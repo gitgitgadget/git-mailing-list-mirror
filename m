@@ -2,210 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20739C77B76
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 16:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFE30C77B76
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 16:29:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbjDQQWI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 12:22:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42630 "EHLO
+        id S230115AbjDQQ3U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 12:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbjDQQVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 12:21:51 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB29DAD11
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:21:48 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id n9-20020a05600c4f8900b003f05f617f3cso20109958wmq.2
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:21:48 -0700 (PDT)
+        with ESMTP id S229575AbjDQQ3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 12:29:19 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5C0BF
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:29:18 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id sj1-20020a17090b2d8100b00247bd1a66d4so695587pjb.5
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681748507; x=1684340507;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QhyBznFkIqvGexVnZFVC2f2hnlMta/niQqiKb/ru0HM=;
-        b=o9nSnc3sptsZ3U4PBLB2tY5J5V9ywnzGo4DOVU1kkCsmZgSoeYAp8PmmJgO6VjVcXK
-         zo0RUvzAv+0VMTo5DY0Mxho2EVH/h4hC1eaQriDrQNVoMhaQn5wv+7UYJ+xo2i7UW/tP
-         rUq1RwaOZX9XAhPXtQ/Qr+U5LpoAyRedcTWfyNOB89uwCAdf/AXfmfiwYSjm4uL0E278
-         VDVakRUn7GJD6tLcgLpaDSj6CrrEPAMnV9qJFDZXrbqvco/5/XkEtcrun7D61jIvoqWV
-         /fx+UN5tBq8BVmTtm+SnU+JzECheLOhpUVXVRUw6PvWGbtJJjL4XxAky3MFSY2V6R904
-         zCXg==
+        d=gmail.com; s=20221208; t=1681748957; x=1684340957;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gUKN5scbqCSSNiN6DWjkZhngt8p0GdaIrAbaZJZ7KY4=;
+        b=TQV7aygDeTaAhSl0I1ZgRPYO6COaTuBBIQ2fhNMDFtkOxVyrKqa6wBkS7nc7tNDfTv
+         83KQNr9P3BEs0qs0GDURI+E6BrLs7aowD8VUUSv/p4zvEP09B1BEIyq6m1nOx8lumPiW
+         nCRylA3ocmuE5jvvG4UcjoG2FLVetN+4lpsX7eCM4RyUZcQSE/dlxbsNOkrk+LNF2QUn
+         zG9PgsApmEiHyPI8ZAcHr5c6fClQZ20s8XrwvH1ppCPoUnniyVPUDSGPmKt97rFUdOgM
+         JlXwsV99BxPySvt0PAS/fTLlTbfbYD7jqNT/dd4eEMEnOL233+7RYQ9gcwMhNPCwNA6U
+         st/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681748507; x=1684340507;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QhyBznFkIqvGexVnZFVC2f2hnlMta/niQqiKb/ru0HM=;
-        b=PBF5qTWRle3C2jEUab4Iv+xykGSLXC55x2AS8TcDiVuCgMvAzezrTbgAqzYTq0Rt+a
-         9I8ANDL9+mmc9+WCEPqwZxrZCkv/VI+7opkFX+eZjlvcDjBuEJRJEjdf4bn0plHAZXge
-         06zvX+cZ7UCMvfGBojMA1Gon9TepHl+UHYDPIga+eTWsBniOKcY0TyrVUn6yfKCyj28Z
-         9y+0jeU8tPyPgPiQl1sWD9anVGAunK9WlfdAyq6qf8VcTHiECYMv/Mdbu+q4LUMpvIQ4
-         bg/+3UtjDrcNXQsHppFpPywO9E87gc6MPVU8yt6XHthYPA/qJkV6uccJen5GMHAiQ9BV
-         Dn7Q==
-X-Gm-Message-State: AAQBX9dlz47ORa/IZFD0xURb+kk5G9fhCbqAETlhFqt8gSw3LK3au3XG
-        1nDnr3Lh25HSja/Jm+h/Tf3JYrXc4NM=
-X-Google-Smtp-Source: AKy350ZjCWAlrdHGGZj+yjD8uY9ZMTPiPepigw66M77IjecGvluxc4RfI9T62X4A6pa+fE/JyCqZ0g==
-X-Received: by 2002:a7b:cb07:0:b0:3f0:5519:9049 with SMTP id u7-20020a7bcb07000000b003f055199049mr11463983wmj.8.1681748506837;
-        Mon, 17 Apr 2023 09:21:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4-20020a5d5644000000b002f02df4c7a3sm10831162wrw.30.2023.04.17.09.21.46
+        d=1e100.net; s=20221208; t=1681748957; x=1684340957;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gUKN5scbqCSSNiN6DWjkZhngt8p0GdaIrAbaZJZ7KY4=;
+        b=gtFbpSLmOskFdqqjNDwVpJ6Zoe0jz7lP7FNJ/M57lUJ3Utfs8/PzSge7cdLYfn9gGI
+         B8oD3OUxmYnYDB0dLCO6LeLva2Lw3G+aChPax2zJSLR7fyMkLKNcSoOPr78Vd+NdCONM
+         Tzg4irkj4Eb6BOOS3TxYoWaCcdfzUTqQ+dhp/cauwo9ZEQO1nbH2OEMnZjq3q6Rw6Bmi
+         Hbi4i21rc6gI7JD5AuubSGW4hn/Q1O9JvylqGxEjZL0Ow7k763mCvFpaLvFxnVSrEtng
+         EeHpa442yq1MmlZPbrIv59FMdPGbXFmc9Se4s3xmPq/XgPob2nx5qT7TLfE4rm7Ng2gp
+         3Jog==
+X-Gm-Message-State: AAQBX9cthy5LmCzrk+0rQSzixS/wklZ8WAoaW0a3GX6updrei3VhORMi
+        PGalydDOcE07+2LTVNDtqoM=
+X-Google-Smtp-Source: AKy350bRfas6HztE9lxcuIHCfZQEf2u4evTUAPwx9VFOc0oB+02LW0nbs260EDlBbKdM+4iyp3JvOg==
+X-Received: by 2002:a17:902:ced0:b0:1a6:b1a2:5f21 with SMTP id d16-20020a170902ced000b001a6b1a25f21mr11253207plg.8.1681748957472;
+        Mon, 17 Apr 2023 09:29:17 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id c21-20020a170902849500b001a6f0e81ec9sm1057674plo.95.2023.04.17.09.29.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 09:21:46 -0700 (PDT)
-Message-Id: <7d894d859ef109091b86bc4e2e4f6cea0e808370.1681748502.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1512.git.1681748502.gitgitgadget@gmail.com>
-References: <pull.1512.git.1681748502.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Apr 2023 16:21:41 +0000
-Subject: [PATCH 4/4] fsck: validate .rev file header
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 17 Apr 2023 09:29:17 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH/RFD] fix connection via git protocol
+References: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
+        <20230416054735.3386065-1-newren@gmail.com>
+Date:   Mon, 17 Apr 2023 09:29:16 -0700
+In-Reply-To: <20230416054735.3386065-1-newren@gmail.com> (Elijah Newren's
+        message of "Sat, 15 Apr 2023 22:47:35 -0700")
+Message-ID: <xmqq5y9uo4kj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Elijah Newren <newren@gmail.com> writes:
 
-While parsing a .rev file, we check the header information to be sure it
-makes sense. This happens before doing any additional validation such as
-a checksum or value check. In order to differentiate between a bad
-header and a non-existent file, we need to update the API for loading a
-reverse index.
+>> 5579f44d2f ("treewide: remove unnecessary cache.h inclusion", 2023-04-11)
+>> broke connections via git protocol because it removed the inclusion of
+>> the default port macro. While some may consider this transport to be
+>> deprecated, it still serves some purpose.
+>
+> In particular the problem is that
+>
+> 	const char *port = STR(DEFAULT_GIT_PORT);
+>
+> translates now to
+>
+> 	const char *port = "DEFAULT_GIT_PORT";
+>
+> instead of
+>
+> 	const char *port = "9418";
 
-Make load_pack_revindex_from_disk() non-static and specify that a
-positive value means "the file does not exist" while other errors during
-parsing are negative values. Since an invalid header prevents setting up
-the structures we would use for further validations, we can stop at that
-point.
+Wow, that is a bad one.  If people do want "DEFAULT_GIT_PORT", they
+would never write STR(DEFAULT_GIT_PORT).  I wonder if we can have a
+bit more clever STR() macro that catches this kind of mistake at the
+compile time.
 
-The place where we can distinguish between a missing file and a corrupt
-file is inside load_revindex_from_disk(), which is used both by pack
-rev-indexes and multi-pack-index rev-indexes. Some tests in t5326
-demonstrate that it is critical to take some conditions to allow
-positive error signals.
+If this is worth fixing, the fix would probably be worth protecting
+with a test or two, but the networking test with fixed port is not
+something we can easily do without a sealed environment, so...
 
-Add tests that check the three header values.
+Thanks Michael for catching this.
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/fsck.c           | 10 ++++++++--
- pack-bitmap.c            |  4 ++--
- pack-revindex.c          |  5 +++--
- pack-revindex.h          |  8 ++++++++
- t/t5325-reverse-index.sh | 15 +++++++++++++++
- 5 files changed, 36 insertions(+), 6 deletions(-)
+> I've got a patch that does precisely this that I just submitted as
+> part of my follow-on to the en/header-split-cache-h series.  I've included
+> that patch below in case Junio wants to advance it faster than the rest of
+> that series.
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 2ab78129bde..2414190c049 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -872,8 +872,14 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	}
- 
- 	for (struct packed_git *p = get_all_packs(the_repository); p; p = p->next) {
--		if (!load_pack_revindex(the_repository, p) &&
--		    verify_pack_revindex(p)) {
-+		int load_error = load_pack_revindex_from_disk(p);
-+
-+		if (load_error < 0) {
-+			error(_("unable to load rev-index for pack '%s'"), p->pack_name);
-+			res = ERROR_PACK_REV_INDEX;
-+		} else if (!load_error &&
-+			   !load_pack_revindex(the_repository, p) &&
-+			   verify_pack_revindex(p)) {
- 			error(_("invalid rev-index for pack '%s'"), p->pack_name);
- 			res = ERROR_PACK_REV_INDEX;
- 		}
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 38b35c48237..3828aab612a 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -379,7 +379,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
- 		goto cleanup;
- 	}
- 
--	if (load_midx_revindex(bitmap_git->midx) < 0) {
-+	if (load_midx_revindex(bitmap_git->midx)) {
- 		warning(_("multi-pack bitmap is missing required reverse index"));
- 		goto cleanup;
- 	}
-@@ -2140,7 +2140,7 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
- 
- 	if (!bitmap_is_midx(bitmap_git))
- 		load_reverse_index(r, bitmap_git);
--	else if (load_midx_revindex(bitmap_git->midx) < 0)
-+	else if (load_midx_revindex(bitmap_git->midx))
- 		BUG("rebuild_existing_bitmaps: missing required rev-cache "
- 		    "extension");
- 
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 62a9846470c..146334e2c96 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -212,7 +212,8 @@ static int load_revindex_from_disk(char *revindex_name,
- 	fd = git_open(revindex_name);
- 
- 	if (fd < 0) {
--		ret = -1;
-+		/* "No file" means return 1. */
-+		ret = 1;
- 		goto cleanup;
- 	}
- 	if (fstat(fd, &st)) {
-@@ -264,7 +265,7 @@ cleanup:
- 	return ret;
- }
- 
--static int load_pack_revindex_from_disk(struct packed_git *p)
-+int load_pack_revindex_from_disk(struct packed_git *p)
- {
- 	char *revindex_name;
- 	int ret;
-diff --git a/pack-revindex.h b/pack-revindex.h
-index c8861873b02..6dd47efea10 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -51,6 +51,14 @@ struct repository;
-  */
- int load_pack_revindex(struct repository *r, struct packed_git *p);
- 
-+/*
-+ * Specifically load a pack revindex from disk.
-+ *
-+ * Returns 0 on success, 1 on "no .rev file", and -1 when there is an
-+ * error parsing the .rev file.
-+ */
-+int load_pack_revindex_from_disk(struct packed_git *p);
-+
- /*
-  * verify_pack_revindex verifies that the on-disk rev-index for the given
-  * pack-file is the same that would be created if written from scratch.
-diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
-index 5c3c80f88f0..431a603ca0e 100755
---- a/t/t5325-reverse-index.sh
-+++ b/t/t5325-reverse-index.sh
-@@ -190,4 +190,19 @@ test_expect_success 'fsck catches invalid row position' '
- 		"invalid rev-index position"
- '
- 
-+test_expect_success 'fsck catches invalid header: magic number' '
-+	corrupt_rev_and_verify 1 "\07" \
-+		"reverse-index file .* has unknown signature"
-+'
-+
-+test_expect_success 'fsck catches invalid header: version' '
-+	corrupt_rev_and_verify 7 "\02" \
-+		"reverse-index file .* has unsupported version"
-+'
-+
-+test_expect_success 'fsck catches invalid header: hash function' '
-+	corrupt_rev_and_verify 11 "\03" \
-+		"reverse-index file .* has unsupported hash id"
-+'
-+
- test_done
--- 
-gitgitgadget
+Yeah, burying it in a 24-patch series is a bit unfortunate.
+
+
+> -- >8 --
+> Subject: [PATCH] protocol.h: move definition of DEFAULT_GIT_PORT from cache.h
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  cache.h    | 21 ---------------------
+>  daemon.c   |  1 +
+>  protocol.h | 21 +++++++++++++++++++++
+>  3 files changed, 22 insertions(+), 21 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 2f21704da9e..71e2fe74c4f 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -39,27 +39,6 @@
+>  #define S_DIFFTREE_IFXMIN_NEQ	0x80000000
+>  
+>  
+> -/*
+> - * Intensive research over the course of many years has shown that
+> - * port 9418 is totally unused by anything else. Or
+> - *
+> - *	Your search - "port 9418" - did not match any documents.
+> - *
+> - * as www.google.com puts it.
+> - *
+> - * This port has been properly assigned for git use by IANA:
+> - * git (Assigned-9418) [I06-050728-0001].
+> - *
+> - *	git  9418/tcp   git pack transfer service
+> - *	git  9418/udp   git pack transfer service
+> - *
+> - * with Linus Torvalds <torvalds@osdl.org> as the point of
+> - * contact. September 2005.
+> - *
+> - * See http://www.iana.org/assignments/port-numbers
+> - */
+> -#define DEFAULT_GIT_PORT 9418
+> -
+>  /*
+>   * Basic data structures for the directory cache
+>   */
+> diff --git a/daemon.c b/daemon.c
+> index db8a31a6ea2..75c3c064574 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -4,6 +4,7 @@
+>  #include "config.h"
+>  #include "environment.h"
+>  #include "pkt-line.h"
+> +#include "protocol.h"
+>  #include "run-command.h"
+>  #include "setup.h"
+>  #include "strbuf.h"
+> diff --git a/protocol.h b/protocol.h
+> index cef1a4a01c7..de66bf80f84 100644
+> --- a/protocol.h
+> +++ b/protocol.h
+> @@ -1,6 +1,27 @@
+>  #ifndef PROTOCOL_H
+>  #define PROTOCOL_H
+>  
+> +/*
+> + * Intensive research over the course of many years has shown that
+> + * port 9418 is totally unused by anything else. Or
+> + *
+> + *	Your search - "port 9418" - did not match any documents.
+> + *
+> + * as www.google.com puts it.
+> + *
+> + * This port has been properly assigned for git use by IANA:
+> + * git (Assigned-9418) [I06-050728-0001].
+> + *
+> + *	git  9418/tcp   git pack transfer service
+> + *	git  9418/udp   git pack transfer service
+> + *
+> + * with Linus Torvalds <torvalds@osdl.org> as the point of
+> + * contact. September 2005.
+> + *
+> + * See http://www.iana.org/assignments/port-numbers
+> + */
+> +#define DEFAULT_GIT_PORT 9418
+> +
+>  enum protocol_version {
+>  	protocol_unknown_version = -1,
+>  	protocol_v0 = 0,
