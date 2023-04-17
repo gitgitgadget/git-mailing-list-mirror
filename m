@@ -2,252 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD61C77B77
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 09:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2C2C77B70
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 09:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231133AbjDQJhZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 05:37:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37230 "EHLO
+        id S230055AbjDQJrl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 05:47:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbjDQJhC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 05:37:02 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863116194
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 02:36:28 -0700 (PDT)
-Date:   Mon, 17 Apr 2023 09:34:34 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1681724080; x=1681983280;
-        bh=HazpFulvYkemTU2flJd+J/W2Z21YBUgTlpnvL6voaIw=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=hVa6HOz6osPQ9Ytv8reVchMrOrPHnvkNTJ2uZZSJTwmybml+w1l+kaYccdcEY7Gta
-         Xp5e0qidNGpByPgyIsQURjWfiGrMXkcKlgae0xYUvscv5NIXdppmYnnbTXasdj/rDY
-         SmfbsQy38AYiH6a/HJ14+UnWK9BIOnAYSkEDGY2IDGdikAXEvo4HTemdP797OzhZ0E
-         w4YseNnfqJzsOwiqDD0tJ+Hogxu1Is/tMoAtGDgCBYOFqlUPPZ+AZXCkWVse29FRpw
-         LV9gTayAUGKrii1ZPoDQWXSvbKjXxO30v5KQLlOVkqnOzu5h3VnASz424yxJEssg+T
-         hAvma6+XFgMBg==
-To:     git@vger.kernel.org
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v9 8/8] worktree add: emit warn when there is a bad HEAD
-Message-ID: <20230417093255.31079-9-jacobabel@nullpo.dev>
-In-Reply-To: <20230417093255.31079-1-jacobabel@nullpo.dev>
-References: <20230417093255.31079-1-jacobabel@nullpo.dev>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S229519AbjDQJrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 05:47:40 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38D65587
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 02:46:56 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id h14so13229310qvr.7
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 02:46:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681724810; x=1684316810;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uL8F43hhCwDPjY574UxOFZJpHOIBww12iRaYp0h4I/0=;
+        b=jExvKdllJsqyjugA3jOoSiRbzYTmdh2/17ivWrbFMB2gMjxgjIHfL29v6ZX22tQx09
+         Dzs8YZvywq/40kDGMED3S8tmJE2nGAO2H9vYn6iU7xLkHB7PoEujJQtdPfyrYdl11UPu
+         r0wwE8unxvpI84QArXvJFOLy6XaxcUAATSUBAYgqdUnyaH6jKONgSgcfpv1ed79ngcOu
+         fAA/G1GANS2Qzc2ud8uxbsXiMO+DYgCxqUhxiiH8Dh9131HrPfiIpKlqnWMnLuZgXbpk
+         PS2GO0/8A/xd6wsxmTZPT7tN6qmvFfJ9CSuTsY5cSifsbnJOxt3gvjmSprNEQq7ndbUD
+         uENg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681724810; x=1684316810;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uL8F43hhCwDPjY574UxOFZJpHOIBww12iRaYp0h4I/0=;
+        b=NMQ9RkpVyjGiYobrIcIyB+aCVDZUISg0MUE+YY7OiwUPcxEU5ajv+paUM9MX8y0E3A
+         a4HVve67/CTAtM2cap5JyJPFey3IpC8LNKw8l8VSy6Ygwddo59YNy4B+7Kg1unauJrIE
+         lrpMdVga/siznvOxdfwlwzKSgqWM8xYxQPu2zxSo3PWEuxjlTcd2s1rNIgg5iDwDh2t8
+         oO9S+2mv3bkpQzTrt2Ri44Z01M4F8YSdfPt+4aTT7IJihYdle+/2tt+0r4tMJWd0kO0+
+         nbhORV2K0T8ZfHhxOXcK55nYqH1AwFGFf0n85XLEC43PFEj1KRSTPqM2zPLoG4JSnZuu
+         LjXQ==
+X-Gm-Message-State: AAQBX9dFVK2bAy4Vy/o/B/dFcw19vIbSHFYkPS1sgLTOtJuqdnKaYzAJ
+        rODPVH9QtoSIhwkskeqY7d/LHqZvFYuAUaaMPGRf6h2oVxxO4A==
+X-Google-Smtp-Source: AKy350bW5t4xg1i1ucyNWgBwBCQn0O4nECZRDpsvPu/vWvoI0op9nbIORAd4MGuNPoFrALiHs0Frncpx+Fj8AyxGB88=
+X-Received: by 2002:ad4:5ce4:0:b0:5e8:e227:983d with SMTP id
+ iv4-20020ad45ce4000000b005e8e227983dmr16479412qvb.45.1681724810111; Mon, 17
+ Apr 2023 02:46:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAJN3DWriXWYKyf+hJL+wZDCgwOZZsWRah=E8_HnKEWh1wcy4Ww@mail.gmail.com>
+ <43997e66-4afb-562d-c06f-ec3d038f1988@web.de> <CAJN3DWpvh8uHnRFnaPgg8U6dW=3xP9YULBe-xfeTAg2SV7K+oQ@mail.gmail.com>
+In-Reply-To: <CAJN3DWpvh8uHnRFnaPgg8U6dW=3xP9YULBe-xfeTAg2SV7K+oQ@mail.gmail.com>
+From:   Gabriel Furstenheim Milerud <furstenheim@gmail.com>
+Date:   Mon, 17 Apr 2023 11:46:39 +0200
+Message-ID: <CAJN3DWoZcKP-Ft=fPvKeCgtGgfEGMrbSmfMaATjH_cuKRPbnpA@mail.gmail.com>
+Subject: Re: Git bug
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a warning to `worktree add` when the command tries to reference
-HEAD, there exist valid local branches, and the HEAD points to a
-non-existent reference.
+In case someone stumbles onto this. The right way to do it is:
 
-Current Behavior:
-% git -C foo worktree list
-/path/to/repo/foo     dadc8e6dac [main]
-/path/to/repo/foo_wt  0000000000 [badref]
-% git -C foo worktree add ../wt1
-Preparing worktree (new branch 'wt1')
-HEAD is now at dadc8e6dac dummy commit
-% git -C foo_wt worktree add ../wt2
-hint: If you meant to create a worktree containing a new orphan branch
-[...]
-hint: Disable this message with "git config advice.worktreeAddOrphan false"
-fatal: invalid reference: HEAD
-%
+git rev-parse --symbolic-full-name --abbrev-ref=3Dloose @{-1}
 
-New Behavior:
-% git -C foo worktree list
-/path/to/repo/foo     dadc8e6dac [main]
-/path/to/repo/foo_wt  0000000000 [badref]
-% git -C foo worktree add ../wt1
-Preparing worktree (new branch 'wt1')
-HEAD is now at dadc8e6dac dummy commit
-% git -C foo_wt worktree add ../wt2
-warning: HEAD points to an invalid (or orphaned) reference.
-HEAD path: '/path/to/repo/foo/.git/worktrees/foo_wt/HEAD'
-HEAD contents: 'ref: refs/heads/badref'
-hint: If you meant to create a worktree containing a new orphan branch
-[...]
-hint: Disable this message with "git config advice.worktreeAddOrphan false"
-fatal: invalid reference: HEAD
-%
-
-Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
----
- builtin/worktree.c      | 34 +++++++++++++++++++++++++++++-----
- t/t2400-worktree-add.sh | 18 +++++++++++++++++-
- 2 files changed, 46 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 95b5bbb1d2..0fba4cfdf8 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -637,6 +637,9 @@ static int first_valid_ref(const char *refname,
-  *
-  * - Checks whether any valid local branches exist.
-  *
-+ * - Emits a warning if there exist any valid branches but HEAD does not p=
-oint
-+ *   to a valid reference.
-+ *
-  * Returns 1 if any of the previous checks are true, otherwise returns 0.
-  */
- static int can_use_local_refs(const struct add_opts *opts)
-@@ -644,6 +647,23 @@ static int can_use_local_refs(const struct add_opts *o=
-pts)
- =09if (head_ref(first_valid_ref, NULL)) {
- =09=09return 1;
- =09} else if (for_each_branch_ref(first_valid_ref, NULL)) {
-+=09=09if (!opts->quiet) {
-+=09=09=09struct strbuf path =3D STRBUF_INIT;
-+=09=09=09struct strbuf contents =3D STRBUF_INIT;
-+
-+=09=09=09strbuf_add_real_path(&path, get_worktree_git_dir(NULL));
-+=09=09=09strbuf_addstr(&path, "/HEAD");
-+=09=09=09strbuf_read_file(&contents, path.buf, 64);
-+=09=09=09strbuf_stripspace(&contents, 0);
-+=09=09=09strbuf_strip_suffix(&contents, "\n");
-+
-+=09=09=09warning(_("HEAD points to an invalid (or orphaned) reference.\n"
-+=09=09=09=09  "HEAD path: '%s'\n"
-+=09=09=09=09  "HEAD contents: '%s'"),
-+=09=09=09=09  path.buf, contents.buf);
-+=09=09=09strbuf_release(&path);
-+=09=09=09strbuf_release(&contents);
-+=09=09}
- =09=09return 1;
- =09}
- =09return 0;
-@@ -665,16 +685,12 @@ static int can_use_local_refs(const struct add_opts *=
-opts)
- static int can_use_remote_refs(const struct add_opts *opts)
- {
- =09if (!guess_remote) {
--=09=09if (!opts->quiet)
--=09=09=09fprintf_ln(stderr, WORKTREE_ADD_DWIM_ORPHAN_INFER_TEXT);
- =09=09return 0;
- =09} else if (for_each_remote_ref(first_valid_ref, NULL)) {
- =09=09return 1;
- =09} else if (!opts->force && remote_get(NULL)) {
- =09=09die(_("No local or remote refs exist despite at least one remote\n"
- =09=09      "present, stopping; use 'add -f' to overide or fetch a remote =
-first"));
--=09} else if (!opts->quiet) {
--=09=09fprintf_ln(stderr, WORKTREE_ADD_DWIM_ORPHAN_INFER_TEXT);
- =09}
- =09return 0;
- }
-@@ -827,8 +843,12 @@ static int add(int ac, const char **av, const char *pr=
-efix)
- =09=09int n;
- =09=09const char *s =3D worktree_basename(path, &n);
- =09=09new_branch =3D xstrndup(s, n);
--=09} else if (opts.orphan || opts.detach) {
-+=09} else if (opts.orphan) {
- =09=09// No-op
-+=09} else if (opts.detach) {
-+=09=09// Check HEAD
-+=09=09if (!strcmp(branch, "HEAD"))
-+=09=09=09can_use_local_refs(&opts);
- =09} else if (ac < 2 && new_branch) {
- =09=09// DWIM: Infer --orphan when repo has no refs.
- =09=09opts.orphan =3D dwim_orphan(&opts, !!opt_track, 0);
-@@ -853,6 +873,10 @@ static int add(int ac, const char **av, const char *pr=
-efix)
- =09=09=09=09branch =3D remote;
- =09=09=09}
- =09=09}
-+
-+=09=09if (!strcmp(branch, "HEAD"))
-+=09=09=09can_use_local_refs(&opts);
-+
- =09}
-
- =09if (!opts.orphan && !lookup_commit_reference_by_name(branch)) {
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index e5cca1d11b..09bf506155 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -729,6 +729,7 @@ test_dwim_orphan () {
- =09local use_quiet=3D0 &&
- =09local remote=3D0 &&
- =09local remote_ref=3D0 &&
-+=09local use_detach=3D0 &&
- =09local use_new_branch=3D0 &&
-
- =09local outcome=3D"$1" &&
-@@ -754,6 +755,10 @@ test_dwim_orphan () {
- =09=09success=3D0 &&
- =09=09outcome_text=3D'"add" error inferred "--orphan" gives illegal opts c=
-ombo'
- =09=09;;
-+=09"warn_bad_head")
-+=09=09success=3D0 &&
-+=09=09outcome_text=3D'"add" error, warn on bad HEAD, hint use orphan'
-+=09=09;;
- =09*)
- =09=09echo "test_dwim_orphan(): invalid outcome: '$outcome'" >&2 &&
- =09=09return 1
-@@ -825,7 +830,7 @@ test_dwim_orphan () {
- =09=09=09context=3D"$context, invalid (or orphan) HEAD"
- =09=09=09;;
-
--=09=09# Whether the code path is tested with the base add command or -b
-+=09=09# Whether the code path is tested with the base add command, -b, or =
---detach
- =09=09"no_-b")
- =09=09=09use_new_branch=3D0 &&
- =09=09=09context=3D"$context, no --branch"
-@@ -834,6 +839,10 @@ test_dwim_orphan () {
- =09=09=09use_new_branch=3D1 &&
- =09=09=09context=3D"$context, --branch"
- =09=09=09;;
-+=09=09"detach")
-+=09=09=09use_detach=3D1 &&
-+=09=09=09context=3D"$context, --detach"
-+=09=09=09;;
-
- =09=09# Whether to check that all output is suppressed (except errors)
- =09=09# or that the output is as expected
-@@ -894,6 +903,9 @@ test_dwim_orphan () {
- =09if [ $use_new_branch -eq 1 ]
- =09then
- =09=09args=3D"$args -b foo"
-+=09elif [ $use_detach -eq 1 ]
-+=09then
-+=09=09args=3D"$args --detach"
- =09else
- =09=09context=3D"DWIM (no --branch), $context"
- =09fi &&
-@@ -1036,6 +1048,10 @@ do
- =09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref remote no_r=
-emote_ref no_guess_remote
- =09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref remote no_r=
-emote_ref guess_remote
- =09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref remote remo=
-te_ref guess_remote
-+
-+=09=09test_dwim_orphan 'warn_bad_head' $dwim_test_args no_-b local_ref bad=
-_head
-+=09=09test_dwim_orphan 'warn_bad_head' $dwim_test_args -b local_ref bad_he=
-ad
-+=09=09test_dwim_orphan 'warn_bad_head' $dwim_test_args detach local_ref ba=
-d_head
- =09done
-
- =09test_dwim_orphan 'fatal_orphan_bad_combo' $quiet_mode no_-b no_checkout
---
-2.39.2
-
-
+On Sat, 15 Apr 2023 at 11:00, Gabriel Furstenheim Milerud
+<furstenheim@gmail.com> wrote:
+>
+> Sorry, my bad. I didn't realize that it worked based on commits. I got co=
+nfused by git checkout -, which doesn't.
+>
+> Cheers
+>
+> On Fri, 14 Apr 2023, 18:07 Ren=C3=A9 Scharfe, <l.s.r@web.de> wrote:
+>>
+>> Am 14.04.23 um 11:41 schrieb Gabriel Furstenheim Milerud:
+>> > Thank you for filling out a Git bug report!
+>> > Please answer the following questions to help us understand your issue=
+.
+>> >
+>> > What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+>> >> repository in branch A
+>> > git name-rev $(git rev-parse HEAD) --name-only
+>> >> returns A
+>> > git checkout B
+>> > git name-rev $(git rev-parse HEAD) --name-only
+>> >
+>> >
+>> >
+>> > What did you expect to happen? (Expected behavior)
+>> > It should return B
+>> >
+>> > What happened instead? (Actual behavior)
+>> > It returns A
+>>
+>> Do you have a short recipe for creating the branches to reproduce this
+>> behavior?  Here's my (failed) attempt:
+>>
+>>    # create repository
+>>    git init -q /tmp/repo
+>>    cd /tmp/repo
+>>
+>>    # create branch a
+>>    echo a >a
+>>    git add a
+>>    git commit -q -m a
+>>    git branch a
+>>
+>>    # create branch b
+>>    echo b >b
+>>    git add b
+>>    git commit -q -m b
+>>    git branch b
+>>
+>> With that done Git v2.34.1 gives me the output you expect:
+>>
+>>    $ git switch a
+>>    Switched to branch 'a'
+>>    $ git name-rev $(git rev-parse HEAD) --name-only
+>>    a
+>>
+>>    $ git switch b
+>>    Switched to branch 'b'
+>>    $ git name-rev $(git rev-parse HEAD) --name-only
+>>    b
+>>
+>> > What's different between what you expected and what actually happened?
+>> > git rev-parse does not seem to update. Same is happenning with git
+>> > rev-parse @{-1}
+>>
+>>    $ git name-rev $(git rev-parse @{-1}) --name-only
+>>    a
+>>
+>> This is expected because @{-1} means the branch/commit checked out
+>> before the current one.
+>>
+>> What does "git rev-parse HEAD" return for you in each case?  Do your
+>> branches perhaps have the same HEAD commit?
+>>
+>> > Anything else you want to add:
+>> > git version 2.34.1
+>> >
+>> > I recently migrated to ubuntu 22. In ubuntu 18 with previous git
+>> > version is was working as expected.
+>>
+>> I guess you use LTS releases, i.e. jammy (22.04) and bionic (18.04)?
+>> bionic shipped with Git 2.17.1 according to https://packages.ubuntu.com/
+>>
+>> Ren=C3=A9
+>>
