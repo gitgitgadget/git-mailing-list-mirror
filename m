@@ -2,66 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75C51C77B7A
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 16:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C2BC77B7A
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 16:55:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbjDQQeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 12:34:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51712 "EHLO
+        id S229953AbjDQQzE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 12:55:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjDQQd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 12:33:59 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1033102
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:33:58 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id hg12so11698657pjb.2
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:33:58 -0700 (PDT)
+        with ESMTP id S229925AbjDQQzD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 12:55:03 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DD8A9
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:54:56 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id s6-20020a17090a698600b00247a7794e78so2466594pjj.0
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 09:54:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681749238; x=1684341238;
+        d=gmail.com; s=20221208; t=1681750496; x=1684342496;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=X9zWAx1wSuelXpxRzuk6EzafkvlzkvQpNeqmVLpZur4=;
-        b=aUOaRImKeAySpP7E4gRp2M+QNZeIaTVAc28LtVE2BP02nrQL0z+fKRnj1S4/hUcrhR
-         orKSgK1403vMkZZ1wYI/KEvArUPqYJtJCSundU4YbIfOxYcjk2x9Rp3kmzBa+9XcWPf/
-         usJWvbisYHa8aTEIm3LQLRYs0OJsYro3QdO1qA8No9VXkFikrLP51hSxlg0DPpcTupin
-         N0jQRK8vEYOeF9V5SPftpub7ZtzVl0qlqUH2dV+Vf0VRPY8ZVDnluVppT5eUBRMHVUHH
-         TftO0CJIc7FqXfZmiaY706FaCQHeXMZIFMcgdFDKF2WVHZp4X8g7IcMQzm3j+eHBBBP1
-         Tbiw==
+        bh=xYsxbvKrYfWFnDJvVeE3e7p2U5w4w+KCCuEgmg3/mXA=;
+        b=XPKU8qIrB4f/q0AJ9vMRSyxYpsJrF5RhX4C9zh3QMokBya7udDtAh8XhsHPT0XUbcR
+         88o5WOh5Ir1GBKRLyPFo5FMfTfCiCs8VMeDGBbBpKwvEvN0Kelq+bQwFSq52L5xIzeX+
+         B/t3XEyGqC6hBVihZULmDzzQLyhcE+XidS5NNV6EXQasfXGX1wP1HYhkaGvtNza0fZUo
+         HO6VxiVs3awV08BBVo9k426Mmb29+PWGNDZZfHUOwB/kMCvgC096DkhxQKmqyLbpKMdm
+         /Q3XlW2aa1n/77NOV8p8t3xmPPik0UV+E0HrnLueui3L1UhfZN2+RyieumTKSeliVpXf
+         8pIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681749238; x=1684341238;
+        d=1e100.net; s=20221208; t=1681750496; x=1684342496;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=X9zWAx1wSuelXpxRzuk6EzafkvlzkvQpNeqmVLpZur4=;
-        b=YzY6P9Evmspf0TNLUX1bMtg+g7DzjAcY6t74MpjTiRqG/4c8rWclSkl9pd1pB8mMsz
-         qGAPZ3lpZRtxgK8AvSQJN94Rbkv1jow05fc1toAboqJ28JOQC5BYte3iFoNoWWOWAktK
-         33oVzcJMiUH5BYYS6qCze8DDeyBFtn5gkMd4rZpUOC72DQ787WjZgpblacz5oG/x6AA7
-         BDWJkPUOEAjcPynHfm5QvYruRfbUczzNmM2ptVDYwRbTPpZrNLcabtIcN6HUaP6yGi2M
-         9RZ+Yp2k2+9GMr+V2OXyMn3bDIqn2J/b8ZU7RHEY1bJOjQ4Ntshd/y6nGzVeuie4yESi
-         dwcw==
-X-Gm-Message-State: AAQBX9csM//opl3RCn7xNOu2h6+bzHyhstpb+K30RInsZQw+oxjO5u4g
-        oQ+kSuvhBjbYdPc6JQzNhpQDmxBZ09I=
-X-Google-Smtp-Source: AKy350Y2ioPlIvtZTFG5xN1oKaU/ot9Bg35DtfuYM+gtFnSvRrKFIM/nrwbqEzKp0ChxFwG5/2Ix9g==
-X-Received: by 2002:a17:902:dac2:b0:1a6:3af1:9c3a with SMTP id q2-20020a170902dac200b001a63af19c3amr15502702plx.22.1681749238091;
-        Mon, 17 Apr 2023 09:33:58 -0700 (PDT)
+        bh=xYsxbvKrYfWFnDJvVeE3e7p2U5w4w+KCCuEgmg3/mXA=;
+        b=YyRe5V7cm52Hpg0WLLoKD2gFTbVv5f+lUNLSoZLmwG5JdiEab/THP/hcFQbjwDTyIo
+         z8FLxKLaTjce7KIMPrF2yIMixBbfFdzOxq9FUtKP8RGDzsE8EwEzTRngMT5UOQWUeblP
+         V4bj1lQVnt2wao35nlTXWX77IIQFc6oVieXVu2kqF5FIMQHwzTvm1y1vFeJK+WvMppEi
+         E6CZyBlZhAhHj/e1hTpvx6cvR9iSo5fRAF3QINAGUe94f+VwHJKx7DMg35+Mj2AGYzYp
+         lCBjtjUMQcmbKcV2UsH4QYQ8u7f+U23m270CpeRU36XvE3Kpl3IzjjnFHfsxB1R1Q2EK
+         WD0Q==
+X-Gm-Message-State: AAQBX9fiI6bcpNU3+OfRwoUABNkWjDZS5sG67l226A/Mshzbupv9AItg
+        OLe9vQYP+e1c3/BWz7W6t5zeAoinG5g=
+X-Google-Smtp-Source: AKy350ZR7w1jgdOVnoJuXziEmoZisRt4ls6dIysEKivAG7p8qPDIJEYnjLkBrUCxrVhoAavTrRQmrA==
+X-Received: by 2002:a17:902:e74c:b0:1a6:6b9c:48ae with SMTP id p12-20020a170902e74c00b001a66b9c48aemr16465082plf.52.1681750496129;
+        Mon, 17 Apr 2023 09:54:56 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id fv23-20020a17090b0e9700b002473c9c8d92sm5375368pjb.44.2023.04.17.09.33.57
+        by smtp.gmail.com with ESMTPSA id bj7-20020a17090b088700b00247a8ef11d8sm1341757pjb.24.2023.04.17.09.54.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 09:33:57 -0700 (PDT)
+        Mon, 17 Apr 2023 09:54:55 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>, Michael J Gruber <git@grubix.eu>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH/RFD] fix connection via git protocol
-References: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
-        <20230416054735.3386065-1-newren@gmail.com>
-        <20230417073827.GA39931@coredump.intra.peff.net>
-Date:   Mon, 17 Apr 2023 09:33:57 -0700
-In-Reply-To: <20230417073827.GA39931@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 17 Apr 2023 03:38:27 -0400")
-Message-ID: <xmqq1qkio4cq.fsf@gitster.g>
+To:     avarab@gmail.com, Lars Kellogg-Stedman <lars@oddbit.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Regression introduced in 03267e86
+References: <bt4342bdip3nzlikjsv6wozszmcbsc2av6cyo3z2lra4jhx3ii@ut2sl5h4f5xn>
+Date:   Mon, 17 Apr 2023 09:54:55 -0700
+In-Reply-To: <bt4342bdip3nzlikjsv6wozszmcbsc2av6cyo3z2lra4jhx3ii@ut2sl5h4f5xn>
+        (Lars Kellogg-Stedman's message of "Sun, 16 Apr 2023 13:20:20 -0400")
+Message-ID: <xmqqttxemotc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,43 +66,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Lars Kellogg-Stedman <lars@oddbit.com> writes:
 
-> The preprocessor doesn't know that we'll be confused if "s" isn't
-> resolved, and by the time the compiler sees it, it's a string already.
+> [This behavior was originally reported in
+> https://stackoverflow.com/q/76022720/147356.]
 >
-> Obviously we could add a test that catches this at run-time, but we
-> should be able to do better (catch it earlier, and with less code).
-
-Ah, great minds think alike.  I am glad you have already thought it
-through.
-
-> My first thought was: why can't we just treat the port as an "int" in
-> the first place? The answer is mostly that getaddrinfo() expects it as a
-> string. It could even be a non-numeric service like "http" in theory
-> (and looked up in /etc/services; Debian's even has "git" in it!), but
-> our get_host_and_port() refuses to allow that. But even if we didn't
-> want to ever support non-numeric service names, it makes the code more
-> awkward (we have to format the port into an extra buffer).
+> Prior to commit 03267e8656, the following sequence would result in an
+> empty commit:
 >
-> This would work:
+>     git init testrepo
+>     date > testrepo/testfile
+>     git -C testrepo add testfile
+>     git -C testrepo commit -m test --allow-empty --only
 >
-> diff --git a/connect.c b/connect.c
-> index fd3179e545..1eba71e34c 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -753,7 +753,7 @@ static char *host_end(char **hoststart, int removebrackets)
->  }
->  
->  #define STR_(s)	# s
-> -#define STR(s)	STR_(s)
-> +#define STR(s) (STR_(s) + BUILD_ASSERT_OR_ZERO(s))
+> After commit 03267e8656, the same sequence creates a commit that
+> contains "testfile". I believe the original behavior was correct,
+> based on the documentation for the `--only` option:
 
-OOoooh.  Clever.  A pointer plus N indexes into an array, but if the
-offset is N then the pointer is left intact so the caller does not
-see the difference.
+It looks like a convoluted way (aka use of an obscure option) to
+create something useless (aka an empty root commit), but it should
+be allowed and the last step should do what you expected.
 
-> ... But the
-> BUILD_ASSERT doesn't seem too bad to me.
+> And while that passes all the tests, I'm not sure if its correct; the
+> change in 03267e8656 was correcting a memory leak and I'm not sure I
+> completely understand the details.
 
-Indeed.
+Yeah, figuring out how 03267e86 (commit: discard partial cache
+before (re-)reading it, 2022-11-08) broke the behaviour is a good
+first step.
+
+Thanks for reporting.
