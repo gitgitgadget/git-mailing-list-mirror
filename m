@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB64DC77B76
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 20:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF096C77B76
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 20:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231139AbjDQU5V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 16:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40224 "EHLO
+        id S231207AbjDQU5b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 16:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231130AbjDQU4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 16:56:54 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F08CC1D
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 13:54:45 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id r184so11480572ybc.1
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 13:54:44 -0700 (PDT)
+        with ESMTP id S230514AbjDQU5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 16:57:04 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE60BCC3E
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 13:54:52 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id m14so9983888ybk.4
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 13:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681764863; x=1684356863;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681764865; x=1684356865;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ufLzWQemmfKm6VPiBYmhZeagjpz2vAilwKvh4+0e+Bk=;
-        b=i9REyRCSykzi0v81jksOU2nV5PKCJWnm8nnEeXRZ5A+fCphhu0hfZmyE+ZfwpN5uml
-         TZAPdMyDqhhEjX97EDrzWvLfhbiTS5zDIi+FedEcAoROlwNZS7O/kzlsCDNeHn5LQLZ9
-         3WXQMYEdKc6iE6gjx3WGECu90+c8dCN8Iz8W69bBWuauUSle6QcTcHSFOWGcBcZXtlcj
-         34aXmjzbOMzzssKervonD22+kW8UqW40XVRqC/y8ctyEQ/TGpkJ/4XhfUnrrQhKvSeSD
-         y8uE8iYdTz1ggF5Tr4BjGt+fqmaJtVK+CXbBiBLaPKsEEADHHMykWJ8mJr6z6ypYXCjZ
-         q2+w==
+        bh=iEJ9qzbPbjrFbQGLENPt1su2NVmD89oNuuCJMqep5HQ=;
+        b=rOf8UBlMuV9DT2p5cjkQr5+8xf6qPa5ilWPUqtwgX3D5sY0voAfAw8Ai3+c2dtJ9SU
+         HJ1+LhLkGHqqSxECNhkcHdWGsmgfPPU9yD7h6Zd504wBBQiMOKnQ4iSEF64dcjr+9wAN
+         fn46Eu4LO1ZE+s83DzuIuOIu0NMy14XYB0B583/GzhMgfWkqSAFnleipozsAA24PvxFJ
+         n3gX4BKdY2urVx7xqnk8FpvKmbpQZbJpjQdPyAI2GsnavnqU3rjZaw7Tbux/6Yeaz+mf
+         MoE+2gGQiYdTgsS0x2RM5nqWaExBy7U78CwjBP+5laOn4FEpLLLcU6ptafAbJWQKPax/
+         1KcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681764863; x=1684356863;
+        d=1e100.net; s=20221208; t=1681764865; x=1684356865;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ufLzWQemmfKm6VPiBYmhZeagjpz2vAilwKvh4+0e+Bk=;
-        b=B3eefYOERhEDr+hCUq+gJ7CXG2rD4Id+vg/h/ik5h88JtDSAYTPlyGHA+kXCjkVK6s
-         kxKSVXy/YRwtq3Ww8QYvw7Zs2LXzjDFtO8QLqHAxvGzb4CtGXFh+ovOux351FB45/xu6
-         Z5e2Q+96pIaIDf5pUKIf01eRdvQrxafctGxBmfGIm/wINqitmdnsPcuSsx59K4rR536J
-         oeWYdGwfK1NDTgVGwLb9pCmnbJ9G6d3IWmVTztXcba80aSyA1p8drrFUaDtsyMBjoy8e
-         EzgOBwYh7Yw0v7ASmqc5ZiHMHQm0ZXC1goEnCKJSzeP7LmQxp6u/qzCgzX/kMiApUHfO
-         J3JA==
-X-Gm-Message-State: AAQBX9cfOjMrzPtLYSNVTHabKdNf0U3CJujZJYpA/pyxQB/7hD+yuVSp
-        aSzrgHAiyi3Hgkd3GW3y9BygaEeNPeBmqel8WW/xBw==
-X-Google-Smtp-Source: AKy350ZUjoCFEeNmxSic+Fq+xCOE6UILKgAi5DLn0H5woYX0YMX1x8S7AIRex+UTg03WrAsQR7jLTg==
-X-Received: by 2002:a25:3743:0:b0:b8f:3eda:30b7 with SMTP id e64-20020a253743000000b00b8f3eda30b7mr16998639yba.13.1681764862656;
-        Mon, 17 Apr 2023 13:54:22 -0700 (PDT)
+        bh=iEJ9qzbPbjrFbQGLENPt1su2NVmD89oNuuCJMqep5HQ=;
+        b=Tf+lb7Kxqsty71gyOnjHflRRUESw90+i7fxGuIIntTdhNl77VNr4cDFHenGwvNGWnf
+         Eva+9uwmr4g89I0wlw6Fdt3lQiCbrZLfeaDSLCHjcFvZHMSHGiVPF/+208EGLLI4mdPz
+         fel8fno9JdzUKe1WGQ2JV2JFB7eO6S/3X1P6HZasUqUPj1+pTCqYQ73CHcultsh0Gup2
+         Dkm12hmJxpd5exa+kBla/GnwxMy3wMSEKbRP3YEp/RvJOWmpqD3GW5XsvRIdv5m+GxdU
+         6Fyn5p6QR9nLnnRZ0O9qESiIolXankw5cwjwFovn8Q1rJzZtcuyj7OA3QnUTqYzx5JR6
+         QHjw==
+X-Gm-Message-State: AAQBX9fOFfiPLhm9bpykt31GN41DS0WaxKVApK/Nz9KhXwYCm2+zm3IE
+        u7tOd3dasCxdByDeWP05ic4dKEggGeT7/MlyWuThFA==
+X-Google-Smtp-Source: AKy350Z1R/4qZe/izrG/a1xUYJ+IyThdYuiCgwe0j6leYwXGsL+j7BwaIHOLcCqds5sqILiU7nbxKQ==
+X-Received: by 2002:a25:4555:0:b0:b8f:2257:af0c with SMTP id s82-20020a254555000000b00b8f2257af0cmr14442796yba.15.1681764865523;
+        Mon, 17 Apr 2023 13:54:25 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a6-20020a259386000000b00b923b9e0a82sm1524900ybm.45.2023.04.17.13.54.22
+        by smtp.gmail.com with ESMTPSA id d71-20020a25cd4a000000b00b8f5b3b7115sm3131933ybf.60.2023.04.17.13.54.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 13:54:22 -0700 (PDT)
-Date:   Mon, 17 Apr 2023 16:54:21 -0400
+        Mon, 17 Apr 2023 13:54:25 -0700 (PDT)
+Date:   Mon, 17 Apr 2023 16:54:24 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 03/10] builtin/gc.c: ignore cruft packs with
- `--keep-largest-pack`
-Message-ID: <796df920ad6af0ee9101a0f3f80edbc793987336.1681764848.git.me@ttaylorr.com>
+Subject: [PATCH 04/10] t/t5304-prune.sh: prepare for `gc --cruft` by default
+Message-ID: <44006da959eeeaef93a33d73071fb5edc45cd45b.1681764848.git.me@ttaylorr.com>
 References: <cover.1681764848.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -66,135 +65,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cruft packs were implemented, we never adjusted the code for `git
-gc`'s `--keep-largest-pack` and `gc.bigPackThreshold` to ignore cruft
-packs. This option and configuration option share a common
-implementation, but including cruft packs is wrong in both cases:
+Many of the tests in t5304 run `git gc`, and rely on its behavior that
+unreachable-but-recent objects are written out loose. This is sensible,
+since t5304 deals specifically with this kind of pruning.
 
-  - Running `git gc --keep-largest-pack` in a repository where the
-    largest pack is the cruft pack itself will make it impossible for
-    `git gc` to prune objects, since the cruft pack itself is kept.
+If left unattended, however, this test would break when the default
+behavior of a bare "git gc" is adjusted to generate a cruft pack by
+default.
 
-  - The same is true for `gc.bigPackThreshold`, if the size of the cruft
-    pack exceeds the limit set by the caller.
-
-Ignore cruft packs in the common implementation for both of these
-options, and add a pair of tests to prevent any future regressions here.
+Ensure that these tests continue to work as-is (and continue to provide
+coverage of loose object pruning) by passing `--no-cruft` explicitly.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config/gc.txt | 10 ++++-----
- Documentation/git-gc.txt    |  7 +++---
- builtin/gc.c                |  2 +-
- t/t6500-gc.sh               | 43 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 53 insertions(+), 9 deletions(-)
+ t/t5304-prune.sh | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 38fea076a2..8d5353e9e0 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -43,11 +43,11 @@ gc.autoDetach::
- 	if the system supports it. Default is true.
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 5500dd0842..662ae9b152 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -62,11 +62,11 @@ test_expect_success 'prune --expire' '
+ test_expect_success 'gc: implicit prune --expire' '
+ 	add_blob &&
+ 	test-tool chmtime =-$((2*$week-30)) $BLOB_FILE &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+ 	test_path_is_file $BLOB_FILE &&
+ 	test-tool chmtime =-$((2*$week+1)) $BLOB_FILE &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	verbose test $before = $(git count-objects | sed "s/ .*//") &&
+ 	test_path_is_missing $BLOB_FILE
+ '
+@@ -86,7 +86,7 @@ test_expect_success 'gc: refuse to start with invalid gc.pruneExpire' '
  
- gc.bigPackThreshold::
--	If non-zero, all packs larger than this limit are kept when
--	`git gc` is run. This is very similar to `--keep-largest-pack`
--	except that all packs that meet the threshold are kept, not
--	just the largest pack. Defaults to zero. Common unit suffixes of
--	'k', 'm', or 'g' are supported.
-+	If non-zero, all non-cruft packs larger than this limit are kept
-+	when `git gc` is run. This is very similar to
-+	`--keep-largest-pack` except that all non-cruft packs that meet
-+	the threshold are kept, not just the largest pack. Defaults to
-+	zero. Common unit suffixes of 'k', 'm', or 'g' are supported.
- +
- Note that if the number of kept packs is more than gc.autoPackLimit,
- this configuration variable is ignored, all packs except the base pack
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index a65c9aa62d..2427478314 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -77,9 +77,10 @@ be performed as well.
- 	instance running on this repository.
- 
- --keep-largest-pack::
--	All packs except the largest pack and those marked with a
--	`.keep` files are consolidated into a single pack. When this
--	option is used, `gc.bigPackThreshold` is ignored.
-+	All packs except the largest pack, any packs marked with a
-+	`.keep` file, and any cruft pack(s) are consolidated into a
-+	single pack. When this option is used, `gc.bigPackThreshold` is
-+	ignored.
- 
- AGGRESSIVE
- ----------
-diff --git a/builtin/gc.c b/builtin/gc.c
-index edd98d35a5..53ef137e1d 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -219,7 +219,7 @@ static struct packed_git *find_base_packs(struct string_list *packs,
- 	struct packed_git *p, *base = NULL;
- 
- 	for (p = get_all_packs(the_repository); p; p = p->next) {
--		if (!p->pack_local)
-+		if (!p->pack_local || p->is_cruft)
- 			continue;
- 		if (limit) {
- 			if (p->pack_size >= limit)
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index d9acb63951..df6f2e6e52 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -298,6 +298,49 @@ test_expect_success 'feature.experimental=false avoids cruft packs by default' '
- 	)
+ test_expect_success 'gc: start with ok gc.pruneExpire' '
+ 	git config gc.pruneExpire 2.days.ago &&
+-	git gc
++	git gc --no-cruft
  '
  
-+test_expect_success '--keep-largest-pack ignores cruft packs' '
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		# Generate a pack for reachable objects (of which there
-+		# are 3), and one for unreachable objects (of which
-+		# there are 6).
-+		prepare_cruft_history &&
-+		git gc --cruft &&
-+
-+		mtimes="$(find .git/objects/pack -type f -name "pack-*.mtimes")" &&
-+		sz="$(test_file_size "${mtimes%.mtimes}.pack")" &&
-+
-+		# Ensure that the cruft pack gets removed (due to
-+		# `--prune=now`) despite it being the largest pack.
-+		git -c gc.bigPackThreshold=$sz gc --cruft --prune=now &&
-+
-+		assert_no_cruft_packs
-+	)
-+'
-+
-+test_expect_success 'gc.bigPackThreshold ignores cruft packs' '
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		# Generate a pack for reachable objects (of which there
-+		# are 3), and one for unreachable objects (of which
-+		# there are 6).
-+		prepare_cruft_history &&
-+		git gc --cruft &&
-+
-+		# Ensure that the cruft pack gets removed (due to
-+		# `--prune=now`) despite it being the largest pack.
-+		git gc --cruft --prune=now --keep-largest-pack &&
-+
-+		assert_no_cruft_packs
-+	)
-+'
-+
- run_and_wait_for_auto_gc () {
- 	# We read stdout from gc for the side effect of waiting until the
- 	# background gc process exits, closing its fd 9.  Furthermore, the
+ test_expect_success 'prune: prune nonsense parameters' '
+@@ -137,44 +137,44 @@ test_expect_success 'gc --no-prune' '
+ 	add_blob &&
+ 	test-tool chmtime =-$((5001*$day)) $BLOB_FILE &&
+ 	git config gc.pruneExpire 2.days.ago &&
+-	git gc --no-prune &&
++	git gc --no-prune --no-cruft &&
+ 	verbose test 1 = $(git count-objects | sed "s/ .*//") &&
+ 	test_path_is_file $BLOB_FILE
+ '
+ 
+ test_expect_success 'gc respects gc.pruneExpire' '
+ 	git config gc.pruneExpire 5002.days.ago &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	test_path_is_file $BLOB_FILE &&
+ 	git config gc.pruneExpire 5000.days.ago &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	test_path_is_missing $BLOB_FILE
+ '
+ 
+ test_expect_success 'gc --prune=<date>' '
+ 	add_blob &&
+ 	test-tool chmtime =-$((5001*$day)) $BLOB_FILE &&
+-	git gc --prune=5002.days.ago &&
++	git gc --prune=5002.days.ago --no-cruft &&
+ 	test_path_is_file $BLOB_FILE &&
+-	git gc --prune=5000.days.ago &&
++	git gc --prune=5000.days.ago --no-cruft &&
+ 	test_path_is_missing $BLOB_FILE
+ '
+ 
+ test_expect_success 'gc --prune=never' '
+ 	add_blob &&
+-	git gc --prune=never &&
++	git gc --prune=never --no-cruft &&
+ 	test_path_is_file $BLOB_FILE &&
+-	git gc --prune=now &&
++	git gc --prune=now --no-cruft &&
+ 	test_path_is_missing $BLOB_FILE
+ '
+ 
+ test_expect_success 'gc respects gc.pruneExpire=never' '
+ 	git config gc.pruneExpire never &&
+ 	add_blob &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	test_path_is_file $BLOB_FILE &&
+ 	git config gc.pruneExpire now &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	test_path_is_missing $BLOB_FILE
+ '
+ 
+@@ -194,7 +194,7 @@ test_expect_success 'gc: prune old objects after local clone' '
+ 		cd aclone &&
+ 		verbose test 1 = $(git count-objects | sed "s/ .*//") &&
+ 		test_path_is_file $BLOB_FILE &&
+-		git gc --prune &&
++		git gc --prune --no-cruft &&
+ 		verbose test 0 = $(git count-objects | sed "s/ .*//") &&
+ 		test_path_is_missing $BLOB_FILE
+ 	)
+@@ -237,7 +237,7 @@ test_expect_success 'clean pack garbage with gc' '
+ 	>.git/objects/pack/fake2.keep &&
+ 	>.git/objects/pack/fake2.idx &&
+ 	>.git/objects/pack/fake3.keep &&
+-	git gc &&
++	git gc --no-cruft &&
+ 	git count-objects -v 2>stderr &&
+ 	grep "^warning:" stderr | sort >actual &&
+ 	cat >expected <<\EOF &&
 -- 
 2.38.1
 
