@@ -2,31 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62639C77B7C
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 09:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24323C77B72
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 09:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230178AbjDQJfi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 05:35:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36160 "EHLO
+        id S229911AbjDQJfh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 05:35:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbjDQJfd (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229634AbjDQJfd (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Apr 2023 05:35:33 -0400
-Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCFCE4205
+Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B993AA1
         for <git@vger.kernel.org>; Mon, 17 Apr 2023 02:34:50 -0700 (PDT)
-Date:   Mon, 17 Apr 2023 09:33:44 +0000
+Date:   Mon, 17 Apr 2023 09:33:35 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
         s=protonmail3; t=1681724030; x=1681983230;
-        bh=c6CW5zlosP9UlTEEz1g9iqvpzkXVpHPsYU4nYoTaiZM=;
+        bh=CvZmQDe/1jgZsnUPyv9kSZCw8AoISXvuQ7Mfsh4OMa0=;
         h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
          Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
          Message-ID:BIMI-Selector;
-        b=aLIWi5uxXcS3Ooq5Tgs1ElWAEBXVqK+v7DlYe2Fl7eFgb08I2FECsillqA1sQ7kQy
-         zp09UWEK+0KswXoNZafMNEqig+/4EFqKtEXGwAjEbvEfn5K6qVftU1WCvbzpkIBOFu
-         QG8FfEDh84K7i6L4bNoywBaZq84Ioa/0JSHY9DtP0wAt1yqp4FayKQaE+GxQ5c4OQB
-         b5lcApqOnHFrXDoIcHo8AeaoqDI7z/DpS0X98Y9oJqljpiJTWvvJc5+8vIuTJ/Ea2I
-         qKh9nDHashe64UocKXhY0srtJRoXq4pGrUQrh6RJ4OGXisp7v9wZzBdrHyjx27vSyT
-         zy+H9XBU19FJQ==
+        b=QQbFzfPH/Oi1We/bRud0eYk6wPkK+QUUqdD22gusNWBNeVKr6r7ZJCDs1DjwpcO0f
+         xo6sztuwnyOVp7NoT1CtOV4RuMdM+JAnQYlvtDb2ekligqjcSAAqftK1BpgSVHw/Mc
+         ky7wbgMtILgEyr82Tb4GxLv4BV3pik4vZ2pk4Rwscob7pMfTHUEr8H0uf1shGZpVPL
+         0NaVmNPmTwEXvUcRbD/2xiwrktYo+NT3YIbHjeFFRuW6a1Dx7vZxSvjIZ37FUnLSTu
+         oIgICLRfwHozz2EtRMjm1WZfylKdaYBJC8o77rgdo3+OvOsGVJrxCs7cqW4m+ae6Gi
+         BvqmsBEiSEVPQ==
 To:     git@vger.kernel.org
 From:   Jacob Abel <jacobabel@nullpo.dev>
 Cc:     Jacob Abel <jacobabel@nullpo.dev>,
@@ -36,8 +36,8 @@ Cc:     Jacob Abel <jacobabel@nullpo.dev>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v9 2/8] t2400: print captured git output when finished
-Message-ID: <20230417093255.31079-3-jacobabel@nullpo.dev>
+Subject: [PATCH v9 1/8] worktree add: include -B in usage docs
+Message-ID: <20230417093255.31079-2-jacobabel@nullpo.dev>
 In-Reply-To: <20230417093255.31079-1-jacobabel@nullpo.dev>
 References: <20230417093255.31079-1-jacobabel@nullpo.dev>
 Feedback-ID: 21506737:user:proton
@@ -48,28 +48,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update tests that capture stderr so that at the end of the test they
-print the captured text back out to stderr. This simplifies debugging
-when inspecting test logs after executing with `-x`.
+Document `-B` next to where `-b` is already documented to bring the
+usage docs in line with other commands such as git checkout.
 
 Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
 ---
- t/t2400-worktree-add.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/git-worktree.txt | 2 +-
+ builtin/worktree.c             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index d587e0b20d..9bc3db20e4 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -326,6 +326,8 @@ test_expect_success 'add -B' '
- '
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.tx=
+t
+index 063d6eeb99..b9c12779f1 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>=
+]]
+-=09=09   [-b <new-branch>] <path> [<commit-ish>]
++=09=09   [(-b | -B) <new-branch>] <path> [<commit-ish>]
+ 'git worktree list' [-v | --porcelain [-z]]
+ 'git worktree lock' [--reason <string>] <worktree>
+ 'git worktree move' <worktree> <new-path>
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 39e9e5c9ce..d1b4b53f2c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -22,7 +22,7 @@
 
- test_expect_success 'add --quiet' '
-+=09test_when_finished "git worktree remove -f -f another-worktree" &&
-+=09test_when_finished cat actual >&2 &&
- =09git worktree add --quiet another-worktree main 2>actual &&
- =09test_must_be_empty actual
- '
+ #define BUILTIN_WORKTREE_ADD_USAGE \
+ =09N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reason <st=
+ring>]]\n" \
+-=09   "                 [-b <new-branch>] <path> [<commit-ish>]")
++=09   "                 [(-b | -B) <new-branch>] <path> [<commit-ish>]")
+ #define BUILTIN_WORKTREE_LIST_USAGE \
+ =09N_("git worktree list [-v | --porcelain [-z]]")
+ #define BUILTIN_WORKTREE_LOCK_USAGE \
 --
 2.39.2
 
