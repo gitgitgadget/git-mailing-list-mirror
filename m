@@ -2,124 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FCC6C77B7A
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 18:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF3C4C77B76
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 19:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbjDQSqx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 14:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50010 "EHLO
+        id S230356AbjDQTKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 15:10:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjDQSqw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 14:46:52 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772635BA1
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 11:46:50 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id p8so26833018plk.9
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 11:46:50 -0700 (PDT)
+        with ESMTP id S230340AbjDQTKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 15:10:50 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68611FF3
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 12:10:49 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id by8so27443118ljb.13
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 12:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681757210; x=1684349210;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jJkOn8HaK3ayZvBCqPs0ZQW9OmfELGqrqtpQt9Mclwg=;
-        b=C1pFAU9jlGAfnTBNRLLUbpAH7icsfyvTzCA+i7O/ZPse+B58IXU4VpWPFF5bR7n7J9
-         iFHlDQley0/kQe4p8Pb7Al3PzjJYD72YRvz/EPZqqZ/nKrnx3IzATlPLtCZpdfkw8zO3
-         08nq/wlxIQ98KPqWTKnQgNq3wBZjBbKvEHZvXOwePf8gtYCYtvOhoiFWkK6HTmCL1/xx
-         Ov8Z9xCwDi/uP8OIHsOnGrfTOq/CjvqVX2OjBk6ke5G7NHCo3UJJnlcwPoOf8TC9Gagy
-         Z8j26TF093kW3xjepgV4sfMWUnbDp1p/K9iC4kcxtua0b00VufwlQfvMA1MgQCB/GN1r
-         yqQQ==
+        d=gmail.com; s=20221208; t=1681758647; x=1684350647;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mfv6vNIM+5tdt1iXSSS5+QYNUMy/T7y+TThYUXRQzV0=;
+        b=dBPxUfZpBxxTe4ft1bpflFFshP0K8/3ohVGZyXa7ofVbm8S88wegAuuZ8qCLMAV17Q
+         2+jkfjHtUNsA7+ethLiT/dE1iI1t5BW48oWWnehtdyQ9GQ+I08gi8rjbZ5KzhtoxrfeO
+         H+WnFu2QO6Fl38h8kXA1w03xVyOVNIApFdHfr1Cj2GDTih7v8+53zGV90NkYyQkAu5u/
+         7ToAb1/M2hygJ9Lh+78gOSKo+nMzISwmRA0pEnzRiuxCfiYaKJFb6wkEBXLNl3T7aE6B
+         +uHLn85zJGGpWfqQYBNqZyMHetwwp2XsZ2ZHGno/yvso7qFy4O5Mbsf+ysFVq0JbkjJ7
+         ry0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681757210; x=1684349210;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jJkOn8HaK3ayZvBCqPs0ZQW9OmfELGqrqtpQt9Mclwg=;
-        b=jMvPg7JwMF0GmRkrSCKs7d52EvcylRz27is/meEHtDh7E4dI3rqgRO1ROKtKzmYRel
-         d51WsQyahV0aeDmvj75nfqw2Ph24IBADPTlHlgnh/lpN01zFPfdEoqzUlivs7sEjDbW0
-         JiNkTGjFj73Ivxa2GIRv4RykovNPZyWyfNiQNifcDBlMewh+jU9YecC0k+54s4kWoBSB
-         Vh94pIrAEwuJVATQIz1LmnDcndx+o7Ie2WGoHXGO9jVI/NaHzF6bONdf4DQFJiqGHF9X
-         QFazSVE/Yp7v9bGXenQ3eO8gfTS032AZUORhLfWfFDP7AR6TU9edQaPs5lb/mPC56272
-         yoww==
-X-Gm-Message-State: AAQBX9cLO4G+XB9DOZDjVGkQYPqlVlbgWPGmg+wSzT31iy2oQhpGnv0C
-        v70unHfUwWRAJy3t3gyF57JTqYMTokw=
-X-Google-Smtp-Source: AKy350bPgrnnqBc3zfzRuN0INbZMyiNBWya0sb/7qn05lhGJ71Wj0zSgjmXam1ubQVnVZ0N24ZSPJQ==
-X-Received: by 2002:a17:90a:df91:b0:246:9c75:351a with SMTP id p17-20020a17090adf9100b002469c75351amr17294663pjv.12.1681757209816;
-        Mon, 17 Apr 2023 11:46:49 -0700 (PDT)
-Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id h14-20020a170902f7ce00b00192aa53a7d5sm6059168plw.8.2023.04.17.11.46.49
+        d=1e100.net; s=20221208; t=1681758647; x=1684350647;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mfv6vNIM+5tdt1iXSSS5+QYNUMy/T7y+TThYUXRQzV0=;
+        b=KulYFS0NGuBC36C/x0bng3n2QPuMQR2scaD/aDud3Seu9iNo850L4YbeRTjY3zIe/6
+         R0DcBuERjrVft0Ah1S6YqyfQXcePFHiYur6FQe+Bjtk5BPXPeqejHa7oIq2P3Ygfx57r
+         T6VWB9TbQYa9cdER3ZiEY56zb7u2wGwFWGNn+CUD6NHRhJL9vuL+ocd2RHP+4ZSC2+V4
+         gBfXiBCrGTRhMIGSdl34e05iZ2NyqQxD9vMba/a6brbcvawpJazui2j1tlX6kzveVXJy
+         HtuvMvw0psL47K5jz259DqGJt1nGwS45xo9kBg/Ou6nYXR2RwcAcV8QW9z6UHatg/Hob
+         I7rg==
+X-Gm-Message-State: AAQBX9dgbHVdP8rFUQL8YOkhoyJHbwNpfLADmSBMYq+2RQzUbaoG4UZz
+        8zf69NLWu4kA0WwaPLDxbrFmxIl1ch40nw==
+X-Google-Smtp-Source: AKy350YwXMih7UFYYLPJo3NtCtOEN5FTd3NF4jPpEoK/T+L0FNoR74YaBqsYkKjbbi+rmeCEC3Xhug==
+X-Received: by 2002:a2e:92d7:0:b0:2a7:80ff:86cd with SMTP id k23-20020a2e92d7000000b002a780ff86cdmr4413768ljh.53.1681758647461;
+        Mon, 17 Apr 2023 12:10:47 -0700 (PDT)
+Received: from titov.fritz.box ([195.246.120.47])
+        by smtp.gmail.com with ESMTPSA id x1-20020a2e9c81000000b002a76e600228sm2304319lji.47.2023.04.17.12.10.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 11:46:49 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Ferencik <sferencik@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] config: introduce an Operating System-specific
- `includeIf` condition
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
-        <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
-        <969a4399-a6db-7c72-f96c-8bbe5f6208d4@iee.email>
-        <xmqqk03jcwxz.fsf@gitster.g>
-        <CABwTEiRz+-+Zdx3Ed7O09Ch8GoXH-SnmJyc-vFOdF-hk_uO-yA@mail.gmail.com>
-Date:   Mon, 17 Apr 2023 11:46:49 -0700
-In-Reply-To: <CABwTEiRz+-+Zdx3Ed7O09Ch8GoXH-SnmJyc-vFOdF-hk_uO-yA@mail.gmail.com>
-        (Samuel Ferencik's message of "Mon, 17 Apr 2023 09:04:25 +0200")
-Message-ID: <xmqq7cuamjmu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Mon, 17 Apr 2023 12:10:47 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/6] t: fix unused files, part 2
+Date:   Mon, 17 Apr 2023 21:10:38 +0200
+Message-Id: <20230417191044.909094-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230403223338.468025-1-rybak.a.v@gmail.com>
+References: <20230403223338.468025-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samuel Ferencik <sferencik@gmail.com> writes:
+Creation of files from redirecting output of Git commands in tests has been
+removed for files which aren't being used for assertions.  CC'ed are authors of
+the affected tests.
 
->>>> Let's introduce a new condition: `os:<uname-s>` where `<uname-s>` is the
->>>> system name, i.e. the output of `uname -s`.
->
-> The discussion about https://github.com/gitgitgadget/git/pull/1429 seems to
-> have stalled on several points. I'll try to summarise; let's see if we can move
-> forward.
->
-> (I am the reporter of https://github.com/git-for-windows/git/issues/4125, which
-> led to this PR. I am vested in making progress here.)
->
-> 1. name of the setting (`os` vs `uname-s` vs `sysname`)
+v1 cover letter:
+  https://lore.kernel.org/git/20230401212858.266508-1-rybak.a.v@gmail.com/
+v2 cover letter:
+  https://lore.kernel.org/git/20230403223338.468025-1-rybak.a.v@gmail.com/
 
-I do not think it is a good idea to squat on too generic a name like
-'os', especially when there are multiple layers people will care
-about.  But I think the original thread discussed this to death, and
-I do not see a point bringing it up again as the first bullet point.
+Changes since v2:
 
-> 2. casing (use of `/i`)
+  - Added "Acked-by" of Øystein Walle to patch 5/6
+    Cf. https://lore.kernel.org/git/CAFaJEqug4bghEMnEQzGDN10EqM8e8iSf5i12AvOm+NZzDCQKOw@mail.gmail.com/
 
-My preference is to do this case sensitively (in other words, start
-stupid) and if somebody wants to use "/i", add it later after the
-dust settles.
+Range diff:
 
-> 3. handling Windows (MinGW, WSL)
+1:  828bb18bd7 = 1:  828bb18bd7 t0300: don't create unused file
+2:  a5b299a0c6 = 2:  a5b299a0c6 t1300: fix config file syntax error descriptions
+3:  806df16415 = 3:  806df16415 t1300: don't create unused files
+4:  6742c957e5 = 4:  6742c957e5 t1450: don't create unused files
+5:  6c173a5c46 ! 5:  19ac488922 t1502: don't create unused files
+    @@ Commit message
+         Don't redirect standard output of "git rev-parse" to file "out" in
+         t1502-rev-parse-parseopt.sh to avoid creating unnecessary files.
 
-This comes back to the reason why "os" is a horrible choice.  Is WSL
-a Windows?  Is WSL a Linux?  The same question can be asked for Cygwin.
+    +    Acked-by: Øystein Walle <oystwa@gmail.com>
+         Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 
-The answer depends on which layer you care about.  The underlying
-kernel and system may be Windows, and some characteristics of the
-underlying system may seep through the abstraction, but these
-systems aim to give user experience of something like GNU/Linux.
+      ## t/t1502-rev-parse-parseopt.sh ##
+6:  d508c1def3 = 6:  c41657be88 t2019: don't create unused files
 
-And this is not limited to Windows.  There may be similar issue for
-systems like PacBSD.  Is it a Linux?  Is it a BSD?
+Andrei Rybak (6):
+  t0300: don't create unused file
+  t1300: fix config file syntax error descriptions
+  t1300: don't create unused files
+  t1450: don't create unused files
+  t1502: don't create unused files
+  t2019: don't create unused files
 
-> 6. what's the use-case?
+ t/t0300-credentials.sh            |  2 +-
+ t/t1300-config.sh                 | 10 +++++-----
+ t/t1450-fsck.sh                   |  5 +----
+ t/t1502-rev-parse-parseopt.sh     |  6 +++---
+ t/t2019-checkout-ambiguous-ref.sh |  4 ++--
+ 5 files changed, 12 insertions(+), 15 deletions(-)
 
-I think that this is the most important question to ask, and from
-here, we'd see how #3 above should be resolved (I suspect that you
-may want to have at least two layers to allow WSL to be grouped
-together with MinGW and Cygwin at one level, and at the same time
-allow it to be grouped together with Ubuntu at a different level).
-And after we figure that out, we'll have a clear and intuitive
-answer to #1.
+-- 
+2.40.0
+
