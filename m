@@ -2,67 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E559C77B7A
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 18:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FCC6C77B7A
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 18:46:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbjDQSbv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 14:31:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
+        id S229711AbjDQSqx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 14:46:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230399AbjDQSbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 14:31:37 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC19BBAA
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 11:31:15 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-63b5465fc13so931244b3a.3
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 11:31:15 -0700 (PDT)
+        with ESMTP id S229477AbjDQSqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 14:46:52 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772635BA1
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 11:46:50 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id p8so26833018plk.9
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 11:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681756272; x=1684348272;
+        d=gmail.com; s=20221208; t=1681757210; x=1684349210;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rxDKLVVhObFut7PnkBm4BJXZqTHQtroO9MVPEWH1FGA=;
-        b=KwdKEugqqprUmDQEjRrYbK0cKK62OXdv83oAEh4uc8x4EPpMS17iTFwlJbhJn4fR2L
-         XmaCAQ3OZ/ZIHV+9tyRsnHB98UObKbIk8P40THIAYElOtOi0lnye3+EjQVmFSie+iC9W
-         poN3XcwajV3IvU0O531QUxyosK6eE+NXbDUzK6yCvtGrA8Ly/d2OpXlu0qw0m6u+yFI+
-         r9nDOt8sfhzYHH6/RrMnzmHIw8cTFwSVJAwa7qIWg758s8glKsJAR2852hBJ9uZtLA5C
-         h8Lp5fmIdtmj5RK6itxk84hHMuOKsFL/8/hKW7E3Pvgv9L5lzJ9MCdS76lSN39NWPPry
-         bwAw==
+        bh=jJkOn8HaK3ayZvBCqPs0ZQW9OmfELGqrqtpQt9Mclwg=;
+        b=C1pFAU9jlGAfnTBNRLLUbpAH7icsfyvTzCA+i7O/ZPse+B58IXU4VpWPFF5bR7n7J9
+         iFHlDQley0/kQe4p8Pb7Al3PzjJYD72YRvz/EPZqqZ/nKrnx3IzATlPLtCZpdfkw8zO3
+         08nq/wlxIQ98KPqWTKnQgNq3wBZjBbKvEHZvXOwePf8gtYCYtvOhoiFWkK6HTmCL1/xx
+         Ov8Z9xCwDi/uP8OIHsOnGrfTOq/CjvqVX2OjBk6ke5G7NHCo3UJJnlcwPoOf8TC9Gagy
+         Z8j26TF093kW3xjepgV4sfMWUnbDp1p/K9iC4kcxtua0b00VufwlQfvMA1MgQCB/GN1r
+         yqQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681756272; x=1684348272;
+        d=1e100.net; s=20221208; t=1681757210; x=1684349210;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=rxDKLVVhObFut7PnkBm4BJXZqTHQtroO9MVPEWH1FGA=;
-        b=bw60DDOTxRkfQuPRaite6gGRl4pptMtUkIwnAuQdtNwRRuseMPRpsQ1oct5Ca2HI0G
-         HS5Gml5GjxqwNZ2Txdi3BKIq0n3z4KfC6v/MLLXK1N9Oh8WX3vh5Km04kj/f/tF81QJe
-         tLQ35MgwJJuNeHxux9MmyQHcUmdW3busz2QO+gCDBN24QNx+j8MbaxLQOOi3nqITkH3V
-         +RAw5UzPy93hXDzSFpDK6Himdc2ssf+RzR4JRzj8fpPXrZJzlmdb3Zdhg5UlVey6p8BO
-         +KPpQ0fwwJgiBoJjdc9hVxNKG8teu1Ty09nnplbFoDGogxU6XygwBFU6fQPyInjc+r/s
-         C0yA==
-X-Gm-Message-State: AAQBX9dvi95ZfRMjvC7j6rZzIfZxZPhnHGo9zy8zZzKdRRYXFMdWiIxX
-        qVUQsKrgADTuXo810WOCOAw=
-X-Google-Smtp-Source: AKy350bncgnIQixdMVzFzXrFboD/6SAr40v9dMnm3huUdKD6NykjQnJ1o2U8JgxXjo8bgW0HzqZMjQ==
-X-Received: by 2002:a05:6a00:2d14:b0:63d:254a:3909 with SMTP id fa20-20020a056a002d1400b0063d254a3909mr4330971pfb.32.1681756271800;
-        Mon, 17 Apr 2023 11:31:11 -0700 (PDT)
+        bh=jJkOn8HaK3ayZvBCqPs0ZQW9OmfELGqrqtpQt9Mclwg=;
+        b=jMvPg7JwMF0GmRkrSCKs7d52EvcylRz27is/meEHtDh7E4dI3rqgRO1ROKtKzmYRel
+         d51WsQyahV0aeDmvj75nfqw2Ph24IBADPTlHlgnh/lpN01zFPfdEoqzUlivs7sEjDbW0
+         JiNkTGjFj73Ivxa2GIRv4RykovNPZyWyfNiQNifcDBlMewh+jU9YecC0k+54s4kWoBSB
+         Vh94pIrAEwuJVATQIz1LmnDcndx+o7Ie2WGoHXGO9jVI/NaHzF6bONdf4DQFJiqGHF9X
+         QFazSVE/Yp7v9bGXenQ3eO8gfTS032AZUORhLfWfFDP7AR6TU9edQaPs5lb/mPC56272
+         yoww==
+X-Gm-Message-State: AAQBX9cLO4G+XB9DOZDjVGkQYPqlVlbgWPGmg+wSzT31iy2oQhpGnv0C
+        v70unHfUwWRAJy3t3gyF57JTqYMTokw=
+X-Google-Smtp-Source: AKy350bPgrnnqBc3zfzRuN0INbZMyiNBWya0sb/7qn05lhGJ71Wj0zSgjmXam1ubQVnVZ0N24ZSPJQ==
+X-Received: by 2002:a17:90a:df91:b0:246:9c75:351a with SMTP id p17-20020a17090adf9100b002469c75351amr17294663pjv.12.1681757209816;
+        Mon, 17 Apr 2023 11:46:49 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id q13-20020a62e10d000000b0063d2dae6243sm1052047pfh.115.2023.04.17.11.31.11
+        by smtp.gmail.com with ESMTPSA id h14-20020a170902f7ce00b00192aa53a7d5sm6059168plw.8.2023.04.17.11.46.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 11:31:11 -0700 (PDT)
+        Mon, 17 Apr 2023 11:46:49 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>, Michael J Gruber <git@grubix.eu>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH/RFD] fix connection via git protocol
-References: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
-        <20230416054735.3386065-1-newren@gmail.com>
-        <20230417073827.GA39931@coredump.intra.peff.net>
-        <xmqq1qkio4cq.fsf@gitster.g>
-Date:   Mon, 17 Apr 2023 11:31:11 -0700
-In-Reply-To: <xmqq1qkio4cq.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        17 Apr 2023 09:33:57 -0700")
-Message-ID: <xmqqildumkcw.fsf@gitster.g>
+To:     Samuel Ferencik <sferencik@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] config: introduce an Operating System-specific
+ `includeIf` condition
+References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
+        <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
+        <969a4399-a6db-7c72-f96c-8bbe5f6208d4@iee.email>
+        <xmqqk03jcwxz.fsf@gitster.g>
+        <CABwTEiRz+-+Zdx3Ed7O09Ch8GoXH-SnmJyc-vFOdF-hk_uO-yA@mail.gmail.com>
+Date:   Mon, 17 Apr 2023 11:46:49 -0700
+In-Reply-To: <CABwTEiRz+-+Zdx3Ed7O09Ch8GoXH-SnmJyc-vFOdF-hk_uO-yA@mail.gmail.com>
+        (Samuel Ferencik's message of "Mon, 17 Apr 2023 09:04:25 +0200")
+Message-ID: <xmqq7cuamjmu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,20 +76,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Samuel Ferencik <sferencik@gmail.com> writes:
 
->>  #define STR_(s)	# s
->> -#define STR(s)	STR_(s)
->> +#define STR(s) (STR_(s) + BUILD_ASSERT_OR_ZERO(s))
+>>>> Let's introduce a new condition: `os:<uname-s>` where `<uname-s>` is the
+>>>> system name, i.e. the output of `uname -s`.
 >
-> OOoooh.  Clever.  A pointer plus N indexes into an array, but if the
-> offset is N then the pointer is left intact so the caller does not
+> The discussion about https://github.com/gitgitgadget/git/pull/1429 seems to
+> have stalled on several points. I'll try to summarise; let's see if we can move
+> forward.
+>
+> (I am the reporter of https://github.com/git-for-windows/git/issues/4125, which
+> led to this PR. I am vested in making progress here.)
+>
+> 1. name of the setting (`os` vs `uname-s` vs `sysname`)
 
-Sorry, but s/N/0/ obviously.
+I do not think it is a good idea to squat on too generic a name like
+'os', especially when there are multiple layers people will care
+about.  But I think the original thread discussed this to death, and
+I do not see a point bringing it up again as the first bullet point.
 
-> see the difference.
->
->> ... But the
->> BUILD_ASSERT doesn't seem too bad to me.
->
-> Indeed.
+> 2. casing (use of `/i`)
+
+My preference is to do this case sensitively (in other words, start
+stupid) and if somebody wants to use "/i", add it later after the
+dust settles.
+
+> 3. handling Windows (MinGW, WSL)
+
+This comes back to the reason why "os" is a horrible choice.  Is WSL
+a Windows?  Is WSL a Linux?  The same question can be asked for Cygwin.
+
+The answer depends on which layer you care about.  The underlying
+kernel and system may be Windows, and some characteristics of the
+underlying system may seep through the abstraction, but these
+systems aim to give user experience of something like GNU/Linux.
+
+And this is not limited to Windows.  There may be similar issue for
+systems like PacBSD.  Is it a Linux?  Is it a BSD?
+
+> 6. what's the use-case?
+
+I think that this is the most important question to ask, and from
+here, we'd see how #3 above should be resolved (I suspect that you
+may want to have at least two layers to allow WSL to be grouped
+together with MinGW and Cygwin at one level, and at the same time
+allow it to be grouped together with Ubuntu at a different level).
+And after we figure that out, we'll have a clear and intuitive
+answer to #1.
