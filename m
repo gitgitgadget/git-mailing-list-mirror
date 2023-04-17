@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8B2EC77B78
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 19:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B6D9C77B76
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 19:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230374AbjDQTKz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 15:10:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35972 "EHLO
+        id S230296AbjDQTK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 15:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230361AbjDQTKx (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230342AbjDQTKx (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Apr 2023 15:10:53 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFCC1FF3
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 12:10:51 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id l15so3047970ljq.8
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 12:10:51 -0700 (PDT)
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E4775246
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 12:10:52 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id r9so13873212ljp.9
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 12:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681758649; x=1684350649;
+        d=gmail.com; s=20221208; t=1681758650; x=1684350650;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eRu4JBrQ9k+aFnaTKf0xWSTGf6TU8UWVGqC92cgpg48=;
-        b=svFol8I3Ztn9XQCKcrB0N+r/TjFlSR96/wKUI1+QmzIp2j+6hARMcuJ+UgO0nHL/VY
-         m+rzf4MT2OU2hk1igWX50WnZqFA0Rc1AP3guTBXzz3Oqk1jJqzP0vMa27ErDAU1wOlgX
-         fYjqE+R/XGYJgm100SAy5UPDpa7P9Ut7Oj3jP9Xp2opy3DcqMq+kPq7+KS9E1ex5C+DP
-         AkwewrlL0z/f4NT27dvZTg1TJLFvtNbKS6kSaFhLHQtoQnoaB9bLrQPFntq8g7hbdLk/
-         LOIWHztDyTwrd+ZXYLB8qi9tJptPm6+rWz4RUaGskcq7nFWH6BJvdJJwXvYPDE4mSebG
-         6qUA==
+        bh=pHlsklKDtGHBtdf2RNlEwL2fSwX7wLVYtDR4NomFA70=;
+        b=b/EbPXDAJxSycFggh8UJ1hDWClzoEiW4Cp+QoG4YmuJrgiq5bfLqdDwgE3GtXM1Vip
+         Lg/P/KeYv+dIJ7N9mXLIG4fUeQpetwVw7rbzmeZm7y1NI7VU2MKSfRjtZTYI3vhDEx3e
+         RtM+qo/JPOFBm1r96CoS3ItzVbEM38Ea87qwZ62zsBPdmxzt1oH4H2VZV8FfD6brfbcU
+         CGJVxW+c6kRwspcJY0X2luy41LHJbeNx16JFzsXMtSmy8nEb0Bj6A+4nOyNvqtdB6RYQ
+         LODPnJvj5G+eMxNEl6QWKpChkDQBS16ahYWloeAbkfyZVRFlQtSpUggS5UHIFTmLnqKJ
+         1Udg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681758649; x=1684350649;
+        d=1e100.net; s=20221208; t=1681758650; x=1684350650;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eRu4JBrQ9k+aFnaTKf0xWSTGf6TU8UWVGqC92cgpg48=;
-        b=CS2jTtNiH8e2XuXnZZvygtCwKvfL57k2tBcmAJVIeSBFfEyZJ2XeEsGy9RlqRmIJdr
-         pqImIgo/pH/JOjVkRPdbxyBL+rRc1EDWk1Rxgrk6VMY82G9xP3XY+RI9thYYdXM+uPcM
-         9gNPBrEHRKP81lLB/B/60LQNExVU0zuor5jMUGEEUNKUq0gcLkGhJNM7h0+3NYLvmW56
-         wwqsjCvmUPk6PTiGYt8bq1XGPdFwwo91v3muYYwPugPVjOPuhY4NM33OpG/ODsz26bGF
-         pyO1c3CXfYnbNGQ6h0EfZjNRir+b5wj0F++HWMdbjTic2d+5J15+gJs6HrGlR1sC4iqd
-         A3MQ==
-X-Gm-Message-State: AAQBX9fu/JWp4jJg4eX26zuNGcHWoUIfKzLxAWy0uncPjg82U4mbPaCp
-        wDuEwhLZx3zmxvsxS7DTpq34raToZpDj3uop
-X-Google-Smtp-Source: AKy350ZfOx6iKN9M2koCQG88KEsblXr4AZKKpzpazZDo8vESEBxzXrL0fY7avgpGQBcXqimibzRFXA==
-X-Received: by 2002:a2e:3602:0:b0:2a8:c842:d30a with SMTP id d2-20020a2e3602000000b002a8c842d30amr976487lja.37.1681758649587;
-        Mon, 17 Apr 2023 12:10:49 -0700 (PDT)
+        bh=pHlsklKDtGHBtdf2RNlEwL2fSwX7wLVYtDR4NomFA70=;
+        b=W+Wh+kESwG1cHbTt3im1hm4H1LPKHjYdxeqgFrGAeVaDk20NjzF8QvcajTd6xbJmQm
+         7LD1I9GHm1H7aJrAW2Pbsciz9WUNiJOd3tOqKz7lq4GBc8ouaDE6z/W1xYCdhyy0CxFb
+         7o/nvKAapB0UmSzMeJUXWhXba1ABBKwfg7fNgBF47Fz0ILyJaiM0eSUa/FCt1o1k0wX4
+         rgOu0Df+Aj4YSCjtKdg5UQLChw7p+hRz8QY0mItAGodOMXLKgp9POCIAb2dhvWYr/ZKk
+         xgKwZ+7YR1wbemXjrUmtJq3zQbOv9K4Xa588epwJhKBZuKuZbbeN/yBeJeZo4wWfvOGL
+         RElw==
+X-Gm-Message-State: AAQBX9fhsTs0DTspGMQgwjtYMbQjyaHO5gInnMGRqN8dHt5Zoa1+JIXI
+        EeyGeegYqnWDqlCqF5y4Nx2KQMth3keAbQ==
+X-Google-Smtp-Source: AKy350a0tUfwbkuBI52Gy+cLyPa6GWhXFWbOSm2TXRPobQO9jsGwvggSf1RtOlLUyAP/HXXJxDGTSw==
+X-Received: by 2002:a2e:3511:0:b0:2a8:d94b:c0db with SMTP id z17-20020a2e3511000000b002a8d94bc0dbmr5124ljz.22.1681758650625;
+        Mon, 17 Apr 2023 12:10:50 -0700 (PDT)
 Received: from titov.fritz.box ([195.246.120.47])
-        by smtp.gmail.com with ESMTPSA id x1-20020a2e9c81000000b002a76e600228sm2304319lji.47.2023.04.17.12.10.48
+        by smtp.gmail.com with ESMTPSA id x1-20020a2e9c81000000b002a76e600228sm2304319lji.47.2023.04.17.12.10.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 12:10:49 -0700 (PDT)
+        Mon, 17 Apr 2023 12:10:50 -0700 (PDT)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/6] t1300: fix config file syntax error descriptions
-Date:   Mon, 17 Apr 2023 21:10:40 +0200
-Message-Id: <20230417191044.909094-3-rybak.a.v@gmail.com>
+Subject: [PATCH v3 3/6] t1300: don't create unused files
+Date:   Mon, 17 Apr 2023 21:10:41 +0200
+Message-Id: <20230417191044.909094-4-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230417191044.909094-1-rybak.a.v@gmail.com>
 References: <20230403223338.468025-1-rybak.a.v@gmail.com>
@@ -70,42 +70,51 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Three tests in t1300-config.sh check that "git config --get" barfs when
-the config file contains various syntax errors: key=value pair without
-equals sign, broken section line, and broken value string.  The sample
-config files include a comment describing the kind of broken syntax.
-This description seems to have been copy-pasted from the "broken section
-line" sample to the other two samples.
+syntax errors are present in the config file.  The tests redirect
+standard output and standard error of "git config --get" to files,
+"actual" and "error" correspondingly.  They assert presence of an error
+message in file "error".  However, these tests don't use file "actual"
+for assertions.
 
-Fix descriptions of broken config file syntax in samples used in
-t1300-config.sh.
+Don't redirect standard output of "git config --get" to file "actual" in
+t1300-config.sh to avoid creating unnecessary files.
 
 Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 ---
- t/t1300-config.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1300-config.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 2575279ab8..d566729d74 100755
+index d566729d74..8ac4531c1b 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -1571,7 +1571,7 @@ test_expect_success 'git config --edit respects core.editor' '
- # malformed configuration files
- test_expect_success 'barf on syntax error' '
- 	cat >.git/config <<-\EOF &&
--	# broken section line
-+	# broken key=value
+@@ -1575,7 +1575,7 @@ test_expect_success 'barf on syntax error' '
  	[section]
  	key garbage
  	EOF
-@@ -1591,7 +1591,7 @@ test_expect_success 'barf on incomplete section header' '
+-	test_must_fail git config --get section.key >actual 2>error &&
++	test_must_fail git config --get section.key 2>error &&
+ 	test_i18ngrep " line 3 " error
+ '
  
- test_expect_success 'barf on incomplete string' '
- 	cat >.git/config <<-\EOF &&
--	# broken section line
-+	# broken value string
+@@ -1585,7 +1585,7 @@ test_expect_success 'barf on incomplete section header' '
+ 	[section
+ 	key = value
+ 	EOF
+-	test_must_fail git config --get section.key >actual 2>error &&
++	test_must_fail git config --get section.key 2>error &&
+ 	test_i18ngrep " line 2 " error
+ '
+ 
+@@ -1595,7 +1595,7 @@ test_expect_success 'barf on incomplete string' '
  	[section]
  	key = "value string
  	EOF
+-	test_must_fail git config --get section.key >actual 2>error &&
++	test_must_fail git config --get section.key 2>error &&
+ 	test_i18ngrep " line 3 " error
+ '
+ 
 -- 
 2.40.0
 
