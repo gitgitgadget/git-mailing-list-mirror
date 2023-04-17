@@ -2,31 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17385C77B76
-	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 09:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91CC1C77B72
+	for <git@archiver.kernel.org>; Mon, 17 Apr 2023 09:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbjDQJgV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 05:36:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36750 "EHLO
+        id S230309AbjDQJgX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 05:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230173AbjDQJgK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230336AbjDQJgK (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Apr 2023 05:36:10 -0400
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1ED92718
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5203421D
         for <git@vger.kernel.org>; Mon, 17 Apr 2023 02:35:30 -0700 (PDT)
-Date:   Mon, 17 Apr 2023 09:34:27 +0000
+Date:   Mon, 17 Apr 2023 09:33:22 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1681724080; x=1681983280;
-        bh=JbBUitJyPqj5GuFTQaLxU6Twsk7ImRm/tFpKoiZaAtU=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=wVj/W/mFE+FHTuzLGDuhAfJ4fzsrGFqLIBc69z256Fj/AwcqSmoZOvEuwKvlZEgst
-         nuNHOyj7QaQQjJD0XAqidm2HsvPdLGU5JP3ddD67kY5a4aRdEFeG3xSqXmor8trgE5
-         8X/mrQUPRbQ2nN7Jesx8oK4KWR9rx2IO/elDQSJjccg6doHjq/UH5fbE/HrKVU9Nk5
-         NcmoPRUzeLEFYPv5vsq8qYT5KMhMIecQrBJLFEXhxj2qZpsdeXPfPuzSlrdfwZ42lE
-         fejVqXLyzeFteIYHIf18NDj/h93NssYwdL+IR3BYNOdY9Y08cUcYEBLdyjYH2cay/H
-         FgjNDrfqOqGHA==
+        s=protonmail3; t=1681724017; x=1681983217;
+        bh=UXIYb7Pn8PSVj0/knyneujLGRCv7ZUuEHqkG/gknOuE=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=0BoJixV5bvULCuDd8bVFkeAiY9rrmAuPfhkbt40Hb/iKhXVvu5PkncRspucVn4Fsi
+         6fqT5Xl3PiAwGylepuBsJnn4uWJlzVfI2FZtfy316oM5OuPOIOtP81sZ5poDMzvUBC
+         6shWUGo6hb6yor8/9Z9VxSgsf/+hEka6C9py5khWGflZbDaeelDgWy7bYCfDkwwKlg
+         9hR2U91GJIQ0Hd81lVHh4EoKwTcu22Q/MJT7JkqjvmytDJ9sozMI/YOCNqrTRdWXse
+         q2izNXqEWERXjng02y/N7LuLdyK4/FzvDL88dFH7Ol0TwXiiBQTSsnz/G3ASFzmcom
+         kUdepksi9C7RA==
 To:     git@vger.kernel.org
 From:   Jacob Abel <jacobabel@nullpo.dev>
 Cc:     Jacob Abel <jacobabel@nullpo.dev>,
@@ -36,10 +35,8 @@ Cc:     Jacob Abel <jacobabel@nullpo.dev>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v9 7/8] worktree add: extend DWIM to infer --orphan
-Message-ID: <20230417093255.31079-8-jacobabel@nullpo.dev>
-In-Reply-To: <20230417093255.31079-1-jacobabel@nullpo.dev>
-References: <20230417093255.31079-1-jacobabel@nullpo.dev>
+Subject: [PATCH v9 0/8] worktree: Support `--orphan` when creating new worktrees
+Message-ID: <20230417093255.31079-1-jacobabel@nullpo.dev>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -48,623 +45,664 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend DWIM to try to infer `--orphan` when in an empty repository. i.e.
-a repository with an invalid/unborn HEAD, no local branches, and if
-`--guess-remote` is used then no remote branches.
+This patchset introduces the ability to create new worktrees from orphan/un=
+born
+branches and introduces DWIM behavior to create worktrees from an orphan br=
+anch
+when no valid refs exists locally in the repository (as is typical in newly
+initialized repositories) or on a remote (when `--guess-remote` is used).
 
-This behavior is equivalent to `git switch -c` or `git checkout -b` in
-an empty repository.
+This addresses the issue of `git worktree add` failing when attempting to c=
+reate
+a worktree from a newly initialized repository (which can be seen in this S=
+O
+question [1]).
 
-Also warn the user (overriden with `-f`/`--force`) when they likely
-intend to checkout a remote branch to the worktree but have not yet
-fetched from the remote. i.e. when using `--guess-remote` and there is a
-remote but no local or remote refs.
+Note: The last 2 patches in this patchset were initially intended to be par=
+t of
+a "part 2" patchset but given that they are so closely tied to this patchse=
+t I
+have been developing the two together. I'm fine with either splitting the
+patchset and resending it or leaving them rolled together, whichever is
+easier/more convenient for everyone.
 
-Current Behavior:
-% git --no-pager branch --list --remotes
-% git remote
-origin
-% git workree add ../main
-hint: If you meant to create a worktree containing a new orphan branch
-[...]
-hint: Disable this message with "git config advice.worktreeAddOrphan false"
-fatal: invalid reference: HEAD
-% git workree add --guess-remote ../main
-hint: If you meant to create a worktree containing a new orphan branch
-[...]
-hint: Disable this message with "git config advice.worktreeAddOrphan false"
-fatal: invalid reference: HEAD
-% git fetch --quiet
-% git --no-pager branch --list --remotes
-origin/HEAD -> origin/main
-origin/main
-% git workree add --guess-remote ../main
-Preparing worktree (new branch 'main')
-branch 'main' set up to track 'origin/main'.
-HEAD is now at dadc8e6dac commit message
-%
-
-New Behavior:
-% git --no-pager branch --list --remotes
-% git remote
-origin
-% git workree add ../main
-No possible source branch, inferring '--orphan'
-Preparing worktree (new branch 'main')
-% git worktree remove ../main
-% git workree add --guess-remote ../main
-fatal: No local or remote refs exist despite at least one remote
-present, stopping; use 'add -f' to overide or fetch a remote first
-% git workree add --guess-remote -f ../main
-No possible source branch, inferring '--orphan'
-Preparing worktree (new branch 'main')
-% git worktree remove ../main
-% git fetch --quiet
-% git --no-pager branch --list --remotes
-origin/HEAD -> origin/main
-origin/main
-% git workree add --guess-remote ../main
-Preparing worktree (new branch 'main')
-branch 'main' set up to track 'origin/main'.
-HEAD is now at dadc8e6dac commit message
-%
-
-Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
----
- Documentation/git-worktree.txt |  10 +
- builtin/worktree.c             | 114 ++++++++++-
- t/t2400-worktree-add.sh        | 332 +++++++++++++++++++++++++++++++++
- 3 files changed, 455 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.tx=
-t
-index 485d865eb2..a4fbf5e838 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -95,6 +95,16 @@ exist, a new branch based on `HEAD` is automatically cre=
-ated as if
- `-b <branch>` was given.  If `<branch>` does exist, it will be checked out
- in the new worktree, if it's not checked out anywhere else, otherwise the
- command will refuse to create the worktree (unless `--force` is used).
-++
-+If `<commit-ish>` is omitted, neither `--detach`, or `--orphan` is
-+used, and there are no valid local branches (or remote branches if
-+`--guess-remote` is specified) then, as a convenience, the new worktree is
-+associated with a new orphan branch named `<branch>` (after
-+`$(basename <path>)` if neither `-b` or `-B` is used) as if `--orphan` was
-+passed to the command. In the event the repository has a remote and
-+`--guess-remote` is used, but no remote or local branches exist, then the
-+command fails with a warning reminding the user to fetch from their remote
-+first (or override by using `-f/--force`).
-
- list::
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 12348d3d16..95b5bbb1d2 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -11,6 +11,7 @@
- #include "strvec.h"
- #include "branch.h"
- #include "refs.h"
-+#include "remote.h"
- #include "run-command.h"
- #include "hook.h"
- #include "sigchain.h"
-@@ -39,6 +40,9 @@
- #define BUILTIN_WORKTREE_UNLOCK_USAGE \
- =09N_("git worktree unlock <worktree>")
-
-+#define WORKTREE_ADD_DWIM_ORPHAN_INFER_TEXT \
-+=09_("No possible source branch, inferring '--orphan'")
-+
- #define WORKTREE_ADD_ORPHAN_WITH_DASH_B_HINT_TEXT \
- =09_("If you meant to create a worktree containing a new orphan branch\n" =
-\
- =09"(branch with no commits) for this repository, you can do so\n" \
-@@ -612,6 +616,107 @@ static void print_preparing_worktree_line(int detach,
- =09}
- }
-
-+/**
-+ * Callback to short circuit iteration over refs on the first reference
-+ * corresponding to a valid oid.
-+ *
-+ * Returns 0 on failure and non-zero on success.
-+ */
-+static int first_valid_ref(const char *refname,
-+=09=09=09   const struct object_id *oid,
-+=09=09=09   int flags,
-+=09=09=09   void *cb_data)
-+{
-+=09return 1;
-+}
-+
-+/**
-+ * Verifies HEAD and determines whether there exist any valid local refere=
-nces.
-+ *
-+ * - Checks whether HEAD points to a valid reference.
-+ *
-+ * - Checks whether any valid local branches exist.
-+ *
-+ * Returns 1 if any of the previous checks are true, otherwise returns 0.
-+ */
-+static int can_use_local_refs(const struct add_opts *opts)
-+{
-+=09if (head_ref(first_valid_ref, NULL)) {
-+=09=09return 1;
-+=09} else if (for_each_branch_ref(first_valid_ref, NULL)) {
-+=09=09return 1;
-+=09}
-+=09return 0;
-+}
-+
-+/**
-+ * Reports whether the necessary flags were set and whether the repository=
- has
-+ * remote references to attempt DWIM tracking of upstream branches.
-+ *
-+ * 1. Checks that `--guess-remote` was used or `worktree.guessRemote =3D t=
-rue`.
-+ *
-+ * 2. Checks whether any valid remote branches exist.
-+ *
-+ * 3. Checks that there exists at least one remote and emits a warning/err=
-or
-+ *    if both checks 1. and 2. are false (can be bypassed with `--force`).
-+ *
-+ * Returns 1 if checks 1. and 2. are true, otherwise 0.
-+ */
-+static int can_use_remote_refs(const struct add_opts *opts)
-+{
-+=09if (!guess_remote) {
-+=09=09if (!opts->quiet)
-+=09=09=09fprintf_ln(stderr, WORKTREE_ADD_DWIM_ORPHAN_INFER_TEXT);
-+=09=09return 0;
-+=09} else if (for_each_remote_ref(first_valid_ref, NULL)) {
-+=09=09return 1;
-+=09} else if (!opts->force && remote_get(NULL)) {
-+=09=09die(_("No local or remote refs exist despite at least one remote\n"
-+=09=09      "present, stopping; use 'add -f' to overide or fetch a remote =
-first"));
-+=09} else if (!opts->quiet) {
-+=09=09fprintf_ln(stderr, WORKTREE_ADD_DWIM_ORPHAN_INFER_TEXT);
-+=09}
-+=09return 0;
-+}
-+
-+/**
-+ * Determines whether `--orphan` should be inferred in the evaluation of
-+ * `worktree add path/` or `worktree add -b branch path/` and emits an err=
-or
-+ * if the supplied arguments would produce an illegal combination  when th=
+This patchset has eight parts:
+  * adding `-B` to the usage docs (noticed during dev and it seemed too sma=
+ll
+    to justify a separate submission)
+  * updating test cases to still show the output of git commands when the t=
+est
+    script is run with `-x` to aid in debugging.
+  * adding a helper fn to simplify testing for mutual exclusion of options
+    in `t/t2400-worktree-add.sh`
+  * adding additional test cases to verify both that behavior doesn't chang=
 e
-+ * `--orphan` flag is included.
-+ *
-+ * `opts` and `opt_track` contain the other options & flags supplied to th=
+    when using `--quiet` and that the extraneous output is properly suppres=
+sed.
+  * adding the ability to create a worktree from an unborn/orphan branch
+    to `git-worktree-add`
+  * adding an advise for using --orphan when `git worktree add` fails due t=
+o
+    a bad ref.
+  * adding functionality to DWIM when there are no existing branches and th=
 e
-+ * command.
-+ *
-+ * remote determines whether to check `can_use_remote_refs()` or not. This
-+ * is primarily to differentiate between the basic `add` DWIM and `add -b`=
+    user likely intends to create an orphan branch.
+  * updating worktree add to emit a warning (containing debug information
+    about the current HEAD) when trying to use a HEAD that points to a
+    non-existant (or unborn) reference and there exist other valid branches=
 .
-+ *
-+ * Returns 1 when inferring `--orphan`, 0 otherwise, and emits an error wh=
-en
-+ * `--orphan` is inferred but doing so produces an illegal combination of
-+ * options and flags. Additionally produces an error when remote refs are
-+ * checked and the repo is in a state that looks like the user added a rem=
-ote
-+ * but forgot to fetch (and did not override the warning with -f).
-+ */
-+static int dwim_orphan(const struct add_opts *opts, int opt_track, int rem=
-ote)
-+{
-+=09if (can_use_local_refs(opts)) {
-+=09=09return 0;
-+=09} else if (remote && can_use_remote_refs(opts)) {
-+=09=09return 0;
-+=09} else if (!opts->quiet) {
-+=09=09fprintf_ln(stderr, WORKTREE_ADD_DWIM_ORPHAN_INFER_TEXT);
-+=09}
-+
-+=09if (opt_track) {
-+=09=09die(_("'%s' and '%s' cannot be used together"), "--orphan",
-+=09=09    "--track");
-+=09} else if (!opts->checkout) {
-+=09=09die(_("'%s' and '%s' cannot be used together"), "--orphan",
-+=09=09    "--no-checkout");
-+=09}
-+=09return 1;
-+}
-+
- static const char *dwim_branch(const char *path, const char **new_branch)
- {
- =09int n;
-@@ -722,12 +827,19 @@ static int add(int ac, const char **av, const char *p=
-refix)
- =09=09int n;
- =09=09const char *s =3D worktree_basename(path, &n);
- =09=09new_branch =3D xstrndup(s, n);
--=09} else if (new_branch || opts.detach || opts.orphan) {
-+=09} else if (opts.orphan || opts.detach) {
- =09=09// No-op
-+=09} else if (ac < 2 && new_branch) {
-+=09=09// DWIM: Infer --orphan when repo has no refs.
-+=09=09opts.orphan =3D dwim_orphan(&opts, !!opt_track, 0);
- =09} else if (ac < 2) {
-+=09=09// DWIM: Guess branch name from path.
- =09=09const char *s =3D dwim_branch(path, &new_branch);
- =09=09if (s)
- =09=09=09branch =3D s;
-+
-+=09=09// DWIM: Infer --orphan when repo has no refs.
-+=09=09opts.orphan =3D (!s) && dwim_orphan(&opts, !!opt_track, 1);
- =09} else if (ac =3D=3D 2) {
- =09=09struct object_id oid;
- =09=09struct commit *commit;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 7ea56ef7c1..e5cca1d11b 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -712,6 +712,338 @@ test_expect_success 'git worktree --no-guess-remote o=
-ption overrides config' '
- =09)
- '
 
-+test_dwim_orphan () {
-+=09local info_text=3D"No possible source branch, inferring '--orphan'" &&
-+=09local fetch_error_text=3D"fatal: No local or remote refs exist despite =
-at least one remote" &&
-+=09local orphan_hint=3D"hint: If you meant to create a worktree containing=
- a new orphan branch" &&
-+=09local invalid_ref_regex=3D"^fatal: invalid reference:\s\+.*" &&
-+=09local bad_combo_regex=3D"^fatal: '[a-z-]\+' and '[a-z-]\+' cannot be us=
-ed together" &&
-+
-+=09local git_ns=3D"repo" &&
-+=09local dashc_args=3D"-C $git_ns" &&
-+=09local use_cd=3D0 &&
-+
-+=09local bad_head=3D0 &&
-+=09local empty_repo=3D1 &&
-+=09local local_ref=3D0 &&
-+=09local use_quiet=3D0 &&
-+=09local remote=3D0 &&
-+=09local remote_ref=3D0 &&
-+=09local use_new_branch=3D0 &&
-+
-+=09local outcome=3D"$1" &&
-+=09local outcome_text &&
-+=09local success &&
-+=09shift &&
-+=09local args=3D"" &&
-+=09local context=3D"" &&
-+=09case "$outcome" in
-+=09"infer")
-+=09=09success=3D1 &&
-+=09=09outcome_text=3D'"add" DWIM infer --orphan'
-+=09=09;;
-+=09"no_infer")
-+=09=09success=3D1 &&
-+=09=09outcome_text=3D'"add" DWIM doesnt infer --orphan'
-+=09=09;;
-+=09"fetch_error")
-+=09=09success=3D0 &&
-+=09=09outcome_text=3D'"add" error need fetch'
-+=09=09;;
-+=09"fatal_orphan_bad_combo")
-+=09=09success=3D0 &&
-+=09=09outcome_text=3D'"add" error inferred "--orphan" gives illegal opts c=
-ombo'
-+=09=09;;
-+=09*)
-+=09=09echo "test_dwim_orphan(): invalid outcome: '$outcome'" >&2 &&
-+=09=09return 1
-+=09=09;;
-+=09esac &&
-+=09while [ $# -gt 0 ]
-+=09do
-+=09=09case "$1" in
-+=09=09# How and from where to create the worktree
-+=09=09"-C_repo")
-+=09=09=09use_cd=3D0 &&
-+=09=09=09git_ns=3D"repo" &&
-+=09=09=09dashc_args=3D"-C $git_ns" &&
-+=09=09=09context=3D"$context, 'git -C repo'"
-+=09=09=09;;
-+=09=09"-C_wt")
-+=09=09=09use_cd=3D0 &&
-+=09=09=09git_ns=3D"wt" &&
-+=09=09=09dashc_args=3D"-C $git_ns" &&
-+=09=09=09context=3D"$context, 'git -C wt'"
-+=09=09=09;;
-+=09=09"cd_repo")
-+=09=09=09use_cd=3D1 &&
-+=09=09=09git_ns=3D"repo" &&
-+=09=09=09dashc_args=3D"" &&
-+=09=09=09context=3D"$context, 'cd repo && git'"
-+=09=09=09;;
-+=09=09"cd_wt")
-+=09=09=09use_cd=3D1 &&
-+=09=09=09git_ns=3D"wt" &&
-+=09=09=09dashc_args=3D"" &&
-+=09=09=09context=3D"$context, 'cd wt && git'"
-+=09=09=09;;
-+
-+=09=09# Bypass the "pull first" warning
-+=09=09"force")
-+=09=09=09args=3D"$args --force" &&
-+=09=09=09context=3D"$context, --force"
-+=09=09=09;;
-+
-+=09=09# Try to use remote refs when DWIM
-+=09=09"guess_remote")
-+=09=09=09args=3D"$args --guess-remote" &&
-+=09=09=09context=3D"$context, --guess-remote"
-+=09=09=09;;
-+=09=09"no_guess_remote")
-+=09=09=09args=3D"$args --no-guess-remote" &&
-+=09=09=09context=3D"$context, --no-guess-remote"
-+=09=09=09;;
-+
-+=09=09# Whether there is at least one local branch present
-+=09=09"local_ref")
-+=09=09=09empty_repo=3D0 &&
-+=09=09=09local_ref=3D1 &&
-+=09=09=09context=3D"$context, >=3D1 local branches"
-+=09=09=09;;
-+=09=09"no_local_ref")
-+=09=09=09empty_repo=3D0 &&
-+=09=09=09context=3D"$context, 0 local branches"
-+=09=09=09;;
-+
-+=09=09# Whether the HEAD points at a valid ref (skip this opt when no refs=
-)
-+=09=09"good_head")
-+=09=09=09# requires: local_ref
-+=09=09=09context=3D"$context, valid HEAD"
-+=09=09=09;;
-+=09=09"bad_head")
-+=09=09=09bad_head=3D1 &&
-+=09=09=09context=3D"$context, invalid (or orphan) HEAD"
-+=09=09=09;;
-+
-+=09=09# Whether the code path is tested with the base add command or -b
-+=09=09"no_-b")
-+=09=09=09use_new_branch=3D0 &&
-+=09=09=09context=3D"$context, no --branch"
-+=09=09=09;;
-+=09=09"-b")
-+=09=09=09use_new_branch=3D1 &&
-+=09=09=09context=3D"$context, --branch"
-+=09=09=09;;
-+
-+=09=09# Whether to check that all output is suppressed (except errors)
-+=09=09# or that the output is as expected
-+=09=09"quiet")
-+=09=09=09use_quiet=3D1 &&
-+=09=09=09args=3D"$args --quiet" &&
-+=09=09=09context=3D"$context, --quiet"
-+=09=09=09;;
-+=09=09"no_quiet")
-+=09=09=09use_quiet=3D0 &&
-+=09=09=09context=3D"$context, no --quiet (expect output)"
-+=09=09=09;;
-+
-+=09=09# Whether there is at least one remote attached to the repo
-+=09=09"remote")
-+=09=09=09empty_repo=3D0 &&
-+=09=09=09remote=3D1 &&
-+=09=09=09context=3D"$context, >=3D1 remotes"
-+=09=09=09;;
-+=09=09"no_remote")
-+=09=09=09empty_repo=3D0 &&
-+=09=09=09remote=3D0 &&
-+=09=09=09context=3D"$context, 0 remotes"
-+=09=09=09;;
-+
-+=09=09# Whether there is at least one valid remote ref
-+=09=09"remote_ref")
-+=09=09=09# requires: remote
-+=09=09=09empty_repo=3D0 &&
-+=09=09=09remote_ref=3D1 &&
-+=09=09=09context=3D"$context, >=3D1 fetched remote branches"
-+=09=09=09;;
-+=09=09"no_remote_ref")
-+=09=09=09empty_repo=3D0 &&
-+=09=09=09remote_ref=3D0 &&
-+=09=09=09context=3D"$context, 0 fetched remote branches"
-+=09=09=09;;
-+
-+=09=09# Options or flags that become illegal when --orphan is inferred
-+=09=09"no_checkout")
-+=09=09=09args=3D"$args --no-checkout" &&
-+=09=09=09context=3D"$context, --no-checkout"
-+=09=09=09;;
-+=09=09"track")
-+=09=09=09args=3D"$args --track" &&
-+=09=09=09context=3D"$context, --track"
-+=09=09=09;;
-+
-+=09=09# All other options are illegal
-+=09=09*)
-+=09=09=09echo "test_dwim_orphan(): invalid arg: '$1'" >&2 &&
-+=09=09=09return 1
-+=09=09=09;;
-+=09=09esac &&
-+=09=09shift
-+=09done &&
-+=09context=3D"${context#', '}" &&
-+=09if [ $use_new_branch -eq 1 ]
-+=09then
-+=09=09args=3D"$args -b foo"
-+=09else
-+=09=09context=3D"DWIM (no --branch), $context"
-+=09fi &&
-+=09if [ $empty_repo -eq 1 ]
-+=09then
-+=09=09context=3D"empty repo, $context"
-+=09fi &&
-+=09args=3D"$args ../foo" &&
-+=09context=3D"${context%', '}" &&
-+=09test_expect_success "$outcome_text w/ $context" '
-+=09=09test_when_finished "rm -rf repo" &&
-+=09=09git init repo &&
-+=09=09if [ $local_ref -eq 1 ] && [ "$git_ns" =3D "repo" ]
-+=09=09then
-+=09=09=09(cd repo && test_commit commit) &&
-+=09=09=09if [ $bad_head -eq 1 ]
-+=09=09=09then
-+=09=09=09=09git -C repo symbolic-ref HEAD refs/heads/badbranch
-+=09=09=09fi
-+=09=09elif [ $local_ref -eq 1 ] && [ "$git_ns" =3D "wt" ]
-+=09=09then
-+=09=09=09test_when_finished "git -C repo worktree remove -f ../wt" &&
-+=09=09=09git -C repo worktree add --orphan -b main ../wt &&
-+=09=09=09(cd wt && test_commit commit) &&
-+=09=09=09if [ $bad_head -eq 1 ]
-+=09=09=09then
-+=09=09=09=09git -C wt symbolic-ref HEAD refs/heads/badbranch
-+=09=09=09fi
-+=09=09elif [ $local_ref -eq 0 ] && [ "$git_ns" =3D "wt" ]
-+=09=09then
-+=09=09=09test_when_finished "git -C repo worktree remove -f ../wt" &&
-+=09=09=09git -C repo worktree add --orphan -b orphanbranch ../wt
-+=09=09fi &&
-+
-+=09=09if [ $remote -eq 1 ]
-+=09=09then
-+=09=09=09test_when_finished "rm -rf upstream" &&
-+=09=09=09git init upstream &&
-+=09=09=09(cd upstream && test_commit commit) &&
-+=09=09=09git -C upstream switch -c foo &&
-+=09=09=09git -C repo remote add upstream ../upstream
-+=09=09fi &&
-+
-+=09=09if [ $remote_ref -eq 1 ]
-+=09=09then
-+=09=09=09git -C repo fetch
-+=09=09fi &&
-+=09=09if [ $success -eq 1 ]
-+=09=09then
-+=09=09=09test_when_finished git -C repo worktree remove ../foo
-+=09=09fi &&
-+=09=09if [ $use_cd -eq 1 ]
-+=09=09then
-+=09=09=09test_when_finished cat "$git_ns/actual" >&2
-+=09=09else
-+=09=09=09test_when_finished cat actual >&2
-+=09=09fi &&
-+=09=09(
-+=09=09=09if [ $use_cd -eq 1 ]
-+=09=09=09then
-+=09=09=09=09cd $git_ns
-+=09=09=09fi &&
-+=09=09=09if [ "$outcome" =3D "infer" ]
-+=09=09=09then
-+=09=09=09=09git $dashc_args worktree add $args 2>actual &&
-+=09=09=09=09if [ $use_quiet -eq 1 ]
-+=09=09=09=09then
-+=09=09=09=09=09test_must_be_empty actual
-+=09=09=09=09else
-+=09=09=09=09=09grep "$info_text" actual
-+=09=09=09=09fi
-+=09=09=09elif [ "$outcome" =3D "no_infer" ]
-+=09=09=09then
-+=09=09=09=09git $dashc_args worktree add $args 2>actual &&
-+=09=09=09=09if [ $use_quiet -eq 1 ]
-+=09=09=09=09then
-+=09=09=09=09=09test_must_be_empty actual
-+=09=09=09=09else
-+=09=09=09=09=09! grep "$info_text" actual
-+=09=09=09=09fi
-+=09=09=09elif [ "$outcome" =3D "fetch_error" ]
-+=09=09=09then
-+=09=09=09=09test_must_fail git $dashc_args worktree add $args 2>actual &&
-+=09=09=09=09grep "$fetch_error_text" actual
-+=09=09=09elif [ "$outcome" =3D "fatal_orphan_bad_combo" ]
-+=09=09=09then
-+=09=09=09=09test_must_fail git $dashc_args worktree add $args 2>actual &&
-+=09=09=09=09if [ $use_quiet -eq 1 ]
-+=09=09=09=09then
-+=09=09=09=09=09! grep "$info_text" actual
-+=09=09=09=09else
-+=09=09=09=09=09grep "$info_text" actual
-+=09=09=09=09fi &&
-+=09=09=09=09grep "$bad_combo_regex" actual
-+=09=09=09elif [ "$outcome" =3D "warn_bad_head" ]
-+=09=09=09then
-+=09=09=09=09test_must_fail git $dashc_args worktree add $args 2>actual &&
-+=09=09=09=09if [ $use_quiet -eq 1 ]
-+=09=09=09=09then
-+=09=09=09=09=09grep "$invalid_ref_regex" actual &&
-+=09=09=09=09=09! grep "$orphan_hint" actual
-+=09=09=09=09else
-+=09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --sq --path-format=
-=3Dabsolute --git-path HEAD) &&
-+=09=09=09=09=09headcontents=3D$(cat "$headpath") &&
-+=09=09=09=09=09grep "HEAD points to an invalid (or orphaned) reference" ac=
-tual &&
-+=09=09=09=09=09grep "HEAD path:\s*.$headpath." actual &&
-+=09=09=09=09=09grep "HEAD contents:\s*.$headcontents." actual &&
-+=09=09=09=09=09grep "$orphan_hint" actual &&
-+=09=09=09=09=09! grep "$info_text" actual
-+=09=09=09=09fi &&
-+=09=09=09=09grep "$invalid_ref_regex" actual
-+=09=09=09else
-+=09=09=09=09# Unreachable
-+=09=09=09=09false
-+=09=09=09fi
-+=09=09) &&
-+=09=09if [ $success -ne 1 ]
-+=09=09then
-+=09=09=09test_path_is_missing foo
-+=09=09fi
-+=09'
-+}
-+
-+for quiet_mode in "no_quiet" "quiet"
-+do
-+=09for changedir_type in "cd_repo" "cd_wt" "-C_repo" "-C_wt"
-+=09do
-+=09=09dwim_test_args=3D"$quiet_mode $changedir_type"
-+=09=09test_dwim_orphan 'infer' $dwim_test_args no_-b
-+=09=09test_dwim_orphan 'no_infer' $dwim_test_args no_-b local_ref good_hea=
+Changes from v8 (patches 1/8 - 6/8):
+  * Rebase to a newer commit on main (from c03801e19c to 9857273be0) to byp=
+ass
+    build failures caused by curl deprecation compile warnings & to elimina=
+te
+    merge conflicts. The below range diff is made against a v8 rebased agai=
+nst
+    the same point
+  * Touched up commit messages.
+  * Shortened title for patch 6/8 to fit in 50 character limit.
+  * Updated tests to print stderr on test exit for tests which capture stde=
+rr
+    to improve debugging of individual test failures.
+  * Added tests to verify `--quiet` is actually quiet and doesn't otherwise
+    change command behavior.
+  * Changed `--orphan` from an option to a flag that can be used either on =
+its
+    own or with `-b`/`-B` as requested in [2].
+  * Pulled a conditional and `die()` out of `print_preparing_worktree_line(=
+)`
+    so that it'd always be checked regardless of `--quiet`. This change was
+    made because a bug was introduced in an early revision of v9 that cause=
 d
-+=09=09test_dwim_orphan 'infer' $dwim_test_args no_-b no_local_ref no_remot=
-e no_remote_ref no_guess_remote
-+=09=09test_dwim_orphan 'infer' $dwim_test_args no_-b no_local_ref remote n=
-o_remote_ref no_guess_remote
-+=09=09test_dwim_orphan 'fetch_error' $dwim_test_args no_-b no_local_ref re=
-mote no_remote_ref guess_remote
-+=09=09test_dwim_orphan 'infer' $dwim_test_args no_-b no_local_ref remote n=
-o_remote_ref guess_remote force
-+=09=09test_dwim_orphan 'no_infer' $dwim_test_args no_-b no_local_ref remot=
-e remote_ref guess_remote
-+
-+=09=09test_dwim_orphan 'infer' $dwim_test_args -b
-+=09=09test_dwim_orphan 'no_infer' $dwim_test_args -b local_ref good_head
-+=09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref no_remote n=
-o_remote_ref no_guess_remote
-+=09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref remote no_r=
-emote_ref no_guess_remote
-+=09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref remote no_r=
-emote_ref guess_remote
-+=09=09test_dwim_orphan 'infer' $dwim_test_args -b no_local_ref remote remo=
-te_ref guess_remote
-+=09done
-+
-+=09test_dwim_orphan 'fatal_orphan_bad_combo' $quiet_mode no_-b no_checkout
-+=09test_dwim_orphan 'fatal_orphan_bad_combo' $quiet_mode no_-b track
-+=09test_dwim_orphan 'fatal_orphan_bad_combo' $quiet_mode -b no_checkout
-+=09test_dwim_orphan 'fatal_orphan_bad_combo' $quiet_mode -b track
-+done
-+
- post_checkout_hook () {
- =09test_when_finished "rm -rf .git/hooks" &&
- =09mkdir .git/hooks &&
+    behavior to differ depending on whether `--quiet` was supplied to the
+    command. To limit the changes made, the original `die()` was left as a
+    `BUG()`.
+  * Moved `!lookup_commit_reference_by_name(branch)` check and `--orphan` h=
+int
+    to the line before the call to `print_preparing_worktree_line()` to com=
+bine
+    with the conditional from the above/previous change.
+  * Wrapped `--orphan` advice/hint in conditional to suppress display when
+    using `--quiet`.
+  * Updated `--orphan` advice/hint to match the `add -b branch dir/` vs
+    `add dir/` syntax initially supplied by the user.
+  * Updated `--orphan` hint tests to check presence on bad HEAD instead of
+    empty repo.
+
+Changes from v8 (patches 7/8 & 8/8):
+  * Extended DWIM to infer `--orphan` when no other branches exist in the r=
+epo
+    (or remotely when using `--guess-remote` while not using `-b`) [3][4].
+  * Added checks to warn/die when inferring `--orphan` causes the set of
+    supplied options & flags to produce an illegal combination.
+  * Added extensive tests to verify new DWIM behavior.
+  * Added a failure/warning when the user likely forgot to fetch from an
+    upstream repo (i.e. when there is a remote, guess_remote is enabled, an=
+d
+    there aren't any local or remote branches in the repo). Can be bypassed
+    with `--force`/`-f` [3].
+  * Updated documentation for worktree-add to mention `--orphan` when
+    discussing situations where DWIM behavior does or does not occur.
+  * Added a warning when the current namespace's HEAD points to an invalid
+    or non-existant reference and the user is trying to create a new worktr=
+ee
+    from that HEAD.
+
+1. https://stackoverflow.com/a/68717229/15064705/
+2. https://lore.kernel.org/git/e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.=
+org.uk/
+3. https://lore.kernel.org/git/20230119222003.qcdrhcsvjlyab6af@phi/
+4. https://lore.kernel.org/git/20230118224020.vrytmeyt3vbanoh2@phi/
+
+Jacob Abel (8):
+  worktree add: include -B in usage docs
+  t2400: print captured git output when finished
+  t2400: refactor "worktree add" opt exclusion tests
+  t2400: add tests to verify --quiet
+  worktree add: add --orphan flag
+  worktree add: introduce "try --orphan" hint
+  worktree add: extend DWIM to infer --orphan
+  worktree add: emit warn when there is a bad HEAD
+
+ Documentation/config/advice.txt |   4 +
+ Documentation/git-worktree.txt  |  16 +-
+ advice.c                        |   1 +
+ advice.h                        |   1 +
+ builtin/worktree.c              | 226 +++++++++++++-
+ t/t2400-worktree-add.sh         | 520 +++++++++++++++++++++++++++++++-
+ 6 files changed, 747 insertions(+), 21 deletions(-)
+
+Range-diff against v8:
+1:  cbda416378 =3D 1:  91153fdb4c worktree add: include -B in usage docs
+-:  ---------- > 2:  8cfbc89dd5 t2400: print captured git output when finis=
+hed
+2:  5f83015779 ! 3:  ab03d92c3a worktree add: refactor opt exclusion tests
+    @@ Metadata
+     Author: Jacob Abel <jacobabel@nullpo.dev>
+
+      ## Commit message ##
+    -    worktree add: refactor opt exclusion tests
+    +    t2400: refactor "worktree add" opt exclusion tests
+
+         Pull duplicate test code into a function so that additional opt
+         combinations can be tested succinctly.
+    @@ t/t2400-worktree-add.sh: test_expect_success '"add" no auto-vivify w=
+ith --detach
+     +test_wt_add_excl () {
+     +=09local opts=3D"$*" &&
+     +=09test_expect_success "'worktree add' with '$opts' has mutually excl=
+usive options" '
+    ++=09=09test_when_finished cat actual >&2 &&
+     +=09=09test_must_fail git worktree add $opts 2>actual &&
+     +=09=09grep -E "fatal:( options)? .* cannot be used together" actual
+     +=09'
+-:  ---------- > 4:  d9a3468c93 t2400: add tests to verify --quiet
+3:  6ac19eeeae ! 5:  8ef9587deb worktree add: add --orphan flag
+    @@ Metadata
+      ## Commit message ##
+         worktree add: add --orphan flag
+
+    -    Adds support for creating an orphan branch when adding a new workt=
+ree.
+    -    This functionality is equivalent to git switch's --orphan flag.
+    -
+    -    The original reason this feature was implemented was to allow a us=
+er
+    -    to initialise a new repository using solely the worktree oriented
+    -    workflow.
+    +    Add support for creating an orphan branch when adding a new worktr=
+ee.
+    +    The functionality of this flag is equivalent to git switch's --orp=
+han
+    +    option.
+
+         Current Behavior:
+         % git -C foo.git --no-pager branch -l
+    @@ Commit message
+         % git -C bar.git worktree add main/
+         Preparing worktree (new branch 'main')
+         fatal: invalid reference: HEAD
+    -    % git -C bar.git worktree add --orphan main main/
+    +    % git -C bar.git worktree add --orphan -b main/
+         Preparing worktree (new branch 'main')
+    +    % git -C bar.git worktree add --orphan -b newbranch worktreedir/
+    +    Preparing worktree (new branch 'newbranch')
+         %
+
+         Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmai=
+l.com>
+    @@ Commit message
+
+      ## Documentation/git-worktree.txt ##
+     @@ Documentation/git-worktree.txt: SYNOPSIS
+    + --------
+      [verse]
+      'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <st=
+ring>]]
+    - =09=09   [(-b | -B) <new-branch>] <path> [<commit-ish>]
+    -+'git worktree add' [-f] [--lock [--reason <string>]]
+    -+=09=09   --orphan <new-branch> <path>
+    +-=09=09   [(-b | -B) <new-branch>] <path> [<commit-ish>]
+    ++=09=09   [--orphan] [(-b | -B) <new-branch>] <path> [<commit-ish>]
+      'git worktree list' [-v | --porcelain [-z]]
+      'git worktree lock' [--reason <string>] <worktree>
+      'git worktree move' <worktree> <new-path>
+    -@@ Documentation/git-worktree.txt: exist, a new branch based on `HEAD`=
+ is automatically created as if
+    - `-b <branch>` was given.  If `<branch>` does exist, it will be checke=
+d out
+    - in the new worktree, if it's not checked out anywhere else, otherwise=
+ the
+    - command will refuse to create the worktree (unless `--force` is used)=
+.
+    -++
+    -+------------
+    -+$ git worktree add --orphan <branch> <path>
+    -+------------
+    -++
+    -+Create a worktree containing no files, with an empty index, and assoc=
+iated
+    -+with a new orphan branch named `<branch>`. The first commit made on t=
+his new
+    -+branch will have no parents and will be the root of a new history dis=
+connected
+    -+from any other branches.
+    -
+    - list::
+    -
+     @@ Documentation/git-worktree.txt: This can also be set up as the defa=
+ult behaviour by using the
+      =09With `prune`, do not remove anything; just report what it would
+      =09remove.
+
+    -+--orphan <new-branch>::
+    ++--orphan::
+     +=09With `add`, make the new worktree and index empty, associating
+    -+=09the worktree with a new orphan branch named `<new-branch>`.
+    ++=09the worktree with a new orphan/unborn branch named `<new-branch>`.
+     +
+      --porcelain::
+      =09With `list`, output in an easy-to-parse format for scripts.
+    @@ builtin/worktree.c
+      #define BUILTIN_WORKTREE_ADD_USAGE \
+      =09N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reaso=
+n <string>]]\n" \
+     -=09   "                 [(-b | -B) <new-branch>] <path> [<commit-ish>=
+]")
+    -+=09   "                 [(-b | -B) <new-branch>] <path> [<commit-ish>=
+]"), \
+    -+=09N_("git worktree add [-f] [--lock [--reason <string>]]\n" \
+    -+=09   "                 --orphan <new-branch> <path>")
+    ++=09   "                 [--orphan] [(-b | -B) <new-branch>] <path> [<=
+commit-ish>]")
+     +
+      #define BUILTIN_WORKTREE_LIST_USAGE \
+      =09N_("git worktree list [-v | --porcelain [-z]]")
+    @@ builtin/worktree.c: static int add_worktree(const char *path, const =
+char *refnam
+      =09=09struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
+
+      =09=09strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
+    -@@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    - =09char *path;
+    - =09const char *branch;
+    - =09const char *new_branch =3D NULL;
+    -+=09const char *orphan_branch =3D NULL;
+    - =09const char *opt_track =3D NULL;
+    - =09const char *lock_reason =3D NULL;
+    - =09int keep_locked =3D 0;
+    +@@ builtin/worktree.c: static void print_preparing_worktree_line(int d=
+etach,
+    + =09=09else {
+    + =09=09=09struct commit *commit =3D lookup_commit_reference_by_name(br=
+anch);
+    + =09=09=09if (!commit)
+    +-=09=09=09=09die(_("invalid reference: %s"), branch);
+    ++=09=09=09=09BUG(_("unreachable: invalid reference: %s"), branch);
+    + =09=09=09fprintf_ln(stderr, _("Preparing worktree (detached HEAD %s)"=
+),
+    + =09=09=09=09  repo_find_unique_abbrev(the_repository, &commit->object=
+.oid, DEFAULT_ABBREV));
+    + =09=09}
+     @@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+      =09=09=09   N_("create a new branch")),
+      =09=09OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
+      =09=09=09   N_("create or reset a branch")),
+    -+=09=09OPT_STRING(0, "orphan", &orphan_branch, N_("branch"),
+    -+=09=09=09   N_("new unparented branch")),
+    ++=09=09OPT_BOOL(0, "orphan", &opts.orphan, N_("create unborn/orphaned =
+branch")),
+      =09=09OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named =
+commit")),
+      =09=09OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new wo=
+rking tree")),
+      =09=09OPT_BOOL(0, "lock", &keep_locked, N_("keep the new working tree=
+ locked")),
+     @@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    - =09memset(&opts, 0, sizeof(opts));
+    - =09opts.checkout =3D 1;
+      =09ac =3D parse_options(ac, av, prefix, options, git_worktree_add_usa=
+ge, 0);
+    -+=09opts.orphan =3D !!orphan_branch;
+      =09if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
+      =09=09die(_("options '%s', '%s', and '%s' cannot be used together"), =
+"-b", "-B", "--detach");
+    -+=09if (!!opts.detach + !!opts.orphan + !!new_branch + !!new_branch_fo=
+rce > 1)
+    -+=09=09die(_("options '%s', '%s', '%s', and '%s' cannot be used togeth=
+er"),
+    -+=09=09    "-b", "-B", "--orphan", "--detach");
+    ++=09if (opts.detach && opts.orphan)
+    ++=09=09die(_("options '%s', and '%s' cannot be used together"),
+    ++=09=09    "--orphan", "--detach");
+     +=09if (opts.orphan && opt_track)
+     +=09=09die(_("'%s' and '%s' cannot be used together"), "--orphan", "--=
+track");
+     +=09if (opts.orphan && !opts.checkout)
+    @@ builtin/worktree.c: static int add(int ac, const char **av, const ch=
+ar *prefix)
+      =09}
+
+     -=09if (ac < 2 && !new_branch && !opts.detach) {
+    -+=09if (opts.orphan) {
+    -+=09=09new_branch =3D orphan_branch;
+    -+=09} else if (ac < 2 && !new_branch && !opts.detach) {
+    ++=09if (opts.orphan && !new_branch) {
+    ++=09=09int n;
+    ++=09=09const char *s =3D worktree_basename(path, &n);
+    ++=09=09new_branch =3D xstrndup(s, n);
+    ++=09} else if (new_branch || opts.detach || opts.orphan) {
+    ++=09=09// No-op
+    ++=09} else if (ac < 2) {
+      =09=09const char *s =3D dwim_branch(path, &new_branch);
+      =09=09if (s)
+      =09=09=09branch =3D s;
+    +-=09}
+    +-
+    +-=09if (ac =3D=3D 2 && !new_branch && !opts.detach) {
+    ++=09} else if (ac =3D=3D 2) {
+    + =09=09struct object_id oid;
+    + =09=09struct commit *commit;
+    + =09=09const char *remote;
+     @@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    + =09=09=09}
+    + =09=09}
+    + =09}
+    ++
+    ++=09if (!opts.orphan && !lookup_commit_reference_by_name(branch)) {
+    ++=09=09die(_("invalid reference: %s"), branch);
+    ++=09}
+    ++
+      =09if (!opts.quiet)
+      =09=09print_preparing_worktree_line(opts.detach, branch, new_branch, =
+!!new_branch_force);
+
+     -=09if (new_branch) {
+     +=09if (opts.orphan) {
+     +=09=09branch =3D new_branch;
+    -+=09} else if (!lookup_commit_reference_by_name(branch)) {
+    -+=09=09die(_("invalid reference: %s"), branch);
+     +=09} else if (new_branch) {
+      =09=09struct child_process cp =3D CHILD_PROCESS_INIT;
+      =09=09cp.git_cmd =3D 1;
+    @@ t/t2400-worktree-add.sh: test_wt_add_excl () {
+      test_wt_add_excl -b poodle -B poodle bamboo main
+      test_wt_add_excl -b poodle --detach bamboo main
+      test_wt_add_excl -B poodle --detach bamboo main
+    -+test_wt_add_excl -B poodle --orphan poodle bamboo
+    -+test_wt_add_excl -b poodle --orphan poodle bamboo
+    -+test_wt_add_excl --orphan poodle --detach bamboo
+    -+test_wt_add_excl --orphan poodle --no-checkout bamboo
+    -+test_wt_add_excl --orphan poodle bamboo main
+    ++test_wt_add_excl --orphan --detach bamboo
+    ++test_wt_add_excl --orphan --no-checkout bamboo
+    ++test_wt_add_excl --orphan bamboo main
+    ++test_wt_add_excl --orphan -b bamboo wtdir/ main
+
+      test_expect_success '"add -B" fails if the branch is checked out' '
+      =09git rev-parse newmain >before &&
+    -@@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet' '
+    +@@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet -b' '
+      =09test_must_be_empty actual
+      '
+
+     +test_expect_success '"add --orphan"' '
+     +=09test_when_finished "git worktree remove -f -f orphandir" &&
+    -+=09git worktree add --orphan neworphan orphandir &&
+    ++=09git worktree add --orphan -b neworphan orphandir &&
+    ++=09echo refs/heads/neworphan >expected &&
+    ++=09git -C orphandir symbolic-ref HEAD >actual &&
+    ++=09test_cmp expected actual
+    ++'
+    ++
+    ++test_expect_success '"add --orphan (no -b)"' '
+    ++=09test_when_finished "git worktree remove -f -f neworphan" &&
+    ++=09git worktree add --orphan neworphan &&
+    ++=09echo refs/heads/neworphan >expected &&
+    ++=09git -C neworphan symbolic-ref HEAD >actual &&
+    ++=09test_cmp expected actual
+    ++'
+    ++
+    ++test_expect_success '"add --orphan --quiet"' '
+    ++=09test_when_finished "git worktree remove -f -f orphandir" &&
+    ++=09test_when_finished cat log.actual >&2 &&
+    ++=09git worktree add --quiet --orphan -b neworphan orphandir 2>log.act=
+ual &&
+    ++=09test_must_be_empty log.actual &&
+     +=09echo refs/heads/neworphan >expected &&
+     +=09git -C orphandir symbolic-ref HEAD >actual &&
+     +=09test_cmp expected actual
+    @@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet' '
+     +
+     +test_expect_success '"add --orphan" fails if the branch already exist=
+s' '
+     +=09test_when_finished "git branch -D existingbranch" &&
+    -+=09test_when_finished "git worktree remove -f -f orphandir" &&
+     +=09git worktree add -b existingbranch orphandir main &&
+    -+=09test_must_fail git worktree add --orphan existingbranch orphandir2=
+ &&
+    -+=09test_path_is_missing orphandir2
+    ++=09git worktree remove orphandir &&
+    ++=09test_must_fail git worktree add --orphan -b existingbranch orphand=
+ir
+     +'
+     +
+     +test_expect_success '"add --orphan" with empty repository' '
+     +=09test_when_finished "rm -rf empty_repo" &&
+     +=09echo refs/heads/newbranch >expected &&
+     +=09GIT_DIR=3D"empty_repo" git init --bare &&
+    -+=09git -C empty_repo  worktree add --orphan newbranch worktreedir &&
+    ++=09git -C empty_repo  worktree add --orphan -b newbranch worktreedir =
+&&
+     +=09git -C empty_repo/worktreedir symbolic-ref HEAD >actual &&
+     +=09test_cmp expected actual
+     +'
+     +
+     +test_expect_success '"add" worktree with orphan branch and lock' '
+    -+=09git worktree add --lock --orphan orphanbr orphan-with-lock &&
+    ++=09git worktree add --lock --orphan -b orphanbr orphan-with-lock &&
+     +=09test_when_finished "git worktree unlock orphan-with-lock || :" &&
+     +=09test -f .git/worktrees/orphan-with-lock/locked
+     +'
+4:  3d76a5b6b8 ! 6:  d2800266f9 worktree add: add hint to direct users towa=
+rds --orphan
+    @@ Metadata
+     Author: Jacob Abel <jacobabel@nullpo.dev>
+
+      ## Commit message ##
+    -    worktree add: add hint to direct users towards --orphan
+    +    worktree add: introduce "try --orphan" hint
+
+    -    Adds a new advice/hint in `git worktree add` for when the user
+    +    Add a new advice/hint in `git worktree add` for when the user
+         tries to create a new worktree from a reference that doesn't exist=
+.
+
+         Current Behavior:
+
+    -    % git init --bare foo.git
+    -    Initialized empty Git repository in /path/to/foo.git/
+    -    % git -C foo.git worktree add main/
+    -    Preparing worktree (new branch 'main')
+    +    % git init foo
+    +    Initialized empty Git repository in /path/to/foo/
+    +    % touch file
+    +    % git -C foo commit -q -a -m "test commit"
+    +    % git -C foo switch --orphan norefbranch
+    +    % git -C foo worktree add newbranch/
+    +    Preparing worktree (new branch 'newbranch')
+         fatal: invalid reference: HEAD
+         %
+
+         New Behavior:
+
+    -    % git init --bare foo.git
+    -    Initialized empty Git repository in /path/to/foo.git/
+    -    % git -C foo.git worktree add main/
+    -    Preparing worktree (new branch 'main')
+    +    % git init --bare foo
+    +    Initialized empty Git repository in /path/to/foo/
+    +    % touch file
+    +    % git -C foo commit -q -a -m "test commit"
+    +    % git -C foo switch --orphan norefbranch
+    +    % git -C foo worktree add newbranch/
+    +    Preparing worktree (new branch 'newbranch')
+         hint: If you meant to create a worktree containing a new orphan br=
+anch
+         hint: (branch with no commits) for this repository, you can do so
+         hint: using the --orphan option:
+         hint:
+    -    hint:   git worktree add --orphan main ./main
+    +    hint:   git worktree add --orphan newbranch/
+    +    hint:
+    +    hint: Disable this message with "git config advice.worktreeAddOrph=
+an false"
+    +    fatal: invalid reference: HEAD
+    +    % git -C foo worktree add -b newbranch2 new_wt/
+    +    Preparing worktree (new branch 'newbranch')
+    +    hint: If you meant to create a worktree containing a new orphan br=
+anch
+    +    hint: (branch with no commits) for this repository, you can do so
+    +    hint: using the --orphan option:
+    +    hint:
+    +    hint:   git worktree add --orphan -b newbranch2 new_wt/
+         hint:
+         hint: Disable this message with "git config advice.worktreeAddOrph=
+an false"
+         fatal: invalid reference: HEAD
+    @@ advice.h: struct string_list;
+      int git_default_advice_config(const char *var, const char *value);
+
+      ## builtin/worktree.c ##
+    +@@
+    + #define BUILTIN_WORKTREE_UNLOCK_USAGE \
+    + =09N_("git worktree unlock <worktree>")
+    +
+    ++#define WORKTREE_ADD_ORPHAN_WITH_DASH_B_HINT_TEXT \
+    ++=09_("If you meant to create a worktree containing a new orphan branc=
+h\n" \
+    ++=09"(branch with no commits) for this repository, you can do so\n" \
+    ++=09"using the --orphan flag:\n" \
+    ++=09"\n" \
+    ++=09"=09git worktree add --orphan -b %s %s\n")
+    ++
+    ++#define WORKTREE_ADD_ORPHAN_NO_DASH_B_HINT_TEXT \
+    ++=09_("If you meant to create a worktree containing a new orphan branc=
+h\n" \
+    ++=09"(branch with no commits) for this repository, you can do so\n" \
+    ++=09"using the --orphan flag:\n" \
+    ++=09"\n" \
+    ++=09"=09git worktree add --orphan %s\n")
+    ++
+    + static const char * const git_worktree_usage[] =3D {
+    + =09BUILTIN_WORKTREE_ADD_USAGE,
+    + =09BUILTIN_WORKTREE_LIST_USAGE,
+    +@@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    + =09const char *opt_track =3D NULL;
+    + =09const char *lock_reason =3D NULL;
+    + =09int keep_locked =3D 0;
+    ++=09int used_new_branch_options;
+    + =09struct option options[] =3D {
+    + =09=09OPT__FORCE(&opts.force,
+    + =09=09=09   N_("checkout <branch> even if already checked out in othe=
+r worktree"),
+    +@@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    +
+    + =09path =3D prefix_filename(prefix, av[0]);
+    + =09branch =3D ac < 2 ? "HEAD" : av[1];
+    ++=09used_new_branch_options =3D new_branch || new_branch_force;
+    +
+    + =09if (!strcmp(branch, "-"))
+    + =09=09branch =3D "@{-1}";
+     @@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    - =09if (opts.orphan) {
+    - =09=09branch =3D new_branch;
+    - =09} else if (!lookup_commit_reference_by_name(branch)) {
+    -+=09=09advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
+    -+=09=09=09_("If you meant to create a worktree containing a new orphan=
+ branch\n"
+    -+=09=09=09"(branch with no commits) for this repository, you can do so=
+\n"
+    -+=09=09=09"using the --orphan option:\n"
+    -+=09=09=09"\n"
+    -+=09=09=09"=09git worktree add --orphan %s %s\n"), new_branch, path);
+    + =09}
+    +
+    + =09if (!opts.orphan && !lookup_commit_reference_by_name(branch)) {
+    ++=09=09int attempt_hint =3D !opts.quiet && (ac < 2);
+    ++=09=09if (attempt_hint && used_new_branch_options) {
+    ++=09=09=09advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
+    ++=09=09=09=09WORKTREE_ADD_ORPHAN_WITH_DASH_B_HINT_TEXT,
+    ++=09=09=09=09new_branch, path);
+    ++=09=09} else if (attempt_hint) {
+    ++=09=09=09advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
+    ++=09=09=09=09WORKTREE_ADD_ORPHAN_NO_DASH_B_HINT_TEXT, path);
+    ++=09=09}
+      =09=09die(_("invalid reference: %s"), branch);
+    - =09} else if (new_branch) {
+    - =09=09struct child_process cp =3D CHILD_PROCESS_INIT;
+    + =09}
+    +
+
+      ## t/t2400-worktree-add.sh ##
+     @@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with o=
+rphan branch, lock, and reason' '
+    @@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with or=
+phan branch,
+      '
+
+     +# Note: Quoted arguments containing spaces are not supported.
+    -+test_wt_add_empty_repo_orphan_hint () {
+    ++test_wt_add_orphan_hint () {
+     +=09local context=3D"$1" &&
+    -+=09shift &&
+    ++=09local use_branch=3D$2 &&
+    ++=09shift 2 &&
+     +=09local opts=3D"$*" &&
+    -+=09test_expect_success "'worktree add' show orphan hint in empty repo=
+ w/ $context" '
+    -+=09=09test_when_finished "rm -rf empty_repo" &&
+    -+=09=09GIT_DIR=3D"empty_repo" git init --bare &&
+    -+=09=09test_must_fail git -C empty_repo worktree add $opts foobar/ 2>a=
+ctual &&
+    ++=09test_expect_success "'worktree add' show orphan hint in bad/orphan=
+ HEAD w/ $context" '
+    ++=09=09test_when_finished "rm -rf repo" &&
+    ++=09=09git init repo &&
+    ++=09=09(cd repo && test_commit commit) &&
+    ++=09=09git -C repo switch --orphan noref &&
+    ++=09=09test_when_finished cat actual >&2 &&
+    ++=09=09test_must_fail git -C repo worktree add $opts foobar/ 2>actual =
+&&
+     +=09=09! grep "error: unknown switch" actual &&
+    -+=09=09grep "hint: If you meant to create a worktree containing a new =
+orphan branch" actual
+    ++=09=09grep "hint: If you meant to create a worktree containing a new =
+orphan branch" actual &&
+    ++=09=09if [ $use_branch -eq 1 ]
+    ++=09=09then
+    ++=09=09=09grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" =
+actual
+    ++=09=09else
+    ++=09=09=09grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
+    ++=09=09fi
+    ++
+     +=09'
+     +}
+     +
+    -+test_wt_add_empty_repo_orphan_hint 'DWIM'
+    -+test_wt_add_empty_repo_orphan_hint '-b' -b foobar_branch
+    -+test_wt_add_empty_repo_orphan_hint '-B' -B foobar_branch
+    ++test_wt_add_orphan_hint 'no opts' 0
+    ++test_wt_add_orphan_hint '-b' 1 -b foobar_branch
+    ++test_wt_add_orphan_hint '-B' 1 -B foobar_branch
+    ++
+    ++test_expect_success "'worktree add' doesn't show orphan hint in bad/o=
+rphan HEAD w/ --quiet" '
+    ++=09test_when_finished "rm -rf repo" &&
+    ++=09git init repo &&
+    ++=09(cd repo && test_commit commit) &&
+    ++=09test_when_finished cat actual >&2 &&
+    ++=09test_must_fail git -C repo worktree add --quiet foobar_branch foob=
+ar/ 2>actual &&
+    ++=09! grep "error: unknown switch" actual &&
+    ++=09! grep "hint: If you meant to create a worktree containing a new o=
+rphan branch" actual
+    ++'
+     +
+      test_expect_success 'local clone from linked checkout' '
+      =09git clone --local here here-clone &&
+-:  ---------- > 7:  e5e139766c worktree add: extend DWIM to infer --orphan
+-:  ---------- > 8:  296226ffd5 worktree add: emit warn when there is a bad=
+ HEAD
 --
 2.39.2
 
