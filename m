@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC787C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FEC9C6FD18
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232793AbjDRUlN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 16:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44000 "EHLO
+        id S232795AbjDRUlQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 16:41:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231510AbjDRUlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 16:41:00 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7CDDB77D
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:56 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-555bc7f6746so29773397b3.6
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:56 -0700 (PDT)
+        with ESMTP id S232699AbjDRUlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 16:41:02 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80202CC3C
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:59 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id b10so2497489ybk.9
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681850455; x=1684442455;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681850458; x=1684442458;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Znitps7bkYZ+IufIXRXGt7XWOPXXw9/MsW2Wk7xDbyo=;
-        b=GszwfOrmVveNexlGOMPIqP8DWYmuDchKIPinxZg0HP3APSHCf7N7+6p7Niz/UtAhS2
-         YwIvxTdQC5rRrn9BtcXuQ2jk5QVQJ+oJVypX160SuAD8/ZiuaciWIsMZqJW7tbJ+K+cM
-         A7rtqMzXLdemGUoQX+k78pZeyZ+YQlQ9wNCVMJiRQdg012ahBMXXDrwwDOly5a3Cwj8w
-         j3sLc8HimN+wX6QW5ffLGSM96CALpoQx1LYv+RkIpz6l9+iog1L9ANBy3ADhbK+7arKs
-         w/CKgRyeMiyUgGOdti7IMWXtEMEStiaZVnWOKPEQ/tqzJFUOu6aLwNxjXF2O65f5IyEW
-         0iaQ==
+        bh=fP+L07cwQTzkf6Cs7rGppdhtqqim7Hezjnkkp2v4+CA=;
+        b=WPdQ2d0+iwlHKbynB/dLvAM/8jHbuU214DQZY4RBCZocNHiIkTaUVMnCUU4h9sscCs
+         fpJr/wPobYgQu4hY3eakIjuGOWmk+yFngwWSz/WeCTjVsBmBgzSqb8M8PfVcwH/QCw5H
+         VCVTICJZzrUL/bNgh91K29N3dLD+Q5UY3+sFS86kEJjdB/NFxo6SF792LN62XdNpYfBO
+         i2vBTGtb1CAXlEQrXtCDyLtHrjL9u3faWTTvp54GdiyapZqKRwyaLy9ev/7exzxhzijl
+         4BNhwIOXFpitkfneGwgcEGlUjxAmHvf7TMHBcfFlVD7b42AJys3h4lA41vt/Jsko2it6
+         xmjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681850455; x=1684442455;
+        d=1e100.net; s=20221208; t=1681850458; x=1684442458;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Znitps7bkYZ+IufIXRXGt7XWOPXXw9/MsW2Wk7xDbyo=;
-        b=FBHTrKvUzIJjnmoP66CIocZT8Ovmme9WX/SRjxce0aAVa5Ju1VuWtxcyuuGuWzF0IY
-         b/Xx44PpbJbB5ZI2whDDKnvjz6fvdcia8SMKytRPgUzdiWfrda4EaE63KN6sdaIhvqgF
-         qbJxVEEdyowApKdomJq8AGQcarKaFc59j6AStn82x+gpcggcHIQvulFIUUs3an9HBqTM
-         nQQ0vthE98sjCNF1m7WXJLK3UphBgsKttQwfuspi7Jb0KKsbqH8y8ooLHFDp/ZzjAmmR
-         PcJzbvdvz1vMRCIXLD0j0ItzKCGAWUkGYlntrPqDRW4bZBgCPhHOATnzqZpdSgDJWO6b
-         hMGw==
-X-Gm-Message-State: AAQBX9dp6QU2ggzM6uJjrT1pOqOcp556qoJN2V5Gltkm3WacYNd2Bv1g
-        X5/rmQrUafzYcvzwIfpXZVWXbNVYDXyjfMxorVSRXg==
-X-Google-Smtp-Source: AKy350ac6X8La5pjmCvqXCI6VjpsBlCd+PCoinaR9QBf9jhfLWoRa8P2Dj7k0WgYhE5Uy3pOFeNyOQ==
-X-Received: by 2002:a0d:d203:0:b0:54f:cf3a:2604 with SMTP id u3-20020a0dd203000000b0054fcf3a2604mr1056835ywd.41.1681850455653;
-        Tue, 18 Apr 2023 13:40:55 -0700 (PDT)
+        bh=fP+L07cwQTzkf6Cs7rGppdhtqqim7Hezjnkkp2v4+CA=;
+        b=UMFgYsskgFsa13EL899eT3yRwtYCGelFlnjThZucJI347oUfr7DUJqPcmw7cMhpKee
+         iiywZpFseO1z010mDHIy8V8UtbsjQu1Wm4OJnT3f9nfK5Picp4qmUmYkWtf4ij2llSQC
+         zCdT9ru9KSjCgxWMNtUsRQKSJIFgGs6C++amnfAglg3R+y+X7tw3i8q6yt/wW6hid+Dl
+         KLC6Gl7QR57SKSXZOvJnOvp8wbNoYHvntqwzdoP6jva3crn36O8kjXtv9+6PL65335zI
+         cSi+C588sP8JsV2svy0GxWLb1zeMbL/W3A+qIdG2U63Axz87SSQ8ICLrfBkLfHi5qW4n
+         JL7g==
+X-Gm-Message-State: AAQBX9f8HuS1hOMGNYQlmjAAMzpRRBavrrcNkNDxf2d06yvwbueqqfSD
+        tnbeffLliwS+4aSF3hQF91spNgenW9hyGi6F7mAs2A==
+X-Google-Smtp-Source: AKy350YW7UNabT6OKkxJZ+NYWmbGurTFwC+/JTaF7vxLBwMAz7IJaMTmhYfXfUCppokjKX7BufjWog==
+X-Received: by 2002:a25:2407:0:b0:b95:ded1:7d99 with SMTP id k7-20020a252407000000b00b95ded17d99mr2258589ybk.27.1681850458506;
+        Tue, 18 Apr 2023 13:40:58 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t22-20020a817816000000b00545a0818494sm4100020ywc.36.2023.04.18.13.40.53
+        by smtp.gmail.com with ESMTPSA id b14-20020a252e4e000000b00b8f6ec5a955sm3198301ybn.49.2023.04.18.13.40.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 13:40:53 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 16:40:52 -0400
+        Tue, 18 Apr 2023 13:40:58 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 16:40:57 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 08/10] t/t9300-fast-import.sh: prepare for `gc --cruft` by
+Subject: [PATCH v2 09/10] builtin/gc.c: make `gc.cruftPacks` enabled by
  default
-Message-ID: <894cf176ea8911e615cb59857b93a2765ca6ba9d.1681850424.git.me@ttaylorr.com>
+Message-ID: <b6784ddfe2906f7c04b3050bd9ba63a884ddb047.1681850424.git.me@ttaylorr.com>
 References: <cover.1681764848.git.me@ttaylorr.com>
  <cover.1681850424.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,79 +67,164 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar fashion as previous commits, adjust the fast-import tests
-to prepare for "git gc" generating a cruft pack by default.
+Back in 5b92477f89 (builtin/gc.c: conditionally avoid pruning objects
+via loose, 2022-05-20), `git gc` learned the `--cruft` option and
+`gc.cruftPacks` configuration to opt-in to writing cruft packs when
+collecting or pruning unreachable objects.
 
-This adjustment is slightly different, however. Instead of relying on us
-writing out the objects loose, and then calling `git prune` to remove
-them, t9300 needs to be prepared to drop objects that would be moved
-into cruft packs.
+Cruft packs were introduced with the merge in a50036da1a (Merge branch
+'tb/cruft-packs', 2022-06-03). They address the problem of "loose object
+explosions", where Git will write out many individual loose objects when
+there is a large number of unreachable objects that have not yet aged
+past `--prune=<date>`.
 
-To do this, we can combine the `git gc` invocation with `git prune` into
-one `git gc --prune`, which handles pruning both loose objects, and
-objects that would otherwise be written to a cruft pack.
+Instead of keeping track of those unreachable yet recent objects via
+their loose object file's mtime, cruft packs collect all unreachable
+objects into a single pack with a corresponding `*.mtimes` file that
+acts as a table to store the mtimes of all unreachable objects. This
+prevents the need to store unreachable objects as loose as they age out
+of the repository, and avoids the problem of loose object explosions.
 
-Likely this pattern of "git gc && git prune" started all the way back in
-03db4525d3 (Support gitlinks in fast-import., 2008-07-19), which
-happened after deprecating `git gc --prune` in 9e7d501990 (builtin-gc.c:
-deprecate --prune, it now really has no effect, 2008-05-09).
+Beyond avoiding loose object explosions, cruft packs also act as a more
+efficient mechanism to store unreachable objects as they age out of a
+repository. This is because pairs of similar unreachable objects serve
+as delta bases for one another.
 
-After `--prune` was un-deprecated in 58e9d9d472 (gc: make --prune useful
-again by accepting an optional parameter, 2009-02-14), this script got a
-handful of new "git gc && git prune" instances via via 4cedb78cb5
-(fast-import: add input format tests, 2011-08-11). These could have been
-`git gc --prune`, but weren't (likely taking after 03db4525d3).
+In 5b92477f89, the feature was introduced as experimental. Since then,
+GitHub has been running these patches in every repository generating
+hundreds of millions of cruft packs along the way. The feature is
+battle-tested, and avoids many pathological cases such as above. Users
+who either run `git gc` manually, or via `git maintenance` can benefit
+from having cruft packs.
+
+As such, enable cruft pack generation to take place by default (by
+making `gc.cruftPacks` have the default of "true" rather than "false).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t9300-fast-import.sh | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ Documentation/config/feature.txt |  3 ---
+ Documentation/config/gc.txt      |  2 +-
+ Documentation/git-gc.txt         |  5 +++--
+ Documentation/gitformat-pack.txt |  4 ++--
+ builtin/gc.c                     |  6 +-----
+ t/t6500-gc.sh                    | 12 ++++--------
+ 6 files changed, 11 insertions(+), 21 deletions(-)
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index aa55b41b9a..ac237a1f90 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -388,9 +388,7 @@ test_expect_success 'B: accept branch name "TEMP_TAG"' '
+diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+index e52bc6b858..17b4d39f89 100644
+--- a/Documentation/config/feature.txt
++++ b/Documentation/config/feature.txt
+@@ -14,9 +14,6 @@ feature.experimental::
+ +
+ * `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
+ skipping more commits at a time, reducing the number of round trips.
+-+
+-* `gc.cruftPacks=true` reduces disk space used by unreachable objects during
+-garbage collection, preventing loose object explosions.
  
- 	INPUT_END
+ feature.manyFiles::
+ 	Enable config options that optimize for repos with many files in the
+diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
+index 8d5353e9e0..7f95c866e1 100644
+--- a/Documentation/config/gc.txt
++++ b/Documentation/config/gc.txt
+@@ -84,7 +84,7 @@ gc.packRefs::
+ gc.cruftPacks::
+ 	Store unreachable objects in a cruft pack (see
+ 	linkgit:git-repack[1]) instead of as loose objects. The default
+-	is `false`.
++	is `true`.
  
--	test_when_finished "rm -f .git/TEMP_TAG
--		git gc
--		git prune" &&
-+	test_when_finished "rm -f .git/TEMP_TAG && git gc --prune=now" &&
- 	git fast-import <input &&
- 	test $(test-tool ref-store main resolve-ref TEMP_TAG 0 | cut -f1 -d " " ) != "$ZERO_OID" &&
- 	test $(git rev-parse main) = $(git rev-parse TEMP_TAG^)
-@@ -406,8 +404,7 @@ test_expect_success 'B: accept empty committer' '
- 	INPUT_END
+ gc.pruneExpire::
+ 	When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index fef382a70f..90806fd26a 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -54,9 +54,10 @@ other housekeeping tasks (e.g. rerere, working trees, reflog...) will
+ be performed as well.
  
- 	test_when_finished "git update-ref -d refs/heads/empty-committer-1
--		git gc
--		git prune" &&
-+		git gc --prune=now" &&
- 	git fast-import <input &&
- 	out=$(git fsck) &&
- 	echo "$out" &&
-@@ -452,8 +449,7 @@ test_expect_success 'B: accept and fixup committer with no name' '
- 	INPUT_END
  
- 	test_when_finished "git update-ref -d refs/heads/empty-committer-2
--		git gc
--		git prune" &&
-+		git gc --prune=now" &&
- 	git fast-import <input &&
- 	out=$(git fsck) &&
- 	echo "$out" &&
-@@ -1778,8 +1774,7 @@ test_expect_success 'P: verbatim SHA gitlinks' '
- 	INPUT_END
+---cruft::
++--[no-]cruft::
+ 	When expiring unreachable objects, pack them separately into a
+-	cruft pack instead of storing them as loose objects.
++	cruft pack instead of storing them as loose objects. `--cruft`
++	is on by default.
  
- 	git branch -D sub &&
--	git gc &&
--	git prune &&
-+	git gc --prune=now &&
- 	git fast-import <input &&
- 	test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
- '
+ --prune=<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
+index e06af02f21..0c1be2dbe8 100644
+--- a/Documentation/gitformat-pack.txt
++++ b/Documentation/gitformat-pack.txt
+@@ -611,8 +611,8 @@ result of repeatedly resetting the objects' mtimes to the present time.
+ 
+ If you are GC-ing repositories in a mixed version environment, consider omitting
+ the `--cruft` option when using linkgit:git-repack[1] and linkgit:git-gc[1], and
+-leaving the `gc.cruftPacks` configuration unset until all writers understand
+-cruft packs.
++setting the `gc.cruftPacks` configuration to "false" until all writers
++understand cruft packs.
+ 
+ === Alternatives
+ 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 53ef137e1d..ece01e966f 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -48,7 +48,7 @@ static const char * const builtin_gc_usage[] = {
+ 
+ static int pack_refs = 1;
+ static int prune_reflogs = 1;
+-static int cruft_packs = -1;
++static int cruft_packs = 1;
+ static int aggressive_depth = 50;
+ static int aggressive_window = 250;
+ static int gc_auto_threshold = 6700;
+@@ -608,10 +608,6 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (prune_expire && parse_expiry_date(prune_expire, &dummy))
+ 		die(_("failed to parse prune expiry value %s"), prune_expire);
+ 
+-	prepare_repo_settings(the_repository);
+-	if (cruft_packs < 0)
+-		cruft_packs = the_repository->settings.gc_cruft_packs;
+-
+ 	if (aggressive) {
+ 		strvec_push(&repack, "-f");
+ 		if (aggressive_depth > 0)
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 3ba2ae5140..69509d0c11 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -216,11 +216,9 @@ assert_no_cruft_packs () {
+ }
+ 
+ for argv in \
+-	"gc --cruft" \
++	"gc" \
+ 	"-c gc.cruftPacks=true gc" \
+-	"-c gc.cruftPacks=false gc --cruft" \
+-	"-c feature.experimental=true gc" \
+-	"-c gc.cruftPacks=true -c feature.experimental=false gc"
++	"-c gc.cruftPacks=false gc --cruft"
+ do
+ 	test_expect_success "git $argv generates a cruft pack" '
+ 		test_when_finished "rm -fr repo" &&
+@@ -244,11 +242,9 @@ do
+ done
+ 
+ for argv in \
+-	"gc" \
++	"gc --no-cruft" \
+ 	"-c gc.cruftPacks=false gc" \
+-	"-c gc.cruftPacks=true gc --no-cruft" \
+-	"-c feature.expiremental=true -c gc.cruftPacks=false gc" \
+-	"-c feature.experimental=false gc"
++	"-c gc.cruftPacks=true gc --no-cruft"
+ do
+ 	test_expect_success "git $argv does not generate a cruft pack" '
+ 		test_when_finished "rm -fr repo" &&
 -- 
 2.40.0.362.gc67ee7c2ff
 
