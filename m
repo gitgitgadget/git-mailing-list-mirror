@@ -2,167 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 904E2C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA812C77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 21:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbjDRUys (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 16:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53502 "EHLO
+        id S232738AbjDRVAa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 17:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231520AbjDRUyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 16:54:46 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 161339772
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:54:25 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-54f6a796bd0so359888697b3.12
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:54:25 -0700 (PDT)
+        with ESMTP id S229838AbjDRVA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 17:00:28 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3E0655AB
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 14:00:27 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1a67d2601b3so19272835ad.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 14:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681851264; x=1684443264;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=B+5CsISckF8WI6iis7xs8+aKkVUTyNGadvKsU2/iDO0=;
-        b=MW3UpJJ0151IvtJuUGJjjwB3CLE5fqvI18u0A7cy+N3AhOHLeN66NZw1tReH+HNCzj
-         DKSSFEKAxrak99kfHabRVzgFQm4Xuj3gZ/UDDkqLTfiITDBGaFf0s84YOCZoTBQInLJI
-         gCV5knF18+KmBRZ77/vPXXbfC5WIDFrm2NOK4zJdftRIx0tH4JE/VvP522qauFR7yE8H
-         BE/LXBhLKjXCf6kPyGR8VjEtIuoxvntX2qvcaualp+BO1c48fch3gVXBuYG/jAF0D1QT
-         L6cdB+YT/ev8KREenstR1c6IMkl5Tmxxs50hiAAMY+XEjml1U4KPXztim0VoaAEjjcrA
-         cUWw==
+        d=gmail.com; s=20221208; t=1681851627; x=1684443627;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nglLCiysEYxgQ+/pRH14WiHlk9xApEEp7TrGJkmMBSk=;
+        b=X5O7qYOb5se/0MnC/zjh0dkovxQoR0ihfbSxWBOvBbPAvIZq/vyaStarBEVu03a8ii
+         WjHg2RTkAVgQy6OOE5poiSSevcbSdQt34P5NmhjBzTq55JJG+6oflEI0WfQQa9xFeIVD
+         0uCmgdVHgIhFb79lKkyMWIOVo2THquTJeKeZRYzJXS+y2o/Sb+Sy6/V/sSs6KBa96s5t
+         NWfnYTcpodf33SV0N8JrjBWK3btDQ9JA3JwkAykRCO5O/MegrBGqSNxMN6UlQBmpqIQZ
+         IYyzly3nXD82sX9nl/xDho03TPKYRCLZCnTwrenw/9NlJhcU7hqBjc5hO/qvij9w9Jdg
+         710g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681851264; x=1684443264;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B+5CsISckF8WI6iis7xs8+aKkVUTyNGadvKsU2/iDO0=;
-        b=PBzBUbcJnTxDN7m+dozeYYdmk6AXxXzi6GyMCjPoO2Qylsr0CmrFD+pec7kOX/gFIU
-         hIMjAMfuWgNh9jqwtdT2OyP5hKXmPxi0ZrYuO/Vw44DOjsWzEij9VH9YzvNXmyi4q9Td
-         bPb9hkBXWt8jLWBD1fofkGuaCD16t8REsK5bbbPD+PddGmsWte6+25asbIzTKs65lBP2
-         My+cM821S4Juf8zFFFVqlg4QMKACyr/kbA9iRAAilQFvQjN9sbIVM4qCd3sTzv+KiygC
-         H5JwsELAxu2xJfdbrDcl0A+3x8869OUTTMmxN0LpC14UweSB6tBHQ2wX+Lx1wzB0hWqw
-         xUdg==
-X-Gm-Message-State: AAQBX9cBC4JlKftvJgQdLT/48YZMDoMaMC32M7IadJ29jLDtKob1x6rW
-        Dghpliy23qJhJ3ht6V6iBarWng==
-X-Google-Smtp-Source: AKy350ZOMRzRzYmMKOhJxjIGIAmgHYzHIkB2pSRRcaj+vFWBIVmhyBqp/bTZbDmOGd0dwYz/QofTWg==
-X-Received: by 2002:a0d:d4d1:0:b0:54c:1ddf:6c4b with SMTP id w200-20020a0dd4d1000000b0054c1ddf6c4bmr1159756ywd.11.1681851264234;
-        Tue, 18 Apr 2023 13:54:24 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t22-20020a817816000000b00545a0818494sm4107996ywc.36.2023.04.18.13.54.23
+        d=1e100.net; s=20221208; t=1681851627; x=1684443627;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nglLCiysEYxgQ+/pRH14WiHlk9xApEEp7TrGJkmMBSk=;
+        b=MuzPnyygX5UL6trftLv0MsX3UhmueH9L0kwDY+D0JChm3qUQyPYxXVIjb1YGpPLT4V
+         MV3AooIFu3Yii4sSC20qQbJVtVDoLIah/ou1oAJmOcnpqdJ2ukVLOpKWCDS67Ew/Rzjz
+         8YFD74/UfpPBmLTGEoaVXT5iSzysCmL+Lfr1xCZLW7nKQKkj4dQMzBi8KKnqtYI6l3UJ
+         TzM0ZzshM0WK4mBUuNe0tozsK4Vr4vHhoWD6Njco3HfcUTNOqdxggGnJMErwX/AE5XQc
+         HR8IKEgC3U6WDEt9Z3Cq/BuLAC6YoKlEsKeaMpvglpmO0ctIGTBZhJoNdZfmFnOLk/tf
+         QAbA==
+X-Gm-Message-State: AAQBX9eACBlOjnVjWps82BwaKyy7z+Pjvi2sNANE9tWcMAXSPQMyQMrQ
+        c1+Yefy9a01giVfU0TK+nf4=
+X-Google-Smtp-Source: AKy350bgh9hrZZe6ceJuxYy5yfVu1rAuZbZmXu0KaTaw21kWKhI/qdgCAl/sKW6EzihT4NbnSl022w==
+X-Received: by 2002:a17:903:2288:b0:1a5:2db2:2bb with SMTP id b8-20020a170903228800b001a52db202bbmr4315175plh.15.1681851627206;
+        Tue, 18 Apr 2023 14:00:27 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id g1-20020a170902740100b001a67eace820sm10084825pll.3.2023.04.18.14.00.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 13:54:23 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 16:54:23 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 1/6] string-list: introduce
- `string_list_split_in_place_multi()`
-Message-ID: <ZD8Df1iZaUGzodrg@nand.local>
-References: <cover.1681428696.git.me@ttaylorr.com>
- <cover.1681845518.git.me@ttaylorr.com>
- <6658b231a906dde6acbe7ce156da693ef7dc40e6.1681845518.git.me@ttaylorr.com>
- <xmqqleipc73v.fsf@gitster.g>
+        Tue, 18 Apr 2023 14:00:26 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH/RFD] fix connection via git protocol
+References: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
+        <20230416054735.3386065-1-newren@gmail.com>
+        <xmqq5y9uo4kj.fsf@gitster.g>
+        <CABPp-BEmzofRAmgoz7Wam-6btCYCTy4CiVnTOtr9aQdjS6TB7w@mail.gmail.com>
+Date:   Tue, 18 Apr 2023 14:00:26 -0700
+In-Reply-To: <CABPp-BEmzofRAmgoz7Wam-6btCYCTy4CiVnTOtr9aQdjS6TB7w@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 17 Apr 2023 18:55:07 -0700")
+Message-ID: <xmqqwn28c3dh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqleipc73v.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 12:39:48PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > Introduce a variant of the `string_list_split_in_place()` function that
-> > takes a string of accepted delimiters.
-> >
-> > By contrast to its cousin `string_list_split_in_place()` which splits
-> > the given string at every instance of the single character `delim`, the
-> > `_multi` variant splits the given string any any character appearing in
-> > the string `delim`.
-> >
-> > Like `strtok()`, the `_multi` variant skips past sequential delimiting
-> > characters. For example:
-> >
-> >     string_list_split_in_place(&xs, xstrdup("foo::bar::baz"), ":", -1);
-> >
-> > would place in `xs` the elements "foo", "bar", and "baz".
->
-> strtok() also skips leading and trailing delimiters, i.e. the above
-> will give you identical result for ":foo:bar:baz:".
+Elijah Newren <newren@gmail.com> writes:
 
-I'm not sure the results are identical. Adding this test case for
-testing the behavior of string_list_split_in_place() passes before and
-after this series:
+> I didn't know it was a fix for anything when I wrote it; it was in the
+> 24-patch series just as a further refactoring.  Then I found out after
+> this report and doing a little digging I found it might be considered
+> a good fix for the issue so I included it here too.
 
---- 8< ---
-diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
-index 9c5094616a..dfe970a566 100755
---- a/t/t0063-string-list.sh
-+++ b/t/t0063-string-list.sh
-@@ -72,6 +72,15 @@ test_split ":" ":" "-1" <<EOF
- [1]: ""
- EOF
+Yup, let's queue it at the tip of (and as a part of) the base series
+with a bit of explanation.  How does this look?
 
-+test_split ":foo:bar:baz:" ":" "-1" <<-\EOF
-+5
-+[0]: ""
-+[1]: "foo"
-+[2]: "bar"
-+[3]: "baz"
-+[4]: ""
-+EOF
+----- >8 --------- >8 --------- >8 --------- >8 -----
+From: Elijah Newren <newren@gmail.com>
+Date: Sun, 16 Apr 2023 03:03:05 +0000
+Subject: [PATCH] protocol.h: move definition of DEFAULT_GIT_PORT from cache.h
+
+Michael J Gruber noticed that connection via the git:// protocol no
+longer worked after a recent header clean-up.  This was caused by
+funny interaction of few gotchas.  First, a necessary definition
+
+	#define DEFAULT_GIT_PORT 9418
+
+was made invisible to a place where
+
+	const char *port = STR(DEFAULT_GIT_PORT);
+
+was expecting to turn the integer into "9418" with a clever STR()
+macro, and ended up stringifying it to
+
+	const char *port = "DEFAULT_GIT_PORT";
+
+without giving any chance to compilers to notice such a mistake.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ cache.h    | 21 ---------------------
+ daemon.c   |  1 +
+ protocol.h | 21 +++++++++++++++++++++
+ 3 files changed, 22 insertions(+), 21 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 2f21704da9..71e2fe74c4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -39,27 +39,6 @@
+ #define S_DIFFTREE_IFXMIN_NEQ	0x80000000
+ 
+ 
+-/*
+- * Intensive research over the course of many years has shown that
+- * port 9418 is totally unused by anything else. Or
+- *
+- *	Your search - "port 9418" - did not match any documents.
+- *
+- * as www.google.com puts it.
+- *
+- * This port has been properly assigned for git use by IANA:
+- * git (Assigned-9418) [I06-050728-0001].
+- *
+- *	git  9418/tcp   git pack transfer service
+- *	git  9418/udp   git pack transfer service
+- *
+- * with Linus Torvalds <torvalds@osdl.org> as the point of
+- * contact. September 2005.
+- *
+- * See http://www.iana.org/assignments/port-numbers
+- */
+-#define DEFAULT_GIT_PORT 9418
+-
+ /*
+  * Basic data structures for the directory cache
+  */
+diff --git a/daemon.c b/daemon.c
+index db8a31a6ea..75c3c06457 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -4,6 +4,7 @@
+ #include "config.h"
+ #include "environment.h"
+ #include "pkt-line.h"
++#include "protocol.h"
+ #include "run-command.h"
+ #include "setup.h"
+ #include "strbuf.h"
+diff --git a/protocol.h b/protocol.h
+index cef1a4a01c..de66bf80f8 100644
+--- a/protocol.h
++++ b/protocol.h
+@@ -1,6 +1,27 @@
+ #ifndef PROTOCOL_H
+ #define PROTOCOL_H
+ 
++/*
++ * Intensive research over the course of many years has shown that
++ * port 9418 is totally unused by anything else. Or
++ *
++ *	Your search - "port 9418" - did not match any documents.
++ *
++ * as www.google.com puts it.
++ *
++ * This port has been properly assigned for git use by IANA:
++ * git (Assigned-9418) [I06-050728-0001].
++ *
++ *	git  9418/tcp   git pack transfer service
++ *	git  9418/udp   git pack transfer service
++ *
++ * with Linus Torvalds <torvalds@osdl.org> as the point of
++ * contact. September 2005.
++ *
++ * See http://www.iana.org/assignments/port-numbers
++ */
++#define DEFAULT_GIT_PORT 9418
 +
- test_split_in_place_multi "foo:;:bar:;:baz" ":;" "-1" <<-\EOF
- 3
- [0]: "foo"
---- >8 ---
-
-> It would be useful to test that here in addition to the existing ones.
-
-Sure. FWIW, the behavior for string_list_split_in_place_multi() is
-slightly different, since it will eat up all of the leading delimiter
-tokens and treat the first token as "foo".
-
-Here's a diff that could be squashed into this patch which captures both
-cases:
-
---- 8< ---
-diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
-index 9c5094616a..efc84dc124 100755
---- a/t/t0063-string-list.sh
-+++ b/t/t0063-string-list.sh
-@@ -72,6 +72,15 @@ test_split ":" ":" "-1" <<EOF
- [1]: ""
- EOF
-
-+test_split ":foo:bar:baz:" ":" "-1" <<-\EOF
-+5
-+[0]: ""
-+[1]: "foo"
-+[2]: "bar"
-+[3]: "baz"
-+[4]: ""
-+EOF
-+
- test_split_in_place_multi "foo:;:bar:;:baz" ":;" "-1" <<-\EOF
- 3
- [0]: "foo"
-@@ -104,6 +113,14 @@ test_split_in_place_multi "foo:;:bar:;:" ":;" "-1" <<-\EOF
- [2]: ""
- EOF
-
-+test_split_in_place_multi ":;:foo:;:bar:;:baz:;:" ":;" "-1" <<-\EOF
-+4
-+[0]: "foo"
-+[1]: "bar"
-+[2]: "baz"
-+[3]: ""
-+EOF
-+
- test_expect_success "test filter_string_list" '
- 	test "x-" = "x$(test-tool string-list filter - y)" &&
- 	test "x-" = "x$(test-tool string-list filter no y)" &&
---- >8 ---
+ enum protocol_version {
+ 	protocol_unknown_version = -1,
+ 	protocol_v0 = 0,
+-- 
+2.40.0-352-g667fcf4e15
 
 
-Thanks,
-Taylor
+
