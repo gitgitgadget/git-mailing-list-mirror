@@ -2,64 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C72C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 16:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AE6C6FD18
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 16:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231558AbjDRQ6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 12:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
+        id S232369AbjDRQ74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 12:59:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjDRQ6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 12:58:23 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B980E7E
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 09:58:22 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id w1so5183532plg.6
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 09:58:22 -0700 (PDT)
+        with ESMTP id S232286AbjDRQ7w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 12:59:52 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F3115B94
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 09:59:39 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-244a5ccf13eso1909246a91.2
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 09:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681837102; x=1684429102;
+        d=gmail.com; s=20221208; t=1681837178; x=1684429178;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Twvl4h8IXIJi5yhxuBjF58wB4ci/fRW4wC9TFRx29EA=;
-        b=su2XpRDoPBvNFH+Z7L6akoBjtr/cVlyDJoXasfQ3/f5SAHEylSxFAJMJjmL4NhsExL
-         /iwA1eyhgNcJZ89o2Q0v8EwXEfD5Fa3ucynTmn6M3BzkzOiw2Ir2eMLUQE7Bw3Hrybrv
-         dlyYcpGcDn8Rb4jrMPZ+fabE8O4R3AeJFh9NbYDHJJTK9Ezx1KX9xezhHqzR+XHOADwH
-         pht/eU4vT6/+TzQ+u1DRwUEypey2nZY/k2Nn72FD5svdqgE1XvTK1UeJ/dN9LXTIVuBf
-         WFcWs29XL+zHVv3nMgvsk+5pRvi71yHzWcpRey2mJTYmXeMTKbm1jPxACCFi6mMUSNQ6
-         JYQg==
+        bh=Tte9X10czVpq3y1etK6RLxvERIP4PryUaClXNLUjsBo=;
+        b=hsmYO1HmQJNGCuFd9Zl3/IMAG34mHZOVf/tJhI7Emq1rYwztnIc9c4WOXr4gulFvaS
+         PE4FyS9EJKPsidXpqg84W2tqB/ERZ+9n1m8ghhSlIhgjXzD7t18tNeuN67HH7UUUfCV2
+         mKYWHP9w1Zil8cQPeov1yQGwTIGFn6pkL6E4IMN4+8rOZXuBkg3IIihKmQstU5o52Q+2
+         i2zMcJHgxmJKQph9iFIRcSBHpJhu+oF4aFYRKbbNKuLOtWUYzOfa/zq9O+QTHPa9a491
+         snblznuMEUanyT8z0vqHNxuJWWFUEJuPExvoilrhWyePpcZ4mMhFtot1QDwOp+5BF0dn
+         /6ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681837102; x=1684429102;
+        d=1e100.net; s=20221208; t=1681837178; x=1684429178;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Twvl4h8IXIJi5yhxuBjF58wB4ci/fRW4wC9TFRx29EA=;
-        b=F4wYM+12IRJHDV+jSFLMuPMw5y62dVE/AREb1kpT3InKK3a0IeAtFj40axP7dMty7n
-         08EHEwfmk1FTHVuGtCoPXwzXqFjojMZtZsiIv/OMCdmyUga6UVyTQjowGPAwSZ5ZZsx3
-         ZvexaXdQZxJEBGx4ZjoqHcOa6X4r3rjDnmSAyxTto/mO4bJCgk8oEW5EFeIo78ix/pY7
-         aZzLK4UC4LB9DbB5PtcLsBLaSa0kHTKLra7Rw8DKVXK34V/htaGhVXJH7Z/peoiVK5r3
-         suq4z1O5rVQxcAe3NP8YpwAmkk7rJpVfNGI1QV3we7qCm7TFtem8DCZ4GCcs+QVm5AVc
-         Hc9w==
-X-Gm-Message-State: AAQBX9dNgK0c6awThil/lT6hW6I+5AM1Sr4nMMNgVHQoaB0C2ZJ0xwoe
-        dMCQNqfJSkN06DXFEh/WdhE=
-X-Google-Smtp-Source: AKy350aTS6LzFCqtTYkas7ykCepubxdggh/p3FVCNqyHvqy/rN3BjcOmUm4Bw0aKD6ToezMPQyJqxQ==
-X-Received: by 2002:a05:6a21:6d91:b0:ec:7705:2f18 with SMTP id wl17-20020a056a216d9100b000ec77052f18mr503268pzb.27.1681837101671;
-        Tue, 18 Apr 2023 09:58:21 -0700 (PDT)
+        bh=Tte9X10czVpq3y1etK6RLxvERIP4PryUaClXNLUjsBo=;
+        b=Kg3/BmlW7AB1h7kNRJqSfYF8+mFUEghCXwy3hvEWSxd0BXhL75p6rIDkTr+SQAbnVW
+         /0U4tRC3hnfTexRG5TyDiVro14KePFwT3DJ5xURPd9RvLcVQX4cmJsyYdmuMSrrBg6x6
+         AVTTrZZZXfCqvxXtZBno1qmWxRe3qrbXgh1LqtTD1aZN/77M8quH1HB4ZAulGyEQBtcy
+         rD6hchlNpRFlkD+9qhyXot7rRJwMwgKbTv7VAen5xZCiQS7+M5bIiBCml5GdEdMn04Lv
+         njCmHi8edjk9hpowUYYqLwf08028L43IiSXpIAD3TczH89A+Ai8leWXpx6oo/LaOIbI6
+         fHJA==
+X-Gm-Message-State: AAQBX9evKf1GfLE1izTFw8jFpezWT5MZO9esa3P+aA24iMVyfHz5n0FU
+        WxLnqJVF1giUnJXJkIvXD9c=
+X-Google-Smtp-Source: AKy350b1ZU1UmtCD0M74mvgHvTQNpstni5eRbbye9W9gX6rmCn60xAScaq9iOxco5UfYu45gZTJkFg==
+X-Received: by 2002:a17:90b:104:b0:247:e4c:d168 with SMTP id p4-20020a17090b010400b002470e4cd168mr400482pjz.10.1681837178383;
+        Tue, 18 Apr 2023 09:59:38 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id a12-20020a65418c000000b0051f17e4e1b2sm1635663pgq.68.2023.04.18.09.58.20
+        by smtp.gmail.com with ESMTPSA id ev7-20020a17090aeac700b00246b1b4a3ffsm8903621pjb.0.2023.04.18.09.59.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 09:58:21 -0700 (PDT)
+        Tue, 18 Apr 2023 09:59:38 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: tb/ban-strtok
-References: <xmqqfs8xfw25.fsf@gitster.g> <ZD6vu6H0xzLSF/2w@nand.local>
-Date:   Tue, 18 Apr 2023 09:58:20 -0700
-In-Reply-To: <ZD6vu6H0xzLSF/2w@nand.local> (Taylor Blau's message of "Tue, 18
-        Apr 2023 10:56:59 -0400")
-Message-ID: <xmqqo7nldt5f.fsf@gitster.g>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 0/4] git fsck: check pack rev-index files
+References: <pull.1512.git.1681748502.gitgitgadget@gmail.com>
+        <ZD615MLzKVwk1jVT@nand.local>
+Date:   Tue, 18 Apr 2023 09:59:37 -0700
+In-Reply-To: <ZD615MLzKVwk1jVT@nand.local> (Taylor Blau's message of "Tue, 18
+        Apr 2023 11:23:16 -0400")
+Message-ID: <xmqqjzy9dt3a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,19 +70,17 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
->>  Mark strtok() and strtok_r() to be banned.
->>
->>  source: <cover.1681428696.git.me@ttaylorr.com>
+> On Mon, Apr 17, 2023 at 04:21:37PM +0000, Derrick Stolee via GitGitGadget wrote:
+>>  builtin/fsck.c           | 36 +++++++++++++++++++
+>>  pack-bitmap.c            |  4 +--
+>>  pack-revindex.c          | 43 +++++++++++++++++++++--
+>>  pack-revindex.h          | 16 +++++++++
+>>  t/t5325-reverse-index.sh | 74 ++++++++++++++++++++++++++++++++++++++++
+>>  5 files changed, 169 insertions(+), 4 deletions(-)
 >
-> This one needs a reroll to remove `strtok_r()` from the proposed banned
-> list, and to support slightly different semantics the new
-> string_list_split_in_place_multi() function. Will send today.
+> I gave this a thorough look and it all looks good to me.
 
-I actually do not think we would seriously miss strtok_r(); as long
-as the rationale for doing so is clearly described, I think we are
-OK.  Just do not sell string-list as if it were the solution to
-everything (which is not---it is a rather poor data structure), but
-compare string_list_split() with strtok_r() and say our application
-hasn't needed the flexibility of the latter.
+This looked good to me, too.  I was planning to wait for a few days
+to see what others find.
 
 Thanks.
