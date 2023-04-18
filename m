@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B783BC77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A60EC6FD18
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232660AbjDRUlB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 16:41:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43650 "EHLO
+        id S232768AbjDRUlE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 16:41:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232654AbjDRUky (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 16:40:54 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38332C670
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:49 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54fe3cd445aso168683327b3.5
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:49 -0700 (PDT)
+        with ESMTP id S232613AbjDRUkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 16:40:55 -0400
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26288CC17
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:52 -0700 (PDT)
+Received: by mail-ua1-x92c.google.com with SMTP id ch24so199007uab.3
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681850448; x=1684442448;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681850451; x=1684442451;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4bLMfk3306UpekY3xnL2cHG7+MAMdF8giKuJ6YI8Hac=;
-        b=q0300kfTqO0FffcZMaJOj3/Hgv53VWkcXPx8mdxEAIerCB2ymaGHAZ1xBcbmnZGueo
-         5L3gWaQz9qpJqBLVmKtFZrmSRx1WXyWso7ZtbB5DyiMQnbfm9iQVR+VMEDcOScYNxK7b
-         JoQA1OOD/TPN+Hf+1MKnswy2lRRELDxWdH5QK8gjnXN0Zzr5tqR6EgvuNysRKXU91mO5
-         1/uJUkZKKNvSaqjWZoUxMbjzhP8rPBr/ZJUpeAaFn/FcrY11NwpG1eHlZhzHPR0ANrrq
-         FnSDXo7FnikT8/FgJGVYwxDV3K3ZuQEtIB8cssI494I4LXCN3ufVwCf/eNYGfUsMnSPg
-         5jAw==
+        bh=uwLXTEsltaly6sNxrv22iYhcf/YerZr3+fP45JUpHhQ=;
+        b=EtFNphYvH+L6+S/Z0BiXdDIT2dFBPDfOgwTgY2HbD8vHu3Q1lohifR/MzNGIFW9W3Y
+         zRY2+3Jvo96kiwY8j4i5W+FPBOqf8aXbCX8HR6J3HaM3INmfLYt34+oyzDBY3bDmxvip
+         5rMyaBqz3gN9Qel6M1enp6U8p7zREnl6DlDUGog/Z0eMbUfsW3V2ZEfLXuU4fsTKJPJo
+         ouWx5k37u3WnW2iXXX6Vciu83by2/m2uW3M8n8TDTE1hywTK/HHfLfA+2GY9R9v8jHpK
+         e+/E6CuAjLJOpBa3HaZfY///1/ZEAngdxFpwFXaHR9dik0TxJuExxMIdipsxgfaavYHP
+         sWSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681850448; x=1684442448;
+        d=1e100.net; s=20221208; t=1681850451; x=1684442451;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4bLMfk3306UpekY3xnL2cHG7+MAMdF8giKuJ6YI8Hac=;
-        b=HnEBbShz+op9jkcn8iRWEbgGntLCEfGF6Tu6dI8adY4LqRv2F2Cct/LQcxFv3T64Kl
-         8dYAA7e68HbqAh5Aaf7KY4qd+XhhzF6H81jre31IbvJdrAqeRoUoo+HA5TVqlmpXVitR
-         +NiNMuDkN1QDD2kruOh+TeVBi7yFL+7E+HfEw0fY4XqRoHSiU0HpkZ85nfuViPgV0SnX
-         OVBfkuYqjBoVtfCUdDOWwEYzGF53OQO6UbLZChDTLdQn7wH8kIjv8ihgr0qL2LXXTLC2
-         zUWk1zw2sJr1Oog+qGwPCB2JCaSH+e5bDj2BrxiHl8thyn1wB57GoJAwFMk703YT0zaA
-         gA6Q==
-X-Gm-Message-State: AAQBX9eC6iY6cFV3rf5+9NOt1wDhhNMvVQpFtE5YiVofvjgttGiW/+Cg
-        SAe+KMxu9/MYYPXixJt1IWRGAW2rQmCNK9ONQcTBMA==
-X-Google-Smtp-Source: AKy350bw57QekciFqcuOxoTJnh+FXGa7osp3amC75i6N3+QBmDOnCCJDMYr1hSXSBEPu6YTwIB6nOA==
-X-Received: by 2002:a0d:c102:0:b0:54f:d7f7:9d61 with SMTP id c2-20020a0dc102000000b0054fd7f79d61mr1275589ywd.14.1681850448166;
-        Tue, 18 Apr 2023 13:40:48 -0700 (PDT)
+        bh=uwLXTEsltaly6sNxrv22iYhcf/YerZr3+fP45JUpHhQ=;
+        b=IFm8lOtEAOXeKmiRmldfVXX7r90qfxUlO65sa1pRY4o4SW0skKbqSqJPU7qIERhWc4
+         J911zx0TOyVgKDovQ+3zQbm6x2zAMAOdqWOIvyws+kesZhBoEoktTac5vd2nLkVgTiA0
+         8vP7BHnlRN1qTdU2FP0kXWzpVAF/e2psfr+RQXWs5Mw+cMDepGTuqVagbawl8qJ6W312
+         CKk1D6Sjcs8N2RRR+HPl4EsOr5Lb+LxKFqp0K+o9fVzCgKg0E4AcaXOfJstaC1bYTCBk
+         K6u2P7+ETTO1VwkZlc6slNCJ3xDnOyms3lQPhMwxBgRW3y67/Xj+z0rsPnQs+2ACnMdc
+         FXwQ==
+X-Gm-Message-State: AAQBX9fLOuzeSkeaOKBM8ZnJL8q00x/Ykzcw+qyThnNp3tdebdwbI3U0
+        qZIGvi01PCJvICmwPH81L0wXfQgyxljGzLdamfanRw==
+X-Google-Smtp-Source: AKy350YSEkxVrir6awQZH4jVjn3OQlyweUufGTLans6BV79GZM/ojE14YHwDw20WV0eOW658P4Wg1A==
+X-Received: by 2002:a1f:5c58:0:b0:440:499:7747 with SMTP id q85-20020a1f5c58000000b0044004997747mr5971620vkb.10.1681850450909;
+        Tue, 18 Apr 2023 13:40:50 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v132-20020a81488a000000b0054fa99bed5asm4048696ywa.129.2023.04.18.13.40.47
+        by smtp.gmail.com with ESMTPSA id df5-20020a05690c0f8500b0054f9a3b60a1sm3281018ywb.33.2023.04.18.13.40.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 13:40:47 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 16:40:46 -0400
+        Tue, 18 Apr 2023 13:40:50 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 16:40:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 06/10] t/t6500-gc.sh: refactor cruft pack tests
-Message-ID: <e6270d75fa1112a7ed92a87f3d0cf24187292d10.1681850424.git.me@ttaylorr.com>
+Subject: [PATCH v2 07/10] t/t6500-gc.sh: add additional test cases
+Message-ID: <9db3fa9e36dce3fc7819f7c93e2af7ac6afcb326.1681850424.git.me@ttaylorr.com>
 References: <cover.1681764848.git.me@ttaylorr.com>
  <cover.1681850424.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,167 +66,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 12253ab6d0 (gc: add tests for --cruft and friends, 2022-10-26), we
-added a handful of tests to t6500 to ensure that `git gc` respected the
-value of `--cruft` and `gc.cruftPacks`.
+In the last commit, we refactored some of the tests in t6500 to make
+clearer when cruft packs will and won't be generated by `git gc`.
 
-Then, in c695592850 (config: let feature.experimental imply
-gc.cruftPacks=true, 2022-10-26), another set of similar tests was added
-to ensure that `feature.experimental` correctly implied enabling cruft
-pack generation (or not).
+Add the remaining cases not covered by the previous patch into this one,
+which enumerates all possible combinations of arguments that will
+produce (or not produce) a cruft pack.
 
-These tests are similar and could be consolidated. Do so in this patch
-to prepare for expanding the set of command-line invocations that enable
-or disable writing cruft packs. This makes it possible to easily test
-more combinations of arguments without being overly repetitive.
+This prepares us for a future commit which will change the default value
+of `gc.cruftPacks` by ensuring that we understand which invocations do
+and do not change as a result.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t6500-gc.sh | 126 ++++++++++++++++++--------------------------------
- 1 file changed, 44 insertions(+), 82 deletions(-)
+ t/t6500-gc.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index df6f2e6e52..a2f988c5c2 100755
+index a2f988c5c2..3ba2ae5140 100755
 --- a/t/t6500-gc.sh
 +++ b/t/t6500-gc.sh
-@@ -210,93 +210,55 @@ prepare_cruft_history () {
- 	git reset HEAD^^
- }
+@@ -218,6 +218,7 @@ assert_no_cruft_packs () {
+ for argv in \
+ 	"gc --cruft" \
+ 	"-c gc.cruftPacks=true gc" \
++	"-c gc.cruftPacks=false gc --cruft" \
+ 	"-c feature.experimental=true gc" \
+ 	"-c gc.cruftPacks=true -c feature.experimental=false gc"
+ do
+@@ -243,6 +244,9 @@ do
+ done
  
--assert_cruft_packs () {
--	find .git/objects/pack -name "*.mtimes" >mtimes &&
--	sed -e 's/\.mtimes$/\.pack/g' mtimes >packs &&
--
--	test_file_not_empty packs &&
--	while read pack
--	do
--		test_path_is_file "$pack" || return 1
--	done <packs
--}
--
- assert_no_cruft_packs () {
- 	find .git/objects/pack -name "*.mtimes" >mtimes &&
- 	test_must_be_empty mtimes
- }
- 
--test_expect_success 'gc --cruft generates a cruft pack' '
--	test_when_finished "rm -fr crufts" &&
--	git init crufts &&
--	(
--		cd crufts &&
--
--		prepare_cruft_history &&
--		git gc --cruft &&
--		assert_cruft_packs
--	)
--'
--
--test_expect_success 'gc.cruftPacks=true generates a cruft pack' '
--	test_when_finished "rm -fr crufts" &&
--	git init crufts &&
--	(
--		cd crufts &&
--
--		prepare_cruft_history &&
--		git -c gc.cruftPacks=true gc &&
--		assert_cruft_packs
--	)
--'
--
--test_expect_success 'feature.experimental=true generates a cruft pack' '
--	git init crufts &&
--	test_when_finished "rm -fr crufts" &&
--	(
--		cd crufts &&
--
--		prepare_cruft_history &&
--		git -c feature.experimental=true gc &&
--		assert_cruft_packs
--	)
--'
--
--test_expect_success 'feature.experimental=false allows explicit cruft packs' '
--	git init crufts &&
--	test_when_finished "rm -fr crufts" &&
--	(
--		cd crufts &&
--
--		prepare_cruft_history &&
--		git -c gc.cruftPacks=true -c feature.experimental=false gc &&
--		assert_cruft_packs
--	)
--'
--
--test_expect_success 'feature.experimental=true can be overridden' '
--	git init crufts &&
--	test_when_finished "rm -fr crufts" &&
--	(
--		cd crufts &&
--
--		prepare_cruft_history &&
--		git -c feature.expiremental=true -c gc.cruftPacks=false gc &&
--		assert_no_cruft_packs
--	)
--'
--
--test_expect_success 'feature.experimental=false avoids cruft packs by default' '
--	git init crufts &&
--	test_when_finished "rm -fr crufts" &&
--	(
--		cd crufts &&
--
--		prepare_cruft_history &&
--		git -c feature.experimental=false gc &&
--		assert_no_cruft_packs
--	)
--'
-+for argv in \
-+	"gc --cruft" \
-+	"-c gc.cruftPacks=true gc" \
-+	"-c feature.experimental=true gc" \
-+	"-c gc.cruftPacks=true -c feature.experimental=false gc"
-+do
-+	test_expect_success "git $argv generates a cruft pack" '
-+		test_when_finished "rm -fr repo" &&
-+		git init repo &&
-+		(
-+			cd repo &&
-+
-+			prepare_cruft_history &&
-+			git $argv &&
-+
-+			find .git/objects/pack -name "*.mtimes" >mtimes &&
-+			sed -e 's/\.mtimes$/\.pack/g' mtimes >packs &&
-+
-+			test_file_not_empty packs &&
-+			while read pack
-+			do
-+				test_path_is_file "$pack" || return 1
-+			done <packs
-+		)
-+	'
-+done
-+
-+for argv in \
-+	"-c feature.expiremental=true -c gc.cruftPacks=false gc" \
-+	"-c feature.experimental=false gc"
-+do
-+	test_expect_success "git $argv does not generate a cruft pack" '
-+		test_when_finished "rm -fr repo" &&
-+		git init repo &&
-+		(
-+			cd repo &&
-+
-+			prepare_cruft_history &&
-+			git $argv &&
-+
-+			assert_no_cruft_packs
-+		)
-+	'
-+done
- 
- test_expect_success '--keep-largest-pack ignores cruft packs' '
- 	test_when_finished "rm -fr repo" &&
+ for argv in \
++	"gc" \
++	"-c gc.cruftPacks=false gc" \
++	"-c gc.cruftPacks=true gc --no-cruft" \
+ 	"-c feature.expiremental=true -c gc.cruftPacks=false gc" \
+ 	"-c feature.experimental=false gc"
+ do
 -- 
 2.40.0.362.gc67ee7c2ff
 
