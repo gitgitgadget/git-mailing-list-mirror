@@ -2,84 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBE25C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 06:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DDDBC77B71
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 07:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbjDRGtP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 02:49:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44494 "EHLO
+        id S230344AbjDRHAx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 03:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230231AbjDRGtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 02:49:14 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98846187
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 23:48:49 -0700 (PDT)
-Received: (qmail 2845 invoked by uid 109); 18 Apr 2023 06:48:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Apr 2023 06:48:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31486 invoked by uid 111); 18 Apr 2023 06:48:47 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Apr 2023 02:48:47 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 18 Apr 2023 02:48:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Rolf Eike Beer <eb@emlix.com>
-Cc:     git@vger.kernel.org, Jaydeep P Das <jaydeepjd.8914@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: gpg-related crash with custom formatter (BUG:
- gpg-interface.c:915: invalid trust level requested -1)
-Message-ID: <20230418064846.GA1414@coredump.intra.peff.net>
-References: <5926995.lOV4Wx5bFT@devpool47.emlix.com>
+        with ESMTP id S229882AbjDRHAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 03:00:52 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0F5CE
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 00:00:51 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-187af4a5437so235336fac.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 00:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681801250; x=1684393250;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YiqlAa+E9ylstYl2BdshDgKkTWlzKmiLjFEN7qMe+nw=;
+        b=AkV+ExZz5BMbX2E4+uUkdiY0mEpcx1UhgCRiwbiI5OGe72MxBZQsxrZOqBvWuULGnJ
+         FFgtCF8QN7fu3A0H0VgJg2YGrcBG/9iIULk44OEGqedRPGtRmquLX73WvN32+ouGQnv1
+         rEQWMV9dtF75Bfg8TaEPMfocmuZWbrJsWa9dHgvE4J/DdPcY7gK/uHC/xqcTQDH00Qwt
+         WTlQmQi3XUoI5XuqqGl2V3q/vcZykmKjKkUWkCw0PhFxy1iVjrIrnmzytT07WPi1eqnw
+         OYzWo0stja9pSBmqUcF6Npq+BDRzejns6keY9kHfqa82UL1buEhM4x5Wbg2m6zbB9PkQ
+         vrSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681801250; x=1684393250;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YiqlAa+E9ylstYl2BdshDgKkTWlzKmiLjFEN7qMe+nw=;
+        b=SdvfQza+t1wRj4+y7upTVBbxwZKwO0bC8LXW/VM8bfRdcAPbYkORu8NxcUCnhv5zr3
+         u4Be1BiQHMG9AB9S3PrBWLpskoyCbKfzDCl21AG4acDNLjCHsWQ878uqFj90lSe6oxrX
+         +iRwVRIfEILkDhByjL0fn8P1rl4GngwPrW59b8H+cBr3YtU11dmlhfAtPdr/nFtu+hPh
+         0ff7jYBQ+J6u5X+OK+03fI/990LhahzPjGKvgXm+2Z6G0EfYLxoUZ7tOLdFDqONklK15
+         XfqXPVqCtCU3O5kwY/azOIomqIZ26CUIlg3rxHuWrFr+Snr2dbtn/7e7186z1qg3EkEn
+         xUQA==
+X-Gm-Message-State: AAQBX9fn8vOALMLSxZz052o1TwtYj9Nh03XW0afUFlANwTFAklnjUJ0d
+        /kJ0URBYnMel8NOxURywVCPc+MxsbYM=
+X-Google-Smtp-Source: AKy350aZqV9NPr2bwKc/NpObAze1VFho7Ns0mRaYQsxG57pIeg0MhjCrDwjmvKxSU/ADMA56UDqxYg==
+X-Received: by 2002:a05:6870:d599:b0:187:d86e:6e07 with SMTP id u25-20020a056870d59900b00187d86e6e07mr559973oao.42.1681801250349;
+        Tue, 18 Apr 2023 00:00:50 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id g4-20020a056870a24400b0017703cd8ff6sm5398377oai.7.2023.04.18.00.00.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 00:00:49 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] doc: git-checkout: trivial style improvements
+Date:   Tue, 18 Apr 2023 01:00:46 -0600
+Message-Id: <20230418070048.2209469-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5926995.lOV4Wx5bFT@devpool47.emlix.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 08:12:03AM +0200, Rolf Eike Beer wrote:
+There is a formatting issue discussed in [1] that is readily apparent in
+manpages after removing one of our hacks, but it's also present in HTML
+documentation generated by asciidoc-py.
 
-> When I now run "git log" in a repository that contains commits signed by 
-> people not in my keyring (e.g. the Gentoo git) I get this backtrace:
-> 
-> BUG: gpg-interface.c:915: invalid trust level requested -1
+This series fixes that issue and cleans up our use of callouts.
 
-Thanks for giving an example repo. After cloning:
- 
-  https://anongit.gentoo.org/git/repo/gentoo.git
+[1] https://lore.kernel.org/git/20230418061713.GA169940@coredump.intra.peff.net/T/
 
-I can reproduce just by running "git log -1 --format=%GT". Bisecting
-turns up 803978da49 (gpg-interface: add function for converting trust
-level to string, 2022-07-11), which is not too surprising.
+Felipe Contreras (2):
+  doc: git-checkout: trivial callout cleanup
+  doc: git-checkout: reorganize examples
 
-Before that we returned an empty string. I don't know if the fix is a
-simple as:
+ Documentation/git-checkout.txt | 54 ++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 26 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index aceeb08336..edb0da1bda 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -934,7 +934,10 @@ const char *gpg_trust_level_to_str(enum signature_trust_level level)
- {
- 	struct sigcheck_gpg_trust_level *trust;
- 
--	if (level < 0 || level >= ARRAY_SIZE(sigcheck_gpg_trust_level))
-+	if (level < 0)
-+		return "";
-+
-+	if (level >= ARRAY_SIZE(sigcheck_gpg_trust_level))
- 		BUG("invalid trust level requested %d", level);
- 
- 	trust = &sigcheck_gpg_trust_level[level];
+-- 
+2.40.0+fc1
 
-which restores the original behavior, or if the original was papering
-over another bug (e.g., should this be "undefined"?). Certainly the
-empty string matches other placeholders like %GS for this case (since we
-obviously don't know anything about the signer).
-
-+cc folks who worked on 803978da49.
-
--Peff
