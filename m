@@ -2,248 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6763C6FD18
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C4DC77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 20:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232048AbjDRUkf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 16:40:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43500 "EHLO
+        id S232285AbjDRUkh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 16:40:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbjDRUkd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 16:40:33 -0400
+        with ESMTP id S230290AbjDRUkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 16:40:35 -0400
 Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054C0A5CC
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:32 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54ee0b73e08so476887047b3.0
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7E4A5CC
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:34 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54ee0b73e08so476888467b3.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 13:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681850431; x=1684442431;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681850434; x=1684442434;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xGA+xVj4j6tfHAZeSbSqbH+sMXH5u/tWGki88UkOoy8=;
-        b=S4IXpM02Vw4T36UKOmul3mzt4C2Dma6KjgLZb9XabLCVgF9pX/vwIfZ3RUYqLS0yfh
-         8+vSdxfg7mVUQlHkoGpPyM4Rb/RaJl/5Vt2fT5ijLGV9r4i3A6Q/L0kj7ds+2dnOIWX3
-         tQ5oRIA9fp215CrgoorZifrupnmzhNYDlcaSDRv6WdaXzdknOc/6tanWl5/ggnBOpvOJ
-         olozo0igpn93MmtbaEM6WQsT5r0U3p4QRaakWL/6hOkSfKgvOq8xw4kXbBweb8CfYuk7
-         Cgb5VQxbtuRg6zfdR6AaCKj45ibPPF2aJVh1h59GxyxiKrSt3msKly9yRSVYthxlZF8U
-         U2Qw==
+        bh=GowqkZqJzwz5Wl6gCYv13LFGatPuqu0IDG+u/xSPVpI=;
+        b=UUocnVVD/irqrJ0hmKF2a5Ba8spZoDzlx5ZyBOflnGTuBtr2jI6jySS3Qk+hLt4FZc
+         C1ZO/JO4WbrLq/Ovek57Fqolz4bR0TV2BOjv3FbsbamW74QQE3gzri9OxVwKe+ItL9JK
+         LMixRRUkmuXwHVDZZkgSVwTLNCBmjNEYF7drRqpBD3RK4tvvol2uO7k98ZuVWUWZWu6c
+         eK33VMGcxz7JEha7Rw+gm+X3iuO48WnpyWcAcN1MdXmk22ZTrX5VWQSIT/C/ZmFadjgY
+         rR2kOaSfMsoiXCt6lB1fMtzuswFrZztJHVPl1TSuc9pYbQ/mgY6vPJAooQ9vJ1ICXAo2
+         dxEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681850431; x=1684442431;
+        d=1e100.net; s=20221208; t=1681850434; x=1684442434;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xGA+xVj4j6tfHAZeSbSqbH+sMXH5u/tWGki88UkOoy8=;
-        b=b8VoFD9qdsKoagF3wRjbI3A0VVPViCHlKZEatcw/onCU3Qq3T2Dca1g374nyWcyN8d
-         OWnQNxzzQnRtgrz84TqzKWT+WuYlS9I3YDIGnuRsw3616AFUUI7NrkbKPGecgqv77ISu
-         4wANbG4DovZIph7yFnVYgIq8vCkAHqeooOs2oTpjA/abs4AjwVHSI5d1N/Eb2xwG2ULb
-         mg7IN0O2WDjfFjPrUgvJxZrZJ//lyu7Iu6c3oNap5mQZkEfWpAVyUk9t8rRbTyDBjaxF
-         aVdLheHDax/OLmEO98R1nvYafylmOjeVNUiqcMvc0TFzVXDwpiDXDG2ETpj3FrOdtFms
-         Fe8w==
-X-Gm-Message-State: AAQBX9fIzZONQBt92f+5XHU7DWrZ6aFCE+FwM/XT4CDKjME0h8dEzwJM
-        yCdXRGG3g2gPv9rTu0lT/72v/hCDLk3/RDt9GxWspw==
-X-Google-Smtp-Source: AKy350YOER1CSijKxlCS8AuDYo8Afv5Qbzfl9Z1CyAgsEl+7xd+HUy2iGa5m+ptsVyREq5beO+LbmQ==
-X-Received: by 2002:a0d:f3c2:0:b0:541:8c8f:ec14 with SMTP id c185-20020a0df3c2000000b005418c8fec14mr1097607ywf.14.1681850430919;
-        Tue, 18 Apr 2023 13:40:30 -0700 (PDT)
+        bh=GowqkZqJzwz5Wl6gCYv13LFGatPuqu0IDG+u/xSPVpI=;
+        b=cx2SrWnutLpkQ/P5cOdA8b36JK7MQoDZZ25+RYeo+mPirJcEjoEhCm0WRmkaQ1tQC0
+         VJbLOhLZjR30gd0kP0AMB/j5Uwfs8xJsZdK2MOU7LzBstdeTQh/SgD5v3LTA1Pqw0D4S
+         6zZK8WYRyUmjtjteowQD6/ZR2wmA8RfXzjrRwjc9JlJy+wx+GbuKTHrZ++8hV2fCiG9U
+         oynnho7MT6gFVnWgltbdtdAOXA3y3nJyX7S4SKCjcN+A4Cl+RPoAbMDlzzaM1wofLrNm
+         9edyZqwGZ+2McLQONt3xAfVF4hUk+RqCzP7ReZS9EVlk2A+xR7DxYsZSGsehsLkZjea2
+         k8VQ==
+X-Gm-Message-State: AAQBX9dE45LGedop6eTItYyubd825meec1w8r2kukHSY1Krm4fk3MgT/
+        Y81YCW/AuS49YeOwuobyqZ8N7tXrssMJFcqO0lsULQ==
+X-Google-Smtp-Source: AKy350a+ZDQBtoHCPAhypIiWwkrbC1+Or8qCDddLqqV23nDU1kmlZeKShu1mvjOFqcRQq4huhPZGkQ==
+X-Received: by 2002:a0d:ef87:0:b0:551:11e7:30cc with SMTP id y129-20020a0def87000000b0055111e730ccmr947020ywe.22.1681850433967;
+        Tue, 18 Apr 2023 13:40:33 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bq8-20020a05690c060800b0054c082bad36sm4071863ywb.120.2023.04.18.13.40.30
+        by smtp.gmail.com with ESMTPSA id 4-20020a811204000000b0054f9e7fed7asm4054916yws.137.2023.04.18.13.40.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 13:40:30 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 16:40:29 -0400
+        Tue, 18 Apr 2023 13:40:33 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 16:40:32 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 00/10] gc: enable cruft packs by default
-Message-ID: <cover.1681850424.git.me@ttaylorr.com>
+Subject: [PATCH v2 01/10] pack-write.c: plug a leak in stage_tmp_packfiles()
+Message-ID: <c477b754e7ddde0d6e696cfd4027ad88c18aeff3.1681850424.git.me@ttaylorr.com>
 References: <cover.1681764848.git.me@ttaylorr.com>
+ <cover.1681850424.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1681764848.git.me@ttaylorr.com>
+In-Reply-To: <cover.1681850424.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is a very tiny reroll of my series to graduate `gc.cruftPacks` out
-of `feature.experimental` and enables it by default.
+The function `stage_tmp_packfiles()` generates a filename to use for
+staging the contents of what will become the pack's ".mtimes" file.
 
-A complete summary of the topic is available in the original cover
-letter[1], and the changes since last time are limited to test clean-up,
-patch reorganization, and some touch-ups on the patch messages
-themselves.
+The name is generated in `write_mtimes_file()` and the result is
+returned back to `stage_tmp_packfiles()` which uses it to rename the
+temporary file into place via `rename_tmp_packfiles()`.
 
-As always, a range-diff is below for convenience.
+`write_mtimes_file()` returns a `const char *`, indicating that callers
+are not expected to free its result (similar to, e.g., `oid_to_hex()`).
+But callers are expected to free its result, so this return type is
+incorrect.
 
-Thanks for all of the review thus far, and in advance for any review on
-this round, too.
+Change the function's signature to return a non-const `char *`, and free
+it at the end of `stage_tmp_packfiles()`.
 
-[1]: https://lore.kernel.org/git/cover.1681764848.git.me@ttaylorr.com/
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ pack-write.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-Taylor Blau (10):
-  pack-write.c: plug a leak in stage_tmp_packfiles()
-  builtin/repack.c: fix incorrect reference to '-C'
-  builtin/gc.c: ignore cruft packs with `--keep-largest-pack`
-  t/t5304-prune.sh: prepare for `gc --cruft` by default
-  t/t6501-freshen-objects.sh: prepare for `gc --cruft` by default
-  t/t6500-gc.sh: refactor cruft pack tests
-  t/t6500-gc.sh: add additional test cases
-  t/t9300-fast-import.sh: prepare for `gc --cruft` by default
-  builtin/gc.c: make `gc.cruftPacks` enabled by default
-  repository.h: drop unused `gc_cruft_packs`
-
- Documentation/config/feature.txt |   3 -
- Documentation/config/gc.txt      |  12 +--
- Documentation/git-gc.txt         |  12 +--
- Documentation/gitformat-pack.txt |   4 +-
- builtin/gc.c                     |   8 +-
- builtin/repack.c                 |   2 +-
- pack-write.c                     |  14 ++--
- repo-settings.c                  |   4 +-
- repository.h                     |   1 -
- t/t5304-prune.sh                 |  28 +++----
- t/t6500-gc.sh                    | 135 ++++++++++++++++---------------
- t/t6501-freshen-objects.sh       |  10 +--
- t/t9300-fast-import.sh           |  13 +--
- 13 files changed, 120 insertions(+), 126 deletions(-)
-
-Range-diff against v1:
- 1:  65ac7ed9b8 =  1:  c477b754e7 pack-write.c: plug a leak in stage_tmp_packfiles()
- 2:  fbc8d15032 =  2:  52fb61fa9c builtin/repack.c: fix incorrect reference to '-C'
- 3:  796df920ad !  3:  63b9ee8e2e builtin/gc.c: ignore cruft packs with `--keep-largest-pack`
-    @@ Commit message
-           - The same is true for `gc.bigPackThreshold`, if the size of the cruft
-             pack exceeds the limit set by the caller.
-     
-    -    Ignore cruft packs in the common implementation for both of these
-    -    options, and add a pair of tests to prevent any future regressions here.
-    +    In the future, it is possible that `gc.bigPackThreshold` could be used
-    +    to write a separate cruft pack containing any new unreachable objects
-    +    that entered the repository since the last time a cruft pack was
-    +    written.
-    +
-    +    There are some complexities to doing so, mainly around handling
-    +    pruning objects that are in an existing cruft pack that is above the
-    +    threshold (which would either need to be rewritten, or else delay
-    +    pruning). Rewriting a substantially similar cruft pack isn't ideal, but
-    +    it is significantly better than the status-quo.
-    +
-    +    If users have large cruft packs that they don't want to rewrite, they
-    +    can mark them as `*.keep` packs. But in general, if a repository has a
-    +    cruft pack that is so large it is slowing down GC's, it should probably
-    +    be pruned anyway.
-    +
-    +    In the meantime, ignore cruft packs in the common implementation for
-    +    both of these options, and add a pair of tests to prevent any future
-    +    regressions here.
-     
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-     
-    @@ Documentation/git-gc.txt: be performed as well.
-     -	All packs except the largest pack and those marked with a
-     -	`.keep` files are consolidated into a single pack. When this
-     -	option is used, `gc.bigPackThreshold` is ignored.
-    -+	All packs except the largest pack, any packs marked with a
-    -+	`.keep` file, and any cruft pack(s) are consolidated into a
-    -+	single pack. When this option is used, `gc.bigPackThreshold` is
-    -+	ignored.
-    ++	All packs except the largest non-cruft pack, any packs marked
-    ++	with a `.keep` file, and any cruft pack(s) are consolidated into
-    ++	a single pack. When this option is used, `gc.bigPackThreshold`
-    ++	is ignored.
-      
-      AGGRESSIVE
-      ----------
- 4:  44006da959 =  4:  905eeb9027 t/t5304-prune.sh: prepare for `gc --cruft` by default
- 8:  4ccc525c39 !  5:  fa6eafb1fe t/t6501-freshen-objects.sh: prepare for `gc --cruft` by default
-    @@ Commit message
-         cover the case of freshening loose objects not using cruft packs.
-     
-         We could run this test twice, once with `--cruft` and once with
-    -    `--no-cruft`, but doing so is unnecessary, since the object rescuing and
-    -    freshening behavior is already extensively tested via t5329.
-    +    `--no-cruft`, but doing so is unnecessary, since we already test object
-    +    rescuing, freshening, and dealing with corrupt parts of the unreachable
-    +    object graph extensively via t5329.
-     
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-     
- 6:  56a965e517 =  6:  e6270d75fa t/t6500-gc.sh: refactor cruft pack tests
- 7:  6957e54f51 !  7:  9db3fa9e36 t/t6500-gc.sh: add additional test cases
-    @@ Commit message
-         which enumerates all possible combinations of arguments that will
-         produce (or not produce) a cruft pack.
-     
-    -    This prepares us for the following commit, which will change the default
-    +    This prepares us for a future commit which will change the default value
-         of `gc.cruftPacks` by ensuring that we understand which invocations do
-         and do not change as a result.
-     
-    @@ t/t6500-gc.sh: do
-      done
-      
-      for argv in \
-    -+	"gc --no-cruft" \
-    ++	"gc" \
-     +	"-c gc.cruftPacks=false gc" \
-     +	"-c gc.cruftPacks=true gc --no-cruft" \
-      	"-c feature.expiremental=true -c gc.cruftPacks=false gc" \
- 5:  1b07eb83fe !  8:  894cf176ea t/t9300-fast-import.sh: prepare for `gc --cruft` by default
-    @@ Metadata
-      ## Commit message ##
-         t/t9300-fast-import.sh: prepare for `gc --cruft` by default
-     
-    -    In a similar fashion as the previous commit, adjust the fast-import
-    -    tests to prepare for "git gc" generating a cruft pack by default.
-    +    In a similar fashion as previous commits, adjust the fast-import tests
-    +    to prepare for "git gc" generating a cruft pack by default.
-     
-         This adjustment is slightly different, however. Instead of relying on us
-         writing out the objects loose, and then calling `git prune` to remove
-    @@ Commit message
-         one `git gc --prune`, which handles pruning both loose objects, and
-         objects that would otherwise be written to a cruft pack.
-     
-    +    Likely this pattern of "git gc && git prune" started all the way back in
-    +    03db4525d3 (Support gitlinks in fast-import., 2008-07-19), which
-    +    happened after deprecating `git gc --prune` in 9e7d501990 (builtin-gc.c:
-    +    deprecate --prune, it now really has no effect, 2008-05-09).
-    +
-    +    After `--prune` was un-deprecated in 58e9d9d472 (gc: make --prune useful
-    +    again by accepting an optional parameter, 2009-02-14), this script got a
-    +    handful of new "git gc && git prune" instances via via 4cedb78cb5
-    +    (fast-import: add input format tests, 2011-08-11). These could have been
-    +    `git gc --prune`, but weren't (likely taking after 03db4525d3).
-    +
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-     
-      ## t/t9300-fast-import.sh ##
- 9:  bfda40a21d !  9:  b6784ddfe2 builtin/gc.c: make `gc.cruftPacks` enabled by default
-    @@ t/t6500-gc.sh: assert_no_cruft_packs () {
-      }
-      
-      for argv in \
-    +-	"gc --cruft" \
-     +	"gc" \
-    - 	"gc --cruft" \
-      	"-c gc.cruftPacks=true gc" \
-     -	"-c gc.cruftPacks=false gc --cruft" \
-     -	"-c feature.experimental=true gc" \
-    @@ t/t6500-gc.sh: assert_no_cruft_packs () {
-      do
-      	test_expect_success "git $argv generates a cruft pack" '
-      		test_when_finished "rm -fr repo" &&
-    -@@ t/t6500-gc.sh: done
-    +@@ t/t6500-gc.sh: do
-    + done
-    + 
-      for argv in \
-    - 	"gc --no-cruft" \
-    +-	"gc" \
-    ++	"gc --no-cruft" \
-      	"-c gc.cruftPacks=false gc" \
-     -	"-c gc.cruftPacks=true gc --no-cruft" \
-     -	"-c feature.expiremental=true -c gc.cruftPacks=false gc" \
-10:  fa15125454 = 10:  c67ee7c2ff repository.h: drop unused `gc_cruft_packs`
+diff --git a/pack-write.c b/pack-write.c
+index f171405495..4da0ccc5f5 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -312,13 +312,13 @@ static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
+ 	hashwrite(f, hash, the_hash_algo->rawsz);
+ }
+ 
+-static const char *write_mtimes_file(struct packing_data *to_pack,
+-				     struct pack_idx_entry **objects,
+-				     uint32_t nr_objects,
+-				     const unsigned char *hash)
++static char *write_mtimes_file(struct packing_data *to_pack,
++			       struct pack_idx_entry **objects,
++			       uint32_t nr_objects,
++			       const unsigned char *hash)
+ {
+ 	struct strbuf tmp_file = STRBUF_INIT;
+-	const char *mtimes_name;
++	char *mtimes_name;
+ 	struct hashfile *f;
+ 	int fd;
+ 
+@@ -544,7 +544,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 			 char **idx_tmp_name)
+ {
+ 	const char *rev_tmp_name = NULL;
+-	const char *mtimes_tmp_name = NULL;
++	char *mtimes_tmp_name = NULL;
+ 
+ 	if (adjust_shared_perm(pack_tmp_name))
+ 		die_errno("unable to make temporary pack file readable");
+@@ -568,6 +568,8 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
+ 	if (mtimes_tmp_name)
+ 		rename_tmp_packfile(name_buffer, mtimes_tmp_name, "mtimes");
++
++	free(mtimes_tmp_name);
+ }
+ 
+ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
 -- 
 2.40.0.362.gc67ee7c2ff
+
