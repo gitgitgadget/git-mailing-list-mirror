@@ -2,99 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23B29C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 15:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFD0DC77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 15:16:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232086AbjDRPDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 11:03:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58900 "EHLO
+        id S230139AbjDRPQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 11:16:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230465AbjDRPDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 11:03:05 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F81FB45A
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 08:03:04 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54fe82d8bf5so147610177b3.3
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 08:03:04 -0700 (PDT)
+        with ESMTP id S229564AbjDRPQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 11:16:27 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6269EAF17
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 08:16:26 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id dx24so30109556ejb.11
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 08:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681830183; x=1684422183;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VEuSX6X0c3k+jOWe76ASVFCYsYUU7g1/1+WyLhjLdLA=;
-        b=cbGaM7SmYY1syZTRrebHrlEFlIjzlOq9zH8P6rG0PLEaitMOGC1V6ebXdt1YUYe5Kb
-         Cdhb/mXHD8kXpliVplAj+Owc6NShlGREEvDpkyPLi5L+BsoOzgI+4T9jqad8+785/YBH
-         K+fAsKH7QhWzBCCDYsQMKpzrSFXHplhZPc/euVtkEcJ5k24D88G4POjDWs6+ndKbuZVC
-         iz6AJepFS5Va3MlPjoBD0SLoPqeJnSWBjJMxwcys3+CPBXP4ooTvMaEQbPr06Wr45uUZ
-         eEha8a1mlCvC0EDSqvMooGPN9+AwzqjvYa7+Gctu4c6D9oBsnE+v56vzFHIpbEpxjYoA
-         5Row==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681830183; x=1684422183;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1681830985; x=1684422985;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VEuSX6X0c3k+jOWe76ASVFCYsYUU7g1/1+WyLhjLdLA=;
-        b=R1wOX4Ill2kS/k33GSfcp5yPtK7n9LW8mezUrk8iveS3Km5GlmrBQOVsQG0j9jV7jc
-         LitMdZPxwETRMBri2Mlsr5bxtK3rad+UcMP03D/Ddd77NJzRWa8qV+RP5fq8/Z4pxncX
-         tFn66Z9lZZZA1s/twVdDaJSjTUWSL70682YGOdCAVE5XeWMWQFtebJuqIzykPJPvu4xt
-         rTZ1EzczY2usHBrLRPiXYS8lb9d61ZM7igBklju1xASI6MTwWq/6ry3EFdg1sdTr7p6D
-         QjleGAZkrcAvmmf5aBuHDx8zrZXY2lQ2LggqjpeAGS9kFtmZB73+AO/35yTk5Zmu4ViM
-         /mTA==
-X-Gm-Message-State: AAQBX9dohUmb6c8Eq9IseU3CxDvTGveulNzFLhYMa2K/DKkR81kfxHNu
-        n53tMU702g+nsJZOWl5Ka/Q75Q==
-X-Google-Smtp-Source: AKy350aFSXgrnNR8w0xcHlJDvgLmPJlnEiVrNLwYFKpBnxkAriYoo8/gZZZqvrQEkWz4U/2VYoTp0g==
-X-Received: by 2002:a81:4f13:0:b0:54f:9b17:c7db with SMTP id d19-20020a814f13000000b0054f9b17c7dbmr207055ywb.10.1681830183162;
-        Tue, 18 Apr 2023 08:03:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 141-20020a810393000000b0054fba955474sm3854525ywd.17.2023.04.18.08.03.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 08:03:02 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 11:03:01 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 2/4] fsck: check rev-index checksums
-Message-ID: <ZD6xJR7vrCzvW+Xw@nand.local>
-References: <pull.1512.git.1681748502.gitgitgadget@gmail.com>
- <7db4ec3e327ed3695f4f5409cb2dc80c72688758.1681748502.git.gitgitgadget@gmail.com>
- <ZD3HI/LIXVv6Pacn@nand.local>
- <2628249e-fe9a-d15c-5414-33d815b35cd1@github.com>
- <ZD6ua4dSynRWmW2a@nand.local>
- <fe72e184-a252-dab4-e9aa-cf53e1499976@github.com>
+        bh=Js3MdinnyhdXwUnfoHQCkiepk4ckhdAIRVwKuXMh01M=;
+        b=Z/QnJlOgFH9Fb8Xz2cI3M6PGFwvi7bfQszphFNyJL82iMZvtenSwKBx3oO5tI6SmlB
+         6JbMVFxoDsiiKB9gpxTLdm34I6RVHU4eNWVQZeuRmcYScUD98DspIpGi+EkDm9bGdC2d
+         TDPgVcQ1E/mqe5gsVFqbbC7v4tGMCZ0Yz0NOCZ6tvkDejYeV6pw+pCSdBNsIBkcLyhJn
+         9SeAayyKQ6TGR1dXeMZwI+dLSfdyCeCq7z7gcDXXb3VYt1fOJrEAsbx4IlXNZ1CDav+9
+         6DLdfLNvXAo1I+d/7q6LCmBiD6JASkAxZpFCbKznWNmQ9tE4pYOZW2Al74RKDxLiYlYY
+         oxog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681830985; x=1684422985;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Js3MdinnyhdXwUnfoHQCkiepk4ckhdAIRVwKuXMh01M=;
+        b=jXcHPIIb3fZpRYGKKXCrj8y9GibMgfsArdGMOtKn0UVWoD/1ejaV5B1Z3H2MzHvMV8
+         tieXnDFyfWWG88sX7sAaTj5ATlbIa3l0DYIltIl79x1m3CaRCUHiZLeuAI9fthDrYYOX
+         S35Phs/MFur3O2dOySwCXp6rio8MAuY3Q6fJw07aIuboBMrG3LhHVcHkzdfiM0TnuYpn
+         AgFKnmXtUXSLEFrxdg5Q86Z/s4JxK0FiZRmK+WAqySb7+eh6nGKdsndZU4GJZXOjH6ZN
+         q0wnX8WS/Txofz9u/4Jr9DWKTQ1Tbz0YiiKtB4Kx1usKp0n5o4pLLYIh3TPLNc1bUY9s
+         JeFg==
+X-Gm-Message-State: AAQBX9eXzMknzXpZgaB96CtJW+pATm7nWMyQoARk1nAP3uU5DE2tZgC2
+        Ph6LHSrtXJCe4MeipQJxnAWYuAv+I6zT/PE3h6M=
+X-Google-Smtp-Source: AKy350abl7Tt+3NtUcqK2zpCtqT19Our//maen0oxuAIK0Th04YnB1+tw95r8pA9TxUN1ggSy/upaw6fL82+FVL7eBQ=
+X-Received: by 2002:a17:906:11d2:b0:94e:6a70:edd0 with SMTP id
+ o18-20020a17090611d200b0094e6a70edd0mr11879035eja.24.1681830984698; Tue, 18
+ Apr 2023 08:16:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fe72e184-a252-dab4-e9aa-cf53e1499976@github.com>
+References: <5926995.lOV4Wx5bFT@devpool47.emlix.com> <20230418064846.GA1414@coredump.intra.peff.net>
+In-Reply-To: <20230418064846.GA1414@coredump.intra.peff.net>
+From:   Jaydeep Das <jaydeepjd.8914@gmail.com>
+Date:   Tue, 18 Apr 2023 20:46:16 +0530
+Message-ID: <CACaPSotwDfDXk=kR7LntF46NN-cM-zx22T83m1sjYEDLbnSxNQ@mail.gmail.com>
+Subject: Re: gpg-related crash with custom formatter (BUG: gpg-interface.c:915:
+ invalid trust level requested -1)
+To:     Jeff King <peff@peff.net>
+Cc:     Rolf Eike Beer <eb@emlix.com>, git@vger.kernel.org,
+        Hariom Verma <hariom18599@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 10:57:15AM -0400, Derrick Stolee wrote:
-> On 4/18/2023 10:51 AM, Taylor Blau wrote:
-> > On Tue, Apr 18, 2023 at 10:27:57AM -0400, Derrick Stolee wrote:
-> >>>> +test_expect_success 'fsck catches invalid checksum' '
-> >>>> +	revfile=$(ls corrupt/.git/objects/pack/pack-*.rev) &&
-> >>>
-> >>> Would this test be tighter if we introduced a sub-shell and cd'd into
-> >>> "corrupt" here?
-> >>
-> >> corrupt_rev_and_verify does the subshell thing. Why should we do that
-> >> here in the test?
-> >
-> > I was thinking that it might be more concise if you moved the subshell
-> > to the test and out of corrupt_rev_and_verify. In addition to making
-> > corrupt_rev_and_verify work in other instances where the repository
-> > isn't required to be in a directory named "corrupt", I think it
-> > simplifies the result.
->
-> I don't think there is a good reason to allow using a different repo
-> name. This is the only test that requires doing anything but calling
-> corrupt_rev_and_verify with different parameters, so I think this
-> makes the test script at the end of the series noisier.
+Thanks for the report.
 
-No worries. I was thinking that it might be convenient in the future if
-we wanted to corrupt a .rev file in a different repository, but that's
-absolutely a bridge we can cross if/when we get to it.
+The patch did not preserve the exact behaviour of
+the previous code. Rather than calling BUG() whenever a trust level is out
+of the sigcheck_gpg_trust_level[] array, we can simply return an empty stri=
+ng
+
+if (level < 0 || level >=3D ARRAY_SIZE(sigcheck_gpg_trust_level))
+        return "";
+
+It will replicate the exact behaviour as the previous code. But as
+Jeff pointed out,
+Should this really be the defined behavior?
+
+Let me know what you think. I will make the necessary changes.
 
 Thanks,
-Taylor
+Jaydeep.
+
+
+On Tue, Apr 18, 2023 at 12:18=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Apr 18, 2023 at 08:12:03AM +0200, Rolf Eike Beer wrote:
+>
+> > When I now run "git log" in a repository that contains commits signed b=
+y
+> > people not in my keyring (e.g. the Gentoo git) I get this backtrace:
+> >
+> > BUG: gpg-interface.c:915: invalid trust level requested -1
+>
+> Thanks for giving an example repo. After cloning:
+>
+>   https://anongit.gentoo.org/git/repo/gentoo.git
+>
+> I can reproduce just by running "git log -1 --format=3D%GT". Bisecting
+> turns up 803978da49 (gpg-interface: add function for converting trust
+> level to string, 2022-07-11), which is not too surprising.
+>
+> Before that we returned an empty string. I don't know if the fix is a
+> simple as:
+>
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index aceeb08336..edb0da1bda 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -934,7 +934,10 @@ const char *gpg_trust_level_to_str(enum signature_tr=
+ust_level level)
+>  {
+>         struct sigcheck_gpg_trust_level *trust;
+>
+> -       if (level < 0 || level >=3D ARRAY_SIZE(sigcheck_gpg_trust_level))
+> +       if (level < 0)
+> +               return "";
+> +
+> +       if (level >=3D ARRAY_SIZE(sigcheck_gpg_trust_level))
+>                 BUG("invalid trust level requested %d", level);
+>
+>         trust =3D &sigcheck_gpg_trust_level[level];
+>
+> which restores the original behavior, or if the original was papering
+> over another bug (e.g., should this be "undefined"?). Certainly the
+> empty string matches other placeholders like %GS for this case (since we
+> obviously don't know anything about the signer).
+>
+> +cc folks who worked on 803978da49.
+>
+> -Peff
