@@ -2,118 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7486C6FD18
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 17:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46FE6C77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 17:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232349AbjDRRI6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 13:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50726 "EHLO
+        id S232442AbjDRRur (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 13:50:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232467AbjDRRIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 13:08:43 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E04B2693
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 10:08:40 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id a11so7437406ybm.3
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 10:08:40 -0700 (PDT)
+        with ESMTP id S232428AbjDRRum (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 13:50:42 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A1BD31D
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 10:50:40 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2a8bbea12d7so20726551fa.3
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 10:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681837719; x=1684429719;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sv+Nw266l/w4aF4fCfsImktivhHRLSEDi0WMgAVZZtQ=;
-        b=q/02leVIJjeA4wHcODBNEjFqceD4J1JIJuHJ9PI1se8K2Y+HygJ7QhAwHCZHOOiLFY
-         Tw3GfyQ+IYu0CSc1axbHEC8JytoLov03Y5NFamMBrLApCtXjYZl7cMoeZ9hwFH8IB1Wx
-         vztOG/T5KJ/O/Osr0WZid+45jvsQwf6Vuqr3/uqJXsRCyYxIoPFwYqs+BeK4dodGqW9u
-         +mzqOE2wyY/+XWFcpWLfJkDRZYwwVGzgASQD07k1BVsYJV3EWPLv7Tn85nMnZjlLqRdm
-         wHrY9sRGJxdok3hxWwWJp3hL9mbMXYY5D1yryi+PN24CTqo/ExrboNS4U9y4Z0n+ScD/
-         X6Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681837719; x=1684429719;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1681840238; x=1684432238;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sv+Nw266l/w4aF4fCfsImktivhHRLSEDi0WMgAVZZtQ=;
-        b=i8X4UO6KpTdSH4bwF7q1xDIgd1ka6PsXMUBeRX6IYfQzsP4tw51/JAcsUdYjt5Sf94
-         yhBPdC//tdE3RjhbWQuIEUlOO/O8qQAyoVpcvLmSrX+quadId03uTp67u4sgTedhlhLG
-         CGdMniedEMBHX38Edzug3Fo6h5iouMvowcLCCGOqcxDTC0nKDo79ixN8jvRaEoM7S/P+
-         GFia6wd0WIXr60pq8jvgukkxa8fYBgQVN13X5PYmUW5Mb1RmWXQzUdhj7WsOSJVHJgqJ
-         qveQ3UEwcsKnacOVrOdWKodUAJ8WAhL440CYQzf+WRYakd/lVOl+K/823sdz6GNkx5pK
-         OgKg==
-X-Gm-Message-State: AAQBX9eCjRYysZSDm3xF5OdO/y+k3SvTEB4vRkHyrzQ+SWOPpgBScVOa
-        flynmxR5jEtunsewDaZh7JVYtw==
-X-Google-Smtp-Source: AKy350ZNDKwHWYYtMitgcOjM6roGTpuQRPOq5CKcw+Ss+zMeGZ88Oy7/xbhhgqFwBkH8VuvKBpAlGA==
-X-Received: by 2002:a25:655:0:b0:b95:6ccc:56a7 with SMTP id 82-20020a250655000000b00b956ccc56a7mr2799007ybg.46.1681837719308;
-        Tue, 18 Apr 2023 10:08:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f188-20020a256ac5000000b00b923f7a98a9sm1898643ybc.7.2023.04.18.10.08.38
+        bh=2ja4D60HFJCiRkToeSpaf2E0VqFZHTBhny0umA/UBEI=;
+        b=PsUUuWs4mxvx9H6tCwkkwxb+7TIyH7/QfHqIET777gxYrxUsMdplmgfkvpt/TdSFXW
+         LNPVkkAXVFCRytr6fPHvRXypNDCKznNPBLdfHkC4KeHY0WtfRl7C3E3lHJWBB6XmMkux
+         NbaWAVS9/Cn+LHHq6vfCXIiCt4P3llOV69eirsQedpaCGCfYM/CJVALzciYV1ttB0zGi
+         VdAzJciiyz7aUkVFP4lbeVniUcGHsL0q7g/AiDVrkC9fiTA9/BZ3gzhuhL7ocsjfQUla
+         1vMnlH3uhHrNBGRPt+w3+EJjISto+5maxcYAaP4fIsxgVMzq4abHqjrWfJ+sf02kkzLy
+         w0Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681840238; x=1684432238;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2ja4D60HFJCiRkToeSpaf2E0VqFZHTBhny0umA/UBEI=;
+        b=MYNs0ENP1Tl/S0Xspu9IpT+TCvUX6uIY+uFogWzD/qoAYxh01BqNHBdklDn69c36bc
+         99ANVImo2VexfsbpHzu6SPCTmmbI3oU1241sJuEMryHB/FdtCCg74368ZjYBQA1raZBb
+         Wze2tvFV1X5DtFaPHUmE952LYc+XeH9inXjztyec2a+dBBlKAYAgSUMMaJm/m8uRqcfH
+         P7csYMRNeNoQQnwWqHtlz2FaIxx0D61Zn8MFfhRfv++JYoNzofOIjlgVJubTYLEhFR+m
+         yAsSzsEkAELGj79M+AQ09cS/M0t2cUKHLXZKmGSb7RMgsE0sH7wa7T9iAaCqyBapA4iX
+         uZ5A==
+X-Gm-Message-State: AAQBX9dQB9FV8HTiL60MSPls2fdLdf99jQpEh6u/cj9nHIJ6pidQ4f2E
+        vUl1z/BLBqCXhvMmf0+KnINsIf9dwbwZs3V2
+X-Google-Smtp-Source: AKy350bQHq2v2mwkDnHptsygyRbLNg0IJ+A1H/yQMBVvESL73eeP+fzqE2VKZcPBGXGStnG98QZ3Fg==
+X-Received: by 2002:ac2:55aa:0:b0:4eb:f6d:64f with SMTP id y10-20020ac255aa000000b004eb0f6d064fmr2920550lfg.42.1681840237973;
+        Tue, 18 Apr 2023 10:50:37 -0700 (PDT)
+Received: from titov.fritz.box ([195.246.120.47])
+        by smtp.gmail.com with ESMTPSA id l20-20020a19c214000000b004ed149acc08sm2294998lfc.93.2023.04.18.10.50.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 10:08:38 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 13:08:37 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] string-list: introduce
- `string_list_split_in_place_multi()`
-Message-ID: <ZD7OlWjApwvE8Aih@nand.local>
-References: <cover.1681428696.git.me@ttaylorr.com>
- <dda218c8c1fdc0ca2e4352b820f3432565a74a23.1681428696.git.me@ttaylorr.com>
- <20230418101058.GA508219@coredump.intra.peff.net>
+        Tue, 18 Apr 2023 10:50:37 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/3] git config tests for "'git config ignores pairs ..."
+Date:   Tue, 18 Apr 2023 19:50:31 +0200
+Message-Id: <20230418175034.982433-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230414081352.810296-1-rybak.a.v@gmail.com>
+References: <20230414081352.810296-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230418101058.GA508219@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 06:10:58AM -0400, Jeff King wrote:
-> On Thu, Apr 13, 2023 at 07:31:43PM -0400, Taylor Blau wrote:
->
-> > Instead of using `strchr(2)` to locate the first occurrence of the given
-> > delimiter character, `string_list_split_in_place_multi()` uses
-> > `strpbrk(2)` to find the first occurrence of *any* character in the given
-> > delimiter string.
-> >
-> > Since the `_multi` variant is a generalization of the original
-> > implementation, reimplement `string_list_split_in_place()` in terms of
-> > the more general function by providing a single-character string for the
-> > list of accepted delimiters.
->
-> I'd imagine that strpbrk() is potentially a lot slower than strchr().
-> But I kind of doubt that splitting is such a hot path that it will
-> matter. If we want to care, I think we could do something like:
->
->   end = delim[1] ? strpbrk(p, delim) : strchr(p, delim[0]);
->
-> It's entirely possible that a half-decent strpbrk() implementation does
-> this already.
+v1 cover letter:
+  https://lore.kernel.org/git/20230414081352.810296-1-rybak.a.v@gmail.com/
 
-I did a little research here, and it looks like both glibc[1] and
-musl[2] already do this. Those links are for their implementations of
-strcspn(), but which both implement[^1] strpbrk() as "p += strcspn(p,
-d)".
+While preparing v2, I've realized that I've failed to click "Reply All" when
+writing my previous email in this subthread.  I apologize.
+  https://lore.kernel.org/git/CACayv=jL4t3cUVS=xXQ3fLxF26vDXRJ3khs2y4UjzBw947JVkw@mail.gmail.com/
 
-> So I mention it mostly in case we need to revisit this later. I think
-> it's OK to ignore for now.
+Changes since v2:
+  - Rewritten commit message for patch 2.
+  - New RFC patch 3.
 
-In addition to being OK from a performance standpoint I think solving
-the semantics concern you noted lower down in the thread[3] is fairly
-straightforward.
+Andrei Rybak (3):
+  t1300: drop duplicate test
+  t1300: check stderr for "ignores pairs" tests
+  t1300: add tests for missing keys
 
-When in "_multi" mode, I think this boils down to moving past any number
-of characters in `delim` before each iteration of the loop. And that's
-doable with "p += strspn(p, delim)".
+ t/t1300-config.sh | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-That avoids any behavior change, and more closely matches what strtok()
-does, so I think it's a better path.
+-- 
+2.40.0
 
-Thanks,
-Taylor
-
-[1]: https://sourceware.org/git/?p=glibc.git;a=blob;f=string/strcspn.c;hb=glibc-2.37#l35
-[2]: https://git.musl-libc.org/cgit/musl/tree/src/string/strcspn.c?h=v1.2.3#n11
-[3]: https://lore.kernel.org/git/20230418102320.GB508219@coredump.intra.peff.net/
-
-[^1]: Not entirely. If strcspn() takes you to the end of the string,
-  strpbrk() will return NULL, instead of a pointer to the end of the
-  string.
