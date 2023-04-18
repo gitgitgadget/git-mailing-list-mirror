@@ -2,103 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 993C7C6FD18
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 14:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E089CC77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 14:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231184AbjDROcR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 10:32:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39096 "EHLO
+        id S229581AbjDROv4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 10:51:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbjDROcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 10:32:16 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 327D49F
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:32:15 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id n203so17495624ybg.6
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:32:15 -0700 (PDT)
+        with ESMTP id S231156AbjDROvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 10:51:54 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FD3146C3
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:51:26 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54c12009c30so568191577b3.9
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681828334; x=1684420334;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CgfbRS38TgiTelC0++i/E8We2Hs+Q4ZVYsKtamXu3Ns=;
-        b=dr7bkI1D6nlB90w+ol8G+k/7avig/BtjxQmSS4nTeOcHeGOmnCfdA9prr9MfxFPaZr
-         yWkXUiEHydjAFFuGeJN9zyMvMp9v42PNYiBebJBiO2n7Rqc50F0kLy8rMA9LNkN5bGme
-         3/gSbsMd192SnSxl21wysIhWSPXTGwpvM6p7bZS9N34mX7Q6CFu8n+ZynZ/YR7KOsLjW
-         yAbi6OMzh25WFmAiTNtEvY4JhM9FMItm62p84bOYPoc0uxAwDqayXJaGhz1RwVzBRpBk
-         jzL130LY6kTv8sJFq7PgJ99l5dvQscTter8FlfteLVYRRnU9oEP2NVKrbjrHRLaHBFyn
-         rbkw==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681829485; x=1684421485;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VleRXOA+4AX5AUgzX00JyhEooEhPH66BcPfJ146xCkE=;
+        b=bxsFRHCv39c+gWIdViBKNeX3/FwcMmY+R22UOI1l1fHVCoj5EZt/RJ+wHh2JX3zGLB
+         YuzQuFcvtZC0g+9UFzjnpz7LUg2pfWYdVTG8VAYR6WrBgWGSNoP8hFKRRgZFzZXDmWCE
+         //7iwAVuCxCC9MIZ7p1PHhtnb4Rp5hLdoun+02SQltvCSJ/9+D954ukFXqwCKbTtcFYs
+         sMev+KhJZPePwWdHCHs8OGEiwyzAQ62TqrMlBps0crcsKKCH38FCeC+xyHMgm+cwKoY5
+         lzLJp5zcLwfFZB6Zz/2MnoWG8ls92HGYKY6VgWNW3XQvwXvakdfRHl/q8krrkpmrvrmS
+         7ZuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681828334; x=1684420334;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CgfbRS38TgiTelC0++i/E8We2Hs+Q4ZVYsKtamXu3Ns=;
-        b=A5mPjryNul4dsnU46s86OdvOeJutKRsdPiJ2P50K7l5tu+tNd2ba6+js7UqyjO5S5O
-         +cSoDXz12g9lhMTYdzs76WAub1fZrFWkkEfW5Nho3knaDITT91cj9zvMMOMV191CqqVe
-         kaCNp9OdeTpexLNzaRIEvgZnMn57twTCAWYckmQTlRi2LT9jJwkurg/Xe4j9nfQ21KGQ
-         3FjKKls1tl6h6fPLIbUgf1ZzOJ5VDuKTTy+hsK39/a+d1sKuK/ONOAzWzWlhvG2OWCNz
-         k2pYWpyT52aNIpxfXUgxs3O33Wbe61BpL6JSSoWh8TKyuYxGWLtnNKqUcI0TjIvLC4TJ
-         C/gQ==
-X-Gm-Message-State: AAQBX9cptRzcfs2/745t2K+1YCopACwzSuxe6WDbT/yJkdh1AasLw0z9
-        DUm+hLXz822LNT5wHElD96GOJG9r098M51PY+A==
-X-Google-Smtp-Source: AKy350a3VYddktuW7CsE51EjRZeTdAigH1TT5Ejc69BHAnf72WZ5NAhv27UstDcOMErSNOBB9b/8uA==
-X-Received: by 2002:a25:5186:0:b0:b95:6cbb:dc5d with SMTP id f128-20020a255186000000b00b956cbbdc5dmr2188031ybb.17.1681828334314;
-        Tue, 18 Apr 2023 07:32:14 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id s1-20020a819b01000000b005461671a79csm3857063ywg.138.2023.04.18.07.32.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 07:32:14 -0700 (PDT)
-Message-ID: <e29e6584-709f-d172-e73a-88a2027a9283@github.com>
-Date:   Tue, 18 Apr 2023 10:32:13 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/4] fsck: check rev-index position values
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
+        d=1e100.net; s=20221208; t=1681829485; x=1684421485;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VleRXOA+4AX5AUgzX00JyhEooEhPH66BcPfJ146xCkE=;
+        b=Fr93/KGDbxrYrPkoonR5L17YpmYdiUUvNtyeoLTw+ovzUYpLJp8uk9Yjyob4khS/Tl
+         7u9iEcmuGyVo6+kd2zVL790les/lPeHMzqKSPA5oD9Lm6maYvoRikPRNDslN4nL0U3jq
+         QODvaF2b1Wpfgpe5ErS3/1nvGWvVsW+PxJkQXi0ltoEt/u1IJE1jkPBwcUDCkj+xxP77
+         AY03d6owIw9PLN/6nqPM5+HSvV4RCt5PcHgwdED9xtCD/IE4NH0ahWG02tIIG3Gm9qHf
+         wcmhDC102xBboOVKnvwj7MkeVqfrwfcOSXU+viOWxphiE/ePj0j7IVPDk/oWsPOklLGS
+         J3+A==
+X-Gm-Message-State: AAQBX9fem2oCU5RNj4GDi8poQv4Ef192eUR60pIhrla3BdZWFQDQ9g/S
+        9qiZACgtLmAciuy7kBCiu/tELA==
+X-Google-Smtp-Source: AKy350Ydf3A5k8cbiBwwvYtEc+uRxGDNzXgRSl51SP9xa2kwb8NyzH+WBZMcjtwz2pHp7cpmfQKU9g==
+X-Received: by 2002:a0d:f0c1:0:b0:552:96e5:61ee with SMTP id z184-20020a0df0c1000000b0055296e561eemr102443ywe.19.1681829485027;
+        Tue, 18 Apr 2023 07:51:25 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id da15-20020a05690c0d8f00b00555abba6ff7sm569920ywb.113.2023.04.18.07.51.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 07:51:24 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 10:51:23 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 2/4] fsck: check rev-index checksums
+Message-ID: <ZD6ua4dSynRWmW2a@nand.local>
 References: <pull.1512.git.1681748502.gitgitgadget@gmail.com>
- <adbe9c8ee90e087e864bd9e0c67338974b5dbc8d.1681748502.git.gitgitgadget@gmail.com>
- <xmqq1qkijhho.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq1qkijhho.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <7db4ec3e327ed3695f4f5409cb2dc80c72688758.1681748502.git.gitgitgadget@gmail.com>
+ <ZD3HI/LIXVv6Pacn@nand.local>
+ <2628249e-fe9a-d15c-5414-33d815b35cd1@github.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2628249e-fe9a-d15c-5414-33d815b35cd1@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/17/2023 6:01 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>  	if (!hashfile_checksum_valid((const unsigned char *)p->revindex_map, p->revindex_size)) {
->>  		error(_("invalid checksum"));
->> -		return -1;
->> +		res = -1;
->>  	}
->>  
->> -	return 0;
->> +	/* This may fail due to a broken .idx. */
->> +	if (create_pack_revindex_in_memory(p))
->> +		return res;
-> 
-> Here, if the revindex file itself is self consistent, res would
-> still be 0, so we will end up silently returning.  Is the idea that
-> while whatever causes in-memory revindex fail to be computed is a
-> concern from the point of view of the repository's health, it would
-> be caught elsewhere as a problem for the <pack,idx> pair we are
-> seeing here?
+On Tue, Apr 18, 2023 at 10:27:57AM -0400, Derrick Stolee wrote:
+> >> +test_expect_success 'fsck catches invalid checksum' '
+> >> +	revfile=$(ls corrupt/.git/objects/pack/pack-*.rev) &&
+> >
+> > Would this test be tighter if we introduced a sub-shell and cd'd into
+> > "corrupt" here?
+>
+> corrupt_rev_and_verify does the subshell thing. Why should we do that
+> here in the test?
 
-This is something I noticed during a test suite run, where the .idx
-was corrupt, so the .rev file could not be checked. In this situation,
-we are not using the .rev file for anything since Git processes would
-fail to lookup objects in the associated packfile.
+I was thinking that it might be more concise if you moved the subshell
+to the test and out of corrupt_rev_and_verify. In addition to making
+corrupt_rev_and_verify work in other instances where the repository
+isn't required to be in a directory named "corrupt", I think it
+simplifies the result.
 
-In this case, we have no way to validate the rest of the .rev file's
-contents, but at least we checked its header and checksum, which is
-the best we can hope to do in this case.
+Here's what I was thinking, as a diff on top of this patch:
+
+--- >8 ---
+diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
+index 6b7c709a1f..7dfbaf6b37 100755
+--- a/t/t5325-reverse-index.sh
++++ b/t/t5325-reverse-index.sh
+@@ -160,29 +160,30 @@ test_expect_success 'set up rev-index corruption tests' '
+ '
+
+ corrupt_rev_and_verify () {
+-	(
+-		pos="$1" &&
+-		value="$2" &&
+-		error="$3" &&
++	pos="$1" &&
++	value="$2" &&
++	error="$3" &&
+
+-		cd corrupt &&
+-		revfile=$(ls .git/objects/pack/pack-*.rev) &&
++	revfile=$(ls .git/objects/pack/pack-*.rev) &&
+
+-		# Reset to original rev-file.
+-		cp $revfile.bak $revfile &&
++	# Reset to original rev-file.
++	cp $revfile.bak $revfile &&
+
+-		printf "$value" | dd of=$revfile bs=1 seek="$pos" conv=notrunc &&
+-		test_must_fail git fsck 2>err &&
+-		grep "$error" err
+-	)
++	printf "$value" | dd of=$revfile bs=1 seek="$pos" conv=notrunc &&
++	test_must_fail git fsck 2>err &&
++	grep "$error" err
+ }
+
+ test_expect_success 'fsck catches invalid checksum' '
+-	revfile=$(ls corrupt/.git/objects/pack/pack-*.rev) &&
+-	orig_size=$(wc -c <$revfile) &&
+-	hashpos=$((orig_size - 10)) &&
+-	corrupt_rev_and_verify $hashpos bogus \
+-		"invalid checksum"
++	(
++		cd corrupt &&
++
++		revfile=$(ls .git/objects/pack/pack-*.rev) &&
++		orig_size=$(wc -c <$revfile) &&
++		hashpos=$((orig_size - 10)) &&
++		corrupt_rev_and_verify $hashpos bogus \
++			"invalid checksum"
++	)
+ '
+
+ test_done
+--- 8< ---
+
+If you do take my suggestion, make sure to remember to come back in
+patches 3/4 and 4/4 and adjust those instances of
+'corrupt_rev_and_verify' to first change into "corrupt".
 
 Thanks,
--Stolee
+Taylor
