@@ -2,160 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 774C3C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 15:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77F2DC6FD18
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 16:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232461AbjDRPyh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 11:54:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40300 "EHLO
+        id S232176AbjDRQRd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 12:17:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232457AbjDRPyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 11:54:33 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A29AB762
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 08:54:27 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-94f7a0818aeso131874466b.2
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 08:54:27 -0700 (PDT)
+        with ESMTP id S231293AbjDRQR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 12:17:27 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E161A273
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 09:17:23 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id s23-20020a17090aba1700b00247a8f0dd50so31137pjr.1
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 09:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681833266; x=1684425266;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mgvzBh5oEO8ATMF3EmQxyXuu7L5qsI/RvBi1FhvpZcc=;
-        b=qWp1u8UxIogSzO+vEjZ1fFMJQ+os9bAHew+uFMhl9BcIP9DVCOTZpxunSUtLr2/u/Z
-         eID1F82TndK9Axz6MxQtOW+q4jnCD2yt6zT0tYFm6E6FEphq6/e/0t621RMStKtnDwYe
-         qqPPIXBoYL37luNe7iZK9HdXSEMyvS5gtnwZ/lIdvGyMJqyFULro0z4OjuHVCunvtb3l
-         +w10i/t45HbvhtiZHHEuMRse2t5YDrlJFAv/+MxYoyZFychBkQXlJlTpRuXA3RN/B+gv
-         AcdhnobnCO7E/DGP2dpTw0J3WJBwi7jZBU0HLJzq2xw/TLh2/MSLoLUb/FpmgTxtnWDZ
-         7bKA==
+        d=gmail.com; s=20221208; t=1681834643; x=1684426643;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K1xpn3hxURjETa/fUb60Q7SjgL89WpW8vIyZXhvWycY=;
+        b=jRgYi1L1MHTlZrmkB3hEW0RTa3CGC9vpQS0khdycKBmJsO/+I6LdmChywAvD6/PW9J
+         yFTtzaQqiFmojNIGy1SC1m08mBr7uHhMa+BbvPFc+VIegQi3TfYrPD1jtZrpu71WvqX4
+         duXhukK8TuXjNu7OZQd+hoyXZ65wdo4NKbrctovtdPRrmRCiC8md+JIdmyuryVWEao6w
+         vUnoANBy7NYfOnuARwI7fiyLGEiwsBAogJ810d0yXMjYsrOcjlpP8MupR2IxkJwy3YxG
+         KxRZzAJEhAJEiuyARwfqh6aWUTOBIN+2uQeQ95EN0ZrFkDcGru4O+/U1m0LDKD1MrOku
+         RzRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681833266; x=1684425266;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mgvzBh5oEO8ATMF3EmQxyXuu7L5qsI/RvBi1FhvpZcc=;
-        b=D0mNLPNPeLXr7FRAfgTMHFJy7NOfuGxcjvooH89TSOeApAypNbqvvcnN1sopV3el38
-         kPTPyKa3iCdxHke//SEHrPLM2xuAbHbGRZbY+MmGAa5LaimWCeIzHRWAcuYEhcD+DevJ
-         xfWj9PiFdCIOZ3NYEvYawKIVB56PRWjw9WghstzVkHQbCwedeHA/1RpK1rgTtuYeokZG
-         uI4vXOr3ZW289YJ0viYfpy/hhKp6pRS2cQRsQxRhd4wZ5dC6cmia9LI+KlXrgTQMu1ze
-         q2XSRgnAy2sDjx+1/c5DpPZI9qo4AxOaBY0rkXg3M0Dsc6xEUpkXPF9Z2RZRzuYm3M5/
-         JNrA==
-X-Gm-Message-State: AAQBX9fzdkzXDKZTtw9Ovmw4IolClQNrDy0fe6QesmVQFUuHtvGAXmII
-        9YyzPMOtlr+dUbbUFCu6LuFRvReZaIliRavZK3laMZZ9xmU=
-X-Google-Smtp-Source: AKy350aE1dDZXkFoUfZopjo0uTxPRtFpX/SjxazDNnNwBr2cMMfrfAhW0qUCszZuktvh++kpRKVt0Q/66ppQDg9lE3Q=
-X-Received: by 2002:a50:d783:0:b0:504:ca21:cc64 with SMTP id
- w3-20020a50d783000000b00504ca21cc64mr1447153edi.2.1681833265658; Tue, 18 Apr
- 2023 08:54:25 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681834643; x=1684426643;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=K1xpn3hxURjETa/fUb60Q7SjgL89WpW8vIyZXhvWycY=;
+        b=TnFf52teQ3/QmsXlnWUS+Ht88BEIdvU+PnyufgzLuIjzDM/lFRsuw0An0ru0lLsXYN
+         MOAoZ20Hv32ybpuxQoXNXORGZP8CbrG15c36P12La93lcJZzKnNtOrFN0OEpVoxQml+r
+         esmVqId00GOlFLmUnHR6O3tmQymdT6SteyqpaoRe/AXk4qOU2w8zRaj7K9pNvZs+IuK8
+         klJXQlnw1rYN6KmQldKQEmJVKsNgLZdSnylMgG1xDeTYgAj631YDjhiQpFy78QdIA5A6
+         DJKNe9ES7LD+y3s84eY4YPqFx7NohbiCbLfZx9ozGmPYLQou4mz8lNqGgzYvngxwvqzM
+         yeWQ==
+X-Gm-Message-State: AAQBX9dJ3q8ec3Un77ixKqEqbH8Z3GbD92zsJgjBs+RsBpt+1zUpdpAg
+        dnzxUsUK0yWRpBei7cJJieL59irEBIE=
+X-Google-Smtp-Source: AKy350baWueXzOTtYLZGi6SzAmfTajLKPvO/J3TNe8OwO3652rlP7/AySK1SBHCPPe90TD7YprdIHg==
+X-Received: by 2002:a05:6a21:3282:b0:f0:2222:8b58 with SMTP id yt2-20020a056a21328200b000f022228b58mr431425pzb.12.1681834642460;
+        Tue, 18 Apr 2023 09:17:22 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id j27-20020a63fc1b000000b0050f9b7e64fasm9054803pgi.77.2023.04.18.09.17.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 09:17:21 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rolf Eike Beer <eb@emlix.com>
+Cc:     git@vger.kernel.org
+Subject: Re: gpg-related crash with custom formatter (BUG:
+ gpg-interface.c:915: invalid trust level requested -1)
+References: <5926995.lOV4Wx5bFT@devpool47.emlix.com>
+Date:   Tue, 18 Apr 2023 09:17:21 -0700
+In-Reply-To: <5926995.lOV4Wx5bFT@devpool47.emlix.com> (Rolf Eike Beer's
+        message of "Tue, 18 Apr 2023 08:12:03 +0200")
+Message-ID: <xmqq354xf9m6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CA+JQ7M_KuDXBaVTzVwLTx+R4-6-3TOuUOpcchkS26iiosc85Hg@mail.gmail.com>
-In-Reply-To: <CA+JQ7M_KuDXBaVTzVwLTx+R4-6-3TOuUOpcchkS26iiosc85Hg@mail.gmail.com>
-From:   =?UTF-8?B?Q2VtIEfDvG5kb8SfZHU=?= <cscallsign@gmail.com>
-Date:   Tue, 18 Apr 2023 17:54:13 +0200
-Message-ID: <CAGrwipO7odTbuKgwDmU+3hY0pEeTdjxx-_9=oufUdBzyQ_eRvQ@mail.gmail.com>
-Subject: Re: Git rebase no longer defaults to upstream after force push
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Erik,
+Rolf Eike Beer <eb@emlix.com> writes:
 
-From documentation:
+> I use this one:
+>
+> [format]
+>         pretty = %C(yellow)commit %H%C(auto)%d%Creset%nAuthor: %an <%ae> 
+> %C(yellow)% GK %GS %C(auto)[%GT% G?]%Creset%nDate:   %ad%n%n%w(0,4,4)%s%n%w(0,
+> 4,4)%+b
+>
+> When I now run "git log" in a repository that contains commits signed by 
+> people not in my keyring (e.g. the Gentoo git) I get this backtrace:
 
-> If <upstream> is not specified, [...] and the --fork-point option is assu=
-med.
+Thanks for a clearly described report.  GPG reports something like
 
-The --fork-point option does this:
+    [GNUPG:] NEWSIG
+    [GNUPG:] ERRSIG B0B5E88696AFE6CB 1 8 00 1681831898 9 E1F036B1FEE7221FC778ECEFB0B5E88696AFE6CB
+    [GNUPG:] NO_PUBKEY B0B5E88696AFE6CB
 
-> Use reflog to find a better common ancestor between <upstream> and <branc=
-h> when calculating which commits have been introduced by <branch>.
+but parse_gpg_output() that is responsible for setting the
+trust_level member of sigc structure never responds to this report
+because none among NEWSIG, ERRSIG, and NO_PUBKEY begins with
+"TRUST_" that triggers a call to parse_gpg_trust_level() to set the
+member.
 
-Since the parent of a is still in the reflog of origin/a, it is not
-being rebased (the rationale being that the commit *was* in origin/a
-at some point). If you want to disable this behavior, add
---no-fork-point option:
+The caller of parse_gpg_output() initializes the member to -1 and
+that is left intact.  Of course, it is not one of the values that
+gpg_trust_level_to_str() knows about.
 
-git rebase -ir --no-fork-point
+The absolute minimum fix is to initialize the member to TRUST_NEVER
+which is one of the values gpg_trust_level_to_str() knows about.  It
+seems that SSH based signature verification codepath uses the same
+approach.
 
-Since this is the documented behavior, it probably is not a bug.
 
-Best,
-Cem
+ gpg-interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Tue, Apr 18, 2023 at 11:34=E2=80=AFAM Erik Cervin Edin <erik@cervined.in=
-> wrote:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
->   git init --bare foo.git && git clone foo.git/ foo && cd foo
->   touch bar && git add bar && git commit -m init
->   git push -u
->   git switch -c a
->   seq 1 3 > bar && git add bar && git commit -m 1
->   git push
->   seq 11 13 > bar && git add bar && git commit -m 2
->   git rebase -ir # Works like git rebase -ir @{upstream}
->   git push --force origin main:a
->   git rebase -ir # No longer works like git rebase -ir @{upstream}
->
-> What did you expect to happen? (Expected behavior)
->
-> After force pushing, I still expected the rebase to work like git
-> rebase -ir @{upstream}.
->
-> What happened instead? (Actual behavior)
->
-> The rebase defaults to a commit other than that of the tip of the
-> upstream branch.
->
-> What's different between what you expected and what actually happened?
->
-> Instead of behaving like git rebase @{upstream}, the rebase seems to
-> default to rebasing on-top of the old upstream.
->
-> git rebase -ir result in a todo like this:
->
-> l onto
->
-> t onto
-> p f1cfbff 2023-04-18    2
->
-> Compared to git rebase -ir @{upstream} which results in a todo like this:
->
-> l onto
->
-> t onto
-> p 01e3c92 2023-04-18    1
-> p f1cfbff 2023-04-18    2
->
-> Anything else you want to add:
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.40.0
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27
-> 02:56:13 UTC 2023 x86_64
-> compiler info: gnuc: 11.3
-> libc info: glibc: 2.35
-> $SHELL (typically, interactive shell): /bin/bash
->
->
-> [Enabled Hooks]
->
-> --
-> Erik Cervin-Edin
+diff --git c/gpg-interface.c w/gpg-interface.c
+index aceeb08336..2044e00205 100644
+--- c/gpg-interface.c
++++ w/gpg-interface.c
+@@ -650,7 +650,7 @@ int check_signature(struct signature_check *sigc,
+ 	gpg_interface_lazy_init();
+ 
+ 	sigc->result = 'N';
+-	sigc->trust_level = -1;
++	sigc->trust_level = TRUST_NEVER;
+ 
+ 	fmt = get_format_by_sig(signature);
+ 	if (!fmt)
