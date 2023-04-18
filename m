@@ -2,155 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34CF6C77B7C
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 01:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94293C77B72
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 02:00:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230503AbjDRB53 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Apr 2023 21:57:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43970 "EHLO
+        id S231145AbjDRCAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Apr 2023 22:00:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230471AbjDRB51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2023 21:57:27 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136704219
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 18:56:57 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2a8c51ba511so9906701fa.1
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 18:56:56 -0700 (PDT)
+        with ESMTP id S230352AbjDRCAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2023 22:00:39 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C05ABA8
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 19:00:36 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6a5f6349ec3so69716a34.0
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 19:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681783015; x=1684375015;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1681783236; x=1684375236;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EOMqsxFVqKUZ8Vnr2Ye8yn55hA6CokPPmX+2jpIfx4A=;
-        b=QlcWsgrfr0djhG4m5N1mnXAJo2gSBR2HyzKpRSKSHi/VOLafhJsT/X5Rp5f4IMu3sz
-         YI35vN9VbmW3vCOpofnRxlqWpoJDsjVqHrwpwRwB9HlU71dc8Zl2RTe749T3HuaHdvdQ
-         RihqaJghcF1X3Q/0l6ZfY+Jvzsr7smAXmKWP36Nd1Hh0IQYShlRMM/LKH9kt64FthBbS
-         li3RHWEkktlfNJylt7EUd3A6EdXZCXzh8JHlEn7f3SJ669ylAWJQ/Qfbqym4hxjujXT4
-         JiwjcVBHVnTmopDX1vOoAi4I4/zrZNr2adhFbU22Iqd5De5365AnU4ViiTisjTQgh7wM
-         LDsw==
+        bh=ij0U2ZfWINCeR3bfozkjdBxQscw2nU7j27t7X5JmIao=;
+        b=EbjLScJCmiDMVht9YFR1OEn9Jart0y6NJ07ej8XW4wrtYRActkzcGdKcWyFwsYndZc
+         Tgp7duPBzmEHuPSEhKsOfFmMaPhDWyPaQgfWmDyMIJL7g6aWG8l/lmR5GXr1LdRHfSm6
+         mHpqyxf8Re3R1zlDPxsgvdi8MkwonB4QetelirARpZ7j4TuZ47H6u2M2ilR45lVtsNQQ
+         PhUjOIJ76ufou5EILz9EbuBP/dxriHeEHFUFLgeyTzHA2Pfs6E8SQZP/NiG/NaF5qvHr
+         549V7dljrr+n1fqxY6x73hbWdn1EuOliJTYB0gkjgXlzXZ25kSX11IwN8H03vS9CFGbv
+         zTjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681783015; x=1684375015;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EOMqsxFVqKUZ8Vnr2Ye8yn55hA6CokPPmX+2jpIfx4A=;
-        b=DnLqOIM8X3BOElapJUEGn1Sz81NWPvPNYTroJtQoZyRm57tEukdkqFCKcnHGWCz6s3
-         6/80BXQAX9gePvQY1kOlCUmqjQkkfwXnuUb51G2Bi22sLDxwpPTtq1PQlVJ/+FJxnhy4
-         v3yezGeS+AUgMtckPkIknJxl8ovTjDvNNUwGKL/ZCbUFRNHBR7PWvmzjGRdOXc3lLzXd
-         oELUf1q4xgK+6YhICJ8f5GbRHxZKdv0KKLQzTtdu/SvPYl+p0ZNXPbljjLAUBtrBQLiE
-         knR8E53TuZDHlFoAp8HgdTX1Ma1+9zoy8K84xG8Ceo/bGYY8lSd4Og5yKgww4CjGBDXo
-         zAOA==
-X-Gm-Message-State: AAQBX9cK/X99YAEXBcGFgFVAczT+SET6yzR0/LPivyem4jDvNnmRJVmN
-        +ERYp2Tdc6+b0OcpiL48ZxkQxMZlPZn0w4O5ARI=
-X-Google-Smtp-Source: AKy350aS+4h3MQaJiXhBRkKvUMBUvRxr2E4KHIF12S4GvjSG+6yvDPy4VIzhKplnbMGCNfwInlZjC5U86pziUuJkGrY=
-X-Received: by 2002:a19:f50b:0:b0:4e9:22ff:948d with SMTP id
- j11-20020a19f50b000000b004e922ff948dmr2750979lfb.7.1681783014994; Mon, 17 Apr
- 2023 18:56:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
- <20230416054735.3386065-1-newren@gmail.com> <20230417073827.GA39931@coredump.intra.peff.net>
-In-Reply-To: <20230417073827.GA39931@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 17 Apr 2023 18:56:42 -0700
-Message-ID: <CABPp-BHW8Xi+=+GG4Z+-cf1a365eO6AzBifRjB+3600G5yyY9A@mail.gmail.com>
-Subject: Re: [PATCH/RFD] fix connection via git protocol
-To:     Jeff King <peff@peff.net>
-Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1681783236; x=1684375236;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ij0U2ZfWINCeR3bfozkjdBxQscw2nU7j27t7X5JmIao=;
+        b=K55G2OvbcVGmtayB/UKxRSF+0UvG1ThVGPi+TWd6/P5SCwnCCHB7YO4HaSlPWC1Dzi
+         vHx21HTiNfCogE9diu6+n3HLLNEYiwrABvhIiuIwx1IC+cJjU2Uq7uORX2h5yvfeY7TJ
+         9PnanJaJyFoEziYhewXrBreRjn+eUMGsa8zg/L1DvrTRJJIHwbXBeMES3E2ceRKFHjzU
+         oPqO5vF7LmOR9bKy03ov3Q6PJ4HextK6joFmXaCpK/ZsYVTMCSYYsZpsaCvLJECXtH1q
+         IzCNZms7raWODMsNuYpuilQ14/7NsvE0zqKUwCDtYrSf0fU0R/zVn6W2iRHws5J2Wz21
+         xGAQ==
+X-Gm-Message-State: AAQBX9fNlqCLYG2JQy1scRvZpuxzml2mXR73cE7gAq+ZCox+aGhaeo4g
+        bBEbzAKIa/bUnVdHcOs5PCM=
+X-Google-Smtp-Source: AKy350b4ZVpxaZukT4ZV2MxNN4CgKpCyKi4ael3xNnioKxNcOUNhPlNKM8AeFxpsv1HpfBvC5dHIYA==
+X-Received: by 2002:a9d:7ad0:0:b0:6a4:2dfa:360c with SMTP id m16-20020a9d7ad0000000b006a42dfa360cmr255386otn.1.1681783235850;
+        Mon, 17 Apr 2023 19:00:35 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id f16-20020a9d5f10000000b0069f0a85fa36sm5039998oti.57.2023.04.17.19.00.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Apr 2023 19:00:35 -0700 (PDT)
+Date:   Mon, 17 Apr 2023 20:00:34 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Stefan Haller <lists@haller-berlin.de>,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+Message-ID: <643df9c257293_19bb0294b7@chronos.notmuch>
+In-Reply-To: <6a8b92d8-5b86-9cf3-3619-4c8bedfa2d47@haller-berlin.de>
+References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
+ <d3895d9b-b45a-449d-a5e6-b8b8c5e6c4b8@app.fastmail.com>
+ <6a8b92d8-5b86-9cf3-3619-4c8bedfa2d47@haller-berlin.de>
+Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 17, 2023 at 12:38=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Sat, Apr 15, 2023 at 10:47:35PM -0700, Elijah Newren wrote:
->
-> > On Sat, Apr 15, 2023 at 4:06=E2=80=AFAM Michael J Gruber <git@grubix.eu=
-> wrote:
-> > >
-> > > 5579f44d2f ("treewide: remove unnecessary cache.h inclusion", 2023-04=
--11)
-> > > broke connections via git protocol because it removed the inclusion o=
-f
-> > > the default port macro. While some may consider this transport to be
-> > > deprecated, it still serves some purpose.
-> >
-> > In particular the problem is that
-> >
-> >       const char *port =3D STR(DEFAULT_GIT_PORT);
-> >
-> > translates now to
-> >
-> >       const char *port =3D "DEFAULT_GIT_PORT";
-> >
-> > instead of
-> >
-> >       const char *port =3D "9418";
-> >
-> > Since both compile and nothing in the testsuite tests this, I just
-> > missed this problem when making the other changes.
->
-> Your fix looks obviously correct, but the much more interesting thing to
-> me is how surprising it is that neither the compiler nor tests caught
-> it.  The tests don't catch it because we never use the default port for
-> our daemon tests, since we don't want two scripts running in parallel to
-> conflict. And your example above shows what the compiler sees, but root
-> issue is this funky string-ification macro:
->
->   #define STR_(s) # s
->   #define STR(s) STR_(s)
->
-> The preprocessor doesn't know that we'll be confused if "s" isn't
-> resolved, and by the time the compiler sees it, it's a string already.
->
-> Obviously we could add a test that catches this at run-time, but we
-> should be able to do better (catch it earlier, and with less code).
->
-> My first thought was: why can't we just treat the port as an "int" in
-> the first place? The answer is mostly that getaddrinfo() expects it as a
-> string. It could even be a non-numeric service like "http" in theory
-> (and looked up in /etc/services; Debian's even has "git" in it!), but
-> our get_host_and_port() refuses to allow that. But even if we didn't
-> want to ever support non-numeric service names, it makes the code more
-> awkward (we have to format the port into an extra buffer).
->
-> This would work:
->
-> diff --git a/connect.c b/connect.c
-> index fd3179e545..1eba71e34c 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -753,7 +753,7 @@ static char *host_end(char **hoststart, int removebra=
-ckets)
->  }
->
->  #define STR_(s)        # s
-> -#define STR(s) STR_(s)
-> +#define STR(s) (STR_(s) + BUILD_ASSERT_OR_ZERO(s))
->
->  static void get_host_and_port(char **host, const char **port)
->  {
->
-> The error message is a bit verbose, but it starts with:
->
->   connect.c: In function =E2=80=98git_tcp_connect_sock=E2=80=99:
->   connect.c:801:32: error: =E2=80=98DEFAULT_GIT_PORT=E2=80=99 undeclared =
-(first use in this function)
->   801 |         const char *port =3D STR(DEFAULT_GIT_PORT);
->       |                                ^~~~~~~~~~~~~~~~
->
-> which seems OK in practice.
+Stefan Haller wrote:
+> On 17.04.23 10:34, Kristoffer Haugsbakk wrote:
+> > On Mon, Apr 17, 2023, at 10:21, Stefan Haller wrote:
+> >> 2. I have a topic branch, and I want to make a copy of it to make so=
+me
+> >> heavy history rewriting experiments. Again, my interactive rebases w=
+ould
+> >> always rebase both branches in the same way, not what I want. In thi=
+s
+> >> case I could work around it by doing the experiments on the original=
 
-Seems pretty good to me.
+> >> branch, creating a tag beforehand that I could reset back to if the
+> >> experiments fail. But maybe I do want to keep both branches around f=
+or a
+> >> while for some reason.
+> > =
 
-> Another alternative is to just declare this STR() thing too clever, and
-> put:
->
->   #define DEFAULT_GIT_PORT_STR "9418"
->
-> next to the int declaration. It's not like its going to change. But the
-> BUILD_ASSERT doesn't seem too bad to me.
+> > I would use a lightweight tag, too, since this option doesn=E2=80=99t=
+ touch tags.[1]
+> > =
 
-Yeah, I like the BUILD_ASSERT.
+> > Why do you want to keep both branches around? =
+
+> =
+
+> Several reasons:
+> =
+
+> Maybe the original branch was pushed already, and I'm collaborating on
+> it with a coworker. At the same time, I want to run my rebase experimen=
+t
+> in parallel on a copy.
+> =
+
+> Maybe I want to create github PRs for both of them, in order to run CI
+> on them, or get feedback for both of them from my coworkers.
+> =
+
+> Also, it just seems to be the most natural workflow for many people. I
+> have seen my coworkers do this a lot without thinking much whether ther=
+e
+> would be a better way.
+
+I also do this, however, I often create a new branch to point to the prev=
+ious
+one (`git branch foo-1`). I know I can refer to it with `foo@{1}`, but th=
+en I
+have to keep track if I rebase more than once, or do any other reflog
+operation.
+
+If I've sent the series for review with my tool `git send-series`, then I=
+ don't
+have to worry about that because I have refs for every version I sent.
+
+A notion of branch versions really comes in handy.
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
