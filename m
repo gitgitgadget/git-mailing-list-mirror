@@ -2,94 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71E96C6FD18
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 19:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23004C77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 19:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232170AbjDRTb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 15:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43556 "EHLO
+        id S232599AbjDRTjv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 15:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232178AbjDRTb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 15:31:27 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 652BD93D9
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:31:25 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-54fa9da5e5bso271651627b3.1
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:31:25 -0700 (PDT)
+        with ESMTP id S230390AbjDRTju (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 15:39:50 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47BD97EFA
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:39:49 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-63b620188aeso2701318b3a.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681846284; x=1684438284;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c0hmtHaN/GnpnMf8rYvbwrZ+MftDMnNFGa6F904Xqlo=;
-        b=j+SsXjlOFPXixjER0u/B9BcRzkRMk6bym5UX0NB6GXJbY7IhOv/Ty+2wELvjSXntfN
-         vvhPINuhqq4ig3VKCEd3FNSErggvCfPSGsAJvfBTDmAvOZrrxAXA2jtqr/rmS3flOjJW
-         joFe5jfKnGAbhjzJAyvgfP36v2DYRwSkuFsqmQHK2QsDqgTSh3b+vYzn5K1aaVconk2n
-         ItKLxupPTvWXFKAOUZZwMluLCl5hApK2fnviUDBSImWZYfWhkG3nwWk3Ls2FRnfHu24h
-         +vnDKucHoQgpFaUPzPxKWymJ9LaAmoQtYf5kzmD8Rhc2lFQ3y31J2/54s9lAbVbf1VT2
-         kh0g==
+        d=gmail.com; s=20221208; t=1681846789; x=1684438789;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6DjxixWHbC4kPi03ND/3tL3X/lrLMgtxWjrrhusmIQo=;
+        b=a9SYRzGF5TPRzaFz9lizHw30ZuZvGETFuB/iMNwcDWBBq3WIYdXRpR/YVyXJBBnXAD
+         LZU1U0AioKhc6I9mOUiTrCj2XAlroHx4nkolRmhDfbK74Z+MGuDgQUvgP5Qz+SH/bnHd
+         uoKVQj8VeudxmftPUK2JtnkRXam7Q2Wb78/x4kfhFc4uXgTh8HrGh+p/fOUle1U7hqzP
+         SS6lj2MMfcZcguCNURMP9e8FwHnDHhTIAo/foVJcyZOfvRWzKhnJpMnACsQxVXXKjIj9
+         S874od0FDgo46Nxr3v6wPo1t1ZFnK3AWCDYbGE9AaM2SWx2hB/zbg6cBnSEKtC3xWG1u
+         Co8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681846284; x=1684438284;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c0hmtHaN/GnpnMf8rYvbwrZ+MftDMnNFGa6F904Xqlo=;
-        b=EpLB5Dw+//xqHlixSOGYDpVpsmo++CfYxTSPpA9q9O9RxAlB8svtovjNCqtcaWHNLc
-         6+0ZlE7eS40Zny0++Th8ZGMBCOyQYvzBo3b3QNHrZzWPyKE5UBpMc01HR3iWrF6Ay4NG
-         OvmLTKsmk0RYm3k6FkqVvA1TbwgMXK8F2809z9enS496i8kRWDXbkegA1l/7u3awq0Yd
-         MBTXDy/whda5o9bH8Ca5Vi8qWt9x0MZnxi+tukuUo3O+hQ8zFNdCBjYE73sWQdYwj3B5
-         IEgHVVoKcw0cDdDEzZPMYMyQqf0FsZiFUzX8wKLw+q+AhPfwT9Ygfo8yqX0Q8iJxQCXE
-         5zQw==
-X-Gm-Message-State: AAQBX9dbz2OkEyBLwY+strDwKAdlrE3/YyK1zB27jWd5h7r56yo5LxuW
-        0uU9MMfermtqftZH2fTCMr3d61C2pwXEFIU51YLUxg==
-X-Google-Smtp-Source: AKy350bf4ibEseQebz4bI1xbFVRRoGpsXBJ+NDNg5mCxIcewg5oKSfo29VoTd0NzSZs4yafbBkRW6A==
-X-Received: by 2002:a0d:d88c:0:b0:544:5b63:b956 with SMTP id a134-20020a0dd88c000000b005445b63b956mr1204578ywe.8.1681846283144;
-        Tue, 18 Apr 2023 12:31:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a192-20020a811ac9000000b0054c19f4d6d2sm3999335ywa.29.2023.04.18.12.31.22
+        d=1e100.net; s=20221208; t=1681846789; x=1684438789;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6DjxixWHbC4kPi03ND/3tL3X/lrLMgtxWjrrhusmIQo=;
+        b=NRgiW/jrv0AT2hnse8/XL51AMYvvohBm6TpQqbprVtFHg0pPI+KJENYuMk3QGzjH5B
+         uC3ekZL907+V2hAre0YERSqkDWMdOAinONDL6EnmPbp1HBEriduG1JpbBxVa5Ud/6vvq
+         QHhqEDqOgNdgGwQ4abHkh9ZJC6yMVc4VWB/MI7jO7ldqlqEXfFXYO2C0fym7H30espDR
+         HEryV9kVOV31lFeVxjvWyDtse1aLMNCbjUMgLEcx7UdYXLmyxxAV4B5eUp92GzgM3RYs
+         oeDphkGIMhlS1Mxx0o6KkNytjZlcnL4Tffv7SUdEpFEmc23FvRWb0XCdaWTeZHaNinv+
+         WGTw==
+X-Gm-Message-State: AAQBX9c5rG9waeGsX/eAzxCVEAznA9RiLvnQFLrRAAvcLFdBafdu+/0T
+        K66Nq0r6ZClFJKpvpPvkNq0=
+X-Google-Smtp-Source: AKy350bV7bfmfkPKujkU3jxPtBzdyvpUYyyi1bPpB+6pQAPB0MnSC24zK9p3R72KuUsYsvMJVXJtqw==
+X-Received: by 2002:a05:6a00:2491:b0:63d:4752:4db6 with SMTP id c17-20020a056a00249100b0063d47524db6mr401436pfv.8.1681846788691;
+        Tue, 18 Apr 2023 12:39:48 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id p15-20020aa7860f000000b005810c4286d6sm9707809pfn.0.2023.04.18.12.39.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 12:31:22 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 15:31:21 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        Tue, 18 Apr 2023 12:39:48 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Chris Torek <chris.torek@gmail.com>
-Subject: Re: tb/ban-strtok
-Message-ID: <ZD7wCYDmhiKcfhow@nand.local>
-References: <xmqqfs8xfw25.fsf@gitster.g>
- <ZD6vu6H0xzLSF/2w@nand.local>
- <xmqqo7nldt5f.fsf@gitster.g>
+Subject: Re: [PATCH v2 1/6] string-list: introduce
+ `string_list_split_in_place_multi()`
+References: <cover.1681428696.git.me@ttaylorr.com>
+        <cover.1681845518.git.me@ttaylorr.com>
+        <6658b231a906dde6acbe7ce156da693ef7dc40e6.1681845518.git.me@ttaylorr.com>
+Date:   Tue, 18 Apr 2023 12:39:48 -0700
+In-Reply-To: <6658b231a906dde6acbe7ce156da693ef7dc40e6.1681845518.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Tue, 18 Apr 2023 15:18:43 -0400")
+Message-ID: <xmqqleipc73v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo7nldt5f.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 09:58:20AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
+
+> Introduce a variant of the `string_list_split_in_place()` function that
+> takes a string of accepted delimiters.
 >
-> >>  Mark strtok() and strtok_r() to be banned.
-> >>
-> >>  source: <cover.1681428696.git.me@ttaylorr.com>
-> >
-> > This one needs a reroll to remove `strtok_r()` from the proposed banned
-> > list, and to support slightly different semantics the new
-> > string_list_split_in_place_multi() function. Will send today.
+> By contrast to its cousin `string_list_split_in_place()` which splits
+> the given string at every instance of the single character `delim`, the
+> `_multi` variant splits the given string any any character appearing in
+> the string `delim`.
 >
-> I actually do not think we would seriously miss strtok_r(); as long
-> as the rationale for doing so is clearly described, I think we are
-> OK.  Just do not sell string-list as if it were the solution to
-> everything (which is not---it is a rather poor data structure), but
-> compare string_list_split() with strtok_r() and say our application
-> hasn't needed the flexibility of the latter.
+> Like `strtok()`, the `_multi` variant skips past sequential delimiting
+> characters. For example:
+>
+>     string_list_split_in_place(&xs, xstrdup("foo::bar::baz"), ":", -1);
+>
+> would place in `xs` the elements "foo", "bar", and "baz".
 
-I agree that we wouldn't miss it at all, since we have no uses of
-strtok_r() today.
+strtok() also skips leading and trailing delimiters, i.e. the above
+will give you identical result for ":foo:bar:baz:".
 
-But let's decide on banning it separately, since the much more
-immediate-term issues are the existing uses of strtok() that are in the
-tree.
+It would be useful to test that here in addition to the existing ones.
 
-Thanks,
-Taylor
+> +for test_fn in test_split test_split_in_place_multi
+> +do
+> +	$test_fn "foo:bar:baz" ":" "-1" <<-\EOF
+> +	3
+> +	[0]: "foo"
+> +	[1]: "bar"
+> +	[2]: "baz"
+> +	EOF
+>  
+> +	$test_fn "foo:bar:baz" ":" "0" <<-\EOF
+> +	1
+> +	[0]: "foo:bar:baz"
+> +	EOF
+>  
+> +	$test_fn "foo:bar:baz" ":" "1" <<-\EOF
+> +	2
+> +	[0]: "foo"
+> +	[1]: "bar:baz"
+> +	EOF
+>  
+> +	$test_fn "foo:bar:baz" ":" "2" <<-\EOF
+> +	3
+> +	[0]: "foo"
+> +	[1]: "bar"
+> +	[2]: "baz"
+> +	EOF
