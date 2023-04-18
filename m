@@ -2,86 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7AEAC77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 04:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82A36C77B71
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 04:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbjDRElq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 00:41:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43062 "EHLO
+        id S230133AbjDRE6S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 00:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbjDRElp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 00:41:45 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A702D1BDC
-        for <git@vger.kernel.org>; Mon, 17 Apr 2023 21:41:43 -0700 (PDT)
-Received: (qmail 745 invoked by uid 109); 18 Apr 2023 04:41:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Apr 2023 04:41:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30664 invoked by uid 111); 18 Apr 2023 04:41:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Apr 2023 00:41:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 18 Apr 2023 00:41:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Subject: Re: [PATCH] doc: remove custom callouts format
-Message-ID: <20230418044142.GA130759@coredump.intra.peff.net>
-References: <20230418011828.47851-1-felipe.contreras@gmail.com>
- <20230418040034.GC60552@coredump.intra.peff.net>
+        with ESMTP id S229517AbjDRE6R (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 00:58:17 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A5CB2D50
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 21:58:16 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id y24so1129933ljm.6
+        for <git@vger.kernel.org>; Mon, 17 Apr 2023 21:58:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681793894; x=1684385894;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C2nRRhW5miXijagfC5kLPRxOw8cwLCJHnxoCjSkXkVU=;
+        b=sr0nfXnI5gCQetgecTwRtqGkUbLv6BuHzEKxX8/z/0jFfIj3xKoC+gZUX6WOeVZdfp
+         tE98WJZB77HlvHj0KDsCiDRahnW4JhyrZnkxuNg/7dwzhVFEXf81eaBJDbyUSdMmtzPE
+         a9T8P1shNZOIUTheLTJC1CzpHKnxx9Y+Ze5rdWXC7JpgQdu3EuNYt1iTN9Ijg5SvaSQP
+         TH+8bLNaNz8etxQTQxbsVC5U2vJ026vf/w4eNU7X27zTc9DikHj3LbkBANqyHXa7siBT
+         YvRqFGYV6kz0A6du4lLgoW3kTclRFIhjWEuJOYE9q75WS7igWi+LYiJPuGL3CGaXwlfG
+         mgug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681793894; x=1684385894;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=C2nRRhW5miXijagfC5kLPRxOw8cwLCJHnxoCjSkXkVU=;
+        b=j8jhZ4Cnu0ixaEM4ZcEsTbFhUYRQYDYUiJCzyykYcNQCRSxNCiH3loaNYPb7ZS9F78
+         xIJWVcTmPdeAixkWA4qxBR/WA1MIoetZifj4pWinDL4K+FulwH5/DotohygIooumePu4
+         57Fs8dgFItmcp445eeGE0R/Bkv+IPQEpTuZNLtglkPsjUCC09kHNXnmjxJI3sK01+vm1
+         8KlepRz7e4EF/R4TichfZCr0uvx+bC8bhAlhbB5x/Teml+Rwg5gaNAzUHjylljim0u/W
+         DaOvVC21OgZKDiiDg8ywwl7aD3lkADSuwdxbqIfbIanzoJqpYAGnBwNqwiuf3WnAk53/
+         LJ+g==
+X-Gm-Message-State: AAQBX9dg4fmvuegkej+qtrbaidkx96BFs20BptSS3ScXdI6cXfTxjus6
+        wrwfG1owjFEA0F1yNlETISjAE4kLysAP/hXznnSkgMdjXfQ=
+X-Google-Smtp-Source: AKy350ZU1DFqoIBiwK0FeDBiPPmIOiadEZnqn1dPaJmLmgRphSpe47A7ulvMeRVrLj7Ju9AL5XdYKCiQdKsILdsdhKQ=
+X-Received: by 2002:a2e:b61b:0:b0:2a6:16b5:2fba with SMTP id
+ r27-20020a2eb61b000000b002a616b52fbamr397656ljn.1.1681793894389; Mon, 17 Apr
+ 2023 21:58:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230418040034.GC60552@coredump.intra.peff.net>
+References: <20230407072415.1360068-1-christian.couder@gmail.com>
+ <20230407072415.1360068-12-christian.couder@gmail.com> <8daf2603-2818-9c9d-7a06-6af2872a045a@github.com>
+ <89c78da5-388a-e52b-b20b-e376ac90de14@github.com>
+In-Reply-To: <89c78da5-388a-e52b-b20b-e376ac90de14@github.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 17 Apr 2023 21:58:01 -0700
+Message-ID: <CABPp-BHCdjOutYqdMO1NbYKNA0BgkXRgwUEKK=MX0kXM-5G_DQ@mail.gmail.com>
+Subject: Re: [PATCH 11/14] replay: use standard revision ranges
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 12:00:34AM -0400, Jeff King wrote:
+On Fri, Apr 14, 2023 at 7:23=E2=80=AFAM Derrick Stolee <derrickstolee@githu=
+b.com> wrote:
+>
+> (I was able to get a segfault by rebasing this series with
+> --author=3Dstolee because the commit list became empty. Something
+> to watch for.)
+>
+> > Something like:
+> >
+> >       'git replay [options] <base> <tip>'
+> >       This mode means to rebase <tip> onto <base>,
+> >       detecting the range of commits to rewrite.
+> >
+> >       'git replay [options] <new-base> <old-base> <tip>'
+> >       This mode means to rebase the range <old-base>..<tip>
+> >       onto <new-base>.
+>
+> For that reason, I think we should be using explicit argument
+> parsing in the builtin and only transform arguments we
+> understand into the setup_revisions() (by building a strvec).
 
-> It's probably still worth moving forward with your patch, as I think it
-> takes us in the direction we want long-term (and which builds with
-> asciidoctor are already using). But we may want to pair it with a patch
-> to work around the issue with git-checkout.1 using asciidoc to avoid
-> regressing that section. It may require re-wording or re-organizing to
-> work around the bug.
+So, it turns out that this suggested solution wouldn't have helped
+prevent the segfault you found.  If someone merely passed <old-base>
+=3D=3D <tip>, they'd see the same segfault.  In fact, I think you found a
+latent bug in merge-ort.  In particular, cmd_replay() has
 
-Just to clarify my comment on asciidoctor: since our Makefile will put
-its output through docbook, too, it actually is using the xsl you're
-removing here (though I'm unclear on why its output looks good in
-general even before your patch).
+    struct merge_options merge_opt;
+    struct merge_result result;
 
-But the problem with git-checkout.1 in particular is that the XML
-generated by asciidoc does not close the <calloutlist> at the right spot
-(it sticks the continuation onto the calloutlist), whereas asciidoctor
-does it right (it closes the calloutlist after item 3).
+    init_merge_options(&merge_opt, the_repository);
+    memset(&result, 0, sizeof(result));
 
-I had tried putting an open block around the whole example and callout
-list before, which asciidoc doesn't like. But doing it just around the
-callout list, like so:
+    <do N merges, for some value of N>
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 6bb32ab460..bd83a6e5d2 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -530,9 +530,11 @@ $ rm -f hello.c
- $ git checkout hello.c            <3>
- ------------
- +
-+--
- <1> switch branch
- <2> take a file out of another commit
- <3> restore `hello.c` from the index
-+--
- +
- If you want to check out _all_ C source files out of the index,
- you can say
+    merge_finalize(&merge_opt, &result);
 
-seems to improve things. The generated XML looks sensible, and the
-output looks like asciidoctor's, though unfortunately both omit the
-blank line between the end of the callout list and the next paragraph.
-That might be good enough to live with.
+This code segfaults if N is 0, because merge_finalize() doesn't return
+early when result->priv is NULL.
 
--Peff
+We never triggered this before, because this is the very first code
+example we've had where someone has tried to call merge_finalize()
+without first performing a merge.  Anyway, nice find and thanks for
+reporting!
