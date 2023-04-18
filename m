@@ -2,114 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D8B7C6FD18
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 19:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB746C77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 19:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232604AbjDRTos (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 15:44:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49360 "EHLO
+        id S232625AbjDRTsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 15:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231174AbjDRToq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 15:44:46 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F58955B5
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:44:45 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id t16so17382199ybi.13
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:44:45 -0700 (PDT)
+        with ESMTP id S232635AbjDRTsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 15:48:14 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A88AD2F
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:48:12 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-54fbb713301so230373177b3.11
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681847084; x=1684439084;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681847292; x=1684439292;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vi8vJ49DXK/RAh8+Xk+/AMwTjjsULJWVTSfJdy4vEKI=;
-        b=ClIolKXMtmUxZIbfH/S0FH29Na+zNRY6kk4jrqfzP3gHt1VSmV5tEoHESYeiT9vLYr
-         TkpgT80fvd99tti8bGUx1BGtXVOlwzKRCVjNZw+mot3eXJwafA2+wYYkBnVAdPbXVA/9
-         2SVfbxw9aOyZ9aOgTMe/l4Wdz2kNfvGChMX5iE4b5ceKDbD9FPP2vmBh0n3uupSa2xiC
-         QksxwsMywAlDs3dIf0tPHbKAnW4jrkwPqEZB0FB34c5NGQtBEatToK4FnZI+ow2IIAZz
-         uIY0n5Jv81agIKU4+tW3pdJhbrjG+VMc7LzuXCB6lnyDbIacfyiHvRK2qaOLT6vV+PY+
-         +l3A==
+        bh=qv85kzwcUFCzZoXanh2pnRR8wBSS6PXyQKLP8e1zUE8=;
+        b=BRcT9x7WVNhABqEycpqk/q/sw7CiuiHEsidkwmUe+xiZLKUDbQPQbzIN5XmarLmDk8
+         pXOHzyg5ZispeBZb7OWXtn0YWxB/FuNN3lZLuuL2cj13dx6KshliRLPz8F3s8/PAFWqA
+         nGkoLO7VW3fmLk50CkZ/AS5vMF+6A8sqFh0xlwCPYwQV+Kf1Yv5eaGmSeOh7gYpPTnzS
+         URSskPMqO1s3kz0n0roikxsS70/wM93i4e5KjtlNqvBAweU4UY7wyrIyVzS6e2V6PXDn
+         xdGhdoldgZKu++3XeRNPqIXn+BeD0f8gwg7PENRVXoimcCPUQcKvmv76PaYXdfCJvXim
+         i/hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681847084; x=1684439084;
+        d=1e100.net; s=20221208; t=1681847292; x=1684439292;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vi8vJ49DXK/RAh8+Xk+/AMwTjjsULJWVTSfJdy4vEKI=;
-        b=WjPwVC/vuAhjeA+gIRftDcw0qv0chN8SvO5SldaMDif+VQxgsvFPc5VHPXH+vtUuib
-         yXQOsM5Js6FIiPbX3pTaE2CqEq4OPSko08bggWndUI8hvaKAeFmZMcFKyKLodXIHNDfK
-         SHh6a4ETNtb1qzQyAqOlWvenzPlzJyf8tHr/kr0FdtD7ygfNONmzjmTgXhmPIiDbzZ60
-         jw+EoUnAj2OT87CsXkUbqb0KYSYihYHbw/DwREBau7ywszXCnhqVIKxZ6SO3kHoJLF71
-         8jKTqvrphkTQllu4lM4AIq6hxpZgmFhjxemt4N8AUfliahz0EScHcrxlpVfmgasgH1Hb
-         X0lA==
-X-Gm-Message-State: AAQBX9dubJQhrM5uMRUia6TaAtR7l/wdWPFJVDwQ37H+pLZKwai0ZHCY
-        mpo5HJ0nbA+mGYiSMD+bdHEXHA==
-X-Google-Smtp-Source: AKy350azvpY8qAU1wkg/yBRtMWrpmcpu/oDzrqY9ZolGi9FquwdIrY/23IKBuYn9i2vR+A8OcyDupA==
-X-Received: by 2002:a25:4ca:0:b0:b8f:9b8:ceb7 with SMTP id 193-20020a2504ca000000b00b8f09b8ceb7mr18769698ybe.44.1681847084355;
-        Tue, 18 Apr 2023 12:44:44 -0700 (PDT)
+        bh=qv85kzwcUFCzZoXanh2pnRR8wBSS6PXyQKLP8e1zUE8=;
+        b=ZLKepAdPsHbvHAuRrqs/+dlBoB13s9xtzaGw13Ah70lz1HrozeMKiWD66v9T756lIP
+         prKx4Oq7b54xrHDHqp+5cS3i3YLn3ifqp4pAEPjjJNbgBI6+OYmB6HcoB7ayKvXz9ypF
+         vw5BKMdVqM1TRsRmmr6wmZI2wA/ImQPmtsc71JlIciuN66pABaZ7j0Onlf3EGTwTuvTj
+         fVQVbDnStYqgSD3SSjh8IOui06wuYjBK+iKsjsYuJuyRdyfu3UfZ7BugPV4He0+PkXd2
+         R0W9JOq00WsEQp3K9iDShxG2dmPh/1412mt5ojrTptKXvnSyn/BjU8q88MYbrEKn1zwx
+         52aA==
+X-Gm-Message-State: AAQBX9cUBq5fMTP5NT7xAT5n506I5SwN1feKoRkcZfTvAy58Hg4DWYVj
+        VEJqjoxUxtx6PRTbkV+dAH07guKOuojuj3KRxCv2yA==
+X-Google-Smtp-Source: AKy350YzPQe7u2RyLGlVOMYjZxOMPTAigUCrjn1vtTVemmbYtGNwY0LNyd62I2uZtAbaOrXOePVfaQ==
+X-Received: by 2002:a81:7d43:0:b0:552:a605:e408 with SMTP id y64-20020a817d43000000b00552a605e408mr938641ywc.12.1681847291789;
+        Tue, 18 Apr 2023 12:48:11 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p198-20020a2542cf000000b00b9582234118sm519830yba.32.2023.04.18.12.44.43
+        by smtp.gmail.com with ESMTPSA id l69-20020a812548000000b00552a118d059sm2727552ywl.117.2023.04.18.12.48.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 12:44:43 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 15:44:42 -0400
+        Tue, 18 Apr 2023 12:48:11 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 15:48:10 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/10] t/t9300-fast-import.sh: prepare for `gc --cruft`
- by default
-Message-ID: <ZD7zKl3iDQc/TbWJ@nand.local>
+Subject: Re: [PATCH 07/10] t/t6500-gc.sh: add additional test cases
+Message-ID: <ZD7z+rg2+fhq/AFP@nand.local>
 References: <cover.1681764848.git.me@ttaylorr.com>
- <1b07eb83fe6ab9fcb65d5a4746dec50c0f2cbd9e.1681764848.git.me@ttaylorr.com>
- <20230418104331.GE508219@coredump.intra.peff.net>
+ <6957e54f51759ff1b6d2469bc40c9b966635595d.1681764848.git.me@ttaylorr.com>
+ <20230418104813.GF508219@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230418104331.GE508219@coredump.intra.peff.net>
+In-Reply-To: <20230418104813.GF508219@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 06:43:31AM -0400, Jeff King wrote:
-> On Mon, Apr 17, 2023 at 04:54:27PM -0400, Taylor Blau wrote:
+On Tue, Apr 18, 2023 at 06:48:13AM -0400, Jeff King wrote:
+> On Mon, Apr 17, 2023 at 04:54:33PM -0400, Taylor Blau wrote:
 >
-> > In a similar fashion as the previous commit, adjust the fast-import
-> > tests to prepare for "git gc" generating a cruft pack by default.
+> > In the last commit, we refactored some of the tests in t6500 to make
+> > clearer when cruft packs will and won't be generated by `git gc`.
 > >
-> > This adjustment is slightly different, however. Instead of relying on us
-> > writing out the objects loose, and then calling `git prune` to remove
-> > them, t9300 needs to be prepared to drop objects that would be moved
-> > into cruft packs.
+> > Add the remaining cases not covered by the previous patch into this one,
+> > which enumerates all possible combinations of arguments that will
+> > produce (or not produce) a cruft pack.
 > >
-> > To do this, we can combine the `git gc` invocation with `git prune` into
-> > one `git gc --prune`, which handles pruning both loose objects, and
-> > objects that would otherwise be written to a cruft pack.
+> > This prepares us for the following commit, which will change the default
+> > of `gc.cruftPacks` by ensuring that we understand which invocations do
+> > and do not change as a result.
 >
-> Good. This is more efficient anyway. It probably does not matter for our
-> tiny test repository, but it is always good for our tests to model the
-> best option when possible. :)
+> I think "the following commit" is really patch 9. Patch 8 adjusts t6501
+> (and likewise says "like the previous commits"). It would probably make
+> more sense to put patch 8 before patches 6 and 7.
 
-I spent more time than I'd willingly admit second-guessing myself
-wondering if there was something I'm missing why we'd want to call `git
-gc` and `git prune` separately.
+I'm glad you said something, because shortly after I sent this series I
+was annoyed with myself for not organizing the preparatory patches in
+order of their test number.
 
-As best as I can tell, this pattern started all the way back in
-03db4525d3 (Support gitlinks in fast-import., 2008-07-19), which
-happened after deprecating `git gc --prune` in 9e7d501990 (builtin-gc.c:
-deprecate --prune, it now really has no effect, 2008-05-09).
+I reordered them like so:
 
-After `--prune` was un-deprecated in 58e9d9d472 (gc: make --prune useful
-again by accepting an optional parameter, 2009-02-14), we got a handful
-of new uses in this script via 4cedb78cb5 (fast-import: add input format
-tests, 2011-08-11), which could have been `git gc --prune`, but weren't
-(likely taking after 03db4525d3).
+    c02f80e1e2 t/t5304-prune.sh: prepare for `gc --cruft` by default
+    2e0fb1382b t/t6501-freshen-objects.sh: prepare for `gc --cruft` by default
+    c916e6d356 t/t6500-gc.sh: refactor cruft pack tests
+    f9f7b2137b t/t6500-gc.sh: add additional test cases
+    5a74520b35 t/t9300-fast-import.sh: prepare for `gc --cruft` by default
 
-I don't know if any of that detail is interesting enough to rise to the
-level of needing to be in the patch itself, those were just my notes I
-took while wandering through this part of the suite.
+Which feels much better to me.
 
-> >  t/t9300-fast-import.sh | 13 ++++---------
-> >  1 file changed, 4 insertions(+), 9 deletions(-)
->
-> The patch itself looks good to me.
+> Probably not worth a re-roll on its own, but if you're doing one anyway,
+> it should be easy to do.
 
-Thanks!
+Agreed on both. I'm rerolling a few tiny things anyways, so I'll squash
+this in, too.
 
--Taylor
+Thanks,
+Taylor
