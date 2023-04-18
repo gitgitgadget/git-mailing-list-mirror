@@ -2,147 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E089CC77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 14:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94647C77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 14:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbjDROv4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 10:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48602 "EHLO
+        id S229800AbjDROx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 10:53:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbjDROvy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 10:51:54 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FD3146C3
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:51:26 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54c12009c30so568191577b3.9
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:51:26 -0700 (PDT)
+        with ESMTP id S230158AbjDROxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 10:53:24 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CA3CA271
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:53:17 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54fe82d8bf5so147331307b3.3
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681829485; x=1684421485;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681829596; x=1684421596;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VleRXOA+4AX5AUgzX00JyhEooEhPH66BcPfJ146xCkE=;
-        b=bxsFRHCv39c+gWIdViBKNeX3/FwcMmY+R22UOI1l1fHVCoj5EZt/RJ+wHh2JX3zGLB
-         YuzQuFcvtZC0g+9UFzjnpz7LUg2pfWYdVTG8VAYR6WrBgWGSNoP8hFKRRgZFzZXDmWCE
-         //7iwAVuCxCC9MIZ7p1PHhtnb4Rp5hLdoun+02SQltvCSJ/9+D954ukFXqwCKbTtcFYs
-         sMev+KhJZPePwWdHCHs8OGEiwyzAQ62TqrMlBps0crcsKKCH38FCeC+xyHMgm+cwKoY5
-         lzLJp5zcLwfFZB6Zz/2MnoWG8ls92HGYKY6VgWNW3XQvwXvakdfRHl/q8krrkpmrvrmS
-         7ZuQ==
+        bh=3G10eq3yJTh/SokhElttax/0msG7ICJGyS+5kBR1Ey4=;
+        b=iPpEAFpjsVSCA/rB+qztOZ9BEQpy57BB/zvswxSvmgZ4vdawx/agui8dcGYn2AFvcU
+         l6EXew8TGV4W/dFFBLKBZx6SuK8iKIHQ3v+SI/rg5HCMB7H9PmOSVlLlsqvdEFsKiLUX
+         lhdAKDJG+U35PCkZdW4r/BoXZ0DNzpGfzPL9ZoHC02HLCRD1Mwzto+4YiuNDfBEgfPc1
+         Mo6xFxs4WeZI2A4A5ShukV4FVPvvp0aSxJnRbhYOJkmUgQmBWsNGIZf/s3dx0N77puCJ
+         0WT5P5/kNbf/B2fqJcgvZqHC26cgLcbm3vFlr8fc/VVW0v3Ux8a6i4D0dG8na8e0VyTk
+         BvwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681829485; x=1684421485;
+        d=1e100.net; s=20221208; t=1681829596; x=1684421596;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VleRXOA+4AX5AUgzX00JyhEooEhPH66BcPfJ146xCkE=;
-        b=Fr93/KGDbxrYrPkoonR5L17YpmYdiUUvNtyeoLTw+ovzUYpLJp8uk9Yjyob4khS/Tl
-         7u9iEcmuGyVo6+kd2zVL790les/lPeHMzqKSPA5oD9Lm6maYvoRikPRNDslN4nL0U3jq
-         QODvaF2b1Wpfgpe5ErS3/1nvGWvVsW+PxJkQXi0ltoEt/u1IJE1jkPBwcUDCkj+xxP77
-         AY03d6owIw9PLN/6nqPM5+HSvV4RCt5PcHgwdED9xtCD/IE4NH0ahWG02tIIG3Gm9qHf
-         wcmhDC102xBboOVKnvwj7MkeVqfrwfcOSXU+viOWxphiE/ePj0j7IVPDk/oWsPOklLGS
-         J3+A==
-X-Gm-Message-State: AAQBX9fem2oCU5RNj4GDi8poQv4Ef192eUR60pIhrla3BdZWFQDQ9g/S
-        9qiZACgtLmAciuy7kBCiu/tELA==
-X-Google-Smtp-Source: AKy350Ydf3A5k8cbiBwwvYtEc+uRxGDNzXgRSl51SP9xa2kwb8NyzH+WBZMcjtwz2pHp7cpmfQKU9g==
-X-Received: by 2002:a0d:f0c1:0:b0:552:96e5:61ee with SMTP id z184-20020a0df0c1000000b0055296e561eemr102443ywe.19.1681829485027;
-        Tue, 18 Apr 2023 07:51:25 -0700 (PDT)
+        bh=3G10eq3yJTh/SokhElttax/0msG7ICJGyS+5kBR1Ey4=;
+        b=fVN8WAYWPfmxOyxhq6v60KUYc5JMdZ7huXqYQ3UjRd97D/QdKIh71XNogNtTa9M8ot
+         8YMSxSaS3M649WyeOkbPhDQNJRXce/rDbJ9KrfN6y9ElOmWYox2ztehKfRxkSajeTJRF
+         LUpNbbU3eK4LiaVjNrxgqZIv3t0/31VGzNkx8ZK4xZHabugEGJ3Nu/nZaBp/mFa3+sqB
+         T4FA+3H83wWTRYjSugbGF3E+tzOHO4yaUUboUfDPGl9Oh9X6vU2upZlFXZQ6bcB9+Z69
+         OjIFeDpIanUbFhjRDRnsjHLlHux5w4+o4htqf8cmu6SKG/yA6XwwskUiB61JHgRASlOU
+         MEnA==
+X-Gm-Message-State: AAQBX9cPYlbKjdV53b90+Ka/GtM5Bc9EqpyH3GQmCpkmRuF7U2ecv71f
+        DHU+MpOQWeo9QH8dABHRQL07qg==
+X-Google-Smtp-Source: AKy350ZhAXBmYteoIcWPp2auS7POd7mejy9HNB3xMFO1mp6Kjkb/ih90m4a/h5Pq7MudZK9iD+fT+w==
+X-Received: by 2002:a0d:fe06:0:b0:54f:8171:38db with SMTP id o6-20020a0dfe06000000b0054f817138dbmr79376ywf.32.1681829596690;
+        Tue, 18 Apr 2023 07:53:16 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id da15-20020a05690c0d8f00b00555abba6ff7sm569920ywb.113.2023.04.18.07.51.24
+        by smtp.gmail.com with ESMTPSA id a206-20020a814dd7000000b00545a081847bsm3859461ywb.11.2023.04.18.07.53.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 07:51:24 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 10:51:23 -0400
+        Tue, 18 Apr 2023 07:53:16 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 10:53:15 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 2/4] fsck: check rev-index checksums
-Message-ID: <ZD6ua4dSynRWmW2a@nand.local>
-References: <pull.1512.git.1681748502.gitgitgadget@gmail.com>
- <7db4ec3e327ed3695f4f5409cb2dc80c72688758.1681748502.git.gitgitgadget@gmail.com>
- <ZD3HI/LIXVv6Pacn@nand.local>
- <2628249e-fe9a-d15c-5414-33d815b35cd1@github.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: tb/pack-revindex-on-disk (was: Re: What's cooking in git.git (Apr
+ 2023, #05; Mon, 17))
+Message-ID: <ZD6u24OqvgoeIcBl@nand.local>
+References: <xmqqfs8xfw25.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2628249e-fe9a-d15c-5414-33d815b35cd1@github.com>
+In-Reply-To: <xmqqfs8xfw25.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 10:27:57AM -0400, Derrick Stolee wrote:
-> >> +test_expect_success 'fsck catches invalid checksum' '
-> >> +	revfile=$(ls corrupt/.git/objects/pack/pack-*.rev) &&
-> >
-> > Would this test be tighter if we introduced a sub-shell and cd'd into
-> > "corrupt" here?
+On Tue, Apr 18, 2023 at 01:12:34AM -0700, Junio C Hamano wrote:
+> * tb/pack-revindex-on-disk (2023-04-13) 7 commits
+>  - t: invert `GIT_TEST_WRITE_REV_INDEX`
+>  - config: enable `pack.writeReverseIndex` by default
+>  - pack-revindex: introduce `pack.readReverseIndex`
+>  - pack-revindex: introduce GIT_TEST_REV_INDEX_DIE_ON_DISK
+>  - pack-revindex: make `load_pack_revindex` take a repository
+>  - t5325: mark as leak-free
+>  - pack-write.c: plug a leak in stage_tmp_packfiles()
+>  (this branch is used by ds/fsck-pack-revindex.)
 >
-> corrupt_rev_and_verify does the subshell thing. Why should we do that
-> here in the test?
+>  The on-disk reverse index that allows mapping from the pack offset
+>  to the object name for the object stored at the offset has been
+>  enabled by default.
+>
+>  Will merge to 'next'?
+>  source: <cover.1681338013.git.me@ttaylorr.com>
 
-I was thinking that it might be more concise if you moved the subshell
-to the test and out of corrupt_rev_and_verify. In addition to making
-corrupt_rev_and_verify work in other instances where the repository
-isn't required to be in a directory named "corrupt", I think it
-simplifies the result.
-
-Here's what I was thinking, as a diff on top of this patch:
-
---- >8 ---
-diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
-index 6b7c709a1f..7dfbaf6b37 100755
---- a/t/t5325-reverse-index.sh
-+++ b/t/t5325-reverse-index.sh
-@@ -160,29 +160,30 @@ test_expect_success 'set up rev-index corruption tests' '
- '
-
- corrupt_rev_and_verify () {
--	(
--		pos="$1" &&
--		value="$2" &&
--		error="$3" &&
-+	pos="$1" &&
-+	value="$2" &&
-+	error="$3" &&
-
--		cd corrupt &&
--		revfile=$(ls .git/objects/pack/pack-*.rev) &&
-+	revfile=$(ls .git/objects/pack/pack-*.rev) &&
-
--		# Reset to original rev-file.
--		cp $revfile.bak $revfile &&
-+	# Reset to original rev-file.
-+	cp $revfile.bak $revfile &&
-
--		printf "$value" | dd of=$revfile bs=1 seek="$pos" conv=notrunc &&
--		test_must_fail git fsck 2>err &&
--		grep "$error" err
--	)
-+	printf "$value" | dd of=$revfile bs=1 seek="$pos" conv=notrunc &&
-+	test_must_fail git fsck 2>err &&
-+	grep "$error" err
- }
-
- test_expect_success 'fsck catches invalid checksum' '
--	revfile=$(ls corrupt/.git/objects/pack/pack-*.rev) &&
--	orig_size=$(wc -c <$revfile) &&
--	hashpos=$((orig_size - 10)) &&
--	corrupt_rev_and_verify $hashpos bogus \
--		"invalid checksum"
-+	(
-+		cd corrupt &&
-+
-+		revfile=$(ls .git/objects/pack/pack-*.rev) &&
-+		orig_size=$(wc -c <$revfile) &&
-+		hashpos=$((orig_size - 10)) &&
-+		corrupt_rev_and_verify $hashpos bogus \
-+			"invalid checksum"
-+	)
- '
-
- test_done
---- 8< ---
-
-If you do take my suggestion, make sure to remember to come back in
-patches 3/4 and 4/4 and adjust those instances of
-'corrupt_rev_and_verify' to first change into "corrupt".
+Yeah, this one has been reviewed thoroughly by Stolee. We made some
+minor tweaks in v2, which he reviewed and said were ready to merge.
 
 Thanks,
 Taylor
