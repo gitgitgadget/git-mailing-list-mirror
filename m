@@ -2,89 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BAD6C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 21:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55030C6FD18
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 23:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232474AbjDRVZP convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 18 Apr 2023 17:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41760 "EHLO
+        id S230307AbjDRX3b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 19:29:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232947AbjDRVZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 17:25:12 -0400
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420F8A27B
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 14:25:10 -0700 (PDT)
-Received: by mail-qv1-f43.google.com with SMTP id a15so7912063qvn.2
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 14:25:10 -0700 (PDT)
+        with ESMTP id S229750AbjDRX3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 19:29:30 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5330976A1
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 16:29:29 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1a67d2601b3so20207405ad.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 16:29:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681860569; x=1684452569;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=WFvaOZnn9KPtryqx5FnpNNdsL5+OpUfslwKQmjUnYfw=;
+        b=dzY8W5uCQHGnlnFuczA5SfAZ5hss89v0maWUcXwLFicSMKO7GdnyxBz423uo2FYJgn
+         J6tDXlD/eBs46Jz+0JCIj4hDtDCHayvaiiE9H4qH6musBwnc/sySBkkL8yukU0UnFXg/
+         6GqoJnuIzPBpHlyoI//Ow25MRD87AWJxsyHpg3W2LYzzC8WuAUZg4NpJkGqHS8p4HLx3
+         iH2selyK/OKwOUbV3121ZmNBAl21bCF5e+jISyH++p887jUnpqhkLDkU3vPIjioFPCVL
+         ZEEuRzzwguPyFRasRIQOgOk3qEtBwXpgrNuT1pxAhCTaiVsj2uo/AnkkMpXROE0XVFiy
+         Qq8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681853109; x=1684445109;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BoImwnjdgzQvJq92ZkAVKqH0DV3UyJxbUKPIJlr/jDg=;
-        b=IOuzartK1fJGAGkcjAZRCnRnR9ko8MfzaJmJuX7XSp1re9qpUEsm1K8R/56XYKv/fN
-         tqQex0KSXvKrn5xpXn/82IZlh98QPeb/0/VwxjX5NO0WUk9iNdgecLZ7dH/OFt3Sd37n
-         uKmbhxtSyMP1Ao0kqpNQK593JroMEdv3BHilQdLp/LHVYHjZvy2kmbWJ7b064WBXnhXt
-         virSUCgJrxUjOJRmqh8tS6eE56WBBKOQe6pI1a3TxG3q/1MNmyZ6LRH6WTDKWY/3aOER
-         DN3UUxygS4y8wY1nXoqwtKq8asWgLHlnHMS25QJlWwp7D8FBUfWQkARWI5o2dk0QbzvX
-         mUpw==
-X-Gm-Message-State: AAQBX9cM2GV1vvMr1DR2drp67L7M8o/KSjoiHMWsy9iku0Hde34sW11V
-        UPWEu2zsosED1K69kRVM1Sm0CAHbNBJAt75G0n8=
-X-Google-Smtp-Source: AKy350YiMp5UJIM809KYIWBSZHbIOpMR0in6vH1q1iW94VqxoG0xJAQ/W3IVeT2dcG0Oz1Q/iTHKopEptpGVP2wnD14=
-X-Received: by 2002:a05:6214:409:b0:5c1:59b9:40b4 with SMTP id
- z9-20020a056214040900b005c159b940b4mr28911515qvx.48.1681853109174; Tue, 18
- Apr 2023 14:25:09 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681860569; x=1684452569;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WFvaOZnn9KPtryqx5FnpNNdsL5+OpUfslwKQmjUnYfw=;
+        b=PWb3nCQgshj6LuUGhrAHSxpjZhgimyZ2XFFge+/O0U790jkQXxZZk99sFN4crIRpor
+         4/TLLeQ7qvkbswJ9lL84QCFHC17itpvJ4FirT62RAVH2H7Ywtq+Km/q7lxkclq6bCVN+
+         pQy85QNybWqj5fB5wm5JHGmlolaPPJ8F/Bo3HBhJ3Mcv+PVqm7A3ArwYCqvXpT0/K218
+         s7Mo/aGikI4jKlWnByBj5eNFTsFLmyr86Wao8t0QQAEctqXo6BVOF/EsKTxYSy2gvM4c
+         VqrlQGf5EQPDyWU+DZDFv6UcWI3qDWacwW/Iv+pS8fttLv0GlosvQQfZzzd1MxJjA58w
+         Vhzg==
+X-Gm-Message-State: AAQBX9faPgwTup6OlxA/YrbbCXz+6OsUnHScMMcTUHdb31p5puiXdtPU
+        Bzls8ZGJ90EW9FMwHM9i340=
+X-Google-Smtp-Source: AKy350YjU2HsEeW6tTsPBb2Y7vcd6A5OgPeuTXOrs4DRUZbH/iQD5lMiRJ+d+tIXqvIFMwAOMBA9ow==
+X-Received: by 2002:a17:902:9b81:b0:1a5:1f13:67fc with SMTP id y1-20020a1709029b8100b001a51f1367fcmr2867569plp.31.1681860568687;
+        Tue, 18 Apr 2023 16:29:28 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id d22-20020a170902b71600b001a67759f9f8sm3860844pls.106.2023.04.18.16.29.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 16:29:28 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 14/23] hash.h, repository.h: reverse the order of these
+ dependencies
+References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
+        <1c6989ae456c86850761b079384f1505735e317a.1681614206.git.gitgitgadget@gmail.com>
+        <ad90e716-ba23-040f-66be-4c4faff02ea8@github.com>
+Date:   Tue, 18 Apr 2023 16:29:28 -0700
+Message-ID: <xmqqedogbwh3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
- <20230416054735.3386065-1-newren@gmail.com> <xmqq5y9uo4kj.fsf@gitster.g>
- <CABPp-BEmzofRAmgoz7Wam-6btCYCTy4CiVnTOtr9aQdjS6TB7w@mail.gmail.com> <xmqqwn28c3dh.fsf@gitster.g>
-In-Reply-To: <xmqqwn28c3dh.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 18 Apr 2023 17:24:58 -0400
-Message-ID: <CAPig+cTTTNO9e3X5u8irHjGHmY5t3GA1_zrvYmfhETn312XJcQ@mail.gmail.com>
-Subject: Re: [PATCH/RFD] fix connection via git protocol
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>, Michael J Gruber <git@grubix.eu>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 5:06 PM Junio C Hamano <gitster@pobox.com> wrote:
-> From: Elijah Newren <newren@gmail.com>
-> Subject: [PATCH] protocol.h: move definition of DEFAULT_GIT_PORT from cache.h
->
-> Michael J Gruber noticed that connection via the git:// protocol no
-> longer worked after a recent header clean-up.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-A link to Michael's email might be useful for future readers of this
-commit message.
+> This is the first patch in the series where I don't immediately agree
+> with the patch. This is a big list of methods that don't seem like
+> they fit in repository.h:
+>
+>> diff --git a/repository.h b/repository.h
+>> +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+>> +static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
+>> +static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
+>> +static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
+>> +static inline int is_null_oid(const struct object_id *oid)
+>> +static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
+>> +static inline void oidcpy_with_padding(struct object_id *dst,
+>> +				       const struct object_id *src)
+>> +static inline void hashclr(unsigned char *hash)
+>> +static inline void oidclr(struct object_id *oid)
+>> +static inline void oidread(struct object_id *oid, const unsigned char *hash)
+>> +static inline int is_empty_blob_sha1(const unsigned char *sha1)
+>> +static inline int is_empty_blob_oid(const struct object_id *oid)
+>> +static inline int is_empty_tree_sha1(const unsigned char *sha1)
+>> +static inline int is_empty_tree_oid(const struct object_id *oid)
+>
+> The goal to remove repository.h from hash.h and object.h makes sense
+> as a goal, but is there another way to do it?
 
-    Michale J Gruber noticed[1] that connection...
+Indeed.
 
-    [1]: https://lore.kernel.org/git/5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu/
+All of the above sit very well in hash simply because they are all
+about hashes.  It does not have much to do with "repository", not
+more than "well, hashes we use to identify objects, and objects are
+stored in repositories".
 
-> This was caused by
-> funny interaction of few gotchas.  First, a necessary definition
->
->         #define DEFAULT_GIT_PORT 9418
->
-> was made invisible to a place where
->
->         const char *port = STR(DEFAULT_GIT_PORT);
->
-> was expecting to turn the integer into "9418" with a clever STR()
-> macro, and ended up stringifying it to
->
->         const char *port = "DEFAULT_GIT_PORT";
->
-> without giving any chance to compilers to notice such a mistake.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+From the point of view of somebody who needs to use these macros, it
+is utterly unnatural that they have to include "repository.h" (as
+opposed to, say, "hash.h") just to be able to compare two hash
+values.  Most of our programs interact with only one repository, and
+it is understandable to include a header "repository.h" if your
+program needs to interact with an extra repository other than the
+"current" one.  But this feels backwards and not quite satisfactory,
+even though inlines are special and I can fully sympathize with the
+author who felt that this patch was necessary.
 
-Perhaps an additional tailer would be appropriate?
-
-    Reported-by: Michael J Gruber <git@grubix.eu>
