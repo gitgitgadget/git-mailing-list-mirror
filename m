@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACA75C77B78
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 19:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B3AAC77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 19:20:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230479AbjDRTUE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 15:20:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37148 "EHLO
+        id S230181AbjDRTUO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 15:20:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjDRTUB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 15:20:01 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6213D1FC3
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:19:36 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id v9so9653989ybm.0
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:19:36 -0700 (PDT)
+        with ESMTP id S230053AbjDRTUF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 15:20:05 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2B3B771
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:19:39 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-555bc7f6746so26993377b3.6
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 12:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681845528; x=1684437528;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681845531; x=1684437531;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cEz+IGEOZrlMZAJLqUNyPK7jLzwh9XjxUPuK8lSgZng=;
-        b=dgAd320Vm2WSnWH1b0zcTdCX+PF+AVeeXgRt2uaMbynHjQRJjAJuYWQnvN9Szv5AOJ
-         41NnAv7GQdgghBpXXxAhAGtEFkKcLrPsP58+NOqliK15j1SIbtNS+4gLLTGPv3K6wKky
-         722tNgcyl01YA8Nx2Xo+1E5sVfLMyMfpJxnh4Y9UdRzrNU1doKPmbVqCTbxEOyo3SVAO
-         nqolBQ6bmZR3DVXsdiIY+kBim46HVtXZ5IoUoI0PlkAZo+kWAgqXXYYkfl7+c7gD8CjS
-         P5sahixRH2zt59B6GHD/nyeKASoKNAiL7jbe4H13V0bbThTLETP4lQU7Jyrme9t/6pfJ
-         fUcQ==
+        bh=MJd2a9t1532cF2WjNpo/oHCfwwv+snJeLWbryabPFKk=;
+        b=Sc0B7jtQhhF5pMWSGR+FZGCxVAaj8Yd1inJrtHa/jl0y5JXplncDRUAMgAfBV2ZJ3p
+         QH6nEskvA/Dg+2J6kGsmAWFc9gNhM2lbIYAL3Q6YJvq9aUlx+h8TtumUqW4mskfuEDpJ
+         9biAZkDG2foNVimB4E9uhVc2Un2fzH6P6BpHCN9Z8tdRtQ1Cg3RAW6SZoitWP0pKa4Zt
+         MELsuaGyVK+wh0WAhV5B728ox3qlyqFWuiOtashLtKkPGFub6FCZb8ntZ4GqZds221Hj
+         vg15yvu/nlCGGYCDykhiueae/S0+eu8npubELgW2w81P4DpptREL98U6WpS5q0RS1I5v
+         2C3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681845528; x=1684437528;
+        d=1e100.net; s=20221208; t=1681845531; x=1684437531;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cEz+IGEOZrlMZAJLqUNyPK7jLzwh9XjxUPuK8lSgZng=;
-        b=ItXuyQ/BKjcgSBw0biZlU8YFN8I/YGzMq3aP+g8bUjWs4KPPL/sbWBRbnjxmW0ydAb
-         MIO54oriAQa2O+fHIqQZOWHjNUov/L6VO+Dnma5wxGbt4Wu6IOge+N6jxbIWKlMuC6I9
-         s4Nwy+2z8r0DCx8S2jVjE69DHXsloxbPPaelkkUIge+7j1i0sfVg8B6uFSQxsXLrU5hS
-         6ZvR2zJCcwzo3FGEQdJ6hJX5qNHFC/sOOu6Iq1N2Juh1oI88R2ycUHxgh/fq5RaysVAt
-         c7MxpklzWRWWEdoKTkSMwORurM1UfGSUNsH4er0K5r4ZXnzc06xICPVCS02AbK/M/tDQ
-         aq1A==
-X-Gm-Message-State: AAQBX9eiIgshJGI3GZ6CaJ80gldZ1GhshvuqpdWSbPVEEknMFSlwOcIt
-        kRNq/XEYuYicv4oSVmjKb8eQaut30urrXVeEab2xLw==
-X-Google-Smtp-Source: AKy350aTjYd9gp2pxx+eXPc6CTRgaN6TpJCr/SnIf8DkWW4AWo+TuBWjIGvU4aIqfIp/owEUlhT64w==
-X-Received: by 2002:a05:6902:707:b0:b8f:3685:c12a with SMTP id k7-20020a056902070700b00b8f3685c12amr22691367ybt.39.1681845527952;
-        Tue, 18 Apr 2023 12:18:47 -0700 (PDT)
+        bh=MJd2a9t1532cF2WjNpo/oHCfwwv+snJeLWbryabPFKk=;
+        b=d+7zIwiAHgFOt02y58ESQtsw1tKYOzTLm7w1PgeSuXhtdjz0hiwia6QdXz/AiE/uWz
+         q/aGZejrTtuDWQIG3bvCmxoyFHn8HJrqtOXOQy6E7FktV639pV5mfipBJdFQFV0u68mC
+         0cj5wj0IxUPmadOg1BhI6iVKVsUIMpJBzZIuJLNf7jMQRzxp0er9KM9KhG+RyhIt9xHO
+         BbFMSyX3JPLpSJ0B9uR4BN4c3KZcM7QWaRoU/dVhZZGkGG6PLfn2q8v4WIYupxqBYDN+
+         ZmaRGkCD4ookOXGWhX8sV0lVga+h4c+aEOpwJi54lIYUDdj5yRVX6l8HeMzRRo+wdHrO
+         wH1g==
+X-Gm-Message-State: AAQBX9dqqRScJFa6cPinMRBBc19CiqQtldaPk4HgORA36Gu5jcIYEDIE
+        1ETzsb3AvASQZw7F6MOKXB9PnL/n8HTvvb8imqmM9A==
+X-Google-Smtp-Source: AKy350Y8Ci75dc6JZwc9V+QX8gYRkK0LZcwEjGQ7+uqok6xWGwaDXGlQa465RIhDtj7A1YbVL3++HQ==
+X-Received: by 2002:a81:91c6:0:b0:4fb:8b40:5899 with SMTP id i189-20020a8191c6000000b004fb8b405899mr1030266ywg.7.1681845531156;
+        Tue, 18 Apr 2023 12:18:51 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 126-20020a250a84000000b00b8f54571fc0sm2326961ybk.5.2023.04.18.12.18.47
+        by smtp.gmail.com with ESMTPSA id 17-20020a810d11000000b00545a0818479sm3986892ywn.9.2023.04.18.12.18.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 12:18:47 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 15:18:46 -0400
+        Tue, 18 Apr 2023 12:18:50 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 15:18:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Chris Torek <chris.torek@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/6] string-list: introduce `string_list_setlen()`
-Message-ID: <2a20ad8bc5513aae912c53a294092ee5087e1873.1681845518.git.me@ttaylorr.com>
+Subject: [PATCH v2 3/6] t/helper/test-hashmap.c: avoid using `strtok()`
+Message-ID: <0ae07dec3663d7cbb0f8662c47485c0667a879b9.1681845518.git.me@ttaylorr.com>
 References: <cover.1681428696.git.me@ttaylorr.com>
  <cover.1681845518.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -65,103 +65,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is sometimes useful to reduce the size of a `string_list`'s list of
-items without having to re-allocate them. For example, doing the
-following:
+Avoid using the non-reentrant `strtok()` to separate the parts of each
+incoming command. Instead of replacing it with `strtok_r()`, let's
+instead use the more friendly `string_list_split_in_place_multi()`.
 
-    struct strbuf buf = STRBUF_INIT;
-    struct string_list parts = STRING_LIST_INIT_NO_DUP;
-    while (strbuf_getline(&buf, stdin) != EOF) {
-      parts.nr = 0;
-      string_list_split_in_place(&parts, buf.buf, ":", -1);
-      /* ... */
-    }
-    string_list_clear(&parts, 0);
-
-is preferable over calling `string_list_clear()` on every iteration of
-the loop. This is because `string_list_clear()` causes us free our
-existing `items` array. This means that every time we call
-`string_list_split_in_place()`, the string-list internals re-allocate
-the same size array.
-
-Since in the above example we do not care about the individual parts
-after processing each line, it is much more efficient to pretend that
-there aren't any elements in the `string_list` by setting `list->nr` to
-0 while leaving the list of elements allocated as-is.
-
-This allows `string_list_split_in_place()` to overwrite any existing
-entries without needing to free and re-allocate them.
-
-However, setting `list->nr` manually is not safe in all instances. There
-are a couple of cases worth worrying about:
-
-  - If the `string_list` is initialized with `strdup_strings`,
-    truncating the list can lead to overwriting strings which are
-    allocated elsewhere. If there aren't any other pointers to those
-    strings other than the ones inside of the `items` array, they will
-    become unreachable and leak.
-
-    (We could ourselves free the truncated items between
-    string_list->items[nr] and `list->nr`, but no present or future
-    callers would benefit from this additional complexity).
-
-  - If the given `nr` is larger than the current value of `list->nr`,
-    we'll trick the `string_list` into a state where it thinks there are
-    more items allocated than there actually are, which can lead to
-    undefined behavior if we try to read or write those entries.
-
-Guard against both of these by introducing a helper function which
-guards assignment of `list->nr` against each of the above conditions.
-
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- string-list.c |  9 +++++++++
- string-list.h | 10 ++++++++++
- 2 files changed, 19 insertions(+)
+ t/helper/test-hashmap.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/string-list.c b/string-list.c
-index b27a53f2e1..f0b3cdae94 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -203,6 +203,15 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
- 	list->nr = list->alloc = 0;
- }
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index 36ff07bd4b..5a3e74a3e5 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -2,6 +2,7 @@
+ #include "git-compat-util.h"
+ #include "hashmap.h"
+ #include "strbuf.h"
++#include "string-list.h"
  
-+void string_list_setlen(struct string_list *list, size_t nr)
-+{
-+	if (list->strdup_strings)
-+		BUG("cannot setlen a string_list which owns its entries");
-+	if (nr > list->nr)
-+		BUG("cannot grow a string_list with setlen");
-+	list->nr = nr;
-+}
-+
- struct string_list_item *string_list_append_nodup(struct string_list *list,
- 						  char *string)
+ struct test_entry
  {
-diff --git a/string-list.h b/string-list.h
-index f01bbb0bb6..b41ecda6f4 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -134,6 +134,16 @@ typedef void (*string_list_clear_func_t)(void *p, const char *str);
- /** Call a custom clear function on each util pointer */
- void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc);
+@@ -150,6 +151,7 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
+  */
+ int cmd__hashmap(int argc, const char **argv)
+ {
++	struct string_list parts = STRING_LIST_INIT_NODUP;
+ 	struct strbuf line = STRBUF_INIT;
+ 	int icase;
+ 	struct hashmap map = HASHMAP_INIT(test_entry_cmp, &icase);
+@@ -159,21 +161,34 @@ int cmd__hashmap(int argc, const char **argv)
  
-+/*
-+ * Set the length of a string_list to `nr`, provided that (a) `list`
-+ * does not own its own storage, and (b) that `nr` is no larger than
-+ * `list->nr`.
-+ *
-+ * Useful when "shrinking" `list` to write over existing entries that
-+ * are no longer used without reallocating.
-+ */
-+void string_list_setlen(struct string_list *list, size_t nr);
+ 	/* process commands from stdin */
+ 	while (strbuf_getline(&line, stdin) != EOF) {
+-		char *cmd, *p1 = NULL, *p2 = NULL;
++		char *cmd, *p1, *p2;
+ 		unsigned int hash = 0;
+ 		struct test_entry *entry;
+ 
++		/*
++		 * Because we memdup() the arguments out of the
++		 * string_list before inserting them into the hashmap,
++		 * it's OK to set its length back to zero to avoid
++		 * re-allocating the items array once per line.
++		 *
++		 * By doing so, we'll instead overwrite the existing
++		 * entries and avoid re-allocating.
++		 */
++		string_list_setlen(&parts, 0);
+ 		/* break line into command and up to two parameters */
+-		cmd = strtok(line.buf, DELIM);
++		string_list_split_in_place_multi(&parts, line.buf, DELIM, 2);
 +
- /**
-  * Apply `func` to each item. If `func` returns nonzero, the
-  * iteration aborts and the return value is propagated.
+ 		/* ignore empty lines */
+-		if (!cmd || *cmd == '#')
++		if (!parts.nr)
++			continue;
++		if (!*parts.items[0].string || *parts.items[0].string == '#')
+ 			continue;
+ 
+-		p1 = strtok(NULL, DELIM);
+-		if (p1) {
++		cmd = parts.items[0].string;
++		p1 = parts.nr >= 1 ? parts.items[1].string : NULL;
++		p2 = parts.nr >= 2 ? parts.items[2].string : NULL;
++		if (p1)
+ 			hash = icase ? strihash(p1) : strhash(p1);
+-			p2 = strtok(NULL, DELIM);
+-		}
+ 
+ 		if (!strcmp("add", cmd) && p1 && p2) {
+ 
+@@ -260,6 +275,7 @@ int cmd__hashmap(int argc, const char **argv)
+ 		}
+ 	}
+ 
++	string_list_clear(&parts, 0);
+ 	strbuf_release(&line);
+ 	hashmap_clear_and_free(&map, struct test_entry, ent);
+ 	return 0;
 -- 
 2.40.0.358.g56d2318a6d
 
