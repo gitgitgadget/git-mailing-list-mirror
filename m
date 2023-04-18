@@ -2,127 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59CD7C77B75
-	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 14:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9072C77B75
+	for <git@archiver.kernel.org>; Tue, 18 Apr 2023 14:55:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231156AbjDROzZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 10:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
+        id S231277AbjDROzb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 10:55:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbjDROzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 10:55:23 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DDC214F7B
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:54:52 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-54f6a796bd0so346414767b3.12
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:54:52 -0700 (PDT)
+        with ESMTP id S231251AbjDROz3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 10:55:29 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F378A27A
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:55:02 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54fbee98814so212908007b3.8
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 07:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681829690; x=1684421690;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LdKI/SFw02nacV7jx+Pn4euKvQDkF47DIGlRrOq0f34=;
-        b=CvfYM+S4bd1/28MVTR8gXaULBTcp1TXy4G9XC3Je6n31ZSuY6zRCf2OCSCeGPeVCLt
-         oyam6f6GUWEBiB4m06KByf9xHLH4LlAgj4Ldn1oVnMGg3hOo+vzaQQj5Iq/6kxY9E5Ub
-         kPlkjA7ybxBPTxWGTmDLq6kCUOCf5RbDoGSJCsMVRa10f9hApYEtljZBySGfOk6Vau/B
-         BlSW+Xw1A9Ux/unTCHVU0tSQRqYsbOo2T0LJwEN1BLKs1BwABb2qvWLmItAcWMkseBy9
-         5AkRUFtV9vs48FCqrIf1ulB9jjCIt2v2p7Wr/naCieGxuOxfbtK3P4SlXfWHPndZQpUZ
-         c1mA==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681829701; x=1684421701;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dHBruOAHSJJ0f1JX8XQTEVYiFOA2PJL41lxU9zeXIM0=;
+        b=VuQWkelZ/l24WvGr+ggQXnls0/qnt+R9B6GRnXD4ORwN9CNHs3hAhOFgufGR2iFiro
+         aIJWQm4p0mcBQe8suLKpZqxTWENrabecwIHTSlTxeemtZI72PdWx/gv/g2GwMzwh6kbG
+         owqQwME3NWIvHGmGhaT2GTvIuhG/XdfR/yvhtV66s3PAdYLVOQFuy4sSYGQNYIrqVkZv
+         yKU/SUvLpFiQtMzEawFB1EcvzFvCUEv7GvUtz54zhnK2hjvQu7R2AGB30ABI1k6v1ceZ
+         QPDGFfPL7gnluSRt0CQ95q9YD+tLrz9uXCzYQPEuXxEEnNiJmlHKMY1l4ZIgLYzL3Dc2
+         45Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681829690; x=1684421690;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LdKI/SFw02nacV7jx+Pn4euKvQDkF47DIGlRrOq0f34=;
-        b=ca0qO10VL8XjuDkQ5cTXfFmQ2NxQjnTxVMUNAmaaADYB4eU8fX5QRHDhHaITi62vPx
-         faoEDSTKvuEJ1EJ14ZJ0R0MXY31h/2ebjpCupRGov4QVNdTXaSHgpZjyYARuXpxVtQkY
-         Bf9ZyWcSjdO8JcSv6krrsBu74EfAPyvVB10YsczFqn/UN7S1hVMZSvlLmO+YGAweNDS2
-         kWKZNYZyxIDMTvLiKEpv8Hzo3Ugo+dFg9X1VDuuWamLGcjctf3WNy4RyV993oEL7EM5+
-         cQL+d4WXtqbj7d8n5e2uB6Hty5HOzHCrvAsxeJwkzT3am9+KQMbZpHwyl0u9rsMc3T5d
-         JGUA==
-X-Gm-Message-State: AAQBX9fgvg8VyeCZrp57Dh6DtNgOrMuiyPd7GVev4eHdyP1zEuogHqeg
-        FggPvTvSBPrsWDPFizvphJ1olhMZSsigviEmEA==
-X-Google-Smtp-Source: AKy350Y4qBBtnH031P1F402UgbvTxw0iXONjNGk3VKjaqUQF9RDgPh7s1dN9+JCWVG1wwV57A61jlQ==
-X-Received: by 2002:a0d:ca16:0:b0:550:65b4:ca60 with SMTP id m22-20020a0dca16000000b0055065b4ca60mr120654ywd.8.1681829690318;
-        Tue, 18 Apr 2023 07:54:50 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id a206-20020a814dd7000000b00545a081847bsm3860352ywb.11.2023.04.18.07.54.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 07:54:49 -0700 (PDT)
-Message-ID: <64e238fe-b69b-d670-6224-930b32bab9a5@github.com>
-Date:   Tue, 18 Apr 2023 10:54:49 -0400
+        d=1e100.net; s=20221208; t=1681829701; x=1684421701;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dHBruOAHSJJ0f1JX8XQTEVYiFOA2PJL41lxU9zeXIM0=;
+        b=GT6IdzpS0dl5jGu6TWl7+Jd+jdSYxXNmg++RbbILxDdmEs4329hO6oJvjyPxCcelll
+         4mP9+KOfPDy+cADJRwZWkrRTiJ8E4SqZo5eS2UQfjk7CmZ9Z8B/qdRjhR8oga22MHxhs
+         dJItvQyq0z2/VNFy37T4MawFJSygZNp6d9v5jV3R47CbLBgirDiwouiyAFY0hUACCfXA
+         Hmxq4Gg5cukGE5jAPUcEaXj3yUldpsm+wvzXeH1hjEAtHlvQrYEZyyeCfG7FWPsv9ZMx
+         5WCNyMduEmujxLjy/e2w5jMNAHfeuYZ+h69SCZM0lfRo5ob4pbzwRWyzMS5JIIQPgejI
+         9ofQ==
+X-Gm-Message-State: AAQBX9fDaxVvRHJrYcnX0nanuIp7qj76hOpxs679KZPj0YMx9U5Za3y6
+        FEJGrU66wkKNMQC3PNlGUeWASg==
+X-Google-Smtp-Source: AKy350ZX/iMAqrkWxEq+aOMf7otiffU1prSCoEFlkjsUX6kFE5hPTJHXVLJA6bvH28kyg14HWSNzcQ==
+X-Received: by 2002:a0d:fdc7:0:b0:54f:1b51:f4e8 with SMTP id n190-20020a0dfdc7000000b0054f1b51f4e8mr104780ywf.11.1681829700723;
+        Tue, 18 Apr 2023 07:55:00 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id by7-20020a05690c082700b00545ef25cec6sm3810924ywb.105.2023.04.18.07.55.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 07:55:00 -0700 (PDT)
+Date:   Tue, 18 Apr 2023 10:54:59 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: tb/enable-cruft-packs-by-default (was: Re: What's cooking in git.git
+ (Apr 2023, #05; Mon, 17))
+Message-ID: <ZD6vQ2wro8aQ/g+y@nand.local>
+References: <xmqqfs8xfw25.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 03/10] builtin/gc.c: ignore cruft packs with
- `--keep-largest-pack`
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <cover.1681764848.git.me@ttaylorr.com>
- <796df920ad6af0ee9101a0f3f80edbc793987336.1681764848.git.me@ttaylorr.com>
- <xmqqildui0gk.fsf@gitster.g> <ZD3QLMs8/+DLKZM6@nand.local>
- <20230418103909.GD508219@coredump.intra.peff.net>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20230418103909.GD508219@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfs8xfw25.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/18/2023 6:39 AM, Jeff King wrote:
-> On Mon, Apr 17, 2023 at 07:03:08PM -0400, Taylor Blau wrote:
+On Tue, Apr 18, 2023 at 01:12:34AM -0700, Junio C Hamano wrote:
+> * tb/enable-cruft-packs-by-default (2023-04-17) 10 commits
+>  - repository.h: drop unused `gc_cruft_packs`
+>  - builtin/gc.c: make `gc.cruftPacks` enabled by default
+>  - t/t6501-freshen-objects.sh: prepare for `gc --cruft` by default
+>  - t/t6500-gc.sh: add additional test cases
+>  - t/t6500-gc.sh: refactor cruft pack tests
+>  - t/t9300-fast-import.sh: prepare for `gc --cruft` by default
+>  - t/t5304-prune.sh: prepare for `gc --cruft` by default
+>  - builtin/gc.c: ignore cruft packs with `--keep-largest-pack`
+>  - builtin/repack.c: fix incorrect reference to '-C'
+>  - pack-write.c: plug a leak in stage_tmp_packfiles()
+>
+>  source: <cover.1681764848.git.me@ttaylorr.com>
 
-I agree with the prior discussion that gc.bigPackThreshold is
-currently misbehaving and stopping it from caring about cruft packs
-is the best way to fix that behavior in this series.
+Peff took a look through this series in detail and made a handful of
+suggestions. In [1] he suggested that none of these were significant
+enough to warrant a reroll.
 
->> It is possible that in the future we could support writing multiple
->> cruft packs (we already handle the presence of multiple cruft packs
->> fine, just don't expose an easy way for the user to write >1 of them).
->> And at that point we would be able to relax this patch a bit and allow
->> `gc.bigPackThreshold` to cover cruft packs, too. But in the meantime,
->> the benefit of avoiding loose object explosions outweighs the possible
->> drawbacks here, IMHO.
-> 
-> I wondered if that interface might be an option to say "hey, I have a
-> gigantic cruft file I want to carry forward, please leave it alone".
-> 
-> But if you have a giant cruft pack that is making your "git gc" too
-> slow, it will eventually age out on its own. And if you're impatient,
-> then "git gc --prune=now" is probably the right tool.
-> 
-> And If you really did want to keep rolling it forward for some reason,
-> then I'd think marking it with ".keep" would be the best thing (and
-> maybe even dropping the mtimes file? I'm not sure a how a kept-cruft
-> pack does or should behave).
-
-Generally, it's probably a good idea to (later) create a separate knob
-for "don't rewrite the objects in a 'big' cruft pack unless you need
-to". For situations where cruft objects are being collected and not
-regularly pruned, this helps avoid repacking all unreachable objects
-into a giant single pack, even though only a small number of objects
-were discovered unreachable this time.
-
-The important times where we'd want to consider a 'big' cruft pack
-for rewrite are:
-
- 1. Some objects in the cruft pack are being pruned.
- 2. Some objects in the cruft pack need updated mtimes.
-
-However, in the typical case that we are adding new cruft objects
-and not changing the mtimes of existing unreachable objects, we could
-create a sensible limit on the size of a cruft pack to be rewritten
-during normal maintenance.
-
-My personal preference would be something between 2GB and 10GB, which
-seems like a decent balance between "size of cruft pack" and "number of
-cruft packs" for most repositories. Since none of the objects are
-reachable, we don't really care about them having good deltas for things
-like fetches and clones. The benefit of reducing the time spent in 'git
-repack --cruft' outweighs the slight disk space savings by having a
-single cruft pack, in my opinion.
+But if we're going to do it, let's do it right ;-). I'll send a (small)
+reroll today that should be ready to go.
 
 Thanks,
--Stolee
+Taylor
+
+[1]: https://lore.kernel.org/git/20230418110424.GD516715@coredump.intra.peff.net/
