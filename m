@@ -2,77 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1AE4C77B73
-	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 12:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D2DC6FD18
+	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 12:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233188AbjDSMcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Apr 2023 08:32:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51178 "EHLO
+        id S233287AbjDSMc0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Apr 2023 08:32:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233331AbjDSMby (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2023 08:31:54 -0400
+        with ESMTP id S233340AbjDSMcC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2023 08:32:02 -0400
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E102916DD6
-        for <git@vger.kernel.org>; Wed, 19 Apr 2023 05:31:38 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 1B1C33200937;
-        Wed, 19 Apr 2023 08:31:38 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA2ED3A91
+        for <git@vger.kernel.org>; Wed, 19 Apr 2023 05:31:42 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id E2C2932005BC;
+        Wed, 19 Apr 2023 08:31:41 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 19 Apr 2023 08:31:38 -0400
+  by compute5.internal (MEProxy); Wed, 19 Apr 2023 08:31:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681907497; x=1681993897; bh=Zz
-        2cabaXclVnL/zZPo/SpLNzTgDLgOWbLFQpPzOlKLM=; b=h3baep8WTHLCb1RM5z
-        ogRF8U8kJGKhh+61Xh3KMOk9kl0sKYlldq1H8UAYlOyv93Z+XHMgjpAw1aWybeBI
-        I6kFKX8NRsImFgLMDbiw7vd90AgQ5/R/X763yMHtAVb9g7E/HahkRW7U1Hx+agKo
-        c/7c8J2+JGiBmylLVG/1Tbd5w+oynRu3LxAcgdRcLq8h/08WM8GfP7NLWBwejunG
-        mMPutXuxDmep8aw0daI1wwG2ysXC9hKlP3fmQaKnqZsB+GxnYd6+hedZFE/OZM6r
-        EhKIKhYiv18ucGiOM3sA3HvaHr1xK7ghgQNR88DynMVF56YOQ8oVOmiBD/4LU+22
-        YmFw==
+        :subject:subject:to:to; s=fm3; t=1681907501; x=1681993901; bh=mm
+        6PKNyyYoj2jYr078aPB49Fz5/wmNwiE9w3CDe8spM=; b=YkMpRc8/zlJcPYpBxO
+        ONthXhNEa7RuNPU51GLwnv1Cn1zMW7q3FnHlQj7PM6//GjE6ezkQrrZas0KYOPQj
+        xffgS3rnLyHrpaYKntB574yC0z2OxPwh4MNG5FuxDN7zDFm8IgG/ZbsBp6ABPUqm
+        n7g82iN9Rdc3fbmYv1i1wxXCaZHvrow+UtvWmnIZLzGi6yrJO+DCNku9n1Ii8/ij
+        jh2Tyjq32WgS64GczcEaNO7hj+1w/+Mc66lUIpkhV+g1HHafVz26CKpifxroU3S5
+        2J5Zj+o3buhMxnotKo6APWQLm3HP26sBOEAhdfqvaG+9qYIj/XFXzqkv0jPnY93j
+        IEZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681907497; x=1681993897; bh=Zz2cabaXclVnL
-        /zZPo/SpLNzTgDLgOWbLFQpPzOlKLM=; b=YQ87w99a0Zs6x5f9kRSo+xjtFyZQO
-        6bCBxHOOSzV9IZHyra67J2XBUQkVaCIbTpra07REYgr2dhd98H8pO/g6N8g8U2l9
-        I+hbIw7gCuVtuphgGeOmwVbhri+JyCRnVlgtDxWR1KKTApfH7xFTPXwCckytz9D4
-        xXdNo9r9e0ptyhByDWCZgiAhvyhQv7atCctdAj0lDNzM/XtKYig9RdFo1JKj2jJv
-        2c/HwA92EAavUGIRR9w3Z9jWJxWmbia+qgF+TyBLspTN2xR9QObaNGQwVdQ5/yEx
-        37MGJ/mLtFBoaRf024e+1/9BA+c5lyRLNrwbh5iNatttOKflt2k4QEO7A==
-X-ME-Sender: <xms:Kd8_ZPqZmOnFU70zu_iraIfQDXMyOoIm6zodKf2is45JuJsznZFIkw>
-    <xme:Kd8_ZJpHvpZO3SYTggf2SeaEJE5MLVYp2uMr4q-UV-zw5P9Yla8FV7B74bJ2QRNUL
-    T400Pcpe5-vY1t35g>
-X-ME-Received: <xmr:Kd8_ZMMwsajY3S6oo-oBZOphm6K1b0tr8mzSn1lwDClxVu0SRQwnWWxmS4eh_0Y4GvXgzkng76wu0mDp_eAhogJR9FqulvkhB4TUZCqgn2jIZg>
+        :x-sasl-enc; s=fm3; t=1681907501; x=1681993901; bh=mm6PKNyyYoj2j
+        Yr078aPB49Fz5/wmNwiE9w3CDe8spM=; b=Wzdf2BF20ANT7TDw0rDTnZxfCz48N
+        5g5cxjj5pY32t0BgJNUezAYdZ6swiwGl1xa/QQ/8w/JIR5Hl0ONbW4Cxgk0dIeDM
+        j+CsmlBVnkAphITMO1rs3TXrzyKghg3PFH5Nr9g+7gGhuVH4OcLYCgo4enRwzJSS
+        qkMWVPac4i9MiYyKlsvH9VwOQG/hgJmDJVkKLniWwbOVHrmItsfUdp6YdAXotPvI
+        G4b5ncqHhgZrIZmVNZIpFXSFXbh9ZpNGVVoqmhrDpMgKOreMy4cG0KsNYOWqI125
+        2NiUdFmDExOTrf0cIBr7BI3LSD82OO09GY54tU+eeJqggkFj+BIfNrfBw==
+X-ME-Sender: <xms:Ld8_ZAwo8TwC9e8M8pFN-dJLf6oxhzJvtLom34EXDrc-Ll-jSB8v3g>
+    <xme:Ld8_ZETxrjcQhVS2JvjqoQiRyBNOrwYqVpQS7hmL7HBQnZiT6BL3-PwEj-kESBa9V
+    HoTaeg6_Ya560kKww>
+X-ME-Received: <xmr:Ld8_ZCUqUDxwQl4JGbNH0a8ZdKCQqltDcJdHeafMe-r29WAv4jjbdUw7P29UYlLBl6d4sCHz9i-waxBxi2YFR2EkKVz4hKHZx4ZXIorCQmODPw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedttddgheegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeljeetffevheeggeetkeetieduieeiie
-    egieegtdffheegkefhjeehfeekhfevleenucffohhmrghinhepghhithhhuhgsrdgtohhm
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Kd8_ZC5h6FfiWZVyqYEyK1GYp40yQ98YAbXEHmXAqB9XCrU-NKUHxw>
-    <xmx:Kd8_ZO547Osra3rdDDLmdWXcanlP4FAwvAKPBB9rgCX3nwkoR80S9g>
-    <xmx:Kd8_ZKjto0ghHPERYXSFuhq78uX8dsYbGZYbmayRF79nN_-nsNgoZg>
-    <xmx:Kd8_ZDiDnB27fyGJHZwV2WbjmT4pRtmPHyJKvn1orkCqrHkhhrei8A>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:Ld8_ZOib_uhS9TpkvfxYmuJn-H5iW-c7MJRtheECtr9NlG9VGbqTNg>
+    <xmx:Ld8_ZCCWnhqDqW7Sj9feziXPiQ-UyGmIytjuZs2g6mYOhsCOoAggEg>
+    <xmx:Ld8_ZPJHzXZHczCdByCsCI__HbvqxkPq7UUK6HUdzFlWKmDGQHoSog>
+    <xmx:Ld8_ZNqGKMukBz1iGAn7bH_fZQqpeQ67_o5uYIMmlXflLyucVa08wQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Apr 2023 08:31:36 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 99cdbfe5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 19 Apr 2023 12:31:24 +0000 (UTC)
-Date:   Wed, 19 Apr 2023 14:31:35 +0200
+ 19 Apr 2023 08:31:40 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id f7fd668e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 19 Apr 2023 12:31:28 +0000 (UTC)
+Date:   Wed, 19 Apr 2023 14:31:39 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 3/8] fetch: fix missing from-reference when fetching HEAD:foo
-Message-ID: <596e12f03a296d753ee6fe8face9522edc9e397e.1681906948.git.ps@pks.im>
+Subject: [PATCH 4/8] fetch: introduce `display_format` enum
+Message-ID: <8571363be1943ed12dd5295593509bae92194933.1681906948.git.ps@pks.im>
 References: <cover.1681906948.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="S0NEOrNx6Xj1E63+"
+        protocol="application/pgp-signature"; boundary="0o47oBVQXDUw35fC"
 Content-Disposition: inline
 In-Reply-To: <cover.1681906948.git.ps@pks.im>
 Precedence: bulk
@@ -80,282 +79,203 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---S0NEOrNx6Xj1E63+
+--0o47oBVQXDUw35fC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When displaying reference updates, we print a line that looks similar to
-the following:
+We currently have two different display formats in git-fetch(1) with the
+"full" and "compact" formats. This is tracked with a boolean value that
+simply denotes whether the display format is supposed to be compacted
+or not. This works reasonably well while there are only two formats, but
+we're about to introduce another format that will make this a bit more
+awkward to use.
 
-```
- * branch               master          -> master
-```
-
-The "branch" bit changes depending on what kind of reference we're
-updating, while both of the right-hand references are computed by
-stripping well-known prefixes like "refs/heads/" or "refs/tags".
-
-The logic is kind of intertwined though and not easy to follow: we
-precompute both the kind (e.g. "branch") and the what, which is the
-abbreviated remote reference name, in `store_updated_refs()` and then
-pass it down the call chain to `display_ref_update()`.
-
-There is a set of different cases here:
-
-    - When the remote reference name is "HEAD" we assume no kind and
-      will thus instead print "[new ref]". We keep what at the empty
-      string.
-
-    - When the remote reference name has a well-known prefix then the
-      kind would be "branch", "tag" or "remote-tracking branch". The
-      what is the reference with the well-known prefix stripped and in
-      fact matches the output that `prettify_refname()` would return.
-
-    - Otherwise, we'll again assume no kind and keep the what set to the
-      fully qualified reference name.
-
-Now there is a bug with the first case here, where the remote reference
-name is "HEAD". As noted, "what" will be set to the empty string. And
-that seems to be intentional because we also use this information to
-update the FETCH_HEAD, and in case we're updating HEAD we seemingly
-don't want to append that to our FETCH_HEAD value.
-
-But as mentioned, we also use this value to display reference updates.
-And while the call to `display_ref_update()` correctly figures out that
-we meant "HEAD" when `what` is empty, the call to `update_local_ref()`
-doesn't. `update_local_ref()` will then call `display_ref_update()` with
-the empty string and cause the following broken output:
-
-```
-$ git fetch --dry-run origin HEAD:foo
-=46rom https://github.com/git/git
- * [new ref]                          -> foo
-```
-
-The HEAD string is clearly missing from the left-hand side of the arrow,
-which is further stressed by the point that the following commands work
-as expected:
-
-```
-$ git fetch --dry-run origin HEAD
-=46rom https://github.com/git/git
- * branch                  HEAD       -> FETCH_HEAD
-
-$ git fetch --dry-run origin master
-=46rom https://github.com/git/git
- * branch                  master     -> FETCH_HEAD
- * branch                  master     -> origin/master
-```
-
-Fix this bug by instead unconditionally passing the full reference name
-to `display_ref_update()` which learns to call `prettify_refname()` on
-it. This does fix the above bug and is otherwise functionally the same
-as `prettify_refname()` would only ever strip the well-known prefixes
-just as intended. So at the same time, this also simplifies the code a
-bit.
-
-Note that this patch also changes formatting of the block that computes
-the "kind" and "what" variables. This is done on purpose so that it is
-part of the diff, hopefully making the change easier to comprehend.
+Introduce a `enum display_format` that is more readily extensible.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c         | 37 +++++++++++++++++++------------------
- t/t5574-fetch-output.sh | 19 +++++++++++++++++++
- 2 files changed, 38 insertions(+), 18 deletions(-)
+ builtin/fetch.c | 101 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 64 insertions(+), 37 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c310d89878..7c64f0c562 100644
+index 7c64f0c562..e03fcd1b2f 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -918,12 +918,14 @@ static void display_ref_update(struct display_state *=
-display_state, char code,
- 	}
+@@ -48,11 +48,17 @@ enum {
+ 	TAGS_SET =3D 2
+ };
 =20
- 	width =3D (summary_width + strlen(summary) - gettext_width(summary));
-+	remote =3D prettify_refname(remote);
-+	local =3D prettify_refname(local);
++enum display_format {
++	DISPLAY_FORMAT_UNKNOWN =3D 0,
++	DISPLAY_FORMAT_FULL,
++	DISPLAY_FORMAT_COMPACT,
++};
++
+ struct display_state {
+ 	struct strbuf buf;
 =20
- 	strbuf_addf(&display_state->buf, " %c %-*s ", code, width, summary);
- 	if (!display_state->compact_format)
--		print_remote_to_local(display_state, remote, prettify_refname(local));
-+		print_remote_to_local(display_state, remote, local);
- 	else
--		print_compact(display_state, remote, prettify_refname(local));
-+		print_compact(display_state, remote, local);
- 	if (error)
- 		strbuf_addf(&display_state->buf, "  (%s)", error);
- 	strbuf_addch(&display_state->buf, '\n');
-@@ -934,7 +936,7 @@ static void display_ref_update(struct display_state *di=
-splay_state, char code,
- static int update_local_ref(struct ref *ref,
- 			    struct ref_transaction *transaction,
- 			    struct display_state *display_state,
--			    const char *remote, const struct ref *remote_ref,
-+			    const struct ref *remote_ref,
- 			    int summary_width)
+ 	int refcol_width;
+-	int compact_format;
++	enum display_format format;
+=20
+ 	char *url;
+ 	int url_len, shown_url;
+@@ -784,7 +790,6 @@ static int refcol_width(const struct ref *ref, int comp=
+act_format)
+ static void display_state_init(struct display_state *display_state, struct=
+ ref *ref_map,
+ 			       const char *raw_url)
  {
- 	struct commit *current =3D NULL, *updated;
-@@ -946,7 +948,7 @@ static int update_local_ref(struct ref *ref,
- 	if (oideq(&ref->old_oid, &ref->new_oid)) {
- 		if (verbosity > 0)
- 			display_ref_update(display_state, '=3D', _("[up to date]"), NULL,
--					   remote, ref->name, summary_width);
-+					   remote_ref->name, ref->name, summary_width);
- 		return 0;
- 	}
+-	struct ref *rm;
+ 	const char *format =3D "full";
+ 	int i;
 =20
-@@ -959,7 +961,7 @@ static int update_local_ref(struct ref *ref,
- 		 */
- 		display_ref_update(display_state, '!', _("[rejected]"),
- 				   _("can't fetch into checked-out branch"),
--				   remote, ref->name, summary_width);
-+				   remote_ref->name, ref->name, summary_width);
- 		return 1;
- 	}
+@@ -809,31 +814,42 @@ static void display_state_init(struct display_state *=
+display_state, struct ref *
 =20
-@@ -970,12 +972,12 @@ static int update_local_ref(struct ref *ref,
- 			r =3D s_update_ref("updating tag", ref, transaction, 0);
- 			display_ref_update(display_state, r ? '!' : 't', _("[tag update]"),
- 					   r ? _("unable to update local ref") : NULL,
--					   remote, ref->name, summary_width);
-+					   remote_ref->name, ref->name, summary_width);
- 			return r;
- 		} else {
- 			display_ref_update(display_state, '!', _("[rejected]"),
- 					   _("would clobber existing tag"),
--					   remote, ref->name, summary_width);
-+					   remote_ref->name, ref->name, summary_width);
- 			return 1;
- 		}
- 	}
-@@ -1008,7 +1010,7 @@ static int update_local_ref(struct ref *ref,
- 		r =3D s_update_ref(msg, ref, transaction, 0);
- 		display_ref_update(display_state, r ? '!' : '*', what,
- 				   r ? _("unable to update local ref") : NULL,
--				   remote, ref->name, summary_width);
-+				   remote_ref->name, ref->name, summary_width);
- 		return r;
- 	}
+ 	git_config_get_string_tmp("fetch.output", &format);
+ 	if (!strcasecmp(format, "full"))
+-		display_state->compact_format =3D 0;
++		display_state->format =3D DISPLAY_FORMAT_FULL;
+ 	else if (!strcasecmp(format, "compact"))
+-		display_state->compact_format =3D 1;
++		display_state->format =3D DISPLAY_FORMAT_COMPACT;
+ 	else
+ 		die(_("invalid value for '%s': '%s'"),
+ 		    "fetch.output", format);
 =20
-@@ -1030,7 +1032,7 @@ static int update_local_ref(struct ref *ref,
- 		r =3D s_update_ref("fast-forward", ref, transaction, 1);
- 		display_ref_update(display_state, r ? '!' : ' ', quickref.buf,
- 				   r ? _("unable to update local ref") : NULL,
--				   remote, ref->name, summary_width);
-+				   remote_ref->name, ref->name, summary_width);
- 		strbuf_release(&quickref);
- 		return r;
- 	} else if (force || ref->force) {
-@@ -1042,12 +1044,12 @@ static int update_local_ref(struct ref *ref,
- 		r =3D s_update_ref("forced-update", ref, transaction, 1);
- 		display_ref_update(display_state, r ? '!' : '+', quickref.buf,
- 				   r ? _("unable to update local ref") : _("forced update"),
--				   remote, ref->name, summary_width);
-+				   remote_ref->name, ref->name, summary_width);
- 		strbuf_release(&quickref);
- 		return r;
- 	} else {
- 		display_ref_update(display_state, '!', _("[rejected]"), _("non-fast-forw=
-ard"),
--				   remote, ref->name, summary_width);
-+				   remote_ref->name, ref->name, summary_width);
- 		return 1;
+-	display_state->refcol_width =3D 10;
+-	for (rm =3D ref_map; rm; rm =3D rm->next) {
+-		int width;
++	switch (display_state->format) {
++	case DISPLAY_FORMAT_FULL:
++	case DISPLAY_FORMAT_COMPACT: {
++		struct ref *rm;
+=20
+-		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
+-		    !rm->peer_ref ||
+-		    !strcmp(rm->name, "HEAD"))
+-			continue;
++		display_state->refcol_width =3D 10;
++		for (rm =3D ref_map; rm; rm =3D rm->next) {
++			int width;
+=20
+-		width =3D refcol_width(rm, display_state->compact_format);
++			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
++			    !rm->peer_ref ||
++			    !strcmp(rm->name, "HEAD"))
++				continue;
+=20
+-		/*
+-		 * Not precise calculation for compact mode because '*' can
+-		 * appear on the left hand side of '->' and shrink the column
+-		 * back.
+-		 */
+-		if (display_state->refcol_width < width)
+-			display_state->refcol_width =3D width;
++			width =3D refcol_width(rm, display_state->format =3D=3D DISPLAY_FORMAT_=
+COMPACT);
++
++			/*
++			 * Not precise calculation for compact mode because '*' can
++			 * appear on the left hand side of '->' and shrink the column
++			 * back.
++			 */
++			if (display_state->refcol_width < width)
++				display_state->refcol_width =3D width;
++		}
++
++		break;
++	}
++	default:
++		BUG("unexpected display foramt %d", display_state->format);
  	}
  }
-@@ -1252,14 +1254,13 @@ static int store_updated_refs(struct display_state =
-*display_state,
- 			if (!strcmp(rm->name, "HEAD")) {
- 				kind =3D "";
- 				what =3D "";
--			}
--			else if (skip_prefix(rm->name, "refs/heads/", &what))
-+			} else if (skip_prefix(rm->name, "refs/heads/", &what)) {
- 				kind =3D "branch";
--			else if (skip_prefix(rm->name, "refs/tags/", &what))
-+			} else if (skip_prefix(rm->name, "refs/tags/", &what)) {
- 				kind =3D "tag";
--			else if (skip_prefix(rm->name, "refs/remotes/", &what))
-+			} else if (skip_prefix(rm->name, "refs/remotes/", &what)) {
- 				kind =3D "remote-tracking branch";
--			else {
-+			} else {
- 				kind =3D "";
- 				what =3D rm->name;
- 			}
-@@ -1277,7 +1278,7 @@ static int store_updated_refs(struct display_state *d=
-isplay_state,
- 					  display_state->url_len);
 =20
- 			if (ref) {
--				rc |=3D update_local_ref(ref, transaction, display_state, what,
-+				rc |=3D update_local_ref(ref, transaction, display_state,
- 						       rm, summary_width);
- 				free(ref);
- 			} else if (write_fetch_head || dry_run) {
-@@ -1288,7 +1289,7 @@ static int store_updated_refs(struct display_state *d=
-isplay_state,
- 				 */
- 				display_ref_update(display_state, '*',
- 						   *kind ? kind : "branch", NULL,
--						   *what ? what : "HEAD",
-+						   rm->name,
- 						   "FETCH_HEAD", summary_width);
- 			}
- 		}
-diff --git a/t/t5574-fetch-output.sh b/t/t5574-fetch-output.sh
-index 0e45c27007..55f0f05b6a 100755
---- a/t/t5574-fetch-output.sh
-+++ b/t/t5574-fetch-output.sh
-@@ -54,6 +54,25 @@ test_expect_success 'fetch compact output' '
- 	test_cmp expect actual
- '
+@@ -904,30 +920,41 @@ static void display_ref_update(struct display_state *=
+display_state, char code,
+ 			       const char *remote, const char *local,
+ 			       int summary_width)
+ {
+-	int width;
+-
+ 	if (verbosity < 0)
+ 		return;
 =20
-+test_expect_success 'fetch output with HEAD and --dry-run' '
-+	test_when_finished "rm -rf head" &&
-+	git clone . head &&
+ 	strbuf_reset(&display_state->buf);
+=20
+-	if (!display_state->shown_url) {
+-		strbuf_addf(&display_state->buf, _("From %.*s\n"),
+-			    display_state->url_len, display_state->url);
+-		display_state->shown_url =3D 1;
++	switch (display_state->format) {
++	case DISPLAY_FORMAT_FULL:
++	case DISPLAY_FORMAT_COMPACT: {
++		int width;
 +
-+	git -C head fetch --dry-run origin HEAD >actual 2>&1 &&
-+	cat >expect <<-EOF &&
-+	From $(test-tool path-utils real_path .)/.
-+	 * branch            HEAD       -> FETCH_HEAD
-+	EOF
-+	test_cmp expect actual &&
++		if (!display_state->shown_url) {
++			strbuf_addf(&display_state->buf, _("From %.*s\n"),
++				    display_state->url_len, display_state->url);
++			display_state->shown_url =3D 1;
++		}
 +
-+	git -C head fetch --dry-run origin HEAD:foo >actual 2>&1 &&
-+	cat >expect <<-EOF &&
-+	From $(test-tool path-utils real_path .)/.
-+	 * [new ref]         HEAD       -> foo
-+	EOF
-+	test_cmp expect actual
-+'
++		width =3D (summary_width + strlen(summary) - gettext_width(summary));
++		remote =3D prettify_refname(remote);
++		local =3D prettify_refname(local);
 +
- test_expect_success '--no-show-forced-updates' '
- 	mkdir forced-updates &&
- 	(
++		strbuf_addf(&display_state->buf, " %c %-*s ", code, width, summary);
++
++		if (display_state->format !=3D DISPLAY_FORMAT_COMPACT)
++			print_remote_to_local(display_state, remote, local);
++		else
++			print_compact(display_state, remote, local);
++
++		if (error)
++			strbuf_addf(&display_state->buf, "  (%s)", error);
++
++		break;
+ 	}
+-
+-	width =3D (summary_width + strlen(summary) - gettext_width(summary));
+-	remote =3D prettify_refname(remote);
+-	local =3D prettify_refname(local);
+-
+-	strbuf_addf(&display_state->buf, " %c %-*s ", code, width, summary);
+-	if (!display_state->compact_format)
+-		print_remote_to_local(display_state, remote, local);
+-	else
+-		print_compact(display_state, remote, local);
+-	if (error)
+-		strbuf_addf(&display_state->buf, "  (%s)", error);
++	default:
++		BUG("unexpected display format %d", display_state->format);
++	};
+ 	strbuf_addch(&display_state->buf, '\n');
+=20
+ 	fputs(display_state->buf.buf, stderr);
 --=20
 2.40.0
 
 
---S0NEOrNx6Xj1E63+
+--0o47oBVQXDUw35fC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ/3yYACgkQVbJhu7ck
-PpTF1BAAqDNI6IMSgPVRmxLZCQmaT8xW1Frm9uLgZbwm406qMi8kDV0cu6llaV75
-4hzi/JUQsrZLRMAx22029N90uPog05Gt30RTEngefU/EtcKAu2dt0KIFMeVe/8+i
-M2+ptsOIgcv6ndFO6e5pXuVtMtuJRZwIYpiPUs5Z+LLvM87JmUu+CLAiJ7aOC/5p
-bveSARy7WrkHikNE3KCVw7KxOEpnOTOUieqjQQ7k8vGix2gwOqaRxVtiCwiRWU+d
-hDuKxlLvHVt07nkXK96cqT9wttUZ5n1xw5SL0a8axWtiI093OUjqJjLVkPrkgKnt
-LO4XJ+T4wO7CJxEtYQSJ7vOPd71lnCM8YhoWOfpC/nva2qNfBh5L9gFa7G07NI11
-fXtVFJ1wvx5TQJU9F5MD6FawVINDfyAtGVZ4BUHYM838pX87bk3/8OnHT1g9Rguw
-jMe3CE1o9twlHOrpsWUFMwwLZpFqucfoAoB34VH7mKlSB8Mf+8yc8SpzWPpZb9pY
-iFtpRsZs6qBrRlX3v3b/ABiu3H5aat35egMtawWfclTLBIupi6Zue4GY4eE7OA+2
-Dn/PsmE9xHtZs6lUSY0H3iWr0IAYSVOIibFsKE1eTj/xq7OWZoS68d3GYNqVYd1j
-mMhFbWCfOSFk7FVy1rVZjqI2WMTWoo+HKXvyxN3RLtvjbUaqefo=
-=CyPt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ/3yoACgkQVbJhu7ck
+PpTKTBAArICo1SleDrnFk5lrGW+LnTOKINKQrHA7CFr2SF8DpXaTFpsgTRZoTr/x
+s+/qrNYKt/IgvK+jmsT14GV41FWDw/7CgSc2q0t4rGJhWbvo6GIUlMxZjLQEDFaa
+W2xZk1rJVJ8NStD0/7XuRsQ1G4qt1D4EBsSu7HDO//iOoXHd4i4Y0azSRRLnf+1y
+gFwAJzXuxN/nDID33xNUy9y/Hvl8wIZ7YfVJw9Na/YAtyyY/G/WWAgzepcbSp3Uf
+84OctHRU35rrNbfepKGmxj+ThLH2Ai+kg2f2RW2YYwAGY62izAjOUFWQpoySBZjO
+j92f12jPWMIk3uQ3YN5mtphPjb9Y5dyho5bE88l0X5NsJu0WzIHt/+DD8Iv9iMhg
+heGNb8QUQSpsg3DiHe8WxZyoLVAj9xUzylRsKVE7Ug+xV5ojql3/R4NqFtKR7m1v
+XcDMWb9emee0rdO+rcZAKWUPYKpIwFHshBWqYkaiyYGzFKYG4heEQoszKMwLC5I1
+t+ZDX+ODYtcf+Cl7lVLHyqunr8WoZXJGTaGEPbxfiSe09I62essKAvFS7VzZdbmU
+448GHe8OskvEsvlesz1H3R0bDTylsC1wzHimbKjXB4La3gGW+Z+OunVhGU4NYH6m
+u1G/+ZzHIG7oC4ItvczE4QgcyaiJB7A53jfIcF6ahuAB4Ne0ICs=
+=LT47
 -----END PGP SIGNATURE-----
 
---S0NEOrNx6Xj1E63+--
+--0o47oBVQXDUw35fC--
