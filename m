@@ -2,210 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F10C77B75
-	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 12:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED43CC6FD18
+	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 12:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232317AbjDSMXM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Apr 2023 08:23:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41572 "EHLO
+        id S233333AbjDSMb6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Apr 2023 08:31:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233084AbjDSMXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2023 08:23:00 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A98941FCE
-        for <git@vger.kernel.org>; Wed, 19 Apr 2023 05:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1681906972; i=johannes.schindelin@gmx.de;
-        bh=Y2nEk2P1Kc/ui2EihtH7fd4V9oXfNBnKkC7doaCNW9M=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NS4MkNw4oULD/p+QHlBPWg42kovZo560mksLGxzEOk9Lxsg7B/I+pkHmORH5+Ekht
-         BRuIaPNZ7KSVNBC6zHstDn1MVEwVkhmSqiwvHoBuNF9syl5XPwSi3Yq6OcVMm0fydN
-         T5wJLfiidi1uihXo3RwNQ/X5OLK6h9KSVq0LqEAga+93rxGWT1qgvZfiBUvGZlVS+e
-         o9+tB49BfSdwx/fuu/MOaHotSFHncS8yQi5no/Nn6gfBnzP4yQdatVkdctEAkzVXlr
-         n3mkz3IjyW81LHkjQw1LgMrnZISSCmRV3B8gyMR2jNQ6BCdWtyrzrvPvZgWZpS5pZX
-         hmrGrgaS52PPw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.23]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAfYm-1pe8U01Wi8-00B32A; Wed, 19
- Apr 2023 14:22:52 +0200
-Date:   Wed, 19 Apr 2023 14:22:50 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Samuel Ferencik <sferencik@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2] config: introduce an Operating System-specific
- `includeIf` condition
-In-Reply-To: <xmqq7cuamjmu.fsf@gitster.g>
-Message-ID: <67a2d12c-6250-c4ee-dd26-fd8ecc71b8bc@gmx.de>
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com> <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com> <969a4399-a6db-7c72-f96c-8bbe5f6208d4@iee.email> <xmqqk03jcwxz.fsf@gitster.g> <CABwTEiRz+-+Zdx3Ed7O09Ch8GoXH-SnmJyc-vFOdF-hk_uO-yA@mail.gmail.com>
- <xmqq7cuamjmu.fsf@gitster.g>
+        with ESMTP id S232894AbjDSMbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2023 08:31:49 -0400
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E80615467
+        for <git@vger.kernel.org>; Wed, 19 Apr 2023 05:31:32 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 592FB32005C1;
+        Wed, 19 Apr 2023 08:31:30 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 19 Apr 2023 08:31:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1681907489; x=1681993889; bh=0lOs8wgjF0QzhakC8j+m/qivr
+        o67PNUwSsNZ7cWIry4=; b=ofsAbSN4h3soa3MeGUOtQ5JvNqTzYzkd3ZtVfPWf1
+        3vMJccQCX9cHPyrlFaeTONwzbjwlOW4bDWqnBvq4S+p2cqyXA4fFj85kMzfL4/CS
+        VXbNWe7AXypWjOarIHlUcFY4tqqI9Ma6ECvPe1sfEvVA9CRwh1wCwXS5iKNPmR+E
+        3a9wiCRc/i4GHxTyXGbn6I1vAH8/nizzV8OgISfg9CepECTBx5kRO6WbbmWn8N61
+        R4SlZeXKyVotznWxnnpj5HsCdSM2kdeYTS8+bCvdRj2ki4N3C7WqGqerD5NfhUG8
+        qPzUVJ8uBDmtnclwGre4BhHkZdT9rOnE9GZnxYKBQc11A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1681907489; x=1681993889; bh=0lOs8wgjF0QzhakC8j+m/qivro67PNUwSsN
+        Z7cWIry4=; b=S3ce2lTftiH9FOJQ44MJuc3rriEXvq0UswAM7x7+piCmbt+i4Zv
+        EZ6HQpGSi7LUYgqYGX76CQPim+J3EjiwaAQeF1McMFHpfW9Q/Yp9ZXb3Lf9T0yDP
+        V8AcWxdrMTQl5iP9BlMbGPSInacGDCQDax4IKWdo5fEmmKzIW4A2fpYgLd01kUV1
+        56tSR3P30TU1GP20YYH6zWNnXqpOjyqE+QYqXJExcSowAUl3mInD2T0P8ArfwqGB
+        VaMhRW4ZF0TkLwh4MODDMP8FSN+n4HArSVq5V731HHt7ZMnO/Yug37DSHyS+BFlL
+        OLcL1UmIAv7BrS999urg5tjkGqB08GbFDjQ==
+X-ME-Sender: <xms:Id8_ZGn_i1wmhNq7czJ9iVOTZ1H-Gidi23xvPNYHXbJU0RPEzgvT6w>
+    <xme:Id8_ZN0x1vnrUXGgDygBvRtj1w7nvSlzQyxZLRJ4cVy0wbc988g3VidQKtQGiMXPX
+    4wOMpYzCQHqR7AHIQ>
+X-ME-Received: <xmr:Id8_ZEohHGa6CbWfezx9KqH6JuLnhWSVgSW3zyKX3VfjK6y8dHNpagpSOyeRTIUXiw8YhsGMqdh4UoUF5TQtWYuu3szIdvEo7FvyBRFtwFlcLw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedttddgheegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfggtggusehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeeugfeutdeuieehteelveegudejkeejheelje
+    ejhffhgffhvefgkeeukeejtdeijeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:Id8_ZKkU_uCs1ezaUNL42aGZKIiN1tNJADlsKlR9DOC7OUXOpPGg_A>
+    <xmx:Id8_ZE1mzug_WXtsbXJGSv0BGGiVZWIkSmyNeq2UawO59M88etCApA>
+    <xmx:Id8_ZBtZrSU4cyl49EptqxVCS9x8UfvirUIYMdWx5P4ps1bCohADxA>
+    <xmx:Id8_ZJ9dTJC0TSXtW2N5D4PwOEOG87Cgus9oAovKPZZ5GZhQWqKbOw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Apr 2023 08:31:28 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 2d396e64 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 19 Apr 2023 12:31:11 +0000 (UTC)
+Date:   Wed, 19 Apr 2023 14:31:22 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH 0/8] fetch: introduce machine-parseable output
+Message-ID: <cover.1681906948.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/qlbiNNdv4APo1BODqeCYtmFnXcaic/iDjA7gvFQQCol/Chomyk
- RCmE7Mwk4M6KrF+8tDA1/HFzCBE2HZgBBoHu1pXzLNBp0VyXgyHWhJ0f0Dq4CHMec9yoLDS
- 7/Pd9nzFl9V3WfkmbIKJ/V4W2Z1ADzawg2Hf4tBxisXB3lRS09ooI+k/DUrw74WnF2OqK++
- rSxZwFQxV+d9NnYrCX1gA==
-UI-OutboundReport: notjunk:1;M01:P0:BQaB5FgxAYc=;nq+V26W8n2k6lL7TUZOjnFzTjlo
- cCBAa6IZq+Rpc/UQrlVYcWNK2PBDoIVR4a5A1rQjB+kMPQrwXc9StZPqHrhxfzwnCi8FPg9KS
- rzDSvOWVOpI+GlPovAhaUOyImh8CfC18YDnQB6Ntjur4/pGEZQOmlHJdN3CRjGZrWf1Ee/CSN
- kDFEIbXVm3l892MCZR6mWmsayceIerU3RFa9mXfqeIA1xzYr3xJROnwC8u//cHjA75Ns5ibmk
- hfcaZho7aBG6mti0Q0OraboT1AE1HynumFT3L2PX/kD2afmbgKjNmsF1zPAoDQ4jdtTq3jsjm
- pR/+lyj458iTCWk6omRkiHhvVgs7cFPdVrEuun4eKT+aCAs3VygTJiW4Xy0vDHkBptKkib/kb
- X0Nk+ZTYTmB/qq02m/YstHjYi4hbQbI4VXHJwoaK6HyzozOzz3QHV8gpp0Ha/YRthBhEn0zOL
- ReVINq3rlPgVrLbDj3QtpYOfIS3bKQgQ4ceOeMaP17gDpu4STeZ1cIhaTEwXLsNxfhSuhCmwK
- IufrM/dotR8E6sd/Sx2gU44XsxtDujDOY384+xX6sa26Ic7kzFIOu8L5QBa2P8KOpAKXXhZBk
- JyDZCQCefx8hdjWZMCr+tp5dEiJHrUwGkaTNYPxnp2io5Ad8tqNmxK4+u2TfFqZ11hi4vx1TD
- TEJNe9arVIchsS13u4MT+QIFF+jL0Qva3mjQszQBNMdU36Q4deuBt7Xuj5KSXGtRz5awDLJZ8
- W/A6kM8HqKJ1fJ2GZ2QkBbAY1uOQE7CjI/W28BNmoOqFZb+1jp2LP9SbVRyjiPCxyIwUU5ZXn
- APxB9cCaUXPexz0nX6UCTg2bAV0Q0XeizXT11LT623r1lKVVW6IN3FJrNRPEABGqG+sgQhCUu
- Jy0Kjk+v4f8kUPDtlfNjVbE9I2XWiPRvfLNM5KzDhYbGWr0eNF6S6QyfzVmeeZblgnZ1ullMy
- YnPHwA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="80RiOQtIqEGazlpI"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Mon, 17 Apr 2023, Junio C Hamano wrote:
+--80RiOQtIqEGazlpI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Samuel Ferencik <sferencik@gmail.com> writes:
->
-> >>>> Let's introduce a new condition: `os:<uname-s>` where `<uname-s>` i=
-s the
-> >>>> system name, i.e. the output of `uname -s`.
-> >
-> > The discussion about https://github.com/gitgitgadget/git/pull/1429 see=
-ms to
-> > have stalled on several points. I'll try to summarise; let's see if we=
- can move
-> > forward.
-> >
-> > (I am the reporter of https://github.com/git-for-windows/git/issues/41=
-25, which
-> > led to this PR. I am vested in making progress here.)
-> >
-> > 1. name of the setting (`os` vs `uname-s` vs `sysname`)
->
-> I do not think it is a good idea to squat on too generic a name like
-> 'os', especially when there are multiple layers people will care
-> about.  But I think the original thread discussed this to death, and
-> I do not see a point bringing it up again as the first bullet point.
+Hi,
 
-Given what you said about "Operating System", i.e. that both "Ubuntu" and
-"Linux" should be able to match at the same time, I kind of concur, but in
-the other direction: rather than forcing the current patch series to use a
-less intuitive (i.e. user-unfriendlier) name than `os`, I would want to
-modify the patch series so that it _can_ match "Ubuntu" and "Linux".
+this is the second part of my quest to introduce a machine-parseable
+output for git-fetch(1) after the initial refactorings that have been
+merged via e9dffbc7f1 (Merge branch 'ps/fetch-ref-update-reporting',
+2023-04-06).
 
-> > 2. casing (use of `/i`)
->
-> My preference is to do this case sensitively (in other words, start
-> stupid) and if somebody wants to use "/i", add it later after the
-> dust settles.
+Parsing the output of fetches is mostly impossible. It prettifies
+reference names that are about to be updated, doesn't print the old and
+new object IDs the refs are being updated from and to, and prints all of
+that information in nice columns. In short, it is designed to be read by
+humans rather than machines.
 
-I strongly disagree with this. This feature is meant for Git users, who I
-must assume based on my experience would expect the value to be
-case-insensitive. I.e. they would expect both `linux` and `Linux` to
-match. Let's not make this feature harder to use than necessary!
+This makes it hard to use in a script way though, e.g. to learn about
+which references actually have been updated or which have not been
+updated. This patch series intends to fix that by introducing a new
+machine-parseable interface:
 
-> > 3. handling Windows (MinGW, WSL)
->
-> This comes back to the reason why "os" is a horrible choice.  Is WSL
-> a Windows?  Is WSL a Linux?  The same question can be asked for Cygwin.
+```
+$ git fetch --output-format=3Dporcelain --no-progress
+  fff5a5e7f528b2ed2c335991399a766c2cf01103 af67688dca57999fd848f051eeea1d37=
+5ba546b2 refs/remotes/origin/master
+* 0000000000000000000000000000000000000000 e046fe5a36a970bc14fbfbcb2074a487=
+76f6b671 refs/remotes/origin/x86-rep-insns
+* 0000000000000000000000000000000000000000 bb81ed6862b864c9eb99447f04d49a84=
+ecb647e5 refs/tags/v6.3-rc4
+* 0000000000000000000000000000000000000000 83af7b1468c0dca86b4dc9e43e73bfa4=
+f38d9637 refs/tags/v6.3-rc5
+* 0000000000000000000000000000000000000000 ab3affb8ed84f68638162fe7e6fd4055=
+e15bff5b refs/tags/v6.3-rc6
+* 0000000000000000000000000000000000000000 1c8c28415e8743368a2b800520a6dd0b=
+22ee6ec2 refs/tags/v6.3-rc7
+```
 
-These questions actually have pretty obvious answers, with the exception
-of WSL1 (which nobody should use anymore): WSL is a Linux, Cygwin is not
-an Operating System by itself but runs on Windows. But of course that's
-not helpful to help configure Git specifically in a Cygwin setup.
+The series is structured as following:
 
-> The answer depends on which layer you care about.
+    - Patches 1 and 2 improve test coverage for output formats.
 
-Yes, this is the crucial bit.
+    - Patch 3 fixes a bug with the current output format.
 
-> The underlying kernel and system may be Windows, and some
-> characteristics of the underlying system may seep through the
-> abstraction, but these systems aim to give user experience of something
-> like GNU/Linux.
->
-> And this is not limited to Windows.  There may be similar issue for
-> systems like PacBSD.  Is it a Linux?  Is it a BSD?
->
-> > 6. what's the use-case?
->
-> I think that this is the most important question to ask, and from
-> here, we'd see how #3 above should be resolved (I suspect that you
-> may want to have at least two layers to allow WSL to be grouped
-> together with MinGW and Cygwin at one level, and at the same time
-> allow it to be grouped together with Ubuntu at a different level).
-> And after we figure that out, we'll have a clear and intuitive
-> answer to #1.
+    - Patch 4 to 6 perform some preliminary refactorings.
 
-This is probably the most valuable feedback in this entire thread: What is
-the problem we're trying to solve here?
+    - Patch 7 introduces a new `--output-format=3D` option for
+      git-fetch(1) that allows the user to configure the output more
+      directly.
 
-The original report (which this patch tries to address) asks for a way to
-have a user-wide ("global") Git configuration that can be shared across
-machines and that allows for adapting to the various environments. The
-rationale is motivated well e.g. in
-https://medium.com/doing-things-right/platform-specific-gitconfigs-and-the=
--wonderful-includeif-7376cd44994d
-where platform-specific credential managers, editors, diff highlighters
-that work only in certain setups, and work vs personal environments are
-mentioned.
+    - Patch 8 introduces the new "porcelain" output format.
 
-So as long as Git offers ways to discern between the mentioned
-environments by including environment-specific configuration files, we
-solve the problem.
+Patrick
 
-Bonus points if we can do that without getting ever deeper into a pretty
-contentious discussion about naming.
+Patrick Steinhardt (8):
+  fetch: split out tests for output format
+  fetch: add a test to exercise invalid output formats
+  fetch: fix missing from-reference when fetching HEAD:foo
+  fetch: introduce `display_format` enum
+  fetch: move display format parsing into main function
+  fetch: move option related variables into main function
+  fetch: introduce new `--output-format` option
+  fetch: introduce machine-parseable "porcelain" output format
 
-The strategy chosen in above-mentioned article uses the presence of
-certain directories as tell-tales for the Operating System in which
-Git is called: Linux, macOS or Windows. Concretely, it suggests this:
+ Documentation/config/fetch.txt  |   4 +-
+ Documentation/fetch-options.txt |   5 +
+ Documentation/git-fetch.txt     |  17 +-
+ builtin/fetch.c                 | 406 +++++++++++++++++++-------------
+ t/t5510-fetch.sh                |  53 -----
+ t/t5574-fetch-output.sh         | 209 ++++++++++++++++
+ 6 files changed, 475 insertions(+), 219 deletions(-)
+ create mode 100755 t/t5574-fetch-output.sh
 
-	[includeIf "gitdir:/Users"]
-		path =3D ~/.gitconfig-macos
-	[includeIf "gitdir:C:"]
-		path =3D ~/.gitconfig-windows
-	[includeIf "gitdir:/home"]
-		path =3D ~/.gitconfig-linux
+--=20
+2.40.0
 
-Now, the presence of directories like `/home/` might work well to discern
-Linux from macOS, but this is not the correct way to identify Linux in
-general (a `/home/` directory exists in many Unices, too). And it only
-works when the _gitdir_ is in those directories, too. That's why I thought
-that Git could do better.
 
-In many cases, though, the presence of directories is probably "good
-enough" to address the need described in above-mentioned article.
+--80RiOQtIqEGazlpI
+Content-Type: application/pgp-signature; name="signature.asc"
 
-What triggered me to write this here patch was the report that those
-`/home/` and `/Users` paths in the Git config ran into the warning that
-Git for Windows no longer treats paths starting with a slash as relative
-to the runtime prefix. This warning was introduced when the `%(prefix)/`
-feature was upstreamed, superseding Git for Windows' original handling of
-paths starting with a slash. The warning was introduced in November '21
-(virtually together with Git for Windows v2.34.0):
-https://github.com/git-for-windows/git/commit/28fdfd8a41836f49666c65e82d92=
-de9befea2e69
+-----BEGIN PGP SIGNATURE-----
 
-So while I still think that something like `includeIf.os:<name>` would
-make for a better way to address the concern in question, I realize that
-the path of least resistance is simply to drop the now-deprecated feature
-from Git for Windows (including the warning that was the reason for the
-original report): https://github.com/git-for-windows/git/pull/4389
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ/3xkACgkQVbJhu7ck
+PpRlXw//f6FviEjWZ/5Ldac3j5PvbkV2RYhPL0+/ZPcXcEk8LTJgUrZrDrbyjI1A
+duqg6dmXNcCw3gKE8AfhJ3ZOPYTKAVLhtwxAQcIpg75fKy7pbvnwCINEgijQSKTP
+drwUQHk/fZYDWkwUEysSHX4r1KtSYyELP9biy9Srq26taHwE6hJFDfxuB1QnBxYb
+5/TEiXSKZlIHcBSyDBhAwu6xeg/kLArs/EtzK+uKJPYkkYE5psKyuG2SHbwUoPxB
+wKZ6Fuo49uOKtBWGS5k/Yr5eEdYOZ5+o/Bon4cu8zJGclvk/VSBpNBO+1iDwXXfv
+GHQWA3ajeFYjQymU54fj+cDguub2CyH4d2KIdpRYwcp5M6Dkwo10ieJTGcZYIrDF
+/MVlemvOstvLVR4uWgPBu78M+vQoVOergSexkTvTJbJgu7AxQxpQ8gbm1kIJ8+3X
+pYyxZ+0d/NmsrmCiGJ/ExAQeg3/edC3VacRAT+3m6EBbdjpyqVBHyMIaYBhNk9ql
++Y67nakSoK7XXYcrkjiwYx/GVxYmf4ySFWDk5F4KIR+dbLFXxdla3ZYXa+oJdJzG
+OeE8vByfCISR3aEAO4bSotdCaBom78/odyDr+VcHlQFvQnaXxXc3YWqIgZtVysa6
+oHaJ4/+X4r3NzLMR2idLOw4oBZVcBmbtu2X2Mho7np1BZ4d/LGE=
+=mJql
+-----END PGP SIGNATURE-----
 
-This still leaves Git in the somewhat unsatisfying state where there is no
-better way to discern between Operating Systems than to work around by
-detecting the presence of certain directories. But I do not see any viable
-way to reach consensus about the `includeIf.os:<name>` patch, so I'll
-leave it at that.
-
-Ciao,
-Johannes
+--80RiOQtIqEGazlpI--
