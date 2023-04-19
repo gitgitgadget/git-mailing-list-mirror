@@ -2,76 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D5B3C6FD18
-	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 12:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E14C7C77B73
+	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 12:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233335AbjDSMcr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Apr 2023 08:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51342 "EHLO
+        id S233262AbjDSMc5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Apr 2023 08:32:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233285AbjDSMc0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2023 08:32:26 -0400
+        with ESMTP id S233316AbjDSMci (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2023 08:32:38 -0400
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB6A167F7
-        for <git@vger.kernel.org>; Wed, 19 Apr 2023 05:31:55 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 7220E32002E2;
-        Wed, 19 Apr 2023 08:31:54 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F924167F3
+        for <git@vger.kernel.org>; Wed, 19 Apr 2023 05:32:01 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id 6684432005C1;
+        Wed, 19 Apr 2023 08:31:58 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 19 Apr 2023 08:31:54 -0400
+  by compute3.internal (MEProxy); Wed, 19 Apr 2023 08:31:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681907514; x=1681993914; bh=dD
-        MHPNvwaXQf4RY9h1marCRFPTtAg3XCiPzp/CyB9ss=; b=R71/Oo/wmEcm/iMyVU
-        v1zsSPnQr69gHwGea5w5AUs4E0BeDT2PyYavo4lUjXMIPD+J6t3XR2aYRxY+2/yf
-        e8OpQGIA46ULxN+y8mv1rLzDCVqn7Ar2iFjrcG56gsBGXEvNKjFGo1fX0N5GZRQ+
-        mhf1GNGbponrDPMAwbHNVSapbXSJz9CKOwR/ejTkjJ4IIPIhC+79UNeMt1DBPS8+
-        8uogKmMxdWi4p6G/ZpAip0QJdMhX5I4OrWC+d5LHFqHUskE+kAsts2LtS21O2xiH
-        uvOmxOijrWVf8wqORZghhLhan5rpzCvrKLkJo98yWFK0tLhhcAr8o3Vnh0I9I+jK
-        KwPw==
+        :subject:subject:to:to; s=fm3; t=1681907518; x=1681993918; bh=4j
+        Km3COaVfcWMPsVHEsG8aIlM26R/58ojhp2L+Y18wU=; b=aktVzpeWSgLTK8CEd9
+        VzRiNhXzpk0qr4O031wTtYWsnTY+deWVFmZJ/Zc8hWaOAlhBmjenpVQPDbP/emds
+        OB4xrx45HQ3LDevfwtgiN0b6kz/cLM5bS0qUtKnjms3vBg4maPzcQAUTS7ggKFjK
+        0d8eDW7/pPUYUS3YhSHJcE9m9LV5mp1Hfx//h2JaR0Pt6MEOqg8fs1RsEw7oJ2/t
+        +88GUk6yDKYYvGzd/3yd0OvuMonlqcudjJfeCI9WUeMF/RZR4w80xX5l/hwZ8EX8
+        d2gxdlCVXL36oEInMsOttJ4a0vtNOZscDpQLj0NazfUf4IdRqJG9o0sBgPTojfqQ
+        QgiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681907514; x=1681993914; bh=dDMHPNvwaXQf4
-        RY9h1marCRFPTtAg3XCiPzp/CyB9ss=; b=iiLAyEusbYGwafIPyHmMqib6DsOiT
-        eRlicC2uzf3GK/dhMGt4PczFuqWFUgloNOZYgpZxmR3HtVgrkZxItEmXrNdoTQHX
-        X8OItkUmdCXldaYrr0zEtBCjmHgVUJplpkam6X9GfX9W1cer5xtFTeq1bH4z9Fg8
-        hj++OpbJfBk2ltMQss9ri5yxIqu3+G6+rRv+d81RKn8ApaTV7TCBEMeNE47vyngV
-        X3OEMd1WMTQ1+SdAnq3ZmO3QSyDJu4tP4a00UQyYYjEGu3+X8NH4cvH9RfRlXKof
-        67w6EzNCxQSwXsH6/IXELmxPEOAqJe/x/Y+U3tO+L61JQW/6dClgVZWPA==
-X-ME-Sender: <xms:Od8_ZMeJMfJ0hGamm_XqmPZ9tJe-NPuHt929k3jA1Rw1DJSl9enp1w>
-    <xme:Od8_ZOOPSn4J0jnsI7PzX29uGTYPNVoLkB6yrj6jvrkt6HSgJv_zrOFOShGLhZIvL
-    7MMYm0IcRU8lBVIdg>
-X-ME-Received: <xmr:Od8_ZNiNqTme8fqUmWhUQYw5W4tVvgiO6hyCvjb1qi4PZ-20oRXUKSEWyO0xywuOHqpOZ5D7kMlnPvN8TY-IwpnWHWHGCZwuUmDmjha8cqzTdQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedttddgheegucetufdoteggodetrfdotf
+        :x-sasl-enc; s=fm3; t=1681907518; x=1681993918; bh=4jKm3COaVfcWM
+        PsVHEsG8aIlM26R/58ojhp2L+Y18wU=; b=X3JRne+quAVltUrVQcJhyRil0wZF3
+        pGdV4PidZOTB8W9YinCwkuRvt5y3dnxN+ljeTX4haD9/Kzy6aCz15sWQRo+SIRdK
+        TkoQj7s+Ium8oNCqpJmcFM7OSuX+zQgWuK20Ydybc18XKcsWm8GqHC3Qyw7x8IlO
+        sVXfUvZo+xk9KhOrUDGgH+QQWC3UqXvaZrMUrsK0yXaiZm8yLB3VxIbRvzP/7RbU
+        8+Uy0hoFeznhuju/iE2i5osWtLNRqqFYsgEDbo1k/iTn+ZFzpMDujLfxoB78p0re
+        SuZm4GF40cBhOmVu+fVxL3TrF0o9Pdtqaxjwm5jF5eIwp3jQIWPwVjeTw==
+X-ME-Sender: <xms:Pd8_ZOqgjngPPGFEFfpOUOrr6eeShSI95m7fUH4J-AaO1WPxo1_Hqg>
+    <xme:Pd8_ZMrb-gQCu_hgJO10yLXnG9_K6Xrsr0Ca91aDDEkKPl3zcsq_XhUu4bwNWPlgl
+    uwa8Y6yudtwaQeYeA>
+X-ME-Received: <xmr:Pd8_ZDNp30FOx1HdinJMv8_QM2Kc0l2_heOhvwGXWKMwGvEoi313eZ9NiBwvCwAoaKpOeSgWRpYXgD-8fEbb_cR9IEef3F5QXiiq8g1hylExrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedttddgheefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:Od8_ZB_hpDr1Oie4YsLRGciLLPGbVEn2QqXReT_oy559RkLR94a9sA>
-    <xmx:Od8_ZIt4TcERAZNeVVSdN1jo8OOhs28xulxpqBgDkN3-QCAf6FsEiA>
-    <xmx:Od8_ZIHRUxMhn3FZ8WDUmCgx6_YJhxKsdAmZHubJSvLghsG9O85vaQ>
-    <xmx:Ot8_ZO2NeY7CEXngDEIJlSiiIbl2PztutYV5FulemnMg7vfj1OtZnA>
+X-ME-Proxy: <xmx:Pd8_ZN4Iiz7OSrMCZRkyHKV_Xt0Yi5LR57SOyhCVxKrtlAk5NGeb8A>
+    <xmx:Pd8_ZN7-FXjPiJWy96m5FXnvWUe6n4Up9YWGRTyL0xtwQoav6mTH3Q>
+    <xmx:Pd8_ZNiU592KaUuV1SHidVizrdcfnAnPUAqtPDOnHu9k-Jiivm-Bxg>
+    <xmx:Pt8_ZKhZz0ng0xeb-z2Gs0UmdTCxN7Heoy2r_cJ9oQCsA6G7tkKHBg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Apr 2023 08:31:53 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 7d198abb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 19 Apr 2023 12:31:40 +0000 (UTC)
-Date:   Wed, 19 Apr 2023 14:31:51 +0200
+ 19 Apr 2023 08:31:56 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id e6b34094 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 19 Apr 2023 12:31:44 +0000 (UTC)
+Date:   Wed, 19 Apr 2023 14:31:55 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 7/8] fetch: introduce new `--output-format` option
-Message-ID: <3b2cad066a3b3446fc335d6944a62bf79b0779bb.1681906949.git.ps@pks.im>
+Subject: [PATCH 8/8] fetch: introduce machine-parseable "porcelain" output
+ format
+Message-ID: <301138da039451519c6e60d6126e7756a54d346f.1681906949.git.ps@pks.im>
 References: <cover.1681906948.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ihoAQ71d/qAykSkD"
+        protocol="application/pgp-signature"; boundary="uK5mVgQpVuqmRIBp"
 Content-Disposition: inline
 In-Reply-To: <cover.1681906948.git.ps@pks.im>
 Precedence: bulk
@@ -79,180 +80,429 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ihoAQ71d/qAykSkD
+--uK5mVgQpVuqmRIBp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-It is only possible to configure the output format that git-fetch(1)
-uses by setting it via a config key. While this interface may be fine as
-long as we only have the current "full" and "compact" output formats,
-where it is unlikely that the user will have to change them regularly.
-But we're about to introduce a new machine-parseable interface where the
-current mechanism feels a little bit indirect and rigid.
+The output of git-fetch(1) is obviously designed for consumption by
+users, only: we neatly columnize data, we abbreviate reference names, we
+print neat arrows and we don't provide information about actual object
+IDs that have changed. This makes the output format basically unusable
+in the context of scripted invocations of git-fetch(1) that want to
+learn about the exact changes that the command performs.
 
-Introduce a new `--output-format` option that allows the user to change
-the desired output format more directly.
+Introduce a new machine-parseable "porcelain" output format that is
+supposed to fix this shortcoming. This output format is intended to
+provide information about every reference that is about to be updated,
+the old object ID that the reference has been pointing to and the new
+object ID it will be updated to. Furthermore, the output format provides
+the same flags as the human-readable format to indicate basic conditions
+for each reference update like whether it was a fast-forward update, a
+branch deletion, a rejected update or others.
+
+The output format is quite simple:
+
+```
+<flag> <old-object-id> <new-object-id> <local-reference>\n
+```
+
+We assume two conditions which are generally true:
+
+    - The old and new object IDs have fixed known widths and cannot
+      contain spaces.
+
+    - References cannot contain newlines.
+
+With these assumptions, the output format becomes unambiguously
+parseable. Furthermore, given that this output is designed to be
+consumed by scripts, the machine-readable data is printed to stdout
+instead of stderr like the human-readable output is. This is mostly done
+so that other data printed to stderr, like error messages or progress
+meters, don't interfere with the parseable data.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/fetch-options.txt |  5 ++++
- builtin/fetch.c                 | 17 +++++++++++
- t/t5574-fetch-output.sh         | 50 +++++++++++++++++++++++++--------
- 3 files changed, 60 insertions(+), 12 deletions(-)
+ Documentation/config/fetch.txt  |  4 +-
+ Documentation/fetch-options.txt |  4 +-
+ Documentation/git-fetch.txt     | 17 ++++++-
+ builtin/fetch.c                 | 50 +++++++++++++++-----
+ t/t5574-fetch-output.sh         | 84 +++++++++++++++++++++++++++++++++
+ 5 files changed, 142 insertions(+), 17 deletions(-)
 
+diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
+index 568f0f75b3..70734226c0 100644
+--- a/Documentation/config/fetch.txt
++++ b/Documentation/config/fetch.txt
+@@ -52,8 +52,8 @@ fetch.pruneTags::
+=20
+ fetch.output::
+ 	Control how ref update status is printed. Valid values are
+-	`full` and `compact`. Default value is `full`. See section
+-	OUTPUT in linkgit:git-fetch[1] for detail.
++	`full`, `compact` and `porcelain`. Default value is `full`.
++	See section OUTPUT in linkgit:git-fetch[1] for detail.
+=20
+ fetch.negotiationAlgorithm::
+ 	Control how information about the commits in the local repository
 diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.=
 txt
-index 622bd84768..654f96f79d 100644
+index 654f96f79d..5ca8a67fe8 100644
 --- a/Documentation/fetch-options.txt
 +++ b/Documentation/fetch-options.txt
-@@ -78,6 +78,11 @@ linkgit:git-config[1].
- --dry-run::
- 	Show what would be done, without making any changes.
+@@ -80,8 +80,8 @@ linkgit:git-config[1].
 =20
-+--output-format::
-+	Control how ref update status is printed. Valid values are
-+	`full` and `compact`. Default value is `full`. See section
-+	OUTPUT in linkgit:git-fetch[1] for detail.
-+
+ --output-format::
+ 	Control how ref update status is printed. Valid values are
+-	`full` and `compact`. Default value is `full`. See section
+-	OUTPUT in linkgit:git-fetch[1] for detail.
++	`full`, `compact` and `porcelain`. Default value is `full`.
++	See section OUTPUT in linkgit:git-fetch[1] for detail.
+=20
  ifndef::git-pull[]
  --[no-]write-fetch-head::
- 	Write the list of remote refs fetched in the `FETCH_HEAD`
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index fba66f1460..efd22cd372 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -197,13 +197,26 @@ The output of "git fetch" depends on the transport me=
+thod used; this
+ section describes the output when fetching over the Git protocol
+ (either locally or via ssh) and Smart HTTP protocol.
+=20
+-The status of the fetch is output in tabular form, with each line
+-representing the status of a single ref. Each line is of the form:
++The output format can be chosen either via the `fetch.output` config
++(see linkgit:git-config[1]), or via the `--output-format` switch.
++Supported values include:
++
++For the `full` and `compact` output formats, the status of the fetch is
++output in tabular, with each line representing the status of a single
++ref. Each line is of the form:
+=20
+ -------------------------------
+  <flag> <summary> <from> -> <to> [<reason>]
+ -------------------------------
+=20
++The `porcelain` output format is intended to be machine-parseable. In
++contrast to the human-readable output formats it thus prints to standard
++output instead of standard error. Each line is of the form:
++
++-------------------------------
++<flag> <old-object-id> <new-object-id> <local-reference>
++-------------------------------
++
+ The status of up-to-date refs is shown only if the --verbose option is
+ used.
+=20
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 81581b0033..22ba75a958 100644
+index 22ba75a958..a99e24448b 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -2050,6 +2050,21 @@ static int fetch_one(struct remote *remote, int argc=
-, const char **argv,
- 	return exit_code;
+@@ -52,6 +52,7 @@ enum display_format {
+ 	DISPLAY_FORMAT_UNKNOWN =3D 0,
+ 	DISPLAY_FORMAT_FULL,
+ 	DISPLAY_FORMAT_COMPACT,
++	DISPLAY_FORMAT_PORCELAIN,
+ };
+=20
+ struct display_state {
+@@ -745,8 +746,11 @@ static void display_state_init(struct display_state *d=
+isplay_state, struct ref *
+=20
+ 		break;
+ 	}
++	case DISPLAY_FORMAT_PORCELAIN:
++		/* We don't need to precompute anything here. */
++		break;
+ 	default:
+-		BUG("unexpected display foramt %d", display_state->format);
++		BUG("unexpected display format %d", display_state->format);
+ 	}
  }
 =20
-+static int opt_parse_output_format(const struct option *opt, const char *a=
-rg, int unset)
-+{
-+	enum display_format *format =3D opt->value;
-+	if (unset || !arg)
-+		return 1;
-+	else if (!strcmp(arg, "full"))
-+		*format =3D DISPLAY_FORMAT_FULL;
-+	else if (!strcmp(arg, "compact"))
-+		*format =3D DISPLAY_FORMAT_COMPACT;
-+	else
-+		return error(_("unsupported output format '%s'"), arg);
-+
-+	return 0;
-+}
-+
- int cmd_fetch(int argc, const char **argv, const char *prefix)
+@@ -815,8 +819,12 @@ static void print_compact(struct display_state *displa=
+y_state,
+ static void display_ref_update(struct display_state *display_state, char c=
+ode,
+ 			       const char *summary, const char *error,
+ 			       const char *remote, const char *local,
++			       const struct object_id *old_oid,
++			       const struct object_id *new_oid,
+ 			       int summary_width)
  {
- 	const char *bundle_uri;
-@@ -2101,6 +2116,8 @@ int cmd_fetch(int argc, const char **argv, const char=
++	FILE *f =3D stderr;
++
+ 	if (verbosity < 0)
+ 		return;
+=20
+@@ -849,12 +857,17 @@ static void display_ref_update(struct display_state *=
+display_state, char code,
+=20
+ 		break;
+ 	}
++	case DISPLAY_FORMAT_PORCELAIN:
++		strbuf_addf(&display_state->buf, "%c %s %s %s", code,
++			    oid_to_hex(old_oid), oid_to_hex(new_oid), local);
++		f =3D stdout;
++		break;
+ 	default:
+ 		BUG("unexpected display format %d", display_state->format);
+ 	};
+ 	strbuf_addch(&display_state->buf, '\n');
+=20
+-	fputs(display_state->buf.buf, stderr);
++	fputs(display_state->buf.buf, f);
+ }
+=20
+ static int update_local_ref(struct ref *ref,
+@@ -872,7 +885,8 @@ static int update_local_ref(struct ref *ref,
+ 	if (oideq(&ref->old_oid, &ref->new_oid)) {
+ 		if (verbosity > 0)
+ 			display_ref_update(display_state, '=3D', _("[up to date]"), NULL,
+-					   remote_ref->name, ref->name, summary_width);
++					   remote_ref->name, ref->name,
++					   &ref->old_oid, &ref->new_oid, summary_width);
+ 		return 0;
+ 	}
+=20
+@@ -885,7 +899,8 @@ static int update_local_ref(struct ref *ref,
+ 		 */
+ 		display_ref_update(display_state, '!', _("[rejected]"),
+ 				   _("can't fetch into checked-out branch"),
+-				   remote_ref->name, ref->name, summary_width);
++				   remote_ref->name, ref->name,
++				   &ref->old_oid, &ref->new_oid, summary_width);
+ 		return 1;
+ 	}
+=20
+@@ -896,12 +911,14 @@ static int update_local_ref(struct ref *ref,
+ 			r =3D s_update_ref("updating tag", ref, transaction, 0);
+ 			display_ref_update(display_state, r ? '!' : 't', _("[tag update]"),
+ 					   r ? _("unable to update local ref") : NULL,
+-					   remote_ref->name, ref->name, summary_width);
++					   remote_ref->name, ref->name,
++					   &ref->old_oid, &ref->new_oid, summary_width);
+ 			return r;
+ 		} else {
+ 			display_ref_update(display_state, '!', _("[rejected]"),
+ 					   _("would clobber existing tag"),
+-					   remote_ref->name, ref->name, summary_width);
++					   remote_ref->name, ref->name,
++					   &ref->old_oid, &ref->new_oid, summary_width);
+ 			return 1;
+ 		}
+ 	}
+@@ -934,7 +951,8 @@ static int update_local_ref(struct ref *ref,
+ 		r =3D s_update_ref(msg, ref, transaction, 0);
+ 		display_ref_update(display_state, r ? '!' : '*', what,
+ 				   r ? _("unable to update local ref") : NULL,
+-				   remote_ref->name, ref->name, summary_width);
++				   remote_ref->name, ref->name,
++				   &ref->old_oid, &ref->new_oid, summary_width);
+ 		return r;
+ 	}
+=20
+@@ -956,7 +974,8 @@ static int update_local_ref(struct ref *ref,
+ 		r =3D s_update_ref("fast-forward", ref, transaction, 1);
+ 		display_ref_update(display_state, r ? '!' : ' ', quickref.buf,
+ 				   r ? _("unable to update local ref") : NULL,
+-				   remote_ref->name, ref->name, summary_width);
++				   remote_ref->name, ref->name,
++				   &ref->old_oid, &ref->new_oid, summary_width);
+ 		strbuf_release(&quickref);
+ 		return r;
+ 	} else if (force || ref->force) {
+@@ -968,12 +987,14 @@ static int update_local_ref(struct ref *ref,
+ 		r =3D s_update_ref("forced-update", ref, transaction, 1);
+ 		display_ref_update(display_state, r ? '!' : '+', quickref.buf,
+ 				   r ? _("unable to update local ref") : _("forced update"),
+-				   remote_ref->name, ref->name, summary_width);
++				   remote_ref->name, ref->name,
++				   &ref->old_oid, &ref->new_oid, summary_width);
+ 		strbuf_release(&quickref);
+ 		return r;
+ 	} else {
+ 		display_ref_update(display_state, '!', _("[rejected]"), _("non-fast-forw=
+ard"),
+-				   remote_ref->name, ref->name, summary_width);
++				   remote_ref->name, ref->name,
++				   &ref->old_oid, &ref->new_oid, summary_width);
+ 		return 1;
+ 	}
+ }
+@@ -1214,7 +1235,9 @@ static int store_updated_refs(struct display_state *d=
+isplay_state,
+ 				display_ref_update(display_state, '*',
+ 						   *kind ? kind : "branch", NULL,
+ 						   rm->name,
+-						   "FETCH_HEAD", summary_width);
++						   "FETCH_HEAD",
++						   &rm->new_oid, &rm->old_oid,
++						   summary_width);
+ 			}
+ 		}
+ 	}
+@@ -1354,6 +1377,7 @@ static int prune_refs(struct display_state *display_s=
+tate,
+ 		for (ref =3D stale_refs; ref; ref =3D ref->next) {
+ 			display_ref_update(display_state, '-', _("[deleted]"), NULL,
+ 					   _("(none)"), ref->name,
++					   &ref->new_oid, &ref->old_oid,
+ 					   summary_width);
+ 			warn_dangling_symref(stderr, dangling_msg, ref->name);
+ 		}
+@@ -2059,6 +2083,8 @@ static int opt_parse_output_format(const struct optio=
+n *opt, const char *arg, in
+ 		*format =3D DISPLAY_FORMAT_FULL;
+ 	else if (!strcmp(arg, "compact"))
+ 		*format =3D DISPLAY_FORMAT_COMPACT;
++	else if (!strcmp(arg, "porcelain"))
++		*format =3D DISPLAY_FORMAT_PORCELAIN;
+ 	else
+ 		return error(_("unsupported output format '%s'"), arg);
+=20
+@@ -2201,6 +2227,8 @@ int cmd_fetch(int argc, const char **argv, const char=
  *prefix)
- 			    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
- 		OPT_BOOL(0, "dry-run", &dry_run,
- 			 N_("dry run")),
-+		OPT_CALLBACK(0, "output-format", &display_format, N_("format"), N_("outp=
-ut format"),
-+			     opt_parse_output_format),
- 		OPT_BOOL(0, "write-fetch-head", &write_fetch_head,
- 			 N_("write fetched references to the FETCH_HEAD file")),
- 		OPT_BOOL('k', "keep", &keep, N_("keep downloaded pack")),
+ 			display_format =3D DISPLAY_FORMAT_FULL;
+ 		else if (!strcasecmp(format, "compact"))
+ 			display_format =3D DISPLAY_FORMAT_COMPACT;
++		else if (!strcasecmp(format, "porcelain"))
++			display_format =3D DISPLAY_FORMAT_PORCELAIN;
+ 		else
+ 			die(_("invalid value for '%s': '%s'"),
+ 			    "fetch.output", format);
 diff --git a/t/t5574-fetch-output.sh b/t/t5574-fetch-output.sh
-index 55f0f05b6a..5144d5ed21 100755
+index 5144d5ed21..28d02a93e4 100755
 --- a/t/t5574-fetch-output.sh
 +++ b/t/t5574-fetch-output.sh
-@@ -24,14 +24,37 @@ test_expect_success 'fetch with invalid output format c=
-onfiguration' '
+@@ -80,6 +80,72 @@ test_expect_success 'fetch compact output' '
  	test_cmp expect actual
  '
 =20
-+test_expect_success 'fetch with invalid output format via command line' '
-+	test_must_fail git fetch --output-format >actual 2>&1 &&
++test_expect_success 'fetch porcelain output' '
++	test_when_finished "rm -rf porcelain-cfg porcelain-cli" &&
++
++	# Set up a bunch of references that we can use to demonstrate different
++	# kinds of flag symbols in the output format.
++	MAIN_OLD=3D$(git rev-parse HEAD) &&
++	git branch "fast-forward" &&
++	git branch "deleted-branch" &&
++	git checkout -b force-updated &&
++	test_commit --no-tag force-update-old &&
++	FORCE_UPDATED_OLD=3D$(git rev-parse HEAD) &&
++	git checkout main &&
++
++	# Clone and pre-seed the repositories. We fetch references into two
++	# namespaces so that we can test that rejected and force-updated
++	# references are reported properly.
++	refspecs=3D"refs/heads/*:refs/unforced/* +refs/heads/*:refs/forced/*" &&
++	git clone . porcelain-cli &&
++	git clone . porcelain-cfg &&
++	git -C porcelain-cfg fetch origin $refspecs &&
++	git -C porcelain-cli fetch origin $refspecs &&
++
++	# Now that we have set up the client repositories we can change our
++	# local references.
++	git branch new-branch &&
++	git branch -d deleted-branch &&
++	git checkout fast-forward &&
++	test_commit --no-tag fast-forward-new &&
++	FAST_FORWARD_NEW=3D$(git rev-parse HEAD) &&
++	git checkout force-updated &&
++	git reset --hard HEAD~ &&
++	test_commit --no-tag force-update-new &&
++	FORCE_UPDATED_NEW=3D$(git rev-parse HEAD) &&
++
 +	cat >expect <<-EOF &&
-+	error: option \`output-format${SQ} requires a value
++	- $MAIN_OLD $ZERO_OID refs/forced/deleted-branch
++	- $MAIN_OLD $ZERO_OID refs/unforced/deleted-branch
++	  $MAIN_OLD $FAST_FORWARD_NEW refs/unforced/fast-forward
++	! $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/unforced/force-updated
++	* $ZERO_OID $MAIN_OLD refs/unforced/new-branch
++	  $MAIN_OLD $FAST_FORWARD_NEW refs/forced/fast-forward
++	+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/forced/force-updated
++	* $ZERO_OID $MAIN_OLD refs/forced/new-branch
++	  $MAIN_OLD $FAST_FORWARD_NEW refs/remotes/origin/fast-forward
++	+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/remotes/origin/force-updated
++	* $ZERO_OID $MAIN_OLD refs/remotes/origin/new-branch
++	EOF
++
++	# Execute a dry-run fetch first. We do this to assert that the dry-run
++	# and non-dry-run fetches produces the same output. Execution of the
++	# fetch is expected to fail as we have a rejected reference update.
++	test_must_fail git -C porcelain-cfg -c fetch.output=3Dporcelain fetch --d=
+ry-run --prune origin $refspecs >actual-dry-run-cfg &&
++	test_must_fail git -C porcelain-cli fetch --output-format=3Dporcelain --d=
+ry-run --prune origin $refspecs >actual-dry-run-cli &&
++	test_cmp actual-dry-run-cfg actual-dry-run-cli &&
++	test_cmp expect actual-dry-run-cfg &&
++
++	# And now we perform a non-dry-run fetch.
++	test_must_fail git -C porcelain-cfg -c fetch.output=3Dporcelain fetch --p=
+rune origin $refspecs >actual-cfg &&
++	test_must_fail git -C porcelain-cli fetch --output-format=3Dporcelain --p=
+rune origin $refspecs >actual-cli &&
++	test_cmp actual-cfg actual-cli &&
++	test_cmp expect actual-cfg &&
++
++	# Ensure that the dry-run and non-dry-run output matches.
++	test_cmp actual-dry-run-cfg actual-cfg
++'
++
+ test_expect_success 'fetch output with HEAD and --dry-run' '
+ 	test_when_finished "rm -rf head" &&
+ 	git clone . head &&
+@@ -99,6 +165,24 @@ test_expect_success 'fetch output with HEAD and --dry-r=
+un' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'fetch porcelain output with HEAD and --dry-run' '
++	test_when_finished "rm -rf head" &&
++	git clone . head &&
++	COMMIT_ID=3D$(git rev-parse HEAD) &&
++
++	git -C head fetch --output-format=3Dporcelain --dry-run origin HEAD >actu=
+al &&
++	cat >expect <<-EOF &&
++	* $ZERO_OID $COMMIT_ID FETCH_HEAD
 +	EOF
 +	test_cmp expect actual &&
 +
-+	test_must_fail git fetch --output-format=3D origin >actual 2>&1 &&
++	git -C head fetch --output-format=3Dporcelain --dry-run origin HEAD:foo >=
+actual &&
 +	cat >expect <<-EOF &&
-+	error: unsupported output format ${SQ}${SQ}
-+	EOF
-+	test_cmp expect actual &&
-+
-+	test_must_fail git fetch --output-format=3Dgarbage origin >actual 2>&1 &&
-+	cat >expect <<-EOF &&
-+	error: unsupported output format ${SQ}garbage${SQ}
++	* $ZERO_OID $COMMIT_ID refs/heads/foo
 +	EOF
 +	test_cmp expect actual
 +'
 +
- test_expect_success 'fetch aligned output' '
--	git clone . full-output &&
-+	test_when_finished "rm -rf full-cfg full-cli" &&
-+	git clone . full-cfg &&
-+	git clone . full-cli &&
- 	test_commit looooooooooooong-tag &&
--	(
--		cd full-output &&
--		git -c fetch.output=3Dfull fetch origin >actual 2>&1 &&
--		grep -e "->" actual | cut -c 22- >../actual
--	) &&
-+
-+	git -C full-cfg -c fetch.output=3Dfull fetch origin >actual-cfg 2>&1 &&
-+	git -C full-cli fetch --output-format=3Dfull origin >actual-cli 2>&1 &&
-+	test_cmp actual-cfg actual-cli &&
-+
-+	grep -e "->" actual-cfg | cut -c 22- >actual &&
- 	cat >expect <<-\EOF &&
- 	main                 -> origin/main
- 	looooooooooooong-tag -> looooooooooooong-tag
-@@ -40,13 +63,16 @@ test_expect_success 'fetch aligned output' '
- '
-=20
- test_expect_success 'fetch compact output' '
--	git clone . compact &&
-+	test_when_finished "rm -rf compact-cfg compact-cli" &&
-+	git clone . compact-cli &&
-+	git clone . compact-cfg &&
- 	test_commit extraaa &&
--	(
--		cd compact &&
--		git -c fetch.output=3Dcompact fetch origin >actual 2>&1 &&
--		grep -e "->" actual | cut -c 22- >../actual
--	) &&
-+
-+	git -C compact-cfg -c fetch.output=3Dcompact fetch origin >actual-cfg 2>&=
-1 &&
-+	git -C compact-cli fetch --output-format=3Dcompact origin >actual-cli 2>&=
-1 &&
-+	test_cmp actual-cfg actual-cli &&
-+
-+	grep -e "->" actual-cfg | cut -c 22- >actual &&
- 	cat >expect <<-\EOF &&
- 	main       -> origin/*
- 	extraaa    -> *
+ test_expect_success '--no-show-forced-updates' '
+ 	mkdir forced-updates &&
+ 	(
 --=20
 2.40.0
 
 
---ihoAQ71d/qAykSkD
+--uK5mVgQpVuqmRIBp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ/3zYACgkQVbJhu7ck
-PpQq6Q//cAvGsjnv/tFOCiClbMp1KW/7doNJgku7ow+Kmlcw/BBU3pof6g8dJ1pW
-KJ2HaVkSm82x4t4YwPnMQsXqBDCOB8oS2TpmFUodUpnWXbfAC3q3ceh3ZdO3nxwo
-fhFU3FU6bop7mM4TkMBpWxAvl7Cq7uHOEXR/104AZFsAGQxoBlp8VhEgHYKJF8qI
-e4kO0z93SPZjxUSggxPEBJAS64sHOYuwxJxTIGaqDpc1bA+reu3Tc7QsBof6m/Lp
-tD9t3653EwomhJDkQ9AVS4xFwjTC7xG5ypGX8VyXEY3GKXIC+TM2vDgG9Yg63JfI
-CtImmAeJvV3oyeJ4kplxFAgQWBHcUV2LIszlL4XRVkFG3+8vL/8BPGmiXEEEXY6t
-8E7nRTMKni6Unyj1m/SIvgiKKrOMAGWuqiz78XyyBD61Tb7+T2iAwQsN5O4Rq7qd
-ZLQzTrlHkXOlifNvRnjczjwtjL38/mQcRVe8BLBW9AoKcj7aGUs8QTYMvzddM/e4
-UE/ppEQWZIzU3Ukb9ivJ4cZ6eCdOVf2mD1t0eCIGqWM7Zl/wHxNDKafL2MHLPqZV
-3u9VkvOzGrGsd9dywGksVYuU809NESME/g0xQkO6hNpKFUs2Q+CZTADTsD6wO5rx
-GaVj7wuMc18+PNfI++CZsammoq0ef31lxuOU0jocbZ8891pq4hg=
-=5ejb
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ/3zoACgkQVbJhu7ck
+PpSUlA/+MF27MWTkdXCXDnD5XVWanF8/3qFMffsNBaTUJjMWqWN7I4nLFhqrBi6O
+4wurMQgZBxOz7HCFeSHSlg6DdiFV85hZi9d9L0ZYIMt8ZCk0OWvYZgec7q9CagOQ
+Y80cQ2t+M+1UDwJJNCV9MuH+kESkqOm5DHyK1ba538gIJg2b0oxS36VVMDZ9M4Cf
+NreTWCNDBYQBS/FfrBcjQdrdMaDczihiGRADvn1webD83ZigDi2+zoxFmAMd4bGj
+cZukmdEAC7Jd3GbBKO+q3yRlqSTpJRzyczKuK+GRzO8XgKXN6fY0CvUcsn2QW5vA
+3O5p8tRAHOBMYEkTtC6fSH0PeBf38mC0hilUaX8MsMKHq4ZQyPKotL/y9S0aiGYs
+rW6gy7+Pp76XSCZ+6P0O2k3TNXQ1haGJxV9wfUdWFJAg5Y7s5vNLc3+hH1iOtx0K
+/8Zb63r7g4/EsBFfeEWoYcEb0uvhROZ7qLeB3k67sZfTRf6qeSvhW8gFASjY+n4k
+q+kIELBeq8Kna4pPSshOYPsazq+5Ph/6GbO4DxINEV9p1eLryFKAJS/YktapqQxb
+XVM9SKId0JHo82CSEhk1/YuJ7W5pfzAutj+u9uAP6Wvo7dA/6vEHrZPyqEVtwdok
+iZm0NFKGYZ37OIS2Cq7pPqg+3FIjIZdmyGvkECWSb9Bq/Ft6ymI=
+=a7s6
 -----END PGP SIGNATURE-----
 
---ihoAQ71d/qAykSkD--
+--uK5mVgQpVuqmRIBp--
