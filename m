@@ -2,94 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0480DC77B73
-	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 17:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B638C6FD18
+	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 17:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233103AbjDSRB5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Apr 2023 13:01:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56808 "EHLO
+        id S233369AbjDSREH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Apr 2023 13:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233017AbjDSRBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2023 13:01:55 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB61D26B6
-        for <git@vger.kernel.org>; Wed, 19 Apr 2023 10:01:53 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-51f3289d306so1708789a12.3
-        for <git@vger.kernel.org>; Wed, 19 Apr 2023 10:01:53 -0700 (PDT)
+        with ESMTP id S233293AbjDSREE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2023 13:04:04 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F357EC5
+        for <git@vger.kernel.org>; Wed, 19 Apr 2023 10:04:01 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2a8c28158e2so23781351fa.0
+        for <git@vger.kernel.org>; Wed, 19 Apr 2023 10:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681923713; x=1684515713;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8GGSjXcORVr/RCA23sOkE1A35aJgBXk0SfC9T8DFQ5Y=;
-        b=ChzeQXRPqYoPgh+YDXoOUKCzDawEsvTivpEX608QVGNoksxw1IZz0BKRcGk6wyNL3g
-         SPuA/w2i2oWVdmzWeXGwQuTg61/jvc9nDzRRJuHALfweLeZ7vsclwFlW92V6mQYHLows
-         /y06x89pZqX0hAbKQ1/Hukgyf2Ed1VqvLQQsoAll4BBmTzrzjMc8DmbNgE51rbN81gtI
-         jg5bmKpKQEikRKknBibV2tjPETwAtJ88emwOVFiVtmwkQ4etaXxGh7f20NTNscSoNxQB
-         6y1j8iTojegaSy9pxG6kxAa0suJ43MzylrK3tvbsbk8G3rkTucNzk1+8Al+y9l5TU4xU
-         mHMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681923713; x=1684515713;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20221208; t=1681923840; x=1684515840;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=8GGSjXcORVr/RCA23sOkE1A35aJgBXk0SfC9T8DFQ5Y=;
-        b=CKrc028ijb4eWYSa0ayc6fJUpD1f8FTJDPTnzNaqbzsAYs9CJ4GyrQaLhy5XVKiQ9N
-         nZxlQK1NL1N90YWxFdQLfbi+wvZQvyDXb2gyS2aGSKKEOSwOa1Ux8wuVJO7ikYWrl4D4
-         E5mm25ES7VTiMAehSSdMF8IQwOyZ5/5/0Tl3celXutZGk+VDZlVE6zS1YoYbb8hNl3pa
-         Fq4CGPYkX3tazQypIgtmNxlCl+PKFoNRtxwrYvW8ELixfJrM6r5hUeZMtMmCj/+76Nbq
-         ni6SVvKjXldvzEwl7daGj1jZQG5sHxHvqOKn5hvZtkWZ6HwfHSljdmqqmpy7p+OcCwzu
-         SGHg==
-X-Gm-Message-State: AAQBX9ePMpVj72D3twUGW0JFMQJDeLfVzWRCv3POdbcdWflEHIkMEE9o
-        ShSU8dF0j4aXkN/FNc7eKj8=
-X-Google-Smtp-Source: AKy350aTgCjbAauwgnbevbbfhcRmrneBIK8ryXvc/8UCPud1rhegBBUlivDym3Jgb0mKFbuxFg7I4Q==
-X-Received: by 2002:a17:90a:17ac:b0:247:6edf:e934 with SMTP id q41-20020a17090a17ac00b002476edfe934mr3404795pja.42.1681923713078;
-        Wed, 19 Apr 2023 10:01:53 -0700 (PDT)
-Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id i4-20020a17090adc0400b00246aba3ebabsm1628756pjv.45.2023.04.19.10.01.52
+        bh=C1KDQt6YQC+kwK1+gP+0PaCnvdjS0ppqdlV1/W3mbcY=;
+        b=Qbq0wMzLgkLagarw4rJ/1qodgqD6f8lnvOW7TzOtkSMh7OsbosMot5j8yrTdbZ/OI0
+         /Vx7JX/oQF2oc0vdrDyM5kCzauO8CihOjpJLTO3/kpyz+SS9qMR2A4s51xJH0SKjWGmd
+         jcKzyF8InAVxi/y+utCYpm0B9f8WNQGN1O0+1WCN/T0YLooUakFxnP56XD1AEW2zhyYJ
+         WW+1Fg3N6vLd9MP+xAqwMwIMjqwugUaQLiN5ojj/jcfqf3eCiddOnrAZPYN0dq1LAhHy
+         YhGAJ2JTGpl/PZ3gTpTfO/fI6/J/zYaIfNKsh0ABby7E9AQXmCRKQCMaIC57wN+lnoYZ
+         rA5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681923840; x=1684515840;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C1KDQt6YQC+kwK1+gP+0PaCnvdjS0ppqdlV1/W3mbcY=;
+        b=CGDrb+f53/93joIFPBKgCXuQpQNfbLCG3EyfVtbUATRIdcFkC+b4EakUJ9e54SjPeQ
+         COuueu6cT5Q3rlzum0yE/Vm9GC6oXEm+1rlhy8S8Se51hDEqNzd9+9zuBMaBk9fWMFKy
+         RPKd+o9QoL0liXKv36X8GXbriKq/Zqy86RmjY7ksU+Z+9l9nCccECDO0KjwK/DY+iVvT
+         FMwJnJJVdZbuh12SDtuLksHv8mg9FYMARf3GnwEss5DZUDNPahrU4KCGRzZSwJTLM8gx
+         jH3odSszvw0GXxQ/A6wdoALtUdQ9L9qJ5lD8DN6l+0j+v4Ux0jWSfdXF768jGvKRzn0t
+         Xn8Q==
+X-Gm-Message-State: AAQBX9dn3UuSPx25Z/R/UL4Ob/rGN6NgRN9+jcfTvvEu1S5KBvSBAPZq
+        qHhm3yaG24r5tIR27VxmCKUVoCnoI24=
+X-Google-Smtp-Source: AKy350YERxjLgEuP2dYVsiERh/QxRmwG6so84jRvQORyth4aMEdzIGADon8qv9E5AtegOOCUa0iHIQ==
+X-Received: by 2002:ac2:546c:0:b0:4db:1bee:c with SMTP id e12-20020ac2546c000000b004db1bee000cmr4024804lfn.44.1681923839586;
+        Wed, 19 Apr 2023 10:03:59 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id t7-20020ac25487000000b004e84d64ab51sm2743678lfk.58.2023.04.19.10.03.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Apr 2023 10:01:52 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Strawbridge <michael.strawbridge@amd.com>
-Cc:     Luben Tuikov <luben.tuikov@amd.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v9 2/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-References: <20230120012459.920932-1-michael.strawbridge@amd.com>
-        <20230120012459.920932-3-michael.strawbridge@amd.com>
-        <e353df62-c189-755f-5536-5ea91177c55c@amd.com>
-        <c1ba0a28-3c39-b313-2757-dceb02930334@amd.com>
-Date:   Wed, 19 Apr 2023 10:01:52 -0700
-In-Reply-To: <c1ba0a28-3c39-b313-2757-dceb02930334@amd.com> (Michael
-        Strawbridge's message of "Fri, 20 Jan 2023 09:25:49 -0500")
-Message-ID: <xmqqttxb956n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Wed, 19 Apr 2023 10:03:59 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Erik Cervin Edin <erik@cervined.in>
+Cc:     Cem =?utf-8?B?R8O8bmRvxJ9kdQ==?= <cscallsign@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git rebase no longer defaults to upstream after force push
+References: <CA+JQ7M_KuDXBaVTzVwLTx+R4-6-3TOuUOpcchkS26iiosc85Hg@mail.gmail.com>
+        <CAGrwipO7odTbuKgwDmU+3hY0pEeTdjxx-_9=oufUdBzyQ_eRvQ@mail.gmail.com>
+        <CA+JQ7M_XP6fjdut10ry9db9M3pEhp3-+zToJ93gnbHo-4p_8uQ@mail.gmail.com>
+Date:   Wed, 19 Apr 2023 20:03:58 +0300
+In-Reply-To: <CA+JQ7M_XP6fjdut10ry9db9M3pEhp3-+zToJ93gnbHo-4p_8uQ@mail.gmail.com>
+        (Erik Cervin Edin's message of "Wed, 19 Apr 2023 17:43:10 +0200")
+Message-ID: <87ttxbztvl.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Strawbridge <michael.strawbridge@amd.com> writes:
+Erik Cervin Edin <erik@cervined.in> writes:
 
->>> +Below is an example for a few common headers. Take notice of the
->> "example of" not "for".
+> On Tue, Apr 18, 2023 at 5:54 PM Cem Gündoğdu <cscallsign@gmail.com> wrote:
+>> > If <upstream> is not specified, [...] and the --fork-point option is assumed.
 >>
->> This maybe clearer:
->> "An example of a few common headers is shown below. Take notice ..."
-> ...
->>> +test_expect_success $PREREQ "--validate hook supports header argument" '
->>> +	write_script my-hooks/sendemail-validate <<-\EOF &&
->>> +        if test "$#" -ge 2
->>> +	then
->> There appears to be an extra indentation of the "if" statement.
-> Good catch.  It was a matter of spaces and tabs combining that wasn't
-> easy to see.
+>> The --fork-point option does this:
+>>
+>> > Use reflog to find a better common ancestor between <upstream> and
+>> > <branch> when calculating which commits have been introduced by
+>> > <branch>.
+>>
+>> Since the parent of a is still in the reflog of origin/a, it is not
+>> being rebased (the rationale being that the commit *was* in origin/a
+>> at some point). If you want to disable this behavior, add
+>> --no-fork-point option:
+>
+> Yes. That's it, thank you for pointing out --fork-point. That's indeed
+> what's causing the unexpected behavior.
+>
+> Do you happen to know when such behavior is desirable? I'm tempted to
+> change the default to --no-fork-point but usually when something is
+> default there's a valid reason.. 🤔
 
-I was reading the list of stalled topics in the periodical "What's
-cooking" report and noticed that this topic has been marked as
-"Expecting a hopefully minor and final reroll." for full three
-months after we saw this message.  Should we be waiting more?
+$ git help merge-base
 
-Thanks.
+has a thorough discussion of --fork-point that might be helpful.
+
+As far as I understand, it helps to DWYM when remote branch has been
+rewound, and causes nasty confusion when it fires unintentionally. 
+
+-- Sergey
