@@ -2,266 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88178C77B75
-	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 01:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 950D6C6FD18
+	for <git@archiver.kernel.org>; Wed, 19 Apr 2023 02:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231596AbjDSBaC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Apr 2023 21:30:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34854 "EHLO
+        id S231332AbjDSCws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Apr 2023 22:52:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231580AbjDSBaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2023 21:30:01 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F817ED7
-        for <git@vger.kernel.org>; Tue, 18 Apr 2023 18:29:58 -0700 (PDT)
-Received: (qmail 11949 invoked by uid 109); 19 Apr 2023 01:29:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 Apr 2023 01:29:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8116 invoked by uid 111); 19 Apr 2023 01:29:57 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Apr 2023 21:29:57 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 18 Apr 2023 21:29:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Rolf Eike Beer <eb@emlix.com>, git@vger.kernel.org,
-        Jaydeep P Das <jaydeepjd.8914@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] gpg-interface: set trust level of missing key to "undefined"
-Message-ID: <20230419012957.GA503941@coredump.intra.peff.net>
-References: <5926995.lOV4Wx5bFT@devpool47.emlix.com>
- <20230418064846.GA1414@coredump.intra.peff.net>
- <xmqqy1mpduq3.fsf@gitster.g>
+        with ESMTP id S230492AbjDSCwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2023 22:52:46 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D1FA6A49
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 19:52:45 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4ec8148f73eso2559442e87.1
+        for <git@vger.kernel.org>; Tue, 18 Apr 2023 19:52:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681872763; x=1684464763;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OhtZ3hxikLCtzvzblTB1389A67MArTLDr/JTOjFV+j0=;
+        b=p6mjTLP3FcvPV1gvOItIciiYAkoxRwcLKD1ycQD/GahWWPrmv3NzUqlSfP86MMqdOj
+         TvL3FbYq2j2OovwU1QZa9eNUb7DxwlH6fOI80pG7wk50475g4Fg2+zEd40wnHnuyDM/G
+         BYIjaGVOG6cmY04LO1xlD+fE7Mc/K0xbEgel5OuZ0viCIl5ZBv+lqyD/xzZatx5E/d21
+         L34JbyQ2rUC85HJw/8+Xq4EC6eE5/2ep+BUpMBr9B97A4CZ1y5ucr/NiNwbnALpFYuvk
+         SH+qKBYCpRaTps3FH7CvvgQhs0M1o6M6O1K1kL3E448ZwpKTbLp0hhjJ2QcqUlF5zYXD
+         QqUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681872763; x=1684464763;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OhtZ3hxikLCtzvzblTB1389A67MArTLDr/JTOjFV+j0=;
+        b=ArEkGYjLCi+V7VD9JZF49rCFdmtO7Uqmrz0ldbI33c6H2/SrnPOaD5XUTV6WKnrhtN
+         AbL0SzIPGRqe5KHd/M45jB1IJAyCRcoWaacONeItcvjltIZWULvRgqJ20TNb87nu3+iz
+         ExnYohl1U5zgww+d6LX/TlCoGOxYAzCyAuU2Dr/q67D/sb6bCv9HvRPf5trOAEfuTCfp
+         5/JlM7GCUqFCBFtjqHGNhnW5CU+95WnIHX7ldQucee0FTBsMEZn+Xh9qNgoaVHrkbK90
+         c1iXXb1bwCpZBReA+0X3VruSBeHc2YlbwMSajxLxx/+xqJjnmJkSHkVH/H4+w9USrMwC
+         +czA==
+X-Gm-Message-State: AAQBX9cOOnyIYeuC5u/CKY8oxliwkD9NdTkjvNW8Y7pjmsbqE5KPCVRu
+        2N7//lqNkbfe8FQT315+6fA9MOikbodhRySInm8hIv5x
+X-Google-Smtp-Source: AKy350ZQXqGOdNLxVxELU6G0mC9cN3D2n6A62NM+aKvWPrkW1u+thayQtLCa9XYp3XHFM/0aiJLZjA9ty7Wwh9Pb2LM=
+X-Received: by 2002:a19:7001:0:b0:4ec:4f58:f24d with SMTP id
+ h1-20020a197001000000b004ec4f58f24dmr3991624lfc.7.1681872763407; Tue, 18 Apr
+ 2023 19:52:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy1mpduq3.fsf@gitster.g>
+References: <xmqqfs8xfw25.fsf@gitster.g>
+In-Reply-To: <xmqqfs8xfw25.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 18 Apr 2023 19:51:00 -0700
+Message-ID: <CABPp-BGF53Sfs_wg4iPJ-gmEkBRddQS+Uaw=wF74eK_j+kykDw@mail.gmail.com>
+Subject: en/header-split-cache-h (Was Re: What's cooking in git.git (Apr 2023,
+ #05; Mon, 17))
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 09:24:20AM -0700, Junio C Hamano wrote:
+On Tue, Apr 18, 2023 at 1:49=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> * en/header-split-cache-h (2023-04-11) 24 commits
+>   (merged to 'next' on 2023-04-13 at b9afefff0b)
+>  + mailmap, quote: move declarations of global vars to correct unit
+>  + treewide: reduce includes of cache.h in other headers
+>  + treewide: remove double forward declaration of read_in_full
+>  + cache.h: remove unnecessary includes
+>  + treewide: remove cache.h inclusion due to pager.h changes
+>  + pager.h: move declarations for pager.c functions from cache.h
+>  + treewide: remove cache.h inclusion due to editor.h changes
+>  + editor: move editor-related functions and declarations into common fil=
+e
+>  + treewide: remove cache.h inclusion due to object.h changes
+>  + object.h: move some inline functions and defines from cache.h
+>  + treewide: remove cache.h inclusion due to object-file.h changes
+>  + object-file.h: move declarations for object-file.c functions from cach=
+e.h
+>  + treewide: remove cache.h inclusion due to git-zlib changes
+>  + git-zlib: move declarations for git-zlib functions from cache.h
+>  + treewide: remove cache.h inclusion due to object-name.h changes
+>  + object-name.h: move declarations for object-name.c functions from cach=
+e.h
+>  + treewide: remove unnecessary cache.h inclusion
+>  + treewide: be explicit about dependence on mem-pool.h
+>  + treewide: be explicit about dependence on oid-array.h
+>  + treewide: be explicit about dependence on pack-revindex.h
+>  + treewide: be explicit about dependence on convert.h
+>  + treewide: be explicit about dependence on advice.h
+>  + treewide: be explicit about dependence on trace.h & trace2.h
+>  + Merge branch 'ab/remove-implicit-use-of-the-repository' into en/header=
+-split-cache-h
+>
+>  Header clean-up.
+>
+>  Will merge to 'master'.
+>  source: <pull.1509.v3.git.1681182060.gitgitgadget@gmail.com>
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > which restores the original behavior, or if the original was papering
-> > over another bug (e.g., should this be "undefined"?). Certainly the
-> > empty string matches other placeholders like %GS for this case (since we
-> > obviously don't know anything about the signer).
-> 
-> Heh, I shouldn't have wasted my cycles in "git log" but in my
-> newsreader ;-)
-> 
-> Looking at the original before the gpg_trust_level_to_str() function
-> was introduced, the switch statement looks like it is missing the
-> usual "default: BUG()" for unhandled enum.  My version made it mimic
-> what ssh side seems to do, but I tend to prefer your empty string
-> that differentiates between "we never saw any trust level" and "the
-> system says this key should never be trusted".
+To avoid breaking connections via the git protocol on master, before
+merging we should first either apply my fix[1] or Peff's fix[2].  (Or
+both.)
 
-Actually it gets weirder even, as I think we're violating the C standard
-a bit here. ;)
-
-Here's the patch that I came up with, though it does not distinguish
-between "we did not see any trust level" and "gpg told us the trust
-level was undefined". I think that's OK. That level is still below
-TRUST_NEVER. But if we really want to distinguish we can introduce a new
-value for the enum.
-
--- >8 --
-Subject: gpg-interface: set trust level of missing key to "undefined"
-
-In check_signature(), we initialize the trust_level field to "-1", with
-the idea that if gpg does not return a trust level at all (if there is
-no signature, or if the signature is made by an unknown key), we'll
-use that value. But this has two problems:
-
-  1. Since the field is an enum, it's up to the compiler to decide what
-     underlying storage to use, and it only has to fit the values we've
-     declared. So we may not be able to store "-1" at all. And indeed,
-     on my system (linux with gcc), the resulting enum is an unsigned
-     32-bit value, and -1 becomes 4294967295.
-
-     The difference may seem academic (and you even get "-1" if you pass
-     it to printf("%d")), but it means that code like this:
-
-       status |= sigc->trust_level < configured_min_trust_level;
-
-     does not necessarily behave as expected. This turns out not to be a
-     bug in practice, though, because we keep the "-1" only when gpg did
-     not report a signature from a known key, in which case the line
-     above:
-
-       status |= sigc->result != 'G';
-
-     would always set status to non-zero anyway. So only a 'G' signature
-     with no parsed trust level would cause a problem, which doesn't
-     seem likely to trigger (outside of unexpected gpg behavior).
-
-  2. When using the "%GT" format placeholder, we pass the value to
-     gpg_trust_level_to_str(), which complains that the value is out of
-     range with a BUG(). This behavior was introduced by 803978da49
-     (gpg-interface: add function for converting trust level to string,
-     2022-07-11). Before that, we just did a switch() on the enum, and
-     anything that wasn't matched would end up as the empty string.
-
-     Curiously, solving this by naively doing:
-
-       if (level < 0)
-               return "";
-
-     in that function isn't sufficient. Because of (1) above, the
-     compiler can (and does in my case) actually remove that conditional
-     as dead code!
-
-We can solve both by representing this state as an enum value. We could
-do this by adding a new "unknown" value. But this really seems to match
-the existing "undefined" level well. GPG describes this as "Not enough
-information for calculation".
-
-We have tests in t7510 that trigger this case (verifying a signature
-from a key that we don't have, and then checking various %G
-placeholders), but they didn't notice the BUG() because we didn't look
-at %GT for that case! Let's make sure we check all %G placeholders for
-each case in the formatting tests.
-
-The interesting ones here are "show unknown signature with custom
-format" and "show lack of signature with custom format", both of which
-would BUG() before, and now turn %GT into "undefined". Prior to
-803978da49 they would have turned it into the empty string, but I think
-saying "undefined" consistently is a reasonable outcome, and probably
-makes life easier for anyone parsing the output (and any such parser had
-to be ready to see "undefined" already).
-
-The other modified tests produce the same output before and after this
-patch, but now we're consistently checking both %G? and %GT in all of
-them.
-
-Signed-off-by: Jeff King <peff@peff.net>
-Reported-by: Rolf Eike Beer <eb@emlix.com>
----
- gpg-interface.c          |  2 +-
- t/t7510-signed-commit.sh | 21 ++++++++++++++-------
- 2 files changed, 15 insertions(+), 8 deletions(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index aceeb08336..f3ac5acdd9 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -650,7 +650,7 @@ int check_signature(struct signature_check *sigc,
- 	gpg_interface_lazy_init();
- 
- 	sigc->result = 'N';
--	sigc->trust_level = -1;
-+	sigc->trust_level = TRUST_UNDEFINED;
- 
- 	fmt = get_format_by_sig(signature);
- 	if (!fmt)
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 48f86cb367..ccbc416402 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -221,84 +221,91 @@ test_expect_success GPG 'amending already signed commit' '
- test_expect_success GPG 'show good signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	G
-+	ultimate
- 	13B6F51ECDDE430D
- 	C O Mitter <committer@example.com>
- 	73D758744BE721698EC54E8713B6F51ECDDE430D
- 	73D758744BE721698EC54E8713B6F51ECDDE430D
- 	EOF
--	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
-+	git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success GPG 'show bad signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	B
-+	undefined
- 	13B6F51ECDDE430D
- 	C O Mitter <committer@example.com>
- 
- 
- 	EOF
--	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" $(cat forged1.commit) >actual &&
-+	git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" $(cat forged1.commit) >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success GPG 'show untrusted signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	U
-+	undefined
- 	65A0EEA02E30CAD7
- 	Eris Discordia <discord@example.net>
- 	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
- 	D4BE22311AD3131E5EDA29A461092E85B7227189
- 	EOF
--	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
-+	git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success GPG 'show untrusted signature with undefined trust level' '
- 	cat >expect <<-\EOF &&
-+	U
- 	undefined
- 	65A0EEA02E30CAD7
- 	Eris Discordia <discord@example.net>
- 	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
- 	D4BE22311AD3131E5EDA29A461092E85B7227189
- 	EOF
--	git log -1 --format="%GT%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
-+	git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success GPG 'show untrusted signature with ultimate trust level' '
- 	cat >expect <<-\EOF &&
-+	G
- 	ultimate
- 	13B6F51ECDDE430D
- 	C O Mitter <committer@example.com>
- 	73D758744BE721698EC54E8713B6F51ECDDE430D
- 	73D758744BE721698EC54E8713B6F51ECDDE430D
- 	EOF
--	git log -1 --format="%GT%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
-+	git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success GPG 'show unknown signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	E
-+	undefined
- 	65A0EEA02E30CAD7
- 
- 
- 
- 	EOF
--	GNUPGHOME="$GNUPGHOME_NOT_USED" git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
-+	GNUPGHOME="$GNUPGHOME_NOT_USED" git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success GPG 'show lack of signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	N
-+	undefined
- 
- 
- 
- 
- 	EOF
--	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" seventh-unsigned >actual &&
-+	git log -1 --format="%G?%n%GT%n%GK%n%GS%n%GF%n%GP" seventh-unsigned >actual &&
- 	test_cmp expect actual
- '
- 
--- 
-2.40.0.579.g88b9f0bf51
-
+[1] https://lore.kernel.org/git/20230416054735.3386065-1-newren@gmail.com/
+[2] https://lore.kernel.org/git/20230418033904.GA60552@coredump.intra.peff.=
+net/
