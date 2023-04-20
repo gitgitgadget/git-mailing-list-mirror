@@ -2,85 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C17AEC77B72
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 18:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C9AC77B73
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 19:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbjDTSMi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 14:12:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33078 "EHLO
+        id S231915AbjDTTQN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 15:16:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbjDTSMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 14:12:36 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC361FC0
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 11:12:35 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1a920d4842bso11379855ad.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 11:12:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682014355; x=1684606355;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GQZfTLMnyaPJQbDW5OEcJW8yEV3NM+VC6+G6u4dkd4o=;
-        b=cDfmeIy+lYgZo2Xea+1C2y1JtsiasaAbpRD8iKzel0csHuIM3FEsPaCyK43s59orac
-         U1yhO2o+Bq4BrdImmgVZbgkJJNzDPNYSFm76tlutdbldyGJFyU2/xQfjvhy0J/b5wy7R
-         kR0saHAVDYejjcs5mgGn4mnuyUjmkttk8tmtFMFtvWLfEK2rhOMUqntPDn/Q7dTcq675
-         YoeMM0nSHAjSm4fgjPe14y5DQ16ZBAL79Nz5erez+4krKEjaqpLNe3/GWji/LvQp6Ywk
-         iKrBmXl1KLS+3gFXAlG0RuQSETx9fE+tjTS8VFGleWk4M5dEX2pt51+gTP5eUiLE90X7
-         hnPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682014355; x=1684606355;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GQZfTLMnyaPJQbDW5OEcJW8yEV3NM+VC6+G6u4dkd4o=;
-        b=TGA8oShekiaxX7mepMRHdBU8qKyE3Q0QuSjbUDdT37eDmpjDR9eg6kovKwp+QFpl0e
-         q0DuQvkXy3+AWV1TKPHAWj9p2LzsxLDSprSODNW2WoL9a50kDRxvu7HrPfcaWGYujxUl
-         BAyVUHbVaLcoZCHFq4N2HuOUt0qR8ucK8pmTHuxk3Skx/mxLib5LlPFUEx1easBZw1dR
-         wbuwCbZFRdnwT61cj4etfx/TEADpS6zmA5SIhCJ4AEYK6qMI/ieL7PgIqIpqnWq015XW
-         1zwm9eRh1NMdFnZeyK+sNa3u3O/MwvQiTkFC/h5kAxqMiUmxU6vyNWWq1ahNzyqSKXdA
-         zUgA==
-X-Gm-Message-State: AAQBX9fKz0W890wWr+rulSEVX9PlHry8lJyirfeXGSSn682wZPHTaojY
-        +smMr+FNKGQp0yyeye0/3u9gBQh7H0o=
-X-Google-Smtp-Source: AKy350bQzqlpvYt45XcvhfvWqd2rqribDh7jKW20MojIwMpIwdgAi05vNlDS+PrZSsxkVp4U7/xvEg==
-X-Received: by 2002:a17:903:28e:b0:1a2:9ce6:6483 with SMTP id j14-20020a170903028e00b001a29ce66483mr2590992plr.64.1682014354813;
-        Thu, 20 Apr 2023 11:12:34 -0700 (PDT)
-Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id p13-20020a170902a40d00b001a687c505e6sm1418199plq.232.2023.04.20.11.12.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 11:12:34 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] builtin/pack-objects.c: introduce `pack.extraCruftTips`
-References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
-Date:   Thu, 20 Apr 2023 11:12:34 -0700
-In-Reply-To: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Thu, 20 Apr 2023 13:27:06 -0400")
-Message-ID: <xmqqzg72zalp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S229468AbjDTTQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 15:16:12 -0400
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::222])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3E7D26B2
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 12:16:09 -0700 (PDT)
+Received: (Authenticated sender: robin@jarry.cc)
+        by mail.gandi.net (Postfix) with ESMTPSA id 3B0BD40003;
+        Thu, 20 Apr 2023 19:16:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
+        t=1682018168;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=WM3mCSyiE8xN8VUtVCez/VFww4PmFhnldxQi9TCugaM=;
+        b=GQ6oorOs3UjoA+qwMS2uE1AT+a3cDgLvobVQxqQEGyQlhrZX0UiwRNroF3zW8AL133qUhG
+        bqh1MBM6GhlScqiR22xo39UIO94LIFzciz6OQnLsM3e8bzn5tzIyv+9+Y9+EhnZUB6sG2u
+        xRs2myDdZlRz1hnvphdhmLDdk4MmxGO6WgBdGIItlXL0WsIBIUWa5dTTs+YY0X68TVJWSn
+        bJ89r8AJO1G3m2Yzg8efnhE4cOBPIGvpGHcwMe89SxDxLrXlmfu1QoqNHmwwRT8OFcOSax
+        wx55KIYFsaIBNgEIZQcsKB+KIDhFyiBGYwTxPOaciMxnJzHuA+yIIk7E+oRo+Q==
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 20 Apr 2023 21:16:05 +0200
+Message-Id: <CS1TOE1MCMH0.2OMA9UHSDG7RC@ringo>
+Cc:     "Phillip Wood" <phillip.wood123@gmail.com>,
+        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, "Tim Culverhouse" <tim@timculverhouse.com>,
+        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Michael Strawbridge" <michael.strawbridge@amd.com>
+Subject: Re: [PATCH v5] send-email: export patch counters in validate
+ environment
+From:   "Robin Jarry" <robin@jarry.cc>
+To:     <git@vger.kernel.org>
+X-Mailer: aerc/0.14.0-180-g18d3291fb702-dirty
+References: <20230414152843.659667-1-robin@jarry.cc>
+ <20230414155249.667180-1-robin@jarry.cc>
+In-Reply-To: <20230414155249.667180-1-robin@jarry.cc>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Robin Jarry, Apr 14, 2023 at 17:52:
+> diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks=
+--sendemail-validate.sample
+> new file mode 100755
+> index 000000000000..ad2f9a86473d
+> --- /dev/null
+> +++ b/templates/hooks--sendemail-validate.sample
+> @@ -0,0 +1,77 @@
+> +#!/bin/sh
+> +
+> +# An example hook script to validate a patch (and/or patch series) befor=
+e
+> +# sending it via email.
+> +#
+> +# The hook should exit with non-zero status after issuing an appropriate
+> +# message if it wants to prevent the email(s) from being sent.
+> +#
+> +# To enable this hook, rename this file to "sendemail-validate".
+> +#
+> +# By default, it will only check that the patch(es) can be applied on to=
+p of
+> +# the default upstream branch without conflicts in a secondary worktree.=
+ After
+> +# validation (successful or not) of the last patch of a series, the work=
+tree
+> +# will be deleted.
+> +#
+> +# The following config variables can be set to change the default remote=
+ and
+> +# remote ref that are used to apply the patches against:
+> +#
+> +#   sendemail.validateRemote (default: origin)
+> +#   sendemail.validateRemoteRef (default: HEAD)
+> +#
+> +# Replace the TODO placeholders with appropriate checks according to you=
+r
+> +# needs.
+> +
+> +validate_cover_letter() {
+> +	file=3D"$1"
+> +	# TODO: Replace with appropriate checks (e.g. spell checking).
+> +	true
+> +}
+> +
+> +validate_patch() {
+> +	file=3D"$1"
+> +	# Ensure that the patch applies without conflicts.
+> +	git am -3 "$file" || return
+> +	# TODO: Replace with appropriate checks for this patch
+> +	# (e.g. checkpatch.pl).
+> +	true
 
-> This patch introduces a new configuration, `pack.extraCruftTips` which
-> allows the caller to specify a program (or set of programs) whose output
-> is treated as a set of objects to treat as "kept", even if they are
-> unreachable and have aged out of the retention period.
+Hey folks,
 
-I can see why this would make the implementation simpler, simply
-because no existing codepaths that determines if an object is still
-live knows about such a program hence all the codepaths by default
-keep considering them expungeable crufts except for a very limited
-set of codepaths that will pay attention to the program.  But it
-makes me wonder if it would make the life of end-users simpler if we
-reserve a special ref hierarchy, say "refs/crufts/*", than having to
-write a program for doing something like this.
+I had an idea after sending v5. Instead of leaving TODO placeholders, it
+would be nicer to introduce other git config sendemail.validate* options
+specific to this hook template so that users can directly use it without
+any modifications simply by setting options in their local clone:
 
-Thanks.
+    git config sendemail.validatePatchCmd 'tools/checkpatch.sh'
+    git config sendemail.validateSeriesCmd 'make tests lint'
+
+And reuse these commands if defined in the hook template.
+
+What do you think?
