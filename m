@@ -2,62 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BAD9C77B72
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 17:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD1A5C77B73
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 18:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbjDTRwB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 13:52:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51216 "EHLO
+        id S229958AbjDTSMI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 14:12:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbjDTRvw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:51:52 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75DE33A88
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 10:51:47 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-2f7db354092so515911f8f.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 10:51:47 -0700 (PDT)
+        with ESMTP id S229670AbjDTSMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 14:12:07 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9EE2715
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 11:12:05 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id eo4-20020a05600c82c400b003f05a99a841so1542349wmb.3
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 11:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682013105; x=1684605105;
+        d=gmail.com; s=20221208; t=1682014324; x=1684606324;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WJGZ153YspBAz4fg+qha3A5IBMhnHXfFhKkznjdfe2g=;
-        b=F9imwsm0LDDuJQT7Y0XmfRy5GpIG7c7qr5MBcf27HJCvTeoZ3dwrKmzOTz9IuONd2H
-         T7jitSZBbJZdqnvz66EjtYGdyUKPDKVwSw/0BlYhULWp6A3ZEaSt4ooYQNZ6tKfBW3eH
-         9IHCgpVVcobKpK4nL22slYlmcNd0gk/8+AEJ6JVKn8Y/LtCKZhb+9KyolwTw3lMWMpt8
-         2Uz7/LcAz3grv7RrTxCgbkpCmr+/7vIQeTjreFEeA9eGS5OIy++ci8N9KXKfLI/3URIw
-         BEDtU7U3F/R5GV/WBxKPY22/U8JjjURC8y1PcsiKIG5lGxNZXFyYs/XkwKl2EetGTxTQ
-         SwXA==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hG7X0QH2k0kBqyXO98NKJVmGFRrDxTx1j08mA1Rtcmo=;
+        b=U5ozKOk2sBCVm/nL5dwgKWQ/Y462U8JyLVuLIUoskXQWXIJ3WDd/BQWAQNA+Zun/GU
+         p4BTur9EnyUuU5WKAylzS4w6+XGlIELSmHZuEFxm31Q+TZ36DbnlS8Gu3KvEIqItGwiv
+         x+SfEdLnfOZPML11pW7hTnuNYhBNKdMKpajKs31Rw5j7zp1vEjMUYu2cd/t/KOwbPlL4
+         ERVqgxyR2bx3wOD5+vSBlZUuFzkbMgSO3tf1q4XAo4LZxSWVoB7x/6p+hRPQCLvKtjNB
+         P0F0zBei4T8/pG/i4hkABS+ue/dxSkURBda3ErC0MCaEtZI2054PgcjIbo4NDjPvO6gN
+         s3fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682013105; x=1684605105;
+        d=1e100.net; s=20221208; t=1682014324; x=1684606324;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WJGZ153YspBAz4fg+qha3A5IBMhnHXfFhKkznjdfe2g=;
-        b=T9HSnEce5C3ZmcXjevjU/vKVFbmX++q67yvESPzdHNTTbZrbP0U2tyOvFNRxID3i5U
-         RZS6pqYLnk9Y1M1Vq0QHuXvbGRGhQBO7zWQ0LlrKDdDSHTsY0uVvRqP9N379CtvZrf7U
-         7y7HmfnIX194/3bWHL3p1OgZyNeU1S+cg0Ib3y309Yvo2leNvR06KAqG0yEalJxHLt5K
-         /kdgt81aVj8n1F8HZsuv41N+NEjxJou4ln1+gf1OVXzcMptA+5C/YmMPbXg57Nue2x3r
-         1d+g/LVstkwhZRRHmHtbU4YsqQAHMRCxwggt65eMcHWdgxkM6qIx4n9Ym96hH6tbiyxu
-         vqMQ==
-X-Gm-Message-State: AAQBX9eDrj+bsBojOfJJPxV+gIyjao0QFjoKbsEOzNpVn5q6TXhWDR+v
-        uPZVDolQjf2R2D8LOav2iXC5xR2KI7E=
-X-Google-Smtp-Source: AKy350aQz3SYNip+BTbReKcaee7+UKjdF3OA161BrD2n79ZZ0rTHaWNyv6FmP6OBnFkYmF9n7rchrw==
-X-Received: by 2002:a5d:6591:0:b0:2fb:1a68:1d96 with SMTP id q17-20020a5d6591000000b002fb1a681d96mr1697184wru.15.1682013105435;
-        Thu, 20 Apr 2023 10:51:45 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hG7X0QH2k0kBqyXO98NKJVmGFRrDxTx1j08mA1Rtcmo=;
+        b=JMiQnGjLBM2Ygt2Q3jZ9ZN2CBRhPV0rdSkIUD7vtnGCbQ85wdq88siaPh5sc76G7Og
+         5TpnthwQpex8Q4+X8wsaHKv4d5H/Mw2nHcqUCOtt5Bvv846AXh4iNtfkwnOE0O+C6CJE
+         BSZzA6FXglTTioHoDBt8NYKyQoVqNkgVu5smY67Ny0ork+VDp8qiBHFrcWUk6p74zEUz
+         /jixMbwSbzLqQpTNl9Vlt/p6+bA0SxC4oKJeROJKjMtDHSosZ2QAkPrNBocH12R390Ac
+         FrJ8t3kN8ds1jBz7cV4JD2hyshLztGSrUi1obP5S0NwBQQu/SkynEnGYVzVR91NcJlZ8
+         93cg==
+X-Gm-Message-State: AAQBX9e/lGXcU8lcncYjSx4AWjtlmSNo0EYkfCxx0EQlTR9cYD7bHneC
+        iyp7hLiy2SnRkgOheryHqPf+TqL20+E=
+X-Google-Smtp-Source: AKy350YicN6UBjh19ux171kSTUzH+3PTjOFlaaEtDBpWtUQlT5/Tfhh39LrJLLhsciB9EdXk5NUMHQ==
+X-Received: by 2002:a1c:f608:0:b0:3ee:b3bf:5f7c with SMTP id w8-20020a1cf608000000b003eeb3bf5f7cmr2026280wmc.23.1682014323771;
+        Thu, 20 Apr 2023 11:12:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o4-20020a056000010400b002fa67f77c16sm2488027wrx.57.2023.04.20.10.51.45
+        by smtp.gmail.com with ESMTPSA id o10-20020a05600c510a00b003ee443bf0c7sm6109198wms.16.2023.04.20.11.12.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 10:51:45 -0700 (PDT)
-Message-Id: <pull.1520.git.1682013104508.gitgitgadget@gmail.com>
+        Thu, 20 Apr 2023 11:12:03 -0700 (PDT)
+Message-Id: <pull.1520.v2.git.1682014322604.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1520.git.1682013104508.gitgitgadget@gmail.com>
+References: <pull.1520.git.1682013104508.gitgitgadget@gmail.com>
 From:   "Ricky Davidson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Apr 2023 17:51:44 +0000
-Subject: [PATCH] http: document sslcert and sslkey types and extend to proxy
+Date:   Thu, 20 Apr 2023 18:12:02 +0000
+Subject: [PATCH v2] http: document sslcert and sslkey types and extend to
+ proxy
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Ricky Davidson <Ricky.Davidson@hii-tsd.com>,
+Cc:     "Junio C Hamano [ ]" <gitster@pobox.com>,
+        Ricky Davidson <Ricky.Davidson@hii-tsd.com>,
         Ricky Davidson <Ricky.Davidson@hii-tsd.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -91,16 +96,48 @@ Signed-off-by: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
     
     Signed-off-by: Ricky Davidson Ricky.Davidson@hii-tsd.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1520%2FRicky-Davidson-hii-tsd%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1520/Ricky-Davidson-hii-tsd/master-v1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1520%2FRicky-Davidson-hii-tsd%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1520/Ricky-Davidson-hii-tsd/master-v2
 Pull-Request: https://github.com/gitgitgadget/git/pull/1520
+
+Range-diff vs v1:
+
+ 1:  711d90215d0 ! 1:  78b96f60ec8 http: document sslcert and sslkey types and extend to proxy
+     @@ Documentation/config/http.txt: http.proxySSLCert::
+      +http.proxySSLKeyType::
+      +	Format of the client private key used to authenticate with an HTTPS proxy.
+      +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     -+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
+     ++	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_KEY_TYPE` environment
+      +	variable.
+      +
+       http.proxySSLCertPasswordProtected::
+     @@ Documentation/config/http.txt: http.sslCert::
+      +http.sslCertType::
+      +	Format of the SSL certificate used to authenticate over HTTPS.
+      +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     -+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
+     ++	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
+      +	variable.
+      +
+       http.sslKey::
+     @@ Documentation/config/http.txt: http.sslCert::
+      +http.sslKeyType::
+      +	Format of the SSL private key used to authenticate over HTTPS.
+      +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     -+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
+     ++	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
+      +	variable.
+      +
+       http.sslCertPasswordProtected::
+
 
  Documentation/config/http.txt | 24 ++++++++++++++++++++++++
  http.c                        | 12 ++++++++++++
  2 files changed, 36 insertions(+)
 
 diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index afeeccfbfa7..10a53930e5f 100644
+index afeeccfbfa7..53386b90185 100644
 --- a/Documentation/config/http.txt
 +++ b/Documentation/config/http.txt
 @@ -34,11 +34,23 @@ http.proxySSLCert::
@@ -121,7 +158,7 @@ index afeeccfbfa7..10a53930e5f 100644
 +http.proxySSLKeyType::
 +	Format of the client private key used to authenticate with an HTTPS proxy.
 +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
++	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_KEY_TYPE` environment
 +	variable.
 +
  http.proxySSLCertPasswordProtected::
@@ -134,7 +171,7 @@ index afeeccfbfa7..10a53930e5f 100644
 +http.sslCertType::
 +	Format of the SSL certificate used to authenticate over HTTPS.
 +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
++	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
 +	variable.
 +
  http.sslKey::
@@ -145,7 +182,7 @@ index afeeccfbfa7..10a53930e5f 100644
 +http.sslKeyType::
 +	Format of the SSL private key used to authenticate over HTTPS.
 +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
++	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
 +	variable.
 +
  http.sslCertPasswordProtected::
