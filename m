@@ -2,96 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A6FCC77B73
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 17:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B07BDC77B73
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 17:24:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbjDTRKZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 13:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48682 "EHLO
+        id S230194AbjDTRYS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 13:24:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229761AbjDTRKX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:10:23 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EC0D2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 10:10:22 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1a6bc48aec8so11056185ad.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 10:10:22 -0700 (PDT)
+        with ESMTP id S231408AbjDTRYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 13:24:15 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F9E4EC4
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 10:24:04 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id n203so2713255ybg.6
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 10:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682010622; x=1684602622;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E9HE5DtZAWYDS6HF/E6UoNLC9OfrZLTAewm1TL16AI0=;
-        b=qvXmmPvhhEaR+3Dn/Xz+vvHIQhTG0nHek7cu/Arx6AQ7X2e9sMkvoi8c0I35RkClBQ
-         713HCqldRoSRgrbggVmXtH8YV4i7VhbbKXlhnN7LrqOnrj2jQyNkDXhKCD9FORcvCJZ6
-         Pm5/Y0LzLmGjAb3Gdd/b5vlR4LPB8/TKsKcT8RQvXAMVI/lCPV+c3ZHAnnIx9ERE+zZf
-         Z3Jv1FNrXD6QFbLxbOg0P8PCtFSnRXzgUKxH7gKZapCH7/uaklw43x+pQYN+2LWfvY2R
-         b0HOVT/b1dGf/9iV4f9FUOni3cYCclA/0Dr0auMWblXMoxnhQVN73Kt8zN/5w+vdSqSP
-         J2bw==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682011443; x=1684603443;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mX7is0BFuyHTYfsbztYbCO25cFilycGGlhGN6FiXU1w=;
+        b=dPEHWvafQXgFvtN8lJcDxOt2dEvDpbzrXJJYFmH9uEupYTF+UdlzZiq9+iuHNcjoIm
+         c2pp0+7dheuEavp0Ywmylmu/XQzyDKQtg8A6p+RZnl9Z2kBuWK5Sev2KyN4aOT3cAyoI
+         ZlgXwh1+prS3FA31pHEae6mdRbfTyQ5Q7ZWIBBhDeF8Yz25oPbGqHcG0fwOuOSDKJ2qF
+         IYRKOSM3bvGdc7rcxpRsmQUNi+FCfpWn/XkXSC5GSCDKjafK/RLH7+MlfUxHcgIByRPj
+         3wJgog+NNFwT+df8zZ97gg+AaCXhHjxtQeRe+yPIenjukZGAkjpBLHNN0PmV0kRdtKD3
+         lpwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682010622; x=1684602622;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=E9HE5DtZAWYDS6HF/E6UoNLC9OfrZLTAewm1TL16AI0=;
-        b=eAu6SOahdjMmPo5ayGJ0DckzKh5GlDljCL7LacJK06/yXXKpY0W26c2IJVIRO2d9kt
-         rIMDi4j4XErKKsFfUzoKXvmqzSqvJcmtZjx3XJQjty2mf7ggRYk1CNc4wBxoXUMar65a
-         dfW9K3QbwH56smR47jsyhQryypBTbuK/XIejkwM60C/bBmY41e2htTgr6rE0i2Zm3n6S
-         1CdqDbc9X/RrPWwKRlToPhAHO0T/1UKKB/F1cqO6SN21CR28NPEqvMur8EfIzHXj35fh
-         jR+SCH+EFPQcYng27oBEfAzK08W7lQW9ty4c0cdz+UjtEI/2G9VUMqbUzRK/NUnmySuF
-         tFHA==
-X-Gm-Message-State: AAQBX9e04AQCGov984h8nlT9lqoWure053iBREJ0cr1IG53tiI8aHUT4
-        HVne5Id1MOH0kyUC7QirZ7c=
-X-Google-Smtp-Source: AKy350baWM2b9+7domAtqEQ4lsyfteaeS3PE7wG9A2nT1jDV4RF9vCEY2Kv4F3W39Y9tzwxiPH2N1g==
-X-Received: by 2002:a17:903:2348:b0:1a6:413c:4a3e with SMTP id c8-20020a170903234800b001a6413c4a3emr2986626plh.5.1682010621972;
-        Thu, 20 Apr 2023 10:10:21 -0700 (PDT)
-Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id x12-20020a1709027c0c00b001a52e3e3745sm1366878pll.296.2023.04.20.10.10.21
+        d=1e100.net; s=20221208; t=1682011443; x=1684603443;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mX7is0BFuyHTYfsbztYbCO25cFilycGGlhGN6FiXU1w=;
+        b=N2iBKv9TEUYTvK6OQzUvoFJ/nt9fs104yQrVQ4lf+Ux+c7yuuMeoZ/2ScUTg31soYu
+         2kSeQux6dqpbaOQAipjEuRVm5NLeMilIupfOG+zcm9d3BbFCiomQAWzFU3G14Ifd0UsG
+         ihtVzqNJHyIb5Xsc7jEvh3cZ8aTwAie6LNFm2O2EtLXDVP+iVkEVuLWOyYDLWQ70S6hT
+         bdz8v4UnC5bvC3kgPZGvyVhgCq60t9CoXLSSqyjMN0HX3cSPNwpLt3nzsEZMJuWS3atP
+         05S7Ar/wWNuycaONRxr3x85k2DZ1saaU0kECYxrKBTzFOpHeobJd8Nzgok1c1uYTCIUW
+         BfGA==
+X-Gm-Message-State: AAQBX9eyn1siKJl5Ef4Dy8qaSLFZZt8tXy9tTkeE2M7A7vAt5x4JpHqt
+        J2dLDdWK5RzaNpbHXejwZlBpLzEiLFEtPJyqDKwfgg==
+X-Google-Smtp-Source: AKy350bIHr3tfzvpz+N2yy3J9mp4RjEa4/zDGHpLXofkn6cJocYub1V2SvXIkR2irPw7m8sWxg7WFg==
+X-Received: by 2002:a25:3254:0:b0:b96:7d4b:7aeb with SMTP id y81-20020a253254000000b00b967d4b7aebmr1841103yby.34.1682011443147;
+        Thu, 20 Apr 2023 10:24:03 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v187-20020a0dd3c4000000b00555c30ec361sm427406ywd.143.2023.04.20.10.24.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 10:10:21 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] merge-ort: fix calling merge_finalize() with no
- intermediate merge
-References: <pull.1518.git.1681974847078.gitgitgadget@gmail.com>
-        <d5c93b5b-32b9-ec50-1661-06f73fa37f5f@github.com>
-Date:   Thu, 20 Apr 2023 10:10:21 -0700
-In-Reply-To: <d5c93b5b-32b9-ec50-1661-06f73fa37f5f@github.com> (Derrick
-        Stolee's message of "Thu, 20 Apr 2023 09:10:47 -0400")
-Message-ID: <xmqqa5z21nuq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Thu, 20 Apr 2023 10:24:02 -0700 (PDT)
+Date:   Thu, 20 Apr 2023 13:24:01 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 09/10] builtin/gc.c: make `gc.cruftPacks` enabled by
+ default
+Message-ID: <ZEF1MSwtSl7KdjMi@nand.local>
+References: <cover.1681764848.git.me@ttaylorr.com>
+ <cover.1681850424.git.me@ttaylorr.com>
+ <b6784ddfe2906f7c04b3050bd9ba63a884ddb047.1681850424.git.me@ttaylorr.com>
+ <xmqqh6tb7bsa.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh6tb7bsa.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
-
-> On 4/20/2023 3:14 AM, Elijah Newren via GitGitGadget wrote:
->> From: Elijah Newren <newren@gmail.com>
+On Wed, Apr 19, 2023 at 03:22:13PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
->> While at it, ensure the FREE_AND_NULL() in the function does something
->> useful with the nulling aspect, namely sets result->priv to NULL rather
->> than a mere temporary.
+> > diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+> > index e52bc6b858..17b4d39f89 100644
+> > --- a/Documentation/config/feature.txt
+> > +++ b/Documentation/config/feature.txt
+> > @@ -14,9 +14,6 @@ feature.experimental::
+> >  +
+> >  * `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
+> >  skipping more commits at a time, reducing the number of round trips.
+> > -+
+> > -* `gc.cruftPacks=true` reduces disk space used by unreachable objects during
+> > -garbage collection, preventing loose object explosions.
 >
-> Good call. It also makes the code look better.
+> Being listed here is a definite sign that a feature behind a
+> configuration variable is considered experimental.  Do we have (and
+> if not, do we want to establish) a procedure to mark and announce a
+> feature that used to be experimental no longer is?  If it is enough
+> to mention it in the release notes, then I can take care of it, of
+> course.
 
-And more correct, if the NULLness of result->priv matters.
+I am not aware of such a procedure. But personally I think it would be
+fine to mention it in the release notes for the next release.
 
-> Perhaps this would be better as
->
-> 	if (result->priv) {
-> 		clear_or_reinit_internal_opts(result->priv, 0);
-> 		FREE_AND_NULL(result->priv);
-> 	}
->
-> to avoid an accidental addition of code to the end of this
-> method that doesn't depend on result->priv?
-
-It does sound like a good idea.
-
-Thanks.
+Thanks,
+Taylor
