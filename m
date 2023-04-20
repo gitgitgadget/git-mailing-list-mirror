@@ -2,238 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F071FC77B73
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 20:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26770C7618E
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 20:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbjDTULt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 16:11:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39816 "EHLO
+        id S231962AbjDTUst (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 16:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjDTULq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 16:11:46 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D885170C
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 13:11:44 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-2f4214b430aso598198f8f.0
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 13:11:44 -0700 (PDT)
+        with ESMTP id S232304AbjDTUsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 16:48:46 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 779F110B
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 13:48:41 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-54f8e81c3f3so13673767b3.1
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 13:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682021502; x=1684613502;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dazENGqNSA7izrlf08rFPHPAzuGs3+MWEpTLz/uy9II=;
-        b=Yh29g5Kcm2y977K50f+zcQ4Jfx83ptKcqIBtzD+XhPEYDxC6FaB+qcrXbrqOvArx5y
-         nqUvuG9luqDHfi3OIzfzUCnOtPLfNABjQkAPDeuLhN8ZPeuQmNczU4GfB6b7xLHOt8Wq
-         If1gChHuoJ6GynNG/fDN8R706/FBVrJkl0fzbBhNDqSDSHVEX+QIwL8EoqyVTO7X91jK
-         SFlqZQyE68UKy8eDZ81utbkNIi6wC8SFm0OYo+oG8G/lWJWG5VW1N5HeIj4+SDzBZ1kr
-         zTlzm2lFbGPdwdztzzKdypsswLxrnrNtP58t0ldPfuKcSZPQ/i8gKY5vLdAkkfYufa1M
-         iHKA==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682023720; x=1684615720;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fRfz6FOTKqlkMf0DQnmAtb0gmv+PeHnGpi9Mm7Cq6d4=;
+        b=1vlqYEX1GEpEgm9Fw74u9q49Mt9Fxz4075qe8h5/0JW4AHDevioUyT7bzJ9PnntEv3
+         ndSecAnRieSE/CdrSOEjpN+/dofLKyVrm2jnxXEfmN1lwiG+rPGyAT9ZUCGhU6l1SVXD
+         OTe5+33qRjg2QJ0JaxT8/MGgJ1lfXdUn4pNmCP0J+Nek/HgkHeyLVgrmcf6XK5WprJZx
+         rNucZfZjWmyCnvOB6g/RR3esuNFL+Zm00aBgxPzC0QNg0RxzhwLOEqpMOGXUogkDp4nR
+         ZoLvRV//c0Z3eGZvuBQd1WomLIjOWBCAMdenBRxuM+kAmsX4+O1ZOJQ5O7rke9NKLI+5
+         v3SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682021502; x=1684613502;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dazENGqNSA7izrlf08rFPHPAzuGs3+MWEpTLz/uy9II=;
-        b=V0jE+W3RAXut8wdSQ+eWKnH5f+xOp3yFNK9wuOvaOj49U37y6OGV+BtrESmw37BNPh
-         9qclDvPws2wOacUeb9FWdphWk/FKIAUF63CnuIRSGNJ3wem5BkC20A5YR1sxLF+gzl8O
-         ByUu0WpjlovzRLGnD1tj2V6iX9l7eWTY8q4lCEeAVjKpwi6Z2tPK5BK218Dw2NmW+YI7
-         5zDB0s8IXsLGAfHNVliG9fMqCpY/U3xmc1O23n3ve4U8mj3pgDGaEXHDSO8qLFktloU4
-         CDg3BGL6gDV0muiUDp4A6xDLosZVhS/L9m1FoIPJtIO8syP18dvdaTJwXKJwb+ucEx9A
-         aVhA==
-X-Gm-Message-State: AAQBX9efra3LsjSDEI6MDnfgJYYLhcg3OrNGbkilmIZBDnpBgrljkQO7
-        0h6sor0+1/bCko5rBAuhWtfNSNh4k30=
-X-Google-Smtp-Source: AKy350bRJNcehj3A5+ZCRI8wbbmANC+hUxgHBK3BPbzxkKkAt0QaRYQpVJSSkmtvC8V8RrZASFk6lQ==
-X-Received: by 2002:a5d:42c7:0:b0:2f7:8779:3bc3 with SMTP id t7-20020a5d42c7000000b002f787793bc3mr2225637wrr.11.1682021502418;
-        Thu, 20 Apr 2023 13:11:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g16-20020a5d5410000000b002fbc61cd080sm2813730wrv.9.2023.04.20.13.11.41
+        d=1e100.net; s=20221208; t=1682023720; x=1684615720;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fRfz6FOTKqlkMf0DQnmAtb0gmv+PeHnGpi9Mm7Cq6d4=;
+        b=eIMPoZi3udEj0w6M68oaSwiKIBFCnLpZKtQzJmrgYwXwS94gsXQY4bH1H+1ch1addf
+         gno3ZlVn/GYBPfThe+clN13K4WoNkT5lb1XP901DBi6UIV+S1Q/ZZ+Oynwfb9zc8tysa
+         ejjSN2TUUv6VBHfO7f5jjc5DVpWdJL0lT7M7o+WGLMjTiPNjUHGok8nW9ftdGG5VLaz0
+         ia20s7GCIVNk7ZP5tuMSYUDEEfEc0jI8/VAtPCs1Ukf2vW36awVmS2719B5VeKFf51aO
+         4xRWFdTLc7DUs7jBcSzunB5FsR62OLnj3b98flQe6F6Ss1FlSxvc7zNpJG7K2xAzSViv
+         7YlQ==
+X-Gm-Message-State: AAQBX9flQLGa3YP97dDt0CrXLylWRKCNo6osCpJ4hDKitRZi852sfmza
+        hTDCqfUPmVebcmN9Iigmb5Dl7g==
+X-Google-Smtp-Source: AKy350ZuKQMXKjHrWQyCo2fM9O04BeQPTY/cI+BBpFQ+7WkfMGaec8zgKcMsvUjazkT1GulIeUkwQA==
+X-Received: by 2002:a0d:f8c7:0:b0:54f:e2ae:21d8 with SMTP id i190-20020a0df8c7000000b0054fe2ae21d8mr104101ywf.28.1682023720522;
+        Thu, 20 Apr 2023 13:48:40 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d14-20020a81ab4e000000b0054f885d381esm539630ywk.135.2023.04.20.13.48.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 13:11:42 -0700 (PDT)
-Message-Id: <pull.1520.v3.git.1682021501245.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1520.v2.git.1682014322604.gitgitgadget@gmail.com>
-References: <pull.1520.v2.git.1682014322604.gitgitgadget@gmail.com>
-From:   "Ricky Davidson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Apr 2023 20:11:40 +0000
-Subject: [PATCH v3] http: document sslcert and sslkey types and extend to
- proxy
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 20 Apr 2023 13:48:40 -0700 (PDT)
+Date:   Thu, 20 Apr 2023 16:48:39 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] builtin/pack-objects.c: introduce `pack.extraCruftTips`
+Message-ID: <ZEGlJx4ibYSp6qmD@nand.local>
+References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
+ <xmqqzg72zalp.fsf@gitster.g>
+ <ZEGSvfEkE5PhokKv@nand.local>
+ <xmqq1qkez5yg.fsf@gitster.g>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "Junio C Hamano [ ]" <gitster@pobox.com>,
-        Ricky Davidson <Ricky.Davidson@hii-tsd.com>,
-        Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1qkez5yg.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+On Thu, Apr 20, 2023 at 12:52:55PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> >> But it makes me wonder if it would make the life of end-users simpler
+> >> if we reserve a special ref hierarchy, say "refs/crufts/*", than
+> >> having to write a program for doing something like this.
+> >
+> > Ideally, yes. But I think there are certain instances where there are
+> > far too many (disconnected) objects that creating a reference for each
+> > part of the unreachable object graph that we want to keep is infeasible.
+> >
+> > Another way to think about pack.extraCruftTips is that the program
+> > invocation is acting like the refs/crufts hierarchy would if it existed,
+> > but without actually having to write all of those references down.
+>
+> [...] Is there a less hand-wavy use case you have in mind?
 
-0a01d41ee4 (http: add support for different sslcert and sslkey
-types., 2023-03-20) added http.sslCertType and http.sslKeyType, but:
+Sure. The use-case I have in mind directly is keeping certain entries
+from GitHub's `audit_log` file (see a description from Peff in [1])
+while excluding others.
 
-1. it does not document the feature.
-2. it does not apply to SSL proxy equivalents.
+We use the audit_log to track every single reference change, like the
+reflog but with the reference name prepended to each entry and some
+optional metadata attached to the end of each entry.
 
-Documents http.sslCertType and http.sslKeyType. Implements
-http.proxySSLCertType. Does the same for http.sslKeyType and
-http.proxySSLKeyType equivalents and related environment
-variables.
+Our goal is to be able to prune the test-merge objects that GitHub
+creates without (usually) pruning any objects that was pushed by a user.
+E.g., even if a user force-pushes their branch from A to B (where B is
+not strictly ahead of A) we want to keep the objects from A around, even
+though a reference is no longer pointing at it.
 
-Signed-off-by: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
----
-    [PATCH] http: document sslcert and sslkey types and extend to proxy
-    
-    0a01d41ee4 (http: add support for different sslcert and sslkey types.,
-    2023-03-20) added http.sslCertType and http.sslKeyType, but:
-    
-     1. it does not document the feature.
-     2. it does not apply to SSL proxy equivalents.
-    
-    Documents http.sslCertType and http.sslKeyType. Implements
-    http.proxySSLCertType. Does the same for http.sslKeyType and
-    http.proxySSLKeyType equivalents and related environment variables.
-    
-    Signed-off-by: Ricky Davidson Ricky.Davidson@hii-tsd.com
+This already works with reflogs, which are considered as reachable
+objects when generating a cruft pack (that is, they go in the "big"
+pack with the rest of the reachable objects. This is extending that
+mechanism to work with GitHub's custom format, but doing so in a way
+that is not tied to that format whatsoever.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1520%2FRicky-Davidson-hii-tsd%2Fmaster-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1520/Ricky-Davidson-hii-tsd/master-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1520
+The hope is that others may find it useful in other special
+circumstances like above.
 
-Range-diff vs v2:
+Thanks,
+Taylor
 
- 1:  78b96f60ec8 ! 1:  020c03104f4 http: document sslcert and sslkey types and extend to proxy
-     @@ Metadata
-       ## Commit message ##
-          http: document sslcert and sslkey types and extend to proxy
-      
-     -    0a01d41 added http.sslCertType and http.sslKeyType, but:
-     +    0a01d41ee4 (http: add support for different sslcert and sslkey
-     +    types., 2023-03-20) added http.sslCertType and http.sslKeyType, but:
-      
-     -    1. does not document the feature.
-     -    2. does not apply to SSL proxy equivalents.
-     +    1. it does not document the feature.
-     +    2. it does not apply to SSL proxy equivalents.
-      
-          Documents http.sslCertType and http.sslKeyType. Implements
-     -    http.proxySSLCertType. Same for http.sslKeyType and
-     +    http.proxySSLCertType. Does the same for http.sslKeyType and
-          http.proxySSLKeyType equivalents and related environment
-          variables.
-      
-
-
- Documentation/config/http.txt | 24 ++++++++++++++++++++++++
- http.c                        | 12 ++++++++++++
- 2 files changed, 36 insertions(+)
-
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index afeeccfbfa7..53386b90185 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -34,11 +34,23 @@ http.proxySSLCert::
- 	with an HTTPS proxy. Can be overridden by the `GIT_PROXY_SSL_CERT` environment
- 	variable.
- 
-+http.proxySSLCertType::
-+	Format of the client certificate used to authenticate with an HTTPS proxy.
-+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
-+	variable.
-+
- http.proxySSLKey::
- 	The pathname of a file that stores a private key to use to authenticate with
- 	an HTTPS proxy. Can be overridden by the `GIT_PROXY_SSL_KEY` environment
- 	variable.
- 
-+http.proxySSLKeyType::
-+	Format of the client private key used to authenticate with an HTTPS proxy.
-+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_KEY_TYPE` environment
-+	variable.
-+
- http.proxySSLCertPasswordProtected::
- 	Enable Git's password prompt for the proxy SSL certificate.  Otherwise OpenSSL
- 	will prompt the user, possibly many times, if the certificate or private key
-@@ -161,11 +173,23 @@ http.sslCert::
- 	over HTTPS. Can be overridden by the `GIT_SSL_CERT` environment
- 	variable.
- 
-+http.sslCertType::
-+	Format of the SSL certificate used to authenticate over HTTPS.
-+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
-+	variable.
-+
- http.sslKey::
- 	File containing the SSL private key when fetching or pushing
- 	over HTTPS. Can be overridden by the `GIT_SSL_KEY` environment
- 	variable.
- 
-+http.sslKeyType::
-+	Format of the SSL private key used to authenticate over HTTPS.
-+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
-+	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
-+	variable.
-+
- http.sslCertPasswordProtected::
- 	Enable Git's password prompt for the SSL certificate.  Otherwise
- 	OpenSSL will prompt the user, possibly many times, if the
-diff --git a/http.c b/http.c
-index d5d82c5230f..bee4ea64115 100644
---- a/http.c
-+++ b/http.c
-@@ -74,7 +74,9 @@ static const char *curl_http_proxy;
- static const char *http_proxy_authmethod;
- 
- static const char *http_proxy_ssl_cert;
-+static const char *http_proxy_ssl_cert_type;
- static const char *http_proxy_ssl_key;
-+static const char *http_proxy_ssl_key_type;
- static const char *http_proxy_ssl_ca_info;
- static struct credential proxy_cert_auth = CREDENTIAL_INIT;
- static int proxy_ssl_cert_password_required;
-@@ -441,9 +443,13 @@ static int http_options(const char *var, const char *value, void *cb)
- 
- 	if (!strcmp("http.proxysslcert", var))
- 		return git_config_string(&http_proxy_ssl_cert, var, value);
-+	if (!strcmp("http.proxysslcerttype", var))
-+		return git_config_string(&http_proxy_ssl_cert_type, var, value);
- 
- 	if (!strcmp("http.proxysslkey", var))
- 		return git_config_string(&http_proxy_ssl_key, var, value);
-+	if (!strcmp("http.proxysslkeytype", var))
-+		return git_config_string(&http_proxy_ssl_key_type, var, value);
- 
- 	if (!strcmp("http.proxysslcainfo", var))
- 		return git_config_string(&http_proxy_ssl_ca_info, var, value);
-@@ -1146,9 +1152,13 @@ static CURL *get_curl_handle(void)
- 
- 			if (http_proxy_ssl_cert)
- 				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT, http_proxy_ssl_cert);
-+			if (http_proxy_ssl_cert_type)
-+				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERTTYPE, http_proxy_ssl_cert_type);
- 
- 			if (http_proxy_ssl_key)
- 				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEY, http_proxy_ssl_key);
-+			if (http_proxy_ssl_key_type)
-+				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEYTYPE, http_proxy_ssl_key_type);
- 
- 			if (has_proxy_cert_password())
- 				curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD, proxy_cert_auth.password);
-@@ -1285,7 +1295,9 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 		max_requests = DEFAULT_MAX_REQUESTS;
- 
- 	set_from_env(&http_proxy_ssl_cert, "GIT_PROXY_SSL_CERT");
-+	set_from_env(&http_proxy_ssl_cert_type, "GIT_PROXY_SSL_CERT_TYPE");
- 	set_from_env(&http_proxy_ssl_key, "GIT_PROXY_SSL_KEY");
-+	set_from_env(&http_proxy_ssl_key_type, "GIT_PROXY_SSL_KEY_TYPE");
- 	set_from_env(&http_proxy_ssl_ca_info, "GIT_PROXY_SSL_CAINFO");
- 
- 	if (getenv("GIT_PROXY_SSL_CERT_PASSWORD_PROTECTED"))
-
-base-commit: 667fcf4e15379790f0b609d6a83d578e69f20301
--- 
-gitgitgadget
+[1]: https://lore.kernel.org/git/20150624094919.GC5436@peff.net/
