@@ -2,31 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CBFC77B73
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 02:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03BD8C77B73
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 02:49:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233543AbjDTCr1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Apr 2023 22:47:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47584 "EHLO
+        id S233539AbjDTCtT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Apr 2023 22:49:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233697AbjDTCrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2023 22:47:19 -0400
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD28AE7C
-        for <git@vger.kernel.org>; Wed, 19 Apr 2023 19:47:10 -0700 (PDT)
-Date:   Thu, 20 Apr 2023 02:46:59 +0000
+        with ESMTP id S230521AbjDTCtO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2023 22:49:14 -0400
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744F4E5A
+        for <git@vger.kernel.org>; Wed, 19 Apr 2023 19:48:46 -0700 (PDT)
+Date:   Thu, 20 Apr 2023 02:48:34 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1681958828; x=1682218028;
-        bh=/ucYm+XCcEg8FheodlKkopIg6fafC3o1h0PPuQyVXIE=;
+        s=protonmail3; t=1681958924; x=1682218124;
+        bh=QOYAqcKfZINj4X3hX2SZ7dGrdo+fB1xOBPdXe87rsvs=;
         h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
          Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
          Message-ID:BIMI-Selector;
-        b=fwX2s+24fLLCNtTdh1cPPo6Mdc4WC5xvlx24MSKoNKkK6rGqohQNv9Vfg3PNDGURa
-         6tS6EkeiOGWjK5jdbeQyMkHwgif4nhH6pat/Z/RPfK4slqEX8ADn2Gg8HiQYYnoJP0
-         S83X2ONAcchOI50iOZ4Pg0BqELIO/BpZ9KJQ2iAMOFB4Kd7fn4ST7IoWm5He9A0nwM
-         /+nfWiiNS3VYBX2xTwBbcIEEHmd48+VBQFSGgykMx8M/OdSzHQlmekzih7a9K2MEil
-         3tW43VlB2aPwBPLW6ttW9ytWlhMU5R5zqu33i+A6hG4o7ax2QD59DWzwdONMpy7MIN
-         rqBqWGsEgiGBw==
+        b=EqcrtbGZ2A8yAyx1/ERye1CcUtaH0F131W23Fn8W88sJuXDFYFPYX334xLWCTjBy5
+         UK6J75jAZun6qhgBEB/kzn6IQV8pi7FK77oZ2HnS8UxEayxnAxVH3TylmV2h8WISBS
+         KbMcIgZXS9n81z7FMQTlLccrIgj65VR7R2VHxnvLbZKb6p6oxhe6Zs76j6glqXNggn
+         tdOycSIdwzf0u4Zpi2jZQuUhSbi/vkknmjt+m4XLwU8Grnrd+bqVXMZhELt7pF5ifF
+         mt3Nlh0LPFN5P2ATVzUtsp1oNtC4WMlO0MIJE7RiIdoMlicSrXqG62QOIL2xZwRIr1
+         Pcf124B6Pw/Jw==
 To:     Junio C Hamano <gitster@pobox.com>
 From:   Jacob Abel <jacobabel@nullpo.dev>
 Cc:     git@vger.kernel.org,
@@ -35,10 +35,10 @@ Cc:     git@vger.kernel.org,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v9 3/8] t2400: refactor "worktree add" opt exclusion tests
-Message-ID: <dsbjgeppeusvddeqn466xwnaa6eif4uoofbcju4sdzhotp5ctq@hh6unkszo5k3>
-In-Reply-To: <xmqqmt36jixr.fsf@gitster.g>
-References: <20230417093255.31079-1-jacobabel@nullpo.dev> <20230417093255.31079-4-jacobabel@nullpo.dev> <xmqqmt36jixr.fsf@gitster.g>
+Subject: Re: [PATCH v9 4/8] t2400: add tests to verify --quiet
+Message-ID: <auz2uadzp3k2b3ycmut6hhqelatwgnodrpqg7kalf2amzjknmq@gnqwpwzeomm3>
+In-Reply-To: <xmqqfs8yjisl.fsf@gitster.g>
+References: <20230417093255.31079-1-jacobabel@nullpo.dev> <20230417093255.31079-5-jacobabel@nullpo.dev> <xmqqfs8yjisl.fsf@gitster.g>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -47,33 +47,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/04/17 02:30PM, Junio C Hamano wrote:
+On 23/04/17 02:33PM, Junio C Hamano wrote:
 > Jacob Abel <jacobabel@nullpo.dev> writes:
 >
-> [...]
+> > [...]
 >
-> > [....]
->
-> Again, I do not think this sends output to the standard output at
-> the end of this test piece.
->
-> > +=09=09test_must_fail git worktree add $opts 2>actual &&
-> > +=09=09grep -E "fatal:( options)? .* cannot be used together" actual
-> > +=09'
-> > +}
->
-> I do not think this patch is needed (I'd rather see people learn the
-> trick of running with "-i" and rely on the fact that the trash
-> directory is left intact to be inspected), but if you must, it may
-> make more sense to add test_must_contain to make a failed 'grep
-> "$@"' easier to see, similar to the way that test_must_be_empty
-> helps a failing 'test !  -s "$1"', something along the lines of ...
->
-> [...]
+> It is good to test the --quiet option.  It is not good to have the
+> ineffective "cat actual" when test_must_be_empty is already used.
+> Probably the same comment applies to the rest of the patch.
 >
 > Thanks.
 
-Understood. As mentioned in the discussion for patch 2/8, these changes
-(trying to `cat actual` on `test_cleanup`) will be reverted for the next
-revision across all patches.
+Understood. As mentioned in the patch 2/8 discussion, this change (the `cat
+actual`) will be reverted in the next revision.
 
