@@ -2,107 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6568EC77B72
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 16:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71F5FC77B73
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 16:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233650AbjDTQbn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 12:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47484 "EHLO
+        id S232168AbjDTQpk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 12:45:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233569AbjDTQbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 12:31:38 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A624910E5
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 09:31:32 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-54ee0b73e08so51234397b3.0
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 09:31:32 -0700 (PDT)
+        with ESMTP id S230350AbjDTQpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 12:45:39 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A76F2D63
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 09:45:38 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1a667067275so11688755ad.1
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 09:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682008292; x=1684600292;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BF5LdrwHYQsOhJLb7EjpcoZVG1VvYCnXGLSeoHbaCvQ=;
-        b=SDsjnrYRS/KTB26knI1q8GbNn+gQQdWkQpilJ6LsiTT0NnuLcc+WW+8NFIKBUIY6jv
-         LtvtO3n9340PfEJcyKH6BwEG45xLfBtH00lY06vrg6NjdMrvK7jeGlUDnsVu1BGo++lT
-         RdBXOmjpUlxkUBQ9iAbPWnNZRwcjBqcNfyGBbw2g1cD9864it5AIBpsAOX5zWxvIoQp9
-         v+4HiJlWnklgNHQWBL4si8poZ3L6IfGVpTfSxMTzn+vDDVHGpHKsG4NgWb746GkZXlfT
-         OGcm19+PLUJ6lrlvGt8w+hJn32ynghE+vV32R4KMz+IYOIwzTXh0zxik3z/8t8cErJ9y
-         jhfA==
+        d=gmail.com; s=20221208; t=1682009137; x=1684601137;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5uWQxgRRmieJjutpxzyfOvVwUUBx+UQbtkmv2n3wfys=;
+        b=seXoq/Xq2xNwDm+el0rDpiG4C0k8crRyspsQ3j6Jw4zPIuUKF+LhYQhtFZrAOulW7s
+         ew2qVFp5aP4FoZA/T7YbgPSLhZPyCAwDO1wrVsNMYFQE8Exyw+/TtcQtqalgg1dYGaHt
+         sddxba6X8e6t9DarNZfWbQ+X2FQAZ4Gc0o8iQvevzjkSiP4JPzpWiqh/uLLtDxujsXku
+         kyRgLJf3Eh4UBvdrcKF7VffKGQVRxL+aNy/SlRDPqAcKyU3U2lswmSRCtu5cCC71Gdm6
+         jNkQcLCGdqC4kg0390EVgew8biVQ6d3hQpDntBVEJqDKi1G9hA2TdKv565QsEy2ZrTSi
+         PLMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682008292; x=1684600292;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BF5LdrwHYQsOhJLb7EjpcoZVG1VvYCnXGLSeoHbaCvQ=;
-        b=YqHpAtzdBBO2ooxjvWD+q0FlUvQTTzJGU2MKzj6sgls/HWMudZwMg9Zzz5svE+J8rE
-         xzyP+f8jrFqlps6h5z0ANWEV+yxhzGpXT7jr70FTQkDKdyw6i2YRohSoh41bxdOW0t0r
-         R2EH7wBdML+ZZ7XR83BHDuBo298LQ66Q+HV2qnBc8HAqVagfC+G8l1SzNwoBlIAuo2iZ
-         ht9cEo1Gg9ID3S4IHB9+SbWZkI3RRxmPrTvAgyXrci9ms6n9bXu9UF70F5Qwod8h78j0
-         ewSRQFnbGsNdqrcRg782+aY+V5mnhUIygDMHJd9vtEIhjFHwDc5ywW0BhqQIXsD49RlF
-         YFOA==
-X-Gm-Message-State: AAQBX9eWv98P9Vvc1EzPx72eN6tqj1acvshobdAw1Ax01Y/Ht94fQ5PC
-        2VcccVk98eFO5gyQUTfzS66RSg==
-X-Google-Smtp-Source: AKy350av+JRgwyQDAadY47YaQF3Gf6pIgFTzV31ToVZUPT0x1hk6qCYC9cwT1hEvUtQDd9YO5GGLAA==
-X-Received: by 2002:a81:9196:0:b0:54f:b9bc:bd31 with SMTP id i144-20020a819196000000b0054fb9bcbd31mr1290370ywg.29.1682008291793;
-        Thu, 20 Apr 2023 09:31:31 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g124-20020a0ddd82000000b0054fdb1dad0fsm422556ywe.43.2023.04.20.09.31.31
+        d=1e100.net; s=20221208; t=1682009137; x=1684601137;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=5uWQxgRRmieJjutpxzyfOvVwUUBx+UQbtkmv2n3wfys=;
+        b=IdAN4xmcTqwOZ8WbCPanwcXHWCVAXenzt0SAGDCGV10VNHZgLHc++Afx91Sbb+OFFS
+         jm2/nyXuXmxjdBRQdBZCwyjBVfbAwBnpUwtfEr0oqhHApVsAKDP+3217di0YhA8g/O0Q
+         iPMtCyZakFDbWrECDc9AH2GeQDoOBG0H1vPHX5UBuZQzzuD4RAje78diyvJKEhenkwd0
+         pDGqmSxXALpaKYxDdiVxw2oDYIL7jOWsxuOrI4G7aAe/BOg3u1TpeXj4w0uw0POLdX3m
+         bP/Vi+a6jAVJYYlPgiya3wi8viH6RrVEgI4adXr6fIrZG8QyiQUt9ozIkPoPiFcv7sQ6
+         ksgQ==
+X-Gm-Message-State: AAQBX9eJxNFk7YxTStD4sJkAFxcr3iyjbBptRHPq3JgvLWW8pxMwmN8t
+        lnPEshwkAdnBFX7P4PjXv4A=
+X-Google-Smtp-Source: AKy350aBGaN4MJoDru9ooie+8hm1yOgC81jkzaDic+8YWOCh1VNb7Ms61Ym+Grn3vExly6aINHmYdA==
+X-Received: by 2002:a17:902:d4ca:b0:1a6:523c:8583 with SMTP id o10-20020a170902d4ca00b001a6523c8583mr2425781plg.68.1682009137365;
+        Thu, 20 Apr 2023 09:45:37 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id jg20-20020a17090326d400b001a1a82fc6d3sm1355223plb.268.2023.04.20.09.45.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 09:31:31 -0700 (PDT)
-Date:   Thu, 20 Apr 2023 12:31:30 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 01/10] pack-write.c: plug a leak in
- stage_tmp_packfiles()
-Message-ID: <ZEFo4iGFTg1UWpL0@nand.local>
-References: <cover.1681764848.git.me@ttaylorr.com>
- <cover.1681850424.git.me@ttaylorr.com>
- <c477b754e7ddde0d6e696cfd4027ad88c18aeff3.1681850424.git.me@ttaylorr.com>
- <xmqqpm7z7crz.fsf@gitster.g>
+        Thu, 20 Apr 2023 09:45:36 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Koichi Murase <myoga.murase@gmail.com>
+Cc:     git@vger.kernel.org, Justin Donnelly <justinrdonnelly@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Edwin Kofler <edwin@kofler.dev>
+Subject: Re: [PATCH 2/2] completion: suppress unwanted unescaping of `read`
+References: <20230420074616.1642742-1-myoga.murase@gmail.com>
+        <20230420074616.1642742-2-myoga.murase@gmail.com>
+Date:   Thu, 20 Apr 2023 09:45:36 -0700
+In-Reply-To: <20230420074616.1642742-2-myoga.murase@gmail.com> (Koichi
+        Murase's message of "Thu, 20 Apr 2023 16:46:16 +0900")
+Message-ID: <xmqqmt321ozz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpm7z7crz.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 19, 2023 at 03:00:48PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Koichi Murase <myoga.murase@gmail.com> writes:
+
+> From: Edwin Kofler <edwin@kofler.dev>
 >
-> > The function `stage_tmp_packfiles()` generates a filename to use for
-> > staging the contents of what will become the pack's ".mtimes" file.
-> >
-> > The name is generated in `write_mtimes_file()` and the result is
-> > returned back to `stage_tmp_packfiles()` which uses it to rename the
-> > temporary file into place via `rename_tmp_packfiles()`.
-> >
-> > `write_mtimes_file()` returns a `const char *`, indicating that callers
-> > are not expected to free its result (similar to, e.g., `oid_to_hex()`).
-> > But callers are expected to free its result, so this return type is
-> > incorrect.
+> The function `__git_eread`, that reads the first line from the file,
+> calls the `read` builtin without passing the flag option `-r`.  When
+> the `read` builtin is called without the flag `-r`, it processes the
+> backslash escaping in the text that it reads.  We usually do not want
+> to process backslashes of the input but want to read the raw contents.
 >
-> Indeed the string that holds the name of the file returned by
-> write_mtimes_file() is leaking.  Does the same logic apply to the
-> returned filename from write_rev_file() and stored in rev_tmp_name
-> that is not freed in stage_tmp_packfiles() in another topic?
+> To make it read the first line as is, pass the flag `-r` to the `read`
+> builtin in the function `__git_eread`.
 
-They are similar, but unfortunately different.
+We USUALLY do not want?
 
-Here, our temporary name is generated by `write_mtimes_file()` which
-*always* comes up with a new name from scratch. So we know that it
-should always be free()'d at the end of `stage_tmp_packfiles()`.
+If there were even a single caller that does rely on the usual
+backslash processing happening in the current code, this patch is a
+breaking change for them, so that phrase is not acceptable as a
+justification for this change.  Perhaps
 
-But in the case of `write_rev_file()`, it only *sometimes* generates a
-new name from scratch. The first parameter can be NULL, in which case
-`write_rev_file()` will generate a new name. Or it can be non-NULL, in
-which case that name will be used instead.
+    After looking at ALL the existing callers of __git_eread, it
+    turns out that they all want to read the first line of the file
+    literally.  Worse yet, some files they read may record file
+    paths, which may contain a backslash, so what they will read are
+    corrupted unless we use `read -r`.
 
-So in that topic, it's less clear on what the ultimate right path
-forward is. But in this topic, changing `mtimes_tmp_name` and the return
-type of `write_mtimes_file()` to be a non-const `char *` (and free()ing
-it, of course ;-)) is the right thing to do.
+or something along that line would be more appropriate.
 
-Thanks,
-Taylor
+I did look at all the callers and I think they want to read things
+literally, so I support the use of "read -r".  But I didn't validate
+the other claim "may contain backslash"---the "... file paths, which
+may contain ..." in the above example is a totally made up claim, as
+I do not have access to a platform whose pathname separator is
+backslash.  Please replace that part to describe the real world
+problem you encountered that led to this fix, if there is one.
+
+Other than that, a very well written description and good change.
+
+Thanks.
+
+> Signed-off-by: Edwin Kofler <edwin@kofler.dev>
+> Signed-off-by: Koichi Murase <myoga.murase@gmail.com>
+> ---
+>  contrib/completion/git-prompt.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index 9c10690a22..49dd69bb84 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -298,7 +298,7 @@ __git_ps1_colorize_gitstring ()
+>  # variable, in that order.
+>  __git_eread ()
+>  {
+> -	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
+> +	test -r "$1" && IFS=$'\r\n' read -r "$2" <"$1"
+>  }
+>  
+>  # see if a cherry-pick or revert is in progress, if the user has committed a
