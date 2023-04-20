@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F0DEC77B73
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 15:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BB74C77B73
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 15:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231622AbjDTP1Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 11:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32786 "EHLO
+        id S234002AbjDTPy4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 11:54:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231469AbjDTP1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 11:27:20 -0400
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2DEC3AB7
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:27:17 -0700 (PDT)
-Received: from [192.168.42.163] (214-49-142-46.pool.kielnet.net [46.142.49.214])
-        by dd36226.kasserver.com (Postfix) with ESMTPSA id 177673C084E;
-        Thu, 20 Apr 2023 17:27:15 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-        s=kas202302241129; t=1682004435;
-        bh=8IUTHQ1ymqchAPMkkNEL31aVGiIeFBSvUewtUyIVzOU=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=xVS3Ww1VvqA4NlC4MgE2u0oTshvaXWZSHnH8zgfqiQpAk7lKAuymebcvxIV6BOmb1
-         kR3ptXoXKdlxgqWGgMf0D//nqlGzwnYr3uW/pkmtdUmIRt7mpWzZvoZDMR+FRUeRhC
-         oakyqIk957WlmXsEcbcCOnwwr9aHsmNZwxhSR4BzHaioaYfrbiKHa11nQzaLhx/nBk
-         aqXl5+2xl2hz06mpoSyWP0QSUxiIIPAyJMReE+cOdpqB/CoMPTWzsMpG7KWg/MKPV0
-         C6oPieGZm6mGJHGD1YfzM/LE2u9fkBwBVgZ5mZ69LjeU33i488j+kFQeej/Zl4Vp7g
-         3PY33djJBW4pQ==
-Message-ID: <2db5c4a5-533a-f004-cf26-7ef938d1f94d@haller-berlin.de>
-Date:   Thu, 20 Apr 2023 17:27:14 +0200
+        with ESMTP id S233782AbjDTPyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 11:54:53 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30643C0F
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:54:39 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1a6670671e3so11646915ad.0
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682006079; x=1684598079;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=icQu06iorNNgIkmbrx/OK7L7EZ5xmANT25G28TaMFSE=;
+        b=rLMSNkMpsZ5QcUjWx+fRoZkznnAxXMco3s2LizDSVua0JIPGasaAVJTyDC8kIZxlrB
+         gXODHz4yy2OlUSCzHIKZDzNbOwbawBrqPW1qvkK2HVnlnypdM9IbZ0I39LuqnvHyeQJf
+         pw7SXsqR9ARxDjFVZaxSznYE9RhB0cvxQSaXWFqezOJnNEEHM8F+WXtLooddWPAgeYsy
+         orCcn0lqJhzIRo1uKOf7akWKNe1W2T2XNmVCpkoB49Z4eJPGE5CSh105HsS1Qh7Hqiak
+         1zR7HZs6aU1xU8tDcfrvdGVG7HWEcLNDNYo1KowobRLL1i9SeO1POAyAdCxLs+3czot5
+         PxQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682006079; x=1684598079;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=icQu06iorNNgIkmbrx/OK7L7EZ5xmANT25G28TaMFSE=;
+        b=TOSiwAqeBbWSfev0rwxgcLTDS/xMucWPESleAIVgHCh0cozvBC1xY2ozI/tu9ESJyb
+         lhSTF8aln3dN8WnlsYbq5/HbPdgFZ7dpKoa48wyrg9PfZqAncNAdPbk5P+zAjMhuCKVj
+         ICdvcxm8kS1wjM5EvmBEfb1VClR4nmOaF4AdRrpo/RV3V7f78Wmwc0bmK5hx6a6yK9Mv
+         4RNxQqSMA5NySi34alRm/yJhnW+7eGgJPurHcWKWnG6OQ3FzFBba1N1WhjrPUKq9bc0K
+         Eu/ozSH9fmVYmZ2Yd2qOT1ZP1dsAv7Hn+h918/ZsyWuTfPrqN/3dWM5eq2fY6AHpdGPo
+         Ss8g==
+X-Gm-Message-State: AAQBX9cCZGDuX9EZg2hp6QhaK4ZFpWOfhx8g7P7ziIcz5u0pHcZFhcrm
+        Pwt9hYzg+OndxZkuKzhVI6Y=
+X-Google-Smtp-Source: AKy350ZVfwzj8YrmX9tOhKMs9bcsXXcPm60iKLpkKl2hid4lxQp63vfFVGO0RrXxKejp4ts4kYS0Ig==
+X-Received: by 2002:a17:902:ab8f:b0:1a6:8f8c:fa1a with SMTP id f15-20020a170902ab8f00b001a68f8cfa1amr2006157plr.16.1682006079139;
+        Thu, 20 Apr 2023 08:54:39 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id g13-20020a170902868d00b001a221d14179sm1302745plo.302.2023.04.20.08.54.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 08:54:38 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH 14/23] hash.h, repository.h: reverse the order of these
+ dependencies
+References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
+        <1c6989ae456c86850761b079384f1505735e317a.1681614206.git.gitgitgadget@gmail.com>
+        <ad90e716-ba23-040f-66be-4c4faff02ea8@github.com>
+        <xmqqedogbwh3.fsf@gitster.g>
+        <CABPp-BELApT-6YrYJ5qwme9uwP_2gqERdiLiE7mJu_b0bXmCbg@mail.gmail.com>
+        <947db4da-13d9-d81a-1c0c-d8fe62a9279f@github.com>
+Date:   Thu, 20 Apr 2023 08:54:38 -0700
+In-Reply-To: <947db4da-13d9-d81a-1c0c-d8fe62a9279f@github.com> (Derrick
+        Stolee's message of "Thu, 20 Apr 2023 09:14:10 -0400")
+Message-ID: <xmqqpm7y4kht.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.10.0
-Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
-Content-Language: de-DE, en-US
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
- <98548a5b-7d30-543b-b943-fd48d8926a33@gmail.com>
-From:   Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <98548a5b-7d30-543b-b943-fd48d8926a33@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17.04.23 14:14, Phillip Wood wrote:
-> On 17/04/2023 09:21, Stefan Haller wrote:
->> Both of these cases could be fixed by --update-refs not touching any
->> refs that point to the current HEAD.
-> 
->> I'm having a hard time coming up
->> with cases where you would ever want those to be updated, in fact.
-> 
-> If a user using stacked branches creates a new branch and then realizes
-> they need to fix something on the parent before creating any commits on
-> the new branch they would want both to be updated. e.g.   
->     $ git symbolic-ref HEAD
->     refs/heads/topic
->     $ git checkout -b another-topic
->     # fix a bug in topic - want topic and another-topic to be
->     # updated
->     $ git rebase -i --update-refs HEAD~2
+Derrick Stolee <derrickstolee@github.com> writes:
 
-OK, this is indeed one situation where my proposed change would do the
-wrong thing.
+> This is mostly because most consumers in the Git codebase will want
+> these methods, and only the most fundamental hashing code will care
+> about hashing separate from the_hash_algo. So, the most-natural name
+> for "the header file that lets me hash stuff" would be "hash.h" and
+> "hash-basics.h" is for "I'm doing very simple, low-level hashing".
 
-It is of course impossible for git to tell whether you were meaning to
-create a stack of branches here, or whether this is one of the cases
-where I'm creating a copy of a branch and want to "detach" it from its
-source branch, as in the examples I posted earlier in this thread.
+I do agree with the reasoning for "most people want 'hash.h'"; what
+is called the "basics" sounds more like for advanced users of the
+low-level machinery, but somehow I expect "basic" would the one to
+be used in sample programs in tutorials or something.  "ll-hash.h"
+for low-level hash features?  I dunno.
 
-In my personal experience the latter is much more common than the
-former, and it's also easier to correct the mistake manually in your
-example by hard-resetting one branch to the other again, so I still
-think it would be a useful change.
+But whatever the name for the header file meant to be used by
+"advanced callers to low-level machinery" would be, I like your
+choice of the latter variant between the ones Elijah presented.
 
-Any other opinions about this?
-
--Stefan
+Thanks.
