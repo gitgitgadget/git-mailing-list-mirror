@@ -2,71 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BB74C77B73
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 15:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1723C77B72
+	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 15:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234002AbjDTPy4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 11:54:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50012 "EHLO
+        id S231316AbjDTPzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 11:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233782AbjDTPyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 11:54:53 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30643C0F
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:54:39 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1a6670671e3so11646915ad.0
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:54:39 -0700 (PDT)
+        with ESMTP id S230033AbjDTPzh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 11:55:37 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02784A7
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:55:36 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-63d4595d60fso8068144b3a.0
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 08:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682006079; x=1684598079;
+        d=gmail.com; s=20221208; t=1682006135; x=1684598135;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=icQu06iorNNgIkmbrx/OK7L7EZ5xmANT25G28TaMFSE=;
-        b=rLMSNkMpsZ5QcUjWx+fRoZkznnAxXMco3s2LizDSVua0JIPGasaAVJTyDC8kIZxlrB
-         gXODHz4yy2OlUSCzHIKZDzNbOwbawBrqPW1qvkK2HVnlnypdM9IbZ0I39LuqnvHyeQJf
-         pw7SXsqR9ARxDjFVZaxSznYE9RhB0cvxQSaXWFqezOJnNEEHM8F+WXtLooddWPAgeYsy
-         orCcn0lqJhzIRo1uKOf7akWKNe1W2T2XNmVCpkoB49Z4eJPGE5CSh105HsS1Qh7Hqiak
-         1zR7HZs6aU1xU8tDcfrvdGVG7HWEcLNDNYo1KowobRLL1i9SeO1POAyAdCxLs+3czot5
-         PxQw==
+        bh=DitP84K5/55ESV7eKFDvbcSY/wA9JTTxk8kkbGEE1oE=;
+        b=XlzcEBJMqQ0GTiy4ccqGgVTOJhOLSa9Ljy4Co/HXyuTiB7OWO9YaSy3kc8lMAW0Hlv
+         81278Zgzx+nDAJKZRFGbLcTkqQx4SneIb4wF1pPuajiqwjEqsj8kCRvn+22IR+KLn2kN
+         NEKd+mhqkMxTQwoeJvkJIqVmQRz3eT1FxCig6PyLjy9NzxnLjSSO4pUumtjvC6Das7Cb
+         wKCyIVmEVtWD5Pm8TZc7nAwKxUFN0tni99aTFrbbod8q98lWNj+q7eYTw3jMift/EOj0
+         7tNu1E85/jmsiGUgPBvjDuBfoOmsCapqji+kTZ8A4POPpdcKFYog1+1iNkpb3vFJEjGS
+         2xcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682006079; x=1684598079;
+        d=1e100.net; s=20221208; t=1682006135; x=1684598135;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=icQu06iorNNgIkmbrx/OK7L7EZ5xmANT25G28TaMFSE=;
-        b=TOSiwAqeBbWSfev0rwxgcLTDS/xMucWPESleAIVgHCh0cozvBC1xY2ozI/tu9ESJyb
-         lhSTF8aln3dN8WnlsYbq5/HbPdgFZ7dpKoa48wyrg9PfZqAncNAdPbk5P+zAjMhuCKVj
-         ICdvcxm8kS1wjM5EvmBEfb1VClR4nmOaF4AdRrpo/RV3V7f78Wmwc0bmK5hx6a6yK9Mv
-         4RNxQqSMA5NySi34alRm/yJhnW+7eGgJPurHcWKWnG6OQ3FzFBba1N1WhjrPUKq9bc0K
-         Eu/ozSH9fmVYmZ2Yd2qOT1ZP1dsAv7Hn+h918/ZsyWuTfPrqN/3dWM5eq2fY6AHpdGPo
-         Ss8g==
-X-Gm-Message-State: AAQBX9cCZGDuX9EZg2hp6QhaK4ZFpWOfhx8g7P7ziIcz5u0pHcZFhcrm
-        Pwt9hYzg+OndxZkuKzhVI6Y=
-X-Google-Smtp-Source: AKy350ZVfwzj8YrmX9tOhKMs9bcsXXcPm60iKLpkKl2hid4lxQp63vfFVGO0RrXxKejp4ts4kYS0Ig==
-X-Received: by 2002:a17:902:ab8f:b0:1a6:8f8c:fa1a with SMTP id f15-20020a170902ab8f00b001a68f8cfa1amr2006157plr.16.1682006079139;
-        Thu, 20 Apr 2023 08:54:39 -0700 (PDT)
+        bh=DitP84K5/55ESV7eKFDvbcSY/wA9JTTxk8kkbGEE1oE=;
+        b=g4+0W+p+sygpV5ElxKDJIt/JxlOeUaBg9KwdIyJIw3707FT9AfDRsCut9emHQtZ9zA
+         LXsWAE6oBwjp19365XfCOU3hGyqrTvsYduV1LcBloTakmcERTfuiVGI0kqdSg/38+wjG
+         2X+3H+PyOhfNpL1wDQav7wTx6dTyQbTntjU5WfjzyZ8/v0orlgj6cKcwjSAxsEfthkJ3
+         kH3MHrfOvqHntNamaKfo2/x6L76xSJ9DPKsGcUt/a2fJPq8iHki7lfgO9uQO7HNpC400
+         0xf/IxmNNUCoW13alkpceFIHLozimwx7U1rlHzITspFDhHdZT/nHECeiZv4z4QfcIVu3
+         g+mA==
+X-Gm-Message-State: AAQBX9fg3bbzCDzd/pfQUo4xlvLgF0P6qM9JKgysfk2QQAIgP3RKGwo2
+        zf0Vg3eYTJZFAMU/F1SkuQQ=
+X-Google-Smtp-Source: AKy350Y2StA5tX5UUMUA238Tngx2jqZFCiXzgtTFr0d/ELVlKxYRf7c2etlhJM7lP1Yhnv1Gwlc4sg==
+X-Received: by 2002:aa7:8554:0:b0:63d:40bb:a88b with SMTP id y20-20020aa78554000000b0063d40bba88bmr6158882pfn.14.1682006135374;
+        Thu, 20 Apr 2023 08:55:35 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id g13-20020a170902868d00b001a221d14179sm1302745plo.302.2023.04.20.08.54.38
+        by smtp.gmail.com with ESMTPSA id 123-20020a621881000000b00638965d4248sm1388970pfy.184.2023.04.20.08.55.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 08:54:38 -0700 (PDT)
+        Thu, 20 Apr 2023 08:55:34 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 14/23] hash.h, repository.h: reverse the order of these
- dependencies
-References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
-        <1c6989ae456c86850761b079384f1505735e317a.1681614206.git.gitgitgadget@gmail.com>
-        <ad90e716-ba23-040f-66be-4c4faff02ea8@github.com>
-        <xmqqedogbwh3.fsf@gitster.g>
-        <CABPp-BELApT-6YrYJ5qwme9uwP_2gqERdiLiE7mJu_b0bXmCbg@mail.gmail.com>
-        <947db4da-13d9-d81a-1c0c-d8fe62a9279f@github.com>
-Date:   Thu, 20 Apr 2023 08:54:38 -0700
-In-Reply-To: <947db4da-13d9-d81a-1c0c-d8fe62a9279f@github.com> (Derrick
-        Stolee's message of "Thu, 20 Apr 2023 09:14:10 -0400")
-Message-ID: <xmqqpm7y4kht.fsf@gitster.g>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     Victoria Dye <vdye@github.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3] write-tree: integrate with sparse index
+References: <20230404003539.1578245-1-cheskaqiqi@gmail.com>
+        <20230419072148.4297-1-cheskaqiqi@gmail.com>
+        <xmqqildran7n.fsf@gitster.g>
+        <CAMO4yUGzGzT4XC8t_LE=Z=ebERJq9Egq+wFj1K=1aUxHfPcnNA@mail.gmail.com>
+Date:   Thu, 20 Apr 2023 08:55:34 -0700
+In-Reply-To: <CAMO4yUGzGzT4XC8t_LE=Z=ebERJq9Egq+wFj1K=1aUxHfPcnNA@mail.gmail.com>
+        (Shuqi Liang's message of "Thu, 20 Apr 2023 01:24:18 -0400")
+Message-ID: <xmqqleim4kg9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,22 +70,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-> This is mostly because most consumers in the Git codebase will want
-> these methods, and only the most fundamental hashing code will care
-> about hashing separate from the_hash_algo. So, the most-natural name
-> for "the header file that lets me hash stuff" would be "hash.h" and
-> "hash-basics.h" is for "I'm doing very simple, low-level hashing".
+>> Sorry, but after this exchange
+>>
+>>     https://lore.kernel.org/git/xmqqmt3bw9ir.fsf@gitster.g/
+>>
+>> I am confused what we want to do with this version.
+>
+> Apologies for not noticing the patch was already merged to master.  I'll make
+> the necessary changes and submit a new patch soon.
 
-I do agree with the reasoning for "most people want 'hash.h'"; what
-is called the "basics" sounds more like for advanced users of the
-low-level machinery, but somehow I expect "basic" would the one to
-be used in sample programs in tutorials or something.  "ll-hash.h"
-for low-level hash features?  I dunno.
+No need to apologize.  I should have been able to guess what happend
+myself.
 
-But whatever the name for the header file meant to be used by
-"advanced callers to low-level machinery" would be, I like your
-choice of the latter variant between the ones Elijah presented.
-
-Thanks.
+Thanks for offering to make your updates incremental.  Will look
+forward to seeing them.
