@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32FA4C77B78
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B3D2C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbjDUTN2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 15:13:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37946 "EHLO
+        id S233464AbjDUTNa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 15:13:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233403AbjDUTNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 15:13:24 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420A810E9
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:23 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-2f86ee42669so2020563f8f.2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:23 -0700 (PDT)
+        with ESMTP id S233417AbjDUTN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2023 15:13:26 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF2A10DA
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:24 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f1728c2a57so21818455e9.0
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682104401; x=1684696401;
+        d=gmail.com; s=20221208; t=1682104404; x=1684696404;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zrB7DkhcGDIQa2I5QGxbVfIiBVj5aGBTnaOP9rGwy/4=;
-        b=dRCgNBaiTkq1Qy0L29g92xzTSJfiKdVZU0TGqJZOAOUCeIw5mQ87rvzSBmpaZfsHmT
-         1LckU0H7M+OAaxX0j2JeVtaRGXBviPpW3PEQTyuTOG6ZPM5M8SdiKS1mE9JrxxoVq7w1
-         kmvo2cTqmg4+UHvElJ4CfxOufTilfkbc2evTHtCNNuINTASLqL1Cz7z3g97v0m/5eBZN
-         /UOUZqGSEYht22EXbcJ6E+li1b5ccFTA4Lw+G5cO1SPEE3J/NTwT+bnAkK8Dir7yBAh6
-         eRP89lt50Eoq664ioZwaK4no6Fo1I+iOe/RjgDRtzkqaQZTtntD005GiZwfO2AUlBRFt
-         RA7A==
+        bh=UPfRS8xz+S8liJ8a8okyP16iGqD5WcF5yfvBfyZgQaA=;
+        b=SdYh+ig3Rmq4toidB4PQdsF3TTRXJFbFW9ZfUk5GIENqU0c097PNsbOuFH1zwqwVUL
+         qRw7naLbCEj0e8qVrcor9GwW567FZiT3ZEAQA2WxTwmgU2aNO7rarIqOY4Nxa6+qQenJ
+         vbdfFTGMk/c8H1e20YMw1PCzswggd8aqqMu7o7jpWPARetqk/kJMOS6UxpuPcPkvVO/G
+         M/CEh6wYVD2FO6dtV4aoQcXe+7NZAhtPQ+3uWTwCOi9qtNEzraoa1x8njK/UdxZ9VNdj
+         GXsiPro+Lh5ExhC8PQi+l/Qn454dE9Q5OBv16SHQt7HEEdeYr8N64XAGh6mDrdbgSED6
+         pp6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682104401; x=1684696401;
+        d=1e100.net; s=20221208; t=1682104404; x=1684696404;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zrB7DkhcGDIQa2I5QGxbVfIiBVj5aGBTnaOP9rGwy/4=;
-        b=Y4N6cia2A8LoKUSgsu4FfheX7tLjaNhU1HSpsas8fYZPBf5ddym37nDyfuTGRnLqhK
-         u19+tJraobWP0XAzPw5qYgEFYYZ1X0W85NmC53rbFhqw4A0sWBGvZ1aCJ/p/UdwsKAQe
-         NLurt5Z3dU9IlZturcs6uEeUWeEpZjhl09/9t3E+iFt0XqTzHLFy2hdYefbEUitY/iDM
-         TOimvXtdS2E2O/YF/7EVDXZXTHANLGsvi01fawPsexOtZ/7NgPXnICEXO+prRDE+yqmB
-         AHeg7YFCsSfMcfi90d8DIzuLHafJFQkN3d0wU7D/qk4VeNwP3iuVqY++m8/VRnH1l3ZI
-         mpAg==
-X-Gm-Message-State: AAQBX9cLN2/EYk4nAArVNH9BMHlOsO/wOROGHI0cW72xeMZ2IqmmgtjO
-        ZFHds6pjIdWpkydU1nXF5OSG7w65CEM=
-X-Google-Smtp-Source: AKy350YwvBuM3FR6Pfsfp9dpRe+Nw+OQ0VPW37gbqVakjtHsvvj4U/OE1CwDmJKyJYBGhqXlvy2FCA==
-X-Received: by 2002:a05:6000:cd:b0:2f4:e580:a72f with SMTP id q13-20020a05600000cd00b002f4e580a72fmr4953411wrx.45.1682104401632;
-        Fri, 21 Apr 2023 12:13:21 -0700 (PDT)
+        bh=UPfRS8xz+S8liJ8a8okyP16iGqD5WcF5yfvBfyZgQaA=;
+        b=O6IgEq+f5GwFPKMKcsq0n0CSJIa/kr1U5wYYbs3AFIKiPiBLCXjhgZDp03IHM1DV7o
+         z1qAK2dvDV8X570LZiFGznrDBPu9wxbR3nMbe7EnHIooyv+Wgsya75rTKLW9/K/gGMzi
+         DDDhTcsSC7NNhxxinGiHhOhfYPseDBRAlVYg9Yq/LIEQUt4A6+6zkC/m/4qyJVqmb1Fb
+         i71gMyqnfQTt64xtmIpJNDSXmTwiy6hADseD70w+0WTuEyoI7HOUMwPaKTwGMbrrgSXa
+         mgWx9R3n1JF3c86i7e4RXkxhCTP5TkTQxI9qFmcVVTNpP+xVS9NAft6nM6978U+ZmlSy
+         YziQ==
+X-Gm-Message-State: AAQBX9erm6oG+ibSV+eOTa9OMNt5csyzBBHJfpckHtBTh5KFfDH1t7QY
+        DD8Xf6W54yiNggnCwqvP1905GXw+D6w=
+X-Google-Smtp-Source: AKy350ZeW84ISgA313TufPa3ddfJWJbn6yoyVcIgmHZSX/bSn6gBtjaC+zK4k7RXVcoK2fba1udxcA==
+X-Received: by 2002:a05:600c:259:b0:3f1:8223:6683 with SMTP id 25-20020a05600c025900b003f182236683mr2480272wmj.40.1682104403936;
+        Fri, 21 Apr 2023 12:13:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b5-20020a056000054500b002e5ff05765esm5013440wrf.73.2023.04.21.12.13.21
+        by smtp.gmail.com with ESMTPSA id q10-20020a05600c46ca00b003f1957ace1fsm1571163wmo.13.2023.04.21.12.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 12:13:21 -0700 (PDT)
-Message-Id: <a682612cff23449e682023303f17a8be1d73fc31.1682104398.git.gitgitgadget@gmail.com>
+        Fri, 21 Apr 2023 12:13:23 -0700 (PDT)
+Message-Id: <cb0218106888f0dc27890ba875dd415e1304a654.1682104398.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
 References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Apr 2023 19:13:06 +0000
-Subject: [PATCH 02/14] config.c: use kvi for CLI config
+Date:   Fri, 21 Apr 2023 19:13:10 +0000
+Subject: [PATCH 06/14] config: inline git_color_default_config
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,196 +71,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-Plumb "struct key_value_info" and use "kvi_fn()" when parsing CLI
-config. Do this by refactoring out and reusing the logic that sets the
-"struct key_value_info" members when caching CLI config in a configset.
-
-This lets us get rid of the fake "struct config_source" in
-"git_config_from_parameters()", so we now only have to maintain one
-implementation. Additionally, this plumbing also reveals that
-"git_config_parse_parameter()" hasn't been setting either
-"the_reader.source" or "the_reader.config_kvi", so any calls to
-"current_*" would either BUG() or return *_UNKNOWN values.
-
-Also, get rid of the BUG() checks that forbid setting ".config_kvi" and
-".source" at the same time, since we will run afoul of that check. They
-will soon be unnecessary when we remove ".source".
+git_color_default_config() is a shorthand for calling two other config
+callbacks. There are no other non-static functions that do this and it
+will complicate our refactoring of config_fn_t so inline it instead.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- config.c | 58 ++++++++++++++++++++++++++++----------------------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+ builtin/branch.c      | 5 ++++-
+ builtin/clean.c       | 6 ++++--
+ builtin/grep.c        | 5 ++++-
+ builtin/show-branch.c | 5 ++++-
+ builtin/tag.c         | 6 +++++-
+ color.c               | 8 --------
+ color.h               | 6 +-----
+ 7 files changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/config.c b/config.c
-index daad892e4fd..4e9e8e7abb9 100644
---- a/config.c
-+++ b/config.c
-@@ -99,8 +99,6 @@ static struct config_reader the_reader;
- static inline void config_reader_push_source(struct config_reader *reader,
- 					     struct config_source *top)
- {
--	if (reader->config_kvi)
--		BUG("source should not be set while iterating a config set");
- 	top->prev = reader->source;
- 	reader->source = top;
- }
-@@ -118,16 +116,12 @@ static inline struct config_source *config_reader_pop_source(struct config_reade
- static inline void config_reader_set_kvi(struct config_reader *reader,
- 					 struct key_value_info *kvi)
- {
--	if (kvi && (reader->source || reader->parsing_scope))
--		BUG("kvi should not be set while parsing a config source");
- 	reader->config_kvi = kvi;
- }
- 
- static inline void config_reader_set_scope(struct config_reader *reader,
- 					   enum config_scope scope)
- {
--	if (scope && reader->config_kvi)
--		BUG("scope should only be set when iterating through a config source");
- 	reader->parsing_scope = scope;
- }
- 
-@@ -672,7 +666,8 @@ static int kvi_fn(config_fn_t fn, const char *key, const char *value,
- }
- 
- static int config_parse_pair(const char *key, const char *value,
--			  config_fn_t fn, void *data)
-+			     struct key_value_info *kvi,
-+			     config_fn_t fn, void *data)
- {
- 	char *canonical_name;
- 	int ret;
-@@ -682,17 +677,30 @@ static int config_parse_pair(const char *key, const char *value,
- 	if (git_config_parse_key(key, &canonical_name, NULL))
- 		return -1;
- 
--	ret = (fn(canonical_name, value, data) < 0) ? -1 : 0;
-+	ret = (kvi_fn(fn, canonical_name, value, kvi, data) < 0) ? -1 : 0;
- 	free(canonical_name);
- 	return ret;
- }
- 
-+
-+/* for values read from `git_config_from_parameters()` */
-+static void kvi_from_param(struct key_value_info *out)
-+{
-+	out->filename = NULL;
-+	out->linenr = -1;
-+	out->origin_type = CONFIG_ORIGIN_CMDLINE;
-+	out->scope = CONFIG_SCOPE_COMMAND;
-+}
-+
- int git_config_parse_parameter(const char *text,
- 			       config_fn_t fn, void *data)
- {
- 	const char *value;
- 	struct strbuf **pair;
- 	int ret;
-+	struct key_value_info kvi = { 0 };
-+
-+	kvi_from_param(&kvi);
- 
- 	pair = strbuf_split_str(text, '=', 2);
- 	if (!pair[0])
-@@ -711,12 +719,13 @@ int git_config_parse_parameter(const char *text,
- 		return error(_("bogus config parameter: %s"), text);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 6413a016c57..c6982181fd5 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -114,7 +114,10 @@ static int git_branch_config(const char *var, const char *value, void *cb)
+ 		return 0;
  	}
  
--	ret = config_parse_pair(pair[0]->buf, value, fn, data);
-+	ret = config_parse_pair(pair[0]->buf, value, &kvi, fn, data);
- 	strbuf_list_free(pair);
- 	return ret;
+-	return git_color_default_config(var, value, cb);
++	if (git_color_config(var, value, cb) < 0)
++		return -1;
++
++	return git_default_config(var, value, cb);
  }
  
--static int parse_config_env_list(char *env, config_fn_t fn, void *data)
-+static int parse_config_env_list(char *env, struct key_value_info *kvi,
-+				 config_fn_t fn, void *data)
- {
- 	char *cur = env;
- 	while (cur && *cur) {
-@@ -750,7 +759,7 @@ static int parse_config_env_list(char *env, config_fn_t fn, void *data)
- 					     CONFIG_DATA_ENVIRONMENT);
- 			}
- 
--			if (config_parse_pair(key, value, fn, data) < 0)
-+			if (config_parse_pair(key, value, kvi, fn, data) < 0)
- 				return -1;
- 		}
- 		else {
-@@ -774,11 +783,9 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- 	struct strvec to_free = STRVEC_INIT;
- 	int ret = 0;
- 	char *envw = NULL;
--	struct config_source source = CONFIG_SOURCE_INIT;
--
--	source.origin_type = CONFIG_ORIGIN_CMDLINE;
--	config_reader_push_source(&the_reader, &source);
-+	struct key_value_info kvi = { 0 };
- 
-+	kvi_from_param(&kvi);
- 	env = getenv(CONFIG_COUNT_ENVIRONMENT);
- 	if (env) {
- 		unsigned long count;
-@@ -814,7 +821,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- 			}
- 			strbuf_reset(&envvar);
- 
--			if (config_parse_pair(key, value, fn, data) < 0) {
-+			if (config_parse_pair(key, value, &kvi, fn, data) < 0) {
- 				ret = -1;
- 				goto out;
- 			}
-@@ -825,7 +832,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- 	if (env) {
- 		/* sq_dequote will write over it */
- 		envw = xstrdup(env);
--		if (parse_config_env_list(envw, fn, data) < 0) {
-+		if (parse_config_env_list(envw, &kvi, fn, data) < 0) {
- 			ret = -1;
- 			goto out;
- 		}
-@@ -835,7 +842,6 @@ out:
- 	strbuf_release(&envvar);
- 	strvec_clear(&to_free);
- 	free(envw);
--	config_reader_pop_source(&the_reader);
- 	return ret;
- }
- 
-@@ -2241,7 +2247,7 @@ static int do_git_config_sequence(struct config_reader *reader,
- 		free(path);
+ static const char *branch_get_color(enum color_branch ix)
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 14c0d555eac..a06df48a269 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -129,8 +129,10 @@ static int git_clean_config(const char *var, const char *value, void *cb)
+ 		return 0;
  	}
  
--	config_reader_set_scope(reader, CONFIG_SCOPE_COMMAND);
-+	config_reader_set_scope(reader, 0);
- 	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
- 		die(_("unable to parse command-line config"));
+-	/* inspect the color.ui config variable and others */
+-	return git_color_default_config(var, value, cb);
++	if (git_color_config(var, value, cb) < 0)
++		return -1;
++
++	return git_default_config(var, value, cb);
+ }
  
-@@ -2423,19 +2429,13 @@ static int configset_add_value(struct config_reader *reader,
- 	l_item->e = e;
- 	l_item->value_index = e->value_list.nr - 1;
+ static const char *clean_get_color(enum color_clean ix)
+diff --git a/builtin/grep.c b/builtin/grep.c
+index a1b68d90bdb..c880c9538d6 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -290,7 +290,10 @@ static int wait_all(void)
+ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ {
+ 	int st = grep_config(var, value, cb);
+-	if (git_color_default_config(var, value, NULL) < 0)
++
++	if (git_color_config(var, value, cb) < 0)
++		st = -1;
++	else if (git_default_config(var, value, cb) < 0)
+ 		st = -1;
  
--	if (!reader->source)
--		BUG("configset_add_value has no source");
--	if (reader->source->name) {
-+	if (reader->source && reader->source->name) {
- 		kv_info->filename = strintern(reader->source->name);
- 		kv_info->linenr = reader->source->linenr;
- 		kv_info->origin_type = reader->source->origin_type;
--	} else {
--		/* for values read from `git_config_from_parameters()` */
--		kv_info->filename = NULL;
--		kv_info->linenr = -1;
--		kv_info->origin_type = CONFIG_ORIGIN_CMDLINE;
--	}
--	kv_info->scope = reader->parsing_scope;
-+		kv_info->scope = reader->parsing_scope;
-+	} else
-+		kvi_from_param(kv_info);
- 	si->util = kv_info;
+ 	if (!strcmp(var, "grep.threads")) {
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 463a8d11c31..82ae2a7e475 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -576,7 +576,10 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
+-	return git_color_default_config(var, value, cb);
++	if (git_color_config(var, value, cb) < 0)
++		return -1;
++
++	return git_default_config(var, value, cb);
+ }
+ 
+ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 782bb3aa2ff..7245a4d30e6 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -204,7 +204,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
+ 
+ 	if (starts_with(var, "column."))
+ 		return git_column_config(var, value, "tag", &colopts);
+-	return git_color_default_config(var, value, cb);
++
++	if (git_color_config(var, value, cb) < 0)
++		return -1;
++
++	return git_default_config(var, value, cb);
+ }
+ 
+ static void write_tag_body(int fd, const struct object_id *oid)
+diff --git a/color.c b/color.c
+index 672dcbb73a6..9bdbffe928d 100644
+--- a/color.c
++++ b/color.c
+@@ -427,14 +427,6 @@ int git_color_config(const char *var, const char *value, void *cb UNUSED)
  	return 0;
+ }
+ 
+-int git_color_default_config(const char *var, const char *value, void *cb)
+-{
+-	if (git_color_config(var, value, cb) < 0)
+-		return -1;
+-
+-	return git_default_config(var, value, cb);
+-}
+-
+ void color_print_strbuf(FILE *fp, const char *color, const struct strbuf *sb)
+ {
+ 	if (*color)
+diff --git a/color.h b/color.h
+index cfc8f841b23..bb28343be21 100644
+--- a/color.h
++++ b/color.h
+@@ -88,12 +88,8 @@ extern const int column_colors_ansi_max;
+  */
+ extern int color_stdout_is_tty;
+ 
+-/*
+- * Use the first one if you need only color config; the second is a convenience
+- * if you are just going to change to git_default_config, too.
+- */
++/* Parse color config. */
+ int git_color_config(const char *var, const char *value, void *cb);
+-int git_color_default_config(const char *var, const char *value, void *cb);
+ 
+ /*
+  * Parse a config option, which can be a boolean or one of
 -- 
 gitgitgadget
 
