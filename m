@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18B4AC77B76
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 897A0C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233538AbjDUTN7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 15:13:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38146 "EHLO
+        id S233514AbjDUTOA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 15:14:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233493AbjDUTNt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233494AbjDUTNt (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Apr 2023 15:13:49 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C0B30CD
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:28 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f173af665fso14264345e9.3
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:28 -0700 (PDT)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7107C1BD1
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:29 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f191c1a8a7so7406165e9.1
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1682104407; x=1684696407;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2a85yV2tGCqUGpf5WRbk6k+FSe/9Q/9V+mQyzN/o9oI=;
-        b=XMGDGcbEd2/DoquF9rcKr3fc0HTi7hB9bqmKUQbFK+uiJlRr7n4BnGoljU4kvR9eP7
-         EeYV5b5uFqwvjqEQO2jOWECX75kzg43kQ1TIaBQA+L9vhspdFzz4fH9EHqym6VaDi9oY
-         /AsMWiT6P5HLtsLkyuHk3KyaQN2b+oj7lTtt8OSr1WasK3/EjGJ+1FAHrJo0DG0gJ07O
-         74itkclUpUDgjDyhVHE8G0e2gsR8quryQ03w8v2y8vcSbjeoIFqo8WZ1V5DqegR+fJJP
-         vDXusHb14/PTS/M5iNtS1HHnI0r+VAE4q+TsLuNwORWJWh0XJqqT8MpfRsNYhDVgt8Un
-         pnpA==
+        bh=xZQcx+cDrstRj9pw3MXO5SVaKI/uKYBh/IIvYQUmAaM=;
+        b=qLhGNvpXr4gJWuScx+TNv+RQhTvzuEOi2SZpP8rtjj51Y+AQinsb23vTrC44lfqXWO
+         lj641+8konnomc1xcz4gtCfvTXe1YjnOuSjLB265YlnQgIQa+51DyKr3rj2ockUlncYk
+         nBkeLIHBDAPJwFHeF4PJBv6DWq/SS6woQDQklgsOcaXkXY/x9U5D7yolrrDlG7RU+ona
+         i53wYRS/tqfIHgaLrThEV+d77KxdLXpBTalmlsvKa0SzI7eE5y5vrmLJVbjtw6ZaKFOS
+         MdA8TtVhQ15ecb6gLm2BhAAgP3Sl68cq3ijpC+zPycQ1Z+kdObtKpoh4lREOQDX1W9ML
+         nTQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1682104407; x=1684696407;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2a85yV2tGCqUGpf5WRbk6k+FSe/9Q/9V+mQyzN/o9oI=;
-        b=I2eYQL+8rK4Ph2VymTFznsaQV9lB+Os44ByWonumsoCa65uk9BWz1WuYyCFn/LhYMR
-         b2FIt+9Sv/JGVRsZpnbXsR++BtRIg5IEDOuYNbc/INuqEAWqtWcjOZ2Oe1L2Vavz6CKr
-         yOJvsTOzB5MRFa+J+u5FSWRgYo4PI4ckKszhiDiRGv7F1JRBq3MvZbkuVUCR0EODpyiq
-         HY55hMsfP6uyoK8oDeH3IRQPUNAkEqs/GpmjHLkQPX/0mGFHO57wIyjf9LlxAufbKC9d
-         Ra/O4v48Umuo8/WR4sxRT+9wEMzTIrBftoV+/PoE4eNsSHZC315V2CS2nTkhAtBjAzs0
-         UAyA==
-X-Gm-Message-State: AAQBX9dSTM24rLLo5F3cY9ECwcxYgMQ6ZpRd3ZoTTiaI7KeQqUGIf0pP
-        3rpr3bSZ2++K4/LRdJGyAUJLbVsLG68=
-X-Google-Smtp-Source: AKy350Z96r7R+v3K5oMmTT8g3bVWxe1cGL7Iqfj99MPYJbfFnpPOzZiJlLwgHN3dMZbAHQzfwY4J/g==
-X-Received: by 2002:a7b:c38e:0:b0:3f1:718d:a21c with SMTP id s14-20020a7bc38e000000b003f1718da21cmr2759321wmj.31.1682104406702;
-        Fri, 21 Apr 2023 12:13:26 -0700 (PDT)
+        bh=xZQcx+cDrstRj9pw3MXO5SVaKI/uKYBh/IIvYQUmAaM=;
+        b=HRGL3HP7WLRSuspr5N9gh9TbgP44bwIxHgb7VeADHHRZF664hOG3aNKqd/UzQxgTue
+         pvt5EGeUdyMamWv1H2RZ1WyHgXVKeLiZLsZYDJIaGsH0Gfz3nyxIjU5FMuZ96q4pPT0M
+         5d8DZkE+Rixho4+rhvWGiCEt0vpfB8I/v/V+/IufXr5mnNn0M7xbqwYkO0d83cc1ieJR
+         KF/sv63KO4vcV+RKMoWz/Yas+82kisc1HQ4OLRUnBBSHdzwmRoYjgs7vPSjhASJ7auWM
+         cCfQfttpWRStE6ZNU0YZQ8f3BlImP+eWDNZAKD2RjoTkBOiXRuP2UOo8uF+tVKY2Ztdd
+         2EPQ==
+X-Gm-Message-State: AAQBX9foBnOTtVoA7zvX+jrVUP7AffC+A2/iSjUpb4Did0hkKS0Q3uGC
+        m39mVgO1vmGyIkPPqNZzK4NfNsj4ujU=
+X-Google-Smtp-Source: AKy350Z48uUBgTE8WLO4PKE7+GyRHnid3fAIFYVX1LQQS1JQi6Ep0X6IuJoLMywgr8WE/Z4nH7nDrw==
+X-Received: by 2002:a7b:c3d8:0:b0:3f1:7972:429d with SMTP id t24-20020a7bc3d8000000b003f17972429dmr2714522wmj.18.1682104407613;
+        Fri, 21 Apr 2023 12:13:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f3-20020adfdb43000000b002efb2d861dasm4991407wrj.77.2023.04.21.12.13.26
+        by smtp.gmail.com with ESMTPSA id p8-20020a05600c358800b003f1738d0d13sm12360248wmq.1.2023.04.21.12.13.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 12:13:26 -0700 (PDT)
-Message-Id: <1071e70c92892166e1ed2cf22bcd7eb49bdf3b20.1682104399.git.gitgitgadget@gmail.com>
+        Fri, 21 Apr 2023 12:13:27 -0700 (PDT)
+Message-Id: <b38653477c75685af9d74b0d9b5605c41659c939.1682104399.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
 References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Apr 2023 19:13:14 +0000
-Subject: [PATCH 10/14] (RFC-only) config: finish config_fn_t refactor
+Date:   Fri, 21 Apr 2023 19:13:15 +0000
+Subject: [PATCH 11/14] config: remove current_config_(line|name|origin_type)
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,395 +71,229 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-Here's an exhaustive list of all of the changes:
-
-* Cases that need a judgement call
-
-  - trace2/tr2_cfg.c:tr2_cfg_set_fl()
-
-    This function needs to account for tr2_cfg_cb() now using "kvi".
-    Since this is only called (indirectly) by git_config_set(), config
-    source information has never been available here, so just pass NULL.
-    It will be tr2_cfg_cb()'s responsibility to not use "kvi".
-
-  - builtin/checkout.c:checkout_main()
-
-    This calls git_xmerge_config() as a shorthand for parsing a CLI arg.
-    "kvi" doesn't apply, so just pass NULL. This might be worth
-    refactoring away, since git_xmerge_config() can call
-    git_default_config().
-
-  - config.c:git_config_include()
-
-    Replace the local "kvi" variable with the "kvi" parameter. This
-    makes config_include_data.config_reader obsolete, so remove it.
-
-* Hard for cocci to catch
-
-  - urlmatch.c
-
-    Manually refactor the custom config callbacks in "struct
-    urlmatch_config".
-
-  - diff.h, fsck.h, grep.h, ident.h, xdiff-interface.h
-
-    "struct key_value_info" hasn't been defined yet, so forward declare
-    it. Alternatively, maybe these files should "#include config.h".
-
-* Likely deficiencies in .cocci patch
-
-  - submodule-config.c:gitmodules_cb()
-
-    Manually refactor a parse_config() call that gets missed because it
-    uses a different "*data" arg.
-
-  - grep.h, various
-
-    Manually refactor grep_config() calls. Not sure why these don't get
-    picked up.
-
-  - config.c:git_config_include(), http.c:http_options()
-
-    Manually add "kvi" where it was missed. Not sure why they get missed.
-
-  - builtin/clone.c:write_one_config()
-
-    Manually refactor a git_clone_config() call. Probably got missed
-    because I didn't include git_config_parse_parameter().
-
-  - ident.h
-
-    Remove the UNUSED attribute. Not sure why this is the only instance
-    of this.
-
-  - git-compat-util.h, compat/mingw.[h|c]
-
-    Manually refactor noop_core_config(), platform_core_config() and
-    mingw_core_config(). I can probably add these as "manual fixups" in
-    cocci.
+Trivially replace current_config_(line|name|origin_type) by reading the
+corresponding values from "struct key_value_info". This includes some
+light "kvi" plumbing for builtin/config.c, and for *origin_type,
+splitting out a function that turns "enum config_origin_type" into the
+human-readable string that callbacks actually want.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/checkout.c | 2 +-
- builtin/clone.c    | 4 ++--
- builtin/grep.c     | 2 +-
- compat/mingw.c     | 3 ++-
- compat/mingw.h     | 4 +++-
- config.c           | 5 +----
- diff.h             | 1 +
- fsck.h             | 1 +
- git-compat-util.h  | 2 ++
- grep.c             | 6 +++---
- grep.h             | 4 +++-
- http.c             | 5 +++--
- ident.h            | 3 ++-
- submodule-config.c | 4 ++--
- trace2/tr2_cfg.c   | 2 +-
- urlmatch.c         | 6 +++---
- xdiff-interface.h  | 2 ++
- 17 files changed, 33 insertions(+), 23 deletions(-)
+ builtin/config.c       | 25 +++++++++++++------------
+ builtin/remote.c       |  6 +++---
+ config.c               | 23 +----------------------
+ config.h               |  4 +---
+ t/helper/test-config.c |  8 ++++----
+ 5 files changed, 22 insertions(+), 44 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 92017ba6696..9641423dc2f 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1687,7 +1687,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 
- 	if (opts->conflict_style) {
- 		opts->merge = 1; /* implied */
--		git_xmerge_config("merge.conflictstyle", opts->conflict_style, NULL);
-+		git_xmerge_config("merge.conflictstyle", opts->conflict_style, NULL, NULL);
- 	}
- 	if (opts->force) {
- 		opts->discard_changes = 1;
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 1e1cf104194..e654757c45d 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -791,14 +791,14 @@ static int git_clone_config(const char *k, const char *v,
+diff --git a/builtin/config.c b/builtin/config.c
+index b2ad7351d0a..2ffa25139c6 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -191,16 +191,16 @@ static void check_argc(int argc, int min, int max)
+ 	usage_builtin_config();
  }
  
- static int write_one_config(const char *key, const char *value,
--			    struct key_value_info *kvi UNUSED, void *data)
-+			    struct key_value_info *kvi, void *data)
+-static void show_config_origin(struct strbuf *buf)
++static void show_config_origin(struct key_value_info *kvi, struct strbuf *buf)
  {
- 	/*
- 	 * give git_clone_config a chance to write config values back to the
- 	 * environment, since git_config_set_multivar_gently only deals with
- 	 * config-file writes
- 	 */
--	int apply_failed = git_clone_config(key, value, data);
-+	int apply_failed = git_clone_config(key, value, kvi, data);
- 	if (apply_failed)
- 		return apply_failed;
+ 	const char term = end_nul ? '\0' : '\t';
  
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 177befc3ed4..6e795f9f3a2 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -290,7 +290,7 @@ static int wait_all(void)
- static int grep_cmd_config(const char *var, const char *value,
- 			   struct key_value_info *kvi, void *cb)
- {
--	int st = grep_config(var, value, cb);
-+	int st = grep_config(var, value, kvi, cb);
- 
- 	if (git_color_config(var, value, cb) < 0)
- 		st = -1;
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 94c5a1daa40..c8181469a2f 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -242,7 +242,8 @@ static int core_restrict_inherited_handles = -1;
- static enum hide_dotfiles_type hide_dotfiles = HIDE_DOTFILES_DOTGITONLY;
- static char *unset_environment_variables;
- 
--int mingw_core_config(const char *var, const char *value, void *cb)
-+int mingw_core_config(const char *var, const char *value,
-+		      struct key_value_info *kvi UNUSED, void *cb)
- {
- 	if (!strcmp(var, "core.hidedotfiles")) {
- 		if (value && !strcasecmp(value, "dotgitonly"))
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 209cf7cebad..4f2b489b883 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -11,7 +11,9 @@ typedef _sigset_t sigset_t;
- #undef _POSIX_THREAD_SAFE_FUNCTIONS
- #endif
- 
--int mingw_core_config(const char *var, const char *value, void *cb);
-+struct key_value_info;
-+int mingw_core_config(const char *var, const char *value,
-+		      struct key_value_info *, void *cb);
- #define platform_core_config mingw_core_config
- 
- /*
-diff --git a/config.c b/config.c
-index 60f8c0c666b..aa183f6f244 100644
---- a/config.c
-+++ b/config.c
-@@ -147,7 +147,6 @@ struct config_include_data {
- 	void *data;
- 	const struct config_options *opts;
- 	struct git_config_source *config_source;
--	struct config_reader *config_reader;
- 
- 	/*
- 	 * All remote URLs discovered when reading all config files.
-@@ -433,10 +432,9 @@ static int include_condition_is_true(struct key_value_info *kvi,
- static int kvi_fn(config_fn_t fn, const char *key, const char *value,
- 		  struct key_value_info *kvi, void *data);
- static int git_config_include(const char *var, const char *value,
--			      struct key_value_info *kvi UNUSED, void *data)
-+			      struct key_value_info *kvi, void *data)
- {
- 	struct config_include_data *inc = data;
--	struct key_value_info *kvi = inc->config_reader->config_kvi;
- 	const char *cond, *key;
- 	size_t cond_len;
- 	int ret;
-@@ -2252,7 +2250,6 @@ int config_with_options(config_fn_t fn, void *data,
- 		inc.data = data;
- 		inc.opts = opts;
- 		inc.config_source = config_source;
--		inc.config_reader = &the_reader;
- 		fn = git_config_include;
- 		data = &inc;
- 	}
-diff --git a/diff.h b/diff.h
-index 6a3efa63753..2ceb0fd2d66 100644
---- a/diff.h
-+++ b/diff.h
-@@ -532,6 +532,7 @@ void free_diffstat_info(struct diffstat_t *diffstat);
- int parse_long_opt(const char *opt, const char **argv,
- 		   const char **optarg);
- 
-+struct key_value_info;
- int git_diff_basic_config(const char *var, const char *value,
- 			  struct key_value_info *kvi, void *cb);
- int git_diff_heuristic_config(const char *var, const char *value, void *cb);
-diff --git a/fsck.h b/fsck.h
-index a06f202576c..914e67a067d 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -233,6 +233,7 @@ void fsck_put_object_name(struct fsck_options *options,
- const char *fsck_describe_object(struct fsck_options *options,
- 				 const struct object_id *oid);
- 
-+struct key_value_info;
- /*
-  * git_config() callback for use by fsck-y tools that want to support
-  * fsck.<msg> fsck.skipList etc.
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4a200a9fb41..6812b592c15 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -440,8 +440,10 @@ typedef uintmax_t timestamp_t;
- #endif
- 
- #ifndef platform_core_config
-+struct key_value_info;
- static inline int noop_core_config(const char *var UNUSED,
- 				   const char *value UNUSED,
-+				   struct key_value_info *kvi UNUSED,
- 				   void *cb UNUSED)
- {
- 	return 0;
-diff --git a/grep.c b/grep.c
-index 1516b0689d0..2d3b9bf5d92 100644
---- a/grep.c
-+++ b/grep.c
-@@ -55,7 +55,7 @@ define_list_config_array_extra(color_grep_slots, {"match"});
-  * the grep_defaults template.
-  */
- int grep_config(const char *var, const char *value,
--		struct key_value_info *kvi UNUSED, void *cb)
-+		struct key_value_info *kvi, void *cb)
- {
- 	struct grep_opt *opt = cb;
- 	const char *slot;
-@@ -90,9 +90,9 @@ int grep_config(const char *var, const char *value,
- 	if (!strcmp(var, "color.grep"))
- 		opt->color = git_config_colorbool(var, value);
- 	if (!strcmp(var, "color.grep.match")) {
--		if (grep_config("color.grep.matchcontext", value, cb) < 0)
-+		if (grep_config("color.grep.matchcontext", value, kvi, cb) < 0)
- 			return -1;
--		if (grep_config("color.grep.matchselected", value, cb) < 0)
-+		if (grep_config("color.grep.matchselected", value, kvi, cb) < 0)
- 			return -1;
- 	} else if (skip_prefix(var, "color.grep.", &slot)) {
- 		int i = LOOKUP_CONFIG(color_grep_slots, slot);
-diff --git a/grep.h b/grep.h
-index c59592e3bdb..6d2fb0ada54 100644
---- a/grep.h
-+++ b/grep.h
-@@ -202,7 +202,9 @@ struct grep_opt {
- 	.output = std_output, \
+-	strbuf_addstr(buf, current_config_origin_type());
++	strbuf_addstr(buf, config_origin_type_name(kvi->origin_type));
+ 	strbuf_addch(buf, ':');
+ 	if (end_nul)
+-		strbuf_addstr(buf, current_config_name());
++		strbuf_addstr(buf, kvi->filename ? kvi->filename : "");
+ 	else
+-		quote_c_style(current_config_name(), buf, NULL, 0);
++		quote_c_style(kvi->filename ? kvi->filename : "", buf, NULL, 0);
+ 	strbuf_addch(buf, term);
  }
  
--int grep_config(const char *var, const char *value, void *);
-+struct key_value_info;
-+int grep_config(const char *var, const char *value, struct key_value_info *kvi,
-+		void *);
- void grep_init(struct grep_opt *, struct repository *repo);
- 
- void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
-diff --git a/http.c b/http.c
-index d5d82c5230f..3d4292eba6a 100644
---- a/http.c
-+++ b/http.c
-@@ -361,7 +361,8 @@ static void process_curl_messages(void)
- 	}
+@@ -214,14 +214,14 @@ static void show_config_scope(struct strbuf *buf)
  }
  
--static int http_options(const char *var, const char *value, void *cb)
-+static int http_options(const char *var, const char *value,
-+			struct key_value_info *kvi, void *cb)
+ static int show_all_config(const char *key_, const char *value_,
+-			   struct key_value_info *kvi UNUSED, void *cb UNUSED)
++			   struct key_value_info *kvi, void *cb UNUSED)
  {
- 	if (!strcmp("http.version", var)) {
- 		return git_config_string(&curl_http_version, var, value);
-@@ -532,7 +533,7 @@ static int http_options(const char *var, const char *value, void *cb)
- 	}
+ 	if (show_origin || show_scope) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		if (show_scope)
+ 			show_config_scope(&buf);
+ 		if (show_origin)
+-			show_config_origin(&buf);
++			show_config_origin(kvi, &buf);
+ 		/* Use fwrite as "buf" can contain \0's if "end_null" is set. */
+ 		fwrite(buf.buf, 1, buf.len, stdout);
+ 		strbuf_release(&buf);
+@@ -239,12 +239,13 @@ struct strbuf_list {
+ 	int alloc;
+ };
  
- 	/* Fall back on the default ones */
--	return git_default_config(var, value, cb);
-+	return git_default_config(var, value, kvi, cb);
- }
- 
- static int curl_empty_auth_enabled(void)
-diff --git a/ident.h b/ident.h
-index f55db41ff99..4e3bd347c52 100644
---- a/ident.h
-+++ b/ident.h
-@@ -62,7 +62,8 @@ const char *fmt_name(enum want_ident);
- int committer_ident_sufficiently_given(void);
- int author_ident_sufficiently_given(void);
- 
-+struct key_value_info;
- int git_ident_config(const char *, const char *,
--		     struct key_value_info *UNUSED, void *);
-+		     struct key_value_info *, void *);
- 
- #endif
-diff --git a/submodule-config.c b/submodule-config.c
-index 522c9cd3213..7d773f33621 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -675,7 +675,7 @@ out:
- }
- 
- static int gitmodules_cb(const char *var, const char *value,
--			 struct key_value_info *kvi UNUSED, void *data)
-+			 struct key_value_info *kvi, void *data)
+-static int format_config(struct strbuf *buf, const char *key_, const char *value_)
++static int format_config(struct strbuf *buf, const char *key_, const char *value_,
++			 struct key_value_info *kvi)
  {
- 	struct repository *repo = data;
- 	struct parse_config_parameter parameter;
-@@ -685,7 +685,7 @@ static int gitmodules_cb(const char *var, const char *value,
- 	parameter.gitmodules_oid = null_oid();
- 	parameter.overwrite = 1;
- 
--	return parse_config(var, value, &parameter);
-+	return parse_config(var, value, kvi, &parameter);
+ 	if (show_scope)
+ 		show_config_scope(buf);
+ 	if (show_origin)
+-		show_config_origin(buf);
++		show_config_origin(kvi, buf);
+ 	if (show_keys)
+ 		strbuf_addstr(buf, key_);
+ 	if (!omit_values) {
+@@ -299,7 +300,7 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
  }
  
- void repo_read_gitmodules(struct repository *repo, int skip_if_read)
-diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
-index 6871258d468..8ed139c69f4 100644
---- a/trace2/tr2_cfg.c
-+++ b/trace2/tr2_cfg.c
-@@ -146,5 +146,5 @@ void tr2_cfg_set_fl(const char *file, int line, const char *key,
- 	struct tr2_cfg_data data = { file, line };
- 
- 	if (tr2_cfg_load_patterns() > 0)
--		tr2_cfg_cb(key, value, &data);
-+		tr2_cfg_cb(key, value, NULL, &data);
- }
-diff --git a/urlmatch.c b/urlmatch.c
-index 47683974d8c..c94500b61b3 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -552,7 +552,7 @@ static int cmp_matches(const struct urlmatch_item *a,
- }
- 
- int urlmatch_config_entry(const char *var, const char *value,
+ static int collect_config(const char *key_, const char *value_,
 -			  struct key_value_info *kvi UNUSED, void *cb)
 +			  struct key_value_info *kvi, void *cb)
  {
- 	struct string_list_item *item;
- 	struct urlmatch_config *collect = cb;
-@@ -566,7 +566,7 @@ int urlmatch_config_entry(const char *var, const char *value,
+ 	struct strbuf_list *values = cb;
  
- 	if (!skip_prefix(var, collect->section, &key) || *(key++) != '.') {
- 		if (collect->cascade_fn)
--			return collect->cascade_fn(var, value, cb);
-+			return collect->cascade_fn(var, value, kvi, cb);
- 		return 0; /* not interested */
+@@ -316,7 +317,7 @@ static int collect_config(const char *key_, const char *value_,
+ 	ALLOC_GROW(values->items, values->nr + 1, values->alloc);
+ 	strbuf_init(&values->items[values->nr], 0);
+ 
+-	return format_config(&values->items[values->nr++], key_, value_);
++	return format_config(&values->items[values->nr++], key_, value_, kvi);
+ }
+ 
+ static int get_value(const char *key_, const char *regex_, unsigned flags)
+@@ -381,7 +382,7 @@ static int get_value(const char *key_, const char *regex_, unsigned flags)
+ 		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
+ 		item = &values.items[values.nr++];
+ 		strbuf_init(item, 0);
+-		if (format_config(item, key_, default_value) < 0)
++		if (format_config(item, key_, default_value, NULL) < 0)
+ 			die(_("failed to format default config value: %s"),
+ 				default_value);
  	}
- 	dot = strrchr(key, '.');
-@@ -610,7 +610,7 @@ int urlmatch_config_entry(const char *var, const char *value,
- 	strbuf_addstr(&synthkey, collect->section);
- 	strbuf_addch(&synthkey, '.');
- 	strbuf_addstr(&synthkey, key);
--	retval = collect->collect_fn(synthkey.buf, value, collect->cb);
-+	retval = collect->collect_fn(synthkey.buf, value, kvi, collect->cb);
+@@ -618,7 +619,7 @@ static int get_urlmatch(const char *var, const char *url)
+ 		struct strbuf buf = STRBUF_INIT;
  
- 	strbuf_release(&synthkey);
- 	return retval;
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index c1676b11702..749cdf77579 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -50,6 +50,8 @@ int buffer_is_binary(const char *ptr, unsigned long size);
+ 		format_config(&buf, item->string,
+-			      matched->value_is_null ? NULL : matched->value.buf);
++			      matched->value_is_null ? NULL : matched->value.buf, NULL);
+ 		fwrite(buf.buf, 1, buf.len, stdout);
+ 		strbuf_release(&buf);
  
- void xdiff_set_find_func(xdemitconf_t *xecfg, const char *line, int cflags);
- void xdiff_clear_find_func(xdemitconf_t *xecfg);
-+
-+struct key_value_info;
- int git_xmerge_config(const char *var, const char *value,
- 		      struct key_value_info *kvi, void *cb);
- extern int git_xmerge_style;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index edb4a9ddd7f..fc4ea993ebb 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -646,7 +646,7 @@ struct push_default_info
+ };
+ 
+ static int config_read_push_default(const char *key, const char *value,
+-	struct key_value_info *kvi UNUSED, void *cb)
++	struct key_value_info *kvi, void *cb)
+ {
+ 	struct push_default_info* info = cb;
+ 	if (strcmp(key, "remote.pushdefault") ||
+@@ -655,8 +655,8 @@ static int config_read_push_default(const char *key, const char *value,
+ 
+ 	info->scope = current_config_scope();
+ 	strbuf_reset(&info->origin);
+-	strbuf_addstr(&info->origin, current_config_name());
+-	info->linenr = current_config_line();
++	strbuf_addstr(&info->origin, kvi->filename);
++	info->linenr = kvi->linenr;
+ 
+ 	return 0;
+ }
+diff --git a/config.c b/config.c
+index aa183f6f244..0a5443243dc 100644
+--- a/config.c
++++ b/config.c
+@@ -3917,13 +3917,8 @@ static int reader_origin_type(struct config_reader *reader,
+ 	return 0;
+ }
+ 
+-const char *current_config_origin_type(void)
++const char *config_origin_type_name(enum config_origin_type type)
+ {
+-	enum config_origin_type type = CONFIG_ORIGIN_UNKNOWN;
+-
+-	if (reader_origin_type(&the_reader, &type))
+-		BUG("current_config_origin_type called outside config callback");
+-
+ 	switch (type) {
+ 	case CONFIG_ORIGIN_BLOB:
+ 		return "blob";
+@@ -3969,14 +3964,6 @@ static int reader_config_name(struct config_reader *reader, const char **out)
+ 	return 0;
+ }
+ 
+-const char *current_config_name(void)
+-{
+-	const char *name;
+-	if (reader_config_name(&the_reader, &name))
+-		BUG("current_config_name called outside config callback");
+-	return name ? name : "";
+-}
+-
+ enum config_scope current_config_scope(void)
+ {
+ 	if (the_reader.config_kvi)
+@@ -3991,14 +3978,6 @@ enum config_scope current_config_scope(void)
+ 		return CONFIG_SCOPE_UNKNOWN;
+ }
+ 
+-int current_config_line(void)
+-{
+-	if (the_reader.config_kvi)
+-		return the_reader.config_kvi->linenr;
+-	else
+-		BUG("current_config_line called outside config callback");
+-}
+-
+ int lookup_config(const char **mapping, int nr_mapping, const char *var)
+ {
+ 	int i;
+diff --git a/config.h b/config.h
+index e4893e237e1..fb16c4aca77 100644
+--- a/config.h
++++ b/config.h
+@@ -375,9 +375,7 @@ void git_global_config(char **user, char **xdg);
+ int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
+ 
+ enum config_scope current_config_scope(void);
+-const char *current_config_origin_type(void);
+-const char *current_config_name(void);
+-int current_config_line(void);
++const char *config_origin_type_name(enum config_origin_type type);
+ 
+ /*
+  * Match and parse a config key of the form:
+diff --git a/t/helper/test-config.c b/t/helper/test-config.c
+index 00cd49e5145..337587df41d 100644
+--- a/t/helper/test-config.c
++++ b/t/helper/test-config.c
+@@ -43,7 +43,7 @@
+  */
+ 
+ static int iterate_cb(const char *var, const char *value,
+-		      struct key_value_info *kvi UNUSED, void *data UNUSED)
++		      struct key_value_info *kvi, void *data UNUSED)
+ {
+ 	static int nr;
+ 
+@@ -52,9 +52,9 @@ static int iterate_cb(const char *var, const char *value,
+ 
+ 	printf("key=%s\n", var);
+ 	printf("value=%s\n", value ? value : "(null)");
+-	printf("origin=%s\n", current_config_origin_type());
+-	printf("name=%s\n", current_config_name());
+-	printf("lno=%d\n", current_config_line());
++	printf("origin=%s\n", config_origin_type_name(kvi->origin_type));
++	printf("name=%s\n", kvi->filename ? kvi->filename : "");
++	printf("lno=%d\n", kvi->linenr);
+ 	printf("scope=%s\n", config_scope_name(current_config_scope()));
+ 
+ 	return 0;
 -- 
 gitgitgadget
 
