@@ -2,109 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC944C7618E
-	for <git@archiver.kernel.org>; Thu, 20 Apr 2023 22:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B88A4C77B73
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 00:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231958AbjDTWrc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 18:47:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33058 "EHLO
+        id S232045AbjDUAKr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 20:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229761AbjDTWrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 18:47:31 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20BAB26AE
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 15:47:30 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-63b7096e2e4so1459715b3a.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 15:47:30 -0700 (PDT)
+        with ESMTP id S230521AbjDUAKq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 20:10:46 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96A354233
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 17:10:44 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-506c04dd879so1698346a12.3
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 17:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682030849; x=1684622849;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s0W7gwzaQNHn+jquSiwx8edK97kaQfmhORcl3ynLLXM=;
-        b=ZctV5QR/TvLlJBrcT7jvWQ83JwGS1E2sunyO57B29tI+zYzPyqvQSHv72GKpAUb492
-         cPDwPkai6E78cCGGjxP71+kvnM5ujQTSlq35RxYzFXs0boL5Wh+MoRywmMqgjY+PqMZJ
-         8nVv6LCRvTsRtkd/QuYyB9P+HaghRAsA+GPMIciyvLbXeHkoxQ8HsIm1A65Z1xqge0PC
-         9/0UO5DVt5SUaRGVoTqfX+8ylvqXNOuR1dNLBhHkFAvGNDArHnOERIjkcRvN5/K2tkJm
-         mByh9yKGAt+D+qxIqI06bQ5yatVQPaUlE8wrdtSeoWDiiwRRWbulqvmEFFuMkTrZJXZn
-         wvLw==
+        d=gmail.com; s=20221208; t=1682035843; x=1684627843;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t46qAudvVPVIOiOaPyfvc1CaSjnePh1BChkLnKUKbXY=;
+        b=WEQFZjE3rAhRxe7WJxcuUxLGKvn3uXrFFPRt9x9fb97RmlKsDfLE7dU/Rp0q2qV/WS
+         w7u7CcffUocNcxYj0M6+LzmsKGXB7brjHvR6mIM/Ia7y1MeimfEi6vQFk5GyGZ3SgWXZ
+         xHB7XNRruUDiG1AM7nsw8wDDzrZf5sPWCkpSJfX8SQNlnlf6JO7b03Q0clOAv/PZpwJO
+         h4QKEF4qBjWZtpTVGNuww/3vfM003eJ3e1cMCqrmqRU4PGAmVdL5wTjwtGZoOp4cfi9v
+         zs0TkagMLAyq/hHxh9zOyCPbNc7GxcmLsMyoAHX3v2/HeiM8lnvJpQVONALyMszfIbeX
+         MDtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682030849; x=1684622849;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=s0W7gwzaQNHn+jquSiwx8edK97kaQfmhORcl3ynLLXM=;
-        b=cmstgqoNO4MlQyNjaSgNJLNPr4KoI8uv4y5czC7cLXn5viXuCVAqN6zMGe3GzC86XI
-         nPteB3yLBl4oxXs9dgVa4/tGGPXZY0hYQa5mTAuMWrpX9683fZ2Mg1+5xW5J4Srx/IOb
-         xdzx7cc7BRlhVK+XpQ7AHGvb5gnWLQvIN/NVHmSB4qPg9rxpaqbg3UFPG9aIk2Yn4Xek
-         oAxNzMf1zsUgu570Yi/IU8ELuOAT87Tamw1lWQaSpzqt1vCG9dQOEd96Ly+7PoTDIlhH
-         F/uLBxkD7lAPUDdGAEejbAJnGAFeuk41ZFOd0gKnECtI5fZWUD2kOhjZ5JEmorEECUdq
-         LjBg==
-X-Gm-Message-State: AAQBX9d9Ss2yV8x4X16z4Z0AlWafFPCMh4mtoqPbZvrifsWrDBZkwlkU
-        KCYMXOS8UhmczIki1qOyhYkViN2XT3uRaw==
-X-Google-Smtp-Source: AKy350bJ7ixetISEwPr0veF6gz/y+0aQ37UkaRYKhVTv82kdX4CSqJ7r4liHXKsgakG0K0BCMBbZzA==
-X-Received: by 2002:a05:6a00:1a86:b0:63b:62d1:d868 with SMTP id e6-20020a056a001a8600b0063b62d1d868mr3716257pfv.8.1682030849351;
-        Thu, 20 Apr 2023 15:47:29 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id d19-20020a056a0024d300b0063b488f3305sm1715121pfv.155.2023.04.20.15.47.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 15:47:28 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Koichi Murase <myoga.murase@gmail.com>
-Cc:     git@vger.kernel.org, Justin Donnelly <justinrdonnelly@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Edwin Kofler <edwin@kofler.dev>
-Subject: Re: [PATCH] completion: suppress unwanted unescaping of `read`
-References: <CAFLRLk9aLXx-j=W++qqiu5-Z0TpqdnyfR35+QA5aMZM=YRZvGQ@mail.gmail.com>
-        <20230420223800.1698197-1-myoga.murase@gmail.com>
-Date:   Thu, 20 Apr 2023 15:47:28 -0700
-In-Reply-To: <20230420223800.1698197-1-myoga.murase@gmail.com> (Koichi
-        Murase's message of "Fri, 21 Apr 2023 07:38:00 +0900")
-Message-ID: <xmqqjzy6p3wf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1682035843; x=1684627843;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t46qAudvVPVIOiOaPyfvc1CaSjnePh1BChkLnKUKbXY=;
+        b=jA99JjOK4f7Ybi0xbnLFlTNfql3+dcbPArliS3RX6i+F1Hbl94ZoB98xDRl1nhMLb6
+         OQ8sPrSJRWFV0oHDnzuwnhpRXK611Yrpvd36d5kXfmmyRkJepQdCMkEXjuHbOVWS2SAK
+         uDust7sFoVSiiWvZTTwIGDI/1QJX2vf8X/PvLx0r1TQ3ld/Z82Gutmf2tOW7OlB47+rR
+         lkGeceBPuAm/9GMQHxEYpdohlZrWXKTW6jCiKzH1kRKt0KTiskHY87RcJSjPduMmk2eE
+         EDvo1vOgEpLLB8Ghsh//14VkAopZTbQug8l+dAy4oqMxX7is67os1MI7Vrd9FjmZ1H4h
+         6+4w==
+X-Gm-Message-State: AAQBX9eHYoAn7Ku21mCa3xUkSh+CqmLBgfH0b6NN0SZiAqO9CGRhhELl
+        /1kcL+uqF/r4565VE88OYipwLaRMEI9OUZDYtm+Pfq6ksNQ=
+X-Google-Smtp-Source: AKy350b2Ks1CI1zWF/RZJqq0iUcbSR3tkSkJAtPsoZfXrO1SNcOYPDbkVCoQP9JlAz4Y1/7wqLIL44ioh/HJPPdmoF4=
+X-Received: by 2002:aa7:da81:0:b0:506:905b:816d with SMTP id
+ q1-20020aa7da81000000b00506905b816dmr3135812eds.6.1682035842724; Thu, 20 Apr
+ 2023 17:10:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
+In-Reply-To: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Thu, 20 Apr 2023 17:10:31 -0700
+Message-ID: <CAPx1GvdmzDVbiZGeguVVjWe+eAhj6=yG18Rd6wLhZVrnd4jiBg@mail.gmail.com>
+Subject: Re: [PATCH] builtin/pack-objects.c: introduce `pack.extraCruftTips`
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Koichi Murase <myoga.murase@gmail.com> writes:
+On Thu, Apr 20, 2023 at 10:35=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
+e:
+> +Output must contain exactly one hex object ID per line, and nothing
+> +else. Objects which cannot be found in the repository are ignored.
 
-> From: Edwin Kofler <edwin@kofler.dev>
->
-> The function `__git_eread`, which reads the first line from the file,
-> calls the `read` builtin without passing the flag option `-r`.  When
-> the `read` builtin is called without the flag `-r`, it processes the
-> backslash escaping in the text that it reads.  For this reason, it is
-> generally considered the best practice to always use the `read`
-> builtin with flag `-r` unless one intensionally processes the
-> backslash escaping.  For the present case in git-prompt.sh, in fact,
-> all the occurrences of the calls of `__git_eread` intend to read the
-> literal content of the first lines.
->
-> To make it read the first line literally, pass the flag `-r` to the
-> `read` builtin in the function `__git_eread`.
->
-> Signed-off-by: Edwin Kofler <edwin@kofler.dev>
-> Signed-off-by: Koichi Murase <myoga.murase@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 9c10690a22..49dd69bb84 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -298,7 +298,7 @@ __git_ps1_colorize_gitstring ()
->  # variable, in that order.
->  __git_eread ()
->  {
-> -	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
-> +	test -r "$1" && IFS=$'\r\n' read -r "$2" <"$1"
->  }
->  
->  # see if a cherry-pick or revert is in progress, if the user has committed a
+The first part sounds good, as a rigid output format can always be
+relaxed later if necessary. The second I'm less sure about: should
+there perhaps be a --{no-,}missing-objects option to control it?
 
-Perfect.  Will queue.  Thanks.
+In particular I'd be a bit concerned if I always wanted to keep object
+$H and ran a command that is supposed to keep $H, but it was
+silently dropped (accidentally or not) and is then gone.
+
+One could always run `gitt rev-parse` or `git cat-file -t` on the hash
+afterward to double check, I suppose...
+
+Chris
