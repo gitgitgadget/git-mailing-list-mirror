@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A109CC77B71
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 14:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9854C77B76
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 14:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232698AbjDUO6U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 10:58:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40310 "EHLO
+        id S232807AbjDUO6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 10:58:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233093AbjDUO6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 10:58:09 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2884413FAE
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 07:58:02 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f192c23fffso5089505e9.3
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 07:58:02 -0700 (PDT)
+        with ESMTP id S233099AbjDUO6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2023 10:58:10 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334B510271
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 07:58:03 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f178da21b2so19508365e9.1
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 07:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682089080; x=1684681080;
+        d=gmail.com; s=20221208; t=1682089081; x=1684681081;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X6ZTi5DbeqtQ0CXMRhXm8T2Is7n6iq4nnCg5hmP9vXI=;
-        b=PbwurQHiB4O1cp1PSCn9VPm02sm3XOddBUSrPTJwyglh2AQGiYhBcAUsxaEiTESqBU
-         wnfPjHy2XlyQJ5ZypwxslZUtjFS16L3cTt0eHLlQfOA2lHWLn2gIcDPbhTZmc30V2wJn
-         VKhQTmrVqSHnXns6/LUAxIJAvXCyhkGS+bVNaAJnBzHs0SDQYrbTqvqbVq+5ZrPIoM73
-         Um8gC2ZVKb4Kf4VDsZiZrMEMT2yFFmR9k6MG4AwuEugLmx6v+d+hIeAmPOXZFM/9a/uo
-         ywFuhRlFiow0IkLAHdUyOShWcfdRVE9cHzjLWF9c8r+XV/Fa49qyIS2RVN3yTn/4ME1Z
-         681g==
+        bh=W9xmzU9qdl4RThmwjjggxusqHV1EPaesxJDrUbfabqc=;
+        b=S2vF5wdHms24wsJiEHu6SLHENtpXijIKTR3+xIYn64VHgIXTkfc7ZW1Bdif0ouQepd
+         Ss0qXI5ZLBiTbWPsMU5vG77YH/LlVaytIJaGgKzSH0Uua2lGvZMDrT5//twTzH/z0Bxt
+         RFxniqi0kxiFQTQPXYuYOWvzyiMeL8S+2ukA8a5OblK3wXV4jMCjEEWEQrmfkWLSliEQ
+         QdKlhLGDmt9WvlhYiFZDHZTcP0EDGY6NsL2fzu5YKdJzUT6NB/Vxo7imAqE+LSbM+3On
+         oyBOHFiG+P0LriWpKwjCfpk5cD3AbV0fReu4ocHGbzPJdbUdye8Zof+VRRqViVv8A3CV
+         20eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682089080; x=1684681080;
+        d=1e100.net; s=20221208; t=1682089081; x=1684681081;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X6ZTi5DbeqtQ0CXMRhXm8T2Is7n6iq4nnCg5hmP9vXI=;
-        b=knnN1JaW5pQh6oGAbP7xO9X7EXd3uA28F7kHlDA6wLAveYjrhmBgrSVB1rOo1f3mQg
-         Vi6eYj8e0fN9l272joNbqt5/OneV3Tq/gRy7AldnUyMqdF96zeHjF0KK2OVVB3I97CAl
-         rQgE31FqTR0NbUeRQBDjSWwlkjUelz/driVJNS7kNgYAPv/E1AtKZQOFveGkwwPwleiu
-         IC5qbRdZM2n2Dpxv/xxVtocb+AEDiwD30yPm9uYl1lNGvT9ckgM9yTRVFt5P3pmq/f79
-         HLPpt+fiMKh4lksl/ZzOEO7tFZUtVWlk7ikAItUJwRPuXC9KsRjZCqGB2CtM5zITijbJ
-         yzwg==
-X-Gm-Message-State: AAQBX9diIJN7HDBPEfsL/PSif2Hy9dAcZYR3VqjUHuVcUexFTvhRA+V6
-        uopaXv6pPLSO18SE5ridS0LC/zYrLhY=
-X-Google-Smtp-Source: AKy350YMW6IIX+ahmj9FM3v/b31gujc17VuC0Gdj0DNJSp2hHnygoXzs4FvoAbet/V8hTsDw8pFpwA==
-X-Received: by 2002:a7b:c3d8:0:b0:3f1:7972:429d with SMTP id t24-20020a7bc3d8000000b003f17972429dmr2189650wmj.18.1682089080339;
-        Fri, 21 Apr 2023 07:58:00 -0700 (PDT)
+        bh=W9xmzU9qdl4RThmwjjggxusqHV1EPaesxJDrUbfabqc=;
+        b=YpPbqBPetzH7KEHyrOy5yAXcVQ65EBIuX0tF7VWqSZc6VWvSRuPrka+at7AI8cPiht
+         ZUQetU4BA+rrkQZMNCes5uj2KcBh/vjOn7NJDuYsYLRghFN2JRCeMXMQUzs8z4EO3xb/
+         wYCkvTP91RxSjebsFr5ahAM/kryisbg7jsmh9zG7+vT2s3tEr6eVD9SRRejHO6PKl4t5
+         8O06RGSDlXKBfbfswxH3a/Li9qLYW2hPkspZxKZfe+AKA86SsXrR+LmIf1WVvMqgGjzr
+         ZXgGKDT5OHvwElreU6/4/AkZRDaCIidfB9Il4cjlud4kODmD1ejmbi5dh9smkm7b3LXZ
+         a3QA==
+X-Gm-Message-State: AAQBX9c0KhXCswuhnPHkBg0MeMHIROmWNNbeSgZ4Vqai+ziioER/sv5J
+        IqH5UTW3Xhw6TnaBAaoDZk5sqR+sUbg=
+X-Google-Smtp-Source: AKy350Z2jg666TbKXOXvI/TpddQdMla1bM2wtjYtCow8N5sPznYZ91pOsFuT9VIywuaszCWT5LQLRA==
+X-Received: by 2002:a1c:7908:0:b0:3f1:6ead:e389 with SMTP id l8-20020a1c7908000000b003f16eade389mr2087078wme.30.1682089081078;
+        Fri, 21 Apr 2023 07:58:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o10-20020a05600c510a00b003ee443bf0c7sm8482007wms.16.2023.04.21.07.57.59
+        by smtp.gmail.com with ESMTPSA id n16-20020adfe350000000b002c71b4d476asm4532611wrj.106.2023.04.21.07.58.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 07:57:59 -0700 (PDT)
-Message-Id: <f8e64c1b631116367e6e68fcfde711b507a03a94.1682089075.git.gitgitgadget@gmail.com>
+        Fri, 21 Apr 2023 07:58:00 -0700 (PDT)
+Message-Id: <a836b049b900fa9d7c03ed5426a28b5cc754d4c5.1682089075.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
 References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
         <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Apr 2023 14:57:53 +0000
-Subject: [PATCH v2 5/6] rebase: fix rewritten list for failed pick
+Date:   Fri, 21 Apr 2023 14:57:54 +0000
+Subject: [PATCH v2 6/6] rebase -i: fix adding failed command to the todo list
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,182 +74,172 @@ X-Mailing-List: git@vger.kernel.org
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
 When rebasing commands are moved from the todo list in "git-rebase-todo"
-to the "done" file just before they are executed. This means that if a
+to the "done" file (which is used by "git status" to show the recently
+executed commands) just before they are executed. This means that if a
 command fails because it would overwrite an untracked file it has to be
 added back into the todo list before the rebase stops for the user to
-fix the problem. Unfortunately the way this is done results in the
-failed pick being recorded as rewritten.
+fix the problem.
 
-Fix this by not calling error_with_patch() for failed commands. The pick
-has failed so there is nothing to commit and therefore we do not want to
-set up the message file for committing staged changes when the rebase
-continues. This change means we no-longer write a patch for the failed
-command or display the error message printed by error_with_patch(). As
-the command has failed the patch isn't really useful in that case and
-REBASE_HEAD is still written so the user can inspect the commit
-associated with the failed command. Unless the user has disabled it we
-print an advice message that is more helpful than the message from
-error_with_patch(). If the advice is disabled the user will still see
-the messages from the merge machinery detailing the problem.
+Unfortunately when a failed command is added back into the todo list
+the command preceding it is erroneously appended to the "done" file.
+This means that when rebase stops after "pick B" fails the "done"
+file contains
 
-To simplify writing REBASE_HEAD in this case pick_one_commit() is
-modified to avoid duplicating the code that adds the failed command back
-into the todo list.
+	pick A
+	pick B
+	pick A
 
+instead of
+
+	pick A
+	pick B
+
+Fix this by not updating the "done" file when adding a failed command
+back into the "git-rebase-todo" file. A couple of the existing tests are
+modified to improve their coverage as none of them trigger this bug or
+check the "done" file.
+
+Reported-by: Stefan Haller <lists@haller-berlin.de>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c                   | 19 +++++++------------
- t/t3404-rebase-interactive.sh | 12 ++++++++++++
- t/t3430-rebase-merges.sh      | 11 ++++++++---
- t/t5407-post-rewrite-hook.sh  | 11 +++++++++++
- 4 files changed, 38 insertions(+), 15 deletions(-)
+ sequencer.c                   | 12 ++++++------
+ t/t3404-rebase-interactive.sh | 27 +++++++++++++++++----------
+ t/t3430-rebase-merges.sh      | 22 ++++++++++++++++------
+ 3 files changed, 39 insertions(+), 22 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 55bf0a72c3a..db2daecb23e 100644
+index db2daecb23e..9769dde00e8 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -4141,6 +4141,7 @@ static int do_merge(struct repository *r,
- 		error(_("could not even attempt to merge '%.*s'"),
- 		      merge_arg_len, arg);
- 		unlink(rebase_path_author_script());
-+		unlink(git_path_merge_msg(r));
- 		goto leave_merge;
- 	}
- 	/*
-@@ -4631,7 +4632,7 @@ N_("Could not execute the todo command\n"
- static int pick_one_commit(struct repository *r,
- 			   struct todo_list *todo_list,
- 			   struct replay_opts *opts,
--			   int *check_todo)
-+			   int *check_todo, int* reschedule)
- {
- 	int res;
- 	struct todo_item *item = todo_list->items + todo_list->current;
-@@ -4644,12 +4645,8 @@ static int pick_one_commit(struct repository *r,
- 			     check_todo);
- 	if (is_rebase_i(opts) && res < 0) {
- 		/* Reschedule */
--		advise(_(rescheduled_advice),
--		       get_item_line_length(todo_list, todo_list->current),
--		       get_item_line(todo_list, todo_list->current));
--		todo_list->current--;
--		if (save_todo(todo_list, opts))
--			return -1;
-+		*reschedule = 1;
-+		return -1;
- 	}
- 	if (item->command == TODO_EDIT) {
- 		struct commit *commit = item->commit;
-@@ -4749,7 +4746,8 @@ static int pick_commits(struct repository *r,
- 			}
- 		}
- 		if (item->command <= TODO_SQUASH) {
--			res = pick_one_commit(r, todo_list, opts, &check_todo);
-+			res = pick_one_commit(r, todo_list, opts, &check_todo,
-+					      &reschedule);
- 			if (!res && item->command == TODO_EDIT)
- 				return 0;
- 		} else if (item->command == TODO_EXEC) {
-@@ -4803,10 +4801,7 @@ static int pick_commits(struct repository *r,
- 			if (save_todo(todo_list, opts))
- 				return -1;
- 			if (item->commit)
--				return error_with_patch(r,
--							item->commit,
--							arg, item->arg_len,
--							opts, res, 0);
-+				write_rebase_head(&item->commit->object.oid);
- 		} else if (is_rebase_i(opts) && check_todo && !res &&
- 			   reread_todo_if_changed(r, todo_list, opts)) {
- 			return -1;
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index c1fe55dc2c1..a657167befd 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1289,6 +1289,10 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
- 	test_cmp_rev HEAD F &&
- 	rm file6 &&
- 	test_path_is_missing .git/rebase-merge/author-script &&
-+	test_path_is_missing .git/rebase-merge/patch &&
-+	test_path_is_missing .git/MERGE_MSG &&
-+	test_path_is_missing .git/rebase-merge/message &&
-+	test_path_is_missing .git/rebase-merge/stopped-sha &&
- 	echo changed >file1 &&
- 	git add file1 &&
- 	test_must_fail git rebase --continue 2>err &&
-@@ -1313,6 +1317,10 @@ test_expect_success 'rebase -i commits that overwrite untracked files (squash)'
- 	test_cmp_rev HEAD F &&
- 	rm file6 &&
- 	test_path_is_missing .git/rebase-merge/author-script &&
-+	test_path_is_missing .git/rebase-merge/patch &&
-+	test_path_is_missing .git/MERGE_MSG &&
-+	test_path_is_missing .git/rebase-merge/message &&
-+	test_path_is_missing .git/rebase-merge/stopped-sha &&
- 	git rebase --continue &&
- 	test $(git cat-file commit HEAD | sed -ne \$p) = I &&
- 	git reset --hard original-branch2
-@@ -1332,6 +1340,10 @@ test_expect_success 'rebase -i commits that overwrite untracked files (no ff)' '
- 	test $(git cat-file commit HEAD | sed -ne \$p) = F &&
- 	rm file6 &&
- 	test_path_is_missing .git/rebase-merge/author-script &&
-+	test_path_is_missing .git/rebase-merge/patch &&
-+	test_path_is_missing .git/MERGE_MSG &&
-+	test_path_is_missing .git/rebase-merge/message &&
-+	test_path_is_missing .git/rebase-merge/stopped-sha &&
- 	git rebase --continue &&
- 	test $(git cat-file commit HEAD | sed -ne \$p) = I
- '
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 360ec787ffd..18a0bc8fafb 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -167,16 +167,21 @@ test_expect_success 'failed `merge -C` writes patch (may be rescheduled, too)' '
- 	test_must_fail git rebase -ir HEAD &&
- 	grep "^merge -C .* G$" .git/rebase-merge/done &&
- 	grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
--	test_path_is_file .git/rebase-merge/patch &&
-+	test_path_is_missing .git/rebase-merge/patch &&
- 	test_path_is_missing .git/rebase-merge/author-script &&
-+	test_path_is_missing .git/MERGE_MSG &&
-+	test_path_is_missing .git/rebase-merge/message &&
-+	test_path_is_missing .git/rebase-merge/stopped-sha &&
- 
- 	: fail because of merge conflict &&
--	rm G.t .git/rebase-merge/patch &&
- 	git reset --hard conflicting-G &&
- 	test_must_fail git rebase --continue &&
- 	! grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
- 	test_path_is_file .git/rebase-merge/patch &&
--	test_path_is_file .git/rebase-merge/author-script
-+	test_path_is_file .git/rebase-merge/author-script &&
-+	test_path_is_file .git/MERGE_MSG &&
-+	test_path_is_file .git/rebase-merge/message &&
-+	test_path_is_file .git/rebase-merge/stopped-sha
- '
- 
- test_expect_success 'failed `merge <branch>` does not crash' '
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 5f3ff051ca2..c490a5137fe 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -173,6 +173,17 @@ test_fail_interactive_rebase () {
- 	)
+@@ -3379,7 +3379,8 @@ give_advice:
+ 	return -1;
  }
  
-+test_expect_success 'git rebase with failed pick' '
-+	test_fail_interactive_rebase "exec_>bar pick 1" --onto C A E &&
-+	rm bar &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse E) $(git rev-parse HEAD)
+-static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
++static int save_todo(struct todo_list *todo_list, struct replay_opts *opts,
++		     int reschedule)
+ {
+ 	struct lock_file todo_lock = LOCK_INIT;
+ 	const char *todo_path = get_todo_path(opts);
+@@ -3389,7 +3390,7 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+ 	 * rebase -i writes "git-rebase-todo" without the currently executing
+ 	 * command, appending it to "done" instead.
+ 	 */
+-	if (is_rebase_i(opts))
++	if (is_rebase_i(opts) && !reschedule)
+ 		next++;
+ 
+ 	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
+@@ -3402,7 +3403,7 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+ 	if (commit_lock_file(&todo_lock) < 0)
+ 		return error(_("failed to finalize '%s'"), todo_path);
+ 
+-	if (is_rebase_i(opts) && next > 0) {
++	if (is_rebase_i(opts) && !reschedule && next > 0) {
+ 		const char *done = rebase_path_done();
+ 		int fd = open(done, O_CREAT | O_WRONLY | O_APPEND, 0666);
+ 		int ret = 0;
+@@ -4716,7 +4717,7 @@ static int pick_commits(struct repository *r,
+ 		const char *arg = todo_item_get_arg(todo_list, item);
+ 		int check_todo = 0;
+ 
+-		if (save_todo(todo_list, opts))
++		if (save_todo(todo_list, opts, reschedule))
+ 			return -1;
+ 		if (is_rebase_i(opts)) {
+ 			if (item->command != TODO_COMMENT) {
+@@ -4797,8 +4798,7 @@ static int pick_commits(struct repository *r,
+ 			       get_item_line_length(todo_list,
+ 						    todo_list->current),
+ 			       get_item_line(todo_list, todo_list->current));
+-			todo_list->current--;
+-			if (save_todo(todo_list, opts))
++			if (save_todo(todo_list, opts, reschedule))
+ 				return -1;
+ 			if (item->commit)
+ 				write_rebase_head(&item->commit->object.oid);
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index a657167befd..653c19bc9c8 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1276,18 +1276,23 @@ test_expect_success 'todo count' '
+ '
+ 
+ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
+-	git checkout --force branch2 &&
++	git checkout --force A &&
+ 	git clean -f &&
++	cat >todo <<-EOF &&
++	exec >file2
++	pick $(git rev-parse B) B
++	pick $(git rev-parse C) C
++	pick $(git rev-parse D) D
++	exec cat .git/rebase-merge/done >actual
 +	EOF
-+	verify_hook_input
-+'
-+
- test_expect_success 'git rebase -i (unchanged)' '
- 	git reset --hard D &&
- 	clear_hook_input &&
+ 	(
+-		set_fake_editor &&
+-		FAKE_LINES="edit 1 2" git rebase -i A
++		set_replace_editor todo &&
++		test_must_fail git rebase -i A
+ 	) &&
+-	test_cmp_rev HEAD F &&
+-	test_path_is_missing file6 &&
+-	>file6 &&
+-	test_must_fail git rebase --continue &&
+-	test_cmp_rev HEAD F &&
+-	rm file6 &&
++	test_cmp_rev HEAD B &&
++	head -n3 todo >expect &&
++	test_cmp expect .git/rebase-merge/done &&
++	rm file2 &&
+ 	test_path_is_missing .git/rebase-merge/author-script &&
+ 	test_path_is_missing .git/rebase-merge/patch &&
+ 	test_path_is_missing .git/MERGE_MSG &&
+@@ -1299,7 +1304,9 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
+ 	grep "error: you have staged changes in your working tree" err &&
+ 	git reset --hard HEAD &&
+ 	git rebase --continue &&
+-	test_cmp_rev HEAD I
++	test_cmp_rev HEAD D &&
++	tail -n3 todo >>expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'rebase -i commits that overwrite untracked files (squash)' '
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index 18a0bc8fafb..86f4e0e4d6f 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -128,14 +128,24 @@ test_expect_success 'generate correct todo list' '
+ '
+ 
+ test_expect_success '`reset` refuses to overwrite untracked files' '
+-	git checkout -b refuse-to-reset &&
++	git checkout B &&
+ 	test_commit dont-overwrite-untracked &&
+-	git checkout @{-1} &&
+-	: >dont-overwrite-untracked.t &&
+-	echo "reset refs/tags/dont-overwrite-untracked" >script-from-scratch &&
++	cat >script-from-scratch <<-EOF &&
++	exec >dont-overwrite-untracked.t
++	pick $(git rev-parse B) B
++	reset refs/tags/dont-overwrite-untracked
++	pick $(git rev-parse C) C
++	exec cat .git/rebase-merge/done >actual
++	EOF
+ 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
+-	test_must_fail git rebase -ir HEAD &&
+-	git rebase --abort
++	test_must_fail git rebase -ir A &&
++	test_cmp_rev HEAD B &&
++	head -n3 script-from-scratch >expect &&
++	test_cmp expect .git/rebase-merge/done &&
++	rm dont-overwrite-untracked.t &&
++	git rebase --continue &&
++	tail -n3 script-from-scratch >>expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success '`reset` rejects trees' '
 -- 
 gitgitgadget
-
