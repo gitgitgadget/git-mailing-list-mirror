@@ -2,183 +2,235 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DB6C7618E
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 00:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEEF5C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 00:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbjDUAlZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 20:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54846 "EHLO
+        id S232584AbjDUAuO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 20:50:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231754AbjDUAlX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 20:41:23 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA82212D
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 17:41:22 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id af79cd13be357-74e3899037cso5298985a.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 17:41:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682037681; x=1684629681;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=btQXZd5p/VZcnYh9a+WqD6JatMOdNKTfjwr9eMFVUw8=;
-        b=ZJzhfF4ccZo7vzRo9PdxLpMVNGB071D8PgXqmLUbjw6ztfSDHaOT2e3nH1kRpXBcQA
-         62QcP4KUiAengQ+UabpfPlI8+fHv8Oo8yP7escRZucNx4Gkwo7OKa8NBkh73u+sIDNcm
-         a0P0HwQuOKoYwJ5ItwdPx1PpGOHt4M5bloyHynIyw6WrhFFu5lCtsd8/vYbcL+vZKVpe
-         3TxltLzASXbPegWSiLDBCrmXymn6gTxFdy0kMPOUtbtpEoQ/l2JuNjysZ0bEbZYamQy7
-         1r1hmAE9tjEBDTsabrE04sbba2G+gtglZ7Vw8rNsg7QsPMNEkH+5bwzWJLwV4WOMS+07
-         WLYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682037681; x=1684629681;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=btQXZd5p/VZcnYh9a+WqD6JatMOdNKTfjwr9eMFVUw8=;
-        b=Ii4PmI3+nhPZkBsgC+FIvkKEcX3gQeXBUN7meF0BKk1nGREo6qWkBwHCNyLaVqSjqB
-         oZuYHyF2Uf+I1XaSj1s+qy72YANeqTFBUKsmzD5RKApaNo4UVMoAMhOetbkP7q/zInsK
-         y754NWDoXTEkeqBWyhf3WTPEpWnyjhbSGSjZ1R0VQC++c+k4S8SGGl3yEjLFWYn6hdci
-         dpezXez6swWeRLp6WkoLfd3DTnjrebGKdmgzfrZGgMyybFpk8n2DxzYXp5z20iLuriXY
-         KwCSSkvSF7thezmCasniIJudVwoNtpElnTACJ+OQ9D5lJ5MSsV7YfOqor8C3PKB/LCfx
-         bolw==
-X-Gm-Message-State: AAQBX9eonmo1kg/WXDxatJXFYcSwAOKirAIYg2eGpXNs+VuoFrDwpWnf
-        PMHFEQNevOLFSIvnsH4p5Gu93ZWfV4DCUQ==
-X-Google-Smtp-Source: AKy350a516atxsIN+ayfaLoTW2tRMcjEX4DJHrRuzNTOKZHZYJ2/k27ICFaLpLvtM/Jgwrj6sglZUg==
-X-Received: by 2002:a05:6214:301c:b0:5fe:dffc:ff1c with SMTP id ke28-20020a056214301c00b005fedffcff1cmr4386254qvb.51.1682037681174;
-        Thu, 20 Apr 2023 17:41:21 -0700 (PDT)
-Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
-        by smtp.googlemail.com with ESMTPSA id o20-20020a0cf4d4000000b005f66296da7bsm773667qvm.94.2023.04.20.17.41.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 17:41:20 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
-        gitster@pobox.com, derrickstolee@github.com
-Subject: [PATCH v4] write-tree: integrate with sparse index
-Date:   Thu, 20 Apr 2023 20:41:08 -0400
-Message-Id: <20230421004108.32554-1-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230419072148.4297-1-cheskaqiqi@gmail.com>
-References: <20230419072148.4297-1-cheskaqiqi@gmail.com>
+        with ESMTP id S230521AbjDUAuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 20:50:12 -0400
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 20 Apr 2023 17:50:10 PDT
+Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE07268A
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 17:50:10 -0700 (PDT)
+Received: from [10.0.2.15] ([147.147.167.102])
+        by smtp with ESMTPA
+        id pevZpcsUfymjlpevaptedf; Fri, 21 Apr 2023 01:47:07 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1682038027; bh=6bmIIHNojxpRjpvA5fwS/JN/MynHwE0NnOrQ5sQTE0s=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=izbmWNsrhbn+Iwle7wA9k1BPmOc0cFxcck13udhlVap5gdFcK0UJ59QFJCMU9UlIa
+         PIdOqND9kNfU0ESPQTpLWJuTpIUsXr7x4gtHL8UIDp+rohGsE5U5/3Y+YuVriBdnjT
+         blomWrWr0egPcWJJrWt2/sahPqv1GLnr/MryfO5krYAj1QR+GNG3HZ1i0Zxa89nasV
+         AmyvYYHc7BV4gr68UWJSgHTKIV36P8nEuLNOqfi8QZT7Nx/yn0Oxwzd+h9JYnTp2hP
+         /CQbgXR1BPgUpny5U2OIWZ7zPv098Hz/hodw7mnQLjEmUTZO1DCHX12uqngDilqsc7
+         FxHUPb5gKwzRA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=Y9vrDzSN c=1 sm=1 tr=0 ts=6441dd0b
+ a=O4HnXJxpn4bBnFCb4s/IkQ==:117 a=O4HnXJxpn4bBnFCb4s/IkQ==:17
+ a=IkcTkHD0fZMA:10 a=367I6d3oAAAA:8 a=NEAV23lmAAAA:8 a=-uMXzpRvgrTe9uJ9uOIA:9
+ a=QEXdDO2ut3YA:10 a=4G2GI1IyKxSpVa9G_Bf7:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <1c365381-4858-1534-18ba-aa6f5c5056c2@ramsayjones.plus.com>
+Date:   Fri, 21 Apr 2023 01:47:05 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3] http: document sslcert and sslkey types and extend to
+ proxy
+To:     Ricky Davidson via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     "Junio C Hamano [ ]" <gitster@pobox.com>,
+        Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+References: <pull.1520.v2.git.1682014322604.gitgitgadget@gmail.com>
+ <pull.1520.v3.git.1682021501245.gitgitgadget@gmail.com>
+Content-Language: en-GB
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <pull.1520.v3.git.1682021501245.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfDIky489RW4spdZNVaugOB720W9j4lAjBLBNfHavDdXa6jSULi0HNnrsS99g3HBeverJniFIxOY58b+CErzgLGkK83WurhMUL1Z3Dts0dIoduXoyOQAa
+ 4iRsloWnKA78q1YaJQ+1ImPXs7vtzlV2ym95bPukWb/lrs3GxzrHdqdVJTxG8OXyPqs3G+u+adBv3nUZ7JxOJBVq6lBQDyH0j/Y=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update 'git write-tree' to allow using the sparse-index in memory
-without expanding to a full one.
-
-The recursive algorithm for update_one() was already updated in 2de37c5
-(cache-tree: integrate with sparse directory entries, 2021-03-03) to
-handle sparse directory entries in the index. Hence we can just set the
-requires-full-index to false for "write-tree".
-
-The `p2000` tests demonstrate a ~96% execution time reduction for 'git
-write-tree' using a sparse index:
-
-Test                                           before  after
------------------------------------------------------------------
-2000.78: git write-tree (full-v3)              0.34    0.33 -2.9%
-2000.79: git write-tree (full-v4)              0.32    0.30 -6.3%
-2000.80: git write-tree (sparse-v3)            0.47    0.02 -95.8%
-2000.81: git write-tree (sparse-v4)            0.45    0.02 -95.6%
-
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
-
-* Modified the code to ensure prepare_repo_settings() is called only 
-when inside a repository.
-
-* Change 'write-tree on all' to just 'write-tree'.
-
-* Have a baseline 'test_all_match git write-tree' before making any 
-changes to the index.
-
-* Add 'git status --porcelain=v2'.
-
-* Ensuring that SKIP_WORKTREE files weren't materialized on disk by
-using "test_path_is_missing".
-
-* Use 'test_all_match' on the 'git update-index'.
 
 
- builtin/write-tree.c                     |  9 ++++++---
- t/t1092-sparse-checkout-compatibility.sh | 20 +++++++++++++++-----
- 2 files changed, 21 insertions(+), 8 deletions(-)
+On 20/04/2023 21:11, Ricky Davidson via GitGitGadget wrote:
+> From: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+> 
+> 0a01d41ee4 (http: add support for different sslcert and sslkey
+> types., 2023-03-20) added http.sslCertType and http.sslKeyType, but:
+> 
+> 1. it does not document the feature.
+> 2. it does not apply to SSL proxy equivalents.
+> 
+> Documents http.sslCertType and http.sslKeyType. Implements
+> http.proxySSLCertType. Does the same for http.sslKeyType and
+> http.proxySSLKeyType equivalents and related environment
+> variables.
+> 
+> Signed-off-by: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+> ---
+>     [PATCH] http: document sslcert and sslkey types and extend to proxy
+>     
+>     0a01d41ee4 (http: add support for different sslcert and sslkey types.,
+>     2023-03-20) added http.sslCertType and http.sslKeyType, but:
+>     
+>      1. it does not document the feature.
+>      2. it does not apply to SSL proxy equivalents.
+>     
+>     Documents http.sslCertType and http.sslKeyType. Implements
+>     http.proxySSLCertType. Does the same for http.sslKeyType and
+>     http.proxySSLKeyType equivalents and related environment variables.
+>     
+>     Signed-off-by: Ricky Davidson Ricky.Davidson@hii-tsd.com
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1520%2FRicky-Davidson-hii-tsd%2Fmaster-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1520/Ricky-Davidson-hii-tsd/master-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1520
+> 
+> Range-diff vs v2:
+> 
+>  1:  78b96f60ec8 ! 1:  020c03104f4 http: document sslcert and sslkey types and extend to proxy
+>      @@ Metadata
+>        ## Commit message ##
+>           http: document sslcert and sslkey types and extend to proxy
+>       
+>      -    0a01d41 added http.sslCertType and http.sslKeyType, but:
+>      +    0a01d41ee4 (http: add support for different sslcert and sslkey
+>      +    types., 2023-03-20) added http.sslCertType and http.sslKeyType, but:
+>       
+>      -    1. does not document the feature.
+>      -    2. does not apply to SSL proxy equivalents.
+>      +    1. it does not document the feature.
+>      +    2. it does not apply to SSL proxy equivalents.
+>       
+>           Documents http.sslCertType and http.sslKeyType. Implements
+>      -    http.proxySSLCertType. Same for http.sslKeyType and
+>      +    http.proxySSLCertType. Does the same for http.sslKeyType and
+>           http.proxySSLKeyType equivalents and related environment
+>           variables.
+>       
+> 
+> 
+>  Documentation/config/http.txt | 24 ++++++++++++++++++++++++
+>  http.c                        | 12 ++++++++++++
+>  2 files changed, 36 insertions(+)
+> 
+> diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+> index afeeccfbfa7..53386b90185 100644
+> --- a/Documentation/config/http.txt
+> +++ b/Documentation/config/http.txt
+> @@ -34,11 +34,23 @@ http.proxySSLCert::
+>  	with an HTTPS proxy. Can be overridden by the `GIT_PROXY_SSL_CERT` environment
+>  	variable.
+>  
+> +http.proxySSLCertType::
+> +	Format of the client certificate used to authenticate with an HTTPS proxy.
+> +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+> +	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
+> +	variable.
+> +
+>  http.proxySSLKey::
+>  	The pathname of a file that stores a private key to use to authenticate with
+>  	an HTTPS proxy. Can be overridden by the `GIT_PROXY_SSL_KEY` environment
+>  	variable.
+>  
+> +http.proxySSLKeyType::
+> +	Format of the client private key used to authenticate with an HTTPS proxy.
+> +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+> +	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_KEY_TYPE` environment
+> +	variable.
+> +
+>  http.proxySSLCertPasswordProtected::
+>  	Enable Git's password prompt for the proxy SSL certificate.  Otherwise OpenSSL
+>  	will prompt the user, possibly many times, if the certificate or private key
+> @@ -161,11 +173,23 @@ http.sslCert::
+>  	over HTTPS. Can be overridden by the `GIT_SSL_CERT` environment
+>  	variable.
+>  
+> +http.sslCertType::
+> +	Format of the SSL certificate used to authenticate over HTTPS.
+> +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+> +	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
+> +	variable.
+> +
+>  http.sslKey::
+>  	File containing the SSL private key when fetching or pushing
+>  	over HTTPS. Can be overridden by the `GIT_SSL_KEY` environment
+>  	variable.
+>  
+> +http.sslKeyType::
+> +	Format of the SSL private key used to authenticate over HTTPS.
+> +	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+> +	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
 
-diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-index 32e302a813..a9d5c20cde 100644
---- a/builtin/write-tree.c
-+++ b/builtin/write-tree.c
-@@ -38,12 +38,15 @@ int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
- 	};
- 
- 	git_config(git_default_config, NULL);
-+	
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
-+
- 	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
- 			     write_tree_usage, 0);
- 
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
--
- 	ret = write_index_as_tree(&oid, &the_index, get_index_file(), flags,
- 				  tree_prefix);
- 	switch (ret) {
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 9bbc0d646b..d3eb31326b 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2055,22 +2055,32 @@ test_expect_success 'grep sparse directory within submodules' '
- 	test_cmp actual expect
- '
- 
--test_expect_success 'write-tree on all' '
-+test_expect_success 'write-tree' '
- 	init_repos &&
- 
-+	test_all_match git write-tree &&
-+
- 	write_script edit-contents <<-\EOF &&
- 	echo text >>"$1"
- 	EOF
- 
-+	# make a change inside the sparse cone
- 	run_on_all ../edit-contents deep/a &&
--	run_on_all git update-index deep/a &&
-+	test_all_match git update-index deep/a &&
- 	test_all_match git write-tree &&
-+	test_all_match git status --porcelain=v2 &&
- 
-+	# make a change outside the sparse cone
- 	run_on_all mkdir -p folder1 &&
- 	run_on_all cp a folder1/a &&
- 	run_on_all ../edit-contents folder1/a &&
--	run_on_all git update-index folder1/a &&
--	test_all_match git write-tree
-+	test_all_match git update-index folder1/a &&
-+	test_all_match git write-tree &&
-+	test_all_match git status --porcelain=v2 &&
-+	
-+	# check that SKIP_WORKTREE files are not materialized
-+	test_path_is_missing sparse-checkout/folder2/a &&
-+	test_path_is_missing sparse-index/folder2/a
- '
- 
- test_expect_success 'sparse-index is not expanded: write-tree' '
-@@ -2080,7 +2090,7 @@ test_expect_success 'sparse-index is not expanded: write-tree' '
- 
- 	echo "test1" >>sparse-index/a &&
- 	git -C sparse-index update-index a &&
--	ensure_not_expanded write-tree
-+	ensure_not_expanded write-tree 
- '
- 
- test_done
--- 
-2.39.0
+s/GIT_SSL_CERT_TYPE/GIT_SSL_KEY_TYPE/ ?
 
+ATB,
+Ramsay Jones
+
+> +	variable.
+> +
+>  http.sslCertPasswordProtected::
+>  	Enable Git's password prompt for the SSL certificate.  Otherwise
+>  	OpenSSL will prompt the user, possibly many times, if the
+> diff --git a/http.c b/http.c
+> index d5d82c5230f..bee4ea64115 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -74,7 +74,9 @@ static const char *curl_http_proxy;
+>  static const char *http_proxy_authmethod;
+>  
+>  static const char *http_proxy_ssl_cert;
+> +static const char *http_proxy_ssl_cert_type;
+>  static const char *http_proxy_ssl_key;
+> +static const char *http_proxy_ssl_key_type;
+>  static const char *http_proxy_ssl_ca_info;
+>  static struct credential proxy_cert_auth = CREDENTIAL_INIT;
+>  static int proxy_ssl_cert_password_required;
+> @@ -441,9 +443,13 @@ static int http_options(const char *var, const char *value, void *cb)
+>  
+>  	if (!strcmp("http.proxysslcert", var))
+>  		return git_config_string(&http_proxy_ssl_cert, var, value);
+> +	if (!strcmp("http.proxysslcerttype", var))
+> +		return git_config_string(&http_proxy_ssl_cert_type, var, value);
+>  
+>  	if (!strcmp("http.proxysslkey", var))
+>  		return git_config_string(&http_proxy_ssl_key, var, value);
+> +	if (!strcmp("http.proxysslkeytype", var))
+> +		return git_config_string(&http_proxy_ssl_key_type, var, value);
+>  
+>  	if (!strcmp("http.proxysslcainfo", var))
+>  		return git_config_string(&http_proxy_ssl_ca_info, var, value);
+> @@ -1146,9 +1152,13 @@ static CURL *get_curl_handle(void)
+>  
+>  			if (http_proxy_ssl_cert)
+>  				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT, http_proxy_ssl_cert);
+> +			if (http_proxy_ssl_cert_type)
+> +				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERTTYPE, http_proxy_ssl_cert_type);
+>  
+>  			if (http_proxy_ssl_key)
+>  				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEY, http_proxy_ssl_key);
+> +			if (http_proxy_ssl_key_type)
+> +				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEYTYPE, http_proxy_ssl_key_type);
+>  
+>  			if (has_proxy_cert_password())
+>  				curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD, proxy_cert_auth.password);
+> @@ -1285,7 +1295,9 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+>  		max_requests = DEFAULT_MAX_REQUESTS;
+>  
+>  	set_from_env(&http_proxy_ssl_cert, "GIT_PROXY_SSL_CERT");
+> +	set_from_env(&http_proxy_ssl_cert_type, "GIT_PROXY_SSL_CERT_TYPE");
+>  	set_from_env(&http_proxy_ssl_key, "GIT_PROXY_SSL_KEY");
+> +	set_from_env(&http_proxy_ssl_key_type, "GIT_PROXY_SSL_KEY_TYPE");
+>  	set_from_env(&http_proxy_ssl_ca_info, "GIT_PROXY_SSL_CAINFO");
+>  
+>  	if (getenv("GIT_PROXY_SSL_CERT_PASSWORD_PROTECTED"))
+> 
+> base-commit: 667fcf4e15379790f0b609d6a83d578e69f20301
