@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58052C7618E
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE21C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:13:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233489AbjDUTNj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 15:13:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38012 "EHLO
+        id S233492AbjDUTNm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 15:13:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233456AbjDUTN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233462AbjDUTN1 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Apr 2023 15:13:27 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB84510F6
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:24 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f1950f569eso5920795e9.2
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B92B170C
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:25 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f178da21afso14740195e9.1
         for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1682104403; x=1684696403;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KPQP1phttm/F7weW3TLGo1HrwI3jSy7Egsz6Ae3JUas=;
-        b=K+nC7pA9MNcV3VUN3fyGEKU61Tk5c28NtbcH5rhy57BSvI/zVqpK0ic1bhFZgeFYdZ
-         2wW1R1TTOLhFt2JYzXOYNzRAyX3coc/HTG9NHNC/V49d72P8p6VI/CAIIB50GG9f41D+
-         oBMw3e5IxPCeGH4Mmf3zSk3jPOtLgC8lYQGcjOmhcVKaWng573DJU9be5W7EJKihiEPT
-         gHXpwFuZYIu6Vs8ZnTEn8g6TvviCJCWgsH6i0wXNVeELD4PjZvsScG34shMGYnCqWDYA
-         B/4xYYkAtwRrvqp/Zm2fvSDcVN1S3IqWLPYdHge45KWJOTKzLiA9xrs7h8F7w9Edwsip
-         cCTg==
+        bh=N3O2tWXYodpew9KhXFpPWf1Ko83c8a1VUAOnD03VJqY=;
+        b=b+ofghSFVy67gxsDPPZIxQwSlZWLUY/nUk/O58jAkfhXrrI5XXvz4ylQW4PQ/Jx6uX
+         JBbaz6pFoi1ln2MTn8/S1dDIgOcQPIIowJ84r5cJkp+7v4M4SgZLIn4oqqBqYMSVfy/Z
+         W/MKyHQS/7RLp3XCSmWRJlnw9F4ossq4Hx6DHOTOOu0qI6uKmsJE8Nibo7pRYTZ//cJB
+         AgZSrOjoaGNBokXFqkTICgza6S+xvrDGOCs2c1+/9z+zcIQ5ro+c3I349zlDrXAmcEs4
+         LfVKeURGz7dO9m0aLratVkgzn6IthI4kuqQb4hApbqf7MEH+Atotuv4wez9iUMW/jowd
+         qH/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1682104403; x=1684696403;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KPQP1phttm/F7weW3TLGo1HrwI3jSy7Egsz6Ae3JUas=;
-        b=lq1RjskOb8mw6q4a2rof/g33LWdRRQOI4kYiHSvM74VU7YgsFEovWaiZEvXyayWK9f
-         +HJYHL9BzlTt7YdJfKQ3ERp0xBNS6dH66sPKVYzMUQu2DOE05tPPUQg+/dB8r//NobRZ
-         RczW+7XrLVNcN1z0LYDR48xuG3Pq0LSNWIkBRdpzeU3WoKg4cb/jwmywWhWNYGOyU8Zz
-         BaNUM4qN2PEG18QtthC5wQwDu5KDlk5xgSs9HyTUhyT5CTDJETxbmh0RLub2LE5Sw5Co
-         az2xvRJx05PEvif/LeaOEHzSJ3y2ESgjopdCJqgS+xX+AsEKG+pyhxU932UkkN7X7dAQ
-         PrUA==
-X-Gm-Message-State: AAQBX9dZiFOJTQ4IeLmaUbWwNlaR3GmbEUrbWBCinVS59vEqtMk+DqyE
-        xAID78WBtK5PcJSYcXbygWCcuWIbzdM=
-X-Google-Smtp-Source: AKy350bvV7dFSSi3y3OLgZHVcYBOj8Mpjty3Kli0KlwYrW0zmoyx4r2X04bySEszlTEs1S0aBtXV4A==
-X-Received: by 2002:a1c:7404:0:b0:3f1:7123:5f82 with SMTP id p4-20020a1c7404000000b003f171235f82mr2803420wmc.12.1682104402826;
-        Fri, 21 Apr 2023 12:13:22 -0700 (PDT)
+        bh=N3O2tWXYodpew9KhXFpPWf1Ko83c8a1VUAOnD03VJqY=;
+        b=V6pVadVd+s8XSbaHX0zMYPr8pAVTy45Y2pXzRomYx9SX6Eeo7yrj3XVY7vJNlOpPDt
+         COQ2w9CMLdNRd4iD+rbqX7R8Cl65eACbMRR61OEpWQhhm+OC8D3WAxQNa45g4MF/sQSq
+         Ul81yrKR3D89Ihs26mgSx1v+TZKOX/CsEszLCsDZ6e2XxiTPatwtqgvaZegmoz4Drc03
+         y+ShJV4eiqvRY03nT9YKVinvs07XmusWWS3GMmh3QvMEel9gTNOwmEgVBaNNFlbP3SHJ
+         oAWEiernzyKJ3AuFbZ9y5hVEPNjz2hUxwGWYlnWZNkHOvcwwKSwghS/S1ZXcyzn8XyWN
+         CiGA==
+X-Gm-Message-State: AAQBX9fqI1M+RkiNehQOGNROek2XWUAzyODjqpSdGuc7TufQ97VWVS+6
+        EESjPw6obDZOR4ni0g8vFN9YBZj7dJs=
+X-Google-Smtp-Source: AKy350bPxYg0jR0lK0/BD8guaz/HNp/BW7Zctcd3vEK51ND+/2fbDXTBKNodUWFrkYl+mV7/MT0+nQ==
+X-Received: by 2002:a05:600c:21a:b0:3f1:75b6:8c7 with SMTP id 26-20020a05600c021a00b003f175b608c7mr2625334wmi.37.1682104403312;
+        Fri, 21 Apr 2023 12:13:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14-20020a05600c358e00b003f188f608b9sm6035946wmq.8.2023.04.21.12.13.22
+        by smtp.gmail.com with ESMTPSA id g11-20020a05600c310b00b003f0aefcc457sm8994864wmo.45.2023.04.21.12.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 12:13:22 -0700 (PDT)
-Message-Id: <b407fe1ed1d9cf4d9d79f900c48864fe4eab9568.1682104398.git.gitgitgadget@gmail.com>
+        Fri, 21 Apr 2023 12:13:23 -0700 (PDT)
+Message-Id: <e80d1b5f4832edb9bd58b6024e3541a34e36f4e9.1682104398.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
 References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Apr 2023 19:13:08 +0000
-Subject: [PATCH 04/14] config: add kvi.path, use it to evaluate includes
+Date:   Fri, 21 Apr 2023 19:13:09 +0000
+Subject: [PATCH 05/14] config: pass source to config_parser_event_fn_t
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,181 +71,243 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-Include directives are evaluated using the path of the config file. To
-reduce the dependence on "config_reader.source", add a new
-"key_value_info.path" member and use that instead of
-"config_source.path".
+..so that the callback can use a "struct config_source" parameter
+instead of "config_reader.source". "struct config_source" is internal to
+config.c, but this refactor is okay because this function has only ever
+been (and probably ever will be) used internally by config.c.
+
+This removes the last user of "config_reader.source", so remove it too.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- config.c | 40 ++++++++++++++++++++--------------------
- config.h |  1 +
- 2 files changed, 21 insertions(+), 20 deletions(-)
+ config.c | 72 ++++++++++----------------------------------------------
+ config.h |  6 +++++
+ 2 files changed, 18 insertions(+), 60 deletions(-)
 
 diff --git a/config.c b/config.c
-index 3369b32d065..b952a4b118d 100644
+index b952a4b118d..147e422a27b 100644
 --- a/config.c
 +++ b/config.c
-@@ -199,7 +199,7 @@ static const char include_depth_advice[] = N_(
- "from\n"
- "	%s\n"
- "This might be due to circular includes.");
--static int handle_path_include(struct config_source *cs, const char *path,
-+static int handle_path_include(struct key_value_info *kvi, const char *path,
- 			       struct config_include_data *inc)
+@@ -60,23 +60,6 @@ struct config_source {
+ #define CONFIG_SOURCE_INIT { 0 }
+ 
+ struct config_reader {
+-	/*
+-	 * These members record the "current" config source, which can be
+-	 * accessed by parsing callbacks.
+-	 *
+-	 * The "source" variable will be non-NULL only when we are actually
+-	 * parsing a real config source (file, blob, cmdline, etc).
+-	 *
+-	 * The "config_kvi" variable will be non-NULL only when we are feeding
+-	 * cached config from a configset into a callback.
+-	 *
+-	 * They cannot be non-NULL at the same time. If they are both NULL, then
+-	 * we aren't parsing anything (and depending on the function looking at
+-	 * the variables, it's either a bug for it to be called in the first
+-	 * place, or it's a function which can be reused for non-config
+-	 * purposes, and should fall back to some sane behavior).
+-	 */
+-	struct config_source *source;
+ 	struct key_value_info *config_kvi;
+ };
+ /*
+@@ -86,23 +69,6 @@ struct config_reader {
+  */
+ static struct config_reader the_reader;
+ 
+-static inline void config_reader_push_source(struct config_reader *reader,
+-					     struct config_source *top)
+-{
+-	top->prev = reader->source;
+-	reader->source = top;
+-}
+-
+-static inline struct config_source *config_reader_pop_source(struct config_reader *reader)
+-{
+-	struct config_source *ret;
+-	if (!reader->source)
+-		BUG("tried to pop config source, but we weren't reading config");
+-	ret = reader->source;
+-	reader->source = reader->source->prev;
+-	return ret;
+-}
+-
+ static inline void config_reader_push_kvi(struct config_reader *reader,
+ 					  struct key_value_info *kvi)
  {
- 	int ret = 0;
-@@ -221,14 +221,14 @@ static int handle_path_include(struct config_source *cs, const char *path,
- 	if (!is_absolute_path(path)) {
- 		char *slash;
+@@ -1059,7 +1025,7 @@ static int do_event(struct config_source *cs, enum config_event_t type,
  
--		if (!cs || !cs->path) {
-+		if (!kvi || !kvi->path) {
- 			ret = error(_("relative config includes must come from files"));
- 			goto cleanup;
- 		}
+ 	if (data->previous_type != CONFIG_EVENT_EOF &&
+ 	    data->opts->event_fn(data->previous_type, data->previous_offset,
+-				 offset, data->opts->event_fn_data) < 0)
++				 offset, cs, data->opts->event_fn_data) < 0)
+ 		return -1;
  
--		slash = find_last_dir_sep(cs->path);
-+		slash = find_last_dir_sep(kvi->path);
- 		if (slash)
--			strbuf_add(&buf, cs->path, slash - cs->path + 1);
-+			strbuf_add(&buf, kvi->path, slash - kvi->path + 1);
- 		strbuf_addstr(&buf, path);
- 		path = buf.buf;
+ 	data->previous_type = type;
+@@ -2020,8 +1986,7 @@ int git_default_config(const char *var, const char *value, void *cb)
+  * fgetc, ungetc, ftell of top need to be initialized before calling
+  * this function.
+  */
+-static int do_config_from(struct config_reader *reader,
+-			  struct config_source *top, config_fn_t fn,
++static int do_config_from(struct config_source *top, config_fn_t fn,
+ 			  void *data, enum config_scope scope,
+ 			  const struct config_options *opts)
+ {
+@@ -2034,21 +1999,17 @@ static int do_config_from(struct config_reader *reader,
+ 	top->total_len = 0;
+ 	strbuf_init(&top->value, 1024);
+ 	strbuf_init(&top->var, 1024);
+-	config_reader_push_source(reader, top);
+ 	kvi_from_source(top, scope, &kvi);
+ 
+ 	ret = git_parse_source(top, fn, &kvi, data, opts);
+ 
+-	/* pop config-file parsing state stack */
+ 	strbuf_release(&top->value);
+ 	strbuf_release(&top->var);
+-	config_reader_pop_source(reader);
+ 
+ 	return ret;
+ }
+ 
+-static int do_config_from_file(struct config_reader *reader,
+-			       config_fn_t fn,
++static int do_config_from_file(config_fn_t fn,
+ 			       const enum config_origin_type origin_type,
+ 			       const char *name, const char *path, FILE *f,
+ 			       void *data, enum config_scope scope,
+@@ -2067,7 +2028,7 @@ static int do_config_from_file(struct config_reader *reader,
+ 	top.do_ftell = config_file_ftell;
+ 
+ 	flockfile(f);
+-	ret = do_config_from(reader, &top, fn, data, scope, opts);
++	ret = do_config_from(&top, fn, data, scope, opts);
+ 	funlockfile(f);
+ 
+ 	return ret;
+@@ -2076,8 +2037,8 @@ static int do_config_from_file(struct config_reader *reader,
+ static int git_config_from_stdin(config_fn_t fn, void *data,
+ 				 enum config_scope scope)
+ {
+-	return do_config_from_file(&the_reader, fn, CONFIG_ORIGIN_STDIN, "",
+-				   NULL, stdin, data, scope, NULL);
++	return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin,
++				   data, scope, NULL);
+ }
+ 
+ int git_config_from_file_with_options(config_fn_t fn, const char *filename,
+@@ -2091,9 +2052,8 @@ int git_config_from_file_with_options(config_fn_t fn, const char *filename,
+ 		BUG("filename cannot be NULL");
+ 	f = fopen_or_warn(filename, "r");
+ 	if (f) {
+-		ret = do_config_from_file(&the_reader, fn, CONFIG_ORIGIN_FILE,
+-					  filename, filename, f, data, scope,
+-					  opts);
++		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename,
++					  filename, f, data, scope, opts);
+ 		fclose(f);
  	}
-@@ -236,12 +236,11 @@ static int handle_path_include(struct config_source *cs, const char *path,
- 	if (!access_or_die(path, R_OK, 0)) {
- 		if (++inc->depth > MAX_INCLUDE_DEPTH)
- 			die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
--			    !cs ? "<unknown>" :
--			    cs->name ? cs->name :
-+			    !kvi ? "<unknown>" :
-+			    kvi->filename ? kvi->filename :
- 			    "the command line");
- 		ret = git_config_from_file_with_options(git_config_include, path, inc,
--							current_config_scope(),
--							NULL);
-+							kvi->scope, NULL);
- 		inc->depth--;
- 	}
- cleanup:
-@@ -256,7 +255,7 @@ static void add_trailing_starstar_for_dir(struct strbuf *pat)
- 		strbuf_addstr(pat, "**");
+ 	return ret;
+@@ -2124,7 +2084,7 @@ int git_config_from_mem(config_fn_t fn,
+ 	top.do_ungetc = config_buf_ungetc;
+ 	top.do_ftell = config_buf_ftell;
+ 
+-	return do_config_from(&the_reader, &top, fn, data, scope, opts);
++	return do_config_from(&top, fn, data, scope, opts);
  }
  
--static int prepare_include_condition_pattern(struct config_source *cs,
-+static int prepare_include_condition_pattern(struct key_value_info *kvi,
- 					     struct strbuf *pat)
+ int git_config_from_blob_oid(config_fn_t fn,
+@@ -3019,7 +2979,6 @@ void git_die_config(const char *key, const char *err, ...)
+  */
+ 
+ struct config_store_data {
+-	struct config_reader *config_reader;
+ 	size_t baselen;
+ 	char *key;
+ 	int do_not_match;
+@@ -3065,11 +3024,10 @@ static int matches(const char *key, const char *value,
+ 		(value && !regexec(store->value_pattern, value, 0, NULL, 0));
+ }
+ 
+-static int store_aux_event(enum config_event_t type,
+-			   size_t begin, size_t end, void *data)
++static int store_aux_event(enum config_event_t type, size_t begin, size_t end,
++			   struct config_source *cs, void *data)
  {
- 	struct strbuf path = STRBUF_INIT;
-@@ -273,11 +272,11 @@ static int prepare_include_condition_pattern(struct config_source *cs,
- 	if (pat->buf[0] == '.' && is_dir_sep(pat->buf[1])) {
- 		const char *slash;
+ 	struct config_store_data *store = data;
+-	struct config_source *cs = store->config_reader->source;
  
--		if (!cs || !cs->path)
-+		if (!kvi || !kvi->path)
- 			return error(_("relative config include "
- 				       "conditionals must come from files"));
+ 	ALLOC_GROW(store->parsed, store->parsed_nr + 1, store->parsed_alloc);
+ 	store->parsed[store->parsed_nr].begin = begin;
+@@ -3389,8 +3347,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	size_t contents_sz;
+ 	struct config_store_data store = CONFIG_STORE_INIT;
  
--		strbuf_realpath(&path, cs->path, 1);
-+		strbuf_realpath(&path, kvi->path, 1);
- 		slash = find_last_dir_sep(path.buf);
- 		if (!slash)
- 			BUG("how is this possible?");
-@@ -292,7 +291,7 @@ static int prepare_include_condition_pattern(struct config_source *cs,
- 	return prefix;
- }
- 
--static int include_by_gitdir(struct config_source *cs,
-+static int include_by_gitdir(struct key_value_info *kvi,
- 			     const struct config_options *opts,
- 			     const char *cond, size_t cond_len, int icase)
+-	store.config_reader = &the_reader;
+-
+ 	/* parse-key returns negative; flip the sign to feed exit(3) */
+ 	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
+ 	if (ret)
+@@ -3951,8 +3907,6 @@ static int reader_origin_type(struct config_reader *reader,
  {
-@@ -309,7 +308,7 @@ static int include_by_gitdir(struct config_source *cs,
- 
- 	strbuf_realpath(&text, git_dir, 1);
- 	strbuf_add(&pattern, cond, cond_len);
--	prefix = prepare_include_condition_pattern(cs, &pattern);
-+	prefix = prepare_include_condition_pattern(kvi, &pattern);
- 
- again:
- 	if (prefix < 0)
-@@ -442,16 +441,16 @@ static int include_by_remote_url(struct config_include_data *inc,
- 					     inc->remote_urls);
- }
- 
--static int include_condition_is_true(struct config_source *cs,
-+static int include_condition_is_true(struct key_value_info *kvi,
- 				     struct config_include_data *inc,
- 				     const char *cond, size_t cond_len)
+ 	if (the_reader.config_kvi)
+ 		*type = reader->config_kvi->origin_type;
+-	else if(the_reader.source)
+-		*type = reader->source->origin_type;
+ 	else
+ 		return 1;
+ 	return 0;
+@@ -4005,8 +3959,6 @@ static int reader_config_name(struct config_reader *reader, const char **out)
  {
- 	const struct config_options *opts = inc->opts;
- 
- 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
--		return include_by_gitdir(cs, opts, cond, cond_len, 0);
-+		return include_by_gitdir(kvi, opts, cond, cond_len, 0);
- 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
--		return include_by_gitdir(cs, opts, cond, cond_len, 1);
-+		return include_by_gitdir(kvi, opts, cond, cond_len, 1);
- 	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
- 		return include_by_branch(cond, cond_len);
- 	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
-@@ -467,7 +466,6 @@ static int kvi_fn(config_fn_t fn, const char *key, const char *value,
- static int git_config_include(const char *var, const char *value, void *data)
- {
- 	struct config_include_data *inc = data;
--	struct config_source *cs = inc->config_reader->source;
- 	struct key_value_info *kvi = inc->config_reader->config_kvi;
- 	const char *cond, *key;
- 	size_t cond_len;
-@@ -482,16 +480,16 @@ static int git_config_include(const char *var, const char *value, void *data)
- 		return ret;
- 
- 	if (!strcmp(var, "include.path"))
--		ret = handle_path_include(cs, value, inc);
-+		ret = handle_path_include(kvi, value, inc);
- 
- 	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
--	    cond && include_condition_is_true(cs, inc, cond, cond_len) &&
-+	    cond && include_condition_is_true(kvi, inc, cond, cond_len) &&
- 	    !strcmp(key, "path")) {
- 		config_fn_t old_fn = inc->fn;
- 
- 		if (inc->opts->unconditional_remote_url)
- 			inc->fn = forbid_remote_url;
--		ret = handle_path_include(cs, value, inc);
-+		ret = handle_path_include(kvi, value, inc);
- 		inc->fn = old_fn;
- 	}
- 
-@@ -683,6 +681,7 @@ static void kvi_from_param(struct key_value_info *out)
- 	out->linenr = -1;
- 	out->origin_type = CONFIG_ORIGIN_CMDLINE;
- 	out->scope = CONFIG_SCOPE_COMMAND;
-+	out->path = NULL;
+ 	if (the_reader.config_kvi)
+ 		*out = reader->config_kvi->filename;
+-	else if (the_reader.source)
+-		*out = reader->source->name;
+ 	else
+ 		return 1;
+ 	return 0;
+@@ -4039,7 +3991,7 @@ int current_config_line(void)
+ 	if (the_reader.config_kvi)
+ 		return the_reader.config_kvi->linenr;
+ 	else
+-		return the_reader.source->linenr;
++		BUG("current_config_line called outside config callback");
  }
  
- int git_config_parse_parameter(const char *text,
-@@ -1077,6 +1076,7 @@ static void kvi_from_source(struct config_source *cs,
- 	out->origin_type = cs->origin_type;
- 	out->linenr = cs->linenr;
- 	out->scope = scope;
-+	out->path = cs->path;
- }
- 
- static int git_parse_source(struct config_source *cs, config_fn_t fn,
+ int lookup_config(const char **mapping, int nr_mapping, const char *var)
 diff --git a/config.h b/config.h
-index 27d1718ac7b..f8bab9fdef4 100644
+index f8bab9fdef4..525fc0d5e03 100644
 --- a/config.h
 +++ b/config.h
-@@ -674,6 +674,7 @@ struct key_value_info {
- 	int linenr;
- 	enum config_origin_type origin_type;
- 	enum config_scope scope;
-+	const char *path;
- 	struct key_value_info *prev;
+@@ -73,6 +73,7 @@ enum config_event_t {
+ 	CONFIG_EVENT_ERROR
  };
  
++struct config_source;
+ /*
+  * The parser event function (if not NULL) is called with the event type and
+  * the begin/end offsets of the parsed elements.
+@@ -82,6 +83,7 @@ enum config_event_t {
+  */
+ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
+ 					size_t begin_offset, size_t end_offset,
++					struct config_source *cs,
+ 					void *event_fn_data);
+ 
+ struct config_options {
+@@ -101,6 +103,10 @@ struct config_options {
+ 
+ 	const char *commondir;
+ 	const char *git_dir;
++	/*
++	 * event_fn and event_fn_data are for internal use only. Handles events
++	 * emitted by the config parser.
++	 */
+ 	config_parser_event_fn_t event_fn;
+ 	void *event_fn_data;
+ 	enum config_error_action {
 -- 
 gitgitgadget
 
