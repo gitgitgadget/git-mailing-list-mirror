@@ -2,134 +2,277 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C128C7618E
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 03:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7687C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 03:36:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbjDUDS6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Apr 2023 23:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37458 "EHLO
+        id S233422AbjDUDgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Apr 2023 23:36:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjDUDS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2023 23:18:56 -0400
-Received: from USG02-CY1-obe.outbound.protection.office365.us (mail-cy1usg02on0078.outbound.protection.office365.us [23.103.209.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33FBE53
-        for <git@vger.kernel.org>; Thu, 20 Apr 2023 20:18:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hii-tsd.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Cm16CHrDGYw2hoicoXeZz5mIY7bMEDplVG/4GipZR9g=;
- b=kX3sZIWATFTqan6yzRQp2c604Qu2Jwut7IRdvU+/RDRnq88rs1xEgk1rPboe1ehNs0m20qJT7J/XKF+aqxWJnO8u/++t62w9Y+LDe1p7xT1ry0LEbCqm+1arV+LlQlaJ8RTL46EG8lCWYKPYdnW9SijYPKQ8It16z3IsIFXEreXfqVZwPruhwu0rr2EJPhoDIEdB6wpTIf9NxZwxfpOSnskaKciu5XRLlO3dWmnTxK7pfbvfKXaxFWuoLbgV68i1c6peJ2RmYR0ZNmkwcG/Grh+WOo/5mrz/aiBL//f4fDC9C4W0rlot0mvJVRh5PhTFeMoAH2FmRbEBBmKfBdkRQg==
-Received: from PH2P110CA0024.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:127::37)
- by PH1P110MB1145.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:175::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.22; Fri, 21 Apr
- 2023 03:18:50 +0000
-Received: from CY1USG02FT006.eop-usg02.itar.protection.office365.us
- (2001:489a:2202:5::203) by PH2P110CA0024.office365.us (2001:489a:200:127::37)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.24 via Frontend
- Transport; Fri, 21 Apr 2023 03:18:50 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 204.237.244.98)
- smtp.mailfrom=hii-tsd.com; dkim=pass (signature was verified)
- header.d=hii-tsd.com;dmarc=pass action=none header.from=hii-tsd.com;
-Received-SPF: Pass (protection.outlook.com: domain of hii-tsd.com designates
- 204.237.244.98 as permitted sender) receiver=protection.outlook.com;
- client-ip=204.237.244.98; helo=agwtsdmbx01.hii-tsd.com; pr=C
-Received: from agwtsdmbx01.hii-tsd.com (204.237.244.98) by
- CY1USG02FT006.mail.protection.office365.us (10.97.26.83) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6319.22 via Frontend Transport; Fri, 21 Apr 2023 03:18:49 +0000
-Received: from agwtsdmbx01.HII-TSD.COM (10.254.42.148) by
- agwtsdmbx01.HII-TSD.COM (10.254.42.148) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Fri, 21 Apr 2023 03:18:47 +0000
-Received: from USG02-CY1-obe.outbound.protection.office365.us (23.103.199.178)
- by agwtsdmbx01.HII-TSD.COM (10.254.42.148) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26 via Frontend Transport; Fri, 21 Apr 2023 03:18:47 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector5401; d=microsoft.com; cv=none;
- b=n7iksJ7uKpLq/41pCjtCc55qnwyQXOLhxxiRU61WDnwSYtmQQi6DiX71lkgGphu2IrvIzlxvzguSL4XCiszjRj4+bIyQ6EG102WZ0Z28XEAVhYq8byq/hpKUWIgblUSurIvFJMzj45FOzVprODdZ0KghUp50g91NiqVBFRY0DWH6mhsvljjI3jujo4mZnu5Awn4Wz4IFmgdGrBDqvK5wc+18dmqpquJvdXuya3r8HobMk9MPFvQ2pkARWV4qF2lJs1a40WFuL4OTu1HI8WRkq0RLIPBpmPyxZTDOR5aLf7fWh4pN5uCJATHIAFlzavL8J/JnFgTXmRV0rlFd5ywYDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector5401;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Cm16CHrDGYw2hoicoXeZz5mIY7bMEDplVG/4GipZR9g=;
- b=A7z+x8NgJYuP54LclSXU6YBrKZ649uVPS3K6xBtI2p2dXkK5CjZRSYfOip+zkOcb7qk141hQQSsCmRHN1M6SEkYgxluveBzlj0QBz20jJVvqiQW7qNotse2LR+f0DRML1sZxEPNLPiKFEcWEfLwIoHE8Zva5ZMJ2Bo92z+FYcvgeYvjZrlr18qWA242c3lY8Z/SSioeUlvz7vT3rJ3TGQx4mM+R/nEfq3b1b5LdHEogcS4lgWmv9GNailWvBXghnEwz3UETszVfZ5hG4R2QvY1g2r6/dEZIaIk0DDTgiWm/AYfCgZ5k87aZJEyWPcVSDWppSBNxu6AhioxWbBd2Wow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hii-tsd.com; dmarc=pass action=none header.from=hii-tsd.com;
- dkim=pass header.d=hii-tsd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hii-tsd.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Cm16CHrDGYw2hoicoXeZz5mIY7bMEDplVG/4GipZR9g=;
- b=kX3sZIWATFTqan6yzRQp2c604Qu2Jwut7IRdvU+/RDRnq88rs1xEgk1rPboe1ehNs0m20qJT7J/XKF+aqxWJnO8u/++t62w9Y+LDe1p7xT1ry0LEbCqm+1arV+LlQlaJ8RTL46EG8lCWYKPYdnW9SijYPKQ8It16z3IsIFXEreXfqVZwPruhwu0rr2EJPhoDIEdB6wpTIf9NxZwxfpOSnskaKciu5XRLlO3dWmnTxK7pfbvfKXaxFWuoLbgV68i1c6peJ2RmYR0ZNmkwcG/Grh+WOo/5mrz/aiBL//f4fDC9C4W0rlot0mvJVRh5PhTFeMoAH2FmRbEBBmKfBdkRQg==
-Received: from BN0P110MB1178.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:181::20)
- by BN0P110MB1545.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:184::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.22; Fri, 21 Apr
- 2023 03:18:43 +0000
-Received: from BN0P110MB1178.NAMP110.PROD.OUTLOOK.COM
- ([fe80::2abb:51a8:c10d:4ac6]) by BN0P110MB1178.NAMP110.PROD.OUTLOOK.COM
- ([fe80::2abb:51a8:c10d:4ac6%7]) with mapi id 15.20.6319.022; Fri, 21 Apr 2023
- 03:18:43 +0000
-From:   "Davidson, Ricky (HII-Mission Technologies)" 
-        <Ricky.Davidson@hii-tsd.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "Ricky Davidson via GitGitGadget" <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Junio C Hamano [ ]" <gitster@pobox.com>,
-        "Davidson, Ricky CTR" <Ricky.Davidson.ctr@ncte.hpc.mil>
-Subject: Re: EXT :Re: [PATCH v3] http: document sslcert and sslkey types and
- extend to proxy
-Thread-Topic: EXT :Re: [PATCH v3] http: document sslcert and sslkey types and
- extend to proxy
-Thread-Index: AQHZc+rTuPQNUg6g6kqxkwd8ND8axa81FkZa
-Date:   Fri, 21 Apr 2023 03:18:43 +0000
-Message-ID: <BN0P110MB117884C8D51DD55E4B445ADCDB609@BN0P110MB1178.NAMP110.PROD.OUTLOOK.COM>
-References: <pull.1520.v2.git.1682014322604.gitgitgadget@gmail.com>
- <pull.1520.v3.git.1682021501245.gitgitgadget@gmail.com>
- <1c365381-4858-1534-18ba-aa6f5c5056c2@ramsayjones.plus.com>
-In-Reply-To: <1c365381-4858-1534-18ba-aa6f5c5056c2@ramsayjones.plus.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=hii-tsd.com;
-x-ms-traffictypediagnostic: BN0P110MB1178:EE_|BN0P110MB1545:EE_|CY1USG02FT006:EE_|PH1P110MB1145:EE_
-X-MS-Office365-Filtering-Correlation-Id: 280c69ef-5d28-466f-b457-08db4217202a
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: F0lv7AbUjMKwL4ikLjUsYXrlva7c43OUmJrp6ulZJ7eluhIbvtomyqtXzOSN3V3LhoNm7CSP9F7vs2BMh5XehP7kSdoiJb2Sv8u7dO6Hp6iOOJBRswgV7Mw7gflQRET0cGsbbshncqIgIyk9Z1MoIAvwEya1TauStug/+gMDRQtkUR6BWx9rEbluNJ/GspubvFHqrW7Vpw7jpx/Pq5VbHyq3coBz7y9EPdgkHZ4UXGmcpbzNw7+WFCQbT8SIJ32skwusNGucaJpXDM6PzaE+nZn5+MROwxpPk8e6TedrXRukyhI+2Pvc/SX5jQLux1X6qw0W7Xlvi7eBUlXXHwEpO0PQLw0n+octGnxKLqt/z5zF9NFpK23tz47j+W2XV9uNjkd0W4lrFuDoQKE+7J0ptCEjSXYfyEBfhrPOPeDhj3SPomL+irNSTFcJGOEbWXcgkM3ERjDeseuARXbZyg6xv8lsRjBjXVJfQcDLs10Ig0LNX/AdcueeGpN5lVlXb+lnPgQUYVJ92zfN/lt1kkqXJH8L3GwG6RZLpDMON0dCGRH2kQWyRqYkFrdmDnKuAzkfL/N6m95ujqKQwijXa/dxUW/DBPefYejnHWzddlx4GlS0FDkgkHMfkA+32XgzIKm3
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0P110MB1178.NAMP110.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(451199021)(66946007)(76116006)(64756008)(66556008)(66476007)(66446008)(558084003)(4326008)(33656002)(38070700005)(38100700002)(5660300002)(8676002)(8936002)(110136005)(122000001)(52536014)(86362001)(54906003)(498600001)(2906002)(71200400001)(7696005)(186003)(26005)(9686003)(6506007)(55016003);DIR:OUT;SFP:1101;
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S230107AbjDUDgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2023 23:36:05 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 837ED1FF0
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 20:36:02 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-2fa0ce30ac2so1141719f8f.3
+        for <git@vger.kernel.org>; Thu, 20 Apr 2023 20:36:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682048161; x=1684640161;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JTqrfADNm7DgrO1MZTrU6DrhMA0DU1uQnakQoHJBK3w=;
+        b=Ep6cdJhloQoQRISmBn1IxMgfHim6bissEi70XOgNqyCgfKCq8o0d26OT5iny1M1qdK
+         82c8Udyuye8DQLQDdCnaLWXrue1MujaYjSI8dtQVxA4VQTtQoMD1uWTuYDziGZ2BwhOR
+         KDkebhMcQc/dS7cSM2QzGY/U6tHvVF6i9sVRFQ+S8xKZc7jFNw/r6oZ74fhthFSvU+Lv
+         X+C5jwVI3m8gUXM4QC3hB9ctzS9RiNexAkqbSuKGers5R54YNXDAXNjJqifGXKTYRF9F
+         mF6XKovFLEx5+ooxXtVT/T6w19h3Tek+JoqzUiOAwd11Cc/RdoVg8rzKsAIcRjHKd0qe
+         z/hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682048161; x=1684640161;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JTqrfADNm7DgrO1MZTrU6DrhMA0DU1uQnakQoHJBK3w=;
+        b=jsUymAnUjxETSZ7Ma5txwpzdL6e+QAZym4wv3gSa4qWENLW9YNjLMgxvGzlHmkWiBH
+         wjiIcjUQ348QxQqV49W7c1IaeMZlLRvuJmM0wUmgZO9tIj+xnXfgWP9FRsCAlAflyjcU
+         0Gpx9Gsv0Vp7JonhHihSfwONTUW3XypodsticqAo5CTAEP/9TNie8C7OLdvPRp8B4I5r
+         wH/78jfFpAVvlvBP2gXdgyU2rp/rd2ACFda1fDAFe75TjdU6akwdIgkecT9vQfXRSa8w
+         2EcXYQKn4+D+2iW+VoBkof3X6IERqRN9eeCgiDf+0CtMeVA5V60G1bFGNwV0+Qqg0rpv
+         EyOQ==
+X-Gm-Message-State: AAQBX9fIrSkyVq+aR4pIESWJBqCzKXLHSMDxU2B/4qEMtdtq7fRWwuwZ
+        XP/o63slRzYYEvY1jkv1aOu2YP1cyHU=
+X-Google-Smtp-Source: AKy350YrkunR3mEDgPssDGnfqbKag3qhgRzRiYnBWKnU/d5JCsd2mJpy7O3sCZZIZbdrYNc7ydq7KA==
+X-Received: by 2002:a5d:56c4:0:b0:2f6:ca0d:ec1c with SMTP id m4-20020a5d56c4000000b002f6ca0dec1cmr2575121wrw.10.1682048160549;
+        Thu, 20 Apr 2023 20:36:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l7-20020a5d4bc7000000b002fefe2edb72sm3438905wrt.17.2023.04.20.20.36.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 20:36:00 -0700 (PDT)
+Message-Id: <pull.1520.v4.git.1682048159508.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1520.v3.git.1682021501245.gitgitgadget@gmail.com>
+References: <pull.1520.v3.git.1682021501245.gitgitgadget@gmail.com>
+From:   "Ricky Davidson via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 21 Apr 2023 03:35:59 +0000
+Subject: [PATCH v4] http: document sslcert and sslkey types and extend to
+ proxy
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0P110MB1545
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: CY1USG02FT006.eop-usg02.itar.protection.office365.us
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 34dc0603-6096-43b0-d64e-08db42171c6d
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: DjmQfjyfKbztdmx2gMCdCL6DeGa8BYpXpaHCJrcmwP6t9sMqc2VpTRQtjK39Ix3kQ5g/eQgDOhaGQMAgGdRCfCFRaW7VmsoJiO5DzrRFsZZrJWIW8QZrd+7RkTURyOfbXb0BOWJ+0KDR1Kp9JfBsL7JrLzXJaFkuUfEbTC7v4c4gYTXzI4ZLROmmfFryqZ2YB/FOHz8Rw1njWgovDUMEP0hiczwjO/6Hqi4Xg/CjnT0pS7qWgQGfU8v9YZ/PW2vbFKhBoXOtjueLIzBKapBIjIHNZvYhzDOVFJoDWjr4wesjppD7HT/n+3gTnoMfYdnJlXYW7yhs4Gr0YQ3Iz1bUsS6Azi9r67YliWA6JGXdqrud6XZk/DP9UHVU/q7Pqjk4zjCO8UOHqghvOC0sEyNFflebI362A2uKgRD8aSgSc7gSNX/IIEd5XJxVtSVYkOF1sVzxRNSA/gvhpVosKATD0h5aTi2JuPYoA5r8U9mRegBkFgOdvHS1ZH9H4WeRAygx+0rQodmf9+l2/pF0CdQJoCHorh54tROPuvveXXy3IbgNrApHDZvP4qHn6Is7+7PvADjZVP2omnBu5OCxFZIoX7/iUPo0qLA5eggfRJNpahD856Xsdpzhh63wNo0y3PNclJr85y1TugBuizcpugxlEb1zRXZ9KuLW5ZLNsIrfbhEyfASguOdSHk73ZbMOg+n8jxJZ2wbp3qLhc3w0kYj5Rg==
-X-Forefront-Antispam-Report: CIP:204.237.244.98;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:agwtsdmbx01.hii-tsd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230028)(4636009)(451199021)(36840700001)(40470700004)(46966006)(498600001)(110136005)(8676002)(54906003)(47076005)(5660300002)(52536014)(70206006)(70586007)(336012)(55016003)(81166007)(4326008)(8936002)(40460700003)(6506007)(26005)(82310400005)(9686003)(33656002)(186003)(558084003)(86362001)(36860700001)(2906002)(7696005)(36900700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: hii-tsd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Apr 2023 03:18:49.2220
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 280c69ef-5d28-466f-b457-08db4217202a
-X-MS-Exchange-CrossTenant-Id: 0f5f8cb4-3b3e-42cb-bcb9-13b83b2f86e2
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0f5f8cb4-3b3e-42cb-bcb9-13b83b2f86e2;Ip=[204.237.244.98];Helo=[agwtsdmbx01.hii-tsd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY1USG02FT006.eop-usg02.itar.protection.office365.us
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH1P110MB1145
+To:     git@vger.kernel.org
+Cc:     "Junio C Hamano [ ]" <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Ricky Davidson <Ricky.Davidson@hii-tsd.com>,
+        Ricky Davidson <Ricky.Davidson@hii-tsd.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=0A=
-> s/GIT_SSL_CERT_TYPE/GIT_SSL_KEY_TYPE/ ?=0A=
-=0A=
-Ah, yes, thank you. Another patch will be inbound. Also, I am a little conc=
-erned about the language in "Supported formats are `PEM` and `ENG`.", so I =
-will change that too.=0A=
+From: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+
+0a01d41ee4 (http: add support for different sslcert and sslkey
+types., 2023-03-20) added http.sslCertType and http.sslKeyType, but:
+
+1. it does not document the feature.
+2. it does not apply to SSL proxy equivalents.
+
+Documents http.sslCertType and http.sslKeyType. Implements
+http.proxySSLCertType. Does the same for http.sslKeyType and
+http.proxySSLKeyType equivalents and related environment
+variables.
+
+Signed-off-by: Ricky Davidson <Ricky.Davidson@hii-tsd.com>
+---
+    [PATCH] http: document sslcert and sslkey types and extend to proxy
+    
+    0a01d41ee4 (http: add support for different sslcert and sslkey types.,
+    2023-03-20) added http.sslCertType and http.sslKeyType, but:
+    
+     1. it does not document the feature.
+     2. it does not apply to SSL proxy equivalents.
+    
+    Documents http.sslCertType and http.sslKeyType. Implements
+    http.proxySSLCertType. Does the same for http.sslKeyType and
+    http.proxySSLKeyType equivalents and related environment variables.
+    
+    Signed-off-by: Ricky Davidson Ricky.Davidson@hii-tsd.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1520%2FRicky-Davidson-hii-tsd%2Fmaster-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1520/Ricky-Davidson-hii-tsd/master-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1520
+
+Range-diff vs v3:
+
+ 1:  020c03104f4 ! 1:  c2489a9ed88 http: document sslcert and sslkey types and extend to proxy
+     @@ Documentation/config/http.txt: http.proxySSLCert::
+       
+      +http.proxySSLCertType::
+      +	Format of the client certificate used to authenticate with an HTTPS proxy.
+     -+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     ++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
+      +	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
+     -+	variable.
+     ++	variable. For more information on accepted values, see libcurl's
+     ++	`CURLOPT_PROXY_SSLCERTTYPE`.
+      +
+       http.proxySSLKey::
+       	The pathname of a file that stores a private key to use to authenticate with
+     @@ Documentation/config/http.txt: http.proxySSLCert::
+       
+      +http.proxySSLKeyType::
+      +	Format of the client private key used to authenticate with an HTTPS proxy.
+     -+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     ++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
+      +	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_KEY_TYPE` environment
+     -+	variable.
+     ++	variable. For more information on accepted values, see libcurl's
+     ++	`CURLOPT_PROXY_SSLKEYTYPE`.
+      +
+       http.proxySSLCertPasswordProtected::
+       	Enable Git's password prompt for the proxy SSL certificate.  Otherwise OpenSSL
+     @@ Documentation/config/http.txt: http.sslCert::
+       
+      +http.sslCertType::
+      +	Format of the SSL certificate used to authenticate over HTTPS.
+     -+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     ++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
+      +	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
+     -+	variable.
+     ++	variable. For more information on accepted values, see libcurl's
+     ++	`CURLOPT_SSLCERTTYPE`.
+      +
+       http.sslKey::
+       	File containing the SSL private key when fetching or pushing
+     @@ Documentation/config/http.txt: http.sslCert::
+       
+      +http.sslKeyType::
+      +	Format of the SSL private key used to authenticate over HTTPS.
+     -+	Supported formats are `PEM` and `ENG`. The format `ENG` enables loading from
+     -+	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
+     -+	variable.
+     ++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
+     ++	a crypto engine. Can be overridden by the `GIT_SSL_KEY_TYPE` environment
+     ++	variable. For more information on accepted values, see libcurl's
+     ++	`CURLOPT_SSLKEYTYPE`.
+      +
+       http.sslCertPasswordProtected::
+       	Enable Git's password prompt for the SSL certificate.  Otherwise
+
+
+ Documentation/config/http.txt | 28 ++++++++++++++++++++++++++++
+ http.c                        | 12 ++++++++++++
+ 2 files changed, 40 insertions(+)
+
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index afeeccfbfa7..dfca1a54123 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -34,11 +34,25 @@ http.proxySSLCert::
+ 	with an HTTPS proxy. Can be overridden by the `GIT_PROXY_SSL_CERT` environment
+ 	variable.
+ 
++http.proxySSLCertType::
++	Format of the client certificate used to authenticate with an HTTPS proxy.
++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
++	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_CERT_TYPE` environment
++	variable. For more information on accepted values, see libcurl's
++	`CURLOPT_PROXY_SSLCERTTYPE`.
++
+ http.proxySSLKey::
+ 	The pathname of a file that stores a private key to use to authenticate with
+ 	an HTTPS proxy. Can be overridden by the `GIT_PROXY_SSL_KEY` environment
+ 	variable.
+ 
++http.proxySSLKeyType::
++	Format of the client private key used to authenticate with an HTTPS proxy.
++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
++	a crypto engine. Can be overridden by the `GIT_PROXY_SSL_KEY_TYPE` environment
++	variable. For more information on accepted values, see libcurl's
++	`CURLOPT_PROXY_SSLKEYTYPE`.
++
+ http.proxySSLCertPasswordProtected::
+ 	Enable Git's password prompt for the proxy SSL certificate.  Otherwise OpenSSL
+ 	will prompt the user, possibly many times, if the certificate or private key
+@@ -161,11 +175,25 @@ http.sslCert::
+ 	over HTTPS. Can be overridden by the `GIT_SSL_CERT` environment
+ 	variable.
+ 
++http.sslCertType::
++	Format of the SSL certificate used to authenticate over HTTPS.
++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
++	a crypto engine. Can be overridden by the `GIT_SSL_CERT_TYPE` environment
++	variable. For more information on accepted values, see libcurl's
++	`CURLOPT_SSLCERTTYPE`.
++
+ http.sslKey::
+ 	File containing the SSL private key when fetching or pushing
+ 	over HTTPS. Can be overridden by the `GIT_SSL_KEY` environment
+ 	variable.
+ 
++http.sslKeyType::
++	Format of the SSL private key used to authenticate over HTTPS.
++	Example values are `PEM` and `ENG`. The format `ENG` enables loading from
++	a crypto engine. Can be overridden by the `GIT_SSL_KEY_TYPE` environment
++	variable. For more information on accepted values, see libcurl's
++	`CURLOPT_SSLKEYTYPE`.
++
+ http.sslCertPasswordProtected::
+ 	Enable Git's password prompt for the SSL certificate.  Otherwise
+ 	OpenSSL will prompt the user, possibly many times, if the
+diff --git a/http.c b/http.c
+index d5d82c5230f..bee4ea64115 100644
+--- a/http.c
++++ b/http.c
+@@ -74,7 +74,9 @@ static const char *curl_http_proxy;
+ static const char *http_proxy_authmethod;
+ 
+ static const char *http_proxy_ssl_cert;
++static const char *http_proxy_ssl_cert_type;
+ static const char *http_proxy_ssl_key;
++static const char *http_proxy_ssl_key_type;
+ static const char *http_proxy_ssl_ca_info;
+ static struct credential proxy_cert_auth = CREDENTIAL_INIT;
+ static int proxy_ssl_cert_password_required;
+@@ -441,9 +443,13 @@ static int http_options(const char *var, const char *value, void *cb)
+ 
+ 	if (!strcmp("http.proxysslcert", var))
+ 		return git_config_string(&http_proxy_ssl_cert, var, value);
++	if (!strcmp("http.proxysslcerttype", var))
++		return git_config_string(&http_proxy_ssl_cert_type, var, value);
+ 
+ 	if (!strcmp("http.proxysslkey", var))
+ 		return git_config_string(&http_proxy_ssl_key, var, value);
++	if (!strcmp("http.proxysslkeytype", var))
++		return git_config_string(&http_proxy_ssl_key_type, var, value);
+ 
+ 	if (!strcmp("http.proxysslcainfo", var))
+ 		return git_config_string(&http_proxy_ssl_ca_info, var, value);
+@@ -1146,9 +1152,13 @@ static CURL *get_curl_handle(void)
+ 
+ 			if (http_proxy_ssl_cert)
+ 				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT, http_proxy_ssl_cert);
++			if (http_proxy_ssl_cert_type)
++				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERTTYPE, http_proxy_ssl_cert_type);
+ 
+ 			if (http_proxy_ssl_key)
+ 				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEY, http_proxy_ssl_key);
++			if (http_proxy_ssl_key_type)
++				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEYTYPE, http_proxy_ssl_key_type);
+ 
+ 			if (has_proxy_cert_password())
+ 				curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD, proxy_cert_auth.password);
+@@ -1285,7 +1295,9 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 		max_requests = DEFAULT_MAX_REQUESTS;
+ 
+ 	set_from_env(&http_proxy_ssl_cert, "GIT_PROXY_SSL_CERT");
++	set_from_env(&http_proxy_ssl_cert_type, "GIT_PROXY_SSL_CERT_TYPE");
+ 	set_from_env(&http_proxy_ssl_key, "GIT_PROXY_SSL_KEY");
++	set_from_env(&http_proxy_ssl_key_type, "GIT_PROXY_SSL_KEY_TYPE");
+ 	set_from_env(&http_proxy_ssl_ca_info, "GIT_PROXY_SSL_CAINFO");
+ 
+ 	if (getenv("GIT_PROXY_SSL_CERT_PASSWORD_PROTECTED"))
+
+base-commit: 667fcf4e15379790f0b609d6a83d578e69f20301
+-- 
+gitgitgadget
