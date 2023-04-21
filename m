@@ -2,154 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77554C77B7F
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 22:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3231DC7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 23:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233821AbjDUWa1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 18:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59974 "EHLO
+        id S231614AbjDUXe3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 19:34:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233591AbjDUWaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 18:30:24 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB9441BF5
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 15:30:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1682116223; x=1713652223;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=UCoDuds6VVa9GHIu2e0l/huwb1xLJeOydSd3csLBhzA=;
-  b=MLoMmkA5B7PUjIn++erCBjr7YTXpjqIEPSJ9WAwwBTFZ1LpQdT6F2v3p
-   jc6opaK0M1ZxBxvg+zQDj9GlscsJokJe1LzJUOfbLwi12sROXxvbX1pSV
-   idpMPQgWVK8AWLoy5rBdX7fCcY2JOhLlK3Ji+6U++GBkRYMl6kactVaDV
-   xNNX/YnhVbal4gJh58HudoeaNxlIMGL8Rk6uy4dIgDXWlhYBI08zL2Lw1
-   BCFAbjo8q66czMGLiGhoUqccDfByjrL6z3C7K+eh3vtLund4IXEQtdTNE
-   OCXhem4e/MRRjMKDfQfodxRXcjDphjgvde6aQiPWTytSkg0CHsbt8T80H
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10687"; a="325693229"
-X-IronPort-AV: E=Sophos;i="5.99,216,1677571200"; 
-   d="scan'208";a="325693229"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2023 15:30:23 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10687"; a="722912529"
-X-IronPort-AV: E=Sophos;i="5.99,216,1677571200"; 
-   d="scan'208";a="722912529"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.241.1])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2023 15:30:22 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        with ESMTP id S229592AbjDUXe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2023 19:34:28 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74272128
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 16:34:26 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-63b67a26069so3769925b3a.0
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 16:34:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682120066; x=1684712066;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pV4UyrjQ5Lnc0sybWLNa56W76nk87hTyzdcly7336ak=;
+        b=my3OI3GzS1fDTCqwwCqz6v0NVBcol/pjFa65GddnvWsMCVik+OG8NJfRyCcGC42yYo
+         gzhyzgQR2YlABUkRSL4UiE8PqB+zJ33ciBUiOUXAWJHMBaeu2Hv2Wx5Po1PMZY3mccHz
+         UND3JA3snw4TbokchzhBxaW3LxmhaO63llh3rOf8ECgXsiHnNBT8n7ToNgKzN22NPnuu
+         ZocazAYobiC6fv9JJ7mxBSSy5aXwOcTzwWpQQ+HF8wjzhWuBrKmAowJZipbP2pVEh0wY
+         nW9iiVPmOKZVTNKVD1LrrEcjU2K6wU3obhL2HKzmTz2YJnwdlT3WvZdntGH9O7pd8jxs
+         VXug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682120066; x=1684712066;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pV4UyrjQ5Lnc0sybWLNa56W76nk87hTyzdcly7336ak=;
+        b=SZrD+NFw4Gu38eW9Icg3F/nM0L1WRcv0LP0ZO4O/LzU7t5BP32cn+G1TDzsZqKp/8z
+         e7A7voxS8Ufh7yxlGCzZaDEBG9JeyOg9HQxuZZ+FJRgnIFGge57XUe8ijemuQCjYGeCY
+         aOONbR9Bj8V5K2Q5HAS63umsRp5/ffzwovhjyqTRV0tngqWo3KwyXQ5SjnD4FExMU20t
+         pJ12lFNOViTz7L5P4e/bt2bSl7GpZtmVChoSJG+Qviw7XhDA6aO7/M/ESpuGmjIc6jZy
+         2wP9aGKyfpt8EgI4NwA8IXdseXQ4325xX61lA/bpbfKzFIpxmqCewV2XM0m5rp8Z6LP3
+         iMkg==
+X-Gm-Message-State: AAQBX9d2S6oG6vuEfzW/Stg17SfugUbZ7vtUL+//ue2Ilhh0cOBEGVUh
+        vSPgrK7PxVJC3D9zO3i4oAk=
+X-Google-Smtp-Source: AKy350a0YgZSW3slYgQdZ+3PmK2wuvBsJ5f0KD/Xy3AM5t1brO9KRzVcEd+n4YeSHKr/EKEM69iF7w==
+X-Received: by 2002:a05:6a21:100e:b0:f1:8f7:eeb5 with SMTP id nk14-20020a056a21100e00b000f108f7eeb5mr7266644pzb.60.1682120065723;
+        Fri, 21 Apr 2023 16:34:25 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id s23-20020a62e717000000b005aa60d8545esm3489224pfh.61.2023.04.21.16.34.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Apr 2023 16:34:25 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
         Glen Choo <chooglen@google.com>
-Subject: [PATCH] blame: use different author name for fake commit generated by --contents
-Date:   Fri, 21 Apr 2023 15:30:13 -0700
-Message-ID: <20230421223013.467142-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.40.0.471.gbd7f14d9353b
+Subject: Re: [PATCH] blame: use different author name for fake commit
+ generated by --contents
+References: <20230421223013.467142-1-jacob.e.keller@intel.com>
+Date:   Fri, 21 Apr 2023 16:34:24 -0700
+In-Reply-To: <20230421223013.467142-1-jacob.e.keller@intel.com> (Jacob
+        Keller's message of "Fri, 21 Apr 2023 15:30:13 -0700")
+Message-ID: <xmqqbkjgizcv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-When the --contents option is used with git blame, and the contents of
-the file have lines which can't be annotated by the history being
-blamed, the user will see an author of "Not Committed Yet". This is
-similar to the way blame handles working tree contents when blaming
-without a revision.
+> +test_expect_success 'blame working copy' '
+> +	test_when_finished "git restore file" &&
+> +	echo "1A quick brown fox jumps over" >file &&
+> +	echo "another lazy dog" >> file &&
 
-This is slightly confusing since this data isn't the working copy and
-while it is technically "not committed yet", its also coming from an
-external file. Replace this author name with "External file
-(--contents)" to better differentiate such lines from actual working
-copy lines.
+Lose the SP between ">>" redirection operator and its operand
+"file".
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Suggested-by: Glen Choo <chooglen@google.com>
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/blame-options.txt |  8 +++-----
- blame.c                         |  8 ++++++--
- t/annotate-tests.sh             | 11 +++++++++--
- 3 files changed, 18 insertions(+), 9 deletions(-)
+So, we have "1A quick brown fox jumps over the" and "lazy dog"
+in :file and HEAD:file, and both of these lines are different
+in the working tree files as shown above.
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 95599bd6e5f4..552dcc60f2a4 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -64,11 +64,9 @@ include::line-range-format.txt[]
- 	manual page.
+> +	check_count A 1 "Not Committed Yet" 1
+
+So why do we expect one is attributed to A while the other is
+attributed to the working tree file?  Shouldn't we be expecting both
+to be attributed to "Not Committed Yet"?
+
+WIth this updated like the attached, 8001, 8002, and 8012 seem to
+all pass (and without, they all fail).
+
+ t/annotate-tests.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git c/t/annotate-tests.sh w/t/annotate-tests.sh
+index 859693949b..4238ce45f8 100644
+--- c/t/annotate-tests.sh
++++ w/t/annotate-tests.sh
+@@ -74,8 +74,8 @@ test_expect_success 'blame 1 author' '
  
- --contents <file>::
--	Pretend the file being annotated has a commit with the
--	contents from the named file and a parent of <rev>,
--	defaulting to HEAD when no <rev> is specified. You may
--	specify '-' to make the command read from the standard
--	input for the file contents.
-+	Annotate using the contents from the named file, starting from <rev>
-+	if it is specified, and HEAD otherwise. You may specify '-' to make
-+	the command read from the standard input for the file contents.
- 
- --date <format>::
- 	Specifies the format used to output dates. If --date is not
-diff --git a/blame.c b/blame.c
-index 2c427bcdbfdd..47dd77d045dc 100644
---- a/blame.c
-+++ b/blame.c
-@@ -206,8 +206,12 @@ static struct commit *fake_working_tree_commit(struct repository *r,
- 
- 	origin = make_origin(commit, path);
- 
--	ident = fmt_ident("Not Committed Yet", "not.committed.yet",
--			WANT_BLANK_IDENT, NULL, 0);
-+	if (contents_from)
-+		ident = fmt_ident("External file (--contents)", "external.file",
-+				  WANT_BLANK_IDENT, NULL, 0);
-+	else
-+		ident = fmt_ident("Not Committed Yet", "not.committed.yet",
-+				  WANT_BLANK_IDENT, NULL, 0);
- 	strbuf_addstr(&msg, "tree 0000000000000000000000000000000000000000\n");
- 	for (parent = commit->parents; parent; parent = parent->next)
- 		strbuf_addf(&msg, "parent %s\n",
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index b35be20cf327..859693949b94 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -72,6 +72,13 @@ test_expect_success 'blame 1 author' '
- 	check_count A 2
+ test_expect_success 'blame working copy' '
+ 	test_when_finished "git restore file" &&
+-	echo "1A quick brown fox jumps over" >file &&
+-	echo "another lazy dog" >> file &&
++	echo "11A quick brown fox jumps over the" >file &&
++	echo "lazy dog" >>file &&
+ 	check_count A 1 "Not Committed Yet" 1
  '
  
-+test_expect_success 'blame working copy' '
-+	test_when_finished "git restore file" &&
-+	echo "1A quick brown fox jumps over" >file &&
-+	echo "another lazy dog" >> file &&
-+	check_count A 1 "Not Committed Yet" 1
-+'
-+
- test_expect_success 'blame with --contents' '
- 	check_count --contents=file A 2
- '
-@@ -79,7 +86,7 @@ test_expect_success 'blame with --contents' '
- test_expect_success 'blame with --contents changed' '
- 	echo "1A quick brown fox jumps over the" >contents &&
- 	echo "another lazy dog" >>contents &&
--	check_count --contents=contents A 1 "Not Committed Yet" 1
-+	check_count --contents=contents A 1 "External file (--contents)" 1
- '
- 
- test_expect_success 'blame in a bare repo without starting commit' '
-@@ -109,7 +116,7 @@ test_expect_success 'blame 2 authors' '
- '
- 
- test_expect_success 'blame with --contents and revision' '
--	check_count -h testTag --contents=file A 2 "Not Committed Yet" 2
-+	check_count -h testTag --contents=file A 2 "External file (--contents)" 2
- '
- 
- test_expect_success 'setup B1 lines (branch1)' '
--- 
-2.40.0.471.gbd7f14d9353b
+
 
