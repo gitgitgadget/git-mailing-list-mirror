@@ -2,133 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1A20C7618E
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 18:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27FB4C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 19:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232717AbjDUS0M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 14:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40940 "EHLO
+        id S232026AbjDUTB1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 15:01:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbjDUS0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 14:26:10 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB9E19A
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 11:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1682101558; i=tboegi@web.de;
-        bh=q4gSvvVcKY+MDFMk+VM7O8VK2mvJHBWgS/aJsuytEqU=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=JMInn/w0skRfoN2y/Sx5lDC+X/p2NvFMwevFYgoGy3IFfZQXNj9XJAi5FvYYsLqLx
-         qxixouF1ZRcBN7QPgrSrL30dJ8HPAvOLoOdoLvaOCaUiGeGZ7hUjZRp7IL9/N1EiZu
-         /H/FUKdkSgUb1diutSwREuhh3Psc9eNME6viHD9/Z4kkACaVvA+AlUR1kF+83UKYJz
-         /8rKGlY7J4egBdRq//yigaYuUPDA+yU7EFCEaKmxptc0JJS5rzYNJYwcm7BYOUQQN9
-         crlgISEhmwGqFJdocd31J2U8COM3UXoXvP+or1c9kOhtCbURtQhIXryaA+ftBv2me8
-         q1RtFIStV191A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MKMA1-1pbHx3035D-00LwH1; Fri, 21
- Apr 2023 20:25:58 +0200
-Date:   Fri, 21 Apr 2023 20:25:57 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org, eyvind.bernhardsen@gmail.com,
-        gitster@pobox.com
-Subject: Re: [PATCH] docs: clarify how the text and text=auto attributes are
- different
-Message-ID: <20230421182556.xxd4vrcksr6634ao@tb-raspi4>
-References: <20230421055641.550199-1-alexhenrie24@gmail.com>
+        with ESMTP id S229950AbjDUTB0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2023 15:01:26 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26EB9A3
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:01:25 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1a66888cb89so21663455ad.3
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 12:01:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682103684; x=1684695684;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mMG6HE3M5B0NL47I1r0AFvJEw0au4HDE8s+6po8mn30=;
+        b=rhQA9dTOJqlr9qgYPdsXk8TxG+KLyHW20bjUFiqypH6zMNgIXDO4QuzvjUCNEZfZLz
+         mrI+VvQzMUVBkJVjs9/KqHO0yxyxd6TE9QL1kj2NF2RD7hikaPVQB1uCiXDdiFfO+MNH
+         e6aKhw8LsaKC1DqU8n1IeM1jbpd9U5ScF/sDm7MvRRFiydqGt4/S5/trIYvkdCudDrEp
+         z+SzsTMWwCVEiABmhaoPSvv3enRkW595oG4GpYyZAJBazyG2anYVcNZpkW6RdpzYovl/
+         5b6k7rCnENvvttca8gPnP4ZgRICkfBqjSYEBDfehK7a6vPLiTVNLLroCwoTBL3e6M3DP
+         NJYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682103684; x=1684695684;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mMG6HE3M5B0NL47I1r0AFvJEw0au4HDE8s+6po8mn30=;
+        b=JLE3Mgt4iXNkdHZVkXW7yyfxfttrW7arOt7DToB5npOQ/BGPJHvf11+eqyR/viPaVf
+         PDEasJx+3tdPi66YdCwlo0biSSzhpgeApzW6G1KcqYXMpzexO5eTFJ/GfAhmW9TSkw/d
+         8PTm9kYfNGrwoBxNOmq1JOv3rHkCrvfNJ3raN5whLFBKiOzqriS0KhpxfR/d+JqsNv69
+         Dgq4t+SUZn2s94edVsNrT1ZnJ7r8kSwjnuv+heBwJ6dgCf61uLJCUcfbcRJO3Cv2N6ON
+         yFuVcgxusP/zq2f+mLr1mavatxbHU4SubPb2nMyV2k/bbvggz2przgTAxbMXLVZqiNAf
+         nPMQ==
+X-Gm-Message-State: AAQBX9c7eXGxXhqRLeuZ9bxkP+P3tRDpevYLD5I9qn4XPZhWP+pxWxO9
+        P4uD5cZprm3RglxPxAL6+hQ=
+X-Google-Smtp-Source: AKy350YSOj34QDHX2jqwFdjDu6zfPPZlAHsihQe8eaV056aldwB5z7EoDtetp0HGr4KqXlBRoo0srg==
+X-Received: by 2002:a17:903:2281:b0:1a1:b174:836c with SMTP id b1-20020a170903228100b001a1b174836cmr8108772plh.16.1682103684502;
+        Fri, 21 Apr 2023 12:01:24 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id y1-20020a170902700100b0019a7ef5e9a8sm3049634plk.82.2023.04.21.12.01.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Apr 2023 12:01:24 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 2/6] rebase -i: remove patch file after conflict
+ resolution
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+        <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+        <227aea031b588977f22f3f97faee981d79ade05c.1682089074.git.gitgitgadget@gmail.com>
+Date:   Fri, 21 Apr 2023 12:01:23 -0700
+In-Reply-To: <227aea031b588977f22f3f97faee981d79ade05c.1682089074.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Fri, 21 Apr 2023 14:57:50
+        +0000")
+Message-ID: <xmqqwn25jbzw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230421055641.550199-1-alexhenrie24@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:2OkzJU24lWJ2IJL31eFOz0b4U1t7zhaYhk6BLIy9t7YmtYPX1JP
- tcA/Aew+CMmTPYSI09cjwhTkF5KHHyWvYs+KTdiGi3Kc8Lfs/oVQ297DjqouRjF9Cg8+d/n
- D+9QTqwyv7Ptr7e8lFVbJzihi2rme6+G4CzGIpwryI6HQWJi38/Rj4PoTjEXKcnVg+qp/tu
- gphW1YWDpkeSRuQk1S7NQ==
-UI-OutboundReport: notjunk:1;M01:P0:NEfKq32tMts=;3btk4xJl+TnDGDjyELpDf4wkBlb
- Qf1a9S2oxdq+8r3ct7pgWAKtak6hufPanwqMA3p8Xh0dxA8BkgJUoQJKGRL8zCKKMqCCJXFZZ
- mKeJebzxWdG07NrgYfp9/yaIyVY8xJ1qdbcyTmKVGlmV1wlwM9O9Q0IHmaKIy3pbku2nyyZHe
- ggHpXrMJLhrFEdy07n2e7Mi2zGNupsqFdAGhz1tR7Ra0E8pBibqLBfIbK412Z8BAFSqXat8qW
- zB8kNCe+/LWZdRVfBnlZJMySZ8h8pKfbDPiDpbtyD97yWuzwSTAZ55Pl1m5QEhVkslV81jKxt
- gIkMxp9MTiHJnuUjExKOrxbXthNA8vwTVni9IpcEPt52/YK1Rdmk1oGVHMXjW0GpVxn0qopX1
- 1aCE60zZJOnEV3Bf7CtUZC7ZExaluu0jP1BXkEDoS2C68qWTQsJGipnIX4xBd0qDb33lUqFyK
- S1ARjusalbu5BbcUZXFUv5ublSZx5xoM3AMHMF20hzT2DnoYdxi1Oj2dja9hV+tsWo+IDS9xF
- 8jdfwYgFcZTSMazQj9MTUhF5GgBIlr6ckbC9fB5wdIVwpBSjYyGJGgODkdSSzBk8kxDt6vpce
- OssYGPvWz8gVfnnom08rQP2+PqA0Y6tga7EcHiWqCEiDPnXl3HLKVr0Jd/SUwNRJdqNisgLiD
- UuVJniIqZH58IfG/eqq764wq3d/TBwYaUKB2Y0xaSiZGwjXtYe+fNqYeIq2774dXzhmXNAUWU
- ksW4XxgFSg41XYff93Mi+LF8MpyQ44ayHZwPj7My5KMIjJ4SrNJ2vo11EIz17va3MtA9+BPHp
- CAJ03OyMwLVPGV1jm+ZJJrMliEZ1RyOiHgVj4NLsSzD2DdpHhZ48ceU7kwi7vsH8HBRCN1bWL
- od2qv3nmfgZiDk/Xk9uIT12QXHIUewjeCOubv7kaSldcSV4OXcdmUsU93KJKH3smVQ0oimvzn
- PkhEiOYuzj9VY4V4hBwNWNzInRs=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 20, 2023 at 11:56:41PM -0600, Alex Henrie wrote:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for that, fully agree with comments from Junio.
-
->  Set::
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> -	Setting the `text` attribute on a path enables end-of-line
-> -	normalization and marks the path as a text file.  End-of-line
-> -	conversion takes place without guessing the content type.
-> +	Setting the `text` attribute on a path marks the path as a text
-> +	file, which enables end-of-line normalization: When a matching file
-> +	is added to the index, even if it has CRLF line endings in the
-> +	working directory, the file is stored in Git with LF line endings.
+> When rebase stops for the user to resolve conflicts it writes a patch
+> for the conflicting commit to .git/rebase-merge/patch. This file
+> should be deleted when the rebase continues.
 
-Hm, I stumbled a little bit over the word "even" here.
-But it makes things very clear, so this is good.
+Could you describe the reason why this file "should" be deleted a
+bit better?  Once the user edits the files in the working tree and
+tell "git rebase" with the "--continue" option that they finished
+helping the command, and the command creates a commit out of the
+resolution left by the user in the working tree and in the index,
+the patch may no longer is needed, so I can understand if this were
+"this file can be deleted"---in other words, again, this explains
+why such a change would not be a wrong change that hurts the users,
+but it does not explain why we want such a change very well.  Is
+there a reason why a left-over patch file is a bad thing (perhaps
+causing end-user confusion upon seeing such a patch that apparently
+is for a much earlier step in the rebase in progress?  If so, that
+might be a good justification to say we "should").
 
+> As the path is now used
+> in two different places rebase_path_patch() is added and used to
+> obtain the path for the patch.
 
-> +	However, if the file was already in Git with CRLF endings, no
-> +	conversion is done.
+OK.
 
-But I think that this is wrong, unless I missed something.
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  sequencer.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
 
-Using
-*.txt text
-in .gitattributes
-will convert CRLF into LF in the repo at the next git commit/git add
+The patch text itself looks good in the sense that it correctly
+implements what the proposed log message claims it "should".
 
-When you create a file with CRLF (no atttibutes), commit it into the repo,
-and later add the attribute "text", the file may be reported as modified.
-Not always. A `touch file.txt` typically asks Git to re-investigate things=
-,
-and it may show up as modified.
-After a `git clone` it may be shown as modified or not.
-End of side-note.
-
-Setting
-
-
-
-
->
->  Unset::
->
-> @@ -142,10 +145,9 @@ Unset::
->
->  Set to string value "auto"::
->
-> -	When `text` is set to "auto", the path is marked for automatic
-> -	end-of-line conversion.  If Git decides that the content is
-> -	text, its line endings are converted to LF on checkin.
-> -	When the file has been committed with CRLF, no conversion is done.
-> +	When text is set to "auto", Git decides by itself whether the file
-> +	is text or binary.  If it is text, line endings are converted as
-> +	described above.  If it is binary, they are not.
-
-Here we need to have the lines from above:
-
-When text is set to "auto", Git decides by itself whether the file
-is text or binary.  If it is text, line endings are converted as
-described above.  If it is binary, they are not.
-However, if the file was already in Git with CRLF endings, no
-conversion is done.
-
-I hope that I didn't messed up while reading this patch ?
-Thanks again for bringing this up
+Thanks.
