@@ -2,144 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7259DC7618E
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 21:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE8F4C7618E
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 21:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233221AbjDUVLw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 17:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53480 "EHLO
+        id S232643AbjDUVVz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 17:21:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbjDUVLv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 17:11:51 -0400
-Received: from mail.cs.ucla.edu (mail.cs.ucla.edu [131.179.128.66])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7565B3
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 14:11:49 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.cs.ucla.edu (Postfix) with ESMTP id 5DC5B3C097AFB;
-        Fri, 21 Apr 2023 14:11:49 -0700 (PDT)
-Received: from mail.cs.ucla.edu ([127.0.0.1])
-        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id F0Dk__KggKPm; Fri, 21 Apr 2023 14:11:48 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.cs.ucla.edu (Postfix) with ESMTP id D51853C097AFC;
-        Fri, 21 Apr 2023 14:11:48 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.cs.ucla.edu D51853C097AFC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
-        s=9D0B346E-2AEB-11ED-9476-E14B719DCE6C; t=1682111508;
-        bh=zQdaZsDa8s9krdsZy85097kC9CndnSxNNUbdc/Og1Tc=;
-        h=Message-ID:Date:MIME-Version:To:From;
-        b=NA3myyvxvu5fOWnmyLbEJP2ylrYSmTPN5p0nv6jFcM4mydg+m5rFsMnBDmdj8vu/P
-         VfuWcSFrQtp7HkGEBXmd2Z96AfXgwviuIfFXGST+oKv+I3PRYUBSyFC2wHlp72YKpI
-         ZjPoB2CJNLH/Vhk2QAwAYhcMmH/BrjIfJI178kdu3TNQqBBzxb39iFIPhWAZKlhy2T
-         P+PwZc30FH1fn4J/4O0G4K8ElJJqlRVko38QG/7ApZndjjv/hl3JXtYxD4CW4FDpGO
-         sSXMtQgzJTrXS6+8uePrIDY4C5AM2ulcixoA4gzmySm183YRdR1mivhwQ0LJ0STVbN
-         BPWuUr/xdqyQw==
-X-Virus-Scanned: amavisd-new at mail.cs.ucla.edu
-Received: from mail.cs.ucla.edu ([127.0.0.1])
-        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id cI4CcMjK-_sC; Fri, 21 Apr 2023 14:11:48 -0700 (PDT)
-Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
-        by mail.cs.ucla.edu (Postfix) with ESMTPSA id 9766E3C097AFB;
-        Fri, 21 Apr 2023 14:11:48 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="------------jZipCDUV888HYNke1Si3HurA"
-Message-ID: <508ca102-63a9-6334-fee8-7a1ae84c7a23@cs.ucla.edu>
-Date:   Fri, 21 Apr 2023 14:11:48 -0700
+        with ESMTP id S229808AbjDUVVx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2023 17:21:53 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E36242110
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 14:21:51 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1a920d4842bso21368965ad.2
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 14:21:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682112111; x=1684704111;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FU3CZjb29x+KAyUCp1GjUNIFG98SvwZnZANCUPKJDag=;
+        b=qiXka2/66tWEdWW3VrjA0sWqyDOCZK9rRFRGF/BzofZZ3fuEtBzUN62MUnVQeBbIiO
+         n3SHuKKhRFaI6qdv/1X2H31qGp2PvOLD7EUjt6r4d3ATEe1dgLEIWaEmB8uVAvY0nUV9
+         XgehLLu5W9+Cf08WwTp30zE1JtQgOLET/fhdlJCVLCjx8T+gq0Y9/JpzBQleVoMtRdAW
+         fqjb1amT7HLq+TMLc+MBwipxhD6bxglzejk/c5/ibmM+aIy6+KTWoFXt83W67Elu+fCc
+         nMIbGtHJmqz5z4dgeDreZiCHlLZKvoxBji6njR32dbuXDZwzNAvnlHKlNuMUD8mcHVlk
+         W/7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682112111; x=1684704111;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FU3CZjb29x+KAyUCp1GjUNIFG98SvwZnZANCUPKJDag=;
+        b=Y/zR+hTusqGlHyzbv02jEsK/ep1VMpVSSffOoEhyyRMb9CJbATGYuowOmsk4WSoH3d
+         a+ibkpSK5Rcekoby13vLDfzh3ru76xdgm5ZZzr67/sDIEh51jpFfPraqY8Qb3PAto7Dh
+         RP0Zv1xQ3m5rqWRJDPPbTp9O8Ju4SnhxzdN8XPM1ICmnWM8S/+JN2UVE1JEmYsVAPf4p
+         sjeeK++VYVul4XweURW7ZYOPYC/DZmkK1WFrgNNdqEC80GefrZ6y99rs1fFfjWUM28OJ
+         OQcPQzX4kGNDlEbaYDXcmoL9FScwtEslfTezHtlXFODBUeFnvGe3gUUvF32mBP50jIdX
+         GN1w==
+X-Gm-Message-State: AAQBX9eqoOD9W8uvG1r6Ejs3icRE3y7NO3rGVz5Zm0bgOsqLiYRdOX5F
+        HrU+Dm8/fWPWfkMrQt7Nsow=
+X-Google-Smtp-Source: AKy350ZJQHbfDGiWHIhwblbgB5HtAanaHxni7/ltw6lu6SqTLWH4FL9i6mU0K8RaYopqdcTHrg169A==
+X-Received: by 2002:a17:902:d4d1:b0:19a:9880:175f with SMTP id o17-20020a170902d4d100b0019a9880175fmr7741229plg.51.1682112111291;
+        Fri, 21 Apr 2023 14:21:51 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id x21-20020a170902b41500b001a1a8e98e93sm3085300plr.287.2023.04.21.14.21.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Apr 2023 14:21:50 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 3/6] sequencer: factor out part of pick_commits()
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+        <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+        <31bb644e769a085bd2db97cdb5aae78729efc52d.1682089075.git.gitgitgadget@gmail.com>
+        <xmqqpm7xjam2.fsf@gitster.g>
+        <049a792d-e015-3583-452d-923b9aee4a72@gmail.com>
+Date:   Fri, 21 Apr 2023 14:21:50 -0700
+In-Reply-To: <049a792d-e015-3583-452d-923b9aee4a72@gmail.com> (Phillip Wood's
+        message of "Fri, 21 Apr 2023 21:00:47 +0100")
+Message-ID: <xmqqleilhqxd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Content-Language: en-US
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Jim Meyering <jim@meyering.net>
-Cc:     grep-devel@gnu.org, demerphq <demerphq@gmail.com>,
-        pcre2-dev@googlegroups.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <m28rf0pa2m.fsf@meyering.net>
- <4322c414-2bb7-924f-0f6d-dbf517599c3f@cs.ucla.edu>
- <CA+8g5KFqgtKadru7g0LMPpoNDO0vxGGsva_+hQAUcOOfMTd22w@mail.gmail.com>
- <c5j7tduynkzhqpcgqc7iei4mmlnlwvfohmj7ryfhifpay6hhtn@ha3apuuzhxzz>
-From:   Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-Subject: Compatibility between GNU and Git grep -P
-In-Reply-To: <c5j7tduynkzhqpcgqc7iei4mmlnlwvfohmj7ryfhifpay6hhtn@ha3apuuzhxzz>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------jZipCDUV888HYNke1Si3HurA
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-In <https://lists.gnu.org/r/grep-devel/2023-04/msg00017.html> Carlo=20
-Marcelo Arenas Bel=C3=B3n wrote:
+> There are two blocks that might be entered. One guarded by "if
+> (reschedule)" - this is not entered because reschedlue is always zero
+> when picking a commit. The other is guarded by "else if
+> (is_rebase_i(opts) && check_todo && !res)" and so will not be entered
+> when we want to return an error because "res" is non-zero in that
+> case.
 
-> After using this for a while think the following will be better suited
-> for a release because:
->=20
-> * the unreleased PCRE2 code is still changing and is unlikely to be rel=
-eased
->    for a couple of months.
-> * the current way to configure PCRE2 make it difficult to link with the
->    unreleased code (this might be an independent bug), but it is likely=
- that
->    the wrong headers might be used by mistake.
-> * the tests and documentation were not completely accurate.
+Perhaps the proposed log message can be updated to mention
+these to save time from "git log" readers?
 
-Thanks for looking into this. I'm concerned about the resulting patches,=20
-though, because I see recent activity in on the Git grep -P side here:
+>>   * the todo_list->current counter is incremented
 
-https://lore.kernel.org/git/xmqqzgaf2zpt.fsf@gitster.g/
+The todo_list->current counter gets incremented before leaving the
+function now, but all three callers of pick_commits() immediately
+call todo_list_release(), the value, whether it is incremented or
+not, is discarded without getting looked at.  
 
-Bleeding-edge (i.e., "master") GNU grep uses PCRE2_UCP |=20
-PCRE2_EXTRA_ASCII_BSD with unreleased PCRE2 (which introduces=20
-PCRE2_EXTRA_ASCII_BSD), and it uses neither flag with the current PCRE2=20
-release. You're proposing to change GNU grep to never use either flag,=20
-regardless of PCRE2 release.
+So it is not a noop, but the difference in behaviour does not become
+externally observable?
 
-In contrast, bleeding-edge (i.e., "next") Git grep -P always uses=20
-PCRE2_UCP and never uses PCRE2_EXTRA_ASCII_BSD. I.e., it disagrees with=20
-GNU grep regardless of whether your proposed changes were adopted.
-
-Given Jim's strong desire that \d should match only ASCII digits, I=20
-doubt whether GNU grep will simply use PCRE2_UCP without=20
-PCRE2_EXTRA_ASCII_BSD.
-
-If we want the two grep -P's to stay compatible, I see two ways forward:
-
-1. Leave GNU grep alone and modify Git grep to behave like GNU grep (see=20
-attached patch to Git).
-
-2. Adopt your proposed change to GNU grep, and revert the recent change=20
-to Git grep so that it never uses PCRE2_UCP.
-
-Either way, we should see what the Git folks say about this.
---------------jZipCDUV888HYNke1Si3HurA
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-grep-be-compatible-with-GNU-grep-P.patch"
-Content-Disposition: attachment;
- filename="0001-grep-be-compatible-with-GNU-grep-P.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1ZjVlNTQxNTdhMDFjNTQwYmRlMDJjMzA1YzhlZTVlMWEzOWQ0ZjFjIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQYXVsIEVnZ2VydCA8ZWdnZXJ0QGNzLnVjbGEuZWR1
-PgpEYXRlOiBGcmksIDIxIEFwciAyMDIzIDE0OjA2OjI1IC0wNzAwClN1YmplY3Q6IFtQQVRD
-SF0gZ3JlcDogYmUgY29tcGF0aWJsZSB3aXRoIEdOVSBncmVwIC1QCgpVc2UgUENSRTJfVUNQ
-IG9ubHkgd2hlbiBQQ1JFMl9FWFRSQV9BU0NJSV9CU0QgaXMgZGVmaW5lZCwKZm9yIGNvbXBh
-dGliaWxpdHkgd2l0aCBHTlUgZ3JlcC4KLS0tCiBncmVwLmMgfCA5ICsrKysrKystLQogMSBm
-aWxlIGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
-aXQgYS9ncmVwLmMgYi9ncmVwLmMKaW5kZXggMDczNTU5ZjJjZC4uZTlkYzhkYzBiYyAxMDA2
-NDQKLS0tIGEvZ3JlcC5jCisrKyBiL2dyZXAuYwpAQCAtMzIwLDggKzMyMCwxMyBAQCBzdGF0
-aWMgdm9pZCBjb21waWxlX3BjcmUyX3BhdHRlcm4oc3RydWN0IGdyZXBfcGF0ICpwLCBjb25z
-dCBzdHJ1Y3QgZ3JlcF9vcHQgKm9wdAogCQl9CiAJCW9wdGlvbnMgfD0gUENSRTJfQ0FTRUxF
-U1M7CiAJfQotCWlmICghb3B0LT5pZ25vcmVfbG9jYWxlICYmIGlzX3V0ZjhfbG9jYWxlKCkg
-JiYgIWxpdGVyYWwpCi0JCW9wdGlvbnMgfD0gKFBDUkUyX1VURiB8IFBDUkUyX1VDUCB8IFBD
-UkUyX01BVENIX0lOVkFMSURfVVRGKTsKKwlpZiAoIW9wdC0+aWdub3JlX2xvY2FsZSAmJiBp
-c191dGY4X2xvY2FsZSgpICYmICFsaXRlcmFsKSB7CisJCW9wdGlvbnMgfD0gKFBDUkUyX1VU
-RiB8IFBDUkUyX01BVENIX0lOVkFMSURfVVRGKTsKKyNpZmRlZiBQQ1JFMl9FWFRSQV9BU0NJ
-SV9CU0QKKwkJLyogQmUgY29tcGF0aWJsZSB3aXRoIEdOVSBncmVwIC1QICdcZCcuICAqLwor
-CQlvcHRpb25zIHw9IChQQ1JFMl9VQ1AgfCBQQ1JFMl9FWFRSQV9BU0NJSV9CU0QpOworI2Vu
-ZGlmCisJfQogCiAjaWZuZGVmIEdJVF9QQ1JFMl9WRVJTSU9OXzEwXzM1X09SX0hJR0hFUgog
-CS8qCi0tIAoyLjM5LjIKCg==
-
---------------jZipCDUV888HYNke1Si3HurA--
+Thanks.
