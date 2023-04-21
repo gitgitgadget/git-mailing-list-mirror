@@ -2,131 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C866EC77B7E
-	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 22:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77554C77B7F
+	for <git@archiver.kernel.org>; Fri, 21 Apr 2023 22:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233711AbjDUWFu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 18:05:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49548 "EHLO
+        id S233821AbjDUWa1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Apr 2023 18:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232058AbjDUWFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 18:05:50 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E3710F2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 15:05:48 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f1763eea08so23280935e9.2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 15:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682114747; x=1684706747;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yw0gKPv0ICFTsC6v2oN1yI6BsvdMAfF34ZENuj/oHyI=;
-        b=EhHv1yd2c5hul+Smi9bspiwQMZSaGYfZAKbIHA44zP0y61oC6ZKrb7WQMrkqXMwXTm
-         0ds5EiegsCSmAOOrRx9qbzWreRyEslQ9zB15J2KvbqN8aZ5NbB10KqRQmqb6z3U8a1gQ
-         Cx25TIFYsgqRgWex+4rMnQUsKh/hEamKfM8nstrnrdpHSqO8lNQEBI7FY+HembbAaX+c
-         kTOJ/33FPsgsf0Or9TapUlplXwvySp37D/QNEMG8vmiGpmRG+B+EZbNDoKAqmSPlNYTW
-         RTf4KUt9hgBMu998927kkt+OHbrQKUl4FS1ksrpFV+ZzHYzm/qfMyxaGFSzjt/EbFIqp
-         vgjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682114747; x=1684706747;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yw0gKPv0ICFTsC6v2oN1yI6BsvdMAfF34ZENuj/oHyI=;
-        b=mD6Fgj8f5ey0MyrCjU5fTRvSmhC5e8dyx5mTwUgd0pf94ZOgNLsurSoF0hL3BlA4Gw
-         cU+GMznbSQehS5wwJLXg3+lpN8cO+0/r3yRcRRZ4s25/am+R9m2Vz7blsuF/UZ65TV+Q
-         sB0Ag5NMbgvyz2SMhS1jIWTNcf3KIb1db13duY3AYiBjZRLiq20cE4XuVPHgelwLGuJV
-         CCreDfPBrWaRUWIa3iaSr0cvDE9SYKSB1FA47s/3kNR9Bk/XHcyOoivfaJpbO3L4yLFV
-         Q0slsmEtIUsm2o5fpuuGjYzE045yKqwqWwq3YJOwRQn6FIjp833dbHBatmY3bYRNxOTa
-         N11g==
-X-Gm-Message-State: AAQBX9emTx2SGjxsmqNLdPcCrCoae5SIUMjcoFP9/PL/wUdUeVMoFO5s
-        5P+InwKUybbfIDI5gnIUQb2wgXFZvqUmqJZ2QTA=
-X-Google-Smtp-Source: AKy350bdxTozaXh9lxM9knwsjYxQe5U9JmqhRejsaQ+VJVA+PJCH8H+1G2omTxjFSyeeXtvaLgtXMOMam0MfM77J3yg=
-X-Received: by 2002:a05:600c:21ce:b0:3f1:8aaa:c212 with SMTP id
- x14-20020a05600c21ce00b003f18aaac212mr2854025wmj.33.1682114746810; Fri, 21
- Apr 2023 15:05:46 -0700 (PDT)
+        with ESMTP id S233591AbjDUWaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2023 18:30:24 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB9441BF5
+        for <git@vger.kernel.org>; Fri, 21 Apr 2023 15:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1682116223; x=1713652223;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=UCoDuds6VVa9GHIu2e0l/huwb1xLJeOydSd3csLBhzA=;
+  b=MLoMmkA5B7PUjIn++erCBjr7YTXpjqIEPSJ9WAwwBTFZ1LpQdT6F2v3p
+   jc6opaK0M1ZxBxvg+zQDj9GlscsJokJe1LzJUOfbLwi12sROXxvbX1pSV
+   idpMPQgWVK8AWLoy5rBdX7fCcY2JOhLlK3Ji+6U++GBkRYMl6kactVaDV
+   xNNX/YnhVbal4gJh58HudoeaNxlIMGL8Rk6uy4dIgDXWlhYBI08zL2Lw1
+   BCFAbjo8q66czMGLiGhoUqccDfByjrL6z3C7K+eh3vtLund4IXEQtdTNE
+   OCXhem4e/MRRjMKDfQfodxRXcjDphjgvde6aQiPWTytSkg0CHsbt8T80H
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10687"; a="325693229"
+X-IronPort-AV: E=Sophos;i="5.99,216,1677571200"; 
+   d="scan'208";a="325693229"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2023 15:30:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10687"; a="722912529"
+X-IronPort-AV: E=Sophos;i="5.99,216,1677571200"; 
+   d="scan'208";a="722912529"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.241.1])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2023 15:30:22 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>
+Subject: [PATCH] blame: use different author name for fake commit generated by --contents
+Date:   Fri, 21 Apr 2023 15:30:13 -0700
+Message-ID: <20230421223013.467142-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.40.0.471.gbd7f14d9353b
 MIME-Version: 1.0
-References: <m28rf0pa2m.fsf@meyering.net> <4322c414-2bb7-924f-0f6d-dbf517599c3f@cs.ucla.edu>
- <CA+8g5KFqgtKadru7g0LMPpoNDO0vxGGsva_+hQAUcOOfMTd22w@mail.gmail.com>
- <c5j7tduynkzhqpcgqc7iei4mmlnlwvfohmj7ryfhifpay6hhtn@ha3apuuzhxzz> <508ca102-63a9-6334-fee8-7a1ae84c7a23@cs.ucla.edu>
-In-Reply-To: <508ca102-63a9-6334-fee8-7a1ae84c7a23@cs.ucla.edu>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 21 Apr 2023 15:05:35 -0700
-Message-ID: <CAPUEsph9MvGhyh0zTz3o5ELj0XKMdPNvghrg6VDRh25UipgXwQ@mail.gmail.com>
-Subject: Re: Compatibility between GNU and Git grep -P
-To:     Paul Eggert <eggert@cs.ucla.edu>
-Cc:     Jim Meyering <jim@meyering.net>, grep-devel@gnu.org,
-        demerphq <demerphq@gmail.com>, pcre2-dev@googlegroups.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2023 at 2:11=E2=80=AFPM Paul Eggert <eggert@cs.ucla.edu> wr=
-ote:
->
-> In <https://lists.gnu.org/r/grep-devel/2023-04/msg00017.html> Carlo
-> Marcelo Arenas Bel=C3=B3n wrote:
->
-> > After using this for a while think the following will be better suited
-> > for a release because:
-> >
-> > * the unreleased PCRE2 code is still changing and is unlikely to be rel=
-eased
-> >    for a couple of months.
-> > * the current way to configure PCRE2 make it difficult to link with the
-> >    unreleased code (this might be an independent bug), but it is likely=
- that
-> >    the wrong headers might be used by mistake.
-> > * the tests and documentation were not completely accurate.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Just to clarify; those points were made about the GNU grep codebase, hence =
-are
-not really relevant about git's which had an independent thread[1] and
-that will be better to use instead to avoid more confusion.
+When the --contents option is used with git blame, and the contents of
+the file have lines which can't be annotated by the history being
+blamed, the user will see an author of "Not Committed Yet". This is
+similar to the way blame handles working tree contents when blaming
+without a revision.
 
-> Thanks for looking into this. I'm concerned about the resulting patches,
-> though, because I see recent activity in on the Git grep -P side here:
->
-> https://lore.kernel.org/git/xmqqzgaf2zpt.fsf@gitster.g/
+This is slightly confusing since this data isn't the working copy and
+while it is technically "not committed yet", its also coming from an
+external file. Replace this author name with "External file
+(--contents)" to better differentiate such lines from actual working
+copy lines.
 
-This is really not that recent, and has been released already with git
-2.40, so at least at that point in time git and grep 3.9 were
-consistent.  That was changed with grep 3.10 though.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Suggested-by: Glen Choo <chooglen@google.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/blame-options.txt |  8 +++-----
+ blame.c                         |  8 ++++++--
+ t/annotate-tests.sh             | 11 +++++++++--
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
-FWIW, it doesn't seem git had any issues (other than the crasher with
-PCRE2 10.34) with the transition to matching multibyte digits with
-'\d' and which is what perl (and therefore PCRE2) does, but as I
-explained in the other thread I think it might be wise (on the context
-of what is usually matched against with git) to not do that in the
-long term, and was therefore working on adding the necessary features
-to PCRE2 to be able to do so.  Note that no decision has been made
-though, which is why I didn't even bother sending an RFC patch.
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 95599bd6e5f4..552dcc60f2a4 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -64,11 +64,9 @@ include::line-range-format.txt[]
+ 	manual page.
+ 
+ --contents <file>::
+-	Pretend the file being annotated has a commit with the
+-	contents from the named file and a parent of <rev>,
+-	defaulting to HEAD when no <rev> is specified. You may
+-	specify '-' to make the command read from the standard
+-	input for the file contents.
++	Annotate using the contents from the named file, starting from <rev>
++	if it is specified, and HEAD otherwise. You may specify '-' to make
++	the command read from the standard input for the file contents.
+ 
+ --date <format>::
+ 	Specifies the format used to output dates. If --date is not
+diff --git a/blame.c b/blame.c
+index 2c427bcdbfdd..47dd77d045dc 100644
+--- a/blame.c
++++ b/blame.c
+@@ -206,8 +206,12 @@ static struct commit *fake_working_tree_commit(struct repository *r,
+ 
+ 	origin = make_origin(commit, path);
+ 
+-	ident = fmt_ident("Not Committed Yet", "not.committed.yet",
+-			WANT_BLANK_IDENT, NULL, 0);
++	if (contents_from)
++		ident = fmt_ident("External file (--contents)", "external.file",
++				  WANT_BLANK_IDENT, NULL, 0);
++	else
++		ident = fmt_ident("Not Committed Yet", "not.committed.yet",
++				  WANT_BLANK_IDENT, NULL, 0);
+ 	strbuf_addstr(&msg, "tree 0000000000000000000000000000000000000000\n");
+ 	for (parent = commit->parents; parent; parent = parent->next)
+ 		strbuf_addf(&msg, "parent %s\n",
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index b35be20cf327..859693949b94 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -72,6 +72,13 @@ test_expect_success 'blame 1 author' '
+ 	check_count A 2
+ '
+ 
++test_expect_success 'blame working copy' '
++	test_when_finished "git restore file" &&
++	echo "1A quick brown fox jumps over" >file &&
++	echo "another lazy dog" >> file &&
++	check_count A 1 "Not Committed Yet" 1
++'
++
+ test_expect_success 'blame with --contents' '
+ 	check_count --contents=file A 2
+ '
+@@ -79,7 +86,7 @@ test_expect_success 'blame with --contents' '
+ test_expect_success 'blame with --contents changed' '
+ 	echo "1A quick brown fox jumps over the" >contents &&
+ 	echo "another lazy dog" >>contents &&
+-	check_count --contents=contents A 1 "Not Committed Yet" 1
++	check_count --contents=contents A 1 "External file (--contents)" 1
+ '
+ 
+ test_expect_success 'blame in a bare repo without starting commit' '
+@@ -109,7 +116,7 @@ test_expect_success 'blame 2 authors' '
+ '
+ 
+ test_expect_success 'blame with --contents and revision' '
+-	check_count -h testTag --contents=file A 2 "Not Committed Yet" 2
++	check_count -h testTag --contents=file A 2 "External file (--contents)" 2
+ '
+ 
+ test_expect_success 'setup B1 lines (branch1)' '
+-- 
+2.40.0.471.gbd7f14d9353b
 
-> Given Jim's strong desire that \d should match only ASCII digits, I
-> doubt whether GNU grep will simply use PCRE2_UCP without
-> PCRE2_EXTRA_ASCII_BSD.
-
-My assumption is that you would also need PCRE2_EXTRA_ASCII_DIGIT, and
-indeed bleeding edge pcre2grep[2] had a compatibility option added
-assuming as much.
-
-> Either way, we should see what the Git folks say about this.
-
-The proposed patch for git would IMHO just cause the same risk I was
-trying to prevent with my proposed change to GNU grep.
-
-There are no plans to release PCRE2 10.43 and based on its regular
-cadence wouldn't be for another couple of months, so this code is a
-little premature and will need updating eitherway.
-
-Carlo
-
-[1] https://lore.kernel.org/git/2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucl=
-a.edu/
-[2] https://github.com/PCRE2Project/pcre2/commit/3bbdb6dd713b39868934fdc978=
-ba61b81da6d1c5
