@@ -2,118 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB875C7618E
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 15:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63BF3C7618E
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 18:40:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229673AbjDVPyh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 11:54:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
+        id S229590AbjDVSkQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 14:40:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjDVPyf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 11:54:35 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FB11713
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 08:54:34 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50685f1b6e0so4901497a12.0
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 08:54:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682178872; x=1684770872;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ImR8uNQ5G8fReE3PKjqelYu7hFn4Vq64pByV0SX+d+c=;
-        b=Wn9bx5+4w3p3dZKOht5j00hKZbpd9s3NRAOgIHWgMhLyWQePFVpZlpFlfPxZPQZ55h
-         vhLXITboY1e0qhWf/ye7QugYB3QwrgGab4RQ316oJr3x/Ne+Dlr9BszwO3yO/VJOe12M
-         /xgN5exi1zzHka/91ZWrhyavVORGhcoFaoKJE6Ml8vHng00jF8nhtBoSiCtIMLmTdaba
-         PF9NmPAtC0AwGYGdrbQysncw4JF9dxVyWuEVEtjm2CqGWOQPtfNg43WzhKxnPDwrJLGp
-         0Rdka3eI/z/G0YNdwHiBpHgTeamEuYccHHwb/HLfqPG5Qpv2RPL6NRm+FeRjXyEfb2FR
-         1yrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682178872; x=1684770872;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ImR8uNQ5G8fReE3PKjqelYu7hFn4Vq64pByV0SX+d+c=;
-        b=fmWWSam5QSIIryVfxvpM6tzchjqFgC5UToEMpsXUrZkhBSCvpLEBNxTD+YEDapuj9G
-         IvhJYEOQ7Z4Bx1xVP/jjcG/O7ZfVuzHtFiCOl4J//SrU2zDdq/jo7LNrUtMHv2DzX+Pr
-         Kt08Od+lp2IdHEXk3icJvv/16CDXtErfz89u/NvevOt7EbarWJSYDa6rUPEmTHfW4mRw
-         uh5SV9P6IQu6bI/YOg5RDx7jgrX/3g5fralb9tPvyo9rLMz7JmcMXny4PGiWfwq4kX1V
-         0PYQbTOP91cI7sfh/AIkDxqgo6xX8WzKaiUFNzhYEG9Ku7fxcmPtxLC9wr550E6DLrGr
-         LS6Q==
-X-Gm-Message-State: AAQBX9eUjSPOlm4HWlygvAtufDXxLr8iF7QPJRNDai5BfNTLR4CxH82Z
-        /xFjTkJ6UnrBywIi7OtR0LHdV6rbFwqnaJRWwnGTMrpOFflSeg==
-X-Google-Smtp-Source: AKy350aRvpWhgAA9w0yXKIySA9eHXgwFmfjwUREt8XX4+nY88n1BwXbETMAApUYwh3VMYVAclej/fyUO1xinSuVltl8=
-X-Received: by 2002:a05:6402:1348:b0:509:d371:21dd with SMTP id
- y8-20020a056402134800b00509d37121ddmr666528edw.25.1682178872270; Sat, 22 Apr
- 2023 08:54:32 -0700 (PDT)
+        with ESMTP id S229451AbjDVSkP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 14:40:15 -0400
+X-Greylist: delayed 2292 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 22 Apr 2023 11:40:14 PDT
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [IPv6:2a0c:5a00:149::25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4A31726
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 11:40:14 -0700 (PDT)
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+        by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.93)
+        (envelope-from <admin@game-point.net>)
+        id 1pqHYd-0090Dr-7f
+        for git@vger.kernel.org; Sat, 22 Apr 2023 20:01:59 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=game-point.net; s=selector2; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Date:Message-ID:Subject:From:To;
+        bh=al2GHbge6lnsTvKiSFxD6j3ROebOSzToT8hV/KtsY2c=; b=WGnSRFgAJwxApHfpm0J650bKr1
+        M5eZkOcRbOxfSkZQR/CXuySFciIG7fp6QvnEw/yE49M9S91YH2of1eH51G6bTBurcAF7ZMdM1PUji
+        Bgffel7knCzMUfsKpAsNHf1Zzt76xmNZdo+G4H98rP7W5/qXS2lZAh1OrpXSd6Gm1mfHHQsbj683K
+        RifRfgq2Kh4otLoXxFEqUmChvBjCy8q1oGffhjap5/TW50iYra6fns+hyC+SOvCp/8IbxuBXgahpP
+        T9K3dw12TWAhcoas/5Fe7DNrCJQPZQq5PM+M0wFlqh39pJpI2nA6BaxxJetMSYSwN4mlBaSoLHbts
+        Vtb6WHSQ==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+        by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+        (envelope-from <admin@game-point.net>)
+        id 1pqHYc-0006Ny-Qo
+        for git@vger.kernel.org; Sat, 22 Apr 2023 20:01:59 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (956903)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        id 1pqHYU-0005fP-7q
+        for git@vger.kernel.org; Sat, 22 Apr 2023 20:01:50 +0200
+To:     git@vger.kernel.org
+From:   Jeremy Morton <admin@game-point.net>
+Subject: Proposal: tell git a file has been renamed
+Message-ID: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
+Date:   Sat, 22 Apr 2023 19:01:45 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101
+ Firefox/60.0 SeaMonkey/2.53.1
 MIME-Version: 1.0
-From:   Aman <amanmatreja@gmail.com>
-Date:   Sat, 22 Apr 2023 21:24:21 +0530
-Message-ID: <CACMKQb3XsPG=gnmoBdL7Eh6dV2h-LEbGHs+QpBr1g9yV+SSmRw@mail.gmail.com>
-Subject: On understanding, exploring and abstractions.
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone.
+Yes, I know Linus specifically doesn't store file rename info in Git. 
+The trouble is, every now and then, I'll come across a situation where 
+Git doesn't successfully detect that I've renamed a file because I'm 
+doing something like renaming a class at the same time.  So I'll have 
+a file OldClassNameTests.cs and a NewClassNameTests.cs but a bunch of 
+lines in that file have also changed from OldClassName.DoThing() to 
+NewClassName.DoThing().  I can clearly see that this is a rename, but 
+Git sees enough changed content that it doesn't realize it, and puts 
+it in as a delete/add, losing the content history.
 
-This is Aman, I am a high school student. And,
+The standard answer for this is to rename the file in one commit, then 
+make the changes.  That's fine if you know ahead of time you'll want 
+to do this.  However it's a total PITA if you have a bunch of changes 
+and you realize that a rename has caused this problem.  You now have 
+to back out your changes to the renamed file, add the rename, commit 
+it, then re-apply the changes.
 
-"I DON'T know how computers (and modern software) works AT ALL".
+Could a command be added to git that means you tell Git that counts as 
+a file rename?  Git would add a marker to the staging area that the 
+file has been renamed, and upon commit, would first generate an 
+additional commit for each rename before generating the main commit, 
+ensuring the rename operation counts as an actual rename, and the 
+content's history is maintained.
 
-I have no idea, except about the abstractions I play on. I understand
-the case for abstractions, they are what, (arguably or not) run the
-world forward.
-
-But it is really , And by really, I mean really frustrating. To the
-point where I don't quite enjoy programming (despite the fact that I
-have had exposure to "programming" for quite some time). I am
-fascinated by these things around me, computers run the world, and I
-REALLY want to understand them, just for the sake of it (I guess).
-
-I believe what made computers fun, in the old days, was the ability to
-really talk to it. (even Linus tells this in the "beauty of
-Programming chapter" in his book, which was written 20 years ago!)
-Even C feels like an abstraction, hey the "magic" of compilers, and
-libraries.
-
-Even people around me, and 99% of people I find on the internet, to
-discuss issues like this, too, don't know how a computer, and modern
-software (which runs the world) really works. And people seem to get
-fine by it, which is not necessarily bad, but really frustrating to
-me.
-
-And my question is, How do I do it? Should I try to build my own
-computer? Create a CPU in Verilog on an FPGA. Write an assembler,
-bootloaders, operating system kernels, compilers, etc.? But what about
-wanting to read how the modern systems work? But if I want to know how
-LLVM or Linux works? Or how a modern compiler is created?
-
-People have discouraged me to read source codes, and software
-architectures, saying it may not be worthwhile, even IF you could do
-it. So what could be done?
-
-Maybe, the right question isn't what to do, but why do I want to, so
-perhaps we can systematically deduce what to do about it. So why? I
-guess, if you see life as a playground, and I have come into this
-world, I'd be an interesting task to learn how it all works. This may
-be a bad idea, and I am open to others. Since nobody I have met, yet,
-has expressed something like this, I don't know if I am living in a
-rock (probably I am anyway).
-
-But learning how a computer (like your phone) works from scratch,
-isn't that interesting, and not knowing, down right frustrating to
-anyone reading this email? Or is it just me for some reason?
-
-And it goes both ways right? , even if I create a simple compiler,
-it'll still be a simple one. Won't it be more interesting to work on
-things that I might use, and others might get value from too.
-
-So this is the dilemma of an 18 year old, confused about what to do about it.
-
-(btw, If you reading this, are a hardware person, making chips or
-something, do you feel like a king/queen? since everyone builds on top
-of what you do)
-
-Regards,
-Aman
+-- 
+Best regards,
+Jeremy Morton (Jez)
