@@ -2,152 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08D72C7618E
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7549CC7618E
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbjDVWJQ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 22 Apr 2023 18:09:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
+        id S229729AbjDVWKr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 18:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjDVWJP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 18:09:15 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CFC0268B
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:09:12 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 33MM89VU1001063
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Apr 2023 22:08:09 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jeremy Morton'" <admin@game-point.net>, <git@vger.kernel.org>
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net> <01cd01d9754b$f12326b0$d3697410$@nexbridge.com> <fbe77ad2-ce65-e6a6-254e-01bf6446d582@game-point.net> <01ce01d97553$4361f990$ca25ecb0$@nexbridge.com> <3ac19159-7314-c299-5112-b0f7aa2cc409@game-point.net>
-In-Reply-To: <3ac19159-7314-c299-5112-b0f7aa2cc409@game-point.net>
-Subject: RE: Proposal: tell git a file has been renamed
-Date:   Sat, 22 Apr 2023 18:09:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <01d301d97567$0e9bc0b0$2bd34210$@nexbridge.com>
+        with ESMTP id S229500AbjDVWKq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 18:10:46 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41E09268E
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:10:45 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-2f40b891420so2925753f8f.0
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682201444; x=1684793444;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XBqbG1Maz1jcF5ItXBuT3qLdpVQndOiSXtuv4YSt/tE=;
+        b=f4MxQ+RVi232cIQkfu06l2BWfGjdEQ/vlpnMZ+hr0ODNxdYNJdkK99dadYrUYc773l
+         i65Vws1N8nGjYEJhdxsz5Od72f/pi40U4TdiZu2byBVDRF0LVNXufvbXRHyEegfiW3Cb
+         Zi0C8eNy4iMWpUgMmRjXghUq16W/lH7Rn52ZifrqUCOeD7hYzahpFd2KjCFVgLq+Msjw
+         k+XdrzS7VFqzMlOITotp0hI8xMaiZsZMjMEI7izgudlcS8LI5c7bZGh1yR11yY0+L8qg
+         Hsng2rk/ELF+e2OCM3LXhtOdCTZ/XfVY2QhXvy5gQIvO7Gb4VlKZTCPHCilHIoIQAfvE
+         7bzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682201444; x=1684793444;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XBqbG1Maz1jcF5ItXBuT3qLdpVQndOiSXtuv4YSt/tE=;
+        b=hiG3PNBrCYJ+NuqW7lYj1w6ys/VeLTZH748aCK7d+XH8N/h60KesGxHuvkUf9iE4Qe
+         N58d4v3edLPNhK0gAKNFnBJpTSU18rpp30DvGKsv6G+veFrDW1AXIuxu7POxPTL7p3Gf
+         KHAe4QEIW2+N+5L7W0UoUL+I3wDscH7NmbOtJLFx2Xo5K2+TBHjT6c6BLErRvcJkUqpn
+         rVCkWnzyYkco3HLxBfbamwuONLfp27UFSN+0LSWvo6sylsN7rGGdHhteaP50hYKliODl
+         YjfFH36LUJj7Sv320ron2SSQGS6H1qs6RjBAZtVvMrHdBBz3stsJ/ys9zDmXFOk8JdR3
+         ApvQ==
+X-Gm-Message-State: AAQBX9f242zn/bBxtCyMFyvJIHzApoQB4zJwvbRgFEQ8pxhcTw0N/IfY
+        r4ZOqsshGjiUm+RJZqrl0qE=
+X-Google-Smtp-Source: AKy350Z672sWI6Ec11hJXLzqkQMrFSoZgEeoop846xnEZsXHHJLnHlk//jMhQ3utFFsoflS0TKbaZA==
+X-Received: by 2002:a5d:5965:0:b0:2fe:e605:a8cc with SMTP id e37-20020a5d5965000000b002fee605a8ccmr6374668wri.31.1682201443680;
+        Sat, 22 Apr 2023 15:10:43 -0700 (PDT)
+Received: from [192.168.2.52] (32.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.32])
+        by smtp.gmail.com with ESMTPSA id x24-20020a1c7c18000000b003f183127434sm8228032wmc.30.2023.04.22.15.10.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Apr 2023 15:10:43 -0700 (PDT)
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Subject: [PATCH 0/3] warn when unreachable commits are left behind
+Message-ID: <f702476a-543a-da9b-ccd9-4431c80471e1@gmail.com>
+Date:   Sun, 23 Apr 2023 00:10:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLKSEVgGV7VqNVq5ZPBoEDYjfkU8wGiEiwXAbdj3K0C3aT/WQIICEvLrRRC7IA=
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Saturday, April 22, 2023 3:54 PM, Jeremy Morton wrote:
->Subject: Re: Proposal: tell git a file has been renamed
->
->https://stackoverflow.com/a/1094392/178757
->
->says:
->
->git mv oldname newname
->
->is just shorthand for:
->
->mv oldname newname
->git add newname
->git rm oldname
+Warn the user when unreachable commits are being left behind.
 
-The above stackoverflow topic is from 2009. A lot has changed since then. My test follows. Please note the status and git log contents indicating the rename.
+Rubén Justo (3):
+  checkout: move orphaned_commit_warning()
+  worktree: warn when removing a worktree with orphan commits
+  checkout: warn when unreachable commits after using --orphan
 
-$ mkdir test2
-$ cd test2
-$ git init
-$ echo "Initial" > file1
-$ git add file1
-$ commit -m "Commit 1"
-$ git mv file1 file2
-$ git status
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        renamed:    file1 -> file2
-$ git commit -m "Rename"
-$ git log --patch
-commit 014068fcedaf361f45c356046cf513b79537f53f (HEAD -> master)
-Author: Randall S. Becker <rsbecker@nexbridge.com>
-Date:   Sat Apr 22 18:02:07 2023 -0400
+ builtin/checkout.c         | 132 ++-----------------------------------
+ builtin/worktree.c         |   8 +++
+ checkout.c                 | 132 +++++++++++++++++++++++++++++++++++++
+ checkout.h                 |  10 +++
+ t/t2020-checkout-detach.sh |   9 +++
+ t/t2403-worktree-move.sh   |  10 +++
+ 6 files changed, 175 insertions(+), 126 deletions(-)
 
-    Rename
 
-diff --git a/file1 b/file2
-similarity index 100%
-rename from file1
-rename to file2
-
-commit 235a33801b82eac67e25c57e512ca428f2d49cea
-Author: Randall S. Becker <rsbecker@nexbridge.com>
-Date:   Sat Apr 22 18:01:48 2023 -0400
-
-    Commit 1
-
-diff --git a/file1 b/file1
-new file mode 100644
-index 0000000..a77fa51
---- /dev/null
-+++ b/file1
-@@ -0,0 +1 @@
-+Initial
-
->
->On 22/04/2023 20:47, rsbecker@nexbridge.com wrote:
->> No, history is preserved in the rename.
->>
->>> -----Original Message-----
->>> From: Jeremy Morton <admin@game-point.net>
->>> Sent: Saturday, April 22, 2023 3:45 PM
->>> To: rsbecker@nexbridge.com; git@vger.kernel.org
->>> Subject: Re: Proposal: tell git a file has been renamed
->>>
->>> I read that git mv is basically the equivalent to deleting the old
->>> file, creating the new file, and adding the changes.  Isn't it?  If
->>> so it's gonna have the same problem as I have now.
->>>
->>> --
->>> Best regards,
->>> Jeremy Morton (Jez)
->>>
->>> On 22/04/2023 19:54, rsbecker@nexbridge.com wrote:
->>>> On Saturday, April 22, 2023 2:02 PM, Jeremy Morton wrote:
->>>>> Yes, I know Linus specifically doesn't store file rename info in Git.
->>>>> The trouble is, every now and then, I'll come across a situation
->>>>> where Git doesn't successfully detect that I've renamed a file
->>>>> because I'm doing something like renaming a class at the same time.
->>>>> So I'll have a file OldClassNameTests.cs and a NewClassNameTests.cs
->>>>> but a bunch of lines in that file have also changed from
->>>>> OldClassName.DoThing() to NewClassName.DoThing().  I can clearly
->>>>> see that this is a rename, but Git sees enough changed content that
->>>>> it doesn't realize it, and puts it in as a delete/add, losing the content history.
->>>>>
->>>>> The standard answer for this is to rename the file in one commit,
->>>>> then make the changes.  That's fine if you know ahead of time
->>>>> you'll want to do this.  However it's a total PITA if you have a
->>>>> bunch of changes and you realize that a rename has caused this
->>>>> problem.  You now have to back out your changes to the renamed
->>>>> file, add the rename, commit
->>> it, then re-apply the changes.
->>>>>
->>>>> Could a command be added to git that means you tell Git that counts
->>>>> as a file rename?  Git would add a marker to the staging area that
->>>>> the file has been renamed, and upon commit, would first generate an
->>>>> additional commit for each rename before generating the main
->>>>> commit, ensuring the rename operation counts as an actual rename,
->>>>> and the content's
->>> history is maintained.
->>>>
->>>> Would git mv work in your situation? You can stage changes to the
->>>> original file,
->>> then use git mv. Or use git mv first. The rename shows as staged in any event.
->>>> --Randall
->>>>
->>>>
->>
->>
-
+base-commit: b28a910c4c1e6d7cbdc0663e75c2f5bc6b11eb20
+-- 
+2.39.2
