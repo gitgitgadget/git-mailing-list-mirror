@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91A91C6FD18
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 20:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35173C77B78
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 20:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbjDVURv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 16:17:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39138 "EHLO
+        id S229950AbjDVURx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 16:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229851AbjDVURm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 16:17:42 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F395A1FEB
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 13:17:40 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-2fe3fb8e25fso1759944f8f.0
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 13:17:40 -0700 (PDT)
+        with ESMTP id S229841AbjDVURl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 16:17:41 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC371BE7
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 13:17:39 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f192c23fffso11421125e9.3
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 13:17:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682194659; x=1684786659;
+        d=gmail.com; s=20221208; t=1682194658; x=1684786658;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ORgi3XkRxetuqDIw16hCNyxvy587ZYTzf+hQdHh7H4g=;
-        b=mGDoaAWYcxgK2PrNY2+7sOAjlypcIpL2T70aYt1IacVZR3US/WJdsFbJQVERSQIZ9M
-         hnzdSoQ36zsVNzPZPLhiaSudMHsPpRSwCEWOwElKm1UV1/O8ow/xxTs2Eygk2y8fabkX
-         o6gAzz2K/iX1zmSkYYBKSBGLXBPGH1cOoqxIEParbl6tTG0Df7K/eHLXqimGEU0K2z3V
-         +D3s6Svm611FpsiE0r1yxxIZIJVV8sRxj0vqtwhlmmDtG0pUrSlHmE7xDsTTd0y+g6L+
-         5QgvMCy9QVPS+HiLLNnqUdPf0Gk4xZuXX9SITUbLSWTtHmENDKR8jZjdOODtno5sXxnT
-         7a/g==
+        bh=Uz+LsNK18ggreqmDEFWGm3x58LxSkDlwUlBEkEdHU8c=;
+        b=EQIKp5Kkscj9UUhyOXE+gDcYwOZmiCVJIqo3Qo59TDpYSbfUzn5SidCA1nfmSwov9j
+         6cdziOfEk+NQNpCmFcaJM4SqgktfVVY+AKAdLFlJjN7YK94vdnnk5e8n8+lj0oyvxpZW
+         t1fub27Y2K3KynDbFz+ay/QFZmN8JcCen/ZJD5WnRYUJUiZMrQMrEkZhM2oV9kIxC2hs
+         1thTNavof6TRFbcAmawEuzX2v2H68ZUT7CVLf/OuE687VADn2bFH20/fNcS5uFixhXKr
+         leSArJ3Suz/jO+ZL2BzvuvTAuaq4vKYOkRehKamvvS6jotybuUrfHa2To5CO4joLbMTO
+         Yblg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682194659; x=1684786659;
+        d=1e100.net; s=20221208; t=1682194658; x=1684786658;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ORgi3XkRxetuqDIw16hCNyxvy587ZYTzf+hQdHh7H4g=;
-        b=dpbCAPlScfT+jNTPd/atO9Xf54wrVnRGpqtbHXxrQgd2fhmFhul9EoUDFWiEmo/0Mi
-         w4VlPE474tsi35tx+lshR8ttRn/sy8vdTIQcixmV+qQrmGWZkGZbTZXRgYGcFpWeAX43
-         /jTkpXeefLvMAYiFf28w3OtmA4xtN4BtJP8p6+/ErFyj0YwtMXgqEyB+RrTrlv+K2dDb
-         dbVmDLzSgpjsYLTNt+kdpJEPS0eiwlOORiJOAr4qG9psHrWTjAoOTrp1q9YIiJ9Kr2Qg
-         O5JJTFyDweXQT9k7GJfiLE5ebTP1bgInhW3cvWS96uRxup2GVuqyguMN7dp97WOUAucs
-         JGVA==
-X-Gm-Message-State: AAQBX9fJychhnoHCmCfyBD5MVsRn0i9JmajbQf0k5n8F+DRadbz+UiH+
-        cgmsX/u5xslHfG0PNnCL3tuOpCg//aA=
-X-Google-Smtp-Source: AKy350ZCsMGIFM38sD882pS7uT5IMz540VHwcjfUyZOITGW57sZLHTGBJU7PVQ3vBxd4XZJSpKTy6A==
-X-Received: by 2002:adf:fdcc:0:b0:2fa:14c8:3f22 with SMTP id i12-20020adffdcc000000b002fa14c83f22mr6305488wrs.30.1682194659435;
-        Sat, 22 Apr 2023 13:17:39 -0700 (PDT)
+        bh=Uz+LsNK18ggreqmDEFWGm3x58LxSkDlwUlBEkEdHU8c=;
+        b=EZFAYHzYYlN5+xrnqKh/H3G6hqTm8ATYTfpVkIajju2JhSOQfd1QGDtGjDQmyuHXkj
+         s+1+rqczAY0i7eoHwbeKPg10I/2rYfNJ1ITdYT/gq3Zo0TMzD7aH4irNWPp7wCuFbGRZ
+         1IfpRdYp3FedFmdbqJAZBzlxypZI51opcrdf7JBvVlR+Jb5RjS/6k+qYOHx/7xrqHZ6e
+         TY6dBDBq8kKCLgMgQL4isQFSHek/G2nQ+YM6NwO3wvMVxQKKMIF6//UkO1GsckeazAE3
+         /2mnqqBmffbbO2gHp9Oi6k/BcbKafjz0DLSpPbMpBUi7A+xoaQ/EVZlq0JnsCHLo4aVf
+         Tgkw==
+X-Gm-Message-State: AAQBX9cvZ43xISzVEv3V9maXZYuvjR8y48j7ZpvCcm7JT7ZJ7zsHFunq
+        H6R5OakihgmZyx8ECx2JpFBKQJpkyYs=
+X-Google-Smtp-Source: AKy350ZMgoncrDophgHhRtUVZnzOLM3tQVNg4LNSg+AbZWc5czsfXfnhAVdVUUjz8WKLzjFT2CBTAA==
+X-Received: by 2002:a5d:6591:0:b0:2fb:1a68:1d96 with SMTP id q17-20020a5d6591000000b002fb1a681d96mr6157031wru.15.1682194657759;
+        Sat, 22 Apr 2023 13:17:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k36-20020a05600c1ca400b003f1733feb3dsm11521472wms.0.2023.04.22.13.17.39
+        by smtp.gmail.com with ESMTPSA id f12-20020adfdb4c000000b002f9ff443184sm7204805wrj.24.2023.04.22.13.17.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Apr 2023 13:17:39 -0700 (PDT)
-Message-Id: <2d829783f30ad9d9bee116d777f38b3d89ae0e0c.1682194651.git.gitgitgadget@gmail.com>
+        Sat, 22 Apr 2023 13:17:37 -0700 (PDT)
+Message-Id: <b2ce7a1786892267dc46669ef8aa5e2ec838170b.1682194651.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
 References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
         <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 22 Apr 2023 20:17:14 +0000
-Subject: [PATCH v2 07/22] pkt-line.h: move declarations for pkt-line.c
+Date:   Sat, 22 Apr 2023 20:17:11 +0000
+Subject: [PATCH v2 04/22] server-info.h: move declarations for server-info.c
  functions from cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
@@ -76,100 +76,96 @@ From: Elijah Newren <newren@gmail.com>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/bundle.c    | 1 +
- builtin/clone.c     | 1 +
- builtin/fetch.c     | 1 +
- builtin/ls-remote.c | 1 +
- builtin/push.c      | 1 +
- cache.h             | 3 ---
- pkt-line.h          | 2 ++
- 7 files changed, 7 insertions(+), 3 deletions(-)
+ builtin/receive-pack.c       | 1 +
+ builtin/repack.c             | 1 +
+ builtin/update-server-info.c | 1 +
+ cache.h                      | 3 ---
+ server-info.c                | 3 ++-
+ server-info.h                | 7 +++++++
+ 6 files changed, 12 insertions(+), 4 deletions(-)
+ create mode 100644 server-info.h
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index e68fc83d943..584d905d965 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -4,6 +4,7 @@
- #include "setup.h"
- #include "strvec.h"
- #include "parse-options.h"
-+#include "pkt-line.h"
- #include "cache.h"
- #include "bundle.h"
- 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 017ebc3faa8..fa300f483e9 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -39,6 +39,7 @@
- #include "setup.h"
- #include "connected.h"
- #include "packfile.h"
-+#include "pkt-line.h"
- #include "list-objects-filter-options.h"
- #include "hook.h"
- #include "bundle.h"
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 61e8ac113b1..4fee2a62376 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -29,6 +29,7 @@
- #include "utf8.h"
- #include "packfile.h"
- #include "pager.h"
-+#include "pkt-line.h"
- #include "list-objects-filter-options.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 7d921170f1c..dae99e4554d 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -33,6 +33,7 @@
+ #include "object-store.h"
+ #include "protocol.h"
  #include "commit-reach.h"
- #include "branch.h"
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 11d9424804a..7972febf726 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -3,6 +3,7 @@
- #include "gettext.h"
++#include "server-info.h"
+ #include "trace.h"
+ #include "trace2.h"
+ #include "worktree.h"
+diff --git a/builtin/repack.c b/builtin/repack.c
+index df4d8e0f0ba..bed2c2aaafb 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -7,6 +7,7 @@
  #include "hex.h"
- #include "transport.h"
-+#include "pkt-line.h"
- #include "ref-filter.h"
- #include "remote.h"
- #include "refs.h"
-diff --git a/builtin/push.c b/builtin/push.c
-index 6001e4ae0a4..7d2b0505aac 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -14,6 +14,7 @@
- #include "remote.h"
- #include "transport.h"
  #include "parse-options.h"
-+#include "pkt-line.h"
- #include "submodule.h"
- #include "submodule-config.h"
- #include "send-pack.h"
+ #include "run-command.h"
++#include "server-info.h"
+ #include "sigchain.h"
+ #include "strbuf.h"
+ #include "string-list.h"
+diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
+index e7bff27ae40..19dce3c0655 100644
+--- a/builtin/update-server-info.c
++++ b/builtin/update-server-info.c
+@@ -3,6 +3,7 @@
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "parse-options.h"
++#include "server-info.h"
+ 
+ static const char * const update_server_info_usage[] = {
+ 	"git update-server-info [-f | --force]",
 diff --git a/cache.h b/cache.h
-index b89f4c59802..fde782a96f0 100644
+index ffb9028f015..2eb4546473f 100644
 --- a/cache.h
 +++ b/cache.h
 @@ -593,9 +593,6 @@ int df_name_compare(const char *name1, size_t len1, int mode1,
  int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
  int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
  
--/* pkt-line.c */
--void packet_trace_identity(const char *prog);
+-/* Dumb servers support */
+-int update_server_info(int);
 -
- /* add */
- /*
-  * return 0 if success, 1 - if addition of a file failed and
-diff --git a/pkt-line.h b/pkt-line.h
-index 8e9846f3151..7c23a4bfaf7 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -246,4 +246,6 @@ void packet_writer_error(struct packet_writer *writer, const char *fmt, ...);
- void packet_writer_delim(struct packet_writer *writer);
- void packet_writer_flush(struct packet_writer *writer);
+ #define COPY_READ_ERROR (-2)
+ #define COPY_WRITE_ERROR (-3)
+ int copy_fd(int ifd, int ofd);
+diff --git a/server-info.c b/server-info.c
+index 68098ddd1ad..55aa04f00ab 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "dir.h"
+ #include "environment.h"
+@@ -11,6 +11,7 @@
+ #include "packfile.h"
+ #include "object-file.h"
+ #include "object-store.h"
++#include "server-info.h"
+ #include "strbuf.h"
+ #include "wrapper.h"
  
-+void packet_trace_identity(const char *prog);
+diff --git a/server-info.h b/server-info.h
+new file mode 100644
+index 00000000000..13bbde2c55f
+--- /dev/null
++++ b/server-info.h
+@@ -0,0 +1,7 @@
++#ifndef SERVER_INFO_H
++#define SERVER_INFO_H
 +
- #endif
++/* Dumb servers support */
++int update_server_info(int);
++
++#endif /* SERVER_INFO_H */
 -- 
 gitgitgadget
 
