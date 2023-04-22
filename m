@@ -2,165 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69590C6FD18
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 20:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE8FEC7618E
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 21:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbjDVUWQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 16:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42108 "EHLO
+        id S229718AbjDVVZR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 17:25:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbjDVUWP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 16:22:15 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE439188
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 13:22:13 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f09b4a1584so19943335e9.2
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 13:22:13 -0700 (PDT)
+        with ESMTP id S229551AbjDVVZQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 17:25:16 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 470CC10DF
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:25:15 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id ca18e2360f4ac-7606ce9bfdeso296401639f.0
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682194932; x=1684786932;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1682198714; x=1684790714;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ifRidpigvacKsm6USGVzuT4L642KtiAk8Uj6R0staYo=;
-        b=bw3Fx+tCBtx7HITbIpGJ5bQX7KFofMJkP79xIXLvzHC9/vY755AGB+PqxOcKQeieGZ
-         DjfDlTHRzIqatbIf/Sn51RAxOs3kp8EZC6mak/mWpdMuyc9RqXOK7uceBpHDIz093Sed
-         nzWuiozmSugfGfnQfHW1ng10uvR4L5RAAO/xQoVus3q9FrbN9VAG2sJcDlo+Kt8tgqM5
-         mzVz6Ug7QUluR4ZQD92FucfQom0ROhpMDjNQTgotXvRhh1VN0BvlWOFjMkkQfqH/yKqJ
-         LgeYbVC+ou4Ro5DLD0BISG4iM9MC45XSpQ4EB0f5UXcdAMFZiUXBbIyd1q+seqbac7qb
-         7Jww==
+        bh=LOkqc1OmZmrEjzhnemqjY4V9V1NkBdV/8/aof63oLbI=;
+        b=qYx0Ld4WWPa157jwWMpmnmsQDU8HmQeRXi8vp7O68zaJPuk6obnBD6xw8hNswTnoPF
+         y34Em+pIYAM3MXjYzUQsjhy1vaBduwgHU4u5FgbhdeXI4h5g7vVGTgIKYaFeNqFArFgh
+         Y91lVamrN2LtphK4nCr3FmWZLfugV4EUE5A7tWPBiOLdyfyZGNh2Vl0SFr2P9SFHHnBI
+         PJI8sU404zaLuOgVMQyaDIBhG5RcN4xVOUGtMj2wEeUMIfxStfmFNLIJviARUwOY0kzV
+         CX8wM90au5q5lDGqbzgb9lQ0+wUkaXea5Qwjh6e2mxmujd9A2mWK4nUp57rP9UDig8NZ
+         DwCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682194932; x=1684786932;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1682198714; x=1684790714;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ifRidpigvacKsm6USGVzuT4L642KtiAk8Uj6R0staYo=;
-        b=L0MnGzZcNNocu5kswGOnYswfI5yJy8bmKqK/0tSmgJhpZPjhEFfPfC8SgpHziDuDT0
-         KCgsq+fd7WvdNxA7UBJ003RWFG287rR2615uJ/LZGQIKYfICev4TxFFuIO0qQ4QX70LV
-         NcEmhcO1i8J9QfmMEtoU0fe2KDUwg+Q8nMkamTjIfdNuwp+hvxAIL19TTmiYIs7371yv
-         8olN6MLQFJUlTbBOuVZD4KChyrepzKM364gh8c3Bj52SIvfADWbkjIBharWjZElodQq1
-         RY4JUaNnBrBX999iYWVIsN/VoeoosOvgpWJ8Jp746iBMSQ/1PHPLkk4OJtoxS5sjPnQJ
-         AdgA==
-X-Gm-Message-State: AAQBX9dTo8Eg0Gd24yipLtteB7bC0aiUbaUI2BUA/hVqJ9kt64UVwoZ+
-        0QlT2ELTELLaWq0H63PxoowMYPJPhjo=
-X-Google-Smtp-Source: AKy350YNrMKe6AJ0OsvnREeGCrhevlUszQw2ieUyT2JKIQlHY11YQTTvxe2DmxLlx596Lsoy0SgOgA==
-X-Received: by 2002:a1c:7302:0:b0:3f1:758e:40eb with SMTP id d2-20020a1c7302000000b003f1758e40ebmr4067139wmb.17.1682194932154;
-        Sat, 22 Apr 2023 13:22:12 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i40-20020a05600c4b2800b003ee6aa4e6a9sm11346994wmp.5.2023.04.22.13.22.11
+        bh=LOkqc1OmZmrEjzhnemqjY4V9V1NkBdV/8/aof63oLbI=;
+        b=WvlfkclellaZJ5SjSepm39ViCTb+r+/57gmuyYir8V2qL+RSqD3qXR6pJUyomA1c7K
+         y41PGAdu+acRSB279FBHVvOQljOMh5H2dr+Zl76GMWewpTGKPI31OnifPcLopd3L2Uio
+         Cj3Lilaq6IsEv4jcSkgqVGCv3aDQAmKbRqg45LKObDNIizmOucqP7Gre+gHxww0kULGC
+         DVKyW8/5QlowWPXRhXCD1I0qbovgJPMsOzLhzyZK7rOrDe8fcEmzyaHi3BLr4LIwDfDN
+         gU76z8w8aJ69sCItYpo33yzaKq/s0t6Q1O0Jexu2siDTVIPlVXYmOzv2dRBrfsICM2o/
+         3aHw==
+X-Gm-Message-State: AAQBX9doY6u10nZ7Kbk3OqVvtLS5m2PSbYGa3C/p4idDPgaFS6ox4eAd
+        dIhHvCmthk+yG0ozuBt2ZqKWqQhYrwjT+w==
+X-Google-Smtp-Source: AKy350bqY61PUt15egZZ8sAQEcrvwyJE/m0PqzzJPuYqHVfC/NDLn+PAyzJo3rF/r/nHc5wcq1fR9w==
+X-Received: by 2002:a5d:9486:0:b0:763:7e7d:9fdb with SMTP id v6-20020a5d9486000000b007637e7d9fdbmr2169923ioj.3.1682198714225;
+        Sat, 22 Apr 2023 14:25:14 -0700 (PDT)
+Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
+        by smtp.googlemail.com with ESMTPSA id x20-20020a6bda14000000b007635e44126bsm1979500iob.53.2023.04.22.14.25.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Apr 2023 13:22:11 -0700 (PDT)
-Message-Id: <pull.1518.v2.git.1682194930766.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1518.git.1681974847078.gitgitgadget@gmail.com>
-References: <pull.1518.git.1681974847078.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 22 Apr 2023 20:22:10 +0000
-Subject: [PATCH v2] merge-ort: fix calling merge_finalize() with no
- intermediate merge
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Sat, 22 Apr 2023 14:25:13 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: Re: [GSOC][PATCH v2] diff-index: enable sparse index
+Date:   Sat, 22 Apr 2023 17:25:00 -0400
+Message-Id: <20230422212500.476955-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <CAPnUp-=3aoG9WwCcLnMZ4UL90j+snL8qUePPmm02WQK9tUkCzw@mail.gmail.com>
+References: <CAPnUp-=3aoG9WwCcLnMZ4UL90j+snL8qUePPmm02WQK9tUkCzw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+>> Re: my last review [2] - did you look into the behavior of 'diff' with
+>> pathspecs and whether this 'pathspec_needs_expanded_index()' could be
+>> centralized (in e.g. 'run_diff_index()')? What did you find?
 
-If some code sets up the data structures for a merge, but then never
-actually performs one before calling merge_finalize(), then
-merge_finalize() wouldn't notice that result->priv was NULL and
-return early, resulting in following that NULL pointer and getting
-a segfault.  There is currently no code in the git codebase that does
-this, but this issue was found during testing of some proposed patches
-that had the following structure:
-
-    struct merge_options merge_opt;
-    struct merge_result result;
-
-    init_merge_options(&merge_opt, the_repository);
-    memset(&result, 0, sizeof(result));
-
-    <do N merges, for some value of N>
-
-    merge_finalize(&merge_opt, &result);
-
-where some flags could cause the code to have N=0, i.e. doing no merges.
-Add a check for result->priv being NULL and return early to avoid a
-segfault in these kinds of cases.
-
-While at it, ensure the FREE_AND_NULL() in the function does something
-useful with the nulling aspect, namely sets result->priv to NULL rather
-than a mere temporary.
-
-Reported-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    merge-ort: fix calling merge_finalize() with no intermediate merge
-    
-    Changes since v1:
-    
-     * Moved code into an if-block instead of returning early, as suggested
-       by Stolee.
-    
-    See
-    https://lore.kernel.org/git/CABPp-BHCdjOutYqdMO1NbYKNA0BgkXRgwUEKK=MX0kXM-5G_DQ@mail.gmail.com/
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1518%2Fnewren%2Ffix-merge-finalize-with-no-merge-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1518/newren/fix-merge-finalize-with-no-merge-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1518
-
-Range-diff vs v1:
-
- 1:  e636027f60c ! 1:  2cb1c63f05b merge-ort: fix calling merge_finalize() with no intermediate merge
-     @@ merge-ort.c: void merge_switch_to_result(struct merge_options *opt,
-       
-      -	clear_or_reinit_internal_opts(opti, 0);
-      -	FREE_AND_NULL(opti);
-     -+	if (!result->priv)
-     -+		return;
-     -+	clear_or_reinit_internal_opts(result->priv, 0);
-     -+	FREE_AND_NULL(result->priv);
-     ++	if (result->priv) {
-     ++		clear_or_reinit_internal_opts(result->priv, 0);
-     ++		FREE_AND_NULL(result->priv);
-     ++	}
-       }
-       
-       /*** Function Grouping: helper functions for merge_incore_*() ***/
+>I hadn't understood the review properly. I just thought you wanted to
+>make sure the function was added to diiff-index itself. I have read
+>through some of it, but I am still not 100% sure of the behaviour.
+>Will run through it more to get more definitive answers
 
 
- merge-ort.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Hello Raghul!
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 5bf64354d16..29966fc082f 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -4718,14 +4718,14 @@ void merge_switch_to_result(struct merge_options *opt,
- void merge_finalize(struct merge_options *opt,
- 		    struct merge_result *result)
- {
--	struct merge_options_internal *opti = result->priv;
--
- 	if (opt->renormalize)
- 		git_attr_set_direction(GIT_ATTR_CHECKIN);
- 	assert(opt->priv == NULL);
- 
--	clear_or_reinit_internal_opts(opti, 0);
--	FREE_AND_NULL(opti);
-+	if (result->priv) {
-+		clear_or_reinit_internal_opts(result->priv, 0);
-+		FREE_AND_NULL(result->priv);
-+	}
- }
- 
- /*** Function Grouping: helper functions for merge_incore_*() ***/
+I hope this email finds you well. I recently came across your patch and 
+noticed that you might be facing some difficulties with a specific issue.
+I've reviewed your patch and thought I'd share a few suggestions that 
+might help you overcome the issue.The code below I've already test it.
+But there must have many detail I did not handle.
 
-base-commit: 667fcf4e15379790f0b609d6a83d578e69f20301
--- 
-gitgitgadget
+In the builtin/diff.c file, the cmd_diff() function can call either 
+'run_diff_files()' or 'run_diff_index()' depending on the situation.
+when you run 'git diff',run_diff_files() is called to find differences
+between the working directory and the index. when you run 
+'git diff --cached'. 'run_diff_index()' is called to find difference 
+between the indexand the commit.
+
+Both the "diff-index" and "diff" commands share the "run_diff_index" 
+function. So, we can handling of pathspecs in one place(run_diff_index).
+Doing this we can simplify the codebase and make it easier to maintain.
+
+1.add test for diff in t1092. We will find the test will fail.
+
+test_expect_success 'git diff with pathspec expands index when necessary' '
+	init_repos &&
+
+	echo "new" >>sparse-index/deep/a &&
+	git -C sparse-index add deep/a &&
+
+	# pathspec that should expand index
+	ensure_expanded diff --cached "*/a" &&
+
+	write_script edit-conflict <<-\EOF &&
+	echo test >>"$1"
+	EOF
+
+	run_on_all ../edit-contents deep/a &&
+	ensure_expanded diff HEAD "*/a"
+'
+
+
+2."run_diff_index" is in 'diff-lib.c'.We can add 
+'pathspec_needs_expanded_index' in front of 'do_diff_cache()'(process
+the index before the start of the diff process).
+
+int run_diff_index(struct rev_info *revs, unsigned int option)
+{
+	......
+	......
+	if (merge_base) {
+		diff_get_merge_base(revs, &oid);
+		name = oid_to_hex_r(merge_base_hex, &oid);
+	} else {
+		oidcpy(&oid, &ent->item->oid);
+		name = ent->name;
+	}
+
+
+	if (pathspec_needs_expanded_index(revs->diffopt.repo->index, &revs->diffopt.pathspec))
+		ensure_full_index(revs->diffopt.repo->index);
+
+
+	if (diff_cache(revs, &oid, name, cached))
+		exit(128);
+
+	.......
+	......
+	.......
+}
+
+
+3.Delete 'the pathspec_needs_expanded_index' function you have in your 
+'builtin/diff-index.c' in last patch.
+
+4.Run the test again, then the test for 'git diff' and your test for 
+'git diff-index'will all pass!
+
+I hope these suggestions prove helpful to you. If you have any questions
+or would like to discuss further, please don't hesitate to reach out.
+
+-----------------------------------------------------------------------
+Best,
+Shuqi
+
+
