@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E945AC7618E
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE372C77B7D
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229900AbjDVWTs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 18:19:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40306 "EHLO
+        id S229698AbjDVW1b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 18:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbjDVWTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 18:19:47 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6558326A4
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:19:45 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f1957e80a2so41258365e9.1
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:19:45 -0700 (PDT)
+        with ESMTP id S229587AbjDVW13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 18:27:29 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2915626B5
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:27:28 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-2febac9cacdso1801319f8f.1
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682201984; x=1684793984;
+        d=gmail.com; s=20221208; t=1682202446; x=1684794446;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
+         :user-agent:date:message-id:cc:references:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2IfNvuAOxcb1q/KCOIJTYtIR4eUBUGg27dSrRoUzm1Y=;
-        b=mKtJLVdBdegIDUxIfLotkuLLkr1XNZGFrTrteCPaDDgRLVaZATU5W8Al/V9i5480Ji
-         6rO/DXxyTqSv7y4uOVlCT0om6i5RSIgcKl+43159tFEMu5A+/9ZpxPWIfbVKiYeopBah
-         IT1KFgVwdEK0RkpKv/W1vdisyPSK2R0QE1FH2JKTqRftDaJNE+39CmcW0RMRaX69cJn+
-         9zfEPqA4fIXy950Mszx4Qokbhug23JBPx+zNgqb4YQbEJ4V50RIOZvfZzIte5iM6lWiM
-         7svCeMrOHGrgNHtppqlkJAg04O+LEZI/LGl1lm79ZaHUnCAWeOTYj8trUag6MYcSHe++
-         NnCw==
+        bh=lFUnhZfo0GwxPoFfVPC+dHvXxMRLedfL5tNwS3zV7K4=;
+        b=ctamGdWxhqY0palFPn7vEbqhiwvyVdimK9ua7rF64RXHhcgt3BW1eTq4qjZma4zkog
+         JKd4a+KO6NEsD60ewGBsG8kRF5Uh8R/nPY7VVo5mITiwFNdv55vGnCrpSnzr/cpLmEgx
+         j8Fsr4ZRQWZtoZwClWAw2c2U1vSkpmmEoXb6LUGz3dLlfku9iHz3AXPc0H3sc/q3YWso
+         u9DGn/jAT9xxyKaOuTgkQhDe4bWOcsxnlo4EXHZeng0Z6qeRJJ21yHeRMh23O32ATPUZ
+         NVg3v08I6tiB0zCAJcrBaIGwSOIlasLVliTcHdo1KrwN2EuDI8CSOtgIXsseP6HUmujX
+         cgig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682201984; x=1684793984;
+        d=1e100.net; s=20221208; t=1682202446; x=1684794446;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject
+         :user-agent:date:message-id:cc:references:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2IfNvuAOxcb1q/KCOIJTYtIR4eUBUGg27dSrRoUzm1Y=;
-        b=XhTTGqoKFJzc3rsENDG4z00bq5X6MFEfG4o4wXdEtOKnKE2kZAmhMVVVRMX+iqRD0d
-         ThQ+H93TY7XaAvgdD2l6/ByZSirIG75Y+K/iUTsbSCn9sSOfrCN0fnfFsXVCZz+NlsWG
-         5qAxRZ0tzfnIQ1OhHcMDVNTvAT8dE5gTIUlWbkoD0gHoBiz8bDjVWZrEKnKknD1VIczO
-         QdxAlpWX7yJrMVncORR5kIG2AHwmF74VRkSoK0yoE/1LEiZodxw6YQ9xAO7FNyOAhy40
-         nyc0lnkPV+rQc/cbNnF91vkdXsTESsYMoHZaPmmu0Q7d1+3nzoAUPxVKL2tPiDdUTplS
-         I6AA==
-X-Gm-Message-State: AAQBX9fS+aPfhgfLDH5pn8HtEZzTfdHwR+SbwFyQunXG6/uYl2TsYtfl
-        HL933BEFo3m1WS1abBZaNxc=
-X-Google-Smtp-Source: AKy350bC9FId5OW6ULERVqHGB3GospvZP17wFo0qm+K8nKOJGvbetRRBZjcPItmp4fls7/3ZwtxULg==
-X-Received: by 2002:a05:6000:47:b0:2d9:10e7:57e8 with SMTP id k7-20020a056000004700b002d910e757e8mr9669723wrx.16.1682201983944;
-        Sat, 22 Apr 2023 15:19:43 -0700 (PDT)
+        bh=lFUnhZfo0GwxPoFfVPC+dHvXxMRLedfL5tNwS3zV7K4=;
+        b=ftN8O+aSM9HDFkSZub9b/lfgKDZ7AaA5fjq9CvFbcDu1cj7xUdyYYrgWipi8bU8IWp
+         1HKynxtiSJDcEyLty9XFuhv5rfXkzSuiR1/+P4c9Sde+eIIwtifCW7pz5rWydS5kBNgQ
+         ynYkcl4jjU7NtVD+69Ct62a+hrXZOMR26V28c3px62AvAfne9Kt1jjLMfG3scJlX/gDU
+         YKuSgZRMxRpClEVY6YcZ7JvD9PyfR12QmE32n/sPkO2tmsUTKzebTxyUjmlG4Me3tKu1
+         o5s+C9LrEVRKsDUEMbiyPW4IoM9ub1KepatUwyDrwVLE7x5Bt3MzcBclkVmzgF9N3GQs
+         5IRQ==
+X-Gm-Message-State: AAQBX9daUK2lVpUTTv1sHS4DG0fDhhc0ReVmSItt3IFJSni0aH5jl8Ug
+        MmHCivQ7m6g+oY3mLZoH+i0=
+X-Google-Smtp-Source: AKy350ZKtoPpTULnzwEnEhRMwuG8JuZq3/tgYm6juWlWQGd2tAh2eXhSV55LoYnrspn/hfFpKohAAg==
+X-Received: by 2002:a5d:5223:0:b0:2f6:b17a:ea57 with SMTP id i3-20020a5d5223000000b002f6b17aea57mr6512686wra.59.1682202446436;
+        Sat, 22 Apr 2023 15:27:26 -0700 (PDT)
 Received: from [192.168.2.52] (32.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.32])
-        by smtp.gmail.com with ESMTPSA id q17-20020a1cf311000000b003eeb1d6a470sm8243890wmq.13.2023.04.22.15.19.43
+        by smtp.gmail.com with ESMTPSA id l2-20020a1c7902000000b003f193d7c6b7sm4779349wme.41.2023.04.22.15.27.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 15:19:43 -0700 (PDT)
-Subject: [PATCH 3/3] checkout: warn when unreachable commits after using
- --orphan
+        Sat, 22 Apr 2023 15:27:26 -0700 (PDT)
+Subject: [PATCH v2] follow usage recommendations for branch_get()
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <f702476a-543a-da9b-ccd9-4431c80471e1@gmail.com>
-Message-ID: <417ae16c-9ba7-1e6d-c8d7-5b20a188b4fe@gmail.com>
-Date:   Sun, 23 Apr 2023 00:19:42 +0200
+References: <4cb4b69c-bd14-dfbd-6d06-59a7cd7e8c94@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Message-ID: <456b2a6f-eedb-a75a-2299-06ee6e7f3a47@gmail.com>
+Date:   Sun, 23 Apr 2023 00:27:24 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <f702476a-543a-da9b-ccd9-4431c80471e1@gmail.com>
+In-Reply-To: <4cb4b69c-bd14-dfbd-6d06-59a7cd7e8c94@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -68,68 +68,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 8e2dc6ac06 (commit: give final warning when reattaching HEAD to leave
-commits behind, 2011-02-18) we introduced a warning to be issued when,
-while checking out, the tip commit being left behind is not connected to
-any ref.
+Our recommendation is to use branch_get(NULL) to obtain the 'struct
+branch*' for the currently checked out branch in the current worktree.
+While branch_get("HEAD") produces the same result, it does not follow
+the recommended usage and may cause confusion.
 
-We assumed that if the commit to be checked out is the same commit
-currently checked out, we would omit the warning.  This makes sense
-because we're going to have HEAD pointing to the same commit anyway, so
-there is nothing to warn about.
+Let's change some calls to branch_get() we currently have in our
+codebase that do not follow the recommendation, applying the following
+semantic patch:
 
-However, with "--orphan" the target commit is not going to be used as
-HEAD in the worktree, but a new orphan branch being created, which is
-not going to be connected to the previous commit.  Therefore, we need
-to check if the commit it is reachable and warn otherwise.
-
-Let's fix the condition we introduced in 8e2dc6ac06, considering the
-"--orphan" flag situation.
+    @@
+    @@
+    - branch_get("HEAD")
+    + branch_get(NULL)
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/checkout.c         | 8 ++++++--
- t/t2020-checkout-detach.sh | 9 +++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ builtin/fetch.c | 2 +-
+ builtin/pull.c  | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 85ac4bca00..7fad3161b4 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1050,8 +1050,12 @@ static int switch_branches(const struct checkout_opts *opts,
- 		}
- 	}
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ab623f41b4..3c1806aae9 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1755,7 +1755,7 @@ static int do_fetch(struct transport *transport,
+ 	commit_fetch_head(&fetch_head);
  
--	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
--		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit, 1);
-+	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit) {
-+		if (new_branch_info->commit != old_branch_info.commit)
-+			orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit, 1);
-+		else if (opts->new_orphan_branch)
-+			orphaned_commit_warning(old_branch_info.commit, NULL, 1);
-+	}
+ 	if (set_upstream) {
+-		struct branch *branch = branch_get("HEAD");
++		struct branch *branch = branch_get(NULL);
+ 		struct ref *rm;
+ 		struct ref *source_ref = NULL;
  
- 	update_refs_for_switch(opts, &old_branch_info, new_branch_info);
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 967368ebc6..f93e8610e0 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -335,7 +335,7 @@ static const char *config_get_ff(void)
+  */
+ static enum rebase_type config_get_rebase(int *rebase_unspecified)
+ {
+-	struct branch *curr_branch = branch_get("HEAD");
++	struct branch *curr_branch = branch_get(NULL);
+ 	const char *value;
  
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index 2eab6474f8..6762a9a572 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -124,6 +124,15 @@ test_expect_success 'checkout warns on orphan commits: output' '
- 	check_orphan_warning stderr "2 commits"
- '
+ 	if (curr_branch) {
+@@ -440,7 +440,7 @@ static int get_only_remote(struct remote *remote, void *cb_data)
+  */
+ static void NORETURN die_no_merge_candidates(const char *repo, const char **refspecs)
+ {
+-	struct branch *curr_branch = branch_get("HEAD");
++	struct branch *curr_branch = branch_get(NULL);
+ 	const char *remote = curr_branch ? curr_branch->remote_name : NULL;
  
-+test_expect_success 'checkout --orphan warns on orphan commits' '
-+	git checkout "$orphan2" &&
-+	git checkout --orphan orphan 2>stderr
-+'
-+
-+test_expect_success 'checkout --orphan warns on orphan commits: output' '
-+	check_orphan_warning stderr "2 commits"
-+'
-+
- test_expect_success 'checkout warns orphaning 1 of 2 commits' '
- 	git checkout "$orphan2" &&
- 	git checkout HEAD^ 2>stderr
+ 	if (*refspecs) {
+@@ -713,7 +713,7 @@ static const char *get_upstream_branch(const char *remote)
+ 	if (!rm)
+ 		return NULL;
+ 
+-	curr_branch = branch_get("HEAD");
++	curr_branch = branch_get(NULL);
+ 	if (!curr_branch)
+ 		return NULL;
+ 
+@@ -777,7 +777,7 @@ static int get_rebase_fork_point(struct object_id *fork_point, const char *repo,
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	curr_branch = branch_get("HEAD");
++	curr_branch = branch_get(NULL);
+ 	if (!curr_branch)
+ 		return -1;
+ 
 -- 
-2.39.2
+2.34.1
