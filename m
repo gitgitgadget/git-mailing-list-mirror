@@ -2,115 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B37A2C77B78
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 21:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08D72C7618E
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:09:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbjDVVx6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 17:53:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34676 "EHLO
+        id S229612AbjDVWJQ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 22 Apr 2023 18:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjDVVx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 17:53:57 -0400
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE9D910E6
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:53:55 -0700 (PDT)
-Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-5ef8aaf12bdso12987966d6.3
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682200434; x=1684792434;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LfZYAb1lTvuL8kCKuNzC5Zf+R3IH41H46boWKWqcEMk=;
-        b=VUJrFVj/zYccDGcFRy5MZ4xQiYYMMA5ya8P03CoKlJwVJrMqt+HM4FUPiP50QHCFzU
-         ju2IaQ4zfAHdie4OAI0CiycMTS8G++A6m+1DW+2F8qdG6SvZWve9sqmy3ezk0F1zslcZ
-         tUOc/smQEmixdAdBGgoixupjCOpV3ylCSEucs+XuRumxQuvTPHM18/Mhu5hXy3SWZzk6
-         IvaIwsOn1yOusV5QgrFULhWKypgVqWE2Fd5G2s0J6byWjSdnHX2h8lXR9Tjv88FYCi10
-         GRe/U0gSuwHivYaZ9BsjrRowopLMZz524GYkuM0DhFtoCZs4NadIaQ1eHxscjJ0z6mLP
-         fk0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682200434; x=1684792434;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LfZYAb1lTvuL8kCKuNzC5Zf+R3IH41H46boWKWqcEMk=;
-        b=Zd2HEYHTLGia9UzQZ42B25l2Gi9DEZBGL5+sP47UV9VopHYUBfUHaVuyDwpceaO03g
-         2ct2Wn//DHGsmwaFLT0xpbvPb+cnvylt2/T6q7c0Ixk5u/AqklL/b/mU7wQd0zcHj5xf
-         zd2w9hczR3ZimfQytSirlpwv4fEbKt0oFP8xq16gY3yjIw+yACzCEEmxb5BYDdcknVgH
-         K2GS8LE4ZnQtGduimncJGmluyNZVfnIsnaEuk/15aqbUi/wcKLUTNtm3Rzm41qYHxBTF
-         zFYbsBBrhnq5HSx2pVa4oSDNLlVxuYXoTNWPq+JfErnOnkFnvXfPmL8tiCaL+2MwmJ/T
-         13Pg==
-X-Gm-Message-State: AAQBX9czxeqczGLoBaHG3eVBfgZlPs6VmDwfRHzXT7CL+OEwNfaj2wM2
-        r3Xyo85RovGsLkzoNGWg4s/GX9M5zo4=
-X-Google-Smtp-Source: AKy350aVck1mP05+5FuUJGBIDcfInZ/jGLsZJ/8indZYxjkEEAfDGV0FCTvF+DKILFqes8825+5vEA==
-X-Received: by 2002:ad4:5be8:0:b0:5f3:deca:ead with SMTP id k8-20020ad45be8000000b005f3deca0eadmr13177843qvc.28.1682200434054;
-        Sat, 22 Apr 2023 14:53:54 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id u14-20020a0cdd0e000000b005ef447e24adsm2189153qvk.19.2023.04.22.14.53.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 14:53:53 -0700 (PDT)
-Subject: Re: pb/complete-and-document-auto-merge-and-friends (Was: Re: What's
- cooking in git.git (Apr 2023, #06; Thu, 20))
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <xmqqwn26w5cd.fsf@gitster.g>
- <CABPp-BGPbo8B6JXBOHTQs0LegpwHccbnnGe__ea05fkO_34YKA@mail.gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <a10648d5-8cba-4c7c-a303-b5b0dcdd3310@gmail.com>
-Date:   Sat, 22 Apr 2023 17:53:52 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        with ESMTP id S229500AbjDVWJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 18:09:15 -0400
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CFC0268B
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:09:12 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 33MM89VU1001063
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 22 Apr 2023 22:08:09 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Jeremy Morton'" <admin@game-point.net>, <git@vger.kernel.org>
+References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net> <01cd01d9754b$f12326b0$d3697410$@nexbridge.com> <fbe77ad2-ce65-e6a6-254e-01bf6446d582@game-point.net> <01ce01d97553$4361f990$ca25ecb0$@nexbridge.com> <3ac19159-7314-c299-5112-b0f7aa2cc409@game-point.net>
+In-Reply-To: <3ac19159-7314-c299-5112-b0f7aa2cc409@game-point.net>
+Subject: RE: Proposal: tell git a file has been renamed
+Date:   Sat, 22 Apr 2023 18:09:01 -0400
+Organization: Nexbridge Inc.
+Message-ID: <01d301d97567$0e9bc0b0$2bd34210$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGPbo8B6JXBOHTQs0LegpwHccbnnGe__ea05fkO_34YKA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLKSEVgGV7VqNVq5ZPBoEDYjfkU8wGiEiwXAbdj3K0C3aT/WQIICEvLrRRC7IA=
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio and Elijah,
+On Saturday, April 22, 2023 3:54 PM, Jeremy Morton wrote:
+>Subject: Re: Proposal: tell git a file has been renamed
+>
+>https://stackoverflow.com/a/1094392/178757
+>
+>says:
+>
+>git mv oldname newname
+>
+>is just shorthand for:
+>
+>mv oldname newname
+>git add newname
+>git rm oldname
 
-Le 2023-04-22 à 11:00, Elijah Newren a écrit :
-> On Thu, Apr 20, 2023 at 3:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+The above stackoverflow topic is from 2009. A lot has changed since then. My test follows. Please note the status and git log contents indicating the rename.
+
+$ mkdir test2
+$ cd test2
+$ git init
+$ echo "Initial" > file1
+$ git add file1
+$ commit -m "Commit 1"
+$ git mv file1 file2
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    file1 -> file2
+$ git commit -m "Rename"
+$ git log --patch
+commit 014068fcedaf361f45c356046cf513b79537f53f (HEAD -> master)
+Author: Randall S. Becker <rsbecker@nexbridge.com>
+Date:   Sat Apr 22 18:02:07 2023 -0400
+
+    Rename
+
+diff --git a/file1 b/file2
+similarity index 100%
+rename from file1
+rename to file2
+
+commit 235a33801b82eac67e25c57e512ca428f2d49cea
+Author: Randall S. Becker <rsbecker@nexbridge.com>
+Date:   Sat Apr 22 18:01:48 2023 -0400
+
+    Commit 1
+
+diff --git a/file1 b/file1
+new file mode 100644
+index 0000000..a77fa51
+--- /dev/null
++++ b/file1
+@@ -0,0 +1 @@
++Initial
+
+>
+>On 22/04/2023 20:47, rsbecker@nexbridge.com wrote:
+>> No, history is preserved in the rename.
 >>
->> * pb/complete-and-document-auto-merge-and-friends (2023-04-14) 5 commits
->>   (merged to 'next' on 2023-04-20 at 2728a01622)
->>  + completion: complete AUTO_MERGE
->>  + Documentation: document AUTO_MERGE
->>  + git-merge.txt: modernize word choice in "True merge" section
->>  + completion: complete REVERT_HEAD and BISECT_HEAD
->>  + revisions.txt: document more special refs
+>>> -----Original Message-----
+>>> From: Jeremy Morton <admin@game-point.net>
+>>> Sent: Saturday, April 22, 2023 3:45 PM
+>>> To: rsbecker@nexbridge.com; git@vger.kernel.org
+>>> Subject: Re: Proposal: tell git a file has been renamed
+>>>
+>>> I read that git mv is basically the equivalent to deleting the old
+>>> file, creating the new file, and adding the changes.  Isn't it?  If
+>>> so it's gonna have the same problem as I have now.
+>>>
+>>> --
+>>> Best regards,
+>>> Jeremy Morton (Jez)
+>>>
+>>> On 22/04/2023 19:54, rsbecker@nexbridge.com wrote:
+>>>> On Saturday, April 22, 2023 2:02 PM, Jeremy Morton wrote:
+>>>>> Yes, I know Linus specifically doesn't store file rename info in Git.
+>>>>> The trouble is, every now and then, I'll come across a situation
+>>>>> where Git doesn't successfully detect that I've renamed a file
+>>>>> because I'm doing something like renaming a class at the same time.
+>>>>> So I'll have a file OldClassNameTests.cs and a NewClassNameTests.cs
+>>>>> but a bunch of lines in that file have also changed from
+>>>>> OldClassName.DoThing() to NewClassName.DoThing().  I can clearly
+>>>>> see that this is a rename, but Git sees enough changed content that
+>>>>> it doesn't realize it, and puts it in as a delete/add, losing the content history.
+>>>>>
+>>>>> The standard answer for this is to rename the file in one commit,
+>>>>> then make the changes.  That's fine if you know ahead of time
+>>>>> you'll want to do this.  However it's a total PITA if you have a
+>>>>> bunch of changes and you realize that a rename has caused this
+>>>>> problem.  You now have to back out your changes to the renamed
+>>>>> file, add the rename, commit
+>>> it, then re-apply the changes.
+>>>>>
+>>>>> Could a command be added to git that means you tell Git that counts
+>>>>> as a file rename?  Git would add a marker to the staging area that
+>>>>> the file has been renamed, and upon commit, would first generate an
+>>>>> additional commit for each rename before generating the main
+>>>>> commit, ensuring the rename operation counts as an actual rename,
+>>>>> and the content's
+>>> history is maintained.
+>>>>
+>>>> Would git mv work in your situation? You can stage changes to the
+>>>> original file,
+>>> then use git mv. Or use git mv first. The rename shows as staged in any event.
+>>>> --Randall
+>>>>
+>>>>
 >>
->>  Document more pseudo-refs and teach the command line completion
->>  machinery to complete AUTO_MERGE.
 >>
->>  Will merge to 'master'.
->>  source: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
-> 
-> This merged to next already?  Doh.
-> 
-> There was some misleading text (and a few typos) in 4/5, and good
-> suggestions from both Eric and Victoria in the thread for wording and
-> display improvements.
-> 
-> Perhaps we can at least wait for a fixup patch?
 
-Yes, sorry for not having send a v2 yet (or responding to reviews),
-I'm very busy with work.
-
-I'm also surprised that this is already in 'next' since your "What's cooking"
-of the 17th did not mention "will merge to next" for this branch [1].
-
-I've fixed the typos and also would like to incorporate Victoria's suggestion.
-
-I probably won't have time to do this before May though. I'll send a v2 then.
-I can do fixup patches on top if it stays in next, or I can wait till 
-next is rebuilt... whatever works best.
-
-Cheers,
-Philippe.
-
-
-[1] https://lore.kernel.org/git/xmqqfs8xfw25.fsf@gitster.g/
