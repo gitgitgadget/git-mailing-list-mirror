@@ -2,102 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1992AC7618E
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 21:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B37A2C77B78
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 21:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229895AbjDVVZ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 17:25:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58660 "EHLO
+        id S229584AbjDVVx6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 17:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbjDVVZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 17:25:58 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1722697
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:25:57 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f199696149so4350475e9.0
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:25:57 -0700 (PDT)
+        with ESMTP id S229500AbjDVVx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 17:53:57 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE9D910E6
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:53:55 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-5ef8aaf12bdso12987966d6.3
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 14:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682198755; x=1684790755;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9SEdPnzKVCOWkYLvqviDXBhHf6cCjgbAXji+dXl/ofQ=;
-        b=ceY6Vv9tw81o9OPmlWHeDbKiex87yNzGHCndrYSSUmKOTTEamKlj9woJtd1tmP2CUz
-         nw0RdHp7WZTVob/Vj8MBtc1TBMKbVtguBEMjbbsSTevxpWhdfoFOfo0dIlk+rFze0mJz
-         B7EusuKd86lRG3UHLOxYuiFLbLjjxibYOlDAq5bzifcVU6pHYBiJl9ZnYPxQf2xGgYXx
-         7QH/E3jb0hVzPlgruQY74S6no3np/6Zs1SWJ/NkeiUKujXy/69L1QS7R3+EQGAQQ5mLE
-         8H0wOY5PAEkbhLFKpSXz5pTGqNYELQXcXu13AKiybJ6OxSC6TLuxbpdEQSWFkQjamG0a
-         48tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682198755; x=1684790755;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20221208; t=1682200434; x=1684792434;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9SEdPnzKVCOWkYLvqviDXBhHf6cCjgbAXji+dXl/ofQ=;
-        b=OKZgTikXUuxGW7zYqwtVzNEBVBt3w3drqE7xtYph2UwSOin5Qa5tw6o6hsAZiRgXK9
-         bzNMdBD6I/TP/eKnSVqe3SndjGhp6JGQTGxf3+gMk98T3jG4aH7SdrJQK6Yc8g4kFL1C
-         Rtao+OQBv0koxrOZELQtsqLDpyLK9Psxos10dQrNTaIfq8TOOdCEE9E6pz9/uirv+66M
-         NQaVPCCX6UaR1YJJ/lbSzoLEZ7E/aOjVJ1mOtHrSKGzRkIikrFTrx3x/bzXb50ghCVM/
-         9YRalwI23X1eQ82/fulqw7gvE2RCcaJ7X/xT7hE1iDpKYA+ytQrc1i2I83kMd0SFa2Cq
-         UPzw==
-X-Gm-Message-State: AAQBX9e/CI1jeT1QQmhItnbD9/PZNINpwr/PuWb7p4dEkQRJyBqETwI9
-        AcSN55Ok9UbEWLRmQKPYwlcXNlRyP+GNf9t9bcBbRTAM7ac=
-X-Google-Smtp-Source: AKy350bod76QXb0yupWTL4w/5v8ukahJz6AiF/i6dUrJZrlxNb+Pv+WMC5sGvlthac+AvtE29bnNSvqobG0ftG05DP8=
-X-Received: by 2002:a1c:ed01:0:b0:3f0:a9dc:a369 with SMTP id
- l1-20020a1ced01000000b003f0a9dca369mr4645153wmh.19.1682198755333; Sat, 22 Apr
- 2023 14:25:55 -0700 (PDT)
+        bh=LfZYAb1lTvuL8kCKuNzC5Zf+R3IH41H46boWKWqcEMk=;
+        b=VUJrFVj/zYccDGcFRy5MZ4xQiYYMMA5ya8P03CoKlJwVJrMqt+HM4FUPiP50QHCFzU
+         ju2IaQ4zfAHdie4OAI0CiycMTS8G++A6m+1DW+2F8qdG6SvZWve9sqmy3ezk0F1zslcZ
+         tUOc/smQEmixdAdBGgoixupjCOpV3ylCSEucs+XuRumxQuvTPHM18/Mhu5hXy3SWZzk6
+         IvaIwsOn1yOusV5QgrFULhWKypgVqWE2Fd5G2s0J6byWjSdnHX2h8lXR9Tjv88FYCi10
+         GRe/U0gSuwHivYaZ9BsjrRowopLMZz524GYkuM0DhFtoCZs4NadIaQ1eHxscjJ0z6mLP
+         fk0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682200434; x=1684792434;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LfZYAb1lTvuL8kCKuNzC5Zf+R3IH41H46boWKWqcEMk=;
+        b=Zd2HEYHTLGia9UzQZ42B25l2Gi9DEZBGL5+sP47UV9VopHYUBfUHaVuyDwpceaO03g
+         2ct2Wn//DHGsmwaFLT0xpbvPb+cnvylt2/T6q7c0Ixk5u/AqklL/b/mU7wQd0zcHj5xf
+         zd2w9hczR3ZimfQytSirlpwv4fEbKt0oFP8xq16gY3yjIw+yACzCEEmxb5BYDdcknVgH
+         K2GS8LE4ZnQtGduimncJGmluyNZVfnIsnaEuk/15aqbUi/wcKLUTNtm3Rzm41qYHxBTF
+         zFYbsBBrhnq5HSx2pVa4oSDNLlVxuYXoTNWPq+JfErnOnkFnvXfPmL8tiCaL+2MwmJ/T
+         13Pg==
+X-Gm-Message-State: AAQBX9czxeqczGLoBaHG3eVBfgZlPs6VmDwfRHzXT7CL+OEwNfaj2wM2
+        r3Xyo85RovGsLkzoNGWg4s/GX9M5zo4=
+X-Google-Smtp-Source: AKy350aVck1mP05+5FuUJGBIDcfInZ/jGLsZJ/8indZYxjkEEAfDGV0FCTvF+DKILFqes8825+5vEA==
+X-Received: by 2002:ad4:5be8:0:b0:5f3:deca:ead with SMTP id k8-20020ad45be8000000b005f3deca0eadmr13177843qvc.28.1682200434054;
+        Sat, 22 Apr 2023 14:53:54 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id u14-20020a0cdd0e000000b005ef447e24adsm2189153qvk.19.2023.04.22.14.53.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Apr 2023 14:53:53 -0700 (PDT)
+Subject: Re: pb/complete-and-document-auto-merge-and-friends (Was: Re: What's
+ cooking in git.git (Apr 2023, #06; Thu, 20))
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <xmqqwn26w5cd.fsf@gitster.g>
+ <CABPp-BGPbo8B6JXBOHTQs0LegpwHccbnnGe__ea05fkO_34YKA@mail.gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <a10648d5-8cba-4c7c-a303-b5b0dcdd3310@gmail.com>
+Date:   Sat, 22 Apr 2023 17:53:52 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <20230320205241.105476-1-cheskaqiqi@gmail.com> <20230322161820.3609-1-cheskaqiqi@gmail.com>
- <20230322161820.3609-3-cheskaqiqi@gmail.com> <c382017a-8c65-24ba-5092-6b46428d8b9b@github.com>
- <CAMO4yUF1P1Sv1aVJ1aw9US-QeNYD-GfaS7ndr=bwp-dgvOyexA@mail.gmail.com>
- <069a53ef-63b8-c1e3-7502-6728bda50665@github.com> <CAMO4yUESBZw2Jr8y4NW_2N7640o2o2mpq58+nnC+3qffG3Y8=Q@mail.gmail.com>
- <111153b4-dba0-b533-fe49-57a6d5d3ba22@github.com>
-In-Reply-To: <111153b4-dba0-b533-fe49-57a6d5d3ba22@github.com>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Sat, 22 Apr 2023 17:25:44 -0400
-Message-ID: <CAMO4yUEsB=Rnoh44V1dykCkymF6qQJTiQyn_3s=L1PedaUcN7g@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] diff-files: integrate with sparse index
-To:     Victoria Dye <vdye@github.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABPp-BGPbo8B6JXBOHTQs0LegpwHccbnnGe__ea05fkO_34YKA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria,
+Hi Junio and Elijah,
 
-On Fri, Apr 21, 2023 at 5:26=E2=80=AFPM Victoria Dye <vdye@github.com> wrot=
-e:
-> Only the latter represents incorrect behavior. If we're aren't expanding =
-the
-> index for a case that was causing index expansion before *and* the
-> user-facing behavior is as-expected, that's the best-case scenario for a
-> sparse index integration!
->
-> Taking a step back, it's important to remember that the overarching goal =
-of
-> the project is not just to switch 'command_requires_full_index' to '0'
-> everywhere, but to find all of the places where Git is working with the
-> index and make sure that work can be done on a sparse directory.
->
-> In most cases, it's possible to adapt an index-related operation to work
-> with sparse directories (albeit with varying levels of complexity). The u=
-se
-> of 'ensure_full_index()' is reserved for cases where it is _impossible_ t=
-o
-> make Git perform a given action on a sparse directory - expanding the ind=
-ex
-> completely eliminates the performance gains had by using a sparse index, =
-so
-> it should be avoided at all costs.
->
-> I hope that helps!
+Le 2023-04-22 à 11:00, Elijah Newren a écrit :
+> On Thu, Apr 20, 2023 at 3:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> * pb/complete-and-document-auto-merge-and-friends (2023-04-14) 5 commits
+>>   (merged to 'next' on 2023-04-20 at 2728a01622)
+>>  + completion: complete AUTO_MERGE
+>>  + Documentation: document AUTO_MERGE
+>>  + git-merge.txt: modernize word choice in "True merge" section
+>>  + completion: complete REVERT_HEAD and BISECT_HEAD
+>>  + revisions.txt: document more special refs
+>>
+>>  Document more pseudo-refs and teach the command line completion
+>>  machinery to complete AUTO_MERGE.
+>>
+>>  Will merge to 'master'.
+>>  source: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
+> 
+> This merged to next already?  Doh.
+> 
+> There was some misleading text (and a few typos) in 4/5, and good
+> suggestions from both Eric and Victoria in the thread for wording and
+> display improvements.
+> 
+> Perhaps we can at least wait for a fixup patch?
 
-Thanks for reminding me about the ultimate goal of sparse index
-integration! I've learned a lot from it. After looking into the test
-failure, it seems that the index didn't expand in cases where I expected
-it to. I'll go ahead and update my patch.
+Yes, sorry for not having send a v2 yet (or responding to reviews),
+I'm very busy with work.
 
-Thanks,
-Shuqi
+I'm also surprised that this is already in 'next' since your "What's cooking"
+of the 17th did not mention "will merge to next" for this branch [1].
+
+I've fixed the typos and also would like to incorporate Victoria's suggestion.
+
+I probably won't have time to do this before May though. I'll send a v2 then.
+I can do fixup patches on top if it stays in next, or I can wait till 
+next is rebuilt... whatever works best.
+
+Cheers,
+Philippe.
+
+
+[1] https://lore.kernel.org/git/xmqqfs8xfw25.fsf@gitster.g/
