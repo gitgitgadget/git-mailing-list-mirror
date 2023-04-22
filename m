@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F3FC7618E
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9D3EC77B78
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 22:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbjDVWTN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 18:19:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39974 "EHLO
+        id S229867AbjDVWT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 18:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbjDVWTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 18:19:11 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80AD126BE
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:19:09 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f178da21b2so31471765e9.1
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:19:09 -0700 (PDT)
+        with ESMTP id S229587AbjDVWT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 18:19:27 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFA126AD
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:19:25 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-2f87c5b4635so2808783f8f.1
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 15:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682201948; x=1684793948;
+        d=gmail.com; s=20221208; t=1682201963; x=1684793963;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+MAXPguIYG550wI+/5xI9tvNvJ0ttQc/qw6ldMv4KD4=;
-        b=NEhuePwFjWRTsZk8TbxQV16v48kbC03JWhuTvjOB5vu5kf0W7fLGH/EfCOlYCg11sZ
-         1Mb8aRW/kkQgjjr6h3iglYVFSBvyqVEsJQCab8ofCBAHcPzwxcqrNrNJd7FA1S99DqC7
-         OJW1T7GT5mw01x31KwEUwiPbE4XUk4bzC1G8GYhouUtUqWCtywx3Bt0kai5VAmi8HDX4
-         /12WOa+kw1wmEUL82WuAZiWKE8isXDrDTgbNBHlEdpRiFiLokNXkaerpUA0NOkrsnHHr
-         sy16VMp3BaSwuGY470a4Q6f8QnjyyyVv21lgy1Bwnz2vuHdrHXDiihUyTdSYh/4X8hrW
-         XSOA==
+        bh=LJ+aoC6ySzh7skTJeAMnkovekBqKSykLZlOBFW3/qEQ=;
+        b=ffHotN7NCNWV2u4hoT/9ozsZvZwB9e8bIeVbl/A8o4+IWb6LvDdEFSLUp3MTVvsV3V
+         muJyJ8MciCUMEZxxkSNlxRbuLsCi1u0Q6E67u5Xmim8OE2O+d0C6KWNoKVqShqExLgyj
+         U5+XtdLYC5LWnhpH6Po6Pgp/6QzSKATNqeG2v8ISq6TIJL9scwdnFaXjFvpW/fhcayoB
+         QGHNPBZkYXAUzQlZsbkNS9YUOmF/YkaOuK8HEZ8ECRWeALXREnU63ymhGeHgRq9NchhA
+         mH4gSJDcsuUywc5mKI89Afpk4Df81p4YifUG9dky1G/8D0BsS9Wb9CEnIYgNM/a5Il3E
+         o2dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682201948; x=1684793948;
+        d=1e100.net; s=20221208; t=1682201963; x=1684793963;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+MAXPguIYG550wI+/5xI9tvNvJ0ttQc/qw6ldMv4KD4=;
-        b=JgCOz9PDZwK0A/U7BV8/nU3k15fj2XmRpfZgFjDhQLkgmOdx5i2sC1o6VDnbt4JFzq
-         gImzfXvmlNuoHH56mtxAaf+WxpuugMhs9XCiGGd0p9jvHWN3MnVisGoHzzsdg4w1cLg0
-         xSxQGwFzu5pFyenzyLxf4DXCmc5hK4Fr9ZHoRlya1aM74z7g5uUiKInWdlqIIF0bwj+t
-         P/X7jx4jp9LT9VrGZs9+xh1A3fHNsO0bdGT3znxXXW6cWvcVzxrmbig6uV8BOHUdT6cy
-         alNbGX6+788LpuPihHb0f+t9vOZQ+bHUvSkD77EaGTz+w2W6vF1lsywtz7VjWNSGQejc
-         R9hg==
-X-Gm-Message-State: AAQBX9cz/mSqnfJFIy5uPgfFP7y/7XRH5iqx7jwnIRUl5YdKekHloVQM
-        B9KaRur/yVePznBIKkO55Yk=
-X-Google-Smtp-Source: AKy350bRWJXMborPk54fWm4dFbiHBy3JM3ofUkYZqhU15ZsimoA1SvJrI3sikMbWARxaMgGIM92/Qg==
-X-Received: by 2002:a5d:4149:0:b0:2fe:61b0:d7a2 with SMTP id c9-20020a5d4149000000b002fe61b0d7a2mr6743885wrq.12.1682201947734;
-        Sat, 22 Apr 2023 15:19:07 -0700 (PDT)
+        bh=LJ+aoC6ySzh7skTJeAMnkovekBqKSykLZlOBFW3/qEQ=;
+        b=U1i6tSxkFtJF1t6h9BxhuNZVMEBAoJNmOw6nJhvr9z+Bv7a6FWjLVq6fnJunMNUmGi
+         a2knuuXA0NG2xbt5xHVUjS3+H/nIaRfhksyalfCg4SkHTCWN8O+Tkq7v/7vkR6UDWrRc
+         2NLt5wbiFZywqRsFLIffJq4JiG8IXZsoU3nvs/fzRVx7CZV27UBgzbRBgyP8X+j4QkBG
+         3tygjPCAzuLFOknQmbFXLS8/ZbhJ99mwGC1K0bbY48ZKHKPRFo9yUzOcn+5wWfpJxOLR
+         pz4uunrVer6FZOBgcMAIQWAEv2KgOOCCBJssit/s2lkVXmY+DLyJOtGBwr+SIM2bxoho
+         zqNQ==
+X-Gm-Message-State: AAQBX9eKSp84OS9AI7nRheLs+tSCJDvtg2q/CIkyBkukM+xBAr5kYECy
+        zJPlgGyOzbuCCUlGWsdBsgem4oSV1/Y=
+X-Google-Smtp-Source: AKy350Yh1u2gkTffuXaMQiaB2A2sQUW273PiptNxQ9+554eR45LI1Tm/UJn4nVZlNcRAEQ8lxomBtw==
+X-Received: by 2002:adf:cf0d:0:b0:2f1:e162:d48 with SMTP id o13-20020adfcf0d000000b002f1e1620d48mr6581118wrj.47.1682201963343;
+        Sat, 22 Apr 2023 15:19:23 -0700 (PDT)
 Received: from [192.168.2.52] (32.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.32])
-        by smtp.gmail.com with ESMTPSA id h1-20020a5d6e01000000b002fa834e1c69sm7372251wrz.52.2023.04.22.15.19.07
+        by smtp.gmail.com with ESMTPSA id p8-20020a05600c358800b003f1738d0d13sm16016946wmq.1.2023.04.22.15.19.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 15:19:07 -0700 (PDT)
-Subject: [PATCH 1/3] checkout: move orphaned_commit_warning()
+        Sat, 22 Apr 2023 15:19:23 -0700 (PDT)
+Subject: [PATCH 2/3] worktree: warn when removing a worktree with orphan
+ commits
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <f702476a-543a-da9b-ccd9-4431c80471e1@gmail.com>
-Message-ID: <bf4835ac-4d39-8bfa-47e9-057d97fa0fff@gmail.com>
-Date:   Sun, 23 Apr 2023 00:19:05 +0200
+Message-ID: <1897dff1-bb4d-9715-dd1c-86763c052589@gmail.com>
+Date:   Sun, 23 Apr 2023 00:19:21 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -67,333 +68,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 8e2dc6ac06 (commit: give final warning when reattaching HEAD to leave
-commits behind, 2011-02-18) we introduced orphaned_commit_warning() in
-builtin/checkout.c.
+While working in a detached worktree, the user can create some commits
+which won't be automatically connected to any ref.
 
-In subsequent commits we're going to use orphaned_commit_warning() not
-only from builtin/checkout.c, but from other builtin commands too.
+Eventually, that worktree can be removed and, if the user has not
+created any ref connected to the HEAD in that worktree (e.g. branch,
+tag), those commits will become unreachable.
 
-Let's move the function and its helpers to checkout.c and make it an
-API callable not just from builtin/checkout.c.
+Let's issue a warning to remind the user for safety, when deleting a
+worktree whose HEAD is not connected to an existing ref.
+
+Let's also add an option to modify the message we show in
+orphaned_commit_warning(): "Previous HEAD position was..."; allowing to
+omit the word "Previous" as it may cause confusion, erroneously
+suggesting that there is a "Current HEAD" while the worktree has been
+removed.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/checkout.c | 124 -------------------------------------------
- checkout.c         | 129 +++++++++++++++++++++++++++++++++++++++++++++
- checkout.h         |   9 ++++
- 3 files changed, 138 insertions(+), 124 deletions(-)
+ builtin/checkout.c       |  2 +-
+ builtin/worktree.c       |  8 ++++++++
+ checkout.c               |  7 +++++--
+ checkout.h               |  3 ++-
+ t/t2403-worktree-move.sh | 10 ++++++++++
+ 5 files changed, 26 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6f5d82ed3d..991413ef1a 100644
+index 991413ef1a..85ac4bca00 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -656,24 +656,6 @@ static void show_local_changes(struct object *head,
- 	release_revisions(&rev);
- }
+@@ -1051,7 +1051,7 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	}
  
--static void describe_detached_head(const char *msg, struct commit *commit)
--{
--	struct strbuf sb = STRBUF_INIT;
--
--	if (!repo_parse_commit(the_repository, commit))
--		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
--	if (print_sha1_ellipsis()) {
--		fprintf(stderr, "%s %s... %s\n", msg,
--			repo_find_unique_abbrev(the_repository, &commit->object.oid, DEFAULT_ABBREV),
--			sb.buf);
--	} else {
--		fprintf(stderr, "%s %s %s\n", msg,
--			repo_find_unique_abbrev(the_repository, &commit->object.oid, DEFAULT_ABBREV),
--			sb.buf);
--	}
--	strbuf_release(&sb);
--}
--
- static int reset_tree(struct tree *tree, const struct checkout_opts *o,
- 		      int worktree, int *writeout_error,
- 		      struct branch_info *info)
-@@ -1016,112 +998,6 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 		report_tracking(new_branch_info);
- }
+ 	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
+-		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
++		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit, 1);
  
--static int add_pending_uninteresting_ref(const char *refname,
--					 const struct object_id *oid,
--					 int flags UNUSED, void *cb_data)
--{
--	add_pending_oid(cb_data, refname, oid, UNINTERESTING);
--	return 0;
--}
--
--static void describe_one_orphan(struct strbuf *sb, struct commit *commit)
--{
--	strbuf_addstr(sb, "  ");
--	strbuf_add_unique_abbrev(sb, &commit->object.oid, DEFAULT_ABBREV);
--	strbuf_addch(sb, ' ');
--	if (!repo_parse_commit(the_repository, commit))
--		pp_commit_easy(CMIT_FMT_ONELINE, commit, sb);
--	strbuf_addch(sb, '\n');
--}
--
--#define ORPHAN_CUTOFF 4
--static void suggest_reattach(struct commit *commit, struct rev_info *revs)
--{
--	struct commit *c, *last = NULL;
--	struct strbuf sb = STRBUF_INIT;
--	int lost = 0;
--	while ((c = get_revision(revs)) != NULL) {
--		if (lost < ORPHAN_CUTOFF)
--			describe_one_orphan(&sb, c);
--		last = c;
--		lost++;
--	}
--	if (ORPHAN_CUTOFF < lost) {
--		int more = lost - ORPHAN_CUTOFF;
--		if (more == 1)
--			describe_one_orphan(&sb, last);
--		else
--			strbuf_addf(&sb, _(" ... and %d more.\n"), more);
--	}
--
--	fprintf(stderr,
--		Q_(
--		/* The singular version */
--		"Warning: you are leaving %d commit behind, "
--		"not connected to\n"
--		"any of your branches:\n\n"
--		"%s\n",
--		/* The plural version */
--		"Warning: you are leaving %d commits behind, "
--		"not connected to\n"
--		"any of your branches:\n\n"
--		"%s\n",
--		/* Give ngettext() the count */
--		lost),
--		lost,
--		sb.buf);
--	strbuf_release(&sb);
--
--	if (advice_enabled(ADVICE_DETACHED_HEAD))
--		fprintf(stderr,
--			Q_(
--			/* The singular version */
--			"If you want to keep it by creating a new branch, "
--			"this may be a good time\nto do so with:\n\n"
--			" git branch <new-branch-name> %s\n\n",
--			/* The plural version */
--			"If you want to keep them by creating a new branch, "
--			"this may be a good time\nto do so with:\n\n"
--			" git branch <new-branch-name> %s\n\n",
--			/* Give ngettext() the count */
--			lost),
--			repo_find_unique_abbrev(the_repository, &commit->object.oid, DEFAULT_ABBREV));
--}
--
--/*
-- * We are about to leave commit that was at the tip of a detached
-- * HEAD.  If it is not reachable from any ref, this is the last chance
-- * for the user to do so without resorting to reflog.
-- */
--static void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit)
--{
--	struct rev_info revs;
--	struct object *object = &old_commit->object;
--
--	repo_init_revisions(the_repository, &revs, NULL);
--	setup_revisions(0, NULL, &revs, NULL);
--
--	object->flags &= ~UNINTERESTING;
--	add_pending_object(&revs, object, oid_to_hex(&object->oid));
--
--	for_each_ref(add_pending_uninteresting_ref, &revs);
--	if (new_commit)
--		add_pending_oid(&revs, "HEAD",
--				&new_commit->object.oid,
--				UNINTERESTING);
--
--	if (prepare_revision_walk(&revs))
--		die(_("internal error in revision walk"));
--	if (!(old_commit->object.flags & UNINTERESTING))
--		suggest_reattach(old_commit, &revs);
--	else
--		describe_detached_head(_("Previous HEAD position was"), old_commit);
--
--	/* Clean up objects used, as they will be reused. */
--	repo_clear_commit_marks(the_repository, ALL_REV_FLAGS);
--	release_revisions(&revs);
--}
--
- static int switch_branches(const struct checkout_opts *opts,
- 			   struct branch_info *new_branch_info)
- {
+ 	update_refs_for_switch(opts, &old_branch_info, new_branch_info);
+ 
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index a61bc32189..df269bccc8 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1138,6 +1138,14 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
+ 
+ 		ret |= delete_git_work_tree(wt);
+ 	}
++
++	if (!wt->head_ref && !is_null_oid(&wt->head_oid)) {
++		struct commit* wt_commit = lookup_commit_reference_gently(the_repository,
++									  &wt->head_oid, 1);
++		if (wt_commit)
++			orphaned_commit_warning(wt_commit, NULL, 0);
++	}
++
+ 	/*
+ 	 * continue on even if ret is non-zero, there's no going back
+ 	 * from here.
 diff --git a/checkout.c b/checkout.c
-index 04238b2713..18e7362043 100644
+index 18e7362043..5f7b0b3c49 100644
 --- a/checkout.c
 +++ b/checkout.c
-@@ -5,6 +5,11 @@
- #include "checkout.h"
- #include "config.h"
- #include "strbuf.h"
-+#include "environment.h"
-+#include "revision.h"
-+#include "advice.h"
-+#include "hex.h"
-+#include "refs.h"
- 
- struct tracking_name_data {
- 	/* const */ char *src_ref;
-@@ -70,3 +75,127 @@ const char *unique_tracking_name(const char *name, struct object_id *oid,
- 	}
- 	return NULL;
- }
-+
-+void describe_detached_head(const char *msg, struct commit *commit)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	if (!repo_parse_commit(the_repository, commit))
-+		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
-+	if (print_sha1_ellipsis()) {
-+		fprintf(stderr, "%s %s... %s\n", msg,
-+			repo_find_unique_abbrev(the_repository, &commit->object.oid, DEFAULT_ABBREV),
-+			sb.buf);
-+	} else {
-+		fprintf(stderr, "%s %s %s\n", msg,
-+			repo_find_unique_abbrev(the_repository, &commit->object.oid, DEFAULT_ABBREV),
-+			sb.buf);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+static int add_pending_uninteresting_ref(const char *refname,
-+					 const struct object_id *oid,
-+					 int flags UNUSED, void *cb_data)
-+{
-+	add_pending_oid(cb_data, refname, oid, UNINTERESTING);
-+	return 0;
-+}
-+
-+static void describe_one_orphan(struct strbuf *sb, struct commit *commit)
-+{
-+	strbuf_addstr(sb, "  ");
-+	strbuf_add_unique_abbrev(sb, &commit->object.oid, DEFAULT_ABBREV);
-+	strbuf_addch(sb, ' ');
-+	if (!repo_parse_commit(the_repository, commit))
-+		pp_commit_easy(CMIT_FMT_ONELINE, commit, sb);
-+	strbuf_addch(sb, '\n');
-+}
-+
-+#define ORPHAN_CUTOFF 4
-+static void suggest_reattach(struct commit *commit, struct rev_info *revs)
-+{
-+	struct commit *c, *last = NULL;
-+	struct strbuf sb = STRBUF_INIT;
-+	int lost = 0;
-+	while ((c = get_revision(revs)) != NULL) {
-+		if (lost < ORPHAN_CUTOFF)
-+			describe_one_orphan(&sb, c);
-+		last = c;
-+		lost++;
-+	}
-+	if (ORPHAN_CUTOFF < lost) {
-+		int more = lost - ORPHAN_CUTOFF;
-+		if (more == 1)
-+			describe_one_orphan(&sb, last);
-+		else
-+			strbuf_addf(&sb, _(" ... and %d more.\n"), more);
-+	}
-+
-+	fprintf(stderr,
-+		Q_(
-+		/* The singular version */
-+		"Warning: you are leaving %d commit behind, "
-+		"not connected to\n"
-+		"any of your branches:\n\n"
-+		"%s\n",
-+		/* The plural version */
-+		"Warning: you are leaving %d commits behind, "
-+		"not connected to\n"
-+		"any of your branches:\n\n"
-+		"%s\n",
-+		/* Give ngettext() the count */
-+		lost),
-+		lost,
-+		sb.buf);
-+	strbuf_release(&sb);
-+
-+	if (advice_enabled(ADVICE_DETACHED_HEAD))
-+		fprintf(stderr,
-+			Q_(
-+			/* The singular version */
-+			"If you want to keep it by creating a new branch, "
-+			"this may be a good time\nto do so with:\n\n"
-+			" git branch <new-branch-name> %s\n\n",
-+			/* The plural version */
-+			"If you want to keep them by creating a new branch, "
-+			"this may be a good time\nto do so with:\n\n"
-+			" git branch <new-branch-name> %s\n\n",
-+			/* Give ngettext() the count */
-+			lost),
-+			repo_find_unique_abbrev(the_repository, &commit->object.oid, DEFAULT_ABBREV));
-+}
-+
-+/*
-+ * We are about to leave commit that was at the tip of a detached
-+ * HEAD.  If it is not reachable from any ref, this is the last chance
-+ * for the user to do so without resorting to reflog.
-+ */
-+void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit)
-+{
-+	struct rev_info revs;
-+	struct object *object = &old_commit->object;
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	setup_revisions(0, NULL, &revs, NULL);
-+
-+	object->flags &= ~UNINTERESTING;
-+	add_pending_object(&revs, object, oid_to_hex(&object->oid));
-+
-+	for_each_ref(add_pending_uninteresting_ref, &revs);
-+	if (new_commit)
-+		add_pending_oid(&revs, "HEAD",
-+				&new_commit->object.oid,
-+				UNINTERESTING);
-+
-+	if (prepare_revision_walk(&revs))
-+		die(_("internal error in revision walk"));
-+	if (!(old_commit->object.flags & UNINTERESTING))
-+		suggest_reattach(old_commit, &revs);
+@@ -171,7 +171,8 @@ static void suggest_reattach(struct commit *commit, struct rev_info *revs)
+  * HEAD.  If it is not reachable from any ref, this is the last chance
+  * for the user to do so without resorting to reflog.
+  */
+-void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit)
++void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit,
++			     int show_previous_position)
+ {
+ 	struct rev_info revs;
+ 	struct object *object = &old_commit->object;
+@@ -192,8 +193,10 @@ void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commi
+ 		die(_("internal error in revision walk"));
+ 	if (!(old_commit->object.flags & UNINTERESTING))
+ 		suggest_reattach(old_commit, &revs);
+-	else
++	else if (show_previous_position)
+ 		describe_detached_head(_("Previous HEAD position was"), old_commit);
 +	else
-+		describe_detached_head(_("Previous HEAD position was"), old_commit);
-+
-+	/* Clean up objects used, as they will be reused. */
-+	repo_clear_commit_marks(the_repository, ALL_REV_FLAGS);
-+	release_revisions(&revs);
-+}
++		describe_detached_head(_("HEAD position was"), old_commit);
+ 
+ 	/* Clean up objects used, as they will be reused. */
+ 	repo_clear_commit_marks(the_repository, ALL_REV_FLAGS);
 diff --git a/checkout.h b/checkout.h
-index 1917f3b323..c7dc056544 100644
+index c7dc056544..ee400376d5 100644
 --- a/checkout.h
 +++ b/checkout.h
-@@ -2,6 +2,7 @@
- #define CHECKOUT_H
+@@ -18,7 +18,8 @@ const char *unique_tracking_name(const char *name,
+  * HEAD.  If it is not reachable from any ref, this is the last chance
+  * for the user to do so without resorting to reflog.
+  */
+-void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit);
++void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit,
++			     int show_previous_position);
  
- #include "hash.h"
-+#include "commit.h"
- 
- /*
-  * Check if the branch name uniquely matches a branch name on a remote
-@@ -12,4 +13,12 @@ const char *unique_tracking_name(const char *name,
- 				 struct object_id *oid,
- 				 int *dwim_remotes_matched);
- 
-+/*
-+ * We are about to leave commit that was at the tip of a detached
-+ * HEAD.  If it is not reachable from any ref, this is the last chance
-+ * for the user to do so without resorting to reflog.
-+ */
-+void orphaned_commit_warning(struct commit *old_commit, struct commit *new_commit);
-+
-+void describe_detached_head(const char *msg, struct commit *commit);
+ void describe_detached_head(const char *msg, struct commit *commit);
  #endif /* CHECKOUT_H */
+diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
+index 230a55e99a..f2756f7137 100755
+--- a/t/t2403-worktree-move.sh
++++ b/t/t2403-worktree-move.sh
+@@ -247,4 +247,14 @@ test_expect_success 'not remove a repo with initialized submodule' '
+ 	)
+ '
+ 
++test_expect_success 'warn when removing a worktree with orphan commits' '
++	git worktree add --detach foo &&
++	git -C foo commit -m one --allow-empty &&
++	git -C foo commit -m two --allow-empty &&
++	git worktree remove foo 2>err &&
++	test_i18ngrep "you are leaving 2 commits behind" err &&
++	test_i18ngrep ! "Previous HEAD position was" err
++	test_i18ngrep "HEAD position was" err
++'
++
+ test_done
 -- 
 2.39.2
