@@ -2,103 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53E35C7618E
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 02:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC89C7618E
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 10:48:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229469AbjDVCE6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Apr 2023 22:04:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49666 "EHLO
+        id S229520AbjDVKsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 06:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjDVCE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2023 22:04:57 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D43211E
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 19:04:56 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2a8ba5f1d6bso21949671fa.2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2023 19:04:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682129094; x=1684721094;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=57kE9lAOwTE09neWCjTNGG+15Yqi7FMbooSqcG/FHdI=;
-        b=nxlO73sYfWP644i2RRc4yAfJQRCsHpOQY1SnTe5E3ETBcQES4ooDs4BC5da7QxJB52
-         N8/WL57ZL7ACMbHf85FYfHdJBoBLmcWh8GAqbz9oZZFl4MP9bZVMPGNyNu350pxRI7jE
-         PmTbyof/NwZF54ahH4lpmAms5AWAaunfpSR8sXI6QPbsM/3cMXBJAq8sxOFBfiFlrCEh
-         1rNmfz77x3SczF9vxAzv20LWlvwJP1JRuSPwnL0c1P/44tOZFtChfDvrhgYRz4R9nuJV
-         lFTpputScZnRWRej5S4l+kIphq5nsIjIyXTyq8LMoULW5UEUP9+bIHfHuE1KdlTClFuM
-         8ipA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682129094; x=1684721094;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=57kE9lAOwTE09neWCjTNGG+15Yqi7FMbooSqcG/FHdI=;
-        b=LoJkTPCMoM6usblY5IdgVYPub5ccoAg3DEJ1kzOgfchYLZ7ImxN/+5M1U4D1m5i+sj
-         hTE14VEFLeqkjw2RmYQoBxgftKq4vbj9TZyhVY6PvegTdpHa/Fysbr4V8lc5WkpgtJmZ
-         IlcSXMbUnO7jojqhhpxQWojOPmKIuS2o+8JB2XBrAGjwzd86ooLTL44hmfiNrDIBdNcF
-         aTvYN/cz3sFRq9LNfANHakXCdLNfgSuAkqs1Dv8Adc9XPmsRFeBGkFweawYVPFrHNYEb
-         MQZrSgdeuhtmj6irY5J/siIp/RRRloYzZkwNhYPNDl5YGjWuk42i42zIxpgE5n+L7PXJ
-         mtJQ==
-X-Gm-Message-State: AAQBX9d23c+GKSaQxqDHQ1SzSkWuzSi0dQtJXuYxDe8LjJXGxiYcbpvD
-        wIxv2GZQ0xZcQz5PSh1QKmhT0N7rweZNeyfYe2GVuWOc
-X-Google-Smtp-Source: AKy350aU7GGEp0v493QEDtLb3aSKFnnmRda80PTT3691NwXN6v98TdMgviHOtXGXO7634qjEofurI1cjiKYvi39i9Bs=
-X-Received: by 2002:a2e:964f:0:b0:2a8:dce8:2d13 with SMTP id
- z15-20020a2e964f000000b002a8dce82d13mr931448ljh.14.1682129094209; Fri, 21 Apr
- 2023 19:04:54 -0700 (PDT)
+        with ESMTP id S229451AbjDVKsB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 06:48:01 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF707198D
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 03:47:59 -0700 (PDT)
+Received: (qmail 10655 invoked by uid 109); 22 Apr 2023 10:47:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 22 Apr 2023 10:47:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27179 invoked by uid 111); 22 Apr 2023 10:47:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 22 Apr 2023 06:47:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 22 Apr 2023 06:47:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Rolf Eike Beer <eb@emlix.com>, git@vger.kernel.org,
+        Jaydeep P Das <jaydeepjd.8914@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] gpg-interface: set trust level of missing key to
+ "undefined"
+Message-ID: <20230422104758.GA2969939@coredump.intra.peff.net>
+References: <5926995.lOV4Wx5bFT@devpool47.emlix.com>
+ <20230418064846.GA1414@coredump.intra.peff.net>
+ <xmqqy1mpduq3.fsf@gitster.g>
+ <20230419012957.GA503941@coredump.intra.peff.net>
+ <xmqqy1mnanz8.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1518.git.1681974847078.gitgitgadget@gmail.com> <d5c93b5b-32b9-ec50-1661-06f73fa37f5f@github.com>
-In-Reply-To: <d5c93b5b-32b9-ec50-1661-06f73fa37f5f@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 21 Apr 2023 19:04:41 -0700
-Message-ID: <CABPp-BGVEWM_N3eXjfEGjemeNzrLMmqDOuWKCvzOuHGeMueoJQ@mail.gmail.com>
-Subject: Re: [PATCH] merge-ort: fix calling merge_finalize() with no
- intermediate merge
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy1mnanz8.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 20, 2023 at 6:10=E2=80=AFAM Derrick Stolee <derrickstolee@githu=
-b.com> wrote:
->
-> On 4/20/2023 3:14 AM, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
->
-> > While at it, ensure the FREE_AND_NULL() in the function does something
-> > useful with the nulling aspect, namely sets result->priv to NULL rather
-> > than a mere temporary.
->
-> Good call. It also makes the code look better.
->
-> >  void merge_finalize(struct merge_options *opt,
-> >                   struct merge_result *result)
-> >  {
-> > -     struct merge_options_internal *opti =3D result->priv;
-> > -
-> >       if (opt->renormalize)
-> >               git_attr_set_direction(GIT_ATTR_CHECKIN);
-> >       assert(opt->priv =3D=3D NULL);
-> >
-> > -     clear_or_reinit_internal_opts(opti, 0);
-> > -     FREE_AND_NULL(opti);
-> > +     if (!result->priv)
-> > +             return;
-> > +     clear_or_reinit_internal_opts(result->priv, 0);
-> > +     FREE_AND_NULL(result->priv);
->
-> Perhaps this would be better as
->
->         if (result->priv) {
->                 clear_or_reinit_internal_opts(result->priv, 0);
->                 FREE_AND_NULL(result->priv);
->         }
->
-> to avoid an accidental addition of code to the end of this
-> method that doesn't depend on result->priv?
+On Wed, Apr 19, 2023 at 08:30:35AM -0700, Junio C Hamano wrote:
 
-Ooh, yes, that'd be a good improvement; thanks.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Here's the patch that I came up with, though it does not distinguish
+> > between "we did not see any trust level" and "gpg told us the trust
+> > level was undefined". I think that's OK. That level is still below
+> > TRUST_NEVER. But if we really want to distinguish we can introduce a new
+> > value for the enum.
+> 
+> Good.
+> 
+> In my zeroth draft, I added to the enum a new TRUST_FAILED = -1 to
+> be used for the initialization assignment and get stringified in the
+> gpg_trust_level_to_str() function, which gave us the distinction and
+> made sure the enum is signed.  But in the end, I decided it was not
+> worth risking upsetting the end-user scripts that assumed the
+> current set of levels with a new "level" that is not known to them.
+> 
+> Initializing to undefined like this patch is with much less damage
+> to the codebase, and existing end-user scripts are probably prepared
+> to react to "undefined" already and treat it as even less trustworthy
+> than the "never" ones.
+
+One thing that I wondered about for using UNDEFINED is that we do this:
+
+  static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
+
+which is then later compared with:
+
+  status |= sigc->result != 'G';
+  status |= sigc->trust_level < configured_min_trust_level;
+
+So before my patch the uninitialized state is (supposedly) less than the
+min level, and after they are the same. For the reasons I gave in the
+commit message, I think that less-than comparison was already broken.
+And likewise, for the reasons I gave, it hopefully never matters since
+the result would never be 'G' in that case.
+
+So I think it's fine, but I definitely had to stare at it for a while.
+This all comes from 54887b4689 (gpg-interface: add minTrustLevel as a
+configuration option, 2019-12-27), which does discuss some of the
+implications, but I think my patch is in line with the logic there.
+
+-Peff
