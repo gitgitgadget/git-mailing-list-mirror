@@ -2,93 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86A5EC6FD18
-	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 15:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB875C7618E
+	for <git@archiver.kernel.org>; Sat, 22 Apr 2023 15:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjDVPxb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Apr 2023 11:53:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40856 "EHLO
+        id S229673AbjDVPyh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Apr 2023 11:54:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbjDVPxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2023 11:53:30 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C42E01FEC
-        for <git@vger.kernel.org>; Sat, 22 Apr 2023 08:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1682178792; i=l.s.r@web.de;
-        bh=6WVWdGEycRDraoEK3mZvHyCm6flHcFi2bTlq1IBEGNk=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=AQWVEfdD2kM2RhC/h9o1CL/k0wRiFmGA0VdAVor2KDXgCDMOug+ZWAQfJGzSDvGei
-         S2E5a7swo6DPQEFla349MgeW2Ge3KhHHVZWWd51LTBSq3oat0RllSbQ+xOYkLUljCI
-         MkK+wkJefvh2abFOdFQwQBusI+GUX7MjMHLYJl2J233FSzE25YGx87tT2LaUWaEo+D
-         ataAPU6OrIRdaAds7iYragJuv8wA6JorDm8VPFOSfMi4VabdcBhGMllvU+aQvWGzsj
-         wqjuHEdEnIlhmUkDoyt+c+ocO4n1mycvREJgtQpxaBxlH3v2U2Ww8tk2ZHr4uxZZG7
-         nooMMYPs7ae5g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.24.218]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N01di-1qBvIs0AFC-00xChC; Sat, 22
- Apr 2023 17:53:12 +0200
-Message-ID: <7f48188b-2e06-9f01-de8d-a24812fb20fe@web.de>
-Date:   Sat, 22 Apr 2023 17:53:10 +0200
+        with ESMTP id S229478AbjDVPyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2023 11:54:35 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FB11713
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 08:54:34 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50685f1b6e0so4901497a12.0
+        for <git@vger.kernel.org>; Sat, 22 Apr 2023 08:54:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682178872; x=1684770872;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ImR8uNQ5G8fReE3PKjqelYu7hFn4Vq64pByV0SX+d+c=;
+        b=Wn9bx5+4w3p3dZKOht5j00hKZbpd9s3NRAOgIHWgMhLyWQePFVpZlpFlfPxZPQZ55h
+         vhLXITboY1e0qhWf/ye7QugYB3QwrgGab4RQ316oJr3x/Ne+Dlr9BszwO3yO/VJOe12M
+         /xgN5exi1zzHka/91ZWrhyavVORGhcoFaoKJE6Ml8vHng00jF8nhtBoSiCtIMLmTdaba
+         PF9NmPAtC0AwGYGdrbQysncw4JF9dxVyWuEVEtjm2CqGWOQPtfNg43WzhKxnPDwrJLGp
+         0Rdka3eI/z/G0YNdwHiBpHgTeamEuYccHHwb/HLfqPG5Qpv2RPL6NRm+FeRjXyEfb2FR
+         1yrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682178872; x=1684770872;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ImR8uNQ5G8fReE3PKjqelYu7hFn4Vq64pByV0SX+d+c=;
+        b=fmWWSam5QSIIryVfxvpM6tzchjqFgC5UToEMpsXUrZkhBSCvpLEBNxTD+YEDapuj9G
+         IvhJYEOQ7Z4Bx1xVP/jjcG/O7ZfVuzHtFiCOl4J//SrU2zDdq/jo7LNrUtMHv2DzX+Pr
+         Kt08Od+lp2IdHEXk3icJvv/16CDXtErfz89u/NvevOt7EbarWJSYDa6rUPEmTHfW4mRw
+         uh5SV9P6IQu6bI/YOg5RDx7jgrX/3g5fralb9tPvyo9rLMz7JmcMXny4PGiWfwq4kX1V
+         0PYQbTOP91cI7sfh/AIkDxqgo6xX8WzKaiUFNzhYEG9Ku7fxcmPtxLC9wr550E6DLrGr
+         LS6Q==
+X-Gm-Message-State: AAQBX9eUjSPOlm4HWlygvAtufDXxLr8iF7QPJRNDai5BfNTLR4CxH82Z
+        /xFjTkJ6UnrBywIi7OtR0LHdV6rbFwqnaJRWwnGTMrpOFflSeg==
+X-Google-Smtp-Source: AKy350aRvpWhgAA9w0yXKIySA9eHXgwFmfjwUREt8XX4+nY88n1BwXbETMAApUYwh3VMYVAclej/fyUO1xinSuVltl8=
+X-Received: by 2002:a05:6402:1348:b0:509:d371:21dd with SMTP id
+ y8-20020a056402134800b00509d37121ddmr666528edw.25.1682178872270; Sat, 22 Apr
+ 2023 08:54:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.10.0
-Subject: Re: [PATCH 3/3] parse_commit(): handle broken whitespace-only
- timestamp
-To:     Jeff King <peff@peff.net>,
-        Thomas Bock <bockthom@cs.uni-saarland.de>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20230422135001.GA3942563@coredump.intra.peff.net>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230422135001.GA3942563@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:F0SyNPqS16i3MJeM5b5JYkUvqbC76VneIBzPkffTx8rOUa/ma4I
- 1enCK+yp+j33MKjmu2Nul7x6dFt47P2YRF19xbr9ADMweWDq8qskUf+2VIcGJTbA+FOy8S7
- Omd1k9mvIwsomxFC2UFW1ZhvtJlAVP7EU976rqXWDb6+wFbu23lpEh0eb3PfKbvUByJ9kXK
- aDa6n9dmA5Sk0cGM+iWwg==
-UI-OutboundReport: notjunk:1;M01:P0:ZmzNR3DQ/dM=;AJQlmuN9iGQRWhIwGbX61OZ9TNQ
- OISYPbZgNqPNcDZfSn/Dh2fEB439Rsos0lRzkkDNvgrQqoVF3R1dQPjJaLMSdGS6BJBoNZ1IZ
- REjuaXcF+CDB9uUTXh44scl2CELa9wcjbV16NFtVoXl6ks+rTxb79GiI3RiJq2Jfp2ftq8WzR
- vp/BAZzI2yqnsocwgqo0jWsNjljMhauudxkcd9AbKLO7vilnIE8wgkWNFMbZUNAOOd/4P9YOP
- CsS4FtJLf5Lz8NwMUHv01/iZMjdAvOL2LnNLhXIotFPg9nKNx0VZFgMTlai/SSWbQDOsmYKFg
- /yMsFqrSLAB8Kilq7vdAVi+zAl0NjvlI3mxqOX+ZAgVyds+xj8cVqx31xJFuvhvppDruFvC1T
- MDMnjUqurlOOoAaiWi0XtfqANswiayjF3RnmWCo8QciEqn73k+BAaIfgN3MyGnjxwN+k3FhrH
- ZX2siw02teBlz41LJoB4wcZ7+vC58CuqWUA8TJdeOhdRJOm/eKSQTtVJFIn+316/4ibuRKXae
- 8KaGrd3bvm8PbDsId59obaDg6LyDTh0DiWcBDB1qwhIaQtDVUpgf04OhYPIz3/OLwOV/tv7Kd
- ezO5SuspD2NDm15jyUoT4uCwJ/msk4jkPaG5NkTeCJc+sGD7Nd0Bbf8F3nKBzfhDLhyeR94hz
- AW//kh9kmhSqinbl3Ui09z15nH/tXfptPnjAyy9xZwwn0jLW+Y4O+iXshVEYhjHB30WBCEf3h
- LHBUyulFxflQGJzFliy4pyNFhDMY3X/0PDAKWMEIoQ2jv8vSQvrYHwRLovTl7Zg7/Jpj71KtK
- vcJVsTpyga7Nvm073Dr4/S6vQzVPHY3aW/6jJ5U9W10sQEq+23w5OKfWoqphMKHf9filEoRug
- v5Vgm8Co2D7zaLj7Y4WaUjUcKdC31dV56f0aqQJVMmE5lXdcafX+FSLwX14olQUgah0r8h2sb
- 80SLbA==
+From:   Aman <amanmatreja@gmail.com>
+Date:   Sat, 22 Apr 2023 21:24:21 +0530
+Message-ID: <CACMKQb3XsPG=gnmoBdL7Eh6dV2h-LEbGHs+QpBr1g9yV+SSmRw@mail.gmail.com>
+Subject: On understanding, exploring and abstractions.
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.04.23 um 15:50 schrieb Jeff King:
-> diff --git a/commit.c b/commit.c
-> index ede810ac1c..56877322d3 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -120,6 +120,16 @@ static timestamp_t parse_commit_date(const char *bu=
-f, const char *tail)
->  	if (dateptr =3D=3D buf || dateptr =3D=3D eol)
->  		return 0;
->
-> +	/*
-> +	 * trim leading whitespace; parse_timestamp() will do this itself, but
-> +	 * it will walk past the newline at eol while doing so. So we insist
-> +	 * that there is at least one digit here.
-> +	 */
-> +	while (dateptr < eol && isspace(*dateptr))
-> +		dateptr++;
-> +	if (!strchr("0123456789", *dateptr))
+Hello everyone.
 
-You could use (our own) isdigit() here instead.  It's more concise and
-efficient.
+This is Aman, I am a high school student. And,
 
-Ren=C3=A9
+"I DON'T know how computers (and modern software) works AT ALL".
 
+I have no idea, except about the abstractions I play on. I understand
+the case for abstractions, they are what, (arguably or not) run the
+world forward.
+
+But it is really , And by really, I mean really frustrating. To the
+point where I don't quite enjoy programming (despite the fact that I
+have had exposure to "programming" for quite some time). I am
+fascinated by these things around me, computers run the world, and I
+REALLY want to understand them, just for the sake of it (I guess).
+
+I believe what made computers fun, in the old days, was the ability to
+really talk to it. (even Linus tells this in the "beauty of
+Programming chapter" in his book, which was written 20 years ago!)
+Even C feels like an abstraction, hey the "magic" of compilers, and
+libraries.
+
+Even people around me, and 99% of people I find on the internet, to
+discuss issues like this, too, don't know how a computer, and modern
+software (which runs the world) really works. And people seem to get
+fine by it, which is not necessarily bad, but really frustrating to
+me.
+
+And my question is, How do I do it? Should I try to build my own
+computer? Create a CPU in Verilog on an FPGA. Write an assembler,
+bootloaders, operating system kernels, compilers, etc.? But what about
+wanting to read how the modern systems work? But if I want to know how
+LLVM or Linux works? Or how a modern compiler is created?
+
+People have discouraged me to read source codes, and software
+architectures, saying it may not be worthwhile, even IF you could do
+it. So what could be done?
+
+Maybe, the right question isn't what to do, but why do I want to, so
+perhaps we can systematically deduce what to do about it. So why? I
+guess, if you see life as a playground, and I have come into this
+world, I'd be an interesting task to learn how it all works. This may
+be a bad idea, and I am open to others. Since nobody I have met, yet,
+has expressed something like this, I don't know if I am living in a
+rock (probably I am anyway).
+
+But learning how a computer (like your phone) works from scratch,
+isn't that interesting, and not knowing, down right frustrating to
+anyone reading this email? Or is it just me for some reason?
+
+And it goes both ways right? , even if I create a simple compiler,
+it'll still be a simple one. Won't it be more interesting to work on
+things that I might use, and others might get value from too.
+
+So this is the dilemma of an 18 year old, confused about what to do about it.
+
+(btw, If you reading this, are a hardware person, making chips or
+something, do you feel like a king/queen? since everyone builds on top
+of what you do)
+
+Regards,
+Aman
