@@ -2,118 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C19C77B73
-	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 09:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E846C77B73
+	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 12:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbjDWJjb convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 23 Apr 2023 05:39:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58494 "EHLO
+        id S229810AbjDWM2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Apr 2023 08:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjDWJja (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2023 05:39:30 -0400
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC6BE7B
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 02:39:29 -0700 (PDT)
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-74dd7f52f18so967582485a.0
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 02:39:29 -0700 (PDT)
+        with ESMTP id S229453AbjDWM2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2023 08:28:02 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8759B107
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 05:28:01 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id d75a77b69052e-3ef5b5d322dso26600351cf.2
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 05:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682252880; x=1684844880;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yHeYGczb4rBs1JZBwvlvsD9UjId/emMzr0p+bvDyDiE=;
+        b=Wkxgkvkw8dbcOmHqD5QV45GpmL0BqIoj+RDaHfmNivzX4+9hkeabLkQWVJLYMyr23F
+         50g9mWFg7YlCiXioUtBW6IgP+d5CfBqH4kHZlWyYyUjPgXMSoXEvVGr8GLpeYoppzYE7
+         aATT3l38gosXfw+NJvNEEiqN970p/WACFV4fjpfDvZYXr9s3Phcohib3Xtrfj9cvS3ho
+         xXDQKWrAVta/SDZt2FfEZPlnmynMXtERLKzBotN8TphMdJc326d+XYfwQqgFp3O7G7+z
+         ZKxGy5uh8NxDBhnLP6x2E0eHDvaZYGL0IwHekHF4F49ATS7vZS3zdveDgdADj4jLZFB2
+         Iq1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682242768; x=1684834768;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zUU+D80zJ91wQVx160qQG3zxA4KDD3RTVz7Cr0El8r8=;
-        b=goxZCwDv3NqBgFp6ebe7m1rL/IdhMSLUxw2ug9yTtYOQqq4nRcRzrijTLOf+X2Lb+/
-         KglWp8AS1kqdMPPdY+yQUcQ13e45ZEDqDhTKQJEWtKtTcqifKT9o6n5i0tsii7eZV5yu
-         zE+paopu0ilJYm38ui4yUTb3oK9tMuz3SisYPLUOS1JhIKJSIi2lK2h2/S40cjWAeLqX
-         p4FVypFpHr9+2sq0GqSAIRkRJNAJThhI98RrDavWTKKjxLKuehgq+KjJIWioI54wnhJU
-         yOppIpbedUwLypxfgixYHf5hVKTTYowmZga7LmxCCcb8IsTHnGej2DS980/l6+v/FKzy
-         kOcQ==
-X-Gm-Message-State: AAQBX9eqfVII1YieBkNNmUYd1wPyquZ0q6ZZM0oG0CfgDA/gkxJOjJuo
-        hX6FSshWmEZLH7kiLDWu0nJR1QZzkr7zsMoKd9IGWhpBVug=
-X-Google-Smtp-Source: AKy350Zv9NjZiNyQRTzL6vtfsfDZ2m43YF2PXoA4Er9+QVVgxWgi+ssLJ2xEbLGWqynfL2X7Yn0zrFS/j5ZTuJrS6Xo=
-X-Received: by 2002:a05:622a:653:b0:3ef:34e1:d37d with SMTP id
- a19-20020a05622a065300b003ef34e1d37dmr16386647qtb.25.1682242767930; Sun, 23
- Apr 2023 02:39:27 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682252880; x=1684844880;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yHeYGczb4rBs1JZBwvlvsD9UjId/emMzr0p+bvDyDiE=;
+        b=Wza4Ee8WrnDl/WppveLUSFl1maZpJlqagoz09LKXQYUaif1Mc+4RK0QP/eQEQkbUVW
+         TLx7yo6BspxxduIj/CcDE42vtfM3+mGXlOD43b174M1AKlGx+gGeoEwzFx9A+gyLZEQ/
+         W8Lg+r+fpL76OlyEbsuCPnny43aQ92bG1UsSB0XJXxQfE09qULPhuWT1fFCaDJsiWAH1
+         8Te73IrQ8NhzKiXSPALmVHF16JLAHuDknuNUO3TGGThXx1Dx99nyD8/X3ubsLRVDlig8
+         SVd4c/uUrPm8OFJ9NMvfTcXchXUTFN86dQdDyNHVxJKWyfP3dwyGVZJeyZ3ZtCrHmVu5
+         eV3A==
+X-Gm-Message-State: AAQBX9dUV55ZCsg2lEKi5d0/eYhbY5BqJuQJAXfYx+TqH4Yv4T9KzVKM
+        HaTBb7tqq45orpHn0fLtk6wuFa4PLzs=
+X-Google-Smtp-Source: AKy350ZpntLjcCq5hWR5Wi+mwWYugkIdZATYXScrS+XbsGfr72fxWScroo4nH0l720F1dGX5AcgCDA==
+X-Received: by 2002:ac8:598a:0:b0:3eb:1512:91c5 with SMTP id e10-20020ac8598a000000b003eb151291c5mr19692883qte.12.1682252880399;
+        Sun, 23 Apr 2023 05:28:00 -0700 (PDT)
+Received: from localhost.localdomain (dsl-141-20.b2b2c.ca. [66.158.141.20])
+        by smtp.gmail.com with ESMTPSA id b10-20020a05622a020a00b003e65228ef54sm2827654qtx.86.2023.04.23.05.27.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Apr 2023 05:27:59 -0700 (PDT)
+From:   Maxim Cournoyer <maxim.cournoyer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Maxim Cournoyer <maxim.cournoyer@gmail.com>
+Subject: [PATCH 0/2] send-email: add --header-cmd option
+Date:   Sun, 23 Apr 2023 08:27:42 -0400
+Message-Id: <20230423122744.4865-1-maxim.cournoyer@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
- <01cd01d9754b$f12326b0$d3697410$@nexbridge.com> <fbe77ad2-ce65-e6a6-254e-01bf6446d582@game-point.net>
- <01ce01d97553$4361f990$ca25ecb0$@nexbridge.com> <3ac19159-7314-c299-5112-b0f7aa2cc409@game-point.net>
- <01d301d97567$0e9bc0b0$2bd34210$@nexbridge.com>
-In-Reply-To: <01d301d97567$0e9bc0b0$2bd34210$@nexbridge.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Sun, 23 Apr 2023 11:38:52 +0200
-Message-ID: <CA+JQ7M8avZiZuBHUtkQu2WqtR4zozU3C2ayCjBxRsQcKjAr16g@mail.gmail.com>
-Subject: Re: Proposal: tell git a file has been renamed
-To:     rsbecker@nexbridge.com
-Cc:     Jeremy Morton <admin@game-point.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 22, 2023 at 9:57 PM Jeremy Morton <admin@game-point.net> wrote:
->
-> https://stackoverflow.com/a/1094392/178757
->
-> says:
->
-> git mv oldname newname
->
-> is just shorthand for:
->
-> mv oldname newname
-> git add newname
-> git rm oldname
+Hi,
 
-That's what I though but it's more like:
-  git show :0:oldname > newname
-  git add newname
-  git rm --cached oldname
-  mv oldname newname
+This adds a new --header-cmd option to the send-email command, joining
+in the ranks of '--cc-cmd' and '--to-cmd'.  The header-cmd script
+provided as argument should output 'header: value' lines, such as:
 
-Basically, a move but also preserving staged/unstaged contents. But
-yes. How git handles renames can sometimes be a bit of a PITA.
+  X-Debbugs-Cc: someone@example.com
+  AnotherHeader: somevalue
+  [...]
 
-On Sun, Apr 23, 2023, 12:16 AM <rsbecker@nexbridge.com> wrote:
->
-> $ git add file1
-> $ commit -m "Commit 1"
-> $ git mv file1 file2
-> $ git status
-> On branch master
-> Changes to be committed:
->   (use "git restore --staged <file>..." to unstage)
->         renamed:    file1 -> file2
+This change was motivated by the use case of easing collaboration
+using Debbugs in GNU Guix [0].
 
-I think your point is better illustrated
-  git add file1
-  commit -m "Commit 1"
-  echo 'Changed' > file1
-  git mv file1 file2
-  git status
-Which yields:
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        renamed:    file1 -> file2
+[0]  https://issues.guix.gnu.org/58813
 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   file2
+Thanks,
 
-Or perhaps even:
-  echo Initial > file1
-  seq 1 10 >> file1 # We need a larger file to detect rename with change
-  git add file1
-  git commit -m 'Commit 1'
-  seq -i 's/Initial/Changed/' file1
-  git add file1 # Stage changes
-  seq 11 20 >> file1 # Add some unstaged changes
-  git mv file1 file2
+Maxim Cournoyer (2):
+  send-email: extract execute_cmd from recipients_cmd
+  send-email: add --header-cmd option
 
-This will result in a staged rename, as well as the staged change
-'Initial'  -> 'Changed' with a bunch of additional unstaged lines of
-numbers 11 to 20.
-NB that this doesn't play nice unless the contents of file1 in HEAD
-and index are similar enough (at least 50%?)
+ Documentation/config/sendemail.txt |  1 +
+ Documentation/git-send-email.txt   |  5 ++++
+ git-send-email.perl                | 38 +++++++++++++++++++++++-------
+ t/t9001-send-email.sh              | 21 +++++++++++++++--
+ 4 files changed, 54 insertions(+), 11 deletions(-)
+
+
+base-commit: 7580f92ffa970b9484ac214f7b53cec5e26ca4bc
+-- 
+2.39.2
+
