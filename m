@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3B93C77B73
-	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 13:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F959C6FD18
+	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 13:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbjDWNq7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Apr 2023 09:46:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53386 "EHLO
+        id S229887AbjDWNrB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Apr 2023 09:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjDWNq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229782AbjDWNq5 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 23 Apr 2023 09:46:57 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C30410EA
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:55 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4efe8991b8aso1222680e87.0
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:55 -0700 (PDT)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870B7171E
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:56 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4edc114c716so3608343e87.1
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682257613; x=1684849613;
+        d=gmail.com; s=20221208; t=1682257614; x=1684849614;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YtvSvK34qyeFoM4mF9Hcxfk1N8vJ0R1tt7iQQxgPuaw=;
-        b=BKldvShIniGEmDa5foG1jJxe2f4Bb43PdNwnCPoduDSdIJCQKrLeb32qImZzjI4olw
-         5FdsLuKWg8uUKy/tx3r9NbNbpjluv2swzq0S28zeNsHZ94r93Gs3Rl3LNSnvSb9zhDGz
-         pDeReJz/6Om9AiQjLU+4BUPvcZvtscnbK6NvmGCXwIgYxHC0hYGOca+bvlthWqVPc/D8
-         O9bMK3PD8UF8yXhP054E5h7PYlFvqd7yV3F6gxqXqxiLx984v8u31zYBRnzGX/OsPKgB
-         uuAZ3ekVFqA+VmHzsMBBy7HiA9CRNUOb4cPNnxRi3pElOM88/UOBjGJSwLbrwuzpz8wX
-         3wnA==
+        bh=cS+eJAC+tQD6AE2KEtPmgNZ4XUTSlytBBlAUIfOxx0U=;
+        b=oi6zT7cUZp5TjG6FeAWGz08gAKRCMODGlvDg10KYrhVYU/1xAq7FHBudl7o66WYyX6
+         lT0awPmp79bKVwGfB76lWaOpP+3Oy40E/wbApDaPJGECjUQYu8M9aARFJNxRnPsfmSAk
+         663yHYyHWou8hYJhEj5s8wPaAvYuh/vldzc0kpDqzIfZf+7Z0zAMuq5E9JDojN5rfpNO
+         BOJTXD+PBv2nedhMlVqYI+zKNI4NWYo3c5v9zVKvICv09ZNFok8iGIwqFJ4kFME524Yg
+         U5scHEkSh8b/68YTWn26xPNNJWRXWz0Exr1cQi5zCNyRiIgvWXvpLvseGoPtJaBYHC/m
+         Q1Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682257613; x=1684849613;
+        d=1e100.net; s=20221208; t=1682257614; x=1684849614;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YtvSvK34qyeFoM4mF9Hcxfk1N8vJ0R1tt7iQQxgPuaw=;
-        b=I8f6rQnpZ6J0pCn0tU+ImFLHCBrGuqjbO4N9iQtA8MtVm/6x3y3zxdorvbRNkXyfCs
-         sV3VPvIe2cxR3Q1x+rPf4egsGPvzKhDzCDYGlUwDkbb3q1r/9AIud4HSbGUv6vZ4scBv
-         AyGnC81CAhcCsYRJqYXX7j3Xvm9axle4tD9YqzbcXb2dNYP6p6U3qaYn7rkbB9jYCBrL
-         qgD9hSnTDfY0xeq7sC4F8E9CpTSIE0HiopZGDUeDkU4envt+y+sPdf3zOKyxCIxlQmb+
-         fq0AsvU/rg2nMmn31c+14A65/vtS6NNyNe+/WbAT5aFiqiXHwSuI96YS4tfFgRk2GyWs
-         MHMw==
-X-Gm-Message-State: AAQBX9dBUP3wUitDojI+OWWXjSr4igwE+VYEug2mznH3Pk6rGognXG1w
-        56Ru5c5i2KOXiC3xV8AymZQfKpY+2803Ut2p
-X-Google-Smtp-Source: AKy350b1hF/B8riUlThNI7/cBtX2jwb26Oj+HkW/C+7QeCxqEHeQiO3tcDdGOZRqnrKDKIoW3d+VyA==
-X-Received: by 2002:a19:f804:0:b0:4e8:485c:6a13 with SMTP id a4-20020a19f804000000b004e8485c6a13mr2456227lff.21.1682257612855;
-        Sun, 23 Apr 2023 06:46:52 -0700 (PDT)
+        bh=cS+eJAC+tQD6AE2KEtPmgNZ4XUTSlytBBlAUIfOxx0U=;
+        b=eULnVZM12RBsIuME2cBN4BrdCBa2mqy3kXZH4R0PrJ3p8+r6ykpRCn5/vlBmLB+942
+         3RJlCbWNVQ8Tff0i3SExb9zqEh50jQ8yRawFGIlYvGJe83t9BOVLTtF24gZafDXHduWI
+         vzb8GsbY0+6q71JnLq2uZ+hk4l/SZQ60OdRSvF6okeZevp+pemJQj6AAA24kymJ4BSzt
+         tYnFpYn1Ks42nAmYzqOgblhQIGm9NY4M4Lg+0ll6CAbhyCk9vWN8ST79bf65pdVlSUm/
+         qO2vncbuUV9lJXv7olP/+j/cieD0OwolWKUnSNlBZmeNfm1S+9RugK6uBUU18pvQ82HQ
+         cAeg==
+X-Gm-Message-State: AAQBX9fe2+WlHTPQoW6pZYvejeThEt90Cog4Q+816sufn0EirF9rnXgT
+        wyq2W8X5WGWKD7lrZNfuOoWaMyr0GxiooSwbGFI=
+X-Google-Smtp-Source: AKy350YifDm9J4b8aNFNFzUBzkPuRVMakf3AQLjc/qxRU4bXqkqIqGQZpYhqlISVsEVbiuZWlXDqPg==
+X-Received: by 2002:a19:c518:0:b0:4eb:3b58:c558 with SMTP id w24-20020a19c518000000b004eb3b58c558mr2491605lfe.59.1682257614518;
+        Sun, 23 Apr 2023 06:46:54 -0700 (PDT)
 Received: from titov.fritz.box ([195.246.120.55])
-        by smtp.gmail.com with ESMTPSA id j24-20020ac24558000000b004db3eff4b12sm1272641lfm.171.2023.04.23.06.46.51
+        by smtp.gmail.com with ESMTPSA id j24-20020ac24558000000b004db3eff4b12sm1272641lfm.171.2023.04.23.06.46.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Apr 2023 06:46:52 -0700 (PDT)
+        Sun, 23 Apr 2023 06:46:54 -0700 (PDT)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Patrick Steinhardt <ps@pks.im>,
@@ -57,98 +57,76 @@ Cc:     Patrick Steinhardt <ps@pks.im>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 0/3] git config tests for "'git config ignores pairs ..."
-Date:   Sun, 23 Apr 2023 15:46:46 +0200
-Message-Id: <20230423134649.431783-1-rybak.a.v@gmail.com>
+Subject: [PATCH v3 2/3] t1300: check stderr for "ignores pairs" tests
+Date:   Sun, 23 Apr 2023 15:46:48 +0200
+Message-Id: <20230423134649.431783-3-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230418175034.982433-1-rybak.a.v@gmail.com>
+In-Reply-To: <20230423134649.431783-1-rybak.a.v@gmail.com>
 References: <20230418175034.982433-1-rybak.a.v@gmail.com>
+ <20230423134649.431783-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clean up existing tests and add new tests in t1300-config.sh.
+Tests "git config ignores pairs ..." in t1300-config.sh validate that
+"git config" ignores various kinds of supplied pairs of environment
+variables GIT_CONFIG_KEY_* GIT_CONFIG_VALUE_* depending on
+GIT_CONFIG_COUNT.  By "ignores" here we mean that "git config" abides by
+the value of environment variable GIT_CONFIG_COUNT and doesn't use
+key-value pairs outside of the supplied GIT_CONFIG_COUNT when trying to
+produce a value for config key "pair.one".
 
-v1 cover letter:
-  https://lore.kernel.org/git/20230414081352.810296-1-rybak.a.v@gmail.com/
-v2 cover letter:
-  https://lore.kernel.org/git/20230418175034.982433-1-rybak.a.v@gmail.com/
+These tests also validate that "git config" doesn't complain about
+mismatched environment variables to standard error.  This is validated
+by redirecting the standard error to a file called "error" and asserting
+that it is empty.  However, two of these tests incorrectly redirect to
+standard output while calling the file "error", and test 'git config
+ignores pairs exceeding count' doesn't validate standard error at all.
 
-Changes since v2:
-  - Patch 3 updates:
-    - Added missing word "are" in commit message
-    - Added signoff
-    - Wrapped $1 and $2 in double quotes for consistency with
-      `git grep -P 'local .*="?[$][1-9]"? &&$' -- t`
-    - Added &&-chainging to function "test_missing_key"
-    - Fixed quoting so that substitution of $key happens inside eval
-    - Added tests about config subsections
+Fix these tests by redirecting standard error to file "error" and
+asserting its emptiness.
 
-Changes since v1:
-  - Rewritten commit message for patch 2.
-  - New RFC patch 3.
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ t/t1300-config.sh | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Andrei Rybak (3):
-  t1300: drop duplicate test
-  t1300: check stderr for "ignores pairs" tests
-  t1300: add tests for missing keys
-
- t/t1300-config.sh | 33 ++++++++++++++++++++++-----------
- 1 file changed, 22 insertions(+), 11 deletions(-)
-
-Range diff against v2:
-1:  cf812f4fa8 = 1:  cf812f4fa8 t1300: drop duplicate test
-2:  b4132adea8 = 2:  b4132adea8 t1300: check stderr for "ignores pairs" tests
-3:  6126f42449 ! 3:  ba536bf855 t1300: add tests for missing keys
-    @@ Metadata
-      ## Commit message ##
-         t1300: add tests for missing keys
-     
-    -    There several tests in t1300-config.sh that validate failing invocations
-    -    of "git config".  However, there are no tests that check what happens
-    -    when "git config" is asked to retrieve a value for a missing key.
-    +    There are several tests in t1300-config.sh that validate failing
-    +    invocations of "git config".  However, there are no tests that check
-    +    what happens when "git config" is asked to retrieve a value for a
-    +    missing key.
-     
-    -    Add tests that check this for various combinations of "<section>.<key>".
-    +    Add tests that check this for various combinations of "<section>.<key>"
-    +    and "<section>.<subsection>.<key>".
-    +
-    +    Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
-     
-      ## t/t1300-config.sh ##
-     @@ t/t1300-config.sh: test_expect_success 'subsections are not canonicalized by git-config' '
-    @@ t/t1300-config.sh: test_expect_success 'subsections are not canonicalized by git
-      '
-      
-     +test_missing_key () {
-    -+	local key=$1
-    -+	local title=$2
-    -+	test_expect_success "value for $title is not printed" "
-    -+		test_must_fail git config $key >out 2>err &&
-    ++	local key="$1" &&
-    ++	local title="$2" &&
-    ++	test_expect_success "value for $title is not printed" '
-    ++		test_must_fail git config "$key" >out 2>err &&
-     +		test_must_be_empty out &&
-     +		test_must_be_empty err
-    -+	"
-    ++	'
-     +}
-     +
-     +test_missing_key 'missingsection.missingkey' 'missing section and missing key'
-     +test_missing_key 'missingsection.penguin' 'missing section and existing key'
-     +test_missing_key 'section.missingkey' 'existing section and missing key'
-    ++test_missing_key 'section.MissingSubSection.missingkey' 'missing subsection and missing key'
-    ++test_missing_key 'section.SubSection.missingkey' 'existing subsection and missing key'
-    ++test_missing_key 'section.MissingSubSection.key' 'missing subsection and existing key'
-     +
-      cat > .git/config <<\EOF
-      [alpha]
-
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 696dca17c6..20a15ede5c 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1462,24 +1462,25 @@ test_expect_success 'git config ignores pairs exceeding count' '
+ 	GIT_CONFIG_COUNT=1 \
+ 		GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
+ 		GIT_CONFIG_KEY_1="pair.two" GIT_CONFIG_VALUE_1="value" \
+-		git config --get-regexp "pair.*" >actual &&
++		git config --get-regexp "pair.*" >actual 2>error &&
+ 	cat >expect <<-EOF &&
+ 	pair.one value
+ 	EOF
+-	test_cmp expect actual
++	test_cmp expect actual &&
++	test_must_be_empty error
+ '
+ 
+ test_expect_success 'git config ignores pairs with zero count' '
+ 	test_must_fail env \
+ 		GIT_CONFIG_COUNT=0 GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
+-		git config pair.one >error &&
++		git config pair.one 2>error &&
+ 	test_must_be_empty error
+ '
+ 
+ test_expect_success 'git config ignores pairs with empty count' '
+ 	test_must_fail env \
+ 		GIT_CONFIG_COUNT= GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
+-		git config pair.one >error &&
++		git config pair.one 2>error &&
+ 	test_must_be_empty error
+ '
+ 
 -- 
 2.40.0
+
