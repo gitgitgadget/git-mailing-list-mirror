@@ -2,202 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C7D7C77B76
-	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 12:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C4BBC77B60
+	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 13:46:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230027AbjDWM2R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Apr 2023 08:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53710 "EHLO
+        id S229807AbjDWNq6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Apr 2023 09:46:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjDWM2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2023 08:28:11 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC10C173F
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 05:28:10 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id d75a77b69052e-3ef112cac17so15469201cf.0
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 05:28:10 -0700 (PDT)
+        with ESMTP id S229441AbjDWNq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2023 09:46:56 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE57E170A
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:55 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4ec81773d50so3534245e87.2
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682252889; x=1684844889;
+        d=gmail.com; s=20221208; t=1682257614; x=1684849614;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gkhJSv8/swODw2xHkq2NfpfAwOys9g6FqeCScSfSqWw=;
-        b=M8ttp+/qs9VemXkQ6SJiWga1U11xZkGbSGgv2TpBYYD2dOTHJnEGM4QWcfocrwP+VI
-         44jwHnv9QRffdfBOgeaK2cua3XVkuWkjR93l1MtNZP4WRirYFqRh67WUa93pH8Dg+L8C
-         O39ubB9svWLRf0NUrUHCHOT/sr523BRBaTZFuILQ7QKF56nzDXZwsZ+/QhFFekLHVhxx
-         WOGMD76hdq/ggwAW0x4hIO6d0vVR3/3DNHD8XA1JllX3ruZ8ILMSYAL+B2RvNGvPjsOy
-         KpkfTZVQ66gvWX4woxAdc7yXinWFwTM1OYU5F+/fhBGbvl7ujIc5KLN5PC4SZqFQyE7U
-         lYUQ==
+        bh=j2unZZ0tkwjTB6Nef/MJvYMRgoZQUGroeYnEdH+E8r0=;
+        b=pLm95TUs3aC/0wFh7nGg1f7OSJvmaMbVKJivJlKaVvNZAb8XCMh5zETJ7Szn2J+A3k
+         58WAMS5OP7mNrgADE4hKpmEY+oojweM7AKd1IZEoNIUhKjfjsra4wzq6XhBLjNcWxinD
+         fib4NQGRwUO2O6Hp970RpoHq15Lg4RgpxtDyu3u08XMtsTPFhuy2/h5L79aruNJH5XwF
+         AadLze0I7tsXApBQcxPbqmUk5j/3PkI16XnAx51ez1JwyakOlpbsr0iPEvqJiXc+sA7w
+         XENZS6HwNAz20J/PNsIErEDnatYlpIctpaDlpIKaOEjHoMXUuytqaitqvt/gTyPFxVds
+         3aIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682252889; x=1684844889;
+        d=1e100.net; s=20221208; t=1682257614; x=1684849614;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gkhJSv8/swODw2xHkq2NfpfAwOys9g6FqeCScSfSqWw=;
-        b=VWZnQWzhn50rI0eWo0yswo3p208LjNhWc9zH9bYykizxAD0j9JxuivGqh3yrJ9izP1
-         kiLVDH1FjvsTpk8IULfbgl8+eEs44ajiBNe/h/6Bdr4KcLRY6PCqDiep06IxlUfdrjSs
-         XjJBGvEeqtfzlzG6g0elZKV2905PQR3UdqtFFzp2zStVwOwDHf6p3LbDtLVC0QCWdfre
-         hinb44hVdQVaLg5iM9oQmF76NaB0lvVz77jYPZn7Nie16bJNLdsg3rUWh4JqG9XSSKq2
-         iJijQWsrVfOCxSsgElcU2Fs0IKL8/3BVH4DKr1qegQ93QrcYFAjkX8zKrUSyNXuhknhv
-         73hQ==
-X-Gm-Message-State: AAQBX9fzVkA1B+m1bsFKLIZHWlpGA7NOEh7RKwAMkb5B6oSOkWDS87Rk
-        9/VILDF+zsSgi0OVRjrV6yKZTZ1OwMQ=
-X-Google-Smtp-Source: AKy350brjiYNrJpH+AX5x9eqb+nSwUPgEF2E+4XrZYjbidz3QyQ7SmJtrRC9OR1ysHHs4y2t10tYwQ==
-X-Received: by 2002:ac8:5884:0:b0:3e4:ce24:99b3 with SMTP id t4-20020ac85884000000b003e4ce2499b3mr17125917qta.15.1682252889521;
-        Sun, 23 Apr 2023 05:28:09 -0700 (PDT)
-Received: from localhost.localdomain (dsl-141-20.b2b2c.ca. [66.158.141.20])
-        by smtp.gmail.com with ESMTPSA id b10-20020a05622a020a00b003e65228ef54sm2827654qtx.86.2023.04.23.05.28.08
+        bh=j2unZZ0tkwjTB6Nef/MJvYMRgoZQUGroeYnEdH+E8r0=;
+        b=gMNP80hk7+JIoU12k0ah17mn8TpVPBAnKQtyzwxJ5TP1fyZGT+fbpdPPqQp77RINTv
+         R46y9Db/2SCi/SOiUQs53c1FTygUjhwoozAE5pD3Wg/BmzNsCx3jcNOZa7TRsXdV1S+S
+         RaPR0KLQLgFuJy4ogt9eAD/P7Nz3TmuAzJUH8ZANHpVqtU0BWbvss032jCVgnuKcXCj+
+         Pbo/9xK+Q/7OD+bQM+9knFUp3G+XrZU8tvEeOr5dXLDBW1OStYUTwQUD+qI1S42DPLfM
+         WngGaRLciUzm9DxFnho13UPH0SXPwEpm3yEProY4f+PTPdHrZT45KEIMwGS1Pm5BaTnr
+         sRKQ==
+X-Gm-Message-State: AAQBX9ezv4kA7LZxBmd23Pea+p2NYs4yxFp3QnNV539C1OITisvSAghP
+        hCJMr2K4n+CZlHc0qMQFByDqG1/fichwS+4XOi0=
+X-Google-Smtp-Source: AKy350Z3Z5P35qnuRAj2RC74bJHrckiyYEeoOsr4ioLLV2i6iPNfRdTXE8+WMDh1xF3NANHqHs2NHg==
+X-Received: by 2002:ac2:4910:0:b0:4ee:8ff3:c981 with SMTP id n16-20020ac24910000000b004ee8ff3c981mr2514927lfi.10.1682257613666;
+        Sun, 23 Apr 2023 06:46:53 -0700 (PDT)
+Received: from titov.fritz.box ([195.246.120.55])
+        by smtp.gmail.com with ESMTPSA id j24-20020ac24558000000b004db3eff4b12sm1272641lfm.171.2023.04.23.06.46.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Apr 2023 05:28:09 -0700 (PDT)
-From:   Maxim Cournoyer <maxim.cournoyer@gmail.com>
+        Sun, 23 Apr 2023 06:46:53 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Maxim Cournoyer <maxim.cournoyer@gmail.com>
-Subject: [PATCH 2/2] send-email: add --header-cmd option
-Date:   Sun, 23 Apr 2023 08:27:44 -0400
-Message-Id: <20230423122744.4865-3-maxim.cournoyer@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230423122744.4865-1-maxim.cournoyer@gmail.com>
-References: <20230423122744.4865-1-maxim.cournoyer@gmail.com>
+Cc:     Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 1/3] t1300: drop duplicate test
+Date:   Sun, 23 Apr 2023 15:46:47 +0200
+Message-Id: <20230423134649.431783-2-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230423134649.431783-1-rybak.a.v@gmail.com>
+References: <20230418175034.982433-1-rybak.a.v@gmail.com>
+ <20230423134649.431783-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes, adding a header different than CC or TO is desirable; for
-example, when using Debbugs, it is best to use 'X-Debbugs-Cc' headers
-to keep people in CC; this is an example use case enabled by the new
-'--header-cmd' option.
----
- Documentation/config/sendemail.txt |  1 +
- Documentation/git-send-email.txt   |  5 +++++
- git-send-email.perl                | 12 +++++++++---
- t/t9001-send-email.sh              | 21 +++++++++++++++++++--
- 4 files changed, 34 insertions(+), 5 deletions(-)
+There are two almost identical tests called 'git config ignores pairs
+with zero count' in file t1300-config.sh.  Drop the first of these and
+keep the one that contains more assertions.
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 51da7088a8..3d0f516520 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -58,6 +58,7 @@ sendemail.annotate::
- sendemail.bcc::
- sendemail.cc::
- sendemail.ccCmd::
-+sendemail.headerCmd::
- sendemail.chainReplyTo::
- sendemail.envelopeSender::
- sendemail.from::
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index b0f438ec99..354c0d06db 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -320,6 +320,11 @@ Automating
- 	Output of this command must be single email address per line.
- 	Default is the value of `sendemail.ccCmd` configuration value.
- 
-+--header-cmd=<command>::
-+	Specify a command to execute once per patch file which should
-+	generate arbitrary, patch file specific header entries.
-+	Default is the value of `sendemail.headerCmd` configuration value.
-+
- --[no-]chain-reply-to::
- 	If this is set, each email will be sent as a reply to the previous
- 	email sent.  If disabled with "--no-chain-reply-to", all emails after
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d2febbda1f..676dd83d89 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -88,8 +88,9 @@ sub usage {
- 
-   Automating:
-     --identity              <str>  * Use the sendemail.<id> options.
--    --to-cmd                <str>  * Email To: via `<str> \$patch_path`
--    --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
-+    --to-cmd                <str>  * Email To: via `<str> \$patch_path`.
-+    --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`.
-+    --header-cmd            <str>  * Add headers via `<str> \$patch_path`.
-     --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, misc-by, all.
-     --[no-]cc-cover                * Email Cc: addresses in the cover letter.
-     --[no-]to-cover                * Email To: addresses in the cover letter.
-@@ -270,7 +271,7 @@ sub do_edit {
- # Variables with corresponding config settings
- my ($suppress_from, $signed_off_by_cc);
- my ($cover_cc, $cover_to);
--my ($to_cmd, $cc_cmd);
-+my ($to_cmd, $cc_cmd, $header_cmd);
- my ($smtp_server, $smtp_server_port, @smtp_server_options);
- my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
- my ($batch_size, $relogin_delay);
-@@ -319,6 +320,7 @@ sub do_edit {
-     "tocmd" => \$to_cmd,
-     "cc" => \@config_cc,
-     "cccmd" => \$cc_cmd,
-+    "headercmd" => \$header_cmd,
-     "aliasfiletype" => \$aliasfiletype,
-     "bcc" => \@config_bcc,
-     "suppresscc" => \@suppress_cc,
-@@ -520,6 +522,7 @@ sub config_regexp {
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
- 		    "cc-cmd=s" => \$cc_cmd,
-+		    "header-cmd=s" => \$header_cmd,
- 		    "suppress-from!" => \$suppress_from,
- 		    "no-suppress-from" => sub {$suppress_from = 0},
- 		    "suppress-cc=s" => \@suppress_cc,
-@@ -1777,6 +1780,9 @@ sub process_file {
- 			push(@header, $_);
- 		}
- 	}
-+	# Add computed headers, if applicable.
-+	push @header, execute_cmd("header-cmd", $header_cmd, $t)
-+		if defined $header_cmd;
- 	# Now parse the header
- 	foreach(@header) {
- 		if (/^From /) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 0de83b5d2b..3393725107 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -374,13 +374,16 @@ test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email'
- 	)
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ t/t1300-config.sh | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 2575279ab8..696dca17c6 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1458,13 +1458,6 @@ test_expect_success 'git config ignores pairs without count' '
+ 	test_must_be_empty error
  '
  
--test_expect_success $PREREQ 'setup tocmd and cccmd scripts' '
-+test_expect_success $PREREQ 'setup cmd scripts' '
- 	write_script tocmd-sed <<-\EOF &&
- 	sed -n -e "s/^tocmd--//p" "$1"
- 	EOF
--	write_script cccmd-sed <<-\EOF
-+	write_script cccmd-sed <<-\EOF &&
- 	sed -n -e "s/^cccmd--//p" "$1"
- 	EOF
-+	write_script headercmd-sed <<-\EOF
-+	sed -n -e "s/^headercmd--//p" "$1"
-+	EOF
- '
- 
- test_expect_success $PREREQ 'tocmd works' '
-@@ -410,6 +413,20 @@ test_expect_success $PREREQ 'cccmd works' '
- 	grep "^	cccmd@example.com" msgtxt1
- '
- 
-+test_expect_success $PREREQ 'headercmd works' '
-+	clean_fake_sendmail &&
-+	cp $patches headercmd.patch &&
-+	echo "headercmd--X-Debbugs-CC: dummy@example.com" >>headercmd.patch &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--header-cmd=./headercmd-sed \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		headercmd.patch \
-+		&&
-+	grep "^X-Debbugs-CC: dummy@example.com" msgtxt1
-+'
-+
- test_expect_success $PREREQ 'reject long lines' '
- 	z8=zzzzzzzz &&
- 	z64=$z8$z8$z8$z8$z8$z8$z8$z8 &&
+-test_expect_success 'git config ignores pairs with zero count' '
+-	test_must_fail env \
+-		GIT_CONFIG_COUNT=0 \
+-		GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
+-		git config pair.one
+-'
+-
+ test_expect_success 'git config ignores pairs exceeding count' '
+ 	GIT_CONFIG_COUNT=1 \
+ 		GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
 -- 
-2.39.2
+2.40.0
 
