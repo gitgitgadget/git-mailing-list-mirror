@@ -2,115 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC596C6FD18
-	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 13:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BBD9C6FD18
+	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 21:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbjDWNrD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Apr 2023 09:47:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53394 "EHLO
+        id S230104AbjDWVBv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Apr 2023 17:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjDWNq6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2023 09:46:58 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0EE170A
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:57 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4eca0563b31so3495151e87.1
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 06:46:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682257616; x=1684849616;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yawSpfkFzgFl1q86Bi3J4ehwF2PSm+/QT8KDpSo1AUU=;
-        b=XA5sDdmHP29e/k3L3dx8r/G2/bU6L/iCHmbuYOYIGtWTaeRHxG3dMTAQBZyoAS7Knu
-         ymAjQ7KVQ+NvJSb8VEQeD9hPh6feDvO9uEJTt2V+R3f+uifMpzRQfrYG58nx8pkTuHZi
-         2EDsZC5C10W+OrYux/acv3Z/IPs5UrPAiNG59Z4BrrrAxDTXQTrdPWnsiFOvlb0pocra
-         cbDeyQWu7DCi6SsOwMdhkTN5KWOnMR7OM81OqRJ6j30IEp9wuazma4he5KvUtb7HpOKh
-         CQ/6e6l7jb8qixg+wmV9u6syk+pNZDvkK4SqHGubJJpEjFTypbhaDP/5d0/VFP7ylnzU
-         dCMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682257616; x=1684849616;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yawSpfkFzgFl1q86Bi3J4ehwF2PSm+/QT8KDpSo1AUU=;
-        b=dkpUcMEKeZAYHmPz32C8EwuXqaqN5m4jR0fC/FZI0zU+h00geTNJr/D2J4JbO5yDP4
-         3yxwb8uC6xcJKpBXd5qTjxjHpGpfx5pvqc3TR3p0V7NTzVD4u2UYoo181R9TLj8CHqGY
-         Peefmt/P9DNn+hbicjHEuQx//AOwwRTfSW7Is3eEhBEOknNQCViXORjBYXb58s1CHdOu
-         llqcQEexoFVOCoGBUzmuNCrIHJKstUK3d//ws2insmSTHGAuT/4JHheHZqVS8lV/mQqm
-         gKtfPIr8JxFAUfMJMt34w1n4TT4mBPZYeTSn6hNI0Ypavad9erCqEaeyJ01qBNDn8CO4
-         TAaw==
-X-Gm-Message-State: AAQBX9fkyWChvIL/PYfIODbyFJpvjskJro+UOBZfFaxt1OEpjZIOlMgh
-        7frKUhWpfd8DVQWVDpC1jw8va/JXYLj4rajkOho=
-X-Google-Smtp-Source: AKy350YALSw1GPDPq60dW/hmULVbTTUio+ZCSmXgrOgjFyP+L9QdtUZcG3AStdunLqfrLfaORiGWqw==
-X-Received: by 2002:a19:5210:0:b0:4db:405f:d5c0 with SMTP id m16-20020a195210000000b004db405fd5c0mr2849776lfb.48.1682257615526;
-        Sun, 23 Apr 2023 06:46:55 -0700 (PDT)
-Received: from titov.fritz.box ([195.246.120.55])
-        by smtp.gmail.com with ESMTPSA id j24-20020ac24558000000b004db3eff4b12sm1272641lfm.171.2023.04.23.06.46.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Apr 2023 06:46:55 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Patrick Steinhardt <ps@pks.im>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 3/3] t1300: add tests for missing keys
-Date:   Sun, 23 Apr 2023 15:46:49 +0200
-Message-Id: <20230423134649.431783-4-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230423134649.431783-1-rybak.a.v@gmail.com>
-References: <20230418175034.982433-1-rybak.a.v@gmail.com>
- <20230423134649.431783-1-rybak.a.v@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229476AbjDWVBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2023 17:01:49 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79D9F7
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 14:01:48 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 35F913200902;
+        Sun, 23 Apr 2023 17:01:46 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Sun, 23 Apr 2023 17:01:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm2; t=1682283705; x=1682370105; bh=axZyQ1KfG+Zw25v0mm1snCEWU
+        h1A8GbCWOs3pBgLXr4=; b=p3Pu/VxS1UimcAgFj2DgePFOzCyX+qcLWrP01AugL
+        6nlfKFHVpj0B3YG15hoGNrJO7QFsZp7OYoG7YRPT0PGq3cHb75PaDlotqUF2lusw
+        Tz6vQ2GyRAlNEk+Fujbcb1lnwI0mgAnnsOOCHiVHEm9mil28e/6H9Ilq17shXREV
+        /6VWzuF0HIUEkzcQSlfZV5OGSMIX3X4R91fAa9AkfNrunw4ngKgHr+bw1v7GWRVu
+        koZvE5u3MdX+AhPPktYq1qFl6bBnscLfv43D4GZ+WT9fcI73KxnX23UQxCTkzsJE
+        WWa+EjSrXeEcsFxAPscGXmChzGjVfID2V7b7AViHFxgqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1682283705; x=1682370105; bh=axZyQ1KfG+Zw25v0mm1snCEWUh1A8GbCWOs
+        3pBgLXr4=; b=cQLbM6OxI23wPCB5peNh9MC7RcHMKNFGHxOzTMm3mZq0ocaUqaS
+        /ZHO2Bezim91Oe4XTS0SqWgckhh7WNFkdVjgtK/fKbpl/OWFc52IWywgje/gOoxZ
+        /ih5Ks29ddbre9/9UJGhjjgAD7qZwWo92H+qDIeX5S237dFFk2ycVV8XNklNrKZn
+        /8UDCFOUvoD5D51mjk2e8UXcGtJ4zUf20Gkig54rMmDut4VPHms7iCFZ+PAdci3E
+        RWzeQ/ovNPb5dnQygrLlTuT5GLFNNEsFFSUWNSxhDZMTGL1WREB8Gfmtd37H9h0p
+        0BCUL3tTGZRpwWJ33eUugnuSWQT1J/0RIRw==
+X-ME-Sender: <xms:uZxFZGAvH2mMQaCK7cIiRdzONPp4mqwhM1_ht0nRoiYOiL8O0PJTb6k>
+    <xme:uZxFZAiITftKo0UbI2ZUlHrowBhtOPevTm1xhVop0m2mdxjzJoRiIYYtPcWtt37pX
+    PEQILV7Cj8aZK3yrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedtkedgudehiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtgf
+    esthhqredtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghk
+    khdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrh
+    hnpedvveehiedufeehffdvteeuveekhefhleeigfektdeifeduteeuheeufeetffefuden
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvg
+    eskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:uZxFZJlz-vb5ae-BwyaZd59QWjm4uV-lTfiDRdj4Ggy8gVkNeTLfdg>
+    <xmx:uZxFZEwabrCdPQOyIpWZ4WYmWBCfii7UXUbvL5wAsskNZyRXpeQiEQ>
+    <xmx:uZxFZLQ-1WxGW2t3juZZDsR7Tid_FoAgYNgU8rq-jJRTPzqBJXnhhw>
+    <xmx:uZxFZOOzZ50KQBhwEPD4QAVqmpHUXGzz2rAcD9bUzmEGqLU_3uVAuw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 8F03515A008E; Sun, 23 Apr 2023 17:01:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-372-g43825cb665-fm-20230411.003-g43825cb6
+Mime-Version: 1.0
+Message-Id: <f249ec0f-f2f0-43d8-bb70-5a4a7c91c608@app.fastmail.com>
+In-Reply-To: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
+References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
+Date:   Sun, 23 Apr 2023 23:01:25 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Jeremy Morton" <admin@game-point.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Proposal: tell git a file has been renamed
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are several tests in t1300-config.sh that validate failing
-invocations of "git config".  However, there are no tests that check
-what happens when "git config" is asked to retrieve a value for a
-missing key.
+On Sat, Apr 22, 2023, at 20:01, Jeremy Morton wrote:
+> Could a command be added to git that means you tell Git that counts as
+> a file rename?  Git would add a marker to the staging area that the
+> file has been renamed, and upon commit, would first generate an
+> additional commit for each rename before generating the main commit,
+> ensuring the rename operation counts as an actual rename, and the
+> content's history is maintained.
 
-Add tests that check this for various combinations of "<section>.<key>"
-and "<section>.<subsection>.<key>".
+I don=E2=80=99t see the (conceptual) problem with a modification of this=
+ as a
+history rewriting tool:
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t1300-config.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+=E2=80=A2 Given a series of commits:
+=E2=80=A2 Tool X modifies all the commits so that the default similarity=
+ index
+  for tools like git-log(1) is triggered on intended file renames
+=E2=80=A2 The user will be probably be prompted with a list of initial p=
+otential
+  renames and then will
+  =E2=80=A2 Keep the intended renames
+  =E2=80=A2 Remove the not-intended renames
+  =E2=80=A2 Add the additional renames
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 20a15ede5c..423948f384 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -98,6 +98,23 @@ test_expect_success 'subsections are not canonicalized by git-config' '
- 	test_cmp_config two section.SubSection.key
- '
- 
-+test_missing_key () {
-+	local key="$1" &&
-+	local title="$2" &&
-+	test_expect_success "value for $title is not printed" '
-+		test_must_fail git config "$key" >out 2>err &&
-+		test_must_be_empty out &&
-+		test_must_be_empty err
-+	'
-+}
-+
-+test_missing_key 'missingsection.missingkey' 'missing section and missing key'
-+test_missing_key 'missingsection.penguin' 'missing section and existing key'
-+test_missing_key 'section.missingkey' 'existing section and missing key'
-+test_missing_key 'section.MissingSubSection.missingkey' 'missing subsection and missing key'
-+test_missing_key 'section.SubSection.missingkey' 'existing subsection and missing key'
-+test_missing_key 'section.MissingSubSection.key' 'missing subsection and existing key'
-+
- cat > .git/config <<\EOF
- [alpha]
- bar = foo
--- 
-2.40.0
+But this looks like something that a third-party tool could implement.
 
+--=20
+Kristoffer Haugsbakk
