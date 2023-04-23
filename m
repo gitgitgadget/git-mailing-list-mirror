@@ -2,66 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB3CDC77B76
-	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 09:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C19C77B73
+	for <git@archiver.kernel.org>; Sun, 23 Apr 2023 09:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229725AbjDWJNH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Apr 2023 05:13:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
+        id S229944AbjDWJjb convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 23 Apr 2023 05:39:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjDWJNG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2023 05:13:06 -0400
-Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF4B1727
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 02:13:04 -0700 (PDT)
-Received: from [2400:4160:1877:2b00:1bad:b006:fd5f:b52b] (helo=glandium.org)
-        by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.96)
-        (envelope-from <glandium@glandium.org>)
-        id 1pqVmF-00DHWJ-0E;
-        Sun, 23 Apr 2023 09:12:59 +0000
-Received: from glandium by goemon.lan with local (Exim 4.94.2)
-        (envelope-from <glandium@goemon>)
-        id 1pqVmA-00As4m-0w; Sun, 23 Apr 2023 18:12:54 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Handle compiler versions containing a dash
-Date:   Sun, 23 Apr 2023 18:12:49 +0900
-Message-Id: <20230423091249.2591136-1-mh@glandium.org>
-X-Mailer: git-send-email 2.40.0.1.gc689dad23e
+        with ESMTP id S229441AbjDWJja (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2023 05:39:30 -0400
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC6BE7B
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 02:39:29 -0700 (PDT)
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-74dd7f52f18so967582485a.0
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 02:39:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682242768; x=1684834768;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zUU+D80zJ91wQVx160qQG3zxA4KDD3RTVz7Cr0El8r8=;
+        b=goxZCwDv3NqBgFp6ebe7m1rL/IdhMSLUxw2ug9yTtYOQqq4nRcRzrijTLOf+X2Lb+/
+         KglWp8AS1kqdMPPdY+yQUcQ13e45ZEDqDhTKQJEWtKtTcqifKT9o6n5i0tsii7eZV5yu
+         zE+paopu0ilJYm38ui4yUTb3oK9tMuz3SisYPLUOS1JhIKJSIi2lK2h2/S40cjWAeLqX
+         p4FVypFpHr9+2sq0GqSAIRkRJNAJThhI98RrDavWTKKjxLKuehgq+KjJIWioI54wnhJU
+         yOppIpbedUwLypxfgixYHf5hVKTTYowmZga7LmxCCcb8IsTHnGej2DS980/l6+v/FKzy
+         kOcQ==
+X-Gm-Message-State: AAQBX9eqfVII1YieBkNNmUYd1wPyquZ0q6ZZM0oG0CfgDA/gkxJOjJuo
+        hX6FSshWmEZLH7kiLDWu0nJR1QZzkr7zsMoKd9IGWhpBVug=
+X-Google-Smtp-Source: AKy350Zv9NjZiNyQRTzL6vtfsfDZ2m43YF2PXoA4Er9+QVVgxWgi+ssLJ2xEbLGWqynfL2X7Yn0zrFS/j5ZTuJrS6Xo=
+X-Received: by 2002:a05:622a:653:b0:3ef:34e1:d37d with SMTP id
+ a19-20020a05622a065300b003ef34e1d37dmr16386647qtb.25.1682242767930; Sun, 23
+ Apr 2023 02:39:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
+ <01cd01d9754b$f12326b0$d3697410$@nexbridge.com> <fbe77ad2-ce65-e6a6-254e-01bf6446d582@game-point.net>
+ <01ce01d97553$4361f990$ca25ecb0$@nexbridge.com> <3ac19159-7314-c299-5112-b0f7aa2cc409@game-point.net>
+ <01d301d97567$0e9bc0b0$2bd34210$@nexbridge.com>
+In-Reply-To: <01d301d97567$0e9bc0b0$2bd34210$@nexbridge.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Sun, 23 Apr 2023 11:38:52 +0200
+Message-ID: <CA+JQ7M8avZiZuBHUtkQu2WqtR4zozU3C2ayCjBxRsQcKjAr16g@mail.gmail.com>
+Subject: Re: Proposal: tell git a file has been renamed
+To:     rsbecker@nexbridge.com
+Cc:     Jeremy Morton <admin@game-point.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The version reported by e.g. x86_64-w64-mingw32-gcc on Debian bullseye
-looks like:
-  gcc version 10-win32 20210110 (GCC)
+On Sat, Apr 22, 2023 at 9:57 PM Jeremy Morton <admin@game-point.net> wrote:
+>
+> https://stackoverflow.com/a/1094392/178757
+>
+> says:
+>
+> git mv oldname newname
+>
+> is just shorthand for:
+>
+> mv oldname newname
+> git add newname
+> git rm oldname
 
-This ends up with detect-compiler failing with:
-  ./detect-compiler: 30: test: Illegal number: 10-win32
+That's what I though but it's more like:
+  git show :0:oldname > newname
+  git add newname
+  git rm --cached oldname
+  mv oldname newname
 
-This change removes the -win32 part by excluding the dash and everything
-that follows from the version.
----
- detect-compiler | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Basically, a move but also preserving staged/unstaged contents. But
+yes. How git handles renames can sometimes be a bit of a PITA.
 
-diff --git a/detect-compiler b/detect-compiler
-index 50087f5670..d961df5fb5 100755
---- a/detect-compiler
-+++ b/detect-compiler
-@@ -17,7 +17,7 @@ get_family() {
- }
- 
- get_version() {
--	get_version_line | sed 's/^.* version \([0-9][^ ]*\).*/\1/'
-+	get_version_line | sed 's/^.* version \([0-9][^ -]*\).*/\1/'
- }
- 
- print_flags() {
--- 
-2.40.0.1.gc689dad23e
+On Sun, Apr 23, 2023, 12:16 AM <rsbecker@nexbridge.com> wrote:
+>
+> $ git add file1
+> $ commit -m "Commit 1"
+> $ git mv file1 file2
+> $ git status
+> On branch master
+> Changes to be committed:
+>   (use "git restore --staged <file>..." to unstage)
+>         renamed:    file1 -> file2
 
+I think your point is better illustrated
+  git add file1
+  commit -m "Commit 1"
+  echo 'Changed' > file1
+  git mv file1 file2
+  git status
+Which yields:
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    file1 -> file2
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   file2
+
+Or perhaps even:
+  echo Initial > file1
+  seq 1 10 >> file1 # We need a larger file to detect rename with change
+  git add file1
+  git commit -m 'Commit 1'
+  seq -i 's/Initial/Changed/' file1
+  git add file1 # Stage changes
+  seq 11 20 >> file1 # Add some unstaged changes
+  git mv file1 file2
+
+This will result in a staged rename, as well as the staged change
+'Initial'  -> 'Changed' with a bunch of additional unstaged lines of
+numbers 11 to 20.
+NB that this doesn't play nice unless the contents of file1 in HEAD
+and index are similar enough (at least 50%?)
