@@ -2,136 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EFBDC77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 17:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19716C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 17:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232096AbjDXRFq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 13:05:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
+        id S231728AbjDXR2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 13:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbjDXRFp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 13:05:45 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CCDE4C17
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:05:44 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 41be03b00d2f7-52863157da6so347162a12.0
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:05:44 -0700 (PDT)
+        with ESMTP id S232284AbjDXR2j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 13:28:39 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A54FC
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:28:37 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-95678d891d6so810081766b.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682355944; x=1684947944;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=G7b1mFXRZxjPyeJC/UXaAg1BpiDdl6FAnCpBbKswP2k=;
-        b=iYYjx1HAQC5XunOr43XNmep0Pu6oj8E20nuKgvQDsRzj8ts4tpMTIyTBjyHQ5PakyW
-         KvncThZB/3vndW+DT8UNKVA/Fgtx5I0Q7FwHhT5pGLDqUJp8Iuqgc6aWuP2Esax3Ze8t
-         JpIgrKLD6sCD8QC4MxOGl71NczMsGXHnOA767aGB9nwAeF7oxmeoQDnn6Uy4oHfXQXn+
-         pvIA/6/+TwnvgrO1u39LouhkTiWdtWg5cXZcINGb0UjmQXi9r7GC9NdQTOmh/LGudKd6
-         8QlLDPx9Qr/s5wZF8eTSDMCI25jSjlt9lvn7gOQGFpcCIY8SdUcB9IhLDybwKdQDA6z8
-         RGOA==
+        d=gmail.com; s=20221208; t=1682357316; x=1684949316;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UyzzXat1HLHTRyQcfQCmDRa3WHfmnd49q85xb1Q41zQ=;
+        b=eNoSlIYvFwumb1dP5PlmgpIutKL4sVDmqU81Sqzs5SZkKlLvXap9V5TschpxgO6PTK
+         Dp1+Fydj48bmfvrVRBfFHS4tZuPdcoC856MBFCZ/T78/yTppjy/NZqmoF3FbfFwHsyuZ
+         umyAdndL2auikA8W5tbhbLXCTjyQu2lw0d/t5j3EIfTbIvkwR0a0nRmxt5Zc3dHNW1WZ
+         UcE/uYDIfogwAtIP03sROotwe1Hz25iiRLo7ZFP0yFpSmg7OBxqEcRKHkJd4wHtEA5/l
+         8kYzWE8II7iPM7rE/Rz4kDRMC2hLIjWKLpft43aF/5V5AdR+5GAibaJSRuAWboOKeS5l
+         3d+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682355944; x=1684947944;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=G7b1mFXRZxjPyeJC/UXaAg1BpiDdl6FAnCpBbKswP2k=;
-        b=lyqtmKw4LZ6a71ADKXFg/dMh2wNvvjnGZWj75e2t4IIldqdpeS8xfHqrC1RVeYsKgp
-         c8GfOvxFP62FVu4EcOgHf5FsMIAmZyiwMQJRh2nLVU4vTtgx9AKrg3voLsNKRRYhO9+Y
-         QL327JhtpNBh//qUpB3Cw+4PNESQb2aoQ3jmvbl5v8ERSWCH1i0alSxPrcU7xOZrgR0X
-         g1bm0lwrMbAyj9E1DqzVDhpjtcnhXSc7LQnYKOqZGRAATUXFomdB6MzB23Hlk5yL84TB
-         OFh+HPBQsCctfJoVCsSLd895BgwFiji0ddTAIYb1fdc8TPX8Qs4HhThhGECihzxN10Un
-         xqWw==
-X-Gm-Message-State: AAQBX9f8BRd48aHpeYkXZzcrQdAjTuGF6euY0PgRg8HlVf7v/Ffkbajs
-        lmechXZye2XjXmnP1XKpu44=
-X-Google-Smtp-Source: AKy350Y2EX4HeIzupPWSBE667xXCWNkXVGI68SHhac3j0IvDDZ7d0BQFgblNX6QN3i6nOmVR6Jw03g==
-X-Received: by 2002:a17:90a:cf8f:b0:23d:e0e8:f453 with SMTP id i15-20020a17090acf8f00b0023de0e8f453mr13841516pju.38.1682355943622;
-        Mon, 24 Apr 2023 10:05:43 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id fv23-20020a17090b0e9700b0023d0290afbdsm8593444pjb.4.2023.04.24.10.05.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 10:05:43 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Thomas Bock <bockthom@cs.uni-saarland.de>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] parse_commit(): parse timestamp from end of line
-References: <20230422134150.GA3516940@coredump.intra.peff.net>
-        <20230422134703.GB3942326@coredump.intra.peff.net>
-Date:   Mon, 24 Apr 2023 10:05:42 -0700
-In-Reply-To: <20230422134703.GB3942326@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 22 Apr 2023 09:47:03 -0400")
-Message-ID: <xmqqcz3tfbx5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1682357316; x=1684949316;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UyzzXat1HLHTRyQcfQCmDRa3WHfmnd49q85xb1Q41zQ=;
+        b=Uwc2Hz+r4k7oQGL7G1VeLCcKaxf3V3hQPoAgYBMl10NHI5abhBcRJHy5q6vJuEnidu
+         ZbxgpfT+kGCBQ05sw8HEzfkhMgxBKTKhRp7dKa+Wt/9OCZtGkU+TPCSJ1aIRA/VaZqqa
+         nqX8aoz5fhjRf0qApFfFD8hHfksgexlj4whngXDbrrowJ9Sr48D2W2FBwkkT4/pE2hsq
+         nhtRa8nStRT0T7roKr7BYg0BxZZHHYp7YLXKe/zGnCPoEBs6xxoukYIJliHDJR1eTT6J
+         jqkXhEduPmgCNUdItzo0MZb1UKi3izss7e6Qpz+rzyjMLe2k/ebLKOWqcsate+8MPGDV
+         oKhg==
+X-Gm-Message-State: AAQBX9f9OgsS6MQ0KTQOCLWLPMxR7psuFBRV1h7lKxe275gjfyWnDaCm
+        tQWbCKn4m9EMiHaxq6T8ZY2s+Lsm5+gSBY1MPjGGItba8gE=
+X-Google-Smtp-Source: AKy350YMlZdDJ2/OCP+OGFYSpBpCftCoNfMzHDPAKSxBGasuRBha3Y2BYt8w01wiWqrMNWsCjF4gjNo/M68wmWLAwRg=
+X-Received: by 2002:a17:906:f152:b0:885:a62c:5a5c with SMTP id
+ gw18-20020a170906f15200b00885a62c5a5cmr9978196ejb.46.1682357315608; Mon, 24
+ Apr 2023 10:28:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CACMKQb3XsPG=gnmoBdL7Eh6dV2h-LEbGHs+QpBr1g9yV+SSmRw@mail.gmail.com>
+In-Reply-To: <CACMKQb3XsPG=gnmoBdL7Eh6dV2h-LEbGHs+QpBr1g9yV+SSmRw@mail.gmail.com>
+From:   Aman <amanmatreja@gmail.com>
+Date:   Mon, 24 Apr 2023 22:58:23 +0530
+Message-ID: <CACMKQb34Mk_37KhVyaj4cb1JnrZPXXmcAhE_QeV=EcF7CRVKPA@mail.gmail.com>
+Subject: Re: On understanding, exploring and abstractions.
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+a follow up for everyone.
 
-> To find the committer timestamp, we parse left-to-right looking for the
-> closing ">" of the email, and then expect the timestamp right after
-> that. But we've seen some broken cases in the wild where this fails, but
-> we _could_ find the timestamp with a little extra work. E.g.:
+On Sat, Apr 22, 2023 at 9:24=E2=80=AFPM Aman <amanmatreja@gmail.com> wrote:
 >
->   Name <Name<email>> 123456789 -0500
-> ...
-> So let's use the same trick as 03818a4a94: find the end of the line, and
-> parse back to the final ">".
-
-This obviously assumes that even in a broken ident, it is very
-likely that the second component (where <e-mail> usually sits) ends
-with a '>'.  Given that we enclose whatever garbage the end user
-gave us as their e-mail inside a pair of <> ourselves, it is a very
-sensible assumption, I would think.  The original parser assumed
-that the end user would not have '>' inside their e-mail part of the
-ident, which turns out to be more problematic than the alternative
-being proposed.  It is doubly good that we already parse from the
-end elsewhere.
-
-Nice.
-
-> +	/*
-> +	 * parse to end-of-line and then walk backwards, which
-> +	 * handles some malformed cases.
-> +	 */
-
-I would say "parse to" -> "jump to", but technically moving forward
-looking for a LF byte is still "parsing".  "some" malformed cases
-being "most plausible" ones (due to how ident.c::fmt_ident() is what
-writes '>' after the string end-user gave as e-mail) may be worth
-mentioning.
-
-> +	eol = memchr(buf, '\n', tail - buf);
-> +	if (!eol)
->  		return 0;
-
-OK.
-
-> -	dateptr = buf;
-> -	while (buf < tail && *buf++ != '\n')
-> +	for (dateptr = eol; dateptr > buf && dateptr[-1] != '>'; dateptr--)
->  		/* nada */;
-
-OK.  Just a style thing, but I found that "; /* nada */" is easier
-to spot that there is an empty statement there.
-
-> -	if (buf >= tail)
-> +	if (dateptr == buf || dateptr == eol)
->  		return 0;
-
-Curious when dateptr that wanted to scan back from eol is still at
-eol after the loop.  It is when the ident line ends with ">" without
-any timestamp/tz info.   And the reason why we need to check that
-here is ...
-
-> -	/* dateptr < buf && buf[-1] == '\n', so parsing will stop at buf-1 */
-> +
-> +	/* dateptr < eol && *eol == '\n', so parsing will stop at eol */
->  	return parse_timestamp(dateptr, NULL, 10);
-
-... because parse_timestamp() is merely strtoumax() and would
-happily skip over arbitrary number of leading "whitespace" without
-stopping if (dateptr == eol && *eol == '\n').  OK, sad but correct.
-
+> Hello everyone.
+>
+> This is Aman, I am a high school student. And,
+>
+> "I DON'T know how computers (and modern software) works AT ALL".
+>
+> I have no idea, except about the abstractions I play on. I understand
+> the case for abstractions, they are what, (arguably or not) run the
+> world forward.
+>
+> But it is really , And by really, I mean really frustrating. To the
+> point where I don't quite enjoy programming (despite the fact that I
+> have had exposure to "programming" for quite some time). I am
+> fascinated by these things around me, computers run the world, and I
+> REALLY want to understand them, just for the sake of it (I guess).
+>
+> I believe what made computers fun, in the old days, was the ability to
+> really talk to it. (even Linus tells this in the "beauty of
+> Programming chapter" in his book, which was written 20 years ago!)
+> Even C feels like an abstraction, hey the "magic" of compilers, and
+> libraries.
+>
+> Even people around me, and 99% of people I find on the internet, to
+> discuss issues like this, too, don't know how a computer, and modern
+> software (which runs the world) really works. And people seem to get
+> fine by it, which is not necessarily bad, but really frustrating to
+> me.
+>
+> And my question is, How do I do it? Should I try to build my own
+> computer? Create a CPU in Verilog on an FPGA. Write an assembler,
+> bootloaders, operating system kernels, compilers, etc.? But what about
+> wanting to read how the modern systems work? But if I want to know how
+> LLVM or Linux works? Or how a modern compiler is created?
+>
+> People have discouraged me to read source codes, and software
+> architectures, saying it may not be worthwhile, even IF you could do
+> it. So what could be done?
+>
+> Maybe, the right question isn't what to do, but why do I want to, so
+> perhaps we can systematically deduce what to do about it. So why? I
+> guess, if you see life as a playground, and I have come into this
+> world, I'd be an interesting task to learn how it all works. This may
+> be a bad idea, and I am open to others. Since nobody I have met, yet,
+> has expressed something like this, I don't know if I am living in a
+> rock (probably I am anyway).
+>
+> But learning how a computer (like your phone) works from scratch,
+> isn't that interesting, and not knowing, down right frustrating to
+> anyone reading this email? Or is it just me for some reason?
+>
+> And it goes both ways right? , even if I create a simple compiler,
+> it'll still be a simple one. Won't it be more interesting to work on
+> things that I might use, and others might get value from too.
+>
+> So this is the dilemma of an 18 year old, confused about what to do about=
+ it.
+>
+> (btw, If you reading this, are a hardware person, making chips or
+> something, do you feel like a king/queen? since everyone builds on top
+> of what you do)
+>
+> Regards,
+> Aman
