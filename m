@@ -2,125 +2,413 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85575C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 11:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32862C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 13:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230426AbjDXLlw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 07:41:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41562 "EHLO
+        id S231736AbjDXNSB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 09:18:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbjDXLlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 07:41:51 -0400
-Received: from EUR02-DB5-obe.outbound.protection.outlook.com (mail-db5eur02olkn2093.outbound.protection.outlook.com [40.92.50.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 985DF3A8C
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 04:41:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dchBoCg/h4Xmzlmgo05Qc7c43ZdpeWzLOSzyrYzLEMyx80plwDB8euzE+YY/USpCL5HppP6Xyjow5G3fckMkNwaVwN9PB86pQETt6jG7BSeYO6gz51P4568WDJ584mtdykdHGt6e+r6EyfCb2tBIbgAuyEa8GiS+bbMVorhrLX4NR9GEaqLEhLPl898cx82aLbm7lnw+brO09vdft0P4NdIFgIslgzj2ZdIUX+nsTGxumZXRS4lCCRi5OhZ7RbRUJmBk1Kk2Czms78vf9KbiNq2+j2W/Djl4gqEaejbd98oEJka70griFJUkJ0lTT4xUnIo7cXs9K4xowcu/cKUXQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/p5f2Iky1e3Fan43yPAxrAEJYnxsWxt5H2Ko8HwV1qs=;
- b=l8ZRM36t/f0SXMss/1p1yCO9IeLh4Ul/WdX757NiBglYFfabQc7SEs0aAC7r3NnAO14dBcZ1Mg6PCu7LGh543PZBDeP4dEfTGYslZGGNxaAjYVbOQbF06etPjHS7t7Xa6lN79DacKftaIBNks/kVg4fJ+99dMtfBNWuazOXC24UzcNv/f4lgL/iccPwvD4FXZuCjsrouSKXUHOorhadHNinHIebwR6ScmF0tgvtrEUxN6CiO+dKKMvkSyIKRn7t/ige67ZYL9VT4wrMfL6PkN9aYPsB8DBJn/VhJ/zhIx7PgMDVpz3wdOKUt1MrZPhdOP29lE4X81Q34Qv8OefSFFA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/p5f2Iky1e3Fan43yPAxrAEJYnxsWxt5H2Ko8HwV1qs=;
- b=IT0JAqTJVLz/XqZe2eyBNkkdrUSz8DuZGi3+TG9cS6vgiBJwzqLqT/sjqHwvjsK9ymyvuw6Gmb2XnNvykOYjQ5MLKpEeXKiyO6IUFeSn67NwJRWRr12b5lr43UUWkxyxsk+ftgAf5B7P8Ez5WF18+VnmtVfnM7UcTIBpIe9JLhvPiC/U16Ndmqcdx0dKhO62Zp2oaMB4GB2cuaPQNRSPbPqTgeA5m3WJvXTEACneouGt6T1pjzbAmEWLa6xeUL+4cgdAXC4ZxJAnZ5igXHankW2Ex7ji6cxTdwXITsEyhNsp8u6j5LzJI28F2HLr3QDmyDkiWN/cK8NxUhx/x7dUzg==
-Received: from PA4PR09MB6516.eurprd09.prod.outlook.com (2603:10a6:102:26e::7)
- by DB8PR09MB4422.eurprd09.prod.outlook.com (2603:10a6:10:15f::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6319.33; Mon, 24 Apr
- 2023 11:41:47 +0000
-Received: from PA4PR09MB6516.eurprd09.prod.outlook.com
- ([fe80::8239:6b07:29d9:4ffe]) by PA4PR09MB6516.eurprd09.prod.outlook.com
- ([fe80::8239:6b07:29d9:4ffe%5]) with mapi id 15.20.6319.022; Mon, 24 Apr 2023
- 11:41:47 +0000
-From:   i o <lvsil4@outlook.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Proposal: adding --soft and --mixed options to git checkout
-Thread-Topic: Proposal: adding --soft and --mixed options to git checkout
-Thread-Index: AQHZdqGqIJFOd4OKQ0OsGknYTVP2yw==
-Date:   Mon, 24 Apr 2023 11:41:47 +0000
-Message-ID: <PA4PR09MB65161C38AEFBC07B3D7A1C62B0679@PA4PR09MB6516.eurprd09.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn:  [nUoRh6jPNRdzflD1UuKmYsiYKfnjMwtY]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PA4PR09MB6516:EE_|DB8PR09MB4422:EE_
-x-ms-office365-filtering-correlation-id: 66e52148-99c8-478c-cb1f-08db44b8e301
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 1mOV0Ekx6nYZL152Btlgoai+u983ts/XQWO1m+J3t4rsf6Phs3uGQhdTpOLwpXRi+lJNSB3uXIUaiSokfQPmwGgXBkqaRaRZFE+dnKTs1bd0hbiG332VVyBVCAr5/vkooHCmZP+NEVvC9ieIC0HCDxhjQd1BSmQt3g763n9rPCvxGVF8Rlg4DejXXt9xJt8CGFwBhGKA8x0fVw5NYMBrbobv4/aTAxwaSJ1eIsOwdixokE+kNQiitfV/nm/Qm4hw1CxgZ/OXcO74Wb3af5egU/AzEbVCdBXwzvKrtwgCiaxwtkcA2D6ZXiG0+xvsD91D9ejQYN3ve2KZo1PXBZQgnzX878hQ0RBkgoFwbS5q5g6exoWn+eSOKEzYLYusfQgf9T/+OhUCA5tcS4Jb5BRmYe6HDT/i598cBEH5BZOoIxfAyHKMAXnyYOyMV2W6cVpM7EhnobD6vJcnJT9N6fQp6dkQdW4SRK3HglA1uawwSQ9PP6k/6r+pK84lVezEFGRSNBSkUErm0J5GOI+ab2BVc4l5H9u9+3QjNcVYXfPsFj10FLXKfo7QdwW5KZHh07XR
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?FPz3A+j+n0E/Z/6Gq8dGipNDBPh4eGoGZEqT60LEJaR8BxXCJMBhKYMHon?=
- =?iso-8859-1?Q?juVxE+bmginFfQVhAVm5gG67ZKBEZnyDIOJLOR5rBTZncYBMwxVbQE33T7?=
- =?iso-8859-1?Q?qiKFWllZYgLDA/Jhztzd1ZWB0c5lcne8ffi3UcEJeG8mOX/cujnk1Cz4dQ?=
- =?iso-8859-1?Q?LoDMMYHavMXVqrORFAdo6ZksGNSOxWfYF33Xo0MUKDTHsMFUG2edT0AYv4?=
- =?iso-8859-1?Q?toPRvRxUIdkpjmm8MGMzr1lgMG7mdEne3N3vGqUlex7XQ4y7HcQcFX1SWk?=
- =?iso-8859-1?Q?JF8RIqN+coECY6ohhr2kh+ahKy9195fgZ64s2HRVDlJ1q1JruuLsV4YdEy?=
- =?iso-8859-1?Q?MdOkqMlSxjNayLasH1qQ/ITOT/Cm5nNOqmjbZXkLghNxovWtT4VLyyJ5NZ?=
- =?iso-8859-1?Q?9cPGUa4S+L/dL6VGuXHc8WwPY+KZpmVEpvAi+saL4CDSEkHq5ZOXhzhoRx?=
- =?iso-8859-1?Q?T2NPSLM/EOlGuGiR0SazMdfu7f2/C0as3Jeg9kt5E6swEj+mtl11ZpGWY7?=
- =?iso-8859-1?Q?eTGIohGiG3fyhHtuk6RUS7WuJOJoiovAnKbR5DF8VVMtm3dhVtC9JyeouW?=
- =?iso-8859-1?Q?8Z9sOXxO1jeYRq5MwWwTlyqXZsiaB3z96ND8VKOmHyyNga9M77B8j6a8Xn?=
- =?iso-8859-1?Q?o12Fq7t0TPzHgFshA82zTkl3Ma4x5/Ghe0J8lZxF9fep8FIkExmOkW5/DA?=
- =?iso-8859-1?Q?iba3PFz3yPm0WipPuAz79XDDMoa/RbheLCY4Q1/oBZlcWJBim2g7hs73/V?=
- =?iso-8859-1?Q?+699utwX39rHZg4VSq1sQvy2ez3yIrs3Vd1bz9Ie+II4FF/j5HKJIAxUF2?=
- =?iso-8859-1?Q?a+mtnCTXFP/1v8meqSSRxWERpeKbIDA/eEY1pc4WkNAVjgt3whWItt87vn?=
- =?iso-8859-1?Q?SOgXk5Xj88bN6KK6Wjs1sBKk8MhEZAP++ws/rSLMdDCucy2Y/XP5/7kh6h?=
- =?iso-8859-1?Q?+4ThmVxMswIy8GLskQj9rFMZlRUJqryBUaQLWzSK2ztWtqMeUvvHBhYx3V?=
- =?iso-8859-1?Q?9WRYKVTQugI4LnOIdqX3cQPYC628RyNrUd+KQbbi7ntTEK03wTRb+saN0A?=
- =?iso-8859-1?Q?EGPFxE3LAof56N8Qh13Uu4rtEG7kqJ78iHpVk3Y6xQVHxNzKuObLjgELux?=
- =?iso-8859-1?Q?SBftd7bQcPbIY5RavUOmTbfJ9dwGn9KurqLDVMGUpCtJJprEbVIAdpN6wg?=
- =?iso-8859-1?Q?EdfpzOIdR2LIHbF7cfdPN3odGesf8f3NhTmRCp3cwNu1iquq8tssmJxb?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S231250AbjDXNR6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 09:17:58 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E0555595
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 06:17:25 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-2f625d52275so4262738f8f.3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 06:17:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682342243; x=1684934243;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vNwgt7iwCwbjIR949+0oXt7e0Osh5igz9RAzTT6xekU=;
+        b=sm6Fab+SAPktx88uAJ6Q89dJsyCHkXnXAZMQDsORg4XXhaIagAmCqK2ovdJzWr/mnC
+         GA33sz4MO69+OmqLJVZnzPjy8uvU9gPEYRJ9GY0RbiyLOpsvoN81JbUcAIyxvl7L/tWl
+         gH3rbd56Yfackf2ESYvl7cjdfFodRwTkoP1TZsye5DMKr3dv6jk0BAFtz5n3A3cxMOjf
+         +9WNSpzd6DrIsu0KLIYP6VBXut51orGC7OA6/WjVLElryqI/+ku6+THyah9DST4lvxpy
+         J0RdjcbdzzO9LDBFlr8Awvb4IaqWEovwbn1U5V8GEJU57DsJLHPNX1fcJVAdJzvANrJl
+         JJuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682342243; x=1684934243;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vNwgt7iwCwbjIR949+0oXt7e0Osh5igz9RAzTT6xekU=;
+        b=LSciMaYkhfBrCrDlWwqBRdZ39qJYdYnLAi8F1QxXM7uKKmmP+1V8QTCrE2I/Uzhk5u
+         G+17cRRy2YnKQskj8amZwcqbxmZ0RUzqhvpSYju2GzeX3xE/yvb4CAe6RhuU90HkQhYL
+         GIxUKMsICeKThauawfVKIt9O6JifO2f7B8ZHOh7WtvjrVW2zxJPCSgbLcqZOqKu8vaPJ
+         mM/Vk4W7W5LtptwXPVmWRT2x5snZuKAqSg/7Jikn4RUEJ7eE1RyT8LOIJlRIYB0Keos3
+         UpUU7CAP9FZ6TMGCqIhsZmTy6eEEzz4aKBeuLL6qFRfTZtPFfdwrXp1Df5iJucTwCpht
+         m6Rw==
+X-Gm-Message-State: AAQBX9dRbBCLUz5dUnpE5FZGBo2eyjRuQgYzurIrel3UAhyfqC0Hek0S
+        V7ORo7QgbUPj6nHzBxhr2xet2sKoQTU=
+X-Google-Smtp-Source: AKy350aVcmvxXgMSW5qCJO0iIvlWEWJu8jys5hnmdoXWRBHePe0DS3ohv4ihgSbkH3uNjrI6RlpT2Q==
+X-Received: by 2002:adf:fd92:0:b0:303:ba27:4366 with SMTP id d18-20020adffd92000000b00303ba274366mr7838341wrr.49.1682342242898;
+        Mon, 24 Apr 2023 06:17:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l11-20020a5d674b000000b0030276f42f08sm9487963wrw.88.2023.04.24.06.17.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Apr 2023 06:17:22 -0700 (PDT)
+Message-Id: <pull.1523.git.1682342241825.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 24 Apr 2023 13:17:21 +0000
+Subject: [PATCH] [RFC] transport: add --show-service option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR09MB6516.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66e52148-99c8-478c-cb1f-08db44b8e301
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Apr 2023 11:41:47.6259
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR09MB4422
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Shawn O. Pearce" <spearce@spearce.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Zeger-Jan van de Weg <zegerjan@gitlab.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I suggest adding `--soft` and `--mixed` options to `git checkout`, that act=
- similarly to the corresponding options of `git reset`, i.e. `git checkout =
---soft <tree-ish>` should move the HEAD to <tree-ish> without affecting the=
- working tree or index, and `git checkout --mixed <tree-ish>` should move t=
-he HEAD to <tree-ish> and update the index to match it without changing the=
- working tree.=0A=
-=0A=
-The difference between this and `git reset` of course would be that, unlike=
- the latter, this doesn't 'drag' the current branch along with HEAD; instea=
-d the usual behaviour would apply depending on what exactly <tree-ish> is, =
-i.e. `git checkout [--soft|--mixed] <commit>` would detach HEAD and point i=
-t to <commit>, whereas `git checkout [--soft|--mixed] <branch>` would move =
-HEAD and switch from the current branch to <branch>.=0A=
-=0A=
-I'm aware work arounds exist for these, something like:=0A=
-=0A=
-    ```=0A=
-    git checkout --detach=0A=
-    git reset [--soft|--mixed] [<branch>|<commit>]=0A=
-    git checkout [<branch>|<commit>]=0A=
-    ```=0A=
-=0A=
-so the aim here is really one of convenience by having this feature contain=
-ed in a native option.=0A=
-=0A=
-Another option that might be worth adding to `git checkout` is `--keep-inde=
-x` (like the option in `git stash`), to move the HEAD to <tree-ish> and upd=
-ate the working tree to match it without changing the index.=
+From: ZheNing Hu <adlternative@gmail.com>
+
+Without using protocol v2, the git server needs to send a pktline
+"# service=$servicename" to the git client first. This often
+requires the git server to implement it independently, but it can
+be delegated to the `git receive-pack` and `git upload-pack` to complete
+the work proactively. Therefore, the `--show-service` option is added
+to `git receive-pack` and `git upload-pack`, which can be used to send
+the "# service=$servicename" pktline, making the logic of the git
+server more concise.
+
+Note that this `--show-service` option can only be used together with
+`--http-backend-info-refs` and it is not applicable when using protocol v2.
+
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [RFC] transport: add --show-service option
+    
+    When the protocol is not v2, the git client requires that the first
+    pktline reply for info refs be "# service=servicename", which requires
+    the git server to implement pktline capability, e.g. [1] , which may be
+    a bit cumbersome.
+    
+    Delegating this feature to git upload-pack and git receive-pack via
+    "--show-service" can simplify server implementation.
+    
+    v1. add --show-service to git upload-pack and git receive-pack.
+    
+    [1]:
+    https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/gitaly/service/smarthttp/inforefs.go#L82
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1523%2Fadlternative%2Fzh%2Finfo-ref-service-output-opt-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1523/adlternative/zh/info-ref-service-output-opt-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1523
+
+ Documentation/git-receive-pack.txt |  10 +++
+ Documentation/git-upload-pack.txt  |  13 +++-
+ builtin/receive-pack.c             |  14 +++-
+ builtin/upload-pack.c              |  17 +++-
+ http-backend.c                     |   7 +-
+ t/t5555-http-smart-common.sh       | 120 +++++++++++++++++++++++++++++
+ 6 files changed, 171 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index 65ff518ccff..e16d364f394 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -46,6 +46,16 @@ OPTIONS
+ 	`$GIT_URL/info/refs?service=git-receive-pack` requests. See
+ 	`--http-backend-info-refs` in linkgit:git-upload-pack[1].
+ 
++--show-service::
++	Output the "# service=git-receive-pack" pktline and the
++	"0000" flush pktline firstly. Since the git client needs
++	the git server to send the first pktline
++	"# service=$servicename", this option allows the git
++	server to delegate the functionality of sending this pktline
++	to `git-receive-pack`.
++	Note that this option can only be used together with
++	`--http-backend-info-refs`.
++
+ PRE-RECEIVE HOOK
+ ----------------
+ Before any ref is updated, if $GIT_DIR/hooks/pre-receive file exists
+diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
+index b656b475675..7052708d03e 100644
+--- a/Documentation/git-upload-pack.txt
++++ b/Documentation/git-upload-pack.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-upload-pack' [--[no-]strict] [--timeout=<n>] [--stateless-rpc]
+-		  [--advertise-refs] <directory>
++		  [--advertise-refs] [--show-service] <directory>
+ 
+ DESCRIPTION
+ -----------
+@@ -44,6 +44,17 @@ OPTIONS
+ 	documentation. Also understood by
+ 	linkgit:git-receive-pack[1].
+ 
++--show-service::
++	Output the "# service=git-upload-pack" pktline and the
++	"0000" flush pktline firstly. Since the git client needs
++	the git server to send the first pktline
++	"# service=$servicename", this option allows the git
++	server to delegate the functionality of sending this pktline
++	to `git-upload-pack`.
++	Note that this option can only be used together with
++	`--http-backend-info-refs` and it is not applicable when
++	using protocol v2.
++
+ <directory>::
+ 	The repository to sync from.
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 9109552533d..eb45c1f72af 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -2485,6 +2485,7 @@ static int delete_only(struct command *commands)
+ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int advertise_refs = 0;
++	int show_service = 0;
+ 	struct command *commands;
+ 	struct oid_array shallow = OID_ARRAY_INIT;
+ 	struct oid_array ref = OID_ARRAY_INIT;
+@@ -2497,8 +2498,10 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		OPT_HIDDEN_BOOL(0, "http-backend-info-refs", &advertise_refs, NULL),
+ 		OPT_ALIAS(0, "advertise-refs", "http-backend-info-refs"),
+ 		OPT_HIDDEN_BOOL(0, "reject-thin-pack-for-testing", &reject_thin, NULL),
++		OPT_BOOL(0, "show-service", &show_service, N_("show service information")),
+ 		OPT_END()
+ 	};
++	enum protocol_version version = determine_protocol_version_server();
+ 
+ 	packet_trace_identity("receive-pack");
+ 
+@@ -2525,7 +2528,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	else if (0 <= receive_unpack_limit)
+ 		unpack_limit = receive_unpack_limit;
+ 
+-	switch (determine_protocol_version_server()) {
++	if (show_service) {
++		if (!advertise_refs)
++			die(_("options '%s' and '%s' should be used together"), "--show-service", "--http-backend-info-refs");
++		if (version != protocol_v2) {
++			packet_write_fmt(1, "# service=git-receive-pack\n");
++			packet_flush(1);
++		}
++	}
++
++	switch (version) {
+ 	case protocol_v2:
+ 		/*
+ 		 * push support for protocol v2 has not been implemented yet,
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+index beb9dd08610..e84eb3735b4 100644
+--- a/builtin/upload-pack.c
++++ b/builtin/upload-pack.c
+@@ -11,7 +11,7 @@
+ 
+ static const char * const upload_pack_usage[] = {
+ 	N_("git-upload-pack [--[no-]strict] [--timeout=<n>] [--stateless-rpc]\n"
+-	   "                [--advertise-refs] <directory>"),
++	   "                [--advertise-refs] [--show-service] <directory>"),
+ 	NULL
+ };
+ 
+@@ -22,6 +22,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+ 	int advertise_refs = 0;
+ 	int stateless_rpc = 0;
+ 	int timeout = 0;
++	int show_service = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
+ 			 N_("quit after a single request/response exchange")),
+@@ -32,8 +33,10 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+ 			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
+ 		OPT_INTEGER(0, "timeout", &timeout,
+ 			    N_("interrupt transfer after <n> seconds of inactivity")),
++		OPT_BOOL(0, "show-service", &show_service, N_("show service information")),
+ 		OPT_END()
+ 	};
++	enum protocol_version version = determine_protocol_version_server();
+ 
+ 	packet_trace_identity("upload-pack");
+ 	read_replace_refs = 0;
+@@ -50,7 +53,17 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+ 	if (!enter_repo(dir, strict))
+ 		die("'%s' does not appear to be a git repository", dir);
+ 
+-	switch (determine_protocol_version_server()) {
++
++	if (show_service) {
++		if (!advertise_refs)
++			die(_("options '%s' and '%s' should be used together"), "--show-service", "--http-backend-info-refs");
++		if (version != protocol_v2) {
++			packet_write_fmt(1, "# service=git-upload-pack\n");
++			packet_flush(1);
++		}
++	}
++
++	switch (version) {
+ 	case protocol_v2:
+ 		if (advertise_refs)
+ 			protocol_v2_advertise_capabilities();
+diff --git a/http-backend.c b/http-backend.c
+index 89aad1b42c7..74c2c7bb606 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -539,6 +539,7 @@ static void get_info_refs(struct strbuf *hdr, char *arg UNUSED)
+ 	if (service_name) {
+ 		const char *argv[] = {NULL /* service name */,
+ 			"--http-backend-info-refs",
++			"--show-service",
+ 			".", NULL};
+ 		struct rpc_service *svc = select_service(hdr, service_name);
+ 
+@@ -547,12 +548,6 @@ static void get_info_refs(struct strbuf *hdr, char *arg UNUSED)
+ 		hdr_str(hdr, content_type, buf.buf);
+ 		end_headers(hdr);
+ 
+-
+-		if (determine_protocol_version_server() != protocol_v2) {
+-			packet_write_fmt(1, "# service=git-%s\n", svc->name);
+-			packet_flush(1);
+-		}
+-
+ 		argv[0] = svc->name;
+ 		run_service(argv, 0);
+ 
+diff --git a/t/t5555-http-smart-common.sh b/t/t5555-http-smart-common.sh
+index b1cfe8b7dba..32431266eb9 100755
+--- a/t/t5555-http-smart-common.sh
++++ b/t/t5555-http-smart-common.sh
+@@ -159,4 +159,124 @@ test_expect_success 'git receive-pack --advertise-refs: v2' '
+ 	test_cmp actual expect
+ '
+ 
++test_expect_success 'git upload-pack --advertise-refs --show-service: v0' '
++	# With no specified protocol
++	cat >expect <<-EOF &&
++	# service=git-upload-pack
++	0000
++	$(git rev-parse HEAD) HEAD
++	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
++	0000
++	EOF
++
++	git upload-pack --advertise-refs --show-service . >out 2>err &&
++	test-tool pkt-line unpack <out >actual &&
++	test_must_be_empty err &&
++	test_cmp actual expect &&
++
++	# With explicit v0
++	GIT_PROTOCOL=version=0 \
++	git upload-pack --advertise-refs --show-service . >out 2>err &&
++	test-tool pkt-line unpack <out >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++
++'
++
++test_expect_success 'git receive-pack --advertise-refs --show-service: v0' '
++	# With no specified protocol
++	cat >expect <<-EOF &&
++	# service=git-receive-pack
++	0000
++	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
++	0000
++	EOF
++
++	git receive-pack --advertise-refs --show-service . >out 2>err &&
++	test-tool pkt-line unpack <out >actual &&
++	test_must_be_empty err &&
++	test_cmp actual expect &&
++
++	# With explicit v0
++	GIT_PROTOCOL=version=0 \
++	git receive-pack --advertise-refs --show-service . >out 2>err &&
++	test-tool pkt-line unpack <out >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++
++'
++
++test_expect_success 'git upload-pack --advertise-refs --show-service: v1' '
++	# With no specified protocol
++	cat >expect <<-EOF &&
++	# service=git-upload-pack
++	0000
++	version 1
++	$(git rev-parse HEAD) HEAD
++	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
++	0000
++	EOF
++
++	GIT_PROTOCOL=version=1 \
++	git upload-pack --advertise-refs --show-service . >out &&
++
++	test-tool pkt-line unpack <out >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++'
++
++test_expect_success 'git receive-pack --advertise-refs --show-service: v1' '
++	# With no specified protocol
++	cat >expect <<-EOF &&
++	# service=git-receive-pack
++	0000
++	version 1
++	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
++	0000
++	EOF
++
++	GIT_PROTOCOL=version=1 \
++	git receive-pack --advertise-refs --show-service . >out &&
++
++	test-tool pkt-line unpack <out >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++'
++
++test_expect_success 'git upload-pack --advertise-refs --show-service: v2' '
++	cat >expect <<-EOF &&
++	version 2
++	agent=FAKE
++	ls-refs=unborn
++	fetch=shallow wait-for-done
++	server-option
++	object-format=$(test_oid algo)
++	object-info
++	0000
++	EOF
++
++	GIT_PROTOCOL=version=2 \
++	GIT_USER_AGENT=FAKE \
++	git upload-pack --advertise-refs --show-service . >out 2>err &&
++
++	test-tool pkt-line unpack <out >actual &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++'
++
++test_expect_success 'git receive-pack --advertise-refs --show-service: v2' '
++	# There is no v2 yet for receive-pack, implicit v0
++	cat >expect <<-EOF &&
++	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
++	0000
++	EOF
++
++	GIT_PROTOCOL=version=2 \
++	git receive-pack --advertise-refs --show-service . >out 2>err &&
++
++	test-tool pkt-line unpack <out >actual &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++'
++
+ test_done
+
+base-commit: 7580f92ffa970b9484ac214f7b53cec5e26ca4bc
+-- 
+gitgitgadget
