@@ -2,125 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB23DC7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 21:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F153C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 21:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232830AbjDXVcy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 17:32:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38912 "EHLO
+        id S232262AbjDXVkF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 17:40:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232073AbjDXVcx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 17:32:53 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658CE5B90
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 14:32:52 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-187993bab0cso4017430fac.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 14:32:52 -0700 (PDT)
+        with ESMTP id S230340AbjDXVkD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 17:40:03 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4BD34C02
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 14:40:01 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b7b54642cso3741867b3a.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 14:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682371971; x=1684963971;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=feCPe9wY6yBXqmb/ZlnTmAD2MmxcgePzx+ntmqNXV70=;
-        b=LM1o7ITourfEcP0k6qA63Te9GBMgxmmseIsDoFwdwTHkdyPf32tp1fTR9XUdXo+jbh
-         2rbuj9P6/GwRp088JnLVGOxLqVcCC06I68IKtIEY0etbipBn9NrKabx1Q36TKQDWzJba
-         +iTgkEyXtDFa3XpSB7PtJsC6t/ub9oTeb66Cf8OMLrUwvXpeU9p0RWBe+4Kxz2fP4mNH
-         6MGp97IaX6xOaikiZ5shW9dmdcpWyRm4m/2x66VoRhL75QmzpOxLz4aop/5Qx40GLNfZ
-         ndM05AqmfOr8X+lxbdotlY2Mk+DYqe8IDgdKTuzLdJfI73LV0KBVXfu4k58ew36dXY6d
-         upjQ==
+        d=gmail.com; s=20221208; t=1682372401; x=1684964401;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U4qENiC4wG/+G4G7yhobfR7FGyUlUxZYeM1KrzAkQyA=;
+        b=BhHVSnR8aPi4b1PWjJnz5rhQE8LFYLoAXjrGfBJnt3Iwk9gvENCuyjiyKtKsY59BAl
+         3VGQwleeNsjl85kvehxCz5ZAHWmGSWI388SRPI2c2UwXS1w8fX8YFLRqSxIPwyxx/y0i
+         p10yDI9Vd/9vZFMQq4Iln39mY0F2D2jYBwHbkY3z3tNnSH0tc8lfpxM2BodaMsI68QCO
+         nKUjXPQ3TMnVZLX+MXj2WhSDgB7656iDlN5sWztrUZmSULagti2z+PMHXdTVCqb5vhpB
+         ApjZwf//qt7aCFVmXwdGd3AHxYCEpMqmLOcmIutmo31peiNcjiTU/5XYYacyyaq29Aw2
+         8vXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682371971; x=1684963971;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=feCPe9wY6yBXqmb/ZlnTmAD2MmxcgePzx+ntmqNXV70=;
-        b=QPshHeqDCYNVV46BPiITuDlDHBIDqDyjCOxYuoAKqHO1Q3DmA4OcHI8Mx9rLwmsAA9
-         O2i3eJnVGX3KxxioapZhHmJp0k1zlV2ktdose0z6uwGOKRuPfYCbevRqkyJ7TCaQ+xo+
-         08PKlZWD5B4vP/+xX6ssenJfvO58iA838RZx4Uf1Iy6FYWfuGuiawhP/kmRxBWI0o9Dr
-         jyBkNDb9Gbhc3FXD/QykIki+18pNaBSspSiiG4QTxkavmr8Mzc1HdJUmyXdc89/cTXlE
-         aKWwBWPgzOCKLhPHIuOMD3BufoYIPwQx/dkHTEXl5XUwCV7GCqGk+r6HDFLB8kH1WAAC
-         6T1g==
-X-Gm-Message-State: AAQBX9fNR99jjxZQdQcmwFOwDiaNNV4ATi2V4s81xygSkkZk3ZB4Udyo
-        uMhtC7YnCLy8Yalj+IZC+I73P33pKgE=
-X-Google-Smtp-Source: AKy350ZLClBBz4SC3WcVb2MRql3vMlW6uIk3/QxztOhSF+JsJVy/3rXKOFNgV0ElOwMCFJamztZlTw==
-X-Received: by 2002:a05:6871:b26:b0:180:3b6:82bd with SMTP id fq38-20020a0568710b2600b0018003b682bdmr9634360oab.33.1682371971599;
-        Mon, 24 Apr 2023 14:32:51 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id x8-20020a4aaa08000000b00525240c6149sm5218372oom.31.2023.04.24.14.32.50
+        d=1e100.net; s=20221208; t=1682372401; x=1684964401;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=U4qENiC4wG/+G4G7yhobfR7FGyUlUxZYeM1KrzAkQyA=;
+        b=IfgjDEAWKIIBbKLwT6FWx5iVZJFro+L2r3HZiIaPSppGpzguiy5W9KDG8oPgRhiusW
+         gFGJ8XM62nrRAQV/LaMKS39ZSILbREn1noaKRHV1PyRp2UFIt6nQx2L86R9ljPqkBlmD
+         aQbPFRz5xAVgh0tqerYa/UONWg4F/NDGPUjEVOcAKLZklVfWeTnN0BLBLqI7gHN0iyJH
+         wJzPsdfiXihZbD/HoHUbPHP/c81cApOggWCSrU2VGaCJJsOM1Sv2C343y7wdjeQgpaM3
+         /dbuNmV5XmGaefvwDHaE+Iz/0R9OuzsEhQD1j+omYwkzmMbS4MSM/nctCkV+TazAln3Q
+         MS+g==
+X-Gm-Message-State: AAQBX9dQKHqM4J7MlsgVH7tS1cO/K/g+IAbYxCnbFzMLsd2JVov0eplp
+        JGi30hRoxEGcqdrRV5pszzPgeCB0INk=
+X-Google-Smtp-Source: AKy350ZxRokOCzIWH+AkgtT4JFfW9kltz/CjDKrl+Ie9Sblq913DC+5cI3c/Ngt6Urfbi9/JAq4N1g==
+X-Received: by 2002:a05:6a20:6a21:b0:f0:6517:2fd with SMTP id p33-20020a056a206a2100b000f0651702fdmr20429464pzk.2.1682372401253;
+        Mon, 24 Apr 2023 14:40:01 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id y4-20020a17090a1f4400b00247a942313bsm6742442pjy.56.2023.04.24.14.40.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 14:32:51 -0700 (PDT)
-Date:   Mon, 24 Apr 2023 15:32:50 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     i o <lvsil4@outlook.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <6446f5824dd5d_cd6129459@chronos.notmuch>
-In-Reply-To: <PA4PR09MB65161C38AEFBC07B3D7A1C62B0679@PA4PR09MB6516.eurprd09.prod.outlook.com>
-References: <PA4PR09MB65161C38AEFBC07B3D7A1C62B0679@PA4PR09MB6516.eurprd09.prod.outlook.com>
-Subject: Re: Proposal: adding --soft and --mixed options to git checkout
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Mon, 24 Apr 2023 14:40:00 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Handle compiler versions containing a dash
+References: <20230423091249.2591136-1-mh@glandium.org>
+Date:   Mon, 24 Apr 2023 14:40:00 -0700
+In-Reply-To: <20230423091249.2591136-1-mh@glandium.org> (Mike Hommey's message
+        of "Sun, 23 Apr 2023 18:12:49 +0900")
+Message-ID: <xmqqo7nd9cy7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-i o wrote:
-> I suggest adding `--soft` and `--mixed` options to `git checkout`, that act
-> similarly to the corresponding options of `git reset`, i.e. `git checkout
-> --soft <tree-ish>` should move the HEAD to <tree-ish> without affecting the
-> working tree or index, and `git checkout --mixed <tree-ish>` should move the
-> HEAD to <tree-ish> and update the index to match it without changing the
-> working tree.
+Mike Hommey <mh@glandium.org> writes:
 
-In my opinion it's pretty clear `--soft` and `--mixed` were terrible names and
-I suggested in the past to rename them to `--no-stage` and `--stage` [1]. We
-should not repeat those mistakes with `git checkout`.
+> The version reported by e.g. x86_64-w64-mingw32-gcc on Debian bullseye
+> looks like:
+>   gcc version 10-win32 20210110 (GCC)
+>
+> This ends up with detect-compiler failing with:
+>   ./detect-compiler: 30: test: Illegal number: 10-win32
+>
+> This change removes the -win32 part by excluding the dash and everything
+> that follows from the version.
 
-If the new options were:
+This may help the "test "$version" -gt 0" check and $((version - 1))
+to pass.  It is not quite clear if/why it gives sensible results,
+though.
 
- * git checkout --no-stage
- * git checkout --no-work-tree
+> ---
+>  detect-compiler | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think it would be pretty clear what is intended without explanation (as
-opposed to `--soft` and `--mixed`).
+Missing sign-off?
 
-> The difference between this and `git reset` of course would be that, unlike
-> the latter, this doesn't 'drag' the current branch along with HEAD; instead
-> the usual behaviour would apply depending on what exactly <tree-ish> is, i.e.
-> `git checkout [--soft|--mixed] <commit>` would detach HEAD and point it to
-> <commit>,
+> diff --git a/detect-compiler b/detect-compiler
+> index 50087f5670..d961df5fb5 100755
+> --- a/detect-compiler
+> +++ b/detect-compiler
+> @@ -17,7 +17,7 @@ get_family() {
+>  }
+>  
+>  get_version() {
+> -	get_version_line | sed 's/^.* version \([0-9][^ ]*\).*/\1/'
+> +	get_version_line | sed 's/^.* version \([0-9][^ -]*\).*/\1/'
 
-In my mind the whole point of `git checkout` is to update the work-tree, if the
-command is not going to do that, then I don't think it should be `git
-checkout`.
+The original is bad enough in that it says "We take anything that
+begins with a digit up to (but not including) the first SP, and then
+it assumes that it is getting an integer.  This one is not all that
+better in that it can still accept a garbage like "version 01xx-foo"
+and "test "$version" -gt 0" would fail the same way, no?
 
-In theory all these three would do the same, correct?
+If we are sure that "version N-win32" is always equivalent to
+"version N" for the purpose of print_flags() helper function, it may
+be more prudent to allow the known-good ones, with something like
 
- * git checkout --no-stage --no-work-tree <commit>
- * git reset --no-stage --detach <commit>
- * git update-ref --no-deref HEAD <commit>
+	# A string that begins with a digit up to the next SP
+	ver=$(get_version_line | sed 's/^.* version \([0-9][^ ]*\).*/\1/')
 
-My preference would be `git reset --no-stage --detach <commit>`.
+	# There are known -variant suffixes that do not affect the
+	# meaning of the main version number.  Strip them.
+	ver=${ver%-win32}
+	ver=${ver%-win64}
+	...
+	echo "$ver"
 
-> whereas `git checkout [--soft|--mixed] <branch>` would move HEAD
-> and switch from the current branch to <branch>.
+while keeping the ones that are not "known-to-be-good" as-is.
 
-If we are going to switch the current branch, then `git switch` makes more
-sense:
+That way, non-numeric numbers that we do not know about how to
+interpret will continue to stop detect-compiler from giving a bogus
+answer, which would be better than silently accepting anything with
+dash and treat as if the string after the number does not make any
+difference.
 
- * git switch --no-stage <branch>
+One thing I am worried about is "10-prerelease" that is not quite
+"10" yet to be treated just like "10" and causing problems.
 
-Then, for the case of a commit we could do:
+Thanks.
 
- * git switch --no-stage --detach <commit>
 
-The advantage of limiting ourselves to `git switch` is that it doesn't have the
-historical of `git checkout`/`git reset`.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20130829180129.GA4880@nysa/
-
--- 
-Felipe Contreras
