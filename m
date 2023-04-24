@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECDF8C7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 23:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2D94C77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 23:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232452AbjDXXAX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 19:00:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60470 "EHLO
+        id S232982AbjDXXAm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 19:00:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbjDXXAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 19:00:22 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 577D46E82
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 16:00:21 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-b8f5276baa3so3763646276.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 16:00:21 -0700 (PDT)
+        with ESMTP id S232791AbjDXXAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 19:00:39 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183A07AA3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 16:00:39 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-b99f3aee8e0so106101276.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 16:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682377220; x=1684969220;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jys5HQ+1Pz9I+/kFVk1eQcys4JvJOt4FyzUqSyqQ7cg=;
-        b=mn42NZpZebpZFxjmRQ5anwkojBUYbR15KYN0vDwlVvHJ2P4P/MPXfq4Fx8xkOZdOfu
-         Igi/18ObbY5remdGhFymaoyW0vqiBNucqsdLA0taGYJVQpbFiefs/Ka14T/TJ0zgxkqE
-         e52O2KjLJF0SePxEtMw//C8nxJpI44mhmj8vbaVFpSLp1PQ7feSrxp0qBI4RfpDptS1A
-         2DhP8Pmiypq0PF54s9Cfq0QnkeyCfXZHh9zaz5vlzvLHJ5DdaCR9XFt4XzW5GV7FPBZX
-         brapHk9oMH9XuyRPChjEWM8a+A8brKXSjSiC5PJwo95mKBQGsGrVvmBXYB04scxVlq2u
-         3SBg==
+        d=google.com; s=20221208; t=1682377238; x=1684969238;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=q9yFm+1f/0VtY9zks5IXJF5l0i0jl65vttIzaeNj1N0=;
+        b=ItYgl8watto7Eo0AK+6UTwBYkh3/NBpMOeWftF9UkVulYY46ELE92KiRtjAjeEaA38
+         7x4Ky4Z8v18DUGzSuMEArpVfdcAxHrGQRcNDSEm8e919FryHdrYN4V7+MGJs9J6e3Agt
+         mAcIFToFCNWLmTfSABdf9fLLxmuTVl/kZ+zmFmAOq9vnhKO4S1dxVx0qVvwKSefI1X0h
+         xaD5nJnyHon8N64HlxXKBpnZDKU8+GkMt28XiZu9MB6KvUJlfAsNIriFbcrngMI1wIJH
+         076cKp8NvqEuFDfQn/2WLUmOAkoms6IYI8V2v6bSTI0LdoNzm4xYBzb34IEieUsWZ3p+
+         FMOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682377220; x=1684969220;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jys5HQ+1Pz9I+/kFVk1eQcys4JvJOt4FyzUqSyqQ7cg=;
-        b=FU5b/A6GXUG6m6KYOIidT//YcdYcNucmsB0ADv/S07991usoW+TSjkTAak8OX4QfMd
-         sozcihOfnyL3nxmD7kI9FGlpodJ45YIFu7EzRvn65UpvFpS11M83s69CiESy9p7lWFuL
-         gpfIzeeFOvQyzB34e1ddHNpn3DQ95PcMy2V1KMagkHustHjzcAhbCOVtMmFKbEs28Khm
-         OR95O4O/Qo1If8R0lBArWfp9TXkAGuPwv4bZFGFlutaPBlZP8Bi4Dnat1fLAjpCT6JN/
-         xvCOnubfeJmtcqyMY3SvX7cxwLDMeEgO367/YlVlg2LGJfQ8bgKET3NyCEszYJnkxllW
-         QEfA==
-X-Gm-Message-State: AAQBX9c8jJgWNGNpMsgseNrTMwnBeK+F3MvuK1S+OhMQ+72X20WIxN0S
-        2pifPkehLm7FEg78pKO9gukHvQ==
-X-Google-Smtp-Source: AKy350ZjS65B9KwvM1ooL3gRDu9JyLnEyUpNVhdzydHXpTQWigXeh480jEnDppvE6SC2uy7fNlXIcw==
-X-Received: by 2002:a0d:d541:0:b0:54f:cbaf:36d with SMTP id x62-20020a0dd541000000b0054fcbaf036dmr8187503ywd.35.1682377220528;
-        Mon, 24 Apr 2023 16:00:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r6-20020a0de806000000b0054c055b8ffcsm3226582ywe.41.2023.04.24.16.00.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 16:00:20 -0700 (PDT)
-Date:   Mon, 24 Apr 2023 19:00:19 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhostetler@github.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v3 6/6] banned.h: mark `strtok()` and `strtok_r()` as
- banned
-Message-ID: <ZEcKAzwtOUKF14nV@nand.local>
-References: <cover.1681428696.git.me@ttaylorr.com>
- <cover.1682374789.git.me@ttaylorr.com>
- <da896aa358eab65f2629f85189c5be4ad9cec635.1682374789.git.me@ttaylorr.com>
- <CAPx1GvdHWBdA8XZu8ZHf3PO3QC5qVpb9UdNMG9Xegyk_9ZtHwg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPx1GvdHWBdA8XZu8ZHf3PO3QC5qVpb9UdNMG9Xegyk_9ZtHwg@mail.gmail.com>
+        d=1e100.net; s=20221208; t=1682377238; x=1684969238;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=q9yFm+1f/0VtY9zks5IXJF5l0i0jl65vttIzaeNj1N0=;
+        b=eFYFRiblkdtrhctkMP2ZHhYXmCwNlMlMlmL4emNdJAMPJTlXlbTOtAOccjugI+9UkS
+         qKYw0P6SYBykPeuJAlDCGwWXKazgfQN1kXkfjj3LCZQb67byIAZsZEk3gxKE/50PZrB+
+         ZEFyOl/KHHbXnyZ0Ihl4p6aPadFtOL5mm6J4JxKhNH0CkNn3LzLn+pswqt1Mb177OM+g
+         1NRRDC7Ey0sfTKIogxtp/J3Em3EyczHUQxyEIx0tMKesLEYE+ZbQ4uQQ+q8j7IuJ1o41
+         A9Hqq86GP0Fki2GlBdLS0YSJpw23Lnu7tnpJ2SD3cv0PkOpxPBDG51AFuVBGrsE/Xh4h
+         npZw==
+X-Gm-Message-State: AAQBX9c/C35f+LiZVKgLnu7UvBD8TZK/jiIgEnDPdqe2lHo4YNQ7QiuY
+        JYvrqOJxz8leD6OqGnBzDYocqFhqDOTzTtNslcPZ5jDHHxp4OoiOQIHN9E6JK0UIKpma1yg52Y2
+        BCTU9bUcdZ9/orW85eHrvfnLgfmQ/HpxYZzhQYr3J8xm/jV9ogvmrHYNhX+/nz5U=
+X-Google-Smtp-Source: AKy350ZC9/T4h9R+00lyD+zRVblyhISeFYXPgcbB8AhpJDtW97VHEKoC2XsS0bqFrBk2PDZP69Ed3jwcrLkuUg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a25:26c7:0:b0:b92:40f8:a46f with SMTP id
+ m190-20020a2526c7000000b00b9240f8a46fmr7943700ybm.2.1682377238343; Mon, 24
+ Apr 2023 16:00:38 -0700 (PDT)
+Date:   Mon, 24 Apr 2023 16:00:36 -0700
+Mime-Version: 1.0
+Message-ID: <kl6lv8hk997v.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Join us for Review Club
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 03:25:55PM -0700, Chris Torek wrote:
-> I eyeballed the whole thing (not the same as real tests of course)
-> and it looks good, but there's one typo (missing-word-o) here of note:
->
-> On Mon, Apr 24, 2023 at 3:20 PM Taylor Blau <me@ttaylorr.com> wrote:
-> ...
-> > But there are no instances of this in Git's tree which are more
-> > well-suited to `strtok_r()` than the friendlier
-> > `string_list_in_place()`, so ban `strtok_r()`, too.
-> >
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
->
-> Missing `split_`. Probably not worth a re-roll...
+Hi everyone!
 
-Oops, thanks for noticing.
+Review Club is happening this Wednesday, 24 Apr, 09:30 Pacific time
+(UTC-8). This is the same time of day as the last session, but on
+Wednesday.
 
-Thanks,
-Taylor
+You can find more info at [1] and on gitcal [2]. We run a session every
+other week, but we're actively experimenting with how to make this
+friendlier to other timezones so the gitcal timings may not always be
+accurate. We'd welcome feedback on how we can make this work better for
+folks :)
+
+This week, we'll be discussing Patrick Steinhardt's "machine parseable
+git fetch" topic [3]. Let me know if you're interested and would like to
+join (off-list is fine), and I'll send you an invite.
+
+See you there!
+
+[1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
+[2] http://tinyurl.com/gitcal
+[3] https://lore.kernel.org/git/cover.1681906948.git.ps@pks.im/
