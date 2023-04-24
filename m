@@ -2,64 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CA41C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 13:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E3D8C77B73
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 13:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232398AbjDXN3E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 09:29:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
+        id S231808AbjDXNnn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 09:43:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232342AbjDXN2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 09:28:49 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0716C6E9F
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 06:28:36 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id 5614622812f47-38e4c98e5ceso1473003b6e.1
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 06:28:35 -0700 (PDT)
+        with ESMTP id S232683AbjDXNni (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 09:43:38 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AB50974F
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 06:43:12 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-187af4a5453so1519458fac.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 06:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682342915; x=1684934915;
+        d=gmail.com; s=20221208; t=1682343790; x=1684935790;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0IU9AJXitEaAM9kWwLch7ThcV0nfOcK5eNy8vBCzDRg=;
-        b=mhc4jW6trf6qpjTCyn5wYEjazHzy4/f319UVRMxqGTKRL1qLJZbZB+D8cRbLt/eENQ
-         lfsNBowvg5WHrFQpOTjjxPp4Tn3hOwyLFUnzNYK0/HpTfNKN3nhKQthlhAWXibK3DEJc
-         Bh4aA6AbayRjpCPJZBQ5hGQOefhp3a+1pzOMbanyUdWQxnyMr1eXmjgXBzoMCHewxIW3
-         ZE7rHor73xgJ00xhlbMTTr66+VdmCGDRAT/4U1uFTL/1fjv9RL6esUeIFm+wQTq7d3YC
-         3SxTBT2iqht54KWwhCrHW8UreHFEseuPPdlKIJpJoP051mIF0mbFFb4B2SwrhT/oVneE
-         Isww==
+        bh=HFu1FdTAyXGnsGTjGEJXev0CbkAO1It/7/9omxu2dgw=;
+        b=diZS0/GM5pm1fz/q/GVeL5IJ7YjprGiy75wzQAlHLZZo+MOB+95HQwOCkZAnyCa8w0
+         ufZf9W6XMgeD7KRhzTUHhb2O7IzFcb0d+j2B0axcPDaePiO+E7vHoVg0ly+FiNhKWVXW
+         P/0r1OIikko2ijGa32oORonNdB6M/D+Egq5dsfupxIrf+PR6mqDM3YUFuKAIRawb/YGT
+         ERXi/CRQtTA9C1RhDSyvocVc9QlGffNAzCt48mGBbYXbDVgvrVYFGjkVr8kKhdmtj/te
+         IwFhAv+JIAYR/0s3l/HjvQGn6HqMdI6Sg5Ldbh5Vh+yZdthas/Re/T7OJXvSmp9MO5ak
+         wjMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682342915; x=1684934915;
+        d=1e100.net; s=20221208; t=1682343790; x=1684935790;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=0IU9AJXitEaAM9kWwLch7ThcV0nfOcK5eNy8vBCzDRg=;
-        b=lFMPE3rnZTcpC3wJdpbqiICF8KHQWzv2jfH1qtAnVPqk4ArQMq9cC5JC3Fo+pZ+ew+
-         BPcZhkjEUzfByS6q3+fvu1OjrQvM+KLagdYQmavJmDD2QGKCDUmJWVe4YB5yh5Nprhir
-         jeDNpTM52mmjuuVv7JzqzmGSyiyamsVb6NwKfCJ/Nt9T+34OfT3038cYeoMYv5O++jbw
-         mczjTzna5I/DwWQQgFLQVM4ATWvzQYnHFMyd6VkGpBl2jQlAqP3x3OQtN6WZG8Qxl7ny
-         tBxSyySFzXoeJE8fYvDcEqEQWAw1JAFtz0SSlF/CD+yU7qmSLte8G4/s0RwTWFgr2s44
-         gyJw==
-X-Gm-Message-State: AAQBX9et3Ds+SkwmpL0oA3wnBOr0rEYYUM00WgAshEpf2qQK0JChoNis
-        MbtEqeRyW9rKBtSIHk3aBAs=
-X-Google-Smtp-Source: AKy350ZDEQiLUNRIeWEHow1T7bM9eYn4jnLshNSc0xACTho5lGkh/aXShG2qvVRDZuYFyo2j79qgbg==
-X-Received: by 2002:aca:2816:0:b0:38e:f0c4:2106 with SMTP id 22-20020aca2816000000b0038ef0c42106mr651488oix.5.1682342915186;
-        Mon, 24 Apr 2023 06:28:35 -0700 (PDT)
+        bh=HFu1FdTAyXGnsGTjGEJXev0CbkAO1It/7/9omxu2dgw=;
+        b=SgdX2wXXFPaWW73CveKvzaT2xn6cGFh+mbeyH34cPXjQQx1T3tNqhRwjq+Vpd9LgAw
+         3d8jTQ3dj1LV1LGk0Mszdah2FcCPzS/to+gFBCAjCqm/kkyAG2Da+9YB1MWSAQQnA0E3
+         RvUDuGWhT3LXLx2CFTQY4EzeUFk3nRitRl+KatB8BXOreUWj0zbT673shC94Cn1mQ6w4
+         Svlq/vb/gWh6+8zevsVVaRzXQW9F2f3c+oWTZr/julwM2fT7MNwvrvmttbbi71/PA1Or
+         n3wOIThmpSMiVYTmjFVaCc4VaQmE5nQz7eqJZtQDwPxmTCU7KUIHG/hDH2ZXM1N7PhIw
+         3hnA==
+X-Gm-Message-State: AAQBX9dAOmY/+yHEnXmGJhcrwXHfFKq5Gmtm96ERduajIjgvkxH2lDrL
+        JKCX54qZ+g+toWlEQp2Iyy8=
+X-Google-Smtp-Source: AKy350buN3pVFh7Sg9d1EDVgTxZ2vsneroJqjsIpkJ7ZMwKSdaLhfBt8FTAYcaE7CNEuvfaZoF4yug==
+X-Received: by 2002:a05:6870:610d:b0:187:8260:2f8 with SMTP id s13-20020a056870610d00b00187826002f8mr10679351oae.6.1682343790386;
+        Mon, 24 Apr 2023 06:43:10 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id ay13-20020a056808300d00b0038e086c764dsm4424771oib.43.2023.04.24.06.28.34
+        by smtp.gmail.com with ESMTPSA id k3-20020a4ab083000000b0053479edbc17sm4792034oon.33.2023.04.24.06.43.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 06:28:34 -0700 (PDT)
-Date:   Mon, 24 Apr 2023 07:28:33 -0600
+        Mon, 24 Apr 2023 06:43:09 -0700 (PDT)
+Date:   Mon, 24 Apr 2023 07:43:09 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Message-ID: <644684018a766_aba29424@chronos.notmuch>
-In-Reply-To: <xmqq8ren8xz1.fsf@gitster.g>
-References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
- <20230418070048.2209469-2-felipe.contreras@gmail.com>
- <xmqq8ren8xz1.fsf@gitster.g>
-Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
+        Koichi Murase <myoga.murase@gmail.com>
+Cc:     git@vger.kernel.org, Justin Donnelly <justinrdonnelly@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>,
+        Edwin Kofler <edwin@kofler.dev>
+Message-ID: <6446876d2e22b_aba294a5@chronos.notmuch>
+In-Reply-To: <xmqqh6ta3485.fsf@gitster.g>
+References: <20230420074616.1642742-1-myoga.murase@gmail.com>
+ <xmqqh6ta3485.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] completion: quote arguments of test and [
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -69,67 +71,35 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> Koichi Murase <myoga.murase@gmail.com> writes:
 > 
-> > The callouts are directly tied to the listing above, remove spaces to
-> > make it clear they are one and the same.
-> >
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  Documentation/git-checkout.txt | 4 ----
-> >  1 file changed, 4 deletions(-)
+> > The raw command substitutions $v in the arguments of the test command
+> > and the [ command are subject to word splitting and pathname
+> > expansions. Even when it is ensured that the variable is not empty and
+> > does not contain whitespaces and glob characters, it can fail when IFS
+> > is set to non-trivial values containing letters and digits.
 > 
-> I tried to format git-checkout.1 and git-checkout.html from HEAD and
-> HEAD^ after applying this step, with asciidoc and asciidoctor, and
-> did not see any difference that came from this patch.  Am I correct
-> to understand that this patch is done purely for the benefit of
-> human readers, and not for formatting machinery?
+> The above sounded good before I looked at the patch, and it still is
+> good in theory, but it start to look mostly academic especially with
+> enclosing $# inside a pair of double-quotes, and the variable would
+> have only digits.  The same for $i and $j that appear in the loop
+> control "for ((i=0, j=0; ...)); do".  The story is pretty much the
+> same for local variables we set outselves to signal our findings,
+> like $pcmode that is only set to either 'yes' or 'no'.
 
-No, it's for the formatting machinery.
+I do have the same opinion.
 
-The fact that both asciidoc and asciidoctor happen to understand our quircky
-formatting in this particualr situation doesn't mean it isn't quirky.
+Although the result seems more proper, I fail to see the actual value of doing
+all these changes everywhere.
 
-In this particular case the parsers do understand what we are trying to do,
-because we just just pepper list continuations (`+`) everywhere and it happens
-to work.
+On the other hand I do see the very real harm that they would break the
+git-completion branch everywhere. Rebasing those 50-so patches would not be
+very pleasant.
 
-This works:
+> In other words, this patch looks way too noisy to be reviewed to
+> discover its real worth.
 
-  1. item
-  +
-  ----
-  line 1 <1>
-  ----
-  +
-  <1> callout 1
-
-But if we used an open block instead (which is more propper), this does not:
-
-  1. item
-  +
-  --
-  ----
-  line 1 <1>
-  ----
-  +
-  <1> callout 1
-  --
-
-This discrepancy confused Jeff in [1].
-
-[1] https://lore.kernel.org/git/20230418061713.GA169940@coredump.intra.peff.net/
-
-> It may be subjective for those who read the source if it is easier
-> to read with or without inter-paragraph spaces, but in any case, the
-> resulting source material now look the same way between two hunks,
-> and consistency is good.
-
-That is an added benefit.
-
-It's simply a good practice to follow the format asciidoctor documentation:
-which doesn't contain spaces, doesn't require adding list continations, it's
-easier to interpret by the parsers, and works inside open blocks.
+Agreed.
 
 -- 
 Felipe Contreras
