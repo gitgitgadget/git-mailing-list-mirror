@@ -2,99 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 494C2C7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 14:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E02EBC77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 14:44:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231245AbjDXOm1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 10:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60618 "EHLO
+        id S231738AbjDXOou (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 10:44:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjDXOm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 10:42:26 -0400
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [IPv6:2a0c:5a00:149::25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F079E30ED
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 07:42:18 -0700 (PDT)
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-        by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <admin@game-point.net>)
-        id 1pqxOR-00DwGj-AR; Mon, 24 Apr 2023 16:42:15 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=game-point.net; s=selector2; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject;
-        bh=FIXBOowMvaczQkMs19xqUGl8ZpFTfrcD+vgNT0effbg=; b=Q9RUklGLuqvfz5gs7IjIKtBZuo
-        lNGt2/VMKz/mLCJQgzNoudHmTkFue88SIuYX0htsGFYYXLBetOmzmStEEoyG835puCppZ70kVQpZr
-        Hl+fAJMCzimqYhXP3KV5BkRQZ7W/hBgYfueLLNw2RnDcd/tbw6G8bP4AAw/wiN63ki387ZUBfXtqD
-        6MnO1kwmZtdshBATwATuZfwyh6h9NdYEU5KegOLg7Syb5hqB5bI9NLVD19TvoGUjzlgx3Ja/G3O+W
-        Y+R8BRtXkJLCepwptUIqOeEKSMVJBnB6Sum8GagRNiwVfa3twzq4MiWivayNaMDq2gzEmGrmjGmHV
-        65Pm2D0g==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <admin@game-point.net>)
-        id 1pqxOQ-0008OM-Up; Mon, 24 Apr 2023 16:42:15 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (956903)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1pqxOI-0008Rp-J7; Mon, 24 Apr 2023 16:42:06 +0200
-Subject: Re: Proposal: tell git a file has been renamed
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     Chris Torek <chris.torek@gmail.com>, git@vger.kernel.org
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
- <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com>
- <74a361fd-4ee6-f362-8d49-92417f0e2dac@game-point.net>
- <CA+JQ7M-1YvZFzE_CtBQa5_eEXa1sPqK4xsTxdwpAQo_YcmW+-A@mail.gmail.com>
- <91dab444-5f65-31ae-c0c6-0b84313bcd94@game-point.net>
- <CA+JQ7M_Lv1acopOpPoHxp7mPwWMFj-7wwwDPpV7KUbwFsjpoxA@mail.gmail.com>
-From:   Jeremy Morton <admin@game-point.net>
-Message-ID: <b157077e-a336-e550-2666-9880130eb5aa@game-point.net>
-Date:   Mon, 24 Apr 2023 15:42:04 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101
- Firefox/60.0 SeaMonkey/2.53.1
+        with ESMTP id S229522AbjDXOom (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 10:44:42 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B0259F5
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 07:44:41 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-b95fb433f59so8083604276.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 07:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1682347481; x=1684939481;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gamvEDFKIBs9u8gZ3tdfcRuxfN3o5CwF5adg3qGZxfk=;
+        b=GfegTgyLsDy7RVQV4lFDvVFZxXJEyiWE/PYjMX/IK3QZZWeMz0ColOMDrwqQ9KAow5
+         +lkbkfkNns8LC2KlS896nRk7V3C8yAl1b6/vg/c4cSuPiqw3Hv03aWrUGXcdbLMLbtGd
+         oWl6dnerU1R4d7BiffrXYmkBf3V3DDxqS73jm8hRaIsyiTl1V4zopX/sUoAbragkhb5N
+         IyPklTslWlkeP3azKTrYmhjgDYSAysWFrgXWL2MkK8jDHkCq1R2FXyWvskuo0S5yN92h
+         gyWiXbrKf2AfrYSZzJh/EkSBoFji4eFF1/IVe5CJNxOQUkIJgKJqhZCV8n0CK5L4VY3u
+         gdwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682347481; x=1684939481;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gamvEDFKIBs9u8gZ3tdfcRuxfN3o5CwF5adg3qGZxfk=;
+        b=DwHQb1iVof2yRv9TDV8zSy7kQMKk8E9qvB/uTG4uYCetmclRDe+Y14/L18zVAYbIc0
+         0aJylSfCvs8xkb5DPK6rDLxZangXI49w2bMsi+I3IW1IG2Ok/R7aO2ueDFd3V5nrdkfj
+         fR78lwY/clMpQGDZg2DOeGO0QZwUd+IR3SEfjjTsOBgfZbed9tY5s+skqhmlQf1xOE38
+         YwJisbTAFtrb+8EaLqtahZwG/avPkCXZaAAWTnR0tDUlAfuVEyi5ajyOa4ws1uCqRtv9
+         2taCqldqOI2FdiK3TjpfR/N2BuuYdBnyH4AKyVivjvnt8G8/Dcq4MxKoaE8JUUGdqJQQ
+         DsUA==
+X-Gm-Message-State: AAQBX9dPUKdnyK0RvL1K/GAmR7uIh8JHb9FWFyxH/vAxc03svjqGG+gX
+        kB5AbdqUf1Jli1HcHJUTWeNO
+X-Google-Smtp-Source: AKy350Zii7s7bclLExXiConESF+LsNCs+ebxQJZIi+Add9H7NIa8ijfKmeR1Kn0dTdcBWYODX3vGBA==
+X-Received: by 2002:a25:246:0:b0:a09:3c5a:c0d7 with SMTP id 67-20020a250246000000b00a093c5ac0d7mr9952376ybc.61.1682347480820;
+        Mon, 24 Apr 2023 07:44:40 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:4c:5bca:4632:1d72? ([2600:1700:e72:80a0:4c:5bca:4632:1d72])
+        by smtp.gmail.com with ESMTPSA id 190-20020a250ac7000000b00b7767ca749esm2921970ybk.59.2023.04.24.07.44.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Apr 2023 07:44:40 -0700 (PDT)
+Message-ID: <2bcaeba9-20bc-1ca8-849b-ac54342c71e3@github.com>
+Date:   Mon, 24 Apr 2023 10:44:38 -0400
 MIME-Version: 1.0
-In-Reply-To: <CA+JQ7M_Lv1acopOpPoHxp7mPwWMFj-7wwwDPpV7KUbwFsjpoxA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v1] negotiator/default.c: avoid stack overflow
+To:     Han Xin <hanxin.hx@bytedance.com>, git@vger.kernel.org
+Cc:     xingxin.xx@bytedance.com, jonathantanmy@google.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <20230424022318.80469-1-hanxin.hx@bytedance.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20230424022318.80469-1-hanxin.hx@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yep, and that suggestion is rather arduous compared to something like:
+On 4/23/2023 10:23 PM, Han Xin wrote:
+> mark_common() in negotiator/default.c may overflow the stack due to
+> recursive function calls. Avoid this by instead recursing using a
+> heap-allocated data structure.
 
-git markasrenamed file2 file1
-git commit
+I'm really happy to see that since you could replace the if statement
+with a while statement, most of the existing logic could stay without
+a bunch of whitespace changes.
+ 
+> This is the same case as [1].
+> 
+> 1. https://lore.kernel.org/git/20221025232934.1504445-1-jonathantanmy@google.com/
 
--- 
-Best regards,
-Jeremy Morton (Jez)
+Thanks for the link, though this could be replaced with
 
-On 24/04/2023 15:00, Erik Cervin Edin wrote:
-> On Mon, Apr 24, 2023 at 1:17 PM Jeremy Morton <admin@game-point.net> wrote:
->>
->> There's no getting away from the fact that this adds a lot of (IMHO
->> unnecessary) work if you've already done a rename that git can't
->> detect and have both that and a bunch of other changes sitting in the
->> index.  What feels like it would be a natural resolution in these
->> cases, though, is a "no, this remove/add is actually a rename" command.
-> 
-> It can definitely be both arduous and non-obvious how to deal with this.
-> 
-> The problem is that such a command cannot exist atm. because renames
-> don't exist, they are only interpreted. So the only way to achieve
-> this is to revert enough of the contents staged to the index such that
-> the rename is detected. The only way to do that in a foolproof manner
-> is reverting all the staged changes except the path so that the moved
-> file in the index is identical to the old file in HEAD.
-> 
-> If I understand you correctly, your point here is that it's
-> non-trivial to go from a state where a file has been renamed, with
-> enough changes staged into the index that the rename hasn't been
-> detected, to a state where the rename is recorded in the index?
-> 
-> The most straightforward method I can think of to restore the staged
-> changes, do the rename without changes, commit and then go about the
-> rest
-> eg:
->    git restore --staged file2
->    mv file2 file1
->    git mv file1 file2
->    git commit -m rename
-> 
+  4654134976f (negotiator/skipping: avoid stack overflow, 2022-10-25)
+
+now that the change exists in the commit history.
+
+One thing that is missing from that change is a test, and such a test
+could be generalized to apply to all negotiators. This could maybe
+help any potential future negotiator avoid this bug. Did you think
+about what such a test could look like? Perhaps test_commit_bulk
+could help, but we'd probably need to create so many commits that the
+test would need to be marked as expensive. That's probably a major
+reason to not include a test and rely on avoiding recursion when
+possible.
+
+> -	if (commit != NULL && !(commit->object.flags & COMMON)) {
+> +	struct prio_queue queue = { NULL };
+> +
+> +	prio_queue_put(&queue, commit);
+
+Should we check the conditions what were removed? The COMMON flag
+is likely only useful for the recursion, but prio_queue_put() is
+not careful about NULL values. However, no callers should be
+providing NULL commits here.
+
+Couldn't hurt to add
+	
+	if (!commit)
+		return;
+
+before the prio_queue_put().
+
+> +	while ((commit = prio_queue_get(&queue))) {
+>  		struct object *o = (struct object *)commit;
+>  
+> +		if (commit == NULL || (commit->object.flags & COMMON))
+> +			continue;
+
+The NULL condition is definitely unnecessary here as it is checked
+by the while condition. The "& COMMON" is helpful if the commit
+gained the COMMON flag after being inserted into the queue.
+
+>  		if (!ancestors_only)
+>  			o->flags |= COMMON;
+>  
+
+
+> @@ -70,15 +76,17 @@ static void mark_common(struct negotiation_state *ns, struct commit *commit,
+>  				ns->non_common_revs--;
+>  			if (!o->parsed && !dont_parse)
+>  				if (repo_parse_commit(the_repository, commit))
+> -					return;
+> +					continue;
+>  
+> +			ancestors_only = 0;
+
+This caught me off guard, but this flag essentially says "should
+I mark the first commit as common or not?". It would probably be
+clearer if this was done before the loop, and then was ignored
+within the loop, setting the flag on each parent in this loop:
+
+>  			for (parents = commit->parents;
+>  					parents;
+>  					parents = parents->next)
+> -				mark_common(ns, parents->item, 0,
+> -					    dont_parse);
+> +				prio_queue_put(&queue, parents->item);
+
+It would have an extra benefit: your walk may duplicate objects in the
+priority queue (there is no duplicate protection in prio_queue_put).
+But, we could use
+
+	if (!(parents->item->object.flags & COMMON)) {
+		parents->item->object.flags |= COMMON;
+		prio_queue_put(&queue, parents->item);
+	}
+
+as duplicate protection _and_ a clearer way to demonstrate what
+ancestors_only is doing. Without this protection, it is possible
+to have exponential growth in the priority queue using simple
+merge commits.
+
+You'd need this at the beginning:
+
+	if (!commit)
+		return;
+
+	prio_queue_put(&queue, commit);
+	if (!ancestors_only)
+		commit->object.flags |= COMMON;
+> diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+> index c7d6ab39bc..3d262b3533 100644
+> --- a/negotiator/skipping.c
+> +++ b/negotiator/skipping.c
+> @@ -108,6 +108,8 @@ static void mark_common(struct data *data, struct commit *seen_commit)
+>  				prio_queue_put(&queue, p->item);
+>  		}
+>  	}
+> +
+> +	clear_prio_queue(&queue);
+
+This memory leak cleanup in the skipping negotiator is good to
+do, but should be split into its own change.
+
+In addition, the mark_common() method there seems to have a few
+problems:
+
+ 1. It does not do duplicate protection before prio_queue_put().
+    (The COMMON bit would work here, too.)
+ 2. When it translated from recursive to iterative it kept "return"
+    statements that should probably be "continue" statements.
+ 3. It does not attempt to parse commits, and instead returns
+    immediately when finding an unparsed commit. This is something
+    that it did in its original version, so maybe it is by design,
+    but it doesn't match the doc comment for the method.
+
+Consider fixing these issues while you are here.
+
+Thanks,
+-Stolee
