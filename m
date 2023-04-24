@@ -2,64 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B7ECC7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB76C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231544AbjDXQjM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 12:39:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53864 "EHLO
+        id S231953AbjDXQjn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 12:39:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbjDXQjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 12:39:10 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A3410DC
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:39:09 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-63b5c4c769aso6330796b3a.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:39:09 -0700 (PDT)
+        with ESMTP id S231928AbjDXQjm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 12:39:42 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6933526E
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:39:41 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1a66911f5faso39059915ad.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682354349; x=1684946349;
+        d=gmail.com; s=20221208; t=1682354381; x=1684946381;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yryzfWcmYqyOZKQ1BelbZ8gLhp6ulFfC70eTWJ1xALc=;
-        b=Mex14OPlzgarcDgiRvBeyBggvx/gVixZJ9nuumsRVpXZXJrDtvmHCOT/CBxdlsKuS/
-         sRzO8Y1Q4tu6xlzsO27LE8xJjdhFoSI/aIQaCTr3GV+5AX3ryAL3v1Ht/9F6YJB0Lrnu
-         BjPHHOlUEqNLXP57Nz5cEhRmulmhx3Dpx7/E3XRgWdTgQ33gh0+Ceo8zeDZKStEl2Ppi
-         UxWvxuECSVj93ioYJwtEBpNzvK8V3brt5li9Jy4MOdqTjLXijnOcl2CMGZ8VXnk0Ueph
-         vvrBggfyfZIFYE6HhsbFq1AOUC5r6rKLVQtbqiKEKWJGiC8fxW1wg45VLjxhB1DguQqF
-         kbDw==
+        bh=NPqTvKVhUkewf1C/LvsKFTRoyyX/WhOSGOXT4QYotWM=;
+        b=enzpdAey807RknWXmWL4JhwwiQh4VBgPcbBMrQ7QBk5cSIMpehzyppp/IYYbbZZICA
+         Q5zTZVINRftdEU6D/8Z/I7ut6/4XkmpUE6AoMkdAAFhOpJTfs1wYIIHegv1ykEsTeOXZ
+         F54mmXmwWLOLZJqNpgsaBIXf3iWqh//PEDs/qQKTCeakWYsq4FRtJ7q1xjINJAkrpJ20
+         p119dUhVoYCw1EiqrNF5Trzz3fhzBDcY5njmhoOM+LKy0RVyBpVNRnBlFAeWfZmVp8tI
+         lzclJBHLZgsUxs6YNqQBV+pKabB8cTNs1DniSBWEy7Y5yDTIJ8agm/1NfaEsAcHgSLb8
+         rOSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682354349; x=1684946349;
+        d=1e100.net; s=20221208; t=1682354381; x=1684946381;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=yryzfWcmYqyOZKQ1BelbZ8gLhp6ulFfC70eTWJ1xALc=;
-        b=YjI1ecmlWbklHhV4yeRhtzXxIKxnDzRvKQF+28UKSN+dEz1CxYG87GRXU7XqwC4IPT
-         dnk2mu3XAuwv1C8nFDedjg/zky/bvmZeucRQzJqn9b0nIWNaBWgHphu1Ds+ZVtyhPVOO
-         fq1fhI0ENVB3kYZjhXkEtJrrbQZWNf02XgXTKOM/m4bCFLjtzLbY096E+ngbpYYJOGk3
-         hJXSbIBwvZSYI6QjXHebN9Kdccv6CTIdu3DnF2QisgfU3WnobwXUi9zgKIw9I5r/Zgb3
-         7M6h6GmuwHes+lNnbezfomK0T5uNDKuCrTsjVp/FUSI8L3KPTEpqVldTl+W7C3U/OGro
-         Kvvw==
-X-Gm-Message-State: AAQBX9exPmh2sebQD9HrVEXjs/r8v/hSnKB2VPQeqKtlbVQl61gNX5kS
-        JNCBbL2MrLwf8OGAtS5IAFA=
-X-Google-Smtp-Source: AKy350YE5qHdhYwX6AixiERHf7qFYFS8ei1zayVKwftL/FvH5YqpusPhQaBS1ls5rQYuVrLmUnLRbw==
-X-Received: by 2002:a17:902:e883:b0:1a6:bb7b:7a68 with SMTP id w3-20020a170902e88300b001a6bb7b7a68mr19475773plg.37.1682354348848;
-        Mon, 24 Apr 2023 09:39:08 -0700 (PDT)
+        bh=NPqTvKVhUkewf1C/LvsKFTRoyyX/WhOSGOXT4QYotWM=;
+        b=Tc8GSFh8a8ESTXx2pSIZRviCzZ5k4FdtboPybWORA43NC3hqqT0/M0CQKUVfUWt5qA
+         AFwJSrXgT0cYsI+O+JaMz2fJmZKmtkvi1akK/yQWLhqTkV9BZ1czGTO/TEXoBXrt/ds5
+         SNfNj+BV1ejXxWuoBSH6nMlPfJlXhAIPlgdngehY9dzo8d0eueOW59frxh2V9/iINEYG
+         MvUVR2pnCeK7rEAVRqkprc7NibWM046oS4DTcT/qbWioXSCXhol8dBPLwirwP4ksaR/V
+         DbegUJpJdeii0QXqKH5NaRNsIKHYQkGLg6Hc8AcfQsvtPrADvFb7n4tbP5fB4btI9KrW
+         Uohw==
+X-Gm-Message-State: AAQBX9cgZtO9xkL/A4vq/MQidjyocRlwTF8hJ23Ke/kxvjQs3wt56hpD
+        vHA/U7yy5s9MepdOGW2upCs=
+X-Google-Smtp-Source: AKy350b9Z/ET1W5cHof60DG63hCuNbYOIYToQquv11uewG6n6a2B0jMrUykjslkynAMUF26i/3EHsg==
+X-Received: by 2002:a17:902:c793:b0:19f:87b5:1873 with SMTP id w19-20020a170902c79300b0019f87b51873mr12646878pla.62.1682354381142;
+        Mon, 24 Apr 2023 09:39:41 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id ot2-20020a17090b3b4200b0023cfdbb6496sm8674953pjb.1.2023.04.24.09.39.08
+        by smtp.gmail.com with ESMTPSA id je4-20020a170903264400b001a217a7a11csm6805062plb.131.2023.04.24.09.39.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 09:39:08 -0700 (PDT)
+        Mon, 24 Apr 2023 09:39:40 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: tb/ban-strtok
-References: <xmqqwn26w5cd.fsf@gitster.g> <ZEHyBbKN5MuxqfQn@nand.local>
-        <20230422112213.GE2969939@coredump.intra.peff.net>
-Date:   Mon, 24 Apr 2023 09:39:08 -0700
-In-Reply-To: <20230422112213.GE2969939@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 22 Apr 2023 07:22:13 -0400")
-Message-ID: <xmqqsfcpfd5f.fsf@gitster.g>
+Cc:     Thomas Bock <bockthom@cs.uni-saarland.de>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] fixing some parse_commit() timestamp corner cases
+References: <7728e059-d58d-cce7-c011-fbc16eb22fb9@cs.uni-saarland.de>
+        <20230415085207.GA656008@coredump.intra.peff.net>
+        <xmqqa5z6q1jl.fsf@gitster.g>
+        <20230418041253.GD60552@coredump.intra.peff.net>
+        <7bbcfbc0-f9da-09ef-9441-5e4b13780841@github.com>
+        <1153e31d-2f89-c9dc-8551-adf4d3822487@cs.uni-saarland.de>
+        <20230422134150.GA3516940@coredump.intra.peff.net>
+Date:   Mon, 24 Apr 2023 09:39:40 -0700
+In-Reply-To: <20230422134150.GA3516940@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 22 Apr 2023 09:41:50 -0400")
+Message-ID: <xmqqo7ndfd4j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,28 +75,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->> I would be curious to get Peff's (cc'd) thoughts on this series, since
->> it was something that he and I were talking about off-list. It was one
->> of those "let me see how hard this would be..." topics, that by the time
->> I finished investigating, I had the series ready to go.
+> On Fri, Apr 21, 2023 at 04:51:03PM +0200, Thomas Bock wrote:
 >
-> I left a few small comments on the series.
+>> Even though the affected commit objects are malformed, it would be very
+>> helpful if this problem could be solved somehow, from a user perspective.
+>> Such malformed objects can potentially occur also in other comparably old
+>> projects, where searching for commits that have been made in a specific time
+>> window in the past could be useful or even necessary in some cases.
 >
-> On the greater question of "should strtok or strtok_r be banned", I
-> don't have too strong a feeling. The hidden global state in strtok() is
-> bad, so probably worth outlawing.
+> Yeah, after sleeping on it for a bit, I think it is worth fixing. I also
+> found another parsing bug in the same function. ;)
 
-I was and still am inclined to say both can be banned.  The primary
-problem I had with the original series was the way the replacement
-was sold (namely, string_list based solution is not universally
-superior but it was sold as if it were, and the sales pitch should
-have been that in our codebase there is no usecase where strtok_r()
-is more suitable than string_list_split and friends).
+Nice.  Thanks.
 
-> I tend to think that strtok_r() is a bit confusing to use. As Chris
-> noted, strsep() is better, but not necessarily as portable. Using
-> ptr/len pairs to parse via strcspn(), etc, seems better still. But that
-> is mostly aesthetics and preference, so I'm OK if we don't outright ban
-> strtok_r().
-
-I am OK if we do ;-)
+>
+> So here's the result.
+>
+>   [1/3]: t4212: avoid putting git on left-hand side of pipe
+>   [2/3]: parse_commit(): parse timestamp from end of line
+>   [3/3]: parse_commit(): handle broken whitespace-only timestamp
+>
+>  commit.c               | 29 +++++++++++++++++++++-------
+>  t/t4212-log-corrupt.sh | 44 ++++++++++++++++++++++++++++++++++++++++--
+>  2 files changed, 64 insertions(+), 9 deletions(-)
+>
+> -Peff
