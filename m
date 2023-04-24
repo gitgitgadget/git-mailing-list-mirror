@@ -2,211 +2,618 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 750C0C7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 22:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97C71C77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 22:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233218AbjDXWJu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 18:09:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60090 "EHLO
+        id S233017AbjDXWUO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 18:20:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232565AbjDXWJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 18:09:48 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEBBC93E6
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 15:09:18 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1a9253d4551so41167785ad.0
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 15:09:18 -0700 (PDT)
+        with ESMTP id S232021AbjDXWUN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 18:20:13 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AFC15FD8
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 15:20:10 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-54fbee69fc4so57116587b3.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 15:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682374158; x=1684966158;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q7K+YPEtNFvbVUjdWawuzHJJvf6LSp2dZLQQ7mGmLwU=;
-        b=NArjIqxM1Rqc9mNg8yL3CQKWL7keOOhUCHaq6DrLyVi84se7+zqU5KhUdjIRfOnu5U
-         HmgCrVE8QkqzuxayXCpH8gQd9/M80JPNFCENV3wInCidGIffud9pqBG4H3FER5e+LRqM
-         +UIPSrBXTOyQzZZTlv2d7j38rJkhctQDmQgJUdAJ9SJYlBv0kxXVTNkEp4OTfMzI3EUs
-         eT/surWMXMFxKAhBoZ8EOzKwYirUeQNJglIxmihYBAyHP/WvZJhSsH9CPDimb+FfMBOJ
-         aL/jWzoCFbUcvB1c1MsBDjsba360iQOZQ6ZOQAe8/tCYUKmF69W5SrzJVf2i66aKAOt2
-         ozRQ==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682374809; x=1684966809;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZxwwfImNnj+9b/j/EhYPibLkg8peISpyYK9RWJQD9wc=;
+        b=KBMi8G4+4OO0bH2OtA/9zKb84FBxm3LMLBFUiLQxiUgQsBjNoNMzMx+7Kuwq8PZL1Y
+         klzGnaOX8y1nxBiVGt3HY8pC/lSLbHBvcuGTMRR7ofqbQPYmI3xGQ9hcNM3u8hYR2w7W
+         j/p2IG+VrK3PCF7xP9ghmjjS+MaOVI0NFXFKVRfHRTg49A6g3UxK6r+uR1frUfHN2j+3
+         HDH0gAkBMsakBgtoWPDV1ENp31J95WioiU/UpkKnc73YGmDKpW2sg+ftKGhlJAo2d625
+         jH9xUoKQBJ3Z0IOR4t4+AxxnBqrgKf22LitNgc2NNzqo3YOGYRtymIVX31zKnjLkh0M+
+         lTCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682374158; x=1684966158;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Q7K+YPEtNFvbVUjdWawuzHJJvf6LSp2dZLQQ7mGmLwU=;
-        b=AGYWOgxr7ha65sLBfNMz/f4Os7OISn/NSz//znYG9uSrbgq1Y5gSKkTP3uvtVPToWC
-         0fal4w7gC/8PAGX/nX6ekgNAkk0e4gzGcJrZRHGaSzJ7f3c5Es2NQH9eBGR+D7SAxC9S
-         6kkekZYrCKHySQje0XpYx0I4wXtnTKy1vpldiLZf36tJOz5gNXbNWS5iluHmrEA19qTO
-         DcjTl4eeY9vkZrICzttfy2gwMn3wwfjuwA754FXVrlA+qnOSTMFgC1MN2kpxEbg394Bi
-         lqo5R4HTx33zA8Ma5n792fqX199if9IJIlntDVfU8OM3/IKqRxc9zmIXS2pcA0iG3nUI
-         vYdg==
-X-Gm-Message-State: AAQBX9c+5rErSErXycSNt95gKfj8OD0f0Yekelto8nK8hG9tSo4JYQg7
-        8Jwq/sgfPq5vtUlIiYmctpg=
-X-Google-Smtp-Source: AKy350bicTGTl1N/Sm0lqD8SE5Efhp2ZIN2ny3h12O+YbjzLkSLlo0o1/1HmfXyJ6KEUVSSmYjcSpA==
-X-Received: by 2002:a17:902:ce8f:b0:1a9:7262:fe55 with SMTP id f15-20020a170902ce8f00b001a97262fe55mr7821274plg.13.1682374157826;
-        Mon, 24 Apr 2023 15:09:17 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id r12-20020a170902be0c00b001a0567811fbsm6985820pls.127.2023.04.24.15.09.17
+        d=1e100.net; s=20221208; t=1682374809; x=1684966809;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZxwwfImNnj+9b/j/EhYPibLkg8peISpyYK9RWJQD9wc=;
+        b=Ew587gRbv2DNldWz7AhjWWoOebWuPe4gsKuUfgDytdTPHRQBZA/MvL9yutpyuFnAMx
+         2pM/kQCMK1S5fYLxiU7yRDFaAfx+Yfvm6160pTq9hiSuqdjouNsLme9aO3cqRjIo+/bR
+         J9mKI4OKUmdGFmhQRnHWhvqJGvDpOghPZ4srbn8QYS2KvOnHowzEAccaQnhlSQHJ2aBe
+         67Ynr3j5+WV3dMXpIfw2LgerS6rlX6Yky9vqr8Ayd50JBzu+lpIZQtXkje3vodgCzB0G
+         E7YUl6hcWSeO3LlfpqTOaIsAMaHHa+3aFHi2qs6KgQW/7I2RGuPTy8u9+zCmY5oR1usn
+         tSQw==
+X-Gm-Message-State: AAQBX9d9mLQN+/XTAOxSKby5xZQwzEbvWJMLreeMbJwoZZvlRAvqEW0b
+        EQYX0WQVpZ0WsiLrVf2Rw1lo2654cC8hgxiswBGN3w==
+X-Google-Smtp-Source: AKy350Yt00vVlhm2UNIoOKdTx+n+nXksDcVwxqJW/Bbbi7job8bqQNq2NLMBPyEc3Wm4DhPcsypC+g==
+X-Received: by 2002:a0d:d0c5:0:b0:551:213:9c24 with SMTP id s188-20020a0dd0c5000000b0055102139c24mr9095253ywd.41.1682374809086;
+        Mon, 24 Apr 2023 15:20:09 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t1-20020a0dea01000000b00545a08184fesm3158388ywe.142.2023.04.24.15.20.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 15:09:17 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Maxim Cournoyer <maxim.cournoyer@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] send-email: add --header-cmd option
-References: <20230423122744.4865-1-maxim.cournoyer@gmail.com>
-        <20230423122744.4865-3-maxim.cournoyer@gmail.com>
-Date:   Mon, 24 Apr 2023 15:09:17 -0700
-In-Reply-To: <20230423122744.4865-3-maxim.cournoyer@gmail.com> (Maxim
-        Cournoyer's message of "Sun, 23 Apr 2023 08:27:44 -0400")
-Message-ID: <xmqqh6t57x0y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Mon, 24 Apr 2023 15:20:08 -0700 (PDT)
+Date:   Mon, 24 Apr 2023 18:20:07 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Chris Torek <chris.torek@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: [PATCH v3 0/6] banned: mark `strok()`, `strtok_r()` as banned
+Message-ID: <cover.1682374789.git.me@ttaylorr.com>
+References: <cover.1681428696.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1681428696.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Maxim Cournoyer <maxim.cournoyer@gmail.com> writes:
+Here is another medium-sized reroll of my series to add `strtok()` (and
+`strtok_r()`!) to the list of banned functions.
 
-> Sometimes, adding a header different than CC or TO is desirable; for
-> example, when using Debbugs, it is best to use 'X-Debbugs-Cc' headers
-> to keep people in CC; this is an example use case enabled by the new
-> '--header-cmd' option.
-> ---
+Notable changes include:
 
-Missing sign-off?
+  - Dropped `string_list_split_in_place_multi()` in favor of a
+    combination of `string_list_split_in_place()` and
+    `string_list_remove_empty_items()`.
 
->  Documentation/config/sendemail.txt |  1 +
->  Documentation/git-send-email.txt   |  5 +++++
->  git-send-email.perl                | 12 +++++++++---
->  t/t9001-send-email.sh              | 21 +++++++++++++++++++--
->  4 files changed, 34 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-> index 51da7088a8..3d0f516520 100644
-> --- a/Documentation/config/sendemail.txt
-> +++ b/Documentation/config/sendemail.txt
-> @@ -58,6 +58,7 @@ sendemail.annotate::
->  sendemail.bcc::
->  sendemail.cc::
->  sendemail.ccCmd::
-> +sendemail.headerCmd::
->  sendemail.chainReplyTo::
->  sendemail.envelopeSender::
->  sendemail.from::
+  - `strtok_r()` is back on the banned list, with a more realistic sales
+    pitch.
 
-Why here?
+As always, a range-diff is included below for convenience. Thanks in
+advance for your review!
 
-Asking because existing other entries look sorted lexicographically.
+[1]: https://lore.kernel.org/git/cover.1681428696.git.me@ttaylorr.com/
 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index b0f438ec99..354c0d06db 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -320,6 +320,11 @@ Automating
->  	Output of this command must be single email address per line.
->  	Default is the value of `sendemail.ccCmd` configuration value.
->  
-> +--header-cmd=<command>::
-> +	Specify a command to execute once per patch file which should
-> +	generate arbitrary, patch file specific header entries.
+Taylor Blau (6):
+  string-list: multi-delimiter `string_list_split_in_place()`
+  string-list: introduce `string_list_setlen()`
+  t/helper/test-hashmap.c: avoid using `strtok()`
+  t/helper/test-oidmap.c: avoid using `strtok()`
+  t/helper/test-json-writer.c: avoid using `strtok()`
+  banned.h: mark `strtok()` and `strtok_r()` as banned
 
-"arbitrary, patch file specific" sounds like a problematic thing to
-say here.  If it is truly arbitrary, then it is up to the user to
-emit identical output for all patches and there is no reason to
-inisist it has to be ptach file specific.  I am sure you meant "you
-do not have to add the same set of headres with the same values for
-all messages", but that is very much obvious once you said "command
-to execute once per patch file".
+ banned.h                    |  4 ++
+ builtin/gc.c                |  4 +-
+ diff.c                      |  2 +-
+ notes.c                     |  2 +-
+ refs/packed-backend.c       |  2 +-
+ string-list.c               | 13 ++++++-
+ string-list.h               | 12 +++++-
+ t/helper/test-hashmap.c     | 22 +++++++----
+ t/helper/test-json-writer.c | 76 +++++++++++++++++++++++--------------
+ t/helper/test-oidmap.c      | 20 +++++++---
+ t/helper/test-string-list.c |  4 +-
+ t/t0063-string-list.sh      | 51 +++++++++++++++++++++++++
+ 12 files changed, 161 insertions(+), 51 deletions(-)
 
-By the way, does it apply also to the cover-letter, which is not a
-patch file?  I presume it does, in which case we shouldn't be saying
-"once per patch file", but something like "once per outgoing message"
-or something.
-
-Also, its output is not really arbitrary.  It has to emit RFC-2822
-style header lines.  Emitting a block of lines, with an empty line
-in it, would be a disaster, isn't it?  The expected output format
-for the <command> this option specifies needs to be described a bit
-better.
-
-	Specify a command that is executed once per outgoing message
-	and output RFC-2822 style header lines to be inserted into
-	them.
-
-or something like that?
-
-> +	Default is the value of `sendemail.headerCmd` configuration value.
-
-Make it clear what you mean by the Default here.  If you configure
-the variable, will the command be always used without any way to
-turn it off?  Or does it specify the default value to be used when
-"git send-email ---header-cmd" option is used without any value?
-
-If it is the former, there should be a way to turn it off from the
-command line, probably.
-
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index d2febbda1f..676dd83d89 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -88,8 +88,9 @@ sub usage {
->  
->    Automating:
->      --identity              <str>  * Use the sendemail.<id> options.
-> -    --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-> -    --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
-> +    --to-cmd                <str>  * Email To: via `<str> \$patch_path`.
-> +    --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`.
-> +    --header-cmd            <str>  * Add headers via `<str> \$patch_path`.
->      --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, misc-by, all.
->      --[no-]cc-cover                * Email Cc: addresses in the cover letter.
->      --[no-]to-cover                * Email To: addresses in the cover letter.
-> @@ -270,7 +271,7 @@ sub do_edit {
->  # Variables with corresponding config settings
->  my ($suppress_from, $signed_off_by_cc);
->  my ($cover_cc, $cover_to);
-> -my ($to_cmd, $cc_cmd);
-> +my ($to_cmd, $cc_cmd, $header_cmd);
->  my ($smtp_server, $smtp_server_port, @smtp_server_options);
->  my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
->  my ($batch_size, $relogin_delay);
-> @@ -319,6 +320,7 @@ sub do_edit {
->      "tocmd" => \$to_cmd,
->      "cc" => \@config_cc,
->      "cccmd" => \$cc_cmd,
-> +    "headercmd" => \$header_cmd,
->      "aliasfiletype" => \$aliasfiletype,
->      "bcc" => \@config_bcc,
->      "suppresscc" => \@suppress_cc,
-> @@ -520,6 +522,7 @@ sub config_regexp {
->  		    "compose" => \$compose,
->  		    "quiet" => \$quiet,
->  		    "cc-cmd=s" => \$cc_cmd,
-> +		    "header-cmd=s" => \$header_cmd,
->  		    "suppress-from!" => \$suppress_from,
->  		    "no-suppress-from" => sub {$suppress_from = 0},
->  		    "suppress-cc=s" => \@suppress_cc,
-> @@ -1777,6 +1780,9 @@ sub process_file {
->  			push(@header, $_);
->  		}
->  	}
-> +	# Add computed headers, if applicable.
-> +	push @header, execute_cmd("header-cmd", $header_cmd, $t)
-> +		if defined $header_cmd;
-
-While execute_cmd() may be a good enough interface to be used
-without much post-processing to read cc-cmd and to-cmd output (but
-notice that even there it needs post-processing), I do not think it
-is a good interface to directly use to read header lines without any
-postprocessing like patch [2/2] does.  Its use in recipients_cmd()
-is OK primarily because it is about just reading bunch of values
-placed on Cc: or To: lines.  If you are going to use it in arbitrary
-sets of header lines, it is very likely that you would need to
-handle header folding (see what the loop before "# Now parse the
-header" is doing to preprocess <$fh>, which is not done for lines
-you read into @header in [2/2]).
-
-
-Thanks.
+Range-diff against v2:
+1:  6658b231a9 ! 1:  59d3e778b6 string-list: introduce `string_list_split_in_place_multi()`
+    @@ Metadata
+     Author: Taylor Blau <me@ttaylorr.com>
+     
+      ## Commit message ##
+    -    string-list: introduce `string_list_split_in_place_multi()`
+    +    string-list: multi-delimiter `string_list_split_in_place()`
+     
+    -    Introduce a variant of the `string_list_split_in_place()` function that
+    -    takes a string of accepted delimiters.
+    -
+    -    By contrast to its cousin `string_list_split_in_place()` which splits
+    -    the given string at every instance of the single character `delim`, the
+    -    `_multi` variant splits the given string any any character appearing in
+    -    the string `delim`.
+    -
+    -    Like `strtok()`, the `_multi` variant skips past sequential delimiting
+    -    characters. For example:
+    -
+    -        string_list_split_in_place(&xs, xstrdup("foo::bar::baz"), ":", -1);
+    -
+    -    would place in `xs` the elements "foo", "bar", and "baz".
+    +    Enhance `string_list_split_in_place()` to accept multiple characters as
+    +    delimiters instead of a single character.
+     
+         Instead of using `strchr(2)` to locate the first occurrence of the given
+         delimiter character, `string_list_split_in_place_multi()` uses
+         `strcspn(2)` to move past the initial segment of characters comprised of
+         any characters in the delimiting set.
+     
+    -    When only a single delimiting character is provided, `strcspn(2)` has
+    -    equivalent performance to `strchr(2)`. Modern `strcspn(2)`
+    -    implementations treat an empty delimiter or the singleton delimiter as a
+    -    special case and fall back to calling strchrnul(). Both glibc[1] and
+    -    musl[2] implement `strcspn(2)` this way.
+    +    When only a single delimiting character is provided, `strpbrk(2)` (which
+    +    is implemented with `strcspn(2)`) has equivalent performance to
+    +    `strchr(2)`. Modern `strcspn(2)` implementations treat an empty
+    +    delimiter or the singleton delimiter as a special case and fall back to
+    +    calling strchrnul(). Both glibc[1] and musl[2] implement `strcspn(2)`
+    +    this way.
+     
+    -    Since the `_multi` variant is a generalization of the original
+    -    implementation, reimplement `string_list_split_in_place()` in terms of
+    -    the more general function by providing a single-character string for the
+    -    list of accepted delimiters.
+    +    This change is one step to removing `strtok(2)` from the tree. Note that
+    +    `string_list_split_in_place()` is not a strict replacement for
+    +    `strtok()`, since it will happily turn sequential delimiter characters
+    +    into empty entries in the resulting string_list. For example:
+     
+    -    To avoid regressions, update t0063 in this patch as well. Any "common"
+    -    test cases (i.e., those that produce the same result whether you call
+    -    `string_list_split()` or `string_list_split_in_place_multi()`) are
+    -    grouped into a loop which is parameterized over the function to test.
+    +        string_list_split_in_place(&xs, "foo:;:bar:;:baz", ":;", -1)
+     
+    -    Any cases which aren't common (of which there is one existing case, and
+    -    a handful of new ones added which are specific to the `_multi` variant)
+    -    are tested independently.
+    +    would yield a string list of:
+    +
+    +        ["foo", "", "", "bar", "", "", "baz"]
+    +
+    +    Callers that wish to emulate the behavior of strtok(2) more directly
+    +    should call `string_list_remove_empty_items()` after splitting.
+    +
+    +    To avoid regressions for the new multi-character delimter cases, update
+    +    t0063 in this patch as well.
+     
+         [1]: https://sourceware.org/git/?p=glibc.git;a=blob;f=string/strcspn.c;hb=glibc-2.37#l35
+         [2]: https://git.musl-libc.org/cgit/musl/tree/src/string/strcspn.c?h=v1.2.3#n11
+     
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+    + ## builtin/gc.c ##
+    +@@ builtin/gc.c: static int get_schedule_cmd(const char **cmd, int *is_available)
+    + 	if (is_available)
+    + 		*is_available = 0;
+    + 
+    +-	string_list_split_in_place(&list, testing, ',', -1);
+    ++	string_list_split_in_place(&list, testing, ",", -1);
+    + 	for_each_string_list_item(item, &list) {
+    + 		struct string_list pair = STRING_LIST_INIT_NODUP;
+    + 
+    +-		if (string_list_split_in_place(&pair, item->string, ':', 2) != 2)
+    ++		if (string_list_split_in_place(&pair, item->string, ":", 2) != 2)
+    + 			continue;
+    + 
+    + 		if (!strcmp(*cmd, pair.items[0].string)) {
+    +
+    + ## diff.c ##
+    +@@ diff.c: static int parse_dirstat_params(struct diff_options *options, const char *params
+    + 	int i;
+    + 
+    + 	if (*params_copy)
+    +-		string_list_split_in_place(&params, params_copy, ',', -1);
+    ++		string_list_split_in_place(&params, params_copy, ",", -1);
+    + 	for (i = 0; i < params.nr; i++) {
+    + 		const char *p = params.items[i].string;
+    + 		if (!strcmp(p, "changes")) {
+    +
+    + ## notes.c ##
+    +@@ notes.c: void string_list_add_refs_from_colon_sep(struct string_list *list,
+    + 	char *globs_copy = xstrdup(globs);
+    + 	int i;
+    + 
+    +-	string_list_split_in_place(&split, globs_copy, ':', -1);
+    ++	string_list_split_in_place(&split, globs_copy, ":", -1);
+    + 	string_list_remove_empty_items(&split, 0);
+    + 
+    + 	for (i = 0; i < split.nr; i++)
+    +
+    + ## refs/packed-backend.c ##
+    +@@ refs/packed-backend.c: static struct snapshot *create_snapshot(struct packed_ref_store *refs)
+    + 					 snapshot->buf,
+    + 					 snapshot->eof - snapshot->buf);
+    + 
+    +-		string_list_split_in_place(&traits, p, ' ', -1);
+    ++		string_list_split_in_place(&traits, p, " ", -1);
+    + 
+    + 		if (unsorted_string_list_has_string(&traits, "fully-peeled"))
+    + 			snapshot->peeled = PEELED_FULLY;
+    +
+      ## string-list.c ##
+     @@ string-list.c: int string_list_split(struct string_list *list, const char *string,
+    - 	}
+      }
+      
+    --int string_list_split_in_place(struct string_list *list, char *string,
+    + int string_list_split_in_place(struct string_list *list, char *string,
+     -			       int delim, int maxsplit)
+    -+static int string_list_split_in_place_1(struct string_list *list, char *string,
+    -+					const char *delim, int maxsplit,
+    -+					unsigned runs)
+    ++			       const char *delim, int maxsplit)
+      {
+      	int count = 0;
+      	char *p = string, *end;
+     @@ string-list.c: int string_list_split_in_place(struct string_list *list, char *string,
+    - 		die("internal error in string_list_split_in_place(): "
+    - 		    "list->strdup_strings must not be set");
+    - 	for (;;) {
+    -+		if (runs)
+    -+			p += strspn(p, delim);
+    -+
+    - 		count++;
+    - 		if (maxsplit >= 0 && count > maxsplit) {
+      			string_list_append(list, p);
+      			return count;
+      		}
+     -		end = strchr(p, delim);
+    --		if (end) {
+    -+		end = p + strcspn(p, delim);
+    -+		if (end && *end) {
+    ++		end = strpbrk(p, delim);
+    + 		if (end) {
+      			*end = '\0';
+      			string_list_append(list, p);
+    - 			p = end + 1;
+    -@@ string-list.c: int string_list_split_in_place(struct string_list *list, char *string,
+    - 		}
+    - 	}
+    - }
+    -+
+    -+int string_list_split_in_place_multi(struct string_list *list, char *string,
+    -+				     const char *delim, int maxsplit)
+    -+{
+    -+	return string_list_split_in_place_1(list, string, delim, maxsplit, 1);
+    -+}
+    -+
+    -+int string_list_split_in_place(struct string_list *list, char *string,
+    -+			       int delim, int maxsplit)
+    -+{
+    -+	char delim_s[2] = { delim, 0 };
+    -+
+    -+	return string_list_split_in_place_1(list, string, delim_s, maxsplit, 0);
+    -+}
+     
+      ## string-list.h ##
+     @@ string-list.h: int string_list_split(struct string_list *list, const char *string,
+    -  * new string_list_items point into string (which therefore must not
+    -  * be modified or freed while the string_list is in use).
+       * list->strdup_strings must *not* be set.
+    -+ *
+    -+ * The "_multi" variant splits the given string on any character
+    -+ * appearing in "delim", and the non-"_multi" variant splits only on the
+    -+ * given character. The "_multi" variant behaves like `strtok()` where
+    -+ * no element contains the delimiting byte(s).
+       */
+    -+int string_list_split_in_place_multi(struct string_list *list, char *string,
+    -+				     const char *delim, int maxsplit);
+      int string_list_split_in_place(struct string_list *list, char *string,
+    - 			       int delim, int maxsplit);
+    +-			       int delim, int maxsplit);
+    ++			       const char *delim, int maxsplit);
+      #endif /* STRING_LIST_H */
+     
+      ## t/helper/test-string-list.c ##
+     @@ t/helper/test-string-list.c: int cmd__string_list(int argc, const char **argv)
+    - 		return 0;
+    - 	}
+    - 
+    -+	if (argc == 5 && !strcmp(argv[1], "split_in_place_multi")) {
+    -+		struct string_list list = STRING_LIST_INIT_NODUP;
+    -+		int i;
+    -+		char *s = xstrdup(argv[2]);
+    + 		struct string_list list = STRING_LIST_INIT_NODUP;
+    + 		int i;
+    + 		char *s = xstrdup(argv[2]);
+    +-		int delim = *argv[3];
+     +		const char *delim = argv[3];
+    -+		int maxsplit = atoi(argv[4]);
+    -+
+    -+		i = string_list_split_in_place_multi(&list, s, delim, maxsplit);
+    -+		printf("%d\n", i);
+    -+		write_list(&list);
+    -+		string_list_clear(&list, 0);
+    -+		free(s);
+    -+		return 0;
+    -+	}
+    -+
+    - 	if (argc == 4 && !strcmp(argv[1], "filter")) {
+    - 		/*
+    - 		 * Retain only the items that have the specified prefix.
+    + 		int maxsplit = atoi(argv[4]);
+    + 
+    + 		i = string_list_split_in_place(&list, s, delim, maxsplit);
+    +@@ t/helper/test-string-list.c: int cmd__string_list(int argc, const char **argv)
+    + 		 */
+    + 		if (sb.len && sb.buf[sb.len - 1] == '\n')
+    + 			strbuf_setlen(&sb, sb.len - 1);
+    +-		string_list_split_in_place(&list, sb.buf, '\n', -1);
+    ++		string_list_split_in_place(&list, sb.buf, "\n", -1);
+    + 
+    + 		string_list_sort(&list);
+    + 
+     
+      ## t/t0063-string-list.sh ##
+     @@ t/t0063-string-list.sh: test_split () {
+      	"
+      }
+      
+    --test_split "foo:bar:baz" ":" "-1" <<EOF
+    --3
+    --[0]: "foo"
+    --[1]: "bar"
+    --[2]: "baz"
+    --EOF
+    -+test_split_in_place_multi () {
+    ++test_split_in_place() {
+     +	cat >expected &&
+    -+	test_expect_success "split_in_place_multi $1 at $2, max $3" "
+    -+		test-tool string-list split_in_place_multi '$1' '$2' '$3' >actual &&
+    ++	test_expect_success "split (in place) $1 at $2, max $3" "
+    ++		test-tool string-list split_in_place '$1' '$2' '$3' >actual &&
+     +		test_cmp expected actual
+     +	"
+     +}
+    - 
+    --test_split "foo:bar:baz" ":" "0" <<EOF
+    --1
+    --[0]: "foo:bar:baz"
+    --EOF
+    -+for test_fn in test_split test_split_in_place_multi
+    -+do
+    -+	$test_fn "foo:bar:baz" ":" "-1" <<-\EOF
+    -+	3
+    -+	[0]: "foo"
+    -+	[1]: "bar"
+    -+	[2]: "baz"
+    -+	EOF
+    - 
+    --test_split "foo:bar:baz" ":" "1" <<EOF
+    --2
+    --[0]: "foo"
+    --[1]: "bar:baz"
+    --EOF
+    -+	$test_fn "foo:bar:baz" ":" "0" <<-\EOF
+    -+	1
+    -+	[0]: "foo:bar:baz"
+    -+	EOF
+    - 
+    --test_split "foo:bar:baz" ":" "2" <<EOF
+    --3
+    --[0]: "foo"
+    --[1]: "bar"
+    --[2]: "baz"
+    --EOF
+    -+	$test_fn "foo:bar:baz" ":" "1" <<-\EOF
+    -+	2
+    -+	[0]: "foo"
+    -+	[1]: "bar:baz"
+    -+	EOF
+    - 
+    --test_split "foo:bar:" ":" "-1" <<EOF
+    --3
+    --[0]: "foo"
+    --[1]: "bar"
+    --[2]: ""
+    --EOF
+    -+	$test_fn "foo:bar:baz" ":" "2" <<-\EOF
+    -+	3
+    -+	[0]: "foo"
+    -+	[1]: "bar"
+    -+	[2]: "baz"
+    -+	EOF
+    - 
+    --test_split "" ":" "-1" <<EOF
+    --1
+    --[0]: ""
+    --EOF
+    -+	$test_fn "foo:bar:" ":" "-1" <<-\EOF
+    -+	3
+    -+	[0]: "foo"
+    -+	[1]: "bar"
+    -+	[2]: ""
+    -+	EOF
+     +
+    -+	$test_fn "" ":" "-1" <<-\EOF
+    -+	1
+    -+	[0]: ""
+    -+	EOF
+    -+done
+    - 
+    - test_split ":" ":" "-1" <<EOF
+    - 2
+    + test_split "foo:bar:baz" ":" "-1" <<EOF
+    + 3
+    + [0]: "foo"
+     @@ t/t0063-string-list.sh: test_split ":" ":" "-1" <<EOF
+      [1]: ""
+      EOF
+      
+    -+test_split_in_place_multi "foo:;:bar:;:baz" ":;" "-1" <<-\EOF
+    -+3
+    ++test_split_in_place "foo:;:bar:;:baz:;:" ":;" "-1" <<EOF
+    ++10
+     +[0]: "foo"
+    -+[1]: "bar"
+    -+[2]: "baz"
+    ++[1]: ""
+    ++[2]: ""
+    ++[3]: "bar"
+    ++[4]: ""
+    ++[5]: ""
+    ++[6]: "baz"
+    ++[7]: ""
+    ++[8]: ""
+    ++[9]: ""
+     +EOF
+     +
+    -+test_split_in_place_multi "foo:;:bar:;:baz" ":;" "0" <<-\EOF
+    ++test_split_in_place "foo:;:bar:;:baz" ":;" "0" <<EOF
+     +1
+     +[0]: "foo:;:bar:;:baz"
+     +EOF
+     +
+    -+test_split_in_place_multi "foo:;:bar:;:baz" ":;" "1" <<-\EOF
+    ++test_split_in_place "foo:;:bar:;:baz" ":;" "1" <<EOF
+     +2
+     +[0]: "foo"
+    -+[1]: "bar:;:baz"
+    ++[1]: ";:bar:;:baz"
+     +EOF
+     +
+    -+test_split_in_place_multi "foo:;:bar:;:baz" ":;" "2" <<-\EOF
+    ++test_split_in_place "foo:;:bar:;:baz" ":;" "2" <<EOF
+     +3
+     +[0]: "foo"
+    -+[1]: "bar"
+    -+[2]: "baz"
+    ++[1]: ""
+    ++[2]: ":bar:;:baz"
+     +EOF
+     +
+    -+test_split_in_place_multi "foo:;:bar:;:" ":;" "-1" <<-\EOF
+    -+3
+    ++test_split_in_place "foo:;:bar:;:" ":;" "-1" <<EOF
+    ++7
+     +[0]: "foo"
+    -+[1]: "bar"
+    ++[1]: ""
+     +[2]: ""
+    ++[3]: "bar"
+    ++[4]: ""
+    ++[5]: ""
+    ++[6]: ""
+     +EOF
+     +
+      test_expect_success "test filter_string_list" '
+2:  2a20ad8bc5 = 2:  ae8d0ce1f2 string-list: introduce `string_list_setlen()`
+3:  0ae07dec36 ! 3:  78ecf13cb0 t/helper/test-hashmap.c: avoid using `strtok()`
+    @@ Commit message
+     
+         Avoid using the non-reentrant `strtok()` to separate the parts of each
+         incoming command. Instead of replacing it with `strtok_r()`, let's
+    -    instead use the more friendly `string_list_split_in_place_multi()`.
+    +    instead use the more friendly pair of `string_list_split_in_place()` and
+    +    `string_list_remove_empty_items()`.
+     
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+    @@ t/helper/test-hashmap.c: int cmd__hashmap(int argc, const char **argv)
+      		unsigned int hash = 0;
+      		struct test_entry *entry;
+      
+    -+		/*
+    -+		 * Because we memdup() the arguments out of the
+    -+		 * string_list before inserting them into the hashmap,
+    -+		 * it's OK to set its length back to zero to avoid
+    -+		 * re-allocating the items array once per line.
+    -+		 *
+    -+		 * By doing so, we'll instead overwrite the existing
+    -+		 * entries and avoid re-allocating.
+    -+		 */
+    -+		string_list_setlen(&parts, 0);
+      		/* break line into command and up to two parameters */
+     -		cmd = strtok(line.buf, DELIM);
+    -+		string_list_split_in_place_multi(&parts, line.buf, DELIM, 2);
+    ++		string_list_setlen(&parts, 0);
+    ++		string_list_split_in_place(&parts, line.buf, DELIM, 2);
+    ++		string_list_remove_empty_items(&parts, 0);
+     +
+      		/* ignore empty lines */
+     -		if (!cmd || *cmd == '#')
+4:  a659431e9c ! 4:  c9b929406a t/helper/test-oidmap.c: avoid using `strtok()`
+    @@ t/helper/test-oidmap.c: int cmd__oidmap(int argc UNUSED, const char **argv UNUSE
+      		struct test_entry *entry;
+      		struct object_id oid;
+      
+    -+		/* see the comment in cmd__hashmap() */
+    -+		string_list_setlen(&parts, 0);
+      		/* break line into command and up to two parameters */
+     -		cmd = strtok(line.buf, DELIM);
+    -+		string_list_split_in_place_multi(&parts, line.buf, DELIM, 2);
+    ++		string_list_setlen(&parts, 0);
+    ++		string_list_split_in_place(&parts, line.buf, DELIM, 2);
+    ++		string_list_remove_empty_items(&parts, 0);
+     +
+      		/* ignore empty lines */
+     -		if (!cmd || *cmd == '#')
+5:  fc6cd23698 ! 5:  201fcac6c4 t/helper/test-json-writer.c: avoid using `strtok()`
+    @@ t/helper/test-json-writer.c: static int scripted(void)
+     +		state.nr = ++line_nr;
+      
+     -		verb = strtok(line, " ");
+    -+		/* see the comment in cmd__hashmap() */
+    -+		string_list_setlen(&parts, 0);
+     +		/* break line into command and zero or more tokens */
+    -+		string_list_split_in_place(&parts, line, ' ', -1);
+    ++		string_list_setlen(&parts, 0);
+    ++		string_list_split_in_place(&parts, line, " ", -1);
+    ++		string_list_remove_empty_items(&parts, 0);
+     +
+     +		/* ignore empty lines */
+     +		if (!parts.nr || !*parts.items[0].string)
+6:  56d2318a6d ! 6:  da896aa358 banned.h: mark `strtok()` as banned
+    @@ Metadata
+     Author: Taylor Blau <me@ttaylorr.com>
+     
+      ## Commit message ##
+    -    banned.h: mark `strtok()` as banned
+    -
+    -    `strtok_r()` is reentrant, but `strtok()` is not, meaning that using it
+    -    is not thread-safe.
+    +    banned.h: mark `strtok()` and `strtok_r()` as banned
+     
+         `strtok()` has a couple of drawbacks that make it undesirable to have
+         any new instances. In addition to being thread-unsafe, it also
+    @@ Commit message
+     
+         Now that we have removed all instances of `strtok()` from the tree,
+         let's ban `strtok()` to avoid introducing new ones in the future. If new
+    -    callers should arise, they can either use:
+    +    callers should arise, they are encouraged to use
+    +    `string_list_split_in_place()` (and `string_list_remove_empty_items()`,
+    +    if applicable).
+     
+    -      - `string_list_split_in_place()`,
+    -      - `string_list_split_in_place_multi()`, or
+    -      - `strtok_r()`.
+    +    string_list_split_in_place() is not a perfect drop-in replacement
+    +    for `strtok_r()`, particularly if the caller is processing a string with
+    +    an arbitrary number of tokens, and wants to process each token one at a
+    +    time.
+     
+    -    Callers are encouraged to use either of the string_list functions when
+    -    appropriate over `strtok_r()`, since the latter suffers from the same
+    -    confusing data-flow problem as `strtok()` does.
+    -
+    -    But callers may prefer `strtok_r()` when the number of tokens in a given
+    -    string is unknown, and they want to split and process them one at a
+    -    time, so `strtok_r()` is left off the banned.h list.
+    +    But there are no instances of this in Git's tree which are more
+    +    well-suited to `strtok_r()` than the friendlier
+    +    `string_list_in_place()`, so ban `strtok_r()`, too.
+     
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+    @@ banned.h
+      #define strncat(x,y,n) BANNED(strncat)
+     +#undef strtok
+     +#define strtok(x,y) BANNED(strtok)
+    ++#undef strtok_r
+    ++#define strtok_r(x,y,z) BANNED(strtok_r)
+      
+      #undef sprintf
+      #undef vsprintf
+-- 
+2.40.0.380.gd2df7d2365
