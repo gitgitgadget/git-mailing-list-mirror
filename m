@@ -2,128 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19716C7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 17:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4517C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 18:00:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231728AbjDXR2y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 13:28:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53464 "EHLO
+        id S231459AbjDXSAA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 14:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232284AbjDXR2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 13:28:39 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A54FC
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:28:37 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-95678d891d6so810081766b.1
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:28:37 -0700 (PDT)
+        with ESMTP id S229906AbjDXR76 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 13:59:58 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C1E6A78
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:59:55 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-63b79d8043eso25180462b3a.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:59:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682357316; x=1684949316;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UyzzXat1HLHTRyQcfQCmDRa3WHfmnd49q85xb1Q41zQ=;
-        b=eNoSlIYvFwumb1dP5PlmgpIutKL4sVDmqU81Sqzs5SZkKlLvXap9V5TschpxgO6PTK
-         Dp1+Fydj48bmfvrVRBfFHS4tZuPdcoC856MBFCZ/T78/yTppjy/NZqmoF3FbfFwHsyuZ
-         umyAdndL2auikA8W5tbhbLXCTjyQu2lw0d/t5j3EIfTbIvkwR0a0nRmxt5Zc3dHNW1WZ
-         UcE/uYDIfogwAtIP03sROotwe1Hz25iiRLo7ZFP0yFpSmg7OBxqEcRKHkJd4wHtEA5/l
-         8kYzWE8II7iPM7rE/Rz4kDRMC2hLIjWKLpft43aF/5V5AdR+5GAibaJSRuAWboOKeS5l
-         3d+A==
+        d=google.com; s=20221208; t=1682359195; x=1684951195;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=INx66fAOcFnLGZh+gd8G1pLdr14RKNSts/uNRr8qs1c=;
+        b=mhKnibuF/IYxQATqR9dagbldctgBnAb8BBByUAl64KgP5FkuoyUd21fKwbj4sL+ZTS
+         7MtHg7WQ0vO6ZW6OAuJ5AEVvp+bOO/ozrP7lyJpYDR2MozLtMJaDWAsrXfNh4zcOQ+UO
+         k/jdR9rG9iX0oxm4FJUwAv3ZXgAIkuOulb70PSrhrpdvbMqPT3LzDsm3j3ggSl/fLM0I
+         T2ClZ7+oglchDuJ8jkrz6srY4DsTDCphc7HHFTeR0XpngWjFXOKjmIlrDJc3Ft6EPZC6
+         a3V44YZLaq5zkCDtJ5MobKUkJIjBvRbEUnn4YWWJ4gGEIpTcuRjD4TAKoDgcX9cblkQP
+         9qZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682357316; x=1684949316;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UyzzXat1HLHTRyQcfQCmDRa3WHfmnd49q85xb1Q41zQ=;
-        b=Uwc2Hz+r4k7oQGL7G1VeLCcKaxf3V3hQPoAgYBMl10NHI5abhBcRJHy5q6vJuEnidu
-         ZbxgpfT+kGCBQ05sw8HEzfkhMgxBKTKhRp7dKa+Wt/9OCZtGkU+TPCSJ1aIRA/VaZqqa
-         nqX8aoz5fhjRf0qApFfFD8hHfksgexlj4whngXDbrrowJ9Sr48D2W2FBwkkT4/pE2hsq
-         nhtRa8nStRT0T7roKr7BYg0BxZZHHYp7YLXKe/zGnCPoEBs6xxoukYIJliHDJR1eTT6J
-         jqkXhEduPmgCNUdItzo0MZb1UKi3izss7e6Qpz+rzyjMLe2k/ebLKOWqcsate+8MPGDV
-         oKhg==
-X-Gm-Message-State: AAQBX9f9OgsS6MQ0KTQOCLWLPMxR7psuFBRV1h7lKxe275gjfyWnDaCm
-        tQWbCKn4m9EMiHaxq6T8ZY2s+Lsm5+gSBY1MPjGGItba8gE=
-X-Google-Smtp-Source: AKy350YMlZdDJ2/OCP+OGFYSpBpCftCoNfMzHDPAKSxBGasuRBha3Y2BYt8w01wiWqrMNWsCjF4gjNo/M68wmWLAwRg=
-X-Received: by 2002:a17:906:f152:b0:885:a62c:5a5c with SMTP id
- gw18-20020a170906f15200b00885a62c5a5cmr9978196ejb.46.1682357315608; Mon, 24
- Apr 2023 10:28:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <CACMKQb3XsPG=gnmoBdL7Eh6dV2h-LEbGHs+QpBr1g9yV+SSmRw@mail.gmail.com>
-In-Reply-To: <CACMKQb3XsPG=gnmoBdL7Eh6dV2h-LEbGHs+QpBr1g9yV+SSmRw@mail.gmail.com>
-From:   Aman <amanmatreja@gmail.com>
-Date:   Mon, 24 Apr 2023 22:58:23 +0530
-Message-ID: <CACMKQb34Mk_37KhVyaj4cb1JnrZPXXmcAhE_QeV=EcF7CRVKPA@mail.gmail.com>
-Subject: Re: On understanding, exploring and abstractions.
-To:     Git List <git@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1682359195; x=1684951195;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=INx66fAOcFnLGZh+gd8G1pLdr14RKNSts/uNRr8qs1c=;
+        b=Jc5Hf3ZLlA9yQofFTyrQ+aWaaaK6F4UenucFbrrfxELet8t3qj5Sxd0w1PZaTOjsmb
+         RBnbWp6kWoHW9YyfXbPSnoxMw3pe9uSoPK0el1bt4COYV/E8EqJAzHnqI3rSdHwSQPSq
+         YIE3tvSak0du0JWIMKLF7f4y4HWopz+Vbx7Cw/jLZecmZM5ewY41l4z3d53UF2xfQNwI
+         5vBzOrmpmDz/91HP+kJxFEbWSCmUpNWCpGrMDU4PSwIt2KMuBJp/jDshyuywco3P1oov
+         McgkRwaLq/4lu5FuIOyV0+k7WAvrTlkIMuL3ODMtKI5Gt5nk7H2IemMJtanmx2MhZi7L
+         fXtg==
+X-Gm-Message-State: AAQBX9d9VdXUT1TUNVajuCbIUPdq6j5JUZGIz08TwP3jqOlarpJjGYza
+        25dUElEUCksk03L3su0wZR77V+mA5i8iEQ==
+X-Google-Smtp-Source: AKy350Ye9bNlGnYKxDt/1Ne4Upqy75ajSiHv9DIJS+uHM25iKyTxtvtearJreWuCZDYf6AH/nYfiY86ufWTOQQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:15d5:b0:63b:8571:8109 with SMTP
+ id o21-20020a056a0015d500b0063b85718109mr6467747pfu.3.1682359195273; Mon, 24
+ Apr 2023 10:59:55 -0700 (PDT)
+Date:   Mon, 24 Apr 2023 10:59:53 -0700
+In-Reply-To: <019057ab-c917-80cd-063b-4871e47dc382@intel.com>
+Mime-Version: 1.0
+References: <20230421223013.467142-1-jacob.e.keller@intel.com>
+ <xmqqbkjgizcv.fsf@gitster.g> <019057ab-c917-80cd-063b-4871e47dc382@intel.com>
+Message-ID: <kl6l354p9n52.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH] blame: use different author name for fake commit
+ generated by --contents
+From:   Glen Choo <chooglen@google.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-a follow up for everyone.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-On Sat, Apr 22, 2023 at 9:24=E2=80=AFPM Aman <amanmatreja@gmail.com> wrote:
+>> diff --git c/t/annotate-tests.sh w/t/annotate-tests.sh
+>> index 859693949b..4238ce45f8 100644
+>> --- c/t/annotate-tests.sh
+>> +++ w/t/annotate-tests.sh
+>> @@ -74,8 +74,8 @@ test_expect_success 'blame 1 author' '
+>>  
+>>  test_expect_success 'blame working copy' '
+>>  	test_when_finished "git restore file" &&
+>> -	echo "1A quick brown fox jumps over" >file &&
+>> -	echo "another lazy dog" >> file &&
+>> +	echo "11A quick brown fox jumps over the" >file &&
+>> +	echo "lazy dog" >>file &&
 >
-> Hello everyone.
+> I think the right fix for this test is to keep the first line (1A) the
+> same, and include the missing "the" I had removed before, and keep the
+> 2nd line as the changed line with "another lazy dog".
+
+This sounds right to me; it's easier to read when the working copy test
+and the --contents test use the same data
 >
-> This is Aman, I am a high school student. And,
+>> not ok 46 - passing hostname resolution information works
+>> #
+>> #               BOGUS_HOST=gitbogusexamplehost.invalid &&
+>> #               BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
+>> #               test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
+>> #               git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
+>> #
 >
-> "I DON'T know how computers (and modern software) works AT ALL".
+> I had thought this was the only failure, and that it has something to do
+> with my system configuration (possibly proxy settings) which affect
+> this.. I checked the firewall configuration and it doesn't appear to be
+> that...
 >
-> I have no idea, except about the abstractions I play on. I understand
-> the case for abstractions, they are what, (arguably or not) run the
-> world forward.
->
-> But it is really , And by really, I mean really frustrating. To the
-> point where I don't quite enjoy programming (despite the fact that I
-> have had exposure to "programming" for quite some time). I am
-> fascinated by these things around me, computers run the world, and I
-> REALLY want to understand them, just for the sake of it (I guess).
->
-> I believe what made computers fun, in the old days, was the ability to
-> really talk to it. (even Linus tells this in the "beauty of
-> Programming chapter" in his book, which was written 20 years ago!)
-> Even C feels like an abstraction, hey the "magic" of compilers, and
-> libraries.
->
-> Even people around me, and 99% of people I find on the internet, to
-> discuss issues like this, too, don't know how a computer, and modern
-> software (which runs the world) really works. And people seem to get
-> fine by it, which is not necessarily bad, but really frustrating to
-> me.
->
-> And my question is, How do I do it? Should I try to build my own
-> computer? Create a CPU in Verilog on an FPGA. Write an assembler,
-> bootloaders, operating system kernels, compilers, etc.? But what about
-> wanting to read how the modern systems work? But if I want to know how
-> LLVM or Linux works? Or how a modern compiler is created?
->
-> People have discouraged me to read source codes, and software
-> architectures, saying it may not be worthwhile, even IF you could do
-> it. So what could be done?
->
-> Maybe, the right question isn't what to do, but why do I want to, so
-> perhaps we can systematically deduce what to do about it. So why? I
-> guess, if you see life as a playground, and I have come into this
-> world, I'd be an interesting task to learn how it all works. This may
-> be a bad idea, and I am open to others. Since nobody I have met, yet,
-> has expressed something like this, I don't know if I am living in a
-> rock (probably I am anyway).
->
-> But learning how a computer (like your phone) works from scratch,
-> isn't that interesting, and not knowing, down right frustrating to
-> anyone reading this email? Or is it just me for some reason?
->
-> And it goes both ways right? , even if I create a simple compiler,
-> it'll still be a simple one. Won't it be more interesting to work on
-> things that I might use, and others might get value from too.
->
-> So this is the dilemma of an 18 year old, confused about what to do about=
- it.
->
-> (btw, If you reading this, are a hardware person, making chips or
-> something, do you feel like a king/queen? since everyone builds on top
-> of what you do)
->
-> Regards,
-> Aman
+> It would be nice to figure out what makes it so the tests fail so that I
+> can make sure tests properly pass on my submissions before sending them
+> in the future.
+
+I remember seeing a similar, flaky failure on an older version of master
+(~2-3 months ago). But if you based this on a recent version, I'm afraid
+I haven't seen this :/
