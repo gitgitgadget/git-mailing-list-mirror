@@ -2,112 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96208C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 19:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 062E3C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 19:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232417AbjDXTZM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 15:25:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
+        id S231959AbjDXTfV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 15:35:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232222AbjDXTZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 15:25:11 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCC8AE58
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 12:25:05 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id 46e09a7af769-6a5f6349ec3so2076911a34.0
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 12:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682364305; x=1684956305;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j58IDzlwRje/FZhrG1C/B//aOrheWurS/+BBtfnbNnE=;
-        b=NDOxZ0+44EqBvFxqwbZIP2K6r9s4+5OeCiHxyIbGCZ4yiRPho/SIxCfggV3zI9Dokn
-         RAR5tjN8PjPvNr4Ov8Rx6AqgXw20V64VVLvp9xEe+YK+W6lPFZybm/cesxoY5dkg3KeU
-         Se6BfTq5tctps3XvirrYG5l9y5EvRbI2VomNW8RjORRBDjYjIrNfmtlpRHOnsMQVRBuA
-         LPNdxNpslDF1Of/9u+st5OHYd/rzPW2R8uAbTjHIXAp8uNTTv50WjjRmwr+fYLyh91Gx
-         +2L8loSOdWbVut7v1tZ6Mc0guQmhQHNOb2w3S+ah4Tbp8Dzxt2xatmkzWwgesoGuAR1a
-         3wDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682364305; x=1684956305;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=j58IDzlwRje/FZhrG1C/B//aOrheWurS/+BBtfnbNnE=;
-        b=MKuBEBGtCuK9bhKUT5aS5MgljS3FEKjPWVZza3wj1tAIfinqVx8nYyIgbtRVMnL8D1
-         KJw9GeEt6OanpEnqRRxmBg2ROhpNwwUBT6BJNy6NS8ENnbN/1HT4C6EucJB79Q4ehbpj
-         R/roVBHq7TJ+pk3deARCF2/80W12Gs73MdHbdTgOQ/H6e/S6c/rW8JIce5zP+5qs+Ux5
-         J0FlosPI8x3Z2mBYgzeJXOmObVO1PUm0jz77MIUJfTv8mFS08Tc1wII2oZo2DFBYVB5Y
-         PxeoccthfjGcMuL4tzsmYVMNgfVopU15r+TifHRvtQx5Ogm/fPjWN1G1yPaRtthmG+Tx
-         w+FQ==
-X-Gm-Message-State: AAQBX9dflWq+rD1U5Oq/qIShWIJI96YPkJ+WHcZANjehSe/1ZkqMDCgp
-        XG87vncIwsAThT3hfqebIO6HAwxrzLs=
-X-Google-Smtp-Source: AKy350a7GJfRiFSFDKzPWZbiScdKOg1Gb2WGiHoIFWcuyX/W4ZmTOaaM2chs8SD5tuqwcJuf8SvUEQ==
-X-Received: by 2002:a9d:66ca:0:b0:6a6:51d1:b162 with SMTP id t10-20020a9d66ca000000b006a651d1b162mr3929967otm.7.1682364305009;
-        Mon, 24 Apr 2023 12:25:05 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id p8-20020a056830130800b00690e990e61asm70777otq.14.2023.04.24.12.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 12:25:04 -0700 (PDT)
-Date:   Mon, 24 Apr 2023 13:25:03 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Erik Cervin Edin <erik@cervined.in>,
-        Jeremy Morton <admin@game-point.net>
-Cc:     Chris Torek <chris.torek@gmail.com>, git@vger.kernel.org
-Message-ID: <6446d78fbbe82_cd61294e5@chronos.notmuch>
-In-Reply-To: <CA+JQ7M_Lv1acopOpPoHxp7mPwWMFj-7wwwDPpV7KUbwFsjpoxA@mail.gmail.com>
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
- <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com>
- <74a361fd-4ee6-f362-8d49-92417f0e2dac@game-point.net>
- <CA+JQ7M-1YvZFzE_CtBQa5_eEXa1sPqK4xsTxdwpAQo_YcmW+-A@mail.gmail.com>
- <91dab444-5f65-31ae-c0c6-0b84313bcd94@game-point.net>
- <CA+JQ7M_Lv1acopOpPoHxp7mPwWMFj-7wwwDPpV7KUbwFsjpoxA@mail.gmail.com>
-Subject: Re: Proposal: tell git a file has been renamed
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229798AbjDXTfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 15:35:20 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDAA123
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 12:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1682364919; x=1713900919;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=7NahVYaLitN2neFR4yHLVrrZWiTyFBsqiCx4QAndgjc=;
+  b=kWfMnTbYjUejU5mIQhbPslwAc+GacX0RYbcCHAWsoV+N2+g0FVdlHFK0
+   Clz4Tqd4kLxSQ6uXHsYMkeTp8u8F/KZe8c42Mbuf9gwAV8dvqy+aSjerk
+   Jc1LovEBt3MDj/hBw81AiDCh6oBI+GZmO/HpG7HS32AW1Ozq1hPhKxKks
+   /P7FTZMGxQHK/rHk9rOiZY0GM1WOCVuHO7lvIR9zpSK9O7Jhd/IMg+F3u
+   5b81po7wySKZTA9Y3u16LFsmDb5IJbwW3MkKszH9k7Ih1M2UQt0AWd9UA
+   BBWCyB7LLLpmeWoJzSb9hSCzV6oorwsRnzZ6LO0pi1RNrfU2xY0Gs/cE/
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10690"; a="348463080"
+X-IronPort-AV: E=Sophos;i="5.99,223,1677571200"; 
+   d="scan'208";a="348463080"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2023 12:35:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10690"; a="687002173"
+X-IronPort-AV: E=Sophos;i="5.99,223,1677571200"; 
+   d="scan'208";a="687002173"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.241.1])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2023 12:35:18 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Subject: [PATCH] blame: use different author name for fake commit generated by --contents
+Date:   Mon, 24 Apr 2023 12:35:08 -0700
+Message-ID: <20230424193508.2245566-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.40.0.471.gbd7f14d9353b
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Erik Cervin Edin wrote:
-> On Mon, Apr 24, 2023 at 1:17=E2=80=AFPM Jeremy Morton <admin@game-point=
-.net> wrote:
-> >
-> > There's no getting away from the fact that this adds a lot of (IMHO
-> > unnecessary) work if you've already done a rename that git can't
-> > detect and have both that and a bunch of other changes sitting in the=
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> > index.  What feels like it would be a natural resolution in these
-> > cases, though, is a "no, this remove/add is actually a rename" comman=
-d.
-> =
+When the --contents option is used with git blame, and the contents of
+the file have lines which can't be annotated by the history being
+blamed, the user will see an author of "Not Committed Yet". This is
+similar to the way blame handles working tree contents when blaming
+without a revision.
 
-> It can definitely be both arduous and non-obvious how to deal with this=
-.
-> =
+This is slightly confusing since this data isn't the working copy and
+while it is technically "not committed yet", its also coming from an
+external file. Replace this author name with "External file
+(--contents)" to better differentiate such lines from actual working
+copy lines.
 
-> The problem is that such a command cannot exist atm. because renames
-> don't exist, they are only interpreted. So the only way to achieve
-> this is to revert enough of the contents staged to the index such that
-> the rename is detected. The only way to do that in a foolproof manner
-> is reverting all the staged changes except the path so that the moved
-> file in the index is identical to the old file in HEAD.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Suggested-by: Glen Choo <chooglen@google.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+Changes since v2
+* Fix the test case to pass and align with the other similar test cases
 
-I agree recording renames explicitely might be a good addition to git, bu=
-t the
-real question is how are they going to be stored in the object storage.
+ Documentation/blame-options.txt |  8 +++-----
+ blame.c                         |  8 ++++++--
+ t/annotate-tests.sh             | 11 +++++++++--
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
-My guess is that it can be added in the commit object after "committer", =
-just
-add a "renames" field with all the renames, or one "rename" field per ren=
-ame.
-It would be backwards compatible because any field can be added this way.=
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 95599bd6e5f4..552dcc60f2a4 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -64,11 +64,9 @@ include::line-range-format.txt[]
+ 	manual page.
+ 
+ --contents <file>::
+-	Pretend the file being annotated has a commit with the
+-	contents from the named file and a parent of <rev>,
+-	defaulting to HEAD when no <rev> is specified. You may
+-	specify '-' to make the command read from the standard
+-	input for the file contents.
++	Annotate using the contents from the named file, starting from <rev>
++	if it is specified, and HEAD otherwise. You may specify '-' to make
++	the command read from the standard input for the file contents.
+ 
+ --date <format>::
+ 	Specifies the format used to output dates. If --date is not
+diff --git a/blame.c b/blame.c
+index 2c427bcdbfdd..47dd77d045dc 100644
+--- a/blame.c
++++ b/blame.c
+@@ -206,8 +206,12 @@ static struct commit *fake_working_tree_commit(struct repository *r,
+ 
+ 	origin = make_origin(commit, path);
+ 
+-	ident = fmt_ident("Not Committed Yet", "not.committed.yet",
+-			WANT_BLANK_IDENT, NULL, 0);
++	if (contents_from)
++		ident = fmt_ident("External file (--contents)", "external.file",
++				  WANT_BLANK_IDENT, NULL, 0);
++	else
++		ident = fmt_ident("Not Committed Yet", "not.committed.yet",
++				  WANT_BLANK_IDENT, NULL, 0);
+ 	strbuf_addstr(&msg, "tree 0000000000000000000000000000000000000000\n");
+ 	for (parent = commit->parents; parent; parent = parent->next)
+ 		strbuf_addf(&msg, "parent %s\n",
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index b35be20cf327..2ef70235b101 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -72,6 +72,13 @@ test_expect_success 'blame 1 author' '
+ 	check_count A 2
+ '
+ 
++test_expect_success 'blame working copy' '
++	test_when_finished "git restore file" &&
++	echo "1A quick brown fox jumps over the" >file &&
++	echo "another lazy dog" >>file &&
++	check_count A 1 "Not Committed Yet" 1
++'
++
+ test_expect_success 'blame with --contents' '
+ 	check_count --contents=file A 2
+ '
+@@ -79,7 +86,7 @@ test_expect_success 'blame with --contents' '
+ test_expect_success 'blame with --contents changed' '
+ 	echo "1A quick brown fox jumps over the" >contents &&
+ 	echo "another lazy dog" >>contents &&
+-	check_count --contents=contents A 1 "Not Committed Yet" 1
++	check_count --contents=contents A 1 "External file (--contents)" 1
+ '
+ 
+ test_expect_success 'blame in a bare repo without starting commit' '
+@@ -109,7 +116,7 @@ test_expect_success 'blame 2 authors' '
+ '
+ 
+ test_expect_success 'blame with --contents and revision' '
+-	check_count -h testTag --contents=file A 2 "Not Committed Yet" 2
++	check_count -h testTag --contents=file A 2 "External file (--contents)" 2
+ '
+ 
+ test_expect_success 'setup B1 lines (branch1)' '
+-- 
+2.40.0.471.gbd7f14d9353b
 
-
-How to generate these fields is a separate issue: first things first.
-
--- =
-
-Felipe Contreras=
