@@ -2,97 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE41C77B78
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EFBDC77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 17:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232022AbjDXQwL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 12:52:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33516 "EHLO
+        id S232096AbjDXRFq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 13:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232301AbjDXQv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 12:51:26 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225E8AD37
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:51:04 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-18b0879e0c8so3502707fac.2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:51:03 -0700 (PDT)
+        with ESMTP id S229625AbjDXRFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 13:05:45 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CCDE4C17
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:05:44 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id 41be03b00d2f7-52863157da6so347162a12.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 10:05:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682355063; x=1684947063;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dgn6n2kCBKA8Oi48GTjtt8h1FvePhHI6E29EwGu2AFI=;
-        b=jRGT8ETJr6GcEZFFpiOwAnUeJDCmulaX0C9cMROmvqwsZ8sqIToeJryIpBvXtzPLZ1
-         qhnPPGrW3/3FHQXQg7idD7Sosh9CwwaR2OwyfIW5SDffuwRTJEhrDTg8RwyJhoqlfttg
-         OPJ9qacIIzvSKNR+Sa0BLNJ1WOyMf2PMm7PMN8xHfD+ivXGz94rYSDipDhe8kGVuTh1B
-         d1Bn7d889Em9aVoZbq69J6Vfn/w6BuTHKR5Dgp4kyWpxaq/CfnF4wCAWYkOWpsRv78ry
-         5CUgfmnfzyFVFxqi4mXlQ/b3vKhxZD4FpMhl9slv4kwx4MnXGccNZUwSEjJU/+VrAQRI
-         NmDA==
+        d=gmail.com; s=20221208; t=1682355944; x=1684947944;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G7b1mFXRZxjPyeJC/UXaAg1BpiDdl6FAnCpBbKswP2k=;
+        b=iYYjx1HAQC5XunOr43XNmep0Pu6oj8E20nuKgvQDsRzj8ts4tpMTIyTBjyHQ5PakyW
+         KvncThZB/3vndW+DT8UNKVA/Fgtx5I0Q7FwHhT5pGLDqUJp8Iuqgc6aWuP2Esax3Ze8t
+         JpIgrKLD6sCD8QC4MxOGl71NczMsGXHnOA767aGB9nwAeF7oxmeoQDnn6Uy4oHfXQXn+
+         pvIA/6/+TwnvgrO1u39LouhkTiWdtWg5cXZcINGb0UjmQXi9r7GC9NdQTOmh/LGudKd6
+         8QlLDPx9Qr/s5wZF8eTSDMCI25jSjlt9lvn7gOQGFpcCIY8SdUcB9IhLDybwKdQDA6z8
+         RGOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682355063; x=1684947063;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Dgn6n2kCBKA8Oi48GTjtt8h1FvePhHI6E29EwGu2AFI=;
-        b=K3SylS7JuemhQjw6+16o9E6IV5EbqmZgJ3B2HHxXcth0mVF09Zl55mflk3zycY2ROJ
-         ChkdrxONy1VfRFgonYqrni1feXA35f1XSGXlBaRCselDPKnCFm3+yV75CvfeNIpzOOA/
-         ACh7TpJ5oZTGXsDbcOun1rk3EYpnU89J/Vo0KvljcmhXIKI1VR/BU0rjsXwhP8Iq19go
-         uCOO14s2zR33VpQ5qRE0GbSRbKl7VUyy3f1bZTHpeLxFps3kE6pr/yOtGMfB3PKqr/rQ
-         gt8WMpQ2rTQFjJL01Sgu5AIHW1k5FNXWyKGd4yxbLGmDHCGx4XGVcaAJa75snevoOeuU
-         xn5w==
-X-Gm-Message-State: AAQBX9dV3fWI2vQlO92Yn7JJOF4M9/tMstLjBoVkpWBkOReKdOVxn6Jw
-        pIr3uzj+eqk0AzNsHx7hrTzKnUFxF1Q=
-X-Google-Smtp-Source: AKy350aHXdIWdZMm1/K1xX3adHWl4LEizxL17yqajl6foskq+FgEIpjZR+LTlv2NHYzl84pe5P557Q==
-X-Received: by 2002:a05:6870:8308:b0:17a:e1b7:ebef with SMTP id p8-20020a056870830800b0017ae1b7ebefmr8820403oae.12.1682355062806;
-        Mon, 24 Apr 2023 09:51:02 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id l21-20020a056870d4d500b0018b9dc6acaasm4317750oai.34.2023.04.24.09.51.02
+        d=1e100.net; s=20221208; t=1682355944; x=1684947944;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=G7b1mFXRZxjPyeJC/UXaAg1BpiDdl6FAnCpBbKswP2k=;
+        b=lyqtmKw4LZ6a71ADKXFg/dMh2wNvvjnGZWj75e2t4IIldqdpeS8xfHqrC1RVeYsKgp
+         c8GfOvxFP62FVu4EcOgHf5FsMIAmZyiwMQJRh2nLVU4vTtgx9AKrg3voLsNKRRYhO9+Y
+         QL327JhtpNBh//qUpB3Cw+4PNESQb2aoQ3jmvbl5v8ERSWCH1i0alSxPrcU7xOZrgR0X
+         g1bm0lwrMbAyj9E1DqzVDhpjtcnhXSc7LQnYKOqZGRAATUXFomdB6MzB23Hlk5yL84TB
+         OFh+HPBQsCctfJoVCsSLd895BgwFiji0ddTAIYb1fdc8TPX8Qs4HhThhGECihzxN10Un
+         xqWw==
+X-Gm-Message-State: AAQBX9f8BRd48aHpeYkXZzcrQdAjTuGF6euY0PgRg8HlVf7v/Ffkbajs
+        lmechXZye2XjXmnP1XKpu44=
+X-Google-Smtp-Source: AKy350Y2EX4HeIzupPWSBE667xXCWNkXVGI68SHhac3j0IvDDZ7d0BQFgblNX6QN3i6nOmVR6Jw03g==
+X-Received: by 2002:a17:90a:cf8f:b0:23d:e0e8:f453 with SMTP id i15-20020a17090acf8f00b0023de0e8f453mr13841516pju.38.1682355943622;
+        Mon, 24 Apr 2023 10:05:43 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id fv23-20020a17090b0e9700b0023d0290afbdsm8593444pjb.4.2023.04.24.10.05.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 09:51:02 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Todd Zullinger <tmz@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 15/15] version-gen: get rid of GVF variable
-Date:   Mon, 24 Apr 2023 10:50:41 -0600
-Message-Id: <20230424165041.25180-16-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
-In-Reply-To: <20230424165041.25180-1-felipe.contreras@gmail.com>
-References: <20230424165041.25180-1-felipe.contreras@gmail.com>
+        Mon, 24 Apr 2023 10:05:43 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Thomas Bock <bockthom@cs.uni-saarland.de>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] parse_commit(): parse timestamp from end of line
+References: <20230422134150.GA3516940@coredump.intra.peff.net>
+        <20230422134703.GB3942326@coredump.intra.peff.net>
+Date:   Mon, 24 Apr 2023 10:05:42 -0700
+In-Reply-To: <20230422134703.GB3942326@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 22 Apr 2023 09:47:03 -0400")
+Message-ID: <xmqqcz3tfbx5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's not much point in a variable which is never going to change and
-doesn't really add any readability.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- GIT-VERSION-GEN | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+> To find the committer timestamp, we parse left-to-right looking for the
+> closing ">" of the email, and then expect the timestamp right after
+> that. But we've seen some broken cases in the wild where this fails, but
+> we _could_ find the timestamp with a little extra work. E.g.:
+>
+>   Name <Name<email>> 123456789 -0500
+> ...
+> So let's use the same trick as 03818a4a94: find the end of the line, and
+> parse back to the final ">".
 
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index a1c50cb06b..3d30ce74af 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -1,6 +1,5 @@
- #!/bin/sh
- 
--GVF=GIT-VERSION-FILE
- DEF_VER=2.40.GIT
- 
- get_version () {
-@@ -15,5 +14,5 @@ VN=$(get_version)
- 
- NEW="GIT_VERSION = $VN"
- 
--test -r $GVF && test "$NEW" = "$(cat $GVF)" && exit
--echo "$NEW" | tee $GVF >&2
-+test -r GIT-VERSION-FILE && test "$NEW" = "$(cat GIT-VERSION-FILE)" && exit
-+echo "$NEW" | tee GIT-VERSION-FILE >&2
--- 
-2.40.0+fc1
+This obviously assumes that even in a broken ident, it is very
+likely that the second component (where <e-mail> usually sits) ends
+with a '>'.  Given that we enclose whatever garbage the end user
+gave us as their e-mail inside a pair of <> ourselves, it is a very
+sensible assumption, I would think.  The original parser assumed
+that the end user would not have '>' inside their e-mail part of the
+ident, which turns out to be more problematic than the alternative
+being proposed.  It is doubly good that we already parse from the
+end elsewhere.
+
+Nice.
+
+> +	/*
+> +	 * parse to end-of-line and then walk backwards, which
+> +	 * handles some malformed cases.
+> +	 */
+
+I would say "parse to" -> "jump to", but technically moving forward
+looking for a LF byte is still "parsing".  "some" malformed cases
+being "most plausible" ones (due to how ident.c::fmt_ident() is what
+writes '>' after the string end-user gave as e-mail) may be worth
+mentioning.
+
+> +	eol = memchr(buf, '\n', tail - buf);
+> +	if (!eol)
+>  		return 0;
+
+OK.
+
+> -	dateptr = buf;
+> -	while (buf < tail && *buf++ != '\n')
+> +	for (dateptr = eol; dateptr > buf && dateptr[-1] != '>'; dateptr--)
+>  		/* nada */;
+
+OK.  Just a style thing, but I found that "; /* nada */" is easier
+to spot that there is an empty statement there.
+
+> -	if (buf >= tail)
+> +	if (dateptr == buf || dateptr == eol)
+>  		return 0;
+
+Curious when dateptr that wanted to scan back from eol is still at
+eol after the loop.  It is when the ident line ends with ">" without
+any timestamp/tz info.   And the reason why we need to check that
+here is ...
+
+> -	/* dateptr < buf && buf[-1] == '\n', so parsing will stop at buf-1 */
+> +
+> +	/* dateptr < eol && *eol == '\n', so parsing will stop at eol */
+>  	return parse_timestamp(dateptr, NULL, 10);
+
+... because parse_timestamp() is merely strtoumax() and would
+happily skip over arbitrary number of leading "whitespace" without
+stopping if (dateptr == eol && *eol == '\n').  OK, sad but correct.
 
