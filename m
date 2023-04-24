@@ -2,122 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31262C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 10:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C322CC77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 10:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231146AbjDXKPn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 06:15:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
+        id S231791AbjDXK1u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 06:27:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230476AbjDXKPm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 06:15:42 -0400
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [IPv6:2a0c:5a00:149::25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5D230E2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 03:15:33 -0700 (PDT)
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-        by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <admin@game-point.net>)
-        id 1pqtEI-00DOnQ-Jb
-        for git@vger.kernel.org; Mon, 24 Apr 2023 12:15:30 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=game-point.net; s=selector2; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject;
-        bh=HK6ZBvuKA6wSO33K6cRu//DdhFWSRMXQP1dQrjeh2sU=; b=PvICIb1QZzYPvgknuNr/3gRumA
-        9ri16ZcmwU53jBruLh4FOgovnBAMmOFIJJEM22NEDK8J/3PtrJhPhT+1j8Wu+z8Uw1zSjBzrI6mK6
-        dzl/N98fuhjfkhWRbrZKbUIgRhVxezEWzNYkOK5NJ5Y8a/nwcHr4HXi6UOvxZtxmAAXYhTVspWKiT
-        iPN7yf5c+IsPktUu4Oyq3NJwebYHIr95KNl66mptmlzeVpaHYGmIAR7Fw0k6Va3P2driSJdEHNvKt
-        KJXcQSh2pU5li/v5P4CwG5NHrWL1R65yd1H9JX4VFt9L7L6eHiwUtom4Q9L525zclb/iaI5XgZxlK
-        r655t/JQ==;
-Received: from [10.9.9.74] (helo=submission03.runbox)
-        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <admin@game-point.net>)
-        id 1pqtEI-00017R-5j; Mon, 24 Apr 2023 12:15:30 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated ID (956903)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1pqt9x-0005pY-1Q; Mon, 24 Apr 2023 12:11:01 +0200
-Subject: Re: Proposal: tell git a file has been renamed
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     git@vger.kernel.org
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
- <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com>
-From:   Jeremy Morton <admin@game-point.net>
-Message-ID: <74a361fd-4ee6-f362-8d49-92417f0e2dac@game-point.net>
-Date:   Mon, 24 Apr 2023 11:10:59 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101
- Firefox/60.0 SeaMonkey/2.53.1
+        with ESMTP id S231754AbjDXK1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 06:27:23 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BDE40D9
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 03:25:36 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-504ecbfddd5so6122868a12.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 03:25:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682331878; x=1684923878;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0kuMFUPuZoLoozXaz3FkVSSsisV3y+5JdEP1zM90Ao0=;
+        b=eoIOoPwO+ibaaR3J7b+Tkp8mHfg3z14McCa/m/dAeKxAO1h36mrR4hA8c3yTjD0ReQ
+         g3656Nk1HFXF19JQYowdrMN/2Re4l59aNP6DuOU7UV+vSk1ap8KN3qTvCoziHSQkBpnt
+         M7f489z01Wl8OePRGJk7S9D3kHp2Erh8nFHV6d2UMlcSi1PNuFXU1F7x3mSWkwGVKZnF
+         5AXBi/WZgaqvIVQSH0uRixMV3EpzkrPfB5PgQ2jdCDKx2GK3NN+lTJslcTSyJu4pXP7g
+         fixP6R28rDVtj+mXyw7g8wCud2nhIMV3/sID+s/qr9i1nfOC0NM8QoCeae4jksYiTVHT
+         uGvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682331878; x=1684923878;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0kuMFUPuZoLoozXaz3FkVSSsisV3y+5JdEP1zM90Ao0=;
+        b=Qshgl0u63YoFnvOl30WdQWNJwHeMcruju/DZU3cA/8nagP59drxbB6w1LFILSauriG
+         Oh+YfDagWNaS5bRzsTXWHQ66SLj+8ZuSqxOGLCZCMkoIcfGogORYrCnmvaALBbUuHbc4
+         dD/xs+j1wJQjuBwqHB4hZa5YsZxKNjKh82/ZRgD8nWJzEoYTflfFDNaEiiAO9ZIkvwPy
+         3Pag14B5AzJRTiYmP67+kKJjBiGRBDRPfTTwZ/8/uze31z/J3GFIQmgxyr4diEqIp1BT
+         u/tFkWaRuJq4KoD+6myx+VUYc/xXHG2AmPXTh838daUpr05R/F8iliXW5IWRAH6C30Xm
+         +uBw==
+X-Gm-Message-State: AAQBX9eb9XNdGYoTzjEYTG+ZR66FWjpa25SGQy8ny878l5H6v4weeUXQ
+        umGxtR/OLFAuOj9+I90ReUSeBk6GMsyNI8gbMwiNE+KtxPM=
+X-Google-Smtp-Source: AKy350aBpBBwKw/q6DsdgEDNaXDo6YABAR6pYrcJ9N+2OZeyoELI7fUNo6dxyHc29NsX9KXjWJlZc7J02ZNsfgRCXKY=
+X-Received: by 2002:a05:6402:2c7:b0:4fd:23c9:11ed with SMTP id
+ b7-20020a05640202c700b004fd23c911edmr11272670edx.17.1682331878357; Mon, 24
+ Apr 2023 03:24:38 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
+ <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com> <74a361fd-4ee6-f362-8d49-92417f0e2dac@game-point.net>
+In-Reply-To: <74a361fd-4ee6-f362-8d49-92417f0e2dac@game-point.net>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Mon, 24 Apr 2023 03:24:27 -0700
+Message-ID: <CAPx1GvfszM00DzW9JxxoNZfnM3-eUJCxPArUzwFV7E+t==cJ4g@mail.gmail.com>
+Subject: Re: Proposal: tell git a file has been renamed
+To:     Jeremy Morton <admin@game-point.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/04/2023 02:43, Chris Torek wrote:>> [renames are a problem]
-> 
-> I have long wondered if there was a way to improve this
-> experience myself.
-> 
-> (I also note that most of the followup messages up to this point
-> have missed the point.  It's true that you can run `git mv` and
-> `git commit`, but you've already said that this becomes
-> particularly painful when you realize that it's appropriate *after
-> the fact*, when you've already made intermediate commits and/or
-> staged changes or whatever.)
-> 
-> The index *currently* has no room to store anything like this: it
-> is, in effect, just the proposed next commit, stored as a
-> flattened tree.  There are, however, extra marker records that
-> can be added.  So:
-> 
-> If `git mv` (or a new command) had a flag to say "make a special
-> index entry so that the next `git commit` does a double commit",
-> we could in fact make this work.  Alternatively, we could have a
-> command -- similar to `git commit --only` in effect -- that uses
-> the current (HEAD) commit to construct a renames-only commit, in
-> which 100%-identical-file matching would (in general) find the
-> desired renames -- and make it, perhaps also co-ordinating with
-> `git mv` of existing files in the index.  (I'd also like to have
+On Mon, Apr 24, 2023 at 3:15=E2=80=AFAM Jeremy Morton <admin@game-point.net=
+> wrote:
+> On 24/04/2023 02:43, Chris Torek wrote:
+> > ... Alternatively, we could have a
+> > command -- similar to `git commit --only` in effect
 
-I'm not sure what the utility of the --only thing would be - to detect 
-renames that didn't have changed content so that all renames could be 
-done in one pre-commit?
+> I'm not sure what the utility of the --only thing would be - to detect
+> renames that didn't have changed content so that all renames could be
+> done in one pre-commit?
 
-> `git mv --after`, in the same vein as `hg mv --after`; I long ago
-> wrote a cheesy script to achieve this, but it would be nice to
-> have a proper command.)
+I mentioned `git commit --only` here just to point out that `git
+commit` already has the ability to make a commit without using the
+current index as the new commit's source.  A "just do renames"
+commit operation (in spite of other changes already made in the
+current index) would need similar functionality.
 
-Huh, I just read the docs on that... does that mean hg already has 
-this functionality of being able to store a "this was renamed" marker 
-in its index?
+Exactly how this might work, I haven't defined.
 
-> On top of this, it might be nice to have a standardized commit
-> message and/or other marker (in the commit header?) for a "rename-
-> only" commit, which this kind of extra-rename-commit operation
-> would use.  Then `git log` and `git blame` and other commands
-> could easily detect such commits and default to an automatic
-> `--follow` style following, and `git log` might be allowed to omit
-> the *display* of such a commit by default, by showing all the
-> renames as renames in the subsequent commit (though this would
-> presumably require an internal verification step to check for
-> spoofed renames that are not in fact rename-only operations).
+> Huh, I just read the docs on [hg mv]... does that mean hg already has
+> this functionality of being able to store a "this was renamed" marker
+> in its index?
 
-I'm surprised --follow isn't the default, actually... isn't the whole 
-point of detecting renames to allow content history to be tracked back 
-through renames?
+Mercurial does not have an index in the first place.  The internal
+structure of the Mercurial database is an append-only series of
+changelongs, with files stored as deltas from the previous version
+of that file (with some exceptions).  Files are listed in a manifest,
+and renaming a file preserves the file's identity despite the
+change of name.
 
-Another one that jumped to mind for me is bisect.  As rename-only 
-commits are liable to create broken builds, it should skip over them 
-to the 'content' commit.
+(This internal format is very different from Git's.  Git is a
+content-addressable file system, rather than an append-only
+changelog.)
 
-> In any case, this *idea* is easy, like many ideas.  It really
-> comes down to implementation.  If someone thinks this is a great
-> idea, someone (perhaps me) should work on *implementing* it. :-)
-
-If you do please feel free to CC me in an email about it, it'd be good 
-to know if this became available!
-
--- 
-Best regards,
-Jeremy Morton (Jez)
+Chris
