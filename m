@@ -2,72 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE97BC77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 137D3C77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231839AbjDXQWm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 12:22:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
+        id S231977AbjDXQY1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 12:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230355AbjDXQWl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 12:22:41 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260A4E69
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:22:38 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-24b9e5a9a68so1171930a91.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:22:38 -0700 (PDT)
+        with ESMTP id S231911AbjDXQYZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 12:24:25 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8414B7D9B
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:24:24 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-63b67a26069so6344258b3a.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682353357; x=1684945357;
+        d=gmail.com; s=20221208; t=1682353463; x=1684945463;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ESofe12vDoPPmgq7VmUED1arRgNvG1MGfRzWSNAB9oI=;
-        b=Xxlfd6i0i9jof/N8A/8NzyO0Wj+/WbsCjWnoCHrk5e7xFRJM5RtrhIEQTyuvRc3tQx
-         knT3ygzIjzr5OegTQKKu/vkbT8FSFhdjZqBe9F3cycdPSuJYMZndtDsCbhXf9PdXrXv1
-         cT44Kq4BU/imDQQUD537qFeemY0ltV6clGGXhVE2IX7G1/SiDm5XdprofLOfQn05e96h
-         Xw9cnBAv7LuTsPSPLBxZCyYjcyYmuNfodQ+sfuUR7eO2yHVDaMHVtcl0ex3jW56RbOxI
-         m6WmUJy/cQz+V5Nvgf2XfTp6EwQFJgVAUDJChmPEQm6m+mPyHELP/cbYI7RSWtJxNvrX
-         A8Cg==
+        bh=Ry43HN3xl5o7lFHHv1Bx3scGGGN0UiFR9oTKEAm1C9o=;
+        b=TNV8DtG6IoVR595NKPHfdGm3nxl4CLnbuYePscDa4XKNwESUB1LLMSde2xi4Qqddo+
+         DaqGpzBuF4LojmY9/JstUn3Xtwn6C9+fLh6OCHv89bjLRrhmlILyee51RKsp8fwKqFsq
+         YbQCT087H87+cGQ1MS15IUjYt/8n5nKYJw6XUk6G+aMu76huTs1OiL4o/dXwL50iUnt0
+         1PQEXhTrDcq+AVzxdfl9DzRi43r4/JZMOs8lV7fJ2+pYvpbUdeT0EfQHbccEpAz6K5ma
+         so7F5ft7MOfpfdOE8jOtPiktx7Ny5uRk++dXdYYRYEYn3UEI1wyPr6LL/nR+g5dl8Zx9
+         evKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682353357; x=1684945357;
+        d=1e100.net; s=20221208; t=1682353463; x=1684945463;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ESofe12vDoPPmgq7VmUED1arRgNvG1MGfRzWSNAB9oI=;
-        b=aHOAYT+ZLUQD+e7u+r+hB0pyq4vq/TnTzUTlVKZqZPm8YxAQxpGQBxecsZo/iQXfCC
-         vJKubmt5rsAhogxV5dPiImQOpVyNjxYUZqkwxMwxMolgn9f7j5tN3CH/FBbIo9XkEui0
-         awYyTEjz5OL/ay0r1HBT9HE2swkeeaIEHYLzG5hhIHaq8QL9XK0S/MeVdLSlXt1frbfW
-         Jp+/377l3CBdkRe1k7zfP3Xcd5q8VdIismJpSIxHMJ5YhDm6cea+mBk/GkclbsqAstlF
-         b9vZAUGKrc1eInrgD0JVE01niP5GhraOCz1YUoVikMaj+J/4L473DI42dDk9KsnP/UW4
-         Sr2w==
-X-Gm-Message-State: AAQBX9cWeRVXKIFs/mHPjqEa3GSnBO3fr2W3KjFl0v4d+e0ZyHFRKR4v
-        PdH0kij16ZKDPeQInHVD7s8JA/8pslY=
-X-Google-Smtp-Source: AKy350YkAOHJgK4SbRlmwDKCB8t1G+0M0POfK6CvFZDrEbc8wIyU9RDi1kGIhGu1lSsoMNJsXtyRSQ==
-X-Received: by 2002:a17:90a:8c85:b0:247:5e62:3288 with SMTP id b5-20020a17090a8c8500b002475e623288mr13984689pjo.33.1682353357456;
-        Mon, 24 Apr 2023 09:22:37 -0700 (PDT)
+        bh=Ry43HN3xl5o7lFHHv1Bx3scGGGN0UiFR9oTKEAm1C9o=;
+        b=VYYQi3SaF0BgRWNjqNO6r7ElydbO0TuFBtgoIQxM6q2wNnDRDoiFE3Gb9mQEjWoDzm
+         OgGZ/wOWfMejbXqZNtFIK06o9Lsp6L7MErbZZ8pFxfkTMvLUTASIPhpOOXUACxpbwp3t
+         F8KjH64oSzwa/1j5o5xtvPtHm3HIEf2xSBjl0+feq2hIDbhY96dcFbxd4bavzIcA9zMs
+         U6lyelsqTQyr72EuMY6c3bTO9zDKMXi1hyJcyhsLwSs0rJcRjySnx7SXo8wJak2Sr+qR
+         xGHtuyXNuesbk0FrXk+vGgbEWGzYZKprvNqgu8cHQsWyrLg7E+cLzCVtkFVXD0brgAdo
+         Do/Q==
+X-Gm-Message-State: AAQBX9dOjkGdgzhTCOPK0x+zBnAppgvSbduNP1HgOe1bA2mfR3S6fU0Q
+        pSId+d6UvHsHjgyA89BkZj0=
+X-Google-Smtp-Source: AKy350YGjsHZBzQzAr6V/Kqk/Y4lwV/OPmMc5H/U+oDsf1Dp/+7/xGBLgVOvdpSjEHEL96HRJaP61Q==
+X-Received: by 2002:a05:6a00:2e0d:b0:63b:7119:64a9 with SMTP id fc13-20020a056a002e0d00b0063b711964a9mr20297357pfb.16.1682353463651;
+        Mon, 24 Apr 2023 09:24:23 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id kx18-20020a17090b229200b0023b3d80c76csm6634202pjb.4.2023.04.24.09.22.37
+        by smtp.gmail.com with ESMTPSA id fe5-20020a056a002f0500b0062de9ef6915sm7521624pfb.216.2023.04.24.09.24.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 09:22:37 -0700 (PDT)
+        Mon, 24 Apr 2023 09:24:23 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Rolf Eike Beer <eb@emlix.com>, git@vger.kernel.org,
-        Jaydeep P Das <jaydeepjd.8914@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] gpg-interface: set trust level of missing key to
- "undefined"
-References: <5926995.lOV4Wx5bFT@devpool47.emlix.com>
-        <20230418064846.GA1414@coredump.intra.peff.net>
-        <xmqqy1mpduq3.fsf@gitster.g>
-        <20230419012957.GA503941@coredump.intra.peff.net>
-        <xmqqy1mnanz8.fsf@gitster.g>
-        <20230422104758.GA2969939@coredump.intra.peff.net>
-Date:   Mon, 24 Apr 2023 09:22:36 -0700
-In-Reply-To: <20230422104758.GA2969939@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 22 Apr 2023 06:47:58 -0400")
-Message-ID: <xmqq4jp5gshf.fsf@gitster.g>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 1/6] string-list: introduce
+ `string_list_split_in_place_multi()`
+References: <cover.1681428696.git.me@ttaylorr.com>
+        <cover.1681845518.git.me@ttaylorr.com>
+        <6658b231a906dde6acbe7ce156da693ef7dc40e6.1681845518.git.me@ttaylorr.com>
+        <20230422111213.GB2969939@coredump.intra.peff.net>
+        <8d228041-d473-7f3f-87d7-543b350aab0e@web.de>
+        <20230423003553.GA3953216@coredump.intra.peff.net>
+Date:   Mon, 24 Apr 2023 09:24:23 -0700
+In-Reply-To: <20230423003553.GA3953216@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 22 Apr 2023 20:35:53 -0400")
+Message-ID: <xmqqwn21fdu0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -77,19 +76,9 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> So before my patch the uninitialized state is (supposedly) less than the
-> min level, and after they are the same. For the reasons I gave in the
-> commit message, I think that less-than comparison was already broken.
-> And likewise, for the reasons I gave, it hopefully never matters since
-> the result would never be 'G' in that case.
+> And yes, it looks like there are only 7 callers which would need a
+> trivial update if we just switched to the multi-char version.
+>
+> That's very compelling.
 
-Yes * 2.
-
-> So I think it's fine, but I definitely had to stare at it for a while.
-> This all comes from 54887b4689 (gpg-interface: add minTrustLevel as a
-> configuration option, 2019-12-27), which does discuss some of the
-> implications, but I think my patch is in line with the logic there.
-
-Yes.
-
-Thanks.
+Sounds good.  Thanks.
