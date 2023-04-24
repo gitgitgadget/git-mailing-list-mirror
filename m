@@ -2,65 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F34E2C7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 18:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4430AC7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 18:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbjDXSBa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 14:01:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44616 "EHLO
+        id S231169AbjDXSGC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 14:06:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbjDXSB3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 14:01:29 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FA136A42
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 11:01:28 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1a6817adde4so52683225ad.0
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 11:01:28 -0700 (PDT)
+        with ESMTP id S231985AbjDXSGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 14:06:00 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1CAC6584
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 11:05:50 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-63b51fd2972so3899728b3a.3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 11:05:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682359288; x=1684951288;
+        d=gmail.com; s=20221208; t=1682359550; x=1684951550;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VBBHfUGOHoCJQipqt65WynJo2a94ethjzrS8FfVSrVQ=;
-        b=GBTyBAADF0bWnsGAdMqWTKeENXkCQr6f884G4mTjUB2vL9qp3DnbdZewZxSnzQ419D
-         FQ+r4Igvd07nvFm3on5a5IeNQCTM2b7RdA/zop/0PmV9Mg1QgmlrPP4GLch5vFTzgBCA
-         BjVupFhe/gtz/e7yehn47nm0UmOrrCiwuei9HtFIt0ePfHg5tHI83ophpl29Z3voBidF
-         RmjCxvB+6kZXVUiXDSGnHUOdmbbKunPP1Btp1KD+foysKEhlrdb+NolP8T25dyQ3XXtU
-         cNwqangqMwibU6aZXVFsHN/1sLVBj9jInx6laXzfi5vQIj0r0NK71+yoQUhrIICejJrz
-         336A==
+        bh=4ogXEVU8WLNLJnxYAnCnluxCJRIGcHKDmxL+4G2gXjg=;
+        b=AjBoNe1fsHJOcVWfuFHfqmE5B8lhEWLP15Ij/Huk8THnA/pCUeaJyc1ZAZDF8IAMdk
+         9DEjjrf/BBtbLH0oBUudwNjigvdzSOD6nNR1X/e2eNFiAfR0+IiVpUxUhtTb/6DTpWHO
+         rlXRIAFaNkAu6Pd1e6KZlZfQn3Jy4TUiuMUA9zSqF1YUWprz2zSEsdJINmbh3eGDbv1F
+         F9Kj7rkSsWNWB/bmOge3i7zxfUEPPzNBFvT0peiywZ/B5e8/MBUPNIM8W652LcIzCF2F
+         CCdT0mklt6XemdR67NDTvkU6l8dM7dqOqb94mqTFNpelfPBy8WctystHQ7+skUowBqet
+         4ayA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682359288; x=1684951288;
+        d=1e100.net; s=20221208; t=1682359550; x=1684951550;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=VBBHfUGOHoCJQipqt65WynJo2a94ethjzrS8FfVSrVQ=;
-        b=ASvZIL6H0J3u7FVfAC70xwFvgb0fPBZw205ay9P9HAkhBxKErVBmEkkaKRX9/8m+R+
-         ohIJ3kNLjl8f/blftoaZTbIdV3jE7+It0lbccxePiCXaUcA4mhDYUHWRiT1eiJZf4sK2
-         Qb/K6BlEGBaIHpaHb9YT9M9IA2A4BWRL2D7FnaUoFvgwP5NGyKRzy+yKjm5OD65Km7NR
-         /9Vt3llJiw17i1BtzNbNFCC0Tri4msmBfijtP1i2CaKxI/6JzoNXk77lWW1bsL29zfBW
-         +qwgx+9QKIaBJR0U6H2PvJAwQx1FxamOolkE+oJJDBDUpVASQCkZ87vKXoeI/D+yCt/Y
-         DGDw==
-X-Gm-Message-State: AAQBX9fcCrCOuiAsmwCYLjZq2BnLGvleRhLGDhx0b4PA/TH/6WoONLTS
-        TsCJ7pI0nKGaCQsiHQyzz8o=
-X-Google-Smtp-Source: AKy350bwwEUccZDrfTKKKl5PNZjJz0kFxmAx+Dwi+Y8OUncKuC3SgE/qv7jO9nZJgKwIp48Ykckh6Q==
-X-Received: by 2002:a17:902:ebd1:b0:1a5:2757:d40a with SMTP id p17-20020a170902ebd100b001a52757d40amr14831331plg.49.1682359287478;
-        Mon, 24 Apr 2023 11:01:27 -0700 (PDT)
+        bh=4ogXEVU8WLNLJnxYAnCnluxCJRIGcHKDmxL+4G2gXjg=;
+        b=V0n/cJcWTIR0IukY2rW8zif8vLA5afPy34zAPuwqKE9/6Sy3Oozt6vyB6ZOhquZvs+
+         VPXYV0sr78AKjw1Yb3Yy2XEA+nRPbNah7hr4r81IJyeTz7q0V4TmikQ+2u6hM+KadebQ
+         HYeyR0iolJUx7RUA1aABCuSY2OYG79rmNig9TEQmgkIj+Y2a0vpkLlJnafoc0DeWbf2C
+         KW1QI3W2Op8ydJr3R84pgM/r4krUnOKuwrDEJJl29JvpBd+bIXu75+dtOHFM5exEDm3T
+         AH7NwV8fo9gNFyhn95XVTwy9RlvVnlvO+X3n2A5LGIM4FYxiA7kSM5pTBo7Poz1WgFo7
+         ZFRQ==
+X-Gm-Message-State: AAQBX9fC1qjhUOQhOvlQZrJG+/Ycb4AJEnwtk4DAqCTKSrDZ/a08nkrR
+        pOaedRe8DkmtkX1byiGsuck=
+X-Google-Smtp-Source: AKy350asEDz7JtVfKwdmL99+59kwuMyJsND5G49LX1LGv9P7gVgEFnNatGGnNXs3sKVKtF70lTCvTQ==
+X-Received: by 2002:a05:6a00:1147:b0:63b:6933:a328 with SMTP id b7-20020a056a00114700b0063b6933a328mr17991622pfm.28.1682359550040;
+        Mon, 24 Apr 2023 11:05:50 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id jh10-20020a170903328a00b001a6ce2bcb3esm6913736plb.161.2023.04.24.11.01.27
+        by smtp.gmail.com with ESMTPSA id m21-20020a62a215000000b0063f33e216dasm3856998pff.96.2023.04.24.11.05.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 11:01:27 -0700 (PDT)
+        Mon, 24 Apr 2023 11:05:49 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Thomas Bock <bockthom@cs.uni-saarland.de>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] parse_commit(): handle broken whitespace-only
- timestamp
-References: <20230422135001.GA3942563@coredump.intra.peff.net>
-Date:   Mon, 24 Apr 2023 11:01:26 -0700
-In-Reply-To: <20230422135001.GA3942563@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 22 Apr 2023 09:50:01 -0400")
-Message-ID: <xmqqy1mhdurt.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/2] notes: clean up confusing NULL checks in init_notes()
+References: <20230422135455.GA3942740@coredump.intra.peff.net>
+        <20230422135543.GA3942829@coredump.intra.peff.net>
+Date:   Mon, 24 Apr 2023 11:05:49 -0700
+In-Reply-To: <20230422135543.GA3942829@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 22 Apr 2023 09:55:43 -0400")
+Message-ID: <xmqqttx5duki.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,88 +69,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> The comment in parse_commit_date() claims that parse_timestamp() will
-> not walk past the end of the buffer we've been given, since it will hit
-> the newline at "eol" and stop. This is usually true, when dateptr
-> contains actual numbers to parse. But with a line like:
+> Coverity complains that we check whether "notes_ref" is NULL, but it was
+> already implied to be non-NULL earlier in the function. And this is
+> true; since b9342b3fd63 (refs: add array of ref namespaces, 2022-08-05),
+> we call xstrdup(notes_ref) unconditionally, which would segfault if it
+> was NULL.
 >
->    committer name <email>   \n
+> But that commit is actually doing the right thing. Even if NULL is
+> passed into the function, we'll use default_notes_ref() as a fallback,
+> which will never return NULL (it tries a few options, but its last
+> resort is a string literal). Ironically, the "!notes_ref" check was
+> added by the same commit that added the fallback: 709f79b0894 (Notes
+> API: init_notes(): Initialize the notes tree from the given notes ref,
+> 2010-02-13). So this check never did anything.
 
-I was wondering of this case while reading [2/3] ;-)
+I am impressed(?) that Coverity can complain at the "_or_null" part
+in xstrdup_or_null().
 
-> ...
-> In practice this can't cause us to walk off the end of an array, because
-> we always add an extra NUL byte to the end of objects we load from disk
-> (as a defense against exactly this kind of bug). However, you can see
-> the behavior in action when "committer" is the final header (which it
-> usually is, unless there's an encoding) and the subject line can be
-> parsed as an integer. We walk right past the newline on the committer
-> line, as well as the "\n\n" separator, and mistake the subject for the
-> timestamp.
+It all makes sense.  Thanks.
 
-
-> +	/*
-> +	 * trim leading whitespace; parse_timestamp() will do this itself, but
-> +	 * it will walk past the newline at eol while doing so. So we insist
-> +	 * that there is at least one digit here.
-> +	 */
-
-"one digit" -> "one non-whitespace".
-
-> +	while (dateptr < eol && isspace(*dateptr))
-> +		dateptr++;
-
-This is an expected change, but
-
-> +	if (!strchr("0123456789", *dateptr))
-> +		return 0;
-
-this is not.  Isn't the only problematic case that dateptr being at
-eol?  That is what the proposed log message argued.
-
->  	/* dateptr < eol && *eol == '\n', so parsing will stop at eol */
-
-This comment is slightly stale.  dateptr < eol, *eol == '\n', and we
-know the string starting at dateptr is not a run of whitespace and
-that is what makes the parsing stop at eol.
-
-> diff --git a/t/t4212-log-corrupt.sh b/t/t4212-log-corrupt.sh
-> index af4b35ff56..d4ef48d646 100755
-> --- a/t/t4212-log-corrupt.sh
-> +++ b/t/t4212-log-corrupt.sh
-> @@ -92,4 +92,33 @@ test_expect_success 'absurdly far-in-future date' '
->  	git log -1 --format=%ad $commit
->  '
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  notes.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/notes.c b/notes.c
+> index 45fb7f22d1..cadb435056 100644
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -1019,13 +1019,13 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+>  	t->root = (struct int_node *) xcalloc(1, sizeof(struct int_node));
+>  	t->first_non_note = NULL;
+>  	t->prev_non_note = NULL;
+> -	t->ref = xstrdup_or_null(notes_ref);
+> +	t->ref = xstrdup(notes_ref);
+>  	t->update_ref = (flags & NOTES_INIT_WRITABLE) ? t->ref : NULL;
+>  	t->combine_notes = combine_notes;
+>  	t->initialized = 1;
+>  	t->dirty = 0;
 >  
-> +test_expect_success 'create commit with whitespace committer date' '
-> +	# It is important that this subject line is numeric, since we want to
-> +	# be sure we are not confused by skipping whitespace and accidentally
-> +	# parsing the subject as a timestamp.
-
-Nice.
-
-> +	# Do not use munge_author_date here. Besides not hitting the committer
-> +	# line, it leaves the timezone intact, and we want nothing but
-> +	# whitespace.
-> +	test_commit 1234567890 &&
-> +	git cat-file commit HEAD >commit.orig &&
-> +	sed "s/>.*/>    /" <commit.orig >commit.munge &&
-> +	ws_commit=$(git hash-object --literally -w -t commit commit.munge)
-> +'
-> +
-> +test_expect_success '--until treats whitespace date as sentinel' '
-> +	echo $ws_commit >expect &&
-> +	git rev-list --until=1980-01-01 $ws_commit >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'pretty-printer handles whitespace date' '
-> +	# as with the %ad test above, we will show these as the empty string,
-> +	# not the 1970 epoch date. This is intentional; see 7d9a281941 (t4212:
-> +	# test bogus timestamps with git-log, 2014-02-24) for more discussion.
-> +	echo : >expect &&
-> +	git log -1 --format="%at:%ct" $ws_commit >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+> -	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
+> +	if (flags & NOTES_INIT_EMPTY ||
+>  	    repo_get_oid_treeish(the_repository, notes_ref, &object_oid))
+>  		return;
+>  	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
