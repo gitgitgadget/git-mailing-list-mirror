@@ -2,67 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3211AC7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BA98C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231886AbjDXQFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 12:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34910 "EHLO
+        id S232009AbjDXQJh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 12:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231625AbjDXQFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 12:05:54 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 698CE5FE4
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:05:53 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b4a64c72bso3781758b3a.0
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:05:53 -0700 (PDT)
+        with ESMTP id S231983AbjDXQJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 12:09:36 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 408096A6A
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:09:35 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-63b4960b015so3773214b3a.3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682352353; x=1684944353;
+        d=gmail.com; s=20221208; t=1682352575; x=1684944575;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1CvZ2QldYyTkkWx9jRSazrusB5WwF3WIxPerKea5Ngc=;
-        b=smGMbbA6XS/RLnSa0XyZDcEQSw5T7adpTDAHupLktoI9CihA5f/5r8rSjSeNRR6Hyd
-         Bmxn0/XNdu0yqJZQcUEom1daS86idsvUpDzsrRbTgpimS4f0i365/4cY8AQ5OKrPQhh5
-         WZ1fuD5MNmgB9ZfB9KrivDBI+Q3HVELuOll4t+wpzPOvFAKSkRleu9U1mV9IwpuBuPod
-         xeCUaTtv3NfZlYAOqG+JeuwE9BNSQ5Nl1lSkTSzAylBRmsnkN+wGY2cZwNCASQ9xa77z
-         9765u7bclsm/h28cNhaiZ8YbRoI18IpsEHuNq8JJ4s59LPcmOpDGUVGDA/2ZJMeJ4jPd
-         xnCg==
+        bh=77jx7BmdSWSx2VPdNBcHgN1hcRKlLQ1mnsxyuKfQ7Sg=;
+        b=dVhCtpn2iJwiogr96Q+l2mu/oHI7gGEIH4PDabzhi5rc6CeMnUqHmiq3TvVF8NHfrm
+         Lo8WeaxlPZdJ2B1bQQBiN9WmOdik4d1p+lFSPiDFAtw2XJnfzHF6AT3Lz3BSuYZIKb0V
+         31RZKTPXD0/xPy6GybW6q3lD7+oFzatZyCO/9NGhILI0g9ZTX4Bj6Dk4wGsfS0w21BZu
+         obDKCOSkWyQjF/fjoX83uJ/Q4zDfmSDLJpgTPtmUC2S3sjAZx0J3M8J3gNUFsZhQekSL
+         oHakngKjtRyaXqZJmHYGHVkAkejTAkWWYSRxCEtTSMG6j7ALPqUV6MOxGvaU8f6GVtmu
+         8LhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682352353; x=1684944353;
+        d=1e100.net; s=20221208; t=1682352575; x=1684944575;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=1CvZ2QldYyTkkWx9jRSazrusB5WwF3WIxPerKea5Ngc=;
-        b=fWTwyfzWqrnZI8IDQKtsXHY4jbYuyTYXNLYpKEmadACQMvMn/3yaH4wrmnrnWoG/Vk
-         DaHDbrpeIKI4Ipoh497XH8mupelQFQVLykHWNIlJTFhuX+IWOOFQmg2mtNroHHC2ljhJ
-         juhZgtSslSRA3OXbV/N4kMz+fe3LHjXr0qib5ei0pO5p9b74Kt61EsYUAt90wtEREQL3
-         ws5Njb8SjYiHHtfCLJdm8qa4IcL7csbhWnU8OOw9F4XDoimJwuJpeLcfeJdzPDvlKKjw
-         0iGOS8h3nhKt3+9GCPBe3Lthz8rrdncndFu3iqwRjykzzj/pYFZcb9qcJgHEEDa5QzzY
-         8mOw==
-X-Gm-Message-State: AAQBX9f/uaHsaExZCAf4PrVYEu9s/GoE/3CwTmysdbZFmOzmHADpJ+y4
-        O82abIfKvvqvOIkxwgsNhWk=
-X-Google-Smtp-Source: AKy350a6W3wwAKt7oF9KTqrs7YaZ3PYcVerC2aVfh7jJOPNQMndoGLDjba2tBF8PIpG5dr9eZdEpnw==
-X-Received: by 2002:a05:6a00:1397:b0:634:db05:d477 with SMTP id t23-20020a056a00139700b00634db05d477mr10671185pfg.10.1682352352755;
-        Mon, 24 Apr 2023 09:05:52 -0700 (PDT)
+        bh=77jx7BmdSWSx2VPdNBcHgN1hcRKlLQ1mnsxyuKfQ7Sg=;
+        b=O3oGj6PCQfe+/4jNkhwzzGDl5wecr4qD7rLpnFgXAhqhYuUYn/smsVX4V55QAgzm9l
+         b+6r31fPbDeTAhPcMaeWAEAbxpdC2E4zf6CWXegcr/M80rfvekRXpRGfEro8hgDFFwnC
+         cKat9bVO6exsDnCprrRXJaSQ1RZwPV3lDBilGplS2jX/ZUS0bv3bxS5w0dAIpJBc7dGo
+         Jx77R5yOcNTdlVIpWgKyqxfe9paQ2W75VIuzNFIl3fPIbvmH96OWPfBZq9rdQ05r8uAO
+         epfklXkffcmT3nP+pV1Ut8kRxnAaojaDRNQT5FLkyhi9heQhZTay+p9zUh8ntA5PihlB
+         +yCA==
+X-Gm-Message-State: AAQBX9fHg7NqknAK3ih05gswGD/zfzPClgeJvYO0I5lTXwjWGRSxMhpT
+        OGeHyAM5lJK5cg8T49KWcMXGWs4bFk0=
+X-Google-Smtp-Source: AKy350ap3PGp2lH+GsLusUnkYsbinXoJh+A5fVzUWc/R/Lom2dnidPNwuAANOOWUqRVMQXHI+fDdsg==
+X-Received: by 2002:a05:6a00:2396:b0:63f:1adb:bf61 with SMTP id f22-20020a056a00239600b0063f1adbbf61mr15198610pfc.18.1682352574652;
+        Mon, 24 Apr 2023 09:09:34 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id f9-20020a056a001ac900b00640d80c8a2bsm1623142pfv.50.2023.04.24.09.05.52
+        by smtp.gmail.com with ESMTPSA id n11-20020a056a00212b00b0063f167b41bdsm6096299pfj.38.2023.04.24.09.09.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 09:05:52 -0700 (PDT)
+        Mon, 24 Apr 2023 09:09:34 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH] blame: use different author name for fake commit
- generated by --contents
-References: <20230421223013.467142-1-jacob.e.keller@intel.com>
-        <xmqqbkjgizcv.fsf@gitster.g>
-        <019057ab-c917-80cd-063b-4871e47dc382@intel.com>
-Date:   Mon, 24 Apr 2023 09:05:52 -0700
-In-Reply-To: <019057ab-c917-80cd-063b-4871e47dc382@intel.com> (Jacob Keller's
-        message of "Fri, 21 Apr 2023 17:11:54 -0700")
-Message-ID: <xmqqh6t5gt9b.fsf@gitster.g>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] Fix memory leak in get_reachable_subset
+References: <20230421234409.1925489-1-mh@glandium.org>
+Date:   Mon, 24 Apr 2023 09:09:33 -0700
+In-Reply-To: <20230421234409.1925489-1-mh@glandium.org> (Mike Hommey's message
+        of "Sat, 22 Apr 2023 08:44:09 +0900")
+Message-ID: <xmqqbkjdgt36.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,60 +66,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Mike Hommey <mh@glandium.org> writes:
 
->>  test_expect_success 'blame working copy' '
->>  	test_when_finished "git restore file" &&
->> -	echo "1A quick brown fox jumps over" >file &&
->> -	echo "another lazy dog" >> file &&
->> +	echo "11A quick brown fox jumps over the" >file &&
->> +	echo "lazy dog" >>file &&
->
-> I think the right fix for this test is to keep the first line (1A) the
-> same, and include the missing "the" I had removed before, and keep the
-> 2nd line as the changed line with "another lazy dog".
+> ---
+>  commit-reach.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Either is fine as long as one line is left intact and the other line
-is modified, as the end result we want is for one to be attributed
-to the floating change while the other one to be attributed to the
-HEAD.
+Missing sign-off?
 
->
-> Will fix in v2, and double check the tests. 
+[jc: adding the author of fcb2c076 (commit-reach: implement
+get_reachable_subset, 2018-11-02) to the CC list]
 
-Thanks.
+> diff --git a/commit-reach.c b/commit-reach.c
+> index 70bde8af05..f15d84566b 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -944,6 +944,8 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+>  		}
+>  	}
+>  
+> +	clear_prio_queue(&queue);
+> +
+>  	clear_commit_marks_many(nr_to, to, PARENT1);
+>  	clear_commit_marks_many(nr_from, from, PARENT2);
 
-> I had run them but my local
-> system sometimes fails the following test:
-
-Hmph, I do not recall seeing t5551 fail but we had seen a fair
-number of flaky http tests, and I would not be surprised if there
-were still remaining flaky tests there.
-
->
->> not ok 46 - passing hostname resolution information works
->> #
->> #               BOGUS_HOST=gitbogusexamplehost.invalid &&
->> #               BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
->> #               test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
->> #               git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
->> #
->
-> I had thought this was the only failure, and that it has something to do
-> with my system configuration (possibly proxy settings) which affect
-> this.. I checked the firewall configuration and it doesn't appear to be
-> that...
->
-> It would be nice to figure out what makes it so the tests fail so that I
-> can make sure tests properly pass on my submissions before sending them
-> in the future.
->
-> Thanks,
-> Jake
->
->
->>  	check_count A 1 "Not Committed Yet" 1
->>  '
->>  
->> 
->> 
+Looking good.
