@@ -2,128 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E936C77B60
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 01:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D26C6FD18
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 02:23:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbjDXBnd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Apr 2023 21:43:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37620 "EHLO
+        id S230251AbjDXCX6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Apr 2023 22:23:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjDXBnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2023 21:43:32 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61BE910CC
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 18:43:31 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-959a3e2dc72so109494166b.2
-        for <git@vger.kernel.org>; Sun, 23 Apr 2023 18:43:31 -0700 (PDT)
+        with ESMTP id S229548AbjDXCX5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2023 22:23:57 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E809D1BE5
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 19:23:55 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b52ad6311so4955750b3a.2
+        for <git@vger.kernel.org>; Sun, 23 Apr 2023 19:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682300610; x=1684892610;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X8KDfWaGOHlEb95j/LuYNy4/nXl7N2bNGQd36UUkBq8=;
-        b=KXkJtU1pR0zyYVAQzW/mDHY8IsJ1Fc4n9EBI2Pcyn42/Q938TKOSxvDILl++5xcoIt
-         ieScwyOnwsvuFw1HJyU3Aq+NJ9A0mWd1nOvhDGQNP17Th64XkjaVso7QSoJ0t77nMpfP
-         i6u2Y70t/9RDApjfAQYPQ4EYXUCpb6Qy/Qnt68YxMOX8zNVL2XbC8oSvisSMDBdcsH3n
-         mM8x+Ky0EjA1Pnq1QjIb5PNsje7CFWekR1nytOt6HkGURNTd8QQY/qDV2Cfr9nzCvx/t
-         UNVUvr3Rx6hj6Fa8n9BSFkO8vx13JgvpsTdLgk4KJ5JtYmrM2Zji+ZV08aQTtqznrtj1
-         EFMg==
+        d=bytedance.com; s=google; t=1682303035; x=1684895035;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2pGGz209kKal0W6JChDAm6CSRM1yLwbRbs45pnuZOQ8=;
+        b=POl4sbLYspwdmdQetYs9m5xN6Xjp70/kPQcBaajvrpmcbCGNbx68AS/Wy40wst7cTq
+         rvcN0eFjBIxWtrkmkDfVfLiSp7C/ZH6H7+ZdD6TKqQaO7KP3PqjJXqqDVxX2kM8ZKpfk
+         Ri9VUW7nwdKJFTu74duclLY63xv7dBNbb9Nh0jZl0j8LrXWsAEl9A5GX2kMa5pN9u4k3
+         q4HCfg8vzo1H8ckEpTl6A9qqMMTtid0ofdPCNriM/Rq/ie9N+54U2MSW33RcgANsJeQ4
+         fjCkYoHPf5UkSJ32/r/bi05ChRBWdTB7pTgjPjQSW5e5hGW1zZfpcdY5avE4dnDnsUHs
+         O4FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682300610; x=1684892610;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X8KDfWaGOHlEb95j/LuYNy4/nXl7N2bNGQd36UUkBq8=;
-        b=Owsjw8tV6Yx93ZJzmmkhyQN/X+8XdKNcyostcPZ9SHQGOdhJzeaFKRtxHhQqWW6gAK
-         bmORvs8Pck+8q+4ThSOaWTto9n9EVQWSU6weGfP8HCxgqVARrAACk8NWzQ2utUgHJhn1
-         IUNrCPku18wIUX6y23UeCmPNPa7EJ0ot79RtZ6ONGb9pTNKdbpfwLPSucbFXWSNG+Ova
-         gEHaA28gUO/hqvB5zMBl3oDP8KTKduSKX9ulUijVw/uNsBXzB7qr4JFX6n8dgpHbd1Tq
-         7lxEEgDlgPEDb5Pngbs924SHsHfihLLp503/d8bvPMPILisdXJ8x02MJS+BX/YW5lprr
-         /Cow==
-X-Gm-Message-State: AAQBX9cWzMQCsY4KzRYQpGgj3ExoWc3X8KvJZkC/mQcEdZa9vTHOq3Ky
-        gUzE1schPy8tR0ty8du485420FRZSG+e4aexoAWGsmsstyI=
-X-Google-Smtp-Source: AKy350b8KFYZIPnrsIhBBlmiOKf1k5/wnyPMUq4HPaUXa+c1L76zfoI20BSCDYFCwXG2GeZ5WoU8xmiTPj+oO3QMbvU=
-X-Received: by 2002:a17:906:8464:b0:953:57a1:55e1 with SMTP id
- hx4-20020a170906846400b0095357a155e1mr8398980ejc.62.1682300609788; Sun, 23
- Apr 2023 18:43:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682303035; x=1684895035;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2pGGz209kKal0W6JChDAm6CSRM1yLwbRbs45pnuZOQ8=;
+        b=MYkMJkKN82JOqKIfC+SV3uWVZrc1z6gic2/Wt3DcZzXFRJdoJi15HJFagsMFeR4M2S
+         gCEgIQ0hY+081c1wHlfP/0WjnmFM75W/m2/OxuSiv4a92HFwQxY5WZovoLjCdJbzmSqT
+         b97MG4iYgLvvstboD+GfREph7hkxLpNSkfesAvPLoGE+BeF0yhWm+zATLnt5DhiU7Duu
+         jsjomVxzCRenPQw4KDD4xsG3G4CJ3V7iNnyv+zIvuOlrzhFk3w24gq07EkJ8OushJpGX
+         Uvuwtd2P3cZtv34kGInvLOkcyagu/y/JyA2Nii7pYhnZ7QIuSRijvqnO4Q4IxD8c8CCI
+         JMWA==
+X-Gm-Message-State: AAQBX9fZme7Ob7QuIqeC52wfvX2/hUQcKuwjoleGSGJLN5EYOmmR1suW
+        whP4ob0OacwUZdTZ4fQ5vDyMqE2MjyGS70QRXCA=
+X-Google-Smtp-Source: AKy350ZBcoOHXGvvR01RIdU/6ebKPrQbv5m+HUZGEdftZte6mIfT1JdJMByXGce2hK5Bt/4P5YSvMQ==
+X-Received: by 2002:a05:6a20:429c:b0:f3:a3b7:ae37 with SMTP id o28-20020a056a20429c00b000f3a3b7ae37mr4437536pzj.29.1682303035246;
+        Sun, 23 Apr 2023 19:23:55 -0700 (PDT)
+Received: from JMHNXMC7VH.bytedance.net ([139.177.225.238])
+        by smtp.gmail.com with ESMTPSA id a22-20020a62d416000000b0063f9de332f8sm1061065pfh.167.2023.04.23.19.23.52
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 23 Apr 2023 19:23:54 -0700 (PDT)
+From:   Han Xin <hanxin.hx@bytedance.com>
+To:     git@vger.kernel.org
+Cc:     Han Xin <hanxin.hx@bytedance.com>, xingxin.xx@bytedance.com,
+        jonathantanmy@google.com, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v1] negotiator/default.c: avoid stack overflow
+Date:   Mon, 24 Apr 2023 10:23:18 +0800
+Message-Id: <20230424022318.80469-1-hanxin.hx@bytedance.com>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
-In-Reply-To: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Sun, 23 Apr 2023 18:43:18 -0700
-Message-ID: <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com>
-Subject: Re: Proposal: tell git a file has been renamed
-To:     Jeremy Morton <admin@game-point.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(By the way, apologies for the stuttering "gitt" typos that seem
-to keep creeping into my messages here. I'm not sure what's
-causing them -- I make a lot of typos but this is abnormal!)
+mark_common() in negotiator/default.c may overflow the stack due to
+recursive function calls. Avoid this by instead recursing using a
+heap-allocated data structure.
 
-On Sat, Apr 22, 2023 at 12:22=E2=80=AFPM Jeremy Morton <admin@game-point.ne=
-t> wrote:
+This is the same case as [1].
 
-> [renames are a problem]
+1. https://lore.kernel.org/git/20221025232934.1504445-1-jonathantanmy@google.com/
 
-I have long wondered if there was a way to improve this
-experience myself.
+Reported-by: Xin Xing <xingxin.xx@bytedance.com>
+Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
+---
+ negotiator/default.c  | 16 ++++++++++++----
+ negotiator/skipping.c |  2 ++
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-(I also note that most of the followup messages up to this point
-have missed the point.  It's true that you can run `git mv` and
-`git commit`, but you've already said that this becomes
-particularly painful when you realize that it's appropriate *after
-the fact*, when you've already made intermediate commits and/or
-staged changes or whatever.)
+diff --git a/negotiator/default.c b/negotiator/default.c
+index f4b78eb47d..6ab7f11409 100644
+--- a/negotiator/default.c
++++ b/negotiator/default.c
+@@ -55,9 +55,15 @@ static int clear_marks(const char *refname, const struct object_id *oid,
+ static void mark_common(struct negotiation_state *ns, struct commit *commit,
+ 		int ancestors_only, int dont_parse)
+ {
+-	if (commit != NULL && !(commit->object.flags & COMMON)) {
++	struct prio_queue queue = { NULL };
++
++	prio_queue_put(&queue, commit);
++	while ((commit = prio_queue_get(&queue))) {
+ 		struct object *o = (struct object *)commit;
+ 
++		if (commit == NULL || (commit->object.flags & COMMON))
++			continue;
++
+ 		if (!ancestors_only)
+ 			o->flags |= COMMON;
+ 
+@@ -70,15 +76,17 @@ static void mark_common(struct negotiation_state *ns, struct commit *commit,
+ 				ns->non_common_revs--;
+ 			if (!o->parsed && !dont_parse)
+ 				if (repo_parse_commit(the_repository, commit))
+-					return;
++					continue;
+ 
++			ancestors_only = 0;
+ 			for (parents = commit->parents;
+ 					parents;
+ 					parents = parents->next)
+-				mark_common(ns, parents->item, 0,
+-					    dont_parse);
++				prio_queue_put(&queue, parents->item);
+ 		}
+ 	}
++
++	clear_prio_queue(&queue);
+ }
+ 
+ /*
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index c7d6ab39bc..3d262b3533 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -108,6 +108,8 @@ static void mark_common(struct data *data, struct commit *seen_commit)
+ 				prio_queue_put(&queue, p->item);
+ 		}
+ 	}
++
++	clear_prio_queue(&queue);
+ }
+ 
+ /*
+-- 
+2.40.0
 
-> The standard answer for this is to rename the file in one commit, then
-> make the changes.  That's fine if you know ahead of time you'll want
-> to do this.  However it's a total PITA if you have a bunch of changes
-> and you realize that a rename has caused this problem.  You now have
-> to back out your changes to the renamed file, add the rename, commit
-> it, then re-apply the changes.
->
-> Could a command be added to git that means you tell Git that counts as
-> a file rename?  Git would add a marker to the staging area that the
-> file has been renamed, and upon commit, would first generate an
-> additional commit for each rename before generating the main commit,
-> ensuring the rename operation counts as an actual rename, and the
-> content's history is maintained.
-
-The index *currently* has no room to store anything like this: it
-is, in effect, just the proposed next commit, stored as a
-flattened tree.  There are, however, extra marker records that
-can be added.  So:
-
-If `git mv` (or a new command) had a flag to say "make a special
-index entry so that the next `git commit` does a double commit",
-we could in fact make this work.  Alternatively, we could have a
-command -- similar to `git commit --only` in effect -- that uses
-the current (HEAD) commit to construct a renames-only commit, in
-which 100%-identical-file matching would (in general) find the
-desired renames -- and make it, perhaps also co-ordinating with
-`git mv` of existing files in the index.  (I'd also like to have
-`git mv --after`, in the same vein as `hg mv --after`; I long ago
-wrote a cheesy script to achieve this, but it would be nice to
-have a proper command.)
-
-On top of this, it might be nice to have a standardized commit
-message and/or other marker (in the commit header?) for a "rename-
-only" commit, which this kind of extra-rename-commit operation
-would use.  Then `git log` and `git blame` and other commands
-could easily detect such commits and default to an automatic
-`--follow` style following, and `git log` might be allowed to omit
-the *display* of such a commit by default, by showing all the
-renames as renames in the subsequent commit (though this would
-presumably require an internal verification step to check for
-spoofed renames that are not in fact rename-only operations).
-
-In any case, this *idea* is easy, like many ideas.  It really
-comes down to implementation.  If someone thinks this is a great
-idea, someone (perhaps me) should work on *implementing* it. :-)
-
-Chris
