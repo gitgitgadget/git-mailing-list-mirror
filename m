@@ -2,96 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32A92C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 20:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9171BC7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 20:17:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232576AbjDXUMh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 16:12:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37506 "EHLO
+        id S232598AbjDXURi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 16:17:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232530AbjDXUMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 16:12:35 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18FA11AD
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:12:26 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-506b2a08877so8441095a12.2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:12:26 -0700 (PDT)
+        with ESMTP id S232580AbjDXURf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 16:17:35 -0400
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC7C4EDE
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:17:33 -0700 (PDT)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-18ecdb1f2aaso573532fac.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682367144; x=1684959144;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQn5SUCUBVUZVBsr68Q0jIVqk9SyhRiZ3uQbqfcUYDE=;
-        b=p8x8x4FuDoYEqzGzExMqhbztc+azx91Cp5TDzj6Gzsx1JepR4o8TLL2det+YOeOUg/
-         xie8WExhH2u/U8wzg/RUkRerPeB4VcRjpQvLu/cAo8E8NqC5+V8rWD0y/0z8ksWwegq7
-         W/YQYOt4j+Xt/7toAYFWAnCUGICXizwCUCDPqvq4X4mfya4TnttmJzqPF2c0BS07Su43
-         4FnopmTlALKVDHhk87aih8X+PKDdQ2oWGfyklu52xgpYal+CTnlmvaJmiWsxo4jBpPAH
-         3hSRNP9Fdz1YpccfVecaIvU9hsErpcpoN7aB0atd1+6U3nKNnXtkX52L7I5JXvpGgZAy
-         Mc3g==
+        d=gmail.com; s=20221208; t=1682367452; x=1684959452;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tf3SS+fpg+okqQP+M6pfZo9xuJY1EoeA9LEUj5cX2FQ=;
+        b=Rm+QCBRqU30TpdCX0+AerkICoik66jV+J3y3ZxOLrtH493VjdKDcNsnvxIhZQDWhrF
+         PA3UmhyFvgjzfeWAKtx0tkkot20Ma9jAKbzPcJB5492mXfFMxqPW4Iqs1Q1TVYKh5xA0
+         xpZMkPPjWn/J/DYUytu5Y/OkuFrfgtDPfnTjKD+fpXfQp4I1U65CvmIhzKffTLYlijvX
+         HfF8/fPKfPE2sf2dAXahcOVJYUYxLI43zBTKJcpNsAvgd6ElRDZLA5bAbFGdXiZrsJm6
+         bp22q7UcRm7Wcz4WRfJr71fMrA7t4nJGsPRcHxMOCB4L5Pj8Xl54yYdUe9Xph4y+Fjy9
+         sfjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682367144; x=1684959144;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JQn5SUCUBVUZVBsr68Q0jIVqk9SyhRiZ3uQbqfcUYDE=;
-        b=UOm8fTOauUFSOvLmlLMwUYBUK+TAPQgA8jLtl85Jq7/7mBDacdfYa2F2CWK1fO9L2S
-         Iioh+/PD8QEH3LnuZmegYULnwOfPvhf5YhfqS/P17EarXdAGjMJj7oPHkfc5kpYxlyoY
-         MVmMExQi8ZryKwKtfDNO8vs2Bo7+srlbFj8INtkyCQM6mHcdBNMBLgX3H1Iqt0oZlWL/
-         /Iruky005tlpz7fziPdKRnAGxJG9NSCPRZm3rK6powv3KVwtFPkjmrZqDeFf2ERBkwbi
-         Mrp+4Kx4Uw1vtDeOAd8tj1ugFajbbGA2IFL6x5/vN5vz6K0Q+KKUmAHfGxoCVRx9fpqS
-         uiYw==
-X-Gm-Message-State: AAQBX9fPbb8kvObi3feXPRKqEp4PkuY2QE27qp7WXKE0+8FeWUSafqhV
-        7xEIuPxmeF+sC/UMMy4yT3DQrap5Yj9x2WEFTfj8M5xkHOY=
-X-Google-Smtp-Source: AKy350afMrBH9+qxCUljC87ksVirwoLqCyen08gKB0zA0s9Yj7hql19TnALrFPWiKCPAXvDAJHCQ66GHMxgeA4FGK6M=
-X-Received: by 2002:a05:6402:1010:b0:4fd:2b04:6e8b with SMTP id
- c16-20020a056402101000b004fd2b046e8bmr15354853edu.29.1682367144238; Mon, 24
- Apr 2023 13:12:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1394.git.1678776364753.gitgitgadget@gmail.com>
- <pull.1394.v2.git.1682070479816.gitgitgadget@gmail.com> <xmqqildpkwnb.fsf@gitster.g>
-In-Reply-To: <xmqqildpkwnb.fsf@gitster.g>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Mon, 24 Apr 2023 21:11:47 +0100
-Message-ID: <CAGJzqsnAj-yHHY9-79WSF7gCNN-x6scrFkXMxC6xQQMHWeeuKw@mail.gmail.com>
-Subject: Re: [PATCH v2] credential: new attribute oauth_refresh_token
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>, Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1682367452; x=1684959452;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tf3SS+fpg+okqQP+M6pfZo9xuJY1EoeA9LEUj5cX2FQ=;
+        b=Hq7K3SNZLJItI9b5GeXitnKUegXfVPQrbvIbGJSon+/zxDSYXN+YvrUcKs5eEkDc+L
+         Stex51IgJPP6XkZaxPuQPrbqbGOsHraS3lVPvjb2S1qP3VDPGGUK6P8C3tAIqwvMzvaW
+         EUgPNulf7hFofBRStcUz5MMtLbqq9eNjdxZ5iJcPMQAr3JjahBfRyRZgU/8mCpIppXx0
+         pYPp9stNDr9T7zwPK54Ie1j9UAaJr9l6FB/c0rC0BNQcQZTW1p+YywBxAvMAIVHhVjv4
+         OoyYXhzMWjnDcD80sGYXOA4h58pptLHnNzuXlIs0GpqaVlM6IpZBnurGFYFEbpAgmBCV
+         nqtg==
+X-Gm-Message-State: AAQBX9ed8r8eG2z8Mhk/t41pLzHSSRxh45oFTKORu0+vsb34ybVw7ysk
+        qIOUG6IBuLBuDsr67Ge0RUY=
+X-Google-Smtp-Source: AKy350an8pkGgtucH4BPmrz8v9MFcZHnJ58ttbKU0iMCNui5c6uqMQXGppOfYnCxEGRlspRtu0Mb+A==
+X-Received: by 2002:a05:6870:ac23:b0:187:a154:eede with SMTP id kw35-20020a056870ac2300b00187a154eedemr9611246oab.4.1682367452392;
+        Mon, 24 Apr 2023 13:17:32 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id v6-20020a056870e28600b0017e0c13b29asm4864664oad.36.2023.04.24.13.17.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Apr 2023 13:17:31 -0700 (PDT)
+Date:   Mon, 24 Apr 2023 14:17:31 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <6446e3db4702d_cd6129452@chronos.notmuch>
+In-Reply-To: <cover.1681906948.git.ps@pks.im>
+References: <cover.1681906948.git.ps@pks.im>
+Subject: Re: [PATCH 0/8] fetch: introduce machine-parseable output
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 21 Apr 2023 at 17:50, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >     Patch v2 adds an additional test
->
-> What we have below shows some differences outside the test, but the
-> range-diff I see locally does show that the change since v1 is
-> purely to the tests.
+Patrick Steinhardt wrote:
+> Parsing the output of fetches is mostly impossible. It prettifies
+> reference names that are about to be updated, doesn't print the old and
+> new object IDs the refs are being updated from and to, and prints all of
+> that information in nice columns. In short, it is designed to be read by
+> humans rather than machines.
+> 
+> This makes it hard to use in a script way though, e.g. to learn about
+> which references actually have been updated or which have not been
+> updated. This patch series intends to fix that by introducing a new
+> machine-parseable interface:
+> 
+> ```
+> $ git fetch --output-format=porcelain --no-progress
+>   fff5a5e7f528b2ed2c335991399a766c2cf01103 af67688dca57999fd848f051eeea1d375ba546b2 refs/remotes/origin/master
+> * 0000000000000000000000000000000000000000 e046fe5a36a970bc14fbfbcb2074a48776f6b671 refs/remotes/origin/x86-rep-insns
+> * 0000000000000000000000000000000000000000 bb81ed6862b864c9eb99447f04d49a84ecb647e5 refs/tags/v6.3-rc4
+> * 0000000000000000000000000000000000000000 83af7b1468c0dca86b4dc9e43e73bfa4f38d9637 refs/tags/v6.3-rc5
+> * 0000000000000000000000000000000000000000 ab3affb8ed84f68638162fe7e6fd4055e15bff5b refs/tags/v6.3-rc6
+> * 0000000000000000000000000000000000000000 1c8c28415e8743368a2b800520a6dd0b22ee6ec2 refs/tags/v6.3-rc7
+> ```
 
-Thank Junio for your reply. Yes I also rebased.
+Makes sense, my only question is what other format could `git fetch` have? I
+think `--format=porcelain` is clear enough.
 
->
-> >  Documentation/git-credential.txt   |  6 ++++++
-> >  builtin/credential-cache--daemon.c |  3 +++
-> >  credential.c                       |  6 ++++++
-> >  credential.h                       |  1 +
-> >  t/lib-credential.sh                | 30 ++++++++++++++++++++++++++++++
-> >  t/t0300-credentials.sh             | 18 ++++++++++++++++++
-> >  t/t0301-credential-cache.sh        |  1 +
-> >  7 files changed, 65 insertions(+)
->
-> Will replace what I kept in 'seen'.
->
-> The original unfortunately did not see anybody interested enough in
-> the topic to review and comment.  Let's hope this time is different
-> ;-)
->
-> THanks.
+-- 
+Felipe Contreras
