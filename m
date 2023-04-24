@@ -2,86 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD2B0C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 20:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32A92C77B61
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 20:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232354AbjDXUFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 16:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34434 "EHLO
+        id S232576AbjDXUMh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 16:12:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232253AbjDXUFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 16:05:42 -0400
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [IPv6:2a0c:5a00:149::26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BAD1FE6
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:05:39 -0700 (PDT)
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-        by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <admin@game-point.net>)
-        id 1pr2RL-00EcLm-CU; Mon, 24 Apr 2023 22:05:35 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=game-point.net; s=selector2; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject;
-        bh=k+Y+NO+lMTI4ksZIOltFf+LC0rFo5YOUE8FWnoMO4i8=; b=IRFiyvLKSkvx71ORxpwMjk9PKB
-        4C6GdzVAGcpPDeJKusQYgj85zbOXX2j1m8+ujq7Kh7sOWpQAtAMi5fsUSZlvVd4xAw3yhkmpAsHog
-        Cv8zGatjX8v/TwAVZjf6QRx5P1gk/Akb3jWjV9ppx2BS5RzOYqpu8kSY9wK7nzvQ1uEXaxEhvkYAL
-        mnHYxuT/5EfWt3MxEg3YXiAGCfOosIOTBwaUM+n4rvOwQnjsboh8zSntONVrPF3NgJ+1juNmb6CCl
-        pr0mWSsiHMzvOaSbIiZY/bRVyBH0kXyPstPZ9gSkriZZIxp2eCmsllzPPFgjrSX2XfEyrpciI8/XV
-        ihnGMq6g==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-        by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <admin@game-point.net>)
-        id 1pr2RK-0004dj-S3; Mon, 24 Apr 2023 22:05:35 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (956903)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1pr2RH-0004cB-9q; Mon, 24 Apr 2023 22:05:31 +0200
-Subject: Re: Proposal: tell git a file has been renamed
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
- <xmqq8rehdq4m.fsf@gitster.g>
-From:   Jeremy Morton <admin@game-point.net>
-Message-ID: <f5d21df1-2f52-8d19-4d2d-fa25ce9efbdc@game-point.net>
-Date:   Mon, 24 Apr 2023 21:05:29 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101
- Firefox/60.0 SeaMonkey/2.53.1
+        with ESMTP id S232530AbjDXUMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 16:12:35 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18FA11AD
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:12:26 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-506b2a08877so8441095a12.2
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 13:12:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682367144; x=1684959144;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JQn5SUCUBVUZVBsr68Q0jIVqk9SyhRiZ3uQbqfcUYDE=;
+        b=p8x8x4FuDoYEqzGzExMqhbztc+azx91Cp5TDzj6Gzsx1JepR4o8TLL2det+YOeOUg/
+         xie8WExhH2u/U8wzg/RUkRerPeB4VcRjpQvLu/cAo8E8NqC5+V8rWD0y/0z8ksWwegq7
+         W/YQYOt4j+Xt/7toAYFWAnCUGICXizwCUCDPqvq4X4mfya4TnttmJzqPF2c0BS07Su43
+         4FnopmTlALKVDHhk87aih8X+PKDdQ2oWGfyklu52xgpYal+CTnlmvaJmiWsxo4jBpPAH
+         3hSRNP9Fdz1YpccfVecaIvU9hsErpcpoN7aB0atd1+6U3nKNnXtkX52L7I5JXvpGgZAy
+         Mc3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682367144; x=1684959144;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JQn5SUCUBVUZVBsr68Q0jIVqk9SyhRiZ3uQbqfcUYDE=;
+        b=UOm8fTOauUFSOvLmlLMwUYBUK+TAPQgA8jLtl85Jq7/7mBDacdfYa2F2CWK1fO9L2S
+         Iioh+/PD8QEH3LnuZmegYULnwOfPvhf5YhfqS/P17EarXdAGjMJj7oPHkfc5kpYxlyoY
+         MVmMExQi8ZryKwKtfDNO8vs2Bo7+srlbFj8INtkyCQM6mHcdBNMBLgX3H1Iqt0oZlWL/
+         /Iruky005tlpz7fziPdKRnAGxJG9NSCPRZm3rK6powv3KVwtFPkjmrZqDeFf2ERBkwbi
+         Mrp+4Kx4Uw1vtDeOAd8tj1ugFajbbGA2IFL6x5/vN5vz6K0Q+KKUmAHfGxoCVRx9fpqS
+         uiYw==
+X-Gm-Message-State: AAQBX9fPbb8kvObi3feXPRKqEp4PkuY2QE27qp7WXKE0+8FeWUSafqhV
+        7xEIuPxmeF+sC/UMMy4yT3DQrap5Yj9x2WEFTfj8M5xkHOY=
+X-Google-Smtp-Source: AKy350afMrBH9+qxCUljC87ksVirwoLqCyen08gKB0zA0s9Yj7hql19TnALrFPWiKCPAXvDAJHCQ66GHMxgeA4FGK6M=
+X-Received: by 2002:a05:6402:1010:b0:4fd:2b04:6e8b with SMTP id
+ c16-20020a056402101000b004fd2b046e8bmr15354853edu.29.1682367144238; Mon, 24
+ Apr 2023 13:12:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq8rehdq4m.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1394.git.1678776364753.gitgitgadget@gmail.com>
+ <pull.1394.v2.git.1682070479816.gitgitgadget@gmail.com> <xmqqildpkwnb.fsf@gitster.g>
+In-Reply-To: <xmqqildpkwnb.fsf@gitster.g>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Mon, 24 Apr 2023 21:11:47 +0100
+Message-ID: <CAGJzqsnAj-yHHY9-79WSF7gCNN-x6scrFkXMxC6xQQMHWeeuKw@mail.gmail.com>
+Subject: Re: [PATCH v2] credential: new attribute oauth_refresh_token
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>, Cheetham <mjcheetham@outlook.com>,
+        Dennington <lessleydennington@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-But if you were doing, say, a git blame for a file, you'd be able to 
-see the commits where its lines were actually last modified even 
-through the rename, rather than a bunch of them being stopped at the 
-"added this file (because it wasn't detected as a rename)" commit, no?
+On Fri, 21 Apr 2023 at 17:50, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> >     Patch v2 adds an additional test
+>
+> What we have below shows some differences outside the test, but the
+> range-diff I see locally does show that the change since v1 is
+> purely to the tests.
 
--- 
-Best regards,
-Jeremy Morton (Jez)
+Thank Junio for your reply. Yes I also rebased.
 
-On 24/04/2023 20:41, Junio C Hamano wrote:
-> Jeremy Morton <admin@game-point.net> writes:
-> 
->> The standard answer for this is to rename the file in one commit, then
->> make the changes.
-> 
-> Oh, by the way, this is a pure myth that would unlikely be helpful
-> in the bigger picture.
-> 
-> When you rename and heavily modify the resulting new path because
-> you have to solve something, such a work would likely be done on the
-> same topic branch.  One step of it may be a pure rename, and other
-> steps may involve heavily changing the renamed result, or you may
-> update the contents in the original and the do a rename at the end,
-> but either way, when you integrate the end result of the whole topic
-> branch into the master history, what such a merge will see is that
-> the original file has disappeared and a new file with contents not
-> at all similar to the disappeared file has appeared.  "pure rename
-> with changes in separate commits" would have no effect when showing
-> such a history with "git log --first-parent -p" for a birds-eye
-> view.
-> 
-> 
+>
+> >  Documentation/git-credential.txt   |  6 ++++++
+> >  builtin/credential-cache--daemon.c |  3 +++
+> >  credential.c                       |  6 ++++++
+> >  credential.h                       |  1 +
+> >  t/lib-credential.sh                | 30 ++++++++++++++++++++++++++++++
+> >  t/t0300-credentials.sh             | 18 ++++++++++++++++++
+> >  t/t0301-credential-cache.sh        |  1 +
+> >  7 files changed, 65 insertions(+)
+>
+> Will replace what I kept in 'seen'.
+>
+> The original unfortunately did not see anybody interested enough in
+> the topic to review and comment.  Let's hope this time is different
+> ;-)
+>
+> THanks.
