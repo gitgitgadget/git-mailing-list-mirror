@@ -2,107 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E758C77B61
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 15:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1400C7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232088AbjDXPp3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 11:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48864 "EHLO
+        id S231775AbjDXQAz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 12:00:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230072AbjDXPp2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 11:45:28 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D25110C3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 08:45:27 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-546ee6030e5so2504420eaf.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 08:45:27 -0700 (PDT)
+        with ESMTP id S229906AbjDXQAx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 12:00:53 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9D96A59
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:00:52 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-63d2ba63dddso3788486b3a.2
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682351127; x=1684943127;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ggo1BN2ihTMc36NzHJUauDA74RTO4ilM+RXkMDKka08=;
-        b=ECaomDC3+O6U16/qnC9I3PDHgJnP13EBCxzsXuA55b7aXW3fyiAdhsAuReeqpTt9pz
-         TCJbAsnSir5nsZHzDDljP0k4ICkCfbI/0LYA5Zf77gke7DKK9SLD8WAmsZKVaGKf8qrR
-         /V/oYbg8Ugz5bbPpQOGeV8vfGsNoDVxGB6X9eCc5HrYFcvl6NurifPPD2QILE5rrurUN
-         IMktVc40/lipRUa5LS4t3QwA+DfPSyGvjtTqKvkk3T0FaWkjY3gQk2jn107cGbtmS4zR
-         JGgs2K9cj4yRNW5r9ntYlfnVMHyXOLDpuZO6A5N835ofK0RtrI2QWuC8gfpKWDyypyt3
-         kQ7g==
+        d=gmail.com; s=20221208; t=1682352052; x=1684944052;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gmuEQ7D44iPWSphfcVTFd7ucdQ65w7h1IstcJ1YYQvQ=;
+        b=P6xwt08M8VCilZO6bLpQe3IhXHgAjvY3W4Q86FiJjrJJIBXxgdqL8G8rx+lKa/OGlc
+         lAZjecA3h20rNirOhjcdUyh3GVIXxT/CzPJ2s+Ti2M6EPu3MZcbvteLuMWGuJ7Vw/BQV
+         Tct6wDsySVbm/KZlu0OymvqR1/jtXvwGnjGvKEdnTmmUA4TFurUkOy9FXPT/sb7zFa8b
+         O/77pTX9VIJEIVjWmgpwauIRqtptqrMzBHUQaJiT9/D8eHfCwadIaRJbXyAzlMG5CrvH
+         /CRqYAFvessOKBXs0exCi6qHv92Ka+SZ0TjgS43QUjx+z8nrUrRcHQNszEI+J4T1Un83
+         o0oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682351127; x=1684943127;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ggo1BN2ihTMc36NzHJUauDA74RTO4ilM+RXkMDKka08=;
-        b=BWHTAHDNp8nnVgSP4ZOWYVIxrIOf3WS1nx8SmsrgATfCzHiULSWxQdHzl0wDeLvEzn
-         hN+HKrh8NQZrr/yQEOg3xDUKvl0LUxm4bHtsW93jlNBTTgbr1qidUH6zV/ZfU/pmaHnO
-         uQZwXVDV8IRtnZ2wRq9xXIQHObHuUnjexIMBoi5Pd9iAAyUlGw91l0uv76o1/KFT2N73
-         3wkzWaae57BGW8VFoSdiJL4x7v+Rwk/7H6PDBFzS8JcCNJj2E51JAXQ6QRoIDqWng7rl
-         v1BY3ZX26RZZLVjU5y/U62OYJTnT2arTj/PDvfyfWtcAX49TEUpw79HypboZxA5ihw7W
-         gAFg==
-X-Gm-Message-State: AAQBX9fFYg/9UF/QTXvjfR5Nfhad0+H3yUO+X1OIRzqPNY3dOV9FcLQH
-        p6DNpOFaOIcnVaLCU6vRMHbsbDyEX5E=
-X-Google-Smtp-Source: AKy350Z47fvEadAf6i4FKUyPxaLkxFgbR0fRo5Cn+Fiz2/g4tQcgHR4GARGzjsmNXAyFRa3HQBFotQ==
-X-Received: by 2002:aca:1905:0:b0:386:a30c:f16a with SMTP id l5-20020aca1905000000b00386a30cf16amr6230537oii.50.1682351126845;
-        Mon, 24 Apr 2023 08:45:26 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id o66-20020acaf045000000b00386b8b1448dsm4682912oih.34.2023.04.24.08.45.26
+        d=1e100.net; s=20221208; t=1682352052; x=1684944052;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gmuEQ7D44iPWSphfcVTFd7ucdQ65w7h1IstcJ1YYQvQ=;
+        b=mGhxe1b5+5SgNCvhlzCXFbtqgp7MaW2dNkJFSqs6PflIsF57SWUvE/c0ku2Ub5NIiI
+         G1QBmqWUScOLwSSSBzsI9TyFiItgk8cRE0Ein98PkRjgBtX5CTJMp0CF1YJeJIPKR9y1
+         VCskMGpSuyUKmaevm9/+zrLnu1Jl7rS4ZbP1et+INaAqO6YraTrjUY1w+YGDypuSwx/U
+         dzjZ14kK6q2B2UWfuwW2TMHj7+mx7VKVw41Xn6ZMIvZPs1zef+EO8nbn0Tw+v3gR1w+6
+         eLxf3vOScbU4AiafAXtj5aVlvSdziBheN9x6AxEWHwoDNPYf4hION3GxkWDGzvRBCdda
+         CqqA==
+X-Gm-Message-State: AAQBX9ewMj1dopLoMOMXzqLCc95Xp66G8Ok86GoBgixgoCTfYHwuzIwO
+        7QsMbeCaM/k1tbqFN+ZSYIU=
+X-Google-Smtp-Source: AKy350Z3+zw/a+j7e+E2uDKSf6N92gbRi+SEIDrhWlry6ze/GWUfVCXdSFQiaacTYyIEyg1s2i/58g==
+X-Received: by 2002:a05:6a20:8424:b0:ef:6c30:5798 with SMTP id c36-20020a056a20842400b000ef6c305798mr18408358pzd.27.1682352052071;
+        Mon, 24 Apr 2023 09:00:52 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id t10-20020a63460a000000b004fab4455748sm6694702pga.75.2023.04.24.09.00.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 08:45:26 -0700 (PDT)
-Date:   Mon, 24 Apr 2023 09:45:25 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Xavier Roche <xavier.roche@algolia.com>, git@vger.kernel.org
-Message-ID: <6446a415925b2_393129470@chronos.notmuch>
-In-Reply-To: <CAE9vp3+_PB0_rA81eWVCF=iXnWjrUVY=1G3=1JPUbcaw2u95Rg@mail.gmail.com>
-References: <CAE9vp3+_PB0_rA81eWVCF=iXnWjrUVY=1G3=1JPUbcaw2u95Rg@mail.gmail.com>
-Subject: Re: Reference the master/main branch with @{m}
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Mon, 24 Apr 2023 09:00:51 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
+Subject: Re: [PATCH v5] write-tree: optimize sparse integration
+References: <20230421004108.32554-1-cheskaqiqi@gmail.com>
+        <20230423071243.1863977-1-cheskaqiqi@gmail.com>
+Date:   Mon, 24 Apr 2023 09:00:51 -0700
+In-Reply-To: <20230423071243.1863977-1-cheskaqiqi@gmail.com> (Shuqi Liang's
+        message of "Sun, 23 Apr 2023 03:12:43 -0400")
+Message-ID: <xmqqleihgtho.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Xavier Roche wrote:
-> With git, you can reference the upstream branch with the @{upstream}
-> or @{u} shorthand
-> (https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches)
-> 
-> With master/main branch varying among repositories, it would be handy
-> to have a "main/master" reference, such as @{main} or @{m}
-> 
-> Would that make sense?
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-No, it would not make sense.
+> 'prepare_repo_settings()' needs to be run inside a repository. Ensure
+> that the code checks for the presence of a repository before calling
+> this function.
 
-The `@{upstream}` mark is itself a shorthand for `HEAD@{upstream}`, so it
-depends on the value of `HEAD`. For example if the current branch is is
-"hot-fix-1", "@{upstream}" could be "master", but if the current branch is
-"feature-1", "@{upstream}" could be "dev": "hot-fix-1@{upstream}" !=
-"feature-1@{upstream}".
+Can you explain why this change is needed?
 
-`HEAD@{m}` does not make sense, because it would be the same for all branches.
+That is, if the caller made sure if this codepath is entered only
+when inside a repository, such a "we need to refrain from doing
+this" becomes unnecessary.  Describe under what condition the
+control passes this section with !the_repository->gitdir, e.g. "When
+the command is run in such and such way outside a repository, the
+control reaches this position but prepare_repo_settings() cannot be
+blindly called".
 
-We could have a "DEFAULT" pseudo-branch, or maybe even "default", but this is
-not necessary, because that's something that you can already achieve.
+I suspect that it is a bug if the control reaches this point without
+having a repository, as the call to write_index_as_tree() would be
+already failing if we were not in a repository, but there is no such
+a bug, and you did not introduce one with your previous changes to
+this codepath that you need to fix here.  You can observe a few
+things:
 
-Your personal local repository does not have to mirror the remote repository.
+ - "write-tree" in the git.c::commands[] table has RUN_SETUP.
 
-You can have a local "default" branch whose upstream branch is "master" or
-"main" (depending on the remote).
+ - git.c::run_builtin() is repsonsible for calling cmd_write_tree();
+   what happens before it calls the function?  For a command with
+   RUN_SETUP set, unless the command line argument is "-h" (that is,
+   "git write-tree -h" is run), setup_git_directory() is called.
 
-This is what I do. If I clone a repository that uses "main", I simply rename
-the default branch in my local repository to "master".
+ - setup_git_directory() dies unless run in a repository.
 
-Arguably this is something that `git clone` should do by default: if I have
-configured `init.defaultbranch=master`, `git clone` should do `git clone -b
-master` by default.
+ - git.c::run_builtin() calls setup_git_directory_gently() when the
+   command line argument is "-h" and it does not die even run
+   outside a repository.  However, before the code you touched,
+   there is a call to parse_options().
 
-Either way, doing `git branch -m master` in the tiny minority of repos that
-don't use "master" as the default branch seems like a marginal effort to me.
+ - parse_options() called for the command line argument "-h" shows a
+   short help and then exits.
 
-Cheers.
+So...?
 
--- 
-Felipe Contreras
+Also when starting to talk about totally different things (like, you
+were discussing the change to write_tree.c to avoid segfaulting when
+run outside a repository, but now you are going to talk about the
+title of one test piece), please make sure it is clear for readers.
+A blank line here may be appropriate.
+
+> 'write-tree on all' had an unclear meaning of 'on all'.
+> Change the test name to simply 'write-tree'. Add a baseline
+> 'test_all_match git write-tree' before making any changes to the index,
+> providing a reference point for the 'write-tree' prior to any
+> modifications. Add a comparison of the output of
+> 'git status --porcelain=v2' to test the working tree after 'write-tree'
+> exits. Ensure SKIP_WORKTREE files weren't materialized on disk by using
+> "test_path_is_missing".
+
+All of the above may be easier to read in a bulletted list form,
+e.g.
+
+ * 'on all' in the title of the test 'write-tree on all' was
+   unclear; remove it.
+
+ * test the baseline test_all_match git write-tree" before doing
+   anything else.
+
+ ...
+
+
+
+> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+> ---
+>
+> * Update commit message.
+
+OK.
+
+> * 'command_requires_full_index' to be set after 'parse_options'.
+
+This does not match what we see in this patch.
+
+> * Remove trailing whitespace.
+
+OK.  But there is a new line with a trailing whitespace before the
+line that says # check that SKIP_WORKTREE files are not materialized"
+in the test.
+
+Thanks.
