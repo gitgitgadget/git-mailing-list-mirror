@@ -2,64 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1400C7618E
-	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3211AC7618E
+	for <git@archiver.kernel.org>; Mon, 24 Apr 2023 16:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbjDXQAz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Apr 2023 12:00:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59330 "EHLO
+        id S231886AbjDXQFz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Apr 2023 12:05:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbjDXQAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2023 12:00:53 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9D96A59
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:00:52 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-63d2ba63dddso3788486b3a.2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:00:52 -0700 (PDT)
+        with ESMTP id S231625AbjDXQFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2023 12:05:54 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 698CE5FE4
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:05:53 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b4a64c72bso3781758b3a.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 09:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682352052; x=1684944052;
+        d=gmail.com; s=20221208; t=1682352353; x=1684944353;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gmuEQ7D44iPWSphfcVTFd7ucdQ65w7h1IstcJ1YYQvQ=;
-        b=P6xwt08M8VCilZO6bLpQe3IhXHgAjvY3W4Q86FiJjrJJIBXxgdqL8G8rx+lKa/OGlc
-         lAZjecA3h20rNirOhjcdUyh3GVIXxT/CzPJ2s+Ti2M6EPu3MZcbvteLuMWGuJ7Vw/BQV
-         Tct6wDsySVbm/KZlu0OymvqR1/jtXvwGnjGvKEdnTmmUA4TFurUkOy9FXPT/sb7zFa8b
-         O/77pTX9VIJEIVjWmgpwauIRqtptqrMzBHUQaJiT9/D8eHfCwadIaRJbXyAzlMG5CrvH
-         /CRqYAFvessOKBXs0exCi6qHv92Ka+SZ0TjgS43QUjx+z8nrUrRcHQNszEI+J4T1Un83
-         o0oQ==
+        bh=1CvZ2QldYyTkkWx9jRSazrusB5WwF3WIxPerKea5Ngc=;
+        b=smGMbbA6XS/RLnSa0XyZDcEQSw5T7adpTDAHupLktoI9CihA5f/5r8rSjSeNRR6Hyd
+         Bmxn0/XNdu0yqJZQcUEom1daS86idsvUpDzsrRbTgpimS4f0i365/4cY8AQ5OKrPQhh5
+         WZ1fuD5MNmgB9ZfB9KrivDBI+Q3HVELuOll4t+wpzPOvFAKSkRleu9U1mV9IwpuBuPod
+         xeCUaTtv3NfZlYAOqG+JeuwE9BNSQ5Nl1lSkTSzAylBRmsnkN+wGY2cZwNCASQ9xa77z
+         9765u7bclsm/h28cNhaiZ8YbRoI18IpsEHuNq8JJ4s59LPcmOpDGUVGDA/2ZJMeJ4jPd
+         xnCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682352052; x=1684944052;
+        d=1e100.net; s=20221208; t=1682352353; x=1684944353;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=gmuEQ7D44iPWSphfcVTFd7ucdQ65w7h1IstcJ1YYQvQ=;
-        b=mGhxe1b5+5SgNCvhlzCXFbtqgp7MaW2dNkJFSqs6PflIsF57SWUvE/c0ku2Ub5NIiI
-         G1QBmqWUScOLwSSSBzsI9TyFiItgk8cRE0Ein98PkRjgBtX5CTJMp0CF1YJeJIPKR9y1
-         VCskMGpSuyUKmaevm9/+zrLnu1Jl7rS4ZbP1et+INaAqO6YraTrjUY1w+YGDypuSwx/U
-         dzjZ14kK6q2B2UWfuwW2TMHj7+mx7VKVw41Xn6ZMIvZPs1zef+EO8nbn0Tw+v3gR1w+6
-         eLxf3vOScbU4AiafAXtj5aVlvSdziBheN9x6AxEWHwoDNPYf4hION3GxkWDGzvRBCdda
-         CqqA==
-X-Gm-Message-State: AAQBX9ewMj1dopLoMOMXzqLCc95Xp66G8Ok86GoBgixgoCTfYHwuzIwO
-        7QsMbeCaM/k1tbqFN+ZSYIU=
-X-Google-Smtp-Source: AKy350Z3+zw/a+j7e+E2uDKSf6N92gbRi+SEIDrhWlry6ze/GWUfVCXdSFQiaacTYyIEyg1s2i/58g==
-X-Received: by 2002:a05:6a20:8424:b0:ef:6c30:5798 with SMTP id c36-20020a056a20842400b000ef6c305798mr18408358pzd.27.1682352052071;
-        Mon, 24 Apr 2023 09:00:52 -0700 (PDT)
+        bh=1CvZ2QldYyTkkWx9jRSazrusB5WwF3WIxPerKea5Ngc=;
+        b=fWTwyfzWqrnZI8IDQKtsXHY4jbYuyTYXNLYpKEmadACQMvMn/3yaH4wrmnrnWoG/Vk
+         DaHDbrpeIKI4Ipoh497XH8mupelQFQVLykHWNIlJTFhuX+IWOOFQmg2mtNroHHC2ljhJ
+         juhZgtSslSRA3OXbV/N4kMz+fe3LHjXr0qib5ei0pO5p9b74Kt61EsYUAt90wtEREQL3
+         ws5Njb8SjYiHHtfCLJdm8qa4IcL7csbhWnU8OOw9F4XDoimJwuJpeLcfeJdzPDvlKKjw
+         0iGOS8h3nhKt3+9GCPBe3Lthz8rrdncndFu3iqwRjykzzj/pYFZcb9qcJgHEEDa5QzzY
+         8mOw==
+X-Gm-Message-State: AAQBX9f/uaHsaExZCAf4PrVYEu9s/GoE/3CwTmysdbZFmOzmHADpJ+y4
+        O82abIfKvvqvOIkxwgsNhWk=
+X-Google-Smtp-Source: AKy350a6W3wwAKt7oF9KTqrs7YaZ3PYcVerC2aVfh7jJOPNQMndoGLDjba2tBF8PIpG5dr9eZdEpnw==
+X-Received: by 2002:a05:6a00:1397:b0:634:db05:d477 with SMTP id t23-20020a056a00139700b00634db05d477mr10671185pfg.10.1682352352755;
+        Mon, 24 Apr 2023 09:05:52 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id t10-20020a63460a000000b004fab4455748sm6694702pga.75.2023.04.24.09.00.51
+        by smtp.gmail.com with ESMTPSA id f9-20020a056a001ac900b00640d80c8a2bsm1623142pfv.50.2023.04.24.09.05.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 09:00:51 -0700 (PDT)
+        Mon, 24 Apr 2023 09:05:52 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
-Subject: Re: [PATCH v5] write-tree: optimize sparse integration
-References: <20230421004108.32554-1-cheskaqiqi@gmail.com>
-        <20230423071243.1863977-1-cheskaqiqi@gmail.com>
-Date:   Mon, 24 Apr 2023 09:00:51 -0700
-In-Reply-To: <20230423071243.1863977-1-cheskaqiqi@gmail.com> (Shuqi Liang's
-        message of "Sun, 23 Apr 2023 03:12:43 -0400")
-Message-ID: <xmqqleihgtho.fsf@gitster.g>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH] blame: use different author name for fake commit
+ generated by --contents
+References: <20230421223013.467142-1-jacob.e.keller@intel.com>
+        <xmqqbkjgizcv.fsf@gitster.g>
+        <019057ab-c917-80cd-063b-4871e47dc382@intel.com>
+Date:   Mon, 24 Apr 2023 09:05:52 -0700
+In-Reply-To: <019057ab-c917-80cd-063b-4871e47dc382@intel.com> (Jacob Keller's
+        message of "Fri, 21 Apr 2023 17:11:54 -0700")
+Message-ID: <xmqqh6t5gt9b.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,91 +70,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> 'prepare_repo_settings()' needs to be run inside a repository. Ensure
-> that the code checks for the presence of a repository before calling
-> this function.
-
-Can you explain why this change is needed?
-
-That is, if the caller made sure if this codepath is entered only
-when inside a repository, such a "we need to refrain from doing
-this" becomes unnecessary.  Describe under what condition the
-control passes this section with !the_repository->gitdir, e.g. "When
-the command is run in such and such way outside a repository, the
-control reaches this position but prepare_repo_settings() cannot be
-blindly called".
-
-I suspect that it is a bug if the control reaches this point without
-having a repository, as the call to write_index_as_tree() would be
-already failing if we were not in a repository, but there is no such
-a bug, and you did not introduce one with your previous changes to
-this codepath that you need to fix here.  You can observe a few
-things:
-
- - "write-tree" in the git.c::commands[] table has RUN_SETUP.
-
- - git.c::run_builtin() is repsonsible for calling cmd_write_tree();
-   what happens before it calls the function?  For a command with
-   RUN_SETUP set, unless the command line argument is "-h" (that is,
-   "git write-tree -h" is run), setup_git_directory() is called.
-
- - setup_git_directory() dies unless run in a repository.
-
- - git.c::run_builtin() calls setup_git_directory_gently() when the
-   command line argument is "-h" and it does not die even run
-   outside a repository.  However, before the code you touched,
-   there is a call to parse_options().
-
- - parse_options() called for the command line argument "-h" shows a
-   short help and then exits.
-
-So...?
-
-Also when starting to talk about totally different things (like, you
-were discussing the change to write_tree.c to avoid segfaulting when
-run outside a repository, but now you are going to talk about the
-title of one test piece), please make sure it is clear for readers.
-A blank line here may be appropriate.
-
-> 'write-tree on all' had an unclear meaning of 'on all'.
-> Change the test name to simply 'write-tree'. Add a baseline
-> 'test_all_match git write-tree' before making any changes to the index,
-> providing a reference point for the 'write-tree' prior to any
-> modifications. Add a comparison of the output of
-> 'git status --porcelain=v2' to test the working tree after 'write-tree'
-> exits. Ensure SKIP_WORKTREE files weren't materialized on disk by using
-> "test_path_is_missing".
-
-All of the above may be easier to read in a bulletted list form,
-e.g.
-
- * 'on all' in the title of the test 'write-tree on all' was
-   unclear; remove it.
-
- * test the baseline test_all_match git write-tree" before doing
-   anything else.
-
- ...
-
-
-
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
+>>  test_expect_success 'blame working copy' '
+>>  	test_when_finished "git restore file" &&
+>> -	echo "1A quick brown fox jumps over" >file &&
+>> -	echo "another lazy dog" >> file &&
+>> +	echo "11A quick brown fox jumps over the" >file &&
+>> +	echo "lazy dog" >>file &&
 >
-> * Update commit message.
+> I think the right fix for this test is to keep the first line (1A) the
+> same, and include the missing "the" I had removed before, and keep the
+> 2nd line as the changed line with "another lazy dog".
 
-OK.
+Either is fine as long as one line is left intact and the other line
+is modified, as the end result we want is for one to be attributed
+to the floating change while the other one to be attributed to the
+HEAD.
 
-> * 'command_requires_full_index' to be set after 'parse_options'.
-
-This does not match what we see in this patch.
-
-> * Remove trailing whitespace.
-
-OK.  But there is a new line with a trailing whitespace before the
-line that says # check that SKIP_WORKTREE files are not materialized"
-in the test.
+>
+> Will fix in v2, and double check the tests. 
 
 Thanks.
+
+> I had run them but my local
+> system sometimes fails the following test:
+
+Hmph, I do not recall seeing t5551 fail but we had seen a fair
+number of flaky http tests, and I would not be surprised if there
+were still remaining flaky tests there.
+
+>
+>> not ok 46 - passing hostname resolution information works
+>> #
+>> #               BOGUS_HOST=gitbogusexamplehost.invalid &&
+>> #               BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
+>> #               test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
+>> #               git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
+>> #
+>
+> I had thought this was the only failure, and that it has something to do
+> with my system configuration (possibly proxy settings) which affect
+> this.. I checked the firewall configuration and it doesn't appear to be
+> that...
+>
+> It would be nice to figure out what makes it so the tests fail so that I
+> can make sure tests properly pass on my submissions before sending them
+> in the future.
+>
+> Thanks,
+> Jake
+>
+>
+>>  	check_count A 1 "Not Committed Yet" 1
+>>  '
+>>  
+>> 
+>> 
