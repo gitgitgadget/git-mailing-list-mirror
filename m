@@ -2,135 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 829B5C6FD18
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 16:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC550C6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 16:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234155AbjDYQ0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 12:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58438 "EHLO
+        id S234510AbjDYQ0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 12:26:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234106AbjDYQ0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 12:26:13 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D881816F09
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:25:38 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1a66888cb89so47952995ad.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:25:38 -0700 (PDT)
+        with ESMTP id S234211AbjDYQ0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 12:26:51 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03C1B2685
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:26:51 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-74dd7f52f18so1692217385a.0
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:26:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682439936; x=1685031936;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0Zk7kzrDRtBMi2c4Bu2LzirjGOH2GjsryrTEUcyl26E=;
-        b=hTYB9DLt5myug7hnRlpJRXRJ0UvBk2GRZY0E/QkO0sGqwTuB7Iq6hAyPj0DNvz3Myb
-         x33+EIzqNi4Se48TI4Koj0WG7g0jb3oag2yZU5Spz/ZUEgmUipsU86z0pVL3FxR6//QN
-         kxaqiS2Zr+icHFY46cR1DdLQyR2JV3Kl7VXyqhihtf1spnEG8rHWeGd30s+2CsHlrV47
-         hCV716Etui7I3KDi6cRHGwKQgR4wzmbXlZqR4/B+0ELBpjcIVe48P/Gy4RS6t72chGv4
-         JhnNVxirlJQRsHCCy4mpxWpDytzinhwaDJnFd7JgVj5NUxUggPEWE11wdQw64Rb03v3U
-         bpFQ==
+        d=gmail.com; s=20221208; t=1682440010; x=1685032010;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6YI9Z4pzZRkLFu/prKwx1UDCqvmXBO0e2PZ8BnmfPVc=;
+        b=o6Hk54eX6evpz2oZdv4nmKjWfLDI+qvBmhjazokF1jtOBAhhdk1rj9EfArEvsiWoAv
+         nbJRXm5dYp+zYUwR1DSQ0pr+NekoxhAAKy948toxmR+81H0oJCyz+N26BbubrxNE1mFw
+         qD+GHxpjFQW9R1UWZZ5Y5o/3pq99NYioyNxaobtSGGlaZ9j/zDyYYDzkQFhY8ltxZOX6
+         PQQAMUU2TAW6Ixkc5uLWpr6Io7DZm0YVuyOgnOjwf2Lkr/6OXUnb9tp6LFlJ1mENFIpd
+         rtswaOX6MmvdqUUDCyh7SQKUOYeWHpI3bGBeNFQdBqeoUf0ZVw0aPjFlAoOi2abrUeZy
+         Bi7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682439936; x=1685031936;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0Zk7kzrDRtBMi2c4Bu2LzirjGOH2GjsryrTEUcyl26E=;
-        b=UcJmV1JRxV0YOsDUMUE9ql/gDaBXUjNS4XpjagioL8CiG3ehr5qZiMOi9uCw8zIZzc
-         dQHCvm2Lm4JLZvSsdD7rL6Kh53SfT5s4iwm2T+TodpeADe2dOc5VdpWG9MSK6862OvUz
-         Ey6x5PQuH5nJgYMH1Ei3zv3ZEkoLm3LX/qP8i4K0keCVT2aX4Bn/O1N2pC74LzIRQ+nR
-         bzYqOuPQIp3w+m03/g2NC7NcGEQoQ4qArJFXJSoM7GaKEyDIAoX/4nkvaQs87xw1XJ6R
-         8Pv4vVHOLy6DpG+ze/Cq7ICIh4Xj2dONf82g7MWsEdph0hmpftpVYKMHJ3HZS2KyBj4v
-         UGEA==
-X-Gm-Message-State: AAQBX9cBdo0aF22sARX53G4rbiOHnWumf35s9TKWbO3nz9FSUbYmy+uz
-        go+/ubx5jI0whFEaeYaTDws=
-X-Google-Smtp-Source: AKy350YsQiJ/WyET62xQ8wNXXUxWeD4VRLkceGw20i0IQp83fdD4ClkipMkAA76/jSGrm821ZEfyqQ==
-X-Received: by 2002:a17:902:ecc8:b0:1a6:f5d5:b809 with SMTP id a8-20020a170902ecc800b001a6f5d5b809mr23468621plh.1.1682439936386;
-        Tue, 25 Apr 2023 09:25:36 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id jm23-20020a17090304d700b001a1faed8707sm1635766plb.63.2023.04.25.09.25.35
+        d=1e100.net; s=20221208; t=1682440010; x=1685032010;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6YI9Z4pzZRkLFu/prKwx1UDCqvmXBO0e2PZ8BnmfPVc=;
+        b=O35OXuWo8HYX3TG7c6GLI7cllVjJsCxmwz28JaUadydx3StsPV6E03wo1L536wMsxH
+         4/dQjdk0Lw9lum3jXQLJFCbUX2BJVUflbugLOE+ItKLJQNWBhFiZ/XFaKKp/IP2QtZOR
+         jtSmaEg9L5rJLRIUoq2u19sSTaKz4fhCP9l+EachAbRizKLnL5U1RjCXbM60Bx5V0lk4
+         Gu7IuHtV7fTK0cZq+PwxbSxbTETjQfQsIMVzGG3obQD5gKmUmdOToW8fv6s9t9f1zs3d
+         eBuralOE86CA8t49Uv/V2P52wfeVdAqEJ4x05gutj7ifWCd5eEBn2UWVvMyyZPdm57YF
+         P2PA==
+X-Gm-Message-State: AAQBX9dt+W5gBvrjqhJDw8kgamFHqgxcSbwQKT7Xd1Kl9v4hAOFFhdO+
+        SU9+hENqg9pCzySC7vlZb7xbAqHWSM4=
+X-Google-Smtp-Source: AKy350bzAVPKuFW7gHFqBzXLyNKtn+i4A+w2Tck1g29tYDs1+eb4Tio0J7MHz+uxxFwX/iSMJmoYrg==
+X-Received: by 2002:a05:622a:214:b0:3ef:6e44:48f7 with SMTP id b20-20020a05622a021400b003ef6e4448f7mr17969623qtx.12.1682440009896;
+        Tue, 25 Apr 2023 09:26:49 -0700 (PDT)
+Received: from localhost.localdomain ([2607:fad8:4:3::1003])
+        by smtp.gmail.com with ESMTPSA id m13-20020ac807cd000000b003ef311b39d7sm4535544qth.96.2023.04.25.09.26.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 09:25:35 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v8 3/6] t3321: add test cases about the notes stripspace
- behavior
-References: <cover.1682429602.git.dyroneteng@gmail.com>
-        <6dfb5bf294dd4038290a4945706c81aececc6d4d.1682429602.git.dyroneteng@gmail.com>
-Date:   Tue, 25 Apr 2023 09:25:35 -0700
-In-Reply-To: <6dfb5bf294dd4038290a4945706c81aececc6d4d.1682429602.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Tue, 25 Apr 2023 21:34:38 +0800")
-Message-ID: <xmqqjzy03p4w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 25 Apr 2023 09:26:49 -0700 (PDT)
+From:   Maxim Cournoyer <maxim.cournoyer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Maxim Cournoyer <maxim.cournoyer@gmail.com>
+Subject: [PATCH v2 0/2] send-email: add --header-cmd option
+Date:   Tue, 25 Apr 2023 12:26:29 -0400
+Message-Id: <20230425162631.13684-1-maxim.cournoyer@gmail.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <xmqqh6t57x0y.fsf@gitster.g>
+References: <xmqqh6t57x0y.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Hello,
 
-> From: Teng Long <dyroneteng@gmail.com>
->
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  t/t3321-notes-stripspace.sh | 291 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 291 insertions(+)
->  create mode 100755 t/t3321-notes-stripspace.sh
+This v2 addresses most of the review comments from Junio (thanks!).
+It clarifies the documentation text and postprocesses the headers,
+adding support for multiline headers.
 
-Looks quite thorough.
+Thanks,
 
-> diff --git a/t/t3321-notes-stripspace.sh b/t/t3321-notes-stripspace.sh
-> new file mode 100755
-> index 00000000..7c26b184
-> --- /dev/null
-> +++ b/t/t3321-notes-stripspace.sh
-> @@ -0,0 +1,291 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2007 Teng Long
+Maxim Cournoyer (2):
+  send-email: extract execute_cmd from recipients_cmd
+  send-email: add --header-cmd option
 
-It's 2023 now.
+ Documentation/config/sendemail.txt |  1 +
+ Documentation/git-send-email.txt   |  8 ++++
+ git-send-email.perl                | 74 +++++++++++++++++++++++-------
+ t/t9001-send-email.sh              | 21 ++++++++-
+ 4 files changed, 85 insertions(+), 19 deletions(-)
 
-> +test_expect_success 'add note by editor' '
-> +	test_when_finished "git notes remove" &&
-> +	cat >expect <<-EOF &&
-> +		first-line
-> +
-> +		second-line
-> +	EOF
-> ...
-> +test_expect_success 'append note by specifying multiple "-m"' '
-> +	test_when_finished "git notes remove" &&
-> +	cat >expect <<-EOF &&
-> +	first-line
-> +
-> +	second-line
-> +	EOF
+Diff-intervalle contre v1 :
+1:  216b40c1b8 = 1:  216b40c1b8 send-email: extract execute_cmd from recipients_cmd
+2:  332d8ac4fe = 2:  332d8ac4fe send-email: add --header-cmd option
 
-Inconsistent indentation confuses readers if the author meant
-something unexplained by the difference between the two.  Stick to
-one style (I personally prefer the "indent to the same level as the
-starting 'cat' and ending 'EOF'" but it is OK to pick the other one,
-as long as it is consistent within a single test script).
+base-commit: 7580f92ffa970b9484ac214f7b53cec5e26ca4bc
+-- 
+2.39.2
 
-> +	cat >note-file <<-EOF &&
-> +		${LF}
-> +		first-line
-> +		${MULTI_LF}
-> +		second-line
-> +		${LF}
-> +	EOF
-
-This is a bit misleading, as there are TWO blank lines before the
-"first-line" (one from the here text itself, the other is from
-${LF}).  
-
-I do not think it matters too much, because the point of stripspace
-is to remove any number of leading or trailing blank lines, and
-squash one or more blank lines elsewhere into one, so having two
-blank lines at the beginning or at the end of the file is just as
-good an example as having a single blank line.  I am mentioning it
-primarily because I had to spend some time thinking about ways to
-make it less misleading.
