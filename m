@@ -2,93 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B694C77B61
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 21:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D698C77B7C
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 21:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236310AbjDYVDQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 17:03:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52880 "EHLO
+        id S236303AbjDYVWv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 17:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236304AbjDYVDL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 17:03:11 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF7D417DD6
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:03:10 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-b99e0ffbabbso2710645276.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:03:10 -0700 (PDT)
+        with ESMTP id S232182AbjDYVWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 17:22:49 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4155616F34
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:22:48 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-5062c6aed59so7332a12.1
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682456590; x=1685048590;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=F5yb4gODjeJ7kU9xzfP1353l1zapJ2bz9DpwBG4wS+Y=;
-        b=3ghhj0C/3T9rTKHCtjQutNf6txvQB0qiFXa/ZhEuEhbaAWd+vOj72NxKSZKyppwLwk
-         VTgZ20M110vUvtSz+aT9Vdg3LMSWLdVGpPij5nfeQLw7sGkxQvLwSkH27D8leU+nlQ5I
-         iEUlaKzETwFBAKUFZu5a2NbgXoN7qQYr1WJ9//w3h1jJDJkYq1ehBAGKzedLR1YaKg6D
-         9b/suGcKxTuAD+UXpaRM1fff3MJI1UabpD8uatlrA9WnjDuT/YByIbDnkMoH0iJTtGPq
-         28MMdzxeGuS8j6Nk50/EGn+Jzr5pGf/3Y/TGdWyk8Ths9hJ5lfzayOkGm/mwcUmwbj+e
-         DyFA==
+        d=google.com; s=20221208; t=1682457766; x=1685049766;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UOntKFKhDEkAjqcoGJjVk6tiiwsU5YHMxpMiawiyaWQ=;
+        b=usvlUI/p6+EcI52L9B3OP14NDiEEylrONV5ltl7WV61D1VfZvKAfmZR4cHmHQrENP9
+         oUwaTS/zecHdp0JGsk5eBnAZwp/QwZJBcPu2ifLvJRkiWj8T6+RCk7FS+zgYXzZhKHBw
+         JTwdqTOAtNY0hneTI3QGupfFNBfTNDXyy3eT6vj4XaUJ7yw/BzkglmESNAjd194nCBIc
+         5/Lz4SbigmoPyIoSaC2j7gvylCqGt3/ic98wEclTko76hAXfOJWHqYx0BIrdXQHG92Q4
+         kuaINYj6YWtrBCyTXIGtHUFiVzw5AKxjsy3RWcJLKf0DK4Qgt4laTFQkXJOrN12Hubkj
+         TgJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682456590; x=1685048590;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F5yb4gODjeJ7kU9xzfP1353l1zapJ2bz9DpwBG4wS+Y=;
-        b=UL7fWAcsMydgdbtgTr0US/f61iFjtMuPLgZvV69fLB68mRd+fu1eoDZOn7+6wurSZs
-         VwfOE0CXR6otdXVqqpuvtlyrCpThwm/Bt8GCYKFBHPcVvIwD6MOuVm9+0ekthrQ+u1+Z
-         lAKf9LkrHqvCrqFnpYktlOHmNVcz08l0hvDJF+0Y33GmFvRLMf4BtgI0fav9PHsAKK2e
-         U/ypmvRn3PlXPvYJ/GnR9JgVo0hPEJ+QzRVoxV+d3IUTehPfCLWLxgZUfWBexBWjL4rg
-         IvcZj+gC072UwDEhtlAMCrH1xWO45n4xCV2hbinNhhN2Me9kMQ9SlHxh/f4cV4C6HGyw
-         yYfQ==
-X-Gm-Message-State: AAQBX9clap62tPKde0tKBWs1nvCIprvg092yKTizKdJyRIp5jRvk5XhJ
-        UUchOF5PfwitBs9eNOSF8jVNZA==
-X-Google-Smtp-Source: AKy350bs45P4Ahjjal16TxPpRjYJlhZZETkMx+tO0qbKissIfEMDkDsR4rKYFWWZmEkQDc5IBhPAkA==
-X-Received: by 2002:a25:6905:0:b0:b92:3993:d34f with SMTP id e5-20020a256905000000b00b923993d34fmr12671360ybc.48.1682456590045;
-        Tue, 25 Apr 2023 14:03:10 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j1-20020a258b81000000b00b923b9e0a82sm3628235ybl.45.2023.04.25.14.03.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 14:03:09 -0700 (PDT)
-Date:   Tue, 25 Apr 2023 17:03:08 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhostetler@github.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v3 0/6] banned: mark `strok()`, `strtok_r()` as banned
-Message-ID: <ZEhADEFE9cq/fjSV@nand.local>
-References: <cover.1681428696.git.me@ttaylorr.com>
- <cover.1682374789.git.me@ttaylorr.com>
- <20230425062708.GC4061254@coredump.intra.peff.net>
+        d=1e100.net; s=20221208; t=1682457766; x=1685049766;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UOntKFKhDEkAjqcoGJjVk6tiiwsU5YHMxpMiawiyaWQ=;
+        b=hVaKDaCx0Lr460E5ryGPdbPBuaVkmKlajuCw45faB4KGbEDkon9MNnN4jV0gHj4lbN
+         4kBHxxur/86t7KgEdiJufZ3T99Iau/ZEz3PBPduH+cybDAoGBo2p/8WpKg1Cp2a3ND9P
+         m+4ALh4wnYMQ6sHs8zHlSMfYCV1/5Y9DUgcrOj4DeAAFKkbzJ2/zBpnqdxGWRSjrR6k/
+         nl4Aplp/q26/Ej4VDTcKt0sgY3shUrOmeyEbMbPu9tRobVs2VpoQNQxKcO/AtQKpHJjn
+         QhC6DBkZDEZOJTwO6q4PURgcmZSheJPYZja4zip7jyXUCupM0Z82ibysCb3eshwbm9wJ
+         o79A==
+X-Gm-Message-State: AC+VfDzwyqO92+LQzZuZXfcFcHPTt7reHIHs/aULl7wOjO2LGHnRvhaf
+        9jq4u61axGADJcQGVMzw6SmfAAdVIqlZW7NuBd5/xWlf5IEju12M/CKDADSZ
+X-Google-Smtp-Source: ACHHUZ7QtM868BU1NAiuF6Fdk4egCqS1rdbRgKW3aVDIGggWbEAPsc/QmeM5GS1QuCLotB18Hc4M2U1PO/8KcqN2gqo=
+X-Received: by 2002:a05:6402:e82:b0:507:6632:bbbf with SMTP id
+ h2-20020a0564020e8200b005076632bbbfmr26182eda.6.1682457765762; Tue, 25 Apr
+ 2023 14:22:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230425062708.GC4061254@coredump.intra.peff.net>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Tue, 25 Apr 2023 14:22:34 -0700
+Message-ID: <CAJoAoZ=vS-pLOAvdJC94O_JEdtApgXnh8gPuE93gC3iCJJUEwA@mail.gmail.com>
+Subject: Video conference libification eng discussion, this Thursday 16:30 UTC
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 02:27:08AM -0400, Jeff King wrote:
-> On Mon, Apr 24, 2023 at 06:20:07PM -0400, Taylor Blau wrote:
->
-> > Here is another medium-sized reroll of my series to add `strtok()` (and
-> > `strtok_r()`!) to the list of banned functions.
-> >
-> > Notable changes include:
-> >
-> >   - Dropped `string_list_split_in_place_multi()` in favor of a
-> >     combination of `string_list_split_in_place()` and
-> >     `string_list_remove_empty_items()`.
-> >
-> >   - `strtok_r()` is back on the banned list, with a more realistic sales
-> >     pitch.
->
-> This all looks good to me. I left two comments which are on the border
-> between "minor" and "philosophizing", so I'd be happy to see the series
-> go in as-is.
+Hello folks,
 
-Thanks, I agree that this version is ready to go, absent any other
-show-stopping reviews.
+Google is hosting a standing engineering discussion about libifying
+Git, for contributors interested in participating in or hearing about
+the progress of this effort. Expect this discussion to be free-form
+and casual - no powerpoints here!
 
-Thanks,
-Taylor
+We're hoping to hold this meeting every Thursday at 9:30am Pacific
+(16:30 UTC) via Google Meet.
+
+To get an invite to the video conference and the notes document,
+please reply to this email. Please also add points to the agenda
+(template follows) if you want to raise awareness of them.
+
+We'll choose a topic to discuss at the beginning of the meeting, and
+I'll reply afterwards with the notes.
+
+ - (asynchronous) What's cooking in libification?
+   - Patches we sent regarding libification
+   - Patches for review related to the libification effort
+ - (asynchronous) What happened in the past 1-2 weeks that interested
+parties or intermittent contributors need to know?
+ - (asynchronous) Where are you stuck? What eng discussions do we want
+to have? (We'll choose a topic from this list at the beginning of the
+meeting.)
+ - Session topic: <TBD>
