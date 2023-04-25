@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38523C6FD18
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 17:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD1EBC77B61
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 17:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234633AbjDYRrc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 13:47:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46768 "EHLO
+        id S234495AbjDYRtg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 13:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230429AbjDYRrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 13:47:31 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4023EAD0F
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:47:30 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-63b51fd2972so4851599b3a.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:47:30 -0700 (PDT)
+        with ESMTP id S231569AbjDYRte (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 13:49:34 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C7FAD0F
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:49:34 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b35789313so4457204b3a.3
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:49:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682444850; x=1685036850;
+        d=gmail.com; s=20221208; t=1682444973; x=1685036973;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=x23DFGaNUWjiGjQHcEMFUlrRtapeyW/f/bAIg8jJB7Q=;
-        b=bw8djH/siXyP08gDfzewCbcdP1mowGyciSXppYAtAv+GYFGiw147u+aUBvFCApa8JW
-         UOW1ef00YGPjrWxJBQOEQ1IAEpVZnGUiiFmh21QJX3Y/CQSTFam3Xl87fXAXC+1khge2
-         X4ug44+FSPO5NFxhRFsGkwIAZAJTpuaA+Wn44PT4ImJV54dad1qoJj9t1yRYq2x/js7B
-         vGa2QZGtIz54CkWx+2elc7C376c5F9In+1ZFoURHkMz1LuGyi5q4taBCD+1k1FjAck0j
-         N0WN6/klXal21Yhqqg/YysZngCA4vHRbC801OsQqF/U/YlFVif4+nBo69N54/gro5oGl
-         ql9g==
+        bh=CRj/cIRR58T/XeQxgVo4a67SeFzQyIMFEh9+M5jVWbo=;
+        b=Dy+jo7ew176Liqi1ItkGm9KYNtGbr48b2ybW9SuGRb0J2Y/cDaEkxB/5vGxyz4ee2i
+         TKTfw7epqwbEtfXT6GIMg+1MkY7/zA0WhkN5ACEb0Nx+UKLfIUjJfL+wOrB9pqGaECHd
+         bV3jVX1If3uVixt8e60tlv1InPDXMFp9095rDmnPNgWSEpjugsgcNOpWU9GRVkM6l4lL
+         +fQdXIoaoEgGFyLGdfuzv4MluvhKjCcKKnomWSgNMiOav7Ugjlb5lDQErN+9Poey0sXX
+         8Sz4QC161wJPJ3wgYEiVSSQR0N0ZbEuPMFT+j2LX7peKfo55ffro3/PBCgFx/hnx6ysY
+         I+Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682444850; x=1685036850;
+        d=1e100.net; s=20221208; t=1682444973; x=1685036973;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=x23DFGaNUWjiGjQHcEMFUlrRtapeyW/f/bAIg8jJB7Q=;
-        b=JlArZ9HlojwMGNeWoCwTb6EqE7HgJkTX4sbqVftHAgA/f0MZx3JwFRyiaudfteP893
-         kn2guK5bjS77vnxDu1c7ndoprH0P2irTjEkh3GI6PdqR9h7tpjbm2CEN3UDcN5FH2clA
-         Oo6xe0gMCE+lE56T7dVeczIPMlRWay0mxF7935IedkoVxwU6kvY/zkjkgxyWWGDmACuu
-         FxmPXWA0Ho6oQpLCYnLIBuazs9yGwagsWdOyysw70Ux9c4Zi4p93t7GRqR17jNXydLTi
-         +Wa14paXk1WsWZmeU1Y0J8vZjlIvv7aq8h6vF3kkhb6W9w6/EmyyHPHeLJD+rlQY4Wh8
-         hbNQ==
-X-Gm-Message-State: AAQBX9dYOP/8Ewe5cNoTEsExDgnJjzt1bVacspYpTubPhm3biFqWSNUa
-        sTbQo+Mao6GMYa6/YYLviu4=
-X-Google-Smtp-Source: AKy350am/LN+Is6Kat4gH/CW/VoUeeO1EF9sjOwRNi0VBSy+/R33quML6NqUaB1yjJMxB4WdrJIf/Q==
-X-Received: by 2002:a05:6a00:9a1:b0:63b:3e:cbee with SMTP id u33-20020a056a0009a100b0063b003ecbeemr26286563pfg.32.1682444849678;
-        Tue, 25 Apr 2023 10:47:29 -0700 (PDT)
+        bh=CRj/cIRR58T/XeQxgVo4a67SeFzQyIMFEh9+M5jVWbo=;
+        b=D22BCD/IKL2LytXd1nXxi60iLkjQfsbIjAblTMr8HjzJa72qaOHs4XYXCPfcCDFEVF
+         P4IzX4+9zitVYAScKCsctIusqkSTWaac/ymat4N9bdHdOT1g+3qDkSl50NYLTd1ZbgRD
+         DjYxh18KxsYiaIjQMlkKtZz0YLgRkr55JQ5M9S1bap/OCqCWqM6O94fmWFhUX9ySBahm
+         tsApd9PmwHTqyYJvtkORiHdr+0ftH7B3iMtO4uZUMniVsYe4b2hfkMHJgAPvjY++9gq7
+         EfGyRW1gZ2pGwuawxsnn3t++SbGn09aVTTd/HEG1BGUB8xMeC72gDF2v/pPjTG7ufR3L
+         dmlw==
+X-Gm-Message-State: AAQBX9d/EPLpakBDBb2WEE3bKy1eLFciPWad2Czyc83RqiB6Z6uT1jMz
+        QxgeIBnm1Ec3NWB31DjLZn0=
+X-Google-Smtp-Source: AKy350b9XFpmts7N6Sg9N/PCP7CM6ErNKtlDIU6K/KRQZURo7v29l6oFGbnPNCJJJ+poSYyIP54QpQ==
+X-Received: by 2002:a05:6a20:a10d:b0:f0:b6e3:90c9 with SMTP id q13-20020a056a20a10d00b000f0b6e390c9mr23136310pzk.4.1682444973325;
+        Tue, 25 Apr 2023 10:49:33 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id i69-20020a628748000000b00640e12b6464sm2656205pfe.178.2023.04.25.10.47.29
+        by smtp.gmail.com with ESMTPSA id x137-20020a62868f000000b0062ddcad2cbesm9807677pfd.145.2023.04.25.10.49.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 10:47:29 -0700 (PDT)
+        Tue, 25 Apr 2023 10:49:32 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v8 5/6] notes.c: append separator instead of insert by pos
+Subject: Re: [PATCH v8 6/6] notes.c: introduce "--[no-]stripspace" option
 References: <cover.1682429602.git.dyroneteng@gmail.com>
-        <ef40e0efc34ce6b6ee5b9b67bdde3dae02652cec.1682429602.git.dyroneteng@gmail.com>
-Date:   Tue, 25 Apr 2023 10:47:29 -0700
-In-Reply-To: <ef40e0efc34ce6b6ee5b9b67bdde3dae02652cec.1682429602.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Tue, 25 Apr 2023 21:34:40 +0800")
-Message-ID: <xmqqa5yv26ry.fsf@gitster.g>
+        <f60f743203d78a489b90df81472e71391b45367d.1682429602.git.dyroneteng@gmail.com>
+Date:   Tue, 25 Apr 2023 10:49:32 -0700
+In-Reply-To: <f60f743203d78a489b90df81472e71391b45367d.1682429602.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Tue, 25 Apr 2023 21:34:41 +0800")
+Message-ID: <xmqq4jp326oj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,38 +72,19 @@ Teng Long <dyroneteng@gmail.com> writes:
 
 > From: Teng Long <dyroneteng@gmail.com>
 >
-> This commit rename "insert_separator" to "append_separator" and also
+> This commit introduces a new option "--[no-]stripspace" to git notes
+> append, git notes edit, and git notes add. This option allows users to
+> control whether the note message need to stripped out.
 
-"This commit rename" -> "Rename".
+Makes sense.
 
-> remove the "postion" argument, this serves two purpose:
->
-> The first is that when specifying more than one "-m" ( like "-F", etc)
-> to "git notes add" or "git notes append", the order of them matters,
-> which means we need to append the each separator and message in turn,
-> so we don't have to make the caller specify the position, the "append"
-> operation is enough and clear.
+>     ... One more thing need to note is "the order of
+>     the options matter", that is, if you specify "-C" before "-m" or
+>     "-F", the reused message by "-C" will be stripped out together,
+>     because everytime concat "-m" or "-F" message, the concated message
+>     will be stripped together. Oppositely, if you specify "-m" or "-F"
+>     before "-C", the reused message by "-C" will not be stripped out.
 
-OK.
+This sounds more like a design/implementation mistake that we may
+want to fix.
 
-> The second is that when we execute the "git notes append" subcommand
-> , we need to combine the "prev_note" and "current_note" to get the
-
-Funny placement of comma?
-
-> +static void append_separator(struct strbuf *message)
->  {
->  	if (!separator)
-> -		strbuf_insertstr(message, pos, "\n");
-> +		strbuf_insertstr(message, message->len, "\n");
->  	else if (separator[strlen(separator) - 1] == '\n')
-> -		strbuf_insertstr(message, pos, separator);
-> +		strbuf_insertstr(message, message->len, separator);
->  	else
-> -		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-> +		strbuf_insertf(message, message->len, "%s%s", separator, "\n");
->  }
-
-Is it still needed to use strbuf_insert*() variants when the only
-thing being done is to append at the end?  Use of strbuf_add*()
-would let you drop message->len from the arguments.
