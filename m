@@ -2,107 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA854C77B61
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 19:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F8DC6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 20:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236060AbjDYTwe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 15:52:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58352 "EHLO
+        id S231744AbjDYU11 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 16:27:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234754AbjDYTwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 15:52:33 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798B761BE
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 12:52:32 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-b992ed878ebso19855128276.0
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 12:52:32 -0700 (PDT)
+        with ESMTP id S229960AbjDYU1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 16:27:25 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6285B83
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 13:27:24 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-54f6f0dae19so46499867b3.0
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 13:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1682452351; x=1685044351;
+        d=github.com; s=google; t=1682454444; x=1685046444;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eScgC8SZpuKVn91ONFO6gr3GGlfZ6MQiE6CbLakQ4g4=;
-        b=PoxKvjmd+XjiwvN97LKQXWNwxjFyBwgxQGRvaH1i8pky/Q/LJu5APRuD5yY7OpeXmn
-         IgIe7+BEmwPRcUlVSW1IFKPuNKZqTE4J3VCjKHyGKslOhK9OWuwJhNmTajSfZXGFgVO7
-         tggneTctNmHepul5Y9wKFKhg+t3FC82MZ3W8I6zXpc2zCE0/lqfJUDc/okpo8ybMY0u6
-         YgHpb5X4iqie04vKHN5oUHqn0D80nHEUe497PNjjuZk4prqym7fJUR5lnRjWewmV8Wf/
-         eBjM3sk5eUJfTeu7o4rIey2TUvjoKpHC6Ba/rul/G/eDhWp3lv6j5UP5c9aUv4SEqzdS
-         Sl9g==
+        bh=xaUJGCg2JMzI03e3eR87HugPG5ASffqPAq+8B5zzIkM=;
+        b=L+c1H5mBUDfQHwuAv7o17RVf95kkDz7RfhnnFQ5hVpPXS7TeO2RASP/vKAGuhMgleI
+         mCetnebEKL3gvlGY6nrJRnw/QU0w3iGnAw76ignTfMpunzDH9/+TTprkv8djk+POop+Q
+         OHZUy+nsmrPpoOmkzFBYoVdWdY2OXs2qfU6wAu+fFyNEQ59/RzhchBBljY+s6x4QQO9Z
+         CuF7zakYHdzp+lWCd2qQJGkkUbZxu870uJRsIlYq0sTXHmQ8CuUjWy0Y7v6h7ClmU/XF
+         Y5eIxR2fnuPr8jxTYC5MwmdFXY3iVNKzg5mK53LR8oLqpSs0G9oYWvRW67yZBzirnbos
+         GJFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682452351; x=1685044351;
+        d=1e100.net; s=20221208; t=1682454444; x=1685046444;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eScgC8SZpuKVn91ONFO6gr3GGlfZ6MQiE6CbLakQ4g4=;
-        b=Dr0lwui1l318gNj+tsshLJfRKqLLO1hCC7F/dWV6yw0YJ5+ttW08QMAwBW79q2Ws7Q
-         2GzFERFQvSnKuK1GmlwT3DiJtVfgz0KC7e/dvVc/hiyshli8Tl5iYiTI0sgzo5nOo6sS
-         CINpggsVO8s1NMp3rvnqItRI71/0ijvl0C3wJKothEJtc3uXgyBOGvpu2PxQRSUFJfS7
-         Mmif7/1F4QNZQOHJ7jAl+9uRq6dOrbXjLKzxqUdWhMlvWypkD5ijnjL10pBeX3ZH3uMm
-         jH8mGlFcrTQcGYb9GztAPLH9TRf8zfeo5TMqothhO0dduUpt71LTSw4f6oTW5jjLyeM0
-         I6mQ==
-X-Gm-Message-State: AC+VfDzE22++PkK56zH7zBnYaeJgbI/Vnxrp0EX5wRPsJWGRVgJZtT5i
-        JF6zSq+liSKNv+8J3LD1Pjgm
-X-Google-Smtp-Source: ACHHUZ4GwiqP6hO/WC5Zu7BIXIswNFGkc5Jzx7xcug+ri4Hm06scCIC1H1oeg12/Lx6gAPLSwn7Exg==
-X-Received: by 2002:a25:d258:0:b0:b92:6110:dd9b with SMTP id j85-20020a25d258000000b00b926110dd9bmr36616ybg.20.1682452351655;
-        Tue, 25 Apr 2023 12:52:31 -0700 (PDT)
+        bh=xaUJGCg2JMzI03e3eR87HugPG5ASffqPAq+8B5zzIkM=;
+        b=PnOPknjN4vimkl+GPbpkj6qinB4sQBXQ4HQlExhbrsKsIDoLtOx0EXc3+oHYZXStb5
+         fUvsIzOEQsx9cxVWayCle5kdZWt6Qrp/Cb32AYE0qZVAT4ZF0BVkirNxPy4O3EUULUk0
+         ndopV7I59M5dmB7sDs0WRgF51cl9F+cRK+5Hl6N2lwRqdKzQseIMKGHsn3D1IufOk5xI
+         c7wNDMFmXq/dRV9hb8KdEtY5kpCYC6esrQ4g2toeTku3npsFoJNZzDV4EzSu1OLpoD9f
+         3ZKSH7nkWtLNsm69/eC6iLGNzkohaB4C8/iVu6GSudohmEdcLyFIlOcbgW3ciQoh3maq
+         i7lw==
+X-Gm-Message-State: AC+VfDyuw/+1u6fNY54kw5kIasDZOeDo3PqptMOGIVh2xT38+tFpztqq
+        CnEXKaSpDO4WbSwsDHAiW0UQ
+X-Google-Smtp-Source: ACHHUZ4anTdjvj78o4Y68zc270/kRIHw843ispyZHBT/kza+Pi0R7NB/RpLCZl32PsoK4Q0nm1K+zw==
+X-Received: by 2002:a81:698a:0:b0:556:d398:870f with SMTP id e132-20020a81698a000000b00556d398870fmr676063ywc.47.1682454443851;
+        Tue, 25 Apr 2023 13:27:23 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:9117:8293:39bd:7100? ([2600:1700:e72:80a0:9117:8293:39bd:7100])
-        by smtp.gmail.com with ESMTPSA id 124-20020a251482000000b00b9550fcb12fsm3610763ybu.64.2023.04.25.12.52.30
+        by smtp.gmail.com with ESMTPSA id x67-20020a0dd546000000b0054c0be459dbsm3800023ywd.39.2023.04.25.13.27.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Apr 2023 12:52:31 -0700 (PDT)
-Message-ID: <5943de3d-3dad-c600-c6d6-3c10c2851071@github.com>
-Date:   Tue, 25 Apr 2023 15:52:29 -0400
+        Tue, 25 Apr 2023 13:27:23 -0700 (PDT)
+Message-ID: <aa162f0f-022d-7216-51c9-c53884362628@github.com>
+Date:   Tue, 25 Apr 2023 16:27:21 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
 Subject: Re: [PATCH 0/3] pack-bitmap: boundary-based bitmap traversal
 Content-Language: en-US
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
 References: <cover.1682380788.git.me@ttaylorr.com>
- <xmqqy1mfzvpq.fsf@gitster.g>
- <1a09d246-5750-7d98-08f7-bad6d3dee3c9@github.com>
- <ZEgikbdP8M2sDMlM@nand.local>
+ <f25c6234-83c0-fa49-85f5-9005e312b8a3@github.com>
+ <ZEgjiAtK8O0+dbht@nand.local>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ZEgikbdP8M2sDMlM@nand.local>
+In-Reply-To: <ZEgjiAtK8O0+dbht@nand.local>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/25/2023 2:57 PM, Taylor Blau wrote:
-> On Tue, Apr 25, 2023 at 02:30:01PM -0400, Derrick Stolee wrote:
->> It would be interesting if we used the initial commit walk to the
->> boundary as a predictor of whether bitmaps would be good, or if
->> we should use the tree-parsing walk instead.
+On 4/25/2023 3:01 PM, Taylor Blau wrote:
+> On Tue, Apr 25, 2023 at 02:06:25PM -0400, Derrick Stolee wrote:
+>> For my curiosity, and since you already have a test environment set up,
+>> could you redo the "without bitmaps" case with pack.useSparse true and
+>> false? When the option was created and defaulted to true, we never
+>> really explored comparing it to the bitmap case. In fact, I assumed the
+>> bitmap case was faster in important cases like this (where there is a
+>> substantial difference in object counts), but your data is surprising me
+>> that the sparse algorithm is outperforming bitmaps, even with this new
+>> algorithm.
+>>
+>> The main question I'd like to ask is: is pack.useSparse contributing
+>> in an important way to the performance here?
 > 
-> I think that this is tough, too. When making a prediction, it would be
-> good if we could avoid walking down to the nearest bitmap, since by that
-> point, you might as well have used bitmaps (if you found one before
-> reaching the root(s) of history).
+> I don't know enough about pack.useSparse to say with certainty, but
+> trying again on the same repository (which is reasonably well-packed at
+> the moment), they appear about the same:
 
-This isn't quite as cut-and-dry, because walking commits is much
-faster than walking trees. I agree that we shouldn't walk too far
-to avoid wasting time, but somehow we'd want to think about the
-distance between the commits we want to cover and the bitmap(s)
-we found in their history.
+Thanks for running that. I apologize, but I didn't sync in my head
+that you're purposefully using 'git rev-list' to do the walk and the
+config only makes a difference for 'git pack-objects'. The suspiciously
+close timings is indeed too suspicious. Thus, the performance numbers
+you are considering are not identical to what would happen in 'git
+pack-objects' by default.
 
->> But perhaps this series gets the bitmap walk "close enough" in
->> the typical case that it's better to use bitmaps in the chance that
->> we have accidentally hit a case where we'd normally need to walk a
->> lot of trees.
-> 
-> Yeah, that is definitely part of this series's goal. Another framing is,
-> for configurations that are using bitmaps everywhere, this should reduce
-> the number of cases where using bitmaps is *significantly* slower than
-> not.
+So, I created my own example using git.git, which included this input:
 
-It's a good opportunity to re-think if we should be using bitmaps in
-these contexts at all, or if there is a simpler thing to do by
-disabling them when 'haves' exist. I don't think that's the right
-thing to do in all cases, but the experiments you've demonstrated here
-seem to point in that direction.
+	refs/remotes/origin/master
+	refs/remotes/origin/maint
+	refs/remotes/origin/next
+	refs/remotes/origin/seen
+	^refs/remotes/origin/master~1000
+
+And there is a clear preference for pack.useSparse=false in this
+case:
+
+Benchmark 1: GIT_TRACE2_PERF="/home/stolee/_git/git/git-review/trace-true.txt" ~/_git/git/git-review/git -c pack.useSparse=true -c pack.useBitmaps=false pack-objects --stdout --revs <in >/dev/null
+  Time (mean ± σ):      2.857 s ±  0.031 s    [User: 6.850 s, System: 0.378 s]
+  Range (min … max):    2.814 s …  2.922 s    10 runs
+ 
+Benchmark 2: GIT_TRACE2_PERF="/home/stolee/_git/git/git-review/trace-false.txt" ~/_git/git/git-review/git -c pack.useSparse=false -c pack.useBitmaps=false pack-objects --stdout --revs <in >/dev/null
+  Time (mean ± σ):      2.682 s ±  0.029 s    [User: 6.678 s, System: 0.388 s]
+  Range (min … max):    2.653 s …  2.753 s    10 runs
+ 
+and I used the perf traces to extract that the enumerate objects
+phase took ~550ms for the sparse walk and ~375ms for the non-sparse
+version.
+
+But using this same input, I'm able to construct an example where
+your modified bitmap walk is faster than the non-sparse object walk:
+
+Benchmark 1: GIT_TRACE2_PERF="/home/stolee/_git/git/git-review/trace-true.txt" ~/_git/git/git-review/git -c pack.useSparse=false -c pack.useBitmaps=true pack-objects --stdout --revs <in >/dev/null
+  Time (mean ± σ):      2.045 s ±  0.039 s    [User: 6.464 s, System: 0.334 s]
+  Range (min … max):    1.966 s …  2.089 s    10 runs
+ 
+Benchmark 2: GIT_TRACE2_PERF="/home/stolee/_git/git/git-review/trace-false.txt" ~/_git/git/git-review/git -c pack.useSparse=false -c pack.useBitmaps=false pack-objects --stdout --revs <in >/dev/null
+  Time (mean ± σ):      2.138 s ±  0.034 s    [User: 6.070 s, System: 0.333 s]
+  Range (min … max):    2.058 s …  2.182 s    10 runs
+
+(Here, the enumerate objects phase takes ~230ms on average.)
+
+I can easily swap this by changing my negative ref to
+
+  ^revs/remotes/origin/master
+
+Benchmark 1: GIT_TRACE2_PERF="/home/stolee/_git/git/git-review/trace-true.txt" ~/_git/git/git-review/git -c pack.useSparse=false -c pack.useBitmaps=true pack-objects --stdout --revs <in >/dev/null
+  Time (mean ± σ):     521.0 ms ±  28.8 ms    [User: 1190.9 ms, System: 103.6 ms]
+  Range (min … max):   496.5 ms … 589.8 ms    10 runs
+ 
+Benchmark 2: GIT_TRACE2_PERF="/home/stolee/_git/git/git-review/trace-false.txt" ~/_git/git/git-review/git -c pack.useSparse=false -c pack.useBitmaps=false pack-objects --stdout --revs <in >/dev/null
+  Time (mean ± σ):     498.5 ms ±  13.2 ms    [User: 1089.1 ms, System: 123.3 ms]
+  Range (min … max):   471.3 ms … 513.6 ms    10 runs
+
+which gives us reason to think about "small fetches" don't need
+bitmaps, but "big fetches" do. But that can be done separately
+from this patch.
+
+Context about the sparse walk:
+
+The sparse walk uses the names of the paths with respect to the root 
+trees as a way to walk only the "new" objects without walking the
+entire object set at the boundary. This makes a big difference in
+repos with many files at HEAD, but the risk is that those path names
+become significant overhead if there are enough new changes spread
+across a large fraction of the tree. For clients pushing the work
+of a single developer, the sparse algorithm outperforms the default
+walk.
+
+I wrote about this years ago in [1] and almost brought it up earlier
+as a description of the commit boundary (called the frontier in [1]),
+but the sparse object walk is helpful to visualize.
+
+[1] https://devblogs.microsoft.com/devops/exploring-new-frontiers-for-git-push-performance/
 
 Thanks,
 -Stolee
