@@ -2,63 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D869C6FD18
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 17:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38523C6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 17:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234480AbjDYRfx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 13:35:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39570 "EHLO
+        id S234633AbjDYRrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 13:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234372AbjDYRfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 13:35:51 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A90C146C8
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:35:44 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1a6670671e3so52145075ad.0
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:35:44 -0700 (PDT)
+        with ESMTP id S230429AbjDYRrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 13:47:31 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4023EAD0F
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:47:30 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-63b51fd2972so4851599b3a.3
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682444144; x=1685036144;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=LTV4HKT7qH764YlLhweTIRDqK8iMT8+YNCXHVSlpBfs=;
-        b=lky23BpoYeo4gU8m6Bs1B4TMCM/zDBg6GTDVDeU0/SE/JNsQYXh0DNmzNJKCp5318Q
-         V+d+xakxlVJ7Xgw0whms5CQ0/qILPjVS52KJdV0/Es0DTkZCUBMZYS90Bnr0hJe226ZN
-         LNBAOudFc89C0e5hlJq/P/WrmaID5oKsQklEEAnzfFTIOP+m9xlsmUeP/664Mgwazs1r
-         WKpieQPYRfrhileWTy/bYaLJZbdZZKvOD0L8/6AzaBBu/Pm/HmM4KWyXlJpJZNYd2j0u
-         67vXkNROGBF3EIQ/C+sKMj4JiPUtivEg1ay4Fptzi0l6oQECC1xuRW57UeJCYAPMlPRc
-         O0Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682444144; x=1685036144;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20221208; t=1682444850; x=1685036850;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LTV4HKT7qH764YlLhweTIRDqK8iMT8+YNCXHVSlpBfs=;
-        b=V10FdJ6Y0yNoPVccOw4CvYLKQB2k2YSoSN77HoJV9KxosudF7tDrVkzZvS0JTLNh6P
-         GkKL+csKcr51w2khLzP8SIhRu/jX1Bb9lDt7VYi2kQkINJe2UqBCzLWyAaygFAJPAiLt
-         aJc4+jtP4w06M0/vPdcx8l4K4bRYTdEyfV/+Vz4ajXhJaikke3jEucQ3RlWIDdiZgAZ8
-         +eu7XQ6kiuPVdo4PR9A1mU+5w+tlpe+p20rYkpqXVPylvx5ytLjWgnSg7Eg0LWfIOYLd
-         naCq8eIMcCiWHx4uN7HPT70PkV+J00xZseC2DWq3nftdqgs4CcO1DSUkcwWQ3gOuGsvT
-         wQPQ==
-X-Gm-Message-State: AAQBX9d5bgiHy1gjhI5VkT4IE8kyXdPcQZUV0mbCT9al+KkTC+531GC2
-        tz+m99Q/g2DCWAT+HnUwNeY=
-X-Google-Smtp-Source: AKy350a9kCPzsUhrP8eaU6IBvVwGHzRenR4HRbu6CB+mUlhU4clpDpNePCpr8fPnDU8KaJJTvDx8dg==
-X-Received: by 2002:a17:902:f684:b0:1a6:82a7:6e60 with SMTP id l4-20020a170902f68400b001a682a76e60mr23742931plg.47.1682444143737;
-        Tue, 25 Apr 2023 10:35:43 -0700 (PDT)
+        bh=x23DFGaNUWjiGjQHcEMFUlrRtapeyW/f/bAIg8jJB7Q=;
+        b=bw8djH/siXyP08gDfzewCbcdP1mowGyciSXppYAtAv+GYFGiw147u+aUBvFCApa8JW
+         UOW1ef00YGPjrWxJBQOEQ1IAEpVZnGUiiFmh21QJX3Y/CQSTFam3Xl87fXAXC+1khge2
+         X4ug44+FSPO5NFxhRFsGkwIAZAJTpuaA+Wn44PT4ImJV54dad1qoJj9t1yRYq2x/js7B
+         vGa2QZGtIz54CkWx+2elc7C376c5F9In+1ZFoURHkMz1LuGyi5q4taBCD+1k1FjAck0j
+         N0WN6/klXal21Yhqqg/YysZngCA4vHRbC801OsQqF/U/YlFVif4+nBo69N54/gro5oGl
+         ql9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682444850; x=1685036850;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=x23DFGaNUWjiGjQHcEMFUlrRtapeyW/f/bAIg8jJB7Q=;
+        b=JlArZ9HlojwMGNeWoCwTb6EqE7HgJkTX4sbqVftHAgA/f0MZx3JwFRyiaudfteP893
+         kn2guK5bjS77vnxDu1c7ndoprH0P2irTjEkh3GI6PdqR9h7tpjbm2CEN3UDcN5FH2clA
+         Oo6xe0gMCE+lE56T7dVeczIPMlRWay0mxF7935IedkoVxwU6kvY/zkjkgxyWWGDmACuu
+         FxmPXWA0Ho6oQpLCYnLIBuazs9yGwagsWdOyysw70Ux9c4Zi4p93t7GRqR17jNXydLTi
+         +Wa14paXk1WsWZmeU1Y0J8vZjlIvv7aq8h6vF3kkhb6W9w6/EmyyHPHeLJD+rlQY4Wh8
+         hbNQ==
+X-Gm-Message-State: AAQBX9dYOP/8Ewe5cNoTEsExDgnJjzt1bVacspYpTubPhm3biFqWSNUa
+        sTbQo+Mao6GMYa6/YYLviu4=
+X-Google-Smtp-Source: AKy350am/LN+Is6Kat4gH/CW/VoUeeO1EF9sjOwRNi0VBSy+/R33quML6NqUaB1yjJMxB4WdrJIf/Q==
+X-Received: by 2002:a05:6a00:9a1:b0:63b:3e:cbee with SMTP id u33-20020a056a0009a100b0063b003ecbeemr26286563pfg.32.1682444849678;
+        Tue, 25 Apr 2023 10:47:29 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id jh22-20020a170903329600b001a5262134d7sm8520267plb.202.2023.04.25.10.35.43
+        by smtp.gmail.com with ESMTPSA id i69-20020a628748000000b00640e12b6464sm2656205pfe.178.2023.04.25.10.47.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 10:35:43 -0700 (PDT)
+        Tue, 25 Apr 2023 10:47:29 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v8 4/6] notes.c: introduce
- '--separator=<paragraph-break>' option
+Subject: Re: [PATCH v8 5/6] notes.c: append separator instead of insert by pos
 References: <cover.1682429602.git.dyroneteng@gmail.com>
-        <be86f9cac3e651ab5aab49f89b6506012b756dab.1682429602.git.dyroneteng@gmail.com>
-Date:   Tue, 25 Apr 2023 10:35:43 -0700
-Message-ID: <xmqqleif27bk.fsf@gitster.g>
+        <ef40e0efc34ce6b6ee5b9b67bdde3dae02652cec.1682429602.git.dyroneteng@gmail.com>
+Date:   Tue, 25 Apr 2023 10:47:29 -0700
+In-Reply-To: <ef40e0efc34ce6b6ee5b9b67bdde3dae02652cec.1682429602.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Tue, 25 Apr 2023 21:34:40 +0800")
+Message-ID: <xmqqa5yv26ry.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,22 +72,38 @@ Teng Long <dyroneteng@gmail.com> writes:
 
 > From: Teng Long <dyroneteng@gmail.com>
 >
-> When adding new notes or appending to an existing notes, we will
-> insert a blank line between the paragraphs, like:
+> This commit rename "insert_separator" to "append_separator" and also
+
+"This commit rename" -> "Rename".
+
+> remove the "postion" argument, this serves two purpose:
 >
->      $ git notes add -m foo -m bar
->      $ git notes show HEAD | cat
->      foo
->
->      bar
+> The first is that when specifying more than one "-m" ( like "-F", etc)
+> to "git notes add" or "git notes append", the order of them matters,
+> which means we need to append the each separator and message in turn,
+> so we don't have to make the caller specify the position, the "append"
+> operation is enough and clear.
 
-That's a pointless piping to "cat".  Piping to "cat -n" might be a
-good way to illustrate what happens, though, i.e.
+OK.
 
-    $ git notes show HEAD | cat -n
-         1  foo
-         2
-         3  bar
+> The second is that when we execute the "git notes append" subcommand
+> , we need to combine the "prev_note" and "current_note" to get the
 
-I have no strong preference either way (the other more obvious
-alternative is to just remove "| cat").
+Funny placement of comma?
+
+> +static void append_separator(struct strbuf *message)
+>  {
+>  	if (!separator)
+> -		strbuf_insertstr(message, pos, "\n");
+> +		strbuf_insertstr(message, message->len, "\n");
+>  	else if (separator[strlen(separator) - 1] == '\n')
+> -		strbuf_insertstr(message, pos, separator);
+> +		strbuf_insertstr(message, message->len, separator);
+>  	else
+> -		strbuf_insertf(message, pos, "%s%s", separator, "\n");
+> +		strbuf_insertf(message, message->len, "%s%s", separator, "\n");
+>  }
+
+Is it still needed to use strbuf_insert*() variants when the only
+thing being done is to append at the end?  Use of strbuf_add*()
+would let you drop message->len from the arguments.
