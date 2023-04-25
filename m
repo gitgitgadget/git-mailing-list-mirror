@@ -2,97 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12AD9C6FD18
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 18:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A700BC6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 18:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234663AbjDYSxK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 14:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44760 "EHLO
+        id S234832AbjDYSyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 14:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234774AbjDYSw7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 14:52:59 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1797117A16
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 11:52:40 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-54fc6949475so69818567b3.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 11:52:40 -0700 (PDT)
+        with ESMTP id S234795AbjDYSx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 14:53:58 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A3718B80
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 11:53:33 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-63b4bf2d74aso4907577b3a.2
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 11:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682448707; x=1685040707;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gb9shQuKezW+KBS/gU9x0lEnJv1ykElMPVDUOJbF7jo=;
-        b=lGoPo3bj8jM1V9aAO8DhwdiqxjAGORFrY7qU60Tvxquel5QmfwUBvcsxv4rSbii2Nj
-         MO1Eqyf7uoSzPcLovpolvrkcjKFCX0hcY3UscBXZ8UMYAMlseoUAlCJMLe/JOEuFGgrk
-         H6DL6dao0aBiYUjJ4W6aErgALdXD0vWsvNwarThhjJYA72OmfGIgJwWdcSXNYsR1iYFm
-         oL2n+PDVVkcnJHTRDlwBfi7g1+JzOpi7tA2ftBakdEq76Hiob7HhcUieIT1FxIhkC3Xd
-         nYwv7dp1jR4At26IwhWHXzqN1Lx42gTVIDBFzyGAY0vfKdmQGLR/3s6WCoY6WC455e9K
-         /89A==
+        d=gmail.com; s=20221208; t=1682448746; x=1685040746;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=ySchA/rbFTUIZxKOk7ewKdfNlyNN7M9VgxrNWz/GJJ4=;
+        b=dZBuwSiXsn4pp5B/T3R2qBNNiRb4eQxncRs5j+h1085LZM9r5E2TJ2s53BYf9dMslg
+         niiIpsVDrONSzKQGst/eFJN29dS7ZabX/LsfdgBi2jo31i2YjyN0IrPI2aE6p29GuPlI
+         Q00peEhN+FThgTwgG+vQjUImyeccBEY77xof7g2rzH+YkEs6p3huPLY27BwsFvHSogSJ
+         SLAHNw5fjzFesn7shcLCYdUHvtU16HDWaSFwxJjJUoI53N3/GS22jMCRk9ZcoyBNUt+x
+         8CTcn4p3XE7e9PyR/6yVHsR7f/Hf+Ea20L7XZESyYBSEVpVjSqOapsYOXIadPWpvOQrI
+         COQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682448707; x=1685040707;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gb9shQuKezW+KBS/gU9x0lEnJv1ykElMPVDUOJbF7jo=;
-        b=TOz8ZwOYqrg5ANkyG2IDlQkoIZ+wrBSDaFdPqNsSl4dwVVvswEgMJHlLRKxVT+7nFI
-         fjEKzIve4STA80z3Umlf699FcBjGxDTCGdy73OvzMIAH60BQlKJdccnXtsCalRVfFoi6
-         Y2MfgbrhVUE5ij/tD5xaFjzR0AyWPcvm2tYZU0MIxNIZ8ZH39p760YQ3nvsTvv8UaoIv
-         9fmLPxDATCBX4LjZ9RTbZPLnJVSrgCRZRioQD8wvF7xTI1lGzEUWcnHxdH06K6Ba6LMB
-         p8l3mRcyOHASsV6jIxFbgyx3vaELGLkmP6z6S0OzXu8ZnkIFIehWCMeBUJhuzbE9XAm9
-         JYlw==
-X-Gm-Message-State: AAQBX9ceHKQiGVY6kALawyPJogmdWdshXavuLDsR7oLODv+WX74AQfpe
-        1oLPguf3lueaaleZRiMx/g2ya+V+dLHkLJtKRWLdrw==
-X-Google-Smtp-Source: AKy350amjBpWjycmW4EqwmxqM6idux54PLNEMtVcXmwzFfWb8muv1iK2MntBjLbVcJzsWnLlMcbvsg==
-X-Received: by 2002:a81:a156:0:b0:550:9d9f:5fb6 with SMTP id y83-20020a81a156000000b005509d9f5fb6mr12146822ywg.1.1682448707178;
-        Tue, 25 Apr 2023 11:51:47 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u142-20020a818494000000b0054f6f65f258sm3737503ywf.16.2023.04.25.11.51.46
+        d=1e100.net; s=20221208; t=1682448746; x=1685040746;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ySchA/rbFTUIZxKOk7ewKdfNlyNN7M9VgxrNWz/GJJ4=;
+        b=Io3xnJRyCwGwoIKnk2KfWumbHIi+G1Jtpa+mDtFXY6jTZbvwbwAgXuB3TwWP+pfiNT
+         puJGGzbmxXr29v758KpYYlqIegIHIlcL0zDg0A5wWTbzFD2FOQQVF4KqiVJbRCUkzKmu
+         jkG4CQ9MKPb98pd5BxCtIVxzSjXjzdWoY34M+QL1Bo0vXi1dmeW2VcSzL61SR/eTHCgY
+         CFAYVGtKnMJCyCcSpYOCgbL78A1a9LNAa5TYGD8p/VkP2LPC/TH3dHYuELVfR+LKoyOO
+         7aHu13KtcHf8xe9+DaRTh3xKkMPEnT3ob3Hnse4JTty9Z4vzgiZ3o3JLYHdhox0WRgqA
+         eFbA==
+X-Gm-Message-State: AAQBX9dsaPehCT1o69UdNg/lTUBfavdwlmiqW6eux6KLehJQ4itp3pfU
+        QiRAxYJl1i0so/HcRKmnSzQ=
+X-Google-Smtp-Source: AKy350a00o81qnL6AKu6K4PrW8RYb8r5TIlUuzsNylpSQsz9GEss212fpzNbLmLKE0Ke/WW0AJXQdw==
+X-Received: by 2002:a05:6a20:1593:b0:f2:fcba:7872 with SMTP id h19-20020a056a20159300b000f2fcba7872mr15760137pzj.28.1682448746212;
+        Tue, 25 Apr 2023 11:52:26 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id fd17-20020a056a002e9100b00625f5aaa1d9sm9640348pfb.83.2023.04.25.11.52.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 11:51:46 -0700 (PDT)
-Date:   Tue, 25 Apr 2023 14:51:45 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        Tue, 25 Apr 2023 11:52:25 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 2/3] pack-bitmap.c: extract `fill_in_bitmap()`t
-Message-ID: <ZEghQRZWZIlZcIed@nand.local>
+Subject: Re: [PATCH 3/3] pack-bitmap.c: use commit boundary during bitmap
+ traversal
 References: <cover.1682380788.git.me@ttaylorr.com>
- <7624d3b5ba0415588a924aad2b855088e3d2028b.1682380788.git.me@ttaylorr.com>
- <xmqqmt2vzubq.fsf@gitster.g>
+        <91ed8c70f22dd2c47c60d650323579fc42cc7f2d.1682380788.git.me@ttaylorr.com>
+Date:   Tue, 25 Apr 2023 11:52:25 -0700
+Message-ID: <xmqqh6t3ztee.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmt2vzubq.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 11:32:25AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
+
+>   3. Fall back to the ordinary object traversal if either (a) there are
+>      no haves, (b) none of the haves are in the bitmapped pack or MIDX,
+>      or (c) there are no wants.
+
+Tangents.  If there are no haves, wouldn't the answer by definition
+everything that are reachable from all wants?  Is there a reason why
+a bitmapped walk cannot fulfill such a request?  If there are no
+wants, wouldn't the answer by definition an empty set?  Again, I am
+not sure what the ordinary object traversal is expected to do in
+such a case.
+
+These questions are not at all important, as this part is an
+explation of what happened in the old code.
+
+> Relaxing the bitmap traversal to allow it to produce over-counted
+> results gives us the opportunity to make some significant improvements.
+> Instead of the above, the new algorithm only has to walk from the
+> *boundary* down to the nearest bitmap, instead of from each of the
+> UNINTERESTING tips.
+
+Is it only me, or are all readers equally confused by the use of
+the term "boundary" that hasn't been given any definition?
+
+> And is more-or-less equivalent to using the *old* algorithm with this
+> invocation:
 >
-> > To prepare for the boundary-based bitmap walk to perform a fill-in
-> > traversal using the boundary of either side as the tips, extract routine
-> > used to perform fill-in traversal by `find_objects()` so that it can be
-> > used in both places.
->
-> What is done is not a literal "extract", though.  Worth mentioning here?
+>     $ git rev-list --objects --boundary $WANTS --not $HAVES |
 
-Oops. It is supposed to be a literal extraction, but this patch was
-originally written before 3e0370a8d2 (list-objects: consolidate
-traverse_commit_list[_filtered], 2022-03-09).
+It is especially confusing because the "--boundary" (at least as I
+originally had invented it), i.e. a commit that is smudged with
+UNINTERESTING bit, whose parent we did not bother to dig further to
+paint with the same UNINTERESTING bit, is not something we start our
+computation with; it is something we learn _after_ completing the
+history traversing.  So I am utterly confused X-<.
 
-> > ---
-> >  pack-bitmap.c | 66 +++++++++++++++++++++++++++++----------------------
-> >  1 file changed, 37 insertions(+), 29 deletions(-)
-> >
-> > +	if (base == NULL)
-> > +		base = bitmap_new();
->
-> Style?
 
-...It was also written before afe8a9070b (tree-wide: apply
-equals-null.cocci, 2022-05-02), which is where this "if (base == NULL)"
-thing comes from. I fixed both to be a clean extraction with no
-functional changes.
-
-Thanks,
-Taylor
