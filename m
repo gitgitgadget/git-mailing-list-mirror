@@ -2,33 +2,34 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA78CC77B73
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 05:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F11C6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 05:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233276AbjDYFy7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 01:54:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33190 "EHLO
+        id S233115AbjDYFzI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 01:55:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233258AbjDYFy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 01:54:57 -0400
+        with ESMTP id S233238AbjDYFzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 01:55:01 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE259000
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 22:54:56 -0700 (PDT)
-Received: (qmail 21789 invoked by uid 109); 25 Apr 2023 05:54:56 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CDB0AD15
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 22:54:59 -0700 (PDT)
+Received: (qmail 21802 invoked by uid 109); 25 Apr 2023 05:54:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Apr 2023 05:54:56 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Apr 2023 05:54:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 897 invoked by uid 111); 25 Apr 2023 05:54:55 -0000
+Received: (qmail 903 invoked by uid 111); 25 Apr 2023 05:54:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Apr 2023 01:54:55 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Apr 2023 01:54:58 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 25 Apr 2023 01:54:55 -0400
+Date:   Tue, 25 Apr 2023 01:54:58 -0400
 From:   Jeff King <peff@peff.net>
 To:     Thomas Bock <bockthom@cs.uni-saarland.de>
 Cc:     Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH v2 2/4] parse_commit(): parse timestamp from end of line
-Message-ID: <20230425055455.GB4015649@coredump.intra.peff.net>
+Subject: [PATCH v2 3/4] parse_commit(): handle broken whitespace-only
+ timestamp
+Message-ID: <20230425055458.GC4015649@coredump.intra.peff.net>
 References: <20230425055244.GA4014505@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -38,117 +39,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To find the committer timestamp, we parse left-to-right looking for the
-closing ">" of the email, and then expect the timestamp right after
-that. But we've seen some broken cases in the wild where this fails, but
-we _could_ find the timestamp with a little extra work. E.g.:
+The comment in parse_commit_date() claims that parse_timestamp() will
+not walk past the end of the buffer we've been given, since it will hit
+the newline at "eol" and stop. This is usually true, when dateptr
+contains actual numbers to parse. But with a line like:
 
-  Name <Name<email>> 123456789 -0500
+   committer name <email>   \n
 
-This means that features that rely on the committer timestamp, like
---since or --until, will treat the commit as happening at time 0 (i.e.,
-1970).
+with just whitespace, and no numbers, parse_timestamp() will consume
+that newline as part of the leading whitespace, and we may walk past our
+"tail" pointer (which itself is set from the "size" parameter passed in
+to parse_commit_buffer()).
 
-This is doubly confusing because the pretty-print parser learned to
-handle these in 03818a4a94 (split_ident: parse timestamp from end of
-line, 2013-10-14). So printing them via "git show", etc, makes
-everything look normal, but --until, etc are still broken (despite the
-fact that that commit explicitly mentioned --until!).
+In practice this can't cause us to walk off the end of an array, because
+we always add an extra NUL byte to the end of objects we load from disk
+(as a defense against exactly this kind of bug). However, you can see
+the behavior in action when "committer" is the final header (which it
+usually is, unless there's an encoding) and the subject line can be
+parsed as an integer. We walk right past the newline on the committer
+line, as well as the "\n\n" separator, and mistake the subject for the
+timestamp.
 
-So let's use the same trick as 03818a4a94: find the end of the line, and
-parse back to the final ">". In theory we could use split_ident_line()
-here, but it's actually a bit more strict. In particular, it requires a
-valid time-zone token, too. That should be present, of course, but we
-wouldn't want to break --until for cases that are working currently.
-
-We might want to teach split_ident_line() to become more lenient there,
-but it would require checking its many callers (since right now they can
-assume that if date_start is non-NULL, so is tz_start).
-
-So for now we'll just reimplement the same trick in the commit parser.
-
-The test is in t4212, which already covers similar cases, courtesy of
-03818a4a94. We'll just adjust the broken commit to munge both the author
-and committer timestamps. Note that we could match (author|committer)
-here, but alternation can't be used portably in sed. Since we wouldn't
-expect to see ">" except as part of an ident line, we can just match
-that character on any line.
+The new test demonstrates such a case. I also added a test to check this
+case against the pretty-print formatter, which uses split_ident_line().
+It's not subject to the same bug, because it insists that there be one
+or more digits in the timestamp.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- commit.c               | 24 ++++++++++++++++--------
- t/t4212-log-corrupt.sh |  7 ++++++-
- 2 files changed, 22 insertions(+), 9 deletions(-)
+ commit.c               | 17 +++++++++++++++--
+ t/t4212-log-corrupt.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+), 2 deletions(-)
 
 diff --git a/commit.c b/commit.c
-index 6d844da9a6..bb340f66fa 100644
+index bb340f66fa..2f1b5d505b 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -95,6 +95,7 @@ struct commit *lookup_commit_reference_by_name(const char *name)
- static timestamp_t parse_commit_date(const char *buf, const char *tail)
- {
- 	const char *dateptr;
-+	const char *eol;
+@@ -120,10 +120,23 @@ static timestamp_t parse_commit_date(const char *buf, const char *tail)
+ 	dateptr = eol;
+ 	while (dateptr > buf && dateptr[-1] != '>')
+ 		dateptr--;
+-	if (dateptr == buf || dateptr == eol)
++	if (dateptr == buf)
+ 		return 0;
  
- 	if (buf + 6 >= tail)
- 		return 0;
-@@ -106,16 +107,23 @@ static timestamp_t parse_commit_date(const char *buf, const char *tail)
- 		return 0;
- 	if (memcmp(buf, "committer", 9))
- 		return 0;
--	while (buf < tail && *buf++ != '>')
--		/* nada */;
--	if (buf >= tail)
+-	/* dateptr < eol && *eol == '\n', so parsing will stop at eol */
++	/*
++	 * Trim leading whitespace; parse_timestamp() will do this itself, but
++	 * if we have _only_ whitespace, it will walk right past the newline
++	 * while doing so.
++	 */
++	while (dateptr < eol && isspace(*dateptr))
++		dateptr++;
++	if (dateptr == eol)
++		return 0;
 +
 +	/*
-+	 * Jump to end-of-line so that we can walk backwards to find the
-+	 * end-of-email ">". This is more forgiving of malformed cases
-+	 * because unexpected characters tend to be in the name and email
-+	 * fields.
++	 * We know there is at least one non-whitespace character, so we'll
++	 * begin parsing there and stop at worst case at eol.
 +	 */
-+	eol = memchr(buf, '\n', tail - buf);
-+	if (!eol)
- 		return 0;
--	dateptr = buf;
--	while (buf < tail && *buf++ != '\n')
--		/* nada */;
--	if (buf >= tail)
-+	dateptr = eol;
-+	while (dateptr > buf && dateptr[-1] != '>')
-+		dateptr--;
-+	if (dateptr == buf || dateptr == eol)
- 		return 0;
--	/* dateptr < buf && buf[-1] == '\n', so parsing will stop at buf-1 */
-+
-+	/* dateptr < eol && *eol == '\n', so parsing will stop at eol */
  	return parse_timestamp(dateptr, NULL, 10);
  }
  
 diff --git a/t/t4212-log-corrupt.sh b/t/t4212-log-corrupt.sh
-index 8b5433ea74..af4b35ff56 100755
+index af4b35ff56..d4ef48d646 100755
 --- a/t/t4212-log-corrupt.sh
 +++ b/t/t4212-log-corrupt.sh
-@@ -9,7 +9,7 @@ test_expect_success 'setup' '
- 	test_commit foo &&
- 
- 	git cat-file commit HEAD >ok.commit &&
--	sed "/^author /s/>/>-<>/" <ok.commit >broken_email.commit &&
-+	sed "s/>/>-<>/" <ok.commit >broken_email.commit &&
- 
- 	git hash-object --literally -w -t commit broken_email.commit >broken_email.hash &&
- 	git update-ref refs/heads/broken_email $(cat broken_email.hash)
-@@ -44,6 +44,11 @@ test_expect_success 'git log --format with broken author email' '
- 	test_must_be_empty actual.err
+@@ -92,4 +92,33 @@ test_expect_success 'absurdly far-in-future date' '
+ 	git log -1 --format=%ad $commit
  '
  
-+test_expect_success '--until handles broken email' '
-+	git rev-list --until=1980-01-01 broken_email >actual &&
-+	test_must_be_empty actual
++test_expect_success 'create commit with whitespace committer date' '
++	# It is important that this subject line is numeric, since we want to
++	# be sure we are not confused by skipping whitespace and accidentally
++	# parsing the subject as a timestamp.
++	#
++	# Do not use munge_author_date here. Besides not hitting the committer
++	# line, it leaves the timezone intact, and we want nothing but
++	# whitespace.
++	test_commit 1234567890 &&
++	git cat-file commit HEAD >commit.orig &&
++	sed "s/>.*/>    /" <commit.orig >commit.munge &&
++	ws_commit=$(git hash-object --literally -w -t commit commit.munge)
 +'
 +
- munge_author_date () {
- 	git cat-file commit "$1" >commit.orig &&
- 	sed "s/^\(author .*>\) [0-9]*/\1 $2/" <commit.orig >commit.munge &&
++test_expect_success '--until treats whitespace date as sentinel' '
++	echo $ws_commit >expect &&
++	git rev-list --until=1980-01-01 $ws_commit >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pretty-printer handles whitespace date' '
++	# as with the %ad test above, we will show these as the empty string,
++	# not the 1970 epoch date. This is intentional; see 7d9a281941 (t4212:
++	# test bogus timestamps with git-log, 2014-02-24) for more discussion.
++	echo : >expect &&
++	git log -1 --format="%at:%ct" $ws_commit >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.40.0.653.g15ca972062
 
