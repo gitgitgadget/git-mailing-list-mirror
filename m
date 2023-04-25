@@ -2,132 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF587C77B61
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 16:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A22D1C6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 16:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234736AbjDYQ1y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 12:27:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59758 "EHLO
+        id S234714AbjDYQ3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 12:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234718AbjDYQ1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 12:27:52 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575333C0A
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:27:51 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id af79cd13be357-74adf6adac6so612295585a.0
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:27:51 -0700 (PDT)
+        with ESMTP id S233943AbjDYQ3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 12:29:01 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269223C0A
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:29:01 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1a50cb65c92so48280805ad.0
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 09:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682440070; x=1685032070;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ExOD1zuQlVMzcH2TB4SpjSglrq8X0SSSdYI+5SJaUHU=;
-        b=mByY+VMR4UTSzibEcVKY2K2WQIsUhGv4HKNY5Qx6LQNIN+uND92z4GGs06ny6MLpIR
-         BvKupHEzsLHK5XDxcbIaFzWx1K0lgLZ7tRLzBFD2MZODP1edF533jZ6eiET3xeDcAh6D
-         MsSh3p8EC3V/mtCB6buuMjyvKWjYVISynYGYJrpTUliyFZMMHZa3vQHkmKhU1+8eln2G
-         ir2l+484gX+Lm8JY08AXYS/0bT7WFDrs/htQN6L4pNfgUwFlgvk7wGO1EjO+WoNT/Opx
-         0Zc14KtEd7b4JIOSqbCnSEZ6qxRQpccbrXxmy4eBlzE/vkA81+HlApJV2w+k5EQugPF4
-         lDag==
+        d=gmail.com; s=20221208; t=1682440140; x=1685032140;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bZWARPzDTaIaCd4dLseacV5/xLxy8NmMgpRtgZExmgE=;
+        b=HtJEMPPvcZez7+uYpg6jpRzwD6AstVi0uq5EpOZreN1+8dKtv1tKHcRA5x1JUsEZgi
+         IJZCJZx/kkw2bo5InwcBTXkFyP1hLx2VBeQj/BpaCZ3hTgD0NFYySdN1MMfKxuTYKQpz
+         bqi3w/9owqGrbPeFvxu6RTfku4kPgGs0NSo2+mw3X7w8+vuVVLZ/63ojWD3T7Y0LIZgU
+         0mgz0GQpyXOvEIdq8mnAJeCIDp61x9Ivgm6SU1dBmpe3e6U93APtGFjWrDI+tS5LPGGX
+         TfC7Skqv02kEQ64268EsaloQeziQEXQMs+sixs+x7j6Ax5Vk0rW+sXOZ3eL0R5sq4v4Z
+         AgaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682440070; x=1685032070;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ExOD1zuQlVMzcH2TB4SpjSglrq8X0SSSdYI+5SJaUHU=;
-        b=BjfcbaogGUesk6o6oSGoetbBsPlL24wIar1wNyCLPqAmO9MyXfQZSPUworynXSAzJG
-         gToEw2+h6cbEh5Os4hYJJRtj/lQJz6Vq4yo+uwUx3aHK7IFpx0Ug5ViiWH+KUbOD7DMo
-         WpwoMsgol6T3SxfWNm+6VsbDGsFJCfvdkaenVXQ07P50kOMDALfBJgafCfsf65WsNooD
-         01d1Rfj0Og5hPjgIsNNaRw2d+sxazhEM96JXqCDBRwfhFwOSenpGGnQXbQYUF+boRBSB
-         yjuhrqqP6dl+0ZYAd1q6rDBuNRj+lPAv0MOdQEwkyvuEdcHEzMlkom1fVizdALRA7j6v
-         gWog==
-X-Gm-Message-State: AAQBX9c2EBMAMpGS2MMkUBnVOY54MxcHGJqapRMAQD8xYeELsk29zpSU
-        Zw9k479wjYzV4yztUacafB3B6osTrMo=
-X-Google-Smtp-Source: AKy350buJ9ll5+HMiGlZR9ZdVKXIIjmOD6trkN7elLX2lzehxYdYDpIdcQ+34Vpl/9BbyEqxK/7JCA==
-X-Received: by 2002:a05:622a:13ce:b0:3ef:4c4b:7e1e with SMTP id p14-20020a05622a13ce00b003ef4c4b7e1emr32391005qtk.29.1682440069914;
-        Tue, 25 Apr 2023 09:27:49 -0700 (PDT)
-Received: from localhost.localdomain ([2607:fad8:4:3::1003])
-        by smtp.gmail.com with ESMTPSA id m13-20020ac807cd000000b003ef311b39d7sm4535544qth.96.2023.04.25.09.27.49
+        d=1e100.net; s=20221208; t=1682440140; x=1685032140;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bZWARPzDTaIaCd4dLseacV5/xLxy8NmMgpRtgZExmgE=;
+        b=II+Z3t9Va4gWY9mWpC868ui8LM5CXLyfRtXIwjtn1fmfPb3wR+6ApLvXIw97yNHNXQ
+         XFNRRhRpwSwZAL4V12eCFNUH/IwZsykBDA6expeqnjzgvDNNioxa0SJBRd6gJvUkBW7D
+         RdWF2v3CTy8rCXzvvnKWhcxMxCsPGDbb8GVAhLQ0wgc26kbUnL48n/XRtmawIMDTmg9l
+         1hF0fURFM5w83vkS4H2a8E4B+D2rGL25t9AOvl2J8qnJjIAKpzsZ59mvYeafk8Xtm6du
+         aVw6M7QE8W3BXCsBZH80D4wsWiBYlVyrbHgY6HgzU6exN9b9r9NFrBq+RIzJWEgQb/ww
+         F3dQ==
+X-Gm-Message-State: AAQBX9fQ+YvtAHB0GQxDcLAeT9DEoCgQT/dk7Iuvr+/0XNqguj/FKzH8
+        QpTGqTZLBTDiexueFprwLjQ=
+X-Google-Smtp-Source: AKy350ZJzvYP4xGzCEca0WEwE85Xz5NbXC8Zk5/6biTQgiX3rLLCAU99rPVBb853B9bjigsByrcySQ==
+X-Received: by 2002:a17:902:dac7:b0:1a9:5c78:8fdf with SMTP id q7-20020a170902dac700b001a95c788fdfmr15435823plx.36.1682440140509;
+        Tue, 25 Apr 2023 09:29:00 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id s2-20020a170902988200b0019a7d58e595sm8439447plp.143.2023.04.25.09.29.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 09:27:49 -0700 (PDT)
-From:   Maxim Cournoyer <maxim.cournoyer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Maxim Cournoyer <maxim.cournoyer@gmail.com>
-Subject: [PATCH v2 1/2] send-email: extract execute_cmd from recipients_cmd
-Date:   Tue, 25 Apr 2023 12:26:32 -0400
-Message-Id: <20230425162631.13684-2-maxim.cournoyer@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230425162631.13684-1-maxim.cournoyer@gmail.com>
-References: <xmqqh6t57x0y.fsf@gitster.g>
- <20230425162631.13684-1-maxim.cournoyer@gmail.com>
+        Tue, 25 Apr 2023 09:29:00 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Maxim Cournoyer <maxim.cournoyer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] send-email: add --header-cmd option
+References: <20230423122744.4865-1-maxim.cournoyer@gmail.com>
+        <20230423122744.4865-3-maxim.cournoyer@gmail.com>
+        <xmqqh6t57x0y.fsf@gitster.g> <87y1mgortc.fsf@gmail.com>
+Date:   Tue, 25 Apr 2023 09:29:00 -0700
+In-Reply-To: <87y1mgortc.fsf@gmail.com> (Maxim Cournoyer's message of "Tue, 25
+        Apr 2023 12:22:07 -0400")
+Message-ID: <xmqqcz3s3oz7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This refactor is to pave the way for the addition of the new
-'--header-cmd' option to the send-email command.
+Maxim Cournoyer <maxim.cournoyer@gmail.com> writes:
 
-Signed-off-by: Maxim Cournoyer <maxim.cournoyer@gmail.com>
----
- git-send-email.perl | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+> I'm not too familiar with the email format; but I presume an empty line
+> would signal the end of a message?  That'd be bad yes, but I think it
+> cannot currently happen given the 'last if $line =~ /^$/;' guard at in
+> execute_cmd around line 2023; it'd means headers following an empty line
+> would be discarded though.  The expected use case is indeed for a user's
+> script to produce RFC 2822 style headers to messages.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index fd8cd0d46f..b8d77ad214 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -2,6 +2,7 @@
- #
- # Copyright 2002,2005 Greg Kroah-Hartman <greg@kroah.com>
- # Copyright 2005 Ryan Anderson <ryan@michonline.com>
-+# Copyright 2023 Maxim Cournoyer <maxim.cournoyer@gmail.com>
- #
- # GPL v2 (See COPYING)
- #
-@@ -2006,15 +2007,29 @@ sub process_file {
- 	}
- }
- 
-+# Execute a command and return its output lines as an array.
-+sub execute_cmd {
-+	my ($prefix, $cmd, $file) = @_;
-+	my @lines = ();
-+	open my $fh, "-|", "$cmd \Q$file\E"
-+		or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
-+	while (my $line = <$fh>) {
-+		last if $line =~ /^$/;
-+		push @lines, $line;
-+	}
-+	close $fh
-+	    or die sprintf(__("(%s) failed to close pipe to '%s'"), $prefix, $cmd);
-+	return @lines;
-+}
-+
- # Execute a command (e.g. $to_cmd) to get a list of email addresses
- # and return a results array
- sub recipients_cmd {
- 	my ($prefix, $what, $cmd, $file) = @_;
--
-+	my @lines = ();
- 	my @addresses = ();
--	open my $fh, "-|", "$cmd \Q$file\E"
--	    or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
--	while (my $address = <$fh>) {
-+	@lines = execute_cmd($prefix, $cmd, $file);
-+	for my $address (@lines) {
- 		$address =~ s/^\s*//g;
- 		$address =~ s/\s*$//g;
- 		$address = sanitize_address($address);
-@@ -2023,8 +2038,6 @@ sub recipients_cmd {
- 		printf(__("(%s) Adding %s: %s from: '%s'\n"),
- 		       $prefix, $what, $address, $cmd) unless $quiet;
- 		}
--	close $fh
--	    or die sprintf(__("(%s) failed to close pipe to '%s'"), $prefix, $cmd);
- 	return @addresses;
- }
- 
--- 
-2.39.2
+Yes, silently discarding the end-user input is what I meant by a
+disaster.
 
+> The former (a true default with no way to turn it off other than
+> redefining it), which I believe is the same behavior as for --cc-cmd or
+> --to-cmd.  There are no '--no-cc-cmd' or '--no-to-cmd' options, although
+> their result can be filtered via the '--no-cc' and '--no-to' options.
+
+Yup.
+
+> Looking in the source, options supporting '--no-' always appear to be
+> boolean toggles (on/off) though, so I'm not sure how a '--no-header-cmd'
+> that take a value can currently be implemented.  Perhaps it could be
+> added later if there is a need?
+
+Perhaps we can do without a configuration variable first, and
+perhaps the variable could be added later if there is a need and a
+proper way to turn it off per invocation basis.
+
+> I've extracted such postprocessing into fold_headers and applied
+> execute_cmd to it in new invoke_header_cmd subroutine.
+
+Sounds like a good approach (without looking the actual patch).
+
+Thanks.
