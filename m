@@ -2,89 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD1EBC77B61
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 17:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B8AC6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 17:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234495AbjDYRtg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 13:49:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47824 "EHLO
+        id S234687AbjDYRz6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 13:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231569AbjDYRte (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 13:49:34 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C7FAD0F
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:49:34 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b35789313so4457204b3a.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682444973; x=1685036973;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CRj/cIRR58T/XeQxgVo4a67SeFzQyIMFEh9+M5jVWbo=;
-        b=Dy+jo7ew176Liqi1ItkGm9KYNtGbr48b2ybW9SuGRb0J2Y/cDaEkxB/5vGxyz4ee2i
-         TKTfw7epqwbEtfXT6GIMg+1MkY7/zA0WhkN5ACEb0Nx+UKLfIUjJfL+wOrB9pqGaECHd
-         bV3jVX1If3uVixt8e60tlv1InPDXMFp9095rDmnPNgWSEpjugsgcNOpWU9GRVkM6l4lL
-         +fQdXIoaoEgGFyLGdfuzv4MluvhKjCcKKnomWSgNMiOav7Ugjlb5lDQErN+9Poey0sXX
-         8Sz4QC161wJPJ3wgYEiVSSQR0N0ZbEuPMFT+j2LX7peKfo55ffro3/PBCgFx/hnx6ysY
-         I+Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682444973; x=1685036973;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CRj/cIRR58T/XeQxgVo4a67SeFzQyIMFEh9+M5jVWbo=;
-        b=D22BCD/IKL2LytXd1nXxi60iLkjQfsbIjAblTMr8HjzJa72qaOHs4XYXCPfcCDFEVF
-         P4IzX4+9zitVYAScKCsctIusqkSTWaac/ymat4N9bdHdOT1g+3qDkSl50NYLTd1ZbgRD
-         DjYxh18KxsYiaIjQMlkKtZz0YLgRkr55JQ5M9S1bap/OCqCWqM6O94fmWFhUX9ySBahm
-         tsApd9PmwHTqyYJvtkORiHdr+0ftH7B3iMtO4uZUMniVsYe4b2hfkMHJgAPvjY++9gq7
-         EfGyRW1gZ2pGwuawxsnn3t++SbGn09aVTTd/HEG1BGUB8xMeC72gDF2v/pPjTG7ufR3L
-         dmlw==
-X-Gm-Message-State: AAQBX9d/EPLpakBDBb2WEE3bKy1eLFciPWad2Czyc83RqiB6Z6uT1jMz
-        QxgeIBnm1Ec3NWB31DjLZn0=
-X-Google-Smtp-Source: AKy350b9XFpmts7N6Sg9N/PCP7CM6ErNKtlDIU6K/KRQZURo7v29l6oFGbnPNCJJJ+poSYyIP54QpQ==
-X-Received: by 2002:a05:6a20:a10d:b0:f0:b6e3:90c9 with SMTP id q13-20020a056a20a10d00b000f0b6e390c9mr23136310pzk.4.1682444973325;
-        Tue, 25 Apr 2023 10:49:33 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id x137-20020a62868f000000b0062ddcad2cbesm9807677pfd.145.2023.04.25.10.49.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 10:49:32 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v8 6/6] notes.c: introduce "--[no-]stripspace" option
-References: <cover.1682429602.git.dyroneteng@gmail.com>
-        <f60f743203d78a489b90df81472e71391b45367d.1682429602.git.dyroneteng@gmail.com>
-Date:   Tue, 25 Apr 2023 10:49:32 -0700
-In-Reply-To: <f60f743203d78a489b90df81472e71391b45367d.1682429602.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Tue, 25 Apr 2023 21:34:41 +0800")
-Message-ID: <xmqq4jp326oj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229481AbjDYRz4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 13:55:56 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9C62CC1F
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 10:55:54 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id BC1A8320090F;
+        Tue, 25 Apr 2023 13:55:51 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Tue, 25 Apr 2023 13:55:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm3; t=1682445351; x=1682531751; bh=Ce
+        hVDW3feiGAM5F0lCnd2gItNox2tKmBK6O6iJuIVrQ=; b=q5IoHXch1QvV8tg03m
+        2Zm1oHFd/5M1DQecD7XXGHO9UH+JZ7QFXpGLipds1SB0O+EwSVHsTVO9s256alyM
+        bFw4G+Q5a8yMmriFgady0CUJgSQxwRCN01uC8ME0kmKwKCTgMoovvfSq+RNeblXP
+        kYCm8/Aq5tXB83xhdrJSK6CtFt1TS/8zL3N43yZtCcs4rc6+l4B6JvxctR2mfET9
+        cN3Q8QV4uyOVNmF5CZAHnIRmZmLDOb7m/8WvG+OxYKqdQhuiGf8od83/oFiBr/Nv
+        m2YtJqroZkDY+sUsgp7U+25h8x9fojookNZqAo+OrnXpXWf5LWCdRx2cgizRUX/8
+        pS9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; t=1682445351; x=1682531751; bh=CehVDW3feiGAM
+        5F0lCnd2gItNox2tKmBK6O6iJuIVrQ=; b=IiRRI9LzoMTnqjK0SfUGmibFf1DQn
+        X35u553xC/lGXK6Tze21PIxCknwGzOLwi3Xs+zWAssTZCF1cwolWE2T4llAVszeb
+        R4qwLhWl1m79op0RbUV7V0T6x0ATOCWgCrKqiG6lSm2If5hiL8PoJ7VLtED1BKX5
+        Btp705QX9vX7gK6jFaspJOP/rIRZApGnTCnrjFMiSpLKC8nUYEpCXBGVqRfnbcAi
+        qK9KNBZAPokLmhaPtUOBuaaabBJQtiAqwqpZR7rFEcvR212wY/hz7ivmZSkT1Ppc
+        5/x/mxZcp9B7hpup7bpKPQzX0zSAgxn8gk3Z3kZHdAcXMYACMpUoBzqoQ==
+X-ME-Sender: <xms:JxRIZFwPn36QO14zNsEUg5x0Ky44o3wQWamVhhw3o0KUn7doks7kBQ>
+    <xme:JxRIZFROTAoIaYDkuJkPn2yavdaS16psmNsorCeqwHRMIuiQ8l06mA3sXrYJnp07U
+    ph1ZoKWHsmodf_SVA>
+X-ME-Received: <xmr:JxRIZPUprfVxHtitSG_-A4O9mQnHujbJ52yUv9Fw9IkKBXUmijFau8s5YFy9XiCkR_RikThpL0NzbG-6ZG5fMz-nMqLpvegXOD5MwX0bCXQr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeduvddguddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeehfefhuedtvedtfeeiteeugefgfeelgeelveehffeukeelfefhieekteevudfh
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:JxRIZHhnLJcOsiy5IgRm5-tciX-JydU0OuDjS003rKN96D6o6yNG7A>
+    <xmx:JxRIZHCiwfFFf9QlnWWrjEjL5JlZ0IU11pIsrq0KbBHy4eBa_HpBlg>
+    <xmx:JxRIZAJmiUdmhqGS79vO2HmmjELk9LRVt_b_nu3YI5W4kgdUsSdXWg>
+    <xmx:JxRIZKqwF5wBOqhZ7worE3T4EbF4CVzHC943FKjyNVv9C4EV2jDOPQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Apr 2023 13:55:50 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id ca225566 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 25 Apr 2023 17:55:23 +0000 (UTC)
+Date:   Tue, 25 Apr 2023 19:55:46 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Join us for Review Club
+Message-ID: <ZEgUIiLgrTJWNFlo@ncase>
+References: <kl6lv8hk997v.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="K9auflCHvJn8wHwB"
+Content-Disposition: inline
+In-Reply-To: <kl6lv8hk997v.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
 
-> From: Teng Long <dyroneteng@gmail.com>
->
-> This commit introduces a new option "--[no-]stripspace" to git notes
-> append, git notes edit, and git notes add. This option allows users to
-> control whether the note message need to stripped out.
+--K9auflCHvJn8wHwB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Makes sense.
+On Mon, Apr 24, 2023 at 04:00:36PM -0700, Glen Choo wrote:
+[snip]
+> This week, we'll be discussing Patrick Steinhardt's "machine parseable
+> git fetch" topic [3]. Let me know if you're interested and would like to
+> join (off-list is fine), and I'll send you an invite.
 
->     ... One more thing need to note is "the order of
->     the options matter", that is, if you specify "-C" before "-m" or
->     "-F", the reused message by "-C" will be stripped out together,
->     because everytime concat "-m" or "-F" message, the concated message
->     will be stripped together. Oppositely, if you specify "-m" or "-F"
->     before "-C", the reused message by "-C" will not be stripped out.
+Thanks for the interest in this patch series. Unfortunately I will not
+be able to join, but I'm looking forward to any feedback!
 
-This sounds more like a design/implementation mistake that we may
-want to fix.
+Patrick
 
+--K9auflCHvJn8wHwB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRIFCEACgkQVbJhu7ck
+PpQXyQ//VJNdtDXJWiKXcBS5u2M5Ne8vIXsG1HLD1aeZg5SFZ6JuPEUaPa5ri99m
+hucB1R1gHYwKCGHMdYOi+Tp28hnLO3d26DrGqQDiYM6/C83ulZpOIio0gpKW2rQ8
+1EaCmQD9/7qsq88cIxFiXkW1xUCq/PsZHwcRvctJF3Nqj8GwhsvnVClil4o9ZkWn
+M9FJs9O+ndJ9p/pu52/5A9HjUm5RKmMB6sq/PWVEo9h3QYBOeBehybQ9oNrJbCJD
+JiHcfCS/nt0SrM6uDQGjL16FWe4xdz2vZCyFsiqAWSGZa/EIoIQQWQ/jYI4Ei9sa
+qTAUQBDOUMkKOGPjCye9XGXzi23REZrvqvxpcuALltDhQ2P8VGoPHjmneOwkf79o
+ztfVL/nl7flBmizR6KOsTNQnqI4rT6dKCbYO0eE93/ZrqonrENRWx0g0KfF7vMBI
+Wu5R0rjcQ+VvGP0CAexH8loZdV4umSriSK34otAMLO/Ds48VtPrtBrtoVir8y/vl
++SPDE/HtodGucqaSJqPqnSmvfTu8w3QHgJwLQy5jV0btBDfae17OtNF2RnOgo1eU
+rc7DXEp7k6sY7UZ1sF7yQTRmTWtqV9+TNk17s6NH0rre4rN5k0qLMAqBEdIAhUBl
+PYO4mvRtzNycrxkp3An5pBHlV11wveG4s7ttahWBkkqE3wfdDUs=
+=IjXs
+-----END PGP SIGNATURE-----
+
+--K9auflCHvJn8wHwB--
