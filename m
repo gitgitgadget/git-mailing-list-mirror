@@ -2,92 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87849C77B61
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 06:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEAE1C6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 06:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233170AbjDYGKd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 02:10:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
+        id S233285AbjDYGVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 02:21:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231428AbjDYGKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 02:10:32 -0400
+        with ESMTP id S232430AbjDYGVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 02:21:10 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02112AD39
-        for <git@vger.kernel.org>; Mon, 24 Apr 2023 23:10:30 -0700 (PDT)
-Received: (qmail 21918 invoked by uid 109); 25 Apr 2023 06:10:30 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 386ACAD2A
+        for <git@vger.kernel.org>; Mon, 24 Apr 2023 23:21:08 -0700 (PDT)
+Received: (qmail 21990 invoked by uid 109); 25 Apr 2023 06:21:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Apr 2023 06:10:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Apr 2023 06:21:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1179 invoked by uid 111); 25 Apr 2023 06:10:30 -0000
+Received: (qmail 1360 invoked by uid 111); 25 Apr 2023 06:21:07 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Apr 2023 02:10:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Apr 2023 02:21:07 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 25 Apr 2023 02:10:29 -0400
+Date:   Tue, 25 Apr 2023 02:21:07 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
-Message-ID: <20230425061029.GA4015844@coredump.intra.peff.net>
-References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
- <20230418070048.2209469-2-felipe.contreras@gmail.com>
- <xmqq8ren8xz1.fsf@gitster.g>
- <644684018a766_aba29424@chronos.notmuch>
- <xmqq8reg96cu.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v3 2/6] string-list: introduce `string_list_setlen()`
+Message-ID: <20230425062107.GA4061254@coredump.intra.peff.net>
+References: <cover.1681428696.git.me@ttaylorr.com>
+ <cover.1682374789.git.me@ttaylorr.com>
+ <ae8d0ce1f25f26da09f2e3f5bc68f85cc162ce64.1682374789.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq8reg96cu.fsf@gitster.g>
+In-Reply-To: <ae8d0ce1f25f26da09f2e3f5bc68f85cc162ce64.1682374789.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 05:02:25PM -0700, Junio C Hamano wrote:
+On Mon, Apr 24, 2023 at 06:20:14PM -0400, Taylor Blau wrote:
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> However, setting `list->nr` manually is not safe in all instances. There
+> are a couple of cases worth worrying about:
 > 
-> > No, it's for the formatting machinery.
-> >
-> > The fact that both asciidoc and asciidoctor happen to understand our quircky
-> > formatting in this particualr situation doesn't mean it isn't quirky.
-> >
-> > In this particular case the parsers do understand what we are trying to do,
-> > because we just just pepper list continuations (`+`) everywhere and it happens
-> > to work.
+>   - If the `string_list` is initialized with `strdup_strings`,
+>     truncating the list can lead to overwriting strings which are
+>     allocated elsewhere. If there aren't any other pointers to those
+>     strings other than the ones inside of the `items` array, they will
+>     become unreachable and leak.
 > 
-> I'll stop at pointing out that the first "no" sounds much stronger
-> than the text that tries to substantiate it, which says that the
-> machinery works fine without the changes.
-> 
-> > This discrepancy confused Jeff in [1].
-> 
-> And this is a good reason to add this change for humans.
+>     (We could ourselves free the truncated items between
+>     string_list->items[nr] and `list->nr`, but no present or future
+>     callers would benefit from this additional complexity).
 
-Since I'm being used as the example, I'd like to point that I think this
-is somewhat tangential to what actually confused me there.
+I wondered how bad it would be to just free those truncated entries when
+strdup_strings is set. But that led me to another interesting point: the
+util fields. The regular string_list_clear() will optionally free the
+util entries, too. We'd potentially need to deal with those, too.
 
-What confused me in that earlier message was that having "+" as the
-continuation between a code-block and its call-out list is odd, since
-"+" is about continuing a list item. It happens to work because we're in
-a larger list item, but it breaks when you put the two of them in their
-own block (which is the part that got me).
+We don't do anything with them here. So code like:
 
-Using just a blank line between the code block and the call-out list
-(instead of the "+") works for asciidoc (it is happy to keep the two
-together) but not asciidoctor (it ends the outer ordered list before
-starting the callout list).
+  struct string_list foo = STRING_LIST_INIT_NODUP;
 
-So the second hunk in the patch, to drop the extra continuation between
-the code block and the callout, makes perfect sense to me.
+  string_list_append(&foo, "bar")->util = xstrdup("something else");
+  string_list_setlen(&foo, 0);
 
-The first hunk seems less obviously good to me. We're not part of a
-list, so there's no continuation. We might say that it is good to always
-stick the callout list directly adjacent to the associated code block,
-since it does matter in other cases. But dropping the blank lines
-between the paragraph-sized callout blocks makes the source less
-readable, and empty lines between list elements are a pretty normal
-thing in asciidoc.
+would leak that util field. To be clear, to me this definitely falls
+under "if it hurts, don't do it", and I think code like above is pretty
+unlikely. But since the point of our function is to prevent mistakes, I
+thought it was worth mentioning.
 
-That said, I don't feel _too_ strongly about it, so I'm OK with the
-patch as-is.
+I think we _could_ do something like:
+
+  for (i = nr; i < list->nr; i++) {
+	if (list->items[i].util)
+		BUG("truncated string list item has non-NULL util field");
+  }
+
+though that is technically tighter than we need to be (it could be an
+unowned util field, after all; we don't know what it means here). So I'm
+inclined to leave your patch as-is.
+
+This would all be easier if the string_list had a field for "we own the
+util fields, too" just like it has strdup_strings. Or even a free-ing
+function. But instead we have ad-hoc solutions like "free_util" and
+string_list_clear_func(). But that's really outside the scope of your
+series. </rant> :)
 
 -Peff
