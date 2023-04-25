@@ -2,107 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B19C3C77B61
-	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 21:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE2BEC6FD18
+	for <git@archiver.kernel.org>; Tue, 25 Apr 2023 21:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236202AbjDYVAS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 17:00:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51940 "EHLO
+        id S236267AbjDYVCr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Apr 2023 17:02:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232148AbjDYVAP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 17:00:15 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0CBB14F5F
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:00:14 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5562c93f140so35152477b3.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:00:14 -0700 (PDT)
+        with ESMTP id S231978AbjDYVCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2023 17:02:46 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34AA26A8
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:02:44 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54fb6ac1e44so75071807b3.1
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 14:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682456414; x=1685048414;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1682456564; x=1685048564;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i9u5Dly3vtsHuqctBPPU6mWlpMfy++Qx48qbCQm6jvw=;
-        b=FsWsOolx2SWLuXBcjI4VKAUN05VpnOJ7VFo4iDkDNgdXWGJrsn6qSIgJ2gd88afXpi
-         BoEa1IrIeJ75LJgGTNMNgqAs+aEaTAEBmBgTEYnAWLXBK1ceUpuYQCOW2JhbKJrH1+KJ
-         FzQ0tb14ylXqU5JW2MGdTDAn/vDG7qVdFmRsThuuGUTBywaaaFVmuI4u7vEkIzFDIQfS
-         r2YAaY86DoTqk8upUyRKH3GFQRfraAUWZfJhRlUYNXzTiYxgSTaDJIl43+d9G3fZucDO
-         qMnD+XYH7PTzHC8f/OHnJ43FTbkbMSsmGjTfgE5WAff+9J72I1V1Sr5cd7HFXP+vnHDN
-         bCCA==
+        bh=3N2uVL9bnYt16hrz4afzwVL4T9d04czTMuFGsgm/uEY=;
+        b=vTcKX6MJ/9wQ3MeRYuEZDtYMQU54FwEsarZbasgJCu9fuvXCTQevLOPD6TFQDytHrm
+         /nGrRG1pSEf909mOSgZ41tHD+XQRkLRP4sRY2FjeIsb8AkFm4SgURmwRsiwLschObYTK
+         K/Iv75vSReaBPU10f2VOQD6ullUfzhVCDvjtUPK+j/qanYSPpFhequABoaqoQjoenPyd
+         cM7eq+8WF5uqXkh8BXMoE49/D5vah2Un4gZ1/AwGVsEQgTNgAVngFVzw3NQlubnf3h1J
+         XqZzxBKBU5scVpPCFgV2XTBN9mrUZWFXDXJYY6csppL7SZ+aWRwjNy44cYHNL8bd+47w
+         +J1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682456414; x=1685048414;
+        d=1e100.net; s=20221208; t=1682456564; x=1685048564;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i9u5Dly3vtsHuqctBPPU6mWlpMfy++Qx48qbCQm6jvw=;
-        b=Ht8qXIRPMP5g5709NKwpbvluI33xdG2t1g0Xc/Kw5+VDppU1zEoQJ+/udHxweSw4rr
-         W+ulOkqBP/XlUSQFZQceLGUfEQJ9DDrT5tAVHMIDeioIN7cLqLRs2iq7h6UGBIrVAiY5
-         1ZICe8LHSWedJwpny1A6j+z1LoBz+ipmNNumAbml939PnS67398sgTXbA67mDEA0IJ4x
-         afcC9hjx49iSJK7GNqI9nYhFus3cogXb3XNRujS9eJ6j82jWOXNKttclZL0E7DiZnV2I
-         Xzrif2Nqvza4J3LepBLRQjEFOxCbLTS5M2tMgEUWroASXnVY7Oe8A0J6FCJg3yWX9cnI
-         qxQg==
-X-Gm-Message-State: AAQBX9eLyD25qXEQnevuhggDibXrk6vNBGZNq0BTqlZy5xzNoPaiOalZ
-        XSAh/twNKTlW5WRVlEB2vQxgaQ==
-X-Google-Smtp-Source: AKy350a6O6OflGSY9jpoLTtRbJ6UgGx/FRSWoAZgwJYRN0j4C/4lqHb6YWAsUkPRH1OqSezrIUkyWA==
-X-Received: by 2002:a0d:d541:0:b0:54f:cbaf:36d with SMTP id x62-20020a0dd541000000b0054fcbaf036dmr10390824ywd.35.1682456414024;
-        Tue, 25 Apr 2023 14:00:14 -0700 (PDT)
+        bh=3N2uVL9bnYt16hrz4afzwVL4T9d04czTMuFGsgm/uEY=;
+        b=CiXa6LExNSDvkVU5iCuZFlQNiX9TRhkCf0CFwnAa4c2ZRL6rK2w/gDIzUqSFHZFyka
+         WPCCEp+j45phTGxdovWrS8ZrF9RiRRzXl6ZE9CgZypRD+jLg6zH4Q3iUPjsIzNnohUVw
+         sxv2l5chkv0GNs8/ceGwJiET7oRiCvgemjpgcLKq5/tV1LnKL/AlPIfXGcqGREIw24QB
+         YgILHrIdVcGgF5H2KpO7l/iUQQMyfc+4OA1uUlFPN9wp6Y56tr9IC9V0O8C3l8vu0YVi
+         Z7RG1N4uxXHqo33b8OcJ0FpX2To0NHzfDedYFpdoqVcGGO4eaHnrmkuUoUpqzEsPvdzl
+         tkHw==
+X-Gm-Message-State: AAQBX9em2PwHaHlepPrl07UFpuU4lpToAKkM89lPfiim9eGOFhhTne4h
+        UdrJwIyXqnAtMDGptj6Yc6A4xmEV0WjtFejAJrhI2w==
+X-Google-Smtp-Source: AKy350aF+j82Zfutl7vm0aLAwrn46ELenSValCfh5wWl/U2q36wuRHOFOIS/rZuPTL/fL2w8hVqkeg==
+X-Received: by 2002:a0d:ccd0:0:b0:541:8735:171e with SMTP id o199-20020a0dccd0000000b005418735171emr12988677ywd.11.1682456563784;
+        Tue, 25 Apr 2023 14:02:43 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u11-20020a81a50b000000b0054f3e4bf623sm3780411ywg.132.2023.04.25.14.00.13
+        by smtp.gmail.com with ESMTPSA id c125-20020a0dc183000000b0054f8b1f21e5sm3783235ywd.85.2023.04.25.14.02.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 14:00:13 -0700 (PDT)
-Date:   Tue, 25 Apr 2023 17:00:12 -0400
+        Tue, 25 Apr 2023 14:02:43 -0700 (PDT)
+Date:   Tue, 25 Apr 2023 17:02:42 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff Hostetler <jeffhostetler@github.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v3 2/6] string-list: introduce `string_list_setlen()`
-Message-ID: <ZEg/XPbtaAx0tPzK@nand.local>
+Subject: Re: [PATCH v3 6/6] banned.h: mark `strtok()` and `strtok_r()` as
+ banned
+Message-ID: <ZEg/8klMmHyJrdrj@nand.local>
 References: <cover.1681428696.git.me@ttaylorr.com>
  <cover.1682374789.git.me@ttaylorr.com>
- <ae8d0ce1f25f26da09f2e3f5bc68f85cc162ce64.1682374789.git.me@ttaylorr.com>
- <20230425062107.GA4061254@coredump.intra.peff.net>
+ <da896aa358eab65f2629f85189c5be4ad9cec635.1682374789.git.me@ttaylorr.com>
+ <20230425062617.GB4061254@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230425062107.GA4061254@coredump.intra.peff.net>
+In-Reply-To: <20230425062617.GB4061254@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 02:21:07AM -0400, Jeff King wrote:
-> I think we _could_ do something like:
+On Tue, Apr 25, 2023 at 02:26:17AM -0400, Jeff King wrote:
+> On Mon, Apr 24, 2023 at 06:20:26PM -0400, Taylor Blau wrote:
 >
->   for (i = nr; i < list->nr; i++) {
-> 	if (list->items[i].util)
-> 		BUG("truncated string list item has non-NULL util field");
->   }
+> > string_list_split_in_place() is not a perfect drop-in replacement
+> > for `strtok_r()`, particularly if the caller is processing a string with
+> > an arbitrary number of tokens, and wants to process each token one at a
+> > time.
+> >
+> > But there are no instances of this in Git's tree which are more
+> > well-suited to `strtok_r()` than the friendlier
+> > `string_list_in_place()`, so ban `strtok_r()`, too.
 >
-> though that is technically tighter than we need to be (it could be an
-> unowned util field, after all; we don't know what it means here). So I'm
-> inclined to leave your patch as-is.
+> For true incremental left-to-right parsing, strcspn() is probably a
+> better solution. We could mention that here in case anybody digs up the
+> commit after getting a "banned function" error.
+>
+> I'm tempted to say that this thread could serve the same function, but
+> I'm not sure where people turn to for answers (I find searching the list
+> about as easy as "git log -S", but then I've invested a lot of effort in
+> my list archive tooling :) ).
 
-I think there are two ways to do it, either:
+Personally, between what's already in the patch message and this
+discussion on the list, I think that folks would have enough guidance on
+how to do things right.
 
-  - something like what you wrote above, perhaps with an additional
-    `free_util` bit on the string_list itself (which might make it
-    convenient to drop all of the `free_util` parameters that permeate
-    its API)
-
-  - have string_list_setlen() take a `free_util` argument itself, in
-    which case your code would change to:
-
-    if (free_util) {
-      for (i = nr; i < list->nr; i++)
-        free(list->items[i].util)
-    }
-
-> This would all be easier if the string_list had a field for "we own the
-> util fields, too" just like it has strdup_strings. Or even a free-ing
-> function. But instead we have ad-hoc solutions like "free_util" and
-> string_list_clear_func(). But that's really outside the scope of your
-> series. </rant> :)
-
-;-).
+But if others feel like we could or should be more rigid here and update
+the commit message to say something like "if you're scanning from
+left-to-right, you could use strtok_r(), or strcspn() instead", but TBH
+I think there are a gazillion different ways to do this task, so I don't
+know that adding another item to that list substantially changes things.
 
 Thanks,
 Taylor
