@@ -2,113 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC8CC7EE25
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 21:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37CFEC7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 21:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239449AbjDZVGw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 17:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
+        id S239869AbjDZVMc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 17:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239968AbjDZVGu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 17:06:50 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5773584
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:06:48 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7A4515A569;
-        Wed, 26 Apr 2023 21:06:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1682543207;
-        bh=hnDLsjbcPaXFB4djfLkAeBNS48mO/YbVVyg2V4UTmMU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=yNKca+zyfwVcGCjHq2MkoQDWqpYde0bG9kAiwNqNb2wd3HodyLpVwdxBdDgJbXEUG
-         g6ncvlANH+E3PhnGGlWplGbpsADV3vXDe7Wl7LU0ywIcrELBiMNLSvoRTkr19fxrUb
-         D1omvxELfMqZgdK0eB/ixOMt5B0p+S2UmO48E2u7fkP7LAU0gS1Z4foVkrDMUjkk9+
-         RIlIEg6y6sDcb48UnSjckk7qWYaa6LWhmlC70kTQkZZHSN30qUYw/OLJ6xT/f8L/rz
-         FJwnUTC3xtq6x57CXFWL3zjWjv++ApR9/Nz5Ovzmt4ZL9oQfw2hkYsDMUnEgU6BrJu
-         Pa8eZ6bB2sMUNTwRlI0boY7t/7y71wum3tigA2I5kEY8DfIjU6HNFw4Rrp4Mks7K6N
-         QRcpnA5Q+6vBmS8n7qRw37gGJp5zzj23UayJwoOL+S/6L89NbAb2gjUIDX6Wbn3bWD
-         N3r+45bXuaUYSGTCO2X8NrwLm4zK7IixywBYJpel3PpSjiFA4Lf
-Date:   Wed, 26 Apr 2023 21:06:46 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        with ESMTP id S239436AbjDZVMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 17:12:30 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C76A6E51
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:12:29 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-63b4dfead1bso6368485b3a.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:12:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682543549; x=1685135549;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7WfJD+82y6CVZ+x8XPR8dEsKccj5QVR3prsHbdOU2kc=;
+        b=lhACu/NzW2+Yo5cvdWrT5YsJe2aQStn4SV7L1x11kUsndPf0yKatZ0W0aJISPXkHe6
+         efBULHAK2grjHtCq4JF8oLpN2Rha2L3+uKI2D36Gej+a7GCKJIh6qj90FB7U4yXhuLbi
+         XVK+WZHfGTU2UOOcSRDfrTzXdhmsGB0NLqyLjDlvsPHYxlXgNsn4fMjjHx9PT8hisipx
+         V58Bux5WlEtNEuICWFyGT1v+puxA2LRcvX4WrNZ+6hM7PmHT6sookYzubNQoQ3ktK1pY
+         xTw4GTOGwaYZ8kq+NOR3x6PYQbKx+yrUPWAYx3KkHgGIZ7RjvdJZyOulW91G8eSmxEAY
+         gypg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682543549; x=1685135549;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=7WfJD+82y6CVZ+x8XPR8dEsKccj5QVR3prsHbdOU2kc=;
+        b=JTThHNesIlFxQyFT12PzqSMD/88XPUL0aLU3V5bJsbAEuoy1cRn50xShkm555vR0uh
+         byTi0UZFaI+utQ9rRHWIiaiT1DZMVp7MqSx0KJ9JCOm8/L+TwxzAIU31WhXQi9Qc2X4v
+         ymgKQ0FdOGXq1lRLkQu3TdKfJZOkb9pPcPaPBkrM7xW6Lvdpg8u9OfAKRVwrYSNhxHBm
+         61lv99Ik09kiw2YeqvC29jnRW6aTN8f/Zyaa42m4ZVhgdhmovpaBlXKnCDYU/rSSOvk1
+         CRGAZGNPUek5HHq2MYSgZMAaDVHBsJcxKJRnZvM2RcAD1Mt6+Gw62kkr8muPbEbEjr9I
+         aQ1w==
+X-Gm-Message-State: AAQBX9cKqndCSWrtrvLRnHEwT4eb4MKZvKug/9PkwtTBiOnMm0+EfRfY
+        XiXeehzj2EWx61N4hmbOo6f6GNXVKB0=
+X-Google-Smtp-Source: AKy350Z/qJ26sSc5rfAiODsHOG6XLzCxrxjPXLkLCC1NNZGbGFJR4I1mtk1UfxzP5jwxTa+QpnCZMw==
+X-Received: by 2002:a05:6a00:2d20:b0:634:7ba3:d142 with SMTP id fa32-20020a056a002d2000b006347ba3d142mr32029179pfb.10.1682543549153;
+        Wed, 26 Apr 2023 14:12:29 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id c14-20020a62f84e000000b0063b6d68f4bcsm11616265pfm.41.2023.04.26.14.12.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Apr 2023 14:12:28 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Adam Majer <adamm@zombino.com>
-Subject: Re: [PATCH] doc: GIT_DEFAULT_HASH is and will be ignored during
- "clone"
-Message-ID: <ZEmSZmfUpIcZAM6c@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Adam Majer <adamm@zombino.com>
-References: <d04c430e-b609-b0a1-fd0f-0f3734d5c3b1@zombino.com>
- <20230405200153.GA525125@coredump.intra.peff.net>
- <xmqqa5zmukp5.fsf@gitster.g>
- <xmqq355euj2i.fsf@gitster.g>
- <ZEhHsJh20gtiDBd9@tapette.crustytoothpaste.net>
- <xmqqcz3ry2sw.fsf@gitster.g>
- <ZEhuMML6n8F+cNLg@tapette.crustytoothpaste.net>
- <20230426112508.GB130148@coredump.intra.peff.net>
- <xmqqcz3qwuj7.fsf@gitster.g>
- <xmqqzg6uvfpo.fsf_-_@gitster.g>
+Subject: Re: [PATCH 0/2] Fix empty SHA-256 clones with v0 and v1
+References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
+        <20230426205324.326501-1-sandals@crustytoothpaste.net>
+Date:   Wed, 26 Apr 2023 14:12:28 -0700
+In-Reply-To: <20230426205324.326501-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Wed, 26 Apr 2023 20:53:22 +0000")
+Message-ID: <xmqqsfcmqrer.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="F7qJWVExsWBS1MZT"
-Content-Disposition: inline
-In-Reply-To: <xmqqzg6uvfpo.fsf_-_@gitster.g>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---F7qJWVExsWBS1MZT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The second introduces some backwards compatibility to avoid regressing
+> the old behaviour of using GIT_DEFAULT_HASH to initialize the proper
+> hash in this case.  We add a flag to see if we explicitly obtained a
+> hash algorithm from the remote side, and if not, we honour
+> GIT_DEFAULT_HASH, as before.
 
-On 2023-04-26 at 15:13:55, Junio C Hamano wrote:
-> The phrasing "is currently ignored" was prone to be misinterpreted
-> as if we were wishing if it were honored.  Rephrase it to make it
-> clear that the experimental variable will be ignored.
->=20
-> In the longer term, after/when we allow incremental/over-the-wire
-> migration of the object-format, i.e. cloning from an SHA-1
-> repository to create an SHA-256 repository (or vice versa) and
-> fetching and pushing between them would bidirectionally convert the
-> object format on the fly, it is likely that we would teach a new
-> option "--object-format" to "git clone" to say "you would use
-> whatever object format the origin uses by default, but this time, I
-> am telling you to use this format on our side, doing on-the-fly
-> object format conversion as needed".  So it is perfectly OK to
-> ignore the settings of this experimental variable, even after such
-> an extension happens that makes it necessary for us to have a way to
-> create a new repository that uses different object format from the
-> origin repository.
+I am fairly negative on this half of the series.  The first one is
+excellent, though.
 
-I have a different proposal which clarifies when it will and will not be
-honoured in my series.  I think we would want to honour this variable
-once we have SHA-1 and SHA-256 interop, and can convert on the fly, so I
-think keeping the "currently" here is a good idea.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---F7qJWVExsWBS1MZT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZEmSZgAKCRB8DEliiIei
-gfW6AP9Y0qbNXE1lTy4Kq+FZ2DoSMsyO2uL/6bJ+8enYbzQ4xAEA+Bg1Jrq+Tozd
-vMqV/oUql3DYxZkD/VN00fT2i3pZhQE=
-=xd63
------END PGP SIGNATURE-----
-
---F7qJWVExsWBS1MZT--
+THanks.
