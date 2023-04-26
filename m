@@ -2,92 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1187C7618E
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 18:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8670C77B7C
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 18:43:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbjDZSO7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 14:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46338 "EHLO
+        id S234698AbjDZSnS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 14:43:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231186AbjDZSO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 14:14:58 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A1444B5
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 11:14:56 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-63b4dfead1bso6209334b3a.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 11:14:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682532896; x=1685124896;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ri0bBEjm5s+a/gKuB0L9oXqUjUppyosIHZpXMRBGxiA=;
-        b=I7o5dWZdZ9aa3heaYSGVqv7UIurDnnXLeU6ct3Pohr7nA5iqRtfs9SfsvghdjML99N
-         5YzxmisCAX3OMAlQxWYrRCRQXXmx681yw82YTSfVCIyFWe9QutGUDP4Af287QrZZmHy9
-         NDD8qwgWSxRkGNlKczymzkjkOyrKe6Mvlu+V/GW6YyoN7bhc9E4mBZVI7zzj8zps4bLE
-         GQqbrUOBvbbgIEFCeiJYXY7MD7XrFFggaMBa7Dac0hJVWsiCBJn3qezHJHjErOFNU21S
-         LMrg4vlRXJ/qphqkmC3bvLhLd8b+uPwAoEcNzcIOtgly7MipBuieDdHdEbjZ4tFvfJVE
-         RegQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682532896; x=1685124896;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ri0bBEjm5s+a/gKuB0L9oXqUjUppyosIHZpXMRBGxiA=;
-        b=UEFT1xlNvBoAImVyhPTtC9nl1wrerpgme5mMQnbM3iA7eBYjrWU5j4RlLnHkNGUDj8
-         N1ZEM9AVMdWnJrJbZjSXZkupzadIw52peJ7HxtPtuKb7N3M3CdfeXat20nnxMk0GyhnB
-         8IKyYz43x3GnQ4cVkoUqa4+R++ocHQO+J+gTZ847Dxo+azxceer43dBL4HY0fy2MkHP/
-         soVfIWNYYnvIn0XGEI9RWbMIn5fdslBzSQL3rxwhQIaak2fCRU3xZP03AyNpY1vxa4Wf
-         rXu3c6nKNYJuksrXoD51AwZprFKyh7w3T9Q8+ofd/LfuPKhJpkEcumvXw2MaoPivod1i
-         f0OQ==
-X-Gm-Message-State: AAQBX9fDWYVavP4Y+yuu5M07QoU8sz2i3TwHbN9+nrweyPBgGu8dnoI2
-        BQgQANndlYDSDbxfKadTiac=
-X-Google-Smtp-Source: AKy350ZIBo0mdN1bhE+Jy9doRFD6ncnq4cG0Z5L82BGmrPg4tyY0Lyd7GNUaJzZ2t3NPqeSi9v1LzA==
-X-Received: by 2002:a05:6a00:15c2:b0:63f:158a:6e7b with SMTP id o2-20020a056a0015c200b0063f158a6e7bmr28173380pfu.6.1682532895844;
-        Wed, 26 Apr 2023 11:14:55 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id s9-20020a63e809000000b00476d1385265sm9964699pgh.25.2023.04.26.11.14.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Apr 2023 11:14:55 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 00/22] Header cleanups (more splitting of cache.h and
- simplifying a few other deps)
-References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
-        <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
-        <kl6lbkjao7fe.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Wed, 26 Apr 2023 11:14:55 -0700
-In-Reply-To: <kl6lbkjao7fe.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Wed, 26 Apr 2023 10:54:45 -0700")
-Message-ID: <xmqqsfcmse74.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S231186AbjDZSnQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 14:43:16 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 26 Apr 2023 11:43:12 PDT
+Received: from tilde.club (tilde.club [IPv6:2607:5300:204:4340::114])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12ECC44BA
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 11:43:11 -0700 (PDT)
+Received: from tilde.club (tor-exit-55.for-privacy.net [185.220.101.55])
+        by tilde.club (Postfix) with ESMTPSA id B0905220CAA85;
+        Wed, 26 Apr 2023 18:35:54 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 tilde.club B0905220CAA85
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tilde.club; s=mail;
+        t=1682534158; bh=iSrdsWB9+0rky9E/qynrbznAnZytADMb5IiqemLxKw4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ST4du/1OW3oFIz6FqPRnO0CyakJgkQKnJJzpVzQGlLC0UyIgr38IglFzdhaYziXvj
+         lvA7Mn52aouhsQDX9fKNtuAfBOvCLsMgZRj1By9tw75TBnajI7ZJ2JMJCorq/Fei0E
+         UJx7tHXbtg6X44mpcw/9RdrRcCCZnzxnNjk+N4SU=
+Date:   Wed, 26 Apr 2023 18:35:39 +0000
+From:   Gwyneth Morgan <gwymor@tilde.club>
+To:     Bran Hagger <brhagger@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Emily Shaffer <nasamuffin@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Improving support for name changes in git
+Message-ID: <ZElux+kFcskXVL9Y@tilde.club>
+References: <LV2PR21MB31334981E02BCA25792BAFFCCF939@LV2PR21MB3133.namprd21.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <LV2PR21MB31334981E02BCA25792BAFFCCF939@LV2PR21MB3133.namprd21.prod.outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+On 2023-04-04 18:00:00+0000, Bran Hagger wrote:
+> Has there been any further work done on supporting git name changes that I missed? Are there any existing files without git history that face similar issues?
+> 
+> [1] https://code.googlesource.com/git/summit/2020/+/main/notes.md
+> [2] https://lore.kernel.org/git/20210103211849.2691287-1-sandals@crustytoothpaste.net/
 
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> This series continues to focus on splitting declarations from cache.h to
->> separate headers. This series also untangles some dependencies between
->> hash.h and repository.h, and between read-cache.c and tree.[ch], and cleans
->> up a few other headers. At the end of this series the number of cache.h
->> includes drops from 189 down to 149.
->
-> I looked over all of the patches briefly and didn't spot any issues,
-> though not deeply enough for a Reviewed-by.
->
-> FWIW I am quite happy with the direction of this series. I find the
-> result much easier to understand compared to the cache.h status quo.
+There was another proposal posted by brian last year, using signing keys
+the author controls instead of hashes:
+https://lore.kernel.org/git/20220919145231.48245-1-sandals@crustytoothpaste.net/T/
 
-Anything that shrinks the kitchen-sinks would be good ;-)
-
-Thanks.
+A different VCS, Pijul, recently adopted a system that seems similar to
+brian's proposal, and may provide some inspiration on the user
+experience. I haven't seen documentation for it, but there are some
+examples of commands here:
+https://nest.pijul.com/pijul/pijul/discussions/706
