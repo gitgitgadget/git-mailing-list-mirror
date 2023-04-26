@@ -2,72 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBAE5C77B60
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 06:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E13C7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 07:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239425AbjDZGqP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 02:46:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58586 "EHLO
+        id S240137AbjDZHp5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 03:45:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238588AbjDZGqN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 02:46:13 -0400
-X-Greylist: delayed 436 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 25 Apr 2023 23:46:11 PDT
-Received: from wilbur.contactoffice.com (wilbur.contactoffice.com [212.3.242.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F61C129
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 23:46:11 -0700 (PDT)
-Received: from smtpauth1.co-bxl (smtpauth1.co-bxl [10.2.0.15])
-        by wilbur.contactoffice.com (Postfix) with ESMTP id 2CDAC2CA;
-        Wed, 26 Apr 2023 08:38:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1682491133;
-        s=20210208-e7xh; d=mailfence.com; i=pareto.optimal@mailfence.com;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        l=799; bh=xYA6HKexsXJreWLikSwy0KPK274n+7RMePEPaCbGOO4=;
-        b=0dUFOtomxF1Pot4nheUtmgyVy5/gLvLULPJ+sCe2eegsgVfu7bFbwtjjJwPfv0st
-        q1ZKoybfOQN8960v7LyHG6brT/PRia3OKia0i+PrnftjrbNT5KkvN4AzBK3OOQadJro
-        4PkB0eIUeFxxAeD3qW+D0uFx/WEecYFevpM/mcOp/kpocARjYyqSdY/Z2T60OHTwatF
-        AhudU7iblfJr71CqVIYfESpQItnJrG0h9lbwAtx97NGVcDlQNRvY4hAMtb0nXbNcCyh
-        Kwt2jB3RQsS97qM/Bw1Y/QpJHaaGDqknAyH1m6+UO09mRs6yKimeFx3z+wNA1UWEDGF
-        J0/UdwKvUg==
-Received: by smtp.mailfence.com with ESMTPSA ; Wed, 26 Apr 2023 08:38:50 +0200 (CEST)
-From:   ParetoOptimalDev <pareto.optimal@mailfence.com>
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     git@vger.kernel.org
-Subject: Re: With git+ssh deprecated, how can multiple git identities be
- managed?
-In-Reply-To: <CA+JQ7M-jjzWFg-fV=zm1TLPibFZZyRz4-uojyUa9vwjRcf47Sw@mail.gmail.com>
-        (Erik Cervin Edin's message of "Wed, 26 Apr 2023 08:25:52 +0200")
-References: <87h6t3rxod.fsf@mailfence.com>
-        <CA+JQ7M-jjzWFg-fV=zm1TLPibFZZyRz4-uojyUa9vwjRcf47Sw@mail.gmail.com>
-Date:   Wed, 26 Apr 2023 01:38:48 -0500
-Message-ID: <878refrvuv.fsf@mailfence.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S240038AbjDZHpL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 03:45:11 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B724226
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 00:44:44 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f09b4a156eso45009775e9.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 00:44:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682495082; x=1685087082;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DrYFywBJ6KwnsRDLvaMium/c48VucEjXPJx/cOyzV74=;
+        b=JbFVvSReP4BU+B5i5jP9YhWoshGVhIVVBJb1u1kTK0yoqU7wJstgJzhHSmpKRcb8xe
+         MpGXFO4Y803yIXunAHIntPaWSKKIciykEgoSUi8KHWdei4R7xwdOWHQPrW2QR4ChgXzl
+         DtV8sZQPnaR1vZk0RXwyt+8g0i4dF6XSPW8kUzrdVqB5XX37rJLsF9tzXtrAxjJikkgg
+         OsJA+nQHcgEdKhMLDQKwrtUXzrzBeltL56tkPOKCBMfn+VKetDYp0Hl71IBGpR5UY8nM
+         T8VyNyluOtNEa3Z5m2r9s2Ah0TzmpVNSvMkva/pTYDAk1kuWnPbWnPcTcx/48r5xhyqJ
+         lXNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682495082; x=1685087082;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DrYFywBJ6KwnsRDLvaMium/c48VucEjXPJx/cOyzV74=;
+        b=A3PUoEWjD5yxxnfjCwTLhPw3XNalr3NtQtXGl7YmAl4cREOpE3WiYCdeTk/tQsoYQV
+         PpkgM4YDPQdhe6x3VYpDyRfoaZUX6NaLKElf/sGfmQEiF9HMENyaUoYJxkhsgy9lne08
+         uY0pMTiagUpP/2Xhz4uFqzzNR8IxtnbgejbQ/ffGMDOTeol7RR87ErEo0Wb01oZ31H3R
+         NUElJzIBf5wTcrSmYFU+3qk4DaHEy79gMJHbfuJqy4pfKJsOZyr76c/2GPdQuBTb2eA+
+         AjKRvlwiLxeGKugHvBbpHpu6fQyX7shd7nLvEVlyraxIf3LT0YSEU0KN55LQeTt3x/2H
+         RcxQ==
+X-Gm-Message-State: AAQBX9cfcYi1k3Uplh/YXXhfJZX9zLYJ04kBrDBE8fyW5LJ9DbQb/IWx
+        GSUsMO7pvq4Ya4rMmaM32P5zWI76UH4=
+X-Google-Smtp-Source: AKy350aT5fIrWo5ErYY0z2KUCkNMCMdEaMMF21QoFM4L+d7N1M1bCvJRjmF+KpFq5jNXjc14iXpYdA==
+X-Received: by 2002:a1c:ed01:0:b0:3f1:70cf:a2d9 with SMTP id l1-20020a1ced01000000b003f170cfa2d9mr12021784wmh.9.1682495082273;
+        Wed, 26 Apr 2023 00:44:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p1-20020a5d48c1000000b002f27dd92643sm8060461wrs.99.2023.04.26.00.44.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Apr 2023 00:44:41 -0700 (PDT)
+Message-Id: <pull.1485.git.git.1682495081131.gitgitgadget@gmail.com>
+From:   "Pooyan Khanjankhani via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 26 Apr 2023 07:44:41 +0000
+Subject: [PATCH] revisions.txt: correct a mistake in dotted range notations
+ section
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ContactOffice-Account: com:311504211
+To:     git@vger.kernel.org
+Cc:     Pooyan Khanjankhani <pooyankhan@gmail.com>,
+        Pooyan Khanjankhani <p.khanjankhani@digikala.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Erik Cervin Edin <erik@cervined.in> writes:
+From: Pooyan Khanjankhani <p.khanjankhani@digikala.com>
 
-> On Wed, Apr 26, 2023 at 8:11=E2=80=AFAM ParetoOptimalDev
-> <pareto.optimal@mailfence.com> wrote:
->>
->> Then I could use it like `git clone
->> git+ssh://paretooptimal-work/some-work/codebase.git` or
->> `git+ssh://paretooptimal-personal/some-personal/codebase.git`
->> respectively.
->
-> Maybe I can't see the forest for the trees but why can't you use
->   ssh://paretooptimal-work/some-work/codebase.git
->   ssh://paretooptimal-personal/some-personal/codebase.git
-> instead?
+Insert a missing 'not' word in a negative sentence.
+  ... but are [not] reachable from neither A or C.
 
-Wow... yes I just cloned a repo with just `ssh://` rather than
-`git+ssh://` and it works perfectly fine.
+Signed-off-by: Pooyan Khanjankhani <p.khanjankhani@digikala.com>
+---
+    docs: Fix sentencing
+    
+    Just fixed a sentence in docs.
 
-I simply didn't know that `ssh://` could be used and mistook deprecation
-of `git+ssh` as deprecation of git integration with the ssh protocol.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1485%2FTheKhanj%2Fdocs%2Fsentencing-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1485/TheKhanj/docs/sentencing-v1
+Pull-Request: https://github.com/git/git/pull/1485
 
-Thank you!
+ Documentation/revisions.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 9aa58052bc7..00c2f030da5 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -306,7 +306,7 @@ other, e.g.
+ 
+ does *not* specify two revision ranges for most commands.  Instead
+ it will name a single connected set of commits, i.e. those that are
+-reachable from either B or D but are reachable from neither A or C.
++reachable from either B or D but are not reachable from neither A or C.
+ In a linear history like this:
+ 
+     ---A---B---o---o---C---D
+
+base-commit: ae73b2c8f1da39c39335ee76a0f95857712c22a7
+-- 
+gitgitgadget
