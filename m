@@ -2,185 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FD81C77B78
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 15:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3067CC7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 15:42:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241212AbjDZPek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 11:34:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49188 "EHLO
+        id S239452AbjDZPmV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 11:42:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240786AbjDZPej (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 11:34:39 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A3B94
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 08:34:37 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 18AC823EE2;
-        Wed, 26 Apr 2023 11:34:35 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.4, from userid 1000)
-        id 1prhAA-gqa-00; Wed, 26 Apr 2023 17:34:34 +0200
-Date:   Wed, 26 Apr 2023 17:34:34 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 8/8] rebase: improve resumption from incorrect initial
- todo list
-Message-ID: <ZElEis+PLDYR+Jvr@ugly>
-Mail-Followup-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
- <20230323162235.995574-9-oswald.buddenhagen@gmx.de>
- <8a188876-c456-7269-28de-9ff406204030@dunelm.org.uk>
+        with ESMTP id S232584AbjDZPmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 11:42:19 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B608E5BBE
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 08:42:18 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1a66911f5faso58307055ad.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 08:42:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682523738; x=1685115738;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kNEn5tndTBTRj6Zy0OYpAELoT8EjYPfzsvZLEbJAqSQ=;
+        b=ZZUdrvPLAZw5uwCIY/YblPQUDNR2JgpiyPmUSH1b8BrPlxj77SHcpiEPrnCdW9ooW3
+         mI49NN0YqC0VWGar4DPTm3jihXTUxYM5Fa/gdHxQ9t5qL4awxer8OPU8D2ug95n/IR+y
+         ZbidgGonaZjwWfpmOJVaUvt9703J83J4UstLjNsdbXHPJipADrAncRXfbEBu2pRSrfRk
+         mLlUVf/+YQeGtP51y3MEBI9h+nvSfINKv/uNKdjeo62lEVQE5ms3x9TUHCHISg58Y/Z3
+         VYZNTXc1jFfsJk4IDbT164izT4+pQyW9I58Z8Dlb+4V9N3i6kqK23J/V+YL5OQMVi+NO
+         OVAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682523738; x=1685115738;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kNEn5tndTBTRj6Zy0OYpAELoT8EjYPfzsvZLEbJAqSQ=;
+        b=RnFSxz3mJmzbg0RssjZOsw0Ugy2s5hYZX/m1DSg4g5cRDwY7HqqR49KxB1alvHns2G
+         Rp0aSKTLooOU6++KgKDHgIKLITvAsX7Pr5dhG1lymQ5vZA+dFSidmVh3j1POJViRRIkX
+         dYsd411YAZnhfFo9o4Hu1wAhnoO324NOp5Gt3SeVat8Ac8Bw5XOinC5c4Pf7J2Wkj0yt
+         Vw479MKhRL2Quras3zolh8KtN1hljYxtHw8JAtMn/s5NYOpArO9PG80rYy+4fyuZUK//
+         uGxo8Ic6U1PbzirOuVhtzyT9MHgW/i8dMRdCPS8Gsiva0xDhl1JKAOGSH6nQ9ub4k3Fs
+         Ij/w==
+X-Gm-Message-State: AAQBX9c9PuxBuvYuUXV4tM3HrKc3khVJxJphtPfb/sZXE6l3DWj0Ncsg
+        ozDhwzg+oexivwiVk8zeSiQ=
+X-Google-Smtp-Source: AKy350a9ZfYLOjioQRt9KuV7xJoRPjcgokZ5U5uQ2UdGCqVXvP1Nt0oCxD8EnW1uZSbjJygnhAT9xA==
+X-Received: by 2002:a17:902:dac7:b0:1a6:9762:6eee with SMTP id q7-20020a170902dac700b001a697626eeemr28207730plx.40.1682523738053;
+        Wed, 26 Apr 2023 08:42:18 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id jh21-20020a170903329500b001a52abb3be3sm10146440plb.201.2023.04.26.08.42.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Apr 2023 08:42:17 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+Subject: Re: git clone of empty repositories doesn't preserve hash
+References: <e7a8957e-6251-39f1-5109-87d4dd382e81@zombino.com>
+        <xmqqr0syw3pe.fsf@gitster.g>
+        <d04c430e-b609-b0a1-fd0f-0f3734d5c3b1@zombino.com>
+        <20230405200153.GA525125@coredump.intra.peff.net>
+        <xmqqa5zmukp5.fsf@gitster.g> <xmqq355euj2i.fsf@gitster.g>
+        <ZEhHsJh20gtiDBd9@tapette.crustytoothpaste.net>
+        <xmqqcz3ry2sw.fsf@gitster.g>
+        <20230426105134.GA130148@coredump.intra.peff.net>
+Date:   Wed, 26 Apr 2023 08:42:17 -0700
+In-Reply-To: <20230426105134.GA130148@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 26 Apr 2023 06:51:34 -0400")
+Message-ID: <xmqq8reeveee.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <8a188876-c456-7269-28de-9ff406204030@dunelm.org.uk>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 26, 2023 at 03:28:01PM +0100, Phillip Wood wrote:
->On 23/03/2023 16:22, Oswald Buddenhagen wrote:
->> When the user butchers the todo file during rebase -i setup, the
->> --continue which would follow --edit-todo would have skipped the last
->> steps of the setup. Notably, this would bypass the fast-forward over
->> untouched picks (though the actual picking loop would still fast-forward
->> the commits, one by one).
->> 
->> Fix this by splitting off the tail of complete_action() to a new
->> start_rebase() function and call that from sequencer_continue() when no
->> commands have been executed yet.
->> 
->> More or less as a side effect, we no longer checkout `onto` before exiting
->> when the todo file is bad. 
->
->I think the implications of this change deserve to be discussed in the 
->commit message. Three things spring to mind but there may be others I 
->haven't thought of
->
->  - Previously when rebase stopped and handed control back to the user
->    HEAD would have already been detached. This patch changes that
->    meaning we can have an active rebase of a branch while that branch is
->    checked out. What does "git status" show in this case? What does the
->    shell prompt show? Will it confuse users?
->
-the failed state is identical to the "still editing the initial todo" 
-state as far as "git status" and the shell prompt are concerned. this 
-seems reasonable. i'll add it to the commit message.
+Jeff King <peff@peff.net> writes:
 
->  - Previously if the user created a commit before running "rebase
->    --continue" we'd rebase on to that commit. Now that commit will be
->    silently dropped.
->
-this is arguably a problem, but not much different from the pre-existing 
-behavior of changes to HEAD done during the initial todo edit being 
-lost.
-to avoid that, we'd need to lock HEAD while editing the todo. is that 
-realistic at all?
-on top of that, i should verify HEAD against orig-head in 
-start_rebase(). though the only way for the user to get out of that 
-situation is saving the todo contents and --abort'ing (and we must take 
-care not the touch HEAD).
+> We could send a capabilities^{} line, which Git has supported on the
+> client side since eb398797cd (connect: advertized capability is not a
+> ref, 2016-09-09). So sending it should not break even old clients
+> (though we would have to check what alternate implementations like
+> libgit2 or dulwich do; we know JGit supports it).
 
-this is somewhat similar to the abysmal situation of the final 
-update-ref failing if the target ref has been modified while being 
-rebased. we'd need to lock that ref for the entire duration of the 
-rebase to avoid that.
+Ah, I forgot all about that JGit workaround.  Yes, we can exploit
+it, and any implementation that does not understand it correctly
+(including git before 13e67aa3 (v0 protocol: fix sha1/sha256
+confusion for capabilities^{}, 2023-04-14)) does not work with JGit
+when cloning an empty repository anyway, so it is not all that bad.
 
->  - Previously if the user checkout out another commit before running
->    "rebase --continue" we'd rebase on to that commit. Now we we rebase
->    on to the original "onto" commit.
->
-this can be subsumed into the above case.
+But I tend to agree with your conclusion that it may be an update
+for the sake of completeness to retrofit v0/v1 on the serving side.
+It would not help any real-world use cases all that much.
 
-> > This makes aborting cheaper and will simplify
-> > things in a later change.
->
->Given that we're stopping so the user can fix the problem and continue 
->the rebase I don't think optimizing for aborting is a convincing reason 
->for this change on its own.
->
-this is all part of the "More or less as a side effect" paragraph, so 
-this isn't a relevant objection.
-
->> diff --git a/builtin/revert.c b/builtin/revert.c
->> index 62986a7b1b..00d3e19c62 100644
->> --- a/builtin/revert.c
->> +++ b/builtin/revert.c
->> @@ -231,7 +231,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
->>   		return ret;
->>   	}
->>   	if (cmd == 'c')
->> -		return sequencer_continue(the_repository, opts);
->> +		return sequencer_continue(the_repository, opts,
->> +					  0, NULL, NULL, NULL);
->
->It's a bit unfortunate that we have to start passing all these extra 
->parameters, could the sequencer read them itself in read_populate_opts()?
->
-that wouldn't help in this case, as these are dummy values which aren't 
-going to be used.
-
-but more broadly, the whole state management is a total mess. i have 
-this notes-to-self patch on top of my local branch:
-
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -476,6 +476,7 @@ static const char *state_dir_path(const char *filename, struct rebase_options *o
-  }
-
-  /* Initialize the rebase options from the state directory. */
-+// FIXME: this is partly redundant with the sequencer's read_populate_opts().
-  static int read_basic_state(struct rebase_options *opts)
-  {
-         struct strbuf head_name = STRBUF_INIT;
-@@ -552,6 +553,7 @@ static int read_basic_state(struct rebase_options *opts)
-         return 0;
-  }
-
-+// This is written only by the apply backend
-  static int rebase_write_basic_state(struct rebase_options *opts)
-  {
-         write_file(state_dir_path("head-name", opts), "%s",
-
-
->> -int sequencer_continue(struct repository *r, struct replay_opts *opts)
->> +static int start_rebase(struct repository *r, struct replay_opts *opts, unsigned flags,
->> +			const char *onto_name, const struct object_id *onto,
->> +			const struct object_id *orig_head, struct todo_list *todo_list);
->
->It would be nice to avoid this forward declaration. I think you could do 
->that by adding a preparatory patch that moves either checkout_onto() or 
->sequencer_continue()
->
-i went for the "minimal churn" approach.
-
-but more broadly, the code distribution between rebase.c and sequencer.c 
-needs a *major* re-think. moving these functions into place could be 
-part of that effort.
-
->> +	git reflog expire --expire=all HEAD &&
->
->Is this really necessary, can you pass -n to "git reflog" below?
->
-starting from a clean slate makes it more straight-forward to make it
-reliable. i don't see any real downsides to the approach.
-
->> +	git reflog > reflog &&
->> +	test $(grep -c fast-forward reflog) = 1 &&
->
->Using test_line_count would make test failures easier to debug.
->
-that's calling for a new test_filtered_line_count function which would 
-have quite some users.
-for the time being, both grep + test_line_count and grep -c are rather 
-prevalent, in this file the latter in particular.
-
->> +	test_cmp_rev HEAD~1 primary~1 &&
->> +	test "$(git log -1 --format=%B)" = "E_reworded"
->
->It is slightly more work, but please use test_cmp for things like this 
->as it makes it so much easier to debug test failures.
->
-fair enough, but the precedents again speak a different language.
-
-regards
+Thanks.
