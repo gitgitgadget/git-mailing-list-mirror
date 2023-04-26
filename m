@@ -2,114 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6E5C77B60
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 11:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34421C7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 11:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240298AbjDZLhC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 07:37:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38628 "EHLO
+        id S240460AbjDZLlO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 07:41:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbjDZLhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 07:37:01 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067373598
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:36:59 -0700 (PDT)
-Received: (qmail 6909 invoked by uid 109); 26 Apr 2023 11:36:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Apr 2023 11:36:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13883 invoked by uid 111); 26 Apr 2023 11:36:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Apr 2023 07:36:58 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 26 Apr 2023 07:36:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Thomas Bock <bockthom@cs.uni-saarland.de>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2 3/4] parse_commit(): handle broken whitespace-only
- timestamp
-Message-ID: <20230426113658.GC130148@coredump.intra.peff.net>
-References: <20230425055244.GA4014505@coredump.intra.peff.net>
- <20230425055458.GC4015649@coredump.intra.peff.net>
- <06bc5530-55b0-7299-a6e6-fde1deab6605@gmail.com>
- <xmqqttx43q08.fsf@gitster.g>
+        with ESMTP id S239947AbjDZLlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 07:41:13 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80EA549C9
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:40:47 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-18b10923c98so4898287fac.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1682509246; x=1685101246;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GhS33Jb/JkvJRuOQkZRchWL0cjOPFBTGvFI1/VC5mrg=;
+        b=VKt+vM5RUlET0h56AB+Yq9gq4fZwx2axIxX8SFWj3gMAzr1mHN891n7Gky95n5iHXG
+         5LaGJwInvOH2XSAj+flV86r1K6WQVVIUM3oOafTLTeT+G9I+kSVVBFVWNYmEHf9aLhFO
+         pt6DQsx/z5j3do8JjutWPdWOyv9Xjf6/krmd60ZlpDWXq4ZbydRKM1G92kXxqDEgSgkq
+         h0t/mxMI/eDMTMaNNE59+wdH9DEzSZxtvh+0AstB2ItR3ltms6xkayIeUCBE0XKJtvUi
+         dFBbqsYFn1ZUvDsFPBORJPy+UNFu6p9QivXyo6TJAP4F4S1UniFXxb6cVszTgmmJr543
+         US0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682509246; x=1685101246;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GhS33Jb/JkvJRuOQkZRchWL0cjOPFBTGvFI1/VC5mrg=;
+        b=hVz90E/Gy9JHnZKjCK9VkLQEeF7SNax2rgwQ+5pDvXgBzrmgPICB41kAe9nmOXYjx4
+         6AQs0D/FWfJll/aLYJ2A5wYVO6i7IGWGqRUG9GuKWEyhzRKlYZnsSldCbQUbXIz726bp
+         DCBK8yQUGnrNDxZ/61WR9t1zOXG1igbR9AvmbtPjqSPXUgz8dGbG4re/Fw19ZbGYWuxh
+         7Q+wqurd5fFNJwvBsrJICfyKluue1U3fGuvqXa3wDGv+3jtu/OsJLhDJSxzHQ5yiclDa
+         SrIentdl1SrxrS7Uu9XN1CO5MO2rl9UojIn3nwt9Z8iuFEpfUrdI2eao/7gupeQ1eDRV
+         kwXg==
+X-Gm-Message-State: AAQBX9dPucV7By0SXTTAOZOQmvIIVKT/tBEJZ6kIBHopuYgsVUFbdeHl
+        2h1UJH/0RdE5XcMfZDZf0YAhRmDDWbHoMryEAKUAtw==
+X-Google-Smtp-Source: AKy350Z6ijXKy0QwzwvOHh5pocHxaSElYQAXS1uRNn+jKn6Nhvj1hzUhnyMSZKOSIJYgj1Db9xgbMNeEVYhPdakL1Ho=
+X-Received: by 2002:a05:6870:2046:b0:187:8537:e43e with SMTP id
+ l6-20020a056870204600b001878537e43emr12039459oad.2.1682509246785; Wed, 26 Apr
+ 2023 04:40:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqttx43q08.fsf@gitster.g>
+References: <20230424022318.80469-1-hanxin.hx@bytedance.com>
+ <cover.1682473718.git.hanxin.hx@bytedance.com> <935be72eb92cd2eda7aff43c8cc2306b78b2a146.1682473718.git.hanxin.hx@bytedance.com>
+ <bf45bfe7-4a29-38d6-b8d7-811581aec82b@github.com>
+In-Reply-To: <bf45bfe7-4a29-38d6-b8d7-811581aec82b@github.com>
+From:   Han Xin <hanxin.hx@bytedance.com>
+Date:   Wed, 26 Apr 2023 19:40:35 +0800
+Message-ID: <CAKgqsWV==tgyz8EOs61_06+bX4Eq+0Su1bocZ+-s4oe+e0DdJA@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v2 1/2] negotiator/default: avoid stack overflow
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, xingxin.xx@bytedance.com,
+        jonathantanmy@google.com, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 09:06:47AM -0700, Junio C Hamano wrote:
+On Wed, Apr 26, 2023 at 7:13=E2=80=AFPM Derrick Stolee <derrickstolee@githu=
+b.com> wrote:
+>
+> On 4/26/2023 12:05 AM, Han Xin wrote:
+> > mark_common() in negotiator/default.c may overflow the stack due to
+> > recursive function calls. Avoid this by instead recursing using a
+> > heap-allocated data structure.
+> >
+> > This is the same case as [1].
+> >
+> > 1. 4654134976f (negotiator/skipping: avoid stack overflow, 2022-10-25)
+>
+> We would typically write this inline, such as:
+>
+>   This is the same case as 4654134976f (negotiator/skipping: avoid
+>   stack overflow, 2022-10-25)
+>
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
-> > This probably doesn't matter in practice but we define our own
-> > isspace() that does not treat '\v' and '\f' as whitespace. However
-> > parse_timestamp() (which is just strtoumax()) uses the standard
-> > library's isspace() which does treat those characters as whitespace
-> > and is locale dependent. This means we can potentially stop at a
-> > character that parse_timestamp() treats as whitespace and if there are
-> > no digits after it we'll still walk past the end of the line. Using
-> > Rene's suggestion of testing the character with isdigit() would fix
-> > that. It would also avoid parsing negative timestamps as positive
-> > numbers and reject any timestamps that begin with a locale dependent
-> > digit.
-> 
-> A very interesting observation.  I wonder if a curious person can
-> craft a malformed timestamp with "hash-object --literally" to do
-> more than DoS themselves?
+Make sense.
 
-I think the answer is no, because the worst case is that they read to
-the trailing NUL that we stick after any object content we read into
-memory. So we'd mis-parse:
-
-  committer name <email> \v\n
-
-  123456 in the subject line
-
-to read "123456" as the commit timestamp (so basically the same bug my
-patch was trying to fix). But we'd never read out-of-bounds memory.
-Still, it does not give me warm fuzzies, and I think is worth fixing.
-
-> We are not going to put anything other than [ 0-9+-] after the '>'
-> we scan for, and making sure '>' is followed by SP and then [0-9]
-> would be sufficient to ensure strtoumax() to stop before the '\n'
-> but does not ensure that the "signal a bad timestamp with 0"
-> happens.  Perhaps that would be sufficient.  I dunno.
-
-Any single non-whitespace character at all would be sufficient to avoid
-the problem. And that's what the current iteration of the patch is
-trying to do. It's just that our definition of "whitespace" has to agree
-with strtoumax()'s for it to work. And as Phillip notes, that may even
-include locale dependent characters. So I don't think we want to get
-into trying to match them all (i.e., a "allow known" strategy).
-
-Instead, we should go back to what the original iteration of the series
-was doing, and make sure there is at least one digit (i.e., a "forbid
-unknown" strategy). Assuming that there is no locale where ascii "1" is
-considered whitespace. ;)
-
-Note that will exclude a few cases that we do allow now, like:
-
-  committer name <email> \v123456 +0000\n
-
-Right now that parses as "123456", but we'd reject it as "0" after such
-a patch.
-
-The alternative is to check _all_ of the characters between ">" and the
-newline and make sure there is some digit somewhere, which would be
-sufficient to prevent strtoumax() from walking past the newline.
-
-I guess it's not even any more expensive in the normal case (since the
-very first non-whitespace entry should be a digit!). I'm not sure it's
-worth caring about too much either way. Garbage making it into
-name/email is an easy mistake to make (for users and implementations).
-Putting whitespace control codes into your timestamp is not, and marking
-them as "0" is an OK outcome.
-
--Peff
+Thanks
+-Han Xin
