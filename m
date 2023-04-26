@@ -2,97 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6743AC77B60
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 21:33:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D645C77B60
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 22:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239935AbjDZVdy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 17:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56558 "EHLO
+        id S240006AbjDZWQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 18:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239984AbjDZVdf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 17:33:35 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28BA40C8
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:33:31 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-63b5c4c76aaso5514567b3a.2
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:33:31 -0700 (PDT)
+        with ESMTP id S229889AbjDZWQk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 18:16:40 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B37A6DD
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 15:16:39 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-b9a6eeea78cso637371276.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 15:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682544811; x=1685136811;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gMgtE3xOuJbsHumMVABUcefMf1I0tc4AGw9a4IK87dc=;
-        b=q+TAGgG17BlaKDhKlFEEtJOUiKVc7IUEKn+t0AP9Gst33vQNdKiJn5vdyW263MuqX0
-         4OLyzCtc8UNawE5e8SWQI4ipNyyAgynv9Wq4TTvgIcHp8TUKaxH0B+Et2j/m5Bv+moEP
-         4O4aXp3haXb1fVkkxIqiE/XUNMiS8uH/k+63BaaharsPui+nVuXYlzCix70AEzGLxA+t
-         C0sAUbT8/eHInPgprGe+1KdNzjiNq+IXfOdsw8Ahlsu00sc0w1zG90q+02gqqr6eRXHb
-         GLY9pGyU7elD3bBWJDCGeZ0DA/hNTT//RgEpwZIaWpzjfM/avxn0DZfawOLeIvwy7bDW
-         zWZw==
+        d=google.com; s=20221208; t=1682547399; x=1685139399;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a6nAXYTb0rUohmhot8WunOnPdCsOy7DxmDkao/kqR7w=;
+        b=2UfNMTekPhKgTOrezEHwoNXI8bwOlwZZagbCc49Yjr3DEF4RNrMK7jfVq+tGf26Pwq
+         Imk4DFaXQvw0WQnlvLdNB20CZaab8rRHMkXMpaMXjkM/Je4+c6/USKMR5FileLTa67iA
+         OnBRx05IfwJyq/dY1L7LpXJAmQxdr3Jup3V+4rc+aBznfR5dTpYbhvj/jXMmsBVzublH
+         TcmRJG1tdtDbXPm57tkR09iutt5TMY6t1fkmcgKV09BeSTY9VAqnU1pbU8ps6S+rM8hO
+         KtQQxyhn5esIDAVmSo+4ikK+kIjMvN6Cl4j27ZXEPxZhntfLzZrPg9KTPVQ+Fy+0X26o
+         m1fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682544811; x=1685136811;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gMgtE3xOuJbsHumMVABUcefMf1I0tc4AGw9a4IK87dc=;
-        b=BaR8kkp+rIA1BuU30Ya0DvDckj95GLE8vPBc+MDiEUCPt299yHZzkl/mSvKRUNWP5H
-         FEISi0MB8qovhsS9IHXEHCUH5MkDq6FnNlpxJKzpaYYUoslocVKXzk9IToLu1aODLX3b
-         32rtTiHagiYv4WTrYF7mr2EWL+xYm2zEinekRijASg04mWTCw96qCgo5W1VjxBFWBozN
-         qzxGWkIkFvlvT9ZfpoqTawGruwhocgJJH4eQMRUQQLqgTuf3QHU+88bFi1M07HPaBtIP
-         WY3I2p27VPIsNku9717YDyee5AX0nXehnv4y8b06FVlLydUMbcOfGCaPajThWBvnz+LE
-         fL6g==
-X-Gm-Message-State: AAQBX9eptZOn+4F1czgsxGVCVGptByXx68WrSjQ8WFF0m9N70iP3PJxr
-        3vupfHNWFq3QMk7GGjkCZIE=
-X-Google-Smtp-Source: AKy350ZdX7al8/iWulyhPg/mHylwLXCRgCHxVcLe2/e5TVVWqJTdgBZ/9H8Uz2bLNZI36GKD3FKgCg==
-X-Received: by 2002:a05:6a00:b8b:b0:63f:1926:5bb8 with SMTP id g11-20020a056a000b8b00b0063f19265bb8mr22691895pfj.30.1682544811173;
-        Wed, 26 Apr 2023 14:33:31 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id v7-20020a056a00148700b0063f534f8060sm6861564pfu.168.2023.04.26.14.33.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Apr 2023 14:33:30 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Adam Majer <adamm@zombino.com>
-Subject: Re: [PATCH 2/2] Honor GIT_DEFAULT_HASH for empty clones without
- remote algo
-References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
-        <20230426205324.326501-1-sandals@crustytoothpaste.net>
-        <20230426205324.326501-3-sandals@crustytoothpaste.net>
-Date:   Wed, 26 Apr 2023 14:33:30 -0700
-In-Reply-To: <20230426205324.326501-3-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 26 Apr 2023 20:53:24 +0000")
-Message-ID: <xmqqbkjaqqfp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20221208; t=1682547399; x=1685139399;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a6nAXYTb0rUohmhot8WunOnPdCsOy7DxmDkao/kqR7w=;
+        b=b97zimw4R+oxrY1+lCnqo0N0qD3610UoW35fnxGPGA9XGeRrg+TMSEa5gCcoq6Ll9N
+         8wRin9ww6tEACmOza1RjDE43fMkA1999pmDUZVDRq/EOHX2EuBn1VBDy/tF4BJfjhaNg
+         HuuLIgdKfLWHWbR0jfMuMbrnnQWGxG93MsV9UXpQ3on4/t07P9mqWqaRGUdByc85AWhU
+         J/r/Q2ehcuYUFbm/icUjsceD8sYjIE/Phx0ds+TEiaFRIj/snZsvW6GZ3Cc4lp1+hogF
+         168jFS3cg+Zpwh1h2wubsF2H8BWb6wFV6K8g2yUIVObyq3pE50Juv5LaWuKT7b2I7cqH
+         BN1g==
+X-Gm-Message-State: AC+VfDwF/9K2ATXXkDoaQk8JqfbHb9rI1KigB5uaqi//Wg1j1Oey8Ewe
+        muE2FGb2TjLUCqGdKx1YTKhF9YzJhKQ5DA==
+X-Google-Smtp-Source: ACHHUZ46jWpGqNUZU31u5VZzKQsDRzW7ERFku+Tfs/LI9sk5/w91u3j5AhafFlnsET1U7yrOJQC6Ii2jb3+8bA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:690c:2f82:b0:54f:e2ca:3085 with SMTP
+ id ew2-20020a05690c2f8200b0054fe2ca3085mr2450692ywb.1.1682547399012; Wed, 26
+ Apr 2023 15:16:39 -0700 (PDT)
+Date:   Wed, 26 Apr 2023 15:16:37 -0700
+In-Reply-To: <xmqq354nxzqr.fsf@gitster.g>
+Mime-Version: 1.0
+References: <xmqq354nxzqr.fsf@gitster.g>
+Message-ID: <kl6lr0s6mgqi.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: gc/doc-cocci-updates (Re: What's cooking in git.git (Apr 2023, #07;
+ Tue, 25))
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->  `GIT_DEFAULT_HASH`::
->  	If this variable is set, the default hash algorithm for new
->  	repositories will be set to this value. This value is currently
-> +	ignored when cloning if the remote value can be definitively
-> +	determined; the setting of the remote repository is used
-> +	instead. The value is honored if the remote repository's
-> +	algorithm cannot be determined, such as some cases when
-> +	the remote repository is empty. The default is "sha1".
-> +	THIS VARIABLE IS EXPERIMENTAL! See `--object-format`
-> +	in linkgit:git-init[1].
+> * gc/doc-cocci-updates (2023-04-12) 2 commits
+>  - cocci: codify authoring and reviewing practices
+>  - cocci: add headings to and reword README
+>
+>  Update documentation regarding Coccinelle patches.
+>
+>  Expecting review response.
+>  cf. <xmqqmt3by5sc.fsf@gitster.g>
+>  source: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
 
-We'd need to evantually cover all the transports (and non-transport
-like the "--local" optimization) so that the object-format and other
-choices are communicated from the origin to a new clone anyway, so
-this extra complexity "until X is fixed, it behaves this way, but
-otherwise the variable is read in the meantime" may be a disservice
-to the end users, even though it may make it easier in the shorter
-term for maintainers of programs that rely on the buggy "git clone"
-that partially honored this environment variable.
-
-In short, I am still not convinced that the above is a good design
-choice in the longer term.
-
-Thanks.
+I'm preparing a reroll based on what's been discussed on that thread.
+The feedback has pretty helpful in gauging the general consensus.
