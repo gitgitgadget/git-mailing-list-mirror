@@ -2,130 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EB47C77B60
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 11:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6E5C77B60
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 11:37:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240233AbjDZLZM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 07:25:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35324 "EHLO
+        id S240298AbjDZLhC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 07:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240424AbjDZLZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 07:25:11 -0400
+        with ESMTP id S230401AbjDZLhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 07:37:01 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA311988
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:25:10 -0700 (PDT)
-Received: (qmail 6683 invoked by uid 109); 26 Apr 2023 11:25:09 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067373598
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:36:59 -0700 (PDT)
+Received: (qmail 6909 invoked by uid 109); 26 Apr 2023 11:36:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Apr 2023 11:25:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Apr 2023 11:36:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13830 invoked by uid 111); 26 Apr 2023 11:25:08 -0000
+Received: (qmail 13883 invoked by uid 111); 26 Apr 2023 11:36:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Apr 2023 07:25:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Apr 2023 07:36:58 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 26 Apr 2023 07:25:08 -0400
+Date:   Wed, 26 Apr 2023 07:36:58 -0400
 From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Adam Majer <adamm@zombino.com>,
-        git@vger.kernel.org
-Subject: Re: git clone of empty repositories doesn't preserve hash
-Message-ID: <20230426112508.GB130148@coredump.intra.peff.net>
-References: <e7a8957e-6251-39f1-5109-87d4dd382e81@zombino.com>
- <xmqqr0syw3pe.fsf@gitster.g>
- <d04c430e-b609-b0a1-fd0f-0f3734d5c3b1@zombino.com>
- <20230405200153.GA525125@coredump.intra.peff.net>
- <xmqqa5zmukp5.fsf@gitster.g>
- <xmqq355euj2i.fsf@gitster.g>
- <ZEhHsJh20gtiDBd9@tapette.crustytoothpaste.net>
- <xmqqcz3ry2sw.fsf@gitster.g>
- <ZEhuMML6n8F+cNLg@tapette.crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Thomas Bock <bockthom@cs.uni-saarland.de>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v2 3/4] parse_commit(): handle broken whitespace-only
+ timestamp
+Message-ID: <20230426113658.GC130148@coredump.intra.peff.net>
+References: <20230425055244.GA4014505@coredump.intra.peff.net>
+ <20230425055458.GC4015649@coredump.intra.peff.net>
+ <06bc5530-55b0-7299-a6e6-fde1deab6605@gmail.com>
+ <xmqqttx43q08.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZEhuMML6n8F+cNLg@tapette.crustytoothpaste.net>
+In-Reply-To: <xmqqttx43q08.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 26, 2023 at 12:20:00AM +0000, brian m. carlson wrote:
+On Tue, Apr 25, 2023 at 09:06:47AM -0700, Junio C Hamano wrote:
 
-> In my case, the clone is over HTTP, so this may not be the ideal way to
-> reproduce it and it may need a better testcase, but it does bisect to
-> the patch above and it is new in master (and doesn't reproduce in
-> 2.40.0).  Note that in our case in the Git LFS testsuite, we're using
-> GIT_DEFAULT_HASH=sha256.
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> I believe what is happening is that for some reason, the object-format
-> data in v0 and v1 is not being read properly, and so we're now setting
-> it to sha1 whereas before we were reading the value from the default
-> setting of the repository (sha256).
+> > This probably doesn't matter in practice but we define our own
+> > isspace() that does not treat '\v' and '\f' as whitespace. However
+> > parse_timestamp() (which is just strtoumax()) uses the standard
+> > library's isspace() which does treat those characters as whitespace
+> > and is locale dependent. This means we can potentially stop at a
+> > character that parse_timestamp() treats as whitespace and if there are
+> > no digits after it we'll still walk past the end of the line. Using
+> > Rene's suggestion of testing the character with isdigit() would fix
+> > that. It would also avoid parsing negative timestamps as positive
+> > numbers and reject any timestamps that begin with a locale dependent
+> > digit.
+> 
+> A very interesting observation.  I wonder if a curious person can
+> craft a malformed timestamp with "hash-object --literally" to do
+> more than DoS themselves?
 
-I'm having trouble finding any breakage at all. E.g., this test passes:
+I think the answer is no, because the worst case is that they read to
+the trailing NUL that we stick after any object content we read into
+memory. So we'd mis-parse:
 
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 0908534f25..95b10288e7 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -704,4 +704,24 @@ test_expect_success 'no empty path components' '
- 	! grep "//" log
- '
- 
-+test_expect_success 'v0 clone over http recognizes object-format' '
-+	git init --bare --object-format=sha256 \
-+		"$HTTPD_DOCUMENT_ROOT_PATH/sha256.git" &&
-+
-+	# do not test an empty repo. In v0, we have no way for an
-+	# empty server to report its object format, so we would
-+	# always default to sha1. We could in theory test that
-+	# a client who wants to default to sha256 will realize
-+	# the other side is sha1, but we have no way to set that local
-+	# default. Unlike git-init, git-clone does not support
-+	# --object-format, nor GIT_DEFAULT_HASH.
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/sha256.git" --work-tree=. \
-+		commit --allow-empty -m foo &&
-+
-+	git -c protocol.version=0 clone $HTTPD_URL/smart/sha256.git sha256 &&
-+	git -C sha256 rev-parse --show-object-format >actual &&
-+	echo sha256 >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
+  committer name <email> \v\n
 
-I'd expect it to break in the empty-repo case, for the reasons given in
-the comment (v0 cannot communicate object-format in an empty repo). But
-that is nothing new.
+  123456 in the subject line
 
-It sounds from your description that your test is running in a mode
-where the client defaults to sha256 (though I'm not sure how, since we
-explicitly document that GIT_DEFAULT_HASH should not affect clone), and
-then you clone an empty sha256 repository via v0, expecting the result
-to be sha256.
+to read "123456" as the commit timestamp (so basically the same bug my
+patch was trying to fix). But we'd never read out-of-bounds memory.
+Still, it does not give me warm fuzzies, and I think is worth fixing.
 
-But I think that is a wrong expectation, at least from the
-client's perspective. An empty repository cannot communicate its
-object-format over v0, so the client should assume its v0, and should
-then itself become v0. And that last "should itself become" is what
-Junio's patch fixed.
+> We are not going to put anything other than [ 0-9+-] after the '>'
+> we scan for, and making sure '>' is followed by SP and then [0-9]
+> would be sufficient to ensure strtoumax() to stop before the '\n'
+> but does not ensure that the "signal a bad timestamp with 0"
+> happens.  Perhaps that would be sufficient.  I dunno.
 
-The first part, "empty repository cannot communicate its object-format
-over v0" is the part is "it's always been broken". We could fix it, but
-I'm not sure if it is worth the trouble (see my other message).
+Any single non-whitespace character at all would be sufficient to avoid
+the problem. And that's what the current iteration of the patch is
+trying to do. It's just that our definition of "whitespace" has to agree
+with strtoumax()'s for it to work. And as Phillip notes, that may even
+include locale dependent characters. So I don't think we want to get
+into trying to match them all (i.e., a "allow known" strategy).
 
-> It very well may be that it's always been broken and this has just made
-> it obvious that it's broken, but I'll look tomorrow and probably send a
-> patch.  I don't think we should revert this change, but I do think we
-> need to fix it before 2.41, since I think it means right now that all
-> clones over protocol v0 and v1 end up with a SHA-1 repository.
+Instead, we should go back to what the original iteration of the series
+was doing, and make sure there is at least one digit (i.e., a "forbid
+unknown" strategy). Assuming that there is no locale where ascii "1" is
+considered whitespace. ;)
 
-Hopefully my guess at what your test is doing is correct, and I didn't
-just leave us off on a tangent. ;)
+Note that will exclude a few cases that we do allow now, like:
 
-But if it is, then I think that everything in Git is OK. Non-empty repos
-over v0 work correctly both before and after Junio's patch. Empty ones
-before his patch were erroneously using sha256 if they preferred it
-locally, even when the other side really was sha1. They _also_ were
-using sha256 erroneously when the other side was sha256 but wasn't able
-to report it (because of v0 limitations). Which is counter-intuitive,
-perhaps, but was still the wrong thing for a client to do.
+  committer name <email> \v123456 +0000\n
+
+Right now that parses as "123456", but we'd reject it as "0" after such
+a patch.
+
+The alternative is to check _all_ of the characters between ">" and the
+newline and make sure there is some digit somewhere, which would be
+sufficient to prevent strtoumax() from walking past the newline.
+
+I guess it's not even any more expensive in the normal case (since the
+very first non-whitespace entry should be a digit!). I'm not sure it's
+worth caring about too much either way. Garbage making it into
+name/email is an easy mistake to make (for users and implementations).
+Putting whitespace control codes into your timestamp is not, and marking
+them as "0" is an OK outcome.
 
 -Peff
