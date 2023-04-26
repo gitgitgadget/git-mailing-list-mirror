@@ -2,153 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3B29C77B60
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 13:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62278C7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 13:15:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240980AbjDZNPl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 09:15:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48584 "EHLO
+        id S241110AbjDZNPo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 09:15:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240724AbjDZNPj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 09:15:39 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13F0170D
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 06:15:13 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b4a64c72bso5619912b3a.0
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 06:15:13 -0700 (PDT)
+        with ESMTP id S241046AbjDZNPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 09:15:42 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F3C2469D
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 06:15:17 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-63b8b19901fso8665713b3a.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 06:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1682514913; x=1685106913;
+        d=bytedance.com; s=google; t=1682514916; x=1685106916;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ywDYLIK8FfV298Ci3hKkrEUQuaXxHjTQ/G524Ogy8zk=;
-        b=lHpgihkCEXm8WKKqgGjva1TzFjXY2r/tRR5C8lZUxDgxlF1ouhYF+6UcUYwChF37Lk
-         EeX3XPtowLwwgd5QAL9sMMRT1Z5FxomLdqX0zXsgoQZXMElZp4F2rnrh4r8j3LyITvlE
-         qoBRABZ0uqVcHCrVUSov4Xe4d4Kqp7s5OVcV4NtvEADLgJN1Of1a9uMUUQ+FU8H8NfDl
-         osEL9CITjNYRKlgjtdZFmfCGcVMdVMut3Ju6VnOACvyTC6O2DuwdYI0VPqhndPMaax3t
-         DGJL48eJZLPXP4bSKoRakMpTXR7syKYSCTjyUUAnaP+ooCcD9EslWNO0hB/ol0vVizjm
-         tpYA==
+        bh=hU6ZOC5QBLRYhUWdL7Hf0VIEqdSYcWcbk3xtzEyWVl4=;
+        b=Wp6p36ItB6f5HEbymeZoyg5z4rmygtVTyidF0XZZGYp0mXSL2zawaoLwPSoOTS6GYO
+         +IOUJJT3m8zmlr3PwdUPWSLI0mHLOlyy5MlDXHk4r++Ob9BD/zG8Q8+ZKtI9tiYSYjlD
+         oD+IVFFGsOAT75JngJb+xNpJgxIi5w8hR0IWOs1RiifVat35ufqbYiqYjttqiKfMGBPH
+         lCXmUE3NTKvvLWkxO5RDM4a7oZV/wJ6K55TwvL2Ujp33bKDWrcSZBTJl5SFeVm3llQxl
+         bOOGbucKfqcIIF/ITtB1EHr3JhEJCK0Wk9J3MThczLST6O9w5IoA5M7QPv5SO+8yNd/D
+         Sr5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682514913; x=1685106913;
+        d=1e100.net; s=20221208; t=1682514916; x=1685106916;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ywDYLIK8FfV298Ci3hKkrEUQuaXxHjTQ/G524Ogy8zk=;
-        b=Mt0RSfehTatvI8xqmV+S3VT/Jrl7t0RnzDDxr8qrJawb7tCNqlU2SbB70qVNiPTTQB
-         7ApHDevGJ7uYd4WK17a3qDXvc+3IMKgntwtZCUK1ZCbqZ72ZLtZYpkaQz8gebJwVXMzN
-         bFjHj2X28IGOddcLqvZjTpRea2fcx9VwEHb9sO31G1g7Seog3/oDVo6COGuVRaZ/nP4Y
-         HQP53VUgDG9D7DjKpheq3oK19EKgsVhsLA/tAYhGVtZ3u3OTbHl5IDD4a/3MGTSCDBKs
-         HenqR7Qc9wD38D+gWIz4Ra0QhWD+sy+LAlNCuKWdE9s0KSVIpWo0fPXwZJ+RYqoJ9VzZ
-         g/QA==
-X-Gm-Message-State: AAQBX9cQUrMh3l8FWbPHnrbkJnHAy7PxAjDoi1SEZnHn7IGmgx+GOu0+
-        TDph0L5IK6c28ez7QkfTNF/5H/32dwEdRUIriYw=
-X-Google-Smtp-Source: AKy350ZuFz1w4xFwm9Iz7/Enq+OR8AyvZXZi4kqBz2pctaUmZKFXdEeGLYGfHrQO+Q98M6c/sPha9Q==
-X-Received: by 2002:a05:6a20:4394:b0:f0:2501:349b with SMTP id i20-20020a056a20439400b000f02501349bmr24382470pzl.25.1682514913249;
-        Wed, 26 Apr 2023 06:15:13 -0700 (PDT)
+        bh=hU6ZOC5QBLRYhUWdL7Hf0VIEqdSYcWcbk3xtzEyWVl4=;
+        b=EJCmH8igJfrXDUx/UXP0OPphjxK69VDj3U1bY6duangTJhI8dbEp/hofNiDxqdyloM
+         zTs5fROtBcUu0sUHRugYT8NfwjU2PJdc1B9oleoMzgTUTVAQagLuvEviI9ZtqsPiMB0i
+         ky3hVlZDM1xUnRxCFLmejKZQzczXAyGtRDEbh7p1ZLDcSqrrRSo30Plm4rGiU4HNcbvW
+         rc04QZdQdP5F2J97CLMfnnGlQ2Zrtn9a7vBZRQYBQ5/icV9bYNl7SZQZEwt9ADInSHfN
+         ItbNGakqotq1xCbGPjzGdxsQKiLz+dtQ8lY4YxWwJnOiUPXrP2mihWRqjL7JvuaRICH/
+         sR6g==
+X-Gm-Message-State: AAQBX9fU1VCytl9S1HPth2NdBAYfCkSn3BPAW0c2d6FZLhiarMalmB79
+        kp5iRUf0PnyPQPkKEBZpA8GTdHcKN6n/E2qFUc4=
+X-Google-Smtp-Source: AKy350aAZkEluR9bXHjpLVmxyhYqf4bFdXpoDGMonOFXDijInYlpmUjBK4kB0M8HXR/gE5fXlxFBxw==
+X-Received: by 2002:a05:6a00:9a4:b0:627:e577:4331 with SMTP id u36-20020a056a0009a400b00627e5774331mr29709327pfg.1.1682514916290;
+        Wed, 26 Apr 2023 06:15:16 -0700 (PDT)
 Received: from JMHNXMC7VH.bytedance.net ([139.177.225.238])
-        by smtp.gmail.com with ESMTPSA id m9-20020a629409000000b00639eae8816asm11173693pfe.130.2023.04.26.06.15.10
+        by smtp.gmail.com with ESMTPSA id m9-20020a629409000000b00639eae8816asm11173693pfe.130.2023.04.26.06.15.13
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 26 Apr 2023 06:15:12 -0700 (PDT)
+        Wed, 26 Apr 2023 06:15:16 -0700 (PDT)
 From:   Han Xin <hanxin.hx@bytedance.com>
 To:     git@vger.kernel.org
 Cc:     Han Xin <hanxin.hx@bytedance.com>, xingxin.xx@bytedance.com,
         jonathantanmy@google.com, derrickstolee@github.com,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/2] negotiator/default: avoid stack overflow
-Date:   Wed, 26 Apr 2023 21:15:02 +0800
-Message-Id: <cover.1682513384.git.hanxin.hx@bytedance.com>
+Subject: [PATCH v3 1/2] negotiator/default: avoid stack overflow
+Date:   Wed, 26 Apr 2023 21:15:03 +0800
+Message-Id: <0e69d70805e6da684e6e17642a1cf0d59a03dfc0.1682513384.git.hanxin.hx@bytedance.com>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <cover.1682473718.git.hanxin.hx@bytedance.com>
-References: <cover.1682473718.git.hanxin.hx@bytedance.com>
+In-Reply-To: <cover.1682513384.git.hanxin.hx@bytedance.com>
+References: <cover.1682473718.git.hanxin.hx@bytedance.com> <cover.1682513384.git.hanxin.hx@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series avoid stack overflow in negotiator/default.c and memory leak
-in negotiator/skipping.c.
+mark_common() in negotiator/default.c may overflow the stack due to
+recursive function calls. Avoid this by instead recursing using a
+heap-allocated data structure.
 
-Changes since v2:
-* Rewrite the commit link in the typical format.
-* Fix the incorrect check for the COMMON bit introduced in v2.
+This is the same case as 4654134976f (negotiator/skipping: avoid
+stack overflow, 2022-10-25)
 
-Han Xin (2):
-  negotiator/default: avoid stack overflow
-  negotiator/skipping: fix some problems in mark_common()
+Reported-by: Xin Xing <xingxin.xx@bytedance.com>
+Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
+---
+ negotiator/default.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
- negotiator/default.c  | 39 +++++++++++++++++++++++++++++----------
- negotiator/skipping.c | 22 +++++++++++++++-------
- 2 files changed, 44 insertions(+), 17 deletions(-)
-
-Range-diff against v2:
-1:  935be72eb9 ! 1:  0e69d70805 negotiator/default: avoid stack overflow
-    @@ Commit message
-         recursive function calls. Avoid this by instead recursing using a
-         heap-allocated data structure.
-     
-    -    This is the same case as [1].
-    -
-    -    1. 4654134976f (negotiator/skipping: avoid stack overflow, 2022-10-25)
-    +    This is the same case as 4654134976f (negotiator/skipping: avoid
-    +    stack overflow, 2022-10-25)
-     
-         Reported-by: Xin Xing <xingxin.xx@bytedance.com>
-         Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
-2:  abbb1bc0b3 ! 2:  8b5c92a4d5 negotiator/skipping: fix some problems in mark_common()
-    @@ Metadata
-      ## Commit message ##
-         negotiator/skipping: fix some problems in mark_common()
-     
-    -    Fixed the following problems:
-    +    The mark_common() method in negotiator/skipping.c was converted
-    +    from recursive to iterative in 4654134976f (negotiator/skipping:
-    +    avoid stack overflow, 2022-10-25), but there is some more work
-    +    to do:
-     
-         1. prio_queue() should be used with clear_prio_queue(), otherwise there
-            will be a memory leak.
-    @@ negotiator/skipping.c: static int clear_marks(const char *refname, const struct
-       */
-      static void mark_common(struct data *data, struct commit *seen_commit)
-      {
-    -@@ negotiator/skipping.c: static void mark_common(struct data *data, struct commit *seen_commit)
-    + 	struct prio_queue queue = { NULL };
-    + 	struct commit *c;
-    + 
-    ++	if (seen_commit->object.flags & COMMON)
-    ++		return;
-    ++
-    + 	prio_queue_put(&queue, seen_commit);
-    ++	seen_commit->object.flags |= COMMON;
-      	while ((c = prio_queue_get(&queue))) {
-      		struct commit_list *p;
-    - 		if (c->object.flags & COMMON)
-    +-		if (c->object.flags & COMMON)
-     -			return;
-    -+			continue;
-    - 		c->object.flags |= COMMON;
-    +-		c->object.flags |= COMMON;
-    ++
-      		if (!(c->object.flags & POPPED))
-      			data->non_common_revs--;
-      
-    @@ negotiator/skipping.c: static void mark_common(struct data *data, struct commit
-     +			continue;
-      		for (p = c->parents; p; p = p->next) {
-     -			if (p->item->object.flags & SEEN)
-    -+			if (p->item->object.flags & SEEN || p->item->object.flags & COMMON)
-    - 				prio_queue_put(&queue, p->item);
-    +-				prio_queue_put(&queue, p->item);
-    ++			if (!(p->item->object.flags & SEEN) ||
-    ++			    (p->item->object.flags & COMMON))
-    ++				continue;
-    ++
-    ++			p->item->object.flags |= COMMON;
-    ++			prio_queue_put(&queue, p->item);
-      		}
-      	}
-     +
+diff --git a/negotiator/default.c b/negotiator/default.c
+index f4b78eb47d..635cdd6483 100644
+--- a/negotiator/default.c
++++ b/negotiator/default.c
+@@ -55,30 +55,49 @@ static int clear_marks(const char *refname, const struct object_id *oid,
+ static void mark_common(struct negotiation_state *ns, struct commit *commit,
+ 		int ancestors_only, int dont_parse)
+ {
+-	if (commit != NULL && !(commit->object.flags & COMMON)) {
+-		struct object *o = (struct object *)commit;
++	struct prio_queue queue = { NULL };
++
++	if (!commit || (commit->object.flags & COMMON))
++		return;
++
++	prio_queue_put(&queue, commit);
++	if (!ancestors_only) {
++		commit->object.flags |= COMMON;
+ 
+-		if (!ancestors_only)
+-			o->flags |= COMMON;
++		if ((commit->object.flags & SEEN) && !(commit->object.flags & POPPED))
++			ns->non_common_revs--;
++	}
++	while ((commit = prio_queue_get(&queue))) {
++		struct object *o = (struct object *)commit;
+ 
+ 		if (!(o->flags & SEEN))
+ 			rev_list_push(ns, commit, SEEN);
+ 		else {
+ 			struct commit_list *parents;
+ 
+-			if (!ancestors_only && !(o->flags & POPPED))
+-				ns->non_common_revs--;
+ 			if (!o->parsed && !dont_parse)
+ 				if (repo_parse_commit(the_repository, commit))
+-					return;
++					continue;
+ 
+ 			for (parents = commit->parents;
+ 					parents;
+-					parents = parents->next)
+-				mark_common(ns, parents->item, 0,
+-					    dont_parse);
++					parents = parents->next) {
++				struct commit *p = parents->item;
++
++				if (p->object.flags & COMMON)
++					continue;
++
++				p->object.flags |= COMMON;
++
++				if ((p->object.flags & SEEN) && !(p->object.flags & POPPED))
++					ns->non_common_revs--;
++
++				prio_queue_put(&queue, parents->item);
++			}
+ 		}
+ 	}
++
++	clear_prio_queue(&queue);
+ }
+ 
+ /*
 -- 
 2.40.0
 
