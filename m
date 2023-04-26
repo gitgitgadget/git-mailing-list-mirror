@@ -2,100 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E13C7618E
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 07:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B8DBC77B78
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 10:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240137AbjDZHp5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 03:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47600 "EHLO
+        id S240217AbjDZKrF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 06:47:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240038AbjDZHpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 03:45:11 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B724226
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 00:44:44 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f09b4a156eso45009775e9.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 00:44:44 -0700 (PDT)
+        with ESMTP id S240639AbjDZKqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 06:46:31 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF0759E8
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 03:45:28 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-b9582901279so10395235276.2
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 03:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682495082; x=1685087082;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DrYFywBJ6KwnsRDLvaMium/c48VucEjXPJx/cOyzV74=;
-        b=JbFVvSReP4BU+B5i5jP9YhWoshGVhIVVBJb1u1kTK0yoqU7wJstgJzhHSmpKRcb8xe
-         MpGXFO4Y803yIXunAHIntPaWSKKIciykEgoSUi8KHWdei4R7xwdOWHQPrW2QR4ChgXzl
-         DtV8sZQPnaR1vZk0RXwyt+8g0i4dF6XSPW8kUzrdVqB5XX37rJLsF9tzXtrAxjJikkgg
-         OsJA+nQHcgEdKhMLDQKwrtUXzrzBeltL56tkPOKCBMfn+VKetDYp0Hl71IBGpR5UY8nM
-         T8VyNyluOtNEa3Z5m2r9s2Ah0TzmpVNSvMkva/pTYDAk1kuWnPbWnPcTcx/48r5xhyqJ
-         lXNQ==
+        d=github.com; s=google; t=1682505927; x=1685097927;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fum2h4vOCuM0yfrU03CSUyK0uQDnmPhMoeasshxE19A=;
+        b=GIQSTjNP69AUHNOVIparradpMfy+Q3UxXJeuBh+iKz2BUvS4oV4QsQ3z8TRyr23O1F
+         mNJ01GNE5ZJacNDbsuw26QcDxAUCOi0sTrC+eOy3ynaQlPe8U6WCTqKI892uDgypxLlY
+         nvJ7KGjehayj1IdsUByqbXyM7d231kmK1UHLTrunVdf96Hk23PoVz4QtWxyp2lneZuAa
+         5SyLUF5wv/UJC5icpTdOhd1MDGICx6M1728FwRuq7XVbXYolF8eEIyyk77n3OvKBRfI0
+         9X9zut3d9mQs1wO8qIdygfctYep5dma1kdUeyd7a3kIzhU0hqN8u33dUlXAkx1bdRhlK
+         Q7fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682495082; x=1685087082;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DrYFywBJ6KwnsRDLvaMium/c48VucEjXPJx/cOyzV74=;
-        b=A3PUoEWjD5yxxnfjCwTLhPw3XNalr3NtQtXGl7YmAl4cREOpE3WiYCdeTk/tQsoYQV
-         PpkgM4YDPQdhe6x3VYpDyRfoaZUX6NaLKElf/sGfmQEiF9HMENyaUoYJxkhsgy9lne08
-         uY0pMTiagUpP/2Xhz4uFqzzNR8IxtnbgejbQ/ffGMDOTeol7RR87ErEo0Wb01oZ31H3R
-         NUElJzIBf5wTcrSmYFU+3qk4DaHEy79gMJHbfuJqy4pfKJsOZyr76c/2GPdQuBTb2eA+
-         AjKRvlwiLxeGKugHvBbpHpu6fQyX7shd7nLvEVlyraxIf3LT0YSEU0KN55LQeTt3x/2H
-         RcxQ==
-X-Gm-Message-State: AAQBX9cfcYi1k3Uplh/YXXhfJZX9zLYJ04kBrDBE8fyW5LJ9DbQb/IWx
-        GSUsMO7pvq4Ya4rMmaM32P5zWI76UH4=
-X-Google-Smtp-Source: AKy350aT5fIrWo5ErYY0z2KUCkNMCMdEaMMF21QoFM4L+d7N1M1bCvJRjmF+KpFq5jNXjc14iXpYdA==
-X-Received: by 2002:a1c:ed01:0:b0:3f1:70cf:a2d9 with SMTP id l1-20020a1ced01000000b003f170cfa2d9mr12021784wmh.9.1682495082273;
-        Wed, 26 Apr 2023 00:44:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p1-20020a5d48c1000000b002f27dd92643sm8060461wrs.99.2023.04.26.00.44.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Apr 2023 00:44:41 -0700 (PDT)
-Message-Id: <pull.1485.git.git.1682495081131.gitgitgadget@gmail.com>
-From:   "Pooyan Khanjankhani via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Apr 2023 07:44:41 +0000
-Subject: [PATCH] revisions.txt: correct a mistake in dotted range notations
- section
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1682505927; x=1685097927;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fum2h4vOCuM0yfrU03CSUyK0uQDnmPhMoeasshxE19A=;
+        b=lQw4/CaK+YFN4iswsq0tmo2QPWQC1BQHmrg7XT0W5lcCUmyHIMaiAzvbIdsftoeNds
+         kCVMLtOSjtCkqdYGst3Qk1DlqWf/Le1Q+yUZUR2l1TLkXkGgxlIvwyfO9vnBRpAcuLbu
+         XV2F+1eoaZdFv1P33pfaiWIfGbI5UFfp4yZJnAGaMwZybyPLSmS0rdVIY0WXQW2xlHW3
+         fRmQofHtlX+HsjHxLjtbkaQISO1Bt84rzLtRGWjqtsezkAkVXJVwhxyPPmdAEqY8CvKR
+         bgT6QlT94JxFm+EmQpLhhz7VdKE3dZdmnmyOHWxR4pLotYIA6NlowDP8bpvn/bSaE/EF
+         xS1w==
+X-Gm-Message-State: AC+VfDyZxrHezHpXqHDAiAUXEBefxFLy+CYyDUQRm1llacl86OpTsbj6
+        BiG4BdTO+K9ACd9m4afo7phz
+X-Google-Smtp-Source: ACHHUZ4fs0/m5kObbEoQzo++4Ep+u4lSMXioK+sPdJQMmLLkJipvw3WVsBiO4dUICd6K3EijhkZv8Q==
+X-Received: by 2002:a81:8287:0:b0:556:9f48:cbe7 with SMTP id s129-20020a818287000000b005569f48cbe7mr8679878ywf.3.1682505927317;
+        Wed, 26 Apr 2023 03:45:27 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:8842:abce:33e9:20d2? ([2600:1700:e72:80a0:8842:abce:33e9:20d2])
+        by smtp.gmail.com with ESMTPSA id c205-20020a814ed6000000b00545a0818483sm4114720ywb.19.2023.04.26.03.45.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Apr 2023 03:45:26 -0700 (PDT)
+Message-ID: <86188f31-f492-d195-d4d5-b0582906621a@github.com>
+Date:   Wed, 26 Apr 2023 06:45:24 -0400
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Pooyan Khanjankhani <pooyankhan@gmail.com>,
-        Pooyan Khanjankhani <p.khanjankhani@digikala.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: Commit graph not using minimal number of columns
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Javier Mora <cousteaulecommandant@gmail.com>
+Cc:     git@vger.kernel.org
+References: <CAH1-q0hReZoDWmXo7St10Dk6uc+6ZUQSxqvu1cJ7w3r7ftR9PQ@mail.gmail.com>
+ <xmqq8refy114.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq8refy114.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pooyan Khanjankhani <p.khanjankhani@digikala.com>
+On 4/25/2023 7:50 PM, Junio C Hamano wrote:
+> Javier Mora <cousteaulecommandant@gmail.com> writes:
+> 
+>> git log --all --decorate --oneline --graph
+>> # ^ displays a complete mess that doesn't resemble two tracks
 
-Insert a missing 'not' word in a negative sentence.
-  ... but are [not] reachable from neither A or C.
+That mess is this:
 
-Signed-off-by: Pooyan Khanjankhani <p.khanjankhani@digikala.com>
----
-    docs: Fix sentencing
-    
-    Just fixed a sentence in docs.
+*   ac6812d (HEAD -> fork) Merge branch 'main' (early part) into fork
+|\  
+* \   92dbe19 Merge branch 'main' into fork
+|\ \  
+* \ \   c372f7b Merge branch 'main' into fork
+|\ \ \  
+* \ \ \   48cae29 Merge branch 'main' into fork
+|\ \ \ \  
+* \ \ \ \   1bd2ff0 Merge branch 'main' into fork
+|\ \ \ \ \  
+* \ \ \ \ \   a5ab648 Merge branch 'main' into fork
+|\ \ \ \ \ \  
+* | | | | | | 362d201 Introduced feature Z
+| | | | | | | * d46dfcc (main) Add H
+| | | | | | |/  
+| | | | | | * ac40305 Add G
+| | | | | |/  
+| | | | | * 867e17a Add F
+| | | | |/  
+| | | | * 23b1d2b Add E
+| | | |/  
+| | | * 8c36fda Add D
+| | |/  
+| | * cae1373 Add C
+| |/  
+| * 808c738 Add B
+|/  
+* 20b84d5 First commit
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1485%2FTheKhanj%2Fdocs%2Fsentencing-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1485/TheKhanj/docs/sentencing-v1
-Pull-Request: https://github.com/git/git/pull/1485
+This width is necessary to avoid crossing lines _given the order
+of the commits_, which is picked independently of the graph
+rendering.
 
- Documentation/revisions.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> "git log --all --oneline --graph --date-order"?
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 9aa58052bc7..00c2f030da5 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -306,7 +306,7 @@ other, e.g.
- 
- does *not* specify two revision ranges for most commands.  Instead
- it will name a single connected set of commits, i.e. those that are
--reachable from either B or D but are reachable from neither A or C.
-+reachable from either B or D but are not reachable from neither A or C.
- In a linear history like this:
- 
-     ---A---B---o---o---C---D
+Here is that output, breaking topological ties with the commit
+date order:
 
-base-commit: ae73b2c8f1da39c39335ee76a0f95857712c22a7
--- 
-gitgitgadget
+*   ac6812d (HEAD -> fork) Merge branch 'main' (early part) into fork
+|\  
+| | * d46dfcc (main) Add H
+| |/  
+| * ac40305 Add G
+* | 92dbe19 Merge branch 'main' into fork
+|\| 
+* |   c372f7b Merge branch 'main' into fork
+|\ \  
+| | * 867e17a Add F
+| |/  
+* |   48cae29 Merge branch 'main' into fork
+|\ \  
+| | * 23b1d2b Add E
+| |/  
+* |   1bd2ff0 Merge branch 'main' into fork
+|\ \  
+| | * 8c36fda Add D
+| |/  
+* |   a5ab648 Merge branch 'main' into fork
+|\ \  
+| | * cae1373 Add C
+| |/  
+* | 362d201 Introduced feature Z
+| * 808c738 Add B
+|/  
+* 20b84d5 First commit
+
+But really, the key issue is that both branches are being used
+as tips. This means that in --topo-order (implied by --graph),
+every commit reachable from 'fork' but not 'main' must be shown
+before the first commit of 'main'.
+
+If we only use 'fork' as a starting point, then the --topo-order
+is the best of all the options:
+
+*   ac6812d (HEAD -> fork) Merge branch 'main' (early part) into fork
+|\  
+| * ac40305 Add G
+* | 92dbe19 Merge branch 'main' into fork
+|\| 
+| * 867e17a Add F
+* | c372f7b Merge branch 'main' into fork
+|\| 
+| * 23b1d2b Add E
+* | 48cae29 Merge branch 'main' into fork
+|\| 
+| * 8c36fda Add D
+* | 1bd2ff0 Merge branch 'main' into fork
+|\| 
+| * cae1373 Add C
+* | a5ab648 Merge branch 'main' into fork
+|\| 
+| * 808c738 Add B
+* | 362d201 Introduced feature Z
+|/  
+* 20b84d5 First commit
+
+I don't think there is anything actionable to do here, as
+these commit-ordering options are well-defined and should not
+be altered. If there was an algorithm to modify the commit
+order in such a way that minimized the graph output, that
+would be interesting, but the cases it minimizes are probably
+too rare to be worth the effort.
+
+Thanks,
+-Stolee
