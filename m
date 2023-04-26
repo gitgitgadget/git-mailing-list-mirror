@@ -2,123 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5EA1C7618E
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 20:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E9BC7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 20:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239877AbjDZUky (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 16:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57378 "EHLO
+        id S233709AbjDZUxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 16:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239443AbjDZUkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 16:40:52 -0400
+        with ESMTP id S231958AbjDZUxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 16:53:36 -0400
 Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C0CB213F
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 13:40:50 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F83B1A7
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 13:53:34 -0700 (PDT)
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:5e4a:89fa:93b9:2058])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 3B7945A569;
-        Wed, 26 Apr 2023 20:40:50 +0000 (UTC)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 9F4DD5B3A1;
+        Wed, 26 Apr 2023 20:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1682541650;
-        bh=ngU8mGvCe0LTWJiuviwrMPuT5qs6I5yvi/EfzUmykXA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=qcHn6QoV9H1mRqFce8S8rHTmk1WC14yx2lcZND+oig9PdVSYsYj1FLwv3WKf/hkyZ
-         cLj1fwxpefaBpzNJdmQzO5jmD5sA2EpANRERx8BcA970bTotFukWwo1Iy60wo5Qvt3
-         v5M4xALJsxKDhJM/gJhooM5tUlsw2QHZzhhoOfi1dDwm1sT8vFVYOQl30+DemVIrri
-         Hg7gsvI15pLujphTaVFxKHBtGH9WRwdjf6E15HIsiAonFzQmExaqd9SNvRTbBFsCsY
-         CqPSkDamGOlrBbiR7dIjBx1a8dYi7u1n4FUOxYLsLb4rJkEVe6gnQAurPsRqKeCfTk
-         b+9rFpGutuPL8AsxlAoSaAz4XaUILrKPGnuuOOWjLz7ULlWhwFQ4pztKH+nhJRnM9p
-         AMJgyz23w9cGMR/joTdGASDYq7Mk0d1uNvZDu7ausB0k/PAL3r8xlOKr3mE80zXta1
-         lFrnVhtfpFXWPiB530WYINeGwLIHxkxPuEVdIUg1WXZiBTHefUf
-Date:   Wed, 26 Apr 2023 20:40:48 +0000
+        s=default; t=1682542413;
+        bh=wa1p133rgzZGEnAaWul+iKsjqHm1lMRUMXivY/U5upU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=eUt7ZJcySj4N3D5hojwmrKWtY6oeMX6Lft/HZfMnw5dnLC5/Yu03q5sSwugXLeE3b
+         QC9ex/d+I+ZWgSrFxTHPYNdZk6z/M/jl0CYBBH9YDMe3w0534oaqsxf5TqbOIXZcnZ
+         EFu+3B+R9LHz1/JZpIaR8uN/RycDyxegkzLyWxbyxe8HtJahPYImtlf3Izpzd7aGkM
+         1fyMfCJOQnnj0vK7GWv62rM2+KvDTaphiGaZuUMVC+3psB464hQ729QRLtoyFHZEy6
+         oLO1jq4MZjaUcu9OrT3dvmusHTtskbnKfxeqgnDXTPyYwb3XI+UaPTa1t0g9tBCKxx
+         pbhh5YPyqg67z8bADEBpONDWY4dpqONj+pmgPxwFasfcRDc2/LzMwR+tqnZym3qCDV
+         oz9PGCzZqU1gaffCZGi5EM19pvYXVYwx4/pG2fe+peYkYx0CoGGnG7UT3eO09qpAjz
+         FeQyqmFZVnTpcq5fi9K1ntUU2WC7sGihvi5ssKLhVzrOFk7sdVi
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Adam Majer <adamm@zombino.com>,
-        git@vger.kernel.org
-Subject: Re: git clone of empty repositories doesn't preserve hash
-Message-ID: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Adam Majer <adamm@zombino.com>, git@vger.kernel.org
-References: <e7a8957e-6251-39f1-5109-87d4dd382e81@zombino.com>
- <xmqqr0syw3pe.fsf@gitster.g>
- <d04c430e-b609-b0a1-fd0f-0f3734d5c3b1@zombino.com>
- <20230405200153.GA525125@coredump.intra.peff.net>
- <xmqqa5zmukp5.fsf@gitster.g>
- <xmqq355euj2i.fsf@gitster.g>
- <ZEhHsJh20gtiDBd9@tapette.crustytoothpaste.net>
- <xmqqcz3ry2sw.fsf@gitster.g>
- <20230426105134.GA130148@coredump.intra.peff.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Adam Majer <adamm@zombino.com>
+Subject: [PATCH 1/2] http: advertise capabilities when cloning empty repos
+Date:   Wed, 26 Apr 2023 20:53:23 +0000
+Message-Id: <20230426205324.326501-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230426205324.326501-1-sandals@crustytoothpaste.net>
+References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
+ <20230426205324.326501-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Zuc/EG5KPEJxOvN7"
-Content-Disposition: inline
-In-Reply-To: <20230426105134.GA130148@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: "brian m. carlson" <bk2204@github.com>
 
---Zuc/EG5KPEJxOvN7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When cloning an empty repository, the HTTP protocol version 0 currently
+offers nothing but the header and flush packets for the /info/refs
+endpoint. This means that no capabilities are provided, so the client
+side doesn't know what capabilities are present.
 
-On 2023-04-26 at 10:51:34, Jeff King wrote:
-> We could send a capabilities^{} line, which Git has supported on the
-> client side since eb398797cd (connect: advertized capability is not a
-> ref, 2016-09-09). So sending it should not break even old clients
-> (though we would have to check what alternate implementations like
-> libgit2 or dulwich do; we know JGit supports it).
+However, this does pose a problem when working with SHA-256
+repositories, since we use the capabilities to know the remote side's
+object format (hash algorithm).  It used to be possible to set the
+correct algorithm with `GIT_DEFAULT_HASH` (which is what the Git LFS
+testsuite did), but this no longer works as of 8b214c2e9d ("clone:
+propagate object-format when cloning from void", 2023-04-05), since
+there we always read the hash algorithm from the remote.  If there is no
+hash algorithm provided, we default to SHA-1 for backwards
+compatibility.
 
-I have a patch which does exactly this, which I will be sending shortly.
-I've confirmed that libgit2 and JGit support it, which is unsurprising,
-since all of the implementations, Git included, share the same code.  In
-addition, this is the behaviour we document as supporting, so all
-implementations should support it.
+Fortunately, the push version of the protocol already indicates a clue
+for how to solve this.  When the /info/refs endpoint is accessed for a
+push and the remote is empty, we include a dummy "capabilities^{}" ref
+pointing to the all-zeros object ID.  The protocol documentation already
+indicates this should _always_ be sent, even for fetches and clones, so
+let's just do that, which means we'll properly announce the hash
+algorithm as part of the capabilities.  This just works with the
+existing code because we share the same ref code for fetches and clones,
+and libgit2 does as well.
 
-> However, the object-format support here was broken until the very recent
-> 13e67aa39b (v0 protocol: fix sha1/sha256 confusion for capabilities^{},
-> 2023-04-14), so it would only be useful going forward (before then we'd
-> die(), but maybe that is preferable to having the wrong object format?).
+Signed-off-by: brian m. carlson <bk2204@github.com>
+---
+ t/t5551-http-fetch-smart.sh | 27 +++++++++++++++++++++++++++
+ t/t5700-protocol-v1.sh      | 21 +++++++++++++++++++--
+ upload-pack.c               |  4 ++++
+ 3 files changed, 50 insertions(+), 2 deletions(-)
 
-I think it's better to die than to silently have the wrong object
-format, and it also prevents the problem if other clients using v0 or v1
-(which effectively have to be supported for compatibility, while v2 is
-optional) try to clone from a fixed server.
-
-> I'm not sure it's worth the effort, though. If you want to use sha256
-> everywhere and tell the other side about it, you need a modern client
-> anyway, and that means the ability to speak v2. So this would only
-> matter if for some reason the v2 probe was being ignored (e.g., proxies
-> eating it, ssh refusing environment variable, etc), which itself are
-> things that ideally would be fixed (and can maybe one day even go away
-> if we optimistically default to v2).
-
-Using v2 everywhere is difficult because many SSH servers still don't
-pass GIT_PROTOCOL by default, meaning that we're stuck with v0 and v1.
-In retrospect, sending an environment variable here was not a great
-decision, but we're stuck with it now.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---Zuc/EG5KPEJxOvN7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZEmMUAAKCRB8DEliiIei
-gRizAQDK/g9P7xrW+9i/IzfWiKWgJqJsYAZdEXEtGR5JfEZ/xgEA9cm0C96avibr
-i0vpIhrFPuZazBW/2fyOhd1bsG+4awY=
-=lvoq
------END PGP SIGNATURE-----
-
---Zuc/EG5KPEJxOvN7--
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 0908534f25..21b7767cbd 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -611,6 +611,33 @@ test_expect_success 'client falls back from v2 to v0 to match server' '
+ 	grep symref=HEAD:refs/heads/ trace
+ '
+ 
++test_expect_success 'create empty http-accessible SHA-256 repository' '
++	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/sha256.git" &&
++	(cd "$HTTPD_DOCUMENT_ROOT_PATH/sha256.git" &&
++	 git --bare init --object-format=sha256
++	)
++'
++
++test_expect_success 'clone empty SHA-256 repository with protocol v2' '
++	rm -fr sha256 &&
++	echo sha256 >expected &&
++	git -c protocol.version=2 clone "$HTTPD_URL/smart/sha256.git" &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	test_cmp actual expected &&
++	git ls-remote "$HTTPD_URL/smart/sha256.git" >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'clone empty SHA-256 repository with protocol v0' '
++	rm -fr sha256 &&
++	echo sha256 >expected &&
++	GIT_TRACE=1 GIT_TRACE_PACKET=1 git -c protocol.version=0 clone "$HTTPD_URL/smart/sha256.git" &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	test_cmp actual expected &&
++	git ls-remote "$HTTPD_URL/smart/sha256.git" >actual &&
++	test_must_be_empty actual
++'
++
+ test_expect_success 'passing hostname resolution information works' '
+ 	BOGUS_HOST=gitbogusexamplehost.invalid &&
+ 	BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
+diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
+index 6c8d4c6cf1..3cd9db9012 100755
+--- a/t/t5700-protocol-v1.sh
++++ b/t/t5700-protocol-v1.sh
+@@ -249,10 +249,12 @@ test_expect_success 'push with ssh:// using protocol v1' '
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+-test_expect_success 'create repo to be served by http:// transport' '
++test_expect_success 'create repos to be served by http:// transport' '
+ 	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
+-	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" one
++	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" one &&
++	git init --object-format=sha256 "$HTTPD_DOCUMENT_ROOT_PATH/sha256" &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/sha256" config http.receivepack true
+ '
+ 
+ test_expect_success 'clone with http:// using protocol v1' '
+@@ -269,6 +271,21 @@ test_expect_success 'clone with http:// using protocol v1' '
+ 	grep "git< version 1" log
+ '
+ 
++test_expect_success 'clone with http:// using protocol v1 with empty SHA-256 repo' '
++	GIT_TRACE_PACKET=1 GIT_TRACE_CURL=1 git -c protocol.version=1 \
++		clone "$HTTPD_URL/smart/sha256" sha256 2>log &&
++
++	cat log &&
++	echo sha256 >expect &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	test_cmp expect actual &&
++
++	# Client requested to use protocol v1
++	grep "Git-Protocol: version=1" log &&
++	# Server responded using protocol v1
++	grep "git< version 1" log
++'
++
+ test_expect_success 'fetch with http:// using protocol v1' '
+ 	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" two &&
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 08633dc121..5ef9b162b6 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -120,6 +120,7 @@ struct upload_pack_data {
+ 	unsigned allow_ref_in_want : 1;				/* v2 only */
+ 	unsigned allow_sideband_all : 1;			/* v2 only */
+ 	unsigned advertise_sid : 1;
++	unsigned sent_capabilities : 1;
+ };
+ 
+ static void upload_pack_data_init(struct upload_pack_data *data)
+@@ -1240,6 +1241,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 			     git_user_agent_sanitized());
+ 		strbuf_release(&symref_info);
+ 		strbuf_release(&session_id);
++		data->sent_capabilities = 1;
+ 	} else {
+ 		packet_fwrite_fmt(stdout, "%s %s\n", oid_to_hex(oid), refname_nons);
+ 	}
+@@ -1379,6 +1381,8 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 			data.no_done = 1;
+ 		head_ref_namespaced(send_ref, &data);
+ 		for_each_namespaced_ref(send_ref, &data);
++		if (!data.sent_capabilities && advertise_refs)
++			send_ref("capabilities^{}", null_oid(), 0, &data);
+ 		/*
+ 		 * fflush stdout before calling advertise_shallow_grafts because send_ref
+ 		 * uses stdio.
