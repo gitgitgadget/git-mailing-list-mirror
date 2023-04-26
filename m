@@ -2,81 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37CFEC7618E
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 21:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8F29C7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 21:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239869AbjDZVMc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 17:12:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45250 "EHLO
+        id S239904AbjDZVOg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 17:14:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239436AbjDZVMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 17:12:30 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C76A6E51
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:12:29 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-63b4dfead1bso6368485b3a.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:12:29 -0700 (PDT)
+        with ESMTP id S232909AbjDZVOe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 17:14:34 -0400
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 185D3E5A
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:14:32 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5529a6f9f28so115308867b3.2
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 14:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682543549; x=1685135549;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7WfJD+82y6CVZ+x8XPR8dEsKccj5QVR3prsHbdOU2kc=;
-        b=lhACu/NzW2+Yo5cvdWrT5YsJe2aQStn4SV7L1x11kUsndPf0yKatZ0W0aJISPXkHe6
-         efBULHAK2grjHtCq4JF8oLpN2Rha2L3+uKI2D36Gej+a7GCKJIh6qj90FB7U4yXhuLbi
-         XVK+WZHfGTU2UOOcSRDfrTzXdhmsGB0NLqyLjDlvsPHYxlXgNsn4fMjjHx9PT8hisipx
-         V58Bux5WlEtNEuICWFyGT1v+puxA2LRcvX4WrNZ+6hM7PmHT6sookYzubNQoQ3ktK1pY
-         xTw4GTOGwaYZ8kq+NOR3x6PYQbKx+yrUPWAYx3KkHgGIZ7RjvdJZyOulW91G8eSmxEAY
-         gypg==
+        d=google.com; s=20221208; t=1682543671; x=1685135671;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZCvp8pUVI07oEaXJ+FzXpKAvYhAmenzEnZhYmuK4QQg=;
+        b=jO3e8LTixPcgBRq6OVthyHXBVYvdDZ8onYYOnKR8SFiZgYHIe72OF5IGJgKiqf212R
+         6IRC8yFdllSV8ZQW/pWlhGipLG06EJ9W8qdzATHiBRImpmfDDA9JzedkjJiMeMdfn5Pl
+         TaGypfiEHIDTfgU5Zjt3Wkk6VzyxMPuRF8Ywz4gYAETIYFTPh6J/MD5/8jDgEWOr2myR
+         Daxuw9Wzhx55EW+ePw5JoP+a8DTiMGvQG4X9Sc77FxlrtkEsTCv17tsaDSX0Z01QcsCL
+         +pwj7GEZ8q1SFr69pq61xX4P8IKWGI23KA/5Mzj2xY0nfTtYjOBL+C0vVQjFiIdtVrZL
+         o0Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682543549; x=1685135549;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7WfJD+82y6CVZ+x8XPR8dEsKccj5QVR3prsHbdOU2kc=;
-        b=JTThHNesIlFxQyFT12PzqSMD/88XPUL0aLU3V5bJsbAEuoy1cRn50xShkm555vR0uh
-         byTi0UZFaI+utQ9rRHWIiaiT1DZMVp7MqSx0KJ9JCOm8/L+TwxzAIU31WhXQi9Qc2X4v
-         ymgKQ0FdOGXq1lRLkQu3TdKfJZOkb9pPcPaPBkrM7xW6Lvdpg8u9OfAKRVwrYSNhxHBm
-         61lv99Ik09kiw2YeqvC29jnRW6aTN8f/Zyaa42m4ZVhgdhmovpaBlXKnCDYU/rSSOvk1
-         CRGAZGNPUek5HHq2MYSgZMAaDVHBsJcxKJRnZvM2RcAD1Mt6+Gw62kkr8muPbEbEjr9I
-         aQ1w==
-X-Gm-Message-State: AAQBX9cKqndCSWrtrvLRnHEwT4eb4MKZvKug/9PkwtTBiOnMm0+EfRfY
-        XiXeehzj2EWx61N4hmbOo6f6GNXVKB0=
-X-Google-Smtp-Source: AKy350Z/qJ26sSc5rfAiODsHOG6XLzCxrxjPXLkLCC1NNZGbGFJR4I1mtk1UfxzP5jwxTa+QpnCZMw==
-X-Received: by 2002:a05:6a00:2d20:b0:634:7ba3:d142 with SMTP id fa32-20020a056a002d2000b006347ba3d142mr32029179pfb.10.1682543549153;
-        Wed, 26 Apr 2023 14:12:29 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id c14-20020a62f84e000000b0063b6d68f4bcsm11616265pfm.41.2023.04.26.14.12.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Apr 2023 14:12:28 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Adam Majer <adamm@zombino.com>
-Subject: Re: [PATCH 0/2] Fix empty SHA-256 clones with v0 and v1
-References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
-        <20230426205324.326501-1-sandals@crustytoothpaste.net>
-Date:   Wed, 26 Apr 2023 14:12:28 -0700
-In-Reply-To: <20230426205324.326501-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 26 Apr 2023 20:53:22 +0000")
-Message-ID: <xmqqsfcmqrer.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20221208; t=1682543671; x=1685135671;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZCvp8pUVI07oEaXJ+FzXpKAvYhAmenzEnZhYmuK4QQg=;
+        b=bFLjzn5r9ewBN1MDuikMuOVmNu3w3DFPgz5VE4lbPpDoG7K3jCdjjHtXPABFJQ0QaN
+         39HIQr+uM95GDNdFESLAfd8m1r6NXhqFeo1CZCjXa2ux9ByMld4X18GAJcHOv87sWdGo
+         rplu2GYQOFVChdlu+zBenZo7pPxFWLsVhqzRzB33tJmRNcCDJzNzngjZ9Qs/dGpoJC1B
+         f5z1PUoilqRgzFO5QNMjALPq0N/NV5ZNyEHpFwHLq7c6bRH4ixN3U7JZ1Y3wigTQ93Ms
+         VsqWrX2ck60SsthUPgHaeayWiMPLsIiyHAQizkMAHxxKvYlLF0UP5cAa+aZB/gEEQqyx
+         URqQ==
+X-Gm-Message-State: AAQBX9fJgvzLvHmu5QSV/PukX0FvGI669SDnJoNSeRl/ddNNP3LzOpqI
+        fauI4K4rZ0aBGXGxhLh1nFn+pLXJ/ZmRHw==
+X-Google-Smtp-Source: AKy350ZsiA6xrk+oQINJuLItxD3X0vZuEx3CdqNWPKDjPhWqox/AHBh9KIhPBDP8Q6FXlrLuzD/GEaJXc3dVNw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a81:aa4b:0:b0:54f:b95f:8999 with SMTP id
+ z11-20020a81aa4b000000b0054fb95f8999mr10401695ywk.6.1682543671365; Wed, 26
+ Apr 2023 14:14:31 -0700 (PDT)
+Date:   Wed, 26 Apr 2023 14:14:20 -0700
+In-Reply-To: <kl6l8reeo4no.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover.1681906948.git.ps@pks.im> <kl6l8reeo4no.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <kl6lttx2mjmb.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 0/8] fetch: introduce machine-parseable output
+From:   Glen Choo <chooglen@google.com>
+To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Glen Choo <chooglen@google.com> writes:
 
-> The second introduces some backwards compatibility to avoid regressing
-> the old behaviour of using GIT_DEFAULT_HASH to initialize the proper
-> hash in this case.  We add a flag to see if we explicitly obtained a
-> hash algorithm from the remote side, and if not, we honour
-> GIT_DEFAULT_HASH, as before.
+> Hi Patrick!
+>
+> Thanks for the pleasant read! I thought this was a great topic for
+> Review Club. It's too bad that we missed you, but we post all relevant
+> feedback here anyway.
+>
+> Nevertheless, if you'd like to see the meeting notes, you can find them
+> at:
+>
+> https://docs.google.com/document/d/14L8BAumGTpsXpjDY8VzZ4rRtpAjuGrFSRqn3stCuS_w/edit
 
-I am fairly negative on this half of the series.  The first one is
-excellent, though.
-
-THanks.
+It seems like Jacob Keller and I have mostly the same comments (since we
+did both go to the same Review Club, after all :)), so feel free to
+respond to only Jacob's messages and ignore mine (where the messages
+overlap) - I'll catch up on those conversations.
