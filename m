@@ -2,110 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE83C7618E
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 03:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D766BC77B60
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 04:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239061AbjDZDyd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Apr 2023 23:54:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57550 "EHLO
+        id S239364AbjDZEFw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 00:05:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233352AbjDZDyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2023 23:54:32 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77D510FE
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 20:54:31 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4ec817735a7so6803634e87.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2023 20:54:31 -0700 (PDT)
+        with ESMTP id S229537AbjDZEFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 00:05:50 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7F01985
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 21:05:47 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-63b4a64c72bso5259815b3a.0
+        for <git@vger.kernel.org>; Tue, 25 Apr 2023 21:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682481270; x=1685073270;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=bytedance.com; s=google; t=1682481947; x=1685073947;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DRjQhMRZl3uteCw65gH5zuzOr9ImlCxqoG2vU6XKntE=;
-        b=oFMSrEUMjaQV9GQm0y1xF/0FdxkiU+6zphBDg54DgW2YocbHVIiStjkHh8SLGPv5G2
-         fROtyPZKz+3H/kogMV6E72QCM0TVBgIJvRgR9fNsGL6zE0sUofDe4YNpwxdN7soUWZz7
-         YX++lcj5eTp0PxbU8q0Ce3RXrqOSOAkE4NxnHIYe7E3CGkycH5uuF/UsdaSuoO4e1HWr
-         fRDAWb3WJ4QrTqHuznoCIh11qmRDyQjdLAy4NeKO0wDjul0C39za2pXYILKW+LoUcKXx
-         oXO9jW2iWhQnowOmwbjoecJU+Nw3iFW7kD7XGcay7pq0UrrCr2pV9zO1e4/LSspEebRb
-         LuUQ==
+        bh=bnaYDMTK4V5iwApsUA/FpcvfVX4Opcq4WBYYrQ9kyGY=;
+        b=gwlVZpqV75JYU3GZPyIh15Fvw/F9CLdkPekzDyR/QSv+k9A7VUM5Qc+oyNnnAasJwo
+         kzwZwy8vPYOJmV8Rizq2lAVFI95KFCdiQQiqRji7INLWDnDKz7aTvBLQnCETAr+ahLcN
+         hajeWFCdI37mpqlr5L31+dEMzJCm8qL4VdfHHvj5bTO9VxtYXsiS5rqWk385JKDVu81F
+         A4i7Z65EJPY3v2Xqt8f3ISCckQFVM1G0oZJld5MBr9lJleBwXldlOd+fOY8wwua2yL5n
+         qWyJD/zdJbiLFSCHSKy0PRc515GPZ0uOcXFbd0rtqRe1zXh77sJQQ7xkrnW89NNi5CxE
+         CTqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682481270; x=1685073270;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1682481947; x=1685073947;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DRjQhMRZl3uteCw65gH5zuzOr9ImlCxqoG2vU6XKntE=;
-        b=dA16TA4EO+aEVLSkvzBy90uK2O9tXYdjTan9U+yfoQ6c19G7fYbExtYfZABlkxsoZC
-         f1Tan7k6QbSevaUafFRq+4/L1rzwZD7jMlcMosk6VSUQeOEIFl2L79vwVONEh4EstcZW
-         iOuU28L9DJQmdNxOQePP8gke11nRYtAtEgh9GECpdlQtsgsskDwUcfYjjDwD1xZkdqJD
-         M4zems5RMsGKf4A6Bqo/Xvu53sECT7dfBz57kfIbuIvXqHSV1zSHxHlO878VlRksh7o0
-         xw0t2Kca6S1QErTNi+orKb9nnU1BHQUlcIXExVtUlpe2nNvFxYxS/tAyr3S8kenQC/k5
-         Mdqg==
-X-Gm-Message-State: AAQBX9fX0i3hSV1WzDpcE4vXZc9aeW26CyVZtrpKGDP21wNLF4WFNgqn
-        8kVOfXVA+NpmQbS7KL2IZ6ZIzZt4Mayq+a0iksiA9fAR
-X-Google-Smtp-Source: AKy350YDKA4kvX3T1ysZ7R9oLivAE1XCzBWh9guogxz/PYYOCsysNYG5ujbB7DvzFOqSdA3nYS7q6pnSUuEIa97t4rU=
-X-Received: by 2002:a19:ae0a:0:b0:4ea:fabb:4db1 with SMTP id
- f10-20020a19ae0a000000b004eafabb4db1mr5007441lfc.1.1682481269715; Tue, 25 Apr
- 2023 20:54:29 -0700 (PDT)
+        bh=bnaYDMTK4V5iwApsUA/FpcvfVX4Opcq4WBYYrQ9kyGY=;
+        b=WFXvFcyg/wNohnneD0oNCJaSJvy6TEV8olfUP0eFNIm0DuWFCxnLpTG7tBoyOzvAz6
+         njDjDTmY6vAj3X/lBhM0xo9RKT2ZGgIqE3zRWKvxWGhJ9HswUIF/JJwHxFJdXmfN74pL
+         rN2oKipj8C0SZrG/H8ADWojSVrK5851WUIDNQbmLegpiVGLNpyEGFp67UGcrI1aiUAZY
+         hhLB1vCDSi0HGOK8faB/ev/yvIMbXj3sEYBcHH5TKx6Ra3sEecwBK8HqSdzehByP8dsc
+         IwDFTibzm7ES/1mNtzuo8ltVd8eE4zs/WBcCH9KDcsanerHsvVAVfwjx92cmWTRqNegz
+         YDqA==
+X-Gm-Message-State: AAQBX9dfm3iJGSYxSz7eryyb7pjdFjZjrhbgMpMFTu9n/8Lg6u4pmViC
+        +dCFrqcg+grMVzlIhRnSClgAHr3lTD2DuZCjpug=
+X-Google-Smtp-Source: AKy350a+GVa6fKtPeNkaEUh6oc3y4kgIV8udOLEhpRu4HkFQJXclYwNUETO3pV8m2CChpO+SaHRg8Q==
+X-Received: by 2002:a05:6a20:548e:b0:f2:5c65:b767 with SMTP id i14-20020a056a20548e00b000f25c65b767mr23274506pzk.42.1682481947089;
+        Tue, 25 Apr 2023 21:05:47 -0700 (PDT)
+Received: from JMHNXMC7VH.bytedance.net ([139.177.225.238])
+        by smtp.gmail.com with ESMTPSA id t1-20020a056a0021c100b005d72e54a7e1sm10038156pfj.215.2023.04.25.21.05.44
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 25 Apr 2023 21:05:46 -0700 (PDT)
+From:   Han Xin <hanxin.hx@bytedance.com>
+To:     git@vger.kernel.org
+Cc:     Han Xin <hanxin.hx@bytedance.com>, xingxin.xx@bytedance.com,
+        jonathantanmy@google.com, derrickstolee@github.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 2/2] negotiator/skipping: fix some problems in mark_common()
+Date:   Wed, 26 Apr 2023 12:05:23 +0800
+Message-Id: <abbb1bc0b35d03e13249ec2e5bb8229a0a123685.1682473718.git.hanxin.hx@bytedance.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <cover.1682473718.git.hanxin.hx@bytedance.com>
+References: <20230424022318.80469-1-hanxin.hx@bytedance.com> <cover.1682473718.git.hanxin.hx@bytedance.com>
 MIME-Version: 1.0
-References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
- <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com> <d95f97f5e90da40b285aa8fd678efcff0ae11033.1682194651.git.gitgitgadget@gmail.com>
- <kl6ly1mh865x.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6ly1mh865x.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 25 Apr 2023 20:54:17 -0700
-Message-ID: <CABPp-BEWS75TrsfUQUP9t4_2B4FTDbM2FamqTgvVj8WpxUgSYA@mail.gmail.com>
-Subject: Re: [PATCH v2 13/22] hash-ll.h: split out of hash.h to remove
- dependency on repository.h
-To:     Glen Choo <chooglen@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 11:51=E2=80=AFAM Glen Choo <chooglen@google.com> wr=
-ote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >                                 Move the parts of hash.h that do not
-> > depend upon repository.h into a new file hash-ll.h (the "low level"
-> > parts of hash.h), and adjust other files to use this new header where
-> > the convenience inline functions aren't needed.
->
-> Suggestion: To maintain this property, it might be helpful to capture
-> the rules of hash-ll.h vs hash.h in a top-level comment.
->
-> > diff --git a/hash-ll.h b/hash-ll.h
-> > new file mode 100644
-> > index 00000000000..80509251370
-> > --- /dev/null
-> > +++ b/hash-ll.h
-> > +const struct object_id *null_oid(void);
-> > [...]
-> > +const char *empty_tree_oid_hex(void);
-> > +const char *empty_blob_oid_hex(void);
->
-> hash-ll.h doesn't depend on repository.h, but these functions' bodies
-> use the_hash_algo. Does it matter?
+Fixed the following problems:
 
-That's a good point.  I think eventually moving these functions from
-hash-ll.h to hash.h on this basis makes sense.  But I kind of view
-this series (and its predecessors) as focusing on cleaning up header
-dependencies, with the idea that hopefully we'd go through and do
-further cleanup of dependencies of C files that would likely result in
-further changes to some of the headers.  I suspect this isn't the only
-change we'd need to make for that kind of consistency, which might
-lengthen this already sizable series, and I've probably missed a few
-similar cases in my previous series as well.
+1. prio_queue() should be used with clear_prio_queue(), otherwise there
+   will be a memory leak.
+2. It does not do duplicate protection before prio_queue_put().
+   (The COMMON bit would work here, too.)
+3. When it translated from recursive to iterative it kept "return"
+   statements that should probably be "continue" statements.
+4. It does not attempt to parse commits, and instead returns
+   immediately when finding an unparsed commit. This is something
+   that it did in its original version, so maybe it is by design,
+   but it doesn't match the doc comment for the method.
 
-> Moving the functions to hash.h requires changing 8 files to #include
-> "hash.h", all of which seem to be because they were getting hash-ll.h
-> indirectly via object-name.h.
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
+---
+ negotiator/skipping.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Yeah, seems like a reasonable further change.  Are you okay with that
-being in a future series, or do you think it should be included in
-this one?
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index c7d6ab39bc..b06dcb197b 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -85,7 +85,7 @@ static int clear_marks(const char *refname, const struct object_id *oid,
+ }
+ 
+ /*
+- * Mark this SEEN commit and all its SEEN ancestors as COMMON.
++ * Mark this SEEN commit and all its parsed SEEN ancestors as COMMON.
+  */
+ static void mark_common(struct data *data, struct commit *seen_commit)
+ {
+@@ -96,18 +96,20 @@ static void mark_common(struct data *data, struct commit *seen_commit)
+ 	while ((c = prio_queue_get(&queue))) {
+ 		struct commit_list *p;
+ 		if (c->object.flags & COMMON)
+-			return;
++			continue;
+ 		c->object.flags |= COMMON;
+ 		if (!(c->object.flags & POPPED))
+ 			data->non_common_revs--;
+ 
+ 		if (!c->object.parsed)
+-			return;
++			continue;
+ 		for (p = c->parents; p; p = p->next) {
+-			if (p->item->object.flags & SEEN)
++			if (p->item->object.flags & SEEN || p->item->object.flags & COMMON)
+ 				prio_queue_put(&queue, p->item);
+ 		}
+ 	}
++
++	clear_prio_queue(&queue);
+ }
+ 
+ /*
+-- 
+2.40.0
+
