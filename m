@@ -2,124 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0467CC7618E
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 13:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A28FC7618E
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 14:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240795AbjDZNTY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 09:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
+        id S241058AbjDZOG1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 10:06:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241118AbjDZNTW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 09:19:22 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 837C41702
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 06:19:21 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 46e09a7af769-6a60630574aso5636623a34.1
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 06:19:21 -0700 (PDT)
+        with ESMTP id S239947AbjDZOG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 10:06:26 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D006591
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 07:06:25 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f178da219bso71405065e9.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 07:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682515161; x=1685107161;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tsv9vHp7tXVJuVJ4C8MXtoB7xgW7xhQOyEC05wQtYa8=;
-        b=GH9ESQfVojH6UcoqDSngD1UH5oxSNthUA726QyrEfjc/c1tQptQEl0eL5w7ToCBuZ1
-         FHtNPGCTnwaCJaKibAYIk3gqW3KdjpHrkJ5VimbgiVYFeHqCSaCuZVjwTDefl5wIllnA
-         2bbb97387Z0+WGVt3wmTjawCX8U5KCk+MU1YA5YvQNtlZtWpT1q5MVQjeUvkKwfW0SrA
-         +h0e0H9bRDWy7IDL7b6tLIq9/rAY31RrvxX9KzR37YBSlq7owExV5LHtRoLazKGGox3d
-         7JdAvCxZIlfvYv+YhBuLl6Rd100otCEgFEhdlBjLtgv/W4eD64+fnnbXKuFsWQVOCQIQ
-         U7og==
+        d=gmail.com; s=20221208; t=1682517983; x=1685109983;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yH5ZNHgWEjoXgRsdTUrNQ2jp5x6U24OKipDQZTVEvfQ=;
+        b=heXoy+uycfGuLGkL0QWqevsCjh6bb27W3dhWMqasjHWm12VE6pphdzttsBVmZ4lB3Z
+         bGy8ccY2d+7X98Z9OWgtuvHczFLTS+AIFksskpguQTYxHCgUaUZhlnXJEueOErCei/nZ
+         DWOJs35pfl2CsUwu5htBWxp0IldCWAF+Q8edFDZAh1Y5X3AhB2+4CMIxwxP/3z/9VYs8
+         Batm3sG0M02eO6OdjNE0/XSNjmtFWKR21Tx+aDIHfbq1IvVTSD0UXOGBCCRXxP9qlAXU
+         jM1vTx8sPwwpo4IwvhwN71+s8NSxuw/uTq5x9jE5kMfjcnm1ki1k7Ch+sm1rKiW3pw4E
+         EzCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682515161; x=1685107161;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Tsv9vHp7tXVJuVJ4C8MXtoB7xgW7xhQOyEC05wQtYa8=;
-        b=jqnR7/RC7r2WnuFIfBNUQXA1U9ZmghCZAlgzbRD2Vv3jIJSwIcFpAjDIoRDqAAS96K
-         YGlBmdkq8YvND/F6J0N4URTDEAAshCgljJcqBx3wnhj22Hf+br7Q3u0m5pBwI5d8SVtE
-         oapYdA8Y49u5ggnhLYdt0kr6TtLhdzeA+sSFF6vzby95TYH4yqLymvPOUQ6n4CEPSAPI
-         V3OoWg6BsMQx8eFTmTpBtPytZMeeXd8C7BaQ/RPKKwOdPMiMXtCfou4auPPsJzsh9nEt
-         HRB3HCZ/oHbLtINOMCOrN/mI8mcNlnjU+IIc5Bwydz+VZPxaINGNzzeDk/1Tu3altBrF
-         0Ovg==
-X-Gm-Message-State: AAQBX9eUCWM8j7+Mh02SDSHJWgo5yp/l8emAbRMbwbXTR4Aqts6aOiZj
-        DsDIhWPNzM0Lk/qKR6jovKPftpRIiwHNuAUFcomjEjUP
-X-Google-Smtp-Source: AKy350Z5069jRHxTThlGhWPqNeHYDN3cAxyEJJ00Q+C+DoIhdQ13hmfdat7rsaYkkBf1X8d31T/nyY5iae4TBEhBLHY=
-X-Received: by 2002:a05:6870:700f:b0:180:b716:9825 with SMTP id
- u15-20020a056870700f00b00180b7169825mr12816602oae.57.1682515160792; Wed, 26
- Apr 2023 06:19:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682517983; x=1685109983;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yH5ZNHgWEjoXgRsdTUrNQ2jp5x6U24OKipDQZTVEvfQ=;
+        b=lVeSCcvh9QV7sho0oFdzPUtPjwD91TogbbNKu1bS98JbHQy7sy5CjKqkKjV+G0la0C
+         XjUe1zA0jcmaw8NKP7FOy5RG+U2bxw2B0AxhBTxgMQe9aR+1OX5hrN1l4Ihm1UrrqCn8
+         Fie7THeDnilsZun9BF7SLzzO5scEnBzgjCpEnG6/EaSMdiN8KkOzxxyBh5VywVaYAZdW
+         xjqc3bC6Ciw2HU7iywZVViJ8swyvMFDkwDF4ilM63ntTCmM0yfwn6fae8si7A3Prvtqb
+         NdsvZd7IQoxSp23WjCn1C7mhjXBoHs/l4ENYWIc+utLhvbXaf8x/IdLa2TXOQeNQIqe0
+         /Slw==
+X-Gm-Message-State: AAQBX9dA+RxdDvSxfCGze4H7Fkela+kSKCqImxSJXnlA+QtgG/siwKIl
+        LBNI1jiwi9mcEMfjAJxXA0c=
+X-Google-Smtp-Source: AKy350YAKXGnbm8dIC5QQFnL7JnNm1ULUTdAy6qrJAYmeg3WJVDmYAjh3XdqJpfgnL+VWOW39oVh4w==
+X-Received: by 2002:adf:e3ca:0:b0:2ef:ab51:15c2 with SMTP id k10-20020adfe3ca000000b002efab5115c2mr15297973wrm.15.1682517983374;
+        Wed, 26 Apr 2023 07:06:23 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id i3-20020adff303000000b002f4cf72fce6sm16027646wro.46.2023.04.26.07.06.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Apr 2023 07:06:22 -0700 (PDT)
+Message-ID: <a6ce9393-331c-3ee0-648b-182614a7d275@gmail.com>
+Date:   Wed, 26 Apr 2023 15:06:16 +0100
 MIME-Version: 1.0
-References: <20230421055641.550199-1-alexhenrie24@gmail.com> <20230421182556.xxd4vrcksr6634ao@tb-raspi4>
-In-Reply-To: <20230421182556.xxd4vrcksr6634ao@tb-raspi4>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Wed, 26 Apr 2023 07:18:44 -0600
-Message-ID: <CAMMLpeRWXCFxk1wCjLPizdgJLG8n0Hy0o+Gm849Ln85cZkkH8w@mail.gmail.com>
-Subject: Re: [PATCH] docs: clarify how the text and text=auto attributes are different
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org, eyvind.bernhardsen@gmail.com,
-        gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 3/4] parse_commit(): handle broken whitespace-only
+ timestamp
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        Thomas Bock <bockthom@cs.uni-saarland.de>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <20230425055244.GA4014505@coredump.intra.peff.net>
+ <20230425055458.GC4015649@coredump.intra.peff.net>
+ <06bc5530-55b0-7299-a6e6-fde1deab6605@gmail.com> <xmqqttx43q08.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqttx43q08.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2023 at 12:26=E2=80=AFPM Torsten B=C3=B6gershausen <tboegi@=
-web.de> wrote:
+On 25/04/2023 17:06, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> This probably doesn't matter in practice but we define our own
+>> isspace() that does not treat '\v' and '\f' as whitespace. However
+>> parse_timestamp() (which is just strtoumax()) uses the standard
+>> library's isspace() which does treat those characters as whitespace
+>> and is locale dependent. This means we can potentially stop at a
+>> character that parse_timestamp() treats as whitespace and if there are
+>> no digits after it we'll still walk past the end of the line. Using
+>> Rene's suggestion of testing the character with isdigit() would fix
+>> that. It would also avoid parsing negative timestamps as positive
+>> numbers 
 
-> Using
-> *.txt text
-> in .gitattributes
-> will convert CRLF into LF in the repo at the next git commit/git add
->
-> When you create a file with CRLF (no atttibutes), commit it into the repo=
-,
-> and later add the attribute "text", the file may be reported as modified.
-> Not always. A `touch file.txt` typically asks Git to re-investigate thing=
-s,
-> and it may show up as modified.
-> After a `git clone` it may be shown as modified or not.
-> End of side-note.
+>> and reject any timestamps that begin with a locale dependent
+>> digit.
 
-Thank you very much for pointing that out. I had assumed that "text"
-and "text=3Dauto" behaved the same for text files, but they do not:
-"text" normalizes line endings even if the file is already in Git.
-That means that my proposed text is not correct, and I will have to
-change it similarly to how you suggested below.
+Sorry, that bit is not correct, I've since checked the C standard and I 
+think strtoul() and friends expect ascii digits (isdigit() and 
+isxdigit() are also locale independent unlike isspace(), isalpha() etc.)
 
-> >  Set to string value "auto"::
-> >
-> > -     When `text` is set to "auto", the path is marked for automatic
-> > -     end-of-line conversion.  If Git decides that the content is
-> > -     text, its line endings are converted to LF on checkin.
-> > -     When the file has been committed with CRLF, no conversion is done=
-.
-> > +     When text is set to "auto", Git decides by itself whether the fil=
-e
-> > +     is text or binary.  If it is text, line endings are converted as
-> > +     described above.  If it is binary, they are not.
->
-> Here we need to have the lines from above:
->
-> When text is set to "auto", Git decides by itself whether the file
-> is text or binary.  If it is text, line endings are converted as
-> described above.  If it is binary, they are not.
-> However, if the file was already in Git with CRLF endings, no
-> conversion is done.
+> A very interesting observation.  I wonder if a curious person can
+> craft a malformed timestamp with "hash-object --literally" to do
+> more than DoS themselves?
+> 
+> We are not going to put anything other than [ 0-9+-] after the '>'
+> we scan for, and making sure '>' is followed by SP and then [0-9]
+> would be sufficient to ensure strtoumax() to stop before the '\n'
+> but does not ensure that the "signal a bad timestamp with 0"
+> happens.  Perhaps that would be sufficient.  I dunno.
+> 
+>> I'm not familiar with this code, but would it be worth changing
+>> parse_timestamp() to stop parsing if it sees a newline?
+> 
+> Meaning replace or write our own strtoumax() equivalent?
 
-Yes, the note about what happens if the file is already in Git with
-CRLF endings applies specifically to text=3Dauto, so it needs to be in
-the text=3Dauto section. The documentation of the eol attribute actually
-explains it more clearly:
+I was thinking of a wrapper around strtoumax() that skipped the leading 
+whitespace itself and returned 0 if it saw '\n' or the first 
+non-whitespace character was not a digit. It would help other callers 
+avoid the problem with missing timestamps that is being fixed in this 
+series. I was surprised to see that callers are expected to pass a base 
+to parse_timestamp(). All of them seem to pass "10" apart from a caller 
+in upload-pack.c that passes "0" when parsing the argument to 
+"deepen-since" - do we really want to support octal and hexadecimal 
+timestamps there?.
 
-"Note that setting this attribute on paths which are in the index with
-CRLF line endings may make the paths to be considered dirty unless
-text=3Dauto is set. Adding the path to the index again will normalize
-the line endings in the index."
+Best Wishes
 
-I think that explanation needs to be moved from the eol attribute
-documentation to the text attribute documentation and edited for
-clarity. I will send a v2 that revises the documentation of both
-attributes, taking into account your and Junio's feedback.
-
-Thanks again,
-
--Alex
+Phillip
