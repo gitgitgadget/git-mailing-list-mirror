@@ -2,144 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A4E9C77B60
-	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 11:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EB47C77B60
+	for <git@archiver.kernel.org>; Wed, 26 Apr 2023 11:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240466AbjDZLNV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Apr 2023 07:13:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57554 "EHLO
+        id S240233AbjDZLZM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Apr 2023 07:25:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230023AbjDZLNU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2023 07:13:20 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7A249D5
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:13:19 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-54fe0146b01so83023737b3.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:13:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1682507597; x=1685099597;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3sutbFG/x/HHpFGaR7jTUO54eIYQ8r1aTX3NeCdTNlo=;
-        b=hd1DqsonBeuYP6MrQ0Z54RkVDZOtEfIxkO2rJt9f54FdVNAQvCUwhisW6m6YYFJM4g
-         /kdvKxg0u1zFHASKCTrA3mlJcLzIEfyq24SRBLxJLb3eK8xgxKBdmys5xMTbJcOG/xA8
-         Qhjniy9PhybzpUE/maA7XUYFJljLc2i95z60XuOEuiKpImHFG/4WdnDtpqTdryIlY4Ch
-         BqQEjxC7lYZECWujF+n4uzthR2SlvJHUv6ViYHLcWsL5nM2WYVO00Eke0CnNWADfXV/n
-         F2h00AmG+kvblRfVZq+GfpvHQhqJhrICTRmbaLDPRm6erT4YY1C0725TQB7GOKz05K8g
-         UISw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682507597; x=1685099597;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3sutbFG/x/HHpFGaR7jTUO54eIYQ8r1aTX3NeCdTNlo=;
-        b=Z4Wl9C4TfYIUvnGo3HpZ/KSd7cMqvw3eVg6vnMsS7Xu/4fiQFWC3RT/oO1kKHiX5Xb
-         urL+Ij8v/ZwvJoiodhjTiVNdLA7ciAyJi/G3z2M+GtWDiMBjOgh/UQox/CwWr5Cg51wh
-         RmPU6vn28ekYSRI6ZPT1vEKMNJGDmJBe8r5pyif5U/WBVVHqxiFhvd08HsqKqyWfmqOb
-         Dp/SpeWUDoR4xQFT4XKHQi/lcVndHwrJM2838FmyQchjCxNRsRiM2T/uFg9hGizeQ7Tc
-         Y77wbnD//0RfWABdKz+cyoDDbbJJtP87CK7FwQo3/lhgDOkj8iVEHEWvD+c1i1rpXimB
-         zMtA==
-X-Gm-Message-State: AAQBX9ewvFakEsZFgA5yL3aZtQnQ799RDD5DgAPbeV82xX1XH+/gOIJB
-        RIZBAEyseLuabwiA9uu1SRP8
-X-Google-Smtp-Source: AKy350ZKZXRZDjey0TpIjih6w9AB0jmNBWAhT250a2OvEkGlLuBUNqHWdtTD4z3Z8L4U98R1NJCg/A==
-X-Received: by 2002:a0d:ea48:0:b0:54f:8d75:372c with SMTP id t69-20020a0dea48000000b0054f8d75372cmr12276154ywe.33.1682507597174;
-        Wed, 26 Apr 2023 04:13:17 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:8842:abce:33e9:20d2? ([2600:1700:e72:80a0:8842:abce:33e9:20d2])
-        by smtp.gmail.com with ESMTPSA id y68-20020a0def47000000b00545dc7c4a9esm4123700ywe.111.2023.04.26.04.13.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Apr 2023 04:13:16 -0700 (PDT)
-Message-ID: <bf45bfe7-4a29-38d6-b8d7-811581aec82b@github.com>
-Date:   Wed, 26 Apr 2023 07:13:15 -0400
+        with ESMTP id S240424AbjDZLZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2023 07:25:11 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA311988
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 04:25:10 -0700 (PDT)
+Received: (qmail 6683 invoked by uid 109); 26 Apr 2023 11:25:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Apr 2023 11:25:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13830 invoked by uid 111); 26 Apr 2023 11:25:08 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Apr 2023 07:25:08 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 26 Apr 2023 07:25:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Adam Majer <adamm@zombino.com>,
+        git@vger.kernel.org
+Subject: Re: git clone of empty repositories doesn't preserve hash
+Message-ID: <20230426112508.GB130148@coredump.intra.peff.net>
+References: <e7a8957e-6251-39f1-5109-87d4dd382e81@zombino.com>
+ <xmqqr0syw3pe.fsf@gitster.g>
+ <d04c430e-b609-b0a1-fd0f-0f3734d5c3b1@zombino.com>
+ <20230405200153.GA525125@coredump.intra.peff.net>
+ <xmqqa5zmukp5.fsf@gitster.g>
+ <xmqq355euj2i.fsf@gitster.g>
+ <ZEhHsJh20gtiDBd9@tapette.crustytoothpaste.net>
+ <xmqqcz3ry2sw.fsf@gitster.g>
+ <ZEhuMML6n8F+cNLg@tapette.crustytoothpaste.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v2 1/2] negotiator/default: avoid stack overflow
-Content-Language: en-US
-To:     Han Xin <hanxin.hx@bytedance.com>, git@vger.kernel.org
-Cc:     xingxin.xx@bytedance.com, jonathantanmy@google.com,
-        Junio C Hamano <gitster@pobox.com>
-References: <20230424022318.80469-1-hanxin.hx@bytedance.com>
- <cover.1682473718.git.hanxin.hx@bytedance.com>
- <935be72eb92cd2eda7aff43c8cc2306b78b2a146.1682473718.git.hanxin.hx@bytedance.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <935be72eb92cd2eda7aff43c8cc2306b78b2a146.1682473718.git.hanxin.hx@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZEhuMML6n8F+cNLg@tapette.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/26/2023 12:05 AM, Han Xin wrote:
-> mark_common() in negotiator/default.c may overflow the stack due to
-> recursive function calls. Avoid this by instead recursing using a
-> heap-allocated data structure.
+On Wed, Apr 26, 2023 at 12:20:00AM +0000, brian m. carlson wrote:
+
+> In my case, the clone is over HTTP, so this may not be the ideal way to
+> reproduce it and it may need a better testcase, but it does bisect to
+> the patch above and it is new in master (and doesn't reproduce in
+> 2.40.0).  Note that in our case in the Git LFS testsuite, we're using
+> GIT_DEFAULT_HASH=sha256.
 > 
-> This is the same case as [1].
-> 
-> 1. 4654134976f (negotiator/skipping: avoid stack overflow, 2022-10-25)
+> I believe what is happening is that for some reason, the object-format
+> data in v0 and v1 is not being read properly, and so we're now setting
+> it to sha1 whereas before we were reading the value from the default
+> setting of the repository (sha256).
 
-We would typically write this inline, such as:
+I'm having trouble finding any breakage at all. E.g., this test passes:
 
-  This is the same case as 4654134976f (negotiator/skipping: avoid
-  stack overflow, 2022-10-25)
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 0908534f25..95b10288e7 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -704,4 +704,24 @@ test_expect_success 'no empty path components' '
+ 	! grep "//" log
+ '
+ 
++test_expect_success 'v0 clone over http recognizes object-format' '
++	git init --bare --object-format=sha256 \
++		"$HTTPD_DOCUMENT_ROOT_PATH/sha256.git" &&
++
++	# do not test an empty repo. In v0, we have no way for an
++	# empty server to report its object format, so we would
++	# always default to sha1. We could in theory test that
++	# a client who wants to default to sha256 will realize
++	# the other side is sha1, but we have no way to set that local
++	# default. Unlike git-init, git-clone does not support
++	# --object-format, nor GIT_DEFAULT_HASH.
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/sha256.git" --work-tree=. \
++		commit --allow-empty -m foo &&
++
++	git -c protocol.version=0 clone $HTTPD_URL/smart/sha256.git sha256 &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	echo sha256 >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 
-> -	if (commit != NULL && !(commit->object.flags & COMMON)) {
-> -		struct object *o = (struct object *)commit;
-> +	struct prio_queue queue = { NULL };
-> +
-> +	if (!commit || (commit->object.flags & COMMON))
-> +		return;
-> +
-> +	prio_queue_put(&queue, commit);
-> +	if (!ancestors_only) {
-> +		commit->object.flags |= COMMON;
->  
-> -		if (!ancestors_only)
-> -			o->flags |= COMMON;
-> +		if ((commit->object.flags & SEEN) && !(commit->object.flags & POPPED))
-> +			ns->non_common_revs--;
-> +	}
-> +	while ((commit = prio_queue_get(&queue))) {
-> +		struct object *o = (struct object *)commit;
->  
->  		if (!(o->flags & SEEN))
->  			rev_list_push(ns, commit, SEEN);
->  		else {
->  			struct commit_list *parents;
->  
-> -			if (!ancestors_only && !(o->flags & POPPED))
-> -				ns->non_common_revs--;
->  			if (!o->parsed && !dont_parse)
->  				if (repo_parse_commit(the_repository, commit))
-> -					return;
-> +					continue;
->  
->  			for (parents = commit->parents;
->  					parents;
-> -					parents = parents->next)
-> -				mark_common(ns, parents->item, 0,
-> -					    dont_parse);
-> +					parents = parents->next) {
-> +				struct commit *p = parents->item;
-> +
-> +				if (p->object.flags & COMMON)
-> +					continue;
-> +
-> +				p->object.flags |= COMMON;
-> +
-> +				if ((p->object.flags & SEEN) && !(p->object.flags & POPPED))
-> +					ns->non_common_revs--;
-> +
-> +				prio_queue_put(&queue, parents->item);
-> +			}
->  		}
->  	}
-> +
-> +	clear_prio_queue(&queue);
+I'd expect it to break in the empty-repo case, for the reasons given in
+the comment (v0 cannot communicate object-format in an empty repo). But
+that is nothing new.
 
-Thanks for this version. It looks like an identical set of actions
-in the commit walk, but the change from DFS to priority queue is
-a welcome change.
+It sounds from your description that your test is running in a mode
+where the client defaults to sha256 (though I'm not sure how, since we
+explicitly document that GIT_DEFAULT_HASH should not affect clone), and
+then you clone an empty sha256 repository via v0, expecting the result
+to be sha256.
 
--Stolee
+But I think that is a wrong expectation, at least from the
+client's perspective. An empty repository cannot communicate its
+object-format over v0, so the client should assume its v0, and should
+then itself become v0. And that last "should itself become" is what
+Junio's patch fixed.
+
+The first part, "empty repository cannot communicate its object-format
+over v0" is the part is "it's always been broken". We could fix it, but
+I'm not sure if it is worth the trouble (see my other message).
+
+> It very well may be that it's always been broken and this has just made
+> it obvious that it's broken, but I'll look tomorrow and probably send a
+> patch.  I don't think we should revert this change, but I do think we
+> need to fix it before 2.41, since I think it means right now that all
+> clones over protocol v0 and v1 end up with a SHA-1 repository.
+
+Hopefully my guess at what your test is doing is correct, and I didn't
+just leave us off on a tangent. ;)
+
+But if it is, then I think that everything in Git is OK. Non-empty repos
+over v0 work correctly both before and after Junio's patch. Empty ones
+before his patch were erroneously using sha256 if they preferred it
+locally, even when the other side really was sha1. They _also_ were
+using sha256 erroneously when the other side was sha256 but wasn't able
+to report it (because of v0 limitations). Which is counter-intuitive,
+perhaps, but was still the wrong thing for a client to do.
+
+-Peff
