@@ -2,129 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 245F4C77B73
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 11:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A12DC77B73
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 13:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243765AbjD0Lzc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 07:55:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50008 "EHLO
+        id S243654AbjD0NCv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 09:02:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243283AbjD0Lza (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 07:55:30 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7EFB2698
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 04:55:29 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-2fa0ce30ac2so7565603f8f.3
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 04:55:29 -0700 (PDT)
+        with ESMTP id S243467AbjD0NCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 09:02:50 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70EAD30C8
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 06:02:48 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-54fb9384c2dso99647187b3.2
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 06:02:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682596528; x=1685188528;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hz4WWFfSch1o2c+95YQrw9krtdofKx6uSDezy1HVUdg=;
-        b=qQM/paWdfLMhvnRUOmYMZcJsa3cjINQUVDZArn6HLaLs1iWYV0z8UtsEpNLhbk2rf/
-         O1vW+AkbUXzV1tpN2p/Rqc7eiZ87bo6d0qweI/3hBY+qgauWzmE1Pt63f9+3pL9KDPIY
-         csy/Mi+FMvC5j3sgiyJyMT7JBd+t4cF+46u69NptmQ2/3tAXPsV9zXHWUw9weD+sNnmz
-         lhgpELVmqhB26qqZToonQzqdw6+pOztINBAtfw0TYAhlmN4/EomOcaZHOABPZjfLvPZu
-         sUb5ntZJXW7HbthmXuogzeP9/akaM23Uyw2ZHB99Df6J2CyFEpYMHWCPWedEk9gvig49
-         8yKg==
+        d=github.com; s=google; t=1682600567; x=1685192567;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ar5WQhXEtMKIU1rr5HL/RfLmagQcxX9Tg7v9sqMhmLA=;
+        b=d0cNvtntZ/Uo9hZhAulHt3vlW3oF7cQwuA55I/rpe3jxRvufkpgIUPBuQ6INkyGtvu
+         LkBJTCRkM2UvWCpRZh14imndoPdnhOn5HtGc15AyiadVLqYJHCcTuXO94HZJ+xGB/LB2
+         JCk8TSu6hPfX5d3BvE9g2sHGpSM80m7n25+ibCu/rIfsgigF70PtASQy//3m7NMullMf
+         FyIqOiND0agofIik5RGTfjokatqfZbgWY8C3Yk/bLC4exzn99LN6VepJb/kKS+tfS6kF
+         s6qGkTacGbJYKmDBE5N+UBRmlcw7HysCmz0G0rJQT/DClvIvck+gh2E+SDq9V9Pu2E4t
+         rhog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682596528; x=1685188528;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hz4WWFfSch1o2c+95YQrw9krtdofKx6uSDezy1HVUdg=;
-        b=LCQZ0APt9FqHi8J3cAbowZ832YgFZgrSxxAOqr980AkfoFHmgdzFB1cYR7QNy6Jku5
-         lARZ80RZOzdk/qv4u3vkBTii+mawSrXnzolHEadn5HIMogkqrzmE2vc7w7u1Z+Nd0nmy
-         nf9IU1JM3+1y5OaiCpyyTvebWzUVK9X6tB4K7HF6Ah8ItXbQWZfiEYM4g9cH1gp63JGb
-         BGonHGsCbyClEV+dRmRKxTTJnh03AOtXjgyhiwRKyyOOwedMd8TdFkw2xzBKxXJnxVsT
-         NcDC5IVMaCDrtFFsTs/afheEFNwkz+1JCOWS+xqfnFbZRJ9CQy6hA9AJfWgWMmusMlht
-         Iesw==
-X-Gm-Message-State: AC+VfDzhbDiNJR53m+LTxJ6SchMCvGHcOQaDofByvfIKs2w/wxIVSuW6
-        Y2w/SqKvyVhI1yXZBp/LAeQ=
-X-Google-Smtp-Source: ACHHUZ5oRTKyE2CGzyvc66RsRmjSReaKNU/WLxUTYBMCQrWOWLbCaLrbGvDj8z050qGr4+2KyZNnkw==
-X-Received: by 2002:adf:e6d0:0:b0:2f8:ba03:6dec with SMTP id y16-20020adfe6d0000000b002f8ba036decmr1320027wrm.20.1682596528175;
-        Thu, 27 Apr 2023 04:55:28 -0700 (PDT)
-Received: from [192.168.1.195] ([90.255.142.254])
-        by smtp.googlemail.com with ESMTPSA id t10-20020a05600c198a00b003f16932fe7dsm24769677wmq.38.2023.04.27.04.55.27
+        d=1e100.net; s=20221208; t=1682600567; x=1685192567;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ar5WQhXEtMKIU1rr5HL/RfLmagQcxX9Tg7v9sqMhmLA=;
+        b=IN/ve/sfJfH3rEZCgrIai5rynJGiim/KmQ2FC4vLqZqIbHYk8YinwsbcbeRvUFDltQ
+         W3bhi759NeNA+u7tJzVxqlg91uZeV6v7TUywSgQDS7Gg8QeKiwT3tNRtQztt+XYSKzof
+         T86YIQVOx5aGb9/35xnjo413Dk3TcycgHmUSa1fm+99txxeSs3VBeIseanG7ASyhQFCq
+         SCNANh+4TtAq7+xkG1+IfUYr+26XMWgnt7Oy5n4O3TC3cRCrGPfvpFJF4rPwg/Z5kTWu
+         6RAWU2eQLuWbE2Q3mlzDEPyLYEzKjdC08mSM2G1V2Pcdny2Bbmui07LVif3nrWoC9K8N
+         zfGQ==
+X-Gm-Message-State: AC+VfDynTm0l7MkFUkINLVF52PT6+f1C+R/hDZOEziRzQk4+45PMlY8W
+        UcfnERV0RrYpv4Tq2KOnuWDg
+X-Google-Smtp-Source: ACHHUZ5Bs+ji6xzN+1LkB0z28u9C5l3FNETuQnbM/Nl8UvX7OTBJkn/Fsx9xmzGeJ6/Uy6Hmo1ILaw==
+X-Received: by 2002:a81:4885:0:b0:552:a840:9da0 with SMTP id v127-20020a814885000000b00552a8409da0mr1086446ywa.10.1682600567418;
+        Thu, 27 Apr 2023 06:02:47 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:d9b2:b2fc:28d:50f3? ([2600:1700:e72:80a0:d9b2:b2fc:28d:50f3])
+        by smtp.gmail.com with ESMTPSA id c125-20020a0dc183000000b00555d2944284sm4744510ywd.67.2023.04.27.06.02.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Apr 2023 04:55:27 -0700 (PDT)
-Message-ID: <ad4f927f-607a-5391-ce50-a342d09934d6@gmail.com>
-Date:   Thu, 27 Apr 2023 12:55:26 +0100
+        Thu, 27 Apr 2023 06:02:46 -0700 (PDT)
+Message-ID: <7ec7f7b2-3e7a-afb9-7042-a4375970e8d8@github.com>
+Date:   Thu, 27 Apr 2023 09:02:43 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/4] parse_commit(): handle broken whitespace-only
- timestamp
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: Commit graph not using minimal number of columns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Javier Mora <cousteaulecommandant@gmail.com>, git@vger.kernel.org
+References: <CAH1-q0hReZoDWmXo7St10Dk6uc+6ZUQSxqvu1cJ7w3r7ftR9PQ@mail.gmail.com>
+ <xmqq8refy114.fsf@gitster.g>
+ <86188f31-f492-d195-d4d5-b0582906621a@github.com>
+ <xmqq1qk6vd3v.fsf@gitster.g>
+ <eb1c6c62-1081-a9d2-8504-db8bffc6c870@github.com>
+ <xmqqwn1ysfo4.fsf@gitster.g>
 Content-Language: en-US
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Bock <bockthom@cs.uni-saarland.de>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <20230427081330.GA1461786@coredump.intra.peff.net>
- <20230427081715.GA1478467@coredump.intra.peff.net>
- <a04e7950-b74e-d43f-4d19-86def079748c@gmail.com>
-In-Reply-To: <a04e7950-b74e-d43f-4d19-86def079748c@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqwn1ysfo4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/04/2023 11:11, Phillip Wood wrote:
-
->> +    test_commit 1234567890 &&
->> +    git cat-file commit HEAD >commit.orig &&
->> +    sed "s/>.*/>    /" <commit.orig >commit.munge &&
->> +    ws_commit=$(git hash-object --literally -w -t commit 
->> commit.munge) &&
->> +    sed "s/>.*/>   $(printf "\013")/" <commit.orig >commit.munge &&
+On 4/26/2023 1:43 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
 > 
-> Does the shell eat the '\v' when it trims trailing whitespace from the 
-> command substitution (I can't remember the rules off the top of my head)?
-
-Having looked it up, the shell trims newlines but not other whitespace 
-so this should be fine.
-
-Best Wishes
-
-Phillip
-
+>> To adapt this algorithm to a newer, dynamic ordering that cares about
+>> minimizing the rendered graph, I don't think changing the priority
+>> queue comparison would be sufficient. Something deeper would be
+>> required and would be quite messy.
 > 
-> Best Wishes
+> Oh, I wasn't thinking about "graph-friendly" at all.  
 > 
-> Phillip
-> 
->> +    vt_commit=$(git hash-object --literally -w -t commit commit.munge)
->> +'
->> +
->> +test_expect_success '--until treats whitespace date as sentinel' '
->> +    echo $ws_commit >expect &&
->> +    git rev-list --until=1980-01-01 $ws_commit >actual &&
->> +    test_cmp expect actual &&
->> +
->> +    echo $vt_commit >expect &&
->> +    git rev-list --until=1980-01-01 $vt_commit >actual &&
->> +    test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'pretty-printer handles whitespace date' '
->> +    # as with the %ad test above, we will show these as the empty 
->> string,
->> +    # not the 1970 epoch date. This is intentional; see 7d9a281941 
->> (t4212:
->> +    # test bogus timestamps with git-log, 2014-02-24) for more 
->> discussion.
->> +    echo : >expect &&
->> +    git log -1 --format="%at:%ct" $ws_commit >actual &&
->> +    test_cmp expect actual &&
->> +    git log -1 --format="%at:%ct" $vt_commit >actual &&
->> +    test_cmp expect actual
->> +'
->> +
->>   test_done
-> 
+> I was wondering if we replaced --date-order implementation with
+> corrected commit date from the generation number work would give us
+> a better output order that users would expect in general (with or
+> without --graph).
 
+Ah. My mistake.
+
+Corrected commit date should be equal to commit date unless there
+is clock skew causing a commit to be older than its parent, (or
+we have a path of commits with equal commit date) so I don't
+anticipate that being helpful in general.
+
+Thanks,
+-Stolee
