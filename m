@@ -2,112 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F946C77B61
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 22:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB4AC77B61
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 22:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344332AbjD0WuA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 18:50:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53242 "EHLO
+        id S1344355AbjD0WyJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 18:54:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343716AbjD0Wt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 18:49:58 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D282C2129
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:49:55 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-517baf1bc93so8900074a12.0
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:49:55 -0700 (PDT)
+        with ESMTP id S1344354AbjD0WyH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 18:54:07 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D00212F
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:54:05 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1a6ebc66ca4so67533175ad.3
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1682635795; x=1685227795;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yAzrSmVjVWYtQHEh+X60fFHl5srD4bxAw4SdUR24cEc=;
-        b=7uciKQJp0PXYGlTjQSbx+L5cxbgBFuWCnnmpZaU3W/iIgmvVSR3kmu+QJaUJnRuLPH
-         njDK0NdDM5H4r4gE9U/5pGTSfoQkZ+7OkqLffzh97glLp3JM7V8byVG1uucbe7E1lDrm
-         F6vZ0WtPE1HQp5CzdQzYHxruHIB6Jp6gACBr8lpcKgMIrP+uFJvpSnGXONZiU0hqgaLl
-         ucXmNJ8q4+e23/6ODG6mpuW5dzqv9mDdUcyv+MpgzeecPsOS6xImWy9FMc8uAwlV1bZU
-         LI+JbgHEbikZK95v9J6EESb2VOwhTY8vWAbItgNdy2N2Rb7JCMwYktbHXAMgwFF9XCVU
-         BXzQ==
+        d=gmail.com; s=20221208; t=1682636045; x=1685228045;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yub5ttIjtj6fSUprzNJh1P/pSE6GbHwkc/0GSngr5DY=;
+        b=g1EEvVsqPdBUbJeEZBkGT2VW3Mge1kJYR41X9aXIuUd0F/UD4SZvazGMssTIhYcnTP
+         NXD4++JhLqfb5/iAgwh5A4d0MaVkTevA6d4Tkhh5UNEEno91oI0w06pEhXtjDOK+o/XK
+         +RgFXwoh90IWE9SWM/KzgM3hjOU7VFg68bv2ImniKYv7Je181EJ0+3sZOjSoY6ySdbKJ
+         ik9QhaR3G5EoAhw3jba8YIVaIzXsSi7cdz2J/KG1+Qij4i6mFtLm+SKYPVJhnJ4X9YrT
+         cR6nmEEBz8Trn0lthd7WBkXva1ZzCVo6APbM9uQstUqEgboTWV3rpEUnsfsWbKNvMQch
+         CS9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682635795; x=1685227795;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yAzrSmVjVWYtQHEh+X60fFHl5srD4bxAw4SdUR24cEc=;
-        b=A1wzHzzMrRVivMQzTewVOHXnkCmiC8uFZDAqB/E/cRN0ygNUqtaLsmm+6wulqwHCWW
-         gzUggfngoz0rQRl4MLrxlUBjSkBCh0vYRdD2/iEiTpkwmvi/KtxxpChxEQ7U7sWNLwH6
-         oLtkZF62eZg3dzd1KUxO+E/FHpm55zhwHO/6PjsRvAV+63BNKiEPNMFhgLSbDl9VZfdp
-         RZ4R727ZBxXRVDH1iDHgG+OswgKEf9HpHMMdgR//yG7yF/NF/ccsWzAxGEu5IgJEhaCV
-         lDcA2JEdIqlSBlURTMgcwjx+9Fcw9Qf707UE2QCd+L1u/8ifyd8LUK2TYYSqzFjnDj9P
-         6BlA==
-X-Gm-Message-State: AC+VfDyEXYg6+a7kurHleDLhAcX+oIxsg65wWH3NJ5cnheDEF/uc4qOX
-        2ghRkTf3XkndVXfPod+Zdwg91gvGXC+yZg==
-X-Google-Smtp-Source: ACHHUZ5y1BLFgPAi1Co0ulEbdcFUB5dIW/UzabDL7RBkpFtn9uHfZhd3GgAIOYQWpYeg6EgIEbA2fdsh9F/WlQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a63:9144:0:b0:520:ac65:e9db with SMTP id
- l65-20020a639144000000b00520ac65e9dbmr781278pge.8.1682635795318; Thu, 27 Apr
- 2023 15:49:55 -0700 (PDT)
-Date:   Thu, 27 Apr 2023 15:49:53 -0700
-In-Reply-To: <xmqqildis89b.fsf@gitster.g>
-Mime-Version: 1.0
-References: <cover.1681906948.git.ps@pks.im> <6446e3db4702d_cd6129452@chronos.notmuch>
- <ZEekRNuPmObU9Vsq@ncase> <b8225865-7eea-3dcb-247f-10cb22899b2a@intel.com> <xmqqildis89b.fsf@gitster.g>
-Message-ID: <kl6lildhlz3i.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 0/8] fetch: introduce machine-parseable output
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1682636045; x=1685228045;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yub5ttIjtj6fSUprzNJh1P/pSE6GbHwkc/0GSngr5DY=;
+        b=SGKjW6jPPTK0Q01Yj9eAI5g+1l2KQiFHKAzIG9XZElsW0J1bGwmv9LUtnf+4A0m/wC
+         iiKb/EWo6crrU61lyM13ojP3kWo672Jj9yKpK80VxClYLnqkARmtJH6Y0lO4JYxEWFtc
+         URNP1ZNKjcsfbguedX+5z6NoRU+phHp1vl3CQMS/73u+86EPA+uON0u5oFmtsEU7yltn
+         siCJXsQAvVax/YFWXnOnsYp5D/ZT8Zv4CRzhMcDb55fBgTq9A9x9+XvTSpe45fKHYfIw
+         XCKgG7K+NJyOiw2Wpn6zsP1+6jbxGdF28Tr/tfS0gzsewcxWBL+5fnBA0Jy5jwI8SXz/
+         Lidw==
+X-Gm-Message-State: AC+VfDz7qOP58B3RAyQVteGpM6hz0BlX92oXeXZuJPn5WGsjXII6+Vsh
+        UhxEYufFmjoVEM5C/lJnEAQ=
+X-Google-Smtp-Source: ACHHUZ51LXOrt+MhjxW2pdyL3oOjlNwtcTxy6w/6aQaNEQN8nVYlYfSONVPcCzf16E5Bp1sIYU90Ag==
+X-Received: by 2002:a17:903:1cf:b0:1a9:581e:d809 with SMTP id e15-20020a17090301cf00b001a9581ed809mr3707030plh.7.1682636045094;
+        Thu, 27 Apr 2023 15:54:05 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id p9-20020a1709028a8900b0019cb6222691sm12085062plo.133.2023.04.27.15.54.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Apr 2023 15:54:04 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] setup: trace bare repository setups
+References: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
+Date:   Thu, 27 Apr 2023 15:54:04 -0700
+In-Reply-To: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
+        (Josh Steadmon's message of "Thu, 27 Apr 2023 15:32:40 -0700")
+Message-ID: <xmqqttx1gcmr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
->> We had some discussion during review club about this, where the idea of
->> using "--porcelain" came up because many commands use that when
->> switching into a machine readable format.
->>
->> In addition, this format not only changes the output but also moves it
->> from being on stderr to stdout, which is a hint that the intended usage
->> of the command is now a little different.
->
-> A little different from what?  I do not think the answer would be
-> "other program's --porcelain mode", as sending them to stdout would
-> be one of the things that make the output easier for programs to
-> parse, so it does sound like very much in the same spirit as "git
-> status --porcelain" where its output format gets tweaked to be more
-> machine friendly.
->
-> The output with "--porcelain" option enabled tend to be less human
-> friendly and the distinction between Porcelain (for humans) and
-> plumbing (for scripts) is reversed in the use of the word there---it
-> started as "this is the option for those who write Porcelain
-> commands to use", but still it is not a very good name for the
-> option.
->
-> I am perfectly OK if the plan is to uniformly use --output-format
-> (or something equally more descriptive) and migrate and deprecate
-> the "--porcelain" option away from existing commands.
+> diff --git a/setup.c b/setup.c
+> index 59abc16ba6..458582207e 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1352,6 +1352,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>  		}
+>  
+>  		if (is_git_directory(dir->buf)) {
+> +			trace2_data_string("setup", NULL, "implicit-bare-repository", dir->buf);
+>  			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT)
+>  				return GIT_DIR_DISALLOWED_BARE;
+>  			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report))
 
-I agree that --porcelain is a confusing name that would be nice to
-deprecate, but I don't think --output-format captures all of the intent
-of "operate in a machine-friendly mode instead of a human-friendly one".
-Unfortunately, if we had picked --plumbing from the beginning, I doubt
-we would be having this discussion today :/
+That is kind of obvious.
 
-E.g. machines (Unix ones at least?) like to have output on stdout and to
-be able to request NUL-terminated output. It's unfortunate that if we
-don't piggyback onto --output-format, we run into option precedence
-problems (like Patrick mentioned), but I'd find it more confusing that
---output-format=[porcelain|full|compact] don't behave the same way.
+> diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-repository.sh
+> index 11c15a48aa..a1f3b5a4d6 100755
+> --- a/t/t0035-safe-bare-repository.sh
+> +++ b/t/t0035-safe-bare-repository.sh
+> @@ -7,13 +7,24 @@ TEST_PASSES_SANITIZE_LEAK=true
+>  
+>  pwd="$(pwd)"
+>  
+> -expect_accepted () {
+> -	git "$@" rev-parse --git-dir
+> +expect_accepted_implicit () {
+> +	test_when_finished "rm \"$pwd/trace.perf\"" &&
 
-I don't think this puts us in a better spot with regards to option
-precedence either. Consider:
+Why not
 
-  git fetch --output-format=full -z <...>
+	test_when_finished 'rm "$pwd/trace.perf"' &&
 
-The only way to respect both options is to have -z affect the
-human-readable output, which isn't the end of the world, but it seems
-unnecessary.
+instead?  
 
-Perhaps something like --machine instead?
+In your version, $pwd is expanded before test_when_finished sees it,
+so you'd have to worry about things like backslashes and double quotes
+in it.  You can of course quote the '$' like so
+
+	test_when_finished "rm \"\$pwd/trace.perf\"" &&
+
+to work it around, but it is equivalent to enclosing everything
+inside a pair of single quotes.  Either way your $pwd will be
+interpolated when "eval" sees the $test_cleanup script.
+
+And it would be much easier to read without backslash and
+backslashed double quotes.
+
+> +	GIT_TRACE2_PERF="$pwd/trace.perf" git "$@" rev-parse --git-dir &&
+> +	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+> +}
+
+We ensure that we positively have such a trace in the output.  Good.
+
+> +expect_accepted_explicit () {
+> +	test_when_finished "rm \"$pwd/trace.perf\"" &&
+> +	GIT_DIR="$@" GIT_TRACE2_PERF="$pwd/trace.perf" git rev-parse --git-dir &&
+> +	! grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+>  }
+
+When not asking for the magic behaviour of "$@" and instead doing a
+"squash everything into a single string, using the first letter in
+$IFS as the separator in between", please write "$*" instead.
+
+    GIT_DIR="$*" GIT_TRACE2_PERF="..." git rev-parse --git-dir
+
+But in this case, I do not think you are ever planning to send a
+directory name split into two or more, to be concatenated with SP,
+so writing it like
+
+    GIT_DIR="$1" GIT_TRACE2_PERF="..." git rev-parse --git-dir
+
+would be much less error prone and easier to follow, I think.
+
+> @@ -22,12 +33,12 @@ test_expect_success 'setup bare repo in worktree' '
+>  '
+>  
+>  test_expect_success 'safe.bareRepository unset' '
+> -	expect_accepted -C outer-repo/bare-repo
+> +	expect_accepted_implicit -C outer-repo/bare-repo
+>  '
+
+Perhaps futureproof this test piece by explicitly unsetting the
+variable before starting the test?  That way, this piece will not be
+broken even if earlier tests gets modified to set some value to
+safe.bareRepository in the future.
+
+>  test_expect_success 'safe.bareRepository=all' '
+>  	test_config_global safe.bareRepository all &&
+> -	expect_accepted -C outer-repo/bare-repo
+> +	expect_accepted_implicit -C outer-repo/bare-repo
+>  '
+>  
+>  test_expect_success 'safe.bareRepository=explicit' '
+> @@ -47,7 +58,7 @@ test_expect_success 'safe.bareRepository in the repository' '
+>  
+>  test_expect_success 'safe.bareRepository on the command line' '
+>  	test_config_global safe.bareRepository explicit &&
+> -	expect_accepted -C outer-repo/bare-repo \
+> +	expect_accepted_implicit -C outer-repo/bare-repo \
+>  		-c safe.bareRepository=all
+>  '
+>  
+> @@ -60,4 +71,8 @@ test_expect_success 'safe.bareRepository in included file' '
+>  	expect_rejected -C outer-repo/bare-repo
+>  '
+>  
+> +test_expect_success 'no trace when GIT_DIR is explicitly provided' '
+> +	expect_accepted_explicit "$pwd/outer-repo/bare-repo"
+> +'
+> +
+>  test_done
+
+All the expectations look sensible.  Thanks for a pleasant read.
