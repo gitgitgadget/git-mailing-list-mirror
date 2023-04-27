@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B532C77B73
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 16:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EAF9C7EE22
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 16:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243898AbjD0QU5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 12:20:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
+        id S243928AbjD0QZT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 12:25:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232698AbjD0QU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 12:20:56 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CDD93AB0
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 09:20:55 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-63b4dfead1bso7204231b3a.3
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 09:20:55 -0700 (PDT)
+        with ESMTP id S243324AbjD0QZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 12:25:04 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D7D92
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 09:25:03 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-24986c7cf2dso7500443a91.2
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 09:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682612455; x=1685204455;
+        d=gmail.com; s=20221208; t=1682612703; x=1685204703;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D5how5+qDH9s/kk6gOb3Sa5mDD6bqtCtCypbZt+kx5I=;
-        b=VaVbdi+rxn/3KxTdjBeo9UcrENMToe+ZwDo/mxbiyIes0LaECKgTTaKmRjmYkYi6Ps
-         gKpJ9fmms5eQ5wELOSOmdL1SZUDkeZW0CY+c+szFpIyN9P6wvVOR0m4Eln+/TscZ31W/
-         MwySLi4in/z/gUTBvQFGPFytqO9rC9U+9vXjMq24mfJW1v59Ti17HYcWN/xRsEr40fFq
-         pii5Kde1ef/xIcXO+SSnYOKPyor9cLwvJT5g0GAVUHa2N1qvGUcNUgvTOW4OBTt2ybEJ
-         2T43wDTVBvhChpSDIBF9ti2ADRyL6FsAzpwfOQ1kDDgnGTS5HgNv/mz30AnLL+oLBdH8
-         umtg==
+        bh=+NJFIfFgE7XpgkQPY4Zor5wxIRu1pBvGE+FOBEMXCS0=;
+        b=n6LghvPNMDnWtKgzamNt3czs0m/+iyIMvFIWFsYslf7IdMbLr0fmn6uO8gdNR3j1Wv
+         0PWHw0OKM6Piufru87H6+zZIfTpWPnXmHKS7z5rcDrkSEqhGKfkdSj6t4Gz7SUZ1h32N
+         r7l2/yw7hoq4e8PEIQzmJAKWidK1Dam1CApMFGdquI/Xek2cWBQOF8wsc7c9I6+8zbfd
+         jHSH+nUyM60ipDYBdacuX3eQFmBl5zqXmlfYoIdAeXGegzSRvKoigQnE6PrpjnJ/tZII
+         JuEEJM+x5iYwYPW9WHFElVxnjPkqhGT997rPn7FUzWTClMNFAPcHtMai7XhMQLuk1mvB
+         OIVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682612455; x=1685204455;
+        d=1e100.net; s=20221208; t=1682612703; x=1685204703;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=D5how5+qDH9s/kk6gOb3Sa5mDD6bqtCtCypbZt+kx5I=;
-        b=Cm9cbbHysdKcKqKDuI168myqGUmYG0nQqDgTGwo5m/nyHg8/9hwbyrWyALq678i3NL
-         XVeAYHlAjh1pcIYpp34itXMnVb3QniKrbQHqI+dncg6pzJcNfZQaITVq3l4llEAMzHbN
-         D9gZLNDMUzsx6MbP2Cb1j1/7xCd4ubHKaA6/Aa+XMp7OlJHb4i2e2/ajttTMUxD3CmLB
-         D3ztDIU8ymd7CsIArcE3iveO4xB3WbPwv2R+Q0ud4T9AtD7dIBoFzaZI4t1qCK8pV8by
-         iuf+cI6TmvyQYfz8wbuvVDIMUDAt3CjFVbbO0akBfU0npR/Lzc4sm4GxKdmuUPUZ4ZDY
-         Go4A==
-X-Gm-Message-State: AC+VfDyg8o0U2UoCfyClqBCFpPOtt1DsfFKJIGabjKxg7a+seyyOrP0F
-        g65fDwvz0qkwNA+yvj+64ns=
-X-Google-Smtp-Source: ACHHUZ73lR1XnczC3x0Wp4xFVWEOgBB1AbBx3qaI+VIETHkAFj/aLSOBn9sYy840SoYKLbLrH+xL1g==
-X-Received: by 2002:a17:90a:4b48:b0:24c:1bee:a306 with SMTP id o8-20020a17090a4b4800b0024c1beea306mr1034335pjl.26.1682612454573;
-        Thu, 27 Apr 2023 09:20:54 -0700 (PDT)
+        bh=+NJFIfFgE7XpgkQPY4Zor5wxIRu1pBvGE+FOBEMXCS0=;
+        b=dKt35ok6ibemLJWk7aVhpChlgLoZr2/eIweVkbuRmnOJ0Zf95IjRmOMroyvaPdgKpp
+         hoJommmjBGRtVxhagQFJ002d8cMh7sZUurexUiZdEbsYrisfWyFZuFv1RVsrg3lo+xgT
+         GodXVsw45bZLhC0PYGYvCUgcmEeaDZ3nr5+atPd5BPSW15mYrrn3YeHiC9S137YVmM86
+         KG5zhAbRYgLlt81dQirTJywXBklyhv0tvOvR9YblCORHbPDiI5RqMttPhzsn5c8IJ4Cr
+         81ZcQNK2r/zYlX+JhToMfVIVR5wKnxi4mHGO7dpUTkD9VIYyWzhjfBlnNcnpbunhHwss
+         uoiA==
+X-Gm-Message-State: AC+VfDwLWyZ9fLMwWPvqg5/ZV8pxOjLECK/uDVChGHCKHu+C6lmBI5ZL
+        4RIMGmZiZHIU+plRnMxXTvuayZ2Rkc8=
+X-Google-Smtp-Source: ACHHUZ7m9hH7nK2377mvYeFQYT+Vg6GV0GirD5sBw+aakAQwUVI5lKWenK+WvaRSW4+zTum9WGl1TQ==
+X-Received: by 2002:a17:90a:bc8d:b0:246:a782:d94 with SMTP id x13-20020a17090abc8d00b00246a7820d94mr2541390pjr.7.1682612703141;
+        Thu, 27 Apr 2023 09:25:03 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id b23-20020a17090acc1700b00240d4521958sm930pju.18.2023.04.27.09.20.53
+        by smtp.gmail.com with ESMTPSA id y1-20020a170902700100b0019a7ef5e9a8sm11895438plk.82.2023.04.27.09.25.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 09:20:53 -0700 (PDT)
+        Thu, 27 Apr 2023 09:25:02 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
+To:     Jeff King <peff@peff.net>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Thomas Bock <bockthom@cs.uni-saarland.de>,
         Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
         =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
@@ -60,11 +60,10 @@ Subject: Re: [PATCH v3 3/4] parse_commit(): handle broken whitespace-only
  timestamp
 References: <20230427081330.GA1461786@coredump.intra.peff.net>
         <20230427081715.GA1478467@coredump.intra.peff.net>
-        <a04e7950-b74e-d43f-4d19-86def079748c@gmail.com>
-Date:   Thu, 27 Apr 2023 09:20:53 -0700
-In-Reply-To: <a04e7950-b74e-d43f-4d19-86def079748c@gmail.com> (Phillip Wood's
-        message of "Thu, 27 Apr 2023 11:11:12 +0100")
-Message-ID: <xmqqpm7pl2je.fsf@gitster.g>
+Date:   Thu, 27 Apr 2023 09:25:02 -0700
+In-Reply-To: <20230427081715.GA1478467@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 27 Apr 2023 04:17:15 -0400")
+Message-ID: <xmqqleidl2ch.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,26 +71,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> I did also allow "-" here, which may be controversial, as we don't
->> currently support negative timestamps. My reasoning was two-fold. One,
->> the design of parse_timestamp() is such that we should be able to easily
->> switch it to handling signed values, and this otherwise creates a
->> hard-to-find gotcha that anybody doing that work would get tripped up
->> on. And two, the status quo is that we currently parse them, though the
->> result of course ends up as a very large unsigned value (which is likely
->> to just get clamped to "0" for display anyway, since our date routines
->> can't handle it).
->
-> I think this makes a good case for accepting '-'. The commit message
-> is well explained as always :-) This all looks good to me apart from a
-> query about one of the tests.
+> In practice this can't cause us to walk off the end of an array, because
+> we always add an extra NUL byte to the end of objects we load from disk
+> (as a defense against exactly this kind of bug). However, you can see
+> the behavior in action when "committer" is the final header (which it
+> usually is, unless there's an encoding ...
 
-I agree.  I was somewhat surprised that the big comment before that
-code did not mention it, but hopefully those who would be tempted to
-remove the check for '-' would either be careful enough themselves
-or be stopped by reviewers who are careful enough to go back to the
-log message of the commit that added the check in the first place,
-so it is OK.
+... or it is a signed commit or a commit that merges a signed tag.
+
+There is no need for us to be exhaustive here, but I just wondered
+which one of these three commit object headers is more common.  I
+guess the reason "encoding" came to your mind first is because it is
+the oldest among the three.
 
