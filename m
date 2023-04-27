@@ -2,268 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B51DAC77B73
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 22:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B128BC77B61
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 22:22:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229775AbjD0WJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 18:09:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
+        id S1344044AbjD0WW3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 18:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjD0WJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 18:09:36 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7F7E359B
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:09:34 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 46e09a7af769-6a5f7341850so7103373a34.2
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:09:34 -0700 (PDT)
+        with ESMTP id S1343660AbjD0WW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 18:22:28 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7F22715
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:22:27 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f09b4a1584so62799195e9.2
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682633374; x=1685225374;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1682634145; x=1685226145;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QqfC/liYBxvd6r/QFdmCxGopBE42hYyLyJH7i+6A8Os=;
-        b=jvVQJyYsVjhbyYoXQet99ki/wKG3pPupOOxdoVfpBU9Ldu5vymGo1VpN9IUmQGbDmB
-         1TQqFijOKyW3SAMhnp5QxJJ3JMDZpsbCFFGJk21t0WFU//MYcUEa1VJmn/tBTTu98sze
-         weoSSl6340xyfdsYzK4tWzoxCVLu0TbIkASt6vdWcMJl0Rge+7mUjD1CpzL8kx8aCpqx
-         5cr1j1LiGH+9/y5RjLRX2zqbxMEO/7KVwTK/hlg0/N2pFhNuB2pBeL7eCUP2JGzsy2ZK
-         0x8+ue73fPgFVqX63i7H88MuY860TZk6yp1JPk40xv7r/gPLxUKfBX7LoW0G/5ow2DNW
-         nQPg==
+        bh=WRMtY/g2D1XB0LVI1PzqYW/zjl/+4wuIDVbdbOiqM94=;
+        b=PTdkM78L3HqAHr8KbA4HZknX5Vq2BdhScARz8lKfiGoscOGKj6LKs7wJ7u+CipbXHc
+         QoxVwwh/UVsxGR1qb0+anUhNBJoeWJYCLiClHxwzMFZOBVgUHMhdx1thLbT+ywNmbNjH
+         RgHW481VTSv6p5ehWzJzThaSR3cCeff6mxeWjOcbVhpOMEXw7g65SG3RLQMvE0f3h0cr
+         Nm/2/6XJqoDdO7gzj7Rwl4aI/qEntYOU5Qm1BfdNdxp/AFPEE/n7LiFfudOS+lXEwTed
+         /5R2NGgRhzuMWMdZDr1qF/uHI6MaJWunBYmqi9daNp2o91XwhmuViyJswd64GK97FxbZ
+         OGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682633374; x=1685225374;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QqfC/liYBxvd6r/QFdmCxGopBE42hYyLyJH7i+6A8Os=;
-        b=aGL3gUsuUFdVoWL925z894Wolhy6la2qjb/WFf0ikVP9j/TmOZrWxFcNJi/wsRv/8u
-         vS0CA2gZ0qvEywZb+3J6FRKi8xjDObD2wNQEHQvbncLHT4iYLfk+xzVDu/maMeorzF3Q
-         GkYdWFE5nTP1x0/XxVsQk4CaH9Km3YlQaXIcEqzpKdBrqpGkHl1CpMVPKblvRahTErhx
-         OH0g2Nnp3Kn8PbAxyKd7EOWIkr4Kv92Vh3V28fvALebCu2rf9+Atw9AMz3WqaRXa/R3o
-         6s8rEvaCxLANr5srZmgaeSIVBmb7rzY52cu/26/MLdExrrY0ueoy91822/pjKB8N7xTc
-         gbvQ==
-X-Gm-Message-State: AC+VfDww49fk9AmkQ6ZX/luSKIyo5pQuQbQRsEYdt2VsEvrJHdMvEfCE
-        E7J82WIql/X1NDb1NIC53BJzjWLvuGA=
-X-Google-Smtp-Source: ACHHUZ6k9T6gkSZzK2hfEsI6LSeig8zv9MKDkygZo8RT3jMW85S9+MQYzRkwDeWisxdlPFTENhhezA==
-X-Received: by 2002:a9d:7c9a:0:b0:6a6:23fd:3ed7 with SMTP id q26-20020a9d7c9a000000b006a623fd3ed7mr1659905otn.34.1682633374169;
-        Thu, 27 Apr 2023 15:09:34 -0700 (PDT)
-Received: from localhost ([2806:230:6026:c32c:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id b22-20020a9d5d16000000b0069d602841e7sm6342379oti.72.2023.04.27.15.09.33
+        d=1e100.net; s=20221208; t=1682634145; x=1685226145;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WRMtY/g2D1XB0LVI1PzqYW/zjl/+4wuIDVbdbOiqM94=;
+        b=OsqfxNGSf15qRKl62e23LsEeFpuPQ0y5Aj0GVgy/NT4Xo9HK65XTggAuADBgtBkP0R
+         PBS5Bf8pmg74euOpQYp6bSfxtsX3IqTxa4lP+lxvAYRZLdr/WV/PFy5x65u4F+arXSXY
+         uSUAMUyI5Uxt3m55Xb+ndSP1Qrymt4Cgk3C7bznjftinAIek1YOgvEf2Iett5kE/ySgs
+         zlNGjAfihDjVTfvvSTtg+AzdP/14Eaa6aPFCZvfb87e/1ut5vCPgySpy6N/TQUZ+b4ZV
+         DZkQ9iAgErVZYxTFxQYgFUItB/Gzbn+0ixFnidKW796PjdAmdKG0ikK8OYuHV3flFpoQ
+         X1Bw==
+X-Gm-Message-State: AC+VfDxtKDa5ztvkZXiIwsmmsgIVTt6oTGAn0MIurRekLx6yDRrFiBsm
+        7S19EFNfSeXo1lzxkhKSeWJJxpHzLQU=
+X-Google-Smtp-Source: ACHHUZ5pXbtpJwFkcUUxtUeepPh3gbAwor8hUYe3iMunXpO386YWx5hR/LUJ3XLZbcGLIKB+lpP7Bg==
+X-Received: by 2002:adf:fc06:0:b0:2f6:c5bd:ba13 with SMTP id i6-20020adffc06000000b002f6c5bdba13mr2424810wrr.42.1682634144897;
+        Thu, 27 Apr 2023 15:22:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e22-20020a5d5956000000b003012030a0c6sm19500601wri.18.2023.04.27.15.22.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 15:09:33 -0700 (PDT)
-Date:   Thu, 27 Apr 2023 16:09:32 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Message-ID: <644af29c8526c_7f4f2945f@chronos.notmuch>
-In-Reply-To: <20230425061029.GA4015844@coredump.intra.peff.net>
-References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
- <20230418070048.2209469-2-felipe.contreras@gmail.com>
- <xmqq8ren8xz1.fsf@gitster.g>
- <644684018a766_aba29424@chronos.notmuch>
- <xmqq8reg96cu.fsf@gitster.g>
- <20230425061029.GA4015844@coredump.intra.peff.net>
-Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Thu, 27 Apr 2023 15:22:24 -0700 (PDT)
+Message-Id: <pull.1495.v2.git.git.1682634143.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
+References: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 27 Apr 2023 22:22:21 +0000
+Subject: [PATCH v2 0/2] cocci: codify authoring and reviewing practices
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Mon, Apr 24, 2023 at 05:02:25PM -0700, Junio C Hamano wrote:
-> 
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> > 
-> > > No, it's for the formatting machinery.
-> > >
-> > > The fact that both asciidoc and asciidoctor happen to understand our quircky
-> > > formatting in this particualr situation doesn't mean it isn't quirky.
-> > >
-> > > In this particular case the parsers do understand what we are trying to do,
-> > > because we just just pepper list continuations (`+`) everywhere and it happens
-> > > to work.
-> > 
-> > I'll stop at pointing out that the first "no" sounds much stronger
-> > than the text that tries to substantiate it, which says that the
-> > machinery works fine without the changes.
-> > 
-> > > This discrepancy confused Jeff in [1].
-> > 
-> > And this is a good reason to add this change for humans.
-> 
-> Since I'm being used as the example, I'd like to point that I think this
-> is somewhat tangential to what actually confused me there.
-> 
-> What confused me in that earlier message was that having "+" as the
-> continuation between a code-block and its call-out list is odd, since
-> "+" is about continuing a list item.
+Thanks for the input on v1, all :)
 
-Indeed.
+I've tried to capture all of the discussion in some form. AFAICT, the result
+is quite similar to what we are already doing, so it might not be very
+helpful to folks who have already worked with Coccinelle, but it should
+hopefully be useful to newcomers.
 
-> It happens to work because we're in a larger list item,
+I suspect that we won't converge on any new practices during this
+discussion, but as we develop practices in the future, we can just update
+this doc.
 
-No, there's only one list item, but yes, it works when the callout is inside
-one.
+Glen Choo (2):
+  cocci: add headings to and reword README
+  cocci: codify authoring and reviewing practices
 
-The `+` is continuing the list item the callout list is part of, it's not part
-of the callout.
-
-> but it breaks when you put the two of them in their own block (which is the
-> part that got me).
-
-You only need to put one, but when you do, the `+` doesn't belong there as it's
-not part of the callout.
-
-> Using just a blank line between the code block and the call-out list
-> (instead of the "+") works for asciidoc (it is happy to keep the two
-> together) but not asciidoctor (it ends the outer ordered list before
-> starting the callout list).
-
-I don't know what you mean.
-
-These are three paragraphs:
-
-  foo
-
-  bar
-
-  roo
-
-These are two paragraphs inside a list item with continuations:
-
-  1. foo
-  +
-  bar
-  +
-  roo
-
-These are three paragraphs inside a list item with an open block:
+ contrib/coccinelle/README | 40 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 4 deletions(-)
 
 
-  1. foo
-  +
-  --
-  bar
-  
-  roo
-  --
+base-commit: f285f68a132109c234d93490671c00218066ace9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1495%2Fchooglen%2Fpush-lsxuouxyokwo-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1495/chooglen/push-lsxuouxyokwo-v2
+Pull-Request: https://github.com/git/git/pull/1495
 
-If you are inside an open block, you don't need the list continuations (`+`).
+Range-diff vs v1:
 
-Therefore a callout inside an open block inside a list item does not need continuations:
-
-  1. foo
-  +
-  --
-  ----
-  line 1 <1>
-  line 2 <2>
-  ----
-
-  <1> callout 1
-
-  <2> callout 2
-  --
-
-Just like a callout outside a list item:
-
-  ----
-  line 1 <1>
-  line 2 <2>
-  ----
-
-  <1> callout 1
-
-  <2> callout 2
-
-It's only a callout inside a list item with no open block that needs
-continuations, just like any other paragraph:
-
-  1. foo
-  +
-  ----
-  line 1 <1>
-  line 2 <2>
-  ----
-  +
-  <1> callout 1
-  +
-  <2> callout 2
-
-> So the second hunk in the patch, to drop the extra continuation between
-> the code block and the callout, makes perfect sense to me.
-> 
-> The first hunk seems less obviously good to me.
-
-I don't see why: it's exactly the same change: removing an unnecessary space.
-
-Except that space is represented with a `+` inside a list item.
-
-> We might say that it is good to always
-> stick the callout list directly adjacent to the associated code block,
-> since it does matter in other cases.
-
-I'd say that is good.
-
-> But dropping the blank lines between the paragraph-sized callout blocks makes
-> the source less readable,
-
-That is a value judgement. It may be less readable to you, I disagree.
-
-I would expect the subsequent callout blocks as close to the listing block they
-refer to as possible.
-
-> and empty lines between list elements are a pretty normal thing in asciidoc.
-
-Usually, yeah when these list elements are independent, but callout elements
-are not independent.
-
-To me this is perfectly readable:
-
-  This is a simple example in sh:
-
-  ----
-  #!/bin/sh          <1>
-  echo 'hello world' <2>
-  ----
-  <1> Shebang
-  <2> "echo" prints
-
-  This is a simple example in Ruby:
-
-  ----
-  #!/usr/bin/env ruby <1>
-  puts 'hello world' <2>
-  ----
-  <1> Standard shebang
-  <2> "puts" puts a string
-
-Put spaces on the callouts, and it's the exact opposite:
-
-  This is a simple example in sh:
-
-  ----
-  #!/bin/sh          <1>
-  echo 'hello world' <2>
-  ----
-
-  <1> Shebang
-
-  <2> "echo" prints
-
-  This is a simple example in Ruby:
-
-  ----
-  #!/usr/bin/env ruby <1>
-  puts 'hello world'  <2>
-  ----
-
-  <1> Standard shebang
-
-  <2> "puts" puts a string
-
-Cheers.
+ 1:  4a8b8a2a674 = 1:  4a8b8a2a674 cocci: add headings to and reword README
+ 2:  75feb18dfd8 ! 2:  acee642531a cocci: codify authoring and reviewing practices
+     @@ Metadata
+       ## Commit message ##
+          cocci: codify authoring and reviewing practices
+      
+     -    This isn't set in stone; we expect this to be updated as the project
+     -    evolves.
+     +    These practices largely reflect what we are already doing on the mailing
+     +    list, which should help new Coccinelle authors and reviewers get up to
+     +    speed.
+      
+          Signed-off-by: Glen Choo <chooglen@google.com>
+      
+     @@ contrib/coccinelle/README: that might be useful to developers.
+      +
+      +== Authoring and reviewing coccinelle changes
+      +
+     -+* When introducing and applying a new .cocci file, both the Git changes and
+     -+  .cocci file should be reviewed.
+     ++* When a .cocci is made, both the Git changes and .cocci file should be
+     ++  reviewed. When reviewing such a change, do your best to understand the .cocci
+     ++  changes (e.g. by asking the author to explain the change) and be explicit
+     ++  about your understanding of the changes. This helps us decide whether input
+     ++  from coccinelle experts is needed or not. If you aren't sure of the cocci
+     ++  changes, indicate what changes you actively endorse and leave an Acked-by
+     ++  (instead of Reviewed-by).
+      +
+     -+* Reviewers do not need to be coccinelle experts. To give a Reviewed-By, it is
+     -+  enough for the reviewer to get a rough understanding of the proposed rules by
+     -+  comparing the .cocci and Git changes, then checking that understanding
+     -+  with the author.
+     -+
+     -+* Conversely, authors should consider that reviewers may not be coccinelle
+     -+  experts. The primary aim should be to make .cocci files easy to understand,
+     -+  e.g. by adding comments or by using rules that are easier to understand even
+     -+  if they are less elegant.
+     ++* Authors should consider that reviewers may not be coccinelle experts, thus the
+     ++  the .cocci changes may not be self-evident. A plain text description of the
+     ++  changes is strongly encouraged, especially when using more esoteric features
+     ++  of the language.
+      +
+      +* .cocci rules should target only the problem it is trying to solve; "collateral
+     -+  damage" is not allowed.
+     ++  damage" is not allowed. Reviewers should look out and flag overly-broad rules.
+     ++
+     ++* Consider the cost-benefit ratio of .cocci changes. In particular, consider the
+     ++  effect on the runtime of "make coccicheck", and how often your .cocci check
+     ++  will catch something valuable. As a rule of thumb, rules that can bail early
+     ++  if a file doesn't have a particular token will have a small impact on runtime,
+     ++  and vice-versa.
+      +
+      +* .cocci files used for refactoring should be temporarily kept in-tree to aid
+     -+  the refactoring of out-of-tree code (e.g. in-flight topics). They should be
+     -+  removed when enough time has been given for others to refactor their code,
+     -+  i.e. ~1 release cycle.
+     ++  the refactoring of out-of-tree code (e.g. in-flight topics). Periodically
+     ++  evaluate the cost-benefit ratio to determine when the file should be removed.
+     ++  For example, consider how many out-of-tree users are left and how much this
+     ++  slows down "make coccicheck".
 
 -- 
-Felipe Contreras
+gitgitgadget
