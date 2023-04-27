@@ -2,85 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 908E4C77B61
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 14:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9367C77B61
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 15:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243760AbjD0OH1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 10:07:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57578 "EHLO
+        id S244199AbjD0PcL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 11:32:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243734AbjD0OHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 10:07:25 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725E846AE
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 07:07:18 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-959a626b622so822726666b.0
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 07:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682604437; x=1685196437;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bxZwOYjtXIJbljHwUruiPnQh8yt1nENLk7+Vzjbego4=;
-        b=h4mq/AXZw2WwOmlnaQKZ/OT3y7PidGUo3fv3QvpcTLHNNxJ7GbTt7UNzObmZEDxV1K
-         TJrug3WFCXwMc+wn0j7KDjUvZ6zUXc1Ijcc8/x4tU/wxN4apbg+DprTFx3trgheERYaG
-         26GCoSMHTzAQ4knZqxOcqwdvPxcz5J7YgC0Y+Ex6V81cwZFFycMqNdDdI8nMdlhK+Lao
-         u3aJaCbD3Z7SHKNFz4pkpsZTB2vJuvTfK+5IDpK3KU/30q+d3ozLiTkPUUOdeGMonQpz
-         48Eju67qESBHLKouKVBOoQfsSaY1Vl9tMVCMLK9xocFLz6SiETcofrgdN1HEQxtkKuAn
-         freA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682604437; x=1685196437;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bxZwOYjtXIJbljHwUruiPnQh8yt1nENLk7+Vzjbego4=;
-        b=JErBWW6tlbOr9o1p1kwzcJWtfX903Sol70aniL8BEBUktvb+G37Re/9hUdbc9E2bPz
-         FFtz1gue7OkEobwwwr6etwcJkrGYvD23arTizcZbSRw3H0sS5xXks/DsSBqMkuL9wnB2
-         AMfYSkdfolFQENXatiAs4O0hXv1n1zJRX6ZIXFuaqHQhhaoUrCs3/O2Hsh3LcvRVkkR3
-         BpYxJZpH5ylyRlXh881V7sySV8E/pifddBYkz+1hrDr3hQf8CM3AS+nrryy/bMm5ZGfE
-         KxqDmfzEu+D9vf0P9emPxIDAAq65riZAJoPjkmZxqUKiqMIeo0jj6eMF4Di8QTbIqyp7
-         08Zg==
-X-Gm-Message-State: AC+VfDwU2Cxn+sGOshT+1s2PSG5svzMHszC7QahZG2mOlxi+JLQaQzSx
-        /E4pdCygLCIAR0xpHb9//KVQ4bwCxptWk5fuXh0=
-X-Google-Smtp-Source: ACHHUZ5OpxazBmdUdr/0n9lgYVn6IWcXeOZAYFaE8GtkbFb9okm4b/vLn8fcVJpsUvZnFqM47MmgMsFLLXRZXKwlK/U=
-X-Received: by 2002:a17:906:7945:b0:94e:d688:c36d with SMTP id
- l5-20020a170906794500b0094ed688c36dmr2009456ejo.38.1682604436662; Thu, 27 Apr
- 2023 07:07:16 -0700 (PDT)
+        with ESMTP id S244139AbjD0PcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 11:32:08 -0400
+X-Greylist: delayed 159 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 27 Apr 2023 08:32:02 PDT
+Received: from mail.sysgo.com (mail.sysgo.com [159.69.174.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B3C4C37
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 08:32:01 -0700 (PDT)
+Received: from lantia.sysgo.com ([172.20.1.5]:38002)
+        by mail.sysgo.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.96)
+        (envelope-from <guillaume.noailhac@sysgo.com>)
+        id 1ps3Ya-0005kl-2X
+        for git@vger.kernel.org;
+        Thu, 27 Apr 2023 17:29:16 +0200
+Message-ID: <235af3bc-57e3-283f-6d4d-177ccf273909@sysgo.com>
+Date:   Thu, 27 Apr 2023 17:29:16 +0200
 MIME-Version: 1.0
-References: <pull.1470.git.git.1679109928556.gitgitgadget@gmail.com>
- <pull.1470.v2.git.git.1679936543320.gitgitgadget@gmail.com> <CAP8UFD1YG-NnHbG4kBmh7L=O3wVnYKHCd94xD6Up_+AwK1ABPQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD1YG-NnHbG4kBmh7L=O3wVnYKHCd94xD6Up_+AwK1ABPQ@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 27 Apr 2023 16:07:05 +0200
-Message-ID: <CAP8UFD3pqk1LrdA=FuRbfT+xHs4iBa6SxwmHUa1R7mXH5MmH-A@mail.gmail.com>
-Subject: Re: [PATCH v2] attr: teach "--attr-source=<tree>" global option to "git"
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Content-Language: en-US
+From:   Guillaume Noailhac <guillaume.noailhac@sysgo.com>
+Subject: difftool does not support --submodule=diff
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms070304070309000305000508"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 27, 2023 at 4:02=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
+This is a cryptographically signed message in MIME format.
 
-> >      -    Add an environment variable GIT_ATTR_SOURCE that is set when
-> >      -    --attr-source is passed in, so that subprocesses use the same=
- value for
-> >      -    the attributes source tree.
-> >      +    Additionally, add an environment variable GIT_ATTR_SOURCE tha=
-t is set
-> >      +    when --attr-source is passed in, so that subprocesses use the=
- same value
-> >      +    for the attributes source tree.
-> >
-> >      -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >           Signed-off-by: John Cai <johncai86@gmail.com>
->
-> If the patch is from Junio, I think you should keep his Signed-off-by. If=
- you
+--------------ms070304070309000305000508
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I wanted to say that if you take ownership of the patch as Junio
-suggested, I think it should be Ok either way.
+Hello
+
+
+I would like to see the complete directories diff of my git project 
+using the command difftool.
+
+Today the command difftool does not support --submodule=diff.
+
+Is it fixable ?
+
+
+My current version of git is:
+
+git version 2.34.1
+
+and my difftool is meld;
+
+
+Best regards
+
+Guillaume Noailhac
+
+
+--------------ms070304070309000305000508
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+AAA=
+--------------ms070304070309000305000508--
