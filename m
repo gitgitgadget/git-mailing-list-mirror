@@ -2,91 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 560C7C77B73
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 18:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA95C77B73
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 18:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244143AbjD0SYJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 14:24:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46476 "EHLO
+        id S244521AbjD0S32 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 14:29:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjD0SYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 14:24:07 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5F8BEA
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 11:24:06 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-63b4bf2d74aso6810748b3a.2
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 11:24:06 -0700 (PDT)
+        with ESMTP id S244523AbjD0S3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 14:29:22 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEA133C29
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 11:29:21 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-95f4c5cb755so431967566b.0
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 11:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682619846; x=1685211846;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q8KicV8hMkSEnn0AxSUL4pEweL1ShhLNPiAJCT7ekAE=;
-        b=ZJHUJF19BMeSUwtPNb5GNTlJ2+th0AHCQsVqkmIooBEv7i3ze7PhVBUZO64kyym0aN
-         VWGvjcNUjQ+T3Z8EpFpPKcE6dJBfQDQe6RbrQW8LwhhFqQY3BGBD3yrFyGJP82LXnrDc
-         zxryucXLm3cDBmBn12ioia+ZfJqK1yE1OscVPUNCHuZzxts0uwLqR8G9JAwkRJJj9vHA
-         v4RC0SrK9Kytn7rkIXrsbOlD6MDwVCCz/XNyKmfv9zPFZCPIxEp6D+dz9VAjwhJC0AZR
-         Jv+2FQjEco0CHzWx9w29olnT9ujJ/4WwiY5tibuNi3H9zWU+6rTeqN31FRfitJJXe2I0
-         YHeA==
+        d=gmail.com; s=20221208; t=1682620160; x=1685212160;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yA3wHcokz4O2nVodjusBh1tbzvPC3xH8nMW6p4mn0eY=;
+        b=MsVOpVhOKGgUkFUEcorxX/iFT5pRIvimeJaPbI87yW/cSArmAdbswz8KDPq1laYurm
+         y7KWKutZTZobizlj2bFE0YbelIwTzngYm9vTJVUCWvWvDms1jA5ZdRmL6vdIqso+xYwN
+         J0ucf636Rera87jVjy7DyQfiPPCTk5SPweHHraZTbrQql0e/64dLoTZDFOYp83LE8yci
+         2ZV4lNhnLDLnAmJEGlNqBrhOfQL/mbisGBdPKBy/8GYbrWnVEs1FJn9gTt63squ3xBx4
+         gGkzF6niqfCwUaP4+0Y8xgDmJhunFhiwvUh7HgLaCMh1KV69UidLZKbYXUiFnaZa84yg
+         nW5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682619846; x=1685211846;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Q8KicV8hMkSEnn0AxSUL4pEweL1ShhLNPiAJCT7ekAE=;
-        b=NVpdOUe1EgCH25P3vnlYfCwrhwNUk4WBSEBVoSnN82ivIvdyTMdQRiAUX6jXZt+dqE
-         /jJQxVJ2KpTnDrzKR5tzVfhkCgvHsL0BqJA48CsVF68VlJlwUo3ZSR3V9PLktMjiKrnm
-         zbKDBwyB5TnN1EbKgcm6iQKiF/NwFK/F5G3+rwnucQ2zkVzt/mLzDBEyEyPNXX833b6M
-         iZ9g94sAK6tsDTjGShl30UQ5DRbj2CvB5uL21Mz0yS30w/bZ1Zo0w7nrULYP9v8GNyB4
-         2P5fc8ZU7GPT2lCqbprjh8VEs0WZlq0VRNxa30Cg2MsdgCwXU1YuqgIHCXnC7/ruf6Aq
-         Y7kw==
-X-Gm-Message-State: AC+VfDx9Y5c7H5wsCxnKvUa/WkwMYmr5Jft9Ephoug2v2fuIi5muqUwX
-        X9ZxgUpJN44Mdf+y8/vnOVA=
-X-Google-Smtp-Source: ACHHUZ4GBt9u4S8rKbJ7wNq8kArBhAWAYO2oBSqtzuxzRVFxvYaLEo0ADZTSYIEjLxbRngUhBRuXzA==
-X-Received: by 2002:a05:6a00:234b:b0:63d:254a:3918 with SMTP id j11-20020a056a00234b00b0063d254a3918mr4336298pfj.29.1682619846334;
-        Thu, 27 Apr 2023 11:24:06 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id fe5-20020a056a002f0500b0062de9ef6915sm13364073pfb.216.2023.04.27.11.24.05
+        d=1e100.net; s=20221208; t=1682620160; x=1685212160;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yA3wHcokz4O2nVodjusBh1tbzvPC3xH8nMW6p4mn0eY=;
+        b=UgIDaZNXywCGOEg7BgKRNo+MrY9IIwREDLGA3Gb99ldlJWjXl7MXiMpu+EraCSbEE2
+         +DSC+B+k1HST40Tldudz/5Ib9/Tw7wPkcQfObAK1TWtYC1LgktKpd3fsvNn9eqo78Zdj
+         yoRSEdHD8FacrRotAcUPRE/UTEVmfI7FFGP9x9yps0M5VzMNuGgV6vzPk5z3YUUNaKq5
+         etCibmkhESGuC5EAHLrROFWqHD0jkAuhsREEfzjNgO4Lv/zmwOjcEJn7WZzrUt8xKCvd
+         wb5h+L398Qn7k28yXxmJRTmhHn/3BUxE/j1iG1+hiIbZcUIxSOUDa/6oebSYN6x+Z941
+         SoRg==
+X-Gm-Message-State: AC+VfDzXfOesaEo0qSDo1sHzvreFKZn2sMjcgGNGesCbzY5q1FoMPDdb
+        XjU6fK+vRmzTlnMpFbroirpXINv4y5s=
+X-Google-Smtp-Source: ACHHUZ4FG1c4bRhT2/BDE47bR1pnVDFMmWdc7ma04qhAfsjxB3dLW0wXXzVuK2OZOwVH7TttWpEYJw==
+X-Received: by 2002:a05:6402:14d2:b0:508:4232:e56f with SMTP id f18-20020a05640214d200b005084232e56fmr2156611edx.39.1682620160073;
+        Thu, 27 Apr 2023 11:29:20 -0700 (PDT)
+Received: from localhost (62-165-236-48.pool.digikabel.hu. [62.165.236.48])
+        by smtp.gmail.com with ESMTPSA id f20-20020a056402069400b00504ecfea8b2sm8239625edy.85.2023.04.27.11.29.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 11:24:05 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Javier Mora <cousteaulecommandant@gmail.com>, git@vger.kernel.org
-Subject: Re: Commit graph not using minimal number of columns
-References: <CAH1-q0hReZoDWmXo7St10Dk6uc+6ZUQSxqvu1cJ7w3r7ftR9PQ@mail.gmail.com>
-        <xmqq8refy114.fsf@gitster.g>
-        <86188f31-f492-d195-d4d5-b0582906621a@github.com>
-        <xmqq1qk6vd3v.fsf@gitster.g>
-        <eb1c6c62-1081-a9d2-8504-db8bffc6c870@github.com>
-        <xmqqwn1ysfo4.fsf@gitster.g>
-        <7ec7f7b2-3e7a-afb9-7042-a4375970e8d8@github.com>
-Date:   Thu, 27 Apr 2023 11:24:05 -0700
-In-Reply-To: <7ec7f7b2-3e7a-afb9-7042-a4375970e8d8@github.com> (Derrick
-        Stolee's message of "Thu, 27 Apr 2023 09:02:43 -0400")
-Message-ID: <xmqq4jp1kwu2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Thu, 27 Apr 2023 11:29:19 -0700 (PDT)
+Date:   Thu, 27 Apr 2023 20:29:18 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] Add C TAP harness
+Message-ID: <20230427182918.GC3271@szeder.dev>
+References: <20230427175007.902278-1-calvinwan@google.com>
+ <20230427175007.902278-2-calvinwan@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230427175007.902278-2-calvinwan@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+On Thu, Apr 27, 2023 at 05:50:06PM +0000, Calvin Wan wrote:
+> Introduces the C TAP harness from https://github.com/rra/c-tap-harness/
+> 
+> There is also more complete documentation at
+> https://www.eyrie.org/~eagle/software/c-tap-harness/
+> 
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
 
-> Corrected commit date should be equal to commit date unless there
-> is clock skew causing a commit to be older than its parent, (or
-> we have a path of commits with equal commit date) so I don't
-> anticipate that being helpful in general.
+Why?
 
-Yes, exactly.  For normal cases it should not matter.
-
-I was wondering if the current --date-order shows commits in an
-order that end-users find unnatural in a branchy history with many
-commits that have wrong commit dates, and if so, tweaking the
-date-order to instead use the corrected commit date may help and if
-so how much.
-
-Thanks.
-
+Please remember that the justification of a change belongs to the
+commit message and that the contents of the cover letter will not be
+included in the history.
 
