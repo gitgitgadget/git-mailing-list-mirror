@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B128BC77B61
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 22:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDC04C77B73
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 22:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344044AbjD0WW3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 18:22:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44224 "EHLO
+        id S1344221AbjD0WWf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 18:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343660AbjD0WW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 18:22:28 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7F22715
+        with ESMTP id S1343660AbjD0WW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 18:22:29 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F49C30EE
         for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:22:27 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f09b4a1584so62799195e9.2
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f19a7f9424so66850065e9.2
         for <git@vger.kernel.org>; Thu, 27 Apr 2023 15:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1682634145; x=1685226145;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WRMtY/g2D1XB0LVI1PzqYW/zjl/+4wuIDVbdbOiqM94=;
-        b=PTdkM78L3HqAHr8KbA4HZknX5Vq2BdhScARz8lKfiGoscOGKj6LKs7wJ7u+CipbXHc
-         QoxVwwh/UVsxGR1qb0+anUhNBJoeWJYCLiClHxwzMFZOBVgUHMhdx1thLbT+ywNmbNjH
-         RgHW481VTSv6p5ehWzJzThaSR3cCeff6mxeWjOcbVhpOMEXw7g65SG3RLQMvE0f3h0cr
-         Nm/2/6XJqoDdO7gzj7Rwl4aI/qEntYOU5Qm1BfdNdxp/AFPEE/n7LiFfudOS+lXEwTed
-         /5R2NGgRhzuMWMdZDr1qF/uHI6MaJWunBYmqi9daNp2o91XwhmuViyJswd64GK97FxbZ
-         OGWw==
+        bh=sQjdAUQbBZ2dyO127HApmyrM90hBdBX7eLKH1Ns4a9c=;
+        b=rf1oYXg20sx9BhG9eBZUeQywi6t/MtAN66w+gwUW9dbnTzCUYkhTk1trwVUKD00uE6
+         meGojG4D4suYCiNix3a4xldAsSurmjaoehD1bX8wftH9p/6zg3+j2vIDcF+zAYkbuCdG
+         z+SC6D2+INXyJAUHFrR1rsx/7sQThjIRiWBAYVi1GW6LiVlh/x+5KmDCEgQMBS1amNEO
+         pCDc1/f/1XN7OLyXloDhWB7EDKFDqqDwYqmFvtkAQo6X0Vf+1r3q0WGuq8vWO3DpXALq
+         lzL2uwXzCeUcAGuBj1YXNN77k6KztSx1Rzf5bx61eJ/gJjGS69iabTZ1xqSdUNf5CotS
+         qfBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1682634145; x=1685226145;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WRMtY/g2D1XB0LVI1PzqYW/zjl/+4wuIDVbdbOiqM94=;
-        b=OsqfxNGSf15qRKl62e23LsEeFpuPQ0y5Aj0GVgy/NT4Xo9HK65XTggAuADBgtBkP0R
-         PBS5Bf8pmg74euOpQYp6bSfxtsX3IqTxa4lP+lxvAYRZLdr/WV/PFy5x65u4F+arXSXY
-         uSUAMUyI5Uxt3m55Xb+ndSP1Qrymt4Cgk3C7bznjftinAIek1YOgvEf2Iett5kE/ySgs
-         zlNGjAfihDjVTfvvSTtg+AzdP/14Eaa6aPFCZvfb87e/1ut5vCPgySpy6N/TQUZ+b4ZV
-         DZkQ9iAgErVZYxTFxQYgFUItB/Gzbn+0ixFnidKW796PjdAmdKG0ikK8OYuHV3flFpoQ
-         X1Bw==
-X-Gm-Message-State: AC+VfDxtKDa5ztvkZXiIwsmmsgIVTt6oTGAn0MIurRekLx6yDRrFiBsm
-        7S19EFNfSeXo1lzxkhKSeWJJxpHzLQU=
-X-Google-Smtp-Source: ACHHUZ5pXbtpJwFkcUUxtUeepPh3gbAwor8hUYe3iMunXpO386YWx5hR/LUJ3XLZbcGLIKB+lpP7Bg==
-X-Received: by 2002:adf:fc06:0:b0:2f6:c5bd:ba13 with SMTP id i6-20020adffc06000000b002f6c5bdba13mr2424810wrr.42.1682634144897;
-        Thu, 27 Apr 2023 15:22:24 -0700 (PDT)
+        bh=sQjdAUQbBZ2dyO127HApmyrM90hBdBX7eLKH1Ns4a9c=;
+        b=LAi/t8XeAYUB6/88+JCjIyFfpMdDnyk1p93L6zDv30siE92oZ3XkK8aIOacwn5JJRK
+         7X/zQxfBrmK0ddtSqt8g3dEj/sEciDn/a/j3Qxs6Naz5Ff8bXXdvOQx3Kwk//WHrVRd2
+         WfM1lJdHNuU9MO2OTshHmKBnT2p+fBlJ7fqiEmS5tiA0bkb1kIJ3VAJ0BQzamqwpljR2
+         PiLcMRnbXbY/MRtOjXMq1KDmNORI2ULGE6QLCF++ahH/LX7CVlxHde17ldpDgE8eWVyr
+         WdHHDcSgajZd9q0ihkGO/I07L4YlooGMq+rFu2hu5vRymU2g14fMhQs7XBn4PHisFif8
+         JrwA==
+X-Gm-Message-State: AC+VfDxH5ip6KcDSre+Sf1uUCtR3E1XlmJpF23a5WyvlPrX4SDqLTPNw
+        geMfCOvQXIbFWuPeEj403OpesB1wbu4=
+X-Google-Smtp-Source: ACHHUZ458ltQMJgjrFlIRfRM5qRVPB4ouauhB06YBcpL6GuAIAGcNfJ1Toa0ZNiMNyB1hlMut17YHw==
+X-Received: by 2002:a7b:c5d9:0:b0:3f1:8992:3618 with SMTP id n25-20020a7bc5d9000000b003f189923618mr2577735wmk.13.1682634145378;
+        Thu, 27 Apr 2023 15:22:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e22-20020a5d5956000000b003012030a0c6sm19500601wri.18.2023.04.27.15.22.24
+        by smtp.gmail.com with ESMTPSA id a18-20020a056000101200b002e61e002943sm19528907wrx.116.2023.04.27.15.22.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 15:22:24 -0700 (PDT)
-Message-Id: <pull.1495.v2.git.git.1682634143.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
+        Thu, 27 Apr 2023 15:22:25 -0700 (PDT)
+Message-Id: <4a8b8a2a6745e791e35296e34f530b5f40f51c27.1682634143.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1495.v2.git.git.1682634143.gitgitgadget@gmail.com>
 References: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
+        <pull.1495.v2.git.git.1682634143.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 27 Apr 2023 22:22:21 +0000
-Subject: [PATCH v2 0/2] cocci: codify authoring and reviewing practices
+Date:   Thu, 27 Apr 2023 22:22:22 +0000
+Subject: [PATCH v2 1/2] cocci: add headings to and reword README
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,97 +65,48 @@ Cc:     Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Glen Choo <chooglen@google.com>,
         Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the input on v1, all :)
+From: Glen Choo <chooglen@google.com>
 
-I've tried to capture all of the discussion in some form. AFAICT, the result
-is quite similar to what we are already doing, so it might not be very
-helpful to folks who have already worked with Coccinelle, but it should
-hopefully be useful to newcomers.
+- Drop "examples" since we actually use the patches.
+- Drop sentences that could be headings instead
 
-I suspect that we won't converge on any new practices during this
-discussion, but as we develop practices in the future, we can just update
-this doc.
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ contrib/coccinelle/README | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Glen Choo (2):
-  cocci: add headings to and reword README
-  cocci: codify authoring and reviewing practices
-
- contrib/coccinelle/README | 40 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 36 insertions(+), 4 deletions(-)
-
-
-base-commit: f285f68a132109c234d93490671c00218066ace9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1495%2Fchooglen%2Fpush-lsxuouxyokwo-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1495/chooglen/push-lsxuouxyokwo-v2
-Pull-Request: https://github.com/git/git/pull/1495
-
-Range-diff vs v1:
-
- 1:  4a8b8a2a674 = 1:  4a8b8a2a674 cocci: add headings to and reword README
- 2:  75feb18dfd8 ! 2:  acee642531a cocci: codify authoring and reviewing practices
-     @@ Metadata
-       ## Commit message ##
-          cocci: codify authoring and reviewing practices
-      
-     -    This isn't set in stone; we expect this to be updated as the project
-     -    evolves.
-     +    These practices largely reflect what we are already doing on the mailing
-     +    list, which should help new Coccinelle authors and reviewers get up to
-     +    speed.
-      
-          Signed-off-by: Glen Choo <chooglen@google.com>
-      
-     @@ contrib/coccinelle/README: that might be useful to developers.
-      +
-      +== Authoring and reviewing coccinelle changes
-      +
-     -+* When introducing and applying a new .cocci file, both the Git changes and
-     -+  .cocci file should be reviewed.
-     ++* When a .cocci is made, both the Git changes and .cocci file should be
-     ++  reviewed. When reviewing such a change, do your best to understand the .cocci
-     ++  changes (e.g. by asking the author to explain the change) and be explicit
-     ++  about your understanding of the changes. This helps us decide whether input
-     ++  from coccinelle experts is needed or not. If you aren't sure of the cocci
-     ++  changes, indicate what changes you actively endorse and leave an Acked-by
-     ++  (instead of Reviewed-by).
-      +
-     -+* Reviewers do not need to be coccinelle experts. To give a Reviewed-By, it is
-     -+  enough for the reviewer to get a rough understanding of the proposed rules by
-     -+  comparing the .cocci and Git changes, then checking that understanding
-     -+  with the author.
-     -+
-     -+* Conversely, authors should consider that reviewers may not be coccinelle
-     -+  experts. The primary aim should be to make .cocci files easy to understand,
-     -+  e.g. by adding comments or by using rules that are easier to understand even
-     -+  if they are less elegant.
-     ++* Authors should consider that reviewers may not be coccinelle experts, thus the
-     ++  the .cocci changes may not be self-evident. A plain text description of the
-     ++  changes is strongly encouraged, especially when using more esoteric features
-     ++  of the language.
-      +
-      +* .cocci rules should target only the problem it is trying to solve; "collateral
-     -+  damage" is not allowed.
-     ++  damage" is not allowed. Reviewers should look out and flag overly-broad rules.
-     ++
-     ++* Consider the cost-benefit ratio of .cocci changes. In particular, consider the
-     ++  effect on the runtime of "make coccicheck", and how often your .cocci check
-     ++  will catch something valuable. As a rule of thumb, rules that can bail early
-     ++  if a file doesn't have a particular token will have a small impact on runtime,
-     ++  and vice-versa.
-      +
-      +* .cocci files used for refactoring should be temporarily kept in-tree to aid
-     -+  the refactoring of out-of-tree code (e.g. in-flight topics). They should be
-     -+  removed when enough time has been given for others to refactor their code,
-     -+  i.e. ~1 release cycle.
-     ++  the refactoring of out-of-tree code (e.g. in-flight topics). Periodically
-     ++  evaluate the cost-benefit ratio to determine when the file should be removed.
-     ++  For example, consider how many out-of-tree users are left and how much this
-     ++  slows down "make coccicheck".
-
+diff --git a/contrib/coccinelle/README b/contrib/coccinelle/README
+index d1daa1f6263..9b28ba1c57a 100644
+--- a/contrib/coccinelle/README
++++ b/contrib/coccinelle/README
+@@ -1,7 +1,9 @@
+-This directory provides examples of Coccinelle (http://coccinelle.lip6.fr/)
+-semantic patches that might be useful to developers.
++= coccinelle
+ 
+-There are two types of semantic patches:
++This directory provides Coccinelle (http://coccinelle.lip6.fr/) semantic patches
++that might be useful to developers.
++
++==  Types of semantic patches
+ 
+  * Using the semantic transformation to check for bad patterns in the code;
+    The target 'make coccicheck' is designed to check for these patterns and
+@@ -42,7 +44,7 @@ There are two types of semantic patches:
+    This allows to expose plans of pending large scale refactorings without
+    impacting the bad pattern checks.
+ 
+-Git-specific tips & things to know about how we run "spatch":
++== Git-specific tips & things to know about how we run "spatch":
+ 
+  * The "make coccicheck" will piggy-back on
+    "COMPUTE_HEADER_DEPENDENCIES". If you've built a given object file
 -- 
 gitgitgadget
+
