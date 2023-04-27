@@ -2,99 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F96C77B61
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 05:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 659EFC77B61
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 05:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242847AbjD0Fnr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 01:43:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
+        id S242875AbjD0FqE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 01:46:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232094AbjD0Fnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 01:43:45 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB31D2D79
-        for <git@vger.kernel.org>; Wed, 26 Apr 2023 22:43:44 -0700 (PDT)
-Received: (qmail 19588 invoked by uid 109); 27 Apr 2023 05:43:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Apr 2023 05:43:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16368 invoked by uid 111); 27 Apr 2023 05:43:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Apr 2023 01:43:43 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 27 Apr 2023 01:43:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Adam Majer <adamm@zombino.com>
-Subject: Re: [PATCH 2/2] Honor GIT_DEFAULT_HASH for empty clones without
- remote algo
-Message-ID: <20230427054343.GE982277@coredump.intra.peff.net>
-References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
- <20230426205324.326501-1-sandals@crustytoothpaste.net>
- <20230426205324.326501-3-sandals@crustytoothpaste.net>
- <xmqqbkjaqqfp.fsf@gitster.g>
+        with ESMTP id S229665AbjD0FqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 01:46:03 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B24122D79
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 22:46:02 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1a5197f00e9so62863365ad.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2023 22:46:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682574362; x=1685166362;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sYVzjspa9VwEt0nqnIrd7rdJU9C5cuRsZWVSS83Km04=;
+        b=QHovULRVV6wvyeXc4em1D8nx2wqNA+4FXlXM8LJokqJpA7rmqwQTSOUDymee7F2rZi
+         57OuwNuhbVzrgjCpQ5s4lHVveZGRXcK8ab7q3DOwmh6/QrB7k0n9SpUDRKq/FR2mjmTv
+         PUmbMvwfKYByobVq1oo6wC5qyPAEUy/ZqCjVll+hTGgT7ZXXm1Ha4nj0eWwzgb4O1yXn
+         gcg754QuRb9DqyWlUsb6IGP934n4EpVJM5ckniAhB7LWJEEWf2jLTftc5XbR+GkjbfJv
+         sVRdmEKSVw0+UIKGdN69Nuirg2kb6RUJsddJpU4l6o38RFcU/HJWvYGR2cnzl0VsSjpy
+         XApg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682574362; x=1685166362;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sYVzjspa9VwEt0nqnIrd7rdJU9C5cuRsZWVSS83Km04=;
+        b=RePs9B92Oq5ogrAPUaudE/Q1sN4+IEwirJtFhL9fRCqOJbRNXWN6+GyR0rNI3WuxBC
+         3HYOujBrRZat5R8YR08pAvEjTjzD41mj/mG4yaSWJe+dYUj9P8ggVXeQbe8RVdv57Z1/
+         HtLUQrIV2b7RnKMKNhPzs5uKahwwV7jtCrtZA/aQE9EVNE/K7ItO7zFz8Yjsa1SctTpM
+         D+Y0//EVs9U4qzifAzrZflQSAkqWcDrs+KtYVvNR7RUqwW3/Xk/JL1k4hevCxUfjlWCy
+         gm2gtc8F0RjyQXVyRW5e6uQEzuNYsrHQdjyO7/HWxDqWOd2Yq4p+aLRV2cB57DgxLna8
+         tmFA==
+X-Gm-Message-State: AC+VfDwEOmrsuRo0Xq1ojf1lyHPwuhRiPj+EsH/QWWxy2STCosVqONwo
+        k0SNDwnB4QxvVuS0c7Hp2/tZ96oC3R8=
+X-Google-Smtp-Source: ACHHUZ6UVbozCT/TlSB/YKcgbQyING5ibY8kJhYzqb5Bnk+KikpApC3zc9dEnIz1qTqBsnFtE0gAaw==
+X-Received: by 2002:a17:902:cec7:b0:1a6:9d98:e763 with SMTP id d7-20020a170902cec700b001a69d98e763mr481438plg.26.1682574362122;
+        Wed, 26 Apr 2023 22:46:02 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id jh21-20020a170903329500b001a52abb3be3sm10844753plb.201.2023.04.26.22.46.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Apr 2023 22:46:01 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] worktree: warn when removing a worktree with orphan
+ commits
+References: <f702476a-543a-da9b-ccd9-4431c80471e1@gmail.com>
+        <1897dff1-bb4d-9715-dd1c-86763c052589@gmail.com>
+        <xmqq5y9lc9ep.fsf@gitster.g>
+        <51adbbcb-bbfa-58cc-03a4-82809c0c555e@gmail.com>
+Date:   Wed, 26 Apr 2023 22:46:01 -0700
+In-Reply-To: <51adbbcb-bbfa-58cc-03a4-82809c0c555e@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Thu, 27 Apr 2023 00:29:12 +0200")
+Message-ID: <xmqqwn1xnahy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbkjaqqfp.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 26, 2023 at 02:33:30PM -0700, Junio C Hamano wrote:
+Rubén Justo <rjusto@gmail.com> writes:
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
-> >  `GIT_DEFAULT_HASH`::
-> >  	If this variable is set, the default hash algorithm for new
-> >  	repositories will be set to this value. This value is currently
-> > +	ignored when cloning if the remote value can be definitively
-> > +	determined; the setting of the remote repository is used
-> > +	instead. The value is honored if the remote repository's
-> > +	algorithm cannot be determined, such as some cases when
-> > +	the remote repository is empty. The default is "sha1".
-> > +	THIS VARIABLE IS EXPERIMENTAL! See `--object-format`
-> > +	in linkgit:git-init[1].
-> 
-> We'd need to evantually cover all the transports (and non-transport
-> like the "--local" optimization) so that the object-format and other
-> choices are communicated from the origin to a new clone anyway, so
-> this extra complexity "until X is fixed, it behaves this way, but
-> otherwise the variable is read in the meantime" may be a disservice
-> to the end users, even though it may make it easier in the shorter
-> term for maintainers of programs that rely on the buggy "git clone"
-> that partially honored this environment variable.
-> 
-> In short, I am still not convinced that the above is a good design
-> choice in the longer term.
+> Maybe "HEAD position was" fits for both usages.  This is how it would
+> look like:
+> ...
+> I think, if there are no objections or better suggestions, I'll re-roll
+> with "HEAD was at". 
 
-I also think it is working against the backwards-compatible design of
-the hash function transition. If we do not see an object-format line
-from the remote, then either:
+But does it convey the more important point?  The reason why "HEAD
+WAS at" may matter is because the user is about to lose history
+leading to it.  I wonder if we want to be more direct and alarming,
+e.g.
 
-  1. They sent us capabilities, but it did not include object-format. So
-     if we are in GIT_DEFAULT_HASH=sha256 mode locally, but the other
-     side is an older version of Git (or even a current version of other
-     implementations, like Dulwich) that do not send object-format at
-     all, then we will not correctly fall back to assuming they are
-     sha1. In a non-empty repo, this means we'll fail to parse their ref
-     advertisement (we'll expect sha256 hashes but get sha1), and
-     cloning will be broken.
+    $ git checkout -
+    About to lose history leading to 2efe05c commit-a
+    HEAD is now at 7906992 commit-b
 
-  2. They did not send us capabilities, because the repo is empty (and
-     the server does not have brian's patch 1). The hash transition doc
-     says we're supposed to assume they're sha1. It's _sort of_
-     academic, in that they also are not telling us about any refs on
-     their side. But we may end up mis-matched with the server (again,
-     this is the 50/50 thing; we don't know what their format is).
-     Presumably that bites us later when we try to push up new objects
-     (but would eventually work when we support interop).
+Whichever phrasing you end up using, I think the order of messages
+should be made consistent between the two cases.  That is,
 
-I think handling (2) is iffy as a goal, but the collateral damage of (1)
-is a complete show-stopper for this patch. If we wanted to do (2) by
-itself, we'd have to distinguish "did they even send us a capabilities
-line" as a separate case (but I tend to agree with you that it is not
-worth doing for now).
+> Maybe "HEAD position was" fits for both usages.  This is how it would
+> look like:
+>
+>    $ git checkout -
+>    HEAD position was 7906992 commit-b
+>    HEAD is now at 2efe05c commit-a
 
--Peff
+Here "git checkout" reports the lost HEAD and then the end result.
+
+>    $ git worktree add test --detach && git worktree remove test
+>    Preparing worktree (detached HEAD 2efe05c)
+>    HEAD is now at 2efe05c commit-a
+>    HEAD position was 2efe05c commit-a
+
+But here "git worktree add" reports the end resultfirst and then
+reports the lost HEAD.  It probably should report them in reverse.
+
+Thanks.
+
