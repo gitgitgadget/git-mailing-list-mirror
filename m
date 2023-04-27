@@ -2,124 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B405AC77B61
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 10:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D0A1C77B73
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 10:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243475AbjD0KRV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 06:17:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52762 "EHLO
+        id S243398AbjD0K6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 06:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243276AbjD0KRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 06:17:19 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E52E187
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 03:17:18 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-2f27a9c7970so7446595f8f.2
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 03:17:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682590636; x=1685182636;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JcL0tqazHB14WYDkRqHWCm3rCXbeWTEJAHaalSwaaSE=;
-        b=c0ACFqIa4lT0CCmE8EmfdU3DjoS+UJv7mipam76nSVou67DiknTRaZl8KDbQ8I7yNQ
-         KbpueGOPdzt1ETyZQU2BOsNbCDTdYptK+kSCB35dFiFOP4g/LMY8CnWqZ+gNNjxL6q4i
-         9L+JO0IeFaMSskkAPqts6IHgk3ex7y/cRiWr+O/lRFtBCDqLAbiGOIiLIgSTvNSvz5OE
-         kLP2exjFRsZfW01v8lL5mjARNB1+5vLxm3+OIZI6fwqQGUTqmp5YqNn2mvlP8VJRRN9V
-         4mSh5owqj1S8zPAdGaUhK8LGqwk3ZcGIBac1PjYnUrmSBod6rrHYhPmx0kkd4WC9A3WC
-         vbbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682590636; x=1685182636;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JcL0tqazHB14WYDkRqHWCm3rCXbeWTEJAHaalSwaaSE=;
-        b=JA/CLDkIGuiPkufvSdFq6Bo8krXojJmP/Blk0mCesbHZ3egpcyGgqVySYN75P0NHhe
-         IOJHmvJA3bX7fFgp/ZMbJLYC+44HlpY8BYcJ0azx0RUehdqA59heWVoexFsgOv36mR/q
-         qohV4BRvnsuF8cUHxHbuPZ36YHL7tmZWky+OiZwabD3Jffn3FKD6XjIzzWQ26XHdOMiQ
-         KNjrLUGPmXod5qDJnz6ZunXjrQORGihU3/KYDukGzQaD3yctcSKsX2unNfq5LXat5h7k
-         ZreBSrOV1uy7oCwy1nORv6IQS1csuEJmQKHEtnx9hYck4RAyH6vMs6rqdwLgnA6hVmnD
-         2+nw==
-X-Gm-Message-State: AC+VfDxvZn9EJRXXjaAKsVi1AvO1yMDSswJhDhh2WvbBlYGVjkRksVrx
-        Iob7elNeHuwCYxogyvxS6Iw=
-X-Google-Smtp-Source: ACHHUZ7dXJRcomHgz95cMb138sYLXr1sxfmk7A5IE8dys/x2ttSBrogFniEPIGZstqc4qNYRAuudpw==
-X-Received: by 2002:a5d:4147:0:b0:304:aad4:b1ed with SMTP id c7-20020a5d4147000000b00304aad4b1edmr1019358wrq.13.1682590636247;
-        Thu, 27 Apr 2023 03:17:16 -0700 (PDT)
-Received: from [192.168.1.195] ([90.255.142.254])
-        by smtp.googlemail.com with ESMTPSA id c1-20020a5d4f01000000b002fc0de07930sm18131929wru.13.2023.04.27.03.17.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Apr 2023 03:17:15 -0700 (PDT)
-Message-ID: <1fd54422-b66a-c2e4-7cd7-934ea01190ad@gmail.com>
-Date:   Thu, 27 Apr 2023 11:17:15 +0100
+        with ESMTP id S243047AbjD0K62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 06:58:28 -0400
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40D7944A8
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 03:58:27 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 2594B5C00B6;
+        Thu, 27 Apr 2023 06:58:26 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Thu, 27 Apr 2023 06:58:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm3; t=1682593106; x=1682679506; bh=PG
+        RLXqeU9uEa04thLIDEevYi/GDIg1876hTK/ekgjqg=; b=Z9pZQxtYVZQqhQO6Ba
+        OgfsdQNX+q5xqK1UR2DmpHiEECCEI6rC6l2GbyYcx/M0/m4EX6DGMz7TorUTzzci
+        5qFVe9vgHNRfSPcthof6dWeU6QK9tLIOF1e2wyC+6iZjRIXqnQEMhr+M0R2OtYdM
+        7HVb8uTXPvxJwjqlh5/oV9vC9krwGwbjC88JjRN5YGD9GsNS0mWPHByj83vqPF+K
+        Ko0rx7qVVlCRczcM6a8XL2QzGNxSbV8RgSuEyN4AJKj5ED6jZMUUhYtAzin8aui4
+        F20LbCYVX7BInTyRnaZHr0fDluuoaipLVBsAmC85n3p48xsn3OxLsAUHJcR/OY5X
+        MAPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; t=1682593106; x=1682679506; bh=PGRLXqeU9uEa0
+        4thLIDEevYi/GDIg1876hTK/ekgjqg=; b=FSZTjbV2Rew8kjHdIZQw8deoakTy3
+        vkbpmgHI7PQp0z9tO8+cy5Q8kZcwLTbz2QhbAmnZg2V/SbhQyu53UHDeR1VSlvqt
+        c92qSMjj2YvxyXPbbTgEEiparbChkJQqvsvEH2e31FvSvQcReqM5ulpXVlC0ggPp
+        UUzBxf9ZazMCy1EwkzIwhNV0DCfUAPSBVE82jCRB1MsnIq7yy/tx+WoBAAYxWQGa
+        VggPsnaLSzwn/d3cR8IG5A2XBYDbex7BTkWvI/GG3MWSvS7TbO/ZtCA0MStCBPtC
+        PerE3ZBAOpkAzNO3Yc36YMbK2YRTrOOUliAUc+YJjpxoeSjHNLshjtpLA==
+X-ME-Sender: <xms:UVVKZKu3XLYhToxQ29IiU8P8rGsJB5jEGPYswevCWzJ_vdr0Gk5prQ>
+    <xme:UVVKZPfxF9ZtxlzZjvqCE4NwhuhAM9cEszooZ8bj5abudnBh8ln-K0J9PCqQltw_A
+    R5H0I2Mv9YK74iMaw>
+X-ME-Received: <xmr:UVVKZFxIquS6X8eOQ3aDnF6zFPTltScbDXfd0gePutzA8cKkiP5Yjv-GN2BBpJk6ExrEBh_FiE16c96ip1Hb2HR91cSxk9xIlgVMu9Pdr4I5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeduiedgfeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:UVVKZFPjNhtxZKHTAUWmv7Y5MbWYGiOJ8Hns1W0BIMYhzIOIIy67vg>
+    <xmx:UVVKZK8gY61eoiqsjk5XlLZ7TeHrwncuegBIxIuku-Eb312xWmowiQ>
+    <xmx:UVVKZNXAzEaZHppuyJqZym-ixd9E4fLJGMOqhkohdhuQnyPa2Sa0Lw>
+    <xmx:UlVKZAnmmRwTFLaagKFMRWU_XKYNLSE8KCINTqR4mogasbxc1fWjLQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Apr 2023 06:58:24 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 956cafc0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 27 Apr 2023 10:57:56 +0000 (UTC)
+Date:   Thu, 27 Apr 2023 12:58:23 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 7/8] fetch: introduce new `--output-format` option
+Message-ID: <ZEpVT-QjzYrmqgw-@ncase>
+References: <cover.1681906948.git.ps@pks.im>
+ <3b2cad066a3b3446fc335d6944a62bf79b0779bb.1681906949.git.ps@pks.im>
+ <kl6l1qk6o2jm.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/6] rebase -i: remove patch file after conflict
- resolution
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Haller <lists@haller-berlin.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
- <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
- <227aea031b588977f22f3f97faee981d79ade05c.1682089074.git.gitgitgadget@gmail.com>
- <xmqqwn25jbzw.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqwn25jbzw.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ZygrBdN4CiNAPbQO"
+Content-Disposition: inline
+In-Reply-To: <kl6l1qk6o2jm.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/04/2023 20:01, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> When rebase stops for the user to resolve conflicts it writes a patch
->> for the conflicting commit to .git/rebase-merge/patch. This file
->> should be deleted when the rebase continues.
-> 
-> Could you describe the reason why this file "should" be deleted a
-> bit better?  Once the user edits the files in the working tree and
-> tell "git rebase" with the "--continue" option that they finished
-> helping the command, and the command creates a commit out of the
-> resolution left by the user in the working tree and in the index,
-> the patch may no longer is needed, so I can understand if this were
-> "this file can be deleted"---in other words, again, this explains
-> why such a change would not be a wrong change that hurts the users,
-> but it does not explain why we want such a change very well.  Is
-> there a reason why a left-over patch file is a bad thing (perhaps
-> causing end-user confusion upon seeing such a patch that apparently
-> is for a much earlier step in the rebase in progress?  If so, that
-> might be a good justification to say we "should").
 
-Yes that's the reason - we don't want a stale patch when we stop for 
-another reason, I'll improve the commit message.
+--ZygrBdN4CiNAPbQO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best Wishes
+On Wed, Apr 26, 2023 at 12:40:13PM -0700, Glen Choo wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > @@ -2101,6 +2116,8 @@ int cmd_fetch(int argc, const char **argv, const =
+char *prefix)
+> >  			    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
+> >  		OPT_BOOL(0, "dry-run", &dry_run,
+> >  			 N_("dry run")),
+> > +		OPT_CALLBACK(0, "output-format", &display_format, N_("format"), N_("=
+output format"),
+> > +			     opt_parse_output_format),
+> >  		OPT_BOOL(0, "write-fetch-head", &write_fetch_head,
+> >  			 N_("write fetched references to the FETCH_HEAD file")),
+> >  		OPT_BOOL('k', "keep", &keep, N_("keep downloaded pack")),
+>=20
+> This change is good enough for fetching from a single remote, but if we
+> want to support "--all", we'd also need to propagate the CLI flag to the
+> child "fetch" processes. (The config option wouldn't have this bug
+> because the child processes would parse config and get the correct
+> value.)
 
-Phillip
+Oh, right, good catch. Will fix, thanks!
 
->> As the path is now used
->> in two different places rebase_path_patch() is added and used to
->> obtain the path for the patch.
-> 
-> OK.
-> 
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   sequencer.c | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> The patch text itself looks good in the sense that it correctly
-> implements what the proposed log message claims it "should".
-> 
-> Thanks.
+Patrick
 
+--ZygrBdN4CiNAPbQO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRKVU4ACgkQVbJhu7ck
+PpQP5RAAmnvt5b+8bMLAMJ5neXf5C4WepChaWeuMLf/hNQWbquyDKXl1IcpOGZeZ
+wFKRub+xpvnOvlRuQ8DOE6R9OPjO+lPaMleL8+T8dxB8OZE3i5wrJIA193pTSl9g
+HI1g3LkR6hmvvr6kVabU7cULp6He/qIYxjfvABStNcq6bXIjMh/HoiZ68zEURVjQ
+DlxZlg+vVx12I0JOtTR8cfDr/YXrgMDWaos9DUAMXQs8uBJ3qsyh6hAMbMUKtDd5
+nRZskQGS1ZWbeeo+6kVyHK6tgLJhjjwALeOP6K1+2VkIVZN7v/f4DLuOUM91ruuv
+tAKzU0xSSCIktwJws/+7BdamkA+xtcJzbCbRKQHK4fFAgUSTj3cuYUdeNGS6s8uI
+NXKCnnAG6+I7cfLCWF0PrmfRjK9DJc+WypGgCVJWE8SCAgLMpDuyYbMXZbo5RTKA
+z1rm/7BYaVvtYPOM9D5AKCo1DcGYnaR9MhQTYAmW8Gh3hL8wQvY5iW6KCGijvRoH
+biyUJZNhp4UingG6UfHnM+cikrKtYVMzb8aNErrQ/S2wlx5GPwjbzDC0MeaYbmzO
+bYGrmkPCj+2oe8J/VOw6dcG2FVT6HDSardnxH+zBN6xvogcBlUlvpcUvYPHzKqzF
+5mh9hQJRtijBc/lhS0epyagwghQ6OB6pT+GcPSnzDs0r6foKTVc=
+=D1RX
+-----END PGP SIGNATURE-----
+
+--ZygrBdN4CiNAPbQO--
