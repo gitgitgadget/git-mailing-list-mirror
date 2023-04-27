@@ -2,133 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73038C77B61
-	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 21:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0800EC77B61
+	for <git@archiver.kernel.org>; Thu, 27 Apr 2023 21:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344088AbjD0VaV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Apr 2023 17:30:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58578 "EHLO
+        id S232339AbjD0VgG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Apr 2023 17:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjD0VaU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2023 17:30:20 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33E421FFF
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 14:30:19 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-18665c1776dso6509782fac.2
-        for <git@vger.kernel.org>; Thu, 27 Apr 2023 14:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682631018; x=1685223018;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yoUOga1jd6YcjY+1GcryRawn6QQZ4s+anP7Epxdnd5Y=;
-        b=mlR/EZhAiWxOw9FA1yEKBJAjWx0xyR12lbmEThZFxTnAh+YxeY6UQ/VJqUamjcQNAC
-         /uLRgh6kcFe3+rmapEVSnSNpedfuvP6IG7+jw+NMbmv87uZt8//Wz5PbDbIFZBT4Xbf8
-         GNZb7lZnc6jM2THbVVKcDnwEbPAL95+4r7qxqUpwilNno5N20GzGTouwI+nvUXp/T30j
-         l1KFStdSaMNxRH5hz0TX1SBdLtOexenWnkH1zbHpMxt6CY2fN+WyzRa1f7LN3ZbRldMy
-         4XAs8sEPnN9JE8wFeHUIsAh2h6yLNzp+tH6aW3QVzdHAfewCEXXWTS62hCRi/Miz7z24
-         PNmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682631018; x=1685223018;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yoUOga1jd6YcjY+1GcryRawn6QQZ4s+anP7Epxdnd5Y=;
-        b=Gbwdcy6Znp9geyK3fW+pONQyBdyM5BGyhMJHh9qfFDG9/zQJCfN/O/YSTg2l4Oyynx
-         KwKZMAlG1ijY7WH7HRwb/gElPDcSVh7Zatyj8ofS3xJKKp4N3JKy9hsi9URl/l553AB1
-         kg8WqJNTec5xqXvMWeLQHO4JqVAzNu6jwe+Qc+kfpq9gvFqGBmtWjRID0nrXwJkTpquF
-         0yCl8b7ymINgaOEuNsgWtd/Uelt4mdpRoDiZwJAj32IbCKwwUhfTMOWW7U75tMY0+oEP
-         DoOqQ/21cISUQ5qS3kKIYizHLzW/lfifBR/sfqIA66e0gC3NN9UKH2w+MU4CYEoDTPwz
-         hbKw==
-X-Gm-Message-State: AC+VfDwTv2HC4e51nMcSu+MSS4h4ZeykbuWRRLa1QMbtltzcU3lSPBtM
-        2EpsO0nMU5H4mhMwP8Ga28o=
-X-Google-Smtp-Source: ACHHUZ7mBSZmcwgz/pLSbVGMhFKWP730dpz0bZ+NcrOD9ek2kHb4nzRg1pGOBQBrST7jTu0U+zDpqw==
-X-Received: by 2002:a05:6870:a701:b0:18e:b91c:7038 with SMTP id g1-20020a056870a70100b0018eb91c7038mr1744403oam.48.1682631018352;
-        Thu, 27 Apr 2023 14:30:18 -0700 (PDT)
-Received: from localhost ([2806:230:6026:c32c:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id o16-20020a4a2c10000000b0054574f35b8esm8818887ooo.41.2023.04.27.14.30.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 14:30:17 -0700 (PDT)
-Date:   Thu, 27 Apr 2023 15:30:16 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Message-ID: <644ae968769f2_7f4f2942d@chronos.notmuch>
-In-Reply-To: <xmqq8reg96cu.fsf@gitster.g>
-References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
- <20230418070048.2209469-2-felipe.contreras@gmail.com>
- <xmqq8ren8xz1.fsf@gitster.g>
- <644684018a766_aba29424@chronos.notmuch>
- <xmqq8reg96cu.fsf@gitster.g>
-Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S229750AbjD0VgE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2023 17:36:04 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 640B0212C
+        for <git@vger.kernel.org>; Thu, 27 Apr 2023 14:36:03 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 443155A2B2;
+        Thu, 27 Apr 2023 21:36:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1682631362;
+        bh=+jnhkB70wJ/Mhk2iAqcPP1oC30IBgP3PlDr6JDOxbas=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=qiwtu4oDPBuEkOodBrI37rh+fkqfm2QKUz8zicIzvfTExeC03+C8gZ9ycfg5YaDpW
+         mo0AtAT9yYe+/SNgUPXewhBXAdcS7ghQjVqngiyJaQIbbXlLsQJBarfQnuc17S3k4Z
+         c5xzCRHfY0IcYJOQBqxhGBqv9SBHyI48Vljc1P4u35+oK+o2bnNJFPbHgpWaNRUBv/
+         oYnf0MnfCJ78+8/Ow3/SQcyqvIIuCJSCD5WKw+kQvV+WR2sLEQrxiqLuoAPk46I/sw
+         NNCJrV1XbHmpqZ3FU9+JrT+OL26ARb5+SCo1EkFHD35NBVQTIn2HVLkQ6mys/cuPxA
+         S8lMEwAji4nA5NYfa7VTUwqAgvFppFVAbaSp+BrueB/IjDTxotbmCgorS0aEpE4O3F
+         Gwg2sb/YdyH96DFx0fuWY0iFAG2evtkEQRAXBduITQkX7BW3TMI9f9t7nKv0aYDzRo
+         AgdJ68eV6R4bPYZwfyXCUs3RFqYHoNfAVLhbof4M7YouyneS7n2
+Date:   Thu, 27 Apr 2023 21:35:58 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] add an external testing library for unit tests
+Message-ID: <ZErqvkCIkytTCvZr@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+References: <20230427175007.902278-1-calvinwan@google.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="iSfcrtr+jmfrvVYh"
+Content-Disposition: inline
+In-Reply-To: <20230427175007.902278-1-calvinwan@google.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > No, it's for the formatting machinery.
-> >
-> > The fact that both asciidoc and asciidoctor happen to understand our quircky
-> > formatting in this particualr situation doesn't mean it isn't quirky.
-> >
-> > In this particular case the parsers do understand what we are trying to do,
-> > because we just just pepper list continuations (`+`) everywhere and it happens
-> > to work.
-> 
-> I'll stop at pointing out that the first "no" sounds much stronger
-> than the text that tries to substantiate it, which says that the
-> machinery works fine without the changes.
 
-The question was if this patch was done *purely* for the benefit of human
-readers:
+--iSfcrtr+jmfrvVYh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > > Am I correct to understand that this patch is done purely for the benefit
-> > > of human readers, and not for formatting machinery?
+On 2023-04-27 at 17:50:05, Calvin Wan wrote:
+> In our current testing environment, we spend a significant amount of
+> effort crafting end-to-end tests for error conditions that could easily
+> be captured by unit tests (or we simply forgo some hard-to-setup and
+> rare error conditions). Unit tests additionally provide stability to the
+> codebase and can simplify debugging through isolation. Turning parts of
+> Git into libraries[1] gives us the ability to run unit tests on the
+> libraries and to write unit tests in C. Writing unit tests in pure C,
+> rather than with our current shell/test-tool helper setup, simplifies
+> test setup, simplifies passing data around (no shell-isms required), and
+> reduces testing runtime by not spawning a separate process for every
+> test invocation.
 
-Even if the conclusion was that it was done primarily for the benefit of human
-readers and secondarily for machine parsers (it shouldn't), that's still a
-"no".
+I think this is a good idea.  Like Junio said downthread, we need to
+have integration and end-to-end tests, and I think those will continue
+to compose the majority of our tests.  However, having simple and easy
+to use unit tests would be really valuable for testing things like our
+hash and HMAC implementations, as well as a variety of other library
+functions, including our strbuf code.
 
-> > This discrepancy confused Jeff in [1].
-> 
-> And this is a good reason to add this change for humans.
-> 
-> > It's simply a good practice to follow the format asciidoctor documentation:
-> 
-> That one I would agree with 100%.
+At work, I recently ported a project from C with no unit tests to Rust
+with unit tests (and in both cases, our existing integration and
+functional testsuite) and found that writing unit tests let us have
+substantially more confidence in the correct functioning of our code.
 
----
+I think it's great that we're using existing TAP functionality as well.
 
-To draw a parallel with a situation the git dev community is much more familiar
-with: we can think of asciidoc as the shell language. AsiiDoc is trying to be a
-specified language [1], just like POSIX shell.
+If you're looking for some proof-of-concept projects to illustrate why
+this is useful in v1, might I suggest some of the subsystems above?
+Assuming it lands, I plan on sending some tests for the percent-encoding
+in the strbuf code and some more aggressive testing of our block SHA-256
+and HMAC implementations if nobody gets to it before me.  (Mostly
+because this is stuff I wrote or touched and would like to have more
+confidence in.)
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-The fact that some syntax happens to work on all the *current* shells does not
-mean it is specified, and it does not mean that it must work on future shells.
+--iSfcrtr+jmfrvVYh
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Similarly, the fact some asciidoc syntax happens to work on the current
-transformers doesn't mean it will work on all future ones. Moreover,
-transformers are not the only consideration, as text editors trying to parse
-the same text also matter.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
 
-Not to mention blurry lines like human-like-machines like LLMs helping humans
-with the code, and machine-like-humans because apparently the way I read the
-asciidoc code is different than my fellow humans (I'm thinking of how a parser
-could interpret it).
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZErqvgAKCRB8DEliiIei
+gSpWAP9BF0dzjYAhYImh92GNcxTBuUOy7l+31tQVduw3YnjVSgD9ElXj91BsXewF
+0wHRzNGfp+eP7oQ27ChNOQIBvsgafQU=
+=Unzk
+-----END PGP SIGNATURE-----
 
-Either way, if the question was about *my* motivation for the patch, it was
-just consistency, which helps both humans and machines.
-
-Cheers.
-
-[1] https://asciidoc-wg.eclipse.org/
-
--- 
-Felipe Contreras
+--iSfcrtr+jmfrvVYh--
