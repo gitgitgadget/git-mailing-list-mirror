@@ -2,90 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C420C77B60
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 20:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 787C6C77B61
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 20:27:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345869AbjD1U02 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 16:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45598 "EHLO
+        id S1346441AbjD1U1O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 16:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbjD1U00 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 16:26:26 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3326793
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:26:25 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-63b8b19901fso516924b3a.3
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:26:25 -0700 (PDT)
+        with ESMTP id S1346347AbjD1U1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 16:27:11 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF841FEA
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:27:10 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-504dfc87927so227040a12.0
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682713584; x=1685305584;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9IUCIAtg4f7W4isto4jFCrP9x+Rtj4hhxrsOy4gPmXg=;
-        b=GC1ey08XyuIPj/Nl9zuWnATa1XBQLLLlNMmA4rgbZTxpY94zqOfAjdiJXPI1ev3dLM
-         1ut1q7dX5C0FOQsChbJKU2r6god/4817EFSjMPWf9xwGuEUmy8BXFiX1Uc6H6b12bHB2
-         resetQtI1Wd/ZxG6pvSpH8xv735//6ymT8vVwkqAQB5pxldqythVdhtx0AWjj9mvDQj4
-         /8hIuFWtOd24+jkmvNBkOhGsWkcO7uKtngAALwizmYCEs0mjIRW3rGgsTu2+rMIBsoVn
-         CiqL5VfLy5wNEy12eg3PLqQQGAgwXPn9Ssuh7T43J52A9Oh4yiTT6b0dyeX7zq6jeXsm
-         BtNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682713584; x=1685305584;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20221208; t=1682713628; x=1685305628;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=9IUCIAtg4f7W4isto4jFCrP9x+Rtj4hhxrsOy4gPmXg=;
-        b=gR2lrTQVQDnTWbCaJL7A6RyhoVQzhEj5GwFedzmNoT819xOh+zdhOU68rffKH/m2CI
-         88lV9rp+tLfRju/P03CeGedOWt8RzM0s5Hhe7PduxgnYigcPcjpUsSwdUJIKFTWoOD7M
-         eTYm5q9utCzdaDq5XtRWaaqw3o+uFiOPCW5SEUrr79WUkb85RcpbIh943y7RwkUvZ/Hu
-         dUlwSl7djQMOm7au48IYHmBPfbGK62KtWUCkyV9L5txXJIAK0sEhqrTllTq2CFdpVEjy
-         INTFUqI7oodoeJGznceWMpYXlLZAnifMMlrAT2Absg+AI5CRuJJ6i6QXzYp6MD1lpDua
-         vsJw==
-X-Gm-Message-State: AC+VfDyJPf+HE36bX1mneLbYvHnz7uQAhEBqkfVTFNcKobsadEqby7qp
-        rp6D8QMaTnuX7PtkvqLq6/o=
-X-Google-Smtp-Source: ACHHUZ7WhhBVgwvK24CZEk/lBUptW38FJW+gCQYU9so0S1S896bRHn7A7m1EGGhuE8bSYHJbHk04BA==
-X-Received: by 2002:a17:902:c946:b0:1a6:e564:603c with SMTP id i6-20020a170902c94600b001a6e564603cmr7915978pla.11.1682713584440;
-        Fri, 28 Apr 2023 13:26:24 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id s7-20020a170902b18700b001a814fcbd7dsm13627995plr.185.2023.04.28.13.26.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 13:26:23 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] setup: trace bare repository setups
-References: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
-        <xmqqttx1gcmr.fsf@gitster.g> <ZEv8AcxQW7B2H8uJ@google.com>
-Date:   Fri, 28 Apr 2023 13:26:23 -0700
-In-Reply-To: <ZEv8AcxQW7B2H8uJ@google.com> (Josh Steadmon's message of "Fri,
-        28 Apr 2023 10:01:53 -0700")
-Message-ID: <xmqq354jda8g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        bh=JFq6YQLcG/HEU5KQ+NwUgn4IITBDgJZVMEnFncXvF8A=;
+        b=ruYUQORskxB+aA+Pj5dwTLpdNoemaW1bSke1Tzi4ykMU3Q/yvcqB7T4nMQwwKeOvzP
+         06i5gTvhwqKfJTs7x63ABv1GP5zREM0ainHB7xw5kUFfqu/B35CRjWbqa/sgXBtYRR4T
+         tZGAFX6ONN3Tu+fPaN9Krm45woN4Fg+Nbm925STiE8W8SZy1FJyjDxe0Y3qPKIco3Zyp
+         KGw7eQ1/6Xol6x+nCbml/fBz56pfpwjP3ivZvbiMjTdUQGAdrla+fTGPoopv52uqvJpO
+         /HphNsHtNYwE0KWLobqrvRFX1BSgQefCf7opQfF3phxueBC8Et++W4LwFdr5La7vTmvy
+         UOvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682713628; x=1685305628;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JFq6YQLcG/HEU5KQ+NwUgn4IITBDgJZVMEnFncXvF8A=;
+        b=iroIb3EOYY/03+t6TrY61BDhbDzXs52vNbR9tu3/NP/uTqcX8gxAPOO4tY8BYZiNev
+         hfWhDHd5zfKfu+V5zsPcWBRZkbT+t3mNd9nqYH98RDA41sz/gW2UqDJ18gVYmNw8W7iu
+         wUQqsa1mJ4SYCxMnV5/mf6eyKFRzB+pVJxqSdmQWfd5OqsHRx7fgX3rLcWQ/MvFue7cn
+         mZbyMjO5ISlNJnG30mVPuGsyVcgzoMzUaMgetpvI9FUUNGxOMwO94qlkXwW8iRvEixWX
+         9WEpAyuYnM6ziwAhA980Zfp9PZpEgrQMHmIKeQLA5gHbvzLovxyLv9Y6MdwVySPEuRXP
+         vc8w==
+X-Gm-Message-State: AC+VfDzwM+OxluXP+zfz+N5C6dRqAgd5fGhs3edlrFn1KTK0Ad44HIKZ
+        DNicZronfP4yiaKooFfFPdSR0q5hnsKvO2KyxxUKNYryNN84UQ==
+X-Google-Smtp-Source: ACHHUZ4CNTEcwi4d3CTCw++6dn3BF6YBn/cFD5Ox2dpL8GcKxEyCmIFz9AD9iX2VwfIxZJ04deAI0vBsrVVbnItwWTE=
+X-Received: by 2002:aa7:c3d9:0:b0:4fb:78a0:eabe with SMTP id
+ l25-20020aa7c3d9000000b004fb78a0eabemr77661edr.14.1682713628439; Fri, 28 Apr
+ 2023 13:27:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 28 Apr 2023 22:26:55 +0200
+Message-ID: <CAP8UFD3-8tvJpu=-=55Lfkty1pnafbcK0_i_9pahe7RkQYNMKw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 98
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Mathias Krause <minipli@grsecurity.net>,
+        Stephane Odul <stephane@clumio.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Bruno Brito <bruno@git-tower.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Hi everyone!
 
-> On 2023.04.27 15:54, Junio C Hamano wrote:
->> Josh Steadmon <steadmon@google.com> writes:
->> 
->> > @@ -22,12 +33,12 @@ test_expect_success 'setup bare repo in worktree' '
->> >  '
->> >  
->> >  test_expect_success 'safe.bareRepository unset' '
->> > -	expect_accepted -C outer-repo/bare-repo
->> > +	expect_accepted_implicit -C outer-repo/bare-repo
->> >  '
->> 
->> Perhaps futureproof this test piece by explicitly unsetting the
->> variable before starting the test?  That way, this piece will not be
->> broken even if earlier tests gets modified to set some value to
->> safe.bareRepository in the future.
->
-> Actually, explicitly setting the variable here is equivalent to the
-> following test case, so I'll just remove this one.
+A draft of a new Git Rev News edition is available here:
 
-I meant explicitly UNsetting, though?
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-98.md
+
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/639
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Sunday
+April 30th in the evening.
+
+Thanks,
+Christian.
