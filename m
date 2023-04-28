@@ -2,65 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80D53C77B7E
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 19:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 760B4C77B60
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 19:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346433AbjD1TDB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 15:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43402 "EHLO
+        id S1346346AbjD1TJq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 15:09:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344155AbjD1TDA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 15:03:00 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FBC1BE7
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 12:02:59 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-63b8b19901fso416605b3a.3
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 12:02:59 -0700 (PDT)
+        with ESMTP id S229661AbjD1TJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 15:09:44 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC021E9
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 12:09:41 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1a66b9bd893so2792355ad.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 12:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682708579; x=1685300579;
+        d=gmail.com; s=20221208; t=1682708981; x=1685300981;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6VP6S/96ZkkOJdcJkD/HQJiYzAJQ3p/HH3nduNGu5Vg=;
-        b=fByb3ctrow49QveyIysTAkFdXtHaIE643twJi2kY90btTut8TmMxOJldZx2obTUuID
-         CDlwU/8kDAd6UxJUl7d2JhMBi2wLouHpXavSk/OihlfWc4XTvxs/fHITNm61/OcvxbAY
-         IzqnhT5wOreXIqLREPhLdS90KuDsUmAy0B3t0ZAdsuwyzBOjviINtlRFRFuM+bKumXe9
-         yY+d/QnPpu4os10i7sqeZLHaJd9Gi3sqcckdm00J2vhy4JuXUGCkmVPrS2w7w/yYBpqB
-         b11q2iV2BY0dTZupQ+ysYzVVDOsF0ulDK6E26i73alrAdgSbcDFsJmL8+JCX5bAUQQ41
-         v+SQ==
+        bh=CPDe6wf5wlppQjuodjaflESrwqCiYxtKdb+XgMxXSec=;
+        b=UxhDQwMl1LqAYh73c88GphlbUK/kKEx3jx+WHW3fuUMwpcqqxf6x9ChpyOwJAR5tru
+         gN33ku5GCARNWfAzZCgkCphTEmG5g0eEbNHFhyfMNHhhBj0Bv4Z47FGAwbQHj13xgM4h
+         5V3fgaGiR+2LhriFAcXNFHW88OpG3w1bFcUSKYL84l1wi7Wg5g9D1ZKB4pkW5OCPHPJZ
+         tXj8dwc0nOxM/uVnjjm3/QjS4IiWuVa2NZo3affpG86+JhU2lOKZ7xYTQFftZwIi/K30
+         kKEJZArrBhEYdiJxRlO12meL2y4f8K9wuFZOk5bCPc+VRBp6XnP9XMVT76/Obv4uJaA9
+         Z4wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682708579; x=1685300579;
+        d=1e100.net; s=20221208; t=1682708981; x=1685300981;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=6VP6S/96ZkkOJdcJkD/HQJiYzAJQ3p/HH3nduNGu5Vg=;
-        b=kQMH+9rZor9uDmz7B7HModfcwbfP6Vp7w5NsmyKrhaCCNDDftmKY19qyL8yFN8WaTj
-         dd1n+oXWDbSEN07CmZc0Bz77EyXL6PhblcHUyDFtHNmOYYLCSPo1OOdQSNybQNKw7UbB
-         buKJ0KE59vVqfPqLZAgPRCfxfUjzMmzDT0SGSm7saop5UDizY+CAjYhGHmc+aLJ2+59m
-         8GY2588qiRobgnl0Oe52WN0bNMAz5M3344i6y38/c3Wy+GH6LVFUaZ9cGeDCCCPiZ/UG
-         txm25h31wFSxA7ZERy0iphsfVS6jVPKug+Tn225JAdjBxaxXvGlOyRc/3z9UG0v2j8zT
-         4Rmw==
-X-Gm-Message-State: AC+VfDy+/H72Cl5qyJXvUlzm3nsEtXP+5yMrdl1DGXqZdI0o2ueT/lLj
-        llBFMZ8LKsYKxJpbHwXG1RA=
-X-Google-Smtp-Source: ACHHUZ5MHeXCX4ylgkdzM4DpaYID7ZVTIU8zcZsKyxn3HUK+uGH3raNVPuGdc/3lOWkVEI9iHR5Q1g==
-X-Received: by 2002:a05:6a00:2d84:b0:63b:e4:554 with SMTP id fb4-20020a056a002d8400b0063b00e40554mr10722914pfb.4.1682708579180;
-        Fri, 28 Apr 2023 12:02:59 -0700 (PDT)
+        bh=CPDe6wf5wlppQjuodjaflESrwqCiYxtKdb+XgMxXSec=;
+        b=EKTaGzGI0Enk9uOm59wTLfumf/ZIRpNz3fI3E0L96+4//waz79jZno2f0tWg43FuUH
+         Qj6q0A33Nth9s1Xen2Y4z6XO1f/lfyOMfQveqt2xv33ac8x5tMS2Hgo+lm62cCdwA7dG
+         lXjTU3wZTXGs4TJscwRTah1LEOwkpq4J6vjbX83GoASTssSPJpHvIDFPEhW3GGher9Gl
+         tqlY6IoaU6eqiOXsbDP1iunWwih7pQQ1bHhQN9rR7I+4NG6xpZhw8jp+rslygXxV36W0
+         DeP5U9gKVhEgeny2zk4kP5ysqUPApvVDStkhkrpWLC0tMvJxm7CIH8sxXntvTf8djeaa
+         9mXg==
+X-Gm-Message-State: AC+VfDymv6fASU2QMlmA8G0rAlhj2wNWXJ6PhbXZoAmN2DyQ9uFavIHv
+        Zx26CGJwVQZbFzb5Qck6MSK1ZJlDbwA=
+X-Google-Smtp-Source: ACHHUZ6aJ2xDmeuSiSO6DrSQaOtVseENDhOlSnm00nB5On6X62HVQxCGC7FIWXJyCZb+yMbD5p2t9g==
+X-Received: by 2002:a17:902:f54d:b0:1a1:e01e:7279 with SMTP id h13-20020a170902f54d00b001a1e01e7279mr6993707plf.4.1682708981062;
+        Fri, 28 Apr 2023 12:09:41 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id u20-20020aa78494000000b0063b7c42a070sm15540492pfn.68.2023.04.28.12.02.58
+        by smtp.gmail.com with ESMTPSA id s1-20020a170902988100b001a1fe40a8dasm13519916plp.262.2023.04.28.12.09.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 12:02:58 -0700 (PDT)
+        Fri, 28 Apr 2023 12:09:40 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] sequencer: actually translate report in do_exec()
+To:     git@vger.kernel.org
+Cc:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Subject: Re: [PATCH v2 3/3] Capitalization and punctuation fixes to some
+ user visible messages
 References: <20230323162234.995485-1-oswald.buddenhagen@gmx.de>
         <20230428125649.1719796-1-oswald.buddenhagen@gmx.de>
-        <20230428125649.1719796-2-oswald.buddenhagen@gmx.de>
-Date:   Fri, 28 Apr 2023 12:02:58 -0700
-In-Reply-To: <20230428125649.1719796-2-oswald.buddenhagen@gmx.de> (Oswald
-        Buddenhagen's message of "Fri, 28 Apr 2023 14:56:48 +0200")
-Message-ID: <xmqqcz3nde3h.fsf@gitster.g>
+        <20230428125649.1719796-3-oswald.buddenhagen@gmx.de>
+        <xmqqttwzded6.fsf@gitster.g>
+Date:   Fri, 28 Apr 2023 12:09:40 -0700
+In-Reply-To: <xmqqttwzded6.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        28 Apr 2023 11:57:09 -0700")
+Message-ID: <xmqq7ctvddsb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,51 +70,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> N_() is meant to be used on strings that are subsequently _()'d, which
-> isn't the case here.
-
-Good eyes.
-
+> Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 >
-> The affected construct is a bit questionable from an i18n perspective,
-> as it pieces together a sentence from separate strings. However, it
-> doesn't appear to be that bad, as the "assembly instructions" are in a
-> translatable message as well. Lacking specific complaints from
-> translators, it doesn't seem worth changing this.
+>> These are conscious violations of the usual rules for error messages,
+>> based on this reasoning:
+>> - If an error message is directly followed by another sentence, it needs
+>>   to be properly terminated with a period, lest the grammar looks broken
+>>   and becomes hard to read.
+>> - That second sentence isn't actually an error message any more, so it
+>>   should abide to conventional language rules for good looks and
+>>   legibility. Arguably, these should be converted to advice messages
+>>   (which the user can squelch, too), but that's a much bigger effort to
+>>   get right.
+>
+> I think both of the above are good guidelines to follow, with a hint
+> for a longer-term plan.  Good description.
 
-True that we frown upon sentence Legos like this.  At least the
-original message in C locale does not break the flow too badly, so
-hpoefully all the supported languages are happy with the existing
-composition.
+I think the above two deserves to be added (in some rephrased form
+to fit better) to the Documentation/CodingGuidelines, somewhere in
+the following section:
 
-Will queue.
+--- >8 ---
+Error Messages
+
+ - Do not end error messages with a full stop.
+
+ - Do not capitalize the first word, only because it is the first word
+   in the message ("unable to open %s", not "Unable to open %s").  But
+   "SHA-3 not supported" is fine, because the reason the first word is
+   capitalized is not because it is at the beginning of the sentence,
+   but because the word would be spelled in capital letters even when
+   it appeared in the middle of the sentence.
+
+ - Say what the error is first ("cannot open %s", not "%s: cannot open")
+
+--- 8< ---
+
+Volunteers?
 
 Thanks.
-
-
->
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> Cc: Junio C Hamano <gitster@pobox.com>
->
-> ---
-> v2:
-> - mention the word puzzle in the commit message
-> ---
->  sequencer.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 3be23d7ca2..0677c9ab09 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3628,7 +3628,7 @@ static int do_exec(struct repository *r, const char *command_line)
->  			  "  git rebase --continue\n"
->  			  "\n"),
->  			command_line,
-> -			dirty ? N_("and made changes to the index and/or the "
-> +			dirty ? _("and made changes to the index and/or the "
->  				"working tree\n") : "");
->  		if (status == 127)
->  			/* command not found */
