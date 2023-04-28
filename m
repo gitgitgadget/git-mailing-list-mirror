@@ -2,55 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C27EC77B61
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 22:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A2FBC77B61
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 22:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346778AbjD1WbN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 18:31:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
+        id S1346835AbjD1WmW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 18:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346512AbjD1WbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 18:31:12 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C93046B7
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 15:31:11 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-54f6dd3b329so7972697b3.0
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 15:31:11 -0700 (PDT)
+        with ESMTP id S1345956AbjD1WmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 18:42:21 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1B31FD2
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 15:42:20 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-640f6f95532so560460b3a.2
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 15:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1682721070; x=1685313070;
+        d=google.com; s=20221208; t=1682721739; x=1685313739;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=diZJo7blTk6ex5D4gc16NhlWzxyMw3EnBt4V/vEUC6E=;
-        b=DLwaKTyzNHFe1GQ+JeizggQpkMfqhVOzuOYywCsRGZkzXhRsXXr0tP2khf+DhylopF
-         AIC8koLEEx2L4GzH4MwXYPRXfRUJi0trOr7wssCLmefLKVPoZ3e12hUHP2ze9wHqL1ye
-         QNg7IvUm5mVJLtzdXLB1pRzGCgn2hIQTX0sbRJBtUyJ6k0SeKfJ6h767WQbs/LQpLmol
-         3mlXRqsHSavcPasNr9nhvUyaZPezlIF/tXlyyIKx5EUCtpuIzo3CRRsMsxvpqG4Kwtz+
-         ChDT+/k0uBzgShhIaCuqTg0pY1fFgLz3irbBfYBg+n0I3HEaP9htEnbAb7tlmg7J5yRz
-         Bb3g==
+        bh=x7SyDsITP+EJ5TT8+/lU5/qkoPSyTfSqen9T38Ju+Wk=;
+        b=xd8yVPCL2Pt95LVYVbACM6fv07f9Skv3vKmt5xsbFmFXkqEu9t4Rm2glesy8t/4lNR
+         7MPF60WbBeYmf8m0nseZU/WbGvyPATEtbKAkYonN3EODVM4/E6RdCU/KKgHq7fDA5CgO
+         /4GtZrPxMTQKBo7zRrk2nuQ8SEwK+ruFyx4XCAtOJlkA0My+gZmWEuswWN2CdxVIKXHd
+         gyzuVmmRwPYImuVLf0UQQ3algbbRxxpnO8P0Lz9amvA/Q201FMPSWXlooJtAZoSbyRS/
+         ERqAxfQ4Kxfq0O5OQTRks97n53864/fIzktmNXJnRW623shxROEoW53sBP52Reo3rDRn
+         f5Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682721070; x=1685313070;
+        d=1e100.net; s=20221208; t=1682721739; x=1685313739;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=diZJo7blTk6ex5D4gc16NhlWzxyMw3EnBt4V/vEUC6E=;
-        b=LGDA99BqFzZS/DprbImUvUe8ovboruD/xLprYeZ3uayHpAnbApd9rX6unvtD/qk0Df
-         P1uMhb8SOmoqZUQzqdXof5ISD5cyQRTlldvrWc20vDEuBg4HycLx6OSyrNVftGTAFQw+
-         L70gzIww+jeEnUFYRfAaO126zM/VAONNbM9GctqGEmDcEuyQwGXClD7Zot3RWR+5zU3i
-         5D3QdHwYaOyKl74CSVEUzqwSDF+OCRMtonYFw2NXEh90WvYaOL48TurJmNIe9KIYUTcG
-         9q4DZN2MqT5gPOEC+gfi5WBYe5JxV8PStbYaZOKWNIZR1+1zqzV3s/7CuUsxJ/XcVp99
-         I1Gg==
-X-Gm-Message-State: AC+VfDzQncv1XaWcVUliwHj0ueWxnjHkrg+ERkHtnckdTFVLsk/ivvCx
-        JuEH4izh18BohR1V/wjQ8kG2pYzN/LOJEQ==
-X-Google-Smtp-Source: ACHHUZ63h9XWd1IPeqi4EpqnhYQmMWgjN3FVrTvqLfdfVuomsNKEstFxnXFS0eA/1wgVRlaTcq9teUaozh8V8w==
+        bh=x7SyDsITP+EJ5TT8+/lU5/qkoPSyTfSqen9T38Ju+Wk=;
+        b=ED1QOGXynm8r/xk+d57qrfTOICC4ycHD1onLazPGceo2R3wHkGxxMH1YRrsKrgMQQ1
+         WhhLyUrxSRZMqxW5aeGST8wHMPakX8hFkC4mO2XQgSRZy2E6Z7nvZmQ8o/reZQ3QqzW5
+         E3G1lsbTjd3Ze2+4s59/lwsfo8BwmidOe/O8uqedHAfTvMZRX9mb2y/NXxan4yDKA2cR
+         fw3oLipzZfJmOcn6XaT8ct800p+dgbEifaRrY7oHD11FnA985jnNow6zkiLLR8BD90DF
+         8RLQzW6cDPrdLe2g3Eo38+LKNh/SrJkcY74Pp6jCUbpOutbm9NokM+J+SvqMcP7QJ1GZ
+         XZzg==
+X-Gm-Message-State: AC+VfDwoO7HE42IMa7U6Ikc0a9k+ilMjHl8clqyMuU9zB3TsrCT38BRr
+        N8bSqEDKjHkb68eIhnKskgyCZwnjGGnw8A==
+X-Google-Smtp-Source: ACHHUZ73jkq2P4LUkD67++T+aGs5paM86fJOPFF8fGBp0L+F5weX68pBCGAqSk5wctq01oGBFtXJscPeYglXRA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a81:c406:0:b0:552:e74d:318e with SMTP id
- j6-20020a81c406000000b00552e74d318emr4072354ywi.7.1682721070474; Fri, 28 Apr
- 2023 15:31:10 -0700 (PDT)
-Date:   Fri, 28 Apr 2023 15:31:08 -0700
-In-Reply-To: <0335e5eeb4ded336c5ff7c8888c8aab9dfed2505.1682593865.git.ps@pks.im>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:bc4:b0:63d:2cff:bfbc with SMTP
+ id x4-20020a056a000bc400b0063d2cffbfbcmr1763475pfu.3.1682721739609; Fri, 28
+ Apr 2023 15:42:19 -0700 (PDT)
+Date:   Fri, 28 Apr 2023 15:42:18 -0700
+In-Reply-To: <d7c1bc1a80406ad320c2de684e0c97ba14827c7a.1682593865.git.ps@pks.im>
 Mime-Version: 1.0
-References: <cover.1681906948.git.ps@pks.im> <cover.1682593865.git.ps@pks.im> <0335e5eeb4ded336c5ff7c8888c8aab9dfed2505.1682593865.git.ps@pks.im>
-Message-ID: <kl6l5y9f3ahf.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 7/8] fetch: introduce new `--output-format` option
+References: <cover.1681906948.git.ps@pks.im> <cover.1682593865.git.ps@pks.im> <d7c1bc1a80406ad320c2de684e0c97ba14827c7a.1682593865.git.ps@pks.im>
+Message-ID: <kl6l354j39yt.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 8/8] fetch: introduce machine-parseable "porcelain"
+ output format
 From:   Glen Choo <chooglen@google.com>
 To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -64,62 +65,56 @@ X-Mailing-List: git@vger.kernel.org
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> @@ -1894,6 +1902,9 @@ static int fetch_multiple(struct string_list *list, int max_children)
->  		     "--no-write-commit-graph", NULL);
->  	add_options_to_argv(&argv);
+> A notable ommission here is that the output format does not include the
+> remote from which a reference was fetched, which might be important
+> information especially in the context of multi-remote fetches. But as
+> such a format would require us to print the remote for every single
+> reference update due to parallelizable fetches it feels wasteful for the
+> most likely usecase, which is when fetching from a single remote. If
+> usecases come up for this in the future though it is easy enough to add
+> a new "porcelain-v2" format that adds this information.
+
+We discussed this elsewhere in the thread, but if we are just adding
+information (and not omitting existing information or shuffling it
+around), I would prefer for us to make the format extensible using flags
+than to add a whole new format enum. We can't imagine what other
+information users might want (maybe the remote ref name?), and it would
+be nice to avoid bumping the 'porcelain version' unnecessarily.
+
+I agree that this format is good enough as a starting point, though.
+
+It's not new to v2, but I've mentioned my reservations on
+--output-format on:
+
+  https://lore.kernel.org/git/kl6ledo33ovx.fsf@chooglen-macbookpro.roam.corp.google.com/
+
+I will be out of office all of next week. If, in the meantime, everyone
+else decides that --output-format=porcelain is good enough, I'm happy to
+accept the result.
+
+> @@ -127,6 +193,24 @@ test_expect_success 'fetch output with HEAD and --dry-run' '
+>  	test_cmp expect actual
+>  '
 >  
-> +	if (format != DISPLAY_FORMAT_UNKNOWN)
-> +		strvec_pushf(&argv, "--output-format=%s", display_formats[format]);
+> +test_expect_success 'fetch porcelain output with HEAD and --dry-run' '
+> +	test_when_finished "rm -rf head" &&
+> +	git clone . head &&
+> +	COMMIT_ID=$(git rev-parse HEAD) &&
+> +
+> +	git -C head fetch --output-format=porcelain --dry-run origin HEAD >actual &&
+> +	cat >expect <<-EOF &&
+> +	* $ZERO_OID $COMMIT_ID FETCH_HEAD
+> +	EOF
+> +	test_cmp expect actual &&
+> +
+> +	git -C head fetch --output-format=porcelain --dry-run origin HEAD:foo >actual &&
+> +	cat >expect <<-EOF &&
+> +	* $ZERO_OID $COMMIT_ID refs/heads/foo
+> +	EOF
+> +	test_cmp expect actual
+> +'
 > +
 
-I think these lines belong inside add_options_to_argv(), since that's
-also used to prepare argv for fetch_submodules(), so we'd also get
-support for --recurse-submodules. (I wish I had spotted that in v1,
-sorry. Thankfully they use the same helper function, so we only have to
-do this once.)
+Now that the earlier test also tests without --dry-run, shouldn't this
+one too?
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-  diff --git a/builtin/fetch.c b/builtin/fetch.c
-  index 422e29a914..7aa385aed5 100644
-  --- a/builtin/fetch.c
-  +++ b/builtin/fetch.c
-  @@ -1796,8 +1796,11 @@ static int add_remote_or_group(const char *name, struct string_list *list)
-    return 1;
-  }
-
-  -static void add_options_to_argv(struct strvec *argv)
-  +static void add_options_to_argv(struct strvec *argv,
-  +				enum display_format format)
-  {
-  /* Maybe this shouldn't be first, idk */
-  +	if (format != DISPLAY_FORMAT_UNKNOWN)
-  +		strvec_pushf(argv, "--output-format=%s", display_formats[format]);
-    if (dry_run)
-      strvec_push(argv, "--dry-run");
-    if (prune != -1)
-  @@ -1908,10 +1911,7 @@ static int fetch_multiple(struct string_list *list, int max_children,
-    strvec_pushl(&argv, "-c", "fetch.bundleURI=",
-          "fetch", "--append", "--no-auto-gc",
-          "--no-write-commit-graph", NULL);
-  -	add_options_to_argv(&argv);
-  -
-  -	if (format != DISPLAY_FORMAT_UNKNOWN)
-  -		strvec_pushf(&argv, "--output-format=%s", display_formats[format]);
-  +	add_options_to_argv(&argv, format);
-
-    if (max_children != 1 && list->nr != 1) {
-      struct parallel_fetch_state state = { argv.v, list, 0, 0 };
-  @@ -2403,7 +2403,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
-      if (max_children < 0)
-        max_children = fetch_parallel_config;
-
-  -		add_options_to_argv(&options);
-  +		add_options_to_argv(&options, display_format);
-      result = fetch_submodules(the_repository,
-              &options,
-              submodule_prefix,
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-
-I tested the result of that locally with --recurse-submodules, and
-it works.
