@@ -2,66 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03611C77B61
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 20:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BC70C77B61
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 20:46:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346683AbjD1UoO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 16:44:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33148 "EHLO
+        id S1346720AbjD1UqK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 16:46:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345728AbjD1UoM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 16:44:12 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38191FF2
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:44:11 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b62d2f729so372500b3a.1
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:44:11 -0700 (PDT)
+        with ESMTP id S1345728AbjD1UqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 16:46:08 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC901FF2
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:46:08 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-63b8b19901fso540084b3a.3
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682714651; x=1685306651;
+        d=gmail.com; s=20221208; t=1682714767; x=1685306767;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Q79QINdjZCCYGIei7fS1arJPfBN/cNGsue9Yiff6C3A=;
-        b=FQpp8r2+GXhXR5t35KDhRjOcmP7STHq3dskLpcFMEna3FHcvukoHfUSu0DVYUE6wIy
-         mdkKPZG2MeCUwSS2XyCv4gXiMXaMVg8N9Gnb0Y+6aCE8HLk5xj4+auoj+5yZmdQsf7L/
-         PiPQMUC2f8GMR8pw43Z0sTRtYCCLh25XGeqCcNqSwp9DjKqGJjnkAi6jehwNnmvqXvn8
-         UvBj+EbP1cYXCiMx25MXiXVx+T2Aas8JgGIjm0EXNDUdUIe0wn+s9H4sLRBBkYQ2Q97+
-         bAizFM07AToEUuE0h55+Uhhwog21uVAUKPS8BjQ1505Q0qOxgkH6zHUAdsh9mrz86QKt
-         Pg1g==
+        bh=rAU0cphfiWyKWQcdbPbM1r6b4+2DGLPBmt8iiSauM60=;
+        b=dK/czhs6Orf74uK1IpNAEFUy6WkVsuc05+0Ar3d6TKXWbY7fgNHiaM864ALMRfjKH4
+         pzVygmBo/IxfouAgxd7BpEKKT5ZFS0JjPcz737cjm5gFdbgrKMlIE6M8HEOhiKxaA9y3
+         li36ykN/6PtDHzTq0UcC/4nseKjW8IqR867+f9XEf5rKqW0h9qx7EjjSYe/QfBW1ToFA
+         TRKAnfKHC2GARM1nytuXlx5jPRXrkCvAhvF8yhFMG48bKGnLcEk+UTY97p+CjBTP9p35
+         sUVrjkDRYbMynbe9iTBJfNyELDBEf+1l6pIYB+Y3SH7zQ6YwRC4vc9MNVc2KxWGfZ90k
+         Rdkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682714651; x=1685306651;
+        d=1e100.net; s=20221208; t=1682714767; x=1685306767;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Q79QINdjZCCYGIei7fS1arJPfBN/cNGsue9Yiff6C3A=;
-        b=MZf/wKDLA9olCGsAVG3AS8KyPM7WnaSZ8oJ/NUHwapbeGawaJ65AlYiycFeN5nuYT+
-         R8xSt4A8/BRCNDIK3BaM7thxNYjlyF4dJPMuShEUquK6+eWEgtosva5euxuranQzpKfW
-         yUiITK35nHNddPZKAKCBPUBBHI065XQW813GL4gouGTYz6ahq9W/M6wuzXG+60o1Ygyo
-         AsHuaL2o6KJbsN2t203aTedX3L6X1bYyvKFdMt3iv0iJorKAdYfoprPgqTfhIOnx/VE9
-         FjMSkk6JFpm/3+EtsCjKcoKO4CjneQ+wUOIzmkWOWiYTkDs8fMiY2txHkQyTSknDcJF4
-         qudA==
-X-Gm-Message-State: AC+VfDyzISFyK+2LI5rb6RH7KFg0Myf72+p/0krtFwRLzO9RtlSK14eM
-        k9Vezl5gcN+LRKN7M+RhN0cienJKmo4=
-X-Google-Smtp-Source: ACHHUZ7c6g0xVzlZRwyrf/S4tWVGU61oKZGTzz+hsKjOxw1d/wL5SttNcka1gBQxFStt551S1nT/mg==
-X-Received: by 2002:a05:6a20:2590:b0:f4:ac2d:8e95 with SMTP id k16-20020a056a20259000b000f4ac2d8e95mr8654010pzd.9.1682714651216;
-        Fri, 28 Apr 2023 13:44:11 -0700 (PDT)
+        bh=rAU0cphfiWyKWQcdbPbM1r6b4+2DGLPBmt8iiSauM60=;
+        b=baervw72b00Tjeb7m6EiDSce16icFyFx2HB3LUI8KZZmmNkiDpAyLSHBU8bxseBIET
+         1f1pJ+HXHfeypiESdqcbB38BnPf39kYeB5YBhKTZh6ATgwF+J8jFqWKKvssqND1g4L8Y
+         DlTAkaSC7P+MLBv/EO4wPxM3VCSTtv+v5plMVHpz3x6RBqw3pwRExbLb8FMj70UY95mC
+         tMKEd32Vn1Bt+IjqXdWg0tVkzHKtEVbGVBVtDITG6UYP6QZwrwQQLS9vVDFJ2VV0QfdS
+         OMWkUNR0iCCpVk5EueIX9NngdrhpLnyK/tktc6pY/h7+ubtVw6btDNwjEjX2If2Pw8N2
+         a4HA==
+X-Gm-Message-State: AC+VfDw6Gy5M7mlAiBAN5sYsBUanL1m0FqjC8XDHjGp6DREy4ciaTr4T
+        jgt9qM02Of63pU6c/zhaFMo=
+X-Google-Smtp-Source: ACHHUZ5haKvQLyybtiFk97N/0f/rwMJG1OBOoVoM/BbvTYYEnvgQbmKx/9wrsEaeJu0n3h72+WmZXQ==
+X-Received: by 2002:a05:6a00:ccc:b0:63f:125f:9595 with SMTP id b12-20020a056a000ccc00b0063f125f9595mr10041382pfv.9.1682714767452;
+        Fri, 28 Apr 2023 13:46:07 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id o64-20020a62cd43000000b0063d642dcd12sm16082875pfg.16.2023.04.28.13.44.10
+        by smtp.gmail.com with ESMTPSA id i2-20020aa787c2000000b0063932e36437sm15579941pfo.134.2023.04.28.13.46.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 13:44:10 -0700 (PDT)
+        Fri, 28 Apr 2023 13:46:07 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v9 4/6] notes.c: introduce
- '--separator=<paragraph-break>' option
-References: <cover.1682671758.git.dyroneteng@gmail.com>
-        <ed930ef4f795f30792bc14d9c1939484e4976db8.1682671758.git.dyroneteng@gmail.com>
-Date:   Fri, 28 Apr 2023 13:44:10 -0700
-In-Reply-To: <ed930ef4f795f30792bc14d9c1939484e4976db8.1682671758.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Fri, 28 Apr 2023 17:23:32 +0800")
-Message-ID: <xmqqsfcjbuud.fsf@gitster.g>
+Subject: Re: [PATCH v9 0/6] notes.c: introduce "--separator" option
+References: <cover.1682429602.git.dyroneteng@gmail.com>
+        <cover.1682671758.git.dyroneteng@gmail.com>
+Date:   Fri, 28 Apr 2023 13:46:07 -0700
+In-Reply-To: <cover.1682671758.git.dyroneteng@gmail.com> (Teng Long's message
+        of "Fri, 28 Apr 2023 17:23:28 +0800")
+Message-ID: <xmqqmt2rbur4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,36 +70,23 @@ X-Mailing-List: git@vger.kernel.org
 
 Teng Long <dyroneteng@gmail.com> writes:
 
-> +static char *separator = "\n";
+> From: Teng Long <dyroneteng@gmail.com>
 
-The only two ways this pointer gains a non-NULL value are with this
-initialization and parsing the command line "--separator=<value>"
-option with OPT_STRING().  Neither of them allocate new storage but
-points an existing string that we do not "own" (and cannot free)
-with the pointer.  So it probably is safer to make it a pointer to a
-const string, i.e.
+It may help newcomers to briefly mention what the purpose of this
+series is here.  Not everybody necessarily has followed previous
+iterations, especially when it comes to a series with this many
+iterations.
 
-	static const char *separator = "\n";
+> Thanks.
+>
+> Teng Long (6):
+>   notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+>   notes.c: use designated initializers for clarity
+>   t3321: add test cases about the notes stripspace behavior
+>   notes.c: introduce '--separator=<paragraph-break>' option
+>   notes.c: append separator instead of insert by pos
+>   notes.c: introduce "--[no-]stripspace" option
 
-> @@ -213,65 +229,96 @@ static void write_note_data(struct note_data *d, struct object_id *oid)
->  	}
->  }
->  
-> +static void insert_separator(struct strbuf *message, size_t pos)
-> +{
-> +	if (separator[strlen(separator) - 1] == '\n')
-> +		strbuf_addstr(message, separator);
-> +	else
-> +		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-> +}
-> +
-> +static void concat_messages(struct note_data *d)
-> +{
-> +	struct strbuf msg = STRBUF_INIT;
-> +
-> +	size_t i;
-> +	for (i = 0; i < d->msg_nr ; i++) {
+Looks quite well done.  Will replace.
 
-Wrong placement of the blank line that separates the declaration and
-the first statement.
-
+Thanks.
