@@ -2,97 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46AE7C77B61
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 18:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6A2C77B61
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 18:29:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346076AbjD1SVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 14:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49142 "EHLO
+        id S1346361AbjD1S3e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 14:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbjD1SVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 14:21:51 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 655701722
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:21:50 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1a80d827179so2167685ad.3
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:21:50 -0700 (PDT)
+        with ESMTP id S229780AbjD1S3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 14:29:33 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D4FFB
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:29:32 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b7588005fso310896b3a.0
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682706110; x=1685298110;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5y1WOeRao3QPHRfqls7KiCzBAKDQfxlGSd1XgrPYG18=;
-        b=WJmHRR7cImGHfwbx7B52iYnjQzSaBc6xqpG1c6jD3puEZEWD6+7wKt5rT+NwZCTyTD
-         fOM0FRPktikwLnof+5c59MWTbYsQoaFG2i987CBUJnYgGO2eiBsGXMIebeKSRDUMNDrO
-         Nl43vbMfNxznK5uucOwm2m46OmANhpZpK6Llnd37wu2HOCgUmucYDmCsqDF0/la8rwYk
-         UZoO6GmdQ/0Bl53ZpiD/hviCD99UkRfmla9dcr8pTeStGgKdl+RyUNVSCpZTa4tQmuwO
-         TVaLazMkRXR6rA1UySczajb78wgvw1Fbsv5rFwIx214lQRp55+Y+rUwfwnBlr6BL/jff
-         PBSg==
+        d=gmail.com; s=20221208; t=1682706571; x=1685298571;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FhLmCRF2/o3Yhx3IBvtJWnBH2mHxTKX83/ClrYadW2Q=;
+        b=IKU6gVrowihGyCGahkjAukljQadJ3OtHUHxrnfdTFBYakDlH467cwZ7+k4c5+JwVYh
+         Sg/+UA2MGOnoKtPEJYcgFQgaiXqjTIpaY1fHTnanzUnxvSp7QOVDHUSJfvh3hflTPMqX
+         FTpdebNpcuBu0DTCuwdJYfpEq4Rb8vE9IpuSPZaF2KjGaYf3TXM9OWcncxK75Ai+YISD
+         tl0qPxr9Ua1HF07uD9/Nee00MXoovVkKRSWhynPXMg1kcobFIVs9Zdf7CjXeFpnEadmg
+         sot8Muacc5jRyDvg/vSlhTEfle1v8LRmWIdwdH5U4zIIRrWtNdCEDUK+iGXH3zhjrAbs
+         FtBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682706110; x=1685298110;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5y1WOeRao3QPHRfqls7KiCzBAKDQfxlGSd1XgrPYG18=;
-        b=TwmLPvjjbQPvEOocxu1BOLDf6LIwRDrHNX3zb7y2vkQz8S+MixoIzKyub94RN7BCcv
-         frKa5WsErSSUlbKJbVNnDoYmx/ZwKrpmJUIuvaOjOB59VwFWVzr9ySyY3lR+GO9cS+lR
-         8czVfnDhilhziCiuZL9PR5HccKQ3k/DyNnbqbS5w2HBVZHw+3N4LItaKk05dvI3j2vT8
-         8KKTfGKrXxzfMyjWoKgguWqCKIVHdCgyqQenwUJAipcHG5U1iL8JBHgshp85zV5m4wae
-         TUW9xH3aUArXHslg4hQmZlu9IOblxVrhTBoqg6FnECUpowr0jYWpwouRtOvNeH77snqn
-         VFfQ==
-X-Gm-Message-State: AC+VfDysv0TDw9Cdb5chbSDat/KVULxmUjQ49gu1Kwydq/DTJbKrdAiR
-        0sZ3YTrCLUEeH7bxeyWhqLtD72SLdaQ=
-X-Google-Smtp-Source: ACHHUZ5DJwSWHkTTUE3m41zfv3PEn1ReERqUhGP77ok2fqbCrhQqMayxXgAmHr+nbBtpwg8ut5Xifw==
-X-Received: by 2002:a17:902:ed44:b0:1a8:1cbb:4f76 with SMTP id y4-20020a170902ed4400b001a81cbb4f76mr6164075plb.28.1682706109702;
-        Fri, 28 Apr 2023 11:21:49 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id jb14-20020a170903258e00b001a6370bb33csm13607489plb.41.2023.04.28.11.21.49
+        d=1e100.net; s=20221208; t=1682706571; x=1685298571;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FhLmCRF2/o3Yhx3IBvtJWnBH2mHxTKX83/ClrYadW2Q=;
+        b=MxRvfx1DfTlzMQOk4MqNESU8mfi2dvZ+01pLkoWB4fKac223Qr+8oXvg84XoEvOrqz
+         hwN5HropQPD9ml0M0r19ZfSU+V0+c1IcKnuz70Eo8oKRWXK4fFUWe+/3b7ce7z8uha3k
+         xfPlfTUuv6YLbH2SuQ4OawtQH3hsLDPEVkj/QeThlDallqmjx7KWNBTIsbKWgZEEwF47
+         VO1Fg4vvLkbm8YKWBNCPRA42rr1q5wR+EWUaRAkihOnwssj3o6IzWeBqV7aPs9nU5xKl
+         8+rEocdvYUIjNh31HCgwTQ9KzugCHiIsZllDuGCo04+QC95bxut860VnzMfPnVVndcg1
+         OP4g==
+X-Gm-Message-State: AC+VfDxUjW7/6Dpem1iE+poeeysuTIwHx3F0dqdewtIHPwrjxtR/Ae1v
+        o0m4w+mA4PIAVyIc8mW/ZsE=
+X-Google-Smtp-Source: ACHHUZ5wjGg4LkABAL64jU90nXEGVRpbHwrrapnxA2fB1k2JuSVTuALl2pD1Db8WMZTdL8Pzu1wnhw==
+X-Received: by 2002:a05:6a00:9a2:b0:641:f54:eaed with SMTP id u34-20020a056a0009a200b006410f54eaedmr10274755pfg.21.1682706571613;
+        Fri, 28 Apr 2023 11:29:31 -0700 (PDT)
+Received: from fivlite-virtual-machine.localdomain ([49.37.147.33])
+        by smtp.gmail.com with ESMTPSA id t40-20020a056a0013a800b0063d29df1589sm15560474pfg.136.2023.04.28.11.29.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 11:21:49 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v8 6/6] notes.c: introduce "--[no-]stripspace" option
-References: <xmqq4jp326oj.fsf@gitster.g>
-        <20230428074013.22998-1-tenglong.tl@alibaba-inc.com>
-Date:   Fri, 28 Apr 2023 11:21:48 -0700
-In-Reply-To: <20230428074013.22998-1-tenglong.tl@alibaba-inc.com> (Teng Long's
-        message of "Fri, 28 Apr 2023 15:40:13 +0800")
-Message-ID: <xmqqo7n7eukj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Fri, 28 Apr 2023 11:29:31 -0700 (PDT)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     nsengiyumvawilberforce@gmail.com
+Cc:     git@vger.kernel.org, chriscool@tuxfamily.org,
+        hariom18599@gmail.com, jaydeepjd.8914@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v5 1/1] ref-filter: add new "signature" atom
+Date:   Fri, 28 Apr 2023 23:59:25 +0530
+Message-Id: <20230428182925.14975-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230311210607.64927-2-nsengiyumvawilberforce@gmail.com>
+References: <20230311210607.64927-2-nsengiyumvawilberforce@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com> writes:
 
->>Teng Long <dyroneteng@gmail.com> writes:
->>
->>> From: Teng Long <dyroneteng@gmail.com>
->>>
->>> This commit introduces a new option "--[no-]stripspace" to git notes
->>> append, git notes edit, and git notes add. This option allows users to
->>> control whether the note message need to stripped out.
->>
->>Makes sense.
->>
->>>     ... One more thing need to note is "the order of
->>>     the options matter", that is, if you specify "-C" before "-m" or
->>>     "-F", the reused message by "-C" will be stripped out together,
->>>     because everytime concat "-m" or "-F" message, the concated message
->>>     will be stripped together. Oppositely, if you specify "-m" or "-F"
->>>     before "-C", the reused message by "-C" will not be stripped out.
->>
->>This sounds more like a design/implementation mistake that we may
->>want to fix.
->
-> I doubted this either, but for compatibility, implementations of
-> this patchset have been made, such as "note_msg" recording the
-> "stripspace" field, to implement these two new options without
-> breaking the old behavior.
+> +test_expect_success GPG 'test bare signature atom' '
 
-Thanks, that is a sensible stance to take.
+I think this test is failing on CI because, as Junio said, there
+are different versions of gpg coming into play here. In particular,
+this test is failing on (according to the logs) linux32 (daald/ubuntu32:xenial).
+The version of GPG that xenial can use is at a maximum v1.4.20 (this is
+evident here https://packages.ubuntu.com/xenial/allpackages). But
+according the code in lib-gpg.sh, we should be able to handle any GPG
+version, except for v1.0.6.
+
+Looking at the logs that Junio posted, I think that the cuplrit is
+
+> +	grep -v "checking the trustdb" out_orig >out &&
+> +	head -3 out >expected &&
+> +	tail -1 out >>expected &&
+
+but I'm not really sure. So I would really be grateful if you could
+explain this hack to me, the one you mentioned in the cover-letter.
+
+Thanks
