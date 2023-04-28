@@ -2,208 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C696FC77B60
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 18:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAB8DC77B60
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 18:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346426AbjD1SgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 14:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56990 "EHLO
+        id S1346429AbjD1Sht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 14:37:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345984AbjD1SgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 14:36:11 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDF919B9
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:36:09 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1a92369761cso2236725ad.3
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:36:09 -0700 (PDT)
+        with ESMTP id S229611AbjD1Shr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 14:37:47 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E58F71BEB
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:37:46 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id d9443c01a7336-1a682ad2f8cso1433735ad.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 11:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682706969; x=1685298969;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=buXfnl5wxZ4cH0JaW5fI7FaXRIkDhv6VwpvWvVDAZwQ=;
-        b=UmDej84itLKVaBR23twbOcL2PIjEDG97PXtVz3RpQuHeKAsS2DCWb98QVAY2HG0uGT
-         MIIfrgp/PexJFfb9KbjpBnGxwwoiBkS0ML01/KFcLPXtvH2kcxpesazcgE3vdr9YbBWK
-         RjhCzcTppD6U/roO3NLDVkqLmjW4OXhFfkdE4UCHfp70b+f4odmdcFtecQfL6cUNnUU0
-         zyKWR83jW3mg3AOzerfb0/5KCQ7oehwXhuabtWOjP3kPLStpv7AsAm+MmHLpETBE3MKX
-         Y0A1vaOgwUOty80+64EiovEPOv6FAXz8zHW/d29jP7VyijlfCD+/ewlrRhg3y4NLgdW4
-         BbUA==
+        d=google.com; s=20221208; t=1682707066; x=1685299066;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nmzlYXkhweXduzJ5aXH7WzeCrYv5my3YSWToSHOLwIE=;
+        b=x5yluZRBgwZVaCscgbV1zeQGOSOx5ZiU42TXvqt49Sdk/QrxhDe1sXzoM9hpbe+I2D
+         S0GlehNXdnjBfeibyBaJlaz5lzlyAOUGCh02Mwn8u/I79xi5L9bAPxnCsuwpxAcN7WuQ
+         qTd3GFhBR0p7AI+moVuwZRt8rHmofuRDnKxleQe5Q7/AcyD6au6aVTy7gEZTnn1r14EB
+         0oEcj/BZuB2dnDvnW+I++drj6XutF6zhlkAVEFfCAV6S/WrV0+EL+W4W37I+erojgwP0
+         nt2EQVCP1jw9SQZwtVEe5PBZsQKcRS/Pi0sg0SRh6zht+cwwAtsJZtrdLu2O+2o7NHYL
+         vtvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682706969; x=1685298969;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=buXfnl5wxZ4cH0JaW5fI7FaXRIkDhv6VwpvWvVDAZwQ=;
-        b=IwPe9LEXns1TOvtCz75DBX+82falfCCmOsq8XNNB2K1SxxiLGZf0c7ql1G4YvAk3l6
-         L0R/8RtMh9qrqSeDUT5untGburmY8sVzKDKkqskrHVtzWloDZg25xjb2g6FhgHjBqQOh
-         36r7rMFJOwmuNz9eZwC/p7GwgCrg2Ixyb6FcVYs3XOpDL5eQYNg9aW6pzr90yyaSRl07
-         sEgYdwsGuUBy5CymTic5FW/qsRmT6qsdEF3zaL0Q4q9Zi0dPiAI8olaoajyuQR4QuYS3
-         c64Qgsdem5PsH60e+XX3dXG9nkexVZLOrLMZH48+uXjIxenHqAmmBNB4ahbGcntcErUZ
-         ssZw==
-X-Gm-Message-State: AC+VfDwM2VJirowdOo1YjRweHuYhVLAEuqQgP6sSaI/Exy+anjrVp69B
-        QfalzsyXTgvHPyML+b4yqg4=
-X-Google-Smtp-Source: ACHHUZ5c/XtMUuFLekvgEUrHafJQr5k7qjql2J2fLFzlmfIr1cfzJ8o1OzHaGoZKB0AKRenK3LUFSQ==
-X-Received: by 2002:a17:902:ce8a:b0:1a2:76b6:c26a with SMTP id f10-20020a170902ce8a00b001a276b6c26amr7601757plg.28.1682706968821;
-        Fri, 28 Apr 2023 11:36:08 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id k14-20020a170902760e00b001a972e9d4f4sm9046507pll.102.2023.04.28.11.35.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 11:35:28 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v2] sequencer: beautify subject of reverts of reverts
-References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
-Date:   Fri, 28 Apr 2023 11:35:28 -0700
-In-Reply-To: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de> (Oswald
-        Buddenhagen's message of "Fri, 28 Apr 2023 10:35:28 +0200")
-Message-ID: <xmqqcz3netxr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20221208; t=1682707066; x=1685299066;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nmzlYXkhweXduzJ5aXH7WzeCrYv5my3YSWToSHOLwIE=;
+        b=CiOQIE3EDYObm9Dj4yAMVEFrl1HhlPBxRD/zxvw3mF1h7CK9ENgzSDcnEhzUpOnOMd
+         4CAdfLYk8+iwlS+RTWj+vRYEu8XcpyCH6akCZh8IxOOU3k+kETnnLnXDsA9DRv2yoGRI
+         jeBZ2dKcpozFTCGhDijRibB9hfD6y6xnVN9JvABGArh9BxPBAaEsIJkRAJPFYTsPh5ZM
+         Y4XYnkxJ4C3e0s0+Pe2xOd0EtY4wyWKhbfVZvFZ9333kpDPDAdtvnp6eEyrmjKAlodTO
+         DAGZxDQ0HF9gvg7I9fo+UEGa0olRKDX5mXvLzF5zhjN9SQgZpGtSUenHd7Cg5eU4EDzC
+         8Ahg==
+X-Gm-Message-State: AC+VfDxqeN4kkLJHb2l2Z4oDe7WTrx1Wz1upsTT1vSOHdgAU14U3SvX/
+        22iyt+QDdHaFMecSS2zhSi76sbwcPBukxQ==
+X-Google-Smtp-Source: ACHHUZ5I7ZozLFzXD4aEn+/qf2d96sdv9lt+3Q9OdMIUZ1YtAG5joDDelmCWUg5xXSRUPdJqpfxtIFaaVVcDfg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:902:728d:b0:1a0:1f4e:a890 with SMTP
+ id d13-20020a170902728d00b001a01f4ea890mr1910748pll.1.1682707066413; Fri, 28
+ Apr 2023 11:37:46 -0700 (PDT)
+Date:   Fri, 28 Apr 2023 11:37:44 -0700
+In-Reply-To: <b548d96db7052dc2cb664922fa2003fe068843cf.1682702058.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
+ <b548d96db7052dc2cb664922fa2003fe068843cf.1682702058.git.steadmon@google.com>
+Message-ID: <kl6lbkj73laf.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2] setup: trace bare repository setups
+From:   Glen Choo <chooglen@google.com>
+To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
-> Instead of generating a silly-looking `Revert "Revert "foo""`, make it
-> a more humane `Reapply "foo"`.
->
-> The alternative `Revert^2 "foo"`, etc. was considered, but it was deemed
-> over-engineered and "too nerdy". Instead, people should get creative
-> with the subjects when they recurse reverts that deeply. The proposed
-> change encourages that by example and explicit recommendation.
->
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> ---
-
-> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-> index d2e10d3dce..e8fa513607 100644
-> --- a/Documentation/git-revert.txt
-> +++ b/Documentation/git-revert.txt
-> @@ -31,6 +31,12 @@ both will discard uncommitted changes in your working directory.
->  See "Reset, restore and revert" in linkgit:git[1] for the differences
->  between the three commands.
+> diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-repository.sh
+> index 11c15a48aa..993f5bdc7d 100755
+> --- a/t/t0035-safe-bare-repository.sh
+> +++ b/t/t0035-safe-bare-repository.sh
+> @@ -7,13 +7,24 @@ TEST_PASSES_SANITIZE_LEAK=true
 >  
-> +The command generates the subject 'Revert "<title>"' for the resulting
-> +commit, assuming the original commit's subject is '<title>'.  Reverting
-> +such a reversion commit in turn yields the subject 'Reapply "<title>"'.
-
-Clearly written.
-
-> +These can of course be modified in the editor when the reason for
-> +reverting is described.
-
-Not just the title but the entire message can be edited and that is
-by design.  Having to modify what this new mechanism does when
-existing users do not like the new behaviour will annoy them, and
-this sentence will not be a good enough excuse to ask them
-forgiveness for breaking their established practice, either.
-
-So, I am not sure if there is a point to have this sentence here.
-
-> diff --git a/sequencer.c b/sequencer.c
-> index 3be23d7ca2..61e466470e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2227,13 +2227,27 @@ static int do_pick_commit(struct repository *r,
->  	 */
+>  pwd="$(pwd)"
 >  
->  	if (command == TODO_REVERT) {
-> +		const char *orig_subject;
+> -expect_accepted () {
+> -	git "$@" rev-parse --git-dir
+> +expect_accepted_implicit () {
+> +	test_when_finished 'rm "$pwd/trace.perf"' &&
+> +	GIT_TRACE2_PERF="$pwd/trace.perf" git "$@" rev-parse --git-dir &&
+> +	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+> +}
 > +
->  		base = commit;
->  		base_label = msg.label;
->  		next = parent;
->  		next_label = msg.parent_label;
->  		if (opts->commit_use_reference) {
->  			strbuf_addstr(&msgbuf,
->  				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-> +		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject)) {
-> +			if (skip_prefix(orig_subject, "Revert \"", &orig_subject)) {
-> +				/*
-> +				 * This prevents the generation of somewhat unintuitive (even if
-> +				 * not incorrect) 'Reapply "Revert "' titles from legacy double
-> +				 * reverts. Fixing up deeper recursions is left to the user.
-> +				 */
+> +expect_accepted_explicit () {
+> +	test_when_finished 'rm "$pwd/trace.perf"' &&
+> +	GIT_DIR="$1" GIT_TRACE2_PERF="$pwd/trace.perf" git rev-parse --git-dir &&
+> +	! grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+>  }
 
-Good comment but in an overwide paragraph.
+(Not new in v2) This wasn't obvious to me at first, but
 
-> +				strbuf_addstr(&msgbuf, "Revert \"Reapply \"");
-> +			} else {
-> +				strbuf_addstr(&msgbuf, "Reapply \"");
-> +			}
-> +			strbuf_addstr(&msgbuf, orig_subject);
->  		} else {
->  			strbuf_addstr(&msgbuf, "Revert \"");
->  			strbuf_addstr(&msgbuf, msg.subject);
+  grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
 
+looks like it's asserting that we trace that the bare repository is
+$pwd, but it's actually only asserting that is starts with $pwd. If it
+might trip up other reasers, a comment here would be helpful.
 
-> diff --git a/t/t3515-revert-subjects.sh b/t/t3515-revert-subjects.sh
-> new file mode 100755
-> index 0000000000..ea4319fd15
-> --- /dev/null
-> +++ b/t/t3515-revert-subjects.sh
+> @@ -21,13 +32,9 @@ test_expect_success 'setup bare repo in worktree' '
+>  	git init --bare outer-repo/bare-repo
+>  '
+>  
+> -test_expect_success 'safe.bareRepository unset' '
+> -	expect_accepted -C outer-repo/bare-repo
+> -'
+> -
 
-It is a bit unexpectd that we need an entire new file to test this.
-It is doubly bad that the title of the file is only about the
-subject of revert commits and does not allow other things to be
-added later.  Are we planning to have a lot more creativity in how
-automatically generated subject of revert commits would read?
+I found this surprising; I thought it was quite valuable to test the
+default behavior. I'd prefer to keep this test.
 
-If there isn't a good enough test coverage for the "git revert"
-command already, then having a new file to test "git revert" would
-be an excellent idea, adding one here is a very welcome addition,
-and it is perfectly fine to start such a new test with only these
-new tests that protects the new "Revert Revert to Reapply" feature.
+Perhaps there was a miscommunication? You mentioned:
 
-But if there is a test file already for "git revert" that covers
-other behaviour of the command, "create two new commits, i.e. revert
-and revert of revert, and then try reverting them and see what their
-subject says" ought to be a simple addition or two to such an
-existing test file.  Doesn't t3501 seem a better home for them?  The
-last handful of tests there are about how the auto-generated log is
-phrased, and would form a good group with this new feature, wouldn't
-it?
+  Actually, explicitly setting the variable here is equivalent to the
+  following test case, so I'll just remove this one.
 
-> @@ -0,0 +1,32 @@
-> +#!/bin/sh
-> +
-> +test_description='git revert produces the expected subject'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'fresh reverts' '
-> +    test_commit --no-tag A file1 &&
-> +    test_commit --no-tag B file1 &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Revert \"B\"" > expect &&
+which is true, but I think Junio meant _un_setting the variable,
+something like:
 
-Style.  See Documentation/CodingGuidelines and look for "For shell
-scripts specifically".
-
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Reapply \"B\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Revert \"Reapply \"B\"\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'legacy double revert' '
-> +    test_commit --no-tag "Revert \"Revert \"B\"\"" file1 &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Revert \"Reapply \"B\"\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual
-> +'
-> +
-> +test_done
-
-Thanks.
+  test_expect_success 'safe.bareRepository unset' '
++   test_unconfig --global safe.bareRepository &&
+    expect_accepted -C outer-repo/bare-repo
+  '
