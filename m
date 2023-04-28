@@ -2,153 +2,230 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19944C77B60
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 17:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77CCBC77B61
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 17:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346298AbjD1RUI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 13:20:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50912 "EHLO
+        id S230090AbjD1RWP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 13:22:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbjD1RUG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 13:20:06 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5DB82720
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 10:20:05 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-63b5a2099a6so127460b3a.3
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 10:20:05 -0700 (PDT)
+        with ESMTP id S229806AbjD1RWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 13:22:14 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6973126
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 10:22:12 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-559d30ec7fcso577097b3.2
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 10:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1682702405; x=1685294405;
+        d=google.com; s=20221208; t=1682702532; x=1685294532;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JBk/OkIn5LbetV5i81m79Y5KCWthdKweu6NhQlk/2J4=;
-        b=KQ4ZyXuk0g3gEb9mM5MWVkKKeiDGkmHeBWB2at4CwNM4PotVps56Bpcwqlgrf6GpBk
-         +6LDkWe9mnuHs9MeZTzpRfr0ekIBTnDU5/l15huTH1cI7/YtuojFTy08E8/zTtFvelwW
-         rW26EIWkQRoVBCSo9Wm1IW/yEy/ib4Rhc57U5aCYEpPTLcDbEWW7528ynkNuKroWpSq4
-         zsIWf1SasDLxDFDwi1oLN0wr73/YF+XXmp1TxX7x7GYxO5t5DuY4RR3eKZU2sAkj9RIl
-         pgZ92zbaUWoiO0zGzfcW1QuIUxBxVRvmwJJ/UGrpraz9Mfd9bztMMed30aNJ17WOE75w
-         xA+w==
+        bh=AvF2aaNGeLXz9xv0DaPPApaLcQBMnowgmUMaL8wG5/I=;
+        b=Vrvi1bmbzWXdOEvRjS6eLx1jQzYGp5UtmeCXMhiEJzpx2zF6H9gVdBa8BN+x1SPGJ/
+         CBLMvYwd9Lg6I8HWA86bRHxpyRF0T9Qpcb53OiN/rkwQp1Wy9ny4c/WX63rXIENvxBOr
+         FW0+rP+3hZM2FcptvSnqtqoPy4dcUs9vYdSgadSaTe4CUfyPhaJdClQnH9tFh5D22xbn
+         n2yemXg2BWkbdpny9+Ydc/qg8Wadopd9MInCWHnmANVQuMv/lZpudn2sS6zKtpVi9hwO
+         0Q8Hr7X78hO6od936fL4o8Ltj2rPbNWAoMKJfjbKgNUzjXz8TV6vzQ1imezWT7YIOtUE
+         0H/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682702405; x=1685294405;
+        d=1e100.net; s=20221208; t=1682702532; x=1685294532;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JBk/OkIn5LbetV5i81m79Y5KCWthdKweu6NhQlk/2J4=;
-        b=MwravZVNVWEY1jEU297zKlixBRlq7Afx/pZKyUC+vTBWprI1AwwE6hrVd8gaztgSZu
-         KRYYkfhf91AaaTvB9cq35h5j5asQobCE4NAr8xfO28+PTXdbICFwz+cezNpYd4kdFoaP
-         yO4u7GOLZ6uj5SaAZrG/qmVSSdvUyZ1h4pRgzws2CvFo/ZSJbJa9pnLckHcj8HtZbGwN
-         mHK82THypCG7VxGyMeVsZGNqQ9rk+ThFagN2PekL14CShkhnear2uLCn7RzQX4HU4+b1
-         rLpoKldtDIPqNSDHQyzipc86st9cK6fSZKdq1svJ3U2hkm90DT11OvnRQ4YK31PmDUdZ
-         iOJw==
-X-Gm-Message-State: AC+VfDzcjqdbFHrgj3C0bncM4puiG7WYibcWOHBiYRJQ1O0urBO/sp1u
-        j9oqoekfUeLr35i5d2iZug068PLLe3fpZw==
-X-Google-Smtp-Source: ACHHUZ4IUb4CTVN4/keUyNHQ0nwCpnjv9catQ5YWLeRTJ1M1+f697XRJ0SUzI4G4i0Xk7F6SGPHSzLl8YPjRgQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:bc2:b0:641:86a:428 with SMTP id
- x2-20020a056a000bc200b00641086a0428mr1601612pfu.1.1682702404778; Fri, 28 Apr
- 2023 10:20:04 -0700 (PDT)
-Date:   Fri, 28 Apr 2023 10:20:02 -0700
-In-Reply-To: <ZEuJFOBCdnCLdGc5@ncase>
+        bh=AvF2aaNGeLXz9xv0DaPPApaLcQBMnowgmUMaL8wG5/I=;
+        b=TSd9Ap8FcTpiK5LIrBR3FoqAwuicsp2swQee8CSeMmTWTUxWaANhuo4pZz+QmVdmwX
+         cUkasGYzeQsyC2/v1tj/RDJv9hkLLWqrGHIoiak0oDQO/HsjLoDsZf3LtDUBXB3JqXXc
+         Wps7OVTepNq7uE/kylrdZv85NOm4byL9HeuRe8Zr7eia1QWZZaCKB8DWEcEUopneoxrv
+         2YNv6mmD8in0tKh/WminQsP5bS9TgfLYbPcoMxCKH5qUK+bszev4QggX3n9e51t1MBu+
+         JJJUdceshR4/godkHBgGnjgy+Vgdk/BEtqzqa6XMz+Lw8Ej5SI4SjCr0SWwPmiCiHhrd
+         tDYA==
+X-Gm-Message-State: AC+VfDykcvMt3pJiaGZSsuOp9piancEqV6NFCklp0uFBw+/KMK/CgQFa
+        NLoAzTQenjYzcXgyRB3QkA1S4u3lk1ltwq5uui+Ikkf+bnA0cvQ7jfR911ZrkyooisMqxZt056G
+        JfZ/KT8oCX55rRUJHtoSJbIYFHURcvnbQ0UdfnC0Pe7Nd6FnNHpHuctCm67Mu46A=
+X-Google-Smtp-Source: ACHHUZ7E1suJjv7V9+glQ0Y8ksvxYRGkJ3PPYagvx6Z8hs2WgOIvCV+M5ruzb9cqN0WRn+ENHzX5F3v//0JQnQ==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:202:d2c3:4cc2:f9f7:57a9])
+ (user=steadmon job=sendgmr) by 2002:a81:c742:0:b0:552:e3fa:6756 with SMTP id
+ i2-20020a81c742000000b00552e3fa6756mr3552790ywl.2.1682702532125; Fri, 28 Apr
+ 2023 10:22:12 -0700 (PDT)
+Date:   Fri, 28 Apr 2023 10:22:10 -0700
+In-Reply-To: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
 Mime-Version: 1.0
-References: <cover.1681906948.git.ps@pks.im> <301138da039451519c6e60d6126e7756a54d346f.1681906949.git.ps@pks.im>
- <kl6lzg6umne9.fsf@chooglen-macbookpro.roam.corp.google.com>
- <ZEpVSrz-uUcfN_3_@ncase> <kl6lfs8knc9f.fsf@chooglen-macbookpro.roam.corp.google.com>
- <ZEuJFOBCdnCLdGc5@ncase>
-Message-ID: <kl6ledo33ovx.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 8/8] fetch: introduce machine-parseable "porcelain" output format
-From:   Glen Choo <chooglen@google.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+References: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
+X-Mailer: git-send-email 2.40.1.495.gc816e09b53d-goog
+Message-ID: <b548d96db7052dc2cb664922fa2003fe068843cf.1682702058.git.steadmon@google.com>
+Subject: [PATCH v2] setup: trace bare repository setups
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     chooglen@google.com, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Glen Choo <chooglen@google.com>
 
->> I'm happy with either approach as long as we don't have to bikeshed
->> about the "perfect" porcelain output :)
->
-> Agreed, and that's why I'm currently defending the "good enough" format.
-> It should likely work for most usecases that exist out there. The target
-> audience is going to be quite small here as this is not a user-directed
-> feature.
+safe.bareRepository=explicit is a safer default mode of operation, since
+it guards against the embedded bare repository attack [1]. Most end
+users don't use bare repositories directly, so they should be able to
+set safe.bareRepository=explicit, with the expectation that they can
+reenable bare repositories by specifying GIT_DIR or --git-dir.
 
-Okay, I agree that this is "good enough" for most cases and we can
-extend it if needed.
+However, the user might use a tool that invokes Git on bare repositories
+without setting GIT_DIR (e.g. "go mod" will clone bare repositories
+[2]), so even if a user wanted to use safe.bareRepository=explicit, it
+wouldn't be feasible until their tools learned to set GIT_DIR.
 
->> My full thoughts on this are in
->> 
->>   https://lore.kernel.org/git/kl6lildhlz3i.fsf@chooglen-macbookpro.roam.corp.google.com
->> 
->> but the short version is that I'm not sure if I expect something as
->> innocuous-looking as --output-format would imply other, machine-friendly
->> things (like stdout instead of stderr), and using --porcelain might make
->> option precedence clearer in some situtations (like if -z is given).
->
-> I'm not even sure that `-z` makes sense in this context. If we see cases
-> where not using `-z` can cause the machine-readable interface to become
-> unparseable then this is a bug in the output format, if you ask me.
-> Mostly because the whole intent of it is to be machine-parseable. So if
-> we output data that can e.g. contain newlines, then we must not use
-> newlines as part of the output format or alternatively escape them. Why
-> let the author of the script shoot themselves into the foot?
+To make this transition easier, add a trace message to note when we
+attempt to set up a bare repository without setting GIT_DIR. This allows
+users and tool developers to audit which of their tools are problematic
+and report/fix the issue.  When they are sufficiently confident, they
+would switch over to "safe.bareRepository=explicit".
 
-Agreed. I think the current output format is resilient enough, just that
-"-z" is something we choose to support for plumbing anyway.
+Note that this uses trace2_data_string(), which isn't supported by the
+"normal" GIT_TRACE2 target, only _EVENT or _PERF.
 
-> Anyway, I'm digressing. It's hard for me to decide what to do right now.
-> The thread with Junio and Jacob points into the direction of keeping the
-> `--output-format=` interface, while this thread points into the other
-> direction. I'm naturally more inclined to keep `--output-format=`,
-> mostly because I personally feel like it's the more obvious interface.
-> But I also see your point, so it's not really a choice of right-or-wrong
-> here, but rather of style.
+[1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
+[2] https://go.dev/ref/mod
 
-Yes. All sides seem to understand the tradeoffs, but we value them
-differently.
+Signed-off-by: Glen Choo <chooglen@google.com>
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+I'm sending a lightly-adapted version of Glen's tracing patch because
+Glen will be on vacation next week and we'd like to get this upstream
+ASAP.
 
-I'd personally prefer to err on the side of consistency, because even if
-the existing behavior is less-than-ideal since:
+Cleaned up some test-style issues since V1.
 
-1) This makes it possible for us to fix it in a consistent, well-thought
-   out way, so we don't have to decide the future for the whole project
-   in a git-fetch series.
-2) At least it still behaves how _some_ users have come to expect it.
+Range-diff against v1:
+1:  cb72bca46c ! 1:  b548d96db7 setup: trace bare repository setups
+    @@ t/t0035-safe-bare-repository.sh: TEST_PASSES_SANITIZE_LEAK=true
+     -expect_accepted () {
+     -	git "$@" rev-parse --git-dir
+     +expect_accepted_implicit () {
+    -+	test_when_finished "rm \"$pwd/trace.perf\"" &&
+    ++	test_when_finished 'rm "$pwd/trace.perf"' &&
+     +	GIT_TRACE2_PERF="$pwd/trace.perf" git "$@" rev-parse --git-dir &&
+     +	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+     +}
+     +
+     +expect_accepted_explicit () {
+    -+	test_when_finished "rm \"$pwd/trace.perf\"" &&
+    -+	GIT_DIR="$@" GIT_TRACE2_PERF="$pwd/trace.perf" git rev-parse --git-dir &&
+    ++	test_when_finished 'rm "$pwd/trace.perf"' &&
+    ++	GIT_DIR="$1" GIT_TRACE2_PERF="$pwd/trace.perf" git rev-parse --git-dir &&
+     +	! grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+      }
+      
+      expect_rejected () {
+     -	test_must_fail git "$@" rev-parse --git-dir 2>err &&
+     -	grep -F "cannot use bare repository" err
+    -+	test_when_finished "rm \"$pwd/trace.perf\"" &&
+    ++	test_when_finished 'rm "$pwd/trace.perf"' &&
+     +	test_env GIT_TRACE2_PERF="$pwd/trace.perf" \
+     +		test_must_fail git "$@" rev-parse --git-dir 2>err &&
+     +	grep -F "cannot use bare repository" err &&
+    @@ t/t0035-safe-bare-repository.sh: TEST_PASSES_SANITIZE_LEAK=true
+      
+      test_expect_success 'setup bare repo in worktree' '
+     @@ t/t0035-safe-bare-repository.sh: test_expect_success 'setup bare repo in worktree' '
+    + 	git init --bare outer-repo/bare-repo
+      '
+      
+    - test_expect_success 'safe.bareRepository unset' '
+    +-test_expect_success 'safe.bareRepository unset' '
+     -	expect_accepted -C outer-repo/bare-repo
+    -+	expect_accepted_implicit -C outer-repo/bare-repo
+    - '
+    - 
+    +-'
+    +-
+      test_expect_success 'safe.bareRepository=all' '
+      	test_config_global safe.bareRepository all &&
+     -	expect_accepted -C outer-repo/bare-repo
 
-As for which is more consistent, a grep for --porcelain over
-Documentation/* shows:
+ setup.c                         |  1 +
+ t/t0035-safe-bare-repository.sh | 31 +++++++++++++++++++++----------
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
-- git-push
-- git-status
-- git-worktree
-- git-blame
-- git-commit
+diff --git a/setup.c b/setup.c
+index 59abc16ba6..458582207e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1352,6 +1352,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 		}
+ 
+ 		if (is_git_directory(dir->buf)) {
++			trace2_data_string("setup", NULL, "implicit-bare-repository", dir->buf);
+ 			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT)
+ 				return GIT_DIR_DISALLOWED_BARE;
+ 			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report))
+diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-repository.sh
+index 11c15a48aa..993f5bdc7d 100755
+--- a/t/t0035-safe-bare-repository.sh
++++ b/t/t0035-safe-bare-repository.sh
+@@ -7,13 +7,24 @@ TEST_PASSES_SANITIZE_LEAK=true
+ 
+ pwd="$(pwd)"
+ 
+-expect_accepted () {
+-	git "$@" rev-parse --git-dir
++expect_accepted_implicit () {
++	test_when_finished 'rm "$pwd/trace.perf"' &&
++	GIT_TRACE2_PERF="$pwd/trace.perf" git "$@" rev-parse --git-dir &&
++	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
++}
++
++expect_accepted_explicit () {
++	test_when_finished 'rm "$pwd/trace.perf"' &&
++	GIT_DIR="$1" GIT_TRACE2_PERF="$pwd/trace.perf" git rev-parse --git-dir &&
++	! grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+ }
+ 
+ expect_rejected () {
+-	test_must_fail git "$@" rev-parse --git-dir 2>err &&
+-	grep -F "cannot use bare repository" err
++	test_when_finished 'rm "$pwd/trace.perf"' &&
++	test_env GIT_TRACE2_PERF="$pwd/trace.perf" \
++		test_must_fail git "$@" rev-parse --git-dir 2>err &&
++	grep -F "cannot use bare repository" err &&
++	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
+ }
+ 
+ test_expect_success 'setup bare repo in worktree' '
+@@ -21,13 +32,9 @@ test_expect_success 'setup bare repo in worktree' '
+ 	git init --bare outer-repo/bare-repo
+ '
+ 
+-test_expect_success 'safe.bareRepository unset' '
+-	expect_accepted -C outer-repo/bare-repo
+-'
+-
+ test_expect_success 'safe.bareRepository=all' '
+ 	test_config_global safe.bareRepository all &&
+-	expect_accepted -C outer-repo/bare-repo
++	expect_accepted_implicit -C outer-repo/bare-repo
+ '
+ 
+ test_expect_success 'safe.bareRepository=explicit' '
+@@ -47,7 +54,7 @@ test_expect_success 'safe.bareRepository in the repository' '
+ 
+ test_expect_success 'safe.bareRepository on the command line' '
+ 	test_config_global safe.bareRepository explicit &&
+-	expect_accepted -C outer-repo/bare-repo \
++	expect_accepted_implicit -C outer-repo/bare-repo \
+ 		-c safe.bareRepository=all
+ '
+ 
+@@ -60,4 +67,8 @@ test_expect_success 'safe.bareRepository in included file' '
+ 	expect_rejected -C outer-repo/bare-repo
+ '
+ 
++test_expect_success 'no trace when GIT_DIR is explicitly provided' '
++	expect_accepted_explicit "$pwd/outer-repo/bare-repo"
++'
++
+ test_done
 
-Most of them already output to stdout. The lone exception is git-push,
-which does exactly this "use stdout for the main output, but keep using
-stderr for debugging output" behavior you added, so using --porcelain
-seems somewhat consistent.
+base-commit: 2807bd2c10606e590886543afe4e4f208dddd489
+-- 
+2.40.1.495.gc816e09b53d-goog
 
-On the other hand, I couldn't find any other option that switches from
-stderr to stdout (we sometimes say --stdout to say "use stdout instead
-of a file", but that's different), so if we added this behavior to "git
-fetch --[output-]format", this might be the first.
-
-(Sidenote: most instances of --format are for templated-style format,
-but "git-replace" does accept an enum for it. I don't think this should
-weigh heavily in our decision though.)
-
-For the other, non git-push commands, --porcelain is treated like an
-output format and respects "last one wins" regular option precedence,
-e.g. in the case of "git status --porcelain --short". I find this
-behavior somewhat confusing (I'd expect --porcelain to win, or at least
-be incompatible), but at least we can consistently change this in the
-future [*].
-
-That said, I'm willing to accept that I'm biased toward my own ideas. If
-others don't find "--format=porcelain implies stdout" confusing, I can
-accept that decision.
-
-[*] In all likelihood, we probably can't make the change to --porcelain
-for backwards-compatibility reasons, but we could introduce a synonym
-with the behavior we want ("--machine"?) and have OPT_PARSE_MACHINE
-handle both --porcelain and --machine.
