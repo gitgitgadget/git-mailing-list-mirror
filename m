@@ -2,89 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A09F7C77B61
-	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 19:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95130C77B61
+	for <git@archiver.kernel.org>; Fri, 28 Apr 2023 20:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346172AbjD1TMD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Apr 2023 15:12:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48552 "EHLO
+        id S1346108AbjD1UWm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Apr 2023 16:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345398AbjD1TMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2023 15:12:02 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6A98E9
-        for <git@vger.kernel.org>; Fri, 28 Apr 2023 12:12:00 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id E684523FBC;
-        Fri, 28 Apr 2023 15:11:57 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.4, from userid 1000)
-        id 1psTVd-T8Y-00; Fri, 28 Apr 2023 21:11:57 +0200
-Date:   Fri, 28 Apr 2023 21:11:57 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v2] sequencer: beautify subject of reverts of reverts
-Message-ID: <ZEwafQmat347la3/@ugly>
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
- <xmqqcz3netxr.fsf@gitster.g>
+        with ESMTP id S230110AbjD1UWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2023 16:22:41 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8879E93
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:22:40 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-5050497df77so193080a12.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2023 13:22:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682713359; x=1685305359;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WcpKXLk63EZTkJ0V0qO4XE3pL377es7NyOMtvqTVBfI=;
+        b=qaP8bUNX30ACLMnXKkkTOpKP55Tm4oEwsp4metHpFRk61oWMbJWU+Ug1ZQ+15QfZYG
+         aXpm0w/8Ck105z0D1Nfi8e/jBO/4o7dT3RZLCkWZQKu1ewZcBfiaW7LGswL7zhxxglXc
+         RFMeDHYj9oUv09Sih7fCYNikWHxRE0MI3L4SbFqCJjRtXnnwhZj96kfvq55EwKL0fOAC
+         qeWi4V8CLjlSSi/6VGR50NhOavjqjuxrAHERATyzpiknCU0WyCiMI5+wMbhXbWF6ZrOb
+         ml1RxPH2uBDXFT4rAQxtyQwO/WG4FGKednNpHUrff+zCLpFkgBwd1Ms+gNPZ2M9ruL3h
+         ep6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682713359; x=1685305359;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WcpKXLk63EZTkJ0V0qO4XE3pL377es7NyOMtvqTVBfI=;
+        b=G6upnO7TuFWxXj6axNdPrdz0iszXtGHGwrY4tKXxnkYAp1GtAvFb11vPX3FRqcACJr
+         pcyIrQ2GeffXBWnFlx34UdYQdLmX6YVjxOdbHp+xIl6+j6Tn4d+621WxIsHglKrX/Xo0
+         dNxwHl3Nx+UmzHZfTV2qkFrrFaNeYgjZpS4qoatsDdP8r9HpUT58agdY14a6vsnF7j+l
+         qlVP9lFn+2CsUgPTYIpeI+V4bWh8JTLKyStoJ5Y4wWNmFRe734NR3NUiuFRhOrIwZq+T
+         3gUvPPqrTgvBguCtYOJm1Db2XQZCWdaL+1hDeMNqDEmC4+JyfvRVR1Alg9ztsZSwu0Dh
+         zwSg==
+X-Gm-Message-State: AC+VfDyZXdjCfPOC/SR1KU4o5JhY5ISgz4dFq1iQLiQN2OQthXTvuePc
+        H455pqORn+WI9qui0mQya2IN0Fm5HHSO0/F9HKJTWXYTe4T6FA==
+X-Google-Smtp-Source: ACHHUZ7rMwy4LzJB9vMsIWfGMdfe9D9spwfzerTDtWYsAPmcFqpUSn9x7vCc9nZWl7LRtIJwaTDDQPqMLOkPEU1T5ro=
+X-Received: by 2002:a17:906:4fd6:b0:95f:6517:b965 with SMTP id
+ i22-20020a1709064fd600b0095f6517b965mr6682062ejw.10.1682713358610; Fri, 28
+ Apr 2023 13:22:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqcz3netxr.fsf@gitster.g>
+References: <pull.1470.v2.git.git.1679936543320.gitgitgadget@gmail.com> <pull.1470.v3.git.git.1682707848916.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1470.v3.git.git.1682707848916.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 28 Apr 2023 22:22:26 +0200
+Message-ID: <CAP8UFD0mfb1HSUGT3Bz1gHhH3fMpGDnMHVf2pT0CjirL0C5zuA@mail.gmail.com>
+Subject: Re: [PATCH v3] attr: teach "--attr-source=<tree>" global option to "git"
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 28, 2023 at 11:35:28AM -0700, Junio C Hamano wrote:
->Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
->> +The command generates the subject 'Revert "<title>"' for the resulting
->> +commit, assuming the original commit's subject is '<title>'.  Reverting
->> +such a reversion commit in turn yields the subject 'Reapply "<title>"'.
->
->Clearly written.
->
->> +These can of course be modified in the editor when the reason for
->> +reverting is described.
->
->Not just the title but the entire message can be edited and that is
->by design.  Having to modify what this new mechanism does when
->existing users do not like the new behaviour will annoy them, and
->this sentence will not be a good enough excuse to ask them
->forgiveness for breaking their established practice, either.
->
->So, I am not sure if there is a point to have this sentence here.
->
-well, it's the one sentence i copied verbatim from your proposal. :-D
+>       +--attr-source=<tree-ish>::
+>      -+ Read gitattributes from <tree-ish> instead of the worktree.
+>      ++ Read gitattributes from <tree-ish> instead of the worktree. See
+>      ++ linkgit:gitrevisions[7].
 
-but i don't get the argument anyway. i think the docu is pretty 
-pointless except to emphasize that the generated subject is a default 
-that should be edited when circumstances recommend it. in fact, i 
-wouldn't mind writing just that, with a notice that the default attempts 
-to be somewhat natural for repeated reverts.
+I think it's more sensible to link to gitattributes(5) instead of
+gitrevisions(7)
 
->>  			strbuf_addstr(&msgbuf,
->>  				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
->> +		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject)) {
->> +			if (skip_prefix(orig_subject, "Revert \"", &orig_subject)) {
->> +				/*
->> +				 * This prevents the generation of somewhat unintuitive (even if
->> +				 * not incorrect) 'Reapply "Revert "' titles from legacy double
->> +				 * reverts. Fixing up deeper recursions is left to the user.
->> +				 */
->
->Good comment but in an overwide paragraph.
->
-there are several lines in the lower 90-ies in that file, one of them 
-seen in the patch context. would 88 be fine?
-(too narrow flowed text looks silly, imo.)
+> +static const char *default_attr_source_tree_object_name;
+> +
+> +void set_git_attr_source(const char *tree_object_name)
+> +{
+> +       default_attr_source_tree_object_name = xstrdup(tree_object_name);
+> +}
+> +
+> +
 
->Doesn't t3501 seem a better home for them?
->
-looking closer at it, i guess it kind of does. the file's contents have 
-clearly grown to fulfill the filename's broad promise, but nobody 
-bothered to adjust the test description and make the setup title more 
-specific. any takers?
+One empty line is enough here.
 
--- ossi
+> +static void compute_default_attr_source(struct object_id *attr_source)
+> +{
+> +       int from_env = 0;
+> +
+> +       if (!default_attr_source_tree_object_name) {
+> +               default_attr_source_tree_object_name = getenv(GIT_ATTR_SOURCE);
+> +               from_env = 1;
+> +       }
+> +
+> +       if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
+> +               return;
+> +
+> +       if (repo_get_oid_treeish(the_repository, default_attr_source_tree_object_name, attr_source)) {
+> +               if (from_env)
+> +                       die(_("bad --attr-source object"));
+> +               else
+> +                       die(_("bad GIT_ATTR_SOURCE"));
+
+I think it would be better to have just the following instead of the 4
+lines above:
+
+die(_("invalid tree object from --attr-source flag or GIT_ATTR_SOURCE
+env variable"));
+
+as a bad GIT_ATTR_SOURCE in a subprocess could come from a bad
+--attr-source in the main process.
+
+And this way the from_env variable is not needed.
+
+> +       }
+> +}
+
+The rest looks good to me, thanks!
