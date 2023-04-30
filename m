@@ -2,108 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E42FBC77B73
-	for <git@archiver.kernel.org>; Sun, 30 Apr 2023 06:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81D63C77B60
+	for <git@archiver.kernel.org>; Sun, 30 Apr 2023 10:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231748AbjD3G7U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Apr 2023 02:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37144 "EHLO
+        id S229525AbjD3KAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Apr 2023 06:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbjD3G7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2023 02:59:18 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499671FC7
-        for <git@vger.kernel.org>; Sat, 29 Apr 2023 23:59:17 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2a8bcfbf276so12737041fa.3
-        for <git@vger.kernel.org>; Sat, 29 Apr 2023 23:59:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682837955; x=1685429955;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ug5CtCvdWcpo9Tac/jUmLTHdTurouITjkT48zD7ryF4=;
-        b=WiDfmwh6O3lZEAKzFJFz6MygiDfHPd39hDPZR33UcD/zV6B82GiYG5+eJipoK6Pz+w
-         cVXLNbVWifuqfnQiuO7ghZb+tSXqpEc5DhlYrUHZWqYCBN9b23f7G2ARS/dr/L7wKiQT
-         DHa5pM4Vtg5/1CLseJ8manfdkpqnAogXg/IJSMKTrK+/h317Uny/9mauLqksvmb6Mhfx
-         rjFtfmO8cOEBtrCrzEhlQ8THQ+GpPuJvfPHSrDkj9UGFzF1FdTTkAZug6Ng13vcsVisX
-         /Z1gCLV9PPHJTrIYytBMyQZhylejWSHoKtNZP4KVi11n+xSY5L84xLKGdCa/OIXd7I+k
-         rRWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682837955; x=1685429955;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ug5CtCvdWcpo9Tac/jUmLTHdTurouITjkT48zD7ryF4=;
-        b=PDQVffXAPzjprSMEF0kvXb1PIn8TuZ2sa+pJGN+7bviD8oiX1Elst5Wd2nGFc24COb
-         FSaCQtjpHnDfkmkcyOBg9enfY9YQAtEFfbqMzQz/mkymCF209nv2h3X+w5p2iRNljfPX
-         3roXhbYe/iSWo2CBV0iyPODsmxa4ZoRRECIzXAzIrL47Fc+AhNvhnLe46dzqS8hZwDrJ
-         dcAAu4DHIlDinQ8zH/Rld8DvR6mevgRJb4RLBHmxsS8hoDKqeIPu/Mecjw4SJ7YFzEaU
-         13tAzxpLnx/TfgUu6lF7IuiR/DfqAsIxZCtBvWjHo11f6VPnkP8o1GKBv8AbjOHuLZ8j
-         78xw==
-X-Gm-Message-State: AC+VfDxNVB4KAQXMXxkhy5/fOCzOYlsJiWoVoLYJXvdCmLR9NAP+a5Jj
-        IBZ78OJYrv2iWyRTxAu8BzGZWDGmPNzbNMvx9+JrI66c
-X-Google-Smtp-Source: ACHHUZ75enF8NlQU8/zcC7AOXJbeW0Wk76nOygWQCeRAZCbCeXcPvVvgZyfH24yNdCfL/TrOYKZVBknhovORlyK4vWY=
-X-Received: by 2002:a2e:7012:0:b0:2a8:dcd4:6161 with SMTP id
- l18-20020a2e7012000000b002a8dcd46161mr2831129ljc.28.1682837955303; Sat, 29
- Apr 2023 23:59:15 -0700 (PDT)
+        with ESMTP id S229477AbjD3KAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2023 06:00:09 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6850219A5
+        for <git@vger.kernel.org>; Sun, 30 Apr 2023 03:00:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1682848802; i=l.s.r@web.de;
+        bh=KssUWx106CIrdvFTddyQymBkkh8LZipsSWoOgUiFg8c=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=NE8Z0ZgSQIckmc00izdAtGm3mgsbXFNP0g2ufOUJU8wx2djw1GQCKFJ7l19i3Db1X
+         FRgXGmGnSHUZ6HvXwHIo8gpCHET2C8uOgBA0Wh5OucWRc81RjmSKncLqduwfYx6FXv
+         xaNtxhJT14xadzFmZ2n1IboAEIIoEUKzKiQsYvX4xiAWy7k0l/sMXX7RTj1sQMGO2D
+         3RxWYbkcgAj2Gf1mz1lAG22OGp/xjDaAJqii/O9DeE6f6/ac6e2mdYGV7l3fqGGA5d
+         arwQeyW0jTKzxJaSCZLRL9KNIu13yxC4co9X9bSLiopPL4EA9p7cSPw0JgR8ZWEqdX
+         VEu27qliV7L6g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.24.218]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MaHWj-1pnqnX16gv-00WG39; Sun, 30
+ Apr 2023 12:00:02 +0200
+Message-ID: <cbc7feb9-7e15-77e2-b3e9-1fa194b4d4fb@web.de>
+Date:   Sun, 30 Apr 2023 12:00:01 +0200
 MIME-Version: 1.0
-References: <xmqqzg6r9o14.fsf@gitster.g>
-In-Reply-To: <xmqqzg6r9o14.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 29 Apr 2023 23:58:00 -0700
-Message-ID: <CABPp-BG7K0L11YGYmo504GK4mexFnBZPuDHhqSwqaD2nGwWfWQ@mail.gmail.com>
-Subject: en/header-split-cache-h-part-2 (Was: Re: What's cooking in git.git
- (Apr 2023, #09; Fri, 28))
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.10.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] test-ctype: check EOF
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:gOwcN4BnTMiMtc7fTxTINYyfAGlKE7fbyQf7t1ZBrgnIjnJM9Ew
+ ETxb2ZZY9y7mbVc8HsWNxmk7ZA5gF06aa3RRUmbvLG5GkMGei+aFX2+7EED9M3pbci1HX3p
+ F2SdLMffHf9yiSnTSma0GBq0UWyKWgGf9NXOCcGddDYncxdh6OXDsmC7uuP8v2fux1VAvot
+ 5d3PhjSBHRmz9KePsA2Eg==
+UI-OutboundReport: notjunk:1;M01:P0:cb/LsWjBc+4=;x91zNsyitON4fbVeC46cvk6cbdV
+ mLt63owlxU2eSv5L4Wji8qdKI6+gOQE1tjT4APMJ2bSAaCH84rNpSH3zAeeZ97IPlP8Gfkb7V
+ faQnzqan01NzAu5M2ZWJrwkqUywYquWoKhMtBTtrciHCvYDGXAvwkkZOsDlKK+J6ihpBPiWgr
+ q6S7QuiOIxUpsYktz89x1mNiKJzhZA+6GzD9kW+EZfYZpwqlSiarAodh82dFM7d1V1yvwpuD8
+ hMJI4G6dBOxpBoWAofsyHrf6v2ra8VZhm/6fzcMsXwvWzPuCCsazHCUYddbvpPUs1yMJVxDPe
+ OWKGIqknW97MWFOzDLfHTjUx/a1G2OLOZWcuq2UfwTECzt+2wMfqIkq+VSiCk1GQpWLh9GBoj
+ vEWNVdKHwQ/u3u0Fr3K3h8pcqHut24HoclB8GrcR1eGonfj31cud078MVUxmuAuAfJk2Ib5Mo
+ Xd6qjPvTf8jLck5cygEZnCF+vZsw1+QMoAvfFiIBiJ9Ak36YvujS6g1iwCFdWIUWciqS5N4ef
+ sJco/8BD8cnH/LtkKsUiOfE0MvrHiNoQZ12hqmbqYoxkdELL01RsHedzGV1ezl7hRBpCiO62q
+ MjEfHvJ0DjVCuqOw2WQw5FKTTVDeR/htWgpxTGBHbVp8S+GaZ6GmwG8OKOHV7nzMUuIRkrols
+ wX/F1ko615DAuCYD/Q+OBNhBaIAGPF3aovdS3DghbAoBLOZbfXi1eN0VihWOOZ9N6tvaIjtg+
+ ExfJ4FkL4QAUQGpcE2dgJeSBoxQ1oOF8hzJ3+rOQwzep3EmjFVTsjG/11nag1BKE1zruUfJuR
+ hxOzM9hPZYOCMmKvPVNh4uU1itirbV1ka/dt3HhcVa7ZsrUQiGa6cNPUUW21ecc6DD6b+zzTv
+ mAu7IA9PwzOKtTUQKaPOXOQzTSJOchArB2Nk/QJCG51Wss4W0cZ2DSMOcy7VDc7OCSkbA8j+q
+ TF+BgA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 29, 2023 at 12:20=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> * en/header-split-cache-h-part-2 (2023-04-24) 22 commits
->  - reftable: ensure git-compat-util.h is the first (indirect) include
->  - diff.h: reduce unnecessary includes
->  - object-store.h: reduce unnecessary includes
->  - commit.h: reduce unnecessary includes
->  - fsmonitor: reduce includes of cache.h
->  - cache.h: remove unnecessary headers
->  - treewide: remove cache.h inclusion due to previous changes
->  - cache,tree: move basic name compare functions from read-cache to tree
->  - cache,tree: move cmp_cache_name_compare from tree.[ch] to read-cache.c
->  - hash-ll.h: split out of hash.h to remove dependency on repository.h
->  - tree-diff.c: move S_DIFFTREE_IFXMIN_NEQ define from cache.h
->  - dir.h: move DTYPE defines from cache.h
->  - versioncmp.h: move declarations for versioncmp.c functions from cache.=
-h
->  - ws.h: move declarations for ws.c functions from cache.h
->  - match-trees.h: move declarations for match-trees.c functions from cach=
-e.h
->  - pkt-line.h: move declarations for pkt-line.c functions from cache.h
->  - base85.h: move declarations for base85.c functions from cache.h
->  - copy.h: move declarations for copy.c functions from cache.h
->  - server-info.h: move declarations for server-info.c functions from cach=
-e.h
->  - packfile.h: move pack_window and pack_entry from cache.h
->  - symlinks.h: move declarations for symlinks.c functions from cache.h
->  - treewide: be explicit about dependence on strbuf.h
->
->  More header clean-up.
->  source: <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
+The character classifiers are supposed to handle EOF, a negative integer
+value.  It isn't part of any character class.  Extend the ctype tests to
+cover it.
 
-Both Stolee[1] and Glen[2] have acked and think it's good.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/helper/test-ctype.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-Also, when others at the weekly libification sync asked if it needed
-more review, I told them that those two were probably sufficient and I
-suspected you'd merge the series to next soon-ish, so they didn't need
-to worry about it.  If I was wrong about that, and you'd like to see
-more review, let me know.
+diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
+index 71a1a5c9b0..039703ee72 100644
+=2D-- a/t/helper/test-ctype.c
++++ b/t/helper/test-ctype.c
+@@ -2,8 +2,10 @@
 
-[1] https://lore.kernel.org/git/1393c57f-9f3f-18da-8f02-badfdc62f02d@github=
-.com/
-[2] https://lore.kernel.org/git/kl6lbkjao7fe.fsf@chooglen-macbookpro.roam.c=
-orp.google.com/
+ static int rc;
+
+-static void report_error(const char *class, int ch)
++static void test(int ch, const char *class, int expect, int actual)
+ {
++	if (actual =3D=3D expect)
++		return;
+ 	printf("%s classifies char %d (0x%02x) wrongly\n", class, ch, ch);
+ 	rc =3D 1;
+ }
+@@ -24,9 +26,9 @@ static int is_in(const char *s, int ch)
+ #define TEST_CLASS(t,s) {			\
+ 	int i;					\
+ 	for (i =3D 0; i < 256; i++) {		\
+-		if (is_in(s, i) !=3D t(i))	\
+-			report_error(#t, i);	\
++		test(i, #t, is_in(s, i), t(i));	\
+ 	}					\
++	test(EOF, #t, 0, t(EOF));		\
+ }
+
+ #define DIGIT "0123456789"
+=2D-
+2.40.1
