@@ -2,92 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24CABC77B7E
-	for <git@archiver.kernel.org>; Sun, 30 Apr 2023 01:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53113C77B7E
+	for <git@archiver.kernel.org>; Sun, 30 Apr 2023 02:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbjD3BGH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Apr 2023 21:06:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59214 "EHLO
+        id S230009AbjD3CWh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Apr 2023 22:22:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjD3BGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2023 21:06:05 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3B6E75
-        for <git@vger.kernel.org>; Sat, 29 Apr 2023 18:06:04 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1aae1bb61edso5718435ad.1
-        for <git@vger.kernel.org>; Sat, 29 Apr 2023 18:06:04 -0700 (PDT)
+        with ESMTP id S229721AbjD3CWg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2023 22:22:36 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E6419A6
+        for <git@vger.kernel.org>; Sat, 29 Apr 2023 19:22:33 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id 6a1803df08f44-5ef6cd8d50bso2745946d6.1
+        for <git@vger.kernel.org>; Sat, 29 Apr 2023 19:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682816763; x=1685408763;
+        d=gmail.com; s=20221208; t=1682821352; x=1685413352;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b0MYSd+0UoYuDi+ao9EoyO/nwLtTXbOwKa2CdS1GstI=;
-        b=CzZ79A9BsZ23oDd9gPw+UwlEMTATV+QNId8H3f9jIrry5fFUCdM8/c1xRXkrMHqnAn
-         o+zrXlBQsVUspn14tbZ2KOseRuMHBsyQf/UWvPFjfVjlCCV6dYUNBLPQvIW9EZi9zjPP
-         vMCl3hAtKNPG89jKfkeMpxzd7jp3M/awfykjOY8xq04BTwosj9t5ANY/X5dr35Lci/2V
-         SVR4cqTY7XR2dbNtBdBdS3V624Dyzl5dDPHzvcrRtsk7EItRCSDdwuEb5/kNPIj5CeHS
-         QtaUTLBXzji3s65AnXPaHLJV8m6lQSGhgyBkLakeXR+b7jn7MAk02mjKWWYXxs1r2hFR
-         CElA==
+        bh=gEWW3fEqOoesLsuCbRkez9CoRvjPNb+TIxEAt6tqMWY=;
+        b=YVoatts7oFKpUmsqp9np8eQfIegkoS2QdVbV0hSzKGxFpkwJboBMrftjBwkQ8EozLn
+         mZnMtxsgkZoc9GygeWje8NhH8eBeCtA3BCNDsRGUP7B87nnCO3gC2yl1DW46P0bMNnpQ
+         2N0KAHpbUSHzXexLKrMuZ/2WzeiaEGhzyDPKhw0M3xljfAJKBXrWC12ynHt4U36FGnGS
+         pFqrT1AwKrZpChC+r5MNCSEZVrcl1hpod5OlJPRCii0ea4lEgbpx2gL6xYCOqAqEBix7
+         UXdrkOQ8ZobUawUsHzv/2IIWz+lDBUY2NccF+Z7OLQJ2aQtRg7KB42NxGuaHPDnNDWI8
+         t2iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682816763; x=1685408763;
+        d=1e100.net; s=20221208; t=1682821352; x=1685413352;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=b0MYSd+0UoYuDi+ao9EoyO/nwLtTXbOwKa2CdS1GstI=;
-        b=SeoElK7w3BtI61o2sJs1P+DOK5SHkxnwslhrdvj2SZGhI1ROoO/XUpSRF/shDBu5qy
-         lFTak3bt+qUBTSpgjxv4ScC2Ancl4fse9GLUdqYP/ZgylOn9pmnwbhx4Cp2IZL7Qo57S
-         sE5TXu5iwV+kz4jAoCC790MC4VdREYXRHVcMMfanMKSjTtD/D6mjoZjpcg6D/3YoUJXW
-         CL//OXfWHPM2YxXoh77AQ8jgFX+rKGk8Dn+zXp0Wlh0J0l8V6irIVQeAhlKtjL1BcRXp
-         bMURSKveDtGtguoC1A7OWpNH3fJKyzBQ3aGJZEhOSWk00bGTNZVACeqtKxi2wIPSBJbM
-         AtrQ==
-X-Gm-Message-State: AC+VfDxzOwnlqUIYz0hg0+4YpbJLn22l3fVchAmkyOOlgHGyXqCFSx9J
-        gmDXcyUKrBG9EHXwRyG4mx0=
-X-Google-Smtp-Source: ACHHUZ4mb7DCuy2eG8XHgrlOh5bGF4O1Yik9Pgz1AK3+vAuzaiWh+YQFrTFjW6ftdLApx8zVOV1lUw==
-X-Received: by 2002:a17:902:da8f:b0:1a1:add5:c355 with SMTP id j15-20020a170902da8f00b001a1add5c355mr11783836plx.5.1682816763510;
-        Sat, 29 Apr 2023 18:06:03 -0700 (PDT)
-Received: from localhost.localdomain ([39.144.154.84])
-        by smtp.gmail.com with ESMTPSA id a15-20020a1709027d8f00b001a6527f6ad7sm15456067plm.85.2023.04.29.18.06.01
+        bh=gEWW3fEqOoesLsuCbRkez9CoRvjPNb+TIxEAt6tqMWY=;
+        b=fU+h6ZOy+OEuI2g/K1aN/fdowcghchgG9oyuoukqjB/3RwU3WC9HoyOmVSENbyWY2A
+         XcqabKkNQUCOIlueNIEux8ilniOFd5c8Qnzhot1OnAWeBb4kFLCk83iHTeZKERqziapa
+         GXAC7e7O/b6OCfIkJxIMDR33oSBCezpMP06gW8W+W3FA2eZbEB3rR45B1dx1vsxxGph2
+         TGAbD7dRkPpTC2t5ZldyryaAVxhvgVwdOXq5IaSZEupUp2oqQQ0vHWhESAz5/Q2XCFM8
+         +mS2lDc2kxdTF/BzgbfubgB7s/hXEOutg12yUMfJTFStpe4xx8L7F8ipkb+KK6mWVssu
+         iYnQ==
+X-Gm-Message-State: AC+VfDxvo/0WxL3RRxoSzErpCPZ74Mh36oMfUEhHGKyeSIWkbXsXLR9b
+        dGAuJXTVeQ6sPMFgoZfT4aVzy84yUx+ghA==
+X-Google-Smtp-Source: ACHHUZ4h0/Pd73yS5n9mPlG6lONZ02Q9/vS0az0zMAc2FXB3oPL/03TO8GWuPlDPhR+Hf0L8nkiPUQ==
+X-Received: by 2002:a05:6214:4001:b0:5ed:c96e:ca4a with SMTP id kd1-20020a056214400100b005edc96eca4amr11305723qvb.1.1682821352163;
+        Sat, 29 Apr 2023 19:22:32 -0700 (PDT)
+Received: from [192.168.1.211] ([2600:4041:454d:2100:c9d7:5476:985c:74a2])
+        by smtp.gmail.com with ESMTPSA id or6-20020a05620a618600b0074e1ee027c2sm7854201qkn.87.2023.04.29.19.22.31
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Apr 2023 18:06:02 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     felipe.contreras@gmail.com
-Cc:     --cc=avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [RFC PATCH 1/1] push: introduce '--heads' option
-Date:   Sun, 30 Apr 2023 09:05:53 +0800
-Message-ID: <20230430010553.4253-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.40.1.445.gf85cd430.dirty
-In-Reply-To: <644bba3f96e3b_1c66e29436@chronos.notmuch>
-References: <644bba3f96e3b_1c66e29436@chronos.notmuch>
+        Sat, 29 Apr 2023 19:22:31 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3] attr: teach "--attr-source=<tree>" global option to "git"
+Date:   Sat, 29 Apr 2023 22:22:31 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <5E890414-C174-4495-8BAD-7017E8E82764@gmail.com>
+In-Reply-To: <CAP8UFD0mfb1HSUGT3Bz1gHhH3fMpGDnMHVf2pT0CjirL0C5zuA@mail.gmail.com>
+References: <pull.1470.v2.git.git.1679936543320.gitgitgadget@gmail.com>
+ <pull.1470.v3.git.git.1682707848916.gitgitgadget@gmail.com>
+ <CAP8UFD0mfb1HSUGT3Bz1gHhH3fMpGDnMHVf2pT0CjirL0C5zuA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi Christian
 
-> Teng Long wrote:
->> From: Teng Long <dyroneteng@gmail.com>
->> 
->> The '--all' option of git-push built-in cmd support to push all branches
->> (refs under refs/heads) to remote. Under the usage, a user can easlily
->> work in some scenarios, for example, branches synchronization and batch
->> upload.
->> 
->> '--all' was introduced for a long time, meanwhile, git supports to
->> customize the storage location under "refs/". when a new git user see
->> the usage like, 'git push origin --all', we might feel like we're
->> pushing _all_ the refs instead of just branches without looking at the
->> documents until we found the related description of it or '--mirror'.
+On 28 Apr 2023, at 16:22, Christian Couder wrote:
+
+>>       +--attr-source=3D<tree-ish>::
+>>      -+ Read gitattributes from <tree-ish> instead of the worktree.
+>>      ++ Read gitattributes from <tree-ish> instead of the worktree. Se=
+e
+>>      ++ linkgit:gitrevisions[7].
 >
->Completely agree.
+> I think it's more sensible to link to gitattributes(5) instead of
+> gitrevisions(7)
+
+oops, I forgot to push up the version with this fix. Thanks for catching =
+it.
+
 >
->This is something I spotted a long time ago. Although I would prefer
->`--branches` over `--heads`.
+>> +static const char *default_attr_source_tree_object_name;
+>> +
+>> +void set_git_attr_source(const char *tree_object_name)
+>> +{
+>> +       default_attr_source_tree_object_name =3D xstrdup(tree_object_n=
+ame);
+>> +}
+>> +
+>> +
+>
+> One empty line is enough here.
 
-I will cook this recently, maybe we need some well prepared test cases
-at first.
+noted.
 
-Thanks.
+>
+>> +static void compute_default_attr_source(struct object_id *attr_source=
+)
+>> +{
+>> +       int from_env =3D 0;
+>> +
+>> +       if (!default_attr_source_tree_object_name) {
+>> +               default_attr_source_tree_object_name =3D getenv(GIT_AT=
+TR_SOURCE);
+>> +               from_env =3D 1;
+>> +       }
+>> +
+>> +       if (!default_attr_source_tree_object_name || !is_null_oid(attr=
+_source))
+>> +               return;
+>> +
+>> +       if (repo_get_oid_treeish(the_repository, default_attr_source_t=
+ree_object_name, attr_source)) {
+>> +               if (from_env)
+>> +                       die(_("bad --attr-source object"));
+>> +               else
+>> +                       die(_("bad GIT_ATTR_SOURCE"));
+>
+> I think it would be better to have just the following instead of the 4
+> lines above:
+>
+> die(_("invalid tree object from --attr-source flag or GIT_ATTR_SOURCE
+> env variable"));
+>
+> as a bad GIT_ATTR_SOURCE in a subprocess could come from a bad
+> --attr-source in the main process.
+>
+> And this way the from_env variable is not needed.
+
+sounds good
+>
+>> +       }
+>> +}
+>
+> The rest looks good to me, thanks!
+
+thanks,
+John
