@@ -2,129 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D29ABC77B7C
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 22:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52784C77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 22:51:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbjEAWkn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 18:40:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35538 "EHLO
+        id S232804AbjEAWvr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 18:51:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbjEAWkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 18:40:41 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26D910FD
-        for <git@vger.kernel.org>; Mon,  1 May 2023 15:40:39 -0700 (PDT)
-Received: (qmail 15901 invoked by uid 109); 1 May 2023 22:40:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 May 2023 22:40:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4857 invoked by uid 111); 1 May 2023 22:40:38 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 01 May 2023 18:40:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 1 May 2023 18:40:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Adam Majer <adamm@zombino.com>
+        with ESMTP id S229822AbjEAWvq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 18:51:46 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3364EB1
+        for <git@vger.kernel.org>; Mon,  1 May 2023 15:51:45 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1aad6f2be8eso25129615ad.3
+        for <git@vger.kernel.org>; Mon, 01 May 2023 15:51:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682981504; x=1685573504;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sz6Co4TKsidc0PU/um1dYSvQe9H2LqRZAJymgYy7hCc=;
+        b=GYj7ucfK7LCL3YA+nIrbvQEXTLDVZhhBI4Jn7sA6l0+z8iSdVlSElokM59l2bWAcU4
+         1if2DcHLIr7zVvMWtifdcltFoPKnrRwQHv3cwEatdNo0L0q6ow7wnclFfCWvoNJTaUIF
+         5z+KuW3Id/KBCNlCQ0/pGOTtsQ6HBOYT6mCsxfJ8g3ZP/y2Gmld6x2mKvxLhFJGN2tX+
+         tKUSdksC63JH0vGLLJEzZinea9qsaFiOAVsbU3HQOqRcSC1ti7gsIUaIGkudLe0j3Xed
+         aJqKXH4s1soUw7HoJL7pJczoSsREeNzuaor/kewu6ifRHttYUhbU/ylVMxgCPIMvELcV
+         C8Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682981504; x=1685573504;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Sz6Co4TKsidc0PU/um1dYSvQe9H2LqRZAJymgYy7hCc=;
+        b=Fi53zrj4LaW734b4pS/pTJrphg5UsIVQ7KXx+9afj420udHTYNdTesAm/N0tn3BVsC
+         PFTo+jR3WIiwq3GA3nevHlsNmsIou7DJ8L21QB7l09/8QlPsKp3m6YV6GjI5/ewaxVCf
+         ZXed00ZMIV1eMM0C/Rq1lpzaQ060exFsTS4RJPvbEd1tEpW9S90AJ6XvP74c+jt2hkU1
+         J/H3AKtLnbLnTF8Tyf9cD6Bp0DyFW6grbSqI7xC5AEDqSAMAYr1kJ/oIXOp6ro3pN5J1
+         QsJzxElGRtU2S79XpFk7KK0ETAHEEC290FQ3+r0JX+UwnwCKDi26E3OuDWBy/jAKARGF
+         13IA==
+X-Gm-Message-State: AC+VfDzkxaVf9JfbPvfa/3at0ZayYmx59Ps4Tx3OpRVork1NgjIWb6/A
+        Tck//5MQG1Sx6J5WqOqS/oc=
+X-Google-Smtp-Source: ACHHUZ64d8rUvpqREslCwilSvmlMsiCFO5nCpmN8fPazv7rcj0LPtsmwg1g0O0SoVNA5cF5RYlHoEg==
+X-Received: by 2002:a17:903:245:b0:1a9:37f4:6345 with SMTP id j5-20020a170903024500b001a937f46345mr17991215plh.12.1682981504467;
+        Mon, 01 May 2023 15:51:44 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id jb4-20020a170903258400b001a682a195basm18461509plb.28.2023.05.01.15.51.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 15:51:44 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Adam Majer <adamm@zombino.com>
 Subject: Re: [PATCH v2 1/1] upload-pack: advertise capabilities when cloning
  empty repos
-Message-ID: <20230501224038.GA1174291@coredump.intra.peff.net>
 References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
- <20230501170018.1410567-1-sandals@crustytoothpaste.net>
- <20230501170018.1410567-2-sandals@crustytoothpaste.net>
+        <20230501170018.1410567-1-sandals@crustytoothpaste.net>
+        <20230501170018.1410567-2-sandals@crustytoothpaste.net>
+        <20230501224038.GA1174291@coredump.intra.peff.net>
+Date:   Mon, 01 May 2023 15:51:43 -0700
+In-Reply-To: <20230501224038.GA1174291@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 1 May 2023 18:40:38 -0400")
+Message-ID: <xmqqzg6n1x8g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230501170018.1410567-2-sandals@crustytoothpaste.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 01, 2023 at 05:00:18PM +0000, brian m. carlson wrote:
+Jeff King <peff@peff.net> writes:
 
-> There is one minor issue to fix, though.  When we call send_ref with
-> namespaces, we would return NULL with the capabilities entry, which
-> would cause a crash.  Instead, let's make sure we don't try to strip the
-> namespace if we're using our special capabilities entry.
+> @@ -1382,8 +1386,10 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+>  			data.no_done = 1;
+>  		head_ref_namespaced(send_ref, &data);
+>  		for_each_namespaced_ref(send_ref, &data);
+> -		if (!data.sent_capabilities)
+> -			send_ref("capabilities^{}", null_oid(), 0, &data);
+> +		if (!data.sent_capabilities) {
+> +			const char *ref = "capabilities^{}";
+> +			write_v0_ref(&data, ref, ref, null_oid());
+> +		}
 
-Thanks, this hunk:
+Ah, this separation of duties wrt the namespace stripping makes the
+result easier to read.
 
-> @@ -1212,7 +1213,8 @@ static int send_ref(const char *refname, const struct object_id *oid,
->  	static const char *capabilities = "multi_ack thin-pack side-band"
->  		" side-band-64k ofs-delta shallow deepen-since deepen-not"
->  		" deepen-relative no-progress include-tag multi_ack_detailed";
-> -	const char *refname_nons = strip_namespace(refname);
-> +	const char *refname_nons = !strcmp(refname, "capabilities^{}") ?
-> +				   refname : strip_namespace(refname);
->  	struct object_id peeled;
->  	struct upload_pack_data *data = cb_data;
+The version brian posted looked good enough to me, but if we are to
+have another iteration, incorporating this change would be nice.
 
-looks much better than sticking it in strip_namespace() as I did
-earlier. I did wonder about refactoring further:
+Thanks.
 
-diff --git a/upload-pack.c b/upload-pack.c
-index d7b31d0527..e1d75d7c3c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1207,19 +1207,17 @@ static void format_session_id(struct strbuf *buf, struct upload_pack_data *d) {
- 		strbuf_addf(buf, " session-id=%s", trace2_session_id());
- }
- 
--static int send_ref(const char *refname, const struct object_id *oid,
--		    int flag UNUSED, void *cb_data)
-+static void write_v0_ref(struct upload_pack_data *data,
-+			 const char *refname, const char *refname_nons,
-+			 const struct object_id *oid)
- {
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow deepen-since deepen-not"
- 		" deepen-relative no-progress include-tag multi_ack_detailed";
--	const char *refname_nons = !strcmp(refname, "capabilities^{}") ?
--				   refname : strip_namespace(refname);
- 	struct object_id peeled;
--	struct upload_pack_data *data = cb_data;
- 
- 	if (mark_our_ref(refname_nons, refname, oid, &data->hidden_refs))
--		return 0;
-+		return;
- 
- 	if (capabilities) {
- 		struct strbuf symref_info = STRBUF_INIT;
-@@ -1249,6 +1247,12 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 	capabilities = NULL;
- 	if (!peel_iterated_oid(oid, &peeled))
- 		packet_fwrite_fmt(stdout, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
-+}
-+
-+static int send_ref(const char *refname, const struct object_id *oid,
-+		    int flag UNUSED, void *cb_data)
-+{
-+	write_v0_ref(cb_data, refname, strip_namespace(refname), oid);
- 	return 0;
- }
- 
-@@ -1382,8 +1386,10 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 			data.no_done = 1;
- 		head_ref_namespaced(send_ref, &data);
- 		for_each_namespaced_ref(send_ref, &data);
--		if (!data.sent_capabilities)
--			send_ref("capabilities^{}", null_oid(), 0, &data);
-+		if (!data.sent_capabilities) {
-+			const char *ref = "capabilities^{}";
-+			write_v0_ref(&data, ref, ref, null_oid());
-+		}
- 		/*
- 		 * fflush stdout before calling advertise_shallow_grafts because send_ref
- 		 * uses stdio.
-
-which avoids doing an extra strcmp() on every ref. But probably it is
-not that big a deal either way.
-
-> Add several sets of tests for HTTP as well as for local clones.
-
-This part puzzled me a bit. There's a local test in t5700, which is
-good. But it also gets HTTP tests. What do they offer versus the ones in
-t5551 (or vice versa)?
-
--Peff
