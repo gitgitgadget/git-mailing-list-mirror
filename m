@@ -2,70 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 333EEC77B73
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 10:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24884C77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 11:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232222AbjEAK5v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 06:57:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60540 "EHLO
+        id S232161AbjEALJd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 07:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231438AbjEAK5t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 06:57:49 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99EB19D
-        for <git@vger.kernel.org>; Mon,  1 May 2023 03:57:47 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-50bc0117683so2728160a12.1
-        for <git@vger.kernel.org>; Mon, 01 May 2023 03:57:47 -0700 (PDT)
+        with ESMTP id S229556AbjEALJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 07:09:32 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E9BB1BD
+        for <git@vger.kernel.org>; Mon,  1 May 2023 04:09:31 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-50b9ef67f35so2868888a12.2
+        for <git@vger.kernel.org>; Mon, 01 May 2023 04:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682938665; x=1685530665;
+        d=gmail.com; s=20221208; t=1682939370; x=1685531370;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ux3yGhumXTx8tAtkBYmwMYccU5IZ5acsfDYzKClHY9Y=;
-        b=JdDGlBEvk4VWRsL5uu5DsvuwlfISaWyO2SqoBGvJvOwI7jvIxvUDDc7fKBTjxBW/3S
-         /lSmIvZIQYSRzy6HPvMqs+uWnfFg6OCW0MHZaByfWmYUgmSagjbSz/4YhNvlSf4b+0jS
-         QkSEaIAlyOYnvmxbmoJdfxyFNoAG1/bFcWeLBJlqgnDMsktWdH+EZBFkfC7fYtq6py+0
-         mqmEcQX97oCbvum1EHmkRwTMvwfPtX9dOWFIKJFxBh1c5SYqt9DSRD8TII7BXcAQXZJH
-         t7uxLQY3si5/OtUm8jdM+fptMPx8ZKYFT5NeQcEbd3OrIma53ABi7QOogNE4X+wNWVLA
-         524Q==
+        bh=cFDyDtoSX/0WveXTvCOblBd9qSy/4Gyd96bISneGDqU=;
+        b=FNeWkPBjd0BWoL6Y0eUYfUK1C7aCQ228r1xvGY+oSbaIKmchRJ9IO5RLE9/v0mP2FV
+         5S3//Ax4ZskGVcfT7LZwquxasIrJg/5HZnoy2kFv0EGIubnpAM1rDk1MdBfL2Li8mBFa
+         kWhXGB4pK9MfCnjYinLW4htcd5phfWSjGspwMduDQs9Z/L394FwXfz9cxkRBZRnzT10V
+         ufYK+8klHdaEDgPwADWR+JPuQckjUhq0f1XPzc2G61G3gnLVKKIwZ/ZXtmp/hzmR1C+h
+         jdp+NflS7c+ljLsNh4IzZiZF8q/arVyS/07XiVOeMmeRi76qyfrTS//O4xe8Org0eJ48
+         t5tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682938665; x=1685530665;
+        d=1e100.net; s=20221208; t=1682939370; x=1685531370;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ux3yGhumXTx8tAtkBYmwMYccU5IZ5acsfDYzKClHY9Y=;
-        b=aFUBUkPpOSy93Yi3APD0FCIgB33o06y+C1oZIduJ6QQZsQ3drwgNAXhzBKPtG93CyD
-         VxHrl6iWHKndz66AEzmYtuO0OTHHB4N/So8JEECBslAnYre2ntWYgrWZKOfJtlyysPf5
-         JAI2LcF59ziQKES6sYFV71skxmHRQig5Ri3qSxJdxZaTahrwjV3EPc0O9ffBJLAbUa+u
-         HGtcOSWzUZuocOqGxYTpiWSYuWQeEBhec7zjZsCbkUM5p/At12owgmdneo2UyjsRpv0t
-         FlMJMxnftS5fFnmWNU5RCiz6Yxz7XYI1wGHsgonydeAnT3k3c91xjX9aVsTN/j8npn3T
-         DOAQ==
-X-Gm-Message-State: AC+VfDzm8njaYDZQHHUuXds5f2hgrD2yQeOQqBmr75nFIxGC2MfPAEwr
-        378pzQvzt2HzSAFsR31axcqoy0nZXbs=
-X-Google-Smtp-Source: ACHHUZ6q43vAZjj2zLYecy5EbfSF4r5STp4UMiWF9YPE2VVkKTxUgFg+oQBTrPlxgLRTqrfAhQwLdQ==
-X-Received: by 2002:a17:907:988:b0:94f:17b7:c4b8 with SMTP id bf8-20020a170907098800b0094f17b7c4b8mr13962376ejc.19.1682938665298;
-        Mon, 01 May 2023 03:57:45 -0700 (PDT)
+        bh=cFDyDtoSX/0WveXTvCOblBd9qSy/4Gyd96bISneGDqU=;
+        b=LV121/NsItMCd+Tu2KAaAUGlVkBYlPEAl64N7G/nm+umu/F7V9gnK3P+/RXDxK3grj
+         XR2P8r0COTzTt84ZlMEtaIFkjCHyafK6OaE6tTdAp51AI4bVYTALNZaCTye6zNVDYw3g
+         I2IPwgmAP6uVX9piEYB33tbHeLSlwd2zbV7SSNguhglUazl5KfMBurv9mS9shznNAJug
+         YrH64OO0mr2CaZgAatFwuPaKDKItIL8ZWPnoRwY1uCt4tiAxLsLJyEYuYwjj+I+3OXyt
+         wrGvT4gWuPZW+FfQir2dMkY3ekGAaQhk6EgdiXbTnkLBTCYPxZKN99cJqgaEF4GCYbD8
+         lH1A==
+X-Gm-Message-State: AC+VfDzB811bddbCstPiqoj2Lp5HrJaFeMA+a+zc+jlLOTbGTp+rpVa2
+        fcQMHAycyGyMYl5nbNcQGDA=
+X-Google-Smtp-Source: ACHHUZ4REsks21K37WMmfHd3o5tmZQqXUbxl/zl1cclOadCUZYJ+b0cDt6USLVz2o9x2BVwO1EgeOA==
+X-Received: by 2002:a05:6402:47:b0:506:fcd5:6159 with SMTP id f7-20020a056402004700b00506fcd56159mr5910412edu.21.1682939369596;
+        Mon, 01 May 2023 04:09:29 -0700 (PDT)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id h6-20020a170906854600b0094e84314762sm14572614ejy.187.2023.05.01.03.57.44
+        by smtp.gmail.com with ESMTPSA id u11-20020aa7d0cb000000b0050687dbb5dasm12050867edo.31.2023.05.01.04.09.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 03:57:44 -0700 (PDT)
+        Mon, 01 May 2023 04:09:29 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1ptRE0-0002td-0p;
-        Mon, 01 May 2023 12:57:44 +0200
+        id 1ptRPM-0003HM-2W;
+        Mon, 01 May 2023 13:09:28 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <nasamuffin@google.com>,
         Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v2 1/2] cocci: add headings to and reword README
-Date:   Mon, 01 May 2023 12:53:19 +0200
-References: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
- <pull.1495.v2.git.git.1682634143.gitgitgadget@gmail.com>
- <4a8b8a2a6745e791e35296e34f530b5f40f51c27.1682634143.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 02/14] config.c: use kvi for CLI config
+Date:   Mon, 01 May 2023 13:06:33 +0200
+References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
+ <a682612cff23449e682023303f17a8be1d73fc31.1682104398.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
-In-reply-to: <4a8b8a2a6745e791e35296e34f530b5f40f51c27.1682634143.git.gitgitgadget@gmail.com>
-Message-ID: <230501.86h6swjp3r.gmgdl@evledraar.gmail.com>
+In-reply-to: <a682612cff23449e682023303f17a8be1d73fc31.1682104398.git.gitgitgadget@gmail.com>
+Message-ID: <230501.86cz3kjok7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -73,26 +71,52 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Apr 27 2023, Glen Choo via GitGitGadget wrote:
+On Fri, Apr 21 2023, Glen Choo via GitGitGadget wrote:
 
-Re subject: I don't per-se mind the "add headings" formatting change,
-but doesn't it have headings already? I.e.:
-
-> -Git-specific tips & things to know about how we run "spatch":
-> +== Git-specific tips & things to know about how we run "spatch":
+> @@ -682,17 +677,30 @@ static int config_parse_pair(const char *key, const char *value,
+>  	if (git_config_parse_key(key, &canonical_name, NULL))
+>  		return -1;
 >  
->   * The "make coccicheck" will piggy-back on
->     "COMPUTE_HEADER_DEPENDENCIES". If you've built a given object file
+> -	ret = (fn(canonical_name, value, data) < 0) ? -1 : 0;
+> +	ret = (kvi_fn(fn, canonical_name, value, kvi, data) < 0) ? -1 : 0;
+>  	free(canonical_name);
+>  	return ret;
+>  }
 
-I think it was clear before that that was a "heading", at least in the
-sense that it summarized what the indented part that followed was
-discussing.
+This is pre-existing, but I'd much prefer as we're doing more
+formalization of this interface if this were just:
 
-I think what this is really doing is converting this part of the doc to
-asciidoc, but is anything actually rendering it as asciidoc?
+	ret = kvi_fn(...);
+	...;
+	return ret;
 
-If we are converting it to asciidoc shouldn't the bullet-points be
-un-indented too? (I'm not sure, but couldn't find a part of our build
-that actually feeds this through asciidoc, so spot-checking that wasn't
-trivial...)
+I.e. a look at the current code shows us that the API users of
+git_config_parse_parameter() are already doing this coercion themselves,
+i.e. they only care about "ret < 0".
 
+So let's just hand them the actual return value, rather than doing the
+needless coercion.
+
+> @@ -2423,19 +2429,13 @@ static int configset_add_value(struct config_reader *reader,
+>  	l_item->e = e;
+>  	l_item->value_index = e->value_list.nr - 1;
+>  
+> -	if (!reader->source)
+> -		BUG("configset_add_value has no source");
+> -	if (reader->source->name) {
+> +	if (reader->source && reader->source->name) {
+>  		kv_info->filename = strintern(reader->source->name);
+>  		kv_info->linenr = reader->source->linenr;
+>  		kv_info->origin_type = reader->source->origin_type;
+> -	} else {
+> -		/* for values read from `git_config_from_parameters()` */
+> -		kv_info->filename = NULL;
+> -		kv_info->linenr = -1;
+> -		kv_info->origin_type = CONFIG_ORIGIN_CMDLINE;
+> -	}
+> -	kv_info->scope = reader->parsing_scope;
+> +		kv_info->scope = reader->parsing_scope;
+> +	} else
+> +		kvi_from_param(kv_info);
+
+Missing a {} here.
