@@ -2,307 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF1D9C77B61
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 11:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5462FC77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 13:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbjEALhO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 07:37:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41742 "EHLO
+        id S231166AbjEANwP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 09:52:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232218AbjEALhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 07:37:12 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74A8AFD
-        for <git@vger.kernel.org>; Mon,  1 May 2023 04:37:10 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-94f1d0d2e03so415605866b.0
-        for <git@vger.kernel.org>; Mon, 01 May 2023 04:37:10 -0700 (PDT)
+        with ESMTP id S229737AbjEANwN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 09:52:13 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5434195
+        for <git@vger.kernel.org>; Mon,  1 May 2023 06:52:09 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-50a14564d17so39775846a12.0
+        for <git@vger.kernel.org>; Mon, 01 May 2023 06:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682941029; x=1685533029;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tt56xPBTMGA/DgCyM8dSHDCT4Mt4+tVJJclJZE5xMI4=;
-        b=aBO07/FC17BrB8WYHHusfjxO1v/491NNrJzIDbRK2PSdHLqQiWrKVrzkIuSAFVCjta
-         9CsMPs5qEW5He6edBL1HnLAxaatnU1itUohzhZXlkSm5jJYnG8dkTLyM7UL0aoXS9rRH
-         10i6N9ercpsIu30fRi0egxzh5FVCKNfume9GBDsc1lumQ9EcnYBpZaHDsRD9v+MJmuMb
-         bKOTAhzFkvc+tVx1IIjFpShVqrkJRCMTBAsFd16/FAzHu6+sYBSPoTMpuYuzJONqgh6g
-         2nVsPNYcOKG218K9YNc1U7rxJzPC3K3u3mZpNY3pEaNWnjh1gD6cpWIuXtGGOG1wC2OL
-         CThg==
+        d=gmail.com; s=20221208; t=1682949128; x=1685541128;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pgsmevLve8/0lEEevDIZLEDy2+9V6HmWhs4enmapgAg=;
+        b=jDFfMlKZnfFOpBbv3UzMGfw2ktdKUSvcivT9RLKRTHKeGQSUODP90ZSn3dE1fa4XE2
+         ALzh6RlzF67peuwOCGcTDLlKM1zCooitPRpgJg7VN5lz/hldhibsG8jUuGE5mqvbUkPx
+         2E8tba7CURHx/USNC7Z5lCQsggsFpVcvtsu2wLKxzaZPhKU/J/xKN/6K5nyxJeD0a3Y3
+         RTSmFg24jhzx09nrp7MMjFUBKsFxSSeUATEIkG8wH+fjnmvRLPo0OgZKzXBuQQXQKfO9
+         KibUk9lnJcDSYdc/zbcmnRaUpoFiVnlZkoksKJXZ1/XXWpGW/uHdgnw0RwhTw64KywqC
+         ELQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682941029; x=1685533029;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tt56xPBTMGA/DgCyM8dSHDCT4Mt4+tVJJclJZE5xMI4=;
-        b=QfU9cvXDki2XGm0r1fGpE1zQA1LFeu1BDOHIRgIpRpPxxYK8KDx7GhpefyJUa6KHou
-         1tjZhYfOjos6rHMARXPUq/DkEkbdl+nWmTwEZ95Cjl8oIKQIk46Q9S2ZZCCf77VSOLTG
-         k1U0YhKDq+2KVCft0B5yu+5ML1ZjFHVTVpahf17to8V1GJmmL8/Az972dn1hytV+oxbU
-         UvR8DxdxU7HS2kCjQXUc7Owtnkmo5XRC7j3pW/G6MfdRC6WNtin7LHLek6sGeM6I4n8W
-         8esFrmlbNoFIPo0IyiGZdeHdeRZTppMD4/A3eN2OMT7mp3qVPqhBMvEvjhMQUEk7gr9j
-         HZrQ==
-X-Gm-Message-State: AC+VfDy0D4WFwqaP6YqWF3OAKQmeu9zJ90v7O8REvbWG7kMFWLC949HL
-        dHAEqTGFffzFQ37Kx8FvgcCJncrN5w0=
-X-Google-Smtp-Source: ACHHUZ5cO/GnAGidNQy/fKLD80suFFuoD38jYDttDvuTTqlNThRSZososDeKjBC1MUpbflgGZYAJuw==
-X-Received: by 2002:a17:907:3f04:b0:94f:967d:e4f with SMTP id hq4-20020a1709073f0400b0094f967d0e4fmr13706718ejc.39.1682941028713;
-        Mon, 01 May 2023 04:37:08 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682949128; x=1685541128;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pgsmevLve8/0lEEevDIZLEDy2+9V6HmWhs4enmapgAg=;
+        b=QDdHxMkV6aEO6vyBvj9ecIxUlTU97nlCxXhg5RUqdSbRC/weznllgKaxiIm7BAnjNB
+         3t/jRZ0/LPqAbhx+3/RbN2PYoeZRyk8gu5KwrfsH5JX1R+v5BztHsRSkUPoMI17gCAp0
+         kHQMvLFsAX4k/PSHgO39BVLo4hOfdGfM+wsAxifey0+ELnICPyiF9uXQGGSOAnpenU2O
+         bzUM1NzWxRgQhpCn7t3xk7kk2Bw1wGAY/VDCwutJVRN/DkZx0AQ6jZ8gApT6LXTY5z5x
+         dq8zDnU8m1cz8weObmnQndyAEIzNG8/Xo+Iyd1mOxGq+QVdyENNzBkrRiivSPNK2YbEb
+         LChA==
+X-Gm-Message-State: AC+VfDwQnk0ZbqHDY1XGphWxCZeRvQZ+XQ/q4dblXpNYxT4mISUekZKi
+        0GoF0iNc7KQQhgyyvoj15T/6+sxk+ts=
+X-Google-Smtp-Source: ACHHUZ78kTxUONs/f1lHxrE8RdkBb/pKTj5bKPb2w3NXocUoJ+c7VYyR0Hj0JGlp12FR2/4NyAHehQ==
+X-Received: by 2002:a17:907:da4:b0:953:838a:ed61 with SMTP id go36-20020a1709070da400b00953838aed61mr13007103ejc.30.1682949127567;
+        Mon, 01 May 2023 06:52:07 -0700 (PDT)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id n2-20020a1709065e0200b00951755d0c79sm14794355eju.104.2023.05.01.04.37.08
+        by smtp.gmail.com with ESMTPSA id d9-20020a17090694c900b0095354acf666sm14898773ejy.92.2023.05.01.06.52.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 04:37:08 -0700 (PDT)
+        Mon, 01 May 2023 06:52:07 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1ptRq7-00047z-2x;
-        Mon, 01 May 2023 13:37:07 +0200
+        id 1ptTwk-0008NO-0e;
+        Mon, 01 May 2023 15:52:06 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 10/14] (RFC-only) config: finish config_fn_t refactor
-Date:   Mon, 01 May 2023 13:19:48 +0200
-References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
- <1071e70c92892166e1ed2cf22bcd7eb49bdf3b20.1682104399.git.gitgitgadget@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH] cocci: remove 'unused.cocci'
+Date:   Mon, 01 May 2023 15:27:54 +0200
+References: <kl6lzg731xib.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <20230420205350.600760-1-szeder.dev@gmail.com>
 User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
-In-reply-to: <1071e70c92892166e1ed2cf22bcd7eb49bdf3b20.1682104399.git.gitgitgadget@gmail.com>
-Message-ID: <230501.868re8jna4.gmgdl@evledraar.gmail.com>
+In-reply-to: <20230420205350.600760-1-szeder.dev@gmail.com>
+Message-ID: <230501.864jowjh15.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Apr 21 2023, Glen Choo via GitGitGadget wrote:
+On Thu, Apr 20 2023, SZEDER G=C3=A1bor wrote:
 
-> From: Glen Choo <chooglen@google.com>
+> When 'unused.cocci' was added in 4f40f6cb73 (cocci: add and apply a
+> rule to find "unused" strbufs, 2022-07-05) it found three unused
+> strbufs, and when it was generalized in the next commit it managed to
+> find an unused string_list as well.  That's four unused variables in
+> over 17 years, so apparently we rarely make this mistake.
+>
+> Unfortunately, applying 'unused.cocci' is quite expensive, e.g. it
+> increases the from-scratch runtime of 'make coccicheck' by over 5:30
+> minutes or over 160%:
+>
+>   $ make -s cocciclean
+>   $ time make -s coccicheck
+>       * new spatch flags
+>
+>   real    8m56.201s
+>   user    0m0.420s
+>   sys     0m0.406s
+>   $ rm contrib/coccinelle/unused.cocci contrib/coccinelle/tests/unused.*
+>   $ make -s cocciclean
+>   $ time make -s coccicheck
+>       * new spatch flags
+>
+>   real    3m23.893s
+>   user    0m0.228s
+>   sys     0m0.247s
+>
+> That's a lot of runtime spent for not much in return, and arguably an
+> unused struct instance sneaking in is not that big of a deal to
+> justify the significantly increased runtime.
+>
+> Remove 'unused.cocci', because we are not getting our CPU cycles'
+> worth.
 
-I like the general goal of this series, i.e. to get rid of the "reader"
-callback, and pass stuff more explicitly.
+It wasn't something I intended at the time, but arguably the main use of
+this rule since it was added was that it served as a canary for the tree
+becoming completely broken with coccinelle, due to adding C syntax it
+didn't understand:
+https://lore.kernel.org/git/220825.86ilmg4mil.gmgdl@evledraar.gmail.com/
 
-But as I pointed out in
-https://lore.kernel.org/git/RFC-cover-0.5-00000000000-20230317T042408Z-avarab@gmail.com/
-I think this part (and the preceding two commits) are really taking is
-down the wrong path.
+So, whatever you think of of how worthwhile it is to spot unused
+variables, I think that weighs heavily in its favor. There *are* other
+ways to detect those sorts of issues, but as it's currently our only
+canary for that issue I don't thin we should remove it.
 
-To demonstrate why, here's a patch-on-top of this topic as a whole where
-I renamed the "kvi" struct members. I've excluded config.c itself (as
-its internals aren't interesting for the purposes of this discussion):
-	
-	diff --git a/builtin/config.c b/builtin/config.c
-	index c9e80a4b500..00cf8ffd791 100644
-	--- a/builtin/config.c
-	+++ b/builtin/config.c
-	@@ -198,8 +198,8 @@ static void show_config_origin(struct key_value_info *kvi, struct strbuf *buf)
-	 
-	-	strbuf_addstr(buf, config_origin_type_name(kvi->origin_type));
-	+	strbuf_addstr(buf, config_origin_type_name(kvi->origin_type2));
-	 	strbuf_addch(buf, ':');
-	 	if (end_nul)
-	-		strbuf_addstr(buf, kvi->filename ? kvi->filename : "");
-	+		strbuf_addstr(buf, kvi->filename2 ? kvi->filename2 : "");
-	 	else
-	-		quote_c_style(kvi->filename ? kvi->filename : "", buf, NULL, 0);
-	+		quote_c_style(kvi->filename2 ? kvi->filename2 : "", buf, NULL, 0);
-	 	strbuf_addch(buf, term);
-	@@ -210,3 +210,3 @@ static void show_config_scope(struct key_value_info *kvi, struct strbuf *buf)
-	 	const char term = end_nul ? '\0' : '\t';
-	-	const char *scope = config_scope_name(kvi->scope);
-	+	const char *scope = config_scope_name(kvi->scope2);
-	 
-	diff --git a/builtin/remote.c b/builtin/remote.c
-	index 034998a1205..81922af3f58 100644
-	--- a/builtin/remote.c
-	+++ b/builtin/remote.c
-	@@ -655,6 +655,6 @@ static int config_read_push_default(const char *key, const char *value,
-	 
-	-	info->scope = kvi->scope;
-	+	info->scope = kvi->scope2;
-	 	strbuf_reset(&info->origin);
-	-	strbuf_addstr(&info->origin, kvi->filename);
-	-	info->linenr = kvi->linenr;
-	+	strbuf_addstr(&info->origin, kvi->filename2);
-	+	info->linenr = kvi->linenr2;
-	 
-	diff --git a/config.h b/config.h
-	index ffb2d76823c..d9b0470e7b7 100644
-	--- a/config.h
-	+++ b/config.h
-	@@ -120,8 +120,8 @@ struct config_options {
-	 struct key_value_info {
-	-	const char *filename;
-	-	int linenr;
-	-	enum config_origin_type origin_type;
-	-	enum config_scope scope;
-	-	const char *path;
-	-	struct key_value_info *prev;
-	+	const char *filename2;
-	+	int linenr2;
-	+	enum config_origin_type origin_type2;
-	+	enum config_scope scope2;
-	+	const char *path2;
-	+	struct key_value_info *prev2;
-	 };
-	diff --git a/remote.c b/remote.c
-	index 5239dfeab55..1cb465c6c17 100644
-	--- a/remote.c
-	+++ b/remote.c
-	@@ -417,4 +417,4 @@ static int handle_config(const char *key, const char *value,
-	 	remote->origin = REMOTE_CONFIG;
-	-	if (kvi->scope == CONFIG_SCOPE_LOCAL ||
-	-	    kvi->scope == CONFIG_SCOPE_WORKTREE)
-	+	if (kvi->scope2 == CONFIG_SCOPE_LOCAL ||
-	+	    kvi->scope2 == CONFIG_SCOPE_WORKTREE)
-	 		remote->configured_in_repo = 1;
-	diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-	index 737505583d4..fa89cdd084c 100644
-	--- a/t/helper/test-config.c
-	+++ b/t/helper/test-config.c
-	@@ -54,6 +54,6 @@ static int iterate_cb(const char *var, const char *value,
-	 	printf("value=%s\n", value ? value : "(null)");
-	-	printf("origin=%s\n", config_origin_type_name(kvi->origin_type));
-	-	printf("name=%s\n", kvi->filename ? kvi->filename : "");
-	-	printf("lno=%d\n", kvi->linenr);
-	-	printf("scope=%s\n", config_scope_name(kvi->scope));
-	+	printf("origin=%s\n", config_origin_type_name(kvi->origin_type2));
-	+	printf("name=%s\n", kvi->filename2 ? kvi->filename2 : "");
-	+	printf("lno=%d\n", kvi->linenr2);
-	+	printf("scope=%s\n", config_scope_name(kvi->scope2));
-	 
-	diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-	index 83db3c755bd..338c5a58bd9 100644
-	--- a/trace2/tr2_tgt_event.c
-	+++ b/trace2/tr2_tgt_event.c
-	@@ -482,3 +482,3 @@ static void fn_param_fl(const char *file, int line, const char *param,
-	 	struct json_writer jw = JSON_WRITER_INIT;
-	-	enum config_scope scope = kvi->scope;
-	+	enum config_scope scope = kvi->scope2;
-	 	const char *scope_name = config_scope_name(scope);
-	diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-	index 65e9be9c5a4..5a06042e7c3 100644
-	--- a/trace2/tr2_tgt_normal.c
-	+++ b/trace2/tr2_tgt_normal.c
-	@@ -301,3 +301,3 @@ static void fn_param_fl(const char *file, int line, const char *param,
-	 	struct strbuf buf_payload = STRBUF_INIT;
-	-	enum config_scope scope = kvi->scope;
-	+	enum config_scope scope = kvi->scope2;
-	 	const char *scope_name = config_scope_name(scope);
-	diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-	index f402f6e3813..96fa359183d 100644
-	--- a/trace2/tr2_tgt_perf.c
-	+++ b/trace2/tr2_tgt_perf.c
-	@@ -445,3 +445,3 @@ static void fn_param_fl(const char *file, int line, const char *param,
-	 	struct strbuf scope_payload = STRBUF_INIT;
-	-	enum config_scope scope = kvi->scope;
-	+	enum config_scope scope = kvi->scope2;
-	 	const char *scope_name = config_scope_name(scope);
+If we hadn't had unused.cocci we wouldn't be able to apply rules the
+functions that use "UNUSED", which have increased a lot in number since
+then, and we wouldn't have any way of spotting similar parsing issues.
 
-So, as this shows us your 08/14 has gone through the effort of passing
-this "kvi" info to every single callback, but it's only this handful
-that actually needs this information.
+But it's unfortunate that it's this slow in the from-scratch case.
 
-So, even if we *can* get this to work I don't think it's worth it,
-especially as this would preclude giving these config callbacks some
-"lighter" API that doesn't take the trouble of recording and ferrying
-this information to them.
+When we last discussed this I pointed out to you that the main
+contribution to the runtime of unused.cocci is parsing
+builtin/{log,rebase}.c is pathalogical, but in your reply to that you
+seem to not have spotted that (or glossed over it):
+https://lore.kernel.org/git/20220831180526.GA1802@szeder.dev/
 
-Of course *now* we need to always prepare this information anyway, as
-anyone could access it via a global, but as the work you've done here
-shows we're always doing that, but only need it for these few cases.
+When I test this locally, doing:
 
-So I really think we could leave the vast majority of the current
-callbacks alone, and just supply a new "kvi" callback. My
-https://lore.kernel.org/git/RFC-patch-5.5-2b80d293c83-20230317T042408Z-avarab@gmail.com/
-showed one way forward with that.
+	time make contrib/coccinelle/unused.cocci.patch SPATCH=3Dspatch SPATCH_USE=
+_O_DEPENDENCIES=3D
 
-I think this should also neatly answer some of your outstanding
-questions. Especially as the above shows that the only non-test caller
-that needs "linenr" is the builtin/config.c caller that my proposed RFC
-(linked above) tackled directly. Most of these callbacks just need the
-more basic "scope".
+Takes ~2m, but if I first do:
 
-So, in particular:
+	>builtin/log.c; >builtin/rebase.c
 
-> Here's an exhaustive list of all of the changes:
->
-> * Cases that need a judgement call
->
->   - trace2/tr2_cfg.c:tr2_cfg_set_fl()
->
->     This function needs to account for tr2_cfg_cb() now using "kvi".
->     Since this is only called (indirectly) by git_config_set(), config
->     source information has never been available here, so just pass NULL.
->     It will be tr2_cfg_cb()'s responsibility to not use "kvi".
+It takes ~1m.
 
-Just adding a "CONFIG_SCOPE_IN_PROCESS", "CONFIG_SCOPE_SET" or whatever
-you'd want to call it seems to make much more sense here, no? 
+So, even without digging into those issues, if we just skipped those two
+files we'd speed this part up by 100%.
 
->   - builtin/checkout.c:checkout_main()
->
->     This calls git_xmerge_config() as a shorthand for parsing a CLI arg.
->     "kvi" doesn't apply, so just pass NULL. This might be worth
->     refactoring away, since git_xmerge_config() can call
->     git_default_config().
+I think such an approach would be much better than just removing this
+outright, which feels rather heavy-handed.
 
-Another example of a caller which never actually cares about this data,
-so if it doesn't need to have it passed to it, it doesn't need to fake
-it up either.
+We could formalize that by creating a "coccicheck-full" category or
+whatever, just as we now have "coccicheck-pending".
 
->   - config.c:git_config_include()
->
->     Replace the local "kvi" variable with the "kvi" parameter. This
->     makes config_include_data.config_reader obsolete, so remove it.
+Then I and the CI could run "full", and you could run "coccicheck" (or
+maybe we'd call that "coccicheck-cheap" or something).
 
-No comment (internal to config.c, as noted above).
+I also submitted patches to both make "coccicheck" incremental, and
+added an "spatchcache", both of which have since been merged (that tool
+is in contrib/).
 
-> * Hard for cocci to catch
->
->   - urlmatch.c
->
->     Manually refactor the custom config callbacks in "struct
->     urlmatch_config".
->
->   - diff.h, fsck.h, grep.h, ident.h, xdiff-interface.h
->
->     "struct key_value_info" hasn't been defined yet, so forward declare
->     it. Alternatively, maybe these files should "#include config.h".
+I understand from previous discussion that you wanted to use "make -s"
+all the time, but does your use-case also preclude using spatchcache?
 
-All of these problems go away if you don't insist on changing every
-single caller, you'll just have a step where you remove the current
-global in favor of some "config callback with kvi" info, and "make" will
-spot those callers that aren't converted yet.
+I run "coccicheck" a lot, and haven't personally be bothered by this
+particular slowdown since that got merged, since it'll only affect me in
+the cases where builtin/{log,rebase}.c and a small list of other files
+are changed, and it's otherwise unnoticeable.
 
-Those changes will be trivial enough (just the callers I noted above) to
-not require the tricky cocci patch in 08/14.
+It would also be rather trivial to just add some way to specify patterns
+on the "make" command-line that we'd "$(filter-out)", would that also
+address your particular use-case? I.e.:
 
-> * Likely deficiencies in .cocci patch
->
->   - submodule-config.c:gitmodules_cb()
->
->     Manually refactor a parse_config() call that gets missed because it
->     uses a different "*data" arg.
->
->   - grep.h, various
->
->     Manually refactor grep_config() calls. Not sure why these don't get
->     picked up.
->
->   - config.c:git_config_include(), http.c:http_options()
->
->     Manually add "kvi" where it was missed. Not sure why they get missed.
->
->   - builtin/clone.c:write_one_config()
->
->     Manually refactor a git_clone_config() call. Probably got missed
->     because I didn't include git_config_parse_parameter().
->
->   - ident.h
->
->     Remove the UNUSED attribute. Not sure why this is the only instance
->     of this.
->
->   - git-compat-util.h, compat/mingw.[h|c]
->
->     Manually refactor noop_core_config(), platform_core_config() and
->     mingw_core_config(). I can probably add these as "manual fixups" in
->     cocci.
+	make coccicheck COCCI_RULES_EXCLUDE=3D*unused*
 
-ditto.
+Or whatever.
+
+
+
