@@ -2,178 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF238C77B61
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 17:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C54BAC77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 17:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231646AbjEARQA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 13:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47762 "EHLO
+        id S232875AbjEARQB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 13:16:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232217AbjEARNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 13:13:49 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D346D212C
-        for <git@vger.kernel.org>; Mon,  1 May 2023 10:13:24 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-506b2a08877so4890892a12.2
-        for <git@vger.kernel.org>; Mon, 01 May 2023 10:13:24 -0700 (PDT)
+        with ESMTP id S234261AbjEARNJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 13:13:09 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DF51A6
+        for <git@vger.kernel.org>; Mon,  1 May 2023 10:12:17 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-959a3e2dc72so558108566b.2
+        for <git@vger.kernel.org>; Mon, 01 May 2023 10:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1682961200; x=1685553200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OZb7Ko2uzM+SJRqk9esZf+0mvRi8QR4Q+70qiLdcAK8=;
-        b=OyOKOGQkR5tRqwzIJGf92+HQ5NGERRVmlqR0Lo9K3Ai68rpZGLM3QwpHqr6hNAsSbS
-         H/+N3DY0mMt/Zh4z1de6zHB2BDWa2+dFafylqy+hHrnmZPrPwB37hVC6L1OP6Gj0WtSR
-         oW4nispmB6aGTBOOwra6fLOjglleUCXHQm8Yo=
+        d=gmail.com; s=20221208; t=1682961135; x=1685553135;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RTr3y3K6SFZew3fnWgwr/JXUAEKdyQsZwG/7NflWuwo=;
+        b=K6MP7X7buKnjJQ2tbDjQugZtxo+UTkQxjbIOCodaVd532UDhN9Enr1Ac+zkHzLr7cm
+         jm31WpfxSiDQSAdDXXdl0WPe0DlSCeVlHKodr/PzrH/PPUoCELcBQdCL/mo1D9Qr1V2o
+         tm8IHMXxpcfxsZDJdq5qlJvtDmipBGw7pEWvTNOEd9QMcHCy1l2rxsP0aebHNxx8bBqJ
+         JUkh5lxoNnz3bFGBJbnaBD4EKH0tv/pEePf66WJ3AF/Mc719gkJORn8KSv1StXpPep1W
+         mdY5ft6UDo6SHLbXE1TopwZ07RpHlMXP3BqyMO3Xdk1bRsw2XmYi24PV50VtbPkqpDaK
+         NMgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682961200; x=1685553200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OZb7Ko2uzM+SJRqk9esZf+0mvRi8QR4Q+70qiLdcAK8=;
-        b=geHI7YehQpr447Nw8J40hlyjz6xEBhCroLmLsLlu4n3JOjcBripBugJEtQLZR8hpYJ
-         Z3R8vfuoWEd6qhxUnAtChkWJeYcozKDZRLXrJH0DbovqMKAdKnnGXR/mf3L3NSA3x3+O
-         ANEu/Gjdf48CnmJvonxs0t+FyGhOedI0PJ4S08aOQIwxOKVMm4jdvcS+KRlt4cmH/lG6
-         uBQ0IKQxoKu4kB0T6oinlpU0vmBGtybJ5uWJLyMRiJE64o6yyLDWkAbfCMnMJBJdhtD/
-         +UjLxCW9xrqnozPy90EGaMVoHtx5dbckRVUgiXMgHRl4gy3E41dnkLGZvLkvpKlsEej2
-         yB3g==
-X-Gm-Message-State: AC+VfDzC17Bowmvq7i9vlaC5w4sj0qHefpJMFtfF7TqV031tkytVJIzJ
-        /u2JRIQxSyAMdsRqrtoq/mJPTRwWza9kgJ6rU+CQdA==
-X-Google-Smtp-Source: ACHHUZ576tJ4WX0+Fq73TZ/+psFSfeqDslDmkM9IZRdnkex6Z+Jop0CNsTqKe0Plpf0MqCJ03z6j9nfHXvPm3X/aOqM=
-X-Received: by 2002:a05:6402:34f:b0:50b:c689:8610 with SMTP id
- r15-20020a056402034f00b0050bc6898610mr2662773edw.18.1682961199683; Mon, 01
- May 2023 10:13:19 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682961135; x=1685553135;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RTr3y3K6SFZew3fnWgwr/JXUAEKdyQsZwG/7NflWuwo=;
+        b=EFSd/bVkqWkcODydY1dTsvBr6wMLIah9cC2b5n4BcATYtcQgHmfcKVujoKBUDTgIn/
+         foom5yLoC633iDAS41Fw93mtLIf9uP52VFreQ2NVAcOwRFNjUsIzxZ66c4vN/xmUpRsO
+         Kl8Tyvgp9Q2TJJo5dwM/BSypIBjWf3yObXFgIc/UDAFOU/bgeSbA/5g2KHtjzvFH+Sck
+         a1DPIzigC/03HqFUhmSnLuCdA8aToKIYPdDB/yPC7ATdZ6om40RXv5qQEPri0c1Emwqy
+         vtWszEoxtpulcAqjpSnV58SJ1d+hQhcstf5/dp+gOhOsY04t2RFopejqK4JVPL+r65bI
+         c0ow==
+X-Gm-Message-State: AC+VfDzvrWYCBznupTM4RWWVT7MT3GvDJfjcpDWGfnysVxxVFjfHfmeT
+        3XczxctiyW1UZ7CN8cGME9+9wXp3Uw0=
+X-Google-Smtp-Source: ACHHUZ654AIwynsAH5VuSRRaprjf7i8/7Lob7b5dq5OJ6iVTO7KcvqAfqSNx+WmuOQNtUiRNl731kw==
+X-Received: by 2002:a17:906:6a28:b0:906:3373:cfe9 with SMTP id qw40-20020a1709066a2800b009063373cfe9mr16934454ejc.10.1682961134880;
+        Mon, 01 May 2023 10:12:14 -0700 (PDT)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id q26-20020a170906941a00b0094f01aa9567sm14923912ejx.20.2023.05.01.10.12.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 10:12:10 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ptX4M-000FBc-03;
+        Mon, 01 May 2023 19:12:10 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Glen Choo <chooglen@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 21/22] diff.h: reduce unnecessary includes
+Date:   Mon, 01 May 2023 19:11:22 +0200
+References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
+ <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
+ <b7a96a08d1463ec51f0d8384012d812fd5f43537.1682194652.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
+In-reply-to: <b7a96a08d1463ec51f0d8384012d812fd5f43537.1682194652.git.gitgitgadget@gmail.com>
+Message-ID: <230501.86edo0ht7a.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAPMMpohyoaH92B9f46hwdX2S5WOYeRB2yMSKW-4UCrHe29SAZQ@mail.gmail.com>
- <xmqqpm7k6ojz.fsf@gitster.g>
-In-Reply-To: <xmqqpm7k6ojz.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Mon, 1 May 2023 19:13:08 +0200
-Message-ID: <CAPMMpoht4FWnv-WuSM3+Z2R4HhwFY+pahJ6zirFU-BD5r34B7Q@mail.gmail.com>
-Subject: Re: Change branch in the middle of a merge
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 1, 2023 at 5:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+
+On Sat, Apr 22 2023, Elijah Newren via GitGitGadget wrote:
+
+> From: Elijah Newren <newren@gmail.com>
 >
-> Tao Klerks <tao@klerks.biz> writes:
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  attr.c              | 1 +
+>  diff.h              | 1 -
+>  http-push.c         | 1 +
+>  line-log.c          | 1 +
+>  pack-bitmap-write.c | 1 +
+>  reflog.c            | 1 +
+>  tree-diff.c         | 1 +
+>  7 files changed, 6 insertions(+), 1 deletion(-)
 >
-> > At first I hoped that "git switch" might have fixed this - and in a
-> > limited sense it has, in that instead of *silently discarding* the
-> > merge state/metadata, it refuses with "fatal: cannot switch branch
-> > while merging".
->
-> I think this is in generally seen as a vast improvement over the
-> "silently discarding" to have the safety valve.
->
+> diff --git a/attr.c b/attr.c
+> index 2d8aeb8b58c..ddf2b0cbc2e 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -20,6 +20,7 @@
+>  #include "object-store.h"
+>  #include "setup.h"
+>  #include "thread-utils.h"
+> +#include "tree-walk.h"
+>  
+>  const char git_attr__true[] = "(builtin)true";
+>  const char git_attr__false[] = "\0(builtin)false";
+> diff --git a/diff.h b/diff.h
+> index 53aeb02a54b..69e574f4315 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -4,7 +4,6 @@
+>  #ifndef DIFF_H
+>  #define DIFF_H
+>  
+> -#include "tree-walk.h"
+>  #include "pathspec.h"
+>  #include "oidset.h"
+>  #include "strbuf.h"
+> diff --git a/http-push.c b/http-push.c
+> index 3f184986362..866ba243a89 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -16,6 +16,7 @@
+>  #include "sigchain.h"
+>  #include "strvec.h"
+>  #include "tree.h"
+> +#include "tree-walk.h"
+>  #include "packfile.h"
+>  #include "object-store.h"
+>  #include "commit-reach.h"
+> diff --git a/line-log.c b/line-log.c
+> index 10c19daec4a..6a7ac312a43 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -18,6 +18,7 @@
+>  #include "setup.h"
+>  #include "strvec.h"
+>  #include "bloom.h"
+> +#include "tree-walk.h"
+>  
+>  static void range_set_grow(struct range_set *rs, size_t extra)
+>  {
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index 3d3fd380654..cdffe2ce47d 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -19,6 +19,7 @@
+>  #include "prio-queue.h"
+>  #include "trace2.h"
+>  #include "tree.h"
+> +#include "tree-walk.h"
+>  
+>  struct bitmapped_commit {
+>  	struct commit *commit;
+> diff --git a/reflog.c b/reflog.c
+> index 57dc7c0d051..ee1bf5d032c 100644
+> --- a/reflog.c
+> +++ b/reflog.c
+> @@ -5,6 +5,7 @@
+>  #include "refs.h"
+>  #include "revision.h"
+>  #include "tree.h"
+> +#include "tree-walk.h"
+>  #include "worktree.h"
+>  
+>  /* Remember to update object flag allocation in object.h */
+> diff --git a/tree-diff.c b/tree-diff.c
+> index 9ea2dd7a6c3..20bb15f38d9 100644
+> --- a/tree-diff.c
+> +++ b/tree-diff.c
+> @@ -5,6 +5,7 @@
+>  #include "diff.h"
+>  #include "diffcore.h"
+>  #include "tree.h"
+> +#include "tree-walk.h"
+>  
+>  /*
+>   * Some mode bits are also used internally for computations.
 
-Heh, that's fair - my apologies for the "ungrateful" tone.
-
->
-> I think this is mostly that nobody spent enough brain cycles to
-> ponder on things like:
-
-(I'm not sure I *have* enough brain cycles, or background knowledge,
-to be sure of these things, but I have some tentative answers)
-
->
->  - Is it always safe to switch from a merge in progress to a newly
->    created branch that point at the same commit as HEAD?  Why?  Is
->    the story the same if the switched-to branch is an existing one
->    that happens to point at the same commit as HEAD?
-
-To the best of my knowledge, the only role that the HEAD *ref* plays
-in any of merge processing (before or after resolution), if there even
-is one, is its use in the commit message.
-
-My proposal is that keeping the original prepared merge message, but
-warning about its use, makes more sense / is more straightforward than
-anything else we might choose to do here, like re-generating the
-message.
-
-With respect to the safety of index operations - when conflicts have
-been resolved already the index is in a "normal" state, same as a
-non-merge checkout with changes, so there is no reason to believe
-there would be any "unsafeness" to worry about?
-
->
->  - Maybe the answer to the above question is not "it is not quite
->    safe to switch during a conflicted merge, but by adjusting X and
->    Y while switching to a new branch, we could make it safe".
-
-The sense in which it is potentially *not* safe, is that some part of
-checkout may mess with the index in some way that does not expect to
-encounter conflicts - given that conflicts explicitly prevent not only
-a "git switch", but also a "git checkout", at this time (due to a
-check for unmerged paths in builtin/checkout.c#merge_working_tree()).
-
-As such, the "simple answer" is to address the case where conflicts
-are already resolved, and defer the case of open conflicts to someone
-who is better able to check or enable the safety of a switch in this
-state.
-
-I believe the urgency/criticality of opening up a "switch while you
-still have unmerged paths" usecase is much lower than the
-simpler-to-prove "switch before committing an already-resolved index"
-usecase.
-
->
->  - Even if the answer to the question above is "yes it is always
->    safe", if it is not safe for a similar situation that ends up in
->    unmerged index (i.e. the index with any path at non-0 stage), the
->    way we determine if we are in "a merge in progress" situation
->    must be reliable.  Is it?
-
-I'm not sure what "a path at 0 stage" means, but I do get the
-*impression* that the conflict checks that are in place in
-builtin/checkout.c#merge_working_tree() look reasonable...? That said,
-I do not intend to modify or circumvent these checks, because I don't
-think the user flow / use case requires it.
-
->
->  - Conversely, perhaps it is also safe to switch to a different
->    branch that points at the same commit as HEAD from the conflicted
->    state after some (but not necessarily all) of the following
->    operations: "am -3", "cherry-pick" (single commit), "revert"
->    (single commit), etc.  Can we come up with a reliable way to
->    determine if we are in such a situation?
-
-I suspect it is, but I also suspect this is a far less common case,
-and as such one I'm less inclined to worry about. In merge-based
-workflows, merges can be *large*, and the case where you have a merge
-ready, conflicts resolved, and you realize you'd like to test it on
-another branch, is more common and impactful, than when you have some
-(far more typically limited in scope) stash or cherry-pick...?
-
-(Or maybe I'm just making excuses for the patch I want to submit :) )
-
-My proposal at least is to carve out an exception, for now, only for
-merges, and only with a clean (not-conflicted) index.
-
->
->  - These "other mergy operations" that can leave unmerged index may
->    share the same "is not safe out of the box, but can be made safe
->    by adjusting some stuff".
->
-> After that is done, we could update the codepath in "git switch"
-> that says "ah, your index is unmerged, so I will not let you switch"
-> to instead say "your index is unmerged; let's first see if you are
-> switching to the same commit as HEAD and then the way your index is
-> unmerged was caused by an operation that we decided is safe to
-> switch out of.  It seems to be one of the situations that could be
-> made safe, so let's do adjustment X and Y and let you switch".
-
-This is what I am proposing, but no adjustment needed if the scope is
-a merge only and the index is already unconflicted.
-
->
-> And the reason why "git switch" punts is because nobody bothered to,
-> not because there fundamentally is some reason why it shouldn't work.
-
-Yep, that makes sense.
+This, unlike the preceding 20/22 really does seem to strictly match its
+$subject, i.e. diff.h didn't need tree-walk.h, but some stuff using it
+needed it, so we're moving the include to those users themselves.
