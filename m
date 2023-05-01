@@ -2,70 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A30C77B7C
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 21:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F1C5C77B7C
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 21:52:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231341AbjEAVvQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 17:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51138 "EHLO
+        id S232084AbjEAVwx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 17:52:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjEAVvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 17:51:14 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EADC1BCD
-        for <git@vger.kernel.org>; Mon,  1 May 2023 14:51:13 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-63b7588005fso2405135b3a.0
-        for <git@vger.kernel.org>; Mon, 01 May 2023 14:51:13 -0700 (PDT)
+        with ESMTP id S229379AbjEAVww (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 17:52:52 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D455E1FC1
+        for <git@vger.kernel.org>; Mon,  1 May 2023 14:52:49 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-63b5c4c76aaso2169005b3a.2
+        for <git@vger.kernel.org>; Mon, 01 May 2023 14:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682977873; x=1685569873;
+        d=gmail.com; s=20221208; t=1682977969; x=1685569969;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UEf09YqcpymorThLxDnNRlcz3/DUQ4xzuGpew1ne2xg=;
-        b=CcEfzDYpSgmV85oc7yo/qz/BxgePfhmxEIbEYrSvPWvDwbUpVpYDv3AcjBa0w75FH8
-         F/U0nXPrDFfC2uEKIQ4GxmGkMEA5Qhne+PPnDHZ5zIRsca9c/UF1wNHQNzh6fR/dxgrJ
-         S6hpP52Nta+Kec15GbT/dr+vGqzkZVYl5px3r5j/pDN/3l5f0RAox7cwO9KchkPl6naS
-         9a0j+V+Cug8soPSjAV50rck1MYUel730606dXPtBrxPftQOXslRpa7AqG5CLMwJwHvIU
-         Z7Wbtf0m3ugx1aDHj+rTRAYYWX7UmN7aiLRx1hC/W9K+D5nJDXcK/ei1nwuqG5UqmXyA
-         7ctQ==
+        bh=IKIQtb7Ru9gs2YHU3CpLiFWXvoU+6Og/CiqsXr0aIXo=;
+        b=kWJdbSLbtoS/8zQQSEoXt3D2QB/zWMFmUCgtlv1uevWvNS17rqN8JEKUntFcsCyHpq
+         23a/3jqSpyE0LyCKUfFmvKs6Dq8Ek5MPOs7lzBOhdB0xuBAknbeDuU1XQyHWAwaUR4J6
+         Canlv+DxQZWLZAlspjLdZjer67VEkq3CcFdVwxhVONmRwqYv4As5wRlF7D8BAjvyUBTL
+         p4a9TBJ/x48ZZsxvwKn+jfv9x6oAHh9Kcq88JtCxJF4N6LLyhsjadUqWgVWtzD7sIcnp
+         iOGGaPOSg62zn+75lhb50gyppo2fknFwSkTOcfuCGdn5KJubcMop4o0FxbETjrWVqu78
+         Qm4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682977873; x=1685569873;
+        d=1e100.net; s=20221208; t=1682977969; x=1685569969;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=UEf09YqcpymorThLxDnNRlcz3/DUQ4xzuGpew1ne2xg=;
-        b=fT7uw/TwNhy7xN58X3NDJY0OYx1zI1Q47Azrl12+euMrfBHy6WutrIC6qaMcscZqnz
-         YC2WxLhqtLwAJyUz9G/yz0pdINtW5mAaqpKqMf5RI0SwBUP8bHtI18nTYKFjkFwxoAzY
-         LQa/OsFOibMEhG32pEZCTIK/gikkOK2+r9Hb0khT65B9UH+qERGmm6dW1ikcl3r+zz/U
-         nllgnikdV3T9QA1OGedq6wstW1+RJRFcQW3X3SpplH7zMptHl3myO43IBNCb7dI8w4WU
-         Bk6acX3svij5CTDJgLNiQYKJi8Xk0IZLtEFnOqiZ401c54V9/EPle153qZjrPSk8s8HQ
-         g5UQ==
-X-Gm-Message-State: AC+VfDyrMgVGXEEnZeyADS+VFCEkSlSqFNQvziv9LXYF0ZZzGbRyhQHT
-        FzUPZp40B0dptoJi8GKWP5U=
-X-Google-Smtp-Source: ACHHUZ7yeCRz90eKEnI/uvMrs6yst+T9H0gyRhT0+JDpYkvLUKuculU1Euo5rGoYa5UVYzcyJqDxyQ==
-X-Received: by 2002:a17:902:aa85:b0:1a5:22f3:220d with SMTP id d5-20020a170902aa8500b001a522f3220dmr14586863plr.49.1682977872678;
-        Mon, 01 May 2023 14:51:12 -0700 (PDT)
+        bh=IKIQtb7Ru9gs2YHU3CpLiFWXvoU+6Og/CiqsXr0aIXo=;
+        b=MCwJ8eiqQp+qfP3d551OnBa2xg3QLNFLoVO37YZ+KKmtonY6hu7XlY75zEcBmQA8yz
+         n8Gftv20zPIDLsZXn0iBmlc5tzbvda+qLUajpq/BBlajJBpyjQQ0cco0OzAolX5zLdBG
+         u6x/02Jh6vNHWlIQ9J31s3Kh9KPSVXfZJK4cH1xMvlSEyqQMwfPN/M4cp+kjZizXrCwp
+         41vNYhS4Q4W3Ckuyegq9D5QXn+S4OBbAQiQSKIHVKuFLmfAtIrQOaHOGYCnO3uRneQNh
+         +66g/BW9Ah2ITFOOp44LG1Tyu68KDhMugP5OREO2opDs5hagRcJqHjRj9UBFVWSTOuXA
+         SvLg==
+X-Gm-Message-State: AC+VfDxGQJLwXpYyacUy4/bvsyCf3ZbeLJtDhLPbx91wCf1uJSfah2uM
+        8FV3gjemlvtf1t6dUvy2JwQ=
+X-Google-Smtp-Source: ACHHUZ7pZub0py4jpOpki5k9aXa4IoDzhGoqXIN7BkSuFLQXm9SwoGo8lgpo2jiE8L6Fe++05htNpA==
+X-Received: by 2002:a05:6a20:4286:b0:dd:7661:fb34 with SMTP id o6-20020a056a20428600b000dd7661fb34mr19719914pzj.51.1682977969222;
+        Mon, 01 May 2023 14:52:49 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id jo17-20020a170903055100b001a9873495f2sm11709276plb.233.2023.05.01.14.51.12
+        by smtp.gmail.com with ESMTPSA id y62-20020a17090a53c400b0024e14a3dba6sm1211665pjh.10.2023.05.01.14.52.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 14:51:12 -0700 (PDT)
+        Mon, 01 May 2023 14:52:48 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
 Cc:     git@vger.kernel.org,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v9 0/8] worktree: Support `--orphan` when creating new
- worktrees
-References: <20230417093255.31079-1-jacobabel@nullpo.dev>
-        <wk2wpftowc7wqeaqrylxq7eci4bkmuffwu75h4qugxulcgsk2b@gw6ouq3g5g2j>
-Date:   Mon, 01 May 2023 14:51:11 -0700
-In-Reply-To: <wk2wpftowc7wqeaqrylxq7eci4bkmuffwu75h4qugxulcgsk2b@gw6ouq3g5g2j>
-        (Jacob Abel's message of "Thu, 20 Apr 2023 03:05:35 +0000")
-Message-ID: <xmqqcz3j4t68.fsf@gitster.g>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?=C3=98ystei?= =?utf-8?Q?n?= Walle <oystwa@gmail.com>
+Subject: Re: [PATCH v3 0/6] t: fix unused files, part 2
+References: <20230403223338.468025-1-rybak.a.v@gmail.com>
+        <20230417191044.909094-1-rybak.a.v@gmail.com>
+Date:   Mon, 01 May 2023 14:52:48 -0700
+In-Reply-To: <20230417191044.909094-1-rybak.a.v@gmail.com> (Andrei Rybak's
+        message of "Mon, 17 Apr 2023 21:10:38 +0200")
+Message-ID: <xmqq8re74t3j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,42 +70,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Abel <jacobabel@nullpo.dev> writes:
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-> I've noticed on the lore that this revision didn't continue the existing
-> thread[1] for the patchset. It seems this is because the `In-Reply-To`
-> header was stripped from the message due to a bug with the MTA/mail bridge
-> I use on my dev machine [2].
+> Creation of files from redirecting output of Git commands in tests has been
+> removed for files which aren't being used for assertions.  CC'ed are authors of
+> the affected tests.
 >
-> Apologies for any confusion this may have caused.
->
-> For continuity purposes I can either:
->
-> A. RESEND the revision to the main thread with a note in the cover letter
-> tagging the discussions from this thread so far.
->
-> B. Reply to [1] in the main thread to point to this thread and then
-> eventually publish v10 in reply to that reply message in the main thread.
->
-> C. Reply to [1] in the main thread to point to this thread and then
-> eventually publish v10 in reply to this cover letter.
->
-> Let me know which would be the least disruptive/most ideal way forward or
-> if there is another way I should approach this.
->
-> Thanks.
->
-> 1. https://lore.kernel.org/git/20230109173227.29264-1-jacobabel@nullpo.dev/
-> 2. https://github.com/ProtonMail/proton-bridge/issues/374
+> v1 cover letter:
+>   https://lore.kernel.org/git/20230401212858.266508-1-rybak.a.v@gmail.com/
+> v2 cover letter:
+>   https://lore.kernel.org/git/20230403223338.468025-1-rybak.a.v@gmail.com/
 
-Once the thread is broken, it is broken.  You gave a link in the
-message I am responding to, to make it easier for people to go back
-to earlier iterations and that is good enough, I think.
-
-Your eventual v10 can be sent with its cover set as a reply to the
-cover of v9 and we will be fine.
-
-It seems that we may need another iteration, but if I reclal
-correctly what remains are all minor issues?
+This round has not seen any further comments; shall we consider it
+pretty much done and ready to move to 'next' by now?
 
 Thanks.
