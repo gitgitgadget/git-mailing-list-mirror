@@ -2,117 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED551C77B73
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 15:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32308C77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 15:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232746AbjEAPXV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 11:23:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49480 "EHLO
+        id S232665AbjEAPYh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 11:24:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232589AbjEAPXU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 11:23:20 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EE90A8
-        for <git@vger.kernel.org>; Mon,  1 May 2023 08:23:19 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-24b725d6898so1635244a91.2
-        for <git@vger.kernel.org>; Mon, 01 May 2023 08:23:19 -0700 (PDT)
+        with ESMTP id S232688AbjEAPYe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 11:24:34 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972C0172B
+        for <git@vger.kernel.org>; Mon,  1 May 2023 08:24:26 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-63b4bf2d74aso1785767b3a.2
+        for <git@vger.kernel.org>; Mon, 01 May 2023 08:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682954598; x=1685546598;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mE6hMAAPqGRFABH/dMzGt1v6Z8wN6hiQWNEqZtj30yU=;
-        b=ED8tqYvHIbjZVQHopTGAASmwFrzzkNirH/msJQKCB8rskyaRlu1Qy+1It66stxcQ2w
-         Qm7e7es+fYuD/TRsl8IBJX37qKl0tL1P0JnVFVBfUGGj9sZTkVqijiKi+Oe261XR20W+
-         uX2av43oCFCic7Wa/B0f3jlnl8maIVcKX6UDVdbYnKJResjS8QHpkcWR+OgUn4F8lklh
-         7Irz7opZAmYmV1C/jXVxCkxBS75/gBcwkub5jejfcjXvFFIXh66l9Gu1m2rZsxPuJyEE
-         6C8cnZmtp//GP0mJcJmoyL5ezBEfBuTobxFk9i84ObO+o0p1XNyUOv7AJ9IP8r7gw5b8
-         pvow==
+        d=gmail.com; s=20221208; t=1682954666; x=1685546666;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xL+hr8v2Qo5xUFPfx3YTCYJEnXcItO0p5bsPXD8Zuv0=;
+        b=GFnke5+KQHNuXQ16113p3/OzDhSrlgYYDXR1x+UOoBstlmpsq7RgFhP5yx8MHffwtQ
+         sZ5IWMa6G7c7JIqsWsxN9bwLxahYJpfJbSZrldEV6C3biusy4knFQN6J+Ul56Bp6gWs3
+         FRct1p1BiUPYUPDCq/bkqI3R6uFjdDLfIEDMc0AAVcA9R8VbQXqKaD/hDzN1APPSKL2u
+         pHSmsi4yl/NRLocU7pE3BJRES1AN/OI3BOU1bT/Pge5VX6srAGdN305xRNZeB+NNo7ZN
+         YEdgOd/S+ESfKtGLFvwudrDkb6rX/cbJZ1HNRHiiVzN16rerYKX59xUoPWGtDAHMzgtp
+         FUVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682954598; x=1685546598;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mE6hMAAPqGRFABH/dMzGt1v6Z8wN6hiQWNEqZtj30yU=;
-        b=gzQrq2cX9uKJYtZ7qNZcYlG/bMzpSo1bvfcwdFpXptp2vYytIRs7JmTryNb6jCtdPE
-         KYBFdglUemLUduAjbuMh0+l+d7vnfssxjMgs7r7WFStkz9oWiv6EtsUJH+JjIbH3503A
-         zrYEEyj6fd23TGPrF00uiSAIMcS5tQyxBWLiYu7OcTYlROPdua/32pEIymfvguDFUSyf
-         dhMBrzlJY3hysvpAHQC30R5Sk0trU/SlALda4p3NhHjgDu6oHuO3r2bPMC7ViWRN4WIk
-         3k3sxtViZfns8J0FPokK6atjn+pXSRnjw1B5FNxGJe5hDmbyImm1n5sfxBeyzzh7TDYZ
-         toSQ==
-X-Gm-Message-State: AC+VfDyllQOp3xV5VqTfPRHLrkxx03LyM+UNZErSDut1DWfpo+uG9GWp
-        8isAIweOOzV2iHihU9EP5R8lf3lhqpQ=
-X-Google-Smtp-Source: ACHHUZ4VBq6TLAGqqEe6FV8UCYGvu4BDvD5e5Vb76EPBT4oSrU2tHXUXxkCX4XUXVlc6UAMZNzYiEw==
-X-Received: by 2002:a17:90a:ec0a:b0:247:bdeb:594f with SMTP id l10-20020a17090aec0a00b00247bdeb594fmr15536255pjy.15.1682954598589;
-        Mon, 01 May 2023 08:23:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682954666; x=1685546666;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=xL+hr8v2Qo5xUFPfx3YTCYJEnXcItO0p5bsPXD8Zuv0=;
+        b=HTlDUA6PzUYHgFowGaslZrt/CK4+CcXy7XtUa3HwdV07qhkapbu2BxUg3A23sHKVCV
+         zlZ+SHLHGQhQI7LfucXgvklWCzXRmH2OSfgTuiZvT5HJcm+uLQ8HOBDj7XWUZzNNTv6M
+         ExXCfo3SrGRl2qOjTYb51Gh1qgm6kiE1PzAZvX0NO3OiOlwKhn07OWX7coEfK9TRO10C
+         eL7YvHgQn17Ta/cufnyBnS9D05xOREDyS6ZOb6U/B+mjZE2mSr16vjEjV6W8VtiOGI5E
+         /DuvMFe7G5Fi7bTIPJZXIpEfIaYPOg8W74VlXTGN/TqjsEJzwJ1Tz9ism1suDM3fyuQ9
+         IGPA==
+X-Gm-Message-State: AC+VfDy0Y3mVhya3BGMPh6e/p+WIP+GcScML+faWTLZcSLrNDRLdGPf9
+        sy7alUggXidYF0pQegR3Q7N7DUg0An4=
+X-Google-Smtp-Source: ACHHUZ5WX/ST9ojAABKw5Xq0pP385GZOxNS0CPlhXD3oCr8kqUUzlPy9uwXthvUZHf8LyO670Aa0gA==
+X-Received: by 2002:a05:6a00:1884:b0:63b:8a38:b1bb with SMTP id x4-20020a056a00188400b0063b8a38b1bbmr21352634pfh.7.1682954665977;
+        Mon, 01 May 2023 08:24:25 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id n4-20020a17090a928400b0024c1ac09394sm6159402pjo.19.2023.05.01.08.23.18
+        by smtp.gmail.com with ESMTPSA id 188-20020a6219c5000000b00640e01dfba0sm13641388pfz.175.2023.05.01.08.24.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 08:23:18 -0700 (PDT)
+        Mon, 01 May 2023 08:24:25 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] test-ctype: check EOF
-References: <cbc7feb9-7e15-77e2-b3e9-1fa194b4d4fb@web.de>
-Date:   Mon, 01 May 2023 08:23:17 -0700
-In-Reply-To: <cbc7feb9-7e15-77e2-b3e9-1fa194b4d4fb@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 30 Apr 2023 12:00:01 +0200")
-Message-ID: <xmqqedo0849m.fsf@gitster.g>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t/t3501-revert-cherry-pick.sh: clarify scope of the file
+References: <20230430100034.1889796-1-oswald.buddenhagen@gmx.de>
+Date:   Mon, 01 May 2023 08:24:25 -0700
+In-Reply-To: <20230430100034.1889796-1-oswald.buddenhagen@gmx.de> (Oswald
+        Buddenhagen's message of "Sun, 30 Apr 2023 12:00:34 +0200")
+Message-ID: <xmqqa5yo847q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-> The character classifiers are supposed to handle EOF, a negative integer
-> value.  It isn't part of any character class.  Extend the ctype tests to
-> cover it.
-
-The goal makes sense.
-
-> -static void report_error(const char *class, int ch)
-> +static void test(int ch, const char *class, int expect, int actual)
->  {
-> +	if (actual == expect)
-> +		return;
->  	printf("%s classifies char %d (0x%02x) wrongly\n", class, ch, ch);
->  	rc = 1;
->  }
-> @@ -24,9 +26,9 @@ static int is_in(const char *s, int ch)
->  #define TEST_CLASS(t,s) {			\
->  	int i;					\
->  	for (i = 0; i < 256; i++) {		\
-> -		if (is_in(s, i) != t(i))	\
-> -			report_error(#t, i);	\
-> +		test(i, #t, is_in(s, i), t(i));	\
->  	}					\
-> +	test(EOF, #t, 0, t(EOF));		\
->  }
+> The file started out as a test for picks and reverts with renames, but
+> has been subsequently populated will all kinds of basic tests, in
+> accordance with its generic name. Adjust the description to reflect
+> that.
 >
->  #define DIGIT "0123456789"
-> --
-> 2.40.1
+> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+> ---
 
-I am a bit torn on the conversion from report_error() to test(), as
-the only "test"-y thing the updated function does is to compare two
-of its parameters.  It still is mostly about reporting an error when
-something goes wrong.  In other words, the added change could have
-been just
+> -test_description='test cherry-pick and revert with renames
+> ...
+> +test_description='miscellaneous basic tests for cherry-pick and revert'
 
-	if (t(EOF) != 0)
-		report_error(#t, EOF);
+Looks good.
 
-after the loop, I think.
+Will queue.
 
-The only thing that I am not entirely happy with the end result is
-the name of the function, and not how the caller and the callee
-divides their work, so it is so miniscule a thing that it won't be
-worth our collective time to bikeshed it further.
-
-Let's take it as-is.  Thanks.
+Thanks.
