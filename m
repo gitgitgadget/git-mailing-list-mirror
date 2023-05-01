@@ -2,71 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0402C77B73
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 16:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E92FC77B61
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 16:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232301AbjEAQs1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 12:48:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56434 "EHLO
+        id S232328AbjEAQuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 12:50:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjEAQs0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 12:48:26 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D70E73
-        for <git@vger.kernel.org>; Mon,  1 May 2023 09:48:24 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-94f4b911570so451648866b.0
-        for <git@vger.kernel.org>; Mon, 01 May 2023 09:48:24 -0700 (PDT)
+        with ESMTP id S232231AbjEAQui (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 12:50:38 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C2B10C2
+        for <git@vger.kernel.org>; Mon,  1 May 2023 09:50:37 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-956ff2399b1so568242966b.3
+        for <git@vger.kernel.org>; Mon, 01 May 2023 09:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682959703; x=1685551703;
+        d=gmail.com; s=20221208; t=1682959835; x=1685551835;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=StMDfSWSI2OaoSOo/hs8fditdpseTtAhAaFdeykdGNw=;
-        b=Ba+BgfhBdfiiU46pbPJiJAisMsl18D7nAsU+TFUfj0emRrXL6oKe+S7MYjPQTcoNbi
-         guoOU6jMKsbWpge29Gx157hOEAQhgHceU4iz2w42IdKReIjFAATfVMM6v6tJVIAY2gW1
-         epIcn5TlwLsnmYiaSaUX8KgJBoLMkQsWKzNtozgb5mux19zwFcrQPJ6ahEp6fHU9VyY1
-         jdgVTRdue5MueVRWpbYxErV61F3TxEIcwp1mRdGQ9DDalQ8av3iZKB6JFf2MxsN5UR9y
-         A9mEA0cAkFLfwoBjl4ndD7bT+CMRtMGjdBeuYQuUvwmaTJJil0LlLRbAQE3qFSkB7+eo
-         7kXw==
+        bh=1WlXfJJY6btS0bSzoaM2URq2GEDoeMXRRE6XyWOd5pE=;
+        b=EPiBasaqd4Rkd/Aklr84/AVKoX60rl9XZ1aGZycr7S2uU65x9Cj6wMXbiEi1lK9ji+
+         QjPFX/dJA/KifPCry/88U8zK//iZHFtMeeWqqc0LMa42OEFXQwnHIRMexZWWJf0cJvKK
+         pxuu3s1NW2bSK9LkXMLOLTX+3tJ7hUO1OrthCHx2S/oGyG6uCkrq+UcxJasvE0CmmDYj
+         GU4BUnDw2S/IVzzTRadghdhUIAwUQHIZOLy79BsJz8SdXEGsQL2aAzySftKE+jz0ClJA
+         807tCtFoXbomqbS5tPsxCtNwcLA7QQEeIJlGOfAK9GmDfTloDVxvvqqefIiV48nTJb0w
+         cTGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682959703; x=1685551703;
+        d=1e100.net; s=20221208; t=1682959835; x=1685551835;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=StMDfSWSI2OaoSOo/hs8fditdpseTtAhAaFdeykdGNw=;
-        b=E09HVFausns6MRqFeFW4/XfCgNAug5AMhKaGsyZkD8j2wXrgs3YP/Vcuh2fF3EH/EV
-         a6WP7PR2NevNTZ3ZkjL1fj/u5ADLEems4VAzzwZ6zXCb64DYT8vKNNo0LWn0v7moyNva
-         7eGKU/YkEZsTHmYcGTKJiUs6JBszILBxb2P1qb95p900bEyAMJ0CqjhraJUg8cDmf7g5
-         q/TkWesDNLWe9RN+lxKUvsMwl8vidwoHQglBs0KH1QZLjjsN5dWTaUl5PrPbbSlnwjrn
-         K+Rsu+U83m0jmuxa2BKnJCaPYdJsFoC8T3NsJ1k2Gzr5IRP5NgpIW49ilWSB3gRUH1FJ
-         NkXA==
-X-Gm-Message-State: AC+VfDyzhuIkdCNmOe5rvjb8dwPHzh1P6vtG02f/8lxR6s1Y1BlfBlYk
-        dX/T1ts9IwkpE9apN8HCEO3/quqjjSs=
-X-Google-Smtp-Source: ACHHUZ4K03SWlPNH2Wcww0rRxcuLLavWQNUna1QzXGfzJ1aTNSEsWJ4g4qDLaw3d8A6s9NOs2Ggmcw==
-X-Received: by 2002:a17:907:1ca8:b0:94e:fdec:67e3 with SMTP id nb40-20020a1709071ca800b0094efdec67e3mr12821223ejc.56.1682959702759;
-        Mon, 01 May 2023 09:48:22 -0700 (PDT)
+        bh=1WlXfJJY6btS0bSzoaM2URq2GEDoeMXRRE6XyWOd5pE=;
+        b=iRc13BvSX3zOqXKaYt4fS5H/vUYymd8f08umcIJl1ZTe2g/R/6lYZhHn3QMTnca0Ti
+         WtDmyhrAfs1Pe8nWwo3R9P2RR4TQEnGBkFfXy+jDKsfmW2HPIgNKwIbIdRuVhut0CYHp
+         SX+P53KFvzxbEpP5QpPi88yAS/dTSj491VNYXuD4ND2k2druXS7xBZGETx0r2tiWXyj9
+         B2vV2kxtB69CyaG5AnOWu7s8LDxo2VDba3YYW8MB4ZLXugO3WL/bPQcLqDa6JT2O4rUY
+         urQnj5AhgX+xZVHUKg5S9SgNfhbcEeOgC4C0lLRueaBVWsBEwfEWke5sA5DPQtqTg2On
+         MWMw==
+X-Gm-Message-State: AC+VfDxXp6b7DpdaTMvI8Adf2iWDfOjOP+SCC0sYe40vP7tjS/TUf9BE
+        oeL55YgFWzUJP9kFJ6NvFuiPeuzcLF0=
+X-Google-Smtp-Source: ACHHUZ7rifOTG3TMquqXMS7sfEzGb1/jSUneNxAfpk8pSYneoEPxhxtPZ/4NsFUpmqT+hAHrwd6L9g==
+X-Received: by 2002:a17:906:d54f:b0:94f:2a13:4e01 with SMTP id cr15-20020a170906d54f00b0094f2a134e01mr15851302ejc.74.1682959834869;
+        Mon, 01 May 2023 09:50:34 -0700 (PDT)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id d5-20020a17090648c500b008c16025b318sm15040928ejt.155.2023.05.01.09.48.22
+        by smtp.gmail.com with ESMTPSA id e1-20020a17090681c100b0094f67ea6598sm14955387ejx.193.2023.05.01.09.50.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 09:48:22 -0700 (PDT)
+        Mon, 01 May 2023 09:50:34 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1ptWhJ-000EN1-34;
-        Mon, 01 May 2023 18:48:21 +0200
+        id 1ptWjS-000ESe-05;
+        Mon, 01 May 2023 18:50:34 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Glen Choo <chooglen@google.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 16/22] treewide: remove cache.h inclusion due to
- previous changes
-Date:   Mon, 01 May 2023 18:44:36 +0200
+Subject: Re: [PATCH v2 17/22] cache.h: remove unnecessary headers
+Date:   Mon, 01 May 2023 18:49:29 +0200
 References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
  <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
- <960b5438ce494a29cc93501cdf4ba4745740f374.1682194652.git.gitgitgadget@gmail.com>
+ <b459b60de89750d0226c7c4f1c7c28de249b475b.1682194652.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
-In-reply-to: <960b5438ce494a29cc93501cdf4ba4745740f374.1682194652.git.gitgitgadget@gmail.com>
-Message-ID: <230501.86v8hchuay.gmgdl@evledraar.gmail.com>
+In-reply-to: <b459b60de89750d0226c7c4f1c7c28de249b475b.1682194652.git.gitgitgadget@gmail.com>
+Message-ID: <230501.86r0s0hu7a.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,90 +75,55 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Apr 22 2023, Elijah Newren via GitGitGadget wrote:
 
-The "Subject" says "due to previous changes", but...
-
 > From: Elijah Newren <newren@gmail.com>
 >
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  archive-zip.c                 | 2 +-
->  bundle-uri.c                  | 2 +-
->  color.c                       | 2 +-
->  combine-diff.c                | 2 +-
->  common-main.c                 | 2 +-
->  config.c                      | 2 +-
->  copy.c                        | 2 +-
->  credential.c                  | 2 +-
->  daemon.c                      | 2 +-
->  date.c                        | 2 +-
->  diagnose.c                    | 2 +-
->  environment.c                 | 2 +-
->  ll-merge.c                    | 2 +-
->  match-trees.c                 | 2 +-
->  midx.c                        | 2 +-
->  object-file.c                 | 2 +-
->  packfile.c                    | 2 +-
->  pkt-line.c                    | 2 +-
->  range-diff.c                  | 2 +-
->  ref-filter.c                  | 2 +-
->  t/helper/test-match-trees.c   | 1 -
->  t/helper/test-mergesort.c     | 1 -
->  t/helper/test-oid-array.c     | 1 -
->  t/helper/test-oidtree.c       | 1 -
->  t/helper/test-parse-options.c | 1 -
->  t/helper/test-read-midx.c     | 1 -
->  t/helper/test-string-list.c   | 1 -
->  tree-diff.c                   | 2 +-
->  tree-walk.c                   | 2 +-
->  tree.c                        | 2 +-
->  wrapper.c                     | 3 ++-
->  31 files changed, 25 insertions(+), 31 deletions(-)
+>  cache.h                              | 2 --
+>  compat/fsmonitor/fsm-ipc-darwin.c    | 1 +
+>  compat/fsmonitor/fsm-listen-darwin.c | 1 +
+>  3 files changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/archive-zip.c b/archive-zip.c
-> index ef538a90df4..d0d065a312e 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -1,7 +1,7 @@
->  /*
->   * Copyright (c) 2006 Rene Scharfe
->   */
-> -#include "cache.h"
-> +#include "git-compat-util.h"
+> diff --git a/cache.h b/cache.h
+> index 591c67b0595..bdedb87e83b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -4,8 +4,6 @@
+>  #include "git-compat-util.h"
+>  #include "strbuf.h"
+>  #include "hashmap.h"
+> -#include "gettext.h"
+> -#include "string-list.h"
+>  #include "pathspec.h"
+>  #include "object.h"
+>  #include "statinfo.h"
+> diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-darwin.c
+> index e62f093cc19..bc68dca0cae 100644
+> --- a/compat/fsmonitor/fsm-ipc-darwin.c
+> +++ b/compat/fsmonitor/fsm-ipc-darwin.c
+> @@ -1,5 +1,6 @@
+>  #include "cache.h"
 >  #include "config.h"
->  #include "archive.h"
+> +#include "gettext.h"
+>  #include "hex.h"
+>  #include "repository.h"
+>  #include "strbuf.h"
+> diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+> index 5eb6402ab82..18c0e3913dc 100644
+> --- a/compat/fsmonitor/fsm-listen-darwin.c
+> +++ b/compat/fsmonitor/fsm-listen-darwin.c
+> @@ -29,6 +29,7 @@
+>  #include "fsmonitor--daemon.h"
+>  #include "fsmonitor-path-utils.h"
 >  #include "gettext.h"
+> +#include "string-list.h"
+>  
+>  struct fsm_listen_data
+>  {
 
-I tried making this change before this series was applied, and
-everything compiled...
+If I rebase this topic to make this the first commit everything
+compiles, i.e. nothing here relies on what came before.
 
-> diff --git a/bundle-uri.c b/bundle-uri.c
-> index 6d44662ee1f..ec1552bbca2 100644
-> --- a/bundle-uri.c
-> +++ b/bundle-uri.c
-> @@ -1,4 +1,4 @@
-> -#include "cache.h"
-> +#include "git-compat-util.h"
->  #include "bundle-uri.h"
->  #include "bundle.h"
->  #include "copy.h"
-
-That's not the case here, but this could instead be squashed into the
-05/22 in this series, i.e. as soon as we add this copy.h, we don't need
-cache.h anymore.
-
-> diff --git a/color.c b/color.c
-> index f8a25ca807b..83abb11eda0 100644
-> --- a/color.c
-> +++ b/color.c
-> @@ -1,4 +1,4 @@
-> -#include "cache.h"
-> +#include "git-compat-util.h"
->  #include "config.h"
->  #include "color.h"
->  #include "editor.h"
-
-I did not look further, but all of the rest of these look like they'd be
-better off squashed into the respective "split this out" commit. I don't
-think keeping the "move declarations for ..." as "move-only" commits is
-worth it, as opposed to getting rid of this one, and making those
-atomic.
+Given the extensive earlier moves I think it would be better to first
+remove unnecessary includes from cache.h, before starting to split it
+up.
