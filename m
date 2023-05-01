@@ -2,218 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E656AC77B73
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 17:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A6F8C77B61
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 17:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231161AbjEARan (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 13:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60626 "EHLO
+        id S232132AbjEARe3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 13:34:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbjEARal (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 13:30:41 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC281AF
-        for <git@vger.kernel.org>; Mon,  1 May 2023 10:30:39 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-b8f324b3ef8so3279624276.0
-        for <git@vger.kernel.org>; Mon, 01 May 2023 10:30:39 -0700 (PDT)
+        with ESMTP id S229688AbjEARe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 13:34:27 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D8FB18B
+        for <git@vger.kernel.org>; Mon,  1 May 2023 10:34:26 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-94ef0a8546fso449756766b.1
+        for <git@vger.kernel.org>; Mon, 01 May 2023 10:34:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1682962239; x=1685554239;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v4bhUXFbiF4bDBth8+0aT6+Ugv+0NCjmWHyJojJZImE=;
-        b=TEXz6SO5mmCv+GkMKqhITi4ensHvLiqBaEiaNV/maImGBJ362kajzmu2JNwumO/a8j
-         es0aoM85h2dSaXq6OcaQyFvkkv19fhnTU6BR40BJdw0g4Qrxa5/1/yQkuOHTJyuawFs7
-         2YHCT7RPKUas4EVqVC4L0je8+BZOOGIaISgfAAv7zJnaKDJBIZjPaaGPb91TrdtJAKz3
-         6CTieeBYL0WY7PpGn89RvuprYYPxEWedUcmvfxSVk/gTamAqkTy4ueKF9dhRy5vL+duM
-         tFOoMeMJVujO6vge+OlknZejB+hbQIGB1epF+YWtArsbbGjOJR7clbZjRPInjss5Q+Em
-         e40A==
+        d=gmail.com; s=20221208; t=1682962464; x=1685554464;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/Qv+3wX2ymOiC/bnHyUyHykjLMMgqtJFI6GfeC/QWs8=;
+        b=gCfdy5Ra8ia+mIRmiMlaCJORMeve+hgu5WcgeGAuSJAHikdfAPDH0ooitHYRldpvnH
+         N0SDAJY9yuLpOqxZUMB2FuB8snDjQpA3CzeiJ0hNlHGCGOz4KnTfe4vRLg/abdryhsX5
+         kb1r2SJk/hPVPNUib3vO5rsU1eSaUrT/fkGSNSTyPjoGxnp1zwCtf6lxND3et1NrbKff
+         OeemylXR2mLcOM07DfERDs6Z5s+XMiv/E44VewxBgG8mbRvy3+j1KOxFkgcA03CCPWNw
+         zU6kVj3eSW8GSkxrGJ3oXiRwkVbPH3xS1nLsZApvcxRYVFudBxVlwm+0j4XRsfyAnBUA
+         6kLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682962239; x=1685554239;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v4bhUXFbiF4bDBth8+0aT6+Ugv+0NCjmWHyJojJZImE=;
-        b=lA0ipmx/r5jGY2P9rD8VDG/VZIYZ8jdSuAjbSN58fzHvPxkerVYVqw485hY0L8IM4m
-         3XAyt6qR0U+6bAhCj66/Y2aoqQDTpMJ6kHLCL7Zal7Fc6gGsETMyQKaRTNY67wtZtFoO
-         ZL+C5SQb3zpzvR2tPiwPCvSwlnLFxKFXAeCZruwUTOxtB8QU6NFilfxfogLEVEyz3AvF
-         yzzAmxY/YSy9Xvm8NrZV219JUW1O3b12au6f5OPGIcXBLwDoA51d2PcNfqG6WVCFBMhJ
-         zPjfd0KwRm+Ybuzo7Xsi2Ba7X2h2QhqoLD5DDuJ9qYSVi8YAhmt57nwr9klLwkR2JUde
-         iNIQ==
-X-Gm-Message-State: AC+VfDy9XvNOwzEmKkhpp4QmhkhKI8ipw8CiLmN20BMKnrV383bueGXL
-        TwaFpicyPpRV06yePf4G++rRROai6HClTegBTYLjvUw5bw8duNyMXHTZEWoK57PJniJoRGBU7yz
-        zG/4+dmK57PvzobKkzTyzEyaYVuF+Ufcg7JG9bWt9ELcN+RI9P6cmLmgW3XlFxvQ=
-X-Google-Smtp-Source: ACHHUZ6qsmehp73fg2zLMAyuUSff4LiLKCIrA5K3eqRJAffecrMtSSX/CVLvgolNxGZb8V/dGXSBQ1O5PAXxSg==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:202:38fe:5256:e952:c2a3])
- (user=steadmon job=sendgmr) by 2002:a25:5305:0:b0:b92:5a75:9f55 with SMTP id
- h5-20020a255305000000b00b925a759f55mr8769617ybb.1.1682962239082; Mon, 01 May
- 2023 10:30:39 -0700 (PDT)
-Date:   Mon,  1 May 2023 10:30:37 -0700
-In-Reply-To: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
-X-Mailer: git-send-email 2.40.1.495.gc816e09b53d-goog
-Message-ID: <e98be8e7f703fc741e06d9208545abc8c24d1a4a.1682962110.git.steadmon@google.com>
-Subject: [PATCH v3] setup: trace bare repository setups
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, chooglen@google.com
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1682962464; x=1685554464;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/Qv+3wX2ymOiC/bnHyUyHykjLMMgqtJFI6GfeC/QWs8=;
+        b=WKbyuKD22wGIMWBuQ31NTuMv2+F6CKSdFWkcMR/HlL6THJtp5Z7z9juUqGftb7UCYF
+         +CNSmyH5gpL955VofyGCZF2wRf5P+6iL1+sGi0/6QVm12X6KGnGsn03BrrlB2iPWfDAp
+         8oYi6c13NmY8BGHGnDTouWoggTWNstscUoiyQot/Egxo2r6MEd0bHTIXVqxoQPLxxe2s
+         md72GnRox/0z1APGrS+gaoK+GXnfJnOO8Huy/Wsq1TXSELUbwilZQFZED58T7G28TSyS
+         ZDmiDLinBCPQQomi5bySZX5+OnTaMCAdBdDjCOYzzuP0QAVgo5ohmLP5ix2Rp/yI06IR
+         /RAg==
+X-Gm-Message-State: AC+VfDyYQwvu9fvxklkhmSULBg3EQRowG5gJk3+8PSmn02uAKpRrWfqF
+        492n+cO/qgp3F2pfeHyZvJyILmGV2Ik=
+X-Google-Smtp-Source: ACHHUZ7EMteSbNDmTjsud4kjHesatgMv/+OP9kwkuOC/wNN6cSK1zKucAkXaWaRwjpvsVbeH/HesYw==
+X-Received: by 2002:a17:906:dac2:b0:94a:9ae2:1642 with SMTP id xi2-20020a170906dac200b0094a9ae21642mr12420282ejb.46.1682962463931;
+        Mon, 01 May 2023 10:34:23 -0700 (PDT)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id g22-20020a170906595600b0094ed3abc937sm14940488ejr.82.2023.05.01.10.34.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 10:34:23 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ptXPq-000G0K-32;
+        Mon, 01 May 2023 19:34:22 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH] cocci: remove 'unused.cocci'
+Date:   Mon, 01 May 2023 19:28:50 +0200
+References: <kl6lzg731xib.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <20230420205350.600760-1-szeder.dev@gmail.com>
+        <230501.864jowjh15.gmgdl@evledraar.gmail.com>
+        <xmqqlei86o7s.fsf@gitster.g>
+User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
+In-reply-to: <xmqqlei86o7s.fsf@gitster.g>
+Message-ID: <230501.865y9chs69.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
 
-safe.bareRepository=explicit is a safer default mode of operation, since
-it guards against the embedded bare repository attack [1]. Most end
-users don't use bare repositories directly, so they should be able to
-set safe.bareRepository=explicit, with the expectation that they can
-reenable bare repositories by specifying GIT_DIR or --git-dir.
+On Mon, May 01 2023, Junio C Hamano wrote:
 
-However, the user might use a tool that invokes Git on bare repositories
-without setting GIT_DIR (e.g. "go mod" will clone bare repositories
-[2]), so even if a user wanted to use safe.bareRepository=explicit, it
-wouldn't be feasible until their tools learned to set GIT_DIR.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> It wasn't something I intended at the time, but arguably the main use of
+>> this rule since it was added was that it served as a canary for the tree
+>> becoming completely broken with coccinelle, due to adding C syntax it
+>> didn't understand:
+>> https://lore.kernel.org/git/220825.86ilmg4mil.gmgdl@evledraar.gmail.com/
+>
+> If it weren't Coccinelle, we could have used the much nicer looking
+> UNUSED(var) notation, and the compilers were all fine.
+>
+> Only because Coccinelle did not understand the "cute" syntax trick,
+> we couldn't.  Yes, it caught us when we used a syntax it couldn't
+> understand, but is that a good thing in the first place?
 
-To make this transition easier, add a trace message to note when we
-attempt to set up a bare repository without setting GIT_DIR. This allows
-users and tool developers to audit which of their tools are problematic
-and report/fix the issue.  When they are sufficiently confident, they
-would switch over to "safe.bareRepository=explicit".
+I think it's unambiguously a good thing that we spotted an otherwise
+unknown side-effect of the proposed UNUSED(var) syntax on coccinelle.
 
-Note that this uses trace2_data_string(), which isn't supported by the
-"normal" GIT_TRACE2 target, only _EVENT or _PERF.
+We might also say that some bit of syntax that coccinelle doesn't
+understand is so valuable that we'd like to make coccinelle itself
+significantly less useful (as it wouldn't reach into those functions),
+or stop using it altogether.
 
-[1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
-[2] https://go.dev/ref/mod
+But that's a seperate question. I'm just pointing out that we'd be
+losing a very valuable check on future syntax incompatibilities,
+particularly when it comes to clever use of macros.
 
-Signed-off-by: Glen Choo <chooglen@google.com>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
-I'm sending a lightly-adapted version of Glen's tracing patch because
-Glen will be on vacation next week and we'd like to get this upstream
-ASAP.
-
-Changes in V3: added a test_unconfig test case for safe.bareRepository
-Changes in V2: cleaned up test-style issues.
-
-Range-diff against v2:
-1:  b548d96db7 ! 1:  e98be8e7f7 setup: trace bare repository setups
-    @@ t/t0035-safe-bare-repository.sh: TEST_PASSES_SANITIZE_LEAK=true
-     +expect_accepted_implicit () {
-     +	test_when_finished 'rm "$pwd/trace.perf"' &&
-     +	GIT_TRACE2_PERF="$pwd/trace.perf" git "$@" rev-parse --git-dir &&
-    ++	# Note: we're intentionally only checking that the bare repo has a
-    ++	# directory *prefix* of $pwd
-     +	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
-     +}
-     +
-    @@ t/t0035-safe-bare-repository.sh: TEST_PASSES_SANITIZE_LEAK=true
-      
-      test_expect_success 'setup bare repo in worktree' '
-     @@ t/t0035-safe-bare-repository.sh: test_expect_success 'setup bare repo in worktree' '
-    - 	git init --bare outer-repo/bare-repo
-      '
-      
-    --test_expect_success 'safe.bareRepository unset' '
-    + test_expect_success 'safe.bareRepository unset' '
-     -	expect_accepted -C outer-repo/bare-repo
-    --'
-    --
-    ++	test_unconfig --global safe.bareRepository &&
-    ++	expect_accepted_implicit -C outer-repo/bare-repo
-    + '
-    + 
-      test_expect_success 'safe.bareRepository=all' '
-      	test_config_global safe.bareRepository all &&
-     -	expect_accepted -C outer-repo/bare-repo
-
- setup.c                         |  1 +
- t/t0035-safe-bare-repository.sh | 32 +++++++++++++++++++++++++-------
- 2 files changed, 26 insertions(+), 7 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index 59abc16ba6..458582207e 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1352,6 +1352,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 		}
- 
- 		if (is_git_directory(dir->buf)) {
-+			trace2_data_string("setup", NULL, "implicit-bare-repository", dir->buf);
- 			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT)
- 				return GIT_DIR_DISALLOWED_BARE;
- 			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report))
-diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-repository.sh
-index 11c15a48aa..038b8b788d 100755
---- a/t/t0035-safe-bare-repository.sh
-+++ b/t/t0035-safe-bare-repository.sh
-@@ -7,13 +7,26 @@ TEST_PASSES_SANITIZE_LEAK=true
- 
- pwd="$(pwd)"
- 
--expect_accepted () {
--	git "$@" rev-parse --git-dir
-+expect_accepted_implicit () {
-+	test_when_finished 'rm "$pwd/trace.perf"' &&
-+	GIT_TRACE2_PERF="$pwd/trace.perf" git "$@" rev-parse --git-dir &&
-+	# Note: we're intentionally only checking that the bare repo has a
-+	# directory *prefix* of $pwd
-+	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
-+}
-+
-+expect_accepted_explicit () {
-+	test_when_finished 'rm "$pwd/trace.perf"' &&
-+	GIT_DIR="$1" GIT_TRACE2_PERF="$pwd/trace.perf" git rev-parse --git-dir &&
-+	! grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
- }
- 
- expect_rejected () {
--	test_must_fail git "$@" rev-parse --git-dir 2>err &&
--	grep -F "cannot use bare repository" err
-+	test_when_finished 'rm "$pwd/trace.perf"' &&
-+	test_env GIT_TRACE2_PERF="$pwd/trace.perf" \
-+		test_must_fail git "$@" rev-parse --git-dir 2>err &&
-+	grep -F "cannot use bare repository" err &&
-+	grep -F "implicit-bare-repository:$pwd" "$pwd/trace.perf"
- }
- 
- test_expect_success 'setup bare repo in worktree' '
-@@ -22,12 +35,13 @@ test_expect_success 'setup bare repo in worktree' '
- '
- 
- test_expect_success 'safe.bareRepository unset' '
--	expect_accepted -C outer-repo/bare-repo
-+	test_unconfig --global safe.bareRepository &&
-+	expect_accepted_implicit -C outer-repo/bare-repo
- '
- 
- test_expect_success 'safe.bareRepository=all' '
- 	test_config_global safe.bareRepository all &&
--	expect_accepted -C outer-repo/bare-repo
-+	expect_accepted_implicit -C outer-repo/bare-repo
- '
- 
- test_expect_success 'safe.bareRepository=explicit' '
-@@ -47,7 +61,7 @@ test_expect_success 'safe.bareRepository in the repository' '
- 
- test_expect_success 'safe.bareRepository on the command line' '
- 	test_config_global safe.bareRepository explicit &&
--	expect_accepted -C outer-repo/bare-repo \
-+	expect_accepted_implicit -C outer-repo/bare-repo \
- 		-c safe.bareRepository=all
- '
- 
-@@ -60,4 +74,8 @@ test_expect_success 'safe.bareRepository in included file' '
- 	expect_rejected -C outer-repo/bare-repo
- '
- 
-+test_expect_success 'no trace when GIT_DIR is explicitly provided' '
-+	expect_accepted_explicit "$pwd/outer-repo/bare-repo"
-+'
-+
- test_done
-
-base-commit: 2807bd2c10606e590886543afe4e4f208dddd489
--- 
-2.40.1.495.gc816e09b53d-goog
+A better way to spot that would be to start parsing the coccinelle logs,
+and detect when we have unknown parsing issues, and error on those. But
+until then...
 
