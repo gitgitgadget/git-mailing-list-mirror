@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 981F7C77B7C
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 19:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60B2FC7EE21
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 19:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232299AbjEATHn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 15:07:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45342 "EHLO
+        id S231779AbjEATKb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 15:10:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbjEATHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 15:07:42 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB93510F8
-        for <git@vger.kernel.org>; Mon,  1 May 2023 12:07:40 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1aafa03f541so11928035ad.0
-        for <git@vger.kernel.org>; Mon, 01 May 2023 12:07:40 -0700 (PDT)
+        with ESMTP id S229664AbjEATKa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 15:10:30 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58EE8173E
+        for <git@vger.kernel.org>; Mon,  1 May 2023 12:10:29 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id 98e67ed59e1d1-24e09b4153eso737987a91.2
+        for <git@vger.kernel.org>; Mon, 01 May 2023 12:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682968060; x=1685560060;
+        d=gmail.com; s=20221208; t=1682968229; x=1685560229;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=K4Mz6B178EyzTgivd6eVLU/TsvioAu6+HN0BfaO10oM=;
-        b=NOWD/Q7c7ZY3Em1pbwdx2iLrflzmP92lLx2BSIFYduQ1ZJVyFpmXuFhkGjELHaH2on
-         1vWYnD7LpcMcBnyfpQkz58bkFNwYdEEpwUfsilpBG3QntD1mBmy5xiLGur+HeYe2ynfw
-         EyPJJeatfU8AitexstgjdkfjNqbiHeW+wB/jTghYh5PAjasa9Gbf42eTuKb1Z6qQpIwP
-         zHNMrVcOUIVRgzAtxkI/0AwUpVVsSW6dWYtgexH3zYgZFIE0AzGsaVOVJR6q7x/c2Tix
-         WUFD9TP5t4dHDqYXxGn68++gBr70Vzjkd5fm17DvKU1OFeMFw6CJUU98AiyF3RFoUZS5
-         EyeA==
+        bh=TMAQWC2gvLZ8PA41f1ZQZemUmEvK9YtQaTVR+2kuZFQ=;
+        b=A8cQav0/HRnR1aI8GaW3pMqv/Q/a29W9g+jH6D8Wniif/O3exXoJkn6V0x8UrxLo2a
+         uOK5HOX1S27OUw09brcklAaMIJA3/swtaKLycQDKGu2bgJhzD7pg6AkxXlYL/HdBUxvO
+         F3z64w6n8Be2JcQXNrrOL2GBeT6ryj6NSwfCntoo5G6Nal+vaYpWmc7beMWyYLuMT2+f
+         zyHmZL2AEO9wmDxfkfg/WxKEUVTdxhyn9uK+mE6Son0KOUeVsrwZFrGE5rsG1J5U9T6n
+         MiXHtS6rkd0pikFezvhUKhZHeGSJoM1KU8qrTgY4QzsiYC152+/sPcwrsiRanlWv0NqS
+         GudQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682968060; x=1685560060;
+        d=1e100.net; s=20221208; t=1682968229; x=1685560229;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=K4Mz6B178EyzTgivd6eVLU/TsvioAu6+HN0BfaO10oM=;
-        b=f5YwrxpHWI/ZY7gK9cbWlvWOdZpoTKzqShVUouvc10X+G/yxuWX4VbkAHI3U9iekfv
-         gg7SBzmU9sDs4OTeyoDaA05F45CSFOnyNxOheX7aspAZzD5XtfjNQH2obCHmpACGvKCB
-         IvGFSmHHt9+OeckrCl9ZBzHYZLcjZA3qCp5TlUlmSb5xeGxOdBVKVT5Qiu6MNUo7WDp/
-         mfxx/czxw0CirJtJPWTFjXVLtXO0unGr5AyUAeaM4MZ0D3NEvkizsdv3rNesbX2Azp4i
-         UEmmykiPAVThXzIf9V+fT+aZUIGEiVKy9DvE9/nU5pAxv2quMiCSegL10mT/xCTUAOWB
-         ef2w==
-X-Gm-Message-State: AC+VfDwnGB1HgNzlhcnr9zlVaxnrDEwonVPrj7ZkdMphXC8P7/Aj0mvb
-        XYrk6P3dJz6Frd+j2KZpX3CCxRqbVP8=
-X-Google-Smtp-Source: ACHHUZ55IPUH6xWvg2+WzMIEm1Pzp9eFItEycVnCmdXq5MjpMhuFjLNfe0oamfzwgzND6cw3bQolng==
-X-Received: by 2002:a17:903:244d:b0:1a8:1f41:59ba with SMTP id l13-20020a170903244d00b001a81f4159bamr18358031pls.38.1682968060145;
-        Mon, 01 May 2023 12:07:40 -0700 (PDT)
+        bh=TMAQWC2gvLZ8PA41f1ZQZemUmEvK9YtQaTVR+2kuZFQ=;
+        b=YSAyhapOBbgG2nn4mQsCtTN+AVz61k+fIph2jLBt7DG8aBm/HTA8YszB6vaY04pTru
+         jQ2c5clX2C7Azal8WGYOmSGV/k3JhssdR8CaNPWfmJT5CmYsskiYNp3/Q5Iq3oU77ROW
+         nmPMATJ8Ac5I6EMA+WByrFGPXxzAxC3rCjFoSFheyUQQkcXzjvvwnDy356AKsCzsf8mV
+         BdpzOt/z0MJ2ASkpGOaouUxvtwzHAPtm0pPkJP5hG+CPrmbSGdTDxKCQn3tlCTben9UH
+         XehU5cUdaGpohQLEL9DORqMMB1Q34fi0s0QRThLsFuhMx+fnaOqx5HVOUUb18FdzTwyq
+         ZUow==
+X-Gm-Message-State: AC+VfDybogqvI88Gygvd7QTK98FSe3D1wfcPcdJU+1B/wiWOwu3Qf7Mq
+        2iB0IWqcNjBdqrha46f4g1A=
+X-Google-Smtp-Source: ACHHUZ4keqwlXstFT7gj8sK5dT08GdoDJyqmZdWGphWQJyOFXyzKcBG7TQVpBudOOEa2R3b/7ozmVw==
+X-Received: by 2002:a17:90a:d190:b0:24e:113d:db82 with SMTP id fu16-20020a17090ad19000b0024e113ddb82mr2506855pjb.8.1682968228675;
+        Mon, 01 May 2023 12:10:28 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id c13-20020a170902c1cd00b001a6d4ffc760sm18351870plc.244.2023.05.01.12.07.39
+        by smtp.gmail.com with ESMTPSA id jj9-20020a170903048900b001a5fccab02dsm18199830plb.177.2023.05.01.12.10.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 12:07:39 -0700 (PDT)
+        Mon, 01 May 2023 12:10:28 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, me@ttaylorr.com,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/2] fsck: verify checksums of all .bitmap files
+Subject: Re: [PATCH 2/2] fsck: use local repository
 References: <pull.1526.git.1682965295.gitgitgadget@gmail.com>
-        <d608d2faa8602df6a52117c8c57c0ca8e43beb4f.1682965295.git.gitgitgadget@gmail.com>
-Date:   Mon, 01 May 2023 12:07:39 -0700
-In-Reply-To: <d608d2faa8602df6a52117c8c57c0ca8e43beb4f.1682965295.git.gitgitgadget@gmail.com>
+        <2162a352a46dc0c40afccc4defc88a1e8940ce6c.1682965296.git.gitgitgadget@gmail.com>
+Date:   Mon, 01 May 2023 12:10:28 -0700
+In-Reply-To: <2162a352a46dc0c40afccc4defc88a1e8940ce6c.1682965296.git.gitgitgadget@gmail.com>
         (Derrick Stolee via GitGitGadget's message of "Mon, 01 May 2023
-        18:21:34 +0000")
-Message-ID: <xmqqv8hb50qs.fsf@gitster.g>
+        18:21:35 +0000")
+Message-ID: <xmqqr0rz50m3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,134 +71,49 @@ X-Mailing-List: git@vger.kernel.org
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +static int verify_bitmap_file(const char *name)
-> +{
-> +	struct stat st;
-> +	unsigned char *data;
-> +	int fd = git_open(name);
-> +	int res = 0;
-> +
-> +	/* A non-existent file is valid. */
-> +	if (fstat(fd, &st)) {
-> +		close(fd);
-> +		return 0;
-> +	}
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> In 0d30feef3c5 (fsck: create scaffolding for rev-index checks,
+> 2023-04-17) and later 5a6072f631d (fsck: validate .rev file header,
+> 2023-04-17), the check_pack_rev_indexes() method was created with a
+> 'struct repository *r' parameter. However, this parameter was unused and
+> instead 'the_repository' was used in its place.
+>
+> Fix this situation with the obvious replacement.
 
-git_open() may return a negative value to signal an error, and
-fstat() would return negative to signal its own error, and feeding
-the negative fd to close() would also be an error without molesting
-other open file descriptors we would want to keep, and we do not
-check the return value from close(), so all of the above may be
-safe, but makes us feel a bit dirty.
+Indeed obvious it is.  Thanks, will queue.
 
-	/* It is OK not to have the file */
-	if (fd < 0 || fstat(fd, &st)) {
-		if (0 <= fd)
-			close(fd);
-		return 0;
-	}
-
-is probably not overly too verbose and makes the result a bit more
-palatable, perhaps.
-
-> +	data = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-> +	close(fd);
-> +	if (!hashfile_checksum_valid(data, st.st_size))
-> +		res = error(_("bitmap file '%s' has invalid checksum"),
-> +			    name);
-> +
-> +	munmap(data, st.st_size);
-> +	return res;
-> +}
-
-OK.
-
-> +int verify_bitmap_files(struct repository *r)
-> +{
-> +	int res = 0;
-> +
-> +	for (struct multi_pack_index *m = get_multi_pack_index(r);
-> +	     m; m = m->next) {
-> +		char *midx_bitmap_name = midx_bitmap_filename(m);
-> +		res |= verify_bitmap_file(midx_bitmap_name);
-> +		free(midx_bitmap_name);
-> +	}
-> +
-> +	for (struct packed_git *p = get_all_packs(r);
-> +	     p; p = p->next) {
-> +		char *pack_bitmap_name = pack_bitmap_filename(p);
-> +		res |= verify_bitmap_file(pack_bitmap_name);
-> +		free(pack_bitmap_name);
-> +	}
-> +
-> +	return res;
-> +}
-
-OK.
-
-> diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-> index 0882cbb6e4a..d7353d8d443 100755
-> --- a/t/t5326-multi-pack-bitmaps.sh
-> +++ b/t/t5326-multi-pack-bitmaps.sh
-> @@ -434,4 +434,42 @@ test_expect_success 'tagged commits are selected for bitmapping' '
->  	)
->  '
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  builtin/fsck.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index 75b30d1d00c..dcc165bf0c5 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -869,20 +869,20 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+>  	int res = 0;
 >  
-> +corrupt_file () {
-> +	chmod a+w "$1" &&
-> +	printf "bogus" | dd of="$1" bs=1 seek="12" conv=notrunc
-> +}
-> +
-> +test_expect_success 'git fsck correctly identifies good and bad bitmaps' '
-> +	git init valid &&
-> +	test_when_finished rm -rf valid &&
-> +
-> +	test_commit_bulk 20 &&
-> +	git repack -adbf &&
-> +
-> +	# Move pack-bitmap aside so it is not deleted
-> +	# in next repack.
-> +	packbitmap=$(ls .git/objects/pack/pack-*.bitmap) &&
-> +	mv "$packbitmap" "$packbitmap.bak" &&
-> +
-> +	test_commit_bulk 10 &&
-> +	git repack -b --write-midx &&
-> +	midxbitmap=$(ls .git/objects/pack/multi-pack-index-*.bitmap) &&
-> +
-> +	# Copy MIDX bitmap to backup. Copy pack bitmap from backup.
-> +	cp "$midxbitmap" "$midxbitmap.bak" &&
-> +	cp "$packbitmap.bak" "$packbitmap" &&
-
-So, at this point, we have only one pack, and we could enable the
-midx bitmap and/or pack bitmap from their .bak.  We first enable
-only the pack bitmap while leaving midx bitmap disabled.
-
-> +	# fsck works at first
-> +	git fsck &&
-
-OK.
-
-> +	corrupt_file "$packbitmap" &&
-> +	test_must_fail git fsck 2>err &&
-> +	grep "bitmap file '\''$packbitmap'\'' has invalid checksum" err &&
-
-And when the only thing enabled, i.e. pack bitmap, is broken, we
-notice the breakage.  OK.
-
-> +	cp "$packbitmap.bak" "$packbitmap" &&
-> +	corrupt_file "$midxbitmap" &&
-
-Now we repair the pack bitmap and break midx bitmap.  Both are
-enabled in this case.
-
-> +	test_must_fail git fsck 2>err &&
-> +	grep "bitmap file '\''$midxbitmap'\'' has invalid checksum" err
-
-And we notice midx bitmap is corrupt.
-
-Is it worth checking at this point if we detect breakages in both
-bitmaps, if we have pack bitmap and midx bitmap, both broken?
-
-Other than these tiny nits, looking very good.
-
-Thanks.
+>  	if (show_progress) {
+> -		for (struct packed_git *p = get_all_packs(the_repository); p; p = p->next)
+> +		for (struct packed_git *p = get_all_packs(r); p; p = p->next)
+>  			pack_count++;
+>  		progress = start_delayed_progress("Verifying reverse pack-indexes", pack_count);
+>  		pack_count = 0;
+>  	}
+>  
+> -	for (struct packed_git *p = get_all_packs(the_repository); p; p = p->next) {
+> +	for (struct packed_git *p = get_all_packs(r); p; p = p->next) {
+>  		int load_error = load_pack_revindex_from_disk(p);
+>  
+>  		if (load_error < 0) {
+>  			error(_("unable to load rev-index for pack '%s'"), p->pack_name);
+>  			res = ERROR_PACK_REV_INDEX;
+>  		} else if (!load_error &&
+> -			   !load_pack_revindex(the_repository, p) &&
+> +			   !load_pack_revindex(r, p) &&
+>  			   verify_pack_revindex(p)) {
+>  			error(_("invalid rev-index for pack '%s'"), p->pack_name);
+>  			res = ERROR_PACK_REV_INDEX;
