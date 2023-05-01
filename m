@@ -2,140 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA023C77B7C
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 20:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03CEDC77B7C
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 20:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233110AbjEAUGB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 16:06:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51440 "EHLO
+        id S231467AbjEAU7s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 16:59:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233018AbjEAUFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 16:05:53 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D036A2685
-        for <git@vger.kernel.org>; Mon,  1 May 2023 13:05:52 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 44B77320094F;
-        Mon,  1 May 2023 16:05:52 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 01 May 2023 16:05:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm2; t=1682971551; x=1683057951; bh=Ha/vK0aQTChyGt/tMU53E4y/s
-        LamF/w4nZzn7hoC2uk=; b=Ph50aPAc2K6ZWrJbQBqmlf4yhzMBZE44OL5icjwIT
-        XjPPo9G+4Ic4B/AFW2Lm9QvwleLjdafVJLYLMO9KI/cjovbSO9a4JERX2Gu1/52R
-        ucS4UEPxP2yC7ABPBNQyOZvpDlr6uCJK0K4isPyjuzUVdYDALp9390zjThh5zA/6
-        I5ZGc1aVZC8oOW36ruEKnhY2dOEj4omVPhcVNMwuPFWAwPET9moR2V5xQjLOcCHX
-        oTW4763DiUV9JsuIbREG2xMDtujX1YaI1rMpRbUJy5jO0teLqe2GYuSzhCoOJQLt
-        LV0jamC9jCIhWueEL6AEDOsJbFlA6osL/iHztckzP4SJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1682971551; x=1683057951; bh=Ha/vK0aQTChyGt/tMU53E4y/sLamF/w4nZz
-        n7hoC2uk=; b=JIlXfdG3iHZReDD3MNbBtngZiezRXe/V55MPOacDqIZCqUe9Njd
-        ps0lZooleiBbF7dM/2yDd9K7H9Dzw/YM1uiyPAkYO8nwxRVhNG0N8ah9jPNQk+f8
-        TZIoTmosXG7D6QfsmW5KwzVakluzfFH5a2og1bbZB+KsNHf3Jk3mkknafcHd/3lo
-        tcdEcMEP2T4bqPZIzOWNoMksDxZceXaLbo63TS8hAh0W93nVoL3JGZPry/1BWcMn
-        K1Yalhj/QWPDDa8gIZCCqQyzl35v7UusxmLJlIA/FEgWotSNxBcSNmulADw+wRm2
-        1fD/x0pR2SrEduJMay09RsTtwW+DpEclpvg==
-X-ME-Sender: <xms:nxtQZBARK69LHr6uWzoAQoRlRRstN_PtrAUJmheOdO7ue3JgARWTkpI>
-    <xme:nxtQZPi_YCku2jeHNMgvcilODzsaHjPokr-9lnyGuJpT0NmtI74NhwrGN04TkzU49
-    mbN8Mh6KrmzbYzlKw>
-X-ME-Received: <xmr:nxtQZMnkqoqBQtlTPJ6l0F_zniLfmQZxTxD6Nj2TchqKMHo9sGMLqfpqu_eXmZqp13NHn1mgcZMugwxxlXs0Eh2JDkrwScpV-6GXd7C6c4YfWLNFMQs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvgedgudeghecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
-    htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
-    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepve
-    fgleevieekgeejieekueevhfelieduvdelgeefkeejtdekvedttefgffevtedtnecuvehl
-    uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhh
-    gruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:nxtQZLxrfxCVANOt3eZy8o5R_YnF1xWoxDrZ5ugwIAGXSDgQtEiitQ>
-    <xmx:nxtQZGSLnxZKFlPAE_KNT9nwrHBu-3CDv0qNP7AzqeiOk8mDp6egkw>
-    <xmx:nxtQZObNQLLkIipEXwK02W2Duotcwk6g8U4qU3e3FC4HbL96yLTYXA>
-    <xmx:nxtQZP5xehTjCcBFJBedkyVhhOad-5qK3ehU8N4DImXvBsYpu1K8XA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 May 2023 16:05:51 -0400 (EDT)
-From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
-To:     git@vger.kernel.org
-Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v4 4/4] doc: interpret-trailers: fix example
-Date:   Mon,  1 May 2023 22:02:41 +0200
-Message-Id: <95760aafe86315c67115e4152e9ea98737de8c9e.1682970213.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <cover.1682970213.git.code@khaugsbakk.name>
-References: <cover.1680548208.git.code@khaugsbakk.name> <cover.1682970213.git.code@khaugsbakk.name>
+        with ESMTP id S229937AbjEAU7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 16:59:46 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 702261AC
+        for <git@vger.kernel.org>; Mon,  1 May 2023 13:59:45 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id 41be03b00d2f7-5208be24dcbso1947140a12.1
+        for <git@vger.kernel.org>; Mon, 01 May 2023 13:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682974785; x=1685566785;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=peoMRvPs6nigBrRDMY5Wt8p/ELxT+WT3QnKW6rkEU/E=;
+        b=IeOw9FGy2VRa006dmJpDLTYR6mzuG6h8eyo5n8y2CTSIV1rL1vLhhLSscFdNYVYhKs
+         qxkRF4RELJ3BQap/fxN6ZsFLQNElBBAVduH0jW01Hu1TeTb3sNpxKGQlMU6pwWpOwoX9
+         mxlOoDnE3c9+eQH68ruSsFw3VEb9XJgss5lhgWH3axznmqwDnIMxjzUfppzro/FTfV38
+         XUcF9xJaOF+WUMscDTCrADI4NulOinGwJztKbVO7CH3SClUCUOG4mkN+H13WNZ8RTXjy
+         zkkoeRFLxu52T8g9l3qOdTRJNEPEvq3Cw9eYG/4pWlxrH9HOkehGs1yPWeV7wSxHxFMW
+         9EgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682974785; x=1685566785;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=peoMRvPs6nigBrRDMY5Wt8p/ELxT+WT3QnKW6rkEU/E=;
+        b=SQ4eNkFTdsxL5F7cxOEO+vI43GxAAc0n81ESSY3BnYvLuR+m3hM4ArIHYUMfKf8vKy
+         WNLF1f8NBsW5QuZWhY0Y8jPRJjO0VEm963Nu4IzGcWFxU+MshBDRfuisek8Tw1SZ7UFt
+         WPp9a/bIBsPyRYXYJiFjY1npZYIETUgnyEryvfceumkj4/QsXXCnF2bLYcjfIJxEobNc
+         pFg3Rr+CbbBwVIbPO7exa8B3l4JBN3vqAGAAzmmczTy1x46lWa+WhdjlWd8qCh4dzYxR
+         6ybrDSebps+ogMHpJGAdwFk+IhQjUggrx4yrZ/sHtxKni6bTcsdyXourqM5EE9qkJNNl
+         rzhg==
+X-Gm-Message-State: AC+VfDyIqL5aEgiTgEVvI7EgxAGIGn1LXCfoVqTjQkgz6VIPOGODSvy+
+        8a1hmRalQnL/7fNHdZbs+rU=
+X-Google-Smtp-Source: ACHHUZ5yRxPWG78yPN0qA5+1OGrtUpRfDMpGFEoioQOsUUV34xFhfoJRQUdCJ8fRlTPWdwOPTMMHaw==
+X-Received: by 2002:a17:902:e881:b0:1aa:f46a:380a with SMTP id w1-20020a170902e88100b001aaf46a380amr6200740plg.26.1682974784699;
+        Mon, 01 May 2023 13:59:44 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id y9-20020a170902700900b0019c2b1c4ad4sm10232636plk.6.2023.05.01.13.59.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 13:59:44 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4 0/4] doc: interpret-trailers: don't use deprecated
+ config
+References: <cover.1680548208.git.code@khaugsbakk.name>
+        <cover.1682970213.git.code@khaugsbakk.name>
+Date:   Mon, 01 May 2023 13:59:44 -0700
+In-Reply-To: <cover.1682970213.git.code@khaugsbakk.name> (Kristoffer
+        Haugsbakk's message of "Mon, 1 May 2023 22:02:37 +0200")
+Message-ID: <xmqqh6sv4vjz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We need to provide `--trailer sign` since the command won’t output
-anything if you don’t give it an input and/or a
-`--trailer`. Furthermore, the message which already contains an s-o-b is
-wrong:
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-    $ git interpret-trailers --trailer sign <msg.txt
-    Signed-off-by: Alice <alice@example.com>
+> Replace deprecated `command` with `cmd` (patch 3). While visiting this
+> file also:
+>
+> • rewrite heredoc examples to use files which are shown with
+>   cat(1) (patch 1);
+> • use input redirection instead of using cat(1) piped into `git
+>   interpret-trailers` (patch 2); and
+> • fix an example that didn’t work properly (patch 4).
+>
+> § Changes in v4
+>
+> • Patch 1: Use `/dev/null` instead of `empty-msg.txt`
+> • Patch 2: Expand commit message
 
-    Signed-off-by: Alice <alice@example.com>
+Looking good.  Will replace.  I'll ping Christian as the area expert
+just in case there is something obvious we missed, but let's aim to
+merge this down to 'next' soonish.
 
-This can’t be what was originally intended.
-
-So change the messages in this example to use the typical
-“subject/message” file.
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-interpret-trailers.txt | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index acecc037ec..4b97f812be 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -322,16 +322,30 @@ $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Re
-   'Signed-off-by: ' already, and show how it works:
- +
- ------------
-+$ cat msg1.txt
-+subject
-+
-+message
- $ git config trailer.sign.key "Signed-off-by: "
- $ git config trailer.sign.ifmissing add
- $ git config trailer.sign.ifexists doNothing
- $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
--$ git interpret-trailers </dev/null
-+$ git interpret-trailers --trailer sign <msg1.txt
-+subject
-+
-+message
- 
- Signed-off-by: Bob <bob@example.com>
--$ cat msg.txt
-+$ cat msg2.txt
-+subject
-+
-+message
-+
- Signed-off-by: Alice <alice@example.com>
--$ git interpret-trailers <msg.txt
-+$ git interpret-trailers --trailer sign <msg2.txt
-+subject
-+
-+message
- 
- Signed-off-by: Alice <alice@example.com>
- ------------
--- 
-2.40.1
-
+Thanks.
