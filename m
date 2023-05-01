@@ -2,153 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BFCEC77B7C
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 19:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A79C77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 20:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232649AbjEATwG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 15:52:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40560 "EHLO
+        id S232954AbjEAUFY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 16:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230433AbjEATwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 15:52:05 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE751FCE
-        for <git@vger.kernel.org>; Mon,  1 May 2023 12:52:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1682970717; i=l.s.r@web.de;
-        bh=5irOUbJR/2rygQXNH9vqocIfIej1AJwDDbirHPcemmg=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=vZNV1WrtM7mIGZqyOmpsZh32OD3DkZUJbJik5zSUv0rB2uLtwCrq7vMm3pD8sBPWv
-         xLJrvX6f60Z1WuYva6emK+HiRelMh+ATm3IL2Rvg0FUl3jnQEEiZQO71M2IP71FOCk
-         SvYxcq9g6HIqcjX0R8SOI3rFpB/giGNj32Fe0grRTigpini9mmMbK5Fwn3D9jDH8fB
-         XCGiypKrgTU7tSOEsuUu14zt32x1omx2JPOUd4Z4qYCUEw2CnlivNHtj8VgzMnCNJM
-         sj4rylCqG99JTx9IxGqf2PjO0RCJyJbl1pY/pM3+leJ8pE3u4FG/OFw41U85GYvYvR
-         DiA7DWCD7oWmw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.24.218]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mq1CC-1qXsSt2iCg-00n63P; Mon, 01
- May 2023 21:51:57 +0200
-Message-ID: <1dbbd7ce-2b3f-6f88-f902-1d4ffe62e259@web.de>
-Date:   Mon, 1 May 2023 21:51:57 +0200
+        with ESMTP id S232740AbjEAUFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 16:05:22 -0400
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1122685
+        for <git@vger.kernel.org>; Mon,  1 May 2023 13:05:16 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id A15FE32004E7;
+        Mon,  1 May 2023 16:05:14 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Mon, 01 May 2023 16:05:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm2; t=1682971513; x=1683057913; bh=3TdLrwKC00bYIhO9XQ1SCNDaL
+        KnziZzZddc0zKPY/9E=; b=X/km3imfkd7ExVqHf2V6WDadjJvNx7lBPm5VvSzUs
+        MpS0cB1ZT0fMa+/QTwwLcsXTYSeqONf0jTwwxWjQwdRkfD1Af4jwg8zj5frYNTq+
+        /QCkNJRLl3ugKvgNHtTk0VgzO+0q13UHUgZt3+Sq3AIfN6Gz0xfujFZtABLTgMI4
+        AMb0VlMm/20UoOwkVioiAkRQEbM1MynGNDpk0C4VJ+IHE/jZxJe9WiGBaJBscelM
+        ppJ6pWcHVcxbOd7AE6WLaE9WE5DBVPFjIy8JTcVWNc3JDOKZKOXNXemymgctlv5R
+        moDtQZhMTrHsRUa1vgmkpMXRkgNfLBHmjOestRiaREnjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1682971513; x=1683057913; bh=3TdLrwKC00bYIhO9XQ1SCNDaLKnziZzZddc
+        0zKPY/9E=; b=PclfVo2Nk78vLJXdsmiPcpI9IsdzhsdVc9pCleyDLIJAyrlpObY
+        UqLidLES0QQmPo2bDMrQb3LsD92gyna/wz2bEJ/UP5w3vpFjuzK5iD5saaODVGiQ
+        pmOS0s5QV+ke5ernvtq9+2rcm+L7ys6amCvNRsXG4YySkI103KY8AQJCt9ftaXbz
+        rcBKjFU02P60HopAvQvIpGoScVRaeaS5dwun7gxKhPqoSub0WIT3boSMUH8B8nAE
+        5l3hftjNLSrOSQthW/D+I1xd7rdgRUfmJbWm/HxdaktHtdE5fppiHz9/S200vgu5
+        r3UMjsryxnRRkWSJQDhKiwGsX9pOYzilcEw==
+X-ME-Sender: <xms:eRtQZHhPWtUFxTGm7uvu2rE-MNQKx42TW0WZJ16FX_dplApcEn4ZN_c>
+    <xme:eRtQZEDCb5VzlWqapMnbkDQ905SHFFo07B6WVCb6mOhBkXK1xoXDv12lZKfVul1R5
+    x6A0wbsngs0AcDznw>
+X-ME-Received: <xmr:eRtQZHGNe5MfbzkaWyKGZkF5_P3Lzz5--6UIFJl796pMCd8nARj2cPxF6v3N1Dwc3dxyR5Orj1EYZ2B_DQfBJb3UUSIAeS-vMojwmeNanN0WDh4Ilq4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvgedgudeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
+    htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
+    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepue
+    eiueffuefftefhhfefleelhfeuheettedtheevgeejteehgfevffeugffglefhnecuffho
+    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:eRtQZEQrvnMyKGMPODDhcPauooEqtSP2YxbfmPUZLA1TKpvgRXOzyQ>
+    <xmx:eRtQZExIyznUyHUAhv1Y0OMjJ55mXtyiW7LO7Cs5WUFyTEbT0JoPQg>
+    <xmx:eRtQZK6seE3LvVU0Sv6lR4d8kw_9EYFjCSicOYw3UvNTdgMqEsHspA>
+    <xmx:eRtQZKaHaIgnyopC_UcEqIS0MuHeW1di75U1ypgOnJgO0wzjvtzoIA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 1 May 2023 16:05:13 -0400 (EDT)
+From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
+To:     git@vger.kernel.org
+Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH v4 0/4] doc: interpret-trailers: don't use deprecated config
+Date:   Mon,  1 May 2023 22:02:37 +0200
+Message-Id: <cover.1682970213.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <cover.1680548208.git.code@khaugsbakk.name>
+References: <cover.1680548208.git.code@khaugsbakk.name>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.10.0
-Subject: Re: [PATCH] test-ctype: check EOF
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <cbc7feb9-7e15-77e2-b3e9-1fa194b4d4fb@web.de>
- <xmqqedo0849m.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqedo0849m.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GuG8M3y60cq7T1ujphDv8y7TAIvN2w2EcGC9ijeRs6aAHQG8YgA
- 3bX+jH1GVROePuPabXHwr6x6Zftg70+VI5hLdMpokUuZu8nIzcKzv5v92D7CWNIBnfEVExp
- Vi98EJlsFwDp0S8vCS0DHge+EhyEp6e7dK/Fl95laFY3TI9rPEM9upW7BbtSBrUD+S7dK2U
- m2doRd1G7d5n8pTZQetVQ==
-UI-OutboundReport: notjunk:1;M01:P0:SuHc1QzNNwY=;VFlfSrhltxA/6z3UcKHpYCq7woL
- qNes+oycwtYfdBNvLiCkDWugTIGgkWocJP0dxtBtEL4QEgZg8phX4NugJaajfyThdRx0tYnYo
- Hwvv/DXF1rcz98POFYwDyLLwH7NJZmezlqThMOeG9oIRXIbrsWu3A68AIF9P4feLZB2NRfM55
- NpveV1vU9OZuoUXzCmD16IXmZuO+mT3+nZuO+Kpfna3BYA1w4ny6Jiyvg7Yb7qp/FGMDmhSdL
- o8nyRsonmYIMCsBcqzi0AoQw4a2S3lapDA5oQRssbzLHmZ/6bMuddDkdRRIuMhiE+AVLlmdE+
- Vrxag+MQDt7YYUJs8GTlGtmVi8zjxyUKooGc2LzAZpMqN/NJ+F1xM9Ok4tlRVYyS2D7vNlK5c
- XMg8PrF17IyAekmW9oQF2rDWJfLY/dkK+ocD0wiF0XAqlk+iIbbhj+/1T7hO+tD/rRPy9cEem
- eo6Oj6BcpNjOnO9rNapX15CAq32x35L00px2epo1gXW+kLAuaLDrXkzZNFahnesT7Jerfr505
- TZoVZXps59SIXrYsg7FA8pR2tH9ikuWpNDifXN7K7MjtjjHvVGU/AGJ/t9Ov7ZSqeH+QKLhSb
- wjztJcKXnrrUKOQIzjhylbo01WrKj1+5wrleLG2CRlSjvZ+E3WbcJ1greZywBKiVgdYgiRsm/
- kEkL38m4AA7Yax3VONgOkTRNcHN6kw/V71DLMseK/FtsuYrZ8R77kEVxeVj0kQZGYwX/NGMLe
- Y/6qnqbprUv646x+WIEBJImqHdimnFnM/9oOCQnZGtQPKqHh2N/8dbm1Tvll+ZxVHKR2qmm4v
- 0OLWlJvqrhAJRnK+aAmYt6drnRrZJG2J+4rm7cXxEPWYrounAEUssOOVM7sMceSPCzTdoUfdY
- Xn9qk5+mxpNI8VouHvHVyb6uUd0+YAsxpS+BF8svqhswHJittznczfN4k3n8Qq/4NpR3o1ha3
- 13DCpQ==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.05.23 um 17:23 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> The character classifiers are supposed to handle EOF, a negative intege=
-r
->> value.  It isn't part of any character class.  Extend the ctype tests t=
-o
->> cover it.
->
-> The goal makes sense.
->
->> -static void report_error(const char *class, int ch)
->> +static void test(int ch, const char *class, int expect, int actual)
->>  {
->> +	if (actual =3D=3D expect)
->> +		return;
->>  	printf("%s classifies char %d (0x%02x) wrongly\n", class, ch, ch);
->>  	rc =3D 1;
->>  }
->> @@ -24,9 +26,9 @@ static int is_in(const char *s, int ch)
->>  #define TEST_CLASS(t,s) {			\
->>  	int i;					\
->>  	for (i =3D 0; i < 256; i++) {		\
->> -		if (is_in(s, i) !=3D t(i))	\
->> -			report_error(#t, i);	\
->> +		test(i, #t, is_in(s, i), t(i));	\
->>  	}					\
->> +	test(EOF, #t, 0, t(EOF));		\
->>  }
->>
->>  #define DIGIT "0123456789"
->> --
->> 2.40.1
->
-> I am a bit torn on the conversion from report_error() to test(), as
-> the only "test"-y thing the updated function does is to compare two
-> of its parameters.  It still is mostly about reporting an error when
-> something goes wrong.  In other words, the added change could have
-> been just
->
-> 	if (t(EOF) !=3D 0)
-> 		report_error(#t, EOF);
->
-> after the loop, I think.
+Replace deprecated `command` with `cmd` (patch 3). While visiting this
+file also:
 
-True -- the objective can be met without changing the function, and
-whatever the goal for the "while at it" refactoring was can be
-discussed in separate patch, if necessary.
+• rewrite heredoc examples to use files which are shown with
+  cat(1) (patch 1);
+• use input redirection instead of using cat(1) piped into `git
+  interpret-trailers` (patch 2); and
+• fix an example that didn’t work properly (patch 4).
 
-> The only thing that I am not entirely happy with the end result is
-> the name of the function, and not how the caller and the callee
-> divides their work, so it is so miniscule a thing that it won't be
-> worth our collective time to bikeshed it further.
->
-> Let's take it as-is.  Thanks.
+§ Changes in v4
 
-Hmm, okay.  Here's v2 anyway; feel free to ignore it.  At least I
-found this reminder to stay focused and KISS helpful.
+• Patch 1: Use `/dev/null` instead of `empty-msg.txt`
+• Patch 2: Expand commit message
 
-=2D-- >8 ---
-Subject: [PATCH v2] test-ctype: check EOF
+Kristoffer Haugsbakk (4):
+  doc: interpret-trailers: don’t use heredoc in examples
+  doc: interpret-trailers: use input redirection
+  doc: interpret-trailers: don’t use deprecated config
+  doc: interpret-trailers: fix example
 
-The character classifiers are supposed to allow passing EOF to them, a
-negative value.  It isn't part of any character class.  Extend the tests
-to cover that.
+ Documentation/git-interpret-trailers.txt | 97 ++++++++++++++----------
+ 1 file changed, 55 insertions(+), 42 deletions(-)
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/helper/test-ctype.c | 2 ++
- 1 file changed, 2 insertions(+)
+Range-diff against v3:
+1:  fd515ad8b4 ! 1:  149dcf964c doc: interpret-trailers: don’t use heredoc in examples
+    @@ Documentation/git-interpret-trailers.txt: $ git config trailer.sign.key "Signed-
+      $ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
+     -$ git interpret-trailers <<EOF
+     -> EOF
+    -+$ git interpret-trailers <empty-msg.txt
+    ++$ git interpret-trailers </dev/null
 
-diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
-index 71a1a5c9b0..e5659df40b 100644
-=2D-- a/t/helper/test-ctype.c
-+++ b/t/helper/test-ctype.c
-@@ -27,6 +27,8 @@ static int is_in(const char *s, int ch)
- 		if (is_in(s, i) !=3D t(i))	\
- 			report_error(#t, i);	\
- 	}					\
-+	if (t(EOF))				\
-+		report_error(#t, EOF);		\
- }
+      Signed-off-by: Bob <bob@example.com>
+     -$ git interpret-trailers <<EOF
+2:  12f7b10462 ! 2:  32483aa635 doc: interpret-trailers: use input redirection
+    @@ Metadata
+      ## Commit message ##
+         doc: interpret-trailers: use input redirection
 
- #define DIGIT "0123456789"
-=2D-
+    +    Use input redirection instead of invoking cat(1) on a single file. This
+    +    is more straightforward, saves a process, and often makes the line
+    +    shorter.
+    +
+         Suggested-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+
+
+      ## Notes (series) ##
+    -    Link: https://lore.kernel.org/git/xmqqbkk44qbo.fsf@gitster.g/
+    +    Junio suggested expanding the commit message:
+    +    https://lore.kernel.org/git/xmqqjzyg7qdw.fsf@gitster.g/
+
+      ## Documentation/git-interpret-trailers.txt ##
+     @@ Documentation/git-interpret-trailers.txt: $ cat msg.txt
+3:  dc1982f0d0 ! 3:  9ea4c4f916 doc: interpret-trailers: don’t use deprecated config
+    @@ Documentation/git-interpret-trailers.txt: $ git interpret-trailers --trailer 'Cc
+      $ git config trailer.sign.ifexists doNothing
+     -$ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
+     +$ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
+    - $ git interpret-trailers <empty-msg.txt
+    + $ git interpret-trailers </dev/null
+
+      Signed-off-by: Bob <bob@example.com>
+     @@ Documentation/git-interpret-trailers.txt: subject
+4:  f6e5605107 ! 4:  95760aafe8 doc: interpret-trailers: fix example
+    @@ Documentation/git-interpret-trailers.txt: $ git interpret-trailers --trailer 'Cc
+      $ git config trailer.sign.ifmissing add
+      $ git config trailer.sign.ifexists doNothing
+      $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
+    --$ git interpret-trailers <empty-msg.txt
+    +-$ git interpret-trailers </dev/null
+     +$ git interpret-trailers --trailer sign <msg1.txt
+     +subject
+     +
+--
 2.40.1
