@@ -2,149 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49297C77B60
-	for <git@archiver.kernel.org>; Sun, 30 Apr 2023 23:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 624DDC77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 00:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232099AbjD3Xoo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Apr 2023 19:44:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57706 "EHLO
+        id S231245AbjEAAls (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Apr 2023 20:41:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbjD3Xon (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2023 19:44:43 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A56A6
-        for <git@vger.kernel.org>; Sun, 30 Apr 2023 16:44:42 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-392116ae103so889775b6e.0
-        for <git@vger.kernel.org>; Sun, 30 Apr 2023 16:44:42 -0700 (PDT)
+        with ESMTP id S229519AbjEAAlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2023 20:41:47 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A068013D
+        for <git@vger.kernel.org>; Sun, 30 Apr 2023 17:41:45 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id 006d021491bc7-549d9c2935fso1192371eaf.2
+        for <git@vger.kernel.org>; Sun, 30 Apr 2023 17:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682898281; x=1685490281;
+        d=gmail.com; s=20221208; t=1682901705; x=1685493705;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CB8uGnbyRbKcmN/VH/4kV+GKKs/cgX2ZBfT8rTQrVUI=;
-        b=gF0LHkjoDlz6OMJfnn4DJnuakNJqN18X/7PkDinir+cTmudJpRcVSDYJv1EVmj37hJ
-         3paLhgf96AUek9ofSyj/MegI7I7IkJkXOxK/rEdtZMOvAMvZd5sbNYfetp0ZWAlfFWmh
-         F6giK3aBwHjEjvjIudmIGV67lVh6CLzu8S06ESvyBCxHJFqp6mARhSbuG8bAl9hkV+2j
-         XLyU0MNiGuk/Azm042vXzfp69KvaC7WnwJNyX9InluXS93+qaHtZTqdsrjy90mSOFoFM
-         Z/o65zFPSnRpkhIjLnBu6u0SVLymLHhT7u0fAResk3EnIrLx9UFC47vkWQQm8ezKAXhF
-         SC/A==
+        bh=9e28SJ9nXDMcYsPaU0NBFDMTyCTejQ0sPZUVU7huaaI=;
+        b=Uxo1Gg65hNrMl9MM6Nuu3G0azc50ke4gPhqDG3Q+++ifUwnBIZeztkGEZ/d6BJr1C7
+         HPqZ+tL5G0LyQbO9qQHm6RZI3Q/jLausdoFE6mtn2HmI349BUAgkJfNQiakhTimNTafd
+         ag5+I4JNrrUhbcgQXtdY95SexB4LnUg7ylRobSXIwHCWlVRynawAASuQm/7bJOGPqPDc
+         Dd2TZLHJYFCi/D+jfAffIoDAVaBGLb8oVAKf2UIXfN0SEpcbXy1IU8X7jkR1dN4Mlfvu
+         wl5BNtLz47/cbqe9Cwf71zXiDviyHDXNgjiCJ8t5XCuuQipcKmbOIqVwBFG4oO9Zg9d1
+         CDSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682898281; x=1685490281;
+        d=1e100.net; s=20221208; t=1682901705; x=1685493705;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CB8uGnbyRbKcmN/VH/4kV+GKKs/cgX2ZBfT8rTQrVUI=;
-        b=Un2Oxm9SGWb1xvatkEE0c5heYOI/DhfUVmWzHzwsSA8IuRR90oqg0UzLYaVerHptig
-         CXJzsUtPkHsreZAA0uHFFj5fYdBcX4r1Ik2ZcYdXjWpKonBQ2pq4it4PLfz21oESYQCG
-         +ZXcOqcdPLHnYchTdfOeoAT/U/q/1lkYrOkTmKmvWo6L/UL7cn8KTXTnV9pmwxC406Mw
-         Ctjsbc6FdtKrl41kfwzJQTGF0hSgqUDcIEK0z+Quji23wee5+DaUWXYoP1Ahs95YWrIz
-         2d5DpB+e1NB7bIjmuq597sHNY3uAtgdHjXzOtRdyO9kvWp3YdqDvk+knk/MusJglxXMX
-         j9xg==
-X-Gm-Message-State: AC+VfDxB/UTnKtPucfa5SoQj2dqfhHCWcBY2RE0EM9RsLNJS28WkDm1B
-        pRweiOHLEA128HWQ1zBsPBaWKim1z8paePYt3XNj/7ZM
-X-Google-Smtp-Source: ACHHUZ5so8MMSxsEY2SQGMn7L3jTx0jBoZYY31OV8l9Y5ZFUYzlcpvHlYidP8vFzKC6ImKohXHWzaAEVafhuImGOGS0=
-X-Received: by 2002:aca:911:0:b0:38e:2135:698b with SMTP id
- 17-20020aca0911000000b0038e2135698bmr5747576oij.19.1682898281619; Sun, 30 Apr
- 2023 16:44:41 -0700 (PDT)
+        bh=9e28SJ9nXDMcYsPaU0NBFDMTyCTejQ0sPZUVU7huaaI=;
+        b=h2AbcEhZED5MWvgXgO0Oh/ej2thm56/JaFmO74yYaay5K8sjLgR0soLjAHH9x4+AJa
+         S8ebXEfd4frEGSl/jLbWykxm9JbG2QVU695/3O7TQhm2KURq+0jdaJqXw+uGCdgea5bz
+         +z3wNu+fj9IKWQYuGACX89+Eu+6+ni4hVk0VdeBXFLN2Kpz6nh9b4GNkvMLeZQ1t/15A
+         JQo1NueKtU8oMZxvu1GqcQD8ZOuNA8sI+K3BdiiOInMpD1BIrsIZ/vwJ+JTYrfMC1Q91
+         3aCIOtHvGFcbN+8D9ACoDiGcQnev0tYHyeIvNjyRj5C8g3ATLl+w5gPHUaUvZ7uG89OP
+         lFQw==
+X-Gm-Message-State: AC+VfDyMFg9+yrAmCS5hOy4R5Z0P+C0RZlACQ5tiWFP9E+uKw9df2DZo
+        nM38g18d8CP90+aQGrKFVRCMddXMNFcyuXsqjes=
+X-Google-Smtp-Source: ACHHUZ6s5OU3VupsRPHmW4undMOaJhJW/cNWIP1B0B54bYoUyIP/nxwK3w13XzSm2hM+52RidXFu4TE4Goh/c6H7WLM=
+X-Received: by 2002:aca:6542:0:b0:38d:fb24:6fa9 with SMTP id
+ j2-20020aca6542000000b0038dfb246fa9mr5780346oiw.23.1682901704867; Sun, 30 Apr
+ 2023 17:41:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20230421055641.550199-1-alexhenrie24@gmail.com>
- <20230428042221.871095-1-alexhenrie24@gmail.com> <20230430131943.4ag5gawuxkvuywlv@tb-raspi4>
-In-Reply-To: <20230430131943.4ag5gawuxkvuywlv@tb-raspi4>
+ <20230428042221.871095-1-alexhenrie24@gmail.com> <xmqqsfcjevbz.fsf@gitster.g>
+ <CAMMLpeQB1zdTEWd+=d0kaKwpzax093iLTuytZtvn0nTSJ2xT4A@mail.gmail.com> <xmqqcz3m9ch1.fsf@gitster.g>
+In-Reply-To: <xmqqcz3m9ch1.fsf@gitster.g>
 From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Sun, 30 Apr 2023 17:43:00 -0600
-Message-ID: <CAMMLpeS7Cf5JbgtLMY5XCPdhSLgtyZEMt2xLdRpfD=Yj+uvz2g@mail.gmail.com>
+Date:   Sun, 30 Apr 2023 18:40:00 -0600
+Message-ID: <CAMMLpeTWxLKtrXxLWY=3mCwh2i8jhQ7ZcivdxpY36rDBpNtK8A@mail.gmail.com>
 Subject: Re: [PATCH v2] docs: rewrite the documentation of the text and eol attributes
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org, eyvind.bernhardsen@gmail.com,
-        gitster@pobox.com
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, eyvind.bernhardsen@gmail.com, tboegi@web.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 30, 2023 at 7:19=E2=80=AFAM Torsten B=C3=B6gershausen <tboegi@w=
-eb.de> wrote:
+On Sat, Apr 29, 2023 at 11:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> On Thu, Apr 27, 2023 at 10:22:21PM -0600, Alex Henrie wrote:
-
-> > -This attribute enables and controls end-of-line normalization.  When a
+> Alex Henrie <alexhenrie24@gmail.com> writes:
 >
-> Hm, not only, I think. The terminologie is probably not very well specifi=
-ed.
-> I would say that it "controls end-of-line conversion".
-> There are 2 type of conversions, from CRLF into LF and LF into CRLF.
-> The CRLF -> LF conversion happens only at `git commit`
-> (strictly speaking already at `git add`) and is called normalization.
-> Because in Git a "normalized" file has LF in the repo (and index).
-> The term normalize has even been add to 2 commands:
+> > The new text may be slightly redundant, but it makes the
+> > important part crystal clear.
 >
-> `git add --renormalize .`
-> inspired by
-> `git merge -Xrenormalize`
+> I tend to disagree and think it is a bit too redundant, but we do
+> not have to agree on everything---after all you are doing all the
+> work, and it is your motivation and your topic.
 
-Yes, we should probably be consistent about using the word "normalize"
-to refer to conversion to LF and the word "convert" to refer to
-conversion to CRLF or conversion in general. That would also allow us
-to use the word "normalize" for emphasis without wondering whether to
-add "if necessary", because normalization certainly does not imply
-conversion if the file is already normalized.
+I just now realized that `eol=3Dcrlf` works when `text` is unspecified.
+In that light, the phrase "on checkin and possibly also checkout"
+seems to go a little too far towards implying that the eol attribute
+and core.autocrlf config variable depend on the text attribute being
+set. Omitting that phrase would leave the introduction with a better
+balance between precision and brevity, and the remainder of the
+documentation would still be there to flesh out the details.
 
-> > -Note that setting `core.autocrlf` to `true` or `input` overrides
-> > -`core.eol` (see the definitions of those options in
-> > -linkgit:git-config[1]).
+> > Then again, maybe the fact that the `text` attribute does not
+> > normalize CR line endings is a bug in Git, and we shouldn't advertise
+> > it in the documentation as if it were intended behavior. What do you
+> > think?
 >
-> Looking with fresh eyes: I am not sure if like this historical construct.
-> First we say the the "core.eol" sets the line endings (if not defined in
-> the attribute) and the we say that core.autcrlf overrides core.eol
->
-> This is mainly due to historically resons.
-> I think that things goes like this:
-> When text or text=3Dauto (and Git identifies the file as text),
-> and the eol attribute is not set, then:
-> core.autocrlf=3Dtrue gives CRLF
-> core.autocrlf=3Dinput give LF
-> core.autocrlf=3Dfalse looks at core.eol:
-> core.eol=3Dclrf gives CRLF
-> core.eol=3Dlf give LF
-> core.eol unset gives the platform default
+> Just not mentioning CRLF specifically would be sufficient.  When
+> (and if) somebody actually comes and complains, we can say "CR
+> delimited files are not considered text these days, we aren't doing
+> MacOS System 7" ;-).
 
-Yes, core.autocrlf takes precedence over core.eol. That's explained in
-the git-config documentation and doesn't need to be explained again in
-the attribute documentation. However, in the documentation for
-unspecified `eol`, I did make sure to name `eol`, core.autocrlf, and
-core.eol in order of precedence.
-
-> > +file is added to the index, even if it has CRLF line endings in the
-> > +working directory, the file is stored in the index with LF line ending=
-s.
-> > +Conversely, when the file is copied from the index to the working
-> "copied" is not an ideal word here:
-> We may specify a filter and/or an encoding as well.
-> Would "transferred and possibly filtered/encoded" be better ?
-
-Although "transferred and possibly filtered/encoded" might be
-technically more accurate, it is a mouthful. For readability, it would
-be better to keep the documentation concise. It's clear in this
-sentence that "copy" does not mean a byte-for-byte copy (because the
-line endings may be changed), which leaves open the possibility that
-the file may be transformed in other ways during checkout.
-
-> > +     When `text` is set to "auto", Git decides by itself whether the f=
-ile
-> > +     is text or binary.  If it is text and the file was not already in
-> > +     Git with CRLF endings, line endings are converted on checkin and
-> > +     checkout as described above.  Otherwise, no conversion is done on
-> > +     checkin or checkout.
->
-> Side note: We previously talked about files. path is better.
-
-It depends: When talking about applying the attribute to a path, path
-is better, but the actual transformation happens on the file contents.
-The file is what's text or binary and the file is what's transformed;
-the path is always text and never transformed.
-
-Thanks for the feedback. I will send a v3 that takes into account your
-feedback and Junio's.
+I don't think I would dare say "CR-delimited text is not text" to a
+retro computing enthusiast. But I'm fine with not mentioning CRLF in
+this sentence, and when the angry mob shows up on my doorstep, I will
+just send them your way ;-)
 
 -Alex
