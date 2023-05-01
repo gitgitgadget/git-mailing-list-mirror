@@ -2,92 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE29C77B61
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 17:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73758C77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 17:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233351AbjEARGT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 13:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38694 "EHLO
+        id S233287AbjEARH2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 13:07:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232655AbjEARFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 13:05:51 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0615E59DE
-        for <git@vger.kernel.org>; Mon,  1 May 2023 10:00:09 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-50bcb229adaso881803a12.2
-        for <git@vger.kernel.org>; Mon, 01 May 2023 10:00:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682960349; x=1685552349;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=N1E8KRVd9qidQejcLIYY/k3yfpi7jlFHrwCGIKeQx0Q=;
-        b=WL499O8ggQoqybMcdzPRENia2aig28K4EbsdiuYkR3kFRDTcVRFEluYLwBd9vo24Ss
-         o9B/OCjAagzGZ2oqR1Zv4PBO1VnPkOlXF0pMfgjCyIY3LRHQ9D9WsFq6r50YgP04qfok
-         sDRIhnrs94AaG5ZE6jtrGq+YVkQH54pXWndiYJLf7bJQv66yTnuPYLzfjw3uCRpLMNwM
-         BmZYFFPmAhhh/Kn1/+mOIj+cukwtJ20lFsUUku/FdAXw3VJmQf0TAJ87mUi4F2olxQui
-         CELX4+doR+B+tKZNg1TgzNIN8EetK54xVIp4hePtQVLPgbTiUvhmpFfpDhnWUCcZzSAh
-         IGNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682960349; x=1685552349;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N1E8KRVd9qidQejcLIYY/k3yfpi7jlFHrwCGIKeQx0Q=;
-        b=BG5ppi6iHVtrjfwDk86JGr2JnGyXbtKU0CpCFvesAq4Guj9NgLIg0yXUg39iEWlcng
-         Qg3dUBOqq1fEwunoyzQsHyXc2LYdp9GTk4R/plzfg+kByVbwKcYdQ5boDUhui1fDc98Z
-         +bnx0nxHYy69uV36pZlFb+0i7i+OLtWZyNh0nyLBCCHiUy2qf3isj3oXOibxOfkwFPSg
-         FjZJK4wmG1tSJkX3/kqM6SB3gUwgVrLfFycEkJ3rH7ZdO4UkhmbH+jL46n4+QRAnq2jU
-         sqv3dautCz2tG0K09EaNxXukSdo0slVX9goY8ioixcxEfFzYsRT+rEh/u+LY+Xxojv1O
-         dlsg==
-X-Gm-Message-State: AC+VfDxTLWUj+qCj4Tyzwoqhhtmfpy1/lzjZPOdTWWqYPK9eYIJkifcF
-        jhI03pIUsjPhwTFfxOozoKPOOHFy7pA=
-X-Google-Smtp-Source: ACHHUZ7JBWNadKvBuQl9LtrJAJQHK7Jwbx9y66bp4Pf5bugiteSqjIh7mU8AiSo9vG6m5dqo5XyrLw==
-X-Received: by 2002:a05:6402:b05:b0:508:4d66:e666 with SMTP id bm5-20020a0564020b0500b005084d66e666mr6484224edb.32.1682960348599;
-        Mon, 01 May 2023 09:59:08 -0700 (PDT)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id n11-20020aa7c68b000000b0050bc6983041sm1125380edq.96.2023.05.01.09.59.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 09:59:08 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ptWrj-000Eko-2F;
-        Mon, 01 May 2023 18:59:07 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Glen Choo <chooglen@google.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 19/22] commit.h: reduce unnecessary includes
-Date:   Mon, 01 May 2023 18:52:52 +0200
-References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
- <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
- <7479e72ffd612addd9d71118647849d99c5870f8.1682194652.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
-In-reply-to: <7479e72ffd612addd9d71118647849d99c5870f8.1682194652.git.gitgitgadget@gmail.com>
-Message-ID: <230501.86mt2ohtt0.gmgdl@evledraar.gmail.com>
+        with ESMTP id S233362AbjEARHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 13:07:12 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D330A5FF9
+        for <git@vger.kernel.org>; Mon,  1 May 2023 10:01:45 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:5e4a:89fa:93b9:2058])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B0BB45A35F;
+        Mon,  1 May 2023 17:00:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1682960426;
+        bh=i7rqtob+sN5i9De95xI/6OpNZUdfQTIRxn8eCeC5sbo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=xS50/DY7i0GJuE0+TtuKV2OGj24N8kNbu/ehEdpE3I0MxxQPDbvzPmGY4X9BsoJ1D
+         AyrLgcXW0UAn71ikuixOBB72jYX7zwfuRBjLREDgisKk4B1LduAvplwDjRNXaYEJw0
+         iE2LKfoG4SVtlbHBzfwJe9CYZcYaFeWnCNc2Y/E53MpL4nHNuvFN6mNQSs0DM2oF05
+         0CfVqKNu/c8BoT0rV6Fxb5da5J0TD+d4oR0mqeHwB1crIrUwhcKSJa97vO8C70W7L3
+         YtWwwVZi8MHts1PR+fxqsTS94sW4cWnrzFheetnBafrtJQrbr/1qX/SxOvJRAvzOeh
+         Isk1NklO223pHycljUS7qsXzoEmMLL6BumM7oi1pa9gy5tYOe3qimrhKaEaZLpnVLW
+         FeKFZUkistuigBjB28rhD3ej6vc8gWkuu8Pid7hPgAnnIhcxUy3+znsDNTIoEioCG6
+         S2CT9QW/TlJhwHiiEPAgttoXa9ovB3vR4U6mdgjUv3QRHIaLAR7
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Adam Majer <adamm@zombino.com>
+Subject: [PATCH v2 0/1] Fix empty SHA-256 clones with v0 and v1
+Date:   Mon,  1 May 2023 17:00:17 +0000
+Message-ID: <20230501170018.1410567-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.40.1.521.gf1e218fcd8
+In-Reply-To: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
+References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We recently fixed empty clones with SHA-256 over protocol v2 by
+honouring the hash algorithm specified even when no refs are present.
+However, in doing so, we made it impossible to set up a v0 or v1
+repository by cloning from an empty SHA-256 repository.  In doing so, we
+also broke the Git LFS testsuite for SHA-256 repositories.
 
-On Sat, Apr 22 2023, Elijah Newren via GitGitGadget wrote:
+This series introduces the dummy `capabilities^{}` entry for fetches and
+clones from an empty repository for v0 and v1, just as we do for clones.
+This is already supported by older versions of Git, as well as libgit2,
+dulwich, and JGit.
 
-> From: Elijah Newren <newren@gmail.com>
+Unlike in v1, we wire this up for all protocols and fix the NULL pointer
+dereference that would occur in that case, as well as add some more
+tests.  The second patch has been dropped, since it is no longer needed
+and was not very popular.
 
-Re earlier comments: If I rebase to make this the first commit
-everything compiles, i.e. nothing here relied on the earlier split-offs
-of cache.h into other headers.
+Changes since v1:
+* Drop patch to honour GIT_DEFAULT_HASH
+* Support all requests, not just HTTP.
+* Add more tests.
+* Fix NULL pointer dereference.
 
-You need to make a choice of whether to first split out cache.h, and
-then do commits like these, or the other way around.
+brian m. carlson (1):
+  upload-pack: advertise capabilities when cloning empty repos
 
-I'm not sure whether it's better to do it the other way around. If you
-do that it's clear e.g. add-interactive.c's implicit dependency on
-tree.h via commit.h has nothing to do with what would be the subsequent
-split-up of cache.h.
+ t/t5551-http-fetch-smart.sh | 27 +++++++++++++++++++++++++++
+ t/t5700-protocol-v1.sh      | 31 +++++++++++++++++++++++++++++--
+ upload-pack.c               |  7 ++++++-
+ 3 files changed, 62 insertions(+), 3 deletions(-)
 
-Or maybe this is fine. I'm just trying to get some picture of what
-depends on what in this series...
