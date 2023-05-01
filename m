@@ -2,75 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A79C77B73
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 20:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA80C77B73
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 20:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232954AbjEAUFY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 16:05:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50944 "EHLO
+        id S233005AbjEAUFg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 16:05:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232740AbjEAUFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 16:05:22 -0400
+        with ESMTP id S232987AbjEAUFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 16:05:35 -0400
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1122685
-        for <git@vger.kernel.org>; Mon,  1 May 2023 13:05:16 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id A15FE32004E7;
-        Mon,  1 May 2023 16:05:14 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B56D26B6
+        for <git@vger.kernel.org>; Mon,  1 May 2023 13:05:34 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 7C1E632009A0;
+        Mon,  1 May 2023 16:05:33 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 01 May 2023 16:05:14 -0400
+  by compute4.internal (MEProxy); Mon, 01 May 2023 16:05:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
          h=cc:cc:content-transfer-encoding:content-type:content-type
         :date:date:from:from:in-reply-to:in-reply-to:message-id
         :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm2; t=1682971513; x=1683057913; bh=3TdLrwKC00bYIhO9XQ1SCNDaL
-        KnziZzZddc0zKPY/9E=; b=X/km3imfkd7ExVqHf2V6WDadjJvNx7lBPm5VvSzUs
-        MpS0cB1ZT0fMa+/QTwwLcsXTYSeqONf0jTwwxWjQwdRkfD1Af4jwg8zj5frYNTq+
-        /QCkNJRLl3ugKvgNHtTk0VgzO+0q13UHUgZt3+Sq3AIfN6Gz0xfujFZtABLTgMI4
-        AMb0VlMm/20UoOwkVioiAkRQEbM1MynGNDpk0C4VJ+IHE/jZxJe9WiGBaJBscelM
-        ppJ6pWcHVcxbOd7AE6WLaE9WE5DBVPFjIy8JTcVWNc3JDOKZKOXNXemymgctlv5R
-        moDtQZhMTrHsRUa1vgmkpMXRkgNfLBHmjOestRiaREnjQ==
+         s=fm2; t=1682971533; x=1683057933; bh=MZf/MG3lv1cPp1JWbPT3Wnumx
+        JACiJ+LvMo0ocy68jo=; b=eDVdwdzsOJxnghoR4qjZun9IIoJDCEEgB7nHO2gOP
+        W15CLiL8pzf60n1V15hsyt9YyK2J2nk6LmV+EfQpMPjuunBBX737yb8NHPFqhCUb
+        Wc6MLyrZ7SgJa7DWxYEeWwY081LybGvpvs+e9wwtDQkAFkJorFo8pA7oZB3XgVZl
+        Jz5SSdrANh+QKTfeTt66aX2VPRWC+JjVgb2lk2T+JNAYQCtP5AyvHdAINOzJ/77H
+        Kjz125K/M/c2xKmtP/3cpcukoLgy7pbzbS6qFgameeX8JNRtCrYjG829yq4oMD1c
+        CT+gpqGgozcVxAPRy9cB+nUWygbQ0cdcXnbsl+Bp2XcGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:date:feedback-id:feedback-id
         :from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to:x-me-proxy
         :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1682971513; x=1683057913; bh=3TdLrwKC00bYIhO9XQ1SCNDaLKnziZzZddc
-        0zKPY/9E=; b=PclfVo2Nk78vLJXdsmiPcpI9IsdzhsdVc9pCleyDLIJAyrlpObY
-        UqLidLES0QQmPo2bDMrQb3LsD92gyna/wz2bEJ/UP5w3vpFjuzK5iD5saaODVGiQ
-        pmOS0s5QV+ke5ernvtq9+2rcm+L7ys6amCvNRsXG4YySkI103KY8AQJCt9ftaXbz
-        rcBKjFU02P60HopAvQvIpGoScVRaeaS5dwun7gxKhPqoSub0WIT3boSMUH8B8nAE
-        5l3hftjNLSrOSQthW/D+I1xd7rdgRUfmJbWm/HxdaktHtdE5fppiHz9/S200vgu5
-        r3UMjsryxnRRkWSJQDhKiwGsX9pOYzilcEw==
-X-ME-Sender: <xms:eRtQZHhPWtUFxTGm7uvu2rE-MNQKx42TW0WZJ16FX_dplApcEn4ZN_c>
-    <xme:eRtQZEDCb5VzlWqapMnbkDQ905SHFFo07B6WVCb6mOhBkXK1xoXDv12lZKfVul1R5
-    x6A0wbsngs0AcDznw>
-X-ME-Received: <xmr:eRtQZHGNe5MfbzkaWyKGZkF5_P3Lzz5--6UIFJl796pMCd8nARj2cPxF6v3N1Dwc3dxyR5Orj1EYZ2B_DQfBJb3UUSIAeS-vMojwmeNanN0WDh4Ilq4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvgedgudeggecutefuodetggdotefrod
+        1682971533; x=1683057933; bh=MZf/MG3lv1cPp1JWbPT3WnumxJACiJ+LvMo
+        0ocy68jo=; b=J0el/Hd5lcwdnTnSn0eLyvzxenB3zz+CYEaxjDhbfdiBxaOY0HP
+        tXMvZO490RJGKU+SuvZqiNSWB8MQ2f0IUmI6aTHjxAY7AvVk8vPs6AZbYcwgCIMa
+        l/l14RdLnlvbBZqiEXbeAi9vUEtHS1E4BfxL8212UaMufDeQlF1QSjLEBOOne2Ow
+        ypFy07HLGjEC16LfXOTQ821DucTFFFo8t58Jzb9nHd9rBnJNQm8lZ14tAz9d+0pf
+        YouCUP+37yNYEmuAcQdpksTqfopKBKw+CootVIo0aNBve9F/c2XKHlYKfsjB+bve
+        Af3GyO1+yn17v3Z94y+1gcovgCH6jX5qJPg==
+X-ME-Sender: <xms:jRtQZAKXwGjEHq30MPVQmL8sahaFHmZM1yStlXBlV8lL69XNYfENc8A>
+    <xme:jRtQZAI0etsIOJhueodZ7pNpC8M3gSUcXBCKTq-dgt2WrIZ_JuJnSrtYIR9qQWfyN
+    0KRdkIjbY5TN_1M8w>
+X-ME-Received: <xmr:jRtQZAtJ-uKQU2Xl1l7l3A5c2lSTSEqVqbv-Ox-FSNec7B3uGHXZNGiELXOkgHU6R75Vy8d1uUrTIP7W9glV05xl3JkBZOLRfQxS5mrhBQ1xekat_t8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvgedgudeghecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
     htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
-    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepue
-    eiueffuefftefhhfefleelhfeuheettedtheevgeejteehgfevffeugffglefhnecuffho
-    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:eRtQZEQrvnMyKGMPODDhcPauooEqtSP2YxbfmPUZLA1TKpvgRXOzyQ>
-    <xmx:eRtQZExIyznUyHUAhv1Y0OMjJ55mXtyiW7LO7Cs5WUFyTEbT0JoPQg>
-    <xmx:eRtQZK6seE3LvVU0Sv6lR4d8kw_9EYFjCSicOYw3UvNTdgMqEsHspA>
-    <xmx:eRtQZKaHaIgnyopC_UcEqIS0MuHeW1di75U1ypgOnJgO0wzjvtzoIA>
+    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepve
+    fgleevieekgeejieekueevhfelieduvdelgeefkeejtdekvedttefgffevtedtnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhh
+    gruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:jRtQZNZnOKdTOQ_LccZ-M0-8cNJhkWqLb1u-4WlBPBaA3LFHcsT_Mw>
+    <xmx:jRtQZHY-2mmdbrX3m5AlIRFobuR8-dnvyzi7gFu5O7T2hrLHYGaqRQ>
+    <xmx:jRtQZJA4uY-MNk8l2RBJO-tABxb5H51_hCNWf9NJHu6xxqrrBFYotg>
+    <xmx:jRtQZOxXCJ7Xk-LCeSzbDguVtR1LYPN-Nl3-Rf8GbbtDZPxJEaWRQg>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 May 2023 16:05:13 -0400 (EDT)
+ 1 May 2023 16:05:32 -0400 (EDT)
 From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
 To:     git@vger.kernel.org
-Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v4 0/4] doc: interpret-trailers: don't use deprecated config
-Date:   Mon,  1 May 2023 22:02:37 +0200
-Message-Id: <cover.1682970213.git.code@khaugsbakk.name>
+Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 1/4] =?UTF-8?q?doc:=20interpret-trailers:=20don?= =?UTF-8?q?=E2=80=99t=20use=20heredoc=20in=20examples?=
+Date:   Mon,  1 May 2023 22:02:38 +0200
+Message-Id: <149dcf964cb0ff056b8bb454602b07b316725400.1682970213.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <cover.1680548208.git.code@khaugsbakk.name>
-References: <cover.1680548208.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1682970213.git.code@khaugsbakk.name>
+References: <cover.1680548208.git.code@khaugsbakk.name> <cover.1682970213.git.code@khaugsbakk.name>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,79 +79,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace deprecated `command` with `cmd` (patch 3). While visiting this
-file also:
+This file contains four instances of trailing spaces from its inception
+in commit [1]. These spaces might be intentional, since a user would be
+prompted with `> ` in an interactive session. On the one hand, this is a
+whitespace error according to `git diff --check`; on the other hand, the
+raw documentation—it makes no difference in the rendered output—is just
+staying faithful to the simulation of the interactive prompt.
 
-• rewrite heredoc examples to use files which are shown with
-  cat(1) (patch 1);
-• use input redirection instead of using cat(1) piped into `git
-  interpret-trailers` (patch 2); and
-• fix an example that didn’t work properly (patch 4).
+Let’s get rid of these whitespace errors and also make the examples more
+friendly to cut-and-paste by replacing the heredocs with files which are
+shown with cat(1).
 
-§ Changes in v4
+[1]: dfd66ddf5a (Documentation: add documentation for 'git
+    interpret-trailers', 2014-10-13)
 
-• Patch 1: Use `/dev/null` instead of `empty-msg.txt`
-• Patch 2: Expand commit message
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ Documentation/git-interpret-trailers.txt | 74 +++++++++++-------------
+ 1 file changed, 35 insertions(+), 39 deletions(-)
 
-Kristoffer Haugsbakk (4):
-  doc: interpret-trailers: don’t use heredoc in examples
-  doc: interpret-trailers: use input redirection
-  doc: interpret-trailers: don’t use deprecated config
-  doc: interpret-trailers: fix example
-
- Documentation/git-interpret-trailers.txt | 97 ++++++++++++++----------
- 1 file changed, 55 insertions(+), 42 deletions(-)
-
-Range-diff against v3:
-1:  fd515ad8b4 ! 1:  149dcf964c doc: interpret-trailers: don’t use heredoc in examples
-    @@ Documentation/git-interpret-trailers.txt: $ git config trailer.sign.key "Signed-
-      $ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
-     -$ git interpret-trailers <<EOF
-     -> EOF
-    -+$ git interpret-trailers <empty-msg.txt
-    ++$ git interpret-trailers </dev/null
-
-      Signed-off-by: Bob <bob@example.com>
-     -$ git interpret-trailers <<EOF
-2:  12f7b10462 ! 2:  32483aa635 doc: interpret-trailers: use input redirection
-    @@ Metadata
-      ## Commit message ##
-         doc: interpret-trailers: use input redirection
-
-    +    Use input redirection instead of invoking cat(1) on a single file. This
-    +    is more straightforward, saves a process, and often makes the line
-    +    shorter.
-    +
-         Suggested-by: Junio C Hamano <gitster@pobox.com>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-
-
-      ## Notes (series) ##
-    -    Link: https://lore.kernel.org/git/xmqqbkk44qbo.fsf@gitster.g/
-    +    Junio suggested expanding the commit message:
-    +    https://lore.kernel.org/git/xmqqjzyg7qdw.fsf@gitster.g/
-
-      ## Documentation/git-interpret-trailers.txt ##
-     @@ Documentation/git-interpret-trailers.txt: $ cat msg.txt
-3:  dc1982f0d0 ! 3:  9ea4c4f916 doc: interpret-trailers: don’t use deprecated config
-    @@ Documentation/git-interpret-trailers.txt: $ git interpret-trailers --trailer 'Cc
-      $ git config trailer.sign.ifexists doNothing
-     -$ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
-     +$ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
-    - $ git interpret-trailers <empty-msg.txt
-    + $ git interpret-trailers </dev/null
-
-      Signed-off-by: Bob <bob@example.com>
-     @@ Documentation/git-interpret-trailers.txt: subject
-4:  f6e5605107 ! 4:  95760aafe8 doc: interpret-trailers: fix example
-    @@ Documentation/git-interpret-trailers.txt: $ git interpret-trailers --trailer 'Cc
-      $ git config trailer.sign.ifmissing add
-      $ git config trailer.sign.ifexists doNothing
-      $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
-    --$ git interpret-trailers <empty-msg.txt
-    +-$ git interpret-trailers </dev/null
-     +$ git interpret-trailers --trailer sign <msg1.txt
-     +subject
-     +
---
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 22ff3a603e..4f4eb7a7fc 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -326,13 +326,12 @@ $ git config trailer.sign.key "Signed-off-by: "
+ $ git config trailer.sign.ifmissing add
+ $ git config trailer.sign.ifexists doNothing
+ $ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
+-$ git interpret-trailers <<EOF
+-> EOF
++$ git interpret-trailers </dev/null
+ 
+ Signed-off-by: Bob <bob@example.com>
+-$ git interpret-trailers <<EOF
+-> Signed-off-by: Alice <alice@example.com>
+-> EOF
++$ cat msg.txt
++Signed-off-by: Alice <alice@example.com>
++$ git interpret-trailers <msg.txt
+ 
+ Signed-off-by: Alice <alice@example.com>
+ ------------
+@@ -357,15 +356,14 @@ Fix #42
+ $ cat ~/bin/glog-find-author
+ #!/bin/sh
+ test -n "$1" && git log --author="$1" --pretty="%an <%ae>" -1 || true
++$ cat msg.txt
++subject
++
++message
+ $ git config trailer.help.key "Helped-by: "
+ $ git config trailer.help.ifExists "addIfDifferentNeighbor"
+ $ git config trailer.help.cmd "~/bin/glog-find-author"
+-$ git interpret-trailers --trailer="help:Junio" --trailer="help:Couder" <<EOF
+-> subject
+->
+-> message
+->
+-> EOF
++$ git interpret-trailers --trailer="help:Junio" --trailer="help:Couder" <msg.txt
+ subject
+ 
+ message
+@@ -382,15 +380,14 @@ Helped-by: Christian Couder <christian.couder@gmail.com>
+ $ cat ~/bin/glog-grep
+ #!/bin/sh
+ test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
++$ cat msg.txt
++subject
++
++message
+ $ git config trailer.ref.key "Reference-to: "
+ $ git config trailer.ref.ifExists "replace"
+ $ git config trailer.ref.cmd "~/bin/glog-grep"
+-$ git interpret-trailers --trailer="ref:Add copyright notices." <<EOF
+-> subject
+->
+-> message
+->
+-> EOF
++$ git interpret-trailers --trailer="ref:Add copyright notices." <msg.txt
+ subject
+ 
+ message
+@@ -402,17 +399,17 @@ Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
+   commit that is related, and show how it works:
+ +
+ ------------
++$ cat msg.txt
++subject
++
++message
++
++see: HEAD~2
+ $ git config trailer.see.key "See-also: "
+ $ git config trailer.see.ifExists "replace"
+ $ git config trailer.see.ifMissing "doNothing"
+ $ git config trailer.see.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG"
+-$ git interpret-trailers <<EOF
+-> subject
+-> 
+-> message
+-> 
+-> see: HEAD~2
+-> EOF
++$ git interpret-trailers <msg.txt
+ subject
+ 
+ message
+@@ -427,22 +424,21 @@ See-also: fe3187489d69c4 (subject of related commit)
+   to add a 'git-version' trailer:
+ +
+ ------------
+-$ sed -e 's/ Z$/ /' >commit_template.txt <<EOF
+-> ***subject***
+-> 
+-> ***message***
+-> 
+-> Fixes: Z
+-> Cc: Z
+-> Reviewed-by: Z
+-> Signed-off-by: Z
+-> EOF
++$ cat temp.txt
++***subject***
++
++***message***
++
++Fixes: Z
++Cc: Z
++Reviewed-by: Z
++Signed-off-by: Z
++$ sed -e 's/ Z$/ /' temp.txt > commit_template.txt
+ $ git config commit.template commit_template.txt
+-$ cat >.git/hooks/commit-msg <<EOF
+-> #!/bin/sh
+-> git interpret-trailers --trim-empty --trailer "git-version: \$(git describe)" "\$1" > "\$1.new"
+-> mv "\$1.new" "\$1"
+-> EOF
++$ cat .git/hooks/commit-msg
++#!/bin/sh
++git interpret-trailers --trim-empty --trailer "git-version: \$(git describe)" "\$1" > "\$1.new"
++mv "\$1.new" "\$1"
+ $ chmod +x .git/hooks/commit-msg
+ ------------
+ 
+-- 
 2.40.1
+
