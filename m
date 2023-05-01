@@ -2,163 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0D4FC77B73
-	for <git@archiver.kernel.org>; Mon,  1 May 2023 22:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D556C77B7C
+	for <git@archiver.kernel.org>; Mon,  1 May 2023 22:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbjEAW05 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 18:26:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57008 "EHLO
+        id S229937AbjEAW32 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 18:29:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbjEAW04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 18:26:56 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A2E2123
-        for <git@vger.kernel.org>; Mon,  1 May 2023 15:26:55 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-63b46186c03so3545413b3a.3
-        for <git@vger.kernel.org>; Mon, 01 May 2023 15:26:55 -0700 (PDT)
+        with ESMTP id S229627AbjEAW31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 18:29:27 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C5BB2123
+        for <git@vger.kernel.org>; Mon,  1 May 2023 15:29:26 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-63b8b19901fso3598543b3a.3
+        for <git@vger.kernel.org>; Mon, 01 May 2023 15:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1682980015; x=1685572015;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I4NbsRNRSKuBqSBSGgqoGSOVZxfnpeu+HWIHrhQZyWM=;
-        b=RdA7FpaduvnnMoTuR5Xw0hxtd5RQizrc2FV0JFrfRe5JLcfz+s6xNb5TjMDoHsZa7u
-         VGLNIEoAwGn01HiBCBhAH4DT5AFHo7adGlnOfkOPJez87WnCV5RLJiFmxMyjxuH+ZR+B
-         cYo4L7CYYCWZgh1MOcqlmpxSwhF5770azp02z6P8/qEd9M+tiGx3JqPVMdqdBYju00NV
-         0lxqrTzTUjX77LP5hY8WcNIPS7EH1TfucQzubO7INKH3fGBZ/OYaJKPS3SdXemKUQRHj
-         vbCWROSakU9SQmPMA0ktTjJ1T8hRqGZYgoSfKdVi/3oijiYmBXiHNopBtWLh2weUbsx1
-         GQsg==
+        d=gmail.com; s=20221208; t=1682980165; x=1685572165;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rBIz7Zsz1dFZ4/nzkz5Slk6jxs4oCj7d7fGhCnW2niQ=;
+        b=qZkK3gc8/MbVhLt6xD2eM26TRVOASMA3t0BLpEc48jmV4+qQs3U3FegH2qbJY/z8Xn
+         5GboTRaiTZxsVswLW57DxyOwILAAF6Evx8sEmn4gu/Xr0dyDXOh+AtMEsJjrQnS5C1dO
+         ZHNJ13fjmre9rgzq+4Sb0fdSKd79q5p9RsYEHt6vVCNsE2FgfQg5sztmc9t2qQLVfvVh
+         MDpRrho+Lv9lYmlr6vKVX7u6iAz+cbt7hZRFWyET+9+vYYiFFp6O+FriR5O/8oN1Z5ZA
+         3nIgiQTiVZDsKg7tTJqSodaGZoLjkbeEkpyxX6Mnh8TFsR+lVbUUGD3fTl1fWh1xjgL2
+         MJGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682980015; x=1685572015;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I4NbsRNRSKuBqSBSGgqoGSOVZxfnpeu+HWIHrhQZyWM=;
-        b=EjPX0wU63kl8nKpEiVJIAvpgnFza3bcTch41Uu8alsW1+Ndh2n7OI7pQQ6irI2Blaw
-         dVbXkDOSYm4UbMtJkLgDloEvVr7c4LmH0m7Va1bRN1UWsME4YqdetovGYy+a0y8vxTa5
-         QoqmmqqIJQVPJF17AGGZdpvFIFZ7Lt9BVojVuqDCAeUpUQbwwwva4aoOGLZ/+ZoTG21b
-         ByvXLilSiEOlghWyx9Stz9JZUxmOskt5/beP9jUPjj5+yoiHrWfVnOZSj5ipVSb7rxWj
-         fcWdSDNdr/0IhnFtpTq3XHZHgN1DIxyEU4PT/lKIyH7uY7+2aYRnVBfbb4/0MUgT/uYu
-         sxUA==
-X-Gm-Message-State: AC+VfDzHJdWVCN2bT/g/x3ega5z9KJp2geNOvg2rRiEnZ+iOVu5E1ZKC
-        3ZiHHsxPQ93vQqbqtDCgGZu3
-X-Google-Smtp-Source: ACHHUZ5140epZKyj6Fi1aCylTMu0U+orD0Y+0LRamEubfwQk3LlrNjuCiYQ91EoptBTQI/QLSJ7HrQ==
-X-Received: by 2002:a05:6a00:1a14:b0:63d:2d7d:b6f2 with SMTP id g20-20020a056a001a1400b0063d2d7db6f2mr22816531pfv.4.1682980014873;
-        Mon, 01 May 2023 15:26:54 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id f20-20020a056a00229400b00627fafe49f9sm20432893pfe.106.2023.05.01.15.26.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 15:26:54 -0700 (PDT)
-Message-ID: <427dff83-536d-46ee-6326-15e2f548082c@github.com>
-Date:   Mon, 1 May 2023 15:26:51 -0700
+        d=1e100.net; s=20221208; t=1682980165; x=1685572165;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rBIz7Zsz1dFZ4/nzkz5Slk6jxs4oCj7d7fGhCnW2niQ=;
+        b=Q5V1+MmUzf3soUxmN0qlVkSXyYVVWJ3z9z+XRmy6GV4nvFoTo3wC2Mn86qIpFU1kBW
+         h6iDcQDmvDLyGGe7a6OP3HiZhQ+Y3obn7zn7b0kFNjUXwT79hUL4t+vJixxir5z9aZSc
+         GXZ9mIp08r1D04Evg79zr168QyYsmjUJCEL9BleGKTbnmuYtjk0ktQA+laJn4ps8l7bk
+         WocU23jpj2J9kzXfTL+iP60YBMuCsTje0QStkTMYa1Y8rQKSLPMDfdqToQ7bN55JmfEq
+         2WGdRJ6sX4Kn+Zm6bK1N26lIc/42HdUU/JF611pZag4JxpKs/KLxJbLfNutD8aAGfjtk
+         Sxnw==
+X-Gm-Message-State: AC+VfDyo6kPsRthihwMf1p3OsP2V/prYPUM01CuNxhlBXo7wIRWNDsqB
+        SoaEf5efh4AUXd09QmFQC80=
+X-Google-Smtp-Source: ACHHUZ4Vit5va3zrVf/y0mkm6adVk6PU18l1gt2euiNKqeFTGQGkIL7hEPEbyIVnYsz7WCn4grr7Sg==
+X-Received: by 2002:a05:6a20:a10d:b0:f0:d50c:4ac5 with SMTP id q13-20020a056a20a10d00b000f0d50c4ac5mr19638162pzk.51.1682980165492;
+        Mon, 01 May 2023 15:29:25 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id z20-20020a63e554000000b00502fd70b0bdsm17729412pgj.52.2023.05.01.15.29.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 15:29:25 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v9 0/6] notes.c: introduce "--separator" option
+References: <cover.1682429602.git.dyroneteng@gmail.com>
+        <cover.1682671758.git.dyroneteng@gmail.com>
+Date:   Mon, 01 May 2023 15:29:24 -0700
+In-Reply-To: <cover.1682671758.git.dyroneteng@gmail.com> (Teng Long's message
+        of "Fri, 28 Apr 2023 17:23:28 +0800")
+Message-ID: <xmqq4jov3cu3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.10.1
-Subject: Re: [PATCH v8 2/2] diff-files: integrate with sparse index
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com
-References: <20230322161820.3609-1-cheskaqiqi@gmail.com>
- <20230423010721.1402736-1-cheskaqiqi@gmail.com>
- <20230423010721.1402736-3-cheskaqiqi@gmail.com>
-Content-Language: en-US
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230423010721.1402736-3-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 3c140103c5..7ebcfe785e 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -1377,7 +1377,10 @@ test_expect_success 'index.sparse disabled inline uses full index' '
->  	! test_region index ensure_full_index trace2.txt
->  '
->  
-> -ensure_not_expanded () {
-> +ensure_index_state () {
-> +	local expected_expansion="$1"
-> +	shift
-> +
->  	rm -f trace2.txt &&
->  	if test -z "$WITHOUT_UNTRACKED_TXT"
->  	then
-> @@ -1398,7 +1401,21 @@ ensure_not_expanded () {
->  			>sparse-index-out \
->  			2>sparse-index-error || return 1
->  	fi &&
-> -	test_region ! index ensure_full_index trace2.txt
-> +
-> +	if [ "$expected_expansion" = "expanded" ]
-> +	then
-> +		test_region index ensure_full_index trace2.txt
-> +	else
-> +		test_region ! index ensure_full_index trace2.txt
-> +	fi
-> +}
-> +
-> +ensure_expanded () {
-> +	ensure_index_state "expanded" "$@"
-> +}
-> +
-> +ensure_not_expanded () {
-> +	ensure_index_state "not_expanded" "$@"
->  }
+Teng Long <dyroneteng@gmail.com> writes:
 
-This still seems a bit more complicated than necessary (mainly due to the
-new string comparison & local arg). What about something like this (applied
-on top)?
+> From: Teng Long <dyroneteng@gmail.com>
+>
+> Diff since v8:
+>
+> 1. test case: Uniform indent format, as recommended by Junio C Hamano.
+>
+> 2. [4/6] make the static var "separator" initialized as "\n", simplify
+>    the code in "insert_separator(...)".
+>
+> 3. [4/6] I don't change the other parts about the "struct note_msg", the
+>    stripspace way (Junio suggest to consider about the stripspace each messge
+>    individually, but I found it will break the compatibility about "-C",
+>    which can be found the case of 'reuse with "-C" and add note with "-m",
+>    "-m" will stripspace all together').
+> 4. [5/6] Optimized the commit message and replace "strbuf_insert*(...)" with
+>    "strbuf_add*(...)".
+>
+> 5. [6/6] As Junio replied, I'm not sure whether the "-C" problem (When the
+>    "-C" argument is used with "-m/-F", the order of "-C" in the options will
+>    affect the result of stripspace differently,) is need to be fixed or keep
+>    as is, I choose to do not break the old behaviour (In fact, I hope to fix
+>    this issue in another patch, if at all, and let this long-tailed patchset
+>    to mature faster, maybe).
 
--------- 8< -------- 8< -------- 8< --------
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 9d11d28891..333822f322 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1377,10 +1377,7 @@ test_expect_success 'index.sparse disabled inline uses full index' '
- 	! test_region index ensure_full_index trace2.txt
- '
- 
--ensure_index_state () {
--	local expected_expansion="$1"
--	shift
--
-+run_sparse_index_trace2 () {
- 	rm -f trace2.txt &&
- 	if test -z "$WITHOUT_UNTRACKED_TXT"
- 	then
-@@ -1400,22 +1397,17 @@ ensure_index_state () {
- 			git -C sparse-index "$@" \
- 			>sparse-index-out \
- 			2>sparse-index-error || return 1
--	fi &&
--
--	if [ "$expected_expansion" = "expanded" ]
--	then
--		test_region index ensure_full_index trace2.txt
--	else
--		test_region ! index ensure_full_index trace2.txt
- 	fi
- }
- 
- ensure_expanded () {
--	ensure_index_state "expanded" "$@"
-+	run_sparse_index_trace2 "$@" &&
-+	test_region index ensure_full_index trace2.txt
- }
- 
- ensure_not_expanded () {
--	ensure_index_state "not_expanded" "$@"
-+	run_sparse_index_trace2 "$@" &&
-+	test_region ! index ensure_full_index trace2.txt
- }
- 
- test_expect_success 'sparse-index is not expanded' '
--------- >8 -------- >8 -------- >8 --------
+I am inclined to say that we should declare victory and merge this
+down to 'next' soonish, unless somebody spots a big hole in the
+logic, or finds a nicer way to "solve" the "-C problem" (to which I
+suspect there is no clean solution, as the original behaviour is
+more or less inconsistent---that is probably because the feature was
+designed assuming that nobody will combine -C with other options).
 
-That said, given that this is my only complaint with this iteration (and
-it's pretty subjective), if others are happy with it then I'm not opposed to
-merging to 'next'.
-
+Thanks.
