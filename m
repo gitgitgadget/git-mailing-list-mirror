@@ -2,114 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A225CC77B73
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 13:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A448DC77B7E
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 13:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234158AbjEBN1e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 09:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56800 "EHLO
+        id S233807AbjEBNvs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 09:51:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234138AbjEBN13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 09:27:29 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1DA05587
-        for <git@vger.kernel.org>; Tue,  2 May 2023 06:27:26 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f1763ee8f8so24392565e9.1
-        for <git@vger.kernel.org>; Tue, 02 May 2023 06:27:26 -0700 (PDT)
+        with ESMTP id S233819AbjEBNvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 09:51:47 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D2710F
+        for <git@vger.kernel.org>; Tue,  2 May 2023 06:51:34 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1aaec6f189cso19329185ad.3
+        for <git@vger.kernel.org>; Tue, 02 May 2023 06:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683034044; x=1685626044;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uktDzCdP4OYrLr62od7DFl+s2SZPRYyuCa+v52eWHD8=;
-        b=K6Ia6ZLMTe+ElujZ0Yy+Buv/XRvBMt75WmILEJX79INhm9XQCtCHU0JqBeNAMHUgEn
-         8aYsYgtatuX1bXggNx88vEM9+RIRn7z5kfw8LX6+sMHhBskkBjv+80cylhTltDPBjLx2
-         XQ/a05irH/P0nvsZLpFGLO1DDMAvuOpaWBWeKNOb7IUqTSY3adfmKwGaPEvuotYEJHGn
-         q+aavTnGukYrSHP79vYAiLUoBo+/o66zJES/NRVOlYRDOftE4+5c2vGrWYMECL9CBQZk
-         FAGYGAhvaXfvIkEOY5ZR0wCUrDPvOaUHnO5JAgLs7rQn8nGFMVzzwR8FlJrHRxjOCs7z
-         j2ag==
+        d=umich.edu; s=google-2016-06-03; t=1683035494; x=1685627494;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EJbi73xirC2lgQWKHbsYdSrRrzinZxe1WYO6TaTD9no=;
+        b=Y15YB3nBa4uuOll3ou8OoiPQ9hOWnaFvJXnBq2H1VrauSZ2rQlRYGpsxGOTxsQATAU
+         aOI4xjQqt0tcMCeC+zFDevYXMoxAYEfbrryHGu/05Yabw0K7ZD1JOARxAM0c/wLEZ97e
+         Gi1V4VeyEOOqg5eA8245RoJvrrJ2xiI44TlMzOkEFOXzHe6xg/S/elU0zyGY74PPilAa
+         P0aJ5FD1EY/4oY7i5MwRT8/Wr2dDgDCbUVy6STg79euvlc/AS/p2l0NiLKcmThtMnVjz
+         vT7Iudoinr47wMQxQ3H+x5iABCUayLVcOuSbpI8ShDbM9XfgjaEUN3KwOJOz/L8vT6vP
+         kcgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683034044; x=1685626044;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uktDzCdP4OYrLr62od7DFl+s2SZPRYyuCa+v52eWHD8=;
-        b=L7Tnwd+zs1+MxoMbPI/SqSoqQZP6unnT4JD5MHTXc7+M8IW2uezcoZik8KhbuqlvGb
-         p+YKXGlvdU/rpHF8EmNys5KR1mRRjbhReHAxfaWjanpXxThqVJdXKVnUpEQIh3cASrZD
-         UC9UhzegkJKgIQhTWFBQnLdMrJyKvo1gf5yGYf/2SXCfbpvfveRWvSr6BmjX9c0RSyvR
-         bqX7jyQtgDmZ8jhiY/wxZFwaqwHg1UzCD/LoQjfwK1pWp2ub9F0SqoBaSlFLfNRDjxPP
-         4eFm+9abnLB1UrzQMhVqPJ2hAQcbl10qI7B25au0Aq8Khrvfsc7GqDL6LwJ/exyxSNqu
-         np9g==
-X-Gm-Message-State: AC+VfDzz/s8DgQr+qCWi3+d5RkVh0b2ptHQNOgRxEF8prSxvr2oVID2L
-        HJR2WWFf84Z0vK7T/ncoX6Oz0Gow8v8=
-X-Google-Smtp-Source: ACHHUZ4mo39SeBqp87S5XoqngxLzVL3fRVxr47cuBVMTf3MChliRvesMojLNMPLJXPdjQKx0jzO5wA==
-X-Received: by 2002:a05:600c:224a:b0:3f2:4fca:1b0f with SMTP id a10-20020a05600c224a00b003f24fca1b0fmr12595571wmm.24.1683034044541;
-        Tue, 02 May 2023 06:27:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ip29-20020a05600ca69d00b003f1712b1402sm38834634wmb.30.2023.05.02.06.27.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 06:27:24 -0700 (PDT)
-Message-Id: <00789bbc55894a1677b4f1e7722e856d1ec1153f.1683034042.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1526.v2.git.1683034042.gitgitgadget@gmail.com>
-References: <pull.1526.git.1682965295.gitgitgadget@gmail.com>
-        <pull.1526.v2.git.1683034042.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 May 2023 13:27:22 +0000
-Subject: [PATCH v2 2/2] fsck: use local repository
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1683035494; x=1685627494;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EJbi73xirC2lgQWKHbsYdSrRrzinZxe1WYO6TaTD9no=;
+        b=XYUap1QiWE1sq/ekCYKhOnT6EMmwHz11PUt3k3j58sD1xgSYGmvDHR3O6l3NdFIR95
+         CxxVHpF5up908PYZbIWMawV1YntKPpTNR66xiPKNhZ8I5OVz/mxkk8t2zu+DLpeRW1y+
+         dZnzqKs/dEIeXXrzy7PBdggoN5gmKyTlSYNiu+BXfcpFf3yDus/KFJa2M4QFq2pOwBAd
+         ETZjoaAHJ3FUVNevMPhn5+FHL1On76qjWBjp0sq0R2CyF3sNYsqJDw9uzBcbUbjdVmXW
+         LLqJvFn21twR482MD1MVijFjTeV4qnTwsm5UJegT2gT468N96eZnUS12wP5PemTdmttC
+         uVkA==
+X-Gm-Message-State: AC+VfDxeU8nqFHpVTsDC9mjF9M62ZTAhCYea/nQL5RGGYCYwHZpezXWt
+        uyE9hCGusGDVVfsNcrl4iiJT30KMiPo3Toq1JvuBD+F4BFl4zkCi2vw=
+X-Google-Smtp-Source: ACHHUZ5MmMpHgtU8qBeF/RrPkQ+BbePhS48Va8r3h4EJ7erJE6Wb8L8MV0E9vWgHSV+Rwo1b1m81KVXx/aysXKdsLXo=
+X-Received: by 2002:a17:903:230d:b0:1a9:3b64:3747 with SMTP id
+ d13-20020a170903230d00b001a93b643747mr21120850plh.17.1683035493566; Tue, 02
+ May 2023 06:51:33 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Tue, 2 May 2023 09:51:26 -0400
+Message-ID: <CA+dzEBm-uVbsiq26J+Zt10RDg7sEH2FFTwAhbeXOaH_0u0Rx=g@mail.gmail.com>
+Subject: cannot checkout file in partial clone on windows
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+this appears to be a windows-specific issue
 
-In 0d30feef3c5 (fsck: create scaffolding for rev-index checks,
-2023-04-17) and later 5a6072f631d (fsck: validate .rev file header,
-2023-04-17), the check_pack_rev_indexes() method was created with a
-'struct repository *r' parameter. However, this parameter was unused and
-instead 'the_repository' was used in its place.
+short reproduction:
 
-Fix this situation with the obvious replacement.
+```bash
+set -euxo pipefail
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/fsck.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+rm -rf t
+git init t
+cd t
+git remote add origin https://github.com/pre-commit/pre-commit-hooks
+git config extensions.partialClone true
+git fetch origin HEAD --quiet --filter=blob:none --tags
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 75b30d1d00c..dcc165bf0c5 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -869,20 +869,20 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	int res = 0;
- 
- 	if (show_progress) {
--		for (struct packed_git *p = get_all_packs(the_repository); p; p = p->next)
-+		for (struct packed_git *p = get_all_packs(r); p; p = p->next)
- 			pack_count++;
- 		progress = start_delayed_progress("Verifying reverse pack-indexes", pack_count);
- 		pack_count = 0;
- 	}
- 
--	for (struct packed_git *p = get_all_packs(the_repository); p; p = p->next) {
-+	for (struct packed_git *p = get_all_packs(r); p; p = p->next) {
- 		int load_error = load_pack_revindex_from_disk(p);
- 
- 		if (load_error < 0) {
- 			error(_("unable to load rev-index for pack '%s'"), p->pack_name);
- 			res = ERROR_PACK_REV_INDEX;
- 		} else if (!load_error &&
--			   !load_pack_revindex(the_repository, p) &&
-+			   !load_pack_revindex(r, p) &&
- 			   verify_pack_revindex(p)) {
- 			error(_("invalid rev-index for pack '%s'"), p->pack_name);
- 			res = ERROR_PACK_REV_INDEX;
--- 
-gitgitgadget
+git checkout v4.4.0 -- .pre-commit-hooks.yaml
+
+ls -al
+```
+
+on linux it produces this output:
+
+```console
+$ bash t.sh
++ rm -rf t
++ git init t
+Initialized empty Git repository in /tmp/t/.git/
++ cd t
++ git remote add origin https://github.com/pre-commit/pre-commit-hooks
++ git config extensions.partialClone true
++ git fetch origin HEAD --quiet --filter=blob:none --tags
++ git checkout v4.4.0 -- .pre-commit-hooks.yaml
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (1/1), 1.73 KiB | 1.73 MiB/s, done.
++ ls -al
+total 36
+drwxr-xr-x  3 asottile asottile  4096 May  2 09:48 .
+drwxrwxrwt 27 root     root     20480 May  2 09:47 ..
+drwxr-xr-x  7 asottile asottile  4096 May  2 09:48 .git
+-rw-r--r--  1 asottile asottile  6950 May  2 09:48 .pre-commit-hooks.yaml
+
+```
+
+on windows it does the following:
+
+```console
+>bash t.sh
++ rm -rf t
++ git init t
+Initialized empty Git repository in
+C:/Users/Anthony/workspace/pre-commit/t/.git/
++ cd t
++ git remote add origin https://github.com/pre-commit/pre-commit-hooks
++ git config extensions.partialClone true
++ git fetch origin HEAD --quiet --filter=blob:none --tags
++ git checkout v4.4.0 -- .pre-commit-hooks.yaml
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (1/1), 1.73 KiB | 1.73 MiB/s, done.
+error: unable to read sha1 file of .pre-commit-hooks.yaml
+(f8523d4a677b2904df1ebf50c826323b2555edeb)
+```
+
+I can work around it by running `git show
+v4.4.0:.pre-commit-hooks.yaml > /dev/null` before the checkout oddly
+enough:
+
+```console
+>bash t.sh
++ rm -rf t
++ git init t
+Initialized empty Git repository in
+C:/Users/Anthony/workspace/pre-commit/t/.git/
++ cd t
++ git remote add origin https://github.com/pre-commit/pre-commit-hooks
++ git config extensions.partialClone true
++ git fetch origin HEAD --quiet --filter=blob:none --tags
++ git show v4.4.0:.pre-commit-hooks.yaml
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (1/1), 1.73 KiB | 1.73 MiB/s, done.
++ git checkout v4.4.0 -- .pre-commit-hooks.yaml
++ ls -al
+total 20
+drwxr-xr-x 1 Anthony 197609    0 May  2 09:50 .
+drwxr-xr-x 1 Anthony 197609    0 May  2 09:50 ..
+drwxr-xr-x 1 Anthony 197609    0 May  2 09:50 .git
+-rw-r--r-- 1 Anthony 197609 6950 May  2 09:50 .pre-commit-hooks.yaml
+```
+
+anthony
