@@ -2,90 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28D42C77B7C
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 01:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFF4BC77B7C
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 01:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233195AbjEBBtW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 May 2023 21:49:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
+        id S233330AbjEBByu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 May 2023 21:54:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232991AbjEBBtU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2023 21:49:20 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FF353AB4
-        for <git@vger.kernel.org>; Mon,  1 May 2023 18:49:17 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5529f3b8623so29738947b3.2
-        for <git@vger.kernel.org>; Mon, 01 May 2023 18:49:17 -0700 (PDT)
+        with ESMTP id S230008AbjEBByt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2023 21:54:49 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9E82121
+        for <git@vger.kernel.org>; Mon,  1 May 2023 18:54:47 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f00d41df22so25505540e87.1
+        for <git@vger.kernel.org>; Mon, 01 May 2023 18:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1682992156; x=1685584156;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NZmAL11R/dQh/FliSg75dkeLb1ccc4pWMaUb7WHnJZM=;
-        b=NSs38PPQSYp/22DSN3EfdK/fwj/K05bjydGxp0qbdQjiQ3yw9yjPbivkdmJokEkRdM
-         av7kl26uMRfnzeX+R42jbhmsXtFwmqonhOys6xoI4qcHf+SRgHMlgYixZyoi4dt4Taf5
-         58vUXva8MVpS+keGwhF307Jd5Gmlme9ti1INZ8FUa8kizGfYyAR3U58XuG1Yrl2oqT8H
-         S7/vYpsshSfsxZERZuM9dcGTZPV4E5x9iuJWlCBrLKtRUMyM4JLr+Z35Zw/SfZJaGFlB
-         UEaKaU58VWqZZRo1X++ZVkU476E3Fswm7HtD34rWM6Vb7jfFUlh4jPFkUS0YKnaa5KDM
-         e2rA==
+        d=gmail.com; s=20221208; t=1682992486; x=1685584486;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jB38QXEbrWKt8OKOrzasDNWQrlZWgVN1aBG5ORqCks0=;
+        b=YsBJStmZN/bFNGFIzpMZ6cGSwubMLza3KKBrf6RdJCURlpINwCOVyG6icrGKLCoCzp
+         ISugxE79hbkkTG1+D/R8vZinujCFnKb11Yr3Ohsp+ZH8CCZREm6d+IwxqOzYBV3WS5bw
+         02W5WkJycerbkaD/a6CIGvvPmy06OLST6Fxf1W2vGKBwV5ZZz2Z/o3TSbryNXN9hm6N1
+         vjReTjmnHZduyRLhMkPc6b21cEf9vQs8TK3mhdaorvPAQM1Vjv3svxG/yfUNWj/xpKyL
+         YeVkKYwluaGA4N6U7h39ZKJfWEeLjS1L4ogx/sb006fTVeonOF/QQ7+eM/RulF6U3o4F
+         HuKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682992156; x=1685584156;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NZmAL11R/dQh/FliSg75dkeLb1ccc4pWMaUb7WHnJZM=;
-        b=HxCEu/1xziXG/5FHAj775TYRQYJMGvsAZcmHibDq7/gknL20jBoeGBDikM7sdHgJ0j
-         WvX1jzsbEUgtrbe+dhGD0n7C1Pdcx+NcIyFBgQDNnN2wPkKAXo1pUAAknC9PXOQGoYN/
-         tvTiM/I7+5r3PQ8QtHquDu625B68YwH7DiSRM9ovYgImGSvf6sIYm9aMPoXJPLI3yvMV
-         crfKM/1Hp+Hnk9zsalAA5xLYjJ+4qRuHAyw69yMsMb7Tu85XD/uesq1ARDNcPKG5k1eo
-         cKk3WIiYz/0CeLp38F5stTBssbkwqmOT5Cp2AK9zyYhsJhBM1KWpc7BgGaSaWfPcxX0D
-         nX2w==
-X-Gm-Message-State: AC+VfDwyfjDhIvV6NmOe+2aEqeuf2kldi2g8/UmZ6DXpTVqjH7haeLRF
-        CrkJOkeuIjU0bY8OYBK1LCsY
-X-Google-Smtp-Source: ACHHUZ4bTphnG07LAf0DNtwWofLLlgStk7JiUXmKn1rbjd8suzKoBd+Vlj4mjvYZzRl+4G+A1obgRg==
-X-Received: by 2002:a0d:e201:0:b0:55a:6efe:8e2f with SMTP id l1-20020a0de201000000b0055a6efe8e2fmr3485158ywe.45.1682992156364;
-        Mon, 01 May 2023 18:49:16 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:cc0f:b830:7250:64ca? ([2600:1700:e72:80a0:cc0f:b830:7250:64ca])
-        by smtp.gmail.com with ESMTPSA id p6-20020a815b06000000b00545a081847fsm7686035ywb.15.2023.05.01.18.49.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 18:49:15 -0700 (PDT)
-Message-ID: <9ad5f246-e21f-0a13-1a53-1ae3307c3f0e@github.com>
-Date:   Mon, 1 May 2023 21:49:14 -0400
+        d=1e100.net; s=20221208; t=1682992486; x=1685584486;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jB38QXEbrWKt8OKOrzasDNWQrlZWgVN1aBG5ORqCks0=;
+        b=hd8BJrKECJ+a7HAzBmXNNLiVTe5fhljwBj3a9VKjte9Cxe24rb5ye7y6mnSzQsklsv
+         kCyfX7pgJQptdTAdSC6PIMOteEUF8wpRwcZb2yL++3dGGaiFKkWjW2ajn/KHV6PLR7kN
+         1GhxrOv/OB/8oZSeYTLEdVzebtvoMXHeS+A2tB1tFP/vzwwmHQ701nxM6JaEFkxtjiI8
+         19/W7QWotlr3O0UCebL0VrMF1Z15N0xKwcMFI/7QJOwE4cWU+bPRcq7sfDGryhbv4AHu
+         YRtcxiWLmuBisjlluXrL9ol3hazSQWj+0/5ECAHq3nSwk/vjNynXXVIHeX3RfDSW0ABv
+         yXtw==
+X-Gm-Message-State: AC+VfDz/s5MCtDSC0PqpY7pd5wn36TfzpVU7ji1BkIYEKNzqj8Ps7MfR
+        cYWEe/LmS445czvbQ7Wql8JInSQCBK3pOLJoMRo=
+X-Google-Smtp-Source: ACHHUZ6bewTYVOcI2QyHoJvmJGLCwdbvkWHHncoiG99dJ7Qowt4eQTHGNg5+FeMnXwS/Kz3OYZ+ptj7lqE82yUOlHDI=
+X-Received: by 2002:ac2:511d:0:b0:4f0:13e3:a291 with SMTP id
+ q29-20020ac2511d000000b004f013e3a291mr4163680lfb.28.1682992485848; Mon, 01
+ May 2023 18:54:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v2 0/2] negotiator/default: avoid stack overflow
-To:     Junio C Hamano <gitster@pobox.com>,
-        Han Xin <hanxin.hx@bytedance.com>
-Cc:     git@vger.kernel.org, xingxin.xx@bytedance.com,
-        jonathantanmy@google.com
-References: <cover.1682473718.git.hanxin.hx@bytedance.com>
- <cover.1682513384.git.hanxin.hx@bytedance.com> <xmqqildb3dnn.fsf@gitster.g>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqildb3dnn.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
+ <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com> <7479e72ffd612addd9d71118647849d99c5870f8.1682194652.git.gitgitgadget@gmail.com>
+ <230501.86mt2ohtt0.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230501.86mt2ohtt0.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 1 May 2023 18:53:00 -0700
+Message-ID: <CABPp-BGOAd=CY2vrd-GjFzk-889MukKX1nbwwi5+9F+UC0aWuw@mail.gmail.com>
+Subject: Re: [PATCH v2 19/22] commit.h: reduce unnecessary includes
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/1/2023 6:11 PM, Junio C Hamano wrote:
-> Han Xin <hanxin.hx@bytedance.com> writes:
-> 
->> This series avoid stack overflow in negotiator/default.c and memory leak
->> in negotiator/skipping.c.
->>
->> Changes since v2:
->> * Rewrite the commit link in the typical format.
->> * Fix the incorrect check for the COMMON bit introduced in v2.
-> 
-> I see Derrick pointed out a logic error during the review of v2 and
-> this round corrects it.  Is everybody happy with this iteration and
-> considers it safe to merge it to 'next'?
+On Mon, May 1, 2023 at 9:59=E2=80=AFAM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on <avarab@gmail.com> wrote:
+>
+> On Sat, Apr 22 2023, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
+>
+> Re earlier comments: If I rebase to make this the first commit
+> everything compiles, i.e. nothing here relied on the earlier split-offs
+> of cache.h into other headers.
+>
+> You need to make a choice of whether to first split out cache.h, and
+> then do commits like these, or the other way around.
+>
+> I'm not sure whether it's better to do it the other way around. If you
+> do that it's clear e.g. add-interactive.c's implicit dependency on
+> tree.h via commit.h has nothing to do with what would be the subsequent
+> split-up of cache.h.
+>
+> Or maybe this is fine. I'm just trying to get some picture of what
+> depends on what in this series...
 
-Sorry for the lack of confirmation on that. I do think the v3
-patches are good (the cover letter says v2).
+Yes, there is some freedom about the ordering of patches, and I had to
+make a choice.
 
-Thanks,
--Stolee
+I found a number of the cleanups like this one for commit.h
+interspersed with the other changes, but I intentionally grouped them
+at the end to get a good high level overview, namely:
+
+(A) Continue splitting declarations from cache.h to separate headers
+(B) Do other header cleanups found during that work
+
+I could have reversed the order, but since the series was motivated
+and organized around (A), it made more sense to me to put those
+patches first.
+
+Besides, the last time I moved a few miscellaneous cleanup patches to
+the front of the series, someone else responded thinking the purpose
+and motivation was about those first few patches[1], so I wanted to
+avoid a repeat of that problem.  ;-)
+
+[1] https://lore.kernel.org/git/CABPp-BFZBWTG1VF6N8teVMYxoUdOeciKGwPq1g-G1K=
+5--My5uQ@mail.gmail.com/
