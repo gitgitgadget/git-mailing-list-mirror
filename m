@@ -2,69 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1AADC77B7E
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 16:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E0F4C77B73
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 16:20:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbjEBQGE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 12:06:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39564 "EHLO
+        id S233932AbjEBQUN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 12:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjEBQGD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 12:06:03 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8CBB26AC
-        for <git@vger.kernel.org>; Tue,  2 May 2023 09:06:01 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id 5614622812f47-38e692c0930so2471959b6e.0
-        for <git@vger.kernel.org>; Tue, 02 May 2023 09:06:01 -0700 (PDT)
+        with ESMTP id S233923AbjEBQUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 12:20:11 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B203840C7
+        for <git@vger.kernel.org>; Tue,  2 May 2023 09:20:01 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 46e09a7af769-6a5e7482961so1534761a34.3
+        for <git@vger.kernel.org>; Tue, 02 May 2023 09:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683043561; x=1685635561;
+        d=gmail.com; s=20221208; t=1683044401; x=1685636401;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vYp+25tIsUOIZSpBRpid4R2a9WY/uvRWafFeYlp+oTc=;
-        b=ncqqS+Pj4J4cNGWmeDFuWrFldbgRryp1gEzy4gXsEEj+c2k8+8vtOj17b4OoeOATn8
-         aTK7kA0X3Nm3UDeGMej2JMrEPRR0/39eFh5rq1DpuR4dYdC04aMHtqx7VWBy8+h6rgY2
-         uEhbPTUGpM98D+fHHt8I+OYm2cObtO50XXqmRu7xkIPP/ZzSRwb751tlIXW5/AtwHi47
-         1QTMfrlPmI3KuDoITLzPXiQ0eRW68LUFloDnSq5gRIA97rtxXnMN2CQj9dIXwJH60bDT
-         BI+yZ0/mJaeMBtrM/S/UQ4g0XgY74rAzAsN9vO/93AULA6U2Gx/XdKi49pVpal+AuvRV
-         EQzg==
+        bh=xGZEiw0GHOZMr/sRa/ZZ/kUobKkj7U2tRI16HrBb8SQ=;
+        b=czVCn2is5AdhxWbGuYlPlb7QkaY3hG4rdo5Ik+zQdDnOc/los+mWexyjONQ5SHOFYG
+         N95LagXsBo24eqeETWiteP8B/ugzusnl1xgWDijAVc8EMzyZbMudihuaoc7L/qJCyjZE
+         JSMWHQodhVmpZHhLddTHQSOcVtyHNvHna4ujH+SGAgd+UM/8G/DPqBIDkBg/s7+AVBe/
+         aYDOCka+flON0DihUi4XyCFrN53XGOr1t6NXE8d8KF+t5mzWvfeFjpJoTl/aNHkRGoPm
+         PVjUv7hUCNwdTviKuvlzxbZ4vQVDjFwEyZCAoVi2w8/8x/xTJYy2zWHl/AFdQjqpWXWB
+         pAww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683043561; x=1685635561;
+        d=1e100.net; s=20221208; t=1683044401; x=1685636401;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=vYp+25tIsUOIZSpBRpid4R2a9WY/uvRWafFeYlp+oTc=;
-        b=jBxS6C1gPltRHJ5I11rjeiv3oePakc4z0DJPvbff3JXwnzWNJYiTbQRqBO4Dg3TppH
-         BsrSUL5n9xOqZ4i4NsIyZnM3or8V702LkFBdEqya7mDwSTtjaA59t8W1y+TEwn49yxA2
-         MXS+F0k11riRPme/9t3lFMNQTLLNK41Su2HmXc4fsohpdRQEPmudOBQfILaZiPCQcIU6
-         r6c2WC4ZGRXDVo3Gx0JQk16pcPAlA8YsFX5dHqFIdQ0VsL9N40xuu5ePwdbmUftWmpD2
-         5xr5ZMUARtDO3HXuplwMWEHJZXmrhOld0oqShSqsTOSGHnYqETJiz3LLmmZhurK4Fq+Y
-         PWgQ==
-X-Gm-Message-State: AC+VfDwQoL/rQx/VkktMr3JRVsdqXhwcMa42hUkmc/hNtEv+OSlEXikL
-        wauwLVs5OACk+z3yVqq3mtOR7ptshzI=
-X-Google-Smtp-Source: ACHHUZ5rDv4UnJFn+ce2Fy6cz3dhYyCkW0qDC7/Xd9Pr5LveGoRhCfpNr01PsZhtODXbw7t0AeSxKg==
-X-Received: by 2002:aca:1906:0:b0:38e:a824:27d3 with SMTP id l6-20020aca1906000000b0038ea82427d3mr8520921oii.27.1683043561256;
-        Tue, 02 May 2023 09:06:01 -0700 (PDT)
+        bh=xGZEiw0GHOZMr/sRa/ZZ/kUobKkj7U2tRI16HrBb8SQ=;
+        b=KFsbFU8Y8hnh+pA20549+6Hndg7Ksw7zKuCCmc3fbLhf1eoqhoh3iXCwPOYMhsyXmO
+         BjLnk+0psBk5Kry3+pWVgypLLGgAYBsq6QLO45axWYcgHsIJ+utwaFldvKXV5FKyc4Lr
+         Lp68wvJoffOBcJkh2MMHX19YfYKT6mCN49rAA5VAu0QbhoO/llh3caT77B7yd53jkQBM
+         M4cdmyowDPRceuJdnmrKSKiD9uhi/1mXQDA6CUburK8S0jrFg90paEQ9p/AprZGr0stE
+         7pAe7pZOeBxPBmyjRxepaAPqpIIejj78z6Tmz0DtGMu0zaKpzhgMGnUEYw5ZWnqTMylX
+         2C7A==
+X-Gm-Message-State: AC+VfDwQB01cEXCjnh9bEgo3bsNjJgQFeneL37VOwENXEReAJOt0Peu0
+        Lm2QS1PplhainpBwekUfdX0=
+X-Google-Smtp-Source: ACHHUZ7SWofFw7xYgFaLYs0CaqneDIflqowN8Eo6AD2SDLCyHo8OlusZsqcL1eRLZSnVHmpYg06Byg==
+X-Received: by 2002:a9d:6f01:0:b0:6a3:3641:8d7c with SMTP id n1-20020a9d6f01000000b006a336418d7cmr9251232otq.18.1683044400937;
+        Tue, 02 May 2023 09:20:00 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id a28-20020a056808099c00b0038ded2e4f05sm12421864oic.16.2023.05.02.09.05.59
+        by smtp.gmail.com with ESMTPSA id f12-20020a9d6c0c000000b006a44338c8efsm11811476otq.44.2023.05.02.09.20.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 09:06:00 -0700 (PDT)
-Date:   Tue, 02 May 2023 10:05:59 -0600
+        Tue, 02 May 2023 09:20:00 -0700 (PDT)
+Date:   Tue, 02 May 2023 10:19:59 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <645134e7619b0_1ba2d294a7@chronos.notmuch>
-In-Reply-To: <20230502101854.GA1180695@coredump.intra.peff.net>
-References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
- <20230418070048.2209469-2-felipe.contreras@gmail.com>
- <xmqq8ren8xz1.fsf@gitster.g>
- <644684018a766_aba29424@chronos.notmuch>
- <xmqq8reg96cu.fsf@gitster.g>
- <20230425061029.GA4015844@coredump.intra.peff.net>
- <644af29c8526c_7f4f2945f@chronos.notmuch>
- <20230502101854.GA1180695@coredump.intra.peff.net>
-Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
+        M Hickford via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Cheetham <mjcheetham@outlook.com>,
+        Dennington <lessleydennington@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        M Hickford <mirth.hickford@gmail.com>
+Message-ID: <6451382f7aacf_1ba2d29490@chronos.notmuch>
+In-Reply-To: <20230425064758.GD4061254@coredump.intra.peff.net>
+References: <pull.1394.git.1678776364753.gitgitgadget@gmail.com>
+ <pull.1394.v2.git.1682070479816.gitgitgadget@gmail.com>
+ <20230425064758.GD4061254@coredump.intra.peff.net>
+Subject: Re: [PATCH v2] credential: new attribute oauth_refresh_token
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -74,35 +74,49 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King wrote:
-> On Thu, Apr 27, 2023 at 04:09:32PM -0600, Felipe Contreras wrote:
+> On Fri, Apr 21, 2023 at 09:47:59AM +0000, M Hickford via GitGitGadget wrote:
 > 
-> > > Using just a blank line between the code block and the call-out list
-> > > (instead of the "+") works for asciidoc (it is happy to keep the two
-> > > together) but not asciidoctor (it ends the outer ordered list before
-> > > starting the callout list).
+> > Git authentication with OAuth access token is supported by every popular
+> > Git host including GitHub, GitLab and BitBucket [1][2][3]. Credential
+> > helpers Git Credential Manager (GCM) and git-credential-oauth generate
+> > OAuth credentials [4][5]. Following RFC 6749, the application prints a
+> > link for the user to authorize access in browser. A loopback redirect
+> > communicates the response including access token to the application.
 > > 
-> > I don't know what you mean.
+> > For security, RFC 6749 recommends that OAuth response also includes
+> > expiry date and refresh token [6]. After expiry, applications can use
+> > the refresh token to generate a new access token without user
+> > reauthorization in browser. GitLab and BitBucket set the expiry at two
+> > hours [2][3]. (GitHub doesn't populate expiry or refresh token.)
+> > 
+> > However the Git credential protocol has no attribute to store the OAuth
+> > refresh token (unrecognised attributes are silently discarded). This
+> > means that the user has to regularly reauthorize the helper in browser.
+> > On a browserless system, this is particularly intrusive, requiring a
+> > second device.
+> > 
+> > Introduce a new attribute oauth_refresh_token. This is especially
+> > useful when a storage helper and a read-only OAuth helper are configured
+> > together. Recall that `credential fill` calls each helper until it has a
+> > non-expired password.
+> > 
+> > ```
+> > [credential]
+> > 	helper = storage  # eg. cache or osxkeychain
+> > 	helper = oauth
+> > ```
 > 
-> For reference, I meant this:
-> 
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index 6bb32ab460..ed32497290 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -529,7 +529,7 @@ $ git checkout master~2 Makefile  <2>
->  $ rm -f hello.c
->  $ git checkout hello.c            <3>
->  ------------
-> -+
-> +
->  <1> switch branch
->  <2> take a file out of another commit
->  <3> restore `hello.c` from the index
-> 
-> which asciidoc renders the same, but asciidoctor is not.
+> OK. I don't have much knowledge of OAuth, but taking the notion of "this
+> is a useful thing for oauth clients to store" as a given, the
+> implementation seems reasonable.
 
-I see. I would say the code is ambiguous, so it's not surprising that a parser
-interprets it as an end of a list element.
+I don't think this is specific to OAuth, I've seen different authorization
+methods use something like that.
+
+In general you just need two variables: the refresh token, and the expiration
+time of the refresh token. The logic is very simple: if the refresh token has
+expired, you ask for a new one. This way you don't have to go through the
+authorization process again.
 
 -- 
 Felipe Contreras
