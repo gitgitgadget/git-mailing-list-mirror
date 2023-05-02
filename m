@@ -2,151 +2,269 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E280AC77B73
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 13:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2CE2C77B7E
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 13:27:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234182AbjEBN1a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 09:27:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56800 "EHLO
+        id S234152AbjEBN1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 09:27:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234146AbjEBN11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 09:27:27 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45147618B
+        with ESMTP id S234158AbjEBN13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 09:27:29 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D522D6196
         for <git@vger.kernel.org>; Tue,  2 May 2023 06:27:25 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f315735514so169006895e9.1
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f09b4a1584so24326625e9.2
         for <git@vger.kernel.org>; Tue, 02 May 2023 06:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683034043; x=1685626043;
+        d=gmail.com; s=20221208; t=1683034044; x=1685626044;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oGX58JxBwbgHF9ZgDIRcUd3KaquhZ77/Y8Ro2G3hMoc=;
-        b=OHfNToByOMVNt7U1hLOHv6rs4SIp3ytL6Ini6J2q38yNcY+TMv6rBwZqEvLeNLduhE
-         sEBngSKVBsyl/uaIeQkz2+raHJEHoNARJO04GeXirgbtaCfjoFDFvH0kPKvyaoXk67bP
-         ct8JY1BWu4yzZB16T6KIHhimhSPOyyJ41pLhM08d6CvFBdXxysBRRN+T6E26QOBKAYIy
-         vpM4nW0d5xrEX/3p4Y0LtG2LaAU1A5XU3+K+o3/OmADMTAhQrJYThg3lBDOsSXMqPuxo
-         yjKg7xlxAZMZh+8hUFozEn0iCR4WojwuZz18jjuCnuI87hj2pG1t8y13YxUvmP2Irjtd
-         1eXQ==
+        bh=s9oQO+VmjoW/VflAHMzv0K8yXzyGZRYygsoT+WhDqWk=;
+        b=ZRZWgH8dqnVNY0KyAo/PtjkGG1uMSyFxCJ8WjjQGR+mfCk4huFQmpfbqf6wMc7eyKf
+         Njelu9GcWD8/W2OvPUGHG6ZQp60QUV4FF//UggW1qsXay/gZzhiO5hkdx5oE8qBGLNo2
+         s968cud+6svn6IcQ+SJRGg/oRl/kDCP0OzxoWV8qLdk1TSNPQLKlmZX7bJg4ZbzzSAI9
+         VbCcVHB4B1v6SuEVo9kfm+hewM9ZdXvP97oLv6G0Q77lk7PsqJgodEZKlWABwKs7N6J+
+         DILVeyInpmME5fuNeuRXdrsf+nRr6tAyTJYRa/Ppg/F3K+n7tHIxHKjmnpVEghKJhOoH
+         UgkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683034043; x=1685626043;
+        d=1e100.net; s=20221208; t=1683034044; x=1685626044;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oGX58JxBwbgHF9ZgDIRcUd3KaquhZ77/Y8Ro2G3hMoc=;
-        b=FksaSiqd1WjsWogRTVhXrTdSxKE9bOHXhEKRrRdZPLt55ztKnT//FinXhGcJ1432vL
-         iSeqR/LoPtNBa/lp8KyLYOGWKnEakHLIuzcNBZLwwSQyBW+VVZOZOc7iQ2nDJQbrl+vW
-         dYTrfksxS93lmGXGVetdq4/qmZp1U75BM3y1nGtdjvkyRG28vBtQ7GuyBUm2bfcjGajv
-         cyOD/hqigBA8j7RlLIKZIWNt+Rqk4Vn7kPAOZUJui0k9LkQZsfgu6oto+qK49+IYkQib
-         IXGq5cEXvIwSzNQxISJjLhZ2C9w7iOoJfWR5oy6HEUSi+6VKaEVhoCHGHPdHoFP0HWJz
-         SGAg==
-X-Gm-Message-State: AC+VfDxMR0ZkfUpiEYb95hRu+rMD6zstqaLGvfu3dWV86i6dylGfKV56
-        Erbwf13Jq/ja6u/H+x9JiCHYhwGxV+s=
-X-Google-Smtp-Source: ACHHUZ4n8Jh3ovL/tW0f6dQTllwYNG9RxMlvn834+8SfNLjfAkMnodxQ8MaQ4Zk5wH1NO4SFCy/jaw==
-X-Received: by 2002:a05:600c:2281:b0:3f1:72db:454c with SMTP id 1-20020a05600c228100b003f172db454cmr12594830wmf.19.1683034043358;
+        bh=s9oQO+VmjoW/VflAHMzv0K8yXzyGZRYygsoT+WhDqWk=;
+        b=jfZQhKggZoaR23NYvRLB+GCKx++W6ycWRAR5NAeP7nQnncUDbvzGWaXCh+mLty6+a0
+         j5oSwsJVw8hE4OduF28EIviISHFZCgtpl5hloVY8m7cEvpQCuGzMVw3FYUfouciaYXvV
+         f6NlnfEbXPxyL5iiBOTeC0yoADLfrJywEEdiNhDUuFYe0xtwF034W3lyHEjQnPkZQu4+
+         y/3apduGxujMVJztPWGNySQe5EzT7P+jnukzVfgP+ZGkl9L9Nv1M/pDbTYcntFql2YZC
+         dJIv9c6d6wsdhf4WFjMCqL7U4hb600RmBVZPsllq9Q4OIQI7Zal4cwyLoev6fZvrD7Tk
+         KhRQ==
+X-Gm-Message-State: AC+VfDxYgXnFIg6Zoj95vX2tf/JvhFpNi6b5ywG/93YSfvK5jIlIkzkm
+        fAjz7EsjID1PRE9LV2nC9hE+OupBPN8=
+X-Google-Smtp-Source: ACHHUZ5yk087hOxsnteq0PSGeJvWuY9ySF7DxZGiq68kDkNSvKncB5wL6Is03hUjhZRcZFTLiH+9WQ==
+X-Received: by 2002:a5d:468e:0:b0:306:3a9c:4c6e with SMTP id u14-20020a5d468e000000b003063a9c4c6emr1049763wrq.68.1683034043895;
         Tue, 02 May 2023 06:27:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t10-20020a05600c198a00b003f16932fe7dsm39586281wmq.38.2023.05.02.06.27.22
+        by smtp.gmail.com with ESMTPSA id c21-20020a7bc855000000b003f17300c7dcsm35317870wml.48.2023.05.02.06.27.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 06:27:22 -0700 (PDT)
-Message-Id: <pull.1526.v2.git.1683034042.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1526.git.1682965295.gitgitgadget@gmail.com>
+        Tue, 02 May 2023 06:27:23 -0700 (PDT)
+Message-Id: <5d6d66586332a411b05b1f345e7456fda858ddb3.1683034042.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1526.v2.git.1683034042.gitgitgadget@gmail.com>
 References: <pull.1526.git.1682965295.gitgitgadget@gmail.com>
+        <pull.1526.v2.git.1683034042.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 May 2023 13:27:20 +0000
-Subject: [PATCH v2 0/2] fsck: verify .bitmap checksums, cleanup
+Date:   Tue, 02 May 2023 13:27:21 +0000
+Subject: [PATCH v2 1/2] fsck: verify checksums of all .bitmap files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to the recent work on rev-indexes [1], add checks for .bitmap files
-to 'git fsck'.
+From: Derrick Stolee <derrickstolee@github.com>
 
-Patch 1 includes the full details for .bitmap files.
+If a filesystem-level corruption occurs in a .bitmap file, Git can react
+poorly. This could take the form of a run-time error due to failing to
+parse an EWAH bitmap or be more subtle such as returning the wrong set
+of objects to a fetch or clone.
 
-Patch 2 includes a cleanup of ds/fsck-pack-revindex that I noticed while
-preparing this series.
+A natural first response to either of these kinds of errors is to run
+'git fsck' to see if any files are corrupt. This currently ignores all
+.bitmap files.
 
+Add checks to 'git fsck' for all .bitmap files that are currently
+associated with a multi-pack-index or pack file. Verify their checksums
+using the hashfile API.
 
-Updates since v2
-================
+We iterate through all multi-pack-indexes and pack-files to be sure to
+check all .bitmap files, not just the one that would be read by the
+process. For example, a multi-pack-index bitmap overrules a pack-bitmap.
+However, if the multi-pack-index is removed, the pack-bitmap may be
+selected instead. Be thorough to include every file that could become
+active in such a way. This includes checking files in alternates.
 
- * The code for verify_bitmap_file() added checks for a negative file
-   descriptor, as well as some other cleanup.
- * The test in t5326 is expanded to include the "both are corrupt" case, as
-   well as a reorganization because the test was not confined to an inner
-   repo.
+There is potential that we could extend this effort to check the
+structure of the reachability bitmaps themselves, but it is very
+expensive to do so. At minimum, it's as expensive as generating the
+bitmaps in the first place, and that's assuming that we don't use the
+trivial algorithm of verifying each bitmap individually. The trivial
+algorithm will result in quadratic behavior (number of objects times
+number of bitmapped commits) while the bitmap building operation
+constructs a lattice of commits to build bitmaps incrementally and then
+generate the final bitmaps from a subset of those commits.
 
-Thanks, Stolee
+If we were to extend 'git fsck' to check .bitmap file contents more
+closely like this, then we would likely want to hide it behind an option
+that signals the user is more willing to do expensive operations such as
+this.
 
-[1]
-https://lore.kernel.org/git/pull.1512.git.1681748502.gitgitgadget@gmail.com/
+For testing, set up a repository with a pack-bitmap _and_ a
+multi-pack-index bitmap. This requires some file movement to avoid
+deleting the pack-bitmap during the repack that creates the
+multi-pack-index bitmap. We can then verify that 'git fsck' is checking
+all files, not just the "active" bitmap.
 
-Derrick Stolee (2):
-  fsck: verify checksums of all .bitmap files
-  fsck: use local repository
-
- builtin/fsck.c                | 10 +++++---
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ builtin/fsck.c                |  4 ++++
  pack-bitmap.c                 | 45 +++++++++++++++++++++++++++++++++++
  pack-bitmap.h                 |  2 ++
  t/t5326-multi-pack-bitmaps.sh | 44 ++++++++++++++++++++++++++++++++++
- 4 files changed, 98 insertions(+), 3 deletions(-)
+ 4 files changed, 95 insertions(+)
 
-
-base-commit: 48d89b51b3bb8a60580c36731b96a7206ce1e5b9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1526%2Fderrickstolee%2Ffsck-bitmap-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1526/derrickstolee/fsck-bitmap-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1526
-
-Range-diff vs v1:
-
- 1:  d608d2faa86 ! 1:  5d6d6658633 fsck: verify checksums of all .bitmap files
-     @@ pack-bitmap.c: int bitmap_is_preferred_refname(struct repository *r, const char
-      +	int fd = git_open(name);
-      +	int res = 0;
-      +
-     -+	/* A non-existent file is valid. */
-     -+	if (fstat(fd, &st)) {
-     -+		close(fd);
-     ++	/* It is OK to not have the file. */
-     ++	if (fd < 0 || fstat(fd, &st)) {
-     ++		if (fd >= 0)
-     ++			close(fd);
-      +		return 0;
-      +	}
-      +
-     @@ t/t5326-multi-pack-bitmaps.sh: test_expect_success 'tagged commits are selected
-      +	cp "$packbitmap.bak" "$packbitmap" &&
-      +
-      +	# fsck works at first
-     -+	git fsck &&
-     ++	git fsck 2>err &&
-     ++	test_must_be_empty err &&
-      +
-      +	corrupt_file "$packbitmap" &&
-      +	test_must_fail git fsck 2>err &&
-     @@ t/t5326-multi-pack-bitmaps.sh: test_expect_success 'tagged commits are selected
-      +	cp "$packbitmap.bak" "$packbitmap" &&
-      +	corrupt_file "$midxbitmap" &&
-      +	test_must_fail git fsck 2>err &&
-     -+	grep "bitmap file '\''$midxbitmap'\'' has invalid checksum" err
-     ++	grep "bitmap file '\''$midxbitmap'\'' has invalid checksum" err &&
-     ++
-     ++	corrupt_file "$packbitmap" &&
-     ++	test_must_fail git fsck 2>err &&
-     ++	grep "bitmap file '\''$midxbitmap'\'' has invalid checksum" err &&
-     ++	grep "bitmap file '\''$packbitmap'\'' has invalid checksum" err
-      +'
-      +
-       test_done
- 2:  2162a352a46 = 2:  00789bbc558 fsck: use local repository
-
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 2cd461b84c1..75b30d1d00c 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -27,6 +27,7 @@
+ #include "run-command.h"
+ #include "worktree.h"
+ #include "pack-revindex.h"
++#include "pack-bitmap.h"
+ 
+ #define REACHABLE 0x0001
+ #define SEEN      0x0002
+@@ -57,6 +58,7 @@ static int name_objects;
+ #define ERROR_COMMIT_GRAPH 020
+ #define ERROR_MULTI_PACK_INDEX 040
+ #define ERROR_PACK_REV_INDEX 0100
++#define ERROR_BITMAP 0200
+ 
+ static const char *describe_object(const struct object_id *oid)
+ {
+@@ -1056,6 +1058,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	errors_found |= check_pack_rev_indexes(the_repository, show_progress);
++	if (verify_bitmap_files(the_repository))
++		errors_found |= ERROR_BITMAP;
+ 
+ 	check_connectivity();
+ 
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index e0fad723bf3..999f962602d 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -2346,3 +2346,48 @@ int bitmap_is_preferred_refname(struct repository *r, const char *refname)
+ 
+ 	return 0;
+ }
++
++static int verify_bitmap_file(const char *name)
++{
++	struct stat st;
++	unsigned char *data;
++	int fd = git_open(name);
++	int res = 0;
++
++	/* It is OK to not have the file. */
++	if (fd < 0 || fstat(fd, &st)) {
++		if (fd >= 0)
++			close(fd);
++		return 0;
++	}
++
++	data = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	close(fd);
++	if (!hashfile_checksum_valid(data, st.st_size))
++		res = error(_("bitmap file '%s' has invalid checksum"),
++			    name);
++
++	munmap(data, st.st_size);
++	return res;
++}
++
++int verify_bitmap_files(struct repository *r)
++{
++	int res = 0;
++
++	for (struct multi_pack_index *m = get_multi_pack_index(r);
++	     m; m = m->next) {
++		char *midx_bitmap_name = midx_bitmap_filename(m);
++		res |= verify_bitmap_file(midx_bitmap_name);
++		free(midx_bitmap_name);
++	}
++
++	for (struct packed_git *p = get_all_packs(r);
++	     p; p = p->next) {
++		char *pack_bitmap_name = pack_bitmap_filename(p);
++		res |= verify_bitmap_file(pack_bitmap_name);
++		free(pack_bitmap_name);
++	}
++
++	return res;
++}
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index f0180b5276b..84591f041bf 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -111,4 +111,6 @@ int bitmap_is_midx(struct bitmap_index *bitmap_git);
+ const struct string_list *bitmap_preferred_tips(struct repository *r);
+ int bitmap_is_preferred_refname(struct repository *r, const char *refname);
+ 
++int verify_bitmap_files(struct repository *r);
++
+ #endif
+diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+index 0882cbb6e4a..f771c442d41 100755
+--- a/t/t5326-multi-pack-bitmaps.sh
++++ b/t/t5326-multi-pack-bitmaps.sh
+@@ -434,4 +434,48 @@ test_expect_success 'tagged commits are selected for bitmapping' '
+ 	)
+ '
+ 
++corrupt_file () {
++	chmod a+w "$1" &&
++	printf "bogus" | dd of="$1" bs=1 seek="12" conv=notrunc
++}
++
++test_expect_success 'git fsck correctly identifies good and bad bitmaps' '
++	git init valid &&
++	test_when_finished rm -rf valid &&
++
++	test_commit_bulk 20 &&
++	git repack -adbf &&
++
++	# Move pack-bitmap aside so it is not deleted
++	# in next repack.
++	packbitmap=$(ls .git/objects/pack/pack-*.bitmap) &&
++	mv "$packbitmap" "$packbitmap.bak" &&
++
++	test_commit_bulk 10 &&
++	git repack -b --write-midx &&
++	midxbitmap=$(ls .git/objects/pack/multi-pack-index-*.bitmap) &&
++
++	# Copy MIDX bitmap to backup. Copy pack bitmap from backup.
++	cp "$midxbitmap" "$midxbitmap.bak" &&
++	cp "$packbitmap.bak" "$packbitmap" &&
++
++	# fsck works at first
++	git fsck 2>err &&
++	test_must_be_empty err &&
++
++	corrupt_file "$packbitmap" &&
++	test_must_fail git fsck 2>err &&
++	grep "bitmap file '\''$packbitmap'\'' has invalid checksum" err &&
++
++	cp "$packbitmap.bak" "$packbitmap" &&
++	corrupt_file "$midxbitmap" &&
++	test_must_fail git fsck 2>err &&
++	grep "bitmap file '\''$midxbitmap'\'' has invalid checksum" err &&
++
++	corrupt_file "$packbitmap" &&
++	test_must_fail git fsck 2>err &&
++	grep "bitmap file '\''$midxbitmap'\'' has invalid checksum" err &&
++	grep "bitmap file '\''$packbitmap'\'' has invalid checksum" err
++'
++
+ test_done
 -- 
 gitgitgadget
+
