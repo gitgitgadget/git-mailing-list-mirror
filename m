@@ -2,107 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2ECFC77B78
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 21:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE3FC19F20
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 21:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbjEBVbf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 17:31:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35864 "EHLO
+        id S229808AbjEBVmE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 17:42:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjEBVbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 17:31:34 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 252BF1992
-        for <git@vger.kernel.org>; Tue,  2 May 2023 14:31:33 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id 46e09a7af769-6a8955b3462so1604046a34.2
-        for <git@vger.kernel.org>; Tue, 02 May 2023 14:31:33 -0700 (PDT)
+        with ESMTP id S229502AbjEBVmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 17:42:03 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A37D1724
+        for <git@vger.kernel.org>; Tue,  2 May 2023 14:42:02 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b87d23729so3137939b3a.0
+        for <git@vger.kernel.org>; Tue, 02 May 2023 14:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683063092; x=1685655092;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tDuYYBbnW8KGtDIUz0d4mz3E0G354Ehca1X9zmmuip8=;
-        b=DXLSEJ5GVZXB3Bs1YAiM7ePnJuFPfiZTLMgIGcZ5vAePKiZBeYn9+RLlbdp3GHRMVE
-         y0M1BgeVWxYAKEoLjnMaVBRaCzljg4E7zbEPjs9WTLKE5YXUv6reOwL381v+TZOkfNIJ
-         KoaG9StT3Qv7rp6UZXM0hxUWGwyKuIePgBBt2Ci5B0jTVuvJxLnA7FHhLxCDNLchtiND
-         ERDxtDNcwu7dTBW4gPk4I+pwazPVrQsPQNmI5rNlINNmupWOE/DtmuUfxaIQuJxK/AC2
-         GglKeEMf8pIpPp9K1mLmq+zX/PAHga+7Eu5cmP9/qdmzbB243sUQ4HEvEnouDoo+tw0p
-         9ufA==
+        d=gmail.com; s=20221208; t=1683063722; x=1685655722;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=izPIH5ZZD3W+BSxmMm4NqoHD3//zkbyJ6tE008AnJK4=;
+        b=UnsiwuhvssYImiUk905ewQRq5BKK3yMoqcgTvAurAQCt8CEx/lYYIr0/xcn8mDpc+X
+         +4XkpXtHDyPA77eEDFdtB05PGtJzZz0MDke5d2YR6LI2Ec7kMqcYoefroMF98CchesU9
+         IZh10F6aeN1H+OZ2rC4cLvGm3wB2JWDjvLgTD+QE6VVDOJR9FGwKwp7+JoxUQTS5O7HQ
+         hVynpZMYqvBkdCjF0VWef0de2XvoW3Jj1r+SWFjdTynoqkawrwPGNvUZDO5ipzan1O20
+         3+7OK1MnZOIIzDpl1qC6sPlCpfFItuGSfKxO7Hw/5ftRRInbm2vSaQmFJ+fi2rNL++jE
+         jUaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683063092; x=1685655092;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tDuYYBbnW8KGtDIUz0d4mz3E0G354Ehca1X9zmmuip8=;
-        b=Okw50dUgo3vkT+XenjU/B8jmgCzLL6/T8rdBTAtu7pB09+XAb6XdfaZn5U5WGFLECW
-         4DMxjdt9k2yaf99Eg4bbFau3aYigzGgmOkWTspbl0tLa03aYIhlx2XI3ygHDj2P0t7Ox
-         HFTeF5foZjm/PtYbmVFfzVHIjH0sgBld/lUXkiH8sg3Dhms75CB351SLL61/Ne6MvBMi
-         cg4oRLPOlXN8LyS/PeIZ14Uaqq9eFDA6dwpXyyYWrP7AFJbqDdYjKQEYuBKbApShLOn0
-         F79jZgxMr12EnBxZLnDRoDOkZEP4ZdAkduTtEcSWYq4qaQAL5Y16Ms84dIdNvCG0yEZb
-         RhEQ==
-X-Gm-Message-State: AC+VfDyxd8IdBA45zI18iW+lIkLE4oQX9/8tg9CxpqIR9NVZ5N8eevlJ
-        6QB4Ia0mUSi4/yum9rzQj0Y=
-X-Google-Smtp-Source: ACHHUZ6lfQfuLfMu0hd47zQti09Y3KZ5OS1ln8WDMMmpRmTeJjl+Mc77bUDXa0AjBfJqd1ibyiCdLg==
-X-Received: by 2002:a9d:6d06:0:b0:69f:578a:d1ea with SMTP id o6-20020a9d6d06000000b0069f578ad1eamr9540976otp.32.1683063092453;
-        Tue, 02 May 2023 14:31:32 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id p21-20020a9d76d5000000b006a3df644d31sm13254907otl.37.2023.05.02.14.31.31
+        d=1e100.net; s=20221208; t=1683063722; x=1685655722;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=izPIH5ZZD3W+BSxmMm4NqoHD3//zkbyJ6tE008AnJK4=;
+        b=d0p1ibiKU+21axXTZW505oFk8941romxbYQctkSiFencpYWx/cmv7uEPMbunvfXVF7
+         XXVEuvnnSu5aMQ1NIHemDGdGGVgB/YKAUGMSIjhAH8iEi9U4hzWnRvX/cEnKFynzV5UN
+         EGE7j1CyqawmWRdgEHeBVxZlGruse3ux7GcR99rsT2+pvboPGRNwqRaLczhOlwBVGIjf
+         dfKQN8HFHlbwG11GideScEarP9EmqxCuxccEz8SODpPzgTbJs72PoWyiiKBSEq/DNPSR
+         78v+UgTmnXbwGRigxQSuWwv3J+fvN1IFlk7+WgyZ3a3dsqr4DTAcyKXvFm99bKv5faON
+         JyGw==
+X-Gm-Message-State: AC+VfDxVr5EBajJBfJc07RwNjP8Wl9GExWtu+M2z2W27KOJesxJqRFmA
+        2jM4C3h9Mhbt083O0Mup+h0=
+X-Google-Smtp-Source: ACHHUZ4xFWbXmHwEFNK8pkz0jHFbZhcKJUPFP2w0kguG98ftSu69Vs8upkgy8/FYApddUmF7BHax2w==
+X-Received: by 2002:a05:6a00:1791:b0:63a:ece0:48d0 with SMTP id s17-20020a056a00179100b0063aece048d0mr26062250pfg.28.1683063722067;
+        Tue, 02 May 2023 14:42:02 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id fc9-20020a056a002e0900b0062e63cdfcb6sm23000819pfb.94.2023.05.02.14.42.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 14:31:31 -0700 (PDT)
-Date:   Tue, 02 May 2023 15:31:31 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Message-ID: <64518133eea7_200ae2948a@chronos.notmuch>
-In-Reply-To: <xmqqh6t3ztee.fsf@gitster.g>
-References: <cover.1682380788.git.me@ttaylorr.com>
- <91ed8c70f22dd2c47c60d650323579fc42cc7f2d.1682380788.git.me@ttaylorr.com>
- <xmqqh6t3ztee.fsf@gitster.g>
-Subject: Re: [PATCH 3/3] pack-bitmap.c: use commit boundary during bitmap
- traversal
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Tue, 02 May 2023 14:42:01 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, newren@gmail.com
+Subject: Re: [PATCH 1/6] abspath: move related functions to abspath
+References: <20230502211454.1673000-1-calvinwan@google.com>
+        <20230502211454.1673000-2-calvinwan@google.com>
+Date:   Tue, 02 May 2023 14:42:01 -0700
+In-Reply-To: <20230502211454.1673000-2-calvinwan@google.com> (Calvin Wan's
+        message of "Tue, 2 May 2023 21:14:49 +0000")
+Message-ID: <xmqq7ctqz9zq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Calvin Wan <calvinwan@google.com> writes:
 
-> > Relaxing the bitmap traversal to allow it to produce over-counted
-> > results gives us the opportunity to make some significant improvements.
-> > Instead of the above, the new algorithm only has to walk from the
-> > *boundary* down to the nearest bitmap, instead of from each of the
-> > UNINTERESTING tips.
-> 
-> Is it only me, or are all readers equally confused by the use of
-> the term "boundary" that hasn't been given any definition?
-> 
-> > And is more-or-less equivalent to using the *old* algorithm with this
-> > invocation:
-> >
-> >     $ git rev-list --objects --boundary $WANTS --not $HAVES |
-> 
-> It is especially confusing because the "--boundary" (at least as I
-> originally had invented it), i.e. a commit that is smudged with
-> UNINTERESTING bit, whose parent we did not bother to dig further to
-> paint with the same UNINTERESTING bit, is not something we start our
-> computation with; it is something we learn _after_ completing the
-> history traversing.  So I am utterly confused X-<.
+> Move abspath-related functions from strbuf.[ch] to abspath.[ch] since
+> they do not belong in a low-level library.
 
-I don't know if it's the case, but in my mind all the `--not $HAVES` are
-boundaries. Some of these might be overshadowed by another boundary higher up
-in the topology and thus not shown, so in a sense are "uninteresting
-boundaries".
+Given a relative path and turning it into absolute is still
+low-level enough, but that apparently is not what you meant.
 
-Perhaps because you invented `--boundary` you think a "boundary" is only an
-interesting boundary which must be computed, and all the other are not true
-boundaries.
+It would be nice to define what you mean by "low-level" here, and
+update the comments at the beginning of <strbuf.h> with that
+definition.
 
-Cheers.
+I think what you are trying to do is to move anything that does more
+than straight string manipulation out of "strbuf.c"; roughly, things
+that have system dependencies that are more than malloc/realloc.
 
--- 
-Felipe Contreras
+For this particular step, I think it is a natural thing to move a
+function that computes an absolute version of a given path to
+abspath.[ch] that already exists.  The same goes for its realpath
+counterpart.
