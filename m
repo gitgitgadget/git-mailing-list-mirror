@@ -2,142 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9984FC77B73
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 15:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D01BAC77B7E
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 15:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234553AbjEBPqK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 11:46:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55182 "EHLO
+        id S234465AbjEBPv1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 11:51:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234377AbjEBPqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 11:46:09 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033403586
-        for <git@vger.kernel.org>; Tue,  2 May 2023 08:46:03 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id 5614622812f47-38e3a1a07c8so2420477b6e.0
-        for <git@vger.kernel.org>; Tue, 02 May 2023 08:46:03 -0700 (PDT)
+        with ESMTP id S234610AbjEBPvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 11:51:23 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5279F35A9
+        for <git@vger.kernel.org>; Tue,  2 May 2023 08:51:18 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-24e01ba9e03so1757871a91.1
+        for <git@vger.kernel.org>; Tue, 02 May 2023 08:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683042363; x=1685634363;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OJeeXhU+FllpWaKheXG8tnxgJNmcHHbYrRVyxwDVp48=;
-        b=E62PdpYIv8nye4/I7rRUzCjfwCFzvpmlNMriMwuZoUAkf7fc1t0QOAyzILWqc0IZ6J
-         +lSIQ+m6jZ3sqRoAHpPzprxL9jZEdzzPwIGuwyvA16vuAgUPyxl2PzVBAEU7ZpBsagb7
-         c/mr4BE1mHh5vwXLI2NiESiC6ZnXcev8pHY40QYUeOzzBznykUZ4Tp4+TUruZt8ZyKuO
-         puFek6ws+blIgU8+I4pLe6RdnLGitCNGV1OBm9KJ+iU4NTl2u8D3Ew/fjv/mDBtNo/nL
-         lWoxUF//lD6I3wPvu8Vcx29uGysRylKAh4wIYkrj+y5gn0NwudFfqnNpnF5siIeo/HO7
-         t2rg==
+        d=gmail.com; s=20221208; t=1683042678; x=1685634678;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LAUe6Z0aP/bdHf5O107LHPsXsr9y2nyNnCuCDO7tZ9c=;
+        b=OpdzjQFh8bCxDMWB+/qHsltgzm6joaiWbzRa9cDH75xveyK4trwo0raXkpklF1c9wo
+         JIDxMX4GwvxfR7pfIb0SN1Hg7d3DbOtCYt2yqlMsFoHuit+jeZfap8cNECUSilYxD7v3
+         XesM1IzN39kpZJY8gvF7LpJHPJ1pO/mczBEfDkk+Kkg9HTsMEAOgzdaDaoFX5ThmWfdW
+         Y9gGXpxR6sz07i0UoqUQG/UAJOHy8e6WBvgpC4dfHw7Vx3VxgPa95OH5+6DjpXIJ8C2g
+         1luEflsTFQO0UNnXQJbAVPfy2PUD4lJ+O8HGUFC+6VJL6mkuf0UkIewn0u4APqlSeBCL
+         A9gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683042363; x=1685634363;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OJeeXhU+FllpWaKheXG8tnxgJNmcHHbYrRVyxwDVp48=;
-        b=Oug9Moo7+HPg2W51qfP2du6RdUYAUI+WoFf+N9G/lHZ+DoPYmmPwdu4AD06zDTtabA
-         igzJ6OVj36cBP2UGLUHg5WTyjZlvjphaObKL+9QgtO2SllyOkElbk2WH5BI5mbxjPaA7
-         uWZQ8yH4/+W0PUc4gaDu/4Qf3CiFG/+yXhdHEXGAeThjghaGpIY0Koha+JIB/pjV9HlF
-         SN2YrWTvXdruVqpoFiNnQnk5ZDoo7pjl8AQ20oie76WXgMa5WWYUJVMp4/hulvYAuS6a
-         fvkPTR6c9wTv0UwFmYssejTbHvwjrYcHhO1hKwjzKZhQx4jo837CVMr9IRmhBG8kKZjF
-         Jdqg==
-X-Gm-Message-State: AC+VfDyD1Dck47fbBNEtmyHrpLlB+Ij3OV1eJQX/uJPnaNoiqYU6IpvX
-        WyfBSsjJRBIQ3wZ8pqWAkF53GoHP1Ow=
-X-Google-Smtp-Source: ACHHUZ7vfNlJk2S1IOCyNy7Pyof/cDmgmSHR31emJ3n+Mqfd9kAMyTnvX1PvC47whrXVhh1rSR24Tw==
-X-Received: by 2002:aca:1001:0:b0:38e:63aa:b5bb with SMTP id 1-20020aca1001000000b0038e63aab5bbmr7624627oiq.40.1683042363214;
-        Tue, 02 May 2023 08:46:03 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id ay13-20020a056808300d00b0038e086c764dsm12283112oib.43.2023.05.02.08.46.02
+        d=1e100.net; s=20221208; t=1683042678; x=1685634678;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LAUe6Z0aP/bdHf5O107LHPsXsr9y2nyNnCuCDO7tZ9c=;
+        b=PzU6vPzo9hD7Sg3Ay0GVXNfnUbEoZWv/EE81j0ioYbwApQxwcZaIAIVs59HAg9DAYI
+         z5uwouanWCgzT2FYAIGoWdGk0sfWXVqPFPjjbpvlyhAy1YNbNR9aPD+awtw/+MansiE4
+         NHHqNJ3gUQYKCpsJOyA+RLiS+jh6EJ4PQXXNqaggT9x9+fwRvAE+XBvnCunj8OIgSUEy
+         08HRqR/a3JGlSfeG3rsreyrtsh4Rx1k+XJb3M0tN4mLATZTv5M3CI33g57nQ8BwuexbV
+         GOEDYVxazaI7sR6wlAJSN6Yev/xuSRV0WuXbp9EzEgv8hoiau06Wp3ufbXrduBeOibkd
+         3NiQ==
+X-Gm-Message-State: AC+VfDyznZHu0MlN+wZLL2Et0dd7byMDlU+DtUr4YVqk6i3p6KjLwYFZ
+        lrnTz/mjH5BE0aUUWfQ6EzoQqH4Q+LA=
+X-Google-Smtp-Source: ACHHUZ5Blu2QbXr3Nl/irqqPahGz55tMvA+yddZS0QytvRxZyuvcWjiTf4HfhyNrjN04zi44U0SJWw==
+X-Received: by 2002:a17:90a:644b:b0:246:5f9e:e4cf with SMTP id y11-20020a17090a644b00b002465f9ee4cfmr18138972pjm.43.1683042677591;
+        Tue, 02 May 2023 08:51:17 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id t1-20020a170902e84100b001ab0aec388bsm1645606plg.135.2023.05.02.08.51.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 08:46:02 -0700 (PDT)
-Date:   Tue, 02 May 2023 09:46:01 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Calvin Wan <calvinwan@google.com>, phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org
-Message-ID: <64513039b4f8b_1ba2d2948c@chronos.notmuch>
-In-Reply-To: <CAFySSZCQfeGnrMPKHwsrT+UvaH_+t=nGhUPUtdVuijOmrrWejA@mail.gmail.com>
-References: <20230427175007.902278-1-calvinwan@google.com>
- <20230427175007.902278-2-calvinwan@google.com>
- <afd3e80f-99d9-7472-36e7-335f86263d09@gmail.com>
- <CAFySSZCQfeGnrMPKHwsrT+UvaH_+t=nGhUPUtdVuijOmrrWejA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] Add C TAP harness
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Tue, 02 May 2023 08:51:17 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Han Xin <hanxin.hx@bytedance.com>, git@vger.kernel.org,
+        xingxin.xx@bytedance.com, jonathantanmy@google.com
+Subject: Re: [PATCH v2 0/2] negotiator/default: avoid stack overflow
+References: <cover.1682473718.git.hanxin.hx@bytedance.com>
+        <cover.1682513384.git.hanxin.hx@bytedance.com>
+        <xmqqildb3dnn.fsf@gitster.g>
+        <9ad5f246-e21f-0a13-1a53-1ae3307c3f0e@github.com>
+Date:   Tue, 02 May 2023 08:51:16 -0700
+In-Reply-To: <9ad5f246-e21f-0a13-1a53-1ae3307c3f0e@github.com> (Derrick
+        Stolee's message of "Mon, 1 May 2023 21:49:14 -0400")
+Message-ID: <xmqqv8ha20ln.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan wrote:
-> On Thu, Apr 27, 2023 at 1:15=E2=80=AFPM Phillip Wood <phillip.wood123@g=
-mail.com> wrote:
-> >
-> > Hi Calvin
-> >
-> > On 27/04/2023 18:50, Calvin Wan wrote:
-> > > Introduces the C TAP harness from https://github.com/rra/c-tap-harn=
-ess/
-> > >
-> > > There is also more complete documentation at
-> > > https://www.eyrie.org/~eagle/software/c-tap-harness/
-> >
-> > I'm afraid this reply is rather briefer than I'd like but I'm short o=
-f
-> > time and about to go off-list for a couple of weeks. My ideal unit te=
-st
-> > library would
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> >   - allow named tests (this maybe more trouble that it is worth as I
-> >     think it inevitably leads to more boilerplate code calling the na=
-med
-> >     tests)
-> =
+>>> Changes since v2:
+>>> * Rewrite the commit link in the typical format.
+>>> * Fix the incorrect check for the COMMON bit introduced in v2.
+>> 
+>> I see Derrick pointed out a logic error during the review of v2 and
+>> this round corrects it.  Is everybody happy with this iteration and
+>> considers it safe to merge it to 'next'?
+>
+> Sorry for the lack of confirmation on that. I do think the v3
+> patches are good (the cover letter says v2).
 
-> I'm not quite sure what you're referring to with "named tests". Could
-> you clarify (possibly with an example)?
-
-Many test frameworks have a way of specifying a name for a test case, for=
-
-example in JavaScript's QUnit:
-
-  test('basic test case', t =3D> {
-    t.is('actual', 'expected');
-  });
-
-In this case "basic test case" is the name of the test case.
-
-In git's testing framework:
-
-  test_expect_success 'basic test case' '
-    echo actual > actual &&
-    echo expected > expected &&
-    test_cmp actual expected
-  '
-
-When running this test case the TAP output would be:
-
-  ok 1 - basic test case
-
-Other testing frameworks report on a per-assertion basis, for example Per=
-l's
-Test::More:
-
-  is('actual', 'expected', 'assertion check');
-
-These are more like named assertions rather than named test cases.
-
-The example of what you proposed shows:
-
-  ok(unit_test(), "unit test runs successfully");
-
-Which is similar to Test::More, so it seems it runs on a concept of asser=
-tions
-rather than test cases.
-
-That's what I presume Phillip meant.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+Thanks.  Will mark the topic for 'next', then.
