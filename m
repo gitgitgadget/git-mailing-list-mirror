@@ -2,115 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CA22C77B73
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 09:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75930C77B7E
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 09:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233396AbjEBJi5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 05:38:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41354 "EHLO
+        id S233128AbjEBJrx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 05:47:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232402AbjEBJiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 05:38:54 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33EC94C08
-        for <git@vger.kernel.org>; Tue,  2 May 2023 02:38:53 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5083bd8e226so5436318a12.3
-        for <git@vger.kernel.org>; Tue, 02 May 2023 02:38:53 -0700 (PDT)
+        with ESMTP id S229601AbjEBJrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 05:47:52 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385354C29
+        for <git@vger.kernel.org>; Tue,  2 May 2023 02:47:51 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-63b781c9787so1065122b3a.1
+        for <git@vger.kernel.org>; Tue, 02 May 2023 02:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683020331; x=1685612331;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nx+RIHZu+mefitefJiCIGeVXU4wTpy+RTLCJAQRmkso=;
-        b=RRx8aiVl6nW9IXA3dGLX776+M11+uq4iITxHgi1T+FDeO7zYAFHgO097AAW/Fclnmi
-         DFWT9tlcq2bt9O/Trz3uDntsHu0XT9H3OuutZtFM0bkAVxVXpN/XYaGAwAEfyVRFBcIP
-         B7Tji/9bzlcFAYGJPIL7y5/fj8D4BctCSzAUbKoPV436+l8zHZuQqzHLk0QmQw/9oDqe
-         jkn43jNJ6T/32DuqUiVR7SMS4/hnZq+lBTIWKg0iOlcQRCry+uU9E8VTMr3IVvHH/L5z
-         UjsUT1DUpxcUXMmWOJ2WFb6xaoJIBcTpm4eX8DUQKsZBRSgEWturMDGPnirSo72O8SMx
-         DwJA==
+        d=gmail.com; s=20221208; t=1683020870; x=1685612870;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=roiKtdcrYB77vTVolVXggwJpyK8B3mJg6Kud7H3yUT0=;
+        b=YjDnozY54yj9ssxmBrk7e7d8JMGBNf9DoTX+IEII+YMo9VA2aHle2A794Ifoay3yl6
+         +9ZPrXhCH1z88LvUs0T37P4aXnRs1JYUFJhDX4LFz1lKxMr+sGiP3xTUQYEq8wBc4Pw1
+         XQDP46t2Wx1M87bybMNysl/0z6u+qflzmFoOqXaPEDaK6oaJDbeQS1f/xLifEYkreVe/
+         F2FcdXsTL9vJtjz8XMQ0B1+iIB68aQxUavUcAROEQR2IAZZXnMZVbu+LcHUud40iMiPa
+         DrpF2W1ydlF0rF67gXUcSMVIMCFMSIBoFN/wLUoq2NucDbuXd/MO2E+yveUx0ElqHlLN
+         tJTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683020331; x=1685612331;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nx+RIHZu+mefitefJiCIGeVXU4wTpy+RTLCJAQRmkso=;
-        b=SiDpieL1JDfQkRRtq9n3/k+lFBJDzc8lv5dFFa31t/6xqSRTyQAiQ4hXWo4z746fSX
-         h6+COfxAJAEmQbb73zqvCFGWNrbtl8zB+k506p+vFLvgSDFNvLcdo6LIJNO+bWwHxjEn
-         sLu5iAkbYt990mx86eVq9IUKnPJVT/0xzIgINwtd+1nxNi2SqwV/ECgXfRkxAzF53rG1
-         +viRwN9cIdqeDoXq5J6CyRaEX71/HpyOF3kVscv+jiJGeZSWd+uC4pjohvjQsfVHn1mM
-         5B+s9fG4PtBTtjqzcN2iPF8/O0F22ya/pekZjLGSf/TVp0urDAtgNqN1oZeM68ScPCSm
-         tWHQ==
-X-Gm-Message-State: AC+VfDxu932jjdxIxxfzm5zQGEZpAPAc5eOOX+jEwiwVH/DfxuIXJCPL
-        D3vURHluqb655JZljdF+BtcONIVC/qn22weu8rM=
-X-Google-Smtp-Source: ACHHUZ7g1JMPjK0pj4L5oqWsQajUjWIB8Ue2GFhUddnPV4t3+PZUs5RHsQSYfQfiKc08qXAsaXgduAXimZ27ibw2J4M=
-X-Received: by 2002:aa7:cd86:0:b0:506:b228:7b08 with SMTP id
- x6-20020aa7cd86000000b00506b2287b08mr8846714edv.17.1683020331455; Tue, 02 May
- 2023 02:38:51 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683020870; x=1685612870;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=roiKtdcrYB77vTVolVXggwJpyK8B3mJg6Kud7H3yUT0=;
+        b=MOy9NYm2kQImh6xb67VuSAYqiNVgUPDAKzA0bKCI72VQl0op71GYD0bwheJEhEJdft
+         je7+SZQR6RdvXEwPwPw7EMo79lVewihCJhlx90MNuapeOiSHIqNEkdRYzjKUwZ3/49VM
+         8fma/2DPmsCBAHI2l3hhnEbvouB8uastOA8qvjR767wCzsih71r0L+d+HQMqal62O5oc
+         Dhro8wCVKxGkR5RuFiQmz5TXton4m1PjYFKOSBYEwKA5mObda15J98ZtMHrKaMTx5gOR
+         3GbSjNRyuQdlmdGUvxeEB0XvrEFzueT+75w12EbbGoJAjuyvjznqTuX0jXvPzpJ3L/UI
+         k4WQ==
+X-Gm-Message-State: AC+VfDyxc3o4hCj91Xkyx9sna25UmJw39TzFkL5oMXUCLZPZw8oxsVH0
+        Z+1QmEegzpJKEcjuI6Lrlw8=
+X-Google-Smtp-Source: ACHHUZ5tEuI0L6hqdk63VhnmCnLyszzundRXAa/sXhL8XhhtJmDvx4RkDMcZqSq3Q4z9+N3GjUZ9Dg==
+X-Received: by 2002:a05:6a20:7f8d:b0:e8:dcca:d9cb with SMTP id d13-20020a056a207f8d00b000e8dccad9cbmr2665327pzj.5.1683020870483;
+        Tue, 02 May 2023 02:47:50 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4072:6c01:39e1:cd79:39bc:8518:eed0])
+        by smtp.gmail.com with ESMTPSA id m9-20020a629409000000b00639eae8816asm21324210pfe.130.2023.05.02.02.47.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 May 2023 02:47:49 -0700 (PDT)
+From:   Raghul Nanth A <nanth.raghul@gmail.com>
+To:     cheskaqiqi@gmail.com
+Cc:     derrickstolee@github.com, git@vger.kernel.org, gitster@pobox.com,
+        vdye@github.com, Raghul Nanth A <nanth.raghul@gmail.com>
+Subject: [GSOC] diff-index: enable sparse index
+Date:   Tue,  2 May 2023 15:16:58 +0530
+Message-Id: <20230502094658.608646-1-nanth.raghul@gmail.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230422212500.476955-1-cheskaqiqi@gmail.com>
+References: <20230422212500.476955-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
-References: <pull.1477.git.git.1679729956620.gitgitgadget@gmail.com>
- <35e1ebe6-e15b-1712-f030-70ab708740db@gmx.de> <CAGJzqs=D8hmcxJKGCcz-NqEQ+QDYgi_aO02fj59kQoHZgiW3OQ@mail.gmail.com>
- <xmqqa5yn3d0k.fsf@gitster.g>
-In-Reply-To: <xmqqa5yn3d0k.fsf@gitster.g>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Tue, 2 May 2023 10:38:15 +0100
-Message-ID: <CAGJzqsm4LmpYE46v2=y4=A+Och44zaQyzTXQRteX-KNSzA_18g@mail.gmail.com>
-Subject: Re: [PATCH] credential/wincred: store password_expiry_utc
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     M Hickford <mirth.hickford@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "Johannes Sixt [ ]" <j6t@kdbg.org>,
-        "Harshil Jani [ ]" <harshiljani2002@gmail.com>,
-        =?UTF-8?B?SmFrdWIgQmVyZcW8YcWEc2tp?= <kuba@berezanscy.pl>,
-        Karsten Blees <blees@dcon.de>,
-        Erik Faye-Lund <kusmabite@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 1 May 2023 at 23:25, Junio C Hamano <gitster@pobox.com> wrote:
->
-> M Hickford <mirth.hickford@gmail.com> writes:
->
-> > Thanks Johannes for the review and the fix. I'll include it in any patch v2.
-> >
-> >> But I have to wonder: why even bother with `git-wincred`? This credential
-> >> helper is so ridiculously limited in its capabilities, it does not even
-> >> support any host that is remotely close to safe (no 2FA, no OAuth, just
-> >> passwords). So I would be just as happy if I weren't asked to spend my
-> >> time to review changes to a credential helper I'd much rather see retired
-> >> than actively worked on.
-> >
-> > git-credential-wincred has the same capabilities as popular helpers
-> > git-credential-cache, git-credential-store, git-credential-osxkeychain
-> > and git-credential-libsecret. Any of which can store OAuth credentials
-> > generated by a helper such as git-credential-oauth [1]. This is
-> > compatible with 2FA (any 2FA happens in browser). Example config:
-> >
-> >     [credential]
-> >         helper = wincred
-> >         helper = oauth
-> >
-> > This patch to store password_expiry_utc is necessary to avoid Git
-> > trying to use OAuth credentials beyond expiry. See
-> > https://github.com/git/git/commit/d208bfdfef97a1e8fb746763b5057e0ad91e283b
-> > for background (I'll add to commit message v2).
->
-> So, even though earlier Dscho sounded negative on extending wincred
-> helper, are we now on track of enhancing its capabilities?  The v3
-> is now queued in my tree and nobody who knows Windows seem to have
-> made any comments on either v2 or v3---I am wondering if the lack
-> of comments is a good news or no interest.
->
-> Thanks.
+Hey,
+  Thanks for the info. Your explanations make sense and I will make the appropriate changes. I had two questions I had two questions regarding this: 
+  I have been trying to base my changes off the 'sl/diff-files-sparse' branch, but I am not sure how I would go about doing that. I thought I would be just pulling changes from some remote repo but I couldn't find one. So, could you let me know how I could do that?
+  Also, I don't seem to have been CC'd on this email. Just wanted to point that out, so that I don't accidentally miss conversations.
 
-Thanks to Johannes's fixes for v1, the latest patch should be correct,
-but it would be prudent to wait for a Windows user to test.
-
-The utility of storing password_expiry_utc is universal to all
-credential helpers. The latest commit message references the
-introduction of this attribute
-(d208bfdfef97a1e8fb746763b5057e0ad91e283b) for background. I repeat
-the arguments in [1], I hope they are persuasive.
-
-[1] https://lore.kernel.org/git/CAGJzqs=D8hmcxJKGCcz-NqEQ+QDYgi_aO02fj59kQoHZgiW3OQ@mail.gmail.com/
+Thanks,
+Raghul
