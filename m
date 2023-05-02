@@ -2,73 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75930C77B7E
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 09:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86A87C77B7E
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 10:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233128AbjEBJrx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 05:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44546 "EHLO
+        id S233772AbjEBKTX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 06:19:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjEBJrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 05:47:52 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385354C29
-        for <git@vger.kernel.org>; Tue,  2 May 2023 02:47:51 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-63b781c9787so1065122b3a.1
-        for <git@vger.kernel.org>; Tue, 02 May 2023 02:47:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683020870; x=1685612870;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=roiKtdcrYB77vTVolVXggwJpyK8B3mJg6Kud7H3yUT0=;
-        b=YjDnozY54yj9ssxmBrk7e7d8JMGBNf9DoTX+IEII+YMo9VA2aHle2A794Ifoay3yl6
-         +9ZPrXhCH1z88LvUs0T37P4aXnRs1JYUFJhDX4LFz1lKxMr+sGiP3xTUQYEq8wBc4Pw1
-         XQDP46t2Wx1M87bybMNysl/0z6u+qflzmFoOqXaPEDaK6oaJDbeQS1f/xLifEYkreVe/
-         F2FcdXsTL9vJtjz8XMQ0B1+iIB68aQxUavUcAROEQR2IAZZXnMZVbu+LcHUud40iMiPa
-         DrpF2W1ydlF0rF67gXUcSMVIMCFMSIBoFN/wLUoq2NucDbuXd/MO2E+yveUx0ElqHlLN
-         tJTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683020870; x=1685612870;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=roiKtdcrYB77vTVolVXggwJpyK8B3mJg6Kud7H3yUT0=;
-        b=MOy9NYm2kQImh6xb67VuSAYqiNVgUPDAKzA0bKCI72VQl0op71GYD0bwheJEhEJdft
-         je7+SZQR6RdvXEwPwPw7EMo79lVewihCJhlx90MNuapeOiSHIqNEkdRYzjKUwZ3/49VM
-         8fma/2DPmsCBAHI2l3hhnEbvouB8uastOA8qvjR767wCzsih71r0L+d+HQMqal62O5oc
-         Dhro8wCVKxGkR5RuFiQmz5TXton4m1PjYFKOSBYEwKA5mObda15J98ZtMHrKaMTx5gOR
-         3GbSjNRyuQdlmdGUvxeEB0XvrEFzueT+75w12EbbGoJAjuyvjznqTuX0jXvPzpJ3L/UI
-         k4WQ==
-X-Gm-Message-State: AC+VfDyxc3o4hCj91Xkyx9sna25UmJw39TzFkL5oMXUCLZPZw8oxsVH0
-        Z+1QmEegzpJKEcjuI6Lrlw8=
-X-Google-Smtp-Source: ACHHUZ5tEuI0L6hqdk63VhnmCnLyszzundRXAa/sXhL8XhhtJmDvx4RkDMcZqSq3Q4z9+N3GjUZ9Dg==
-X-Received: by 2002:a05:6a20:7f8d:b0:e8:dcca:d9cb with SMTP id d13-20020a056a207f8d00b000e8dccad9cbmr2665327pzj.5.1683020870483;
-        Tue, 02 May 2023 02:47:50 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:6c01:39e1:cd79:39bc:8518:eed0])
-        by smtp.gmail.com with ESMTPSA id m9-20020a629409000000b00639eae8816asm21324210pfe.130.2023.05.02.02.47.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 02:47:49 -0700 (PDT)
-From:   Raghul Nanth A <nanth.raghul@gmail.com>
-To:     cheskaqiqi@gmail.com
-Cc:     derrickstolee@github.com, git@vger.kernel.org, gitster@pobox.com,
-        vdye@github.com, Raghul Nanth A <nanth.raghul@gmail.com>
-Subject: [GSOC] diff-index: enable sparse index
-Date:   Tue,  2 May 2023 15:16:58 +0530
-Message-Id: <20230502094658.608646-1-nanth.raghul@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230422212500.476955-1-cheskaqiqi@gmail.com>
-References: <20230422212500.476955-1-cheskaqiqi@gmail.com>
+        with ESMTP id S233797AbjEBKTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 06:19:00 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D60A5270
+        for <git@vger.kernel.org>; Tue,  2 May 2023 03:18:57 -0700 (PDT)
+Received: (qmail 24894 invoked by uid 109); 2 May 2023 10:18:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 May 2023 10:18:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9281 invoked by uid 111); 2 May 2023 10:18:55 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 May 2023 06:18:55 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 2 May 2023 06:18:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
+Message-ID: <20230502101854.GA1180695@coredump.intra.peff.net>
+References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
+ <20230418070048.2209469-2-felipe.contreras@gmail.com>
+ <xmqq8ren8xz1.fsf@gitster.g>
+ <644684018a766_aba29424@chronos.notmuch>
+ <xmqq8reg96cu.fsf@gitster.g>
+ <20230425061029.GA4015844@coredump.intra.peff.net>
+ <644af29c8526c_7f4f2945f@chronos.notmuch>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <644af29c8526c_7f4f2945f@chronos.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey,
-  Thanks for the info. Your explanations make sense and I will make the appropriate changes. I had two questions I had two questions regarding this: 
-  I have been trying to base my changes off the 'sl/diff-files-sparse' branch, but I am not sure how I would go about doing that. I thought I would be just pulling changes from some remote repo but I couldn't find one. So, could you let me know how I could do that?
-  Also, I don't seem to have been CC'd on this email. Just wanted to point that out, so that I don't accidentally miss conversations.
+On Thu, Apr 27, 2023 at 04:09:32PM -0600, Felipe Contreras wrote:
 
-Thanks,
-Raghul
+> > Using just a blank line between the code block and the call-out list
+> > (instead of the "+") works for asciidoc (it is happy to keep the two
+> > together) but not asciidoctor (it ends the outer ordered list before
+> > starting the callout list).
+> 
+> I don't know what you mean.
+
+For reference, I meant this:
+
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 6bb32ab460..ed32497290 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -529,7 +529,7 @@ $ git checkout master~2 Makefile  <2>
+ $ rm -f hello.c
+ $ git checkout hello.c            <3>
+ ------------
+-+
++
+ <1> switch branch
+ <2> take a file out of another commit
+ <3> restore `hello.c` from the index
+
+which asciidoc renders the same, but asciidoctor is not.
+
+Your patch is now in master removing the line entirely, though, so the
+point is moot.
+
+-Peff
