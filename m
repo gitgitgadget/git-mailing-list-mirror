@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FDEDC77B7E
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 15:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9984FC77B73
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 15:46:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233978AbjEBP2x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 11:28:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45954 "EHLO
+        id S234553AbjEBPqK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 11:46:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233981AbjEBP2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 11:28:51 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07226421C
-        for <git@vger.kernel.org>; Tue,  2 May 2023 08:28:18 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id 5614622812f47-38e27409542so2849260b6e.0
-        for <git@vger.kernel.org>; Tue, 02 May 2023 08:28:17 -0700 (PDT)
+        with ESMTP id S234377AbjEBPqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 11:46:09 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033403586
+        for <git@vger.kernel.org>; Tue,  2 May 2023 08:46:03 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id 5614622812f47-38e3a1a07c8so2420477b6e.0
+        for <git@vger.kernel.org>; Tue, 02 May 2023 08:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683041293; x=1685633293;
+        d=gmail.com; s=20221208; t=1683042363; x=1685634363;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=68V/zO/l5fJooUoqowW+VsVAR+OaS1zFy1ec4Jl8YeQ=;
-        b=PtoC8he4083kL1N2pqpkvcrR7g4o5pyXd9RXfK8U2Y4F6gcRkO1nnc1/5NzSmxy5ay
-         FUQXiBkKEAVye3MoeUP18WtjYYWXbUvfj2g7pF9/NdVhkJeiCrpEr9BcMliR/EsRJzbo
-         YY1rNXJKgH8fOrLnn1cobS4k8S+3wZxSpshr1VGUCDAxg9iIHbaJr5K6PoOiiu9SGbgL
-         gsM54O7wN9SSEGlqg63Zyu4csudKeHCu5Cm9jZ4MvmesVR3nza+o/ZwBDOe0wi7cN5Qr
-         6XpFS3mX//cMKTwcmjyzVYwTZcCc8zARodND4rK1ohWudND01yIN/rgQt3MSPBe5hfj2
-         ZVRA==
+        bh=OJeeXhU+FllpWaKheXG8tnxgJNmcHHbYrRVyxwDVp48=;
+        b=E62PdpYIv8nye4/I7rRUzCjfwCFzvpmlNMriMwuZoUAkf7fc1t0QOAyzILWqc0IZ6J
+         +lSIQ+m6jZ3sqRoAHpPzprxL9jZEdzzPwIGuwyvA16vuAgUPyxl2PzVBAEU7ZpBsagb7
+         c/mr4BE1mHh5vwXLI2NiESiC6ZnXcev8pHY40QYUeOzzBznykUZ4Tp4+TUruZt8ZyKuO
+         puFek6ws+blIgU8+I4pLe6RdnLGitCNGV1OBm9KJ+iU4NTl2u8D3Ew/fjv/mDBtNo/nL
+         lWoxUF//lD6I3wPvu8Vcx29uGysRylKAh4wIYkrj+y5gn0NwudFfqnNpnF5siIeo/HO7
+         t2rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683041293; x=1685633293;
+        d=1e100.net; s=20221208; t=1683042363; x=1685634363;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=68V/zO/l5fJooUoqowW+VsVAR+OaS1zFy1ec4Jl8YeQ=;
-        b=HYEPcGbt70cGxmyoY2CPHUXV6xBBeF1iGCJ7lqmiUMW6If0rXiMORf3qxdicantLTf
-         QjuqZCGkRCUBGZ7H8dYQRaPUFHaUdWQKol+J2EBMtkO9JZ5T11atZBbXIQ74QaZ9s4OY
-         23CT2bRIER9xoebjZxWSrRhIPgCd94+CyMphXL56/T1v7/ThXBe+mJy5Vv0g/+Nfhqne
-         ebZs7O4VKwrXFJ3HbV5wESIMsMyFBrdRjC9jOIfG9jUFhxWJQMoM/lkkwGDz8PODGNDj
-         Syw/dN7Mri+WWmVti3w2McemyqDD21N1PExbOf+nE9Q7dy7lJvvMf18lvMIyKrgT100D
-         tZ4Q==
-X-Gm-Message-State: AC+VfDyj3tCw2nnz48oly7ayF09qhTwahel3oshUsk6k/9E6g5znWFTS
-        Q8UL2AazUdib6g7BZHF0XFBo3MVAr2k=
-X-Google-Smtp-Source: ACHHUZ5lUt0cYc+GWzjU7/6vNpg7LEerYC5LnUr3i/ODKhax4GDV2CQ4PfdILSUrdPyTYQMgQ4jvkA==
-X-Received: by 2002:a05:6808:2816:b0:390:8250:c87c with SMTP id et22-20020a056808281600b003908250c87cmr7851223oib.29.1683041292868;
-        Tue, 02 May 2023 08:28:12 -0700 (PDT)
+        bh=OJeeXhU+FllpWaKheXG8tnxgJNmcHHbYrRVyxwDVp48=;
+        b=Oug9Moo7+HPg2W51qfP2du6RdUYAUI+WoFf+N9G/lHZ+DoPYmmPwdu4AD06zDTtabA
+         igzJ6OVj36cBP2UGLUHg5WTyjZlvjphaObKL+9QgtO2SllyOkElbk2WH5BI5mbxjPaA7
+         uWZQ8yH4/+W0PUc4gaDu/4Qf3CiFG/+yXhdHEXGAeThjghaGpIY0Koha+JIB/pjV9HlF
+         SN2YrWTvXdruVqpoFiNnQnk5ZDoo7pjl8AQ20oie76WXgMa5WWYUJVMp4/hulvYAuS6a
+         fvkPTR6c9wTv0UwFmYssejTbHvwjrYcHhO1hKwjzKZhQx4jo837CVMr9IRmhBG8kKZjF
+         Jdqg==
+X-Gm-Message-State: AC+VfDyD1Dck47fbBNEtmyHrpLlB+Ij3OV1eJQX/uJPnaNoiqYU6IpvX
+        WyfBSsjJRBIQ3wZ8pqWAkF53GoHP1Ow=
+X-Google-Smtp-Source: ACHHUZ7vfNlJk2S1IOCyNy7Pyof/cDmgmSHR31emJ3n+Mqfd9kAMyTnvX1PvC47whrXVhh1rSR24Tw==
+X-Received: by 2002:aca:1001:0:b0:38e:63aa:b5bb with SMTP id 1-20020aca1001000000b0038e63aab5bbmr7624627oiq.40.1683042363214;
+        Tue, 02 May 2023 08:46:03 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id ay13-20020a056808300d00b0038e086c764dsm12267557oib.43.2023.05.02.08.28.11
+        by smtp.gmail.com with ESMTPSA id ay13-20020a056808300d00b0038e086c764dsm12283112oib.43.2023.05.02.08.46.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 08:28:11 -0700 (PDT)
-Date:   Tue, 02 May 2023 09:28:11 -0600
+        Tue, 02 May 2023 08:46:02 -0700 (PDT)
+Date:   Tue, 02 May 2023 09:46:01 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Calvin Wan <calvinwan@google.com>
+To:     Calvin Wan <calvinwan@google.com>, phillip.wood@dunelm.org.uk
 Cc:     git@vger.kernel.org
-Message-ID: <64512c0b1237b_1ba2d29426@chronos.notmuch>
-In-Reply-To: <230502.861qjyj0cb.gmgdl@evledraar.gmail.com>
+Message-ID: <64513039b4f8b_1ba2d2948c@chronos.notmuch>
+In-Reply-To: <CAFySSZCQfeGnrMPKHwsrT+UvaH_+t=nGhUPUtdVuijOmrrWejA@mail.gmail.com>
 References: <20230427175007.902278-1-calvinwan@google.com>
- <230502.861qjyj0cb.gmgdl@evledraar.gmail.com>
-Subject: Re: [RFC PATCH 0/2] add an external testing library for unit tests
+ <20230427175007.902278-2-calvinwan@google.com>
+ <afd3e80f-99d9-7472-36e7-335f86263d09@gmail.com>
+ <CAFySSZCQfeGnrMPKHwsrT+UvaH_+t=nGhUPUtdVuijOmrrWejA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/2] Add C TAP harness
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -67,98 +68,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Calvin Wan wrote:
+> On Thu, Apr 27, 2023 at 1:15=E2=80=AFPM Phillip Wood <phillip.wood123@g=
+mail.com> wrote:
+> >
+> > Hi Calvin
+> >
+> > On 27/04/2023 18:50, Calvin Wan wrote:
+> > > Introduces the C TAP harness from https://github.com/rra/c-tap-harn=
+ess/
+> > >
+> > > There is also more complete documentation at
+> > > https://www.eyrie.org/~eagle/software/c-tap-harness/
+> >
+> > I'm afraid this reply is rather briefer than I'd like but I'm short o=
+f
+> > time and about to go off-list for a couple of weeks. My ideal unit te=
+st
+> > library would
 
-> We already have pure-C libraries that we add a really shim to unit test=
-,
-> the most extreme example of this is t0032-reftable-unittest.sh, whose
-> body is simply (excluding comments):
-> 	=
+> >   - allow named tests (this maybe more trouble that it is worth as I
+> >     think it inevitably leads to more boilerplate code calling the na=
+med
+> >     tests)
+> =
 
-> 	#!/bin/sh
-> 	test_description=3D'reftable unittests'
-> 	=
+> I'm not quite sure what you're referring to with "named tests". Could
+> you clarify (possibly with an example)?
 
-> 	TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> 	. ./test-lib.sh
-> 	=
+Many test frameworks have a way of specifying a name for a test case, for=
 
-> 	test_expect_success 'unittests' '
-> 		TMPDIR=3D$(pwd) && export TMPDIR &&
-> 		test-tool reftable
-> 	'
-> 	=
+example in JavaScript's QUnit:
 
-> 	test_done
+  test('basic test case', t =3D> {
+    t.is('actual', 'expected');
+  });
 
-Yeah, but an output of 'ok 1 - unittests' is not very useful, neither is =
-an
-output of 'not ok 1 - unittests'.
+In this case "basic test case" is the name of the test case.
 
-This completely misses the point of a TAP interface, which is to parse th=
-e
-status of individual test cases, or even individual assertions.
+In git's testing framework:
 
-If all we are doing is check the exit code of some program, then we don't=
- need
-TAP.
+  test_expect_success 'basic test case' '
+    echo actual > actual &&
+    echo expected > expected &&
+    test_cmp actual expected
+  '
 
-> Now, that goes into reftable/test_framework.h which basically implement=
-s
-> its own mini-test framework, so that's at least a *partial* argument fo=
-r
-> what you're suggesting here, but note that it doesn't emit TAP, it just=
+When running this test case the TAP output would be:
 
-> returns an exit code, the EXPECT() etc. is purely internal. I.e. "what
-> should we return?".
+  ok 1 - basic test case
 
-You are just describing the status quo.
+Other testing frameworks report on a per-assertion basis, for example Per=
+l's
+Test::More:
 
-I think this is a naturaistic fallacy: confusing what is versus what ough=
-t to
-be.
+  is('actual', 'expected', 'assertion check');
 
-Can we test C code with our current testing framework? Yes.
+These are more like named assertions rather than named test cases.
 
-Should we? That's the actual question.
+The example of what you proposed shows:
 
-> None of those are perfect, but I think the current arrangement is rathe=
-r
-> ideal.
+  ok(unit_test(), "unit test runs successfully");
 
-I think misuing TAP is far from ideal.
+Which is similar to Test::More, so it seems it runs on a concept of asser=
+tions
+rather than test cases.
 
-In my view an ideal framework would:
+That's what I presume Phillip meant.
 
- 1. Be able to test C code
- 2. Report individual test cases success/failure
- 3. Report relevant context in the case of failure (actual vs. expected)
- 4. Don't create forks on every individual test case or assertion
- 5. Properly handle crashes
-
-Doing basically the following is not an ideal framework:
-
-  echo '1..1'
-  test-tool reftable > /dev/null 2>&1 && echo 'ok 1' || { echo 'not ok 1'=
-; false; }
-
-Yes, it works. But "it works" has never been a good enough reason to stay=
- on
-the status quo.
-
-> We can write most or all of the test in C, but we just do so by
-> calling a function that returns an exit code.
-
-Yes, we *can*, but should we?
-
----
-
-If we can test C code in a way that individual test case failures are rep=
-orted
-(as is the intention with TAP), why would we reject that in favor of the =
-status
-quo which basically is just reporting the exit code of the whole test fil=
-e?
+Cheers.
 
 -- =
 
