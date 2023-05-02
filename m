@@ -2,54 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18765C77B73
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 19:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32C6BC7EE22
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 19:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbjEBT3U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 15:29:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50650 "EHLO
+        id S229652AbjEBTbK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 15:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjEBT3T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 15:29:19 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197842133
-        for <git@vger.kernel.org>; Tue,  2 May 2023 12:29:18 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id 006d021491bc7-546615d6f47so2507171eaf.0
-        for <git@vger.kernel.org>; Tue, 02 May 2023 12:29:18 -0700 (PDT)
+        with ESMTP id S229584AbjEBTbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 15:31:09 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4C192100
+        for <git@vger.kernel.org>; Tue,  2 May 2023 12:31:00 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-1925ad4953dso1179645fac.2
+        for <git@vger.kernel.org>; Tue, 02 May 2023 12:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683055757; x=1685647757;
+        d=gmail.com; s=20221208; t=1683055858; x=1685647858;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3/lYjAEpR94suEoFMeq13dtp/OQOiYfWrLAHt20/YtA=;
-        b=APZ/xNcdOEF8lE2KZrgpiCBj+rzl2+/d5BwOM7sl/A63SwtdaW86eRaSw5YXvnMqap
-         N05PVQqiVGXP0JM2cxAd+0XDvyspXH/5GhX+jt2wb+zzz+qfFcUCb0DEVe7j8a4TrJ1l
-         zcESTEE+9dyTYClnOHO2QU1FGNNX/TkSRX8Sb7pAR3t9wenbsMCLK/GhQhEAYOgPJnNt
-         vDl308oawzDgtTaHW5P+tgg0anW3+XzhUwvmMqqOsUiBZZMOGSXe3QxlM1gWg908nNRg
-         Dci7M56LENiQyFoXViGTuiWD0AlUNMQVir5FsgaK0MZwaxLJxpx4vI5tHuMl/O9l2P7I
-         jdbg==
+        bh=kybcUY5sNtVeoFIyYBRnnFQ4aerre/PYwXElvgER8+Y=;
+        b=ADmnUpa3Vwo0VePydvSTxlTVJTlkANjj3hoUcAgp+ArqE9u2MaHW6fAO/X6oz0ow+n
+         8TCG/G/zL+1JT7kv1pyWfXYL35JfcvVK/6HF2j/8j0MNVU2mEh6BzthM/pz3NYxlcQji
+         U92/NzwJMQ1cvTUZ8eBvT56LrNXBtTiQ62p2gn+xCg2Lk6HvrI9WLFmjQ4Guom1U4Tyr
+         42rHSq+Z4PA00nZ40DeQkdrzdD27iT6CSIW/DOcRFrti3qjdaagcv59V6tSMlzA+uU/o
+         O/ZRO6hP3h9xmNZ4mJTj5Q68sPwD2UspO0ptSsWBzYBSajbj0+D/2WB/zJrBHlqH9eNG
+         G2Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683055757; x=1685647757;
+        d=1e100.net; s=20221208; t=1683055858; x=1685647858;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=3/lYjAEpR94suEoFMeq13dtp/OQOiYfWrLAHt20/YtA=;
-        b=Rv1ha18upbgvb+A9fTw5Vo3B3M7bZj2OADg6eTwmLBJtTqA2/qyXSHvEYiyeWtw55M
-         0nxQcaOgRFN8gi2GRso0IzI5GaQ8SXSSmiHqiBZfcZAqDO8fnljI+I6tCPTu8Hvp7pG3
-         vzuDqVq2HCOze1/nI3NtfRQ5jcR7uSIWWi/azfLfH6V8JcvUn5hty+Xvj9qP6JPgU46O
-         KEvbRcf4tE/EU9xKnU+TxzLmhM2GFd65ex9ti9OrHa7Vod9HLsDFtDjWxIhHOUy8HnYE
-         2u6yb4oYeYCXMBJG0qpxQmMfqnISjh+F2Qa7iWpFlvIfXfnAzZyxDcELWL6t+pH5y6Ow
-         44ZA==
-X-Gm-Message-State: AC+VfDwCIZW+KUj08BVIF4syJFD1XoW4sh7JjJXENaUD2bRB6KxTpyxN
-        nqxPoqVu0hRQWgBIPevKvNY=
-X-Google-Smtp-Source: ACHHUZ5kN8Ae9llqibigrASSVV+xD02stYf6kWCb+kHGfJReIA40ACenRzr0rttqDCf9Fhtj6g1iLg==
-X-Received: by 2002:a4a:e9b9:0:b0:547:6a27:7dc0 with SMTP id t25-20020a4ae9b9000000b005476a277dc0mr8264851ood.7.1683055757371;
-        Tue, 02 May 2023 12:29:17 -0700 (PDT)
+        bh=kybcUY5sNtVeoFIyYBRnnFQ4aerre/PYwXElvgER8+Y=;
+        b=XPYcs1F/v6kCkSLdASIlXETsDRv8LyCJbUFo3e6GW4trpRgdn16+rByvGnGc6qjSZY
+         JaJKReACpid8v3l4xgZHMM8gfm3jMf+xFu5g2jBsgVDtQSoMN6K7PvF+0c5Xs7KtYSz6
+         P7Hx1go8RU6ZCi8329cPB5u1IzuXZQ9WbJ7kc2JoOG5d3scHBX5FpdwyYXz/tfEkSFsG
+         NT9t26bb22cAd5jx/Cacd+AFqy4C5TRw1yyS6oQO8Bv9hByYRQPD07x72N4BVwvfGQBT
+         PaIVSBFkDRO4AwYZTSbwr7uqCTwSP+Ky4hIrDYAID9fGxEC5aL1cS/dzza22AdQ/r7BD
+         ksyQ==
+X-Gm-Message-State: AC+VfDza10xkH0Yq3qCU74tgIa67vcH1WO2zBBdx9a8wr8ESbWBjzRUg
+        6BQDopTa4dOxcE9AVhOz/F4=
+X-Google-Smtp-Source: ACHHUZ7h+34/r3a3wu8osx95Gk5x+09x/GMu9x06u+IDf334LtKm269Kq20Eo4mijUmzPcD2sh4TKg==
+X-Received: by 2002:a05:6870:5b26:b0:192:79ba:ef35 with SMTP id ds38-20020a0568705b2600b0019279baef35mr2190647oab.18.1683055858443;
+        Tue, 02 May 2023 12:30:58 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id g13-20020a4ad84d000000b0053dfd96fa61sm1376591oov.39.2023.05.02.12.29.16
+        by smtp.gmail.com with ESMTPSA id t1-20020a056870e74100b0017280f7d653sm12608433oak.35.2023.05.02.12.30.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 12:29:16 -0700 (PDT)
-Date:   Tue, 02 May 2023 13:29:16 -0600
+        Tue, 02 May 2023 12:30:57 -0700 (PDT)
+Date:   Tue, 02 May 2023 13:30:56 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
@@ -57,7 +57,7 @@ Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>,
         Glen Choo <chooglen@google.com>
-Message-ID: <6451648c11a04_1ba2d2947a@chronos.notmuch>
+Message-ID: <645164f0e6064_1ba2d294b3@chronos.notmuch>
 In-Reply-To: <230501.86h6swjp3r.gmgdl@evledraar.gmail.com>
 References: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
  <pull.1495.v2.git.git.1682634143.gitgitgadget@gmail.com>
@@ -72,48 +72,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I fogot to mention:
+
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Thu, Apr 27 2023, Glen Choo via GitGitGadget wrote:
-> =
-
-> Re subject: I don't per-se mind the "add headings" formatting change,
-> but doesn't it have headings already? I.e.:
-> =
-
-> > -Git-specific tips & things to know about how we run "spatch":
-> > +=3D=3D Git-specific tips & things to know about how we run "spatch":=
-
-> >  =
-
-> >   * The "make coccicheck" will piggy-back on
-> >     "COMPUTE_HEADER_DEPENDENCIES". If you've built a given object fil=
-e
-> =
-
-> I think it was clear before that that was a "heading", at least in the
-> sense that it summarized what the indented part that followed was
-> discussing.
-> =
-
-> I think what this is really doing is converting this part of the doc to=
-
-> asciidoc, but is anything actually rendering it as asciidoc?
-
-Personally I write many documents in AsciiDoc format even if I'm not
-using asciidoc, as I find them easier to read.
-
-Moreover, one can always do `:set ft=3Dasciidoc` in vim to see some synta=
-x
-colors for an easier read.
-
 > If we are converting it to asciidoc shouldn't the bullet-points be
-> un-indented too? (I'm not sure, but couldn't find a part of our build
-> that actually feeds this through asciidoc, so spot-checking that wasn't=
+> un-indented too?
 
-> trivial...)
-
-You can just do `asciidoctor doc.txt` with any document and it will
-generate an HTML page.
+I don't think that's necessary.
 
 -- =
 
