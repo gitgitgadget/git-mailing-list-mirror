@@ -2,100 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21A6AC77B78
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 20:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD82C77B73
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 21:04:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229740AbjEBU4F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 16:56:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40458 "EHLO
+        id S230108AbjEBVEK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 17:04:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjEBU4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 16:56:04 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A53F21734
-        for <git@vger.kernel.org>; Tue,  2 May 2023 13:56:02 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-18f4a6d2822so117035fac.1
-        for <git@vger.kernel.org>; Tue, 02 May 2023 13:56:02 -0700 (PDT)
+        with ESMTP id S229684AbjEBVDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 17:03:52 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE182113
+        for <git@vger.kernel.org>; Tue,  2 May 2023 14:03:41 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4edcc885d8fso5197793e87.1
+        for <git@vger.kernel.org>; Tue, 02 May 2023 14:03:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683060961; x=1685652961;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C2/8GAoKMpeYglLOI/EXa5hPnQdjNVHuWNqieoy39wY=;
-        b=V/+6fnisk3VZsU/lEwyz5ytDrnc/Z4F/lh7ntuEsVy5XARxngNMOPSGZiWE8/JjHUi
-         EyBc+PdS77+CNyheIDyhJJpJEmlxTnM7IQYWaSrBUFV2HWJWnVJjQKAgh1cqHubhxHr6
-         ixTd10zijvAcd4T2RrHnvZ9o9nT23JcNYXEhwQOK2tdh182CH1dbN0yF1pvFfktXJH26
-         bBQNEqHS1rv/TvF/q6iglbpt5xNQlZGCkC9rk8hNccR29sMkwZ6nNJee7xOT5sRlWDpG
-         /mQDKyW2a5qN/o8/SPiDnvijtBK/yQLos9iuuVf6CD1OsxuWZI6u6ATrP+eOVOs8SKk1
-         G/Eg==
+        d=gmail.com; s=20221208; t=1683061420; x=1685653420;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kZbLOseZAAv+WZbCnUmFKPjlAbAz2BWbDaUt9vZ0h20=;
+        b=WbRArG2YXbtthilHuIdMu3y69WHKPTvjbEr9QCnxlfIusGyp2hT2UXxr+o6GrmGZrD
+         LMqJMhEQa5eLzEp1Fli/YsZ6OekFJ2Qt/qqXgvEXmWlkm5IZGVvV8p4FofT274lG2sLc
+         a8tDc7FW0QSO2JucJ7olfzvAy+34UMXb/YNl8/U30eueu1v21MVEsgEYPDcVt4zZs2ih
+         7H2OLheCXp9M4eMKn3YQq5ouO49R9WvudUNFe5tEWlcZckQTuDJo9TijTAyJ8GnvgTGm
+         pN+/Umxpop8diiBkW01JZJNzO9JdoHc60b0o9ImY8AFt9u0kdDk09MOAsI5YbbJz+Bi5
+         3H+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683060961; x=1685652961;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=C2/8GAoKMpeYglLOI/EXa5hPnQdjNVHuWNqieoy39wY=;
-        b=SskVlHmwVlwi+KNwAaePF8tQDtLfjysP6x1xOVkHk0hHb27NdHmr0uW83Dc7otYAVG
-         C0SjOqze8QQ0uhZBsI9lv+zxpGttMc13eL0eMnAUi31afS7N1BDdJmXFWEXAhiot3J3B
-         N2UGzaDRGDQFJAJ96aKijrquAdGpLAEP4Mt02COCOX+dWMCDLX3a98VU+WXn99PDu6mX
-         01FOdSi45KXrTJbxvJX47VZAb8zcsALUgTFcC2vXYb4JzoFLgj73uM1e3B4szUX66AaC
-         WTL9XYJC4seHrGPMUPgh/Vuf+PlL4Lb0Q5uhj16eEQGBru3/6dsr1sEVNzULcmkdoGQD
-         EqrQ==
-X-Gm-Message-State: AC+VfDwiFoJgN8yqVKoS5xKDg8T6q06r1gmaaDrAAVyjmzy64aA8IUE7
-        CAmqpB80CHKWLGmCF/LAWSuoURXP26Q=
-X-Google-Smtp-Source: ACHHUZ7O4EVrKWhWXRnlbLOpvdf+3L551kEKvarInGSxQgTkksxbcbd606mNxeDpUfC+sGaZbuZ7iQ==
-X-Received: by 2002:a05:6870:e815:b0:180:9705:fc3b with SMTP id o21-20020a056870e81500b001809705fc3bmr10889599oan.11.1683060961007;
-        Tue, 02 May 2023 13:56:01 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id f6-20020a9d5f06000000b006a1287ccce6sm12050098oti.31.2023.05.02.13.55.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 13:55:59 -0700 (PDT)
-Date:   Tue, 02 May 2023 14:55:59 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>, Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <645178df26120_200ae294e1@chronos.notmuch>
-In-Reply-To: <ZEpVSrz-uUcfN_3_@ncase>
-References: <cover.1681906948.git.ps@pks.im>
- <301138da039451519c6e60d6126e7756a54d346f.1681906949.git.ps@pks.im>
- <kl6lzg6umne9.fsf@chooglen-macbookpro.roam.corp.google.com>
- <ZEpVSrz-uUcfN_3_@ncase>
-Subject: Re: [PATCH 8/8] fetch: introduce machine-parseable "porcelain" output
- format
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        d=1e100.net; s=20221208; t=1683061420; x=1685653420;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kZbLOseZAAv+WZbCnUmFKPjlAbAz2BWbDaUt9vZ0h20=;
+        b=jNOhuiX7TWO+TSxiqlipNyRSpDqiFS6HuL4suPSwIX8X2+u8fPWNmfevgDh06k6zdt
+         lUYkgq4PHbD4KsaBY3fS+I+L0QpqrICkplC3sQDcYiDZdhNkWlN5hAKtY/i1VuWg9A5h
+         7MBCCR4Foonj5JHLXp2aykDRlX4fpMHpvsqRxc+L1oF8xecEpWU+dTKiGw3hmIzcvtK0
+         0Pphu15ZYxhIGE6kph3R8fAfX6MC2JhBLo7AygdF1ZxOIgdPMxJVpVPpPlIJ6/LVxS9D
+         5hsO1qFXhiYTon8gdpULo+HRgqIekNFZr0NnhEvRIKdsJKENQWeeFlzBxbNUKHu5o6vE
+         eXeQ==
+X-Gm-Message-State: AC+VfDz/9ZhguRrkA2cvPvbihtWAugiYsNJyAz5FiTGU2YwE8onIUcM5
+        7xRJ+U2Cui9xZV5214fmjKk=
+X-Google-Smtp-Source: ACHHUZ4VYT/sPjYzD6Hkqrnu1s7uwrbOw205rdu4fS+6nqEcXYQwa0dZgUVfVUhdcYx6ukjnEyIksQ==
+X-Received: by 2002:a19:c512:0:b0:4ec:9cca:999e with SMTP id w18-20020a19c512000000b004ec9cca999emr322342lfe.32.1683061419578;
+        Tue, 02 May 2023 14:03:39 -0700 (PDT)
+Received: from [10.2.18.49] ([195.246.120.77])
+        by smtp.gmail.com with ESMTPSA id z22-20020ac24196000000b004ec508e3a9bsm5490540lfh.276.2023.05.02.14.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 14:03:38 -0700 (PDT)
+Message-ID: <73ead9f4-4e12-09c6-8abb-e338f71efceb@gmail.com>
+Date:   Tue, 2 May 2023 23:03:36 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 0/6] t: fix unused files, part 2
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?=c3=98ystein_Walle?= <oystwa@gmail.com>
+References: <20230403223338.468025-1-rybak.a.v@gmail.com>
+ <20230417191044.909094-1-rybak.a.v@gmail.com> <xmqq8re74t3j.fsf@gitster.g>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+In-Reply-To: <xmqq8re74t3j.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt wrote:
-> On Wed, Apr 26, 2023 at 12:52:46PM -0700, Glen Choo wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > > The output format is quite simple:
-> > >
-> > > ```
-> > > <flag> <old-object-id> <new-object-id> <local-reference>\n
-> > > ```
-> > 
-> > This format doesn't show the remote name or url that was fetched. That
-> > seems okay when fetching with a single remote, but it seems necessary
-> > with "--all". Perhaps you were planning to add that in a later series?
-> > If so, I think it's okay to call the "porcelain" format experimental,
-> > and forbid porcelain + --all until then.
+On 01/05/2023 23:52, Junio C Hamano wrote:
+> Andrei Rybak <rybak.a.v@gmail.com> writes:
 > 
-> The reason is mostly that I didn't find an output format that I really
-> liked here. We'd basically have to repeat the remote URL for every
-> single reference: just repeating it once per remote doesn't fly because
-> with `--parallel` the output could be intermingled. But doing that feels
-> wasteful to me, so I bailed. I guess I'm also biased here because it
-> just wouldn't be useful to myself.
+>> Creation of files from redirecting output of Git commands in tests has been
+>> removed for files which aren't being used for assertions.  CC'ed are authors of
+>> the affected tests.
+>>
+>> v1 cover letter:
+>>    https://lore.kernel.org/git/20230401212858.266508-1-rybak.a.v@gmail.com/
+>> v2 cover letter:
+>>    https://lore.kernel.org/git/20230403223338.468025-1-rybak.a.v@gmail.com/
+> 
+> This round has not seen any further comments; shall we consider it
+> pretty much done and ready to move to 'next' by now?
 
-Couldn't each URL be assigned an index and then just show `0` in the output? I
-think it should be straightforward for a parser to figure out what `0` means
-but if not, that's something that could be figured out once the use case
-arrives (which very well could be never).
+In general, I'm OK with the series as is.
 
--- 
-Felipe Contreras
+While answering Ævar's questions to some of the patches in v2, I
+went quite deep in trying to investigate what is and isn't important
+to validate/assert in particular tests, but I haven't come up with
+a good way to include this information in commit messages for this
+series.
+
+Notes per patch:
+
+   - 1/6 for t0300 is just an explanation about why one out of three
+     cases in one test does not check stdout (and doesn't need to).
+     https://lore.kernel.org/git/db2de983-9b1f-5efb-0fdc-cc704e6b875b@gmail.com/
+
+   - 3/6 for t1300 lead to a separate series
+     https://lore.kernel.org/git/20230423134649.431783-1-rybak.a.v@gmail.com/
+
+   - 4/6 for t1450 had an idea for a test 'fresh repository has no
+     dangling objects'.  I'm doubtful about usefulness of such a test,
+     so hasn't sent it as a patch yet.
+     https://lore.kernel.org/git/35bc2dc5-d5cb-3492-ff94-41b93b7563d4@gmail.com/
+
+   - 6/6 for t2019 -- a dive into how output of "git checkout" is tested
+     https://lore.kernel.org/git/4ef5464b-31dd-3c3e-05be-9891162e4f05@gmail.com/#t
+
+Patches 2/6 and 5/6 are different from others, because they fix
+more obvious issues.
+
+> Thanks.
+
