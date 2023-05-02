@@ -2,86 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11667C77B7E
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 15:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF1E2C77B73
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 15:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234658AbjEBP4h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 11:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34830 "EHLO
+        id S234363AbjEBP6m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 11:58:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234650AbjEBP4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 11:56:35 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC05E10FE
-        for <git@vger.kernel.org>; Tue,  2 May 2023 08:56:27 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1aae5c2423dso32204605ad.3
-        for <git@vger.kernel.org>; Tue, 02 May 2023 08:56:27 -0700 (PDT)
+        with ESMTP id S233675AbjEBP6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 11:58:40 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3F3D1989
+        for <git@vger.kernel.org>; Tue,  2 May 2023 08:58:38 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 46e09a7af769-6a5f765d5b8so3209845a34.3
+        for <git@vger.kernel.org>; Tue, 02 May 2023 08:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683042987; x=1685634987;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k4i0a5fy/rGKalkaYLw68S/KU544BMsb9kKTW1njW3k=;
-        b=IOpbUBkiN8OwmCREe0LzsL22QqTHEFAOKw/D2OZqahBZIBDmW02SLTuBtVDBHgORlf
-         IHubO9Mmcc7A9hRLaR5JrIcH9ooEDobnhZUVqlEF4ciuB0mD0w9st51tbOR0/i5Z+dGO
-         Bo85cp56KWc69eJrGRotk3rm8GVSm52+NsEms/ZfcgZuEpDxeuMGW/orLM3ae5Ta3drm
-         KExGliBHytIpUu6ZJJj+ZWRQiBoGoeQVnCviPMS5HH+tgR0BTOE3kSpOchzvNW+jcE2O
-         v0DlQmbzDzTOiJzYrsEe42dmand22GjImZ9PYhPEGYGvhD51zk056UCvlrBxVNEsZSk4
-         d/vg==
+        d=gmail.com; s=20221208; t=1683043118; x=1685635118;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PWdSziyZDOwqgSOX+bPiJOQN6FnfOEASNHm+osDe8C4=;
+        b=JG7ve07DGhUbOivfKI7s51kFU/yQwHMV8JSj7FtF5D8uEIaZXdPcicSPZnn/+4h+vj
+         UcJHUcm4ybCv6MDJWdgp88/6AQQX0d6pI4AWw28HgKcMmMGGtgv8+6Ucc94qTgY4zhfB
+         l6k82geeqJ3N1CxlP8DLHjJ4zeAajQsZVDKDzJFvFWRwsm3Dx6JQp+9bfl06XC3Ol1lF
+         I93TsVt8RMlmLrz7W7yHG6aun2abtYSqaOXnlxkbIGM8hQh1DWJejMNob6KXLhtgOeKT
+         2T8Dtbx+8WFXoqRSaVI1odcEfnWhD3ypc981roWnOFWIjgZD3UO348ssn8/S8twVV/+V
+         5Bcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683042987; x=1685634987;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k4i0a5fy/rGKalkaYLw68S/KU544BMsb9kKTW1njW3k=;
-        b=QzfS7clL3BQV/EG8nsmUuhdJSmOuDK81HCJeYzMTXch1acnvs57Ntl8r5cc/9gGUUT
-         OpUj9VnR35wH0eXWO4/mqgBxyy3Oz+UR/7QyQTdXoeWkAyr4KaJ6Lk+0HtcZDlUGQMzp
-         y8arQ9f2tThr4Bi3+awxLNoIh/xWjbdPmAZx6FsLx2mLK+vdzsO7VAf1zIoFqbRQt8lO
-         sgXi3zdxQp/DysmshV137GYawBj2I6ftYmRoIwgwl1qpcsLv6wtcJHl0hJFV1Eg+x5hj
-         L0FR8NgGrNtGnMUVF87XiupINKNjh8qaN7uVjyaZP2GYTz8OTLr7aEI8jz8MCZk76EJe
-         7koQ==
-X-Gm-Message-State: AC+VfDwKSXhHW6t806NDTI3+qMCnpVYQdHBsktoOP5xZzSzb9RcmrhCk
-        GSwcB023hAFll3gb1gk+Q1I=
-X-Google-Smtp-Source: ACHHUZ6xdR83FxUrraCUB+9gY+mut5p21IOioL6EQvIQcFQpXBgFMVpFUZ84xqwhTZcv01BrFZVMfQ==
-X-Received: by 2002:a17:902:ab92:b0:19a:a520:b203 with SMTP id f18-20020a170902ab9200b0019aa520b203mr16890498plr.25.1683042987004;
-        Tue, 02 May 2023 08:56:27 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id z12-20020a170902834c00b001ab05835b4fsm2174348pln.130.2023.05.02.08.56.26
+        d=1e100.net; s=20221208; t=1683043118; x=1685635118;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PWdSziyZDOwqgSOX+bPiJOQN6FnfOEASNHm+osDe8C4=;
+        b=LKTPt/6VOlsSQZ+cm2eimBLaGzoGB0AVNbbdmiegeqWOtkM3gkTpmzaGvoUdFv5Sxx
+         jGrSxi74pW3iRS5834tUJLPT/Fbfbk0YuT6UF2KvVluE4WiGLAt2p7ZargrLOLbC4whY
+         7SmB31c7lOASrGCJcQnzPbnSs7vbD63CEo/WitQX1Z7NEB0OYf5z7ePxHccvGlQPZgi9
+         NhtENdP0Z57+nh1ffIxbOzlYFI52ki2ceXgwcLJaH1o0c3GSRi+gtV+js+jK+m1Ofb4B
+         yHW1fjAjRT25dV3DpAlnJNUq2rs/7iQ0d5hB7Y/dh10EN4GiAdWj1Gpjt1ExtVfZsrZD
+         q04w==
+X-Gm-Message-State: AC+VfDz37UyLDYTDLe2fV3K3R1+3YOol51Lz38yrLA19T+QVM6OvWbYn
+        T9HPp3NrqEWZSp0jCzbbcfQ=
+X-Google-Smtp-Source: ACHHUZ5VczI9BKnucPPdTxd1/dQCWzNlgFnFIbpCmOWw5CtG017Q0dmE8ii2MSLSSkGfkbtvcDmKxA==
+X-Received: by 2002:a9d:7357:0:b0:6a6:389f:ad88 with SMTP id l23-20020a9d7357000000b006a6389fad88mr9484914otk.13.1683043118146;
+        Tue, 02 May 2023 08:58:38 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id w22-20020a9d77d6000000b00697be532609sm12834016otl.73.2023.05.02.08.58.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 08:56:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v2 12/22] tree-diff.c: move S_DIFFTREE_IFXMIN_NEQ define
- from cache.h
-References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
-        <pull.1517.v2.git.1682194649.gitgitgadget@gmail.com>
-        <7b55f82e62ecf761b804432c8d08dffabbb7605f.1682194651.git.gitgitgadget@gmail.com>
-        <230501.86zg6ohuw7.gmgdl@evledraar.gmail.com>
-        <CABPp-BEPy4R1R1X1o1oMs6sEECVjEoLeRXripEi7k8ZO-CrbuA@mail.gmail.com>
-        <CABPp-BHymt9COEjnTRTbg_vHa4s6-CL7Bh+9q0PfoiE0SRcRrg@mail.gmail.com>
-Date:   Tue, 02 May 2023 08:56:26 -0700
-In-Reply-To: <CABPp-BHymt9COEjnTRTbg_vHa4s6-CL7Bh+9q0PfoiE0SRcRrg@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 1 May 2023 22:00:14 -0700")
-Message-ID: <xmqqr0ry20d1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Tue, 02 May 2023 08:58:37 -0700 (PDT)
+Date:   Tue, 02 May 2023 09:58:36 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org
+Message-ID: <6451332c869d2_1ba2d2946c@chronos.notmuch>
+In-Reply-To: <xmqqedo5jh6a.fsf@gitster.g>
+References: <20230427175007.902278-1-calvinwan@google.com>
+ <20230427175007.902278-3-calvinwan@google.com>
+ <xmqqedo5jh6a.fsf@gitster.g>
+Subject: Re: [RFC PATCH 2/2] unit test: add basic example
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Junio C Hamano wrote:
+> As a technology demonstration, such a hello-world test may be fine,
+> but I would have liked to see a more realistic sample that links
+> with reasonably isolated part of Git codebase, perhaps testing say
+> functions from <quote.h>.
 
-> Although maybe I'll have to do it in a follow-on series?  Junio merged
-> the series to next today, so...I guess I'll just add it to my "header
-> cleanups" notes.
+I don't know if that's the case for Calvin's proposal, but at least when I
+tried to do that for my proposal, one major issue is that there's no shared
+library to link to, making it difficult to play along with other shared
+libraries.
 
-I am not Ævar, but it is so small a thing that is local to a single
-file, we can wait until the dust settles to avoid distraction.
+-- 
+Felipe Contreras
