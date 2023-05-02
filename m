@@ -2,150 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A448DC77B7E
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 13:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8D48C77B73
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 14:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233807AbjEBNvs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 09:51:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
+        id S234216AbjEBOFI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 10:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233819AbjEBNvr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 09:51:47 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D2710F
-        for <git@vger.kernel.org>; Tue,  2 May 2023 06:51:34 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1aaec6f189cso19329185ad.3
-        for <git@vger.kernel.org>; Tue, 02 May 2023 06:51:34 -0700 (PDT)
+        with ESMTP id S234368AbjEBOE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 10:04:57 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183201BC3
+        for <git@vger.kernel.org>; Tue,  2 May 2023 07:04:55 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-50b37f3e664so6152673a12.1
+        for <git@vger.kernel.org>; Tue, 02 May 2023 07:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1683035494; x=1685627494;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EJbi73xirC2lgQWKHbsYdSrRrzinZxe1WYO6TaTD9no=;
-        b=Y15YB3nBa4uuOll3ou8OoiPQ9hOWnaFvJXnBq2H1VrauSZ2rQlRYGpsxGOTxsQATAU
-         aOI4xjQqt0tcMCeC+zFDevYXMoxAYEfbrryHGu/05Yabw0K7ZD1JOARxAM0c/wLEZ97e
-         Gi1V4VeyEOOqg5eA8245RoJvrrJ2xiI44TlMzOkEFOXzHe6xg/S/elU0zyGY74PPilAa
-         P0aJ5FD1EY/4oY7i5MwRT8/Wr2dDgDCbUVy6STg79euvlc/AS/p2l0NiLKcmThtMnVjz
-         vT7Iudoinr47wMQxQ3H+x5iABCUayLVcOuSbpI8ShDbM9XfgjaEUN3KwOJOz/L8vT6vP
-         kcgg==
+        d=gmail.com; s=20221208; t=1683036294; x=1685628294;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CWQpSuJCRaXE/xMPMsrMdHsjMFDCsvnnePKBPx00/bg=;
+        b=pS8fyGICF10oCAnmZg/Ke1v6BXTPiOzBTwCDMWGCZ1qD1gghpufqWgD1MUmrLQj3Yv
+         lRKdYOQSbPpkHrwC9Nasi1fbTQwHCdo2HzMW4gqluiL3CQIke0qhRROprcPOJ1J3MhuM
+         2AInyR0UMf5MKFG1lnJIP6YIwks4Y6Wr9iv3o2qggaCORD70QCg6dY6/JU3aGUsXbiQe
+         j6NMBYydLa2f0QymgQ6Yqt06gYZJn0sGH0Zd6RIGK/Pi4aj56mXVEOj+pd95kri7Lds7
+         1lOEy7J/ogor4qkLgZoO8ndqzLw5wMTM2927fX4nTrSAKZTUKiTn4cjeQrloZOW2ktX4
+         uyLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683035494; x=1685627494;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EJbi73xirC2lgQWKHbsYdSrRrzinZxe1WYO6TaTD9no=;
-        b=XYUap1QiWE1sq/ekCYKhOnT6EMmwHz11PUt3k3j58sD1xgSYGmvDHR3O6l3NdFIR95
-         CxxVHpF5up908PYZbIWMawV1YntKPpTNR66xiPKNhZ8I5OVz/mxkk8t2zu+DLpeRW1y+
-         dZnzqKs/dEIeXXrzy7PBdggoN5gmKyTlSYNiu+BXfcpFf3yDus/KFJa2M4QFq2pOwBAd
-         ETZjoaAHJ3FUVNevMPhn5+FHL1On76qjWBjp0sq0R2CyF3sNYsqJDw9uzBcbUbjdVmXW
-         LLqJvFn21twR482MD1MVijFjTeV4qnTwsm5UJegT2gT468N96eZnUS12wP5PemTdmttC
-         uVkA==
-X-Gm-Message-State: AC+VfDxeU8nqFHpVTsDC9mjF9M62ZTAhCYea/nQL5RGGYCYwHZpezXWt
-        uyE9hCGusGDVVfsNcrl4iiJT30KMiPo3Toq1JvuBD+F4BFl4zkCi2vw=
-X-Google-Smtp-Source: ACHHUZ5MmMpHgtU8qBeF/RrPkQ+BbePhS48Va8r3h4EJ7erJE6Wb8L8MV0E9vWgHSV+Rwo1b1m81KVXx/aysXKdsLXo=
-X-Received: by 2002:a17:903:230d:b0:1a9:3b64:3747 with SMTP id
- d13-20020a170903230d00b001a93b643747mr21120850plh.17.1683035493566; Tue, 02
- May 2023 06:51:33 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683036294; x=1685628294;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CWQpSuJCRaXE/xMPMsrMdHsjMFDCsvnnePKBPx00/bg=;
+        b=IeApvgTN+BwOsO9UoC6LPIsnKqrN1fD9oLbJz0LrNgRvCREIo56C+VOewyTVSrLcof
+         WaCnsB7QPAQSC/0dbRU9bNJ8xwlbaasok9LomXwQ1locryVgSbbqZL96Rg0f0pT/hqN/
+         RGZLpqoFro6Mv6axZtqMgZ4iW9H8pZJwnvqHASxSYn6s9R+jURIKK2Qw/DO1F/6z0XEh
+         cs8N7ibYXwvsO2VcC2d0SOTmEnBrPlt4mNxC+icBL4Gpq1inOHW/qbbrlvpZQP7Sp7h6
+         vIQyT3baSboO1PgZwyl2auoDJNDlc4LR3iCBEGs0xHZt0IPPgd1YkoM2dBA3PSbz5p8A
+         8jbA==
+X-Gm-Message-State: AC+VfDw70rr71TDqdBvLZtb0lBjON/be2l4ljL6KhaHhciSW5a+jLzGu
+        7BXFl1buI0p+BpI6L5y3/DqpwrL1zwI=
+X-Google-Smtp-Source: ACHHUZ6dXXg6Lj2wQMvaQJbRqR+W5cQf9tDh82gJC6jbG2J9ebB1x5zqRVbb2WbHiuHb3vlz+BqX2A==
+X-Received: by 2002:a17:907:25ce:b0:961:2956:2ed9 with SMTP id ae14-20020a17090725ce00b0096129562ed9mr62700ejc.25.1683036293762;
+        Tue, 02 May 2023 07:04:53 -0700 (PDT)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id sg9-20020a170907a40900b00959aba150c3sm11491640ejc.50.2023.05.02.07.04.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 May 2023 07:04:53 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ptqce-000Ttv-1H;
+        Tue, 02 May 2023 16:04:52 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] add an external testing library for unit tests
+Date:   Tue, 02 May 2023 15:52:33 +0200
+References: <20230427175007.902278-1-calvinwan@google.com>
+User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
+In-reply-to: <20230427175007.902278-1-calvinwan@google.com>
+Message-ID: <230502.861qjyj0cb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Tue, 2 May 2023 09:51:26 -0400
-Message-ID: <CA+dzEBm-uVbsiq26J+Zt10RDg7sEH2FFTwAhbeXOaH_0u0Rx=g@mail.gmail.com>
-Subject: cannot checkout file in partial clone on windows
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-this appears to be a windows-specific issue
 
-short reproduction:
+On Thu, Apr 27 2023, Calvin Wan wrote:
 
-```bash
-set -euxo pipefail
+> In our current testing environment, we spend a significant amount of
+> effort crafting end-to-end tests for error conditions that could easily
+> be captured by unit tests (or we simply forgo some hard-to-setup and
+> rare error conditions). Unit tests additionally provide stability to the
+> codebase and can simplify debugging through isolation. Turning parts of
+> Git into libraries[1] gives us the ability to run unit tests on the
+> libraries and to write unit tests in C. Writing unit tests in pure C,
+> rather than with our current shell/test-tool helper setup, simplifies
+> test setup, simplifies passing data around (no shell-isms required), and
+> reduces testing runtime by not spawning a separate process for every
+> test invocation.
+>
+> Unit testing in C requires a separate testing harness that we ideally
+> would like to be TAP-style and to come with a non-restrictive license.
+> Fortunately, there already exists a C TAP harness library[2] with an MIT
+> license (at least for the files included in this series). 
+>
+> This first patch introduces the C TAP harness and includes only the
+> necessary files. The second patch showcases a basic example of it. As an
+> RFC, I am wondering what the list thinks about using a second testing
+> library for unit testing? Are there any problems with this particular
+> external testing library and does it provide the necessary functionality
+> we would want for unit testing Git libraries? How should the folders be
+> structured and how should the new Makefile rules be written? Ultimately,
+> this will help us determine the setup of our unit tests in future
+> libification patches.
+>
+> [1] https://lore.kernel.org/git/CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com/
+> [2] https://github.com/rra/c-tap-harness/ 
 
-rm -rf t
-git init t
-cd t
-git remote add origin https://github.com/pre-commit/pre-commit-hooks
-git config extensions.partialClone true
-git fetch origin HEAD --quiet --filter=blob:none --tags
+I have some out-of-tree patches I've been meaning to submit that massage
+some of our TAP output, and I'd really prefer if we don't end up with
+two TAP emitters in-tree if we can help it.
 
-git checkout v4.4.0 -- .pre-commit-hooks.yaml
+We can support such a thing, but nothing about your goals or your
+explanation here provides the "why".
 
-ls -al
-```
+Or rather, I'm not really buying the "passing data around" or "recuding
+[...] runtime [overhead]". I think you're describing how *some* of our
+*.sh to *.c interop goes, but we have test-lib.sh driving C code without
+those issues.
 
-on linux it produces this output:
+We already have pure-C libraries that we add a really shim to unit test,
+the most extreme example of this is t0032-reftable-unittest.sh, whose
+body is simply (excluding comments):
+	
+	#!/bin/sh
+	test_description='reftable unittests'
+	
+	TEST_PASSES_SANITIZE_LEAK=true
+	. ./test-lib.sh
+	
+	test_expect_success 'unittests' '
+		TMPDIR=$(pwd) && export TMPDIR &&
+		test-tool reftable
+	'
+	
+	test_done
 
-```console
-$ bash t.sh
-+ rm -rf t
-+ git init t
-Initialized empty Git repository in /tmp/t/.git/
-+ cd t
-+ git remote add origin https://github.com/pre-commit/pre-commit-hooks
-+ git config extensions.partialClone true
-+ git fetch origin HEAD --quiet --filter=blob:none --tags
-+ git checkout v4.4.0 -- .pre-commit-hooks.yaml
-remote: Enumerating objects: 1, done.
-remote: Counting objects: 100% (1/1), done.
-remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
-Receiving objects: 100% (1/1), 1.73 KiB | 1.73 MiB/s, done.
-+ ls -al
-total 36
-drwxr-xr-x  3 asottile asottile  4096 May  2 09:48 .
-drwxrwxrwt 27 root     root     20480 May  2 09:47 ..
-drwxr-xr-x  7 asottile asottile  4096 May  2 09:48 .git
--rw-r--r--  1 asottile asottile  6950 May  2 09:48 .pre-commit-hooks.yaml
+Now, that goes into reftable/test_framework.h which basically implements
+its own mini-test framework, so that's at least a *partial* argument for
+what you're suggesting here, but note that it doesn't emit TAP, it just
+returns an exit code, the EXPECT() etc. is purely internal. I.e. "what
+should we return?".
 
-```
+Probably a more git-y example is t0071-sort.sh, whose body is similar
+(skipping most of the boilerplate):
+	
+	test_expect_success 'DEFINE_LIST_SORT_DEBUG' '
+		test-tool mergesort test
+	'
 
-on windows it does the following:
+We then have similar library tests as e.g. t0063-string-list.sh,
+t0061-run-command.sh, t3070-wildmatch.sh etc.
 
-```console
->bash t.sh
-+ rm -rf t
-+ git init t
-Initialized empty Git repository in
-C:/Users/Anthony/workspace/pre-commit/t/.git/
-+ cd t
-+ git remote add origin https://github.com/pre-commit/pre-commit-hooks
-+ git config extensions.partialClone true
-+ git fetch origin HEAD --quiet --filter=blob:none --tags
-+ git checkout v4.4.0 -- .pre-commit-hooks.yaml
-remote: Enumerating objects: 1, done.
-remote: Counting objects: 100% (1/1), done.
-remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
-Receiving objects: 100% (1/1), 1.73 KiB | 1.73 MiB/s, done.
-error: unable to read sha1 file of .pre-commit-hooks.yaml
-(f8523d4a677b2904df1ebf50c826323b2555edeb)
-```
+None of those are perfect, but I think the current arrangement is rather
+ideal. We can write most or all of the test in C, but we just do so by
+calling a function that returns an exit code.
 
-I can work around it by running `git show
-v4.4.0:.pre-commit-hooks.yaml > /dev/null` before the checkout oddly
-enough:
-
-```console
->bash t.sh
-+ rm -rf t
-+ git init t
-Initialized empty Git repository in
-C:/Users/Anthony/workspace/pre-commit/t/.git/
-+ cd t
-+ git remote add origin https://github.com/pre-commit/pre-commit-hooks
-+ git config extensions.partialClone true
-+ git fetch origin HEAD --quiet --filter=blob:none --tags
-+ git show v4.4.0:.pre-commit-hooks.yaml
-remote: Enumerating objects: 1, done.
-remote: Counting objects: 100% (1/1), done.
-remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
-Receiving objects: 100% (1/1), 1.73 KiB | 1.73 MiB/s, done.
-+ git checkout v4.4.0 -- .pre-commit-hooks.yaml
-+ ls -al
-total 20
-drwxr-xr-x 1 Anthony 197609    0 May  2 09:50 .
-drwxr-xr-x 1 Anthony 197609    0 May  2 09:50 ..
-drwxr-xr-x 1 Anthony 197609    0 May  2 09:50 .git
--rw-r--r-- 1 Anthony 197609 6950 May  2 09:50 .pre-commit-hooks.yaml
-```
-
-anthony
+It does mean we need to spawn a shell for test-lib.sh, and call a
+test-tool at least once, but the overhead of that is trivial. It's not
+trivial in some cases where we call the helper in a loop, but that's
+much more easily addressed than hoisting all of TAP generation into the
+C space.
