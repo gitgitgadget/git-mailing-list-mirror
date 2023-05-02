@@ -2,121 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E0F4C77B73
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 16:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEA45C77B73
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 16:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233932AbjEBQUN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 12:20:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49136 "EHLO
+        id S233998AbjEBQ1a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 12:27:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233923AbjEBQUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 12:20:11 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B203840C7
-        for <git@vger.kernel.org>; Tue,  2 May 2023 09:20:01 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id 46e09a7af769-6a5e7482961so1534761a34.3
-        for <git@vger.kernel.org>; Tue, 02 May 2023 09:20:01 -0700 (PDT)
+        with ESMTP id S233930AbjEBQ12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 12:27:28 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410C6198A
+        for <git@vger.kernel.org>; Tue,  2 May 2023 09:27:27 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id 006d021491bc7-546de76c23eso2169856eaf.0
+        for <git@vger.kernel.org>; Tue, 02 May 2023 09:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683044401; x=1685636401;
+        d=gmail.com; s=20221208; t=1683044846; x=1685636846;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xGZEiw0GHOZMr/sRa/ZZ/kUobKkj7U2tRI16HrBb8SQ=;
-        b=czVCn2is5AdhxWbGuYlPlb7QkaY3hG4rdo5Ik+zQdDnOc/los+mWexyjONQ5SHOFYG
-         N95LagXsBo24eqeETWiteP8B/ugzusnl1xgWDijAVc8EMzyZbMudihuaoc7L/qJCyjZE
-         JSMWHQodhVmpZHhLddTHQSOcVtyHNvHna4ujH+SGAgd+UM/8G/DPqBIDkBg/s7+AVBe/
-         aYDOCka+flON0DihUi4XyCFrN53XGOr1t6NXE8d8KF+t5mzWvfeFjpJoTl/aNHkRGoPm
-         PVjUv7hUCNwdTviKuvlzxbZ4vQVDjFwEyZCAoVi2w8/8x/xTJYy2zWHl/AFdQjqpWXWB
-         pAww==
+        bh=uRmGEsRcF3Ffc3mVhW6YiD+7IBxw1op50EVAHSnXLUs=;
+        b=mT8z7UHkRtJpCR4SEhz9J0L01j0GzwLG0uWlHSu4PkIL2HsV9C62xcETHcrtCDUIRw
+         AKhahxprdLWrW/v9Qjb5XHdq5mRpg10jH3ChXNsnIpI+ZRh/VJqp/a6iMAn/xxkAsLNl
+         7wMuVV2LAGJEO1wcWzkUWWbnO+5dVgDJC1aCdRpUWIYTLXuRlL1WWs/g/pCz843G33qN
+         Jm0qzaMDu1oSg/eAwbkpPcsREO0CEt4pqOo44236Fq+5m1/TTYUHtjAl11y5r+WG1Tol
+         FFjIaqyuBYEHGkVY+QQTMf9ZL2eWVW82sJ+Bbdju31sS3Hwb7H4iGC6cPRqFhSTmrq0k
+         k+pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683044401; x=1685636401;
+        d=1e100.net; s=20221208; t=1683044846; x=1685636846;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=xGZEiw0GHOZMr/sRa/ZZ/kUobKkj7U2tRI16HrBb8SQ=;
-        b=KFsbFU8Y8hnh+pA20549+6Hndg7Ksw7zKuCCmc3fbLhf1eoqhoh3iXCwPOYMhsyXmO
-         BjLnk+0psBk5Kry3+pWVgypLLGgAYBsq6QLO45axWYcgHsIJ+utwaFldvKXV5FKyc4Lr
-         Lp68wvJoffOBcJkh2MMHX19YfYKT6mCN49rAA5VAu0QbhoO/llh3caT77B7yd53jkQBM
-         M4cdmyowDPRceuJdnmrKSKiD9uhi/1mXQDA6CUburK8S0jrFg90paEQ9p/AprZGr0stE
-         7pAe7pZOeBxPBmyjRxepaAPqpIIejj78z6Tmz0DtGMu0zaKpzhgMGnUEYw5ZWnqTMylX
-         2C7A==
-X-Gm-Message-State: AC+VfDwQB01cEXCjnh9bEgo3bsNjJgQFeneL37VOwENXEReAJOt0Peu0
-        Lm2QS1PplhainpBwekUfdX0=
-X-Google-Smtp-Source: ACHHUZ7SWofFw7xYgFaLYs0CaqneDIflqowN8Eo6AD2SDLCyHo8OlusZsqcL1eRLZSnVHmpYg06Byg==
-X-Received: by 2002:a9d:6f01:0:b0:6a3:3641:8d7c with SMTP id n1-20020a9d6f01000000b006a336418d7cmr9251232otq.18.1683044400937;
-        Tue, 02 May 2023 09:20:00 -0700 (PDT)
+        bh=uRmGEsRcF3Ffc3mVhW6YiD+7IBxw1op50EVAHSnXLUs=;
+        b=e6E9KG9nUx5UnmUuGOritqiyL9BvpV4pDKCGQfM1j41VF52nexVplXh98dLAWJZoZS
+         qTtQuBQcWWyS09o7VWFL6m6dCHvALo+qMBiTYlSklhN7nTprf0JcnNytn6CfF9An8ty5
+         KvPzBOXpgDdmnvnFHGu32gfLoJr0csW3wKT+f42A4juC14oO0CPbpl1k8Dy4iDTbRw/Z
+         P75c3C2PnLD8OevNWw3e/S1UUJ9pwYGr0GUEMoh3sEt4B/Ey0d//W0g5TeFa0J9vJah/
+         1KuMKhey9NxZPnTaLQNBA4LM1oBeA9hLGzi6iKkfwFqEjwVbaTZpZ3nPBGMGNyG1KQTx
+         hu1Q==
+X-Gm-Message-State: AC+VfDxRnbZ6Hj0vnAOp2OM2Z3JS7U2h0phMsAsi4eOlG0KchfNee3ns
+        GwT1qorT6dIyxnfF/E70j5o=
+X-Google-Smtp-Source: ACHHUZ5RzyuSVGdfRfc7tRMpZ6RbkPYJAy/kNarCwu0OWJJF/y4GhtYPMWgmToofK8C5J07tN9wwZQ==
+X-Received: by 2002:a4a:c601:0:b0:547:6a79:18cb with SMTP id l1-20020a4ac601000000b005476a7918cbmr8484921ooq.9.1683044846542;
+        Tue, 02 May 2023 09:27:26 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id f12-20020a9d6c0c000000b006a44338c8efsm11811476otq.44.2023.05.02.09.20.00
+        by smtp.gmail.com with ESMTPSA id e9-20020a4ada09000000b0052a32a952e9sm1180289oou.48.2023.05.02.09.27.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 09:20:00 -0700 (PDT)
-Date:   Tue, 02 May 2023 10:19:59 -0600
+        Tue, 02 May 2023 09:27:25 -0700 (PDT)
+Date:   Tue, 02 May 2023 10:27:25 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Message-ID: <6451382f7aacf_1ba2d29490@chronos.notmuch>
-In-Reply-To: <20230425064758.GD4061254@coredump.intra.peff.net>
-References: <pull.1394.git.1678776364753.gitgitgadget@gmail.com>
- <pull.1394.v2.git.1682070479816.gitgitgadget@gmail.com>
- <20230425064758.GD4061254@coredump.intra.peff.net>
-Subject: Re: [PATCH v2] credential: new attribute oauth_refresh_token
+To:     =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+        Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git@vger.kernel.org, eyvind.bernhardsen@gmail.com,
+        gitster@pobox.com
+Message-ID: <645139edf1a0_1ba2d29474@chronos.notmuch>
+In-Reply-To: <20230502041725.7zbv3i4srdb7fqrg@tb-raspi4>
+References: <20230501023533.35370-1-alexhenrie24@gmail.com>
+ <20230501023533.35370-2-alexhenrie24@gmail.com>
+ <20230502041725.7zbv3i4srdb7fqrg@tb-raspi4>
+Subject: Re: [PATCH v3 1/1] docs: rewrite the documentation of the text and
+ eol attributes
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Apr 21, 2023 at 09:47:59AM +0000, M Hickford via GitGitGadget wrote:
-> 
-> > Git authentication with OAuth access token is supported by every popular
-> > Git host including GitHub, GitLab and BitBucket [1][2][3]. Credential
-> > helpers Git Credential Manager (GCM) and git-credential-oauth generate
-> > OAuth credentials [4][5]. Following RFC 6749, the application prints a
-> > link for the user to authorize access in browser. A loopback redirect
-> > communicates the response including access token to the application.
-> > 
-> > For security, RFC 6749 recommends that OAuth response also includes
-> > expiry date and refresh token [6]. After expiry, applications can use
-> > the refresh token to generate a new access token without user
-> > reauthorization in browser. GitLab and BitBucket set the expiry at two
-> > hours [2][3]. (GitHub doesn't populate expiry or refresh token.)
-> > 
-> > However the Git credential protocol has no attribute to store the OAuth
-> > refresh token (unrecognised attributes are silently discarded). This
-> > means that the user has to regularly reauthorize the helper in browser.
-> > On a browserless system, this is particularly intrusive, requiring a
-> > second device.
-> > 
-> > Introduce a new attribute oauth_refresh_token. This is especially
-> > useful when a storage helper and a read-only OAuth helper are configured
-> > together. Recall that `credential fill` calls each helper until it has a
-> > non-expired password.
-> > 
-> > ```
-> > [credential]
-> > 	helper = storage  # eg. cache or osxkeychain
-> > 	helper = oauth
-> > ```
-> 
-> OK. I don't have much knowledge of OAuth, but taking the notion of "this
-> is a useful thing for oauth clients to store" as a given, the
-> implementation seems reasonable.
+Torsten B=C3=B6gershausen wrote:
+> This looks much better, thanks.
+> I have some minor comments:
+> a) The commit message from above:
+> >  docs: rewrite the documentation of the text and eol attributes
+> =
 
-I don't think this is specific to OAuth, I've seen different authorization
-methods use something like that.
+> The word "doc" is used 2 times, that feel a little bit redundant
+> (and should start with a uppercase letter)
+> =
 
-In general you just need two variables: the refresh token, and the expiration
-time of the refresh token. The logic is very simple: if the refresh token has
-expired, you ask for a new one. This way you don't have to go through the
-authorization process again.
+> "Docs: rewrite the documentation of the text and eol attributes"
+> =
 
--- 
-Felipe Contreras
+> Or may be shorter:
+> "Rewrite the documentation of the text and eol attributes"
+
+This suggestion goes against the Git guideline in SubmittingPatches [1]:
+
+  The title sentence after the "area:" prefix omits the full stop at the
+  end, and its first word is not capitalized (the omission of
+  capitalization applies only to the word after the "area:" prefix of
+  the title) unless there is a reason to capitalize it other than
+  because it is the first word in the sentence.  E.g. "doc: clarify...",
+  not "doc: Clarify...", or "githooks.txt: improve...", not
+  "githooks.txt: Improve...".
+
+If this is touching the documentation, it should have the "docs: "
+prefix, or "doc: ".
+
+[1] https://git-scm.com/docs/SubmittingPatches
+
+-- =
+
+Felipe Contreras=
