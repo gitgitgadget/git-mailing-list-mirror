@@ -2,91 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70324C77B7E
-	for <git@archiver.kernel.org>; Tue,  2 May 2023 16:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18F02C7EE25
+	for <git@archiver.kernel.org>; Tue,  2 May 2023 16:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233831AbjEBQi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 12:38:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
+        id S233521AbjEBQj2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 12:39:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233992AbjEBQiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 12:38:19 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33DF24680
-        for <git@vger.kernel.org>; Tue,  2 May 2023 09:38:05 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-1925ad4953dso1074646fac.2
-        for <git@vger.kernel.org>; Tue, 02 May 2023 09:38:05 -0700 (PDT)
+        with ESMTP id S229584AbjEBQj1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 12:39:27 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90BC5199B
+        for <git@vger.kernel.org>; Tue,  2 May 2023 09:39:25 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-95316faa3a8so811595566b.2
+        for <git@vger.kernel.org>; Tue, 02 May 2023 09:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683045484; x=1685637484;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+GITRPA9dDFmtCrtkvArPiTHIbCIZngiVM2PW1eOdDc=;
-        b=MVdrHf0xil0hkMVnB5PLq+Uwa/VB9JeeYmCRFV2HYo917RmTi5IvxUgWiKXlFRWORa
-         OPI612b1sMGuj+N17RHGFK1OiJ/IPmjMN2njPFRDMeDy4EZT3QNWdnzjrUu5QLWXeYMO
-         fpwBeW3PlQrgdoyqU2q77zkkoo47Ehje1C1mXCyaQb2CemYcPxfBGG+jIv08zhrKxxzp
-         jen0JuunoavPF82Qnh3vdCMe3Rx2cxsH5nQPAP4b+u+kUfIEMrc7HdCJGlUKK8TtKLk6
-         teidxqSRRsuvrOebsfkT5Q2VHP/9FaNx5JteyfIyelWHMXKlMnf2TaRnKjKGEtN5M5Nb
-         MydQ==
+        d=gmail.com; s=20221208; t=1683045564; x=1685637564;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HWxcqgd8aJ3f3F6Yu0spoiv12aMkyxDIb8+Mp4IKtaQ=;
+        b=durTVSHryx1rwfoan53nWtVnKAsJTRZ8a46eEigC/U9spKogn5C1Je+PpS8HCQoKnN
+         cyZMP0Bu3gNu6/Ex+RA8qIXezbsOvCSZ1gpI3PPlskCiriqRcVcEzavYQhdc0NHaAVBJ
+         DtEnSnaKG9+VV30lZMfXNJ80pkBaX9u3ymEMab2YD/TRaI5SPaTxbIwO8kWTEEiryRkO
+         fBXY8EpQbHQxfd9oTMImhpbU2B6Vwzxxo7B5QhgC9A+TZoUGkbpXe1+dG+csOalR6NXs
+         i4nD1Kw1kjwMMjobA3U61v5C+g5o/zrEMZvLPs/HRsgoWDf0D9TpaazeECVKuH43dcdB
+         xbhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683045484; x=1685637484;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+GITRPA9dDFmtCrtkvArPiTHIbCIZngiVM2PW1eOdDc=;
-        b=gOooIXud8bncPcj0whbJFk/0xZr8v01Ox3W8LKbmwBAbq2jRlQIuVPIfoPDz/RI4cX
-         sef/v8NOJFotn1IkkGO52gygsZ4/sbHsAxCz5gNiDo1dhdbGUOahG+8L532icEfB+Yuh
-         Ph0L7UPA2aSG9C5We2J2G6U6PqMCJcolIeKVdLqmv6pxffoi1UtYmcTU5uaVSyhZmjR3
-         2JwpkalvCrb93r/iOB1my2tyv63a5UBCD+cVW5cHW8nmRFitV4BMBCmwXxoY92GvqroG
-         rR/OBaa2uzg1HvQtT91omzqzja7m0+bchAGs6w801Sor+jIdfaCLSXm5NdIr9fOs1tk8
-         wtRQ==
-X-Gm-Message-State: AC+VfDzYwQpsi6+JoZvzEyp5kZxauHXfRR0/L5pSEZu3mEA+9cEHWuEn
-        PVb9w1GvqFEZrZ6eyaf1uFo1PNNBKvE=
-X-Google-Smtp-Source: ACHHUZ7IdhJXUCKPi4swUKSOvnc2eDVhfjBHd9EMotQAyFqJzhxEMyTqS0g5l/xy4ZPkajIVlVDkeg==
-X-Received: by 2002:a05:6870:85c3:b0:18e:e0bc:829 with SMTP id g3-20020a05687085c300b0018ee0bc0829mr8511748oal.17.1683045484386;
-        Tue, 02 May 2023 09:38:04 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id b1-20020a056870b24100b0018045663fc5sm12361119oam.48.2023.05.02.09.38.03
+        d=1e100.net; s=20221208; t=1683045564; x=1685637564;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HWxcqgd8aJ3f3F6Yu0spoiv12aMkyxDIb8+Mp4IKtaQ=;
+        b=TB7S2nWUh9vZBWUTsnSuB48rsMf0EfNZxpWW10CMt9w/CjA/vsjSp2GF0GN5NGIzSW
+         FAKDRQygmsc+iPnIvdMT4NR+EeBRXK2JgwtlZAemNaCMajKLpxWjhLUEy2V67lvtyoh/
+         Vzr0YL6agdjvuQM+6tkAETdGgEwQ9kbr0c2re943Am0MLuNSMwx/SEnzaoeL0sNEs3vJ
+         KuEt4URmMalvIkXcxengOSlyzQ4Ym5hxTCpgIHTRIDcHKgp0JkumbKtSyXiJyO0Kc+y9
+         7RP48/P57uUpbMf/POml3V6S2+3/+GLhLImScdi3grYeNxRS2nBl3Ors2sMKnTDh3959
+         veWg==
+X-Gm-Message-State: AC+VfDxsQUKyH/PvM2tbzhpsYgBgGjFJCt+eZC2paMuqtAiUB0tLWqC3
+        pHxwtZ9xloO2iXi4VJN1CNk=
+X-Google-Smtp-Source: ACHHUZ53GkDANcsDd07LNTxxFZtVx6yFw0STeMW4/4grXsakzUrRZTByU3ubnc6f9HJ/RTP4E58IFg==
+X-Received: by 2002:a17:906:4fcb:b0:94f:64c7:d7e2 with SMTP id i11-20020a1709064fcb00b0094f64c7d7e2mr625979ejw.9.1683045563810;
+        Tue, 02 May 2023 09:39:23 -0700 (PDT)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id l22-20020a170906795600b0094f25ae0821sm16143294ejo.31.2023.05.02.09.39.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 09:38:03 -0700 (PDT)
-Date:   Tue, 02 May 2023 10:38:03 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Message-ID: <64513c6b3531f_1ba2d2945f@chronos.notmuch>
-In-Reply-To: <xmqq7ctytv2y.fsf@gitster.g>
-References: <20230323162234.995450-1-oswald.buddenhagen@gmx.de>
- <ZElHNTiFCblfIDEe@ugly>
- <xmqq7ctytv2y.fsf@gitster.g>
-Subject: Re: [PATCH] t/lib-rebase: (mostly) cosmetic improvements to
- set_fake_editor()
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Tue, 02 May 2023 09:39:23 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ptt2A-000Z6C-3A;
+        Tue, 02 May 2023 18:39:22 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] Add C TAP harness
+Date:   Tue, 02 May 2023 18:34:44 +0200
+References: <20230427175007.902278-1-calvinwan@google.com>
+ <20230427175007.902278-2-calvinwan@google.com>
+ <afd3e80f-99d9-7472-36e7-335f86263d09@gmail.com>
+User-agent: Debian GNU/Linux 12 (bookworm); Emacs 28.2; mu4e 1.9.0
+In-reply-to: <afd3e80f-99d9-7472-36e7-335f86263d09@gmail.com>
+Message-ID: <230502.86wn1qhemd.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
-> 
-> > ping!
-> >
-> > (also on three other unanswered patches from the same day.)
-> 
-> I would be a wrong person to ping.  
-> 
->     $ git shortlog -n -s --since=18.months --no-merges master -- t/lib-rebase.sh
->          2	Phillip Wood
->          1	Derrick Stolee
 
-Also:
+On Thu, Apr 27 2023, Phillip Wood wrote:
 
-https://github.com/felipec/git-related
+> Hi Calvin
+>
+> On 27/04/2023 18:50, Calvin Wan wrote:
+>> Introduces the C TAP harness from https://github.com/rra/c-tap-harness/
+>> There is also more complete documentation at
+>> https://www.eyrie.org/~eagle/software/c-tap-harness/
+>
+> I'm afraid this reply is rather briefer than I'd like but I'm short of
+> time and about to go off-list for a couple of weeks. My ideal unit
+> test library would
+>
+>  - print the file and line number of failed assertions
+>  - allow the test plan to be omitted by calling test_done() at the end
+>    of the test file as we do in our main test suite.
+>  - support the TODO directive
+>  - allow named tests (this maybe more trouble that it is worth as I
+>    think it inevitably leads to more boilerplate code calling the named
+>    tests)
+>
+> Unfortunately this library doesn't seem to offer any of those
+> features. It does support a lazy test plan but uses atexit() so will
+> not detect if the test program exits before all the tests have run. I
+> think it would be useful to add some unit tests to our test suite and
+> maybe this library could form the basis of that but I think printing
+> the file and line number of failed assertions is pretty essential.
 
--- 
-Felipe Contreras
+Other things aside, I prefer our explicit "test_done", but I don't see
+why you think an atexit() isn't enough to catch incomplete tests.
+
+For a C program you'd just do something like this (somewhat pseudocode,
+I didn't check if it compiled etc):
+	
+        static int done; /* read by atexit() handler */
+
+        void on_atexit(void)
+	{
+		if (!done)
+			BUG();
+        	print_plan_line();
+	}
+
+	int main(void)
+	{
+                int ret;
+
+	        setup_atexit(a_handler);
+		ret = do_tests();
+	        done = 1;
+
+                return ret;
+	}
+
+If I'm understanding you correctly you're concerned that if some user
+code within do_test() calls exit() we won't return from "do_test()", but
+we *would* call print_plan_line().
+
+That's a valid concern, we want to distinguish such "early return" from
+cases where we run to completion, that's why we use "test_done" in the
+shell code.
+
+But in the C case I think just using something like the "done" variable
+pattern above should cover that, without the need for an explicit
+"test_done".
+
+But maybe I'm missing something.
+	
