@@ -2,80 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6DA1C77B78
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 22:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF50FC77B78
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 22:54:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjECWId (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 18:08:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53268 "EHLO
+        id S229755AbjECWyd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 18:54:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjECWIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 18:08:32 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA44783D7
-        for <git@vger.kernel.org>; Wed,  3 May 2023 15:08:31 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-b9a879cd49cso8247434276.0
-        for <git@vger.kernel.org>; Wed, 03 May 2023 15:08:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683151711; x=1685743711;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=btgGy5vXO5Um57pR7bQPV2e+4m1XHRoq1T1GYXwksX8=;
-        b=dV3gIBB31HfUenwltsB98AQoQTz4RtGfgihkr/2LoTDUMefSmYdD1gScWUaUQQQAyH
-         SlQR9P9NVDwvEn1WOrwp+CVraYHSW/sfdR6zuuhRlZQjaxhghz1TVvkroX80LV/Nu9vW
-         0o9va/aiVGGP9meoW/mk5kGkan5x5ZpA+2X2C5cjK4WF6+gG5Opq4yq8f+aVfeYNo7vD
-         9A0cL35FPW/5ndLtyAtKTQOQXaDfCDjccDBrxW1ZIfuOb4lY7CTKw1M5GqY6UfJDA726
-         t+xe4AxjMKlLp/2qwcP43WuyMuKj/HMLiMSQiAW2faw1qAoZet1J9G1Pw/d13hdJxSWX
-         8Ckw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683151711; x=1685743711;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=btgGy5vXO5Um57pR7bQPV2e+4m1XHRoq1T1GYXwksX8=;
-        b=MeY9aHzf5kWaYH43Fx4x9Ul65ZcnlRo61eQiRhSZrkclvbME1C0VwpSwRUdt2lxPtg
-         G1tK/D2FsDLLAb3sj233SONw/LJX4T+hbiOuaDmee1+QW2kDC2H4zLYhsPoDCL8N9voh
-         9PaLoXcS30dtXKPqW/VmpvX+yWrk0lonXp/+MUgZsBCtSe7RajR0bQxfqahq/96CeoJj
-         Q6iN2raX/u17KCf2xGKnShEGZm4rzIRWiqnQbepkXMr38P+OazAbjZYDLQNEQ4wzKDq4
-         rrS5Fegt5rS/oyXXuv19S+pTXyZ92/eaeoI3mRb+yBczooRmHq83gf/Bu1u4GdXk7kRl
-         9Npg==
-X-Gm-Message-State: AC+VfDypKTXm7Ap4oqKjj6q9HbnsNv8cVA/zhOOF/cORwl/abz2B8Hwq
-        7sj08JJXQXjZO63j6C4w8AO3SwUMovXCfquuQOKldA==
-X-Google-Smtp-Source: ACHHUZ4Kvyz6NWCwLSIuPVvETELJdzVydga85SU/kPL5PpLOJpsWTdf1gcpXuGrkY6eb34cSBt0FVw==
-X-Received: by 2002:a25:d891:0:b0:b9d:c98b:5650 with SMTP id p139-20020a25d891000000b00b9dc98b5650mr15433770ybg.49.1683151711005;
-        Wed, 03 May 2023 15:08:31 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d4-20020a251d04000000b00b9a80b9e08esm3928480ybd.12.2023.05.03.15.08.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 15:08:30 -0700 (PDT)
-Date:   Wed, 3 May 2023 18:08:29 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] revision: support tracking uninteresting commits
-Message-ID: <ZFLbXTKOK6KTEy7q@nand.local>
-References: <cover.1682380788.git.me@ttaylorr.com>
- <a643678c0ff7d1a910b1d6c33a839166e2a6a7b2.1682380788.git.me@ttaylorr.com>
- <0b8884ea-f37b-b7d4-6edb-825ca935a893@github.com>
+        with ESMTP id S229743AbjECWya (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 18:54:30 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5C246A4
+        for <git@vger.kernel.org>; Wed,  3 May 2023 15:54:19 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 24EB65A35F;
+        Wed,  3 May 2023 22:54:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1683154459;
+        bh=6QBkWORHkmM6yAjal1J+gCBhOv9h6cwoOzM8u6owVSM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=oe8AsIPThIDzDcwsWIfb8mrw5i7rFQNvQZO+S9Ob38Oj0Z61gi7rn1a99NmEq6siP
+         VrMElxcZ36lEq7fKS7qkhj2rvPoD8dZ/iF2TS4uCz+ElyxbBmWUyaDJbiICfE3Nimh
+         uGgdmALSafIaPqLVxWXMPcMRTEqu1DdewCXtg9QRxlApMXfVAQh0jezVbtHc4qnvaf
+         vjkUhpI5CWXVDKqLKUsB3W3Jn5tes8QxBLULEXAhpbt4A5LWlJf7noCUqtIJ2S0uLT
+         Y7CryXsFeinUEJFlwJ3mwDAiu5G9M64IiL+sFncFsySrGYAdJWTbapddoL1/ztWrMc
+         Hb3pN9i/IM0hOELoVyh95qXX58Meu23e1Vc6mNBbAuRKv62/aZO/i0S93uvAJP7bLT
+         fZFpwFI94sbKjmbBZKkJ0WSuTkMBz8R7skhwyLTa6BNoB8ihUV7Q7St2S+7LFpUlpR
+         I4z5gise0hrsKY0h71JrcLdQ3HcksZdkzuAi46KcTmk5ghKZCCy
+Date:   Wed, 3 May 2023 22:54:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, Adam Majer <adamm@zombino.com>
+Subject: Re: Is GIT_DEFAULT_HASH flawed?
+Message-ID: <ZFLmGYXgvyydLB5E@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, Adam Majer <adamm@zombino.com>
+References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
+ <20230426205324.326501-1-sandals@crustytoothpaste.net>
+ <20230426205324.326501-3-sandals@crustytoothpaste.net>
+ <xmqqbkjaqqfp.fsf@gitster.g>
+ <20230427054343.GE982277@coredump.intra.peff.net>
+ <6451a0ba5c3fb_200ae2945b@chronos.notmuch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="JUkE04ncryDxi3m8"
 Content-Disposition: inline
-In-Reply-To: <0b8884ea-f37b-b7d4-6edb-825ca935a893@github.com>
+In-Reply-To: <6451a0ba5c3fb_200ae2945b@chronos.notmuch>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 02:15:49PM -0400, Derrick Stolee wrote:
-> I know that the walking code in builtin/pack-objects.c does
-> this same computation, but it's muddled with other checks and
-> the trees are marked as UNINTERESTING at the same time. It
-> doesn't seem like we can reuse anything directly out of there,
-> but it did give me the idea to try a callback.
 
-Interesting idea. When you say callback, do you mean a function that we
-invoke in place of where we currently call `add_object_array()`? Or do
-you mean something else? Curious.
+--JUkE04ncryDxi3m8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Taylor
+On 2023-05-02 at 23:46:02, Felipe Contreras wrote:
+> In my view one repository should be able to have part SHA-1 history,
+> part SHA3-256 history, and part BLAKE2b history.
+
+That is practically very difficult and it means that it's hard to have
+confidence in the later history because SHA-1 is weak and you have to
+rely on it to verify the SHA-256 history later.  Since attacks always
+get better, SHA-1 will eventually be so weak that collisions can be
+computed in the amount of time we now take for MD4 or MD5 collisions
+(i.e., seconds), and with your plan, we'd have to retain that history
+forever with the resulting lack of confidence in part of the history.
+
+This also doesn't work with various structures like trees, the index,
+and pack and index formats, which have no indication of the algorithm
+used and simply rely on fixed-size, often 4-byte aligned object IDs
+without any metadata.  In addition, the internals of the code often
+don't pass around enough data to make these values variable and thus
+this approach would substantially complicate the code in many ways.
+
+Also, we've already decided on the current design a long time ago with
+the transition plan after extensive, thoughtful discussion by many
+people.  Very few people other than me have worked on sending patches to
+work on the hash function transition, and that work up to now has all
+been done on my personal time, without compensation of any sort, out of
+a desire to improve the project.  Lots of people have opined on how it
+should have been different without sending any patches.
+
+If you would like to propose patches for the extensive amount of work to
+implement your solution, then we could consider them, although I will
+warn you that your approach will likely require at least several hundred
+patches.  However, I refer you to the list archives to determine why
+your approach is not the one we chose and is not, in my view, the best
+path forward.  I should also be clear that I have no intention of
+submitting patches to change our approach now or in the future, or
+redoing the patches I've already sent.
+
+> The fact that apparently it's so easy to clone a repository with
+> the wrong hash algorithm should give developers pause, as it means the
+> whole point of using cryptographic hash algorithms to ensure the
+> integrity of the commit history is completely gone.
+
+No, it doesn't.  It means that our empty repositories until recently
+lacked any indication of the algorithm or other capabilities, which was
+a mistake in our original protocol design that has now been corrected.
+
+If you interact with the repository later on when it has data, then if
+you're using the wrong hash algorithm, you'll find that you get a
+helpful error message that that's not yet supported.  If you patched Git
+to ignore that check, you'd find that your repository would just be very
+broken in many ways with lots of random crashing and seemingly unrelated
+error messages instead of subtly using the wrong algorithm.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--JUkE04ncryDxi3m8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZFLmGQAKCRB8DEliiIei
+gX+RAP9yRszto8oIG4sZ7UlOnbUF5BVjruQaIsfdHH8ZXB6hpwD9EgZ0JRb/NCmh
+dFO39iF25a2/dQzKC8Ngv5CjqkdNUwg=
+=RLY1
+-----END PGP SIGNATURE-----
+
+--JUkE04ncryDxi3m8--
