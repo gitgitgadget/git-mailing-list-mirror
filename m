@@ -2,218 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83728C77B75
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 11:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A99A4C77B75
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 13:41:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbjECLhF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 07:37:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47670 "EHLO
+        id S230202AbjECNlj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 09:41:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbjECLg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 07:36:57 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83F455FE4
-        for <git@vger.kernel.org>; Wed,  3 May 2023 04:36:40 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 9E3695C037C;
-        Wed,  3 May 2023 07:36:28 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 03 May 2023 07:36:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1683113788; x=1683200188; bh=6o
-        FU6Np7W0P7rT78gfXoJ3bcZrWUkrqbBEWewOjKPQo=; b=AANJqgAKFpjw6m1lcK
-        QLEpr4qHMXh7uDepsnQtIQ6lpz/PDd29cW9ttldT6PF0Nf5+ZVfHuWUdXaPVBlVL
-        A2oKjVbH7t+3pb/BqucCT6wo2B6+N8INIPpHsokOXgw7Yeoy9FvXh8NEfxhRrVOC
-        9zF7fX+KHtGMFkrIf6J+TNbvaLyNbemHpn1j2eFxZ9lWWsvT9E+2OmUM7BHxYmoP
-        MB7CfJvuqXobh9+UPPos6uzdqh80pmLuBhFLHFh2oE5/3XngbzCqNufZ6uxE1BPE
-        QM3SVW7tsg4kVVEM9o7ceZdniPH5Jp6XEjvYAov17bCU1+pbo7NuWv/fZAOTa6Wa
-        03gQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683113788; x=1683200188; bh=6oFU6Np7W0P7r
-        T78gfXoJ3bcZrWUkrqbBEWewOjKPQo=; b=ABSsJmqBq7/zS7WgJcSyDQUHlUKNi
-        768ORVtKygBHpohjaiCEnmrI5BQi2sdmo3CbGhMqJ0JSlycIYfFv5oA5JEp+zbed
-        vbYgLZQtI+eGjfXDQZojux7lMMPoIV+s2Fdca/71yfHxlU8Xy0FZBMSKA1yDunoj
-        mRNgbbODrHKmOPqUEX/7z1qca1vuKKxsuPKABZ3pP0NyQxUfXQKcMuBJN87QZXVD
-        ylQjz0GIUAqGMV2jfyhGeREn/wHR68r3NJNPVAdfHxLnNSW7fifWrIagxLIVNupJ
-        PqyKGLge+3wkhzDLM+z4S6rbdi1uZVn62THyb+uOCnp8Vj7dM+jUri7fQ==
-X-ME-Sender: <xms:PEdSZM_HuLsFH-knZVNaO2LX-_hxbWw6CSHGcWXD8n8kENVeXy18WQ>
-    <xme:PEdSZEsp--10lD4CRMvNp_NmG8VNa83zlqC7QIiakMtHIobpSUPZ2qZx296jZswPz
-    dDcuwfXguZoKxf8gg>
-X-ME-Received: <xmr:PEdSZCBPjg2cA9hQR-I0QiZnF5gEJmQQAFeLsAJKZfecxpg_pn11jPqbWLSzdqttrfD_7NqkCYZ2_VVSUUHwOXeztsTuDREfi_aJA4q0fO3y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvkedggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:PEdSZMfcEZex8W0E58pxT8YwyCPIrwWHHzdWIY-5GrVcdb7WjhZE5Q>
-    <xmx:PEdSZBOPrbSEAdEVxhx2QVQ0cS6xTnVSyBThs-1-xh21lxIvuohwjA>
-    <xmx:PEdSZGmZ27yZSi2y14PWf8STP4MmG-NiSfzvyJ6clAEQx4_aIiKc3g>
-    <xmx:PEdSZGqUiV8qh0ggXmRIczz8e_5dGWl9LMc8RfJHJ8nEvFcOeIVwkw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 May 2023 07:36:26 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id dcdfef32 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 3 May 2023 11:35:45 +0000 (UTC)
-Date:   Wed, 3 May 2023 13:36:24 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v2 7/8] fetch: introduce new `--output-format` option
-Message-ID: <ZFJHOLCQpyeWEPB7@ncase>
-References: <cover.1681906948.git.ps@pks.im>
- <cover.1682593865.git.ps@pks.im>
- <0335e5eeb4ded336c5ff7c8888c8aab9dfed2505.1682593865.git.ps@pks.im>
- <kl6l5y9f3ahf.fsf@chooglen-macbookpro.roam.corp.google.com>
- <ZFIsw94SBxRVkWmz@ncase>
+        with ESMTP id S229688AbjECNli (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 09:41:38 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E4A71A5
+        for <git@vger.kernel.org>; Wed,  3 May 2023 06:41:35 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ac7561c0feso6595201fa.0
+        for <git@vger.kernel.org>; Wed, 03 May 2023 06:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683121293; x=1685713293;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yYZxO/ia62rusuqegXv3lhzhUTFPhAHqg9mIq+c85/0=;
+        b=D2ccPapvEO0V30wwnoevnK9YI3mAGhILwj6Vd8S42qrkJv9vJPkJ0+kSAo9mAN0Lxs
+         l+KA/EhabckJutAuanIowV1RPoeib3YwF1q6dvmlOuE0neaDLCWP8XZk7/JbkIPtwNoc
+         L0wW33lY9ljwsP6uL/k54OQAGbaI9Yvq9+I9L5485dYgnFheP36VdcD2kBHXvKLbW+5T
+         UqynKTJKUyyIPstJqU6Nnqkfo7e7hY9lfn72nNU9j/xaJ0rcFxdsdb+xmv/iZZqOWXF4
+         U2X/Hiym4Ndv1+6meAE1gTOQhobMJe9Ra+dn+P5ZgLDBbH/HSz5reEFWt6Wtxm6MAmj5
+         yHrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683121293; x=1685713293;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yYZxO/ia62rusuqegXv3lhzhUTFPhAHqg9mIq+c85/0=;
+        b=XkZlaeWIUFLbZn4ZB3lF+6ZXIac6gP/MsaYiFRbjxTgfHVIGZGu5cscUp5GgEmUoGf
+         zUulOwcmK0o8FcpnX9D1dSGneVoUv8CAWfsmmT8Xc2ZtA4oUO7gXnWd8l78FJsXpwrkX
+         S6uFqGvzC54Uki6BwqUsstH2WP4o9OGlhQHAuITZTFY9+9SXBqmECVwfjYq70nktktmD
+         YYiTFtddIqeoxCIzbKl2zXWyQ7zgM4q2804FDpFIMDU9J9f+jTLMJYdZsgUgg6IGIxPh
+         ZuOlP/gcS0yHt9U50iuCm/2qRtXxsn0tFLWdSk52Ic/NP8cIIrhR/qLQaL5+goZyufG3
+         rVcA==
+X-Gm-Message-State: AC+VfDwTbX/ncHN4oP1T2mVqkFQZG5z2/IFwOEtAZ4pe0z9AQ8osEFN2
+        z8U1XpC8YzfA6sZyTuR/t+w=
+X-Google-Smtp-Source: ACHHUZ6JHjD0Ya8I73VZzNOstfdfhwS1+fNHLN1kbAPU9yDkx2tUa0D1itlh0NDubQ0N8UT0xKz8pA==
+X-Received: by 2002:a2e:8896:0:b0:2a9:f640:2032 with SMTP id k22-20020a2e8896000000b002a9f6402032mr55252lji.5.1683121293139;
+        Wed, 03 May 2023 06:41:33 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id j25-20020a2e8519000000b002a76c16ad65sm6022680lji.87.2023.05.03.06.41.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 May 2023 06:41:32 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH] t4013: add expected failure for "log --patch --no-patch"
+Date:   Wed,  3 May 2023 16:41:18 +0300
+Message-Id: <20230503134118.73504-1-sorganov@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HIQamP2Ej+x7iBG+"
-Content-Disposition: inline
-In-Reply-To: <ZFIsw94SBxRVkWmz@ncase>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+--patch followed by --no-patch is to be a no-op according to the "git
+log" manual page. In reality this sequence breaks --raw output
+though (and who knows what else?)
 
---HIQamP2Ej+x7iBG+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add a test_expected_failure case for the issue.
 
-On Wed, May 03, 2023 at 11:43:31AM +0200, Patrick Steinhardt wrote:
-> On Fri, Apr 28, 2023 at 03:31:08PM -0700, Glen Choo wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >=20
-> > > @@ -1894,6 +1902,9 @@ static int fetch_multiple(struct string_list *l=
-ist, int max_children)
-> > >  		     "--no-write-commit-graph", NULL);
-> > >  	add_options_to_argv(&argv);
-> > > =20
-> > > +	if (format !=3D DISPLAY_FORMAT_UNKNOWN)
-> > > +		strvec_pushf(&argv, "--output-format=3D%s", display_formats[format=
-]);
-> > > +
-> >=20
-> > I think these lines belong inside add_options_to_argv(), since that's
-> > also used to prepare argv for fetch_submodules(), so we'd also get
-> > support for --recurse-submodules. (I wish I had spotted that in v1,
-> > sorry. Thankfully they use the same helper function, so we only have to
-> > do this once.)
-> >=20
-> > ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-> >   diff --git a/builtin/fetch.c b/builtin/fetch.c
-> >   index 422e29a914..7aa385aed5 100644
-> >   --- a/builtin/fetch.c
-> >   +++ b/builtin/fetch.c
-> >   @@ -1796,8 +1796,11 @@ static int add_remote_or_group(const char *nam=
-e, struct string_list *list)
-> >     return 1;
-> >   }
-> >=20
-> >   -static void add_options_to_argv(struct strvec *argv)
-> >   +static void add_options_to_argv(struct strvec *argv,
-> >   +				enum display_format format)
-> >   {
-> >   /* Maybe this shouldn't be first, idk */
-> >   +	if (format !=3D DISPLAY_FORMAT_UNKNOWN)
-> >   +		strvec_pushf(argv, "--output-format=3D%s", display_formats[format]=
-);
-> >     if (dry_run)
-> >       strvec_push(argv, "--dry-run");
-> >     if (prune !=3D -1)
-> >   @@ -1908,10 +1911,7 @@ static int fetch_multiple(struct string_list *=
-list, int max_children,
-> >     strvec_pushl(&argv, "-c", "fetch.bundleURI=3D",
-> >           "fetch", "--append", "--no-auto-gc",
-> >           "--no-write-commit-graph", NULL);
-> >   -	add_options_to_argv(&argv);
-> >   -
-> >   -	if (format !=3D DISPLAY_FORMAT_UNKNOWN)
-> >   -		strvec_pushf(&argv, "--output-format=3D%s", display_formats[format=
-]);
-> >   +	add_options_to_argv(&argv, format);
-> >=20
-> >     if (max_children !=3D 1 && list->nr !=3D 1) {
-> >       struct parallel_fetch_state state =3D { argv.v, list, 0, 0 };
-> >   @@ -2403,7 +2403,7 @@ int cmd_fetch(int argc, const char **argv, cons=
-t char *prefix)
-> >       if (max_children < 0)
-> >         max_children =3D fetch_parallel_config;
-> >=20
-> >   -		add_options_to_argv(&options);
-> >   +		add_options_to_argv(&options, display_format);
-> >       result =3D fetch_submodules(the_repository,
-> >               &options,
-> >               submodule_prefix,
-> >=20
-> > ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-> >=20
-> > I tested the result of that locally with --recurse-submodules, and
-> > it works.
->=20
-> Unfortunately it doesn't quite work alright: while the porcelain format
-> does indeed get inherited to the child process correctly, the parallel
-> process API will cause us to group output per submodule-fetch. This has
-> the consequence that stdout will be redirected into stderr, and that
-> then breaks the assumption that all machine-parseable output goes to
-> stdout.
->=20
-> My initial reflex is to just outright reject porcelain mode when
-> submodule fetches are enabled. But that would require the caller to
-> always explicitly pass `--recurse-submodules=3Doff`, which isn't exactly
-> great usability-wise.
->=20
-> The alternative would be to ungroup the output so that we can continue
-> to print to the correct output streams. That works alright, and I've got
-> a working version that does exactly that. But now we have the issue that
-> the porcelain output is misleading: you cannot tell whether a specific
-> reference update happens in the parent repository or in the submodule as
-> that information is not part of the output.
->=20
-> I consider the second option to be much worse than the first option
-> because it can cause scripts do to the wrong thing. So I'll send v3 with
-> the first option, even though it's kind of an awful workaround. I'd be
-> happy to hear any alternative proposals though.
->=20
-> Patrick
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+ t/t4013-diff-various.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-I've gone with a slightly different variant of the first option that is
-inspired by `--negotiate-only`: instead of refusing to run, we disable
-submodule-fetches unless explicitly specified on the command line. In
-that case we return an error.
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 5de1d190759f..f876b0cc8ec3 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -457,6 +457,17 @@ diff-tree --stat --compact-summary initial mode
+ diff-tree -R --stat --compact-summary initial mode
+ EOF
+ 
++# This should succeed as --patch followed by --no-patch sequence is to
++# be a no-op according to the manual page. In reality it breaks --raw
++# though. Needs to be fixed.
++test_expect_failure '--no-patch cancels --patch only' '
++	git log --raw master >result &&
++	process_diffs result >expected &&
++	git log --patch --no-patch --raw >result &&
++	process_diffs result >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'log -m matches pure log' '
+ 	git log master >result &&
+ 	process_diffs result >expected &&
+-- 
+2.25.1
 
-Patrick
-
---HIQamP2Ej+x7iBG+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRSRzcACgkQVbJhu7ck
-PpS0MBAAgK1lIvgWWwf/FYQLkGbIYSXivfHu2E6qrC+GrIbHrlR7lHFzyqPfAWNh
-FGzwGGU3mUEbfGdv6dg9GVQftx07zO0wYWj1PcU+3MUFgZv6QfGEDZIegFEAuoLJ
-h+fBzuFM6Nwe43BJRJDdDM705C2wRMjHijU/keBNWF0u8dLpgIcmVmWKUpRVKAT2
-yh7hM+9zsGKVGg1Let28yxGiFCVaeJLb7yrNtomY9qQlmueljSI1XEjUbxT++8Vh
-DACPcA0heHH+3VZdHwnBGKEFyvKY9UyImQ52CZLoDcHGLaDxRQiGEHjg5sgmrOyg
-jkX+9PbT3M5WrIbXWj4lEvgm5ZQCjY5HloXrfLH2432a7xYGirUQvS5jguCzo1JL
-Pw9tJljqqwYruljhvSOz5Oe2IwcjAOUk5adYzjqF9LKWipbucUQDCk4qu200L0ka
-zDcSQcF1ByENbz6P/LJbgXDJOTbqvAINSM/u0SdSqM6zvRfh3DG7B3/afR1b272G
-9VQfUqmgY3LWjRlLwzWHO4RkYjBahMsheRDtAsU2gDHrMKHuk9wRTaBDDnaTrMli
-Ohm9u14xl+01OM3qYcSPbGrpMXwSD4zRfoeeRroRqu59Jl4MHp7tuBuZcfLcb7sg
-VZ6+TYSLvywRgondETAOUrW1m2E08/pmG2TFQbIvzWLScIig1yI=
-=UrbY
------END PGP SIGNATURE-----
-
---HIQamP2Ej+x7iBG+--
