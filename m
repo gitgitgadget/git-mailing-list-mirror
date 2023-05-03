@@ -2,137 +2,312 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF50FC77B78
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 22:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70F4BC77B7F
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 23:18:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbjECWyd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 18:54:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48638 "EHLO
+        id S229558AbjECXSt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 19:18:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbjECWya (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 18:54:30 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5C246A4
-        for <git@vger.kernel.org>; Wed,  3 May 2023 15:54:19 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 24EB65A35F;
-        Wed,  3 May 2023 22:54:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1683154459;
-        bh=6QBkWORHkmM6yAjal1J+gCBhOv9h6cwoOzM8u6owVSM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oe8AsIPThIDzDcwsWIfb8mrw5i7rFQNvQZO+S9Ob38Oj0Z61gi7rn1a99NmEq6siP
-         VrMElxcZ36lEq7fKS7qkhj2rvPoD8dZ/iF2TS4uCz+ElyxbBmWUyaDJbiICfE3Nimh
-         uGgdmALSafIaPqLVxWXMPcMRTEqu1DdewCXtg9QRxlApMXfVAQh0jezVbtHc4qnvaf
-         vjkUhpI5CWXVDKqLKUsB3W3Jn5tes8QxBLULEXAhpbt4A5LWlJf7noCUqtIJ2S0uLT
-         Y7CryXsFeinUEJFlwJ3mwDAiu5G9M64IiL+sFncFsySrGYAdJWTbapddoL1/ztWrMc
-         Hb3pN9i/IM0hOELoVyh95qXX58Meu23e1Vc6mNBbAuRKv62/aZO/i0S93uvAJP7bLT
-         fZFpwFI94sbKjmbBZKkJ0WSuTkMBz8R7skhwyLTa6BNoB8ihUV7Q7St2S+7LFpUlpR
-         I4z5gise0hrsKY0h71JrcLdQ3HcksZdkzuAi46KcTmk5ghKZCCy
-Date:   Wed, 3 May 2023 22:54:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, Adam Majer <adamm@zombino.com>
-Subject: Re: Is GIT_DEFAULT_HASH flawed?
-Message-ID: <ZFLmGYXgvyydLB5E@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, Adam Majer <adamm@zombino.com>
-References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
- <20230426205324.326501-1-sandals@crustytoothpaste.net>
- <20230426205324.326501-3-sandals@crustytoothpaste.net>
- <xmqqbkjaqqfp.fsf@gitster.g>
- <20230427054343.GE982277@coredump.intra.peff.net>
- <6451a0ba5c3fb_200ae2945b@chronos.notmuch>
+        with ESMTP id S229541AbjECXSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 19:18:47 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188DE7A8D
+        for <git@vger.kernel.org>; Wed,  3 May 2023 16:18:46 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 41be03b00d2f7-51fdc1a1270so3911738a12.1
+        for <git@vger.kernel.org>; Wed, 03 May 2023 16:18:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683155925; x=1685747925;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mbY/pHtgmrZ7reyLOplSq2n5cFv79j1eFlFdV2Xbw7g=;
+        b=WSBL8i07dVK/sq+/mSaQD7NHbw2BFwmSDT+5iZnQP5Vg7ASAlWN8XOUPGRdutMaTmB
+         CT1qL0rqJoYfAWMNR1zfAsLS51OETHmjHvDPQmkDufzAiCTNJqYlQpa3+orXmYGus9uY
+         P0KbcMvDIDc4y0mSokYnNV7Lfp0VJcrD12EgfZRH+zO3R1DUWfwG4/+rc0fQ0ipiq1hV
+         EUYozhskcS7pgWCHKh9R4kwOBhHJGnGPSZgAeVJQFIbC+m3/b0eavhKjoZFQJlSi6F0Y
+         TpwIYN4WmPQOC3lilo6PEmDERYl+xwkGHFGNgfDuCkV5K8uNTYBjR86lBifisAdQdYkD
+         NQqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683155925; x=1685747925;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mbY/pHtgmrZ7reyLOplSq2n5cFv79j1eFlFdV2Xbw7g=;
+        b=e4Xx3RsIXRG8E6YDeYNmCjChgmFQVKNBsHXRBI52e6d41/vbnJ5P+ld2zY30upRaL+
+         0KD5ZEpHa/nmPmHVONAQ+xHWeV6KdtzRO/LOH54VpD7kAVxKUKxw1R+7h0NzJrNS3RAb
+         BW9o+wjaBGH1RBrK3MU/YkLZA9IfacZDVK9LuRWI7CU8b3YQxfytcE8LvkspJF+1uIF+
+         dqi89zWwqIwDLSaEYjC3SSAw13lDx69iYQzB6rgQrvkrnK4YTnbjrWU5+1tjy2xE15t+
+         fd/XnKWWZpjoKA1JHn7l3Q1lPdygtKyK4n+H/dI/SSZYrfQm7gO9au36qk49+VL4IDt6
+         E8Rg==
+X-Gm-Message-State: AC+VfDyA1YAMuM5a3FtP98vlO+W1hnkmfRz5v3MIA+KWVdIuOzbhM+J7
+        XDsME3wACLsh2mCBBfvLeBCfTwmNS6E=
+X-Google-Smtp-Source: ACHHUZ4kyLbgUqZLwY34guLNemS14YYvVcj54erdC+gsixS/x5/884NR1Vm8zI+UI8Gm+V414dt3Ag==
+X-Received: by 2002:a17:90b:4c42:b0:24e:2f9c:ee5e with SMTP id np2-20020a17090b4c4200b0024e2f9cee5emr159818pjb.42.1683155925284;
+        Wed, 03 May 2023 16:18:45 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id oj16-20020a17090b4d9000b0024bb47eba2asm1948049pjb.7.2023.05.03.16.18.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 May 2023 16:18:44 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3] builtin/pack-objects.c: introduce `pack.extraCruftTips`
+References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
+        <27a7f16aab35b5cac391d9831aadb0f2e2146313.1683151485.git.me@ttaylorr.com>
+Date:   Wed, 03 May 2023 16:18:44 -0700
+In-Reply-To: <27a7f16aab35b5cac391d9831aadb0f2e2146313.1683151485.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Wed, 3 May 2023 18:05:45 -0400")
+Message-ID: <xmqqv8h9m2az.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JUkE04ncryDxi3m8"
-Content-Disposition: inline
-In-Reply-To: <6451a0ba5c3fb_200ae2945b@chronos.notmuch>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
---JUkE04ncryDxi3m8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>   - When not pruning, all packed and loose objects which do not appear
+>     in the any of the packs which wil remain (as indicated over stdin,
+>     with `--cruft`) are packed separately into a cruft pack.
 
-On 2023-05-02 at 23:46:02, Felipe Contreras wrote:
-> In my view one repository should be able to have part SHA-1 history,
-> part SHA3-256 history, and part BLAKE2b history.
+"wil remain" -> "will remain"
 
-That is practically very difficult and it means that it's hard to have
-confidence in the later history because SHA-1 is weak and you have to
-rely on it to verify the SHA-256 history later.  Since attacks always
-get better, SHA-1 will eventually be so weak that collisions can be
-computed in the amount of time we now take for MD4 or MD5 collisions
-(i.e., seconds), and with your plan, we'd have to retain that history
-forever with the resulting lack of confidence in part of the history.
+But more importantly, it is not clear to me whose "stdin" we are
+talking about and what is sent "over stdin" here.  Somebody pipes
+the output of "printf %s --cruft" to "pack-objects"???
 
-This also doesn't work with various structures like trees, the index,
-and pack and index formats, which have no indication of the algorithm
-used and simply rely on fixed-size, often 4-byte aligned object IDs
-without any metadata.  In addition, the internals of the code often
-don't pass around enough data to make these values variable and thus
-this approach would substantially complicate the code in many ways.
+> However, there is no option to be able to keep around certain objects
+> that have otherwise aged out of the grace period. The only way to retain
+> those objects is:
+>
+>   - to point a reference at them, which may be undesirable or
+>     infeasible,
+>   - to track them via the reflog, which may be undesirable since the
+>     reflog's lifetime is limited to that of the reference it's tracking
+>     (and callers may want to keep those unreachable objects around for
+>     longer)
+>   - to extend the grace period, which may keep around other objects that
+>     the caller *does* want to discard,
+>   - or, to force the caller to construct the pack of objects they want
+>     to keep themselves, and then mark the pack as kept by adding a
+>     ".keep" file.
 
-Also, we've already decided on the current design a long time ago with
-the transition plan after extensive, thoughtful discussion by many
-people.  Very few people other than me have worked on sending patches to
-work on the hash function transition, and that work up to now has all
-been done on my personal time, without compensation of any sort, out of
-a desire to improve the project.  Lots of people have opined on how it
-should have been different without sending any patches.
+If you do not want to point objects you want to keep with a ref,
+then you are making a problem for yourself, as gc decisions are
+designed around the notion that anything worthwhile to keep are
+supposed to be reachable from some anchoring points (like the refs,
+the reflogs, the index and its various extensions, etc.).
 
-If you would like to propose patches for the extensive amount of work to
-implement your solution, then we could consider them, although I will
-warn you that your approach will likely require at least several hundred
-patches.  However, I refer you to the list archives to determine why
-your approach is not the one we chose and is not, in my view, the best
-path forward.  I should also be clear that I have no intention of
-submitting patches to change our approach now or in the future, or
-redoing the patches I've already sent.
+> Here is a reworked version of the pack.extraCruftTips feature to reuse
+> parts of the "rescue old/unreachable, but reachable-from-recent" traversal.
 
-> The fact that apparently it's so easy to clone a repository with
-> the wrong hash algorithm should give developers pause, as it means the
-> whole point of using cryptographic hash algorithms to ensure the
-> integrity of the commit history is completely gone.
+That sounds like a sensible way to go, but as I said earlier, it
+still is not clear, at least to me, why the pack.extraCruftTips
+program can compute them cheaply enough when you cannot have these
+tips pointed at with refs in some reserved namespaces of your own.
 
-No, it doesn't.  It means that our empty repositories until recently
-lacked any indication of the algorithm or other capabilities, which was
-a mistake in our original protocol design that has now been corrected.
+> +pack.extraCruftTips::
 
-If you interact with the repository later on when it has data, then if
-you're using the wrong hash algorithm, you'll find that you get a
-helpful error message that that's not yet supported.  If you patched Git
-to ignore that check, you'd find that your repository would just be very
-broken in many ways with lots of random crashing and seemingly unrelated
-error messages instead of subtly using the wrong algorithm.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Is this consistent with the way we name a variable whose value
+specifies a command to run?  At first, I thought this was a
+multi-valued configuration variable, each of the value is an object
+name.  extraCruftTipsCmd?  extraCruftTipsHook?
 
---JUkE04ncryDxi3m8
-Content-Type: application/pgp-signature; name="signature.asc"
+> +	When generating a cruft pack, use the shell to execute the
+> +	specified command(s), and interpret their output as additional
+> +	tips of objects to keep in the cruft pack, regardless of their
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+What is a "tip of an object"?  The first byte ;-)?
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZFLmGQAKCRB8DEliiIei
-gX+RAP9yRszto8oIG4sZ7UlOnbUF5BVjruQaIsfdHH8ZXB6hpwD9EgZ0JRb/NCmh
-dFO39iF25a2/dQzKC8Ngv5CjqkdNUwg=
-=RLY1
------END PGP SIGNATURE-----
+A "tip of history" would only imply commit objects, but presumably
+you would want to specify a tree and protect all the blobs and trees
+it recursively contains, so that is not a good name for it.
 
---JUkE04ncryDxi3m8--
+> +	age.
+> ++
+> +Output must contain exactly one hex object ID per line, and nothing
+> +else. Objects which cannot be found in the repository are ignored.
+
+Are objects that cannot be found the same as objects that are
+missing?  How do we determine if a given object name refers to an
+object which cannot be found?  Would the lazy fetching from promisor
+remotes come into play?
+
+> +Multiple hooks are supported, but all must exit successfully, else no
+> +cruft pack will be generated.
+> +
+
+Now, we are told this variable refers to "hooks".  If that is the
+name we want to call them, we'd better use the term from the
+beginning.
+
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index a5b466839b..6f6e7872cd 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -44,6 +44,7 @@
+>  #include "pack-mtimes.h"
+>  #include "parse-options.h"
+>  #include "wrapper.h"
+> +#include "run-command.h"
+>
+>  /*
+>   * Objects we are going to pack are collected in the `to_pack` structure.
+> @@ -3543,11 +3544,85 @@ static void enumerate_cruft_objects(void)
+>  	stop_progress(&progress_state);
+>  }
+>
+> +static int enumerate_extra_cruft_tips_1(struct rev_info *revs, const char *args)
+
+Let's lose the _1 suffix unless you have
+enumerate_extra_cruft_tips() that farms out bulk of its inner
+workings to this one.
+
+> +{
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	FILE *out;
+> +	int ret = 0;
+> +
+> +	cmd.use_shell = 1;
+> +	cmd.out = -1;
+> +
+> +	strvec_push(&cmd.args, args);
+> +
+> +	if (start_command(&cmd))
+> +		return -1;
+> +
+> +	out = xfdopen(cmd.out, "r");
+
+It somehow feels funny to be reading from "out", which is usually
+where we write things to.
+
+> +	while (strbuf_getline(&buf, out) != EOF) {
+
+Ditto.
+
+> +		struct object_id oid;
+> +		struct object *obj;
+> +		int type;
+> +		const char *rest;
+> +
+> +		if (parse_oid_hex(buf.buf, &oid, &rest) || *rest) {
+> +			ret = error(_("invalid extra cruft tip: '%s'"), buf.buf);
+> +			goto done;
+> +		}
+> +
+> +		type = oid_object_info(the_repository, &oid, NULL);
+> +		if (type < 0)
+> +			continue;
+> +
+> +		obj = lookup_object_by_type(the_repository, &oid, type);
+> +		if (!obj)
+> +			continue;
+
+Hmph, we may want to have an interface that lets us avoid looking up
+the same oid twice in the same set of tables.  Given an object
+unseen so far, oid_object_info() should have done most of the work
+necessary for lookup_object_by_type() to get to and start parsing
+the data of the object in the good case (i.e. object exists and in a
+pack---just we haven't needed it yet), but in the above sequence
+there is not enough information passed between two calls to take
+advantage of it.
+
+> +		display_progress(progress_state, ++nr_seen);
+> +		add_pending_object(revs, obj, "");
+> +	}
+> +
+> +	ret = finish_command(&cmd);
+> +
+> +done:
+> +	if (out)
+> +		fclose(out);
+> +	strbuf_release(&buf);
+> +	child_process_clear(&cmd);
+> +
+> +	return ret;
+> +}
+> +
+> +static void add_extra_cruft_tips_to_traversal(struct rev_info *revs)
+> +{
+> +	const struct string_list *programs;
+> +	int ret = 0;
+> +	size_t i;
+> +
+> +	if (git_config_get_string_multi("pack.extracrufttips", &programs))
+> +		return;
+> +
+> +	if (progress)
+> +		progress_state = start_progress(_("Enumerating extra cruft tips"), 0);
+> +	nr_seen = 0;
+> +	for (i = 0; i < programs->nr; i++) {
+> +		ret = enumerate_extra_cruft_tips_1(revs,
+> +						   programs->items[i].string);
+> +		if (ret)
+> +			break;
+> +	}
+> +	stop_progress(&progress_state);
+
+We iterate over the value list internal to the repo_config, but we
+are only borrowing them so there is no need to do any clean-up upon
+leaving.  OK.
+
+> +	if (ret)
+> +		die(_("unable to enumerate additional cruft tips"));
+> +}
+> +
+>  static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs)
+>  {
+>  	struct packed_git *p;
+>  	struct rev_info revs;
+> -	int ret;
+> +	int ret = 0;
+>
+>  	repo_init_revisions(the_repository, &revs, NULL);
+>
+> @@ -3560,11 +3635,15 @@ static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs
+>
+>  	revs.ignore_missing_links = 1;
+>
+> -	if (progress)
+> -		progress_state = start_progress(_("Enumerating cruft objects"), 0);
+> -	ret = add_unseen_recent_objects_to_traversal(&revs, cruft_expiration,
+> -						     set_cruft_mtime, 1);
+> -	stop_progress(&progress_state);
+> +	if (cruft_expiration) {
+> +		if (progress)
+> +			progress_state = start_progress(_("Enumerating cruft objects"), 0);
+> +		ret = add_unseen_recent_objects_to_traversal(&revs, cruft_expiration,
+> +							     set_cruft_mtime, 1);
+> +		stop_progress(&progress_state);
+> +	}
+> +
+> +	add_extra_cruft_tips_to_traversal(&revs);
+
+Hmph, is this hunk doing two unrelated things at the same time?
+What was the reason why we didn't have to be conditional on
+cruft_expiration in the original code, and why does it start
+mattering when we teach the code to call out to hooks?
+
+> @@ -3639,8 +3718,19 @@ static void read_cruft_objects(void)
+>
+>  	if (cruft_expiration)
+>  		enumerate_and_traverse_cruft_objects(&fresh_packs);
+> -	else
+> +	else {
+> +		/*
+> +		 * call both enumerate_cruft_objects() and
+> +		 * enumerate_and_traverse_cruft_objects(), since:
+> +		 *
+> +		 *   - the former is required to implement non-pruning GCs
+> +		 *   - the latter is a noop for "cruft_expiration == 0", but
+> +		 *     picks up any additional tips mentioned via
+> +		 *     `pack.extraCruftTips`.
+> +		 */
+>  		enumerate_cruft_objects();
+> +		enumerate_and_traverse_cruft_objects(&fresh_packs);
+> +	}
