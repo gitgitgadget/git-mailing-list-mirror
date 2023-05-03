@@ -2,86 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 577E1C77B7F
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 23:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F13C77B75
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 23:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbjECXX4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 19:23:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60442 "EHLO
+        id S229799AbjECX0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 19:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbjECXXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 19:23:53 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305A883CC
-        for <git@vger.kernel.org>; Wed,  3 May 2023 16:23:53 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-18b5c8c2a49so3978023fac.3
-        for <git@vger.kernel.org>; Wed, 03 May 2023 16:23:53 -0700 (PDT)
+        with ESMTP id S229772AbjECX0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 19:26:01 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 065DE8A7F
+        for <git@vger.kernel.org>; Wed,  3 May 2023 16:25:59 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-52c30fbccd4so3448093a12.0
+        for <git@vger.kernel.org>; Wed, 03 May 2023 16:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683156231; x=1685748231;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qjCwFBzhXfeva8DiGKPT2+/LMTvBQ6nKv2hbIsce4Pw=;
-        b=W+1hWBPUDqD3JYuAt3rmK+b0DMaloVguj7CVbmM+d2gF1EZ3G8/bF+CR4rOpXa93uR
-         VLKcw3e5ezaXh0cXYOZfViVwf4BV4YN0LC2RydmXDYeCzSUPl44Y0/XvwJxsUDn7jGt7
-         mx2j49uz8CzfqQFvfu6Tg366YVCrs81z+x8bisqtySxi1DCD6hZyiatDbrrUk4yXlOEV
-         gKdKpYsgWCmQwSNO/ilJX6oyC6Nq5WOIwRZANXElHRCWNu0K/0nKdoCELb0i+MIyCbOi
-         Db1CiMHN2j/7uu+yU5vs5RKiLLJfOVAe05niKa9MyVCQsrp85O0eNTFgyEHozqLONlm1
-         r/aw==
+        d=gmail.com; s=20221208; t=1683156358; x=1685748358;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=cVE0LyNxC5YlR6XbNlNiO/TUhyyMAHxJ6RQiLRVx8Uo=;
+        b=YGRL/vPW5oOz9cIJVMjmN514dczXD5hV0LAoMh1260MarAD4ju1Qu9nl56SZsBV3v1
+         X31ikygLM0qdNAQUbUCp4wlK9aRAQX55xiB/hhuQlExGa6TQf/naqsWG9DmDPJObkkWq
+         0waoImFH0IK4QbokXYN+kfgNA61xVSURZeY9HxNP8cjysEhe8Lqro1YMwfzu5tFynNlo
+         X7jokQXV4NNxO/OgzwuKdRGJS6ogDObFVB9hUIZVHLQ4xyqAEFveYCYENcA/QMUCP6QH
+         +NMfK96NQLQ8u54rBwmg/3EYaOH6Kdjdr//Lbooi6EZNuGgBVEnIXRkTdbPPBiXQQLs7
+         euVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683156231; x=1685748231;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1683156358; x=1685748358;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qjCwFBzhXfeva8DiGKPT2+/LMTvBQ6nKv2hbIsce4Pw=;
-        b=F+zQDJwjwd9gmkMsFAB4mpsXukTbXcdGKVMbxfU1Bnuq3lxv2oiFKLVS3bCVAHsfaJ
-         61y0lGBy9gqEdrQO0WiBbsgvu4jBwj2h9cejtyCGSIt9GvlxwPicM3vfal+KBP4l58i+
-         dbaBcIrr/qja+dBsD76BQ3YlnSFBQ9VB1LLTMrkx575B9SnJcRgCpuMVArVqgraYXB/q
-         Vzl/KWvdZ3RVw8fUX2DeMAdzdGGQlvX/xKhWztMO210XrOmlkyRa80JJMLIvG/Uv9mzd
-         dGdGHl62yi3g5tZaTRvIy6TklY5whhnZMUOCwdvdWu4LkXUe+f39Bd3G4SJN7CULacuS
-         m55Q==
-X-Gm-Message-State: AC+VfDycOgBubyXL9GGyQLU0m6ptCmw2Kpx8dVzAeYTX5u15atqSvn01
-        QNFmxjx1OTDtxFudPLeVFz9ir5E41n0=
-X-Google-Smtp-Source: ACHHUZ5PwdNpLBbSb2kFATv82L0XFoH/vWiZrISGO99CJ2MQnwTVT6vPy93UxrCJ/RD/DDuwfHCIjQ==
-X-Received: by 2002:a05:6808:2387:b0:384:3f55:ab96 with SMTP id bp7-20020a056808238700b003843f55ab96mr862778oib.25.1683156231470;
-        Wed, 03 May 2023 16:23:51 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id a23-20020a9d6e97000000b006a144b97e73sm1078798otr.74.2023.05.03.16.23.50
+        bh=cVE0LyNxC5YlR6XbNlNiO/TUhyyMAHxJ6RQiLRVx8Uo=;
+        b=VTjU7zlL5OUIi5UuukPO/3diMNwUKhqeWAczeIXZpgJk5WS5psQ7dMKMg+nOelKxJn
+         f2NCqQnwvAgO7w81FFfb/yWQ6qe3PNhbbQGHUWiLm3uTQGU8BZ81cwZokY/czOQ9uje4
+         5P5FfyACumuxFqHHzOHouuG4RJ+YxOsBUv+9pgzwnROtL8KOitI5e+VQg6S+vZr9Vxhp
+         eUYZj5poS49kK5uzbinfpV1mqyz1FTTW2KCWh4F0lkmB1kuYv21N+ktNNHV4uuMi3CkS
+         H5NB0SgqXcX2gzj/DHKPsYPdKbwi6LuChqWSh3G+zBIAy7kcT6igGqoN6DWkAoDRExcY
+         QzNA==
+X-Gm-Message-State: AC+VfDykqrsH6Nrx3jPYdOpltLJUga/fgrxZZ+3k6jibtUwViMQt9ivd
+        w+XG7TS8cgBBZQ1U8KIitWM=
+X-Google-Smtp-Source: ACHHUZ7AkS9dm20Ukt44fwFlfbuctjP/45t3N2CuRz1fvhi6b2pu4YYHjA4eAA0GspAofMt7pB107g==
+X-Received: by 2002:a17:90a:c981:b0:24e:1144:ef52 with SMTP id w1-20020a17090ac98100b0024e1144ef52mr262542pjt.11.1683156358338;
+        Wed, 03 May 2023 16:25:58 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id h24-20020a17090a9c1800b00247735d1463sm3837344pjp.39.2023.05.03.16.25.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 16:23:50 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] doc: doc-diff: specify date
-Date:   Wed,  3 May 2023 17:23:49 -0600
-Message-Id: <20230503232349.59997-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
+        Wed, 03 May 2023 16:25:57 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
+Subject: Re: [PATCH v10 1/2] t1092: add tests for `git diff-files`
+References: <20230502172335.478312-1-cheskaqiqi@gmail.com>
+        <20230503215549.511999-1-cheskaqiqi@gmail.com>
+        <20230503215549.511999-2-cheskaqiqi@gmail.com>
+Date:   Wed, 03 May 2023 16:25:57 -0700
+Message-ID: <xmqqpm7hm1yy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Otherwise comparing the output of commits with different dates generates
-unnecessary diffs.
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/doc-diff | 1 +
- 1 file changed, 1 insertion(+)
+> +	test_sparse_match git diff-files -- folder2/a &&
+> +
+> +	write_script edit-contents <<-\EOF &&
+> +	echo text >>"$1"
+> +	EOF
 
-diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-index 1694300e50..554a78a12d 100755
---- a/Documentation/doc-diff
-+++ b/Documentation/doc-diff
-@@ -153,6 +153,7 @@ render_tree () {
- 		make -j$parallel -C "$tmp/worktree" \
- 			$makemanflags \
- 			GIT_VERSION=omitted \
-+			GIT_DATE=1970-01-01 \
- 			SOURCE_DATE_EPOCH=0 \
- 			DESTDIR="$tmp/installed/$dname+" \
- 			install-man &&
--- 
-2.40.0+fc1
+> +	# Add file to the index but outside of cone for sparse-checkout cases.
+> +	# Add file to the index without sparse-checkout cases to ensure all have
+> +	# same output.
 
+Are these two sentences supposed to explain the following two
+commands that are run in all three repositories?  As far as I can
+tell, no command in this test adds anything to the index.  Perhaps
+it is a leftover/stale comment from previous rounds or something?
+
+> +	run_on_all mkdir -p folder1 &&
+> +	run_on_all cp a folder1/a &&
+> +
+> +	# file present on-disk with modifications
+> +	run_on_all ../edit-contents folder1/a &&
+
+With the above three commands taken together, we have made folder1/a
+on the working tree different from what is in the index, so we can
+expect to see differences between the index and the working tree
+files.  "# file present on-disk with modifications" is a good way to
+summarize a half of what we are trying to achieve, with the other
+half being that we try to do that to a path outside the cone of
+interest.
+
+So, perhaps get rid of this comment between the step 2 and 3 of the
+preparation, and rewrite the comment before the step 1 (i.e. "mkdir
+-p") of the preparation to explain the whole thing, perhaps like:
+
+	# The directory "folder1" is outside the cone of interest
+	# and may not exist in the sparse checkout repositories.
+        # Create it as needed, add file "folder1/a" there with
+	# contents that is different from the staged version.
+
+to explain what scenario these three run_on_all commands are trying
+to create?
+
+> +	test_all_match git diff-files &&
+> +	test_all_match git diff-files folder1/a &&
+> +	test_all_match git diff-files "folder*/a"
+
+I think Victoria suggested to use the double-dash disambiguators for
+these tests, and it may not be a bad idea to do so, i.e.
+
+	test_all_match git diff-files &&
+	test_all_match git diff-files -- folder1/a &&
+	test_all_match git diff-files -- folder\*/a
+
+> +'
+> +
+>  test_done
+
+Thanks.
