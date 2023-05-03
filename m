@@ -2,665 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CABB5C77B75
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 20:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17182C77B78
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 20:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbjECUJm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 16:09:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42478 "EHLO
+        id S229773AbjECUcz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 16:32:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjECUJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 16:09:40 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4EC6420B
-        for <git@vger.kernel.org>; Wed,  3 May 2023 13:09:37 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f178da21b2so58582065e9.1
-        for <git@vger.kernel.org>; Wed, 03 May 2023 13:09:37 -0700 (PDT)
+        with ESMTP id S229441AbjECUcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 16:32:53 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2EF56E95
+        for <git@vger.kernel.org>; Wed,  3 May 2023 13:32:52 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-b99f0a0052fso7836433276.3
+        for <git@vger.kernel.org>; Wed, 03 May 2023 13:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683144576; x=1685736576;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683145972; x=1685737972;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e7de0WOU+rYG8KMl7T86+HmfmlGRQRKvDCrxQcsR1Zc=;
-        b=oBr5V0LXfpUjenz/Z8NUYQu0tCkBT89RLH7e4/pSIt7idnCnI/vAiC+UsIblh4r24B
-         mu0NYpzWniiEpHLrrYrpPDUDiV2p1+X4MNFwR3CvlEf4gCfxjKKzBO91fG3tY6eHhxAZ
-         bt2dyl976Ex5Z+TX7LktpZKWQsrzFXEYusOHSv6ecaHS8cAuJCjG3amdJDqEu3kEoCtN
-         2c0QgI0Jx2PBXNlOSWRJP65Wf9D/dQ5jT9oNI2CLgET+svYHHXTMmoy7bwaqWo0kGrvp
-         PMCaA20ANVH2rswZz3vCGkXaa4UzAp18eNvYO/1SHlDxTqtQ8uFPXPxwVM/xQ0yPcSby
-         Xhfg==
+        bh=5Oghzab4z16KJaPOLughgNYU/9FJ8QIkevhkVbvvERg=;
+        b=N3LIKNyCVXaoi3ynEVRXfltHHQDmTdS1+DwYuS57FmgOq05BlQ8O9R2N6lnlEM3T0+
+         VRZ+QaVJ4i5sZ7PKNBreogwAQ+sEHkOB6YVEj+lT/aookrVCNDwF786rSOMI642Zl09E
+         zuKtWS6nuNzcttrlPowBQYQzqLpQV2Wdcy6C1ILIPUiDtVGPI/Zzu7MhDdJ/9ukM5k7V
+         yAM/g96u6L1P6AyaqC2g9rnjNJu1euFLWQ2W4hONhsx689ngXFwmKcHvYCVTQl5iNQis
+         AMaPIst64xDfmQ9WKALDpxk/rsBCtLOTOcjSc7ZxB8959To9MPV7TX1NSYbDg+T4hH0i
+         iKYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683144576; x=1685736576;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1683145972; x=1685737972;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=e7de0WOU+rYG8KMl7T86+HmfmlGRQRKvDCrxQcsR1Zc=;
-        b=UGMuSMkMj45Ey3SqBOcyyz88Kppqgwl9QGZrQ0YLCc2GceTCnD3Kzkn/8MMuKy8mcl
-         TqlaxkkCacaJf6WIxfn6g7M4K2RDS+87czNnExUFI1GdOpsrpFNiFjkVVvIPCJdDd8nJ
-         jUUAbq4/Jwk+I9BZJ3GeqecIOC1IZ9OmcNAyQsqKAVWvfMgA7BLEgkgNzWIplvOs3rIM
-         //fRxmMoAXwzAOE3+r1DtQ7pTQBJYp0LkyaKtFpzt/fG0IAkY2kdtO2gFbgHQM00up8J
-         K8xG7FGdWm4o3W0NLSPdPoPCwhpcO7cyPx9Tv+9ccuWtyXRofjiBiP8btihTL0XS8moO
-         KoyA==
-X-Gm-Message-State: AC+VfDxQKTOMsl06h/Mmnpo3wCZn5OFjR/StUqnMqaen/gNpyDnUcEcI
-        t+yZSq63ODdsaeWvGkxocfnkUyhV8W0=
-X-Google-Smtp-Source: ACHHUZ4CuA2cDQxQSi+3NBpr5NF5Dmyl/eCxFftUBLAbFjgXk4qUVuRFghaGQT29fjEAxJkZrJtPpQ==
-X-Received: by 2002:a5d:6a04:0:b0:306:2ef0:d223 with SMTP id m4-20020a5d6a04000000b003062ef0d223mr800659wru.62.1683144575796;
-        Wed, 03 May 2023 13:09:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v14-20020adff68e000000b003063430ad9bsm6444815wrp.88.2023.05.03.13.09.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 13:09:35 -0700 (PDT)
-Message-Id: <pull.1470.v5.git.git.1683144574158.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1470.v4.git.git.1682822352360.gitgitgadget@gmail.com>
-References: <pull.1470.v4.git.git.1682822352360.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 03 May 2023 20:09:33 +0000
-Subject: [PATCH v5] attr: teach "--attr-source=<tree>" global option to "git"
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=5Oghzab4z16KJaPOLughgNYU/9FJ8QIkevhkVbvvERg=;
+        b=TBQnvnfKRUwNqnBmNNFkHClh5cvTEo/J7AkruIw5qkHGY6rHZKSpxTEJeKVrQTT1bG
+         igakYlzNMwx78TXcG89qBgryEDOk3K0mnMP4xSgwpCprsStDHAeTDYyUgNjaAmvKv2Pn
+         0awfoVpgetfqFmzzSC5snjd8aPU3ihLZUTa9/XC5/T4NQ1peYeWVmbwh0hONjINYqAyH
+         q1WijKP/lJt34DXZ1WRMRkROZWNhBBeAQYL6ypysar4LHwBAbg6KxUfTMybiXx/kJPVG
+         itRND58l04TiUCLVeVjNN3jMAtEG2kPfbHKXMJe1Gz8zd9NuCOapxsigTl0IlQc/Kcqy
+         JZxw==
+X-Gm-Message-State: AC+VfDystVK/Q5g+QUE3Mr2t0qOB/a+RQOiEcVQ4NIGdIchJ9lHe63xk
+        BIEo6eaXYPhxfYbYYrn7ThFPyZcD2WlKWDx+lR1Onpv1y1k=
+X-Google-Smtp-Source: ACHHUZ7iVAtGZlkzR2mV+KB05ONDQ9j+ACST2EBWpTUMaQyh0LuSupizCNSZK/+USorKxuEZsauHy4os85eStc9heW0=
+X-Received: by 2002:a25:6886:0:b0:ba1:643f:c114 with SMTP id
+ d128-20020a256886000000b00ba1643fc114mr2649518ybc.35.1683145971960; Wed, 03
+ May 2023 13:32:51 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+References: <CAJXgQP1j6JYbtikMuWGFn44+FVb3PfmuwiFrxDGLQAYgr92Wfw@mail.gmail.com>
+ <xmqq1qjxqkbo.fsf@gitster.g>
+In-Reply-To: <xmqq1qjxqkbo.fsf@gitster.g>
+From:   Kevin Ushey <kevinushey@gmail.com>
+Date:   Wed, 3 May 2023 13:32:15 -0700
+Message-ID: <CAJXgQP2Rvye6U64_Nv9a0VbTJF=WsT741J42gfQmP9vz74u0ww@mail.gmail.com>
+Subject: Re: git grep -E doesn't accept \b word boundaries?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+Thanks for the quick response! I wonder if this issue could be macOS-specif=
+ic?
 
-Earlier, 47cfc9bd (attr: add flag `--source` to work with tree-ish,
-2023-01-14) taught "git check-attr" the "--source=<tree>" option to
-allow it to read attribute files from a tree-ish, but did so only
-for the command.  Just like "check-attr" users wanted a way to use
-attributes from a tree-ish and not from the working tree files,
-users of other commands (like "git diff") would benefit from the
-same.
+I just tried building git from sources, and I was able to reproduce
+the issue with 2.39.3:
 
-Undo most of the UI change the commit made, while keeping the
-internal logic to read attributes from a given tree-ish. Expose the
-internal logic via a new "--attr-source=<tree>" command line option
-given to "git", so that it can be used with any git command that
-runs as part of the main git process.
+$ ./git --version
+git version 2.39.3
+$ ./git grep -E '\bupdate\b'
 
-Additionally, add an environment variable GIT_ATTR_SOURCE that is set
-when --attr-source is passed in, so that subprocesses use the same value
-for the attributes source tree.
+But everything works okay for me with 2.38.5:
 
-Signed-off-by: John Cai <johncai86@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-    attr: teach "--attr-source=" global option to "git"
-    
-    [1] aimed to allow gitattributes to be read from bare repositories when
-    running git-diff(1). Through discussion, a more general solution emerged
-    (represented by this patch), which allows the attribute machinery to
-    read attributes from a source passed in through a git flag.
-    
-    Changes since v4:
-    
-     * adjusted env var variable name
-     * added documentation for GIT_ATTR_SOURCE env var
-     * fixed error message when handling git option
-    
-    Changes since v3:
-    
-     * fixed documentation link
-     * simplified error message handling when --attr-source or
-       GIT_ATTR_SOURCE is bad
-    
-    Changes since v2:
-    
-     * allow --attr-source= and --attr-source
-     * fixes to commit message
-     * fix error message to distinguish between --attr-source and
-       GIT_ATTR_SOURCE
-    
-     1. https://lore.kernel.org/git/pull.1459.git.git.1678758818.gitgitgadget@gmail.com/
+$ ./git --version
+git version 2.38.5
+kevin@MBP-P2MQ:~/projects/git [(HEAD detached at v2.38.5)]
+$ ./git grep -E '\bupdate\b'
+.github/workflows/l10n.yml:          sudo apt-get update -q &&
+.gitignore:/git-update-index
+.gitignore:/git-update-ref
+< ... etc ...>
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1470%2Fjohn-cai%2Fjc%2Fattr-source-git-flag-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1470/john-cai/jc/attr-source-git-flag-v5
-Pull-Request: https://github.com/git/git/pull/1470
+I see this bit in the release notes, which seems potentially related:
 
-Range-diff vs v4:
+https://github.com/git/git/blob/69c786637d7a7fe3b2b8f7d989af095f5f49c3a8/Do=
+cumentation/RelNotes/2.39.0.txt#L64-L65
 
- 1:  e41f931b0ad ! 1:  b3b696bd135 attr: teach "--attr-source=<tree>" global option to "git"
-     @@ Documentation/git.txt: If you just want to run git as if it was started in `<pat
-       GIT COMMANDS
-       ------------
-       
-     +@@ Documentation/git.txt: for further details.
-     + 	tells Git not to verify the SSL certificate when fetching or
-     + 	pushing over HTTPS.
-     + 
-     ++`GIT_ATTR_SOURCE`::
-     ++	Sets the treeish that gitattributes will be read from.
-     ++
-     + `GIT_ASKPASS`::
-     + 	If this environment variable is set, then Git commands which need to
-     + 	acquire passwords or passphrases (e.g. for HTTP or IMAP authentication)
-      
-       ## archive.c ##
-      @@ archive.c: static const struct attr_check *get_archive_attrs(struct index_state *istate,
-     @@ attr.c: static void collect_some_attrs(struct index_state *istate,
-      +static void compute_default_attr_source(struct object_id *attr_source)
-      +{
-      +	if (!default_attr_source_tree_object_name)
-     -+		default_attr_source_tree_object_name = getenv(GIT_ATTR_SOURCE);
-     ++		default_attr_source_tree_object_name = getenv(GIT_ATTR_SOURCE_ENVIRONMENT);
-      +
-      +	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
-      +		return;
-     @@ environment.h: const char *getenv_safe(struct strvec *argv, const char *name);
-       #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
-       #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
-       #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
-     -+#define GIT_ATTR_SOURCE "GIT_ATTR_SOURCE"
-     ++#define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
-       
-       /*
-        * Environment variable used in handshaking the wire protocol.
-     @@ git.c: static int handle_options(const char ***argv, int *argc, int *envchanged)
-       			}
-      +		} else if (!strcmp(cmd, "--attr-source")) {
-      +			if (*argc < 2) {
-     -+				fprintf(stderr, _("no prefix given for --attr-source\n" ));
-     ++				fprintf(stderr, _("no attribute source given for --attr-source\n" ));
-      +				usage(git_usage_string);
-      +			}
-     -+			setenv(GIT_ATTR_SOURCE, (*argv)[1], 1);
-     ++			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, (*argv)[1], 1);
-      +			if (envchanged)
-      +				*envchanged = 1;
-      +			(*argv)++;
-      +			(*argc)--;
-      +		} else if (skip_prefix(cmd, "--attr-source=", &cmd)) {
-      +			set_git_attr_source(cmd);
-     -+			setenv(GIT_ATTR_SOURCE, (*argv)[1], 1);
-     ++			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, (*argv)[1], 1);
-      +			if (envchanged)
-      +				*envchanged = 1;
-       		} else {
+And indeed, I can't reproduce the issue if I compile git 2.39.3 with
+'make NO_REGEX=3D1'. So, perhaps a difference between git's compat regex
+library and the one provided by macOS?
 
+Thanks,
+Kevin
 
- Documentation/git.txt     |  8 ++++++++
- archive.c                 |  2 +-
- attr.c                    | 37 +++++++++++++++++++++++++++++++++++--
- attr.h                    | 13 +++++++++----
- builtin/check-attr.c      | 17 ++++++++---------
- builtin/pack-objects.c    |  2 +-
- convert.c                 |  2 +-
- environment.h             |  1 +
- git.c                     | 16 ++++++++++++++++
- ll-merge.c                |  4 ++--
- pathspec.c                |  2 +-
- t/lib-diff-alternative.sh | 31 ++++++++++++++++++++++++++-----
- t/t0003-attributes.sh     | 11 ++++++++++-
- t/t4018-diff-funcname.sh  | 19 +++++++++++++++++++
- userdiff.c                |  2 +-
- ws.c                      |  2 +-
- 16 files changed, 140 insertions(+), 29 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 74973d3cc40..02707cb01d1 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -212,6 +212,11 @@ If you just want to run git as if it was started in `<path>` then use
- 	nohelpers (exclude helper commands), alias and config
- 	(retrieve command list from config variable completion.commands)
- 
-+--attr-source=<tree-ish>::
-+	Read gitattributes from <tree-ish> instead of the worktree. See
-+	linkgit:gitattributes[5]. This is equivalent to setting the
-+	`GIT_ATTR_SOURCE` environment variable.
-+
- GIT COMMANDS
- ------------
- 
-@@ -686,6 +691,9 @@ for further details.
- 	tells Git not to verify the SSL certificate when fetching or
- 	pushing over HTTPS.
- 
-+`GIT_ATTR_SOURCE`::
-+	Sets the treeish that gitattributes will be read from.
-+
- `GIT_ASKPASS`::
- 	If this environment variable is set, then Git commands which need to
- 	acquire passwords or passphrases (e.g. for HTTP or IMAP authentication)
-diff --git a/archive.c b/archive.c
-index 8570cf37ff7..e809514fe70 100644
---- a/archive.c
-+++ b/archive.c
-@@ -128,7 +128,7 @@ static const struct attr_check *get_archive_attrs(struct index_state *istate,
- 	static struct attr_check *check;
- 	if (!check)
- 		check = attr_check_initl("export-ignore", "export-subst", NULL);
--	git_check_attr(istate, NULL, path, check);
-+	git_check_attr(istate, path, check);
- 	return check;
- }
- 
-diff --git a/attr.c b/attr.c
-index 2d8aeb8b58c..11238d6083d 100644
---- a/attr.c
-+++ b/attr.c
-@@ -20,6 +20,7 @@
- #include "object-store.h"
- #include "setup.h"
- #include "thread-utils.h"
-+#include "object-name.h"
- 
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-@@ -1169,11 +1170,42 @@ static void collect_some_attrs(struct index_state *istate,
- 	fill(path, pathlen, basename_offset, check->stack, check->all_attrs, rem);
- }
- 
-+static const char *default_attr_source_tree_object_name;
-+
-+void set_git_attr_source(const char *tree_object_name)
-+{
-+	default_attr_source_tree_object_name = xstrdup(tree_object_name);
-+}
-+
-+static void compute_default_attr_source(struct object_id *attr_source)
-+{
-+	if (!default_attr_source_tree_object_name)
-+		default_attr_source_tree_object_name = getenv(GIT_ATTR_SOURCE_ENVIRONMENT);
-+
-+	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
-+		return;
-+
-+	if (repo_get_oid_treeish(the_repository, default_attr_source_tree_object_name, attr_source))
-+		die(_("bad --attr-source or GIT_ATTR_SOURCE"));
-+}
-+
-+static struct object_id *default_attr_source(void)
-+{
-+	static struct object_id attr_source;
-+
-+	if (is_null_oid(&attr_source))
-+		compute_default_attr_source(&attr_source);
-+	if (is_null_oid(&attr_source))
-+		return NULL;
-+	return &attr_source;
-+}
-+
- void git_check_attr(struct index_state *istate,
--		    const struct object_id *tree_oid, const char *path,
-+		    const char *path,
- 		    struct attr_check *check)
- {
- 	int i;
-+	const struct object_id *tree_oid = default_attr_source();
- 
- 	collect_some_attrs(istate, tree_oid, path, check);
- 
-@@ -1186,10 +1218,11 @@ void git_check_attr(struct index_state *istate,
- 	}
- }
- 
--void git_all_attrs(struct index_state *istate, const struct object_id *tree_oid,
-+void git_all_attrs(struct index_state *istate,
- 		   const char *path, struct attr_check *check)
- {
- 	int i;
-+	const struct object_id *tree_oid = default_attr_source();
- 
- 	attr_check_reset(check);
- 	collect_some_attrs(istate, tree_oid, path, check);
-diff --git a/attr.h b/attr.h
-index 9884ea2bc60..676bd17ce27 100644
---- a/attr.h
-+++ b/attr.h
-@@ -45,7 +45,7 @@
-  * const char *path;
-  *
-  * setup_check();
-- * git_check_attr(&the_index, tree_oid, path, check);
-+ * git_check_attr(&the_index, path, check);
-  * ------------
-  *
-  * - Act on `.value` member of the result, left in `check->items[]`:
-@@ -120,7 +120,6 @@
- #define ATTR_MAX_FILE_SIZE (100 * 1024 * 1024)
- 
- struct index_state;
--struct object_id;
- 
- /**
-  * An attribute is an opaque object that is identified by its name. Pass the
-@@ -135,6 +134,12 @@ struct git_attr;
- struct all_attrs_item;
- struct attr_stack;
- 
-+/*
-+ * The textual object name for the tree-ish used by git_check_attr()
-+ * to read attributes from (instead of from the working tree).
-+ */
-+void set_git_attr_source(const char *);
-+
- /*
-  * Given a string, return the gitattribute object that
-  * corresponds to it.
-@@ -203,14 +208,14 @@ void attr_check_free(struct attr_check *check);
- const char *git_attr_name(const struct git_attr *);
- 
- void git_check_attr(struct index_state *istate,
--		    const struct object_id *tree_oid, const char *path,
-+		    const char *path,
- 		    struct attr_check *check);
- 
- /*
-  * Retrieve all attributes that apply to the specified path.
-  * check holds the attributes and their values.
-  */
--void git_all_attrs(struct index_state *istate, const struct object_id *tree_oid,
-+void git_all_attrs(struct index_state *istate,
- 		   const char *path, struct attr_check *check);
- 
- enum git_attr_direction {
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 037bf1aaa2a..748f3578b2a 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -63,7 +63,7 @@ static void output_attr(struct attr_check *check, const char *file)
- }
- 
- static void check_attr(const char *prefix, struct attr_check *check,
--		       const struct object_id *tree_oid, int collect_all,
-+		       int collect_all,
- 		       const char *file)
- 
- {
-@@ -71,9 +71,9 @@ static void check_attr(const char *prefix, struct attr_check *check,
- 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
- 
- 	if (collect_all) {
--		git_all_attrs(&the_index, tree_oid, full_path, check);
-+		git_all_attrs(&the_index, full_path, check);
- 	} else {
--		git_check_attr(&the_index, tree_oid, full_path, check);
-+		git_check_attr(&the_index, full_path, check);
- 	}
- 	output_attr(check, file);
- 
-@@ -81,7 +81,7 @@ static void check_attr(const char *prefix, struct attr_check *check,
- }
- 
- static void check_attr_stdin_paths(const char *prefix, struct attr_check *check,
--				   const struct object_id *tree_oid, int collect_all)
-+				   int collect_all)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -95,7 +95,7 @@ static void check_attr_stdin_paths(const char *prefix, struct attr_check *check,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		check_attr(prefix, check, tree_oid, collect_all, buf.buf);
-+		check_attr(prefix, check, collect_all, buf.buf);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 	strbuf_release(&buf);
-@@ -111,7 +111,6 @@ static NORETURN void error_with_usage(const char *msg)
- int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
- 	struct attr_check *check;
--	struct object_id *tree_oid = NULL;
- 	struct object_id initialized_oid;
- 	int cnt, i, doubledash, filei;
- 
-@@ -187,14 +186,14 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	if (source) {
- 		if (repo_get_oid_tree(the_repository, source, &initialized_oid))
- 			die("%s: not a valid tree-ish source", source);
--		tree_oid = &initialized_oid;
-+		set_git_attr_source(source);
- 	}
- 
- 	if (stdin_paths)
--		check_attr_stdin_paths(prefix, check, tree_oid, all_attrs);
-+		check_attr_stdin_paths(prefix, check, all_attrs);
- 	else {
- 		for (i = filei; i < argc; i++)
--			check_attr(prefix, check, tree_oid, all_attrs, argv[i]);
-+			check_attr(prefix, check, all_attrs, argv[i]);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a5b466839ba..9cfc8801f9b 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1331,7 +1331,7 @@ static int no_try_delta(const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("delta", NULL);
--	git_check_attr(the_repository->index, NULL, path, check);
-+	git_check_attr(the_repository->index, path, check);
- 	if (ATTR_FALSE(check->items[0].value))
- 		return 1;
- 	return 0;
-diff --git a/convert.c b/convert.c
-index 5a2ea5308d6..e65938bb1a8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1314,7 +1314,7 @@ void convert_attrs(struct index_state *istate,
- 		git_config(read_convert_config, NULL);
- 	}
- 
--	git_check_attr(istate, NULL, path, check);
-+	git_check_attr(istate, path, check);
- 	ccheck = check->items;
- 	ca->crlf_action = git_path_check_crlf(ccheck + 4);
- 	if (ca->crlf_action == CRLF_UNDEFINED)
-diff --git a/environment.h b/environment.h
-index a63f0c6a24f..30cb7e0fa34 100644
---- a/environment.h
-+++ b/environment.h
-@@ -55,6 +55,7 @@ const char *getenv_safe(struct strvec *argv, const char *name);
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
- #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
- #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
-+#define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
- 
- /*
-  * Environment variable used in handshaking the wire protocol.
-diff --git a/git.c b/git.c
-index 45899be8265..dc54541f6e3 100644
---- a/git.c
-+++ b/git.c
-@@ -9,6 +9,7 @@
- #include "alias.h"
- #include "replace-object.h"
- #include "setup.h"
-+#include "attr.h"
- #include "shallow.h"
- #include "trace.h"
- #include "trace2.h"
-@@ -314,6 +315,21 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			} else {
- 				exit(list_cmds(cmd));
- 			}
-+		} else if (!strcmp(cmd, "--attr-source")) {
-+			if (*argc < 2) {
-+				fprintf(stderr, _("no attribute source given for --attr-source\n" ));
-+				usage(git_usage_string);
-+			}
-+			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, (*argv)[1], 1);
-+			if (envchanged)
-+				*envchanged = 1;
-+			(*argv)++;
-+			(*argc)--;
-+		} else if (skip_prefix(cmd, "--attr-source=", &cmd)) {
-+			set_git_attr_source(cmd);
-+			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, (*argv)[1], 1);
-+			if (envchanged)
-+				*envchanged = 1;
- 		} else {
- 			fprintf(stderr, _("unknown option: %s\n"), cmd);
- 			usage(git_usage_string);
-diff --git a/ll-merge.c b/ll-merge.c
-index 28bc94c45d6..6580970a670 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -393,7 +393,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
- 		normalize_file(theirs, path, istate);
- 	}
- 
--	git_check_attr(istate, NULL, path, check);
-+	git_check_attr(istate, path, check);
- 	ll_driver_name = check->items[0].value;
- 	if (check->items[1].value) {
- 		marker_size = atoi(check->items[1].value);
-@@ -421,7 +421,7 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("conflict-marker-size", NULL);
--	git_check_attr(istate, NULL, path, check);
-+	git_check_attr(istate, path, check);
- 	if (check->items[0].value) {
- 		marker_size = atoi(check->items[0].value);
- 		if (marker_size <= 0)
-diff --git a/pathspec.c b/pathspec.c
-index 6972d515f0c..09103a137ef 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -734,7 +734,7 @@ int match_pathspec_attrs(struct index_state *istate,
- 	if (name[namelen])
- 		name = to_free = xmemdupz(name, namelen);
- 
--	git_check_attr(istate, NULL, name, item->attr_check);
-+	git_check_attr(istate, name, item->attr_check);
- 
- 	free(to_free);
- 
-diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
-index a8f5d3274a5..c4dc2d46dc1 100644
---- a/t/lib-diff-alternative.sh
-+++ b/t/lib-diff-alternative.sh
-@@ -112,15 +112,36 @@ EOF
- 
- 	STRATEGY=$1
- 
--	test_expect_success "$STRATEGY diff from attributes" '
-+	test_expect_success "setup attributes files for tests with $STRATEGY" '
-+		git checkout -b master &&
- 		echo "file* diff=driver" >.gitattributes &&
--		git config diff.driver.algorithm "$STRATEGY" &&
--		test_must_fail git diff --no-index file1 file2 > output &&
--		cat expect &&
--		cat output &&
-+		git add file1 file2 .gitattributes &&
-+		git commit -m "adding files" &&
-+		git checkout -b branchA &&
-+		echo "file* diff=driverA" >.gitattributes &&
-+		git add .gitattributes &&
-+		git commit -m "adding driverA as diff driver" &&
-+		git checkout master &&
-+		git clone --bare --no-local . bare.git
-+	'
-+
-+	test_expect_success "$STRATEGY diff from attributes" '
-+		test_must_fail git -c diff.driver.algorithm=$STRATEGY diff --no-index file1 file2 > output &&
- 		test_cmp expect output
- 	'
- 
-+	test_expect_success "diff from attributes with bare repo with source" '
-+		git -C bare.git --attr-source=branchA -c diff.driver.algorithm=myers \
-+			-c diff.driverA.algorithm=$STRATEGY \
-+			diff HEAD:file1 HEAD:file2 >output &&
-+		test_cmp expect output
-+	'
-+
-+	test_expect_success "diff from attributes with bare repo with invalid source" '
-+		test_must_fail git -C bare.git --attr-source=invalid-branch diff \
-+			HEAD:file1 HEAD:file2
-+	'
-+
- 	test_expect_success "$STRATEGY diff from attributes has valid diffstat" '
- 		echo "file* diff=driver" >.gitattributes &&
- 		git config diff.driver.algorithm "$STRATEGY" &&
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 89b306cb114..26e082f05b4 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -30,8 +30,17 @@ attr_check_quote () {
- attr_check_source () {
- 	path="$1" expect="$2" source="$3" git_opts="$4" &&
- 
--	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
- 	echo "$path: test: $expect" >expect &&
-+
-+	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_must_be_empty err &&
-+
-+	git $git_opts --attr-source="$source" check-attr test -- "$path" >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_must_be_empty err
-+
-+	GIT_ATTR_SOURCE="$source" git $git_opts check-attr test -- "$path" >actual 2>err &&
- 	test_cmp expect actual &&
- 	test_must_be_empty err
- }
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 42a2b9a13b7..c8d555771d5 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -63,6 +63,25 @@ do
- 		test_i18ngrep ! fatal msg &&
- 		test_i18ngrep ! error msg
- 	'
-+
-+	test_expect_success "builtin $p pattern compiles on bare repo with --attr-source" '
-+		test_when_finished "rm -rf bare.git" &&
-+		git checkout -B master &&
-+		git add . &&
-+		echo "*.java diff=notexist" >.gitattributes &&
-+		git add .gitattributes &&
-+		git commit -am "changing gitattributes" &&
-+		git checkout -B branchA &&
-+		echo "*.java diff=$p" >.gitattributes &&
-+		git add .gitattributes &&
-+		git commit -am "changing gitattributes" &&
-+		git clone --bare --no-local . bare.git &&
-+		git -C bare.git symbolic-ref HEAD refs/heads/master &&
-+		test_expect_code 1 git -C bare.git --attr-source=branchA \
-+			diff --exit-code HEAD:A.java HEAD:B.java 2>msg &&
-+		test_i18ngrep ! fatal msg &&
-+		test_i18ngrep ! error msg
-+	'
- done
- 
- test_expect_success 'last regexp must not be negated' '
-diff --git a/userdiff.c b/userdiff.c
-index eaec6ebb5e9..664c7c14025 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -444,7 +444,7 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
- 		check = attr_check_initl("diff", NULL);
- 	if (!path)
- 		return NULL;
--	git_check_attr(istate, NULL, path, check);
-+	git_check_attr(istate, path, check);
- 
- 	if (ATTR_TRUE(check->items[0].value))
- 		return &driver_true;
-diff --git a/ws.c b/ws.c
-index da3d0e28cbb..903bfcd53e4 100644
---- a/ws.c
-+++ b/ws.c
-@@ -79,7 +79,7 @@ unsigned whitespace_rule(struct index_state *istate, const char *pathname)
- 	if (!attr_whitespace_rule)
- 		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
- 
--	git_check_attr(istate, NULL, pathname, attr_whitespace_rule);
-+	git_check_attr(istate, pathname, attr_whitespace_rule);
- 	value = attr_whitespace_rule->items[0].value;
- 	if (ATTR_TRUE(value)) {
- 		/* true (whitespace) */
-
-base-commit: f85cd430b12b0d3e4f1a30ef3239a1b73d5f6331
--- 
-gitgitgadget
+On Wed, May 3, 2023 at 12:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Kevin Ushey <kevinushey@gmail.com> writes:
+>
+> > I'm seeing the following, which I believe is unexpected. I have a file
+> > with contents:
+> >
+> > $ cat hello.txt
+> > WholeWord
+> > Whole Word
+> > Whole
+> >
+> > I can use `git grep` to search with word boundaries; e.g.
+> >
+> > $ git grep --untracked '\bWhole\b'
+> > hello.txt:Whole Word
+> > hello.txt:Whole
+> >
+> > However, if I add `-E` to use extended regular expressions, the same
+> > invocation finds no search results.
+> >
+> > $ git grep --untracked -E '\bWhole\b'
+>
+> Does not seem to reproduce for me.  In a randomly picked repository
+> (the source to git itself), I did
+>
+>     $ cat >hello.txt
+>     WholeWord
+>     Whole Word
+>     Whole
+>     ^D
+>
+> and "git grep --untracked -E '\bWhole\b' hello.txt" with or without
+> the "-E" option shows the same two lines as hits.
+>
+> Without the pathspec hello.txt, the output includes one line from
+> unpack-trees.c as well, but the hits from the untracked hello.txt
+> are the same.
+>
+> The tip of 'master', v2.40.0, v2.38.4, v2.37.4, v2.35.4 (they are by
+> no means significant milestones---just some random versions I picked
+> to test) all behave the same way.
