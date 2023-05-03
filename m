@@ -2,152 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D87CAC77B78
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 13:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9040AC77B75
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 14:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbjECNqP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 09:46:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55788 "EHLO
+        id S230143AbjECOB6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 10:01:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjECNqN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 09:46:13 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C734B1A5
-        for <git@vger.kernel.org>; Wed,  3 May 2023 06:46:09 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-546dad86345so3681075eaf.0
-        for <git@vger.kernel.org>; Wed, 03 May 2023 06:46:09 -0700 (PDT)
+        with ESMTP id S229650AbjECOB4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 10:01:56 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE9A73C3C
+        for <git@vger.kernel.org>; Wed,  3 May 2023 07:01:54 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-b97ec4bbc5aso4290909276.3
+        for <git@vger.kernel.org>; Wed, 03 May 2023 07:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683121569; x=1685713569;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tRQIt00fj8U2dc5+4/DKM9C+GIa61RRyxvlF9V8tWCw=;
-        b=G31PV534/F2a3/wCtov/jl75e6D7cnjVrxajKmeSHK71KWwZtShNfrK9hbtSNWw1jM
-         w9UUEkmEZnZllYqbnlLG9rf1mJeMwgmdjyBO1Lj9ewZaFH1D7QtMFGGyunMEGNbkLNPr
-         wAoraGF/05JB9qeThYB8n1pRwV4+XEPT3ds38ZweRGRQrhjgsUf2n8V2O//VQNrfZ8ZE
-         3id7yttuAE8ySs6VxsQALSDpYZ+9Bm1UprwSikhBcl2UD/e8w52Gr97kmh5brwGVlq1l
-         xESDwnPZUGqx1+yAZo4uP0WM1aWCEw9KId2yX9LDXQeLCIwlTO1ix+Ic6NobfOAmHTj/
-         QVcA==
+        d=github.com; s=google; t=1683122514; x=1685714514;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ggga3FmPTdEpwva8c3Zg30s7UB9sq+XCbuT6NIWpQrw=;
+        b=GTg8B/rf+MaB0Bybc1RnsJBfqLUJH9UQTmSp95SLV97d50jZGD5/35oSjns8thmXGt
+         qnboIuTLf9sRvKU681VkcUO+5JkcXiS7kloF7V4mdcBVVisT4F4mmUGPSTTPkTgvZXWl
+         7Gdudu5KehsLPL0fU903YrnYzS6+MsLHXeGjcd1o93fbqORiBPVsjcM+7mjPTCsjGPmM
+         N7ZbvtWixRFHeadcndynLVGpxBXwycFBWV7oUs1XVm5An7FkMvxz1q9Yz6iGQhpLw0A6
+         aPT3wfHFA3bP8loXE3MnYExG1zBcFOIKm+6iH/pNbxhXw1wG5Q/Z+ko5a/8QrxuSEhmK
+         6YTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683121569; x=1685713569;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tRQIt00fj8U2dc5+4/DKM9C+GIa61RRyxvlF9V8tWCw=;
-        b=hF140gu4fd5yBJ2pxlrxf/vTkijenSAUR3Q0GcDPoNhWQ/c3AkgLkB9XTBa7hsvGJW
-         EN2nVJ/SgbYQ0WY4Bzk7ImjjCXsHvEshym6qxWuOOR/hbE9QtJjl0ZXe3siJKAavgmDm
-         lRTkWFh2vG2eVH4/LRRaxOXrO4AWqG8/JroJo1andd9NWzPlc1JRLIQ0dUY52HcHlgbK
-         GDVvgBk7GyDaedqZMSEPSwn9pkZg1IPALcnaphoCHm2CJw65IGN4TGLVwNQSwSgEA97M
-         pXWYezU99CKkyx0KxoogGEA0uTWmjHKqr2GQg7BUf52xlDBxmBraKBrkmaGju0EPyFjf
-         ePqw==
-X-Gm-Message-State: AC+VfDzJHFV5eTtYmPczUajh0LMKxJq3w6A4LaAUARFeiNiCc3JK5qUA
-        O5Z6ukRhSYfcYfMs4Rq6wA8=
-X-Google-Smtp-Source: ACHHUZ4eAMd7lOrj0DT9g53Mjkar3bBU9X1h3PGtlWRPTpUcjrJ94T5Xord6ukw7anjNJ7LUCMfmRQ==
-X-Received: by 2002:a05:6808:1ab3:b0:386:8c30:6e92 with SMTP id bm51-20020a0568081ab300b003868c306e92mr65296oib.14.1683121568966;
-        Wed, 03 May 2023 06:46:08 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id 1-20020aca0701000000b0038eb56f5b87sm598271oih.47.2023.05.03.06.46.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 06:46:07 -0700 (PDT)
-Date:   Wed, 03 May 2023 07:46:06 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Message-ID: <6452659e704df_682294b6@chronos.notmuch>
-In-Reply-To: <xmqqpm7ivtd0.fsf@gitster.g>
-References: <20230418070048.2209469-1-felipe.contreras@gmail.com>
- <20230418070048.2209469-2-felipe.contreras@gmail.com>
- <xmqq8ren8xz1.fsf@gitster.g>
- <644684018a766_aba29424@chronos.notmuch>
- <xmqq8reg96cu.fsf@gitster.g>
- <20230425061029.GA4015844@coredump.intra.peff.net>
- <644af29c8526c_7f4f2945f@chronos.notmuch>
- <20230502101854.GA1180695@coredump.intra.peff.net>
- <xmqqpm7ivtd0.fsf@gitster.g>
-Subject: Re: [PATCH 1/2] doc: git-checkout: trivial callout cleanup
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        d=1e100.net; s=20221208; t=1683122514; x=1685714514;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ggga3FmPTdEpwva8c3Zg30s7UB9sq+XCbuT6NIWpQrw=;
+        b=jDAKi7agfIjD5YYqeD/nRrGuww0sW+vl9SmlAW4ZJiMGaU/UZXZjJS5/obbZ0cYn2M
+         Jo+c6tO91XbmCirpQKPlBdmEsVGKa8PajStkBPeXFeyGiEUKaLBLnRLwC8Maea+8JnWB
+         GwvmGCA0EDyz6etkw/p3TOUhkTVtvTTX3/bzCbnbN7cisgsRESNl71c2yj0sMukOYbwD
+         +7KO036D2M9Hm/OM60HY4bta1BdMeoJW75lFOa7NwH1KjZ4C1tLbaPavSdJlDS91HEWD
+         hv4jaqANHCYnx4T8HavYMo1f27Xpb0yGVxJ82vWYJOirXU98LIuiZ1/f1JB+MlxuswZy
+         NH8g==
+X-Gm-Message-State: AC+VfDxa4XeMuuBciStN2XrDdVrbAGO7Ksubk8AA5jcy9Txqw8zxupMD
+        KFRyC2EFHsvoMnE8pQ7EnB8G
+X-Google-Smtp-Source: ACHHUZ6i2/Xne0ak7RBGCB+5hx2gIeVDNxKS+/WGLAW/QhtYWcBPRuLVKjmP+XAkDEYeMD55zNKRmQ==
+X-Received: by 2002:a25:2106:0:b0:b9e:6d2c:ce2 with SMTP id h6-20020a252106000000b00b9e6d2c0ce2mr5270499ybh.46.1683122513979;
+        Wed, 03 May 2023 07:01:53 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:b0dd:b183:de1f:7f32? ([2600:1700:e72:80a0:b0dd:b183:de1f:7f32])
+        by smtp.gmail.com with ESMTPSA id q14-20020a25f40e000000b00b9e73d0dba5sm940614ybd.47.2023.05.03.07.01.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 07:01:53 -0700 (PDT)
+Message-ID: <b29ff03e-5504-af04-72c6-f98abde1442f@github.com>
+Date:   Wed, 3 May 2023 10:01:51 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v2] builtin/pack-objects.c: introduce
+ `pack.extraCruftTips`
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
+ <73ad7b90e1fe6c15f41ff828651f7ab06076ffd8.1683072587.git.me@ttaylorr.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <73ad7b90e1fe6c15f41ff828651f7ab06076ffd8.1683072587.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> >> > Using just a blank line between the code block and the call-out list
-> >> > (instead of the "+") works for asciidoc (it is happy to keep the two
-> >> > together) but not asciidoctor (it ends the outer ordered list before
-> >> > starting the callout list).
-> >> ...
-> >  $ git checkout hello.cgit checkout hello.c            <3>
-> >  ------------
-> > -+
-> > +
-> >  <1> switch branch
-> >  <2> take a file out of another commit
-> >  <3> restore `hello.c` from the index
-> >
-> > which asciidoc renders the same, but asciidoctor is not.
-> 
-> Yet another random annoying differences that explains why we wrote
-> it that way in the first place X-<.
+On 5/2/2023 8:09 PM, Taylor Blau wrote:
+> This patch introduces a new multi-valued configuration option,
+> `pack.extraCruftTips` as an alternative means to mark certain objects in
+> the cruft pack as rescued, even if they would otherwise be pruned.
 
-I don't think so. This is the sequence of events:
+> Range-diff against v1:
+> 1:  8af478ebe3 ! 1:  73ad7b90e1 builtin/pack-objects.c: introduce `pack.extraCruftTips`
+>     @@ Commit message
+>      
+>            - to point a reference at them, which may be undesirable or
+>              infeasible,
+>     +      - to track them via the reflog, which may be undesirable since the
+>     +        reflog's lifetime is limited to that of the reference it's tracking
+>     +        (and callers may want to keep those unreachable objects around for
+>     +        longer)
+>            - to extend the grace period, which may keep around other objects that
+>              the caller *does* want to discard,
+>            - or, to force the caller to construct the pack of objects they want
+>     @@ Documentation/config/pack.txt: pack.deltaCacheLimit::
+>      ++
+>      +Output must contain exactly one hex object ID per line, and nothing
+>      +else. Objects which cannot be found in the repository are ignored.
+>     ++Multiple hooks are supported, but all must exit successfully, else no
+>     ++cruft pack will be generated.
 
- 1. 1e2ccd3abc (Documentation: more examples., 2005-12-12)
- 2. 1be0659efc (checkout: merge local modifications while switching branches., 2006-01-12)
- 3. 48aeecdcc1 (Fix up remaining man pages that use asciidoc "callouts"., 2006-04-28)
+Thanks for these updates.
 
-In 1 "callouts" were added inside the listing itself, so they were not actually
-callouts, the space was added just for formatting. In 2 other examples were
-added, which transformed the original example to a list element, and everything
-was peppered with `+`. Finally in 3 the code was transformed to actual AsciiDoc
-callouts, which meant that the original space that previously was protected
-inside a listing block would not be protected anymore, so it could either be 1)
-removed or 2) converted to `+`.
+>       pack.threads::
+>       	Specifies the number of threads to spawn when searching for best
+>     @@ builtin/pack-objects.c: static void enumerate_and_traverse_cruft_objects(struct
+>      +		add_pending_object(revs, obj, "");
+>      +	}
+>      +
+>     ++	ret = finish_command(&cmd);
+>     ++
+>      +done:
+>      +	if (out)
+>      +		fclose(out);
+>     @@ builtin/pack-objects.c: static void enumerate_and_traverse_cruft_objects(struct
+>      +	for (i = 0; i < programs->nr; i++) {
+>      +		ret = enumerate_extra_cruft_tips_1(&revs,
+>      +						   programs->items[i].string);
+>     -+		if (!ret)
+>     ++		if (ret)
+>      +			break;
+>      +	}
 
-In the thread that added this `+` [1] I see no discussion about the
-alternatives.
+If we have a failure, then we stop immediately and report a failure
+(from this bit outside the range-diff's context):
 
-At no point did anyone consider using a newline inside a list element, because
-spaces inside list elements don't work, so the actual two choices were:
+> +	if (ret)
+> +		die(_("unable to enumerate additional cruft tips"));
 
-A:
+>     @@ t/t5329-pack-objects-cruft.sh: test_expect_success 'cruft objects are freshend v
+>      +		cruft_new="$(git rev-parse HEAD)" &&
+>      +
+>      +		git checkout main &&
+>     -+		git branch -D old new &&
+>     ++		git branch -D discard old new &&
 
-  ----
-  line 1 <1>
-  ----
-  <1> callout 1
+Good update.
 
-B:
+>      +		git reflog expire --all --expire=all &&
+>      +
+>      +		# mark cruft.old with an mtime that is many minutes
+>     @@ t/t5329-pack-objects-cruft.sh: test_expect_success 'cruft objects are freshend v
+>      +		mtimes="$(ls .git/objects/pack/pack-*.mtimes)" &&
+>      +		git show-index <${mtimes%.mtimes}.idx >cruft &&
+>      +		cut -d" " -f2 cruft | sort >cruft.actual &&
+>     -+		test_cmp cruft.expect cruft.actual
+>     ++		test_cmp cruft.expect cruft.actual &&
+>     ++
+>     ++		# Ensure that the "old" objects are removed after
+>     ++		# dropping the pack.extraCruftTips hook.
+>     ++		git config --unset pack.extraCruftTips &&
+>     ++		git repack --cruft --cruft-expiration=now -d &&
 
-  ----
-  line 1 <1>
-  ----
-  +
-  <1> callout 1
+Double-checking that removing the tips correctly removes the objects
+at this time is good, but...
 
-And there never was any actual reason given as to why B was "chosen".
+>     ++		mtimes="$(ls .git/objects/pack/pack-*.mtimes)" &&
+>     ++		git show-index <${mtimes%.mtimes}.idx >cruft &&
+>     ++		cut -d" " -f2 cruft | sort >cruft.actual &&
+>     ++
+>     ++		git rev-list --objects --no-object-names $cruft_new >cruft.raw &&
+>     ++		cp cruft.expect cruft.old &&
+>     ++		sort cruft.raw >cruft.expect &&
+>     ++		test_cmp cruft.expect cruft.actual &&
+>     ++
+>     ++		# ensure objects which are no longer in the cruft pack were
+>     ++		# removed from the repository
+>     ++		for object in $(comm -13 cruft.expect cruft.old)
+>     ++		do
+>     ++			test_must_fail git cat-file -t $object || return 1
+>     ++		done
 
-I think the reality is most of the AsciiDoc code doesn't really have any
-consideration as to what is the actual AsciiDoc syntax, it's there because it
-seems to work, and that's it.
+...it would be good to do this check before the removal of the hook
+to be sure the objects from 'discard' are removed as part of the step
+with the hook. I can imagine a world where the hook-based approach
+erroneously keeps the 'discard' objects in the non-cruft pack only
+for them to be deleted by the repack where hooks are disabled, and
+having a test would help guarantee we don't live in that hypothetical
+world.
 
-So I think the real reason is that a newline was there before, and newlines
-stop list elements.
+I would also be satisfied with checking just the commits that were
+previously referenced by 'discard' and 'old', but this more
+thorough check is also good.
 
-It couldn't have possibly been because a newline didn't work in asciidoctor,
-because asciidoctor would not have been created for another 6 years.
+>     ++test_expect_success 'multi-valued pack.extraCruftTips' '
+>     ++	git init repo &&
+>     ++	test_when_finished "rm -fr repo" &&
+>     ++	(
+>     ++		cd repo &&
+>     ++
+>     ++		test_commit base &&
+>     ++		git branch -M main &&
+>     ++
+>     ++		git checkout --orphan cruft.a &&
+>     ++		git rm -fr . &&
+>     ++		test_commit --no-tag cruft.a &&
+>     ++		cruft_a="$(git rev-parse HEAD)" &&
+>     ++
+>     ++		git checkout --orphan cruft.b &&
+>     ++		git rm -fr . &&
+>     ++		test_commit --no-tag cruft.b &&
+>     ++		cruft_b="$(git rev-parse HEAD)" &&
+>     ++
+>     ++		git checkout main &&
+>     ++		git branch -D cruft.a cruft.b &&
+>     ++		git reflog expire --all --expire=all &&
+>     ++
+>     ++		echo "echo $cruft_a" | write_script extra-tips.a &&
+>     ++		echo "echo $cruft_b" | write_script extra-tips.b &&
+>     ++		echo "false" | write_script extra-tips.c &&
+>     ++
+>     ++		git rev-list --objects --no-object-names $cruft_a $cruft_b \
+>     ++			>cruft.raw &&
+>     ++		sort cruft.raw >cruft.expect &&
+>     ++
+>     ++		# ensure that each extra cruft tip is saved by its
+>     ++		# respective hook
+>     ++		git config --add pack.extraCruftTips ./extra-tips.a &&
+>     ++		git config --add pack.extraCruftTips ./extra-tips.b &&
+>     ++		git repack --cruft --cruft-expiration=now -d &&
+>     ++
+>     ++		mtimes="$(ls .git/objects/pack/pack-*.mtimes)" &&
+>     ++		git show-index <${mtimes%.mtimes}.idx >cruft &&
+>     ++		cut -d" " -f2 cruft | sort >cruft.actual &&
+>     ++		test_cmp cruft.expect cruft.actual &&
+>     ++
+>     ++		# ensure that a dirty exit halts cruft pack generation
+>     ++		git config --add pack.extraCruftTips ./extra-tips.c &&
+>     ++		test_must_fail git repack --cruft -d 2>err &&
+>     ++		grep "unable to enumerate additional cruft tips" err &&
+>     ++
+>     ++		# and that the existing cruft pack is left alone
+>     ++		test_path_is_file "$mtimes"
+>      +	)
 
-> If it has been removed to make it not to matter, that was lucky of us ;-)
+This new test looks good to me.
 
-Only if following the actual syntax of a language is considered "luck", in the
-same way that it's "lucky" that following the C specification makes C code work
-on most C compilers.
-
-[1] https://lore.kernel.org/git/BAYC1-PASMTP028F5C1C39F7EF6A6EEB95AEB20@CEZ.ICE/
-
--- 
-Felipe Contreras
+Thanks,
+-Stolee
