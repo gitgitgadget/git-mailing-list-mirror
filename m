@@ -2,137 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3344EC77B7F
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 19:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 662FEC77B75
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 19:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbjECTtw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 15:49:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33124 "EHLO
+        id S229526AbjECT7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 15:59:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230008AbjECTtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 15:49:51 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA7E7AAD
-        for <git@vger.kernel.org>; Wed,  3 May 2023 12:49:49 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4ec8148f73eso6487481e87.1
-        for <git@vger.kernel.org>; Wed, 03 May 2023 12:49:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683143388; x=1685735388;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sQnhfgsaak1oIY6R7PWjZvmrvBgyS/heQqBnG1O9VYU=;
-        b=RF+yL4aQDD+hutXvn814OTHc9hzujJtmYU3kzD5UWspL2+S/zZtj8yEw72lalnZNTz
-         gQ3E0CnQJoHRmcGVJQCxCMHAyTP27bpKanopILI5D83nX/oNWCtHH7IefV2d/U4g7H7c
-         AoPwJDulYl2/8PsrHIUAH2HFzQo+sP6HS/GxQ35fgiCpZglXyzAek9Ffe+JzSMAThWwD
-         mVgsET8J3et7k5/L4Vv1lK8GZZGGStXR1hcKeygxQeYav1mxe31xslz1GARlL3kIv+4h
-         AfvpZMGeh85UZ7PrGf9ftb2MUKIEXlbFAMhBylX5lh7axoHoolJmxjyCEkZU5y15AxFz
-         iEIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683143388; x=1685735388;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sQnhfgsaak1oIY6R7PWjZvmrvBgyS/heQqBnG1O9VYU=;
-        b=H6dRDenx6OAPnBxaQPyK9SM3RHhNVrskd3SqLVwvxt37YoERjIzPfF6nIuQ7zPPzdf
-         yKLHDUyraIZQXQNsjAQL1vubgIvYPmlxKqZTQ5PeiFYCxBCNWAWgUfuLHajOt0MofT6V
-         gre1S6b4B5kr1/mx0sSErHN8bb8UkaS07cluq/ZyGyzLReCh/xS+Vlrt3fmyJNsfBr3L
-         QwL+OwPvyQLk06nOPWG8bu/EESetwkxIXiyPHCVHqwqs82hDRyE5Ndu3akfC/R6HgCSH
-         Tk9ie2tPj19eUarg4boAxmLZb4j1MdyWOSOqUOEoj/QRBNrYQB4TElvonCAGxDXCbrq2
-         ULrA==
-X-Gm-Message-State: AC+VfDx7x1koyN+dW1EDaEjsSYgVgMqZ4oEK3Zx1Xmd/5+KY8Px43rCu
-        KRxLkCdySJFTbzFJPGqi6VP/aXwZj3k=
-X-Google-Smtp-Source: ACHHUZ6sune5voLhybR8FXb5eGfgmR6iC8kr+fVuipzJwf7q4hn0iN0IzAAtW/8f+hP5thYp3tXJbA==
-X-Received: by 2002:a2e:9106:0:b0:2a8:a859:b5c7 with SMTP id m6-20020a2e9106000000b002a8a859b5c7mr320839ljg.0.1683143387446;
-        Wed, 03 May 2023 12:49:47 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t22-20020a2e9d16000000b002ab59a09d75sm2553825lji.120.2023.05.03.12.49.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 12:49:46 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t4013: add expected failure for "log --patch --no-patch"
-References: <20230503134118.73504-1-sorganov@gmail.com>
-        <xmqqsfcdtkt0.fsf@gitster.g> <874jote2zl.fsf@osv.gnss.ru>
-        <xmqqmt2lqofb.fsf@gitster.g>
-Date:   Wed, 03 May 2023 22:49:46 +0300
-In-Reply-To: <xmqqmt2lqofb.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        03 May 2023 11:07:20 -0700")
-Message-ID: <87ttwtci05.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S229459AbjECT7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 15:59:09 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 866FE13A
+        for <git@vger.kernel.org>; Wed,  3 May 2023 12:59:07 -0700 (PDT)
+Received: (qmail 13223 invoked by uid 109); 3 May 2023 19:59:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 May 2023 19:59:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30745 invoked by uid 111); 3 May 2023 19:59:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 03 May 2023 15:59:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 3 May 2023 15:59:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2] builtin/pack-objects.c: introduce
+ `pack.extraCruftTips`
+Message-ID: <20230503195906.GA1796816@coredump.intra.peff.net>
+References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
+ <73ad7b90e1fe6c15f41ff828651f7ab06076ffd8.1683072587.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <73ad7b90e1fe6c15f41ff828651f7ab06076ffd8.1683072587.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, May 02, 2023 at 08:09:47PM -0400, Taylor Blau wrote:
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> No problem from my side, but are you sure?
->
-> Absolutely.
->
-> I've seen people just say "we document a failed one" and leave it at
-> that, without attempting to fix.  I am trying to see if pushing back
-> at first would serve as a good way to encourage these known failure
-> to be fixed, without accumulating too many expect_failure in our
-> test suite, which will waste cycles at CI runs (which do not need to
-> be reminded something is known to be broken).  I will try not to do
-> this when I do not positively know the author of such a patch is
-> capable enough to provide a fix, though, and you are unlucky enough
-> to have shown your abilities in the past ;-)
+> However, there is no option to be able to keep around certain objects
+> that have otherwise aged out of the grace period. The only way to retain
+> those objects is:
+> 
+>   - to point a reference at them, which may be undesirable or
+>     infeasible,
+>   - to track them via the reflog, which may be undesirable since the
+>     reflog's lifetime is limited to that of the reference it's tracking
+>     (and callers may want to keep those unreachable objects around for
+>     longer)
+>   - to extend the grace period, which may keep around other objects that
+>     the caller *does* want to discard,
+>   - or, to force the caller to construct the pack of objects they want
+>     to keep themselves, and then mark the pack as kept by adding a
+>     ".keep" file.
 
-Thanks for the credit, but as my recent attempts to fix 2 obvious
-deficiencies in Git CI (one of them being my own) failed quite
-miserably, I figure I have no idea how these things in CI are to be
-treated, so I prefer to leave a fix to somebody else, who actually groks
-what makes sense in the Git UI, and what doesn't.
+OK, I understand the use case you're trying to support, and your
+approach mostly makes sense. But there are two things I was surprised by
+in the implementation:
 
-That said, in case you still need the test with expect_success, below is
-one rerolled.
+  1. Does this need to be tied to cruft packs? The same logic would
+     apply to "repack -A" which turns objects loose (of course you
+     probably don't want to do that in the long term for performance
+     reasons, but it's conceptually the same thing; see below).
 
-Thanks,
--- Sergey Organov
+  2. Why is there a separate walk distinct from the one that rescues
+     recent-but-unreachable objects?
 
---- >8 ---
+Conceptually it seems to me that the simplest and most flexible way to
+think of this new feature is: pretend these objects are recent enough to
+be kept in the grace period, even though their mtimes do not qualify".
 
-Subject: [PATCH] t4013: add test for "log --patch --no-patch"
+And then everything else would just fall out naturally. Am I missing
+something?
 
---patch followed by --no-patch is to be a no-op according to the "git
-log" manual page. In reality this sequence breaks --raw output
-though (and who knows what else?)
+In a pre-cruft-pack world, I'd have just expected the patch to look like
+this:
 
-Add test case for the issue.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index bd6ad016d6..1d655dc758 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4077,6 +4077,7 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
+ 		if (add_unseen_recent_objects_to_traversal(revs,
+ 				unpack_unreachable_expiration, NULL, 0))
+ 			die(_("unable to add recent objects"));
++		add_tips_from_program(revs);
+ 		if (prepare_revision_walk(revs))
+ 			die(_("revision walk setup failed"));
+ 		traverse_commit_list(revs, record_recent_commit,
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- t/t4013-diff-various.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Sadly the cruft-pack feature doesn't really share this code, but I think
+it does something similar, and could just consider those synthetic tips
+as "recent" for this run.
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 5de1d190759f..32907bf142fc 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -457,6 +457,17 @@ diff-tree --stat --compact-summary initial mode
- diff-tree -R --stat --compact-summary initial mode
- EOF
- 
-+# This should succeed as --patch followed by --no-patch sequence is to
-+# be a no-op according to the manual page. In reality it breaks --raw
-+# though. Needs to be fixed.
-+test_expect_success '--no-patch cancels --patch only' '
-+	git log --raw master >result &&
-+	process_diffs result >expected &&
-+	git log --patch --no-patch --raw >result &&
-+	process_diffs result >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'log -m matches pure log' '
- 	git log master >result &&
- 	process_diffs result >expected &&
--- 
-2.25.1
+> +static int enumerate_extra_cruft_tips_1(struct rev_info *revs, const char *args)
+> +{
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	FILE *out = NULL;
+> +	int ret = 0;
+> +
+> +	cmd.use_shell = 1;
+> +	cmd.out = -1;
+> +
+> +	strvec_push(&cmd.args, args);
+> +	strvec_pushv(&cmd.env, (const char **)local_repo_env);
 
+Why does this clear the environment of local-repo variables? That seems
+unlike most other hooks we have, and would cause confusion if $GIT_DIR
+or various config variables are important (e.g., should "git -c foo.bar
+gc" persist foo.bar when running the hook? It usually does).
+
+I know that some hooks that try to change repositories by changing
+directories have the opposite confusion ($GIT_DIR is set, but they did
+not want it). But it makes more sense to me to remain consistent with
+how other hooks behave.
+
+> +	if (start_command(&cmd)) {
+> +		ret = -1;
+> +		goto done;
+> +	}
+
+This may be a matter of taste, but you can "return -1" directly here, as
+nothing has been allocated (and a failed start_command() will call
+child_process_clear() for you). This would mean "out" is always set in
+the "done:" label, so it wouldn't need a NULL-check (nor an
+initialization).
+
+> +
+> +	out = xfdopen(cmd.out, "r");
+> +	while (strbuf_getline_lf(&buf, out) != EOF) {
+
+is there any reason to be a stickler for LF versus CRLF here? I.e.,
+wouldn't strbuf_getline() be more friendly, with little chance that we
+misinterpret the result?
+
+> +		struct object_id oid;
+> +		struct object *obj;
+> +		const char *rest;
+> +
+> +		if (parse_oid_hex(buf.buf, &oid, &rest) || *rest) {
+> +			ret = error(_("invalid extra cruft tip: '%s'"), buf.buf);
+> +			goto done;
+> +		}
+> +
+> +		obj = parse_object(the_repository, &oid);
+> +		if (!obj)
+> +			continue;
+
+This parse_object() can be pretty expensive, especially if you are
+rescuing a lot of objects (or if your program directly references large
+blobs). Can we use oid_object_info() here in combination with
+lookup_object_by_type()?
+
+-Peff
