@@ -2,124 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3D21C77B75
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 17:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09ADFC7EE26
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 17:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbjECRHU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 13:07:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45590 "EHLO
+        id S229964AbjECRKb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 13:10:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230109AbjECRHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 13:07:06 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C10744B1
-        for <git@vger.kernel.org>; Wed,  3 May 2023 10:06:34 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1aaf70676b6so29446095ad.3
-        for <git@vger.kernel.org>; Wed, 03 May 2023 10:06:34 -0700 (PDT)
+        with ESMTP id S229756AbjECRK3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 13:10:29 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C227A8D
+        for <git@vger.kernel.org>; Wed,  3 May 2023 10:10:06 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-6a5e905e15aso1995232a34.1
+        for <git@vger.kernel.org>; Wed, 03 May 2023 10:10:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683133584; x=1685725584;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HzT+aPtnfqMnLBEyeOR4Pb0kEABs8nNQCSidTQpRo0E=;
-        b=q5kDuW6KLN+r4ewfCkhrUknDfjbJkSw5qAxIUFwJ6eHFX9eitG35ii/EMsVXxb+PQg
-         U8CCLVjraCEYAjvxVKQFnqFS468v10eeO1nLqTamFw4I3mAiaXiXKwm8LFU1Bsn0kQGC
-         XoiSVDobEeMJ9JBWAfiUXUpghTCfFAC2+ZB/a05BkZX6wATEQhg6dqh4naDOLwIveUFA
-         5GjQ4AU7rTgrqJlfh03Yl2eq+/qCJQV6utpP+Nkg+Bdp98dH05rO4TH8GGk475XKSprd
-         w0loWN9P+BW6GmaQ45APpjrgjg+bE0PO6Mny66AmZmf0ep7ySQtn+YFj5Q4lxk6zSIUQ
-         QnVA==
+        d=gmail.com; s=20221208; t=1683133788; x=1685725788;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ffUdhlBVuq/yz//ftWD5L7jW4AYWkG2+mNe5s+qOR7k=;
+        b=a/NkS73hsLR4amPxMDGlaHCMt2FjflptpFiAJnQrPpCQj54pV5IVr3xs6d0RAeRTXF
+         sFrjg1Pq4UmwRzalKCHX32kltOjfOZNZw9nf7PmW2v8/5NVMwLjKzsiLvp5jG49K8TAW
+         KJugmHhGKZ7U1LhU9k2fvZp28A5GVWuFnANJTj3PaCJJMG9iBReocA9SemVTvPHfOelb
+         yysxstUsZXoXeutY7J2V1RldpvmsAJcYNzvab0YsezlvlQRdfFfnfekAzY8p7EjCpPcv
+         cqn4D4Ymtj978fY34gcwP05qQC90uVfkOcy95oFxSYA0UM9J0nVnptYv7iXvQWD2Q+HI
+         xuqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683133584; x=1685725584;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HzT+aPtnfqMnLBEyeOR4Pb0kEABs8nNQCSidTQpRo0E=;
-        b=DwNdWs+9tRLUOyLhNA/Ply6C3eoCZoI3ISjWTk41HNIM3n4jTlO3NwpJSkBUkM+7HB
-         C6KDOBRpUI/mKGaq/KlvjEAfi7MACPg0MHTNWn1JBpZOKrZ8l6hKg5uenVNBeGtJaHDW
-         bN+aKqBcxq5P3O9csFry8dzeSfMRCS8STCx2f1DNEfz8WkyDIo7kH/dKhwCfzhpXYECR
-         LNNDnPXvBV/MY/JFOZE4elk1cCI0ECkm3RwHyC8wrGOaKMYc8ym9WbIgn4QmajHcjmwa
-         qxAipjP5XhZrw8PK3H67fFLiLtTi6TeUKt6tF4ysdrKGFs3zhFt7vfNDb+WQDQFLKBcb
-         0ivA==
-X-Gm-Message-State: AC+VfDwOdXBqFIajF+YUJBa1J/9JsqBymV+bhTktEUvGIAIK2P6vZR8H
-        ffmwiTlmq4MKi6t3pmQDJJGtqwUI/2I=
-X-Google-Smtp-Source: ACHHUZ6BspUTXEk8rdQKA67l32oVtHvuTHcudBtnrp/071YXqAQHf9S7mC/EFy4Rxa3lNX8oycrhUQ==
-X-Received: by 2002:a17:902:ef94:b0:1a1:ee8c:eef5 with SMTP id iz20-20020a170902ef9400b001a1ee8ceef5mr714807plb.7.1683133583660;
-        Wed, 03 May 2023 10:06:23 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id k11-20020a170902694b00b0019309be03e7sm21831570plt.66.2023.05.03.10.06.22
+        d=1e100.net; s=20221208; t=1683133788; x=1685725788;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ffUdhlBVuq/yz//ftWD5L7jW4AYWkG2+mNe5s+qOR7k=;
+        b=aLe+5P1CtWAEnZIIEuRMpJ8m2s4TaWz4QWZ16MshpaJguXXaczygM/saD0ljgCOHLc
+         3wc1ZoVQTbpiUAX8tElS7yE0jeqrLIptu15tFvgeSBzfK6MbvU5OozjmNHEvZgTFdwxS
+         scKzzcOHRHCD9HFsOFnhGwHfYmg3fTXRZfVi9bgGxzQl46ETpAtS0P68zYI50h99R0lE
+         I+cggE7Rv97QpV1GVjLQBUnEXR08E9t0K3YdY0RE/YNflMt4Gjz1RbyweQEZduXnyplJ
+         O725E07boGv8FapF/sXJUvWIvLQH0yIvAlct83fmVnYmffvX8HBB1a34gdeQsgLQL2Os
+         IjmQ==
+X-Gm-Message-State: AC+VfDyNiOeqkQckXJMfDy3vbBi3HV9kzKvG5BUGcQsnW0ntz5N5tGXd
+        lCQ1ju4ZLeni8qp1+xAFku+wKUeTbfc=
+X-Google-Smtp-Source: ACHHUZ7IaN8Q8t8Mk1yvdKqUOQIGqcajDJ8gTL3zKslxSj3uYVykrhcjf6kPIuEVIqx6UtETjREhcw==
+X-Received: by 2002:a05:6830:1e33:b0:6a6:f2e:d7ee with SMTP id t19-20020a0568301e3300b006a60f2ed7eemr11137427otr.23.1683133788325;
+        Wed, 03 May 2023 10:09:48 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id u12-20020a056830118c00b006a30260ccfdsm784874otq.11.2023.05.03.10.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 10:06:23 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Sohom Datta via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Sohom Datta <sohomdatta1@gmail.com>,
-        Sohom <sohom.datta@learner.manipal.edu>
-Subject: Re: [PATCH v2] docs: clarify git rm --cached function in gitignore
- note
-References: <pull.862.git.git.1601888338644.gitgitgadget@gmail.com>
-        <pull.862.v2.git.git.1683127916363.gitgitgadget@gmail.com>
-Date:   Wed, 03 May 2023 10:06:22 -0700
-In-Reply-To: <pull.862.v2.git.git.1683127916363.gitgitgadget@gmail.com> (Sohom
-        Datta via GitGitGadget's message of "Wed, 03 May 2023 15:31:56 +0000")
-Message-ID: <xmqqild9tkdt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Wed, 03 May 2023 10:09:47 -0700 (PDT)
+Date:   Wed, 03 May 2023 11:09:46 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <6452955ade0c9_1df7294b9@chronos.notmuch>
+In-Reply-To: <20230503164354.GC1789686@coredump.intra.peff.net>
+References: <20230503052926.217219-1-felipe.contreras@gmail.com>
+ <20230503164354.GC1789686@coredump.intra.peff.net>
+Subject: Re: [PATCH] doc: manpage: remove maximum title length
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Sohom Datta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King wrote:
+> On Tue, May 02, 2023 at 11:29:26PM -0600, Felipe Contreras wrote:
+> 
+> > DocBook Stylesheets limit the size of the manpage titles for some
+> > reason.
+> > 
+> > Even some of the longest git commands have no trouble fitting in 80
+> > character terminals, so it's not clear why we would want to limit titles
+> > to 20 characters, especially when modern terminals are much bigger.
+> 
+> Makes sense.
+> 
+> Since the manpage header shows the name twice, along with "Git Manual",
+> the practical limit for an 80-column terminal is somewhere around 35
+> characters. If it's not hard to do, it might be worth setting the value
+> there,
 
-> From: Sohom <sohom.datta@learner.manipal.edu>
+It's not hard to do, but that would create a discrepancy with asciidoctor
+manpage backend, which doesn't do that.
 
-Please make sure this line matches what you sign-off the patch as,
-i.e. the above line should read more like
+> I could also see an argument that the truncation is worse than any
+> wrapping or other ugliness that the user might see on a smaller
+> terminal, which implies that "no limit" as you have here is the best
+> option.
 
-    From: Sohom Datta <sohom.datta@learner.manipal.edu>
+I think it's best to remove the limit so there are no surprises and the output
+is consistent among tools.
 
-> Explain to users that the step to untrack a file will not also keep it
-> untracked in the future.
+> > For example:
+> > 
+> > --- a/git-credential-cache--daemon.1
+> > +++ b/git-credential-cache--daemon.1
+> > @@ -1,4 +1,4 @@
+> > -GIT-CREDENTIAL-CAC(1)             Git Manual             GIT-CREDENTIAL-CAC(1)
+> > +GIT-CREDENTIAL-CACHE--DAEMON(1)   Git Manual   GIT-CREDENTIAL-CACHE--DAEMON(1)
+> > 
+> >  NAME
+> >         git-credential-cache--daemon - Temporarily store user credentials in
+> > @@ -24,4 +24,4 @@ DESCRIPTION
+> >  GIT
+> >         Part of the git(1) suite
+> > 
+> > -Git omitted                       2023-05-02             GIT-CREDENTIAL-CAC(1)
+> > +Git omitted                       2023-05-02   GIT-CREDENTIAL-CACHE--DAEMON(1)
+> 
+> Your patch can't be applied by "git am" because of this diff in the
+> commit message (it thinks the commit message stops at the first diff,
+> even if it is before a "---" marker). The usual practice is to indent
+> the included diff.
 
-"also keep it untracked" -> "prevent them from getting added"?
+All right, I'll send an update.
 
-After all, it is not "git" that makes the path tracked.  It is the
-user who says "git add" that file that is not supposed to be
-tracked.
-
-> Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
-> ---
-> ...
-> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-> index f2738b10db6..8b78e1b3e08 100644
-> --- a/Documentation/gitignore.txt
-> +++ b/Documentation/gitignore.txt
-> @@ -146,7 +146,9 @@ The purpose of gitignore files is to ensure that certain files
->  not tracked by Git remain untracked.
->  
->  To stop tracking a file that is currently tracked, use
-> -'git rm --cached'.
-> +'git rm --cached' to remove the file from the index. The filename
-> +can then be added to the `gitignore` file to stop the file from
-> +being reintroduced in later commits.
-
-Should that be `.gitignore`, I have to wonder.  If the file in
-question is in a directory `deep/hierarchy`, the user may choose to
-add it in `deep/hierarchy/.gitignore`, and in that sense, you may
-have chosen to say "tell the ignore/exclude mechanism" in general
-without specifying the exact file path, in which case I am OK with
-that strategy, too.  But then, `literal` mark-up is not appropriate
-as it is no longer something the user types literally.
-
-I'd vote for just saying `.gitignore`; it's simpler and users who
-want to be creative can improvise at their own risk ;-)
-
-Other than that, looking good.
-
-Thanks.
-
->  Git does not follow symbolic links when accessing a `.gitignore` file in
->  the working tree. This keeps behavior consistent when the file is
->
-> base-commit: 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
+-- 
+Felipe Contreras
