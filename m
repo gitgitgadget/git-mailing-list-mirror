@@ -2,84 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5675C77B7F
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 19:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEFE0C77B78
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 19:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbjECTAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 15:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33494 "EHLO
+        id S230086AbjECTFd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 15:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbjECTAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 15:00:20 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46CF47ED0
-        for <git@vger.kernel.org>; Wed,  3 May 2023 12:00:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1683140402; i=tboegi@web.de;
-        bh=fulhYavH6iUSd07ZC8dDUh3aeyfjqblVb8PjV3cL9Ec=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=Hub92dzdh8Fm1LR1f83ElTW8Xd8YnYzaYzou175X5alIHyfntM1r3oUZXgiTEYOlX
-         EB/x7AJRj0pLHUIjo+MpBJbbO1BgmqBgXe1DMocbWSBzPk/Pd7+pdpjHm4NhrTGLLk
-         96LF+10aCfT6YfOjC//5blSOWsE9/Nxjbdhs2sFEl5Ln2bt4M4oA7MLLH7Xpp/sjOt
-         6bOPHM3DGP1Ck8uwfltfOow+7mJMLF/MU9QdFKb0/yUZQk5UVl3fGcm8SOgYVdxN1w
-         kuTnITOOc0KnecsUznbpJCQ+J0C7o2EQVlfLZecTx4Irufh4D1dPiCrvmNUeVioTUG
-         6WTETFRMNm5Kw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MK574-1pfUPn3QSs-00LpIF; Wed, 03
- May 2023 21:00:01 +0200
-Date:   Wed, 3 May 2023 21:00:00 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        eyvind.bernhardsen@gmail.com, sandals@crustytoothpaste.net
-Subject: Re: [PATCH v4 1/1] docs: rewrite the documentation of the text and
- eol attributes
-Message-ID: <20230503190000.5icpfm5k3dxgoq4d@tb-raspi4>
-References: <20230501023533.35370-1-alexhenrie24@gmail.com>
- <20230503044656.221175-1-alexhenrie24@gmail.com>
- <20230503044656.221175-2-alexhenrie24@gmail.com>
- <xmqq8re5wg9r.fsf@gitster.g>
+        with ESMTP id S229705AbjECTFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 15:05:31 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4097D8B
+        for <git@vger.kernel.org>; Wed,  3 May 2023 12:05:28 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-b9a6869dd3cso8060523276.2
+        for <git@vger.kernel.org>; Wed, 03 May 2023 12:05:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683140726; x=1685732726;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3nFWDj95e9FnHi7HAJQYIPQcCNaLbSZIi6gaf7nYRCk=;
+        b=ZUeAVsBgxUPMFNADkBDwupLxrpPnIoHYwiFFVwPOcU3AFpaa8hMyrDxy5jTResGLyW
+         TPN2y0KIPVkTpqWn2w2CBt0Ssz/OaDJXln418S14mvA4cQgc707otxk+ohdV8H0yfR6h
+         GDi5ZXL4SEmizGA10NdXtoZe+Ged6qP7Wijnu1zgk2Ek7RdC1cx+q+NA611ISybrP1yU
+         36oVnjhaudCA84iG2i2m7TSzBMAgWytgIB6eAEYToVRgK+wVHoV+4LemRCT7ZBhjSakP
+         8kClbTpJv8N+gF7XCfm43WlUd0ddAnUReyU1hEp0j5GovpVaxIo/YQzmQ5ZXYzhopZl4
+         VjkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683140726; x=1685732726;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3nFWDj95e9FnHi7HAJQYIPQcCNaLbSZIi6gaf7nYRCk=;
+        b=Qt+90dahr+W1FAYY23a0bGYOR0VQuF/XD6v6ctbfUjuVHuViCmil6mr7lo2vL+gGsw
+         sVOPkNLa8WwQqAAva1t7xm0T6Q1sSgqcZaOy3VNJZ7MVn0aMZntGnSdCQd0B7mrmMibW
+         W89VChLvxl6RDlOZyHyvwFgHE+8ZqF61cimQlosMwA6MQBlyy6JE2y/Fgsg1s0ee/PfN
+         gShhV6/+ghmE3thxT5iY8ugHNyJUzuV0vBiKzt+amTh+J3fLruaJVVeEbq6FpQ9jdvA1
+         ZyN5RHuY4trt9NZNmOexBfavKGBk/SS1UPQVpc/CUO2T7iVJNfNF9CuMVsgguiiwBD8V
+         O3Fg==
+X-Gm-Message-State: AC+VfDwMG9iJUizdV3TleGQqZfhUfUVxcFmVdxxY9fs1A49QyzC58CM1
+        rpIqYteTDpk2xFYo0sLlAE6shLtVtXGeDUP+YArR5LyCf1c=
+X-Google-Smtp-Source: ACHHUZ5CfK1VDCOJenJ39HhwjOYuP8rFiuVHAxBAxvKPFGjnsv7Gu5Wr3perXaxWKfrk7zWxJEwHQNj8/rRhO+Qa80I=
+X-Received: by 2002:a25:6f56:0:b0:b92:4a97:56f with SMTP id
+ k83-20020a256f56000000b00b924a97056fmr19755324ybc.14.1683140726339; Wed, 03
+ May 2023 12:05:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8re5wg9r.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:xDpSbGz46ADl+00rkr9z9wTlYOD2iVmVzC31tlYLf3oYjluRxOF
- 1FI/QOe6bb6y+V2Lbe/wdMlcV5VAAa+rnw0M4kuV4nidciGKRSIFae3IOLadcCSYpPlhFw+
- 81NbOqV4KA8Ja9vUxQsFCEdcL7eiYjn2zOuyLdmwO+l/pnUD6Y5InK8KDC7FoZzOQjsuf1E
- yXlvmQI7FPQJo2ByfR1MA==
-UI-OutboundReport: notjunk:1;M01:P0:JNCzgvKxdm4=;ZeUAAFNBa0optk+L3Hb2VhSyKP5
- nrAklYPhKdSONK9nQ4UD4IrVaTDqUUuUiP8IGklGeAV3KMCZs44W5BBVj+N2Q82VKM4/Ng85e
- QqCjCISr5/uwDeG0YRJ8eO0YSFr43itpeb2y45QG1NTYcza5fPIgqYjbQ6RSOMN+JOSKhPYue
- wYXHvcbxE52Fosg0yK0AaH+XCBFUdBTfqKIXdHUe3hya8Uhni4qEpcPDxe+GR0qjbzdfnkW5T
- u9BeWtXPAJZe4IuUxdHoTiUKHafD4epi/qLh4A1FnTYcrezu8FZUqXlRAFAbYuhL07wfz5Y5B
- F/2iF72Cf2NQzd6DUCPvBr/Xpnkk8Z3lFi+UNytgTj+H3dbVty02LeOfxDAIlRlyUIB6SVr4p
- usiESePUwAcJuv2n6nelgLfS1z4xTJO2OVmcjctPuZYcJAT6+uyYDfFyhPBK+OrjyVJlLMM0t
- /zBbUgmohVBY3KOAWtTvhMxteq4xtrnQw0/9foaeIh/CHFXKIw2q0P97uGnujOyxL2Q6/nEt1
- LRbdk5xT+h3Yw9GAXpAeSQ3MJcmuQmwPqZB3e9va1Qj3aCOQKU3TlV4YBc3+hRCd7y+Y2CLOD
- RF6sTGclb80+nmPYoHeLLw3rPtCDYyTo0kenYF6E1ZmZsLgAHYpi1qwv2lF7hTtBqQKhhfuCN
- Svxa1TTjIsl4S1wGW1/Jx11wJ5/mPv/lt3cm9rxBeUp83sVvyZp0RPmk14Yg5NYVe+698te1f
- Zi8LV1z6ENfx/ujGX+e7eRMuZ7FMPQAZCaLITkUkqkB8KTfJgqmImhGFaQCoCELAgO4gMNzeX
- BKbiTok+izAgWciHyDZamtf7vxF7jGmmPOhsx41iJEoa7W8SzEJm2CJYZl1gEMMesi7vn2JbH
- E0T/1OI82RZbLlXlDWYrrXr1NpJZXJi1guWOk8uhSM9yxh8GtkjWSO8K9xI3Kr/3PRGzCZBNe
- cz8JYQfYgSXmFWWod3arBR5zPE0=
-Content-Transfer-Encoding: quoted-printable
+From:   Kevin Ushey <kevinushey@gmail.com>
+Date:   Wed, 3 May 2023 12:04:47 -0700
+Message-ID: <CAJXgQP1j6JYbtikMuWGFn44+FVb3PfmuwiFrxDGLQAYgr92Wfw@mail.gmail.com>
+Subject: git grep -E doesn't accept \b word boundaries?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 03, 2023 at 09:06:56AM -0700, Junio C Hamano wrote:
-> Alex Henrie <alexhenrie24@gmail.com> writes:
+Hello,
 
+I'm seeing the following, which I believe is unexpected. I have a file
+with contents:
 
-> > ---
-> >  Documentation/gitattributes.txt | 59 +++++++++++++++++---------------=
--
-> >  1 file changed, 31 insertions(+), 28 deletions(-)
->
-> Will replace.  Unless I hear objections soon, I'll mark it for
-> 'next' and merge it down.  Thanks.
->
-That's all fine with me - no objections.
-Happy line-ending ;-)
+$ cat hello.txt
+WholeWord
+Whole Word
+Whole
+
+I can use `git grep` to search with word boundaries; e.g.
+
+$ git grep --untracked '\bWhole\b'
+hello.txt:Whole Word
+hello.txt:Whole
+
+However, if I add `-E` to use extended regular expressions, the same
+invocation finds no search results.
+
+$ git grep --untracked -E '\bWhole\b'
+
+This does seem to work as expected with the '-w' flag, e.g.
+
+$ git grep --untracked -E -w 'Whole'
+hello.txt:Whole Word
+hello.txt:Whole
+
+as well as with POSIX word boundaries, e.g.
+
+$ git grep --untracked -E '[[:<:]]Whole[[:>:]]'
+hello.txt:Whole Word
+hello.txt:Whole
+
+Is this a bug, or am I misunderstanding some behavior in `git grep`?
+For posterity:
+
+$ git grep --untracked -G '\bWhole\b'
+hello.txt:Whole Word
+hello.txt:Whole
+
+$ git grep --untracked -E '\bWhole\b'
+
+$ git grep --untracked -P '\bWhole\b'
+hello.txt:Whole Word
+hello.txt:Whole
+
+For what it's worth, I don't see this issue with an older version of
+`git` on an Ubuntu 22.04 VM:
+
+root@96722b73f316:~/test# git --version
+git version 2.34.1
+root@96722b73f316:~/test# git grep --untracked -E '\bWhole\b'
+hello.txt:Whole Word
+hello.txt:Whole
+
+Thanks,
+Kevin
+
+------
+
+[System Info]
+git version:
+git version 2.40.1
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 22.4.0 Darwin Kernel Version 22.4.0: Mon Mar  6 20:59:28
+PST 2023; root:xnu-8796.101.5~3/RELEASE_ARM64_T6000 arm64
+compiler info: clang: 14.0.3 (clang-1403.0.22.14.1)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /opt/homebrew/bin/bash
