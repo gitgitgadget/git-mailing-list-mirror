@@ -2,102 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56EB1C77B75
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 17:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 948C7C77B75
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 18:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbjECR6g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 13:58:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46690 "EHLO
+        id S229991AbjECSAV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 14:00:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbjECR6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 13:58:35 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C72D77A88
-        for <git@vger.kernel.org>; Wed,  3 May 2023 10:58:25 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1ab267e3528so4733335ad.0
-        for <git@vger.kernel.org>; Wed, 03 May 2023 10:58:25 -0700 (PDT)
+        with ESMTP id S229481AbjECSAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 14:00:20 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 234371708
+        for <git@vger.kernel.org>; Wed,  3 May 2023 11:00:19 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id d75a77b69052e-3ef36d814a5so507751cf.0
+        for <git@vger.kernel.org>; Wed, 03 May 2023 11:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683136705; x=1685728705;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oLCNKYlVkZWjn5P/kRL8+BV303MeGEZjOE5L3LDXJs0=;
-        b=NbtA/j7b1NzGIrMATH23yWTvMzJ3JacVOOod/vtl29HDetNSoSZ832EFhzVENUE9qU
-         M+ONizq60qE36w0mURBzFAxLfCjLU5zyW+o11znKXDVJ1moV3SiR0YdES29msaj/WBr6
-         MCGrHdwn1UsLjEvTnVOqdJ0CvM4clC9gxeiHC8PqR1fH25lsfXWcqhjhX3DyEKWWh4lT
-         p//HQgljMnjlgdCWtsBP0hu96qyVVnJR9+/Hhz9Q8KSHMmf0BHtHjqG+koQrnOuwRAgX
-         dGJ2JKJ2UFzTldbNx48tAJ0mXd65V9z4puqG5wwdimuwIjnEZk6Jmka1WxKoDlZr9BEh
-         347g==
+        d=google.com; s=20221208; t=1683136818; x=1685728818;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H6/Ht32WVrT1ZvMxqBE08tl4tl8Yy90UiTXh2iBWmfU=;
+        b=JNrOg8hXFOj3Db6U4DCYMGX9EdjRwcXx15975DZtlMXeip+dLa3yZhCRMxHjxFD4Ha
+         Oc5Rhz+oM5A7X7jnnLyi+ZjQvkLy+x5pXiKr1x4buLP4jrOIRz3w5hIbK9llRnfYJzkt
+         CneTXD3MtIP12JWcscHnr1KaB9iGou5kvAF7fQ5T/dgQHa8WYhXutcz73BXmhfusSDO9
+         tje/iA/ohmFy/eyq8X07fPhVWAkoQZjOoaMhgRlqerIgYWq5Q0CzccnKXWgXXK7m+ZBm
+         n4gLdFhRMkDU48SDFwh2Luy3lu7zwqJk2S0B9gzSPUs7EWHNTqibRkeJBrmQV283ZCx6
+         2Mxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683136705; x=1685728705;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oLCNKYlVkZWjn5P/kRL8+BV303MeGEZjOE5L3LDXJs0=;
-        b=gnySDQkVX4atZg0dd/otY0naruJuz9l5tPnSKFjYrjwxwDbdg3UsmUFo6xH/KyU7EN
-         v48BudaGqZ5QruFomUuGbmoAZ1jxBwOSwAYjt4eSH6gJE+Taq/wqsIVljz31JJMIpOXo
-         hO5Cg2H6J5h+h71Sva+Q00aGqe5hiLcQwHKi/9Ve18K2O8qUpJ4lhMOhm9hApmRmbjkn
-         2kCZ1CsuetSB6/QLCId/ncZLu+AaSO/a7N6HsxDPpzVG2QIyFvBTQdH54WhCKE9Hdf9W
-         +GYfr4QlAjHeIF2Wf34Ub7jc2TO/Xm+cvWu/bXK0pkjzw4MfQZMxmGFP8kAQlfhTFNxK
-         fTsQ==
-X-Gm-Message-State: AC+VfDy4DMDTdWHZCT+cL88Vv1sygE7OV04xgFUbBxyq5f4HcxrISY6d
-        84qyGQXd8ovzzT86K/92N0g=
-X-Google-Smtp-Source: ACHHUZ5Ozg7wxl3RNJoYTf1K3/n/QaQg3HI4DTJmLDujOsT3ODEgZaNFi6niqPof0TADpbs2T3T5tg==
-X-Received: by 2002:a17:902:b195:b0:1aa:fb67:b943 with SMTP id s21-20020a170902b19500b001aafb67b943mr798954plr.62.1683136704937;
-        Wed, 03 May 2023 10:58:24 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id c14-20020a170903234e00b001ab19724f64sm1989530plh.38.2023.05.03.10.58.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 10:58:24 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] doc: manpage: remove maximum title length
-References: <20230503052926.217219-1-felipe.contreras@gmail.com>
-        <20230503171658.8996-1-felipe.contreras@gmail.com>
-Date:   Wed, 03 May 2023 10:58:24 -0700
-In-Reply-To: <20230503171658.8996-1-felipe.contreras@gmail.com> (Felipe
-        Contreras's message of "Wed, 3 May 2023 11:16:58 -0600")
-Message-ID: <xmqqr0rxqou7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1683136818; x=1685728818;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H6/Ht32WVrT1ZvMxqBE08tl4tl8Yy90UiTXh2iBWmfU=;
+        b=XYCvniuvVR2PS8diwfZoOzEyQ2EoQDGXmMnI+J/NPJUaaVeITBLI8KkVou8Qxr7Zlt
+         GhalVknWUzkgtd95VVkxKsv5lqgEWx0WZAicaRSRkz9cd2q50VyQ7o/vCG6JBi1lld8q
+         z3gQzE/VkUGSbn0xfKAJnYDymX82A/B446MWeldK7IEbApov9FGMfIvqJmLCpxrmWYge
+         upuuJI62q2//oPfPC3cNpJ7RLvK1bmtFZvEvt8A1wpDwaBx1kYPzK+heJy/CIfoSrfeJ
+         kgBTwXBSg+3j//UDvyVhXGE8S8WsFCQVCLmEyWHbHBf0ArSHEDWJQFnw5Zb5g+ua8mHF
+         kaHQ==
+X-Gm-Message-State: AC+VfDz9W0RKQSU6DedF58rtNrjjTy0FE/cSkOtJgVeGWcdKg7tcDFNB
+        x8FX8b6qohDODMAU4t6WVhEXS7PcYyLhRJOwuaSfxzz3GH0FvUJvLWI=
+X-Google-Smtp-Source: ACHHUZ7BKuWE+NqkU/iFie39zCPc67/YiyXxsvNBm0BHYCjDCmS00+m3PP2dpwReMXTVYqiBPrjVNCM4sT5kmiiEOYA=
+X-Received: by 2002:ac8:4e48:0:b0:3ef:404a:b291 with SMTP id
+ e8-20020ac84e48000000b003ef404ab291mr461331qtw.7.1683136818095; Wed, 03 May
+ 2023 11:00:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230502211454.1673000-1-calvinwan@google.com> <CABPp-BFagTvBTe0XbEOM_hO-vDFwVvSSmGOii1q2=7amqerwtQ@mail.gmail.com>
+In-Reply-To: <CABPp-BFagTvBTe0XbEOM_hO-vDFwVvSSmGOii1q2=7amqerwtQ@mail.gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 3 May 2023 11:00:07 -0700
+Message-ID: <CAFySSZAOqX0pESfJ-7bYg9iR2RDB9PL6sC4Kcvr_zitdQ1kD_g@mail.gmail.com>
+Subject: Re: [PATCH 0/6] strbuf cleanups
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+While moving strbuf_add_separated_string_list() to a separate file
+would mean that strbuf would no longer have a dependency on
+string-list, I don't think that dependency is problematic to begin
+with. Widening the boundary for strbuf as a string manipulation
+library to a string and string list manipulation library seems
+reasonable to me.
 
-> DocBook Stylesheets limit the size of the manpage titles for some
-> reason.
-> ...
-> Moreover, asciidoctor manpage backend doesn't limit the title length, so
-> we probably want to do the same for docbook backends for consistency.
+
+On Tue, May 2, 2023 at 7:37=E2=80=AFPM Elijah Newren <newren@gmail.com> wro=
+te:
 >
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
-
-Looking good.  It is especially good that we say why we chose to
-make it unlimited instead of raising it to some arbitrary value.
-
-The claim that the longest one would fit on a line is not still
-substantiated (we could say "git-X manual page" needs the most
-columns and people can check for themselves), but I'll let it pass.
-
-Will queue.  Thanks.
-
-> diff --git a/Documentation/manpage-normal.xsl b/Documentation/manpage-normal.xsl
-> index a9c7ec69f4..e7aa5df2fc 100644
-> --- a/Documentation/manpage-normal.xsl
-> +++ b/Documentation/manpage-normal.xsl
-> @@ -8,6 +8,9 @@
->  <xsl:param name="man.output.quietly" select="1"/>
->  <xsl:param name="refentry.meta.get.quietly" select="1"/>
->  
-> +<!-- unset maximum length of title -->
-> +<xsl:param name="man.th.title.max.length"/>
-> +
->  <!-- convert asciidoc callouts to man page format -->
->  <xsl:template match="co">
->  	<xsl:value-of select="concat('\fB(',substring-after(@id,'-'),')\fR')"/>
+> On Tue, May 2, 2023 at 2:15=E2=80=AFPM Calvin Wan <calvinwan@google.com> =
+wrote:
+> >
+> > Strbuf is a basic structure that should function as a low-level library
+> > due to how generic it is. Over time certain functions inside of
+> > strbuf.[ch] have been added with dependencies to higher level objects
+> > and functions. This series cleans up some of those higher level
+> > dependencies by moving the offending functions to the files they
+> > interact with. With the goal of eventually being able to stand up strbu=
+f
+> > as a libary, this series also removes the use of environment variables
+> > from strbuf.
+> >
+> > Calvin Wan (6):
+> >   abspath: move related functions to abspath
+> >   credential-store: move related functions to credential-store file
+> >   object-name: move related functions to object-name
+> >   path: move related function to path
+> >   strbuf: clarify dependency
+> >   strbuf: remove environment variables
+> >
+> >  abspath.c                  |  36 +++++++++++++
+> >  abspath.h                  |  21 ++++++++
+> >  add-patch.c                |  12 +++--
+> >  builtin/am.c               |   2 +-
+> >  builtin/branch.c           |   4 +-
+> >  builtin/commit.c           |   2 +-
+> >  builtin/credential-store.c |  19 +++++++
+> >  builtin/merge.c            |  10 ++--
+> >  builtin/notes.c            |  16 +++---
+> >  builtin/rebase.c           |   2 +-
+> >  builtin/stripspace.c       |   6 ++-
+> >  builtin/tag.c              |   9 ++--
+> >  fmt-merge-msg.c            |   9 ++--
+> >  gpg-interface.c            |   5 +-
+> >  hook.c                     |   1 +
+> >  object-name.c              |  15 ++++++
+> >  object-name.h              |   9 ++++
+> >  path.c                     |  20 +++++++
+> >  path.h                     |   5 ++
+> >  pretty.c                   |   1 +
+> >  rebase-interactive.c       |  15 +++---
+> >  sequencer.c                |  24 +++++----
+> >  strbuf.c                   | 106 +++----------------------------------
+> >  strbuf.h                   |  44 ++-------------
+> >  tempfile.c                 |   1 +
+> >  wt-status.c                |   6 +--
+> >  26 files changed, 213 insertions(+), 187 deletions(-)
+> >
+> > --
+> > 2.40.1.495.gc816e09b53d-goog
+>
+> The series looks pretty good to me.  I left a couple small comments on
+> 5/6 and 6/6.  One other high-level note:
+>
+> As =C3=86var noted over at
+> https://lore.kernel.org/git/230501.86a5yohsme.gmgdl@evledraar.gmail.com/,
+> strbuf_add_separated_string_list() is currently only used by
+> merge-ort.c and merge-recursive.c (both of which include
+> merge-recursive.h).  It may make sense to move that function, and that
+> would permit you to drop the forward declaration of 'struct
+> string_list;' from strbuf.c as well.
