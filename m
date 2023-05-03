@@ -2,133 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 501E2C77B78
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 15:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D3C0C77B75
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 15:44:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230343AbjECPcB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 11:32:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54938 "EHLO
+        id S230170AbjECPoa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 11:44:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbjECPcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 11:32:00 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F9359D1
-        for <git@vger.kernel.org>; Wed,  3 May 2023 08:31:59 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f18335a870so33397345e9.0
-        for <git@vger.kernel.org>; Wed, 03 May 2023 08:31:59 -0700 (PDT)
+        with ESMTP id S229626AbjECPo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 11:44:28 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE7A5BAE
+        for <git@vger.kernel.org>; Wed,  3 May 2023 08:44:27 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-187fc21f6acso2306507fac.2
+        for <git@vger.kernel.org>; Wed, 03 May 2023 08:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683127917; x=1685719917;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683128666; x=1685720666;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QqJA5kJh8OfYJU5vYvtM2c8Iz2ru8lfdqzkLPnVuUTQ=;
-        b=XKN+2qdzGCb42l8jBu3Zjy74adcWwoe2XmYNeGgellMFbGCnV4YK8aEV52cu7tY9Z5
-         ZzmuAoj54cxgt28qHH3tZUIb9MGbxcTQ8d0pU438D1Gn0MaV1x/PR7WYLk7YhZHi9RJ3
-         SYJ3WlPczeErPkadmVmAMk1nVSar9YORVtjun5hstBJQjEOMID0xTLp8+o5D8RglI9/W
-         e4RDY1oBlFl9KdWKy9IQPslWAX7mvH24lX3r9kw3ZsUa/QHclpjh13H+DIhApimCJWoo
-         VAkSIU8QBPf48DLT/0EZvawWaZwqnhAjDPnHzfB/x2DzK5qygP3Ka5IftLycDJpNFK9F
-         REvw==
+        bh=6lcrQX5XhvfV6hhgnIzGtMG+n9YNiUqmqqzTdmH/o8Y=;
+        b=ixylZIvTUKhGh8JV1TTeYUrqLA0UwaHAwvPNSeThXyZpQkU4jTb/D4QSojOWqq54iY
+         RQQsTim9A1MOCh5sOJkYWxjho1BMrDlrY5FXGtRFu+O5k6FbWv5rfq7YSDG+KIO3Nb0I
+         xotVkk3e7GVG+j7REtcmKY14sVz//DWa90Zb6qmWjyrnqqMEUHWilsugv4bhdP8hN8An
+         e9pZMa+X4XJEPdNflP5FlD3Bf7Bg4WS3UsogNzOiR3YfrikwnvW5NMAJ1euKpLrjATOj
+         epF7JTmHILUp1OnystQGM6688UbrTwDmYNRf0IMoiJsU+8eaUwcbRQjJEal59TUvTlzJ
+         AU2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683127917; x=1685719917;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QqJA5kJh8OfYJU5vYvtM2c8Iz2ru8lfdqzkLPnVuUTQ=;
-        b=Pi6kmmm237QaM/thwIdu5W9somwyKjGmaCMmChjLZVRLgqfQdclraqGXMR5zJRRgAR
-         dMVqoTxkYhL/ezWkHG3jOaWM1PPICXA1ltoDUpOa87CJLANjDU1Zo2WbvVhVftOSxDtQ
-         +KC1/jhbNYDoW9R86fw3Gm9bsVmlw13Cb7iv6n/SWO304Vx5BAGJ/V7Dcy139Qhrk4B/
-         CCqWHkec72+IIWHaQLBYU79xOB77V99nUuW/IXXvxCfnPAjDKuChur4IdVVDeK+c7/vb
-         iCyYl8X1at7NwyLj03q9kf/yXZPEz84O3L5MuSHWvZQqDA/T4d9ov68CZSocP/U+qnGH
-         SK/w==
-X-Gm-Message-State: AC+VfDyKLlBRg9M3yVON6PlygYYrMVU34rvpKEpPRbjLrltiRxDXc0uo
-        0e4t7LKXfF/xqUnEr7Wjhr0Q3a8l9eQ=
-X-Google-Smtp-Source: ACHHUZ5fBZ89AKWVmC5WRJHHCNf5bm/sPUpBUcNbDxQbN+geSXMDDouyWNqn/vmhqq7hst/vrZRUUA==
-X-Received: by 2002:adf:eec3:0:b0:306:297b:927f with SMTP id a3-20020adfeec3000000b00306297b927fmr393554wrp.25.1683127917393;
-        Wed, 03 May 2023 08:31:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f4-20020a0560001b0400b002ffbf2213d4sm34267654wrz.75.2023.05.03.08.31.56
+        d=1e100.net; s=20221208; t=1683128666; x=1685720666;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6lcrQX5XhvfV6hhgnIzGtMG+n9YNiUqmqqzTdmH/o8Y=;
+        b=FnLfoh3t970+t+k4zjc9omOy57gLk2Gqe4tICCjK1544vJV3QQVHUnv/VvDzJq6bkU
+         rrbf+pUfP0wLyEakCXVjA3+AlSLqPpHm/i6WACt7dDfh18uO6ybZyHGXr3RLO+g7R08o
+         SX2SUCXlcx/Mi8cUI1E7KnYQYYlP4wh9KCFIA6CDiSt2Hq2aqK495zeaYRmNmLDI8owQ
+         kVlsRYI6h2zlKkh3MzeN+8cpqRtB+fsAhU1MAnPMH43EZGXwG8HyugDKYb6pOV8Ft3zr
+         UhvPdrXgQecKDKfk0KnRcJ6CxWSkk9kioSTrm6DkG4dtTTVqghXxh/KsGU+lID/cDE47
+         sj1A==
+X-Gm-Message-State: AC+VfDyglNsAd1or97wG1Y0Ox0C646e7EGh1Av/YgUU1IwiMOPzMLt6V
+        RtiB2JZ+tZZ+a2HxnLJdsi6lIHEG6rM=
+X-Google-Smtp-Source: ACHHUZ7YQ8BTl6MRF21pxrKxGA4WMSFihheFr+21Iy59ay0dH1Pb46OesES+OjgW4pRS+rByLCnsjg==
+X-Received: by 2002:a05:6871:302:b0:187:bbb2:9586 with SMTP id b2-20020a056871030200b00187bbb29586mr8645662oag.33.1683128666640;
+        Wed, 03 May 2023 08:44:26 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id f35-20020a4a8926000000b00541b5963069sm2384119ooi.20.2023.05.03.08.44.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 08:31:57 -0700 (PDT)
-Message-Id: <pull.862.v2.git.git.1683127916363.gitgitgadget@gmail.com>
-In-Reply-To: <pull.862.git.git.1601888338644.gitgitgadget@gmail.com>
-References: <pull.862.git.git.1601888338644.gitgitgadget@gmail.com>
-From:   "Sohom Datta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 03 May 2023 15:31:56 +0000
-Subject: [PATCH v2] docs: clarify git rm --cached function in gitignore note
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Sohom Datta <sohomdatta1@gmail.com>,
-        Sohom <sohom.datta@learner.manipal.edu>
+        Wed, 03 May 2023 08:44:25 -0700 (PDT)
+Date:   Wed, 03 May 2023 09:44:24 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Adam Majer <adamm@zombino.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Message-ID: <64528158cdd1e_68229498@chronos.notmuch>
+In-Reply-To: <70103746-6980-baed-13d9-afeae6cee464@zombino.com>
+References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
+ <20230426205324.326501-1-sandals@crustytoothpaste.net>
+ <20230426205324.326501-3-sandals@crustytoothpaste.net>
+ <xmqqbkjaqqfp.fsf@gitster.g>
+ <20230427054343.GE982277@coredump.intra.peff.net>
+ <6451a0ba5c3fb_200ae2945b@chronos.notmuch>
+ <70103746-6980-baed-13d9-afeae6cee464@zombino.com>
+Subject: Re: Is GIT_DEFAULT_HASH flawed?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sohom <sohom.datta@learner.manipal.edu>
+Adam Majer wrote:
+> On 5/3/23 01:46, Felipe Contreras wrote:
+> > To be honest this whole approach seems to be completely flawed to me and
+> > against the whole design of git in the first place.
+> 
+> The discussion above is mostly moot now since this has been fixed in 
+> later patches in this thread, AFAIK.
 
-Explain to users that the step to untrack a file will not also keep it
-untracked in the future.
+That particular isssue might be fixed, but that issue should never have
+happened in the first place if the design was correct.
 
-Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
+A bad design makes certain errors prone to happen, a good design makes the same
+errors happen rarely, a great design makes those errors impossible.
+
+Git was designed to make it *impossible* to confuse two commits with similar
+data.
+
+The symptom might have been fixed, that doesn't mean there's no underlying
+problem.
+
+> It's also moot for other reasons, like the hash function transition plan is
+> not really implemented, yet.
+
+The implemention of the plan isn't the problem, it's the plan itself.
+
+> Also, this was about corner-case, like it often is.
+
+A corner-case that should be impossible.
+
+> > In a recent email Linus Torvalds explained why object ids were
+> > calculated based {type, size, data} [1], and he explained very clearly
+> > that two objects with exactly the same data are not supposed to have the
+> > same id if the type is different.
+> 
+> This is different. But aside, type + size + data are not really much 
+> different from just having data in a hash function.
+
+It's completely different.
+
+> There are plenty of hash collisions where
+> 
+>      HASH(type + size + data) == HASH(type + size + data')
+> 
+> by definition of how these functions work. The problem is always in 
+> finding these collisions. But anyway...
+
+I don't think you understand why Linus Torvalds chose to hash objects.
+
+> > In my view one repository should be able to have part SHA-1 history,
+> > part SHA3-256 history, and part BLAKE2b history.
+> 
+> Yes, that would be great. Please provide patch series for this :-)
+
+I have hundreds of patches being ignored, why would I write yet another patch
+series that will be ignored?
+
+> > I have not been following the SHA-1 -> OID discussions, but I
+> > distinctively recall Linus Torvalds mentioning that the choice of using
+> > SHA-1 wasn't even for security purposes, it was to ensure integrity.
+> 
+> These are different sides of the same coin. Hashes are used to provide 
+> integrity. Hashes like MD4, MD5, SHA1, SHA256 are there for integrity. 
+> Some of these are no longer recommended and some are completely broken.
+
+There are different philosophical views of what "security" means, and it seems
+pretty clear to me that your view does not align with the view of Linus
+Torvalds.
+
+> > Better the SHA-1 you know, than the SHA-256 you don't.
+> 
+> Wrong conclusion ;) Also, we know SHA-256
+
+You don't understand what is being said.
+
+Which hash is more trustworthy?
+
+ a. 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
+ b. d891b12414e1d9331f8cbb15acfe690671974f27ba76e2b423294cfb7a055f2f
+
+If you answer b just beacuse it's SHA-256 you don't understand security.
+
+b is a random commit I generated, a is the current git.git master.
+
+A SHA-1 hash from a source you trust is inifinitely more trustworthy than a
+random SHA-256 hash. Even a known MD5 hash is better in this respect.
+
+> Keep in mind -- hashes are there for object reference.
+
+No. I don't think you understand why Linus Torvalds used hashes.
+
+> If you have SHA1 repo, you can calculate a SHA256 or whatever hash for any
+> type object.
+
+I know it *can* be done, I understand how hash algorithms work, but just
+because something *can* be done doesn't mean it *should*.
+
+You *can* generate a SHA-1 of a blob's data, instead of a SHA-1 of a blob's
+`type + size + data`, does that mean we should? No.
+
+> Finally, let not have a "bike shed" discussion about this.
+
+Discussing the original design of git's object storage which has withstood the
+test of time for 18 years is not "bike sheding".
+
+I don't even think you understand what I'm trying to say.
+
 ---
-    docs: Clarify git rm --cached function in gitignore note
-    
-    Added text explaining that the git rm --cached command isn't analogous
-    to the gitignore file and that the file will need to be added to
-    gitignore to prevent later commits from adding the file back.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-862%2Fsohomdatta1%2Fgitignore-note-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-862/sohomdatta1/gitignore-note-v2
-Pull-Request: https://github.com/git/git/pull/862
+Why do you think these commands generate different hashes?
 
-Range-diff vs v1:
+  git hash-object -t blob /dev/null
+  git hash-object -t tree /dev/null
 
- 1:  053e9f99c9e ! 1:  c3257398c8f docs: clarify git rm --cached function in gitignore note
-     @@ Metadata
-       ## Commit message ##
-          docs: clarify git rm --cached function in gitignore note
-      
-     -    Added text explaining that the git rm --cached command
-     -    isn't analogous to the gitignore file and that the file
-     -    will need to be added to gitignore to prevent later
-     -    commits from adding the file back.
-     +    Explain to users that the step to untrack a file will not also keep it
-     +    untracked in the future.
-      
-          Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
-      
-     @@ Documentation/gitignore.txt: The purpose of gitignore files is to ensure that ce
-      +can then be added to the `gitignore` file to stop the file from
-      +being reintroduced in later commits.
-       
-     - EXAMPLES
-     - --------
-     + Git does not follow symbolic links when accessing a `.gitignore` file in
-     + the working tree. This keeps behavior consistent when the file is
-
-
- Documentation/gitignore.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index f2738b10db6..8b78e1b3e08 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -146,7 +146,9 @@ The purpose of gitignore files is to ensure that certain files
- not tracked by Git remain untracked.
- 
- To stop tracking a file that is currently tracked, use
--'git rm --cached'.
-+'git rm --cached' to remove the file from the index. The filename
-+can then be added to the `gitignore` file to stop the file from
-+being reintroduced in later commits.
- 
- Git does not follow symbolic links when accessing a `.gitignore` file in
- the working tree. This keeps behavior consistent when the file is
-
-base-commit: 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
 -- 
-gitgitgadget
+Felipe Contreras
