@@ -2,141 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF400C77B7F
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 18:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F01D9C77B7F
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 18:49:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbjECSnt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 May 2023 14:43:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
+        id S229763AbjECStV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 May 2023 14:49:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbjECSnT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2023 14:43:19 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BEF8682
-        for <git@vger.kernel.org>; Wed,  3 May 2023 11:40:58 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id d75a77b69052e-3ef385482e9so8937591cf.0
-        for <git@vger.kernel.org>; Wed, 03 May 2023 11:40:58 -0700 (PDT)
+        with ESMTP id S229613AbjECStD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2023 14:49:03 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8A705BBA
+        for <git@vger.kernel.org>; Wed,  3 May 2023 11:48:55 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-b8f6bef3d4aso11114044276.0
+        for <git@vger.kernel.org>; Wed, 03 May 2023 11:48:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683139252; x=1685731252;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0l9OTDlTzd8d3FEtgYfnkSfRk9y1TWkDkfwXuvMPhF4=;
-        b=n3rsYPRjuguH5ts7xEvnwUFQiIUCPBFBkLtIfdbJaZM1SbGyfuNpXIyb06fM6phZ6n
-         AuEIB3k55qU7hVOoVmMcl/D5Vvmn6kZeHG5Q6NwvDnMxjb98XenoFJ3rzWRYO6mqI2D+
-         UyAJwAi6mil0QZGCpCblfyc2Ep8Dy7WKAY3ulSLPQPRxBVGoAEV4vEwo9xOt+i5a89Bk
-         1CLcKv+yrm7LEjsuxbosSxyAyNAX+hgEABHWC0lzrCOLbgOezrl2nk+wTqLlGOgqz6P+
-         RCXDg9hIlFsZV+RkRs9vrALoPEFbkC5zY5usYovmrMfFApo4EFi3tG3YofoWYbq8jvGj
-         x4yw==
+        d=google.com; s=20221208; t=1683139735; x=1685731735;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2FRuIpOGUMsA1ewzlWZVI/OCWZ1dW52ZqQu0cBkXFAg=;
+        b=seTobT+8dcxAMg39qF0ZJEoQMYucpVYzzmm8pfemTlq6Cw+Sa+3x5IgQynQsaZO9vJ
+         SGS3iuthWqSlbXWKAHeN70dI9UGLMDpivGGEQqQfxjAJx/tG8IQGZ9cIJINyonJ16NGu
+         mU3wgI40D5BfE0Vq+zH05Y+CSHiXoZuGBXB4GrlLmikM/h7UmtGgnG1zrduAwiN2fm/m
+         S/t8pRbL6ac/FkRgDk1m8aHc57g8u/+nYN33ZQhUbUbA+kuTFMMiiyXv+dCzmElvblM0
+         vxLvtuE6mlOXrVT7iJKJOwvAUrh+Wi0DaQtvChHJQXVFscsihBgOO6Boi3QSj+CPH9Gh
+         pulA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683139252; x=1685731252;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0l9OTDlTzd8d3FEtgYfnkSfRk9y1TWkDkfwXuvMPhF4=;
-        b=O4CsEjJh/XnkC8EL1ap0itzfO21gTD9O03F4C0mu/WH5R6gM7XRankCOtjx9avgB8F
-         x7L63gnW+6Ofq3ibK9ZNwozBg+uRt4CH3v3rDFp8gwLTdTUkuU6Xo/Lm85WdPrfbeY3R
-         9BarRFeBjz1uKKTaYCtTrnsLSRiNHtp7xW1nPNTliaNsODl6NNw9wvcxu0nDu0NsdvDb
-         QYdcBr6XcrIwoBxf9dy3yxw38qrW1xvBlRtfe9OjQDQX389LEt1GwFDLP3E7Oxhft9Tu
-         i2RUExlCi8ppZ3EzTU/h99wo/eLgdHcs5gp+15MuZRiTsmGqgnsDQp0rSsE9LDXibqXj
-         swQQ==
-X-Gm-Message-State: AC+VfDz2z5zjuSjZvJoMHoYPB7dNpDhSWyr04F+jBEs/ENYkcjMs54mE
-        zeb5z7G7i6VX4aXJ8SfMLQeZpqvmGP/Lpw==
-X-Google-Smtp-Source: ACHHUZ6gY6IC6RoSQgqNyVMqHF3Bh7/U4V3KgaEZzS54KcwKkvdiUR2+j+yfCZfdPQlinLfgzbrU3w==
-X-Received: by 2002:a05:622a:c1:b0:3c0:40c3:b8fd with SMTP id p1-20020a05622a00c100b003c040c3b8fdmr11458376qtw.6.1683139252373;
-        Wed, 03 May 2023 11:40:52 -0700 (PDT)
-Received: from localhost (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
-        by smtp.gmail.com with ESMTPSA id x15-20020ac84d4f000000b003ef28a76a11sm11656752qtv.68.2023.05.03.11.40.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 11:40:51 -0700 (PDT)
-Date:   Wed, 3 May 2023 14:40:50 -0400
-From:   John Cai <johncai86@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] attr: teach "--attr-source=<tree>" global option to
- "git"
-Message-ID: <20230503184050.wpouoe533rg2uyyw@pop-os>
-References: <pull.1470.v3.git.git.1682707848916.gitgitgadget@gmail.com>
- <pull.1470.v4.git.git.1682822352360.gitgitgadget@gmail.com>
- <CAP8UFD00omU=HiGQyaNx=ZbuH79rCv-eHkCuQ1sf5xv9zu4ffg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD00omU=HiGQyaNx=ZbuH79rCv-eHkCuQ1sf5xv9zu4ffg@mail.gmail.com>
+        d=1e100.net; s=20221208; t=1683139735; x=1685731735;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2FRuIpOGUMsA1ewzlWZVI/OCWZ1dW52ZqQu0cBkXFAg=;
+        b=TKQNjSFAMCA5k+IZ5td427dHWrIlUepZw+d/mk9OA5lz0cBGyYfhPR45QhFe+gnKfK
+         W+3u3knXsPWqipe69iasRT0CTFFFsU7+3qM9JLyTKmzBxJ0UjsOm9NquK3RBkJq4mQH8
+         JTDi/Uj0jlPVGnD4AfWKLIrXmwCE9PokwD2aKx6cnE5Hty4QqRXFsEEVst9tb4y2zBmQ
+         BkqIxV9iLDszQcbVtwqg0YTbDtOV0Fb/gCAOu3Py+owpjutF1S511WoURGAsEyr0f3NI
+         OnchLYhnDQXPc0V97+S+25XWT5JHGzIQwB7Be8FPYLrxvn9eXStOCOFLbo4ZOk7OB3eQ
+         dl3g==
+X-Gm-Message-State: AC+VfDwVboipVPOJBpZ+UFJmJLylHxZWvbl7IJKU+4eGr4K0ZRYi+1UU
+        LKo8sD3ZfZMHfkD01j6RANUJTqYNRET4FbV1mQJzdWUpAeQJnAs4y0oUYSeB+u5IeeeDTQAAAHR
+        nIUexloLl6gieYs8BVD9rAcKkNqE7LmAQAxNFrzGD+2fGwoqD32SZmePas1LwHQDCUw==
+X-Google-Smtp-Source: ACHHUZ5wCh8h+ymv/jd1+MOzCH41B2+9TZnjcUZ8bO3MU8m0YbkPEI284uRfsN9AlqlDzOOn8aANwuKlSgCxWPU=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a25:e701:0:b0:b9e:71a7:3bc9 with SMTP id
+ e1-20020a25e701000000b00b9e71a73bc9mr4035681ybh.10.1683139734984; Wed, 03 May
+ 2023 11:48:54 -0700 (PDT)
+Date:   Wed,  3 May 2023 18:48:49 +0000
+In-Reply-To: <20230502211454.1673000-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230502211454.1673000-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.40.1.521.gf1e218fcd8-goog
+Message-ID: <20230503184849.1809304-1-calvinwan@google.com>
+Subject: [PATCH v2 0/7] strbuf cleanups
+From:   Calvin Wan <calvinwan@google.com>
+To:     git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, newren@gmail.com, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Strbuf is a widely used basic structure that should only interact with
+other primitives in strbuf.[ch]. Over time certain functions inside of
+strbuf.[ch] have been added to interact with higher level objects and
+functions. This series cleans up some of those higher level interactions
+by moving the offending functions to the files they interact with and
+adding documentation to strbuf.h. With the goal of eventually being able
+to stand up strbuf as a libary, this series also removes the use of
+environment variables from strbuf.
 
-On 23/05/03 05:10PM, Christian Couder wrote:
-> On Sun, Apr 30, 2023 at 4:39 AM John Cai via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> 
-> > diff --git a/Documentation/git.txt b/Documentation/git.txt
-> > index 74973d3cc40..b8f4f604707 100644
-> > --- a/Documentation/git.txt
-> > +++ b/Documentation/git.txt
-> > @@ -212,6 +212,11 @@ If you just want to run git as if it was started in `<path>` then use
-> >         nohelpers (exclude helper commands), alias and config
-> >         (retrieve command list from config variable completion.commands)
-> >
-> > +--attr-source=<tree-ish>::
-> > +       Read gitattributes from <tree-ish> instead of the worktree. See
-> > +       linkgit:gitattributes[5]. This is equivalent to setting the
-> > +       `GIT_ATTR_SOURCE` environment variable.
-> 
-> As you talk about GIT_ATTR_SOURCE, I wonder if this variable should
-> also be documented in the "Environment Variables" section of this
-> Documentation/git.txt doc.
-> 
-> > diff --git a/environment.h b/environment.h
-> > index a63f0c6a24f..758927a689c 100644
-> > --- a/environment.h
-> > +++ b/environment.h
-> > @@ -55,6 +55,7 @@ const char *getenv_safe(struct strvec *argv, const char *name);
-> >  #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
-> >  #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
-> >  #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
-> > +#define GIT_ATTR_SOURCE "GIT_ATTR_SOURCE"
-> 
-> To be similar with the definitions that are just above, I think it
-> actually should be:
-> 
-> #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
-> 
-> > @@ -314,6 +315,21 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
-> >                         } else {
-> >                                 exit(list_cmds(cmd));
-> >                         }
-> > +               } else if (!strcmp(cmd, "--attr-source")) {
-> > +                       if (*argc < 2) {
-> > +                               fprintf(stderr, _("no prefix given for --attr-source\n" ));
-> 
-> The example I sent was about '--super-prefix' so it made sense to say
-> "no prefix given", but here it makes more sense to say something like
-> "no attribute source given for --attr-source".
-> 
+Calvin Wan (7):
+  strbuf: clarify API boundary
+  abspath: move related functions to abspath
+  credential-store: move related functions to credential-store file
+  object-name: move related functions to object-name
+  path: move related function to path
+  strbuf: clarify dependency
+  strbuf: remove environment variables
 
-All good feedback. I'll update the branch with these changes.
+ abspath.c                  |  36 +++++++++++++
+ abspath.h                  |  21 ++++++++
+ add-patch.c                |  12 +++--
+ builtin/am.c               |   2 +-
+ builtin/branch.c           |   4 +-
+ builtin/commit.c           |   2 +-
+ builtin/credential-store.c |  19 +++++++
+ builtin/merge.c            |  10 ++--
+ builtin/notes.c            |  16 +++---
+ builtin/rebase.c           |   2 +-
+ builtin/stripspace.c       |   6 ++-
+ builtin/tag.c              |   9 ++--
+ fmt-merge-msg.c            |   9 ++--
+ gpg-interface.c            |   5 +-
+ hook.c                     |   1 +
+ object-name.c              |  15 ++++++
+ object-name.h              |   9 ++++
+ path.c                     |  20 +++++++
+ path.h                     |   5 ++
+ pretty.c                   |   1 +
+ rebase-interactive.c       |  15 +++---
+ sequencer.c                |  24 +++++----
+ strbuf.c                   | 106 +++----------------------------------
+ strbuf.h                   |  53 +++++--------------
+ tempfile.c                 |   1 +
+ wt-status.c                |   6 +--
+ 26 files changed, 220 insertions(+), 189 deletions(-)
 
-> > +                               usage(git_usage_string);
-> > +                       }
-> > +                       setenv(GIT_ATTR_SOURCE, (*argv)[1], 1);
-> > +                       if (envchanged)
-> > +                               *envchanged = 1;
-> > +                       (*argv)++;
-> > +                       (*argc)--;
-> > +               } else if (skip_prefix(cmd, "--attr-source=", &cmd)) {
-> > +                       set_git_attr_source(cmd);
-> > +                       setenv(GIT_ATTR_SOURCE, (*argv)[1], 1);
-> > +                       if (envchanged)
-> > +                               *envchanged = 1;
-> >                 } else {
-> >                         fprintf(stderr, _("unknown option: %s\n"), cmd);
-> >                         usage(git_usage_string);
+Range-diff against v1:
+-:  ---------- > 1:  e0dd3f5295 strbuf: clarify API boundary
+1:  283771c088 ! 2:  ec1ea6ae4f abspath: move related functions to abspath
+    @@ Commit message
+         abspath: move related functions to abspath
+     
+         Move abspath-related functions from strbuf.[ch] to abspath.[ch] since
+    -    they do not belong in a low-level library.
+    +    paths are not primitive objects and therefore strbuf should not interact
+    +    with them.
+     
+      ## abspath.c ##
+     @@ abspath.c: char *prefix_filename_except_for_dash(const char *pfx, const char *arg)
+2:  58f78b8ae0 = 3:  2d74561b91 credential-store: move related functions to credential-store file
+3:  88ab90c079 ! 4:  30b5e635cb object-name: move related functions to object-name
+    @@ Commit message
+         object-name: move related functions to object-name
+     
+         Move object-name-related functions from strbuf.[ch] to object-name.[ch]
+    -    since they do not belong in a low-level library.
+    +    since paths are not a primitive object that strbuf should directly
+    +    interact with.
+     
+      ## object-name.c ##
+     @@ object-name.c: static void find_abbrev_len_packed(struct min_abbrev_data *mad)
+4:  30b7de5a81 ! 5:  6905618470 path: move related function to path
+    @@ Metadata
+      ## Commit message ##
+         path: move related function to path
+     
+    -    Move path-related function from strbuf.[ch] to path.[ch] since it does
+    -    not belong in a low-level library.
+    +    Move path-related function from strbuf.[ch] to path.[ch] since path is
+    +    not a primitive object and therefore strbuf should not directly interact
+    +    with it.
+     
+      ## path.c ##
+     @@ path.c: int normalize_path_copy(char *dst, const char *src)
+5:  7b6d6353de ! 6:  caf3482bf7 strbuf: clarify dependency
+    @@ Metadata
+      ## Commit message ##
+         strbuf: clarify dependency
+     
+    +    refs.h was once needed but is no longer so as of 6bab74e7fb8 ("strbuf:
+    +    move strbuf_branchname to sha1_name.c", 2010-11-06). strbuf.h was
+    +    included thru refs.h, so removing refs.h requires strbuf.h to be added
+    +    back.
+    +
+      ## strbuf.c ##
+     @@
+      #include "environment.h"
+6:  ffacd1cbe5 ! 7:  a7f23488f8 strbuf: remove enviroment variables
+    @@ Metadata
+     Author: Calvin Wan <calvinwan@google.com>
+     
+      ## Commit message ##
+    -    strbuf: remove enviroment variables
+    +    strbuf: remove environment variables
+     
+    -    As a lower level library, strbuf should not directly access environment
+    -    variables within its functions. Therefore, add an additional variable to
+    -    function signatures for functions that use an environment variable and
+    -    refactor callers to pass in the environment variable.
+    +    As a library that only interacts with other primitives, strbuf should
+    +    not directly access environment variables within its
+    +    functions. Therefore, add an additional variable to function signatures
+    +    for functions that use an environment variable and refactor callers to
+    +    pass in the environment variable.
+     
+      ## add-patch.c ##
+     @@ add-patch.c: static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
+    @@ strbuf.h: void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
+      __attribute__((format (printf,2,0)))
+      void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+     @@ strbuf.h: int strbuf_normalize_path(struct strbuf *sb);
+    + 
+    + /**
+       * Strip whitespace from a buffer. The second parameter controls if
+    -  * comments are considered contents to be removed or not.
+    +- * comments are considered contents to be removed or not.
+    ++ * comments are considered contents to be removed or not. The third parameter
+    ++ * is the comment character that determines whether a line is a comment or not.
+       */
+     -void strbuf_stripspace(struct strbuf *buf, int skip_comments);
+     +void strbuf_stripspace(struct strbuf *buf, int skip_comments, char comment_line_char);
+-- 
+2.40.1.521.gf1e218fcd8-goog
 
-thanks
-John
