@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2E4C77B78
-	for <git@archiver.kernel.org>; Wed,  3 May 2023 02:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A75A1C77B78
+	for <git@archiver.kernel.org>; Wed,  3 May 2023 02:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbjECCPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 May 2023 22:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
+        id S229520AbjECChS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 May 2023 22:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjECCPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2023 22:15:34 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7207A1FF6
-        for <git@vger.kernel.org>; Tue,  2 May 2023 19:15:22 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f137dbaa4fso250758e87.2
-        for <git@vger.kernel.org>; Tue, 02 May 2023 19:15:21 -0700 (PDT)
+        with ESMTP id S229455AbjECChO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2023 22:37:14 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27A830E2
+        for <git@vger.kernel.org>; Tue,  2 May 2023 19:37:09 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4efea4569f5so5282526e87.3
+        for <git@vger.kernel.org>; Tue, 02 May 2023 19:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683080114; x=1685672114;
+        d=gmail.com; s=20221208; t=1683081428; x=1685673428;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c3GvHcoMB2/6rhvuKleMRFjRjqwccK/K26TrcV0kBQo=;
-        b=MdAAJta14AWfANFVfrzAAFm/oQ8do7SWtoS5H3V24VcQJL9tzhaU3eovjZTSS5G63P
-         q/pkHn70a2q7YadZVuGselVyD+uQWmAsnINspdoNig83JHOR8m079E59SxvNgMfTqw3Q
-         4l9bFSMiMuQ/Ek+XtSwE+Cbw05bLguYWOF+OOwHQIpuCMXq2XpcS7mc0J5Qb073scsJF
-         EML3jt1NfZW2FPuOh7CfsiWK2RVM8GINcIpjeSEFsRG/C0FQ0ug1kf35FiOLEF4rgPhL
-         OKtzar7c4JC6d1ccCwf9fz/U1ibR787QuF5Y2D1lGk1WraP+ih06x1H21KFUloT4rJw9
-         +VUw==
+        bh=6b0xlYrr/Ld9+upShOl79DrdPTQaMc5hNppVDtjXQU4=;
+        b=b6OIamsvs2/bGh5T+yKYoC1Gh3uOhoS20I3MEefur8LUgnHNtEhkv646ZjqfLEXwdl
+         HpoMe2fydhNzP9dLRX9RGzTguwduv9iS97a/44Uy61fcGRnybFlSnPDLgbTb1hAsORha
+         Tx8u+lhj7qjpvZW/pyAZyNkZwUl8TJROomAmEkEMhBNHdbINEtXQAz+kairBfP7xISBU
+         waMeFqHtoK6pazMQyH4eersAs9kA6t6jVmdSEy9anPjwApnXgDJYN3r9CTWfLn+PJNBT
+         cZaLCzUBkWK4BK77Q57dmWz2RZD/zfozjjb8qBbyvUbCUS2cLSBRISuSwvap7Ly4eVtB
+         emig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683080114; x=1685672114;
+        d=1e100.net; s=20221208; t=1683081428; x=1685673428;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c3GvHcoMB2/6rhvuKleMRFjRjqwccK/K26TrcV0kBQo=;
-        b=a0W+hpKOStN56kMhabaAUSfiPOLKEpp/XDk+FHvkxQoEzuGmP0VBOWSlY49IG13Xsi
-         GlFjIXifB1c7ACW8iZ8i8Ivpt/mq8bYyCPhxhFXFyCPJFGyewFjmFA4WzWt6GrKJkf+J
-         JC4r6le6BEwfJjwCgHNlf4rqgLcL5bUuiRzgqBNJPJ6Wcl3dYB3xiLC1k4D+uLTCm6KP
-         kP6djbI0WYrLwWMaYf087HS3DekWbqO2jPY1XBJudbZKLBJXLyMd5vSy+VEpoFgpdXI4
-         e5C/U56BqTmBPFmeg6enLwouZxXpJ/RdezGThxtTNZ1Mn+YIoo4Ul8+LV5WEp38wN3BL
-         MFXw==
-X-Gm-Message-State: AC+VfDxQLFr7rBVhB3D6J8o4CkQMTSYqp+QVK7DA2wJaM1hYSQzY9+NF
-        lIq7ZO+n3fvGEmFeEfd19AAWTHpwSZQL8p681EKyEHGV
-X-Google-Smtp-Source: ACHHUZ733sgxQGX/gxmyZNKJnkBwj5npLNFyI+gv+aLm5dOZ0Ynt5DfZ/2OA7NDXyMkgYdqRTlYjsN90UkoMT3KDgvo=
-X-Received: by 2002:ac2:548f:0:b0:4d8:75f8:6963 with SMTP id
- t15-20020ac2548f000000b004d875f86963mr454350lfk.38.1683080113981; Tue, 02 May
- 2023 19:15:13 -0700 (PDT)
+        bh=6b0xlYrr/Ld9+upShOl79DrdPTQaMc5hNppVDtjXQU4=;
+        b=facoUipqarVuJ1AJt5vzy7k0hvH5MQgGf0ik6G42cN43oN3VWWofsI5qNdusk+I/ab
+         fT3pqbuJhvpVyacgi2hsPFKK/f0cON+cNRSOUPw3FVhO6YV0Yu0wbLo2WU1yFXaAfkOT
+         iQoameSIPsuqSta2foyS1u0oPx9lAU550cSIWuPHhmABL1vwHfPMyBi1dces4jcguNtj
+         s7KfJT7OsEE7DwekFtI03zhbPCB7cij6xuCA2x5TY7f4j3OL7Hftc31usJll5FZBk4UI
+         BeDNg2SLUj7NtOG3DegHEHIPqxJzsmT+cLuM/uyq8FB7/txfvkqI8vppcQRc7oiam308
+         dDvA==
+X-Gm-Message-State: AC+VfDxg3NELKp3yipLsWJzEjqgjUQajfKucGosAXdR7cHf3Y2ft3Z0D
+        JXQX6I0aA4YX1+oM2c6dvQWWbK7igS9JfcOlV37h1Dba
+X-Google-Smtp-Source: ACHHUZ5ymq3lmhbIpq/2KQKyHamA5yXhneIzDpArKRdQvFBuFhunOjtAZu/H30KRUyvk4Z5bVP+sXVn13Tqbdv7yWwE=
+X-Received: by 2002:ac2:4468:0:b0:4dc:82b0:4c68 with SMTP id
+ y8-20020ac24468000000b004dc82b04c68mr436647lfl.50.1683081427885; Tue, 02 May
+ 2023 19:37:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230502211454.1673000-1-calvinwan@google.com> <20230502211454.1673000-7-calvinwan@google.com>
-In-Reply-To: <20230502211454.1673000-7-calvinwan@google.com>
+References: <20230502211454.1673000-1-calvinwan@google.com>
+In-Reply-To: <20230502211454.1673000-1-calvinwan@google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 2 May 2023 19:15:00 -0700
-Message-ID: <CABPp-BGgP50TV7Gc8bpu1vvR-6-EKKC8eM_j=o4imz7Y-55pMw@mail.gmail.com>
-Subject: Re: [PATCH 6/6] strbuf: remove environment variables
+Date:   Tue, 2 May 2023 19:37:00 -0700
+Message-ID: <CABPp-BFagTvBTe0XbEOM_hO-vDFwVvSSmGOii1q2=7amqerwtQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] strbuf cleanups
 To:     Calvin Wan <calvinwan@google.com>
 Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -64,67 +64,61 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, May 2, 2023 at 2:15=E2=80=AFPM Calvin Wan <calvinwan@google.com> wr=
 ote:
 >
-> As a lower level library, strbuf should not directly access environment
-> variables within its functions. Therefore, add an additional variable to
-> function signatures for functions that use an environment variable and
-> refactor callers to pass in the environment variable.
-
-Yaay!  I hate the pervasive implicit use of globals throughout the
-codebase, and like seeing changes that at least make them less hidden.
-
-I might have split this patch into three, one for each of the
-functions you are changing.  The reason is just that it makes review
-so much easier; a simple --color-words view then becomes easy
-to rapidly scan through on each patch.  When one patch includes all
-three, reviewers have to double check the position of the added
-parameter in the argument list against the name of the function.  But
-that's a really minor point, and some might prefer as you have it here
-with the three squashed together.
-
-[...]
-> diff --git a/strbuf.h b/strbuf.h
-> index b6d53c1cbe..f90da8859f 100644
-> --- a/strbuf.h
-> +++ b/strbuf.h
-> @@ -283,7 +283,8 @@ void strbuf_splice(struct strbuf *sb, size_t pos, siz=
-e_t len,
->   * by a comment character and a blank.
->   */
->  void strbuf_add_commented_lines(struct strbuf *out,
-> -                               const char *buf, size_t size);
-> +                               const char *buf, size_t size,
-> +                               char comment_line_char);
+> Strbuf is a basic structure that should function as a low-level library
+> due to how generic it is. Over time certain functions inside of
+> strbuf.[ch] have been added with dependencies to higher level objects
+> and functions. This series cleans up some of those higher level
+> dependencies by moving the offending functions to the files they
+> interact with. With the goal of eventually being able to stand up strbuf
+> as a libary, this series also removes the use of environment variables
+> from strbuf.
 >
+> Calvin Wan (6):
+>   abspath: move related functions to abspath
+>   credential-store: move related functions to credential-store file
+>   object-name: move related functions to object-name
+>   path: move related function to path
+>   strbuf: clarify dependency
+>   strbuf: remove environment variables
 >
->  /**
-> @@ -412,8 +413,8 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, =
-...);
->   * Add a formatted string prepended by a comment character and a
->   * blank to the buffer.
->   */
-> -__attribute__((format (printf, 2, 3)))
-> -void strbuf_commented_addf(struct strbuf *sb, const char *fmt, ...);
-> +__attribute__((format (printf, 3, 4)))
-> +void strbuf_commented_addf(struct strbuf *sb, char comment_line_char, co=
-nst char *fmt, ...);
+>  abspath.c                  |  36 +++++++++++++
+>  abspath.h                  |  21 ++++++++
+>  add-patch.c                |  12 +++--
+>  builtin/am.c               |   2 +-
+>  builtin/branch.c           |   4 +-
+>  builtin/commit.c           |   2 +-
+>  builtin/credential-store.c |  19 +++++++
+>  builtin/merge.c            |  10 ++--
+>  builtin/notes.c            |  16 +++---
+>  builtin/rebase.c           |   2 +-
+>  builtin/stripspace.c       |   6 ++-
+>  builtin/tag.c              |   9 ++--
+>  fmt-merge-msg.c            |   9 ++--
+>  gpg-interface.c            |   5 +-
+>  hook.c                     |   1 +
+>  object-name.c              |  15 ++++++
+>  object-name.h              |   9 ++++
+>  path.c                     |  20 +++++++
+>  path.h                     |   5 ++
+>  pretty.c                   |   1 +
+>  rebase-interactive.c       |  15 +++---
+>  sequencer.c                |  24 +++++----
+>  strbuf.c                   | 106 +++----------------------------------
+>  strbuf.h                   |  44 ++-------------
+>  tempfile.c                 |   1 +
+>  wt-status.c                |   6 +--
+>  26 files changed, 213 insertions(+), 187 deletions(-)
 >
->  __attribute__((format (printf,2,0)))
->  void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
-> @@ -538,7 +539,7 @@ int strbuf_normalize_path(struct strbuf *sb);
->   * Strip whitespace from a buffer. The second parameter controls if
->   * comments are considered contents to be removed or not.
+> --
+> 2.40.1.495.gc816e09b53d-goog
 
-Should this documentation string be updated, given that it previously
-documented all arguments to the function?
+The series looks pretty good to me.  I left a couple small comments on
+5/6 and 6/6.  One other high-level note:
 
->   */
-> -void strbuf_stripspace(struct strbuf *buf, int skip_comments);
-> +void strbuf_stripspace(struct strbuf *buf, int skip_comments, char comme=
-nt_line_char);
->
->  static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suf=
-fix)
->  {
-[...]
-
-The rest looks good to me.
+As =C3=86var noted over at
+https://lore.kernel.org/git/230501.86a5yohsme.gmgdl@evledraar.gmail.com/,
+strbuf_add_separated_string_list() is currently only used by
+merge-ort.c and merge-recursive.c (both of which include
+merge-recursive.h).  It may make sense to move that function, and that
+would permit you to drop the forward declaration of 'struct
+string_list;' from strbuf.c as well.
