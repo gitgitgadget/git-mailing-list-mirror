@@ -2,456 +2,360 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EE71C7EE21
-	for <git@archiver.kernel.org>; Thu,  4 May 2023 15:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA510C77B78
+	for <git@archiver.kernel.org>; Thu,  4 May 2023 15:49:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230408AbjEDP2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 May 2023 11:28:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46040 "EHLO
+        id S231150AbjEDPtA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 May 2023 11:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbjEDP2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2023 11:28:31 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3F141BF6
-        for <git@vger.kernel.org>; Thu,  4 May 2023 08:28:28 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f315712406so68966535e9.0
-        for <git@vger.kernel.org>; Thu, 04 May 2023 08:28:28 -0700 (PDT)
+        with ESMTP id S230104AbjEDPs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2023 11:48:58 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7831BF7
+        for <git@vger.kernel.org>; Thu,  4 May 2023 08:48:55 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f1763ee8f8so5209915e9.1
+        for <git@vger.kernel.org>; Thu, 04 May 2023 08:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683214107; x=1685806107;
+        d=gmail.com; s=20221208; t=1683215333; x=1685807333;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a/5nfJMJYIVFHveNSK/jFa1IIq8CrtitpcExqVBWDak=;
-        b=nLG5zFiMeHbyoUCPp4+YJ2lV0Xd+jTFfqz4R3spBqNhd1n2LWnVfjEQ6XEiowEXQLt
-         aUwcLGqkpxbO/LFYfDSpdoeJCh002n+gnzi3f1vrrYJdyzyTXYZ3WNCtw/TCHZooXy87
-         CPeRFKx2JCwhCmcR8iO+ffoXizGc/wokeiVD3V86fDe3HgULOuFiXR54fAMxiI9Zxax/
-         1W/9rCRviSecdsV1YWf0Ft+0kYch8z7hSsjjrPxpNRwAJ9sG10n8QoGUvSFPEL6tlZYC
-         N2JIRE4z4RKTKvWKuGJjAjeyDdpUzKKZRIMnRgI5ETBb620RideqG0gcucH7c8cyoUdB
-         FUdw==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Bh+kqb5Hx725gysAKpHAhm4E2jcRpHCCM1qwhjbSj8=;
+        b=qFoPwgwjNnIELfRasKD3XDXwoWO+OJNNdNZ8kL4HC4jBzXtEWwHXTt6VheYaZgvpEA
+         5VoPN6/8HEhdqK8wAeNi6BiSo75l5TXMcbnUtXZFpOPdYlgjx9tgd0W/gvyqyI+yNRm7
+         k9kPN9YkrN7u3KfpVJOrMvgllHlitFabO/AM0Zs/sYFXf8QxCPaI9kuMraBnACycPerJ
+         uiCkB4pzbhAvxTrjBQ5cEwKtLrdREk1bS3KUxX8mdgcZHVJCRUajNMJvYw+1uT/4SQT8
+         euMkWpqF6euuqRSKZaXDU5l54gOsX1f9qrvcGOu+AqyH5kxTS1gELZODyP4c1/S/udZR
+         uvWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683214107; x=1685806107;
+        d=1e100.net; s=20221208; t=1683215333; x=1685807333;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a/5nfJMJYIVFHveNSK/jFa1IIq8CrtitpcExqVBWDak=;
-        b=hXUIt5vTDLfmklC1Tp4W1cwqtJfCfTQz9Da00CZMP3ythUUJ1L4EPorPZNMPoQe3sY
-         dNsJBLbKY5m0jY4cWp1U4jgbTuyIk1WU40mnK8qyqut8o0nsKJIqoyKmoNR7Jes6XCsc
-         4VtI0QXFvMayX7e71KjNJrH9YY1PhK66yX4eu2mZ8vH+Dhu8Cxr5+kfbS5Ud3sVmebWa
-         sZHfv7DWfocVFEW8K3PIN6jh5uoiCqn0UPnKNTqGCb0nEZRdGtjzK563U03ken7CWm0m
-         tsKmAOXjojnvUhEszORFqjWChjx1ZJC+8pAUA4L/mMFBO0L/TSkRQtiAPvZw821KW1CP
-         u2gQ==
-X-Gm-Message-State: AC+VfDza2PM1WcUXHuYTUiUN3r+ls41JsDexTJmuAYD7HEgJIA/6AxDV
-        IyYQ7MYhkXSZ6H/9x/9+tHzvYv9FhBk=
-X-Google-Smtp-Source: ACHHUZ5azZ7zkEJWKIxepiNvoXEv95mxEyF8g5ZOZbrhC/ss7yOAmtgooZDJFXaldVsQAkudbzAebA==
-X-Received: by 2002:a05:600c:458e:b0:3f1:7619:f0f6 with SMTP id r14-20020a05600c458e00b003f17619f0f6mr71832wmo.9.1683214106988;
-        Thu, 04 May 2023 08:28:26 -0700 (PDT)
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1Bh+kqb5Hx725gysAKpHAhm4E2jcRpHCCM1qwhjbSj8=;
+        b=WJRyKWX4gnumIK1RN+8miIUamUdqJHdIV0DqikSu2PTnUMHR2012X/6AcIZiGGZZjG
+         xoTyqNDXe4fWP+VPuAoV2eFZg6/d+NHRyGTjd+hT66D9oiAkFW4pjzaf5PjEVGhs3dr4
+         ZH3e05BfoRiGJj3cPrwC8wsCx06fzx9b+FnWo3IVKkulUQyBsdKsFTH59HIaWmh7Wv+Z
+         y5zn2o2DZR4c9EHreQZ8/o85iW1hhFsApClnLK68LWzQLTAyvthbI1Jalxl30Q+R+kE7
+         CoYQSAPzUZdtzQRWtlGGz91OBv+6AYJILLaKV9BpNn5d/2pmORyPFNmCNYwbMmHgKXeu
+         gsCg==
+X-Gm-Message-State: AC+VfDxchCrw+T0pePrFsdF3JB5rs2gzOYyQzq8nxCjePEV9a6G89uv5
+        yDMKu+LsfcMwpMFInMYLIAEAwX11cUg=
+X-Google-Smtp-Source: ACHHUZ4J/1FGDRYCcqjR6zzJrgd51cWP4cLnRHQSiHOw6Ug3g5+L3JWBidLpPHE8f0hjv3JdyQHPkQ==
+X-Received: by 2002:a05:600c:2257:b0:3f1:78a7:6bd2 with SMTP id a23-20020a05600c225700b003f178a76bd2mr75997wmm.27.1683215333243;
+        Thu, 04 May 2023 08:48:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a6-20020a1cf006000000b003f0aefcc457sm5220227wmb.45.2023.05.04.08.28.26
+        by smtp.gmail.com with ESMTPSA id l9-20020a1c7909000000b003f193d7c6b7sm5187247wme.41.2023.05.04.08.48.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 May 2023 08:28:26 -0700 (PDT)
-Message-Id: <pull.1523.v2.git.1683214104399.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1523.git.1682342241825.gitgitgadget@gmail.com>
-References: <pull.1523.git.1682342241825.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 May 2023 15:28:23 +0000
-Subject: [PATCH v2] [RFC] transport: add --show-service option
+        Thu, 04 May 2023 08:48:52 -0700 (PDT)
+Message-Id: <pull.1501.git.git.1683215331910.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 04 May 2023 15:48:51 +0000
+Subject: [PATCH] pack-refs: teach --exclude option to exclude refs from being
+ packed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Shawn O. Pearce" <spearce@spearce.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+Cc:     John Cai <johncai86@gmail.com>, John Cai <jcai@gitlab.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+From: John Cai <jcai@gitlab.com>
 
-Without using protocol v2, the git server needs to send a pktline
-"#service=$servicename" to the git client first. The servername
-here can only be selected in "git-receive-pack and "git-upload-pack",
-neither the git client nor the server depends on this servername to
-perform any functions. Howerver, , implementing this capability
-independently can be cumbersome for the git server, as seen in [1].
+Currently once refs are packed into a pack-refs file, deleting them can be
+slow since it involves a full file scan of the entire pack-refs file. At
+GitLab, we have a system that creates ephemeral internal refs that don't
+live long before getting deleted. Having an option to not include certain
+refs from a pack-refs file allows these internal references to be deleted
+much more efficiently.
 
-To simplify this process, the `--show-service` option was added to
-git-receive-pack and git-upload-pack. This option can be used to
-send the '#service=$servicename' pktline, making the logic of the
-git server more concise. Note that this option can only be used
-together with --http-backend-info-refs and is not applicable when
-using protocol v2.
+Add an --exclude option to the pack-refs builtin, and use the ref
+exclusions API to exclude certain refs from being packed into the final
+pack-refs file
 
-[1]: https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/gitaly/service/smarthttp/inforefs.go#L82
-
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+Signed-off-by: John Cai <johncai86@gmail.com>
 ---
-    [RFC] transport: add --show-service option
+    pack-refs: Teach --exclude option to exclude refs from being packed
     
-    When the protocol is not v2, the git client requires that the first
-    pktline reply for info refs be "# service=servicename", which requires
-    the git server to implement pktline capability, e.g. [1] , which may be
-    a bit cumbersome.
+    Add an --exclude option to the pack-refs builtin, to prevent certain
+    refs from being packed into the final packrefs file. At GitLab we keep
+    ephemeral internal references that quickly get deleted. Being able to
+    exclude them from the packrefs file will avoid incurring the performance
+    hit from ref deletions--especially since it scales with packrefs size.
     
-    Delegating this feature to git upload-pack and git receive-pack via
-    "--show-service" can simplify server implementation.
+    It's worth noting that [1] discussed a proposal for a pack refs v2
+    format that would improve deletion speeds. The ref-table backend would
+    also improve performance of deletions. However, both of those proposals
+    are still being discussed.
     
-    v1. add --show-service to git upload-pack and git receive-pack. v2.
-    amend the git commit message to explain the reason for adding the
-    option.
-    
-    [1]:
-    https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/gitaly/service/smarthttp/inforefs.go#L82
+     1. https://lore.kernel.org/git/pull.1408.git.1667846164.gitgitgadget@gmail.com/
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1523%2Fadlternative%2Fzh%2Finfo-ref-service-output-opt-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1523/adlternative/zh/info-ref-service-output-opt-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1523
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1501%2Fjohn-cai%2Fjc%2Fexclude-refs-from-pack-refs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1501/john-cai/jc/exclude-refs-from-pack-refs-v1
+Pull-Request: https://github.com/git/git/pull/1501
 
-Range-diff vs v1:
+ Documentation/git-pack-refs.txt |  8 +++++++-
+ builtin/pack-refs.c             | 17 +++++++++++++++--
+ refs.c                          |  4 ++--
+ refs.h                          |  6 +++++-
+ refs/debug.c                    |  4 ++--
+ refs/files-backend.c            | 13 ++++++++++---
+ refs/packed-backend.c           |  3 ++-
+ refs/refs-internal.h            |  4 +++-
+ t/helper/test-ref-store.c       |  3 ++-
+ t/t3210-pack-refs.sh            | 18 ++++++++++++++++++
+ 10 files changed, 66 insertions(+), 14 deletions(-)
 
- 1:  a2d33d6857a ! 1:  b8aa0e7e053 [RFC] transport: add --show-service option
-     @@ Commit message
-          [RFC] transport: add --show-service option
-      
-          Without using protocol v2, the git server needs to send a pktline
-     -    "# service=$servicename" to the git client first. This often
-     -    requires the git server to implement it independently, but it can
-     -    be delegated to the `git receive-pack` and `git upload-pack` to complete
-     -    the work proactively. Therefore, the `--show-service` option is added
-     -    to `git receive-pack` and `git upload-pack`, which can be used to send
-     -    the "# service=$servicename" pktline, making the logic of the git
-     -    server more concise.
-     +    "#service=$servicename" to the git client first. The servername
-     +    here can only be selected in "git-receive-pack and "git-upload-pack",
-     +    neither the git client nor the server depends on this servername to
-     +    perform any functions. Howerver, , implementing this capability
-     +    independently can be cumbersome for the git server, as seen in [1].
-      
-     -    Note that this `--show-service` option can only be used together with
-     -    `--http-backend-info-refs` and it is not applicable when using protocol v2.
-     +    To simplify this process, the `--show-service` option was added to
-     +    git-receive-pack and git-upload-pack. This option can be used to
-     +    send the '#service=$servicename' pktline, making the logic of the
-     +    git server more concise. Note that this option can only be used
-     +    together with --http-backend-info-refs and is not applicable when
-     +    using protocol v2.
-     +
-     +    [1]: https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/gitaly/service/smarthttp/inforefs.go#L82
-      
-          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-      
-
-
- Documentation/git-receive-pack.txt |  10 +++
- Documentation/git-upload-pack.txt  |  13 +++-
- builtin/receive-pack.c             |  14 +++-
- builtin/upload-pack.c              |  17 +++-
- http-backend.c                     |   7 +-
- t/t5555-http-smart-common.sh       | 120 +++++++++++++++++++++++++++++
- 6 files changed, 171 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-index 65ff518ccff..e16d364f394 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -46,6 +46,16 @@ OPTIONS
- 	`$GIT_URL/info/refs?service=git-receive-pack` requests. See
- 	`--http-backend-info-refs` in linkgit:git-upload-pack[1].
- 
-+--show-service::
-+	Output the "# service=git-receive-pack" pktline and the
-+	"0000" flush pktline firstly. Since the git client needs
-+	the git server to send the first pktline
-+	"# service=$servicename", this option allows the git
-+	server to delegate the functionality of sending this pktline
-+	to `git-receive-pack`.
-+	Note that this option can only be used together with
-+	`--http-backend-info-refs`.
-+
- PRE-RECEIVE HOOK
- ----------------
- Before any ref is updated, if $GIT_DIR/hooks/pre-receive file exists
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
-index b656b475675..7052708d03e 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
+diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+index 154081f2de2..d80e0a1562d 100644
+--- a/Documentation/git-pack-refs.txt
++++ b/Documentation/git-pack-refs.txt
+@@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repository access
+ SYNOPSIS
  --------
  [verse]
- 'git-upload-pack' [--[no-]strict] [--timeout=<n>] [--stateless-rpc]
--		  [--advertise-refs] <directory>
-+		  [--advertise-refs] [--show-service] <directory>
+-'git pack-refs' [--all] [--no-prune]
++'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
  
  DESCRIPTION
  -----------
-@@ -44,6 +44,17 @@ OPTIONS
- 	documentation. Also understood by
- 	linkgit:git-receive-pack[1].
+@@ -59,6 +59,12 @@ a repository with many branches of historical interests.
+ The command usually removes loose refs under `$GIT_DIR/refs`
+ hierarchy after packing them.  This option tells it not to.
  
-+--show-service::
-+	Output the "# service=git-upload-pack" pktline and the
-+	"0000" flush pktline firstly. Since the git client needs
-+	the git server to send the first pktline
-+	"# service=$servicename", this option allows the git
-+	server to delegate the functionality of sending this pktline
-+	to `git-upload-pack`.
-+	Note that this option can only be used together with
-+	`--http-backend-info-refs` and it is not applicable when
-+	using protocol v2.
++--exclude <pattern>::
 +
- <directory>::
- 	The repository to sync from.
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9109552533d..eb45c1f72af 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2485,6 +2485,7 @@ static int delete_only(struct command *commands)
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- {
- 	int advertise_refs = 0;
-+	int show_service = 0;
- 	struct command *commands;
- 	struct oid_array shallow = OID_ARRAY_INIT;
- 	struct oid_array ref = OID_ARRAY_INIT;
-@@ -2497,8 +2498,10 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		OPT_HIDDEN_BOOL(0, "http-backend-info-refs", &advertise_refs, NULL),
- 		OPT_ALIAS(0, "advertise-refs", "http-backend-info-refs"),
- 		OPT_HIDDEN_BOOL(0, "reject-thin-pack-for-testing", &reject_thin, NULL),
-+		OPT_BOOL(0, "show-service", &show_service, N_("show service information")),
- 		OPT_END()
- 	};
-+	enum protocol_version version = determine_protocol_version_server();
- 
- 	packet_trace_identity("receive-pack");
- 
-@@ -2525,7 +2528,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	else if (0 <= receive_unpack_limit)
- 		unpack_limit = receive_unpack_limit;
- 
--	switch (determine_protocol_version_server()) {
-+	if (show_service) {
-+		if (!advertise_refs)
-+			die(_("options '%s' and '%s' should be used together"), "--show-service", "--http-backend-info-refs");
-+		if (version != protocol_v2) {
-+			packet_write_fmt(1, "# service=git-receive-pack\n");
-+			packet_flush(1);
-+		}
-+	}
++Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
++accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
++patterns.
 +
-+	switch (version) {
- 	case protocol_v2:
- 		/*
- 		 * push support for protocol v2 has not been implemented yet,
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index beb9dd08610..e84eb3735b4 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -11,7 +11,7 @@
  
- static const char * const upload_pack_usage[] = {
- 	N_("git-upload-pack [--[no-]strict] [--timeout=<n>] [--stateless-rpc]\n"
--	   "                [--advertise-refs] <directory>"),
-+	   "                [--advertise-refs] [--show-service] <directory>"),
+ BUGS
+ ----
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index 9833815fb30..bc2db41c2cb 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -4,22 +4,35 @@
+ #include "parse-options.h"
+ #include "refs.h"
+ #include "repository.h"
++#include "revision.h"
+ 
+ static char const * const pack_refs_usage[] = {
+-	N_("git pack-refs [--all] [--no-prune]"),
++	N_("git pack-refs [--all] [--no-prune] [--exclude <pattern>]"),
  	NULL
  };
  
-@@ -22,6 +22,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 	int advertise_refs = 0;
- 	int stateless_rpc = 0;
- 	int timeout = 0;
-+	int show_service = 0;
- 	struct option options[] = {
- 		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
- 			 N_("quit after a single request/response exchange")),
-@@ -32,8 +33,10 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
- 		OPT_INTEGER(0, "timeout", &timeout,
- 			    N_("interrupt transfer after <n> seconds of inactivity")),
-+		OPT_BOOL(0, "show-service", &show_service, N_("show service information")),
- 		OPT_END()
+ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ {
+ 	unsigned int flags = PACK_REFS_PRUNE;
++	static struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
++	struct pack_refs_opts pack_opts = {.exclusions = &excludes};
++	static struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
++	struct string_list_item *item;
++
+ 	struct option opts[] = {
+ 		OPT_BIT(0, "all",   &flags, N_("pack everything"), PACK_REFS_ALL),
+ 		OPT_BIT(0, "prune", &flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
++		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
++			N_("references to exclude")),
+ 		OPT_END(),
  	};
-+	enum protocol_version version = determine_protocol_version_server();
++
+ 	git_config(git_default_config, NULL);
+ 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+ 		usage_with_options(pack_refs_usage, opts);
+-	return refs_pack_refs(get_main_ref_store(the_repository), flags);
++
++	for_each_string_list_item(item, &option_excluded_refs)
++		add_ref_exclusion(pack_opts.exclusions, item->string);
++
++	return refs_pack_refs(get_main_ref_store(the_repository), flags, &pack_opts);
+ }
+diff --git a/refs.c b/refs.c
+index d2a98e1c21f..637810347a0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2132,9 +2132,9 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
+ }
  
- 	packet_trace_identity("upload-pack");
- 	read_replace_refs = 0;
-@@ -50,7 +53,17 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 	if (!enter_repo(dir, strict))
- 		die("'%s' does not appear to be a git repository", dir);
+ /* backend functions */
+-int refs_pack_refs(struct ref_store *refs, unsigned int flags)
++int refs_pack_refs(struct ref_store *refs, unsigned int flags, struct pack_refs_opts *pack_opts)
+ {
+-	return refs->be->pack_refs(refs, flags);
++	return refs->be->pack_refs(refs, flags, pack_opts);
+ }
  
--	switch (determine_protocol_version_server()) {
-+
-+	if (show_service) {
-+		if (!advertise_refs)
-+			die(_("options '%s' and '%s' should be used together"), "--show-service", "--http-backend-info-refs");
-+		if (version != protocol_v2) {
-+			packet_write_fmt(1, "# service=git-upload-pack\n");
-+			packet_flush(1);
-+		}
-+	}
-+
-+	switch (version) {
- 	case protocol_v2:
- 		if (advertise_refs)
- 			protocol_v2_advertise_capabilities();
-diff --git a/http-backend.c b/http-backend.c
-index 89aad1b42c7..74c2c7bb606 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -539,6 +539,7 @@ static void get_info_refs(struct strbuf *hdr, char *arg UNUSED)
- 	if (service_name) {
- 		const char *argv[] = {NULL /* service name */,
- 			"--http-backend-info-refs",
-+			"--show-service",
- 			".", NULL};
- 		struct rpc_service *svc = select_service(hdr, service_name);
+ int peel_iterated_oid(const struct object_id *base, struct object_id *peeled)
+diff --git a/refs.h b/refs.h
+index 123cfa44244..a76dbb2d3f0 100644
+--- a/refs.h
++++ b/refs.h
+@@ -63,6 +63,10 @@ struct worktree;
+ #define RESOLVE_REF_NO_RECURSE 0x02
+ #define RESOLVE_REF_ALLOW_BAD_NAME 0x04
  
-@@ -547,12 +548,6 @@ static void get_info_refs(struct strbuf *hdr, char *arg UNUSED)
- 		hdr_str(hdr, content_type, buf.buf);
- 		end_headers(hdr);
++struct pack_refs_opts {
++	struct ref_exclusions *exclusions;
++};
++
+ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 				    const char *refname,
+ 				    int resolve_flags,
+@@ -405,7 +409,7 @@ void warn_dangling_symrefs(FILE *fp, const char *msg_fmt,
+  * Write a packed-refs file for the current repository.
+  * flags: Combination of the above PACK_REFS_* flags.
+  */
+-int refs_pack_refs(struct ref_store *refs, unsigned int flags);
++int refs_pack_refs(struct ref_store *refs, unsigned int flags, struct pack_refs_opts *opts);
  
--
--		if (determine_protocol_version_server() != protocol_v2) {
--			packet_write_fmt(1, "# service=git-%s\n", svc->name);
--			packet_flush(1);
--		}
--
- 		argv[0] = svc->name;
- 		run_service(argv, 0);
+ /*
+  * Setup reflog before using. Fill in err and return -1 on failure.
+diff --git a/refs/debug.c b/refs/debug.c
+index adc34c836fc..93f6168052a 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -122,10 +122,10 @@ static int debug_initial_transaction_commit(struct ref_store *refs,
+ 	return res;
+ }
  
-diff --git a/t/t5555-http-smart-common.sh b/t/t5555-http-smart-common.sh
-index b1cfe8b7dba..32431266eb9 100755
---- a/t/t5555-http-smart-common.sh
-+++ b/t/t5555-http-smart-common.sh
-@@ -159,4 +159,124 @@ test_expect_success 'git receive-pack --advertise-refs: v2' '
- 	test_cmp actual expect
- '
+-static int debug_pack_refs(struct ref_store *ref_store, unsigned int flags)
++static int debug_pack_refs(struct ref_store *ref_store, unsigned int flags, struct pack_refs_opts *opts)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+-	int res = drefs->refs->be->pack_refs(drefs->refs, flags);
++	int res = drefs->refs->be->pack_refs(drefs->refs, flags, opts);
+ 	trace_printf_key(&trace_refs, "pack_refs: %d\n", res);
+ 	return res;
+ }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index d0581ee41ac..b77c474919f 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -19,6 +19,7 @@
+ #include "../worktree.h"
+ #include "../wrapper.h"
+ #include "../write-or-die.h"
++#include "../revision.h"
  
-+test_expect_success 'git upload-pack --advertise-refs --show-service: v0' '
-+	# With no specified protocol
-+	cat >expect <<-EOF &&
-+	# service=git-upload-pack
-+	0000
-+	$(git rev-parse HEAD) HEAD
-+	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
-+	0000
-+	EOF
+ /*
+  * This backend uses the following flags in `ref_update::flags` for
+@@ -1173,7 +1174,8 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_
+  */
+ static int should_pack_ref(const char *refname,
+ 			   const struct object_id *oid, unsigned int ref_flags,
+-			   unsigned int pack_flags)
++			   unsigned int pack_flags,
++			   struct pack_refs_opts *opts)
+ {
+ 	/* Do not pack per-worktree refs: */
+ 	if (parse_worktree_ref(refname, NULL, NULL, NULL) !=
+@@ -1192,10 +1194,15 @@ static int should_pack_ref(const char *refname,
+ 	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))
+ 		return 0;
+ 
++	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
++		return 0;
 +
-+	git upload-pack --advertise-refs --show-service . >out 2>err &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect &&
+ 	return 1;
+ }
+ 
+-static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
++static int files_pack_refs(struct ref_store *ref_store,
++			   unsigned int flags,
++			   struct pack_refs_opts *pack_opts)
+ {
+ 	struct files_ref_store *refs =
+ 		files_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB,
+@@ -1221,7 +1228,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 		 * pruned, also add it to refs_to_prune.
+ 		 */
+ 		if (!should_pack_ref(iter->refname, iter->oid, iter->flags,
+-				     flags))
++				     flags, pack_opts))
+ 			continue;
+ 
+ 		/*
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 2333ed5a1f7..8a611dd92b4 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1576,7 +1576,8 @@ static int packed_delete_refs(struct ref_store *ref_store, const char *msg,
+ }
+ 
+ static int packed_pack_refs(struct ref_store *ref_store UNUSED,
+-			    unsigned int flags UNUSED)
++			    unsigned int flags UNUSED,
++			    struct pack_refs_opts *pack_opts UNUSED)
+ {
+ 	/*
+ 	 * Packed refs are already packed. It might be that loose refs
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index a85d113123c..7b4852104f0 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -547,7 +547,9 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
+ 				      struct ref_transaction *transaction,
+ 				      struct strbuf *err);
+ 
+-typedef int pack_refs_fn(struct ref_store *ref_store, unsigned int flags);
++typedef int pack_refs_fn(struct ref_store *ref_store,
++			 unsigned int flags,
++			 struct pack_refs_opts *opts);
+ typedef int create_symref_fn(struct ref_store *ref_store,
+ 			     const char *ref_target,
+ 			     const char *refs_heads_master,
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 6d8f844e9c7..0405cacc99b 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -116,8 +116,9 @@ static struct flag_definition pack_flags[] = { FLAG_DEF(PACK_REFS_PRUNE),
+ static int cmd_pack_refs(struct ref_store *refs, const char **argv)
+ {
+ 	unsigned int flags = arg_flags(*argv++, "flags", pack_flags);
++	struct pack_refs_opts pack_opts = { 0 };
+ 
+-	return refs_pack_refs(refs, flags);
++	return refs_pack_refs(refs, flags, &pack_opts);
+ }
+ 
+ static int cmd_create_symref(struct ref_store *refs, const char **argv)
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index 07a0ff93def..31b9f72e84a 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -108,6 +108,24 @@ test_expect_success \
+      git branch -d n/o/p &&
+      git branch n'
+ 
++test_expect_success \
++    'test excluded refs are not packed' '
++     git branch dont_pack1 &&
++     git branch dont_pack2 &&
++     git branch pack_this &&
++     git pack-refs --all --exclude refs/heads/dont_pack* &&
++     test -f .git/refs/heads/dont_pack1 &&
++     test -f .git/refs/heads/dont_pack2 &&
++     ! test -f ./git/refs/heads/pack_this'
 +
-+	# With explicit v0
-+	GIT_PROTOCOL=version=0 \
-+	git upload-pack --advertise-refs --show-service . >out 2>err &&
-+	test-tool pkt-line unpack <out >actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect
++test_expect_success \
++    'test --no-exclude refs clears excluded refs' '
++     git branch dont_pack3 &&
++     git branch dont_pack4 &&
++     git pack-refs --all --exclude refs/heads/dont_pack* --no-exclude &&
++     ! test -f .git/refs/heads/dont_pack3 &&
++     ! test -f .git/refs/heads/dont_pack4'
 +
-+'
-+
-+test_expect_success 'git receive-pack --advertise-refs --show-service: v0' '
-+	# With no specified protocol
-+	cat >expect <<-EOF &&
-+	# service=git-receive-pack
-+	0000
-+	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
-+	0000
-+	EOF
-+
-+	git receive-pack --advertise-refs --show-service . >out 2>err &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect &&
-+
-+	# With explicit v0
-+	GIT_PROTOCOL=version=0 \
-+	git receive-pack --advertise-refs --show-service . >out 2>err &&
-+	test-tool pkt-line unpack <out >actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect
-+
-+'
-+
-+test_expect_success 'git upload-pack --advertise-refs --show-service: v1' '
-+	# With no specified protocol
-+	cat >expect <<-EOF &&
-+	# service=git-upload-pack
-+	0000
-+	version 1
-+	$(git rev-parse HEAD) HEAD
-+	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
-+	0000
-+	EOF
-+
-+	GIT_PROTOCOL=version=1 \
-+	git upload-pack --advertise-refs --show-service . >out &&
-+
-+	test-tool pkt-line unpack <out >actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'git receive-pack --advertise-refs --show-service: v1' '
-+	# With no specified protocol
-+	cat >expect <<-EOF &&
-+	# service=git-receive-pack
-+	0000
-+	version 1
-+	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
-+	0000
-+	EOF
-+
-+	GIT_PROTOCOL=version=1 \
-+	git receive-pack --advertise-refs --show-service . >out &&
-+
-+	test-tool pkt-line unpack <out >actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'git upload-pack --advertise-refs --show-service: v2' '
-+	cat >expect <<-EOF &&
-+	version 2
-+	agent=FAKE
-+	ls-refs=unborn
-+	fetch=shallow wait-for-done
-+	server-option
-+	object-format=$(test_oid algo)
-+	object-info
-+	0000
-+	EOF
-+
-+	GIT_PROTOCOL=version=2 \
-+	GIT_USER_AGENT=FAKE \
-+	git upload-pack --advertise-refs --show-service . >out 2>err &&
-+
-+	test-tool pkt-line unpack <out >actual &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'git receive-pack --advertise-refs --show-service: v2' '
-+	# There is no v2 yet for receive-pack, implicit v0
-+	cat >expect <<-EOF &&
-+	$(git rev-parse HEAD) $(git symbolic-ref HEAD)
-+	0000
-+	EOF
-+
-+	GIT_PROTOCOL=version=2 \
-+	git receive-pack --advertise-refs --show-service . >out 2>err &&
-+
-+	test-tool pkt-line unpack <out >actual &&
-+	test_must_be_empty err &&
-+	test_cmp actual expect
-+'
-+
- test_done
+ test_expect_success \
+ 	'see if up-to-date packed refs are preserved' \
+ 	'git branch q &&
 
-base-commit: 7580f92ffa970b9484ac214f7b53cec5e26ca4bc
+base-commit: f85cd430b12b0d3e4f1a30ef3239a1b73d5f6331
 -- 
 gitgitgadget
