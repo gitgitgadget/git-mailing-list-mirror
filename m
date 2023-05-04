@@ -2,171 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D940CC7EE29
-	for <git@archiver.kernel.org>; Thu,  4 May 2023 16:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C626C77B7C
+	for <git@archiver.kernel.org>; Thu,  4 May 2023 16:49:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbjEDQeb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 May 2023 12:34:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52904 "EHLO
+        id S229585AbjEDQt1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 May 2023 12:49:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbjEDQe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2023 12:34:28 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2128A1FDF
-        for <git@vger.kernel.org>; Thu,  4 May 2023 09:34:27 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-18ef8aa1576so627527fac.0
-        for <git@vger.kernel.org>; Thu, 04 May 2023 09:34:27 -0700 (PDT)
+        with ESMTP id S229470AbjEDQtY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2023 12:49:24 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 634F730F7
+        for <git@vger.kernel.org>; Thu,  4 May 2023 09:49:00 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-643995a47f7so391606b3a.1
+        for <git@vger.kernel.org>; Thu, 04 May 2023 09:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683218066; x=1685810066;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xBorYkw+4/6DCTg4EQdM48+wnN8B8jV4BTq/cwLzgKk=;
-        b=R1zMmKOIDdt4xHJyuzn3/QeZrMaJhNwP0wtcy03WbgE0Ama2L37gWcpT89TQOOnnS0
-         hhAyzsyGzzl6/PgKE6Zad/01jAUCP0y9fKoNwPbEdWMkj41BfRIYcKPokrIY0+WVDXlG
-         fUoXSzLkCMrtqmTh1xC63b/InqbF39musonSgYE6ZtpT8BFZMbNxFHOQB1lNQ7ZR/iiH
-         dQRInQ+DKbaZpeTg9c8I+4XzxsnLZ3lx5v/jUSnLsuLje4yORckwg7LDSXj0Tx5WhXfB
-         /8zKcrBafhKbRqRjfi9I6/M/05Y3cw2rnbjFblWSBlajW9dkyvaUWryy46cYatHE6All
-         tthA==
+        d=gmail.com; s=20221208; t=1683218938; x=1685810938;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KxXN/eTtdTB0FrthhXvC896/Ay/c7BboJkkR2Wrppnk=;
+        b=WleR1AW6yKtGmIBV31a6v0fdY5RChOkndRALoG0EGkTnGUT0SaTK4TusUOKy4du6Xw
+         Ax7+bE6qBvv/07hY2X1jtTe2VA1XKYGTMzwWQHoMkYTbiyRrG6saCIJz087+sCP0SM8w
+         XpWU0Kjn2qflliHH5+hQhZpLtbSoutXK+ln9XxdkjmGAap5iSvE5dkFM67w1JgfUaiXz
+         Xy2VMWOQcwJ+nI+cpU9wCpq5a4eWCm7gwEHv6OfnI/fpI8GytF6nvjz4wR3rPB3BYrHE
+         KONa6Lkp4q2HomzjuWnl5kuf88jU3jmrb90Je96k/gQSbvGmWvlYpaFtMgD6/RwWE43S
+         tQNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683218066; x=1685810066;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xBorYkw+4/6DCTg4EQdM48+wnN8B8jV4BTq/cwLzgKk=;
-        b=LisO5P5cSfKiWcxHUGPj3v5Lfck8ocp4UheDj69xJcwBRnGLoPsmi+X64wB9n1kY9f
-         vDXUrRrpR7NGPt4buMJtqQcmLvoGOUTC8Tcla6r38AIRBhRvUrpQn0TJSn+S6iYRzACK
-         R523M5+5Q5is9jc28vX+F2Ez6VkMXW8GEG207FR6CKVPAV5OFuq4oZUBLEgxMnusZXEJ
-         GPCEZjK9U/8bLzOQoGrGX1HTb85UiYKFPCz1wkLDEP/DnQs1Uht5lToaT/9ADUzxUVh7
-         dnIXScMInVMqWffplbwh5vKrbia3a+t7Z//4UiZL/vccWgASgYFCcfk0Iu9lPQheJGoz
-         TTEQ==
-X-Gm-Message-State: AC+VfDzYa2pH+WjWoIgykeSDxx7l24MnfwvK51CjxISW8p/81V6/YdZ8
-        t7Hs/6i2jRj3uUw8kIqnHB/PV5vEgTM=
-X-Google-Smtp-Source: ACHHUZ4+aAOxeF3oR4bvadINmN61F0PaqXhr0459zSdZcMXlbZSsyHyG1ffekv3WWqSfnjPqS5nOSg==
-X-Received: by 2002:a05:6870:9186:b0:177:9753:f82b with SMTP id b6-20020a056870918600b001779753f82bmr1391985oaf.5.1683218066458;
-        Thu, 04 May 2023 09:34:26 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id k5-20020a056870a4c500b001805a3e722csm811682oal.19.2023.05.04.09.34.25
+        d=1e100.net; s=20221208; t=1683218938; x=1685810938;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KxXN/eTtdTB0FrthhXvC896/Ay/c7BboJkkR2Wrppnk=;
+        b=HmMU3/lNbcF23L+PcL4boQywUpLq3UfVOvO1XYtx+RtCNxL9tbPSPnouolYdPs1aPf
+         LYM221QW8jZr5JM0/EsXdYrIMBvBD4tytI0zVE3PFwudKkIx98Zc/ElSxpPVf1M5yVhM
+         6dMcF3rfju1oeidfgrhPiHwVuCtZbPl9mRQzHTawYpo0gbJ3xHGrm2Z+QdrCC6vjZk1q
+         pXTrl512OCaolU6jQ0JELpNvzpjwYpm74lL74Ywhx1zvsScxRxUcBD1YR2w6Jzkqlvsb
+         OmDUawVL856xRBvRyp1It5OjNG8gXxPW4q8hvhSn9tgdHywHqGan6U8EddcIZdFeCjoA
+         1oTQ==
+X-Gm-Message-State: AC+VfDwmapyUn68ra85TYXRu+eRg+IJTFxOyUGsFHwOjlzX58D5tTfyy
+        6tMx3mp3ZkgNa+QqRbAbglY=
+X-Google-Smtp-Source: ACHHUZ7zVXzUIaUkLjLFobMOqxPX4j0tj9IW4UpY8ZM4rUEedf+UMlU2t+YaFCnWKWq8Z6+Metp6Uw==
+X-Received: by 2002:a05:6a00:98e:b0:63b:88f6:3817 with SMTP id u14-20020a056a00098e00b0063b88f63817mr3375972pfg.19.1683218938327;
+        Thu, 04 May 2023 09:48:58 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id ei23-20020a056a0080d700b006410f4f3ecdsm14278659pfb.83.2023.05.04.09.48.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 May 2023 09:34:25 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/2] doc: revisions: add a bunch of missing quotes
-Date:   Thu,  4 May 2023 10:34:21 -0600
-Message-Id: <20230504163421.100400-3-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
-In-Reply-To: <20230504163421.100400-1-felipe.contreras@gmail.com>
-References: <20230504163421.100400-1-felipe.contreras@gmail.com>
+        Thu, 04 May 2023 09:48:57 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
+        John Cai <jcai@gitlab.com>
+Subject: Re: [PATCH] pack-refs: teach --exclude option to exclude refs from
+ being packed
+References: <pull.1501.git.git.1683215331910.gitgitgadget@gmail.com>
+Date:   Thu, 04 May 2023 09:48:57 -0700
+In-Reply-To: <pull.1501.git.git.1683215331910.gitgitgadget@gmail.com> (John
+        Cai via GitGitGadget's message of "Thu, 04 May 2023 15:48:51 +0000")
+Message-ID: <xmqq4joskpom.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/revisions.txt | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index af764de153..bc1c6e5979 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -97,10 +97,10 @@ some output processing may assume ref names in UTF-8.
-   before the current one.
- 
- '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
--  A branch B may be set up to build on top of a branch X (configured with
--  `branch.<name>.merge`) at a remote R (configured with
--  `branch.<name>.remote`). B@\{u} refers to the remote-tracking branch for
--  the branch X taken from remote R, typically found at `refs/remotes/R/X`.
-+  A branch 'B' may be set up to build on top of a branch 'X' (configured with
-+  `branch.<name>.merge`) at a remote 'R' (configured with
-+  `branch.<name>.remote`). 'B@\{u}' refers to the remote-tracking branch for
-+  the branch 'X' taken from remote 'R', typically found at `refs/remotes/R/X`.
- 
- '[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
-   The suffix '@\{push}' reports the branch "where we would push to" if
-@@ -129,7 +129,7 @@ from one location and push to another. In a non-triangular workflow,
- This suffix is also accepted when spelled in uppercase, and means the same
- thing no matter the case.
- 
--'<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-+'<rev>{caret}[<n>]', e.g. 'HEAD{caret}', 'v1.5.1{caret}0'::
-   A suffix '{caret}' to a revision parameter means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-   '<rev>{caret}'
-@@ -137,7 +137,7 @@ thing no matter the case.
-   '<rev>{caret}0' means the commit itself and is used when '<rev>' is the
-   object name of a tag object that refers to a commit object.
- 
--'<rev>{tilde}[<n>]', e.g. 'HEAD{tilde}, master{tilde}3'::
-+'<rev>{tilde}[<n>]', e.g. 'HEAD{tilde}', 'master{tilde}3'::
-   A suffix '{tilde}' to a revision parameter means the first parent of
-   that commit object.
-   A suffix '{tilde}<n>' to a revision parameter means the commit
-@@ -278,8 +278,8 @@ The '..' (two-dot) Range Notation::
-  The '{caret}r1 r2' set operation appears so often that there is a shorthand
-  for it.  When you have two commits 'r1' and 'r2' (named according
-  to the syntax explained in SPECIFYING REVISIONS above), you can ask
-- for commits that are reachable from r2 excluding those that are reachable
-- from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
-+ for commits that are reachable from 'r2' excluding those that are reachable
-+ from 'r1' by '{caret}r1 r2' and it can be written as 'r1..r2'.
- 
- The '\...' (three-dot) Symmetric Difference Notation::
-  A similar notation 'r1\...r2' is called symmetric difference
-@@ -288,7 +288,7 @@ The '\...' (three-dot) Symmetric Difference Notation::
-  It is the set of commits that are reachable from either one of
-  'r1' (left side) or 'r2' (right side) but not from both.
- 
--In these two shorthand notations, you can omit one end and let it default to HEAD.
-+In these two shorthand notations, you can omit one end and let it default to `HEAD`.
- For example, 'origin..' is a shorthand for 'origin..HEAD' and asks "What
- did I do since I forked from the origin branch?"  Similarly, '..origin'
- is a shorthand for 'HEAD..origin' and asks "What did the origin do since
-@@ -340,22 +340,22 @@ Revision Range Summary
- ----------------------
- 
- '<rev>'::
--	Include commits that are reachable from <rev> (i.e. <rev> and its
-+	Include commits that are reachable from '<rev>' (i.e. '<rev>' and its
- 	ancestors).
- 
- '{caret}<rev>'::
--	Exclude commits that are reachable from <rev> (i.e. <rev> and its
-+	Exclude commits that are reachable from '<rev>' (i.e. '<rev>' and its
- 	ancestors).
- 
- '<rev1>..<rev2>'::
--	Include commits that are reachable from <rev2> but exclude
--	those that are reachable from <rev1>.  When either <rev1> or
--	<rev2> is omitted, it defaults to `HEAD`.
-+	Include commits that are reachable from '<rev2>' but exclude
-+	those that are reachable from '<rev1>'.  When either '<rev1>' or
-+	'<rev2>' is omitted, it defaults to `HEAD`.
- 
- '<rev1>\...<rev2>'::
--	Include commits that are reachable from either <rev1> or
--	<rev2> but exclude those that are reachable from both.  When
--	either <rev1> or <rev2> is omitted, it defaults to `HEAD`.
-+	Include commits that are reachable from either '<rev1>' or
-+	'<rev2>' but exclude those that are reachable from both.  When
-+	either '<rev1>' or '<rev2>' is omitted, it defaults to `HEAD`.
- 
- '<rev>{caret}@', e.g. 'HEAD{caret}@'::
-   A suffix '{caret}' followed by an at sign is the same as listing
-@@ -367,7 +367,7 @@ Revision Range Summary
-   as giving commit '<rev>' and all its parents prefixed with
-   '{caret}' to exclude them (and their ancestors).
- 
--'<rev>{caret}-<n>', e.g. 'HEAD{caret}-, HEAD{caret}-2'::
-+'<rev>{caret}-<n>', e.g. 'HEAD{caret}-', 'HEAD{caret}-2'::
- 	Equivalent to '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
- 	given.
- 
--- 
-2.40.0+fc1
+> From: John Cai <jcai@gitlab.com>
+>
+> Currently once refs are packed into a pack-refs file, deleting them can be
+> slow since it involves a full file scan of the entire pack-refs file. At
 
+"pack-refs" -> "packed-refs".
+
+But performing a full file scan of 100MB file would take how many
+milliseconds?  Having to remove many refs from a single packed-refs
+file would be costly if it is done one-by-one, though.  I wonder how
+effective our batched update mechanism is these days...
+
+Sorry for straying to a tangent.  In any case, I do not think the
+first sentence is necessary; just start it with "At GitLab, ..." to
+say that you have a need to be more selective than "is it a tag or
+not?" to choose refs to be and not to be packed.  The reason why we
+may want to leave a ref loose is not limited to ref deletion
+performance, and the benefit of this new feature is not limited to
+it, either.
+
+> GitLab, we have a system that creates ephemeral internal refs that don't
+> live long before getting deleted. Having an option to not include certain
+> refs from a pack-refs file allows these internal references to be deleted
+> much more efficiently.
+
+I think that is a valid use case.
+
+If we step back a bit, we can see "pack-refs" has an option "--all"
+that was added by b3d4204f (git-pack-refs --all, 2006-10-08), to
+allow us pack only tags by default, because packing branches that
+are meant to be updated often and also removed more often than tags
+were found to be detrimental.  We can view this new option a
+follow-up work for the commit, to allow the users to define what to
+be and what not to be packed, depending on their workflow.
+
+This observation also makes us realize that we should consider the
+opposite.  It would benefit us to include some refs that we normally
+do not pack and be more selective than "--all" ("--exclude" proposed
+here is a way to leave some refs that we normally pack and be more
+selective than not running pack-refs at all).  A set of branches
+that are only occasionally used may want to be packed while the rest
+of branches want to be left loose because they are more active, or
+something.
+
+> Add an --exclude option to the pack-refs builtin, and use the ref
+> exclusions API to exclude certain refs from being packed into the final
+> pack-refs file
+
+"pack-refs" appears here, too.
+
+>  Documentation/git-pack-refs.txt |  8 +++++++-
+>  builtin/pack-refs.c             | 17 +++++++++++++++--
+>  refs.c                          |  4 ++--
+>  refs.h                          |  6 +++++-
+>  refs/debug.c                    |  4 ++--
+>  refs/files-backend.c            | 13 ++++++++++---
+>  refs/packed-backend.c           |  3 ++-
+>  refs/refs-internal.h            |  4 +++-
+>  t/helper/test-ref-store.c       |  3 ++-
+>  t/t3210-pack-refs.sh            | 18 ++++++++++++++++++
+>  10 files changed, 66 insertions(+), 14 deletions(-)
+>
+> diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+> index 154081f2de2..d80e0a1562d 100644
+> --- a/Documentation/git-pack-refs.txt
+> +++ b/Documentation/git-pack-refs.txt
+> @@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repository access
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git pack-refs' [--all] [--no-prune]
+> +'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -59,6 +59,12 @@ a repository with many branches of historical interests.
+>  The command usually removes loose refs under `$GIT_DIR/refs`
+>  hierarchy after packing them.  This option tells it not to.
+>  
+> +--exclude <pattern>::
+> +
+> +Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
+> +accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
+> +patterns.
+
+The interaction of this option with "--all" needs to be described
+somewhere.  If we are to be adding "--include" for completeness,
+that one also needs to interact with "--all".
+
+> diff --git a/refs.c b/refs.c
+> index d2a98e1c21f..637810347a0 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2132,9 +2132,9 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
+>  }
+>  
+>  /* backend functions */
+> -int refs_pack_refs(struct ref_store *refs, unsigned int flags)
+> +int refs_pack_refs(struct ref_store *refs, unsigned int flags, struct pack_refs_opts *pack_opts)
+>  {
+> -	return refs->be->pack_refs(refs, flags);
+> +	return refs->be->pack_refs(refs, flags, pack_opts);
+
+That's a curious choice of the API.  It is not like backend methods
+all share the same "flags" bitset (they share "refs" pointer to the
+ref_store), so I would have expected that it would become part of
+the pack_refs_opts structure.  Do not call the parameter pack_opts;
+either spell it out as "pack_refs_opts", or just use "opts".  The
+latter is probably more preferrable as I do not expect it to be
+ambiguous with other kinds of "opts".
+
+The rest of the pack I found nothing unexpected or surprising.
