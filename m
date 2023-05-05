@@ -2,147 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E189C77B75
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 17:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E3CFC77B75
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 17:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232916AbjEERle convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 5 May 2023 13:41:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39604 "EHLO
+        id S233149AbjEERsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 13:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232907AbjEERla (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 13:41:30 -0400
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E2D1A481
-        for <git@vger.kernel.org>; Fri,  5 May 2023 10:41:28 -0700 (PDT)
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-74e462a540aso103510785a.1
-        for <git@vger.kernel.org>; Fri, 05 May 2023 10:41:28 -0700 (PDT)
+        with ESMTP id S233153AbjEERsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 13:48:04 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2159A1E998
+        for <git@vger.kernel.org>; Fri,  5 May 2023 10:47:39 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-55a20a56a01so36353977b3.3
+        for <git@vger.kernel.org>; Fri, 05 May 2023 10:47:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683308778; x=1685900778;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=07NN2A8IdY5ciQugSvTX3TQTTZ1EsDB4Clh2fjHngaw=;
+        b=qqubh+rbHrMo0BzNLWBpTjsRU9k7AOgIV6z/q6DRKPrEDKDIqYthYV9l00vhuVRfYT
+         gQECV69hhfXFPZhHu32dCLx70h8+y8uLsLndvkp4KHvKxcgBhTwjCQ7e0o41OK+m0Y+Q
+         kqZRVziaQTDDqX67+cDy2Qr6n0stKpgLN7muihmafTX272RrjIpxJlSNaweDMR5T62Zo
+         7dpuAj2EF2Z0D23xlOLlypjiqytLbJG6C74I5I0zedTHCkF+QdrkxiB8hl5xvsUjNraB
+         /9Mskm6Of6G3eINjTRFFTpk3Uk72LPsMXRd8Yf4J3LxL42Jk5aeVKPDdYLcD7+P3iY1G
+         GZMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683308488; x=1685900488;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZhCF21d9nMyVg4inFkojr99oHy00U1EGQAjwuiPaNRA=;
-        b=bGi9jK+RpizXbxoEqQCBCzIXF3PdEOkO8nIGXQxwGC4VE4r3Rb7MzmN7kCITjuduPB
-         DMtyEqzVOWwmFZjJyr3xcBm5tq6puOH70c8GOscD5OUkInGeMf9lHiaarqsoqeVHbKjM
-         DX0//prNaVmKJm5n9YxnNGc4EmmuOd42wUnFFxm2688tCmUwL70xWDbYBUQVXxGfVhg6
-         Y6s/+8fn3M+I6hdEwpZPXBF8c35ovFIizpInB6ZorCqUFWh/GgUSPwQACy2BGfiORYOI
-         zVbPaXsedTn2KI5TQfAfRQ5Td1+UUnyKqRJE8J0hK9SBOt6KtVhrRM/9zfiPZZ5IOmXJ
-         j3OQ==
-X-Gm-Message-State: AC+VfDwQsggw2Z23KIbx5Y/HgppUXc+Qzrd2FgOlumPZHxHPfdJbCyX0
-        s2UNpPa374pXRVewV4XHiIu7W7xR43WEd+LDA6p92etLtQ8=
-X-Google-Smtp-Source: ACHHUZ7cj9QaPFNNn9E9Db79I2HjH9Mwiyz2iJEHQbI2RBRuC/pHZCT26HWhjJf1TbJTknxdbYy43tjlwe6kCHV+6Qw=
-X-Received: by 2002:a05:6214:234a:b0:61b:7aa5:d063 with SMTP id
- hu10-20020a056214234a00b0061b7aa5d063mr3669903qvb.41.1683308487704; Fri, 05
- May 2023 10:41:27 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683308778; x=1685900778;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=07NN2A8IdY5ciQugSvTX3TQTTZ1EsDB4Clh2fjHngaw=;
+        b=TViHDxJnDtPnlZcqxiUcAVTg/6YY/v7VZeA5r3lliokuwt2UNq9CnKhk/DVjwbv002
+         gA2g89bAa9Yv+X7ryMV4PMMAZW3OIQHxJWTdX8r2tl9eiCdlamSOob3aRvilhpgcrUf5
+         5L7RE7or27RULXjpvql8u14ECRoZAyY0bj1hgsLmj+hj2H7Ot0sXxDaiOhHZK2ElDzFg
+         a6aPBc+4S3cL0eiFe2mbxQRXFpjqaio8YXtoKIwTVPtC6SMtfU0EgCVHpjm3dQPZkKYB
+         CK+7KawEpJ+Gr3OjXuCSQQKwMyeTJ5VOtNPeKhrWnBUrJfzvJ8CDu5ebeO3aytX8812M
+         6t8w==
+X-Gm-Message-State: AC+VfDxuskxKYyAL0Bf6s/q2X2vc6ji9JJqZYwc0se6Vtr+Jq+3o15Vv
+        XyXFKtVKFXNMo+LkY8rbupsB2Q==
+X-Google-Smtp-Source: ACHHUZ7W5OAnzDTJL+JDViGx9+pzya4y0MVnbvIMCkgM1qQFDr9qUp2XH4B1jibxu4BjDYcg+I9Jpg==
+X-Received: by 2002:a81:4fcd:0:b0:55a:8b11:5f6a with SMTP id d196-20020a814fcd000000b0055a8b115f6amr2481575ywb.19.1683308777770;
+        Fri, 05 May 2023 10:46:17 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id b78-20020a0dd951000000b0055a931afe48sm612715ywe.8.2023.05.05.10.46.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 May 2023 10:46:17 -0700 (PDT)
+Date:   Fri, 5 May 2023 13:46:16 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/7] contrib/credential: avoid protocol injection attacks
+Message-ID: <ZFVA6MyjUE+L+x9P@nand.local>
+References: <cover.1682956419.git.me@ttaylorr.com>
+ <bd745f48-038f-f4f2-2041-f4b2c7bd0d20@github.com>
 MIME-Version: 1.0
-References: <xmqqfs8bith1.fsf_-_@gitster.g> <20230505165952.335256-1-gitster@pobox.com>
-In-Reply-To: <20230505165952.335256-1-gitster@pobox.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 5 May 2023 13:41:16 -0400
-Message-ID: <CAPig+cT=3dmtEEApiPUvB9+5ZHx+uwc1NXhYsf4peYiSwPYPsQ@mail.gmail.com>
-Subject: Re: [PATCH v2] diff: fix interaction between the "-s" option and
- other options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bd745f48-038f-f4f2-2041-f4b2c7bd0d20@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 5, 2023 at 1:02 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Sergey Organov noticed and reported "--patch --no-patch --raw"
-> behaves differently from just "--raw".  It turns out that there are
-> a few interesting bugs in the implementation and documentation.
+On Fri, May 05, 2023 at 11:24:44AM -0400, Derrick Stolee wrote:
+> > But the new "wwwauth[]" field does allow this attack to take place.
 >
->  * First, the documentation for "--no-patch" was unclear that it
->    could be read to mean "--no-patch" countermands an earlier
->    "--patch" but not other things.  The intention of "--no-patch"
->    ever since it was introduced at d09cd15d (diff: allow --no-patch
->    as synonym for -s, 2013-07-16) was to serve as a synonym for
->    "-s", so "--raw --patch --no-patch" should have produced no
->    output, but it can be (mis)read to allow showing only "--raw"
->    output.
->
->  * Then the interaction between "-s" and other format options were
->    poorly implemented.  Modern versions of Git uses one bit each to
->    represent formatting options like "--patch", "--stat" in a single
->    output_format word, but for historical reasons, "-s" also is
->    represented as another bit in the same word.  This allows two
->    interesting bugs to happen, and we have both X-<.
->
->    (1) After setting a format bit, then setting NO_OUTPUT with "-s",
->        the code to process another "--<format>" option drops the
->        NO_OUTPUT bit to allow output to be shown again.  However,
->        the code to handle "-s" only set NO_OUTPUT without unsetting
->        format bits set earlier, so the earlier format bit got
->        revealed upon seeing the second "--<format>" option.  This is
+> In particular, because this should be resolved before 2.41.0-rc0.
 
-Glad to see "THis" from v1 fixed.
+Yes, definitely.
 
->        the problem Sergey observed.
+> Each patch was simple to read and well-motivated. I was particularly
+> happy with this diffstat:
 >
->    (2) After setting NO_OUTPUT with "-s", code to process
->        "--<format>" option can forget to unset NO_OUTPUT, leaving
->        the command still silent.
+> >  contrib/credential/gnome-keyring/.gitignore   |   1 -
+> >  contrib/credential/gnome-keyring/Makefile     |  25 -
+> >  .../git-credential-gnome-keyring.c            | 470 ------------------
 >
-> It is tempting to change the meaning of "--no-patch" to mean
-> "disable only the patch format output" and reimplement "-s" as "not
-> showing anything", but it would be an end-user visible change in
-> behavior.  Let's fix the interactions of these bits to first make
-> "-s" work as intended.
->
-> The fix is conceptually very simple.
->
->  * Whenever we set DIFF_FORMAT_FOO because we saw the "--foo"
->    option (e.g. DIFF_FORMAT_RAW is set when the "--raw" option is
->    given), we make sure we drop DIFF_FORMAT_NO_OUTPUT.  We forgot to
->    do so in some of the options and caused (2) above.
->
->  * When processing "-s" option, we should not just set
->    DIFF_FORMAT_NO_OUTPUT bit, but clear other DIFF_FORMAT_* bits.
->    We didn't do so and retained format bits set by options
->    previously seen, causing (1) above.
+> The rest of the changes looked to be obvious improvements, so this
+> v1 LGTM.
 
-The above description is very clear and well stated, even to someone
-like me who didn't follow the discussion which culminated in this
-patch.
+Thanks. Much credit is owed to Peff, who worked on these patches with
+me. And FWIW, dropping support for the gnome-keyring helper was his
+idea.
 
-> It is even more tempting to lose NO_OUTPUT bit and instead take
-> output_format word being 0 as its replacement, but that would break
-> the mechanism "git show" uses to default to "--patch" output, where
-> the distinction between telling the command to be silent with "-s"
-> and having no output format specified on the command line matters,
-> and an explicit output format given on the command line should not
-> be "combined" with the default "--patch" format.
->
-> So, while we cannot lose the NO_OUTPUT bit, as a follow-up work, we
-> may want to replace it with OPTION_GIVEN bit, and
->
->  * make "--patch", "--raw", etc. set DIFF_FORMAT_$format bit and
->    DIFF_FORMAT_OPTION_GIVEN bit on for each format.  "--no-raw",
->    etc. will set off DIFF_FORMAT_$format bit but still record the
->    fact that we saw an option from the command line by setting
->    DIFF_FORMAT_OPTION_GIVEN bit.
->
->  * make "-s" (and its synonym "--no-patch") clear all other bits
->    and set only the DIFF_FORMAT_OPTION_GIVEN bit on.
->
-> which I suspect would make the code much cleaner without breaking
-> any end-user expectations.
->
-> Once that is in place, transitioning "--no-patch" to mean the
-> counterpart of "--patch", just like "--no-raw" only defeats an
-> earlier "--raw", would be quite simple at the code level.  The
-> social cost of migrating the end-user expectations might be too
-> great for it to be worth, but at least the "GIVEN" bit clean-up
+Thanks for the review :-).
 
-s/worth/worthwhile/
-
-> alone may be worth it.
-
-And this final part addresses the big question which v1 left dangling
-(specifically, "why the proposed patch doesn't eliminate NO_OUTPUT
-altogether). Good.
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Thanks,
+Taylor
