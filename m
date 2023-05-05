@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DDA5C77B7C
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 10:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E804C77B7C
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 13:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231408AbjEEKck (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 May 2023 06:32:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40884 "EHLO
+        id S232616AbjEEN7D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 09:59:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjEEKci (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 06:32:38 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100CC16094
-        for <git@vger.kernel.org>; Fri,  5 May 2023 03:32:37 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-306f9df5269so1066060f8f.3
-        for <git@vger.kernel.org>; Fri, 05 May 2023 03:32:36 -0700 (PDT)
+        with ESMTP id S232619AbjEEN67 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 09:58:59 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F6516340
+        for <git@vger.kernel.org>; Fri,  5 May 2023 06:58:56 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3077d134028so514331f8f.3
+        for <git@vger.kernel.org>; Fri, 05 May 2023 06:58:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683282755; x=1685874755;
+        d=gmail.com; s=20221208; t=1683295134; x=1685887134;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0eQRcfAgqujrTbX8IPOoTKfZFmRW5+Iy9NNP/M5RFeE=;
-        b=KHchXqDo/gmIbglH0obiFFFphkWvXZZQ21Xyej1j89jMStXNC+5sAE95TfM/F7/N38
-         FaLVOh3Kacqbp0QHV2a7WiBR/EnxuPmCHF0y3Ci5zTmlQCfcb0GZ0uZnSV2t0bZeSj3j
-         1iFBGFWWj34lf2IFxjiqbZ9aiXTMJ84lZSwCCgrOZ8Vpw8KZVMr+Ao8S7uBygLpSl9vb
-         K6SI7xPBB9/IWwalXzLjYJLS43kf9Pd2thfh90A40TBE0v65SMdkUbhJlDwPZi9lAkre
-         Ttqmen2PpnogFCu3kz7XiRHBMc+Npmjnl5RhEGC1b7E9hhWnpuyQo4IP433Tb98Crk6Z
-         D6lA==
+        bh=K3H8LWIcQM3qWKGfV4n7FAsSV5+JegJMntC1tAlUmYU=;
+        b=WP7EQcezc0vRwcsksQUgn2hBHv19MsCuXZ/i80BqPWDzzFOOQ6aGWeFjlmXCYJpeZE
+         SjgFkUb+0lkSjBYyPFsLl0A2EkMi0yDhKmD60WgTZVE9610vEXe6RqwOHjO3oYG33cVt
+         kDaEET8SmOscKiKu9ydwYucNCfeZysDUj5MCumat7dgtaYHWrQjw9CzXYl6AXP75qDNI
+         faoR94ZnT9vu5aRbzmbPH0aQyEvO17P/DeNM4HjUF4EHQS77eI05qIrO9Nzcxlc4mZu/
+         XPBmSeGOri94S30aryzDwiFNrC59NaczKXuxv7mszkl6Pz/fKEwQ8JiXJuTK0aCk8mR2
+         JI4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683282755; x=1685874755;
+        d=1e100.net; s=20221208; t=1683295134; x=1685887134;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0eQRcfAgqujrTbX8IPOoTKfZFmRW5+Iy9NNP/M5RFeE=;
-        b=HH7YaU3O2H0IBAFCSnhl8ryvyu1NifMP3CGOESIVNn0cdQEKgPAF2va6nBfH+ODWwv
-         nisViNMy+n2Vp+3ZLykdcHl7zh0T4tJMgx9jJSXRUDnSIZgMDbKdS+7IiN/+d4lH1FZH
-         V1BN/6Va5tXoUWU0MStqM/v99D/8lp58wj0bkFq0mOrOi3pVdqHMAHJ7TzsB0QCPHmzY
-         tFc0Yu/zPx93e5XQlEe+OP1qEK8+J4zoHMDgXh42DWZdBe/k96kWnV4P8vLDEaJe80Hv
-         Dz8vX7q8un4O79uskOg71Ex7qhVf29koIvnzDwqs3hpEQYtbiOPNtH5E2mjyj5ByFpXY
-         rZLw==
-X-Gm-Message-State: AC+VfDy3Ffn+uQMM8tND27+Boo7oQy9MF0+tY/1jkvoE7tdmdvYyfyhB
-        HEno+gqMuXXeMfhaqv31Wy7AffKfpww=
-X-Google-Smtp-Source: ACHHUZ5I49e5h7mz4n4VetNR87qWENMAO3CwIA0+AEEwfQ7d5CDFvCRygP3ZGt/lGYXzggou/J/tfw==
-X-Received: by 2002:adf:f706:0:b0:306:2a46:4b11 with SMTP id r6-20020adff706000000b003062a464b11mr1011704wrp.43.1683282755135;
-        Fri, 05 May 2023 03:32:35 -0700 (PDT)
+        bh=K3H8LWIcQM3qWKGfV4n7FAsSV5+JegJMntC1tAlUmYU=;
+        b=almVTYktDjcPt2+yY67yB0RTVpc2GIA5KjNEz+/axEMffsBE3kKKHgelOM990AqsGA
+         PfN2SmnSTaiRezpXtSjhI3qr8abSXmFxKgRcBQD3Ye5QzeS/WZU5Lr9FfiGU2+E9k5YM
+         4itSQreRBPSL3UDj2C/KVf84rhy9fvX0Nd99qUlQTmURJtA1jOsjCfbG/eKSMnjzCcYY
+         Jww4HMmD/0XMNos5vT+EOGHyL6GS4QBoYKEogvv3W0gSXYNrom39tMSQeWmGvdABt35r
+         GRJRQJe9sofgODRQRat1Qwt82SYxVgCBOEPmI3j44qi6Zh/o2+abpdZMnJrwRuGDs//g
+         bsAw==
+X-Gm-Message-State: AC+VfDxoXjPkrd3oKKR7lVWzU++31rs0tVaNiAKU+YDisyjMoHYPYFcv
+        a07GNWEAm4UNecmhPH8ItZLqzW/ZW+k=
+X-Google-Smtp-Source: ACHHUZ777UwaCiHiaTaJmK3MUcWZCHyol+BPOA+M6iS63RmE8z1YTrB/a0dFDNInZJl09XZjJGHI8A==
+X-Received: by 2002:adf:f410:0:b0:2f4:de63:a0b5 with SMTP id g16-20020adff410000000b002f4de63a0b5mr1478200wro.69.1683295134324;
+        Fri, 05 May 2023 06:58:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t14-20020a5d460e000000b003047ae72b14sm1963607wrq.82.2023.05.05.03.32.34
+        by smtp.gmail.com with ESMTPSA id p6-20020adfe606000000b002e5f6f8fc4fsm2491666wrm.100.2023.05.05.06.58.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 03:32:34 -0700 (PDT)
-Message-Id: <pull.1504.git.git.1683282753768.gitgitgadget@gmail.com>
+        Fri, 05 May 2023 06:58:53 -0700 (PDT)
+Message-Id: <pull.1505.git.git.1683295133304.gitgitgadget@gmail.com>
 From:   "Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 May 2023 10:32:33 +0000
-Subject: [PATCH] doc: restore: remove note on --patch w/ pathspecs
+Date:   Fri, 05 May 2023 13:58:53 +0000
+Subject: [PATCH] doc: merge: improve conflict presentation docs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc:     Elijah Newren <newren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Adam Johnson <me@adamj.eu>, Adam Johnson <me@adamj.eu>
 Precedence: bulk
@@ -66,44 +66,158 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Adam Johnson <me@adamj.eu>
 
-This note was added with the command in 46e91b663b (checkout: split part of
-it to new command 'restore', 2019-04-25), but it is now inaccurate. The
-underlying builtin `add -i` implementation, made default in 0527ccb1b5 (add
--i: default to the built-in implementation, 2021-11-30), supports pathspecs,
-so `git restore -p <pathspec>...` has worked for all users since then. I
-bisected to verify this was the commit that added support.
+Improvements:
+
+1. Remove the sexist example ("Barbie... wants to go shopping")
+2. Show real merge marker contents, rather than e.g. "yours:sample.txt".
+3. Swap yours/theirs terms for source/target.
+4. General wordsmithing.
 
 Signed-off-by: Adam Johnson <me@adamj.eu>
 ---
-    doc: restore: remove note on --patch w/ pathspecs
+    doc: merge: improve conflict presentation docs
     
-    This note was added with the command in 46e91b663b, but it is now
-    inaccurate. The underlying builtin add -i implementation, made default
-    in 0527ccb1b5, does support pathspecs, so git restore -p <pathspec>...
-    has worked for all users since then. I bisected to verify this.
+    Improvements:
+    
+     1. Remove the sexist example ("Barbie... wants to go shopping")
+     2. Show real merge marker contents, rather than e.g.
+        "yours:sample.txt".
+     3. Swap yours/theirs terms for source/target.
+     4. General wordsmithing.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1504%2Fadamchainz%2Faj%2Fgit-restore-patch-docs-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1504/adamchainz/aj/git-restore-patch-docs-fix-v1
-Pull-Request: https://github.com/git/git/pull/1504
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1505%2Fadamchainz%2Faj%2Fmerge-conflict-docs-improvements-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1505/adamchainz/aj/merge-conflict-docs-improvements-v1
+Pull-Request: https://github.com/git/git/pull/1505
 
- Documentation/git-restore.txt | 3 ---
- 1 file changed, 3 deletions(-)
+ Documentation/git-merge.txt | 75 ++++++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 38 deletions(-)
 
-diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
-index 5964810caa4..d31a06a673e 100644
---- a/Documentation/git-restore.txt
-+++ b/Documentation/git-restore.txt
-@@ -51,9 +51,6 @@ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
- 	restore source and the restore location. See the ``Interactive
- 	Mode'' section of linkgit:git-add[1] to learn how to operate
- 	the `--patch` mode.
--+
--Note that `--patch` can accept no pathspec and will prompt to restore
--all modified paths.
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 0aeff572a59..b4523362e48 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -233,11 +233,11 @@ HOW CONFLICTS ARE PRESENTED
  
- -W::
- --worktree::
+ During a merge, the working tree files are updated to reflect the result
+ of the merge.  Among the changes made to the common ancestor's version,
+-non-overlapping ones (that is, you changed an area of the file while the
+-other side left that area intact, or vice versa) are incorporated in the
+-final result verbatim.  When both sides made changes to the same area,
++non-overlapping ones, where only one side changed an area, are incorporated
++in the final result as-is.  When both sides made changes to the same area,
+ however, Git cannot randomly pick one side over the other, and asks you to
+-resolve it by leaving what both sides did to that area.
++resolve it.  Git adds changes from both sides, and optionally the
++original content from the common ancestor, surrounded by merge markers.
+ 
+ By default, Git uses the same style as the one used by the "merge" program
+ from the RCS suite to present such a conflicted hunk, like this:
+@@ -245,71 +245,70 @@ from the RCS suite to present such a conflicted hunk, like this:
+ ------------
+ Here are lines that are either unchanged from the common
+ ancestor, or cleanly resolved because only one side changed,
+-or cleanly resolved because both sides changed the same way.
+-<<<<<<< yours:sample.txt
+-Conflict resolution is hard;
+-let's go shopping.
++or cleanly resolved because both sides changed identically.
++<<<<<<< HEAD
++Git makes conflict resolution straightforward.
+ =======
+ Git makes conflict resolution easy.
+->>>>>>> theirs:sample.txt
++>>>>>>> main
+ And here is another line that is cleanly resolved or unmodified.
+ ------------
+ 
+ The area where a pair of conflicting changes happened is marked with markers
+ `<<<<<<<`, `=======`, and `>>>>>>>`.  The part before the `=======`
+-is typically your side, and the part afterwards is typically their side.
++is typically from the target (where you’re merging into), and the part
++afterwards is typically from the source (where you’re merging from).
++
++The default format does not show what the original version contained in the
++conflicting area.  You cannot tell how many lines have been deleted and
++replaced on either side. The only thing you can tell is that the target side
++says "straightforward", while the source side says "easy".
+ 
+-The default format does not show what the original said in the conflicting
+-area.  You cannot tell how many lines are deleted and replaced with
+-Barbie's remark on your side.  The only thing you can tell is that your
+-side wants to say it is hard and you'd prefer to go shopping, while the
+-other side wants to claim it is easy.
++You can use an alternative conflict marker style by setting the
++`merge.conflictStyle` configuration variable to either "diff3" or "zdiff3".
++Both of these styles show the original version of the conflicted area, which
++may help you find a better resolution.
+ 
+-An alternative style can be used by setting the "merge.conflictStyle"
+-configuration variable to either "diff3" or "zdiff3".  In "diff3"
+-style, the above conflict may look like this:
++In the "diff3" style, the above conflict looks like this:
+ 
+ ------------
+ Here are lines that are either unchanged from the common
+ ancestor, or cleanly resolved because only one side changed,
+-<<<<<<< yours:sample.txt
+-or cleanly resolved because both sides changed the same way.
+-Conflict resolution is hard;
+-let's go shopping.
+-||||||| base:sample.txt
++<<<<<<< HEAD
+ or cleanly resolved because both sides changed identically.
++Git makes conflict resolution straightforward.
++||||||| 81821ce
++or cleanly resolved because both sides changed the same way.
+ Conflict resolution is hard.
+ =======
+-or cleanly resolved because both sides changed the same way.
++or cleanly resolved because both sides changed identically.
+ Git makes conflict resolution easy.
+->>>>>>> theirs:sample.txt
++>>>>>>> main
+ And here is another line that is cleanly resolved or unmodified.
+ ------------
+ 
+-while in "zdiff3" style, it may look like this:
++while in the "zdiff3" style, it looks like this:
+ 
+ ------------
+ Here are lines that are either unchanged from the common
+ ancestor, or cleanly resolved because only one side changed,
+-or cleanly resolved because both sides changed the same way.
+-<<<<<<< yours:sample.txt
+-Conflict resolution is hard;
+-let's go shopping.
+-||||||| base:sample.txt
+ or cleanly resolved because both sides changed identically.
++<<<<<<< HEAD
++Git makes conflict resolution straightforward.
++||||||| 81821ce
++or cleanly resolved because both sides changed the same way.
+ Conflict resolution is hard.
+ =======
+ Git makes conflict resolution easy.
+->>>>>>> theirs:sample.txt
++>>>>>>> main
+ And here is another line that is cleanly resolved or unmodified.
+ ------------
+ 
+-In addition to the `<<<<<<<`, `=======`, and `>>>>>>>` markers, it uses
+-another `|||||||` marker that is followed by the original text.  You can
+-tell that the original just stated a fact, and your side simply gave in to
+-that statement and gave up, while the other side tried to have a more
+-positive attitude.  You can sometimes come up with a better resolution by
+-viewing the original.
++The original commit SHA and text are shown after another marker, `|||||||`.
++This region lets you now see that both sides made the edit from "the same
++way" to "identically", as well as editing the following line.  The "diff3"
++style keeps all changed lines within the markers, whilst the "zdiff3" style
++moves the commonly edited line before the marker.
+ 
+ 
+ HOW TO RESOLVE CONFLICTS
 
-base-commit: f285f68a132109c234d93490671c00218066ace9
+base-commit: 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
 -- 
 gitgitgadget
