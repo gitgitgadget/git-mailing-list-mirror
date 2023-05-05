@@ -2,94 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A10C77B7D
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 05:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0CFCC77B7D
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 07:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbjEEFz4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 May 2023 01:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
+        id S230456AbjEEHBL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 03:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbjEEFzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 01:55:55 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E44273B
-        for <git@vger.kernel.org>; Thu,  4 May 2023 22:55:54 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-643995a47f7so1080403b3a.1
-        for <git@vger.kernel.org>; Thu, 04 May 2023 22:55:54 -0700 (PDT)
+        with ESMTP id S231224AbjEEHBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 03:01:10 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D241EAD20
+        for <git@vger.kernel.org>; Fri,  5 May 2023 00:01:08 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50b37f3e664so2395651a12.1
+        for <git@vger.kernel.org>; Fri, 05 May 2023 00:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683266154; x=1685858154;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DYOOebmU05PxCvcNpfTRjVCWtcqkbS23D2XWiSNhWYc=;
-        b=aGjYQluCyNq+MQyhY5c/Za+Wnzv8PXft8K6VYKrbnSZVGrSc1L8ovjsJLcdzc5PDUY
-         77PhD9xCc7fOzvrRhvlqDFo8acDhiViJv+5bb16Caj0LpGxY4QtfKzMSfa/xOoVKPwaV
-         CiN5H30JexajxnOc8qrtY51Wois3Ev7qk0LndeVTEUh4qVL4ltiuj4NNS62NDBioq9xi
-         5ylxceR7WB2Ix6viaSRdLy4087BaiGSr8QSPLZZhGz2VXd4E6FIjJ2pFEfKvpGtVMF/p
-         S80aCv0BHnPA/grubX6kSgKN/cghWkxGFvVO2fLhxm1Jpazg9iilipmFL1Q9esQAw7AL
-         7jcQ==
+        d=gmail.com; s=20221208; t=1683270067; x=1685862067;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ITkO84isEDSVJaiiwzhxRpxp8C1wUirhcxm/D3pvGLE=;
+        b=Ukl1XueY43yRCLb/9KR/qM7G/juMuQkn/R6FDqX5x3231PkV8+1SVbiGgMOa2j0d5a
+         05FDpbvv8A2FPRNs+EQ/U3BBm1ZEdsSQTV8jrIkemlIrd6UP5xRWsu4qJUVyHqQkW/Xi
+         dWjcV1/V1AnP6gBQETF8ZTm2kr58zGhnh+GXD8FuFX7ZORrCORwlQdFihtzSIKaw+DIn
+         eMPnXvzgtOGun1K6w/H+0v82nCKbHb63INcCYr3K9Da2bhnoI3+q3ySWA4Q0Lerx7CT0
+         5Mdxl7gygeIbSz913CnGKAJHRmSBlAiJ1ITP3VS5RQ8b19UTJDF2wrpMcnoX8ctMvmxj
+         adHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683266154; x=1685858154;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DYOOebmU05PxCvcNpfTRjVCWtcqkbS23D2XWiSNhWYc=;
-        b=GaQPXvOeNUMuXfFrJdphQ76q4zLkYkZSdqO/wj8UJQi1++/wzwlxH5/RyhrcTzCnbW
-         TuGX7swjPSFqDTJpNmtCk7IqZDebaMP86LejRQdtNow74d7CTCH9kTy8wGzVqMhnJwUb
-         3WJ8q1JssIRZvZAWm2DuIorcwy5qZEI3QDQOZTopPWj8KK8lMmH3VZbUs/SpQKbHZlSQ
-         KCC3sVESDTlOm//gvL6kGXLcY7wOtCaoJ0NTVLPhF+zlWOVizdTlO7tEcnoZGLq2+ZGe
-         OBaq77tfTrsVgVBkvay/sUByvzoAR5xrBOhOZgGjPlOO/bc2cg2gS+9J8IzQxa3AnX54
-         sqeQ==
-X-Gm-Message-State: AC+VfDxI3NGVYYhMj3Fm/Zm6w+slJVK6H8/GivUMI6R/6/yOsswStqU+
-        YSb+pJIs0jehJjjdxfb+qBA=
-X-Google-Smtp-Source: ACHHUZ6f6uQAWnKWtLp/5UYrbxK0p5wOODZ6kl9lQVOozssxjD+7/f1ydWqap7wou4h+h4FjItYMCw==
-X-Received: by 2002:a05:6a00:849:b0:643:980:65b with SMTP id q9-20020a056a00084900b006430980065bmr1022367pfk.2.1683266153761;
-        Thu, 04 May 2023 22:55:53 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id d22-20020aa78156000000b00634a96493f7sm730531pfn.128.2023.05.04.22.55.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 May 2023 22:55:52 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: doc-diff: specify date
-References: <20230503232349.59997-1-felipe.contreras@gmail.com>
-        <xmqq8re3inn4.fsf@gitster.g>
-        <20230505014610.GA2366370@coredump.intra.peff.net>
-Date:   Thu, 04 May 2023 22:55:52 -0700
-In-Reply-To: <20230505014610.GA2366370@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 4 May 2023 21:46:10 -0400")
-Message-ID: <xmqqzg6jgw47.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1683270067; x=1685862067;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ITkO84isEDSVJaiiwzhxRpxp8C1wUirhcxm/D3pvGLE=;
+        b=QWEpKJxnvzgMwODmg66ds/ouNsDiCOlw/uNk2Vr1onUBUAf+gIN5YmU0qUU3Sr+5al
+         qi59FTC4xSqBJJuW17caZ1URwvzAWZy0okBbhGO2JMJ7A06b1X6/1PBQ+cp3EoUliloV
+         xKUpKFlp0KG+CCVKLvBhOPtHlRl6M94Pty6N11UzRo3SorNGIgyL1vYzCepL5ZOXmrlL
+         jKaxHrzDoko5U/1cTYYqDWD3tpGJ+tl930Zi36hTPt0W53METdxCz03sNb/Fi1xoK1k0
+         d4GFzBR6FLWaQ/8xQ0+PpL3v8NpBS5HUcUj/BmZwe/Qi/bsAntLbSO+iUX5KKkdIIh7c
+         gV+w==
+X-Gm-Message-State: AC+VfDyHQzul7PWvQaAntBTv60zN/byPWg+DsgPevg9RIlPlSU0q0iQi
+        awlcdnSIMuUZed/KsTh7axh69aqdy6ym9HgKTmE=
+X-Google-Smtp-Source: ACHHUZ7wngUDFm2jW6Um9WCOQSeLVm2L22liJS5iR8ejcVn8o5YC1laP1avV4C2369kC800+5qdbsybfMwmv0U0C/lw=
+X-Received: by 2002:a17:907:7ea0:b0:953:457c:7977 with SMTP id
+ qb32-20020a1709077ea000b00953457c7977mr302301ejc.38.1683270067046; Fri, 05
+ May 2023 00:01:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1469.git.git.1678829531648.gitgitgadget@gmail.com>
+ <pull.1469.v2.git.git.1679729764851.gitgitgadget@gmail.com> <xmqqjzxoj8mm.fsf@gitster.g>
+In-Reply-To: <xmqqjzxoj8mm.fsf@gitster.g>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Fri, 5 May 2023 08:00:31 +0100
+Message-ID: <CAGJzqsmL6AK8BsxJJzRRddcdep-F2szUAvE-2ep5KBsmUVnghw@mail.gmail.com>
+Subject: Re: [PATCH v2] credential/libsecret: support password_expiry_utc
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>,
+        Javier Roucher Iglesias 
+        <Javier.Roucher-Iglesias@ensimag.imag.fr>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> >  			GIT_VERSION=omitted \
->> > +			GIT_DATE=1970-01-01 \
->> >  			SOURCE_DATE_EPOCH=0 \
->> >  			DESTDIR="$tmp/installed/$dname+" \
->> >  			install-man &&
->> 
->> I wonder what the existing SOURCE_DATE_EPOCH was trying to do there,
->> though.
+On Thu, 4 May 2023 at 18:42, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> It used to be necessary so that we had a reproducible build. Otherwise,
-> asciidoc uses the mtime of the file, and diffing two versions would have
-> tons of uninteresting date-differences.
+> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> After 28fde3a1 I doubt it is necessary, as the header uses $GIT_DATE
-> instead (it's possible the mtime may be used elsewhere, but I didn't see
-> any spot after grepping a built xml file. And at any rate, if it does
-> not produce a visible difference, that is enough for doc-diff).
+> We used to use the bog-standard "COMPAT_NETWORK" but now we are
+> adding an extra element, and that makes it necessary to define our
+> own?  OK.
 
-Thanks for confirming my suspicion.  I guess leaving it there still
-would not hurt.  It can be removed whenever somebody motivated
-enough comes and shows a well-reasoned patch that explains why it no
-longer is necessary ;-)
+Exactly.
 
+>
+> >  static char *make_label(struct credential *c)
+> >  {
+> >       if (c->port)
+> > @@ -78,6 +93,9 @@ static GHashTable *make_attr_list(struct credential *c)
+> >               g_hash_table_insert(al, "port", g_strdup_printf("%hu", c->port));
+> >       if (c->path)
+> >               g_hash_table_insert(al, "object", g_strdup(c->path));
+> > +     if (c->password_expiry_utc)
+> > +             g_hash_table_insert(al, "password_expiry_utc",
+> > +                     g_strdup(c->password_expiry_utc));
+> >
+> >       return al;
+> >  }
+> > @@ -101,9 +119,11 @@ static int keyring_get(struct credential *c)
+> >
+> >       attributes = make_attr_list(c);
+> >       items = secret_service_search_sync(service,
+> > -                                        SECRET_SCHEMA_COMPAT_NETWORK,
+> > +                                        &schema,
+> >                                          attributes,
+> > -                                        SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_UNLOCK,
+> > +                                        SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_UNLOCK |
+> > +                                        // for backwards compatibility
+>
+> No // comments please.
+
+I'll amend in v3.
+
+>
+> > +                                        SECRET_SCHEMA_DONT_MATCH_NAME,
+>
+> SECRET_SCHEMA_DONT_MATCH_NAME does not seem to be listed as one of
+> the flags to be used with secret_service_search_sync(),
+>
+>     https://www.manpagez.com/html/libsecret-1/libsecret-1-0.18.6/SecretService.php#secret-service-search-sync
+>
+> and the only reference to it I found was as a flag to be placed in
+> the schema.
+>
+>     https://www.manpagez.com/html/libsecret-1/libsecret-1-0.18.6/migrating-schemas.php
+>     https://www.manpagez.com/html/libsecret-1/libsecret-1-0.18.6/libsecret-SecretSchema.php
+>
+> But I'll take your word for it.
+
+Good spot. I must have misread the docs. I shall fix in v3 and test
+backwards compatibility carefully.
+
+[1] https://gnome.pages.gitlab.gnome.org/libsecret/migrating-libgnome-keyring.html#working-with-schemas
+
+>
+> I found nothing unexpected or surprising in the rest of the patch to
+> this file.  They all looked just a fallout of having to store and
+> retrieve one extra item from the database together with many other
+> things we already store and retrieve.  Cleanly written.
+
+Thanks Junio for the review.
+
+>
+> > diff --git a/t/lib-credential.sh b/t/lib-credential.sh
+> > index 5ea8bc9f1dc..9ebf7eeae48 100644
+> > --- a/t/lib-credential.sh
+> > +++ b/t/lib-credential.sh
+> > @@ -43,6 +43,7 @@ helper_test_clean() {
+> >       reject $1 https example.com store-user
+> >       reject $1 https example.com user1
+> >       reject $1 https example.com user2
+> > +     reject $1 https example.com user3
+> >       reject $1 http path.tld user
+> >       reject $1 https timeout.tld user
+> >       reject $1 https sso.tld
+> > @@ -298,6 +299,35 @@ helper_test_timeout() {
+> >       '
+> >  }
+> >
+> > +helper_test_password_expiry_utc() {
+> > +     HELPER=$1
+> > +
+> > +     test_expect_success "helper ($HELPER) stores password_expiry_utc" '
+> > +             check approve $HELPER <<-\EOF
+> > +             protocol=https
+> > +             host=example.com
+> > +             username=user3
+> > +             password=pass
+> > +             password_expiry_utc=9999999999
+> > +             EOF
+> > +     '
+> >
+> > +     test_expect_success "helper ($HELPER) gets password_expiry_utc" '
+> > +             check fill $HELPER <<-\EOF
+> > +             protocol=https
+> > +             host=example.com
+> > +             username=user3
+> > +             --
+> > +             protocol=https
+> > +             host=example.com
+> > +             username=user3
+> > +             password=pass
+> > +             password_expiry_utc=9999999999
+> > +             --
+> > +             EOF
+> > +     '
+> > +}
+> > +
+>
+> Is any random number usable for this test, or is there some
+> constraints (like, "it cannot be too small to be a timestamp in the
+> past, because the entry will be expired immediately")?  If there is
+> some constraint like that, is it a good idea to also test that
+> (like, "make sure an entry with expiry already happened is
+> rejected")?
+
+The date has to be in the future otherwise the credential will be
+discarded by `credential approve` before it reaches the helper. That
+logic is already tested in t/t0300-credentials.sh. There isn't any
+expiry logic in the helper itself to test.
+
+>
+> Thanks.
+>
