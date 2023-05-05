@@ -2,93 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E3CFC77B75
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 17:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04E41C77B7C
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 17:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233149AbjEERsI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 May 2023 13:48:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45420 "EHLO
+        id S232944AbjEER7h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 13:59:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233153AbjEERsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 13:48:04 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2159A1E998
-        for <git@vger.kernel.org>; Fri,  5 May 2023 10:47:39 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-55a20a56a01so36353977b3.3
-        for <git@vger.kernel.org>; Fri, 05 May 2023 10:47:39 -0700 (PDT)
+        with ESMTP id S232218AbjEER7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 13:59:35 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF54DE2
+        for <git@vger.kernel.org>; Fri,  5 May 2023 10:59:34 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-559e317eef1so30221267b3.0
+        for <git@vger.kernel.org>; Fri, 05 May 2023 10:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683308778; x=1685900778;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=07NN2A8IdY5ciQugSvTX3TQTTZ1EsDB4Clh2fjHngaw=;
-        b=qqubh+rbHrMo0BzNLWBpTjsRU9k7AOgIV6z/q6DRKPrEDKDIqYthYV9l00vhuVRfYT
-         gQECV69hhfXFPZhHu32dCLx70h8+y8uLsLndvkp4KHvKxcgBhTwjCQ7e0o41OK+m0Y+Q
-         kqZRVziaQTDDqX67+cDy2Qr6n0stKpgLN7muihmafTX272RrjIpxJlSNaweDMR5T62Zo
-         7dpuAj2EF2Z0D23xlOLlypjiqytLbJG6C74I5I0zedTHCkF+QdrkxiB8hl5xvsUjNraB
-         /9Mskm6Of6G3eINjTRFFTpk3Uk72LPsMXRd8Yf4J3LxL42Jk5aeVKPDdYLcD7+P3iY1G
-         GZMw==
+        d=github.com; s=google; t=1683309574; x=1685901574;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+/jCv8AAoZ/tPht8YHvdGn4rEcLsHccJgf5K7kUjxFk=;
+        b=Ns4MM04fiMFH01GM30tbCeQF8qyYq2jqrnYG5koIY2KvMWnABHJcvXj3scQZ6xMGeD
+         wdfR80iOdIyEm50/zV/w3PV6IABM9gpMfwWQw9pWtptBxSDCRItL0l10fmxcCixmB5n2
+         2Stf41p6+t2QYiI2cSrBlTteOWERZ8mKPUMkDjrQbBHqUO01t7DdPceUv7QCsqWJVKuD
+         Se9yYn74cTFhPkLRGDTD2LAcpLC1tgoUgcj5LhPE7823EBOBajXmwv7GWtJ4jlNxbDil
+         Vnb0LavsDRM4yBHwTO+Zw3bg4HTk+aPnfWlotrc21tkAYFzEXvjL20u2u9KoPMfcK5k6
+         cx8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683308778; x=1685900778;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=07NN2A8IdY5ciQugSvTX3TQTTZ1EsDB4Clh2fjHngaw=;
-        b=TViHDxJnDtPnlZcqxiUcAVTg/6YY/v7VZeA5r3lliokuwt2UNq9CnKhk/DVjwbv002
-         gA2g89bAa9Yv+X7ryMV4PMMAZW3OIQHxJWTdX8r2tl9eiCdlamSOob3aRvilhpgcrUf5
-         5L7RE7or27RULXjpvql8u14ECRoZAyY0bj1hgsLmj+hj2H7Ot0sXxDaiOhHZK2ElDzFg
-         a6aPBc+4S3cL0eiFe2mbxQRXFpjqaio8YXtoKIwTVPtC6SMtfU0EgCVHpjm3dQPZkKYB
-         CK+7KawEpJ+Gr3OjXuCSQQKwMyeTJ5VOtNPeKhrWnBUrJfzvJ8CDu5ebeO3aytX8812M
-         6t8w==
-X-Gm-Message-State: AC+VfDxuskxKYyAL0Bf6s/q2X2vc6ji9JJqZYwc0se6Vtr+Jq+3o15Vv
-        XyXFKtVKFXNMo+LkY8rbupsB2Q==
-X-Google-Smtp-Source: ACHHUZ7W5OAnzDTJL+JDViGx9+pzya4y0MVnbvIMCkgM1qQFDr9qUp2XH4B1jibxu4BjDYcg+I9Jpg==
-X-Received: by 2002:a81:4fcd:0:b0:55a:8b11:5f6a with SMTP id d196-20020a814fcd000000b0055a8b115f6amr2481575ywb.19.1683308777770;
-        Fri, 05 May 2023 10:46:17 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b78-20020a0dd951000000b0055a931afe48sm612715ywe.8.2023.05.05.10.46.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 10:46:17 -0700 (PDT)
-Date:   Fri, 5 May 2023 13:46:16 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/7] contrib/credential: avoid protocol injection attacks
-Message-ID: <ZFVA6MyjUE+L+x9P@nand.local>
-References: <cover.1682956419.git.me@ttaylorr.com>
- <bd745f48-038f-f4f2-2041-f4b2c7bd0d20@github.com>
+        d=1e100.net; s=20221208; t=1683309574; x=1685901574;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+/jCv8AAoZ/tPht8YHvdGn4rEcLsHccJgf5K7kUjxFk=;
+        b=lDEjgowM8gD96DJVvkTaSDJkwdqhSXc0nLXaXVhQ+9A85yAAGfN7Wym7ovtrlFMJLc
+         L37ZmB1vSKd/we4pPGazAN+lGRnQ/OepwYwvfgVWIyq+yEh3TKPFPH9yLMacGVFrOzDT
+         YzxoM+6bs2Opvr5xhykTQY9FAMsTz/BvoW3v8OpKfEI08Qu19jVMQtmRfsDMHnXVXH04
+         3qqcmLHXoSY+vwYa0ZlNvO8a/ppThtmfsV8IXrzCAxj3Fi/EJCDav9XiKvdXQeQZN+gI
+         SmIEF1gGCG9FzOo5khvRQJ6SqGI4KddaJ5jMKX2cOQexRsZqxH2ZEAiCs7jNAmY5eIBx
+         TNXg==
+X-Gm-Message-State: AC+VfDyCUwbtf2U1NDkl3pL/1sgbDIGItcE51rDxrDH/EwbElpZ8Zhte
+        qaxq7Y8MMXojiU8sVQo/K+GW
+X-Google-Smtp-Source: ACHHUZ7+9BQeadU44UQPkWXoHFyz7IgYH0BRB80AvLCdPoa95KiNXdHSNv7jd4LOZbwcwyKn9ZMZ0Q==
+X-Received: by 2002:a81:a157:0:b0:559:e240:3c27 with SMTP id y84-20020a81a157000000b00559e2403c27mr2411601ywg.23.1683309573992;
+        Fri, 05 May 2023 10:59:33 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:fcac:2b0b:1f40:7f1a? ([2600:1700:e72:80a0:fcac:2b0b:1f40:7f1a])
+        by smtp.gmail.com with ESMTPSA id h19-20020a81b413000000b0055a85ab2704sm602263ywi.20.2023.05.05.10.59.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 May 2023 10:59:33 -0700 (PDT)
+Message-ID: <6c8d9142-9013-f3f0-0619-b3780b86b6ab@github.com>
+Date:   Fri, 5 May 2023 13:59:31 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bd745f48-038f-f4f2-2041-f4b2c7bd0d20@github.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v2 0/2] pack-bitmap: boundary-based bitmap traversal
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1682380788.git.me@ttaylorr.com>
+ <cover.1683307620.git.me@ttaylorr.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <cover.1683307620.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 05, 2023 at 11:24:44AM -0400, Derrick Stolee wrote:
-> > But the new "wwwauth[]" field does allow this attack to take place.
->
-> In particular, because this should be resolved before 2.41.0-rc0.
+On 5/5/2023 1:27 PM, Taylor Blau wrote:
+> Here is a reroll of my series to implement a boundary-based bitmap
+> traversal algorithm that I worked on towards the end of 2021 with Peff.
+> 
+> The algorithm is unchanged from the last version, but the implementation
+> has been made much more straightforward, thanks to a very helpful
+> suggestion from Stolee.
+> 
+> Instead of hackily trying to write down all of the UNINTERESTING commits
+> between the tips and boundary within limit_list(), we can just perform a
+> commit-only walk, which will give us the set of commits that we need.
 
-Yes, definitely.
+Something that didn't seem to get attention in this version was buried
+deep in the commentary of my high-level review [1]:
 
-> Each patch was simple to read and well-motivated. I was particularly
-> happy with this diffstat:
->
-> >  contrib/credential/gnome-keyring/.gitignore   |   1 -
-> >  contrib/credential/gnome-keyring/Makefile     |  25 -
-> >  .../git-credential-gnome-keyring.c            | 470 ------------------
->
-> The rest of the changes looked to be obvious improvements, so this
-> v1 LGTM.
+> For these reasons, I'm surprised that this patch completely replaces
+> the old algorithm for the new one. I would prefer to see a config
+> option that enables this new algorithm. It would be safer to deploy
+> that way, too.
 
-Thanks. Much credit is owed to Peff, who worked on these patches with
-me. And FWIW, dropping support for the gnome-keyring helper was his
-idea.
+I still think it would be nice to keep the two algorithms for at least
+a little while instead of completely removing the old one. Let's gather
+some more evidence and get more reps in with the new algorithm before
+making it the new default. I could imagine a scenario where someone
+really wants to spend the extra time to make sure none of the objects
+reachable from the UNINTERESTING commits are included in the output of
+this diff.
 
-Thanks for the review :-).
+[1] https://lore.kernel.org/git/a143150d-7cf5-c697-0e48-0f7af1c6de8f@github.com/
 
 Thanks,
-Taylor
+-Stolee
