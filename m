@@ -2,103 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77830C77B75
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 21:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA437C77B75
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 21:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbjEEVHH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 May 2023 17:07:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47190 "EHLO
+        id S230483AbjEEVQS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 17:16:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230106AbjEEVHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 17:07:06 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2242835BE
-        for <git@vger.kernel.org>; Fri,  5 May 2023 14:07:05 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-b9a7766d1f2so2720256276.3
-        for <git@vger.kernel.org>; Fri, 05 May 2023 14:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683320824; x=1685912824;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=irW4I9+rWXmOMqkhMDs/wo75GkO6iU5IkMxSCFzQ+IE=;
-        b=1oP0LDitx4Q7t1WR8YljJ3zePFga7g1jSJ/B6vXbgxluBNW8ZU/rFcX5UN3mX1Wvs4
-         pyYoPrTUFRMExD6AFl8bfd1/8Yr73dbnHFclDDHwgPtS42LZejXt4Qbj2xPvxoIKAk6L
-         S3WQhkXkduJ8yfedMOloYhuK3a7ZNmsE7kPU0nUp/9cBBgkIVc9KzxdTj95orEzW8MBe
-         kEVu6zH3SvCt0Pq8DeT0v9aVkNWocbVDV33/6LUNq3gLUKHONUNUk/42ch2i1W/YQMrF
-         +NG0vIpWz4RpFD7XDjfypnZHzrEZ5HKDk/J57b645BV+3fEc6wZSUdSOW2n8Rxgfdxes
-         Oh5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683320824; x=1685912824;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=irW4I9+rWXmOMqkhMDs/wo75GkO6iU5IkMxSCFzQ+IE=;
-        b=QEhZzkBue2+MjG9a4m1FxgdS7UqhYLcoH4YVjSh0w/cJB+/GFET7aGcsfWhGX0677c
-         asrxqPmyWHWlgAToF5IXFMPJ+OcD9bFkmGX+4qnaIh+9elZipOGAChwtYaVyUgJdDKxC
-         PXnXJgXWNnwI67VsjCLPeJpvieJV0MVTu+brRE7+bBewcIpO8r5R/3VD1NUl8my+Gq0g
-         IcQkE94Gz65ydPbGuATlSFvSIL3G4oZUj/350awTQodk+mvfziaetbz1M+Bh/2ijz6UC
-         Eua8KJSsej9M9IeFGobufitocmgNanrlDhEK5mok5gtOis0IjoL8BXRrBCCdxc91rab1
-         fv2g==
-X-Gm-Message-State: AC+VfDxP1KlqpdbGLYnm00b+SHSMtuIRCnmXuKi1Dzga0xmGtgfFVEgX
-        cx5eB/nJ786YaujRDDFUVbCWymZLptWsbBAObQ5D
-X-Google-Smtp-Source: ACHHUZ6z/iDiooKHA8Cb/KlcaRm3vXciiZwcCvMt6R7znTtJueHiF+/CChpVFqaNuWtV8ujLwnw4VDFu7ZZ392ZGrjHf
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:a6fc:f615:7180:efdd])
- (user=jonathantanmy job=sendgmr) by 2002:a25:584:0:b0:b8f:54f5:89ff with SMTP
- id 126-20020a250584000000b00b8f54f589ffmr1732357ybf.11.1683320824329; Fri, 05
- May 2023 14:07:04 -0700 (PDT)
-Date:   Fri,  5 May 2023 14:07:02 -0700
-In-Reply-To: <230501.868re8jna4.gmgdl@evledraar.gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.1.521.gf1e218fcd8-goog
-Message-ID: <20230505210702.3359841-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 10/14] (RFC-only) config: finish config_fn_t refactor
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
-        Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229932AbjEEVQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 17:16:16 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F794EDC
+        for <git@vger.kernel.org>; Fri,  5 May 2023 14:16:11 -0700 (PDT)
+Received: (qmail 4617 invoked by uid 109); 5 May 2023 21:16:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 May 2023 21:16:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4229 invoked by uid 111); 5 May 2023 21:16:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 May 2023 17:16:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 5 May 2023 17:16:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: doc-diff: specify date
+Message-ID: <20230505211610.GA3197168@coredump.intra.peff.net>
+References: <20230503232349.59997-1-felipe.contreras@gmail.com>
+ <xmqq8re3inn4.fsf@gitster.g>
+ <20230505014610.GA2366370@coredump.intra.peff.net>
+ <xmqqzg6jgw47.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzg6jgw47.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> But as I pointed out in
-> https://lore.kernel.org/git/RFC-cover-0.5-00000000000-20230317T042408Z-av=
-arab@gmail.com/
-> I think this part (and the preceding two commits) are really taking is
-> down the wrong path.
->=20
-> To demonstrate why, here's a patch-on-top of this topic as a whole where
-> I renamed the "kvi" struct members. I've excluded config.c itself (as
-> its internals aren't interesting for the purposes of this discussion):
+On Thu, May 04, 2023 at 10:55:52PM -0700, Junio C Hamano wrote:
 
-[snip patch showing where kvi is used]
+> Jeff King <peff@peff.net> writes:
+> 
+> >> >  			GIT_VERSION=omitted \
+> >> > +			GIT_DATE=1970-01-01 \
+> >> >  			SOURCE_DATE_EPOCH=0 \
+> >> >  			DESTDIR="$tmp/installed/$dname+" \
+> >> >  			install-man &&
+> >> 
+> >> I wonder what the existing SOURCE_DATE_EPOCH was trying to do there,
+> >> though.
+> >
+> > It used to be necessary so that we had a reproducible build. Otherwise,
+> > asciidoc uses the mtime of the file, and diffing two versions would have
+> > tons of uninteresting date-differences.
+> >
+> > After 28fde3a1 I doubt it is necessary, as the header uses $GIT_DATE
+> > instead (it's possible the mtime may be used elsewhere, but I didn't see
+> > any spot after grepping a built xml file. And at any rate, if it does
+> > not produce a visible difference, that is enough for doc-diff).
+> 
+> Thanks for confirming my suspicion.  I guess leaving it there still
+> would not hurt.  It can be removed whenever somebody motivated
+> enough comes and shows a well-reasoned patch that explains why it no
+> longer is necessary ;-)
 
-Ah, thanks for this patch. One of my objections to your proposal in the
-aforementioned thread is that we would end up with a lot of callback-
-taking config functions that have 2 variants, one for the kvi callback
-and one for the non-kvi callback, but here your patch shows that it
-won't be the case.
+-- >8 --
+Subject: [PATCH] doc-diff: drop SOURCE_DATE_EPOCH override
 
-Your approach does look like a reasonable one.
+The original doc-diff script set SOURCE_DATE_EPOCH to make asciidoc's
+output deterministic. Otherwise, the mtime of the source files would end
+up in the footer of the manpage, causing noisy and uninteresting diff
+hunks.
 
-As for my own opinions, (before =C3=86var sent this email) I took a look
-at these patches myself and had some issues with at least the first
-2: in patch 1, kvi_fn() replaces fn() for some but not all invocations
-of fn() (in patch 2, you can see one such invocation that was not
-changed), and I was having difficulty thinking of what kind of bugs
-I should watch out for since not all invocations were changed; and
-in patch 2, the safeguard of not setting kvi and source together was
-removed and likewise I was having difficulty thinking of what kind of
-bugs could occur from both being set at once inadvertently. I was going
-to suggest reordering the patches such that the large-scale refactoring
-(and any supporting patches like [PATCH 06/14] config: inline
-git_color_default_config) should occur first (or waiting for a reviewer
-who is convinced that patches 1 and 2 are OK, I guess), but having now
-seen that sidestepping a large part of this makes sense, sidestepping
-seems like a good idea to me.
+But this has been unused since 28fde3a1f4 (doc: set actual revdate for
+manpages, 2023-04-13), as the footer uses the externally-specified
+GIT_DATE instead (that needs to be set consistently, too, which it now
+is as of the previous commit).
+
+Asciidoc sets several automatic attributes based on the mtime (or manual
+epoch), so it's still possible to write a document that would need
+SOURCE_DATE_EPOCH set to be deterministic. But if we wrote such a thing,
+it's probably a mistake, and we're better off having doc-diff loudly
+show it.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/doc-diff | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+index 554a78a12d..fb09e0ac0e 100755
+--- a/Documentation/doc-diff
++++ b/Documentation/doc-diff
+@@ -154,7 +154,6 @@ render_tree () {
+ 			$makemanflags \
+ 			GIT_VERSION=omitted \
+ 			GIT_DATE=1970-01-01 \
+-			SOURCE_DATE_EPOCH=0 \
+ 			DESTDIR="$tmp/installed/$dname+" \
+ 			install-man &&
+ 		mv "$tmp/installed/$dname+" "$tmp/installed/$dname"
+-- 
+2.40.1.802.gdef2a8734a
+
