@@ -2,85 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79CCDC77B7C
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 22:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57E2FC77B7D
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 22:30:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231556AbjEEWTY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 May 2023 18:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41562 "EHLO
+        id S233337AbjEEWaq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 18:30:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjEEWTX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 18:19:23 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DCBEA
-        for <git@vger.kernel.org>; Fri,  5 May 2023 15:19:22 -0700 (PDT)
-Received: (qmail 4866 invoked by uid 109); 5 May 2023 22:19:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 May 2023 22:19:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4728 invoked by uid 111); 5 May 2023 22:19:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 May 2023 18:19:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 5 May 2023 18:19:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v3] builtin/pack-objects.c: introduce
- `pack.extraCruftTips`
-Message-ID: <20230505221921.GE3321533@coredump.intra.peff.net>
-References: <8af478ebe34539b68ffb9b353bbb1372dfca3871.1682011600.git.me@ttaylorr.com>
- <27a7f16aab35b5cac391d9831aadb0f2e2146313.1683151485.git.me@ttaylorr.com>
+        with ESMTP id S232766AbjEEWap (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 18:30:45 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25EB25244
+        for <git@vger.kernel.org>; Fri,  5 May 2023 15:30:40 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-51b0f9d7d70so2147856a12.1
+        for <git@vger.kernel.org>; Fri, 05 May 2023 15:30:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683325839; x=1685917839;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FCS8vmtq0oFMqd/uqbsCMeA0ezBrXdC4lpU0a67aZ70=;
+        b=PmscEmHEeJOnpntREp8b620qZh50q9a6l44DfciNv+CtTwfj8cG5uQq74jVtUmec2F
+         EpcJsFkMVFV2kY9q6VqnJRiMEe9/IWkTB9LWN9zCN6IqbKoNZ9dvYk6O/+cr8oXIrs4L
+         H2yZ6epuR5eq5CjOZaCghuVY8qjr2/eQvWlcdewMiGpWRxaKOdjSrO+g1Qi2OaIhI81Y
+         AUMjmo+eAKEVSBTyiLj6b6RNnmMZsWmz3ubwXmegQbs5zEbh0xWqgnM02AtyT+s+soNx
+         /tca6iuCUgrrvvFxecm7Nyb/HsEnI5Fr1aXFOehDa4+M2IXj3UkZLtX5ZTuAYkDcHWSk
+         EeCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683325839; x=1685917839;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FCS8vmtq0oFMqd/uqbsCMeA0ezBrXdC4lpU0a67aZ70=;
+        b=UaVNv9A0tY9dkoFZPNWSQWbJ6nstv7k8/Yi/fbfnj9Irxf0i9PP518Pov1jqnJ77Su
+         ZxVCuE7AX8br5Mkdcsrs7kgnpvwzeauQ/ODNzszHHY+1S5pBqP5+/tgBO1pSvwx+y1Sf
+         Qkh0e5p0rUWGJC81k7Un1xeZGWHR8/4wV5Itz9/5vIK7V8NcjEDK49ExwehdmaeNChZq
+         oZgmDtbu8jcIwl7r831YP31aK14vpvhMYwvZwazeaSn+X/DkfykMgdCI+kKeiyHwdSKG
+         SaSFlYumu8fuAu290wrcElnn5noj8W8/04Xqpcf2lV3tYNYrouhbdfmeyICkDG1sArg0
+         VUQg==
+X-Gm-Message-State: AC+VfDwXGYQaz/HgNSAJwkwTI8UN8D4i1Qzb87wKDY2pq5IC5RTxCEdd
+        gEEhmeAM52N9/V0WwMqq+3o=
+X-Google-Smtp-Source: ACHHUZ4bXGTev5zzY+A88iW9j+lqsk2E2t5JKkSNawK+av8Q1SLmZRCvva0AtNXDaDYIvibVs7OXmQ==
+X-Received: by 2002:a17:902:ea03:b0:19f:2dff:2199 with SMTP id s3-20020a170902ea0300b0019f2dff2199mr3109622plg.68.1683325839451;
+        Fri, 05 May 2023 15:30:39 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id z12-20020a170903018c00b001aae64e9b36sm2264759plg.114.2023.05.05.15.30.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 May 2023 15:30:38 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, chooglen@google.com
+Subject: Re: [PATCH v3] setup: trace bare repository setups
+References: <cb72bca46c6ff2a8cf3196408fb53411f7f91892.1682631601.git.steadmon@google.com>
+        <e98be8e7f703fc741e06d9208545abc8c24d1a4a.1682962110.git.steadmon@google.com>
+Date:   Fri, 05 May 2023 15:30:38 -0700
+In-Reply-To: <e98be8e7f703fc741e06d9208545abc8c24d1a4a.1682962110.git.steadmon@google.com>
+        (Josh Steadmon's message of "Mon, 1 May 2023 10:30:37 -0700")
+Message-ID: <xmqqa5yicsxd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <27a7f16aab35b5cac391d9831aadb0f2e2146313.1683151485.git.me@ttaylorr.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 03, 2023 at 06:05:45PM -0400, Taylor Blau wrote:
+Josh Steadmon <steadmon@google.com> writes:
 
-> +	out = xfdopen(cmd.out, "r");
-> +	while (strbuf_getline(&buf, out) != EOF) {
-> +		struct object_id oid;
-> +		struct object *obj;
-> +		int type;
-> +		const char *rest;
-> +
-> +		if (parse_oid_hex(buf.buf, &oid, &rest) || *rest) {
-> +			ret = error(_("invalid extra cruft tip: '%s'"), buf.buf);
-> +			goto done;
-> +		}
+> From: Glen Choo <chooglen@google.com>
+>
+> safe.bareRepository=explicit is a safer default mode of operation, since
+> it guards against the embedded bare repository attack [1]. Most end
+> users don't use bare repositories directly, so they should be able to
+> set safe.bareRepository=explicit, with the expectation that they can
+> reenable bare repositories by specifying GIT_DIR or --git-dir.
+>
+> However, the user might use a tool that invokes Git on bare repositories
+> without setting GIT_DIR (e.g. "go mod" will clone bare repositories
+> [2]), so even if a user wanted to use safe.bareRepository=explicit, it
+> wouldn't be feasible until their tools learned to set GIT_DIR.
+>
+> To make this transition easier, add a trace message to note when we
+> attempt to set up a bare repository without setting GIT_DIR. This allows
+> users and tool developers to audit which of their tools are problematic
+> and report/fix the issue.  When they are sufficiently confident, they
+> would switch over to "safe.bareRepository=explicit".
+>
+> Note that this uses trace2_data_string(), which isn't supported by the
+> "normal" GIT_TRACE2 target, only _EVENT or _PERF.
+>
+> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
+> [2] https://go.dev/ref/mod
+>
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+> I'm sending a lightly-adapted version of Glen's tracing patch because
+> Glen will be on vacation next week and we'd like to get this upstream
+> ASAP.
+>
+> Changes in V3: added a test_unconfig test case for safe.bareRepository
+> Changes in V2: cleaned up test-style issues.
 
-While adapting this for my "how about this" patch elsewhere in the
-thread, I noticed the error handling here is a little funny.
-
-The other side sent us unexpected output, so we stopped parsing. But we
-never reap the child process. We just jump to "done", which clears the
-memory used by the process struct, but never call finish_command().
-
-I think you want to break out of this loop and run finish_command. But
-you have to make sure to fclose(out) first, so that it knows to exit
-(otherwise it may fill up the pipe buffer and block waiting for us to
-read, creating a deadlock).
-
-And then
-
-So something like:
-
-  while (strbuf_getline(...)) {
-	if (some_error) {
-		ret = error(...);
-		break;
-  }
-
-  fclose(out); /* no need for "if (out)" here; it's always open */
-  ret |= finish_command(&cmd);
-
-  /* no need to child_process_clear(); already done by finish_command() */
-  strbuf_release(&buf);
-  return ret;
-
--Peff
+Thanks.  We saw no interest on the list in reviewing this patch
+further, it seems, but I didn't see anything glaringly wrong, see
+no reason not to merge it, and this should help noticing potential
+issues by $corp folks, I would presume, so let's merge it as-is.
