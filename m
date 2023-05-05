@@ -2,95 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 846ABC77B7C
-	for <git@archiver.kernel.org>; Fri,  5 May 2023 15:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23FBEC77B7F
+	for <git@archiver.kernel.org>; Fri,  5 May 2023 16:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232866AbjEEP02 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 May 2023 11:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56540 "EHLO
+        id S232376AbjEEQbI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 May 2023 12:31:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232845AbjEEP0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2023 11:26:07 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A0EA18FFC
-        for <git@vger.kernel.org>; Fri,  5 May 2023 08:24:48 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-55a010774a5so28531517b3.3
-        for <git@vger.kernel.org>; Fri, 05 May 2023 08:24:48 -0700 (PDT)
+        with ESMTP id S231852AbjEEQbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2023 12:31:07 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A9126B7
+        for <git@vger.kernel.org>; Fri,  5 May 2023 09:31:06 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-52c6f8ba7e3so1783976a12.3
+        for <git@vger.kernel.org>; Fri, 05 May 2023 09:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1683300287; x=1685892287;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xA9fv1atq4+Deilj3Ela+iwwVB/+qQxVR4XWHdSaf/c=;
-        b=Z5KYDjKXMDy3nf/xEnXu1fTR3W/hhYSwpPBh0DekvKMvXjnT42MUhcWlPn6Y6TpT+X
-         LxregZm0yY8wmsB6M38ZOjTjaOY7Rsm7mrP9l+oVHD2Y/pUOo9KlrWt4SckhTWo9rEEn
-         or0gbp/FbF7WzFedi3HjExmIZ/cJmKNO6rx2K7Dga5jA/DORaWlMBXWk2r2nI9bPojgU
-         LLSwadaztMMyKCSjBqhZ+7xYZynvPRqSN0d+STUHx0h3AKbJa8tPSzWJoRsh8lz866Wf
-         DyaP8CLix31y6rCxGeXcGvrVoG9zt4//aiOpoSgw8iQt4M5ot1baqW/8yz2YYrmqRGZt
-         g8/Q==
+        d=gmail.com; s=20221208; t=1683304266; x=1685896266;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=XVF3Qr6Fv/hYW9BASWNIJ50HRujaAbpLJ8t42h233d8=;
+        b=VdKS7jMD+AGghmN+2wAvA3inZrZSgGb7RdTNJ8otKYH3TL/LKO7lMnqtmaRdvb7GdB
+         Ks7WjZos9Wze4PGVaWugAetoflv3sLSWdGCAB7UhvuN45jiMucVrh3jVQeNe0S3yXAPR
+         6FIoQTK2DTyi7UBOl0O6hQAawA2NvNRDxxM1rsRzeT6xgJ6tvSGKBiVVGH2dwpdF7AXZ
+         FdCK4CEePrYhyT/Vm+WA7rBAEAuKYezhtJdJzuue4DipXKGNd2hthVTC3HBNULje7DYE
+         B3L5zOX2rFEy+CNTD2WOCOlE760lU3s4t7PGTJU+cb/2lOgu9so40kgOikiqqXMfFsG3
+         ColQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683300287; x=1685892287;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xA9fv1atq4+Deilj3Ela+iwwVB/+qQxVR4XWHdSaf/c=;
-        b=ffxsXHJj178KMOxTNpp6451kyqaUyhb8p1zwneh7y+ywB4s7hHeYCA/wJjSEfzE16B
-         ThoEQkmi47g/x5+/Wb74m5qYNc8BooRhjidKMe4e9ct2a2bLn+nvg2lmo0ElwQ6PIQU9
-         44VE4A3sTZURd8u7Lj1JrMV9EXYKaKiX+2/aRzYHuZ9HMkftnGopB53ZToXN3pAYyvUl
-         o50G0ARajwRe8Ebb+SuNthBOviA5m31mpVf6zNezzKakZ8NJ7+YIgyE8pgYTc8rT5vdh
-         9hPHuZU5Zhgzc7tic07JNR4/udlpQk6GFqa09+enCr8Y53gLHlsff8X/Aytvu4HjTrMF
-         zHpg==
-X-Gm-Message-State: AC+VfDw7uzxIxTj3ilnRA6dTlRVspG/Ofi0NrTHPLIEUsl+0pZOxdFhw
-        3RaFU+oazCzZsQsAi9vi5w1c
-X-Google-Smtp-Source: ACHHUZ5KgmKIbXtbfPzFNSgKSogGn+EP3mIDfpkprJ4ZVNz6IZ/OgZHMDzomHazZcrnb0wsMOpLzKg==
-X-Received: by 2002:a81:498f:0:b0:55a:52f0:8465 with SMTP id w137-20020a81498f000000b0055a52f08465mr2120375ywa.44.1683300286778;
-        Fri, 05 May 2023 08:24:46 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:fcac:2b0b:1f40:7f1a? ([2600:1700:e72:80a0:fcac:2b0b:1f40:7f1a])
-        by smtp.gmail.com with ESMTPSA id j17-20020a819211000000b0055a581c7f03sm525894ywg.29.2023.05.05.08.24.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 08:24:46 -0700 (PDT)
-Message-ID: <bd745f48-038f-f4f2-2041-f4b2c7bd0d20@github.com>
-Date:   Fri, 5 May 2023 11:24:44 -0400
+        d=1e100.net; s=20221208; t=1683304266; x=1685896266;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XVF3Qr6Fv/hYW9BASWNIJ50HRujaAbpLJ8t42h233d8=;
+        b=A5b/HU4i/ePbW9PXTB5kHEm+07J5NoaU22m7LbVQUEvbQ9Q9Wk2VyKm1XpJ81LcJCJ
+         SM5cvryt1g6sEAToKhyyPMIjZ692UeSCDe2lYWT3jzbvvaN0BmERpMM2XyuMnfzXYkSj
+         40xlP8QxS0FYEd4O2zfUTcseqiU0AUc9hVQf1m93Pbaz/hGUIsFEF9z/94HL8/M++Z4q
+         salZwgRGcxkBEpB3ZhEXrTzIW9Xc2MZhODdIsYY/L/m4JFHKwDOPp5RH2m2Fybfi6uWo
+         yTRvYUZu8WXYRIWfIKsdxco5M//xKW+IQAUIF3VH3kmTHrwjTEgXCDle0S41BBSC6psB
+         35nw==
+X-Gm-Message-State: AC+VfDxNB/KzP8c8LH5RWo+1t09j2QE+dbVKM8XvUrNpqx7GLaZ2argy
+        CGNVxBILc1UXcnGR7sCPyaI=
+X-Google-Smtp-Source: ACHHUZ5eqmB3mRXGRsROo3fI6U1xw9vwEhZ/F3akSAltLmalixaQiOssrPkM+/Q9jHCqSIdB5rfVww==
+X-Received: by 2002:a17:903:187:b0:1a9:433e:41d5 with SMTP id z7-20020a170903018700b001a9433e41d5mr2318553plg.56.1683304265643;
+        Fri, 05 May 2023 09:31:05 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id w9-20020a170902904900b001aaed524541sm1969837plz.227.2023.05.05.09.31.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 May 2023 09:31:05 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] diff: fix behaviour of the "-s" option
+References: <20230503134118.73504-1-sorganov@gmail.com>
+        <xmqqsfcdtkt0.fsf@gitster.g> <874jote2zl.fsf@osv.gnss.ru>
+        <xmqqmt2lqofb.fsf@gitster.g> <xmqqttwskse5.fsf@gitster.g>
+        <87o7n03qgq.fsf@osv.gnss.ru> <xmqqpm7fizsl.fsf@gitster.g>
+        <xmqqjzxnixqr.fsf_-_@gitster.g> <xmqqfs8bith1.fsf_-_@gitster.g>
+        <87sfcbyy8c.fsf@osv.gnss.ru>
+Date:   Fri, 05 May 2023 09:31:04 -0700
+Message-ID: <xmqq8re2g2pj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 0/7] contrib/credential: avoid protocol injection attacks
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cover.1682956419.git.me@ttaylorr.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover.1682956419.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/1/2023 11:53 AM, Taylor Blau wrote:
-> This series addresses a handful of potential protocol injection attacks
-> possible via some of the credential helpers in contrib/credential, and
-> the new "wwwauth[]" directive.
+Sergey Organov <sorganov@gmail.com> writes:
 
-Sorry for being late to review this. I was not one of the three
-developers involved in writing and/or testing these changes, but I
-am motivated to see these fixes land.
+>>  * Whenever we set DIFF_FORMAT_FOO becasuse we saw the "--foo"
+>>    option (e.g. DIFF_FORMAT_RAW is set when the "--raw" option is
+>>    given), we make sure we drop DIFF_FORMAT_NO_OUTPUT.  We forgot to
+>>    do so in some of the options and caused (2) above.
+>>
+>>  * When processing "-s" option, we should not just set
+>>    DIFF_FORMAT_NO_OUTPUT bit, but clear other DIFF_FORMAT_* bits.
+>>    We didn't do so and retained format bits set by options
+>>    previously seen, causing (1) above.
+>
+> Sounds good to me. Doesn't this makes DIFF_FORMAT_NO_OUTPUT obsolete as
+> well, I wonder, as absence of any output bits effectively means "no
+> output"?
 
-> But the new "wwwauth[]" field does allow this attack to take place.
+Not quite.  The latter is not "set 0 to output_format word", but
+"set 0 to output_format word and then flip only NO_OUTPUT bit on".
+I've written a bit more on it in a follow-up message to the patch.
 
-In particular, because this should be resolved before 2.41.0-rc0.
-
-Each patch was simple to read and well-motivated. I was particularly
-happy with this diffstat:
-
->  contrib/credential/gnome-keyring/.gitignore   |   1 -
->  contrib/credential/gnome-keyring/Makefile     |  25 -
->  .../git-credential-gnome-keyring.c            | 470 ------------------
-
-The rest of the changes looked to be obvious improvements, so this
-v1 LGTM.
-
-Thanks,
--Stolee
+Thanks.
