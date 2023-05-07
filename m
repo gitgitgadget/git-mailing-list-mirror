@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A78FC7EE24
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 03:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3ABDC77B7D
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 03:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230322AbjEGDqX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 May 2023 23:46:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37624 "EHLO
+        id S230486AbjEGDqZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 May 2023 23:46:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230326AbjEGDqE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230330AbjEGDqE (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 6 May 2023 23:46:04 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73CA52D6D
-        for <git@vger.kernel.org>; Sat,  6 May 2023 20:46:01 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3062c1e7df8so2109600f8f.1
-        for <git@vger.kernel.org>; Sat, 06 May 2023 20:46:01 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D3D61816B
+        for <git@vger.kernel.org>; Sat,  6 May 2023 20:46:02 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f19afc4fbfso32726535e9.2
+        for <git@vger.kernel.org>; Sat, 06 May 2023 20:46:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683431159; x=1686023159;
+        d=gmail.com; s=20221208; t=1683431160; x=1686023160;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bAh+FLTlGAu0Alzmqma5PD7e5PEfAs+N6kkIkvSEL58=;
-        b=hrR9U01c6div58IuDd1luGNxtWqBqCYLctp/5lqjPjDtrIWpnQuXYy4K0ExkCmb8PN
-         MF1O9Nlujiuu7o92D7WxdQSZQdxZ1j5RqwH6hZH0UTwbfP0UYluStQWWtBhqQn6nywCW
-         L+02Y/J7KSZeEgdVBKh58iChkw2ZOXBhBQP/OoKdwUmT/tC/pUEJnBfHwbhpxHglvcIR
-         ZZsZbu+uv/mV+wpAGjtlr/21F1dKXGkHCr5CPhfs1kFkT+DEoOCqE11JeO1y7K+icbFC
-         VOpukxWvjY6gxvOQ3MyDokdsH3r5JFew20vKDnAmXK4W1gSEfk9bmEt4U0OpQZGR0fX9
-         CTcA==
+        bh=I6dG7AlPVVznMsyldRUr8JW9bbpEOQeRtR0Onz6ehVQ=;
+        b=R7J/wsA24sdrwmR7eWHTHHEFaifbIHkUK3OVvuO44VHzzJj1mWixM3I5xudfb5wZAu
+         5MdQgOzLZ5yfneOk25GQqk6XCmbs3S4OXeU4UmX3UlaxHj1zfDFhW1d2A1Ukg9GvTU28
+         afzWxjfPmc2s4Pul0Sih5hETdtnL7W3nmzc6DAqwSAix3R4zGTfoAjf5nVnGHr6h1cbx
+         d6KgeS+GAKR3297Xj+XbHSEBHTNAUG1RiKH7JbURLTfTlVfO6+nwT0BYYQRPRCQ3B7US
+         jfgYZFweGSLIF8eUfR8sdE1B3/9kknAq2JbLm9n+d8FxY/fcLc06TdVuT3Ba0PnqHQrz
+         mc9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683431159; x=1686023159;
+        d=1e100.net; s=20221208; t=1683431160; x=1686023160;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bAh+FLTlGAu0Alzmqma5PD7e5PEfAs+N6kkIkvSEL58=;
-        b=fxmWkQ9durQRHydjNFD5RJcS/0fJ9DyfS67cco11sci1c1WFmysQt0VbulhYy0s3l2
-         A5Xlwtawh+IMlz2g649JJujqlGOD9uDqSCntbyayXzF07YA/a7GhnJGYhW8XpXAJr3PT
-         nMYYbFDyKEWDiJu8+I7miIgV1ybyJCIXaf+1fFuAc6scFt9Klo0ka57r3al2zKpZ5QfL
-         lK42yRiBGa9pIqaz3che8N+kGK/rXLLk7KBpz9M/W9YTNW5z1O9vnehWShDYqEq/B4GP
-         I9Gy1MLjO/jCle3WRVku2w5mCCSZ4d7Agoth45NTmhgRQZx4mZtcajAEdjgooBlCDWUx
-         7kQQ==
-X-Gm-Message-State: AC+VfDwF7Ny4zgtLUCn5Z7M1wR3vAo2GnLz9l+YiQvIDfleP8ADcz0Hk
-        haWU/i6kCxCO7pPHsa2nAeuGb8MKCb8=
-X-Google-Smtp-Source: ACHHUZ7Kw3IkPjFNpePCbCXQfbmpuzJejjwWuPpvRFUm0YkCkIokwnNcS58IpCidUARNfpu2YdFjjw==
-X-Received: by 2002:a5d:4578:0:b0:306:31e0:958 with SMTP id a24-20020a5d4578000000b0030631e00958mr4531511wrc.15.1683431159403;
-        Sat, 06 May 2023 20:45:59 -0700 (PDT)
+        bh=I6dG7AlPVVznMsyldRUr8JW9bbpEOQeRtR0Onz6ehVQ=;
+        b=k1W3xWhThshlmYBRXMd0RPFk/oqP7boZGJi6H3sKU1PiMnjcOqSywyj9JZlqghiHMe
+         MoMGkFg4/yBtwkN7pARyGGSfX4w+NE9M2nvEv3mcENdt8mrkiPrR4OG3GPMPKF+B9t/4
+         mwRplbOsZo7lVCyaJxV1irNO9Kihemh61w2vTJuQs3Sc7hdZfGmVER9cIcs6krN/jbHm
+         lA+nx6k5pqxrc4x83ngaeE3Mo4ObKW2Nog77feUuH9qc9HErUylc2h3RA7MekRY+cYit
+         9CsSLhEF6YbcFxJvgcUxzkNq14a/QVB70pwn+JMphNQLsu/tsz3BxkseR6Sj15RqfCY/
+         v/5w==
+X-Gm-Message-State: AC+VfDzp8BduoSCKVZQAbOX+g3Ow2fZUYmuih+gfzfEjGyrRUz+YaX2i
+        2PhNfIOWvnY1WxPRQcs7MgmNgAq3vF4=
+X-Google-Smtp-Source: ACHHUZ7I4PlPcUyRCMADrorvks/J//lWKRCZv1C68/8GoG0v4p4CwfI5E1sioUsbr1Ik3IpKKJQozg==
+X-Received: by 2002:a1c:ed03:0:b0:3f3:468d:d00f with SMTP id l3-20020a1ced03000000b003f3468dd00fmr4097299wmh.20.1683431160466;
+        Sat, 06 May 2023 20:46:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e7-20020a5d65c7000000b00307925ff35bsm354817wrw.49.2023.05.06.20.45.58
+        by smtp.gmail.com with ESMTPSA id p1-20020a05600c204100b003ed2c0a0f37sm12530709wmg.35.2023.05.06.20.46.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 May 2023 20:45:58 -0700 (PDT)
-Message-Id: <e7b5b66c10c97098c2ea24d8cb3e9252bd3d82be.1683431151.git.gitgitgadget@gmail.com>
+        Sat, 06 May 2023 20:46:00 -0700 (PDT)
+Message-Id: <fe50a0d0e77d940779004d9327c5ccc98de3b3ba.1683431151.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 07 May 2023 03:45:32 +0000
-Subject: [PATCH 07/24] statinfo: move stat_{data,validity} functions from
- cache/read-cache
+Date:   Sun, 07 May 2023 03:45:34 +0000
+Subject: [PATCH 09/24] name-hash.h: move declarations for name-hash.c from
+ cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,407 +68,192 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-These functions do not depend upon struct cache_entry or struct
-index_state in any way, and it seems more logical to break them out into
-this file, especially since statinfo.h already has the struct stat_data
-declaration.
-
-Diff best viewed with `--color-moved`.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Makefile              |  1 +
- cache.h               | 48 ------------------------
- object.c              |  1 +
- read-cache.c          | 84 -----------------------------------------
- refs/packed-backend.c |  1 +
- shallow.c             |  1 +
- statinfo.c            | 87 +++++++++++++++++++++++++++++++++++++++++++
- statinfo.h            | 51 +++++++++++++++++++++++++
- 8 files changed, 142 insertions(+), 132 deletions(-)
- create mode 100644 statinfo.c
+ apply.c                             |  1 +
+ builtin/mv.c                        |  1 +
+ cache.h                             |  9 ---------
+ dir.c                               |  1 +
+ entry.c                             |  1 +
+ merge-recursive.c                   |  1 +
+ name-hash.c                         |  1 +
+ name-hash.h                         | 16 ++++++++++++++++
+ read-cache.c                        |  1 +
+ sparse-index.c                      |  1 +
+ t/helper/test-lazy-init-name-hash.c |  1 +
+ unpack-trees.c                      |  1 +
+ 12 files changed, 26 insertions(+), 9 deletions(-)
+ create mode 100644 name-hash.h
 
-diff --git a/Makefile b/Makefile
-index e440728c246..cbc7f212016 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1142,6 +1142,7 @@ LIB_OBJS += sigchain.o
- LIB_OBJS += sparse-index.o
- LIB_OBJS += split-index.o
- LIB_OBJS += stable-qsort.o
-+LIB_OBJS += statinfo.o
- LIB_OBJS += strbuf.o
- LIB_OBJS += streaming.o
- LIB_OBJS += string-list.o
+diff --git a/apply.c b/apply.c
+index 6212ab3a1b3..3da33bb88fd 100644
+--- a/apply.c
++++ b/apply.c
+@@ -23,6 +23,7 @@
+ #include "xdiff-interface.h"
+ #include "ll-merge.h"
+ #include "lockfile.h"
++#include "name-hash.h"
+ #include "object-name.h"
+ #include "object-file.h"
+ #include "parse-options.h"
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 665bd274485..e058b574654 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -11,6 +11,7 @@
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "name-hash.h"
+ #include "object-file.h"
+ #include "pathspec.h"
+ #include "lockfile.h"
 diff --git a/cache.h b/cache.h
-index 02d69c24cd6..891e5fec744 100644
+index d31b1515069..316904da392 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -488,19 +488,6 @@ int has_racy_timestamp(struct index_state *istate);
- int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
- int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+@@ -245,12 +245,6 @@ struct index_state {
+ void index_state_init(struct index_state *istate, struct repository *r);
+ void release_index(struct index_state *istate);
  
--/*
-- * Record to sd the data from st that we use to check whether a file
-- * might have changed.
-- */
--void fill_stat_data(struct stat_data *sd, struct stat *st);
+-/* Name hashing */
+-int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
+-void add_name_hash(struct index_state *istate, struct cache_entry *ce);
+-void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
+-void free_name_hash(struct index_state *istate);
 -
--/*
-- * Return 0 if st is consistent with a file not having been changed
-- * since sd was filled.  If there are differences, return a
-- * combination of MTIME_CHANGED, CTIME_CHANGED, OWNER_CHANGED,
-- * INODE_CHANGED, and DATA_CHANGED.
-- */
--int match_stat_data(const struct stat_data *sd, struct stat *st);
- int match_stat_data_racy(const struct index_state *istate,
- 			 const struct stat_data *sd, struct stat *st);
+ /* Cache entry creation and cleanup */
  
-@@ -539,14 +526,6 @@ void set_alternate_index_output(const char *);
- extern int verify_index_checksum;
- extern int verify_ce_order;
+ /*
+@@ -377,9 +371,6 @@ int repo_index_has_changes(struct repository *repo,
  
--#define MTIME_CHANGED	0x0001
--#define CTIME_CHANGED	0x0002
--#define OWNER_CHANGED	0x0004
--#define MODE_CHANGED    0x0008
--#define INODE_CHANGED   0x0010
--#define DATA_CHANGED    0x0020
--#define TYPE_CHANGED    0x0040
--
- int cmp_cache_name_compare(const void *a_, const void *b_);
+ int verify_path(const char *path, unsigned mode);
+ int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
+-int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+-void adjust_dirname_case(struct index_state *istate, char *name);
+-struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
  
- /* add */
-@@ -579,31 +558,4 @@ int checkout_fast_forward(struct repository *r,
- 
- int sane_execvp(const char *file, char *const argv[]);
- 
--/*
-- * A struct to encapsulate the concept of whether a file has changed
-- * since we last checked it. This uses criteria similar to those used
-- * for the index.
-- */
--struct stat_validity {
--	struct stat_data *sd;
--};
--
--void stat_validity_clear(struct stat_validity *sv);
--
--/*
-- * Returns 1 if the path is a regular file (or a symlink to a regular
-- * file) and matches the saved stat_validity, 0 otherwise.  A missing
-- * or inaccessible file is considered a match if the struct was just
-- * initialized, or if the previous update found an inaccessible file.
-- */
--int stat_validity_check(struct stat_validity *sv, const char *path);
--
--/*
-- * Update the stat_validity from a file opened at descriptor fd. If
-- * the file is missing, inaccessible, or not a regular file, then
-- * future calls to stat_validity_check will match iff one of those
-- * conditions continues to be true.
-- */
--void stat_validity_update(struct stat_validity *sv, int fd);
--
- #endif /* CACHE_H */
-diff --git a/object.c b/object.c
-index 6d4ef1524de..333e736fb24 100644
---- a/object.c
-+++ b/object.c
-@@ -6,6 +6,7 @@
+ /*
+  * Searches for an entry defined by name and namelen in the given index.
+diff --git a/dir.c b/dir.c
+index a7469df3ac7..029aab36fe8 100644
+--- a/dir.c
++++ b/dir.c
+@@ -13,6 +13,7 @@
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "name-hash.h"
  #include "object-file.h"
  #include "object-store.h"
- #include "blob.h"
-+#include "statinfo.h"
- #include "tree.h"
- #include "commit.h"
- #include "tag.h"
-diff --git a/read-cache.c b/read-cache.c
-index bfbd531ea60..b99dbfd16b0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -177,61 +177,6 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
- 		add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
- }
- 
--void fill_stat_data(struct stat_data *sd, struct stat *st)
--{
--	sd->sd_ctime.sec = (unsigned int)st->st_ctime;
--	sd->sd_mtime.sec = (unsigned int)st->st_mtime;
--	sd->sd_ctime.nsec = ST_CTIME_NSEC(*st);
--	sd->sd_mtime.nsec = ST_MTIME_NSEC(*st);
--	sd->sd_dev = st->st_dev;
--	sd->sd_ino = st->st_ino;
--	sd->sd_uid = st->st_uid;
--	sd->sd_gid = st->st_gid;
--	sd->sd_size = st->st_size;
--}
--
--int match_stat_data(const struct stat_data *sd, struct stat *st)
--{
--	int changed = 0;
--
--	if (sd->sd_mtime.sec != (unsigned int)st->st_mtime)
--		changed |= MTIME_CHANGED;
--	if (trust_ctime && check_stat &&
--	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
--		changed |= CTIME_CHANGED;
--
--#ifdef USE_NSEC
--	if (check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
--		changed |= MTIME_CHANGED;
--	if (trust_ctime && check_stat &&
--	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
--		changed |= CTIME_CHANGED;
--#endif
--
--	if (check_stat) {
--		if (sd->sd_uid != (unsigned int) st->st_uid ||
--			sd->sd_gid != (unsigned int) st->st_gid)
--			changed |= OWNER_CHANGED;
--		if (sd->sd_ino != (unsigned int) st->st_ino)
--			changed |= INODE_CHANGED;
--	}
--
--#ifdef USE_STDEV
--	/*
--	 * st_dev breaks on network filesystems where different
--	 * clients will have different views of what "device"
--	 * the filesystem is on
--	 */
--	if (check_stat && sd->sd_dev != (unsigned int) st->st_dev)
--			changed |= INODE_CHANGED;
--#endif
--
--	if (sd->sd_size != (unsigned int) st->st_size)
--		changed |= DATA_CHANGED;
--
--	return changed;
--}
--
- /*
-  * This only updates the "non-critical" parts of the directory
-  * cache, ie the parts that aren't tracked by GIT, and only used
-@@ -3536,35 +3481,6 @@ void *read_blob_data_from_index(struct index_state *istate,
- 	return data;
- }
- 
--void stat_validity_clear(struct stat_validity *sv)
--{
--	FREE_AND_NULL(sv->sd);
--}
--
--int stat_validity_check(struct stat_validity *sv, const char *path)
--{
--	struct stat st;
--
--	if (stat(path, &st) < 0)
--		return sv->sd == NULL;
--	if (!sv->sd)
--		return 0;
--	return S_ISREG(st.st_mode) && !match_stat_data(sv->sd, &st);
--}
--
--void stat_validity_update(struct stat_validity *sv, int fd)
--{
--	struct stat st;
--
--	if (fstat(fd, &st) < 0 || !S_ISREG(st.st_mode))
--		stat_validity_clear(sv);
--	else {
--		if (!sv->sd)
--			CALLOC_ARRAY(sv->sd, 1);
--		fill_stat_data(sv->sd, &st);
--	}
--}
--
- void move_index_extensions(struct index_state *dst, struct index_state *src)
- {
- 	dst->untracked = src->untracked;
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 704424f55c0..085becf773e 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -10,6 +10,7 @@
- #include "../iterator.h"
- #include "../lockfile.h"
- #include "../chdir-notify.h"
-+#include "../statinfo.h"
- #include "../wrapper.h"
- #include "../write-or-die.h"
- 
-diff --git a/shallow.c b/shallow.c
-index 128f56179ed..a2ebf0af2ba 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -17,6 +17,7 @@
- #include "list-objects.h"
- #include "commit-reach.h"
- #include "shallow.h"
-+#include "statinfo.h"
+ #include "attr.h"
+diff --git a/entry.c b/entry.c
+index 91a540bd29f..7791cc999cc 100644
+--- a/entry.c
++++ b/entry.c
+@@ -5,6 +5,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
++#include "name-hash.h"
+ #include "streaming.h"
+ #include "submodule.h"
+ #include "symlinks.h"
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 8e87b6386d9..b341ba4f38d 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -23,6 +23,7 @@
+ #include "ll-merge.h"
+ #include "lockfile.h"
+ #include "match-trees.h"
++#include "name-hash.h"
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "object-store.h"
+diff --git a/name-hash.c b/name-hash.c
+index fb13716e430..52ce47ea394 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -8,6 +8,7 @@
+ #include "cache.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "name-hash.h"
+ #include "thread-utils.h"
  #include "trace.h"
- #include "wrapper.h"
- 
-diff --git a/statinfo.c b/statinfo.c
+ #include "trace2.h"
+diff --git a/name-hash.h b/name-hash.h
 new file mode 100644
-index 00000000000..17bb8966c33
+index 00000000000..b1b4b0fb337
 --- /dev/null
-+++ b/statinfo.c
-@@ -0,0 +1,87 @@
-+#include "git-compat-util.h"
-+#include "environment.h"
-+#include "statinfo.h"
++++ b/name-hash.h
+@@ -0,0 +1,16 @@
++#ifndef NAME_HASH_H
++#define NAME_HASH_H
 +
-+void fill_stat_data(struct stat_data *sd, struct stat *st)
-+{
-+	sd->sd_ctime.sec = (unsigned int)st->st_ctime;
-+	sd->sd_mtime.sec = (unsigned int)st->st_mtime;
-+	sd->sd_ctime.nsec = ST_CTIME_NSEC(*st);
-+	sd->sd_mtime.nsec = ST_MTIME_NSEC(*st);
-+	sd->sd_dev = st->st_dev;
-+	sd->sd_ino = st->st_ino;
-+	sd->sd_uid = st->st_uid;
-+	sd->sd_gid = st->st_gid;
-+	sd->sd_size = st->st_size;
-+}
-+
-+int match_stat_data(const struct stat_data *sd, struct stat *st)
-+{
-+	int changed = 0;
-+
-+	if (sd->sd_mtime.sec != (unsigned int)st->st_mtime)
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && check_stat &&
-+	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
-+		changed |= CTIME_CHANGED;
-+
-+#ifdef USE_NSEC
-+	if (check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && check_stat &&
-+	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
-+		changed |= CTIME_CHANGED;
-+#endif
-+
-+	if (check_stat) {
-+		if (sd->sd_uid != (unsigned int) st->st_uid ||
-+			sd->sd_gid != (unsigned int) st->st_gid)
-+			changed |= OWNER_CHANGED;
-+		if (sd->sd_ino != (unsigned int) st->st_ino)
-+			changed |= INODE_CHANGED;
-+	}
-+
-+#ifdef USE_STDEV
-+	/*
-+	 * st_dev breaks on network filesystems where different
-+	 * clients will have different views of what "device"
-+	 * the filesystem is on
-+	 */
-+	if (check_stat && sd->sd_dev != (unsigned int) st->st_dev)
-+			changed |= INODE_CHANGED;
-+#endif
-+
-+	if (sd->sd_size != (unsigned int) st->st_size)
-+		changed |= DATA_CHANGED;
-+
-+	return changed;
-+}
-+
-+void stat_validity_clear(struct stat_validity *sv)
-+{
-+	FREE_AND_NULL(sv->sd);
-+}
-+
-+int stat_validity_check(struct stat_validity *sv, const char *path)
-+{
-+	struct stat st;
-+
-+	if (stat(path, &st) < 0)
-+		return sv->sd == NULL;
-+	if (!sv->sd)
-+		return 0;
-+	return S_ISREG(st.st_mode) && !match_stat_data(sv->sd, &st);
-+}
-+
-+void stat_validity_update(struct stat_validity *sv, int fd)
-+{
-+	struct stat st;
-+
-+	if (fstat(fd, &st) < 0 || !S_ISREG(st.st_mode))
-+		stat_validity_clear(sv);
-+	else {
-+		if (!sv->sd)
-+			CALLOC_ARRAY(sv->sd, 1);
-+		fill_stat_data(sv->sd, &st);
-+	}
-+}
-diff --git a/statinfo.h b/statinfo.h
-index e49e3054eaa..bb9b61bc471 100644
---- a/statinfo.h
-+++ b/statinfo.h
-@@ -1,6 +1,8 @@
- #ifndef STATINFO_H
- #define STATINFO_H
- 
++struct cache_entry;
 +struct index_state;
 +
- /*
-  * The "cache_time" is just the low 32 bits of the
-  * time. It doesn't matter if it overflows - we only
-@@ -21,4 +23,53 @@ struct stat_data {
- 	unsigned int sd_size;
- };
- 
-+/*
-+ * A struct to encapsulate the concept of whether a file has changed
-+ * since we last checked it. This uses criteria similar to those used
-+ * for the index.
-+ */
-+struct stat_validity {
-+	struct stat_data *sd;
-+};
++int index_dir_exists(struct index_state *istate, const char *name, int namelen);
++void adjust_dirname_case(struct index_state *istate, char *name);
++struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
 +
-+#define MTIME_CHANGED	0x0001
-+#define CTIME_CHANGED	0x0002
-+#define OWNER_CHANGED	0x0004
-+#define MODE_CHANGED    0x0008
-+#define INODE_CHANGED   0x0010
-+#define DATA_CHANGED    0x0020
-+#define TYPE_CHANGED    0x0040
++int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
++void add_name_hash(struct index_state *istate, struct cache_entry *ce);
++void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
++void free_name_hash(struct index_state *istate);
 +
-+/*
-+ * Record to sd the data from st that we use to check whether a file
-+ * might have changed.
-+ */
-+void fill_stat_data(struct stat_data *sd, struct stat *st);
-+
-+/*
-+ * Return 0 if st is consistent with a file not having been changed
-+ * since sd was filled.  If there are differences, return a
-+ * combination of MTIME_CHANGED, CTIME_CHANGED, OWNER_CHANGED,
-+ * INODE_CHANGED, and DATA_CHANGED.
-+ */
-+int match_stat_data(const struct stat_data *sd, struct stat *st);
-+
-+void stat_validity_clear(struct stat_validity *sv);
-+
-+/*
-+ * Returns 1 if the path is a regular file (or a symlink to a regular
-+ * file) and matches the saved stat_validity, 0 otherwise.  A missing
-+ * or inaccessible file is considered a match if the struct was just
-+ * initialized, or if the previous update found an inaccessible file.
-+ */
-+int stat_validity_check(struct stat_validity *sv, const char *path);
-+
-+/*
-+ * Update the stat_validity from a file opened at descriptor fd. If
-+ * the file is missing, inaccessible, or not a regular file, then
-+ * future calls to stat_validity_check will match iff one of those
-+ * conditions continues to be true.
-+ */
-+void stat_validity_update(struct stat_validity *sv, int fd);
-+
- #endif
++#endif /* NAME_HASH_H */
+diff --git a/read-cache.c b/read-cache.c
+index b99dbfd16b0..e1016ae0317 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -25,6 +25,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "mem-pool.h"
++#include "name-hash.h"
+ #include "object-name.h"
+ #include "resolve-undo.h"
+ #include "revision.h"
+diff --git a/sparse-index.c b/sparse-index.c
+index 886054729e5..60451daae80 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -2,6 +2,7 @@
+ #include "alloc.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "name-hash.h"
+ #include "repository.h"
+ #include "sparse-index.h"
+ #include "tree.h"
+diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
+index b83a75d19f6..6944b7e825f 100644
+--- a/t/helper/test-lazy-init-name-hash.c
++++ b/t/helper/test-lazy-init-name-hash.c
+@@ -2,6 +2,7 @@
+ #include "test-tool.h"
+ #include "cache.h"
+ #include "environment.h"
++#include "name-hash.h"
+ #include "parse-options.h"
+ #include "repository.h"
+ #include "setup.h"
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e8c32a40dcb..078c53f7a13 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -7,6 +7,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
++#include "name-hash.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "cache-tree.h"
 -- 
 gitgitgadget
 
