@@ -2,72 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9925C77B7C
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 13:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 495D4C77B7C
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 20:34:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230248AbjEGNOu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 May 2023 09:14:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54212 "EHLO
+        id S231878AbjEGUeo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 May 2023 16:34:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbjEGNOb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2023 09:14:31 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19FEE14E48
-        for <git@vger.kernel.org>; Sun,  7 May 2023 06:14:28 -0700 (PDT)
-Received: (qmail 28302 invoked by uid 109); 7 May 2023 13:14:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 07 May 2023 13:14:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23161 invoked by uid 111); 7 May 2023 13:14:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 07 May 2023 09:14:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 7 May 2023 09:14:27 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/6] strbuf cleanups
-Message-ID: <20230507131427.GA1852750@coredump.intra.peff.net>
-References: <20230502211454.1673000-1-calvinwan@google.com>
- <CABPp-BFagTvBTe0XbEOM_hO-vDFwVvSSmGOii1q2=7amqerwtQ@mail.gmail.com>
- <CAFySSZAOqX0pESfJ-7bYg9iR2RDB9PL6sC4Kcvr_zitdQ1kD_g@mail.gmail.com>
- <CABPp-BGc6ZK919rEH7-fOVg-nYs2wtvFP-XeQ7V9dEBEJvBYsQ@mail.gmail.com>
+        with ESMTP id S230099AbjEGUen (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2023 16:34:43 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D40CA5F4
+        for <git@vger.kernel.org>; Sun,  7 May 2023 13:34:42 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-b9a824c3a95so5088086276.1
+        for <git@vger.kernel.org>; Sun, 07 May 2023 13:34:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683491681; x=1686083681;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jR2FkSBOJliAJH6QUuIuCYavXjxlUtuTW6CriwTy4Vg=;
+        b=ODZID5LHUvuqdlyHuzyISObGs56JyTGay4KQ6Q907oZ+6N/+vO0j0+2xFsgU2Pg9OB
+         H6I8AWxKJNpAlvxl8wsv/Vno2JpklMb0nHYE6VmqMQU2Gtl4VVhu59mba7tSa+zxJOCf
+         T3mHITbRBpaLoD/B1EBhY/jc6dJEt59tR1IeKDmpiefGqYCBjV7UqSBWIvhisPqEYoou
+         0qfF0HrhIJA1hOB59No+l5KBLNrZ8ZlRbjko0TXbZkGHbPJYCPb70rC1LasnB9eMCHd5
+         /sotqapqWYWRxMQ4ZHq6AHqH6eW+B85EVw6M9aT5OGkFOdxQt617krfMWoR72mUjcvFg
+         e/Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683491681; x=1686083681;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jR2FkSBOJliAJH6QUuIuCYavXjxlUtuTW6CriwTy4Vg=;
+        b=Vt+fOWPfHXv7uXvavLjXgb/Gf6AsXRvpDAshAdlwgPgL79cD37+F3xK4pv9i/NmV/m
+         Qy0tZuXyBAx3BcmLd/vHn1gaVJP/GTXTgY/L3czcZOX88rFnd9jI1OkO1A0BxekfePEi
+         BK4BWOlNRLyHh7d3fYE2n/bdQz4nZ2x1gxt9KmL9VCxfrFypmq63vjteIlekYHENqEpy
+         uTw1fK7w0vKKiAdDWDsFInIDhBpB7phjHsr+Wh+6Sygbvr5muYKRM5PmHcOqn1VhDGkU
+         RG+1CcQoZlgNLWXXun0tWabokyLiIHXIKLwat4ilW7NZ50p/JjkJotIkIFuZI0IWTLy5
+         HY8g==
+X-Gm-Message-State: AC+VfDxAVzE0ZCYQBsDM00F1hkwYkXW2ldfpjXYeI69nDMrIN4efFN+/
+        8rnHkopaxdgnhDle4ibWtao1Ulaz2n9PbCF3QUXjzPFSda0=
+X-Google-Smtp-Source: ACHHUZ6ehCNaBQZnpjONTzwGcFa+gDGwQ1wo6Qa/tQ+9qGR56bsveaTLfRW1W3U7+OvyDalUman+tLASFZKfr7NK+5E=
+X-Received: by 2002:a25:2412:0:b0:b9d:bede:2366 with SMTP id
+ k18-20020a252412000000b00b9dbede2366mr9300624ybk.20.1683491681522; Sun, 07
+ May 2023 13:34:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BGc6ZK919rEH7-fOVg-nYs2wtvFP-XeQ7V9dEBEJvBYsQ@mail.gmail.com>
+References: <CAOvKW55oWs+atYyy-cTb=H0VhJx-V+M7_7FsqjdJ_jU9bR+8LA@mail.gmail.com>
+ <a611877f-c515-033c-e015-f3952b520c08@gmail.com>
+In-Reply-To: <a611877f-c515-033c-e015-f3952b520c08@gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sun, 7 May 2023 15:34:30 -0500
+Message-ID: <CAMP44s23Qsw3behbm57BNKeT9w_u1OunV04A9uzz85rDcD_Uug@mail.gmail.com>
+Subject: Re: Weird merge records
+To:     Thomas Guyot <tguyot@gmail.com>
+Cc:     Dan Stromberg <strombrg@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 06, 2023 at 05:14:55PM -0700, Elijah Newren wrote:
+On Sat, May 6, 2023 at 10:20=E2=80=AFAM Thomas Guyot <tguyot@gmail.com> wro=
+te:
 
-> On Wed, May 3, 2023 at 11:00 AM Calvin Wan <calvinwan@google.com> wrote:
-> >
-> > While moving strbuf_add_separated_string_list() to a separate file
-> > would mean that strbuf would no longer have a dependency on
-> > string-list, I don't think that dependency is problematic to begin
-> > with. Widening the boundary for strbuf as a string manipulation
-> > library to a string and string list manipulation library seems
-> > reasonable to me.
-> 
-> Oh, the high level idea behind string-list might make sense at this
-> level, but I was assuming Peff would show up at some point and
-> highlight the evils of the current string-list API[1][2][3] and how we
-> should avoid using, depending on, or implementing something that acts
-> like it.  :-)
+> You shouldn't change the user's config - you can instead use
+> command-line switches with git-pull to force the desired behavior. In
+> this case (which is also the default if there is no pull.rebase config)
+> it will merge with the remote (and that merge will be a fast-forward if
+> you have no added commits).
 
-You rang? :)
+Actually no: it won't merge the current branch with the remote, it
+will merge the remote with the current branch, which is not the same.
 
-Yes, IMHO this strbuf_add_separated_string_list() is another example of
-why string-list sucks: it doesn't degrade to a natural array type
-(because the "util" magic requires a struct). If it were a strvec or
-similar, we could just pass "const char **str, size_t len", which would
-make the helper function simpler and more generally useful.
+This is one of the many reasons many git veterans recommend most users
+to simply avoid doing `git pull` [1]: it very rarely does what you
+want.
 
-I know there may be other reasons to use a string-list in the caller
-here, though (looks like it uses "nodup"). So as usual, the situation is
-not so simple as "we should just switch types".
+[1] https://felipec.wordpress.com/2021/07/13/why-is-git-pull-broken/
 
--Peff
+--=20
+Felipe Contreras
