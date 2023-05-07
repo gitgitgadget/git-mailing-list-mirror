@@ -2,30 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD24DC77B7C
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 12:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65E21C7EE22
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 12:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231484AbjEGMGs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 May 2023 08:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45182 "EHLO
+        id S231489AbjEGMGu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 May 2023 08:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbjEGMGr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231460AbjEGMGr (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 7 May 2023 08:06:47 -0400
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2049132AC
-        for <git@vger.kernel.org>; Sun,  7 May 2023 05:06:42 -0700 (PDT)
-Date:   Sun, 07 May 2023 12:06:24 +0000
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38DF313869
+        for <git@vger.kernel.org>; Sun,  7 May 2023 05:06:43 -0700 (PDT)
+Date:   Sun, 07 May 2023 12:06:33 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
         s=protonmail3; t=1683461201; x=1683720401;
-        bh=4nVEPKu2DssMn0Q2fVQT3c0kVmSWBAPoYcTqC5AH4YI=;
+        bh=3eAt6/lS1Yv/9utN376uB+/TUDJSDDERK30ilLJh+Ms=;
         h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
          Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=jdCZw2l4W5w1lICpFBD6aXhJMbq8qkKlOccAPFTEiCjf3fSYFjxoamYsFn19kvplE
-         PHlarrQl99q//FrU6IMpfmjt7PpbJPjQtO71eB5MX8Goglsv73Ry5wuBE5SJqQOQxj
-         zYxZLgd2Uno7fU4Dczr4hnVncKgeqUXeibyAIX2Idk4ifEJPINpNsglZtWblG2KIJs
-         gULeBglax9egi0vAnw/IJzNEp7w2z0HWOXARQSAT14vbZX8Cd2dFkV5c+yoaMjO4tb
-         E9bDXouewX2dr88ip6i3Cb+ueNULoVQxrrOGjcwzA5T5Cds7oTnmE72iaSTF9QD+Ks
-         oDLS1V0nyvFGw==
+        b=GVuXvuE2jYBSfU7ARzd6baN8ZKVyhzsVyARwDruT2BKIkx0WDTSJ4ikQAHf3PCTJT
+         Pt0OrShjFVTaVA96V5WgJ/VsIcu8FXXveh1juLFQz4Tb+wYbZV3faKebUbtmraRKiu
+         dk/ed4tFbhB+5iF+4DdS9WH6WB4iJngBekBvcNz665UTIHmygJrbzr5VpGNA6sq3TZ
+         VSsYS6KOi1M+yFzN+JiVkkWSCmhpQ3hrUXAvucoi8970zD+U8Q087h4vc3rXDwNU07
+         U/TznKcDS8IQegt5IKwL1qiDVUza5QMucZUtK1Kh2yb2zE6nJluF2Yfvue2eqhXttL
+         5Lm+HM0TpnJ1w==
 To:     git@vger.kernel.org
 From:   Jacob Abel <jacobabel@nullpo.dev>
 Cc:     Jacob Abel <jacobabel@nullpo.dev>,
@@ -35,8 +35,8 @@ Cc:     Jacob Abel <jacobabel@nullpo.dev>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v10 3/8] t2400: refactor "worktree add" opt exclusion tests
-Message-ID: <20230507120530.14669-4-jacobabel@nullpo.dev>
+Subject: [PATCH v10 4/8] t2400: add tests to verify --quiet
+Message-ID: <20230507120530.14669-5-jacobabel@nullpo.dev>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,51 +45,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pull duplicate test code into a function so that additional opt
-combinations can be tested succinctly.
+Add tests to verify that the command performs operations the same with
+`--quiet` as without it. Additionally verifies that all non-fatal output
+is suppressed.
 
 Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
 ---
- t/t2400-worktree-add.sh | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ t/t2400-worktree-add.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index a3f108347a..0ca3ec2022 100755
+index 0ca3ec2022..841f15f59e 100755
 --- a/t/t2400-worktree-add.sh
 +++ b/t/t2400-worktree-add.sh
-@@ -298,17 +298,20 @@ test_expect_success '"add" no auto-vivify with --deta=
-ch and <branch> omitted' '
- =09test_must_fail git -C mish/mash symbolic-ref HEAD
+@@ -334,6 +334,13 @@ test_expect_success 'add --quiet' '
+ =09test_must_be_empty actual
  '
 
--test_expect_success '"add" -b/-B mutually exclusive' '
--=09test_must_fail git worktree add -b poodle -B poodle bamboo main
--'
--
--test_expect_success '"add" -b/--detach mutually exclusive' '
--=09test_must_fail git worktree add -b poodle --detach bamboo main
--'
-+# Helper function to test mutually exclusive options.
-+#
-+# Note: Quoted arguments containing spaces are not supported.
-+test_wt_add_excl () {
-+=09local opts=3D"$*" &&
-+=09test_expect_success "'worktree add' with '$opts' has mutually exclusive=
- options" '
-+=09=09test_must_fail git worktree add $opts 2>actual &&
-+=09=09grep -E "fatal:( options)? .* cannot be used together" actual
-+=09'
-+}
++test_expect_success 'add --quiet -b' '
++=09test_when_finished "git branch -D quietnewbranch" &&
++=09test_when_finished "git worktree remove -f -f another-worktree" &&
++=09git worktree add --quiet -b quietnewbranch another-worktree 2>actual &&
++=09test_must_be_empty actual
++'
++
+ test_expect_success 'local clone from linked checkout' '
+ =09git clone --local here here-clone &&
+ =09( cd here-clone && git fsck )
+@@ -532,6 +539,35 @@ test_expect_success 'git worktree add --guess-remote s=
+ets up tracking' '
+ =09=09test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
+ =09)
+ '
++test_expect_success 'git worktree add --guess-remote sets up tracking (qui=
+et)' '
++=09test_when_finished rm -rf repo_a repo_b foo &&
++=09setup_remote_repo repo_a repo_b &&
++=09(
++=09=09cd repo_b &&
++=09=09git worktree add --quiet --guess-remote ../foo 2>actual &&
++=09=09test_must_be_empty actual
++=09) &&
++=09(
++=09=09cd foo &&
++=09=09test_branch_upstream foo repo_a foo &&
++=09=09test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
++=09)
++'
++
++test_expect_success 'git worktree --no-guess-remote (quiet)' '
++=09test_when_finished rm -rf repo_a repo_b foo &&
++=09setup_remote_repo repo_a repo_b &&
++=09(
++=09=09cd repo_b &&
++=09=09git worktree add --quiet --no-guess-remote ../foo
++=09) &&
++=09(
++=09=09cd foo &&
++=09=09test_must_fail git config "branch.foo.remote" &&
++=09=09test_must_fail git config "branch.foo.merge" &&
++=09=09test_cmp_rev ! refs/remotes/repo_a/foo refs/heads/foo
++=09)
++'
 
--test_expect_success '"add" -B/--detach mutually exclusive' '
--=09test_must_fail git worktree add -B poodle --detach bamboo main
--'
-+test_wt_add_excl -b poodle -B poodle bamboo main
-+test_wt_add_excl -b poodle --detach bamboo main
-+test_wt_add_excl -B poodle --detach bamboo main
-
- test_expect_success '"add -B" fails if the branch is checked out' '
- =09git rev-parse newmain >before &&
+ test_expect_success 'git worktree add with worktree.guessRemote sets up tr=
+acking' '
+ =09test_when_finished rm -rf repo_a repo_b foo &&
 --
 2.39.3
 
