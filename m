@@ -2,97 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15EE6C77B7C
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 22:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A5FC7EE22
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 22:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231935AbjEGWPi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 May 2023 18:15:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60178 "EHLO
+        id S231634AbjEGWZm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 May 2023 18:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjEGWPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2023 18:15:36 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA513AD36
-        for <git@vger.kernel.org>; Sun,  7 May 2023 15:15:35 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-1928aa70ffbso3282210fac.3
-        for <git@vger.kernel.org>; Sun, 07 May 2023 15:15:35 -0700 (PDT)
+        with ESMTP id S230348AbjEGWZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2023 18:25:40 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E0A0100D9
+        for <git@vger.kernel.org>; Sun,  7 May 2023 15:25:39 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-192b330a577so1520896fac.3
+        for <git@vger.kernel.org>; Sun, 07 May 2023 15:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683497735; x=1686089735;
+        d=gmail.com; s=20221208; t=1683498338; x=1686090338;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fK7DQuSFLWM3A24KDdnPVl/bPLRqUmMztk765t5QXR4=;
-        b=sQcTQdDg41Exk5PcjVPCPN8VUY40SLyLVSHh6Yrjc6hwp/31Rp4/jn464evUD7rASW
-         u/1pouSKfY91bAr4QfZ/epbSSseMpvx1VczAMKBgpKSus3tFyrbFRTh9oF2TEH7u2i4i
-         7weNYuk3RNjQYtfJG8NuZBkGctGQ7Yduu2cD8fen0PrPTzDZK2fjuVHv1c6cgs0ZlMDV
-         lYnKeQtK4RW1+oHoB6ws40vU8tA1jOslakd2FFIGXsz6PcdiyrkP/uS59fKAz6PYO5/1
-         D8l32F02hGh2lTzlOGwJnTXGT7bgGNHqL4CXgPVhUikBMVvkhXdSHNFJOHdIaqa2pkJl
-         7JaA==
+        bh=wu3e/tHcx88FeTLKJ9ICeIElH2pIIL/GOuRIlq+tpxc=;
+        b=Zam53+c2VKz8Z+FECwVGMNUs+r9O8VtlB9n3KWO9zXG2ojC7AhZOD3BDCSNGGDn+K2
+         bPcdCEII4FpxStVxWUEvpwwG+Af8voT9tDFJnwJj7Jys0eaKTPOoDA40LjwtPQ/GtGD/
+         rZusbsRrktIzdqOJyhWlqYAqiw+ksVZ2cet9XAbCC9k2d7WqFha2x81wVOe+9QTrWaw/
+         fh3RD35raZ8iyKtBiWxXnLB77MKtqtOyzbAjSIYwq74Gurt475QbJhOsrs9T7lPKYg7n
+         wSDEawZEtDu9HjC59GLZOT+iappa/7TL8PaD6iG+6jH3IV2iqQkRVfim6wBO0UiX6hDk
+         yxnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683497735; x=1686089735;
+        d=1e100.net; s=20221208; t=1683498338; x=1686090338;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=fK7DQuSFLWM3A24KDdnPVl/bPLRqUmMztk765t5QXR4=;
-        b=iY0mZVLs2DZUqc9nmLkYZAdd8x5KcTSS/d8Tp2+RVe3j9dVow0aJlhV2H7Gv0ctKGC
-         rdtncSko/QVLqEIGvLYg9hz95Ko8Va4jW6RE46v95BayNqkkuPKsGuo6r2Exuq4s7/no
-         YGNHzqT4iDLK19ipjAZt82wMaS7EKQsEQ8XId3BBsIQBJCa50w87m+NJigaWxT1KP4J3
-         o8v3W0UKAW74OzbeCAMxqf0sRCNcQVqSf7KqnUETs9JV/kYiDQMoSnJg8OtFibQpuITZ
-         Ta7yLyjTLAgXXHFEU5iGj8Y/wprM4iSSUIb7NifWWzAUL1h69r+oULDFcUpmAilUYlqP
-         91UQ==
-X-Gm-Message-State: AC+VfDzScNKheY4Qx61Mpep1xQvJgZSr2o0GLdj/HCU1B6y+ffAA5E4i
-        hhFKiEhwE+n1acZqRhlM74c=
-X-Google-Smtp-Source: ACHHUZ53HM8pSifcV1OtBRhdfbJieLAZ0mkLb+V9cf55GvmuXvNA2byZE5xqEsSOcKCk84U7iC/VuA==
-X-Received: by 2002:a05:6870:b302:b0:18e:2b7e:a849 with SMTP id a2-20020a056870b30200b0018e2b7ea849mr3920617oao.22.1683497735200;
-        Sun, 07 May 2023 15:15:35 -0700 (PDT)
+        bh=wu3e/tHcx88FeTLKJ9ICeIElH2pIIL/GOuRIlq+tpxc=;
+        b=hOz9dLcUi2uh4jVss5YMvHbY9iwjGJhU7SE/7viyp5GLyzBEeliwWV+njzqotJD7KC
+         c4kyWp/Hi3TYQ1VnYdXOuIvJ+mx1bKH8MNLikg1yV7O8D0MZdn/l7YA0P52DP96Iak+v
+         JXRSxGJpdMvu/ZXCyYUINr2IRQ+rY5cRBM6KctJ4MppbjLGOiQXYj+hA1OqzysnIqP4C
+         5sknXCsywMsH7icTNxIKdz3HR3jO4nKY5Xo+T7LaFiCiaW9ScgfFYHaN5heGtg/6Euc4
+         rNLWP3gp3EUdDUdb1rUQ8l2mXEN7cwItK1WuWGzZCx7tNfsDQUh1JQD3lUIX86ugv08M
+         jkqg==
+X-Gm-Message-State: AC+VfDxyHEuxoqOFF90jKUum3ybN0KAzv9iygRMXqyQ7I8pjV+rF0F+7
+        CYOjweM1kO09/o6MYTLhCYGYOi2tLUw=
+X-Google-Smtp-Source: ACHHUZ5AQn9dlOXRgItOcVVSp2/tOsoKNHGU0e1WBcXbHdoLlagDPuHxJiAk7Hf1uSsaURCxAVnb4w==
+X-Received: by 2002:a05:6870:e14f:b0:184:222:6652 with SMTP id z15-20020a056870e14f00b0018402226652mr2906075oaa.39.1683498338569;
+        Sun, 07 May 2023 15:25:38 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id q24-20020a4a3018000000b00524f381f681sm3758814oof.27.2023.05.07.15.15.34
+        by smtp.gmail.com with ESMTPSA id bt11-20020a0568201a8b00b00549f4d87eecsm3438886oob.30.2023.05.07.15.25.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 May 2023 15:15:34 -0700 (PDT)
-Date:   Sun, 07 May 2023 16:15:33 -0600
+        Sun, 07 May 2023 15:25:38 -0700 (PDT)
+Date:   Sun, 07 May 2023 16:25:37 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     Elijah Newren <newren@gmail.com>,
         Adam Johnson via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Adam Johnson <me@adamj.eu>
-Message-ID: <64582305ee966_4e612948f@chronos.notmuch>
-In-Reply-To: <xmqqzg6ibe42.fsf@gitster.g>
+Message-ID: <645825614027d_4e612949f@chronos.notmuch>
+In-Reply-To: <CABPp-BE50neqaQbE2tTq_=fEM9j_8-cxgj7xKcSfAunoWjsigw@mail.gmail.com>
 References: <pull.1505.git.git.1683295133304.gitgitgadget@gmail.com>
- <xmqqzg6ibe42.fsf@gitster.g>
+ <CABPp-BE50neqaQbE2tTq_=fEM9j_8-cxgj7xKcSfAunoWjsigw@mail.gmail.com>
 Subject: Re: [PATCH] doc: merge: improve conflict presentation docs
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> "Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > From: Adam Johnson <me@adamj.eu>
-> >
-> > Improvements:
-> >
-> > 1. Remove the sexist example ("Barbie... wants to go shopping")
-> 
-> "Barbie goes shopping" is a pretty common meme.
+Elijah Newren wrote:
+> On Fri, May 5, 2023 at 6:58=E2=80=AFAM Adam Johnson via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 
-And it's not sexist in the least.
+> > -while in "zdiff3" style, it may look like this:
+> > +while in the "zdiff3" style, it looks like this:
+> =
 
-Tony Montana likes big guns, and it's not sexist to say that outloud.
+> The insertion of "the" surprises me.  It reads better without it to
+> me, but I don't know if I'm just used to some grammar rule being
+> violated or something.  Why is "the" necessary here?
 
-Tina can like big guns as well, and Peter can like to go shopping.
+It's not necessary, but the addition of the word "the" suggests a single
+well-known term.
 
-The fact that a preference happens to match a stereotype doesn't mean that
-saying so constitutes bigotry.
+If you say "minimalist style", that can refer to a broad range of styles =
+that
+are generally refered to as of "minimalist" type. On the other hand if yo=
+u say
+"the Minimalist tyle" it evokes a *single* style that cannot be confused =
+with
+any other.
 
-I'm Mexican and I like tacos. There's nothing wrong with somebody saying
-"Felipe likes tacos", especially because it's true.
+In this case it's a single style, so "the" is warranted.
 
-So what if Barbie likes to go shopping? So what if Amanda likes the color pink?
+-- =
 
-Am I not allowed to like tacos because I'm Mexican?
-
--- 
-Felipe Contreras
+Felipe Contreras=
