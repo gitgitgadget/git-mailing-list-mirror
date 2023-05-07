@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6B7C77B7D
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 03:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 108C2C77B7C
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 03:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230402AbjEGDqK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 May 2023 23:46:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37568 "EHLO
+        id S229568AbjEGDqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 May 2023 23:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbjEGDqB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230211AbjEGDqB (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 6 May 2023 23:46:01 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA16035AE
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BFB6E97
         for <git@vger.kernel.org>; Sat,  6 May 2023 20:45:59 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f315735514so135931335e9.1
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-306dbad5182so2056982f8f.1
         for <git@vger.kernel.org>; Sat, 06 May 2023 20:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683431158; x=1686023158;
+        d=gmail.com; s=20221208; t=1683431157; x=1686023157;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cvdDaqrvX/P/PDr79doxRz1qredxSFylEeu3GU+KG6Y=;
-        b=EHAIeDaSAn+W1N74qzkcA1dqEcbwkulfkWg/ZrFjtr5gFAqxO0/9b+3eT9r0bgXj1z
-         BdBTY+ioYpiqSmgi+DXec0BJP9fBQQPwKMO6ujie6N1ykabRk38gwm577hBfqQ16Pzt2
-         Me1mlMqcD9FvFrcQWzwqbr8GBL+BCqda71TIRmM8nCeh1ndKqQQH52svJ+JMhwfX+4WC
-         U4eAGtQ9v31SVHougJOQ3ntkQjMWVRB4NqLJKnAExr80dtZGTP0/TCV2DCRo2b0XV9dh
-         ZjYNj2MLaoiqk4HaComZ+w3PmjZf4xj1lexMlM88faGFMlQmVgNV1gdxBGx/gBiMRuzo
-         RIfg==
+        bh=sJkdwMdZjbvXjbYbGMDvUZ/CtlyY7I5G8aheyrEfFHc=;
+        b=k12Vz+hqwiAvtqMaUag+4W/hp6IbRhhTWEPRzUrQZw4XoPnvCaPF1tTIhwk0yIHNv/
+         k6vzUw1WLuQNIAZKC2bksTp0NahZO1kkA6/rd9+RPCUP/Bi4WE2pRtTk8vyMRdAVHo9d
+         ACWxkgQuWvUq/iCMriH+D1zPp9xCHurFKINVAbKBI4+JFdA86Zq3KwKu5ATwDyxgL6Nl
+         o72MrFLExAnOHsr77J5I7I/gaT4bZEzlKhceaSyB4CLOi2yjH+5ZevQ0nb/eVFCZteJq
+         NbFecGDs3LkN6Sw8HMUYVoXrg0rBTggRr2tXa0puBErwY4vwNupwcWx+8Ta+vWekpYAv
+         8g6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683431158; x=1686023158;
+        d=1e100.net; s=20221208; t=1683431157; x=1686023157;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cvdDaqrvX/P/PDr79doxRz1qredxSFylEeu3GU+KG6Y=;
-        b=idKIGO5xUnMX0E4shRT8/9/rXg+CbC4JKLDHMnU+jisffFXSzZF3CvE6kK1e6iWeQr
-         orQAyK6KwfhyG1fCoOTjLe+9qHsagwD/45lM/TxYe9HtacFWWV3q/YvnkXOR6LUvXVMC
-         uLkxAs512ke5JuxBNDVO/VvMmk9lYoNYXQqrKwJe0xvl47ef4GgjYJfvPhPMM3Krjp4M
-         HGvbFqFuvuymmsRdC6eVqkkqptmRMRAuPpNf90J4YlgiYQywQr46QStDisllrycotAT2
-         Gt331C9T8pyX3A8wVZNFztK2EEkNFeXa3snTdw13yGxmvgEtDUUYLD2tFadSipOIhkm/
-         1i1Q==
-X-Gm-Message-State: AC+VfDxWfX6yruUp2FFbuEOhJz4LRD7Dcq9bHPtmOTIYjHUgAdZcp0wV
-        XD1W8K6qyW5mD0f08ieYX5zNvG7Al+A=
-X-Google-Smtp-Source: ACHHUZ5W0gsJgQ3Y3n9zEcSkctjJvTd+L3WsUcq2yHnwyr3kyPattihfr1jyxOuuoqoD0nLFA2SI5w==
-X-Received: by 2002:adf:f189:0:b0:306:45ef:9935 with SMTP id h9-20020adff189000000b0030645ef9935mr8189055wro.13.1683431157910;
+        bh=sJkdwMdZjbvXjbYbGMDvUZ/CtlyY7I5G8aheyrEfFHc=;
+        b=WeDxdwS9VBI5Tc72UI5ZaXS6Yux91nA11LzS9SyTFrabXfOdY0X36JMv2vEjO502E9
+         lfrft/5JpqhK91yIVsoPL3Gi7x9Rc8a35K+sOfG8D5REJX/iedY81539nEYX6zmMuEE7
+         gpFNxwQcsATh3wWv3pr5+TsSf1G6/SgRGcmMg+cMCniAciY1Iqv2Ply4NGYllegfuiji
+         7DyHGfac9vtQsynRqT7ho3d9DxzavC2C+uzjRnDAFQVc3/iYTFk14E5+pFuNGD9VV4jW
+         2V67b87BSGf31im/QDninxJ9ZElvrUZqAciYrabpug3/pLm6GdnUN+l5hrU7uogxtzXn
+         IrQg==
+X-Gm-Message-State: AC+VfDw32ZM0voIlcprdkZWntte8Gd9n42A+Y5GATD1afrR2JnZ4FltM
+        Gwpr9sEUJ3IRPruBv31ppZIQGITaA2Q=
+X-Google-Smtp-Source: ACHHUZ51nVfhiCHM9BgNzJURFwo+bEMjvZfquCRcPvjd4J1EbFalk0LVjHB3l3MCfGD4q4M54IwwTw==
+X-Received: by 2002:adf:f985:0:b0:307:8555:35e1 with SMTP id f5-20020adff985000000b00307855535e1mr3194170wrr.19.1683431157394;
         Sat, 06 May 2023 20:45:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p4-20020a1c7404000000b003f1739a0116sm12483966wmc.33.2023.05.06.20.45.57
+        by smtp.gmail.com with ESMTPSA id j10-20020adff54a000000b00304b5b2f5ffsm7005060wrp.53.2023.05.06.20.45.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 06 May 2023 20:45:57 -0700 (PDT)
-Message-Id: <30989571ac34d9bd7e8402e149ac647939bfba33.1683431151.git.gitgitgadget@gmail.com>
+Message-Id: <d5a5b511f6ddb7bad9c723581c8c83ae0644f3b8.1683431151.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 07 May 2023 03:45:30 +0000
-Subject: [PATCH 05/24] add: modify add_files_to_cache() to avoid globals
+Date:   Sun, 07 May 2023 03:45:29 +0000
+Subject: [PATCH 04/24] read-cache: move shared commit and ls-files code
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,148 +67,311 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The function add_files_to_cache() is used by all three of builtin/{add,
-checkout, commit}.c.  That suggests this is common library code, and
-should be moved somewhere else, like read-cache.c.  However, the
-function and its helpers made use of two global variables that made
-straight code movement difficult:
-  * the_index
-  * include_sparse
-The latter was perhaps more problematic since it was only accessible in
-builtin/add.c but was still affecting builtin/checkout.c and
-builtin/commit.c without this fact being very clear from the code.  I'm
-not sure if the other two callers would want to add a `--sparse` flag
-similar to add.c to get non-default behavior, but exposing this
-dependence will help if we ever decide we do want to add such a flag.
+The function overlay_tree_on_index(), plus associated helper functions,
+were defined in builtin/ls-files.c, but also shared with
+builtin/commit.c.  Move these shared functions to read-cache.c.
 
-Modify add_files_to_cache() and its helpers to accept the necessary
-arguments instead of relying on globals.
+Diff best viewed with `--color-moved`.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/add.c      | 22 +++++++++++++++-------
- builtin/checkout.c |  2 +-
- builtin/commit.c   |  3 ++-
- cache.h            |  4 +++-
- 4 files changed, 21 insertions(+), 10 deletions(-)
+ builtin/ls-files.c | 137 ---------------------------------------------
+ read-cache.c       | 137 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 137 insertions(+), 137 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 76cc026a68a..a526eff734e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -37,6 +37,8 @@ static int include_sparse;
- static const char *pathspec_from_file;
- 
- struct update_callback_data {
-+	struct index_state *index;
-+	int include_sparse;
- 	int flags;
- 	int add_errors;
- };
-@@ -100,7 +102,8 @@ static void update_callback(struct diff_queue_struct *q,
- 		struct diff_filepair *p = q->queue[i];
- 		const char *path = p->one->path;
- 
--		if (!include_sparse && !path_in_sparse_checkout(path, &the_index))
-+		if (!data->include_sparse &&
-+		    !path_in_sparse_checkout(path, data->index))
- 			continue;
- 
- 		switch (fix_unmerged_status(p, data)) {
-@@ -108,7 +111,7 @@ static void update_callback(struct diff_queue_struct *q,
- 			die(_("unexpected diff status %c"), p->status);
- 		case DIFF_STATUS_MODIFIED:
- 		case DIFF_STATUS_TYPE_CHANGED:
--			if (add_file_to_index(&the_index, path,	data->flags)) {
-+			if (add_file_to_index(data->index, path, data->flags)) {
- 				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
- 					die(_("updating files failed"));
- 				data->add_errors++;
-@@ -118,7 +121,7 @@ static void update_callback(struct diff_queue_struct *q,
- 			if (data->flags & ADD_CACHE_IGNORE_REMOVAL)
- 				break;
- 			if (!(data->flags & ADD_CACHE_PRETEND))
--				remove_file_from_index(&the_index, path);
-+				remove_file_from_index(data->index, path);
- 			if (data->flags & (ADD_CACHE_PRETEND|ADD_CACHE_VERBOSE))
- 				printf(_("remove '%s'\n"), path);
- 			break;
-@@ -126,16 +129,19 @@ static void update_callback(struct diff_queue_struct *q,
- 	}
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 625f48f0d61..069b28bd484 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -516,143 +516,6 @@ static int get_common_prefix_len(const char *common_prefix)
+ 	return common_prefix_len;
  }
  
--int add_files_to_cache(const char *prefix,
--		       const struct pathspec *pathspec, int flags)
-+int add_files_to_cache(struct repository *repo, const char *prefix,
-+		       const struct pathspec *pathspec, int include_sparse,
-+		       int flags)
- {
- 	struct update_callback_data data;
- 	struct rev_info rev;
- 
- 	memset(&data, 0, sizeof(data));
-+	data.index = repo->index;
-+	data.include_sparse = include_sparse;
- 	data.flags = flags;
- 
--	repo_init_revisions(the_repository, &rev, prefix);
-+	repo_init_revisions(repo, &rev, prefix);
- 	setup_revisions(0, NULL, &rev, NULL);
- 	if (pathspec)
- 		copy_pathspec(&rev.prune_data, pathspec);
-@@ -640,7 +646,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	if (add_renormalize)
- 		exit_status |= renormalize_tracked_files(&pathspec, flags);
- 	else
--		exit_status |= add_files_to_cache(prefix, &pathspec, flags);
-+		exit_status |= add_files_to_cache(the_repository, prefix,
-+						  &pathspec, include_sparse,
-+						  flags);
- 
- 	if (add_new_files)
- 		exit_status |= add_files(&dir, flags);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 715eeb5048f..d6765c9dbd9 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -861,7 +861,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			 * entries in the index.
- 			 */
- 
--			add_files_to_cache(NULL, NULL, 0);
-+			add_files_to_cache(the_repository, NULL, NULL, 0, 0);
- 			init_merge_options(&o, the_repository);
- 			o.verbosity = 0;
- 			work = write_in_core_index_as_tree(the_repository);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e67c4be2211..bd634ee6ad1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -447,7 +447,8 @@ static const char *prepare_index(const char **argv, const char *prefix,
- 	if (all || (also && pathspec.nr)) {
- 		repo_hold_locked_index(the_repository, &index_lock,
- 				       LOCK_DIE_ON_ERROR);
--		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
-+		add_files_to_cache(the_repository, also ? prefix : NULL,
-+				   &pathspec, 0, 0);
- 		refresh_cache_or_die(refresh_flags);
- 		cache_tree_update(&the_index, WRITE_TREE_SILENT);
- 		if (write_locked_index(&the_index, &index_lock, 0))
-diff --git a/cache.h b/cache.h
-index 8b2eb52f04e..02d69c24cd6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -554,7 +554,9 @@ int cmp_cache_name_compare(const void *a_, const void *b_);
-  * return 0 if success, 1 - if addition of a file failed and
-  * ADD_FILES_IGNORE_ERRORS was specified in flags
-  */
--int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int flags);
-+int add_files_to_cache(struct repository *repo, const char *prefix,
-+		       const struct pathspec *pathspec, int include_sparse,
-+		       int flags);
- 
- /* diff.c */
- extern int diff_auto_refresh_index;
+-static int read_one_entry_opt(struct index_state *istate,
+-			      const struct object_id *oid,
+-			      struct strbuf *base,
+-			      const char *pathname,
+-			      unsigned mode, int opt)
+-{
+-	int len;
+-	struct cache_entry *ce;
+-
+-	if (S_ISDIR(mode))
+-		return READ_TREE_RECURSIVE;
+-
+-	len = strlen(pathname);
+-	ce = make_empty_cache_entry(istate, base->len + len);
+-
+-	ce->ce_mode = create_ce_mode(mode);
+-	ce->ce_flags = create_ce_flags(1);
+-	ce->ce_namelen = base->len + len;
+-	memcpy(ce->name, base->buf, base->len);
+-	memcpy(ce->name + base->len, pathname, len+1);
+-	oidcpy(&ce->oid, oid);
+-	return add_index_entry(istate, ce, opt);
+-}
+-
+-static int read_one_entry(const struct object_id *oid, struct strbuf *base,
+-			  const char *pathname, unsigned mode,
+-			  void *context)
+-{
+-	struct index_state *istate = context;
+-	return read_one_entry_opt(istate, oid, base, pathname,
+-				  mode,
+-				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
+-}
+-
+-/*
+- * This is used when the caller knows there is no existing entries at
+- * the stage that will conflict with the entry being added.
+- */
+-static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
+-				const char *pathname, unsigned mode,
+-				void *context)
+-{
+-	struct index_state *istate = context;
+-	return read_one_entry_opt(istate, oid, base, pathname,
+-				  mode, ADD_CACHE_JUST_APPEND);
+-}
+-
+-/*
+- * Read the tree specified with --with-tree option
+- * (typically, HEAD) into stage #1 and then
+- * squash them down to stage #0.  This is used for
+- * --error-unmatch to list and check the path patterns
+- * that were given from the command line.  We are not
+- * going to write this index out.
+- */
+-void overlay_tree_on_index(struct index_state *istate,
+-			   const char *tree_name, const char *prefix)
+-{
+-	struct tree *tree;
+-	struct object_id oid;
+-	struct pathspec pathspec;
+-	struct cache_entry *last_stage0 = NULL;
+-	int i;
+-	read_tree_fn_t fn = NULL;
+-	int err;
+-
+-	if (repo_get_oid(the_repository, tree_name, &oid))
+-		die("tree-ish %s not found.", tree_name);
+-	tree = parse_tree_indirect(&oid);
+-	if (!tree)
+-		die("bad tree-ish %s", tree_name);
+-
+-	/* Hoist the unmerged entries up to stage #3 to make room */
+-	/* TODO: audit for interaction with sparse-index. */
+-	ensure_full_index(istate);
+-	for (i = 0; i < istate->cache_nr; i++) {
+-		struct cache_entry *ce = istate->cache[i];
+-		if (!ce_stage(ce))
+-			continue;
+-		ce->ce_flags |= CE_STAGEMASK;
+-	}
+-
+-	if (prefix) {
+-		static const char *(matchbuf[1]);
+-		matchbuf[0] = NULL;
+-		parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC,
+-			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
+-	} else
+-		memset(&pathspec, 0, sizeof(pathspec));
+-
+-	/*
+-	 * See if we have cache entry at the stage.  If so,
+-	 * do it the original slow way, otherwise, append and then
+-	 * sort at the end.
+-	 */
+-	for (i = 0; !fn && i < istate->cache_nr; i++) {
+-		const struct cache_entry *ce = istate->cache[i];
+-		if (ce_stage(ce) == 1)
+-			fn = read_one_entry;
+-	}
+-
+-	if (!fn)
+-		fn = read_one_entry_quick;
+-	err = read_tree(the_repository, tree, &pathspec, fn, istate);
+-	clear_pathspec(&pathspec);
+-	if (err)
+-		die("unable to read tree entries %s", tree_name);
+-
+-	/*
+-	 * Sort the cache entry -- we need to nuke the cache tree, though.
+-	 */
+-	if (fn == read_one_entry_quick) {
+-		cache_tree_free(&istate->cache_tree);
+-		QSORT(istate->cache, istate->cache_nr, cmp_cache_name_compare);
+-	}
+-
+-	for (i = 0; i < istate->cache_nr; i++) {
+-		struct cache_entry *ce = istate->cache[i];
+-		switch (ce_stage(ce)) {
+-		case 0:
+-			last_stage0 = ce;
+-			/* fallthru */
+-		default:
+-			continue;
+-		case 1:
+-			/*
+-			 * If there is stage #0 entry for this, we do not
+-			 * need to show it.  We use CE_UPDATE bit to mark
+-			 * such an entry.
+-			 */
+-			if (last_stage0 &&
+-			    !strcmp(last_stage0->name, ce->name))
+-				ce->ce_flags |= CE_UPDATE;
+-		}
+-	}
+-}
+-
+ static const char * const ls_files_usage[] = {
+ 	N_("git ls-files [<options>] [<file>...]"),
+ 	NULL
+diff --git a/read-cache.c b/read-cache.c
+index f4c31a68c85..c0df4586c9b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3806,3 +3806,140 @@ void prefetch_cache_entries(const struct index_state *istate,
+ 				   to_fetch.oid, to_fetch.nr);
+ 	oid_array_clear(&to_fetch);
+ }
++
++static int read_one_entry_opt(struct index_state *istate,
++			      const struct object_id *oid,
++			      struct strbuf *base,
++			      const char *pathname,
++			      unsigned mode, int opt)
++{
++	int len;
++	struct cache_entry *ce;
++
++	if (S_ISDIR(mode))
++		return READ_TREE_RECURSIVE;
++
++	len = strlen(pathname);
++	ce = make_empty_cache_entry(istate, base->len + len);
++
++	ce->ce_mode = create_ce_mode(mode);
++	ce->ce_flags = create_ce_flags(1);
++	ce->ce_namelen = base->len + len;
++	memcpy(ce->name, base->buf, base->len);
++	memcpy(ce->name + base->len, pathname, len+1);
++	oidcpy(&ce->oid, oid);
++	return add_index_entry(istate, ce, opt);
++}
++
++static int read_one_entry(const struct object_id *oid, struct strbuf *base,
++			  const char *pathname, unsigned mode,
++			  void *context)
++{
++	struct index_state *istate = context;
++	return read_one_entry_opt(istate, oid, base, pathname,
++				  mode,
++				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
++}
++
++/*
++ * This is used when the caller knows there is no existing entries at
++ * the stage that will conflict with the entry being added.
++ */
++static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
++				const char *pathname, unsigned mode,
++				void *context)
++{
++	struct index_state *istate = context;
++	return read_one_entry_opt(istate, oid, base, pathname,
++				  mode, ADD_CACHE_JUST_APPEND);
++}
++
++/*
++ * Read the tree specified with --with-tree option
++ * (typically, HEAD) into stage #1 and then
++ * squash them down to stage #0.  This is used for
++ * --error-unmatch to list and check the path patterns
++ * that were given from the command line.  We are not
++ * going to write this index out.
++ */
++void overlay_tree_on_index(struct index_state *istate,
++			   const char *tree_name, const char *prefix)
++{
++	struct tree *tree;
++	struct object_id oid;
++	struct pathspec pathspec;
++	struct cache_entry *last_stage0 = NULL;
++	int i;
++	read_tree_fn_t fn = NULL;
++	int err;
++
++	if (repo_get_oid(the_repository, tree_name, &oid))
++		die("tree-ish %s not found.", tree_name);
++	tree = parse_tree_indirect(&oid);
++	if (!tree)
++		die("bad tree-ish %s", tree_name);
++
++	/* Hoist the unmerged entries up to stage #3 to make room */
++	/* TODO: audit for interaction with sparse-index. */
++	ensure_full_index(istate);
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++		if (!ce_stage(ce))
++			continue;
++		ce->ce_flags |= CE_STAGEMASK;
++	}
++
++	if (prefix) {
++		static const char *(matchbuf[1]);
++		matchbuf[0] = NULL;
++		parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC,
++			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
++	} else
++		memset(&pathspec, 0, sizeof(pathspec));
++
++	/*
++	 * See if we have cache entry at the stage.  If so,
++	 * do it the original slow way, otherwise, append and then
++	 * sort at the end.
++	 */
++	for (i = 0; !fn && i < istate->cache_nr; i++) {
++		const struct cache_entry *ce = istate->cache[i];
++		if (ce_stage(ce) == 1)
++			fn = read_one_entry;
++	}
++
++	if (!fn)
++		fn = read_one_entry_quick;
++	err = read_tree(the_repository, tree, &pathspec, fn, istate);
++	clear_pathspec(&pathspec);
++	if (err)
++		die("unable to read tree entries %s", tree_name);
++
++	/*
++	 * Sort the cache entry -- we need to nuke the cache tree, though.
++	 */
++	if (fn == read_one_entry_quick) {
++		cache_tree_free(&istate->cache_tree);
++		QSORT(istate->cache, istate->cache_nr, cmp_cache_name_compare);
++	}
++
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++		switch (ce_stage(ce)) {
++		case 0:
++			last_stage0 = ce;
++			/* fallthru */
++		default:
++			continue;
++		case 1:
++			/*
++			 * If there is stage #0 entry for this, we do not
++			 * need to show it.  We use CE_UPDATE bit to mark
++			 * such an entry.
++			 */
++			if (last_stage0 &&
++			    !strcmp(last_stage0->name, ce->name))
++				ce->ce_flags |= CE_UPDATE;
++		}
++	}
++}
 -- 
 gitgitgadget
 
