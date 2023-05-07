@@ -2,217 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F3D7C77B73
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 00:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36667C77B75
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 01:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbjEGA4n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 May 2023 20:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57870 "EHLO
+        id S230479AbjEGBg2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 May 2023 21:36:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232535AbjEGAzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 May 2023 20:55:51 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E8D425711
-        for <git@vger.kernel.org>; Sat,  6 May 2023 17:54:36 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ad89c7a84fso3522911fa.2
-        for <git@vger.kernel.org>; Sat, 06 May 2023 17:54:36 -0700 (PDT)
+        with ESMTP id S230218AbjEGBg0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 May 2023 21:36:26 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC432684
+        for <git@vger.kernel.org>; Sat,  6 May 2023 18:36:25 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ac7707e34fso37788951fa.1
+        for <git@vger.kernel.org>; Sat, 06 May 2023 18:36:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683420858; x=1686012858;
+        d=gmail.com; s=20221208; t=1683423383; x=1686015383;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bo6Jdplql6L9f8b9tOieOz/qUL9wi9YJJOJX7/9u1Yg=;
-        b=jHFHGeCLIzbQ0HJL10RMGOYgyf5pUPTgmxqtr6SExasCgFBIWFY/1Nx5ncgLauFGEc
-         QbtxYDgjlUBSXP8YGByCP9XlQLSa6W3yrDarH7uaFgVerwG/j8hEw2iI4Fmg7gHCuotz
-         +Aph+alUgHvzCRZ0fKUj2cmJTEZZLB8Ui/b8RH8reQ6Jzw03pgJ2S4sWafdYMQ2F2B4n
-         FwNc/iIHNGlM1Pbv30x5UeF4IVW7zdg210x76sOpTdLnR2cMvRoo7FFeE8aC+C2cnvZD
-         JjxXRy0QfVuUIYf4FIN9XaxK9YnJlDgcx+oSQL/uDwhH0A33V236SSLlIKjSwv3HpQVu
-         7W6g==
+        bh=2Es+5rDhS92mDLmKmIwhC/B6B2Y4P/MAUS3EWWnFZ/U=;
+        b=fvVUVZNbzhtVKbPyFN7NLz+XaVplaKDItTQZYKB7zSXuo8qObyQs108Y/6TiBhEjD8
+         CGCAZjj/DU4IE6EZIBmYrw9oMM8hjpW7mQKqeKWr+2oOrJwTKCSwXrZ4sSyOQGhCVRV3
+         eeFJLXE6KRIDMBDrtfM5yiC0Lb7uf2XPnxZ+zNAwJQd2HwfPAmcNOSQrI1qUnz5QV3Ye
+         2sRoBElXiahOnEPOzURYpIsjcjYAtQjGhTIn0tFGADMxc/gcAPEvLeKKkZQP3Uhvg8cz
+         Pc0Qji8WcCIX2sy5vpzUuL4oDOmIhARO63agFQwVEEQbNw18A4ch2YwR/PqiShfzntn0
+         YuKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683420858; x=1686012858;
+        d=1e100.net; s=20221208; t=1683423383; x=1686015383;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bo6Jdplql6L9f8b9tOieOz/qUL9wi9YJJOJX7/9u1Yg=;
-        b=Oy+R3EUj8n+jIRMYUR3t1FksWl/3upMfSE+7GnGEf6iVJsTNuQyXJFClQEJXjnLNrq
-         +Z+VZQoltKRKAEe5yGkhQho6G0N1KPrgKVPuySRy+uGSQ+AUUCTIUy8kCqBxMy/OGe03
-         jgjGQV8Hu+OJ4T9QU/BYNkfjMyq3zKPb7KN8Q3HKEuK+JlSEfIyuCyB++gO7C/xjPSkO
-         Ww1UxVJYoZRuPh3amftrbp8tZ7Oj76m6igcSaE2uHTPBuuznh11sXhmnNIqmk/pGpY/x
-         Qjh6iRqA+4/0uBbhwIFhKJLHigpZqvGnCWwzzr9ZMbHpn5+7yo9HRW5BzalTQNbepZ5+
-         c5sw==
-X-Gm-Message-State: AC+VfDxYizl/z1O6DAwfZpkDcNJxYLXv1vOxKVLu9JORBG5WMAAY51No
-        Ezv01xTwMyGhdOF+t594gyNbQ7RgehvQT22wUAMaJfeNhwc=
-X-Google-Smtp-Source: ACHHUZ56rm+4tAps+rYsH5Ps6UjiW+HxkLu3NgQZ+IEajgi+o07OyOn1v65R0NKM26dKTCLR/6qIqr9n5EtpKw/0E/8=
-X-Received: by 2002:ac2:5443:0:b0:4ec:a4b4:4731 with SMTP id
- d3-20020ac25443000000b004eca4b44731mr1466833lfn.68.1683420059944; Sat, 06 May
- 2023 17:40:59 -0700 (PDT)
+        bh=2Es+5rDhS92mDLmKmIwhC/B6B2Y4P/MAUS3EWWnFZ/U=;
+        b=kwfGk5Uu853XNelTcaKvi+hXdo+487iX3cA4D+vMEDQofcYUJGIRhsh201SCpcr20x
+         FrJalIXRaD9Ap/oIwWk4BxWuWf+Yy96h3Wt0kXO6RAyrySTKYqqSOtauIdM49Q7t2Osf
+         SVJkN8EggQ7VNqDs6EFZFV6Gvi7QKGhgrtKAF4B93QE4oxpHfJMehAnje2oGCAPo76r+
+         G4lyKS+MuB19mlD0l6/VcKQcobK+707VI+t/ltZGsRX7pkw9nQB8eMagSrMLrU4lv+3e
+         C+aTp9Rgm2F11yy1KcvgLRfkCwoPjzcsnPiH7wDNj/H1Uj0iVHmj2UdIkapemvP0npnE
+         8ScQ==
+X-Gm-Message-State: AC+VfDzXW8dAZcQlE2IZasVegStRSosj2ldm+anXLmoe+gR8F857BWKt
+        xktCBpQRdzdP2JQ0WpdtmJgHXQ70VVcrOvVoIR5cpq9w
+X-Google-Smtp-Source: ACHHUZ4pCtjiqjI8Nuyr8ESg/Yv6Q+UK/ibqY9w4X6RXg4dyyYj/X43R9pkGSCfCgRVdxhUJvs8pr4Law7rQhy0s6fg=
+X-Received: by 2002:ac2:53bc:0:b0:4e8:4106:ea93 with SMTP id
+ j28-20020ac253bc000000b004e84106ea93mr1585668lfh.69.1683423383074; Sat, 06
+ May 2023 18:36:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230502211454.1673000-1-calvinwan@google.com> <20230503184849.1809304-1-calvinwan@google.com>
-In-Reply-To: <20230503184849.1809304-1-calvinwan@google.com>
+References: <pull.862.v2.git.git.1683127916363.gitgitgadget@gmail.com> <pull.862.v3.git.git.1683150400953.gitgitgadget@gmail.com>
+In-Reply-To: <pull.862.v3.git.git.1683150400953.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 6 May 2023 17:40:47 -0700
-Message-ID: <CABPp-BGk-s+4b+OHi9FDXjwz5BeZPS8qb4XiJ8CVwkt8Siaq8A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] strbuf cleanups
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
+Date:   Sat, 6 May 2023 18:36:11 -0700
+Message-ID: <CABPp-BEu6F1KYq8vHjypc470HH0fu-4DR6jXogAP=zY1jGNEXg@mail.gmail.com>
+Subject: Re: [PATCH v3] docs: clarify git rm --cached function in gitignore note
+To:     Sohom Datta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Sohom Datta <sohomdatta1@gmail.com>,
+        Sohom Datta <sohom.datta@learner.manipal.edu>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 3, 2023 at 11:48=E2=80=AFAM Calvin Wan <calvinwan@google.com> w=
-rote:
+On Wed, May 3, 2023 at 2:46=E2=80=AFPM Sohom Datta via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Strbuf is a widely used basic structure that should only interact with
-> other primitives in strbuf.[ch].
-
-"should"?  I agree with moving things in this direction, but the
-wording here suggests there's a pre-existing directive or guideline;
-but if so, I'm unfamiliar with it.  Maybe this should be reworded to
-"This series modifies strbuf to focus on string manipulation with
-minimal other dependencies"?
-
-> Over time certain functions inside of
-> strbuf.[ch] have been added to interact with higher level objects and
-> functions. This series cleans up some of those higher level interactions
-> by moving the offending functions to the files they interact with and
-> adding documentation to strbuf.h. With the goal of eventually being able
-> to stand up strbuf as a libary, this series also removes the use of
-> environment variables from strbuf.
-
-As Junio pointed out, "environment variables" is misleading; see below.
-
-> Range-diff against v1:
-> -:  ---------- > 1:  e0dd3f5295 strbuf: clarify API boundary
-
-I read this separately; this patch looks good to me.
-
-> 1:  283771c088 ! 2:  ec1ea6ae4f abspath: move related functions to abspat=
-h
->     @@ Commit message
->          abspath: move related functions to abspath
+> From: Sohom Datta <sohom.datta@learner.manipal.edu>
 >
->          Move abspath-related functions from strbuf.[ch] to abspath.[ch] =
-since
->     -    they do not belong in a low-level library.
->     +    paths are not primitive objects and therefore strbuf should not =
-interact
->     +    with them.
-
-This applies to patches 4 & 5 as well:
-
-Would this perhaps be better worded as:
-
-    Move abspath-related functions from strbuf.[ch] to abspath.[ch] so that
-    strbuf is focused on string manipulation routines with minimal dependen=
-cies.
-
-?
-
->       ## abspath.c ##
->      @@ abspath.c: char *prefix_filename_except_for_dash(const char *pfx,=
- const char *arg)
-> 2:  58f78b8ae0 =3D 3:  2d74561b91 credential-store: move related function=
-s to credential-store file
-> 3:  88ab90c079 ! 4:  30b5e635cb object-name: move related functions to ob=
-ject-name
->     @@ Commit message
->          object-name: move related functions to object-name
+> Explain to users that the step to untrack a file will not also prevent th=
+em
+> from getting added in the future.
 >
->          Move object-name-related functions from strbuf.[ch] to object-na=
-me.[ch]
->     -    since they do not belong in a low-level library.
->     +    since paths are not a primitive object that strbuf should direct=
-ly
->     +    interact with.
+> Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
+> ---
+>     docs: Clarify git rm --cached function in gitignore note
 >
->       ## object-name.c ##
->      @@ object-name.c: static void find_abbrev_len_packed(struct min_abbr=
-ev_data *mad)
-> 4:  30b7de5a81 ! 5:  6905618470 path: move related function to path
->     @@ Metadata
->       ## Commit message ##
->          path: move related function to path
+>     I've fixed the Sign-Off v/s commit author issue and incorporated the
+>     changes suggested :)
 >
->     -    Move path-related function from strbuf.[ch] to path.[ch] since i=
-t does
->     -    not belong in a low-level library.
->     +    Move path-related function from strbuf.[ch] to path.[ch] since p=
-ath is
->     +    not a primitive object and therefore strbuf should not directly =
-interact
->     +    with it.
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-862=
+%2Fsohomdatta1%2Fgitignore-note-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-862/so=
+homdatta1/gitignore-note-v3
+> Pull-Request: https://github.com/git/git/pull/862
 >
->       ## path.c ##
->      @@ path.c: int normalize_path_copy(char *dst, const char *src)
-> 5:  7b6d6353de ! 6:  caf3482bf7 strbuf: clarify dependency
->     @@ Metadata
->       ## Commit message ##
->          strbuf: clarify dependency
+> Range-diff vs v2:
 >
->     +    refs.h was once needed but is no longer so as of 6bab74e7fb8 ("s=
-trbuf:
->     +    move strbuf_branchname to sha1_name.c", 2010-11-06). strbuf.h wa=
-s
->     +    included thru refs.h, so removing refs.h requires strbuf.h to be=
- added
->     +    back.
->     +
-
-Thanks.
-
-> 6:  ffacd1cbe5 ! 7:  a7f23488f8 strbuf: remove enviroment variables
->     @@ Metadata
->      Author: Calvin Wan <calvinwan@google.com>
+>  1:  c3257398c8f ! 1:  ae09ff2e70c docs: clarify git rm --cached function=
+ in gitignore note
+>      @@
+>        ## Metadata ##
+>      -Author: Sohom <sohom.datta@learner.manipal.edu>
+>      +Author: Sohom Datta <sohom.datta@learner.manipal.edu>
 >
->       ## Commit message ##
->     -    strbuf: remove enviroment variables
->     +    strbuf: remove environment variables
+>        ## Commit message ##
+>           docs: clarify git rm --cached function in gitignore note
 >
->     -    As a lower level library, strbuf should not directly access envi=
-ronment
->     -    variables within its functions. Therefore, add an additional var=
-iable to
->     -    function signatures for functions that use an environment variab=
-le and
->     -    refactor callers to pass in the environment variable.
->     +    As a library that only interacts with other primitives, strbuf s=
-hould
->     +    not directly access environment variables within its
->     +    functions. Therefore, add an additional variable to function sig=
-natures
->     +    for functions that use an environment variable and refactor call=
-ers to
->     +    pass in the environment variable.
+>      -    Explain to users that the step to untrack a file will not also =
+keep it
+>      -    untracked in the future.
+>      +    Explain to users that the step to untrack a file will not also =
+prevent them
+>      +    from getting added in the future.
+>
+>           Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
+>
+>      @@ Documentation/gitignore.txt: The purpose of gitignore files is to=
+ ensure that ce
+>        To stop tracking a file that is currently tracked, use
+>       -'git rm --cached'.
+>       +'git rm --cached' to remove the file from the index. The filename
+>      -+can then be added to the `gitignore` file to stop the file from
+>      ++can then be added to the `.gitignore` file to stop the file from
+>       +being reintroduced in later commits.
+>
+>        Git does not follow symbolic links when accessing a `.gitignore` f=
+ile in
+>
+>
+>  Documentation/gitignore.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index f2738b10db6..4c17f2356c4 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -146,7 +146,9 @@ The purpose of gitignore files is to ensure that cert=
+ain files
+>  not tracked by Git remain untracked.
+>
+>  To stop tracking a file that is currently tracked, use
+> -'git rm --cached'.
+> +'git rm --cached' to remove the file from the index. The filename
+> +can then be added to the `.gitignore` file to stop the file from
+> +being reintroduced in later commits.
+>
+>  Git does not follow symbolic links when accessing a `.gitignore` file in
+>  the working tree. This keeps behavior consistent when the file is
+>
+> base-commit: 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
+> --
+> gitgitgadget
 
-"environment variable" makes one think not of "variable from
-environment.c [that happens to be a global]" but of
-https://en.wikipedia.org/wiki/Environment_variable.  The fact that the
-variable is defined in environment.c isn't even relevant here, though,
-while the fact that it is a global is relevant.  I'd just
-s/environment variable/global variable/ in all 4 places (er, 5 if you
-include the cover letter).
+v3 looks good to me:
 
-Your v3 7/7 has an important correction, but you didn't send out a
-range diff for v3 so I'm putting my comments on your v2 range-diff.
-:-)
-
->     + /**
->        * Strip whitespace from a buffer. The second parameter controls if
->     -  * comments are considered contents to be removed or not.
->     +- * comments are considered contents to be removed or not.
->     ++ * comments are considered contents to be removed or not. The third=
- parameter
->     ++ * is the comment character that determines whether a line is a com=
-ment or not.
->        */
-
-Thanks.
-
-
-This series fixes two of my comments on v1, and the other was just
-"here's another cleanup that could be added" -- it's fine to punt on.
-
-I only had a couple minor comments on this v2/v3 that should be easy
-to fix up, all included in this response to the cover letter.
+Reviewed-by: Elijah Newren <newren@gmail.com>
