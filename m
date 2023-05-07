@@ -2,30 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95138C77B7D
-	for <git@archiver.kernel.org>; Sun,  7 May 2023 12:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCFBDC77B7D
+	for <git@archiver.kernel.org>; Sun,  7 May 2023 12:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231501AbjEGMHG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 May 2023 08:07:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45510 "EHLO
+        id S231517AbjEGMHU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 May 2023 08:07:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230283AbjEGMHD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2023 08:07:03 -0400
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750A04EC9
-        for <git@vger.kernel.org>; Sun,  7 May 2023 05:06:58 -0700 (PDT)
-Date:   Sun, 07 May 2023 12:06:43 +0000
+        with ESMTP id S230225AbjEGMHS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2023 08:07:18 -0400
+Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF7311B6A
+        for <git@vger.kernel.org>; Sun,  7 May 2023 05:07:13 -0700 (PDT)
+Date:   Sun, 07 May 2023 12:06:53 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1683461216; x=1683720416;
-        bh=O+Fl4bjZvnbGHrlijbEhzADoQ3wuGL1fXlnCfWpoOQ4=;
+        s=protonmail3; t=1683461231; x=1683720431;
+        bh=GBD9KRYfDWCz1DNOb3JfzyQ5/42VYlL6lgVC7m5TmLw=;
         h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
          Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=vfW8gRST5a7WiiMm67rzUDcEwvePiolBSslc4nK/IAgqrHhxU39W8FKJq3B0TsLDI
-         ElgV2fkdXCSI4GZD1uXKHjL3TyGHUepecR0VWQ6dF6ocru8FmN6UQSiWityKRPd5aK
-         gVERVhlSqA9m5lq7f/jNSf6JbEb83w7QyzPoXq/Hmdg7IdkOFbbKl2ezVQCUhUnT07
-         IpiD+Cfw98vq7bdwAlek5tiuSaYYvv+tbxyAAN3oqdjTViqF5QVGLRFMn6nkQLzVqq
-         7yADqxoS6PDP0gxU1C6n3Q6FkMgmlqwopvIGMt0SR2bIw7ZaQS3aXKl+xn5lyaoNJv
-         H3DHgtbzDSa+A==
+        b=mhPPB2QXLpbYAFXBaeP92v/oJ7IwHhO4C5jS/EHqx4r2l8W0Szv2kAyQ/trKR6Wkc
+         17zPxi825fhLKZZLLDX2s+/MDU9gEtt5vtZIWKUq+7FZo1G7w2y7ZpnWvUeOQ4tCHO
+         n+K/ms6FA9PuNQMESkeXoYsG5Xoo1ByTjMuY+SEXAaEyefR4TJgCWWjAJhIumod2Yd
+         /0H2GSrZyjtqioh9jCuQXjlESzbqk97yXEiGPYJzH9IJinW531/eCsn9uDCdl6MAsu
+         +pIUObG617bL82TpTaoVnlF72Lgxsb+350tWxV6Ca4/vU9H4zJO3G1jGn5WPH0cbVp
+         /jIhlgDjqBMwQ==
 To:     git@vger.kernel.org
 From:   Jacob Abel <jacobabel@nullpo.dev>
 Cc:     Jacob Abel <jacobabel@nullpo.dev>,
@@ -35,8 +35,8 @@ Cc:     Jacob Abel <jacobabel@nullpo.dev>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v10 5/8] worktree add: add --orphan flag
-Message-ID: <20230507120530.14669-6-jacobabel@nullpo.dev>
+Subject: [PATCH v10 6/8] worktree add: introduce "try --orphan" hint
+Message-ID: <20230507120530.14669-7-jacobabel@nullpo.dev>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,367 +45,223 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for creating an orphan branch when adding a new worktree.
-The functionality of this flag is equivalent to git switch's --orphan
-option.
+Add a new advice/hint in `git worktree add` for when the user
+tries to create a new worktree from a reference that doesn't exist.
 
 Current Behavior:
-% git -C foo.git --no-pager branch -l
-+ main
-% git -C foo.git worktree add main/
-Preparing worktree (new branch 'main')
-HEAD is now at 6c93a75 a commit
-%
 
-% git init bar.git
-Initialized empty Git repository in /path/to/bar.git/
-% git -C bar.git --no-pager branch -l
-
-% git -C bar.git worktree add main/
-Preparing worktree (new branch 'main')
-fatal: not a valid object name: 'HEAD'
+% git init foo
+Initialized empty Git repository in /path/to/foo/
+% touch file
+% git -C foo commit -q -a -m "test commit"
+% git -C foo switch --orphan norefbranch
+% git -C foo worktree add newbranch/
+Preparing worktree (new branch 'newbranch')
+fatal: invalid reference: HEAD
 %
 
 New Behavior:
 
-% git -C foo.git --no-pager branch -l
-+ main
-% git -C foo.git worktree add main/
-Preparing worktree (new branch 'main')
-HEAD is now at 6c93a75 a commit
-%
-
-% git init --bare bar.git
-Initialized empty Git repository in /path/to/bar.git/
-% git -C bar.git --no-pager branch -l
-
-% git -C bar.git worktree add main/
-Preparing worktree (new branch 'main')
-fatal: invalid reference: HEAD
-% git -C bar.git worktree add --orphan -b main/
-Preparing worktree (new branch 'main')
-% git -C bar.git worktree add --orphan -b newbranch worktreedir/
+% git init --bare foo
+Initialized empty Git repository in /path/to/foo/
+% touch file
+% git -C foo commit -q -a -m "test commit"
+% git -C foo switch --orphan norefbranch
+% git -C foo worktree add newbranch/
 Preparing worktree (new branch 'newbranch')
+hint: If you meant to create a worktree containing a new orphan branch
+hint: (branch with no commits) for this repository, you can do so
+hint: using the --orphan option:
+hint:
+hint:   git worktree add --orphan newbranch/
+hint:
+hint: Disable this message with "git config advice.worktreeAddOrphan false"
+fatal: invalid reference: HEAD
+% git -C foo worktree add -b newbranch2 new_wt/
+Preparing worktree (new branch 'newbranch')
+hint: If you meant to create a worktree containing a new orphan branch
+hint: (branch with no commits) for this repository, you can do so
+hint: using the --orphan option:
+hint:
+hint:   git worktree add --orphan -b newbranch2 new_wt/
+hint:
+hint: Disable this message with "git config advice.worktreeAddOrphan false"
+fatal: invalid reference: HEAD
 %
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
 ---
- Documentation/git-worktree.txt |  6 ++-
- builtin/worktree.c             | 67 +++++++++++++++++++++++++++------
- t/t2400-worktree-add.sh        | 68 ++++++++++++++++++++++++++++++++++
- 3 files changed, 129 insertions(+), 12 deletions(-)
+ Documentation/config/advice.txt |  4 ++++
+ advice.c                        |  1 +
+ advice.h                        |  1 +
+ builtin/worktree.c              | 26 +++++++++++++++++++++++
+ t/t2400-worktree-add.sh         | 37 +++++++++++++++++++++++++++++++++
+ 5 files changed, 69 insertions(+)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.tx=
-t
-index b9c12779f1..485d865eb2 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>=
-]]
--=09=09   [(-b | -B) <new-branch>] <path> [<commit-ish>]
-+=09=09   [--orphan] [(-b | -B) <new-branch>] <path> [<commit-ish>]
- 'git worktree list' [-v | --porcelain [-z]]
- 'git worktree lock' [--reason <string>] <worktree>
- 'git worktree move' <worktree> <new-path>
-@@ -222,6 +222,10 @@ This can also be set up as the default behaviour by us=
-ing the
- =09With `prune`, do not remove anything; just report what it would
- =09remove.
-
-+--orphan::
-+=09With `add`, make the new worktree and index empty, associating
-+=09the worktree with a new orphan/unborn branch named `<new-branch>`.
-+
- --porcelain::
- =09With `list`, output in an easy-to-parse format for scripts.
- =09This format will remain stable across Git versions and regardless of us=
-er
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d1b4b53f2c..48de7fc3b0 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -22,7 +22,8 @@
-
- #define BUILTIN_WORKTREE_ADD_USAGE \
- =09N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reason <st=
-ring>]]\n" \
--=09   "                 [(-b | -B) <new-branch>] <path> [<commit-ish>]")
-+=09   "                 [--orphan] [(-b | -B) <new-branch>] <path> [<commi=
-t-ish>]")
-+
- #define BUILTIN_WORKTREE_LIST_USAGE \
- =09N_("git worktree list [-v | --porcelain [-z]]")
- #define BUILTIN_WORKTREE_LOCK_USAGE \
-@@ -95,6 +96,7 @@ struct add_opts {
- =09int detach;
- =09int quiet;
- =09int checkout;
-+=09int orphan;
- =09const char *keep_locked;
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.=
+txt
+index c96b5b2e5d..c548a91e67 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -138,4 +138,8 @@ advice.*::
+ =09=09checkout.
+ =09diverging::
+ =09=09Advice shown when a fast-forward is not possible.
++=09worktreeAddOrphan::
++=09=09Advice shown when a user tries to create a worktree from an
++=09=09invalid reference, to instruct how to create a new orphan
++=09=09branch instead.
+ --
+diff --git a/advice.c b/advice.c
+index d6232439c3..e5a9bb9b44 100644
+--- a/advice.c
++++ b/advice.c
+@@ -78,6 +78,7 @@ static struct {
+ =09[ADVICE_SUBMODULES_NOT_UPDATED] =09=09=3D { "submodulesNotUpdated", 1 }=
+,
+ =09[ADVICE_UPDATE_SPARSE_PATH]=09=09=09=3D { "updateSparsePath", 1 },
+ =09[ADVICE_WAITING_FOR_EDITOR]=09=09=09=3D { "waitingForEditor", 1 },
++=09[ADVICE_WORKTREE_ADD_ORPHAN]=09=09=09=3D { "worktreeAddOrphan", 1 },
  };
 
-@@ -368,6 +370,22 @@ static int checkout_worktree(const struct add_opts *op=
-ts,
- =09return run_command(&cp);
- }
+ static const char turn_off_instructions[] =3D
+diff --git a/advice.h b/advice.h
+index 0f584163f5..2affbe1426 100644
+--- a/advice.h
++++ b/advice.h
+@@ -49,6 +49,7 @@ struct string_list;
+ =09ADVICE_UPDATE_SPARSE_PATH,
+ =09ADVICE_WAITING_FOR_EDITOR,
+ =09ADVICE_SKIPPED_CHERRY_PICKS,
++=09ADVICE_WORKTREE_ADD_ORPHAN,
+ };
 
-+static int make_worktree_orphan(const char * ref, const struct add_opts *o=
-pts,
-+=09=09=09=09struct strvec *child_env)
-+{
-+=09struct strbuf symref =3D STRBUF_INIT;
-+=09struct child_process cp =3D CHILD_PROCESS_INIT;
+ int git_default_advice_config(const char *var, const char *value);
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 48de7fc3b0..15bdb380c7 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "checkout.h"
+ #include "config.h"
+ #include "builtin.h"
+@@ -39,6 +40,20 @@
+ #define BUILTIN_WORKTREE_UNLOCK_USAGE \
+ =09N_("git worktree unlock <worktree>")
+
++#define WORKTREE_ADD_ORPHAN_WITH_DASH_B_HINT_TEXT \
++=09_("If you meant to create a worktree containing a new orphan branch\n" =
+\
++=09"(branch with no commits) for this repository, you can do so\n" \
++=09"using the --orphan flag:\n" \
++=09"\n" \
++=09"=09git worktree add --orphan -b %s %s\n")
 +
-+=09validate_new_branchname(ref, &symref, 0);
-+=09strvec_pushl(&cp.args, "symbolic-ref", "HEAD", symref.buf, NULL);
-+=09if (opts->quiet)
-+=09=09strvec_push(&cp.args, "--quiet");
-+=09strvec_pushv(&cp.env, child_env->v);
-+=09strbuf_release(&symref);
-+=09cp.git_cmd =3D 1;
-+=09return run_command(&cp);
-+}
++#define WORKTREE_ADD_ORPHAN_NO_DASH_B_HINT_TEXT \
++=09_("If you meant to create a worktree containing a new orphan branch\n" =
+\
++=09"(branch with no commits) for this repository, you can do so\n" \
++=09"using the --orphan flag:\n" \
++=09"\n" \
++=09"=09git worktree add --orphan %s\n")
 +
- static int add_worktree(const char *path, const char *refname,
- =09=09=09const struct add_opts *opts)
- {
-@@ -397,7 +415,7 @@ static int add_worktree(const char *path, const char *r=
-efname,
- =09=09=09die_if_checked_out(symref.buf, 0);
- =09}
- =09commit =3D lookup_commit_reference_by_name(refname);
--=09if (!commit)
-+=09if (!commit && !opts->orphan)
- =09=09die(_("invalid reference: %s"), refname);
-
- =09name =3D worktree_basename(path, &len);
-@@ -486,10 +504,10 @@ static int add_worktree(const char *path, const char =
-*refname,
- =09strvec_pushf(&child_env, "%s=3D%s", GIT_WORK_TREE_ENVIRONMENT, path);
- =09cp.git_cmd =3D 1;
-
--=09if (!is_branch)
-+=09if (!is_branch && commit) {
- =09=09strvec_pushl(&cp.args, "update-ref", "HEAD",
- =09=09=09     oid_to_hex(&commit->object.oid), NULL);
--=09else {
-+=09} else {
- =09=09strvec_pushl(&cp.args, "symbolic-ref", "HEAD",
- =09=09=09     symref.buf, NULL);
- =09=09if (opts->quiet)
-@@ -501,6 +519,10 @@ static int add_worktree(const char *path, const char *=
-refname,
- =09if (ret)
- =09=09goto done;
-
-+=09if (opts->orphan &&
-+=09    (ret =3D make_worktree_orphan(refname, opts, &child_env)))
-+=09=09goto done;
-+
- =09if (opts->checkout &&
- =09    (ret =3D checkout_worktree(opts, &child_env)))
- =09=09goto done;
-@@ -520,7 +542,7 @@ static int add_worktree(const char *path, const char *r=
-efname,
- =09 * Hook failure does not warrant worktree deletion, so run hook after
- =09 * is_junk is cleared, but do return appropriate code when hook fails.
- =09 */
--=09if (!ret && opts->checkout) {
-+=09if (!ret && opts->checkout && !opts->orphan) {
- =09=09struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
-
- =09=09strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
-@@ -568,7 +590,7 @@ static void print_preparing_worktree_line(int detach,
- =09=09else {
- =09=09=09struct commit *commit =3D lookup_commit_reference_by_name(branch)=
-;
- =09=09=09if (!commit)
--=09=09=09=09die(_("invalid reference: %s"), branch);
-+=09=09=09=09BUG(_("unreachable: invalid reference: %s"), branch);
- =09=09=09fprintf_ln(stderr, _("Preparing worktree (detached HEAD %s)"),
- =09=09=09=09  repo_find_unique_abbrev(the_repository, &commit->object.oid,=
- DEFAULT_ABBREV));
- =09=09}
-@@ -620,6 +642,7 @@ static int add(int ac, const char **av, const char *pre=
+ static const char * const git_worktree_usage[] =3D {
+ =09BUILTIN_WORKTREE_ADD_USAGE,
+ =09BUILTIN_WORKTREE_LIST_USAGE,
+@@ -634,6 +649,7 @@ static int add(int ac, const char **av, const char *pre=
 fix)
- =09=09=09   N_("create a new branch")),
- =09=09OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
- =09=09=09   N_("create or reset a branch")),
-+=09=09OPT_BOOL(0, "orphan", &opts.orphan, N_("create unborn/orphaned branc=
-h")),
- =09=09OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named commi=
-t")),
- =09=09OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working=
- tree")),
- =09=09OPT_BOOL(0, "lock", &keep_locked, N_("keep the new working tree lock=
-ed")),
-@@ -640,6 +663,17 @@ static int add(int ac, const char **av, const char *pr=
+ =09const char *opt_track =3D NULL;
+ =09const char *lock_reason =3D NULL;
+ =09int keep_locked =3D 0;
++=09int used_new_branch_options;
+ =09struct option options[] =3D {
+ =09=09OPT__FORCE(&opts.force,
+ =09=09=09   N_("checkout <branch> even if already checked out in other wor=
+ktree"),
+@@ -686,6 +702,7 @@ static int add(int ac, const char **av, const char *pre=
+fix)
+
+ =09path =3D prefix_filename(prefix, av[0]);
+ =09branch =3D ac < 2 ? "HEAD" : av[1];
++=09used_new_branch_options =3D new_branch || new_branch_force;
+
+ =09if (!strcmp(branch, "-"))
+ =09=09branch =3D "@{-1}";
+@@ -728,6 +745,15 @@ static int add(int ac, const char **av, const char *pr=
 efix)
- =09ac =3D parse_options(ac, av, prefix, options, git_worktree_add_usage, 0=
-);
- =09if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
- =09=09die(_("options '%s', '%s', and '%s' cannot be used together"), "-b",=
- "-B", "--detach");
-+=09if (opts.detach && opts.orphan)
-+=09=09die(_("options '%s', and '%s' cannot be used together"),
-+=09=09    "--orphan", "--detach");
-+=09if (opts.orphan && opt_track)
-+=09=09die(_("'%s' and '%s' cannot be used together"), "--orphan", "--track=
-");
-+=09if (opts.orphan && !opts.checkout)
-+=09=09die(_("'%s' and '%s' cannot be used together"), "--orphan",
-+=09=09    "--no-checkout");
-+=09if (opts.orphan && ac =3D=3D 2)
-+=09=09die(_("'%s' and '%s' cannot be used together"), "--orphan",
-+=09=09    _("<commit-ish>"));
- =09if (lock_reason && !keep_locked)
- =09=09die(_("the option '%s' requires '%s'"), "--reason", "--lock");
- =09if (lock_reason)
-@@ -668,13 +702,17 @@ static int add(int ac, const char **av, const char *p=
-refix)
- =09=09strbuf_release(&symref);
  =09}
 
--=09if (ac < 2 && !new_branch && !opts.detach) {
-+=09if (opts.orphan && !new_branch) {
-+=09=09int n;
-+=09=09const char *s =3D worktree_basename(path, &n);
-+=09=09new_branch =3D xstrndup(s, n);
-+=09} else if (new_branch || opts.detach || opts.orphan) {
-+=09=09// No-op
-+=09} else if (ac < 2) {
- =09=09const char *s =3D dwim_branch(path, &new_branch);
- =09=09if (s)
- =09=09=09branch =3D s;
--=09}
--
--=09if (ac =3D=3D 2 && !new_branch && !opts.detach) {
-+=09} else if (ac =3D=3D 2) {
- =09=09struct object_id oid;
- =09=09struct commit *commit;
- =09=09const char *remote;
-@@ -688,10 +726,17 @@ static int add(int ac, const char **av, const char *p=
-refix)
- =09=09=09}
- =09=09}
+ =09if (!opts.orphan && !lookup_commit_reference_by_name(branch)) {
++=09=09int attempt_hint =3D !opts.quiet && (ac < 2);
++=09=09if (attempt_hint && used_new_branch_options) {
++=09=09=09advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
++=09=09=09=09WORKTREE_ADD_ORPHAN_WITH_DASH_B_HINT_TEXT,
++=09=09=09=09new_branch, path);
++=09=09} else if (attempt_hint) {
++=09=09=09advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
++=09=09=09=09WORKTREE_ADD_ORPHAN_NO_DASH_B_HINT_TEXT, path);
++=09=09}
+ =09=09die(_("invalid reference: %s"), branch);
  =09}
-+
-+=09if (!opts.orphan && !lookup_commit_reference_by_name(branch)) {
-+=09=09die(_("invalid reference: %s"), branch);
-+=09}
-+
- =09if (!opts.quiet)
- =09=09print_preparing_worktree_line(opts.detach, branch, new_branch, !!new=
-_branch_force);
 
--=09if (new_branch) {
-+=09if (opts.orphan) {
-+=09=09branch =3D new_branch;
-+=09} else if (new_branch) {
- =09=09struct child_process cp =3D CHILD_PROCESS_INIT;
- =09=09cp.git_cmd =3D 1;
- =09=09strvec_push(&cp.args, "branch");
 diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 841f15f59e..fba90582b6 100755
+index fba90582b6..46eef26179 100755
 --- a/t/t2400-worktree-add.sh
 +++ b/t/t2400-worktree-add.sh
-@@ -312,6 +312,10 @@ test_wt_add_excl () {
- test_wt_add_excl -b poodle -B poodle bamboo main
- test_wt_add_excl -b poodle --detach bamboo main
- test_wt_add_excl -B poodle --detach bamboo main
-+test_wt_add_excl --orphan --detach bamboo
-+test_wt_add_excl --orphan --no-checkout bamboo
-+test_wt_add_excl --orphan bamboo main
-+test_wt_add_excl --orphan -b bamboo wtdir/ main
-
- test_expect_success '"add -B" fails if the branch is checked out' '
- =09git rev-parse newmain >before &&
-@@ -341,6 +345,62 @@ test_expect_success 'add --quiet -b' '
- =09test_must_be_empty actual
+@@ -401,6 +401,43 @@ test_expect_success '"add" worktree with orphan branch=
+, lock, and reason' '
+ =09test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
  '
 
-+test_expect_success '"add --orphan"' '
-+=09test_when_finished "git worktree remove -f -f orphandir" &&
-+=09git worktree add --orphan -b neworphan orphandir &&
-+=09echo refs/heads/neworphan >expected &&
-+=09git -C orphandir symbolic-ref HEAD >actual &&
-+=09test_cmp expected actual
-+'
++# Note: Quoted arguments containing spaces are not supported.
++test_wt_add_orphan_hint () {
++=09local context=3D"$1" &&
++=09local use_branch=3D$2 &&
++=09shift 2 &&
++=09local opts=3D"$*" &&
++=09test_expect_success "'worktree add' show orphan hint in bad/orphan HEAD=
+ w/ $context" '
++=09=09test_when_finished "rm -rf repo" &&
++=09=09git init repo &&
++=09=09(cd repo && test_commit commit) &&
++=09=09git -C repo switch --orphan noref &&
++=09=09test_must_fail git -C repo worktree add $opts foobar/ 2>actual &&
++=09=09! grep "error: unknown switch" actual &&
++=09=09grep "hint: If you meant to create a worktree containing a new orpha=
+n branch" actual &&
++=09=09if [ $use_branch -eq 1 ]
++=09=09then
++=09=09=09grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" actua=
+l
++=09=09else
++=09=09=09grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
++=09=09fi
 +
-+test_expect_success '"add --orphan (no -b)"' '
-+=09test_when_finished "git worktree remove -f -f neworphan" &&
-+=09git worktree add --orphan neworphan &&
-+=09echo refs/heads/neworphan >expected &&
-+=09git -C neworphan symbolic-ref HEAD >actual &&
-+=09test_cmp expected actual
-+'
++=09'
++}
 +
-+test_expect_success '"add --orphan --quiet"' '
-+=09test_when_finished "git worktree remove -f -f orphandir" &&
-+=09git worktree add --quiet --orphan -b neworphan orphandir 2>log.actual &=
-&
-+=09test_must_be_empty log.actual &&
-+=09echo refs/heads/neworphan >expected &&
-+=09git -C orphandir symbolic-ref HEAD >actual &&
-+=09test_cmp expected actual
-+'
++test_wt_add_orphan_hint 'no opts' 0
++test_wt_add_orphan_hint '-b' 1 -b foobar_branch
++test_wt_add_orphan_hint '-B' 1 -B foobar_branch
 +
-+test_expect_success '"add --orphan" fails if the branch already exists' '
-+=09test_when_finished "git branch -D existingbranch" &&
-+=09git worktree add -b existingbranch orphandir main &&
-+=09git worktree remove orphandir &&
-+=09test_must_fail git worktree add --orphan -b existingbranch orphandir
-+'
-+
-+test_expect_success '"add --orphan" with empty repository' '
-+=09test_when_finished "rm -rf empty_repo" &&
-+=09echo refs/heads/newbranch >expected &&
-+=09GIT_DIR=3D"empty_repo" git init --bare &&
-+=09git -C empty_repo worktree add --orphan -b newbranch worktreedir &&
-+=09git -C empty_repo/worktreedir symbolic-ref HEAD >actual &&
-+=09test_cmp expected actual
-+'
-+
-+test_expect_success '"add" worktree with orphan branch and lock' '
-+=09git worktree add --lock --orphan -b orphanbr orphan-with-lock &&
-+=09test_when_finished "git worktree unlock orphan-with-lock || :" &&
-+=09test -f .git/worktrees/orphan-with-lock/locked
-+'
-+
-+test_expect_success '"add" worktree with orphan branch, lock, and reason' =
-'
-+=09lock_reason=3D"why not" &&
-+=09git worktree add --detach --lock --reason "$lock_reason" orphan-with-lo=
-ck-reason main &&
-+=09test_when_finished "git worktree unlock orphan-with-lock-reason || :" &=
-&
-+=09test -f .git/worktrees/orphan-with-lock-reason/locked &&
-+=09echo "$lock_reason" >expect &&
-+=09test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
++test_expect_success "'worktree add' doesn't show orphan hint in bad/orphan=
+ HEAD w/ --quiet" '
++=09test_when_finished "rm -rf repo" &&
++=09git init repo &&
++=09(cd repo && test_commit commit) &&
++=09test_must_fail git -C repo worktree add --quiet foobar_branch foobar/ 2=
+>actual &&
++=09! grep "error: unknown switch" actual &&
++=09! grep "hint: If you meant to create a worktree containing a new orphan=
+ branch" actual
 +'
 +
  test_expect_success 'local clone from linked checkout' '
  =09git clone --local here here-clone &&
  =09( cd here-clone && git fsck )
-@@ -457,6 +517,14 @@ setup_remote_repo () {
- =09)
- }
-
-+test_expect_success '"add" <path> <remote/branch> w/ no HEAD' '
-+=09test_when_finished rm -rf repo_upstream repo_local foo &&
-+=09setup_remote_repo repo_upstream repo_local &&
-+=09git -C repo_local config --bool core.bare true &&
-+=09git -C repo_local branch -D main &&
-+=09git -C repo_local worktree add ./foo repo_upstream/foo
-+'
-+
- test_expect_success '--no-track avoids setting up tracking' '
- =09test_when_finished rm -rf repo_upstream repo_local foo &&
- =09setup_remote_repo repo_upstream repo_local &&
 --
 2.39.3
 
