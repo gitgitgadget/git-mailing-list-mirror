@@ -2,129 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DC3DC7EE25
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 22:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EC7EC7EE22
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 22:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233953AbjEHWZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 18:25:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55034 "EHLO
+        id S233434AbjEHW0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 18:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233434AbjEHWZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 18:25:49 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB1E95B92
-        for <git@vger.kernel.org>; Mon,  8 May 2023 15:25:48 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-643912bca6fso4031861b3a.0
-        for <git@vger.kernel.org>; Mon, 08 May 2023 15:25:48 -0700 (PDT)
+        with ESMTP id S233577AbjEHW0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 18:26:16 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361C05BB4
+        for <git@vger.kernel.org>; Mon,  8 May 2023 15:26:15 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-b9a7e639656so7936495276.0
+        for <git@vger.kernel.org>; Mon, 08 May 2023 15:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1683584748; x=1686176748;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WePH/tCb4To56/rrzYKWCYwjZ+dOGU5TruKCLc6sNrY=;
-        b=C0Desm1Ar9w5ynDIqlhrMfaFVTek7bSBYxfBOuzXz8IOYi7PGSZ4DmyJqQdQGfoYYj
-         mhkYY4olM+m7rqljCp59YlKOgbwJLO/0xdcuUcB5dRc2IhUAgWJel1hcamGcEiJnxuti
-         Cph+k1ojTkZa1oJNxRzX5cMw1D4FKzuYlbjETgabHwbBzUeBnR0ARSAuzl4SO1P8YPXw
-         ESvDiWYe0kKDCPrH0B/WF4UyOYKOrrlhPZRAHYv0sVtEusIbccQyjwwWXRCd7d6+9Kq1
-         P5r7P5NW7S1QFfBeyapjwIJWSiIHrumqoDjkv3lfut6U+8ClLXhCWqpXAFmWp5ylK5p6
-         mIXQ==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683584774; x=1686176774;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=X2h4jf+zyyUcV+kja2JasfJ4qkEeqWoEfynyVKdsWZw=;
+        b=1JS5eNLCcz1+/sW9rJMulMDb11+gZC+E8jOvTgZYrB6z8TJioDWup7vh9P0AExwQIG
+         G/aJlT6jBPgjkoBmU1MwWl+N+HiMrvZRAWm6zq5R7wbTJtmjQ32nSuMRwV5I01UfMzri
+         rVTdJiLq4DaOlW62aa86JFB2FbB6GYFcc3KJDneA+gIq60JmfjGB6pB4PdvtiGEbLIOe
+         Wo6xAGJW6zWX4SMOp4VsEL8QTkvsDtTweYLmj3Wm8wSv9xuBuXBw5mCh0451HpVtgOjV
+         v7xuyz2F95+FqNCbWbY2xHV7DeddPGCsVa/ZlUpdyQ5y6CQnC0kbplPWUYE/0shrJcsK
+         C7pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683584748; x=1686176748;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WePH/tCb4To56/rrzYKWCYwjZ+dOGU5TruKCLc6sNrY=;
-        b=f2w3t2nXjWXf0vskpOH5CbgWA0IvJF2FyR+DQOuODV/wO/leKw0VKSl0lWC5V4VWf5
-         r3HqT+agpkpiwGbFFWZ6CGNWMqQyjmxJB2PSg+KivoZtzv1q25uw9ID4n+6KFhvfhgBc
-         /tLmvEPTI+2+MOJs6wxKbW7xKsJ+NKVwNnBjA3uwkEOgth1NLuxua1a/DifixMsgXEJZ
-         Chwjc+V68j0XvAZpBvVVmCPhqsKWYFkz3b64er/cNRaVJm5CILMf2AWb+7XgPjtGIoSh
-         tjrYZ+XrIffpc90lejAZ/Kb4mSK8SA59ObjI/Xvuy8wYDefAE1OkLTKZZhP3c6GFQBYF
-         9iWQ==
-X-Gm-Message-State: AC+VfDy/+Ol+7QmAegTv2rdBthGtwH4OJDzvSrDZ1n3Dt02iF6QPVVzR
-        rnDdRwtKVRBekpHmeOKDORycr7coEXitu7bRNA==
-X-Google-Smtp-Source: ACHHUZ5nxuNXiv/7KYFB5FRls/6drCBLIDeCpibCHPPn481h6ikCojc3MmsJ6SARDX378jRwWMfe2w==
-X-Received: by 2002:a05:6a00:1821:b0:644:d77:a2c5 with SMTP id y33-20020a056a00182100b006440d77a2c5mr12386016pfa.29.1683584748242;
-        Mon, 08 May 2023 15:25:48 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id k3-20020aa790c3000000b0063d46ec5777sm419107pfk.158.2023.05.08.15.25.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 15:25:47 -0700 (PDT)
-Message-ID: <8489e272-ccb9-62b1-992e-d305bb27c895@github.com>
-Date:   Mon, 8 May 2023 15:25:45 -0700
+        d=1e100.net; s=20221208; t=1683584774; x=1686176774;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X2h4jf+zyyUcV+kja2JasfJ4qkEeqWoEfynyVKdsWZw=;
+        b=akLht62HLXY8y7cf8G+y7r7mNxm1ejfpg7pT6FbN9EbcEIYZID1XbMsTlpvMHbsoKE
+         8PTe6DcA7h9xN/QabZqGhIBqiNXXrSJjGg6LHgzNWCYVYbu29JtVgjKjcZTX9V03YTPq
+         TIVAKswY+XKa9B/ejFgw5EjqtdEJ/1NwQrYE0UBOgCJBnt34X9BeuV+rb5VvSzTkLsXs
+         7/PlKe+Bnn7nr600H8yKu7tpjjZzHlD0+gWrMAMLhP8Cyz9twNSqs+63zxQ6wU/YJ/IM
+         uA/jSceZDOCpgMoZKbASXrlYwqYDLIkld1cHmrWUjqmPkc7Wsn/DaPUldUwCHdmx+oPj
+         B2SA==
+X-Gm-Message-State: AC+VfDwydK2HShsZ2lonR6mmEtt6N3gJPiVzEVh8Bpg3Dg/tCuJCGZ1R
+        BIQBXG7ii3TkMZM4RBMocDkE0azM8bpRO6+g8mTRpg==
+X-Google-Smtp-Source: ACHHUZ7bYu1V0jxAw5boiH5FXR3lZncynIhUIlnSa+LAb+IUS+Dn9J/jaN61Mc0kduXKw7XtG+qgDg==
+X-Received: by 2002:a25:7454:0:b0:b92:3d81:cc6 with SMTP id p81-20020a257454000000b00b923d810cc6mr11885380ybc.25.1683584774386;
+        Mon, 08 May 2023 15:26:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c203-20020a251cd4000000b00b99768e3b83sm2687045ybc.25.2023.05.08.15.26.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 15:26:13 -0700 (PDT)
+Date:   Mon, 8 May 2023 18:26:12 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/3] t: drop "verbose" helper function
+Message-ID: <ZFl3BCzDwetyAkyQ@nand.local>
+References: <20230508185953.GA2108869@coredump.intra.peff.net>
+ <20230508190457.GC2366490@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.10.1
-Subject: Re: [PATCH v11 1/2] t1092: add tests for `git diff-files`
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com
-References: <20230503215549.511999-1-cheskaqiqi@gmail.com>
- <20230508184652.4283-1-cheskaqiqi@gmail.com>
- <20230508184652.4283-2-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230508184652.4283-2-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230508190457.GC2366490@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> +test_expect_success 'diff-files with pathspec inside sparse definition' '
-> +	init_repos &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	run_on_all ../edit-contents deep/a &&
-> +
-> +	test_all_match git diff-files &&
-> +
-> +	test_all_match git diff-files deep/a &&
-> +
-> +	# test wildcard
-> +	test_all_match git diff-files "deep/*"
+On Mon, May 08, 2023 at 03:04:57PM -0400, Jeff King wrote:
+> Let's consider the "verbose" function a failed experiment and remove the
+> last few callers (which are all many years old, and have been dwindling
+> as we remove them from scripts we touch for other reasons). It will be
+> one less thing for new test writers to see and wonder if they should be
+> using themselves.
 
-You added the '--' separator below, but not here. Was that intentional, or
-should these have it as well? It doesn't make much of a practical difference
-in this case, but it would be nice to remain consistent across all tests of
-'diff-files' that you're adding. 
+Well put.
 
-The same goes for some of the tests in patch 2 [1] ('sparse index is not
-expanded: diff-files' and the perf tests).
+> I think this should be all calls. Most tests will fail after removing
+> the function, of course, but it's possible one could be hiding in an
+> expect_failure or something. I didn't see any after grepping for
+> '[^-]verbose' in t/, which is not too long to look through.
+>
+>  t/t0020-crlf.sh            | 38 +++++++++++++++++++-------------------
+>  t/t1301-shared-repo.sh     |  4 ++--
+>  t/t3427-rebase-subtree.sh  | 12 ++++++------
+>  t/t4022-diff-rewrite.sh    |  2 +-
+>  t/t4062-diff-pickaxe.sh    |  2 +-
+>  t/t5304-prune.sh           | 16 ++++++++--------
+>  t/t6006-rev-list-format.sh |  2 +-
+>  t/t6501-freshen-objects.sh |  2 +-
+>  t/t7001-mv.sh              |  2 +-
+>  t/t7300-clean.sh           |  4 ++--
+>  t/t9902-completion.sh      | 30 +++++++++++++++---------------
+>  t/test-lib-functions.sh    |  9 ---------
+>  12 files changed, 57 insertions(+), 66 deletions(-)
 
-[1] https://lore.kernel.org/git/20230508184652.4283-3-cheskaqiqi@gmail.com/
+I applied these myself and grepped around myself, and also could not
+find any stragglers. So I'd be happy to drop the implementation of
+verbose() in this series, too, to avoid the appearance of it continuing
+to be a blessed path.
 
-> +'
-> +
-> +test_expect_success 'diff-files with pathspec outside sparse definition' '
-> +	init_repos &&
-> +
-> +	test_sparse_match git diff-files -- folder2/a &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	# The directory "folder1" is outside the cone of interest
-> +	# and may not exist in the sparse checkout repositories.
-> +	# Create it as needed, add file "folder1/a" there with
-> +	# contents that is different from the staged version.
-
-nit: 'folder1/' *definitely* won't be present in the sparse-checkout
-repositories, so "will not" would be more accurate than "may not".
-Otherwise, this comment is clearer than before & better explains what's
-going on here.
-
-> +	run_on_all mkdir -p folder1 &&
-> +	run_on_all cp a folder1/a &&
-> +
-> +	run_on_all ../edit-contents folder1/a &&
-> +	test_all_match git diff-files &&
-> +	test_all_match git diff-files -- folder1/a &&
-> +	test_all_match git diff-files -- "folder*/a"
-> +'
-> +
->  test_done
-
+Thanks,
+Taylor
