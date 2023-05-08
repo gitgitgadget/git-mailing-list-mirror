@@ -2,304 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 706F0C7EE2C
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 10:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D46E5C77B75
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 14:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235051AbjEHKp7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 06:45:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
+        id S234082AbjEHOU5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 10:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235044AbjEHKpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 06:45:34 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE56E2A9EE
-        for <git@vger.kernel.org>; Mon,  8 May 2023 03:44:57 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-50bc3088b7aso8489826a12.3
-        for <git@vger.kernel.org>; Mon, 08 May 2023 03:44:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1683542696; x=1686134696;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=me/NW831JyBtJwU3JI8btqe65Pq5HYOFl0PcDEVnodo=;
-        b=XpHm9ICIW0nC+5z1hgArys6KJAIXeqwJOyR7sqpmZfCVXWAT6whII+j8qeawAOUNsr
-         2qtWl4BFXpt8lvJ4flw3i2ziBo3Ma/1HWFPRK4SD69p7L3I/e6YgQAPRwkFEvZsOd076
-         G5MSftDgYOBssUJoV04QWjQdka0d1X+5uTxPQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683542696; x=1686134696;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=me/NW831JyBtJwU3JI8btqe65Pq5HYOFl0PcDEVnodo=;
-        b=A3g+HSbkERnajKGf66Z9laWR+Z+2/UnmWogV4wySGL28EC8ZTjMwKCmQ7CK6U2j2NK
-         rUjVrMx805C0kvJLdTLVElXC0hNA573BqB6OhrLUA6XxuMr+hdb+vAfoakjtFCeWABQ0
-         VTeNpHdq/LYrw7B2j7Z/rpacaaoSEsdUiLcifF4kZYnjyfed4066qAbo4AORETXG+De1
-         nSwnt7mVgDEDJa+SOLRQZvztjAMIEeEU8DIO73lgGHbLxyfN/w9CiwDupGtbZfovZb5X
-         QicK4GAABxopEi0gO512Acdh/jBTKzr5Z6DiowIAB6WIA71aXPN9mQ/EiZR2JEmiLW41
-         CEQg==
-X-Gm-Message-State: AC+VfDxfrrgpC/lRnqufCMC8Ix8Fr11guQKrjxXlLqiioW7s6rcNEXYN
-        iJpPrVdAUQC2q4IxILSCexmph1MxaOUrBOKu194Gm+4pzrw96iUxv8M=
-X-Google-Smtp-Source: ACHHUZ7GIgeCIxnUb8aAsXZgXZC3LsEGFbRofQUUPhldHbGo0IJXUd4Wn0LobobG3IOrIGcj24Rp2t7H+agTHz02ci8=
-X-Received: by 2002:a17:906:730c:b0:969:19ca:b856 with SMTP id
- di12-20020a170906730c00b0096919cab856mr840607ejc.54.1683542696170; Mon, 08
- May 2023 03:44:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1527.git.1683008869804.gitgitgadget@gmail.com>
- <CABPp-BH8A=CnO3_UWXDegb87VTNEX8s+=CefB90m1_vjBZ_+Fw@mail.gmail.com>
- <CAPMMpogiTVksUKgZ==n4d3xm4ZJqxm7ki2dOF8j8S5BaJvu1Ew@mail.gmail.com> <CABPp-BGmPKyNcDa-wUh-oisTvvux+X=6BvGxSNQC2O7uodpFrA@mail.gmail.com>
-In-Reply-To: <CABPp-BGmPKyNcDa-wUh-oisTvvux+X=6BvGxSNQC2O7uodpFrA@mail.gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Mon, 8 May 2023 12:44:45 +0200
-Message-ID: <CAPMMpojDm8jHWFr8i5EC-oEKK8WBt1g3iyRvixfy1bhk8qck2g@mail.gmail.com>
-Subject: Re: [PATCH] RFC: switch: allow same-commit switch during merge if
- conflicts resolved
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S234538AbjEHOUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 10:20:51 -0400
+Received: from us-smtp-delivery-145.mimecast.com (us-smtp-delivery-145.mimecast.com [170.10.133.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A23DA0
+        for <git@vger.kernel.org>; Mon,  8 May 2023 07:20:02 -0700 (PDT)
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2046.outbound.protection.outlook.com [104.47.66.46]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-310-aVNGcCYKO5e9G4yNTySfGA-1; Mon, 08 May 2023 10:19:58 -0400
+X-MC-Unique: aVNGcCYKO5e9G4yNTySfGA-1
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hqNDAwzD97hSZYIkZe0Nm0TO8S5p/jYj/n6Ra0RRADb4pQKtIOTLwq280L2jtZ8wo8P9f/g99D2J6vIWW7StBcuQib7Mc3ivrlxf8Usm55uZSykGq5wI2Q3o5t3dzHWjknaZklwknZIXWyWl3413AE3wQkIWKbgLwhq2kvhXCuVVpTZU/KbUb2rtISRQmPxX9LRDQuIoqr5DyByy+fpVfMMFIbGpPZj8yHkbiw2bqs02m69anC2lqFoOZjAt7x1E4Lxy89SUeTqSeoqYWCACEBfBqZZN/RJlWmQ3iAuRxH88QKmx1B16g3+x6d+BK/Z/mpvLCsLea11TwEZwfGw7Uw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZMefy5oCIqPe5CdbFSe6KaFvNtxPWw3QU2tFUisGIf8=;
+ b=LCo5CU5rcBFSp2ZpY3yrg9FIHXlIflljjZ7NHDu4f+njKHTHEX8DGx0FavHLL/MgGj7tft1djDyoLwuIYSFmRhYGI58R7AU8YqjzREnnvZqAjxPAgRP1/gIdYlzdXpjhIwDhkSdKwpNkzofCo/nVV8qIETRIgcH9sXMYwD7c6AZ1sPL8wuBi0TaxAUZvxgvajnjTG1TzPNrrWMSRe1rajOLgZfEmwviSTJ1BYksj8ZN8ibsOjI88+nIQbsX5OC2BfTLadtFI3mdmkqtkkwLI1IejudUVesrITG/0QPG9yI9qPaf8xPigPEiACfB1U8LFGp8OyDZnTSxAxqdQzbgHoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=benevity.com; dmarc=pass action=none header.from=benevity.com;
+ dkim=pass header.d=benevity.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=benevity.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZMefy5oCIqPe5CdbFSe6KaFvNtxPWw3QU2tFUisGIf8=;
+ b=KtPJq4FtYebTF0AaOc138Ho5atefyHkNg2ZoefI1P7muxJKZfnupyDZM5hVyoluHNc+D/QixUyzN/oqwZvaNJ/oXLeRZPVxGbmwoiWqTjvQY9NxA9UYHkr7h3CX+uSot7+ww1T+z2Z6Z4llR1ZTqqYYabkj012oqKy5EAcH0sDY=
+Received: from MWHPR01MB2318.prod.exchangelabs.com (2603:10b6:300:29::13) by
+ BL0PR01MB5140.prod.exchangelabs.com (2603:10b6:208:6c::27) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6363.32; Mon, 8 May 2023 14:19:53 +0000
+Received: from MWHPR01MB2318.prod.exchangelabs.com
+ ([fe80::56b1:d0ba:db8b:52f7]) by MWHPR01MB2318.prod.exchangelabs.com
+ ([fe80::56b1:d0ba:db8b:52f7%6]) with mapi id 15.20.6363.032; Mon, 8 May 2023
+ 14:19:52 +0000
+From:   Shafiq Jetha <shafiq.jetha@benevity.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Teng Long <dyroneteng@gmail.com>
+CC:     "erik@cervined.in" <erik@cervined.in>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Suggestion to provide a way for screenshots to be added to commit
+ messages
+Thread-Topic: Suggestion to provide a way for screenshots to be added to
+ commit messages
+Thread-Index: Adl/YOs3NOSblOWnQ9e1660pTYpR1wAmG24AAAYLyYAAFAd45QBVmzQw
+Date:   Mon, 8 May 2023 14:19:52 +0000
+Message-ID: <MWHPR01MB2318577FFBB21ECA369B1684F3719@MWHPR01MB2318.prod.exchangelabs.com>
+References: <CA+JQ7M-MHvtLf=p5+JWEG6ec4r-X0JzFxV0eVhrKNWv8jNLX1g@mail.gmail.com>
+        <20230506115437.61969-1-tenglong.tl@alibaba-inc.com>
+ <xmqqpm7drvz7.fsf@gitster.g>
+In-Reply-To: <xmqqpm7drvz7.fsf@gitster.g>
+Accept-Language: en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=benevity.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MWHPR01MB2318:EE_|BL0PR01MB5140:EE_
+x-ms-office365-filtering-correlation-id: 7e85f5da-0224-41e9-b7d6-08db4fcf4a2a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: EYtaogB1EvUwHoHB/IiI98XSFVVVYqKZ3b35Q+4cLKoQ+nY4iN3Ood7jszUNb0fFxjpsgnqbVFy3JoQTRsdEfB/NuSxjv3rQENPiLMQka6ISMwzRX5qDB9ywUxbZySiqmmeLFU+5kysEDIgtKJKqzBpYftoQA0dwTnSqtt787KnA2kIj+oqfV1YE1YNLLz1+RZX9zYG063qBsnaD1cj2Wk5pfDzmWFykN5c8kdWWMQlPQt3POeIdpSbsKcaO5SCM+Uzdet6odXJr/vQIvi+veYHrbRxoXGDu8WfeTyU8yLg2ob2gB/ItdoWcspzmuEeEYAMX5G6Bj5NfL3Fgpik3o+8al95hjaFJsaJwFfcJJSNZZ8SUQuC8lkLTHIpQpr6L6CyPhymUfQVgSkUOOBa4GihDjL1OXVqd0UtQD7S1SgGITSowG2eeZJfRcMXnYFDbBGtrtwNgy4z+E34iqkKIBt+Mm3SWoX6dpfxmBEjcIrixXqcFiaXPqUXJHbav4H0pDo3ElhfVOFxGw4bqncuPr/bhUBVGcmTZpV+4f0LfNDPuv6dm6B+GFr4F4sc8pqvaOa3BKFG0adYAuHp/If+fFzwQZE/HCiM/WlhBLcZgcNg=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR01MB2318.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230028)(39850400004)(396003)(136003)(366004)(346002)(376002)(451199021)(53546011)(66476007)(86362001)(33656002)(966005)(54906003)(110136005)(66446008)(64756008)(4326008)(76116006)(66946007)(66556008)(7696005)(316002)(478600001)(55016003)(52536014)(5660300002)(71200400001)(44832011)(41300700001)(15650500001)(8676002)(2906002)(8936002)(186003)(38070700005)(38100700002)(122000001)(9686003)(26005)(6506007)(83380400001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?QRWAJyMtu/LAjW2oQR+ZJXSc/zyDxf7XMQB4ILdqIvLuytbcBc/h+cwOaxpg?=
+ =?us-ascii?Q?AmVpEWI3W3iK5kNDV8IQqx5SfPMUqky/FzTGkdmnBjlcTrdho1AEraqoPpmq?=
+ =?us-ascii?Q?8YFJII3zoqKoxRMt9d2B7lA3++h5tY4xBYCQRIu/aix4ddTAHvlkEXjc/TyA?=
+ =?us-ascii?Q?FmD4zapW3CRJfOdcQcst2XFYKIqYJeAhdELKba43/lanBQxAidECPnxmmqJ1?=
+ =?us-ascii?Q?MDLYH2uepKikA5bN3n+NxS7KwWDTAIJvHW7XbpuLQSNMfXD5a/ZGJI1tAVE+?=
+ =?us-ascii?Q?7MJpFmpwH0op8YWu5y1JZlFymuP5+qGXHLfS5+eAqj5HM7Q7zfpbsvkGjvxD?=
+ =?us-ascii?Q?/V88plAMNMEqkvVEsDXzXFl8Beflris/XuXf0PasiWf+twMHoO8r4IvUOzHI?=
+ =?us-ascii?Q?4cUE52VsFxmEZBsFNIqmspdYyiGaqP41wQPiQFPAys1SCrDfBLhiF4IvU1CZ?=
+ =?us-ascii?Q?LgA/nuLLKP6pVRfNAvIjn4NzFeV6Ws97eQvA5v8gdRELAfNdXFnMudLIeDj0?=
+ =?us-ascii?Q?CKB//pSPqc9IZCfY4xzzmD3Oug3eB5+40DV+aTUEqoxHehbSmg1neGE2CFKT?=
+ =?us-ascii?Q?2ep1AXTWxSnau10d7gDBC2KwiiChPQluWMJNO90ZQbVYtACEE5jibAnx+3Bh?=
+ =?us-ascii?Q?Uvrse3HkFvs4B7oC9yXhcC9uJh+DdF8gA+us7+RIgw8zbHMsafrls1XTEV4r?=
+ =?us-ascii?Q?Dg49+0d7hBLOX5lc59XSV7L0/aSv1wJ0xyYe4rqnPg8yV2EEdJpwTrgFwkHf?=
+ =?us-ascii?Q?wTAAZduZx9qARl+RZH/BHipLor2d+MfY8Zkcmn2MniYspeuKlOjuR5824Wrg?=
+ =?us-ascii?Q?APtty6x6zejoqAWnsrU4NdKdD09IPjaIW3A0EsdlqQ5DiTcumglRiE5EuYL3?=
+ =?us-ascii?Q?phV/hp+iz2xbowwkDOA1bnox4RgkTDgkGKzjW1QrIZlgUNHgWYcGc1fTsPni?=
+ =?us-ascii?Q?e3hMtd3f9iLnh+jrqIaR62mxIcRwbrt1Xsm0S0F57ho9aNz1GSCOY9OYaFnU?=
+ =?us-ascii?Q?Z7luJzj89a8ZhJ2L/Yapv+lUSAOd8qI+BUvmaccmUdd+kLF+S201uPM2X7Y3?=
+ =?us-ascii?Q?tw3d1hUv7V7RNT/XXvZ5oqGyXDGSgeTeyDnOwKyQ1EQzPulLFEU0+H5/ggpB?=
+ =?us-ascii?Q?aKqM0aT5YE6s/jZdRuhPZpD3qxd3u92oLeAQNPYZd1WMPJMQz+b3qCtS5eFM?=
+ =?us-ascii?Q?RxDzg6oCmFvATI85TF6TE453uqwFuEq9Gi3YhsoMlJsJrC+MXxXHhbPthPk6?=
+ =?us-ascii?Q?LHZGj7piyFF2BQhFtEQfaiYdU6KhoehSSrt8FDZbGeNBE+QFydn6HJQbUqXM?=
+ =?us-ascii?Q?QdPDCmGONkI7qhAjPeoBQrHbZbrcfe1ZV3robaORWSy+yjcQ3mlAX4tJ+Aq1?=
+ =?us-ascii?Q?soBNMmS/rqIyCfQiHgkwySQ50AxPt/8mZA5uzq3OmRADtTKImFAstsRXtZAJ?=
+ =?us-ascii?Q?Av++gkx0uRBjP8hdaQYd9ppUXLNB8LVp6rvJh03NIFWh69Q57udi0jG26uhr?=
+ =?us-ascii?Q?u85xokURh60ea/KjrAgBmzaLAtipvlg0pwGSXyEnGqyn6zwvbrjjOLtfjGgz?=
+ =?us-ascii?Q?pDvlZeo1i2x6Gh88N3/dSZPBatcefdiYXCTMzITA?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: benevity.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR01MB2318.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7e85f5da-0224-41e9-b7d6-08db4fcf4a2a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2023 14:19:52.3863
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 16550523-17e3-4640-b0f6-1017a8b74396
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +gZlxopceqPAeloxH3Ch/KdfIopqRUoWz/PRg1I8cyOHDkThBcwmsEnv/JHb1HrTye0+MS9WjxWBePWT8Dosk5U2EXJV9tdCDKL7TV4C7nM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR01MB5140
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 7, 2023 at 4:48=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
-te:
->
-> On Wed, May 3, 2023 at 10:01=E2=80=AFPM Tao Klerks <tao@klerks.biz> wrote=
-:
-> >
-> > I believe this question was resolved later in the thread. The proposal
-> > is to allow the simplest case of merge only, for resolved
-> > (unconflicted) indexes only. If the change were to make sense I could
-> > update this message to be clearer that none of those other operations
-> > or situations are impacted by this change.
->
-> As I mentioned to Junio, I understood fully that your implementation
-> limited the changes to this one case.  That did not resolve my
-> concerns, it merely obviated some other bigger ones that I didn't
-> raise.
->
-> However, making it only available via a --force override (and then
-> perhaps also limiting it to just some operations), would resolve my
-> concerns.
->
+Yes! This is exactly what I had it mind. It would require a lot of organisa=
+tion but I think it could work really, really well if implemented like this=
+.
 
-Hmm, I think there is confusion here.
+-----Original Message-----
+From: Junio C Hamano <jch2355@gmail.com> On Behalf Of Junio C Hamano
+Sent: Saturday, May 6, 2023 3:28 PM
+To: Teng Long <dyroneteng@gmail.com>
+Cc: erik@cervined.in; git@vger.kernel.org; Shafiq Jetha <shafiq.jetha@benev=
+ity.com>
+Subject: Re: Suggestion to provide a way for screenshots to be added to com=
+mit messages
 
-My proposal was (and now, again, is) to add support for "--force" to
-"git switch", and to keep and improve that existing support for "git
-checkout" (where it is in my opinion broken during a rebase), but that
-proposal was mostly-unrelated to my main goal and proposal for
-supporting same-commit switches in the first place:
+[You don't often get email from gitster@pobox.com. Learn why this is import=
+ant at https://aka.ms/LearnAboutSenderIdentification ]
 
-A same-commit switch (*without* --force) serves the use-case of
-*completing a merge on another branch*. This is, as far as I can tell
-only *useful* for merges:
- * during a rebase, switching in the middle (to the same commit,
-without --force) won't achieve anything useful; your rebase is still
-in progress, any previously rebased commits in the sequence are lost,
-and if you continue the rebase you'll end up with a very strange and
-likely-surprising partial rebase state)
- * during a cherry-pick, it's just "not very useful" - it's not bad
-like rebase, because in-progress cherry-pick metadata is destroyed
- * during am, and bisect I'm not sure, I haven't tested yet.
+Teng Long <dyroneteng@gmail.com> writes:
 
-The reason this in-progress is *valuable* for merges (in a way that it
-is not for those other states) is that the merge metadata not only
-says what you're in the middle of, but also contains additional useful
-information about what you've done so far, which you want to have be a
-part of what you commit in the end - the identity of the commit you
-were merging in.
+> I'm not sure the scenario of using git note to save the binary is=20
+> suitable, but the above context may give some ideas, maybe.
 
-Supporting switch with --force, and having it implicitly destroy
-in-progress operation metadata, has value in that it makes it easier
-to break backwards compatibility of "git checkout" without impacting
-users' or tests' workflows; it helps make a change to make checkout
-safer; but it does not help with my other (/main?) objective of making
-it easy and intuitive to switch to another same-commit branch, to be
-able to commit your in-progress merge on another branch and avoid
-committing it where you started.
+A project could choose to store its commit log message in some arbitrary bi=
+nary format, encoded to be safe when displayed as text by accident (e.g. "C=
+ontent-type: text/html" with quoted-printable, or something silly like that=
+) when shown in plain vanilla "git log".
 
-Hence, if/when we add support for same-commit switching during merge
-(and potentially other operations, if that makes sense), it should
-*not* take "--force", which has a substantially different purpose and
-meaning.
+Then repository viewers can be taught to render such a "rich" log message i=
+n any way it wants.  I do not know if authors of "gitk"
+(bundled with us) or "tig" (not provided by us) are interested in doing so =
+to their ware, but there are tons of GUI Clients out there
+(https://git-scm.com/downloads/guis) and authors of some of them may be ent=
+iced to add such a new feature ;-)
 
-> > > My first gut guess is that switching with conflicts would be just as
-> > > safe as this is, and any users who likes your change is going to
-> > > complain if we don't allow it during conflicts.
-> >
-> > In principle I believe so too, I just haven't checked whether the
-> > tree-merge process attempts to do anything for a same-commit switch,
-> > and if it does, whether the presence of conflict data "bothers" it in
-> > any way / causes it to do the wrong thing, eg remove it.
-> >
-> > If verifying this and opening up the "pending conflicts" case meets
-> > the consistency itch, I'm happy to explore this area and (try to)
-> > expand the scope of the fix/exemption.
->
-> If this behavior is behind a `--force` flag rather than the default
-> behavior, then I think there's much more leniency for a partial
-> solution.
-
-But if it were behind "--force", it wouldn't work :)
-
->
-> That said, I do still think it'd be nice to handle this case for
-> consistency, so if you're willing to take a look, that'd be great.  If
-> you are interested, here's a pointer: Stolee's commit 313677627a8
-> ("checkout: add simple check for 'git checkout -b'", 2019-08-29) might
-> be of interest here.  Essentially, when switching to a same-commit
-> branch, you can short-circuit most of the work and basically just
-> update HEAD.  (In his case, he was creating _and_ switching to a
-> branch, and he was essentially just trying to short-circuit the
-> reading and writing of the index since he knew there would be no
-> changes, but the same basic logic almost certainly applies to this
-> broader case -- no index changes are needed, so the existence of
-> conflicts shouldn't matter.)
-
-Will look, thx
-
->
-> If you don't want to handle that case, though, you should probably
-> think about what kind of message to give the user if they try to
-> `--force` the checkout and they have conflicts.  They'd probably
-> deserve a longer explanation due to the inconsistency.
->
-
---force implicitly and intentionally discards the conflicts.
-
-> > > But I think it'd take
-> > > a fair amount of work to figure out if it's safe during
-> > > rebase/cherry-pick/am/revert (is it only okay on the very first patch
-> > > of a series?  And only if non-interactive?  And only without
-> > > --autostash and --update-refs?  etc.), and whether the ending set of
-> > > rules feels horribly inconsistent or feels fine to support.
-> >
-> > I agree this gets complicated - I haven't thought or explored through
-> > most of these, but I have confirmed that switching branch in the
-> > middle of a *rebase* is very confusing: your rebase continues on the
-> > new HEAD, as you continue to commit, your rebased commits get
-> > committed to the branch you switched to, but at the end when you
-> > *complete* the rebase, the original ref you were rebasing still ends
-> > up being pointed to the new HEAD - so you end up with *both* the
-> > branch you were rebasing, and the branch you switched to along the
-> > way, pointing to the same head commit.
-> >
-> > I understand how that works in terms of git's internal logic, but as a
-> > user of rebase, if I tried to switch (to a new branch) in the middle,
-> > I would be intending to say "I got scared of the changes I'm making
-> > here, I want the that is ref pointed to the new commit graph at the
-> > end of the process to be this new ref, instead of the ref I originally
-> > started on".
-> >
-> > Supporting that usecase, for rebase, sounds to me like it should be
-> > done by something completely different to "git switch". The most
-> > helpful behavior I can think of here would be that a "git switch"
-> > attempt would say "cannot switch branch in the middle of a rebase. to
-> > continue your rebase and create a new branch, use 'git rebase
-> > --make-new-branch NEWBRANCHNAME" instead of 'git switch'"
->
-> That all sounds reasonable.
->
-> But you know someone is going to try it anyway during a
-> rebase/cherry-pick/revert.  If we start letting `--force` override
-> during a merge, we should do something to address that inconsistency
-> for users.  It doesn't need to be something big; we could likely
-> address it by just specifically checking for the `--force` case during
-> a rebase/cherry-pick/revert and providing an even more detailed error
-> message in that case that spells out why the operation cannot be
-> `--force`d.
-
-The behavior of "--force" is already clear - it resets your worktree
-to the state of the branch you are switching to. It also (or should
-but doesn't, in the case of rebase) destroys in-progress operation
-state/metadata.
-
-That said, I understand and agree that there should be a difference
-between a generic error "there is an operation in progress, you need
-to '--abort'" for the operation types that can and should not benefit
-from a same-commit exception, and the operation(s) that do get a
-same-commit exception when it doesn't apply (when you're trying to
-switch commit). If the same-commit does end up behind some parameter,
-there should be yet another message for a same-commit branch switch
-operation when the new needed parameter is not specified.
-
->
-> > > > Also add a warning when the merge metadata is deleted (in case of a
-> > > > "git checkout" to another commit) to let the user know the merge st=
-ate
-> > > > was lost, and that "git switch" would prevent this.
-> > >
-> > > If we're touching this area, we should employ the right fix rather
-> > > than a half measure.  As I mentioned above, this should be an error
-> > > with the operation prevented -- just like switch behaves.
-> > >
-> >
-> > My understanding, given the code organization, was that we wanted to
-> > preserve current (funky) behavior for backwards-compatibility
-> > purposes.
->
-> I totally understand how you'd reach that conclusion.  I would
-> probably come to the same one reading the code for the first time.
-> But, as it turns out, that's not how things happened.
->
-> > If we're comfortable changing behavior here, I am happy to
-> > change the patch (while keeping/allowing the --force exemption, which
-> > *should* still destroy the merge state).
->
-> Yaay!
-
-As suggested in my recent response to Felipe, I will create a separate
-patch (series) for the git checkout safety enhancements and related
---force support enhancements.
-
->
-> > > > Also add a warning when the merge metadata is preserved (same commi=
-t),
-> > > > to let the user know the commit message prepared for the merge may =
-still
-> > > > refer to the previous branch.
-> > >
-> > > So, it's not entirely safe even when the commit of the target branch
-> > > matches HEAD?  Is that perhaps reason to just leave this for expert
-> > > users to use the update-refs workaround?
-> > >
-> >
-> > It is *safe*, it's just that one aspect of the outcome is *potentially
-> > confusing*. You really did do the merge on the original branch. The
-> > merge message is the same as it would be if you committed, created a
-> > new branch, and reset the original branch.
-> >
-> > (and just to note - the reasonable workaround is to commit the merge
-> > on the current "wrong" branch, create the other branch, and then reset
-> > the original branch, as Chris Torek shows on StackOverflow; not to
-> > teach people all about update-refs)
-> >
-> >
-> > Thanks so much for taking the time to go through all this!
-> >
-> > Please let me know whether you would be comfortable with a patch that:
-> > * Fixed checkout to be more restrictive
->
-> Absolutely.
->
-> > (except still allowing --force at least on a merging state)
->
-> That's fine too.
->
-> > * More explicitly noted that we are relaxing things for merge only,
-> > none of the other in-progress states that currently prevent switch
->
-> That wouldn't resolve any of my concerns; it was totally clear to me
-> the first time.
->
-> > * Also worked with outstanding conflicts in the index (verifying that
-> > this is safe)
->
-> In combination with `--force`, I think that would be very nice.
-
-I need this to work without --force, for the reasons noted above, *but
-I will split this into two patch series to avoid further confusion!*
-
-Thanks so much for your help!
