@@ -2,131 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C4CC77B7C
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 02:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8063BC77B7F
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 07:31:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232263AbjEHCIm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 May 2023 22:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56464 "EHLO
+        id S233382AbjEHHbp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 03:31:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231738AbjEHCIk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2023 22:08:40 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6133714E62
-        for <git@vger.kernel.org>; Sun,  7 May 2023 19:08:39 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id 46e09a7af769-6ab0967093dso124807a34.3
-        for <git@vger.kernel.org>; Sun, 07 May 2023 19:08:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683511718; x=1686103718;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B5CZ+44rwWCnXtCh2m6AfqwiiUoFti6qhtm4K24QjL0=;
-        b=ZKMfZudHspNCbJFdJyWpbdWNPGyvtlH4IUg0lj1i5Bsx4aTdj+VDI0CrW1vnKXMk68
-         ZaDPKhlBV35fdlBlsM48EgNlPhJrjZ6l8EetakkTd3LeL47Xt8/LiFH2QM/ipRKkOroP
-         Kbg9VFdDvHhbSaebIT4ezNZdd48aPHeqfVMtB1ixz6oaEoKycoVYrh8CYBIlJ+CGbi+B
-         Xp/ejmDiRaCqTfiO8sUv/Zwed3dfIQLAfLzwyg7GwEALyzix7QGfySRrOPp2lcXva91G
-         O0TZ7s74zVneHjIEPIw7ezpIDsLx0Nn5KD6JhnPvTmWyFFQB7WOTi6v4jOIUJjztpb9H
-         Egaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683511718; x=1686103718;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=B5CZ+44rwWCnXtCh2m6AfqwiiUoFti6qhtm4K24QjL0=;
-        b=T51SjOcC0SjToesszIA68fUssJzQK3yWjppi9pSDEfXU0+6Fc/AHAc0gD+0gQ8NBKm
-         KEk6qywgSF9VquaB1RqOe9QoSp2ORs2CH3Ls/E1+YaJhQx0HRBAd5Fmw0DTyyPVzFbbS
-         UsJnpyyBu2P7DP/nseUd16WWRQwmgDL6t2Lr6U6XocFXQVlh4Rq3e3UG2Wa6s0Z4vKF2
-         BnRqW5Wkg44zwi7dH7C4c6+/21ILBpaAd+fDrV9gtYg37YrLHTNZh/kj1ssbpX9jqlaP
-         I4TcWngFW5XGU3TE7zFVyag0azqC+XQR7GMDPt/n5egf+Dr+UW1GOo7uYiNhCablY1IG
-         xg0Q==
-X-Gm-Message-State: AC+VfDyKNNZQ/RDYLuu8pCZieSroX0T8TbNSNrmYxe0N4YJtlaJD3dqr
-        BxWTsHAS7Tl2obMWj807K3s=
-X-Google-Smtp-Source: ACHHUZ4QDnMkjVN5XTavufqLqJxsIbPVYBotYQj1ZY+El0Xsa/Kw9wFuYPHYQJnasjeMhg/1kVXwDw==
-X-Received: by 2002:a05:6871:6b90:b0:17a:cbf2:a4c7 with SMTP id zh16-20020a0568716b9000b0017acbf2a4c7mr4376462oab.27.1683511718428;
-        Sun, 07 May 2023 19:08:38 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id b1-20020a05687061c100b0018b22156e84sm4469118oah.38.2023.05.07.19.08.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 May 2023 19:08:38 -0700 (PDT)
-Date:   Sun, 07 May 2023 20:08:37 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Message-ID: <645859a541f23_4e612944b@chronos.notmuch>
-In-Reply-To: <xmqq8re3inn4.fsf@gitster.g>
-References: <20230503232349.59997-1-felipe.contreras@gmail.com>
- <xmqq8re3inn4.fsf@gitster.g>
-Subject: Re: [PATCH] doc: doc-diff: specify date
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S233355AbjEHHbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 03:31:43 -0400
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532241A49F
+        for <git@vger.kernel.org>; Mon,  8 May 2023 00:31:39 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id 98DF73200392;
+        Mon,  8 May 2023 03:31:38 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Mon, 08 May 2023 03:31:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm3; t=1683531098; x=1683617498; bh=A7
+        bS8eHKqTJX8F/CAYbII92BSSzPntNtqbeVflSd/Bw=; b=fEPWj4Eaa2JCULoBj2
+        YtMIc0qnse6hfocP/YDbmaPrgHtNKqwW1DDbCicsOKWkyPG2SZJHdfLFo+KFO0Jr
+        T69yNRTgFH695wAXiClE8OP5y750t+ILhzPlUyW+XqXYrsIyFQADTbfiv/q+Bwwl
+        rxm6lO4xrk5eKvTFs74fiEyx/Xm9aH5BpN0iPEGGq0Ut3PR0ipPaK0cfjKZJtTWQ
+        zuietsrnvNNJTO6umCBKlq9EfJjIpee3CO67jV5Kn5gdPJUd9x2XCOetmiCMxLn3
+        YuawTSHl8Q9glgrxlltcQkS9cyZF8BAwd0Rak2dNW9prmpPQrfm5XivydhygStLJ
+        JwTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; t=1683531098; x=1683617498; bh=A7bS8eHKqTJX8
+        F/CAYbII92BSSzPntNtqbeVflSd/Bw=; b=T9U9t70fKlAwUVyToXkV0H/Omn+p9
+        50ggXYSMcdsk7S3hyAPhj0cRpRfX3RkBcRHZjD21phpS1A6/AypIb7efa2QFjhkA
+        COw+8HrJY8EGO7yEK+dTWeIP7x/N2TAT8zYE1k7ZmwuhKZOyMbe7rsn32K7I8f+t
+        Gnyhrjz4+B4UJmWFyZk5g7K1YK55t8GLFAYRW1PbVjP/W4/h+4eCjmVFMuDVogXb
+        vQMVBRgueP1SpNOqLU7R8PGKW0RIQlpl0AK3A5M9SQzNRmnj33o2g/LV3kQ5ISVw
+        LM27NZ+8jjGHgsEO2S4IYgKQ8n3E7oa/AMPs3FXus+STXd9NpfMb72VCw==
+X-ME-Sender: <xms:WqVYZJ_vj2F767CZ4uulaXLJitiWVp1DPcNU2tvNQprosSqGhSqOlg>
+    <xme:WqVYZNv8G-zEAx-FB8D0-_TeJ_a7gq6ZmVCrz09R3RCi1SFN8Mhm7yYAC6LVvSZbn
+    DhwmGNA2X9YnwwIeA>
+X-ME-Received: <xmr:WqVYZHDDW6hrl35c64TMZ0gvkyG1dCHRm4j7NFySZyPmicD0UpfZZtURP_9Q0Tn4cHTOHSfBMCZ9PurCSnZq3D-3gFkXZsXQiHWWns1RydtKERM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeefjedguddvvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptdeiteevvedukeekheeiueevtdeigf
+    fgtefhkeelgeevtdejueelleffteeuieeunecuffhomhgrihhnpehpkhhsrdhimhenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:WqVYZNdCzLD1xt8HfsO2-j7xbbuLeWmfpJG-7brnw4Wa7fSE6NRtLg>
+    <xmx:WqVYZONjfRdyRedJeLQ-qBms9LnxkoUVCPuFfUDmc6X3V_TnG5E3FQ>
+    <xmx:WqVYZPkVTBggXlYtgVHG5ZXdkp7EJxSzqlDYTrlVMRaQ0u4fphXwwQ>
+    <xmx:WqVYZIXes6nLnqr0RBsqMT2-blSjiDFZLUJKcQg6fcl9gvxKZqwlqg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 May 2023 03:31:37 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id ce0f36cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 8 May 2023 07:31:30 +0000 (UTC)
+Date:   Mon, 8 May 2023 09:31:33 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: ps/fetch-output-format (was: What's cooking in git.git (May
+ 2023, #02; Fri, 5))
+Message-ID: <ZFilVVv88qhZhL-d@ncase>
+References: <xmqqmt2ibcq2.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Uq5CC3A7nsklRW16"
+Content-Disposition: inline
+In-Reply-To: <xmqqmt2ibcq2.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Otherwise comparing the output of commits with different dates generates
-> > unnecessary diffs.
-> >
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  Documentation/doc-diff | 1 +
-> >  1 file changed, 1 insertion(+)
-> 
-> Ahh, it is a fix for a fallout from 28fde3a1 (doc: set actual
-> revdate for manpages, 2023-04-13); when it is shown in the patch
-> form like this, it is kind of obvious why we need to compensate for
-> that change this way, but apparently "doc-diff" slipped everybody's
-> mind back then when we were looking at the change.
 
-Yes. doc-diff is an odd duck, because it can't be easily integrated to
-the testing framework.
+--Uq5CC3A7nsklRW16
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sometimes a diff in the documentation is intentional, so the fact that
-doc-diff generates an output from HEAD~ to HEAD is precisely what was
-intended. However, sometimes it's not. Maybe a flag inside the commit
-message such as GitHub's `[no ci]` might help, but it's beyond me how
-could that be cleanly integrated to continous integration machinery.
+On Fri, May 05, 2023 at 04:05:57PM -0700, Junio C Hamano wrote:
+> * ps/fetch-output-format (2023-05-03) 8 commits
+>  - fetch: introduce machine-parseable "porcelain" output format
+>  - fetch: move option related variables into main function
+>  - fetch: move display format parsing into main function
+>  - fetch: introduce `display_format` enum
+>  - fetch: fix missing from-reference when fetching HEAD:foo
+>  - fetch: add a test to exercise invalid output formats
+>  - fetch: split out tests for output format
+>  - fetch: fix `--no-recurse-submodules` with multi-remote fetches
+>=20
+>  "git fetch" learned the "--output-format" option that emits what it
+>  did in a machine-parseable format.
+>=20
+>  Will merge to 'next'?
+>  source: <cover.1683113177.git.ps@pks.im>
 
-For now doc-diff is meant to be run manually, therefore it's expected
-that some unexpeced diffs are inevitably going to slip by, and more
-relevantly: issues in doc-diff itself are going to slip by.
+Note that the description isn't accurate anymore: v3 of the patch series
+has changed the new option from `--output-format` to `--porcelain`. With
+that change I'd also feel more comfortable if the new iteration had at
+least one review before merging to `next`.
 
-> Looking at the patch text of 28fde3a1, we pass GIT_VERSION and
-> GIT_DATE to AsciiDoc since that version.  We were already covering
-> GIT_VERSION by hardcoded "omitted" string, and now we compensate for
-> the other one here, which means this change and the other changes
-> complement each other, and there shouldn't be a need to further
-> adjustment for that change around this area.  Looking good.
+Patrick
 
-Yes. I think we should be passing a semi-real version instead, like
-`0.0.0`, just to see how a real version would look like, but that's
-orthogonal.
+--Uq5CC3A7nsklRW16
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> > diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-> > index 1694300e50..554a78a12d 100755
-> > --- a/Documentation/doc-diff
-> > +++ b/Documentation/doc-diff
-> > @@ -153,6 +153,7 @@ render_tree () {
-> >  		make -j$parallel -C "$tmp/worktree" \
-> >  			$makemanflags \
-> >  			GIT_VERSION=omitted \
-> > +			GIT_DATE=1970-01-01 \
-> >  			SOURCE_DATE_EPOCH=0 \
-> >  			DESTDIR="$tmp/installed/$dname+" \
-> >  			install-man &&
-> 
-> I wonder what the existing SOURCE_DATE_EPOCH was trying to do there,
-> though.
+-----BEGIN PGP SIGNATURE-----
 
-I also wondered the same, but again: orthogonal.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRYpVQACgkQVbJhu7ck
+PpRekg/+Iag8AU1M6RsyU08te+HkZGiTFmo+oHqLj0w6HuOlH7pqrc51zZeFrY9p
+57j55LaDyuOx35rxZfuaDL3NtghR3DTlDbi2x+7lXaWD3tBFh/U7OZIwq7BOQiHn
+pPtNDNjrh2kr6KokWfCDCvuBXHbtpkTmyvR/8HZsv9C1BlGn/MMpm/SuTvxwAfUl
++vWKYYEybYTbNY0FyIp+JlzQtD8w77NPpD1/qu8rixjA26mehsiequNQunuM3Xkb
+vJBE2qRMtJrKJrcprvTW0o0o8l1i8t91NDtFGrVZBiQD5KqjobKvgLJ19uiWbs0k
+OAlD8X2QBnEkOeJvXNWimjygl1EEPZcpZE28UTeC0a21b87Uka1cTOY0nKiWT8Dl
+AHLsfijhGNykEk7wOsEe9NOws0B/dlqINIwn6JuW1qenTgmtYp1SR5bP2Dvlh62d
+IWihUzchb0Qu8wD9qz0A1Nfqfw7WOMq58OYP5Y/mUn1WtTkKQndDHk1WTpJLISJa
+NgDhredWIpJk8eqxXOKCL07i/RYi8XdiNV5JNS+J8LGXnrv2zZC1AMqrAd3L9+7H
+g+cVih6qezVsXiNUoYycF6yT0mpXB2oVxAf++VY6n9obqggsfWnRX9rqX7hGc02K
+sblPRmZzHyky2RuqD93EOatZ7x0vPIlpT61WRxg4XQysgz5ICWo=
+=Q2Kq
+-----END PGP SIGNATURE-----
 
-Cheers.
-
--- 
-Felipe Contreras
+--Uq5CC3A7nsklRW16--
