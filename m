@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42BE2C7EE22
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 15:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAACFC77B75
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 15:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233524AbjEHP3j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 11:29:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47158 "EHLO
+        id S234752AbjEHPzf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 11:55:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232161AbjEHP3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 11:29:24 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCEC297
-        for <git@vger.kernel.org>; Mon,  8 May 2023 08:29:23 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1aaf21bb42bso32333505ad.2
-        for <git@vger.kernel.org>; Mon, 08 May 2023 08:29:23 -0700 (PDT)
+        with ESMTP id S234093AbjEHPzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 11:55:33 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AE3990
+        for <git@vger.kernel.org>; Mon,  8 May 2023 08:55:32 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-52160f75920so3128590a12.2
+        for <git@vger.kernel.org>; Mon, 08 May 2023 08:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683559763; x=1686151763;
+        d=gmail.com; s=20221208; t=1683561331; x=1686153331;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dEAy9jQpSjMUe5od8TyAv94NrVTZgIh0jzQ8DjCnNOU=;
-        b=iCW2VdDk8xls/nI1dZl1Qh7drxSJRshE4eSsWBBXYeM1uWA40h+zFVJKeSn3u+eYcV
-         C6ffz0GZ5yBHdPqHSfLJ6WwsHU2DpjYNveBIQlYANW5gXdt6QR4tK0eJKdVdMwB0fOXl
-         P7/lWqAj7ebBDPZKxCwulAKcSVSrO8vjatqShLOLKQbsFwGv0HGSAHdVMzxUgMQEUFNV
-         +ZBISm7KBryf2Y0qApNVuixmwsJe29aI6CW75y4YcZo/IJJZtePRVqTW9kpuF7d3FkKN
-         djU+wsOTjYhCTkzBhXvUstL+hgjokSbTLsUbSoBZ0keBB3VHa55qkXcVxrfA8YbbuZJZ
-         qJLA==
+        bh=je7z8lVUSJx8ngT4CubtwYgP1YLxwOZncoTJj5sKz+Y=;
+        b=SDclaFdAnfvjUtj8VsxgdFt9RU6j0uvVMt3EWs4NI+NLTWn0XAibe+/GMEIiWgAfBJ
+         cu4A/QzUPKN2ZxYZF+UKe1481qlz8dMcVCFBHizB9f4joOjR3AhjYqFtWEE3ayOrtDkb
+         YKqLMcDTGfS4X17jKuhYKFrufrMZGK4RtDBob9twb3WZRs700d+7MjdnlmhtduFZGybX
+         mvK4z4/NXbNtle4wGWkyzJH/GSZjVoRm3AjOO0zIGMbtZ//kzndWcd2qaoEozGtEGGiX
+         Gq3fjeA0eJss57TmBhLo56XnDoqfuWAR3ljBr2ethB8vJZF5pIOvKWlK/ubdpVBQuH0y
+         nouQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683559763; x=1686151763;
+        d=1e100.net; s=20221208; t=1683561331; x=1686153331;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=dEAy9jQpSjMUe5od8TyAv94NrVTZgIh0jzQ8DjCnNOU=;
-        b=Fo/2NUNrADhBzUbp09Db1I8PrYAmFN1jgIV2xFGX0SU9vTgsy7G4d0tjnU4TkkZh3J
-         9pU7z5KDG1E8mRFTzt4Q6yIBa9klNEH+0U8jTLeitfFQZp1PMJdgha7hydmUxjjEWNRt
-         NDyluNGLP6uurru/ng/tTlxr003tRkCeQvLy1ySLdAo73mxCHmZKJj7JqOIgvydGpY//
-         kjFUSKm024P+VnpThO4VtMkwqlBNpgSBu/ebe/J30X2boOMMptzFqYWq5gCfw/XClmeg
-         xdYDGmVGs8sLm0EdPWv0LQqCVtPHifr5M15lZAB4CrAW8n0l44XOv1D6Og9tyygyiwBW
-         Nzyw==
-X-Gm-Message-State: AC+VfDwOQtKstc+Kqhoi7wMWavpsXoUvITF72CB5TDOslrRQIOUAJZOq
-        BHI8ga5zjRAtCSamGOqOltw=
-X-Google-Smtp-Source: ACHHUZ4ioF6AfGbBW/m8own8QTEXrwij6Mlf+AaL0OWi10DcsQ1gLgnqw9ulPk8SXrsc46OR5cyCRQ==
-X-Received: by 2002:a17:903:22cd:b0:1aa:ebcc:dd5e with SMTP id y13-20020a17090322cd00b001aaebccdd5emr12843332plg.65.1683559763213;
-        Mon, 08 May 2023 08:29:23 -0700 (PDT)
+        bh=je7z8lVUSJx8ngT4CubtwYgP1YLxwOZncoTJj5sKz+Y=;
+        b=YhHcfyvJ49NTrPBG2BhpgJl7zCfliXnLuQ+7D/FGN8+eOsm/bwpmdL1MX8rgZJli3r
+         cO2PqmyRUTrKhzjAA/EeFpBE+GiTKU9d9XGRwRnMLfPbc81cVCLYkGsnKEDZYGurr5i8
+         4NfkQPU5Yrd2PKHHVVXuJYyW5hUJqeAaTDU4A18AISdLJz6jMKMPeCG4hYwmteoOCk+X
+         jzm8RhRVeefCPCxrC0Ov80zQ9qxHbz/o+I7E9t6R2zqCOJj+Hq6qrDdZrvRuqh1zT8e3
+         IAURH9Hdi6Q2lV+winNajyDpnvsxtqgiA4CgsCVGIk7HvY6wFA6UpPRY5d8OdejN/eZv
+         Mu2A==
+X-Gm-Message-State: AC+VfDxoZbdlPWbPaY0mfqwGgUk8wSOraGGHBd9xP3FIiuiegWq6dMds
+        uAWlDg72ILRUumztsQqysCxvRcUgzM4=
+X-Google-Smtp-Source: ACHHUZ4RSMOfgPnLOxnBG3F3n30HNYVM2mgL+PoqJ1BxU60Pjs/T4SUV38VRAXYzEVJGmzJY2gRkTw==
+X-Received: by 2002:a17:902:d902:b0:1a9:86ca:38cd with SMTP id c2-20020a170902d90200b001a986ca38cdmr10946865plz.2.1683561331390;
+        Mon, 08 May 2023 08:55:31 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id h8-20020a170902704800b001ab06958770sm3447599plt.161.2023.05.08.08.29.22
+        by smtp.gmail.com with ESMTPSA id n5-20020a1709026a8500b001ab0d815dbbsm7440367plk.23.2023.05.08.08.55.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 08:29:22 -0700 (PDT)
+        Mon, 08 May 2023 08:55:30 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
@@ -56,10 +56,10 @@ Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH 00/24] Header cleanups (final splitting of cache.h, and
  some splitting of other headers)
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
-Date:   Mon, 08 May 2023 08:29:22 -0700
+Date:   Mon, 08 May 2023 08:55:30 -0700
 In-Reply-To: <pull.1525.git.1683431149.gitgitgadget@gmail.com> (Elijah Newren
         via GitGitGadget's message of "Sun, 07 May 2023 03:45:25 +0000")
-Message-ID: <xmqqzg6ergdp.fsf@gitster.g>
+Message-ID: <xmqqttwmrf65.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,10 +69,27 @@ X-Mailing-List: git@vger.kernel.org
 
 "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> Maintainer notes: (1) This series is built on top of a merge of
+> en/header-split-cache-h-part-2 into master, (2) This series has no conflicts
+> with next, but has three simple & small conflicts with seen:
+>
+>  * a textual conflict with tl/notes-separator (affecting builtin/notes.c; to
+>    address, nuke the conflict region and add an include of alloc.h after
+>    builtin.h)
+>  * a textual & semantic conflict with cw/strbuf-cleanup (affecting strbuf.c;
+>    to address, delete the conflict region and also delete the include of
+>    repository.h)
+>  * a semantic conflict with rn/sparse-diff-index (affecting
+>    builtin/diff-index.c; to address, add an include of sparse-index.h).
 
->   hash-ll, hashmap: move oidhash() to hash-ll
->   fsmonitor-ll.h: split this header out of fsmonitor.h
+After looking at them myself, I think that the above resolution
+makes sense.
 
-If you are introducing a bunch of -ll suffixed files, wouldn't you
-want to either rename them to ll- prefixed, or rename ll-merge to
-match them to make things consistent?
+> This series continues to focus on splitting declarations from cache.h to
+> separate headers, and also cleans up some other small header issues. By
+> patch 16, cache.h is gone.
+
+It is a nice touch to update the part of the coding guidelines
+document that names which header files other than <git-compat-util.h>
+can be the first one to include.
+
