@@ -2,124 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41751C77B75
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 17:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E1DAC77B7F
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 18:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232968AbjEHRxu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 13:53:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52192 "EHLO
+        id S232521AbjEHSrI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 14:47:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjEHRxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 13:53:48 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E1A63599
-        for <git@vger.kernel.org>; Mon,  8 May 2023 10:53:47 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1aaf70676b6so33643445ad.3
-        for <git@vger.kernel.org>; Mon, 08 May 2023 10:53:47 -0700 (PDT)
+        with ESMTP id S232492AbjEHSrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 14:47:07 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7E359F7
+        for <git@vger.kernel.org>; Mon,  8 May 2023 11:47:05 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-7577ef2fa31so417570085a.0
+        for <git@vger.kernel.org>; Mon, 08 May 2023 11:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683568426; x=1686160426;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=t0NvTy7w6geAPppNOVJLk4WJg6UguR/z67p+Hn66Xpw=;
-        b=a4D0yS/XTIwlnRWhv9wnTyFAY7kJqujbHVR1tn+eplARQh+mL//i8eAM8fZsiO+AMX
-         679tqzekFhVpxinzdjqWOD6ORGiWR8Ws3+LDpho1hwZpFtmEIPly3yQolcGOSiWEVYGz
-         OxmhFFNFW9kFdR6hCISMwkcQd8sPgkXSLQKuDz23olDm3AkbPaGabI5Sz+5qpgu+EsRY
-         3EHez5gYh7yc+YESQew6hT2LyxVGXnW3oM/8HUHQEga5E6cZWCiy/MTv2hMB9mqXc8HB
-         bv3hKZxE2BkpFclVHqqytG7BrNRY1/N68/85YzMlm4WauA9YV1qE++EABAvUmh3gxaPh
-         mmfA==
+        d=gmail.com; s=20221208; t=1683571624; x=1686163624;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HaYc+Wfkl2UALglpc3tGtQ3NLeq/kDmyIY0dA6P48sQ=;
+        b=GPa632jsWR+a8jCaooTIHusIWNOLQDLwr2dkfvyH8v96qpGyaZZtX4XNIs1U/aKhBa
+         koDXJlVMaJerri6fTfL1mit7Wm4NxOkgAprBQkYSOXK1ifShNF7LcsW/MzzNrxAwiVe6
+         rZNZoBOAzTwg/Cpcwkk32LKXkW2ujNAv4KTvlL7Jd+8P9SSSEc9ynWO4EyFt/sKmx3vx
+         XMnDdpr+ggdK9REl57f72uUeUt1nr3D01iRc0W0zVXrkXE2fyP/XlFuTCEJRPaKaonLb
+         Gp4f37sbY9w/WkpbaFZwtzKQ1jo/ulH6QzXW1P5uhCYz6IVYETZbNdpzkYbvLlgZvbCR
+         GE8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683568426; x=1686160426;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=t0NvTy7w6geAPppNOVJLk4WJg6UguR/z67p+Hn66Xpw=;
-        b=MHdPz7Lv/Fir2r0kx/1h1QuczPc0il7k6DFZm5CgMHVhDgOoBp3IMj3vnY4pPLWEVx
-         b4UGPXWiztjQe2Bli9qxbCaoDpbvKWtb3Eji3hyqpj+xRw/6SLUzgKD+HzhK1i5qkogq
-         J29zM5QJnZNRildQfu5ZJoFJoT8Wds5cMYKCNhx6FKerS7O36Z9cCXRA4fkN2rL15psa
-         6Q8s0Rf6+o1MQ0mmymFhDgF2D6BDliAHyDzB+aCCm5h7ruo7nxgdC6Juh3ph+eSDTwax
-         Q5YOx0IaANjAqMqihRpIm1yFAcGXheMFD+WSC/ppjkrlgegvN1yKKvmT9umZi8Ovw2E8
-         Q7XQ==
-X-Gm-Message-State: AC+VfDwij2u8yu9fnPnfjHwAy9iQj7q63Hyspjr8KtLaB+YWMVsM/AYy
-        JHGg7r8TEpQ5ee49TLWHi0Q=
-X-Google-Smtp-Source: ACHHUZ6SVGptxnfbFk3yIWO1jRqdndgrCKb9iTt8VorBoY7iqcmWhzTe9X6SwI4SDIhgXrBSRv6w+Q==
-X-Received: by 2002:a17:902:db01:b0:1a6:9f09:866d with SMTP id m1-20020a170902db0100b001a69f09866dmr14103429plx.61.1683568426162;
-        Mon, 08 May 2023 10:53:46 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id f5-20020a170902ce8500b001ab1d5726dcsm7527729plg.243.2023.05.08.10.53.45
+        d=1e100.net; s=20221208; t=1683571624; x=1686163624;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HaYc+Wfkl2UALglpc3tGtQ3NLeq/kDmyIY0dA6P48sQ=;
+        b=UZcI1NYPqye8+Xhh8b8jbxUz0sQMNb/kLS0JT3I4i7PP3Z264KvsO37usDn4qdUJTW
+         /OqRdep0cCWC67N4aarvi8QDfaE8Da/puRIQTv0O0pQLx6nW8PA9ZInwV8VXfxtXO539
+         FMYrvFlT0X8BWx9hrdOo0GVgyd2TSQl/eiXjLO27nvR/ABOocAuTFynUNB4tr17bzZWY
+         IwCMLFvExJa4QlY7XoigSlbLIJpjC/dXe+q7ZJK9jyxtBAAukgUAfbe6Mze3aYuZsZYb
+         gfGwZuXk5gjzE1wcE6wNzaxmYLfN0WgQ/mHw/8VCNb/R5QHsJ1dqui8xeuFTTXOvgclU
+         TAmQ==
+X-Gm-Message-State: AC+VfDyi1MwmbpdsaKEcn0l9J35wOejU43tRN7z5H+kQmGKEdrhxv6y/
+        j+3WIxA2azaU+fereWrvD2CfvARH6DSArg==
+X-Google-Smtp-Source: ACHHUZ7ibNVx2kMFrQbcLyhvl/B2BUZtjVM8PwAo8EmckXUNR3tIWdAiJp2uo3iwE1AJdutKv2P5ng==
+X-Received: by 2002:a05:622a:302:b0:3ef:379c:71b9 with SMTP id q2-20020a05622a030200b003ef379c71b9mr27469304qtw.30.1683571624666;
+        Mon, 08 May 2023 11:47:04 -0700 (PDT)
+Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
+        by smtp.googlemail.com with ESMTPSA id q29-20020ac8411d000000b003f1f26bbb50sm1900982qtl.35.2023.05.08.11.47.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 10:53:45 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>,
-        Paul Mackerras <paulus@ozlabs.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 0/2] gitk: handle long command-lines
-References: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
-        <af2111f8-2669-b952-6c4e-45ee0330ec14@gmx.de>
-        <fce603aa-ceb7-d601-6a19-657e36d9059c@iee.email>
-Date:   Mon, 08 May 2023 10:53:45 -0700
-Message-ID: <xmqqbkiupv4m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Mon, 08 May 2023 11:47:04 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: [PATCH v11 0/2] diff-files: integrate with sparse index
+Date:   Mon,  8 May 2023 14:46:50 -0400
+Message-Id: <20230508184652.4283-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230503215549.511999-1-cheskaqiqi@gmail.com>
+References: <20230503215549.511999-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+Changes since v10:
 
-> On 27/03/2023 10:17, Johannes Schindelin wrote:
->> Hi Pau & Junio,
->>
->> this patch series saw a positive review from Junio (thank you! I know that
->> you try to stay away from Tcl code, so I appreciate the effort very much),
->> but apart from that it simply languished on the mailing list for more than
->> two months now.
->>
->> Paul, is there anything I can do to help you integrate this into `gitk`?
->> Or is it time to pass over `gitk` maintenance to the Git project?
->>
->> Ciao,
->> Johannes
->
-> I just tripped over this problem while trying to de-stack my Git backlog
-> https://github.com/git-for-windows/git/issues/4408 "sdk gitk interaction".
+* Rewrite the comment before the "mkdir -p"
 
-I have done the same "create temporary fork of gitk, queue the
-patches, merge the result down while asking Paul to pull from me"
-dance I did every once in a while in the past (it seems the last I
-did it was in Sep 2019 [*]).
-
- * The last merge from Paulus is ef9b086d (Merge branch 'master' of
-   git://git.ozlabs.org/~paulus/gitk, 2022-05-11), whose second
-   parent (i.e. Paulus's tip) was 465f0386 (gitk: include y coord in
-   recorded sash position, 2022-02-20).
-
- * The two patches that originate from GfW have been applied on top
-   of 465f0386 in the gitk history; the result of this is 7dd272ec
-   (gitk: escape file paths before piping to git log, 2023-01-24).
-
- * The js/gitk-fixes-from-gfw topic holds a -Xsubtree=gitk-git merge
-   of 7dd272ec into my tree.  This was merged to 'next' and
-   hopefully will finish the usual 'next' to 'master' journey
-   soonish.
-
-Paul, can you fetch js/gitk-fixes-from-gfw branch of
-https://github.com/gitster/git/, which will give you 7dd272ec that
-you can use to
-
- $ git merge 7dd272ec
-
-to obtain these two commits from Johannes and Nico?
-
-Alternatively, you can fetch 'seen' from any of the mirrors, as it
-hopefully should always contain that topic from now on.
-
-Thanks.
+* Add " -- " in modified test to prevent regressions.
 
 
-[References]
+Shuqi Liang (2):
+  t1092: add tests for `git diff-files`
+  diff-files: integrate with sparse index
 
-* https://lore.kernel.org/git/xmqqlfum7epn.fsf@gitster-ct.c.googlers.com/
+ builtin/diff-files.c                     |  4 ++
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 66 +++++++++++++++++++++++-
+ 3 files changed, 70 insertions(+), 2 deletions(-)
+
+Range-diff against v10:
+1:  3b284bdf3b ! 1:  3e96a0c136 t1092: add tests for `git diff-files`
+    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is n
+     +	echo text >>"$1"
+     +	EOF
+     +
+    -+	# Add file to the index but outside of cone for sparse-checkout cases.
+    -+	# Add file to the index without sparse-checkout cases to ensure all have
+    -+	# same output.
+    ++	# The directory "folder1" is outside the cone of interest
+    ++	# and may not exist in the sparse checkout repositories.
+    ++	# Create it as needed, add file "folder1/a" there with
+    ++	# contents that is different from the staged version.
+     +	run_on_all mkdir -p folder1 &&
+     +	run_on_all cp a folder1/a &&
+     +
+    -+	# file present on-disk with modifications
+     +	run_on_all ../edit-contents folder1/a &&
+     +	test_all_match git diff-files &&
+    -+	test_all_match git diff-files folder1/a &&
+    -+	test_all_match git diff-files "folder*/a"
+    ++	test_all_match git diff-files -- folder1/a &&
+    ++	test_all_match git diff-files -- "folder*/a"
+     +'
+     +
+      test_done
+2:  15472db302 ! 2:  2c53fedf08 diff-files: integrate with sparse index
+    @@ t/t1092-sparse-checkout-compatibility.sh: ensure_not_expanded () {
+      }
+      
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'diff-files with pathspec outside sparse definition' '
+    - 	test_all_match git diff-files "folder*/a"
+    + 	test_all_match git diff-files -- "folder*/a"
+      '
+      
+     +test_expect_success 'sparse index is not expanded: diff-files' '
+-- 
+2.39.0
+
