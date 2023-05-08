@@ -2,132 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8063BC77B7F
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 07:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 996D0C77B73
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 08:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233382AbjEHHbp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 03:31:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43238 "EHLO
+        id S232699AbjEHIbK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 04:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233355AbjEHHbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 03:31:43 -0400
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532241A49F
-        for <git@vger.kernel.org>; Mon,  8 May 2023 00:31:39 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 98DF73200392;
-        Mon,  8 May 2023 03:31:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 08 May 2023 03:31:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1683531098; x=1683617498; bh=A7
-        bS8eHKqTJX8F/CAYbII92BSSzPntNtqbeVflSd/Bw=; b=fEPWj4Eaa2JCULoBj2
-        YtMIc0qnse6hfocP/YDbmaPrgHtNKqwW1DDbCicsOKWkyPG2SZJHdfLFo+KFO0Jr
-        T69yNRTgFH695wAXiClE8OP5y750t+ILhzPlUyW+XqXYrsIyFQADTbfiv/q+Bwwl
-        rxm6lO4xrk5eKvTFs74fiEyx/Xm9aH5BpN0iPEGGq0Ut3PR0ipPaK0cfjKZJtTWQ
-        zuietsrnvNNJTO6umCBKlq9EfJjIpee3CO67jV5Kn5gdPJUd9x2XCOetmiCMxLn3
-        YuawTSHl8Q9glgrxlltcQkS9cyZF8BAwd0Rak2dNW9prmpPQrfm5XivydhygStLJ
-        JwTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683531098; x=1683617498; bh=A7bS8eHKqTJX8
-        F/CAYbII92BSSzPntNtqbeVflSd/Bw=; b=T9U9t70fKlAwUVyToXkV0H/Omn+p9
-        50ggXYSMcdsk7S3hyAPhj0cRpRfX3RkBcRHZjD21phpS1A6/AypIb7efa2QFjhkA
-        COw+8HrJY8EGO7yEK+dTWeIP7x/N2TAT8zYE1k7ZmwuhKZOyMbe7rsn32K7I8f+t
-        Gnyhrjz4+B4UJmWFyZk5g7K1YK55t8GLFAYRW1PbVjP/W4/h+4eCjmVFMuDVogXb
-        vQMVBRgueP1SpNOqLU7R8PGKW0RIQlpl0AK3A5M9SQzNRmnj33o2g/LV3kQ5ISVw
-        LM27NZ+8jjGHgsEO2S4IYgKQ8n3E7oa/AMPs3FXus+STXd9NpfMb72VCw==
-X-ME-Sender: <xms:WqVYZJ_vj2F767CZ4uulaXLJitiWVp1DPcNU2tvNQprosSqGhSqOlg>
-    <xme:WqVYZNv8G-zEAx-FB8D0-_TeJ_a7gq6ZmVCrz09R3RCi1SFN8Mhm7yYAC6LVvSZbn
-    DhwmGNA2X9YnwwIeA>
-X-ME-Received: <xmr:WqVYZHDDW6hrl35c64TMZ0gvkyG1dCHRm4j7NFySZyPmicD0UpfZZtURP_9Q0Tn4cHTOHSfBMCZ9PurCSnZq3D-3gFkXZsXQiHWWns1RydtKERM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeefjedguddvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptdeiteevvedukeekheeiueevtdeigf
-    fgtefhkeelgeevtdejueelleffteeuieeunecuffhomhgrihhnpehpkhhsrdhimhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:WqVYZNdCzLD1xt8HfsO2-j7xbbuLeWmfpJG-7brnw4Wa7fSE6NRtLg>
-    <xmx:WqVYZONjfRdyRedJeLQ-qBms9LnxkoUVCPuFfUDmc6X3V_TnG5E3FQ>
-    <xmx:WqVYZPkVTBggXlYtgVHG5ZXdkp7EJxSzqlDYTrlVMRaQ0u4fphXwwQ>
-    <xmx:WqVYZIXes6nLnqr0RBsqMT2-blSjiDFZLUJKcQg6fcl9gvxKZqwlqg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 May 2023 03:31:37 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id ce0f36cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 8 May 2023 07:31:30 +0000 (UTC)
-Date:   Mon, 8 May 2023 09:31:33 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ps/fetch-output-format (was: What's cooking in git.git (May
- 2023, #02; Fri, 5))
-Message-ID: <ZFilVVv88qhZhL-d@ncase>
-References: <xmqqmt2ibcq2.fsf@gitster.g>
+        with ESMTP id S229779AbjEHIbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 04:31:09 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C4FE170B
+        for <git@vger.kernel.org>; Mon,  8 May 2023 01:31:04 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-94f910ea993so653997766b.3
+        for <git@vger.kernel.org>; Mon, 08 May 2023 01:31:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google; t=1683534663; x=1686126663;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fruIB/xMs77GDmSJUJOE3ouwGAuGiFRFLthvNFhhvuE=;
+        b=WPxFnbnSBAr1IDpckEHI02wW2P5FGbiUcIQ7BqDnvxxjNj9EsEK+QKczo9xFnYcDIu
+         T2FsdUcEpKG/3x1NlylEBUTEmkzrpMuBy3BJKjlN48/w6aYILc2Cj/cQk11rVsBQ71mi
+         vTcTT80pL+pqEXrr+5utbva6o/gaY2ya2uqX8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683534663; x=1686126663;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fruIB/xMs77GDmSJUJOE3ouwGAuGiFRFLthvNFhhvuE=;
+        b=WvpSSxsfnWtbnRa3hbtMWJthNHcS07r4F6MJSc3TmnhuQSQVM2hOGAB+u5uSGoq3sT
+         97TfYZM99nPmubTtbSQo5/2LbZcShM6wl9qKUF8m4KSIsuFCGnBAOt/a0JA4Zm78a3SB
+         EIiwkoveYYR+vyQPG1ZtiFHGuXC1BGV884xDNIbK986iEyW8FJxw2Pbq/H4+wzsL5FNg
+         A+Ew5senBSIel567c33kLeuGakx84ETAW5vH7Qb1pTLXsi3+dNxANENwudtzO4NfnAoU
+         8XH2jFMHcVB6c+IPGK35EetWN7CXjR61VC6oq6DPer+Am/L21xYO/5T+nm5Css98oJQg
+         qZFg==
+X-Gm-Message-State: AC+VfDyaVcxZixKbXjfNyysOlkcFhb79jYw7fb2uDPrwZM/AaT/XZpjC
+        I/OlhJ/PIOTDLORkLLpS1k29m5RwLpXkvT8OBxshWw==
+X-Google-Smtp-Source: ACHHUZ5Q8lfKbudKytgWTSXJlwDInOFEexBZjJtbQ/yWKuqtHt6y0u6Y487rfcWzibLorV9ckEl1ojBgFJHfSCzgWJM=
+X-Received: by 2002:a17:907:7da7:b0:94a:9c9e:6885 with SMTP id
+ oz39-20020a1709077da700b0094a9c9e6885mr8529322ejc.58.1683534662715; Mon, 08
+ May 2023 01:31:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Uq5CC3A7nsklRW16"
-Content-Disposition: inline
-In-Reply-To: <xmqqmt2ibcq2.fsf@gitster.g>
+References: <pull.1527.git.1683008869804.gitgitgadget@gmail.com>
+ <CABPp-BH8A=CnO3_UWXDegb87VTNEX8s+=CefB90m1_vjBZ_+Fw@mail.gmail.com>
+ <CAPMMpogiTVksUKgZ==n4d3xm4ZJqxm7ki2dOF8j8S5BaJvu1Ew@mail.gmail.com>
+ <CABPp-BGmPKyNcDa-wUh-oisTvvux+X=6BvGxSNQC2O7uodpFrA@mail.gmail.com> <64581fc358ede_4e6129442@chronos.notmuch>
+In-Reply-To: <64581fc358ede_4e6129442@chronos.notmuch>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Mon, 8 May 2023 10:30:51 +0200
+Message-ID: <CAPMMpojTjFn7JCo8QsDcOJf6NoJYASbV1bL_JxDhUr7DS12DJg@mail.gmail.com>
+Subject: Re: [PATCH] RFC: switch: allow same-commit switch during merge if
+ conflicts resolved
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, May 8, 2023 at 12:01=E2=80=AFAM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> Elijah Newren wrote:
+> > On Wed, May 3, 2023 at 10:01=E2=80=AFPM Tao Klerks <tao@klerks.biz> wro=
+te:
+>
+> > > If we are comfortable changing the behavior of branch checkout to be
+> > > safe-and-limiting like switch, then that should be almost as simple a=
+s
+> > > removing that condition.
+> >
+> > I've never heard a dissenting vote against this
+>
+> Here is my dissenting vote: I'm against this change.
+>
+> If I want to use a high-level command meant for novices, I use `git switc=
+h`. If
+> instead I simply want to switch to a different commit and I want git to s=
+hut up
+> about it, then I use `git checkout`.
 
---Uq5CC3A7nsklRW16
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you for your perspective on the relationship between these commands.
 
-On Fri, May 05, 2023 at 04:05:57PM -0700, Junio C Hamano wrote:
-> * ps/fetch-output-format (2023-05-03) 8 commits
->  - fetch: introduce machine-parseable "porcelain" output format
->  - fetch: move option related variables into main function
->  - fetch: move display format parsing into main function
->  - fetch: introduce `display_format` enum
->  - fetch: fix missing from-reference when fetching HEAD:foo
->  - fetch: add a test to exercise invalid output formats
->  - fetch: split out tests for output format
->  - fetch: fix `--no-recurse-submodules` with multi-remote fetches
->=20
->  "git fetch" learned the "--output-format" option that emits what it
->  did in a machine-parseable format.
->=20
->  Will merge to 'next'?
->  source: <cover.1683113177.git.ps@pks.im>
+I don't fully share this perspective, in two ways:
+- In my experience most novices don't see or know about "git switch"
+at all - the vast majority of the internet is still stuck on "git
+checkout", as are existing users. Google search result counts are of
+course a poor metric of anything, but compare 100k for "git switch" to
+2.4M for "git checkout".
+- As far as I can tell, "git switch" and "git restore" have exactly
+the same power and expressiveness (except specifically the lack of
+"git switch --force" support for bulldozing ongoing merges) - they are
+just as much "expert" tools as "git checkout"; the main way they
+differ is that they are clearer about what they're doing / what
+they're for. I'd love to see "git checkout" deprecated one day,
+although I'm not sure I'll live to see it happen :)
 
-Note that the description isn't accurate anymore: v3 of the patch series
-has changed the new option from `--output-format` to `--porcelain`. With
-that change I'd also feel more comfortable if the new iteration had at
-least one review before merging to `next`.
+>
+> You want to strip away the options for experts, in search for what?
 
-Patrick
+What *I* want is a generally safe system, in which you don't have to
+be an expert to avoid causing yourself problems, especially losing
+work.
 
---Uq5CC3A7nsklRW16
-Content-Type: application/pgp-signature; name="signature.asc"
+The specific example that motivated my wanting to change "git
+checkout" here was the case of a normal (non-expert, non-novice) user
+who is used to doing "git checkout -b
+actually-those-changes-I-made-shouldnt-go-on-the-branch-I-was-working-on-ye=
+t".
+In their day-to-day work, that action will always have achieved
+exactly what they wanted. The day they make exactly the same
+invocation just before they commit a merge, it will do something
+completely different and confusing - it will destroy a merge state,
+and result in the commit, shortly after, being a regular non-merge
+commot. Leveraging that committed tree in a merge commit *is* indeed
+an expert action, and most novice and maybe intermediate users will
+instead find themselves cursing git, and starting the merge again from
+scratch - if they even notice the problem. If they don't notice the
+problem, then they will instead have a new and fascinating source of
+merge conflicts at some future time.
 
------BEGIN PGP SIGNATURE-----
+In general I *will* be willing to make things a little harder for
+experts in favor of novices - absolutely.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRYpVQACgkQVbJhu7ck
-PpRekg/+Iag8AU1M6RsyU08te+HkZGiTFmo+oHqLj0w6HuOlH7pqrc51zZeFrY9p
-57j55LaDyuOx35rxZfuaDL3NtghR3DTlDbi2x+7lXaWD3tBFh/U7OZIwq7BOQiHn
-pPtNDNjrh2kr6KokWfCDCvuBXHbtpkTmyvR/8HZsv9C1BlGn/MMpm/SuTvxwAfUl
-+vWKYYEybYTbNY0FyIp+JlzQtD8w77NPpD1/qu8rixjA26mehsiequNQunuM3Xkb
-vJBE2qRMtJrKJrcprvTW0o0o8l1i8t91NDtFGrVZBiQD5KqjobKvgLJ19uiWbs0k
-OAlD8X2QBnEkOeJvXNWimjygl1EEPZcpZE28UTeC0a21b87Uka1cTOY0nKiWT8Dl
-AHLsfijhGNykEk7wOsEe9NOws0B/dlqINIwn6JuW1qenTgmtYp1SR5bP2Dvlh62d
-IWihUzchb0Qu8wD9qz0A1Nfqfw7WOMq58OYP5Y/mUn1WtTkKQndDHk1WTpJLISJa
-NgDhredWIpJk8eqxXOKCL07i/RYi8XdiNV5JNS+J8LGXnrv2zZC1AMqrAd3L9+7H
-g+cVih6qezVsXiNUoYycF6yT0mpXB2oVxAf++VY6n9obqggsfWnRX9rqX7hGc02K
-sblPRmZzHyky2RuqD93EOatZ7x0vPIlpT61WRxg4XQysgz5ICWo=
-=Q2Kq
------END PGP SIGNATURE-----
+That said, I don't believe the (new) change proposed here strips away
+*useful* options from experts at all. When I said "safe-and-limiting",
+I meant it in the most literal way - that there are some operations
+that could be performed before and would achieve certain outcomes that
+won't be possible afterwards. What I didn't mean to imply is that
+those options are *valuable* to anyone - even to experts.
 
---Uq5CC3A7nsklRW16--
+>
+> If there was a way of doing:
+>
+>   git -c core.iknowwhatimdoing=3Dtrue checkout $whatever
+>
+> Then I wouldn't oppose such change.
+
+I know I keep wavering back and forth on this, my apologies for my
+inconstancy: *I once again think adding support for "--force" (to
+checkout and switch) with ongoing operations makes sense.*
+
+This does not achieve exactly what you seem to be suggesting above,
+for two reasons:
+1. It could not be implicit in config, but rather would need to be
+explicit in the command
+2. The outcome of using --force is not exactly the same as "git
+checkout" without it (but that's a good thing)
+
+I would (and will) argue that not achieving exactly what you propose
+*is OK* because the behavior of "git checkout", without "--force",
+when there is a (merge, rebase, cherry-pick, am, bisect) operation in
+course, especially the way that behavior differs from when "--force"
+is specified, is *not useful* - even to expert users.
+
+I will provide a table of behaviors with a proposed patch in a few
+days, but basically the main behavior we're taking away is a
+one-command behavior of "switch branch and remove the (merge,
+cherry-pick) in-progress state". The explicit equivalent is and will
+continue to be "git [merge|cherry-pick] --quit && git checkout" -
+leaving the in-progress merge changes in the index, but switching to
+the specified branch.
+
+My expectation is that this is not something even expert users find
+themselves doing... ever. But I would like to know about it if I'm
+wrong of course!
+
+Something that I *do* see quite a lot in the test suite, and is
+prompting my turn-about on "--force" support, is "git checkout -f
+whatever" as a shorthand for "just get my worktree to the state of
+that branch, regardless of the current ongoing operation".
+
+This shorthand happens to *fail to work correctly* during a rebase
+(clearing of the rebasing state was never implemented), but I believe
+that has more to do with priorities and scope of changes than
+intentional "let's set an extra-confusing trap for rebase" reasons.
+The resulting state, where you have switched to the requested branch
+and discarded any local changes, but are still in a rebase,
+potentially with pending rebase sequence steps to complete, is not one
+that I can see even expert users making constructive use of.
+
+Generally, the "allow 'checkout --force' to destroy in-progress
+operation states" behavior looks like an expert shortcut worth
+preserving, and improving/fixing in the case of rebase.
+
+>
+> But this is not the proposal. The proposal is to break backwards compatib=
+ility
+> for expert users with no way to retain the existing behavior.
+>
+
+It is true that the (updated) proposal closes the doors on *specific*
+behaviors as a single command, requiring them to instead be spread
+across two commands. However, I believe that those are effectively
+*unused behaviors*, and that the increase in consistency and safety,
+for all users, by far outweighs the cost of this particular break in
+backwards compatibility.
+
+I am, again, very interested in anything I might be missing!
+
+> Generally, breaking backwards compatibility for no reason is frowned upon=
+.
+>
+
+I absolutely understand and agree that breaking backwards
+compatibility *for no reason* is never the right thing - and I take
+note that being clear about exactly what the reasons are, and what the
+costs are, *before* talking about doing it and asking for opinions, is
+advisable and something that I failed to do sensibly here.
+
+Thanks again for the feedback, please let me know if you know of any
+useful expert use cases that I *am* missing in this updated proposal.
