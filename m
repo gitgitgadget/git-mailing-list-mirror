@@ -2,205 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC6B2C77B75
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 20:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0104C77B75
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 20:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbjEHUV5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 16:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60152 "EHLO
+        id S233507AbjEHUbB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 16:31:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjEHUVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 16:21:55 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4EBD213C
-        for <git@vger.kernel.org>; Mon,  8 May 2023 13:21:53 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-3ef4a74b42dso25367531cf.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 13:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683577312; x=1686169312;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qnzn+4W7xWkidowl7lc4umQIqOLhsZYjwZuFOEM2hBs=;
-        b=RnpLvFIW31B4AG2xT1unQWBJAg91Z+uCC/cOLQZ/J6E2UyiG40hwpG8sLBXMspEAbR
-         w/tE0lV/decxNfWUNKi+O8mjL7UZNlcBsP0b0p5mc/CfKM1w83bORAlbIZEKLLwb9NO9
-         gOeXq/rTAmioCPcxCDtnzsDLqpjOV6w+jgCYtbqbhhr4SgAvJf1jRFqwPIne5AiyNLZ2
-         +fLHXJ2ii8WP9NAqrxg8VrA+z14L62B23eD0timT+QNfH6sFemF3RACP46ZzPyQU9UJB
-         8ruUahM5Gx1/a6qJGioyuu0iebaQRPe1p4azq1jC405upcR1UwP5L3MFMS4zHl/8NRuX
-         WKhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683577312; x=1686169312;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Qnzn+4W7xWkidowl7lc4umQIqOLhsZYjwZuFOEM2hBs=;
-        b=D6dY3MhiNQAZZVpAIRVIfRj6BCNzwtimzdYFJV0lNCbYnLsd3oQlNtTKk/WEX5RbmK
-         iMDtktIJxJhjR8ZTcX99WOHvrE0kVqmJPUfLFe8Rz9NKTF0IzmOhj1AGyrcjmAQZVQum
-         xukzp4BfmpMLYRV493xIvUavSF72xU+pfmWV+LAMkSYOTGw3y6YzP16SgOsDS+1qMaRr
-         XZxk4TjOT9w3wLVuJYz9tjZ1QBtCbaMZcoHlPgRabq3GsvT0yCgj5IZDoXU+7aqxytyM
-         FS2EUeDqQYBp/fSOUeXi+v5hkpP8K2JRD6X4DIFAkUlD5XnBmNMBDI6cRZI7sx3zYctE
-         CZOw==
-X-Gm-Message-State: AC+VfDwNclaAtYM5Zb+hFLHbB5AGOkXjb24I4bDe4EFcMqWZyMxHxg4w
-        M0E2nPq61pQ+ymotgLWC2/MqcbbFEF8QMg==
-X-Google-Smtp-Source: ACHHUZ592emh/YFDojUCzNNY10p9QH2VNe6LQqSQWoK5/k5K0UQcN8tAXgKRvAaj97VRsvkkdOPpNA==
-X-Received: by 2002:a05:622a:5d3:b0:3f0:ac80:1ed7 with SMTP id d19-20020a05622a05d300b003f0ac801ed7mr18010730qtb.45.1683577312590;
-        Mon, 08 May 2023 13:21:52 -0700 (PDT)
-Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
-        by smtp.googlemail.com with ESMTPSA id s15-20020ac85ecf000000b003eb136bec50sm3196725qtx.66.2023.05.08.13.21.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 13:21:52 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
-        gitster@pobox.com, derrickstolee@github.com
-Subject: [PATCH v6] write-tree: optimize sparse integration
-Date:   Mon,  8 May 2023 16:21:40 -0400
-Message-Id: <20230508202140.464363-1-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230508200508.462423-1-cheskaqiqi@gmail.com>
-References: <20230508200508.462423-1-cheskaqiqi@gmail.com>
+        with ESMTP id S229690AbjEHUbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 16:31:00 -0400
+Received: from us-smtp-delivery-120.mimecast.com (us-smtp-delivery-120.mimecast.com [170.10.133.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7831646B9
+        for <git@vger.kernel.org>; Mon,  8 May 2023 13:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mathworks.com;
+        s=mimecast20180117; t=1683577816;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=lq6FF8Zbbm9ZVTcpVHCwm0jVqKrk5TNo1cUIhqaMnYo=;
+        b=gfL+ORNGoyfszUvysgIZFAofsmGFgpDIQW58zRq31PtSKAhAXvKDl+Rv2cSjID4vGOXUxE
+        WO74KUUqS/69edrCNXF1HJwu3bCl5vbx2HOoK0M5l4vA7fTjZwInj6f6YaNaCM0HoX51kW
+        yqMkPFQ3CzoovnqPLY4ZiBMJdGZwzOc=
+Received: from CY4PR02CU008.outbound.protection.outlook.com
+ (mail-westcentralusazlp17012025.outbound.protection.outlook.com
+ [40.93.6.25]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-644-2YIMw_dmM1qWG0r-LDAMvA-1; Mon, 08 May 2023 16:30:15 -0400
+X-MC-Unique: 2YIMw_dmM1qWG0r-LDAMvA-1
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com (2603:10b6:208:2f::17)
+ by SN6PR05MB5581.namprd05.prod.outlook.com (2603:10b6:805:c6::32) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.32; Mon, 8 May
+ 2023 20:30:10 +0000
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::9879:48ba:f188:d10e]) by BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::9879:48ba:f188:d10e%7]) with mapi id 15.20.6363.032; Mon, 8 May 2023
+ 20:30:10 +0000
+From:   Eric DeCosta <edecosta@mathworks.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: [PATCH v2] fsmonitor: handle differences between Windows named
+ pipe functions
+Thread-Topic: [PATCH v2] fsmonitor: handle differences between Windows named
+ pipe functions
+Thread-Index: AQHZa+Ua5/eopUBI6EKbvZeRiY8+8a830QpggAZT8wCAEsTXsA==
+Date:   Mon, 8 May 2023 20:30:09 +0000
+Message-ID: <BL0PR05MB5571DD75B080F2790FC82534D9719@BL0PR05MB5571.namprd05.prod.outlook.com>
+References: <pull.1503.git.1679678090412.gitgitgadget@gmail.com>
+ <pull.1503.v2.git.1681155963011.gitgitgadget@gmail.com>
+ <BL0PR05MB557134157C3D08D982DEB338D9619@BL0PR05MB5571.namprd05.prod.outlook.com>
+ <48d44c06-34ba-0a1f-dd0d-7d66bd8dfcb9@jeffhostetler.com>
+In-Reply-To: <48d44c06-34ba-0a1f-dd0d-7d66bd8dfcb9@jeffhostetler.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL0PR05MB5571:EE_|SN6PR05MB5581:EE_
+x-ms-office365-filtering-correlation-id: d4d72787-c0f6-405d-fe45-08db500304ef
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0
+x-microsoft-antispam-message-info: qVJj+y8ctnsldnHJpTeo0ZNjc1ktyGzfV60ZXhntiC9VeWtVpmKXqd5aZbJpWxCy9uxPlrHOMk+eHY0mgAFjOc1pAW2jlY5qCWTWqdsxfSflAmrRoYVsSl0nLUJanM96xYHojiM2xjO1x0E7xW+v9frlhDpOZdNxXDb/90tvgOFZNDm5d5equ03SyQwBWRdwCijuwUdgp9C5iWS081EcL1muVb5d87OGi/WrXythfPRCxNWrRUrRIMh2zjJXupnyBm2HK1KmEW9M4dJDmRgttfvikYNGdLdpek7n0WZ3S3z0StsoDsULNrUJKzT8JynvsuOOKx3ff0C+ozGrQpKfYEeU6/aFBGF8ZqwFpXzm+z17nTIsoeatGsHz+/UfZOZT/NyYHB7KLhbCRPXeKKbWm9Z0xzefPObxk+3Qy9mj31YZj+/LOQqppPsb5FWG3dBH+2cvL3UjK/CGapJogD2qFT3JhWtIOpaaDEZvbSWoDHnCr+vMTqC2+xK0UCbZujpmsM3qWahX1yVsAqLWPnRZYyUI44aldU9VjVT/+k9cscE9lvzhjXJFDYzse99dXqIW4K1YR9ueHhczBRq6VkUYof1WKqnZvnH0eKweCumuNv9gYC8LfkTCz+Cyy6sp4ljnsBIv1U15UKT0xEnfqncNx2O8yz4nv2yxJTrS2487PMU=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR05MB5571.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(136003)(346002)(376002)(39860400002)(396003)(451199021)(7696005)(110136005)(71200400001)(478600001)(186003)(8936002)(26005)(53546011)(8676002)(66476007)(9686003)(66446008)(41300700001)(5660300002)(64756008)(2906002)(66556008)(66946007)(76116006)(52536014)(4326008)(38070700005)(86362001)(6506007)(316002)(38100700002)(33656002)(55016003)(83380400001)(122000001);DIR:OUT;SFP:1101
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?U2Q0S0R0VCtja3BSTHhzZUtaVG5wOVhjVmY2dkxQbE50aCttd3lTbThQVWdE?=
+ =?utf-8?B?YklNZTdCcTFVNWZ3MGpWeUpKTFJIcG1kamdOUGJvWmtMVFpxcjMrSzRZS1hH?=
+ =?utf-8?B?cjB1eElaVml2eHVYREs5UC84eFlyQTdtRE5YOHZ2c3lWbTBKSUJiS1ZCQTY0?=
+ =?utf-8?B?S3UwcFk4aXVqV2dYZ2JYUzBDUXpGbXhzdlNpK3hjL1h6Tkg5MXM0NTFXZEpF?=
+ =?utf-8?B?UnR6UzUwRVl4aTNrelQyWk5QTVhFcExZL3JEY1FoMXdmQzZXRllnc2RZRzho?=
+ =?utf-8?B?TE1pTml2UTBzTEJaOEJDalVLZUsyc2xyaUZKYnhnSTlPRzl2cGw4NGl4UHh5?=
+ =?utf-8?B?MWFhOFZhcVNIdzVRaTAzU205MU9hQ3Z1dk9RR21ISnlqYWxsRlNiWlE0MFJY?=
+ =?utf-8?B?Sk1vQ2pBVVIwMWdUQ3YvSFhnOFJ2K0w1TGJIMHEvak44N1JndTJZUkwvYzE4?=
+ =?utf-8?B?WU1GZlZuTFNrK3Roa0hkRG5pMllMQ2dsa1o1NlpzbUdkNHNDcXhWODNmdGRt?=
+ =?utf-8?B?b2Zyck44WVVIdE91cVRmVlhKRlV1VUVvVGJPQWxsQnJWTHQzcVFPYlB5YjE1?=
+ =?utf-8?B?R2JyZzdVeTViTU94ZlhEU0F2cmgyTU02cUFxa1VWdG5lM0paa1ZTaHcxMnBN?=
+ =?utf-8?B?UlRreERIVHdnVFVJU3RXNVhOcElIM2tTM01Od3VNRmNDOEpmL2cwYnZTTkVR?=
+ =?utf-8?B?SkpvNjdZeDhROTQ5ZHpONTdkYXRZQTE5MDZveGttaDVHRkVsZENkeDRYRm5j?=
+ =?utf-8?B?S3hBWGNDSzUrb1E0cXRPVTdMTmwxbjBqSXQ5Zk00VnZYRmpWRENJV1IrK1RV?=
+ =?utf-8?B?dVpNWEhmaDkzUlQraUNieklvS2xYcGQ1NHNFT1d2Wm9zOVdicFhOUWVlT3pN?=
+ =?utf-8?B?dVByakRhVFh3NlN1UVhNWmJYcEpPMkkzQnV1TEpYQ0w3U3VQbGphNEE1NFJm?=
+ =?utf-8?B?WmQwQ2xRSTkxa1pNSmV6L3ZkMURSOTZPOGpxRUxJeWhFdmROWjdKMVJrcmlM?=
+ =?utf-8?B?cjczRm1wN2V4MVZwRDV6QXBpNHNDL1hMemc3VUZNVElhSmxKcTY3NUV3TDEw?=
+ =?utf-8?B?NWtSQTBHZE5ZNmlWSVdDT3VaeVVyN1VCUWpVU1V0Uk9SLzRjTmttWFQyUUJT?=
+ =?utf-8?B?VHdrKzdNZHhnc2xuaDY4QkFJc2VUNGV5M01oWEVpaVJRR0xNMXJlQUVUdzZl?=
+ =?utf-8?B?NkRoVjNidjFpeGlFZ2VVckc4Vms5NWF6RFdQb1pWWnFlVklnWHdJWm9iUE1o?=
+ =?utf-8?B?STJaRzlrSHBVVEtuaVQ4dDI5SFNkaDJURTh0cUp5cUpkMUp2UXdZcmpqbUVJ?=
+ =?utf-8?B?T1JHSm1zS2RwRTBKc0I0YS8wUms0bWF0MVZ1OXFWYlAxQVd2QWtJTFI2QU14?=
+ =?utf-8?B?T2tXNjZMYS9KYy9VVEkzOXgzVEZuYTNUSXVDVFYwWGNwczh1YXcwWkxpazRs?=
+ =?utf-8?B?TGRSTDI3WkI2Q1pzN09wcXJwcGhhYncxOXVnME0yeHVVK0FDQitKUUl1NkFk?=
+ =?utf-8?B?Q1Y0dk1TV3lNTXYrZW5RWXkzVkl2WXc5TS9paEtNeDg4RU04c3ZNWGZoMGJR?=
+ =?utf-8?B?S1VkSll6Q29FNUhZZEdUYldJYVFNS2tTSVBJU2pXanB6cmxwbXJ2Q1hrS0VX?=
+ =?utf-8?B?OTFEazFXdjQrL1VxbEMyOXFrSWJFeXRwMVNhbGZWT3RDTE5UQncxbXhlSlJE?=
+ =?utf-8?B?NGVjdmdmc0RCK2FWcWZ6cjdacUpKazR4QXVaL0NvOEM0TGdud3pqbXBuRmJq?=
+ =?utf-8?B?ZDAvblF0K2ZKWnUvSURSbm5UVFY3YXJCK2hMUThRbVZ5MWNwN2hDOEhWUTQv?=
+ =?utf-8?B?dlpXUTF1WXV3NDJYdGFvc01YSWtQK2tIOENEUEZscFppMjRnMmcyNnlDbW05?=
+ =?utf-8?B?V0x4NXJvUmVWM3ZreUtMQXc4cFZxTUxVcnVjVTNoNmdGcUVJUk5jSkw3a0NX?=
+ =?utf-8?B?dVh1d3FoTkhZNFBLRjBTekFwSThKcURxRmYxNXVUVTd6QjA4ZnlPL2VNOGU0?=
+ =?utf-8?B?WGtzYmlXQmZOdzV4UkpIZnNpSloybFFiVkRIdUVyWWJ3QzRIRk91M2ZtZmwx?=
+ =?utf-8?B?c0lhRlB5Nkc0K3Ayd1RqMWMyWUxzK3lZSzlCQVEwbE5xVUVoWlVCYWtZSnB2?=
+ =?utf-8?Q?fdUqPsymILtPzyA7zr9UxOOUy?=
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: pgTNND7N1PIUVB64jei2kB3Gd1Z5HmoYSTYzeHbChQFuU6O0HWcjNGzVBprttp8eTY6lrs9oDl0+yZq8vXXbqAutuVgeTg0y4fMfQEaKhk9BO/9Q+dPCPCi/aJKKnyCmIaJTof1PNOEmioT2u0cNQVKSr5cLTgn47p/65CVMVQyq9wC84w90l1uYDH4y5/+QRXooN91G7A2jPUKeqqhUaF68mWIo/mgoj09NcWXdhQCFz6AtIK0+21IHs0nBLmVTDZOoJ5IciYDlJ2MbGEDxjyycvAuUg+T69u0jrw9ndaG+19982UjOUNcnaw0Dkklmn+t55NFRepvZ7aVZcIV3dcEQe3Anbys7MwTkCS4qEYltP+9grjMM7UYU1vpDtzN72MJwmoNg+FLfwN61k+z+8u27vy56j6kzEMnIE8bNkCq90BiN756McWcReLwGxVJWTJRpPmFLkLsrbJHGGPkk4NrGJCdeLwVdgLQHdw73+vA9T+srOIyI0+K2iOih0ktcIiUaMyYLAyE7omIl9umnZfhybTbAZXpLCKSDEvGNtSFEzVSyjbBP2ELV5Ie8GtzueB96YuXk1rzcTV7aTwz6MrBJkBvdDHGI83lcYuSgK+fDtR3Kc18zeO0tzT2gbZNtQN9fvgqP+nBVw7SNkE19WZFfm5/TUEBjN4wFzNSKRECcf3530SFBka8wEopQa8nhNOT61UllZC1YzX/LSz2/CaTCT9KKG91Gem/+zcl/v52oLrzQuBRM4efOGCI8B1oR+sDJb8SG3acJ8grMzleMLNGdXAk34kPs1TX0P2da6nnFLFQeJOpebNfcFB/j15F5ColVGThD5bicxj7l1aYR5uC7AASI3WyTyKWZUKi3+w4=
+X-OriginatorOrg: mathworks.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR05MB5571.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d4d72787-c0f6-405d-fe45-08db500304ef
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2023 20:30:10.0931
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 99dd3a11-4348-4468-9bdd-e5072b1dc1e6
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: rEiFonNt4JAZ2QoQ1vHr8m21d/VtnHwKVvOTBB5MbgdnTash7+CbXrnE3Vd6sfFi9lKbjsJ9ZjCmuIyuKzFsSg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR05MB5581
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: mathworks.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* 'on all' in the title of the test 'write-tree on all' was unclear;
-remove it.
-
-* Add a baseline 'test_all_match git write-tree' before making any
-changes to the index, providing a reference point for the 'write-tree'
-prior to any modifications.
-
-* Add a comparison of the output of 'git status --porcelain=v2' to test
-the working tree after 'write-tree' exits.
-
-* Ensure SKIP_WORKTREE files weren't materialized on disk by using
-"test_path_is_missing".
-
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
-
-My apologies, please ignore the previous v6 iteration.
-
-change sine V5:
-
-* We not need to check for the presence of a repository before calling
-'prepare_repo_settings()', as the control flow should not reach this
-point without a repository. This is because 'setup_git_directory()' is
-called for commands with RUN_SETUP set, except when the command line
-argument is "-h", in which case 'parse_options()' takes over and exits
-the program.
-
-* Change the commit message to make it easier to read.
-
-* Remove whitespace before the line that says # check that SKIP_WORKTREE
-files are not materialized".
-
-Range-diff against v5:
-1:  df470c2d61 ! 1:  e6c21ec6b8 write-tree: optimize sparse integration
-    @@ Metadata
-      ## Commit message ##
-         write-tree: optimize sparse integration
-     
-    -    'prepare_repo_settings()' needs to be run inside a repository. Ensure
-    -    that the code checks for the presence of a repository before calling
-    -    this function. 'write-tree on all' had an unclear meaning of 'on all'.
-    -    Change the test name to simply 'write-tree'. Add a baseline
-    -    'test_all_match git write-tree' before making any changes to the index,
-    -    providing a reference point for the 'write-tree' prior to any
-    -    modifications. Add a comparison of the output of
-    -    'git status --porcelain=v2' to test the working tree after 'write-tree'
-    -    exits. Ensure SKIP_WORKTREE files weren't materialized on disk by using
-    +    * 'on all' in the title of the test 'write-tree on all' was unclear;
-    +    remove it.
-    +
-    +    * Add a baseline 'test_all_match git write-tree' before making any
-    +    changes to the index, providing a reference point for the 'write-tree'
-    +    prior to any modifications.
-    +
-    +    * Add a comparison of the output of 'git status --porcelain=v2' to test
-    +    the working tree after 'write-tree' exits.
-    +
-    +    * Ensure SKIP_WORKTREE files weren't materialized on disk by using
-         "test_path_is_missing".
-     
-         Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-     
-    - ## builtin/write-tree.c ##
-    -@@ builtin/write-tree.c: int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
-    - 	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
-    - 			     write_tree_usage, 0);
-    - 
-    --	prepare_repo_settings(the_repository);
-    --	the_repository->settings.command_requires_full_index = 0;
-    -+	if (the_repository->gitdir) {
-    -+		prepare_repo_settings(the_repository);
-    -+		the_repository->settings.command_requires_full_index = 0;
-    -+	}
-    - 
-    - 	ret = write_index_as_tree(&oid, &the_index, get_index_file(), flags,
-    - 				  tree_prefix);
-    -
-      ## t/t1092-sparse-checkout-compatibility.sh ##
-     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep sparse directory within submodules' '
-      	test_cmp actual expect
-    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep sparse direc
-     +	test_all_match git update-index folder1/a &&
-     +	test_all_match git write-tree &&
-     +	test_all_match git status --porcelain=v2 &&
-    -+	
-    ++
-     +	# check that SKIP_WORKTREE files are not materialized
-     +	test_path_is_missing sparse-checkout/folder2/a &&
-     +	test_path_is_missing sparse-index/folder2/a
--- 
-
-
- t/t1092-sparse-checkout-compatibility.sh | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 0c784813f1..3aa6356a85 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2080,22 +2080,32 @@ test_expect_success 'grep sparse directory within submodules' '
- 	test_cmp actual expect
- '
- 
--test_expect_success 'write-tree on all' '
-+test_expect_success 'write-tree' '
- 	init_repos &&
- 
-+	test_all_match git write-tree &&
-+
- 	write_script edit-contents <<-\EOF &&
- 	echo text >>"$1"
- 	EOF
- 
-+	# make a change inside the sparse cone
- 	run_on_all ../edit-contents deep/a &&
--	run_on_all git update-index deep/a &&
-+	test_all_match git update-index deep/a &&
- 	test_all_match git write-tree &&
-+	test_all_match git status --porcelain=v2 &&
- 
-+	# make a change outside the sparse cone
- 	run_on_all mkdir -p folder1 &&
- 	run_on_all cp a folder1/a &&
- 	run_on_all ../edit-contents folder1/a &&
--	run_on_all git update-index folder1/a &&
--	test_all_match git write-tree
-+	test_all_match git update-index folder1/a &&
-+	test_all_match git write-tree &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# check that SKIP_WORKTREE files are not materialized
-+	test_path_is_missing sparse-checkout/folder2/a &&
-+	test_path_is_missing sparse-index/folder2/a
- '
- 
- test_expect_success 'sparse-index is not expanded: write-tree' '
--- 
-2.39.0
+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEplZmYgSG9zdGV0bGVyIDxn
+aXRAamVmZmhvc3RldGxlci5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgQXByaWwgMjYsIDIwMjMg
+NDozNCBQTQ0KPiBUbzogRXJpYyBEZUNvc3RhIDxlZGVjb3N0YUBtYXRod29ya3MuY29tPjsgRXJp
+YyBEZUNvc3RhIHZpYSBHaXRHaXRHYWRnZXQNCj4gPGdpdGdpdGdhZGdldEBnbWFpbC5jb20+OyBn
+aXRAdmdlci5rZXJuZWwub3JnDQo+IENjOiBKb2hhbm5lcyBTY2hpbmRlbGluIDxKb2hhbm5lcy5T
+Y2hpbmRlbGluQGdteC5kZT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2Ml0gZnNtb25pdG9yOiBo
+YW5kbGUgZGlmZmVyZW5jZXMgYmV0d2VlbiBXaW5kb3dzDQo+IG5hbWVkIHBpcGUgZnVuY3Rpb25z
+DQo+IA0KPiANCj4gDQo+IE9uIDQvMjIvMjMgNDowMCBQTSwgRXJpYyBEZUNvc3RhIHdyb3RlOg0K
+PiA+DQo+ID4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4+IEZyb206IEVyaWMgRGVD
+b3N0YSB2aWEgR2l0R2l0R2FkZ2V0IDxnaXRnaXRnYWRnZXRAZ21haWwuY29tPg0KPiA+PiBTZW50
+OiBNb25kYXksIEFwcmlsIDEwLCAyMDIzIDM6NDYgUE0NCj4gPj4gVG86IGdpdEB2Z2VyLmtlcm5l
+bC5vcmcNCj4gPj4gQ2M6IEpvaGFubmVzIFNjaGluZGVsaW4gPEpvaGFubmVzLlNjaGluZGVsaW5A
+Z214LmRlPjsgSmVmZiBIb3N0ZXRsZXINCj4gPj4gPGdpdEBqZWZmaG9zdGV0bGVyLmNvbT47IEVy
+aWMgRGVDb3N0YSA8ZWRlY29zdGFAbWF0aHdvcmtzLmNvbT47IEVyaWMNCj4gPj4gRGVDb3N0YSA8
+ZWRlY29zdGFAbWF0aHdvcmtzLmNvbT4NCj4gPj4gU3ViamVjdDogW1BBVENIIHYyXSBmc21vbml0
+b3I6IGhhbmRsZSBkaWZmZXJlbmNlcyBiZXR3ZWVuIFdpbmRvd3MNCj4gbmFtZWQNCj4gPj4gcGlw
+ZSBmdW5jdGlvbnMNCj4gPj4NCj4gPj4gRnJvbTogRXJpYyBEZUNvc3RhIDxlZGVjb3N0YUBtYXRo
+d29ya3MuY29tPg0KPiA+Pg0KPiA+PiBUaGUgdHdvIGZ1bmN0aW9ucyBpbnZvbHZlZCB3aXRoIGNy
+ZWF0aW5nIGFuZCBjaGVja2luZyBmb3IgdGhlIGV4aXN0YW5jZSBvZg0KPiA+PiB0aGUgbG9jYWwg
+ZnNtb25pdG9yIG5hbWVkIHBpcGUsIENyYXRlZE5hbWVkUGlwZVcgYW5kDQo+IFdhaXROYW1lZFBp
+cGVXDQo+ID4+IGFwcGVhciB0byBoYW5kbGUgbmFtZXMgd2l0aCBsZWFkaW5nIHNsYXNoZXMgb3Ig
+YmFja3NsYXNoZXMgYSBiaXQNCj4gZGlmZmVyZW50bHkuDQo+ID4+DQo+ID4+IElmIGEgcmVwbyBy
+ZXNvbHZlcyB0byBhIHJlbW90ZSBmaWxlIHN5c3RlbSB3aXRoIHRoZSBVTkMgcGF0aCBvZiAvL3Nv
+bWUtDQo+ID4+IHNlcnZlci9zb21lLWRpci9zb21lLXJlcG8sIENyZWF0ZU5hbWVkUGlwZVcgYWNj
+ZXB0cyB0aGlzIG5hbWUgYW5kDQo+ID4+IGNyZWF0ZXMgdGhpcyBuYW1lZCBwaXBlOiBcXC5ccGlw
+ZVxzb21lLXNlcnZlclxzb21lLWRpclxzb21lLXJlcG8NCj4gPj4NCj4gPj4gSG93ZXZlciwgd2hl
+biB0aGUgc2FtZSBVTkMgcGF0aCBpcyBwYXNzZWQgdG8gV2FpdE5hbWVkUGlwZVcsIGl0IGZhaWxz
+DQo+ID4+IHdpdGggRVJST1JfRklMRV9OT1RfRk9VTkQuDQo+ID4+DQo+ID4+IFNraXBwaW5nIHRo
+ZSBsZWFkaW5nIHNsYXNoIGZvciBVTkMgcGF0aHMgd29ya3MgZm9yIGJvdGgNCj4gQ3JlYXRlTmFt
+ZWRQaXBlVw0KPiA+PiBhbmQgV2FpdE5hbWVkUGlwZVcuIFJlc3VsdGluZyBpbiBhIG5hbWVkIHBp
+cGUgd2l0aCB0aGUgc2FtZSBuYW1lIGFzDQo+ID4+IGFib3ZlIHRoYXQgV2FpdE5hbWVkUGlwZVcg
+aXMgYWJsZSB0byBjb3JyZWN0bHkgZmluZC4NCj4gPj4NCj4gPj4gU2lnbmVkLW9mZi1ieTogRXJp
+YyBEZUNvc3RhIDxlZGVjb3N0YUBtYXRod29ya3MuY29tPg0KPiBbLi4uXQ0KPiA+Pg0KPiA+Pg0K
+PiA+PiBjb21wYXQvc2ltcGxlLWlwYy9pcGMtd2luMzIuYyB8IDcgKysrKysrLQ0KPiA+PiAxIGZp
+bGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+ID4+DQo+ID4+IGRp
+ZmYgLS1naXQgYS9jb21wYXQvc2ltcGxlLWlwYy9pcGMtd2luMzIuYyBiL2NvbXBhdC9zaW1wbGUt
+aXBjL2lwYy0NCj4gd2luMzIuYw0KPiA+PiBpbmRleCA5OTdmNjE0NDM0NC4uNjMyYjEyZTFhYjUg
+MTAwNjQ0DQo+ID4+IC0tLSBhL2NvbXBhdC9zaW1wbGUtaXBjL2lwYy13aW4zMi5jDQo+ID4+ICsr
+KyBiL2NvbXBhdC9zaW1wbGUtaXBjL2lwYy13aW4zMi5jDQo+ID4+IEBAIC0xOSwxMyArMTksMTgg
+QEANCj4gPj4gc3RhdGljIGludCBpbml0aWFsaXplX3BpcGVfbmFtZShjb25zdCBjaGFyICpwYXRo
+LCB3Y2hhcl90ICp3cGF0aCwgc2l6ZV90DQo+ID4+IGFsbG9jKSB7IGludCBvZmYgPSAwOw0KPiA+
+PiArIGludCByZWFsX29mZiA9IDA7DQo+ID4+IHN0cnVjdCBzdHJidWYgcmVhbHBhdGggPSBTVFJC
+VUZfSU5JVDsNCj4gPj4NCj4gPj4gaWYgKCFzdHJidWZfcmVhbHBhdGgoJnJlYWxwYXRoLCBwYXRo
+LCAwKSkgcmV0dXJuIC0xOw0KPiA+Pg0KPiA+PiArIC8qIFVOQyBQYXRoLCBza2lwIGxlYWRpbmcg
+c2xhc2ggKi8NCj4gPj4gKyBpZiAocmVhbHBhdGguYnVmWzBdID09ICcvJyAmJiByZWFscGF0aC5i
+dWZbMV0gPT0gJy8nKSByZWFsX29mZiA9IDE7DQo+ID4+ICsNCj4gPj4gb2ZmID0gc3dwcmludGYo
+d3BhdGgsIGFsbG9jLCBMIlxcXFwuXFxwaXBlXFwiKTsNCj4gPj4gLSBpZiAoeHV0ZnRvd2NzKHdw
+YXRoICsgb2ZmLCByZWFscGF0aC5idWYsIGFsbG9jIC0gb2ZmKSA8IDApDQo+ID4+ICsgaWYgKHh1
+dGZ0b3djcyh3cGF0aCArIG9mZiwgcmVhbHBhdGguYnVmICsgcmVhbF9vZmYsIGFsbG9jIC0gb2Zm
+KSA8IDApDQo+ID4+IHJldHVybiAtMTsNCj4gDQo+IEkgaGF2ZW4ndCBoYWQgYSBjaGFuY2UgdG8g
+dGVzdCB0aGlzLCBidXQgdGhpcyBkb2VzIGxvb2sNCj4gbGlrZSBhIG1pbmltYWwgc29sdXRpb24g
+Zm9yIHRoZSBwYXRobmFtZSBjb25mdXNpb24gaW4gdGhlDQo+IE1TRlQgQVBJcy4NCj4gDQo+IERv
+IHlvdSBuZWVkIHRvIHRlc3QgZm9yIHJlYWxwYXRoLmJ1ZlswXSBhbmQgWzFdIGJlaW5nIGEgZm9y
+d2FyZCBPUg0KPiBhIGJhY2tzbGFzaCA/DQo+IA0KPiBTaG91bGQgd2Ugc2V0IHJlYWxfb2ZmIHRv
+IDIgcmF0aGVyIHRoYW4gMSBiZWNhdXNlIHdlIGFscmVhZHkNCj4gYXBwZW5kZWQgYSB0cmFpbGlu
+ZyBiYWNrc2xhc2ggaW4gdGhlIHN3cHJpbnRmKCkgPw0KPiANCkF0dGVtcHRzIHRvIGFkZCBhZGRp
+dGlvbmFsIGJhY2tzbGFzaGVzIGFmdGVyIFxcLlxwaXBlXFwgYXJlIGFwcGFyZW50bHkNCmlnbm9y
+ZWQuIFRoZSBuYW1lIG9mIHRoZSBsb2NhbCBwaXBlIGFsd2F5cyBlbmRzIHVwIGxvb2tpbmcgbGlr
+ZSB0aGlzOg0KDQpmb3IgVU5DIHBhdGhzOg0KICBcXC5ccGlwZVxcc29tZS1zZXJ2ZXJcc29tZS1k
+aXJcc29tZS1yZXBvDQogIA0KYW5kIGZvciBsb2NhbCBwYXRoczoNCiBcXC5ccGlwZVxcQ19cc29t
+ZS1kaXJcc29tZS1yZXBvDQogIA0KVGh1cyBmb3IgYSBVTkMgcGF0aCBvZiAvL3NvbWUtc2VydmVy
+L3NvbWUtZGlyL3NvbWUtcmVwbyB0aGUgc2ltcGxlc3QgdGhpbmcgdG8NCmRvIGlzIHRvIHNraXAg
+dGhlIGZpcnN0IHNsYXNoLg0KDQo+IFlvdSBzaG91bGQgcnVuIG9uZSBvZiB0aG9zZSBOUEZTIGRp
+cmVjdG9yeSBsaXN0aW5nIHRvb2xzIHRvDQo+IGNvbmZpcm0gdGhlIGV4YWN0IHNwZWxsaW5nIG9m
+IHRoZSBwaXBlIG1hdGNoZXMgeW91ciBleHBlY3RhdGlvbg0KPiBoZXJlLiAgWWVzLCBpZiBib3Ro
+IGZ1bmN0aW9ucyBub3cgd29yaywgd2Ugc2hvdWxkIGJlIGdvb2QsIGJ1dA0KPiBpdCB3b3VsZCBi
+ZSBnb29kIHRvIGNvbmZpcm0geW91ciByZWFsX29mZiBjaG9pY2UsIHJpZ2h0Pw0KPiANCkkgaGF2
+ZSB1c2VkIGJvdGggUG93ZXJTaGVsbCBhbmQgUHJvY2VzcyBFeHBsb3JlciBhbmQgc2VlIHNpbWls
+YXIgcmVzdWx0cy4NCg0KPiBJZiB3b3VsZCBiZSBnb29kIHRvIChhdCBsZWFzdCBpbnRlcmFjdGl2
+ZWx5KSB0ZXN0IHRoYXQgdGhlDQo+IGdpdC1mb3Itd2luZG93cyBpbnN0YWxsZXIgY2FuIGZpbmQg
+dGhlIHBhdGggYW5kIHN0b3AgdGhlIGRhZW1vbg0KPiBvbiBhbiB1cGdyYWRlIG9yIHVuaW5zdGFs
+bC4gIFNlZSBKb2hhbm5lcycgZWFybGllciBwb2ludC4NCj4gDQpJbiByZWdhcmRzIHRvIHRoZSBH
+ZlcgaW5zdGFsbGVyLCBpZiB0aGUgZGFlbW9uIGlzIHJ1bm5pbmcgYWdhaW5zdA0KYSBuZXR3b3Jr
+IG1vdW50ZWQgcmVwbyBpdCByZXBvcnRzIHRoZSBmb2xsb3dpbmc6DQoNCkNvdWxkIG5vdCBzdG9w
+IEZTTW9uaXRvciBkYWVtb24gaW4gc29tZS1zZXJ2ZXJcc29tZS1kaXJcc29tZS1yZXBvDQoob3V0
+cHV0OiAsIGVycm9yczogZmF0YWwgY2Fubm90IGNoYW5nZSB0byAnc29tZS1zZXJ2ZXJcc29tZS1k
+aXJcc29tZS1yZXBvJzoNCk5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkpDQoNCkl0IGxvb2tzIGxp
+a2UgdGhlIGluc3RhbGxlciBtYXkgaGF2ZSB0byBkbyBzb21ldGhpbmcgbGlrZToNCmxvb2sgZm9y
+ICI8ZHJpdmUgbGV0dGVyPl8iIGltbWVkaWF0ZWx5IGFmdGVyICJcXC5ccGlwZVxcIiBhbmQgaWYg
+aXQgZG9lcyBub3QNCmZpbmQgaXQsIGFzc3VtZSBhIFVOQyBwYXRoLg0KDQo+IFdlIHNob3VsZCBz
+dGF0ZSBzb21ld2hlcmUgdGhhdCB3ZSBhcmUgcnVubmluZyB0aGUgZnNtb25pdG9yDQo+IGRhZW1v
+biBsb2NhbGx5IGFuZCBpdCBpcyB3YXRjaGluZyBhIHJlbW90ZSBmaWxlIHN5c3RlbS4NCj4gDQo+
+IFlvdSBzaG91bGQgcnVuIGEgZmV3IHN0cmVzcyB0ZXN0cyB0byBlbnN1cmUgdGhhdCB0aGUNCj4g
+TUFYX1JEQ1dfQlVGX0ZBTExCQUNLIHRocm90dGxpbmcgd29ya3MgYW5kIHRoYXQgdGhlIGRhZW1v
+bg0KPiBkb2Vzbid0IGZhbGwgYmVoaW5kIG9uIGEgdmVyeSBidXN5IHJlbW90ZSBmaWxlIHN5c3Rl
+bS4gIChUaGVyZQ0KPiBhcmUgU01CL0NJRlMgd2lyZSBwcm90b2NvbCBsaW1pdHMuICBTZWUgdGhl
+IHNvdXJjZS4pICAoSSBkaWQNCj4gdGVzdCB0aGlzIGJldHdlZW4gdGhlIGNvbWJpbmF0aW9uIG9m
+IHN5c3RlbXMgdGhhdCBJIGhhZCwgYnV0DQo+IFlNTVYuKQ0KPiANCj4gRHVyaW5nIHRoZSBzdHJl
+c3MgdGVzdCwgaXQgd291bGQgYWxzbyBiZSBnb29kIHRvIHRlc3QgdGhhdA0KPiBJTyBnZW5lcmF0
+ZWQgYnkgYSBjbGllbnQgcHJvY2VzcyBvbiB5b3VyIGxvY2FsIG1hY2hpbmUgdG8gdGhlDQo+IHJl
+bW90ZSBmaWxlIHN5c3RlbSBpcyByZXBvcnRlZCwgYnV0IGFsc28gdGhhdCByYW5kb20gSU8gZnJv
+bQ0KPiByZW1vdGUgcHJvY2Vzc2VzIG9uIHRoZSByZW1vdGUgc3lzdGVtIGFyZSBzZWVuIGluIHRo
+ZSBldmVudA0KPiBzdHJlYW0uICBBZ2FpbiwgSSB0ZXN0ZWQgdGhlIGNvbWJpbmF0aW9ucyBvZiBt
+YWNoaW5lcyB0aGF0IEkNCj4gaGFkIGF2YWlsYWJsZSBhdCB0aGUgdGltZS4NCj4gDQpJIGhlYXIg
+d2hhdCB5b3UgYXJlIHNheWluZywgaG93ZXZlciByZXBvcnRpbmcgdGhhdCBpbmZvcm1hdGlvbiBp
+bmNyZWFzZXMNCnRoZSBzY29wZSBvZiB0aGlzIGNoYW5nZS4gQXMgdGhpcyBzdGFuZHMgcmlnaHQg
+bm93IHRoZSBhZHZlcnRpc2VkIGZlYXR1cmUNCm9mIGFsbG93aW5nIGZzbW9uaXRvciB0byB3b3Jr
+IG9uIG5ldHdvcmstbW91bnRlZCBzYW5kYm94ZXMgZm9yIFdpbmRvd3MNCmlzIG5vdCB3b3JraW5n
+IGFzIGV4cGVjdGVkLg0KDQotRXJpYw0KDQo+IEhvcGUgdGhpcyBoZWxwcywNCj4gSmVmZg0KPiAN
+Cj4gDQo+ID4+DQo+ID4+IC8qIEhhbmRsZSBkcml2ZSBwcmVmaXggKi8NCj4gPj4NCj4gPj4gYmFz
+ZS1jb21taXQ6IGYyODVmNjhhMTMyMTA5YzIzNGQ5MzQ5MDY3MWMwMDIxODA2NmFjZTkNCj4gPj4g
+LS0NCj4gPj4gZ2l0Z2l0Z2FkZ2V0DQo+ID4NCj4gPiBBcmUgdGhlcmUgYW55IG90aGVyIHRob3Vn
+aHRzIGFib3V0IHRoaXM/DQo+ID4NCj4gPiBJIGJlbGlldmUgdGhhdCB0aGlzIGlzIHRoZSBzaW1w
+bGVzdCBjaGFuZ2UgcG9zc2libGUgdGhhdCB3aWxsIGVuc3VyZSB0aGF0DQo+ID4gZnNtb25pdG9y
+IGNvcnJlY3RseSBoYW5kbGVzIG5ldHdvcmsgcmVwb3MuDQo+ID4NCj4gPiAtRXJpYw0KDQo=
 
