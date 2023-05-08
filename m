@@ -2,97 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40C61C7EE22
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 21:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD2FC77B75
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 21:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbjEHVJy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 17:09:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54786 "EHLO
+        id S233811AbjEHV1k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 17:27:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjEHVJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 17:09:53 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1146E82
-        for <git@vger.kernel.org>; Mon,  8 May 2023 14:09:51 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-64389a44895so4084175b3a.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 14:09:51 -0700 (PDT)
+        with ESMTP id S232838AbjEHV1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 17:27:38 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A2AA86B6
+        for <git@vger.kernel.org>; Mon,  8 May 2023 14:27:21 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f19a80a330so33418495e9.2
+        for <git@vger.kernel.org>; Mon, 08 May 2023 14:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683580191; x=1686172191;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aTG+in0PdLDiayre5efpImroTRPaZuuGZd67moc0SwE=;
-        b=hZPTUmzCPV5gEbJjEuzoxP1o06FWeMDm6Kt3n5D6Bviw6465eqKqybsLe7bap3bP/M
-         jF+9vqPUl7/f4H4mJP7uO+ZES3MHLw82JL/pgLi7wHtm2L58OknCNEIDGKJgQJbZRTOq
-         uOxrG22w6o/1tdVOq+LSYkNAFmVw/h4HG3ru6RXPYALfMFguHhiCY0OVGlyeJ+8updTD
-         HXC+5PUdx5XZf5ZvDMOSS5OeB3YOA+8w8QRQBXK8W9RsHQEZkQ68LCPpaidH20PHn+2a
-         d3IPOPV0SDqwXoiKUjzbZuYYpRsDfHKKl8o9cXp5kzslrhTtL4mHhtOx9n3hZxGXBGG+
-         cmpg==
+        d=gmail.com; s=20221208; t=1683581239; x=1686173239;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mySby13VJNpfONvh0D/b04ENRbM9Y9klbvGxZ4LdNyw=;
+        b=qxFzBgDOB19cLHs9kPyp03mRap5lH3sufjV/lHRg856Z8NajDjSg5YSuze3yWbrqMW
+         p2dEpC7wXVA+iPdLjxAeeiw5ZCKgxZQUPjE9ksGcFuWN9+f67lA54NskNEIjNLOzHYaA
+         eB5p3cYYeTR5v4moWb7/D2oJYxIrGeHO1ff7+x+kY9r6zUANjcmDZTFw8EpwZs+6x37t
+         cKYWUnN7Hpz6WTUaqFSFgoL2Vohw01GavXXjihOIkbmbBhJZOHR3yNozLEdrS35iCtUM
+         5IKzDFgTAPP5PqOH3qysu0fubuD0hRXbKPQa+y12L5xCmA6ETPL5Q7zEFXyeuWlYLlAz
+         EG9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683580191; x=1686172191;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aTG+in0PdLDiayre5efpImroTRPaZuuGZd67moc0SwE=;
-        b=DsXqj+7zAWjzXE75esKL+kjulMr7MQEQUoyxNGvDEziibZdWPmk55MN30fq2OWAwaa
-         C/AMCPrmRBKMxeW/m19dSPoWSI7zaKBFa4V0559Cy8JUgg+3h/huEHhUW1bFmW4YZNuP
-         lRpu01spQRxo69OCaH9OwpDWZ5BB/qoIiVl1hFrPh57Rzh/wncZetwqoY1LgGIKSy/9M
-         PbHtSFG5EPVIFmAKWo4grvAQ0OX3STrHSlYrp6K2g1VyMDCQ9AheVCOzlOZUgzg3vSkM
-         9fBt9kJ+apoNn0oWvVjWnzdeUdFxZ215K1Jmeg0ef4Bfu034Enn+HP/j5TQfkhTZKcxL
-         3MAA==
-X-Gm-Message-State: AC+VfDybHLlBKEY9w4/+BvrumEWSZGyeGaSw2FuP+UmTXrrDSfIJWjV1
-        T/FY+LkfrX8+sWknaKVl6gE=
-X-Google-Smtp-Source: ACHHUZ5r7GaYy2HQuKpTtMemAzU1kRSMv4ghvzWEazRH+mRCqjAcOAT7MH4kvd4VSPiUjZPxQ0y70Q==
-X-Received: by 2002:a05:6a00:179b:b0:63b:62d1:d868 with SMTP id s27-20020a056a00179b00b0063b62d1d868mr17669026pfg.8.1683580191087;
-        Mon, 08 May 2023 14:09:51 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id v13-20020a62a50d000000b0064309cd0551sm389828pfm.85.2023.05.08.14.09.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 14:09:50 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
-Subject: Re: [PATCH v6] write-tree: optimize sparse integration
-References: <20230508200508.462423-1-cheskaqiqi@gmail.com>
-        <20230508202140.464363-1-cheskaqiqi@gmail.com>
-Date:   Mon, 08 May 2023 14:09:50 -0700
-In-Reply-To: <20230508202140.464363-1-cheskaqiqi@gmail.com> (Shuqi Liang's
-        message of "Mon, 8 May 2023 16:21:40 -0400")
-Message-ID: <xmqqednqmswx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1683581239; x=1686173239;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mySby13VJNpfONvh0D/b04ENRbM9Y9klbvGxZ4LdNyw=;
+        b=W0o1e29OMvwWT9XOm/rBUaajkQgm9Wkb8j6qtSKU5jkXerQbBl/xgVcBJpzQ4frkOC
+         pcI+K6d56Tt+a4I6E4fZnvOXVCx6kXoUMXF7u4teS4lPRxo15eR7bgHFI2Is9HE77A2R
+         UZ8pUJ0XIY16ES5EZXRKDzWSYG2ltPfBcpO4vCZlxiM6PxBZFp2A0L1Ad+zoanTxSIle
+         5bI0o4E/+TVNssv3S9w7a6ws6Xn5Ou5lW1EwShI96TmR1XiRMEhrlBHZEH8GPpQVReUE
+         3P5u1L1mGTWoqux7WzedGElGbAws0fuBebfBm8KfEVIrQJpnO8NkYvWlP/U4gOjsmqXO
+         CGgQ==
+X-Gm-Message-State: AC+VfDxE9PuzaNegNB9DkRwfFlx0S9EWwLKfTXqpQJ4XxuVdQHwfa07H
+        dF1iiK1GNAEpvc8QVkjrNnLR/kLlDAYm1BkrYgo=
+X-Google-Smtp-Source: ACHHUZ7lguIyfvA6pT9vydtwQgZMAGvJA2Xo/PNx3wW+jeHCzjQU8szfr9hY3aTXEsjIil9gPFkToiFMxv/MzTF7Pp8=
+X-Received: by 2002:a7b:c314:0:b0:3ef:6b97:f0c3 with SMTP id
+ k20-20020a7bc314000000b003ef6b97f0c3mr7945979wmj.15.1683581239366; Mon, 08
+ May 2023 14:27:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230508200508.462423-1-cheskaqiqi@gmail.com> <20230508202140.464363-1-cheskaqiqi@gmail.com>
+ <xmqqednqmswx.fsf@gitster.g>
+In-Reply-To: <xmqqednqmswx.fsf@gitster.g>
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+Date:   Mon, 8 May 2023 17:27:07 -0400
+Message-ID: <CAMO4yUEmJM1-VYRePn6tjYHXmhEhj5-wkZ4VrX9EaS9=kSX-3w@mail.gmail.com>
+Subject: Re: [PATCH v6] write-tree: optimize sparse integration
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+Hi Junio,
 
-> * 'on all' in the title of the test 'write-tree on all' was unclear;
-> remove it.
+On Mon, May 8, 2023 at 5:09=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> * Add a baseline 'test_all_match git write-tree' before making any
-> changes to the index, providing a reference point for the 'write-tree'
-> prior to any modifications.
+> Shuqi Liang <cheskaqiqi@gmail.com> writes:
 >
-> * Add a comparison of the output of 'git status --porcelain=v2' to test
-> the working tree after 'write-tree' exits.
+> > * 'on all' in the title of the test 'write-tree on all' was unclear;
+> > remove it.
+> >
+> > * Add a baseline 'test_all_match git write-tree' before making any
+> > changes to the index, providing a reference point for the 'write-tree'
+> > prior to any modifications.
+> >
+> > * Add a comparison of the output of 'git status --porcelain=3Dv2' to te=
+st
+> > the working tree after 'write-tree' exits.
+> >
+> > * Ensure SKIP_WORKTREE files weren't materialized on disk by using
+> > "test_path_is_missing".
+> >
+> > Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+> > ---
+> >
 >
-> * Ensure SKIP_WORKTREE files weren't materialized on disk by using
-> "test_path_is_missing".
+> As we have lost the change to the code, the title has become stale.
+> How about I retitle it like so after queuing the patch?
 >
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
->
+>     Subject: t1092: update write-tree test
 
-As we have lost the change to the code, the title has become stale.
-How about I retitle it like so after queuing the patch?
+I think it's a good idea to retitle the patch=EF=BC=8C as it better reflect=
+s the
+current changes in the test.
 
-    Subject: t1092: update write-tree test
+> The changes to the test seem to match what Victoria already gave a
+> thums-up in her review of v4; I see nothing surprising or unexpected
+> there.
+>
+> Thanks.  Will queue.
 
-The changes to the test seem to match what Victoria already gave a
-thums-up in her review of v4; I see nothing surprising or unexpected
-there.
+I really appreciate your and Victoria's continuous support and
+guidance throughout
+the review process :)
 
-Thanks.  Will queue.
+Thanks!
+Shuqi
