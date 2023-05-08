@@ -2,163 +2,670 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E317C77B75
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 17:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64264C7EE24
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 17:38:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234090AbjEHRi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 13:38:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46922 "EHLO
+        id S234183AbjEHRi3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 13:38:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234057AbjEHRiQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 13:38:16 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9244F5FF7
-        for <git@vger.kernel.org>; Mon,  8 May 2023 10:38:11 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-559e53d1195so69305267b3.2
-        for <git@vger.kernel.org>; Mon, 08 May 2023 10:38:11 -0700 (PDT)
+        with ESMTP id S233086AbjEHRiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 13:38:25 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7E04491
+        for <git@vger.kernel.org>; Mon,  8 May 2023 10:38:14 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-ba2362d4ea9so2000201276.3
+        for <git@vger.kernel.org>; Mon, 08 May 2023 10:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683567490; x=1686159490;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R9FZiwSdorLoMYpq4R8bXR+hymQnnjYbO1isQqpVQtk=;
-        b=w2Rdg5qoYZoKtVgfQ+th5PewHbYEcChMbRlRIgKX4cvWr/N5bg3ZCSs8Kjd3TLRvp5
-         qXQQ/a1Fc24bfigGi72nKAAwbEeYEi30FHR76sLbU3q0NwUviU3qH3L/GHqH/SyF2GZW
-         32Tfzn+GP7SjQqwjH/Z+x9O+hLAX3L19am0Fjda4l1G3xIc7f1SbE/X4EZSfLoHzzGga
-         9TaDm+mWpXpXHoJM2bZ20LWhrOP61KZY27MYTSSd4Eo7OKTOQZPgDjgFqYdIcZjHTkFc
-         dFJaTP1WT1bVjJmCWwN0TlNQKgCXudtXSHfQi+uyCSrH0Qau1L5d17xv/fV6wQ1viOoP
-         +6hw==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683567494; x=1686159494;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TtLQURNeRuD3t2XAx7gdGFq/1aIIewX7mW7HPJSSb/c=;
+        b=uIKaENz2+wkuiRi+TStS86OSXyfCh82bdXgNdhblSa3eA+D7X/eVbmrbJ2tm0nUT8A
+         P8XBnv+e+kqwl+xjxhVT48nCvkkeGu8d/g+loqChwC2HCCogctYqOO3MFTJWUqAu9H9T
+         zr/Pqh/6kaWDtpucSwT2PNMzGrTLDZ91QogcHVh9ef5ufBQ8CEyMr39lRONb9+Pv7R3R
+         JKuGojPmb6Vd4PtuoU1ssBN6kk6AUsQoMY4/nriqtn5CGoRUcyjMkDAp39qVi4vD8Cu9
+         nHFCimyRjT0hEKZ9LQjnC8nB/F0wNCsOpyhPrnSnfrncLEyBPLCsVwhXZ+0yxjqnf1rZ
+         Ih3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683567490; x=1686159490;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R9FZiwSdorLoMYpq4R8bXR+hymQnnjYbO1isQqpVQtk=;
-        b=EgJt0AzCTfIvfV7F/80p2E2Kbz4fOqRqzPXaRqZGGuxnEUzu/9rqGbu6LMj6g7rvHt
-         N+BcfQB7tBjUup1ggPQmFL4Bd6vlPyHgeIHISAhHiAXLllJ3uiLoS0W9MXbVh4tq9/CZ
-         KYLb8cpR++TKaww0wfN6XKmST+59UZHcTPbNGOY++ANDm7MStAcgloRnzIr9VBNyRqhX
-         J9HDO4SYB6P8nzKkaGddjQtfnC3O/nfFoDzKFcPkYuyM6nOYu5D7BKn2Wb0n66T6hX7U
-         xhjYJGut7A1gRg0HzWrisCAP8Vg6UEUl6i93cL1SW138TZlo57/w7U4RnVpEYaS9hDph
-         XYlA==
-X-Gm-Message-State: AC+VfDyCX0w07eQ3JvW1FgfCY8eLxH4pi+K6oTwjcPv3d76hMbfRKBML
-        7v4qADCNFEQtbe0rS7f1AsK+laZX/VwqIKWM3Qt5qg==
-X-Google-Smtp-Source: ACHHUZ6bNY6Qt4iRKuf1t6FZI8MKZ96ctadFgWBFxIi+npDdzkGDAzqdBZlhrwYXrSBYjZcXm3+phw==
-X-Received: by 2002:a0d:d8d4:0:b0:54f:adeb:9898 with SMTP id a203-20020a0dd8d4000000b0054fadeb9898mr13294276ywe.10.1683567490618;
-        Mon, 08 May 2023 10:38:10 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683567494; x=1686159494;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TtLQURNeRuD3t2XAx7gdGFq/1aIIewX7mW7HPJSSb/c=;
+        b=IgZaghIq7Vi3jGEsq/5uhGntwv0apw/OC2AMkydNYWEg6Na4ZBgVyzZGGjyWwuBwmP
+         7/lR7DElDdNqy/UhQMscPN7w1Spu9DAL25VYP4SKeGDU1u+KzMZpR4FtyB+zqS19WRHR
+         xAY63lA+dORQHB43r6Yk0hTonxDEE7lvOR/h8PPsx8DUld3oHk8FwEQINWcVgfG/cyR9
+         KKZ1zOeXX1T3i/uAKzdXInqLXHSzq5ZQSePUsCFL/0yTeugYCiuaagmXuOGehKelDRUk
+         13hJZtplReB26zOgTF83QqnMhUAIk18sjAgNPwwEU35VAXzhfGLjkVRwqMnXds1v4Nv7
+         R53w==
+X-Gm-Message-State: AC+VfDz32yfdZSjokdRQThHVdZ5m55QdpOk+Dau01XaJIsKnNaumoBHJ
+        g3PStpIi5tpvTnhrdhzs3EJIuhsbZLMvieUtrCCYWg==
+X-Google-Smtp-Source: ACHHUZ4yZqQA5kslJxYlbaYMD1wdPFMJr/WPg1F5EPBeUqXHgS9Z/UhnGD8L3OHee+kJAoT2fyRAsA==
+X-Received: by 2002:a25:4e08:0:b0:ba1:cdd1:a984 with SMTP id c8-20020a254e08000000b00ba1cdd1a984mr9569266ybb.18.1683567493517;
+        Mon, 08 May 2023 10:38:13 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y1-20020a81a101000000b0055a07585a91sm2669195ywg.11.2023.05.08.10.38.10
+        by smtp.gmail.com with ESMTPSA id b2-20020a251b02000000b00b7767ca7485sm2518838ybb.34.2023.05.08.10.38.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 10:38:10 -0700 (PDT)
-Date:   Mon, 8 May 2023 13:38:09 -0400
+        Mon, 08 May 2023 10:38:13 -0700 (PDT)
+Date:   Mon, 8 May 2023 13:38:12 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/3] pack-bitmap.c: extract `fill_in_bitmap()`
-Message-ID: <e7b30490dae51b1375545ba19561900ed0f340b7.1683567065.git.me@ttaylorr.com>
+Subject: [PATCH v3 3/3] pack-bitmap.c: use commit boundary during bitmap
+ traversal
+Message-ID: <8a8f41e0c410f9160b8ff922333c13ed68f7334b.1683567065.git.me@ttaylorr.com>
 References: <cover.1682380788.git.me@ttaylorr.com>
  <cover.1683567065.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1683567065.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prepare for the boundary-based bitmap walk to perform a fill-in
-traversal using the boundary of either side as the tips, extract routine
-used to perform fill-in traversal by `find_objects()` so that it can be
-used in both places.
+When reachability bitmap coverage exists in a repository, Git will use a
+different (and hopefully faster) traversal to compute revision walks.
 
+Consider a set of positive and negative tips (which we'll refer to with
+their standard bitmap parlance by "wants", and "haves"). In order to
+figure out what objects exist between the tips, the existing traversal
+in `prepare_bitmap_walk()` does something like:
+
+  1. Consider if we can even compute the set of objects with bitmaps,
+     and fall back to the usual traversal if we cannot. For example,
+     pathspec limiting traversals can't be computed using bitmaps (since
+     they don't know which objects are at which paths). The same is true
+     of certain kinds of non-trivial object filters.
+
+  2. If we can compute the traversal with bitmaps, partition the
+     (dereferenced) tips into two object lists, "haves", and "wants",
+     based on whether or not the objects have the UNINTERESTING flag,
+     respectively.
+
+  3. Fall back to the ordinary object traversal if either (a) there are
+     more than zero haves, none of which are in the bitmapped pack or
+     MIDX, or (b) there are no wants.
+
+  4. Construct a reachability bitmap for the "haves" side by walking
+     from the revision tips down to any existing bitmaps, OR-ing in any
+     bitmaps as they are found.
+
+  5. Then do the same for the "wants" side, stopping at any objects that
+     appear in the "haves" bitmap.
+
+  6. Filter the results if any object filter (that can be easily
+     computed with bitmaps alone) was given, and then return back to the
+     caller.
+
+When there is good bitmap coverage relative to the traversal tips, this
+walk is often significantly faster than an ordinary object traversal
+because it can visit far fewer objects.
+
+But in certain cases, it can be significantly *slower* than the usual
+object traversal. Why? Because we need to compute complete bitmaps on
+either side of the walk. If either one (or both) of the sides require
+walking many (or all!) objects before they get to an existing bitmap,
+the extra bitmap machinery is mostly or all overhead.
+
+One of the benefits, however, is that even if the walk is slower, bitmap
+traversals are guaranteed to provide an *exact* answer. Unlike the
+traditional object traversal algorithm, which can over-count the results
+by not opening trees for older commits, the bitmap walk builds an exact
+reachability bitmap for either side, meaning the results are never
+over-counted.
+
+But producing non-exact results is OK for our traversal here (both in
+the bitmap case and not), as long as the results are over-counted, not
+under.
+
+Relaxing the bitmap traversal to allow it to produce over-counted
+results gives us the opportunity to make some significant improvements.
+Instead of the above, the new algorithm only has to walk from the
+*boundary* down to the nearest bitmap, instead of from each of the
+UNINTERESTING tips.
+
+The boundary-based approach still has degenerate cases, but we'll show
+in a moment that it is often a significant improvement.
+
+The new algorithm works as follows:
+
+  1. Build a (partial) bitmap of the haves side by first OR-ing any
+     bitmap(s) that already exist for UNINTERESTING commits between the
+     haves and the boundary.
+
+  2. For each commit along the boundary, add it as a fill-in traversal
+     tip (where the traversal terminates once an existing bitmap is
+     found), and perform fill-in traversal.
+
+  3. Build up a complete bitmap of the wants side as usual, stopping any
+     time we intersect the (partial) haves side.
+
+  4. Return the results.
+
+And is more-or-less equivalent to using the *old* algorithm with this
+invocation:
+
+    $ git rev-list --objects --use-bitmap-index $WANTS --not \
+        $(git rev-list --objects --boundary $WANTS --not $HAVES |
+          perl -lne 'print $1 if /^-(.*)/')
+
+The new result performs significantly better in many cases, particularly
+when the distance from the boundary commit(s) to an existing bitmap is
+shorter than the distance from (all of) the have tips to the nearest
+bitmapped commit.
+
+Note that when using the old bitmap traversal algorithm, the results can
+be *slower* than without bitmaps! Under the new algorithm, the result is
+computed faster with bitmaps than without (at the cost of over-counting
+the true number of objects in a similar fashion as the non-bitmap
+traversal):
+
+    # (Computing the number of tagged objects not on any branches
+    # without bitmaps).
+    $ time git rev-list --count --objects --tags --not --branches
+    20
+
+    real	0m1.388s
+    user	0m1.092s
+    sys	0m0.296s
+
+    # (Computing the same query using the old bitmap traversal).
+    $ time git rev-list --count --objects --tags --not --branches --use-bitmap-index
+    19
+
+    real	0m22.709s
+    user	0m21.628s
+    sys	0m1.076s
+
+    # (this commit)
+    $ time git.compile rev-list --count --objects --tags --not --branches --use-bitmap-index
+    19
+
+    real	0m1.518s
+    user	0m1.234s
+    sys	0m0.284s
+
+The new algorithm is still slower than not using bitmaps at all, but it
+is nearly a 15-fold improvement over the existing traversal.
+
+In a more realistic setting (using my local copy of git.git), I can
+observe a similar (if more modest) speed-up:
+
+    $ argv="--count --objects --branches --not --tags"
+    hyperfine \
+      -n 'no bitmaps' "git.compile rev-list $argv" \
+      -n 'existing traversal' "git.compile rev-list --use-bitmap-index $argv" \
+      -n 'boundary traversal' "git.compile -c pack.useBitmapBoundaryTraversal=true rev-list --use-bitmap-index $argv"
+    Benchmark 1: no bitmaps
+      Time (mean ± σ):     124.6 ms ±   2.1 ms    [User: 103.7 ms, System: 20.8 ms]
+      Range (min … max):   122.6 ms … 133.1 ms    22 runs
+
+    Benchmark 2: existing traversal
+      Time (mean ± σ):     368.6 ms ±   3.0 ms    [User: 325.3 ms, System: 43.1 ms]
+      Range (min … max):   365.1 ms … 374.8 ms    10 runs
+
+    Benchmark 3: boundary traversal
+      Time (mean ± σ):     167.6 ms ±   0.9 ms    [User: 139.5 ms, System: 27.9 ms]
+      Range (min … max):   166.1 ms … 169.2 ms    17 runs
+
+    Summary
+      'no bitmaps' ran
+        1.34 ± 0.02 times faster than 'boundary traversal'
+        2.96 ± 0.05 times faster than 'existing traversal'
+
+Here, the new algorithm is also still slower than not using bitmaps, but
+represents a more than 2-fold improvement over the existing traversal in
+a more modest example.
+
+Since this algorithm was originally written (nearly a year and a half
+ago, at the time of writing), the bitmap lookup table shipped, making
+the new algorithm's result more competitive. A few other future
+directions for improving bitmap traversal times beyond not using bitmaps
+at all:
+
+  - Decrease the cost to decompress and OR together many bitmaps
+    together (particularly when enumerating the uninteresting side of
+    the walk). Here we could explore more efficient bitmap storage
+    techniques, like Roaring+Run and/or use SIMD instructions to speed
+    up ORing them together.
+
+  - Store pseudo-merge bitmaps, which could allow us to OR together
+    fewer "summary" bitmaps (which would also help with the above).
+
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 65 ++++++++++++++++++++++++++++-----------------------
- 1 file changed, 36 insertions(+), 29 deletions(-)
+ Documentation/config/feature.txt |   3 +
+ Documentation/config/pack.txt    |  17 +++
+ ci/run-build-and-tests.sh        |   1 +
+ pack-bitmap.c                    | 182 ++++++++++++++++++++++++++++---
+ pack-bitmap.h                    |   4 +
+ repo-settings.c                  |   7 +-
+ repository.h                     |   1 +
+ t/README                         |   4 +
+ t/t5310-pack-bitmaps.sh          |  38 +++++++
+ 9 files changed, 243 insertions(+), 14 deletions(-)
 
+diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+index 17b4d39f89..bf9546fca4 100644
+--- a/Documentation/config/feature.txt
++++ b/Documentation/config/feature.txt
+@@ -14,6 +14,9 @@ feature.experimental::
+ +
+ * `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
+ skipping more commits at a time, reducing the number of round trips.
+++
++* `pack.useBitmapBoundaryTraversal=true` may improve bitmap traversal times by
++walking fewer objects.
+ 
+ feature.manyFiles::
+ 	Enable config options that optimize for repos with many files in the
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index d4c7c9d4e4..3748136d14 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -123,6 +123,23 @@ pack.useBitmaps::
+ 	true. You should not generally need to turn this off unless
+ 	you are debugging pack bitmaps.
+ 
++pack.useBitmapBoundaryTraversal::
++	When true, Git will use an experimental algorithm for computing
++	reachability queries with bitmaps. Instead of building up
++	complete bitmaps for all of the negated tips and then OR-ing
++	them together, consider negated tips with existing bitmaps as
++	additive (i.e. OR-ing them into the result if they exist,
++	ignoring them otherwise), and build up a bitmap at the boundary
++	instead.
+++
++When using this algorithm, Git may include too many objects as a result
++of not opening up trees belonging to certain UNINTERESTING commits. This
++inexactness matches the non-bitmap traversal algorithm.
+++
++In many cases, this can provide a speed-up over the exact algorithm,
++particularly when there is poor bitmap coverage of the negated side of
++the query.
++
+ pack.useSparse::
+ 	When true, git will default to using the '--sparse' option in
+ 	'git pack-objects' when the '--revs' option is present. This
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index a18b13a41d..2528f25e31 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -29,6 +29,7 @@ linux-TEST-vars)
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ 	export GIT_TEST_NO_WRITE_REV_INDEX=1
+ 	export GIT_TEST_CHECKOUT_WORKERS=2
++	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
+ 	;;
+ linux-clang)
+ 	export GIT_TEST_DEFAULT_HASH=sha1
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e0fad723bf..5d2cc6ac96 100644
+index 5d2cc6ac96..e8a1579b16 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1043,6 +1043,40 @@ static int add_commit_to_bitmap(struct bitmap_index *bitmap_git,
- 	return 1;
+@@ -1077,6 +1077,126 @@ static struct bitmap *fill_in_bitmap(struct bitmap_index *bitmap_git,
+ 	return base;
  }
  
-+static struct bitmap *fill_in_bitmap(struct bitmap_index *bitmap_git,
-+				     struct rev_info *revs,
-+				     struct bitmap *base,
-+				     struct bitmap *seen)
++struct bitmap_boundary_cb {
++	struct bitmap_index *bitmap_git;
++	struct bitmap *base;
++
++	struct object_array boundary;
++};
++
++static void show_boundary_commit(struct commit *commit, void *_data)
 +{
-+	struct include_data incdata;
-+	struct bitmap_show_data show_data;
++	struct bitmap_boundary_cb *data = _data;
 +
-+	if (!base)
-+		base = bitmap_new();
++	if (commit->object.flags & BOUNDARY)
++		add_object_array(&commit->object, "", &data->boundary);
 +
-+	incdata.bitmap_git = bitmap_git;
-+	incdata.base = base;
-+	incdata.seen = seen;
++	if (commit->object.flags & UNINTERESTING) {
++		if (bitmap_walk_contains(data->bitmap_git, data->base,
++					 &commit->object.oid))
++			return;
 +
-+	revs->include_check = should_include;
-+	revs->include_check_obj = should_include_obj;
-+	revs->include_check_data = &incdata;
++		add_commit_to_bitmap(data->bitmap_git, &data->base, commit);
++	}
++}
 +
++static void show_boundary_object(struct object *object,
++				 const char *name, void *data)
++{
++	BUG("should not be called");
++}
++
++static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
++					    struct rev_info *revs,
++					    struct object_list *roots)
++{
++	struct bitmap_boundary_cb cb;
++	struct object_list *root;
++	unsigned int i;
++	unsigned int tmp_blobs, tmp_trees, tmp_tags;
++	int any_missing = 0;
++
++	cb.bitmap_git = bitmap_git;
++	cb.base = bitmap_new();
++	object_array_init(&cb.boundary);
++
++	revs->ignore_missing_links = 1;
++
++	/*
++	 * OR in any existing reachability bitmaps among `roots` into
++	 * `cb.base`.
++	 */
++	for (root = roots; root; root = root->next) {
++		struct object *object = root->item;
++		if (object->type != OBJ_COMMIT ||
++		    bitmap_walk_contains(bitmap_git, cb.base, &object->oid))
++			continue;
++
++		if (add_commit_to_bitmap(bitmap_git, &cb.base,
++					 (struct commit *)object))
++			continue;
++
++		any_missing = 1;
++	}
++
++	if (!any_missing)
++		goto cleanup;
++
++	tmp_blobs = revs->blob_objects;
++	tmp_trees = revs->tree_objects;
++	tmp_tags = revs->blob_objects;
++	revs->blob_objects = 0;
++	revs->tree_objects = 0;
++	revs->tag_objects = 0;
++
++	/*
++	 * We didn't have complete coverage of the roots. First setup a
++	 * revision walk to (a) OR in any bitmaps that are UNINTERESTING
++	 * between the tips and boundary, and (b) record the boundary.
++	 */
++	trace2_region_enter("pack-bitmap", "boundary-prepare", the_repository);
 +	if (prepare_revision_walk(revs))
-+		die(_("revision walk setup failed"));
++		die("revision walk setup failed");
++	trace2_region_leave("pack-bitmap", "boundary-prepare", the_repository);
 +
-+	show_data.bitmap_git = bitmap_git;
-+	show_data.base = base;
++	trace2_region_enter("pack-bitmap", "boundary-traverse", the_repository);
++	revs->boundary = 1;
++	traverse_commit_list_filtered(revs,
++				      show_boundary_commit,
++				      show_boundary_object,
++				      &cb, NULL);
++	revs->boundary = 0;
++	trace2_region_leave("pack-bitmap", "boundary-traverse", the_repository);
 +
-+	traverse_commit_list(revs, show_commit, show_object, &show_data);
++	revs->blob_objects = tmp_blobs;
++	revs->tree_objects = tmp_trees;
++	revs->tag_objects = tmp_tags;
 +
-+	revs->include_check = NULL;
-+	revs->include_check_obj = NULL;
-+	revs->include_check_data = NULL;
++	reset_revision_walk();
++	clear_object_flags(UNINTERESTING);
 +
-+	return base;
++	/*
++	 * Then add the boundary commit(s) as fill-in traversal tips.
++	 */
++	trace2_region_enter("pack-bitmap", "boundary-fill-in", the_repository);
++	for (i = 0; i < cb.boundary.nr; i++) {
++		struct object *obj = cb.boundary.objects[i].item;
++		if (bitmap_walk_contains(bitmap_git, cb.base, &obj->oid))
++			obj->flags |= SEEN;
++		else
++			add_pending_object(revs, obj, "");
++	}
++	if (revs->pending.nr)
++		cb.base = fill_in_bitmap(bitmap_git, revs, cb.base, NULL);
++	trace2_region_leave("pack-bitmap", "boundary-fill-in", the_repository);
++
++cleanup:
++	object_array_clear(&cb.boundary);
++	revs->ignore_missing_links = 0;
++
++	return cb.base;
 +}
 +
  static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
  				   struct rev_info *revs,
  				   struct object_list *roots,
-@@ -1108,35 +1142,8 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+@@ -1142,8 +1262,21 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
  		}
  	}
  
--	if (needs_walk) {
--		struct include_data incdata;
--		struct bitmap_show_data show_data;
--
--		if (!base)
--			base = bitmap_new();
--
--		incdata.bitmap_git = bitmap_git;
--		incdata.base = base;
--		incdata.seen = seen;
--
--		revs->include_check = should_include;
--		revs->include_check_obj = should_include_obj;
--		revs->include_check_data = &incdata;
--
--		if (prepare_revision_walk(revs))
--			die(_("revision walk setup failed"));
--
--		show_data.bitmap_git = bitmap_git;
--		show_data.base = base;
--
--		traverse_commit_list(revs,
--				     show_commit, show_object,
--				     &show_data);
--
--		revs->include_check = NULL;
--		revs->include_check_obj = NULL;
--		revs->include_check_data = NULL;
--	}
-+	if (needs_walk)
-+		base = fill_in_bitmap(bitmap_git, revs, base, seen);
+-	if (needs_walk)
++	if (needs_walk) {
++		/*
++		 * This fill-in traversal may walk over some objects
++		 * again, since we have already traversed in order to
++		 * find the boundary.
++		 *
++		 * But this extra walk should be extremely cheap, since
++		 * all commit objects are loaded into memory, and
++		 * because we skip walking to parents that are
++		 * UNINTERESTING, since it will be marked in the haves
++		 * bitmap already (or it has an on-disk bitmap, since
++		 * OR-ing it in covers all of its ancestors).
++		 */
+ 		base = fill_in_bitmap(bitmap_git, revs, base, seen);
++	}
  
  	return base;
  }
+@@ -1535,6 +1668,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 					 int filter_provided_objects)
+ {
+ 	unsigned int i;
++	int use_boundary_traversal;
+ 
+ 	struct object_list *wants = NULL;
+ 	struct object_list *haves = NULL;
+@@ -1585,13 +1719,21 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 			object_list_insert(object, &wants);
+ 	}
+ 
+-	/*
+-	 * if we have a HAVES list, but none of those haves is contained
+-	 * in the packfile that has a bitmap, we don't have anything to
+-	 * optimize here
+-	 */
+-	if (haves && !in_bitmapped_pack(bitmap_git, haves))
+-		goto cleanup;
++	use_boundary_traversal = git_env_bool(GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL, -1);
++	if (use_boundary_traversal < 0) {
++		prepare_repo_settings(revs->repo);
++		use_boundary_traversal = revs->repo->settings.pack_use_bitmap_boundary_traversal;
++	}
++
++	if (!use_boundary_traversal) {
++		/*
++		 * if we have a HAVES list, but none of those haves is contained
++		 * in the packfile that has a bitmap, we don't have anything to
++		 * optimize here
++		 */
++		if (haves && !in_bitmapped_pack(bitmap_git, haves))
++			goto cleanup;
++	}
+ 
+ 	/* if we don't want anything, we're done here */
+ 	if (!wants)
+@@ -1605,18 +1747,32 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 	if (load_bitmap(revs->repo, bitmap_git) < 0)
+ 		goto cleanup;
+ 
+-	object_array_clear(&revs->pending);
++	if (!use_boundary_traversal)
++		object_array_clear(&revs->pending);
+ 
+ 	if (haves) {
+-		revs->ignore_missing_links = 1;
+-		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
+-		reset_revision_walk();
+-		revs->ignore_missing_links = 0;
++		if (use_boundary_traversal) {
++			trace2_region_enter("pack-bitmap", "haves/boundary", the_repository);
++			haves_bitmap = find_boundary_objects(bitmap_git, revs, haves);
++			trace2_region_leave("pack-bitmap", "haves/boundary", the_repository);
++		} else {
++			trace2_region_enter("pack-bitmap", "haves/classic", the_repository);
++			revs->ignore_missing_links = 1;
++			haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
++			reset_revision_walk();
++			revs->ignore_missing_links = 0;
++			trace2_region_leave("pack-bitmap", "haves/classic", the_repository);
++		}
+ 
+ 		if (!haves_bitmap)
+ 			BUG("failed to perform bitmap walk");
+ 	}
+ 
++	if (use_boundary_traversal) {
++		object_array_clear(&revs->pending);
++		reset_revision_walk();
++	}
++
+ 	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap);
+ 
+ 	if (!wants_bitmap)
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index f0180b5276..daa72b6331 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -62,6 +62,10 @@ void traverse_bitmap_commit_list(struct bitmap_index *,
+ void test_bitmap_walk(struct rev_info *revs);
+ int test_bitmap_commits(struct repository *r);
+ int test_bitmap_hashes(struct repository *r);
++
++#define GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL \
++	"GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL"
++
+ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 					 int filter_provided_objects);
+ uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
+diff --git a/repo-settings.c b/repo-settings.c
+index d220c5dd9f..7b566d729d 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -41,8 +41,10 @@ void prepare_repo_settings(struct repository *r)
+ 	repo_cfg_bool(r, "feature.experimental", &experimental, 0);
+ 
+ 	/* Defaults modified by feature.* */
+-	if (experimental)
++	if (experimental) {
+ 		r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_SKIPPING;
++		r->settings.pack_use_bitmap_boundary_traversal = 1;
++	}
+ 	if (manyfiles) {
+ 		r->settings.index_version = 4;
+ 		r->settings.index_skip_hash = 1;
+@@ -62,6 +64,9 @@ void prepare_repo_settings(struct repository *r)
+ 	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
+ 	repo_cfg_bool(r, "index.skiphash", &r->settings.index_skip_hash, r->settings.index_skip_hash);
+ 	repo_cfg_bool(r, "pack.readreverseindex", &r->settings.pack_read_reverse_index, 1);
++	repo_cfg_bool(r, "pack.usebitmapboundarytraversal",
++		      &r->settings.pack_use_bitmap_boundary_traversal,
++		      r->settings.pack_use_bitmap_boundary_traversal);
+ 
+ 	/*
+ 	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
+diff --git a/repository.h b/repository.h
+index 1a13ff2867..c42f7ab6bd 100644
+--- a/repository.h
++++ b/repository.h
+@@ -37,6 +37,7 @@ struct repo_settings {
+ 	int command_requires_full_index;
+ 	int sparse_index;
+ 	int pack_read_reverse_index;
++	int pack_use_bitmap_boundary_traversal;
+ 
+ 	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
+ 
+diff --git a/t/README b/t/README
+index bdfac4cceb..b71a065e4a 100644
+--- a/t/README
++++ b/t/README
+@@ -442,6 +442,10 @@ GIT_TEST_INDEX_VERSION=<n> exercises the index read/write code path
+ for the index version specified.  Can be set to any valid version
+ (currently 2, 3, or 4).
+ 
++GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=<boolean> if enabled will
++use the boundary-based bitmap traversal algorithm. See the documentation
++of `pack.useBitmapBoundaryTraversal` for more details.
++
+ GIT_TEST_PACK_SPARSE=<boolean> if disabled will default the pack-objects
+ builtin to use the non-sparse object walk. This can still be overridden by
+ the --sparse command-line argument.
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 526a5a506e..78c1c6c923 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -9,6 +9,10 @@ test_description='exercise basic bitmap functionality'
+ # their place.
+ GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
+ 
++# Likewise, allow individual tests to control whether or not they use
++# the boundary-based traversal.
++sane_unset GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL
++
+ objpath () {
+ 	echo ".git/objects/$(echo "$1" | sed -e 's|\(..\)|\1/|')"
+ }
+@@ -457,6 +461,13 @@ test_bitmap_cases () {
+ 
+ test_bitmap_cases
+ 
++GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
++export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL
++
++test_bitmap_cases
++
++sane_unset GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL
++
+ test_expect_success 'incremental repack fails when bitmaps are requested' '
+ 	test_commit more-1 &&
+ 	test_must_fail git repack -d 2>err &&
+@@ -468,6 +479,33 @@ test_expect_success 'incremental repack can disable bitmaps' '
+ 	git repack -d --no-write-bitmap-index
+ '
+ 
++test_expect_success 'boundary-based traversal is used when requested' '
++	git repack -a -d --write-bitmap-index &&
++
++	for argv in \
++		"git -c pack.useBitmapBoundaryTraversal=true" \
++		"git -c feature.experimental=true" \
++		"GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1 git"
++	do
++		eval "GIT_TRACE2_EVENT=1 $argv rev-list --objects \
++			--use-bitmap-index second..other 2>perf" &&
++		grep "\"region_enter\".*\"label\":\"haves/boundary\"" perf ||
++			return 1
++	done &&
++
++	for argv in \
++		"git -c pack.useBitmapBoundaryTraversal=false" \
++		"git -c feature.experimental=true -c pack.useBitmapBoundaryTraversal=false" \
++		"GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=0 git -c pack.useBitmapBoundaryTraversal=true" \
++		"GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=0 git -c feature.experimental=true"
++	do
++		eval "GIT_TRACE2_EVENT=1 $argv rev-list --objects \
++			--use-bitmap-index second..other 2>perf" &&
++		grep "\"region_enter\".*\"label\":\"haves/classic\"" perf ||
++			return 1
++	done
++'
++
+ test_bitmap_cases "pack.writeBitmapLookupTable"
+ 
+ test_expect_success 'verify writing bitmap lookup table when enabled' '
 -- 
 2.40.1.479.g8f2b93ade7
-
