@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3618AC7EE26
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 22:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F73CC77B7F
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 22:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234446AbjEHWAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 18:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39500 "EHLO
+        id S234401AbjEHWAC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 18:00:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234439AbjEHV7z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 17:59:55 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E8CE70
-        for <git@vger.kernel.org>; Mon,  8 May 2023 14:59:54 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-55a5a830238so46493247b3.3
-        for <git@vger.kernel.org>; Mon, 08 May 2023 14:59:54 -0700 (PDT)
+        with ESMTP id S234346AbjEHV76 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 17:59:58 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2A7102
+        for <git@vger.kernel.org>; Mon,  8 May 2023 14:59:57 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-b9e66ce80acso6893176276.3
+        for <git@vger.kernel.org>; Mon, 08 May 2023 14:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683583193; x=1686175193;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683583197; x=1686175197;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VDtx3iqE2RZQuNCLKAySEpkN7cP3UMLjgoQpHks3AJY=;
-        b=FaJpuR6pZNfm/ACv2/OO35hYdztb22m0HTC9LW+XQlvx2JLWYlziVJdRnyZ1YCmry+
-         SMNVTcmfLPK0KgZYTPGPswDxx8Jbu4+paXkDAUmlp3QahbF+nHiI13vlbq1NQjvan0BG
-         oahslJ+TkX5yoy3jGat8MJFkpAkgWDLpqBW+dUee3xt0hQ8xdlUao/a0zk81ra4npBV+
-         4kPtHHx9AtvvdAx8fGN3UvdXtAIoR37KOldilg7Aok56lTzpk6GfUeTIGPjTjHL6xnTh
-         aVNvMZo19S6aYFaB/xchVCsmS1KmCmBF0PYcJYTy85yqO0QvzfzppPdcEKaD4oBqbVFQ
-         zMFA==
+        bh=OZd3f4LH9FIps4H7kT3AlcP2vjt1ARQg19e8+HO6wZ4=;
+        b=k7m6VTBwTr8rAf8zwDG5KA+5iFOj4DQK0lQ9rpvF8DLKNbfkbEHBvsdjBxreM2XRL3
+         hhZXEhgF3J995KdDQXoK1FurYiteGT/XbtjUS6UmJKrF7FjI8jZbFmDF6UpyOfTo/B51
+         eFUaBRNgCttkEPLUWTpbCrCszTA+F7K4kWOs/wrHXkG7Dtq2svH9OJ9R03I5wGileLzg
+         ZnyoySyzb68d4kZ9ilo8dWDT7WYb+tpoZl/idcmwKeabMFRp8DNM/Ko98asptRrJ4bsZ
+         hcsM9bn93zFvv0puDViYmPijB/1o4FXffHz9VQMLHbQrg7uu1XuPKAmSZ58+HxLW6Hv1
+         4cRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683583193; x=1686175193;
+        d=1e100.net; s=20221208; t=1683583197; x=1686175197;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VDtx3iqE2RZQuNCLKAySEpkN7cP3UMLjgoQpHks3AJY=;
-        b=G4Nkzt3+Qdje1e0nqA9jKpo44+AOMQ9IhnZPGFhw7h0xj+OiamfcAHL+UHh9I+Eysx
-         +Hf7PidRsPnnZOEs2DTV4+7Ol5J3SHiGYZIKcBs2DIRP4x2rT4iaSHhUbHNY32HNjyQ6
-         VC6UnS8dH3qllt/14uvUaVlRgpDUE1VeN9sMdnsKY3aTZOUPHQRXrdG3cupkxXlsPakE
-         fPPRgjQVSv6J/YOOUClXarda5j7y9K+OIaBLJNJ2g22VjEzF5zBEP9d/TuMu8kykLOM/
-         izH/6Yjrxf/xMOD+cehtNytzbxKZ+RvJnKarzozTbjEiRjTg0RcI6Db2oqxqK3ybGAgV
-         YFHw==
-X-Gm-Message-State: AC+VfDzRN0A9SfVBZEV1aG8Wb12VxNbE7XWuG+7MuagyfuaAAYKudNrg
-        yNdGRRyLSj6PovOqv6QL+Yjf3tcOhMj1upH9sniePQ==
-X-Google-Smtp-Source: ACHHUZ43C7ZvBQGJYvLJeJ8V2MtRD/fH34TJ4EIQeNd0cz9wweKzhn6GgNFwEPWQPY8KSiH/QHq9CQ==
-X-Received: by 2002:a81:5404:0:b0:55d:c333:26c4 with SMTP id i4-20020a815404000000b0055dc33326c4mr8236520ywb.0.1683583193387;
-        Mon, 08 May 2023 14:59:53 -0700 (PDT)
+        bh=OZd3f4LH9FIps4H7kT3AlcP2vjt1ARQg19e8+HO6wZ4=;
+        b=bEwfI5cDi26ifFpUH22ycSnmLsHc46mONbKd+W/+nSQdvFYHj100q7vkxJwZJogvu6
+         wjfKJIH3m3Au17Op2AdJxJ0iaoIzIgk+FAKzIbyru9s8u+8RmwTeQaZH/0e36brLNf/a
+         N5eBWL7I9HP3Gm5Zskxos1087WNF70jVHiE5cr3aDn8hpe+RFbn35LEzR3IMNnaI7Bss
+         YOYFLTHH82g9EpHS2/ww7B8FtWoZfdKusZmgHIMQXyx0giJ7MdpDtPuMlIAWpBBp5Jkf
+         8eMA6HNBsnBVeSgiUdk1TeNWbpur29WToNbs7NM7n1W+tvrRnI9WaSTE9I0YU3cOuUfz
+         /05Q==
+X-Gm-Message-State: AC+VfDwJ6WwZ0OXwAziD6B7FYgzW12aLvx3yEQLSUywcsl+kBN/r6Aua
+        z/A/5k2UGIxscCssXw1ILx9ZBbPbk80o1qazdGwatw==
+X-Google-Smtp-Source: ACHHUZ4LRssufuqPKR+Gl8yV9qGIxu4TgJUzCuw2ny2omb19g2IgVx/5tFGAMPwOaARxzIeS8yekfQ==
+X-Received: by 2002:a25:addf:0:b0:b8f:599c:c43f with SMTP id d31-20020a25addf000000b00b8f599cc43fmr14077836ybe.19.1683583196860;
+        Mon, 08 May 2023 14:59:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g142-20020a815294000000b0055d6b67f468sm2795753ywb.14.2023.05.08.14.59.52
+        by smtp.gmail.com with ESMTPSA id k3-20020a25ed03000000b00b8f4916294csm2577988ybh.10.2023.05.08.14.59.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 14:59:53 -0700 (PDT)
-Date:   Mon, 8 May 2023 17:59:52 -0400
+        Mon, 08 May 2023 14:59:56 -0700 (PDT)
+Date:   Mon, 8 May 2023 17:59:55 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 04/15] ref-filter: add ref_filter_clear()
-Message-ID: <c804ba3620476713bd0535a315876378149ad7dd.1683581621.git.me@ttaylorr.com>
+Subject: [PATCH 05/15] ref-filter.c: parameterize match functions over
+ patterns
+Message-ID: <c54000f5f5122c4ca3ac9b16828a8fd77050768c.1683581621.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,95 +68,66 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We did not bother to clean up at all in branch/tag, and for-each-ref
-only hit a few elements. So this is probably cleaning up leaks, but I
-didn't check yet.
+`match_pattern()` and `match_name_as_path()` both take a `struct
+ref_filter *`, and then store a stack variable `patterns` pointing at
+`filter->patterns`.
 
-Note that the reachable_from and unreachable_from lists should be
-cleaned as they are used. So this is just covering any case where we
-might bail before running the reachability check.
+The subsequent patch will add a new array of patterns to match over (the
+excluded patterns, via a new `git for-each-ref --exclude` option),
+treating the return value of these functions differently depending on
+which patterns are being used to match.
+
+Tweak `match_pattern()` and `match_name_as_path()` to take an array of
+patterns to prepare for passing either in.
+
+Co-authored-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/branch.c       |  1 +
- builtin/for-each-ref.c |  3 +--
- builtin/tag.c          |  1 +
- ref-filter.c           | 16 ++++++++++++++++
- ref-filter.h           |  3 +++
- 5 files changed, 22 insertions(+), 2 deletions(-)
+ ref-filter.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 03bb8e414c..c201f0cb0b 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -813,6 +813,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		print_columns(&output, colopts, NULL);
- 		string_list_clear(&output, 0);
- 		ref_sorting_release(sorting);
-+		ref_filter_clear(&filter);
- 		return 0;
- 	} else if (edit_description) {
- 		const char *branch_name;
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 99ccb73518..c01fa6fefe 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -120,8 +120,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&err);
- 	strbuf_release(&output);
- 	ref_array_clear(&array);
--	free_commit_list(filter.with_commit);
--	free_commit_list(filter.no_commit);
-+	ref_filter_clear(&filter);
- 	ref_sorting_release(sorting);
- 	strvec_clear(&vec);
- 	return 0;
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 6b41bb7374..aab5e693fe 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -645,6 +645,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- cleanup:
- 	ref_sorting_release(sorting);
-+	ref_filter_clear(&filter);
- 	strbuf_release(&buf);
- 	strbuf_release(&ref);
- 	strbuf_release(&reflog_msg);
 diff --git a/ref-filter.c b/ref-filter.c
-index b1d5022a51..9ea92b9637 100644
+index 9ea92b9637..6c5eed144f 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2864,3 +2864,19 @@ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
+@@ -2102,9 +2102,10 @@ static int get_ref_atom_value(struct ref_array_item *ref, int atom,
+  * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
+  * matches "refs/heads/mas*", too).
+  */
+-static int match_pattern(const struct ref_filter *filter, const char *refname)
++static int match_pattern(const struct ref_filter *filter,
++			 const char **patterns,
++			 const char *refname)
+ {
+-	const char **patterns = filter->name_patterns;
+ 	unsigned flags = 0;
  
- 	return 0;
+ 	if (filter->ignore_case)
+@@ -2132,9 +2133,10 @@ static int match_pattern(const struct ref_filter *filter, const char *refname)
+  * matches a pattern "refs/heads/" but not "refs/heads/m") or a
+  * wildcard (e.g. the same ref matches "refs/heads/m*", too).
+  */
+-static int match_name_as_path(const struct ref_filter *filter, const char *refname)
++static int match_name_as_path(const struct ref_filter *filter,
++			      const char **pattern,
++			      const char *refname)
+ {
+-	const char **pattern = filter->name_patterns;
+ 	int namelen = strlen(refname);
+ 	unsigned flags = WM_PATHNAME;
+ 
+@@ -2163,8 +2165,8 @@ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
+ 	if (!*filter->name_patterns)
+ 		return 1; /* No pattern always matches */
+ 	if (filter->match_as_path)
+-		return match_name_as_path(filter, refname);
+-	return match_pattern(filter, refname);
++		return match_name_as_path(filter, filter->name_patterns, refname);
++	return match_pattern(filter, filter->name_patterns, refname);
  }
-+
-+void ref_filter_init(struct ref_filter *filter)
-+{
-+	struct ref_filter blank = REF_FILTER_INIT;
-+	memcpy(filter, &blank, sizeof(blank));
-+}
-+
-+void ref_filter_clear(struct ref_filter *filter)
-+{
-+	oid_array_clear(&filter->points_at);
-+	free_commit_list(filter->with_commit);
-+	free_commit_list(filter->no_commit);
-+	free_commit_list(filter->reachable_from);
-+	free_commit_list(filter->unreachable_from);
-+	ref_filter_init(filter);
-+}
-diff --git a/ref-filter.h b/ref-filter.h
-index a920f73b29..160b807224 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -170,4 +170,7 @@ void filter_ahead_behind(struct repository *r,
- 			 struct ref_format *format,
- 			 struct ref_array *array);
  
-+void ref_filter_init(struct ref_filter *filter);
-+void ref_filter_clear(struct ref_filter *filter);
-+
- #endif /*  REF_FILTER_H  */
+ /*
 -- 
 2.40.1.477.g956c797dfc
 
