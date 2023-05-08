@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C2B5C77B7F
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 19:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC2BC77B7F
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 19:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233394AbjEHTlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 15:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55340 "EHLO
+        id S232921AbjEHTu2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 15:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjEHTlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 15:41:10 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A82459EA
-        for <git@vger.kernel.org>; Mon,  8 May 2023 12:41:07 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1aaf21bb427so35369865ad.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 12:41:07 -0700 (PDT)
+        with ESMTP id S233613AbjEHTtl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 15:49:41 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C9344A3
+        for <git@vger.kernel.org>; Mon,  8 May 2023 12:48:35 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id 41be03b00d2f7-517c01edaaaso3208584a12.3
+        for <git@vger.kernel.org>; Mon, 08 May 2023 12:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683574867; x=1686166867;
+        d=gmail.com; s=20221208; t=1683575236; x=1686167236;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=g3ulkEldZw54AX6Ye5oY5fJmLNNTVI3fsv8G+QQzZdY=;
-        b=rIfdQTfy9TWMtnroQozJQa4iEAQo94BCzVmKpkBba/i3Xbgu8ov5Y0ZNiyTTfFon95
-         FTew+MmAZwuj82yprgCGObXFJhYKHuxWj9gU68HdY0olwPxDjGWVwfP+a5L872rObWZk
-         yf669M02q+ePXFLeDWjtURpFoHn3di8giBcdL5wfl+E9PBw7+/30se87eW3z5HuXWdJV
-         iXC9FcEIbmrqkxQAB4DqO4eXSZXYlmrjatwCKircliFxsrcAbUTWzfQ1tslpmWe7qToj
-         FqLrqA5pmCrX+HFKwQkSnwF3XHxjjDe24Gak3qyACFnn3udrlT4HX2Q/jA8u6qg+yfEx
-         9B1g==
+        bh=8C3VZL20qXQlf56izCE+Aa0GUIxWVglRONT6IOLtNBA=;
+        b=ewZ+opcroimoAEPDPX/QJyMeUFeU6JpUmfd3urzoHllFC0av8DAB7rMSGLkbBW5sjz
+         tPecM9lAaAuVbY1QmoS6kE1HGUbZ/jf3qZ6jOcbTNB05+aozdLalo8QNOz9AqoH5WyeO
+         YvYgMWtmDsPJzpNuOMjcpYkP5swmaC6BOKie+6iBCTmwn87F4/fZjK28GeVuSwxlwpCz
+         scdrJ5w7rUi7phTGCtdFWL367cYWWcpeXOyF3iDyG524AHFreSST+TK9z3TLfWojHjZZ
+         xLSUzXNvntgeTzXIByp2WAn9xasx4ml8KUDJ2KcjuGEFW6gz3cLq87gGAmEkyOYLgi7f
+         Mohw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683574867; x=1686166867;
+        d=1e100.net; s=20221208; t=1683575236; x=1686167236;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=g3ulkEldZw54AX6Ye5oY5fJmLNNTVI3fsv8G+QQzZdY=;
-        b=XeAq33w3xlNENqqD8sCOSUSYR0NxJCxXdqKnnxja4+sjJYPnH4LI2rBs2JLR+bN7o1
-         hAMnYqPK5QjGzZ8z2C38ze1RWclInkDe+kn+Ev+u31FcT/wn8Wy/dbPYt21Kc9RoTOyo
-         M1CStQ2okL1wrbnwe3EkHQOeGTUeQcih5ve6E4hSQy3jVlzF4zvTR4Vo7e/9re1Chh2D
-         5s2LZeUpsLUjnQzJtscAA4Hq2ojRsrOMMMvITD7/t4/OjD3e4SqBpTAQFU1eGRUFgxQp
-         oSALfDL2JPSy6lN189+yDi49uvD6OgwDmW1hy5JodqVyOHwDx1DSMjQHU8zgiMhZD2Gj
-         Y9Qg==
-X-Gm-Message-State: AC+VfDwtba7pj4fND6tncYsOmjRVgWshtE/3yO3hI2vWiYMQaXtaWcd/
-        8Q/s7Fro/ow5jOWGO6FwAJA=
-X-Google-Smtp-Source: ACHHUZ6/EAj2Mvo466xeSa9pm1p/QeuDQq6IA7Bg1+7/Vjeo8OECeob03MduadlhYY7DJrYzJdu+KA==
-X-Received: by 2002:a17:903:185:b0:1aa:db0f:1aba with SMTP id z5-20020a170903018500b001aadb0f1abamr14222942plg.47.1683574866751;
-        Mon, 08 May 2023 12:41:06 -0700 (PDT)
+        bh=8C3VZL20qXQlf56izCE+Aa0GUIxWVglRONT6IOLtNBA=;
+        b=fGnetFG0WEcowT1AWjxsFN53W7PaHAkP5wWQCrs/DSPiDUwTxFasrM1OEqYObApdhD
+         6QIs1k5dPTsM49ayW2Gu2wZfoXMp6ggRyKMz9LOu3mQVWnHyiHclt/AQEO50fiO5lkcr
+         nW2yIbnKGOIKK+bttgochvGZ/Oab/XyjogrgZA2HVDv8NWCtZMrGPerAo27/AFBHJJ0S
+         jSBT8BN7WiJSwyu/paa5+0Ju0sv701pSi7mZ1mprVA5gmeKNsL0dRJ81M4YRsEEz8tyt
+         lVlwKIjD+l0NYvjmdvp72hkGoqDBuqDXJS3oLeq8iYzFRqJZd3d3TXLHXKGW01sLVqV+
+         0zaA==
+X-Gm-Message-State: AC+VfDximfn+hu331Qb6Mgn7/VgoBxj4aoWmM1dr84JxezzaxJd3qoRb
+        VuNEi4q5wyJ6sPW6CGOk6y8=
+X-Google-Smtp-Source: ACHHUZ73NjJAL1KBF/fLa6vpzhDib4tW6QZAOD3jfmiiiQWt5U6HyIGS2ymsJQmfYJtwR3OF3BpwpA==
+X-Received: by 2002:a17:90a:5293:b0:24d:fcae:d455 with SMTP id w19-20020a17090a529300b0024dfcaed455mr11330303pjh.41.1683575236547;
+        Mon, 08 May 2023 12:47:16 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id y4-20020a170902b48400b001aaf83873dbsm7609518plr.162.2023.05.08.12.41.06
+        by smtp.gmail.com with ESMTPSA id ih15-20020a17090b430f00b0024e3bce323asm10938665pjb.26.2023.05.08.12.47.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 12:41:06 -0700 (PDT)
+        Mon, 08 May 2023 12:47:16 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 06/11] doc: trailer: trailer.<token>.cmd: add missing
- verb phrase
+Subject: Re: [PATCH 08/11] doc: trailer.<token>.command: refer to existing
+ example
 References: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
-        <8e36d1bd1f0c8ca6b1210a537f4bb8403fab7c47.1683566870.git.gitgitgadget@gmail.com>
-Date:   Mon, 08 May 2023 12:41:06 -0700
-In-Reply-To: <8e36d1bd1f0c8ca6b1210a537f4bb8403fab7c47.1683566870.git.gitgitgadget@gmail.com>
-        (Linus Arver via GitGitGadget's message of "Mon, 08 May 2023 17:27:45
+        <5980432179352054955e602cf97b57e97694a28c.1683566870.git.gitgitgadget@gmail.com>
+Date:   Mon, 08 May 2023 12:47:15 -0700
+In-Reply-To: <5980432179352054955e602cf97b57e97694a28c.1683566870.git.gitgitgadget@gmail.com>
+        (Linus Arver via GitGitGadget's message of "Mon, 08 May 2023 17:27:47
         +0000")
-Message-ID: <xmqq1qjqobl9.fsf@gitster.g>
+Message-ID: <xmqqwn1imwqk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,33 +73,38 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Linus Arver <linusa@google.com>
 >
-> The phrase "is specified" is implied. Make it explicit.
-
-Makes sense.  Calling it "implied" is generous ;-)  Isn't the
-original just outright ungrammatical?
-
->
 > Signed-off-by: Linus Arver <linusa@google.com>
 > ---
->  Documentation/git-interpret-trailers.txt | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
+>  Documentation/git-interpret-trailers.txt | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+
+This patch has more annoying "just rewrapping the text in a strange
+way without changing anything" than the real change which is to
+enclose <value> inside the angle brackets (which is good) and adding
+a new sentence.
+
+We are discouraging the use of .command and recommending folks to
+use .cmd instead, by the way.  At some point we may drop the
+example, and adding a reference to the example would mean somebody
+needs to remember removing this when it happens.
+
 > diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index e80a9cd161b..c4675d9d3bb 100644
+> index ac448fd732e..5ca758e363f 100644
 > --- a/Documentation/git-interpret-trailers.txt
 > +++ b/Documentation/git-interpret-trailers.txt
-> @@ -248,10 +248,10 @@ for the same <token>, 'trailer.<token>.cmd' is used and
->  'trailer.<token>.command' is ignored.
+> @@ -234,10 +234,11 @@ trailer.<token>.ifmissing::
+>  	that option for trailers with the specified <token>.
 >  
->  trailer.<token>.cmd::
-> -	This option can be used to specify a shell command that will be called:
-> -	once to automatically add a trailer with the specified <token>, and then
-> -	each time a '--trailer <token>=<value>' argument to modify the <value> of
-> -	the trailer that this option would produce.
-> +	This option can be used to specify a shell command that will be called once
-> +	to automatically add a trailer with the specified <token>, and then called
-> +	each time a '--trailer <token>=<value>' argument is specified to modify the
-> +	<value> of the trailer that this option would produce.
+>  trailer.<token>.command::
+> -	This option behaves in the same way as 'trailer.<token>.cmd', except
+> -	that it doesn't pass anything as argument to the specified command.
+> -	Instead the first occurrence of substring $ARG is replaced by the
+> -	value that would be passed as argument.
+> +	This option behaves in the
+> +	same way as 'trailer.<token>.cmd', except that it doesn't pass anything as
+> +	argument to the specified command. Instead the first occurrence of substring
+> +	$ARG is replaced by the <value> from the trailer. See the
+> +	'trailer.see.command' trailer example in the "EXAMPLES" section below.
 >  +
->  When the specified command is first called to add a trailer
->  with the specified <token>, the behavior is as if a special
+>  The 'trailer.<token>.command' option has been deprecated in favor of
+>  'trailer.<token>.cmd' due to the fact that $ARG in the user's command is
