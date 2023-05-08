@@ -2,91 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25C74C7EE22
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 17:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EBA4C7EE22
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 17:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233223AbjEHRWc convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 8 May 2023 13:22:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38552 "EHLO
+        id S233480AbjEHR14 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 13:27:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233049AbjEHRWb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 13:22:31 -0400
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 682A34ECA
-        for <git@vger.kernel.org>; Mon,  8 May 2023 10:22:27 -0700 (PDT)
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-75773a7bd66so184302085a.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 10:22:27 -0700 (PDT)
+        with ESMTP id S232429AbjEHR1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 13:27:54 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9D15BBA
+        for <git@vger.kernel.org>; Mon,  8 May 2023 10:27:53 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f4000ec6ecso48736955e9.0
+        for <git@vger.kernel.org>; Mon, 08 May 2023 10:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683566871; x=1686158871;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=D7H2kg0UU/KC12hNHznMJnDwSXp8WdFM1GYN/CXxFXg=;
+        b=EyzkkfBM4hqoxPxSaJ586oEj/c0pB6FbCdb3b32lWA/i0rTl9YNrTQP9sFKQ5qb3iL
+         0solsY/t459dgtoSpv/M/V1BFHdpkXCKFU4oCRYPxUP+chy1x5Gt4tkgKTcrMGeZdhTQ
+         GK+UjnzqRCUqX4E2C3+Q+78ngQo4adXa3l3eM7coLFoj5QJ74qIlnpE/z7t5J5vOZiW8
+         7+rnq4Sm1992DHDtNICmDgMEH6WwX2HSVjakGCf5lminjLQbR3UOVsqgvK+rbzJIralg
+         dgzGz/D5Mi7jZnwyUapiFkspbMHIs/gArcTSgelwXHlKv7L11F5p2S4fLeDvq8yM9GQK
+         tZLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683566546; x=1686158546;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IJEC4B7FRCvECR7dqAdC7UbeUcLONBcAGBxi/foTwiA=;
-        b=fo2MGCEx1fqlqDXfRKHB3Np6FgENBoAb3Qg/kGwqZN+wRVVlcetoqkHGt4twtaTTPa
-         bYMTbJgV8H888Fie7sQI9M5/rYk31EL5/edWbYT/vu6x+C/Fr+40uPFVAJH4VgKuyZJ5
-         Dj8k+TcFxCnXUAFEZtmO655MqqsGv4GR1luequYJqOkxNzPzrDQNjmTSJII84tZwc0Gc
-         1E6pkG70IiKPiLeoWNBWC5Yjc2JdDrO8rXIfkQMXd8wTSYi8AYyZXHupMhqsmCqSboEp
-         dETqdglrxiJoPGzkBdB68raeSaP7u3WbvdDWagl3JROqq8lKbwfhVU/Z2T6SdBUOhVpT
-         ZY7g==
-X-Gm-Message-State: AC+VfDySyyrdgXV3LyAr2gFsRzJLYpKJyqPDkTsgobtE52Qf+1/lGvV0
-        U/Ux327ncCuMaoPC/ynFFnJcpK6BcIZITAs6schKRdz+RvA=
-X-Google-Smtp-Source: ACHHUZ7BFqAjcD+xW/q3278IMPWDSDh1IJAI4g9tFj3xFQUPAJT6/zaw4IO3M2T6k3w2J40/c1ExkoktEPhGG/VQE1k=
-X-Received: by 2002:ad4:5f4c:0:b0:5f7:a9e1:bbbf with SMTP id
- p12-20020ad45f4c000000b005f7a9e1bbbfmr16955706qvg.44.1683566546360; Mon, 08
- May 2023 10:22:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683566871; x=1686158871;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D7H2kg0UU/KC12hNHznMJnDwSXp8WdFM1GYN/CXxFXg=;
+        b=CUtJ4iU5TjTNGWWXbtSJhf03Gp7uzj/9KXQum33AANqinwScs4q3Ya35ckUfvgosJI
+         Ed2z9fd2+Kpip6C7ch0MTYGoIvp3YUg9BjWPpZMHU23ezm+zAN68y5fL97DzMd95gvKR
+         5XXcpgN8vEMKwrIQTk1l905cs1Hui88tQLend2TEHOif7BPVR2c1nm9j+5oFtopcyD1Z
+         KVDOUQG4Pprb1WF8EtAS5oPppW+o/zQkkRBHPcB1UHSFpTjF1VC4X1YqoWvCoaqjUOiQ
+         GtS1kqKyeWcqKNDyNQFalouam3w34DV6fYuFSUf8cphSlrZyN3tZ1p201iM/VtwTOa4j
+         GbTA==
+X-Gm-Message-State: AC+VfDyKl5avvQ4DIuDctbPG621bx7/yWzaQ8qv6BQupC9OCpO22666M
+        FNl4tX87QxGZAadQ8WPOWLX1wPaHe3Y=
+X-Google-Smtp-Source: ACHHUZ6XU43IjhHR+BzdRNsGg5DEKJR/MJKubssUve9rn1dHgD8IaMi9OQbegEujysvzlwSJ2zqeGA==
+X-Received: by 2002:a7b:cb92:0:b0:3f4:2148:e8d7 with SMTP id m18-20020a7bcb92000000b003f42148e8d7mr4803730wmi.35.1683566871416;
+        Mon, 08 May 2023 10:27:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n3-20020a7bc5c3000000b003f0b1b8cd9bsm17559482wmk.4.2023.05.08.10.27.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 10:27:51 -0700 (PDT)
+Message-Id: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
+From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 08 May 2023 17:27:39 +0000
+Subject: [PATCH 00/11] docs: interpret-trailers: reword and add examples
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20230508165728.525603-1-calvinwan@google.com> <20230508165908.526247-1-calvinwan@google.com>
-In-Reply-To: <20230508165908.526247-1-calvinwan@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 8 May 2023 13:22:15 -0400
-Message-ID: <CAPig+cTQg7XzORPHeD79aHEi1ggOjTPw9X02VPgxcV9uoBOBxg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/7] strbuf: clarify API boundary
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+To:     git@vger.kernel.org
+Cc:     Linus Arver <linusa@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 8, 2023 at 1:05 PM Calvin Wan <calvinwan@google.com> wrote:
-> strbuf, as a generic and widely used structure across the codebase,
-> should be limited as a libary to only interact with primitives. Add
+This series makes some small improvements to the docs for
+git-interpret-trailers. The intent is to make it easier to read for
+beginners who have never used this command before.
 
-s/libary/library/
+Linus Arver (11):
+  doc: trailer: fix grammar
+  doc: trailer: swap verb order
+  doc: trailer: --no-divider: more precise language
+  doc: trailer: explain "commit mesage part" on first usage
+  doc: trailer: remove redundant phrasing
+  doc: trailer: trailer.<token>.cmd: add missing verb phrase
+  doc: trailer: use angle brackets for <token> and <value>
+  doc: trailer.<token>.command: refer to existing example
+  doc: trailer.<token>.command: emphasize deprecation
+  doc: trailer: mention 'key' in DESCRIPTION
+  doc: trailer: add more examples in DESCRIPTION
 
-> documentation so future functions can be appropriately be placed. Older
+ Documentation/git-interpret-trailers.txt | 62 +++++++++++++++---------
+ 1 file changed, 40 insertions(+), 22 deletions(-)
 
-Too many "be"'s.
 
-> functions that do not follow this boundary should eventually be moved or
-> refactored.
->
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> ---
-> diff --git a/strbuf.h b/strbuf.h
-> @@ -5,7 +5,11 @@ struct string_list;
->  /**
->   * strbuf's are meant to be used with all the usual C string and memory
-> - * APIs. Given that the length of the buffer is known, it's often better to
-> + * APIs. The objects that this API interacts with in this file should be
-> + * limited to other primitives, however, there are older functions in here
-> + * that should eventually be moved out or refactored.
-> + *
-> + * Given that the length of the buffer is known, it's often better to
->   * use the mem* functions than a str* one (memchr vs. strchr e.g.).
->   * Though, one has to be careful about the fact that str* functions often
->   * stop on NULs and that strbufs may have embedded NULs.
-
-The new text is administrative in nature, aimed at people who will be
-modifying strbuf itself. As such, it is unclear why it is being
-inserted into documentation aimed at _consumers_ of the strbuf API.
-Moreover, with it buried in existing API documentation like this, I
-fear that those at whom it is aimed will almost certainly overlook it.
-
-To increase the likelihood that the target audience will indeed read
-the new text, I'd suggest placing it in its own comment block very
-near the top of the file, possibly prefixed with a loud "NOTE FOR
-STRBUF DEVELOPERS" or some such. Further, as the new text is aimed at
-strbuf developers, not strbuf consumers, it would make more sense to
-use a plain /*...*/ comment block rather than a /**...*/ block.
+base-commit: 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1506%2Flistx%2Fdoc-trailer-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1506/listx/doc-trailer-v1
+Pull-Request: https://github.com/git/git/pull/1506
+-- 
+gitgitgadget
