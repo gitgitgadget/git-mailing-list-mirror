@@ -2,249 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E1B4C7EE22
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 21:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40C61C7EE22
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 21:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232949AbjEHVBU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 17:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52346 "EHLO
+        id S229766AbjEHVJy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 17:09:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233831AbjEHVA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 17:00:56 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D08B7A97
-        for <git@vger.kernel.org>; Mon,  8 May 2023 14:00:53 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-643fdfb437aso11639433b3a.0
-        for <git@vger.kernel.org>; Mon, 08 May 2023 14:00:53 -0700 (PDT)
+        with ESMTP id S229486AbjEHVJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 17:09:53 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1146E82
+        for <git@vger.kernel.org>; Mon,  8 May 2023 14:09:51 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-64389a44895so4084175b3a.1
+        for <git@vger.kernel.org>; Mon, 08 May 2023 14:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683579653; x=1686171653;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20221208; t=1683580191; x=1686172191;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=10v/B2VuxF0Cx1Q06dsd8BmLAVWPWNZHc1AOV3HCdXU=;
-        b=7nOUBYzsJU0KglCzEMo0/xQO3WspJXazhH2ow3E3T+IqWTHNlmhRezHw4+DovDmA0f
-         isijyd/EhPSMKFqHsP3ng3tAR1g15cQcXM/9Zxc/QTtH17MfrVxV9SX+qNu04FRtUG9D
-         eKhHeBoU3c1l/DXTxgvNIcJhzKofste8WsDVUugcMdy8ay5vQDTwd03zSox+zdytRMTc
-         kF7P35GfzWmWpKuQqrIwgMlyCJ9de86uUb8mHX4rzqbF6WnI/u5IBUrmm1/QyXxFszC3
-         Gu19MCyRKGY27ulaZaoZqTN95RK3uQA27PYCB6JEXJIKqt32LPRCJBo1soTnzDI7QPlW
-         APNQ==
+        bh=aTG+in0PdLDiayre5efpImroTRPaZuuGZd67moc0SwE=;
+        b=hZPTUmzCPV5gEbJjEuzoxP1o06FWeMDm6Kt3n5D6Bviw6465eqKqybsLe7bap3bP/M
+         jF+9vqPUl7/f4H4mJP7uO+ZES3MHLw82JL/pgLi7wHtm2L58OknCNEIDGKJgQJbZRTOq
+         uOxrG22w6o/1tdVOq+LSYkNAFmVw/h4HG3ru6RXPYALfMFguHhiCY0OVGlyeJ+8updTD
+         HXC+5PUdx5XZf5ZvDMOSS5OeB3YOA+8w8QRQBXK8W9RsHQEZkQ68LCPpaidH20PHn+2a
+         d3IPOPV0SDqwXoiKUjzbZuYYpRsDfHKKl8o9cXp5kzslrhTtL4mHhtOx9n3hZxGXBGG+
+         cmpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683579653; x=1686171653;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+        d=1e100.net; s=20221208; t=1683580191; x=1686172191;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=10v/B2VuxF0Cx1Q06dsd8BmLAVWPWNZHc1AOV3HCdXU=;
-        b=l4VTET7BIvyoPMWZjHF5YMtoO9LPkx+/UhGViubIoSGBB83qhivkL/3+6HEHHfbIRN
-         MznLaL12R0iGHH5G1GiMkppi+3cvYCnWZa1r7JFEUUbskW8RSd25d9xGKemVBRbVhobS
-         /XeSKC3WlLhwj4FHTcxxmANA/AWCL31z/B4e+4kG1M2qWCGq6XVX3OJ9awlllbNAdZ1d
-         slPUZ7BqhSZO/ZmVFkBxfvCGSg96ZoDJ83a080jzF8W7vsXcnnmlQpYwkBgvmCpTA5G/
-         OFe5PbCllOj6yHsqw6NI4CtPDlWaoyf0eIgMLwOIgPJaLgzt1/I4erqZ7HenU/LEoXU7
-         +t4w==
-X-Gm-Message-State: AC+VfDykdyMuIDspkMn3MYCrfpULthsnXJ7FPHubelj4uxNMUZsxUM7F
-        imxZe6uJfHOk4graQdncchqPII2H+qFxFw==
-X-Google-Smtp-Source: ACHHUZ7PitMSNAWk1jIH0FGLFavKEsBWN+UxPXNEjAdhDwZu17n5CWf7x5FHAYtDkSPWbOAj/5RCgN1qRpcn9g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a63:2806:0:b0:51a:7d6a:65c9 with SMTP id
- bs6-20020a632806000000b0051a7d6a65c9mr3506524pgb.6.1683579652812; Mon, 08 May
- 2023 14:00:52 -0700 (PDT)
-Date:   Mon, 08 May 2023 14:00:51 -0700
-In-Reply-To: <230501.868re8jna4.gmgdl@evledraar.gmail.com>
-Mime-Version: 1.0
-References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
- <1071e70c92892166e1ed2cf22bcd7eb49bdf3b20.1682104399.git.gitgitgadget@gmail.com>
- <230501.868re8jna4.gmgdl@evledraar.gmail.com>
-Message-ID: <kl6lr0rq1qt8.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 10/14] (RFC-only) config: finish config_fn_t refactor
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        bh=aTG+in0PdLDiayre5efpImroTRPaZuuGZd67moc0SwE=;
+        b=DsXqj+7zAWjzXE75esKL+kjulMr7MQEQUoyxNGvDEziibZdWPmk55MN30fq2OWAwaa
+         C/AMCPrmRBKMxeW/m19dSPoWSI7zaKBFa4V0559Cy8JUgg+3h/huEHhUW1bFmW4YZNuP
+         lRpu01spQRxo69OCaH9OwpDWZ5BB/qoIiVl1hFrPh57Rzh/wncZetwqoY1LgGIKSy/9M
+         PbHtSFG5EPVIFmAKWo4grvAQ0OX3STrHSlYrp6K2g1VyMDCQ9AheVCOzlOZUgzg3vSkM
+         9fBt9kJ+apoNn0oWvVjWnzdeUdFxZ215K1Jmeg0ef4Bfu034Enn+HP/j5TQfkhTZKcxL
+         3MAA==
+X-Gm-Message-State: AC+VfDybHLlBKEY9w4/+BvrumEWSZGyeGaSw2FuP+UmTXrrDSfIJWjV1
+        T/FY+LkfrX8+sWknaKVl6gE=
+X-Google-Smtp-Source: ACHHUZ5r7GaYy2HQuKpTtMemAzU1kRSMv4ghvzWEazRH+mRCqjAcOAT7MH4kvd4VSPiUjZPxQ0y70Q==
+X-Received: by 2002:a05:6a00:179b:b0:63b:62d1:d868 with SMTP id s27-20020a056a00179b00b0063b62d1d868mr17669026pfg.8.1683580191087;
+        Mon, 08 May 2023 14:09:51 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id v13-20020a62a50d000000b0064309cd0551sm389828pfm.85.2023.05.08.14.09.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 14:09:50 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
+Subject: Re: [PATCH v6] write-tree: optimize sparse integration
+References: <20230508200508.462423-1-cheskaqiqi@gmail.com>
+        <20230508202140.464363-1-cheskaqiqi@gmail.com>
+Date:   Mon, 08 May 2023 14:09:50 -0700
+In-Reply-To: <20230508202140.464363-1-cheskaqiqi@gmail.com> (Shuqi Liang's
+        message of "Mon, 8 May 2023 16:21:40 -0400")
+Message-ID: <xmqqednqmswx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-> On Fri, Apr 21 2023, Glen Choo via GitGitGadget wrote:
+> * 'on all' in the title of the test 'write-tree on all' was unclear;
+> remove it.
 >
->> From: Glen Choo <chooglen@google.com>
+> * Add a baseline 'test_all_match git write-tree' before making any
+> changes to the index, providing a reference point for the 'write-tree'
+> prior to any modifications.
 >
-> I like the general goal of this series, i.e. to get rid of the "reader"
-> callback, and pass stuff more explicitly.
+> * Add a comparison of the output of 'git status --porcelain=v2' to test
+> the working tree after 'write-tree' exits.
 >
-> But as I pointed out in
-> https://lore.kernel.org/git/RFC-cover-0.5-00000000000-20230317T042408Z-av=
-arab@gmail.com/
-> I think this part (and the preceding two commits) are really taking is
-> down the wrong path.
+> * Ensure SKIP_WORKTREE files weren't materialized on disk by using
+> "test_path_is_missing".
 >
-> To demonstrate why, here's a patch-on-top of this topic as a whole where
-> I renamed the "kvi" struct members. I've excluded config.c itself (as
-> its internals aren't interesting for the purposes of this discussion):
+> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+> ---
 >
-> [Patch showing used kvi members...]
->
-> So, as this shows us your 08/14 has gone through the effort of passing
-> this "kvi" info to every single callback, but it's only this handful
-> that actually needs this information.
 
-The attached patch misses the majority of "kvi" users, which use it in
-die_bad_number(). This change happens in Patch 13/14, where the whole
-"kvi" is passed into config.c machinery. It's still a much smaller
-number of config callbacks than the ones changed in these few patches,
-but it's more than a handful, I'd think.
+As we have lost the change to the code, the title has become stale.
+How about I retitle it like so after queuing the patch?
 
-> So, even if we *can* get this to work I don't think it's worth it,
-> especially as this would preclude giving these config callbacks some
-> "lighter" API that doesn't take the trouble of recording and ferrying
-> this information to them.
+    Subject: t1092: update write-tree test
 
-I assume the "lighter API" refers to the current API?
+The changes to the test seem to match what Victoria already gave a
+thums-up in her review of v4; I see nothing surprising or unexpected
+there.
 
-If I'm reading this correctly, your concern isn't primarily about
-reducing churn, it's YAGNI - since most callers don't need this info,
-they should be able to reap the benefits of an API that doesn't provide
-that info. Thus, you're proposing to having both the current API and a
-new kvi-based one?
-
-If so, I don't think that's a good route to take:
-
-- Having both *_kvi() and "old" variants will add bloat to an already
-  bloated config API. Even without further changes, we'd need to add
-  *_kvi() to at least config_with_options() and repo_config(), as well
-  as all of the functions that config_with_options() uses under the
-  hood (some of which are public).
-
-  To some extent, this can be managed by shrinking the config API (e.g.
-  like your suggestion to get rid of git_config_from_file() [1]), but
-  IMO that needs more discussion.
-
-- What benefit is the old API giving us vs the new one? It won't be any
-  faster since the machinery will need to support the new API, and even
-  if it were, the benefit would be tiny. In some cases it might be nice
-  to use the config callback in a non-config setting, but this patch
-  shows that those are rare and can be easily worked around.
-
-- I strongly suspect that we'd already like "kvi" in more places, and if
-  we made it readily available, we would add these additional callers.
-  E.g. we already use it to give additional diagnostics when failing to
-  parse a number, and there's no reason why we shouldn't do this when
-  doing other kinds of parsing (e.g. date in git_config_expiry_date() or
-  color in color_parse_mem()).
-
-If your concern really is primarily about churn and we actually want to
-move everything to the new API eventually, wouldn't it be better to bite
-the bullet and take a one time, well-scoped churn cost instead of a
-longer migration?
-
-[1] https://lore.kernel.org/git/230307.86wn3szrzu.gmgdl@evledraar.gmail.com=
-/
-
-> I think this should also neatly answer some of your outstanding
-> questions. Especially as the above shows that the only non-test caller
-> that needs "linenr" is the builtin/config.c caller that my proposed RFC
-> (linked above) tackled directly. Most of these callbacks just need the
-> more basic "scope".
-
-I didn't see where builtin/config.c was handled in the above link.
-Perhaps you meant a different RFC,
-https://github.com/avar/git/commit/0233297a359bbda43a902dd0213aacdca82faa34=
-?
-
-> So, in particular:
->
->> Here's an exhaustive list of all of the changes:
->>
->> * Cases that need a judgement call
->>
->>   - trace2/tr2_cfg.c:tr2_cfg_set_fl()
->>
->>     This function needs to account for tr2_cfg_cb() now using "kvi".
->>     Since this is only called (indirectly) by git_config_set(), config
->>     source information has never been available here, so just pass NULL.
->>     It will be tr2_cfg_cb()'s responsibility to not use "kvi".
->
-> Just adding a "CONFIG_SCOPE_IN_PROCESS", "CONFIG_SCOPE_SET" or whatever
-> you'd want to call it seems to make much more sense here, no?=20
-
-CONFIG_SCOPE_SET makes sense.
-
->>   - builtin/checkout.c:checkout_main()
->>
->>     This calls git_xmerge_config() as a shorthand for parsing a CLI arg.
->>     "kvi" doesn't apply, so just pass NULL. This might be worth
->>     refactoring away, since git_xmerge_config() can call
->>     git_default_config().
->
-> Another example of a caller which never actually cares about this data,
-> so if it doesn't need to have it passed to it, it doesn't need to fake
-> it up either.
-
-Here's a case of YAGNI I mentioned above and I agree it would be nice to
-not have to fake a "kvi". However, git_xmerge_config() can call
-git_defualt_config() so this seems more like it's abusing the config
-callback to parse a CLI arg. A better resolution would be to have a
-function dedicated to parsing "merge.conflictstyle".
-
->> * Hard for cocci to catch
->>
->>   - urlmatch.c
->>
->>     Manually refactor the custom config callbacks in "struct
->>     urlmatch_config".
->>
->>   - diff.h, fsck.h, grep.h, ident.h, xdiff-interface.h
->>
->>     "struct key_value_info" hasn't been defined yet, so forward declare
->>     it. Alternatively, maybe these files should "#include config.h".
->
-> All of these problems go away if you don't insist on changing every
-> single caller, you'll just have a step where you remove the current
-> global in favor of some "config callback with kvi" info, and "make" will
-> spot those callers that aren't converted yet.
->
-> Those changes will be trivial enough (just the callers I noted above) to
-> not require the tricky cocci patch in 08/14.
->
->> * Likely deficiencies in .cocci patch
->>
->>   - submodule-config.c:gitmodules_cb()
->>
->>     Manually refactor a parse_config() call that gets missed because it
->>     uses a different "*data" arg.
->>
->>   - grep.h, various
->>
->>     Manually refactor grep_config() calls. Not sure why these don't get
->>     picked up.
->>
->>   - config.c:git_config_include(), http.c:http_options()
->>
->>     Manually add "kvi" where it was missed. Not sure why they get missed=
-.
->>
->>   - builtin/clone.c:write_one_config()
->>
->>     Manually refactor a git_clone_config() call. Probably got missed
->>     because I didn't include git_config_parse_parameter().
->>
->>   - ident.h
->>
->>     Remove the UNUSED attribute. Not sure why this is the only instance
->>     of this.
->>
->>   - git-compat-util.h, compat/mingw.[h|c]
->>
->>     Manually refactor noop_core_config(), platform_core_config() and
->>     mingw_core_config(). I can probably add these as "manual fixups" in
->>     cocci.
->
-> ditto.
-
-Yeah, there was definitely more cocci trickery than I'd like. Btw, if
-you comments on the .cocci file itself, feel free to share. I obviously
-just hacked together something based on a very rudimentary understanding
-of cocci and I'd love suggestions on how to improve.
+Thanks.  Will queue.
