@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 737E5C77B7F
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 19:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7A47C77B7F
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 19:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbjEHThY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 15:37:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54364 "EHLO
+        id S232717AbjEHTiQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 15:38:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjEHThW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 15:37:22 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B16159D4
-        for <git@vger.kernel.org>; Mon,  8 May 2023 12:37:21 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1aaea43def7so33696365ad.2
-        for <git@vger.kernel.org>; Mon, 08 May 2023 12:37:21 -0700 (PDT)
+        with ESMTP id S229492AbjEHTiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 15:38:15 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E61059DA
+        for <git@vger.kernel.org>; Mon,  8 May 2023 12:38:14 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id 41be03b00d2f7-52c6504974dso4504127a12.2
+        for <git@vger.kernel.org>; Mon, 08 May 2023 12:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683574641; x=1686166641;
+        d=gmail.com; s=20221208; t=1683574694; x=1686166694;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RhljU7AWU1VmwZpLAmLNjD/062UF6xh67ODKbml5SC4=;
-        b=anf65cl5vfnod+WbVYdSqtKB8Ld0PD3/TXxOhA1+y9RJC3VsVI9JJpeWQTu9P3MpHF
-         iKZV2eyaK0wUGm6e8lWdy1Bor5oxsVaEZBE1bKDgYi7flVcjAfRSBhpoSUea88uypB75
-         4nqaW4z2IhmzMaDmRvZBQ7PKqnS6f25bWCmP4Cr8bryOjTSlq1uqKDLI/doH6Z4uGVyI
-         hN5eTQhc4M2uJJSArrkADuiZICwtmnYkQrTE4cnzTDqKTyIGaoeKeqc46oTpIGbOoD/N
-         EpvSRWufG8K22YV3DQ8jShi2x9AW2dW7Gb6nYR6AdRM3FnXC1sIzupA+OPNGipjuqCnD
-         7SUg==
+        bh=iLvoJ8TlC8niJG4NRf3KANh+eJI/DCNflObMAataRYg=;
+        b=qQEJbBqE3jGw/PCigY6l+WI8bAtRlIkKG+bvewOTNUe9pyG6YWXcawTFKRlJjNVpT7
+         Ffd9g4dDaz7NngbARLTEJuNDjCgawXQZqEnrMlWEoWPpjtMlSkeKKp4q+bMexSeJyU8/
+         e7pUS0N+OUS9GNbsVHHrvuIm/cuL10ECKd4WjeT/OcWhZWcN/K78TcxatSbiX5upo0GG
+         JTyMgiCLs0uA1AqQwz432OlTGjTSaL3Ps9ZQJb9irMwqwkVphHfz/6talBFInp+R9n4C
+         V2sPqOroOAfz6jmfHlxcLkpbyXVa1Xrk6W4qeSkpCIVsZUjjQ4FH9Os6KPakaHje1ilF
+         sb0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683574641; x=1686166641;
+        d=1e100.net; s=20221208; t=1683574694; x=1686166694;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=RhljU7AWU1VmwZpLAmLNjD/062UF6xh67ODKbml5SC4=;
-        b=CX1RuhqnLFBhRf4DzhJyq1ig5YqhQ3Y6gWpFOYHx4ttKbd+fyDwSvcAWNxaSkDEjAG
-         6kEy54dbNErptBrCCr/hBvj5ZTKDvzWbShS3wp/S6bgoNvxSPjN6NfBn9nwrdMha2Jr1
-         i1OUIkWuqzmZqRuAG4gyNMaTzbAnKPt8FcOcT/4bmzDfdLzy0FluJFK+Gdfb+LMTUaog
-         PbKIaEyeKUZWUnRRfdTdDL27EF26i2iWMJ4ioSBF8+5llPyYBHHo5AtD0657GPhleZZS
-         tZrZhFFr+qJFjG/J168kTDT5OF7orheMZ3qYAOeKn2jImc7T/zLTi92JYq6nKDfNGzc5
-         zCKA==
-X-Gm-Message-State: AC+VfDzwRM4mCXAjEboXJGW3rXziMzDRSkj585c9aKLMZjB2oR5myry4
-        26c8Xu6L5OIs9soMKl+QiO8=
-X-Google-Smtp-Source: ACHHUZ7NNzOQuAvNJvX7yDiKr4I4+e4U5ocyw02MFDlJVEP2qTeWMMxRyav+XVnSmkV1YlF6yDkBlw==
-X-Received: by 2002:a17:902:b685:b0:1aa:f46a:380a with SMTP id c5-20020a170902b68500b001aaf46a380amr10526625pls.26.1683574640919;
-        Mon, 08 May 2023 12:37:20 -0700 (PDT)
+        bh=iLvoJ8TlC8niJG4NRf3KANh+eJI/DCNflObMAataRYg=;
+        b=MEgneo0Cytwe9jUm5z8XibjB+JopT2tUXTmLLnzcHCyFbnDX7M7yEIovWzPXEhZOcV
+         05rMoBHFyD4s35H9AIL/DZnM3/Pf1sPMiXsOTtT0Xg3em9R/ON/om9tCZ+OJDJXF1CuZ
+         Nde14bhrkv6yRABmS2VNz2jP8txkxvYOQE0Nelb5npTSGgO+2EF+9D5Gp/u747DVGYbE
+         /KgfSL3iEvuSPm0+zrphlPdURt06CYOeXzFlvKxVdoEcMEd+eFdla97BcqzepDkz5ENo
+         Im2LwDKovhFWiXRCcyVGCQxznz9DtC1hEw6rpm8T1zbGLHQJj73lFET7XHyCEbcft3aZ
+         5YsA==
+X-Gm-Message-State: AC+VfDyMztnxmrX7gi2W8pScdCvtN+vuxaJXFesjdexe955IcZXi0X44
+        fc5O4sgPXIsIGvfk31Y68JYI1iy6syw=
+X-Google-Smtp-Source: ACHHUZ7eGjwNphrsM4Cu6mcunWLfyx6gWcJVLFITpdWYu0mUBfprnNQk7MkwKBO6bHZ1SOVnx1YM8g==
+X-Received: by 2002:a17:902:b20f:b0:1a6:8405:f709 with SMTP id t15-20020a170902b20f00b001a68405f709mr12465322plr.20.1683574693812;
+        Mon, 08 May 2023 12:38:13 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id r9-20020a1709028bc900b001a4fecf79e4sm7595745plo.49.2023.05.08.12.37.20
+        by smtp.gmail.com with ESMTPSA id w19-20020a1709029a9300b001ac68a87255sm3723553plp.93.2023.05.08.12.38.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 12:37:20 -0700 (PDT)
+        Mon, 08 May 2023 12:38:13 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 04/11] doc: trailer: explain "commit mesage part" on
- first usage
+Subject: Re: [PATCH 07/11] doc: trailer: use angle brackets for <token> and
+ <value>
 References: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
-        <0c10e40794d208ba408a2b1c394fdbd6caa7a92a.1683566870.git.gitgitgadget@gmail.com>
-Date:   Mon, 08 May 2023 12:37:20 -0700
-In-Reply-To: <0c10e40794d208ba408a2b1c394fdbd6caa7a92a.1683566870.git.gitgitgadget@gmail.com>
-        (Linus Arver via GitGitGadget's message of "Mon, 08 May 2023 17:27:43
+        <ab11527ca58a7c3f0da657393088919acba78b00.1683566870.git.gitgitgadget@gmail.com>
+Date:   Mon, 08 May 2023 12:38:13 -0700
+In-Reply-To: <ab11527ca58a7c3f0da657393088919acba78b00.1683566870.git.gitgitgadget@gmail.com>
+        (Linus Arver via GitGitGadget's message of "Mon, 08 May 2023 17:27:46
         +0000")
-Message-ID: <xmqqa5yeobrj.fsf@gitster.g>
+Message-ID: <xmqq5y92obq2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,40 +73,30 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Linus Arver <linusa@google.com>
 >
-> This phrase is used for the first time here, but it's not explained what
-> it means. So explain it just in case it's not obvious.
+> We already use angle brackets elsewhere, so this makes things more
+> consistent.
 
-03+04 should be a single patch (as I read more, I may find other
-steps should also be in a single step, I dunno); otherwise it would
-waste reviewer's time (just like I did thinking and writing about
-03/11).
+Excellent.
 
-Or just drop "part".  "git cat-file commit HEAD | sed -e '1,/^$/d'"
-is a good material to use with "--no-divider" because it only has
-the "commit message".  The "part" implies you first had something
-that has both "commit message" and something else and you split
-that combination into two (or more) parts.  But that does not have
-to be the case.  I think that made 03/11 confusing, at least to me.
-
+>
 > Signed-off-by: Linus Arver <linusa@google.com>
 > ---
 >  Documentation/git-interpret-trailers.txt | 6 +++---
 >  1 file changed, 3 insertions(+), 3 deletions(-)
 >
 > diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index 3e60a6eaabc..7d6e250f37e 100644
+> index c4675d9d3bb..ac448fd732e 100644
 > --- a/Documentation/git-interpret-trailers.txt
 > +++ b/Documentation/git-interpret-trailers.txt
-> @@ -22,9 +22,9 @@ This command reads some patches or commit messages from either the
->  <file> arguments or the standard input if no <file> is specified. If
->  `--parse` is specified, the output consists of the parsed trailers.
+> @@ -62,9 +62,9 @@ space or the end of the line). Such three minus signs start the patch
+>  part of the message. See also `--no-divider` below.
 >  
-> -Otherwise, this command applies the arguments passed using the
-> -`--trailer` option, if any, to the commit message part of each input
-> -file. The result is emitted on the standard output.
-> +Otherwise, this command applies the arguments passed using the `--trailer`
-> +option, if any, to the commit message part of each input file (as opposed to the
-> +patch part following a '---' divider). The result is emitted to standard output.
->  
->  Some configuration variables control the way the `--trailer` arguments
->  are applied to each commit message and the way any existing trailer in
+>  When reading trailers, there can be no whitespace before or inside the
+> -token, but any number of regular space and tab characters are allowed
+> -between the token and the separator. There can be whitespaces before,
+> -inside or after the value. The value may be split over multiple lines
+> +<token>, but any number of regular space and tab characters are allowed
+> +between the <token> and the separator. There can be whitespaces before,
+> +inside or after the <value>. The <value> may be split over multiple lines
+>  with each subsequent line starting with at least one whitespace, like
+>  the "folding" in RFC 822.
