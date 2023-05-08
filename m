@@ -2,122 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B6D6C77B7F
-	for <git@archiver.kernel.org>; Mon,  8 May 2023 19:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94047C7EE22
+	for <git@archiver.kernel.org>; Mon,  8 May 2023 20:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233935AbjEHTv5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 15:51:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36190 "EHLO
+        id S229629AbjEHUFY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 16:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234075AbjEHTvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 15:51:40 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C68F83E6
-        for <git@vger.kernel.org>; Mon,  8 May 2023 12:51:04 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-51f597c975fso4649220a12.0
-        for <git@vger.kernel.org>; Mon, 08 May 2023 12:51:04 -0700 (PDT)
+        with ESMTP id S229464AbjEHUFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 16:05:23 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64D9B121
+        for <git@vger.kernel.org>; Mon,  8 May 2023 13:05:22 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id 6a1803df08f44-61b6a4233a1so46527806d6.1
+        for <git@vger.kernel.org>; Mon, 08 May 2023 13:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683575416; x=1686167416;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z9UXYjWjHkOOgZd2PUsAPtaNDi4+TrDs2V1gMAUPrRA=;
-        b=EZaKe741N6iqGramfOPAyVoUUV2m3CO2VupVePPCViyVuxU0m7sWgfgoErLEYZ5J0L
-         ax1THzECwOrEuMYQpi6ChxODkjF2QnbzUWX0/J53oDa11GquTmi5a5XDJn5U44VwbQe4
-         vkZzZyZ2qC8qFxpdHso9vkRf7oh+41JD6SnX/wghkCVAn6jprUNkIUohvWHyqa/qe3fB
-         wciff3+XWsxbVDjSqGyUp7I8AbjK5D4rs4dHsPbDoNLdd/9+9uQ/5PHkFhRO2e8rCoaK
-         lXC0siW3J+PnV9lgrCkrA6IIBcU4H5SiyRMX+5sS/FZqqWPNKjyit6f8GF3MEyUym4IT
-         p9FA==
+        d=gmail.com; s=20221208; t=1683576321; x=1686168321;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XkKs3H94LRrtbgRcU1oOYXKaRr6d2XDa1nvRauwXUYI=;
+        b=i4+73iylkd40mqo1QjXErJTbrca9iYXz7a1uxPVFPpKOgkZgSSyAQjdl8sVaj+WZdS
+         N0/x6ffLM6y5hlaqE1f42rWHxjoIO6Us8AMKNmWGYFVCeIKujqVRqEDgFvqjHZrYQp32
+         1YnmoFocmfOExPUnHdHVRyDyNNHmpgbeOjMhQ7iy8FGJ9F44uuzQuPZUeiorcTnFyOhX
+         b5uzGvMYH80w9uTGhawedKKh+OryPiZmDrgPXzmZXBiDTVLwzF5o1WfaYHYd6/Gs7JHY
+         HbOMtxQtrnWet+FNjczhVsPr1iaCg63YpeMSFqFJ28tZ8QtMaaZM6QHfpv12VIzeUcNo
+         b3mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683575416; x=1686167416;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=z9UXYjWjHkOOgZd2PUsAPtaNDi4+TrDs2V1gMAUPrRA=;
-        b=jMeUD3yNihblhRHB8NtbTJx5GTbQRYVJVE5CJZ0jH+4y3qfJRKoUl0RGZcvkxxSK1F
-         JX0jCwPGVA7HifNK6CO1czooOdCX4TG0vvSgPL/MU0DspDyWxhXTQLgca7fmSeJIhiLo
-         bA5yViylWaT3Y6p5SFs1BrioUY9Qyrdcc7AQfrerjwRmpjBwhEnWIsfSfrbbNfHbhGlU
-         E91nbmjkyKGGH5RozThpcN2iefhjWMelveY5J0OgSejCdGwoh7sTR9yyM3GuWhNlqWT5
-         LirBpWLr+vx9Worc5zBDpXD7NTCuoFMr4MROY+c/Z2aC24lEyiA/fRhnXG9SC85VJbAN
-         jY+w==
-X-Gm-Message-State: AC+VfDwdiZvaBXDIqPn4Thcu4HzLU9KUD+YpJk9gRjzNmjAm0PU06rTj
-        S59y7EDHr0MWsu9PaaZ7rB+UY/KwDdo=
-X-Google-Smtp-Source: ACHHUZ4sc64P+60HOcgIoF1N//ust6PNRt7rcZqwXYTFZN09Ye+kgRCDH8PeNqrx2ONWFcFoiaNNEA==
-X-Received: by 2002:a05:6a21:789c:b0:100:607:b986 with SMTP id bf28-20020a056a21789c00b001000607b986mr7536811pzc.56.1683575416547;
-        Mon, 08 May 2023 12:50:16 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id c22-20020a17090ab29600b0024e49b53c24sm10181611pjr.10.2023.05.08.12.50.16
+        d=1e100.net; s=20221208; t=1683576321; x=1686168321;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XkKs3H94LRrtbgRcU1oOYXKaRr6d2XDa1nvRauwXUYI=;
+        b=d+YvEX6WKvCM2XXCZa97nvAJJVfEPAdt3/r0vSIWZoGNOpa7jq8nJvU070hmBWcrV4
+         62m+LXdARhvz67MlTY5f6f/eWb8HEIadKDl2K2KN4XTfjsyy0wjabGJnMg4trWzffDW/
+         ABSnHhEQGJuRmSSYfZrbYdB3HyoGSE6lV1kSmlBcR4/oFmqmplPOn1GIHWcoy+TNFZpj
+         i8N5EXMeV2pCBkojcPk84FahOwyZW0cxpY3Han5EGKv9n/PRPZIRRf0w7rRq+w9UDj8U
+         SimCG6J40V8gaves+TDjCwLlRZr7ZtiXkZw0ENxAX38zfZSfSPm98S+RiSH90gQp+MjB
+         BBNA==
+X-Gm-Message-State: AC+VfDwuvdJv+bWR5PG87RxhskuRTvYVow3tpQ0/jVup2yXB0p02SLu7
+        ChjrYVoa1o2QTmAIiIhrwZYeVHaSENCD2g==
+X-Google-Smtp-Source: ACHHUZ7K+Pi4gWXHDTq+IFhejGAAmrxOmP3wvSQwt2nV3WMVbX1aoIipQS3Y77KYU/1JCgMc6ogJDA==
+X-Received: by 2002:a05:6214:1d2f:b0:5b4:1d9a:75e7 with SMTP id f15-20020a0562141d2f00b005b41d9a75e7mr19808232qvd.13.1683576320788;
+        Mon, 08 May 2023 13:05:20 -0700 (PDT)
+Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
+        by smtp.googlemail.com with ESMTPSA id a13-20020a05620a124d00b0074abe1e1457sm2778948qkl.76.2023.05.08.13.05.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 12:50:16 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 11/11] doc: trailer: add more examples in DESCRIPTION
-References: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
-        <ea483b364b460819c727da5c65497de6ecd4b04f.1683566870.git.gitgitgadget@gmail.com>
-Date:   Mon, 08 May 2023 12:50:16 -0700
-In-Reply-To: <ea483b364b460819c727da5c65497de6ecd4b04f.1683566870.git.gitgitgadget@gmail.com>
-        (Linus Arver via GitGitGadget's message of "Mon, 08 May 2023 17:27:50
-        +0000")
-Message-ID: <xmqqmt2emwlj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Mon, 08 May 2023 13:05:20 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: [PATCH v6] write-tree: optimize sparse integration
+Date:   Mon,  8 May 2023 16:05:08 -0400
+Message-Id: <20230508200508.462423-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230423071243.1863977-1-cheskaqiqi@gmail.com>
+References: <20230423071243.1863977-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+* Remove 'on all' from the test title 'write-tree on all', making it
+'write-tree'.
 
-> From: Linus Arver <linusa@google.com>
->
-> Be more up-front about what trailers are in practice with examples, to
-> give the reader a visual cue while they go on to read the rest of the
-> description.
->
-> Also add an example for multiline values.
->
-> Signed-off-by: Linus Arver <linusa@google.com>
-> ---
->  Documentation/git-interpret-trailers.txt | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index 119dcd64f34..f31b94a6823 100644
-> --- a/Documentation/git-interpret-trailers.txt
-> +++ b/Documentation/git-interpret-trailers.txt
-> @@ -16,7 +16,18 @@ DESCRIPTION
->  -----------
->  Add or parse 'trailer' lines, that look similar to RFC 822 e-mail
->  headers, at the end of the otherwise free-form part of a commit
-> -message.
-> +message. For example, in the following commit message
-> +
-> +------------------------------------------------
-> +subject
-> +
-> +message
-> +
-> +Signed-off-by: Alice <alice@example.com>
-> +Signed-off-by: Bob <bob@example.com>
-> +------------------------------------------------
-> +
-> +the last two lines starting with "Signed-off-by" are trailers.
+* Add a baseline 'test_all_match git write-tree' before making any
+changes to the index, providing a reference point for the 'write-tree'
+prior to any modifications.
 
-Excellent.
+* Add a comparison of the output of 'git status --porcelain=v2' to test
+the working tree after 'write-tree' exits.
 
-> @@ -68,7 +79,12 @@ When reading trailers, there can be no whitespace before or inside the
->  between the <token> and the separator. There can be whitespaces before,
->  inside or after the <value>. The <value> may be split over multiple lines
->  with each subsequent line starting with at least one whitespace, like
-> -the "folding" in RFC 822.
-> +the "folding" in RFC 822. Example:
-> +
-> +------------------------------------------------
-> +token: Lorem ipsum dolor sit amet, consectetur
-> +  adipiscing elit.
-> +------------------------------------------------
+* Ensure SKIP_WORKTREE files weren't materialized on disk by using
+"test_path_is_missing".
 
-Excellent.
+Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+---
+
+change sine V5:
+
+* We not need to check for the presence of a repository before calling
+'prepare_repo_settings()', as the control flow should not reach this
+point without a repository. This is because 'setup_git_directory()' is
+called for commands with RUN_SETUP set, except when the command line
+argument is "-h", in which case 'parse_options()' takes over and exits
+the program.
+
+* Change the commit message to make it easier to read.
+
+* Remove whitespace before the line that says # check that SKIP_WORKTREE
+files are not materialized".
+
+
+
+Range-diff against v5:
+1:  df470c2d61 ! 1:  0510b08c96 write-tree: optimize sparse integration
+    @@ Metadata
+      ## Commit message ##
+         write-tree: optimize sparse integration
+     
+    -    'prepare_repo_settings()' needs to be run inside a repository. Ensure
+    -    that the code checks for the presence of a repository before calling
+    -    this function. 'write-tree on all' had an unclear meaning of 'on all'.
+    -    Change the test name to simply 'write-tree'. Add a baseline
+    -    'test_all_match git write-tree' before making any changes to the index,
+    -    providing a reference point for the 'write-tree' prior to any
+    -    modifications. Add a comparison of the output of
+    -    'git status --porcelain=v2' to test the working tree after 'write-tree'
+    -    exits. Ensure SKIP_WORKTREE files weren't materialized on disk by using
+    +    * Remove 'on all' from the test title 'write-tree on all', making it
+    +    'write-tree'.
+    +
+    +    * Add a baseline 'test_all_match git write-tree' before making any
+    +    changes to the index, providing a reference point for the 'write-tree'
+    +    prior to any modifications.
+    +
+    +    * Add a comparison of the output of 'git status --porcelain=v2' to test
+    +    the working tree after 'write-tree' exits.
+    +
+    +    * Ensure SKIP_WORKTREE files weren't materialized on disk by using
+         "test_path_is_missing".
+     
+         Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+     
+    - ## builtin/write-tree.c ##
+    -@@ builtin/write-tree.c: int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
+    - 	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
+    - 			     write_tree_usage, 0);
+    - 
+    --	prepare_repo_settings(the_repository);
+    --	the_repository->settings.command_requires_full_index = 0;
+    -+	if (the_repository->gitdir) {
+    -+		prepare_repo_settings(the_repository);
+    -+		the_repository->settings.command_requires_full_index = 0;
+    -+	}
+    - 
+    - 	ret = write_index_as_tree(&oid, &the_index, get_index_file(), flags,
+    - 				  tree_prefix);
+    -
+      ## t/t1092-sparse-checkout-compatibility.sh ##
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep sparse directory within submodules' '
+      	test_cmp actual expect
+    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep sparse direc
+     +	test_all_match git update-index folder1/a &&
+     +	test_all_match git write-tree &&
+     +	test_all_match git status --porcelain=v2 &&
+    -+	
+    ++
+     +	# check that SKIP_WORKTREE files are not materialized
+     +	test_path_is_missing sparse-checkout/folder2/a &&
+     +	test_path_is_missing sparse-index/folder2/a
+-- 
+
+ t/t1092-sparse-checkout-compatibility.sh | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 0c784813f1..3aa6356a85 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -2080,22 +2080,32 @@ test_expect_success 'grep sparse directory within submodules' '
+ 	test_cmp actual expect
+ '
+ 
+-test_expect_success 'write-tree on all' '
++test_expect_success 'write-tree' '
+ 	init_repos &&
+ 
++	test_all_match git write-tree &&
++
+ 	write_script edit-contents <<-\EOF &&
+ 	echo text >>"$1"
+ 	EOF
+ 
++	# make a change inside the sparse cone
+ 	run_on_all ../edit-contents deep/a &&
+-	run_on_all git update-index deep/a &&
++	test_all_match git update-index deep/a &&
+ 	test_all_match git write-tree &&
++	test_all_match git status --porcelain=v2 &&
+ 
++	# make a change outside the sparse cone
+ 	run_on_all mkdir -p folder1 &&
+ 	run_on_all cp a folder1/a &&
+ 	run_on_all ../edit-contents folder1/a &&
+-	run_on_all git update-index folder1/a &&
+-	test_all_match git write-tree
++	test_all_match git update-index folder1/a &&
++	test_all_match git write-tree &&
++	test_all_match git status --porcelain=v2 &&
++
++	# check that SKIP_WORKTREE files are not materialized
++	test_path_is_missing sparse-checkout/folder2/a &&
++	test_path_is_missing sparse-index/folder2/a
+ '
+ 
+ test_expect_success 'sparse-index is not expanded: write-tree' '
+-- 
+2.39.0
 
