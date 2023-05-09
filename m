@@ -2,114 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3582EC7EE22
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 22:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97D25C7EE23
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 22:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234872AbjEIW2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 18:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59626 "EHLO
+        id S235374AbjEIWao (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 18:30:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbjEIW2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 18:28:51 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A042697
-        for <git@vger.kernel.org>; Tue,  9 May 2023 15:28:48 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-6439e6f5a33so3630469b3a.2
-        for <git@vger.kernel.org>; Tue, 09 May 2023 15:28:48 -0700 (PDT)
+        with ESMTP id S230264AbjEIWan (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 18:30:43 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 962A326A5
+        for <git@vger.kernel.org>; Tue,  9 May 2023 15:30:41 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-b99ef860a40so11899881276.3
+        for <git@vger.kernel.org>; Tue, 09 May 2023 15:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683671328; x=1686263328;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pMXYBD9jC2McG2Legqur7dKRkgXwkmqFIpaljMqCOJU=;
-        b=nWRERzQIQnCWakSjBtOA47saUBr/IbiejX5FU5bkaZbuCgCJriDtPfgMaydnBy4l8h
-         jqECdE4vRzPf4haRX1R+fw0cj/z7Z0rDVBgIflkr2Y6y9zk5OPqmLTxwiz8YALNlPI63
-         hEL8OHhl1h54ulv7mRs59DD+pkKk8XgfuQ+T2oInwtWyqtWimG5+2/Lz+irNulJdwtyF
-         Tp8IGVBzbbNj9YuypZN3ZVYyriQd/nKLHsRZjbapoEk3tknlB28Gauo7HRks2uTik5yP
-         JN9l8t6Cgd9e4lLb3UlW4+UaFGMU5Uygk6+mTM3t0EA/6bv76oh7DzsrnIDZUde2LFTF
-         ibYQ==
+        d=google.com; s=20221208; t=1683671441; x=1686263441;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ukGbfWlrD6UQiWkZefJDqFDguyP+deMwyhL02tNBHlE=;
+        b=3wSS2676kFmdwvppMA7YwULufNg8eaS6jEEuOUpRguYxstqcCMLCuCIVsvroa2jQFa
+         Yvi8M0RazumjxNipizn18TvULEhAvd87KYZ0uJyJYcR4cbIXs80QdInS0uskQiGDG/Wb
+         a/1CCQ7LYtFWPcEIgqYWZL4QwA9d5/uamftN3vzLCkfg/fV2edcUQjF7r3azJgZkU7/e
+         LrTdWeJ4aheH2+l+P6eMt5ZVjD7dXiLpgx44tsnqlUYzoOL/ehgI2TKbwkZL2ZBrfQHD
+         wgQm0hLXLG7cKk+lD+qp4cozeIE8LwZOOtodWnmATgEeVck8QB04lHSjJM8AxUluKDYs
+         oP+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683671328; x=1686263328;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pMXYBD9jC2McG2Legqur7dKRkgXwkmqFIpaljMqCOJU=;
-        b=HJk3eI9L4MU+9Fz+rMLa04zWfNhoa/G6P+QHctkWn1hNOTjiz87h/wfT6qlHjYvDXA
-         32s6il4NL2T3oQNlHO3DsI+K2BbUomsl0XgiGsjFpW+A6fLIxfhea7UbJLiNaRO6mdza
-         FQhe3zHsYDVw6pNFW1fFXomIql+LUIKzHtd72T4WMk1p7O6lJA46iqka/pIqi5EsSg3w
-         LuddPIz7e9DZW7T06SMQDG90ZEgG41pIP//P9xR2517vmNj3C8918Wt6hJtY+110F6P4
-         rpaJvKHj08TmwZ1Gh5v4DpT6mYneJJStlfRg2tg3JkpZWh8xEFx4YnSVNVcqmi18pW8f
-         RHXw==
-X-Gm-Message-State: AC+VfDwlEW4DvwHpGrEIh1lEqktfs4YfVk6lBTM1KFGk3m+IJQEMvErT
-        GOGO0q345FfUTSLr5H9xlZE=
-X-Google-Smtp-Source: ACHHUZ4QG1M5CvFNpog2Jl5arLfKplRS0obWlEBGmnXSXBla0BYqvCINoavIAgHeDbfhD4sjxyHPnQ==
-X-Received: by 2002:a05:6a20:4326:b0:100:3258:d163 with SMTP id h38-20020a056a20432600b001003258d163mr12193330pzk.35.1683671328212;
-        Tue, 09 May 2023 15:28:48 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id w187-20020a6362c4000000b0050bd9c8c53dsm1905381pgb.23.2023.05.09.15.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 15:28:47 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
+        d=1e100.net; s=20221208; t=1683671441; x=1686263441;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ukGbfWlrD6UQiWkZefJDqFDguyP+deMwyhL02tNBHlE=;
+        b=Tr3yo+RbvQHWzqT/2tvm+ss2u0wIYMwW3LgkaVbP4w9laTu2IOQ44LAxou4yGUbG7J
+         amVKNua0soYGfsSk8nZBrNH4uHNaO8LWcgnEI6jXYIpn53PQPevR95FUd0L27CEYD7Qc
+         xlZwepwixgTMTKvw+XqNKoEfVSYZL4TJta08l5ubrrMk24ZfRavgAwQvWNGQtrLwEws0
+         jF1z8jLjIf5GPf/Sh0BY6oilOGwvyg6UgcnTOy3UTI4hZC+ErpYlg21fRYNkGuyG+9Tz
+         R4gXQtx+5Xp94blCeAiuuopM3ImmBURRFN+cYGBG7xnI//FDxBa1G8OuggKQertxUrPU
+         HONw==
+X-Gm-Message-State: AC+VfDyXDlnqTGIBiip97x04Efz5/Hf1ieOUWvO+N3t/b6w9Vvjj3xnM
+        2VWxbUie76XYCzwEjVwAwIt+T0C0tnyvHQ==
+X-Google-Smtp-Source: ACHHUZ5NjI871Ni3TMZqleWVNazl0Zb8rnBTS4qzAxOCNBWCnSYsaSOrhqq6fIsyUfY3l5QctPvesw32F3/2ZA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a25:5b84:0:b0:ba2:da66:3d37 with SMTP id
+ p126-20020a255b84000000b00ba2da663d37mr3364140ybb.10.1683671440896; Tue, 09
+ May 2023 15:30:40 -0700 (PDT)
+Date:   Tue, 09 May 2023 15:30:33 -0700
+In-Reply-To: <826b8b7bc0d7d6a76f6fd19d8f4a8460af61e9cf.1683636885.git.ps@pks.im>
+Mime-Version: 1.0
+References: <cover.1681906948.git.ps@pks.im> <cover.1683636885.git.ps@pks.im> <826b8b7bc0d7d6a76f6fd19d8f4a8460af61e9cf.1683636885.git.ps@pks.im>
+Message-ID: <kl6l1qjp16k6.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v4 6/8] fetch: move display format parsing into main function
+From:   Glen Choo <chooglen@google.com>
+To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH v2 00/15] Introduce new `git replay` command
-References: <20230407072415.1360068-1-christian.couder@gmail.com>
-        <20230509175347.1714141-1-christian.couder@gmail.com>
-Date:   Tue, 09 May 2023 15:28:47 -0700
-In-Reply-To: <20230509175347.1714141-1-christian.couder@gmail.com> (Christian
-        Couder's message of "Tue, 9 May 2023 19:53:32 +0200")
-Message-ID: <xmqq8rdxuokg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> # Intro
->
-> `git replay` has initially been developed entirely by Elijah Newren
-> mostly last year (2022) at:
->
-> https://github.com/newren/git/commits/replay
->
-> I took over a few months ago to polish and upstream it as GitLab is
-> interested in replacing libgit2, and for that purpose needs a command
-> to do server side (so without using a worktree) rebases, cherry-picks
-> and reverts.
+> with the `fetch.output` config key set. We're thus going to introduce a
+> new `--output-format` switch for git-fetch(1) so that the output format
+> can be configured more directly.
 
-It would help to include the following in future updated rounds, as
-Elijah is shuffling the header files around agressively and these
-patches do not build when merged into 'seen'.  When these two new
-includes are added, the series would compile both standalone
-(i.e. applied on top of 'master') and in 'seen' (i.e. with shuffled
-headers).
+This is stale as of v3, since isn't named --output-format any more. Let
+me see if there are other instances of this.
 
-Thanks.
-
- builtin/replay.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git c/builtin/replay.c w/builtin/replay.c
-index 7699d28f93..62dd1f7fff 100644
---- c/builtin/replay.c
-+++ w/builtin/replay.c
-@@ -15,6 +15,8 @@
- #include "refs.h"
- #include "revision.h"
- #include "strmap.h"
-+#include <oidset.h>
-+#include <tree.h>
- 
- static const char *short_commit_name(struct commit *commit)
- {
+(I should have caught this earlier; I only saw it because Junio quoted
+it in a reply of his.)
