@@ -2,250 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56566C77B7F
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 01:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98C8AC77B7F
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 01:58:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229455AbjEIBzp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 21:55:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49588 "EHLO
+        id S233775AbjEIB6Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 21:58:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233624AbjEIBzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 21:55:43 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F1D1FC3
-        for <git@vger.kernel.org>; Mon,  8 May 2023 18:55:35 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-190d4f2f943so4283021fac.3
-        for <git@vger.kernel.org>; Mon, 08 May 2023 18:55:35 -0700 (PDT)
+        with ESMTP id S229726AbjEIB6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 21:58:15 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5942749FC
+        for <git@vger.kernel.org>; Mon,  8 May 2023 18:58:13 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f24cfb8539so2341746e87.3
+        for <git@vger.kernel.org>; Mon, 08 May 2023 18:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683597334; x=1686189334;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683597491; x=1686189491;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t5jQPFNtGlOpmXgBKUDn4o19MQ+qXcTBAocZQQEF0rA=;
-        b=n6X9qrFXCIJeAOozXFS2XGDkamIXNP2y2grJUNE42NmqV/eHmfsB/GOmthGaj4YXSh
-         FUMsuKcVpvFp6fv16m7rDiqjHkRtcuzzzLQGRGrRZjTtkHHXpXLN7Marml/WPDI5TJ2h
-         9Em67qtjZRlpaeuTOi1QRH85+QpfgGzqYlbVdJbpTAJpdDPJxE81IBgueWvZxwBv4WHp
-         84uZCWji/8Kgz4Kzrf57775QOYrac4oEXCOxz4CZUf4GpfYrXayfkIe82udsKTJdukON
-         qjilOJGnIIpwLgPA0gXp9j/VXRbqONUaKWme+AaH5ffDHfdn0IpbityD4sEe1ukCFhGT
-         OBsQ==
+        bh=XrB4dtcbpHoFVsecFQoKnY42g6NFPHCglKNAzQRZ7Eo=;
+        b=Kc3IwHiroaRWqALaSGNRJNhXrzgS0FONE2zzDcyOQgEKGJODPJpyv/ROQZp5fMhkFn
+         518C9pp1E6v53Q0Zlwr34jVg0BnQWGK37OXKD4CKG40FXr7eQ5+hZDmZm2PB8DbQ3hlA
+         GEEd0v5Kj7HVoH3DCJl/ni3Usnp3ZxaDkWAmL/GDrk04Ax+It/+9LvMmQVrfKqdlu2LK
+         BfUbwaPL0bzputD1HQuTXqY5ddJp/LbvvZUWSYO+rdKwT4cIrNyK9TspyuqndYpnMAxm
+         NGMA3DALg03sCf+eqQjJJQtsnUCRg19CIUdS0aK69BpNCAQeuU+3lceO3rKWieC9Y0yV
+         /dsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683597334; x=1686189334;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=t5jQPFNtGlOpmXgBKUDn4o19MQ+qXcTBAocZQQEF0rA=;
-        b=gAXpnTGnBfBx5s/14pBPFIZ1auQzRTO6oMc5SmXkMw3bIRN+S5HL34mRIvuKdPJlAk
-         sD4Yj0buvGWItAPqm2d/HKsaRQK+o+3pIuMKT1+x4q5aW8b4iUk/EiS5sEFOMvARFCyk
-         eiXmoKf2oSlcN21F7D87PI4hbueOcEHV8fEKjZF/IJWWhFMlNvQ9WVAUh2MKWUTXEQo3
-         R1Pp9zUdFxBinsuahaNRQti56qbBBnVJ+pS4yvFC2qO8Gb0nCDz/IG+H1cf/AbNwTVtS
-         pKo2vUnu/sp8M7o/OD62HqerPkvb/Gk2vHePvKGEo/O5OJtdtm5LJaMoxf13Jf0ev1h/
-         EQCg==
-X-Gm-Message-State: AC+VfDwYtXiem/Iq+ccsccJsd07Cm6PncuwRDUkluQCRWb8x1QEKgGHP
-        oMPGMfZVWo8kyPfqgTUq9PpcMoYuYO0=
-X-Google-Smtp-Source: ACHHUZ6Q5VVe9+mad3UG40idwVBDkULAjCNlZ6Cau8AXzOarF0b3N4oZ9X9QnYlv+QnpVb/XAICiBA==
-X-Received: by 2002:a05:6870:172c:b0:196:12ec:110a with SMTP id h44-20020a056870172c00b0019612ec110amr2502998oae.48.1683597334280;
-        Mon, 08 May 2023 18:55:34 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id e18-20020a9d5612000000b006a1287ccce6sm4732383oti.31.2023.05.08.18.55.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 18:55:33 -0700 (PDT)
-Date:   Mon, 08 May 2023 19:55:32 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Tao Klerks <tao@klerks.biz>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Message-ID: <6459a814ee378_7c682949e@chronos.notmuch>
-In-Reply-To: <CAPMMpoi74RFBptKkv23FSK-fQsnuan9EK5HodUBRLNtxLYdr_w@mail.gmail.com>
-References: <pull.1527.git.1683008869804.gitgitgadget@gmail.com>
- <CABPp-BH8A=CnO3_UWXDegb87VTNEX8s+=CefB90m1_vjBZ_+Fw@mail.gmail.com>
- <CAPMMpogiTVksUKgZ==n4d3xm4ZJqxm7ki2dOF8j8S5BaJvu1Ew@mail.gmail.com>
- <CABPp-BGmPKyNcDa-wUh-oisTvvux+X=6BvGxSNQC2O7uodpFrA@mail.gmail.com>
- <64581fc358ede_4e6129442@chronos.notmuch>
- <CAPMMpojTjFn7JCo8QsDcOJf6NoJYASbV1bL_JxDhUr7DS12DJg@mail.gmail.com>
- <64591fbddaf2d_7c6829457@chronos.notmuch>
- <CAPMMpoi74RFBptKkv23FSK-fQsnuan9EK5HodUBRLNtxLYdr_w@mail.gmail.com>
-Subject: Re: [PATCH] RFC: switch: allow same-commit switch during merge if
- conflicts resolved
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        d=1e100.net; s=20221208; t=1683597491; x=1686189491;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XrB4dtcbpHoFVsecFQoKnY42g6NFPHCglKNAzQRZ7Eo=;
+        b=C2ctgrEieYyj6+Sm7KaH8jfmR4gVao2rUEaI/Hn/EhqDzIC/RvDwvFYyir4JKCPgD+
+         vIC6+/QRxz8eNUyka14zvhe7wh/wOhAylcvCqmoKDDQzofEfnaBjFHN01JxokeDlpb6u
+         bxEN77EmgmftAQ4Lbll9KSCOtimH4hfJtIQiv6X173q0Y16B849kKQ+O/zW758h/R91c
+         2ONy84spfsytK7qNCvh9AnTqFcOtwRgvRRpAqROwxkurLHE/wfaIDnfr6hyVjTAG24oc
+         pWFX/0C2nLj6QWhwZmimdVvcfBGi93hLD6liBUPcdbZCZFqy4twBEBajH8t02ObR+PXK
+         4OLg==
+X-Gm-Message-State: AC+VfDwHEf6r5VpBfuZroIlCWSx4pkLH+A6RtP8u5TMJFZfWt/ef2G/K
+        FrQhLs/Qh11gxWRT1gzoDtMEYXTiXo8MLlkB7o6a/x/pEQU=
+X-Google-Smtp-Source: ACHHUZ7oDJAkEn5vIPYj9YfMJuycgLzWdBxYqeJbP85fJwj4yU0AQfaI+YSCnb5Iyel4ak8fMzRhCwhz9/tpNzAl/U8=
+X-Received: by 2002:a05:6512:2189:b0:4ef:ef11:e29d with SMTP id
+ b9-20020a056512218900b004efef11e29dmr225645lft.68.1683597491362; Mon, 08 May
+ 2023 18:58:11 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230503184849.1809304-1-calvinwan@google.com> <20230508165728.525603-1-calvinwan@google.com>
+In-Reply-To: <20230508165728.525603-1-calvinwan@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 8 May 2023 18:57:59 -0700
+Message-ID: <CABPp-BGTByZg5rJCmBeZNwjNTFwsoQ5HTjEhmhYFFfi-KbfgTw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] strbuf cleanups
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tao Klerks wrote:
-> On Mon, May 8, 2023 at 6:13=E2=80=AFPM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > Tao Klerks wrote:
-> > > On Mon, May 8, 2023 at 12:01=E2=80=AFAM Felipe Contreras
-> > > <felipe.contreras@gmail.com> wrote:
-> > > > Elijah Newren wrote:
-> > > > > On Wed, May 3, 2023 at 10:01=E2=80=AFPM Tao Klerks <tao@klerks.=
-biz> wrote:
-> > > >
-> > > > > > If we are comfortable changing the behavior of branch checkou=
-t to be
-> > > > > > safe-and-limiting like switch, then that should be almost as =
-simple as
-> > > > > > removing that condition.
-> > > > >
-> > > > > I've never heard a dissenting vote against this
-> > > >
-> > > > Here is my dissenting vote: I'm against this change.
-> > > >
-> > > > If I want to use a high-level command meant for novices, I use `g=
-it switch`. If
-> > > > instead I simply want to switch to a different commit and I want =
-git to shut up
-> > > > about it, then I use `git checkout`.
-> > >
-> > > Thank you for your perspective on the relationship between these co=
-mmands.
-> > >
-> > > I don't fully share this perspective, in two ways:
-> > > - In my experience most novices don't see or know about "git switch=
-"
-> > > at all - the vast majority of the internet is still stuck on "git
-> > > checkout", as are existing users. Google search result counts are o=
-f
-> > > course a poor metric of anything, but compare 100k for "git switch"=
- to
-> > > 2.4M for "git checkout".
-> >
-> > Yes, but that's something for the Git community to fix.
-> >
-> > Why can't the git developers communicate effectively with the user ba=
-se?
-> =
+On Mon, May 8, 2023 at 9:57=E2=80=AFAM Calvin Wan <calvinwan@google.com> wr=
+ote:
+>
+> This reroll include suggestions made by Elijah and Junio, clarifying
+> commit messages in patches 2/4/5 and s/environment variable/global
+> variable in patch 7.
+>
+> Calvin Wan (7):
+>   strbuf: clarify API boundary
+>   abspath: move related functions to abspath
+>   credential-store: move related functions to credential-store file
+>   object-name: move related functions to object-name
+>   path: move related function to path
+>   strbuf: clarify dependency
+>   strbuf: remove global variable
+>
+>  abspath.c                  |  36 +++++++++++++
+>  abspath.h                  |  21 ++++++++
+>  add-patch.c                |  12 +++--
+>  builtin/am.c               |   2 +-
+>  builtin/branch.c           |   4 +-
+>  builtin/commit.c           |   2 +-
+>  builtin/credential-store.c |  19 +++++++
+>  builtin/merge.c            |  10 ++--
+>  builtin/notes.c            |  16 +++---
+>  builtin/rebase.c           |   2 +-
+>  builtin/stripspace.c       |   6 ++-
+>  builtin/tag.c              |   9 ++--
+>  fmt-merge-msg.c            |   9 ++--
+>  gpg-interface.c            |   5 +-
+>  hook.c                     |   1 +
+>  object-name.c              |  15 ++++++
+>  object-name.h              |   9 ++++
+>  path.c                     |  20 +++++++
+>  path.h                     |   5 ++
+>  pretty.c                   |   1 +
+>  rebase-interactive.c       |  15 +++---
+>  sequencer.c                |  24 +++++----
+>  strbuf.c                   | 106 +++----------------------------------
+>  strbuf.h                   |  53 +++++--------------
+>  tempfile.c                 |   1 +
+>  wt-status.c                |   6 +--
+>  26 files changed, 220 insertions(+), 189 deletions(-)
+>
+> Range-diff against v3:
+> -:  ---------- > 1:  e0dd3f5295 strbuf: clarify API boundary
 
-> Emm... I'm going to take that as a rhetorical question, since you've
-> been around these parts for a lot longer than I have :)
-> =
+Huh?  I thought v3 had this patch.  v2 certainly did, and with the
+same contents.  Did you just give the wrong range for the range-diff?
 
-> (I have opinions, but they are not pertinent to this thread, and I
-> don't have meaningful solutions)
+Aside: Can I plug gitgitgadget for a minute?  It
+  * handles the range-diff consistently
+  * sets up reply-to nicely
+  * ensures testing on a variety of platforms
+  * makes it _trivial_ to download the series via a simple fetch, with
+remote/branch/command documented in the cover letter
 
-Yes, it was rhetorical.
+I think the last point is particularly cool.  Yes, I know of b4, and
+it helps a lot, but a simple fetch, especially one where the cover
+letter contains the command, makes things easier for someone who comes
+along to review.  I know I'm happier as a reviewer when I see a patch
+series sent by gitgitgadget, because of this last point.  (Granted,
+folks could just copy that really nice usability touch by hand in
+their cover letters if they like send-email, but I suspect it's enough
+of a hassle to the sender that people just don't do it.).  Anyway,
+just some food for thought.
 
-That being said, if you feel like sharing that opinion off the record,
-I'm interested in hearing it.
+> 1:  ec1ea6ae4f ! 2:  48fb5db28b abspath: move related functions to abspat=
+h
+>     @@ Metadata
+>       ## Commit message ##
+>          abspath: move related functions to abspath
+>
+>     -    Move abspath-related functions from strbuf.[ch] to abspath.[ch] =
+since
+>     -    paths are not primitive objects and therefore strbuf should not =
+interact
+>     -    with them.
+>     +    Move abspath-related functions from strbuf.[ch] to abspath.[ch] =
+so that
+>     +    strbuf is focused on string manipulation routines with minimal
+>     +    dependencies.
+>
+>       ## abspath.c ##
+>      @@ abspath.c: char *prefix_filename_except_for_dash(const char *pfx,=
+ const char *arg)
+> 2:  2d74561b91 =3D 3:  a663f91819 credential-store: move related function=
+s to credential-store file
+> 3:  30b5e635cb ! 4:  ccef9dd5f2 object-name: move related functions to ob=
+ject-name
+>     @@ Commit message
+>          object-name: move related functions to object-name
+>
+>          Move object-name-related functions from strbuf.[ch] to object-na=
+me.[ch]
+>     -    since paths are not a primitive object that strbuf should direct=
+ly
+>     -    interact with.
+>     +    so that strbuf is focused on string manipulation routines with m=
+inimal
+>     +    dependencies.
+>
+>       ## object-name.c ##
+>      @@ object-name.c: static void find_abbrev_len_packed(struct min_abbr=
+ev_data *mad)
+> 4:  6905618470 ! 5:  0d6b9cf0f7 path: move related function to path
+>     @@ Metadata
+>       ## Commit message ##
+>          path: move related function to path
+>
+>     -    Move path-related function from strbuf.[ch] to path.[ch] since p=
+ath is
+>     -    not a primitive object and therefore strbuf should not directly =
+interact
+>     -    with it.
+>     +    Move path-related function from strbuf.[ch] to path.[ch] so that=
+ strbuf
+>     +    is focused on string manipulation routines with minimal dependen=
+cies.
+>
+>       ## path.c ##
+>      @@ path.c: int normalize_path_copy(char *dst, const char *src)
+> 5:  caf3482bf7 =3D 6:  5655c56a6d strbuf: clarify dependency
+> 6:  3bbaebf292 ! 7:  874d0efac3 strbuf: remove environment variable
+>     @@ Metadata
+>      Author: Calvin Wan <calvinwan@google.com>
+>
+>       ## Commit message ##
+>     -    strbuf: remove environment variable
+>     +    strbuf: remove global variable
+>
+>          As a library that only interacts with other primitives, strbuf s=
+hould
+>     -    not utilize the comment_line_char environment variable within it=
+s
+>     +    not utilize the comment_line_char global variable within its
+>          functions. Therefore, add an additional parameter for functions =
+that use
+>          comment_line_char and refactor callers to pass it in instead.
+>
+> --
+> 2.40.1.521.gf1e218fcd8-goog
 
-> > > - As far as I can tell, "git switch" and "git restore" have exactly=
+Other than the off-by-one in the range-diff of the cover letter, this
+all looks good to me:
 
-> > > the same power and expressiveness (except specifically the lack of
-> > > "git switch --force" support for bulldozing ongoing merges) - they =
-are
-> > > just as much "expert" tools as "git checkout"; the main way they
-> > > differ is that they are clearer about what they're doing / what
-> > > they're for.
-> >
-> > That is not true, you can't do `git switch master^0` because that wou=
-ld be
-> > potentially confusing to new users, but you can do the same with `git=
-
-> > checkout`.
-> =
-
-> Ah, I see your point - git switch requires you to be more verbose in
-> this case, specifying an extra --detach.
-
-Yes, because it's meant for more novice users.
-
-> > > > If there was a way of doing:
-> > > >
-> > > >   git -c core.iknowwhatimdoing=3Dtrue checkout $whatever
-> > > >
-> > > > Then I wouldn't oppose such change.
-> > >
-> > > I know I keep wavering back and forth on this, my apologies for my
-> > > inconstancy: *I once again think adding support for "--force" (to
-> > > checkout and switch) with ongoing operations makes sense.*
-> > >
-> > > This does not achieve exactly what you seem to be suggesting above,=
-
-> > > for two reasons:
-> > > 1. It could not be implicit in config, but rather would need to be
-> > > explicit in the command
-> > > 2. The outcome of using --force is not exactly the same as "git
-> > > checkout" without it (but that's a good thing)
-> > >
-> > > I would (and will) argue that not achieving exactly what you propos=
-e
-> > > *is OK* because the behavior of "git checkout", without "--force",
-> > > when there is a (merge, rebase, cherry-pick, am, bisect) operation =
-in
-> > > course, especially the way that behavior differs from when "--force=
-"
-> > > is specified, is *not useful* - even to expert users.
-> >
-> > OK. That may be the case.
-> >
-> > But it wouldn't be the first time some operation is considered not
-> > useful, and then it turns out people did in fact use it.
-> >
-> > I would be much more confortable if there was a way to retain the
-> > current behavior, but if we are 99.99% positive nobody is actually
-> > relying on this behavior, we could chose to roll the die and see what=
-
-> > happens (hopefully nobody will shout).
-> =
-
-> It sounds like you're distinguishing here between "options for
-> experts" (which should be valuable to warrant influencing the
-> long-term design) and "behavior that users and systems may have come
-> to rely on".
-
-Sure, they are different, but they are related.
-
-If somebody has only one week of expertice with git, I think it's safe
-to say they don't rely on the current behavior that much.
-
-On the other hand somebody who has 15 years of experience with git has a
-higher chance of relying on the current behavior.
-
-> As I've argued here, I believe that the current behavior
-> is not *useful*, and thus a "but the expert users" argument doesn't
-> sway me at all...
-
-And you may be right, I'm not going to argue against such claim.
-
-But this is an argument from ignorance fallacy. The last time I argued
-"I cannot imagine how X might be the case" turned out X was the case.
-
-> I can't imagine this pattern being used in real-life automation, but
-> like anyone my imagination is limited.
-
-Indeed.
-
-Once again: I'm not saying this is going to break user expectations,
-because it might not. I'm saying this *might* break user expectations,
-but we could still roll the dice and find out.
-
-Ultimately this is not my decision, it's the decision of the maintainer.
-
-> Here is precisely where I don't know how to judge "breakage risk and
-> value of being able to revert behavior without downgrading git" vs
-> "complexity of implementation and communication". Obviously I would
-> prefer not to do a bunch of valueless work implementing and supporting
-> an option that no-one would ever use, and removing it a couple months
-> later.
-
-Agreed, which is why I'm not suggesting this work has to be done, but
-the maintainer might (I've often done what I consider unnecessary work
-just because of that reason).
-
-All I'm saying is that because the git project puts a premium on
-preserving backwards compatibility (as any decent software project
-should), then:
-
-> > But if that's the case, I think this is something that should be a
-> > conscious decision that is extremely clear in the commit message.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+Reviewed-by: Elijah Newren <newren@gmail.com>
