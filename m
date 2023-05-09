@@ -2,200 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0200FC77B7F
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 00:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DD92C7EE22
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 00:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbjEIAiT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 20:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43334 "EHLO
+        id S229779AbjEIAoL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 20:44:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjEIAiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 20:38:17 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BC664C0F
-        for <git@vger.kernel.org>; Mon,  8 May 2023 17:38:16 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-1960539df06so1416079fac.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 17:38:16 -0700 (PDT)
+        with ESMTP id S229472AbjEIAoJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 20:44:09 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A905759EE
+        for <git@vger.kernel.org>; Mon,  8 May 2023 17:44:08 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-6aafdeab6b0so1411523a34.0
+        for <git@vger.kernel.org>; Mon, 08 May 2023 17:44:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683592695; x=1686184695;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=35F9i9gaFbJs0cPGUcFxDPYHojFtFW8jJv3HNxLWaEo=;
-        b=konC6TaV0leIWSUQ47bmCI7MBykAQQuVBYnFWPg4uroMZtJ91K7QjLIC9oMsxO1q/S
-         4te7aoU3DBIqCQA+MUK3PRGMrJ5yWWLa/In9U/zbTmKHLnShJpEB+bMoSUFQGHw7Eepg
-         0jOKV9nX1u3J/0aEoFXN5BVSMS7E28aPcZAQvmqeUkwHs5JTL9M1Bn2X5wfaU2pZSMLz
-         UtAYLb4XPS0dxaZDwLjDvVTCjEj6JEdVB6RzsodDhIphPB5vAEqtBAZkvmjHe96RWOw/
-         I6IChAsxqQkg9ot7HNehF6cm3pJhl/HEbFtf5+I7ZSxKfSppClA8pAh0qkxUP6gbA40N
-         Lueg==
+        d=gmail.com; s=20221208; t=1683593047; x=1686185047;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7qxzqgFl3TFhfzFY4W25Eo42bq2dNP63eyfzhIETXBE=;
+        b=rgB/sYODBH4msdnQFT9TH5uIksskB7e6Jl9LAeOiVjg1m3SAfRw+qQSBAOrKLTnN4W
+         KJJUniS7XaeLOjygf4DZqCc9JcoAXCbgKUS0lpw1iReQvikGlqxt/gC3M5/HtcTeOtN+
+         RBgfdSPxHfkiwDGuwMil1YqoXSev+x+R7tOV6DlonKjH2zdl60kFapLCtntU3gMVVATJ
+         ef/nJFJUJdwgZjCkPfNwyJF9O1K7D5r8Yk9jpsHfyvWKYeETYIkYPzYK8yjkIjETEfTi
+         2SXcVjrTd+P5SmKGhJpQVpbhxnyRymluI3lbsESpqEpCT4WorL74faiO/mZV98BgXSjh
+         YrdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683592695; x=1686184695;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=35F9i9gaFbJs0cPGUcFxDPYHojFtFW8jJv3HNxLWaEo=;
-        b=FeBJ7xFjsIf5cHVJkPYp6B/0hpXIBfJhB6NkgZwhG5nMYFyiy3a5oH6QnLGT6xXO9U
-         eZ5heuxH4KFCHkV9EUtB1pwDRTVVxP0th6QlgWD8on+XrqILHCpmmA03QDdThPE5hyZb
-         wx2K22akXWJqDFZt+wOzrCtcH48SOMRCkx33bOWo6Ep7RpJWoauF24MUnK9WeKz+hXYo
-         vwOnj+4ZZcTArC51RTdp1UkJv9wRUZ/msojdmGG9UfckcNeqj8TttEfQeNfDUuFVO34l
-         L2LoXJwoyTWMs0ttM1xXyKO0EmQHkdnAI4iR85xOnoYkUtppcbZ2IrlXxetbasi2RStt
-         DIcg==
-X-Gm-Message-State: AC+VfDwc1xjqGEVqmMNteyixQnEfenHGkE/jw3k5vJRJDQJLQKc/Av49
-        SnhK8YQF+Gcu8so6qPZs8G2ZzHgiNdA=
-X-Google-Smtp-Source: ACHHUZ55ibSkP2+QGe4BoNrvb/r3sjVVM0XjBYd9Pi1jdANj0/3nPsAYcZp2UKh+6UHHLrPUBvzCvQ==
-X-Received: by 2002:a05:6870:9565:b0:196:354e:d2fa with SMTP id v37-20020a056870956500b00196354ed2famr78667oal.9.1683592694768;
-        Mon, 08 May 2023 17:38:14 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683593047; x=1686185047;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7qxzqgFl3TFhfzFY4W25Eo42bq2dNP63eyfzhIETXBE=;
+        b=J5aD3liK8SHDK+So58OfTjVSp6bgt/rmZ2jM7c7mYWv7dmrUx0baM31zIjc9/05eoM
+         bJoNkMnaAiyzb7r3h7hHQpjt1kk+VNlfPkfx44/X83asDN5za8qetPCOJwuGnvVAbnA6
+         vEiMjNcauvwm9SCmDgLemfjOEFkjzRxWt04VGGvuh/uAMGFoWyGvUE6X1g8juGpv+Lj+
+         tXyRxzAP8HDJHlCZCEOWMhSeq5aFuAxMTqgTAzvzLvhU0Da5mvvmtYHcVpvFZFVycC8M
+         KQHNY8Ut54d1lDI1oEVS8SaFQcKHzvqPrp9twMfPQTerxeFl0TO75ITeEmv6Cvos6DR+
+         GYbw==
+X-Gm-Message-State: AC+VfDwRBW76LMlRB2v+G61FjurCiCWaHpAYsveWvYBFA6JVsZuj0+uG
+        qDnTJOYm8DSSDit2w1gVXJX9y+LL0xY=
+X-Google-Smtp-Source: ACHHUZ43CQmoW9axOd+LGZSZxHS8hnBTVqqpUfWw8EwrdQnDQhMyUPEw+uHgEKd3qYfK+vpG3b2T/Q==
+X-Received: by 2002:a9d:6657:0:b0:6a5:f8b6:ccd2 with SMTP id q23-20020a9d6657000000b006a5f8b6ccd2mr543736otm.16.1683593047682;
+        Mon, 08 May 2023 17:44:07 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id g2-20020a056870c38200b001962e45f0d4sm287746oao.24.2023.05.08.17.38.13
+        by smtp.gmail.com with ESMTPSA id b1-20020a056830104100b006a42b16ec7asm83953otp.38.2023.05.08.17.44.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 17:38:14 -0700 (PDT)
-Date:   Mon, 08 May 2023 18:38:13 -0600
+        Mon, 08 May 2023 17:44:07 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <645995f53dd75_7c6829483@chronos.notmuch>
-In-Reply-To: <20230505165952.335256-1-gitster@pobox.com>
-References: <xmqqfs8bith1.fsf_-_@gitster.g>
- <20230505165952.335256-1-gitster@pobox.com>
-Subject: Re: [PATCH v2] diff: fix interaction between the "-s" option and
- other options
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC PATCH 0/4] diff: fix default/no-output
+Date:   Mon,  8 May 2023 18:44:02 -0600
+Message-Id: <20230509004406.1786033-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Sergey Organov noticed and reported "--patch --no-patch --raw"
-> behaves differently from just "--raw".  It turns out that there are
-> a few interesting bugs in the implementation and documentation.
-> 
->  * First, the documentation for "--no-patch" was unclear that it
->    could be read to mean "--no-patch" countermands an earlier
->    "--patch" but not other things.  The intention of "--no-patch"
->    ever since it was introduced at d09cd15d (diff: allow --no-patch
->    as synonym for -s, 2013-07-16) was to serve as a synonym for
->    "-s", so "--raw --patch --no-patch" should have produced no
->    output, but it can be (mis)read to allow showing only "--raw"
->    output.
+The diff code assumes 0 means the default, and --no-patch means
+NO_OUTPUT.
 
-I would say that is orthogonal.
+The problem with this approach is that it doesn't allow distinguishing
+`git diff --no-patch`, `git diff --patch --no-patch`, and `git diff`.
 
->  * Then the interaction between "-s" and other format options were
->    poorly implemented.  Modern versions of Git uses one bit each to
->    represent formatting options like "--patch", "--stat" in a single
->    output_format word, but for historical reasons, "-s" also is
->    represented as another bit in the same word.  This allows two
->    interesting bugs to happen, and we have both X-<.
-> 
->    (1) After setting a format bit, then setting NO_OUTPUT with "-s",
->        the code to process another "--<format>" option drops the
->        NO_OUTPUT bit to allow output to be shown again.  However,
->        the code to handle "-s" only set NO_OUTPUT without unsetting
+By introducing a DIFF_FORMAT_DEFAULT (which is not 0) it's now possible
+to properly distinguish these arguments, and get rid of
+DIFF_FORMAT_NO_OUTPUT which should have never been considered of a
+format, but the absense of the DIFF_FORMAT_PATCH format.
 
-s/only set/only sets/
+This fixes an issue Sergey Organov reported.
 
->        format bits set earlier, so the earlier format bit got
->        revealed upon seeing the second "--<format>" option.  This is
->        the problem Sergey observed.
-> 
->    (2) After setting NO_OUTPUT with "-s", code to process
+Now all these 3 work correctly:
 
-s/code/the code/
+ 1. git diff --raw
+ 2. git diff --patch --no-patch --raw
+ 3. git diff --raw --patch --no-patch
 
->        "--<format>" option can forget to unset NO_OUTPUT, leaving
->        the command still silent.
+Felipe Contreras (3):
+  line-log: set patch format explicitly by default
+  diff: introduce DIFF_FORMAT_DEFAULT
+  diff: remove DIFF_FORMAT_NO_OUTPUT
 
-> It is tempting to change the meaning of "--no-patch" to mean
-> "disable only the patch format output" and reimplement "-s" as "not
-> showing anything", but it would be an end-user visible change in
-> behavior.
+Sergey Organov (1):
+  t4013: add expected failure for "log --patch --no-patch"
 
-Yes, it would be a change in behavior from what no reasonable user would
-expect, to what most reasonable users would expct.
-
-These are synonyms:
-
- 1.a. git diff --patch-with-raw
- 1.b. git diff --patch --raw
-
-And so should these:
-
- 2.a. git diff --raw
- 2.b. git diff --no-patch --raw
-
-But who on Earth would then think these are different?
-
- 2.b. git diff --no-patch --raw
- 2.c. git diff --raw --no-patch
-
-Your patch is *already* an end-user visible change in behavior, so why
-not do the end-user visible change in behavior that reasonable users
-would expect?
-
-> Let's fix the interactions of these bits to first make "-s" work as
-> intended.
-
-Is it though?
-
-> The fix is conceptually very simple.
-> 
->  * Whenever we set DIFF_FORMAT_FOO because we saw the "--foo"
->    option (e.g. DIFF_FORMAT_RAW is set when the "--raw" option is
->    given), we make sure we drop DIFF_FORMAT_NO_OUTPUT.  We forgot to
->    do so in some of the options and caused (2) above.
-> 
->  * When processing "-s" option, we should not just set
->    DIFF_FORMAT_NO_OUTPUT bit, but clear other DIFF_FORMAT_* bits.
->    We didn't do so and retained format bits set by options
->    previously seen, causing (1) above.
-> 
-> It is even more tempting to lose NO_OUTPUT bit and instead take
-> output_format word being 0 as its replacement, but that would break
-> the mechanism "git show" uses to default to "--patch" output, where
-> the distinction between telling the command to be silent with "-s"
-> and having no output format specified on the command line matters,
-> and an explicit output format given on the command line should not
-> be "combined" with the default "--patch" format.
-
-That's because the logic is not correct, the default should not be 0,
-the default should be a different value, for example
-DIFF_FORMAT_DEFAULT, that way each tool can update DIFF_FORMAT_DEFAULT
-to whatever default is desired.
-
-Then 0 doesn't mean default, it means NO_OUTPUT, and then removing all
-the formats--including DIFF_FORMAT_DEFAULT--makes it clear what the user
-intends to do.
-
-> So, while we cannot lose the NO_OUTPUT bit, as a follow-up work, we
-> may want to replace it with OPTION_GIVEN bit, and
-> 
->  * make "--patch", "--raw", etc. set DIFF_FORMAT_$format bit and
->    DIFF_FORMAT_OPTION_GIVEN bit on for each format.  "--no-raw",
->    etc. will set off DIFF_FORMAT_$format bit but still record the
->    fact that we saw an option from the command line by setting
->    DIFF_FORMAT_OPTION_GIVEN bit.
-> 
->  * make "-s" (and its synonym "--no-patch") clear all other bits
->    and set only the DIFF_FORMAT_OPTION_GIVEN bit on.
-> 
-> which I suspect would make the code much cleaner without breaking
-> any end-user expectations.
-
-Why DIFF_FORMAT_OPTION_GIVEN? DIFF_FORMAT_DEFAULT as the opposite is
-much more understandable.
-
-> Once that is in place, transitioning "--no-patch" to mean the
-> counterpart of "--patch", just like "--no-raw" only defeats an
-> earlier "--raw", would be quite simple at the code level.
-
-It's not only simple, it's a no-op, as (~DIFF_FORMAT_PATCH |
-DIFF_FORMAT_OPTION_GIVEN) becomes indistinguishible from
-DIFF_FORMAT_NO_OUTPUT unless another optin like DIFF_FORMAT_RAW is
-specified.
-
-I'm sending a patch series that shows that to be the case.
+ blame.c                     |  6 ++---
+ builtin/diff-files.c        |  2 +-
+ builtin/diff-index.c        |  2 +-
+ builtin/diff-tree.c         |  2 +-
+ builtin/diff.c              |  2 +-
+ builtin/log.c               | 16 ++++++++---
+ builtin/stash.c             |  4 +--
+ builtin/submodule--helper.c |  2 +-
+ combine-diff.c              | 10 +++----
+ diff-merges.c               |  2 +-
+ diff-no-index.c             |  2 +-
+ diff.c                      | 53 ++++++++++++++++++-------------------
+ diff.h                      |  6 +----
+ line-log.c                  |  2 +-
+ log-tree.c                  |  4 +--
+ merge-ort.c                 |  4 +--
+ merge-recursive.c           |  4 +--
+ notes-merge.c               |  4 +--
+ range-diff.c                |  4 +--
+ revision.c                  |  6 ++---
+ t/t4013-diff-various.sh     |  8 ++++++
+ tree-diff.c                 |  2 +-
+ 22 files changed, 78 insertions(+), 69 deletions(-)
 
 -- 
-Felipe Contreras
+2.40.0+fc1
+
