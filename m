@@ -2,63 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C2BC7EE22
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 16:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ADC8C77B7C
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 16:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbjEIQga (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 12:36:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52036 "EHLO
+        id S234305AbjEIQrh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 12:47:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjEIQg2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 12:36:28 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DCC7271E
-        for <git@vger.kernel.org>; Tue,  9 May 2023 09:36:27 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-643bb9cdd6eso3659426b3a.1
-        for <git@vger.kernel.org>; Tue, 09 May 2023 09:36:27 -0700 (PDT)
+        with ESMTP id S234262AbjEIQrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 12:47:35 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A78051738
+        for <git@vger.kernel.org>; Tue,  9 May 2023 09:47:22 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-644d9bf05b7so2449669b3a.3
+        for <git@vger.kernel.org>; Tue, 09 May 2023 09:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683650186; x=1686242186;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QkA/pi8KlAO9UEn9idPV6TS+UbJ0UGUv2n4mkqlJeYs=;
-        b=YfKtVKyR+u9VytuYai7tjj3j1aHI2Tz4sXtnu5FOoPL5I9h0h/8lQ79nQbLzS2vjyU
-         UovK9QYUTP6iBYGYCuPE0wWhE0Rw4OysllmM62IvJ2cV8UItA8E/qAYKbSNL/HjO8tTG
-         GjFw7BEKhYCfTrTOkvKyJt0LwQ9eWVU+pf4InH8r2fYKyDW3aPaDIxvePSARi2lyxyMR
-         oQkbOWREeCjM18oHe/cj120UEO9BnnBb3iXVv8XBGt7QO3dJ+ZBYQUhV1Q7FcqYYYYRJ
-         jc3g3xSAFupm8UYLhaQxMgL48VPsKfrGiNeTzV0dBFpJyic7RkEkuVR4DmZLgbfoKxQ/
-         pH5Q==
+        d=gmail.com; s=20221208; t=1683650842; x=1686242842;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=w8WZhqIhJUZBBwKkEzHufdci89kDBKjlme/ZxYSgUwE=;
+        b=ZJPVhJUB/zl5MlNPOGMKkvDOWtRzREDARwWxtcwIFWqcZHttwnh60cva1vxo9VRDUg
+         EqYDoeQ4IgAHhGLAG9Hsa6YXS3dp7/DR0/s0c80ccppdZ0fmecACHayrRDuJy5wRFmJF
+         5R+vM8ST6mQHgWodeB85dPvhkI6FBAc8KGJuWOvibNQ79Yea2oNGbFp2hgaxNHXvarbo
+         DlCaagdAtSAuN7KQboZp4tDUtKvP6dVra1fHrekQ5eqDRqHcVViIM0V+hf2rWrFJziCb
+         UVlUCK/8vJxaSP9NXYA0FNiZujnFR4z+B/dBY78N8QYi6di51eWlqy22/KB9gQaJqUqV
+         JBYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683650186; x=1686242186;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QkA/pi8KlAO9UEn9idPV6TS+UbJ0UGUv2n4mkqlJeYs=;
-        b=B1FGTdA9fkjo6odg8BzUbptChswT6V9U0eSXVKQocvotqMXVRk+AwTsDzyptYwQ2z/
-         dBvesjVlBVcoeXhmCOQLAkmKwYOXWtoa6jlC/BWPTsTFl6rWX//m+HdNaFhxwmJoit1d
-         +SH8wsnXK7nu7TWM2IEmsFXShjPWeKPXkZvIw6UpDFrfw9Unl2POoJCCgZwbnhPtbjId
-         M3OhO5ZKb2dzMtwVIvTGtezEGRBTZU85FfPmt/vPy8zMQOgyZmFFrML5L3O/3oPNZm+M
-         162+unETboinhbJA7NJJasXl/V/EuczhXoi7isBZY+KlU0527/N2TKF0oEHKdeP64Ijl
-         WFfQ==
-X-Gm-Message-State: AC+VfDzJLM7r9YNNjEzDqdTkp4pVenHEHYjyiP4itSWyBl1MvNyrJxcz
-        71Z0itaBZQMh6iKTkylF7MY=
-X-Google-Smtp-Source: ACHHUZ5C/XZRlj+pUlLey/rxW9/P6G0wBevP9pXzOmnCwyoM/IGa2fst3r65d3qhdXdbELthuJiL5w==
-X-Received: by 2002:a05:6a00:1794:b0:645:b13e:e674 with SMTP id s20-20020a056a00179400b00645b13ee674mr10725074pfg.26.1683650186603;
-        Tue, 09 May 2023 09:36:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683650842; x=1686242842;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w8WZhqIhJUZBBwKkEzHufdci89kDBKjlme/ZxYSgUwE=;
+        b=SPuEFuu0VSUXmHkXcu3UQvDIl99K7/JGSgffw+R0qhQhDyucIXYNvHxfInFG8SOVnm
+         ftSQSKAmetBcgdOF8gVo5n9iWfi2/AKdEBrYeoCgSvF6xZYjp8UfMJoyhvJvhqVXioGE
+         J0vBKsi/EYm83aqPLAOoqRHDngWmrxWD6jGBhumH/X6Ehj441UFwGUQMdIk9iGJDEtyg
+         aKgDP8i5Eude9/I92adY97MF6SGNU4lCXLT56OvWts1+18DTGtT8b4KCpfXQJexno+4X
+         L6C54qIs4cF6zPG7cHTmvonh3mQjKOB77RtTtg2HVFqklDjCdF4Tg5XoaGoyurE6hHSW
+         w+LA==
+X-Gm-Message-State: AC+VfDzOefHU4itcJ0O6BiTN6SDuv3FsV+njddLCwUwdag7AWrlglGAC
+        NuGY4vLFhoptwMUd1WcnZiU=
+X-Google-Smtp-Source: ACHHUZ7NrGheg3svMWTTYiEukvlc35CpXyY+wW/oiSuyATCsZXi0+OlrtnW48dd3bu1h37wDnDHQfg==
+X-Received: by 2002:a05:6a20:2443:b0:ff:ccee:8e95 with SMTP id t3-20020a056a20244300b000ffccee8e95mr14040214pzc.48.1683650841940;
+        Tue, 09 May 2023 09:47:21 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id 17-20020aa79151000000b0063b8ddcdde9sm1721572pfi.65.2023.05.09.09.36.25
+        by smtp.gmail.com with ESMTPSA id c4-20020aa781c4000000b006413bf90e72sm2012477pfn.62.2023.05.09.09.47.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 09:36:26 -0700 (PDT)
+        Tue, 09 May 2023 09:47:21 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Soref <jsoref@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Instead of "Revert "Revert "original"", give "Replay "original""
-References: <CACZqfqDL7EUGGxHAsKmU6Y67FupHGog3PD-P-g_O0atG4NG23A@mail.gmail.com>
-Date:   Tue, 09 May 2023 09:36:25 -0700
-In-Reply-To: <CACZqfqDL7EUGGxHAsKmU6Y67FupHGog3PD-P-g_O0atG4NG23A@mail.gmail.com>
-        (Josh Soref's message of "Tue, 9 May 2023 01:18:39 -0400")
-Message-ID: <xmqqwn1h1mye.fsf@gitster.g>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Adam Majer <adamm@zombino.com>
+Subject: Re: Is GIT_DEFAULT_HASH flawed?
+References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
+        <20230426205324.326501-1-sandals@crustytoothpaste.net>
+        <20230426205324.326501-3-sandals@crustytoothpaste.net>
+        <xmqqbkjaqqfp.fsf@gitster.g>
+        <20230427054343.GE982277@coredump.intra.peff.net>
+        <6451a0ba5c3fb_200ae2945b@chronos.notmuch>
+        <ZFLmGYXgvyydLB5E@tapette.crustytoothpaste.net>
+        <645857d8e8fd7_4e6129477@chronos.notmuch>
+        <ZFlr8PWOPRuLuP6E@tapette.crustytoothpaste.net>
+        <ZFohLeq1AfdVKqfY@ugly>
+Date:   Tue, 09 May 2023 09:47:21 -0700
+Message-ID: <xmqqild11mg6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,25 +75,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Soref <jsoref@gmail.com> writes:
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-> https://github.com/git/git/commit/42e073b5ff5f9e8bc2356151dbab0c95321d2454
->
-> The commit message says:
-> ---
-> Merge branch 'ob/revert-of-revert' into seen
->
-> Instead of "Revert "Revert "original"", give "Replay "original""
-> as the title for a revert of a revert.
->
-> * ob/revert-of-revert:
->   sequencer: beautify subject of reverts of reverts
+>>If your history contains mixed and matched hash algorithms, you'll need
+>>to be able to verify those commits to the root to have any confidence in
+>>a signed commit or tag, which means trusting SHA-1 if you have any SHA-1
+>>commits in the repository.
+>>
+> the history is traversed from the end anyway, so having sha-1 in the
+> history is entirely irrelevant for verifying sha-256 commits, assuming
+> one may only upgrade the algorithm.
 
-Thanks for spotting.
+That depends on what is meant by "verify a commit".  If we are only
+interested in the tree contents, then the newer commits whose trees
+are hashed with a more secure hash algorithm recursively down to the
+blobs would lack any weak link hashed by a less secure algorithm.
+Most people do not care as deeply how their project tree came to the
+shape it has today as they care about what is in the recent trees,
+so this is an acceptable stance to take.
 
-This comes from my working draft of the "What's cooking" report and
-every time I merge the topic to any integration branch it is
-extracted from there and used to annotate the merge commit.  I'll
-update it there so that it will say "Reapply" when the final reroll
-comes and it is merged to 'next' and down to 'master'.
+If the less secure algorithm becomes so weak that the history, up to
+the last commit that was signed by it, can be rewritten arbitrarily,
+however, an attacker can lie about why the code that survives to
+this day looks the way it does by forging old parts of the history,
+and mislead today's developers to do wrong things.  The only way to
+prevent that kind of attack is to verify a commit by recursively
+making sure not just the commit and its tree, but its parents are
+all authentic, and less secure algorithm may make it impossible.
+
+The old history hashed with the old algorithm needs to be kept to
+help external references, but I think as a mitigation, those who
+care about that part of history can create a copy of the history
+hashed with the new algorithm and publish the correspondence between
+the two parallel histories to assure the integrity of that part of
+the old history.
 
