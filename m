@@ -2,110 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F7BC7EE23
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 20:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2254FC7EE23
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 20:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229666AbjEIUNg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 16:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
+        id S234729AbjEIUTe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 16:19:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjEIUNf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 16:13:35 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 199892102
-        for <git@vger.kernel.org>; Tue,  9 May 2023 13:13:34 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-b9ef06cb784so8181520276.0
-        for <git@vger.kernel.org>; Tue, 09 May 2023 13:13:34 -0700 (PDT)
+        with ESMTP id S229911AbjEIUTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 16:19:31 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 638F63ABF
+        for <git@vger.kernel.org>; Tue,  9 May 2023 13:19:30 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-643a1656b79so4167627b3a.3
+        for <git@vger.kernel.org>; Tue, 09 May 2023 13:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683663213; x=1686255213;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=w9XoJTze7YgZPDtDyL5G7zEQqV0SWyJGe1IMI+NEgv4=;
-        b=XkKFctjdNkSivZr44qkiPy2gMIwxtgAaQQEsjwIU6TGeRKizkJbZpGF1MBqOixTnLB
-         lDw8jIv9sy3jLhkgAM+at7GqebIoNrg2bJ1CoCxvX371CftIp//Mwkk8LhPDwqZLD6qE
-         hzo2ldYlPHqA39sexyZEifbFoysg36QOMM+AuiMz82siS3O4vhA0TH7tRzHFRtcGSR0d
-         oPuYuRB69zlB4k9NlbgizuIAmFiP6w+wqqICrTgZ3/dmZHDeowca3d8JjeBrPsdEwkUF
-         8N/OcVBAcFFfwJblwE8KWlNotk5tUNhJgNyXdiWEYQiY+XRv1ub1/qTgmoFRI2CqFLA/
-         IwHQ==
+        d=gmail.com; s=20221208; t=1683663570; x=1686255570;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6eUEPIXGFh00Gwu9KY0qXjFG/9QsBFwGur83joEHtps=;
+        b=U2iEDb6EMrHuZhhBtoQGlKXxalpKsSV4W3TSEAx88xTtzUrxrnPbWAmYr2QW7LQmLE
+         +ll2o+juKWW7H3hRBvySNl3iwUqLc0Dwe94cNcEnFfjkK+xKpeFFZOmIQ8l1kad5ZZO9
+         lv97/QAf15t5nVVA4F72mHftaOtN9BRCwC2WSnnFVIU5P3g6lN2cxyMYufcKf8PbOB5J
+         3MjqSyUYbLrGMgBv9oxZtqKFWjEFnjMSJXYsDJmL5nKVL7gEcwRPRxfL9wZFp5uDKoKR
+         OTZ1brkwBo+9vROybCYyEgITXyRsnA462XG9Il3QGTpLuZP6GsPQVcTJ0vaA/3vd7EaZ
+         Hj7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683663213; x=1686255213;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w9XoJTze7YgZPDtDyL5G7zEQqV0SWyJGe1IMI+NEgv4=;
-        b=KUPlsVUnZwYm6WauobwMOAsX0wgDmDPyQ6pS+Faaqsk71xRISSVBYWMGjgEbsoNCvZ
-         Qldn1mwI5Bu+MZkk/RWGYc36IRHHgzDbcyf95ClL5DGbqZ9GSXPS/DljZOFOf5R/PAbZ
-         kAZXYjEEQE0UkskChnis168f5Cc91zkEaHhxL1/zsLKKqbnSETWoU18lY7gIcEA9ECBC
-         Le+cq39IanEg467jYb4jx6/u9KMPO4iYDAqNeWfrAxuMw4d78jWsXH1F92pUJl4lEUkx
-         sdh5qvBf0yfbIWlF1BWSXfGG8nPs3d5O1jGGm48JlfZz87viBQklwNHRlWCAcPh4ImiH
-         NwsQ==
-X-Gm-Message-State: AC+VfDxVP21CG4RXpnMNAsUA1AL4elRG25g34lZe4p5pTWCogqJ3E/PG
-        5SPG5uBa/OFZ8fkXDwPoIh7FNg==
-X-Google-Smtp-Source: ACHHUZ6kmENhAjcnRZPV88YBoCRsafjEoQFiqap85THE1z/8ipPhxyDNC0MwomwbQIxNn3HnN4Vxbw==
-X-Received: by 2002:a05:6902:723:b0:b92:4703:8cf5 with SMTP id l3-20020a056902072300b00b9247038cf5mr20273077ybt.50.1683663213237;
-        Tue, 09 May 2023 13:13:33 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u9-20020a252e09000000b00b9d255709f9sm3184853ybu.2.2023.05.09.13.13.32
+        d=1e100.net; s=20221208; t=1683663570; x=1686255570;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6eUEPIXGFh00Gwu9KY0qXjFG/9QsBFwGur83joEHtps=;
+        b=bKEH2QkNn9JIG7dQQZC1sxTZ5K9QLOiI6AdmlK2AGThCyXxjzWGNGO6rSJiAf3XC3T
+         B4XQPgR9KrwP2vHaop230S+aUWrvSMCqnhEqAZmZ5/MIkDp6tLRy8Hl7YmfZTbIordWQ
+         e3zJj+plq5V5dR3vVspDMIm7voPAwwaLvLC7FHVfLsrgrt+6RGWSrLTG2zIPJUqOHqXT
+         d/ax0VnTIsi5d6phVeETbHovyMlhkMz3D8E7yffpHe8l3+/eWDRP7HiqgsUgAziOvu1w
+         VQS3/z4QC86CNUVLBg5+jtdO+5eO4V0fFry8qQK+KRsIfEFeRub25v3e8+3tuVtqpz8f
+         B3zw==
+X-Gm-Message-State: AC+VfDzdnbfdPwxdo9l10fORqqSZR4M44wOh8u5CfYX0SoajPRXXPjiv
+        SAVghvwROL0wnR2p57813S8=
+X-Google-Smtp-Source: ACHHUZ6wRJq7gJtwTH+YfryZWiCKJEUdM+9w6B7I0KyDVH/rEtn1yO1xL5CAzYcj+/gQqzUj6/9fkg==
+X-Received: by 2002:a05:6a00:234c:b0:646:3c2:4d30 with SMTP id j12-20020a056a00234c00b0064603c24d30mr10436532pfj.30.1683663569694;
+        Tue, 09 May 2023 13:19:29 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id n23-20020a62e517000000b0064398fe3451sm2092535pff.217.2023.05.09.13.19.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 13:13:32 -0700 (PDT)
-Date:   Tue, 9 May 2023 16:13:26 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 05/15] ref-filter.c: parameterize match functions over
- patterns
-Message-ID: <ZFqpZrwiKARsM53t@nand.local>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <c54000f5f5122c4ca3ac9b16828a8fd77050768c.1683581621.git.me@ttaylorr.com>
- <xmqqmt2e4fia.fsf@gitster.g>
+        Tue, 09 May 2023 13:19:29 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v4 5/8] fetch: introduce `display_format` enum
+References: <cover.1681906948.git.ps@pks.im> <cover.1683636885.git.ps@pks.im>
+        <80ac00b0c4b0fde61a3edf48d996e3a60327a54d.1683636885.git.ps@pks.im>
+Date:   Tue, 09 May 2023 13:19:29 -0700
+In-Reply-To: <80ac00b0c4b0fde61a3edf48d996e3a60327a54d.1683636885.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Tue, 9 May 2023 15:02:19 +0200")
+Message-ID: <xmqq5y91xnou.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmt2e4fia.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2023 at 03:36:45PM -0700, Junio C Hamano wrote:
-> > @@ -2132,9 +2133,10 @@ static int match_pattern(const struct ref_filter *filter, const char *refname)
-> >   * matches a pattern "refs/heads/" but not "refs/heads/m") or a
-> >   * wildcard (e.g. the same ref matches "refs/heads/m*", too).
-> >   */
-> > -static int match_name_as_path(const struct ref_filter *filter, const char *refname)
-> > +static int match_name_as_path(const struct ref_filter *filter,
-> > +			      const char **pattern,
-> > +			      const char *refname)
-> >  {
-> > -	const char **pattern = filter->name_patterns;
-> >  	int namelen = strlen(refname);
-> >  	unsigned flags = WM_PATHNAME;
-> >
+Patrick Steinhardt <ps@pks.im> writes:
+
+> We currently have two different display formats in git-fetch(1) with the
+> "full" and "compact" formats. This is tracked with a boolean value that
+> simply denotes whether the display format is supposed to be compacted
+> or not. This works reasonably well while there are only two formats, but
+> we're about to introduce another format that will make this a bit more
+> awkward to use.
 >
-> These hint that we'd eventually lose .name_patterns member from the
-> structure so that we can pass pattern array that is not necessarily
-> tied to any instance of a filter?
+> Introduce a `enum display_format` that is more readily extensible.
 
-Right. We'll pass in the excluded patterns in the next commit.
+Makes sense.
 
-> And we are not there yet, so we hoist the use of .name_patterns
-> member one level up to the only caller?
+> +enum display_format {
+> +	DISPLAY_FORMAT_UNKNOWN = 0,
+> +	DISPLAY_FORMAT_FULL,
+> +	DISPLAY_FORMAT_COMPACT,
+> +};
 >
-> Without seeing how it evolves, we can tell this does not make
-> anything break, but we cannot tell how this helps anything (yet).
+>  struct display_state {
+>  	struct strbuf buf;
+>  
+>  	int refcol_width;
+> -	int compact_format;
+> +	enum display_format format;
 
-Hmm. I tried to allude to this in the patch message with the paragraph:
+OK.  Preparatory conversion without adding anything new.
 
-    The subsequent patch will add a new array of patterns to match over (the
-    excluded patterns, via a new `git for-each-ref --exclude` option),
-    treating the return value of these functions differently depending on
-    which patterns are being used to match.
+> @@ -809,31 +814,42 @@ static void display_state_init(struct display_state *display_state, struct ref *
+>  
+>  	git_config_get_string_tmp("fetch.output", &format);
+>  	if (!strcasecmp(format, "full"))
+> -		display_state->compact_format = 0;
+> +		display_state->format = DISPLAY_FORMAT_FULL;
+>  	else if (!strcasecmp(format, "compact"))
+> -		display_state->compact_format = 1;
+> +		display_state->format = DISPLAY_FORMAT_COMPACT;
+>  	else
+>  		die(_("invalid value for '%s': '%s'"),
+>  		    "fetch.output", format);
 
-    Tweak `match_pattern()` and `match_name_as_path()` to take an array of
-    patterns to prepare for passing either in.
+Naturally.
 
-...but I'm happy to add detail or clarify it if you think that these
-paragraphs could use it.
+> -	display_state->refcol_width = 10;
+> -	for (rm = ref_map; rm; rm = rm->next) {
+> -		int width;
+> +	switch (display_state->format) {
+> +	case DISPLAY_FORMAT_FULL:
+> +	case DISPLAY_FORMAT_COMPACT: {
+> +		struct ref *rm;
+>  
+> -		if (rm->status == REF_STATUS_REJECT_SHALLOW ||
+> -		    !rm->peer_ref ||
+> -		    !strcmp(rm->name, "HEAD"))
+> -			continue;
+> +		display_state->refcol_width = 10;
+> +		for (rm = ref_map; rm; rm = rm->next) {
+> +			int width;
+>  
+> -		width = refcol_width(rm, display_state->compact_format);
+> +			if (rm->status == REF_STATUS_REJECT_SHALLOW ||
+> +			    !rm->peer_ref ||
+> +			    !strcmp(rm->name, "HEAD"))
+> +				continue;
+>  
+> -		/*
+> -		 * Not precise calculation for compact mode because '*' can
+> -		 * appear on the left hand side of '->' and shrink the column
+> -		 * back.
+> -		 */
+> -		if (display_state->refcol_width < width)
+> -			display_state->refcol_width = width;
+> +			width = refcol_width(rm, display_state->format == DISPLAY_FORMAT_COMPACT);
+> +
+> +			/*
+> +			 * Not precise calculation for compact mode because '*' can
+> +			 * appear on the left hand side of '->' and shrink the column
+> +			 * back.
+> +			 */
+> +			if (display_state->refcol_width < width)
+> +				display_state->refcol_width = width;
+> +		}
+> +
+> +		break;
+> +	}
+> +	default:
+> +		BUG("unexpected display format %d", display_state->format);
+>  	}
 
-Thanks,
-Taylor
+Due to reindentation, the patch is noisier than what it does (which
+should be "nothing, other than allowing another value in the .format
+member").
+
+It makes me wonder if it would make it easier to read to move the
+bulk of this code to a helper function.  If we are to give a name to
+what is being done in the above hunk, what would it be?  It computes
+display->refcol_width in which all records would fit, but presumably
+if we are to add more things to be shown per ref and align them in a
+simlar way, we would compute widths for these other things there as
+well.  Perhaps compute_display_alignment() or somesuch?
+
