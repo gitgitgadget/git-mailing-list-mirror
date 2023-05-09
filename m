@@ -2,107 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9AD0C77B7C
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 21:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3582EC7EE22
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 22:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234247AbjEIVf3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 17:35:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60500 "EHLO
+        id S234872AbjEIW2w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 18:28:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235656AbjEIVf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 17:35:26 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 883496A5A
-        for <git@vger.kernel.org>; Tue,  9 May 2023 14:35:00 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-b9d881ad689so8282644276.2
-        for <git@vger.kernel.org>; Tue, 09 May 2023 14:35:00 -0700 (PDT)
+        with ESMTP id S230264AbjEIW2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 18:28:51 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A042697
+        for <git@vger.kernel.org>; Tue,  9 May 2023 15:28:48 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-6439e6f5a33so3630469b3a.2
+        for <git@vger.kernel.org>; Tue, 09 May 2023 15:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683668075; x=1686260075;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=06UKc/yO7nrqBeIUTG0rm0f2iUGEMitq+FXetXoOrus=;
-        b=UUE/AEgQMnwobZS1at0Fzj81wK/4CaHQim5Hkus+YNl7OpLObst1ggQqMM/VysRMms
-         8UL9jlE8/RAx3oRibZ3z4X5rXmEWGPaRsj2xS//yBCGIo2EExCwwAD3vtCosCx2SoEPv
-         0ZnN51z/lPR4KFqseIeORETBm1F7fnYKRlDVbSQjnUnkp37OFy5ONmQHJkrjJLKfg6A6
-         nLGJqjLT+RAHYPYtuirYdR+QB4E03LB8/3PqbFgrB1swpPEbApPu83QoZAawqU5znPxb
-         R4eSTK/YEvd/se1xYG0TKEdej9gyXmqQpb/r+M4EB8G4ByCkYPcbjLgGq7yhamN1hIHX
-         5emw==
+        d=gmail.com; s=20221208; t=1683671328; x=1686263328;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pMXYBD9jC2McG2Legqur7dKRkgXwkmqFIpaljMqCOJU=;
+        b=nWRERzQIQnCWakSjBtOA47saUBr/IbiejX5FU5bkaZbuCgCJriDtPfgMaydnBy4l8h
+         jqECdE4vRzPf4haRX1R+fw0cj/z7Z0rDVBgIflkr2Y6y9zk5OPqmLTxwiz8YALNlPI63
+         hEL8OHhl1h54ulv7mRs59DD+pkKk8XgfuQ+T2oInwtWyqtWimG5+2/Lz+irNulJdwtyF
+         Tp8IGVBzbbNj9YuypZN3ZVYyriQd/nKLHsRZjbapoEk3tknlB28Gauo7HRks2uTik5yP
+         JN9l8t6Cgd9e4lLb3UlW4+UaFGMU5Uygk6+mTM3t0EA/6bv76oh7DzsrnIDZUde2LFTF
+         ibYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683668075; x=1686260075;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=06UKc/yO7nrqBeIUTG0rm0f2iUGEMitq+FXetXoOrus=;
-        b=iV9CLjMEwGooJf7ZfMvbX2hmVg2R6Y10388Dj1rlA2YsIt3Hk0kKdyTJgs8+d9DNyv
-         vIQoSNXxsxuywTf6vmWzO7XGYUX/R38frfaiKbDzIlDddSdNayUekLJtWVZeFNSGk24a
-         scGunmyOT/Rq0JxhVPOmKbR8saNqioGvzfuJALQbt0BVFSFiSczvU1eXzK8ijyWsaAu+
-         JioBW6G8PgIq4jvtW8mZL4JNyz31u6Wq2gpujZ8fcrRWNxNu/q7HNPwBAI4RRBzQ+Vc5
-         QQTf1U9l71O5mcn8nM9S8KfxdoF+3NIO1+Wek3AOPwFl8lRy+aVi3kkF7dJBwRJqOciJ
-         x7BA==
-X-Gm-Message-State: AC+VfDz8KB18IputW4o90nnRdFOEdnZxFFdukrk78EzfeHOI1A0zr1Zx
-        tfQ4t1sAx+QjRn6PVsMN9nGUqg==
-X-Google-Smtp-Source: ACHHUZ5zHbbplT7l4yH0Qa7oxz1KriRW7trXuATnr0/epHDmARwqV9qzkpDxh7rla9aMVCaQhl/F6w==
-X-Received: by 2002:a25:d40c:0:b0:b9e:45e1:2081 with SMTP id m12-20020a25d40c000000b00b9e45e12081mr19726190ybf.45.1683668074989;
-        Tue, 09 May 2023 14:34:34 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u9-20020a252e09000000b00b9d255709f9sm3228657ybu.2.2023.05.09.14.34.34
+        d=1e100.net; s=20221208; t=1683671328; x=1686263328;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pMXYBD9jC2McG2Legqur7dKRkgXwkmqFIpaljMqCOJU=;
+        b=HJk3eI9L4MU+9Fz+rMLa04zWfNhoa/G6P+QHctkWn1hNOTjiz87h/wfT6qlHjYvDXA
+         32s6il4NL2T3oQNlHO3DsI+K2BbUomsl0XgiGsjFpW+A6fLIxfhea7UbJLiNaRO6mdza
+         FQhe3zHsYDVw6pNFW1fFXomIql+LUIKzHtd72T4WMk1p7O6lJA46iqka/pIqi5EsSg3w
+         LuddPIz7e9DZW7T06SMQDG90ZEgG41pIP//P9xR2517vmNj3C8918Wt6hJtY+110F6P4
+         rpaJvKHj08TmwZ1Gh5v4DpT6mYneJJStlfRg2tg3JkpZWh8xEFx4YnSVNVcqmi18pW8f
+         RHXw==
+X-Gm-Message-State: AC+VfDwlEW4DvwHpGrEIh1lEqktfs4YfVk6lBTM1KFGk3m+IJQEMvErT
+        GOGO0q345FfUTSLr5H9xlZE=
+X-Google-Smtp-Source: ACHHUZ4QG1M5CvFNpog2Jl5arLfKplRS0obWlEBGmnXSXBla0BYqvCINoavIAgHeDbfhD4sjxyHPnQ==
+X-Received: by 2002:a05:6a20:4326:b0:100:3258:d163 with SMTP id h38-20020a056a20432600b001003258d163mr12193330pzk.35.1683671328212;
+        Tue, 09 May 2023 15:28:48 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id w187-20020a6362c4000000b0050bd9c8c53dsm1905381pgb.23.2023.05.09.15.28.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 14:34:34 -0700 (PDT)
-Date:   Tue, 9 May 2023 17:34:33 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Tue, 09 May 2023 15:28:47 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/15] upload-pack.c: avoid enumerating hidden refs where
- possible
-Message-ID: <ZFq8aYppuhjlkChK@nand.local>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <44bbf85e73676b2c89a82c09f7d355122ce6e805.1683581621.git.me@ttaylorr.com>
- <ZFpjpsmCxDTUG-z3@ncase>
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH v2 00/15] Introduce new `git replay` command
+References: <20230407072415.1360068-1-christian.couder@gmail.com>
+        <20230509175347.1714141-1-christian.couder@gmail.com>
+Date:   Tue, 09 May 2023 15:28:47 -0700
+In-Reply-To: <20230509175347.1714141-1-christian.couder@gmail.com> (Christian
+        Couder's message of "Tue, 9 May 2023 19:53:32 +0200")
+Message-ID: <xmqq8rdxuokg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZFpjpsmCxDTUG-z3@ncase>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 09, 2023 at 05:15:50PM +0200, Patrick Steinhardt wrote:
-> On Mon, May 08, 2023 at 06:00:26PM -0400, Taylor Blau wrote:
-> > @@ -601,11 +601,32 @@ static int get_common_commits(struct upload_pack_data *data,
-> >  	}
-> >  }
-> >
-> > +static int allow_hidden_refs(enum allow_uor allow_uor)
-> > +{
-> > +	return allow_uor & (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1);
-> > +}
-> > +
-> > +static void for_each_namespaced_ref_1(each_ref_fn fn,
-> > +				      struct upload_pack_data *data)
+Christian Couder <christian.couder@gmail.com> writes:
+
+> # Intro
 >
-> I know it's common practice in the Git project, but personally I tend to
-> fight with functions that have a `_1` suffix. You simply cannot tell
-> what the difference is to the non-suffixed variant without checking its
-> declaration.
+> `git replay` has initially been developed entirely by Elijah Newren
+> mostly last year (2022) at:
 >
-> `for_each_namespaced_ref_with_optional_hidden_refs()` is definitely a
-> mouthful though, and I can't really think of something better either.
-
-Yeah, I know. It's not my favorite convention, either, but I also
-couldn't come up with anything shorter ;-).
-
-> > +{
-> > +	/*
-> > +	 * If `data->allow_uor` allows updating hidden refs, we need to
-> > +	 * mark all references (including hidden ones), to check in
-> > +	 * `is_our_ref()` below.
+> https://github.com/newren/git/commits/replay
 >
-> Doesn't this influence whether somebody can _fetch_ objects pointed to
-> by the hidden refs instead of _updating_ them?
+> I took over a few months ago to polish and upstream it as GitLab is
+> interested in replacing libgit2, and for that purpose needs a command
+> to do server side (so without using a worktree) rebases, cherry-picks
+> and reverts.
 
-Oops, yes. Thanks for catching my obvious typo.
+It would help to include the following in future updated rounds, as
+Elijah is shuffling the header files around agressively and these
+patches do not build when merged into 'seen'.  When these two new
+includes are added, the series would compile both standalone
+(i.e. applied on top of 'master') and in 'seen' (i.e. with shuffled
+headers).
 
-Thanks,
-Taylor
+Thanks.
+
+ builtin/replay.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git c/builtin/replay.c w/builtin/replay.c
+index 7699d28f93..62dd1f7fff 100644
+--- c/builtin/replay.c
++++ w/builtin/replay.c
+@@ -15,6 +15,8 @@
+ #include "refs.h"
+ #include "revision.h"
+ #include "strmap.h"
++#include <oidset.h>
++#include <tree.h>
+ 
+ static const char *short_commit_name(struct commit *commit)
+ {
