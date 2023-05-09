@@ -2,65 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F6B9C77B7F
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 01:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 525DCC7EE25
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 01:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbjEIBDd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 21:03:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52716 "EHLO
+        id S233170AbjEIBHa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 21:07:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjEIBDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 21:03:32 -0400
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E378DE7D
-        for <git@vger.kernel.org>; Mon,  8 May 2023 18:03:28 -0700 (PDT)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-195ee1be41aso2011932fac.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 18:03:28 -0700 (PDT)
+        with ESMTP id S233354AbjEIBH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 21:07:27 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A639012
+        for <git@vger.kernel.org>; Mon,  8 May 2023 18:07:16 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-195c61067beso2836227fac.1
+        for <git@vger.kernel.org>; Mon, 08 May 2023 18:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683594208; x=1686186208;
+        d=gmail.com; s=20221208; t=1683594435; x=1686186435;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aWYPXHpZGgrNSC0B1/pjAyhWicpIT1aWYoD2AtHFr0o=;
-        b=kzYavD8QxZD2tLPvUvuAZJEems+l3f8RrGNWbs0yQyEQJi751XmKhBF6/ursDOcLiC
-         64in9SiDtsmg25DbwVNaWN7Btdto9LNS3q9LouO/MY2beop1dXijHBH2ms3YLPb1yAmu
-         n+rcx4FqpElNVwXEbJ0I3wu+IsuLBnaxgY9wQrdLroCcuU3NCRcX81EsTeh2jaGGEQUb
-         l8pclncXAnV4gLyCgfw5u9/yJjD0IZ+IVkpkOHNuu3RGgMUl/FG6f0WYDuqSQM2+gA8d
-         3UedNywNsza72eFgTRdEHlA3gSh/kW6mcYqvf03FLt0UwBEUiG1P2uI2I4w8OuTR5HEx
-         Lunw==
+        bh=fCE1dYR9bHKSLT/pE3jk2UUh6tm4KMH88gjFjYfPu/s=;
+        b=bZgaUnsxB3ceJ+R35Qalb0zDLjj8/Eerc7vYYa5M2pQqR7H1BQ2wgdfAIpa+LG1Dw9
+         M+Ero3+M0SC81fNXQjGVyywsEGuEF1iaA9CklxZXq8rbmQCZTTGyhZCATcp/xicBP/5n
+         nQuTqUZTxAc80+Nl3WfIoELMSsO/vWBTZSTbHli6ltS1sm296pOKxYBBwzOOMbjAA8kQ
+         AXkvEHGewVIlK20kcRFlqFwvNDj3pMSvXGVsojTRLlJsPQ+aVD2A0AuJIun6xe8UNe0i
+         r2X9xAXgvMyQZBqiqepXUOS3FVMcyCJnrHN/3X3Ze1vvLM5L60nezTWUr9bXm1imFXjn
+         Pyhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683594208; x=1686186208;
+        d=1e100.net; s=20221208; t=1683594435; x=1686186435;
         h=content-transfer-encoding:mime-version:subject:references
          :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=aWYPXHpZGgrNSC0B1/pjAyhWicpIT1aWYoD2AtHFr0o=;
-        b=fzN2xjnzS8yi86Ul3z906qzyU2w6fnzPy8RytoNctapZF/ZaG2jGvLmrrSTH/bNZ3F
-         lESFe56kqWyUr5ULGNBmYvB0CdXdpmCHL4DDP8wFx14obMhDWtlT0SRzI37IMA+L901Y
-         8rMXWG3ok7fK6UAR5KlRyoGyYiEeZgTVOXrUwAYWaC8l6Byn5T2k18cyNyJq+vp4vshn
-         e1xOtC49LFOIhB+aUmg1LQXWQkBKVaALzgLVYVJREnWaRnJYITUslokljEZdGMlEI7pY
-         yFHGx5owp8b/aSKpm8CPBCwDKKvTd4nQy4s9G4wmNk6HMpBVN1MuDZeVGJRQrwC3Ng0s
-         HCBA==
-X-Gm-Message-State: AC+VfDyrcrzsdoPWtp0wq/2bDOa0n4izxoovCvy683jEz4Lpy2JJDl4K
-        TyWMOrSH438vegHm/n56IAi80zUQHkw=
-X-Google-Smtp-Source: ACHHUZ54DilxhuK6tDkLOVH3C0s1IWQJ8vTA2nWofRrrFljy81mL5UMghy7gmOfXqRhhJDdAy1IB3w==
-X-Received: by 2002:a05:6870:7712:b0:18e:afcc:60bd with SMTP id dw18-20020a056870771200b0018eafcc60bdmr6941814oab.47.1683594208132;
-        Mon, 08 May 2023 18:03:28 -0700 (PDT)
+        bh=fCE1dYR9bHKSLT/pE3jk2UUh6tm4KMH88gjFjYfPu/s=;
+        b=bYatFf46+bmh1jUjbsFFUw1HM3KADDCWkc98cQ3DRG+HPEi6FB7EZ6ePK4PFDU1h3V
+         EWP130i6RTYLkzewiUTZ4JCvEDF5NpS5auLj8mqBDa8258aGooUs63l90AjsoUkB21Ee
+         NHqEGZLqN2wh8WyzSc3LEGjC1koult0UhkEWyWjHvo0MympDA/cGhOyw7kXLy+b98drW
+         U6Q6dLVzrnrMgeKtLtUAeOKFSyF+Itagui2s7TWtb/0rkOQTFLZKxVqOHUzmu+7j9lQP
+         DAszDjOnh8lqKmExS4HMw6pCteTRHok5msSHmXuns5W0S/XgEa6v+yLpVoEA279Tpo6G
+         S4Ig==
+X-Gm-Message-State: AC+VfDyF0n6IA/rAXPojtR+8rHLEfAp7DZYkvAASM7DIsuMxvmJJJ+hN
+        eb6li3h9BITBlO0Yuy0HDwZKTjsqJlw=
+X-Google-Smtp-Source: ACHHUZ5DIfpKrKdm/jq1rvbDL1tAcvJVnKT1CcDH4NkHz9H9syX3+R0XZVDrWrwugefe9V0DNdb+Xg==
+X-Received: by 2002:a05:6870:9544:b0:192:85fb:3a33 with SMTP id v4-20020a056870954400b0019285fb3a33mr4616033oal.2.1683594435621;
+        Mon, 08 May 2023 18:07:15 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id y17-20020a056870381100b00187d06465edsm5523118oal.43.2023.05.08.18.03.27
+        by smtp.gmail.com with ESMTPSA id u22-20020a056871059600b0017703cd8ff6sm5545109oan.7.2023.05.08.18.07.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 18:03:27 -0700 (PDT)
-Date:   Mon, 08 May 2023 19:03:26 -0600
+        Mon, 08 May 2023 18:07:14 -0700 (PDT)
+Date:   Mon, 08 May 2023 19:07:14 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Sergey Organov <sorganov@gmail.com>
 Cc:     git@vger.kernel.org
-Message-ID: <64599bdee22b4_7c6829422@chronos.notmuch>
-In-Reply-To: <xmqqttwskse5.fsf@gitster.g>
+Message-ID: <64599cc234708_7c6829426@chronos.notmuch>
+In-Reply-To: <xmqq1qjwj7go.fsf@gitster.g>
 References: <20230503134118.73504-1-sorganov@gmail.com>
  <xmqqsfcdtkt0.fsf@gitster.g>
- <874jote2zl.fsf@osv.gnss.ru>
- <xmqqmt2lqofb.fsf@gitster.g>
- <xmqqttwskse5.fsf@gitster.g>
+ <xmqq1qjwj7go.fsf@gitster.g>
 Subject: Re: [PATCH] t4013: add expected failure for "log --patch --no-patch"
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -74,80 +72,30 @@ Junio C Hamano wrote:
 > Junio C Hamano <gitster@pobox.com> writes:
 > > Sergey Organov <sorganov@gmail.com> writes:
 > >
-> >> No problem from my side, but are you sure?
+> >> --patch followed by --no-patch is to be a no-op according to the "git
+> >> log" manual page.
 > >
-> > Absolutely.
-> >
-> > I've seen people just say "we document a failed one" and leave it at
-> > that, without attempting to fix.  I am trying to see if pushing back
-> > at first would serve as a good way to encourage these known failure
-> > to be fixed, without accumulating too many expect_failure in our
-> > test suite, which will waste cycles at CI runs (which do not need to
-> > be reminded something is known to be broken).  I will try not to do
-> > this when I do not positively know the author of such a patch is
-> > capable enough to provide a fix, though, and you are unlucky enough
-> > to have shown your abilities in the past ;-)
+> > I briefly wondered if it is a bug in the documentation.
+> > ... when "git log -p --raw" shows both patch and raw, I do not
+> > think of a reason why "git log -p --raw --no-patch" should not
+> > behave similarly.
 > 
-> I ended up spending some time digging history and remembered that
-> "--no-patch" was added as a synonym to "-s" by d09cd15d (diff: allow
-> --no-patch as synonym for -s, 2013-07-16).  These
-> 
->     git diff -p --stat --no-patch HEAD^ HEAD
->     git diff -p --raw --no-patch HEAD^ HEAD
-> 
-> would show no output from the diff machinery, patches, diffstats,
-> raw object names, etc.
-> 
-> And this turns out to be a prime example why the approach to ask
-> contributors do more, would help the project overall.
+> So, to tie the loose ends, "log -p --raw --no-patch" and "log -p
+> --stat --no-patch" do behave similarly.  Where my reaction was
+> mistaken was that I did not read the manual page myself that clearly
+> said it is the same as "-s" that suppresses diff output (where "diff
+> output" is not limited to "patch"---diffstat is also output of "diff"),
+> and incorrectly thought that "--no-patch" would countermand only
+> "--patch" and nothing else.
 
-It would also help the project to reward the contributors who actually
-do more.
+If Sergey, you, and me all agreed on what `--no-patch` should do
+(without reading the manpage), isn't that an indication that that is the
+expected behavior?
 
-Otherwise why would a contributor feel incentivized to do more, if that
-work is simply going to land flat on the ground?
+The fact that the documentation documents some unexpected behavior,
+doesn't mean it isn't a bug.
 
-> It hopefully would have been "ah, the intent is not documented
-> correctly, and here is a documentation patch to fix it."
-
-That would be assuming that the intent of a developer is all that
-matters.
-
-I disagree.
-
-What a reasonable user would expect also matters.
-
-> When a command does not behave the way one thinks it should, being
-> curious is good.  Reporting it as a potential bug is also good.  But
-> it would help the project more if it was triaged before reporting it
-> as a potential bug, if the reporter is capable of doing so.
-
-This entirely depends on one's definition of "bug".
-
-To me a bug is unexpected behavior. Some people think documenting
-unexpected behavior makes it not a bug, but to me it's just a documented
-bug.
-
-"It's not a bug, it's a feature!"
-
-> Those who encounter behaviour unexpected to them are more numerous
-> than those who can report it as a potential bug (many people are not
-> equipped to write a good bug report),
-
-Is it just unexpected to them? Or is it unexpected to most users?
-
-So what would a reasonable user expect `--no-patch` to do? I think a
-reasonable user would expect it to negate the effect of `--patch`, and
-nothing more.
-
-The fact that a minority of users expect `--no-patch` to disable all
-output--not just the one of `--patch`--would not make it not a bug in my
-book.
-
-> Those who can come up with a solution is even more scarse.
-
-And those who can come up with a solution that the maintainer deems
-worthy of merging are way, way scarcer.
+I would say it's a documented bug.
 
 -- 
 Felipe Contreras
