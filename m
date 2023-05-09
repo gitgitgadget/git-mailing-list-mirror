@@ -2,123 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CBA0C77B7C
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 17:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE1FCC77B75
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 18:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234009AbjEIR6h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 13:58:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        id S229592AbjEIS1j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 14:27:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjEIR6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 13:58:35 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DFC04483
-        for <git@vger.kernel.org>; Tue,  9 May 2023 10:58:34 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1ab1b79d3a7so42829975ad.3
-        for <git@vger.kernel.org>; Tue, 09 May 2023 10:58:34 -0700 (PDT)
+        with ESMTP id S229484AbjEIS1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 14:27:38 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C15DB4
+        for <git@vger.kernel.org>; Tue,  9 May 2023 11:27:37 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1aae2223aaeso35032745ad.2
+        for <git@vger.kernel.org>; Tue, 09 May 2023 11:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683655114; x=1686247114;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jH6R08BXYtkCRLaYBHGXJJ/dXOuedIeLqDHrF88pC68=;
-        b=S0U4GNFyKcn7JwalFsjife5aaCgTSaiS5MwihfkY4rx7O+/uJ/hIMBeq/6D7oWxo/0
-         r/RKhCe9nyf1ySCn75MxsPTg+uvNiSVvDxdqVdkoiBUPH+VwpE0g1UEUS/oWtxFJIH3K
-         E5wC0L4ouvhB54WL2bCo0FCo/Bj65Tm1HL8VsjAK8hcalcUw9dWTltGOwvqcLsGvRT9A
-         GkC3CRrZmWm0bz03Mt2owCZmlQhNGNDOi0JJ1poFDFMEsHkV1FqtJ61ctB5cBRRrqI4T
-         7NCmE6zb8aXbs7a/KOmwzP/k0oHLWtythYhva/d1cpOuiTnHBlIk9kYKDfVEluuaAcg/
-         5gDg==
+        d=google.com; s=20221208; t=1683656857; x=1686248857;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QKIz4JMR0mKH3bJ9qZdb/O9aWWZJAoOT9JAEH94gmQc=;
+        b=avOTcK7i6HCm1izWd9Nm5P1jDarWGF/lhNduXzG/kOUjHOS6jzaMfRlSzVoekVxEYS
+         E87LkQt/PzClh4Lc/0TKkgXsBWh9TFGNk0rewoU7H/WArzecZ4rZ3KY48APdHDi4Ys+d
+         Jdxvp5JPCS8H02PuxoLhc80z1RLF+WceZZZhIwHj07jlnrkBBcgYRhnrQ89n/Rhr+B72
+         Nj9YvfKCvpYeEip9Qhu1RwsEAoPniurqG9uxx+qo3Wxc8ShoXt7a4qxT4vu2jA87kMgq
+         QAT/ah7BzJpX20vq5auOUAlOwgWFcotpK36cN0ERQj0A4KhDypZPtdhjxFvXTMmnt7GE
+         q11g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683655114; x=1686247114;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jH6R08BXYtkCRLaYBHGXJJ/dXOuedIeLqDHrF88pC68=;
-        b=kImnN+S+CmsFayKe/8fmFmq+gRKqkO7RIkBUHh8x6noWLs7hkbi68eoYLqWWnj8Oq6
-         Wm48QTG5v4gbOCyGXgfbXFmplTLTLQk67qOnO0HLtHmQoFBP/7o0y7CX+6NNOTQdt6g/
-         a0gdnJBEtQdtas0XA7HIVjwLw2RDdJSt/eoAbQCRqI4Zkr7PtAP75f1EP2Ou8k0pytiv
-         Wfjuk/Em2SI1H3/3WzwIshAR4kBlxpv/H+25/DzJJkpzNZfwd95sPHP4iI8GPTPKAYld
-         GLzeBvCOu99UcKDyyXWkVJ6RYNzd9yqkxwQ0Z/ZoZejR61TQwf0B13ehGHC2ZEWux/9C
-         JvwA==
-X-Gm-Message-State: AC+VfDytlTMQZ0MMwEAmD0Z24BhC6XLFldLOTuu1Pn7+RpG1W24PDTNm
-        DvWd/MuVdRN3dEYRGoPVM0iRsVSrQRQ=
-X-Google-Smtp-Source: ACHHUZ4+q+SZSpkq4f9E9rzRp60pSK9rGLCXV6Mxrl8ePstx9repdtfrN1C35E6d07/0oZrjrOk4dw==
-X-Received: by 2002:a17:902:db06:b0:1ac:712d:2049 with SMTP id m6-20020a170902db0600b001ac712d2049mr10533457plx.6.1683655113604;
-        Tue, 09 May 2023 10:58:33 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id be8-20020a170902aa0800b001ac897026cesm1894928plb.102.2023.05.09.10.58.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 10:58:33 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 3/8] fetch: add a test to exercise invalid output
- formats
+        d=1e100.net; s=20221208; t=1683656857; x=1686248857;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QKIz4JMR0mKH3bJ9qZdb/O9aWWZJAoOT9JAEH94gmQc=;
+        b=RXoLXjTZ89FPpXYu83dMij7Yst7AGVBCxMXigICJtRNoL82WIKqXK27tF7sxpkF735
+         k0F55wYQSez/xsZaiq8k4bEgqOmjXUohOdoqREGos3xNZ3UYSSkIWF1mIKLZCPKpfx5D
+         bpNh/jNpJRKKHNckFI4/2Pp6TeNpTx6MIfMgTiBKfRoxyyZql+eDxB4+XRxVm1U0ajq2
+         mHj1boRqpPcwJETn4VvnXLqzX/Nc18vIIayY6MxkwBmI16MJHpcuXfczKqHJbP9idh+k
+         O5YI8Wlc7cxkPVYwbJvDL0DfNE1NUiCtGfLZyVdF3zNbQ8G4lq0EqflEccRS0toraCkt
+         VvvQ==
+X-Gm-Message-State: AC+VfDwjTSUAH26hJxUCDNw/R/MhxhkA9Gx/BHGU57v9tYFS9zmCnj4m
+        UI/hBFgGsl/BqTEXDstA/oaZwSmmt6KoWg==
+X-Google-Smtp-Source: ACHHUZ5gdTfZjFVBesBYOrDvB2HZyAYsk/zpGo393Ew2d9MFyo0YG3AuA0Cn6om0yiJLDAA52lEtwnUsMN1P5w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:903:3281:b0:1a5:32f3:ca95 with SMTP
+ id jh1-20020a170903328100b001a532f3ca95mr5168813plb.8.1683656857017; Tue, 09
+ May 2023 11:27:37 -0700 (PDT)
+Date:   Tue, 09 May 2023 11:27:35 -0700
+In-Reply-To: <xmqq1qjpz96s.fsf@gitster.g>
+Mime-Version: 1.0
 References: <cover.1681906948.git.ps@pks.im> <cover.1683636885.git.ps@pks.im>
-        <006ea93afbef8742a823a9444d2b71785a9b4ec3.1683636885.git.ps@pks.im>
-Date:   Tue, 09 May 2023 10:58:33 -0700
-In-Reply-To: <006ea93afbef8742a823a9444d2b71785a9b4ec3.1683636885.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Tue, 9 May 2023 15:02:11 +0200")
-Message-ID: <xmqqv8h1xu7q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+ <d82b42ed345ac7b482bf5dd96456f131ecb8c746.1683636885.git.ps@pks.im> <xmqq1qjpz96s.fsf@gitster.g>
+Message-ID: <kl6l5y911ht4.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v4 1/8] fetch: fix `--no-recurse-submodules` with
+ multi-remote fetches
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Add a testcase that exercises the logic when an invalid output format is
-> passed via the `fetch.output` configuration.
+>> +		git config fetch.parallel 0 &&
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t5574-fetch-output.sh | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+> Is this necessary for the purpose of the test, though?  It should
+> not hurt, but we do not require the end-users to set it in real life
+> for the parallel fetching to work, either, right?
 
-It makes perfect sense to make sure that invalid input gets rejected
-and the command exits with non-zero status, and it is probably a
-good thing that the end-user sees a message that explains why the
-particular input is rejected (even though it adds one more thing
-that needs to be updated when the message gets reworded).
+IIUC it would make the test output deterministic if we fetched from both
+remotes. That doesn't happen here though, so I guess it's not doing
+anything right now.
 
-But do we need to insist on no output to the standard output stream
-when the command errors out?
+>> +		git fetch --all --no-recurse-submodules 2>../actual
+>> +	) &&
+>> +
+>> +	cat >expect <<-EOF &&
+>> +	From ../src
+>> +	 * [new branch]      master     -> secondary/master
+>> +	EOF
+>> +	test_cmp expect actual
+>> +'
+>
+> In the context of a series that attempts to introduce a new stable
+> output format for machine consumption, which implies the traditional
+> output can change to match human users' preference, this test feels
+> a bit brittle, but let's wait until the end of the series to judge
+> that.
 
-Other than that, looking good.
+I also find it a bit brittle to assert on the whole output when this
+test is about checking that we do not fetch the superproject.
 
-THanks.
+Is there a reason you didn't go with the "grep for submodule lines"
+approach in the previous tests? If it's about catching regressions, IMO
+your PATCH 2/8 does a good enough job of doing that.
 
-
-> diff --git a/t/t5574-fetch-output.sh b/t/t5574-fetch-output.sh
-> index f91b654d38..a09750d225 100755
-> --- a/t/t5574-fetch-output.sh
-> +++ b/t/t5574-fetch-output.sh
-> @@ -7,6 +7,25 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  . ./test-lib.sh
->  
-> +test_expect_success 'fetch with invalid output format configuration' '
-> +	test_when_finished "rm -rf clone" &&
-> +	git clone . clone &&
-> +
-> +	test_must_fail git -C clone -c fetch.output= fetch origin >actual.out 2>actual.err &&
-> +	cat >expect <<-EOF &&
-> +	fatal: invalid value for ${SQ}fetch.output${SQ}: ${SQ}${SQ}
-> +	EOF
-> +	test_must_be_empty actual.out &&
-> +	test_cmp expect actual.err &&
-> +
-> +	test_must_fail git -C clone -c fetch.output=garbage fetch origin >actual.out 2>actual.err &&
-> +	cat >expect <<-EOF &&
-> +	fatal: invalid value for ${SQ}fetch.output${SQ}: ${SQ}garbage${SQ}
-> +	EOF
-> +	test_must_be_empty actual.out &&
-> +	test_cmp expect actual.err
-> +'
-> +
->  test_expect_success 'fetch aligned output' '
->  	git clone . full-output &&
->  	test_commit looooooooooooong-tag &&
+Wondering out loud, I wonder if it makes sense for us to make a bigger
+distinction between "tests whose purpose is to guard against unexpected
+changes in output" (i.e. snapshot tests) vs "tests that happen to use
+output as a way to assert behavior" (i.e. 'regular' behavioral tests).
+Many GUI app codebases have such a distinction and have different best
+practices around them.
