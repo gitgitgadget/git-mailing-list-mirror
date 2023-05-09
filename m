@@ -2,172 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2254FC7EE23
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 20:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27A12C77B75
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 20:22:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234729AbjEIUTe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 16:19:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53770 "EHLO
+        id S230157AbjEIUWp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 16:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229911AbjEIUTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 16:19:31 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 638F63ABF
-        for <git@vger.kernel.org>; Tue,  9 May 2023 13:19:30 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-643a1656b79so4167627b3a.3
-        for <git@vger.kernel.org>; Tue, 09 May 2023 13:19:30 -0700 (PDT)
+        with ESMTP id S229650AbjEIUWn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 16:22:43 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AFE40C2
+        for <git@vger.kernel.org>; Tue,  9 May 2023 13:22:42 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55a79671a4dso97982627b3.2
+        for <git@vger.kernel.org>; Tue, 09 May 2023 13:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683663570; x=1686255570;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6eUEPIXGFh00Gwu9KY0qXjFG/9QsBFwGur83joEHtps=;
-        b=U2iEDb6EMrHuZhhBtoQGlKXxalpKsSV4W3TSEAx88xTtzUrxrnPbWAmYr2QW7LQmLE
-         +ll2o+juKWW7H3hRBvySNl3iwUqLc0Dwe94cNcEnFfjkK+xKpeFFZOmIQ8l1kad5ZZO9
-         lv97/QAf15t5nVVA4F72mHftaOtN9BRCwC2WSnnFVIU5P3g6lN2cxyMYufcKf8PbOB5J
-         3MjqSyUYbLrGMgBv9oxZtqKFWjEFnjMSJXYsDJmL5nKVL7gEcwRPRxfL9wZFp5uDKoKR
-         OTZ1brkwBo+9vROybCYyEgITXyRsnA462XG9Il3QGTpLuZP6GsPQVcTJ0vaA/3vd7EaZ
-         Hj7w==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683663761; x=1686255761;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DobOCbshlVIssY+mhoVGSHm5biNXWUPHSc48u0OJBIw=;
+        b=q6wWs00F95bFuvgVil6EWENSoLgqJoV2QSEffu6hEzCcGpcTg5DAldO0VwOA53ctpT
+         CnMF+B1anmBnmLJkDtSOvgWRjSckwoyyZLPMNn7eMpa/pJnDDIsPNV+Mkjnzm1MKZDt0
+         kFaa7K3AdC2l94cg7ZVdVmCb8sN9ceNj3Z64KcH1ZZVXCkDcvlDxvFCtHInoSY1TraJ8
+         HCx3gTss6oRUGpTjGmNbcyE/R5v1TJ4i8I8B5nJoLx/DwRfq8Ek6rWI6cd/2ja5jg2G+
+         4rMXEj70MEe/7UvUWu9QVllJPyXFcsw+WcKNTH6yI0jyvlNfpI2PX5DB+crMynMHOQxU
+         VsqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683663570; x=1686255570;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6eUEPIXGFh00Gwu9KY0qXjFG/9QsBFwGur83joEHtps=;
-        b=bKEH2QkNn9JIG7dQQZC1sxTZ5K9QLOiI6AdmlK2AGThCyXxjzWGNGO6rSJiAf3XC3T
-         B4XQPgR9KrwP2vHaop230S+aUWrvSMCqnhEqAZmZ5/MIkDp6tLRy8Hl7YmfZTbIordWQ
-         e3zJj+plq5V5dR3vVspDMIm7voPAwwaLvLC7FHVfLsrgrt+6RGWSrLTG2zIPJUqOHqXT
-         d/ax0VnTIsi5d6phVeETbHovyMlhkMz3D8E7yffpHe8l3+/eWDRP7HiqgsUgAziOvu1w
-         VQS3/z4QC86CNUVLBg5+jtdO+5eO4V0fFry8qQK+KRsIfEFeRub25v3e8+3tuVtqpz8f
-         B3zw==
-X-Gm-Message-State: AC+VfDzdnbfdPwxdo9l10fORqqSZR4M44wOh8u5CfYX0SoajPRXXPjiv
-        SAVghvwROL0wnR2p57813S8=
-X-Google-Smtp-Source: ACHHUZ6wRJq7gJtwTH+YfryZWiCKJEUdM+9w6B7I0KyDVH/rEtn1yO1xL5CAzYcj+/gQqzUj6/9fkg==
-X-Received: by 2002:a05:6a00:234c:b0:646:3c2:4d30 with SMTP id j12-20020a056a00234c00b0064603c24d30mr10436532pfj.30.1683663569694;
-        Tue, 09 May 2023 13:19:29 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id n23-20020a62e517000000b0064398fe3451sm2092535pff.217.2023.05.09.13.19.29
+        d=1e100.net; s=20221208; t=1683663761; x=1686255761;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DobOCbshlVIssY+mhoVGSHm5biNXWUPHSc48u0OJBIw=;
+        b=KWWMbNG0JYlIGwF/CQXMSClWKjD06SO7g6Dc5ytEzcfGjqQscgMbmSd9kgaSU1RTEo
+         jttEfp3n19Og2sepHTJ6jq840jTDoVWCCjIRkncQbw+wF4s2xvLttcnRkRSTeHdlahOw
+         Gd4MiQ8seArdQzUTCIjcMtc7QUQsb1eZ8GeGd6TUvYtkABTG8UG1oILDtYctnhl/CYq4
+         jATfnqRq/8V+AsYjvVaPX1g4vXy/dmA3qT0TnD0/1NRKYUiGeevuozGPcztT/TeeTdmf
+         t3k7hfLD+MDL/lcwNRN0RhjNGlsylJrZnkXHnXkDladIL4UkzzBlSRmsaB5AoW9T76ur
+         KRXA==
+X-Gm-Message-State: AC+VfDzsrYqtQm6pnX0tD4jftai58p6btyqfQlL47Xuu9rmzZb9ZVx/v
+        9+1lLxhKIdj7ARd4QDjazy9y4GrHc61shUivBa/kiw==
+X-Google-Smtp-Source: ACHHUZ76aTQAF1iFj/6lCH9yY+2HpG4P+Y71w2lMuJv0TK1L/5oYKU1kpM5lydr92FNo6B1xuHsSlQ==
+X-Received: by 2002:a81:9288:0:b0:55a:824e:a142 with SMTP id j130-20020a819288000000b0055a824ea142mr15120959ywg.23.1683663761389;
+        Tue, 09 May 2023 13:22:41 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z128-20020a816586000000b00545dc7c4a9esm3536565ywb.111.2023.05.09.13.22.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 13:19:29 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v4 5/8] fetch: introduce `display_format` enum
-References: <cover.1681906948.git.ps@pks.im> <cover.1683636885.git.ps@pks.im>
-        <80ac00b0c4b0fde61a3edf48d996e3a60327a54d.1683636885.git.ps@pks.im>
-Date:   Tue, 09 May 2023 13:19:29 -0700
-In-Reply-To: <80ac00b0c4b0fde61a3edf48d996e3a60327a54d.1683636885.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Tue, 9 May 2023 15:02:19 +0200")
-Message-ID: <xmqq5y91xnou.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 09 May 2023 13:22:40 -0700 (PDT)
+Date:   Tue, 9 May 2023 16:22:39 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 06/15] builtin/for-each-ref.c: add `--exclude` option
+Message-ID: <ZFqrj/gdzkZBYF1V@nand.local>
+References: <cover.1683581621.git.me@ttaylorr.com>
+ <ea5c0ddc10cd484c2af8505b8078697896ff3bad.1683581621.git.me@ttaylorr.com>
+ <xmqqcz3a4den.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqcz3a4den.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> We currently have two different display formats in git-fetch(1) with the
-> "full" and "compact" formats. This is tracked with a boolean value that
-> simply denotes whether the display format is supposed to be compacted
-> or not. This works reasonably well while there are only two formats, but
-> we're about to introduce another format that will make this a bit more
-> awkward to use.
+On Mon, May 08, 2023 at 04:22:08PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Introduce a `enum display_format` that is more readily extensible.
-
-Makes sense.
-
-> +enum display_format {
-> +	DISPLAY_FORMAT_UNKNOWN = 0,
-> +	DISPLAY_FORMAT_FULL,
-> +	DISPLAY_FORMAT_COMPACT,
-> +};
+> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> > index c01fa6fefe..449da61e11 100644
+> > --- a/builtin/for-each-ref.c
+> > +++ b/builtin/for-each-ref.c
+> > @@ -14,6 +14,7 @@ static char const * const for_each_ref_usage[] = {
+> >  	N_("git for-each-ref [--points-at <object>]"),
+> >  	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
+> >  	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
+> > +	N_("git for-each-ref [--exclude=<pattern> ...]"),
+> >  	NULL
+> >  };
 >
->  struct display_state {
->  	struct strbuf buf;
->  
->  	int refcol_width;
-> -	int compact_format;
-> +	enum display_format format;
+> I think the original is already wrong, but the easiest thing we can
+> do in order to avoid making it worse is to drop this hunk, as the
+> existing usage is this:
+>
+> static char const * const for_each_ref_usage[] = {
+> 	N_("git for-each-ref [<options>] [<pattern>]"),
+> 	N_("git for-each-ref [--points-at <object>]"),
+> 	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
+> 	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
+> 	NULL
+> };
+>
+> and this series merely adds a new "--exclude=<pattern>" as one of
+> the "<options>".
+>
+> As we can see from the fact that for example
+>
+>  $ git for-each-ref --no-merged next refs/heads/\?\?/\*
+>
+> works just fine, exactly the same thing can be said about the other
+> --points-at/--merged/--no-merged/--contains/--no-contains options.
+>
+> The SYNOPSIS section of the manual page is fine.
 
-OK.  Preparatory conversion without adding anything new.
+Good point, will tweak; thanks.
 
-> @@ -809,31 +814,42 @@ static void display_state_init(struct display_state *display_state, struct ref *
->  
->  	git_config_get_string_tmp("fetch.output", &format);
->  	if (!strcasecmp(format, "full"))
-> -		display_state->compact_format = 0;
-> +		display_state->format = DISPLAY_FORMAT_FULL;
->  	else if (!strcasecmp(format, "compact"))
-> -		display_state->compact_format = 1;
-> +		display_state->format = DISPLAY_FORMAT_COMPACT;
->  	else
->  		die(_("invalid value for '%s': '%s'"),
->  		    "fetch.output", format);
+> > @@ -2169,6 +2169,15 @@ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
+> >  	return match_pattern(filter, filter->name_patterns, refname);
+> >  }
+> >
+> > +static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+> > +{
+> > +	if (!filter->exclude.nr)
+> > +		return 0;
+> > +	if (filter->match_as_path)
+> > +		return match_name_as_path(filter, filter->exclude.v, refname);
+> > +	return match_pattern(filter, filter->exclude.v, refname);
+> > +}
+>
+> Earlier I made a comment about .name_patterns member becoming
+> unnecessary, but I think what should need to happen is instead
+> match_pattern() and match_name_as_path() to lose the "filter"
+> parameter, and take a boolean "ignore_case" instead.
 
-Naturally.
+Agreed.
 
-> -	display_state->refcol_width = 10;
-> -	for (rm = ref_map; rm; rm = rm->next) {
-> -		int width;
-> +	switch (display_state->format) {
-> +	case DISPLAY_FORMAT_FULL:
-> +	case DISPLAY_FORMAT_COMPACT: {
-> +		struct ref *rm;
->  
-> -		if (rm->status == REF_STATUS_REJECT_SHALLOW ||
-> -		    !rm->peer_ref ||
-> -		    !strcmp(rm->name, "HEAD"))
-> -			continue;
-> +		display_state->refcol_width = 10;
-> +		for (rm = ref_map; rm; rm = rm->next) {
-> +			int width;
->  
-> -		width = refcol_width(rm, display_state->compact_format);
-> +			if (rm->status == REF_STATUS_REJECT_SHALLOW ||
-> +			    !rm->peer_ref ||
-> +			    !strcmp(rm->name, "HEAD"))
-> +				continue;
->  
-> -		/*
-> -		 * Not precise calculation for compact mode because '*' can
-> -		 * appear on the left hand side of '->' and shrink the column
-> -		 * back.
-> -		 */
-> -		if (display_state->refcol_width < width)
-> -			display_state->refcol_width = width;
-> +			width = refcol_width(rm, display_state->format == DISPLAY_FORMAT_COMPACT);
-> +
-> +			/*
-> +			 * Not precise calculation for compact mode because '*' can
-> +			 * appear on the left hand side of '->' and shrink the column
-> +			 * back.
-> +			 */
-> +			if (display_state->refcol_width < width)
-> +				display_state->refcol_width = width;
-> +		}
-> +
-> +		break;
-> +	}
-> +	default:
-> +		BUG("unexpected display format %d", display_state->format);
->  	}
+> > +cat >expected <<\EOF
+> > +refs/tags/bar
+> > +refs/tags/baz
+> > +refs/tags/foo/one
+> > +refs/tags/testtag
+> > +EOF
+> > +
+> > +test_expect_success 'exercise patterns with pattern exclusions' '
+> > +	for tag in foo/one foo/two foo/three bar baz
+> > +	do
+> > +		git tag "$tag" || return 1
+> > +	done &&
+> > +	test_when_finished "git tag -d foo/one foo/two foo/three bar baz" &&
+> > +	git for-each-ref --format="%(refname)" \
+> > +		refs/tags/ --exclude="refs/tags/foo/t*" >actual &&
+> > +	test_cmp expected actual
+> > +'
+>
+> These are doing as Romans do, so I won't comment on the outdated
+> pattern of preparing the expectation outside the test script.  After
+> the dust settles, somebody needs to go in and clean it up.
 
-Due to reindentation, the patch is noisier than what it does (which
-should be "nothing, other than allowing another value in the .format
-member").
+Yeah, I figured that this series was already getting pretty long, but
+that it would be expedient to propagate forward this pattern. But it
+should be cleaned up. Let's tag it with #leftoverbits accordingly.
 
-It makes me wonder if it would make it easier to read to move the
-bulk of this code to a helper function.  If we are to give a name to
-what is being done in the above hunk, what would it be?  It computes
-display->refcol_width in which all records would fit, but presumably
-if we are to add more things to be shown per ref and align them in a
-simlar way, we would compute widths for these other things there as
-well.  Perhaps compute_display_alignment() or somesuch?
-
+Thanks,
+Taylor
