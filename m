@@ -2,235 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F376C7EE22
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 19:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87FEFC7EE22
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 19:28:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234768AbjEITTF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 15:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48172 "EHLO
+        id S230078AbjEIT2V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 15:28:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234420AbjEITS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 15:18:59 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48C22423A
-        for <git@vger.kernel.org>; Tue,  9 May 2023 12:18:57 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f417ea5252so26815265e9.0
-        for <git@vger.kernel.org>; Tue, 09 May 2023 12:18:57 -0700 (PDT)
+        with ESMTP id S229695AbjEIT2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 15:28:20 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAE40448F
+        for <git@vger.kernel.org>; Tue,  9 May 2023 12:28:17 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-643bb9cdd6eso3860858b3a.1
+        for <git@vger.kernel.org>; Tue, 09 May 2023 12:28:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683659935; x=1686251935;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aSvfGA6ZeDgICLM7bAi9aYm+Y1F51ka/7GJxA/PERUY=;
-        b=KNBjuIaDm48B/PJKQlR23eHBvuNoas/Lle6rWyqt76YCsioQq378JT2qg9BeqAbaDt
-         2x747DVxKtcfNJsUK+qcgfY+dxsREUcd9pDqS7RUVVycDGgiRCLE6+PwnwFFK+pRqDrZ
-         QRQYH1cda+0v/AhVPF+NxyaCwGk3whODY0MYGm+DraVRbDgSHGxeZg7a/9sDF253fm39
-         mykD6WS3H2E/FpF4uL0MfusY5v/Y0HOhYtv9oko2lcYo6HhF1hnLKvYTMVgC7dXGRs7J
-         tFCr8Z3dYddF1zDEqw65VP7gNFvZZ6j5kQItJuurP4BsImhOTSBI8cTIWcu/qrlSbpqJ
-         6/zA==
+        d=gmail.com; s=20221208; t=1683660497; x=1686252497;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C2cMxwE4KTfhi2Fofux5FYX6wBgF25o241RpJQiKFsc=;
+        b=aI7Ta8hCzjAtxC7a7R7njPqZrk4MX1E1Hi9cUC2AxSXB2Op/T/+XU8LNMZ09T1/oW2
+         pMJZMFWLPfBuNrq8Ng4vB50Z6x3+Rm5BWomABp7q7e+OFQk4w8wIf0VH2ipUfwT0cZhp
+         r6K5s/iWG59TLJwrdN05TwustxAS6MS10OTjIxWXJx+h5HzjrZ9Jr19BtW7GbZC8XwOO
+         1BJ2s0fIkB97K/233vOWb/yCus8D9TYIIJtzGHCnObnavEyMcFYdoK9hmcDfTNNXXfvB
+         QqveusAvIp0JDEg/n0FTRdxg0TIZy8iTt87U54tl6yo3lOumSTupvRZo7DgIL1Ak33lm
+         lQHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683659935; x=1686251935;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aSvfGA6ZeDgICLM7bAi9aYm+Y1F51ka/7GJxA/PERUY=;
-        b=loVhEUGAh3ZRgdSlyrvQ+v+J0dXFCDmIYhYSGm6uJJ9HEjPwG24SxeXxpS7Dikg1Lk
-         zc+nCysCxL6yBEIRa7I+PKIiokXj8eZji8ynY/neZe69+e4oVMqJdZgoSvrOFemS5Ots
-         OixBmvbHCy8bld6hlwuByUJeUGy0e5mIiZDnlMHUpe4fmL6/ETRPeZriWb5qOp7O6GRl
-         aKMD3wKyQUXnmKjAbtDc8b40Aovwu5jHRebfcD2swosk1+cNXH3zMQO9WrK6JidTQTKS
-         C2P3cRxu3HlzMmDAX+jrcZ94bsYUHUykoHzn8hp09p+E7Q/InSthE4t/M3oMnBZXOQFC
-         r5pA==
-X-Gm-Message-State: AC+VfDwlTNQ5zw1LV/fsmCJ9ejGBl8bA3+CXDlbeHjymIGr6idihCMRY
-        GRo+hCT6ylgnMiSKJfnI++KFyDo8A4E=
-X-Google-Smtp-Source: ACHHUZ5fLCzmx0Ny2uR4bzTkX50GSfrrAfzI9lfelKr20EpJlzAn2ClUp/gyLzOrK0AAGyuLguKvUw==
-X-Received: by 2002:a05:600c:2055:b0:3f1:74c3:3c51 with SMTP id p21-20020a05600c205500b003f174c33c51mr10731856wmg.35.1683659935463;
-        Tue, 09 May 2023 12:18:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n22-20020a7bcbd6000000b003f41bb52834sm11225022wmi.38.2023.05.09.12.18.54
+        d=1e100.net; s=20221208; t=1683660497; x=1686252497;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=C2cMxwE4KTfhi2Fofux5FYX6wBgF25o241RpJQiKFsc=;
+        b=VtgBn7zAXfPCH8AigwtYmVgYwXa1W70qn+ulPnoIoGYaRXk/+LEcat0E+nah1XTrfb
+         Cfr1tglCZgPeGOHDu5l1nW9ZdHbD86atvsJE7if8ou2JCpg+f/NrB++6543EKm4ll11A
+         8BxmGFCN7wpAAhXoJLoxjfR8G1or6axtoJIW+UNeYlkeloFT7j2GGNdHge/snCqqgIu2
+         dIyuqKo0fjcL0EevEKk981huwOwtaVRg4JQDl2pjjTJMirsdSbq6rgrHT2RRpYNgBtS2
+         V9f5qC3zibFrH3sG/5W+fuxtlIjAggzLe1DrrOIqV7410vHjTxfCq4DDv8rN+CfZwKpy
+         RfRw==
+X-Gm-Message-State: AC+VfDzkJf65D7rIJtQD2Fmox1h9D2+zSEmGsU2K9D7ZP/jSE1fGFgPW
+        AnjJPkhhQue0cJ37KyCH3Vc=
+X-Google-Smtp-Source: ACHHUZ5BAyjzqONhIVzqRMv468xzra9Wvd8BYnxTR8fyTN/852NLMf8cFEjJvCuIL1BmP9Zxit1ezw==
+X-Received: by 2002:a05:6a00:14c8:b0:63d:2d8c:7fd5 with SMTP id w8-20020a056a0014c800b0063d2d8c7fd5mr20537202pfu.12.1683660497072;
+        Tue, 09 May 2023 12:28:17 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id c8-20020a62e808000000b0063b1b84d54csm2060266pfi.213.2023.05.09.12.28.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 12:18:55 -0700 (PDT)
-Message-Id: <03950e8f120e48b7df68f3273bbb2f7bb1e9073d.1683659931.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
-References: <pull.1501.git.git.1683215331910.gitgitgadget@gmail.com>
-        <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 May 2023 19:18:51 +0000
-Subject: [PATCH v2 3/3] pack-refs: teach pack-refs --include option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 09 May 2023 12:28:16 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v4 4/8] fetch: fix missing from-reference when fetching
+ HEAD:foo
+References: <cover.1681906948.git.ps@pks.im> <cover.1683636885.git.ps@pks.im>
+        <e599ea6d335d16b45fa75b223ea8db93e46c627d.1683636885.git.ps@pks.im>
+Date:   Tue, 09 May 2023 12:28:16 -0700
+In-Reply-To: <e599ea6d335d16b45fa75b223ea8db93e46c627d.1683636885.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Tue, 9 May 2023 15:02:15 +0200")
+Message-ID: <xmqqednpxq27.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-Allow users to be more selective over which refs to pack by adding an
---include option to git-pack-refs.
+> But it is not intended when displaying the updated references and would
+> cause us to miss the left-hand side of the displayed reference update:
+>
+> ```
+> $ git fetch origin HEAD:foo
+> From https://github.com/git/git
+>  * [new ref]                          -> foo
+> ```
+> The HEAD string is clearly missing from the left-hand side of the arrow,
+> which is further stressed by the point that the following commands show
+> the left-hand side as expected:
+>
+> ```
+> $ git fetch origin HEAD
+> From https://github.com/git/git
+>  * branch                  HEAD       -> FETCH_HEAD
 
-The existing options allow some measure of selectivity. By default
-git-pack-refs packs all tags. --all can be used to include all refs,
-and the previous commit added the ability to exclude certain refs with
---exclude.
+I do not mind being explicit and showing HEAD in this case for the
+sake of consistency.
 
-While these knobs give the user some selection over which refs to pack,
-it could be useful to give more control. For instance, a repository may
-have a set of branches that are rarely updated and would benefit from
-being packed. --include would allow the user to easily include a set of
-branches to be packed while leaving everything else unpacked.
+But speaking for the past developers, it was deliberate to omit what
+is common from the output to make it more terse, IIRC, and I think
+it is unfair to call it a "BUG".
 
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- Documentation/git-pack-refs.txt | 15 ++++++++++++++-
- builtin/pack-refs.c             | 10 ++++++++--
- refs.h                          |  1 +
- refs/files-backend.c            | 14 +++++++++++---
- t/t3210-pack-refs.sh            | 10 ++++++++++
- 5 files changed, 44 insertions(+), 6 deletions(-)
+Back when we wrote git-fetch-script, the output was a lot more
+verbose, and through efforts like 165f3902 (git-fetch: more terse
+fetch output, 2007-11-03) and numerous others over time, we got to
+the current output.
 
-diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
-index c0f7426e519..f187925bdc0 100644
---- a/Documentation/git-pack-refs.txt
-+++ b/Documentation/git-pack-refs.txt
-@@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repository access
- SYNOPSIS
- --------
- [verse]
--'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
-+'git pack-refs' [--all] [--no-prune] [--include <pattern>] [--exclude <pattern>]
- 
- DESCRIPTION
- -----------
-@@ -60,6 +60,15 @@ interests.
- The command usually removes loose refs under `$GIT_DIR/refs`
- hierarchy after packing them.  This option tells it not to.
- 
-+--include <pattern>::
-+
-+Pack refs based on a `glob(7)` pattern. Repetitions of this option
-+accumulate inclusion patterns. If a ref is both included in `--include` and
-+`--exclude`, `--exclude` takes precedence. Using `--include` does not preclude
-+all tags from being included by default. Symbolic refs and broken refs will never
-+be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
-+and reset the list of patterns.
-+
- --exclude <pattern>::
- 
- Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
-@@ -70,6 +79,10 @@ unpack it.
- When used with `--all`, it will use the difference between the set of all refs,
- and what is provided to `--exclude`.
- 
-+When used with `--include`, it will use what is provided to `--include` as well
-+as the the default of all tags and already packed refs, minus refs that are
-+provided to `--exclude`.
-+
- 
- BUGS
- ----
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index 3dcbd6e2421..293cdd17181 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -7,7 +7,7 @@
- #include "revision.h"
- 
- static char const * const pack_refs_usage[] = {
--	N_("git pack-refs [--all] [--no-prune] [--exclude <pattern>]"),
-+	N_("git pack-refs [--all] [--no-prune] [--include <pattern>] [--exclude <pattern>]"),
- 	NULL
- };
- 
-@@ -15,13 +15,19 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- {
- 	unsigned int flags = PACK_REFS_PRUNE;
- 	static struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
--	struct pack_refs_opts pack_refs_opts = {.exclusions = &excludes, .flags = flags};
-+	static struct string_list included_refs = STRING_LIST_INIT_NODUP;
-+	struct pack_refs_opts pack_refs_opts = { .exclusions = &excludes,
-+						 .flags = flags,
-+						 .included_refs = &included_refs };
-+
- 	static struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *item;
- 
- 	struct option opts[] = {
- 		OPT_BIT(0, "all",   &pack_refs_opts.flags, N_("pack everything"), PACK_REFS_ALL),
- 		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
-+		OPT_STRING_LIST(0, "include", pack_refs_opts.included_refs, N_("pattern"),
-+			N_("references to include")),
- 		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
- 			N_("references to exclude")),
- 		OPT_END(),
-diff --git a/refs.h b/refs.h
-index 46020bd335c..2f91f4c4a90 100644
---- a/refs.h
-+++ b/refs.h
-@@ -66,6 +66,7 @@ struct worktree;
- struct pack_refs_opts {
- 	unsigned int flags;
- 	struct ref_exclusions *exclusions;
-+	struct string_list *included_refs;
- };
- 
- const char *refs_resolve_ref_unsafe(struct ref_store *refs,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6a51267f379..3f8974a4a32 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1181,6 +1181,17 @@ static int should_pack_ref(const char *refname,
- 	    REF_WORKTREE_SHARED)
- 		return 0;
- 
-+	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
-+		return 0;
-+
-+	if (opts->included_refs && opts->included_refs->nr) {
-+		struct string_list_item *item;
-+
-+		for_each_string_list_item(item, opts->included_refs)
-+			if (!wildmatch(item->string, refname, 0))
-+				return 1;
-+	}
-+
- 	/* Do not pack non-tags unless PACK_REFS_ALL is set: */
- 	if (!(opts->flags & PACK_REFS_ALL) && !starts_with(refname, "refs/tags/"))
- 		return 0;
-@@ -1193,9 +1204,6 @@ static int should_pack_ref(const char *refname,
- 	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))
- 		return 0;
- 
--	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
--		return 0;
--
- 	return 1;
- }
- 
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 31b9f72e84a..86b3ff6a3e0 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -126,6 +126,16 @@ test_expect_success \
-      ! test -f .git/refs/heads/dont_pack3 &&
-      ! test -f .git/refs/heads/dont_pack4'
- 
-+test_expect_success \
-+    'test only included refs are packed' '
-+     git branch pack_this1 &&
-+     git branch pack_this2 &&
-+     git tag dont_pack5 &&
-+     git pack-refs --include refs/tags/pack_this* --exclude refs/tags/dont_pack* &&
-+     test -f .git/refs/tags/dont_pack5 &&
-+     ! test -f ./git/refs/heads/pack_this1 &&
-+     ! test -f ./git/refs/heads/pack_this2'
-+
- test_expect_success \
- 	'see if up-to-date packed refs are preserved' \
- 	'git branch q &&
--- 
-gitgitgadget
+> Note that this patch also changes formatting of the block that computes
+> the "kind" and "what" variables. This is done on purpose so that it is
+> part of the diff, hopefully making the change easier to comprehend.
+
+Just to help readers, "kind" is the category like branch, tag,
+etc. and "what" is the concrete name like 'master' and 'foo'.
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 08d7fc7233..6aecf549e8 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -918,12 +918,14 @@ static void display_ref_update(struct display_state *display_state, char code,
+>  	}
+>  
+>  	width = (summary_width + strlen(summary) - gettext_width(summary));
+> +	remote = prettify_refname(remote);
+> +	local = prettify_refname(local);
+>  
+>  	strbuf_addf(&display_state->buf, " %c %-*s ", code, width, summary);
+>  	if (!display_state->compact_format)
+> -		print_remote_to_local(display_state, remote, prettify_refname(local));
+> +		print_remote_to_local(display_state, remote, local);
+>  	else
+> -		print_compact(display_state, remote, prettify_refname(local));
+> +		print_compact(display_state, remote, local);
+>  	if (error)
+>  		strbuf_addf(&display_state->buf, "  (%s)", error);
+>  	strbuf_addch(&display_state->buf, '\n');
+> @@ -934,7 +936,7 @@ static void display_ref_update(struct display_state *display_state, char code,
+>  static int update_local_ref(struct ref *ref,
+>  			    struct ref_transaction *transaction,
+>  			    struct display_state *display_state,
+> -			    const char *remote, const struct ref *remote_ref,
+> +			    const struct ref *remote_ref,
+>  			    int summary_width)
+>  {
+>  	struct commit *current = NULL, *updated;
+> @@ -946,7 +948,7 @@ static int update_local_ref(struct ref *ref,
+>  	if (oideq(&ref->old_oid, &ref->new_oid)) {
+>  		if (verbosity > 0)
+>  			display_ref_update(display_state, '=', _("[up to date]"), NULL,
+> -					   remote, ref->name, summary_width);
+> +					   remote_ref->name, ref->name, summary_width);
+
+Makes sense.  The variable "remote" (now removed) holds what to
+write to FETCH_HEAD to be used to formulate a merge message by the
+caller, but this function is purely to report the ref updates and
+has no need to have access to that information.
+
+> @@ -1252,14 +1254,13 @@ static int store_updated_refs(struct display_state *display_state,
+>  			if (!strcmp(rm->name, "HEAD")) {
+>  				kind = "";
+>  				what = "";
+> -			}
+> -			else if (skip_prefix(rm->name, "refs/heads/", &what))
+> +			} else if (skip_prefix(rm->name, "refs/heads/", &what)) {
+>  				kind = "branch";
+> -			else if (skip_prefix(rm->name, "refs/tags/", &what))
+> +			} else if (skip_prefix(rm->name, "refs/tags/", &what)) {
+>  				kind = "tag";
+> -			else if (skip_prefix(rm->name, "refs/remotes/", &what))
+> +			} else if (skip_prefix(rm->name, "refs/remotes/", &what)) {
+>  				kind = "remote-tracking branch";
+> -			else {
+> +			} else {
+>  				kind = "";
+>  				what = rm->name;
+>  			}
+
+This is a bit noisier than necessary.  It took me a while until I
+realized that this hunk is a no-op.
+
+> @@ -1277,7 +1278,7 @@ static int store_updated_refs(struct display_state *display_state,
+>  					  display_state->url_len);
+>  
+>  			if (ref) {
+> -				rc |= update_local_ref(ref, transaction, display_state, what,
+> +				rc |= update_local_ref(ref, transaction, display_state,
+>  						       rm, summary_width);
+>  				free(ref);
+
+Good.
+
+> @@ -1288,7 +1289,7 @@ static int store_updated_refs(struct display_state *display_state,
+>  				 */
+>  				display_ref_update(display_state, '*',
+>  						   *kind ? kind : "branch", NULL,
+> -						   *what ? what : "HEAD",
+> +						   rm->name,
+>  						   "FETCH_HEAD", summary_width);
+
+Good, too.  The original cleared "what" and then to compensate for
+that had a logic to turn it back to "HEAD", but that is all gone by
+passing rm->name down.  
+
+I think we could pass "rm" and leave it to display_ref_update() what
+string to use, if we wanted to further refine the output later.
+
+Then somebody in the future may even want to see "HEAD" to be shown
+as an empty string and that can all be done in display_ref_update().
+It would fix the inconsistency that "git fetch origin HEAD" reports
+"HEAD -> FETCH_HEAD" by hiding "HEAD" just like the case where
+fetching "HEAD:foo" does, going in the other direction, I would
+think.
+
+Thanks.
