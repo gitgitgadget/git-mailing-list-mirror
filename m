@@ -2,149 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC22C7EE23
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 15:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00D92C77B7C
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 16:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236070AbjEIPQB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 11:16:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40682 "EHLO
+        id S235311AbjEIQDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 12:03:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236011AbjEIPPz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 11:15:55 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E81449D5
-        for <git@vger.kernel.org>; Tue,  9 May 2023 08:15:54 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id BC89D5C0120;
-        Tue,  9 May 2023 11:15:53 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 09 May 2023 11:15:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1683645353; x=1683731753; bh=Gk
-        6l7yJ0cZv+uj/R3Gh7pwaU3lKyrapn1ro6xxI/trg=; b=f39m3R19ZxLJSuwIZm
-        Ljv0BmLU2q0MrSWvyoV1H1dVO8fxTXxZZ+JdTK0pF7qmNMmN/apop14Hk2PyWRod
-        QXkH1CiU1IsuaAk0b8LTSZJ5LGq3oY95ithr4iPiQ1+rD4N8lYbELhn7HekfwPrm
-        GNwFGDajB/NSsKKtVtUxkDTxG0Vk5QiCWiw+oS85Pg/GKguiwbgvteAthqH7bqfj
-        NqMEvFyCMO2irrKpwoz8HWZHmHkKOxQnKxolWlxtbPm9ZZEUUfcpRVxfoe2KwzP9
-        JZiLBFE1Gn7OQ97II0hcHR50bzzcZlDv/mcErXUGpno1t240lpkYaOrFWjox1Khg
-        jcxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683645353; x=1683731753; bh=Gk6l7yJ0cZv+u
-        j/R3Gh7pwaU3lKyrapn1ro6xxI/trg=; b=ZT63bxY2lWqbKyosZKOMeFQh5Fh7A
-        eFEBpG45/cK5T79g7dgIq4BW7PRqA5jPpz2JpLBkNDv7sJ74+Kx9w+1E3yPUQXq6
-        qj6Pm8zxsblVJOd51wVpJn2fXuU+erwEhqOPxkUxlF4U/iL5z91c3MNzJ4ydomwH
-        pog2K2l8fXa5SScMl96mGJPHOmOzdt+jFLfkoNF3IC28dTaYU4Bvgs0IKjidH8Iz
-        HT7meKkKo61ovWpD2eUwMEJeJwAoEkKdoG7Jq7Ph03lZOQxii9INd64TzI3z8DKi
-        hPIkjdRS3zcQCNPjHD5hF04KjPMgdD1yb4RNINockFkPTBlnAO2HVWyeg==
-X-ME-Sender: <xms:qWNaZDR5HeEbOXX319vOyrr01l1setaQs8KbVoLHQWUk-lkBV3TD-A>
-    <xme:qWNaZExvV3AbWbggm_MhVDQVf6FDCYkh5-2uoxoc_7ksKRPPt8ZKwWEP4w5jSYS74
-    Rhrbd8uogiXZZRUnQ>
-X-ME-Received: <xmr:qWNaZI0DqdzCxpf9nz6CDGjeq7zI1fEaLTSMeFhO3qo9Cvx6J2VHQMPDZmX87RzXSwZ2YLcOzIOiUTkcpbDue3Q0q0EmCj-SVK8ZsZGA3Yw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeguddguddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:qWNaZDCdBp6KcfOOY9ClBccJKaEBaf75huAKDB099QcmhMXIsTyIuw>
-    <xmx:qWNaZMjRjf4we-gM9DOnMrbGGHqqLJuFCOo9Xjtiie6FiaxtLYQysA>
-    <xmx:qWNaZHqeIiIcgukNrEc_1uRHrrIwfyQvaHpQKqPL_7o8icz66Wv7NQ>
-    <xmx:qWNaZFuZLnrhHS2D7ICr3zG4-evM8TDDlONSUOZ3RLWrkm-HjrhTsg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 May 2023 11:15:52 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 9a517530 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 9 May 2023 15:15:44 +0000 (UTC)
-Date:   Tue, 9 May 2023 17:15:50 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/15] upload-pack.c: avoid enumerating hidden refs where
- possible
-Message-ID: <ZFpjpsmCxDTUG-z3@ncase>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <44bbf85e73676b2c89a82c09f7d355122ce6e805.1683581621.git.me@ttaylorr.com>
+        with ESMTP id S230150AbjEIQDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 12:03:24 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A3B53594
+        for <git@vger.kernel.org>; Tue,  9 May 2023 09:03:23 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-643557840e4so6550219b3a.2
+        for <git@vger.kernel.org>; Tue, 09 May 2023 09:03:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683648203; x=1686240203;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=izHhQAkaC6vScCjAdhfRQl8WGfQnQlNfegcU7+xtsHI=;
+        b=ZEo5uPgM6ssLcZNn/zTdqlXwszuy3IdmTV1TwF1Vl36BRmaUJemMlhUxM9eIw4uaYQ
+         Se+d5ZOXx+4rKpD9ehxNbdCHcpMDHScXfvBr5pCazAlCH+AEtricNgS3kSOzMDsixq6p
+         6+cqx3FOMFIlBh2OjGQBAahCzNg3ZUBRZZ+USfIl1AQwqB2gclIG08KT4HqLLe8KpSWa
+         ytAKk2C1hRayxLzg3eWvVpvKPQHmG+X7aaFP4OQ8wenDtieXxbBmoypWKiTAn6pH6VVJ
+         ll2dwaus5eHmkA4PNttG+qr4HuXpYNOKJVcEdwI12klyjpCC2m0r6UcGC8YnuiF63pnr
+         r8Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683648203; x=1686240203;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=izHhQAkaC6vScCjAdhfRQl8WGfQnQlNfegcU7+xtsHI=;
+        b=C/BXT63boZTPY5tBxnUGoZUnLiHQVVVjY9uTrTUlrHShzc0/HxCltnI496ua3QDB69
+         WK7Xs7w7G91cSBg1P3vM+ZqUcAxplY38dAemmbTt2F7q4bfl5Stf4MoR6l/Cliuh0zCx
+         tkqA5ANc3BahASHEHDhGctkIkOoqMgbxFdZaPz9nAcgwJRSQlqxL+5dMQkIGFjURl6pX
+         Ofl59xlKgIC8Ha75ItpKgpkteyAW1exk8W+kxad29/LyAVzB6uuPicVz18Qy0vshf3aR
+         zyCBmoVyXf/svhwcrn4jldOOi1uMfj8iDQ12EVR0IOXsUBI6HEKjU6xf+BMfGdy/4IFk
+         v4rA==
+X-Gm-Message-State: AC+VfDxW4T9EvdxJJE3HQKZeOMs5zOtUG5Chzo74zVMFxlSdwctKaZ6l
+        t43jviPoerG25v9SwZAb6Rs=
+X-Google-Smtp-Source: ACHHUZ69kvCCPtj9GHG7ERCXJleVxyF5KCavIE6V+H4e8MR0M/X1aQC4/520tZGvxI7lKvLK3gRodw==
+X-Received: by 2002:a17:902:d507:b0:1ac:310d:872d with SMTP id b7-20020a170902d50700b001ac310d872dmr19536839plg.52.1683648202760;
+        Tue, 09 May 2023 09:03:22 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id c13-20020a170902c1cd00b001a64ce7b18dsm1771550plc.165.2023.05.09.09.03.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 May 2023 09:03:21 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 00/24] Header cleanups (final splitting of cache.h, and
+ some splitting of other headers)
+References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
+        <xmqqzg6ergdp.fsf@gitster.g>
+        <CABPp-BErrVUnuDjL73edDpmkKUvs6Ny6cYwvueXw1toB4JcF-Q@mail.gmail.com>
+Date:   Tue, 09 May 2023 09:03:21 -0700
+In-Reply-To: <CABPp-BErrVUnuDjL73edDpmkKUvs6Ny6cYwvueXw1toB4JcF-Q@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 8 May 2023 18:31:00 -0700")
+Message-ID: <xmqqlehx331y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vXXXO7uzJAmdMghU"
-Content-Disposition: inline
-In-Reply-To: <44bbf85e73676b2c89a82c09f7d355122ce6e805.1683581621.git.me@ttaylorr.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Elijah Newren <newren@gmail.com> writes:
 
---vXXXO7uzJAmdMghU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Sure, I'm happy to rename ll-merge to merge-ll.  I prefer a suffix
+> since it is common to see files sorted by filename (whether by Git or
+> by the shell) and the suffix tends to keep similar-ish files together.
 
-On Mon, May 08, 2023 at 06:00:26PM -0400, Taylor Blau wrote:
-[snip]
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 7c646ea5bd..0162fffce0 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -601,11 +601,32 @@ static int get_common_commits(struct upload_pack_da=
-ta *data,
->  	}
->  }
-> =20
-> +static int allow_hidden_refs(enum allow_uor allow_uor)
-> +{
-> +	return allow_uor & (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1);
-> +}
-> +
-> +static void for_each_namespaced_ref_1(each_ref_fn fn,
-> +				      struct upload_pack_data *data)
+It can go both ways, though.  Grouping lower-level things together
+has values, too ;-).
 
-I know it's common practice in the Git project, but personally I tend to
-fight with functions that have a `_1` suffix. You simply cannot tell
-what the difference is to the non-suffixed variant without checking its
-declaration.
+If foo and foo-lowleve needs to be grouped and read together to be
+understood, it is a sign that the conceptual separation between the
+higher- and lower-level things is not done cleanly enough.
 
-`for_each_namespaced_ref_with_optional_hidden_refs()` is definitely a
-mouthful though, and I can't really think of something better either.
+Having said that, I do not care too deeply either way, as long as
+it makes it easier to locate what we need to in the end result.
 
-> +{
-> +	/*
-> +	 * If `data->allow_uor` allows updating hidden refs, we need to
-> +	 * mark all references (including hidden ones), to check in
-> +	 * `is_our_ref()` below.
+Thanks.
 
-Doesn't this influence whether somebody can _fetch_ objects pointed to
-by the hidden refs instead of _updating_ them?
-
-Patrick
-
---vXXXO7uzJAmdMghU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRaY6UACgkQVbJhu7ck
-PpTRdA/9H36dvL4tQSSvGJBE/tamXaB/MmmkoRu7YXZNZiT6y99ingeHNYhYPBxO
-GS064afsIzQrg+59yChpOjH+GLpF/L+0VfUHpInL+Od+I9Ph8YRu5OQFjA5lGrbo
-VMKoMEipkalLN+uRD7tZ17FWS5StUHVx/RAX5p0C3D1vbZrPH5vg48hUzVYsnISw
-jwWEZYYzNMlP2frtiNXphxLSo5Rba7wicf3wA2WK+wrQm52UrOepgAQdQL+F+8eq
-URMvgCZ3N2sRbzqgTXrTr6+Wnw/9RCu5ZxvR80o6Oh9qK/Mnet1aAGNrvQTcs3Xc
-lkxo2cO4pmTMJe/3tnu2Q3wpnPeB+ygH5bpVt51J5/UjcRI2PM6iNB84vYfSorcw
-R2G+DnL3j87GGSQ13T4feqX1U6IEI/Yxj2iTUD9FkZ4zCKwp9UgBL0DAYLuhZjYG
-vjHkd5eTqb0ayvyY4KXpUJb/7Hzgkzlo1l7dGatnIvuogdBIE80iGF8BX6yYkFDO
-0gMvwJ3yEDti8Og6F+gfK7jOlxfdT98oQrCMjs/F/RZF9NOG9CuO1H0ABTpcfbzx
-l+t+TUrY3KH+yrnFM3V5yrMaOZialrlF9NKDYuWqp5uXpR6blGf9uViRHp2Ee8Yr
-uNfGNzvc0pcMdFDHKokLOpZxXyRoWAIxS4FZq/1lrfUy6rpwjM0=
-=wL43
------END PGP SIGNATURE-----
-
---vXXXO7uzJAmdMghU--
