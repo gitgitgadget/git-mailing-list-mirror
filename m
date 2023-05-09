@@ -2,64 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 525DCC7EE25
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 01:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07067C77B75
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 01:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233170AbjEIBHa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 May 2023 21:07:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54044 "EHLO
+        id S233256AbjEIBQa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 May 2023 21:16:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233354AbjEIBH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2023 21:07:27 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A639012
-        for <git@vger.kernel.org>; Mon,  8 May 2023 18:07:16 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-195c61067beso2836227fac.1
-        for <git@vger.kernel.org>; Mon, 08 May 2023 18:07:16 -0700 (PDT)
+        with ESMTP id S230348AbjEIBQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2023 21:16:29 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0B276E9E
+        for <git@vger.kernel.org>; Mon,  8 May 2023 18:16:27 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-1928ec49077so4356794fac.0
+        for <git@vger.kernel.org>; Mon, 08 May 2023 18:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683594435; x=1686186435;
+        d=gmail.com; s=20221208; t=1683594987; x=1686186987;
         h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :in-reply-to:message-id:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fCE1dYR9bHKSLT/pE3jk2UUh6tm4KMH88gjFjYfPu/s=;
-        b=bZgaUnsxB3ceJ+R35Qalb0zDLjj8/Eerc7vYYa5M2pQqR7H1BQ2wgdfAIpa+LG1Dw9
-         M+Ero3+M0SC81fNXQjGVyywsEGuEF1iaA9CklxZXq8rbmQCZTTGyhZCATcp/xicBP/5n
-         nQuTqUZTxAc80+Nl3WfIoELMSsO/vWBTZSTbHli6ltS1sm296pOKxYBBwzOOMbjAA8kQ
-         AXkvEHGewVIlK20kcRFlqFwvNDj3pMSvXGVsojTRLlJsPQ+aVD2A0AuJIun6xe8UNe0i
-         r2X9xAXgvMyQZBqiqepXUOS3FVMcyCJnrHN/3X3Ze1vvLM5L60nezTWUr9bXm1imFXjn
-         Pyhg==
+        bh=1KMigbrM2NCiky+kpZoHL6IbIUgbRsGG1Wrrvkmql60=;
+        b=jBh3sRelLBRU3n5TLo4/iq7D8aC0eA8tJ7N7rG6uucfmRIbU1ZiO6BEL/DccsHmxi+
+         iFCvQgGZzea7NAwgnhByjfUroPJ32dKJBjVCqCw0tIC3gtM9YKur3gyfFiUcElX1d747
+         DcTSkeZlQLwDV8/SALsjREBeKy1gU8cVuOn7Kyvbd7mwR96skfi8z/j/8M3vrDFugbiZ
+         MNqfZiJpdg1EggdyjTweuw7/sXjkH4cK2Slat9zbqHIsfY218qH3mJM6XU5pSda+blxu
+         AcHYFfS+scREUJhktvhfzke/WOOpnvpfW+jRVhJ2hfgTzGuOoQfrzQwGWkiZgcbIxP46
+         R4hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683594435; x=1686186435;
+        d=1e100.net; s=20221208; t=1683594987; x=1686186987;
         h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fCE1dYR9bHKSLT/pE3jk2UUh6tm4KMH88gjFjYfPu/s=;
-        b=bYatFf46+bmh1jUjbsFFUw1HM3KADDCWkc98cQ3DRG+HPEi6FB7EZ6ePK4PFDU1h3V
-         EWP130i6RTYLkzewiUTZ4JCvEDF5NpS5auLj8mqBDa8258aGooUs63l90AjsoUkB21Ee
-         NHqEGZLqN2wh8WyzSc3LEGjC1koult0UhkEWyWjHvo0MympDA/cGhOyw7kXLy+b98drW
-         U6Q6dLVzrnrMgeKtLtUAeOKFSyF+Itagui2s7TWtb/0rkOQTFLZKxVqOHUzmu+7j9lQP
-         DAszDjOnh8lqKmExS4HMw6pCteTRHok5msSHmXuns5W0S/XgEa6v+yLpVoEA279Tpo6G
-         S4Ig==
-X-Gm-Message-State: AC+VfDyF0n6IA/rAXPojtR+8rHLEfAp7DZYkvAASM7DIsuMxvmJJJ+hN
-        eb6li3h9BITBlO0Yuy0HDwZKTjsqJlw=
-X-Google-Smtp-Source: ACHHUZ5DIfpKrKdm/jq1rvbDL1tAcvJVnKT1CcDH4NkHz9H9syX3+R0XZVDrWrwugefe9V0DNdb+Xg==
-X-Received: by 2002:a05:6870:9544:b0:192:85fb:3a33 with SMTP id v4-20020a056870954400b0019285fb3a33mr4616033oal.2.1683594435621;
-        Mon, 08 May 2023 18:07:15 -0700 (PDT)
+         :in-reply-to:message-id:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1KMigbrM2NCiky+kpZoHL6IbIUgbRsGG1Wrrvkmql60=;
+        b=JiMHWfx17hPOXaFI9Taajm3hVtTq8sUvMe8gfs7f+HRmI+n50/acVqv8tw2i/vQ2pT
+         HL62ezjbo08Ngm4UKHQWQcPackLPqHNSRBSnL7kbJs3tuKH+VKC5e9f7pruL7CXCkt6e
+         QqadVDTSLGBDsEuUUPpxYnJ4vThAsADOOEtxWl8ePPwo6YqGG27Q1Ans6Ku1M1ZiVPjH
+         dRWVrvR3mGhblJbpRheq5kvF3ynlxSkkP3p0mpd/V6P2xDOcPjI7DG7uTjdwbTuBPq4T
+         32PVr7OzXsrB97eg0FrWpObIPGTyVt7oKiACOLzMnRJV6CBKqtLZ2iK3t5mSHwvj/u5E
+         jykg==
+X-Gm-Message-State: AC+VfDyF4dSTMDBK3jxd1bUsuMIRWAZ/cE3iWYlbipJB4jNRjBozcXUp
+        AdItPMs/8bkKx+OrXI5PzO5X258Nepg=
+X-Google-Smtp-Source: ACHHUZ74qDRBZPlhXXUlqc2BaLGAD7Zd+etCaTO7PiPB2/MNSmInKuUGH7ov6ljU/pSYRQ1UoT3y2Q==
+X-Received: by 2002:a05:6870:4293:b0:18b:15cd:9b45 with SMTP id y19-20020a056870429300b0018b15cd9b45mr5828880oah.40.1683594987161;
+        Mon, 08 May 2023 18:16:27 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id u22-20020a056871059600b0017703cd8ff6sm5545109oan.7.2023.05.08.18.07.14
+        by smtp.gmail.com with ESMTPSA id r1-20020a056870734100b00177ba198612sm5507663oal.53.2023.05.08.18.16.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 18:07:14 -0700 (PDT)
-Date:   Mon, 08 May 2023 19:07:14 -0600
+        Mon, 08 May 2023 18:16:26 -0700 (PDT)
+Date:   Mon, 08 May 2023 19:16:25 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Message-ID: <64599cc234708_7c6829426@chronos.notmuch>
-In-Reply-To: <xmqq1qjwj7go.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Message-ID: <64599ee988190_7c68294b4@chronos.notmuch>
+In-Reply-To: <xmqq4joribyv.fsf@gitster.g>
 References: <20230503134118.73504-1-sorganov@gmail.com>
  <xmqqsfcdtkt0.fsf@gitster.g>
- <xmqq1qjwj7go.fsf@gitster.g>
-Subject: Re: [PATCH] t4013: add expected failure for "log --patch --no-patch"
+ <874jote2zl.fsf@osv.gnss.ru>
+ <xmqqmt2lqofb.fsf@gitster.g>
+ <xmqqttwskse5.fsf@gitster.g>
+ <87o7n03qgq.fsf@osv.gnss.ru>
+ <xmqqpm7fizsl.fsf@gitster.g>
+ <xmqqjzxnixqr.fsf_-_@gitster.g>
+ <xmqqfs8bith1.fsf_-_@gitster.g>
+ <xmqq4joribyv.fsf@gitster.g>
+Subject: Re: [PATCH] diff: fix behaviour of the "-s" option
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -70,32 +75,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano wrote:
 > Junio C Hamano <gitster@pobox.com> writes:
-> > Sergey Organov <sorganov@gmail.com> writes:
-> >
-> >> --patch followed by --no-patch is to be a no-op according to the "git
-> >> log" manual page.
-> >
-> > I briefly wondered if it is a bug in the documentation.
-> > ... when "git log -p --raw" shows both patch and raw, I do not
-> > think of a reason why "git log -p --raw --no-patch" should not
-> > behave similarly.
 > 
-> So, to tie the loose ends, "log -p --raw --no-patch" and "log -p
-> --stat --no-patch" do behave similarly.  Where my reaction was
-> mistaken was that I did not read the manual page myself that clearly
-> said it is the same as "-s" that suppresses diff output (where "diff
-> output" is not limited to "patch"---diffstat is also output of "diff"),
-> and incorrectly thought that "--no-patch" would countermand only
-> "--patch" and nothing else.
+> >  * Then the interaction between "-s" and other format options were
+> >    poorly implemented.  Modern versions of Git uses one bit each to
+> >    represent formatting options like "--patch", "--stat" in a single
+> >    output_format word, but for historical reasons, "-s" also is
+> >    represented as another bit in the same word.
+> 
+> An obvious improvement strategy is to stop using the NO_OUTPUT bit
+> and instead make "-s" to clear the "output_format" word, and make
+> "--[no-]raw", "--[no-]stat", "--[no-]patch", etc. to flip their own
+> bit in the same "output_format" word.  I think the "historical
+> reasons" why we did not do that was because we wanted to be able to
+> do a flexible defaulting.  We may want to say "if no output-format
+> option is given from the command line, default to "--patch", but
+> otherwise do not set the "--patch" bit on", for example.
+> Initializing the "output_format" word with "--patch" bit on would
+> not work---when "--raw" is given from the command line, we want to
+> clear that "--patch" bit we set for default and set "--raw" bit on.
+> We can initialize the "output_format" word to 0, and OR in the bits
+> for each format option as we process them, and then flip the
+> "--patch" bit on if "output_format" word is still 0 after command
+> line parsing is done.  This would almost work, except that it would
+> make it hard to tell "no command line options" case and "'-s' cleared
+> all bits" case apart (the former wants to default to "--patch",
+> while the latter wants to stay "no output"), and it probably was the
+> reason why we gave an extra NO_OUTPUT bit to the "-s" option.  In
+> hindsight, the arrangement certainly made other things harder and
+> prone to unnecessary bugs.
 
-If Sergey, you, and me all agreed on what `--no-patch` should do
-(without reading the manpage), isn't that an indication that that is the
-expected behavior?
+That's easy to solve by introducing a DIFF_FORMAT_DEFAULT item, which
+would be different from 0.
 
-The fact that the documentation documents some unexpected behavior,
-doesn't mean it isn't a bug.
-
-I would say it's a documented bug.
+Then every command can update DIFF_FORMAT_DEFAULT to the desired
+default, and if the default is cleared (e.g. `--no-patch`) that would
+not happen.
 
 -- 
 Felipe Contreras
