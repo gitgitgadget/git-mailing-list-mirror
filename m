@@ -2,82 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 622A0C77B75
-	for <git@archiver.kernel.org>; Tue,  9 May 2023 20:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93FDDC7EE22
+	for <git@archiver.kernel.org>; Tue,  9 May 2023 20:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234562AbjEIU3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 16:29:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57714 "EHLO
+        id S230305AbjEIUfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 16:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjEIU3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 16:29:47 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C900F40E4
-        for <git@vger.kernel.org>; Tue,  9 May 2023 13:29:46 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-b9dea9d0360so8401257276.1
-        for <git@vger.kernel.org>; Tue, 09 May 2023 13:29:46 -0700 (PDT)
+        with ESMTP id S234959AbjEIUft (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 16:35:49 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE35C10FE
+        for <git@vger.kernel.org>; Tue,  9 May 2023 13:35:48 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6435bbedb4fso6894094b3a.3
+        for <git@vger.kernel.org>; Tue, 09 May 2023 13:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683664186; x=1686256186;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=chrwqOCyveQraEn11exT7WS/wtG/liKDWK/sMmbUwGk=;
-        b=cdDxwprj1vvXm6wJWNcVQp4EE4ebb0vjnKXALAyGixgyIkfQg1AqONl11gFcYhn/aW
-         PUhlRuixgmtgYTFIUypy2T8iqoSFWdu7DYB+itLBI56BqoHqllnJBhV4yYwurqO2Cnxe
-         daqn0s6OUD/Sp0q40gvrCgXGBtwfOa3COlRSdwnl64B85ASMGsPAbHteHHSvyxlQdskK
-         5/ZlFA8epV5LiQhznPMwgIYZbcclAIEfCiWTrM/Nn4kszCB6+cY2MkD+WC1E5jrzFMNC
-         BeNdLYw8hMVK/6iENjTOSLU2gwwOTTC56ZDF/vlIgdLhk/0+esHu4k+iqICFw8s9XMrz
-         D7XA==
+        d=gmail.com; s=20221208; t=1683664548; x=1686256548;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZVyiF9xpT6HWVo30btL3VhX+fRmehfDm5gBeyK3W0i8=;
+        b=kvQED+iSeHrH1H4pH6iGeRkdVkTuQ0zMzSCkSdrzDYj8sxn/XglNKgQZEOuTO9BjqX
+         4IY0Rvnd7eQt45DxNhBvzitAlZGNMA/Zj7BQOfxOqWTi0HAoDqBb+0qvWjs0104aKnoP
+         5gW5lmiy5ZO2sXUZ/v3P9IbYjbPFBIerVqKgSFIHEpVKq1A6L0RBp04oMb8C5SGvoyZC
+         +8O+8Gz26gjlfFUVjKdWEr0d0IkCjdfQaaC5LV4SRJOO5R1mz10IKVmq/CS+0INTfkHi
+         lJwEVN9rcvDoTUqZIYFgsD3CatUZ3TOAU+n5BALSf7BjvjAvd3rJu+ja/ZLc+7z/898q
+         uJTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683664186; x=1686256186;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=chrwqOCyveQraEn11exT7WS/wtG/liKDWK/sMmbUwGk=;
-        b=TBDg6hhlXxmIT00QTjTO8ALmTWZwj7GymhCnxlJP8eab8DI0qHc8T+4FXczJW8L5+J
-         XgcgTJW6Rc/f9mXkMz3IjtLHYnOOz9Aw+wjL8yedxvCnCsxhxBpR9cU4fYUGqUNRO2BK
-         WophGSjoXZClfF2rpi+NtMWkoXdWAglBgRau+YTtSbJWZIKhxBZnndHoefJ5IQnVMIup
-         8iauXKUe6pfwYWhVb9vP0FpU0J2XZlBB2utSqG5r3p2CLHjbhDAe8xAxiJmj+uM4MWXx
-         OzOodBKBZRUgUR8Uf4Eok9gMD6gyOLtrXxVc4chu4cFYVOc90tVtK/NvGf2ht4QXnqFi
-         s/6g==
-X-Gm-Message-State: AC+VfDyajspkPYmbPIpX3S6QWIU86dP1HHFSX/N2vjxIIDWTyyIiwFxG
-        LELP+VtU1CQwpsHfnQRUQ8OUTg==
-X-Google-Smtp-Source: ACHHUZ6mvlClkHZiriZEEa6XgiltgJ2PIZzw4iYlhnlGgvs80VvtCslbNo1eAQOr4dMxz+T/kFp7hA==
-X-Received: by 2002:a25:3255:0:b0:b9e:849b:31e6 with SMTP id y82-20020a253255000000b00b9e849b31e6mr16632257yby.43.1683664185946;
-        Tue, 09 May 2023 13:29:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f184-20020a2551c1000000b00ba07622e023sm3261392ybb.14.2023.05.09.13.29.45
+        d=1e100.net; s=20221208; t=1683664548; x=1686256548;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZVyiF9xpT6HWVo30btL3VhX+fRmehfDm5gBeyK3W0i8=;
+        b=ElWQpI6cFlxtWWAjwxMBjSoFeEXzMKItGel58HfFzOV0Ljl09IjrqLu2q2zbcd8KYn
+         UV+q/W8qVYPYUe8LXnk6Ujd/776uwmi70ucQ1WBF6hI5A5fJjyy0klZcwRLlFSozjs7e
+         S77ZubhSxEIoj7HrFaZgLfRtOF1uJbuaz3WbYF841xijitJ2eVxd/Ms0ojsCBNAiVsTU
+         GB76rCClYwyWcFyClS3sDJFi0VYsiLj/MvMq0Kb02VUpx9D0wCb651DcehZaj4j0eeAd
+         o8UKlq/ELjzDITBan5e802Q8RltGTFEjyeimd0qQejzWMOXBpMWJxQe9Xn3gffU6aD30
+         YG/g==
+X-Gm-Message-State: AC+VfDwAJ801XSgGGOOR8LBEAz6HbtiOiq0crzReLIvIHt6jccpmWqP6
+        f7Fl2tGpKmMo6yDe9X7PK94=
+X-Google-Smtp-Source: ACHHUZ40BZ/tPqEwUOSF99vSlQ1NFosBWe3HjX54RFBRMDEh/b1Mu2zhpo34UsVrRx2lBQSK6jmjJQ==
+X-Received: by 2002:a05:6a00:2311:b0:63a:ea82:b7b7 with SMTP id h17-20020a056a00231100b0063aea82b7b7mr22540999pfh.28.1683664548419;
+        Tue, 09 May 2023 13:35:48 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id s4-20020a62e704000000b0063b8d21be5asm2211928pfh.147.2023.05.09.13.35.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 13:29:45 -0700 (PDT)
-Date:   Tue, 9 May 2023 16:29:44 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 08/15] refs/packed-backend.c: refactor
- `find_reference_location()`
-Message-ID: <ZFqtOPO5MMrG60S3@nand.local>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <836a5665b7df065811edc678cb8e70004f7b7c49.1683581621.git.me@ttaylorr.com>
- <xmqq5y924bt2.fsf@gitster.g>
+        Tue, 09 May 2023 13:35:47 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v4 6/8] fetch: move display format parsing into main
+ function
+References: <cover.1681906948.git.ps@pks.im> <cover.1683636885.git.ps@pks.im>
+        <826b8b7bc0d7d6a76f6fd19d8f4a8460af61e9cf.1683636885.git.ps@pks.im>
+Date:   Tue, 09 May 2023 13:35:47 -0700
+In-Reply-To: <826b8b7bc0d7d6a76f6fd19d8f4a8460af61e9cf.1683636885.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Tue, 9 May 2023 15:02:24 +0200")
+Message-ID: <xmqqo7mtw8d8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq5y924bt2.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2023 at 04:56:41PM -0700, Junio C Hamano wrote:
-> So, yes I can agree that this does not introduce any new bug, it is
-> a mysterious no-op, and why we want to pass different values in "start"
-> in future steps in order to achieve what is not explained and leaves
-> the readers frustrated.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Re-reading this patch again with your review in mind, I agree that the
-split is poorly placed.
+> We're about to introduce a output format though that is intended to be
+> parseable by machines, for example inside of a script. In that case it
+> becomes a bit awkward of an interface if you have to call git-fetch(1)
+> with the `fetch.output` config key set. We're thus going to introduce a
+> new `--output-format` switch for git-fetch(1) so that the output format
+> can be configured more directly.
 
-I modified this patch to just extract the core routine behind a helper
-function and avoided adding the "start" parameter here.
+Good.  I was wondering about that code in the context of the
+previous patch, especially the error message had a hard-coded
+assumption that it comes from a configuration variable.
 
-Thanks,
-Taylor
+And the changes to display_state_init() to lift the responsibility
+of finding and validating .format out of the function, and the
+changes to intermediate functions to pass the .format through the
+callchain, are all expected and there was nothing questionable.
+
+> @@ -2157,6 +2149,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i;
+>  	const char *bundle_uri;
+> +	enum display_format display_format = DISPLAY_FORMAT_UNKNOWN;
+>  	struct string_list list = STRING_LIST_INIT_DUP;
+>  	struct remote *remote = NULL;
+>  	int result = 0;
+> @@ -2183,6 +2176,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  	argc = parse_options(argc, argv, prefix,
+>  			     builtin_fetch_options, builtin_fetch_usage, 0);
+>  
+> +	if (display_format == DISPLAY_FORMAT_UNKNOWN) {
+> +		const char *format = "full";
+> +
+> +		git_config_get_string_tmp("fetch.output", &format);
+> +		if (!strcasecmp(format, "full"))
+> +			display_format = DISPLAY_FORMAT_FULL;
+> +		else if (!strcasecmp(format, "compact"))
+> +			display_format = DISPLAY_FORMAT_COMPACT;
+> +		else
+> +			die(_("invalid value for '%s': '%s'"),
+> +			    "fetch.output", format);
+> +	}
+
+OK, but isn't the usual way to do this to have configuration parser
+before parse_options() and then let parse_options() override
+whatever display_format set by it?
+
+That way, we do not have to worry about DISPLAY_FORMAT_UNKNOWN at
+all.  Just initialize the variable to whatever default format at the
+beginning of this function, read "fetch.output" to override it if
+the configuration exists, and then let parse_options() to handle
+"--output-format" or "--porcelain" or whatever to further override
+it.
+
+Thanks.
