@@ -2,103 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF8A9C77B7D
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 04:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA9D2C77B7D
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 06:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbjEJE0f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 00:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39426 "EHLO
+        id S230192AbjEJGpG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 02:45:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjEJE0d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 00:26:33 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB5881987
-        for <git@vger.kernel.org>; Tue,  9 May 2023 21:26:32 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-51b661097bfso4750539a12.0
-        for <git@vger.kernel.org>; Tue, 09 May 2023 21:26:32 -0700 (PDT)
+        with ESMTP id S235962AbjEJGoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 02:44:54 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67527448D
+        for <git@vger.kernel.org>; Tue,  9 May 2023 23:44:47 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-517bad1b8c5so6484160a12.0
+        for <git@vger.kernel.org>; Tue, 09 May 2023 23:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683692792; x=1686284792;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=z/vkP1owWF50y8HzDbVj/HxorTrcYSdfpZMkQtfcPcw=;
-        b=cF5n/2uQAVIbpb9I1Zwys+Ox31vTI/1O75zrQht4TLgqAq3BSH5mDUctYb+s/FpzPG
-         TYDslkd1c6knxx6RSyvPz81K8glVcojD4myIEXFssc/2u6JOuahQms6Ny7p7Wsmw8a/q
-         hg6Z4ISCAW8RSS8jMrBC813/ZRz3prSJnMarpD6xJc1xo9LobiRnAJyJ1a8VCFDKLZdv
-         APSvh30PFeEANcG+jwf0WGWr1MsEvgGm7o3iai1Qh/YgoJZOrRv1DNE3jZZG91W9BC50
-         EQkI/f3KNcb1gS91chO4YOX1OlWay3gdLx79WHoHmVOJ8s8t3K6qFES/3rT+NnrrExOG
-         KTrQ==
+        d=google.com; s=20221208; t=1683701087; x=1686293087;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hb/IAmudeOIAlSyErmezAHvXdo8R1OI85uRhDfuDXHM=;
+        b=tVwMm2co/ZW3PDOsaptQDka0Wg532cJv4qHAhtSJNkayxOAQkdJONEmcqAHzTF6E7I
+         BIXJloSY5kh9I9ChCa4x3qYWuZ5CVQEALwfndqmOj3Zb/vOwDU4CkIeRKbqF0Xty8AHT
+         cH4WKfzQnGuEHb0bX5apmdL7IQtGsZjYLd8PyBff/2aJatnR8u2PAT0uDB+ypeBs7/Wk
+         dCdhwUFIOgaOEHh6wLgVdkhCKa/W/drpoNchTBobrmJWM0t79arK2GoDqUewOP3nhqGR
+         Fjzo4eS3rBEvm5mXsttoD/Hj5RKu1crB+dO2V2g79kgMd5iRSgvJgaVbiWTHoT0ORyZX
+         VoOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683692792; x=1686284792;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z/vkP1owWF50y8HzDbVj/HxorTrcYSdfpZMkQtfcPcw=;
-        b=SEGAmy8Y57HIGbtotCn46eatqyfPs4p03OxdAFSYbVWd7L6ecAgebwjCeEcrcHekfu
-         slNO6LQIXo0FpYr3s8kCp0clEWRNSIa43hMMYw6cdHHeosNAWWzovsDH8JQWL0leTWa2
-         1yHDcHcB1gLRUwvYfuQ5ebS58xJd3nWSljrWrVjYzpvwVoe+L8PRMcVIbiWteza4AZzJ
-         YmsmMxNDknD90IogJ0H1f1V2Hvb77UNw8AbexOWlol396yRcDgFSLirGugXUNkNmeJKV
-         yxGasEh0iRHBGmCS3hAoErsJCCV5TgVGCG0/lJYWA/hixz+FC+PSNUfcid7lNaWNV8vb
-         bn7g==
-X-Gm-Message-State: AC+VfDyM/7FLJdWvO6JIjRobfGLBo5IkzEylJ4U/2VB28UekMMgt6Dfh
-        0qAmT4biyUX5ZJEUCNBDsWK2EvEA2r4=
-X-Google-Smtp-Source: ACHHUZ64j2L/qIIvOzCO4m6eHAnX/QukuMSrqW0cYR2uJark+R4N1nidTkXxsvtRG+8u1QX18KeRhw==
-X-Received: by 2002:a05:6a20:72a7:b0:ff:d067:34f with SMTP id o39-20020a056a2072a700b000ffd067034fmr15873889pzk.33.1683692792075;
-        Tue, 09 May 2023 21:26:32 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id j24-20020aa78018000000b0063a1e7d7439sm2604593pfi.69.2023.05.09.21.26.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 21:26:31 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+        d=1e100.net; s=20221208; t=1683701087; x=1686293087;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hb/IAmudeOIAlSyErmezAHvXdo8R1OI85uRhDfuDXHM=;
+        b=OR+PqNIfFlYi6RMisxMLf97VRabquNKkA/o/RpLoNgcZjfeUG4/B6rXyqmUFImYrX6
+         0mfhDKYEUd3xoKCJ+126kBAcABNPW29Of3GTSMlohsISDYJGBDVOlE2V3IOHzU59s5s+
+         uC1fYxbHar8vszg/X+d8AAyzK9tjVqohZr1krQ1yJDvfSJ59/vw0i2JO/pt+0gBzXM2E
+         RAyeD6oVLuozm34wULUg7Q9QjvDC6dEkIsKx8AoZqOGXgZnhc9c1myakfsnlSZIlC0h1
+         FBCR1Yi0h04BGhzWTwWo0FKB/+dPzQF2mM4bjKqqkZ9maLaDMuS2LY/Wvw31tDhPsRYT
+         PO9Q==
+X-Gm-Message-State: AC+VfDzZbA6mctumlt3ZEQBhzAnS/ya50zus6TO4sSwsam4za/L49jZv
+        zWMo9mvL4PZDrJyOQlHjiAZxMeATrLI=
+X-Google-Smtp-Source: ACHHUZ7RBAM1h1QV5LGZvUwIG9xYakKziWdY56zOkeFQB8Eawq6Ovsf7HVvCtwOOcpXk7gqY0jmQoNBXvRo=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a63:6b02:0:b0:52c:5e46:c804 with SMTP id
+ g2-20020a636b02000000b0052c5e46c804mr4770887pgc.10.1683701086930; Tue, 09 May
+ 2023 23:44:46 -0700 (PDT)
+Date:   Tue, 09 May 2023 23:44:45 -0700
+In-Reply-To: <xmqqa5yeobrj.fsf@gitster.g>
+Mime-Version: 1.0
+References: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
+ <0c10e40794d208ba408a2b1c394fdbd6caa7a92a.1683566870.git.gitgitgadget@gmail.com>
+ <xmqqa5yeobrj.fsf@gitster.g>
+Message-ID: <owlymt2cn0rm.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 04/11] doc: trailer: explain "commit mesage part" on first usage
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] diff: fix interaction between the "-s" option and
- other options
-References: <xmqqfs8bith1.fsf_-_@gitster.g>
-        <20230505165952.335256-1-gitster@pobox.com>
-        <645995f53dd75_7c6829483@chronos.notmuch> <xmqqsfc62t8y.fsf@gitster.g>
-        <6459c31038e81_7c68294ee@chronos.notmuch>
-Date:   Tue, 09 May 2023 21:26:31 -0700
-Message-ID: <xmqqjzxgzua0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> > Is it though?
->> 
->> Yes.
->> 
->> If the proposed log message says "as intended", the author thinks it
->> is.
->
-> The question is not if the author of the patch thinks this is the way
-> `-s` is intended to work, the question is if this is the way `-s` is
-> intended to work.
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The "author" refers to the author of the "proposed log message" of
-the patch in question, i.e. me in this case.  The author of the
-patch under discussion thinks it is, so asking "Is it?", implying
-you do not agree, is nothing but a rhetorical question, and doing
-so, without explaining why, wastes time on both sides.
+>> From: Linus Arver <linusa@google.com>
 
-I am not interested in getting involved in unproductive arguments
-with you (or with anybody else for that matter).  I've been giving
-you benefit of doubt, but I'll go back to refrain from responding to
-your message, unless it is a patch that I can say "I agree 100% with
-what the proposed log message says and what the patch text does,
-looking great, thanks. Will queue." to, which has been my default
-stance.
+>> This phrase is used for the first time here, but it's not explained what
+>> it means. So explain it just in case it's not obvious.
 
-Past experience tells me that to any review other than "100% good",
-I would see responses in an unpleasant and hostile manner.  Anything
-that asks clarification for something unclear in your patch, or
-suggests alternatives or improvements.  And it led to unproductive
-and irritating waste of time number of times, and eventually you
-were asked to leave the development community for at least a few
-times.
+> 03+04 should be a single patch
 
+Agreed.
+
+> otherwise it would
+> waste reviewer's time (just like I did thinking and writing about
+> 03/11).
+
+Thank you for the pointer. I will be more careful about patch order
+moving forward.
+
+> Or just drop "part".  "git cat-file commit HEAD | sed -e '1,/^$/d'"
+> is a good material to use with "--no-divider" because it only has
+> the "commit message".  The "part" implies you first had something
+> that has both "commit message" and something else and you split
+> that combination into two (or more) parts.  But that does not have
+> to be the case.  I think that made 03/11 confusing, at least to me.
+
+Looking back, I don't think I had a good grasp of what "commit message
+part" meant. When I wrote this series I thought "commit message part"
+meant everything in the output of git-format-patch until hitting the
+"---" divider. But as you point out in your
+
+     git cat-file commit HEAD | sed -e '1,/^$/d'
+
+example, technically there is never any ambiguity of what the commit
+message contains (it only contains a commit message, not a "commit
+message part" and a separate "patch part"). And the output of
+git-format-patch is a patch (which contains the commit message and also
+other things), not a commit message with different subparts. I was
+operating under this flawed understanding, oops.
+
+That being said, there are several instances in the DESCRIPTION section
+when we use the "commit message part" phrasing (as opposed to just
+"commit message"). I am leaning toward just dropping "part" as you
+suggested. Also, I think we should add an explanation of how
+git-interpret-trailers sees the incoming text, how it gives special
+treatment to a "---" divider line, how it uses this line to mark off a
+commit message part (and then uses this part as the default location of
+adding trailers, unless specifying a "--no-divider" flag), etc. This
+could be in a revamped 03+04 patch, or perhaps left out until another
+day. I'll see what I can do in v2.
+
+>> Signed-off-by: Linus Arver <linusa@google.com>
+>> ---
+>>   Documentation/git-interpret-trailers.txt | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+
+>> diff --git a/Documentation/git-interpret-trailers.txt  
+>> b/Documentation/git-interpret-trailers.txt
+>> index 3e60a6eaabc..7d6e250f37e 100644
+>> --- a/Documentation/git-interpret-trailers.txt
+>> +++ b/Documentation/git-interpret-trailers.txt
+>> @@ -22,9 +22,9 @@ This command reads some patches or commit messages  
+>> from either the
+>>   <file> arguments or the standard input if no <file> is specified. If
+>>   `--parse` is specified, the output consists of the parsed trailers.
+
+>> -Otherwise, this command applies the arguments passed using the
+>> -`--trailer` option, if any, to the commit message part of each input
+>> -file. The result is emitted on the standard output.
+>> +Otherwise, this command applies the arguments passed using the  
+>> `--trailer`
+>> +option, if any, to the commit message part of each input file (as  
+>> opposed to the
+>> +patch part following a '---' divider). The result is emitted to  
+>> standard output.
+
+>>   Some configuration variables control the way the `--trailer` arguments
+>>   are applied to each commit message and the way any existing trailer in
