@@ -2,171 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3C9BC77B7D
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 12:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0511C77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 12:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237100AbjEJMfq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 08:35:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37242 "EHLO
+        id S237138AbjEJMfy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 08:35:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237040AbjEJMfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 08:35:04 -0400
+        with ESMTP id S236538AbjEJMfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 08:35:16 -0400
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E179EF2
-        for <git@vger.kernel.org>; Wed, 10 May 2023 05:35:02 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 5C00E3200918;
-        Wed, 10 May 2023 08:35:01 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3997A244
+        for <git@vger.kernel.org>; Wed, 10 May 2023 05:35:08 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 9D0933200926;
+        Wed, 10 May 2023 08:35:07 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 10 May 2023 08:35:01 -0400
+  by compute5.internal (MEProxy); Wed, 10 May 2023 08:35:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1683722100; x=1683808500; bh=z6
-        PA5APLk1b/bsa46QsdapxxnZyFsp089HLVgNM6JLM=; b=MiAFgKV30TlcC8GOXi
-        fWlfC54KL1FBe/hIcl0pFfP8F3A4Pd3eyR+uXcqc/S5wWFt6Oem2eZSXGxsnZ20I
-        j5enV1c0hCiliiKrAZ5HOOwmmIXKnTs84IpPMJyqMBQfGi0qwFTAMDWqwXuosYAz
-        RZkQ1uIi9Z3UNfWk8EMRi+HdfjvjvdsmKcl/Ys5zHZ88D6j9AuPgezTXn21bpuAi
-        tS4IforOS+hm2YS3i1QL48fyGj5b6SWg4LkSeXZxGFlFCRv9jrXigE3/yTxm0w1J
-        p1f3lfsYCdr4/c9gsyJOpXzYKycJAYe94qMVKqPmdWu799DiJ7wJ6cmkfbNiJuD6
-        DOxg==
+        :subject:subject:to:to; s=fm3; t=1683722106; x=1683808506; bh=ZG
+        bkQAF52GzFHmdIinjQS35TmUXJwfCQ2wyAZsrrwDs=; b=TcBMbPwkukHbXInfbB
+        z/fvrYAr8sPn20ufdjt1NrPLm7t/qXbBXqTCOqpK8VfWQUHm1bagY1gozECgnAd6
+        DFNtr2Fyu3jeFmjxkEPoNEbPWsdB+sxWjJx0XZ8+ijC6IBmtRccEDtx69c9yelGq
+        dvZRLwx5F8xFOTWASnrMh//a0IR/9rqfkfCNnBv4DUY+pI1TaS4LM+w75Kg3IW2a
+        aBH7FfZTcG03+tGS4XZk8mG0Mw4A3avsgrD6y5ujHQt2cVEr5cRkoDX7TX3rLPaj
+        4QYqbQoN7F0Nx+EnhHVvmmlnTD9bJvhGDkCb7sTJnfxLX+uZ95x5p3AXHVnAVb/Z
+        tfRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683722100; x=1683808500; bh=z6PA5APLk1b/b
-        sa46QsdapxxnZyFsp089HLVgNM6JLM=; b=NZnM8UF2bPwV3vA5Vrlck4po1kF/h
-        CLWt/56VDW7en+qRIZnxenE/LhR38UBCirTyUIRfGhOnkVdaB4XVtrHnb58HZueg
-        TsmPV5/2k75bGwCiz/PgVCf64n9OptTMns25o2mMcl+jXjrqmWP4k3AQdquSRRC6
-        adgPdeybPae/IofgEwImJtW6p8RzuxdyetrfeB+PLw+G9q9/Cm+xMiwD7O4w8UJt
-        8MDpAhXKr5hCJDUShhEdS0vWtFRp02cK9SwnFAlvcBh+vdUDOGLOOkRcBGAskkOW
-        PDHTRZd2dlD1n7qO1zOIhqvzJ3sj8iY0BKMbU0WAaFKpetFeqvtZpQXSw==
-X-ME-Sender: <xms:dI9bZC91jkx-xuja1c_5ESAk4wELV8NQINfIxx1Inxqo9HXN2moITg>
-    <xme:dI9bZCs7OqcbqOcs4eRxXbaak3oX507ffyGNE-VFlzYGCZWGipmT5s2Kql9M2K8bp
-    0sv8AdnZxWm3ETi0g>
-X-ME-Received: <xmr:dI9bZIAr-FEAheFNWzIP8gjNr28042IKJPuu-X87YSLBKQWClx8gdG_bJLve_K5ttNPp2Yny2hyFALVYODLPs7lcIexW2YAz3Pe9Pvw-diQs>
+        :x-sasl-enc; s=fm3; t=1683722106; x=1683808506; bh=ZGbkQAF52GzFH
+        mdIinjQS35TmUXJwfCQ2wyAZsrrwDs=; b=OCFWVuMCd8LwhiyBe87Qw9VrR9Eo4
+        nUKjuFfdf7WLuG5zvBHop3OqFekBxYid9vQc6f/2sl8jxdNgvPEr+pwdp/wrt2zj
+        KeUV25v7qTjTuR5FDtHVbzHjUIE47cuvBvK7uoqi3xN95zXuDNAKnUvnar1P3ghC
+        vt2U3exmJjgYXKjHT8T6mKI/lzaEhlMFmeutdGbLVAtvE897vjalQV8zvbSuFEbw
+        TFpVNOBe5LC1SrIFvQTlZ3mlncK/tYGeEKmKrdwhuiaTRB8+UVLBlHsPaSXGC8ZL
+        sq/njoUek6h5uaZ9RH3HMXMw/UTCqUlcFLeDD9kpflVWM6E+kTJEsZ6Fg==
+X-ME-Sender: <xms:eo9bZArYbcQneS2C1CjBPLBRoSF2KL_pv4BWQlHGkBK3af8APOFJkA>
+    <xme:eo9bZGoUDHA6_QvtpsDWoJ_n-ofkNRyTJ-5HRQtTlftw4TyHaSFq7m7tSnzUeyl03
+    MofN7woW6DeRHBkGA>
+X-ME-Received: <xmr:eo9bZFNFlEQQiKsdPynJXoUH8zE2nSnB0z9Q3SBhm-mlInrZd71tIQkDZqlLLs77T4qKiDGVhEDQKr4zWqn9mYiOwAagQJ1cI3qpQzvv2k9q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeegiedgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepffeijedtgfekhfehuedutdeutddtgefgieevfeeukedutdeffefgjeeuffffuddt
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mh
-X-ME-Proxy: <xmx:dI9bZKfxojxe_VxVYa5PHloioe0RA5Ncc9-AQ4apop7xRgeXwQYg_g>
-    <xmx:dI9bZHOytApoiJ73_XOU7cPIbA_M-lEvXKo0PcRMgXFV92xjfdVAxw>
-    <xmx:dI9bZEnpLaRBQfCOLLhduknLOmJiLnMPNhyrpywKhejZKl94E3pFWw>
-    <xmx:dI9bZMrC2q8gNjHDFD8xlAkO9TkqX8-Np0CGMn5U3NjpD-PpuvYjtA>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:eo9bZH6C0ZBEgXZxcnGjwBA0RbseemVpw930m4jj3K7Wj2O9skCDvQ>
+    <xmx:eo9bZP6H3bDgIOa62_h8QmPA7FaPcU1J1VLT-YlqhAu3D4nbBReOhg>
+    <xmx:eo9bZHi3j3nW5l4r5jAhVu8JAFB8Lu15aFvxxV7oC6gjwU9Zbq8jjA>
+    <xmx:eo9bZC0k38LZyT1b97Y3pWvrUhS8a-GDapdBdnA5fFvXtQI09kYECQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 May 2023 08:34:59 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 6d378db6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 10 May 2023 12:34:49 +0000 (UTC)
-Date:   Wed, 10 May 2023 14:34:57 +0200
+ 10 May 2023 08:35:05 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id fd576748 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 10 May 2023 12:34:55 +0000 (UTC)
+Date:   Wed, 10 May 2023 14:35:03 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
         Glen Choo <chooglen@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jacob Keller <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v4 4/8] fetch: fix missing from-reference when fetching
- HEAD:foo
-Message-ID: <ZFuPcfeqCbJo4XcS@ncase>
+Subject: Re: [PATCH v4 5/8] fetch: introduce `display_format` enum
+Message-ID: <ZFuPd8sPOFcbFohW@ncase>
 References: <cover.1681906948.git.ps@pks.im>
  <cover.1683636885.git.ps@pks.im>
- <e599ea6d335d16b45fa75b223ea8db93e46c627d.1683636885.git.ps@pks.im>
- <xmqqednpxq27.fsf@gitster.g>
+ <80ac00b0c4b0fde61a3edf48d996e3a60327a54d.1683636885.git.ps@pks.im>
+ <xmqq5y91xnou.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="OZc4+RhpuHf98IX6"
+        protocol="application/pgp-signature"; boundary="EvDy8SZaQX47v8OQ"
 Content-Disposition: inline
-In-Reply-To: <xmqqednpxq27.fsf@gitster.g>
+In-Reply-To: <xmqq5y91xnou.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---OZc4+RhpuHf98IX6
+--EvDy8SZaQX47v8OQ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 09, 2023 at 12:28:16PM -0700, Junio C Hamano wrote:
+On Tue, May 09, 2023 at 01:19:29PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+[snip]
+> > -	display_state->refcol_width =3D 10;
+> > -	for (rm =3D ref_map; rm; rm =3D rm->next) {
+> > -		int width;
+> > +	switch (display_state->format) {
+> > +	case DISPLAY_FORMAT_FULL:
+> > +	case DISPLAY_FORMAT_COMPACT: {
+> > +		struct ref *rm;
+> > =20
+> > -		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
+> > -		    !rm->peer_ref ||
+> > -		    !strcmp(rm->name, "HEAD"))
+> > -			continue;
+> > +		display_state->refcol_width =3D 10;
+> > +		for (rm =3D ref_map; rm; rm =3D rm->next) {
+> > +			int width;
+> > =20
+> > -		width =3D refcol_width(rm, display_state->compact_format);
+> > +			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
+> > +			    !rm->peer_ref ||
+> > +			    !strcmp(rm->name, "HEAD"))
+> > +				continue;
+> > =20
+> > -		/*
+> > -		 * Not precise calculation for compact mode because '*' can
+> > -		 * appear on the left hand side of '->' and shrink the column
+> > -		 * back.
+> > -		 */
+> > -		if (display_state->refcol_width < width)
+> > -			display_state->refcol_width =3D width;
+> > +			width =3D refcol_width(rm, display_state->format =3D=3D DISPLAY_FOR=
+MAT_COMPACT);
+> > +
+> > +			/*
+> > +			 * Not precise calculation for compact mode because '*' can
+> > +			 * appear on the left hand side of '->' and shrink the column
+> > +			 * back.
+> > +			 */
+> > +			if (display_state->refcol_width < width)
+> > +				display_state->refcol_width =3D width;
+> > +		}
+> > +
+> > +		break;
+> > +	}
+> > +	default:
+> > +		BUG("unexpected display format %d", display_state->format);
+> >  	}
 >=20
-> > But it is not intended when displaying the updated references and would
-> > cause us to miss the left-hand side of the displayed reference update:
-> >
-> > ```
-> > $ git fetch origin HEAD:foo
-> > From https://github.com/git/git
-> >  * [new ref]                          -> foo
-> > ```
-> > The HEAD string is clearly missing from the left-hand side of the arrow,
-> > which is further stressed by the point that the following commands show
-> > the left-hand side as expected:
-> >
-> > ```
-> > $ git fetch origin HEAD
-> > From https://github.com/git/git
-> >  * branch                  HEAD       -> FETCH_HEAD
+> Due to reindentation, the patch is noisier than what it does (which
+> should be "nothing, other than allowing another value in the .format
+> member").
 >=20
-> I do not mind being explicit and showing HEAD in this case for the
-> sake of consistency.
->=20
-> But speaking for the past developers, it was deliberate to omit what
-> is common from the output to make it more terse, IIRC, and I think
-> it is unfair to call it a "BUG".
->=20
-> Back when we wrote git-fetch-script, the output was a lot more
-> verbose, and through efforts like 165f3902 (git-fetch: more terse
-> fetch output, 2007-11-03) and numerous others over time, we got to
-> the current output.
+> It makes me wonder if it would make it easier to read to move the
+> bulk of this code to a helper function.  If we are to give a name to
+> what is being done in the above hunk, what would it be?  It computes
+> display->refcol_width in which all records would fit, but presumably
+> if we are to add more things to be shown per ref and align them in a
+> simlar way, we would compute widths for these other things there as
+> well.  Perhaps compute_display_alignment() or somesuch?
 
-That's fair. It's still not quite clear whether this behaviour is in
-fact intentional though. Quoting 165f3902 (git-fetch: more terse
-fetch output, 2007-11-03), the weird corner case is not documented:
+The code already has such a function and calls it `refcol_width()`, but
+it only computes the width for a single reference. The most natural
+thing to do here would thus be to merge the loop over the references
+into that function. This would also allow us to skip some weirdness,
+like the fact that we skip some references inside `refcol_width()` while
+we skip other references in the `ref_map` loop.
 
-    This makes the fetch output much more terse and prettier on a 80 column
-    display, based on a consensus reached on the mailing list.  Here's an
-    example output:
-
-    Receiving objects: 100% (5439/5439), 1.60 MiB | 636 KiB/s, done.
-    Resolving deltas: 100% (4604/4604), done.
-    From git://git.kernel.org/pub/scm/git/git
-     ! [rejected]        html -> origin/html  (non fast forward)
-       136e631..f45e867  maint -> origin/maint  (fast forward)
-       9850e2e..44dd7e0  man -> origin/man  (fast forward)
-       3e4bb08..e3d6d56  master -> origin/master  (fast forward)
-       fa3665c..536f64a  next -> origin/next  (fast forward)
-     + 4f6d9d6...768326f pu -> origin/pu  (forced update)
-     * [new branch]      todo -> origin/todo
-
-I've reformulated the commit message to talk about an inconsistency
-instead of a bug.
+This refactoring is also quite noisy, but it makes the code simpler
+overall and will make the patch introducing the enum less so.
 
 Patrick
 
---OZc4+RhpuHf98IX6
+--EvDy8SZaQX47v8OQ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRbj3AACgkQVbJhu7ck
-PpT2Kw/6Ap2dndo3CJ2RYYJ6WKctjluYbGfw9Edsr2f+k7uEiSv1mi2Uo+pxZv+8
-hdJpv5MBw455jO7Pd7ULI/jfRp3ej2NDWV5TQmUDLS2rDhaVnl1TBV1ibz1wHoak
-ynzr6N8ei2I4UZoakW0ATLeuElhv7r/Uf0qacHleKQy1LS/rZ1GMx5wqYJFgSrmX
-jCF4o2gvOgb4IQ+NkfSBrHPGOyOr7m3plF/8rR9YpIpRV74Z/YziC1bb+XY6463C
-8m4cpXCMFZAwFScJ5MfGiV/DTKsLH4sD3Pz1jruBnBwff43yGuaOYsZ5RLvNCKBW
-U+zzLJ0uHh22D2Z2tY7LH12Ia6g9kMRhgR7mWP1ai2cbRWclMftw3VdemhKgMuRW
-PHdxpg0RYLr04pgKrXMXQKnNo2mLeOibKRBCytnI3mnCFDg4/AMKQETHLrkvYzg0
-VH7m7X9Mcm5wQh3GFbCx8/4HZNLvdCu3xYGHeGN6WFKjzhwlvf/RjB2YqLr2NPo4
-8oC9B5ny8/HauJoTw8+o7m63LapNFvf1Cy6HkGYUX2xCY4UBqDRV6vsdUDXkWcbG
-6vo86g3dR+3YOO/HjYSb1bQTy/MZi2aUXae5YgP4AGocf/I3ugtqlRMpfuPRxOIT
-h39C/gqVHjEjqieJkshPTUNWPkQGRG6+iDdj/KSOadsZr/1Ij6Q=
-=Osyk
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRbj3YACgkQVbJhu7ck
+PpRsAw//UXXegWBmyJPmfEo6zuNj2k6cgzrWP6lOQThWIHb3GL46z60l2Pf+CoV3
+olUUdbS+WdaiVKkqMsiqNR11S6H0V32NCSxaRg7GaKhORK+nfeAFV4W/6OkspJDR
+O6Bbo30xjfoK2rmC+zGlOFPQTZLopva1GBDiZPrIcEUZjqv2dkF81ZdLLHkPpgl5
+7TO12LsX1DbHunY1wCcoxry3JDgDo3cRO3ZmbR1d7JnG8EB+zB4tsSXRYfCJBK11
+jd7Jktg2GN0mKv/jnvCzOizMrY8YN8scia50u2uYsWRU1wzAau6yP0J9hGhSGlOk
+OByOeIPhy96vIJyXMZvCD3ah+8ift/UHyAyz+bkCMybb6VNaoDNnbEOK8mxpeGMe
+Mz9GJCAfYyo1GAC+MBUW3p0MyZTn13kRXrdfUZ1fJc3UUR75Bt2eeiE4ohjTy1ex
+TNvj9YLRbH7ZBtY2sYb2XCKg2iADo0jHDWsKfQxVZXXZlb2Pd/VY/zyHWzHmz8H5
+lcbHaDg82zAqtzP8z/moxeq2vfyDjRwnsFOCYW26LXc/QCZk6fmMFV7ahSoDrXNM
+vN8wGGSTWywGSuh0gjIOrP4cc3FFa7RnddG83R1ACXE+Vd17hlUkGy7FDmH+53QB
+J3KMhj5mS/Wmpq9pJZWeSBsRyvF7PT2oO3up/PQiTSNs9c8xLsc=
+=GCLK
 -----END PGP SIGNATURE-----
 
---OZc4+RhpuHf98IX6--
+--EvDy8SZaQX47v8OQ--
