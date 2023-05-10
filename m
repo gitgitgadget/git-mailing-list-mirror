@@ -2,154 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C7AC77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 20:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81F8CC77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 20:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236114AbjEJUSJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 16:18:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48928 "EHLO
+        id S236237AbjEJUaP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 16:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235944AbjEJUSH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 16:18:07 -0400
-X-Greylist: delayed 559 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 10 May 2023 13:18:06 PDT
-Received: from ci74p00im-qukt09082502.me.com (ci74p00im-qukt09082502.me.com [17.57.156.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8888D2D66
-        for <git@vger.kernel.org>; Wed, 10 May 2023 13:18:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1683749326;
-        bh=q9xJnqq2Q0wNvSdeiVVN8I7Su48RVyh/5inWm4q7G8Q=;
-        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
-        b=gvRQ8JIcW1zNpCfLmSqaA1XZZKiXQPlHEyPEeGkFXFqkcvWpR3g7kGRNbjJpTA7lV
-         ysUS6c0Xqv/xdcCULU2k1/qqDB/Jj112dcpoi4n6if3r7LHVcHuTfTRfKZ4xMHJuo4
-         83zViQWbuxnfjvaxfN5d7nrGuAYLOx0UzjYwJWBuJBTTllANiMknvnZbOvCZ4NUuy4
-         ywX5k7ow0jgq6zd2C7ElQQsioQE2/TARd6aKoq6FX5wAixR9qz6EQsGf82bgwJb/ue
-         0xInJNaCELW1AWg7a/gRrkK9uFuCc13dW97nc4wG7RVEXmJt1F8jkPxgfw/A/bv5rA
-         vW32Ko5k65Gxg==
-Received: from smtpclient.apple (ci77p00im-dlb-asmtp-mailmevip.me.com [17.57.156.26])
-        by ci74p00im-qukt09082502.me.com (Postfix) with ESMTPSA id E1BE311C0219
-        for <git@vger.kernel.org>; Wed, 10 May 2023 20:08:45 +0000 (UTC)
-From:   Christopher Fretz <cfretz@icloud.com>
+        with ESMTP id S231465AbjEJUaO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 16:30:14 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3784C16
+        for <git@vger.kernel.org>; Wed, 10 May 2023 13:30:13 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-18f4a6d2822so46756651fac.1
+        for <git@vger.kernel.org>; Wed, 10 May 2023 13:30:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683750613; x=1686342613;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L9eDfIn1OLAlJx0E6TJl+agqXctlSGgEqMmp0KAGGWk=;
+        b=YOFBG/6fCkAZgx6XGXvIB2Ay/MCmotzX4qlIh51Yap4+5ThjrgDbrWU2mplM3WzYYv
+         98YC2xMeReNRHOWUSU7InkTh2oVBFdaSiqII97BNUt4oO4NVNmvfoxyO2BV6LfhJ4af8
+         E4+2Epd+HfeAUO3VQ4M+H9k9pyH8Mz0vjBMxhSZOmR9jt0pPowKklx4RJQ2Bl8mD4OoP
+         4in9S89declaCDs9RVZYcaE4Gh2d/h4K5ZLDetr5VEUOn5pLNWMgffKzW4u6tLzOgdgU
+         ejfFPAcqVtCzEBjXCMna044iAEstM+JzLkv5tJwA5rqAGJAObs1qX3fpO4unpp8xhj03
+         /qKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683750613; x=1686342613;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=L9eDfIn1OLAlJx0E6TJl+agqXctlSGgEqMmp0KAGGWk=;
+        b=aIt0/mZR3VwrzWOoC7k9IksnEU9uPlOQXZ12b8sW0FFY8qqLBlq2abzP5ijGibN49o
+         GG8nLEozrsMirkNFTunwAfIMwy0i8YrG4hz+y40DPmhWKUK7j7z34GP3B7kSg7NlCHxt
+         gtOcuTwmA0OQtiEpimwAbY5ekVRj9pUEKCPlHWjhE3LbI8UKrdta8OMkPPbTklqFPiMD
+         oMgB14XLSj5sRJEPvVROkxzZcKo0wfnNnIAshZdYRxnWZb/lGrPPmA5EZqpF1y019tcG
+         6HK3nYork0oUonEqK1uWIDis5W9Iah9GdlE6Ev00LROEfGoamBXWVxhuydlLk7GDX3Ew
+         2R6g==
+X-Gm-Message-State: AC+VfDwY8jYrl88ay8kL5BBzqdsR3P0k+UqyWYr03xk/HKdK0lwOsEDn
+        gIDPoLutrZ7P8ZFsVg2b3es=
+X-Google-Smtp-Source: ACHHUZ47zvhEwdWhH/HiARhOlKbjmm28ugqbBD+l+KtJrIOSI+NxSam4sTS81mkG6UlyOYrPwsYHGg==
+X-Received: by 2002:a05:6830:310a:b0:6ab:3c0:7fe7 with SMTP id b10-20020a056830310a00b006ab03c07fe7mr4233770ots.14.1683750612719;
+        Wed, 10 May 2023 13:30:12 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id g25-20020a9d6c59000000b006a652d3ad74sm2847649otq.69.2023.05.10.13.30.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 May 2023 13:30:12 -0700 (PDT)
+Date:   Wed, 10 May 2023 14:30:11 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, christian.couder@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Message-ID: <645bfed357efc_3819294e1@chronos.notmuch>
+In-Reply-To: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
+References: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] merge-tree: load default git config
+Mime-Version: 1.0
 Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
-Subject: git rebase --root bug
-Message-Id: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
-Date:   Wed, 10 May 2023 14:08:34 -0600
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3731.500.231)
-X-Proofpoint-GUID: co2nA7KpqqASAKfPVeO4pm4KN6Lh4yiy
-X-Proofpoint-ORIG-GUID: co2nA7KpqqASAKfPVeO4pm4KN6Lh4yiy
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.11.62.513.0000000_definitions?=
- =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2021-12-02?=
- =?UTF-8?Q?=5F01_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 clxscore=1011
- phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2305100163
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> The 'git merge-tree' command handles creating root trees for merges
+> without using the worktree. This is a critical operation in many Git
+> hosts, as they typically store bare repositories.
+> 
+> This builtin does not load the default Git config, which can have
+> several important ramifications.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Run an interactive, root, rebase, select one or more commits to edit, =
-and then leave the repo in the rebase state for long
-enough that the "onto" commit expires out of the reflog and gets gc'd.
+For the record, I had already sent a better version of this patch almost 2
+years ago [1], not just for `git merge-tree`, but other commands as well.
 
-An example set of commands to immediately reproduce the issue can be =
-seen below:
-  $ mkdir git_test
+The obvious fix was completely ignored by the maintainer.
 
-  $ cd git_test
+The reason why it should be git_xmerge_config and not git_default_config, is
+that merge.conflictstyle would not be parsed if you call git_default_config.
 
-  $ git init
-  Initialized empty Git repository in =
-/Users/cfretz/working/git_test/.git/
+> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> index aa8040c2a6a..b8f8a8b5d9f 100644
+> --- a/builtin/merge-tree.c
+> +++ b/builtin/merge-tree.c
+> @@ -17,6 +17,7 @@
+>  #include "merge-blobs.h"
+>  #include "quote.h"
+>  #include "tree.h"
+> +#include "config.h"
+>  
+>  static int line_termination = '\n';
+>  
+> @@ -628,6 +629,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+>  	if (argc != expected_remaining_argc)
+>  		usage_with_options(merge_tree_usage, mt_options);
+>  
+> +	git_config(git_default_config, NULL);
 
-  $ git commit --allow-empty -m 'root commit'
-  [master (root-commit) 01edd93] root commit
+It should be git_xmerge_config.
 
-  $ git rebase -i --root
-  Stopped at 01edd93...  root commit # empty
-  You can amend the commit now, with
+> +
+>  	/* Do the relevant type of merge */
+>  	if (o.mode == MODE_REAL)
+>  		return real_merge(&o, merge_base, argv[0], argv[1], prefix);
 
-    git commit --amend
+[1] https://lore.kernel.org/git/20210622002714.1720891-3-felipe.contreras@gmail.com/
 
-  Once you are satisfied with your changes, run
-
-    git rebase --continue
-
-  $ git reflog expire --expire-unreachable=3Dnow --all
-
-  $ git gc --prune=3Dnow
-  Enumerating objects: 2, done.
-  Counting objects: 100% (2/2), done.
-  Writing objects: 100% (2/2), done.
-  Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
-
-  $ git rebase --continue
-  fatal: could not parse 10796537ce108c36191d52368250f403afede30b
-
-What did you expect to happen? (Expected behavior)
-Git should consider the "onto" commit to be referenced from the ongoing =
-rebase, and refuse to gc it, even during a --root
-rebase.
-
-What happened instead? (Actual behavior)
-Git gcs the "onto" commit, breaking the ongoing rebase; after this, no =
-rebase commands work, and your only option is git rebase --quit.
-The only way I've discovered to fix this without git rebase --quit is =
-running scary commands to manually create a new dummy "onto" commit,
-and then overwrite the onto file in the git directory; I'm not confident =
-that this doesn't somehow cause subtle problems that aren't
-immediately obvious.
-
-What's different between what you expected and what actually happened?
-Git gcs the onto commit and leaves the repo in a broken state. Without =
-manual intervention to fix the .git directory, or hard bailing out of
-the rebase, the repository appears broken. A user less familiar with git =
-would likely just delete the repo, reclone, and start entirely from
-scratch.
-
-Anything else you want to add:
-The way I originally encountered this issue was by leaving a repo in the =
-rebase state for multiple weeks, coming back to the repo to finish the
-work, and then having the repo broken by a background gc job. I assume =
-the fundamental problem here is that the "onto" commit during a --root
-rebase isn't actually a part of the new history, and is just =
-"synthesized" to remove edge cases, and so git sees it as unreachable =
-during the gc.
-=46rom one perspective, it might be argued that this is "expected" =
-behavior given the above, but given the severity of the failure I think =
-this should
-be considered a bug, and I think git should just unconditionally =
-consider the "onto" commit as _always_ being reachable; it's not obvious =
-to me why
-this wouldn't work. My apologies if this bug has already been fixed in a =
-later version of git. Thanks!
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.37.3
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 22.3.0 Darwin Kernel Version 22.3.0: Mon Jan 30 20:42:11 =
-PST 2023; root:xnu-8792.81.3~2/RELEASE_X86_64 x86_64
-compiler info: clang: 13.1.6 (clang-1316.0.21.2.5)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]=
+-- 
+Felipe Contreras
