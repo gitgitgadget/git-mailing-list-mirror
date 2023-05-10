@@ -2,124 +2,514 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3DE0C7EE22
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 08:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61BCEC7EE22
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 08:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235952AbjEJINS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 04:13:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60500 "EHLO
+        id S235928AbjEJIPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 04:15:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233875AbjEJINP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 04:13:15 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A90C4499
-        for <git@vger.kernel.org>; Wed, 10 May 2023 01:12:36 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-306f9df5269so4518361f8f.3
-        for <git@vger.kernel.org>; Wed, 10 May 2023 01:12:35 -0700 (PDT)
+        with ESMTP id S231124AbjEJIPL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 04:15:11 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB58310D8
+        for <git@vger.kernel.org>; Wed, 10 May 2023 01:15:07 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-ba5e37f60f0so2294621276.0
+        for <git@vger.kernel.org>; Wed, 10 May 2023 01:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683706354; x=1686298354;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=XX3UCZzpfNU6VrcTj6j8g9c6ucrLSoHHbm1E3P0DIeo=;
-        b=ppW/hnB3HAiwwxoIOF8jjCX19MvsDL3FHcQPRp3YqSX5jYhAqkmL8HL9vbRy61Eapn
-         rEG/uqN+K7AoMxykc/jRJ3+vV5g/4koAmrznEffzKK9I0nUTzm1/m8G4pwedHgvds4gQ
-         v7gFPAYsziKJWhLISMrUr8gfwXGSKPOKGp7EIYo/c+MZFmKDryEiUArYGTqU07u1gJdg
-         72nFlGYgf4+SvUl4uINRdgJUP78PFGmIsASOftfqHeCZXT4nuIFyrg2oWxFXZCaiEjpJ
-         eJJJhddcdVAZKASb1ZcLHNJYobi5GFWawWpLCtbnU3fwbSz9pMuN4Mn+jsPNRzZNNJCq
-         HJbg==
+        d=gmail.com; s=20221208; t=1683706507; x=1686298507;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=blbbkMgn/tT9RLuBkweS1Ami+1C6zM5PuN6tNzUROAA=;
+        b=pjzNbNuQ6cnYBPIYoqspLc5QR0aEyfToR28CoBMHuUURl8WDE0L5j74bRxLHDIzi2U
+         FMiGGvuu/3/LZdyEl9RxNfGJiPcWtCaaWV016Id56nmsM0w+ZYYEi/bIj9QgCh822ZCe
+         zeHSDVW25m7CLPYBl97XI6eql6F5yeWoCs+wcDwIBphnIzJgWOWR3TYOVvz+dywR5nfm
+         ngfyzn4VNrNBidCs0RSAHQbJl68C6WVIxbaV7tqUX4Jec+UND8g8epbAHfDSXEpV4Ybg
+         9AeyQ/9vyZ1aejTAxbQhynQWz62pPBe/KPclfltc7+GAuM33KCedkh4ylf1ThXsIGDYs
+         00og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683706354; x=1686298354;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XX3UCZzpfNU6VrcTj6j8g9c6ucrLSoHHbm1E3P0DIeo=;
-        b=XNjC1kV+6a6Jyojj7qoVdiN4Dge3y0k+ryzINA+B6a1pGh+aSLQtYFcjVFo/tpAUIK
-         uO8cVh6by0YPajn9W6/Oc7V9tncBH0tj415/PwQW/V5l2MZj2fMd7fWF+D4brN4/BEBu
-         hrXPKyPsEVCwpE9vXgia5DhE3jLaSQ40kw9II4mHIJtc2nxnExNNXBdktKk8rEWYHn0f
-         4H2aHtZVby4cdmnJQFInGt+yq/LFJnpkqj1YrUfqG7ihFSlPLJ/h71W3WR8rkT4LNPAB
-         mCjX0BCVvDGYizcUWZjoACqOX757jcKTu9JETgCGJrt2K3pfQYSG2OovYv2lq4H+gTGg
-         2POg==
-X-Gm-Message-State: AC+VfDwSYbAyPlq9T42OwPdeqKEXQexPU+fqgXwfGgjG4Bmn4XkGJlbR
-        KeoSPZFL2aBsmJKya8LpGAW0fwy8gVc=
-X-Google-Smtp-Source: ACHHUZ7DVnZIdms4dBz6AE5P3qGjMkSswZv4ff4E1UzbAyohTC0MuC571GUi8GJB9WvT7x8VtRIsDg==
-X-Received: by 2002:a5d:5589:0:b0:307:8666:a50e with SMTP id i9-20020a5d5589000000b003078666a50emr9238730wrv.67.1683706354237;
-        Wed, 10 May 2023 01:12:34 -0700 (PDT)
-Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id z6-20020adff746000000b002f103ca90cdsm16559285wrp.101.2023.05.10.01.12.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 May 2023 01:12:33 -0700 (PDT)
-Message-ID: <8c8afa4a-ae2d-5a13-f9fa-5a5e11a0c810@gmail.com>
-Date:   Wed, 10 May 2023 09:12:32 +0100
+        d=1e100.net; s=20221208; t=1683706507; x=1686298507;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=blbbkMgn/tT9RLuBkweS1Ami+1C6zM5PuN6tNzUROAA=;
+        b=dYI+LnITbR4Nos8GjqOn81Xi5/CXJ34OpH8bXbNxXX6EbwSrFw5GKHhi7Nsm4iG+Cr
+         h+71yect6oyYr3HI6jeNgDbewaYDR5uCVkazFaMeTbFaQFqt6eGToYkfveAvnEhbnDQU
+         3XGE88Fpr6kq3qX3pjbTpFN5ZmiheDkj/CCCknJkav7C1aX6KRUdsZNf1D4qPn1ueUEc
+         i/3Gn8jw27RreFcw+mhxUA/xfKadKLl7byNrDW63Eeu/F0Wwd2z+JipnoSttmuGjMy+u
+         Avk8xw0UKbEqSQUA8fnUm/OTlrz9iIq3wY1JRsCVPNBZpI+5Wdl/LgJSsLfx28zDJHH5
+         Llsw==
+X-Gm-Message-State: AC+VfDwtMWeDsfrA2jyzW2UCQL1upAVurc87J+PsRZjMcTEO29hmDXjB
+        /uvauOJCx1mZQmFBNrtqxegWUmApmQDe+BBoOrc=
+X-Google-Smtp-Source: ACHHUZ7H+ixH+EeUol1bCHzBXGWUDBstHvvrImSBYc0h6en2gWiuliIfZ4CK8YROsTcgp5Rnq2Y6egfMDW6Mv5pNtXc=
+X-Received: by 2002:a25:7413:0:b0:ba1:9d86:8df with SMTP id
+ p19-20020a257413000000b00ba19d8608dfmr18684477ybc.8.1683706506615; Wed, 10
+ May 2023 01:15:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 7/7] strbuf: remove global variable
-To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Cc:     newren@gmail.com, peff@peff.net
-References: <20230508165728.525603-1-calvinwan@google.com>
- <20230508165908.526247-7-calvinwan@google.com>
-Content-Language: en-US
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230508165908.526247-7-calvinwan@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1523.git.1682342241825.gitgitgadget@gmail.com> <pull.1523.v2.git.1683214104399.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1523.v2.git.1683214104399.gitgitgadget@gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 10 May 2023 16:15:58 +0800
+Message-ID: <CAOLTT8SA9MvGTJojYFzD=LtPG=WMdEwK-ufgTyHwhCEDRFG=yQ@mail.gmail.com>
+Subject: Re: [PATCH v2] [RFC] transport: add --show-service option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        adlternaitve@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Calvin
+Just ping for this patch...
 
-On 08/05/2023 17:59, Calvin Wan wrote:
-> As a library that only interacts with other primitives, strbuf should
-> not utilize the comment_line_char global variable within its
-> functions. Therefore, add an additional parameter for functions that use
-> comment_line_char and refactor callers to pass it in instead.
-
-I find the revised subject and commit message much easier to understand.
-
-> diff --git a/strbuf.c b/strbuf.c
-> index d5978fee4e..eba65ca421 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -1,6 +1,5 @@
->   #include "git-compat-util.h"
->   #include "alloc.h"
-> -#include "environment.h"
->   #include "gettext.h"
->   #include "hex.h"
->   #include "strbuf.h"
-> @@ -362,7 +361,8 @@ static void add_lines(struct strbuf *out,
->   	strbuf_complete_line(out);
->   }
->   
-> -void strbuf_add_commented_lines(struct strbuf *out, const char *buf, size_t size)
-> +void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
-> +				size_t size, char comment_line_char)
-
-I don't really object to this change as I can understand why you are 
-making it, but it does make this function more cumbersome to use within 
-git itself where we now have to pass the global comment_line_char 
-explicitly.
-
-> @@ -1054,7 +1055,8 @@ static size_t cleanup(char *line, size_t len)
->    * Enable skip_comments to skip every line starting with comment
->    * character.
->    */
-> -void strbuf_stripspace(struct strbuf *sb, int skip_comments)
-> +void strbuf_stripspace(struct strbuf *sb, int skip_comments,
-> +		       char comment_line_char)
-
-Rather than adding a new parameter here could we change the signature to
-
-	void strbuf_stripspace(struct strbuf *sb, char comment_char)
-
-and not strip comments if comment_char == '\0'? There doesn't seem much 
-point in forcing callers to pass comment_line_char when they don't want 
-to strip comments.
-
-Best Wishes
-
-Phillip
+ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2023=E5=B9=B4=
+5=E6=9C=884=E6=97=A5=E5=91=A8=E5=9B=9B 23:28=E5=86=99=E9=81=93=EF=BC=9A
+>
+> From: ZheNing Hu <adlternative@gmail.com>
+>
+> Without using protocol v2, the git server needs to send a pktline
+> "#service=3D$servicename" to the git client first. The servername
+> here can only be selected in "git-receive-pack and "git-upload-pack",
+> neither the git client nor the server depends on this servername to
+> perform any functions. Howerver, , implementing this capability
+> independently can be cumbersome for the git server, as seen in [1].
+>
+> To simplify this process, the `--show-service` option was added to
+> git-receive-pack and git-upload-pack. This option can be used to
+> send the '#service=3D$servicename' pktline, making the logic of the
+> git server more concise. Note that this option can only be used
+> together with --http-backend-info-refs and is not applicable when
+> using protocol v2.
+>
+> [1]: https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/gitaly/s=
+ervice/smarthttp/inforefs.go#L82
+>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+>     [RFC] transport: add --show-service option
+>
+>     When the protocol is not v2, the git client requires that the first
+>     pktline reply for info refs be "# service=3Dservicename", which requi=
+res
+>     the git server to implement pktline capability, e.g. [1] , which may =
+be
+>     a bit cumbersome.
+>
+>     Delegating this feature to git upload-pack and git receive-pack via
+>     "--show-service" can simplify server implementation.
+>
+>     v1. add --show-service to git upload-pack and git receive-pack. v2.
+>     amend the git commit message to explain the reason for adding the
+>     option.
+>
+>     [1]:
+>     https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/gitaly/se=
+rvice/smarthttp/inforefs.go#L82
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1523%2F=
+adlternative%2Fzh%2Finfo-ref-service-output-opt-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1523/adlte=
+rnative/zh/info-ref-service-output-opt-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1523
+>
+> Range-diff vs v1:
+>
+>  1:  a2d33d6857a ! 1:  b8aa0e7e053 [RFC] transport: add --show-service op=
+tion
+>      @@ Commit message
+>           [RFC] transport: add --show-service option
+>
+>           Without using protocol v2, the git server needs to send a pktli=
+ne
+>      -    "# service=3D$servicename" to the git client first. This often
+>      -    requires the git server to implement it independently, but it c=
+an
+>      -    be delegated to the `git receive-pack` and `git upload-pack` to=
+ complete
+>      -    the work proactively. Therefore, the `--show-service` option is=
+ added
+>      -    to `git receive-pack` and `git upload-pack`, which can be used =
+to send
+>      -    the "# service=3D$servicename" pktline, making the logic of the=
+ git
+>      -    server more concise.
+>      +    "#service=3D$servicename" to the git client first. The serverna=
+me
+>      +    here can only be selected in "git-receive-pack and "git-upload-=
+pack",
+>      +    neither the git client nor the server depends on this servernam=
+e to
+>      +    perform any functions. Howerver, , implementing this capability
+>      +    independently can be cumbersome for the git server, as seen in =
+[1].
+>
+>      -    Note that this `--show-service` option can only be used togethe=
+r with
+>      -    `--http-backend-info-refs` and it is not applicable when using =
+protocol v2.
+>      +    To simplify this process, the `--show-service` option was added=
+ to
+>      +    git-receive-pack and git-upload-pack. This option can be used t=
+o
+>      +    send the '#service=3D$servicename' pktline, making the logic of=
+ the
+>      +    git server more concise. Note that this option can only be used
+>      +    together with --http-backend-info-refs and is not applicable wh=
+en
+>      +    using protocol v2.
+>      +
+>      +    [1]: https://gitlab.com/gitlab-org/gitaly/-/blob/master/interna=
+l/gitaly/service/smarthttp/inforefs.go#L82
+>
+>           Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+>
+>
+>
+>  Documentation/git-receive-pack.txt |  10 +++
+>  Documentation/git-upload-pack.txt  |  13 +++-
+>  builtin/receive-pack.c             |  14 +++-
+>  builtin/upload-pack.c              |  17 +++-
+>  http-backend.c                     |   7 +-
+>  t/t5555-http-smart-common.sh       | 120 +++++++++++++++++++++++++++++
+>  6 files changed, 171 insertions(+), 10 deletions(-)
+>
+> diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-recei=
+ve-pack.txt
+> index 65ff518ccff..e16d364f394 100644
+> --- a/Documentation/git-receive-pack.txt
+> +++ b/Documentation/git-receive-pack.txt
+> @@ -46,6 +46,16 @@ OPTIONS
+>         `$GIT_URL/info/refs?service=3Dgit-receive-pack` requests. See
+>         `--http-backend-info-refs` in linkgit:git-upload-pack[1].
+>
+> +--show-service::
+> +       Output the "# service=3Dgit-receive-pack" pktline and the
+> +       "0000" flush pktline firstly. Since the git client needs
+> +       the git server to send the first pktline
+> +       "# service=3D$servicename", this option allows the git
+> +       server to delegate the functionality of sending this pktline
+> +       to `git-receive-pack`.
+> +       Note that this option can only be used together with
+> +       `--http-backend-info-refs`.
+> +
+>  PRE-RECEIVE HOOK
+>  ----------------
+>  Before any ref is updated, if $GIT_DIR/hooks/pre-receive file exists
+> diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload=
+-pack.txt
+> index b656b475675..7052708d03e 100644
+> --- a/Documentation/git-upload-pack.txt
+> +++ b/Documentation/git-upload-pack.txt
+> @@ -10,7 +10,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git-upload-pack' [--[no-]strict] [--timeout=3D<n>] [--stateless-rpc]
+> -                 [--advertise-refs] <directory>
+> +                 [--advertise-refs] [--show-service] <directory>
+>
+>  DESCRIPTION
+>  -----------
+> @@ -44,6 +44,17 @@ OPTIONS
+>         documentation. Also understood by
+>         linkgit:git-receive-pack[1].
+>
+> +--show-service::
+> +       Output the "# service=3Dgit-upload-pack" pktline and the
+> +       "0000" flush pktline firstly. Since the git client needs
+> +       the git server to send the first pktline
+> +       "# service=3D$servicename", this option allows the git
+> +       server to delegate the functionality of sending this pktline
+> +       to `git-upload-pack`.
+> +       Note that this option can only be used together with
+> +       `--http-backend-info-refs` and it is not applicable when
+> +       using protocol v2.
+> +
+>  <directory>::
+>         The repository to sync from.
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 9109552533d..eb45c1f72af 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -2485,6 +2485,7 @@ static int delete_only(struct command *commands)
+>  int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+>  {
+>         int advertise_refs =3D 0;
+> +       int show_service =3D 0;
+>         struct command *commands;
+>         struct oid_array shallow =3D OID_ARRAY_INIT;
+>         struct oid_array ref =3D OID_ARRAY_INIT;
+> @@ -2497,8 +2498,10 @@ int cmd_receive_pack(int argc, const char **argv, =
+const char *prefix)
+>                 OPT_HIDDEN_BOOL(0, "http-backend-info-refs", &advertise_r=
+efs, NULL),
+>                 OPT_ALIAS(0, "advertise-refs", "http-backend-info-refs"),
+>                 OPT_HIDDEN_BOOL(0, "reject-thin-pack-for-testing", &rejec=
+t_thin, NULL),
+> +               OPT_BOOL(0, "show-service", &show_service, N_("show servi=
+ce information")),
+>                 OPT_END()
+>         };
+> +       enum protocol_version version =3D determine_protocol_version_serv=
+er();
+>
+>         packet_trace_identity("receive-pack");
+>
+> @@ -2525,7 +2528,16 @@ int cmd_receive_pack(int argc, const char **argv, =
+const char *prefix)
+>         else if (0 <=3D receive_unpack_limit)
+>                 unpack_limit =3D receive_unpack_limit;
+>
+> -       switch (determine_protocol_version_server()) {
+> +       if (show_service) {
+> +               if (!advertise_refs)
+> +                       die(_("options '%s' and '%s' should be used toget=
+her"), "--show-service", "--http-backend-info-refs");
+> +               if (version !=3D protocol_v2) {
+> +                       packet_write_fmt(1, "# service=3Dgit-receive-pack=
+\n");
+> +                       packet_flush(1);
+> +               }
+> +       }
+> +
+> +       switch (version) {
+>         case protocol_v2:
+>                 /*
+>                  * push support for protocol v2 has not been implemented =
+yet,
+> diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+> index beb9dd08610..e84eb3735b4 100644
+> --- a/builtin/upload-pack.c
+> +++ b/builtin/upload-pack.c
+> @@ -11,7 +11,7 @@
+>
+>  static const char * const upload_pack_usage[] =3D {
+>         N_("git-upload-pack [--[no-]strict] [--timeout=3D<n>] [--stateles=
+s-rpc]\n"
+> -          "                [--advertise-refs] <directory>"),
+> +          "                [--advertise-refs] [--show-service] <director=
+y>"),
+>         NULL
+>  };
+>
+> @@ -22,6 +22,7 @@ int cmd_upload_pack(int argc, const char **argv, const =
+char *prefix)
+>         int advertise_refs =3D 0;
+>         int stateless_rpc =3D 0;
+>         int timeout =3D 0;
+> +       int show_service =3D 0;
+>         struct option options[] =3D {
+>                 OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
+>                          N_("quit after a single request/response exchang=
+e")),
+> @@ -32,8 +33,10 @@ int cmd_upload_pack(int argc, const char **argv, const=
+ char *prefix)
+>                          N_("do not try <directory>/.git/ if <directory> =
+is no Git directory")),
+>                 OPT_INTEGER(0, "timeout", &timeout,
+>                             N_("interrupt transfer after <n> seconds of i=
+nactivity")),
+> +               OPT_BOOL(0, "show-service", &show_service, N_("show servi=
+ce information")),
+>                 OPT_END()
+>         };
+> +       enum protocol_version version =3D determine_protocol_version_serv=
+er();
+>
+>         packet_trace_identity("upload-pack");
+>         read_replace_refs =3D 0;
+> @@ -50,7 +53,17 @@ int cmd_upload_pack(int argc, const char **argv, const=
+ char *prefix)
+>         if (!enter_repo(dir, strict))
+>                 die("'%s' does not appear to be a git repository", dir);
+>
+> -       switch (determine_protocol_version_server()) {
+> +
+> +       if (show_service) {
+> +               if (!advertise_refs)
+> +                       die(_("options '%s' and '%s' should be used toget=
+her"), "--show-service", "--http-backend-info-refs");
+> +               if (version !=3D protocol_v2) {
+> +                       packet_write_fmt(1, "# service=3Dgit-upload-pack\=
+n");
+> +                       packet_flush(1);
+> +               }
+> +       }
+> +
+> +       switch (version) {
+>         case protocol_v2:
+>                 if (advertise_refs)
+>                         protocol_v2_advertise_capabilities();
+> diff --git a/http-backend.c b/http-backend.c
+> index 89aad1b42c7..74c2c7bb606 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -539,6 +539,7 @@ static void get_info_refs(struct strbuf *hdr, char *a=
+rg UNUSED)
+>         if (service_name) {
+>                 const char *argv[] =3D {NULL /* service name */,
+>                         "--http-backend-info-refs",
+> +                       "--show-service",
+>                         ".", NULL};
+>                 struct rpc_service *svc =3D select_service(hdr, service_n=
+ame);
+>
+> @@ -547,12 +548,6 @@ static void get_info_refs(struct strbuf *hdr, char *=
+arg UNUSED)
+>                 hdr_str(hdr, content_type, buf.buf);
+>                 end_headers(hdr);
+>
+> -
+> -               if (determine_protocol_version_server() !=3D protocol_v2)=
+ {
+> -                       packet_write_fmt(1, "# service=3Dgit-%s\n", svc->=
+name);
+> -                       packet_flush(1);
+> -               }
+> -
+>                 argv[0] =3D svc->name;
+>                 run_service(argv, 0);
+>
+> diff --git a/t/t5555-http-smart-common.sh b/t/t5555-http-smart-common.sh
+> index b1cfe8b7dba..32431266eb9 100755
+> --- a/t/t5555-http-smart-common.sh
+> +++ b/t/t5555-http-smart-common.sh
+> @@ -159,4 +159,124 @@ test_expect_success 'git receive-pack --advertise-r=
+efs: v2' '
+>         test_cmp actual expect
+>  '
+>
+> +test_expect_success 'git upload-pack --advertise-refs --show-service: v0=
+' '
+> +       # With no specified protocol
+> +       cat >expect <<-EOF &&
+> +       # service=3Dgit-upload-pack
+> +       0000
+> +       $(git rev-parse HEAD) HEAD
+> +       $(git rev-parse HEAD) $(git symbolic-ref HEAD)
+> +       0000
+> +       EOF
+> +
+> +       git upload-pack --advertise-refs --show-service . >out 2>err &&
+> +       test-tool pkt-line unpack <out >actual &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect &&
+> +
+> +       # With explicit v0
+> +       GIT_PROTOCOL=3Dversion=3D0 \
+> +       git upload-pack --advertise-refs --show-service . >out 2>err &&
+> +       test-tool pkt-line unpack <out >actual 2>err &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect
+> +
+> +'
+> +
+> +test_expect_success 'git receive-pack --advertise-refs --show-service: v=
+0' '
+> +       # With no specified protocol
+> +       cat >expect <<-EOF &&
+> +       # service=3Dgit-receive-pack
+> +       0000
+> +       $(git rev-parse HEAD) $(git symbolic-ref HEAD)
+> +       0000
+> +       EOF
+> +
+> +       git receive-pack --advertise-refs --show-service . >out 2>err &&
+> +       test-tool pkt-line unpack <out >actual &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect &&
+> +
+> +       # With explicit v0
+> +       GIT_PROTOCOL=3Dversion=3D0 \
+> +       git receive-pack --advertise-refs --show-service . >out 2>err &&
+> +       test-tool pkt-line unpack <out >actual 2>err &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect
+> +
+> +'
+> +
+> +test_expect_success 'git upload-pack --advertise-refs --show-service: v1=
+' '
+> +       # With no specified protocol
+> +       cat >expect <<-EOF &&
+> +       # service=3Dgit-upload-pack
+> +       0000
+> +       version 1
+> +       $(git rev-parse HEAD) HEAD
+> +       $(git rev-parse HEAD) $(git symbolic-ref HEAD)
+> +       0000
+> +       EOF
+> +
+> +       GIT_PROTOCOL=3Dversion=3D1 \
+> +       git upload-pack --advertise-refs --show-service . >out &&
+> +
+> +       test-tool pkt-line unpack <out >actual 2>err &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect
+> +'
+> +
+> +test_expect_success 'git receive-pack --advertise-refs --show-service: v=
+1' '
+> +       # With no specified protocol
+> +       cat >expect <<-EOF &&
+> +       # service=3Dgit-receive-pack
+> +       0000
+> +       version 1
+> +       $(git rev-parse HEAD) $(git symbolic-ref HEAD)
+> +       0000
+> +       EOF
+> +
+> +       GIT_PROTOCOL=3Dversion=3D1 \
+> +       git receive-pack --advertise-refs --show-service . >out &&
+> +
+> +       test-tool pkt-line unpack <out >actual 2>err &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect
+> +'
+> +
+> +test_expect_success 'git upload-pack --advertise-refs --show-service: v2=
+' '
+> +       cat >expect <<-EOF &&
+> +       version 2
+> +       agent=3DFAKE
+> +       ls-refs=3Dunborn
+> +       fetch=3Dshallow wait-for-done
+> +       server-option
+> +       object-format=3D$(test_oid algo)
+> +       object-info
+> +       0000
+> +       EOF
+> +
+> +       GIT_PROTOCOL=3Dversion=3D2 \
+> +       GIT_USER_AGENT=3DFAKE \
+> +       git upload-pack --advertise-refs --show-service . >out 2>err &&
+> +
+> +       test-tool pkt-line unpack <out >actual &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect
+> +'
+> +
+> +test_expect_success 'git receive-pack --advertise-refs --show-service: v=
+2' '
+> +       # There is no v2 yet for receive-pack, implicit v0
+> +       cat >expect <<-EOF &&
+> +       $(git rev-parse HEAD) $(git symbolic-ref HEAD)
+> +       0000
+> +       EOF
+> +
+> +       GIT_PROTOCOL=3Dversion=3D2 \
+> +       git receive-pack --advertise-refs --show-service . >out 2>err &&
+> +
+> +       test-tool pkt-line unpack <out >actual &&
+> +       test_must_be_empty err &&
+> +       test_cmp actual expect
+> +'
+> +
+>  test_done
+>
+> base-commit: 7580f92ffa970b9484ac214f7b53cec5e26ca4bc
+> --
+> gitgitgadget
