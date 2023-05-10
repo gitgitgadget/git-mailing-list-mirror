@@ -2,164 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32376C77B7D
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 12:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E762BC77B7D
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 12:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237118AbjEJMfM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 08:35:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36890 "EHLO
+        id S237134AbjEJMfm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 08:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237045AbjEJMet (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 08:34:49 -0400
+        with ESMTP id S237093AbjEJMfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 08:35:02 -0400
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6457AB9
-        for <git@vger.kernel.org>; Wed, 10 May 2023 05:34:48 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id A1F7E3200915;
-        Wed, 10 May 2023 08:34:47 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A529EF6
+        for <git@vger.kernel.org>; Wed, 10 May 2023 05:34:55 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id E4E573200919;
+        Wed, 10 May 2023 08:34:54 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 10 May 2023 08:34:48 -0400
+  by compute4.internal (MEProxy); Wed, 10 May 2023 08:34:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1683722087; x=1683808487; bh=jy
-        cccpQOMPD6j7hakqW6b+1765pkk9WgWoHSGrPucKA=; b=f7VZiyQX01SW71zy+g
-        vbaHswaQIgcEavFdBD8k+65vB66Cyw12GsQh31mIrUV3wTdxvwssoiB67Xb1pH4a
-        ohzN24lGJOHn5kxHM/7j/rqGDNQr0UpG38d7EDSwnAiTAlvT02pKpnHQwobuHVHV
-        HQq1tkS9jakbngnNjt7c7TJCwYRPGM6NXDx7ACGro1aWQhEql8G7rNNDZnj7q1gt
-        YoUp8DytC9NnfRmcCJ+vZ/pkgfp6WLHOynZu1CgNJefcNt6JjpheqBq0p+3us38+
-        0/wIvc3qzuwTwZtScBSeDv4UKjCK8x4UD2eblpRTd76zyAkcvhWuJKossFNk4Wbj
-        vtMA==
+        :subject:subject:to:to; s=fm3; t=1683722094; x=1683808494; bh=uD
+        5wihF8eiw5RnzdsFhWaMGX0G0hCHIaw4G0acluT00=; b=is9ErKz0oWtrg4Er/z
+        l8aNBEVdD+Ye7RuzPK1vKp2QZIJfHW3DAzRqtnlKUIsX0a2H3eWSRzfwm6tQDvAS
+        72x3loMeM1N/PTv7CIn+MFPdXF5lNvT/bzwSMIH433Ohv7JPtZ2RuxnG5jll0rAX
+        At0JAkRHuE6C7uV1/fZmTECwI7JVedTngoogVDpensPFpDWQ9Ct6D4YOmq+wFrcq
+        QiYabs9cMLG04mIboGPKns/TNhMsiz3py1ayjcuSb/smqens044RHfyfVx/79OfV
+        XDBBxvQdkRKaOIEWw0oG4pqiCC3UyK1hdTqS4MBD2d3OLOfxlZO7m2aG6psq/2n0
+        Ie8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683722087; x=1683808487; bh=jycccpQOMPD6j
-        7hakqW6b+1765pkk9WgWoHSGrPucKA=; b=aE8QbDdskYdXhkPR6vCK7U6vJJRYV
-        /nho4214UJEeF5d0XYt+gtBrnDEmKDVdYoltTBOHsu8biHcCyqLmp7IBz0q00LbH
-        Gb04UtQldUQin9EyBLFmtEefuBmwpkG8DVFGf9iW4s0Pz/F/5AMGqseYEVWF4UKp
-        GiV1i/7nXk97TmZAJSIFOXQzBDV5bc78eleMUBPDQWyuLP78y/yZZ6t3FIraIXkM
-        KWwIrgHF7PDB45o/GqciREYhYRk7jyM2nYyv0RQeBsArXhdmrquAMvPaSIgnCrbt
-        /Ab2Q12Ym3TwFTdUBQyKRxOT6L6rcV+/TacwQKfikGlWtqLfcqqqxf4QQ==
-X-ME-Sender: <xms:Z49bZNMuJE45FqcZ9NDxj1Xd4yIojPyqBuNrU0oaMtZag8CrsH88LQ>
-    <xme:Z49bZP-d8zPWe808rv1AQVidBQOzrlO6TmpeyivxDW0cGB0CD0YLLSnqkN5g3e6WN
-    ilx_2r4JQWp5gAjuQ>
-X-ME-Received: <xmr:Z49bZMS3Ib91TAuHHkXQ-udxp967JnYS2C-13AjxNYbBJCKdDLlpN_L5HlCOJKvs_hG-yZSU1tsHeI_gzWdXp-tZJ1_rcWpQ7rTjeR2jevfR>
+        :x-sasl-enc; s=fm3; t=1683722094; x=1683808494; bh=uD5wihF8eiw5R
+        nzdsFhWaMGX0G0hCHIaw4G0acluT00=; b=ZuMDPnF927mJV727KoRoYeMkR84dm
+        acDpVBLV5dqSfD+j67KJuYLnoOVX04PFPFJhIIVetqVZBzjO9Gl7lZh9lT/um990
+        ruizBhWdncfsRcL+7qBLGx77BFZkmJEzjStGU7p3N/5/tK+PVNNCvDyfhn3KBmvn
+        Z6xZY6MgfSOD88Z8eKbskBaamTkhRxI2uRoHQu5Vzj5nrChsG56VpAtHvurB0acg
+        eB/FfqoLVyLTWWMdujEmmZLRqF4pBtpCjPo2GFxJiCMY4QKbmjho92Xj/95M5EBL
+        3q3DaBts4/qSDqhw88nwXwBH5WXKAVGsU3DgBv3cWy4FtpmHsUJ+M4RpQ==
+X-ME-Sender: <xms:bo9bZM9_BxywBo4tZ39bWG8yF5WBHgvFX5A_5FD-GptZnXDZgAd44Q>
+    <xme:bo9bZEuBz0hqDJht7-F_x56pIKk8DTzuyQ_7Dq1jN2SE724NaEfpCJ51TYN0CHBmB
+    e0dsLWslUvxIDxZzA>
+X-ME-Received: <xmr:bo9bZCDHB6HOTsEV_3x1IasEwQowIAzHkmwOY5HmdSO7lTzXUHtqSTKvt2-vhb0RFew-fzPFp4uJaBDiUt7H3hZznjFRfPiVNRHxK9nr7gqY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeegiedgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Z49bZJvCCFJkGGg2OCW1io4FURK1wL50Kx3Is1w9xkZkICQtAAp22A>
-    <xmx:Z49bZFfiudnPPHHSSr0TGmE-5w_W2mKx3wNOgy8Iqhu3mT8khj9IGA>
-    <xmx:Z49bZF0lmlCbzYgdJSnY_56lJulhX63erd0YFexrHLiFky5Lmn54yQ>
-    <xmx:Z49bZM7bpeVFwELCqUh3TEVH_QTAA2ZuPPHT2oLXHOigx_D406DQBg>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeefnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:bo9bZMf0mSNLEteAtoP14IIKEFhn8cOdXviE5XOmUlI00yh5lxoGvg>
+    <xmx:bo9bZBPHL_CInGYdg3qleBUviLhutxx4yXZHqGWfqTQvstHi9MsCng>
+    <xmx:bo9bZGlxnbFAszDLnsp7RhT-ZAoNxrnguJ3mT2jPg70z0aBxbMvJlw>
+    <xmx:bo9bZDWommbFocW6UNFAuKo2ofQVdl5hcja6jPudDSkrr9-ISS-sBA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 May 2023 08:34:45 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id bb114e6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 10 May 2023 12:34:36 +0000 (UTC)
-Date:   Wed, 10 May 2023 14:34:44 +0200
+ 10 May 2023 08:34:53 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 705b70a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 10 May 2023 12:34:44 +0000 (UTC)
+Date:   Wed, 10 May 2023 14:34:52 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v4 1/8] fetch: fix `--no-recurse-submodules` with
- multi-remote fetches
-Message-ID: <ZFuPZMK-xtygmZ7J@ncase>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 3/8] fetch: add a test to exercise invalid output
+ formats
+Message-ID: <ZFuPbJZ4jtFfX7iY@ncase>
 References: <cover.1681906948.git.ps@pks.im>
  <cover.1683636885.git.ps@pks.im>
- <d82b42ed345ac7b482bf5dd96456f131ecb8c746.1683636885.git.ps@pks.im>
- <xmqq1qjpz96s.fsf@gitster.g>
- <kl6l5y911ht4.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <006ea93afbef8742a823a9444d2b71785a9b4ec3.1683636885.git.ps@pks.im>
+ <xmqqv8h1xu7q.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HQ0p01HmA0Yi1nww"
+        protocol="application/pgp-signature"; boundary="rrVUcS5apKQ+TS8+"
 Content-Disposition: inline
-In-Reply-To: <kl6l5y911ht4.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <xmqqv8h1xu7q.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---HQ0p01HmA0Yi1nww
+--rrVUcS5apKQ+TS8+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 09, 2023 at 11:27:35AM -0700, Glen Choo wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, May 09, 2023 at 10:58:33AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> >> +		git config fetch.parallel 0 &&
+> > Add a testcase that exercises the logic when an invalid output format is
+> > passed via the `fetch.output` configuration.
 > >
-> > Is this necessary for the purpose of the test, though?  It should
-> > not hurt, but we do not require the end-users to set it in real life
-> > for the parallel fetching to work, either, right?
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  t/t5574-fetch-output.sh | 19 +++++++++++++++++++
+> >  1 file changed, 19 insertions(+)
 >=20
-> IIUC it would make the test output deterministic if we fetched from both
-> remotes. That doesn't happen here though, so I guess it's not doing
-> anything right now.
+> It makes perfect sense to make sure that invalid input gets rejected
+> and the command exits with non-zero status, and it is probably a
+> good thing that the end-user sees a message that explains why the
+> particular input is rejected (even though it adds one more thing
+> that needs to be updated when the message gets reworded).
+>=20
+> But do we need to insist on no output to the standard output stream
+> when the command errors out?
+>=20
+> Other than that, looking good.
 
-Right, will drop.
-
-> >> +		git fetch --all --no-recurse-submodules 2>../actual
-> >> +	) &&
-> >> +
-> >> +	cat >expect <<-EOF &&
-> >> +	From ../src
-> >> +	 * [new branch]      master     -> secondary/master
-> >> +	EOF
-> >> +	test_cmp expect actual
-> >> +'
-> >
-> > In the context of a series that attempts to introduce a new stable
-> > output format for machine consumption, which implies the traditional
-> > output can change to match human users' preference, this test feels
-> > a bit brittle, but let's wait until the end of the series to judge
-> > that.
->=20
-> I also find it a bit brittle to assert on the whole output when this
-> test is about checking that we do not fetch the superproject.
->=20
-> Is there a reason you didn't go with the "grep for submodule lines"
-> approach in the previous tests? If it's about catching regressions, IMO
-> your PATCH 2/8 does a good enough job of doing that.
->=20
-> Wondering out loud, I wonder if it makes sense for us to make a bigger
-> distinction between "tests whose purpose is to guard against unexpected
-> changes in output" (i.e. snapshot tests) vs "tests that happen to use
-> output as a way to assert behavior" (i.e. 'regular' behavioral tests).
-> Many GUI app codebases have such a distinction and have different best
-> practices around them.
-
-Fair enough, will switch to `! grep "Fetching submodule"`.
+Not really, no. Will change.
 
 Patrick
 
---HQ0p01HmA0Yi1nww
+--rrVUcS5apKQ+TS8+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRbj2MACgkQVbJhu7ck
-PpTuHhAAnV08aLs11z4oo1/53VQRPELLpi/r7SL1N1gQfxN492HDNZx1WK4jh9qM
-6+Yxus9LuaRIy9QUYnHCwWFJLi/xSzlhwLda8PEru/QPqplNAEx9UIYq4TI/g0wC
-Acvt3MkClDsWHjPndiGAXFhgExbgYeEWQkVF3AhTQhIvvr4eJSI3Ddd4ATrbSSAe
-rKsyH2fUWUNc+u2wykzncwuDzkl0tPbiwO8IzPg5bcML5GKat9sCAfR6pPMhF6/2
-+ZMS2w+fk2NJ6xjFh3R13m4Vf9YfB0APAMMRz0Jxvc8XGFl1DbP/IMySPONNzUy6
-WaDLs+HqtVPc3DUCBNgq5IlpQRIiBme/tgb97z/0pRaEBtnW35YlXuad2FbfcMNu
-b6NJB4Tvj0kW3id9kxS9YyfCuWTndVhhlVClhJe714kboxob2W1wULGaSR6sOYDK
-yY07DIp3Mm73n3aeD2xG/bgH785LynGAZ080mI/+Hm1GOwcV05yb5KyQFiD3LPdy
-W6UOTGPmTXdWJTzuWVOXT0s3qr1dVhh1u0wJLUqM6xMcMlKFK5tS41gUsIsXyHpG
-tbqvTH4DLuKvEtwGspFJ47iEGYzd0XgIus3q3Fe+f5/zzuMfO1uhiXYIDNJdTCQb
-jwbQKn7Sfr+HDrU+HU7IQMI/aRdoxIOBOP+ju3gm4BVrHG+0+yQ=
-=y2SI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRbj2sACgkQVbJhu7ck
+PpRoDBAAnzMX3792u7opmep04cdUVIExOEq4otOU9a+lCHTyS+39D5uY5owova7X
+ovWFKPWUhifKwzb1m1xqNjvT3XMIZZ/bC9yiiylZO7WUv03ic+ca98/51h9v8JFw
+fu+tYhzf360SvJ0K920Nm5WX1QAKVWNdK9xj7wUmnbq7tkTKSNoMVbKJtSYFDHYQ
+pJS4IaVHT+ZwODztxjDwWhhc6KesLlvrK1h8UDYo85ommvXTn+oGGonIZsj7Ywr0
++VuhRVkA5mLuG2fuBmLBcHILpUU41VFQ1m3bAAtHUaX33GM7UM7FBBJ8F9Pa4coj
+D508r6mcyIBCK3zEdIqgbcoBtsYG4xZ4HeQh14Pn/IlsQC51gktyF7oatZzjK2Sx
+7rwrC/lg4501K97DrvIMZq1SB0UAWMdZ4mj15iRVMwvRrOwspU/ql1TdO8ijzj+U
+iYCrfJcyCdmNgGW3IfMTZDEuMXTwdPuKjVeC5LUjmFyPnhp+X+3Z1jWUeevI3Ixw
+ykYJUDmcr//9Qm566m+WaDG0I5x/i9POJQQfQ6EV4HCXRvXJPTHtHMu1jQnEPYB5
+6+ZE8z9zkZIv/YiKUyOsmA2U2Ye+fMmD9jvgHNz/UoI57yZoKK0ZwSwNOEVQ9PZf
+b3pkhb7QRjotkwhPgozFBKL5xGIzgY2v08I/sDtjM/sHe7tO8qU=
+=ISzJ
 -----END PGP SIGNATURE-----
 
---HQ0p01HmA0Yi1nww--
+--rrVUcS5apKQ+TS8+--
