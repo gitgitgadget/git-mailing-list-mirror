@@ -2,150 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0226CC77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 19:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B677C77B7D
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 19:26:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229828AbjEJTVq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 15:21:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
+        id S235899AbjEJT0j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 15:26:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjEJTVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 15:21:45 -0400
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102CB5255
-        for <git@vger.kernel.org>; Wed, 10 May 2023 12:21:44 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 4452C5C0269;
-        Wed, 10 May 2023 15:21:43 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Wed, 10 May 2023 15:21:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm2; t=1683746503; x=1683832903; bh=++X8qurLPyVUdNoR6SAyvJEZ1
-        UzpuHm2f7nLnKkUKCo=; b=wIokVmMh8SM17raPEfqHdFn0UhCwWMPf/llkYvVSr
-        a7cIHy7DXVsS6wgSTNUKngeeRq+0FA4KCSII2GRekBdYg0ARlafB0gyML1u8SNm0
-        h9h85eQTcxLiyz9G0smHICxlVjGIX/06FKwTMfNeZU4xdFrsZgeE2yqrdCDSkO66
-        VtmEBv7hjoYK0bjGY0tTTeW30xK2FJ+Qb78/eft1yN0k8PHiylzuexHRrb8h5vDI
-        IfYsQc5UYEZd0/ojlTN6ObNYvX9E4x+XOmMZQt/nxBZojhvOxmJAtekFPx5GeA5S
-        LfW1EuKuzDDBuIdSa5R3FKlmfg3x8UoDGcVEUR7t+fg9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1683746503; x=1683832903; bh=++X8qurLPyVUdNoR6SAyvJEZ1UzpuHm2f7n
-        LnKkUKCo=; b=WuyuIDxMsLaCzJqelI2nabsk1qDNckcM1xzRFTAn50IP1moi9Nr
-        +KAvub0q3FLRxfNVQmlFG8euUMV7YHydgrOQR54GHoYpG/fZmzO/b4qqv7wpqgmM
-        uB8IsVo9o9DlLlmHgL9tPPHN76TCc1qkL6r0cizGhzAikW8iWNZV2oVOWOYcjTAZ
-        EfCvovOFLksmQKDG2L4kFxCU9T7+TkDmwi6laFxkXdg/NT8zIVW/uQYwMuQEPoba
-        YA4hP9O8T6lcfbzmtyD4plN1Xrhe7NL+NoUcXqZiwYBYV4xibdHAHaQvVB3oY4/F
-        KFvcWS5QnuBvWkNtuQzHiMgJnY8oRa5DYOg==
-X-ME-Sender: <xms:xu5bZLxP9Zhw2DpQdeEdNinyy4JnxSGILfw5Egn_i2Tq5CYXbjJerT4>
-    <xme:xu5bZDT3W1cFWLPugxpYEkm77T_tsk-e005UvGLFbxgQ9HdMVJ-3h0NPvLmtzFXru
-    tB6Xh6iEbV3KwIYog>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeegiedgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtgf
-    esthhqredtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghk
-    khdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrh
-    hnpedtkeduvedthfelueevheffhedvveeiueeiheehudehveegueetteduuddtfeelueen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:xu5bZFVRkcU2wIQ7oD9Rvv7-xWufnX278BxIahSVFYVFiFgLtLG4yQ>
-    <xmx:xu5bZFhrMaPF-aG8NMntt8xUvtJoSi1HjEsg1lw8LACBmnGbgQdtWA>
-    <xmx:xu5bZNCI32NSmj29e-4hHicqOPmEUaQ3vCpP-u6_mlR5pvixYXUscw>
-    <xmx:x-5bZMMcOdvgXjQ0q8UHhSojUoQds_1Ikovog35Ni6wOy26-SjIdqA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 3DFF715A008E; Wed, 10 May 2023 15:21:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-415-gf2b17fe6c3-fm-20230503.001-gf2b17fe6
-Mime-Version: 1.0
-Message-Id: <2908b005-9478-4c59-ae8e-150be44a15a9@app.fastmail.com>
-In-Reply-To: <ed930ef4f795f30792bc14d9c1939484e4976db8.1682671758.git.dyroneteng@gmail.com>
-References: <cover.1682671758.git.dyroneteng@gmail.com>
- <ed930ef4f795f30792bc14d9c1939484e4976db8.1682671758.git.dyroneteng@gmail.com>
-Date:   Wed, 10 May 2023 21:19:46 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Teng Long" <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org,
-        "Junio C Hamano" <gitster@pobox.com>, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v9 4/6] notes.c: introduce '--separator=<paragraph-break>' option
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229586AbjEJT0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 15:26:38 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84105595
+        for <git@vger.kernel.org>; Wed, 10 May 2023 12:26:36 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-55af4277904so117770007b3.1
+        for <git@vger.kernel.org>; Wed, 10 May 2023 12:26:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1683746796; x=1686338796;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cQVg/yRqK2Z6mWc7P9cITGrxGNGvhoaIia+gLb5LtI4=;
+        b=KKoLObjjRKqmTGTYXZtTDt7NYArNn30zgYQkO8Z4svVHH2bZ3DcSDSfdl3SNXmkxj+
+         dbActXmhF/z3Mulnvo60HLBvHI/VfoXmKzdPxX6sSSSp/h9cJlrV1gYyhQWSGcJv/x6D
+         NnT7Lfvo++SXjhSnNT+lrbEcP9QUYBXrxUkQWZi4co++npucB0HPE5TBuhk37GRLbDv8
+         Ov0XGQfgy9NzsgxuCwHGlRn7QkJC3j91bICKtcEzU+UBZfbTywBgvW2//Rsd+OcaffqQ
+         /dndlLLwuEaplkH5GqrFr7HhH9yBK0ZcD9lwRQgte86eosLwUnMtVcJahOH+YL1gisnf
+         9OOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683746796; x=1686338796;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cQVg/yRqK2Z6mWc7P9cITGrxGNGvhoaIia+gLb5LtI4=;
+        b=k2l5RLaIBg9aXgRF7ZjyofqIA289XqSVGNsFNUtHCmLln6TRpIUuurQuZVo50KAODo
+         QFh8iF2Xx1gT8f691QTlELeiyDahbt4boWlyAwvaCYcCrxV6YK5jLA9JvAGUrvoYX6Re
+         20hFqF+kLbOjHoPNKM4bLfLanTTQ1ioWBI+f7dJekI55UwUWgP/8wHFPBTrMJCa2AOtE
+         G/ZaC2VL0pip5B9AtAMcSyfdh4jO6wPmiIzpluE7xJXOzcXEmgI96qwW4m8shc1VpBIN
+         BvUQeQW2uapAu+DJFldI/31xMZHX77Ho9XPdOPqAvjZ5clNgZWu4iuo8H9QhUaGqeh0o
+         NP8g==
+X-Gm-Message-State: AC+VfDxUcix1yQO1a4zW4+wGAOHCUHcIMi9HOYJf4OJDHPye+wQugYc8
+        vUYltzLNpIHaInXrDsb0fEum
+X-Google-Smtp-Source: ACHHUZ7gqv2jW0UZTvRtqNOcEJBQVDldXMcPr1op3//a1DcnajnwFH5qU6ipamMIgD6jLs7B0e5HyA==
+X-Received: by 2002:a0d:ce84:0:b0:55a:30f4:23e7 with SMTP id q126-20020a0dce84000000b0055a30f423e7mr20501588ywd.24.1683746795912;
+        Wed, 10 May 2023 12:26:35 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:872:7afa:ea2c:790e? ([2600:1700:e72:80a0:872:7afa:ea2c:790e])
+        by smtp.gmail.com with ESMTPSA id q188-20020a8180c5000000b0054f9e7fed7asm4322079ywf.137.2023.05.10.12.26.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 May 2023 12:26:35 -0700 (PDT)
+Message-ID: <cc058647-554b-3b40-b8b9-52de0b7bd9e4@github.com>
+Date:   Wed, 10 May 2023 15:26:34 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH] merge-tree: load default git config
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, christian.couder@gmail.com
+References: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
+ <xmqqsfc43si0.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqsfc43si0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I realize that this series is going to be merged to `master`.[1] I was
-trying out this new change since I might have some use for it when the
-next version is released.
+On 5/10/2023 3:18 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>>     This patch was reviewed on the Git security list, but the impact seemed
+>>     limited to Git forges using merge-ort to create merge commits. The
+>>     forges represented on the list have deployed versions of this patch and
+>>     thus are no longer vulnerable.
+> 
+> Let's queue directly on 'next' (unlike 'master', where we want to
+> merge only commits that had exposure in 'next' for a week or so,
+> there is no formal requirement for topics to enter 'next' before
+> spending any time in 'seen') and fast-track to 'master', as I've
+> seen it already reviewed adequately over there.
 
-On Fri, Apr 28, 2023, at 11:23, Teng Long wrote:
-> From: Teng Long <dyroneteng@gmail.com>
->
-> When adding new notes or appending to an existing notes, we will
-> insert a blank line between the paragraphs, like:
+Thanks for picking it up so quickly. I did not mean to imply that
+we should merge to master without giving the public list time to
+digest the patch. It is a rather simple one, though.
 
-The test case[2] `append: specify an empty separator` demonstrates that
-`--separator=3D""` is the same as the default behavior, namely to add a
-blank line. It has (according to the commit messages) been like this
-since v5 of this patch.[3]
-
-v4 of this patch special-cased `--separator=3D""` to mean =E2=80=9Cno
-separator=E2=80=9D. And this was the same behavior as the original
-`--no-blankline`,[4] which eventually mutated into `--separator`.
-
-Why was this changed to act the same as the default behavior (add a
-blank line)? I can=E2=80=99t seem to find a note for it on the cover let=
-ter of
-v5 or in the relevant replies.
-
-It seemed that v4 of this patch (with special-cased empty argument) was
-perhaps based on Eric Sunshine=E2=80=99s suggestion:[5]
-
-> Taking a step back, perhaps think of this in terms of "separator". The
-> default behavior is to insert "\n" as a separator between notes. If
-> you add a --separator option, then users could supply their own
-> separator, such as "----\n" or, in your case, "" to suppress the blank
-> line.
-
-(And then reiterated in a v4 email [6])
-
-Was the idea perhaps to eventually (separately) add a separate option
-which functions like `--each-message-is-line-not-paragraph`, like what
-was mentioned in [7]?
-
-Maybe I=E2=80=99ve missed something. (I probably have.)
-
-[1] https://lore.kernel.org/git/xmqqpm785erg.fsf@gitster.g/T/#md9b208014=
-57c3eb24dc0e793f5dfbeae2f2707fd
-[2] On `next`, 74a8c73209 (Sync with 'master', 2023-05-09)
-[3] https://lore.kernel.org/git/a74c96d6dd23f2f1df6d3492093f3fd27451e24c=
-.1676551077.git.dyroneteng@gmail.com/
-
-   Commit message on v4:
-
-   >  * --separator=3D'': we specify an empty separator which means will
-   >  append the message directly without inserting any separator at
-   >  first.
-
-   Commit message on v5:
-
-   > * --separator=3D'': we specify an empty separator which has the same
-   > behavour with --separator=3D'\n' and or not specified the option.
-
-[4] https://lore.kernel.org/git/20221013055654.39628-1-tenglong.tl@aliba=
-ba-inc.com/
-[5] https://lore.kernel.org/git/CAPig+cRcezSp4Rqt1Y9bD-FT6+7b0g9qHfbGRx6=
-5AOnw2FQXKg@mail.gmail.com/
-[6] https://lore.kernel.org/git/CAPig+cSF7Fp3oM4TRU1QbiSzTeKNd1qGtqU7goP=
-c1r-p4g8mkg@mail.gmail.com/
-[7] https://lore.kernel.org/git/xmqqh6yh3nk4.fsf@gitster.g/
-
---=20
-Kristoffer Haugsbakk
+Thanks,
+-Stolee
