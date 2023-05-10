@@ -2,68 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A89C3C77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 12:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 184E2C7EE23
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 12:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237029AbjEJMer (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 08:34:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36318 "EHLO
+        id S237042AbjEJMes (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 08:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237043AbjEJMe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 08:34:29 -0400
+        with ESMTP id S237068AbjEJMek (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 08:34:40 -0400
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7677F7AB9
-        for <git@vger.kernel.org>; Wed, 10 May 2023 05:34:28 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172FF83F1
+        for <git@vger.kernel.org>; Wed, 10 May 2023 05:34:33 -0700 (PDT)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 817B2320039A;
-        Wed, 10 May 2023 08:34:27 -0400 (EDT)
+        by mailout.west.internal (Postfix) with ESMTP id 34C973200915;
+        Wed, 10 May 2023 08:34:32 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 10 May 2023 08:34:27 -0400
+  by compute2.internal (MEProxy); Wed, 10 May 2023 08:34:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1683722067; x=1683808467; bh=Vp
-        z5Y4bjPeocNmWGjzLdVoplGoy421Oxi8GJP9YHdtc=; b=Tr9UCV1e8oPtR0Qw1Q
-        lWD5i/Ga3U3Ah9T6VCL5tVgZ26RJRvDaxlOPXB9HE4T9GLzwmD4hoXIg3LwJUWQd
-        F1/XeZN280pbqj3PtMGytrMOnOXc0PqC4b7uI25jqjV8lbT7Apizk38Whr/oQcIz
-        ig4EjCCIYnT4h1PrpKb5/scPy6cf+Ik8mhTpigjYyLchluCLQ5/Z2USQJW1RzLWG
-        fiX9f1/2wA3TPL477Xen6sgt+LSxpU8ycnHuJOQJyBG8wxL9EDNAiG470id4vk3f
-        sz86Gt/a8zEkL/PJXsJ3YTG/OOLAOTI2EQa8iVnJOucACGyFrCQDMr4ut15HB0pd
-        VDWg==
+        :subject:subject:to:to; s=fm3; t=1683722071; x=1683808471; bh=Lq
+        vKaXXSjS+TBnj8gSPxfC+VLjGy811a+k9Lf2eHT7Y=; b=kMM5qVRu7pWQpUYjZW
+        5cF/Dzip0thX4qTOUvbNjhKY04mp9oOsmiqhFr4+xeww88hO7UQ7u2xaFnbdu0f7
+        yxflVsnMKMZtbwd6jkmvSoa9KmYiU80jX7PF73POMTMGR0UFXjssGbRDhb4cwbZZ
+        EWduxl7zDKJeI6ZV525fBks9GtTrUL6WIQRmvC/9jXX5BcU5+Vv2+D0ibOIyf2ND
+        WftmB86+jsCLTEP7Y2N281QwKRo/sh4IbGrj/eIA6D8xgyu+SJlRZWHU2KsMFmAZ
+        JypiPtjrd+8nos/DOpU3ydzqPOWsBu24Qqpgn2cr/NvFTQSlYmQIIHuQP37jWtVS
+        Gh7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683722067; x=1683808467; bh=Vpz5Y4bjPeocN
-        mWGjzLdVoplGoy421Oxi8GJP9YHdtc=; b=FFphgwf+x5134niOExcEQBBa+Mows
-        Cus+g7wSq6SY1x3fsgJC/uigkufYTC8VSdVs4ApilGd5s63OQiNTC+3bs4fACrAX
-        ht7Uy6klW2SM7SmNlZfz5XwY2Fqy+9FP4xpucuDdsrgJUc4KTS6idUVyNGxP15hp
-        6eAA/G4fKAMICFObJaFNxHvO3IPl8JzZ4RgAWkXRBuGFElM44/8DFXeWUMadstIH
-        oLRKUyRnDonLvj91O85/KSG/z7dJTPsl20DU+iXjLsSahyTzRS5Vp4HtlWudbb9C
-        XpgJ1rvva8sKZwqDpzCmeh/oxbVHUaWSJDrC6UgH1buPMAt4L4TZHdr+Q==
-X-ME-Sender: <xms:Uo9bZJWFa-LK4UTdLNAmrGdwemiVz0rKk5byoaftS6egbUHGDcXUog>
-    <xme:Uo9bZJnaHaWK73-Uy3GihXQoVMqC1M_v-FuMJlpxKnct7pirddxrOJvOKwcwD12ft
-    IuPXMMqa6z2UpXnig>
-X-ME-Received: <xmr:Uo9bZFbhh0oUCkPw2B33m7gLqu1T6gv9PRy2x3oCT5Yq-i_RAKSMeq8jLdC0OQg-yuOB_tJn2nlmcE9jv3iMWAzMjg_2vYBajXaHdFdghu0d>
+        :x-sasl-enc; s=fm3; t=1683722071; x=1683808471; bh=LqvKaXXSjS+TB
+        nj8gSPxfC+VLjGy811a+k9Lf2eHT7Y=; b=ZeDtmxhpa/MPW29fxQ0sWXlvrdw5+
+        VngQ54DhyUmfCC04FeWRITFXFMUsjRa4cm1DCiXrJ77tPovjF+QPle1iAI46RXeb
+        uZJ6KhOFPSNkvY98neOdezCjvmOXx08cwVrFZnLCKtsLdce5W28ZiJAd+tnJ9QC1
+        pKtDmqC7wlOMCtXgr/tWieA0LS13OAECTOHUIDDgjrtupnbSIlThV5UKUoOqm5V5
+        bzwYMxy7yM7o4MImUNekZaKre6VFow86D/2GylN9n2uqHCfX++Cq2cw3f3WaOhGj
+        RWUHeNZNXyAruMKLm3RU5V6dUoAqw4Fdxxq9Nex6Xy0GTVgQZwXGAA/7Q==
+X-ME-Sender: <xms:V49bZDeCd2gSCzvhP5Bn5s9jPdCyprcsLMxlCA4JYoQSiben-Yedpg>
+    <xme:V49bZJP3id58wCXeBB8Oew1RIr7PAxsiIjKb573ZTazSrGdLnL-5oi9PPsDDIjsh3
+    X0THqlPaciSffujvA>
+X-ME-Received: <xmr:V49bZMjTEGJGp3pLKCih6UHeHAIrNyHmCt5uer2lTOG13a0fa6YV4zOMzNVHVQiGI9g8SJWXoytXU0M19uHk1p_n8ozHY6J-d3G3GucHKvMx>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeegiedgfedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:U49bZMWheWTkOwZXDPeyDbZsraggGUfpQlHCa4yfz5J_Zp_wYZKgBA>
-    <xmx:U49bZDmjAENkGGDN_4Ew9uOs_clZ5ihleKD_jEAsUUoYGEMJ2nUCKQ>
-    <xmx:U49bZJdRXYF15LGw2LXufEeCy7MpBNMeGhNfzscKNAky9aurbd7noA>
-    <xmx:U49bZMBw6p1lu0x3_ue7kcUC-mB8aovQ1X54CqLvh2H7KbuZpSIGKQ>
+X-ME-Proxy: <xmx:V49bZE9Is9BJFCRcHJUUc2J_HORoGYD03Jpn5O5HhOq9hYm1QhpoVA>
+    <xmx:V49bZPuHZFaKrRoL6kkY7ASkeMzNChh_-1-uUdxUR7AbnGP44a5edw>
+    <xmx:V49bZDEERKG7Y5x8nrSZRbcrQA6JZzOGu71H-8guFgMjez8gCn3yfw>
+    <xmx:V49bZJJ4DV2zHZoAMECc09KV7STkmZWU_uOj79345Vwj8g2pkMDqnw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 May 2023 08:34:25 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id d9d52796 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 10 May 2023 12:34:16 +0000 (UTC)
-Date:   Wed, 10 May 2023 14:34:24 +0200
+ 10 May 2023 08:34:30 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 6686fe17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 10 May 2023 12:34:20 +0000 (UTC)
+Date:   Wed, 10 May 2023 14:34:28 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -71,13 +71,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Glen Choo <chooglen@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v5 6/9] fetch: introduce `display_format` enum
-Message-ID: <3cac552f5ff85f84f986de02bbafa7e4ea0be848.1683721293.git.ps@pks.im>
+Subject: [PATCH v5 7/9] fetch: lift up parsing of "fetch.output" config
+ variable
+Message-ID: <0c3dbcd09fb5e064601dc3fd9ac650cb496371e5.1683721293.git.ps@pks.im>
 References: <cover.1681906948.git.ps@pks.im>
  <cover.1683721293.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="81c38m7huWAkEwJ0"
+        protocol="application/pgp-signature"; boundary="H2oCXpanvfgki/6b"
 Content-Disposition: inline
 In-Reply-To: <cover.1683721293.git.ps@pks.im>
 Precedence: bulk
@@ -85,159 +86,203 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---81c38m7huWAkEwJ0
+--H2oCXpanvfgki/6b
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We currently have two different display formats in git-fetch(1) with the
-"full" and "compact" formats. This is tracked with a boolean value that
-simply denotes whether the display format is supposed to be compacted
-or not. This works reasonably well while there are only two formats, but
-we're about to introduce another format that will make this a bit more
-awkward to use.
+Parsing the display format happens inside of `display_state_init()`. As
+we only need to check for a simple config entry, this is a natural
+location to put this code as it means that display-state logic is neatly
+contained in a single location.
 
-Introduce a `enum display_format` that is more readily extensible.
+We're about to introduce a new "porcelain" output format though that is
+intended to be parseable by machines, for example inside of a script.
+This format can be enabled by passing the `--porcelain` switch to
+git-fetch(1). As a consequence, we'll have to add a second callsite that
+influences the output format, which will become awkward to handle.
+
+Refactor the code such that callers are expected to pass the display
+format that is to be used into `display_state_init()`. This allows us to
+lift up the code into the main function, where we can then hook it into
+command line options parser in a follow-up commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c | 69 +++++++++++++++++++++++++++++++++----------------
- 1 file changed, 47 insertions(+), 22 deletions(-)
+ builtin/fetch.c | 50 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 18 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 007eb3693d..4c58ee503a 100644
+index 4c58ee503a..439d3c667b 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -48,11 +48,17 @@ enum {
- 	TAGS_SET =3D 2
- };
+@@ -104,8 +104,14 @@ static int fetch_write_commit_graph =3D -1;
+ static int stdin_refspecs =3D 0;
+ static int negotiate_only;
 =20
-+enum display_format {
-+	DISPLAY_FORMAT_UNKNOWN =3D 0,
-+	DISPLAY_FORMAT_FULL,
-+	DISPLAY_FORMAT_COMPACT,
++struct fetch_config {
++	enum display_format display_format;
 +};
 +
- struct display_state {
- 	struct strbuf buf;
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
++	struct fetch_config *fetch_config =3D cb;
++
+ 	if (!strcmp(k, "fetch.prune")) {
+ 		fetch_prune_config =3D git_config_bool(k, v);
+ 		return 0;
+@@ -144,6 +150,18 @@ static int git_fetch_config(const char *k, const char =
+*v, void *cb)
+ 		return 0;
+ 	}
 =20
- 	int refcol_width;
--	int compact_format;
-+	enum display_format format;
-=20
- 	char *url;
- 	int url_len, shown_url;
-@@ -820,14 +826,22 @@ static void display_state_init(struct display_state *=
-display_state, struct ref *
-=20
- 	git_config_get_string_tmp("fetch.output", &format);
- 	if (!strcasecmp(format, "full"))
--		display_state->compact_format =3D 0;
-+		display_state->format =3D DISPLAY_FORMAT_FULL;
- 	else if (!strcasecmp(format, "compact"))
--		display_state->compact_format =3D 1;
-+		display_state->format =3D DISPLAY_FORMAT_COMPACT;
- 	else
- 		die(_("invalid value for '%s': '%s'"),
- 		    "fetch.output", format);
-=20
--	display_state->refcol_width =3D refcol_width(ref_map, display_state->comp=
-act_format);
-+	switch (display_state->format) {
-+	case DISPLAY_FORMAT_FULL:
-+	case DISPLAY_FORMAT_COMPACT:
-+		display_state->refcol_width =3D refcol_width(ref_map,
-+							   display_state->format =3D=3D DISPLAY_FORMAT_COMPACT);
-+		break;
-+	default:
-+		BUG("unexpected display format %d", display_state->format);
++	if (!strcmp(k, "fetch.output")) {
++		if (!v)
++			return config_error_nonbool(k);
++		else if (!strcasecmp(v, "full"))
++			fetch_config->display_format =3D DISPLAY_FORMAT_FULL;
++		else if (!strcasecmp(v, "compact"))
++			fetch_config->display_format =3D DISPLAY_FORMAT_COMPACT;
++		else
++			die(_("invalid value for '%s': '%s'"),
++			    "fetch.output", v);
 +	}
++
+ 	return git_default_config(k, v, cb);
  }
 =20
- static void display_state_release(struct display_state *display_state)
-@@ -897,30 +911,41 @@ static void display_ref_update(struct display_state *=
-display_state, char code,
- 			       const char *remote, const char *local,
- 			       int summary_width)
+@@ -800,14 +818,13 @@ static int refcol_width(const struct ref *ref_map, in=
+t compact_format)
+ }
+=20
+ static void display_state_init(struct display_state *display_state, struct=
+ ref *ref_map,
+-			       const char *raw_url)
++			       const char *raw_url, enum display_format format)
  {
--	int width;
+-	const char *format =3D "full";
+ 	int i;
+=20
+ 	memset(display_state, 0, sizeof(*display_state));
 -
+ 	strbuf_init(&display_state->buf, 0);
++	display_state->format =3D format;
+=20
+ 	if (raw_url)
+ 		display_state->url =3D transport_anonymize_url(raw_url);
+@@ -824,15 +841,6 @@ static void display_state_init(struct display_state *d=
+isplay_state, struct ref *
  	if (verbosity < 0)
  		return;
 =20
- 	strbuf_reset(&display_state->buf);
-=20
--	if (!display_state->shown_url) {
--		strbuf_addf(&display_state->buf, _("From %.*s\n"),
--			    display_state->url_len, display_state->url);
--		display_state->shown_url =3D 1;
-+	switch (display_state->format) {
-+	case DISPLAY_FORMAT_FULL:
-+	case DISPLAY_FORMAT_COMPACT: {
-+		int width;
-+
-+		if (!display_state->shown_url) {
-+			strbuf_addf(&display_state->buf, _("From %.*s\n"),
-+				    display_state->url_len, display_state->url);
-+			display_state->shown_url =3D 1;
-+		}
-+
-+		width =3D (summary_width + strlen(summary) - gettext_width(summary));
-+		remote =3D prettify_refname(remote);
-+		local =3D prettify_refname(local);
-+
-+		strbuf_addf(&display_state->buf, " %c %-*s ", code, width, summary);
-+
-+		if (display_state->format !=3D DISPLAY_FORMAT_COMPACT)
-+			print_remote_to_local(display_state, remote, local);
-+		else
-+			print_compact(display_state, remote, local);
-+
-+		if (error)
-+			strbuf_addf(&display_state->buf, "  (%s)", error);
-+
-+		break;
- 	}
--
--	width =3D (summary_width + strlen(summary) - gettext_width(summary));
--	remote =3D prettify_refname(remote);
--	local =3D prettify_refname(local);
--
--	strbuf_addf(&display_state->buf, " %c %-*s ", code, width, summary);
--	if (!display_state->compact_format)
--		print_remote_to_local(display_state, remote, local);
+-	git_config_get_string_tmp("fetch.output", &format);
+-	if (!strcasecmp(format, "full"))
+-		display_state->format =3D DISPLAY_FORMAT_FULL;
+-	else if (!strcasecmp(format, "compact"))
+-		display_state->format =3D DISPLAY_FORMAT_COMPACT;
 -	else
--		print_compact(display_state, remote, local);
--	if (error)
--		strbuf_addf(&display_state->buf, "  (%s)", error);
-+	default:
-+		BUG("unexpected display format %d", display_state->format);
-+	};
- 	strbuf_addch(&display_state->buf, '\n');
+-		die(_("invalid value for '%s': '%s'"),
+-		    "fetch.output", format);
+-
+ 	switch (display_state->format) {
+ 	case DISPLAY_FORMAT_FULL:
+ 	case DISPLAY_FORMAT_COMPACT:
+@@ -1605,7 +1613,8 @@ static int backfill_tags(struct display_state *displa=
+y_state,
+ }
 =20
- 	fputs(display_state->buf.buf, stderr);
+ static int do_fetch(struct transport *transport,
+-		    struct refspec *rs)
++		    struct refspec *rs,
++		    enum display_format display_format)
+ {
+ 	struct ref_transaction *transaction =3D NULL;
+ 	struct ref *ref_map =3D NULL;
+@@ -1691,7 +1700,7 @@ static int do_fetch(struct transport *transport,
+ 	if (retcode)
+ 		goto cleanup;
+=20
+-	display_state_init(&display_state, ref_map, transport->url);
++	display_state_init(&display_state, ref_map, transport->url, display_forma=
+t);
+=20
+ 	if (atomic_fetch) {
+ 		transaction =3D ref_transaction_begin(&err);
+@@ -2069,7 +2078,8 @@ static inline void fetch_one_setup_partial(struct rem=
+ote *remote)
+ }
+=20
+ static int fetch_one(struct remote *remote, int argc, const char **argv,
+-		     int prune_tags_ok, int use_stdin_refspecs)
++		     int prune_tags_ok, int use_stdin_refspecs,
++		     enum display_format display_format)
+ {
+ 	struct refspec rs =3D REFSPEC_INIT_FETCH;
+ 	int i;
+@@ -2136,7 +2146,7 @@ static int fetch_one(struct remote *remote, int argc,=
+ const char **argv,
+ 	sigchain_push_common(unlock_pack_on_signal);
+ 	atexit(unlock_pack_atexit);
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+-	exit_code =3D do_fetch(gtransport, &rs);
++	exit_code =3D do_fetch(gtransport, &rs, display_format);
+ 	sigchain_pop(SIGPIPE);
+ 	refspec_clear(&rs);
+ 	transport_disconnect(gtransport);
+@@ -2146,6 +2156,9 @@ static int fetch_one(struct remote *remote, int argc,=
+ const char **argv,
+=20
+ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
++	struct fetch_config config =3D {
++		.display_format =3D DISPLAY_FORMAT_FULL,
++	};
+ 	int i;
+ 	const char *bundle_uri;
+ 	struct string_list list =3D STRING_LIST_INIT_DUP;
+@@ -2165,7 +2178,7 @@ int cmd_fetch(int argc, const char **argv, const char=
+ *prefix)
+ 		free(anon);
+ 	}
+=20
+-	git_config(git_fetch_config, NULL);
++	git_config(git_fetch_config, &config);
+ 	if (the_repository->gitdir) {
+ 		prepare_repo_settings(the_repository);
+ 		the_repository->settings.command_requires_full_index =3D 0;
+@@ -2302,7 +2315,8 @@ int cmd_fetch(int argc, const char **argv, const char=
+ *prefix)
+ 	} else if (remote) {
+ 		if (filter_options.choice || has_promisor_remote())
+ 			fetch_one_setup_partial(remote);
+-		result =3D fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs);
++		result =3D fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
++				   config.display_format);
+ 	} else {
+ 		int max_children =3D max_jobs;
+=20
 --=20
 2.40.1
 
 
---81c38m7huWAkEwJ0
+--H2oCXpanvfgki/6b
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRbj08ACgkQVbJhu7ck
-PpQUcw/9Ho9DQmyw3d/TvrZRqTGqYnCk5OBEC1/ceR6aRtcM00KPJVsw4RuQ10nc
-5t23tBRKBwCr6Rj634+46eGuU6GVLE/W+SmNNEjgz/T+ygzpYUiiiJGfyL2pH4QM
-RE0BkYBSVDE5go7aW2nRK+bRVJLD8T7LSvrxCeu5f0FnYB3yu1WCyBTOrHz1W/pH
-o++Eaxtl5fKLnbZUQ0CUHPAGWeI+eUx4+JS0a/yilB/2BfmbsoeYU3B+c92mMQY2
-sBpRzr0hNyS96za34YhGCQlfuAU5uJEUYI2ATU3YUQMZDjBykn/c8wRekGSAraOb
-KRACvijelmhGsjbKZxzsRko5corGrc3XziqbSz4xx036IzI/b/6I5XDry1cvA7+k
-K3InPXr+wCrJo6JpSSFIcxIhxwcsjbX0x6+STbsClCpo1ZDv0Xtr4KL2wYHQWVDM
-Nbu1wsoWXcAxwK/Uv1Sh2ZgGprj5PXvgjzmJNetWo8GKaHD3qciGY/aMUU4hGph3
-gpBfKpFaRqgNHoYvm7xSF7zMl6Zzm1X2DkmoSA0K+CGkNnQxIgcNx1PD0TMBpnaw
-mmgpz17thrTr3RKWQi+Lf3MTanRrGQ7wAUABSF/D/l04bgoUiaEokpS2SwvYxm8r
-y9BLQcCafNOYGLJDGiGjXgIpvtLKpW52YKGK8hgedez2d91tnG0=
-=wHjT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmRbj1MACgkQVbJhu7ck
+PpRb1Q/9HTnJkfF1FJlab5nU3znNm3iW1crApGcYf5dSWK98Ovn7whcXmwSzQcod
+99S3pTu/piliJfDJqcDx7GDMD8GtWPwaSaAJ0f8ym1FlW2K95lFf4APcyJlnmx2O
+/C+XLXvteeViPHxpVFjl9wUzC0YQGBSTgOWCoYV2L3+TnZeyXujEzPnfNPug6pXG
+aKV+XgkcTPLWUF9M9gwuq/SzNDhBTqKKBcr6lwxXNYKmPJD52zGLPHan/m8MZV7C
+nlsLN3Wvjv1kZcgEMHAyRcFJODy6yYf5cRSgpTLimLmjEhZbqC+iomOOIrBwISmO
+CWJVifKsFD4wmPkLV33PvkJwKsSqBZAwp52IzMo1qHTmmXk8gImBL4ApVUPod3Oa
+Z3uLBO0vLyGuSvtxLHYFp/HFiqGKIuHOxrjvEsAl9BZxSAQaC/AMrWeDxTf9I2HF
+yxv36bV2NENVXGc27qtIswvZrqlzM5Icp7xH0PgV7Tzg+cb2G7Gq6oB3Lspb5ICz
+r2oKD3cyQQIvqVKs5RuGECpZ3EPWad4bkMpTvKfQ+SW8hog/QzRwLiOHwFoAQkZW
+LK39gvbooVmS0BdCbBaq8ck4xl/nKJLfkOtNzZKUIgnXWsi1xTSqwKfdeP040Xwk
+w2xZQ8UjGz46UXYR1AFO6XjnwPAukuR5vYq/n3WLzPc5A0W8JW0=
+=kn3S
 -----END PGP SIGNATURE-----
 
---81c38m7huWAkEwJ0--
+--H2oCXpanvfgki/6b--
