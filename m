@@ -2,182 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1732C77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 19:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC471C77B7D
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 20:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236089AbjEJTwx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 15:52:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37630 "EHLO
+        id S229656AbjEJUNh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 16:13:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbjEJTwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 15:52:51 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9B54487
-        for <git@vger.kernel.org>; Wed, 10 May 2023 12:52:50 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id 6a1803df08f44-618a8632655so10357916d6.0
-        for <git@vger.kernel.org>; Wed, 10 May 2023 12:52:50 -0700 (PDT)
+        with ESMTP id S229661AbjEJUNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 16:13:35 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8870173C
+        for <git@vger.kernel.org>; Wed, 10 May 2023 13:13:07 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-6435bbedb4fso8317350b3a.3
+        for <git@vger.kernel.org>; Wed, 10 May 2023 13:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683748369; x=1686340369;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1XgfLiKJL1U8WBTByIRmnPCI7OS2MbI5XxZWLvcnaiM=;
-        b=O5wilpnRRhJVb5AY7KP7g2vCkV8JJSRux3HmffdQQznB/lzsgtmMGYxam34EsnLqY+
-         jXBd9H+DD1NG2yi85HD8TdG09GlFLLy8NDEsAzDizrUSvBrVao/d0uc99mFhb9/jsVrM
-         LuedPQ/JdRkDGciOZVZdesy+BRwz6cmiUiamN7lH9PK7p7QByXj0QA/UrGjCVxYX5zWv
-         t2tkUUUn2/PmBCLxEpLGE9lNNxL9U+dSlPqUZi7jEXnx90h/EF0k0n5U+wvGgPmVmxQy
-         N8itRQSMLZm0DqoCYa4D1byfz7EhgmaYixbimjkNgz6VHmp9bv86nxtctG40gm8kqfc0
-         CHbw==
+        d=gmail.com; s=20221208; t=1683749586; x=1686341586;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2Eu81Z0q7H2kt7YKzDcj8c07mLo55EZZ8Dn3HMxKkqY=;
+        b=eXXWY9gqEMSY48dKvI3k7ABbqidI/+hjzu9iCYQCUCA1VtpYFH3NgyTkbUrGJCCcJF
+         i7Z6+rxrQDzWqm2yPkN78Aizwu9B9TqktbjOdVNWkaFkKZ+wADaQaEA6giz7M9VstR0K
+         upYDByHvowOqDK6luIOHit34KB/4mfNwT3bPOG5egK6qv/cIqrW6JrQqeGL7jAZbqxqm
+         qDc3fnnQZkrXdbF8ztsnrjLAU15yUNR9uOV591CiCY5MZDW7ISpLhBa84YIoIJFOjvOL
+         rloU6ffxoBEat3eYmtLZ91FVL9k7Bek12mmrbOdHwse50ytH/BcPxfRUQnyT7uwxG7Pg
+         qw8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683748369; x=1686340369;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1XgfLiKJL1U8WBTByIRmnPCI7OS2MbI5XxZWLvcnaiM=;
-        b=hTBr73tSxFW/WkP/U9I4WBNsqq0/O26lT1zo9nGIucLhkEBmsJu5BL9svqXIN4spxv
-         bHR9dCS9fDi3fQq4nSD/DlTD7td+9pgzdjWD8us5TmJbuIyHA/u1kJyMjrSFXLe4WzGC
-         +GrWZx7jnsuP9gVqLIXYKgwtKNPBtp1iDI07rtqnd2MZ2x4wtZ2T4rd2vMoY+iST+MhU
-         R05htQOZwrqAXPhvWboFwUt0EGv1ub5ok+vak68S6cz1dwISm3hJda3+PX6lR7+au3/s
-         CoZH/JSadoUftXXgnp29O8GdovDsPCBEwy3YRea4wtLIeJHy+hk5oGOK9bOd6rQu8XhU
-         TLUw==
-X-Gm-Message-State: AC+VfDyGehxL8k/V0MzkSboseFqaA0k/TPLepjKEO4eo0lCd5KjYSP6h
-        fdcfn8GF1tXl9P2SDrZnSmo=
-X-Google-Smtp-Source: ACHHUZ6xaCE035Cyg+WppZX0jvpAiy5nHcPxPXvGD0P8DzTQioYsrzTuyap8Bt7InV0JxjxIgctoVQ==
-X-Received: by 2002:a05:6214:4108:b0:621:4549:106 with SMTP id kc8-20020a056214410800b0062145490106mr6657847qvb.2.1683748369072;
-        Wed, 10 May 2023 12:52:49 -0700 (PDT)
-Received: from localhost (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
-        by smtp.gmail.com with ESMTPSA id nd22-20020a056214421600b0061b63237be3sm1755418qvb.131.2023.05.10.12.52.48
+        d=1e100.net; s=20221208; t=1683749586; x=1686341586;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2Eu81Z0q7H2kt7YKzDcj8c07mLo55EZZ8Dn3HMxKkqY=;
+        b=HXtAQOUDVM4HFBNelZ7NxLoKBohZ3MCMhlRe3f4pRCEaMuMCluja3ggRQifnt1G3vl
+         pDU2//s72rkOUeDlFgoS50U7kNLk/DtxP04D5XOjsvZjtJrv4YZVw12QPAWlol7PJ4OD
+         BcOMzHF5Xc5GY/NNt1/9giEOVFWYb6cuHD7cJzPTrrFfcqsUxQfkFGQ2hh1oXHD4iBqD
+         oQQnaU9t2tB/jhcmHHXSdZaYiXg0II8V+vGGipD0HOAGVI71CZZ7qoHxw4zl5vvDoChj
+         M54ybswx/1sFVCeBT4Kb6cePBWAmdRp1eDcHiy2vN3KH386D3Mx7v9siOgqY2jQUq2nR
+         Wj7w==
+X-Gm-Message-State: AC+VfDzZGjJEWniFYMJNRDgD9zVt3BZ2HJysIUogvwNZFbu5qV2LEsHe
+        UK8CP+uvaRunaXTVVhvKc6ZTnw+l2mE=
+X-Google-Smtp-Source: ACHHUZ6xg4eL0yDEOyZQAugLcM3N2VUbEs45q6Mu24aUfRarFOEkaMg7FCjlHCkPZb9VrKMd5XaUNA==
+X-Received: by 2002:a05:6a20:1608:b0:f2:c2a3:3a1 with SMTP id l8-20020a056a20160800b000f2c2a303a1mr24327771pzj.43.1683749586237;
+        Wed, 10 May 2023 13:13:06 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id k25-20020a63ba19000000b0050f93a3586fsm3437052pgf.37.2023.05.10.13.13.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 12:52:48 -0700 (PDT)
-Date:   Wed, 10 May 2023 15:52:47 -0400
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 3/3] pack-refs: teach pack-refs --include option
-Message-ID: <20230510195247.aj2vpzzxzdkvuzff@pop-os>
-References: <pull.1501.git.git.1683215331910.gitgitgadget@gmail.com>
- <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
- <03950e8f120e48b7df68f3273bbb2f7bb1e9073d.1683659931.git.gitgitgadget@gmail.com>
- <xmqqo7mturi1.fsf@gitster.g>
+        Wed, 10 May 2023 13:13:05 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Toon Claes <toon@iotcl.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 1/1] cat-file: quote-format name in error when using -z
+References: <xmqqilfhctrr.fsf@gitster.g>
+        <20230510190116.795641-1-toon@iotcl.com>
+        <20230510190116.795641-2-toon@iotcl.com>
+Date:   Wed, 10 May 2023 13:13:05 -0700
+In-Reply-To: <20230510190116.795641-2-toon@iotcl.com> (Toon Claes's message of
+        "Wed, 10 May 2023 21:01:16 +0200")
+Message-ID: <xmqqpm782be6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo7mturi1.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/05/09 02:25PM, Junio C Hamano wrote:
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > +--include <pattern>::
-> > +
-> > +Pack refs based on a `glob(7)` pattern. Repetitions of this option
-> > +accumulate inclusion patterns. If a ref is both included in `--include` and
-> > +`--exclude`, `--exclude` takes precedence. Using `--include` does not preclude
-> > +all tags from being included by default. Symbolic refs and broken refs will never
-> > +be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
-> > +and reset the list of patterns.
-> 
-> Hmph, that was a bit unexpected.  exclude taking precedence over
-> include is very much in line with how negative pathspec works and
-> the end-users should be familiar with it, but when the user bothers
-> to specify with --include what to include, I would have expected
-> that the "pack tags by default" would be defeated.
-> 
-> In other words, I would have expected that the program acts as if
-> the machinery works this way (iow, the code does not have to exactly
-> implement it this way---it just has to behave as if it did):
-> 
->  - it maintains two pattern list, positive and negative,
->    both start empty.
->  - "--exclude" are accumulated to the negative list.
->  - "--include" are accumulated to the positive list.
->  - "--all" adds "*" to the positive list.
->  - after parsing command line options, if the positive list is
->    empty, then "refs/tags/*" is added to the positive list.
->  - refs that match positive list but does not match negative list
->    are shown.
-> 
-> > +When used with `--include`, it will use what is provided to `--include` as well
-> > +as the the default of all tags and already packed refs, minus refs that are
-> > +provided to `--exclude`.
-> 
-> IOW, I would expect that the use of "--include" alone is enough to
-> defeat the default; the end user does not have to figure out that
-> they have to pass "--exclude=refs/tags/*" to do so when they are
-> specifying a specific hierarchy to include.
+Toon Claes <toon@iotcl.com> writes:
 
-Hm yeah, I think that is a nicer user experience.
+> Since it's supported to have NUL-delimited input, introduced in
+> db9d67f2e9 (builtin/cat-file.c: support NUL-delimited input with `-z`,
+> 2022-07-22), it's possible to pass paths that contain newlines.
 
-> 
-> > @@ -66,6 +66,7 @@ struct worktree;
-> >  struct pack_refs_opts {
-> >  	unsigned int flags;
-> >  	struct ref_exclusions *exclusions;
-> > +	struct string_list *included_refs;
-> 
-> It is unfortunate that the struct is called ref_exclusions to imply
-> as if it is only usable for excluding refs from listing.  It has
-> other members for handling hidden refs, and it would have been very
-> natural to extend it to also add included_refs pattern next to
-> excluded_refs string list.  After all, the struct is used to tweak
-> which refs are included and which refs are excluded, and
-> historically everything was included unless listed on the excluded
-> pattern.  We are now allowing the "everything is included" part to
-> be customizable with this step.  If the struct were named with a
-> more neutral term, like ref_visibility to hint that it is about
-> setting visibility, then this patch wouldn't have added a separate
-> string list to this structure---instead it would have extended the
-> ref_exclusions (with a better name) struct and placed included_refs
-> string list there.
+It has been a while since I saw this patch the last time, and it did
+not immediately click to me how "pass paths" relates to passing
+object names, which is what "--batch-check" takes.  Perhaps
 
-Thanks for calling this out. I was thinking along very similar lines when
-working on this patch, but was too lazy to make the change :)
+    "cat-file --batch-check" may be fed object names of blobs and
+    trees as "<commit>:<path>", and with its "-z" option, it is
+    possible to feed <commit> or <path> with newlines in it.
 
-> 
-> >  };
-> >  
-> >  const char *refs_resolve_ref_unsafe(struct ref_store *refs,
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index 6a51267f379..3f8974a4a32 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -1181,6 +1181,17 @@ static int should_pack_ref(const char *refname,
-> >  	    REF_WORKTREE_SHARED)
-> >  		return 0;
-> >  
-> > +	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
-> > +		return 0;
-> > +
-> > +	if (opts->included_refs && opts->included_refs->nr) {
-> > +		struct string_list_item *item;
-> > +
-> > +		for_each_string_list_item(item, opts->included_refs)
-> > +			if (!wildmatch(item->string, refname, 0))
-> > +				return 1;
-> > +	}
-> 
-> We can see why the initial placement of exclusion logic in the
-> earlier step was suboptimal here.
-> 
-> >  	/* Do not pack non-tags unless PACK_REFS_ALL is set: */
-> >  	if (!(opts->flags & PACK_REFS_ALL) && !starts_with(refname, "refs/tags/"))
-> >  		return 0;
-> > @@ -1193,9 +1204,6 @@ static int should_pack_ref(const char *refname,
-> >  	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))
-> >  		return 0;
-> >  
-> > -	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
-> > -		return 0;
-> > -
-> >  	return 1;
-> >  }
-> 
-> 
-> Other than that, the changes look mostly expected and no surprises.
-> 
-> Thanks.
+or something?
 
-thanks
-John
+> This
+> works great when the object is found, but when it's not, the input path
+> is returned in the error message. Because this can contain newlines, the
+> error message might get spread over multiple lines, making it harder to
+> machine-parse this error message.
+
+Good description.  I may suggest
+
+    "the input path is returned" -> "the input is shown verbatim"
+
+because <path> is not the only thing that can contain LF.  E.g.
+
+    $ git show -s 'HEAD^{/introduced in
+    > db9d67}'
+
+can find the commit resulting from this patch, so
+
+    $ printf "%s\0" 'HEAD^{/introduced in
+    > db9d67}:builtin/cat-file.cc' |
+    > git cat-file --batch-check -z 
+
+would be an input record with newline in it, that has no newline in
+the path.
+
+> With this change, the input is quote-formatted in the error message, if
+> needed. This ensures the error message is always on a single line and
+> makes parsing the error more straightforward.
+
+Drop "With this change, ..." and give a command to the codebase to
+c-quote the object name in the output, e.g.
+
+    C-quote the object name from the input in the error message as
+    needed, to ensure that the error message is on a single line and
+    ...
+
+The other side of the coin, however, is that an existing project
+that is sane enough not to have a path with LF in it, but is not
+sane enough to avoid a path with double-quote in it, would now stop
+being able to parse the error message for a missing path.
+
+It is a regression, and we may argue that it is not a large enough
+regression to block progress given by this patch, but if it is not
+common enough to have funny characters in the paths then we wouldn't
+be seeing this patch in the first place.  So I would prefer to see
+that we at least admit that we are deliberately making this change
+with a known regression.  Perhaps add something like
+
+    Note that if a project already parses the error message
+    correctly because it does not have paths with newlines, this is
+    a breaking change if it has paths with characters that need
+    c-quoting (like double quotes and backslashes) that are not
+    newlines.  We consider that this is a small enough price to pay
+    to allow newlines in paths because ...
+
+and fill the "because ..." part is sensible.  I am not filling the
+"because" part, simply because I do not offhand see any good excuse
+to rob Peter to pay Paul in this case.
+
+> @@ -470,8 +471,17 @@ static void batch_object_write(const char *obj_name,
+>  						       &data->oid, &data->info,
+>  						       OBJECT_INFO_LOOKUP_REPLACE);
+>  		if (ret < 0) {
+> +			struct strbuf quoted = STRBUF_INIT;
+> +
+> +			if (opt->nul_terminated &&
+> +			    obj_name) {
+> +				quote_c_style(obj_name, &quoted, NULL, 0);
+> +				obj_name = quoted.buf;
+> +			}
+> +
+>  			printf("%s missing\n",
+>  			       obj_name ? obj_name : oid_to_hex(&data->oid));
+> +			strbuf_release(&quoted);
+>  			fflush(stdout);
+>  			return;
+>  		}
+
+Interesting.
+
+When running "--batch-all-objects", we do not have obj_name, and we
+do not have anything to "quote", but the fallback label is the full
+hexadecimal object name, and we do not have to worry about line
+breaks.
+
+OK.
+
+> @@ -518,6 +528,13 @@ static void batch_one_object(const char *obj_name,
+>  	result = get_oid_with_context(the_repository, obj_name,
+>  				      flags, &data->oid, &ctx);
+>  	if (result != FOUND) {
+> +		struct strbuf quoted = STRBUF_INIT;
+> +
+> +		if (opt->nul_terminated) {
+> +			quote_c_style(obj_name, &quoted, NULL, 0);
+> +			obj_name = quoted.buf;
+> +		}
+> +
+>  		switch (result) {
+>  		case MISSING_OBJECT:
+>  			printf("%s missing\n", obj_name);
+> @@ -542,6 +559,8 @@ static void batch_one_object(const char *obj_name,
+>  			       result);
+>  			break;
+>  		}
+> +
+> +		strbuf_release(&quoted);
+>  		fflush(stdout);
+>  		return;
+>  	}
+
+This is the side that runs without "--batch-all-objects" and always
+has non-null obj_name, so it looks a bit different from the other
+hunk and is more straight-forward.  Looking good.
+
+Thanks.
