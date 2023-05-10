@@ -2,175 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B183AC7EE24
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 22:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81CD4C7EE22
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 22:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236703AbjEJW4D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 18:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52984 "EHLO
+        id S236681AbjEJW4T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 18:56:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236613AbjEJWzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 18:55:55 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9217A59C8
-        for <git@vger.kernel.org>; Wed, 10 May 2023 15:55:42 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3063b5f32aaso5127423f8f.2
-        for <git@vger.kernel.org>; Wed, 10 May 2023 15:55:42 -0700 (PDT)
+        with ESMTP id S236605AbjEJWz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 18:55:58 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A1533C29
+        for <git@vger.kernel.org>; Wed, 10 May 2023 15:55:55 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-64395e2a715so7833284b3a.3
+        for <git@vger.kernel.org>; Wed, 10 May 2023 15:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683759341; x=1686351341;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rvdkpK4i29JGsdPGIKFzCvz8x5oqDToMx3woCvX7opM=;
-        b=CUsn4cnIsFLzddTTa5ekZHOFlh0DcDzw1nOdrmY7fe+k/tXiYzdz6XXWY/uGtVPyIE
-         Aky1P9N9SQ2e/3xHZDML3e/DxiLrjRXQXR5A0lOvmGeZBuhMLcapPGiL91Q9f2tYSfiP
-         WYV286j32+SmUlH4TQJSFp0CKaPaHVzqPGkG66/Xkv5U/bW3P46rT/RYONBcbVptqLi5
-         lTJiylrvxhr9eh5l+TvRSviSPi216xyf6oKDMqHtWttYhlvcBi5Ur2MhbRLdLnX0do+J
-         7oe4NEm1TOqzDgeO4O/6j1oDaRI+lVY2xejTXyhqm61e9weBZ87wT2u8oSbla06lP/8U
-         cjSQ==
+        d=gmail.com; s=20221208; t=1683759355; x=1686351355;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GFoGwirTwj3NXoCmBvV+nTpyovvtz0giEZ8/VBg3xD4=;
+        b=MKCEBnLwP/YoYqqlgkSnyNBP/RiHd1IVl98Yj+Bannk7Pq7dMAZ5VxZHb/z11STUci
+         NnZwsAttw/Ch1rTJ9iL5bcZSdmIkGi/c4OKWpL29OLySSdhJE1tvxCBMKyNJOmcfHlpM
+         cUMHeSXkGOnQdv3p7Hg+hflQJCS8ruFN3jrwktEvfWv8lyQZ/KRmQB9z/UH+69X62x/5
+         cGLfGtbqfHc46R8ZL4k99UT1vUlXKMoANRQrS3afgEhc60G73LEywQwIjfy/osYX75kg
+         7hMt4nrj/R5D1x3Sokr3M9UZP9E/wrkDO+KGFOPRT6vtoUEkyI/rDJHnhsujpwbPtwvs
+         4lVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683759341; x=1686351341;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rvdkpK4i29JGsdPGIKFzCvz8x5oqDToMx3woCvX7opM=;
-        b=GCbRyIjoIyfXCWo5C7QhJXG0nVuUuKD99n1zERYJEHLWUhy7qGa4KHufD/Vk2hcD8Y
-         T6XSx/tWdb2MNfwRsvFjTLXqagJWW/0mVZEIsulPFMVcbvbLDhkhC+Cv5yIJpqsEnX1c
-         Jwa+TUUGx0eLz/qdhZRfV18KEUyimgPucTNM9lSN/xiaRzdX3TMoF/WyFFIugBhx3b0a
-         kzZrcnTU+c76nNmfuEDvIm+JKsGQZIBhy8PtlFbgQRmRXk/m07DxfIUORj/sG76mJ4l/
-         vx+xLv3ckQrySbjhK6Tg47wnd285NH6nrruQruHBcNJADxoA5ZS93jho2VPYSBI1qEbe
-         xXxg==
-X-Gm-Message-State: AC+VfDxezOqap0Dm34Gw1cANjvz8I8CSpuk1TQ6zOCsqG1BBStBZ5jG1
-        lGlKNxz15dtxEhWKZGdVnVmNtuBgDPs=
-X-Google-Smtp-Source: ACHHUZ688wOMSyf8IFllsDSWa07lau3W3lIPJJn5TypZ/GYiQN7mxesiexjlsFn/UkS80gq+J9VZYw==
-X-Received: by 2002:a5d:6406:0:b0:306:32c4:7e7b with SMTP id z6-20020a5d6406000000b0030632c47e7bmr14033026wru.41.1683759340884;
-        Wed, 10 May 2023 15:55:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c379200b003f17300c7dcsm23720845wmr.48.2023.05.10.15.55.40
+        d=1e100.net; s=20221208; t=1683759355; x=1686351355;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GFoGwirTwj3NXoCmBvV+nTpyovvtz0giEZ8/VBg3xD4=;
+        b=GSRutZPtbwuCOl69NwoqwIwiNI5W//AqJCuIVGU81zMQkVcoFf9T5HVmz03F/ZTI8M
+         CnMwYOUrFQJT5E6SwqBFjPmwu9X6nJIGXvw/tF6MqKIrMeCiznUMFcuRzWoCGwv4kZnH
+         uYchS7drb2WjVN6bO+Xb4gCq419QEqkOzMVifK5BzKDUpJy5HtvUEOkLHn1T+zBBGCpe
+         Ig8kLJZuqAmErD8A8fHp0N6N4WoXELJuf0fILWmHqCyjIjmy1icpKzAllmjjyuIPzFLX
+         j6NINnjp/hQ7vlmx+jusrWLyCKWRFslWKJynkuVRKmfcS8ms+nZ+j/ps4qpHBEKSZZe+
+         HdBg==
+X-Gm-Message-State: AC+VfDw7VUU6+ukXjHqN+FQphxBiJmjEVUmAGEWQJK4yvnuTmUuoDYmR
+        ULVHvKS8vy+wyTWDn5Tf4MA=
+X-Google-Smtp-Source: ACHHUZ5g+McasbKBamJRfmFx36E8ndagXJXmMWnKB4gOcpGimwqrkGlU0EkY8Z0VVmLx5LUUMXKSBQ==
+X-Received: by 2002:a05:6a00:190c:b0:63d:47c8:856e with SMTP id y12-20020a056a00190c00b0063d47c8856emr25980820pfi.2.1683759354829;
+        Wed, 10 May 2023 15:55:54 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id e24-20020aa78258000000b0062dd8809d6esm3993353pfn.150.2023.05.10.15.55.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 15:55:40 -0700 (PDT)
-Message-Id: <d12d5469f8cbc21ce1efbffc8e7569c534b5a305.1683759339.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
-References: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 May 2023 22:55:38 +0000
-Subject: [PATCH 2/2] rebase -r: fix the total number shown in the progress
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 10 May 2023 15:55:54 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 0/3] pack-bitmap: boundary-based bitmap traversal
+References: <cover.1682380788.git.me@ttaylorr.com>
+        <cover.1683567065.git.me@ttaylorr.com>
+Date:   Wed, 10 May 2023 15:55:54 -0700
+In-Reply-To: <cover.1683567065.git.me@ttaylorr.com> (Taylor Blau's message of
+        "Mon, 8 May 2023 13:38:02 -0400")
+Message-ID: <xmqqmt2b23ut.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Taylor Blau <me@ttaylorr.com> writes:
 
-For regular, non-`--rebase-merges` runs, there is very little work to do
-for the parser when determining the total number of commands in a rebase
-script: it is simply the number of lines after stripping the commented
-lines and then trimming the trailing empty line, if any.
+> Here is another small reroll of my series to implement a boundary-based
+> bitmap traversal algorithm that I worked on towards the end of 2021 with
+> Peff.
+>
+> The algorithm is the same as in the last round, though I cleaned up a
+> few things throughout thanks to another very helpful review from Stolee.
+>
+> One significant change from last time is that the new algorithm is
+> opt-in behind feature.experimental, giving users a way to try out the
+> new implementation while still being able to switch back to the
+> known-good traversal in case anything goes wrong.
 
-The `--rebase-merges` mode complicates things by introducing empty lines
-and comments in the middle of the script. These should _not_ be counted
-as commands, and indeed, when an interactive rebase is interrupted and
-subsequently resumed, the total number of commands can magically shrink,
-sometimes dramatically.
+It seems that the comments the topic received on the previous round
+have all been addressed adequately?  Does everybody feel comfortable
+merging this topic to 'next'?
 
-The reason for this strange behavior is that empty lines _are_ counted
-in `edit_todo_list()` (but not the comments, as they are stripped via
-`strbuf_stripspace(..., 1)`, which is a bug.
-
-Let's fix this so that the correct total number is shown from the
-get-go, by carefully adjusting it according to what's in the rebase
-script. Extra care needs to be taken in case the user edits the script:
-the number of commands might be different after the user edited than
-beforehand.
-
-Note: Even though commented lines are skipped in `edit_todo_list()`, we
-still need to handle `TODO_COMMENT` items by decrementing the
-already-incremented `total_nr` again: empty lines are also marked as
-`TODO_COMMENT`.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c              | 12 ++++++++----
- t/t3430-rebase-merges.sh |  7 +++++++
- 2 files changed, 15 insertions(+), 4 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index f5d89abdc5e..46dd07df0f2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2609,7 +2609,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
- 	char *p = buf, *next_p;
- 	int i, res = 0, fixup_okay = file_exists(rebase_path_done());
- 
--	todo_list->current = todo_list->nr = 0;
-+	todo_list->current = todo_list->nr = todo_list->total_nr = 0;
- 
- 	for (i = 1; *p; i++, p = next_p) {
- 		char *eol = strchrnul(p, '\n');
-@@ -2628,7 +2628,8 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
- 			item->arg_offset = p - buf;
- 			item->arg_len = (int)(eol - p);
- 			item->commit = NULL;
--		}
-+		} else if (item->command == TODO_COMMENT)
-+			todo_list->total_nr--;
- 
- 		if (fixup_okay)
- 			; /* do nothing */
-@@ -6039,7 +6040,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 	struct todo_list new_todo = TODO_LIST_INIT;
- 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
- 	struct object_id oid = onto->object.oid;
--	int res;
-+	int new_total_nr, res;
- 
- 	find_unique_abbrev_r(shortonto, &oid, DEFAULT_ABBREV);
- 
-@@ -6066,6 +6067,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		return error(_("nothing to do"));
- 	}
- 
-+	new_total_nr = todo_list->total_nr - count_commands(todo_list);
- 	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
- 			     shortonto, flags);
- 	if (res == -1)
-@@ -6088,11 +6090,13 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		return -1;
- 	}
- 
-+	new_total_nr += count_commands(&new_todo);
-+	new_todo.total_nr = new_total_nr;
-+
- 	/* Expand the commit IDs */
- 	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
- 	strbuf_swap(&new_todo.buf, &buf2);
- 	strbuf_release(&buf2);
--	new_todo.total_nr -= new_todo.nr;
- 	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
- 		BUG("invalid todo list after expanding IDs:\n%s",
- 		    new_todo.buf.buf);
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index f351701fec2..8da99a075dc 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -517,4 +517,11 @@ test_expect_success '--rebase-merges with message matched with onto label' '
- 	EOF
- '
- 
-+test_expect_success 'progress shows the correct total' '
-+	git checkout -b progress H &&
-+	git rebase --rebase-merges --force-rebase --verbose A 2> err &&
-+	grep "^Rebasing.*14.$" err >progress &&
-+	test_line_count = 14 progress
-+'
-+
- test_done
--- 
-gitgitgadget
+Thanks.
