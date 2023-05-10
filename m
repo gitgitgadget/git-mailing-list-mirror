@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0446C77B7D
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 07:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B47FEC7EE22
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 07:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236397AbjEJHIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 03:08:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40174 "EHLO
+        id S236429AbjEJHKu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 03:10:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjEJHIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 03:08:44 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D8F3C02
-        for <git@vger.kernel.org>; Wed, 10 May 2023 00:08:40 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-51f10bda596so3307799a12.1
-        for <git@vger.kernel.org>; Wed, 10 May 2023 00:08:40 -0700 (PDT)
+        with ESMTP id S236439AbjEJHKp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 03:10:45 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0DD2421D
+        for <git@vger.kernel.org>; Wed, 10 May 2023 00:10:44 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1aaf4334a67so38980115ad.1
+        for <git@vger.kernel.org>; Wed, 10 May 2023 00:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683702520; x=1686294520;
+        d=google.com; s=20221208; t=1683702644; x=1686294644;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0ZrDLvCTSXHovp32MrQJnrXfcinTS4/ywbRgLqaTlY=;
-        b=3LH6ddv6J0MltO5yv9jnbSYuEwi61y/8qCI0YljVRbFS+DOuD3w2JvKrLJaKDPXWG8
-         PhfhYZ8JIluU5FJa/XQ4uoPavWvkLvllHo7xGRQHis6cbMfP9+4/ohXQlMWDqxNZfdcz
-         QtGbMCVHpnFHY31yN4YKpyi5QwV0ax6a0pMUuTCw6b6Rv37goeL2pqeGOiacb72LcHOi
-         79KKDyqz2ov8sRPvOZy0f1FK/HrvApS2uQ14HJOo8Omms2WiNHWDaR6Hw+ltYa9RTNmt
-         GIkxyeHM/APqMAPfCXPzDtAGDCRZdBLO0EB/BIfClIl3G7OxUH/cB7YxCZQocrBNL6dO
-         R2BQ==
+        bh=EVR9EDCoAUfzw0eQV9p2CO5IhMmiD2kOX6LrAWk7mHk=;
+        b=PsIhlGus0uNtETa3ZhkaIx2+Sxg0l88gB6pZSe1zICFM1zJCyT2G5xrKPxK5hmnGDz
+         GdhlkI5D5W6/6EkiKwR46Fu8NQGlfqUSkc4L35gRn3HJ/HFdQWVxNaGIyZzKSe4aEIaz
+         1d493pxuoO3/6kPj30W4U+rpCEQUWY3v64NwFAtJf8X4fb5Q5zvoZrqHnN6TOcbbmAkj
+         Loe6pG3T/KGprmOj0uQr/zp4VQTkp7hgg6ZoBqbEX/lJ5CyABQRat/lNHoJLq7R6Vtq9
+         i/Af9BDQZBiy/ApkDkTl6YDDjccUYvuQmplJNmroJGs9Suw7kxJcmGTdA5xHfGrqzx8E
+         WGTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683702520; x=1686294520;
+        d=1e100.net; s=20221208; t=1683702644; x=1686294644;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0ZrDLvCTSXHovp32MrQJnrXfcinTS4/ywbRgLqaTlY=;
-        b=jciUrPFKlephZTWZOpFTzMS9AMjZR88fvTJQ+2M5TbJYgQMs63eVCSgQms9dCiRmhk
-         KenFDM6WA0faEVfWsi9X4v4X4APVxQDslZMunUslGaICihzSPRhr7P7VNIsuCCp4SpsB
-         F6L3syWP1lAZhEf2kmSr2JE18FQAwVvkOM3c1f3pAqJFLuNUseK89Z8bFD3O0gUvpIox
-         J1wA+VLqD5jFLkulXn+skJYzCA9qEzvw6KPeGIytoBlcadfyZ7ijzUnmCweaRdEJexkk
-         VaMRudjlzbyAfmO+PR9pOSLhMGqy3cbdQ+irhUMLyDK8nAKyGlXsMuystLORJlLaD7eU
-         KxhQ==
-X-Gm-Message-State: AC+VfDxF2akyUlLxVR/1U+zKJgZg7eD/2ByM8eVLPeRnOYwPw2fhbIWW
-        4GGlDZzfAVjAg/2e6PDtdUklq6wEklI=
-X-Google-Smtp-Source: ACHHUZ7ccQX7pI7PjlVwDrZgh9+TbwzS/8X10DeAXdlK9C3JUVX3t2xAR4UaRvgh0iFfu0Qmw6Ym42TCoQk=
+        bh=EVR9EDCoAUfzw0eQV9p2CO5IhMmiD2kOX6LrAWk7mHk=;
+        b=KvGCLPSKAJA3eutp35JZyUaP+Lc9Zr6ttoOfq5lM05vLfYD5V+yTXpyiSlZxIQNNYK
+         wPSSQ1So7ZzvrgIpuCST1D+piedcg59if2GXROTwJT1ZVux3g4FK9Z7CSR5aKOvJC/kL
+         YOiPIUDHaZ7n3WgpvDd8JMsVk6yU9RqnKUTGjJdGPTa7AvT1iU5GkIqOcEM5ZSaJIiFs
+         d9Hv0rjMF26ByTZwloYzcvRjtA4DUv6C0fo8LP7YviLuGMZFCY7+81faFbLyBMXwoKZ/
+         9/qCoDPGoo+/arK0suXmc6kmUTVejhvciTySL5hC5ensfsweSuSQ2Yg1uu2cWI1yu4Ft
+         PXiA==
+X-Gm-Message-State: AC+VfDwB7+JMEEgAcDV0ddGk5MjFPCY9IHKhBfnSBbDvz4UbUk8Vqawo
+        MoCvgLwVZ3+RBG2KvJlbAe1B1nDc5IU=
+X-Google-Smtp-Source: ACHHUZ7ZH+cw7GCxYKk1MqSXfhNsh7mHeVIVT8E6YZtt6nSumPLRhnqbs4DnKc/B3n2Snp9GjYPwEBBdWmQ=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a63:2b04:0:b0:521:62ef:9b38 with SMTP id
- r4-20020a632b04000000b0052162ef9b38mr4734008pgr.3.1683702519967; Wed, 10 May
- 2023 00:08:39 -0700 (PDT)
-Date:   Wed, 10 May 2023 00:08:38 -0700
-In-Reply-To: <xmqqwn1imwqk.fsf@gitster.g>
+ (user=linusa job=sendgmr) by 2002:a17:902:c115:b0:1a6:d9db:9382 with SMTP id
+ 21-20020a170902c11500b001a6d9db9382mr5660786pli.11.1683702644373; Wed, 10 May
+ 2023 00:10:44 -0700 (PDT)
+Date:   Wed, 10 May 2023 00:10:43 -0700
+In-Reply-To: <xmqqsfc6mwok.fsf@gitster.g>
 Mime-Version: 1.0
 References: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
- <5980432179352054955e602cf97b57e97694a28c.1683566870.git.gitgitgadget@gmail.com>
- <xmqqwn1imwqk.fsf@gitster.g>
-Message-ID: <owlyh6skmznt.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 08/11] doc: trailer.<token>.command: refer to existing example
+ <1ac58b0b07c21fe4494f5fbe5d4b0f9bc1a49ac0.1683566870.git.gitgitgadget@gmail.com>
+ <xmqqsfc6mwok.fsf@gitster.g>
+Message-ID: <owlyednomzkc.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 09/11] doc: trailer.<token>.command: emphasize deprecation
 From:   Linus Arver <linusa@google.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
@@ -68,61 +68,34 @@ Junio C Hamano <gitster@pobox.com> writes:
 
 >> From: Linus Arver <linusa@google.com>
 
+>> This puts the deprecation notice up front, instead of leaving it to the
+>> next paragraph.
+
+> Shouldn't the opening text of the next paragraph be tweaked in the
+> same commit to avoid duplication?
+
+Good call; will do in v2.
+
+
 >> Signed-off-by: Linus Arver <linusa@google.com>
 >> ---
->>   Documentation/git-interpret-trailers.txt | 9 +++++----
->>   1 file changed, 5 insertions(+), 4 deletions(-)
-
-> This patch has more annoying "just rewrapping the text in a strange
-> way without changing anything"
-
-Noted. I will remove the whitespace churn in v2.
-
-> than the real change which is to
-> enclose <value> inside the angle brackets (which is good) and adding
-> a new sentence.
-
-I should probably move the angle bracket changes into 07.
-
-> We are discouraging the use of .command and recommending folks to
-> use .cmd instead, by the way.
-
-I was motivated to add the reference to the example because I could not
-understand what
-
-     Instead the first occurrence of substring $ARG is replaced by the
-     value that would be passed as argument.
-
-meant in the existing language. In hindsight maybe it's not worth adding
-the reference, because of the deprecation.
-
-> At some point we may drop the
-> example, and adding a reference to the example would mean somebody
-> needs to remember removing this when it happens.
-
-Wouldn't we also delete the entire `trailer.<token>.command::` section
-(and therefore the reference to the example) also at the same time?
+>>   Documentation/git-interpret-trailers.txt | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 >> diff --git a/Documentation/git-interpret-trailers.txt  
 >> b/Documentation/git-interpret-trailers.txt
->> index ac448fd732e..5ca758e363f 100644
+>> index 5ca758e363f..c9b82ceba34 100644
 >> --- a/Documentation/git-interpret-trailers.txt
 >> +++ b/Documentation/git-interpret-trailers.txt
->> @@ -234,10 +234,11 @@ trailer.<token>.ifmissing::
+>> @@ -234,7 +234,7 @@ trailer.<token>.ifmissing::
 >>   	that option for trailers with the specified <token>.
 
 >>   trailer.<token>.command::
->> -	This option behaves in the same way as 'trailer.<token>.cmd', except
->> -	that it doesn't pass anything as argument to the specified command.
->> -	Instead the first occurrence of substring $ARG is replaced by the
->> -	value that would be passed as argument.
->> +	This option behaves in the
->> +	same way as 'trailer.<token>.cmd', except that it doesn't pass  
+>> -	This option behaves in the
+>> +	Deprecated in favor of 'trailer.<token>.cmd'. This option behaves in  
+>> the
+>>   	same way as 'trailer.<token>.cmd', except that it doesn't pass  
 >> anything as
->> +	argument to the specified command. Instead the first occurrence of  
+>>   	argument to the specified command. Instead the first occurrence of  
 >> substring
->> +	$ARG is replaced by the <value> from the trailer. See the
->> +	'trailer.see.command' trailer example in the "EXAMPLES" section below.
->>   +
->>   The 'trailer.<token>.command' option has been deprecated in favor of
->>   'trailer.<token>.cmd' due to the fact that $ARG in the user's command is
+>>   	$ARG is replaced by the <value> from the trailer. See the
