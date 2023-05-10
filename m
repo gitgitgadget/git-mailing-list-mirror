@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E08F8C77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 13:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE550C77B7D
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 13:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236697AbjEJNkl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 09:40:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44400 "EHLO
+        id S236975AbjEJNzn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 09:55:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229867AbjEJNkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 09:40:40 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137C9130
-        for <git@vger.kernel.org>; Wed, 10 May 2023 06:40:39 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4ec8133c59eso8195886e87.0
-        for <git@vger.kernel.org>; Wed, 10 May 2023 06:40:38 -0700 (PDT)
+        with ESMTP id S236727AbjEJNzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 09:55:41 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3F292130
+        for <git@vger.kernel.org>; Wed, 10 May 2023 06:55:06 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2ac7c59665bso81662141fa.3
+        for <git@vger.kernel.org>; Wed, 10 May 2023 06:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683726037; x=1686318037;
+        d=gmail.com; s=20221208; t=1683726900; x=1686318900;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=58LoSHALH3Ra5MoQBovAIyJKkJxU0VcSfXFqqIJSZpc=;
-        b=GoayVY3WGsy4+swA3MIBnMeFJqIpuHMl8lC6J59dO+a8AP7J/r/5wV1unXvrkQlQko
-         0AeblgLnIlV7ob1n2FFGDLPtZyP4MKjrtq6p4yx4NfnZVnMaatssFWB7BeV40tpXeJmn
-         CYXSAah7obxX9rfMrYbbN9rWE+wYlzUk9aoLlZq9UdloBXSfAOzbGC1zkUNSbc26gKbb
-         AHqTpS4Yc0VSjG6rBYzx/cGV68m0WEkmQO2VF5rm3CVkE1stZ9ssE7NB00L+TF112MRQ
-         aTZGmbg01MEvP0d1/KTErOFLwYrkMD09mjy/64dFitkMtBtSv/PU5Byx+dEuqFU/9aHu
-         x0pw==
+        bh=deW3yGA/sQQ0wq9G18zv6l7R1cG4JhXK9QT6UyROJ+A=;
+        b=o0+RBIDe+IABmv1t0qXaAMHJruXfCGex41ekLOk5PdgLb81tJogZlaLKf6jXu00kD6
+         uG8851oWOUBjO0lxyD3CA4nKK5sGJlS0YocOk9W7L5u+Cyq4dokymTMnM7PsmDxRyfyt
+         oWaj9cDfFanGSlGlAhjO9qWGTBWcD4nHAFK2PlBTC4cOy0XTRvrsbPeUc8SZ9dk9trwq
+         lA7Sdk3aAZV3mpHz94JxPFFtIPri9IKOTAmejtPTtqKmQeMAoUNlFF3nNcgcDmQlskt0
+         3a8leslG7m8pamid9s3t0t9eP11c2jDcwO+L+Vdmh/g2tY05icOzcc6CT7RF8LOqd9tV
+         tOpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683726037; x=1686318037;
+        d=1e100.net; s=20221208; t=1683726900; x=1686318900;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=58LoSHALH3Ra5MoQBovAIyJKkJxU0VcSfXFqqIJSZpc=;
-        b=BjpVI0AabX+9XJ1y7jJ3c9xfukgTeB5SgxhlF4eNFzy3jMIQIknO57eSrvBSd2Vz2k
-         6YKCivKbyX5dmzyfJDFB/ErCc+rrWsTYL7jPmxEM6NxlJW3yBhS9qiSt7+uIzompyEYF
-         Fsgugf7hAKrk/X56zIXKEFERXurZAKFlZUU6yWzvWsohA6fnjaixlW96Bf7i8VfMO7X2
-         CYNSba2QJqfBjW0AL5Y2pcO/olD3d9DcyxReazuE3YVk5ky17aglSTqdePVhESBXATjd
-         alVyVfo5M3/8n7H+BZBdPI9EEjbshY5L9DTZViztlihZXkwWeIwI02tk+WZebhrXwpb/
-         gxdQ==
-X-Gm-Message-State: AC+VfDxJqziZg2ut6zAYi1h27xn81LczpB3UaSE8GyapvUPWnlo2f8zn
-        2mhNbaK+UO7WkCXrQLmygSiBTHvPEnY=
-X-Google-Smtp-Source: ACHHUZ78244FwnLO2FT1/JKfMPjSFRiSfx7t88YRFMrRRtcip0AtDoVsvzLW67ajzPRUmyptZECMyQ==
-X-Received: by 2002:a05:6512:946:b0:4ec:844e:7b85 with SMTP id u6-20020a056512094600b004ec844e7b85mr1843778lft.25.1683726036855;
-        Wed, 10 May 2023 06:40:36 -0700 (PDT)
+        bh=deW3yGA/sQQ0wq9G18zv6l7R1cG4JhXK9QT6UyROJ+A=;
+        b=IVc3BxHdBLcZweIJXtdJfqoQLMFbkZ5S4qoNCYGTMeS+R47kyVGFGJt9CKGmbQeIKZ
+         qK8Gxo3fXVvTFKtUFXUWjuIqu6hmovg/dMSUYGKFvntijZ1FmYoZEbEzTZmKIdg7H83g
+         5xSKaXx6auP7h8/FMZmMuCoQ9qse+pE/+LYc1gVYPXvxJF64RCZVxExHHoCNOojOFOnI
+         DSUHVgXvKfNNp8zO1tbzzsNYJo5a91sO40t7Y7uVG3LbcCHqxkkkOS/bcYakvcLPXbzp
+         bA66sKOQIkAG94WBaTY9mAHBDpkxk4rXvgArRh0CqWGqioWjPDbHN+LQpKwffFeJTedQ
+         69kQ==
+X-Gm-Message-State: AC+VfDwy0r01LUSdBzH+Rt8l+5gwVHJW581xoBfo6NDFTkKHyT8vlxuQ
+        QRMc0S+WCppdYONIslW2bxE8lcAim7s=
+X-Google-Smtp-Source: ACHHUZ7HH/McyTUEGZBvmAQMKRmHCb2Kcqb+OpDjunDpUInBkp+0QZOVxy0rubVMxxGv50gnEtELTQ==
+X-Received: by 2002:a2e:80c6:0:b0:2a6:2444:9892 with SMTP id r6-20020a2e80c6000000b002a624449892mr1900940ljg.25.1683726900386;
+        Wed, 10 May 2023 06:55:00 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id x23-20020ac25dd7000000b004f150011dafsm738861lfq.265.2023.05.10.06.40.36
+        by smtp.gmail.com with ESMTPSA id q23-20020a2e84d7000000b002a77f45cc00sm2036699ljh.29.2023.05.10.06.54.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 06:40:36 -0700 (PDT)
+        Wed, 10 May 2023 06:54:59 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH] t4013: add expected failure for "log --patch --no-patch"
 References: <20230503134118.73504-1-sorganov@gmail.com>
-        <xmqqsfcdtkt0.fsf@gitster.g> <xmqq1qjwj7go.fsf@gitster.g>
-        <64599cc234708_7c6829426@chronos.notmuch>
-Date:   Wed, 10 May 2023 16:40:35 +0300
-In-Reply-To: <64599cc234708_7c6829426@chronos.notmuch> (Felipe Contreras's
-        message of "Mon, 08 May 2023 19:07:14 -0600")
-Message-ID: <87wn1ggv8s.fsf@osv.gnss.ru>
+        <xmqqsfcdtkt0.fsf@gitster.g> <874jote2zl.fsf@osv.gnss.ru>
+        <xmqqmt2lqofb.fsf@gitster.g> <xmqqttwskse5.fsf@gitster.g>
+        <87o7n03qgq.fsf@osv.gnss.ru> <6459a33b14bd6_7c682947d@chronos.notmuch>
+Date:   Wed, 10 May 2023 16:54:59 +0300
+In-Reply-To: <6459a33b14bd6_7c682947d@chronos.notmuch> (Felipe Contreras's
+        message of "Mon, 08 May 2023 19:34:51 -0600")
+Message-ID: <87v8h0guks.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,38 +69,52 @@ X-Mailing-List: git@vger.kernel.org
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Junio C Hamano wrote:
+> Sergey Organov wrote:
 >> Junio C Hamano <gitster@pobox.com> writes:
->> > Sergey Organov <sorganov@gmail.com> writes:
->> >
->> >> --patch followed by --no-patch is to be a no-op according to the "git
->> >> log" manual page.
->> >
->> > I briefly wondered if it is a bug in the documentation.
->> > ... when "git log -p --raw" shows both patch and raw, I do not
->> > think of a reason why "git log -p --raw --no-patch" should not
->> > behave similarly.
->> 
->> So, to tie the loose ends, "log -p --raw --no-patch" and "log -p
->> --stat --no-patch" do behave similarly.  Where my reaction was
->> mistaken was that I did not read the manual page myself that clearly
->> said it is the same as "-s" that suppresses diff output (where "diff
->> output" is not limited to "patch"---diffstat is also output of "diff"),
->> and incorrectly thought that "--no-patch" would countermand only
->> "--patch" and nothing else.
 >
-> If Sergey, you, and me all agreed on what `--no-patch` should do
-> (without reading the manpage), isn't that an indication that that is the
-> expected behavior?
+>> > When a command does not behave the way one thinks it should, being
+>> > curious is good.  Reporting it as a potential bug is also good.  But
+>> > it would help the project more if it was triaged before reporting it
+>> > as a potential bug, if the reporter is capable of doing so.  Those
+>> > who encounter behaviour unexpected to them are more numerous than
+>> > those who can report it as a potential bug (many people are not
+>> > equipped to write a good bug report), and those who can triage and
+>> > diagnose a bug report are fewer.  Those who can come up with a
+>> > solution is even more scarse.
+>>
+>> I'm afraid the solution I'd come up with won't be welcomed.
 >
-> The fact that the documentation documents some unexpected behavior,
-> doesn't mean it isn't a bug.
+> My solutions are often not welcomed, and yet I still implement them.
 >
-> I would say it's a documented bug.
+> It might be a waste of time, but often I've found out that very quickly
+> after attempting to come up with a solution I realize there's a lot of
+> detail I was missing initially, so even if the solution is not welcomed,
+> it helps me to understand the problem space and be more helpful in the
+> discussion of potential solutions.
+>
+> So if I were you, I would still attempt to do it, just to gather some
+> understanding.
 
-Yep, it is. Chances are this will end-up in the "won't fix" category
-though, similar to unfortunate '-m'. In which case I think it's better
-to explicitly mark it in the documentation as such: won't fix.
+I sympathize, and I did recently. However, I figure I'd rather spend my
+time elsewhere, say, in the Linux kernel, where my experience is
+somewhat different, and allows me to enjoy my work.
+
+[...]
+
+>
+> I for one welcome any and all attempts to fix git's awful user
+> interface, regardless of the reception of the maintainer, and the "core
+> club".
+
+For UI, the problem is that there is no core model defined, nor any
+guidelines are given, so every discussion ends-up being what "makes
+sense" and what doesn't for a user, everyone involved having his own
+preference, that often even changes over time.
+
+In this situation attempting to fix the UI sounds like waste of efforts,
+as nobody can actually point at the state of the UI to which we are
+willing to converge, so there are no objective criteria for accepting of
+fixup patches.
 
 Thanks,
 -- Sergey Organov
