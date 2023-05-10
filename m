@@ -2,64 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2AA1C77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 16:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78800C77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 16:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbjEJQcM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 12:32:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55050 "EHLO
+        id S229564AbjEJQhT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 12:37:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjEJQcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 12:32:10 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBCB81993
-        for <git@vger.kernel.org>; Wed, 10 May 2023 09:32:04 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-517bdd9957dso5023898a12.1
-        for <git@vger.kernel.org>; Wed, 10 May 2023 09:32:04 -0700 (PDT)
+        with ESMTP id S229461AbjEJQhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 12:37:16 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A27CDE4C
+        for <git@vger.kernel.org>; Wed, 10 May 2023 09:37:14 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1aaec6f189cso51916485ad.3
+        for <git@vger.kernel.org>; Wed, 10 May 2023 09:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683736324; x=1686328324;
+        d=gmail.com; s=20221208; t=1683736634; x=1686328634;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=A3oColRS1Spij9w04nGtSeOy0kG1XfOjCjXlMmgxk+w=;
-        b=lMgA8pjGQX+2DqKlpllK+jzoxW1zw+oHxapAyW1yE1mjsxSugqhj8ZqEsE13xFYbyq
-         FKkj8wCLNrUK7FqfyVY096Gr2EwbSfRB8644ujp/o+U2k96qApjcsHf+2XTgpbe6MJHz
-         cIwe1KyICFY0Z1z922ku03y3000ym/zrS+nyxj27TzDQvweEpxmiCZd7uN/4wlwKIQjo
-         Do+rVjk8CFTD27iYf6oafqayDe2pEZKHwddO5Caxo5wcgyWL1JsILtZMnpcltpPfSpCr
-         hLRQDZ3iVC8K2wx0+/NL0xJjB0bU+5vT4hwPrBJ7xjfzQrRconfKgDth/3tjWvmItJjL
-         eBnA==
+        bh=Mc+YqhG4n3a459Dt7ckUkA0mSi+yCp1xnV8m2VX26Eo=;
+        b=BsEpn+afW52Gs5aUkN9U3j7DoZYfvTTRINU5U8QadSpoVADfydOLs+SR8gLlqEZrWz
+         AiUC5qfp1lA/l26aMTz0jhM/m049bWU2h8pomOpbRdODAtD1glST33Frq1YQhg7xpuPc
+         yoSWnl++e/0Kmo30lkLwy+yoMFyvcXBTwSs7Or1B6ckjFy7qqJEQ9MSHGCsTYNsEOEq4
+         do4ZxcxC82PI3NMqTN63vz9wRWM+MJNWEwPkag82yGDWJaoZosFjGNMeDw3LMqcz5zib
+         lJuZX8jnRNg1J5T2p43+aDa0eIK4KsaOuTDEkto9AkotZ1KROn+6aGRRSET1kur6LelO
+         3Nzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683736324; x=1686328324;
+        d=1e100.net; s=20221208; t=1683736634; x=1686328634;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=A3oColRS1Spij9w04nGtSeOy0kG1XfOjCjXlMmgxk+w=;
-        b=IIM4LaiiDT+Fo4j4PJJ2z4005UBWUYqYUaCFfFF7uBU+VNBYvX8y7ysbeEIkYKWxEC
-         0+Eu1tqCKJmxnzc1/YRyEH77xvnuNB0Wn4XzO8u/sPcSne32jUFbICOUCHSKkQNy8nEY
-         MicrLT1dpLcQ+5urNHXa6PQDojZ/SDDJyf15DF5BoloUeMiSiw3KDYVukZnNVQfmZAJz
-         VGMgfnBbYvpa+dfO3lzTTGkNCretow2k0PCABuTSnlvAL/JcII/XbjGrry5CikiZHW4Q
-         QFS+99lYsUhtikqMC1fQjlvMZ9EPZgyYyIl1RDys3/q6UJMR65g0Ywd8xmdJt5DJrDQB
-         h+iA==
-X-Gm-Message-State: AC+VfDyyLWn2QqY6INI2ulbZSaf86/VIxawldjyBBtRbCxXJ+ewM2qo3
-        K2xfLmLmymFG12F9d79RfX4=
-X-Google-Smtp-Source: ACHHUZ6U4BmUJAwTX7QaODmANqohiaVvgBJpl2OBOS5KR90s3Qr4AIfm/jXD7LPC3MWcwhS0A3PKug==
-X-Received: by 2002:a17:90b:a52:b0:234:f77:d6d2 with SMTP id gw18-20020a17090b0a5200b002340f77d6d2mr18521445pjb.45.1683736324009;
-        Wed, 10 May 2023 09:32:04 -0700 (PDT)
+        bh=Mc+YqhG4n3a459Dt7ckUkA0mSi+yCp1xnV8m2VX26Eo=;
+        b=BqbUhD2N9gqc7LqAS/qs0mbPp+Pu1lCZ7ZTPUrDSVAcGFrMHg2FIc+Fmg9AKB+sue+
+         C7rIGRMxIxbdg/+kznssPN35/1sXKXQtpDYuRVr2+iuGo0QAnCDXzVX1mYGgd9mqqFT1
+         Bx31EkaYOmB8oUiVtGLIQ9jAKIg6Vw0LsUgbJzbvjDOEmDA6fOza0BBN448N6QdoGZlV
+         Pni9SFwfMzBG3m9IALMUFZPV4LfXHh6bhAXn2J1I6+XZKLVfhymQZeHZEYeOIL3TrtV1
+         uOOmAVGJcvcktnbfK0D89U6GcbkT2ixRJB4nOI4UnW7cO79BVs9FlhxRn9eKT9q28L8h
+         cCvQ==
+X-Gm-Message-State: AC+VfDw1GQTqGOuo2Q0Hs0owGOinkFAo1aommSURrOIEX0nyxpjwVbr5
+        cz0L+q4AU3ypjy5baaOomPw=
+X-Google-Smtp-Source: ACHHUZ6I6ruZ9HlmjKwFBfknXD/gyCyg/6GheaLm5A3X5h16AZf6ltqqeynJnFUa6yfYvWTRrJMqhA==
+X-Received: by 2002:a17:902:6b03:b0:1a6:a1ec:53a3 with SMTP id o3-20020a1709026b0300b001a6a1ec53a3mr17824299plk.3.1683736634055;
+        Wed, 10 May 2023 09:37:14 -0700 (PDT)
 Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id lr8-20020a17090b4b8800b0024752ff8061sm22039084pjb.12.2023.05.10.09.32.03
+        by smtp.gmail.com with ESMTPSA id e8-20020a17090301c800b001acacff3a70sm2368758plh.125.2023.05.10.09.37.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 09:32:03 -0700 (PDT)
+        Wed, 10 May 2023 09:37:13 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2023, #03; Tue, 9)
-References: <xmqqmt2d0x0f.fsf@gitster.g>
-        <20230510071935.7329-1-tenglong.tl@alibaba-inc.com>
-Date:   Wed, 10 May 2023 09:32:03 -0700
-In-Reply-To: <20230510071935.7329-1-tenglong.tl@alibaba-inc.com> (Teng Long's
-        message of "Wed, 10 May 2023 15:19:35 +0800")
-Message-ID: <xmqqpm785erg.fsf@gitster.g>
+To:     Linus Arver <linusa@google.com>
+Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 06/11] doc: trailer: trailer.<token>.cmd: add missing
+ verb phrase
+References: <pull.1506.git.git.1683566870.gitgitgadget@gmail.com>
+        <8e36d1bd1f0c8ca6b1210a537f4bb8403fab7c47.1683566870.git.gitgitgadget@gmail.com>
+        <xmqq1qjqobl9.fsf@gitster.g> <owlyjzxgn0et.fsf@fine.c.googlers.com>
+Date:   Wed, 10 May 2023 09:37:13 -0700
+In-Reply-To: <owlyjzxgn0et.fsf@fine.c.googlers.com> (Linus Arver's message of
+        "Tue, 09 May 2023 23:52:26 -0700")
+Message-ID: <xmqqlehw5eiu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,38 +70,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Linus Arver <linusa@google.com> writes:
 
->>* tl/notes-separator (2023-04-28) 6 commits
->>  (merged to 'next' on 2023-05-06 at 598ed19c9b)
->> + notes.c: introduce "--[no-]stripspace" option
->> + notes.c: append separator instead of insert by pos
->> + notes.c: introduce '--separator=<paragraph-break>' option
+>> Isn't the
+>> original just outright ungrammatical?
 >
-> Sorry, there is an updated optimization for the commit of the
-> `--separator` option, which can be applied using the reply[1].
+> Indeed.
 >
-> Please also inform me if a new patch is needed and I will send
-> it immediately.
+> Should I combine 01+06 together?
 
-Once a topic is in 'next', we update by queuing a new patch on top,
-so [1] is not quite sufficient.
-
-As to the "char *" -> "const char *", I didn't check if there are
-places where we use the variable as "char *" and need changes other
-than the place the variable is defined to prevent compilers from
-complaining on type mismatches when I made the observation, out of
-which you made the change.  In any case, "const char *" may be
-safer, but the code as posted is not wrong per-se, and I do not see
-it so urgent to fix.
-
-The blank line also better sits between the decls and the first
-statement, but I do not see it so urgent to fix with an immediate
-patch, forging your sign-off and writing log message myself.  It
-is something we can safely leave for a separate clean-up topic after
-the dust settles.
-
-Thanks.
-
-
-
+Either is fine.  Thanks.
