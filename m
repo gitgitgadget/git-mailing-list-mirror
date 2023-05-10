@@ -2,140 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86A65C77B75
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 03:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA249C77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 04:00:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234743AbjEJDBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 May 2023 23:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
+        id S229549AbjEJD7r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 May 2023 23:59:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjEJDBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2023 23:01:06 -0400
-X-Greylist: delayed 589 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 09 May 2023 20:01:01 PDT
-Received: from pv50p00im-zteg10021401.me.com (pv50p00im-zteg10021401.me.com [17.58.6.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 646C71FD7
-        for <git@vger.kernel.org>; Tue,  9 May 2023 20:01:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1683687072;
-        bh=px9+4tXT4ojcJa1SazdLMS+jin2lVe8IR0055jK2nJ0=;
-        h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
-        b=P6R5IP9EyijzepkQ7pASGnueObI8Qd4zuOCXa2e2vEWaEiFPRB1U0XwVUQqpVXsCM
-         bUrwMNsIoyfw1Q70PLVNuv8DluXy0hAj85nheDgQZHHoq9g2CCON/0mq1Jf69VlH1C
-         XZ4qBytu/WL2Nd/sBrwcuu/ILjwpppBfBj1451uE77oXrukiQd52k9KaNwVeuNEmUa
-         F8dD+rWJm6oZS2zzuSliTcDU+mYKd6OqhL//bUQDAScVWUVVwbHZIzbxOjN+26hEfM
-         n/TQmOCusKQqLvkaXPcr5fY1iOFI5jd0mlr3ijzPHTm7DvmbNmUxUOGrlPFPzpxkGN
-         NIZMT9VeBw7Ww==
-Received: from smtpclient.apple (pv50p00im-dlb-asmtp-mailmevip.me.com [17.56.9.10])
-        by pv50p00im-zteg10021401.me.com (Postfix) with ESMTPSA id 956688E00CE;
-        Wed, 10 May 2023 02:51:10 +0000 (UTC)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
-Subject: Re: Feature Request - Better i18n support
-From:   Emir SARI <emir_sari@icloud.com>
-In-Reply-To: <ZApgtJqVxkory4/B@tapette.crustytoothpaste.net>
-Date:   Wed, 10 May 2023 05:50:56 +0300
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D9534BB9-DF29-425D-9B4D-4DE051C1DB8B@icloud.com>
-References: <ZAnXddDN7v0AOBdm@mbp.local>
- <ZApdaAMrkmFcxarq@tapette.crustytoothpaste.net> <xmqq7cvp8sdu.fsf@gitster.g>
- <ZApgtJqVxkory4/B@tapette.crustytoothpaste.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: Apple Mail (2.3731.500.231)
-X-Proofpoint-ORIG-GUID: 4lIVg9kCworIjww91LtlxLezQ4X4q0Yn
-X-Proofpoint-GUID: 4lIVg9kCworIjww91LtlxLezQ4X4q0Yn
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.517,18.0.883,17.11.64.514.0000000_definitions?=
- =?UTF-8?Q?=3D2022-06-21=5F08:2022-06-21=5F01,2022-06-21=5F08,2022-02-23?=
- =?UTF-8?Q?=5F01_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 phishscore=0 mlxscore=0
- clxscore=1015 mlxlogscore=999 adultscore=0 suspectscore=0 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2305100020
+        with ESMTP id S236042AbjEJD7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2023 23:59:12 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D419B6188
+        for <git@vger.kernel.org>; Tue,  9 May 2023 20:56:32 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-64389a44895so5478111b3a.1
+        for <git@vger.kernel.org>; Tue, 09 May 2023 20:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683690992; x=1686282992;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=qCNp/Ir07L2M7Hy0r1iMXCYwSQ5C+BqMg3jn+JdWZMY=;
+        b=aKv2H+vU7PtU4IKv9F6mPP5DtVJ0b/ERFjRvFCN9xK3g9DKyrycPvcw+ZvzArGO1TL
+         tAtwg1CsXsurc9CaNRIoFz4EvTmbVs6w+XxVv2Ryot8+foX/mXvCWBZeUE8UQ6QPX62N
+         OnNxb91kapXvVb/E3VGrZU9jOKuXY4r+mYDzkuHESq2E6XlWgueIlVBb42eu+mSXIymE
+         g1RPRaF/BYcZdJ9OiT1AZrAb4VX2sEVQUBfdmfDH+Faguw7NSUgtA24qMPOweUbi/OPg
+         BOQDRJcJVVrh3rzAQ580YBSVE+ihENPk3LNn4ZYk3jcWvfh/m164CV6eK+TKJx/EM8Xb
+         ATTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683690992; x=1686282992;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qCNp/Ir07L2M7Hy0r1iMXCYwSQ5C+BqMg3jn+JdWZMY=;
+        b=RynkMUJm1M5b7mPqZPnmvIS2CZD2HRD5ovDO+nYCrcMSTyfDwY8D3CCicnt03BTD7B
+         M5EEXiQze6RhbXDzrzBbFRE77I5cEkJQ+v7RAeoU+D7tkPy+FLqpkpE0PuL+RpB/WfDB
+         4kRXkmxhBEIYEJzGs+OETwGGdnI2lDoZCnaLB14opr8RtaNegRGwVJBKVTBMP3LDwrhE
+         YNlFGeYo2ERwwzAcM4vxXSzwyq2/1qEgewKH3k6t9TRfIjAU8B2CnAjIZKrXXAGnslxn
+         igfZeHo8koHV9sN7SdV0MRf0m62EkvMx934Kz1BnrOS4Bj53mJJjmLUclqX4clEGTEDC
+         MctA==
+X-Gm-Message-State: AC+VfDyJvZfG3zeuxhFoW0c//A/jrmLveXs7afiHjBtJ31AO8PA2k2lI
+        C3yeWrh5e1NajYglfOrkCFI=
+X-Google-Smtp-Source: ACHHUZ5OFyz7tWZlgxwOKvbrc1XWmvl/x89IWDzDACCuDOGz3yi0GClYj05pXKum8wihnLBY6p11Ng==
+X-Received: by 2002:a05:6a00:a8a:b0:63f:158a:6e7b with SMTP id b10-20020a056a000a8a00b0063f158a6e7bmr23599901pfl.6.1683690992067;
+        Tue, 09 May 2023 20:56:32 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id q17-20020a62ae11000000b0063b8ce0e860sm2571608pff.21.2023.05.09.20.56.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 May 2023 20:56:31 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH] test: rev-parse-upstream: add missing cmp
+References: <20230509000246.1760327-1-felipe.contreras@gmail.com>
+Date:   Tue, 09 May 2023 20:56:31 -0700
+Message-ID: <xmqqpm78zvo0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-How does the below diff look:
+> It seems pretty clear 5236fce6b4 (t1507: stop losing return codes of git
+> commands, 2019-12-20) missed a test_cmp.
+>
+> Cc: Denton Liu <liu.denton@gmail.com>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  t/t1507-rev-parse-upstream.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+> index d94c72c672..cb9ef7e329 100755
+> --- a/t/t1507-rev-parse-upstream.sh
+> +++ b/t/t1507-rev-parse-upstream.sh
+> @@ -97,7 +97,8 @@ test_expect_success 'my-side@{u} resolves to correct commit' '
+>  	commit_subject my-side >actual &&
+>  	test_cmp expect actual &&
+>  	echo 5 >expect &&
+> -	commit_subject my-side@{u} >actual
+> +	commit_subject my-side@{u} >actual &&
+> +	test_cmp expect actual
+>  '
+>  
+>  test_expect_success 'not-tracking@{u} fails' '
 
-diff --git a/apply.c b/apply.c
-index 6212ab3..3e1d08d 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4247,11 +4247,11 @@ static void show_rename_copy(struct patch *p)
- 	 * new_name through the end of names are renames
- 	 */
- 	if (old_name !=3D p->old_name)
--		printf(" %s %.*s{%s =3D> %s} (%d%%)\n", renamecopy,
-+		printf(_(" %s %.*s{%s =3D> %s} (%d%%)\n"), renamecopy,
- 		       (int)(old_name - p->old_name), p->old_name,
- 		       old_name, new_name, p->score);
- 	else
--		printf(" %s %s =3D> %s (%d%%)\n", renamecopy,
-+		printf(_(" %s %s =3D> %s (%d%%)\n"), renamecopy,
- 		       p->old_name, p->new_name, p->score);
- 	show_mode_change(p, 0);
- }
-@@ -4270,8 +4270,8 @@ static void summary_patch_list(struct patch =
-*patch)
- 				show_rename_copy(p);
- 			else {
- 				if (p->score) {
--					printf(" rewrite %s (%d%%)\n",
--					       p->new_name, p->score);
-+					printf(" rewrite %s ", =
-p->new_name);
-+					printf(_("(%d%%)\n"), p->score);
- 					show_mode_change(p, 0);
- 				}
- 				else
-diff --git a/progress.c b/progress.c
-index f695798..1f8d372 100644
---- a/progress.c
-+++ b/progress.c
-@@ -124,10 +124,24 @@ static void display(struct progress *progress, =
-uint64_t n, const char *done)
- 			progress->last_percent =3D percent;
-=20
- 			strbuf_reset(counters_sb);
--			strbuf_addf(counters_sb,
--				    "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", =
-percent,
-+
-+			struct strbuf progress_sb =3D STRBUF_INIT;
-+			strbuf_addf(&progress_sb,
-+				_("%u%% (%"PRIuMAX"/%"PRIuMAX")%s"), =
-percent,
- 				    (uintmax_t)n, =
-(uintmax_t)progress->total,
- 				    tp);
-+			struct strbuf progress_str =3D STRBUF_INIT;
-+			strbuf_addstr(&progress_str, progress_sb.buf);
-+			strbuf_release(&progress_sb);
-+
-+			if (percent < 10)
-+			    strbuf_insert(&progress_str, 0, "  ", 2);
-+			else if (percent < 100)
-+			    strbuf_insert(&progress_str, 0, " ", 1);
-+
-+			strbuf_addf(counters_sb, "%s", =
-progress_str.buf);
-+			strbuf_release(&progress_str);
-+
- 			show_update =3D 1;
- 		}
- 	} else if (progress_update) {
+Good eyes.
 
-I=E2=80=99ve left diff.c out, since there are no accompanying localised =
-strings to my knowledge. If this looks good, then only remaining thing =
-to tackle would be localised decimal separators I think.
+a93cbe8d (t1507: assert output of rev-parse, 2023-03-18) and wanted
+to do the same to this script, and the series that contains the
+commit wanted to do the same to many other test scripts, but it
+seems to have missed this one.
 
-Best regards,
-Emir (=F0=90=B0=BD=F0=90=B0=BA=F0=90=B0=8D)
+Will queue (on top of a93cbe8d, naturally).
 
-** E-mail needs to stay simple
-** Use plain text e-mail
-
+Thanks.
