@@ -2,136 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86B66C7EE22
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 21:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D46C77B7D
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 21:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236072AbjEJVhz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 17:37:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46212 "EHLO
+        id S236051AbjEJVjc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 17:39:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236032AbjEJVhq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 17:37:46 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6583D3A85
-        for <git@vger.kernel.org>; Wed, 10 May 2023 14:37:45 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id 46e09a7af769-6aaf52ff35bso4468517a34.2
-        for <git@vger.kernel.org>; Wed, 10 May 2023 14:37:45 -0700 (PDT)
+        with ESMTP id S235455AbjEJVj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 17:39:29 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E663C33
+        for <git@vger.kernel.org>; Wed, 10 May 2023 14:39:25 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6ab094a7c04so1616839a34.3
+        for <git@vger.kernel.org>; Wed, 10 May 2023 14:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683754664; x=1686346664;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683754765; x=1686346765;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LYyJGzjoRZ/uu0tJQ7EXjIEHDeIgQCWUxmFSOXU9W2E=;
-        b=ZrNsuSfsRIRUcAUVxXjpFClsJl/gDup/VOba8sivts7EyvTV85r3kpgYS/U/PG4hmA
-         USND5EcR9fsiYJuT5Vw6FHVwssowclBhymk53Q1lmULhJMCR3HwrLqfzKGxwWg/iDzmw
-         sGwtBGgclMF6aUdtLveeIh6BZBSoyFqx94hudqiLvpjDuG/YOTRAwy518mDfaNsle9QO
-         1gtBOM/PlhuHtH5UMyYVFUY/vd93Xx3kGNiK91zEZgjNkjpF0ipHlrXOh2SsZBS8Jg1w
-         gNKsTt+Iu2GZelFN7kvRH7u2L+Tr9ItbB6esVc5TFmkzZjzLRIjSNahA5hYCgfzYRlKm
-         k3uA==
+        bh=D3c+z2JxgmuNM7nTzQb9hFh3+4DJMwVTu07crkoHKIY=;
+        b=OYBLnndKMt4Ev4BOGGjFmuaRvAhuXkiWSrcZAHr+ZfElhKEs3+8d5wx5GxDQUVtop4
+         gEJFx3i1BTEgzlLsJctmuP+G6LspPO4yQY4B8lGkt/aQUsYaFRuVmGHTUtPgQEjCZQIO
+         fx2QJwNj8HTkt3LfR04kzfo3tNPnCnZoQDaDUM+2qeUgqq03jindPb1ofAVmDn43GKiK
+         xoiezwenZEwg5r6ulOA6Uj7X4mLAlCXt12jyClEaxipurtbOjCnNnldyWxW7B9yZb0fr
+         ZAF2JQpJvEllr3esqlKPpevuVy4Cs2rYz/uhTnABTzUQm5mnkY4aceuqDhtpF/OA/8s2
+         9gQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683754664; x=1686346664;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LYyJGzjoRZ/uu0tJQ7EXjIEHDeIgQCWUxmFSOXU9W2E=;
-        b=XVU3kCPIRiaoOfKG+Tfm9MAGtDuL/XHil66jVz9uZG4ngrVnH2tU/wu+ZhAFmOBizM
-         RMi4yA995x8MzUd77N2cVFdrfj7ezuqBUTraTtxjnfCgvZDl9nz/KOBX/DnLBLYA8H4i
-         Ig/TtLOltWQ3dtGQKnQiwpzaSFJRAHD/9PIllDwd4SadxGPfZmNr4DTNEeFquhyJrI6W
-         QgbmGpuxbI7Tc4R+ma2DFcQvgCzGBShRcaeZxo9z+cu4hshCGrsQ8/b+USi1NXE1NUXT
-         lYrCin+hK3cIxiqsTRQ7SbPL+OLs9NaOTqdc7IRMZ9jW7c2vEBbWNHe7I+EadAq8SWGP
-         BGPA==
-X-Gm-Message-State: AC+VfDzwVXWDmbve6EpclXk5aIfYZhvWseCTd17Y0uGCoZMUunkd1ZRC
-        FaJU4aCvRAK5t4h5dju+B/CkFpTjuic=
-X-Google-Smtp-Source: ACHHUZ48qzgIdruHiH+IgHJk4/LDITxVP1HdUxQP0CSIef/D8g6gJRyt/6uAR8wos2y70cTH4tQCUw==
-X-Received: by 2002:a9d:6d98:0:b0:6ab:1d86:e4a5 with SMTP id x24-20020a9d6d98000000b006ab1d86e4a5mr3562552otp.25.1683754664516;
-        Wed, 10 May 2023 14:37:44 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683754765; x=1686346765;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=D3c+z2JxgmuNM7nTzQb9hFh3+4DJMwVTu07crkoHKIY=;
+        b=E4h4zzj4TSwDkB9kvEqH9bMBlwL1Bo5Ua33wj76mqEKS7ogJza16BcHq1dIua2GhIF
+         N4Dcc7mAltWq4lYRsYWq9rC3IQ+dvHB1TjKwnO/d+S6AKDqaRsWgTGOL4GY03LBYaLWe
+         g2/oDVh8LsnkIyvVb+KUxWDaQuuNLzWhSnm1H4o6SYnKYI/DPetTUxu6KusoL5ZIn4Ep
+         mY0uigUqTw+GXS7ye0gzXLzYG0uOsdovB05jImKLw99yfASIQG8/cFqJbrlqpIfHAKeu
+         wHKamFNzpp8c7i8O0yAl+NN2VIa3kPguiocU3he4MZ/NKuYWm5FDKRaeLgpGJOK52v7c
+         VEkw==
+X-Gm-Message-State: AC+VfDx/iWos8TRfYxL90v83NyMVRnO82AOaICkuBVdHRm3FmM4JbKMG
+        exasbaXyv8WpJBKixfgsCUQi61OGXS4=
+X-Google-Smtp-Source: ACHHUZ5MU2uhDiHnO2ASycJfZcmYFfwB85VqO3F2iteCFXsT4RCiXb02GW2WY7+TUFkR6SYhG94v/g==
+X-Received: by 2002:a9d:6396:0:b0:6a5:f792:dbe5 with SMTP id w22-20020a9d6396000000b006a5f792dbe5mr3848698otk.22.1683754764861;
+        Wed, 10 May 2023 14:39:24 -0700 (PDT)
 Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id dj8-20020a0568303a8800b006ab2af64f34sm1286093otb.13.2023.05.10.14.37.43
+        by smtp.gmail.com with ESMTPSA id n17-20020a9d7411000000b006ab0981ef17sm3225349otk.64.2023.05.10.14.39.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 14:37:44 -0700 (PDT)
+        Wed, 10 May 2023 14:39:24 -0700 (PDT)
+Date:   Wed, 10 May 2023 15:39:23 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <derrickstolee@github.com>,
+To:     Sergey Organov <sorganov@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 3/4] notes: fix merge.conflictstyle handling
-Date:   Wed, 10 May 2023 15:37:37 -0600
-Message-Id: <20230510213738.505241-4-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
-In-Reply-To: <20230510213738.505241-1-felipe.contreras@gmail.com>
-References: <20230510213738.505241-1-felipe.contreras@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Message-ID: <645c0f0b9ba51_7b63e2943@chronos.notmuch>
+In-Reply-To: <87wn1ggv8s.fsf@osv.gnss.ru>
+References: <20230503134118.73504-1-sorganov@gmail.com>
+ <xmqqsfcdtkt0.fsf@gitster.g>
+ <xmqq1qjwj7go.fsf@gitster.g>
+ <64599cc234708_7c6829426@chronos.notmuch>
+ <87wn1ggv8s.fsf@osv.gnss.ru>
+Subject: Re: [PATCH] t4013: add expected failure for "log --patch --no-patch"
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently it's completely ignored.
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >> Junio C Hamano <gitster@pobox.com> writes:
+> >> > Sergey Organov <sorganov@gmail.com> writes:
+> >> >
+> >> >> --patch followed by --no-patch is to be a no-op according to the "git
+> >> >> log" manual page.
+> >> >
+> >> > I briefly wondered if it is a bug in the documentation.
+> >> > ... when "git log -p --raw" shows both patch and raw, I do not
+> >> > think of a reason why "git log -p --raw --no-patch" should not
+> >> > behave similarly.
+> >> 
+> >> So, to tie the loose ends, "log -p --raw --no-patch" and "log -p
+> >> --stat --no-patch" do behave similarly.  Where my reaction was
+> >> mistaken was that I did not read the manual page myself that clearly
+> >> said it is the same as "-s" that suppresses diff output (where "diff
+> >> output" is not limited to "patch"---diffstat is also output of "diff"),
+> >> and incorrectly thought that "--no-patch" would countermand only
+> >> "--patch" and nothing else.
+> >
+> > If Sergey, you, and me all agreed on what `--no-patch` should do
+> > (without reading the manpage), isn't that an indication that that is the
+> > expected behavior?
+> >
+> > The fact that the documentation documents some unexpected behavior,
+> > doesn't mean it isn't a bug.
+> >
+> > I would say it's a documented bug.
+> 
+> Yep, it is. Chances are this will end-up in the "won't fix" category
+> though, similar to unfortunate '-m'.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/notes.c                    |  3 ++-
- t/t6440-config-conflict-markers.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 1 deletion(-)
+Probably.
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index d5788352b6..9a9044b50b 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -28,6 +28,7 @@
- #include "notes-utils.h"
- #include "worktree.h"
- #include "write-or-die.h"
-+#include "xdiff-interface.h"
- 
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-@@ -1020,7 +1021,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(git_default_config, NULL);
-+	git_config(git_xmerge_config, NULL);
- 	argc = parse_options(argc, argv, prefix, options, git_notes_usage,
- 			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
- 	if (!fn) {
-diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
-index cb2ee3ad0a..c51512ced6 100755
---- a/t/t6440-config-conflict-markers.sh
-+++ b/t/t6440-config-conflict-markers.sh
-@@ -55,4 +55,31 @@ test_expect_success 'merge-tree' '
- 	)
- '
- 
-+test_expect_success 'notes' '
-+	test_create_repo notes &&
-+	(
-+		test_commit initial &&
-+
-+		git -c core.notesRef=refs/notes/b notes add -m b initial &&
-+
-+		git update-ref refs/notes/r refs/notes/b &&
-+		git -c core.notesRef=refs/notes/r notes add -f -m r initial &&
-+
-+		git update-ref refs/notes/l refs/notes/b &&
-+		git config core.notesRef refs/notes/l &&
-+		git notes add -f -m l initial &&
-+
-+		test_must_fail git notes merge r &&
-+		! grep "^|||||||" .git/NOTES_MERGE_WORKTREE/* &&
-+
-+		git notes merge --abort &&
-+		test_must_fail git -c merge.conflictstyle=diff3 notes merge r &&
-+		grep "^|||||||" .git/NOTES_MERGE_WORKTREE/* &&
-+
-+		git notes merge --abort &&
-+		test_must_fail git -c merge.conflictstyle=merge notes merge r &&
-+		! grep "^|||||||" .git/NOTES_MERGE_WORKTREE/*
-+	)
-+'
-+
- test_done
+> In which case I think it's better to explicitly mark it in the documentation
+> as such: won't fix.
+
+Agreed.
+
 -- 
-2.40.0+fc1
-
+Felipe Contreras
