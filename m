@@ -2,200 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC471C77B7D
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 20:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C7AC77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 20:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbjEJUNh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 16:13:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45898 "EHLO
+        id S236114AbjEJUSJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 16:18:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229661AbjEJUNf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 16:13:35 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8870173C
-        for <git@vger.kernel.org>; Wed, 10 May 2023 13:13:07 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-6435bbedb4fso8317350b3a.3
-        for <git@vger.kernel.org>; Wed, 10 May 2023 13:13:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683749586; x=1686341586;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2Eu81Z0q7H2kt7YKzDcj8c07mLo55EZZ8Dn3HMxKkqY=;
-        b=eXXWY9gqEMSY48dKvI3k7ABbqidI/+hjzu9iCYQCUCA1VtpYFH3NgyTkbUrGJCCcJF
-         i7Z6+rxrQDzWqm2yPkN78Aizwu9B9TqktbjOdVNWkaFkKZ+wADaQaEA6giz7M9VstR0K
-         upYDByHvowOqDK6luIOHit34KB/4mfNwT3bPOG5egK6qv/cIqrW6JrQqeGL7jAZbqxqm
-         qDc3fnnQZkrXdbF8ztsnrjLAU15yUNR9uOV591CiCY5MZDW7ISpLhBa84YIoIJFOjvOL
-         rloU6ffxoBEat3eYmtLZ91FVL9k7Bek12mmrbOdHwse50ytH/BcPxfRUQnyT7uwxG7Pg
-         qw8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683749586; x=1686341586;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2Eu81Z0q7H2kt7YKzDcj8c07mLo55EZZ8Dn3HMxKkqY=;
-        b=HXtAQOUDVM4HFBNelZ7NxLoKBohZ3MCMhlRe3f4pRCEaMuMCluja3ggRQifnt1G3vl
-         pDU2//s72rkOUeDlFgoS50U7kNLk/DtxP04D5XOjsvZjtJrv4YZVw12QPAWlol7PJ4OD
-         BcOMzHF5Xc5GY/NNt1/9giEOVFWYb6cuHD7cJzPTrrFfcqsUxQfkFGQ2hh1oXHD4iBqD
-         oQQnaU9t2tB/jhcmHHXSdZaYiXg0II8V+vGGipD0HOAGVI71CZZ7qoHxw4zl5vvDoChj
-         M54ybswx/1sFVCeBT4Kb6cePBWAmdRp1eDcHiy2vN3KH386D3Mx7v9siOgqY2jQUq2nR
-         Wj7w==
-X-Gm-Message-State: AC+VfDzZGjJEWniFYMJNRDgD9zVt3BZ2HJysIUogvwNZFbu5qV2LEsHe
-        UK8CP+uvaRunaXTVVhvKc6ZTnw+l2mE=
-X-Google-Smtp-Source: ACHHUZ6xg4eL0yDEOyZQAugLcM3N2VUbEs45q6Mu24aUfRarFOEkaMg7FCjlHCkPZb9VrKMd5XaUNA==
-X-Received: by 2002:a05:6a20:1608:b0:f2:c2a3:3a1 with SMTP id l8-20020a056a20160800b000f2c2a303a1mr24327771pzj.43.1683749586237;
-        Wed, 10 May 2023 13:13:06 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id k25-20020a63ba19000000b0050f93a3586fsm3437052pgf.37.2023.05.10.13.13.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 13:13:05 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Toon Claes <toon@iotcl.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 1/1] cat-file: quote-format name in error when using -z
-References: <xmqqilfhctrr.fsf@gitster.g>
-        <20230510190116.795641-1-toon@iotcl.com>
-        <20230510190116.795641-2-toon@iotcl.com>
-Date:   Wed, 10 May 2023 13:13:05 -0700
-In-Reply-To: <20230510190116.795641-2-toon@iotcl.com> (Toon Claes's message of
-        "Wed, 10 May 2023 21:01:16 +0200")
-Message-ID: <xmqqpm782be6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S235944AbjEJUSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 16:18:07 -0400
+X-Greylist: delayed 559 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 10 May 2023 13:18:06 PDT
+Received: from ci74p00im-qukt09082502.me.com (ci74p00im-qukt09082502.me.com [17.57.156.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8888D2D66
+        for <git@vger.kernel.org>; Wed, 10 May 2023 13:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1683749326;
+        bh=q9xJnqq2Q0wNvSdeiVVN8I7Su48RVyh/5inWm4q7G8Q=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=gvRQ8JIcW1zNpCfLmSqaA1XZZKiXQPlHEyPEeGkFXFqkcvWpR3g7kGRNbjJpTA7lV
+         ysUS6c0Xqv/xdcCULU2k1/qqDB/Jj112dcpoi4n6if3r7LHVcHuTfTRfKZ4xMHJuo4
+         83zViQWbuxnfjvaxfN5d7nrGuAYLOx0UzjYwJWBuJBTTllANiMknvnZbOvCZ4NUuy4
+         ywX5k7ow0jgq6zd2C7ElQQsioQE2/TARd6aKoq6FX5wAixR9qz6EQsGf82bgwJb/ue
+         0xInJNaCELW1AWg7a/gRrkK9uFuCc13dW97nc4wG7RVEXmJt1F8jkPxgfw/A/bv5rA
+         vW32Ko5k65Gxg==
+Received: from smtpclient.apple (ci77p00im-dlb-asmtp-mailmevip.me.com [17.57.156.26])
+        by ci74p00im-qukt09082502.me.com (Postfix) with ESMTPSA id E1BE311C0219
+        for <git@vger.kernel.org>; Wed, 10 May 2023 20:08:45 +0000 (UTC)
+From:   Christopher Fretz <cfretz@icloud.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
+Subject: git rebase --root bug
+Message-Id: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
+Date:   Wed, 10 May 2023 14:08:34 -0600
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3731.500.231)
+X-Proofpoint-GUID: co2nA7KpqqASAKfPVeO4pm4KN6Lh4yiy
+X-Proofpoint-ORIG-GUID: co2nA7KpqqASAKfPVeO4pm4KN6Lh4yiy
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.11.62.513.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2021-12-02?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 clxscore=1011
+ phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2305100163
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Toon Claes <toon@iotcl.com> writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> Since it's supported to have NUL-delimited input, introduced in
-> db9d67f2e9 (builtin/cat-file.c: support NUL-delimited input with `-z`,
-> 2022-07-22), it's possible to pass paths that contain newlines.
+What did you do before the bug happened? (Steps to reproduce your issue)
+Run an interactive, root, rebase, select one or more commits to edit, =
+and then leave the repo in the rebase state for long
+enough that the "onto" commit expires out of the reflog and gets gc'd.
 
-It has been a while since I saw this patch the last time, and it did
-not immediately click to me how "pass paths" relates to passing
-object names, which is what "--batch-check" takes.  Perhaps
+An example set of commands to immediately reproduce the issue can be =
+seen below:
+  $ mkdir git_test
 
-    "cat-file --batch-check" may be fed object names of blobs and
-    trees as "<commit>:<path>", and with its "-z" option, it is
-    possible to feed <commit> or <path> with newlines in it.
+  $ cd git_test
 
-or something?
+  $ git init
+  Initialized empty Git repository in =
+/Users/cfretz/working/git_test/.git/
 
-> This
-> works great when the object is found, but when it's not, the input path
-> is returned in the error message. Because this can contain newlines, the
-> error message might get spread over multiple lines, making it harder to
-> machine-parse this error message.
+  $ git commit --allow-empty -m 'root commit'
+  [master (root-commit) 01edd93] root commit
 
-Good description.  I may suggest
+  $ git rebase -i --root
+  Stopped at 01edd93...  root commit # empty
+  You can amend the commit now, with
 
-    "the input path is returned" -> "the input is shown verbatim"
+    git commit --amend
 
-because <path> is not the only thing that can contain LF.  E.g.
+  Once you are satisfied with your changes, run
 
-    $ git show -s 'HEAD^{/introduced in
-    > db9d67}'
+    git rebase --continue
 
-can find the commit resulting from this patch, so
+  $ git reflog expire --expire-unreachable=3Dnow --all
 
-    $ printf "%s\0" 'HEAD^{/introduced in
-    > db9d67}:builtin/cat-file.cc' |
-    > git cat-file --batch-check -z 
+  $ git gc --prune=3Dnow
+  Enumerating objects: 2, done.
+  Counting objects: 100% (2/2), done.
+  Writing objects: 100% (2/2), done.
+  Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
 
-would be an input record with newline in it, that has no newline in
-the path.
+  $ git rebase --continue
+  fatal: could not parse 10796537ce108c36191d52368250f403afede30b
 
-> With this change, the input is quote-formatted in the error message, if
-> needed. This ensures the error message is always on a single line and
-> makes parsing the error more straightforward.
+What did you expect to happen? (Expected behavior)
+Git should consider the "onto" commit to be referenced from the ongoing =
+rebase, and refuse to gc it, even during a --root
+rebase.
 
-Drop "With this change, ..." and give a command to the codebase to
-c-quote the object name in the output, e.g.
+What happened instead? (Actual behavior)
+Git gcs the "onto" commit, breaking the ongoing rebase; after this, no =
+rebase commands work, and your only option is git rebase --quit.
+The only way I've discovered to fix this without git rebase --quit is =
+running scary commands to manually create a new dummy "onto" commit,
+and then overwrite the onto file in the git directory; I'm not confident =
+that this doesn't somehow cause subtle problems that aren't
+immediately obvious.
 
-    C-quote the object name from the input in the error message as
-    needed, to ensure that the error message is on a single line and
-    ...
+What's different between what you expected and what actually happened?
+Git gcs the onto commit and leaves the repo in a broken state. Without =
+manual intervention to fix the .git directory, or hard bailing out of
+the rebase, the repository appears broken. A user less familiar with git =
+would likely just delete the repo, reclone, and start entirely from
+scratch.
 
-The other side of the coin, however, is that an existing project
-that is sane enough not to have a path with LF in it, but is not
-sane enough to avoid a path with double-quote in it, would now stop
-being able to parse the error message for a missing path.
+Anything else you want to add:
+The way I originally encountered this issue was by leaving a repo in the =
+rebase state for multiple weeks, coming back to the repo to finish the
+work, and then having the repo broken by a background gc job. I assume =
+the fundamental problem here is that the "onto" commit during a --root
+rebase isn't actually a part of the new history, and is just =
+"synthesized" to remove edge cases, and so git sees it as unreachable =
+during the gc.
+=46rom one perspective, it might be argued that this is "expected" =
+behavior given the above, but given the severity of the failure I think =
+this should
+be considered a bug, and I think git should just unconditionally =
+consider the "onto" commit as _always_ being reachable; it's not obvious =
+to me why
+this wouldn't work. My apologies if this bug has already been fixed in a =
+later version of git. Thanks!
 
-It is a regression, and we may argue that it is not a large enough
-regression to block progress given by this patch, but if it is not
-common enough to have funny characters in the paths then we wouldn't
-be seeing this patch in the first place.  So I would prefer to see
-that we at least admit that we are deliberately making this change
-with a known regression.  Perhaps add something like
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
-    Note that if a project already parses the error message
-    correctly because it does not have paths with newlines, this is
-    a breaking change if it has paths with characters that need
-    c-quoting (like double quotes and backslashes) that are not
-    newlines.  We consider that this is a small enough price to pay
-    to allow newlines in paths because ...
 
-and fill the "because ..." part is sensible.  I am not filling the
-"because" part, simply because I do not offhand see any good excuse
-to rob Peter to pay Paul in this case.
+[System Info]
+git version:
+git version 2.37.3
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 22.3.0 Darwin Kernel Version 22.3.0: Mon Jan 30 20:42:11 =
+PST 2023; root:xnu-8792.81.3~2/RELEASE_X86_64 x86_64
+compiler info: clang: 13.1.6 (clang-1316.0.21.2.5)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
 
-> @@ -470,8 +471,17 @@ static void batch_object_write(const char *obj_name,
->  						       &data->oid, &data->info,
->  						       OBJECT_INFO_LOOKUP_REPLACE);
->  		if (ret < 0) {
-> +			struct strbuf quoted = STRBUF_INIT;
-> +
-> +			if (opt->nul_terminated &&
-> +			    obj_name) {
-> +				quote_c_style(obj_name, &quoted, NULL, 0);
-> +				obj_name = quoted.buf;
-> +			}
-> +
->  			printf("%s missing\n",
->  			       obj_name ? obj_name : oid_to_hex(&data->oid));
-> +			strbuf_release(&quoted);
->  			fflush(stdout);
->  			return;
->  		}
 
-Interesting.
-
-When running "--batch-all-objects", we do not have obj_name, and we
-do not have anything to "quote", but the fallback label is the full
-hexadecimal object name, and we do not have to worry about line
-breaks.
-
-OK.
-
-> @@ -518,6 +528,13 @@ static void batch_one_object(const char *obj_name,
->  	result = get_oid_with_context(the_repository, obj_name,
->  				      flags, &data->oid, &ctx);
->  	if (result != FOUND) {
-> +		struct strbuf quoted = STRBUF_INIT;
-> +
-> +		if (opt->nul_terminated) {
-> +			quote_c_style(obj_name, &quoted, NULL, 0);
-> +			obj_name = quoted.buf;
-> +		}
-> +
->  		switch (result) {
->  		case MISSING_OBJECT:
->  			printf("%s missing\n", obj_name);
-> @@ -542,6 +559,8 @@ static void batch_one_object(const char *obj_name,
->  			       result);
->  			break;
->  		}
-> +
-> +		strbuf_release(&quoted);
->  		fflush(stdout);
->  		return;
->  	}
-
-This is the side that runs without "--batch-all-objects" and always
-has non-null obj_name, so it looks a bit different from the other
-hunk and is more straight-forward.  Looking good.
-
-Thanks.
+[Enabled Hooks]=
