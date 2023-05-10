@@ -2,103 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6731BC77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 20:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13476C77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 21:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235728AbjEJUfi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 16:35:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58878 "EHLO
+        id S235757AbjEJVho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 17:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjEJUfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 16:35:37 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C9EE64
-        for <git@vger.kernel.org>; Wed, 10 May 2023 13:35:36 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 09ACC5C0677;
-        Wed, 10 May 2023 16:35:34 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Wed, 10 May 2023 16:35:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm2; t=1683750934; x=
-        1683837334; bh=N+wZuTLIiU0lPmSCh0nFOQhEigN+O4N2bTwZVU/A6Aw=; b=z
-        EXDTeCKO6GA7Zwr4Li/JO1aqB7n5cUrLgGx4/nPtThJJCDycXkIDA45j27aWmDUS
-        8/TAeGmvKryap+y3Fo+nXy/oVQuXRiy1zP7czX4+JixtYUA9udPs29rTzlYU077C
-        DdnLcCCs7X6jtxRiKvoi2vjsmxzZ7bw1Ys0RJGEptQDbkMvbd07Je+ApOLsbIiSN
-        4S+b5U6M1sMtuUDszLzVhprEayZrbOHOqi0pRYZEnWhT3/ztHyLOSpXmqfxD8PS6
-        TYRp5nD7pZx9s2cARkz8qns3bMVVrlQPhT308K2bkZc0G0d2V9sq7v2VaJ23lzws
-        +Fc0H1y1w6ZavjN6PGA8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1683750934; x=1683837334; bh=N+wZuTLIiU0lP
-        mSCh0nFOQhEigN+O4N2bTwZVU/A6Aw=; b=SFfJg2z1MbVfQLnKM1CJbLaISwndX
-        p6nM8G88NP+6SY6g6+sOdEXMLg38Io7ai+1koFZYew/7efCM66hWq0GJSVwc2YXI
-        oz9HQ4lJyEU9+dtqpXOu4Hxx6/Nqq5ryrm/LoGgpIfjUEHDvuKS2tdkrK5vv0N7q
-        VSrBOax2WdRh/A+a6lpJ4clOmQVgM3bAbRD2Q1yAgl0imoaFHPHw8c8VT4EmCS0N
-        ZlOTKqtU3am0X3yqDnr7TUT6YkoRxcDHoxZTJybKJp1J1Dxca4SukGCy7eg9jsSL
-        CTk8ZKe7ImxmYE7wIVrVRwRt+tQ93VPLcLsnocMJjd0KXzBrv4gdpTQfA==
-X-ME-Sender: <xms:FQBcZMHuE5N_xdzbQm2WNjBoNMYNmFaNP05JvrLNewh6D6gk-vj_SGg>
-    <xme:FQBcZFUq4Ef-AtejWhUnD6nnIsxc652vdWREfOD5x6Ez6h3JlGw4Qp7rmSWxBCwxd
-    pXHwmu3a2pJujJjdQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeegiedguddvlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
-    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:FQBcZGK8NrRKyKKNpW9fwSBdzFRAP7VNd7O7UIWOD_ZCKtpO3E9EZA>
-    <xmx:FQBcZOGtydPCBHjrZyic3xcEZ582Ue6g7bPfL6NvwnCGzupKMkJTOQ>
-    <xmx:FQBcZCXzxgTMpLlIHFRS9ao6EO_G_biZ7bHohm7LSEFeEsiQZZF_cA>
-    <xmx:FgBcZNByPddJrONPViGvspKisGuqSqdcxDc3qD-meGhlGhvzDbZnDA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id C86D815A008E; Wed, 10 May 2023 16:35:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-415-gf2b17fe6c3-fm-20230503.001-gf2b17fe6
-Mime-Version: 1.0
-Message-Id: <1efe92ee-6ae0-4588-ba67-b7632c7ea97e@app.fastmail.com>
-In-Reply-To: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
-References: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
-Date:   Wed, 10 May 2023 22:35:13 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Christopher Fretz" <cfretz@icloud.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git rebase --root bug
-Content-Type: text/plain
+        with ESMTP id S229555AbjEJVhn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 17:37:43 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 506A93A80
+        for <git@vger.kernel.org>; Wed, 10 May 2023 14:37:41 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-1929818d7faso47260783fac.0
+        for <git@vger.kernel.org>; Wed, 10 May 2023 14:37:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683754660; x=1686346660;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OuLhwV9TFl4CWLkHqD6RtfrRvn8ACm3zmR4UpCtj3sM=;
+        b=HocT54PZQCYqVWjRyHMCp/H91hRjw2cWhfENuHkC+nvTZqUnoF1rfH8AYLGH1IYjCC
+         R+IFRpTf+Xwor0ANGC9/eIWAUz5xAcLBPnhEl9gdelYRGMLC40rRf4BbbTHpmtJzclft
+         4hkxiW854a8nR5Pqff1EzthzF/DATu/9NQTjRrmeX8gRjmI+ja5cUxXsVwG9hjtdG6zN
+         KHdZ4NSK3ZqOeDX6h6yed/y1Ef5pGddaQqWq4o0v5xHYqqxtJWahM3nYdAfoSZAg7iDp
+         gCwUO59w3emlKtkV8lqq6giW77zS1DOl0BZQkQ/jnuKpXdg7Qcz0052iwvnGJfVxC+co
+         7orA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683754660; x=1686346660;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OuLhwV9TFl4CWLkHqD6RtfrRvn8ACm3zmR4UpCtj3sM=;
+        b=RorLzMIIKtp05/14GPW08PNHAUA69u+b61O7UUqh1nkoj8pLl3cRCotjfeLhh1wkiG
+         eoo7S5CG/q23woblftcAWSbAb5ztAcx/SpXp9fVWYV9viEtiHF/BWFFm2TwL1M2m+PVH
+         VoqrOuBtMxf7MXGCTDfeEu8pDtSkkRfDvMMwN0IQiG1+GX13v0Hz4dH4fkJIEjPXkZLi
+         50LRdcKktcz3hoIXmC+p6NeiBVTsVL0qbpHncLq0MLoO47IaO/tmRFWCGw5trRbkwEND
+         WEGDuyvg4bE7jSGq56x9e7XYgc/tnQ88eE+ftfnOmGmcnhMkrT9aQaL2XJh6zFCbZQYi
+         wpUA==
+X-Gm-Message-State: AC+VfDx9Fv/XNak+Z1tbs5K9x1F8P5dqK5gOI4o+xQgV6Ze3+pmlTw92
+        eVG9jaJB3sHP4mw1Uf78004+/ECKkSA=
+X-Google-Smtp-Source: ACHHUZ6mdK/0OgPCXvYKcCGdV208U3I8AGaDoeU4XY6LZYfC/FhZDM0wWao+d9pa1t33VhczBG+hVg==
+X-Received: by 2002:aca:de82:0:b0:38e:c4a9:e17e with SMTP id v124-20020acade82000000b0038ec4a9e17emr3258799oig.7.1683754660256;
+        Wed, 10 May 2023 14:37:40 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id u2-20020a056870184200b0018b182ce317sm7411077oaf.55.2023.05.10.14.37.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 May 2023 14:37:39 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 0/4] Generic conflict style fixes
+Date:   Wed, 10 May 2023 15:37:34 -0600
+Message-Id: <20230510213738.505241-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 10, 2023, at 22:08, Christopher Fretz wrote:
-> Thank you for filling out a Git bug report!
+I sent v2 of this series almost 2 years ago [1] and received zero
+feedback. This is the same version except rebased on top of master.
 
-I get a more generic error:
+In v1 the idea was to change the default conflictstyle, but that
+proposal got stuck due to a variety of reasons (including unnecessary
+personal drama).
 
-    $ git rebase --continue
-    fatal: No rebase in progress?
+v2 should not have been controversial, and neither is v3.
 
-[System Info]
-git version:
-git version 2.40.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.4.0-148-generic #165~18.04.1-Ubuntu SMP Thu Apr 20 01:14:06 UTC 2023 x86_64
-compiler info: gnuc: 7.5
-libc info: glibc: 2.27
-$SHELL (typically, interactive shell): /bin/bash
+[1] https://lore.kernel.org/git/20210622002714.1720891-1-felipe.contreras@gmail.com/
 
+Felipe Contreras (4):
+  test: add merge style config test
+  merge-tree: fix merge.conflictstyle handling
+  notes: fix merge.conflictstyle handling
+  test: document broken merge.conflictStyle handling
 
-[Enabled Hooks]
+ builtin/merge-tree.c               |   4 +
+ builtin/notes.c                    |   3 +-
+ t/t6440-config-conflict-markers.sh | 116 +++++++++++++++++++++++++++++
+ 3 files changed, 122 insertions(+), 1 deletion(-)
+ create mode 100755 t/t6440-config-conflict-markers.sh
 
+Range-diff against v2:
+1:  51351f1a77 = 1:  6867f22f49 test: add merge style config test
+2:  1fccf561ed ! 2:  60bf233000 merge-tree: fix merge.conflictstyle handling
+    @@ Commit message
+     
+      ## builtin/merge-tree.c ##
+     @@
+    - #include "blob.h"
+    - #include "exec-cmd.h"
+      #include "merge-blobs.h"
+    + #include "quote.h"
+    + #include "tree.h"
+     +#include "config.h"
+     +#include "xdiff-interface.h"
+      
+    - static const char merge_tree_usage[] = "git merge-tree <base-tree> <branch1> <branch2>";
+    + static int line_termination = '\n';
+      
+     @@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+    - 	if (argc != 4)
+    - 		usage(merge_tree_usage);
+    + 	if (argc != expected_remaining_argc)
+    + 		usage_with_options(merge_tree_usage, mt_options);
+      
+     +	git_config(git_xmerge_config, NULL);
+     +
+    - 	buf1 = get_tree_descriptor(r, t+0, argv[1]);
+    - 	buf2 = get_tree_descriptor(r, t+1, argv[2]);
+    - 	buf3 = get_tree_descriptor(r, t+2, argv[3]);
+    + 	/* Do the relevant type of merge */
+    + 	if (o.mode == MODE_REAL)
+    + 		return real_merge(&o, merge_base, argv[0], argv[1], prefix);
+     
+      ## t/t6440-config-conflict-markers.sh ##
+     @@ t/t6440-config-conflict-markers.sh: test_expect_success 'merge' '
+3:  3bb872e3cd ! 3:  cf8cabaae3 notes: fix merge.conflictstyle handling
+    @@ Commit message
+     
+      ## builtin/notes.c ##
+     @@
+    - #include "notes-merge.h"
+      #include "notes-utils.h"
+      #include "worktree.h"
+    + #include "write-or-die.h"
+     +#include "xdiff-interface.h"
+      
+      static const char * const git_notes_usage[] = {
+    @@ builtin/notes.c: int cmd_notes(int argc, const char **argv, const char *prefix)
+     -	git_config(git_default_config, NULL);
+     +	git_config(git_xmerge_config, NULL);
+      	argc = parse_options(argc, argv, prefix, options, git_notes_usage,
+    - 			     PARSE_OPT_STOP_AT_NON_OPTION);
+    - 
+    + 			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
+    + 	if (!fn) {
+     
+      ## t/t6440-config-conflict-markers.sh ##
+     @@ t/t6440-config-conflict-markers.sh: test_expect_success 'merge-tree' '
+4:  a767bc68e6 = 4:  5959fea3c4 test: document broken merge.conflictStyle handling
 -- 
-Kristoffer Haugsbakk
+2.40.0+fc1
+
