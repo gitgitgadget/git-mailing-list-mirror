@@ -2,121 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3076DC77B7C
-	for <git@archiver.kernel.org>; Wed, 10 May 2023 22:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 257FBC77B7C
+	for <git@archiver.kernel.org>; Wed, 10 May 2023 22:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjEJWvx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 18:51:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50426 "EHLO
+        id S236660AbjEJWz5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 18:55:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbjEJWvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 18:51:51 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A75C91BFB
-        for <git@vger.kernel.org>; Wed, 10 May 2023 15:51:50 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1ab032d9266so73559485ad.0
-        for <git@vger.kernel.org>; Wed, 10 May 2023 15:51:50 -0700 (PDT)
+        with ESMTP id S236589AbjEJWzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 18:55:48 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D843A8E
+        for <git@vger.kernel.org>; Wed, 10 May 2023 15:55:41 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-30639daee76so5131016f8f.1
+        for <git@vger.kernel.org>; Wed, 10 May 2023 15:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683759110; x=1686351110;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=adD+DQVHpk/7+4NTd6NGQfOn+z4tqDJmK3QXFIpk8f0=;
-        b=lPGkqMo963y7dC2lJQtX7RpnZpV9vQorUWtbI7g5Z2YBcBnStQNZv18MiLMedwyJ5R
-         kksyWFW7P9Rhn3z1rjCBrxN2c5dDKYCRVWw2diXTq853Hwp4mpEvaVy+j4EFJwhfYMEE
-         6CMGenxbH6kFkfuLxcMfHIXoGzq50KZt+ugvNu6JY8CC+Mjdq0xZOkmXdXiI2MlYqxvP
-         cqa4wR7EoT4w7faV+PNKAN/6MYYJynG2Y+qLBwa3v8DYsgeRKGgEnQwuw2AyJZbnLfrs
-         B6ia4wvJ62VrKhQ14iCCSTYhG5PajeeNncz07fzi/lNVi/c511cb/9fguUg4nmyRmBYc
-         LD0w==
+        d=gmail.com; s=20221208; t=1683759340; x=1686351340;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=30h8G0vNWauFVPuLQLLMaK97qwMQu01Wv6dQYCKTAaM=;
+        b=bzYv0f5I8nUXQ+CZTMEKHYkBU9RWAOXXsG4arPuaaii9Vjey7SRy8G8DEsfo2Eb8ty
+         5jB/DlQKdqq1iaE8DBPrv0Vb32enWmN8+J69PBG02O003BBMI5SbSpEovrAV5GF3HCn/
+         xtKBlon0fEtnbFJkQlsgju9+yJ9ZCDzANmx0eaURB8Np4BL38oNE1wYzMxjq3DbiOc6a
+         JQBQlBnfesaJ6llZaslTcDpqRhGy4Ng7pMl45ZaEgyCTiFDsTscKo+lEXjG+6ykokY6g
+         MjdXXunC+uBQFhuzcoKRlUkVe9dUJKXY6NTHMsf+2Nndic+cCAnQq0MjzW+hYHNrHrC6
+         reZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683759110; x=1686351110;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=adD+DQVHpk/7+4NTd6NGQfOn+z4tqDJmK3QXFIpk8f0=;
-        b=Gmx776hSwt1tT9XvPBjRT7E8oVyr4ayyNOXUGeRImBdi+Hw7928IigTxW9NbyXhJJH
-         qQHrSIq2Mh2R/UQ6qxt2Ye8Yj43snz18dbwK51e6YlkZ4p/HU5uqdSMFVUOt/YGX8Zsg
-         /+Z6PEyYZ0Dxdn4qI55R2L8CF/6T1Y9ZCuwtPUKqim+C2EHAwyLcPxW+1DMcXsCErfuV
-         qXZljCA+tB//901MGD/vEkKWUsHbjH3nH+tW1FuF45JTJbYnJ2EstExHBwVupiojKKCE
-         tTWU0TiQ+M+lquj+MGaYgOl9we8jgnqpKnTPZVHvlkT1DiAKpnAdcTeesfUINkeKEy7E
-         Vi0A==
-X-Gm-Message-State: AC+VfDxJ38JUXGBmRPxAr55tQRzTapHI1iZTLePf+loqMNqq5D3GSqKw
-        j/NFwaIflJKDGcbSCAkm5W8=
-X-Google-Smtp-Source: ACHHUZ5Gs0PC0UsjwBbd0wtu4pP9YOiPIRnEg+p+XUuc7i/Jbg4XmQ7NGf15ZN9nF35hRpnI9vwKoQ==
-X-Received: by 2002:a17:902:d34b:b0:19f:188c:3e34 with SMTP id l11-20020a170902d34b00b0019f188c3e34mr19877473plk.53.1683759110023;
-        Wed, 10 May 2023 15:51:50 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id r1-20020a170902be0100b001a24cded097sm4311862pls.236.2023.05.10.15.51.49
+        d=1e100.net; s=20221208; t=1683759340; x=1686351340;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=30h8G0vNWauFVPuLQLLMaK97qwMQu01Wv6dQYCKTAaM=;
+        b=abazeLYlU89koaYQLT2rM43DKjs9mhTQ+fWNLWC2ajO9q4QIFxf1K9sMt1O3R0Jjfc
+         8ZChcNZc6lzwYQxWqdwgDi/4WdrrY/rBFRaAqHi8QJZ8m6n1u+yWeqxp42BxMR3K1Bh3
+         rSr4RRVXSAKZHEh8P4ElzqRhF5mkaxYgpXQQF+HU53Z1D6LDkiNXQt80481He9IusH5a
+         qULn9razzsHsGeeYIyiE10YdnP/phfcTinsd9QU3JQoV4jVrbg8R9tVEGCi9e3GAhzEQ
+         3Is9d/ZJZ7D/2ktSyxLvYgtbZl1puyXW+78vKrPJmKAV4iu1vDLf5AQVNl5wlRniWfZ7
+         qn3Q==
+X-Gm-Message-State: AC+VfDz49uK1E4GzpuFDcd3/ANYu5AS54Zauz4eusov3UlmyP7vhiCwP
+        d0/rkbwttYN1DeSFtlQyvJBneixPhe0=
+X-Google-Smtp-Source: ACHHUZ7c+2sSP8EbK7sypxtdh8AbdropUCGoxRcJ/oh3fJIWrlRqGLr3UzxWMxLgUIw3hs92+5PVjw==
+X-Received: by 2002:adf:f291:0:b0:306:3bf0:f1ec with SMTP id k17-20020adff291000000b003063bf0f1ecmr14088076wro.7.1683759339926;
+        Wed, 10 May 2023 15:55:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a11-20020adfeecb000000b003048477729asm18447755wrp.81.2023.05.10.15.55.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 15:51:49 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net
-Subject: Re: [PATCH v4 1/7] strbuf: clarify API boundary
-References: <20230508165728.525603-1-calvinwan@google.com>
-        <20230508165908.526247-1-calvinwan@google.com>
-        <CAPig+cTQg7XzORPHeD79aHEi1ggOjTPw9X02VPgxcV9uoBOBxg@mail.gmail.com>
-Date:   Wed, 10 May 2023 15:51:49 -0700
-In-Reply-To: <CAPig+cTQg7XzORPHeD79aHEi1ggOjTPw9X02VPgxcV9uoBOBxg@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 8 May 2023 13:22:15 -0400")
-Message-ID: <xmqqr0rn241m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Wed, 10 May 2023 15:55:39 -0700 (PDT)
+Message-Id: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 10 May 2023 22:55:36 +0000
+Subject: [PATCH 0/2] Fix two rebase bugs related to total_nr
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+I recently picked up work where I regularly rebase large branch thickets
+consisting of thousands of commits. During those rebases, I could not fail
+to notice that the progress initially showed a total number around 2,100,
+when the actual number of commands was more like 1,850. And indeed, when
+resuming the rebase after being interrupted due to a break command or due to
+a merge conflict, the progress showed the correct number!
 
-> On Mon, May 8, 2023 at 1:05 PM Calvin Wan <calvinwan@google.com> wrote:
->> strbuf, as a generic and widely used structure across the codebase,
->> should be limited as a libary to only interact with primitives. Add
->
-> s/libary/library/
->
->> documentation so future functions can be appropriately be placed. Older
->
-> Too many "be"'s.
->
->> functions that do not follow this boundary should eventually be moved or
->> refactored.
->>
->> Signed-off-by: Calvin Wan <calvinwan@google.com>
->> ---
->> diff --git a/strbuf.h b/strbuf.h
->> @@ -5,7 +5,11 @@ struct string_list;
->>  /**
->>   * strbuf's are meant to be used with all the usual C string and memory
->> - * APIs. Given that the length of the buffer is known, it's often better to
->> + * APIs. The objects that this API interacts with in this file should be
->> + * limited to other primitives, however, there are older functions in here
->> + * that should eventually be moved out or refactored.
->> + *
->> + * Given that the length of the buffer is known, it's often better to
->>   * use the mem* functions than a str* one (memchr vs. strchr e.g.).
->>   * Though, one has to be careful about the fact that str* functions often
->>   * stop on NULs and that strbufs may have embedded NULs.
->
-> The new text is administrative in nature, aimed at people who will be
-> modifying strbuf itself. As such, it is unclear why it is being
-> inserted into documentation aimed at _consumers_ of the strbuf API.
-> Moreover, with it buried in existing API documentation like this, I
-> fear that those at whom it is aimed will almost certainly overlook it.
->
-> To increase the likelihood that the target audience will indeed read
-> the new text, I'd suggest placing it in its own comment block very
-> near the top of the file, possibly prefixed with a loud "NOTE FOR
-> STRBUF DEVELOPERS" or some such. Further, as the new text is aimed at
-> strbuf developers, not strbuf consumers, it would make more sense to
-> use a plain /*...*/ comment block rather than a /**...*/ block.
+So I set out to fix this, stumbling over an incorrect use of total_nr in the
+--update-refs code, so I fixed that, too.
 
-All look good suggestions to make.
+Note: These patches apply cleanly on top of ds/rebase-update-ref as well as
+on top of the current main branch.
 
-If there is nothing else outstanding, let's see a small and
-hopefully final reroll so that the topic can be merged to 'next'
-soonish.
+Johannes Schindelin (2):
+  rebase --update-refs: fix loops
+  rebase -r: fix the total number shown in the progress
 
-Thanks.
+ sequencer.c              | 16 ++++++++++------
+ t/t3430-rebase-merges.sh |  7 +++++++
+ 2 files changed, 17 insertions(+), 6 deletions(-)
+
+
+base-commit: 4611884ea883908a9638cafbd824c401c41cf7f6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1531%2Fdscho%2Ffix-rebase-i-progress-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1531/dscho/fix-rebase-i-progress-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1531
+-- 
+gitgitgadget
