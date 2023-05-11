@@ -2,99 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A487C77B7C
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 15:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA3CC77B7C
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 16:16:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238708AbjEKPXr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 11:23:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47592 "EHLO
+        id S238697AbjEKQQx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 12:16:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238611AbjEKPXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 11:23:44 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD4C1BF8
-        for <git@vger.kernel.org>; Thu, 11 May 2023 08:23:41 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-b9a6f17f2b6so41902561276.1
-        for <git@vger.kernel.org>; Thu, 11 May 2023 08:23:41 -0700 (PDT)
+        with ESMTP id S238664AbjEKQQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 12:16:52 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96E25255
+        for <git@vger.kernel.org>; Thu, 11 May 2023 09:16:44 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-559f1819c5dso133108797b3.0
+        for <git@vger.kernel.org>; Thu, 11 May 2023 09:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1683818620; x=1686410620;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K/92ZNtjUv0WH/yeGmdSjOmQUNhMis5l6+WGZ5i8Cqc=;
-        b=NKxFCiKfbA+ItqyVTxhJnyahjYRpBHa1a/QuViOMSKfBoBROMACzU2cW9vJXlqmJ2Z
-         3QdfL4AWQm2smgHkkZ5edQQB/bmF5mW6+4iIdzTRChY4c1DCu4Y0P/NSoE84BuJ+wMWP
-         QcFvJuwT5ukPl1bWpdjT0wohV2uRWrQ3bNwFOxi2i62MfQyp52RA1v49qPUJS0KekDEV
-         1sHzqtzaCxUsxTUpWXyV797RDFdLD1rf3ADIaKkwX/3Zi5Altgn9EJqZbGzmz3wiXAwr
-         CFSb+C6TEjD9WeqYm0FBFFAYxThtrLYbu4MO+saFo4gJ+iyUqe88Ue1A3fibbQiVtUrQ
-         ilbw==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683821804; x=1686413804;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/oBL/9i3+IWsZ9jjBvOfHxikmhC9wpcungLmJuFrJOo=;
+        b=cS9JSrW7V3DpK6JbzvJtvupyIEQrjODA574AquiBLXyOEccAy98w//o+/PNxlX3xCx
+         kzWb9NDJxtcRO9Gai+B5dNvjzkDha0P55sBQQUGXgD6Proc6uodKGx6CQ8UmcTyOrPYQ
+         iteMonEXlr9zlM/mnk2PBGGa2O48PLpa0FpQkH5GH5WxKmukptELqNRa/gofSiiBrR+3
+         5hGPy52EUiIbP5g7mBZ5G93/QNCUNeHjqGWRBxOgosNbB2S82EKYJ2WPhUsLs7WmMHrN
+         7ABaonetdqhpnw6yKHgy20bY2Pqd4y9/ih3at67V6uRV6owustwuM3KQ+FmPymdduKMg
+         9v2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683818620; x=1686410620;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K/92ZNtjUv0WH/yeGmdSjOmQUNhMis5l6+WGZ5i8Cqc=;
-        b=l3wxsJcw+1ul19kIrtw7kIjyT5MYYm7eW0Ta3hUvuWyiNo8JIwQF9JcweUOOXsjneR
-         5Xmz6CviPvhD+eiqD+EmQQZCEk9YhIk8FdsG2uj5rxUYNJx3BKFKO55bzDkqtY15Mgrq
-         DDqRsgUNT+KPeya5BshFhFJtuS5ESbtu26utb3AsSyWY0ZCwfGKAzpfzsorNzx2ehxyJ
-         VaAv6NhFP1PnMFphK1nRCWrlwLgxSeadZwSeAddOv/YtdyIP/GPTo06hl1RCxx8dClZu
-         dMGk3aoi/7h6zN/0rnoLFtdZZbRHchVxDixR3VwmN55FBH5iLmGTBvG2J/6vzIwh138X
-         nrXQ==
-X-Gm-Message-State: AC+VfDzEFZkNOQhZRL0/HY1TNzwQwKmWsPJzzR9rSi3rktkv/ZY6gX8T
-        fc0e5PPEM0T8NS40ppQaWSIq
-X-Google-Smtp-Source: ACHHUZ4gIg+rtgOAJH2OhzHvPgeFOK0D/lmZiFGGe0KP/M/Gifcm4UrdERJo31VQ4AJZGZfgsrT5cQ==
-X-Received: by 2002:a0d:e690:0:b0:559:d78f:db64 with SMTP id p138-20020a0de690000000b00559d78fdb64mr20453570ywe.3.1683818620191;
-        Thu, 11 May 2023 08:23:40 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:c583:6563:bc4f:3e20? ([2600:1700:e72:80a0:c583:6563:bc4f:3e20])
-        by smtp.gmail.com with ESMTPSA id z141-20020a0dd793000000b0055a446a9e71sm4941399ywd.40.2023.05.11.08.23.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 May 2023 08:23:39 -0700 (PDT)
-Message-ID: <7c4425fe-c1e9-0410-2b14-a33fcf89b428@github.com>
-Date:   Thu, 11 May 2023 11:23:38 -0400
+        d=1e100.net; s=20221208; t=1683821804; x=1686413804;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/oBL/9i3+IWsZ9jjBvOfHxikmhC9wpcungLmJuFrJOo=;
+        b=ZBqEyTrRyFQRQ0c0e4nPYIZZzpwprZn/AGWA+PFVW302+ykzC3CWpLLNIbJAi2GkYK
+         Uu2atfJEhHX0DN+RANHnPish9bxCX+C3I2JMEaweDy0X/AJ2laFltjeduIYeVavEcb2/
+         G3NNnc4EwkjyOrP1ggw0IEYlDc28r5mZXrQ8EZL7z1USl1S+MdhQRxjqaD7ZNek7F1pt
+         6ERMhw8Yv2ckD7CEfJePexRFZS9YtefuOx9snzQuoAbzacopLyUBxo+3p9huAfsTDcGI
+         3Kv27dJN+0f9kI8kWxt0kkXu0hFFScKM6mfYL7VxgBWGXWy4Q2dJaNSO2HD1BgEZwHqG
+         5XaA==
+X-Gm-Message-State: AC+VfDwncEHDx8m2gd2ewF2VqHoS5aKwzeWANy1L8BbE1lUiO8+9vSje
+        K+K3L2jwf2bwnOe+A4exzqEIQcHLQSJi6gOZNcppRQ==
+X-Google-Smtp-Source: ACHHUZ4wIxnbeHYjYLqfr5syBN0sd4imlGIwQeqes7rGYhV24d9z/LbzxV4Bj0FjPATV+WXcLsdXwQ==
+X-Received: by 2002:a0d:e696:0:b0:55a:2d2b:cdf0 with SMTP id p144-20020a0de696000000b0055a2d2bcdf0mr22491665ywe.8.1683821803765;
+        Thu, 11 May 2023 09:16:43 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m188-20020a0de3c5000000b00560c648ef1esm2033801ywe.72.2023.05.11.09.16.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 May 2023 09:16:43 -0700 (PDT)
+Date:   Thu, 11 May 2023 12:16:42 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Christopher Fretz <cfretz@icloud.com>, git@vger.kernel.org
+Subject: Re: git rebase --root bug
+Message-ID: <ZF0U6tneDjLfGxf1@nand.local>
+References: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
+ <288a9935-264b-4dc5-0d63-200c310f326e@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 0/3] pack-bitmap: boundary-based bitmap traversal
-To:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-References: <cover.1682380788.git.me@ttaylorr.com>
- <cover.1683567065.git.me@ttaylorr.com> <xmqqmt2b23ut.fsf@gitster.g>
- <ZFwkXtkAau4MNtKv@nand.local>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ZFwkXtkAau4MNtKv@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <288a9935-264b-4dc5-0d63-200c310f326e@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/10/2023 7:10 PM, Taylor Blau wrote:
-> On Wed, May 10, 2023 at 03:55:54PM -0700, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
->>
->>> Here is another small reroll of my series to implement a boundary-based
->>> bitmap traversal algorithm that I worked on towards the end of 2021 with
->>> Peff.
->>>
->>> The algorithm is the same as in the last round, though I cleaned up a
->>> few things throughout thanks to another very helpful review from Stolee.
->>>
->>> One significant change from last time is that the new algorithm is
->>> opt-in behind feature.experimental, giving users a way to try out the
->>> new implementation while still being able to switch back to the
->>> known-good traversal in case anything goes wrong.
->>
->> It seems that the comments the topic received on the previous round
->> have all been addressed adequately?  Does everybody feel comfortable
->> merging this topic to 'next'?
-> 
-> Thanks. I agree and think that this is ready to merge down. Even though
-> it is changing the traversal algorithm, it should be relatively safe to
-> merge since the new behavior is hidden behind an opt-in configuration
-> option.
+On Thu, May 11, 2023 at 03:21:11PM +0100, Phillip Wood wrote:
+> The cause of the problem is that --root creates an empty commit (known as
+> "squash_onto" in the code) which it uses as the "onto" commit. When it picks
+> the first commit in the todo list the "onto" commit is amended and so is
+> unreachable when the reflog is expired above. I think the best fix would be
+> to stop pretending that we have a real "onto" commit when --root is used
+> without --onto and either store "new root" .git/rebase-merge/onto or not
+> create that file at all.
 
-Yes, I'm happy with this version.
+Wouldn't it suffice to consider the squash_onto commit as reachable the
+same way we do for `--indexed-objects`?
 
 Thanks,
--Stolee
+Taylor
