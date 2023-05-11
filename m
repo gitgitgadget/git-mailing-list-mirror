@@ -2,136 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1DB2C7EE24
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 07:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9254C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 07:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236941AbjEKHHi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 03:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
+        id S237620AbjEKHpq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 03:45:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237342AbjEKHH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 03:07:28 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 193837DA7
-        for <git@vger.kernel.org>; Thu, 11 May 2023 00:06:54 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f13d8f74abso9249809e87.0
-        for <git@vger.kernel.org>; Thu, 11 May 2023 00:06:54 -0700 (PDT)
+        with ESMTP id S236848AbjEKHpo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 03:45:44 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762EB1BE9
+        for <git@vger.kernel.org>; Thu, 11 May 2023 00:45:42 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-18f4a6d2822so49261602fac.1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 00:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683788813; x=1686380813;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683791141; x=1686383141;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nAJvPD5V8g1G78lp+c/x6EIixVqZwWxewADDEBuSLSY=;
-        b=GicVPQ3G6lMTTWdIJfI+C+0mss+I3tOl6Qqq4rueqZZMSBZeEz7PY5NoeOGFMVuVAL
-         AUwNnykjxCx605SvCyTrrK7jaO5vw+wkPlwVQTp3cuXL35tjfSJdUMr9MgSVT4SttI39
-         mQGvkIIKjRzhu4XjErhaib6+mhF3zIvX3Kt6ZB+x49zgzMjmCzFJOcTIHTuVhesxiAqS
-         Mcfdp0e2s5OCqTwGOwgi2uww0eM9MizTjYXdX82x4AeIFIqZDIc/QXV7A/HJ7BYXfAxk
-         E1/ezTu3s+H9GuNLkZ7VUt08F88pyY362kUsU0Sw6E92Mlre6Xq0XP4F2oL8ZU6oj6zm
-         sBhQ==
+        bh=mZaxuXVXKRWYI68mRVrlODgQ6nKYMUpThoVp/Nrb0/8=;
+        b=cFtzIKcUpli57lGKbQJMBbWI0pXpEVrjegE8NoHHW7u7lP5MsUcj+l5Sibb+/MzQxf
+         P8gCsl2RAVhVX9JP2mJJV522ocs4x6YBzuPbYvW1iLIG1EGY8SNpuu1ZL9R2fdP+CcX6
+         tRQcdg7JvKElughg0tu4Xw6AEcV1ti/FGUA/mRoVxms7blCO5Jw9vvd99jlT9Fq4nBnE
+         yGMpTb7EoyoFQwfOZm4pdYGiKhYtFcajyAGLoOixX9f2FPyHRH5xyyTaulVD2Hz+tJqS
+         +bukDtkZH5FDau0qvpuiSRsctCngpAQzwdgsuyeM9NWRwvGUZ8Hq/vAZjuYJOE+uarXX
+         +vAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683788813; x=1686380813;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nAJvPD5V8g1G78lp+c/x6EIixVqZwWxewADDEBuSLSY=;
-        b=iFKkKsAgxwSjUT9Jv6CqiJM5MF2O4ocGfNqtzZxzhy5tOqEus6LQezUR0toh6j+JIq
-         NezHVitcOZotwLa24UPgMSXY37PqIt4ri5sWWw6rnIQMP0NfGj4AD/3m4LykHoLB03JJ
-         Qg7A6JnSgku8HwXyLNsgE5IK8AQ79gtlRdMlYPaV+RDSKITgqIYiu/1bkbwnZo0I1gSx
-         ih4aNW39C+pk0WZs6qnX2sr/33vcejKiTipttcCJZq3Mfdy0e9TDEI+hJu396oV8G/Rn
-         mKwp+RUD/8ACsrup/+YnkmDUN+MvVaDLwg8vm+oQFJk8YOnQEg4dDJPejr2ZBPA2L4B7
-         i0TA==
-X-Gm-Message-State: AC+VfDxgxvm8DaXEn2ROkgGzqQvmO5oQYYeQoSjegwU3aexmQ3xPaQF7
-        0Iud+REuoHfmzIra3aU78vqaSu5XKG8blD7jGFs=
-X-Google-Smtp-Source: ACHHUZ5fi/g9pbp4EMiU/XLFipqVGYZRJsTwg6rA9DfHAQ46aZn6UatzWZ5Qf236c8YLdTbPk7AlUbAWhMtAFe+/UG4=
-X-Received: by 2002:a19:a406:0:b0:4f2:5c2a:19ba with SMTP id
- q6-20020a19a406000000b004f25c2a19bamr1911834lfc.46.1683788813011; Thu, 11 May
- 2023 00:06:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1527.git.1683008869804.gitgitgadget@gmail.com>
- <CABPp-BH8A=CnO3_UWXDegb87VTNEX8s+=CefB90m1_vjBZ_+Fw@mail.gmail.com>
- <CAPMMpogiTVksUKgZ==n4d3xm4ZJqxm7ki2dOF8j8S5BaJvu1Ew@mail.gmail.com>
- <CABPp-BGmPKyNcDa-wUh-oisTvvux+X=6BvGxSNQC2O7uodpFrA@mail.gmail.com> <CAPMMpojDm8jHWFr8i5EC-oEKK8WBt1g3iyRvixfy1bhk8qck2g@mail.gmail.com>
-In-Reply-To: <CAPMMpojDm8jHWFr8i5EC-oEKK8WBt1g3iyRvixfy1bhk8qck2g@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 11 May 2023 00:06:39 -0700
-Message-ID: <CABPp-BHGAVb06BahQ0--15LWetyyx7eHAoPH8-So9UyqpJv0sg@mail.gmail.com>
-Subject: Re: [PATCH] RFC: switch: allow same-commit switch during merge if
- conflicts resolved
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1683791141; x=1686383141;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mZaxuXVXKRWYI68mRVrlODgQ6nKYMUpThoVp/Nrb0/8=;
+        b=KZ83/na3aGMLBjm72qpw+KhdJZqqRx6TflfcFC+n2ykVFNGOCrtEPBxOFA5gg2OWgi
+         KSmK7iT/0fREzuYVqaeHn9sCUmREdEj9ryFPvWayjTdNXu9nHQiJ6ZTgMEQed+NX0/n5
+         NdF+oE7NHlhtK6597IWoi63fnO82eihhpf8E3wtaJbQ3UBmQ0s42X9RETgZ/JfaqtPnf
+         I6K0yNQBy1lsW9hWteHG9IcCTfiB/iXoWNOfs0ws9ohFDcXAjsiH7lV9wQvmrZEONwCh
+         CnRB5HMul4UwG3UfZO7rCr0ZpqgHizqYM46qUAPo4EGm9Jcvs8Yz6u3ztm/f5YmXhYO3
+         W5ZA==
+X-Gm-Message-State: AC+VfDy65uTuaX5/cdui39Q5LYgiDa7WEJtSxuET/29dEDvHSE4Zpjeg
+        RiKb9hUNFp23Y5ifmrq6esI=
+X-Google-Smtp-Source: ACHHUZ4OrV8f8HD0Yj/Z3cOeR9BP7I9WuqrPj39r/Rjdl7lrl9ewRPoF0OIRlTAlixA6sRH+n4lJQQ==
+X-Received: by 2002:a4a:91d2:0:b0:547:6a8d:67b2 with SMTP id e18-20020a4a91d2000000b005476a8d67b2mr4370733ooh.0.1683791141626;
+        Thu, 11 May 2023 00:45:41 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id d12-20020a05683018ec00b006ab13915cd4sm2821040otf.81.2023.05.11.00.45.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 May 2023 00:45:41 -0700 (PDT)
+Date:   Thu, 11 May 2023 01:45:40 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        christian.couder@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+Message-ID: <645c9d245c155_16db0a29494@chronos.notmuch>
+In-Reply-To: <CABPp-BECZgACeEUqG3pajJpHAaY=-orNwwOUEX5qqzAKVRMFdQ@mail.gmail.com>
+References: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
+ <CABPp-BECZgACeEUqG3pajJpHAaY=-orNwwOUEX5qqzAKVRMFdQ@mail.gmail.com>
+Subject: Re: [PATCH] merge-tree: load default git config
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 8, 2023 at 3:44=E2=80=AFAM Tao Klerks <tao@klerks.biz> wrote:
->
-> On Sun, May 7, 2023 at 4:48=E2=80=AFAM Elijah Newren <newren@gmail.com> w=
-rote:
+Elijah Newren wrote:
+> On Wed, May 10, 2023 at 12:33=E2=80=AFPM Derrick Stolee via GitGitGadge=
+t
+> <gitgitgadget@gmail.com> wrote:
 > >
-> > On Wed, May 3, 2023 at 10:01=E2=80=AFPM Tao Klerks <tao@klerks.biz> wro=
-te:
-> > >
-> > > I believe this question was resolved later in the thread. The proposa=
-l
-> > > is to allow the simplest case of merge only, for resolved
-> > > (unconflicted) indexes only. If the change were to make sense I could
-> > > update this message to be clearer that none of those other operations
-> > > or situations are impacted by this change.
+> > From: Derrick Stolee <derrickstolee@github.com>
 > >
-> > As I mentioned to Junio, I understood fully that your implementation
-> > limited the changes to this one case.  That did not resolve my
-> > concerns, it merely obviated some other bigger ones that I didn't
-> > raise.
+> > The 'git merge-tree' command handles creating root trees for merges
+> > without using the worktree. This is a critical operation in many Git
+> > hosts, as they typically store bare repositories.
 > >
-> > However, making it only available via a --force override (and then
-> > perhaps also limiting it to just some operations), would resolve my
-> > concerns.
+> > This builtin does not load the default Git config, which can have
+> > several important ramifications.
 > >
->
-> Hmm, I think there is confusion here.
->
-> My proposal was (and now, again, is) to add support for "--force" to
-> "git switch", and to keep and improve that existing support for "git
-> checkout" (where it is in my opinion broken during a rebase), but that
-> proposal was mostly-unrelated to my main goal and proposal for
-> supporting same-commit switches in the first place:
->
-> A same-commit switch (*without* --force) serves the use-case of
-> *completing a merge on another branch*. This is, as far as I can tell
-> only *useful* for merges:
->  * during a rebase, switching in the middle (to the same commit,
-> without --force) won't achieve anything useful; your rebase is still
-> in progress, any previously rebased commits in the sequence are lost,
-> and if you continue the rebase you'll end up with a very strange and
-> likely-surprising partial rebase state)
->  * during a cherry-pick, it's just "not very useful" - it's not bad
-> like rebase, because in-progress cherry-pick metadata is destroyed
->  * during am, and bisect I'm not sure, I haven't tested yet.
->
-> The reason this in-progress is *valuable* for merges (in a way that it
-> is not for those other states) is that the merge metadata not only
-> says what you're in the middle of, but also contains additional useful
-> information about what you've done so far, which you want to have be a
-> part of what you commit in the end - the identity of the commit you
-> were merging in.
->
-> Supporting switch with --force, and having it implicitly destroy
-> in-progress operation metadata, has value in that it makes it easier
-> to break backwards compatibility of "git checkout" without impacting
-> users' or tests' workflows; it helps make a change to make checkout
-> safer; but it does not help with my other (/main?) objective of making
-> it easy and intuitive to switch to another same-commit branch, to be
-> able to commit your in-progress merge on another branch and avoid
-> committing it where you started.
->
-> Hence, if/when we add support for same-commit switching during merge
-> (and potentially other operations, if that makes sense), it should
-> *not* take "--force", which has a substantially different purpose and
-> meaning.
+> > In particular, one config that is loaded by default is
+> > core.useReplaceRefs. This is typically disabled in Git hosts due to
+> > the ability to spoof commits in strange ways.
+> >
+> > Since this config is not loaded specifically during merge-tree, users=
 
-Doh, sorry, brain fart on my part forgetting the checkout/switch
-already have a "--force".  Replace "--force" in my email with "an
-override" such as "--ignore-in-progress".
+> > were previously able to use refs/replace/ references to make pull
+> > requests that looked valid but introduced malicious content. The
+> > resulting merge commit would have the correct commit history, but the=
+
+> > malicious content would exist in the root tree of the merge.
+> =
+
+> Ouch!  So sorry for creating this problem.
+> =
+
+> > The fix is simple: load the default Git config in cmd_merge_tree().
+> > This may also fix other behaviors that are effected by reading defaul=
+t
+> > config. The only possible downside is a little extra computation time=
+
+> > spent reading config. The config parsing is placed after basic argume=
+nt
+> > parsing so it does not slow down usage errors.
+> >
+> > Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> > ---
+> >     merge-tree: load default git config
+> >
+> >     This patch was reviewed on the Git security list, but the impact =
+seemed
+> >     limited to Git forges using merge-ort to create merge commits. Th=
+e
+> >     forges represented on the list have deployed versions of this pat=
+ch and
+> >     thus are no longer vulnerable.
+> >
+> >     Thanks, -Stolee
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-153=
+0%2Fderrickstolee%2Fstolee%2Frefs-replace-upstream-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1530/d=
+errickstolee/stolee/refs-replace-upstream-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/1530
+> >
+> >  builtin/merge-tree.c  |  3 +++
+> >  t/t4300-merge-tree.sh | 18 ++++++++++++++++++
+> >  2 files changed, 21 insertions(+)
+> >
+> > diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> > index aa8040c2a6a..b8f8a8b5d9f 100644
+> > --- a/builtin/merge-tree.c
+> > +++ b/builtin/merge-tree.c
+> > @@ -17,6 +17,7 @@
+> >  #include "merge-blobs.h"
+> >  #include "quote.h"
+> >  #include "tree.h"
+> > +#include "config.h"
+> >
+> >  static int line_termination =3D '\n';
+> >
+> > @@ -628,6 +629,8 @@ int cmd_merge_tree(int argc, const char **argv, c=
+onst char *prefix)
+> >         if (argc !=3D expected_remaining_argc)
+> >                 usage_with_options(merge_tree_usage, mt_options);
+> >
+> > +       git_config(git_default_config, NULL);
+> > +
+> =
+
+> Always nice when it's a simple fix.  :-)
+> =
+
+> I am curious though...
+> =
+
+> init_merge_options() in merge-recursive.c (which is also used by
+> merge-ort) calls merge_recursive_config().  merge_recursive_config()
+> does a bunch of config parsing, regardless of whatever config parsing
+> is done beforehand by the caller of init_merge_options().  This makes
+> me wonder if the config which handles replace refs should be included
+> in merge_recursive_config() as well.  Doing so would have the added
+> benefit of making sure all the builtins calling the merge logic behave
+> similarly.  And if we copy/move the replace-refs-handling config
+> logic, does that replace the fix in this patch, or just supplement it?
+> =
+
+> To be honest, I've mostly ignored the config side of things while
+> working on the merge machinery, so I didn't even know (or at least
+> remember) the above details until I went digging just now.  I don't
+> know if the way init_merge_options()/merge_recursive_config() is how
+> we should do things, or just vestiges of how it's evolved from 15
+> years ago.
+
+It's obvious this is not the way we should do things as configurations ar=
+e
+overriden when they shouldn't be.
+
+Something like this [1] is obviously needed.
+
+[1] https://lore.kernel.org/git/20210609192842.696646-5-felipe.contreras@=
+gmail.com/
+
+-- =
+
+Felipe Contreras=
