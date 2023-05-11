@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3109EC7EE25
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 18:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A44DBC7EE24
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 18:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238720AbjEKSLK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 14:11:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
+        id S239172AbjEKSLM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 14:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238991AbjEKSLF (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239097AbjEKSLF (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 May 2023 14:11:05 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4993C1FD6
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574F859C9
         for <git@vger.kernel.org>; Thu, 11 May 2023 11:10:43 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-306281edf15so8439833f8f.1
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f42c865535so35010495e9.1
         for <git@vger.kernel.org>; Thu, 11 May 2023 11:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683828638; x=1686420638;
+        d=gmail.com; s=20221208; t=1683828639; x=1686420639;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M4STwXsYC5zaqNwPZjors7t5vDArRyXy8FMMZAV/Z6w=;
-        b=X8C4wjFlui8S3vT3qGSABfbQQmky8PNgig4PkqlbZAmOvLgvkP6FoUtvLN4kRJs3Ep
-         PJV8r3CUf8wC21Eq31lTtgynNjzCV0FgKQbzT4eEndbJLI6ylM07QO0sWfZCDictSePL
-         gNEcscHbzZKbsW2tfCAQn37jcj9hfwgpg5woF+0BIYMyviV873XLq6PmwFLhulOGsFuy
-         Z32QxKTUMYw68PEN7KIU19YAFNUmWqOTwBw4sRUN+BKkH7UsCHXveIK+WaE8oMcPpC5b
-         0ui+JrsKdDw3OxyLVh4lp0A06J2IF52Ol/9WHDdXubxw6HfvYgrK/FZW8nT11Je+d7T4
-         jyRg==
+        bh=owB2XbBuAy7BfVLhS6ZUa1LnzDFPKxnqC/ILRkr5XeY=;
+        b=VXQyJWdsG0L7Y1GGNlAO+VD8Di4ZVLPfgHsYRRxnwlQp+L7Hc0wVN/E7yW6amQOWPJ
+         xAWrz+LsFXP8Cf/6fcGG/CP/2iAwooqIW+qptqaR7lT+NxOL6JdloA80eH5mCn95CN48
+         gQYl/QljrUiBpVGFMlQszvPMqhQf3tUwozO1MPCJqPB2X5ptdYp2IyvxNEt/KzWMd/Bu
+         fJ1f759PhUuA+4KWusapAcRaqYUDXwsGLUUgdj9uNGDKmJgkiheAS3Bdu3alTrsBFe2W
+         Pgt1mfEOb99h16ZCO8ncfFyrqFKFyqCdSETIch2Fpjli03rXGWw+jnD4CWkCaQey51yy
+         kqvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683828638; x=1686420638;
+        d=1e100.net; s=20221208; t=1683828639; x=1686420639;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M4STwXsYC5zaqNwPZjors7t5vDArRyXy8FMMZAV/Z6w=;
-        b=d3eNKd7tOYSkTBnsy+OtHFcR2tmvpAfXlapFky8FjDaRrJ8yacocAy6NUVNq4Yd4a9
-         sQHb688qS0vhpDyLnkMmU+lAYnR/Ks2Gl9w35zt6eIIdK6oBZF7eNsAnAKwe4olrF4O/
-         xhn3/eYHwi6rU9Qcgr0bS6+poQs6dT9LFOA6xskvjMUtNzzC0yrg4g6rHJIp0KvHAroB
-         agPt9hrtZM7d9Zv8pDRXobuaTPDBjMZFDylPTj9tJwDSaig+pLWPwkEzBxblJp3phUDe
-         xzJG0HL/4LrqemhS9TtcyRx4qb3gKrPS+kwsY8yb3CP/S/Wwj0KY+7Xzgri+3GpFKX21
-         XPsg==
-X-Gm-Message-State: AC+VfDyPgjrGB1fgMT3RQtp8/QhxaI9+g7RESloXTL4nf+MPRl9AWXEg
-        6W9O/guP4fS4b3ZLqL4y0hmcWU3zmg4=
-X-Google-Smtp-Source: ACHHUZ7WyTn2gu627H1ZJPyw2XziovjFrodUD/VI3UH1Y3xTp7AOMdgaO1w7/5S2zhk7f8XPUhs6+Q==
-X-Received: by 2002:a5d:5143:0:b0:306:3bfb:fe94 with SMTP id u3-20020a5d5143000000b003063bfbfe94mr15521533wrt.53.1683828638495;
-        Thu, 11 May 2023 11:10:38 -0700 (PDT)
+        bh=owB2XbBuAy7BfVLhS6ZUa1LnzDFPKxnqC/ILRkr5XeY=;
+        b=H7o9XlPCwRKgt7x+DdIuxDJ+9m8VMocay9r7xg7GBu5q7rxkEHsHzT1NBX4dJw5FnM
+         e11lL8T2KGtrmbzxAz5Y98JAo890gmb13pZa+wCCtvIkRNedyN4DirPqH7ZLmM02LqxK
+         PAB+FmgXjouq5PXoZv3CndeYvXdH9ShFkRjYn9pvtlO3Zd4j/0guBiHlyrrJXnHeZdV9
+         EEPKm06x5PLtJaj1NEVvv03d7xRvkCW3PdH3G8q0zBqYN7J2kECMmo7Fhf8svWHkjX9e
+         ON5r1nqRUmoCiz4l+nOmc1olOw1H9VHt/bAydsx9pXlCD82EeswWCnkJp6NAf51+mBVd
+         AG8Q==
+X-Gm-Message-State: AC+VfDwCvpLb+ckDdk9aChVxCqjRHPpCJUPJ6W1fQxip+f90gPl6iJ62
+        tfOi3zp9YyV2t0/w9jmkLPbRn79iWg0=
+X-Google-Smtp-Source: ACHHUZ79rMgoTL0Oh4lOYc0QZGN/NvjxSxl1h2O34/PTCzMrWPUEDNcMaH3hvw/lRYN6E44FYh1+kg==
+X-Received: by 2002:a5d:4008:0:b0:306:39e5:f338 with SMTP id n8-20020a5d4008000000b0030639e5f338mr13146618wrp.62.1683828639303;
+        Thu, 11 May 2023 11:10:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f5-20020adff985000000b002fda1b12a0bsm21342315wrr.2.2023.05.11.11.10.38
+        by smtp.gmail.com with ESMTPSA id c3-20020a7bc843000000b003f31d44f0cbsm26535845wml.29.2023.05.11.11.10.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 11 May 2023 11:10:38 -0700 (PDT)
-Message-Id: <0a0693ad612755e675861dfa5a660baf8d325ed0.1683828635.git.gitgitgadget@gmail.com>
+Message-Id: <b2f3b98cd2461a25ab708adbcd8a95f5e2b18e5e.1683828635.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1501.v3.git.git.1683828635.gitgitgadget@gmail.com>
 References: <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
         <pull.1501.v3.git.git.1683828635.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 May 2023 18:10:33 +0000
-Subject: [PATCH v3 3/4] revision: modify ref_exclusions to handle inclusions
+Date:   Thu, 11 May 2023 18:10:34 +0000
+Subject: [PATCH v3 4/4] pack-refs: teach pack-refs --include option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,385 +70,208 @@ X-Mailing-List: git@vger.kernel.org
 
 From: John Cai <johncai86@gmail.com>
 
-The ref_exclusions API provides the ability to check if certain refs are
-to be excluded. We can easily extend this API to check if certain refs
-are included, which a subsequent commit will make use of.
+Allow users to be more selective over which refs to pack by adding an
+--include option to git-pack-refs.
 
-Rename ref_exclusions to ref_visibility and add a member to keep track
-of inclusions. Add add_ref_inclusion(), ref_included() to be used for
-refs to explicitly include.
+The existing options allow some measure of selectivity. By default
+git-pack-refs packs all tags. --all can be used to include all refs,
+and the previous commit added the ability to exclude certain refs with
+--exclude.
+
+While these knobs give the user some selection over which refs to pack,
+it could be useful to give more control. For instance, a repository may
+have a set of branches that are rarely updated and would benefit from
+being packed. --include would allow the user to easily include a set of
+branches to be packed while leaving everything else unpacked.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- builtin/pack-refs.c  |  6 ++--
- builtin/rev-parse.c  | 18 +++++------
- refs.h               |  2 +-
- refs/files-backend.c |  2 +-
- revision.c           | 71 +++++++++++++++++++++++++++-----------------
- revision.h           | 26 ++++++++++------
- 6 files changed, 75 insertions(+), 50 deletions(-)
+ Documentation/git-pack-refs.txt | 14 +++++++++++++-
+ builtin/pack-refs.c             | 18 ++++++++++++++++--
+ refs/files-backend.c            | 15 +++++++--------
+ t/helper/test-ref-store.c       |  8 +++++++-
+ t/t3210-pack-refs.sh            | 21 +++++++++++++++++++++
+ 5 files changed, 64 insertions(+), 12 deletions(-)
 
+diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+index c0f7426e519..85874a5f5dc 100644
+--- a/Documentation/git-pack-refs.txt
++++ b/Documentation/git-pack-refs.txt
+@@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repository access
+ SYNOPSIS
+ --------
+ [verse]
+-'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
++'git pack-refs' [--all] [--no-prune] [--include <pattern>] [--exclude <pattern>]
+ 
+ DESCRIPTION
+ -----------
+@@ -60,6 +60,15 @@ interests.
+ The command usually removes loose refs under `$GIT_DIR/refs`
+ hierarchy after packing them.  This option tells it not to.
+ 
++--include <pattern>::
++
++Pack refs based on a `glob(7)` pattern. Repetitions of this option
++accumulate inclusion patterns. If a ref is both included in `--include` and
++`--exclude`, `--exclude` takes precedence. Using `--include` will preclude all
++tags from being included by default. Symbolic refs and broken refs will never
++be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
++and reset the list of patterns.
++
+ --exclude <pattern>::
+ 
+ Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
+@@ -70,6 +79,9 @@ unpack it.
+ When used with `--all`, it will use the difference between the set of all refs,
+ and what is provided to `--exclude`.
+ 
++When used with `--include`, refs provided to `--include`, minus refs that are
++provided to `--exclude` will be packed.
++
+ 
+ BUGS
+ ----
 diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index 1d1a64fe386..2464575a665 100644
+index 2464575a665..5062206f22e 100644
 --- a/builtin/pack-refs.c
 +++ b/builtin/pack-refs.c
-@@ -14,8 +14,8 @@ static char const * const pack_refs_usage[] = {
- int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- {
- 	unsigned int flags = PACK_REFS_PRUNE;
--	static struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
--	struct pack_refs_opts pack_refs_opts = {.exclusions = &excludes, .flags = flags};
-+	static struct ref_visibility visibility = REF_VISIBILITY_INIT;
-+	struct pack_refs_opts pack_refs_opts = {.visibility = &visibility, .flags = flags};
- 	static struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *item;
+@@ -5,9 +5,10 @@
+ #include "refs.h"
+ #include "repository.h"
+ #include "revision.h"
++#include "trace.h"
  
-@@ -31,7 +31,7 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- 		usage_with_options(pack_refs_usage, opts);
- 
- 	for_each_string_list_item(item, &option_excluded_refs)
--		add_ref_exclusion(pack_refs_opts.exclusions, item->string);
-+		add_ref_exclusion(pack_refs_opts.visibility, item->string);
- 
- 	return refs_pack_refs(get_main_ref_store(the_repository), &pack_refs_opts);
- }
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 852e49e3403..9036d8876fc 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -46,7 +46,7 @@ static int abbrev_ref_strict;
- static int output_sq;
- 
- static int stuck_long;
--static struct ref_exclusions ref_excludes = REF_EXCLUSIONS_INIT;
-+static struct ref_visibility ref_visibility = REF_VISIBILITY_INIT;
- 
- /*
-  * Some arguments are relevant "revision" arguments,
-@@ -208,7 +208,7 @@ static int show_default(void)
- static int show_reference(const char *refname, const struct object_id *oid,
- 			  int flag UNUSED, void *cb_data UNUSED)
- {
--	if (ref_excluded(&ref_excludes, refname))
-+	if (ref_excluded(&ref_visibility, refname))
- 		return 0;
- 	show_rev(NORMAL, oid, refname);
- 	return 0;
-@@ -596,7 +596,7 @@ static void handle_ref_opt(const char *pattern, const char *prefix)
- 		for_each_glob_ref_in(show_reference, pattern, prefix, NULL);
- 	else
- 		for_each_ref_in(prefix, show_reference, NULL);
--	clear_ref_exclusions(&ref_excludes);
-+	clear_ref_visibility(&ref_visibility);
- }
- 
- enum format_type {
-@@ -874,7 +874,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			}
- 			if (!strcmp(arg, "--all")) {
- 				for_each_ref(show_reference, NULL);
--				clear_ref_exclusions(&ref_excludes);
-+				clear_ref_visibility(&ref_visibility);
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--disambiguate=", &arg)) {
-@@ -888,13 +888,13 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (opt_with_value(arg, "--branches", &arg)) {
--				if (ref_excludes.hidden_refs_configured)
-+				if (ref_visibility.hidden_refs_configured)
- 					return error(_("--exclude-hidden cannot be used together with --branches"));
- 				handle_ref_opt(arg, "refs/heads/");
- 				continue;
- 			}
- 			if (opt_with_value(arg, "--tags", &arg)) {
--				if (ref_excludes.hidden_refs_configured)
-+				if (ref_visibility.hidden_refs_configured)
- 					return error(_("--exclude-hidden cannot be used together with --tags"));
- 				handle_ref_opt(arg, "refs/tags/");
- 				continue;
-@@ -904,17 +904,17 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (opt_with_value(arg, "--remotes", &arg)) {
--				if (ref_excludes.hidden_refs_configured)
-+				if (ref_visibility.hidden_refs_configured)
- 					return error(_("--exclude-hidden cannot be used together with --remotes"));
- 				handle_ref_opt(arg, "refs/remotes/");
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--exclude=", &arg)) {
--				add_ref_exclusion(&ref_excludes, arg);
-+				add_ref_exclusion(&ref_visibility, arg);
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--exclude-hidden=", &arg)) {
--				exclude_hidden_refs(&ref_excludes, arg);
-+				exclude_hidden_refs(&ref_visibility, arg);
- 				continue;
- 			}
- 			if (!strcmp(arg, "--show-toplevel")) {
-diff --git a/refs.h b/refs.h
-index 46020bd335c..57949a1726b 100644
---- a/refs.h
-+++ b/refs.h
-@@ -65,7 +65,7 @@ struct worktree;
- 
- struct pack_refs_opts {
- 	unsigned int flags;
--	struct ref_exclusions *exclusions;
-+	struct ref_visibility *visibility;
+ static char const * const pack_refs_usage[] = {
+-	N_("git pack-refs [--all] [--no-prune] [--exclude <pattern>]"),
++	N_("git pack-refs [--all] [--no-prune] [--include <pattern>] [--exclude <pattern>]"),
+ 	NULL
  };
  
- const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+@@ -15,13 +16,17 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ {
+ 	unsigned int flags = PACK_REFS_PRUNE;
+ 	static struct ref_visibility visibility = REF_VISIBILITY_INIT;
+-	struct pack_refs_opts pack_refs_opts = {.visibility = &visibility, .flags = flags};
++	struct pack_refs_opts pack_refs_opts = { .visibility = &visibility,
++						 .flags = flags };
+ 	static struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
++	static struct string_list option_included_refs = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *item;
+ 
+ 	struct option opts[] = {
+ 		OPT_BIT(0, "all",   &pack_refs_opts.flags, N_("pack everything"), PACK_REFS_ALL),
+ 		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
++		OPT_STRING_LIST(0, "include", &option_included_refs, N_("pattern"),
++			N_("references to include")),
+ 		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
+ 			N_("references to exclude")),
+ 		OPT_END(),
+@@ -33,5 +38,14 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ 	for_each_string_list_item(item, &option_excluded_refs)
+ 		add_ref_exclusion(pack_refs_opts.visibility, item->string);
+ 
++	for_each_string_list_item(item, &option_included_refs)
++		add_ref_inclusion(pack_refs_opts.visibility, item->string);
++
++	if (pack_refs_opts.flags & PACK_REFS_ALL)
++		add_ref_inclusion(pack_refs_opts.visibility, "*");
++
++	if (!pack_refs_opts.visibility->included_refs.nr)
++		add_ref_inclusion(pack_refs_opts.visibility, "refs/tags/*");
++
+ 	return refs_pack_refs(get_main_ref_store(the_repository), &pack_refs_opts);
+ }
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 76aebfde695..3ef19199788 100644
+index 3ef19199788..c669cf8001a 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1183,7 +1183,7 @@ static int should_pack_ref(const char *refname,
+@@ -1183,13 +1183,6 @@ static int should_pack_ref(const char *refname,
  	    REF_WORKTREE_SHARED)
  		return 0;
  
--	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
-+	if (opts->visibility && ref_excluded(opts->visibility, refname))
+-	if (opts->visibility && ref_excluded(opts->visibility, refname))
+-		return 0;
+-
+-	/* Do not pack non-tags unless PACK_REFS_ALL is set: */
+-	if (!(opts->flags & PACK_REFS_ALL) && !starts_with(refname, "refs/tags/"))
+-		return 0;
+-
+ 	/* Do not pack symbolic refs: */
+ 	if (ref_flags & REF_ISSYMREF)
+ 		return 0;
+@@ -1198,7 +1191,13 @@ static int should_pack_ref(const char *refname,
+ 	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))
  		return 0;
  
- 	/* Do not pack non-tags unless PACK_REFS_ALL is set: */
-diff --git a/revision.c b/revision.c
-index b33cc1d106a..d59cd728e9e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1533,54 +1533,71 @@ static void add_rev_cmdline_list(struct rev_info *revs,
- 	}
- }
- 
--int ref_excluded(const struct ref_exclusions *exclusions, const char *path)
-+static int ref_matched(const char *path,
-+		       const struct string_list *l,
-+		       const struct string_list *hidden_refs)
- {
- 	const char *stripped_path = strip_namespace(path);
- 	struct string_list_item *item;
- 
--	for_each_string_list_item(item, &exclusions->excluded_refs) {
-+	for_each_string_list_item(item, l) {
- 		if (!wildmatch(item->string, path, 0))
- 			return 1;
- 	}
- 
--	if (ref_is_hidden(stripped_path, path, &exclusions->hidden_refs))
-+	if (ref_is_hidden(stripped_path, path, hidden_refs))
- 		return 1;
- 
- 	return 0;
- }
- 
--void init_ref_exclusions(struct ref_exclusions *exclusions)
-+int ref_excluded(const struct ref_visibility *visibility, const char *path)
- {
--	struct ref_exclusions blank = REF_EXCLUSIONS_INIT;
--	memcpy(exclusions, &blank, sizeof(*exclusions));
-+	return ref_matched(path, &visibility->excluded_refs, &visibility->hidden_refs);
- }
- 
--void clear_ref_exclusions(struct ref_exclusions *exclusions)
-+int ref_included(const struct ref_visibility *visibility, const char *path)
- {
--	string_list_clear(&exclusions->excluded_refs, 0);
--	string_list_clear(&exclusions->hidden_refs, 0);
--	exclusions->hidden_refs_configured = 0;
-+	return ref_matched(path, &visibility->included_refs, &visibility->hidden_refs);
- }
- 
--void add_ref_exclusion(struct ref_exclusions *exclusions, const char *exclude)
-+void init_ref_visibility(struct ref_visibility *visibility)
- {
--	string_list_append(&exclusions->excluded_refs, exclude);
-+	struct ref_visibility blank = REF_VISIBILITY_INIT;
-+	memcpy(visibility, &blank, sizeof(*visibility));
-+}
+-	return 1;
++	if (opts->visibility && ref_excluded(opts->visibility, refname))
++		return 0;
 +
-+void clear_ref_visibility(struct ref_visibility *visibility)
-+{
-+	string_list_clear(&visibility->excluded_refs, 0);
-+	string_list_clear(&visibility->hidden_refs, 0);
-+	visibility->hidden_refs_configured = 0;
-+}
++	if (opts->visibility && ref_included(opts->visibility, refname))
++		return 1;
 +
-+void add_ref_exclusion(struct ref_visibility *visibility, const char *exclude)
-+{
-+	string_list_append(&visibility->excluded_refs, exclude);
-+}
++	return 0;
+ }
+ 
+ static int files_pack_refs(struct ref_store *ref_store,
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index de4197708d9..0dec1223362 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -5,6 +5,7 @@
+ #include "worktree.h"
+ #include "object-store.h"
+ #include "repository.h"
++#include "revision.h"
+ 
+ struct flag_definition {
+ 	const char *name;
+@@ -116,7 +117,12 @@ static struct flag_definition pack_flags[] = { FLAG_DEF(PACK_REFS_PRUNE),
+ static int cmd_pack_refs(struct ref_store *refs, const char **argv)
+ {
+ 	unsigned int flags = arg_flags(*argv++, "flags", pack_flags);
+-	struct pack_refs_opts pack_opts = { .flags = flags };
++	static struct ref_visibility visibility = REF_VISIBILITY_INIT;
++	struct pack_refs_opts pack_opts = { .flags = flags,
++					    .visibility = &visibility };
 +
-+void add_ref_inclusion(struct ref_visibility *visibility, const char *include)
-+{
-+	string_list_append(&visibility->included_refs, include);
++	if (pack_opts.flags & PACK_REFS_ALL)
++		add_ref_inclusion(pack_opts.visibility, "*");
+ 
+ 	return refs_pack_refs(refs, &pack_opts);
  }
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index ddfc1b6e5f1..9ff6326b646 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -124,6 +124,27 @@ test_expect_success 'test --no-exclude refs clears excluded refs' '
+ 	! test -f .git/refs/heads/dont_pack3 &&
+ 	! test -f .git/refs/heads/dont_pack4'
  
- struct exclude_hidden_refs_cb {
--	struct ref_exclusions *exclusions;
-+	struct ref_visibility *visibility;
- 	const char *section;
- };
- 
- static int hide_refs_config(const char *var, const char *value, void *cb_data)
- {
- 	struct exclude_hidden_refs_cb *cb = cb_data;
--	cb->exclusions->hidden_refs_configured = 1;
-+	cb->visibility->hidden_refs_configured = 1;
- 	return parse_hide_refs_config(var, value, cb->section,
--				      &cb->exclusions->hidden_refs);
-+				      &cb->visibility->hidden_refs);
- }
- 
--void exclude_hidden_refs(struct ref_exclusions *exclusions, const char *section)
-+void exclude_hidden_refs(struct ref_visibility *visibility, const char *section)
- {
- 	struct exclude_hidden_refs_cb cb;
- 
-@@ -1588,10 +1605,10 @@ void exclude_hidden_refs(struct ref_exclusions *exclusions, const char *section)
- 			strcmp(section, "uploadpack"))
- 		die(_("unsupported section for hidden refs: %s"), section);
- 
--	if (exclusions->hidden_refs_configured)
-+	if (visibility->hidden_refs_configured)
- 		die(_("--exclude-hidden= passed more than once"));
- 
--	cb.exclusions = exclusions;
-+	cb.visibility = visibility;
- 	cb.section = section;
- 
- 	git_config(hide_refs_config, &cb);
-@@ -1935,7 +1952,7 @@ void repo_init_revisions(struct repository *r,
- 
- 	init_display_notes(&revs->notes_opt);
- 	list_objects_filter_init(&revs->filter);
--	init_ref_exclusions(&revs->ref_excludes);
-+	init_ref_visibility(&revs->ref_excludes);
- }
- 
- static void add_pending_commit_list(struct rev_info *revs,
-@@ -2724,12 +2741,12 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
- 			init_all_refs_cb(&cb, revs, *flags);
- 			other_head_refs(handle_one_ref, &cb);
- 		}
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--branches")) {
- 		if (revs->ref_excludes.hidden_refs_configured)
- 			return error(_("--exclude-hidden cannot be used together with --branches"));
- 		handle_refs(refs, revs, *flags, refs_for_each_branch_ref);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--bisect")) {
- 		read_bisect_terms(&term_bad, &term_good);
- 		handle_refs(refs, revs, *flags, for_each_bad_bisect_ref);
-@@ -2740,17 +2757,17 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
- 		if (revs->ref_excludes.hidden_refs_configured)
- 			return error(_("--exclude-hidden cannot be used together with --tags"));
- 		handle_refs(refs, revs, *flags, refs_for_each_tag_ref);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--remotes")) {
- 		if (revs->ref_excludes.hidden_refs_configured)
- 			return error(_("--exclude-hidden cannot be used together with --remotes"));
- 		handle_refs(refs, revs, *flags, refs_for_each_remote_ref);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if ((argcount = parse_long_opt("glob", argv, &optarg))) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref(handle_one_ref, optarg, &cb);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("exclude", argv, &optarg))) {
- 		add_ref_exclusion(&revs->ref_excludes, optarg);
-@@ -2764,21 +2781,21 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
- 			return error(_("--exclude-hidden cannot be used together with --branches"));
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/heads/", &cb);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if (skip_prefix(arg, "--tags=", &optarg)) {
- 		struct all_refs_cb cb;
- 		if (revs->ref_excludes.hidden_refs_configured)
- 			return error(_("--exclude-hidden cannot be used together with --tags"));
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/tags/", &cb);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if (skip_prefix(arg, "--remotes=", &optarg)) {
- 		struct all_refs_cb cb;
- 		if (revs->ref_excludes.hidden_refs_configured)
- 			return error(_("--exclude-hidden cannot be used together with --remotes"));
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/remotes/", &cb);
--		clear_ref_exclusions(&revs->ref_excludes);
-+		clear_ref_visibility(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--reflog")) {
- 		add_reflogs_to_pending(revs, *flags);
- 	} else if (!strcmp(arg, "--indexed-objects")) {
-diff --git a/revision.h b/revision.h
-index 25776af3815..296c520a003 100644
---- a/revision.h
-+++ b/revision.h
-@@ -84,7 +84,12 @@ struct rev_cmdline_info {
- 	} *rev;
- };
- 
--struct ref_exclusions {
-+struct ref_visibility {
-+	/*
-+	 * Included refs is a list of wildmatch patterns. If any of the
-+	 * patterns match, the reference will be included.
-+	 */
-+	struct string_list included_refs;
- 	/*
- 	 * Excluded refs is a list of wildmatch patterns. If any of the
- 	 * patterns match, the reference will be excluded.
-@@ -106,9 +111,10 @@ struct ref_exclusions {
- };
- 
- /**
-- * Initialize a `struct ref_exclusions` with a macro.
-+ * Initialize a `struct ref_visibility` with a macro.
-  */
--#define REF_EXCLUSIONS_INIT { \
-+#define REF_VISIBILITY_INIT { \
-+	.included_refs = STRING_LIST_INIT_DUP, \
- 	.excluded_refs = STRING_LIST_INIT_DUP, \
- 	.hidden_refs = STRING_LIST_INIT_DUP, \
- }
-@@ -135,7 +141,7 @@ struct rev_info {
- 	struct list_objects_filter_options filter;
- 
- 	/* excluding from --branches, --refs, etc. expansion */
--	struct ref_exclusions ref_excludes;
-+	struct ref_visibility ref_excludes;
- 
- 	/* Basic information */
- 	const char *prefix;
-@@ -487,11 +493,13 @@ void show_object_with_name(FILE *, struct object *, const char *);
-  * Helpers to check if a reference should be excluded.
-  */
- 
--int ref_excluded(const struct ref_exclusions *exclusions, const char *path);
--void init_ref_exclusions(struct ref_exclusions *);
--void clear_ref_exclusions(struct ref_exclusions *);
--void add_ref_exclusion(struct ref_exclusions *, const char *exclude);
--void exclude_hidden_refs(struct ref_exclusions *, const char *section);
-+int ref_excluded(const struct ref_visibility *exclusions, const char *path);
-+int ref_included(const struct ref_visibility *exclusions, const char *path);
-+void init_ref_visibility(struct ref_visibility *);
-+void clear_ref_visibility(struct ref_visibility *);
-+void add_ref_exclusion(struct ref_visibility *, const char *exclude);
-+void add_ref_inclusion(struct ref_visibility *, const char *exclude);
-+void exclude_hidden_refs(struct ref_visibility *, const char *section);
- 
- /**
-  * This function can be used if you want to add commit objects as revision
++test_expect_success 'test only included refs are packed' '
++	git branch pack_this1 &&
++	git branch pack_this2 &&
++	git tag dont_pack5 &&
++	git pack-refs --include "refs/heads/pack_this*" &&
++	test -f .git/refs/tags/dont_pack5 &&
++	! test -f ./git/refs/heads/pack_this1 &&
++	! test -f ./git/refs/heads/pack_this2'
++
++test_expect_success 'test --no-include refs clears included refs' '
++	git branch pack1 &&
++	git branch pack2 &&
++	git pack-refs --include "refs/heads/pack*" --no-include &&
++	test -f .git/refs/heads/pack1 &&
++	test -f .git/refs/heads/pack2'
++
++test_expect_success 'test --exclude takes precedence over --include' '
++	git branch dont_pack5 &&
++	git pack-refs --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
++	test -f .git/refs/heads/dont_pack5'
++
+ test_expect_success \
+ 	'see if up-to-date packed refs are preserved' \
+ 	'git branch q &&
 -- 
 gitgitgadget
-
