@@ -2,136 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 635A4C77B7D
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 01:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C131C77B7C
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 03:14:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbjEKBuj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 May 2023 21:50:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41268 "EHLO
+        id S229768AbjEKDOy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 May 2023 23:14:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjEKBui (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2023 21:50:38 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91EA65AA
-        for <git@vger.kernel.org>; Wed, 10 May 2023 18:50:36 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-64115eef620so54441000b3a.1
-        for <git@vger.kernel.org>; Wed, 10 May 2023 18:50:36 -0700 (PDT)
+        with ESMTP id S231313AbjEKDOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2023 23:14:44 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274B8171C
+        for <git@vger.kernel.org>; Wed, 10 May 2023 20:14:43 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 46e09a7af769-6aafdeab6b0so3322833a34.0
+        for <git@vger.kernel.org>; Wed, 10 May 2023 20:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683769836; x=1686361836;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nnlOcZ2K1VIx7eR2H0acgsbu/v/fyABOuaforuAsyVU=;
-        b=JpLLlijZIlh5KwjhU0SMseDFXS8rbJIy+y9KT+p1+L3royz2FBUfEZNu+eXd/OhWNv
-         4PcEyPWn1ggYF5rXK7LtGPNhghPsxcc4OZEJW2ylLVG/76Dol1OV4n13fljZRB0wl/TI
-         HkloTfqnIkqLgVtePnwYzfbqpdF2mRxxTgMX6TLUby30Pp6GYnEXXnELOYp6l9ktdBRT
-         JiBekhqTyKjj8e455nmQIDm64HGs7lICFu7M8JEO2kfx9sChSodjs+TqFlCAbCCSGCXc
-         7oRoSCV943+xu0I6gls5Eb8RJakI9CjdBYbi/7koeqQNtXpTk6we08ZQbty3fBjU8hgo
-         c8kg==
+        d=gmail.com; s=20221208; t=1683774882; x=1686366882;
+        h=content-transfer-encoding:mime-version:subject:message-id:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ACVd2WZMx0FUe9LxrftFmrk1zPYqLHkRQJY3wKdaphU=;
+        b=BcWzHvRrH3aAbAzs4PHxwgPabbAQY0wYfof/wKKiKr9qeWVMPr7JcmpsPLEeXkENY7
+         G1eajWk9E4JujttJC/kEF6+fTavGyJXk4rQTcVfRVcWSFT7UcJ8K5yQ2nBEj2YZoJ3wd
+         tNPCiB/F6XikQ5eh+nFcG7KzjMNsrS1A4CPyLTUbn+LBzknZug1jIQpjVvTKEb91QKZ4
+         3NIoEb7ABMw1aV0kOHq1ynDfQLgzd9Bdwl6g0W5rmdbuQXzJKNxIDzS063Y9IDMUtO+E
+         0u/tvz4UJWzKjLZMw6oqcKP0rreIs/tv95pLUVQmXRSLg8/A1r2YTEmFzy5cgECBepvU
+         1R6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683769836; x=1686361836;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nnlOcZ2K1VIx7eR2H0acgsbu/v/fyABOuaforuAsyVU=;
-        b=QS8przHxKBQ0X0PFluEXLRItHaIM/FuGyQFkyu8UsnW4UmDDmzbg+LTikE0DECF85u
-         fY93hpNKi9oBGTKU999HFKpUm3bvEWLoS0qKUJY+PZOEzB7t/48dHJDMlvnEFeUJdxdS
-         s1L2gJLpwAW4/+DZ+4VkzhBfgJUWUubNoWhpsBUpkNB3I7MeeaNosscxNm9f10VWW6sg
-         lfub6oTJ6Fm0ZeGKepLqokRN27pmV/kabhQ6jYd3e7jTElLdQ9H9yYtoMmATSIkNGEGg
-         ArmKwE7Tai62Z3f2GsU4OWPgaeFiHGuaYFONTjL0bgE3lLhr9ip/StkwGPYhR9dIvHJV
-         qZgg==
-X-Gm-Message-State: AC+VfDyD2KRtESA24Xogi0rdSzTzoWwamWEcAWK10szff+WoXFkvx7ez
-        ZJanITa02HPMonUCGf5ZDpA=
-X-Google-Smtp-Source: ACHHUZ4r62T1v8xMSMCPUeLtD4hizcuvSkpAuxVPCXre2cTi4zQTzTCYapZz0E3JpzrIE9B1hjZ6sg==
-X-Received: by 2002:a17:903:41d2:b0:1ab:28b4:6d5 with SMTP id u18-20020a17090341d200b001ab28b406d5mr32402262ple.5.1683769836115;
-        Wed, 10 May 2023 18:50:36 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id l8-20020a170903244800b001ac2c3e54adsm4476050pls.118.2023.05.10.18.50.35
+        d=1e100.net; s=20221208; t=1683774882; x=1686366882;
+        h=content-transfer-encoding:mime-version:subject:message-id:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ACVd2WZMx0FUe9LxrftFmrk1zPYqLHkRQJY3wKdaphU=;
+        b=i6U0r9FL8uet7uK/Tn7yhmt773Xn3L73SCFupp5Yhf4c16i20FL9aoXqDlFV3CXuEo
+         bmAdXjTBLdhvvXe1rjZbNx1XQfPj2n7m8YG6hFnKytvcCvUW3sJdCUEMz4MGrxeXZPDU
+         2a4Nv+xGmSg/wUbv0fMOeT4zU4xplwbIJxKsanozLYNp5YIu36b9Ux2+cwlMXBlSwGO/
+         hCu5cjOjVZrvOQatFOrMMZXMLR3qLCVwKkvUBeoPGwGQEBqfR2kOrXobLM89N7RXUy4T
+         mCsTNUonfzZrlaP05ndRJ4S4txgYZ5vXPcq+BV/Q5s+LvkTPCV79bclkHbukka+5LCuO
+         o4sg==
+X-Gm-Message-State: AC+VfDzGwKV43aRY51sJFopVFev2SshXWdZCeR2xBsylQV7i4RGBxztg
+        0YDrzqoft74EdRNCpYy1Yj7/dHyVea0=
+X-Google-Smtp-Source: ACHHUZ7TCSrkK0o1hD7+k5WUnbefZB5jBb1iNONRAnCG9Bhqy45OA8kkNKlqE2P0yW+XLFDwnP9eEw==
+X-Received: by 2002:a05:6808:3cd:b0:394:4825:fa7 with SMTP id o13-20020a05680803cd00b0039448250fa7mr898093oie.2.1683774882148;
+        Wed, 10 May 2023 20:14:42 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id j126-20020acab984000000b0039425b542d9sm1801910oif.5.2023.05.10.20.14.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 18:50:35 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] diff: fix interaction between the "-s" option and
- other options
-References: <xmqqfs8bith1.fsf_-_@gitster.g>
-        <20230505165952.335256-1-gitster@pobox.com>
-        <645995f53dd75_7c6829483@chronos.notmuch> <xmqqsfc62t8y.fsf@gitster.g>
-        <6459c31038e81_7c68294ee@chronos.notmuch> <xmqqjzxgzua0.fsf@gitster.g>
-        <645c25dcb590b_7b63e294ea@chronos.notmuch>
-Date:   Wed, 10 May 2023 18:50:35 -0700
-In-Reply-To: <645c25dcb590b_7b63e294ea@chronos.notmuch> (Felipe Contreras's
-        message of "Wed, 10 May 2023 17:16:44 -0600")
-Message-ID: <xmqqpm77zlec.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Wed, 10 May 2023 20:14:41 -0700 (PDT)
+Date:   Wed, 10 May 2023 21:14:40 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Matthieu Moy <matthieu.moy@univ-lyon1.fr>
+Message-ID: <645c5da0981c1_16961a29455@chronos.notmuch>
+Subject: Can we clarify the purpose of `git diff -s`?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+A recent discussion about a bug in the diff machinery [1] made me dig
+the history of the `-s` option, and turned out to be quite an
+archeological endeavor.
 
->> The "author" refers to the author of the "proposed log message" of
->> the patch in question, i.e. me in this case.  The author of the
->> patch under discussion thinks it is, so asking "Is it?",
->
-> This is the full quote:
->
-> ====
-> Let's fix the interactions of these bits to first make "-s" work as intended.
-> ====
->
-> If instead you meant this:
->
-> ====
-> Let's fix the interactions of these bits to first make "-s" work as I intend.
-> ====
->
-> Then that's not a rationale, you are essentially saying "let's do X because I
-> want".
+The first indication of such flag comes from e2e5e98a40 ([PATCH] Silent
+flag for show-diff, 2005-04-13), only 54 commits after the initial
+commit.
 
-This will be the last message from me on this.  I wouldn't have even
-seen the message I am responding to, as I've already done my "once
-every few days sweep the spam folder to find things to salvage", but
-somebody notified me of it, so...
+Not much later after, a `-z` option was added for some machine-readable
+output in d94c6128e6 ([PATCH] show-diff -z option for machine readable
+output., 2005-04-16).
 
-I didn't say and I didn't mean "as I intend", and you know that.
+Linus Torvalds wanted to make the machine-readable output the only one
+and wrote 0a7668e99f (show-diff: match diff-tree and diff-cache output,
+2005-04-26), but Junio Hamano disagreed and added a `-p` option for
+a human-readable patch in 4a6bf9e18a ([PATCH] Reactivate show-diff patch
+generation, 2005-04-27).
 
-I, the author of the patch under discussion, know that it is the
-intention of the author of the earlier commit that introduced
-"--no-patch" to make it work identically as "-s".
+  You'll need "diff-tree-helper" to show the full diff, but Junio is
+  dead set on adding a "-p" argument to all three to avoid it. That's
+  next..
 
-I even had a quote from that earlier commit in the proposed log
-message of the patch (look for d09cd15d) to substantiate the fact
-that it was the intended way for the option "--no-patch" to work.
-So, either you are arguing against the patch you didn't even read,
-or you are playing your usual word twisting game just for the sake
-of arguing.
+Right after that, Junio Hamano deprecated the `-s` flag, since
+`git-show-diff` didn't show the patch by default, so `-s` became a
+no-op. I presume at that point in time they didn't think of the
+possibility of doing `-p -s` together.
 
->> And it led to unproductive and irritating waste of time number of times, and
->> eventually you were asked to leave the development community for at least a
->> few times.
->
-> That is blatantly false. As a member of Git's Project Leadership Committee, you
-> should know precisely how many times the committee has excercised this power,
-> and it hasn't been "a few times", it has been one time.
+The first introduction of DIFF_FORMAT_NO_OUTPUT was in a corner case of
+6b14d7faf0 ([PATCH] Diffcore updates., 2005-05-22), but later on it was
+used explicitly to replace a global variable of `git-diff-tree -s` in
+d0309355c9 ([PATCH] Use DIFF_FORMAT_NO_OUTPUT to implement diff-tree -s
+option., 2005-05-24).
 
-You were asked to leave in May 2014, and according to that message
-from May 2014 [*1*], apparently you were asked to leave after a big
-"Felipe eruption" in the summer of 2013 [*2*].  These happened long
-before the project adopted a formal CoC at 5cdf2301 (add a Code of
-Conduct document, 2019-09-24).
+When the equivalent of the modern `git diff` was added, the `-p` option
+was included by default: 940c1bb018 (Add "git diff" script, 2005-06-13).
+So later on when it was converted to C, DIFF_FORMAT_PATCH was the
+default 65056021f2 (built-in diff., 2006-04-28).
 
-But apparently the "fact" does not matter to you.  I know that your
-next excuse will be "I said the committee never exercised this power
-more than once, which is a FACT", which may let you keep arguing
-further.
+But not for all commands, for example the default of `git diff-tree` is
+DIFF_FORMAT_RAW, and it remains the case to this day.
 
+So at this point it seems pretty clear that `-s` means `silent`, and
+whatever the default format of a diff command is (`--patch` or `--raw`),
+`-s` is meant to silence that format.
 
-[References]
+Later on in c6744349df (Merge with_raw, with_stat and summary variables
+to output_format, 2006-06-24), the output format changed from an enum to
+a bit field, so now it was possible to do for example
+`DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW`.
 
-*1* https://lore.kernel.org/git/53709788.2050201@alum.mit.edu/
-*2* https://public-inbox.org/git/7vsj0lvs8f.fsf@alter.siamese.dyndns.org/
+This is when things become complicated, because now what is `-s`
+supposed to do? Is it supposed to silence only the default format? Or is
+it supposed to silence all formats?
 
+For example, these two commands are equivalent:
+
+  git diff-tree @~ @
+  git diff-tree --raw @~ @
+
+That's because the default format of `git diff-tree` is DIFF_FORMAT_RAW.
+
+But what happens if we do:
+
+  git diff-tree -s --patch @~ @
+
+Shall we silence only the RAW part, or the PATCH part as well?
+
+And then, should these two be different?
+
+  git diff-tree --patch -s @~ @
+  git diff-tree -s --patch @~ @
+
+This is something that wasn't discussed or explored at the time, so it
+is unclear.
+
+And then, finally, we have d09cd15d19 (diff: allow --no-patch as synonym
+for -s, 2013-07-16), which very clearly says:
+
+  This follows the usual convention of having a --no-foo option to
+  negate --foo.
+
+So, obviously the intention of `--no-patch` is to negate `--patch`, but
+it is linked to `-s`, which was linked to DIFF_FORMAT_NO_OUTPUT, which
+means `--no-patch` negates *all* output, not just the output of
+`--patch`.
+
+So what should the output of this command be:
+
+  git diff-tree --patch --no-patch --raw @~ @
+
+I think it very clearly should output the same as:
+
+  git diff-tree @~ @
+
+And the ordering does not matter, as this should output the same:
+
+  git diff-tree --raw --patch --no-patch @~ @
+
+If we can combine two formats, for example:
+
+  git diff --patch --raw @~
+
+Then we should be able to negate a single format, for example:
+
+  git diff --patch --raw --no-patch @~
+
+Which in my mind should be different from:
+
+  git diff --patch --raw --silent @~
+
+So, in short: I don't think `-s` and `--no-patch` are the same thing at
+all, and it was a mistake to link them together.
+
+If anybody thinks the intention behind `-s` and `--no-patch` is
+obviously clear, I think it would be helpful to explicitly say so for
+the record.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/20230503134118.73504-1-sorganov@gmail.com/
+
+-- 
+Felipe Contreras
