@@ -2,168 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19960C77B7C
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 19:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E163C77B7C
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 19:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238741AbjEKTdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 15:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52378 "EHLO
+        id S239216AbjEKTfA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 15:35:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232629AbjEKTc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 15:32:59 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B162859D0
-        for <git@vger.kernel.org>; Thu, 11 May 2023 12:32:57 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ac7f53ae44so97568731fa.2
-        for <git@vger.kernel.org>; Thu, 11 May 2023 12:32:57 -0700 (PDT)
+        with ESMTP id S232629AbjEKTe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 15:34:58 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616477ED6
+        for <git@vger.kernel.org>; Thu, 11 May 2023 12:34:54 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1ab01bf474aso69398455ad.1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 12:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683833576; x=1686425576;
+        d=gmail.com; s=20221208; t=1683833694; x=1686425694;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WN881+kpo4v+XHQslmqM7FeMDGa+Sqe/fzWxKY3MKoQ=;
-        b=YcjRssCZr9SL2RjdkvycYfb8y+aq6NZpPt5nd5ySbEmnSnFDqrIHTofle74uHoii5z
-         EhD6sLUfqEpua8jNsKFT6BWvutK0M8KPN+hLzXXrHA/Rw3rYNdEd4vdlJTwzxE6iF0vw
-         8WvK5RaLCOGRjGwPrqj21cb5cpXCppypwkLDwfZVt/YN8UGP5yVYTRdP5u3y2ig1p2Ag
-         mbhzSJlQxi0C569D/03xx6UKyR7aiAIau3qoo9YA+yLYLyi42/3qrlJyrIkY7Plcbe2e
-         gjFih+jy4CVhWjwhsVGioHJNRi/Hh7gJcHZ2gpdYqNCMQU+ZmGieygIO+ROI6+I/zEM7
-         nX6A==
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HuvKv5kBFTPDGsyzXXgZ0/Eozrn9iPl98eabMPIXw+k=;
+        b=Qf0iKyZyDEYtaBzJhUvMeiR9/C7TK0um2HENZczmCqPi43xIwGzB9tMUJxLxmgJLJ9
+         b6pj/bwVKO61Nj3THDWKCWuvDF8ufRSUg3TlA14qWkZAMzKqEAN7e5J+C+IGYJMBf4mZ
+         OqBGGt+zTpR20sfcNAfH03K6AbkEBe5TYy5zvVL6YYel98H94qdb1MxbFyx+yQ7qzSsP
+         MnEMBDiq0dSvQVzK3a+8FMqsJc/DwMxhAmV3m/l2DqFBq9QLAzBbO6cX1qxKIxjCTYZZ
+         Ama1ITBYAmh9gQpn+OI34s49KDf23QsdwXB+6x4+6LBWdeNltd3MAHxluLczzvtQa5rS
+         Vynw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683833576; x=1686425576;
+        d=1e100.net; s=20221208; t=1683833694; x=1686425694;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WN881+kpo4v+XHQslmqM7FeMDGa+Sqe/fzWxKY3MKoQ=;
-        b=SO1auzJCjvFEPaLNP4wW9ri61h9kVI2FG8/TdW74LzJLt4ItAYP9fjhphoSwkdW848
-         nzd2PeEb+eItdZJGAnC4rQH9Q+/6BsXyczm3I6WfddKeXSVdAiEHxFvYNX6i8G8TnNdH
-         Z7C85xG7OWxlwLwP949ftDKMaSkcu02EV41YOqxtglNBcD/IfAyEky7yYzP41oZvFRK8
-         4dN5G9KyjnrPXz0dQEXs/8D4TO8392rz218JZPR3C5tIenxSFV3IVUEi6qWiaTFCWMkg
-         87Acs2paegTtczi1dkTJ44zMsSZmMs/xKmGp1aOnjevutBQ2ityMfnBqMCAkhLu3p5dr
-         GVKg==
-X-Gm-Message-State: AC+VfDxYt9j+LCUYSmxIOI+alQk+oaSKNV8g0Kk6f2JsYcczHDeRC2pc
-        AyQ2rOpbI0M9NqT4SVdyPVw=
-X-Google-Smtp-Source: ACHHUZ6jCI0i/SG4yOTSASECglM6wcM/cIYiWoUE7J+m2Su0LeG+QR6TB41lxuOoMzZUrOteJu0Edg==
-X-Received: by 2002:a2e:9942:0:b0:2ad:8f4a:4ed5 with SMTP id r2-20020a2e9942000000b002ad8f4a4ed5mr3185190ljj.37.1683833575725;
-        Thu, 11 May 2023 12:32:55 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id v20-20020a2e9f54000000b002ada0c38963sm1175849ljk.62.2023.05.11.12.32.54
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HuvKv5kBFTPDGsyzXXgZ0/Eozrn9iPl98eabMPIXw+k=;
+        b=GK6IRuGxxjfGKd7Z7Jgv8nyYqWb0SJnAPC93iMBmtrS7N+y+WHe0+VJ43RS/n+U6GC
+         FVreQTIWW4nV/uHPJRfwsiWI0frYcbkzpfWLdKVC0R+oet5Fl0LlHBuIRT0hOlR/fGrv
+         r0pwJKECBAlrBSGgHvPnsZiD6TasTCIahHTI6xBGzeS4clqx8LipwzdTMT4qGLbI9qmh
+         IFZH8cUo65gvyI1OQ52jezJTYKlgrup/kZKXgiUJh2ZVXo2DjamV/lxur9BTRwTkQMof
+         Qw7zZSneXsYvCCcZRgHxU6tyxRvLjzM+P3HtAeJU/bsCSELrnASP5Atd3duiNKbquA3D
+         8vSQ==
+X-Gm-Message-State: AC+VfDw+J48fKmL8PZnftsaHA46qdxdqanP8LTif9zqETwxnct0wM34E
+        uvNZPr18f9hHPDENehbf1ig=
+X-Google-Smtp-Source: ACHHUZ7TqMoAyZntjvul8ty40ZV35omgNlvd91+6S2tRskkBSaX+Q6jMQzvVEnIPZ8urKRtxZr5UHg==
+X-Received: by 2002:a17:902:f543:b0:1ac:6084:1f4 with SMTP id h3-20020a170902f54300b001ac608401f4mr26734009plf.27.1683833693776;
+        Thu, 11 May 2023 12:34:53 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id d7-20020a170903230700b001a661000398sm6312858plh.103.2023.05.11.12.34.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 12:32:55 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-Subject: Re: Can we clarify the purpose of `git diff -s`?
-References: <645c5da0981c1_16961a29455@chronos.notmuch>
-        <871qjn2i63.fsf@osv.gnss.ru>
-        <645d28e112294_26011a294b2@chronos.notmuch>
-        <877cte200m.fsf@osv.gnss.ru>
-        <645d3dbf785a5_26069229463@chronos.notmuch>
-Date:   Thu, 11 May 2023 22:32:54 +0300
-In-Reply-To: <645d3dbf785a5_26069229463@chronos.notmuch> (Felipe Contreras's
-        message of "Thu, 11 May 2023 13:10:55 -0600")
-Message-ID: <87wn1ezms9.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        Thu, 11 May 2023 12:34:53 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v3 2/4] pack-refs: teach --exclude option to exclude
+ refs from being packed
+References: <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
+        <pull.1501.v3.git.git.1683828635.gitgitgadget@gmail.com>
+        <8c5c66a3050ee1c0ce8a48a088f5ecc2df7d1e3a.1683828635.git.gitgitgadget@gmail.com>
+Date:   Thu, 11 May 2023 12:34:53 -0700
+In-Reply-To: <8c5c66a3050ee1c0ce8a48a088f5ecc2df7d1e3a.1683828635.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Thu, 11 May 2023 18:10:32
+        +0000")
+Message-ID: <xmqqzg6avezm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Sergey Organov wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> > Sergey Organov wrote:
->> >
->> >> I'd rather think about generic interface for setting/clearing
->> >> (multiple) bits through CI than resorting to such convenience
->> >> tricks. Once that is in place, one will be able to say "I need these
->> >> bits only", "I need to turn these bit(s) on", and "I need to turn
->> >> these bit(s) off" conveniently and universally in any part of Git CI
->> >> where it's needed.
->> >
->> > It's possible to achieve both.
->> >
->> > Imagine your ideal explicit interface. In that interface the default
->> > is no output, so you *have* to specify all the bits, for example:
->> >
->> >   git show --patch
->> 
->> No, that's not what I meant. There is no point in making "git show" to
->> have no output by default, please see below.
->> 
->> >
->> > Or:
->> >
->> >   git show --raw
->> >
->> > In this ideal interface it's clear what the user wants to do, because
->> > it's explicit.
->> >
->> >   git show --patch --raw --no-patch
->> >
->> > Agreed?
->> >
->> > My proposal achieves your ideal explicit interface, except when no
->> > format is specified (e.g. `git show`), a default format is chosen for
->> > the user, but that's *only* if the user hasn't specified any format.
->> 
->> My point is that the default format should be selected as if it has been
->> provided by existing options, rather than by some magic hidden in the
->> code.
+> From: John Cai <johncai86@gmail.com>
 >
-> But why?
+> At GitLab, we have a system that creates ephemeral internal refs that
+> don't live long before getting deleted. Having an option to exclude
+> certain refs from a packed-refs file allows these internal references to
+> be deleted much more efficiently.
 >
-> I don't see any benefit, only drawbacks.
+> Add an --exclude option to the pack-refs builtin, and use the ref
+> exclusions API to exclude certain refs from being packed into the final
+> packed-refs file
 >
->> > If you explicitely specify the output format that you want, then the
->> > default is irrelevant to you, thus you have your ideal explicit
->> > interface.
->> 
->> That's not what I had in mind, sorry. It'd rather be something like:
->> 
->>   --raw: set "raw" bit and clear all the rest
->>   --+raw set "raw" bit  (== current --raw)
->>   ---raw clear "raw" bit (== --no-raw)
->> 
->> In this model
->> 
->>   git show
->> 
->> would be just an alias for
->> 
->>   git log -n1 --patch --cc
->> 
->> and no support for a separate command would be need in the first place.
->> 
->>   git show --raw
->> 
->> would then produce expected output that makes sense due to the common
->> option processing rules, not because somebody had implemented some
->> arbitrary "defaults" for the command.
->
-> But now you are at the mercy of those "arbitrary defaults".
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  Documentation/git-pack-refs.txt | 12 +++++++++++-
+>  builtin/pack-refs.c             | 20 ++++++++++++++++----
+>  refs.c                          |  4 ++--
+>  refs.h                          |  7 ++++++-
+>  refs/debug.c                    |  4 ++--
+>  refs/files-backend.c            | 16 ++++++++++------
+>  refs/packed-backend.c           |  2 +-
+>  refs/refs-internal.h            |  3 ++-
+>  revision.h                      |  2 +-
+>  t/helper/test-ref-store.c       |  3 ++-
+>  t/t3210-pack-refs.sh            | 16 ++++++++++++++++
+>  11 files changed, 69 insertions(+), 20 deletions(-)
 
-No, see below.
+Nice.
 
->
-> Let's say those defaults change, and now the default output of `git show` is
-> `--stat`.
->
-> Now to generate the same output you have to do:
->
->   git show --raw
->
-> in one version of git, and:
->
->   git show --no-stat --patch --raw
->
-> in another.
+> diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+> index e011e5fead3..c0f7426e519 100644
+> --- a/Documentation/git-pack-refs.txt
+> +++ b/Documentation/git-pack-refs.txt
+> @@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repository access
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git pack-refs' [--all] [--no-prune]
+> +'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -60,6 +60,16 @@ interests.
+>  The command usually removes loose refs under `$GIT_DIR/refs`
+>  hierarchy after packing them.  This option tells it not to.
+>  
+> +--exclude <pattern>::
+> +
+> +Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
+> +accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
+> +patterns. If a ref is already packed, including it with `--exclude` will not
+> +unpack it.
+> +
+> +When used with `--all`, it will use the difference between the set of all refs,
+> +and what is provided to `--exclude`.
+> +
 
-No: --raw in my model clears all the flags but --raw, so
+Just one question.  Does the above get formatted correctly, or does
+the lack of a line with a sole '+' on it between the paragraphs make
+the second paragraph look as if it is unrelated to the description
+of the "--exclude" option?
 
-  git show --raw
+Other than that I saw nothing surprising or unexpected in the
+patch.  Looking good.
 
-will produce exactly the same result: raw output only.
-
-Thanks,
--- Sergey Organov
+Thanks.
