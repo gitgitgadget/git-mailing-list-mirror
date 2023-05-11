@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE3E7C77B7F
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 19:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EFF2C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 19:49:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239581AbjEKTtV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 15:49:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36346 "EHLO
+        id S239395AbjEKTtX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 15:49:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239077AbjEKTtB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231376AbjEKTtB (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 May 2023 15:49:01 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C955E72A2
-        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:34 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-518d6f87a47so4445430a12.3
-        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:34 -0700 (PDT)
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443212114
+        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:33 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1aaf6ef3580so50946465ad.3
+        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683834513; x=1686426513;
+        d=google.com; s=20221208; t=1683834511; x=1686426511;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=frkXVvp6yG2x745+Lt+a4pQaSaIgvbG38H+8YGuxcbk=;
-        b=gxkbhHveQuRy0fmuGBdbSXJD2NB74CfGwh7EYisqu1NdjVWFnkFW0g96d7kbwCK+1W
-         tlxWQxCOuBIrq6KKmhctxazG7SKU9NWGJ8iSkcdleZ+GpzwOBPccG300c+NsZGDJN5IX
-         MFXVQFhGyeFL67mqj+bj+ZlllEOQGtGyGJoeli9uEX1EcwDFTKUr562FjuXNl6jzjaBC
-         lzTy55ShuMvk8hMtzTPCk492RdmxgtUNV80sNixsPaVT/KXWHEw2JvEHSBK/Zpuyk1MT
-         YcEQj4CbgEMFWj4VYdz9inVH79g6VYQyhshZKjAAt9A2r2Kdyoxk/scZjb0DgsMEklD6
-         c1sg==
+        bh=3J/fNsT88vcveyOtPul3skFuP/+j7iQ4q9p0Eb5N+Pc=;
+        b=DXmQVt3jsFAG92jtYBwC8O5i+60ZVb32NiDVjzd/PR2GKn9zdMdCBbjaTY01nAHk7E
+         iWyffSBaHJpEwZ9YKTCvkERKglbYNGb9xKdt+kZDkruQYkAmfzs28Q3mAJTynej+xer0
+         GWb2YX8ndvRA14lhs6dpxwn7Ps9Ck/WH6tj/YeJx7BZACH7xsRTRODSNwin86+z86UjD
+         4cgknejTH8E4uwd0Ve9Wdzbeajp+B79Msa+qiwKnYkOFHBZmI3DnPNr9juYM3uo3TcCy
+         cDjmaGH8acdtTKp7/huJxcnLCMoXZ0nKiH0cvQD4JRFHU8k+DdAUc6M1jtgKw2wv2Pk8
+         /EqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683834513; x=1686426513;
+        d=1e100.net; s=20221208; t=1683834511; x=1686426511;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=frkXVvp6yG2x745+Lt+a4pQaSaIgvbG38H+8YGuxcbk=;
-        b=BXcO+rwvE6ZemUPhh1ha5tUDtbvCZFp9KEfCBSOah66MZbbalzpHNFkTRRLabDXqGj
-         WC0yk9Zwo+nj7thmpR9S81esa9G/mAhCo8iJgaO0POlhZXYtpmxPQ2lxBufsG1mRfcMm
-         TFNcSjXIotXE/oPZYX3vkYTOp+iOYMJagAt87usf0+55cjHyeUixX2yriCN84j8mU6zP
-         uK/rYrhT82LTpPhfrrktvhcy/J6e7//wDRe0PF35xRkCdxjXZ2tbHxlwuEgvYOepxwJC
-         YkEVQgoVb1WJbqXDrqqYBsC4fgsI2P3LeQKvPbVG6M9lL5cmAVaO+PqPgGi1ImV9vaDL
-         Sppg==
-X-Gm-Message-State: AC+VfDwj+8P7z4g09UT1VpTj8Lj9NjrfspteCpNSxwDXbrf0nrPGpUGw
-        t8lu8THJoRuigvIVIgEaCbncixO5dMyXi99dJ0f31LzDKzC6iF0+HkhG6k6CMPorL0cqhEVKp0j
-        G8VfudMjCqfEDIW/lJikMapNOsVLp5LiMU96UfRAdBlq6Da+HYSapFdmXMuDcpfKaXA==
-X-Google-Smtp-Source: ACHHUZ6E/HU7RP7guVc+piirzHICH6aazcEq5Uyzhgrg/H9kjoG5NU2cxnpvZBtyErgAPKW4o88bBMdOmCUTLVM=
+        bh=3J/fNsT88vcveyOtPul3skFuP/+j7iQ4q9p0Eb5N+Pc=;
+        b=U0y/tEe3dSwwef314o4L5eUah6JX2MZLMNNj6KKYmPy9Omjt2/3gZpW0jgUSyU+j+J
+         HAteOn5Q7+sYgRntzpDr0QVSn1MMGSmfyw3nOUwx2ftQTHayEhPI8nILcJYBKYUPYWXh
+         0Sw5Ij3+gRxnOUZcmHTnagNLg6xzatoGbTeMAT3DbYIs0hrfFCcEzh7ZjSxEI8KpRmci
+         WpqMZSmBA8E+KejjxEU/4MM2nFEmtUzS8UiVlquYLW3HmXTQOQNPPNGNj0SJ0Mtq/cao
+         TtcBHxAFE124BIQ6bkBXx5DWwk9IBEegFd9OGnNUP6si1MNITunTvz9iXDWg/Bjrotre
+         +ITg==
+X-Gm-Message-State: AC+VfDxerfGgR1S6m6oEdb8Pfqe2/cFTcOOCmM5b/a3nYZrt89RP8lVb
+        fHiNhNWH+Ikm/S0DLt6lirrqzNJLbSsdSy1Qp8epodOxxu/wk7zYN31vsFtBiZJqDmBBJ53wfPP
+        yuiYz+LTtngpXJFu8G5dBIHTdc1kAK4kgMzkLawwWDV0EZqNAwbLb1jqdntDr4sj5fA==
+X-Google-Smtp-Source: ACHHUZ4vdq2EUE1vPklMYjpB2GFISFVF7SeS/kVARZN2plAyQDE2EXFCN5S1yp+c5qtaAMGwryekpQLrhLkYIHU=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a63:6b04:0:b0:51b:8f87:6da4 with SMTP id
- g4-20020a636b04000000b0051b8f876da4mr6200482pgc.11.1683834513146; Thu, 11 May
- 2023 12:48:33 -0700 (PDT)
-Date:   Thu, 11 May 2023 19:48:20 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:902:8682:b0:1ac:921c:87f6 with SMTP
+ id g2-20020a170902868200b001ac921c87f6mr3311842plo.8.1683834511288; Thu, 11
+ May 2023 12:48:31 -0700 (PDT)
+Date:   Thu, 11 May 2023 19:48:19 +0000
 In-Reply-To: <20230511194446.1492907-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230511194446.1492907-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230511194822.1493798-5-calvinwan@google.com>
-Subject: [PATCH v5 5/7] path: move related function to path
+Message-ID: <20230511194822.1493798-4-calvinwan@google.com>
+Subject: [PATCH v5 4/7] object-name: move related functions to object-name
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, newren@gmail.com, peff@peff.net,
@@ -62,94 +62,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move path-related function from strbuf.[ch] to path.[ch] so that strbuf
-is focused on string manipulation routines with minimal dependencies.
+Move object-name-related functions from strbuf.[ch] to object-name.[ch]
+so that strbuf is focused on string manipulation routines with minimal
+dependencies.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- path.c   | 20 ++++++++++++++++++++
- path.h   |  5 +++++
- strbuf.c | 20 --------------------
- 3 files changed, 25 insertions(+), 20 deletions(-)
+ object-name.c | 15 +++++++++++++++
+ object-name.h |  9 +++++++++
+ pretty.c      |  1 +
+ strbuf.c      | 16 ----------------
+ strbuf.h      | 10 ----------
+ 5 files changed, 25 insertions(+), 26 deletions(-)
 
-diff --git a/path.c b/path.c
-index 7c1cd8182a..e17a2613c5 100644
---- a/path.c
-+++ b/path.c
-@@ -1213,6 +1213,26 @@ int normalize_path_copy(char *dst, const char *src)
- 	return normalize_path_copy_len(dst, src, NULL);
+diff --git a/object-name.c b/object-name.c
+index 538e8a8f62..c2e82aceea 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -766,6 +766,21 @@ static void find_abbrev_len_packed(struct min_abbrev_data *mad)
+ 		find_abbrev_len_for_pack(p, mad);
  }
  
-+int strbuf_normalize_path(struct strbuf *src)
++void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
++				   const struct object_id *oid, int abbrev_len)
 +{
-+	struct strbuf dst = STRBUF_INIT;
-+
-+	strbuf_grow(&dst, src->len);
-+	if (normalize_path_copy(dst.buf, src->buf) < 0) {
-+		strbuf_release(&dst);
-+		return -1;
-+	}
-+
-+	/*
-+	 * normalize_path does not tell us the new length, so we have to
-+	 * compute it by looking for the new NUL it placed
-+	 */
-+	strbuf_setlen(&dst, strlen(dst.buf));
-+	strbuf_swap(src, &dst);
-+	strbuf_release(&dst);
-+	return 0;
++	int r;
++	strbuf_grow(sb, GIT_MAX_HEXSZ + 1);
++	r = repo_find_unique_abbrev_r(repo, sb->buf + sb->len, oid, abbrev_len);
++	strbuf_setlen(sb, sb->len + r);
 +}
 +
- /*
-  * path = Canonical absolute path
-  * prefixes = string_list containing normalized, absolute paths without
-diff --git a/path.h b/path.h
-index 60e83a49a9..639372edd9 100644
---- a/path.h
-+++ b/path.h
-@@ -191,6 +191,11 @@ const char *remove_leading_path(const char *in, const char *prefix);
- const char *relative_path(const char *in, const char *prefix, struct strbuf *sb);
- int normalize_path_copy_len(char *dst, const char *src, int *prefix_len);
- int normalize_path_copy(char *dst, const char *src);
++void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
++			      int abbrev_len)
++{
++	strbuf_repo_add_unique_abbrev(sb, the_repository, oid, abbrev_len);
++}
++
+ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
+ 			      const struct object_id *oid, int len)
+ {
+diff --git a/object-name.h b/object-name.h
+index 1d63698f42..9ae5223071 100644
+--- a/object-name.h
++++ b/object-name.h
+@@ -40,6 +40,15 @@ struct object_context {
+ const char *repo_find_unique_abbrev(struct repository *r, const struct object_id *oid, int len);
+ int repo_find_unique_abbrev_r(struct repository *r, char *hex, const struct object_id *oid, int len);
+ 
 +/**
-+ * Normalize in-place the path contained in the strbuf. If an error occurs,
-+ * the contents of "sb" are left untouched, and -1 is returned.
++ * Add the abbreviation, as generated by repo_find_unique_abbrev(), of `sha1` to
++ * the strbuf `sb`.
 + */
-+int strbuf_normalize_path(struct strbuf *src);
- int longest_ancestor_length(const char *path, struct string_list *prefixes);
- char *strip_path_suffix(const char *path, const char *suffix);
- int daemon_avoid_alias(const char *path);
++void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
++				   const struct object_id *oid, int abbrev_len);
++void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
++			      int abbrev_len);
++
+ int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
+ __attribute__((format (printf, 2, 3)))
+ int get_oidf(struct object_id *oid, const char *fmt, ...);
+diff --git a/pretty.c b/pretty.c
+index 0bb938021b..78bac2d818 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -18,6 +18,7 @@
+ #include "gpg-interface.h"
+ #include "trailer.h"
+ #include "run-command.h"
++#include "object-name.h"
+ 
+ /*
+  * The limit for formatting directives, which enable the caller to append
 diff --git a/strbuf.c b/strbuf.c
-index 6533559e95..178d75f250 100644
+index da2693b21f..6533559e95 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -1088,26 +1088,6 @@ void strbuf_stripspace(struct strbuf *sb, int skip_comments)
- 	strbuf_setlen(sb, j);
+@@ -3,7 +3,6 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "object-name.h"
+ #include "refs.h"
+ #include "string-list.h"
+ #include "utf8.h"
+@@ -1023,21 +1022,6 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+ 	strbuf_setlen(sb, sb->len + len);
  }
  
--int strbuf_normalize_path(struct strbuf *src)
+-void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
+-				   const struct object_id *oid, int abbrev_len)
 -{
--	struct strbuf dst = STRBUF_INIT;
--
--	strbuf_grow(&dst, src->len);
--	if (normalize_path_copy(dst.buf, src->buf) < 0) {
--		strbuf_release(&dst);
--		return -1;
--	}
--
--	/*
--	 * normalize_path does not tell us the new length, so we have to
--	 * compute it by looking for the new NUL it placed
--	 */
--	strbuf_setlen(&dst, strlen(dst.buf));
--	strbuf_swap(src, &dst);
--	strbuf_release(&dst);
--	return 0;
+-	int r;
+-	strbuf_grow(sb, GIT_MAX_HEXSZ + 1);
+-	r = repo_find_unique_abbrev_r(repo, sb->buf + sb->len, oid, abbrev_len);
+-	strbuf_setlen(sb, sb->len + r);
 -}
 -
- void strbuf_strip_file_from_path(struct strbuf *sb)
- {
- 	char *path_sep = find_last_dir_sep(sb->buf);
+-void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
+-			      int abbrev_len)
+-{
+-	strbuf_repo_add_unique_abbrev(sb, the_repository, oid, abbrev_len);
+-}
+-
+ /*
+  * Returns the length of a line, without trailing spaces.
+  *
+diff --git a/strbuf.h b/strbuf.h
+index 90ad8b8892..b38bfd34af 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -617,16 +617,6 @@ void strbuf_add_separated_string_list(struct strbuf *str,
+  */
+ void strbuf_list_free(struct strbuf **list);
+ 
+-/**
+- * Add the abbreviation, as generated by repo_find_unique_abbrev(), of `sha1` to
+- * the strbuf `sb`.
+- */
+-struct repository;
+-void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
+-				   const struct object_id *oid, int abbrev_len);
+-void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
+-			      int abbrev_len);
+-
+ /*
+  * Remove the filename from the provided path string. If the path
+  * contains a trailing separator, then the path is considered a directory
 -- 
 2.40.1.606.ga4b1b128d6-goog
 
