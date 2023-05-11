@@ -2,89 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A25C9C77B7C
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 13:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C6E5C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 14:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238155AbjEKNpc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 09:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34900 "EHLO
+        id S238265AbjEKOOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 10:14:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238247AbjEKNpV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 09:45:21 -0400
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBF85E704
-        for <git@vger.kernel.org>; Thu, 11 May 2023 06:45:09 -0700 (PDT)
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-75776686671so277293185a.1
-        for <git@vger.kernel.org>; Thu, 11 May 2023 06:45:09 -0700 (PDT)
+        with ESMTP id S238236AbjEKOOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 10:14:18 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01A69106F2
+        for <git@vger.kernel.org>; Thu, 11 May 2023 07:13:49 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3078c092056so4085963f8f.1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 07:13:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683814426; x=1686406426;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4BO5SU64jrnGzclx5EWwK/kqRbqnQE9s8bG7bBz9H2A=;
+        b=WDnlvQp0jCZPaEBnuaeRHbldpCv0vKOIs3hGlRNTr5lg7UG6vgJUMjjB39MYkVM7sX
+         mIYrdrnbHr4yVnQLeOtKAsoPx7LlU3DMnf2lCCkq/XylC8t6c0SWvI6mzJlzktYl3a11
+         DISws5KTSW/y++fqDeYpr3BplVnzOynSvJ/ajwzmjww4/ymWffG/fRYSrfE/FqxRoDJJ
+         hY69FFVuMRQf7svM/iTRNF8EW+IKPgDqus6+5qCRDZKua7P3tFNuM1YgPcXhWdntLkOT
+         n2x1mElb+JkZ/1RvNb5Fz1MBJiN1e+nvAIxCbNcC88UIZGL0qhqHARkPwua0qkOzzTuO
+         nYfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683812709; x=1686404709;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1683814426; x=1686406426;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=R0W9poFvmBzc2K5P99Ogveg/XaoRDil+hJvU6KMXmFM=;
-        b=WUG/nbwnKB6j6QKNt8uEd43pXTP2xVaS5Tr1gTbmVYVjlGEaUszhHRJ2o6FVfpk9ue
-         EqxNoGDKP9ovvZan6h22uT7+EU0vMLA2HlOBhqjHapLoU0SybrUJQwiwYUP5L15TBquI
-         K/heqDThICJLcmoQM/A0clDVrIoDbU2QoxvR9hF3R988kEWBupN0tqKGBdJ6jc8+dMTH
-         gimU417+CL0cyeNNGlSB5zDWtt7f9ARex/lGP/29At8z3NmRrIU9XRCmGfhRy4S83pnh
-         RIMWI3U5X7EOZMPxfLpRYkcdfyS8awOz5c2lHkPHK1yLlTxqnqgBqNaKxXUIM85GJxVt
-         6DeA==
-X-Gm-Message-State: AC+VfDyczOyYVLo9CFgoGelxp4Cf7pg6jbbQkxXsRkZ7jA8a2tPLjU8w
-        Fy4GlLNqrLKLcRjdUkBavRRruuJ1Hdd9pGnfRDJC3EnpOmw=
-X-Google-Smtp-Source: ACHHUZ7K0zwKEj+/SA552sq57A24DybGEREjgvh9rjJBkrI/kRgqgXZKdmA0vsDhfbvJLfFyhNPMVXBIm8gqhDIJtlo=
-X-Received: by 2002:a05:622a:285:b0:3f3:8a0a:f1a8 with SMTP id
- z5-20020a05622a028500b003f38a0af1a8mr24023279qtw.61.1683812708747; Thu, 11
- May 2023 06:45:08 -0700 (PDT)
+        bh=4BO5SU64jrnGzclx5EWwK/kqRbqnQE9s8bG7bBz9H2A=;
+        b=anSRab9byuLeLeMbT8rwIg44x4h2HfCWynhIqK20lSaqZFExQu3srgIe6Me1o4Kqej
+         v7uTL4ivPtPao/NAcnSLjo1epo52fKhYh2q8oygvmsNe7GKUUHo/GoSUknuVAQm7jvE7
+         h9y5kAQ7C0Q2hW3A8ILpKUSbVtXAXprdlKcfyuXjEOfntou1gO4WKQkuGNA3u6y1lIOp
+         MWXFSn1MODZRlxli9APhN6tjD4xc0ohy4+WOh7HKQaUxsm8HSmtBQ02MPcGxidOrSGvN
+         3utMADx9QbSM4/a4GjJd6VsGb1u6km8F6GNlR4zDpIgakMfwDY06ABucHcZTFwjZKuni
+         /XyA==
+X-Gm-Message-State: AC+VfDzFepEaOSxqTx62SCHv1pG5nBTaEYXN5I212yAp8WRG6aYn5HbF
+        5TyV4tGNX/qD6A/sY+F9HfQ=
+X-Google-Smtp-Source: ACHHUZ7eqT4Oq9B6SdKe7L0rfyGHHTsgQdjgO/e8P1nTlo+gMPkxJHGynG9HESNRSRpdOIL5Hd8WZA==
+X-Received: by 2002:adf:dc04:0:b0:307:a33d:d054 with SMTP id t4-20020adfdc04000000b00307a33dd054mr6966860wri.49.1683814425763;
+        Thu, 11 May 2023 07:13:45 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id s2-20020a5d4ec2000000b003063a92bbf5sm20706251wrv.70.2023.05.11.07.13.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 May 2023 07:13:45 -0700 (PDT)
+Message-ID: <b481d212-89c5-5c8e-c99f-6df3909523c7@gmail.com>
+Date:   Thu, 11 May 2023 15:13:44 +0100
 MIME-Version: 1.0
-References: <8fe188a9-c01f-9fb5-5877-8ff508094b22@game-point.net>
- <CAPx1Gvdc6bqzt2PpqD1Z4e5w+b=8gZhUSyfUQC1n8QazdBacEw@mail.gmail.com>
- <74a361fd-4ee6-f362-8d49-92417f0e2dac@game-point.net> <CA+JQ7M-1YvZFzE_CtBQa5_eEXa1sPqK4xsTxdwpAQo_YcmW+-A@mail.gmail.com>
- <91dab444-5f65-31ae-c0c6-0b84313bcd94@game-point.net> <CA+JQ7M_Lv1acopOpPoHxp7mPwWMFj-7wwwDPpV7KUbwFsjpoxA@mail.gmail.com>
- <6446d78fbbe82_cd61294e5@chronos.notmuch> <c7bb292d-903b-692e-885b-524b6bb113ee@intel.com>
- <xmqqwn1yqsx7.fsf@gitster.g>
-In-Reply-To: <xmqqwn1yqsx7.fsf@gitster.g>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Thu, 11 May 2023 15:44:32 +0200
-Message-ID: <CA+JQ7M_3jLCXHokbeHB=DyphFO605GE0BTu-cqZsF1ZNExL=kg@mail.gmail.com>
-Subject: Re: Proposal: tell git a file has been renamed
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Jeremy Morton <admin@game-point.net>,
-        Chris Torek <chris.torek@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] rebase -r: fix the total number shown in the progress
+Content-Language: en-US
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
+ <d12d5469f8cbc21ce1efbffc8e7569c534b5a305.1683759339.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <d12d5469f8cbc21ce1efbffc8e7569c534b5a305.1683759339.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Another example of where the current implementation isn't working great
+Hi Dscho
 
-  A - B - C
+On 10/05/2023 23:55, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> For regular, non-`--rebase-merges` runs, there is very little work to do
+> for the parser when determining the total number of commands in a rebase
+> script: it is simply the number of lines after stripping the commented
+> lines and then trimming the trailing empty line, if any.
+> 
+> The `--rebase-merges` mode complicates things by introducing empty lines
+> and comments in the middle of the script. These should _not_ be counted
+> as commands, and indeed, when an interactive rebase is interrupted and
+> subsequently resumed, the total number of commands can magically shrink,
+> sometimes dramatically.
+> 
+> The reason for this strange behavior is that empty lines _are_ counted
+> in `edit_todo_list()` (but not the comments, as they are stripped via
+> `strbuf_stripspace(..., 1)`, which is a bug.
+> 
+> Let's fix this so that the correct total number is shown from the
+> get-go, by carefully adjusting it according to what's in the rebase
+> script. Extra care needs to be taken in case the user edits the script:
+> the number of commands might be different after the user edited than
+> beforehand.
+> 
+> Note: Even though commented lines are skipped in `edit_todo_list()`, we
+> still need to handle `TODO_COMMENT` items by decrementing the
+> already-incremented `total_nr` again: empty lines are also marked as
+> `TODO_COMMENT`.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   sequencer.c              | 12 ++++++++----
+>   t/t3430-rebase-merges.sh |  7 +++++++
+>   2 files changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index f5d89abdc5e..46dd07df0f2 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2609,7 +2609,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>   	char *p = buf, *next_p;
+>   	int i, res = 0, fixup_okay = file_exists(rebase_path_done());
+>   
+> -	todo_list->current = todo_list->nr = 0;
+> +	todo_list->current = todo_list->nr = todo_list->total_nr = 0;
+>   
+>   	for (i = 1; *p; i++, p = next_p) {
+>   		char *eol = strchrnul(p, '\n');
+> @@ -2628,7 +2628,8 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>   			item->arg_offset = p - buf;
+>   			item->arg_len = (int)(eol - p);
+>   			item->commit = NULL;
+> -		}
+> +		} else if (item->command == TODO_COMMENT)
+> +			todo_list->total_nr--;
 
-commit A makes changes to foo
-commit B changes the name of foo to bar
-commit C symlinks foo => bar
+This feels a bit fragile, I think it would be better to count the 
+commands properly in the first place rather than adjusting the total 
+here. We could do that by not incrementing "todo_list->total_nr" in 
+append_new_todo() and then doing
 
-Rebasing the commits and reordering them
+	if (item->command != TODO_COMMENT)
+		todo_list->total_nr++;
 
-  commit B changes the name of foo to bar
-  commit C symlinks foo => bar
-  commit A makes changes to foo
+here. We may want to stop counting invalid commands as well by only 
+counting commands whre "item->command < TODO_COMMENT".
 
-is going to result in merge conflicts. The best way to achieve this
-ordering is actually doing multiple rebases.
+>   
+>   		if (fixup_okay)
+>   			; /* do nothing */
+> @@ -6039,7 +6040,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>   	struct todo_list new_todo = TODO_LIST_INIT;
+>   	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+>   	struct object_id oid = onto->object.oid;
+> -	int res;
+> +	int new_total_nr, res;
+>   
+>   	find_unique_abbrev_r(shortonto, &oid, DEFAULT_ABBREV);
+>   
+> @@ -6066,6 +6067,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>   		return error(_("nothing to do"));
+>   	}
+>   
+> +	new_total_nr = todo_list->total_nr - count_commands(todo_list);
+>   	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
+>   			     shortonto, flags);
+>   	if (res == -1)
+> @@ -6088,11 +6090,13 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>   		return -1;
+>   	}
+>   
+> +	new_total_nr += count_commands(&new_todo);
+> +	new_todo.total_nr = new_total_nr;
+> +
+>   	/* Expand the commit IDs */
+>   	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
+>   	strbuf_swap(&new_todo.buf, &buf2);
+>   	strbuf_release(&buf2);
+> -	new_todo.total_nr -= new_todo.nr;
 
-  commit B changes the name of foo to bar
-  commit A makes changes to foo
-  commit C symlinks foo => bar
+I think if we just change this line to
+	
+	new_todo.total_nr = 0;
 
-followed by
+we don't need any other changes to this function. This is because 
+complete_action() is only called at the start of a rebase so we don't 
+need to worry about "total_nr" including commands that have already been 
+executed. The reason we need to set it to zero here is that we re-parse 
+the todo list below which increments "total_nr" by the number of 
+commands parsed.
 
-  commit B changes the name of foo to bar
-  commit C symlinks foo => bar
-  commit A makes changes to foo
+Thanks for working on this.
+Best Wishes
 
-I guess the difficulty that arises from reordering commits like this
-isn't unique to renames but it arguably results in a more hostile user
-experience. It requires an unusual amount of discipline and
-understanding of what is going on to resolve as well as how to avoid
-it.
+Phillip
+
+>   	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
+>   		BUG("invalid todo list after expanding IDs:\n%s",
+>   		    new_todo.buf.buf);
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index f351701fec2..8da99a075dc 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -517,4 +517,11 @@ test_expect_success '--rebase-merges with message matched with onto label' '
+>   	EOF
+>   '
+>   
+> +test_expect_success 'progress shows the correct total' '
+> +	git checkout -b progress H &&
+> +	git rebase --rebase-merges --force-rebase --verbose A 2> err &&
+> +	grep "^Rebasing.*14.$" err >progress &&
+> +	test_line_count = 14 progress
+> +'
+> +
+>   test_done
