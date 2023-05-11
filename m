@@ -2,199 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F167C7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 20:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FB26C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 20:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239229AbjEKUnI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 16:43:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44542 "EHLO
+        id S238914AbjEKU7h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 16:59:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238084AbjEKUnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 16:43:05 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5250A2
-        for <git@vger.kernel.org>; Thu, 11 May 2023 13:43:03 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id 98e67ed59e1d1-24e116d1a05so8660710a91.2
-        for <git@vger.kernel.org>; Thu, 11 May 2023 13:43:03 -0700 (PDT)
+        with ESMTP id S238254AbjEKU7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 16:59:25 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454A47EF1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 13:59:24 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id 5614622812f47-38ef6217221so5026964b6e.3
+        for <git@vger.kernel.org>; Thu, 11 May 2023 13:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683837783; x=1686429783;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CwypswIzaObBuf6tibn2R8Ptwwpg2/gGrOVMDwaXpbo=;
-        b=R7bU+2qpIGoh2upk6qDX5qxF7VWDv72/swgPHZrme/jrecxcIdv7UR4lmCkzEzqXkh
-         Yohhfk6cFJZGZdfSEZjf0FTiRk7jSagk6BmyI16icWb2Rg1GPoCJaEjZIE/G451VGlH7
-         xUvJEPb5rMY/lxwmZoyxxIdezfvlC9xwyIs9UyT9+LdMiqEUJj3F30KGoRiGQdPLNc+c
-         PCfX4XEmG9SBBvd1UHeNhJnIX2Q2npQXA1OXGlEEDtnfNj9Ht2OZ/nCAyXiwkaYCG6YS
-         z5A7e/1twvDttBYgVozUqcIcr7S/L5/JtDXJw3oWYs/CGYtLl58mWAfAYKBJdTS2WwR5
-         De/Q==
+        d=gmail.com; s=20221208; t=1683838763; x=1686430763;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=56XY7tthaYOxeB3xRCslTBPHbTczs2b78vxw6E8uBCM=;
+        b=msR9/Ad4eIr5Fy8HL3sCbGBFUMzsTjCW7zV4+71owZ5fFkt6AwBjbDciJ/eIZvMGJS
+         TufiMKgbpUyqwq2y/UQzORt9TxacnSzhZXFOjOUjVlrmmG2hPs4O3oUWftjEBkEYy6cm
+         v7Bf59oaax/rQWVDwryT4ESTSUx96Qrm3hhtgrfu+mTujdMKFScPtEzxDihrzuTX5oQ0
+         7bYlyObqGlzGuifI6WVMx6Zz64wTEObCEN0Zni5Ynv07gsHqc12KCP6XVJunzJFDUfPc
+         7G/cxTUEuvRdo9mpgGST1H9gPs3RLJkq17ZYTsmTkZUVrCZ72m2NvotSH5GvoI+veYwV
+         awQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683837783; x=1686429783;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CwypswIzaObBuf6tibn2R8Ptwwpg2/gGrOVMDwaXpbo=;
-        b=ZUjQ2fOhE6cego8w/WNacXFY+YdS57PL8GgWSb9m7wYNDODnYRCsvNlZqfszGRUP0K
-         9K+JzfCBOAgya/2AYa026OMW8qYEdXlBENnDO6nnrSVpPQ6FZWgttX4nnVLU3wiUfCCH
-         Ytp8pP9pdhDGDi5cwO4AxFVaDQc0HkGqx6U4um9euFzV/Hzn1Jp8WzLP8lck4aHpx2mW
-         Z9bYYFEdfJ/9UPrdeN3kEX4STaXdAOz/aJ15ko4pCtUrExmxYxpoCdlKkSVADUStMXed
-         u8olSZqPq+zhzFv/Rvj3Il1iW1X1UeYPFmN8ejjwVhc42zaW1UmrCw+Our4Rr8e+R6ti
-         o1Fg==
-X-Gm-Message-State: AC+VfDwI5NKwYZOeW3bnqqO/WiWuJAB8E8c0UCUFVhOFLGk5i4KtIoUB
-        RnLbcMN1JvlGXDcDsxyZ6SD6jASo7wW5lg==
-X-Google-Smtp-Source: ACHHUZ4oq3SfPcPLoyoY/Z+8IsRa/eiMogJbw7iTZ5qmenwQnAb3L5DoaXVD6wTm33SRhO0qB0Nir1a0XkJ/ag==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:90b:e98:b0:24d:f3d9:48b5 with SMTP id
- fv24-20020a17090b0e9800b0024df3d948b5mr6834319pjb.3.1683837783236; Thu, 11
- May 2023 13:43:03 -0700 (PDT)
-Date:   Thu, 11 May 2023 13:43:01 -0700
-In-Reply-To: <12a251f77f679123d01892109694f8ee19b96252.1683431151.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20221208; t=1683838763; x=1686430763;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=56XY7tthaYOxeB3xRCslTBPHbTczs2b78vxw6E8uBCM=;
+        b=gnDMK68OGf8Cv4ozS8N1KNLldZ+eofk7yCaZ8sZeeHPuguSUkuFErrNbJr8tJAhrLW
+         Obn/8GwpJCd850svqU1yPshHstnqyxc6x6DfAhHN59HqQlLuW4gVafNIE8x2jEvhMhcO
+         IBRD52M9Dxlb0STYzIJsNCYWZ9VwqaH69otaQ8Vmiv2s9sPzti3G/kuz0swPNZqkSB/5
+         Bavb/AB/sMKTgK9GP7RPCwijg7a2KSmIuqM2eNv1U4o0Xb8nrW+X9Lalkw8TLcfWrpvE
+         zyCtnD6L7arG8SrdOvaQNvM0i5evhS/swnVG02mBLoaehWzLB8hmqS/TnamOKGDAku6X
+         k4lg==
+X-Gm-Message-State: AC+VfDwhBnUdg6LI/JicF6qvf4BWha2XX6xe/+Df8pwRSyVwFjFAMbCl
+        zqS5N8GCuy9NzbLnTiKIoKADK7O2YJY=
+X-Google-Smtp-Source: ACHHUZ6eZ3+jjvhIFtVPSE1XRH5rzDhJwtabPpQqvnclXnAD6B4d4EjR7zbDcxL49VzQSWnaDG0VZg==
+X-Received: by 2002:aca:6747:0:b0:38e:1ee1:982 with SMTP id b7-20020aca6747000000b0038e1ee10982mr5494383oiy.7.1683838763540;
+        Thu, 11 May 2023 13:59:23 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id q24-20020a4a3018000000b00524f381f681sm8199289oof.27.2023.05.11.13.59.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 May 2023 13:59:22 -0700 (PDT)
+Date:   Thu, 11 May 2023 14:59:22 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Matthieu Moy <matthieu.moy@univ-lyon1.fr>
+Message-ID: <645d572a47e5b_57c4e294dc@chronos.notmuch>
+In-Reply-To: <87mt2azkdp.fsf@osv.gnss.ru>
+References: <645c5da0981c1_16961a29455@chronos.notmuch>
+ <871qjn2i63.fsf@osv.gnss.ru>
+ <645d28e112294_26011a294b2@chronos.notmuch>
+ <877cte200m.fsf@osv.gnss.ru>
+ <645d3dbf785a5_26069229463@chronos.notmuch>
+ <87wn1ezms9.fsf@osv.gnss.ru>
+ <645d480be344d_260ff5294c@chronos.notmuch>
+ <87mt2azkdp.fsf@osv.gnss.ru>
+Subject: Re: Can we clarify the purpose of `git diff -s`?
 Mime-Version: 1.0
-References: <pull.1525.git.1683431149.gitgitgadget@gmail.com> <12a251f77f679123d01892109694f8ee19b96252.1683431151.git.gitgitgadget@gmail.com>
-Message-ID: <kl6lsfc2zjje.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 01/24] init-db: remove unnecessary global variable &
- document existing bug
-From:   Glen Choo <chooglen@google.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Sergey Organov wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> 
+> >> > Sergey Organov wrote:
+> >> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> >> > Sergey Organov wrote:
+> >> >> >
+> >> >> >> I'd rather think about generic interface for setting/clearing
+> >> >> >> (multiple) bits through CI than resorting to such convenience
+> >> >> >> tricks. Once that is in place, one will be able to say "I need these
+> >> >> >> bits only", "I need to turn these bit(s) on", and "I need to turn
+> >> >> >> these bit(s) off" conveniently and universally in any part of Git CI
+> >> >> >> where it's needed.
+> >> >> >
+> >> >> > It's possible to achieve both.
+> >> >> >
+> >> >> > Imagine your ideal explicit interface. In that interface the default
+> >> >> > is no output, so you *have* to specify all the bits, for example:
+> >> >> >
+> >> >> >   git show --patch
+> >> >> 
+> >> >> No, that's not what I meant. There is no point in making "git show" to
+> >> >> have no output by default, please see below.
+> >> >> 
+> >> >> >
+> >> >> > Or:
+> >> >> >
+> >> >> >   git show --raw
+> >> >> >
+> >> >> > In this ideal interface it's clear what the user wants to do, because
+> >> >> > it's explicit.
+> >> >> >
+> >> >> >   git show --patch --raw --no-patch
+> >> >> >
+> >> >> > Agreed?
+> >> >> >
+> >> >> > My proposal achieves your ideal explicit interface, except when no
+> >> >> > format is specified (e.g. `git show`), a default format is chosen for
+> >> >> > the user, but that's *only* if the user hasn't specified any format.
+> >> >> 
+> >> >> My point is that the default format should be selected as if it has been
+> >> >> provided by existing options, rather than by some magic hidden in the
+> >> >> code.
+> >> >
+> >> > But why?
+> >> >
+> >> > I don't see any benefit, only drawbacks.
+> >> >
+> >> >> > If you explicitely specify the output format that you want, then the
+> >> >> > default is irrelevant to you, thus you have your ideal explicit
+> >> >> > interface.
+> >> >> 
+> >> >> That's not what I had in mind, sorry. It'd rather be something like:
+> >> >> 
+> >> >>   --raw: set "raw" bit and clear all the rest
+> >> >>   --+raw set "raw" bit  (== current --raw)
+> >> >>   ---raw clear "raw" bit (== --no-raw)
+> >> >> 
+> >> >> In this model
+> >> >> 
+> >> >>   git show
+> >> >> 
+> >> >> would be just an alias for
+> >> >> 
+> >> >>   git log -n1 --patch --cc
+> >> >> 
+> >> >> and no support for a separate command would be need in the first place.
+> >> >> 
+> >> >>   git show --raw
+> >> >> 
+> >> >> would then produce expected output that makes sense due to the common
+> >> >> option processing rules, not because somebody had implemented some
+> >> >> arbitrary "defaults" for the command.
+> >> >
+> >> > But now you are at the mercy of those "arbitrary defaults".
+> >> 
+> >> No, see below.
+> >> 
+> >> >
+> >> > Let's say those defaults change, and now the default output of `git show` is
+> >> > `--stat`.
+> >> >
+> >> > Now to generate the same output you have to do:
+> >> >
+> >> >   git show --raw
+> >> >
+> >> > in one version of git, and:
+> >> >
+> >> >   git show --no-stat --patch --raw
+> >> >
+> >> > in another.
+> >> 
+> >> No: --raw in my model clears all the flags but --raw, so
+> >> 
+> >>   git show --raw
+> >> 
+> >> will produce exactly the same result: raw output only.
+> >
+> > But that {--,--+,---} notion doesn't exist, and I think it's safe to say it
+> > will never exist. So, could we limit or solution-space to those solutions that
+> > could have the potential to be merged?
+> 
+> I didn't expect it to exist any time soon, just showed a different way
+> of options design.
+> 
+> >
+> > What you suggest could be easily achieved with:
+> >
+> >   git show --silent --raw
+> >
+> > But because no other format is explicitely specified, following my notion of
+> > defaults, that's the same as:
+> 
+> The problem that I tried to fight is this notion of defaults that is
+> somewhat special, so, if I allow for it, the rest of my suggestions
+> becomes pointless,
 
-> From: Elijah Newren <newren@gmail.com>
->
-> This commit was prompted by a desire to move the functions which
-> builtin/init-db.c and builtin/clone.c share out of the former file and
-> into setup.c.  One issue that made it difficult was the
-> init_is_bare_repository global variable.
->
-> init_is_bare_repository is actually not very useful.  It merely stores
-> the return value from is_bare_repository() and only for the duration of
-> a few additional function calls before its value is checked, and none of
-> those functions do anything that could change is_bare_repository()'s
-> return value.  So, we can simply dispense with the global by replacing
-> it with is_bare_repository().
+No, they don't, all you need to do is specify the default explicitely.
 
-I think the purpose of init_is_bare_repository is something different.
-But based off my different understanding, I can't reproduce any
-different behavior. I don't know if I'm just confused or not, but I'll
-leave some breadcrumbs here to check my understanding.
+> and without the "defaults" with non-trivial behavior[*]
+> 
+>    git show --raw
+> 
+> won't work as expected provided --raw still just sets "raw" bit and
+> doesn't clear all the rest.
 
-Reordering the hunks for clarity,
+It works perfectly fine. There are no bits to clear, because there are no bits
+set.
 
-> @@ -422,8 +436,6 @@ int init_db(const char *git_dir, const char *real_git_dir,
->  
->  	safe_create_dir(git_dir, 0);
->  
-> -	init_is_bare_repository = is_bare_repository();
-> -
->  	/* Check to see if the repository version is right.
->  	 * Note that a newly created repository does not have
->  	 * config file, so this will not fail.  What we are catching
+That's the whole point of defaults: you don't have to use them. If you don't
+like the notion of defaults, then don't use them.
 
-Here, init_db() caches the value of is_bare_repository(), which itself
-reads the value of is_bare_repository_cfg, which can be modified by when
-we read "core.bare" via git_config(git_default_config) or similar
-(basically, any config callback that uses git_default_config). It is
-also modified in other places though, like setup.c.
+If you specify *any* format option, then the defaults are ignored and no bits
+are set other than the ones that you explicitly specified.
 
-IIUC, we haven't actually parsed "core.bare" at this point. The
-git_config() call just above this calls "plaform_core_config", which is
-either "mingw_core_config" (doesn't read "core.bare") or
-noop_core_config (noop).
+> [*] Defaults with trivial behavior is just initializing of internal
+> variable holding flags with specific value, that is exactly the same as
+> putting corresponding option(s) at the beginning.
 
-> @@ -231,9 +230,24 @@ static int create_default_files(const char *template_path,
->  	 * We must make sure command-line options continue to override any
->  	 * values we might have just re-read from the config.
->  	 */
-> -	is_bare_repository_cfg = init_is_bare_repository || !work_tree;
->  	if (init_shared_repository != -1)
->  		set_shared_repository(init_shared_repository);
-> +	/*
-> +	 * TODO: heed core.bare from config file in templates if no
-> +	 *       command-line override given
-> +	 *
-> +	 * Unfortunately, this location in the code is far too late to
-> +	 * allow this to happen; both builtin/init.db and
-> +	 * builtin/clone.c setup the new repository and call
-> +	 * set_git_work_tree() before this point.  (Note that both do
-> +	 * that repository setup before calling init_db(), which in
-> +	 * turn calls create_default_files().)  Fixing it would
-> +	 * require too much refactoring, and no one seems to have
-> +	 * wanted this behavior in 15+ years, so we'll continue
-> +	 * ignoring the config for now and just override
-> +	 * is_bare_repository_cfg unconditionally.
-> +	 */
-> +	is_bare_repository_cfg = is_bare_repository() || !work_tree;
->  
->  	/*
->  	 * We would have created the above under user's umask -- under
+Those are not default arguments, those are initial arguments. In many cases
+they behave the same, but not all.
 
-Now, we're in the midst of the re-init. Expanding the context a little,
-we see:
-
-	git_config(git_default_config, NULL);
-
-	/*
-	 * We must make sure command-line options continue to override any
-	 * values we might have just re-read from the config.
-	 */
-	is_bare_repository_cfg = init_is_bare_repository || !work_tree;
-
-So now we've read the new config of the re-inited repo, which might have
-"core.bare" set to a value other than what "git init-db [--bare]"
-started with, so we want to _intentionally_ ignore it. We do this by
-reading out the cached value, _not_ by calling is_bare_repository()
-again. So it seems to me like this patch changes the intent.
-
-Where I struggling with is how to make this behave badly. The lines
-above seem to be defensive in nature - we never use
-is_bare_repository_cfg past this point, but we want to guard against
-unintentional behavior in the future.
-
-But I thought that logging this value would show a difference in
-behavior, e.g.
-
-  diff --git a/builtin/init-db.c b/builtin/init-db.c
-  index ba6e0b20fa..da3579d46d 100644
-  --- a/builtin/init-db.c
-  +++ b/builtin/init-db.c
-  @@ -229,6 +229,8 @@ static int create_default_files(const char *template_path,
-    * values we might have just re-read from the config.
-    */
-    is_bare_repository_cfg = init_is_bare_repository || !work_tree;
-  +	printf_ln("is_bare_repository_cfg is %d", is_bare_repository_cfg);
-  +
-    if (init_shared_repository != -1)
-      set_shared_repository(init_shared_repository);
-
-  diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-  index 1b6437ec07..e4b978992e 100755
-  --- a/t/t1301-shared-repo.sh
-  +++ b/t/t1301-shared-repo.sh
-  @@ -15,6 +15,14 @@ TEST_PASSES_SANITIZE_LEAK=true
-  # Remove a default ACL from the test dir if possible.
-  setfacl -k . 2>/dev/null
-
-  +test_expect_success 're-init respects core.bare' '
-  +	git init bare.git >actual &&
-  +	grep "is_bare_repository_cfg is 0" actual &&
-  +	git -C bare.git config core.bare true &&
-  +	git init bare.git >actual &&
-  +	grep "is_bare_repository_cfg is 1" actual
-  +'
-  +
-  # User must have read permissions to the repo -> failure on --shared=0400
-  test_expect_success 'shared = 0400 (faulty permission u-w)' '
-    test_when_finished "rm -rf sub" &&
-
-But apparently this doesn't work at all. I can't get this to print
-"is_bare_repository_cfg is 1" no matter what I do, before or after your
-patch. Maybe there's more at play here (e.g. with setup.c), but I
-haven't figured that out.
-
-If I'm right (which I'm not sure about), we might need to keep
-init_is_bare_repository around _somewhere_. Not a global, but maybe
-as a param.
+-- 
+Felipe Contreras
