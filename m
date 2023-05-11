@@ -2,141 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26CA2C7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 22:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FC5FC77B7C
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 22:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239431AbjEKWIH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 18:08:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56702 "EHLO
+        id S239164AbjEKWlM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 18:41:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239506AbjEKWHs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 18:07:48 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6D593D7
-        for <git@vger.kernel.org>; Thu, 11 May 2023 15:07:34 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-541fb831026so3067027eaf.3
-        for <git@vger.kernel.org>; Thu, 11 May 2023 15:07:34 -0700 (PDT)
+        with ESMTP id S239494AbjEKWlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 18:41:09 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BE25584
+        for <git@vger.kernel.org>; Thu, 11 May 2023 15:41:07 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba6939e78a0so9190419276.0
+        for <git@vger.kernel.org>; Thu, 11 May 2023 15:41:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683842854; x=1686434854;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wacibTOk8jv0wWkxNwvv+EjAoOJFp0LnEBnB+QPqlzc=;
-        b=pNTzfzhnfo5MTe0b8jfs5XmdRR/nmd/dfsP5tiOI1NJ41vJf3NB1rtYhtCeB0xYgph
-         CTIXALCabOpdDeBmXmNg4Ho2RYdFDQYpKOg/qdexNoHZpJniH+qB6D4wp625F0A8wypN
-         tioTGZlyvPrRRdctwAfGgQIklpAF4Zq+TepOq7yIT7Ea1uKKrW8l6bFdGXsexwe6WnwL
-         OeFfNiwV2DcdYnb/wYu0PTvY/l4kVAXF6bq1tRG908jCZDGNuLI2o4xmWqesoC6/j6s8
-         uFp6TLwkkr9i1Jv3FGas6hpih0gAGeC3bP5JzrGchriel9bQCs5vETcYFL60YbVG332+
-         d0qw==
+        d=google.com; s=20221208; t=1683844867; x=1686436867;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2StT1VwqACDseDtPB469qJ968iqKs343+VBCtXIhGXs=;
+        b=2c7cfUCWlYDOqKgJbSH6k7fO8PBzvaAu6PAQjguVzc6hS3KzswTH4e3WTS88GLeAlm
+         fl9yuVZLgBgnqjnAC2N8WMHwzfgeuZqxZ/pibx2ePK2ypuxE6fSncQy6L1SSQriYD3A4
+         AjctIhKjXfCwP62oXQhpwlZBTjMSALSKdzqAkEl8+tDrRQyhehe5u5c9/+KQVdS9ONLU
+         arEOadl86sQ+sbL2EXAlq+SlvkHPJUJO8RpN+v5p4V4Xk0xa/xqFoa+PO32jhgxag8uy
+         Lr0/SHtS7fFw06MHRg7KQqbViQNqV4RNHy8V3DxenX30jCJI76gCkauFRNg41K4tXpEW
+         CwHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683842854; x=1686434854;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wacibTOk8jv0wWkxNwvv+EjAoOJFp0LnEBnB+QPqlzc=;
-        b=VbFahJBAUjiWjvHQGN/t+RDE6V/rG43Gly8ervpLcWtVBG7K1jyxP1yPccBV+krhSG
-         tl0HyLT78xLOGRx7DjzNJg2EJ3CuvtkimjPO2/tVXHxHcusSSoT9L4ru8JcumKBiKSoc
-         GQSkCn6wIqbGexo3PEpeAROel7Z3N3/Xhl9k4v2mbq2rd1xfti6Qg3ccfYJyRZt3ooJ9
-         sFC2jqCrzh8wy4O0ruLovbzzadyPqlUzjPbkI7azjJQYBKj7fOmtAFx0HGDGj9OQDvGn
-         Ewao41HOm6Ta24Nve2LPNdIYbla8QJcieIxSnZDAmGHeT7r56eD5uCy8PfeE2N2H7U6n
-         wdcg==
-X-Gm-Message-State: AC+VfDzhJsfoyU9Vq6kdnidyES+IVd+Ug3G3cEODqxK7UrfsWXQNm1Y+
-        Q/rNQOWvPCxan6BIAZcgm/4=
-X-Google-Smtp-Source: ACHHUZ5TlZTbzneGHlGFoT/CHq+fLqB32kndtOSKNsBMBnQ2WLqU4g5A6LIzohSWDqFlYiv/CmiqjQ==
-X-Received: by 2002:a4a:271a:0:b0:54f:8540:d05a with SMTP id l26-20020a4a271a000000b0054f8540d05amr4660366oof.8.1683842853719;
-        Thu, 11 May 2023 15:07:33 -0700 (PDT)
-Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id w14-20020a4ac18e000000b00541854ce607sm7618360oop.28.2023.05.11.15.07.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 15:07:33 -0700 (PDT)
-Date:   Thu, 11 May 2023 16:07:32 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, christian.couder@gmail.com
-Message-ID: <645d672447ebb_13d3fe294f@chronos.notmuch>
-In-Reply-To: <015dcb79-9630-e188-65cf-23b005184db1@github.com>
-References: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
- <645bfed357efc_3819294e1@chronos.notmuch>
- <015dcb79-9630-e188-65cf-23b005184db1@github.com>
-Subject: Re: [PATCH] merge-tree: load default git config
+        d=1e100.net; s=20221208; t=1683844867; x=1686436867;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2StT1VwqACDseDtPB469qJ968iqKs343+VBCtXIhGXs=;
+        b=P6ufhviY2rFyt9UGWCvbwjWqamYcHPT1s/XhMPwGtFcOYjJeCZmpiYNZMU1mSUdKC5
+         lMQx26yNBcvqnLZKDQqPao9+NydftTiepYovl/VPf+iNh4SWtsZp4HCfj+ThPfG7GxVw
+         9/IykgouIUe0hGtdFj9jIe60Bz8mCMCuuS7N+A2sMGcbxZNmDuufRVz6stTPpYqACgYP
+         eJ2YPsdgqvzICVkXCd954OwvZw/S73wwWuCf6ZO0ELVZ4gUfzDWgT7TdaGjNJXtGpofI
+         Ca+AdKfkSKafRF2kiNyCySdDiaRNk8tqzcQ6qgFFbhvNLjjWG4q3hWC+5WC7k7Iq57jv
+         TnwQ==
+X-Gm-Message-State: AC+VfDzcqJ21Uok1gBvxv2+LeG+q0Az1g+SYIOX5KB9RTq4IUXwXZ8y9
+        c+OkZiu4KfM2AOiwNTZob9CnGjoQvxWVuFDFHk5fmhC37HSIW32NRgOzJ+xNhKagbVi2068MK+H
+        TYN9GFMTa6S2KwCuQbhZkWWyD9GDfOLNqK+N/3o4lXPQfQGBNJivKyPZA7VJXDMi0oby7PemkSN
+        /Z
+X-Google-Smtp-Source: ACHHUZ46HWOFRsKvf0cYFd+w9ZuG7T76XbMsWYsBPYz5K4e8kZ+cbGlap0iNZ3we5BY25IJsk5I7wXg1I6XAD5gdvDVV
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:aa27:e943:1ce4:723f])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:5e55:0:b0:ba2:58d2:bd86 with
+ SMTP id s82-20020a255e55000000b00ba258d2bd86mr11245896ybb.5.1683844866865;
+ Thu, 11 May 2023 15:41:06 -0700 (PDT)
+Date:   Thu, 11 May 2023 15:40:59 -0700
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
+Message-ID: <20230511224101.972442-1-jonathantanmy@google.com>
+Subject: Changed path filter hash differs from murmur3 if char is signed
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, derrickstolee@github.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 5/10/2023 4:30 PM, Felipe Contreras wrote:
-> > Derrick Stolee via GitGitGadget wrote:
-> >> From: Derrick Stolee <derrickstolee@github.com>
-> >>
-> >> The 'git merge-tree' command handles creating root trees for merges
-> >> without using the worktree. This is a critical operation in many Git
-> >> hosts, as they typically store bare repositories.
-> >>
-> >> This builtin does not load the default Git config, which can have
-> >> several important ramifications.
-> > 
-> > For the record, I had already sent a better version of this patch almost 2
-> > years ago [1], not just for `git merge-tree`, but other commands as well.
-> > 
-> > The obvious fix was completely ignored by the maintainer.
-> > 
-> > The reason why it should be git_xmerge_config and not git_default_config, is
-> > that merge.conflictstyle would not be parsed if you call git_default_config.
-> 
-> As mentioned by Elijah in a different thread, the merge machinery loads
-> the merge config as needed. I confirmed by creating this test, which I
-> may submit as an independent patch:
+This issue arose while I was implementing changed path filters (the
+bloom filters in the commit graph file) for JGit [1].
 
-I wrote my patches before Elijah wrote the real merge implementation, and in
-his function he does `init_merge_options()`, which eventually calls
-`git_config(git_xmerge_config, NULL)`.
+It turns out that if a repository contains paths that have at least one
+character greater than 0x7f, Git writes these filters and interprets
+them (when read from the commit graph file) differently depending on
+whether "char" is signed or unsigned, and when "char" is signed (this
+can be controlled by a compiler flag), the implementation of the murmur3
+hash differs from the one in Wikipedia and elsewhere. (I looked into
+Git's Makefile and didn't see anything that controlled whether "char"
+is signed, so I presume that the default of the compiler used applies.)
+This can be seen from the murmur3_seeded() function in bloom.c:
 
-But if `git_config()` is already called, you shouldn't need to add yet another
-`git_config()` call.
+> uint32_t murmur3_seeded(uint32_t seed, const char *data, size_t len)
+> {
+[snip]
+> 		uint32_t byte1 = (uint32_t)data[4*i];
 
-The problem is that he added `init_merge_options()` *after* the
-`get_merge_parent()` calls, that's why the configuration is ignored.
+Note that data[4*i] is of type "char". When I first read this, I thought
+that no sign extension would occur regardless of the signedness of char
+(that is, (uint32_t)(signed char)-1 == (uint32_t)(unsigned char)-1)
+but it turns out that sign extension does occur if the thing being cast
+is signed (that is, (uint32_t)(signed char)-1 != (uint32_t)(unsigned
+char)-1) [2]. The implementation of the murmur3 hash in Wikipedia (and
+presumably the intention of the author here, since the variable is named
+"byte1") expects this value to not exceed 0xff, but this is not the case
+if sign extension occurs.
 
-If we move `init_merge_options()` to the right place, the problem is fixed:
+I looked if this was discussed at the time this patch was presented [3]
+but couldn't find anything related.
 
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -424,6 +424,8 @@ static int real_merge(struct merge_tree_options *o,
- 	struct merge_result result = { 0 };
- 	int show_messages = o->show_messages;
- 
-+	init_merge_options(&opt, the_repository);
-+
- 	parent1 = get_merge_parent(branch1);
- 	if (!parent1)
- 		help_unknown_ref(branch1, "merge-tree",
-@@ -434,8 +436,6 @@ static int real_merge(struct merge_tree_options *o,
- 		help_unknown_ref(branch2, "merge-tree",
- 				 _("not something we can merge"));
- 
--	init_merge_options(&opt, the_repository);
--
- 	opt.show_rename_progress = 0;
- 
- 	opt.branch1 = branch1;
+So...how do we proceed? I can see at least 2 ways:
 
-I ran your test case, and it passes.
+ - Decide that we're going to stick with the details of the existing
+   implementation and declare that "data" is always interpreted as signed.
+   In that case, I would put "signed" wherever necessary, rename the
+   function to something that is not "murmur3", and change the names of
+   byte1 etc. to indicate that they are not constrained to be less than or
+   equal to 0xff.
 
-I sent a patch for that here:
+ - Bump the version number to 2 and correct the implementation to
+   match murmur3 (so, "data" is unsigned). Then we would have to think of
+   a transition plan. One possible one might be to always reject version
+   1 bloom filters, which I'm personally OK with, but it may seem too
+   heavy a cost to some since in the perhaps typical case where a repo has
+   filenames restricted to 0x7f and below, the existing bloom filters are
+   still correct.
 
-https://lore.kernel.org/git/20230511215608.1297686-1-felipe.contreras@gmail.com/
+Of the two, I prefer the latter, but I'm open to suggestions.
 
-This is a more proper fix because a) it doesn't add any new line of code, b) it
-doesn't add a new include, and c) it doesn't call `git_config()` twice.
+[1] https://git.eclipse.org/r/c/jgit/jgit/+/201851/2
+[2] Verified in practice and also prescribed by the C standard; see
+  e.g. https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf section
+  6.3.1.3 point 2.
+[3] https://lore.kernel.org/git/a5aa3415c05ee9bc67a9471445a20c71a9834673.1586192395.git.gitgitgadget@gmail.com/
 
-Cheers.
 
--- 
-Felipe Contreras
