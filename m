@@ -2,96 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22424C7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 21:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26CA2C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 22:08:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239299AbjEKV4N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 17:56:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50488 "EHLO
+        id S239431AbjEKWIH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 18:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238254AbjEKV4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 17:56:12 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7501C3C1B
-        for <git@vger.kernel.org>; Thu, 11 May 2023 14:56:10 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id 46e09a7af769-6ab611e57c2so1165056a34.1
-        for <git@vger.kernel.org>; Thu, 11 May 2023 14:56:10 -0700 (PDT)
+        with ESMTP id S239506AbjEKWHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 18:07:48 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6D593D7
+        for <git@vger.kernel.org>; Thu, 11 May 2023 15:07:34 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-541fb831026so3067027eaf.3
+        for <git@vger.kernel.org>; Thu, 11 May 2023 15:07:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683842169; x=1686434169;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683842854; x=1686434854;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nveOpIQQN7dROak3PV1Ry6ipewOh0IRFYeRGBlbV3Gs=;
-        b=UmJyWWg7EenJ+Fg1EtghIzk2TIOmKBszhJCSi40TOgvAG1pNKxTmufRfI+5LNb6GcU
-         gFp7CLEazjnlKEVKWF/AJbzvwWjekr3uXIh9bVJqo4MbJ9wBQJDyAEGthfyI5cO2Q4zj
-         YPdinSZ32jbj6vEEvOXH1UtWRC41t0zMrqQ5IVTz/kwZu+PPXzNLE1zO3JRnPNBSEW9d
-         PyUqWNmEXVBQxYbxpDpkWb8XFUb3Raefp5Gc1oqOngIPogxC+mo/+9sKrAQ7XxDu05b1
-         T8ZDIqv9PEiQGfHbreuuIKCW4TzBo6XdYaiiswc3DOJwMwlSlI4h7N9uQXv1aPKFXyD1
-         RXGQ==
+        bh=wacibTOk8jv0wWkxNwvv+EjAoOJFp0LnEBnB+QPqlzc=;
+        b=pNTzfzhnfo5MTe0b8jfs5XmdRR/nmd/dfsP5tiOI1NJ41vJf3NB1rtYhtCeB0xYgph
+         CTIXALCabOpdDeBmXmNg4Ho2RYdFDQYpKOg/qdexNoHZpJniH+qB6D4wp625F0A8wypN
+         tioTGZlyvPrRRdctwAfGgQIklpAF4Zq+TepOq7yIT7Ea1uKKrW8l6bFdGXsexwe6WnwL
+         OeFfNiwV2DcdYnb/wYu0PTvY/l4kVAXF6bq1tRG908jCZDGNuLI2o4xmWqesoC6/j6s8
+         uFp6TLwkkr9i1Jv3FGas6hpih0gAGeC3bP5JzrGchriel9bQCs5vETcYFL60YbVG332+
+         d0qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683842169; x=1686434169;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nveOpIQQN7dROak3PV1Ry6ipewOh0IRFYeRGBlbV3Gs=;
-        b=DQH/dEGSrI2muFjZqnM5AyqNsBfG3uEXeTfDCWF2ReNWS5srKA/GdQfKQuxdWK/Jiu
-         e1gnNN7vBL2YCubQsN++Ae8F3fdT/9HKwvCKVqeurxcerhfox9hD3FRQ791HYKgNVUHK
-         x18sP2i65+4RfEMIdjPu9q6/o0QukpD2xQz3fl1J7/VfVFswIWCKRKHNk8xl5Staqu3Y
-         NSVkUKP7OzCjb2EvemhhQW4izyk7l3LjpcqMJVHEpZGm81awb5D6vAPRohyciCp9EUBn
-         hm6COUECMzLhF77TL3apDjxL/xfJQXXJsb35FnTDbSnmFwPvCUlJaZiMS62iptGlriMs
-         5u/g==
-X-Gm-Message-State: AC+VfDwTR+S0Z7njcJgZ1jpqwpclIgfyQ546/Imue7M/Ofb/61V0r6x7
-        /0FewXXGs392CuDCsNAoNyDN2N1u8q4=
-X-Google-Smtp-Source: ACHHUZ70QyE0Mh9tzCP8v09hFzXeThi6wMA4DE1mJFKW1M1mvip6eKl/NyNrNfS3ql4Rl039xp4R5A==
-X-Received: by 2002:a9d:5c11:0:b0:6ab:2918:8185 with SMTP id o17-20020a9d5c11000000b006ab29188185mr3967166otk.5.1683842169459;
-        Thu, 11 May 2023 14:56:09 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683842854; x=1686434854;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wacibTOk8jv0wWkxNwvv+EjAoOJFp0LnEBnB+QPqlzc=;
+        b=VbFahJBAUjiWjvHQGN/t+RDE6V/rG43Gly8ervpLcWtVBG7K1jyxP1yPccBV+krhSG
+         tl0HyLT78xLOGRx7DjzNJg2EJ3CuvtkimjPO2/tVXHxHcusSSoT9L4ru8JcumKBiKSoc
+         GQSkCn6wIqbGexo3PEpeAROel7Z3N3/Xhl9k4v2mbq2rd1xfti6Qg3ccfYJyRZt3ooJ9
+         sFC2jqCrzh8wy4O0ruLovbzzadyPqlUzjPbkI7azjJQYBKj7fOmtAFx0HGDGj9OQDvGn
+         Ewao41HOm6Ta24Nve2LPNdIYbla8QJcieIxSnZDAmGHeT7r56eD5uCy8PfeE2N2H7U6n
+         wdcg==
+X-Gm-Message-State: AC+VfDzhJsfoyU9Vq6kdnidyES+IVd+Ug3G3cEODqxK7UrfsWXQNm1Y+
+        Q/rNQOWvPCxan6BIAZcgm/4=
+X-Google-Smtp-Source: ACHHUZ5TlZTbzneGHlGFoT/CHq+fLqB32kndtOSKNsBMBnQ2WLqU4g5A6LIzohSWDqFlYiv/CmiqjQ==
+X-Received: by 2002:a4a:271a:0:b0:54f:8540:d05a with SMTP id l26-20020a4a271a000000b0054f8540d05amr4660366oof.8.1683842853719;
+        Thu, 11 May 2023 15:07:33 -0700 (PDT)
 Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id c3-20020a9d7843000000b006a5f7285a53sm7716495otm.6.2023.05.11.14.56.08
+        by smtp.gmail.com with ESMTPSA id w14-20020a4ac18e000000b00541854ce607sm7618360oop.28.2023.05.11.15.07.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 14:56:08 -0700 (PDT)
+        Thu, 11 May 2023 15:07:33 -0700 (PDT)
+Date:   Thu, 11 May 2023 16:07:32 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+To:     Derrick Stolee <derrickstolee@github.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH] merge-tree: load config correctly
-Date:   Thu, 11 May 2023 15:56:08 -0600
-Message-Id: <20230511215608.1297686-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
-In-Reply-To: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, christian.couder@gmail.com
+Message-ID: <645d672447ebb_13d3fe294f@chronos.notmuch>
+In-Reply-To: <015dcb79-9630-e188-65cf-23b005184db1@github.com>
 References: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ <645bfed357efc_3819294e1@chronos.notmuch>
+ <015dcb79-9630-e188-65cf-23b005184db1@github.com>
+Subject: Re: [PATCH] merge-tree: load default git config
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When real merges were implemented in 1f0c3a29da (merge-tree: implement
-real merges, 2022-06-18), init_merge_options was called after doing
-get_merge_parent, which means core.useReplaceRefs was not parsed at the
-moment the commit objects were parsed, and thus essentially this option
-was ignored.
+Derrick Stolee wrote:
+> On 5/10/2023 4:30 PM, Felipe Contreras wrote:
+> > Derrick Stolee via GitGitGadget wrote:
+> >> From: Derrick Stolee <derrickstolee@github.com>
+> >>
+> >> The 'git merge-tree' command handles creating root trees for merges
+> >> without using the worktree. This is a critical operation in many Git
+> >> hosts, as they typically store bare repositories.
+> >>
+> >> This builtin does not load the default Git config, which can have
+> >> several important ramifications.
+> > 
+> > For the record, I had already sent a better version of this patch almost 2
+> > years ago [1], not just for `git merge-tree`, but other commands as well.
+> > 
+> > The obvious fix was completely ignored by the maintainer.
+> > 
+> > The reason why it should be git_xmerge_config and not git_default_config, is
+> > that merge.conflictstyle would not be parsed if you call git_default_config.
+> 
+> As mentioned by Elijah in a different thread, the merge machinery loads
+> the merge config as needed. I confirmed by creating this test, which I
+> may submit as an independent patch:
 
-This configuration is typically disabled in git hosts due to the ability
-to spoof commits in strange ways. Users are able to use refs/replace/
-references to make pull requests that look valid but introduce malicious
-content. The resulting merge has the correct commit history, but the
-malicious content exists in the root tree of the merge.
+I wrote my patches before Elijah wrote the real merge implementation, and in
+his function he does `init_merge_options()`, which eventually calls
+`git_config(git_xmerge_config, NULL)`.
 
-To fix this let's simply load the configuration before any call to
-get_merge_parent().
+But if `git_config()` is already called, you shouldn't need to add yet another
+`git_config()` call.
 
-Cc: Elijah Newren <newren@gmail.com>
-Tests-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/merge-tree.c  |  4 ++--
- t/t4300-merge-tree.sh | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+), 2 deletions(-)
+The problem is that he added `init_merge_options()` *after* the
+`get_merge_parent()` calls, that's why the configuration is ignored.
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index aa8040c2a6..b405cf448f 100644
+If we move `init_merge_options()` to the right place, the problem is fixed:
+
 --- a/builtin/merge-tree.c
 +++ b/builtin/merge-tree.c
 @@ -424,6 +424,8 @@ static int real_merge(struct merge_tree_options *o,
@@ -112,33 +126,17 @@ index aa8040c2a6..b405cf448f 100644
  	opt.show_rename_progress = 0;
  
  	opt.branch1 = branch1;
-diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-index c52c8a21fa..57c4f26e46 100755
---- a/t/t4300-merge-tree.sh
-+++ b/t/t4300-merge-tree.sh
-@@ -334,4 +334,22 @@ test_expect_success 'turn tree to file' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'merge-tree respects core.useReplaceRefs=false' '
-+	test_commit merge-to &&
-+	test_commit valid base &&
-+	git reset --hard HEAD^ &&
-+	test_commit malicious base &&
-+
-+	test_when_finished "git replace -d $(git rev-parse valid^0)" &&
-+	git replace valid^0 malicious^0 &&
-+
-+	tree=$(git -c core.useReplaceRefs=true merge-tree --write-tree merge-to valid) &&
-+	merged=$(git cat-file -p $tree:base) &&
-+	test malicious = $merged &&
-+
-+	tree=$(git -c core.useReplaceRefs=false merge-tree --write-tree merge-to valid) &&
-+	merged=$(git cat-file -p $tree:base) &&
-+	test valid = $merged
-+'
-+
- test_done
--- 
-2.40.0+fc1
 
+I ran your test case, and it passes.
+
+I sent a patch for that here:
+
+https://lore.kernel.org/git/20230511215608.1297686-1-felipe.contreras@gmail.com/
+
+This is a more proper fix because a) it doesn't add any new line of code, b) it
+doesn't add a new include, and c) it doesn't call `git_config()` twice.
+
+Cheers.
+
+-- 
+Felipe Contreras
