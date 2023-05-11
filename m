@@ -2,77 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 468CCC7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 05:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D43F9C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 05:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236961AbjEKFE6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 01:04:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
+        id S237026AbjEKFSN convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 11 May 2023 01:18:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236953AbjEKFEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 01:04:55 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A33F40EE
-        for <git@vger.kernel.org>; Wed, 10 May 2023 22:04:54 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1aad5245632so58451635ad.3
-        for <git@vger.kernel.org>; Wed, 10 May 2023 22:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683781493; x=1686373493;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z0+WXGj/Ppc5haWMI0isdYIWecJ1BHzwbMK9TbkAaLw=;
-        b=JKuBJux/KdY2rMa/71IousR06qm/5HDXDIx/hFcK16cGZUVc/7SnEcskr3YVPE+NUj
-         fxH5YDvOvMcFsFq3Qvxer+R82TDHjIt8bbL6aShVxiKwz5PyYQJOiJTSSqyQ1V4lHsD4
-         8raqQGeARadG8vlSWeJNr4oA2HKdtnIOepZ6EgOFSj5u+yeeki3kQiarpf7fj/6MLBxw
-         MPYUn22FQlorwiV+fCC+Zam7cFgCmI0mBq24atIkijnePc+ogqXDZCQm5zudsKA9jZIb
-         bgvABAuxDnJ0bFH+YlT3/oWjruTtj8dSSaKOyluKnUxArceQjXJuSgogR9J9K8wpO/Zx
-         iLSQ==
+        with ESMTP id S236982AbjEKFSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 01:18:11 -0400
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6926420B
+        for <git@vger.kernel.org>; Wed, 10 May 2023 22:18:09 -0700 (PDT)
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-61b79b97ed8so38122786d6.1
+        for <git@vger.kernel.org>; Wed, 10 May 2023 22:18:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683781493; x=1686373493;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Z0+WXGj/Ppc5haWMI0isdYIWecJ1BHzwbMK9TbkAaLw=;
-        b=On9C5Z65yQRxzTzVjKR6GqkWTWvWUDajroJcY++RNj3Ib4Ly1L0+Gs2qXPTyV3iJwc
-         +Ws4mKKf3kI82bpn6bzRfSNdHprCMQIYbc/4X9GIRERqd65Q6SxoQl7pe1a9Qs+Zycvv
-         P2Q35v4u//HLJxwT33ng0gTEkFjch0GJnwLmuEuieJ3Kt8VkA5PvRZGbXXJCRmAbk0p+
-         GVU8wWZ7NqmFdHtcWoBwbZxvpzwAZfWPyCR8A4F/NpJnL7Tn+x9PhNW8WXYllpX2fI2u
-         SzcEHMcwSMsYM5DW/ZuOC41pFTSGWAzmGr0eeghnjiNnHNMdvjXsYjJKzf3hnOvciDjG
-         ra9A==
-X-Gm-Message-State: AC+VfDwyVIyYafRSw9b0j34bVDO7UIiudvdiJIYD9O1BHkYJccOTYnkr
-        1Hpa4HUaQcQoDBur6Ynwces=
-X-Google-Smtp-Source: ACHHUZ5Qfy+OmVz7LLpaDi01nhTf2maEM5LII6Jw1kuEUdhTNYFsIE2CwTHyoEODquBAktTeapdUwA==
-X-Received: by 2002:a17:902:ecc4:b0:1ad:8c8f:afb1 with SMTP id a4-20020a170902ecc400b001ad8c8fafb1mr4681229plh.39.1683781493362;
-        Wed, 10 May 2023 22:04:53 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id p22-20020a17090adf9600b00246774a9addsm14303627pjv.48.2023.05.10.22.04.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 22:04:52 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org,
-        derrickstolee@github.com
-Subject: Re: [PATCH v12 0/2] diff-files: integrate with sparse index
-References: <20230508184652.4283-1-cheskaqiqi@gmail.com>
-        <20230509194241.469477-1-cheskaqiqi@gmail.com>
-        <f51a8d77-c480-f021-38c4-78a9d75cdd11@github.com>
-Date:   Wed, 10 May 2023 22:04:52 -0700
-In-Reply-To: <f51a8d77-c480-f021-38c4-78a9d75cdd11@github.com> (Victoria Dye's
-        message of "Wed, 10 May 2023 20:41:52 -0700")
-Message-ID: <xmqqbkirzcej.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1683782289; x=1686374289;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H6jV6WzJOMom+MVlDmGpNPC3GtFowCSqs7ZgF8e2ggI=;
+        b=FGQyC2pSAEcuUeU7JukrtPY0Y2qCrB9USlyzy9oHf7MPkFejMVgjC/jG2fZj741Cmu
+         OJk0l2EospJY/3cpPqWA7VmbmndiUKuJChlgBCgRiyozd6MAnC46HO5+OIgNjZtKWddC
+         sj3m4xlsmnZXojPWbdU0eIDCeCUqmgAA8yTTkTns7XCginxbjLvX4c18e2rJjy48XDlz
+         edlvw8OOMdhAaQye+yCUTUJZD9tpiCmnjtjHDTJJ8HA+OYadOOvl8F4Mp9JhASEcgfq1
+         /PHxoBLmJs+fSVLisZDC9pGFLl7tWw6mtIRCBz/IAC+Et5LUbSmo/QkJ+AO1WhhFq+O1
+         K7Pg==
+X-Gm-Message-State: AC+VfDxItr2H17OS/s4AYplONrftJ2KvF5jAQF5oUHiIsznlpr+6ErSB
+        IPcw/FM/NzrKyk9mgol3wKHIVCHCE+SJufSOX5kw1jRFjrY=
+X-Google-Smtp-Source: ACHHUZ448+hVYaNnFE4PxoFbJzaorTsQpw6mUdBtI4vyql4QJMh5si9sZxS+pvat4DAKoErCd79YxBycCFcgFV03xLQ=
+X-Received: by 2002:a05:6214:1c8a:b0:5a3:79cd:8ef7 with SMTP id
+ ib10-20020a0562141c8a00b005a379cd8ef7mr27544844qvb.23.1683782288833; Wed, 10
+ May 2023 22:18:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1384.v7.git.1669136378754.gitgitgadget@gmail.com> <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 11 May 2023 01:17:56 -0400
+Message-ID: <CAPig+cR+mNDT1NX1dSp92UAvvFwoHGU_D60MSnVkMmuwSx=fhw@mail.gmail.com>
+Subject: Re: [PATCH v8] status: modernize git-status "slow untracked files" advice
+To:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Rudy Rigot <rudy.rigot@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+On Tue, Nov 22, 2022 at 5:07 PM Rudy Rigot via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> `git status` can be slow when there are a large number of
+> untracked files and directories since Git must search the entire
+> worktree to enumerate them.  When it is too slow, Git prints
+> advice with the elapsed search time and a suggestion to disable
+> the search using the `-uno` option.  This suggestion also carries
+> a warning that might scare off some users.
+>
+> However, these days, `-uno` isn't the only option.  Git can reduce
+> the size and time of the untracked file search when the
+> `core.untrackedCache` and `core.fsmonitor` features are enabled by
+> caching results from previous `git status` invocations.
+>
+> Therefore, update the `git status` man page to explain the various
+> configuration options, and update the advice to provide more
+> detail about the current configuration and to refer to the updated
+> documentation.
+>
+> Signed-off-by: Rudy Rigot <rudy.rigot@gmail.com>
+> ---
+>     Changes since v7:
+>
+>      * Moved tests from new test script to existing one, in order not to
+>        needlessly waste a test script number for such a small feature. Two
+>        caveats:
+>        * The use of test_config in a subshell result in: 'error: bug in the
+>          test script: test_when_finished does nothing in a subshell', so
+>          I've had to resort to using plain old git config instead.
 
-> This iteration looks good to me. Thanks for keeping up with the reviews and
-> getting this to a polished state!
+Sorry, I should have thought of this when making suggestions in my
+earlier reviews. For completeness, in case you run across this sort of
+issue again if submitting patches in the future, it is possible to get
+this working by using the -C option (change to directory) with
+test_config() outside of the subshell. For instance:
 
-Thanks, both.  Let's merge the topic to 'next'.
-
+    test_expect_sucess 'some title' '
+        test_config -C slowstatus core.untrackedCache false &&
+        test_config -C slowstatus core.fsmonitor false &&
+        (
+            cd slowstatus &&
+            GIT_TEST_UF_DELAY_WARNING=1 git status >out &&
+            ...
+        )
+    '
