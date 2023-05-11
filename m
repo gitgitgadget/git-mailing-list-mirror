@@ -2,106 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B473DC7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 21:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22424C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 21:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239332AbjEKVmv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 17:42:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45508 "EHLO
+        id S239299AbjEKV4N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 17:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239401AbjEKVms (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 17:42:48 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D84855BA1
-        for <git@vger.kernel.org>; Thu, 11 May 2023 14:42:35 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1aae46e62e9so66408935ad.2
-        for <git@vger.kernel.org>; Thu, 11 May 2023 14:42:35 -0700 (PDT)
+        with ESMTP id S238254AbjEKV4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 17:56:12 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7501C3C1B
+        for <git@vger.kernel.org>; Thu, 11 May 2023 14:56:10 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id 46e09a7af769-6ab611e57c2so1165056a34.1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 14:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683841355; x=1686433355;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+Lnh2sRBijWVZk7yqoJY2BLeohj/uIXFGZaUULtkb7s=;
-        b=fDusFCrrJqrPOHGw/wjcOKQCfKFkLR4g2u8f7xJFN9hsrYKnd/kHFQPhSUpu+l8KM0
-         JrIa2Um00RFxocI3tzeMK71WEJkFLQDe/I+IhUb6rTU1xIIj+rLIv6p2dfeXgjJWhQI+
-         pGq6LWmFkwATztNZENFJcTZOR76WUICTPDd9S/34oJrerFH3j9yaYuO5tlS/02Y1gFun
-         xOZ/x4A5bu2GSeO6hF4AGJpF3L+SkwzcR5PM/9IynFLKpeCc44z0Di8Mj49mFWiTeSw0
-         rnShH8+jGCoA5SDzXSgtO0LyOqu7B2GSa3ypPKt0uS0Usr3mMt5Zk8vBcDBnUxEE9Trx
-         msng==
+        d=gmail.com; s=20221208; t=1683842169; x=1686434169;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nveOpIQQN7dROak3PV1Ry6ipewOh0IRFYeRGBlbV3Gs=;
+        b=UmJyWWg7EenJ+Fg1EtghIzk2TIOmKBszhJCSi40TOgvAG1pNKxTmufRfI+5LNb6GcU
+         gFp7CLEazjnlKEVKWF/AJbzvwWjekr3uXIh9bVJqo4MbJ9wBQJDyAEGthfyI5cO2Q4zj
+         YPdinSZ32jbj6vEEvOXH1UtWRC41t0zMrqQ5IVTz/kwZu+PPXzNLE1zO3JRnPNBSEW9d
+         PyUqWNmEXVBQxYbxpDpkWb8XFUb3Raefp5Gc1oqOngIPogxC+mo/+9sKrAQ7XxDu05b1
+         T8ZDIqv9PEiQGfHbreuuIKCW4TzBo6XdYaiiswc3DOJwMwlSlI4h7N9uQXv1aPKFXyD1
+         RXGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683841355; x=1686433355;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+Lnh2sRBijWVZk7yqoJY2BLeohj/uIXFGZaUULtkb7s=;
-        b=Pr/kXbsfDJmzarX2fAcgkVHpT0i481wQGTErNmSDkdFG+gAxGwzsOOeIV/haJMmwY3
-         +r61reqZl/UK1+OkVrelDka2iFGpUXz5YLcl020RQc2OYojtBfUh7RE1Sj9MdMUVXyyT
-         HVn7BThKf/pH5ODNDMQTsa25TN4kUu6kzmQGK487esxHVQWKIcKtHPIcxAgs9vkGZ0oa
-         wSpL1nrVj/DM00JOn153aUtK9gNVf7W5UsJZeARvG3Tq4EkS+ktX8FuzDWcu4sqZYgH1
-         mgOTA3RI+3l0Ne7N0Ue8a19+mp7iNLRDwt2tfb13Gkcijd7j+IlrMRvJkcADfbWi+KDb
-         YMsQ==
-X-Gm-Message-State: AC+VfDzQ8lmUR2N/dA2T6lPPJUaNLceHsal4vFfx/22aJC3G+IFo3jdr
-        2FMvEZs2twkTxGnsZbzsvS0=
-X-Google-Smtp-Source: ACHHUZ7ciCx/PiHOWeAEck2HcJVjLgFDuxo+xO67vy1DAPRxe1cs76j0o7z7+i+YDQC+/8MS7zFsHw==
-X-Received: by 2002:a17:902:e852:b0:1a9:433e:41e7 with SMTP id t18-20020a170902e85200b001a9433e41e7mr20693562plg.43.1683841355217;
-        Thu, 11 May 2023 14:42:35 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id u11-20020a170902a60b00b001ab1a737c8dsm6339104plq.285.2023.05.11.14.42.34
+        d=1e100.net; s=20221208; t=1683842169; x=1686434169;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nveOpIQQN7dROak3PV1Ry6ipewOh0IRFYeRGBlbV3Gs=;
+        b=DQH/dEGSrI2muFjZqnM5AyqNsBfG3uEXeTfDCWF2ReNWS5srKA/GdQfKQuxdWK/Jiu
+         e1gnNN7vBL2YCubQsN++Ae8F3fdT/9HKwvCKVqeurxcerhfox9hD3FRQ791HYKgNVUHK
+         x18sP2i65+4RfEMIdjPu9q6/o0QukpD2xQz3fl1J7/VfVFswIWCKRKHNk8xl5Staqu3Y
+         NSVkUKP7OzCjb2EvemhhQW4izyk7l3LjpcqMJVHEpZGm81awb5D6vAPRohyciCp9EUBn
+         hm6COUECMzLhF77TL3apDjxL/xfJQXXJsb35FnTDbSnmFwPvCUlJaZiMS62iptGlriMs
+         5u/g==
+X-Gm-Message-State: AC+VfDwTR+S0Z7njcJgZ1jpqwpclIgfyQ546/Imue7M/Ofb/61V0r6x7
+        /0FewXXGs392CuDCsNAoNyDN2N1u8q4=
+X-Google-Smtp-Source: ACHHUZ70QyE0Mh9tzCP8v09hFzXeThi6wMA4DE1mJFKW1M1mvip6eKl/NyNrNfS3ql4Rl039xp4R5A==
+X-Received: by 2002:a9d:5c11:0:b0:6ab:2918:8185 with SMTP id o17-20020a9d5c11000000b006ab29188185mr3967166otk.5.1683842169459;
+        Thu, 11 May 2023 14:56:09 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id c3-20020a9d7843000000b006a5f7285a53sm7716495otm.6.2023.05.11.14.56.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 14:42:34 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net,
-        phillip.wood123@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v5 7/7] strbuf: remove global variable
-References: <20230511194446.1492907-1-calvinwan@google.com>
-        <20230511194822.1493798-7-calvinwan@google.com>
-Date:   Thu, 11 May 2023 14:42:34 -0700
-In-Reply-To: <20230511194822.1493798-7-calvinwan@google.com> (Calvin Wan's
-        message of "Thu, 11 May 2023 19:48:22 +0000")
-Message-ID: <xmqqr0rmtuid.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Thu, 11 May 2023 14:56:08 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH] merge-tree: load config correctly
+Date:   Thu, 11 May 2023 15:56:08 -0600
+Message-Id: <20230511215608.1297686-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
+In-Reply-To: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
+References: <pull.1530.git.1683745654800.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+When real merges were implemented in 1f0c3a29da (merge-tree: implement
+real merges, 2022-06-18), init_merge_options was called after doing
+get_merge_parent, which means core.useReplaceRefs was not parsed at the
+moment the commit objects were parsed, and thus essentially this option
+was ignored.
 
-> strbuf_stripspace() removes the skip_comments boolean and checks if
-> comment_line_char is a non-NULL character to determine whether to skip
-> comments or not.
+This configuration is typically disabled in git hosts due to the ability
+to spoof commits in strange ways. Users are able to use refs/replace/
+references to make pull requests that look valid but introduce malicious
+content. The resulting merge has the correct commit history, but the
+malicious content exists in the root tree of the merge.
 
-Hmph, that is certainly cute.  Taking it as granted that NUL can
-never serve any useful purpose in a text file (where stripspace
-makes any sense), passing NUL as the comment_line_char can certainly
-be used as a sign that no stripping is desired.
+To fix this let's simply load the configuration before any call to
+get_merge_parent().
 
-And those existing callers that do not want comment stripping are
-already passing 0 at the position because the original parameter is
-an integer (used as a Boolean); they now ought to be passing '\0'
-instead, but passing 0 is acceptable.
+Cc: Elijah Newren <newren@gmail.com>
+Tests-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/merge-tree.c  |  4 ++--
+ t/t4300-merge-tree.sh | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-It is not trivial to catch existing callers that pass 1 to mean
-"please strip" as they are not supposed to pass comment_line_char
-(usually "#", but there is a global variable for that visible to
-them).  If left unconverted, they end up asking that lines that
-begin with SOH ('\001') to be considered comments and get stripped.
-In order to catch such a mistake, however, you cannot say "ah, the
-skip_comments parameter is '1'; is that because the end user really
-wanted SOH as the comment leader?  Let's warn if the value of the
-comment_line_char global is not 1" for obvious reasons X-<.
-
-So this step, while it makes sense in a vacuum, is a cute idea, and
-is nicer in the longer term (because we certainly do not want to
-have to pass an extra parameter to the function), raises the risk of
-semantic mismerge higher for topics in flight that do want to use
-stripspace to remove lines that are commented out.  My quick "git
-log -S" seems to tell me there is no such topic I happened to have
-picked up in 'seen' right now, though, so it may be OK.
-
-Thanks.
-
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index aa8040c2a6..b405cf448f 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -424,6 +424,8 @@ static int real_merge(struct merge_tree_options *o,
+ 	struct merge_result result = { 0 };
+ 	int show_messages = o->show_messages;
+ 
++	init_merge_options(&opt, the_repository);
++
+ 	parent1 = get_merge_parent(branch1);
+ 	if (!parent1)
+ 		help_unknown_ref(branch1, "merge-tree",
+@@ -434,8 +436,6 @@ static int real_merge(struct merge_tree_options *o,
+ 		help_unknown_ref(branch2, "merge-tree",
+ 				 _("not something we can merge"));
+ 
+-	init_merge_options(&opt, the_repository);
+-
+ 	opt.show_rename_progress = 0;
+ 
+ 	opt.branch1 = branch1;
+diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+index c52c8a21fa..57c4f26e46 100755
+--- a/t/t4300-merge-tree.sh
++++ b/t/t4300-merge-tree.sh
+@@ -334,4 +334,22 @@ test_expect_success 'turn tree to file' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'merge-tree respects core.useReplaceRefs=false' '
++	test_commit merge-to &&
++	test_commit valid base &&
++	git reset --hard HEAD^ &&
++	test_commit malicious base &&
++
++	test_when_finished "git replace -d $(git rev-parse valid^0)" &&
++	git replace valid^0 malicious^0 &&
++
++	tree=$(git -c core.useReplaceRefs=true merge-tree --write-tree merge-to valid) &&
++	merged=$(git cat-file -p $tree:base) &&
++	test malicious = $merged &&
++
++	tree=$(git -c core.useReplaceRefs=false merge-tree --write-tree merge-to valid) &&
++	merged=$(git cat-file -p $tree:base) &&
++	test valid = $merged
++'
++
+ test_done
+-- 
+2.40.0+fc1
 
