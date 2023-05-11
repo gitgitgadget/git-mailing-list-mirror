@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C65C7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 19:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE3E7C77B7F
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 19:49:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239566AbjEKTtT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 15:49:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
+        id S239581AbjEKTtV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 15:49:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239361AbjEKTtE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 15:49:04 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F156F83E6
-        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:35 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-52857fc23b1so8492748a12.2
-        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:35 -0700 (PDT)
+        with ESMTP id S239077AbjEKTtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 15:49:01 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C955E72A2
+        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:34 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-518d6f87a47so4445430a12.3
+        for <git@vger.kernel.org>; Thu, 11 May 2023 12:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683834515; x=1686426515;
+        d=google.com; s=20221208; t=1683834513; x=1686426513;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=h+9aIyZsHKWt/WXrctl0MWBZHtOrnvY1GGul+Q1rxBQ=;
-        b=wa/lIRtKxWNR5Q7oN8MrZDaeL/jjh/+qr0tIiCOX6au5SqKtBhlSYYGA+XANUEONBU
-         Oae92BEIxaEKNAwu7kQMrlrojWxjzN+sMYXSyDY9bp1d21Fa6d+hP7RtDU4ljF6wPTvY
-         rfS8lwVxtzYplmvENjquS7CxIkxFRL71mL8PLWnB1lXzer88Spc4U5ml6j+C1VCaSr1J
-         nUcz/aqHjI8opvZYavLqpHCx/rFdKc9pyK87aQWiytk5AUPoDnyoXCPx39EHeQJ6p4oI
-         7a+NUAjw3QHxvxCOy2vQrjTowsJjGcmLYqFySDo05XpgJhZ4DiBBT1qZVN1Cfydae9pO
-         mBEQ==
+        bh=frkXVvp6yG2x745+Lt+a4pQaSaIgvbG38H+8YGuxcbk=;
+        b=gxkbhHveQuRy0fmuGBdbSXJD2NB74CfGwh7EYisqu1NdjVWFnkFW0g96d7kbwCK+1W
+         tlxWQxCOuBIrq6KKmhctxazG7SKU9NWGJ8iSkcdleZ+GpzwOBPccG300c+NsZGDJN5IX
+         MFXVQFhGyeFL67mqj+bj+ZlllEOQGtGyGJoeli9uEX1EcwDFTKUr562FjuXNl6jzjaBC
+         lzTy55ShuMvk8hMtzTPCk492RdmxgtUNV80sNixsPaVT/KXWHEw2JvEHSBK/Zpuyk1MT
+         YcEQj4CbgEMFWj4VYdz9inVH79g6VYQyhshZKjAAt9A2r2Kdyoxk/scZjb0DgsMEklD6
+         c1sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683834515; x=1686426515;
+        d=1e100.net; s=20221208; t=1683834513; x=1686426513;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h+9aIyZsHKWt/WXrctl0MWBZHtOrnvY1GGul+Q1rxBQ=;
-        b=lZ2chkFJnaVQhc4qX9tB53CI1boVEdlbFElyRRMKw4IvPEg5icb4qp+xaJnvcxou4+
-         Oo6yJw1LLdm3PvW3FmR98NTilIdnrDns3nv3SGWCmqleF96o7PWlKxNdS2vz52hxqAbK
-         V4OLKVlPzoJaj2DpH63xwSRIDP/o1ZjAYOhqVOhy63ldsIW7xQAbmYY8K7MJPhBQbXcX
-         9q/GR4ukjZvJmN0K26DeSt+Gur4ErTyY6wkJWalY9Nxmtr+HQqUyP0o6TxnKWiX3+paY
-         AzMPCfdaAoWx676QjIRCrctsIT8bmDQjS5MS4kcAFjbZNlSNCAyMDQYfj3el7diZtBmb
-         OJwQ==
-X-Gm-Message-State: AC+VfDzVtJiPIxkLVyhIEEcgbeAqMa4cnQmgGpHESlkaYWKSfgbnCPfe
-        N7XMCN+YkijKnMa1P974lIvxxO2J9W78CNVHqT7Yu8eFmo6P6JwTTmSR414zyRu3VDXo/OJleFM
-        f7qrykZVBKQKF4khyygn6A9LGIHIi90exaDDTu3tFMgMvh+TOkaHKOvZ0iDBzcqBG/Q==
-X-Google-Smtp-Source: ACHHUZ6TEJe1h+ywhZYROa9xPD9fFhiy75YgTdJEQTejwqqXxk+OBw0RTMApxRoM78cFi9m0dk9zDUOq7sH4l/Y=
+        bh=frkXVvp6yG2x745+Lt+a4pQaSaIgvbG38H+8YGuxcbk=;
+        b=BXcO+rwvE6ZemUPhh1ha5tUDtbvCZFp9KEfCBSOah66MZbbalzpHNFkTRRLabDXqGj
+         WC0yk9Zwo+nj7thmpR9S81esa9G/mAhCo8iJgaO0POlhZXYtpmxPQ2lxBufsG1mRfcMm
+         TFNcSjXIotXE/oPZYX3vkYTOp+iOYMJagAt87usf0+55cjHyeUixX2yriCN84j8mU6zP
+         uK/rYrhT82LTpPhfrrktvhcy/J6e7//wDRe0PF35xRkCdxjXZ2tbHxlwuEgvYOepxwJC
+         YkEVQgoVb1WJbqXDrqqYBsC4fgsI2P3LeQKvPbVG6M9lL5cmAVaO+PqPgGi1ImV9vaDL
+         Sppg==
+X-Gm-Message-State: AC+VfDwj+8P7z4g09UT1VpTj8Lj9NjrfspteCpNSxwDXbrf0nrPGpUGw
+        t8lu8THJoRuigvIVIgEaCbncixO5dMyXi99dJ0f31LzDKzC6iF0+HkhG6k6CMPorL0cqhEVKp0j
+        G8VfudMjCqfEDIW/lJikMapNOsVLp5LiMU96UfRAdBlq6Da+HYSapFdmXMuDcpfKaXA==
+X-Google-Smtp-Source: ACHHUZ6E/HU7RP7guVc+piirzHICH6aazcEq5Uyzhgrg/H9kjoG5NU2cxnpvZBtyErgAPKW4o88bBMdOmCUTLVM=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a63:8a4a:0:b0:52c:a2b8:5dda with SMTP id
- y71-20020a638a4a000000b0052ca2b85ddamr6373209pgd.11.1683834514841; Thu, 11
- May 2023 12:48:34 -0700 (PDT)
-Date:   Thu, 11 May 2023 19:48:21 +0000
+ (user=calvinwan job=sendgmr) by 2002:a63:6b04:0:b0:51b:8f87:6da4 with SMTP id
+ g4-20020a636b04000000b0051b8f876da4mr6200482pgc.11.1683834513146; Thu, 11 May
+ 2023 12:48:33 -0700 (PDT)
+Date:   Thu, 11 May 2023 19:48:20 +0000
 In-Reply-To: <20230511194446.1492907-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230511194446.1492907-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230511194822.1493798-6-calvinwan@google.com>
-Subject: [PATCH v5 6/7] strbuf: clarify dependency
+Message-ID: <20230511194822.1493798-5-calvinwan@google.com>
+Subject: [PATCH v5 5/7] path: move related function to path
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, newren@gmail.com, peff@peff.net,
@@ -62,29 +62,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-refs.h was once needed but is no longer so as of 6bab74e7fb8 ("strbuf:
-move strbuf_branchname to sha1_name.c", 2010-11-06). strbuf.h was
-included thru refs.h, so removing refs.h requires strbuf.h to be added
-back.
+Move path-related function from strbuf.[ch] to path.[ch] so that strbuf
+is focused on string manipulation routines with minimal dependencies.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- strbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ path.c   | 20 ++++++++++++++++++++
+ path.h   |  5 +++++
+ strbuf.c | 20 --------------------
+ 3 files changed, 25 insertions(+), 20 deletions(-)
 
+diff --git a/path.c b/path.c
+index 7c1cd8182a..e17a2613c5 100644
+--- a/path.c
++++ b/path.c
+@@ -1213,6 +1213,26 @@ int normalize_path_copy(char *dst, const char *src)
+ 	return normalize_path_copy_len(dst, src, NULL);
+ }
+ 
++int strbuf_normalize_path(struct strbuf *src)
++{
++	struct strbuf dst = STRBUF_INIT;
++
++	strbuf_grow(&dst, src->len);
++	if (normalize_path_copy(dst.buf, src->buf) < 0) {
++		strbuf_release(&dst);
++		return -1;
++	}
++
++	/*
++	 * normalize_path does not tell us the new length, so we have to
++	 * compute it by looking for the new NUL it placed
++	 */
++	strbuf_setlen(&dst, strlen(dst.buf));
++	strbuf_swap(src, &dst);
++	strbuf_release(&dst);
++	return 0;
++}
++
+ /*
+  * path = Canonical absolute path
+  * prefixes = string_list containing normalized, absolute paths without
+diff --git a/path.h b/path.h
+index 60e83a49a9..639372edd9 100644
+--- a/path.h
++++ b/path.h
+@@ -191,6 +191,11 @@ const char *remove_leading_path(const char *in, const char *prefix);
+ const char *relative_path(const char *in, const char *prefix, struct strbuf *sb);
+ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len);
+ int normalize_path_copy(char *dst, const char *src);
++/**
++ * Normalize in-place the path contained in the strbuf. If an error occurs,
++ * the contents of "sb" are left untouched, and -1 is returned.
++ */
++int strbuf_normalize_path(struct strbuf *src);
+ int longest_ancestor_length(const char *path, struct string_list *prefixes);
+ char *strip_path_suffix(const char *path, const char *suffix);
+ int daemon_avoid_alias(const char *path);
 diff --git a/strbuf.c b/strbuf.c
-index 178d75f250..d5978fee4e 100644
+index 6533559e95..178d75f250 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -3,7 +3,7 @@
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
--#include "refs.h"
-+#include "strbuf.h"
- #include "string-list.h"
- #include "utf8.h"
- #include "date.h"
+@@ -1088,26 +1088,6 @@ void strbuf_stripspace(struct strbuf *sb, int skip_comments)
+ 	strbuf_setlen(sb, j);
+ }
+ 
+-int strbuf_normalize_path(struct strbuf *src)
+-{
+-	struct strbuf dst = STRBUF_INIT;
+-
+-	strbuf_grow(&dst, src->len);
+-	if (normalize_path_copy(dst.buf, src->buf) < 0) {
+-		strbuf_release(&dst);
+-		return -1;
+-	}
+-
+-	/*
+-	 * normalize_path does not tell us the new length, so we have to
+-	 * compute it by looking for the new NUL it placed
+-	 */
+-	strbuf_setlen(&dst, strlen(dst.buf));
+-	strbuf_swap(src, &dst);
+-	strbuf_release(&dst);
+-	return 0;
+-}
+-
+ void strbuf_strip_file_from_path(struct strbuf *sb)
+ {
+ 	char *path_sep = find_last_dir_sep(sb->buf);
 -- 
 2.40.1.606.ga4b1b128d6-goog
 
