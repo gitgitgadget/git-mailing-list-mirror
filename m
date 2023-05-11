@@ -2,79 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA3CC77B7C
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 16:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F5EC77B7F
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 16:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238697AbjEKQQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 12:16:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33476 "EHLO
+        id S238578AbjEKQSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 12:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238664AbjEKQQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 12:16:52 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96E25255
-        for <git@vger.kernel.org>; Thu, 11 May 2023 09:16:44 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-559f1819c5dso133108797b3.0
-        for <git@vger.kernel.org>; Thu, 11 May 2023 09:16:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683821804; x=1686413804;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/oBL/9i3+IWsZ9jjBvOfHxikmhC9wpcungLmJuFrJOo=;
-        b=cS9JSrW7V3DpK6JbzvJtvupyIEQrjODA574AquiBLXyOEccAy98w//o+/PNxlX3xCx
-         kzWb9NDJxtcRO9Gai+B5dNvjzkDha0P55sBQQUGXgD6Proc6uodKGx6CQ8UmcTyOrPYQ
-         iteMonEXlr9zlM/mnk2PBGGa2O48PLpa0FpQkH5GH5WxKmukptELqNRa/gofSiiBrR+3
-         5hGPy52EUiIbP5g7mBZ5G93/QNCUNeHjqGWRBxOgosNbB2S82EKYJ2WPhUsLs7WmMHrN
-         7ABaonetdqhpnw6yKHgy20bY2Pqd4y9/ih3at67V6uRV6owustwuM3KQ+FmPymdduKMg
-         9v2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683821804; x=1686413804;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/oBL/9i3+IWsZ9jjBvOfHxikmhC9wpcungLmJuFrJOo=;
-        b=ZBqEyTrRyFQRQ0c0e4nPYIZZzpwprZn/AGWA+PFVW302+ykzC3CWpLLNIbJAi2GkYK
-         Uu2atfJEhHX0DN+RANHnPish9bxCX+C3I2JMEaweDy0X/AJ2laFltjeduIYeVavEcb2/
-         G3NNnc4EwkjyOrP1ggw0IEYlDc28r5mZXrQ8EZL7z1USl1S+MdhQRxjqaD7ZNek7F1pt
-         6ERMhw8Yv2ckD7CEfJePexRFZS9YtefuOx9snzQuoAbzacopLyUBxo+3p9huAfsTDcGI
-         3Kv27dJN+0f9kI8kWxt0kkXu0hFFScKM6mfYL7VxgBWGXWy4Q2dJaNSO2HD1BgEZwHqG
-         5XaA==
-X-Gm-Message-State: AC+VfDwncEHDx8m2gd2ewF2VqHoS5aKwzeWANy1L8BbE1lUiO8+9vSje
-        K+K3L2jwf2bwnOe+A4exzqEIQcHLQSJi6gOZNcppRQ==
-X-Google-Smtp-Source: ACHHUZ4wIxnbeHYjYLqfr5syBN0sd4imlGIwQeqes7rGYhV24d9z/LbzxV4Bj0FjPATV+WXcLsdXwQ==
-X-Received: by 2002:a0d:e696:0:b0:55a:2d2b:cdf0 with SMTP id p144-20020a0de696000000b0055a2d2bcdf0mr22491665ywe.8.1683821803765;
-        Thu, 11 May 2023 09:16:43 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m188-20020a0de3c5000000b00560c648ef1esm2033801ywe.72.2023.05.11.09.16.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 09:16:43 -0700 (PDT)
-Date:   Thu, 11 May 2023 12:16:42 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Christopher Fretz <cfretz@icloud.com>, git@vger.kernel.org
-Subject: Re: git rebase --root bug
-Message-ID: <ZF0U6tneDjLfGxf1@nand.local>
-References: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
- <288a9935-264b-4dc5-0d63-200c310f326e@gmail.com>
+        with ESMTP id S238774AbjEKQST (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 12:18:19 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D9B17695
+        for <git@vger.kernel.org>; Thu, 11 May 2023 09:17:58 -0700 (PDT)
+Received: (qmail 26742 invoked by uid 109); 11 May 2023 16:17:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 May 2023 16:17:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10505 invoked by uid 111); 11 May 2023 16:17:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 May 2023 12:17:57 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 11 May 2023 12:17:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 3/3] fsck: mention file path for index errors
+Message-ID: <20230511161757.GA1973344@coredump.intra.peff.net>
+References: <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net>
+ <Y/hxW9i9GyKblNV4@coredump.intra.peff.net>
+ <305ccc55-25e3-6b01-cd86-9a9035839d06@sunshineco.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <288a9935-264b-4dc5-0d63-200c310f326e@gmail.com>
+In-Reply-To: <305ccc55-25e3-6b01-cd86-9a9035839d06@sunshineco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2023 at 03:21:11PM +0100, Phillip Wood wrote:
-> The cause of the problem is that --root creates an empty commit (known as
-> "squash_onto" in the code) which it uses as the "onto" commit. When it picks
-> the first commit in the todo list the "onto" commit is amended and so is
-> unreachable when the reflog is expired above. I think the best fix would be
-> to stop pretending that we have a real "onto" commit when --root is used
-> without --onto and either store "new root" .git/rebase-merge/onto or not
-> create that file at all.
+On Thu, May 11, 2023 at 02:39:59AM -0400, Eric Sunshine wrote:
 
-Wouldn't it suffice to consider the squash_onto commit as reachable the
-same way we do for `--indexed-objects`?
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > diff --git a/builtin/fsck.c b/builtin/fsck.c
+> > @@ -795,7 +797,8 @@ static int fsck_resolve_undo(struct index_state *istate)
+> > -static void fsck_index(struct index_state *istate)
+> > +static void fsck_index(struct index_state *istate, const char *index_path,
+> > +		       int is_main_index)
+> 
+> This adds an `is_main_index` flag, but...
+> 
+> > @@ -993,12 +998,19 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+> > +			if (read_index_from(&istate, path,
+> >   					    get_worktree_git_dir(wt)) > 0)
+> > -				fsck_index(&istate);
+> > +				fsck_index(&istate, path, wt->is_current);
+> 
+> ...this accesses `is_current`, the value of which is "true" only for the
+> worktree in which the Git command was run, which is not necessarily the main
+> worktree. The main worktree, on the other hand, is guaranteed to be the
+> first entry returned by get_worktrees(), so shouldn't this instead be:
+> 
+>     worktrees = get_worktrees();
+>     for (p = worktrees; *p; p++) {
+>         ...
+>         fsck_index(&istate, path, p == worktrees);
+>         ...
+>     }
+>     free_worktrees(worktrees);
+> 
+> Or am I fundamentally misunderstanding something?
 
-Thanks,
-Taylor
+I think "current" is what we want here, since the point was to return
+the short-but-syntactically-correct ":path-in-index" for the current
+worktree, which is where "rev-parse :path-in-index", etc, would look
+when resolving that name.
+
+So the code is working as intended, but I may have misused the term
+"main" with respect to other worktree code. I didn't even know that was
+a concept, not having dealt much with worktrees.
+
+Maybe it's worth s/main/current/ here (and I guess in t1450)?
+
+-Peff
