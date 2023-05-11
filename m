@@ -2,166 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF54C7EE22
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 14:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F603C7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 14:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238224AbjEKOVn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 10:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39506 "EHLO
+        id S238451AbjEKO47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 10:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238380AbjEKOVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 10:21:35 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B7C12711
-        for <git@vger.kernel.org>; Thu, 11 May 2023 07:21:14 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f41dceb9d1so60004045e9.1
-        for <git@vger.kernel.org>; Thu, 11 May 2023 07:21:13 -0700 (PDT)
+        with ESMTP id S238576AbjEKO4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 10:56:44 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1448A40E5
+        for <git@vger.kernel.org>; Thu, 11 May 2023 07:56:25 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-55a14807e4cso155870117b3.1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 07:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683814872; x=1686406872;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5LicFixW3LzlQhbi+Vg1vh0S7wCn9mwoJ3asBuNAvjU=;
-        b=Ft4zSEcrK3ejN30tST9tCU8pis1aq+fRsfFYhniqmh+aRHmp+AsljuaHC2fflKrE7Y
-         ltJ2MJIfGPAMmHqp4AjuUQIPhWl7VvJoQg64XkraXLPwdmB9WB6BOGyyur2Wpu05BhaN
-         3gkf0z7/lpJEsLn70PX7j5SXc82gghFzrx87h+7x02x/8+7ed4iT2gcJ1TGBLx4jxzNl
-         dT2VFQA63kDRr5Jc0+VXYlkhk1ZujlMErgXmsK3VprV2YO9qu9wg+b3MwgnvOaCk8Z4T
-         gQILvYV2L+oQVshCb20WXD7JJTWm5Nm5jgYPylWURvduBDt3cLdPiVhg7md/8+vVOsBv
-         5eAg==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683816922; x=1686408922;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hTsn61FXYfmyCQqYamwlNF1ZmJH9OtqORn3BEVIZ8eQ=;
+        b=XaTKpYtfc3USIxj4nrQ9OxGgHjTqfGTHzTM0PMGMqr3kEOyfSsBqImdOoJv+SDMzsN
+         pG7nGIiZ/x6w26F7EjcbQNejjHuhSBA2aVM741EJj87+8CKc8ysPVUGUxwarE4GnGzgS
+         a+/elgN7oPTNl1lYUXccXic/64ViVA2ScXG9T1qKwtBpLk+v4QLDsYUuUZDnwdiwT6qN
+         crwlH7PsSfY8daOH1qFWCqKWDYPjCGSCSW5doVqovvKGj0+mTm1rMNvGrOumR2lMOfIQ
+         uNctiVB8ghYyClXvvnGYHNPTKSHEphMJOHgE3Hz8OMbm+OgF/CyrZtrzcwwtk2ZGEemL
+         cr8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683814872; x=1686406872;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5LicFixW3LzlQhbi+Vg1vh0S7wCn9mwoJ3asBuNAvjU=;
-        b=iP5huJeyXOVZgSiY6b9+3skAYbrcqRsW/hSbJjSUd6sP2f6TtsIZIrCHD28J9bgXn1
-         Cz1E+xmaufdHFNTIEvOrVzF51JG1XXr6Cbdx2sPwyLFFM+RZBXHjqMkVGBiztJ0ge5xf
-         IrsOMyPMyNF6TzntpzEBgGuST04zK+G0gXbPWKLET0Za//pnVE9rOkXBfDAX9T39C1Ex
-         JQz3tYdUOYvrSEpYroJPeEspgzVih1i2QvVW78MS5lVxoDTK0QLqYyR+IshICUrKeCIY
-         cfrG30RvizT4dNLierO14+9Y9Eks0Uvw3bhbf38Gb/zJUbX5JXNWqCx7hfS8DQETbD4d
-         3Daw==
-X-Gm-Message-State: AC+VfDxYXVpMUXwAc+yLfsnIxtx7GEg8RRmy4D13X244qJwq4ojgNq/A
-        LRYXkCpSgqR+puPPG3Te4aU=
-X-Google-Smtp-Source: ACHHUZ4VbX12FiX5xEJRhryGZJFAcgf2i6M6JHOQqHxnXGdpw3yTcqs4N3oP8QfbnlOcFd0es7X4fg==
-X-Received: by 2002:a05:600c:2047:b0:3f4:2452:9675 with SMTP id p7-20020a05600c204700b003f424529675mr10152666wmg.0.1683814872210;
-        Thu, 11 May 2023 07:21:12 -0700 (PDT)
-Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id s9-20020a5d5109000000b002ffbf2213d4sm20452354wrt.75.2023.05.11.07.21.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 May 2023 07:21:11 -0700 (PDT)
-Message-ID: <288a9935-264b-4dc5-0d63-200c310f326e@gmail.com>
-Date:   Thu, 11 May 2023 15:21:11 +0100
+        d=1e100.net; s=20221208; t=1683816922; x=1686408922;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hTsn61FXYfmyCQqYamwlNF1ZmJH9OtqORn3BEVIZ8eQ=;
+        b=Sn2W+Gc0FYQWPKuTkQh7OrktTw+P5tOBkgook874Rl0rSpwZp8qz0bdwlO+onXOZQ+
+         Lzw6N3ov1XPMYzq9wz9iBNKETxqXMYxFwPn6mjgP4GXIo9u/AKXpyPcLdPZybQl+bqMJ
+         87lWbdOMBTxKBuW6mMBLii46MfqmtLOnOGSnHRORfodgKVxWj4eGcOz4T48Haw9eJ8p3
+         5eMB3jHXyWEhhRzAlYuYaBnz++m/W/T1G/quRupq9Q1XqRZWvyfaX6QnBIXHAQP9+VT5
+         0B4ZEKaXIAQJOLGOjMAWqwO4YiYRteLkbEm5s3pK0s3kkZs3XCqU+51FLu1XDbU1Xs0v
+         gtiA==
+X-Gm-Message-State: AC+VfDxyRQOxEozB5nJ62Xx+dmvq24Yfr8AAbeoRY78dtWlaB6kfnzNe
+        YkJ5FhGvBfPeaGlvDAEosCbHIA==
+X-Google-Smtp-Source: ACHHUZ6vkY53nGN/fDLxI4D8MYxJYWQHOCPDuVWdKnCZPtLzBzYwWh0+jXa6WQGFtg0xqfp82K1SeQ==
+X-Received: by 2002:a0d:c641:0:b0:544:ccde:b6b8 with SMTP id i62-20020a0dc641000000b00544ccdeb6b8mr21231011ywd.4.1683816922252;
+        Thu, 11 May 2023 07:55:22 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w76-20020a81494f000000b0054fba0d6a88sm4901541ywa.100.2023.05.11.07.55.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 May 2023 07:55:21 -0700 (PDT)
+Date:   Thu, 11 May 2023 10:55:20 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Bug in unused.cocci?
+Message-ID: <ZF0B2Prhc7jsqa3p@nand.local>
+References: <5720a23e-6ac0-9a6d-3d05-4e0f34bc0589@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git rebase --root bug
-Content-Language: en-US
-To:     Christopher Fretz <cfretz@icloud.com>, git@vger.kernel.org
-References: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5720a23e-6ac0-9a6d-3d05-4e0f34bc0589@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christopher
+On Thu, May 11, 2023 at 10:16:21AM +0100, Phillip Wood wrote:
+> I think this is due to a bug in unused.cocci. I'm not sure what is going
+> wrong and admittedly we're unlikely to see code where an strbuf is
+> initialized and then used it without calling any of the strbuf_* functions
+> within our main codebase but it would be nice if the rule could handle this.
 
-On 10/05/2023 21:08, Christopher Fretz wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
-> 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Run an interactive, root, rebase, select one or more commits to edit, and then leave the repo in the rebase state for long
-> enough that the "onto" commit expires out of the reflog and gets gc'd.
-> 
-> An example set of commands to immediately reproduce the issue can be seen below:
->    $ mkdir git_test
-> 
->    $ cd git_test
-> 
->    $ git init
->    Initialized empty Git repository in /Users/cfretz/working/git_test/.git/
-> 
->    $ git commit --allow-empty -m 'root commit'
->    [master (root-commit) 01edd93] root commit
-> 
->    $ git rebase -i --root
->    Stopped at 01edd93...  root commit # empty
->    You can amend the commit now, with
-> 
->      git commit --amend
-> 
->    Once you are satisfied with your changes, run
-> 
->      git rebase --continue
-> 
->    $ git reflog expire --expire-unreachable=now --all
-> 
->    $ git gc --prune=now
->    Enumerating objects: 2, done.
->    Counting objects: 100% (2/2), done.
->    Writing objects: 100% (2/2), done.
->    Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
-> 
->    $ git rebase --continue
->    fatal: could not parse 10796537ce108c36191d52368250f403afede30b
+I don't think that this is a bug in unused.cocci, but rather a bug in
+spatch not being able to read t/unit-tests/test-lib.h.
 
-The cause of the problem is that --root creates an empty commit (known 
-as "squash_onto" in the code) which it uses as the "onto" commit. When 
-it picks the first commit in the todo list the "onto" commit is amended 
-and so is unreachable when the reflog is expired above. I think the best 
-fix would be to stop pretending that we have a real "onto" commit when 
---root is used without --onto and either store "new root" 
-.git/rebase-merge/onto or not create that file at all.
+    $ spatch --verbose-parsing --debug --all-includes \
+        --sp-file contrib/coccinelle/unused.old.cocci \
+        t/unit-tests/t-strbuf.c | grep '^bad'
+    init_defs_builtins: /usr/lib/coccinelle/standard.h
+    -----------------------------------------------------------------------
+    processing semantic patch file: contrib/coccinelle/unused.old.cocci
+    with isos from: /usr/lib/coccinelle/standard.iso
+    -----------------------------------------------------------------------
 
-Best Wishes
+    HANDLING: t/unit-tests/t-strbuf.c
+    parse error
+     = error in t/unit-tests/test-lib.h; set verbose_parsing for more info
+    badcount: 3
+    bad: int test_done(void);
+    bad:
+    bad: /* Skip the current test. */
+    BAD:!!!!! __attribute__((format (printf, 1, 2)))
 
-Phillip
+From my understanding, spatch happily ignores macros that it doesn't
+understand (like check_uint() and check_char()), so to it this code
+looks like:
 
-> What did you expect to happen? (Expected behavior)
-> Git should consider the "onto" commit to be referenced from the ongoing rebase, and refuse to gc it, even during a --root
-> rebase.
-> 
-> What happened instead? (Actual behavior)
-> Git gcs the "onto" commit, breaking the ongoing rebase; after this, no rebase commands work, and your only option is git rebase --quit.
-> The only way I've discovered to fix this without git rebase --quit is running scary commands to manually create a new dummy "onto" commit,
-> and then overwrite the onto file in the git directory; I'm not confident that this doesn't somehow cause subtle problems that aren't
-> immediately obvious.
-> 
-> What's different between what you expected and what actually happened?
-> Git gcs the onto commit and leaves the repo in a broken state. Without manual intervention to fix the .git directory, or hard bailing out of
-> the rebase, the repository appears broken. A user less familiar with git would likely just delete the repo, reclone, and start entirely from
-> scratch.
-> 
-> Anything else you want to add:
-> The way I originally encountered this issue was by leaving a repo in the rebase state for multiple weeks, coming back to the repo to finish the
-> work, and then having the repo broken by a background gc job. I assume the fundamental problem here is that the "onto" commit during a --root
-> rebase isn't actually a part of the new history, and is just "synthesized" to remove edge cases, and so git sees it as unreachable during the gc.
->  From one perspective, it might be argued that this is "expected" behavior given the above, but given the severity of the failure I think this should
-> be considered a bug, and I think git should just unconditionally consider the "onto" commit as _always_ being reachable; it's not obvious to me why
-> this wouldn't work. My apologies if this bug has already been fixed in a later version of git. Thanks!
-> 
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
-> 
-> 
-> [System Info]
-> git version:
-> git version 2.37.3
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Darwin 22.3.0 Darwin Kernel Version 22.3.0: Mon Jan 30 20:42:11 PST 2023; root:xnu-8792.81.3~2/RELEASE_X86_64 x86_64
-> compiler info: clang: 13.1.6 (clang-1316.0.21.2.5)
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): /bin/zsh
-> 
-> 
-> [Enabled Hooks]
+    struct strbuf buf;
+
+    strbuf_init(&buf, 1024);
+    strbuf_release(&buf);
+
+which it marks as unused and applies the patch. Strangely, if you force
+it to pre-process with the appropriate macro file by passing it
+explicitly, it works as expected:
+
+    $ spatch --macro-file t/unit-tests/test-lib.h \
+        --sp-file contrib/coccinelle/unused.old.cocci \
+        t/unit-tests/t-strbuf.c
+    init_defs_builtins: /usr/lib/coccinelle/standard.h
+    init_defs: t/unit-tests/test-lib.h
+    HANDLING: t/unit-tests/t-strbuf.c
+
+I am puzzled by spatch's behavior here.
+
+Thanks,
+Taylor
