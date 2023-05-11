@@ -2,161 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 889A2C77B7C
-	for <git@archiver.kernel.org>; Thu, 11 May 2023 18:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03AAFC7EE22
+	for <git@archiver.kernel.org>; Thu, 11 May 2023 18:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238652AbjEKSFC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 14:05:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
+        id S238687AbjEKSJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 14:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239144AbjEKSE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 14:04:57 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 455117D85
-        for <git@vger.kernel.org>; Thu, 11 May 2023 11:04:20 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f13ef4ad91so10413895e87.3
-        for <git@vger.kernel.org>; Thu, 11 May 2023 11:04:20 -0700 (PDT)
+        with ESMTP id S238840AbjEKSJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 14:09:09 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684B2AD
+        for <git@vger.kernel.org>; Thu, 11 May 2023 11:08:40 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id 98e67ed59e1d1-24ddf274039so6199201a91.1
+        for <git@vger.kernel.org>; Thu, 11 May 2023 11:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683828257; x=1686420257;
+        d=gmail.com; s=20221208; t=1683828515; x=1686420515;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U9XrkLl4/+NZqqyuM1FrDmO4o+HEvW/Z+oDNbMeCBcY=;
-        b=c22BSHawNzLCj2y6u7ydmKXBHFueBO5BGJBOJ/4GjZf73M62P7+GxqpIT/B0TsgS4u
-         PnVdeO+mAWYwm900LJk+/ZKl0pNnxrIHzbdUCnqdMO610Xek7M0FYz8OOqHjhdxLhL2s
-         Z89T+uNwoVLQWTu2bUG2YqM+CWACr1teqsiC3zozxaC5KfAatJbbi4w2PsllgpCT59bY
-         EcE3W/iVez+nUKA4SOXq5sQnkrAI0hX3Cv8n0D+xKuiTfSHIGTQpJP1MjrRL2qZ0MlQ7
-         Kqy1WVPRsR7YUBiN7pWukLeBgaQFflDwvxjrgAgRC6KB6IwquUBF9KIITHGh+kcp1546
-         AMog==
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tf8yzCwrqvBJBAzv+wfk2qnungUIWXWQO6p54yRgTxc=;
+        b=CzzbKB+2zRMPJyYhWz+bcDwRactNXpc7jg8j+4ijqNgFmbnIIjGvcLaYNSoqlJI6Em
+         hkRGXoJ0arFeYSCcok730EvlVUeFYcDVQokXxIiY6dHfB2gBj/3Z/RZDfY+13cEMm4of
+         kQgJf8GojE0BbEdvCdGQ8WoYoH58eVyZ2e3bzuTqiBa7WLhF13OfgXq86lOuJU5BsUox
+         nrs3IRswb5LXyKYJ+W36kMnyLvTnhYTVF0zb+B9sf+g2Co8o3O2JwSLqCBS+PaPxQddO
+         Cv2zF7uLj3lHo+zAZLl5BXmqTM0VmwqGLx+t8eoKke4GlUzagKt6b2zWYxiyE76M9jdn
+         7/gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683828257; x=1686420257;
+        d=1e100.net; s=20221208; t=1683828515; x=1686420515;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U9XrkLl4/+NZqqyuM1FrDmO4o+HEvW/Z+oDNbMeCBcY=;
-        b=cTYZehpOpRrnnKOjtPcNKX5fqDSAeX2/kSLfX9YoBnz4+m1VMPz/AYu3XUfj39DVq+
-         m+tIereKTNSE89f44/Dt43rZK9XKYtBhKS0BsFtTM/aJhvcbs3CV62izGM17z8Vqz5zv
-         MccarAJIBLKgt/NPyGyDR/LoUABiJFVQkAjl7JNXZariRz3xdSHrlh/Jg2IlVvNu3HwT
-         1v0eUwbEgYDSZkR/jFokCujaHZ/35KtsgmweSJmsM7MJ9JL3e25ZOXEEDlQyPvto/sCB
-         reBGt4ZMK09TiDlbO8IFUfESKhKgypZm9/RPVsniAhIrPIBQ0CREgAJkD19E+NL/iMqD
-         1KEQ==
-X-Gm-Message-State: AC+VfDxyzj+h5PRhKYZrOkQEJSU1eUwbrAs2+TcB9r1tBg/UR9Z7UXbn
-        Xr9tVOr1CP36xUcsNE5bs48=
-X-Google-Smtp-Source: ACHHUZ5q7eI2s3TmGMUgMRoeOzuMiScKauyxSMg8DtbM08KNELK+x+CBC7X9FL9CmgcFEoPRkwCNTg==
-X-Received: by 2002:ac2:4a7a:0:b0:4ee:d8f3:1390 with SMTP id q26-20020ac24a7a000000b004eed8f31390mr2736290lfp.53.1683828256893;
-        Thu, 11 May 2023 11:04:16 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id w21-20020ac24435000000b004f1f16777f1sm1190815lfl.303.2023.05.11.11.04.16
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tf8yzCwrqvBJBAzv+wfk2qnungUIWXWQO6p54yRgTxc=;
+        b=NbAAGHGVqkh414C7a/4TZUI37fR33t9TXhENXzov5gTVai5HqCuPWpQBHrc6+0w/Bt
+         ob7mbfm2jLzxjFQJPK/1wm09uIsN8cjgypRyITldY1QWfj28BGey/iizlcsMCHZCd4ki
+         RMiC/2ZXCx9Mfsw5hVEKt4kMCf0dA8UT+xAZbjNPBxODkRsvZ6XtFwjl86/KCf3m07tu
+         8C2wehrGUfEG3dfsH8Ot8swlSI353phc+Xbd/jzDqRAoJGaBX5Yhs3ZxEco0/BJwX08Z
+         Jfsq9utTdoJWFYnarQSL702Qse2XPxZFHSDKrJLWYJD8UGqR+3s4ERWPqYCX0ylWqxnj
+         rcTw==
+X-Gm-Message-State: AC+VfDxyWKdRIa/Uy/KayrRr29SPW1yiNUjnF+JgfY96xUeda6NNsjsw
+        XbWUUxkX6d3fVKvFzu6Rirw=
+X-Google-Smtp-Source: ACHHUZ5cpCYNBPRZ8d/zG6//lTWpNXGXDrT8tq+JU8PeO37B0C1KXxT75e++q4wPo9uFxnch+3s9AQ==
+X-Received: by 2002:a17:90a:b297:b0:24d:ff56:f8c1 with SMTP id c23-20020a17090ab29700b0024dff56f8c1mr22560097pjr.13.1683828514572;
+        Thu, 11 May 2023 11:08:34 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id v5-20020a17090a7c0500b0024e4f169931sm15445563pjf.2.2023.05.11.11.08.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 11:04:16 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-Subject: Re: Can we clarify the purpose of `git diff -s`?
-References: <645c5da0981c1_16961a29455@chronos.notmuch>
-        <871qjn2i63.fsf@osv.gnss.ru> <xmqqwn1ewyzx.fsf@gitster.g>
-Date:   Thu, 11 May 2023 21:04:15 +0300
-In-Reply-To: <xmqqwn1ewyzx.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        11 May 2023 10:37:22 -0700")
-Message-ID: <87lehu219c.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        Thu, 11 May 2023 11:08:34 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] rebase -r: fix the total number shown in the progress
+References: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
+        <d12d5469f8cbc21ce1efbffc8e7569c534b5a305.1683759339.git.gitgitgadget@gmail.com>
+        <b481d212-89c5-5c8e-c99f-6df3909523c7@gmail.com>
+Date:   Thu, 11 May 2023 11:08:34 -0700
+In-Reply-To: <b481d212-89c5-5c8e-c99f-6df3909523c7@gmail.com> (Phillip Wood's
+        message of "Thu, 11 May 2023 15:13:44 +0100")
+Message-ID: <xmqqsfc2wxjx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+>> @@ -2609,7 +2609,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>>   	char *p = buf, *next_p;
+>>   	int i, res = 0, fixup_okay = file_exists(rebase_path_done());
+>>   -	todo_list->current = todo_list->nr = 0;
+>> +	todo_list->current = todo_list->nr = todo_list->total_nr = 0;
+>>     	for (i = 1; *p; i++, p = next_p) {
+>>   		char *eol = strchrnul(p, '\n');
+>> @@ -2628,7 +2628,8 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>>   			item->arg_offset = p - buf;
+>>   			item->arg_len = (int)(eol - p);
+>>   			item->commit = NULL;
+>> -		}
+>> +		} else if (item->command == TODO_COMMENT)
+>> +			todo_list->total_nr--;
 >
->> I entirely agree with your conclusion: obviously, -s (--silent) and
->> --no-patch are to be different for UI to be even remotely intuitive, and
->> I'd vote for immediate fix of --no-patch semantics even though it's a
->> backward-incompatible change.
+> This feels a bit fragile, I think it would be better to count the
+> commands properly in the first place rather than adjusting the total
+> here. We could do that by not incrementing "todo_list->total_nr" in
+> append_new_todo() and then doing
 >
-> I forgot to write about this part.
+> 	if (item->command != TODO_COMMENT)
+> 		todo_list->total_nr++;
 >
-> tl;dr.  While I do not think the current "--no-patch" that turns off
-> things other than "--patch" is intuitive, an "immediate" change is
-> not possible.  Let's do one fix at a time.
+> here. We may want to stop counting invalid commands as well by only
+> counting commands whre "item->command < TODO_COMMENT".
+
+OK.
+
+>> @@ -6088,11 +6090,13 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>>   		return -1;
+>>   	}
+>>   +	new_total_nr += count_commands(&new_todo);
+>> +	new_todo.total_nr = new_total_nr;
+>> +
+>>   	/* Expand the commit IDs */
+>>   	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
+>>   	strbuf_swap(&new_todo.buf, &buf2);
+>>   	strbuf_release(&buf2);
+>> -	new_todo.total_nr -= new_todo.nr;
 >
-> The behaviour came in the v1.8.4 days with a series that was merged
-> by e2ecd252 (Merge branch 'mm/diff-no-patch-synonym-to-s',
-> 2013-07-22), which
+> I think if we just change this line to
+> 	
+> 	new_todo.total_nr = 0;
 >
->  * made "--no-patch" a synonym for "-s";
+> we don't need any other changes to this function. This is because
+> complete_action() is only called at the start of a rebase so we don't
+> need to worry about "total_nr" including commands that have already
+> been executed. The reason we need to set it to zero here is that we
+> re-parse the todo list below which increments "total_nr" by the number
+> of commands parsed.
 >
->  * fixed "-s --patch", in which the effect of "-s" got stuck and did
->    not allow the patch output to be re-enabled again with "--patch";
+> Thanks for working on this.
+> Best Wishes
 >
->  * updated documentation to explain "--no-patch" as a synonym for
->    "-s".
->
-> While it is very clear that the intent of the author was to make it
-> a synonym for "-s" and not a "feature-wise enable/disable" option,
-> that is what we've run with for the past 10 years.  You identified
-> bugs related the "-s got stuck" problem and we recently fixed that.
+> Phillip
 
-I wonder, why this intention of the author has not been opposed at that
-time is beyond my understanding, sorry! What exactly did it bring to
-make --no-patch a synonym for -s? Not only it's illogical, it's even not
-useful as being more lengthy.
-
-Probably nobody actually cared at that time, me thinks.
-
->
-> "Should --no-patch be changed" can be treated as a separate issue,
-> and whenever we can treat two things separately, I want to do so, to
-> keep the potential blast radius smaller.
-
-Sure it's a separate change. When I said "immediate" I meant that there
-is no need for some transition measures like config variables, not that
-it is to be included in the "fix -s".
-
-> That way, if an earlier change turns out OK but the other change
-> causes severe regression, we can only revert or rework the latter. An
-> exception is if committing to one change (e.g. "fix '-s'") makes the
-> other change (e.g. "redefine --no-patch") impossible, but we all know
-> it is not the case here. I gave an outline of how to go about it in
-> the log message of that "fix '-s'" patch.
->
-> I do not think it will break established use cases too badly to fix
-> the behaviour of "-s" so that it does not get stuck.  We saw an
-> existing breakage in one test, but asking the owners of scripts that
-> make the same mistake of assuming "-s" gets stuck for some but not
-> other options to fix that assumption based on an earlier faulty
-> implementation is much easier.
->
-> But "git diff --stat --patch --no-patch", which suddenly starts
-> showing diffstat after you make "--no-patch" no longer a synonym for
-> "-s", has a much larger potential to break the existing workflows.
-> And I do not think asking the users who followed the documented
-> "--no-patch is a synonym for -s" to change their script because we
-> decided to make "--no-patch" no longer a synonym is much harder.
-
-Why somebody would use --no-patch instead of -s when she means -s? Is't
-it obvious that
-
-   git diff --stat --patch -s
-
-is not only shorter but dramatically more clear than
-
-   git diff --stat --patch --no-patch
-
-???
-
-Taking this into account, I'd predict no breakage at all.
-
-> So, no, I do not think we can immediately "fix".  I do not think
-> anybody knows if it can be done "immediately" or needs a careful
-> planning to transition, and I offhand do not know if it is even
-> possible to transition without fallout.
-
-This has been expected, and this is one of the things that stops me from
-trying to "fix" anything in the Git UI recently. I think that perfectly
-legit carefulness from the maintainer to be conservative in accepting of
-such changes goes a bit too far, sorry!
-
-Thanks,
--- Sergey Organov
+Thanks both for working on the fix and reviewing the patch.
