@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D815C7EE24
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A62CC7EE25
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240128AbjELHFT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 03:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49704 "EHLO
+        id S240130AbjELHFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 03:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240083AbjELHEr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 03:04:47 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 789946E89
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:45 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3078c092056so4621001f8f.1
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:45 -0700 (PDT)
+        with ESMTP id S240090AbjELHEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 03:04:48 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441067A84
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:47 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-306f2b42a86so6282989f8f.3
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683875084; x=1686467084;
+        d=gmail.com; s=20221208; t=1683875085; x=1686467085;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bAh+FLTlGAu0Alzmqma5PD7e5PEfAs+N6kkIkvSEL58=;
-        b=s5zb+O1PcKi0qWljLexq+AQjhGPDW/EqDMVFvAiLhoxv12DpQjC51x6QQxtYURZMhD
-         tSgv/A5/6LvP/FIswOGCyRiLsd7+O07S8FwI9/erSe8TDJL3cEbFhR6SympHpUrqPWiJ
-         5z8p/xfJF1QsTq12aHjRCyHcBPQWbHuM69ojGFJ5iYTjK5DmMzud9nXlE7/Rz5+Scv+k
-         8xcAAQFVub+llLPC3EIi2vZlU5lgft5JIC5zXUxmvtBNICBcaYBWRp52eyqX/3WkUYVU
-         gqsWb3F4J3xBkVaJQb8y4uOW0D+1Fd73vNz7VnPd89FfLFWoul7KxzLB28cCRwibrcoc
-         iTSA==
+        bh=XH+16sMx+RbV9GvYAzMzrOb5IHu2U5QC3zjANAUk960=;
+        b=cjLu6bKT3E8a+f7hwAabxcJrwO9dLIl09fTHT6V2JXJHRiKgp4FkSnxp3VoVuIcMx6
+         lovtzANBkPwGsE8eGPuHeSbYDTexThANypQ1sQOXYP02jWu+mF8VXC+AQh5uzz6jWC7J
+         RYaoJ0u/G5IZhXPj4OauwRzwq8ULJJRRBhaEaNzom4e4u2cunWagEzariGuvhGj+dWD2
+         IxHDgSh40c/lU8/iA71ySMPub+4iyduXtsv2eQ5x5j22SR+clJW86p3QM2F9Vs62W4qr
+         nHL6ntzjB3iDsmwuSHbtZmd2Dk3atNSJudGcmxwVe7fepttcGi2pginWTnm2j9s4Fdnm
+         XNaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683875084; x=1686467084;
+        d=1e100.net; s=20221208; t=1683875085; x=1686467085;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bAh+FLTlGAu0Alzmqma5PD7e5PEfAs+N6kkIkvSEL58=;
-        b=VzFhuC2PZWAkSrW/p7hvpfi3YepgGjFz6QkFa/C5nYCjBtpYSw7yJbFurIj/9JtsYK
-         kuR6rFd6wicY33L0Ss0OuwwmnuGSrCF7JB87jiuuy9Z6Z8IJtCliA2GrYL3SSkhOLfWj
-         iSARDwWuuXBOeuOo6Kftwkqaj2qLAbme0CJJ3pnVQYVHVrzoEbwjgcr8XTwcFExmERux
-         d+foNYDGSY9dGbtLDX4eUIiPhYhzMxunILKM95vp3dQg7dpYOh8hbFJnrAPdoOyzBtBt
-         KVB//tuvnjkDBA3kGEI5U7s4zbfTDYA2RhcnN4xfby3l0UqDovJY7rRIDyjjU+gzeoIw
-         S+DA==
-X-Gm-Message-State: AC+VfDw0rebva9VmiC6H+WMLlSAv30q1A8WKPD+vZwP5WOghPyCkvOJW
-        xAwhtzb4bl/7jPjrv70OFwjmKUIpz04=
-X-Google-Smtp-Source: ACHHUZ7uvxSZHOvYT3lF2JtuQgOF2VHVkhPMG5JuFY+I94bbmxnMfVSqnos0VPy6VwhRiGo8TfH77g==
-X-Received: by 2002:a5d:4942:0:b0:306:2c01:4f08 with SMTP id r2-20020a5d4942000000b003062c014f08mr15800550wrs.21.1683875083550;
-        Fri, 12 May 2023 00:04:43 -0700 (PDT)
+        bh=XH+16sMx+RbV9GvYAzMzrOb5IHu2U5QC3zjANAUk960=;
+        b=WCOS6uwzwDex6Ze/0vm5GFkiOy7yr3O648h5Za85k7PFPfacV20M/zahbRnyTsRHLN
+         goi24ehH4kURaFbL9OavE5gbr2jKzDPBITLxVJpMZMaj27sEAp9NMFyBU55lsnPaDyEk
+         H3Ykum8v8fd/7tLxtEU7iX7y631H9WOEx7dMdJwDcTVbG+qLTMy66LaXXaYMXsd7dDa9
+         DanupGAu5rqOKZCcVGCZY1RjSjEhK5/AXPb/Kv4/i/hqXqcerk+LmWiVJB3tYeqQVRPN
+         q9PD3eMvDzkh09cz0COVUMHK9RKHTSnOvDjufbcm9zd9fF0+YhycjaDtmBkWdpDaN9EF
+         8nxQ==
+X-Gm-Message-State: AC+VfDyaa1eQ9cOguQgric6JVDskESC8JjSpgGvD+d7aXqMT/gKCO5oX
+        8SKSwB5OtHsHeq5AVduy8UjSv4zORZM=
+X-Google-Smtp-Source: ACHHUZ7/Vapht0+jQROMnXZQ5kZ41dsCcKFPWQoAZIkyZPuTkq8TRT/gCzS5KQFj09Z3wSAKhxz6vQ==
+X-Received: by 2002:adf:e511:0:b0:304:6715:8728 with SMTP id j17-20020adfe511000000b0030467158728mr19355714wrm.18.1683875085431;
+        Fri, 12 May 2023 00:04:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f25-20020a1c6a19000000b003f4290720cbsm11495399wmc.29.2023.05.12.00.04.43
+        by smtp.gmail.com with ESMTPSA id z18-20020a1c4c12000000b003f188f608b9sm27611876wmf.8.2023.05.12.00.04.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 00:04:43 -0700 (PDT)
-Message-Id: <39e5f6ca470b31f8fab17569a4b3fc18a2a7489a.1683875070.git.gitgitgadget@gmail.com>
+        Fri, 12 May 2023 00:04:45 -0700 (PDT)
+Message-Id: <f46aa5e73a1a06b1287b068a020a34aaf4b2b160.1683875070.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
         <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 May 2023 07:04:09 +0000
-Subject: [PATCH v2 08/27] statinfo: move stat_{data,validity} functions from
- cache/read-cache
+Date:   Fri, 12 May 2023 07:04:12 +0000
+Subject: [PATCH v2 11/27] sparse-index.h: move declarations for sparse-index.c
+ from cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,405 +73,284 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-These functions do not depend upon struct cache_entry or struct
-index_state in any way, and it seems more logical to break them out into
-this file, especially since statinfo.h already has the struct stat_data
-declaration.
-
-Diff best viewed with `--color-moved`.
+Note in particular that this reverses the decision made in 118a2e8bde0
+("cache: move ensure_full_index() to cache.h", 2021-04-01).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Makefile              |  1 +
- cache.h               | 48 ------------------------
- object.c              |  1 +
- read-cache.c          | 84 -----------------------------------------
- refs/packed-backend.c |  1 +
- shallow.c             |  1 +
- statinfo.c            | 87 +++++++++++++++++++++++++++++++++++++++++++
- statinfo.h            | 51 +++++++++++++++++++++++++
- 8 files changed, 142 insertions(+), 132 deletions(-)
- create mode 100644 statinfo.c
+ builtin/checkout-index.c    | 1 +
+ builtin/commit.c            | 1 +
+ builtin/difftool.c          | 1 +
+ builtin/fsck.c              | 1 +
+ builtin/ls-files.c          | 1 +
+ builtin/merge-index.c       | 1 +
+ builtin/read-tree.c         | 1 +
+ builtin/reset.c             | 1 +
+ builtin/rm.c                | 1 +
+ builtin/stash.c             | 1 +
+ builtin/submodule--helper.c | 1 +
+ builtin/update-index.c      | 1 +
+ cache.h                     | 2 --
+ dir.c                       | 1 +
+ entry.c                     | 1 +
+ merge-ort.c                 | 1 +
+ merge-recursive.c           | 1 +
+ resolve-undo.c              | 1 +
+ revision.c                  | 1 +
+ sequencer.c                 | 1 +
+ sparse-index.h              | 2 ++
+ 21 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e440728c246..cbc7f212016 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1142,6 +1142,7 @@ LIB_OBJS += sigchain.o
- LIB_OBJS += sparse-index.o
- LIB_OBJS += split-index.o
- LIB_OBJS += stable-qsort.o
-+LIB_OBJS += statinfo.o
- LIB_OBJS += strbuf.o
- LIB_OBJS += streaming.o
- LIB_OBJS += string-list.o
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index 9375a05539f..b1cd8bef264 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -17,6 +17,7 @@
+ #include "entry.h"
+ #include "parallel-checkout.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ 
+ #define CHECKOUT_ALL 4
+ static int nul_term_line;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index bd634ee6ad1..02e2ef3e307 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -38,6 +38,7 @@
+ #include "gpg-interface.h"
+ #include "column.h"
+ #include "sequencer.h"
++#include "sparse-index.h"
+ #include "mailmap.h"
+ #include "help.h"
+ #include "commit-reach.h"
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 0049342f5c0..2c27a59e04a 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -23,6 +23,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "parse-options.h"
++#include "sparse-index.h"
+ #include "strvec.h"
+ #include "strbuf.h"
+ #include "lockfile.h"
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 2cd461b84c1..7134596d218 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -25,6 +25,7 @@
+ #include "replace-object.h"
+ #include "resolve-undo.h"
+ #include "run-command.h"
++#include "sparse-index.h"
+ #include "worktree.h"
+ #include "pack-revindex.h"
+ 
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 069b28bd484..45b3b0ce5d8 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -23,6 +23,7 @@
+ #include "pathspec.h"
+ #include "run-command.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
+ 
+diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+index ab16e70f23d..d16e8aa414b 100644
+--- a/builtin/merge-index.c
++++ b/builtin/merge-index.c
+@@ -3,6 +3,7 @@
+ #include "hex.h"
+ #include "repository.h"
+ #include "run-command.h"
++#include "sparse-index.h"
+ 
+ static const char *pgm;
+ static int one_shot, quiet;
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 440f19b1b87..bd1ce1d963f 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -22,6 +22,7 @@
+ #include "repository.h"
+ #include "resolve-undo.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
+ 
+diff --git a/builtin/reset.c b/builtin/reset.c
+index f99f32d5802..3dc41ac3327 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -29,6 +29,7 @@
+ #include "unpack-trees.h"
+ #include "cache-tree.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
+ #include "trace.h"
+diff --git a/builtin/rm.c b/builtin/rm.c
+index b4589c824c0..377a0f66ad8 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -19,6 +19,7 @@
+ #include "repository.h"
+ #include "string-list.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "submodule.h"
+ #include "pathspec.h"
+ 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index a7e17ffe384..8856ac6d5c7 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -20,6 +20,7 @@
+ #include "rerere.h"
+ #include "revision.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "log-tree.h"
+ #include "diffcore.h"
+ #include "exec-cmd.h"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6bf8d666ce9..c58cfbfd6d3 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -13,6 +13,7 @@
+ #include "pathspec.h"
+ #include "dir.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
+ #include "string-list.h"
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 5fab9ad2ec4..47dc9b626ef 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -24,6 +24,7 @@
+ #include "dir.h"
+ #include "repository.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "split-index.h"
+ #include "symlinks.h"
+ #include "fsmonitor.h"
 diff --git a/cache.h b/cache.h
-index 02d69c24cd6..891e5fec744 100644
+index 316904da392..79daaa166b1 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -488,19 +488,6 @@ int has_racy_timestamp(struct index_state *istate);
- int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
- int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+@@ -327,8 +327,6 @@ int read_index_from(struct index_state *, const char *path,
+ 		    const char *gitdir);
+ int is_index_unborn(struct index_state *);
  
--/*
-- * Record to sd the data from st that we use to check whether a file
-- * might have changed.
-- */
--void fill_stat_data(struct stat_data *sd, struct stat *st);
+-void ensure_full_index(struct index_state *istate);
 -
--/*
-- * Return 0 if st is consistent with a file not having been changed
-- * since sd was filled.  If there are differences, return a
-- * combination of MTIME_CHANGED, CTIME_CHANGED, OWNER_CHANGED,
-- * INODE_CHANGED, and DATA_CHANGED.
-- */
--int match_stat_data(const struct stat_data *sd, struct stat *st);
- int match_stat_data_racy(const struct index_state *istate,
- 			 const struct stat_data *sd, struct stat *st);
- 
-@@ -539,14 +526,6 @@ void set_alternate_index_output(const char *);
- extern int verify_index_checksum;
- extern int verify_ce_order;
- 
--#define MTIME_CHANGED	0x0001
--#define CTIME_CHANGED	0x0002
--#define OWNER_CHANGED	0x0004
--#define MODE_CHANGED    0x0008
--#define INODE_CHANGED   0x0010
--#define DATA_CHANGED    0x0020
--#define TYPE_CHANGED    0x0040
--
- int cmp_cache_name_compare(const void *a_, const void *b_);
- 
- /* add */
-@@ -579,31 +558,4 @@ int checkout_fast_forward(struct repository *r,
- 
- int sane_execvp(const char *file, char *const argv[]);
- 
--/*
-- * A struct to encapsulate the concept of whether a file has changed
-- * since we last checked it. This uses criteria similar to those used
-- * for the index.
-- */
--struct stat_validity {
--	struct stat_data *sd;
--};
--
--void stat_validity_clear(struct stat_validity *sv);
--
--/*
-- * Returns 1 if the path is a regular file (or a symlink to a regular
-- * file) and matches the saved stat_validity, 0 otherwise.  A missing
-- * or inaccessible file is considered a match if the struct was just
-- * initialized, or if the previous update found an inaccessible file.
-- */
--int stat_validity_check(struct stat_validity *sv, const char *path);
--
--/*
-- * Update the stat_validity from a file opened at descriptor fd. If
-- * the file is missing, inaccessible, or not a regular file, then
-- * future calls to stat_validity_check will match iff one of those
-- * conditions continues to be true.
-- */
--void stat_validity_update(struct stat_validity *sv, int fd);
--
- #endif /* CACHE_H */
-diff --git a/object.c b/object.c
-index 6d4ef1524de..333e736fb24 100644
---- a/object.c
-+++ b/object.c
+ /* For use with `write_locked_index()`. */
+ #define COMMIT_LOCK		(1 << 0)
+ #define SKIP_IF_UNCHANGED	(1 << 1)
+diff --git a/dir.c b/dir.c
+index 029aab36fe8..1e84b1e1f28 100644
+--- a/dir.c
++++ b/dir.c
+@@ -25,6 +25,7 @@
+ #include "ewah/ewok.h"
+ #include "fsmonitor.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "submodule-config.h"
+ #include "symlinks.h"
+ #include "trace2.h"
+diff --git a/entry.c b/entry.c
+index 7791cc999cc..53d00386748 100644
+--- a/entry.c
++++ b/entry.c
 @@ -6,6 +6,7 @@
- #include "object-file.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "name-hash.h"
++#include "sparse-index.h"
+ #include "streaming.h"
+ #include "submodule.h"
+ #include "symlinks.h"
+diff --git a/merge-ort.c b/merge-ort.c
+index 65837db77f0..4bff685e456 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -38,6 +38,7 @@
+ #include "oid-array.h"
+ #include "promisor-remote.h"
+ #include "revision.h"
++#include "sparse-index.h"
+ #include "strmap.h"
+ #include "submodule-config.h"
+ #include "submodule.h"
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b341ba4f38d..0e16e7a06df 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -29,6 +29,7 @@
  #include "object-store.h"
- #include "blob.h"
-+#include "statinfo.h"
- #include "tree.h"
- #include "commit.h"
- #include "tag.h"
-diff --git a/read-cache.c b/read-cache.c
-index bfbd531ea60..b99dbfd16b0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -177,61 +177,6 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
- 		add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
- }
+ #include "repository.h"
+ #include "revision.h"
++#include "sparse-index.h"
+ #include "string-list.h"
+ #include "submodule-config.h"
+ #include "submodule.h"
+diff --git a/resolve-undo.c b/resolve-undo.c
+index 70a6db526d2..7ec09e89d4f 100644
+--- a/resolve-undo.c
++++ b/resolve-undo.c
+@@ -2,6 +2,7 @@
+ #include "dir.h"
+ #include "hash.h"
+ #include "resolve-undo.h"
++#include "sparse-index.h"
+ #include "string-list.h"
  
--void fill_stat_data(struct stat_data *sd, struct stat *st)
--{
--	sd->sd_ctime.sec = (unsigned int)st->st_ctime;
--	sd->sd_mtime.sec = (unsigned int)st->st_mtime;
--	sd->sd_ctime.nsec = ST_CTIME_NSEC(*st);
--	sd->sd_mtime.nsec = ST_MTIME_NSEC(*st);
--	sd->sd_dev = st->st_dev;
--	sd->sd_ino = st->st_ino;
--	sd->sd_uid = st->st_uid;
--	sd->sd_gid = st->st_gid;
--	sd->sd_size = st->st_size;
--}
--
--int match_stat_data(const struct stat_data *sd, struct stat *st)
--{
--	int changed = 0;
--
--	if (sd->sd_mtime.sec != (unsigned int)st->st_mtime)
--		changed |= MTIME_CHANGED;
--	if (trust_ctime && check_stat &&
--	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
--		changed |= CTIME_CHANGED;
--
--#ifdef USE_NSEC
--	if (check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
--		changed |= MTIME_CHANGED;
--	if (trust_ctime && check_stat &&
--	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
--		changed |= CTIME_CHANGED;
--#endif
--
--	if (check_stat) {
--		if (sd->sd_uid != (unsigned int) st->st_uid ||
--			sd->sd_gid != (unsigned int) st->st_gid)
--			changed |= OWNER_CHANGED;
--		if (sd->sd_ino != (unsigned int) st->st_ino)
--			changed |= INODE_CHANGED;
--	}
--
--#ifdef USE_STDEV
--	/*
--	 * st_dev breaks on network filesystems where different
--	 * clients will have different views of what "device"
--	 * the filesystem is on
--	 */
--	if (check_stat && sd->sd_dev != (unsigned int) st->st_dev)
--			changed |= INODE_CHANGED;
--#endif
--
--	if (sd->sd_size != (unsigned int) st->st_size)
--		changed |= DATA_CHANGED;
--
--	return changed;
--}
--
- /*
-  * This only updates the "non-critical" parts of the directory
-  * cache, ie the parts that aren't tracked by GIT, and only used
-@@ -3536,35 +3481,6 @@ void *read_blob_data_from_index(struct index_state *istate,
- 	return data;
- }
- 
--void stat_validity_clear(struct stat_validity *sv)
--{
--	FREE_AND_NULL(sv->sd);
--}
--
--int stat_validity_check(struct stat_validity *sv, const char *path)
--{
--	struct stat st;
--
--	if (stat(path, &st) < 0)
--		return sv->sd == NULL;
--	if (!sv->sd)
--		return 0;
--	return S_ISREG(st.st_mode) && !match_stat_data(sv->sd, &st);
--}
--
--void stat_validity_update(struct stat_validity *sv, int fd)
--{
--	struct stat st;
--
--	if (fstat(fd, &st) < 0 || !S_ISREG(st.st_mode))
--		stat_validity_clear(sv);
--	else {
--		if (!sv->sd)
--			CALLOC_ARRAY(sv->sd, 1);
--		fill_stat_data(sv->sd, &st);
--	}
--}
--
- void move_index_extensions(struct index_state *dst, struct index_state *src)
- {
- 	dst->untracked = src->untracked;
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 704424f55c0..085becf773e 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -10,6 +10,7 @@
- #include "../iterator.h"
- #include "../lockfile.h"
- #include "../chdir-notify.h"
-+#include "../statinfo.h"
- #include "../wrapper.h"
- #include "../write-or-die.h"
- 
-diff --git a/shallow.c b/shallow.c
-index 128f56179ed..a2ebf0af2ba 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -17,6 +17,7 @@
- #include "list-objects.h"
+ /* The only error case is to run out of memory in string-list */
+diff --git a/revision.c b/revision.c
+index b33cc1d106a..88b2f42daa6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -32,6 +32,7 @@
+ #include "packfile.h"
+ #include "worktree.h"
+ #include "setup.h"
++#include "sparse-index.h"
+ #include "strvec.h"
+ #include "trace2.h"
  #include "commit-reach.h"
- #include "shallow.h"
-+#include "statinfo.h"
- #include "trace.h"
- #include "wrapper.h"
+diff --git a/sequencer.c b/sequencer.c
+index ff18f7f4203..cae9c75a54e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -28,6 +28,7 @@
+ #include "merge-ort.h"
+ #include "merge-ort-wrappers.h"
+ #include "refs.h"
++#include "sparse-index.h"
+ #include "strvec.h"
+ #include "quote.h"
+ #include "trailer.h"
+diff --git a/sparse-index.h b/sparse-index.h
+index 59a92d819ec..a16f3e67d75 100644
+--- a/sparse-index.h
++++ b/sparse-index.h
+@@ -37,4 +37,6 @@ struct pattern_list;
+  */
+ void expand_index(struct index_state *istate, struct pattern_list *pl);
  
-diff --git a/statinfo.c b/statinfo.c
-new file mode 100644
-index 00000000000..17bb8966c33
---- /dev/null
-+++ b/statinfo.c
-@@ -0,0 +1,87 @@
-+#include "git-compat-util.h"
-+#include "environment.h"
-+#include "statinfo.h"
-+
-+void fill_stat_data(struct stat_data *sd, struct stat *st)
-+{
-+	sd->sd_ctime.sec = (unsigned int)st->st_ctime;
-+	sd->sd_mtime.sec = (unsigned int)st->st_mtime;
-+	sd->sd_ctime.nsec = ST_CTIME_NSEC(*st);
-+	sd->sd_mtime.nsec = ST_MTIME_NSEC(*st);
-+	sd->sd_dev = st->st_dev;
-+	sd->sd_ino = st->st_ino;
-+	sd->sd_uid = st->st_uid;
-+	sd->sd_gid = st->st_gid;
-+	sd->sd_size = st->st_size;
-+}
-+
-+int match_stat_data(const struct stat_data *sd, struct stat *st)
-+{
-+	int changed = 0;
-+
-+	if (sd->sd_mtime.sec != (unsigned int)st->st_mtime)
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && check_stat &&
-+	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
-+		changed |= CTIME_CHANGED;
-+
-+#ifdef USE_NSEC
-+	if (check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && check_stat &&
-+	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
-+		changed |= CTIME_CHANGED;
-+#endif
-+
-+	if (check_stat) {
-+		if (sd->sd_uid != (unsigned int) st->st_uid ||
-+			sd->sd_gid != (unsigned int) st->st_gid)
-+			changed |= OWNER_CHANGED;
-+		if (sd->sd_ino != (unsigned int) st->st_ino)
-+			changed |= INODE_CHANGED;
-+	}
-+
-+#ifdef USE_STDEV
-+	/*
-+	 * st_dev breaks on network filesystems where different
-+	 * clients will have different views of what "device"
-+	 * the filesystem is on
-+	 */
-+	if (check_stat && sd->sd_dev != (unsigned int) st->st_dev)
-+			changed |= INODE_CHANGED;
-+#endif
-+
-+	if (sd->sd_size != (unsigned int) st->st_size)
-+		changed |= DATA_CHANGED;
-+
-+	return changed;
-+}
-+
-+void stat_validity_clear(struct stat_validity *sv)
-+{
-+	FREE_AND_NULL(sv->sd);
-+}
-+
-+int stat_validity_check(struct stat_validity *sv, const char *path)
-+{
-+	struct stat st;
-+
-+	if (stat(path, &st) < 0)
-+		return sv->sd == NULL;
-+	if (!sv->sd)
-+		return 0;
-+	return S_ISREG(st.st_mode) && !match_stat_data(sv->sd, &st);
-+}
-+
-+void stat_validity_update(struct stat_validity *sv, int fd)
-+{
-+	struct stat st;
-+
-+	if (fstat(fd, &st) < 0 || !S_ISREG(st.st_mode))
-+		stat_validity_clear(sv);
-+	else {
-+		if (!sv->sd)
-+			CALLOC_ARRAY(sv->sd, 1);
-+		fill_stat_data(sv->sd, &st);
-+	}
-+}
-diff --git a/statinfo.h b/statinfo.h
-index e49e3054eaa..bb9b61bc471 100644
---- a/statinfo.h
-+++ b/statinfo.h
-@@ -1,6 +1,8 @@
- #ifndef STATINFO_H
- #define STATINFO_H
- 
-+struct index_state;
-+
- /*
-  * The "cache_time" is just the low 32 bits of the
-  * time. It doesn't matter if it overflows - we only
-@@ -21,4 +23,53 @@ struct stat_data {
- 	unsigned int sd_size;
- };
- 
-+/*
-+ * A struct to encapsulate the concept of whether a file has changed
-+ * since we last checked it. This uses criteria similar to those used
-+ * for the index.
-+ */
-+struct stat_validity {
-+	struct stat_data *sd;
-+};
-+
-+#define MTIME_CHANGED	0x0001
-+#define CTIME_CHANGED	0x0002
-+#define OWNER_CHANGED	0x0004
-+#define MODE_CHANGED    0x0008
-+#define INODE_CHANGED   0x0010
-+#define DATA_CHANGED    0x0020
-+#define TYPE_CHANGED    0x0040
-+
-+/*
-+ * Record to sd the data from st that we use to check whether a file
-+ * might have changed.
-+ */
-+void fill_stat_data(struct stat_data *sd, struct stat *st);
-+
-+/*
-+ * Return 0 if st is consistent with a file not having been changed
-+ * since sd was filled.  If there are differences, return a
-+ * combination of MTIME_CHANGED, CTIME_CHANGED, OWNER_CHANGED,
-+ * INODE_CHANGED, and DATA_CHANGED.
-+ */
-+int match_stat_data(const struct stat_data *sd, struct stat *st);
-+
-+void stat_validity_clear(struct stat_validity *sv);
-+
-+/*
-+ * Returns 1 if the path is a regular file (or a symlink to a regular
-+ * file) and matches the saved stat_validity, 0 otherwise.  A missing
-+ * or inaccessible file is considered a match if the struct was just
-+ * initialized, or if the previous update found an inaccessible file.
-+ */
-+int stat_validity_check(struct stat_validity *sv, const char *path);
-+
-+/*
-+ * Update the stat_validity from a file opened at descriptor fd. If
-+ * the file is missing, inaccessible, or not a regular file, then
-+ * future calls to stat_validity_check will match iff one of those
-+ * conditions continues to be true.
-+ */
-+void stat_validity_update(struct stat_validity *sv, int fd);
++void ensure_full_index(struct index_state *istate);
 +
  #endif
 -- 
