@@ -2,93 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E88CC77B75
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 20:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D006CC77B7C
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 21:02:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238714AbjELUye (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 16:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56698 "EHLO
+        id S236208AbjELVCD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 17:02:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235723AbjELUyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 16:54:32 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A32361AE
-        for <git@vger.kernel.org>; Fri, 12 May 2023 13:54:31 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba22ced2f40so15227832276.1
-        for <git@vger.kernel.org>; Fri, 12 May 2023 13:54:31 -0700 (PDT)
+        with ESMTP id S236184AbjELVCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 17:02:00 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C592859C4
+        for <git@vger.kernel.org>; Fri, 12 May 2023 14:01:59 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id 5614622812f47-3909756b8b1so3355129b6e.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 14:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683924870; x=1686516870;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QpfRmVYR+r/8j83e+uUeUNL1PdAsBdOrpqgERHsX2i8=;
-        b=yvclC4awpDSSAOAJpYxUP/VcK8vdn8IwSZaLplVIu/ZxF9zpmv9RXc+nnlo1WP8brw
-         p4HRnqwBTildBu5Qn1N1iM5eL2AJumzqvgDTZGA7hSoH1cTqUoczX5NoINbFSh3hATsG
-         gswQtojYDbkKVDOVBxlml1J/JKbp513b0Lljq30gJJpLUcvaN2SUTjWavWec8d0nRGfc
-         +6ZfT5x3bziSK8Hjdjw1mAeOk5XyJ8vejK+N6x1/WupvY3cVrXV/9pgus6iq3gD5lcpp
-         QJlc6xf+rIpW4Aq5Md6iuwmQH0iSpKF57smYxIUba81SIDzMbqAE/ysaLjJOi9PfgdQk
-         Yn8g==
+        d=gmail.com; s=20221208; t=1683925319; x=1686517319;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xwtPEtXrXwypteEfX5Uh9sMn3Ikmif8jSdYuRLMgewI=;
+        b=qbmyQvUBe2AyM387tfmnFdGWPuJ5rzFT5der8smGJFeC2InVXBq1aihJOKpaJD16pa
+         DDllOQI8a7JB0MDn+PK3h+rdKZ/YOjy/o/JB0JylxfygqXDZHII6WlT624AvgaLwbCkU
+         cqWbFWzCISSizFA/T99tdC9HCuqjkycJRmbn5O38ZboVHqRPhRrAUOFIAwP96rVJKtLm
+         bHrLikw3Q3Sqhs+zMj2dzfvYVIdtLj5vTp/0FRsTAWUPFYvZ5bpZ20xP+W1a+v38nI5p
+         pV1W+csFwF4movwo9Z+eQrdk6+Aeivc35U3KBNH3Qa7n3BeUSlzqH//88DspuYfWmCiC
+         4djQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683924870; x=1686516870;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QpfRmVYR+r/8j83e+uUeUNL1PdAsBdOrpqgERHsX2i8=;
-        b=dv5MHoksjqArzgb3PGkp5r54TvCYFJpcJ2B5mnw3PfSo7VXSfVBeP1IMuED34glT16
-         KZ2MPi3uDk6NnIpYkwW53NlYbagWdjeAuLAaaoroBtcJ705zbfYqszzdF4O1RzXLDA3e
-         HViT4Fw30/KfP3yR+Mxpe+sXUOD11TUo8AjLtgZHBAvpF0Z0GXxcWld8wKZpzFZkMzwG
-         6s+EC4eqvviwoJ2La84F/yufGttIh0MjBRDW/x6YGqv/ylhHU+t2p7ByjLma1JaMsv01
-         3NPY4rVziymENcA/lyP4kXGrg1bq9QDkWqnz+8hFejB5FdXUX9gpmn2ivL9UTqwWBlKM
-         /n0Q==
-X-Gm-Message-State: AC+VfDybP75yn34ZqvQsRt10VSuuEp2VtARZWL21nM06OEC2teH/srLV
-        5dTeTYsFLMl1kr4AgV1bL+DfbJecOYh8F3mR/KkI
-X-Google-Smtp-Source: ACHHUZ54NjS12d8ShgB4P7uaeVn7mVne9KmzIQLEDsBQ2is/mQQuq8zFSGScImY/5r2UhZpU1daNp5+r7K3SxN5jGVcA
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:fca5:20a4:493f:ac3a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6902:e:b0:ba6:af30:21c2 with
- SMTP id l14-20020a056902000e00b00ba6af3021c2mr4069782ybh.6.1683924870301;
- Fri, 12 May 2023 13:54:30 -0700 (PDT)
-Date:   Fri, 12 May 2023 13:54:27 -0700
-In-Reply-To: <xmqqbkippca5.fsf@gitster.g>
+        d=1e100.net; s=20221208; t=1683925319; x=1686517319;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xwtPEtXrXwypteEfX5Uh9sMn3Ikmif8jSdYuRLMgewI=;
+        b=HL3gWiZOTDb/cdxM/8unJ0MZdcycQchEWmKuHUM92GuwFqmAfyx2sSZowAMDSc6WBq
+         42j+GaZdNTTtfdmAv63m/wwNor7BvbDg+MnL3svvNNjkbkAxSOv9/1HBvkJwg88If/75
+         nQLKGwwZIqv1EdSpC3t8T7UqpfB2WZfyAB5Gln8ggvaqzH3tAhcUxBpWixkAA/nGpzg0
+         XmhnDf7dDyUPeJ+8EJnw2Bzp7GaSuvoSEQvB+nLwYKZFrxri4g/6/UJONWRTlqlTOErB
+         kfguajxRgSCcPpFbwQ9/22oWCFf+5VSVAl1FuBB4Y6DxFzj6klMf6GDR8IDw0loUIhKb
+         SCfg==
+X-Gm-Message-State: AC+VfDyNWxS8AmTeKNT2PwlghHP85cFe8lBERx/mwklptpM0W1Ay3XfJ
+        83sfouNHPgobUXCoJIXHdQNCADMU4dg=
+X-Google-Smtp-Source: ACHHUZ5ph0S4kN6aEEgZoJAuS4ApYx7aUxI7DKVn+XQyuqjQwc84XDslaVgbOhb2sg+KPxcZZUaDJw==
+X-Received: by 2002:a54:4695:0:b0:389:4f86:205e with SMTP id k21-20020a544695000000b003894f86205emr6546384oic.9.1683925318875;
+        Fri, 12 May 2023 14:01:58 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id c16-20020a544e90000000b0037b6f5d6309sm4775006oiy.2.2023.05.12.14.01.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 14:01:58 -0700 (PDT)
+Date:   Fri, 12 May 2023 15:01:57 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <645ea94569b79_21b4f8294e7@chronos.notmuch>
+In-Reply-To: <xmqq1qjlp98j.fsf@gitster.g>
+References: <645c5da0981c1_16961a29455@chronos.notmuch>
+ <871qjn2i63.fsf@osv.gnss.ru>
+ <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
+ <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
+ <xmqqo7mpqy6g.fsf@gitster.g>
+ <87h6shif6q.fsf@osv.gnss.ru>
+ <xmqqv8gxpd8r.fsf@gitster.g>
+ <645ea15eca6fa_21989f294f5@chronos.notmuch>
+ <xmqq1qjlp98j.fsf@gitster.g>
+Subject: Re: Can we clarify the purpose of `git diff -s`?
 Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230512205427.1090937-1-jonathantanmy@google.com>
-Subject: Re: Changed path filter hash differs from murmur3 if char is signed
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        derrickstolee@github.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Jonathan Tan <jonathantanmy@google.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> > Yes - if the bloom filter contained junk data (in our example, created
-> > using a different hash function on filenames that have characters that
-> > exceed 0x7f), the bloom filter would report "no, this commit does not
-> > contain a change in such-and-such path" and then we would skip the
-> > commit, even if the commit did have a change in that path.
+> > So your rationale to reject a perfectly logical behavior that *everyone* agrees
+> > with is that it might break a hypothetical patch?
 > 
-> Just to help my understanding (read: I am not suggesting this as one
-> of the holes to exploit to help a smooth transition), does the above
-> mean that, as long as the path we are asking about does not have a
-> byte with the high-bit set, we would be OK, even if the Bloom filter
-> were constructed with a bad function and there were other paths that
-> had such a byte?
+> Everyone is an overstatement, as there are only Sergey and you,
 
-Ah, thanks for asking. Yes, the false negative I describe above only
-happens when the path we're querying for contains a character >0x7f (so
-if there is no byte with the high-bit set, it is still OK).
+Matthieu Moy also agreed [1]:
 
-> > I don't have statistics on this, but if the majority of repos have
-> > only <=0x7f filenames (which seems reasonable to me), this might save
-> > sufficient work that we can proceed with bumping the version number and
-> > ignoring old data.
-> >
-> >> Better yet, we should be able to reuse existing Bloom filter data for
-> >> paths that have all characters <=0xff, and only recompute them where
+  Looking more closely, it's rather clear to me they are not, and that
+
+     git show --raw --patch --no-patch
+
+  should be equivalent to
+
+     git show --raw
+
+That's pretty much everyone that has participated in the discussion.
+
+> and as we all saw in public some members stated they will not engage in a
+> discussion thread in which you were involved.
+
+Smoke screen.
+
+> > Just do `--silent` instead.
 > 
-> "ff" -> "7f" I presume?
+> I am *not* shutting the door for "--no-patch"; I am only saying that
+> it shouldn't be done so hastily.
 
-That was my assumption too, but Taylor can clarify.
+> But conflating the two will delay the fix for "-s sticks unnecessarily" that
+> is ready for this cycle.
+
+That breaks backwards-compatibility.
+
+Why are your patches excempt from bacwards-compatibility considerations?
+
+[1] https://lore.kernel.org/git/4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr/
+
+-- 
+Felipe Contreras
