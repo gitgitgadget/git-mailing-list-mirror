@@ -2,90 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E4FDC77B7F
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 14:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9270C77B7C
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 14:56:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241075AbjELOz2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 10:55:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42004 "EHLO
+        id S241272AbjELO4d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 10:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241621AbjELOzT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 10:55:19 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 637219ED2
-        for <git@vger.kernel.org>; Fri, 12 May 2023 07:54:52 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f4c6c4b51eso32019375e9.2
-        for <git@vger.kernel.org>; Fri, 12 May 2023 07:54:52 -0700 (PDT)
+        with ESMTP id S241595AbjELO4Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 10:56:24 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CF3E106DE
+        for <git@vger.kernel.org>; Fri, 12 May 2023 07:56:06 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id d75a77b69052e-3f38a2d9b3dso12821981cf.0
+        for <git@vger.kernel.org>; Fri, 12 May 2023 07:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683903288; x=1686495288;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xhQ+ne+KZHiLstURVTh7dvKgRH0QWFdK/kZvMwpqN80=;
-        b=kOELvZ4V5OrI+dE+9cdk88kcmlLcW6H3c3Y/PuzhJpJdnwCUmeebjweGgOu5ld0xjI
-         qHPHGwqpMPnplEGL7KT3iRgKjb8pWyOhPu0S1622scrW4xL2BF7Om2/pdd0L1BEctxEp
-         +LbD1DGZPe+dgEKkLIu6a1v5GMdWGjIiIKZC9Ma+2DhliUM9rtmycY+O6n9cheMExJ0r
-         2JIMigRNzo/I4XpHhaQ2DuvldVSyUeRu6E69YJ4yX/retD672Lr7oWPmCe4dWWkyjYe6
-         NFXLh7IR8WDPtdSnV2cGvcnJ9IlfKh1PuB9tSYVINqJumK/jhYdgBb398wpBYI2JtYIY
-         B48A==
+        d=gmail.com; s=20221208; t=1683903365; x=1686495365;
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jjs5S8WSJvDKAUflx6SsDSXo6AcmIbniAZ63D1M1LEY=;
+        b=C5nsNSdWLKsnbA2dxMOe4SwLvUL4hwqjzg54YFZ4jO3vhnQA3O3LBD4LX3HDTvU0PM
+         KDsCsdjHTb8dXFffgu584XvdNptHXOglRLphIew31M2MoReBAzxBxCfuwSn0Xcvd7I2u
+         CG5GxHNSrfNxeZuM9cBXdIJC/bt2BzGHMBoADrMvzxIaD6F3GqzauA+5KBMCr2cjhvoz
+         v5AeiYizuvCn4bgFMUibgk7ZeFuxNlrH+++ZEjuHRbLTLQW9a4UHkUFA/P6kjiQXUbpm
+         mSgU0e0PN6IXn6fE11f+2oxfRJZNkKFCB0aPmOquAxhsPJ3HPFk2QBf86mm7YYyGVmG1
+         kDYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683903288; x=1686495288;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xhQ+ne+KZHiLstURVTh7dvKgRH0QWFdK/kZvMwpqN80=;
-        b=fNPKcDWu12Nh5uilhuKySOzsiFRt22Lf2n8lWLiOjcNWcIux+v805t351Xqy50pndW
-         flJumyEhmNGGamehDJooTdFenp8hweeR3SGLfSamBXJc2/7g/yhDeeNev9fjhuX7FWAY
-         B0Pa/A4VPvBlRdmjYDVPDNHz9gUPzsYl9FEUGUme6TKchFZdSeHxI9EGFryKMywI4Osf
-         ZoB6vOs41jTKcq+37h1QEcW1LL8Ov5UOMGmiWP8xXH8zcGP0hVvF9nmuGGV0LCttA/hg
-         b8U8QM+5363teA9lf6axiuW6zIkR+l88UB3+Cx8ZSZgqkaxFPi0M9WpjlTH2f+vCeqEz
-         nEpg==
-X-Gm-Message-State: AC+VfDw3EGqZO0nrntY9xdRTfwEVN2TIlsztrcnG3LHjvbEbTR0GxCf9
-        0AcgwKy4fwkCdIYtgWNq8xk=
-X-Google-Smtp-Source: ACHHUZ42PuzCE38jr9UYMXEqD80hjk22AlLPzmdobAJvHBSH8y5qdNcJUCjnO/1OW51tKytEcUDcxQ==
-X-Received: by 2002:a7b:c04c:0:b0:3f3:4147:3048 with SMTP id u12-20020a7bc04c000000b003f341473048mr17306644wmc.10.1683903287804;
-        Fri, 12 May 2023 07:54:47 -0700 (PDT)
-Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id h14-20020a056000000e00b002ceacff44c7sm23688173wrx.83.2023.05.12.07.54.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 07:54:47 -0700 (PDT)
-Message-ID: <215b700d-6175-3527-857d-4347bb4efb95@gmail.com>
-Date:   Fri, 12 May 2023 15:54:46 +0100
+        d=1e100.net; s=20221208; t=1683903365; x=1686495365;
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jjs5S8WSJvDKAUflx6SsDSXo6AcmIbniAZ63D1M1LEY=;
+        b=N2T3Ivu/YSwmDGRpqwjKhes9Nhcb703qbn41tTxGvD7gz+sRLDZB3W4Ha/dS3sVDXh
+         RrdxshESWXDOZp1/uKqtuZrY0oQ6COD0GsMacM1Dw4vItQRmVC4AKjkF7MMp1SCBRFoC
+         0+NtO0m0Gzb74HVuHApbqkP5jF6vFeXroKM9tZAdTBHbOcqy39Qbgz/8vVOnZWTh0+FI
+         j/Ep0ffec/sCNwetU2/RBG0dVJkmAs0e0/t4KdaWqj63R/TBJ535mMF/zE2DTcEoNy1l
+         fqhBGInzsgsm4sSFKagdNWvEsxcHl1Y/ECNv8nmJUpfWwY6KM/4Q4swRuBvoqg4XL/M9
+         HeZA==
+X-Gm-Message-State: AC+VfDy8juYKiGx8yfUL2hBL8N+d6gXLZwXvh9h3NPCwJLkj9+ULy+Pa
+        3y+EZELtb3NOUxDw1SaK9hc=
+X-Google-Smtp-Source: ACHHUZ7c9RXxQOr8fO6V4QuMcyS83iqAHSXrH37sq3oIp7edC4Et+HM6aPcutQva967vGZ8uCmdCBA==
+X-Received: by 2002:a05:622a:1a29:b0:3ef:189c:8913 with SMTP id f41-20020a05622a1a2900b003ef189c8913mr41151642qtb.1.1683903364920;
+        Fri, 12 May 2023 07:56:04 -0700 (PDT)
+Received: from [192.168.1.211] ([2600:4041:4533:8b00:18f3:8a21:eac1:94c8])
+        by smtp.gmail.com with ESMTPSA id g9-20020ae9e109000000b00746a7945d87sm5341127qkm.52.2023.05.12.07.56.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 May 2023 07:56:04 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 3/4] revision: modify ref_exclusions to handle inclusions
+Date:   Fri, 12 May 2023 10:56:03 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <866E98A8-E622-43A3-BCEC-7B6E46D49D14@gmail.com>
+In-Reply-To: <xmqqfs82ve34.fsf@gitster.g>
+References: <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
+ <pull.1501.v3.git.git.1683828635.gitgitgadget@gmail.com>
+ <0a0693ad612755e675861dfa5a660baf8d325ed0.1683828635.git.gitgitgadget@gmail.com>
+ <xmqqfs82ve34.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 7/7] strbuf: remove global variable
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net,
-        sunshine@sunshineco.com
-References: <20230511194446.1492907-1-calvinwan@google.com>
- <20230511194822.1493798-7-calvinwan@google.com> <xmqqr0rmtuid.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqr0rmtuid.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/05/2023 22:42, Junio C Hamano wrote:
-> Calvin Wan <calvinwan@google.com> writes:
+Hi Junio,
+
+On 11 May 2023, at 15:54, Junio C Hamano wrote:
+
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> So this step, while it makes sense in a vacuum, is a cute idea, and
-> is nicer in the longer term (because we certainly do not want to
-> have to pass an extra parameter to the function), raises the risk of
-> semantic mismerge higher for topics in flight that do want to use
-> stripspace to remove lines that are commented out.  My quick "git
-> log -S" seems to tell me there is no such topic I happened to have
-> picked up in 'seen' right now, though, so it may be OK.
+>> +static int ref_matched(const char *path,
+>> +		       const struct string_list *l,
+>> +		       const struct string_list *hidden_refs)
+>>  {
+>>  	const char *stripped_path = strip_namespace(path);
+>>  	struct string_list_item *item;
+>>
+>> -	for_each_string_list_item(item, &exclusions->excluded_refs) {
+>> +	for_each_string_list_item(item, l) {
+>>  		if (!wildmatch(item->string, path, 0))
+>>  			return 1;
+>>  	}
+>>
+>> -	if (ref_is_hidden(stripped_path, path, &exclusions->hidden_refs))
+>> +	if (ref_is_hidden(stripped_path, path, hidden_refs))
+>>  		return 1;
+>>
+>>  	return 0;
+>>  }
+>>
+>> -void init_ref_exclusions(struct ref_exclusions *exclusions)
+>> +int ref_excluded(const struct ref_visibility *visibility, const char *path)
+>>  {
+>> -	struct ref_exclusions blank = REF_EXCLUSIONS_INIT;
+>> -	memcpy(exclusions, &blank, sizeof(*exclusions));
+>> +	return ref_matched(path, &visibility->excluded_refs, &visibility->hidden_refs);
+>>  }
+>>
+>> -void clear_ref_exclusions(struct ref_exclusions *exclusions)
+>> +int ref_included(const struct ref_visibility *visibility, const char *path)
+>>  {
+>> -	string_list_clear(&exclusions->excluded_refs, 0);
+>> -	string_list_clear(&exclusions->hidden_refs, 0);
+>> -	exclusions->hidden_refs_configured = 0;
+>> +	return ref_matched(path, &visibility->included_refs, &visibility->hidden_refs);
+>>  }
+>
+> It is unexpected that we do "hidden" inside ref_matched().  I would
+> have expected that no matter what exclusion or inclusion patterns
+> say, hidden things are to be kept hidden.  I.e.  I expected
 
-I just grepped seen for strbuf_stripspace() and it looks like all the 
-callers are converted correctly.
+Oops. Yes this was an oversight.
 
-Best Wishes
+>
+>  - ref_matched(), which takes a path and a list of patterns, checks
+>    if the path matches any of the given patterns;
+>
+>  - ref_excluded(), whcih takes a path and a visibility, asks
+>    ref_matched() if the path matches visibility->excluded_refs and
+>    relays its answer to the caller.
+>
+>  - ref_included(), which takes a path and a visibility, asks
+>    ref_matched() if the path matches visibility->included_refs and
+>    relays its answer to the caller.
+>
+>  - ref_visibility(), which takes a path and a visibility, goes
+>    through the following sequence:
+>
+>    - if ref_is_hidden() says that the path is hidden, it is not
+>      visible;
+>
+>    - if ref_excluded() says the path is excluded, it is not visible;
+>
+>    - if ref_included() says the path is included, it is visible;
+>
+>    - if none of the above triggers, the fate of the path is
+>      determined by some default logic.
 
-Phillip
+That's a good point. I didn't think about adding a ref_visibility() function
+that conslidates inclusion and exclusion.
+>
+> or something along that line.  That would also allow us to avoid
+> having to call ref_is_hidden() more than once when we need to check
+> both inclusion and exclusion list.
+>
+> But perhaps I am missing some requirements to be taken into
+> account, so let me read on.
+>
+> To be honest, I didn't expect the "exclusions can be extended",
+> which I alluded to as a future, possible, follow-on work, to be
+> included as a part of this topic.  I appreciate your going an extra
+> mile, but I am not sure if it was a good change in the context of
+> this series.  With this patch, it is not trivial to even validate
+> that there is no behaviour change to any users of "struct
+> ref_exclusions" when the included_refs list is empty, which is an
+> absolute must to avoid regressions.
+
+Okay, maybe we can include this refactor in a subsequent series then.
+
+thanks
+John
