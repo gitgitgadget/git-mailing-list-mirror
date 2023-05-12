@@ -2,142 +2,329 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E880AC77B7C
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 18:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5DD0C77B75
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 19:04:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238454AbjELSVh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 14:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35470 "EHLO
+        id S239268AbjELTEF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 15:04:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238016AbjELSV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 14:21:28 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5361AA5EA
-        for <git@vger.kernel.org>; Fri, 12 May 2023 11:21:21 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2ac733b813fso110165121fa.1
-        for <git@vger.kernel.org>; Fri, 12 May 2023 11:21:21 -0700 (PDT)
+        with ESMTP id S231343AbjELTED (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 15:04:03 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6482C2722
+        for <git@vger.kernel.org>; Fri, 12 May 2023 12:04:02 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-3f3956573fbso10065331cf.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 12:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683915679; x=1686507679;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/pcO9o3QKPGIA74w+o7eG2+HCS8MlKtJ/RIx9i9okcA=;
-        b=Mx13lloQk8CAB89cbHqe0gQdkZjuUXPcwQOzw+atAPHnBv5Iuctcvp2tiBdvTqYo3U
-         OvCy8FyIiUeSeJj0tQ2qlM55cfUCzJTHKBeewu9cu8E3pgwP0OFFJCxa6z81oznIDcfH
-         IgE+SbbRvorw51ufRwy5f2mCQVH3bdrdWU2J0GRPrayniGhWhJmWBEmN+oJ3CWmi+uEw
-         a8L3ediiUCsFzb9rQgzgor9cC4hQn+LJEX8iflPqKjz5Bg3ZeqB4na8ZUN9Xm4YK4znv
-         2LW2U9spuGQCpYveZTdPYcht4wuy8k7B/mMHAv6LKml+eJTWqndW4Y688pkmWLl2AdOU
-         pmIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683915679; x=1686507679;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1683918241; x=1686510241;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/pcO9o3QKPGIA74w+o7eG2+HCS8MlKtJ/RIx9i9okcA=;
-        b=HIcuPO02UNkJG8z4od19Af8J6+XoiDvJ9u1ylqyJYN22Mbo8iJgaFlSkSI/5wDzBiO
-         VvuFArQNlv7MWv2e7kI8rYk4X5Cduy/uZRoI/8uBCyiswTxlWjHpQxmEOQV4Isn3iLKa
-         sMC1gojT7W0GyTHgfk5c6Nk2JtdTxZbzkY78zSLcr3shrDTKT40rWDVz56tiQtAL7m0j
-         SRGMtG8ZmPOJh1mQcHKYxNzgibJiEC03SXfS106BPAras2f0dtp2BRJX+4FihhMlwIko
-         AVnLq0tCri1Q9i5x3U26GUv5kqA3I3XuJJINCPFzFtmFtk3m7Jdv0npQQGua/CS17bq+
-         pczA==
-X-Gm-Message-State: AC+VfDw+XpjxYALZ10bjUNMbTXb0jxyLumzIrBQflfPHK6uX+cZ5MNKb
-        8Ksq2IHGLFmUG/WP7IxK3mlIzjJ3NFL35A==
-X-Google-Smtp-Source: ACHHUZ5o/MHcBtek9GU729vl4zvJJj8FF6w9slrTVGBtN0sVWWKlMp0R9wbYWhW/CxpkKsIoD19GZg==
-X-Received: by 2002:a2e:908c:0:b0:2ab:d1b:dcb2 with SMTP id l12-20020a2e908c000000b002ab0d1bdcb2mr4329252ljg.38.1683915678935;
-        Fri, 12 May 2023 11:21:18 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id b7-20020a2e9887000000b002aa458a7a46sm2878345ljj.123.2023.05.12.11.21.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 11:21:18 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Can we clarify the purpose of `git diff -s`?
-References: <645c5da0981c1_16961a29455@chronos.notmuch>
-        <871qjn2i63.fsf@osv.gnss.ru>
-        <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
-        <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
-        <xmqqo7mpqy6g.fsf@gitster.g>
-Date:   Fri, 12 May 2023 21:21:17 +0300
-In-Reply-To: <xmqqo7mpqy6g.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        12 May 2023 10:03:51 -0700")
-Message-ID: <87h6shif6q.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        bh=f2nGtcSP0ARQqKAjvzzJ/2CbMUwQXkYq1monGxlh3Fs=;
+        b=rkt0HpTFYDKmeW2rAF8WJ2pzSuYnSuiRuztcp1r9tdgXUqkiKvEg5Ws54TQbxGydft
+         zmUAGexzlZF0jTD6LPSwGJpoXUOn6YWUiRUB2W49hF30Lx5BQhNqxtWYs0TWBpGgFNHh
+         gLuIHFa4/uqKNb9NfEgeS7O4yHDULVCJzf7ZMS4HnLlNTViC2A8oybzpK3UTigxCvfjQ
+         a/RenpqMq1H9j2ZU1hm6EVkejrO2IbQ9g/9VrQkermhV2GEoiEoTQcrK18jngpsUQzTL
+         ctlvXIqaLb0riu1ZeI0gBt6iT/Dk/EmAWA0jRsUwn2suy3xqIYPcXZC8GmAihbbz1BAb
+         gbdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683918241; x=1686510241;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f2nGtcSP0ARQqKAjvzzJ/2CbMUwQXkYq1monGxlh3Fs=;
+        b=X2PBCublxXJwgIkEW5jE9YRmkUpE1jKh0BlnF4BGIQaqCp2/mQNr2BeP46mvhT9kWb
+         VjS6bO+wDdXwSTN2fArZG7JFgqHcJg0e9w6IK7e2pwJvKR/K0NshNHs51g8NcoEyXB69
+         XontsWZOFwzP9RYS1aT8HisAD3GlnjnK2MsXQFO8E7KLa4X/cAshzUlcxa8h5bTIm2Qb
+         kHtRqeDAAmyL/6KjY8sNIjVZtaJXmj0uA35ckLg4iC1ZKwCsos/49cXwuxOO6ewDn0Xn
+         yWCf8a2gKKpbz7wPzk4+CaXPSE/Xwf2WzQz2s8Lv7dPXvWIokZErw64zDl6MNT/O4VGH
+         wOSg==
+X-Gm-Message-State: AC+VfDyf6k0hZWzs9o1WTptinzKc13vGzFnKxu5oF2xaEKBQAcj9mbuh
+        e1KSQbPp7+l1OC6mehceXsVE439i11Q=
+X-Google-Smtp-Source: ACHHUZ7KBzaCHJLK8dK3FBxwADn3jw9SoqAFjb18ODd64no/I9P323UGLSBLy7w1UHIe3HA86YY9uQ==
+X-Received: by 2002:a05:622a:1450:b0:3f4:e4e5:af7c with SMTP id v16-20020a05622a145000b003f4e4e5af7cmr13350814qtx.5.1683918240803;
+        Fri, 12 May 2023 12:04:00 -0700 (PDT)
+Received: from [192.168.1.211] ([2600:4041:4533:8b00:18f3:8a21:eac1:94c8])
+        by smtp.gmail.com with ESMTPSA id c16-20020ac80090000000b003f3963d24ebsm3318477qtg.30.2023.05.12.12.03.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 May 2023 12:04:00 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 4/4] pack-refs: teach pack-refs --include option
+Date:   Fri, 12 May 2023 15:03:59 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <4086BA28-57C5-43FF-BD3D-D4731ACD6E64@gmail.com>
+In-Reply-To: <b2f3b98cd2461a25ab708adbcd8a95f5e2b18e5e.1683828635.git.gitgitgadget@gmail.com>
+References: <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
+ <pull.1501.v3.git.git.1683828635.gitgitgadget@gmail.com>
+ <b2f3b98cd2461a25ab708adbcd8a95f5e2b18e5e.1683828635.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Matthieu Moy <Matthieu.Moy@univ-lyon1.fr> writes:
+On 11 May 2023, at 14:10, John Cai via GitGitGadget wrote:
+
+> From: John Cai <johncai86@gmail.com>
 >
->> https://public-inbox.org/git/51E3DC47.70107@googlemail.com/
->>
->> Essentially, Stefan Beller was using 'git show --format="%ad"' and
->> expecting it to show only the author date, and for merge commits it
->> also showed the patch (--cc). I suggested -s and noticed that the
->> option wasn't easily discoverable, hence the patch series to better
->> document it and add --no-patch as a synonym.
->>
->> Probably I did not get all the subtleties of the different kinds of
->> outputs. I guess I considered the output of diff to be the one
->> specified by --format plus the patch (not considering --raw, --stat &
->> friends), hence "get only the output specified by --format" and
->> "disable the patch" were synonym to me.
+> Allow users to be more selective over which refs to pack by adding an
+> --include option to git-pack-refs.
+>
+> The existing options allow some measure of selectivity. By default
+> git-pack-refs packs all tags. --all can be used to include all refs,
+> and the previous commit added the ability to exclude certain refs with
+> --exclude.
+>
+> While these knobs give the user some selection over which refs to pack,=
 
-So --no-patch, if it were made to disable only --patch from the
-beginning, would still serve the purpose of solving of the original
-problem, right? Please notice that --cc produces no output without
---patch. Thus, making --no-patch a synonym for -s was a mistake in the
-first place that leaked through review process at that time, and
+> it could be useful to give more control. For instance, a repository may=
 
-   git show --format="%ad" --no-patch
+> have a set of branches that are rarely updated and would benefit from
+> being packed. --include would allow the user to easily include a set of=
 
-will still work the same way even if we fix --no-patch to disable
---patch only.
+> branches to be packed while leaving everything else unpacked.
+>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  Documentation/git-pack-refs.txt | 14 +++++++++++++-
+>  builtin/pack-refs.c             | 18 ++++++++++++++++--
+>  refs/files-backend.c            | 15 +++++++--------
+>  t/helper/test-ref-store.c       |  8 +++++++-
+>  t/t3210-pack-refs.sh            | 21 +++++++++++++++++++++
+>  5 files changed, 64 insertions(+), 12 deletions(-)
+>
+> diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-r=
+efs.txt
+> index c0f7426e519..85874a5f5dc 100644
+> --- a/Documentation/git-pack-refs.txt
+> +++ b/Documentation/git-pack-refs.txt
+> @@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repos=
+itory access
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
+> +'git pack-refs' [--all] [--no-prune] [--include <pattern>] [--exclude =
+<pattern>]
+>
+>  DESCRIPTION
+>  -----------
+> @@ -60,6 +60,15 @@ interests.
+>  The command usually removes loose refs under `$GIT_DIR/refs`
+>  hierarchy after packing them.  This option tells it not to.
+>
+> +--include <pattern>::
+> +
+> +Pack refs based on a `glob(7)` pattern. Repetitions of this option
+> +accumulate inclusion patterns. If a ref is both included in `--include=
+` and
+> +`--exclude`, `--exclude` takes precedence. Using `--include` will prec=
+lude all
+> +tags from being included by default. Symbolic refs and broken refs wil=
+l never
+> +be packed. When used with `--all`, it will be a noop. Use `--no-includ=
+e` to clear
+> +and reset the list of patterns.
+> +
+>  --exclude <pattern>::
+>
+>  Do not pack refs matching the given `glob(7)` pattern. Repetitions of =
+this option
+> @@ -70,6 +79,9 @@ unpack it.
+>  When used with `--all`, it will use the difference between the set of =
+all refs,
+>  and what is provided to `--exclude`.
+>
+> +When used with `--include`, refs provided to `--include`, minus refs t=
+hat are
+> +provided to `--exclude` will be packed.
+> +
+>
+>  BUGS
+>  ----
+> diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+> index 2464575a665..5062206f22e 100644
+> --- a/builtin/pack-refs.c
+> +++ b/builtin/pack-refs.c
+> @@ -5,9 +5,10 @@
+>  #include "refs.h"
+>  #include "repository.h"
+>  #include "revision.h"
+> +#include "trace.h"
+>
+>  static char const * const pack_refs_usage[] =3D {
+> -	N_("git pack-refs [--all] [--no-prune] [--exclude <pattern>]"),
+> +	N_("git pack-refs [--all] [--no-prune] [--include <pattern>] [--exclu=
+de <pattern>]"),
+>  	NULL
+>  };
+>
+> @@ -15,13 +16,17 @@ int cmd_pack_refs(int argc, const char **argv, cons=
+t char *prefix)
+>  {
+>  	unsigned int flags =3D PACK_REFS_PRUNE;
+>  	static struct ref_visibility visibility =3D REF_VISIBILITY_INIT;
+> -	struct pack_refs_opts pack_refs_opts =3D {.visibility =3D &visibility=
+, .flags =3D flags};
+> +	struct pack_refs_opts pack_refs_opts =3D { .visibility =3D &visibilit=
+y,
+> +						 .flags =3D flags };
+>  	static struct string_list option_excluded_refs =3D STRING_LIST_INIT_N=
+ODUP;
+> +	static struct string_list option_included_refs =3D STRING_LIST_INIT_N=
+ODUP;
+>  	struct string_list_item *item;
+>
+>  	struct option opts[] =3D {
+>  		OPT_BIT(0, "all",   &pack_refs_opts.flags, N_("pack everything"), PA=
+CK_REFS_ALL),
+>  		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (def=
+ault)"), PACK_REFS_PRUNE),
+> +		OPT_STRING_LIST(0, "include", &option_included_refs, N_("pattern"),
+> +			N_("references to include")),
+>  		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
+>  			N_("references to exclude")),
+>  		OPT_END(),
+> @@ -33,5 +38,14 @@ int cmd_pack_refs(int argc, const char **argv, const=
+ char *prefix)
+>  	for_each_string_list_item(item, &option_excluded_refs)
+>  		add_ref_exclusion(pack_refs_opts.visibility, item->string);
+>
+> +	for_each_string_list_item(item, &option_included_refs)
+> +		add_ref_inclusion(pack_refs_opts.visibility, item->string);
+> +
+> +	if (pack_refs_opts.flags & PACK_REFS_ALL)
+> +		add_ref_inclusion(pack_refs_opts.visibility, "*");
+> +
+> +	if (!pack_refs_opts.visibility->included_refs.nr)
+> +		add_ref_inclusion(pack_refs_opts.visibility, "refs/tags/*");
+> +
+>  	return refs_pack_refs(get_main_ref_store(the_repository), &pack_refs_=
+opts);
+>  }
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 3ef19199788..c669cf8001a 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -1183,13 +1183,6 @@ static int should_pack_ref(const char *refname,
+>  	    REF_WORKTREE_SHARED)
+>  		return 0;
+>
+> -	if (opts->visibility && ref_excluded(opts->visibility, refname))
+> -		return 0;
+> -
+> -	/* Do not pack non-tags unless PACK_REFS_ALL is set: */
+> -	if (!(opts->flags & PACK_REFS_ALL) && !starts_with(refname, "refs/tag=
+s/"))
+> -		return 0;
+> -
+>  	/* Do not pack symbolic refs: */
+>  	if (ref_flags & REF_ISSYMREF)
+>  		return 0;
+> @@ -1198,7 +1191,13 @@ static int should_pack_ref(const char *refname,
+>  	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))=
+
+>  		return 0;
+>
+> -	return 1;
+> +	if (opts->visibility && ref_excluded(opts->visibility, refname))
+> +		return 0;
+> +
+> +	if (opts->visibility && ref_included(opts->visibility, refname))
+> +		return 1;
+> +
+> +	return 0;
+>  }
+>
+>  static int files_pack_refs(struct ref_store *ref_store,
+> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+> index de4197708d9..0dec1223362 100644
+> --- a/t/helper/test-ref-store.c
+> +++ b/t/helper/test-ref-store.c
+> @@ -5,6 +5,7 @@
+>  #include "worktree.h"
+>  #include "object-store.h"
+>  #include "repository.h"
+> +#include "revision.h"
+>
+>  struct flag_definition {
+>  	const char *name;
+> @@ -116,7 +117,12 @@ static struct flag_definition pack_flags[] =3D { F=
+LAG_DEF(PACK_REFS_PRUNE),
+>  static int cmd_pack_refs(struct ref_store *refs, const char **argv)
+>  {
+>  	unsigned int flags =3D arg_flags(*argv++, "flags", pack_flags);
+> -	struct pack_refs_opts pack_opts =3D { .flags =3D flags };
+> +	static struct ref_visibility visibility =3D REF_VISIBILITY_INIT;
+> +	struct pack_refs_opts pack_opts =3D { .flags =3D flags,
+> +					    .visibility =3D &visibility };
+> +
+> +	if (pack_opts.flags & PACK_REFS_ALL)
+> +		add_ref_inclusion(pack_opts.visibility, "*");
+
+I was wondering about this test function. I had to add this in because no=
+w we
+are no longer checking the PACK_REFS_ALL flag in refs/files-backend.c and=
+
+instead relying on the inclusions data structure.
+
+However, this does not support --exclude and --include options. With the =
+current
+plumbing code in this file, it doesn't look like it supports options with=
+ values
+as it uses a bitmask.
+
+My question is, do we need to add support for every option we add to
+git-pack-refs here? Or are the changes in this patch sufficient.
+
+thanks
+John
 
 >
-> Thanks for double checking.  It matches my recollection that we (you
-> the author and other reviewers as well) added "--no-patch" back then
-> to mean "no output from diff machinery, exactly the same as '-s' but
-> use a name that is more discoverable".
+>  	return refs_pack_refs(refs, &pack_opts);
+>  }
+> diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+> index ddfc1b6e5f1..9ff6326b646 100755
+> --- a/t/t3210-pack-refs.sh
+> +++ b/t/t3210-pack-refs.sh
+> @@ -124,6 +124,27 @@ test_expect_success 'test --no-exclude refs clears=
+ excluded refs' '
+>  	! test -f .git/refs/heads/dont_pack3 &&
+>  	! test -f .git/refs/heads/dont_pack4'
 >
->> Looking more closely, it's
->> rather clear to me they are not, and that
->>
->>   git show --raw --patch --no-patch
->>
->> should be equivalent to
->>
->>   git show --raw
->
-> Yeah.  If this were 10 years ago and we were designing from scratch,
-> the "no output from diff machinery, more discoverable alias for
-> '-s'" would have been "--silent" or "--squelch" and we would made
-> any "--no-<format>" to defeat only "--<format>".
->
-> It is a different matter if we can safely change what "--no-patch"
-> means _now_.  Given that "--no-patch" was introduced for the
-> explicit purpose of giving "-s" a name that is easier to remember,
-> and given that in the 10 years since we did so, we may have acquired
-> at least a few more end users of Git than we used to have, hopefully
-> your change have helped them discover and learn to use "--no-patch"
-> to defeat any "--<format>" they gave earlier as initial options in
-> their script, which will be broken and need to be updated to use a
-> much less discoverable "-s".
+> +test_expect_success 'test only included refs are packed' '
+> +	git branch pack_this1 &&
+> +	git branch pack_this2 &&
+> +	git tag dont_pack5 &&
+> +	git pack-refs --include "refs/heads/pack_this*" &&
+> +	test -f .git/refs/tags/dont_pack5 &&
+> +	! test -f ./git/refs/heads/pack_this1 &&
+> +	! test -f ./git/refs/heads/pack_this2'
+> +
+> +test_expect_success 'test --no-include refs clears included refs' '
+> +	git branch pack1 &&
+> +	git branch pack2 &&
+> +	git pack-refs --include "refs/heads/pack*" --no-include &&
+> +	test -f .git/refs/heads/pack1 &&
+> +	test -f .git/refs/heads/pack2'
+> +
+> +test_expect_success 'test --exclude takes precedence over --include' '=
 
-Fortunately, whoever used --no-patch are very unlikely to actually rely
-on it being a synonym for "-s", as it was always enough for them that
---no-patch disables --patch, that will still hold after the fix.
+> +	git branch dont_pack5 &&
+> +	git pack-refs --include "refs/heads/pack*" --exclude "refs/heads/pack=
+*" &&
+> +	test -f .git/refs/heads/dont_pack5'
+> +
+>  test_expect_success \
+>  	'see if up-to-date packed refs are preserved' \
+>  	'git branch q &&
+> -- =
 
-Taking this into account it should be pretty safe to fix that old
-mistake, and then to address "-s" discoverability issue separately.
-
-Finally, this safety concern is even less attractive provided recent
-"-s" fix changed behavior more aggressively yet gets no such resistance.
-
-Thanks,
--- Sergey Organov
+> gitgitgadget
