@@ -2,146 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99248C77B7C
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 17:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E880AC77B7C
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 18:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238078AbjELRdm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 13:33:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
+        id S238454AbjELSVh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 14:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231327AbjELRde (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 13:33:34 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F23D055
-        for <git@vger.kernel.org>; Fri, 12 May 2023 10:33:33 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-560f6723651so48356597b3.2
-        for <git@vger.kernel.org>; Fri, 12 May 2023 10:33:33 -0700 (PDT)
+        with ESMTP id S238016AbjELSV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 14:21:28 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5361AA5EA
+        for <git@vger.kernel.org>; Fri, 12 May 2023 11:21:21 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2ac733b813fso110165121fa.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 11:21:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683912812; x=1686504812;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ovNXajCSewwDaPWskIaZcNFVsOWrsQTKYxCtlrsB608=;
-        b=2Ez4T88Ki7bAKz+5EiqNpEaw+gp0H1fQs7+v6UJ5qP2LsG+y8yppv0qZ6clsZADff2
-         dmYEV9uANzT2PD2y1C8gKug3Lr0rjVSUGl/PSpIwJxVFs+O2wAB8EZtyluA9YJgwAESo
-         K8Eo00blj+o9ipQsvSxBg2nc9aBezY9e6gmNDXLm+vFbnBwiFALsZ0Wp0wxFIvLsbKx+
-         eC9azuXrpvjH14+8Dei0VpF/SYa9YlP6Z3nqC0ClSZQ2ZEECslkHi4yjEZEPa5YXCm83
-         DjKtP/iS/LTSmZXu5UhbaFwsedvIju0spesXWUbEEdEeVSaL6/mOPC7z6Sb9joLKdSTN
-         itpQ==
+        d=gmail.com; s=20221208; t=1683915679; x=1686507679;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/pcO9o3QKPGIA74w+o7eG2+HCS8MlKtJ/RIx9i9okcA=;
+        b=Mx13lloQk8CAB89cbHqe0gQdkZjuUXPcwQOzw+atAPHnBv5Iuctcvp2tiBdvTqYo3U
+         OvCy8FyIiUeSeJj0tQ2qlM55cfUCzJTHKBeewu9cu8E3pgwP0OFFJCxa6z81oznIDcfH
+         IgE+SbbRvorw51ufRwy5f2mCQVH3bdrdWU2J0GRPrayniGhWhJmWBEmN+oJ3CWmi+uEw
+         a8L3ediiUCsFzb9rQgzgor9cC4hQn+LJEX8iflPqKjz5Bg3ZeqB4na8ZUN9Xm4YK4znv
+         2LW2U9spuGQCpYveZTdPYcht4wuy8k7B/mMHAv6LKml+eJTWqndW4Y688pkmWLl2AdOU
+         pmIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683912812; x=1686504812;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ovNXajCSewwDaPWskIaZcNFVsOWrsQTKYxCtlrsB608=;
-        b=RTnotb0J4u4uUf68y+PcaXySxZutZfj/MqHRJ8JK6Cud/1OTZs2SgcQWuwtyFzJo0p
-         6ZwCb7l7CaNJv16/zPvPkBHdGMMu63Qwxxz82cknGjBYKvIBd06RUqrvXMEh8nvi4uJs
-         dk6eiWVA8h4HhyHgzmeLLWWEj5uEUWyfsOvCv94d6EUSmNQuioXjWK+xCVRs2tcGfaex
-         f0s1+eGT1LQk03vpZiWEJokRFV1E95ShnOKzlnMUIbwEPcSo98w7AqKMTN6mdCDMkXFi
-         7kV95J0icNIxKI76XEmVPP7NM6KtELFev9db01jliY6VDxdDqaPN/naFldRdS9st67gC
-         ML+g==
-X-Gm-Message-State: AC+VfDzOTRD5oMERG3sEhuw14CdU1bzHYxoyEYOYmS2IseZnoWog8JPn
-        MEsJZiYE4Sx1tONCVxfdzDBQ1ROK3gobEEKS1kXO
-X-Google-Smtp-Source: ACHHUZ6iFy1GjyjVvn1ip3ZkaQ2A45VMM+XmaK+oNmoa67CqBaKvb3iUiItVzpuJw8u0FbakaFR7BOVtSvrje7EmYO9y
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:aa27:e943:1ce4:723f])
- (user=jonathantanmy job=sendgmr) by 2002:a81:ae17:0:b0:561:2d82:7f07 with
- SMTP id m23-20020a81ae17000000b005612d827f07mr791470ywh.0.1683912812448; Fri,
- 12 May 2023 10:33:32 -0700 (PDT)
-Date:   Fri, 12 May 2023 10:33:29 -0700
-In-Reply-To: <ZF116EDcmAy7XEbC@nand.local>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230512173330.1072880-1-jonathantanmy@google.com>
-Subject: Re: Changed path filter hash differs from murmur3 if char is signed
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        derrickstolee@github.com
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1683915679; x=1686507679;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/pcO9o3QKPGIA74w+o7eG2+HCS8MlKtJ/RIx9i9okcA=;
+        b=HIcuPO02UNkJG8z4od19Af8J6+XoiDvJ9u1ylqyJYN22Mbo8iJgaFlSkSI/5wDzBiO
+         VvuFArQNlv7MWv2e7kI8rYk4X5Cduy/uZRoI/8uBCyiswTxlWjHpQxmEOQV4Isn3iLKa
+         sMC1gojT7W0GyTHgfk5c6Nk2JtdTxZbzkY78zSLcr3shrDTKT40rWDVz56tiQtAL7m0j
+         SRGMtG8ZmPOJh1mQcHKYxNzgibJiEC03SXfS106BPAras2f0dtp2BRJX+4FihhMlwIko
+         AVnLq0tCri1Q9i5x3U26GUv5kqA3I3XuJJINCPFzFtmFtk3m7Jdv0npQQGua/CS17bq+
+         pczA==
+X-Gm-Message-State: AC+VfDw+XpjxYALZ10bjUNMbTXb0jxyLumzIrBQflfPHK6uX+cZ5MNKb
+        8Ksq2IHGLFmUG/WP7IxK3mlIzjJ3NFL35A==
+X-Google-Smtp-Source: ACHHUZ5o/MHcBtek9GU729vl4zvJJj8FF6w9slrTVGBtN0sVWWKlMp0R9wbYWhW/CxpkKsIoD19GZg==
+X-Received: by 2002:a2e:908c:0:b0:2ab:d1b:dcb2 with SMTP id l12-20020a2e908c000000b002ab0d1bdcb2mr4329252ljg.38.1683915678935;
+        Fri, 12 May 2023 11:21:18 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id b7-20020a2e9887000000b002aa458a7a46sm2878345ljj.123.2023.05.12.11.21.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 11:21:18 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Can we clarify the purpose of `git diff -s`?
+References: <645c5da0981c1_16961a29455@chronos.notmuch>
+        <871qjn2i63.fsf@osv.gnss.ru>
+        <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
+        <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
+        <xmqqo7mpqy6g.fsf@gitster.g>
+Date:   Fri, 12 May 2023 21:21:17 +0300
+In-Reply-To: <xmqqo7mpqy6g.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        12 May 2023 10:03:51 -0700")
+Message-ID: <87h6shif6q.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-> On Thu, May 11, 2023 at 03:51:16PM -0700, Junio C Hamano wrote:
-> > If path filter hashing were merely advisory, in the sense that if a
-> > matching data is found, great, the processing goes faster, but if
-> > not, we would get correct results albeit not so quickly, a third
-> > option would be to just update the implementation without updating
-> > the version number.  But we may not be so lucky---you must have seen
-> > a wrong result returned quickly, which is not what we want to see.
-> 
-> Right; from my understanding of Jonathan's message, I believe that we
-> would get the wrong results if the implementation of not-quite-murmur3
-> were corrected without updating the on-disk Bloom filters.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes - if the bloom filter contained junk data (in our example, created
-using a different hash function on filenames that have characters that
-exceed 0x7f), the bloom filter would report "no, this commit does not
-contain a change in such-and-such path" and then we would skip the
-commit, even if the commit did have a change in that path.
+> Matthieu Moy <Matthieu.Moy@univ-lyon1.fr> writes:
+>
+>> https://public-inbox.org/git/51E3DC47.70107@googlemail.com/
+>>
+>> Essentially, Stefan Beller was using 'git show --format="%ad"' and
+>> expecting it to show only the author date, and for merge commits it
+>> also showed the patch (--cc). I suggested -s and noticed that the
+>> option wasn't easily discoverable, hence the patch series to better
+>> document it and add --no-patch as a synonym.
+>>
+>> Probably I did not get all the subtleties of the different kinds of
+>> outputs. I guess I considered the output of diff to be the one
+>> specified by --format plus the patch (not considering --raw, --stat &
+>> friends), hence "get only the output specified by --format" and
+>> "disable the patch" were synonym to me.
 
-> We already have the bloom_filter_settings struct, which could also
-> encode whether or not the data was computed with sign extension or not.
-> If we are consistent in computing the hashes when we write Bloom filters
-> and when we re-compute hashes to query them, I'd think we would be able
-> to reuse the existing filters.
-> 
-> That would be nice to do if we could. Unfortunately, I don't think there
-> is an easy way to determine the signed-ness of an existing set of Bloom
-> filters, nor a guarantee that they all have the same signed-ness (IOW,
-> the Bloom filters could have been built up across multiple copies of
-> Git, each with different compiler settings).
-> 
-> So I'm not sure that that is a productive direction for us to take.
+So --no-patch, if it were made to disable only --patch from the
+beginning, would still serve the purpose of solving of the original
+problem, right? Please notice that --cc produces no output without
+--patch. Thus, making --no-patch a synonym for -s was a mistake in the
+first place that leaked through review process at that time, and
 
-Agreed.
+   git show --format="%ad" --no-patch
 
-> > But if I recall correctly we made the file format in such a way that
-> > bumping the version number is cheap in that transition can appear
-> > seamless.  An updated implementation can just be told to _ignore_
-> > old and possibly incorrect Bloom filters until it gets told to
-> > recompute, at which time it can write a correct one with a new
-> > version number.  So I would prefer your "Bump the version number and
-> > ignore the old and possibly wrong data".
-> 
-> Version numbers are easy to increment, as is the case when adding new
-> chunks to the chunked file format used by commit-graph,
-> multi-pack-index, etc.
-> 
-> However, computing Bloom filters en-masse from scratch is fairly
-> expensive. At GitHub when we were rolling out Bloom filters to all
-> repositories a few years ago, I wrote 809e0327f5
-> (builtin/commit-graph.c: introduce '--max-new-filters=<n>', 2020-09-18)
-> to avoid spending too much time computing new filters from scratch.
+will still work the same way even if we fix --no-patch to disable
+--patch only.
 
-Thanks for this pointer.
+>
+> Thanks for double checking.  It matches my recollection that we (you
+> the author and other reviewers as well) added "--no-patch" back then
+> to mean "no output from diff machinery, exactly the same as '-s' but
+> use a name that is more discoverable".
+>
+>> Looking more closely, it's
+>> rather clear to me they are not, and that
+>>
+>>   git show --raw --patch --no-patch
+>>
+>> should be equivalent to
+>>
+>>   git show --raw
+>
+> Yeah.  If this were 10 years ago and we were designing from scratch,
+> the "no output from diff machinery, more discoverable alias for
+> '-s'" would have been "--silent" or "--squelch" and we would made
+> any "--no-<format>" to defeat only "--<format>".
+>
+> It is a different matter if we can safely change what "--no-patch"
+> means _now_.  Given that "--no-patch" was introduced for the
+> explicit purpose of giving "-s" a name that is easier to remember,
+> and given that in the 10 years since we did so, we may have acquired
+> at least a few more end users of Git than we used to have, hopefully
+> your change have helped them discover and learn to use "--no-patch"
+> to defeat any "--<format>" they gave earlier as initial options in
+> their script, which will be broken and need to be updated to use a
+> much less discoverable "-s".
 
-> If we do have to re-compute all of the filters from scratch, it may be
-> worth considering enumerating all of the repository's paths first and
-> seeing if any of them are >0xff. If none are, we can propagate the
-> existing filters forward without having to compute new ones.
+Fortunately, whoever used --no-patch are very unlikely to actually rely
+on it being a synonym for "-s", as it was always enough for them that
+--no-patch disables --patch, that will still hold after the fix.
 
-One way server operators can do this is by:
- - patching their Git to ignore the bloom filter version number
- - in a batch job, enumerate all trees and see their filenames
- - for the repos that have <=0x7f filenames, bump version number
- - update Git to the latest version (that uses the new hash)
+Taking this into account it should be pretty safe to fix that old
+mistake, and then to address "-s" discoverability issue separately.
 
-Enumerating all trees saves on revision walking, which hopefully will
-speed things up.
+Finally, this safety concern is even less attractive provided recent
+"-s" fix changed behavior more aggressively yet gets no such resistance.
 
-I don't have statistics on this, but if the majority of repos have
-only <=0x7f filenames (which seems reasonable to me), this might save
-sufficient work that we can proceed with bumping the version number and
-ignoring old data.
-
-> Better yet, we should be able to reuse existing Bloom filter data for
-> paths that have all characters <=0xff, and only recompute them where
-> necessary. That makes much more sense than the previous paragraph.
-
-I would think that at the point that we know the paths that have been
-changed for a commit, the cost of computation of the bloom filter (all
-in the CPU) is negligible compared to the I/O it took for us to retrieve
-all the paths (so the solution of just ignoring old data seems better
-to me). But perhaps at large scales, we do want to save the computation
-time anyway.
+Thanks,
+-- Sergey Organov
