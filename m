@@ -2,115 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 177ABC77B7F
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 08:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C07D6C77B7C
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 09:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239930AbjELIrJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 04:47:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56368 "EHLO
+        id S240086AbjELJci (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 05:32:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232659AbjELIrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 04:47:07 -0400
-X-Greylist: delayed 1881 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 May 2023 01:47:05 PDT
-Received: from cisrsmtp.univ-lyon1.fr (cisrsmtp.univ-lyon1.fr [IPv6:2001:660:5001:a188::146])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B6930F4
-        for <git@vger.kernel.org>; Fri, 12 May 2023 01:47:05 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 5A6AC6022D
-        for <git@vger.kernel.org>; Fri, 12 May 2023 10:15:40 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id fvK5WtX-DVxp for <git@vger.kernel.org>;
-        Fri, 12 May 2023 10:15:39 +0200 (CEST)
-Received: from MailInBlack.univ-lyon1.fr (mailinblack.univ-lyon1.fr [134.214.128.85])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 8B1406005B
-        for <git@vger.kernel.org>; Fri, 12 May 2023 10:15:39 +0200 (CEST)
-Received: from bvsortant.univ-lyon1.fr (bvsortant.univ-lyon1.fr [134.214.128.70])
-        by MailInBlack.univ-lyon1.fr (Postfix) with ESMTPS id 3099C8460F;
-        Fri, 12 May 2023 08:15:39 +0000 (UTC)
-Received: from SAMBXP02.univ-lyon1.fr (sambxp02.univ-lyon1.fr [134.214.128.92])
-        by bvsortant.univ-lyon1.fr (Postfix) with ESMTPS id 70FDC260E4E;
-        Fri, 12 May 2023 10:15:31 +0200 (CEST)
-Received: from [10.56.9.62] (134.214.126.37) by SAMBXP02.univ-lyon1.fr
- (134.214.128.92) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 12 May
- 2023 10:15:38 +0200
-Message-ID: <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
-Date:   Fri, 12 May 2023 10:15:38 +0200
+        with ESMTP id S240164AbjELJcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 05:32:35 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D24911B4E
+        for <git@vger.kernel.org>; Fri, 12 May 2023 02:32:22 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4effb818c37so11029790e87.3
+        for <git@vger.kernel.org>; Fri, 12 May 2023 02:32:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683883940; x=1686475940;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rSeTYxLScbA1aATHEH7w2LVd3CJEBOSsj4ESq27P7Ag=;
+        b=kQyg/nXbPXZHJZEpR8VJOkPaM5RCP2baqqFK/E7D3He+UVkDKgAi7aTnQAjayRPNAH
+         oOxT/Ww4TIAz9KSc0PHOyJlaXgZcyq8Gl6SSNEf8oN/dlYEsg/1Yre1elBXqSPyPHgIG
+         l/J5PMUbDcXJDy3bn6CjQMHmSzBh/HNoLEW7JLK30ZWwF2ELe2qihgAe3aQHgnggCyQX
+         Akh9PvlNd1TSdQvD68irCDx+Bi0SlIRQqHkGuv+5ne87tBLR4cltiUY5cfa++/z4zACd
+         a9ejndyFpLzUMuwFvUPpcWV2MfcTi8bWEkByl2MHryBNokdJkU+zgbqCAUD1sN0uaOx0
+         hV9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683883940; x=1686475940;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rSeTYxLScbA1aATHEH7w2LVd3CJEBOSsj4ESq27P7Ag=;
+        b=AWc8vlNP52ZZI5sHAQeARUwkn6dbuVcY9hVd/Dk8w9Blv8BqYSVRrEZTe6bHmdczlY
+         TWC8wWNzpT0n49Hfrv2vhisw58nDQYH7VtFQVeudxruBz+q91iXGgRsopbvJUugwE56X
+         Z1Hvw4/trJLXh9y5DYe0hObL+IbUMZa9vfy4e1E4UZM28kAmvweLi1Tb7SzJztF2sVC5
+         c4XbQDqZOw0/GR5U2CfIHzw/Fg+TCL33BY+zwjf2beCU6I0U9aFeYg+OxMOlRb+Ad8MY
+         RoddB1YMghR9SSmprf9NWVD4inufg0KkVbteO/i0yQmqnufKc5nji4ppv4p1ujv35sT8
+         BU1A==
+X-Gm-Message-State: AC+VfDyDIhzEvDJGuMQY5b3lD7F2Bwa6cqYJuQIZDYEAeQajzMa8dpuP
+        zxAp901wrUk5XNNIIALOZnarhaGrhNCelw==
+X-Google-Smtp-Source: ACHHUZ7RD4rxgJznzElaDPoaukZGw1gCWgCAoOZJpSO2B25XHWXrVAjc0UyyAyw5XHZrYxfZI+ZlOw==
+X-Received: by 2002:ac2:4c1b:0:b0:4ef:eeaa:e9b9 with SMTP id t27-20020ac24c1b000000b004efeeaae9b9mr3064905lfq.35.1683883939654;
+        Fri, 12 May 2023 02:32:19 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id q5-20020ac25fc5000000b004f1477cf8a7sm1417062lfg.115.2023.05.12.02.32.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 02:32:19 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1 0/7] diff: fix -s and --no-patch
+References: <20230512080339.2186324-1-felipe.contreras@gmail.com>
+        <645df6e614f00_215cec29462@chronos.notmuch>
+Date:   Fri, 12 May 2023 12:32:18 +0300
+In-Reply-To: <645df6e614f00_215cec29462@chronos.notmuch> (Felipe Contreras's
+        message of "Fri, 12 May 2023 02:20:54 -0600")
+Message-ID: <87r0rlj3od.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: Can we clarify the purpose of `git diff -s`?
-To:     Junio C Hamano <gitster@pobox.com>,
-        Sergey Organov <sorganov@gmail.com>
-CC:     Felipe Contreras <felipe.contreras@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <645c5da0981c1_16961a29455@chronos.notmuch>
- <871qjn2i63.fsf@osv.gnss.ru>
- <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
-From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-Content-Language: en-GB, en-US
-In-Reply-To: <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [134.214.126.37]
-X-ClientProxiedBy: SAMBXE02.univ-lyon1.fr (134.214.128.94) To
- SAMBXP02.univ-lyon1.fr (134.214.128.92)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[ I apologize for not being more reactive the last few years. I still 
-love Git and this ml, but I'm struggling to find time to contribute. ]
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On 5/11/23 19:37, Junio C Hamano wrote:
-> The behaviour came in the v1.8.4 days with a series that was merged
-> by e2ecd252 (Merge branch 'mm/diff-no-patch-synonym-to-s',
-> 2013-07-22), which
-> 
->   * made "--no-patch" a synonym for "-s";
-> 
->   * fixed "-s --patch", in which the effect of "-s" got stuck and did
->     not allow the patch output to be re-enabled again with "--patch";
-> 
->   * updated documentation to explain "--no-patch" as a synonym for
->     "-s".
-> 
-> While it is very clear that the intent of the author was to make it
-> a synonym for "-s" and not a "feature-wise enable/disable" option,
-> that is what we've run with for the past 10 years.
+> Felipe Contreras wrote:
+>> This fixes an issue Sergey Organov reported.
+>
+> Sergey, as you can see this series fixes the issue you reported.
+>
+> First, I think these should remain working the same, simply for convenience:
+>
+>  * git diff         # default output
+>  * git diff --patch # patch output
+>  * git diff --raw   # raw output
+>  * git diff --stat  # stat output
+>
+> I don't think there's a way I can be convinced otherwise.
 
-That's too old for me to remember exactly my state of mind, but if you 
-want to do a bit of archeology, the origin is there:
+Fine with me.
 
-https://public-inbox.org/git/51E3DC47.70107@googlemail.com/
+>
+> But there's many changes:
+>
+>  1. git diff -s --raw                 # before: nil, after: raw
+>  2. git diff --no-patch --raw         # before: nil, after: raw
+>  3. git diff --patch --no-patch --raw # before: nil, after: raw
+>  4. git diff --raw --patch --no-patch # before: nil, after: raw
 
-Essentially, Stefan Beller was using 'git show --format="%ad"' and 
-expecting it to show only the author date, and for merge commits it also 
-showed the patch (--cc). I suggested -s and noticed that the option 
-wasn't easily discoverable, hence the patch series to better document it 
-and add --no-patch as a synonym.
+Fine as well.
 
-Probably I did not get all the subtleties of the different kinds of 
-outputs. I guess I considered the output of diff to be the one specified 
-by --format plus the patch (not considering --raw, --stat & friends), 
-hence "get only the output specified by --format" and "disable the 
-patch" were synonym to me. Looking more closely, it's rather clear to me 
-they are not, and that
+>
+> I don't think there's any way you can say my 174 changes make the code work
+> "exactly the same".
 
-   git show --raw --patch --no-patch
+I said that in the context where we discussed entirely separate issue
+"handling of defaults by Git commands". Irrelevant to these series as
+they don't touch this aspect as visible from outside, even though you
+do change the implementation for better.
 
-should be equivalent to
+>
+> And this is better than Junio's solution, because #4 outputs a raw format,
+> while in Junio's solution it doesn't output anything.
 
-   git show --raw
+Yes, and that's where I agreed from the very beginning.
 
-Cheers,
+> Even if you don't agree with everything, this solution is better than the
+> status quo, and it's better than Junio's solution as it fixes --no-patch
+> immediately.
 
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+Yep, it fixes "--no-patch" semantics indeed, and as I already said, I do
+vote in favor of this change, for what it's worth.
 
+Thanks,
+-- Sergey Organov
