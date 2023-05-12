@@ -2,116 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 533D6C77B75
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 21:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 357EEC77B7F
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 21:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239721AbjELVgT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 17:36:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59920 "EHLO
+        id S239537AbjELVlw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 17:41:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239542AbjELVgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 17:36:18 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B98A8E66
-        for <git@vger.kernel.org>; Fri, 12 May 2023 14:36:17 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55a2cb9788dso152357097b3.2
-        for <git@vger.kernel.org>; Fri, 12 May 2023 14:36:17 -0700 (PDT)
+        with ESMTP id S236366AbjELVlv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 17:41:51 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66DFB5FFF
+        for <git@vger.kernel.org>; Fri, 12 May 2023 14:41:49 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2ac8d9399d5so96136611fa.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 14:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683927377; x=1686519377;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XPg0uO6Zbv4d615Ea4GGakvMa1Crx1tX1JUhqjMz4+s=;
-        b=HApyfUF6WYc6b86mtCbVJ6Hy42GMJbQBbwHfErTkW0MuyzBF3zUP+zO1jbbJmBwhkR
-         BpzvSxPl1nWrS6QreNsVCH2A5D3INgbzkMDUV5oOmt+Sfdg2K3OcfRY9G49hNn/Fw1ax
-         PxwG7x1gkeo3VWxMhZn/COna8PfJniFohJBZccxm5eR3LOhM4nLXHWNO3qTMyp4B34BO
-         Vnt70llBsU2j/ZRBivhPzRM234ixjnJVOuEOm8ouyuLDuGiOn9fC0Fbg0XaJc5tq9HZI
-         EiRbUpc5HxR8jmjI8SMd6sVTR+x3mdyUpKizW0tRNQ/UmWeIvdsEqPM8e8dyE1R5AFdK
-         ljpw==
+        d=gmail.com; s=20221208; t=1683927707; x=1686519707;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5jup8VwsXtNW120wo48v2rddE/ynq7Zabohk6neug+I=;
+        b=iQqngAW8Z8qFuWVbcs1hF6sMx/gogb1FABWVAeNbp40KschjL6D7xYtwmrdUBEB4gs
+         VWP23dTOkQXLoqiWI9rmEqsGXxvOBLZl7I6p7NGSdYLskbquQmmWXrm3nW+iYqnjSjNt
+         kjUHhcljE3P8d6dnBdayiHqUqgD0AC5L+bqGvgnvdHbiiiZ/Kl7D9zeuIE/N5imylhp4
+         6gF2gq5Co8wjqCELXErMs2ITk4zKLjXhCtCImRCT+RiZYoaqOZolQGtmVFVulellthwn
+         br5hFZ6Sb80kw5dKmIqJFCRJsBIcF80Dxy0Cxw6pQ4IX3ZiVpLMmmTOiAsb9fOJX+eYC
+         NcoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683927377; x=1686519377;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20221208; t=1683927707; x=1686519707;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XPg0uO6Zbv4d615Ea4GGakvMa1Crx1tX1JUhqjMz4+s=;
-        b=X6cSGnwlqN85LFtBuqD2CCGqxgjv6AcXtOuJ2WG7zwgZ7KPipX2YMpyTmutGfsdTdO
-         OvHTvnJeQH/J72LuJRO2QXIMjnYuvzrwQPTQn0yPfu7flFWl4D1p0oQ3FfebYASDvTQb
-         CAMKH4cEeCH0GGiCciqv0fk4+naVQYUJuFSzKo+m4V0FciGVn1wmNPbmwNVvNZ/9eshY
-         LhUZozJ/7mgeIwE7mdz4+BD9C6YAwHSMWRWF3ZNrY+XEMa4r586kH4nErvRqZNdp5K38
-         tDyW1If2adsX8qWWRoOj7Tg+ddjVAKD1oEzBhGt3UJfelQrd/KCyKRqmfZIu+jCAw8rd
-         Wg/Q==
-X-Gm-Message-State: AC+VfDzxOx3EnmAJFUEvqj0OCMX8ibR7k1HHeAACQLCQdLYQF5t9Y1e/
-        gEUrPMN1WvEBO3eVq+gQBp6fTA==
-X-Google-Smtp-Source: ACHHUZ6cZ6Y47AnDzjeWFgr4AhTdFb4F2xwR2gJo6l31ISHpABhoPEdocpT1L9+YuXhtsw6uCO4TRg==
-X-Received: by 2002:a0d:d516:0:b0:55a:f428:e8ea with SMTP id x22-20020a0dd516000000b0055af428e8eamr26463308ywd.41.1683927376919;
-        Fri, 12 May 2023 14:36:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b5-20020a0dd905000000b0055a931afe48sm771015ywe.8.2023.05.12.14.36.15
+        bh=5jup8VwsXtNW120wo48v2rddE/ynq7Zabohk6neug+I=;
+        b=W9+RZu7LDqIYcNoykAZsKc4fFlo8wAlqRVj1QTFPE9+schLZnkI1S042OnLLYyb57U
+         JQc2VFj6jDZpCKbAzd/fxvhuhIN5w9Ifndn34W62BbBGed0uP8ukFH6kH+O8t7oKM8IS
+         EX5fkjW+L9mvUbe6iYogQXg7i2ciBEWJvsrci+f7BZdh2y2Obhe2eexRk4LwzvBlCbVS
+         36HNzb7GO+SpIZI6osENIrJm8+VTwiKxlRFMx7PozK78YZ/Hh9fdJ2a3LW42InYZaKab
+         mupDdGbeL8L99hQ95+yUtBOfL183zcuKtQ+XJcCH2Bzze10i2DJhVc8ZUQ8XYYc5AAwg
+         pw/A==
+X-Gm-Message-State: AC+VfDwJQBx3ZVOhWGG8O9zMoIZE1REQOLqjdo3YFPtp5+/iap6tDKVm
+        wJEncddtq1wlGO9/GG6f+TXVix5maCs=
+X-Google-Smtp-Source: ACHHUZ4Pa5GHwW++q7rA9JWfeWfeT/i5m9Iogj/9B/83D4NBy3n0y9l87X+zNwBe0A7nnPR+O2Posg==
+X-Received: by 2002:a2e:9004:0:b0:2a8:b37c:17f0 with SMTP id h4-20020a2e9004000000b002a8b37c17f0mr4678771ljg.4.1683927707086;
+        Fri, 12 May 2023 14:41:47 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id j11-20020a19f50b000000b004edbc0eb509sm1598279lfb.16.2023.05.12.14.41.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 14:36:16 -0700 (PDT)
-Date:   Fri, 12 May 2023 17:36:15 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] builtin/pack-objects.c: introduce
- `pack.recentObjectsHook`
-Message-ID: <ZF6xT34/Zq5pT9fG@nand.local>
-References: <cover.1683847221.git.me@ttaylorr.com>
- <2ce8a79fa4bf98947728da4e6e22304a2f203fac.1683847221.git.me@ttaylorr.com>
- <20230512212456.GA2495860@coredump.intra.peff.net>
+        Fri, 12 May 2023 14:41:46 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Can we clarify the purpose of `git diff -s`?
+References: <645c5da0981c1_16961a29455@chronos.notmuch>
+        <871qjn2i63.fsf@osv.gnss.ru>
+        <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
+        <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
+        <xmqqo7mpqy6g.fsf@gitster.g> <87h6shif6q.fsf@osv.gnss.ru>
+        <xmqqv8gxpd8r.fsf@gitster.g>
+        <645ea15eca6fa_21989f294f5@chronos.notmuch>
+        <xmqq1qjlp98j.fsf@gitster.g>
+Date:   Sat, 13 May 2023 00:41:42 +0300
+In-Reply-To: <xmqq1qjlp98j.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        12 May 2023 13:47:56 -0700")
+Message-ID: <877ctdi5wp.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230512212456.GA2495860@coredump.intra.peff.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2023 at 05:24:56PM -0400, Jeff King wrote:
-> > This patch introduces a new configuration, `pack.recentObjectsHook`
-> > which allows the caller to specify a program (or set of programs) whose
-> > output is treated as a set of objects to treat as recent, regardless of
-> > their true age.
->
-> I was going to complain about putting this in the "pack" section,
-> because I thought by touching reachable.c, we'd also affect git-prune.
-> But I don't think we do, because it does its own direct mtime check on
-> the loose objects.
->
-> But I'm not sure that's the right behavior.
->
-> It feels like even before your patch, this is a huge gap in our
-> object-retention strategy.  During repacking, we try to avoid dropping
-> objects which are reachable from recent-but-unreachable things we're
-> keeping (since otherwise it effectively corrupts those recent objects,
-> making them less valuable to keep). But git-prune will happily drop them
-> anyway!
->
-> And I think the same thing would apply to your hook. If the hook says
-> "object XYZ is precious even if unreachable, keep it", then git-prune
-> ignoring that seems like it would be a source of errors.
->
-> I suspect both could be fixed by having git-prune trigger the same
-> add_unseen_recent_objects_to_traversal() call either as part of
-> the perform_reachability_traversal() walk, or maybe in its own walk (I
-> think maybe it has to be its own because the second walk should avoid
-> complaining about missing objects).
+Junio C Hamano <gitster@pobox.com> writes:
 
-I might be missing something, but I think we already (kind of) do the
-right thing here.
 
-AFAICT, the path is:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> So your rationale to reject a perfectly logical behavior that *everyone* agrees
+>> with is that it might break a hypothetical patch?
+>
+> Everyone is an overstatement, as there are only Sergey and you,
 
-  - cmd_prune()
-  - for_each_loose_file_in_objdir()
-  - prune_object() (as a callback to the above)
-  - is_object_reachable()
-  - perform_reachability_traversal()
-  - mark_reachable_objects()
-  - add_unseen_recent_objects_to_traversal()
+Sorry, do you actually expect there is anybody here who disagrees that
+--no-patch logical behavior is to disable --patch? I thought you, in
+particular, have already agreed it's exactly "perfectly logical
+behavior". So there are at least 3 of us who explicitly agreed it is,
+and nobody who stated his disagreement. No?
 
-That only happens when `mark_recent != 0`, though.
+> and as we all saw in public some members stated they will not engage
+> in a discussion thread in which you were involved. In addition, at PLC
+> I've seen people complain about how quickly a discussion that involves
+> you becomes unproductive---they may have better sence of backward
+> compatibility concern than you two, but they are staying silent (they
+> are wiser than I am).
+
+The above statement with the word "everyone" was not about backward
+compatibility, where we obviously expect different opinions from
+different people.
+
+As for the sense, maybe there are people out there who do have better
+sense indeed, but then maybe some of them keep silence out of agreement?
+For what it's worth, @work I do have to maintain CI that is 600-pages
+long document and to take care of backward compatibility, so I do have
+at least some experience in this field beyond Git, and I do sympathize
+the conservatism in this field, and only argue about practical
+thresholds.
+
+As for backward compatibility itself, what I see as a problem is that
+the criteria of when backward incompatibility is to be considered a
+show-stopper, and when not, are unclear and look entirely voluntary from
+here. At least I was not able to correctly predict the outcome so far,
+that is rather discouraging.
+
+[...]
+
+> I am *not* shutting the door for "--no-patch";
+
+That apparently confirms that you still do consider it "the perfectly
+logical behavior".
+
+> I am only saying that it shouldn't be done so hastily.
+
+I won't even try to insist on immediate fix, though I still don't see
+why shouldn't we just do it while we are at the issue, and be done with
+it.
+
+> Indeed "--silent" or "--squelch" is one of the things that I plan to
+> suggest when we were to go with "--no-patch is no longer -s" topic.
+
+While we are at this, may I vote against "--squelch", please? For me
+it'd be undiscoverable, as it's the first time I ever hear this word in
+such context. Moreover, from the meaning of the word I'd expect it to
+silence output unless the size of diff exceeds some limit, that in turn
+makes little sense. Or maybe it makes some sense? Hmm. "Show me only
+diffs that are more than 10 lines long". It'd be entirely different
+option anyway.
 
 Thanks,
-Taylor
+-- Sergey Organov
