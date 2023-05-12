@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B823C77B7C
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B34AC77B75
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240165AbjELHFu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 03:05:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50252 "EHLO
+        id S240167AbjELHFy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 03:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240113AbjELHFF (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240058AbjELHFF (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 12 May 2023 03:05:05 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC96D2CC
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:55 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3063891d61aso9112613f8f.0
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:55 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CC9E100FB
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:57 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3075e802738so8647428f8f.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683875094; x=1686467094;
+        d=gmail.com; s=20221208; t=1683875096; x=1686467096;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f0B4pvIc5DiagiUq2VjsSPV6kDHWGEDm7Wv1uqhJ3os=;
-        b=p/AFCKkvDkWoajovv82iakXxZHlazj9mfNRw0sbLn6L/wJCJciGjJBU8F2o6ij8QW1
-         e76dEPNjagj7Pdc9fpI6u9hrFnNRlxAQs/NhDETIqzT3UuycLUB7TKhC9bZjxldRsbmZ
-         wnsLlOba4y2umQBN7huZrJ9zyxPD1xGdTAErHk7pW0OJfVQZ9JRd5iT+iT5vlkU2vJoJ
-         eZKqaof6Q+g3zdEr5PAO05vO3/8I19zTw5lG2j5y83tiiVNAFT97ewizb3DYdXpzQH0z
-         cKcq1NPzklVoMYpci0hBK+ede/acOzMAnHvkuoKMLttdKZfMAI5XybcyS/ZsnTKadQzK
-         +lIA==
+        bh=o1XCD6kbwxSOo4fHvPtSX0C1hnDuj/3E6NFDkAQt6x8=;
+        b=BQ/J40wp/O7lplbHgXWLPlMqsnsR9m8v92lwOUM9CGWtfwxXE+VbcEtjPMZBjgOHw/
+         yr6aeQuuUNTWJEqRqqqiZAFs35zlegpWy/39WWA8uXNo6vZDoAELXia/amHvh3crmnt5
+         btzsYw1uSjj6NjwbVu2exo8tAC+tHETXsUjDZciNq4I2YlYzRj+Pk3fdXazQVktc6qMH
+         sv8rM3DhWVc1gOej8WMlO0p7zwm6h516JtHz8O+BneWCUz+r5fW9Kc//Y2m997dG2fKA
+         /en7Dxte4VwKHhcZAIgAyWuk/xTmKajqNp3yU4z3axxeymR4IVN7QutWa3bPOJSXUORS
+         FeoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683875094; x=1686467094;
+        d=1e100.net; s=20221208; t=1683875096; x=1686467096;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f0B4pvIc5DiagiUq2VjsSPV6kDHWGEDm7Wv1uqhJ3os=;
-        b=T0BmUiwWfTBApJ+xNnhCY20qGTiVs4fEwJGjtQV2oICqZQMgJT5UHkpfSl30mF/DM0
-         POJTW13EyG0yTCGWDeGoaS8csaJeUjVXDSRhR5D1RGUKaNfERcKBBa5rLkave4W5v+Ao
-         OBj42lN1QmDKgt6MTWqN3LpjBkKRpvMdVsEmJR+3LWpAPyWz9kQ2bXinJDJhnE3ngUoe
-         05NKwJ9g/3Vf+BD0Z9sWkD7APFLfpxVUbYqbh981jnpa6/61+uhTbtquboSStDt2f4Jj
-         PtbHymY8MZMMAx2V/gZYTaYxiK5p0Upv4++h7gJ5Kxw3h1M5uvjnHFO7EjtNXjfKLt0P
-         ounA==
-X-Gm-Message-State: AC+VfDxlDmDVJwTJQ8WTDbZVPhoeL/CL3ciGIuyW1NrHCDO/b9dRTK0R
-        nHdDT5cIbE1RSop0PlfFJgXJj0y50dQ=
-X-Google-Smtp-Source: ACHHUZ6xmvl33O7Mj7qseaE+kxlIWLcKcsz8uM9E56WEbEHpXTTcVd74mSYj0lRN/M21rTuKdKIOqw==
-X-Received: by 2002:a05:6000:1191:b0:306:462a:b78d with SMTP id g17-20020a056000119100b00306462ab78dmr14942971wrx.53.1683875093855;
-        Fri, 12 May 2023 00:04:53 -0700 (PDT)
+        bh=o1XCD6kbwxSOo4fHvPtSX0C1hnDuj/3E6NFDkAQt6x8=;
+        b=O2HG34xzNC7vO5k5SABzR0zI52HZWZ9QV3Ztbj6s1sFhwLZHKfrT09up886OdhLBDR
+         udin7Vl8bDLlCkMIUzyK9C5ADji1mW8ecGtQmpGsZuYMkAdae5swTdvqPw8ulDZuyoMR
+         RXstn3UrhF6e5Z+Kv93Q0fWfXkxUQXJEz1MQ338j6qQNs4DxwWNKtF4Fc7Mfhvf/LdIY
+         UtXXz98OJQTbHnkx5tkziTRu+p/10y/5XBmxbFAIC80gMYQ/mwzGCePz+yQzFYfs/hdj
+         1yQXZ1tBg/oAruIU6mvQwiLiC1880hdzpHCcSrfCNxKboBOlQ50cSQDC1s1C+pdNxUJK
+         W9pw==
+X-Gm-Message-State: AC+VfDxQ8r2gI0e5qYq88XUMQ0aWrL15zeShhIlv6tY7Xk5ovFPBPpJg
+        QHMdLJYGEfJwHMF2kpi1pua/7ms5gkk=
+X-Google-Smtp-Source: ACHHUZ6uc9FlzPTeE/MN66y0ajPLv9cJGUdfcmnlHzmc000EQQC/mEF/3eju4j9rp/Jt/5pFSvZ0cw==
+X-Received: by 2002:adf:dd02:0:b0:2f9:9911:93d1 with SMTP id a2-20020adfdd02000000b002f9991193d1mr18338143wrm.24.1683875095803;
+        Fri, 12 May 2023 00:04:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n2-20020a5d4c42000000b003063db8f45bsm22356474wrt.23.2023.05.12.00.04.53
+        by smtp.gmail.com with ESMTPSA id k11-20020adff5cb000000b0030649242b72sm22491100wrp.113.2023.05.12.00.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 00:04:53 -0700 (PDT)
-Message-Id: <1d3d33a843b3af435300d37228cd028a67ae1265.1683875072.git.gitgitgadget@gmail.com>
+        Fri, 12 May 2023 00:04:55 -0700 (PDT)
+Message-Id: <e0bfeb985562197f1f96b8735e8a15f9ae7a0b39.1683875072.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
         <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 May 2023 07:04:23 +0000
-Subject: [PATCH v2 22/27] builtin.h: remove unneccessary includes
+Date:   Fri, 12 May 2023 07:04:26 +0000
+Subject: [PATCH v2 25/27] khash: name the structs that khash declares
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,117 +72,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This also made it clear that a few .c files under builtin/ were
-depending upon some headers but had forgotten to #include them.  Add the
-missing direct includes while at it.
+khash.h lets you instantiate custom hash types that map between two
+types. These are defined as a struct, as you might expect, and khash
+typedef's that to kh_foo_t. But it declares the struct anonymously,
+which doesn't give a name to the struct type itself; there is no
+"struct kh_foo". This has two small downsides:
 
+  - when using khash, we declare "kh_foo_t *the_foo".  This is
+    unlike our usual naming style, which is "struct kh_foo *the_foo".
+
+  - you can't forward-declare a typedef of an unnamed struct type in
+    C. So we might do something like this in a header file:
+
+        struct kh_foo;
+        struct bar {
+                struct kh_foo *the_foo;
+        };
+
+    to avoid having to include the header that defines the real
+    kh_foo. But that doesn't work with the typedef'd name. Without the
+    "struct" keyword, the compiler doesn't know we mean that kh_foo is
+    a type.
+
+So let's always give khash structs the name that matches our
+conventions ("struct kh_foo" to match "kh_foo_t"). We'll keep doing
+the typedef to retain compatibility with existing callers.
+
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin.h                  | 2 --
- builtin/check-mailmap.c    | 1 +
- builtin/commit-graph.c     | 1 +
- builtin/config.c           | 1 +
- builtin/credential-cache.c | 1 +
- builtin/for-each-ref.c     | 1 +
- builtin/init-db.c          | 1 +
- builtin/verify-pack.c      | 1 +
- 8 files changed, 7 insertions(+), 2 deletions(-)
+ khash.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin.h b/builtin.h
-index 3e6c22eef69..d560baa6618 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -2,8 +2,6 @@
- #define BUILTIN_H
+diff --git a/khash.h b/khash.h
+index 56241e6a5c9..a0a08dad8b7 100644
+--- a/khash.h
++++ b/khash.h
+@@ -62,7 +62,7 @@ static inline khint_t __ac_X31_hash_string(const char *s)
+ static const double __ac_HASH_UPPER = 0.77;
  
- #include "git-compat-util.h"
--#include "strbuf.h"
--#include "commit.h"
- 
- /*
-  * builtin API
-diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
-index 002d2941e93..b8a05b8e07b 100644
---- a/builtin/check-mailmap.c
-+++ b/builtin/check-mailmap.c
-@@ -4,6 +4,7 @@
- #include "ident.h"
- #include "mailmap.h"
- #include "parse-options.h"
-+#include "strbuf.h"
- #include "string-list.h"
- #include "write-or-die.h"
- 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index a3d00fa232b..96a8a677327 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -1,4 +1,5 @@
- #include "builtin.h"
-+#include "commit.h"
- #include "config.h"
- #include "dir.h"
- #include "environment.h"
-diff --git a/builtin/config.c b/builtin/config.c
-index ff2fe8ef125..30f6d9fe67b 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -12,6 +12,7 @@
- #include "path.h"
- #include "quote.h"
- #include "setup.h"
-+#include "strbuf.h"
- #include "worktree.h"
- #include "wrapper.h"
- 
-diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
-index 0ffacfdd83c..ff3a47badbe 100644
---- a/builtin/credential-cache.c
-+++ b/builtin/credential-cache.c
-@@ -2,6 +2,7 @@
- #include "gettext.h"
- #include "parse-options.h"
- #include "path.h"
-+#include "strbuf.h"
- #include "wrapper.h"
- #include "write-or-die.h"
- 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index d0d6ab0fd34..15409337f83 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -5,6 +5,7 @@
- #include "object.h"
- #include "parse-options.h"
- #include "ref-filter.h"
-+#include "strbuf.h"
- #include "strvec.h"
- #include "commit-reach.h"
- 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 680ef7e1837..0d8bd4d7219 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -12,6 +12,7 @@
- #include "parse-options.h"
- #include "path.h"
- #include "setup.h"
-+#include "strbuf.h"
- #include "wrapper.h"
- 
- static int guess_repository_type(const char *git_dir)
-diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
-index aba92cf8af7..011dddd2dc3 100644
---- a/builtin/verify-pack.c
-+++ b/builtin/verify-pack.c
-@@ -3,6 +3,7 @@
- #include "gettext.h"
- #include "run-command.h"
- #include "parse-options.h"
-+#include "strbuf.h"
- 
- #define VERIFY_PACK_VERBOSE 01
- #define VERIFY_PACK_STAT_ONLY 02
+ #define __KHASH_TYPE(name, khkey_t, khval_t) \
+-	typedef struct { \
++	typedef struct kh_##name { \
+ 		khint_t n_buckets, size, n_occupied, upper_bound; \
+ 		khint32_t *flags; \
+ 		khkey_t *keys; \
 -- 
 gitgitgadget
 
