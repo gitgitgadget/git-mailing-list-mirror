@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D409EC77B7C
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42563C7EE24
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240160AbjELHFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 03:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50078 "EHLO
+        id S240161AbjELHFp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 03:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240062AbjELHFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 03:05:04 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D4C6E89
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:52 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f4249b7badso57829365e9.3
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:52 -0700 (PDT)
+        with ESMTP id S240110AbjELHFF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 03:05:05 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308BB8A56
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:53 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3064099f9b6so6198209f8f.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683875090; x=1686467090;
+        d=gmail.com; s=20221208; t=1683875091; x=1686467091;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hoiqaguwhnODUg14KydfB9G/f8pgwlbBJIn58whY6a8=;
-        b=kBwHECq4ZcB0trwr0FzJxfK0JqvjmZ5di6N4A/6kTfSvRyvEudEgnu69snc0X4xe0Q
-         2QnpyE0Sl0xO4tn5fOz/mFISj+tISbj8rpaUzCaEn7rs538lhClyQa/KttVg8BOXFkRK
-         R/zmPiLCg4I5mQj+YMV+3whBcY5nSqLC01m4OzbCCVWiQSj2oXnTxYvr8/ysuNZXp8Em
-         Isqnn8F0gY8PK2foSfEu3gCPZzknME0z17BOkXQwbBd7TYEEaBPL0nrjhpyew12NNhlk
-         u4Fxj7Tuxym+jRfA1l5f+FO+kXe229GYQopE5yVpzC0Hf2KFN5v8Md1D8anV89Y6r5tl
-         hXpw==
+        bh=foYp9tDJ46gEyun0Rnww9pUSWkTmxCt/a0rYI0HoxZE=;
+        b=l5aQNR+LcoRmTzL4G67Z43r07Qpfc9UMXkdD+gdPtEOwOOIbPQW5xmXzZmdvkc9+k5
+         DpFodQ5sEAV7+UYGO2pDCzEijW2LEGiy1UMjfFllgcuPYvmy4lNprscLxpIygD3jJoWD
+         a2oWIgf9Hv0og3caTZwuxyDhQ/8lbU05SX6OK8elj4S3xO9sr6TEkHrKzPUUB2fxghLG
+         TJWxc2cxiMkCNE6l4m6ufITnSyfe8ZqKxrL7fBSxdVi/GQRmKIiXQ04o3tryO6AIY9M7
+         281Q5SkbnTk8KTlfqP0rteAdaYSq/O6dCkipu1So3KDuafqzG2hYz5PRNZMQKqd5aY9J
+         PSsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683875090; x=1686467090;
+        d=1e100.net; s=20221208; t=1683875091; x=1686467091;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hoiqaguwhnODUg14KydfB9G/f8pgwlbBJIn58whY6a8=;
-        b=IUXDP+BhJ0CUgVmbJm53l51ddRHyxTCEOwZ2BPvuhySm/Iz8VT6PJch4E7Mz3nzt1p
-         U/Xi51ivb3fnPpZXBAoVXHkWv4ER5zdCJNtSVVH/szGvKP94tV070bLLIgQ7oUxs9jjw
-         vGul3+wQWsT8vi9rACFxKfLwJuTlKHJpjD9vSV0YHR3ZGgVd1XwjYo+54qhwk8AbqRxq
-         xJgsMUqlLeAtbxvFE5Uk51WIqcbqTHs3W9ACuAy9eAqwbXxBPIdBBU88b/1jxP2mRzDI
-         ekBxbuS2OmQzsT1KvlJupZ8MTCYqsCPn7TODcUQyDvNuCmmMekTNti0cSWNvDDRymdrE
-         3VFQ==
-X-Gm-Message-State: AC+VfDyn2BpHkTQnNg8OGQ8/ZbfFMrJZWWy6y3nrD4ydygBCzNxswcXm
-        dMuPC8cXnetLX5fHIPi6xzJG50A0Jzc=
-X-Google-Smtp-Source: ACHHUZ4xa7FxcpIFy/5JO0QfYGIj7Or90+sjMsXnDdX+DjdfFOfpPVzHZ2f0S1/unkcxKH7QNkreYA==
-X-Received: by 2002:a7b:c345:0:b0:3f1:82ba:b03f with SMTP id l5-20020a7bc345000000b003f182bab03fmr16507143wmj.18.1683875089658;
-        Fri, 12 May 2023 00:04:49 -0700 (PDT)
+        bh=foYp9tDJ46gEyun0Rnww9pUSWkTmxCt/a0rYI0HoxZE=;
+        b=Syn/nxae2vCcIXCIHf+GtNXGlELWWvudm9RgJGtnfFamXAnfblS6lCEXmLYoIDxTCM
+         wYZRssbvWbL90MtQjxGcNEJVezkB4rJTQS7NquWNxPTWfQPvWs2iCTGP4piqbNzBQc9I
+         V7vVYPjy8nLWz4UriaRxFT6a8+7SRmm9MV4zDqzTSublYbjbgPYxyb81uLFJ4xvnDCGR
+         DCDPR7ftLQDbVD+3El5xen9cwdAxmwkJSSDOWk2mirTY1DscJ87Bx06y+3BP/5s5LC9T
+         MhTJf710fy9igxiRcxImMprk/rhoO3f+Ggwlawx6RE2i4PmLIuzUQZ97lya5Ay+uhPBb
+         YXGg==
+X-Gm-Message-State: AC+VfDz2N8xz81IHHUy2WTh0nOSa96geY7obkzyKtwA5+GaiZs7+9do8
+        45cFzhZB+PYC+BReom0IKC89bZRCvsg=
+X-Google-Smtp-Source: ACHHUZ7kEuGv/QNfUAt19cKV8qTSG1xD6ss4ErR9ye7FaK2m5NWx4487RW1mhun4D9Oi20UuYkXo4Q==
+X-Received: by 2002:a5d:68c1:0:b0:306:28fa:16a7 with SMTP id p1-20020a5d68c1000000b0030628fa16a7mr17910772wrw.43.1683875090372;
+        Fri, 12 May 2023 00:04:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e14-20020a056000120e00b00307c46f4f08sm4593406wrx.79.2023.05.12.00.04.49
+        by smtp.gmail.com with ESMTPSA id l18-20020a5d4bd2000000b003078bb639bdsm18206997wrt.68.2023.05.12.00.04.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 00:04:49 -0700 (PDT)
-Message-Id: <41183b7baed30ba19e98961944e946919995c2c1.1683875070.git.gitgitgadget@gmail.com>
+        Fri, 12 May 2023 00:04:50 -0700 (PDT)
+Message-Id: <8f021be54e0795f56ab67e1d269abfcdac587f9c.1683875071.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
         <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 May 2023 07:04:17 +0000
-Subject: [PATCH v2 16/27] read-cache*.h: move declarations for read-cache.c
- functions from cache.h
+Date:   Fri, 12 May 2023 07:04:18 +0000
+Subject: [PATCH v2 17/27] cache.h: remove this no-longer-used header
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,2054 +72,2086 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-For the functions defined in read-cache.c, move their declarations from
-cache.h to a new header, read-cache-ll.h.  Also move some related inline
-functions from cache.h to read-cache.h.  The purpose of the
-read-cache-ll.h/read-cache.h split is that about 70% of the sites don't
-need the inline functions and the extra headers they include.
+Since this header showed up in some places besides just #include
+statements, update/clean-up/remove those other places as well.
+
+Note that compat/fsmonitor/fsm-path-utils-darwin.c previously got
+away with violating the rule that all files must start with an include
+of git-compat-util.h (or a short-list of alternate headers that happen
+to include it first).  This change exposed the violation and caused it
+to stop building correctly; fix it by having it include
+git-compat-util.h first, as per policy.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- add-interactive.c                    |   1 +
- add-patch.c                          |   1 +
- apply.c                              |   1 +
- attr.c                               |   1 +
- blame.c                              |   1 +
- builtin/add.c                        |   1 +
- builtin/checkout--worker.c           |   1 +
- builtin/checkout-index.c             |   1 +
- builtin/checkout.c                   |   1 +
- builtin/clean.c                      |   1 +
- builtin/commit.c                     |   1 +
- builtin/describe.c                   |   1 +
- builtin/diff-tree.c                  |   1 +
- builtin/diff.c                       |   1 +
- builtin/difftool.c                   |   1 +
- builtin/fsck.c                       |   1 +
- builtin/grep.c                       |   1 +
- builtin/ls-files.c                   |   1 +
- builtin/merge-index.c                |   1 +
- builtin/mv.c                         |   1 +
- builtin/pull.c                       |   1 +
- builtin/rev-parse.c                  |   1 +
- builtin/rm.c                         |   1 +
- builtin/stash.c                      |   1 +
- builtin/submodule--helper.c          |   1 +
- builtin/update-index.c               |   1 +
- builtin/worktree.c                   |   1 +
- cache-tree.c                         |   1 +
- cache.h                              | 520 ---------------------------
- compat/precompose_utf8.c             |   1 +
- compat/sha1-chunked.c                |   1 +
- config.c                             |   1 +
- convert.c                            |   1 +
- diff-lib.c                           |   1 +
- diff.c                               |   1 +
- diffcore-break.c                     |   3 +-
- environment.h                        |   3 +-
- fsmonitor.h                          |   2 +
- git.c                                |   1 +
- hash-lookup.c                        |   1 +
- merge-ort-wrappers.c                 |   1 +
- merge-ort.c                          |   1 +
- name-hash.c                          |   2 +
- object-name.c                        |   1 +
- oidmap.h                             |   1 +
- parallel-checkout.c                  |   1 +
- pathspec.c                           |   1 +
- preload-index.c                      |   1 +
- read-cache-ll.h                      | 481 +++++++++++++++++++++++++
- read-cache.c                         |   1 +
- read-cache.h                         |  45 +++
- repository.c                         |   1 +
- rerere.c                             |   1 +
- resolve-undo.c                       |   1 +
- revision.c                           |   1 +
- split-index.c                        |   1 +
- submodule.c                          |   1 +
- t/helper/test-cache-tree.c           |   1 +
- t/helper/test-dump-cache-tree.c      |   1 +
- t/helper/test-dump-fsmonitor.c       |   1 +
- t/helper/test-dump-split-index.c     |   1 +
- t/helper/test-dump-untracked-cache.c |   1 +
- t/helper/test-fast-rebase.c          |   1 +
- t/helper/test-fsmonitor-client.c     |   1 +
- t/helper/test-hash-speed.c           |   1 +
- t/helper/test-index-version.c        |   1 +
- t/helper/test-lazy-init-name-hash.c  |   1 +
- t/helper/test-path-utils.c           |   1 +
- t/helper/test-read-cache.c           |   1 +
- t/helper/test-scrap-cache-tree.c     |   1 +
- t/helper/test-sha1.c                 |   1 +
- t/helper/test-sha256.c               |   1 +
- t/helper/test-strcmp-offset.c        |   1 +
- t/helper/test-write-cache.c          |   1 +
- unpack-trees.c                       |   1 +
- unpack-trees.h                       |   2 +-
- wt-status.c                          |   1 +
- 77 files changed, 603 insertions(+), 524 deletions(-)
- create mode 100644 read-cache-ll.h
- create mode 100644 read-cache.h
+ Documentation/CodingGuidelines           |  2 +-
+ Documentation/MyFirstObjectWalk.txt      |  2 +-
+ Documentation/user-manual.txt            | 18 ++++++++----------
+ Makefile                                 |  2 +-
+ add-interactive.c                        |  2 +-
+ add-patch.c                              |  2 +-
+ apply.c                                  |  2 +-
+ attr.c                                   |  2 +-
+ blame.c                                  |  2 +-
+ builtin.h                                |  1 -
+ builtin/add.c                            |  3 +--
+ builtin/am.c                             |  3 +--
+ builtin/apply.c                          |  1 -
+ builtin/archive.c                        |  1 -
+ builtin/bisect.c                         |  1 -
+ builtin/branch.c                         |  3 +--
+ builtin/bundle.c                         |  1 -
+ builtin/cat-file.c                       |  3 +--
+ builtin/check-attr.c                     |  1 -
+ builtin/check-ignore.c                   |  1 -
+ builtin/check-ref-format.c               |  3 +--
+ builtin/clean.c                          |  1 -
+ builtin/column.c                         |  1 -
+ builtin/commit-tree.c                    |  3 +--
+ builtin/commit.c                         |  3 +--
+ builtin/count-objects.c                  |  3 +--
+ builtin/describe.c                       |  3 +--
+ builtin/diff-files.c                     |  3 +--
+ builtin/diff-index.c                     |  3 +--
+ builtin/diff-tree.c                      |  3 +--
+ builtin/diff.c                           |  3 +--
+ builtin/difftool.c                       |  3 +--
+ builtin/fast-export.c                    |  1 -
+ builtin/fast-import.c                    |  1 -
+ builtin/fetch.c                          |  3 +--
+ builtin/for-each-ref.c                   |  1 -
+ builtin/for-each-repo.c                  |  3 +--
+ builtin/fsck.c                           |  1 -
+ builtin/get-tar-commit-id.c              |  3 +--
+ builtin/grep.c                           |  3 +--
+ builtin/help.c                           |  3 +--
+ builtin/hook.c                           |  1 -
+ builtin/init-db.c                        |  3 +--
+ builtin/interpret-trailers.c             |  1 -
+ builtin/ls-files.c                       |  3 +--
+ builtin/ls-remote.c                      |  1 -
+ builtin/ls-tree.c                        |  3 +--
+ builtin/mailinfo.c                       |  3 +--
+ builtin/mailsplit.c                      |  1 -
+ builtin/merge-base.c                     |  1 -
+ builtin/merge-file.c                     |  1 -
+ builtin/merge-recursive.c                |  1 -
+ builtin/merge.c                          |  3 +--
+ builtin/multi-pack-index.c               |  1 -
+ builtin/notes.c                          |  3 +--
+ builtin/patch-id.c                       |  1 -
+ builtin/prune.c                          |  3 +--
+ builtin/pull.c                           |  3 +--
+ builtin/push.c                           |  3 +--
+ builtin/range-diff.c                     |  1 -
+ builtin/read-tree.c                      |  3 +--
+ builtin/replace.c                        |  3 +--
+ builtin/rerere.c                         |  1 -
+ builtin/rev-list.c                       |  3 +--
+ builtin/rev-parse.c                      |  3 +--
+ builtin/shortlog.c                       |  1 -
+ builtin/show-branch.c                    |  3 +--
+ builtin/show-index.c                     |  1 -
+ builtin/show-ref.c                       |  1 -
+ builtin/sparse-checkout.c                |  1 -
+ builtin/stripspace.c                     |  1 -
+ builtin/submodule--helper.c              |  1 -
+ builtin/symbolic-ref.c                   |  1 -
+ builtin/tag.c                            |  3 +--
+ builtin/unpack-objects.c                 |  1 -
+ builtin/update-index.c                   |  3 +--
+ builtin/update-ref.c                     |  3 +--
+ builtin/update-server-info.c             |  3 +--
+ builtin/upload-archive.c                 |  1 -
+ builtin/upload-pack.c                    |  1 -
+ builtin/verify-commit.c                  |  3 +--
+ builtin/verify-pack.c                    |  1 -
+ builtin/verify-tag.c                     |  3 +--
+ builtin/worktree.c                       |  3 +--
+ builtin/write-tree.c                     |  1 -
+ cache-tree.c                             |  2 +-
+ cache.h                                  |  6 ------
+ compat/fsmonitor/fsm-health-win32.c      |  2 +-
+ compat/fsmonitor/fsm-listen-win32.c      |  2 +-
+ compat/fsmonitor/fsm-path-utils-darwin.c |  1 +
+ compat/fsmonitor/fsm-path-utils-win32.c  |  2 +-
+ compat/fsmonitor/fsm-settings-win32.c    |  2 +-
+ compat/mingw.c                           |  1 -
+ compat/precompose_utf8.c                 |  2 +-
+ compat/sha1-chunked.c                    |  2 +-
+ compat/simple-ipc/ipc-win32.c            |  2 +-
+ compat/win32/trace2_win32_process_info.c |  2 +-
+ convert.c                                |  2 +-
+ diff-lib.c                               |  2 +-
+ diff.c                                   |  2 +-
+ entry.c                                  |  2 +-
+ environment.c                            |  2 +-
+ fsmonitor-ipc.c                          |  2 +-
+ fsmonitor.c                              |  2 +-
+ fsmonitor.h                              |  1 -
+ hash-lookup.c                            |  2 +-
+ merge-ort-wrappers.c                     |  2 +-
+ merge-ort.c                              |  2 +-
+ merge-recursive.c                        |  2 +-
+ merge.c                                  |  2 +-
+ name-hash.c                              |  2 +-
+ object-name.c                            |  2 +-
+ object.c                                 |  2 +-
+ parallel-checkout.c                      |  2 +-
+ pathspec.c                               |  2 +-
+ preload-index.c                          |  2 +-
+ read-cache.c                             |  2 +-
+ refs/files-backend.c                     |  2 +-
+ refs/packed-backend.c                    |  2 +-
+ repository.c                             |  2 +-
+ rerere.c                                 |  2 +-
+ resolve-undo.c                           |  2 +-
+ revision.c                               |  2 +-
+ run-command.h                            |  2 +-
+ sequencer.c                              |  2 +-
+ shallow.c                                |  2 +-
+ sparse-index.c                           |  2 +-
+ split-index.c                            |  2 +-
+ strbuf.h                                 |  4 ----
+ submodule.c                              |  2 +-
+ t/helper/test-cache-tree.c               |  1 -
+ t/helper/test-dump-cache-tree.c          |  1 -
+ t/helper/test-dump-fsmonitor.c           |  1 -
+ t/helper/test-dump-split-index.c         |  1 -
+ t/helper/test-dump-untracked-cache.c     |  1 -
+ t/helper/test-fast-rebase.c              |  1 -
+ t/helper/test-fsmonitor-client.c         |  1 -
+ t/helper/test-hash-speed.c               |  1 -
+ t/helper/test-index-version.c            |  1 -
+ t/helper/test-lazy-init-name-hash.c      |  1 -
+ t/helper/test-path-utils.c               |  1 -
+ t/helper/test-read-cache.c               |  1 -
+ t/helper/test-scrap-cache-tree.c         |  1 -
+ t/helper/test-sha1.c                     |  1 -
+ t/helper/test-sha256.c                   |  1 -
+ t/helper/test-strcmp-offset.c            |  1 -
+ t/helper/test-write-cache.c              |  1 -
+ unpack-trees.c                           |  2 +-
+ wt-status.c                              |  2 +-
+ 149 files changed, 99 insertions(+), 205 deletions(-)
+ delete mode 100644 cache.h
 
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 003393ed161..2b472df29d5 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -444,7 +444,7 @@ For C programs:
+  - The first #include in C files, except in platform specific compat/
+    implementations and sha1dc/, must be either "git-compat-util.h" or
+    one of the approved headers that includes it first for you.  (The
+-   approved headers currently include "cache.h", "builtin.h",
++   approved headers currently include "builtin.h",
+    "t/helper/test-tool.h", "xdiff/xinclude.h", or
+    "reftable/system.h").  You do not have to include more than one of
+    these.
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index eee513e86f4..200e628e301 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -124,7 +124,7 @@ parameters provided by the user over the CLI.
+ 
+ `nr` represents the number of `rev_cmdline_entry` present in the array.
+ 
+-`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is
++`alloc` is used by the `ALLOC_GROW` macro. Check `alloc.h` - this variable is
+ used to track the allocated size of the list.
+ 
+ Per entry, we find:
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index dc9c6a663a9..100630ba3d2 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -4102,13 +4102,11 @@ Note that terminology has changed since that revision.  For example, the
+ README in that revision uses the word "changeset" to describe what we
+ now call a <<def_commit_object,commit>>.
+ 
+-Also, we do not call it "cache" any more, but rather "index"; however, the
+-file is still called `cache.h`.  Remark: Not much reason to change it now,
+-especially since there is no good single name for it anyway, because it is
+-basically _the_ header file which is included by _all_ of Git's C sources.
++Also, we do not call it "cache" any more, but rather "index"; however,
++the file is still called `read-cache.h`.
+ 
+ If you grasp the ideas in that initial commit, you should check out a
+-more recent version and skim `cache.h`, `object.h` and `commit.h`.
++more recent version and skim `read-cache-ll.h`, `object.h` and `commit.h`.
+ 
+ In the early days, Git (in the tradition of UNIX) was a bunch of programs
+ which were extremely simple, and which you used in scripts, piping the
+@@ -4119,11 +4117,11 @@ many of these parts have become builtins, and some of the core has been
+ and to avoid code duplication.
+ 
+ By now, you know what the index is (and find the corresponding data
+-structures in `cache.h`), and that there are just a couple of object types
+-(blobs, trees, commits and tags) which inherit their common structure from
+-`struct object`, which is their first member (and thus, you can cast e.g.
+-`(struct object *)commit` to achieve the _same_ as `&commit->object`, i.e.
+-get at the object name and flags).
++structures in `read-cache-ll.h`), and that there are just a couple of
++object types (blobs, trees, commits and tags) which inherit their
++common structure from `struct object`, which is their first member
++(and thus, you can cast e.g.  `(struct object *)commit` to achieve the
++_same_ as `&commit->object`, i.e.  get at the object name and flags).
+ 
+ Now is a good point to take a break to let this information sink in.
+ 
+diff --git a/Makefile b/Makefile
+index cbc7f212016..2d180abc5ca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1952,7 +1952,7 @@ endif
+ 	BASIC_CFLAGS += \
+ 		-DSHA1DC_NO_STANDARD_INCLUDES \
+ 		-DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 \
+-		-DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" \
++		-DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"git-compat-util.h\"" \
+ 		-DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\""
+ endif
+ endif
 diff --git a/add-interactive.c b/add-interactive.c
-index 99f7dc3b0d1..a9671e33491 100644
+index a9671e33491..40f88c02051 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -6,6 +6,7 @@
- #include "gettext.h"
- #include "hex.h"
- #include "preload-index.h"
-+#include "read-cache-ll.h"
- #include "revision.h"
- #include "refs.h"
- #include "string-list.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "add-interactive.h"
+ #include "color.h"
+ #include "config.h"
 diff --git a/add-patch.c b/add-patch.c
-index 8d770d203ff..7d4d298286d 100644
+index 7d4d298286d..875b96e2274 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -6,6 +6,7 @@
- #include "environment.h"
- #include "gettext.h"
- #include "object-name.h"
-+#include "read-cache-ll.h"
- #include "strbuf.h"
- #include "run-command.h"
- #include "strvec.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "add-interactive.h"
+ #include "advice.h"
+ #include "alloc.h"
 diff --git a/apply.c b/apply.c
-index 3da33bb88fd..f056c8f3bb9 100644
+index f056c8f3bb9..e44a5dd7c50 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -28,6 +28,7 @@
- #include "object-file.h"
- #include "parse-options.h"
- #include "quote.h"
-+#include "read-cache.h"
- #include "rerere.h"
- #include "apply.h"
- #include "entry.h"
+@@ -7,7 +7,7 @@
+  *
+  */
+ 
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "base85.h"
 diff --git a/attr.c b/attr.c
-index ddf2b0cbc2e..57c813d8e77 100644
+index 57c813d8e77..5a32bfadb37 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -16,6 +16,7 @@
- #include "gettext.h"
- #include "utf8.h"
- #include "quote.h"
-+#include "read-cache-ll.h"
- #include "revision.h"
- #include "object-store.h"
- #include "setup.h"
+@@ -6,7 +6,7 @@
+  * an insanely large number of attributes.
+  */
+ 
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "environment.h"
 diff --git a/blame.c b/blame.c
-index 58dd58b6c97..a29ae7c14b2 100644
+index a29ae7c14b2..15bbf16057a 100644
 --- a/blame.c
 +++ b/blame.c
-@@ -8,6 +8,7 @@
- #include "diffcore.h"
- #include "gettext.h"
- #include "hex.h"
-+#include "read-cache.h"
- #include "setup.h"
- #include "tag.h"
- #include "trace2.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "refs.h"
+ #include "object-store.h"
+ #include "cache-tree.h"
+diff --git a/builtin.h b/builtin.h
+index cb0db676814..3e6c22eef69 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -3,7 +3,6 @@
+ 
+ #include "git-compat-util.h"
+ #include "strbuf.h"
+-#include "cache.h"
+ #include "commit.h"
+ 
+ /*
 diff --git a/builtin/add.c b/builtin/add.c
-index 8397be4f8de..9fe6b6ce290 100644
+index 9fe6b6ce290..50792c0d495 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -20,6 +20,7 @@
- #include "preload-index.h"
- #include "diff.h"
- #include "diffcore.h"
-+#include "read-cache.h"
- #include "revision.h"
- #include "bulk-checkin.h"
- #include "strvec.h"
-diff --git a/builtin/checkout--worker.c b/builtin/checkout--worker.c
-index 2120dd1d300..c655dc4b136 100644
---- a/builtin/checkout--worker.c
-+++ b/builtin/checkout--worker.c
-@@ -6,6 +6,7 @@
- #include "parallel-checkout.h"
- #include "parse-options.h"
- #include "pkt-line.h"
-+#include "read-cache-ll.h"
- 
- static void packet_to_pc_item(const char *buffer, int len,
- 			      struct parallel_checkout_item *pc_item)
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index b1cd8bef264..f62f13f2b53 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -16,6 +16,7 @@
- #include "parse-options.h"
- #include "entry.h"
- #include "parallel-checkout.h"
-+#include "read-cache-ll.h"
- #include "setup.h"
- #include "sparse-index.h"
- 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2d72a742d9d..09b84156492 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -21,6 +21,7 @@
- #include "object-store.h"
- #include "parse-options.h"
- #include "preload-index.h"
-+#include "read-cache.h"
- #include "refs.h"
- #include "remote.h"
- #include "resolve-undo.h"
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 78852d28cec..49c7af45b03 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -14,6 +14,7 @@
+@@ -4,10 +4,9 @@
+  * Copyright (C) 2006 Linus Torvalds
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "advice.h"
+ #include "config.h"
+-#include "builtin.h"
+ #include "lockfile.h"
+ #include "editor.h"
  #include "dir.h"
+diff --git a/builtin/am.c b/builtin/am.c
+index 0d8f46f8d5a..2f0f2337915 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -4,11 +4,10 @@
+  * Based on git-am.sh by Junio C Hamano.
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "abspath.h"
+ #include "advice.h"
+ #include "config.h"
+-#include "builtin.h"
+ #include "editor.h"
+ #include "environment.h"
+ #include "exec-cmd.h"
+diff --git a/builtin/apply.c b/builtin/apply.c
+index e3ff02a09e3..c18b7ea5d3d 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -1,4 +1,3 @@
+-#include "cache.h"
+ #include "builtin.h"
  #include "gettext.h"
  #include "parse-options.h"
-+#include "read-cache-ll.h"
+diff --git a/builtin/archive.c b/builtin/archive.c
+index b0eaa3c14a3..90761fdfee0 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -2,7 +2,6 @@
+  * Copyright (c) 2006 Franck Bui-Huu
+  * Copyright (c) 2006 Rene Scharfe
+  */
+-#include "cache.h"
+ #include "builtin.h"
+ #include "archive.h"
+ #include "gettext.h"
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 4812450c393..bce0ee6268a 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "copy.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 501c47657c9..5e9b0e4ea44 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -5,14 +5,13 @@
+  * Based on git-branch.sh by Junio C Hamano.
+  */
+ 
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "color.h"
+ #include "editor.h"
+ #include "environment.h"
+ #include "refs.h"
+ #include "commit.h"
+-#include "builtin.h"
+ #include "gettext.h"
+ #include "object-name.h"
+ #include "remote.h"
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 44113389d7a..3f63631c039 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -6,7 +6,6 @@
+ #include "parse-options.h"
+ #include "pkt-line.h"
  #include "repository.h"
+-#include "cache.h"
+ #include "bundle.h"
+ 
+ /*
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0bafc14e6c0..9646e7209ca 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -4,11 +4,10 @@
+  * Copyright (C) Linus Torvalds, 2005
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "convert.h"
+-#include "builtin.h"
+ #include "diff.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index b2b678847f5..869c04420d3 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "attr.h"
+ #include "environment.h"
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index e4b78782a32..906cd967536 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "gettext.h"
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index 57f0505070f..5eb6bdc3f69 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -2,9 +2,8 @@
+  * GIT - The information manager from hell
+  */
+ 
+-#include "cache.h"
+-#include "refs.h"
+ #include "builtin.h"
++#include "refs.h"
  #include "setup.h"
- #include "string-list.h"
+ #include "strbuf.h"
+ 
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 49c7af45b03..66b4479356d 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -9,7 +9,6 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
+ #include "abspath.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "gettext.h"
+diff --git a/builtin/column.c b/builtin/column.c
+index de623a16c2d..ce13ff0baa2 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "strbuf.h"
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index d1d251c3ded..d2121f30d45 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -3,7 +3,7 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -12,7 +12,6 @@
+ #include "repository.h"
+ #include "commit.h"
+ #include "tree.h"
+-#include "builtin.h"
+ #include "utf8.h"
+ #include "gpg-interface.h"
+ #include "parse-options.h"
 diff --git a/builtin/commit.c b/builtin/commit.c
-index fa769045c88..5be05c9d9e1 100644
+index 5be05c9d9e1..3b90cb748cd 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -31,6 +31,7 @@
- #include "object-name.h"
+@@ -6,7 +6,7 @@
+  */
+ 
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "advice.h"
+ #include "config.h"
+ #include "lockfile.h"
+@@ -15,7 +15,6 @@
+ #include "dir.h"
+ #include "editor.h"
+ #include "environment.h"
+-#include "builtin.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "commit.h"
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index f3d8f1bcbb0..b9e6b55a9a9 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -4,13 +4,12 @@
+  * Copyright (c) 2006 Junio C Hamano
+  */
+ 
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "repository.h"
+-#include "builtin.h"
  #include "parse-options.h"
- #include "preload-index.h"
-+#include "read-cache.h"
- #include "string-list.h"
- #include "rerere.h"
- #include "unpack-trees.h"
+ #include "quote.h"
+ #include "packfile.h"
 diff --git a/builtin/describe.c b/builtin/describe.c
-index 55b4baaa223..f1be7c36948 100644
+index f1be7c36948..508e8df00ef 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -13,6 +13,7 @@
+@@ -1,5 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+@@ -9,7 +9,6 @@
+ #include "tag.h"
+ #include "blob.h"
+ #include "refs.h"
+-#include "builtin.h"
  #include "exec-cmd.h"
  #include "object-name.h"
  #include "parse-options.h"
-+#include "read-cache-ll.h"
- #include "revision.h"
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 2e6b59a8bb3..b7036aa7c2b 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -3,14 +3,13 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
  #include "diff.h"
- #include "hashmap.h"
+ #include "diff-merges.h"
+ #include "commit.h"
+ #include "preload-index.h"
+ #include "revision.h"
+-#include "builtin.h"
+ #include "submodule.h"
+ 
+ static const char diff_files_usage[] =
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 9b98db2e77e..1ab8f8b6dc5 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -1,11 +1,10 @@
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "diff.h"
+ #include "diff-merges.h"
+ #include "commit.h"
+ #include "preload-index.h"
+ #include "revision.h"
+-#include "builtin.h"
+ #include "setup.h"
+ #include "submodule.h"
+ 
 diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 0b02c62b85e..5a1e5d6df7c 100644
+index 5a1e5d6df7c..3e281150473 100644
 --- a/builtin/diff-tree.c
 +++ b/builtin/diff-tree.c
-@@ -8,6 +8,7 @@
- #include "log-tree.h"
- #include "builtin.h"
- #include "submodule.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "tree.h"
- 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 967550739a6..a9ce701ff97 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -17,6 +17,7 @@
- #include "diff-merges.h"
- #include "diffcore.h"
- #include "preload-index.h"
-+#include "read-cache-ll.h"
- #include "revision.h"
- #include "log-tree.h"
- #include "builtin.h"
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 2c27a59e04a..88809976c53 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -23,6 +23,7 @@
+@@ -1,12 +1,11 @@
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "diff.h"
+ #include "commit.h"
  #include "gettext.h"
  #include "hex.h"
- #include "parse-options.h"
-+#include "read-cache-ll.h"
- #include "sparse-index.h"
- #include "strvec.h"
- #include "strbuf.h"
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7134596d218..e8c5fbca58f 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -22,6 +22,7 @@
- #include "object-file.h"
- #include "object-name.h"
- #include "object-store.h"
-+#include "read-cache-ll.h"
- #include "replace-object.h"
- #include "resolve-undo.h"
- #include "run-command.h"
-diff --git a/builtin/grep.c b/builtin/grep.c
-index b86c754defb..0d567575890 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -31,6 +31,7 @@
- #include "object-store.h"
- #include "packfile.h"
- #include "pager.h"
-+#include "read-cache-ll.h"
- #include "write-or-die.h"
- 
- static const char *grep_prefix;
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 45b3b0ce5d8..d8c1c62bcb0 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -21,6 +21,7 @@
- #include "resolve-undo.h"
- #include "string-list.h"
- #include "pathspec.h"
-+#include "read-cache.h"
- #include "run-command.h"
- #include "setup.h"
- #include "sparse-index.h"
-diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index d16e8aa414b..270d5f644ac 100644
---- a/builtin/merge-index.c
-+++ b/builtin/merge-index.c
-@@ -1,6 +1,7 @@
+ #include "log-tree.h"
+-#include "builtin.h"
+ #include "submodule.h"
+ #include "read-cache-ll.h"
+ #include "repository.h"
+diff --git a/builtin/diff.c b/builtin/diff.c
+index a9ce701ff97..b19530c996c 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -4,7 +4,7 @@
+  * Copyright (c) 2006 Junio C Hamano
+  */
  #define USE_THE_INDEX_VARIABLE
- #include "builtin.h"
- #include "hex.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "run-command.h"
- #include "sparse-index.h"
-diff --git a/builtin/mv.c b/builtin/mv.c
-index e058b574654..ae462bd7d41 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -19,6 +19,7 @@
- #include "cache-tree.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "ewah/ewok.h"
+ #include "lockfile.h"
+@@ -20,7 +20,6 @@
+ #include "read-cache-ll.h"
+ #include "revision.h"
+ #include "log-tree.h"
+-#include "builtin.h"
  #include "setup.h"
  #include "submodule.h"
+ #include "oid-array.h"
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 88809976c53..4a22de3eddb 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -12,11 +12,10 @@
+  * Copyright (C) 2016 Johannes Schindelin
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "abspath.h"
+ #include "config.h"
+ #include "copy.h"
+-#include "builtin.h"
+ #include "run-command.h"
+ #include "environment.h"
+ #include "exec-cmd.h"
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 9a95f6a1a82..5f3ffd6912f 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -4,7 +4,6 @@
+  * Copyright (C) 2007 Johannes E. Schindelin
+  */
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "hex.h"
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index bbd9b2b3e71..67a2260a5eb 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -1,6 +1,5 @@
+ #include "builtin.h"
+ #include "abspath.h"
+-#include "cache.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 4d7c2897528..cbc991086cd 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1,7 +1,7 @@
+ /*
+  * "git fetch"
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "advice.h"
+ #include "config.h"
+ #include "gettext.h"
+@@ -15,7 +15,6 @@
+ #include "oidset.h"
+ #include "oid-array.h"
+ #include "commit.h"
+-#include "builtin.h"
+ #include "string-list.h"
+ #include "remote.h"
+ #include "transport.h"
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 695fc8f4a5e..d0d6ab0fd34 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "refs.h"
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+index 37daf7bec14..28186b30f54 100644
+--- a/builtin/for-each-repo.c
++++ b/builtin/for-each-repo.c
+@@ -1,6 +1,5 @@
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+ #include "path.h"
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index e8c5fbca58f..f05617ceb14 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "repository.h"
+diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
+index 564cfcac4fb..9303e386cc7 100644
+--- a/builtin/get-tar-commit-id.c
++++ b/builtin/get-tar-commit-id.c
+@@ -1,10 +1,9 @@
+ /*
+  * Copyright (c) 2005, 2006 Rene Scharfe
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "commit.h"
+ #include "tar.h"
+-#include "builtin.h"
+ #include "quote.h"
+ #include "wrapper.h"
+ 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 0d567575890..7638d779000 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -3,7 +3,7 @@
+  *
+  * Copyright (c) 2006 Junio C Hamano
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "alloc.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -14,7 +14,6 @@
+ #include "commit.h"
+ #include "tag.h"
+ #include "tree-walk.h"
+-#include "builtin.h"
+ #include "parse-options.h"
+ #include "string-list.h"
+ #include "run-command.h"
+diff --git a/builtin/help.c b/builtin/help.c
+index d3cf4af3f6e..e93533fb09e 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -1,9 +1,8 @@
+ /*
+  * Builtin help command
+  */
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "exec-cmd.h"
+ #include "gettext.h"
+ #include "pager.h"
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 88051795c7f..09b51a6487c 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -1,4 +1,3 @@
+-#include "cache.h"
+ #include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index feb019a9dea..680ef7e1837 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -3,12 +3,11 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "abspath.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+-#include "builtin.h"
+ #include "object-file.h"
+ #include "parse-options.h"
+ #include "path.h"
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 107ac28f0e8..c5e83452654 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -5,7 +5,6 @@
+  *
+  */
+ 
+-#include "cache.h"
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index d8c1c62bcb0..a49c43864f7 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -5,13 +5,12 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "convert.h"
+ #include "quote.h"
+ #include "dir.h"
+-#include "builtin.h"
+ #include "gettext.h"
+ #include "object-name.h"
+ #include "strbuf.h"
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index cb6cb77e086..a0aadc9b8ff 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "transport.h"
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 077977a4610..f4331c640fc 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -3,7 +3,7 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -13,7 +13,6 @@
+ #include "tree.h"
+ #include "commit.h"
+ #include "quote.h"
+-#include "builtin.h"
+ #include "parse-options.h"
+ #include "pathspec.h"
+ 
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index a032a1c3881..53b55dd71c0 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -2,9 +2,8 @@
+  * Another stupid program, this one parsing the headers of an
+  * email to figure out authorship and subject
+  */
+-#include "cache.h"
+-#include "abspath.h"
+ #include "builtin.h"
++#include "abspath.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "utf8.h"
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index 0b6193a0915..3af9ddb8ae5 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -4,7 +4,6 @@
+  * It just splits a mbox into a list of files: "0001" "0002" ..
+  * so you can process them further from there.
+  */
+-#include "cache.h"
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "string-list.h"
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index 854019a32dc..e68b7fe45d7 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "gettext.h"
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index 781818d08f5..d7eb4c65401 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -1,6 +1,5 @@
+ #include "builtin.h"
+ #include "abspath.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "setup.h"
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index b9e980384a4..3366699657c 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -1,4 +1,3 @@
+-#include "cache.h"
+ #include "builtin.h"
+ #include "advice.h"
+ #include "commit.h"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 6e8f7b9bb53..d7ac108ce94 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -7,7 +7,7 @@
+  */
+ 
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "abspath.h"
+ #include "advice.h"
+ #include "alloc.h"
+@@ -18,7 +18,6 @@
+ #include "hex.h"
+ #include "object-name.h"
+ #include "parse-options.h"
+-#include "builtin.h"
+ #include "lockfile.h"
+ #include "run-command.h"
+ #include "hook.h"
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 1b5083f8b26..5bb71bce08d 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -1,6 +1,5 @@
+ #include "builtin.h"
+ #include "abspath.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/notes.c b/builtin/notes.c
+index d5788352b6e..efdf2451486 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -7,9 +7,8 @@
+  * and builtin/tag.c by Kristian Høgsberg and Carlos Rica.
+  */
+ 
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "editor.h"
+ #include "gettext.h"
+ #include "hex.h"
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 9d5585d3a72..27952f1a6fd 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -1,4 +1,3 @@
+-#include "cache.h"
+ #include "builtin.h"
+ #include "config.h"
+ #include "diff.h"
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 5dc9b207200..b3658b5b512 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -1,11 +1,10 @@
+-#include "cache.h"
++#include "builtin.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "revision.h"
+-#include "builtin.h"
+ #include "reachable.h"
+ #include "parse-options.h"
+ #include "progress.h"
 diff --git a/builtin/pull.c b/builtin/pull.c
-index f9ddc94ba9a..8aeb5abc7fb 100644
+index 8aeb5abc7fb..d4261804d76 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -20,6 +20,7 @@
- #include "oid-array.h"
- #include "remote.h"
- #include "dir.h"
-+#include "read-cache-ll.h"
- #include "rebase.h"
+@@ -6,10 +6,9 @@
+  * Fetch one or more remote refs and merge it/them into the current HEAD.
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "advice.h"
+ #include "config.h"
+-#include "builtin.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "merge.h"
+diff --git a/builtin/push.c b/builtin/push.c
+index 4e5780dd50d..62d44736500 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -1,7 +1,7 @@
+ /*
+  * "git push"
+  */
+-#include "cache.h"
++#include "builtin.h"
+ #include "advice.h"
+ #include "branch.h"
+ #include "config.h"
+@@ -10,7 +10,6 @@
  #include "refs.h"
  #include "refspec.h"
+ #include "run-command.h"
+-#include "builtin.h"
+ #include "remote.h"
+ #include "transport.h"
+ #include "parse-options.h"
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index 04339a92ea5..8610390d7c5 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -1,4 +1,3 @@
+-#include "cache.h"
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "object-name.h"
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index bd1ce1d963f..63c92936faa 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -5,7 +5,7 @@
+  */
+ 
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -17,7 +17,6 @@
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+ #include "dir.h"
+-#include "builtin.h"
+ #include "parse-options.h"
+ #include "repository.h"
+ #include "resolve-undo.h"
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 981f1894436..e0fbdc98ed3 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -8,9 +8,8 @@
+  * git-tag.sh and mktag.c by Linus Torvalds.
+  */
+ 
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "editor.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index d4bd52797f4..0458db9cadf 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "gettext.h"
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 6dc8be492a2..8029f3de53c 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "diff.h"
+@@ -15,7 +15,6 @@
+ #include "object-store.h"
+ #include "pack.h"
+ #include "pack-bitmap.h"
+-#include "builtin.h"
+ #include "log-tree.h"
+ #include "graph.h"
+ #include "bisect.h"
 diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 852e49e3403..ad93e5fad88 100644
+index ad93e5fad88..8d8c870421d 100644
 --- a/builtin/rev-parse.c
 +++ b/builtin/rev-parse.c
-@@ -18,6 +18,7 @@
+@@ -4,7 +4,7 @@
+  * Copyright (C) Linus Torvalds, 2005
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "config.h"
+@@ -14,7 +14,6 @@
+ #include "hex.h"
+ #include "refs.h"
+ #include "quote.h"
+-#include "builtin.h"
  #include "object-name.h"
  #include "parse-options.h"
  #include "diff.h"
-+#include "read-cache-ll.h"
- #include "revision.h"
- #include "setup.h"
- #include "split-index.h"
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 377a0f66ad8..463eeabceaa 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -16,6 +16,7 @@
- #include "tree-walk.h"
- #include "object-name.h"
- #include "parse-options.h"
-+#include "read-cache.h"
- #include "repository.h"
- #include "string-list.h"
- #include "setup.h"
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 06527ee8471..d3d5bb95e26 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -18,6 +18,7 @@
- #include "dir.h"
- #include "entry.h"
- #include "preload-index.h"
-+#include "read-cache.h"
- #include "rerere.h"
- #include "revision.h"
- #include "setup.h"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 597e780a93a..86324b829a7 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -13,6 +13,7 @@
- #include "pathspec.h"
- #include "preload-index.h"
- #include "dir.h"
-+#include "read-cache.h"
- #include "setup.h"
- #include "sparse-index.h"
- #include "submodule.h"
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 47dc9b626ef..484a307df50 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -22,6 +22,7 @@
- #include "parse-options.h"
- #include "pathspec.h"
- #include "dir.h"
-+#include "read-cache.h"
- #include "repository.h"
- #include "setup.h"
- #include "sparse-index.h"
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index f3180463be2..3c3d97ad5b0 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -13,6 +13,7 @@
- #include "parse-options.h"
- #include "strvec.h"
- #include "branch.h"
-+#include "read-cache-ll.h"
- #include "refs.h"
- #include "repository.h"
- #include "run-command.h"
-diff --git a/cache-tree.c b/cache-tree.c
-index ebfe649b330..153217b47ff 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -9,6 +9,7 @@
- #include "bulk-checkin.h"
- #include "object-file.h"
- #include "object-store.h"
-+#include "read-cache-ll.h"
- #include "replace-object.h"
- #include "promisor-remote.h"
- #include "sparse-index.h"
-diff --git a/cache.h b/cache.h
-index 11882897741..9b4e8d16874 100644
---- a/cache.h
-+++ b/cache.h
-@@ -2,525 +2,5 @@
- #define CACHE_H
- 
- #include "git-compat-util.h"
--#include "strbuf.h"
--#include "hashmap.h"
--#include "pathspec.h"
--#include "object.h"
--#include "statinfo.h"
--
--/*
-- * Basic data structures for the directory cache
-- */
--
--#define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
--struct cache_header {
--	uint32_t hdr_signature;
--	uint32_t hdr_version;
--	uint32_t hdr_entries;
--};
--
--#define INDEX_FORMAT_LB 2
--#define INDEX_FORMAT_UB 4
--
--struct cache_entry {
--	struct hashmap_entry ent;
--	struct stat_data ce_stat_data;
--	unsigned int ce_mode;
--	unsigned int ce_flags;
--	unsigned int mem_pool_allocated;
--	unsigned int ce_namelen;
--	unsigned int index;	/* for link extension */
--	struct object_id oid;
--	char name[FLEX_ARRAY]; /* more */
--};
--
--#define CE_STAGEMASK (0x3000)
--#define CE_EXTENDED  (0x4000)
--#define CE_VALID     (0x8000)
--#define CE_STAGESHIFT 12
--
--/*
-- * Range 0xFFFF0FFF in ce_flags is divided into
-- * two parts: in-memory flags and on-disk ones.
-- * Flags in CE_EXTENDED_FLAGS will get saved on-disk
-- * if you want to save a new flag, add it in
-- * CE_EXTENDED_FLAGS
-- *
-- * In-memory only flags
-- */
--#define CE_UPDATE            (1 << 16)
--#define CE_REMOVE            (1 << 17)
--#define CE_UPTODATE          (1 << 18)
--#define CE_ADDED             (1 << 19)
--
--#define CE_HASHED            (1 << 20)
--#define CE_FSMONITOR_VALID   (1 << 21)
--#define CE_WT_REMOVE         (1 << 22) /* remove in work directory */
--#define CE_CONFLICTED        (1 << 23)
--
--#define CE_UNPACKED          (1 << 24)
--#define CE_NEW_SKIP_WORKTREE (1 << 25)
--
--/* used to temporarily mark paths matched by pathspecs */
--#define CE_MATCHED           (1 << 26)
--
--#define CE_UPDATE_IN_BASE    (1 << 27)
--#define CE_STRIP_NAME        (1 << 28)
--
--/*
-- * Extended on-disk flags
-- */
--#define CE_INTENT_TO_ADD     (1 << 29)
--#define CE_SKIP_WORKTREE     (1 << 30)
--/* CE_EXTENDED2 is for future extension */
--#define CE_EXTENDED2         (1U << 31)
--
--#define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
--
--/*
-- * Safeguard to avoid saving wrong flags:
-- *  - CE_EXTENDED2 won't get saved until its semantic is known
-- *  - Bits in 0x0000FFFF have been saved in ce_flags already
-- *  - Bits in 0x003F0000 are currently in-memory flags
-- */
--#if CE_EXTENDED_FLAGS & 0x803FFFFF
--#error "CE_EXTENDED_FLAGS out of range"
--#endif
--
--/* Forward structure decls */
--struct pathspec;
--struct tree;
--
--/*
-- * Copy the sha1 and stat state of a cache entry from one to
-- * another. But we never change the name, or the hash state!
-- */
--static inline void copy_cache_entry(struct cache_entry *dst,
--				    const struct cache_entry *src)
--{
--	unsigned int state = dst->ce_flags & CE_HASHED;
--	int mem_pool_allocated = dst->mem_pool_allocated;
--
--	/* Don't copy hash chain and name */
--	memcpy(&dst->ce_stat_data, &src->ce_stat_data,
--			offsetof(struct cache_entry, name) -
--			offsetof(struct cache_entry, ce_stat_data));
--
--	/* Restore the hash state */
--	dst->ce_flags = (dst->ce_flags & ~CE_HASHED) | state;
--
--	/* Restore the mem_pool_allocated flag */
--	dst->mem_pool_allocated = mem_pool_allocated;
--}
--
--static inline unsigned create_ce_flags(unsigned stage)
--{
--	return (stage << CE_STAGESHIFT);
--}
--
--#define ce_namelen(ce) ((ce)->ce_namelen)
--#define ce_size(ce) cache_entry_size(ce_namelen(ce))
--#define ce_stage(ce) ((CE_STAGEMASK & (ce)->ce_flags) >> CE_STAGESHIFT)
--#define ce_uptodate(ce) ((ce)->ce_flags & CE_UPTODATE)
--#define ce_skip_worktree(ce) ((ce)->ce_flags & CE_SKIP_WORKTREE)
--#define ce_mark_uptodate(ce) ((ce)->ce_flags |= CE_UPTODATE)
--#define ce_intent_to_add(ce) ((ce)->ce_flags & CE_INTENT_TO_ADD)
--
--static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
--					     unsigned int mode)
--{
--	extern int trust_executable_bit, has_symlinks;
--	if (!has_symlinks && S_ISREG(mode) &&
--	    ce && S_ISLNK(ce->ce_mode))
--		return ce->ce_mode;
--	if (!trust_executable_bit && S_ISREG(mode)) {
--		if (ce && S_ISREG(ce->ce_mode))
--			return ce->ce_mode;
--		return create_ce_mode(0666);
--	}
--	return create_ce_mode(mode);
--}
--static inline int ce_to_dtype(const struct cache_entry *ce)
--{
--	unsigned ce_mode = ntohl(ce->ce_mode);
--	if (S_ISREG(ce_mode))
--		return DT_REG;
--	else if (S_ISDIR(ce_mode) || S_ISGITLINK(ce_mode))
--		return DT_DIR;
--	else if (S_ISLNK(ce_mode))
--		return DT_LNK;
--	else
--		return DT_UNKNOWN;
--}
--
--static inline int ce_path_match(struct index_state *istate,
--				const struct cache_entry *ce,
--				const struct pathspec *pathspec,
--				char *seen)
--{
--	return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
--			      S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
--}
--
--#define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
--
--#define SOMETHING_CHANGED	(1 << 0) /* unclassified changes go here */
--#define CE_ENTRY_CHANGED	(1 << 1)
--#define CE_ENTRY_REMOVED	(1 << 2)
--#define CE_ENTRY_ADDED		(1 << 3)
--#define RESOLVE_UNDO_CHANGED	(1 << 4)
--#define CACHE_TREE_CHANGED	(1 << 5)
--#define SPLIT_INDEX_ORDERED	(1 << 6)
--#define UNTRACKED_CHANGED	(1 << 7)
--#define FSMONITOR_CHANGED	(1 << 8)
--
--struct split_index;
--struct untracked_cache;
--struct progress;
--struct pattern_list;
--
--enum sparse_index_mode {
--	/*
--	 * There are no sparse directories in the index at all.
--	 *
--	 * Repositories that don't use cone-mode sparse-checkout will
--	 * always have their indexes in this mode.
--	 */
--	INDEX_EXPANDED = 0,
--
--	/*
--	 * The index has already been collapsed to sparse directories
--	 * whereever possible.
--	 */
--	INDEX_COLLAPSED,
--
--	/*
--	 * The sparse directories that exist are outside the
--	 * sparse-checkout boundary, but it is possible that some file
--	 * entries could collapse to sparse directory entries.
--	 */
--	INDEX_PARTIALLY_SPARSE,
--};
--
--struct index_state {
--	struct cache_entry **cache;
--	unsigned int version;
--	unsigned int cache_nr, cache_alloc, cache_changed;
--	struct string_list *resolve_undo;
--	struct cache_tree *cache_tree;
--	struct split_index *split_index;
--	struct cache_time timestamp;
--	unsigned name_hash_initialized : 1,
--		 initialized : 1,
--		 drop_cache_tree : 1,
--		 updated_workdir : 1,
--		 updated_skipworktree : 1,
--		 fsmonitor_has_run_once : 1;
--	enum sparse_index_mode sparse_index;
--	struct hashmap name_hash;
--	struct hashmap dir_hash;
--	struct object_id oid;
--	struct untracked_cache *untracked;
--	char *fsmonitor_last_update;
--	struct ewah_bitmap *fsmonitor_dirty;
--	struct mem_pool *ce_mem_pool;
--	struct progress *progress;
--	struct repository *repo;
--	struct pattern_list *sparse_checkout_patterns;
--};
--
--/**
-- * A "struct index_state istate" must be initialized with
-- * INDEX_STATE_INIT or the corresponding index_state_init().
-- *
-- * If the variable won't be used again, use release_index() to free()
-- * its resources. If it needs to be used again use discard_index(),
-- * which does the same thing, but will use use index_state_init() at
-- * the end. The discard_index() will use its own "istate->repo" as the
-- * "r" argument to index_state_init() in that case.
-- */
--#define INDEX_STATE_INIT(r) { \
--	.repo = (r), \
--}
--void index_state_init(struct index_state *istate, struct repository *r);
--void release_index(struct index_state *istate);
--
--/* Cache entry creation and cleanup */
--
--/*
-- * Create cache_entry intended for use in the specified index. Caller
-- * is responsible for discarding the cache_entry with
-- * `discard_cache_entry`.
-- */
--struct cache_entry *make_cache_entry(struct index_state *istate,
--				     unsigned int mode,
--				     const struct object_id *oid,
--				     const char *path,
--				     int stage,
--				     unsigned int refresh_options);
--
--struct cache_entry *make_empty_cache_entry(struct index_state *istate,
--					   size_t name_len);
--
--/*
-- * Create a cache_entry that is not intended to be added to an index. If
-- * `ce_mem_pool` is not NULL, the entry is allocated within the given memory
-- * pool. Caller is responsible for discarding "loose" entries with
-- * `discard_cache_entry()` and the memory pool with
-- * `mem_pool_discard(ce_mem_pool, should_validate_cache_entries())`.
-- */
--struct cache_entry *make_transient_cache_entry(unsigned int mode,
--					       const struct object_id *oid,
--					       const char *path,
--					       int stage,
--					       struct mem_pool *ce_mem_pool);
--
--struct cache_entry *make_empty_transient_cache_entry(size_t len,
--						     struct mem_pool *ce_mem_pool);
--
--/*
-- * Discard cache entry.
-- */
--void discard_cache_entry(struct cache_entry *ce);
--
--/*
-- * Check configuration if we should perform extra validation on cache
-- * entries.
-- */
--int should_validate_cache_entries(void);
--
--/*
-- * Duplicate a cache_entry. Allocate memory for the new entry from a
-- * memory_pool. Takes into account cache_entry fields that are meant
-- * for managing the underlying memory allocation of the cache_entry.
-- */
--struct cache_entry *dup_cache_entry(const struct cache_entry *ce, struct index_state *istate);
--
--/*
-- * Validate the cache entries in the index.  This is an internal
-- * consistency check that the cache_entry structs are allocated from
-- * the expected memory pool.
-- */
--void validate_cache_entries(const struct index_state *istate);
--
--/*
-- * Bulk prefetch all missing cache entries that are not GITLINKs and that match
-- * the given predicate. This function should only be called if
-- * repo_has_promisor_remote() returns true.
-- */
--typedef int (*must_prefetch_predicate)(const struct cache_entry *);
--void prefetch_cache_entries(const struct index_state *istate,
--			    must_prefetch_predicate must_prefetch);
--
--/* Initialize and use the cache information */
--struct lock_file;
--int do_read_index(struct index_state *istate, const char *path,
--		  int must_exist); /* for testting only! */
--int read_index_from(struct index_state *, const char *path,
--		    const char *gitdir);
--int is_index_unborn(struct index_state *);
--
--/* For use with `write_locked_index()`. */
--#define COMMIT_LOCK		(1 << 0)
--#define SKIP_IF_UNCHANGED	(1 << 1)
--
--/*
-- * Write the index while holding an already-taken lock. Close the lock,
-- * and if `COMMIT_LOCK` is given, commit it.
-- *
-- * Unless a split index is in use, write the index into the lockfile.
-- *
-- * With a split index, write the shared index to a temporary file,
-- * adjust its permissions and rename it into place, then write the
-- * split index to the lockfile. If the temporary file for the shared
-- * index cannot be created, fall back to the behavior described in
-- * the previous paragraph.
-- *
-- * With `COMMIT_LOCK`, the lock is always committed or rolled back.
-- * Without it, the lock is closed, but neither committed nor rolled
-- * back.
-- *
-- * If `SKIP_IF_UNCHANGED` is given and the index is unchanged, nothing
-- * is written (and the lock is rolled back if `COMMIT_LOCK` is given).
-- */
--int write_locked_index(struct index_state *, struct lock_file *lock, unsigned flags);
--
--void discard_index(struct index_state *);
--void move_index_extensions(struct index_state *dst, struct index_state *src);
--int unmerged_index(const struct index_state *);
--
--/**
-- * Returns 1 if istate differs from tree, 0 otherwise.  If tree is NULL,
-- * compares istate to HEAD.  If tree is NULL and on an unborn branch,
-- * returns 1 if there are entries in istate, 0 otherwise.  If an strbuf is
-- * provided, the space-separated list of files that differ will be appended
-- * to it.
-- */
--int repo_index_has_changes(struct repository *repo,
--			   struct tree *tree,
--			   struct strbuf *sb);
--
--int verify_path(const char *path, unsigned mode);
--int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
--
--/*
-- * Searches for an entry defined by name and namelen in the given index.
-- * If the return value is positive (including 0) it is the position of an
-- * exact match. If the return value is negative, the negated value minus 1
-- * is the position where the entry would be inserted.
-- * Example: The current index consists of these files and its stages:
-- *
-- *   b#0, d#0, f#1, f#3
-- *
-- * index_name_pos(&index, "a", 1) -> -1
-- * index_name_pos(&index, "b", 1) ->  0
-- * index_name_pos(&index, "c", 1) -> -2
-- * index_name_pos(&index, "d", 1) ->  1
-- * index_name_pos(&index, "e", 1) -> -3
-- * index_name_pos(&index, "f", 1) -> -3
-- * index_name_pos(&index, "g", 1) -> -5
-- */
--int index_name_pos(struct index_state *, const char *name, int namelen);
--
--/*
-- * Like index_name_pos, returns the position of an entry of the given name in
-- * the index if one exists, otherwise returns a negative value where the negated
-- * value minus 1 is the position where the index entry would be inserted. Unlike
-- * index_name_pos, however, a sparse index is not expanded to find an entry
-- * inside a sparse directory.
-- */
--int index_name_pos_sparse(struct index_state *, const char *name, int namelen);
--
--/*
-- * Determines whether an entry with the given name exists within the
-- * given index. The return value is 1 if an exact match is found, otherwise
-- * it is 0. Note that, unlike index_name_pos, this function does not expand
-- * the index if it is sparse. If an item exists within the full index but it
-- * is contained within a sparse directory (and not in the sparse index), 0 is
-- * returned.
-- */
--int index_entry_exists(struct index_state *, const char *name, int namelen);
--
--/*
-- * Some functions return the negative complement of an insert position when a
-- * precise match was not found but a position was found where the entry would
-- * need to be inserted. This helper protects that logic from any integer
-- * underflow.
-- */
--static inline int index_pos_to_insert_pos(uintmax_t pos)
--{
--	if (pos > INT_MAX)
--		die("overflow: -1 - %"PRIuMAX, pos);
--	return -1 - (int)pos;
--}
--
--#define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
--#define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
--#define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
--#define ADD_CACHE_JUST_APPEND 8		/* Append only */
--#define ADD_CACHE_NEW_ONLY 16		/* Do not replace existing ones */
--#define ADD_CACHE_KEEP_CACHE_TREE 32	/* Do not invalidate cache-tree */
--#define ADD_CACHE_RENORMALIZE 64        /* Pass along HASH_RENORMALIZE */
--int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
--void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
--
--/* Remove entry, return true if there are more entries to go. */
--int remove_index_entry_at(struct index_state *, int pos);
--
--void remove_marked_cache_entries(struct index_state *istate, int invalidate);
--int remove_file_from_index(struct index_state *, const char *path);
--#define ADD_CACHE_VERBOSE 1
--#define ADD_CACHE_PRETEND 2
--#define ADD_CACHE_IGNORE_ERRORS	4
--#define ADD_CACHE_IGNORE_REMOVAL 8
--#define ADD_CACHE_INTENT 16
--/*
-- * These two are used to add the contents of the file at path
-- * to the index, marking the working tree up-to-date by storing
-- * the cached stat info in the resulting cache entry.  A caller
-- * that has already run lstat(2) on the path can call
-- * add_to_index(), and all others can call add_file_to_index();
-- * the latter will do necessary lstat(2) internally before
-- * calling the former.
-- */
--int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
--int add_file_to_index(struct index_state *, const char *path, int flags);
--
--int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
--int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
--void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
--int index_name_is_other(struct index_state *, const char *, int);
--void *read_blob_data_from_index(struct index_state *, const char *, unsigned long *);
--
--/* do stat comparison even if CE_VALID is true */
--#define CE_MATCH_IGNORE_VALID		01
--/* do not check the contents but report dirty on racily-clean entries */
--#define CE_MATCH_RACY_IS_DIRTY		02
--/* do stat comparison even if CE_SKIP_WORKTREE is true */
--#define CE_MATCH_IGNORE_SKIP_WORKTREE	04
--/* ignore non-existent files during stat update  */
--#define CE_MATCH_IGNORE_MISSING		0x08
--/* enable stat refresh */
--#define CE_MATCH_REFRESH		0x10
--/* don't refresh_fsmonitor state or do stat comparison even if CE_FSMONITOR_VALID is true */
--#define CE_MATCH_IGNORE_FSMONITOR 0X20
--int is_racy_timestamp(const struct index_state *istate,
--		      const struct cache_entry *ce);
--int has_racy_timestamp(struct index_state *istate);
--int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
--int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
--
--int match_stat_data_racy(const struct index_state *istate,
--			 const struct stat_data *sd, struct stat *st);
--
--void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, struct stat *st);
--
--#define REFRESH_REALLY                   (1 << 0) /* ignore_valid */
--#define REFRESH_UNMERGED                 (1 << 1) /* allow unmerged */
--#define REFRESH_QUIET                    (1 << 2) /* be quiet about it */
--#define REFRESH_IGNORE_MISSING           (1 << 3) /* ignore non-existent */
--#define REFRESH_IGNORE_SUBMODULES        (1 << 4) /* ignore submodules */
--#define REFRESH_IN_PORCELAIN             (1 << 5) /* user friendly output, not "needs update" */
--#define REFRESH_PROGRESS                 (1 << 6) /* show progress bar if stderr is tty */
--#define REFRESH_IGNORE_SKIP_WORKTREE     (1 << 7) /* ignore skip_worktree entries */
--int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
--/*
-- * Refresh the index and write it to disk.
-- *
-- * 'refresh_flags' is passed directly to 'refresh_index()', while
-- * 'COMMIT_LOCK | write_flags' is passed to 'write_locked_index()', so
-- * the lockfile is always either committed or rolled back.
-- *
-- * If 'gentle' is passed, errors locking the index are ignored.
-- *
-- * Return 1 if refreshing the index returns an error, -1 if writing
-- * the index to disk fails, 0 on success.
-- *
-- * Note that if refreshing the index returns an error, we still write
-- * out the index (unless locking fails).
-- */
--int repo_refresh_and_write_index(struct repository*, unsigned int refresh_flags, unsigned int write_flags, int gentle, const struct pathspec *, char *seen, const char *header_msg);
--
--struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
--
--void set_alternate_index_output(const char *);
--
--extern int verify_index_checksum;
--extern int verify_ce_order;
--
--int cmp_cache_name_compare(const void *a_, const void *b_);
--
--/* add */
--/*
-- * return 0 if success, 1 - if addition of a file failed and
-- * ADD_FILES_IGNORE_ERRORS was specified in flags
-- */
--int add_files_to_cache(struct repository *repo, const char *prefix,
--		       const struct pathspec *pathspec, int include_sparse,
--		       int flags);
--
--/* ls-files */
--void overlay_tree_on_index(struct index_state *istate,
--			   const char *tree_name, const char *prefix);
- 
- #endif /* CACHE_H */
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index a4d11376ba5..fb08475bc64 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -10,6 +10,7 @@
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 46f4e0832ac..99be9dc417d 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "diff.h"
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 7ef4a642c17..cd215f89af8 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
  #include "environment.h"
  #include "gettext.h"
- #include "path.h"
-+#include "strbuf.h"
- #include "utf8.h"
- #include "precompose_utf8.h"
- 
-diff --git a/compat/sha1-chunked.c b/compat/sha1-chunked.c
-index 6adfcfd5405..56729d92dcf 100644
---- a/compat/sha1-chunked.c
-+++ b/compat/sha1-chunked.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "hash-ll.h"
- 
- int git_SHA1_Update_Chunked(platform_SHA_CTX *c, const void *data, size_t len)
- {
-diff --git a/config.c b/config.c
-index b79baf83e35..06e6cc6f1ec 100644
---- a/config.c
-+++ b/config.c
-@@ -33,6 +33,7 @@
- #include "replace-object.h"
+@@ -6,7 +6,6 @@
+ #include "hex.h"
+ #include "pretty.h"
  #include "refs.h"
- #include "setup.h"
-+#include "strvec.h"
- #include "trace2.h"
- #include "worktree.h"
- #include "ws.h"
-diff --git a/convert.c b/convert.c
-index 7cf7bd0c883..236d5e3dc25 100644
---- a/convert.c
-+++ b/convert.c
-@@ -9,6 +9,7 @@
- #include "attr.h"
- #include "run-command.h"
- #include "quote.h"
-+#include "read-cache-ll.h"
- #include "sigchain.h"
- #include "pkt-line.h"
- #include "sub-process.h"
-diff --git a/diff-lib.c b/diff-lib.c
-index 60e979dc1bd..36cd66ea237 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -9,6 +9,7 @@
+-#include "builtin.h"
+ #include "color.h"
+ #include "strvec.h"
+ #include "object-name.h"
+diff --git a/builtin/show-index.c b/builtin/show-index.c
+index d839e55335d..540dc3dad1c 100644
+--- a/builtin/show-index.c
++++ b/builtin/show-index.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "gettext.h"
+ #include "hash.h"
+ #include "hex.h"
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index a2243b42195..e07e9ca862f 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
  #include "gettext.h"
  #include "hex.h"
- #include "object-name.h"
-+#include "read-cache.h"
- #include "revision.h"
- #include "cache-tree.h"
- #include "unpack-trees.h"
-diff --git a/diff.c b/diff.c
-index 07f140b425f..61b4dc61e1e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -39,6 +39,7 @@
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 40d420f06cb..5c8ffb1f759 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
  #include "dir.h"
+ #include "environment.h"
+diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+index 9451eb69ff4..397d7fe2dcd 100644
+--- a/builtin/stripspace.c
++++ b/builtin/stripspace.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 86324b829a7..17567d91c88 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -6,7 +6,6 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "repository.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "parse-options.h"
+ #include "quote.h"
+diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
+index 10198a74fae..a61fa3c0f81 100644
+--- a/builtin/symbolic-ref.c
++++ b/builtin/symbolic-ref.c
+@@ -1,6 +1,5 @@
+ #include "builtin.h"
+ #include "config.h"
+-#include "cache.h"
+ #include "gettext.h"
+ #include "refs.h"
+ #include "parse-options.h"
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 1850a6a6fdc..ce298d08945 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -6,10 +6,9 @@
+  * Based on git-tag.sh and mktag.c by Linus Torvalds.
+  */
+ 
+-#include "cache.h"
++#include "builtin.h"
+ #include "advice.h"
+ #include "config.h"
+-#include "builtin.h"
+ #include "editor.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 2c52c3a741f..85baf6a131a 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "bulk-checkin.h"
+ #include "config.h"
+ #include "environment.h"
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 484a307df50..aee3cb8cbd3 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -4,7 +4,7 @@
+  * Copyright (C) Linus Torvalds, 2005
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "builtin.h"
+ #include "bulk-checkin.h"
+ #include "config.h"
+ #include "environment.h"
+@@ -15,7 +15,6 @@
+ #include "quote.h"
+ #include "cache-tree.h"
+ #include "tree-walk.h"
+-#include "builtin.h"
  #include "object-file.h"
+ #include "refs.h"
+ #include "resolve-undo.h"
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 0c59b1c9eff..242102273ee 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -1,9 +1,8 @@
+-#include "cache.h"
++#include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "hash.h"
+ #include "refs.h"
+-#include "builtin.h"
  #include "object-name.h"
-+#include "read-cache-ll.h"
- #include "setup.h"
- #include "strmap.h"
- #include "ws.h"
-diff --git a/diffcore-break.c b/diffcore-break.c
-index 5462420bbbe..4909dc088e6 100644
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -1,9 +1,10 @@
+ #include "parse-options.h"
+ #include "quote.h"
+diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
+index 19dce3c0655..1dc3971edeb 100644
+--- a/builtin/update-server-info.c
++++ b/builtin/update-server-info.c
+@@ -1,6 +1,5 @@
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+ #include "server-info.h"
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 44ad400e183..d4c7f162ff0 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -1,7 +1,6 @@
+ /*
+  * Copyright (c) 2006 Franck Bui-Huu
+  */
+-#include "cache.h"
+ #include "builtin.h"
+ #include "archive.h"
+ #include "pkt-line.h"
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+index beb9dd08610..ba5103a9331 100644
+--- a/builtin/upload-pack.c
++++ b/builtin/upload-pack.c
+@@ -1,4 +1,3 @@
+-#include "cache.h"
+ #include "builtin.h"
+ #include "exec-cmd.h"
+ #include "gettext.h"
+diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
+index 5d99b82a64f..aa34fb896ac 100644
+--- a/builtin/verify-commit.c
++++ b/builtin/verify-commit.c
+@@ -5,9 +5,8 @@
+  *
+  * Based on git-verify-tag
+  */
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "gettext.h"
+ #include "object-name.h"
+ #include "object-store.h"
+diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+index 190fd695409..aba92cf8af7 100644
+--- a/builtin/verify-pack.c
++++ b/builtin/verify-pack.c
+@@ -1,5 +1,4 @@
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "run-command.h"
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index c6019a0ad8c..d8753270ebe 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -5,9 +5,8 @@
+  *
+  * Based on git-verify-tag.sh
+  */
+-#include "cache.h"
+-#include "config.h"
+ #include "builtin.h"
++#include "config.h"
+ #include "gettext.h"
+ #include "tag.h"
+ #include "run-command.h"
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 3c3d97ad5b0..b9a84988637 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1,9 +1,8 @@
+-#include "cache.h"
++#include "builtin.h"
+ #include "abspath.h"
+ #include "checkout.h"
+ #include "config.h"
+ #include "copy.h"
+-#include "builtin.h"
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index f98d54c1df2..5917085f429 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -5,7 +5,6 @@
+  */
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
+-#include "cache.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/cache-tree.c b/cache-tree.c
+index 153217b47ff..077932c2db5 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "environment.h"
+ #include "hex.h"
+diff --git a/cache.h b/cache.h
+deleted file mode 100644
+index 9b4e8d16874..00000000000
+--- a/cache.h
++++ /dev/null
+@@ -1,6 +0,0 @@
+-#ifndef CACHE_H
+-#define CACHE_H
+-
+-#include "git-compat-util.h"
+-
+-#endif /* CACHE_H */
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+index fe11bdd9ce6..6c81d7ee5c2 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "fsmonitor.h"
+ #include "fsm-health.h"
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 677b1bbdeca..3c0df5cff8c 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "fsmonitor.h"
+ #include "fsm-listen.h"
+diff --git a/compat/fsmonitor/fsm-path-utils-darwin.c b/compat/fsmonitor/fsm-path-utils-darwin.c
+index 45eb4a9b9e7..ef0142e0fbf 100644
+--- a/compat/fsmonitor/fsm-path-utils-darwin.c
++++ b/compat/fsmonitor/fsm-path-utils-darwin.c
+@@ -1,3 +1,4 @@
++#include "git-compat-util.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-path-utils.h"
+ #include "gettext.h"
+diff --git a/compat/fsmonitor/fsm-path-utils-win32.c b/compat/fsmonitor/fsm-path-utils-win32.c
+index 4024baafb97..27bb6945183 100644
+--- a/compat/fsmonitor/fsm-path-utils-win32.c
++++ b/compat/fsmonitor/fsm-path-utils-win32.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-path-utils.h"
+ #include "gettext.h"
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index a8af31b71de..37288978643 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "repository.h"
+ #include "fsmonitor.h"
+diff --git a/compat/mingw.c b/compat/mingw.c
+index d06cdc6254f..559abb1c617 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -6,7 +6,6 @@
+ #include <wchar.h>
+ #include "../strbuf.h"
+ #include "../run-command.h"
+-#include "../cache.h"
+ #include "../abspath.h"
+ #include "../alloc.h"
+ #include "win32/lazyload.h"
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index fb08475bc64..0bd5c24250a 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -5,7 +5,7 @@
+ 
+ #define PRECOMPOSE_UNICODE_C
+ 
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/compat/sha1-chunked.c b/compat/sha1-chunked.c
+index 56729d92dcf..a4a6f930d7b 100644
+--- a/compat/sha1-chunked.c
++++ b/compat/sha1-chunked.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "hash-ll.h"
+ 
+ int git_SHA1_Update_Chunked(platform_SHA_CTX *c, const void *data, size_t len)
+diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
+index 6adce3c650e..8bfe51248e5 100644
+--- a/compat/simple-ipc/ipc-win32.c
++++ b/compat/simple-ipc/ipc-win32.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "gettext.h"
+ #include "simple-ipc.h"
+diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
+index a4e33768f43..a2b1506f9c9 100644
+--- a/compat/win32/trace2_win32_process_info.c
++++ b/compat/win32/trace2_win32_process_info.c
+@@ -1,4 +1,4 @@
+-#include "../../cache.h"
++#include "../../git-compat-util.h"
+ #include "../../json-writer.h"
+ #include "../../repository.h"
+ #include "../../trace2.h"
+diff --git a/convert.c b/convert.c
+index 236d5e3dc25..9e89f660308 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "advice.h"
+ #include "config.h"
+ #include "convert.h"
+diff --git a/diff-lib.c b/diff-lib.c
+index 36cd66ea237..f3aa7f93c78 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -1,7 +1,7 @@
  /*
   * Copyright (C) 2005 Junio C Hamano
   */
 -#include "cache.h"
 +#include "git-compat-util.h"
+ #include "quote.h"
+ #include "commit.h"
  #include "diff.h"
- #include "diffcore.h"
-+#include "object.h"
- #include "promisor-remote.h"
- 
- static int should_break(struct repository *r,
-diff --git a/environment.h b/environment.h
-index a63f0c6a24f..6eca4712e1e 100644
---- a/environment.h
-+++ b/environment.h
-@@ -1,9 +1,8 @@
- #ifndef ENVIRONMENT_H
- #define ENVIRONMENT_H
- 
--#include "strvec.h"
--
- struct repository;
-+struct strvec;
+diff --git a/diff.c b/diff.c
+index 61b4dc61e1e..5e81dc0d02d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1,7 +1,7 @@
+ /*
+  * Copyright (C) 2005 Junio C Hamano
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "base85.h"
+diff --git a/entry.c b/entry.c
+index 53d00386748..041f5cf212d 100644
+--- a/entry.c
++++ b/entry.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "blob.h"
+ #include "object-store.h"
+ #include "dir.h"
+diff --git a/environment.c b/environment.c
+index 28d18eaca8e..0cdd20a1589 100644
+--- a/environment.c
++++ b/environment.c
+@@ -110,7 +110,7 @@ char *git_work_tree_cfg;
+ static char *git_namespace;
  
  /*
-  * The character that begins a commented line in user-editable file
+- * Repository-local GIT_* environment variables; see cache.h for details.
++ * Repository-local GIT_* environment variables; see environment.h for details.
+  */
+ const char * const local_repo_env[] = {
+ 	ALTERNATE_DB_ENVIRONMENT,
+diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+index 6a6a89764a6..6ace978a1b4 100644
+--- a/fsmonitor-ipc.c
++++ b/fsmonitor-ipc.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "fsmonitor.h"
+ #include "gettext.h"
+ #include "simple-ipc.h"
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 28c083d4d84..f670c509378 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "environment.h"
 diff --git a/fsmonitor.h b/fsmonitor.h
-index c67e0ebc09b..8b7a521552a 100644
+index 8b7a521552a..7702301d214 100644
 --- a/fsmonitor.h
 +++ b/fsmonitor.h
-@@ -4,6 +4,8 @@
- #include "cache.h"
+@@ -1,7 +1,6 @@
+ #ifndef FSMONITOR_H
+ #define FSMONITOR_H
+ 
+-#include "cache.h"
  #include "dir.h"
  #include "fsmonitor-settings.h"
-+#include "object.h"
-+#include "read-cache-ll.h"
- #include "trace.h"
- 
- extern struct trace_key trace_fsmonitor;
-diff --git a/git.c b/git.c
-index 45899be8265..a1a538fc52e 100644
---- a/git.c
-+++ b/git.c
-@@ -5,6 +5,7 @@
- #include "gettext.h"
- #include "help.h"
- #include "pager.h"
-+#include "read-cache-ll.h"
- #include "run-command.h"
- #include "alias.h"
- #include "replace-object.h"
+ #include "object.h"
 diff --git a/hash-lookup.c b/hash-lookup.c
-index bb54dfde9c7..8fec8939fd3 100644
+index 8fec8939fd3..9f0f95e2b9e 100644
 --- a/hash-lookup.c
 +++ b/hash-lookup.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
  #include "hash.h"
  #include "hash-lookup.h"
-+#include "read-cache-ll.h"
- 
- static uint32_t take2(const struct object_id *oid, size_t ofs)
- {
+ #include "read-cache-ll.h"
 diff --git a/merge-ort-wrappers.c b/merge-ort-wrappers.c
-index a5507533009..a0bedcb63bb 100644
+index a0bedcb63bb..4acedf3c338 100644
 --- a/merge-ort-wrappers.c
 +++ b/merge-ort-wrappers.c
-@@ -3,6 +3,7 @@
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "gettext.h"
  #include "hash.h"
  #include "merge-ort.h"
- #include "merge-ort-wrappers.h"
-+#include "read-cache-ll.h"
- #include "tree.h"
- 
- #include "commit.h"
 diff --git a/merge-ort.c b/merge-ort.c
-index 4bff685e456..5512f40d321 100644
+index 5512f40d321..c2d2ee73eaa 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -37,6 +37,7 @@
- #include "object-store.h"
- #include "oid-array.h"
- #include "promisor-remote.h"
-+#include "read-cache-ll.h"
- #include "revision.h"
- #include "sparse-index.h"
- #include "strmap.h"
+@@ -14,7 +14,7 @@
+  * "cale", "peedy", or "ins" instead of "ort"?)
+  */
+ 
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "merge-ort.h"
+ 
+ #include "alloc.h"
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 0e16e7a06df..4bef9b62fa8 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3,7 +3,7 @@
+  * Fredrik Kuivinen.
+  * The thieves were Alex Riesen and Johannes Schindelin, in June/July 2006
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "merge-recursive.h"
+ 
+ #include "advice.h"
+diff --git a/merge.c b/merge.c
+index fade6b203b3..83bcba6943e 100644
+--- a/merge.c
++++ b/merge.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "gettext.h"
 diff --git a/name-hash.c b/name-hash.c
-index 52ce47ea394..f2f3564cb20 100644
+index f2f3564cb20..251f036eef6 100644
 --- a/name-hash.c
 +++ b/name-hash.c
-@@ -9,6 +9,8 @@
+@@ -5,7 +5,7 @@
+  *
+  * Copyright (C) 2008 Linus Torvalds
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
  #include "environment.h"
  #include "gettext.h"
  #include "name-hash.h"
-+#include "object.h"
-+#include "read-cache-ll.h"
- #include "thread-utils.h"
- #include "trace.h"
- #include "trace2.h"
 diff --git a/object-name.c b/object-name.c
-index 6fc3fa595b8..1eefeef746e 100644
+index 1eefeef746e..45f4d51305b 100644
 --- a/object-name.c
 +++ b/object-name.c
-@@ -18,6 +18,7 @@
- #include "packfile.h"
- #include "pretty.h"
- #include "object-store.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "setup.h"
- #include "submodule.h"
-diff --git a/oidmap.h b/oidmap.h
-index c1642927fa6..05c673eb7c1 100644
---- a/oidmap.h
-+++ b/oidmap.h
-@@ -1,6 +1,7 @@
- #ifndef OIDMAP_H
- #define OIDMAP_H
- 
-+#include "hash-ll.h"
- #include "hashmap.h"
- 
- /*
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "object-name.h"
+ #include "advice.h"
+ #include "config.h"
+diff --git a/object.c b/object.c
+index 333e736fb24..60f954194f7 100644
+--- a/object.c
++++ b/object.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "object.h"
 diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 69d569f3525..2b1439c0c5f 100644
+index 2b1439c0c5f..602fbf19d3c 100644
 --- a/parallel-checkout.c
 +++ b/parallel-checkout.c
-@@ -8,6 +8,7 @@
- #include "parallel-checkout.h"
- #include "pkt-line.h"
- #include "progress.h"
-+#include "read-cache-ll.h"
- #include "run-command.h"
- #include "sigchain.h"
- #include "streaming.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "entry.h"
 diff --git a/pathspec.c b/pathspec.c
-index 1e57b6c667d..47d172fe414 100644
+index 47d172fe414..0baa85384f8 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -6,6 +6,7 @@
- #include "gettext.h"
- #include "pathspec.h"
- #include "attr.h"
-+#include "read-cache.h"
- #include "repository.h"
- #include "setup.h"
- #include "strvec.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "config.h"
+ #include "dir.h"
 diff --git a/preload-index.c b/preload-index.c
-index c26739debf8..d037a951efa 100644
+index d037a951efa..e44530c80cf 100644
 --- a/preload-index.c
 +++ b/preload-index.c
-@@ -10,6 +10,7 @@
- #include "config.h"
- #include "preload-index.h"
- #include "progress.h"
-+#include "read-cache.h"
- #include "thread-utils.h"
- #include "repository.h"
- #include "symlinks.h"
-diff --git a/read-cache-ll.h b/read-cache-ll.h
-new file mode 100644
-index 00000000000..9a1a7edc5a2
---- /dev/null
-+++ b/read-cache-ll.h
-@@ -0,0 +1,481 @@
-+#ifndef READ_CACHE_LL_H
-+#define READ_CACHE_LL_H
-+
-+#include "hash-ll.h"
-+#include "hashmap.h"
-+#include "statinfo.h"
-+
-+/*
-+ * Basic data structures for the directory cache
-+ */
-+
-+#define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
-+struct cache_header {
-+	uint32_t hdr_signature;
-+	uint32_t hdr_version;
-+	uint32_t hdr_entries;
-+};
-+
-+#define INDEX_FORMAT_LB 2
-+#define INDEX_FORMAT_UB 4
-+
-+struct cache_entry {
-+	struct hashmap_entry ent;
-+	struct stat_data ce_stat_data;
-+	unsigned int ce_mode;
-+	unsigned int ce_flags;
-+	unsigned int mem_pool_allocated;
-+	unsigned int ce_namelen;
-+	unsigned int index;	/* for link extension */
-+	struct object_id oid;
-+	char name[FLEX_ARRAY]; /* more */
-+};
-+
-+#define CE_STAGEMASK (0x3000)
-+#define CE_EXTENDED  (0x4000)
-+#define CE_VALID     (0x8000)
-+#define CE_STAGESHIFT 12
-+
-+/*
-+ * Range 0xFFFF0FFF in ce_flags is divided into
-+ * two parts: in-memory flags and on-disk ones.
-+ * Flags in CE_EXTENDED_FLAGS will get saved on-disk
-+ * if you want to save a new flag, add it in
-+ * CE_EXTENDED_FLAGS
-+ *
-+ * In-memory only flags
-+ */
-+#define CE_UPDATE            (1 << 16)
-+#define CE_REMOVE            (1 << 17)
-+#define CE_UPTODATE          (1 << 18)
-+#define CE_ADDED             (1 << 19)
-+
-+#define CE_HASHED            (1 << 20)
-+#define CE_FSMONITOR_VALID   (1 << 21)
-+#define CE_WT_REMOVE         (1 << 22) /* remove in work directory */
-+#define CE_CONFLICTED        (1 << 23)
-+
-+#define CE_UNPACKED          (1 << 24)
-+#define CE_NEW_SKIP_WORKTREE (1 << 25)
-+
-+/* used to temporarily mark paths matched by pathspecs */
-+#define CE_MATCHED           (1 << 26)
-+
-+#define CE_UPDATE_IN_BASE    (1 << 27)
-+#define CE_STRIP_NAME        (1 << 28)
-+
-+/*
-+ * Extended on-disk flags
-+ */
-+#define CE_INTENT_TO_ADD     (1 << 29)
-+#define CE_SKIP_WORKTREE     (1 << 30)
-+/* CE_EXTENDED2 is for future extension */
-+#define CE_EXTENDED2         (1U << 31)
-+
-+#define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
-+
-+/*
-+ * Safeguard to avoid saving wrong flags:
-+ *  - CE_EXTENDED2 won't get saved until its semantic is known
-+ *  - Bits in 0x0000FFFF have been saved in ce_flags already
-+ *  - Bits in 0x003F0000 are currently in-memory flags
-+ */
-+#if CE_EXTENDED_FLAGS & 0x803FFFFF
-+#error "CE_EXTENDED_FLAGS out of range"
-+#endif
-+
-+/* Forward structure decls */
-+struct pathspec;
-+struct tree;
-+
-+/*
-+ * Copy the sha1 and stat state of a cache entry from one to
-+ * another. But we never change the name, or the hash state!
-+ */
-+static inline void copy_cache_entry(struct cache_entry *dst,
-+				    const struct cache_entry *src)
-+{
-+	unsigned int state = dst->ce_flags & CE_HASHED;
-+	int mem_pool_allocated = dst->mem_pool_allocated;
-+
-+	/* Don't copy hash chain and name */
-+	memcpy(&dst->ce_stat_data, &src->ce_stat_data,
-+			offsetof(struct cache_entry, name) -
-+			offsetof(struct cache_entry, ce_stat_data));
-+
-+	/* Restore the hash state */
-+	dst->ce_flags = (dst->ce_flags & ~CE_HASHED) | state;
-+
-+	/* Restore the mem_pool_allocated flag */
-+	dst->mem_pool_allocated = mem_pool_allocated;
-+}
-+
-+static inline unsigned create_ce_flags(unsigned stage)
-+{
-+	return (stage << CE_STAGESHIFT);
-+}
-+
-+#define ce_namelen(ce) ((ce)->ce_namelen)
-+#define ce_size(ce) cache_entry_size(ce_namelen(ce))
-+#define ce_stage(ce) ((CE_STAGEMASK & (ce)->ce_flags) >> CE_STAGESHIFT)
-+#define ce_uptodate(ce) ((ce)->ce_flags & CE_UPTODATE)
-+#define ce_skip_worktree(ce) ((ce)->ce_flags & CE_SKIP_WORKTREE)
-+#define ce_mark_uptodate(ce) ((ce)->ce_flags |= CE_UPTODATE)
-+#define ce_intent_to_add(ce) ((ce)->ce_flags & CE_INTENT_TO_ADD)
-+
-+#define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
-+
-+#define SOMETHING_CHANGED	(1 << 0) /* unclassified changes go here */
-+#define CE_ENTRY_CHANGED	(1 << 1)
-+#define CE_ENTRY_REMOVED	(1 << 2)
-+#define CE_ENTRY_ADDED		(1 << 3)
-+#define RESOLVE_UNDO_CHANGED	(1 << 4)
-+#define CACHE_TREE_CHANGED	(1 << 5)
-+#define SPLIT_INDEX_ORDERED	(1 << 6)
-+#define UNTRACKED_CHANGED	(1 << 7)
-+#define FSMONITOR_CHANGED	(1 << 8)
-+
-+struct split_index;
-+struct untracked_cache;
-+struct progress;
-+struct pattern_list;
-+
-+enum sparse_index_mode {
-+	/*
-+	 * There are no sparse directories in the index at all.
-+	 *
-+	 * Repositories that don't use cone-mode sparse-checkout will
-+	 * always have their indexes in this mode.
-+	 */
-+	INDEX_EXPANDED = 0,
-+
-+	/*
-+	 * The index has already been collapsed to sparse directories
-+	 * whereever possible.
-+	 */
-+	INDEX_COLLAPSED,
-+
-+	/*
-+	 * The sparse directories that exist are outside the
-+	 * sparse-checkout boundary, but it is possible that some file
-+	 * entries could collapse to sparse directory entries.
-+	 */
-+	INDEX_PARTIALLY_SPARSE,
-+};
-+
-+struct index_state {
-+	struct cache_entry **cache;
-+	unsigned int version;
-+	unsigned int cache_nr, cache_alloc, cache_changed;
-+	struct string_list *resolve_undo;
-+	struct cache_tree *cache_tree;
-+	struct split_index *split_index;
-+	struct cache_time timestamp;
-+	unsigned name_hash_initialized : 1,
-+		 initialized : 1,
-+		 drop_cache_tree : 1,
-+		 updated_workdir : 1,
-+		 updated_skipworktree : 1,
-+		 fsmonitor_has_run_once : 1;
-+	enum sparse_index_mode sparse_index;
-+	struct hashmap name_hash;
-+	struct hashmap dir_hash;
-+	struct object_id oid;
-+	struct untracked_cache *untracked;
-+	char *fsmonitor_last_update;
-+	struct ewah_bitmap *fsmonitor_dirty;
-+	struct mem_pool *ce_mem_pool;
-+	struct progress *progress;
-+	struct repository *repo;
-+	struct pattern_list *sparse_checkout_patterns;
-+};
-+
-+/**
-+ * A "struct index_state istate" must be initialized with
-+ * INDEX_STATE_INIT or the corresponding index_state_init().
-+ *
-+ * If the variable won't be used again, use release_index() to free()
-+ * its resources. If it needs to be used again use discard_index(),
-+ * which does the same thing, but will use use index_state_init() at
-+ * the end. The discard_index() will use its own "istate->repo" as the
-+ * "r" argument to index_state_init() in that case.
-+ */
-+#define INDEX_STATE_INIT(r) { \
-+	.repo = (r), \
-+}
-+void index_state_init(struct index_state *istate, struct repository *r);
-+void release_index(struct index_state *istate);
-+
-+/* Cache entry creation and cleanup */
-+
-+/*
-+ * Create cache_entry intended for use in the specified index. Caller
-+ * is responsible for discarding the cache_entry with
-+ * `discard_cache_entry`.
-+ */
-+struct cache_entry *make_cache_entry(struct index_state *istate,
-+				     unsigned int mode,
-+				     const struct object_id *oid,
-+				     const char *path,
-+				     int stage,
-+				     unsigned int refresh_options);
-+
-+struct cache_entry *make_empty_cache_entry(struct index_state *istate,
-+					   size_t name_len);
-+
-+/*
-+ * Create a cache_entry that is not intended to be added to an index. If
-+ * `ce_mem_pool` is not NULL, the entry is allocated within the given memory
-+ * pool. Caller is responsible for discarding "loose" entries with
-+ * `discard_cache_entry()` and the memory pool with
-+ * `mem_pool_discard(ce_mem_pool, should_validate_cache_entries())`.
-+ */
-+struct cache_entry *make_transient_cache_entry(unsigned int mode,
-+					       const struct object_id *oid,
-+					       const char *path,
-+					       int stage,
-+					       struct mem_pool *ce_mem_pool);
-+
-+struct cache_entry *make_empty_transient_cache_entry(size_t len,
-+						     struct mem_pool *ce_mem_pool);
-+
-+/*
-+ * Discard cache entry.
-+ */
-+void discard_cache_entry(struct cache_entry *ce);
-+
-+/*
-+ * Check configuration if we should perform extra validation on cache
-+ * entries.
-+ */
-+int should_validate_cache_entries(void);
-+
-+/*
-+ * Duplicate a cache_entry. Allocate memory for the new entry from a
-+ * memory_pool. Takes into account cache_entry fields that are meant
-+ * for managing the underlying memory allocation of the cache_entry.
-+ */
-+struct cache_entry *dup_cache_entry(const struct cache_entry *ce, struct index_state *istate);
-+
-+/*
-+ * Validate the cache entries in the index.  This is an internal
-+ * consistency check that the cache_entry structs are allocated from
-+ * the expected memory pool.
-+ */
-+void validate_cache_entries(const struct index_state *istate);
-+
-+/*
-+ * Bulk prefetch all missing cache entries that are not GITLINKs and that match
-+ * the given predicate. This function should only be called if
-+ * repo_has_promisor_remote() returns true.
-+ */
-+typedef int (*must_prefetch_predicate)(const struct cache_entry *);
-+void prefetch_cache_entries(const struct index_state *istate,
-+			    must_prefetch_predicate must_prefetch);
-+
-+/* Initialize and use the cache information */
-+struct lock_file;
-+int do_read_index(struct index_state *istate, const char *path,
-+		  int must_exist); /* for testting only! */
-+int read_index_from(struct index_state *, const char *path,
-+		    const char *gitdir);
-+int is_index_unborn(struct index_state *);
-+
-+/* For use with `write_locked_index()`. */
-+#define COMMIT_LOCK		(1 << 0)
-+#define SKIP_IF_UNCHANGED	(1 << 1)
-+
-+/*
-+ * Write the index while holding an already-taken lock. Close the lock,
-+ * and if `COMMIT_LOCK` is given, commit it.
-+ *
-+ * Unless a split index is in use, write the index into the lockfile.
-+ *
-+ * With a split index, write the shared index to a temporary file,
-+ * adjust its permissions and rename it into place, then write the
-+ * split index to the lockfile. If the temporary file for the shared
-+ * index cannot be created, fall back to the behavior described in
-+ * the previous paragraph.
-+ *
-+ * With `COMMIT_LOCK`, the lock is always committed or rolled back.
-+ * Without it, the lock is closed, but neither committed nor rolled
-+ * back.
-+ *
-+ * If `SKIP_IF_UNCHANGED` is given and the index is unchanged, nothing
-+ * is written (and the lock is rolled back if `COMMIT_LOCK` is given).
-+ */
-+int write_locked_index(struct index_state *, struct lock_file *lock, unsigned flags);
-+
-+void discard_index(struct index_state *);
-+void move_index_extensions(struct index_state *dst, struct index_state *src);
-+int unmerged_index(const struct index_state *);
-+
-+/**
-+ * Returns 1 if istate differs from tree, 0 otherwise.  If tree is NULL,
-+ * compares istate to HEAD.  If tree is NULL and on an unborn branch,
-+ * returns 1 if there are entries in istate, 0 otherwise.  If an strbuf is
-+ * provided, the space-separated list of files that differ will be appended
-+ * to it.
-+ */
-+int repo_index_has_changes(struct repository *repo,
-+			   struct tree *tree,
-+			   struct strbuf *sb);
-+
-+int verify_path(const char *path, unsigned mode);
-+int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
-+
-+/*
-+ * Searches for an entry defined by name and namelen in the given index.
-+ * If the return value is positive (including 0) it is the position of an
-+ * exact match. If the return value is negative, the negated value minus 1
-+ * is the position where the entry would be inserted.
-+ * Example: The current index consists of these files and its stages:
-+ *
-+ *   b#0, d#0, f#1, f#3
-+ *
-+ * index_name_pos(&index, "a", 1) -> -1
-+ * index_name_pos(&index, "b", 1) ->  0
-+ * index_name_pos(&index, "c", 1) -> -2
-+ * index_name_pos(&index, "d", 1) ->  1
-+ * index_name_pos(&index, "e", 1) -> -3
-+ * index_name_pos(&index, "f", 1) -> -3
-+ * index_name_pos(&index, "g", 1) -> -5
-+ */
-+int index_name_pos(struct index_state *, const char *name, int namelen);
-+
-+/*
-+ * Like index_name_pos, returns the position of an entry of the given name in
-+ * the index if one exists, otherwise returns a negative value where the negated
-+ * value minus 1 is the position where the index entry would be inserted. Unlike
-+ * index_name_pos, however, a sparse index is not expanded to find an entry
-+ * inside a sparse directory.
-+ */
-+int index_name_pos_sparse(struct index_state *, const char *name, int namelen);
-+
-+/*
-+ * Determines whether an entry with the given name exists within the
-+ * given index. The return value is 1 if an exact match is found, otherwise
-+ * it is 0. Note that, unlike index_name_pos, this function does not expand
-+ * the index if it is sparse. If an item exists within the full index but it
-+ * is contained within a sparse directory (and not in the sparse index), 0 is
-+ * returned.
-+ */
-+int index_entry_exists(struct index_state *, const char *name, int namelen);
-+
-+/*
-+ * Some functions return the negative complement of an insert position when a
-+ * precise match was not found but a position was found where the entry would
-+ * need to be inserted. This helper protects that logic from any integer
-+ * underflow.
-+ */
-+static inline int index_pos_to_insert_pos(uintmax_t pos)
-+{
-+	if (pos > INT_MAX)
-+		die("overflow: -1 - %"PRIuMAX, pos);
-+	return -1 - (int)pos;
-+}
-+
-+#define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
-+#define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
-+#define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
-+#define ADD_CACHE_JUST_APPEND 8		/* Append only */
-+#define ADD_CACHE_NEW_ONLY 16		/* Do not replace existing ones */
-+#define ADD_CACHE_KEEP_CACHE_TREE 32	/* Do not invalidate cache-tree */
-+#define ADD_CACHE_RENORMALIZE 64        /* Pass along HASH_RENORMALIZE */
-+int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
-+void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
-+
-+/* Remove entry, return true if there are more entries to go. */
-+int remove_index_entry_at(struct index_state *, int pos);
-+
-+void remove_marked_cache_entries(struct index_state *istate, int invalidate);
-+int remove_file_from_index(struct index_state *, const char *path);
-+#define ADD_CACHE_VERBOSE 1
-+#define ADD_CACHE_PRETEND 2
-+#define ADD_CACHE_IGNORE_ERRORS	4
-+#define ADD_CACHE_IGNORE_REMOVAL 8
-+#define ADD_CACHE_INTENT 16
-+/*
-+ * These two are used to add the contents of the file at path
-+ * to the index, marking the working tree up-to-date by storing
-+ * the cached stat info in the resulting cache entry.  A caller
-+ * that has already run lstat(2) on the path can call
-+ * add_to_index(), and all others can call add_file_to_index();
-+ * the latter will do necessary lstat(2) internally before
-+ * calling the former.
-+ */
-+int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
-+int add_file_to_index(struct index_state *, const char *path, int flags);
-+
-+int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
-+int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
-+void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
-+int index_name_is_other(struct index_state *, const char *, int);
-+void *read_blob_data_from_index(struct index_state *, const char *, unsigned long *);
-+
-+/* do stat comparison even if CE_VALID is true */
-+#define CE_MATCH_IGNORE_VALID		01
-+/* do not check the contents but report dirty on racily-clean entries */
-+#define CE_MATCH_RACY_IS_DIRTY		02
-+/* do stat comparison even if CE_SKIP_WORKTREE is true */
-+#define CE_MATCH_IGNORE_SKIP_WORKTREE	04
-+/* ignore non-existent files during stat update  */
-+#define CE_MATCH_IGNORE_MISSING		0x08
-+/* enable stat refresh */
-+#define CE_MATCH_REFRESH		0x10
-+/* don't refresh_fsmonitor state or do stat comparison even if CE_FSMONITOR_VALID is true */
-+#define CE_MATCH_IGNORE_FSMONITOR 0X20
-+int is_racy_timestamp(const struct index_state *istate,
-+		      const struct cache_entry *ce);
-+int has_racy_timestamp(struct index_state *istate);
-+int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
-+int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
-+
-+int match_stat_data_racy(const struct index_state *istate,
-+			 const struct stat_data *sd, struct stat *st);
-+
-+void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, struct stat *st);
-+
-+#define REFRESH_REALLY                   (1 << 0) /* ignore_valid */
-+#define REFRESH_UNMERGED                 (1 << 1) /* allow unmerged */
-+#define REFRESH_QUIET                    (1 << 2) /* be quiet about it */
-+#define REFRESH_IGNORE_MISSING           (1 << 3) /* ignore non-existent */
-+#define REFRESH_IGNORE_SUBMODULES        (1 << 4) /* ignore submodules */
-+#define REFRESH_IN_PORCELAIN             (1 << 5) /* user friendly output, not "needs update" */
-+#define REFRESH_PROGRESS                 (1 << 6) /* show progress bar if stderr is tty */
-+#define REFRESH_IGNORE_SKIP_WORKTREE     (1 << 7) /* ignore skip_worktree entries */
-+int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
-+/*
-+ * Refresh the index and write it to disk.
-+ *
-+ * 'refresh_flags' is passed directly to 'refresh_index()', while
-+ * 'COMMIT_LOCK | write_flags' is passed to 'write_locked_index()', so
-+ * the lockfile is always either committed or rolled back.
-+ *
-+ * If 'gentle' is passed, errors locking the index are ignored.
-+ *
-+ * Return 1 if refreshing the index returns an error, -1 if writing
-+ * the index to disk fails, 0 on success.
-+ *
-+ * Note that if refreshing the index returns an error, we still write
-+ * out the index (unless locking fails).
-+ */
-+int repo_refresh_and_write_index(struct repository*, unsigned int refresh_flags, unsigned int write_flags, int gentle, const struct pathspec *, char *seen, const char *header_msg);
-+
-+struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
-+
-+void set_alternate_index_output(const char *);
-+
-+extern int verify_index_checksum;
-+extern int verify_ce_order;
-+
-+int cmp_cache_name_compare(const void *a_, const void *b_);
-+
-+int add_files_to_cache(struct repository *repo, const char *prefix,
-+		       const struct pathspec *pathspec, int include_sparse,
-+		       int flags);
-+
-+void overlay_tree_on_index(struct index_state *istate,
-+			   const char *tree_name, const char *prefix);
-+
-+#endif /* READ_CACHE_LL_H */
+@@ -1,7 +1,7 @@
+ /*
+  * Copyright (C) 2008 Linus Torvalds
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "pathspec.h"
+ #include "dir.h"
+ #include "environment.h"
 diff --git a/read-cache.c b/read-cache.c
-index 3fad839fb6f..42f27b06642 100644
+index 42f27b06642..edab96765df 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -28,6 +28,7 @@
- #include "name-hash.h"
- #include "object-name.h"
- #include "preload-index.h"
-+#include "read-cache.h"
- #include "resolve-undo.h"
- #include "revision.h"
- #include "run-command.h"
-diff --git a/read-cache.h b/read-cache.h
-new file mode 100644
-index 00000000000..043da1f1aae
---- /dev/null
-+++ b/read-cache.h
-@@ -0,0 +1,45 @@
-+#ifndef READ_CACHE_H
-+#define READ_CACHE_H
-+
-+#include "read-cache-ll.h"
-+#include "object.h"
-+#include "pathspec.h"
-+
-+static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
-+					     unsigned int mode)
-+{
-+	extern int trust_executable_bit, has_symlinks;
-+	if (!has_symlinks && S_ISREG(mode) &&
-+	    ce && S_ISLNK(ce->ce_mode))
-+		return ce->ce_mode;
-+	if (!trust_executable_bit && S_ISREG(mode)) {
-+		if (ce && S_ISREG(ce->ce_mode))
-+			return ce->ce_mode;
-+		return create_ce_mode(0666);
-+	}
-+	return create_ce_mode(mode);
-+}
-+
-+static inline int ce_to_dtype(const struct cache_entry *ce)
-+{
-+	unsigned ce_mode = ntohl(ce->ce_mode);
-+	if (S_ISREG(ce_mode))
-+		return DT_REG;
-+	else if (S_ISDIR(ce_mode) || S_ISGITLINK(ce_mode))
-+		return DT_DIR;
-+	else if (S_ISLNK(ce_mode))
-+		return DT_LNK;
-+	else
-+		return DT_UNKNOWN;
-+}
-+
-+static inline int ce_path_match(struct index_state *istate,
-+				const struct cache_entry *ce,
-+				const struct pathspec *pathspec,
-+				char *seen)
-+{
-+	return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
-+			      S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
-+}
-+
-+#endif /* READ_CACHE_H */
+@@ -3,7 +3,7 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "bulk-checkin.h"
+ #include "config.h"
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index bca7b851c5a..01c08207619 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1,4 +1,4 @@
+-#include "../cache.h"
++#include "../git-compat-util.h"
+ #include "../config.h"
+ #include "../copy.h"
+ #include "../environment.h"
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 085becf773e..713491a9e2c 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1,4 +1,4 @@
+-#include "../cache.h"
++#include "../git-compat-util.h"
+ #include "../alloc.h"
+ #include "../config.h"
+ #include "../gettext.h"
 diff --git a/repository.c b/repository.c
-index c53e480e326..ebad755c2cc 100644
+index ebad755c2cc..67ec56a70c5 100644
 --- a/repository.c
 +++ b/repository.c
-@@ -10,6 +10,7 @@
- #include "config.h"
- #include "object.h"
- #include "lockfile.h"
-+#include "read-cache-ll.h"
- #include "remote.h"
- #include "setup.h"
- #include "submodule-config.h"
+@@ -3,7 +3,7 @@
+  * declaration matches the definition in this file.
+  */
+ #define USE_THE_INDEX_VARIABLE
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "repository.h"
+ #include "object-store.h"
 diff --git a/rerere.c b/rerere.c
-index e968d413d65..3bc9aedc286 100644
+index 3bc9aedc286..2fb93a51125 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -7,6 +7,7 @@
- #include "hex.h"
- #include "lockfile.h"
- #include "string-list.h"
-+#include "read-cache-ll.h"
- #include "rerere.h"
- #include "xdiff-interface.h"
- #include "dir.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "config.h"
 diff --git a/resolve-undo.c b/resolve-undo.c
-index 7ec09e89d4f..59598877841 100644
+index 59598877841..7817f5d6db1 100644
 --- a/resolve-undo.c
 +++ b/resolve-undo.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
  #include "dir.h"
  #include "hash.h"
-+#include "read-cache.h"
- #include "resolve-undo.h"
- #include "sparse-index.h"
- #include "string-list.h"
+ #include "read-cache.h"
 diff --git a/revision.c b/revision.c
-index 88b2f42daa6..8d37ec9f495 100644
+index 8d37ec9f495..66a1fece0df 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -31,6 +31,7 @@
- #include "bisect.h"
- #include "packfile.h"
- #include "worktree.h"
-+#include "read-cache.h"
- #include "setup.h"
- #include "sparse-index.h"
- #include "strvec.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "environment.h"
+diff --git a/run-command.h b/run-command.h
+index 9e47f91d462..1f22cc3827d 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -503,7 +503,7 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts);
+  * exception of GIT_CONFIG_PARAMETERS and GIT_CONFIG_COUNT (which cause the
+  * corresponding environment variables to be unset in the subprocess) and adds
+  * an environment variable pointing to new_git_dir. See local_repo_env in
+- * cache.h for more information.
++ * environment.h for more information.
+  */
+ void prepare_other_repo_env(struct strvec *env, const char *new_git_dir);
+ 
+diff --git a/sequencer.c b/sequencer.c
+index ec4a2e80a10..08bd0e81743 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "advice.h"
+ #include "alloc.h"
+diff --git a/shallow.c b/shallow.c
+index a2ebf0af2ba..f1c93e74648 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "hex.h"
+ #include "repository.h"
+diff --git a/sparse-index.c b/sparse-index.c
+index 60451daae80..2c47954d933 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "environment.h"
+ #include "gettext.h"
 diff --git a/split-index.c b/split-index.c
-index 40e54760b35..0a8d3903d6f 100644
+index 0a8d3903d6f..0ee3865a553 100644
 --- a/split-index.c
 +++ b/split-index.c
-@@ -3,6 +3,7 @@
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
  #include "gettext.h"
  #include "hash.h"
- #include "mem-pool.h"
-+#include "read-cache-ll.h"
- #include "split-index.h"
- #include "strbuf.h"
- #include "ewah/ewok.h"
+diff --git a/strbuf.h b/strbuf.h
+index 3dfeadb44c2..e8dfab6ecd6 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -72,10 +72,6 @@ struct strbuf {
+ extern char strbuf_slopbuf[];
+ #define STRBUF_INIT  { .buf = strbuf_slopbuf }
+ 
+-/*
+- * Predeclare this here, since cache.h includes this file before it defines the
+- * struct.
+- */
+ struct object_id;
+ 
+ /**
 diff --git a/submodule.c b/submodule.c
-index 2e78f513496..e09722d6be3 100644
+index e09722d6be3..20aa8ed0fb8 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -28,6 +28,7 @@
- #include "object-name.h"
- #include "object-store.h"
- #include "commit-reach.h"
-+#include "read-cache-ll.h"
- #include "setup.h"
- #include "shallow.h"
- #include "trace2.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "repository.h"
 diff --git a/t/helper/test-cache-tree.c b/t/helper/test-cache-tree.c
-index 9507b356e22..9d64422b3cc 100644
+index 9d64422b3cc..e7236392c81 100644
 --- a/t/helper/test-cache-tree.c
 +++ b/t/helper/test-cache-tree.c
-@@ -6,6 +6,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "test-tool.h"
+-#include "cache.h"
+ #include "gettext.h"
+ #include "hex.h"
  #include "tree.h"
- #include "cache-tree.h"
- #include "parse-options.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "setup.h"
- 
 diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
-index f22f7bd84a9..78aa11bb194 100644
+index 78aa11bb194..c38f546e4f0 100644
 --- a/t/helper/test-dump-cache-tree.c
 +++ b/t/helper/test-dump-cache-tree.c
-@@ -5,6 +5,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "test-tool.h"
+-#include "cache.h"
+ #include "hash.h"
  #include "hex.h"
  #include "tree.h"
- #include "cache-tree.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "setup.h"
- 
 diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
-index 9a098a25cba..e4357d65ec5 100644
+index e4357d65ec5..4f215fea025 100644
 --- a/t/helper/test-dump-fsmonitor.c
 +++ b/t/helper/test-dump-fsmonitor.c
-@@ -1,5 +1,6 @@
+@@ -1,5 +1,4 @@
  #include "test-tool.h"
- #include "cache.h"
-+#include "read-cache-ll.h"
+-#include "cache.h"
+ #include "read-cache-ll.h"
  #include "repository.h"
  #include "setup.h"
- 
 diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
-index 63fde9157c4..59a24a842b4 100644
+index 59a24a842b4..5cf0b26dca1 100644
 --- a/t/helper/test-dump-split-index.c
 +++ b/t/helper/test-dump-split-index.c
-@@ -2,6 +2,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
  #include "test-tool.h"
- #include "cache.h"
+-#include "cache.h"
  #include "hex.h"
-+#include "read-cache-ll.h"
+ #include "read-cache-ll.h"
  #include "repository.h"
- #include "setup.h"
- #include "split-index.h"
 diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-index df70be549fd..a1cbafd64f3 100644
+index a1cbafd64f3..b4af9712fe5 100644
 --- a/t/helper/test-dump-untracked-cache.c
 +++ b/t/helper/test-dump-untracked-cache.c
-@@ -3,6 +3,7 @@
- #include "cache.h"
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "test-tool.h"
+-#include "cache.h"
  #include "dir.h"
  #include "hex.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "setup.h"
- 
+ #include "read-cache-ll.h"
 diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
-index d1d63feaa9e..cbcf2419f9b 100644
+index cbcf2419f9b..62c5b5d704b 100644
 --- a/t/helper/test-fast-rebase.c
 +++ b/t/helper/test-fast-rebase.c
-@@ -21,6 +21,7 @@
- #include "lockfile.h"
- #include "merge-ort.h"
- #include "object-name.h"
-+#include "read-cache-ll.h"
- #include "refs.h"
- #include "revision.h"
- #include "sequencer.h"
+@@ -12,7 +12,6 @@
+ 
+ #define USE_THE_INDEX_VARIABLE
+ #include "test-tool.h"
+-#include "cache.h"
+ #include "cache-tree.h"
+ #include "commit.h"
+ #include "environment.h"
 diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
-index 9f18c685b7f..386f4cdaee5 100644
+index 386f4cdaee5..58d1dc5fc83 100644
 --- a/t/helper/test-fsmonitor-client.c
 +++ b/t/helper/test-fsmonitor-client.c
-@@ -7,6 +7,7 @@
- #include "cache.h"
+@@ -4,7 +4,6 @@
+  */
+ 
+ #include "test-tool.h"
+-#include "cache.h"
  #include "parse-options.h"
  #include "fsmonitor-ipc.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "setup.h"
- #include "thread-utils.h"
+ #include "read-cache-ll.h"
 diff --git a/t/helper/test-hash-speed.c b/t/helper/test-hash-speed.c
-index f40d9ad0c2d..c1e82d5d028 100644
+index c1e82d5d028..b235da594f7 100644
 --- a/t/helper/test-hash-speed.c
 +++ b/t/helper/test-hash-speed.c
-@@ -1,5 +1,6 @@
+@@ -1,5 +1,4 @@
  #include "test-tool.h"
- #include "cache.h"
-+#include "hash-ll.h"
+-#include "cache.h"
+ #include "hash-ll.h"
  
  #define NUM_SECONDS 3
- 
 diff --git a/t/helper/test-index-version.c b/t/helper/test-index-version.c
-index a06c45c1f84..b3cbaf6d2a8 100644
+index b3cbaf6d2a8..f3c2dbe0a2c 100644
 --- a/t/helper/test-index-version.c
 +++ b/t/helper/test-index-version.c
-@@ -1,5 +1,6 @@
+@@ -1,5 +1,4 @@
  #include "test-tool.h"
- #include "cache.h"
-+#include "read-cache-ll.h"
+-#include "cache.h"
+ #include "read-cache-ll.h"
  
  int cmd__index_version(int argc UNUSED, const char **argv UNUSED)
- {
 diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
-index 6944b7e825f..8eb327b3b93 100644
+index 8eb327b3b93..187a115d574 100644
 --- a/t/helper/test-lazy-init-name-hash.c
 +++ b/t/helper/test-lazy-init-name-hash.c
-@@ -4,6 +4,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "test-tool.h"
+-#include "cache.h"
  #include "environment.h"
  #include "name-hash.h"
  #include "parse-options.h"
-+#include "read-cache-ll.h"
- #include "repository.h"
- #include "setup.h"
- #include "trace.h"
 diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 2ef53d5f7a2..90e4d29a06f 100644
+index 90e4d29a06f..70396fa3845 100644
 --- a/t/helper/test-path-utils.c
 +++ b/t/helper/test-path-utils.c
-@@ -3,6 +3,7 @@
+@@ -1,5 +1,4 @@
+ #include "test-tool.h"
+-#include "cache.h"
  #include "abspath.h"
  #include "environment.h"
  #include "path.h"
-+#include "read-cache-ll.h"
- #include "setup.h"
- #include "string-list.h"
- #include "trace.h"
 diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-index c1ae2763954..0d548814e08 100644
+index 0d548814e08..56c2d25f359 100644
 --- a/t/helper/test-read-cache.c
 +++ b/t/helper/test-read-cache.c
-@@ -2,6 +2,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
  #include "test-tool.h"
- #include "cache.h"
+-#include "cache.h"
  #include "config.h"
-+#include "read-cache-ll.h"
+ #include "read-cache-ll.h"
  #include "repository.h"
- #include "setup.h"
- #include "wrapper.h"
 diff --git a/t/helper/test-scrap-cache-tree.c b/t/helper/test-scrap-cache-tree.c
-index 6e17f50d225..7b7e2384043 100644
+index 7b7e2384043..0a816a96e28 100644
 --- a/t/helper/test-scrap-cache-tree.c
 +++ b/t/helper/test-scrap-cache-tree.c
-@@ -2,6 +2,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
  #include "test-tool.h"
- #include "cache.h"
+-#include "cache.h"
  #include "lockfile.h"
-+#include "read-cache-ll.h"
+ #include "read-cache-ll.h"
  #include "repository.h"
- #include "setup.h"
- #include "tree.h"
 diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
-index 71fe5c61455..dc6fb17f2a7 100644
+index dc6fb17f2a7..dcb7f6c0032 100644
 --- a/t/helper/test-sha1.c
 +++ b/t/helper/test-sha1.c
-@@ -1,5 +1,6 @@
+@@ -1,5 +1,4 @@
  #include "test-tool.h"
- #include "cache.h"
-+#include "hash-ll.h"
+-#include "cache.h"
+ #include "hash-ll.h"
  
  int cmd__sha1(int ac, const char **av)
- {
 diff --git a/t/helper/test-sha256.c b/t/helper/test-sha256.c
-index 0ac6a99d5f2..f50f64f1f22 100644
+index f50f64f1f22..08cf1490014 100644
 --- a/t/helper/test-sha256.c
 +++ b/t/helper/test-sha256.c
-@@ -1,5 +1,6 @@
+@@ -1,5 +1,4 @@
  #include "test-tool.h"
- #include "cache.h"
-+#include "hash-ll.h"
+-#include "cache.h"
+ #include "hash-ll.h"
  
  int cmd__sha256(int ac, const char **av)
- {
 diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
-index 96b9a5b5291..d3f39207f14 100644
+index d3f39207f14..d8473cf2fcf 100644
 --- a/t/helper/test-strcmp-offset.c
 +++ b/t/helper/test-strcmp-offset.c
-@@ -1,5 +1,6 @@
+@@ -1,5 +1,4 @@
  #include "test-tool.h"
- #include "cache.h"
-+#include "read-cache-ll.h"
+-#include "cache.h"
+ #include "read-cache-ll.h"
  
  int cmd__strcmp_offset(int argc UNUSED, const char **argv)
- {
 diff --git a/t/helper/test-write-cache.c b/t/helper/test-write-cache.c
-index eace08072d7..d27125eeacf 100644
+index d27125eeacf..f084034d38e 100644
 --- a/t/helper/test-write-cache.c
 +++ b/t/helper/test-write-cache.c
-@@ -2,6 +2,7 @@
+@@ -1,6 +1,5 @@
+ #define USE_THE_INDEX_VARIABLE
  #include "test-tool.h"
- #include "cache.h"
+-#include "cache.h"
  #include "lockfile.h"
-+#include "read-cache-ll.h"
+ #include "read-cache-ll.h"
  #include "repository.h"
- #include "setup.h"
- 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 078c53f7a13..fdcc46e474f 100644
+index fdcc46e474f..4b620df3031 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -15,6 +15,7 @@
- #include "progress.h"
- #include "refs.h"
- #include "attr.h"
-+#include "read-cache.h"
- #include "split-index.h"
- #include "sparse-index.h"
- #include "submodule.h"
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 30622aeebff..9b827c307f6 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -1,8 +1,8 @@
- #ifndef UNPACK_TREES_H
- #define UNPACK_TREES_H
- 
+@@ -1,4 +1,4 @@
 -#include "cache.h"
- #include "convert.h"
-+#include "read-cache-ll.h"
++#include "git-compat-util.h"
+ #include "advice.h"
  #include "strvec.h"
- #include "string-list.h"
- #include "tree-walk.h"
+ #include "repository.h"
 diff --git a/wt-status.c b/wt-status.c
-index 068b76ef6d9..847b63c906e 100644
+index 847b63c906e..6ee8567ac2d 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -18,6 +18,7 @@
- #include "refs.h"
- #include "submodule.h"
- #include "column.h"
-+#include "read-cache.h"
- #include "setup.h"
- #include "strbuf.h"
- #include "trace.h"
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "advice.h"
+ #include "wt-status.h"
+ #include "object.h"
 -- 
 gitgitgadget
 
