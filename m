@@ -2,56 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E4F5C77B75
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 22:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32FBDC77B75
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 22:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237235AbjELWRo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 18:17:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46218 "EHLO
+        id S239498AbjELWr7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 18:47:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjELWRn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 18:17:43 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F05C198B
-        for <git@vger.kernel.org>; Fri, 12 May 2023 15:17:42 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-64a9335a8e7so8776513b3a.0
-        for <git@vger.kernel.org>; Fri, 12 May 2023 15:17:42 -0700 (PDT)
+        with ESMTP id S229611AbjELWr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 18:47:58 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEFAC173A
+        for <git@vger.kernel.org>; Fri, 12 May 2023 15:47:55 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f13dafd5dcso11750901e87.3
+        for <git@vger.kernel.org>; Fri, 12 May 2023 15:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683929861; x=1686521861;
+        d=gmail.com; s=20221208; t=1683931674; x=1686523674;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SbmxyCetEfr1HDII239goejMQD3BlGa412Wy+9w0Vsw=;
-        b=UY+e3qOsZUYD0MXVFSFzV6ZwtW7eGsiDiiTpa6ekYj+TM8Q6NXtp73DYS9TXcr/XBP
-         hrYXbSFqnjQpRNUV9Q2ojULVkmVj7FkGV/i7JYUEMV88Qv5voNnnk4HrRaSGs6h4aLMa
-         Vl1hdPi01mstS72Uwqk7735mWL8VZp1Eg8odZGsdlq0FBf3Pp+xQxTL4cnPUFGgncdfo
-         bZnBI0kNiZ85XUkntGkZWmQvq4KeBYJg3JYUjWBtMh6aYcgFLTcFxtO5eIRzQteeT/Ed
-         Ha9ROWcZUfx4U6tlYdxTCfUA3Rn53qSDslg4X2iAU+Z/lP5p4nnv1UoBbBSJAiw1UAS6
-         itoA==
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OQQ0C7RVrnQQulLjDx3WfYWHc0vSRajNLKZAsYyXTEQ=;
+        b=dX9Pzrh8UabKPiFPFks5Qy8miusYDYnFsi8FHpYB9e/h7zk6MmnWdtEXFjh1zk7Sm6
+         VU2YksjvOd9lMrZukEuxx2myqXw2A6VGctiARcicE21vzcXg64V8slbodOiZyf+ibrcS
+         kKtf8cLS6hbFLWTtYGs0HUHH/ccBKELypXiIMLjiS+AL72KEOXHlYpUgByTwZYXCum4y
+         gx0wfo778+1kgE9lFVE95L6BtB03CX498qgrGLYcyrkdpOz8AJSBpzzZ5sscd5OXjlUl
+         kZqsUPYlBue2detwp1xyeOVcolUJIEHgU8O0+RZrNTgvUL6aOVq66tOQZyrj8fYZPzjS
+         FAfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683929861; x=1686521861;
+        d=1e100.net; s=20221208; t=1683931674; x=1686523674;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=SbmxyCetEfr1HDII239goejMQD3BlGa412Wy+9w0Vsw=;
-        b=j7XdAFXefWjT9Ama0cn6uhZwJ09qUfOBFahUmAFV0OBQRRc3Z/R6BLds1U7joTza/x
-         r6vdp42h6x/8KrMo/bGn2Za9l07TQSnJ4JXKp9FAwx2J+VAYpBZhiY63O1tEsL8upPhE
-         A9NWobBne1CmPyFdJAEl9m2zgHaT3On8GJdrg20K6FPIaE8U2QuV4egQUFBLaftSK4lT
-         nEC5TQHeRCutf1U2xKVMP8CQG8sd17ZjUfTousReAR0iYKK3IfRm7sCRI7++XGhTWlSK
-         Qpa8e2ZyK7EN1FY33S83+s0y7cE8AFzYV6cxtcsWmIgKJKbU6UfeHzalskHai6s43WEf
-         HJ4g==
-X-Gm-Message-State: AC+VfDxXttfCdnh7LBCWaB+y+QMSARIhplR4xRDx5vgZLyhpJdQesbib
-        0vJQV2bjF3adOCH6tuH41Jc=
-X-Google-Smtp-Source: ACHHUZ7iVQN3wZE9boi4z9r7oRhYRlQdKlZD/TFNUZcR0hMPIVnCanIoHX7Fbw4uCi3OR6UxlCwpqQ==
-X-Received: by 2002:a17:902:e80b:b0:1a9:57b4:9d5a with SMTP id u11-20020a170902e80b00b001a957b49d5amr36460978plg.31.1683929860979;
-        Fri, 12 May 2023 15:17:40 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id io20-20020a17090312d400b001ab0a30c895sm8403717plb.202.2023.05.12.15.17.40
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OQQ0C7RVrnQQulLjDx3WfYWHc0vSRajNLKZAsYyXTEQ=;
+        b=bltizo4x56g7gPjKlCadXU10KOlBFEPtcU6RC9/Xo4MssRmtXuEU/ltlLrq1divVqk
+         xh83/XGnqdb+BlxP3OsGcNY4x9V9o27sLBr7P52DRplsF/FTgy/nLpehuCDzwGJOlTBG
+         A3P2ohBD0C7Gf0n6uEbQNoKfxGJybxJBpUnqrchnGNHuEpFm19uKKyGR3jx4Au60YGpw
+         Fxtn6CdhYcJlr2hONIIDzb9atovJ+szS+/R3WLzrDT2tq9yNEgDuGtuVCZynKqH3xYSG
+         2XEUEpBR7voPvHYsTku+Rx8pdC/O3EcZkpZJF+YHzsO1uhSMaOaztjHvbB9USNaHYF1A
+         8rDg==
+X-Gm-Message-State: AC+VfDxNznTGwpzNyAgfLmu6rgz83btj0U/+kOuUJWJZloZvPu3Ttu4G
+        Ov2t3xNdcHcZ78xIg4CaXxP17WIh2W8=
+X-Google-Smtp-Source: ACHHUZ4AikXeFQTelxpvkbKpazzh8GOURxA59YJXU0dha42LtAOPLNHTgOHrHReRJhI9pHEqyWSNNQ==
+X-Received: by 2002:ac2:4c22:0:b0:4ef:e87e:df88 with SMTP id u2-20020ac24c22000000b004efe87edf88mr3603831lfq.64.1683931673508;
+        Fri, 12 May 2023 15:47:53 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id w17-20020a05651204d100b004f14898d18esm1585977lfq.85.2023.05.12.15.47.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 15:17:40 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
+        Fri, 12 May 2023 15:47:52 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
         Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
         "git@vger.kernel.org" <git@vger.kernel.org>
@@ -64,34 +62,53 @@ References: <645c5da0981c1_16961a29455@chronos.notmuch>
         <xmqqv8gxpd8r.fsf@gitster.g>
         <645ea15eca6fa_21989f294f5@chronos.notmuch>
         <xmqq1qjlp98j.fsf@gitster.g> <877ctdi5wp.fsf@osv.gnss.ru>
-Date:   Fri, 12 May 2023 15:17:40 -0700
-In-Reply-To: <877ctdi5wp.fsf@osv.gnss.ru> (Sergey Organov's message of "Sat,
-        13 May 2023 00:41:42 +0300")
-Message-ID: <xmqq8rdtnqij.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        <xmqq8rdtnqij.fsf@gitster.g>
+Date:   Sat, 13 May 2023 01:47:51 +0300
+In-Reply-To: <xmqq8rdtnqij.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        12 May 2023 15:17:40 -0700")
+Message-ID: <87y1ltgoa0.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Indeed "--silent" or "--squelch" is one of the things that I plan to
->> suggest when we were to go with "--no-patch is no longer -s" topic.
+> Sergey Organov <sorganov@gmail.com> writes:
 >
-> While we are at this, may I vote against "--squelch", please?
+>>> Indeed "--silent" or "--squelch" is one of the things that I plan to
+>>> suggest when we were to go with "--no-patch is no longer -s" topic.
+>>
+>> While we are at this, may I vote against "--squelch", please?
+>
+> Sure.  I actually do not think either "--silent" or "--squelch" is a
+> good name in the context of "git show"; as the output from the
+> command consists of the commit log message and the output from the
+> diff machinery, and "-s" is about squelching only the latter.
 
-Sure.  I actually do not think either "--silent" or "--squelch" is a
-good name in the context of "git show"; as the output from the
-command consists of the commit log message and the output from the
-diff machinery, and "-s" is about squelching only the latter.
+Yep.
 
-I have a name better than these two in mind, but as I said already,
-we are getting closer to the pre-release feature freeze, and I'd
-rather reserve my bandwidth to review rerolls of the topics that are
-in 'seen' and have seen some reviews already to merge them down to
-'next' if they are ready, rather than staying on this thread, as
-"--no-patch is no longer -s" will not happen within this cycle.
+>
+> I have a name better than these two in mind,
 
-Thanks.
+--no-diff?
+
+That said, in the context of git log/show, as opposes to git diff, it
+all could have been:
+
+  --diff=<list>
+
+where <list> is comma-separated list of options to pass to diff, and
+then it'd be:
+
+  --diff=off
+
+for the option in question with apparent synonym --no-diff, and less
+apparent synonym -s.
+
+Hold on! Now it starts to sound familiar... --diff-merges! )))
+
+Thanks,
+-- Sergey Organov
