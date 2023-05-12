@@ -2,101 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06A86C77B75
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 15:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD254C77B7C
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 15:18:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241200AbjELPJX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 11:09:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56142 "EHLO
+        id S241778AbjELPSo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 11:18:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241720AbjELPJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 11:09:21 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92605FFF
-        for <git@vger.kernel.org>; Fri, 12 May 2023 08:09:19 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f42b984405so32531625e9.3
-        for <git@vger.kernel.org>; Fri, 12 May 2023 08:09:19 -0700 (PDT)
+        with ESMTP id S241720AbjELPSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 11:18:43 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44EBBFF
+        for <git@vger.kernel.org>; Fri, 12 May 2023 08:18:42 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f4449fa085so27003285e9.0
+        for <git@vger.kernel.org>; Fri, 12 May 2023 08:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683904158; x=1686496158;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=gmail.com; s=20221208; t=1683904720; x=1686496720;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Iij93rJdDuabRIYHT2lU0GRF9R+zjBILr74xrJHzZE=;
-        b=HCqeR8ZlOTcVSFQHoBrPPBPllZhKMmx+LbY2NhW3xSCVpxxI8XzZKOdVvkfpkh+Y8u
-         EhxkE2ByoPTDR4FDBRKlyZfLEly+HRMAYsszNrY5d4QXV9U+vaoUlRbkNxpTy+wW2+Jy
-         Q6wDktY9u69B9WGp77Q1SkbwC4Tm9Gtrg6ICe8ztqifT8iKkVAGrVApm0H5EHnpFQIKy
-         5baypVq27GRfVS8V1u439Dq7Wx6NK25y8QtPCip86Nj2kM30e+h4Q6IE1OOaJbTgeW8z
-         INwWetjjPQC0QvV3lfuv2j6PQm8Enmmo603VZI77r85vZQwy3XHtvytm/9eIyrqDoB1D
-         PcaQ==
+        bh=o3o5zkygc+eS3Qd7pErnpXyidGTkquoW6H8v/1CiPZ8=;
+        b=G9XulUdufUrvaVaa3N6NIxCsg9KOicuibwKb9XImGzu2WGB4fMBkDI1HOnmfTw/0SZ
+         70KYhMvP36Nqwl5uffU2tuJ4w/MEkVC8KKW0zcOY7dNGQMMrryfvRi6/RX0r3ODicXIx
+         l5T1CDC6nd8XmAbLutu9lzyK52dd8MaexybvrotBB2MeUiYbBtazOJyWj6aIJVqX6sdn
+         JuDIQkbnN9oC23/7plfutissHvbJNOwOYZ7OBgbMuNowjaJja9IXbcIPZyEQzP49KOmI
+         qIgGZjMBmXwkX8CArT1mH8Q1Iz3J/8wbVtyyGjpYBGHL6lr0XaWnbGhWNFtS2b9uP850
+         zLAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683904158; x=1686496158;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=1e100.net; s=20221208; t=1683904720; x=1686496720;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3Iij93rJdDuabRIYHT2lU0GRF9R+zjBILr74xrJHzZE=;
-        b=iiPYxg7479utNdjfnCyW9pVbkrf69PXjWy0O0eN3uhzfArSNTKAYxnJGc9umMf54a/
-         ynazISn1+Rxq5z+MMz3RVC3UdVKD9hdzn+/MaEUm48rvwFCtk0aN+ClhtchfYX5OZBXI
-         NuLy0/UdRmBCVW73Vws7THqf0tTkeQVYDhAa/vM/RoCcq114a51IamPX8cJj3hv8ablE
-         V7B7h+SESsx3z9rRGe/I0ARIDgnkWTPFMgjVZKeuVawmZ/M/5sCczEIEYgy0xIV70DvE
-         ytBjw9f6ylsALV7dp7NEw6fLr+tHOvby14GePec01hv3fPPWrXIFtxdpFMLiD16qgQ7o
-         ejsg==
-X-Gm-Message-State: AC+VfDwKCQYZp+/YaGA/7GsfP+miLbbHtXQy/LLO8SR0MI2/DpdJFqHX
-        RzQaXEFYPIYk67QjNzJcF9MlFuyQ8IM=
-X-Google-Smtp-Source: ACHHUZ7E47eT25golREznzHuu0K6vCNHKKO/nGU8Z1bqtfTmsyiAluqVwk7irHk573PYjKzmiZ7/uA==
-X-Received: by 2002:adf:dd46:0:b0:307:8d6a:a48e with SMTP id u6-20020adfdd46000000b003078d6aa48emr14859313wrm.52.1683904157657;
-        Fri, 12 May 2023 08:09:17 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y15-20020adfe6cf000000b0030633152664sm23662975wrm.87.2023.05.12.08.09.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 08:09:17 -0700 (PDT)
-Message-Id: <pull.1532.git.1683904156670.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 May 2023 15:09:16 +0000
-Subject: [PATCH] t5583: fix shebang line
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=o3o5zkygc+eS3Qd7pErnpXyidGTkquoW6H8v/1CiPZ8=;
+        b=I1VWnX9S8gkq4RpvqJMU1eQVuXlW9G/C9STMROowsOmM0uXOO3ClsBNhjdj3nPS6p5
+         w1P6KIDWV9k4PY5PiQuNGLBy5gu0NT7J6+tvjop87YnYxs8ll20YbMt9tEbtckyfd4mH
+         7UVG5FaGNfbDpzYQiYkbUiV3K2qTS0KpgPdD+8t42TI1uinj9qdnAkAvxa1ops0Bgs/o
+         3/H/7XhvwhHsdI880bmupDV6UuvC2eDfSIQg6gTkbL5TD4yewR+Gl0g4KRL1z/3ilQgR
+         cAJw5/F9aPtgDIdyXkLgWq6utCRAqTszuYTP4ngR6+AEqjw+3TN2L+FaNfPO5J9hfPYy
+         t7Bg==
+X-Gm-Message-State: AC+VfDzPM2e9sMlYXbWcoj4f6S5AisYLY+PrFfabcd1KtcFPZQYWdJC5
+        Fxs2i2/BkNJ5b7g1OxLnwqU=
+X-Google-Smtp-Source: ACHHUZ5/dO5VxvrnKtNwCHIRmi+X4TTW92uhTMJAm0J/ZB5bwTdCH9+KnxKMeMgTbjP91Kciy5DGNA==
+X-Received: by 2002:a5d:6d50:0:b0:307:83a4:5860 with SMTP id k16-20020a5d6d50000000b0030783a45860mr18620659wri.68.1683904720386;
+        Fri, 12 May 2023 08:18:40 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id n3-20020a7bc5c3000000b003f0b1b8cd9bsm29136426wmk.4.2023.05.12.08.18.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 May 2023 08:18:40 -0700 (PDT)
+Message-ID: <a6c6d3a4-433d-f275-e31c-4eece062722c@gmail.com>
+Date:   Fri, 12 May 2023 16:18:39 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git rebase --root bug
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk
+Cc:     Christopher Fretz <cfretz@icloud.com>, git@vger.kernel.org
+References: <5E3AD305-8461-496F-B165-7734D400C4A6@icloud.com>
+ <288a9935-264b-4dc5-0d63-200c310f326e@gmail.com>
+ <ZF0U6tneDjLfGxf1@nand.local>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <ZF0U6tneDjLfGxf1@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi Taylor
 
-The shebang was missing the leading `/` character, resulting in:
+On 11/05/2023 17:16, Taylor Blau wrote:
+> On Thu, May 11, 2023 at 03:21:11PM +0100, Phillip Wood wrote:
+>> The cause of the problem is that --root creates an empty commit (known as
+>> "squash_onto" in the code) which it uses as the "onto" commit. When it picks
+>> the first commit in the todo list the "onto" commit is amended and so is
+>> unreachable when the reflog is expired above. I think the best fix would be
+>> to stop pretending that we have a real "onto" commit when --root is used
+>> without --onto and either store "new root" .git/rebase-merge/onto or not
+>> create that file at all.
+> 
+> Wouldn't it suffice to consider the squash_onto commit as reachable the
+> same way we do for `--indexed-objects`?
 
-    $ ./t5583-push-branches.sh
-    bash: ./t5583-push-branches.sh: cannot execute: required file not found
+We could do that rather than clean up the implementation of --root. We 
+should definitely consider the commit stored in 
+.git/rebase-merge/orig-head to be reachable as the following test fails
 
-Add the missing character so the test can run.
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ff0afad63e..8ac5e2eec6 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -66,6 +66,19 @@ test_expect_success 'setup' '
+  SHELL=
+  export SHELL
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    t5583: fix shebang line
-    
-    Applies on the top of tl/push-branches-is-an-alias-for-all.
-    
-    Noticed yesterday when testing my header cleanups against next & seen.
++test_expect_success 'orig-head is not garbage collected' '
++        git checkout --detach &&
++        test_commit --no-tag x &&
++        (
++                set_fake_editor &&
++                FAKE_LINES="1 edit 2" git rebase -i @~2
++        ) &&
++        git reset @^ &&
++        git reflog expire --expire-unreachable=now &&
++        git gc --prune=now &&
++        git rebase --abort
++'
++
+  test_expect_success 'rebase --keep-empty' '
+          git checkout -b emptybranch primary &&
+          git commit --allow-empty -m "empty" &&
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1532%2Fnewren%2Ffix-tl-push-branches-is-an-alias-for-all-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1532/newren/fix-tl-push-branches-is-an-alias-for-all-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1532
+I'm not familiar with the gc code, does it use the --indexed-objects 
+option of "git rev-list"?
 
- t/t5583-push-branches.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Best Wishes
 
-diff --git a/t/t5583-push-branches.sh b/t/t5583-push-branches.sh
-index 29a5c5601bd..e7e1b6dab66 100755
---- a/t/t5583-push-branches.sh
-+++ b/t/t5583-push-branches.sh
-@@ -1,4 +1,4 @@
--#!bin/sh
-+#!/bin/sh
- 
- test_description='check the consisitency of behavior of --all and --branches'
- 
-
-base-commit: 425b4d7f47bd2be561ced14eac36056390862e8c
--- 
-gitgitgadget
+Phillip
