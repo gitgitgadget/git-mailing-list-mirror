@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A4BEC7EE24
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE568C77B75
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 07:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239664AbjELHFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 03:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49736 "EHLO
+        id S240144AbjELHFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 03:05:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240046AbjELHEv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240070AbjELHEv (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 12 May 2023 03:04:51 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68847A84
-        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:49 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-306f2b42a86so6283024f8f.3
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E05E8A56
+        for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:50 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f315712406so309973895e9.0
         for <git@vger.kernel.org>; Fri, 12 May 2023 00:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683875089; x=1686467089;
+        d=gmail.com; s=20221208; t=1683875088; x=1686467088;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rCGUWfMTa72akBAHQ1unEi/WpotVdZJ6yNJXRlRlCI8=;
-        b=KUS1DdsR+zz6KscnaDMti7RfAcm5ZcVHeQNP2tGGABKxfhcm8p1ofKulSiKidsDboL
-         MPo/gVwVQv5lRmRqrKcI1Sm/7Cw/IUMqVtJm3ayV04eoH0VLehrSw+a+hm6YlxIQQA5M
-         2mYOMqTTX7fjudzfpLHSeNeCnjhtp24shLRdJiqW2X38UOsAgGOkT9h9NhBX4P5nvbTj
-         IQwMlr1E8UyM5BnQY6rIt0Eemtmanlmmdt7QAmLIDOqTQpITVsdpVnQ8694Y93meckTX
-         xGs5Pu2tVIzPNWKpetBDhjQG0xZzDaKsGZHLCUA0/okvIbP+wBdqUuX0f8+4Gsrvq5DA
-         HyTA==
+        bh=MUwimbSgeOzcEP9ameyh3VbVpCTezWYkKUoRQfT5VtA=;
+        b=M+zzDcyeVKrS74ovEMUZIG/+08HrcKhz5zIeE4s57VS5p0CAAYn0IaPI1dwbQ+Vitm
+         BqJnZGtjjx2nnUmimbllPNaFd9oWxCsN1bvVHYlZpv0Vth7jxZ9RpcCD8T5mPtNbvX6H
+         hNWzQtzSNuHewOEUE/p66LGkkI8FVewfS9MHAb4G4JERUu/lBDaIozF6a75VWfL5C150
+         8GbysIbtQYtdLP/90Ue9rq7gUCWO6hxB6V4w7SgxgM/raR9hO+WSlrvJzYWXga0uwiBY
+         2DQrCEXrX/4Qrn/PFTqau8X/eMruKjiQ+e8VeGhCOBFLqIp4XENiMi9e7CiGtMKrLoSn
+         f3+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683875089; x=1686467089;
+        d=1e100.net; s=20221208; t=1683875088; x=1686467088;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rCGUWfMTa72akBAHQ1unEi/WpotVdZJ6yNJXRlRlCI8=;
-        b=lwRbUWAxm2dUz6IfQQWRVTWuH38iRs9DZusBYjVPS/XY609DYpwygRD4ok/38y8Drw
-         3K1ChqaSfyY9MSYFEAQ8Cllr/a04xWtF2yPMzC29eEWbvoxlERxZeT1zlyK5t1Ni79B0
-         /fije7nOHk4lyvvF5pjDCdD5nUFamfY5vMOZFxHzUHdYb+lKaYjoM6MJfhHmNK+U3Stb
-         e5OylHM3P+E0p6OAarJdBhb9/u3iF3bCN5y6jaVxHTyH3PH7ZrRs7q9cW/qrNOyr2f6Y
-         KIhXXuhnB2odlk52mqm63Hql3cQCXTzNwOvzRbkaApP9Rf7QA+tZiBdLm1qlD8pvxr2L
-         8CWQ==
-X-Gm-Message-State: AC+VfDx3xx055vhU9kc8zTHQbVUhVbnsUCsl6R55UGNu4KyoNwUpIB+e
-        KdkOzA82tutrfBgI+FFASiJDhmU+ofs=
-X-Google-Smtp-Source: ACHHUZ5gVw86QY/WRvb1WrxKAzvgiPQhRmVoK1MYSi3s0LcBs6t+XpX+cwIOHXrk/e65uFLqWnHOHw==
-X-Received: by 2002:adf:e511:0:b0:304:6715:8728 with SMTP id j17-20020adfe511000000b0030467158728mr19355895wrm.18.1683875088939;
+        bh=MUwimbSgeOzcEP9ameyh3VbVpCTezWYkKUoRQfT5VtA=;
+        b=a5xbRuWVV+HoA+JwOIqdUURr3LbsedhPhli7Ax+rygkrFMNlzsIHG2MMXoH/v185oI
+         Bk+DeduhnXaQKkUBgwernygOJL4BBxidIWyx9T9o1WSaQ72I2rv0I/NqZDedM1+ZDOh3
+         +4Z7cx7/e6yd9VfhXFj9a83kxCye1Xqxb8tbVHkcuuPfiHFEmm9JKDGyFtkvneTYQvFw
+         fg2550WatIgz0Htl6FRvlhz1+paTuXoWUZW3pjkiamgr9kO7XnYUayZ44W2fFP+OdPya
+         9/sC/ivxRaImeVwZmMjTEhTV6D2S5qJxllpA7X4onpCR3B/GqDzPNxplNNYTuqK14F+j
+         7gSQ==
+X-Gm-Message-State: AC+VfDzwtY7xqh2A8W6vLs9axGn2p2pz9TIsxSlj+ISpTRuJbtxQWuLJ
+        bPmGX4qxvexJ5lQ2nyO9Y3cnOSkxJeM=
+X-Google-Smtp-Source: ACHHUZ6qeFWY8zexlDlp4pIwOCkVNYGjVUJZrq/0ksrc7RNfLAEgHOihOszVuQdyvoLrxsihLg6ZPw==
+X-Received: by 2002:a05:600c:4e44:b0:3f4:9a86:f2ab with SMTP id e4-20020a05600c4e4400b003f49a86f2abmr5533242wmq.17.1683875088259;
         Fri, 12 May 2023 00:04:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c15-20020adfed8f000000b003047f7a7ad1sm22563903wro.71.2023.05.12.00.04.48
+        by smtp.gmail.com with ESMTPSA id c20-20020a7bc014000000b003ef64affec7sm27670789wmb.22.2023.05.12.00.04.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 00:04:48 -0700 (PDT)
-Message-Id: <abfb127b812c3c7501e54bbb9213c8598056ad50.1683875070.git.gitgitgadget@gmail.com>
+        Fri, 12 May 2023 00:04:47 -0700 (PDT)
+Message-Id: <77c3c5918b8cd874d0ca1be7b326207ea3fc98bd.1683875070.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 References: <pull.1525.git.1683431149.gitgitgadget@gmail.com>
         <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 May 2023 07:04:16 +0000
-Subject: [PATCH v2 15/27] repository.h: move declaration of the_index from
- cache.h
+Date:   Fri, 12 May 2023 07:04:15 +0000
+Subject: [PATCH v2 14/27] merge.h: move declarations for merge.c from cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,58 +72,108 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-the_index is a global variable defined in repository.c; as such, its
-declaration feels better suited living in repository.h rather than
-cache.h.  Move it.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- cache.h                          | 4 ----
- repository.h                     | 3 +++
- t/helper/test-dump-split-index.c | 1 +
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ builtin/merge.c |  1 +
+ builtin/pull.c  |  1 +
+ cache.h         | 11 -----------
+ merge.c         |  1 +
+ merge.h         | 17 +++++++++++++++++
+ sequencer.c     |  1 +
+ 6 files changed, 21 insertions(+), 11 deletions(-)
+ create mode 100644 merge.h
 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 8da3e46abb0..6e8f7b9bb53 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -37,6 +37,7 @@
+ #include "color.h"
+ #include "rerere.h"
+ #include "help.h"
++#include "merge.h"
+ #include "merge-recursive.h"
+ #include "merge-ort-wrappers.h"
+ #include "resolve-undo.h"
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 967368ebc65..f9ddc94ba9a 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -12,6 +12,7 @@
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "hex.h"
++#include "merge.h"
+ #include "object-name.h"
+ #include "parse-options.h"
+ #include "exec-cmd.h"
 diff --git a/cache.h b/cache.h
-index 5b690b80a16..11882897741 100644
+index 08f6fbd801d..5b690b80a16 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -312,10 +312,6 @@ typedef int (*must_prefetch_predicate)(const struct cache_entry *);
- void prefetch_cache_entries(const struct index_state *istate,
- 			    must_prefetch_predicate must_prefetch);
+@@ -527,15 +527,4 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+ void overlay_tree_on_index(struct index_state *istate,
+ 			   const char *tree_name, const char *prefix);
  
--#ifdef USE_THE_INDEX_VARIABLE
--extern struct index_state the_index;
--#endif
+-/* merge.c */
+-struct commit_list;
+-int try_merge_command(struct repository *r,
+-		const char *strategy, size_t xopts_nr,
+-		const char **xopts, struct commit_list *common,
+-		const char *head_arg, struct commit_list *remotes);
+-int checkout_fast_forward(struct repository *r,
+-			  const struct object_id *from,
+-			  const struct object_id *to,
+-			  int overwrite_ignore);
 -
- /* Initialize and use the cache information */
- struct lock_file;
- int do_read_index(struct index_state *istate, const char *path,
-diff --git a/repository.h b/repository.h
-index f81228bcfb5..763794880ed 100644
---- a/repository.h
-+++ b/repository.h
-@@ -169,6 +169,9 @@ struct repository {
- };
- 
- extern struct repository *the_repository;
-+#ifdef USE_THE_INDEX_VARIABLE
-+extern struct index_state the_index;
-+#endif
- 
- /*
-  * Define a custom repository layout. Any field can be NULL, which
-diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
-index d1badd71126..63fde9157c4 100644
---- a/t/helper/test-dump-split-index.c
-+++ b/t/helper/test-dump-split-index.c
-@@ -2,6 +2,7 @@
- #include "test-tool.h"
- #include "cache.h"
+ #endif /* CACHE_H */
+diff --git a/merge.c b/merge.c
+index 10aaec3a6c1..fade6b203b3 100644
+--- a/merge.c
++++ b/merge.c
+@@ -4,6 +4,7 @@
+ #include "gettext.h"
  #include "hex.h"
-+#include "repository.h"
- #include "setup.h"
- #include "split-index.h"
- #include "ewah/ewok.h"
+ #include "lockfile.h"
++#include "merge.h"
+ #include "commit.h"
+ #include "run-command.h"
+ #include "resolve-undo.h"
+diff --git a/merge.h b/merge.h
+new file mode 100644
+index 00000000000..21ac7ef2f13
+--- /dev/null
++++ b/merge.h
+@@ -0,0 +1,17 @@
++#ifndef MERGE_H
++#define MERGE_H
++
++struct commit_list;
++struct object_id;
++struct repository;
++
++int try_merge_command(struct repository *r,
++		const char *strategy, size_t xopts_nr,
++		const char **xopts, struct commit_list *common,
++		const char *head_arg, struct commit_list *remotes);
++int checkout_fast_forward(struct repository *r,
++			  const struct object_id *from,
++			  const struct object_id *to,
++			  int overwrite_ignore);
++
++#endif /* MERGE_H */
+diff --git a/sequencer.c b/sequencer.c
+index cae9c75a54e..ec4a2e80a10 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -25,6 +25,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "rerere.h"
++#include "merge.h"
+ #include "merge-ort.h"
+ #include "merge-ort-wrappers.h"
+ #include "refs.h"
 -- 
 gitgitgadget
 
