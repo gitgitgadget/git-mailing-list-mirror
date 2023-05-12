@@ -2,274 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34168C7EE22
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 00:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 395BBC77B7C
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 00:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239743AbjELAA4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 May 2023 20:00:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54090 "EHLO
+        id S239709AbjELABi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 May 2023 20:01:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239706AbjELAAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2023 20:00:38 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9B87ED4
-        for <git@vger.kernel.org>; Thu, 11 May 2023 17:00:16 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id 5614622812f47-394690088acso252335b6e.0
-        for <git@vger.kernel.org>; Thu, 11 May 2023 17:00:16 -0700 (PDT)
+        with ESMTP id S239720AbjELABZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2023 20:01:25 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60CF07298
+        for <git@vger.kernel.org>; Thu, 11 May 2023 17:00:56 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-55a10577911so135044547b3.0
+        for <git@vger.kernel.org>; Thu, 11 May 2023 17:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683849593; x=1686441593;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sGFAddDlxRxMHQSU+wadSFsNIdAoAf84B2phUcVkY0k=;
-        b=NfyZVTaJsxlNIs3E+6Hhhj7bSHPWCxPlIAPs/5Ztv3ADkAUmbMZks11WjdwCQzuKWy
-         tw4bXt0zkny21g7QcoK11dUTfPmxcVjzLHD+Nb4Tpxg362wXL7f5mBEW2XSaoGbspJr8
-         gF8FlGmd/qhmrfbxGTUscOwnKOhJBzZLJmFXUNkzBv/Lv/XEijRWY+gG+9j3zl955s0b
-         O4t5fQeT9ay0R57u/tP59K67lDreNRABIzJY8MU51BXltS5htukuPOrE9vs8cdfZMos+
-         DQ0YWvVLhCTtAjWTmeSiyP6t14uPiXkNSKLziP+HaklK/Lt65EJG/gEQHilYX3+U77ah
-         j7HQ==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1683849625; x=1686441625;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ODzvNdWFY1cWPde5K0Z3NTNKGGleaxtNzlSy/H5m5b8=;
+        b=s/btNhrt/G+iCgANt9akzWAzooWW6WIOT/P/y1YZ87ZmJmGq03fOcBrkRWzfq6PFs/
+         iOgBoEoGTFaSFdyVsXbKTTH04zwLqnMv+KcEeRGuy+jC+oULeMaaT+i/Bxq+RC7Gv/Qd
+         ldt87sz1gerxIK8kxzWEYxLf+qx8VKBHqS4lAZU3xdXYWx8M6hAODvKiMy31SZObwzz3
+         om38t1w7G6hPBdCKmm8xsG8w+f3ISLLCh2wmwa2TlLEE/wC0cukGBnNhlr7YDNS5BbMD
+         hYuJmIFxw0pwbLJklnBjdDvRxKUXrOQUfUlMJf1rDw43+aDaSCQMx5AAqDIzpqpFBmlm
+         473w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683849593; x=1686441593;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sGFAddDlxRxMHQSU+wadSFsNIdAoAf84B2phUcVkY0k=;
-        b=jg1jJSW4ocwRsAcWYwGmDp4KJl02/G8yAzP4WfXbaH7hyY0jdNvY8JQpelcsCbJFv2
-         VrjnJy41G284t3dOYLgmnnWDq70KbHKTjTXLyRNFPFCIv2l5d6lRHHshxV3tk06dHfFD
-         2REZoAIJnfrlWCdlkAisEqbHxvm/u1yyw4eYxr2shx7GmWiMYGxLuBllxh6ZPhoj/GXw
-         c10Y/W2hR3A7ewzISwva7Ph9Q4AP0janlFG3CtCMrJwA7//zGFl2u85ObYEpQYQXr2N7
-         jWajTEjhOcBFkPoSDX1z9tBDurXrXFEgyPHUfX7IY9YmLjK3WmT7B3UNeOJNiNzgZ8a5
-         o9KQ==
-X-Gm-Message-State: AC+VfDx3XRXQsq9IDMb/N+f69lR5Lp3qdcDlmTN1YsZesUGo07o7EoO0
-        HHoP7ME7ZSLUqmNWNJ9UNHYYSUdEuO0=
-X-Google-Smtp-Source: ACHHUZ65JfcUzNec8SFS/6T3hnP+nGJjdYptvbayAi38jL7/cIzrSGBBhaAwwi6Dr2X2CYA9DxMHVA==
-X-Received: by 2002:a54:4194:0:b0:390:9226:2c75 with SMTP id 20-20020a544194000000b0039092262c75mr6038975oiy.55.1683849592882;
-        Thu, 11 May 2023 16:59:52 -0700 (PDT)
-Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id r81-20020acaf354000000b0038ee0c3b38esm3894103oih.44.2023.05.11.16.59.52
+        d=1e100.net; s=20221208; t=1683849625; x=1686441625;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ODzvNdWFY1cWPde5K0Z3NTNKGGleaxtNzlSy/H5m5b8=;
+        b=h0Kn7vkKOYW65oxlvEy5SI/u2AwYNaeE3XN8NntOGVWJfGuj9auxXH5Io7oyPnmlld
+         gs8rWZYJVUlW8XkBNkYxNwUHIviocsn9lZPKz4H6Ovnkr3rfU83USim1NCXVUmsoJX1b
+         Lo371mv4rzJbfSWgcX4ymcZ05Yk6090rvkXBWqrsco90K2KrlSkCshwaTKKewTOwuBmT
+         ku15jYWx7OB6JEe9pZdKLgosmbRE9vzASYYX2rloNpwLtIgbavqGy+TcLDtlRchyeTX8
+         rxZDvSAVmNjv+aOoTOObf6S6EnIrl3zT2fDaxA10ghXNr5U2JTgSW6j7mIxB/0hC/sec
+         3NSA==
+X-Gm-Message-State: AC+VfDz5pQrQ76SVPBc4oyuTXxvCmgzXutb3q3CZQOdC+jJnzOecGXj6
+        fus1+L37Kc/iS5Het9X4X4lekw==
+X-Google-Smtp-Source: ACHHUZ6b77F48v4fBNjPBWgUNnTUuftSR/2gNX1rNqYyjXxA2AiF8bXE1Qz22XadS+MhqQDaKPEEnQ==
+X-Received: by 2002:a81:4f08:0:b0:55a:8037:84ca with SMTP id d8-20020a814f08000000b0055a803784camr25152990ywb.46.1683849625599;
+        Thu, 11 May 2023 17:00:25 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t126-20020a814684000000b0055a21492192sm5323050ywa.115.2023.05.11.17.00.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 16:59:52 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] Fix merge_recursive_config()
-Date:   Thu, 11 May 2023 17:59:51 -0600
-Message-Id: <20230511235951.2309462-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
+        Thu, 11 May 2023 17:00:25 -0700 (PDT)
+Date:   Thu, 11 May 2023 20:00:24 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v3 2/4] pack-refs: teach --exclude option to exclude refs
+ from being packed
+Message-ID: <ZF2BmI/SnhfEDB2K@nand.local>
+References: <pull.1501.v2.git.git.1683659931.gitgitgadget@gmail.com>
+ <pull.1501.v3.git.git.1683828635.gitgitgadget@gmail.com>
+ <8c5c66a3050ee1c0ce8a48a088f5ecc2df7d1e3a.1683828635.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8c5c66a3050ee1c0ce8a48a088f5ecc2df7d1e3a.1683828635.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The configuration shouldn't be loaded whenever, it should be loaded
-*before* command options are parsed, so the code has the opportunity to
-override the configuration.
+On Thu, May 11, 2023 at 06:10:32PM +0000, John Cai via GitGitGadget wrote:
+> From: John Cai <johncai86@gmail.com>
+>
+> At GitLab, we have a system that creates ephemeral internal refs that
+> don't live long before getting deleted. Having an option to exclude
+> certain refs from a packed-refs file allows these internal references to
+> be deleted much more efficiently.
+>
+> Add an --exclude option to the pack-refs builtin, and use the ref
+> exclusions API to exclude certain refs from being packed into the final
+> packed-refs file
+>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  Documentation/git-pack-refs.txt | 12 +++++++++++-
+>  builtin/pack-refs.c             | 20 ++++++++++++++++----
+>  refs.c                          |  4 ++--
+>  refs.h                          |  7 ++++++-
+>  refs/debug.c                    |  4 ++--
+>  refs/files-backend.c            | 16 ++++++++++------
+>  refs/packed-backend.c           |  2 +-
+>  refs/refs-internal.h            |  3 ++-
+>  revision.h                      |  2 +-
+>  t/helper/test-ref-store.c       |  3 ++-
+>  t/t3210-pack-refs.sh            | 16 ++++++++++++++++
+>  11 files changed, 69 insertions(+), 20 deletions(-)
+>
+> diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+> index e011e5fead3..c0f7426e519 100644
+> --- a/Documentation/git-pack-refs.txt
+> +++ b/Documentation/git-pack-refs.txt
+> @@ -8,7 +8,7 @@ git-pack-refs - Pack heads and tags for efficient repository access
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git pack-refs' [--all] [--no-prune]
+> +'git pack-refs' [--all] [--no-prune] [--exclude <pattern>]
+>
+>  DESCRIPTION
+>  -----------
+> @@ -60,6 +60,16 @@ interests.
+>  The command usually removes loose refs under `$GIT_DIR/refs`
+>  hierarchy after packing them.  This option tells it not to.
+>
+> +--exclude <pattern>::
+> +
+> +Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
+> +accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
+> +patterns. If a ref is already packed, including it with `--exclude` will not
+> +unpack it.
+> +
+> +When used with `--all`, it will use the difference between the set of all refs,
+> +and what is provided to `--exclude`.
+> +
 
-merge_recursive_config() erroneously calls git_xmerge_config() directly,
-overriding any previous options, for example `--confligt=diff3`.
+I think this last paragraph could be simplified, though feel free to
+discard my suggestion if you think it makes things less clear.
 
-To do this properly git_xmerge_config is explicitly called at the top
-level of all the commands that call merge_recursive_config() directly or
-indirectly.
+  When used with `--all`, pack only loose refs which do not match any of
+  the provided `--exclude` patterns.
 
-Some commands already do this, for example `git checkout`, others
-probably don't need it, like `git bisect` or `git diff-tree`. For the
-rest it's added.
+>  int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+>  {
+>  	unsigned int flags = PACK_REFS_PRUNE;
+> +	static struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
+> +	struct pack_refs_opts pack_refs_opts = {.exclusions = &excludes, .flags = flags};
+> +	static struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
+> +	struct string_list_item *item;
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/am.c              | 3 ++-
- builtin/log.c             | 5 +++++
- builtin/merge-recursive.c | 3 +++
- builtin/merge-tree.c      | 4 ++++
- builtin/merge.c           | 4 ++++
- builtin/stash.c           | 5 +++++
- merge-recursive.c         | 1 -
- sequencer.c               | 4 ++++
- 8 files changed, 27 insertions(+), 2 deletions(-)
+Since this list does not appear to be sensitive to its order, have you
+considered using the strvec API instead of the string_list one?
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 5c83f2e003..9d56b434d9 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -44,6 +44,7 @@
- #include "repository.h"
- #include "pretty.h"
- #include "wrapper.h"
-+#include "xdiff-interface.h"
- 
- /**
-  * Returns the length of the first line of msg.
-@@ -2433,7 +2434,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(usage, options);
- 
--	git_config(git_default_config, NULL);
-+	git_config(git_xmerge_config, NULL);
- 
- 	am_state_init(&state);
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index 676de107d6..50cb422494 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -46,6 +46,7 @@
- #include "tmp-objdir.h"
- #include "tree.h"
- #include "write-or-die.h"
-+#include "xdiff-interface.h"
- 
- #define MAIL_DEFAULT_WRAP 72
- #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
-@@ -567,6 +568,7 @@ static int cmd_log_walk(struct rev_info *rev)
- static int git_log_config(const char *var, const char *value, void *cb)
- {
- 	const char *slot_name;
-+	int status;
- 
- 	if (!strcmp(var, "format.pretty"))
- 		return git_config_string(&fmt_pretty, var, value);
-@@ -613,6 +615,9 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	status = git_xmerge_config(var, value, NULL);
-+	if (status)
-+		return status;
- 	return git_diff_ui_config(var, value, cb);
- }
- 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index b9e980384a..2bcc354788 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -9,6 +9,7 @@
- #include "object-name.h"
- #include "repository.h"
- #include "xdiff-interface.h"
-+#include "config.h"
- 
- static const char builtin_merge_recursive_usage[] =
- 	"git %s <base>... -- <head> <remote> ...";
-@@ -35,6 +36,8 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix UNUSED)
- 	char *better1, *better2;
- 	struct commit *result;
- 
-+	git_config(git_xmerge_config, NULL);
-+
- 	init_merge_options(&o, the_repository);
- 	if (argv[0] && ends_with(argv[0], "-subtree"))
- 		o.subtree_shift = "";
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index aa8040c2a6..59b0323640 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -17,6 +17,8 @@
- #include "merge-blobs.h"
- #include "quote.h"
- #include "tree.h"
-+#include "config.h"
-+#include "xdiff-interface.h"
- 
- static int line_termination = '\n';
- 
-@@ -548,6 +550,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	git_config(git_xmerge_config, NULL);
-+
- 	/* Parse arguments */
- 	original_argc = argc - 1; /* ignoring argv[0] */
- 	argc = parse_options(argc, argv, prefix, mt_options,
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 8da3e46abb..0c41e89c60 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -53,6 +53,7 @@
- #include "wt-status.h"
- #include "commit-graph.h"
- #include "wrapper.h"
-+#include "xdiff-interface.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -669,6 +670,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 	}
- 
- 	status = fmt_merge_msg_config(k, v, cb);
-+	if (status)
-+		return status;
-+	status = git_xmerge_config(k, v, NULL);
- 	if (status)
- 		return status;
- 	return git_diff_ui_config(k, v, cb);
-diff --git a/builtin/stash.c b/builtin/stash.c
-index a7e17ffe38..355ea1034c 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -25,6 +25,7 @@
- #include "exec-cmd.h"
- #include "reflog.h"
- #include "add-interactive.h"
-+#include "xdiff-interface.h"
- 
- #define INCLUDE_ALL_FILES 2
- 
-@@ -839,6 +840,7 @@ static int show_include_untracked;
- 
- static int git_stash_config(const char *var, const char *value, void *cb)
- {
-+	int status;
- 	if (!strcmp(var, "stash.showstat")) {
- 		show_stat = git_config_bool(var, value);
- 		return 0;
-@@ -851,6 +853,9 @@ static int git_stash_config(const char *var, const char *value, void *cb)
- 		show_include_untracked = git_config_bool(var, value);
- 		return 0;
- 	}
-+	status = git_xmerge_config(var, value, NULL);
-+	if (status)
-+		return status;
- 	return git_diff_basic_config(var, value, cb);
- }
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 8e87b6386d..226603f7f8 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3881,7 +3881,6 @@ static void merge_recursive_config(struct merge_options *opt)
- 		} /* avoid erroring on values from future versions of git */
- 		free(value);
- 	}
--	git_config(git_xmerge_config, NULL);
- }
- 
- void init_merge_options(struct merge_options *opt,
-diff --git a/sequencer.c b/sequencer.c
-index b553b49fbb..22c8530649 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -47,6 +47,7 @@
- #include "reset.h"
- #include "branch.h"
- #include "wrapper.h"
-+#include "xdiff-interface.h"
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -274,6 +275,9 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
- 	if (opts->action == REPLAY_REVERT && !strcmp(k, "revert.reference"))
- 		opts->commit_use_reference = git_config_bool(k, v);
- 
-+	status = git_xmerge_config(k, v, NULL);
-+	if (status)
-+		return status;
- 	return git_diff_basic_config(k, v, NULL);
- }
- 
--- 
-2.40.0+fc1
+> diff --git a/refs.c b/refs.c
+> index d2a98e1c21f..881a0da65cf 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2132,9 +2132,9 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
+>  }
+>
+>  /* backend functions */
+> -int refs_pack_refs(struct ref_store *refs, unsigned int flags)
+> +int refs_pack_refs(struct ref_store *refs, struct pack_refs_opts *opts)
+>  {
+> -	return refs->be->pack_refs(refs, flags);
+> +	return refs->be->pack_refs(refs, opts);
+>  }
+>
+>  int peel_iterated_oid(const struct object_id *base, struct object_id *peeled)
+> diff --git a/refs.h b/refs.h
+> index 123cfa44244..46020bd335c 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -63,6 +63,11 @@ struct worktree;
+>  #define RESOLVE_REF_NO_RECURSE 0x02
+>  #define RESOLVE_REF_ALLOW_BAD_NAME 0x04
+>
+> +struct pack_refs_opts {
+> +	unsigned int flags;
+> +	struct ref_exclusions *exclusions;
 
+I think this would be OK to include directly in the struct instead of
+via a pointer, but either is fine.
+
+> @@ -1175,15 +1176,18 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_
+>   */
+>  static int should_pack_ref(const char *refname,
+>  			   const struct object_id *oid, unsigned int ref_flags,
+> -			   unsigned int pack_flags)
+> +			   struct pack_refs_opts *opts)
+>  {
+>  	/* Do not pack per-worktree refs: */
+>  	if (parse_worktree_ref(refname, NULL, NULL, NULL) !=
+>  	    REF_WORKTREE_SHARED)
+>  		return 0;
+>
+> +	if (opts->exclusions && ref_excluded(opts->exclusions, refname))
+> +		return 0;
+
+Looks good, here is where we throw out refs that we don't want. I wonder
+if ref_excluded() does the right thing with a zero-initialized argument
+(i.e. that it behaves as if nothing matches).
+
+I wonder if it's possible to skip over certain loose references by
+avoiding traversal into the sub-directories for simple prefixes. That
+may be a premature optimization, though, so I don't think you
+necessarily need to worry about it in this round.
+
+> +test_expect_success 'test excluded refs are not packed' '
+> +	git branch dont_pack1 &&
+> +	git branch dont_pack2 &&
+> +	git branch pack_this &&
+> +	git pack-refs --all --exclude "refs/heads/dont_pack*" &&
+> +	test -f .git/refs/heads/dont_pack1 &&
+> +	test -f .git/refs/heads/dont_pack2 &&
+> +	! test -f ./git/refs/heads/pack_this'
+> +
+> +test_expect_success 'test --no-exclude refs clears excluded refs' '
+> +	git branch dont_pack3 &&
+> +	git branch dont_pack4 &&
+> +	git pack-refs --all --exclude "refs/heads/dont_pack*" --no-exclude &&
+> +	! test -f .git/refs/heads/dont_pack3 &&
+> +	! test -f .git/refs/heads/dont_pack4'
+
+Tests look good. The trailing quote is a little odd to be placed on the
+last line of the test instead of off on its own, but I suppose that is
+imitating existing style, which is OK.
+
+Thanks,
+Taylor
