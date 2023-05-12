@@ -2,113 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32FBDC77B75
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 22:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED65EC77B7F
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 22:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239498AbjELWr7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 18:47:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
+        id S240018AbjELWwG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 18:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjELWr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 18:47:58 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEFAC173A
-        for <git@vger.kernel.org>; Fri, 12 May 2023 15:47:55 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f13dafd5dcso11750901e87.3
-        for <git@vger.kernel.org>; Fri, 12 May 2023 15:47:55 -0700 (PDT)
+        with ESMTP id S239694AbjELWwE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 18:52:04 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E5CDE
+        for <git@vger.kernel.org>; Fri, 12 May 2023 15:52:02 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id 46e09a7af769-6ab1f0b6abeso3873617a34.1
+        for <git@vger.kernel.org>; Fri, 12 May 2023 15:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683931674; x=1686523674;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OQQ0C7RVrnQQulLjDx3WfYWHc0vSRajNLKZAsYyXTEQ=;
-        b=dX9Pzrh8UabKPiFPFks5Qy8miusYDYnFsi8FHpYB9e/h7zk6MmnWdtEXFjh1zk7Sm6
-         VU2YksjvOd9lMrZukEuxx2myqXw2A6VGctiARcicE21vzcXg64V8slbodOiZyf+ibrcS
-         kKtf8cLS6hbFLWTtYGs0HUHH/ccBKELypXiIMLjiS+AL72KEOXHlYpUgByTwZYXCum4y
-         gx0wfo778+1kgE9lFVE95L6BtB03CX498qgrGLYcyrkdpOz8AJSBpzzZ5sscd5OXjlUl
-         kZqsUPYlBue2detwp1xyeOVcolUJIEHgU8O0+RZrNTgvUL6aOVq66tOQZyrj8fYZPzjS
-         FAfQ==
+        d=gmail.com; s=20221208; t=1683931921; x=1686523921;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VvqE1x7AsXStvej58b8v7otdY8V64NU70e7e2cJq7BE=;
+        b=OoRew+jJ6ZdMuE6irRI9b22FNHX8ybWRt91O8UK2VL7fx2huliWK8cYEZz26Jccy7v
+         OuAgoAzk5ICBE1Re2bVvrXOFNOibjUsJdoNKPNztKSGeUz3FT9Ub1YQk6z9AOCz7BH68
+         RjPitYfmgU+bzbObrgbREcdw4UwLvIb+iH5WiTfR9j3IiJkPUPVI/iOwHSbbIDK5jFk9
+         R6YBQB1iRv2bay+nZ6q1Z4QbL4e3FuvXDD1HVEIea5142dNp9AreRmVv2zCzABrLhxIo
+         76ijZqIZZ6mbCr1Wc1eFkQL9MxXBjea8bDRnTGbmaabrAu4pquDoaAlCqanoEvLeFEMs
+         B/Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683931674; x=1686523674;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OQQ0C7RVrnQQulLjDx3WfYWHc0vSRajNLKZAsYyXTEQ=;
-        b=bltizo4x56g7gPjKlCadXU10KOlBFEPtcU6RC9/Xo4MssRmtXuEU/ltlLrq1divVqk
-         xh83/XGnqdb+BlxP3OsGcNY4x9V9o27sLBr7P52DRplsF/FTgy/nLpehuCDzwGJOlTBG
-         A3P2ohBD0C7Gf0n6uEbQNoKfxGJybxJBpUnqrchnGNHuEpFm19uKKyGR3jx4Au60YGpw
-         Fxtn6CdhYcJlr2hONIIDzb9atovJ+szS+/R3WLzrDT2tq9yNEgDuGtuVCZynKqH3xYSG
-         2XEUEpBR7voPvHYsTku+Rx8pdC/O3EcZkpZJF+YHzsO1uhSMaOaztjHvbB9USNaHYF1A
-         8rDg==
-X-Gm-Message-State: AC+VfDxNznTGwpzNyAgfLmu6rgz83btj0U/+kOuUJWJZloZvPu3Ttu4G
-        Ov2t3xNdcHcZ78xIg4CaXxP17WIh2W8=
-X-Google-Smtp-Source: ACHHUZ4AikXeFQTelxpvkbKpazzh8GOURxA59YJXU0dha42LtAOPLNHTgOHrHReRJhI9pHEqyWSNNQ==
-X-Received: by 2002:ac2:4c22:0:b0:4ef:e87e:df88 with SMTP id u2-20020ac24c22000000b004efe87edf88mr3603831lfq.64.1683931673508;
-        Fri, 12 May 2023 15:47:53 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id w17-20020a05651204d100b004f14898d18esm1585977lfq.85.2023.05.12.15.47.52
+        d=1e100.net; s=20221208; t=1683931921; x=1686523921;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VvqE1x7AsXStvej58b8v7otdY8V64NU70e7e2cJq7BE=;
+        b=aoYUvg9LFofI+8asSSJNzDND7P/M4Q/mqzZuA/VEBzjII7fWqgaTeOfOacrpdKKtOy
+         mLtiqwnBDwJvvecF5Mr204tQ9vxsKMlA/E6Kyhc9QQOvskk7JPu+0uTSKSImZMJwSl+y
+         JlB7NhuwC2S+uGLJcRTDUdleFyNIdQdlb6LJbos4iS0/thHf/KST8XC8TI5hFJryhWDb
+         LMIRQw4IInizTQMQrEVGfd9yuUbVPxGnbEEwrhM1LY5MbXhqV5xC6VSaKVZUDp7nbYgU
+         9mhXyvIxiGcLOB0mI8yHVE++SpXfTZewX4PXUK1UKUX2lUCO2Fz8CBSRt3tCu0DaAHHd
+         xFpw==
+X-Gm-Message-State: AC+VfDwB4NKOkRiBFPnhDvD9eYogbGEneSthTTxlrJr/jMB1UIUKTOfo
+        JxhRwB0pXMa6/IdsBb/ir/2YZ+pk1gY=
+X-Google-Smtp-Source: ACHHUZ7Kp7aO7pWrlmLIa5dThhNAx3kv6ZR5x3cMUnhjyrqdfXPNum0r+JXFy54vSBDudhGTHVFRAA==
+X-Received: by 2002:a05:6830:11c9:b0:6a5:e895:1bd3 with SMTP id v9-20020a05683011c900b006a5e8951bd3mr8167933otq.31.1683931921549;
+        Fri, 12 May 2023 15:52:01 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:e8a3:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id p12-20020a9d694c000000b006ab04994a1csm5789132oto.65.2023.05.12.15.52.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 15:47:52 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        Fri, 12 May 2023 15:52:01 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Can we clarify the purpose of `git diff -s`?
-References: <645c5da0981c1_16961a29455@chronos.notmuch>
-        <871qjn2i63.fsf@osv.gnss.ru>
-        <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
-        <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
-        <xmqqo7mpqy6g.fsf@gitster.g> <87h6shif6q.fsf@osv.gnss.ru>
-        <xmqqv8gxpd8r.fsf@gitster.g>
-        <645ea15eca6fa_21989f294f5@chronos.notmuch>
-        <xmqq1qjlp98j.fsf@gitster.g> <877ctdi5wp.fsf@osv.gnss.ru>
-        <xmqq8rdtnqij.fsf@gitster.g>
-Date:   Sat, 13 May 2023 01:47:51 +0300
-In-Reply-To: <xmqq8rdtnqij.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        12 May 2023 15:17:40 -0700")
-Message-ID: <87y1ltgoa0.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        Emily Shaffer <nasamuffin@google.com>
+Subject: [PATCH] lib: add new libgit-builtin
+Date:   Fri, 12 May 2023 16:52:00 -0600
+Message-Id: <20230512225200.2214534-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Since its creation in 0a02ce72d9 (Clean up the Makefile a bit.,
+2005-04-18), libgit.a has been used as dumping ground for everything all
+git commands use.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->>> Indeed "--silent" or "--squelch" is one of the things that I plan to
->>> suggest when we were to go with "--no-patch is no longer -s" topic.
->>
->> While we are at this, may I vote against "--squelch", please?
->
-> Sure.  I actually do not think either "--silent" or "--squelch" is a
-> good name in the context of "git show"; as the output from the
-> command consists of the commit log message and the output from the
-> diff machinery, and "-s" is about squelching only the latter.
+When the code was split between `*.c` and `builtin/*.c` it was never
+clarified what belongs in what category.
 
-Yep.
+The code in `*.c` can be shared by all builtins, but so can the code in
+`builtin/*.c`.
 
->
-> I have a name better than these two in mind,
+There's no practical difference.
 
---no-diff?
+In order to attempt to start decoupling libgit.a from the `git` binary,
+let's create a new libgit-builtin.a library meant only for the code in
+`builtin/*.c`.
 
-That said, in the context of git log/show, as opposes to git diff, it
-all could have been:
+Ideally eventually libgit.a would not contain code that is specific to
+`git`, only code that is generic and could be used by projects outside
+git.git.
 
-  --diff=<list>
+This is an essential step that has to be done if there's any hope of
+ever having a public libgit.so library.
 
-where <list> is comma-separated list of options to pass to diff, and
-then it'd be:
+The choice of notes-utils.c is mostly arbitrary, but its functions had
+been discussed before as a roadblock for a proper libgit. In particular
+something like `init_copy_notes_for_rewrite("am")` does not seem like
+something anyone outside `git` would want to call.
 
-  --diff=off
+Cc: Emily Shaffer <nasamuffin@google.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-for the option in question with apparent synonym --no-diff, and less
-apparent synonym -s.
+After re-reading a previous thread about the lbification of git [1], I
+realized `init_copy_notes_for_rewrite()` and others which now belong in
+notes-utils.c are good candidates to start splitting away from what
+eventually should be a public libgit.so library.
 
-Hold on! Now it starts to sound familiar... --diff-merges! )))
+[1] https://lore.kernel.org/git/1370712574-27688-1-git-send-email-felipe.contreras@gmail.com/
 
-Thanks,
--- Sergey Organov
+ Makefile | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e440728c24..84cbb35828 100644
+--- a/Makefile
++++ b/Makefile
+@@ -668,6 +668,7 @@ FUZZ_OBJS =
+ FUZZ_PROGRAMS =
+ GIT_OBJS =
+ LIB_OBJS =
++BUILTIN_LIB_OBJS =
+ SCALAR_OBJS =
+ OBJECTS =
+ OTHER_PROGRAMS =
+@@ -916,6 +917,7 @@ export PYTHON_PATH
+ TEST_SHELL_PATH = $(SHELL_PATH)
+ 
+ LIB_FILE = libgit.a
++BUILTIN_LIB_FILE = libgit-builtin.a
+ XDIFF_LIB = xdiff/lib.a
+ REFTABLE_LIB = reftable/libreftable.a
+ REFTABLE_TEST_LIB = reftable/libreftable_test.a
+@@ -1071,7 +1073,6 @@ LIB_OBJS += negotiator/noop.o
+ LIB_OBJS += negotiator/skipping.o
+ LIB_OBJS += notes-cache.o
+ LIB_OBJS += notes-merge.o
+-LIB_OBJS += notes-utils.o
+ LIB_OBJS += notes.o
+ LIB_OBJS += object-file.o
+ LIB_OBJS += object-name.o
+@@ -1194,6 +1195,8 @@ LIB_OBJS += ws.o
+ LIB_OBJS += wt-status.o
+ LIB_OBJS += xdiff-interface.o
+ 
++BUILTIN_LIB_OBJS += notes-utils.o
++
+ BUILTIN_OBJS += builtin/add.o
+ BUILTIN_OBJS += builtin/am.o
+ BUILTIN_OBJS += builtin/annotate.o
+@@ -1332,7 +1335,7 @@ THIRD_PARTY_SOURCES += sha1collisiondetection/%
+ THIRD_PARTY_SOURCES += sha1dc/%
+ 
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
+-GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
++GITLIBS = common-main.o $(LIB_FILE) $(BUILTIN_LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+ EXTLIBS =
+ 
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+@@ -2655,6 +2658,7 @@ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST
+ test-objs: $(TEST_OBJS)
+ 
+ GIT_OBJS += $(LIB_OBJS)
++GIT_OBJS += $(BUILTIN_LIB_OBJS)
+ GIT_OBJS += $(BUILTIN_OBJS)
+ GIT_OBJS += common-main.o
+ GIT_OBJS += git.o
+@@ -2809,6 +2813,9 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++$(BUILTIN_LIB_FILE): $(BUILTIN_LIB_OBJS)
++	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
++
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
+@@ -3651,7 +3658,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) po/git.pot po/git-core.pot
+ 	$(RM) git.res
+ 	$(RM) $(OBJECTS)
+-	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
++	$(RM) $(LIB_FILE) $(BUILTIN_LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+-- 
+2.40.0+fc1
+
