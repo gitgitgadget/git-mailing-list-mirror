@@ -2,118 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C07D6C77B7C
-	for <git@archiver.kernel.org>; Fri, 12 May 2023 09:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED045C77B7F
+	for <git@archiver.kernel.org>; Fri, 12 May 2023 10:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240086AbjELJci (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 May 2023 05:32:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
+        id S240669AbjELKYX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 May 2023 06:24:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240164AbjELJcf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2023 05:32:35 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D24911B4E
-        for <git@vger.kernel.org>; Fri, 12 May 2023 02:32:22 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4effb818c37so11029790e87.3
-        for <git@vger.kernel.org>; Fri, 12 May 2023 02:32:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683883940; x=1686475940;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rSeTYxLScbA1aATHEH7w2LVd3CJEBOSsj4ESq27P7Ag=;
-        b=kQyg/nXbPXZHJZEpR8VJOkPaM5RCP2baqqFK/E7D3He+UVkDKgAi7aTnQAjayRPNAH
-         oOxT/Ww4TIAz9KSc0PHOyJlaXgZcyq8Gl6SSNEf8oN/dlYEsg/1Yre1elBXqSPyPHgIG
-         l/J5PMUbDcXJDy3bn6CjQMHmSzBh/HNoLEW7JLK30ZWwF2ELe2qihgAe3aQHgnggCyQX
-         Akh9PvlNd1TSdQvD68irCDx+Bi0SlIRQqHkGuv+5ne87tBLR4cltiUY5cfa++/z4zACd
-         a9ejndyFpLzUMuwFvUPpcWV2MfcTi8bWEkByl2MHryBNokdJkU+zgbqCAUD1sN0uaOx0
-         hV9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683883940; x=1686475940;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rSeTYxLScbA1aATHEH7w2LVd3CJEBOSsj4ESq27P7Ag=;
-        b=AWc8vlNP52ZZI5sHAQeARUwkn6dbuVcY9hVd/Dk8w9Blv8BqYSVRrEZTe6bHmdczlY
-         TWC8wWNzpT0n49Hfrv2vhisw58nDQYH7VtFQVeudxruBz+q91iXGgRsopbvJUugwE56X
-         Z1Hvw4/trJLXh9y5DYe0hObL+IbUMZa9vfy4e1E4UZM28kAmvweLi1Tb7SzJztF2sVC5
-         c4XbQDqZOw0/GR5U2CfIHzw/Fg+TCL33BY+zwjf2beCU6I0U9aFeYg+OxMOlRb+Ad8MY
-         RoddB1YMghR9SSmprf9NWVD4inufg0KkVbteO/i0yQmqnufKc5nji4ppv4p1ujv35sT8
-         BU1A==
-X-Gm-Message-State: AC+VfDyDIhzEvDJGuMQY5b3lD7F2Bwa6cqYJuQIZDYEAeQajzMa8dpuP
-        zxAp901wrUk5XNNIIALOZnarhaGrhNCelw==
-X-Google-Smtp-Source: ACHHUZ7RD4rxgJznzElaDPoaukZGw1gCWgCAoOZJpSO2B25XHWXrVAjc0UyyAyw5XHZrYxfZI+ZlOw==
-X-Received: by 2002:ac2:4c1b:0:b0:4ef:eeaa:e9b9 with SMTP id t27-20020ac24c1b000000b004efeeaae9b9mr3064905lfq.35.1683883939654;
-        Fri, 12 May 2023 02:32:19 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q5-20020ac25fc5000000b004f1477cf8a7sm1417062lfg.115.2023.05.12.02.32.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 02:32:19 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1 0/7] diff: fix -s and --no-patch
-References: <20230512080339.2186324-1-felipe.contreras@gmail.com>
-        <645df6e614f00_215cec29462@chronos.notmuch>
-Date:   Fri, 12 May 2023 12:32:18 +0300
-In-Reply-To: <645df6e614f00_215cec29462@chronos.notmuch> (Felipe Contreras's
-        message of "Fri, 12 May 2023 02:20:54 -0600")
-Message-ID: <87r0rlj3od.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S240294AbjELKYU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2023 06:24:20 -0400
+X-Greylist: delayed 823 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 May 2023 03:24:18 PDT
+Received: from out-54.mta1.migadu.com (out-54.mta1.migadu.com [95.215.58.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8391BF
+        for <git@vger.kernel.org>; Fri, 12 May 2023 03:24:18 -0700 (PDT)
+References: <xmqqilfhctrr.fsf@gitster.g>
+ <20230510190116.795641-1-toon@iotcl.com>
+ <20230510190116.795641-2-toon@iotcl.com> <xmqqpm782be6.fsf@gitster.g>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+        t=1683885639;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=gSiel6UfsKsJEy+vs/IhwtE9h7TzPehylpm4b5c/VFA=;
+        b=xk+ip4yUgCfJz9T9D5qv/QDmJilCdAKIMfYj1J2L/LTQQ3Mh0vQByArYNDv43X82lZYhkk
+        vLZb78fCYaNsGB9n+B8eFjvcK/0N5a3ukfw6VEqKPtpRam9B9kkxQqDCfI4cZPGe+ucOqL
+        CKtOHJizMsoPnAK5tPNefUH21kwmaaE=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   Toon Claes <toon@iotcl.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v5 1/1] cat-file: quote-format name in error when using -z
+Date:   Fri, 12 May 2023 10:54:20 +0200
+In-reply-to: <xmqqpm782be6.fsf@gitster.g>
+Message-ID: <87h6sh6f81.fsf@iotcl.com>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Felipe Contreras wrote:
->> This fixes an issue Sergey Organov reported.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Toon Claes <toon@iotcl.com> writes:
 >
-> Sergey, as you can see this series fixes the issue you reported.
+>> Since it's supported to have NUL-delimited input, introduced in
+>> db9d67f2e9 (builtin/cat-file.c: support NUL-delimited input with `-z`,
+>> 2022-07-22), it's possible to pass paths that contain newlines.
 >
-> First, I think these should remain working the same, simply for convenience:
+> It has been a while since I saw this patch the last time, and it did
+> not immediately click to me how "pass paths" relates to passing
+> object names, which is what "--batch-check" takes.  Perhaps
 >
->  * git diff         # default output
->  * git diff --patch # patch output
->  * git diff --raw   # raw output
->  * git diff --stat  # stat output
+>     "cat-file --batch-check" may be fed object names of blobs and
+>     trees as "<commit>:<path>", and with its "-z" option, it is
+>     possible to feed <commit> or <path> with newlines in it.
 >
-> I don't think there's a way I can be convinced otherwise.
+> or something?
 
-Fine with me.
+Good suggestion.
+
+>> This
+>> works great when the object is found, but when it's not, the input path
+>> is returned in the error message. Because this can contain newlines, the
+>> error message might get spread over multiple lines, making it harder to
+>> machine-parse this error message.
+>
+> Good description.  I may suggest
+>
+>     "the input path is returned" -> "the input is shown verbatim"
+>
+> because <path> is not the only thing that can contain LF.  E.g.
+>
+>     $ git show -s 'HEAD^{/introduced in
+>     > db9d67}'
+>
+> can find the commit resulting from this patch, so
+>
+>     $ printf "%s\0" 'HEAD^{/introduced in
+>     > db9d67}:builtin/cat-file.cc' |
+>     > git cat-file --batch-check -z
+
+Thanks for that thorough explanation, makes a lot of sense.
 
 >
-> But there's many changes:
+> would be an input record with newline in it, that has no newline in
+> the path.
 >
->  1. git diff -s --raw                 # before: nil, after: raw
->  2. git diff --no-patch --raw         # before: nil, after: raw
->  3. git diff --patch --no-patch --raw # before: nil, after: raw
->  4. git diff --raw --patch --no-patch # before: nil, after: raw
-
-Fine as well.
-
+>> With this change, the input is quote-formatted in the error message, if
+>> needed. This ensures the error message is always on a single line and
+>> makes parsing the error more straightforward.
 >
-> I don't think there's any way you can say my 174 changes make the code work
-> "exactly the same".
-
-I said that in the context where we discussed entirely separate issue
-"handling of defaults by Git commands". Irrelevant to these series as
-they don't touch this aspect as visible from outside, even though you
-do change the implementation for better.
-
+> Drop "With this change, ..." and give a command to the codebase to
+> c-quote the object name in the output, e.g.
 >
-> And this is better than Junio's solution, because #4 outputs a raw format,
-> while in Junio's solution it doesn't output anything.
+>     C-quote the object name from the input in the error message as
+>     needed, to ensure that the error message is on a single line and
+>     ...
 
-Yes, and that's where I agreed from the very beginning.
+Sure, I'll update the commit message accordingly.
 
-> Even if you don't agree with everything, this solution is better than the
-> status quo, and it's better than Junio's solution as it fixes --no-patch
-> immediately.
+> The other side of the coin, however, is that an existing project
+> that is sane enough not to have a path with LF in it, but is not
+> sane enough to avoid a path with double-quote in it, would now stop
+> being able to parse the error message for a missing path.
 
-Yep, it fixes "--no-patch" semantics indeed, and as I already said, I do
-vote in favor of this change, for what it's worth.
+Ah interesting, this is not a case I did consider before.
 
-Thanks,
--- Sergey Organov
+> It is a regression, and we may argue that it is not a large enough
+> regression to block progress given by this patch, but if it is not
+> common enough to have funny characters in the paths then we wouldn't
+> be seeing this patch in the first place.  So I would prefer to see
+> that we at least admit that we are deliberately making this change
+> with a known regression.  Perhaps add something like
+>
+>     Note that if a project already parses the error message
+>     correctly because it does not have paths with newlines, this is
+>     a breaking change if it has paths with characters that need
+>     c-quoting (like double quotes and backslashes) that are not
+>     newlines.  We consider that this is a small enough price to pay
+>     to allow newlines in paths because ...
+>
+> and fill the "because ..." part is sensible.  I am not filling the
+> "because" part, simply because I do not offhand see any good excuse
+> to rob Peter to pay Paul in this case.
+
+I intended to finalize this patch sooner, but other priorities popped
+up. The -z flag was added in v2.38 and it would have been nice to have
+the patch in v2.40, this would reduce the number of Peters affected. Now
+we're a couple months and yet another release further between
+introduction of the flag and making the regression, so I feel your
+sentiment.
+
+I previous conversations[1] we've been talking about making the output
+NUL-terminated as well. We agreed on the cquote fix because the -z flag
+was still fresh, but maybe at this time we need to revisit this.
+
+Ideally the output should be NUL-terminated if -z is used. This was also
+suggested[2] when the flag was introduced. Obviously we cannot change
+this now, because it would break behavior for *everyone* using -z, not
+only when funny names are used. So if we want to go this route, we
+should only do so with another flag (e.g. `--null-output`) or a config
+option.
+
+But I was looking at the git-config(1) documentation:
+
+> core.quotePath::
+> 	Commands that output paths (e.g. 'ls-files', 'diff'), will
+> 	quote "unusual" characters in the pathname by enclosing the
+> 	pathname in double-quotes and escaping those characters with
+> 	backslashes in the same way C escapes control characters (e.g.
+> 	`\t` for TAB, `\n` for LF, `\\` for backslash) or bytes with
+> 	values larger than 0x80 (e.g. octal `\302\265` for "micro" in
+> 	UTF-8).  If this variable is set to false, bytes higher than
+> 	0x80 are not considered "unusual" any more. Double-quotes,
+> 	backslash and control characters are always escaped regardless
+> 	of the setting of this variable.  A simple space character is
+> 	not considered "unusual".  Many commands can output pathnames
+> 	completely verbatim using the `-z` option. The default value
+> 	is true.
+
+If you read this, the changes of this patch fully contradict this. Also
+documentation on other commands (e.g. git-check-ignore(1)) using `-z`
+will mention the verbatim output. So at the moment I'm leaning toward
+another solution. I'm looping in Taylor as he added the flag initially,
+so he might have some insights how they are using it and how they expect
+it to work.
+
+-- Toon
+
+[1]: https://lore.kernel.org/git/xmqq5yekyvrh.fsf@gitster.g/
+[2]: https://lore.kernel.org/git/66b71194-ad0e-18d0-e43b-71e5c47ba111@gmail.com/
