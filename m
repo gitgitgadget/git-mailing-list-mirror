@@ -2,103 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C6AC77B7C
-	for <git@archiver.kernel.org>; Sat, 13 May 2023 09:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02311C77B7D
+	for <git@archiver.kernel.org>; Sat, 13 May 2023 14:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237911AbjEMJaK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 May 2023 05:30:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33906 "EHLO
+        id S238904AbjEMO6h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 May 2023 10:58:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232959AbjEMJaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2023 05:30:07 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119E610D9
-        for <git@vger.kernel.org>; Sat, 13 May 2023 02:30:06 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30786c87cdaso8129307f8f.2
-        for <git@vger.kernel.org>; Sat, 13 May 2023 02:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683970204; x=1686562204;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Is++gNE3nkGcxknP6d0sQEnXdTlnG8ED0bAigj61VA=;
-        b=I6E0w2zYYp3SpIIzQ6LLkHLBY5z/XxzZRiD+l/nk/EtLCVrY9QNW6dKzs3gP4RFzMG
-         oRXk8idaeTLYmJ3fbfquYXIELeHb1a4AunZO3vtohAssw64cxz2DrOnI7dDVmE/9EDK1
-         fZJSR6LuPYOjCT9Hx9B+kkA06oCMP6A3ROlkxMnZUkWOcbTgf+e0BGmOfh2umYHPBGQA
-         Ui9aG/BiC+Pnejag2arw+Qy2I5fuj5iDVdqBo+j75vnJNDKwbWBroA9zfmFSn2X9rIVu
-         G1mmpomirvs1ZN+Xf1k/K9I5mNysE41KcQjgdfUBFQQ17oo4Ufvzw68YjaGzSyKCmL/F
-         aWzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683970204; x=1686562204;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3Is++gNE3nkGcxknP6d0sQEnXdTlnG8ED0bAigj61VA=;
-        b=EhDbpUr/HdzRCyWMJ1BQHoUmfKjG7DKPjkHH+CvPZfTpHRdyCOtmruZT36hnQHlGg9
-         UciE68+Hs/vSNLoa1Iaz29iNBRIch7vMKEqscs9hRfWpqVz7LvcSun6L3F3k38uSo0DT
-         rYcAUe3duqRc3DWYGnuDslAwCj6C0KaEnoIUghMkVqUktb8PmQ8oMi6eQA8gokSA1FlO
-         kLnwD/CwPYd5PZk+5rF/LvScrcQimfcpTwH/2Y2FZFKXYH1rWCrJcF1YgKdzPwKROFgN
-         nfKXwB1RYNKEXL5Jee/JPeOs65VjqkkcL/ijKFnPmqwqsX7Cs5Jgs9sugy1PHpfkWJGY
-         CTBA==
-X-Gm-Message-State: AC+VfDx58HGTpvGsvA2WKcEayZhrMPi2D2nPcpme1sOWp61TXd7OF0RA
-        TyjCVopfAbChRdbj4rQlO9ZHZAriBpc=
-X-Google-Smtp-Source: ACHHUZ5DbNgbZ/RyjxKDUhKtSZ7AM7kHJJGqV+M7Bo5Y+fWfX1xkJ8OOaa7TkbTv+5FsNwoeZnqilQ==
-X-Received: by 2002:a5d:5011:0:b0:307:8a39:5568 with SMTP id e17-20020a5d5011000000b003078a395568mr19790650wrt.7.1683970204234;
-        Sat, 13 May 2023 02:30:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y18-20020a5d6212000000b0030796e103a1sm17530157wru.5.2023.05.13.02.30.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 May 2023 02:30:04 -0700 (PDT)
-Message-Id: <pull.1507.git.git.1683970203084.gitgitgadget@gmail.com>
-From:   "Corentin Garcia via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 May 2023 09:30:02 +0000
-Subject: [PATCH] doc/git-config: add unit for http.lowSpeedLimit
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230133AbjEMO6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2023 10:58:36 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618111FD6
+        for <git@vger.kernel.org>; Sat, 13 May 2023 07:58:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
+        s=2023022100; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+        References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID; bh=H1g/R+wzsZa+iZWYexR1N9jwreyrIFYwzh+T58tAsQo=; b=qrbXBw
+        3PnNV/LpoCqRs0/+IHVYqStitGeenNLBtHxu5wUxBlVbiOugNiWcbPGN9dC2iVixjCG28uB+mnGOS
+        MpdA4VRbfzcqgvQqIzdD4ytLWlggLrd1ceoKnNoIxpDd65Xm6kl9/gBtmk/GhJiqAwSyGfTxgZ3i1
+        vTeakzP70YQ=;
+Received: from 88-110-117-142.dynamic.dsl.as9105.com ([88.110.117.142] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1pxqhb-0003U6-95;
+        Sat, 13 May 2023 15:58:32 +0100
+Message-ID: <2ca296d5-4871-5123-3fcd-88f94e86b0b7@iee.email>
+Date:   Sat, 13 May 2023 15:58:30 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Corentin Garcia <corenting@gmail.com>,
-        Corentin Garcia <corenting@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: Can we clarify the purpose of `git diff -s`?
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <645c5da0981c1_16961a29455@chronos.notmuch>
+ <871qjn2i63.fsf@osv.gnss.ru>
+ <5bb24e0208dd4a8ca5f6697d578f3ae0@SAMBXP02.univ-lyon1.fr>
+ <4f713a29-1a34-2f71-ee54-c01020be903a@univ-lyon1.fr>
+ <xmqqo7mpqy6g.fsf@gitster.g> <87h6shif6q.fsf@osv.gnss.ru>
+ <xmqqv8gxpd8r.fsf@gitster.g> <645ea15eca6fa_21989f294f5@chronos.notmuch>
+ <xmqq1qjlp98j.fsf@gitster.g> <877ctdi5wp.fsf@osv.gnss.ru>
+ <645ec6c64bbd7_21cbbf294bf@chronos.notmuch>
+Content-Language: en-GB
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <645ec6c64bbd7_21cbbf294bf@chronos.notmuch>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Corentin Garcia <corenting@gmail.com>
+On 13/05/2023 00:07, Felipe Contreras wrote:
+> Also agree. I've never heard the word "squelch" outside of the git context, and
+> I'm pretty sure my English vocabulary is not small. Multiple people have
+> suggested "silent" and no one has suggested "squelch" (other than Junio).
+Squelch is common in the right circles.
 
-Add the unit (bytes per second) for http.lowSpeedLimit
-in the documentation.
+It is the term for cutting out the static electricity based background
+audio noise from radio receivers. Back in the day, it was an adjustable
+dial, so anyone who used a radio (including ex-military and their
+family) would be familiar with the term.
 
-Signed-off-by: Corentin Garcia <corenting@gmail.com>
----
-    doc/git-config: add unit for http.lowSpeedLimit
-    
-    Add the unit (bytes per second) for http.lowSpeedLimit in the
-    documentation.
+It's not so common nowadays because there is auto-squelch and auto
+tuning on most receivers, but it's still part of the lexicon ;-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1507%2Fcorenting%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1507/corenting/master-v1
-Pull-Request: https://github.com/git/git/pull/1507
-
- Documentation/config/http.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index afeeccfbfa7..51a70781e58 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -246,8 +246,9 @@ significantly since the entire buffer is allocated even for small
- pushes.
- 
- http.lowSpeedLimit, http.lowSpeedTime::
--	If the HTTP transfer speed is less than 'http.lowSpeedLimit'
--	for longer than 'http.lowSpeedTime' seconds, the transfer is aborted.
-+	If the HTTP transfer speed, in bytes per second, is less than
-+	'http.lowSpeedLimit' for longer than 'http.lowSpeedTime' seconds,
-+	the transfer is aborted.
- 	Can be overridden by the `GIT_HTTP_LOW_SPEED_LIMIT` and
- 	`GIT_HTTP_LOW_SPEED_TIME` environment variables.
- 
-
-base-commit: 5597cfdf47db94825213fefe78c4485e6a5702d8
--- 
-gitgitgadget
+Philip
