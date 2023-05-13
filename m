@@ -2,84 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2BFC77B7A
-	for <git@archiver.kernel.org>; Sat, 13 May 2023 16:57:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A561C77B7A
+	for <git@archiver.kernel.org>; Sat, 13 May 2023 16:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjEMQ5K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 May 2023 12:57:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48614 "EHLO
+        id S231161AbjEMQ7a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 May 2023 12:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229826AbjEMQ5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2023 12:57:09 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 623812D68
-        for <git@vger.kernel.org>; Sat, 13 May 2023 09:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
-        s=2023022100; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To
-        :Message-Id:Date:Subject:To:From:Reply-To:Content-Type:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID; bh=GhYNDa50KBTLn9JcSNWbK+3RVcItuU6uz7yrT0QFcjg=; b=cDgqoB
-        oLOVEBMs5Hpex70lntvVOwKIA+i6JaruHprXKx6jbvkjrqgant0hDDhCzmBfWi1WzWe3v3k6EqOi6
-        lDCnh6q59ciItPdXy36RZc0o5D3nIDnsnW8aaUTPhHOIUuFhBCTdPYSYD4sfYSMOBQiUSVdnIix2O
-        +c+aBIuXDO4=;
-Received: from 88-110-117-142.dynamic.dsl.as9105.com ([88.110.117.142] helo=localhost.localdomain)
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1pxsYM-000CBr-5z;
-        Sat, 13 May 2023 17:57:07 +0100
-From:   Philip Oakley <philipoakley@iee.email>
-To:     gitster@pobox.com
-Cc:     Johannes.Schindelin@gmx.de, alexhenrie24@gmail.com,
-        git@vger.kernel.org, newren@gmail.com, philipoakley@iee.email,
-        phillip.wood123@gmail.com, tao@klerks.biz
-Subject: [PATCH 1/1] doc: Glossary, describe Flattening
-Date:   Sat, 13 May 2023 17:56:56 +0100
-Message-Id: <20230513165657.812-1-philipoakley@iee.email>
-X-Mailer: git-send-email 2.40.0.windows.1
-In-Reply-To: <xmqq5ybug8s8.fsf@gitster.g>
-References: <xmqq5ybug8s8.fsf@gitster.g>
+        with ESMTP id S229611AbjEMQ72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2023 12:59:28 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E1F2D68
+        for <git@vger.kernel.org>; Sat, 13 May 2023 09:59:26 -0700 (PDT)
+Received: (qmail 23528 invoked by uid 109); 13 May 2023 16:59:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 13 May 2023 16:59:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1724 invoked by uid 111); 13 May 2023 16:59:25 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 13 May 2023 12:59:25 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 13 May 2023 12:59:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v5 4/9] fetch: print left-hand side when fetching HEAD:foo
+Message-ID: <20230513165925.GA113985@coredump.intra.peff.net>
+References: <cover.1681906948.git.ps@pks.im>
+ <cover.1683721293.git.ps@pks.im>
+ <2cc7318697ef6062f6deadf7a22feb26c2c829e8.1683721293.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2cc7318697ef6062f6deadf7a22feb26c2c829e8.1683721293.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clarify the term 'flatten' and the unexpected effects that the user
-may come across, such as discussed in [1] and [2].
+On Wed, May 10, 2023 at 02:34:15PM +0200, Patrick Steinhardt wrote:
 
-[1] https://lore.kernel.org/git/xmqqr0ukggk5.fsf@gitster.g/
+> @@ -946,7 +948,7 @@ static int update_local_ref(struct ref *ref,
+>  	if (oideq(&ref->old_oid, &ref->new_oid)) {
+>  		if (verbosity > 0)
+>  			display_ref_update(display_state, '=', _("[up to date]"), NULL,
+> -					   remote, ref->name, summary_width);
+> +					   remote_ref->name, ref->name, summary_width);
+>  		return 0;
+>  	}
 
-[2] https://lore.kernel.org/git/xmqq5ybug8s8.fsf@gitster.g/
+Here (and in other hunks) we now dereference remote_ref unconditionally.
+But in existing parts of the code, we guard against remote_ref being
+NULL. E.g., later on:
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
----
- Documentation/glossary-content.txt | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+          if (!current || !updated) {
+                  const char *msg;
+                  const char *what;
+                  int r;
+                  /*
+                   * Nicely describe the new ref we're fetching.
+                   * Base this on the remote's ref name, as it's
+                   * more likely to follow a standard layout.
+                   */
+                  const char *name = remote_ref ? remote_ref->name : "";
+		  [...]
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 5a537268e2..36125e503c 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -173,6 +173,19 @@ current branch integrates with) obviously do not work, as there is no
- 	missing from the local <<def_object_database,object database>>,
- 	and to get them, too.  See also linkgit:git-fetch[1].
- 
-+[[def_flatten]]flatten::
-+	Flattening is a common term for the 'linearizing' of a
-+	selected portion of the <<def_commit_graph_general,commit graph>>.
-+	Flattening may include excluding commits, or rearranging commits,
-+	for the linearized sequence.
-+	In particular, linkgit:git-log[1] and linkgit:git-show[1] have a
-+	range of "History Simplification" techniques that affect which
-+	commits are included, and how they are linearized.
-+	The default linkgit:git-rebase[1] will drop merge commits when it
-+	flattens history, which also may be unexpected.
-+	The two common linearization types are chronological (date-time), and
-+	topological (shape) based orderings. Generation numbering is topological.
-+
- [[def_file_system]]file system::
- 	Linus Torvalds originally designed Git to be a user space file system,
- 	i.e. the infrastructure to hold files and directories. That ensured the
--- 
-2.40.0.windows.1
+I'm not sure if the old code was being overly defensive, or if the new
+code is ripe for a segfault. But it's probably worth looking into (it
+was noticed by Coverity).
 
+Looking at the caller, it is always store_update_refs() which passes its
+own "rm", a pointer iterating over ref_map. And it should always be
+non-NULL, since that's the loop condition.
+
+So I think your code is fine, but you might want to double-check my
+logic. (And it may be worth cleaning up the existing redundant check to
+prevent confusion).
+
+-Peff
