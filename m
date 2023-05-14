@@ -2,72 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78F40C7EE22
-	for <git@archiver.kernel.org>; Sun, 14 May 2023 20:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD12CC77B7D
+	for <git@archiver.kernel.org>; Sun, 14 May 2023 20:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233720AbjENUV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 May 2023 16:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59716 "EHLO
+        id S235250AbjENUYk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 May 2023 16:24:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbjENUV1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2023 16:21:27 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3881B6
-        for <git@vger.kernel.org>; Sun, 14 May 2023 13:21:25 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-306dbad5182so7815604f8f.1
-        for <git@vger.kernel.org>; Sun, 14 May 2023 13:21:25 -0700 (PDT)
+        with ESMTP id S229635AbjENUYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2023 16:24:39 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC5F10FC
+        for <git@vger.kernel.org>; Sun, 14 May 2023 13:24:37 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f42b984405so42327985e9.3
+        for <git@vger.kernel.org>; Sun, 14 May 2023 13:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684095684; x=1686687684;
+        d=gmail.com; s=20221208; t=1684095876; x=1686687876;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=D30kBiX9dfFL+/o/VSGfK+UUW3Si3naqQjahMlc9mvM=;
-        b=XW/0m+94o8arMjMhJmmSdw+C5i33dN7mKYuWWDa0bQuQ3Puq52MeHMNbF1O17l7sX5
-         2oWDNV9wTy0vbaKKgTrhD2gAHvL4xtmVQ8BIYZ/Ki6ahx4DwtzLVAQuALJsoOf9qwsFQ
-         b9j8iTaxULpaF45Nu4ffQUPqVnXyPfExf+DTaV+5GmCC4pbtvUetFbeAMgGEc/5rYOuy
-         r92BwdigC5Ac3qU74xkc9JBME0940Gg7gXZoYk8HPgGAeq6DYxPxK5yoMQ51E5LmrzUj
-         0JDNPFzr5Viti3RB38MnYuE9is6lDdOiG8iJzSlk3xbO7PjUy71jByb63eyQsPWpaxFU
-         +daQ==
+        bh=Vqp4SdgIjbzYNwcimJatWTOVuAHk7ya4KmceLbq/qdI=;
+        b=nZkV7gDaBtDEKB6J9jPPTtvUmxCJnYcJ2AMbP6zgLfW7BS6uIHDTYtmQUEJsPhyEHM
+         DuS95mW3AaiI5TAkVQ4lePw7znpuccwZH/5hi305XOFc6f/eIIGBZEQJeiPPXiC05mkw
+         Al9tiocv/1lzTIrsmNTRwjQkvP+A4gK6ZFWpVXf0q8dlA9ncj2XUv1Pw2gD8mljhAbMA
+         syobPoiE9S9dRQVSXKYLoIfQpz3xsIUrtxN7/XUocX7kVdi6u5RvAZS0xSYM2HPYLCNq
+         3X5MC+GQfKwFov5BtmD7NcLxh55MV/WzgX5hrNJ4SBUEYK6xP5GeUisxOjo79tm6HM9R
+         Etnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684095684; x=1686687684;
+        d=1e100.net; s=20221208; t=1684095876; x=1686687876;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D30kBiX9dfFL+/o/VSGfK+UUW3Si3naqQjahMlc9mvM=;
-        b=WuBXMv9rEzV/G2TwcNxH7sGMsF4b+i1Q9YHFd8VRzjibJmvvPiqzvOAtEZL04OBS1V
-         1QyzfAbOuHYcYuAub5PH/n0O9cnevpLLRR53hGt6MwVS4tfUHeX2yxd6ZalORoTLwyq1
-         zYrh/sF7xnaj2ncQxTx5I7BFGUh0wGEqs6NpbCZTrHYmDKvTJkDyqFWZTpz5bgooogxx
-         +1MKkdwWRzAGJiFyISNqvAcvMu6wXkANnnA9e+hihGO65UO0kzjed4EnuERaFruadh78
-         5FpzwRD/sFUQk9fhs+GjaVMcmyPflZ9frBNX1a+aT6ulKoRlj6wL4t6ArMAfyQGTiuwL
-         3QQw==
-X-Gm-Message-State: AC+VfDyM9G1flLAVGLXP5Sp/OysRCscvXHKs8rc25D2P4+DcCu8zeu8i
-        27O86anAAQAFzJawFxYOark=
-X-Google-Smtp-Source: ACHHUZ6bktKHi4RtR5TxxDT7PhQVPVW6/GNP+pfZv8B+iznFQyN0jz13Of0kBGzqvn9lU71SJ2Re7Q==
-X-Received: by 2002:a5d:6346:0:b0:307:977a:e693 with SMTP id b6-20020a5d6346000000b00307977ae693mr19229919wrw.59.1684095683796;
-        Sun, 14 May 2023 13:21:23 -0700 (PDT)
+        bh=Vqp4SdgIjbzYNwcimJatWTOVuAHk7ya4KmceLbq/qdI=;
+        b=EzMivkOuKD11+Qbxiuy2W9ePXsbL2eOu9pR6BEsXwM/JBFHN6Udguol4nO8rmEujbT
+         P/sxcudefUwgHUKu5XqYocODe+m924W4EUA/pTqqnj1gQO3KHsBfwwO6/BluH9GkF/y3
+         eeE2TE37PmI6n570NO8Y4P9aIlKp6TuRceg7KOPD0lGDiTpcPlmkvl8MEfv3FAilwFTO
+         7dEDug1L9JXEpvQp32bnuDjeKfP8LJqvEPlh0+W2i9T/IrvyILVx+8Mwuu2jYvidhRno
+         5qP1HkvlShR+jOPK3dILZF3AXQ/Laa7Zya7YEana+Xg501maIkm9pjbD4kMiS8x+G4+x
+         jfIw==
+X-Gm-Message-State: AC+VfDz98Wk0NGOUzdbASwBzsRKFhDTmW1o1RdDHrT+53LvPJkrWsI9F
+        HYBvJQ7vUT3UfsDZvYAc8Yc=
+X-Google-Smtp-Source: ACHHUZ7V/Ljs2TYPf/3cIKEyhDnDxDWkmIxYo3ManIk0VqRHD8GcIBwT5gnXXBqD1eINqTI/g+6y9g==
+X-Received: by 2002:a7b:c314:0:b0:3ef:6b97:f0c3 with SMTP id k20-20020a7bc314000000b003ef6b97f0c3mr22332076wmj.15.1684095875463;
+        Sun, 14 May 2023 13:24:35 -0700 (PDT)
 Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d4a84000000b003062b6a522bsm30344898wrq.96.2023.05.14.13.21.22
+        by smtp.gmail.com with ESMTPSA id 2-20020a05600c22c200b003f42328b5d9sm22962065wmg.39.2023.05.14.13.24.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 May 2023 13:21:23 -0700 (PDT)
+        Sun, 14 May 2023 13:24:34 -0700 (PDT)
 Subject: Re: [PATCH v4] checkout/switch: disallow checking out same branch in
  multiple worktrees
-To:     phillip.wood@dunelm.org.uk, Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        git@vger.kernel.org
+Cc:     pclouds@gmail.com, gitster@pobox.com,
         Jinwook Jeong <vustthat@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood123@gmail.com>
 References: <20230119055325.1013-1-carenas@gmail.com>
  <20230120113553.24655-1-carenas@gmail.com>
- <8f24fc3c-c30f-dc70-5a94-5ee4ed3de102@dunelm.org.uk>
- <CAPUEspjuXSncRxo5DMj1pA5zcYvn4Y6epdijYL6HJRGhk_6q7g@mail.gmail.com>
- <a848b7d5-fd40-b043-7ed9-1672f65312e6@dunelm.org.uk>
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <31ab5d7c-d310-1659-5d56-2fd341c44275@gmail.com>
-Date:   Sun, 14 May 2023 22:21:21 +0200
+Message-ID: <6dfbdc94-6a5c-c99a-3435-08f86f0e1fef@gmail.com>
+Date:   Sun, 14 May 2023 22:24:33 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <a848b7d5-fd40-b043-7ed9-1672f65312e6@dunelm.org.uk>
+In-Reply-To: <20230120113553.24655-1-carenas@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -75,96 +73,210 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27-ene-2023 14:46:45, Phillip Wood wrote:
-> Hi Carlo
-> 
-> On 20/01/2023 22:12, Carlo Arenas wrote:
-> > On Fri, Jan 20, 2023 at 7:08 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > > 
-> > > On 20/01/2023 11:35, Carlo Marcelo Arenas Belón wrote:
-> > > > Commands `git switch -C` and `git checkout -B` neglect to check whether
-> > > > the provided branch is already checked out in some other worktree, as
-> > > > shown by the following:
-> > > > 
-> > > >     $ git worktree list
-> > > >     .../foo    beefb00f [main]
-> > > >     $ git worktree add ../other
-> > > >     Preparing worktree (new branch 'other')
-> > > >     HEAD is now at beefb00f first
-> > > >     $ cd ../other
-> > > >     $ git switch -C main
-> > > >     Switched to and reset branch 'main'
-> > > >     $ git worktree list
-> > > >     .../foo    beefb00f [main]
-> > > >     .../other  beefb00f [main]
-> > > > 
-> > > > Fix this problem by teaching `git switch -C` and `git checkout -B` to
-> > > > check whether the branch in question is already checked out elsewhere.
-> > > > 
-> > > > Unlike what it is done for `git switch` and `git checkout`, that have
-> > > > an historical exception to ignore other worktrees if the branch to
-> > > > check is the current one (as required when called as part of other
-> > > > tools), the logic implemented is more strict and will require the user
-> > > > to invoke the command with `--ignore-other-worktrees` to explicitly
-> > > > indicate they want the risky behaviour.
-> > > > 
-> > > > This matches the current behaviour of `git branch -f` and is safer; for
-> > > > more details see the tests in t2400.
-> > > 
-> > > As I said before, it would be much easier for everyone else to
-> > > understand the changes if you wrote out what they were rather than
-> > > saying "look at the tests". I do appreciate the improved test
-> > > descriptions though - thanks for that.
-> > 
-> > Apologies on that, I tried to come up with something that would
-> > describe the change of behaviour other than the paragraph above and
-> > couldn't come out with a better explanation except reading the tests
-> > (which I know is complicated by the fact they are interlinked).
-> > 
-> > The behaviour I am changing is also not documented (other than by the
-> > test) and might have been added as a quirk to keep the scripted rebase
-> > and bisect going when confronted with branches that were checked out
-> > in multiple worktrees, and as such might had not be intended for
-> > `switch`, and might not be needed anymore either.
-> > 
-> > Using`checkout` for simplicity, but also applies to `switch`,
-> > 
-> >    % git worktree list
-> >    .../base  6a45aba [main]
-> >    % git worktree add -f ../other main
-> >    Preparing worktree (checking out 'main')
-> >    HEAD is now at 6a45aba init
-> >    % cd ../other
-> >    % git checkout main
-> >    Already on 'main'
-> >    % git checkout -B main
-> >    fatal: 'main' is already checked out at '.../base'
-> 
-> Thanks for explaining that. If there is no <start-point> given we don't
-> reset the branch so it seems a bit harsh to error out here.
+On 20/1/23 12:35, Carlo Marcelo Arenas Belón wrote:
+> Commands `git switch -C` and `git checkout -B` neglect to check whether
+> the provided branch is already checked out in some other worktree, as
+> shown by the following:
+>
+>   $ git worktree list
+>   .../foo    beefb00f [main]
+>   $ git worktree add ../other
+>   Preparing worktree (new branch 'other')
+>   HEAD is now at beefb00f first
+>   $ cd ../other
+>   $ git switch -C main
+>   Switched to and reset branch 'main'
+>   $ git worktree list
+>   .../foo    beefb00f [main]
+>   .../other  beefb00f [main]
+>
+> Fix this problem by teaching `git switch -C` and `git checkout -B` to
+> check whether the branch in question is already checked out elsewhere.
+>
+> Unlike what it is done for `git switch` and `git checkout`, that have
+> an historical exception to ignore other worktrees if the branch to
+> check is the current one (as required when called as part of other
+> tools), the logic implemented is more strict and will require the user
+> to invoke the command with `--ignore-other-worktrees` to explicitly
+> indicate they want the risky behaviour.
+>
+> This matches the current behaviour of `git branch -f` and is safer; for
+> more details see the tests in t2400.
+>
+> Reported-by: Jinwook Jeong <vustthat@gmail.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Helped-by: Rubén Justo <rjusto@gmail.com>
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+> Changes since v3
+> * Code and Tests improvements as suggested by Phillip
+> * Disable unreliable test that triggers a known bug
+>
+> Changes since v2
+> * A leak free implementation
+> * More details in commit as suggested by Junio
+>
+> Changes since v1
+> * A much better commit message
+> * Changes to the tests as suggested by Eric
+> * Changes to the logic as suggested by Rubén
+>
+>
+>  builtin/checkout.c      | 32 ++++++++++++++++++++++++--------
+>  t/t2400-worktree-add.sh | 34 +++++++++++++++++++++++++++-------
+>  2 files changed, 51 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 3fa29a08ee..0688652f99 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1474,7 +1474,8 @@ static void die_if_some_operation_in_progress(void)
+>  }
+>  
+>  static int checkout_branch(struct checkout_opts *opts,
+> -			   struct branch_info *new_branch_info)
+> +			   struct branch_info *new_branch_info,
+> +			   char *check_branch_path)
+>  {
+>  	if (opts->pathspec.nr)
+>  		die(_("paths cannot be used with switching branches"));
+> @@ -1533,13 +1534,13 @@ static int checkout_branch(struct checkout_opts *opts,
+>  	if (!opts->can_switch_when_in_progress)
+>  		die_if_some_operation_in_progress();
+>  
+> -	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
+> -	    !opts->ignore_other_worktrees) {
+> +	if (!opts->ignore_other_worktrees && !opts->force_detach &&
+> +	    check_branch_path && ref_exists(check_branch_path)) {
+>  		int flag;
+>  		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
+> -		if (head_ref &&
+> -		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
+> -			die_if_checked_out(new_branch_info->path, 1);
+> +		if (opts->new_branch_force || (head_ref &&
+> +		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, check_branch_path))))
+> +			die_if_checked_out(check_branch_path, 1);
+>  		free(head_ref);
+>  	}
+>  
+> @@ -1627,7 +1628,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>  			 const char * const usagestr[],
+>  			 struct branch_info *new_branch_info)
+>  {
+> +	int ret;
+>  	int parseopt_flags = 0;
+> +	char *check_branch_path = NULL;
+>  
+>  	opts->overwrite_ignore = 1;
+>  	opts->prefix = prefix;
+> @@ -1717,6 +1720,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>  		opts->new_branch = argv0 + 1;
+>  	}
+>  
+> +	if (opts->new_branch && !opts->ignore_other_worktrees) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +
+> +		strbuf_branchname(&buf, opts->new_branch, INTERPRET_BRANCH_LOCAL);
+> +		strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
+> +		check_branch_path = strbuf_detach(&buf, NULL);
+> +	}
+>  	/*
+>  	 * Extract branch name from command line arguments, so
+>  	 * all that is left is pathspecs.
+> @@ -1741,6 +1751,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>  					     new_branch_info, opts, &rev);
+>  		argv += n;
+>  		argc -= n;
+> +
+> +		if (!opts->ignore_other_worktrees && !check_branch_path && new_branch_info->path)
+> +			check_branch_path = xstrdup(new_branch_info->path);
+>  	} else if (!opts->accept_ref && opts->from_treeish) {
+>  		struct object_id rev;
+>  
+> @@ -1817,9 +1830,12 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>  	}
+>  
+>  	if (opts->patch_mode || opts->pathspec.nr)
+> -		return checkout_paths(opts, new_branch_info);
+> +		ret = checkout_paths(opts, new_branch_info);
+>  	else
+> -		return checkout_branch(opts, new_branch_info);
+> +		ret = checkout_branch(opts, new_branch_info, check_branch_path);
+> +
+> +	free(check_branch_path);
+> +	return ret;
+>  }
+>  
+>  int cmd_checkout(int argc, const char **argv, const char *prefix)
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> index d587e0b20d..7ab7e87440 100755
+> --- a/t/t2400-worktree-add.sh
+> +++ b/t/t2400-worktree-add.sh
+> @@ -118,14 +118,17 @@ test_expect_success '"add" worktree creating new branch' '
+>  	)
+>  '
+>  
+> -test_expect_success 'die the same branch is already checked out' '
+> +test_expect_success 'die if the same branch is already checked out' '
+>  	(
+>  		cd here &&
+> -		test_must_fail git checkout newmain
+> +		test_must_fail git checkout newmain &&
+> +		test_must_fail git checkout -B newmain &&
+> +		test_must_fail git switch newmain &&
+> +		test_must_fail git switch -C newmain
+>  	)
+>  '
+>  
+> -test_expect_success SYMLINKS 'die the same branch is already checked out (symlink)' '
+> +test_expect_success SYMLINKS 'die if the same branch is already checked out (symlink)' '
+>  	head=$(git -C there rev-parse --git-path HEAD) &&
+>  	ref=$(git -C there symbolic-ref HEAD) &&
+>  	rm "$head" &&
+> @@ -133,17 +136,34 @@ test_expect_success SYMLINKS 'die the same branch is already checked out (symlin
+>  	test_must_fail git -C here checkout newmain
+>  '
+>  
+> -test_expect_success 'not die the same branch is already checked out' '
+> +test_expect_success 'allow creating multiple worktrees for same branch with force' '
+> +	git worktree add --force anothernewmain newmain
+> +'
+> +
+> +test_expect_success 'allow checkout/reset from the conflicted branch' '
+>  	(
+>  		cd here &&
+> -		git worktree add --force anothernewmain newmain
+> +		git checkout -b conflictedmain newmain &&
+> +		git checkout -B conflictedmain newmain &&
+> +		git switch -C conflictedmain newmain
+> +	)
+> +'
+> +
+> +test_expect_success 'and not die on re-checking out current branch even if conflicted' '
+> +	(
+> +		cd there &&
+> +		git checkout newmain &&
+> +		git switch newmain
+>  	)
+>  '
+>  
+> -test_expect_success 'not die on re-checking out current branch' '
+> +test_expect_failure 'unless using force without --ignore-other-worktrees' '
 
-We say in the documentation:
+The fix to what caused this test to occasionally fail is already in
+'master'.  This test should now succeed consistently.
 
-   +
-   If `-B` is given, `<new-branch>` is created if it doesn't exist; otherwise, it
-   is reset. This is the transactional equivalent of
-   +
-   ------------
-   $ git branch -f <branch> [<start-point>]
-   $ git checkout <branch>
-   ------------
-   +
+>  	(
+>  		cd there &&
+> -		git checkout newmain
+> +		test_must_fail git checkout -B newmain &&
+> +		test_must_fail git switch -C newmain &&
+> +		git checkout --ignore-other-worktrees -B newmain &&
+> +		git switch --ignore-other-worktrees -C newmain
+>  	)
+>  '
+>  
+>
 
-and, since 55c4a67307 (Prevent force-updating of the current branch,
-2011-08-20), we return with error on "git branch -f <current-branch> [...]".
-
-Therefore, when the current branch is checked out in multiple worktrees, it
-seems consequent to error on "git checkout -B <current_branch> [...]".
-
-But we want to allow "git checkout -B <current_branch>", without <start-point>,
-as a way to say "git reset --keep", see: 39bd6f7261 (Allow checkout -B
-<current-branch> to update the current branch, 2011-11-26).
-
-Your suggestion not to error is not only reasonable, but also seems desirable.
-
-Thanks.
+Thanks for continuing to work on this.
