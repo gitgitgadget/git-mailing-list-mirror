@@ -2,173 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5C9C7EE22
-	for <git@archiver.kernel.org>; Sun, 14 May 2023 13:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E88C77B7D
+	for <git@archiver.kernel.org>; Sun, 14 May 2023 18:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237221AbjENNUW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 May 2023 09:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48340 "EHLO
+        id S230339AbjENR7Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 May 2023 13:59:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233311AbjENNUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2023 09:20:17 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E91882D48
-        for <git@vger.kernel.org>; Sun, 14 May 2023 06:20:15 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 623145C0075;
-        Sun, 14 May 2023 09:20:15 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Sun, 14 May 2023 09:20:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:date:date:from
-        :from:in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1684070415; x=
-        1684156815; bh=10NzY3raI+Scjpw7pySJ9k4C4P260Yu1s4xB62S8ewo=; b=Y
-        h23bDaqWZ8cDmS82wQiKcr9mklvp2yQRbZJUVAwNERTjlLoduIACc0PF7S4pgYbX
-        rokT9925ifuNMlKBaH1fx+jM5N284CbHHu/Me5unpw0/mfXMwM5Xf3fs5AGl3JiJ
-        ORQ/EgX/d8tCAJMeHSl1B8qIYSnWhCL7CiQ5IjHN8pg/tjBThM9ihcW+QL6XHPUg
-        3jrp+0tGWJPVFMhitqmbvE9To6wrwlk+nzv3QU1BpusFRBfS00QGJ/usGI1eBH7B
-        tgcBhrJJVR0itV3v+Po+FM5Gr+D4nx1K5HwyUIyY4T0L2kOgCbn22MK1tMlUZoYb
-        WT/5dic5eFHEaQKiHZ/7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1684070415; x=
-        1684156815; bh=10NzY3raI+Scjpw7pySJ9k4C4P260Yu1s4xB62S8ewo=; b=K
-        HMUPUx5loOn77XxTgkYVTVIRqSOJQvcMkkIioJkIF+WpgROPprQL+zyfThK9D8hw
-        qDB1P7EW8ndkDgMYhxdH6elKtxJS6eJs1am4f+N8rtUfYUdZrSgt9AhXVr1Ptk3Q
-        er0h3wB0if49QMqEtCavn6GH4sik/T48A+YlZJ+YU4bKAwma0O4B9F5QbEjBgN0T
-        fEm8uWD7XEx1WCB0x782SgHeB7QEVWPmtsUMMVY5NtW2uYt/jfGLsu5hO9BrxPF2
-        zRuFZnJBT4tLfCvLLKzNvJcC46SSdtCGBtBx+1oHDgqN2XsKWFmrqA+8rFuq6F8j
-        Te8s/tmNawnsS6OnqsXNQ==
-X-ME-Sender: <xms:D-BgZL9MPRPSbx7ZjDQScRiyL8SKoL380RpQUXlPxN_r5WUW5ixCpT0>
-    <xme:D-BgZHtjF-4GL8T_d1viIZQbu83ba0hklKjpJ54lSp5KbiOMKKYwCdpUxynJ1WDYg
-    Eztfhjqn-LLdE1Sxg>
-X-ME-Received: <xmr:D-BgZJA1GrqAdzch96if8Xxwi6tqxVpksnhAUFRVISO-xaudq1vbC_pctigQ3tnDszlyZLODfdUFrpE-ens0MVR-Wr7jmzfghCtBEZ5KnQal_LJjk9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehhedgieegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegt
-    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepteduie
-    ehgedutdfgudevkefhveduieeiteejhfffteeitdegjeeihedthfejgfetnecuvehluhhs
-    thgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruh
-    hgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:D-BgZHea6075bdlqJQCdMYQ8bHTilSWn3iqEKzK2IH4CSNoHN5brmg>
-    <xmx:D-BgZANzDxtne-JLe8twbqJJ9JA6JZ1zkZFGCqFX5GnP7rXTHIkKnA>
-    <xmx:D-BgZJlGk4ikTj4rFgoItXOk7Ic7eiVryt82IKnJXTFn3uNqG5T81A>
-    <xmx:D-BgZK3d2NiUBQn4x1cbFUp-qm6ofeHCm8nP0Fcpx8jI9BRRgrlcXA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 14 May 2023 09:20:14 -0400 (EDT)
-From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH 3/3] tag: keep the message file in case ref transaction fails
-Date:   Sun, 14 May 2023 15:18:00 +0200
-Message-Id: <999af290af4c6850aa3faa2cc95adbac3b7a3984.1684067644.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <cover.1684067644.git.code@khaugsbakk.name>
-References: <cover.1684067644.git.code@khaugsbakk.name>
+        with ESMTP id S229523AbjENR7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2023 13:59:15 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0C435AF
+        for <git@vger.kernel.org>; Sun, 14 May 2023 10:59:12 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f4ad71b00eso31343355e9.2
+        for <git@vger.kernel.org>; Sun, 14 May 2023 10:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684087150; x=1686679150;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PDlPMXWjwxiVASoA8oKnaFu3s1ygkcHvph+ZqgyKUYk=;
+        b=VvPm/LKEx7iGq1zpdaUra8OTRh5iUXsojSLxUBa6jm/EVZdJj9osdozkSD155vCuNC
+         aA+aIPOlDEw0me6fYyV9CK4wDucVHcFiliSFq3Ucm2KnRDCBaL+m6FDRrYIp7p8Oqv7h
+         KwC3vlCRhsT0Mmiyioa+UEVhnwWdJnBJMxgayHATLbBMrNpBDe7nyD54pPhrSlp7z9TO
+         nZ/3HI4UVMpWxJu6hhmYKoz5NSUIe5L9e2FFzL5L7PCVD60pGU4vFMzAUKVcVSFStLI0
+         eZYAsQeIdqIGK52WrAdkIlxT3Qp9N5rortSrVKIhArwEh2GZ43C6HzYysMed58hFGrhq
+         l2Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684087150; x=1686679150;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PDlPMXWjwxiVASoA8oKnaFu3s1ygkcHvph+ZqgyKUYk=;
+        b=Sjzke9RplZUFADouj7nX/4D3T5COXQTDKXgntU4LxfOW4WHxCWAGH7ilCGxclAP6Hh
+         7W2AIfJlq+lb+PWc9vqbTVmyMF8oKYsx9DQq5z7Ueds2YOgVxHgkV+hPpKYF6BFfUVc9
+         DFwY5vCcStXo5F+3c7ibwH4Y/MNMqaoTDkIuCmCtY07S+mpzo5hgxrNxls3+TV32r44Q
+         WTOwMS743i1P3nySJ+jvJky2I/E2Od8xnjb2wAPhp73GADGMm4LQHUXtdCXdxWu3q0ZN
+         2Uhv0LqbHb2X3oX3tP894BCc8jyjyANwRhx2EAbtjYMRbL/WLF16ElAyINpAZkGpFWOP
+         OJ+A==
+X-Gm-Message-State: AC+VfDymte65uswmBGQn7B8YRMuMHxkd6G/DyZ1j9Jbt8vZMvAD0WD70
+        uXlXYcco4PXW0/Dc1jYxoeg=
+X-Google-Smtp-Source: ACHHUZ5HX999mgOJPSEXi2ellquqjWLSBdo7VkFUvGOdXJGVG097UMW9lO7uL+lH/MfbiwRLpLRvEQ==
+X-Received: by 2002:a05:600c:2101:b0:3f4:2174:b28f with SMTP id u1-20020a05600c210100b003f42174b28fmr17655482wml.2.1684087149560;
+        Sun, 14 May 2023 10:59:09 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id f26-20020a7bcd1a000000b003f423f5b659sm21943958wmj.10.2023.05.14.10.59.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 14 May 2023 10:59:09 -0700 (PDT)
+Message-ID: <42b3c24a-8c3f-df03-18b8-312520d6c963@gmail.com>
+Date:   Sun, 14 May 2023 18:59:07 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/2] Fix two rebase bugs related to total_nr
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
+ <pull.1531.v2.git.1683965487.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1531.v2.git.1683965487.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The ref transaction can fail after the user has written their tag message. In
-particular, if there exists a tag `foo/bar` and `git tag -a foo` is said then
-the command will only fail once it tries to write `refs/tags/foo`, which is
-after one has closed the editor.
+Hi Dscho
 
-Hold on to the message file for a little longer so that it is not unlinked
-before the fatal error occurs.
+On 13/05/2023 09:11, Johannes Schindelin via GitGitGadget wrote:
+> I recently picked up work where I regularly rebase large branch thickets
+> consisting of thousands of commits. During those rebases, I could not fail
+> to notice that the progress initially showed a total number around 2,100,
+> when the actual number of commands was more like 1,850. And indeed, when
+> resuming the rebase after being interrupted due to a break command or due to
+> a merge conflict, the progress showed the correct number!
+> 
+> So I set out to fix this, stumbling over an incorrect use of total_nr in the
+> --update-refs code, so I fixed that, too.
+> 
+> Note: These patches apply cleanly on top of ds/rebase-update-ref as well as
+> on top of the current main branch.
+> 
+> Changes since v1:
+> 
+>   * Clarified the pattern expected by the test case in the progress output,
+>     as suggested by Junio.
+>   * Simplified the code as suggested by Phillipp, based on the insight that
+>     complete_action() (naming is hard!) is only called at the very beginning
+>     of a rebase, and therefore there cannot be any already-done commands in
+>     the todo list.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+This version looks good to me, thanks for re-rolling
 
-Notes (series):
-    I tried to maintain the proper formatting by using `clang-format` via Emacs on
-    the affected lines.
+Phillip
 
- builtin/tag.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index d428c45dc8..7df9c143ac 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -266,11 +266,10 @@ static const char message_advice_nested_tag[] =
- static void create_tag(const struct object_id *object, const char *object_ref,
- 		       const char *tag,
- 		       struct strbuf *buf, struct create_tag_options *opt,
--		       struct object_id *prev, struct object_id *result)
-+		       struct object_id *prev, struct object_id *result, char *path)
- {
- 	enum object_type type;
- 	struct strbuf header = STRBUF_INIT;
--	char *path = NULL;
- 
- 	type = oid_object_info(the_repository, object, NULL);
- 	if (type <= OBJ_NONE)
-@@ -294,7 +293,6 @@ static void create_tag(const struct object_id *object, const char *object_ref,
- 		int fd;
- 
- 		/* write the template message before editing: */
--		path = git_pathdup("TAG_EDITMSG");
- 		fd = xopen(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
- 
- 		if (opt->message_given) {
-@@ -336,10 +334,6 @@ static void create_tag(const struct object_id *object, const char *object_ref,
- 				path);
- 		exit(128);
- 	}
--	if (path) {
--		unlink_or_warn(path);
--		free(path);
--	}
- }
- 
- static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
-@@ -487,6 +481,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	};
- 	int ret = 0;
- 	const char *only_in_list = NULL;
-+	char *path = NULL;
- 
- 	setup_ref_filter_porcelain_msg();
- 
-@@ -621,7 +616,9 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (create_tag_object) {
- 		if (force_sign_annotate && !annotate)
- 			opt.sign = 1;
--		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object);
-+		path = git_pathdup("TAG_EDITMSG");
-+		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object,
-+			   path);
- 	}
- 
- 	transaction = ref_transaction_begin(&err);
-@@ -629,8 +626,17 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	    ref_transaction_update(transaction, ref.buf, &object, &prev,
- 				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
- 				   reflog_msg.buf, &err) ||
--	    ref_transaction_commit(transaction, &err))
-+	    ref_transaction_commit(transaction, &err)) {
-+		if (path)
-+			fprintf(stderr,
-+				_("The tag message has been left in %s\n"),
-+				path);
- 		die("%s", err.buf);
-+	}
-+	if (path) {
-+		unlink_or_warn(path);
-+		free(path);
-+	}
- 	ref_transaction_free(transaction);
- 	if (force && !is_null_oid(&prev) && !oideq(&prev, &object))
- 		printf(_("Updated tag '%s' (was %s)\n"), tag,
--- 
-2.40.1
-
+> Johannes Schindelin (2):
+>    rebase --update-refs: fix loops
+>    rebase -r: fix the total number shown in the progress
+> 
+>   sequencer.c              | 13 ++++++++-----
+>   t/t3430-rebase-merges.sh |  8 ++++++++
+>   2 files changed, 16 insertions(+), 5 deletions(-)
+> 
+> 
+> base-commit: 4611884ea883908a9638cafbd824c401c41cf7f6
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1531%2Fdscho%2Ffix-rebase-i-progress-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1531/dscho/fix-rebase-i-progress-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1531
+> 
+> Range-diff vs v1:
+> 
+>   1:  2ac7c7a7c61 = 1:  2ac7c7a7c61 rebase --update-refs: fix loops
+>   2:  d12d5469f8c ! 2:  cac809bcffd rebase -r: fix the total number shown in the progress
+>       @@ Commit message
+>            Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>        
+>         ## sequencer.c ##
+>       +@@ sequencer.c: void todo_list_release(struct todo_list *todo_list)
+>       + static struct todo_item *append_new_todo(struct todo_list *todo_list)
+>       + {
+>       + 	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
+>       +-	todo_list->total_nr++;
+>       + 	return todo_list->items + todo_list->nr++;
+>       + }
+>       +
+>        @@ sequencer.c: int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>         	char *p = buf, *next_p;
+>         	int i, res = 0, fixup_okay = file_exists(rebase_path_done());
+>       @@ sequencer.c: int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>         	for (i = 1; *p; i++, p = next_p) {
+>         		char *eol = strchrnul(p, '\n');
+>        @@ sequencer.c: int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>       - 			item->arg_offset = p - buf;
+>       - 			item->arg_len = (int)(eol - p);
+>         			item->commit = NULL;
+>       --		}
+>       -+		} else if (item->command == TODO_COMMENT)
+>       -+			todo_list->total_nr--;
+>       + 		}
+>         
+>       ++		if (item->command != TODO_COMMENT)
+>       ++			todo_list->total_nr++;
+>       ++
+>         		if (fixup_okay)
+>         			; /* do nothing */
+>       + 		else if (is_fixup(item->command))
+>        @@ sequencer.c: int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>       - 	struct todo_list new_todo = TODO_LIST_INIT;
+>       - 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+>       - 	struct object_id oid = onto->object.oid;
+>       --	int res;
+>       -+	int new_total_nr, res;
+>       -
+>       - 	find_unique_abbrev_r(shortonto, &oid, DEFAULT_ABBREV);
+>       -
+>       -@@ sequencer.c: int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>       - 		return error(_("nothing to do"));
+>       - 	}
+>       -
+>       -+	new_total_nr = todo_list->total_nr - count_commands(todo_list);
+>       - 	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
+>       - 			     shortonto, flags);
+>       - 	if (res == -1)
+>       -@@ sequencer.c: int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>       - 		return -1;
+>       - 	}
+>       -
+>       -+	new_total_nr += count_commands(&new_todo);
+>       -+	new_todo.total_nr = new_total_nr;
+>       -+
+>       - 	/* Expand the commit IDs */
+>         	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
+>         	strbuf_swap(&new_todo.buf, &buf2);
+>         	strbuf_release(&buf2);
+>        -	new_todo.total_nr -= new_todo.nr;
+>       ++	/* Nothing is done yet, and we're reparsing, so let's reset the count */
+>       ++	new_todo.total_nr = 0;
+>         	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
+>         		BUG("invalid todo list after expanding IDs:\n%s",
+>         		    new_todo.buf.buf);
+>       @@ t/t3430-rebase-merges.sh: test_expect_success '--rebase-merges with message matc
+>        +test_expect_success 'progress shows the correct total' '
+>        +	git checkout -b progress H &&
+>        +	git rebase --rebase-merges --force-rebase --verbose A 2> err &&
+>       -+	grep "^Rebasing.*14.$" err >progress &&
+>       ++	# Expecting "Rebasing (N/14)" here, no bogus total number
+>       ++	grep "^Rebasing.*/14.$" err >progress &&
+>        +	test_line_count = 14 progress
+>        +'
+>        +
+> 
