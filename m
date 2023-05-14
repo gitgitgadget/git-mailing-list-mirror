@@ -2,135 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B62EC77B7D
-	for <git@archiver.kernel.org>; Sat, 13 May 2023 20:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E11C1C7EE22
+	for <git@archiver.kernel.org>; Sun, 14 May 2023 13:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230326AbjEMUuj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 May 2023 16:50:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40736 "EHLO
+        id S234023AbjENNTz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 May 2023 09:19:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231327AbjEMUui (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2023 16:50:38 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42EDD40E0
-        for <git@vger.kernel.org>; Sat, 13 May 2023 13:50:26 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-55cc8aadc97so170415707b3.3
-        for <git@vger.kernel.org>; Sat, 13 May 2023 13:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684010996; x=1686602996;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n7J27VL8uKaKCPqNpUDRv8T+iST9v5Sg55fqjVCMYCQ=;
-        b=5Hk4IpPySLEXTKth+k959WB9caYeTBqnNU/WXxDgFYiMAoRn3RZwB4Xq2IO0KaWG95
-         SNBmI/ViZb4PZZCktZmK5iU74xF+XrD9R7Au83oGu9VFcS/jJgAuWUxKHUsLM+fMLseS
-         oD6dn/FxNpT4iDPwD1uWc7LVMnpqm6MsjR4mcZQYrf0fvET+h2wuy8IKYgBiQj+oY3oO
-         z/R5yM3eaVpKBn7frukEaVdUhyncW4QQgO01RvrmPoYlqOrj0xdL3ywJZiUid6XUiIxM
-         iJ5ZJ7daMbBdaDN3rogNpS4SzdGFO0/gn70oCJdDzMSOrzzZBgNjftdkFb5Mmg1fLK1H
-         kQaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684010996; x=1686602996;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n7J27VL8uKaKCPqNpUDRv8T+iST9v5Sg55fqjVCMYCQ=;
-        b=VzmTN6O9+di9ifIZ4vnhk2JxhPtQ1FNO2i5s9y3Y8TGPUpLV8gSEEjnpAXXKgOmhLl
-         7tK3ctKIVeupU5zWv8YTAYKaNFT0MS6YFZxc4cZfN5z0qBMBnGF8/qblHZlHjAAaPK/Z
-         t7AmoXP2GQEuWRMRYXbGBlgQs/IKXUx0bCU+ftQ4IcQDsGxU+uz2u1ieoGdfgT+PGyb1
-         iRxMxYRXWusR/OI8/LDPi57iGn2KvHV1wz6sJYUcrIhjr8PYxpvu8Uc4tIXqDOJqg4U6
-         PIDp+f/S16ECiokDmiFmLy5NXMgmnwH40fQguNVqOHz3ThPY0zeLUmGeiQKd26TQppbQ
-         i8eQ==
-X-Gm-Message-State: AC+VfDwOeoRVqEa5rJZsWLA9XycLwlvAVSOxfkh1RWeh2wy1UMyrSYmv
-        wvXKaehefkxG6nNgNpUZnS6KLMMw2xqw9pEX26nZag==
-X-Google-Smtp-Source: ACHHUZ6H7TfaEelwTn6LFZu5aeTdIIpY4MyUaxaWWIOD7AnHUx8qIjkrNW3wMMJYiRSFpMaTkMHgfQ==
-X-Received: by 2002:a81:9202:0:b0:559:e54d:4dde with SMTP id j2-20020a819202000000b00559e54d4ddemr29809932ywg.8.1684010995968;
-        Sat, 13 May 2023 13:49:55 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n1-20020a0dcb01000000b0055a503ca1e8sm6581162ywd.109.2023.05.13.13.49.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 May 2023 13:49:54 -0700 (PDT)
-Date:   Sat, 13 May 2023 16:49:52 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        with ESMTP id S229942AbjENNTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2023 09:19:54 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091031FD2
+        for <git@vger.kernel.org>; Sun, 14 May 2023 06:19:52 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 941B15C004F;
+        Sun, 14 May 2023 09:19:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Sun, 14 May 2023 09:19:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:message-id:mime-version
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1684070390; x=
+        1684156790; bh=LgLlAOjATzPtoGle2syhxx8xoY/l5PJxmYcXrkHfgJo=; b=E
+        r305IBjzYhHHESYce3Xgvc96NWGoOTTQRx4Ix3PWKEpyik0wKzcI50cq2Jz70qSY
+        uZOw/5lnlnp/W0fVo/YbNzV0gmVZxeWjvZXR0MbWtgFiKJfZlnTGI73SJC6HrPeu
+        PoFC4OsnrXCdqH1ASngyXqnaNE94E9v6DTnSaul2jx2aqa5WOeCHikerWPgvtCkU
+        Y6X3GKsKVv/e7HaaWXr1W2/17Bq8WC3+fOGGCIE4qN7BOajQJkdXPCvLShBjyxAa
+        Qo64IBY1jnSPahXOE4J8dPTS5b+2qXA6Icvb/479TvjXY+0BkjtY6xtMUp7oQSgP
+        Oes8Yda00CND7IeA+mPlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+        :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; t=1684070390; x=1684156790; bh=L
+        gLlAOjATzPtoGle2syhxx8xoY/l5PJxmYcXrkHfgJo=; b=viw3peloDVu57sOL0
+        EJ1xY3RyiU5HZaHgByyEPmXO+0jWHiLFH8hgPNoz+5AvRWcBqRzy8VHWboJd3xnU
+        iNEPogYjeDd6iDGMNlS2Hret8QR1MHcDpAG0lTAJbwetJv8DScdkoe92ET7dBb+E
+        hD7Dbn1HFupn8DHtMj+NR9zrZbFf/jRGbx7QX91G5q/dsnW8LK55TnCuoGe+0BJy
+        wEMFB3eciaNqJrflKWBOxxiVPjbIyzuBLEqmPeGxUWlQh6FMDVojk22gkglmYxPA
+        A0kGTQd5AlisbcjrkxrTyBlp1SwjytxodW1kq/iVqgYH3b3lBRxfgc1hu0dAC+oh
+        qIZaw==
+X-ME-Sender: <xms:9t9gZBP-ZrdzEIF-4gKiVZP5j5C3Dr1KgR8Stnz6OhrwWD7zWS1d1GU>
+    <xme:9t9gZD9cmZp2nxGHXPZXb-JDitxDf5EaaiCBY9fzEEuo_O9v9320J-8zA4GnePuG4
+    WjiB4RuvngKf5jWcA>
+X-ME-Received: <xmr:9t9gZAQ5oT8S9E644sbufEvuhZI0s3igPtewjLbQkQX1v-MAwrnwDSdF-KbqqAblZr843TUVB3MSOYAgMlEAtt1UTVANE6hUbeVMbAt2IclROYlVyEM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehhedgieegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffogggtgfesthekre
+    dtredtjeenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceotgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvteeivd
+    etveelheelffdvleejhfetieejvdfgieeijeelvddvkeefleelkeevhfenucffohhmrghi
+    nhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:9t9gZNtKcj0RNac1wkFTlrjpJl_0_i6m1wCdiRmaPVlVioo3NZxw6Q>
+    <xmx:9t9gZJdlEgGUuIlDKdJWP16pQHiMMzBwDttBRQJZECOgk6lD_5T91Q>
+    <xmx:9t9gZJ2HNRZlMGBtpImN-cIzt9BFOLsqTzRJLR-ublcLTak7P98A_g>
+    <xmx:9t9gZJG2N9psSmVevOH2FbyJybw0BM-1eU52R4JxcNg46wLvqSLSUA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 14 May 2023 09:19:49 -0400 (EDT)
+From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
 To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Git's Code of Conduct, and community updates
-Message-ID: <ZF/38DXNYMsZjvy4@nand.local>
+Cc:     peff@peff.net, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH 0/3] tag: keep the message file in case ref transaction fails
+Date:   Sun, 14 May 2023 15:17:57 +0200
+Message-Id: <cover.1684067644.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As you know, the Git Project adopted the Contributor Covenant more
-than 3 years ago and uses it as its Code of Conduct [1, 2].
+The ref transaction can fail after the message has been written using the
+editor. The ref transaction is attempted after the message file (`TAG_EDITMSG`)
+has been unlinked, so there is no backup tag message file to retry the
+command.[1]
 
-That document outlines the standards of behavior that we expect from
-all members of the Git project. Most importantly, it reminds us of the
-following:
+This is unfortunate if someone has written more than e.g. “v1.99.4” in the
+editor. (I don’t know if people write long tag messages in practice.)
 
-  We pledge to act and interact in ways that contribute to an open,
-  welcoming, diverse, inclusive, and healthy community.
+Hold on to the tag message file until after the ref transaction in order
+to preserve the backup.
 
-While disagreements and technical debates are part of open-source
-work, we should always expect of one another to be treated with
-respect, regardless of any individual differences of opinion.
-Disrespectful behavior is demoralizing, discourages collaboration, and
-obscures the best parts of our community.
+† 1: On commit 91428f078b (The eighteenth batch, 2023-05-10)
 
-Among others, the CoC lists the following examples as unacceptable
-behavior:
+§ Reproduction script
 
-  * Trolling, insulting or derogatory comments, and personal or
-    political attacks
-  * Other conduct which could reasonably be considered inappropriate
-    in a professional setting
+```
+cd /tmp
+dir=$(mktemp -d)
+cd $dir
+git init
+git commit --allow-empty -mInit
+git tag release/v1
+# Fails
+git tag -a release
+```
 
-By and large, our expectations of each other are met, as the vast
-majority of project participants are collegial and friendly. When our
-expectations of each other are not met, the project leadership
-committee (PLC) exists in part to investigate and mediate disputes.
-When corrective action is required, the CoC outlines four steps:
-correction, warning, temporary ban, and permanent ban.
+Error message:
 
-Despite our repeated efforts (including applying corrective action as
-laid out in the CoC), Felipe Contreras has continued to violate the
-CoC, leading to numerous complaints from community members.
+```
+fatal: cannot lock ref 'refs/tags/release': 'refs/tags/release/v1' exists; cannot create 'refs/tags/release'
+```
 
-As such, **we had to make the difficult decision to permanently ban
-Felipe Contreras from participating in the Git project due to multiple
-violations of our Code of Conduct**.
+Better error message and behavior:
 
-Previous violations and related complaints resulted in the PLC's July,
-2021 decision to temporarily ban him from the community for three
-months. This ban contained clear warnings that further violation could
-result in another temporary or permanent ban.
+```
+The tag message has been left in .git/TAG_EDITMSG
+fatal: cannot lock ref 'refs/tags/release': 'refs/tags/release/v1' exists; cannot create 'refs/tags/release'
+```
 
-Despite this, we have recently seen a number of new violations and
-received related complaints, resulting in our decision to ban him
-permanently.
+§ Alternatives considered
 
-In accordance with the CoC, Felipe is permanently banned from any sort
-of public interaction in our community. The vger.kernel.org
-postmaster has configured the Git list to drop emails from him.
+My first thought was to find a way to “dry run” the ref update before opening
+the editor (the edge case of the ref update command succeeding the first time
+but not the second *real* time seemed incredibly unlikely to happen by
+happenstance, so I saw no reason to consider that). However that seemed like it
+would involve more code and conditionals, and I don’t know if the dry-run mode
+is even supported.
 
-We should hold each other to high expectations. The Git project should
-be a fun place to contribute to or work on. We should not tolerate
-behavior that is rude, disrespectful, and detracts to the community,
-no matter what. If you have any questions or concerns about the CoC,
-please do not hesitate to reach out to the PLC.
+A benefit of this alternative approach would be to error out immediately instead
+of opening the editor. But trying to create a tag which collides with an
+existing “namespace” seems very unlikely to happen in practice.[2] Losing a file
+is much worse than being inconvenienced to retry the command, so I decided to
+just focus on the former problem.
 
---
-Thanks,
-The Git Project Leadership Committee
+Most importantly though this approach was within my ability to implement.
 
-Christian Couder
-Junio C Hamano
-Taylor Blau
-Ævar Arnfjörð Bjarmason
+† 2: Just observe my “Reproduction script”: one tries to create `release` after
+    someone else made `release/v1`. But what is just “release”? What follows
+    (next version) that? But why am I arguing against my change…
 
-[1]: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
-[2]: https://github.com/git/git/commit/5cdf2301d4a8b439f89fd2cdfed13736ccd64a30
+§ CI
+
+https://github.com/LemmingAvalanche/git/actions/runs/4972149825
+
+§ Carbon copy
+
+The suggested contacts seemed too long:
+
+```
+$ ./contrib/contacts/git-contacts v2.40.1..
+Junio C Hamano <>
+René Scharfe <>
+Jonathan Tan <>
+Jonathan Nieder <>
+Jeff King <>
+Stefan Beller <>
+Denton Liu <>
+Robert Dailey <>
+```
+
+So I added only Jeff King based on commit 3927bbe9a4 (tag: delete TAG_EDITMSG
+only on successful tag, 2008-12-06).
+
+§ Patches
+
+1. Test the happy case
+2. Test the unhappy case (fails without the next patch)
+3. The change
+
+—
+
+Cheers.
+
+Kristoffer Haugsbakk (3):
+  t/t7004-tag: add regression test for existing behavior
+  t/t7004-tag: add failing tag message file test
+  tag: keep the message file in case ref transaction fails
+
+ builtin/tag.c  | 24 +++++++++++++++---------
+ t/t7004-tag.sh | 19 +++++++++++++++++++
+ 2 files changed, 34 insertions(+), 9 deletions(-)
+
+-- 
+2.40.1
+
