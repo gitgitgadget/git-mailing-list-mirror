@@ -2,198 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E88C77B7D
-	for <git@archiver.kernel.org>; Sun, 14 May 2023 18:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78F40C7EE22
+	for <git@archiver.kernel.org>; Sun, 14 May 2023 20:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbjENR7Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 May 2023 13:59:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58798 "EHLO
+        id S233720AbjENUV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 May 2023 16:21:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjENR7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2023 13:59:15 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0C435AF
-        for <git@vger.kernel.org>; Sun, 14 May 2023 10:59:12 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f4ad71b00eso31343355e9.2
-        for <git@vger.kernel.org>; Sun, 14 May 2023 10:59:12 -0700 (PDT)
+        with ESMTP id S229635AbjENUV1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2023 16:21:27 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3881B6
+        for <git@vger.kernel.org>; Sun, 14 May 2023 13:21:25 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-306dbad5182so7815604f8f.1
+        for <git@vger.kernel.org>; Sun, 14 May 2023 13:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684087150; x=1686679150;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PDlPMXWjwxiVASoA8oKnaFu3s1ygkcHvph+ZqgyKUYk=;
-        b=VvPm/LKEx7iGq1zpdaUra8OTRh5iUXsojSLxUBa6jm/EVZdJj9osdozkSD155vCuNC
-         aA+aIPOlDEw0me6fYyV9CK4wDucVHcFiliSFq3Ucm2KnRDCBaL+m6FDRrYIp7p8Oqv7h
-         KwC3vlCRhsT0Mmiyioa+UEVhnwWdJnBJMxgayHATLbBMrNpBDe7nyD54pPhrSlp7z9TO
-         nZ/3HI4UVMpWxJu6hhmYKoz5NSUIe5L9e2FFzL5L7PCVD60pGU4vFMzAUKVcVSFStLI0
-         eZYAsQeIdqIGK52WrAdkIlxT3Qp9N5rortSrVKIhArwEh2GZ43C6HzYysMed58hFGrhq
-         l2Ew==
+        d=gmail.com; s=20221208; t=1684095684; x=1686687684;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D30kBiX9dfFL+/o/VSGfK+UUW3Si3naqQjahMlc9mvM=;
+        b=XW/0m+94o8arMjMhJmmSdw+C5i33dN7mKYuWWDa0bQuQ3Puq52MeHMNbF1O17l7sX5
+         2oWDNV9wTy0vbaKKgTrhD2gAHvL4xtmVQ8BIYZ/Ki6ahx4DwtzLVAQuALJsoOf9qwsFQ
+         b9j8iTaxULpaF45Nu4ffQUPqVnXyPfExf+DTaV+5GmCC4pbtvUetFbeAMgGEc/5rYOuy
+         r92BwdigC5Ac3qU74xkc9JBME0940Gg7gXZoYk8HPgGAeq6DYxPxK5yoMQ51E5LmrzUj
+         0JDNPFzr5Viti3RB38MnYuE9is6lDdOiG8iJzSlk3xbO7PjUy71jByb63eyQsPWpaxFU
+         +daQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684087150; x=1686679150;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PDlPMXWjwxiVASoA8oKnaFu3s1ygkcHvph+ZqgyKUYk=;
-        b=Sjzke9RplZUFADouj7nX/4D3T5COXQTDKXgntU4LxfOW4WHxCWAGH7ilCGxclAP6Hh
-         7W2AIfJlq+lb+PWc9vqbTVmyMF8oKYsx9DQq5z7Ueds2YOgVxHgkV+hPpKYF6BFfUVc9
-         DFwY5vCcStXo5F+3c7ibwH4Y/MNMqaoTDkIuCmCtY07S+mpzo5hgxrNxls3+TV32r44Q
-         WTOwMS743i1P3nySJ+jvJky2I/E2Od8xnjb2wAPhp73GADGMm4LQHUXtdCXdxWu3q0ZN
-         2Uhv0LqbHb2X3oX3tP894BCc8jyjyANwRhx2EAbtjYMRbL/WLF16ElAyINpAZkGpFWOP
-         OJ+A==
-X-Gm-Message-State: AC+VfDymte65uswmBGQn7B8YRMuMHxkd6G/DyZ1j9Jbt8vZMvAD0WD70
-        uXlXYcco4PXW0/Dc1jYxoeg=
-X-Google-Smtp-Source: ACHHUZ5HX999mgOJPSEXi2ellquqjWLSBdo7VkFUvGOdXJGVG097UMW9lO7uL+lH/MfbiwRLpLRvEQ==
-X-Received: by 2002:a05:600c:2101:b0:3f4:2174:b28f with SMTP id u1-20020a05600c210100b003f42174b28fmr17655482wml.2.1684087149560;
-        Sun, 14 May 2023 10:59:09 -0700 (PDT)
-Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id f26-20020a7bcd1a000000b003f423f5b659sm21943958wmj.10.2023.05.14.10.59.08
+        d=1e100.net; s=20221208; t=1684095684; x=1686687684;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D30kBiX9dfFL+/o/VSGfK+UUW3Si3naqQjahMlc9mvM=;
+        b=WuBXMv9rEzV/G2TwcNxH7sGMsF4b+i1Q9YHFd8VRzjibJmvvPiqzvOAtEZL04OBS1V
+         1QyzfAbOuHYcYuAub5PH/n0O9cnevpLLRR53hGt6MwVS4tfUHeX2yxd6ZalORoTLwyq1
+         zYrh/sF7xnaj2ncQxTx5I7BFGUh0wGEqs6NpbCZTrHYmDKvTJkDyqFWZTpz5bgooogxx
+         +1MKkdwWRzAGJiFyISNqvAcvMu6wXkANnnA9e+hihGO65UO0kzjed4EnuERaFruadh78
+         5FpzwRD/sFUQk9fhs+GjaVMcmyPflZ9frBNX1a+aT6ulKoRlj6wL4t6ArMAfyQGTiuwL
+         3QQw==
+X-Gm-Message-State: AC+VfDyM9G1flLAVGLXP5Sp/OysRCscvXHKs8rc25D2P4+DcCu8zeu8i
+        27O86anAAQAFzJawFxYOark=
+X-Google-Smtp-Source: ACHHUZ6bktKHi4RtR5TxxDT7PhQVPVW6/GNP+pfZv8B+iznFQyN0jz13Of0kBGzqvn9lU71SJ2Re7Q==
+X-Received: by 2002:a5d:6346:0:b0:307:977a:e693 with SMTP id b6-20020a5d6346000000b00307977ae693mr19229919wrw.59.1684095683796;
+        Sun, 14 May 2023 13:21:23 -0700 (PDT)
+Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d4a84000000b003062b6a522bsm30344898wrq.96.2023.05.14.13.21.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 May 2023 10:59:09 -0700 (PDT)
-Message-ID: <42b3c24a-8c3f-df03-18b8-312520d6c963@gmail.com>
-Date:   Sun, 14 May 2023 18:59:07 +0100
+        Sun, 14 May 2023 13:21:23 -0700 (PDT)
+Subject: Re: [PATCH v4] checkout/switch: disallow checking out same branch in
+ multiple worktrees
+To:     phillip.wood@dunelm.org.uk, Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+        Jinwook Jeong <vustthat@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20230119055325.1013-1-carenas@gmail.com>
+ <20230120113553.24655-1-carenas@gmail.com>
+ <8f24fc3c-c30f-dc70-5a94-5ee4ed3de102@dunelm.org.uk>
+ <CAPUEspjuXSncRxo5DMj1pA5zcYvn4Y6epdijYL6HJRGhk_6q7g@mail.gmail.com>
+ <a848b7d5-fd40-b043-7ed9-1672f65312e6@dunelm.org.uk>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <31ab5d7c-d310-1659-5d56-2fd341c44275@gmail.com>
+Date:   Sun, 14 May 2023 22:21:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/2] Fix two rebase bugs related to total_nr
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1531.git.1683759338.gitgitgadget@gmail.com>
- <pull.1531.v2.git.1683965487.gitgitgadget@gmail.com>
+In-Reply-To: <a848b7d5-fd40-b043-7ed9-1672f65312e6@dunelm.org.uk>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1531.v2.git.1683965487.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+On 27-ene-2023 14:46:45, Phillip Wood wrote:
+> Hi Carlo
+> 
+> On 20/01/2023 22:12, Carlo Arenas wrote:
+> > On Fri, Jan 20, 2023 at 7:08 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > > 
+> > > On 20/01/2023 11:35, Carlo Marcelo Arenas Belón wrote:
+> > > > Commands `git switch -C` and `git checkout -B` neglect to check whether
+> > > > the provided branch is already checked out in some other worktree, as
+> > > > shown by the following:
+> > > > 
+> > > >     $ git worktree list
+> > > >     .../foo    beefb00f [main]
+> > > >     $ git worktree add ../other
+> > > >     Preparing worktree (new branch 'other')
+> > > >     HEAD is now at beefb00f first
+> > > >     $ cd ../other
+> > > >     $ git switch -C main
+> > > >     Switched to and reset branch 'main'
+> > > >     $ git worktree list
+> > > >     .../foo    beefb00f [main]
+> > > >     .../other  beefb00f [main]
+> > > > 
+> > > > Fix this problem by teaching `git switch -C` and `git checkout -B` to
+> > > > check whether the branch in question is already checked out elsewhere.
+> > > > 
+> > > > Unlike what it is done for `git switch` and `git checkout`, that have
+> > > > an historical exception to ignore other worktrees if the branch to
+> > > > check is the current one (as required when called as part of other
+> > > > tools), the logic implemented is more strict and will require the user
+> > > > to invoke the command with `--ignore-other-worktrees` to explicitly
+> > > > indicate they want the risky behaviour.
+> > > > 
+> > > > This matches the current behaviour of `git branch -f` and is safer; for
+> > > > more details see the tests in t2400.
+> > > 
+> > > As I said before, it would be much easier for everyone else to
+> > > understand the changes if you wrote out what they were rather than
+> > > saying "look at the tests". I do appreciate the improved test
+> > > descriptions though - thanks for that.
+> > 
+> > Apologies on that, I tried to come up with something that would
+> > describe the change of behaviour other than the paragraph above and
+> > couldn't come out with a better explanation except reading the tests
+> > (which I know is complicated by the fact they are interlinked).
+> > 
+> > The behaviour I am changing is also not documented (other than by the
+> > test) and might have been added as a quirk to keep the scripted rebase
+> > and bisect going when confronted with branches that were checked out
+> > in multiple worktrees, and as such might had not be intended for
+> > `switch`, and might not be needed anymore either.
+> > 
+> > Using`checkout` for simplicity, but also applies to `switch`,
+> > 
+> >    % git worktree list
+> >    .../base  6a45aba [main]
+> >    % git worktree add -f ../other main
+> >    Preparing worktree (checking out 'main')
+> >    HEAD is now at 6a45aba init
+> >    % cd ../other
+> >    % git checkout main
+> >    Already on 'main'
+> >    % git checkout -B main
+> >    fatal: 'main' is already checked out at '.../base'
+> 
+> Thanks for explaining that. If there is no <start-point> given we don't
+> reset the branch so it seems a bit harsh to error out here.
 
-On 13/05/2023 09:11, Johannes Schindelin via GitGitGadget wrote:
-> I recently picked up work where I regularly rebase large branch thickets
-> consisting of thousands of commits. During those rebases, I could not fail
-> to notice that the progress initially showed a total number around 2,100,
-> when the actual number of commands was more like 1,850. And indeed, when
-> resuming the rebase after being interrupted due to a break command or due to
-> a merge conflict, the progress showed the correct number!
-> 
-> So I set out to fix this, stumbling over an incorrect use of total_nr in the
-> --update-refs code, so I fixed that, too.
-> 
-> Note: These patches apply cleanly on top of ds/rebase-update-ref as well as
-> on top of the current main branch.
-> 
-> Changes since v1:
-> 
->   * Clarified the pattern expected by the test case in the progress output,
->     as suggested by Junio.
->   * Simplified the code as suggested by Phillipp, based on the insight that
->     complete_action() (naming is hard!) is only called at the very beginning
->     of a rebase, and therefore there cannot be any already-done commands in
->     the todo list.
+We say in the documentation:
 
-This version looks good to me, thanks for re-rolling
+   +
+   If `-B` is given, `<new-branch>` is created if it doesn't exist; otherwise, it
+   is reset. This is the transactional equivalent of
+   +
+   ------------
+   $ git branch -f <branch> [<start-point>]
+   $ git checkout <branch>
+   ------------
+   +
 
-Phillip
+and, since 55c4a67307 (Prevent force-updating of the current branch,
+2011-08-20), we return with error on "git branch -f <current-branch> [...]".
 
-> Johannes Schindelin (2):
->    rebase --update-refs: fix loops
->    rebase -r: fix the total number shown in the progress
-> 
->   sequencer.c              | 13 ++++++++-----
->   t/t3430-rebase-merges.sh |  8 ++++++++
->   2 files changed, 16 insertions(+), 5 deletions(-)
-> 
-> 
-> base-commit: 4611884ea883908a9638cafbd824c401c41cf7f6
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1531%2Fdscho%2Ffix-rebase-i-progress-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1531/dscho/fix-rebase-i-progress-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1531
-> 
-> Range-diff vs v1:
-> 
->   1:  2ac7c7a7c61 = 1:  2ac7c7a7c61 rebase --update-refs: fix loops
->   2:  d12d5469f8c ! 2:  cac809bcffd rebase -r: fix the total number shown in the progress
->       @@ Commit message
->            Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->        
->         ## sequencer.c ##
->       +@@ sequencer.c: void todo_list_release(struct todo_list *todo_list)
->       + static struct todo_item *append_new_todo(struct todo_list *todo_list)
->       + {
->       + 	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
->       +-	todo_list->total_nr++;
->       + 	return todo_list->items + todo_list->nr++;
->       + }
->       +
->        @@ sequencer.c: int todo_list_parse_insn_buffer(struct repository *r, char *buf,
->         	char *p = buf, *next_p;
->         	int i, res = 0, fixup_okay = file_exists(rebase_path_done());
->       @@ sequencer.c: int todo_list_parse_insn_buffer(struct repository *r, char *buf,
->         	for (i = 1; *p; i++, p = next_p) {
->         		char *eol = strchrnul(p, '\n');
->        @@ sequencer.c: int todo_list_parse_insn_buffer(struct repository *r, char *buf,
->       - 			item->arg_offset = p - buf;
->       - 			item->arg_len = (int)(eol - p);
->         			item->commit = NULL;
->       --		}
->       -+		} else if (item->command == TODO_COMMENT)
->       -+			todo_list->total_nr--;
->       + 		}
->         
->       ++		if (item->command != TODO_COMMENT)
->       ++			todo_list->total_nr++;
->       ++
->         		if (fixup_okay)
->         			; /* do nothing */
->       + 		else if (is_fixup(item->command))
->        @@ sequencer.c: int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->       - 	struct todo_list new_todo = TODO_LIST_INIT;
->       - 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
->       - 	struct object_id oid = onto->object.oid;
->       --	int res;
->       -+	int new_total_nr, res;
->       -
->       - 	find_unique_abbrev_r(shortonto, &oid, DEFAULT_ABBREV);
->       -
->       -@@ sequencer.c: int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->       - 		return error(_("nothing to do"));
->       - 	}
->       -
->       -+	new_total_nr = todo_list->total_nr - count_commands(todo_list);
->       - 	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
->       - 			     shortonto, flags);
->       - 	if (res == -1)
->       -@@ sequencer.c: int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->       - 		return -1;
->       - 	}
->       -
->       -+	new_total_nr += count_commands(&new_todo);
->       -+	new_todo.total_nr = new_total_nr;
->       -+
->       - 	/* Expand the commit IDs */
->         	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
->         	strbuf_swap(&new_todo.buf, &buf2);
->         	strbuf_release(&buf2);
->        -	new_todo.total_nr -= new_todo.nr;
->       ++	/* Nothing is done yet, and we're reparsing, so let's reset the count */
->       ++	new_todo.total_nr = 0;
->         	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
->         		BUG("invalid todo list after expanding IDs:\n%s",
->         		    new_todo.buf.buf);
->       @@ t/t3430-rebase-merges.sh: test_expect_success '--rebase-merges with message matc
->        +test_expect_success 'progress shows the correct total' '
->        +	git checkout -b progress H &&
->        +	git rebase --rebase-merges --force-rebase --verbose A 2> err &&
->       -+	grep "^Rebasing.*14.$" err >progress &&
->       ++	# Expecting "Rebasing (N/14)" here, no bogus total number
->       ++	grep "^Rebasing.*/14.$" err >progress &&
->        +	test_line_count = 14 progress
->        +'
->        +
-> 
+Therefore, when the current branch is checked out in multiple worktrees, it
+seems consequent to error on "git checkout -B <current_branch> [...]".
+
+But we want to allow "git checkout -B <current_branch>", without <start-point>,
+as a way to say "git reset --keep", see: 39bd6f7261 (Allow checkout -B
+<current-branch> to update the current branch, 2011-11-26).
+
+Your suggestion not to error is not only reasonable, but also seems desirable.
+
+Thanks.
