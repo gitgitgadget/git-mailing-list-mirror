@@ -2,109 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC7C1C7EE26
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 19:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FC93C77B75
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 19:48:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245120AbjEOTYv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 15:24:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40026 "EHLO
+        id S243939AbjEOTsd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 15:48:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245203AbjEOTYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 15:24:17 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29686160BA
-        for <git@vger.kernel.org>; Mon, 15 May 2023 12:23:56 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-ba729a64ba8so3354765276.2
-        for <git@vger.kernel.org>; Mon, 15 May 2023 12:23:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684178635; x=1686770635;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZaLbohQ+PKZiejMjH0QzkbAVObghkl6P97WFXVQ+OhI=;
-        b=T5JcUAGUKE+YUeiInqMEEmFtHd1u/E5//YY8L90/stspex3iQmKL/mSzVseITQIO9n
-         82nAZLs1b5TlNTaFbuSfdQtwyZKLeKMfn4eXPJqpkwWoVxVxaNlsT6tkzlbLzLzA89So
-         M5hb3czSCpDzV5nU2QAXS0to1XunWmZ1pKbNINT707sgS5hJARIUE+Oq3iduyvN42i/U
-         OWTBafJJIttqTdK2Earuv2yX6DDM8SM3aUOPtRme/igvrFgj6HPV3mRnq3ivKhwrqvlv
-         eak4YIkwr90xT/a0RqFsNuy8WAsqmAdtSarlZXObwymgo9gjAJvP/nNNqplq25CyD6Fr
-         wpYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684178635; x=1686770635;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZaLbohQ+PKZiejMjH0QzkbAVObghkl6P97WFXVQ+OhI=;
-        b=GSDKDXDRjUblH6NMBwjcDemNd7r8UEZzih1AH2Xz5O6yWZzQo75Yoe95T3ifNne9xx
-         2zsNljSPrMa9hQ5i03komf7o+bWc9A4aCkPyj0Z8M9M+PgFKMGwVcPK9UlHYPVQE5Iqq
-         Dp9NV210ANvYbhj18xR0ZkVG1IZCQPTl+o7oUkUm8K9zQLtmd76LnvjdCM+0t/MvSoCE
-         W2dQPGSBFiyRcpKbEt5fADTinUyCbFK/Ucp2U/Vjjrw7sbzLGbG6LH3Lr9MvXIR8zYXL
-         68QFHHnFjppMWdVF4gA493+oeL/4wSubIJA2VPn0G9D9Cr8VBijmtAdzgTUmGGw5a9dQ
-         92zA==
-X-Gm-Message-State: AC+VfDziKcbCos0L6Npkg80UwBmSS0z227tPMBfyNoOUfCEpLz8YXlGH
-        HMZ9Mt5sD2ocDTH8IG0Thf44WlGQRqhCZeJ3weNyPg==
-X-Google-Smtp-Source: ACHHUZ4QNJ1WIzXUhN1c7086uCwurZF4ULBgnxN1s2IJdIHh9tF313QxBayXD1fynXKgNPi/GlZKeg==
-X-Received: by 2002:a25:6912:0:b0:b3b:a48c:b241 with SMTP id e18-20020a256912000000b00b3ba48cb241mr30248931ybc.31.1684178634861;
-        Mon, 15 May 2023 12:23:54 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w14-20020a25ef4e000000b00ba7fd64e113sm17144ybm.36.2023.05.15.12.23.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 12:23:54 -0700 (PDT)
-Date:   Mon, 15 May 2023 15:23:53 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 16/16] ls-refs.c: avoid enumerating hidden refs where
- possible
-Message-ID: <2c6b89d64a164bdeec34db13017f3228c6a73184.1684178576.git.me@ttaylorr.com>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <cover.1684178576.git.me@ttaylorr.com>
+        with ESMTP id S236744AbjEOTsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 15:48:32 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D527AD2C
+        for <git@vger.kernel.org>; Mon, 15 May 2023 12:48:31 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9B8811F6B77;
+        Mon, 15 May 2023 15:48:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d9BHsyfEJi6VBzs04eWf9x+6+v8bphg6Ir7XdR
+        el5U8=; b=AMbz9KYhGhTfNuemaByWuFaCIXZqYYWIVtmOU5MhKo+Mw71S5WU5rp
+        7HIKphPNVIDCG3h4e+Zi9IG9Of2+tp/YGRhvkqWYNsyFwJWFitJd+0xs1WYTn8yN
+        r+sc/9fMnA7L7927313EEvSiRaDIzuSBgvqS1YQ3HKHxJsmof4a6Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 93F7A1F6B76;
+        Mon, 15 May 2023 15:48:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.203.137.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C51631F6B74;
+        Mon, 15 May 2023 15:48:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Sean Allred <code@seanallred.com>
+Subject: Re: [PATCH v3 1/6] show-ref doc: update for internal consistency
+References: <pull.1471.v2.git.git.1679478573.gitgitgadget@gmail.com>
+        <pull.1471.v3.git.git.1684152793.gitgitgadget@gmail.com>
+        <fe442c2041b01985a4ecb0f2e9651231af2a439b.1684152793.git.gitgitgadget@gmail.com>
+Date:   Mon, 15 May 2023 12:48:26 -0700
+In-Reply-To: <fe442c2041b01985a4ecb0f2e9651231af2a439b.1684152793.git.gitgitgadget@gmail.com>
+        (Sean Allred via GitGitGadget's message of "Mon, 15 May 2023 12:13:08
+        +0000")
+Message-ID: <xmqqttwd8jg5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1684178576.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 76265A18-F359-11ED-B0FF-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar fashion as in previous commits, teach `ls-refs` to avoid
-enumerating hidden references where possible.
+"Sean Allred via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-As before, this is linux.git with one hidden reference per commit.
+> From: Sean Allred <allred.sean@gmail.com>
+>
+> - Use inline-code syntax for options where appropriate.
+> - Use code blocks to clarify output format.
+>
+> This patch also swaps out 'SHA-1' language for the implementation-
+> agnostic 'OID' term where appropriate in preparation for supporting
+> different hashing algorithms.
 
-    $ hyperfine -L v ,.compile 'git{v} -c protocol.version=2 ls-remote .'
-    Benchmark 1: git -c protocol.version=2 ls-remote .
-      Time (mean ± σ):      89.8 ms ±   0.6 ms    [User: 84.3 ms, System: 5.7 ms]
-      Range (min … max):    88.8 ms …  91.3 ms    32 runs
+Making the last one into the third bullet item, e.g.
 
-    Benchmark 2: git.compile -c protocol.version=2 ls-remote .
-      Time (mean ± σ):       6.5 ms ±   0.1 ms    [User: 2.4 ms, System: 4.3 ms]
-      Range (min … max):     6.2 ms …   8.3 ms    397 runs
+    - Use OID instead of SHA-1, as we support different hashing
+      algorithems these days.
 
-    Summary
-      'git.compile -c protocol.version=2 ls-remote .' ran
-       13.85 ± 0.33 times faster than 'git -c protocol.version=2 ls-remote .'
+would have been even easier to follow, but I'll let it pass.  
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ls-refs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+In prose, "object name" would flow better than OID (the original
+would say not just "SHA-1" but use "SHA-1 hash" or somesuch in such
+a context), I would think.  When used as a placeholder, OID would be
+perfectly fine (<oid>, where we used to write <hash> or <sha-1> or
+<SHA-1>).
 
-diff --git a/ls-refs.c b/ls-refs.c
-index 8c3181d051..c9a723ba89 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -193,7 +193,7 @@ int ls_refs(struct repository *r, struct packet_reader *request)
- 		strvec_push(&data.prefixes, "");
- 	refs_for_each_fullref_in_prefixes(get_main_ref_store(r),
- 					  get_git_namespace(), data.prefixes.v,
--					  NULL, send_ref, &data);
-+					  data.hidden_refs.v, send_ref, &data);
- 	packet_fflush(stdout);
- 	strvec_clear(&data.prefixes);
- 	strbuf_release(&data.buf);
--- 
-2.40.1.572.g5c4ab523ef
+>  -s::
+>  --hash[=<n>]::
+>  
+> -	Only show the SHA-1 hash, not the reference name. When combined with
+> -	--dereference the dereferenced tag will still be shown after the SHA-1.
+> +	Only show the OID, not the reference name. When combined with
+> +	`--dereference`, the dereferenced tag will still be shown after the OID.
+
+Not a problem you created, but I noticed we do not explain what
+"=<n>" up there does.
+
+> @@ -96,7 +96,13 @@ OPTIONS
+>  OUTPUT
+>  ------
+>  
+> -The output is in the format: '<SHA-1 ID>' '<space>' '<reference name>'.
+> +The output is in the format:
+> +
+> +------------
+> +<oid> SP <ref> LF
+> +------------
+> +
+> +For example,
+
+OK.
+
+> @@ -110,7 +116,13 @@ $ git show-ref --head --dereference
+>  ...
+>  -----------------------------------------------------------------------------
+>  
+> -When using --hash (and not --dereference) the output format is: '<SHA-1 ID>'
+> +When using `--hash` (and not `--dereference`), the output is in the format:
+> +
+> +------------
+> +<OID> LF
+> +------------
+> +
+> +For example,
+
+Let's consistently use <oid> in lowercase as the previous hunk.
+
+Everything else looked great in this step.  Thanks for working on this.
