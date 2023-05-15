@@ -2,75 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B62AC77B75
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 21:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D58CDC77B75
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 21:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244870AbjEOVuM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 17:50:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40490 "EHLO
+        id S245231AbjEOVuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 17:50:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243404AbjEOVuL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 17:50:11 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE1EE720
-        for <git@vger.kernel.org>; Mon, 15 May 2023 14:50:10 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-54c2999fdc7so253686277b3.2
-        for <git@vger.kernel.org>; Mon, 15 May 2023 14:50:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684187409; x=1686779409;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3gcePHDpISfC1uT335V5oapGdccWwrpWya0/EgvtOJE=;
-        b=3ZzQsv85XY7QGanIS19+fe2I7vbmmEM5k6mik9nWUVfjm0uLWW2yn5qJYTpK94O17L
-         +cPznQAoHXjHQMuViZKXPXKoPIyJGnJHp1xmG2jgugDVUhZ3ueY7aYDBrseGwJiaFW75
-         83dDae4IqpyDm9F7hBxQuseBURkfKtySovqTCXNjz6AkmnADK2ctbTzCTA4GO5wGvIWP
-         7GKDBW1DQtOfyrb9QiWJE7WbGxv6r1Z7F9zuLLo8P0mTF45iv38ORSQgjU+WeOpD/MmP
-         E7sYxLq5QAmbQDizsCM3dYR9Ax42Q6/b/3rQdjuR3xqlqP8Ygxwj1B1gUgB7bpQaF7P7
-         l1Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684187409; x=1686779409;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gcePHDpISfC1uT335V5oapGdccWwrpWya0/EgvtOJE=;
-        b=UrRRbLQliZ0UbYI7ZspxMuNAFRLjm3af++YmEVbE2YCu0cAjyZ82SF+SLQtc/cdT2d
-         nzcmDJLnNURHruExxdkAU9WRzGIDGHZ0HfY0zGmZ370o4fjov+Vku/OxW/qNiIP5YxrT
-         GnRawQ8eJA2IMjQgYNbjNXhgbpxPlzMiXR8rsufZUy5Gs+SYK/JPrRA0UB786i92gQvA
-         WPFJxHG1fI9Z9rUaB2zY5kWpvFIRKk/E10BYZDcZ7udf5SE6IQkMEhG9hOHdNFA5KCQl
-         ECrpTSLStZWO7An+OqVvbzqiw6uEXcPDC7flU0vkawE62MfyCduemyYJq8NAY5hLxMPn
-         nxFA==
-X-Gm-Message-State: AC+VfDzjRazfHr/L+KI8toJQJcirCMXdaXx3C1iYnjCSjl2q8Pn1oMrh
-        Fpr5yJmiiGl1cWLDxXEYIH1rgK/MWNtE8bOgv3Wk
-X-Google-Smtp-Source: ACHHUZ6L9j5IEpPnisTu+teSyfryD/1WEkWm6rQg8ckuRuJPQD5283lS8rvPwuPNRCjRQnd9rNyOOuACHgSvEk4B26Yd
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:3aab:56bd:1f4b:d239])
- (user=jonathantanmy job=sendgmr) by 2002:a81:bc09:0:b0:55d:95b7:39d8 with
- SMTP id a9-20020a81bc09000000b0055d95b739d8mr20589939ywi.7.1684187409754;
- Mon, 15 May 2023 14:50:09 -0700 (PDT)
-Date:   Mon, 15 May 2023 14:50:07 -0700
-In-Reply-To: <abfb127b812c3c7501e54bbb9213c8598056ad50.1683875070.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230515215007.1446214-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 15/27] repository.h: move declaration of the_index from cache.h
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>,
-        Calvin Wan <calvinwan@google.com>, Jeff King <peff@peff.net>,
-        Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S243404AbjEOVui (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 17:50:38 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969DDE720
+        for <git@vger.kernel.org>; Mon, 15 May 2023 14:50:37 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FC02196435;
+        Mon, 15 May 2023 17:50:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=bX/NvZoGG/So
+        srw6E3AGQRQoTqxxHukiwI3wK0K9kqE=; b=E76xotEd9yEXdqLBq3h6n+5qBHbY
+        uTYcc2eLTVl1dxArQCddcyVT3xNi1rHEThh2e2feIlicooXtmj+9WFrkbrlht4pD
+        ShQDE8jl4mh2MG0aAqvLa8VnTP/kLw9Dsrg4w0BeqN92yTGd1WkdPkOz3J2j+ijA
+        0E67tOmj1N/yz4I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5701B196434;
+        Mon, 15 May 2023 17:50:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.203.137.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BDACE196432;
+        Mon, 15 May 2023 17:50:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] tag: keep the message file in case ref
+ transaction fails
+References: <cover.1684067644.git.code@khaugsbakk.name>
+        <cover.1684181855.git.code@khaugsbakk.name>
+Date:   Mon, 15 May 2023 14:50:32 -0700
+In-Reply-To: <cover.1684181855.git.code@khaugsbakk.name> (Kristoffer
+        Haugsbakk's message of "Mon, 15 May 2023 22:29:32 +0200")
+Message-ID: <xmqq7ct98dsn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 84C4078A-F36A-11ED-950C-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> the_index is a global variable defined in repository.c; as such, its
-> declaration feels better suited living in repository.h rather than
-> cache.h.  Move it.
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-Up to here looks good. Now to look at the read-cache-ll/read-cache split
-in patch 16...
- 
+>      +	GIT_EDITOR=3D./fakeeditor git tag -a foo &&
+>     -+	! test -e .git/TAG_EDITMSG
+>     ++	! test_path_exists .git/TAG_EDITMSG
+
+This is not quite right.  test_path_exists is loud when its
+expectation that the path _exists_ is not met, i.e.
+
+        test_path_exists () {
+                test "$#" -ne 1 && BUG "1 param"
+                if ! test -e "$1"
+                then
+                        echo "Path $1 doesn't exist"
+                        false
+                fi
+        }
+
+But this test expects that .git/TAG_EDITMSG to be missing.  When the
+test is run with "-v" to make the output from this 'echo' visible,
+we will keep getting the complaint when the test is happy, which is
+not quite what we want.
+
+What you want to use is test_path_is_missing, without "!".
+
+>       ## Notes (series) ##
+>     -    I tried to maintain the proper formatting by using `clang-form=
+at` via Emacs on
+>     -    the affected lines.
+>     +    I duplicated this message (this isn=E2=80=99t obvious in the d=
+iff):
+>     +
+>     +        fprintf(stderr,
+>     +                _("The tag message has been left in %s\n"),
+>     +                path);
+>     +
+>     +    Should this be factored into a static function instead?
+
+When the third copy is made, we would definitely insist avoiding
+copies, but until then, I am indifferent.  Others may have different
+opinions, though.
+
