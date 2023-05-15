@@ -2,118 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E83C7EE25
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 18:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B81C4C7EE24
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 19:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245092AbjEOSRK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 14:17:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52522 "EHLO
+        id S244752AbjEOTTV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 15:19:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245207AbjEOSQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 14:16:50 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C188C18865
-        for <git@vger.kernel.org>; Mon, 15 May 2023 11:15:01 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 333AA1F607D;
-        Mon, 15 May 2023 14:15:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WfPho6xUNGxTu1zNSRfplGsrOB0qmlOlCMBbJy
-        VHMgA=; b=dTalAABvVhHdC2NEFfUYXhUPxVpdg8AZdJ3zeMy1JvKGTw+eBA9qsG
-        PGwgeeJm9yLZfdxFBRqtDwBShHzRJNoTbiEwLp1aoomYW6VW9OZXxk9f/Zp/6eTd
-        83ongyi03S3Grtvtyl3COO6F/CUuNBWPGGgrgzJGPJd8KkEstYISg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B47D1F607A;
-        Mon, 15 May 2023 14:15:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.203.137.187])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CEFF71F6076;
-        Mon, 15 May 2023 14:14:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     M Hickford <mirth.hickford@gmail.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] credential/libsecret: support password_expiry_utc
-References: <pull.1469.v2.git.git.1679729764851.gitgitgadget@gmail.com>
-        <pull.1469.v3.git.git.1683270298313.gitgitgadget@gmail.com>
-        <CAGJzqskMwOJkriH6serqdwAVYi+fftEL8ohJd-suP6v+OxB_bg@mail.gmail.com>
-Date:   Mon, 15 May 2023 11:14:55 -0700
-In-Reply-To: <CAGJzqskMwOJkriH6serqdwAVYi+fftEL8ohJd-suP6v+OxB_bg@mail.gmail.com>
-        (M. Hickford's message of "Mon, 15 May 2023 11:50:01 +0100")
-Message-ID: <xmqq353xa2cg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S244262AbjEOTTU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 15:19:20 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC0BB8
+        for <git@vger.kernel.org>; Mon, 15 May 2023 12:19:18 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id e9e14a558f8ab-334f64c91aeso23453635ab.2
+        for <git@vger.kernel.org>; Mon, 15 May 2023 12:19:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684178358; x=1686770358;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jf241MmniCdb/eHyIXTK+bi41wqhOhBgq1fF/wvYKq0=;
+        b=Q9NEP2EM47K53EcU+i5eFMuvLdzN3QJwt0nZyTQn5ETkRT/co7vQhTanMYO3x5pDf1
+         bOl+6EMq5ljuDTBQhzwJwfQEwQhjY7vHsYluozI9Qv8AiCPCbPhhZfbTBjNmPCEFG2fr
+         OYy2/ExEdBlyCNu0lSd45etPFaFR9+Rvp8FvwYsn6Vsicy/SlqaihB7Y+SgbaGJz4fv4
+         yBORfB7uWgS88GDhtghSpOuBap1Jn661eoWCimiLWvcQW/ir4mdLjbkKytRZMAW0a3n1
+         5y860a6wFQYyH4NhRFkHv/1ZJAAT6dOU3Yr09gh7nIfS0nw9AcxQt6lJxlKRqn+IRrZs
+         79Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684178358; x=1686770358;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jf241MmniCdb/eHyIXTK+bi41wqhOhBgq1fF/wvYKq0=;
+        b=c2qLVH3tKrSCIwcSASCt17tctI8CP8UYQG4isolIX8GiJFVtYTY8fxbmKFd/ZXcXGN
+         o8iI2ydphqy1+WUtv+j7hJ8miZ18u9O+cOWAbpdDUi5gqzur+ej/UdljmdlTKQo0CpJl
+         ozOYryNbJaJdpLUqovXjsysQphL+Z+rfIIo2hfsagL3S+2VWVpHvZQr9NV6tqGzOX/m5
+         lKGOpSyuPoPgGYcC4aVcfmI3vDMDrQH0I3wdTeV6pWIPbD08GMpr0xWejOCD7MffhIKV
+         bqvmJ42NnZSQuxvEr8fOOG3ril44oZTRy8ZqK9wSyQd0bJAN27BLPCst/m9d3WRu6qph
+         FGaw==
+X-Gm-Message-State: AC+VfDyC06eOlx5OWbSjqxyB7gCxhoXd4PltzNFwwhTBeHF42EYGvaOK
+        LDPzuRrVdFb6WhBahHkf5xunUwRaiQBobw==
+X-Google-Smtp-Source: ACHHUZ65K8JXs3aui+9iKIeTdxU46Ozf8SG9yzMZpvarE+Nvg53dtmoxnjJfLcAGsKAIpYHeKdoC3Q==
+X-Received: by 2002:a92:ce05:0:b0:331:cd3:90a7 with SMTP id b5-20020a92ce05000000b003310cd390a7mr25712935ilo.17.1684178357803;
+        Mon, 15 May 2023 12:19:17 -0700 (PDT)
+Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
+        by smtp.googlemail.com with ESMTPSA id w184-20020a025dc1000000b0040fdd2a623dsm6764026jaa.138.2023.05.15.12.19.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 May 2023 12:19:17 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: [RFC][PATCH V1] diff-tree: integrate with sparse index
+Date:   Mon, 15 May 2023 15:18:36 -0400
+Message-Id: <20230515191836.674234-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 65C22C4A-F34C-11ED-BB59-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-M Hickford <mirth.hickford@gmail.com> writes:
+Remove full index requirement for `git diff-tree`. Add tests that verify
+that 'git diff-tree' behaves correctly when the sparse index is enabled
+and test to ensure the index is not expanded.
 
->> +static const SecretSchema schema = {
->> +       "org.git.Password",
->> +       /* Ignore schema name for backwards compatibility with previous versions */
->> +       SECRET_SCHEMA_DONT_MATCH_NAME,
->> +       {
->> +               {  "user", SECRET_SCHEMA_ATTRIBUTE_STRING },
->> +               {  "object", SECRET_SCHEMA_ATTRIBUTE_STRING },
->> +               {  "protocol", SECRET_SCHEMA_ATTRIBUTE_STRING },
->> +               {  "port", SECRET_SCHEMA_ATTRIBUTE_INTEGER },
->> +               {  "server", SECRET_SCHEMA_ATTRIBUTE_STRING },
->> +               {  "password_expiry_utc", SECRET_SCHEMA_ATTRIBUTE_INTEGER },
->
-> I've been testing this patch with credential-generating helper
-> git-credential-helper. It works, but because libsecret overwrites
-> items if and only if the attributes match exactly, you end up with
-> many items in the secret store that differ only by expiry date. This
-> is inelegant, and confusing to users. Please hold this patch, don't
-> merge to master. A solution might be to store the expiry date as the
-> secret of a separate item (even though the value is not confidential)
+The `p2000` tests demonstrate a ~98% execution time reduction for
+'git diff-tree' using a sparse index:
 
-Thanks for stopping me.  I'll mark the topic as "on hold".
+Test                                                before  after
+------------------------------------------------------------------------
+2000.94: git diff-tree HEAD (full-v3)                0.05   0.04 -20.0%
+2000.95: git diff-tree HEAD (full-v4)                0.06   0.05 -16.7%
+2000.96: git diff-tree HEAD (sparse-v3)              0.59   0.01 -98.3%
+2000.97: git diff-tree HEAD (sparse-v4)              0.61   0.01 -98.4%
+2000.98: git diff-tree HEAD -- f2/f4/a (full-v3)     0.05   0.05 +0.0%
+2000.99: git diff-tree HEAD -- f2/f4/a (full-v4)     0.05   0.04 -20.0%
+2000.100: git diff-tree HEAD -- f2/f4/a (sparse-v3)  0.58   0.01 -98.3%
+2000.101: git diff-tree HEAD -- f2/f4/a (sparse-v4)  0.55   0.01 -98.2%
 
-It does sound problematic, but if we think about what is used as
-keys and what is used as values, it does make a lot more sense to
-store the expiry as part of a value.  After all, we are not even
-asking "give me the password that will expire in the most distant
-future" or anything like that.  We consult the database with "who
-wants to access what server over which protocol at what port" as the
-key and expect we find the suitable authentication material to use.
-It would be best if we can treat the expiry date as an additional
-attribute of that authentication material.  
+Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+---
+ builtin/diff-tree.c                      |  4 ++
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 62 ++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+)
 
-Do the methods to store and retrieve a password from the keyring
-allow us to add such an extra attribute to the password?  I have no
-idea how the Gnome keyring API works, but is there a way to mark
-each entry in the SecretSchemaAttributes as "this is used as a key"
-vs "this is used as a value---do not match"?  Would thinking along
-such a line help?
-
-Another possibility would be to store encoded concatenation of the
-real password and expiration timestamp and decode them into two upon
-retrieval.  If we were the only user of the keystore, that may work,
-but if we are sharing the keystore with other applications, it would
-be a non-starter.
-
-What do other application do, when using the keyring to store
-expirable passwords with services that do let you know the
-expiration time of the password?  If they just ask the users again
-only after finding out that the password did not work, perhaps we
-should do the same, without being proactive and notice the expiry
-ourselves?  That is, instead of failing the access to the server
-immediately upon seeing an auth failure, if the authentication
-material is know to have expiration time, can we let the application
-layer to ask the end-user to provide an refreshed password and try
-again?  For such a scheme, we do not have to store ever-changing
-"password_expiry_utc" and contaminate the keyring with crufts whose
-expiry dates are the only difference.  Instead we can just have a
-Boolean "does this site expire a valid password?" and use it to
-behave differently, if desired, from sites for which the passwords
-do not expire, perhaps?
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 385c2d0230..c5d5730ebf 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -121,6 +121,10 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 		usage(diff_tree_usage);
+ 
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
++
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	repo_init_revisions(the_repository, opt, prefix);
+ 	if (repo_read_index(the_repository) < 0)
+ 		die(_("index file corrupt"));
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 60d1de0662..14caf01718 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -129,5 +129,7 @@ test_perf_on_all git grep --cached bogus -- "f2/f1/f1/*"
+ test_perf_on_all git write-tree
+ test_perf_on_all git describe --dirty
+ test_perf_on_all 'echo >>new && git describe --dirty'
++test_perf_on_all git diff-tree HEAD
++test_perf_on_all git diff-tree HEAD -- $SPARSE_CONE/a
+ 
+ test_done
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 0c784813f1..f08edcbf8e 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -2108,4 +2108,66 @@ test_expect_success 'sparse-index is not expanded: write-tree' '
+ 	ensure_not_expanded write-tree
+ '
+ 
++test_expect_success 'diff-tree' '
++	init_repos &&
++
++	write_script edit-contents <<-\EOF &&
++	echo text >>"$1"
++	EOF
++
++	# Get the tree SHA for the current HEAD
++	tree1=$(git -C sparse-index rev-parse HEAD^{tree}) &&
++
++	# make a change inside the sparse cone
++	run_on_all ../edit-contents deep/a &&
++	test_all_match git add deep/a &&
++	test_all_match git commit -m "Change deep/a" &&
++
++	# Get the tree SHA for the new HEAD
++	tree2=$(git -C sparse-index rev-parse HEAD^{tree}) &&
++
++
++	test_all_match git diff-tree $tree1 $tree2 &&
++	test_all_match git diff-tree HEAD &&
++	test_all_match git diff-tree HEAD -- deep/a &&
++
++	# make a change outside the sparse cone
++	run_on_all mkdir -p folder1 &&
++	run_on_all cp a folder1/a &&
++	run_on_all ../edit-contents folder1/a &&
++	test_all_match git update-index folder1/a &&
++	test_all_match git commit -m "Change folder1/a" &&
++
++	# Get the tree SHA for the new HEAD
++	tree3=$(git -C sparse-index rev-parse HEAD^{tree}) &&
++
++	test_all_match git diff-tree $tree1 $tree3 &&
++	test_all_match git diff-tree $tree1 $tree3 -- folder1/a &&
++	test_all_match git diff-tree HEAD &&
++	test_all_match git diff-tree HEAD -- folder1/a &&
++
++	# check that SKIP_WORKTREE files are not materialized
++	test_path_is_missing sparse-checkout/folder2/a &&
++	test_path_is_missing sparse-index/folder2/a
++'
++
++test_expect_success 'sparse-index is not expanded: diff-tree' '
++	init_repos &&
++
++	# Get the tree SHA for the current HEAD
++	tree1=$(git -C sparse-index rev-parse HEAD^{tree}) &&
++
++	echo "test1" >>sparse-index/deep/a &&
++	git -C sparse-index add deep/a &&
++	git -C sparse-index commit -m "Change deep/a" &&
++
++	# Get the tree SHA for the new HEAD
++	tree2=$(git -C sparse-index rev-parse HEAD^{tree}) &&
++
++	ensure_not_expanded diff-tree $tree1 $tree2 &&
++	ensure_not_expanded diff-tree $tree1 $tree2 -- deep/a &&
++	ensure_not_expanded diff-tree HEAD &&
++	ensure_not_expanded diff-tree HEAD -- deep/a
++'
++
+ test_done
+-- 
+2.39.0
 
