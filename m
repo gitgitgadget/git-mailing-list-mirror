@@ -2,126 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB912C77B7D
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 07:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1813EC77B75
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 07:03:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238920AbjEOHA0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 03:00:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
+        id S240462AbjEOHDI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 03:03:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238643AbjEOG7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 02:59:54 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D7438F
-        for <git@vger.kernel.org>; Sun, 14 May 2023 23:59:53 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1aafa41116fso83723545ad.1
-        for <git@vger.kernel.org>; Sun, 14 May 2023 23:59:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684133993; x=1686725993;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=qxjts3TM/FHCvlEWcjFSOKYHxr22fYZxS1euKRoGqMI=;
-        b=l4tljwIVV4DQrzXRsokdrS9QyssUmhqYIkKrK5bPziKAeCcoPbqzG6UoebY+eFDnhQ
-         PqQLJM8HNloms+8VYuN3wb0EajQjdRE6plogw16gPmZvZe/o0K+9nnzVWbwE3MtemfMW
-         78fdS6Mz6g3q/c/nYwD9e8wBucCd1+ZlSEB4CeQRb8igX7XCF4aBeh3J7YtdZpuaSY/h
-         oXVYQ6aMZezriZs/sSHSbbyBGp09V9K7oEVqm+weOWCe4bkPfUXSpeQA5qnHoAJHKr6Q
-         XPQKQkiZyK4wW0KZEejMoxa5fN4J1Hbx23q+PGdHx4mb4Gw9hyuX6cGRDOVpFwW0Ikmq
-         gaCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684133993; x=1686725993;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qxjts3TM/FHCvlEWcjFSOKYHxr22fYZxS1euKRoGqMI=;
-        b=YJj7DInGejuem+ZuK0YdnWJ81EuBfsiKFAtjihNqDdBT/k3XUE8cUo6uAAcKNC8K7P
-         Iw/vwBjGuLRAIdFD1+yfBE4rl+XmL+9zykroWoZi50S6VL99flgGc+fEVXUJlSPCA510
-         Y7WPeSfEuaSvEvJVOiLzi2hLl3luRo25EhTSsuHs3i8U+CY1jn8nbqgrG+sb5gElrY40
-         PaTMMXV5SlfRge8dCtP+2Lq01vpf5/yv3dV8LGYQeqCembNMd3KPVhrcbtRr9I4q42qQ
-         kmauHz7eVlTl7oBmnNg5BE7/VXfl7MU9vBJQkyBc0jrwIhKFgGDAk1X5njrdL+xfcOpy
-         7RYA==
-X-Gm-Message-State: AC+VfDzQiW4A/h2nMNE9lPTdnYAVkhZwSipMra8KM7SngCdH3GJTtHoY
-        Fm31gT4rZdPeR+Y+MwzOkvM=
-X-Google-Smtp-Source: ACHHUZ5TyViNbMLMmGcu6ckWCcXV1PiQIg9tdJ9qfXGGSov3dyk9OIvBRTphIJQ2pum3pFbaD2B9Zg==
-X-Received: by 2002:a17:903:11c3:b0:1ab:160c:526d with SMTP id q3-20020a17090311c300b001ab160c526dmr37563177plh.22.1684133992718;
-        Sun, 14 May 2023 23:59:52 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id w14-20020a170902e88e00b001ac591b0500sm5935912plg.134.2023.05.14.23.59.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 May 2023 23:59:52 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
+        with ESMTP id S240605AbjEOHCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 03:02:55 -0400
+X-Greylist: delayed 118 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 15 May 2023 00:02:44 PDT
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDFB610FA
+        for <git@vger.kernel.org>; Mon, 15 May 2023 00:02:44 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 34ECC1F19F4;
+        Mon, 15 May 2023 03:02:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=HV3djz4MjH9BvaVI3tx6a82zNpYtsdI+7PEgIUU4kPQ=; b=mfup
+        FH1uJCHE5gWokHs9fsOtbDCGhwbrS8tccnBh0cqZ6AN0VfJWEWJ6SweLdIUz4kG5
+        SdJutObJlH/eFWyWZ26miUKGaSyoFHrSrd7DMChj97JUxT18FaptFRlQQw87pqOS
+        VTMmCdWICix9NRoKDVQrDadxtH19M8Zw3pqmWoI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E7C21F19EF;
+        Mon, 15 May 2023 03:02:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.203.137.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3DB851F19D8;
+        Mon, 15 May 2023 03:02:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Johannes.Schindelin@gmx.de, alexhenrie24@gmail.com,
-        git@vger.kernel.org, newren@gmail.com, phillip.wood123@gmail.com,
-        tao@klerks.biz
-Subject: Re: [PATCH 1/1] doc: Glossary, describe Flattening
-References: <xmqq5ybug8s8.fsf@gitster.g>
-        <20230513165657.812-1-philipoakley@iee.email>
-Date:   Sun, 14 May 2023 23:59:51 -0700
-Message-ID: <xmqqh6seaxlk.fsf@gitster.g>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 2/3] t/t7004-tag: add failing tag message file test
+References: <cover.1684067644.git.code@khaugsbakk.name>
+        <1f24aa43f70b16381ef0cfb4f1d482706161554d.1684067644.git.code@khaugsbakk.name>
+Date:   Mon, 15 May 2023 00:02:39 -0700
+Message-ID: <xmqq4joeaxgw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 7B462728-F2EE-11ED-A923-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-> +[[def_flatten]]flatten::
-> +	Flattening is a common term for the 'linearizing' of a
-> +	selected portion of the <<def_commit_graph_general,commit graph>>.
-> +	Flattening may include excluding commits, or rearranging commits,
-> +	for the linearized sequence.
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  t/t7004-tag.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 
-Thanks for writing.  I agree that it is a good idea to define the
-verb "flatten".  The above I agree with 100%.
+Does this document the current behaviour, i.e. before applying the
+patch [3/3]?  Or is this a new test designed to fail until [3/3] is
+applied?
 
-I think I was one of the first ones who used the verb in the context
-of Git; what I wanted to convey with the verb was what it happens
-when you use "am" to rebuild some history made into a series of
-patches using the "format-patch" command on a part of the history.
+If the latter, please don't [*].
 
-When you have materials from two or more topic branches merged to
-your primary integration branch, you would omit the merge commits on
-the integration branch and send patches for commits on these topics
-in a linearized way.  Applying these patches one by one will result
-in a linearlized history, containing patches from all of these
-topics (hopefully this is done in a topological order).
+Instead, combine this with [3/3] and make it [2/2] that changes the
+behaviour of the command and protects the new behaviour from future
+breakages in a single step.  Those who are truly curious to see why
+the code change in it is necessary can apply the "code change plus
+new test" patch, and then temporarily revert only the code change
+part in their working tree to see how the test breaks without the
+code change.
 
-> +	In particular, linkgit:git-log[1] and linkgit:git-show[1] have a
-> +	range of "History Simplification" techniques that affect which
-> +	commits are included, and how they are linearized.
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 550b5b1cce..1e512dbe06 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -2136,4 +2136,14 @@ test_expect_success 'If tag is created then tag message file is unlinked' '
+>  	! test -e .git/TAG_EDITMSG
+>  '
+>  
+> +test_expect_success 'If tag cannot be created then tag message file is not unlinked' '
+> +	test_when_finished "git tag -d foo/bar" &&
+> +	write_script fakeeditor <<-\EOF &&
+> +	echo Message >.git/TAG_EDITMSG
+> +	EOF
+> +	git tag foo/bar &&
+> +	! GIT_EDITOR=./fakeeditor git tag -a foo &&
 
-I didn't think (and I do not yet agree, but I may change my mind
-after thinking about it further) that the history simplification had
-much to do with flattening.
+Imitate other tests that expect a controlled failure from our
+command, and write something like
 
-Even after a history is simplified (in the sense how rev-list family
-of commands do so), there will still be merge commits left if both
-branches contribute something to the end result.  So unless a merge
-is to cauterize the side branch (i.e. in order to record the fact
-that we already have everything we may want possibly merge to the
-integration branch from the side branch, we create a merge commit
-that merges the branch but does not change the tree from the parent
-commit on the integration branch), history simplification may not
-contribute to "excluding" commits.
+	test_must_fail env GIT_EDITOR=./fakeeditor git tag -a foo
 
-> +	The default linkgit:git-rebase[1] will drop merge commits when it
-> +	flattens history, which also may be unexpected.
+so that a segfaulting "git tag" will not count as "failing as
+expected".
 
-I am tempted to suggest dropping ", which also may be unexpected"
-here.  When learning a new system, there may be things a learner may
-not expect (that is why we have documents), so it is not all that
-useful to say "this may not be expected", expecially if we do not
-mention why it behaves that way to clear the "unexpected"-ness.
+> +	test -e .git/TAG_EDITMSG
 
-And in this case, the reason may be obvious and it is OK to be left
-unsaid---"git rebase" (without an option to keep merge commits) was
-designed to be a way to flatten history, and a flattened history by
-definition cannot have any merge commits in it.
+Use "test_path_exists" instead.
 
-> +	The two common linearization types are chronological (date-time), and
-> +	topological (shape) based orderings. Generation numbering is topological.
+Thanks.
 
-Good.
+
+[Footnote]
+
+ * Introducing this as a failing test "test_expect_failure" in [2/3]
+   and then flip it to "test_expect_success" in [3/3] would make
+   tests pass without applying [3/3], but generally it is not a
+   recommended practice.
+
+   This is because such a [3/3] patch would only show the line with
+   the test title and the behaviour of the test will not be shown in
+   the diff context.  That hurts reviewability.
