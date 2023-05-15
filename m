@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30C8CC7EE24
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 19:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07992C77B7D
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 19:24:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245147AbjEOTYY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 15:24:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
+        id S244803AbjEOTYe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 15:24:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245073AbjEOTXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 15:23:46 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D598916083
-        for <git@vger.kernel.org>; Mon, 15 May 2023 12:23:38 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55a6efe95c9so187775437b3.1
-        for <git@vger.kernel.org>; Mon, 15 May 2023 12:23:38 -0700 (PDT)
+        with ESMTP id S245170AbjEOTXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 15:23:53 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F7C312088
+        for <git@vger.kernel.org>; Mon, 15 May 2023 12:23:41 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-55a14807e4cso229262787b3.1
+        for <git@vger.kernel.org>; Mon, 15 May 2023 12:23:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684178618; x=1686770618;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684178620; x=1686770620;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XBI7CbX1D1uTZmQxEGtIXC6FqAeaYOFo23OZECFFXrk=;
-        b=tzrVuDh8SsTPBB7M4RuGZAYkdYKSz9rvr1IUMeTUkvzD7LHuZTMCPzMqsLtr6kanyi
-         3emS2XNbrk9QXsFVoz8X/TI+w/HfwlBSOkXpSDs1X0GHWRDJ/oH9zJU0oaPWNBdP9PAi
-         +eAKqrvvAHS9bheGbaADtcC7SI9HYcj5lfPACSrKYgtpZufokGhxT4fWVTQqpy8xcnZF
-         CsqKGh6AvwfO9qPhkK5SbvJ7vRIHk8Zw5qL7xMeef4CNJZ2/vzV/7BIKrKOXLfabqdW7
-         rx5vdHIyywn+2kAXmnHA5xADf4YbTUvBFSGYc+Je/Ydqgmti/IZuTIM02p7MTmWJxdhF
-         coNw==
+        bh=G+LbZ/jFbK4nuI485lF4RMAcFPTufAXjwWYPJPFW8qE=;
+        b=lFWdSSPvH48TPqhuUt+a6D0MfBUOWOittyYpD8SOOBxiyOlHJ3nffUpln2wSAhuP7X
+         qoQK3GGsg/O62nXG6my0dBhr59dxmLXIGZMMLCfvWAPtkrpDt+80eO4jVzHN89Rs4hFY
+         HstRH9mWnBKoam0TLqggW7kHm0OJ4JJ7yRF+GbL/hC+f2N2EE29XCm5/6mG7kvHyj938
+         cL8IBcGFNpKu+QpW1QHlKNDMo9R3cjYUtVx92HoVMWSefL7Rr+NwpDKxxdImMbUm3jhf
+         M6qHH7g7qnPL02Lgfc+B820LLAcDYr7enyqjgvdZH5axXrkPvQlz+50+IdqMGRHKUrJE
+         q4sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684178618; x=1686770618;
+        d=1e100.net; s=20221208; t=1684178620; x=1686770620;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XBI7CbX1D1uTZmQxEGtIXC6FqAeaYOFo23OZECFFXrk=;
-        b=g6rm/fZ4tJ8EB5SyyIFa0fTV2olVhq2LCQCg7ctw8auKeIISYbXSlghIcTZ9dHau1m
-         m3sdEOoQ4XV72FnzsgG56TL+j/+Efx3KTFLow4pg70ZncNkoSKTjKWjXNGQLLR0nNjTO
-         BULOK3vUOcyQFd6b9kzkkYWGrlBeisPrW54SyH9IMSijF8AfPB+qddk4jkVkWLCVUHzx
-         2zB0J2mR6DRYfflhkk7uSo+Ia4utjqr+ednvvyDWT5GewqW4PrrtR0Zlc1m80qwYyH/N
-         MJks49IZOYXQ1kMBcIUXF04irSjm6xNHJxkFGiEotPjrXI1p0XVkQO2XcP4TMca8l4P3
-         FpHQ==
-X-Gm-Message-State: AC+VfDzObnkSJlgCWjjigcHcniuv5gTDvHntqZkqsa8Kf4v5BhFUyQnR
-        otgTAG3mDChVmvJGqzB8NVXbuG7+jD6nBh0TCNqA6g==
-X-Google-Smtp-Source: ACHHUZ6DzDH7Ixs2ewjc4RL3FL7XLk0ziFXysXtPGfrpElAdSnPQ3TcL7AVm8pr6EwEyFRAfee+5mg==
-X-Received: by 2002:a81:84ce:0:b0:55a:3b80:c00d with SMTP id u197-20020a8184ce000000b0055a3b80c00dmr30356624ywf.25.1684178617820;
-        Mon, 15 May 2023 12:23:37 -0700 (PDT)
+        bh=G+LbZ/jFbK4nuI485lF4RMAcFPTufAXjwWYPJPFW8qE=;
+        b=I5ormjHyW1zhV6enHmIOOcAkvR68DKzabDZU7EsSXqsoB+WxO7gl8LJnIjUVVoRz57
+         22sKj8I8cjkv9EPRYJsz9JOlJhROXo3UEfWQnKrCOauTqm0lQ7lRHZ2wob6ezQi4+tPn
+         XcrlDwwI8r0r4gFdkbXxO5q9AiVLlySX139sxPtcwCkafV9wXo5y/KLP9eiV/EaTEARw
+         VjxIkSPNXUuTRUXZCI5fBzuwTP5KfkS7ECPjnfNRKmav+lCjHyMKOiJ7hACHOOJe2nHg
+         MkYfW5VYU4H2Dfw4Mgr5esmjG1/fW/exhIAcCw0AKB1WsuB7fs1wKFPy5fl/43f90o0a
+         YzOw==
+X-Gm-Message-State: AC+VfDx98dzkT84e1ofcRrEMCdXXhbtiFicj+X62cuu7Nlv90kZlY3tp
+        3y8NE+lvO8Ilj4/1n4saIBgUuLULB0M1hVJfMlag8A==
+X-Google-Smtp-Source: ACHHUZ6Glscd97NMqMbvSQGtURJHVJHE/i086s3HLq6IfrGa49BVXMDxqCjfiaA12kVMggRJpDivPQ==
+X-Received: by 2002:a81:4995:0:b0:55a:a1e5:9e1c with SMTP id w143-20020a814995000000b0055aa1e59e1cmr34506611ywa.2.1684178620601;
+        Mon, 15 May 2023 12:23:40 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u7-20020a814707000000b0055dfbb44d56sm4455ywa.144.2023.05.15.12.23.37
+        by smtp.gmail.com with ESMTPSA id d62-20020a0df441000000b00545a08184d0sm15009ywf.96.2023.05.15.12.23.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 12:23:37 -0700 (PDT)
-Date:   Mon, 15 May 2023 15:23:36 -0400
+        Mon, 15 May 2023 12:23:40 -0700 (PDT)
+Date:   Mon, 15 May 2023 15:23:39 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 10/16] refs/packed-backend.c: add trace2 counters for jump
- list
-Message-ID: <5059f5dd421c94164ce5aee19b8f920417aee27d.1684178576.git.me@ttaylorr.com>
+Subject: [PATCH v2 11/16] revision.h: store hidden refs in a `strvec`
+Message-ID: <f765b50a8405f1653cbc2e79b375c979c4361550.1684178576.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1684178576.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -68,199 +67,246 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit added low-level tests to ensure that the packed-refs
-iterator did not enumerate excluded sections of the refspace.
+In subsequent commits, it will be convenient to have a 'const char **'
+of hidden refs (matching `transfer.hiderefs`, `uploadpack.hideRefs`,
+etc.), instead of a `string_list`.
 
-However, there was no guarantee that these sections weren't being
-visited, only that they were being suppressed from the output. To harden
-these tests, add a trace2 counter which tracks the number of regions
-skipped by the packed-refs iterator, and assert on its value.
+Convert spots throughout the tree that store the list of hidden refs
+from a `string_list` to a `strvec`.
 
-Suggested-by: Derrick Stolee <derrickstolee@github.com>
+Note that in `parse_hide_refs_config()` there is an ugly const-cast used
+to avoid an extra copy of each value before trimming any trailing slash
+characters. This could instead be written as:
+
+    ref = xstrdup(value);
+    len = strlen(ref);
+    while (len && ref[len - 1] == '/')
+            ref[--len] = '\0';
+    strvec_push(hide_refs, ref);
+    free(ref);
+
+but the double-copy (once when calling `xstrdup()`, and another via
+`strvec_push()`) is wasteful.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- refs/packed-backend.c   |  2 ++
- t/t1419-exclude-refs.sh | 59 ++++++++++++++++++++++++++++-------------
- trace2.h                |  2 ++
- trace2/tr2_ctr.c        |  5 ++++
- 4 files changed, 49 insertions(+), 19 deletions(-)
+ builtin/receive-pack.c |  4 ++--
+ ls-refs.c              |  6 +++---
+ refs.c                 | 11 ++++++-----
+ refs.h                 |  4 ++--
+ revision.c             |  2 +-
+ revision.h             |  5 +++--
+ upload-pack.c          | 10 +++++-----
+ 7 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 67327e579c..7ba9fa2bb8 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -12,6 +12,7 @@
- #include "../chdir-notify.h"
- #include "../wrapper.h"
- #include "../write-or-die.h"
-+#include "../trace2.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 1a31a58367..1a8472eddc 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -90,7 +90,7 @@ static struct object_id push_cert_oid;
+ static struct signature_check sigcheck;
+ static const char *push_cert_nonce;
+ static const char *cert_nonce_seed;
+-static struct string_list hidden_refs = STRING_LIST_INIT_DUP;
++static struct strvec hidden_refs = STRVEC_INIT;
  
- enum mmap_strategy {
- 	/*
-@@ -845,6 +846,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 		iter->jump_pos++;
- 		if (iter->pos < curr->end) {
- 			iter->pos = curr->end;
-+			trace2_counter_add(TRACE2_COUNTER_ID_PACKED_REFS_JUMPS, 1);
- 			break;
- 		}
+ static const char *NONCE_UNSOLICITED = "UNSOLICITED";
+ static const char *NONCE_BAD = "BAD";
+@@ -2619,7 +2619,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		packet_flush(1);
+ 	oid_array_clear(&shallow);
+ 	oid_array_clear(&ref);
+-	string_list_clear(&hidden_refs, 0);
++	strvec_clear(&hidden_refs);
+ 	free((void *)push_cert_nonce);
+ 	return 0;
+ }
+diff --git a/ls-refs.c b/ls-refs.c
+index 6f490b2d9c..8c3181d051 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -72,7 +72,7 @@ struct ls_refs_data {
+ 	unsigned symrefs;
+ 	struct strvec prefixes;
+ 	struct strbuf buf;
+-	struct string_list hidden_refs;
++	struct strvec hidden_refs;
+ 	unsigned unborn : 1;
+ };
+ 
+@@ -155,7 +155,7 @@ int ls_refs(struct repository *r, struct packet_reader *request)
+ 	memset(&data, 0, sizeof(data));
+ 	strvec_init(&data.prefixes);
+ 	strbuf_init(&data.buf, 0);
+-	string_list_init_dup(&data.hidden_refs);
++	strvec_init(&data.hidden_refs);
+ 
+ 	git_config(ls_refs_config, &data);
+ 
+@@ -197,7 +197,7 @@ int ls_refs(struct repository *r, struct packet_reader *request)
+ 	packet_fflush(stdout);
+ 	strvec_clear(&data.prefixes);
+ 	strbuf_release(&data.buf);
+-	string_list_clear(&data.hidden_refs, 0);
++	strvec_clear(&data.hidden_refs);
+ 	return 0;
+ }
+ 
+diff --git a/refs.c b/refs.c
+index 538bde644e..ec4d5b9101 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1427,7 +1427,7 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ }
+ 
+ int parse_hide_refs_config(const char *var, const char *value, const char *section,
+-			   struct string_list *hide_refs)
++			   struct strvec *hide_refs)
+ {
+ 	const char *key;
+ 	if (!strcmp("transfer.hiderefs", var) ||
+@@ -1438,22 +1438,23 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
+ 
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		ref = xstrdup(value);
++
++		/* drop const to remove trailing '/' characters */
++		ref = (char *)strvec_push(hide_refs, value);
+ 		len = strlen(ref);
+ 		while (len && ref[len - 1] == '/')
+ 			ref[--len] = '\0';
+-		string_list_append_nodup(hide_refs, ref);
  	}
-diff --git a/t/t1419-exclude-refs.sh b/t/t1419-exclude-refs.sh
-index bc534c8ea1..350a7d2587 100755
---- a/t/t1419-exclude-refs.sh
-+++ b/t/t1419-exclude-refs.sh
-@@ -9,7 +9,8 @@ TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- for_each_ref__exclude () {
--	test-tool ref-store main for-each-ref--exclude "$@" >actual.raw
-+	GIT_TRACE2_PERF=1 test-tool ref-store main \
-+		for-each-ref--exclude "$@" >actual.raw
- 	cut -d ' ' -f 2 actual.raw
+ 	return 0;
  }
  
-@@ -17,6 +18,17 @@ for_each_ref () {
- 	git for-each-ref --format='%(refname)' "$@"
+ int ref_is_hidden(const char *refname, const char *refname_full,
+-		  const struct string_list *hide_refs)
++		  const struct strvec *hide_refs)
+ {
+ 	int i;
+ 
+ 	for (i = hide_refs->nr - 1; i >= 0; i--) {
+-		const char *match = hide_refs->items[i].string;
++		const char *match = hide_refs->v[i];
+ 		const char *subject;
+ 		int neg = 0;
+ 		const char *p;
+diff --git a/refs.h b/refs.h
+index d672d636cf..a7751a1fc9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -810,7 +810,7 @@ int update_ref(const char *msg, const char *refname,
+ 	       unsigned int flags, enum action_on_err onerr);
+ 
+ int parse_hide_refs_config(const char *var, const char *value, const char *,
+-			   struct string_list *);
++			   struct strvec *);
+ 
+ /*
+  * Check whether a ref is hidden. If no namespace is set, both the first and
+@@ -820,7 +820,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *,
+  * the ref is outside that namespace, the first parameter is NULL. The second
+  * parameter always points to the full ref name.
+  */
+-int ref_is_hidden(const char *, const char *, const struct string_list *);
++int ref_is_hidden(const char *, const char *, const struct strvec *);
+ 
+ /* Is this a per-worktree ref living in the refs/ namespace? */
+ int is_per_worktree_ref(const char *refname);
+diff --git a/revision.c b/revision.c
+index 89953592f9..7c9367a266 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1558,7 +1558,7 @@ void init_ref_exclusions(struct ref_exclusions *exclusions)
+ void clear_ref_exclusions(struct ref_exclusions *exclusions)
+ {
+ 	string_list_clear(&exclusions->excluded_refs, 0);
+-	string_list_clear(&exclusions->hidden_refs, 0);
++	strvec_clear(&exclusions->hidden_refs);
+ 	exclusions->hidden_refs_configured = 0;
  }
  
-+assert_jumps () {
-+	local nr="$1"
-+	local trace="$2"
-+
-+	grep -q "name:jumps_made value:$nr" $trace
-+}
-+
-+assert_no_jumps () {
-+	! assert_jumps ".*" "$1"
-+}
-+
- test_expect_success 'setup' '
- 	test_commit --no-tag base &&
- 	base="$(git rev-parse HEAD)" &&
-@@ -35,67 +47,76 @@ test_expect_success 'setup' '
- '
+diff --git a/revision.h b/revision.h
+index 31828748dc..94f035fa22 100644
+--- a/revision.h
++++ b/revision.h
+@@ -10,6 +10,7 @@
+ #include "decorate.h"
+ #include "ident.h"
+ #include "list-objects-filter-options.h"
++#include "strvec.h"
  
- test_expect_success 'excluded region in middle' '
--	for_each_ref__exclude refs/heads refs/heads/foo >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/foo >actual 2>perf &&
- 	for_each_ref refs/heads/bar refs/heads/baz refs/heads/quux >expect &&
+ /**
+  * The revision walking API offers functions to build a list of revisions
+@@ -95,7 +96,7 @@ struct ref_exclusions {
+ 	 * Hidden refs is a list of patterns that is to be hidden via
+ 	 * `ref_is_hidden()`.
+ 	 */
+-	struct string_list hidden_refs;
++	struct strvec hidden_refs;
  
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
- '
+ 	/*
+ 	 * Indicates whether hidden refs have been configured. This is to
+@@ -110,7 +111,7 @@ struct ref_exclusions {
+  */
+ #define REF_EXCLUSIONS_INIT { \
+ 	.excluded_refs = STRING_LIST_INIT_DUP, \
+-	.hidden_refs = STRING_LIST_INIT_DUP, \
++	.hidden_refs = STRVEC_INIT, \
+ }
  
- test_expect_success 'excluded region at beginning' '
--	for_each_ref__exclude refs/heads refs/heads/bar >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/bar >actual 2>perf &&
- 	for_each_ref refs/heads/baz refs/heads/foo refs/heads/quux >expect &&
+ struct oidset;
+diff --git a/upload-pack.c b/upload-pack.c
+index 08633dc121..d77d58bdde 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -69,7 +69,7 @@ struct upload_pack_data {
+ 	struct object_array have_obj;
+ 	struct oid_array haves;					/* v2 only */
+ 	struct string_list wanted_refs;				/* v2 only */
+-	struct string_list hidden_refs;
++	struct strvec hidden_refs;
  
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
- '
+ 	struct object_array shallows;
+ 	struct string_list deepen_not;
+@@ -126,7 +126,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
+ {
+ 	struct string_list symref = STRING_LIST_INIT_DUP;
+ 	struct string_list wanted_refs = STRING_LIST_INIT_DUP;
+-	struct string_list hidden_refs = STRING_LIST_INIT_DUP;
++	struct strvec hidden_refs = STRVEC_INIT;
+ 	struct object_array want_obj = OBJECT_ARRAY_INIT;
+ 	struct object_array have_obj = OBJECT_ARRAY_INIT;
+ 	struct oid_array haves = OID_ARRAY_INIT;
+@@ -161,7 +161,7 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
+ {
+ 	string_list_clear(&data->symref, 1);
+ 	string_list_clear(&data->wanted_refs, 1);
+-	string_list_clear(&data->hidden_refs, 0);
++	strvec_clear(&data->hidden_refs);
+ 	object_array_clear(&data->want_obj);
+ 	object_array_clear(&data->have_obj);
+ 	oid_array_clear(&data->haves);
+@@ -1169,7 +1169,7 @@ static void receive_needs(struct upload_pack_data *data,
  
- test_expect_success 'excluded region at end' '
--	for_each_ref__exclude refs/heads refs/heads/quux >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/quux >actual 2>perf &&
- 	for_each_ref refs/heads/foo refs/heads/bar refs/heads/baz >expect &&
+ /* return non-zero if the ref is hidden, otherwise 0 */
+ static int mark_our_ref(const char *refname, const char *refname_full,
+-			const struct object_id *oid, const struct string_list *hidden_refs)
++			const struct object_id *oid, const struct strvec *hidden_refs)
+ {
+ 	struct object *o = lookup_unknown_object(the_repository, oid);
  
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
- '
+@@ -1453,7 +1453,7 @@ static int parse_want(struct packet_writer *writer, const char *line,
  
- test_expect_success 'disjoint excluded regions' '
--	for_each_ref__exclude refs/heads refs/heads/bar refs/heads/quux >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/bar refs/heads/quux >actual 2>perf &&
- 	for_each_ref refs/heads/baz refs/heads/foo >expect &&
- 
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 2 perf
- '
- 
- test_expect_success 'adjacent, non-overlapping excluded regions' '
--	for_each_ref__exclude refs/heads refs/heads/bar refs/heads/baz >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/bar refs/heads/baz >actual 2>perf &&
- 	for_each_ref refs/heads/foo refs/heads/quux >expect &&
- 
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
- '
- 
- test_expect_success 'overlapping excluded regions' '
--	for_each_ref__exclude refs/heads refs/heads/ba refs/heads/baz >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/ba refs/heads/baz >actual 2>perf &&
- 	for_each_ref refs/heads/foo refs/heads/quux >expect &&
- 
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
- '
- 
- test_expect_success 'several overlapping excluded regions' '
- 	for_each_ref__exclude refs/heads \
--		refs/heads/bar refs/heads/baz refs/heads/foo >actual &&
-+		refs/heads/bar refs/heads/baz refs/heads/foo >actual 2>perf &&
- 	for_each_ref refs/heads/quux >expect &&
- 
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
- '
- 
- test_expect_success 'non-matching excluded section' '
--	for_each_ref__exclude refs/heads refs/heads/does/not/exist >actual &&
-+	for_each_ref__exclude refs/heads refs/heads/does/not/exist >actual 2>perf &&
- 	for_each_ref >expect &&
- 
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_no_jumps
- '
- 
- test_expect_success 'meta-characters are discarded' '
--	for_each_ref__exclude refs/heads "refs/heads/ba*" >actual &&
-+	for_each_ref__exclude refs/heads "refs/heads/ba*" >actual 2>perf &&
- 	for_each_ref >expect &&
- 
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	assert_no_jumps
- '
- 
- test_done
-diff --git a/trace2.h b/trace2.h
-index 4ced30c0db..9452e291f5 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -551,6 +551,8 @@ enum trace2_counter_id {
- 	TRACE2_COUNTER_ID_TEST1 = 0, /* emits summary event only */
- 	TRACE2_COUNTER_ID_TEST2,     /* emits summary and thread events */
- 
-+	TRACE2_COUNTER_ID_PACKED_REFS_JUMPS, /* counts number of jumps */
-+
- 	/* Add additional counter definitions before here. */
- 	TRACE2_NUMBER_OF_COUNTERS
- };
-diff --git a/trace2/tr2_ctr.c b/trace2/tr2_ctr.c
-index b342d3b1a3..50570d0165 100644
---- a/trace2/tr2_ctr.c
-+++ b/trace2/tr2_ctr.c
-@@ -27,6 +27,11 @@ static struct tr2_counter_metadata tr2_counter_metadata[TRACE2_NUMBER_OF_COUNTER
- 		.name = "test2",
- 		.want_per_thread_events = 1,
- 	},
-+	[TRACE2_COUNTER_ID_PACKED_REFS_JUMPS] = {
-+		.category = "packed-refs",
-+		.name = "jumps_made",
-+		.want_per_thread_events = 0,
-+	},
- 
- 	/* Add additional metadata before here. */
- };
+ static int parse_want_ref(struct packet_writer *writer, const char *line,
+ 			  struct string_list *wanted_refs,
+-			  struct string_list *hidden_refs,
++			  struct strvec *hidden_refs,
+ 			  struct object_array *want_obj)
+ {
+ 	const char *refname_nons;
 -- 
 2.40.1.572.g5c4ab523ef
 
