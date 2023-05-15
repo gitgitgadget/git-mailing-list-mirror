@@ -2,113 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BFD6C77B7D
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 07:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 111E3C77B75
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 08:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239878AbjEOHD4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 03:03:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33082 "EHLO
+        id S229704AbjEOIrp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 04:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238553AbjEOHDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 03:03:54 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2698E4F
-        for <git@vger.kernel.org>; Mon, 15 May 2023 00:03:52 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 218901F18D1;
-        Mon, 15 May 2023 03:00:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=HV3djz4MjH9BvaVI3tx6a82zNpYtsdI+7PEgIUU4kPQ=; b=GuSl
-        bo4dtCEq3allxIBrjFvYl0xxciAEslefUvjsLnZlu2ZPF8hgPccAPOPO+Fic2j6W
-        pJH8hd3TvZI4dYzG0iH+/GII2aU1jt0VHtgrtu+/UqK/MXPu9dZnZaUycnh3Q8a+
-        A+u2o81aaUmJC0Jtw+clX+vZgZuUBsLIN/NmG0k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 19B641F18D0;
-        Mon, 15 May 2023 03:00:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.203.137.187])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4927D1F18CD;
-        Mon, 15 May 2023 03:00:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 2/3] t/t7004-tag: add failing tag message file test
-References: <cover.1684067644.git.code@khaugsbakk.name>
-        <1f24aa43f70b16381ef0cfb4f1d482706161554d.1684067644.git.code@khaugsbakk.name>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-Date:   Mon, 15 May 2023 00:00:38 -0700
-Message-ID: <xmqqa5y6axk9.fsf@gitster.g>
+        with ESMTP id S229530AbjEOIro (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 04:47:44 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D22ED
+        for <git@vger.kernel.org>; Mon, 15 May 2023 01:47:42 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f450815d02so37821445e9.0
+        for <git@vger.kernel.org>; Mon, 15 May 2023 01:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684140461; x=1686732461;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=k7faE5nvxz8/dn4DHaOwy6gk/ZDxIs9hXSBVQOML2fk=;
+        b=BSXj1SR/iHhO0c8DdzGviJpSFJPksE3LXBc+HAgaFBUzy9Wi3N0BQ1tyNkS11esTAt
+         ISM7VufI7++UzIhrmZh8brIvT2rmKG1vtWAn2YuvVfgEvadgGNRYRcPLnd2jqpDKW+sy
+         MnGvM1GQBJam1osYTaYiK0kXVx+JxkuKgoGGFBr3Z6x2u0QNDEWcQsCLhk8Jm9tAFPHZ
+         9H+5rXwSwse0+O5A0a7zZ2P8jcft+f953h4yVE5w4PHgm4xl9gQ1cQdp/1h5oV/VC9V3
+         GjwAZkPTq2vze0t7SXFs9VeAkVaXV1t1/sJYa+YQ0W+W3F69CUR61oHS7s3peX0pRL/+
+         hItw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684140461; x=1686732461;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k7faE5nvxz8/dn4DHaOwy6gk/ZDxIs9hXSBVQOML2fk=;
+        b=LQz7p7phcGhhRr5xZIxiwO2jAzuHRroqaKpI8acVgCqF5OVh619pI4ZR1u1HnUBhA/
+         W3nC8AFbHCQ4yGcRyf4DBrKrw7t+Es95DHLC0Rv2HvsJpfmzj7Y8PN3p2xlzZMqUK3I3
+         FvNFNTFkeuQ5yh4AEXmirZO76qv4DD5rRp7cFGcFk2PoGx9ULbxXl3niklXnK7dEmHc8
+         6G1OpuzSWJ0/fly42ZoFeG/M9wzDWYAjtkk612mByaxv5I79DLF0PLZSFZV4wiCc+c/a
+         D9KYEZ6UJeGMKE1DO5In6C4ZHljOJJNqJ9tMjueSWwHaAPTdgDMqFE3EK/QVJNWz20Tp
+         3E6Q==
+X-Gm-Message-State: AC+VfDxxCWtxlQKZmoidxqLRBz84oVefUVT5RO2Ro2m9gdkdgPalY4xO
+        50WvS7dHRVWUgY1om9CduoG/i572Lxc=
+X-Google-Smtp-Source: ACHHUZ6bGFWWJuHeT63gIxWxx5TI64sZMC8N6FzkZ9NCBG2rqWs9yi0cdCkUSz2+MxLnSs7hXNZTsg==
+X-Received: by 2002:a1c:4c04:0:b0:3f4:2158:68ae with SMTP id z4-20020a1c4c04000000b003f4215868aemr20647794wmf.15.1684140460708;
+        Mon, 15 May 2023 01:47:40 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id n18-20020adfe792000000b002f7780eee10sm31772763wrm.59.2023.05.15.01.47.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 May 2023 01:47:40 -0700 (PDT)
+Message-ID: <ec139b78-1d36-f894-e39f-f29877a67b18@gmail.com>
+Date:   Mon, 15 May 2023 09:47:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 332DDEE0-F2EE-11ED-AC0C-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 1/1] cat-file: quote-format name in error when using -z
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+References: <xmqqilfhctrr.fsf@gitster.g>
+ <20230510190116.795641-1-toon@iotcl.com>
+ <20230510190116.795641-2-toon@iotcl.com> <xmqqpm782be6.fsf@gitster.g>
+ <87h6sh6f81.fsf@iotcl.com> <xmqqy1ltqygb.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqy1ltqygb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
+On 12/05/2023 17:57, Junio C Hamano wrote:
+> Toon Claes <toon@iotcl.com> writes:
+> Stepping back a bit, how big a problem is this in real life?  It
+> certainly is possible to create a pathname with funny byte values in
+> it, and in some environments,letters like single-quote that are
+> considered cumbersome to handle by those who are used to CLI
+> programs may be commonplace.  But a path with newline?  Or any
+> control character for that matter?  And this is not even the primary
+> output from the program but is an error message for consumption by
+> humans, no?
+> 
+> I am wondering if it is simpler to just declare that the paths
+> output in error messages have certain bytes, probably all control
+> characters other than HT, replaced with a dot, and tell the users
+> not to rely on the pathnames being intact if they contain funny
+> bytes in them.
 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  t/t7004-tag.sh | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+We could only c-quote the name when it contains a control character 
+other that HT. That way names containing double quotes and backslashes 
+are unchanged but it will still be possible to parse the path from the 
+error message. If we're going to munge the name we might as well use our 
+standard quoting rather than some ad-hoc scheme.
 
-Does this document the current behaviour, i.e. before applying the
-patch [3/3]?  Or is this a new test designed to fail until [3/3] is
-applied?
+Best Wishes
 
-If the latter, please don't [*].
+Phillip
 
-Instead, combine this with [3/3] and make it [2/2] that changes the
-behaviour of the command and protects the new behaviour from future
-breakages in a single step.  Those who are truly curious to see why
-the code change in it is necessary can apply the "code change plus
-new test" patch, and then temporarily revert only the code change
-part in their working tree to see how the test breaks without the
-code change.
-
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 550b5b1cce..1e512dbe06 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -2136,4 +2136,14 @@ test_expect_success 'If tag is created then tag message file is unlinked' '
->  	! test -e .git/TAG_EDITMSG
->  '
->  
-> +test_expect_success 'If tag cannot be created then tag message file is not unlinked' '
-> +	test_when_finished "git tag -d foo/bar" &&
-> +	write_script fakeeditor <<-\EOF &&
-> +	echo Message >.git/TAG_EDITMSG
-> +	EOF
-> +	git tag foo/bar &&
-> +	! GIT_EDITOR=./fakeeditor git tag -a foo &&
-
-Imitate other tests that expect a controlled failure from our
-command, and write something like
-
-	test_must_fail env GIT_EDITOR=./fakeeditor git tag -a foo
-
-so that a segfaulting "git tag" will not count as "failing as
-expected".
-
-> +	test -e .git/TAG_EDITMSG
-
-Use "test_path_exists" instead.
-
-Thanks.
-
-
-[Footnote]
-
- * Introducing this as a failing test "test_expect_failure" in [2/3]
-   and then flip it to "test_expect_success" in [3/3] would make
-   tests pass without applying [3/3], but generally it is not a
-   recommended practice.
-
-   This is because such a [3/3] patch would only show the line with
-   the test title and the behaviour of the test will not be shown in
-   the diff context.  That hurts reviewability.
+   That way, with the definition of "work" being "you
+> can read the path out of error messages that talk about it", paths
+> with bytes that c-quote mechanism butchers, like double quotes and
+> backslashes, that have worked before will not be broken, and paths
+> with LF or CRLF in them that have never worked would not work, but
+> at least does not break the input stream of whoever is reading the
+> error messages line by line.
+> 
+> I dunno.
+> 
+> 
