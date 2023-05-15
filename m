@@ -2,135 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08ABCC7EE26
-	for <git@archiver.kernel.org>; Mon, 15 May 2023 17:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22A0DC77B7D
+	for <git@archiver.kernel.org>; Mon, 15 May 2023 17:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242563AbjEORXS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 13:23:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41626 "EHLO
+        id S244336AbjEORcF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 13:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244058AbjEORW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 13:22:58 -0400
+        with ESMTP id S244293AbjEORbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 13:31:32 -0400
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374531208F
-        for <git@vger.kernel.org>; Mon, 15 May 2023 10:21:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D55714E49
+        for <git@vger.kernel.org>; Mon, 15 May 2023 10:28:16 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 079E21F5A14;
-        Mon, 15 May 2023 13:20:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F6881F5A8B;
+        Mon, 15 May 2023 13:27:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qNvyxCIYXtIjNE0+gW0cUpZFmRaITmwviHMgsu
-        l+EhE=; b=MM2mSpuZ8IX5mbrJmSdxiGMoxWSyU+9m9wPggFx5MYpzydbLPQ/Yza
-        xDBfCFUPp9LE3PbkPeEPx5PSSyn+YvQahtPYAq57zqXXxV9cbkfEM7lm3EfZv45l
-        +Pb/dm6Hc16b5lxfzGuBHiwzBIfQrfcNI72t73TCHs2a8X/rtzU/s=
+        :content-type:content-transfer-encoding; s=sasl; bh=Hsl3kilEAjGv
+        KKCe4b4u6DlZGyjhgmltxmE/83HzDAU=; b=bU1OscB0cZMrGZa5D2PUyygILH14
+        GMxwd/TJgwhil2xWf7op8FTscr8yxbNRhy2xUlE4Cfo75l+FoKT6CtXHefdJkF+G
+        25z9PbgfEJax040NYLplU5rPoxDynyx8fN3WNf5qfoUbkl57N6ZJUb/PIA6qzKCb
+        ZkhJJ5zvd/vu9Q4=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 00B651F5A13;
-        Mon, 15 May 2023 13:20:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 881A01F5A8A;
+        Mon, 15 May 2023 13:27:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.203.137.187])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F3501F5A12;
-        Mon, 15 May 2023 13:20:52 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AF04F1F5A89;
+        Mon, 15 May 2023 13:27:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v5 1/1] cat-file: quote-format name in error when using -z
-References: <xmqqilfhctrr.fsf@gitster.g>
-        <20230510190116.795641-1-toon@iotcl.com>
-        <20230510190116.795641-2-toon@iotcl.com> <xmqqpm782be6.fsf@gitster.g>
-        <87h6sh6f81.fsf@iotcl.com> <xmqqy1ltqygb.fsf@gitster.g>
-        <ec139b78-1d36-f894-e39f-f29877a67b18@gmail.com>
-Date:   Mon, 15 May 2023 10:20:51 -0700
-In-Reply-To: <ec139b78-1d36-f894-e39f-f29877a67b18@gmail.com> (Phillip Wood's
-        message of "Mon, 15 May 2023 09:47:38 +0100")
-Message-ID: <xmqqmt25a4uk.fsf@gitster.g>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Sean Allred via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Sean Allred <allred.sean@gmail.com>,
+        Sean Allred <code@seanallred.com>
+Subject: Re: [PATCH v3 1/6] show-ref doc: update for internal consistency
+References: <pull.1471.v2.git.git.1679478573.gitgitgadget@gmail.com>
+        <pull.1471.v3.git.git.1684152793.gitgitgadget@gmail.com>
+        <fe442c2041b01985a4ecb0f2e9651231af2a439b.1684152793.git.gitgitgadget@gmail.com>
+        <CAPig+cTSp3+RDbULeOXpfXwXw35tj3o-CTrpaeRPSB8remKk4A@mail.gmail.com>
+Date:   Mon, 15 May 2023 10:27:45 -0700
+In-Reply-To: <CAPig+cTSp3+RDbULeOXpfXwXw35tj3o-CTrpaeRPSB8remKk4A@mail.gmail.com>
+        (Eric Sunshine's message of "Mon, 15 May 2023 12:58:46 -0400")
+Message-ID: <xmqqilcta4j2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D7CB1A7A-F344-11ED-A39E-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CEDE13EE-F345-11ED-B858-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On 12/05/2023 17:57, Junio C Hamano wrote:
->> Toon Claes <toon@iotcl.com> writes:
->> Stepping back a bit, how big a problem is this in real life?  It
->> certainly is possible to create a pathname with funny byte values in
->> it, and in some environments,letters like single-quote that are
->> considered cumbersome to handle by those who are used to CLI
->> programs may be commonplace.  But a path with newline?  Or any
->> control character for that matter?  And this is not even the primary
->> output from the program but is an error message for consumption by
->> humans, no?
->> I am wondering if it is simpler to just declare that the paths
->> output in error messages have certain bytes, probably all control
->> characters other than HT, replaced with a dot, and tell the users
->> not to rely on the pathnames being intact if they contain funny
->> bytes in them.
+> On Mon, May 15, 2023 at 8:13=E2=80=AFAM Sean Allred via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> - Use inline-code syntax for options where appropriate.
+>> - Use code blocks to clarify output format.
+>>
+>> This patch also swaps out 'SHA-1' language for the implementation-
+>> agnostic 'OID' term where appropriate in preparation for supporting
+>> different hashing algorithms.
+>>
+>> Signed-off-by: Sean Allred <allred.sean@gmail.com>
+>> ---
+>> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-r=
+ef.txt
+>> @@ -96,7 +96,13 @@ OPTIONS
+>> -The output is in the format: '<SHA-1 ID>' '<space>' '<reference name>=
+'.
+>> +The output is in the format:
+>> +
+>> +------------
+>> +<oid> SP <ref> LF
+>> +------------
+>>  $ git show-ref --head --dereference
+>> @@ -110,7 +116,13 @@ $ git show-ref --head --dereference
+>> -When using --hash (and not --dereference) the output format is: '<SHA=
+-1 ID>'
+>> +When using `--hash` (and not `--dereference`), the output is in the f=
+ormat:
+>> +
+>> +------------
+>> +<OID> LF
+>> +------------
+>>  $ git show-ref --heads --hash
 >
-> We could only c-quote the name when it contains a control character
-> other that HT. That way names containing double quotes and backslashes
-> are unchanged but it will still be possible to parse the path from the
-> error message. If we're going to munge the name we might as well use
-> our standard quoting rather than some ad-hoc scheme.
+> Is the difference in case ("<oid>" vs. "<OID>") intentional between
+> these two examples?
 
-In the above suggestion, I gave up and no longer aim to do
-"quoting".  A more appropriate word for the approach is "redacting".
-The message essentially is: If you use truly problematic bytes in
-your path, they are redacted (so do not use them if it hurts).
+I think it is an incomplete fix based on the suggestion I made for
+the previous round,
 
-This is because I am not sure how "names containing dq and bs are
-unchanged" can be done without ambiguity.  If I see a message that
-comes out of this:
-
-	printf("%s missing\n", obj_name);
-
-and it looks like
-
-	"a\nb" missing
-
-how do I tell if it is complaining about the object the user named
-with a three-byte string (i.e. lowercase-A, newline, lowercase-B),
-or a six-byte string (i.e. dq, lowercase-A, bs, lowercase-N,
-lowercase-B, dq)?
-
-If we were forbidding '"' to appear in a refname, then we could take
-advantage of the fact that the name of an object inside a tree at a
-funny path would not start with '"', to disambiguate.  For the
-three- and six-byte string cases above, the formatting function will
-give these messages (referred to as "sample output" below):
-
-	"master:a\nb" missing
-	master:"a\nb" missing
-
-because of your "we do not exactly do our standard c-quote; we
-exempt dq and bs from the bytes to be quoted" rule.
-
-But it still feels a bit misleading.  This codepath may have the
-whole objectname as a single string so that c-quoting the entire
-"<commit> <colon> <path>" inside a single c-quoted string that
-begins with a dq is easy, but not all codepaths are lucky and some
-may have to show <commit> and <path> separately, concatenated with
-<colon> at the outermost output layer, which means that the second
-one from the sample output may still mean the path with three-byte
-name in the tree of 'master' commit.
-
-And worse yet, because
-
-	git branch '"master'
-
-is possible (even though nobody sane would do that), so "treat the
-string as c-quoted only if the object name as a whole begins with a
-dq", this disambiguation idea would not work.  The first one from
-the sample output could be the blob at the path with a five-byte
-string name (i.e. lowercase-A, bs, lowercase-N, lowercase-B, dq)
-in the tree of the commit at the tip of branch with seven-byte
-string name (i.e. dq followed by 'master').
-
-So, I dunno.
+ cf. https://lore.kernel.org/git/xmqqsfdwenn3.fsf@gitster.g/
