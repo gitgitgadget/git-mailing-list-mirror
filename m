@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C11BFC7EE24
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 06:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F249C77B7F
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 06:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230309AbjEPGfH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 02:35:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
+        id S230311AbjEPGfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 02:35:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbjEPGes (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 02:34:48 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F4A9468E
-        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:33 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30796c0cbcaso9965289f8f.1
-        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:33 -0700 (PDT)
+        with ESMTP id S230302AbjEPGeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 02:34:46 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E38E14683
+        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:29 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f4249b7badso96477775e9.3
+        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684218871; x=1686810871;
+        d=gmail.com; s=20221208; t=1684218868; x=1686810868;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/Axuwz5jkldTe0vO8FKJacAVKxAeMa9U/RSS6hK1PFw=;
-        b=b7i7gPrDXQaEVFwuDliGkikvijmtIF9y088F2CSwiKBbvx05bWBd1zKn2vfBMButOU
-         hkPB2Rwk/CzXQvnD0+OcGObk+dRrDmceBlqGTRgJmOmMnr6OZJUL/qhNOBCMgUaIfEpu
-         wayLWJXLMH09LdHZVFz6fLI/qGG//sFDiQf+7LsfotkoQEuIndlUrLROI7l8O9IrB1QD
-         E4y6rEZz91ysEtK+yAk1kLNJzyLO9NSlJqm8CQbB0xSORH1ycdslx/RVnGJmrhqBeXO7
-         UQjTItSPk9MzdH1rlXTT9o2sL3QARUfW9VIvj46r3miFnkdqCqQlhMGWtMN3T6dI6M8w
-         XiQQ==
+        bh=ST0fwY7y3AT9WtPSXWaBBn71IAShr0kXfKKXOHLsZdE=;
+        b=avowM2IZzpSYwIj09VUhr7y9c4qs/2fHOy42sinyE06D9J6TdYYAl103pYOCg5X8sA
+         /oCCKm6izmQ0C3oSFwDr9iEeEtOsRQoJvPYojVWBFsg2oxyBdfFaMUcKWyHX5kkB4iI8
+         iqmppHSNqU7bQe56ILmQJxrfrw3wAgqYO6T83q40iDgp1pV6AAzJXgaYqTnfx3zsSqGn
+         CiWjuN5nbZnYS8EfPpJqE63UFg15bhB0jjQH94AuazbzFVmilD18b7E+fcpSKiNOLOkl
+         vZZc2Wx1zB0EBe7BPyJGF2i7rc9xLwZs/8uLfjS8PcMcxbEmDNEeQmrK2/aKlXkN9LH1
+         xEFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684218871; x=1686810871;
+        d=1e100.net; s=20221208; t=1684218868; x=1686810868;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/Axuwz5jkldTe0vO8FKJacAVKxAeMa9U/RSS6hK1PFw=;
-        b=L5Okhto5vz+xn5T3M/Q1ae+kwvbOXKa1BzbyUG4ld3z3imqL0C1dzzrk2dXEeK2N3y
-         7qdmF5u7kg5xV0QUpCbvbotCprD+zoc0MZ7RgeDz2HkMrT4AJmo21JX25Lk0qK/Z2il/
-         8KGRc3r5K3T9hc7M9YMxa4dNBW69vX96I6azVY8A6EEtLYBzS60vF9bFs7lOEU/d7NVK
-         Ft+UcyNW5iMixJvKIYB75kZhQrx3Jgvj61BcEoyxg1Q6hQGQIfTGmJLccyz3pDRBNixT
-         Pdl1PXUlAzA1+eBJH5X45Hwv+oHv822e52pawDSM91qwaZ1NOteRN03bTPnJJwN2whDJ
-         BhMg==
-X-Gm-Message-State: AC+VfDzzGwp0/2Xifr5nNK+7ajSiPYISNQ0pYRN5uCFMqX7I7aqWJGez
-        SQn5Ia3cnhUX5ucRB5QboSKNVWAxvcM=
-X-Google-Smtp-Source: ACHHUZ47+imfmDR84do/YC+YyKCv1E2647OTJbVRwWQxqbuBcpnvF9kKS4q/C76TIspT64lkQfE98A==
-X-Received: by 2002:a5d:43c4:0:b0:2f8:2d4:74ef with SMTP id v4-20020a5d43c4000000b002f802d474efmr28141003wrr.43.1684218871614;
-        Mon, 15 May 2023 23:34:31 -0700 (PDT)
+        bh=ST0fwY7y3AT9WtPSXWaBBn71IAShr0kXfKKXOHLsZdE=;
+        b=AgGQmE3/WD/GrsjL4BQoUxQFTCutHslTvtD3/kR/u2U0cdaXiUt8SDAqOwe5u0mYYL
+         1J/H3iG22eEoa8jYS6mZkkgJHDzERf/IZ3UycXod3n+BBYJxexz/vOQlsHIgd9N/tmxL
+         aazkU80OVV/LUxs6e6KdQSZqEtGtz7ylyfGSBh5qZn8ideORA24oZH1jFyOG5NG/6fGV
+         Q+zketDLUhFbJUFDAlKJ99Jv4aGBpU7bOMzEfp7RCrE8DHF5QgASuQIrXyMyNndgY5gd
+         brvK7Fg7e/LisDzg4znCJq+Da4r/EJQfZ6WBNudnbuu9RrEjVAFnC4U10HYYpYq67Ols
+         ChMw==
+X-Gm-Message-State: AC+VfDwPjWJ86WMXbniCDrh2gYzHQHOCM3aYSc6scbFfu8r6m6qeKTo0
+        5Gvj83hdwmgenC2F5rxvlxUA1LfGw58=
+X-Google-Smtp-Source: ACHHUZ6wUyjaSGRVnMEmhC9jU7qPOLoVqHBE0cB+aGQ+nbI6+/9WZN2DTx0QQZ9bKcfgC6XN2m5PEg==
+X-Received: by 2002:a05:600c:3658:b0:3f4:2374:3517 with SMTP id y24-20020a05600c365800b003f423743517mr19266616wmq.19.1684218868111;
+        Mon, 15 May 2023 23:34:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y5-20020adff145000000b0030631a599a0sm1403943wro.24.2023.05.15.23.34.31
+        by smtp.gmail.com with ESMTPSA id t22-20020a7bc3d6000000b003f427cba193sm1088455wmj.41.2023.05.15.23.34.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 23:34:31 -0700 (PDT)
-Message-Id: <beb4287dd6532f22742c2415336eea381728fc2e.1684218852.git.gitgitgadget@gmail.com>
+        Mon, 15 May 2023 23:34:27 -0700 (PDT)
+Message-Id: <2be96fbbe56ce92cd7e255636bff1e53d117dfd4.1684218851.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
 References: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
         <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 May 2023 06:33:58 +0000
-Subject: [PATCH v3 18/28] log-tree: replace include of revision.h with simple
- forward declaration
+Date:   Tue, 16 May 2023 06:33:53 +0000
+Subject: [PATCH v3 13/28] diff.h: move declaration for global in diff.c from
+ cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,48 +76,35 @@ From: Elijah Newren <newren@gmail.com>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/diff-tree.c | 1 +
- log-tree.c          | 1 +
- log-tree.h          | 2 +-
- 3 files changed, 3 insertions(+), 1 deletion(-)
+ cache.h | 3 ---
+ diff.h  | 2 ++
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 3e281150473..4ad55ecc3fc 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -9,6 +9,7 @@
- #include "submodule.h"
- #include "read-cache-ll.h"
- #include "repository.h"
-+#include "revision.h"
- #include "tree.h"
+diff --git a/cache.h b/cache.h
+index b79802a4639..08f6fbd801d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -523,9 +523,6 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 		       const struct pathspec *pathspec, int include_sparse,
+ 		       int flags);
  
- static struct rev_info log_tree_opt;
-diff --git a/log-tree.c b/log-tree.c
-index f4b22a60cc5..07d0b47b168 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -16,6 +16,7 @@
- #include "reflog-walk.h"
- #include "refs.h"
- #include "replace-object.h"
-+#include "revision.h"
- #include "string-list.h"
- #include "color.h"
- #include "gpg-interface.h"
-diff --git a/log-tree.h b/log-tree.h
-index e7e4641cf83..bdb64328154 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -1,7 +1,7 @@
- #ifndef LOG_TREE_H
- #define LOG_TREE_H
+-/* diff.c */
+-extern int diff_auto_refresh_index;
+-
+ /* ls-files */
+ void overlay_tree_on_index(struct index_state *istate,
+ 			   const char *tree_name, const char *prefix);
+diff --git a/diff.h b/diff.h
+index 3a7a9e8b888..29a9cd217c2 100644
+--- a/diff.h
++++ b/diff.h
+@@ -694,4 +694,6 @@ void print_stat_summary(FILE *fp, int files,
+ 			int insertions, int deletions);
+ void setup_diff_pager(struct diff_options *);
  
--#include "revision.h"
-+struct rev_info;
- 
- struct log_info {
- 	struct commit *commit, *parent;
++extern int diff_auto_refresh_index;
++
+ #endif /* DIFF_H */
 -- 
 gitgitgadget
 
