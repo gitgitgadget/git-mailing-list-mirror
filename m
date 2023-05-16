@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A04F1C77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 06:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46812C77B75
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 06:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230344AbjEPGfb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 02:35:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
+        id S230351AbjEPGff (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 02:35:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230362AbjEPGey (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230361AbjEPGey (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 May 2023 02:34:54 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 219BB49C1
-        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:37 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3062b101ae1so8929537f8f.2
-        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:37 -0700 (PDT)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0ADA46B1
+        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:36 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f423521b10so68568095e9.0
+        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684218876; x=1686810876;
+        d=gmail.com; s=20221208; t=1684218875; x=1686810875;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Qj76xsVjf5vl8Ms8krg5HIm0o46KWMXTgiKsmC/q57A=;
-        b=Cxdtuchc9i+HKcotqgjfkUMmli57SOAMMoGh3C4CPnm1jsR2lQw2AYe/SUpCoyKfVd
-         /VssBu54Ei72Tp06zEjZK0zMTKFGR1er+i7N/5fOCOVbD79IDuS9B9NcCLW4FrgU8qiC
-         GGNTdUADZAjtO1sR2QICJC03HNR3CnUEAQUUb5aHaeiUfWM0zzaEJbtrw02gC+PoU0TT
-         Rr8YdeChGjMWiQhO0sKuYa7aSmIpoPPuwRuqvKF2wuaAEBGDXEASSdKtv5VDvz3lFRGj
-         oEHBxqYBIf51g8fxuZs4xryjK14qIpLBpEq+Ue+x7dYlkV++QtmauqXInZ2/I6HuML+V
-         DjGg==
+        bh=El59bK7JSFEywYHqvBjD2SN+B4bI3RMWhoHGQ1NHguA=;
+        b=DjcNxB1JgT5ve27SN9PcWE39ta86Tl4tj/yxl2OlVtiKCp3aYdYWmsS99d5UjEdPNS
+         vqhKpJUrjMePSMfm0DmcHsokTB5l/KAXP+Q0/igeiPgmc1wLUmuBXDf0UhbGyVAVVSm+
+         Q+JEJXDNQWo+6oURFDfqngPd2NqZk61kJ4NUdhFZ9ZcLvExGWFiU/UV5VM0rVz3Cj8kC
+         TSCEthX9/aCqIyuKLB131295tXxEBrZ5n6ReCr6eV7dgk6Y45UKzqOkhd1TVehFwCkCL
+         pLrWQTd+kGIKHNQP+yXVvlKbWpVqQygBbQu4xa6meGzd+9l0HTgpAd9pGadjcLthcRAl
+         T4qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684218876; x=1686810876;
+        d=1e100.net; s=20221208; t=1684218875; x=1686810875;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Qj76xsVjf5vl8Ms8krg5HIm0o46KWMXTgiKsmC/q57A=;
-        b=OonixqHHI/5EvqMS8lhIUTb5aWOsNq8jbq0/0wpitCeR0MVaM20QMdaiOYiDvQF+b2
-         D2btbgnTpq+jbizr58HdTZdm+GrRoLXDsaPYkqBiG4gI7EdtRVoffwQ7pH3q5Ut0GHwt
-         lpP2oXg/uk9D3hK1ZK2+Pb+Sb/HPd+JCmhL8AZQhte3CsD3QyTp62SrWbTMfbGhodX6f
-         WHHJXkfPfOFipL3kzxWWPMX3cYyDJc1j66HNhAnjwpIBt7JLSZSo+ER9LM01sxOksP2N
-         Fnpf5LjX/lUpWiivmXbWonyldndlOeM35R+NlsujA0GUFQI7aw43TwxY7QKnLw/xTuZh
-         LdUA==
-X-Gm-Message-State: AC+VfDxr+lcSn3tgVz8h6Xmn6Ng+Sl5qLh5EXm1n3LaYo+0/1b81IMok
-        uNs6uxc2OcZ5p84KTNyFa1bUHgq4/3Y=
-X-Google-Smtp-Source: ACHHUZ6+Vt1OP2XmysqGKtoASSxeghhpAk7oAzyDyUxKxZ+5aRoy8o5dnw8HK05Wq+DQ64JfM9xF8g==
-X-Received: by 2002:adf:de01:0:b0:306:334a:7cd1 with SMTP id b1-20020adfde01000000b00306334a7cd1mr25931437wrm.31.1684218875838;
-        Mon, 15 May 2023 23:34:35 -0700 (PDT)
+        bh=El59bK7JSFEywYHqvBjD2SN+B4bI3RMWhoHGQ1NHguA=;
+        b=Ra3/mYMksisM7gAuxDrJsy912rbuDJpzJ6k4tdobFzvTBiRIOBpWDaCZhebwKzBVgX
+         fRU7HK0r/pPdQCUEDmETZnkdboDjJlQpdRTYnxg5XxEQgLyWM6AFY3N94kAwzRTTIuId
+         P3E4Ly0P01L1d844qHW/UJRWjxgHkrl5HT0S2lnNf+bGwSLyEHgP2eqCo9DsKFUL0h7U
+         HavQeIwT/kI3tjuq460IJdSZJ2urwA4AAnNaoV4TbmnKYuP+GuKg8z31HZXNUJFX7omj
+         eYbaigi5ptWoVoANJLXNawozzBLvcHqKviIVezrkjAC4DtQw1p9V1ZrpDvQo+8vZOkBL
+         k/eg==
+X-Gm-Message-State: AC+VfDySw3oZ9CspKE+4Df1PSdanipB5foBdu+2xqTxO6QcDtocTybnJ
+        zEomulpQPNz4uAh69KNyhC90dgw+gjA=
+X-Google-Smtp-Source: ACHHUZ5ONm1LEFZYFX+7W6aXWjBNwgrmk6zlin7aS07GdEkmtu6Eu9SSanipjCrUrzssmfs2Mj0ang==
+X-Received: by 2002:a1c:7906:0:b0:3f5:aa2:28af with SMTP id l6-20020a1c7906000000b003f50aa228afmr3671456wme.9.1684218874921;
+        Mon, 15 May 2023 23:34:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y12-20020a5d614c000000b003062c609115sm1399949wrt.21.2023.05.15.23.34.35
+        by smtp.gmail.com with ESMTPSA id u5-20020adfdd45000000b002fe13ec49fasm1367307wrm.98.2023.05.15.23.34.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 23:34:35 -0700 (PDT)
-Message-Id: <6de1eebfea65c8a66bb7270fc7fb550d25d7d3f6.1684218853.git.gitgitgadget@gmail.com>
+        Mon, 15 May 2023 23:34:34 -0700 (PDT)
+Message-Id: <fe631d90b4fb5f9653739edc2ce5ebf33781bb7d.1684218852.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
 References: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
         <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 May 2023 06:34:05 +0000
-Subject: [PATCH v3 25/28] khash: name the structs that khash declares
+Date:   Tue, 16 May 2023 06:34:03 +0000
+Subject: [PATCH v3 23/28] git-compat-util.h: remove unneccessary include of
+ wildmatch.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,66 +74,240 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-khash.h lets you instantiate custom hash types that map between two
-types. These are defined as a struct, as you might expect, and khash
-typedef's that to kh_foo_t. But it declares the struct anonymously,
-which doesn't give a name to the struct type itself; there is no
-"struct kh_foo". This has two small downsides:
+The include of wildmatch.h in git-compat-util.h was added in cebcab189aa
+(Makefile: add USE_WILDMATCH to use wildmatch as fnmatch, 2013-01-01) as
+a way to be able to compile-time force any calls to fnmatch() to instead
+invoke wildmatch().  The defines and inline function were removed in
+70a8fc999d9 (stop using fnmatch (either native or compat), 2014-02-15),
+and this include in git-compat-util.h has been unnecessary ever since.
 
-  - when using khash, we declare "kh_foo_t *the_foo".  This is
-    unlike our usual naming style, which is "struct kh_foo *the_foo".
+Remove the include from git-compat-util.h, but add it to the .c files
+that had omitted the direct #include they needed.
 
-  - you can't forward-declare a typedef of an unnamed struct type in
-    C. So we might do something like this in a header file:
-
-        struct kh_foo;
-        struct bar {
-                struct kh_foo *the_foo;
-        };
-
-    to avoid having to include the header that defines the real
-    kh_foo. But that doesn't work with the typedef'd name. Without the
-    "struct" keyword, the compiler doesn't know we mean that kh_foo is
-    a type.
-
-So let's always give khash structs the name that matches our
-conventions ("struct kh_foo" to match "kh_foo_t"). We'll keep doing
-the typedef to retain compatibility with existing callers.
-
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- khash.h        | 2 +-
- object-store.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ apply.c                   | 1 +
+ builtin/describe.c        | 1 +
+ builtin/ls-remote.c       | 1 +
+ builtin/name-rev.c        | 1 +
+ builtin/reflog.c          | 1 +
+ builtin/replace.c         | 1 +
+ builtin/show-branch.c     | 1 +
+ config.c                  | 1 +
+ diffcore-order.c          | 1 +
+ fmt-merge-msg.c           | 1 +
+ git-compat-util.h         | 2 --
+ log-tree.c                | 1 +
+ pathspec.c                | 1 +
+ refs.c                    | 1 +
+ revision.c                | 1 +
+ t/helper/test-wildmatch.c | 1 +
+ trace2/tr2_cfg.c          | 1 +
+ 17 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/khash.h b/khash.h
-index 56241e6a5c9..a0a08dad8b7 100644
---- a/khash.h
-+++ b/khash.h
-@@ -62,7 +62,7 @@ static inline khint_t __ac_X31_hash_string(const char *s)
- static const double __ac_HASH_UPPER = 0.77;
+diff --git a/apply.c b/apply.c
+index be58dc08d22..801f2bcc99c 100644
+--- a/apply.c
++++ b/apply.c
+@@ -35,6 +35,7 @@
+ #include "entry.h"
+ #include "setup.h"
+ #include "symlinks.h"
++#include "wildmatch.h"
+ #include "ws.h"
+ #include "wrapper.h"
  
- #define __KHASH_TYPE(name, khkey_t, khval_t) \
--	typedef struct { \
-+	typedef struct kh_##name { \
- 		khint_t n_buckets, size, n_occupied, upper_bound; \
- 		khint32_t *flags; \
- 		khkey_t *keys; \
-diff --git a/object-store.h b/object-store.h
-index 12415e5ea73..05803a03e92 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -164,7 +164,7 @@ struct raw_object_store {
- 	 */
- 	struct object_directory *odb;
- 	struct object_directory **odb_tail;
--	kh_odb_path_map_t *odb_by_path;
-+	struct kh_odb_path_map *odb_by_path;
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 508e8df00ef..eb19ab0bbbe 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -22,6 +22,7 @@
+ #include "object-store.h"
+ #include "list-objects.h"
+ #include "commit-slab.h"
++#include "wildmatch.h"
  
- 	int loaded_alternates;
+ #define MAX_TAGS	(FLAG_BITS - 1)
  
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index a0aadc9b8ff..fc765754305 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -7,6 +7,7 @@
+ #include "remote.h"
+ #include "refs.h"
+ #include "parse-options.h"
++#include "wildmatch.h"
+ 
+ static const char * const ls_remote_usage[] = {
+ 	N_("git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 593f0506a10..de9808e21c8 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -15,6 +15,7 @@
+ #include "hash-lookup.h"
+ #include "commit-slab.h"
+ #include "commit-graph.h"
++#include "wildmatch.h"
+ 
+ /*
+  * One day.  See the 'name a rev shortly after epoch' test in t6120 when
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index fc217748808..79b4ff04aae 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -4,6 +4,7 @@
+ #include "repository.h"
+ #include "revision.h"
+ #include "reachable.h"
++#include "wildmatch.h"
+ #include "worktree.h"
+ #include "reflog.h"
+ #include "parse-options.h"
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 6b266a66d30..a2f57a56b3e 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -24,6 +24,7 @@
+ #include "replace-object.h"
+ #include "repository.h"
+ #include "tag.h"
++#include "wildmatch.h"
+ 
+ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index cd215f89af8..a203f13cb0d 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -14,6 +14,7 @@
+ #include "dir.h"
+ #include "commit-slab.h"
+ #include "date.h"
++#include "wildmatch.h"
+ 
+ static const char* show_branch_usage[] = {
+     N_("git show-branch [-a | --all] [-r | --remotes] [--topo-order | --date-order]\n"
+diff --git a/config.c b/config.c
+index 666ec73bab1..0b2a9f1bd89 100644
+--- a/config.c
++++ b/config.c
+@@ -36,6 +36,7 @@
+ #include "setup.h"
+ #include "strvec.h"
+ #include "trace2.h"
++#include "wildmatch.h"
+ #include "worktree.h"
+ #include "ws.h"
+ #include "wrapper.h"
+diff --git a/diffcore-order.c b/diffcore-order.c
+index 57ccab28464..e7d20ebd2d1 100644
+--- a/diffcore-order.c
++++ b/diffcore-order.c
+@@ -5,6 +5,7 @@
+ #include "gettext.h"
+ #include "diff.h"
+ #include "diffcore.h"
++#include "wildmatch.h"
+ 
+ static char **order;
+ static int order_cnt;
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 5af0d4715ba..f096b1ef549 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -15,6 +15,7 @@
+ #include "fmt-merge-msg.h"
+ #include "commit-reach.h"
+ #include "gpg-interface.h"
++#include "wildmatch.h"
+ 
+ static int use_branch_desc;
+ static int suppress_dest_pattern_seen;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5b2b99c17c5..1889da7986e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -625,8 +625,6 @@ static inline int git_has_dir_sep(const char *path)
+ 
+ #include "compat/bswap.h"
+ 
+-#include "wildmatch.h"
+-
+ struct strbuf;
+ 
+ /* General helper functions */
+diff --git a/log-tree.c b/log-tree.c
+index 07d0b47b168..60b61597c42 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -26,6 +26,7 @@
+ #include "range-diff.h"
+ #include "strmap.h"
+ #include "tree.h"
++#include "wildmatch.h"
+ #include "write-or-die.h"
+ 
+ static struct decoration name_decoration = { "object names" };
+diff --git a/pathspec.c b/pathspec.c
+index 0baa85384f8..ad9b9e7dc74 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -12,6 +12,7 @@
+ #include "strvec.h"
+ #include "symlinks.h"
+ #include "quote.h"
++#include "wildmatch.h"
+ 
+ /*
+  * Finds which of the given pathspecs match items in the index.
+diff --git a/refs.c b/refs.c
+index 3c0c95ac442..5f76da35673 100644
+--- a/refs.c
++++ b/refs.c
+@@ -29,6 +29,7 @@
+ #include "sigchain.h"
+ #include "date.h"
+ #include "commit.h"
++#include "wildmatch.h"
+ #include "wrapper.h"
+ 
+ /*
+diff --git a/revision.c b/revision.c
+index 66a1fece0df..d4b4b34fd80 100644
+--- a/revision.c
++++ b/revision.c
+@@ -46,6 +46,7 @@
+ #include "list-objects-filter-options.h"
+ #include "resolve-undo.h"
+ #include "parse-options.h"
++#include "wildmatch.h"
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
+diff --git a/t/helper/test-wildmatch.c b/t/helper/test-wildmatch.c
+index a95bb4da9b1..b4ff5f986ae 100644
+--- a/t/helper/test-wildmatch.c
++++ b/t/helper/test-wildmatch.c
+@@ -1,4 +1,5 @@
+ #include "test-tool.h"
++#include "wildmatch.h"
+ 
+ int cmd__wildmatch(int argc, const char **argv)
+ {
+diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
+index 78cfc15d52d..db817a80c53 100644
+--- a/trace2/tr2_cfg.c
++++ b/trace2/tr2_cfg.c
+@@ -4,6 +4,7 @@
+ #include "trace2.h"
+ #include "trace2/tr2_cfg.h"
+ #include "trace2/tr2_sysenv.h"
++#include "wildmatch.h"
+ 
+ static struct strbuf **tr2_cfg_patterns;
+ static int tr2_cfg_count_patterns;
 -- 
 gitgitgadget
 
