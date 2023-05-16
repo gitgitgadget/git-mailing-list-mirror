@@ -2,311 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 508A2C77B75
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 21:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C8B8C77B75
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 21:30:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230328AbjEPVTK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 17:19:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43798 "EHLO
+        id S229632AbjEPVat (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 17:30:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjEPVTJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 17:19:09 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146035FD6
-        for <git@vger.kernel.org>; Tue, 16 May 2023 14:19:08 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1aaff9c93a5so1072245ad.2
-        for <git@vger.kernel.org>; Tue, 16 May 2023 14:19:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1684271947; x=1686863947;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FFhU1MjvueAz4J3WV3nK6SHf9SnjGOCxrEioVycuNfU=;
-        b=ATHC5moifXzfgEqrTATchAdzH9obi3TyhTRBL477K6mix3/j1hwYgyPh8NOxnegJhf
-         AxncSvSDx+T6/n0kCjGCKy3zSN4h2rdvWyea2SygYR+/q3joivWBe9MVFSlJ6KZwMqCN
-         gcdXt0HAfimfyVRl4mZu2ZAGz2DzuFXP6yL3EinY750ZX9rWWWeQHW5TFEx3tC3dkGQK
-         tImc64DuvOmoRUANuQcAhzDj9p+i2NfRPWDQockbpmK6DHIhHvqSeKdPxkIMXVjN3V70
-         Nju3mT/H9WxRu0U48x5hxAll80GE7hVdEFma9tQvwsYvAfE9ZtQBsWC75Oo4KDllQ3UO
-         xNIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684271947; x=1686863947;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FFhU1MjvueAz4J3WV3nK6SHf9SnjGOCxrEioVycuNfU=;
-        b=XuHcJocimWqyB48HCznZ+RdB/y0pMqJo5rZP1tYWzrWRHTF84ISVMqwyoWOgt3NO7Q
-         9WoBU1me1vLy/Bvu8NDYUSsGCvNm+6yrX+Wo+2jzzI/5iWrIqCygMtG9b0YaZtN8v6Es
-         2Nw5NuAsNmPMODY9DBZa3Rz3pJ6kghOucfSKQXsvZVIroNtVnw2hK5rdo+XRphcOV5d8
-         WRRUybhRfjyFSXzHBf9Ds1NQLCHWPDu8VAm79N/8THs3ksCPfEpM7ZiOueE5nhdyh4qL
-         nXQPd20rexcw3+DdCKrpAoobW2h4v5oRVloHrm14CKpQwlLwZN9+0WiSOT94ygGU3znj
-         8F5Q==
-X-Gm-Message-State: AC+VfDzWTSC3u/2c0xMrmUO0BINCdC9uwF4IPPz8zW5/yW9ldln6gotX
-        kcIYQVpBd9NtaC5zOuJ/9b7k
-X-Google-Smtp-Source: ACHHUZ73Or0fQoNJRCIPMIHHsVBSUSP2m637DwZXWUDkJRSp+dYoAew/13I8h8uOEldjH+ZinhudQw==
-X-Received: by 2002:a17:902:e5cf:b0:1ac:807b:deb1 with SMTP id u15-20020a170902e5cf00b001ac807bdeb1mr35958085plf.38.1684271947362;
-        Tue, 16 May 2023 14:19:07 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id n18-20020a170902d2d200b001aaeba5ce0fsm15973692plc.68.2023.05.16.14.19.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 14:19:07 -0700 (PDT)
-Message-ID: <fa24482c-7c48-9b7f-5d97-3dbf9822728c@github.com>
-Date:   Tue, 16 May 2023 14:19:04 -0700
+        with ESMTP id S229595AbjEPVas (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 17:30:48 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445A56E88
+        for <git@vger.kernel.org>; Tue, 16 May 2023 14:30:47 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 2900A5AF40;
+        Tue, 16 May 2023 21:30:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1684272646;
+        bh=jCNAF5kUf7xYmF2CUprrf2mxitQzuj8UiEYgOfeWZZQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=BfFXtydGeH5emd9qXFc5EL7MpDErsbpL8f81CCjQZA9jRpvjcO2yLZ0WbNSy7Uy8G
+         emxwSb5DXnQzvMyug4wqozBOHGTlKEGqDO/AwE4W6r3IkuIIdOE7+4SPN8QhaP0MNy
+         o9XS9WRCHBZ9/6khYhB2/nECWAJK8DH7DtLOTKDyXMP2btbUYJO+41PpvnRJ0Zqqc8
+         mZtbAyBVVLzE55a92LmvK//EgFaJpclo/3SbL3Nc2a4F8pVtJJhgPxhssOup8Tve68
+         ZNp/uJcqOZGqmM5IrrTjLWfW8ywM2DBPj+k+CkLX1k9GX7bUQs6XEz+YHKwRjacnN6
+         572EhUVsHCBHO+2my9TAJw63lUjQTbbFuH7DcfuvqYmk7ekyOZhWCYWCF7Wof/RBpB
+         sqQL33cgiOV8eSBUQKyiFmWskabf20kajsdjAdfiG3nKgESoH7zqeFTmjNqQqXHNsN
+         iYj9M4hEIfLXgZ+OXJoNNwMqOyKCGd+NmwVpotjnqec1GBk8Wtd
+Date:   Tue, 16 May 2023 21:30:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Tim Walter (Visual Concepts)" <twalter@vcentertainment.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git hangs with --separate-git-dir
+Message-ID: <ZGP2AzYJSLpI4kGN@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Tim Walter (Visual Concepts)" <twalter@vcentertainment.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <BY5PR14MB36544D63ECEAB9954C14407FA5799@BY5PR14MB3654.namprd14.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.10.1
-Subject: Re: [RFC][PATCH V1] diff-tree: integrate with sparse index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com
-References: <20230515191836.674234-1-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230515191836.674234-1-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="CgZhJIbQCGpDV2/z"
+Content-Disposition: inline
+In-Reply-To: <BY5PR14MB36544D63ECEAB9954C14407FA5799@BY5PR14MB3654.namprd14.prod.outlook.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> Remove full index requirement for `git diff-tree`. Add tests that verify
-> that 'git diff-tree' behaves correctly when the sparse index is enabled
-> and test to ensure the index is not expanded.
-> 
-> The `p2000` tests demonstrate a ~98% execution time reduction for
-> 'git diff-tree' using a sparse index:
-> 
-> Test                                                before  after
-> ------------------------------------------------------------------------
-> 2000.94: git diff-tree HEAD (full-v3)                0.05   0.04 -20.0%
-> 2000.95: git diff-tree HEAD (full-v4)                0.06   0.05 -16.7%
-> 2000.96: git diff-tree HEAD (sparse-v3)              0.59   0.01 -98.3%
-> 2000.97: git diff-tree HEAD (sparse-v4)              0.61   0.01 -98.4%
-> 2000.98: git diff-tree HEAD -- f2/f4/a (full-v3)     0.05   0.05 +0.0%
-> 2000.99: git diff-tree HEAD -- f2/f4/a (full-v4)     0.05   0.04 -20.0%
-> 2000.100: git diff-tree HEAD -- f2/f4/a (sparse-v3)  0.58   0.01 -98.3%
-> 2000.101: git diff-tree HEAD -- f2/f4/a (sparse-v4)  0.55   0.01 -98.2%
 
-These performance results look great! This is generally what we'd expect,
-too, since 'diff-tree' should be fast enough that index expansion is the
-majority of its runtime.
+--CgZhJIbQCGpDV2/z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
->  builtin/diff-tree.c                      |  4 ++
->  t/perf/p2000-sparse-operations.sh        |  2 +
->  t/t1092-sparse-checkout-compatibility.sh | 62 ++++++++++++++++++++++++
->  3 files changed, 68 insertions(+)
-> 
-> diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-> index 385c2d0230..c5d5730ebf 100644
-> --- a/builtin/diff-tree.c
-> +++ b/builtin/diff-tree.c
-> @@ -121,6 +121,10 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
->  		usage(diff_tree_usage);
->  
->  	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
-> +
-> +	prepare_repo_settings(the_repository);
-> +	the_repository->settings.command_requires_full_index = 0;
+On 2023-05-16 at 17:54:41, Tim Walter (Visual Concepts) wrote:
+> Windows 10 PC
+> large project
+> 300GB
+> 500,000 files
+> mix of binary and text assets.
+>=20
+> cd /d D:\myproject
+> git init --separate-git-dir=3DF:\myproject.git
+> git add *
+>=20
+> Git runs for a little while then hangs and does some really bad things to=
+ the OS as well.
+> it seems impossible to kill git.exe even with administrator priviledges.
+> f: drive ends up locked and any other process, such as explorer that try =
+to look at it also hang
+> you cannot log out without hanging
+> or even restart
+> This then requires a hard power cycle to fix.
+>
+> 100% reproducable.
+>=20
+> running git init without=C2=A0--separate-git-dir and git add * works fine=
+ (takes 3 hours,.. but works)
+> then I can move the .git dir to f: and reinit with=C2=A0--separate-git-di=
+r and that works.
+> So this seems to only be a problem for the initial init.
 
-tl;dr: this does appear to be all you need to integrate the sparse index
-with 'diff-tree', although there's an opportunity to clean up some
-(seemingly) unused code to make that clearer.
- 
-Longer version: 
+I don't use Windows so I can't verify this, but I would not expect this
+problem to occur.  Even hashing 500,000 files consuming 300 GB should
+not hang the computer or take 3 hours.
 
-Looking at the documentation for 'diff-tree', it's not immediately obvious
-why we'd need the index at all - it "[c]ompares the content and mode of
-blobs found via two tree objects," per the command documentation. However,
-the index is read in 'cmd_diff_tree' at two points, so to be reasonably
-certain that this sparse index integration is correct we should verify that
-the intended usage associated with those two reads will still work with a
-sparse index.
+What kind of disk is F:?  Is it an external disk (USB or such, and if
+so, what speed and kind)?  Is it a network drive?  Is it another local
+disk in the computer (SSD or HDD)?
 
-Reading the index for attributes
-================================
-The first index read was added in fd66bcc31ff (diff-tree: read the index so
-attribute checks work in bare repositories, 2017-12-06) to deal with reading
-'.gitattributes' content. Per the 'gitattributes.txt' documentation:
+Are you using an antivirus or firewall other than the default, or any
+sort of other monitoring software?  What I suspect is happening here is
+that you have an antivirus intercepting Git's operations and scanning
+the files for viruses, making everything really slow, and then at some
+point a bug occurs in the antivirus (which may have a kernel driver) and
+then things hang.  This is probably made worse if F: is an external
+drive or network drive.
 
-"Git consults `$GIT_DIR/info/attributes` file (which has the highest
-precedence), `.gitattributes` file in the same directory as the path in
-question, and its parent directories up to the toplevel of the work
-tree...When the `.gitattributes` file is missing from the work tree, the
-path in the index is used as a fall-back."
+If you are, can you try to completely uninstall that software and
+reboot, and then try again?
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-However, 77efbb366ab (attr: be careful about sparse directories, 2021-09-08)
-established that, in a sparse index, we do _not_ try to load a
-'.gitattributes' file from within a sparse directory. Therefore, we don't
-need to expand the index or change anything about reading attributes in
-'diff-tree'. Good!
+--CgZhJIbQCGpDV2/z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Reading the index for rename detection(?)
-=========================================
-The second one is read only on the condition that we're reading from stdin:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
 
-if (opt->diffopt.detect_rename) {
-	if (!the_index.cache)
-		repo_read_index(the_repository);
-	opt->diffopt.setup |= DIFF_SETUP_USE_SIZE_CACHE;
-}
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZGP2AwAKCRB8DEliiIei
+genUAP4wHvrm8e8yAYcH/BpK5QysXvdsj3r3LeMPkrLjYBNpDgD+PFMh0FiqmmTs
+pWUh44vzgj21Szry837Lt8OW4Xck7w4=
+=2J30
+-----END PGP SIGNATURE-----
 
-This was initially added in f0c6b2a2fd9 ([PATCH] Optimize diff-tree -[CM]
---stdin, 2005-05-27), where 'setup' was set to 'DIFF_SETUP_USE_SIZE_CACHE |
-DIFF_SETUP_USE_CACHE'. That assignment was later modified to drop the
-'DIFF_SETUP_USE_CACHE' in ff7fe37b053 (diff.c: move read_index() code back
-to the caller, 2018-08-13). 
-
-However, 'DIFF_SETUP_USE_SIZE_CACHE' seems to be unused as of 6e0b8ed6d35
-(diff.c: do not use a separate "size cache"., 2007-05-07) and nothing about
-'detect_rename' otherwise indicates index usage, so AFAICT that whole
-condition can be dropped (along with DIFF_SETUP_USE_SIZE_CACHE,
-DIFF_SETUP_REVERSE, and diff_options.setup). Note that, if you want to make
-that change in this series, it should be done in a separate patch _before_
-this one (since dropping the deprecated setup infrastructure isn't really
-part of the sparse index integration).
-
-> +
->  	repo_init_revisions(the_repository, opt, prefix);
->  	if (repo_read_index(the_repository) < 0)
->  		die(_("index file corrupt"));
-> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-> index 60d1de0662..14caf01718 100755
-> --- a/t/perf/p2000-sparse-operations.sh
-> +++ b/t/perf/p2000-sparse-operations.sh
-> @@ -129,5 +129,7 @@ test_perf_on_all git grep --cached bogus -- "f2/f1/f1/*"
->  test_perf_on_all git write-tree
->  test_perf_on_all git describe --dirty
->  test_perf_on_all 'echo >>new && git describe --dirty'
-> +test_perf_on_all git diff-tree HEAD
-> +test_perf_on_all git diff-tree HEAD -- $SPARSE_CONE/a
-
-These tests cover both the whole tree & a specific pathspec, looks good.
-
->  
->  test_done
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 0c784813f1..f08edcbf8e 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -2108,4 +2108,66 @@ test_expect_success 'sparse-index is not expanded: write-tree' '
->  	ensure_not_expanded write-tree
->  '
->  
-> +test_expect_success 'diff-tree' '
-> +	init_repos &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	# Get the tree SHA for the current HEAD
-> +	tree1=$(git -C sparse-index rev-parse HEAD^{tree}) &&
-> +
-> +	# make a change inside the sparse cone
-> +	run_on_all ../edit-contents deep/a &&
-> +	test_all_match git add deep/a &&
-> +	test_all_match git commit -m "Change deep/a" &&
-> +
-> +	# Get the tree SHA for the new HEAD
-> +	tree2=$(git -C sparse-index rev-parse HEAD^{tree}) &&
-
-Commits with changes similar to what you create here here already exist in
-the test repo; you can simplify the test by using them:
-
-test_expect_success 'diff-tree' '
-        init_repos &&
-
-        # Test change inside sparse cone
-        test_all_match git diff-tree HEAD update-deep &&
-        test_all_match git diff-tree HEAD update-deep -- deep/a &&
-
-        # Test change outside sparse cone
-        test_all_match git diff-tree HEAD update-folder1 &&
-        test_all_match git diff-tree HEAD update-folder1 -- folder1/a &&
-
-	# Check that SKIP_WORKTREE files are not materialized
-	test_path_is_missing sparse-checkout/folder1/a &&
-	test_path_is_missing sparse-index/folder1/a
-'
-
-This also has the benefit of avoiding the creation of 'folder1/a' on disk in
-the sparse-checkout test repos.
-
-> +
-> +
-
-nit: extra newline should be removed
-
-> +	test_all_match git diff-tree $tree1 $tree2 &&
-> +	test_all_match git diff-tree HEAD &&
-> +	test_all_match git diff-tree HEAD -- deep/a &&
-
-You don't have a wildcard pathspec tested here, but I think that's okay in
-this case; unlike e.g. 'git grep', there's no sparse index-related behavior
-here that depends on the pathspec's contents.
-
-> +
-> +	# make a change outside the sparse cone
-> +	run_on_all mkdir -p folder1 &&
-> +	run_on_all cp a folder1/a &&
-> +	run_on_all ../edit-contents folder1/a &&
-> +	test_all_match git update-index folder1/a &&
-
-'update-index' will work here, but I think using the more porcelain command
-'add --sparse' might be better for demonstrating typical user behavior.
-
-> +	test_all_match git commit -m "Change folder1/a" &&
-> +
-> +	# Get the tree SHA for the new HEAD
-> +	tree3=$(git -C sparse-index rev-parse HEAD^{tree}) &&
-> +
-> +	test_all_match git diff-tree $tree1 $tree3 &&
-> +	test_all_match git diff-tree $tree1 $tree3 -- folder1/a &&
-> +	test_all_match git diff-tree HEAD &&
-> +	test_all_match git diff-tree HEAD -- folder1/a &&
-> +
-> +	# check that SKIP_WORKTREE files are not materialized
-> +	test_path_is_missing sparse-checkout/folder2/a &&
-> +	test_path_is_missing sparse-index/folder2/a
-
-At first I wasn't sure about whether these checks were necessary (we don't
-'diff-tree' on any 'folder2/' pathspec), but this check verifies that we
-don't materialize the files in the case with no pathspec. While that's
-unlikely to happen, it doesn't hurt to have this test to be sure.
-
-> +'
-> +
-> +test_expect_success 'sparse-index is not expanded: diff-tree' '
-> +	init_repos &&
-> +
-> +	# Get the tree SHA for the current HEAD
-> +	tree1=$(git -C sparse-index rev-parse HEAD^{tree}) &&
-
-As with the previous test, you can use the 'update-deep' and
-'update-folder1' branches to simplify here.
-
-> +
-> +	echo "test1" >>sparse-index/deep/a &&
-> +	git -C sparse-index add deep/a &&
-> +	git -C sparse-index commit -m "Change deep/a" &&
-> +
-> +	# Get the tree SHA for the new HEAD
-> +	tree2=$(git -C sparse-index rev-parse HEAD^{tree}) &&
-> +
-> +	ensure_not_expanded diff-tree $tree1 $tree2 &&
-> +	ensure_not_expanded diff-tree $tree1 $tree2 -- deep/a &&
-> +	ensure_not_expanded diff-tree HEAD &&
-> +	ensure_not_expanded diff-tree HEAD -- deep/a
-
-Since the index won't expand regardless of whether you 'diff-tree'
-a file inside or outside the cone, it'd be nice to have a test like:
-
-ensure_not_expanded diff-tree update-folder1 &&
-ensure_not_expanded diff-tree update-folder1 -- folder1/a
-
-> +'
-> +
->  test_done
-
+--CgZhJIbQCGpDV2/z--
