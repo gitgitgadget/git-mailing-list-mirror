@@ -2,59 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAAFCC77B75
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 02:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8800C77B75
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 03:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbjEPC5S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 May 2023 22:57:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34508 "EHLO
+        id S229687AbjEPDCn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 May 2023 23:02:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjEPC5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2023 22:57:17 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C73E040D3
-        for <git@vger.kernel.org>; Mon, 15 May 2023 19:57:15 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f387d97dddso941498e87.3
-        for <git@vger.kernel.org>; Mon, 15 May 2023 19:57:15 -0700 (PDT)
+        with ESMTP id S229945AbjEPDC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2023 23:02:27 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B3A6587
+        for <git@vger.kernel.org>; Mon, 15 May 2023 20:02:14 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ac8cc8829fso128566481fa.3
+        for <git@vger.kernel.org>; Mon, 15 May 2023 20:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684205834; x=1686797834;
+        d=gmail.com; s=20221208; t=1684206133; x=1686798133;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bwX1u6EdfN0DVIAHueP/U9nbtslGGAXbeB3Fi8xTTDQ=;
-        b=P58qRGecZUy7V02HE3J3vuDV8CwtNlv6hDzH30Mu6TPIx8HWoEGzMNyQ5ZBpqkszQc
-         k34KhybnSJjJvf5l9x6BLb6cu88zal2NpK6/UyVLHPOD9RRE6echoLxL2VL69KjtrpH3
-         wyQFSNB0OmgCF9anJAI+r31Ee1D4gNECUTsknuP7vXZlftra8YY0R4EvuRNduz/CIfRM
-         1AledmI5XyfA3NrE3wc2g35T1jLufhsaEQpp37rDtb2n1DhOs47VsxewpV3ry9mtjjuc
-         mJixOYVV0zNubKnizmH+ZeL+Cx7X6ZIdMpwt980H2F8Uus1fI1wbZE6+0k8Lp/1YqKa2
-         NltA==
+        bh=MUFjSC4eXzlfg+LMlUC+618Oa+vm4qvZV71ncCSM8xo=;
+        b=lmS9seClI2ozRdVixzanXSgieZDHiyYxeMO9Hwz74WQjWs62P5bS1q8W09Z7Ed1jRW
+         9O745W1oaMDEQUudubHzieLp9vcbCPTZU3J4MzHKC1K97jc21G5w39CVOs5SlB30jXf4
+         CjgNVijrPse62qIAGzSHkvcH4Hq0YE2saVGDRY2Ek7nhRCDZXJgNXlLOJKlBhZygwfUR
+         LwpOnGUnHNIQ6k4lIqSQT//mXIr9x5I9I84GHagsJeoS/nBbRApf0nyXoKJbQtUlzru/
+         dxnCSR6lDCp3TQvCCDgqIbZJ901jdeaz0WeuJhEObi1kMGbAWbJ9gUAvnueqRvYVwI5S
+         5M0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684205834; x=1686797834;
+        d=1e100.net; s=20221208; t=1684206133; x=1686798133;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bwX1u6EdfN0DVIAHueP/U9nbtslGGAXbeB3Fi8xTTDQ=;
-        b=jae82zC5AL9dDv6B/msB2df2+DYbummtR8eWofIL+md9mtizGE6Fizr/ykVPwkgAgf
-         eXj894DLZxZh6lshkhvgLS8H4V6i6klR1IPG8G1ZXmYvf1IzcuXis9Iyo4JmAUrLxwZl
-         bYP1xg1cebLSxKOTd18PZyVkmaBPRCka34Ek6b1q8hR3Q+0tM4CogB0e9VmfvNxAC7Hn
-         VW7tVpjHZLCUpVPqtaTXhR2cCcyhpr3llaVmUmpkm0re3dQHLy12YO93fmEs2IPDgOqj
-         pLARfGVm0t3vDpAfSOHRmi4nnOPS6ZbP8dyUa0wo0XHYY+JV/ryrYTqWAaasL1Ka5UGe
-         ou/A==
-X-Gm-Message-State: AC+VfDysrfI0eQTILXsRjwYNyZCJS/YTwDKlHj9WUOIRCVglf2un6ho4
-        O6cK2i+EI8u7gZs+tOMvAf6b+/SHboI9tExwcQk=
-X-Google-Smtp-Source: ACHHUZ5pDmjrZvtHuZNwJ+mE0yEIqcQcPDlm0kgTFBbIMp6M9ib2rTr7esCySY5SulkgaW20g5vaRNMzzT72pGlnsFQ=
-X-Received: by 2002:ac2:4d02:0:b0:4f3:8269:7228 with SMTP id
- r2-20020ac24d02000000b004f382697228mr1436123lfi.68.1684205833725; Mon, 15 May
- 2023 19:57:13 -0700 (PDT)
+        bh=MUFjSC4eXzlfg+LMlUC+618Oa+vm4qvZV71ncCSM8xo=;
+        b=XxIDCG3sYWbzQfDtILR9x63aZXEKkEVMm4UKwV3svzDQZ0y8MLrLSp1tHEhVDP5BBj
+         +P4HTLvTFv/q7XdVxOBMUukmn6dq/ld6Dk9w1uVh5hEyOipf04P7iw6GL79kdu2PRbX1
+         ah4DOWfR1wcsGzSNoBCfzItnROGciY5/Mu69eJ24/urNSk0fFru03Wfpz+ObS91Ywwbr
+         +vpDtgKUi29MPGa3XTjHIaW/9HoX78h4Jk+rJsqVASvjtPmuTUuPEl1kbrvOnTwYXoJY
+         zYEsbBAQ/bIiNQCfmbRsCHgyi2aH+RbANy+V4hjvIAkYRC1k13PeIJIhoBlObSk1OMXW
+         UkgQ==
+X-Gm-Message-State: AC+VfDyi3sm2z/LvlbHoN1X5kaMZ0zviSnPKLeb3p1+cL8u8ucgS0r8+
+        dPTaGq7C8QCEKn5NfSxL+g7vqc5BjR3gETvzgh0=
+X-Google-Smtp-Source: ACHHUZ47rCAit1mabJICEfx+nFrbW5NjeBYS+FBeFcDWZce0Gmo5m3EJykpnUmN9EFCb6sHHB42McI+9HrdiYAwT/Fo=
+X-Received: by 2002:a2e:b70b:0:b0:2ac:83bb:ab46 with SMTP id
+ j11-20020a2eb70b000000b002ac83bbab46mr7408417ljo.30.1684206132386; Mon, 15
+ May 2023 20:02:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <3bc4dfeea901d9e57cee41666f85c783026d7e82.1683875070.git.gitgitgadget@gmail.com>
- <20230512212822.1126697-1-jonathantanmy@google.com>
-In-Reply-To: <20230512212822.1126697-1-jonathantanmy@google.com>
+References: <8f021be54e0795f56ab67e1d269abfcdac587f9c.1683875071.git.gitgitgadget@gmail.com>
+ <20230516000241.1459276-1-jonathantanmy@google.com>
+In-Reply-To: <20230516000241.1459276-1-jonathantanmy@google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 15 May 2023 19:57:01 -0700
-Message-ID: <CABPp-BHMDbO8EEQ3L6tok+qZaCSEurUwmOK+G+4Q+p1LYRQsQw@mail.gmail.com>
-Subject: Re: [PATCH v2 03/27] init-db, clone: change unnecessary global into
- passed parameter
+Date:   Mon, 15 May 2023 20:02:00 -0700
+Message-ID: <CABPp-BH-cmCm4CGrCpyPXCYhQtJSab5hPD7Y8GOB5jW3ngxqCg@mail.gmail.com>
+Subject: Re: [PATCH v2 17/27] cache.h: remove this no-longer-used header
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
@@ -65,30 +64,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2023 at 2:28=E2=80=AFPM Jonathan Tan <jonathantanmy@google.=
+On Mon, May 15, 2023 at 5:02=E2=80=AFPM Jonathan Tan <jonathantanmy@google.=
 com> wrote:
 >
 > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > Much like the former commit, this commit was prompted by a desire to
+> > Since this header showed up in some places besides just #include
+> > statements, update/clean-up/remove those other places as well.
+> >
+> > Note that compat/fsmonitor/fsm-path-utils-darwin.c previously got
+> > away with violating the rule that all files must start with an include
+> > of git-compat-util.h (or a short-list of alternate headers that happen
+> > to include it first).  This change exposed the violation and caused it
+> > to stop building correctly; fix it by having it include
+> > git-compat-util.h first, as per policy.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
 >
-> Could we have s/former/parent? I'm not used to "former" with this
-> meaning (but if it's understood by others, then that's fine).
+> Ah, a monumental effort indeed (to finally remove cache.h). This patch
+> was one of a few called out in the cover letter [1] as needing reviewer
+> focus, but this patch seemed straightforward to me (changing the text
+> wherever cache.h is mentioned in relatively obvious ways) so hopefully
+> I'm not missing anything.
 
-Sure, I'll make the switch.
+I mostly called it out simply because this patch was different than
+all the other ones, due to the Makefile and Documentation changes.  I
+figured that those who wanted to "spot check" deserved an easy way to
+find the different kinds of changes involved.
 
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 15f9912b4ca..cc34c194f5e 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -930,6 +930,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
-> >       int submodule_progress;
-> >       int filter_submodules =3D 0;
-> >       int hash_algo;
-> > +     const int do_not_override_repo_unix_permissions =3D -1;
->
-> I don't really like this name, but init_db() is undocumented so an
-> anonymous -1 at the call site is not much better. For the purposes of
-> this patch set (getting rid of cache.h), this should be fine for now.
+Although, I was a bit curious after the patch what the purpose of the
+SHA1DC_CUSTOM_INCLUDE_SHA1_C and SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C
+defines were and why there were two different ones.  I tried to do a
+little history spelunking to find out, but it didn't shed any light on
+the issue for me.  Setting them both to git-compat-util.h works just
+fine, so...*shrug*.
