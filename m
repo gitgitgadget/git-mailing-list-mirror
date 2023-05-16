@@ -2,168 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 189D0C77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 10:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C24C77B75
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 10:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232077AbjEPKKW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 06:10:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42784 "EHLO
+        id S232328AbjEPKZh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 06:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232051AbjEPKKS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 06:10:18 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA52A59F5
-        for <git@vger.kernel.org>; Tue, 16 May 2023 03:09:55 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1aaf21bb42bso98609535ad.2
-        for <git@vger.kernel.org>; Tue, 16 May 2023 03:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684231795; x=1686823795;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FxG4CrC9AUgcIkXysGyBJ4wQ0MxeMoX5BkxDh/25wnw=;
-        b=IIZZpnggEhuFmDKx7mF4WWJ7qh9II2NNlJwYFBlQjyFSpEAF2/T9y+Io/lP9kmo4Zv
-         xP12/2BAd5fPsIpI0dUxR3jFruCDomXNpbBP36EVUhNQXiDX8zCt2MKO64F29lBps5jU
-         hcTG+qDPyQeNgo8eJSiVhdNMUqwygKETt+Nklr4yaC7o6rD2IWREL/798hn9WqAgIqvV
-         KjQPUWjIp0m8fewumJqjAUfg0Qj7MU5B/HFz3FC32oVKeMWJjE56apwPxmi/Mai6jvHO
-         eldd3ZP8b0VkjUdT02gVbPRGFiuWUjtHbeOxd1kKYTPmv8bG0UOppGoaKAvXK3aebYCf
-         lgWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684231795; x=1686823795;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FxG4CrC9AUgcIkXysGyBJ4wQ0MxeMoX5BkxDh/25wnw=;
-        b=HtOwre2EQl2z1RuKByLcSsa/Zxc/t7b7waJeZyCK2kxk1Nheh5MDONx1XWKOohGd+f
-         jyZsZ8I6tz9oHj2cyrB0GYbHEDkZP7lTGfbGt5EPtKYzhY90rrRS41yGmQHCpcQNNIMc
-         ASjvCc2lXGmPpAe/fME8KX7sGQaCMCoS5LJIAl2WA1VwP+Z0lyOp65EpXv3Os9XIKTev
-         wbHB1Q/7TG2Gq/gmrRj76UirzUrll6SUslQzThfVkh4/iUB99xcGGJQKip7en6gwHiVB
-         HLz0hngAtrKIKrdLRee0OAWwlHNPcNmElMYaqT/t1j5ocbAJAZSuRZXNFejMY3QW6c6a
-         GsVw==
-X-Gm-Message-State: AC+VfDzE7WgIN/hbBVVkVyTSakbFo4rh2uSijNYNTfBnYTqyl4MGwRg0
-        RzNimdkfECxIf24vYe06KN26qsf7YB8=
-X-Google-Smtp-Source: ACHHUZ5/ubLQ5wohR2o1CErj42xQEn5bMe6gJhxTRclok5//ILVIbp10Td/YG8FWJJkg5fUVI0sQ3Q==
-X-Received: by 2002:a17:902:b08c:b0:1a1:ee8c:eef7 with SMTP id p12-20020a170902b08c00b001a1ee8ceef7mr39207156plr.48.1684231795119;
-        Tue, 16 May 2023 03:09:55 -0700 (PDT)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id u4-20020a17090341c400b001ab39cd875csm15042327ple.133.2023.05.16.03.09.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 May 2023 03:09:54 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Teng Long <dyroneteng@gmail.com>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Arkadii Yakovets <ark@cho.red>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.41.0 round #1
-Date:   Tue, 16 May 2023 18:09:49 +0800
-Message-Id: <20230516100949.24007-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        with ESMTP id S232408AbjEPKY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 06:24:59 -0400
+X-Greylist: delayed 310 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 16 May 2023 03:24:46 PDT
+Received: from qs51p00im-qukt01071502.me.com (qs51p00im-qukt01071502.me.com [17.57.155.5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E745B8E
+        for <git@vger.kernel.org>; Tue, 16 May 2023 03:24:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1684232375;
+        bh=dgO79jIb1j3EmBA4Zx4OTxzQTIHgYLJD6EkreArNX4k=;
+        h=From:To:Subject:Date:Message-Id:MIME-Version;
+        b=dfu4GB57T9dj3SsLplftNf0esi1C9ZCawCSC9u2bfW8OKxXmtZ6onMc1Tyu9+A+u+
+         62ErhbOWUVBncnZ3BjmaekhOyBzOncd7+VFCmvhGBSCPM5rINbzUyKIB+6+J13BQpn
+         fzElLj0vF72MuWYfZcgDNw0hSZ3QsKMbNdG1sU7HnmYGh7lbu8QfEihUJ/KTJDgzgR
+         MpmwHhatQHNMjWCfR4smEhh1yAMI1I5C+ZncSWz550q+QKyjD9d2doK/r0wu1Z5Ch2
+         wtiLgpIRr0l8xCOdUO2Wv90EqQvFgGFHM82llWWN+3WMBFlWXlgnN7c60M/Zy8fqhJ
+         7wcpgL4mbMcTA==
+Received: from localhost.localdomain (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
+        by qs51p00im-qukt01071502.me.com (Postfix) with ESMTPSA id D12EA668017C;
+        Tue, 16 May 2023 10:19:34 +0000 (UTC)
+From:   Emir SARI <emir_sari@icloud.com>
+To:     git@vger.kernel.org
+Cc:     Emir SARI <emir_sari@icloud.com>
+Subject: [PATCH] i18n: Enable percentage l10n for more strings
+Date:   Tue, 16 May 2023 13:19:11 +0300
+Message-Id: <20230516101911.93809-1-emir_sari@icloud.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: LbFiP2US2nZHakJavW3kZtRjzy0gbXX4
+X-Proofpoint-ORIG-GUID: LbFiP2US2nZHakJavW3kZtRjzy0gbXX4
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.790,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-01-12=5F02:2020-02-14=5F02,2022-01-12=5F02,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999
+ adultscore=0 mlxscore=0 clxscore=1015 spamscore=0 suspectscore=0
+ malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2305160087
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This enables percentage localization in more progress views, and
+provides a more cohesive l10n environment among the translated messages.
+---
+ apply.c    |  8 ++++----
+ progress.c | 18 ++++++++++++++++--
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-Git v2.41.0-rc0 has been released, and it's time to start new round of
-git l10n.  This time there are 39 updated messages need to be translated
-since last release. Please send your pull request to the l10n coordinator's
-repository below before this update window closes on Wed, 31 May 2023. 
+diff --git a/apply.c b/apply.c
+index 6212ab3..3e1d08d 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4247,11 +4247,11 @@ static void show_rename_copy(struct patch *p)
+ 	 * new_name through the end of names are renames
+ 	 */
+ 	if (old_name != p->old_name)
+-		printf(" %s %.*s{%s => %s} (%d%%)\n", renamecopy,
++		printf(_(" %s %.*s{%s => %s} (%d%%)\n"), renamecopy,
+ 		       (int)(old_name - p->old_name), p->old_name,
+ 		       old_name, new_name, p->score);
+ 	else
+-		printf(" %s %s => %s (%d%%)\n", renamecopy,
++		printf(_(" %s %s => %s (%d%%)\n"), renamecopy,
+ 		       p->old_name, p->new_name, p->score);
+ 	show_mode_change(p, 0);
+ }
+@@ -4270,8 +4270,8 @@ static void summary_patch_list(struct patch *patch)
+ 				show_rename_copy(p);
+ 			else {
+ 				if (p->score) {
+-					printf(" rewrite %s (%d%%)\n",
+-					       p->new_name, p->score);
++					printf(" rewrite %s ", p->new_name);
++					printf(_("(%d%%)\n"), p->score);
+ 					show_mode_change(p, 0);
+ 				}
+ 				else
+diff --git a/progress.c b/progress.c
+index f695798..1f8d372 100644
+--- a/progress.c
++++ b/progress.c
+@@ -124,10 +124,24 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 			progress->last_percent = percent;
+ 
+ 			strbuf_reset(counters_sb);
+-			strbuf_addf(counters_sb,
+-				    "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
++
++			struct strbuf progress_sb = STRBUF_INIT;
++			strbuf_addf(&progress_sb,
++				_("%u%% (%"PRIuMAX"/%"PRIuMAX")%s"), percent,
+ 				    (uintmax_t)n, (uintmax_t)progress->total,
+ 				    tp);
++			struct strbuf progress_str = STRBUF_INIT;
++			strbuf_addstr(&progress_str, progress_sb.buf);
++			strbuf_release(&progress_sb);
++
++			if (percent < 10)
++			    strbuf_insert(&progress_str, 0, "  ", 2);
++			else if (percent < 100)
++			    strbuf_insert(&progress_str, 0, " ", 1);
++
++			strbuf_addf(counters_sb, "%s", progress_str.buf);
++			strbuf_release(&progress_str);
++
+ 			show_update = 1;
+ 		}
+ 	} else if (progress_update) {
+-- 
+2.40.1
 
-    https://github.com/git-l10n/git-po/
-
-As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
-following description of the new l10n workflow is from the "po/README.md"
-file.
-
-
-## The "po/git.pot" file is a generated file, no longer in the repository
-
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
-
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Wed, 31 May 2023. **
-
-
---
-Jiang Xin
