@@ -2,55 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8747BC77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3612DC77B7A
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbjEPRJx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 13:09:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
+        id S230381AbjEPRJz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 13:09:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231580AbjEPRJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 13:09:50 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DC63ABC
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:09:49 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5618c444144so16569317b3.0
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:09:49 -0700 (PDT)
+        with ESMTP id S231782AbjEPRJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 13:09:52 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D0B3A99
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:09:51 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 98e67ed59e1d1-2532c2c41f7so470660a91.0
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684256989; x=1686848989;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4SNR6ajVQViBGC18i6drQVB9WIbNBXU+U7QCfHVLmQM=;
-        b=oc5A2QyhPcPsl0jOPx7wITVJHkvHr9B9J9/umAkbmXNVBBdPEzESq3hF6eHjyQ2coQ
-         tiAW48f08VCcKE5xb8EDB44rMFbMWiUYNr6cCE/IRok+RM150H2p4Mv9gQPId+JSuYLj
-         0DjTS6USPtK8Co9EZqh3qQvNtzPpWLEjh1/WmxjfKi0/4AORwRkxZNnEFQQV6l1PznCC
-         WCVIh3v7eHG8BIxNnxlzoRzqcafgUHNRpTuaq7icZDhvpaiaWW6JckWJ67q1MQUL8Zku
-         FP2kpW+QX+Nc0K1otnEZI4cjeDJBqyJUGY7KnFxR6b/WOvJN6G4k0XJW1A+wukeB/bpZ
-         0uGQ==
+        d=google.com; s=20221208; t=1684256991; x=1686848991;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=y3vT97uSeoH935qNYgrw0g8pV/dI3A84VsaaxyWqLok=;
+        b=QA2/Omif02pTdRt6+ii7KyR9TOxSNeIbTg6NWsmZW529cwN3FWZbp6aRX3xnOTtK+Y
+         hjihn1/kyrYKjyVVCPiMLKUyZnmSD0ewPWrXmj7Pc5psvRBH1ATy8dddjOsm88lWocer
+         2zG4FXKSz6AJvZ7kKJVDggm+yrohu1BDIWWFJOrbCoBs+BOQN1ZcPdSBKa2wig5RDfht
+         GvljNNpJ4dczdUNUCT6/vXMsX8bHcZYuG51acHv/m03xdt3BILH28oryRYCSfmAepBer
+         AzNsUyVuXBnZOtr7c2ZnuRKQCQumOlaGptNhiwL17xvepX8d2zX1g27sznXbkgU2mdhn
+         tD/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684256989; x=1686848989;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4SNR6ajVQViBGC18i6drQVB9WIbNBXU+U7QCfHVLmQM=;
-        b=Ub2dXKpFhCLb3ZbRPxwx4A3pCoDpjrB+TenQofuIR+pVIVBaW+s7H36JHnbEQ8dlnB
-         0xA/jhVfhpmRvqYpLfGh5+0OexKr1FsepzlTbRayHgRPDgEUsFWJgJxFQXZnF9wBloJB
-         UVXcj9cu+eB8nRVMX+Rt8bsI7BTYidofdSy5gJGOq+pG0IjNCbRpDK9pgicBFtT6bWXn
-         L/m+jcOCYsOXcDwuNroElRlyM6AVgG7DjSIqbRsr8KIZybcxnsBQWD5QhK9mO5ea0lgP
-         EeSXSCln7aWJNwDydfaFvvNTGq3mq6ik8LY+HVyshD1+hAkE4xdTodz4A4fZCPkrRMNS
-         kCMg==
-X-Gm-Message-State: AC+VfDx8l5BpEQgWJ1sO2ivczLmrjTHJyaWT+MUnoUjUZkwbp1ncx8Zd
-        0/TIa0NpqMlG91q2SmUUooc9kahYmU1QI35LbS/LWVRUK1KyKfKZcFVCUo/WmWnGvExNtUJBHGk
-        nTNZwujcsof1zfr6uHr/YQA5QpwPbIQmb3ZyfjHVBUaJSMtKcB2Ke6IbHeCx4l92oUw==
-X-Google-Smtp-Source: ACHHUZ6ndRabRtlJpkYJp0QPJPlV0yIxArbU6xHyUkUGPEonGNXvfH4zlMTZPTA+FV10ppNyuimlnIRfH2Ij+FY=
+        d=1e100.net; s=20221208; t=1684256991; x=1686848991;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=y3vT97uSeoH935qNYgrw0g8pV/dI3A84VsaaxyWqLok=;
+        b=kHLQRIRgo6nbNd9KOF3IaHQUjlZaPcHBadDkeZZCGJbcqzDAhonlcC72bUM+xRRONn
+         M1bOslEDgbYvdMzNbBh+HuEFhgrkximqwi2KwoEne3XQxIRmKlktx1YpGskvdAD7/P/y
+         8BNW/7xSkAt3gh8c418WnGP0Why5/flGXltzn6qPT7TWO+8MlebAXn1StFabQc9C0/Sd
+         8snZMuY+L2qb0iPsHnTYXY1lktAndK8d55qnj9ouJs09KZxCTGp/jZjxNui2FPbguDex
+         jtqOan0vTW4R2J1oK8nMFC1J7S+oLH+Kx/mIlpm+NVIjn1Q2deT2qsE4PW7FBhCLgop7
+         Lj/w==
+X-Gm-Message-State: AC+VfDxhhQ3WGIFEaD+E5/k0uPGASEsEskFN2XNuWLIGfcLfJlvX2uFO
+        YlrNXK/YjJWkhLJX0RV+l1rOjAidssFFFk3GtQQvE74PkmTrvtJudtpdvI7Q+HcGDUbmgA1VGTq
+        /tBYE/QL3akBS326WqSNBwlT6rHfxpsokYzb45SKgk6uGzP5U6hXOQ3xoXF8/OfikGQ==
+X-Google-Smtp-Source: ACHHUZ4WPkP5jSmP5rHc0jDQsI9Zd/RYs7mPsYDc5hfRSJrE6c0HZDbADhn19o8+0BFbM/qNVgCPOKGZOGxqYbY=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a81:4513:0:b0:55d:f929:418f with SMTP id
- s19-20020a814513000000b0055df929418fmr17550928ywa.1.1684256988863; Tue, 16
- May 2023 10:09:48 -0700 (PDT)
-Date:   Tue, 16 May 2023 17:09:25 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:90a:fa8b:b0:24e:4c73:e732 with SMTP
+ id cu11-20020a17090afa8b00b0024e4c73e732mr10761697pjb.0.1684256990674; Tue,
+ 16 May 2023 10:09:50 -0700 (PDT)
+Date:   Tue, 16 May 2023 17:09:26 +0000
+In-Reply-To: <20230516170932.1358685-1-calvinwan@google.com>
 Mime-Version: 1.0
+References: <20230516170932.1358685-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230516170932.1358685-1-calvinwan@google.com>
-Subject: [PATCH 0/6] git-compat-util cleanups
+Message-ID: <20230516170932.1358685-2-calvinwan@google.com>
+Subject: [PATCH 1/6] strbuf.h: move declarations for strbuf.c functions from git-compat-util.h
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>
@@ -59,180 +61,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series focuses on cleaning up and reducing the scope of
-git-compat-util.h by moving headers to their respective files and
-separating out functionality from git-compat-util.h to a new file,
-common.h. I go into more detail in patch 3 as to why I believe this
-separation is useful. 
+While functions like starts_with() probably should not belong in the
+boundaries of the strbuf library, this commit focuses on first splitting
+out headers from git-compat-util.h.
 
-By the end of this series, git-compat-util.h includes common.h which
-includes wrapper.h and usage.h. Since virtually every file includes
-git-compat-util.h and the large majority of files use functions defined
-in common.h, wrapper.h, and usage.h, I believe it makes sense that those
-are also automatically included with git-compat-util.h.
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+---
+ git-compat-util.h | 32 --------------------------------
+ strbuf.h          | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 32 deletions(-)
 
-While this series does not intend to draw clearer boundaries for
-common.h, I am open to ideas for how it can be cleaned up more and if
-there is a better name for the file. 
-
-Calvin Wan (6):
-  strbuf.h: move declarations for strbuf.c functions from
-    git-compat-util.h
-  wrapper.h: move declarations for wrapper.c functions from
-    git-compat-util.h
-  common.h: move non-compat specific macros and functions from
-    git-compat-util.h
-  usage.h: move declarations for usage.c functions from
-    git-compat-util.h
-  treewide: remove unnecessary includes for wrapper.h
-  common: move alloc macros to common.h
-
- add-patch.c                        |   1 -
- alias.c                            |   1 -
- alloc.h                            |  75 ----
- apply.c                            |   2 -
- archive-tar.c                      |   1 -
- archive.c                          |   1 -
- attr.c                             |   1 -
- builtin/am.c                       |   1 -
- builtin/bisect.c                   |   1 -
- builtin/blame.c                    |   1 -
- builtin/branch.c                   |   1 -
- builtin/bugreport.c                |   1 -
- builtin/cat-file.c                 |   1 -
- builtin/checkout--worker.c         |   1 -
- builtin/clone.c                    |   1 -
- builtin/config.c                   |   2 -
- builtin/credential-cache--daemon.c |   1 -
- builtin/credential-cache.c         |   1 -
- builtin/difftool.c                 |   1 -
- builtin/fast-import.c              |   1 -
- builtin/fetch-pack.c               |   1 -
- builtin/fmt-merge-msg.c            |   1 -
- builtin/fsmonitor--daemon.c        |   1 -
- builtin/gc.c                       |   1 -
- builtin/get-tar-commit-id.c        |   1 -
- builtin/grep.c                     |   1 -
- builtin/index-pack.c               |   2 -
- builtin/init-db.c                  |   1 -
- builtin/log.c                      |   1 -
- builtin/merge.c                    |   2 -
- builtin/mktree.c                   |   1 -
- builtin/mv.c                       |   1 -
- builtin/name-rev.c                 |   1 -
- builtin/pack-objects.c             |   2 -
- builtin/rebase.c                   |   1 -
- builtin/receive-pack.c             |   1 -
- builtin/repack.c                   |   1 -
- builtin/rerere.c                   |   1 -
- builtin/rev-parse.c                |   1 -
- builtin/revert.c                   |   1 -
- builtin/rm.c                       |   1 -
- builtin/submodule--helper.c        |   1 -
- builtin/unpack-file.c              |   1 -
- builtin/worktree.c                 |   1 -
- bulk-checkin.c                     |   2 -
- cache-tree.c                       |   1 -
- chunk-format.c                     |   1 -
- combine-diff.c                     |   1 -
- commit-graph.c                     |   1 -
- commit-reach.c                     |   1 -
- common.h                           | 551 ++++++++++++++++++++++++
- compat/terminal.c                  |   1 -
- config.c                           |   2 -
- convert.c                          |   1 -
- copy.c                             |   1 -
- csum-file.c                        |   1 -
- daemon.c                           |   2 -
- delta-islands.c                    |   1 -
- diff.c                             |   2 -
- diffcore-rename.c                  |   1 -
- dir-iterator.c                     |   1 -
- dir.c                              |   2 -
- editor.c                           |   1 -
- entry.c                            |   1 -
- environment.c                      |   1 -
- ewah/bitmap.c                      |   1 -
- ewah/ewah_bitmap.c                 |   1 -
- fetch-pack.c                       |   2 -
- fmt-merge-msg.c                    |   1 -
- fsck.c                             |   1 -
- git-compat-util.h                  | 664 +----------------------------
- gpg-interface.c                    |   1 -
- grep.c                             |   1 -
- help.c                             |   1 -
- http-backend.c                     |   2 -
- imap-send.c                        |   1 -
- line-log.c                         |   1 -
- list-objects-filter-options.c      |   1 -
- list-objects-filter.c              |   1 -
- ll-merge.c                         |   1 -
- merge-recursive.c                  |   1 -
- midx.c                             |   1 -
- notes-merge.c                      |   1 -
- object-file.c                      |   2 -
- oid-array.c                        |   1 -
- oidtree.c                          |   1 -
- pack-bitmap-write.c                |   1 -
- pack-bitmap.c                      |   1 -
- pack-objects.c                     |   1 -
- pack-write.c                       |   1 -
- packfile.c                         |   2 -
- parallel-checkout.c                |   2 -
- path.c                             |   1 -
- pkt-line.c                         |   1 -
- pretty.c                           |   1 -
- prio-queue.c                       |   1 -
- quote.c                            |   1 -
- read-cache.c                       |   2 -
- rebase-interactive.c               |   1 -
- ref-filter.c                       |   1 -
- reflog-walk.c                      |   1 -
- refs.c                             |   2 -
- refspec.c                          |   1 -
- remote-curl.c                      |   1 -
- remote.c                           |   1 -
- rerere.c                           |   2 -
- revision.c                         |   1 -
- send-pack.c                        |   1 -
- sequencer.c                        |   2 -
- server-info.c                      |   2 -
- setup.c                            |   1 -
- shallow.c                          |   2 -
- sigchain.c                         |   1 -
- sparse-index.c                     |   1 -
- split-index.c                      |   1 -
- strbuf.c                           |   2 -
- strbuf.h                           |  32 ++
- streaming.c                        |   1 -
- string-list.c                      |   1 -
- strvec.c                           |   1 -
- submodule-config.c                 |   1 -
- submodule.c                        |   1 -
- t/helper/test-delta.c              |   1 -
- t/helper/test-fsmonitor-client.c   |   1 -
- t/helper/test-reach.c              |   1 -
- t/helper/test-read-cache.c         |   1 -
- tag.c                              |   1 -
- tempfile.c                         |   1 -
- trace.c                            |   1 -
- trace2/tr2_tls.c                   |   1 -
- trailer.c                          |   1 -
- transport-helper.c                 |   1 -
- transport.c                        |   2 -
- tree-walk.c                        |   1 -
- upload-pack.c                      |   1 -
- usage.c                            |   1 -
- usage.h                            |  60 +++
- userdiff.c                         |   1 -
- worktree.c                         |   2 -
- wrapper.c                          |   1 -
- wrapper.h                          | 111 +++++
- write-or-die.c                     |   1 -
- 142 files changed, 756 insertions(+), 897 deletions(-)
- create mode 100644 common.h
- create mode 100644 usage.h
-
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5b2b99c17c..51af0a53aa 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -679,9 +679,6 @@ void set_warn_routine(report_fn routine);
+ report_fn get_warn_routine(void);
+ void set_die_is_recursing_routine(int (*routine)(void));
+ 
+-int starts_with(const char *str, const char *prefix);
+-int istarts_with(const char *str, const char *prefix);
+-
+ /*
+  * If the string "str" begins with the string found in "prefix", return 1.
+  * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
+@@ -710,29 +707,6 @@ static inline int skip_prefix(const char *str, const char *prefix,
+ 	return 0;
+ }
+ 
+-/*
+- * If the string "str" is the same as the string in "prefix", then the "arg"
+- * parameter is set to the "def" parameter and 1 is returned.
+- * If the string "str" begins with the string found in "prefix" and then a
+- * "=" sign, then the "arg" parameter is set to "str + strlen(prefix) + 1"
+- * (i.e., to the point in the string right after the prefix and the "=" sign),
+- * and 1 is returned.
+- *
+- * Otherwise, return 0 and leave "arg" untouched.
+- *
+- * When we accept both a "--key" and a "--key=<val>" option, this function
+- * can be used instead of !strcmp(arg, "--key") and then
+- * skip_prefix(arg, "--key=", &arg) to parse such an option.
+- */
+-int skip_to_optional_arg_default(const char *str, const char *prefix,
+-				 const char **arg, const char *def);
+-
+-static inline int skip_to_optional_arg(const char *str, const char *prefix,
+-				       const char **arg)
+-{
+-	return skip_to_optional_arg_default(str, prefix, arg, "");
+-}
+-
+ /*
+  * Like skip_prefix, but promises never to read past "len" bytes of the input
+  * buffer, and returns the remaining number of bytes in "out" via "outlen".
+@@ -777,12 +751,6 @@ static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
+ 	return strip_suffix_mem(str, len, suffix);
+ }
+ 
+-static inline int ends_with(const char *str, const char *suffix)
+-{
+-	size_t len;
+-	return strip_suffix(str, suffix, &len);
+-}
+-
+ #define SWAP(a, b) do {						\
+ 	void *_swap_a_ptr = &(a);				\
+ 	void *_swap_b_ptr = &(b);				\
+diff --git a/strbuf.h b/strbuf.h
+index 3dfeadb44c..5e6f7f3d8e 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -727,4 +727,36 @@ char *xstrvfmt(const char *fmt, va_list ap);
+ __attribute__((format (printf, 1, 2)))
+ char *xstrfmt(const char *fmt, ...);
+ 
++int starts_with(const char *str, const char *prefix);
++int istarts_with(const char *str, const char *prefix);
++
++/*
++ * If the string "str" is the same as the string in "prefix", then the "arg"
++ * parameter is set to the "def" parameter and 1 is returned.
++ * If the string "str" begins with the string found in "prefix" and then a
++ * "=" sign, then the "arg" parameter is set to "str + strlen(prefix) + 1"
++ * (i.e., to the point in the string right after the prefix and the "=" sign),
++ * and 1 is returned.
++ *
++ * Otherwise, return 0 and leave "arg" untouched.
++ *
++ * When we accept both a "--key" and a "--key=<val>" option, this function
++ * can be used instead of !strcmp(arg, "--key") and then
++ * skip_prefix(arg, "--key=", &arg) to parse such an option.
++ */
++int skip_to_optional_arg_default(const char *str, const char *prefix,
++				 const char **arg, const char *def);
++
++static inline int skip_to_optional_arg(const char *str, const char *prefix,
++				       const char **arg)
++{
++	return skip_to_optional_arg_default(str, prefix, arg, "");
++}
++
++static inline int ends_with(const char *str, const char *suffix)
++{
++	size_t len;
++	return strip_suffix(str, suffix, &len);
++}
++
+ #endif /* STRBUF_H */
 -- 
 2.40.1.606.ga4b1b128d6-goog
 
