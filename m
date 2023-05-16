@@ -2,77 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52D22C77B75
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 19:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28D62C77B7F
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 19:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbjEPTAy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 15:00:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36356 "EHLO
+        id S229543AbjEPTMK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 15:12:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjEPTAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 15:00:53 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DB19CC
-        for <git@vger.kernel.org>; Tue, 16 May 2023 12:00:52 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-510a5a5cf79so9a12.1
-        for <git@vger.kernel.org>; Tue, 16 May 2023 12:00:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684263651; x=1686855651;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D6RbwDQV3n9AMO7oG+T+9TR6eQOzzeSHFbXl0Me5rHE=;
-        b=IN1ieLkvF1gOH8yebExuOoKZ3dfMoJEk3ksklHs5Xk+SXu9/jWu8Jz1BWe87QXpail
-         93lbVugM/x1RMFs2i17IW6tcqY9dKFBvGvGLB0+iOXITSyR66qqxe0JsbioqYF8WRYyu
-         1JTtS2JOf7AZPm75UfG1fZwRMNV8GZPnv81iog1FUQ4Ms/FkGXI2VWKSjqnAVvKzLQp+
-         NM+hhwmxLSzXku1HjGS54PnzGKe8B5PwHW30N/qSlLYAKM5y7BWtpGM8oQ6pU6HOUPTP
-         LeHD5DBEcnrdYiaXy/0VvkVZnZxp9jj6UF2ZJLJPrQAFTt5MiM61IO0FrbnyGhbFisG4
-         wO0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684263651; x=1686855651;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D6RbwDQV3n9AMO7oG+T+9TR6eQOzzeSHFbXl0Me5rHE=;
-        b=BYTjnQr3/qykDudyCeZ5IQSOwyoesL+XA6XnzzXTVc+Eed6flieWISiGCgJimhLkIm
-         ofCBTp0gw15HD/cqqyKCXB4gG1aXyagkAWi7pPBoi0XC2vUM8vjcLN0AFAl8XUr0OfrY
-         6bRLmpgb0s//yEYJiCRZR4sl72tS94jC61qT5c8RH5US5EonpaSJwLs32hzPYWbec6jW
-         N9rHvr3DOuvwnunOugfLWjS7foHU3IUDbm2w5kkm6Y3+OSW9CdKZ6+WLdBZwK4vpWN0R
-         plgeWOcifClb/XPgfBLiz8Okxx8cz31p4RTd7FQqSM02jIvl7IHwd6Dbq7zIr5j4EjZo
-         UtuQ==
-X-Gm-Message-State: AC+VfDym5VDbTAkf5Tqucg5wJT8hXr2Q8x1im+mi+97fjU1w4Km1i4xI
-        aUqm6D1swIcUVRzHZZmNk3Nn1gd4WUXmVqFionMf9g==
-X-Google-Smtp-Source: ACHHUZ5DujX8pAHDb9gtTrDA8cJXmmmyKS3gMXYLkb42f76V8BjMnjXoKx/FV7nYul3rJ1dzFoalx/PAnNvUSD/w1cc=
-X-Received: by 2002:a50:aadd:0:b0:50b:f6ce:2f3d with SMTP id
- r29-20020a50aadd000000b0050bf6ce2f3dmr23315edc.0.1684263650876; Tue, 16 May
- 2023 12:00:50 -0700 (PDT)
+        with ESMTP id S229449AbjEPTMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 15:12:07 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AABD171A
+        for <git@vger.kernel.org>; Tue, 16 May 2023 12:12:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6ECD519D24E;
+        Tue, 16 May 2023 15:12:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=06GL3rpDUvuN
+        AfCfZju/3q/0zCt2PSi/PzaRH+Qn6qM=; b=yJZR2XQi5LjKCJdxklhCA6grI/iF
+        HxwlpxLxAzHkt+1/MbvocFpuw3ILj/Rl7gFyXVrvC61PhSrlOmD2yRoqU8kR+YJy
+        BO9GIuvfXZ74rIM4J052tQ3g1F93AmyIgPd9xBXyUGfaLmVNXOixSk/sbf/xPn9L
+        9Y6UifIxIqFOb7M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E81119D24D;
+        Tue, 16 May 2023 15:12:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.203.137.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DED4C19D24C;
+        Tue, 16 May 2023 15:12:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org,
+        "Randall S. Becker" <randall.becker@nexbridge.ca>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] run-command.c: fix missing include under `NO_PTHREADS`
+References: <ZGO4LesPe4A2ftdm@nand.local>
+        <db403de74da839084165f11dab05d71484457c6f.1684259780.git.me@ttaylorr.com>
+Date:   Tue, 16 May 2023 12:12:02 -0700
+In-Reply-To: <db403de74da839084165f11dab05d71484457c6f.1684259780.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Tue, 16 May 2023 13:56:21 -0400")
+Message-ID: <xmqqh6sct7jx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230516170932.1358685-1-calvinwan@google.com> <xmqqbkikuppz.fsf@gitster.g>
-In-Reply-To: <xmqqbkikuppz.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Tue, 16 May 2023 12:00:39 -0700
-Message-ID: <CAFySSZDn7vNgXmhO6EzvkX_6_uw-pdGZUjmFmwk=Qst-P2HN2g@mail.gmail.com>
-Subject: Re: [PATCH 0/6] git-compat-util cleanups
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8ADC44A8-F41D-11ED-86E2-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 16, 2023 at 10:54=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> This seems to have been based on 'master' around Apr 25th of this
-> year, like 0807e578 (Merge branch 'en/header-split-cache-h',
-> 2023-04-25).  If this were written some time ago and have been
-> tested internally at $WORK or something, *not* rebasing on a later
-> tip of 'master' (which you did) is good, but at the same time, it
-> would be nice to hear on which commit the series is designed to be
-> applied.  To prepare for the start of the next cycle, however, it
-> may be even better to rebase it on the tip of more recent 'master'
-> and test it internally (again), and sending the result out as v2
-> would very much be appreciated ;-)
+> When building git with `NO_PTHREADS=3DYesPlease`, we fail to build
+> run-command.o since we don't have a definition for ALLOC_GROW:
+>
+>     $ make NO_PTHREADS=3D1 DEVELOPER=3D1 run-command.o
+>     GIT_VERSION =3D 2.41.0.rc0.1.g787eb3beae.dirty
+>         CC run-command.o
+>     run-command.c: In function =E2=80=98git_atexit=E2=80=99:
+>     run-command.c:1103:9: error: implicit declaration of function =E2=80=
+=98ALLOC_GROW=E2=80=99 [-Werror=3Dimplicit-function-declaration]
+>      1103 |         ALLOC_GROW(git_atexit_hdlrs.handlers, git_atexit_hd=
+lrs.nr + 1, git_atexit_hdlrs.alloc);
+>           |         ^~~~~~~~~~
+>     cc1: all warnings being treated as errors
+>     make: *** [Makefile:2715: run-command.o] Error 1
 
-ok I'll go ahead and do that
+I am OK to give a reproduction recipe, i.e. the "$ make" command
+line, to make it easy for people, who cannot remember how to define
+make variables from the command line, to try out themselves, but I
+hate the "build transcript" in the log message, when a few lines of
+prose suffices.
+
+How about this?
+
+    Git 2.41-rc0 fails to compile run-command.c with NO_PTHREADS
+    defined, i.e.
+
+      $ make NO_PTHREADS=3D1 run-command.o
+
+    as ALLOC_GROW() macro is used in the atexit() emulation but the
+    macro definition is not available.
+
+> This bisects to 36bf195890 (alloc.h: move ALLOC_GROW() functions from
+> cache.h, 2023-02-24), which replaced includes of "cache.h" with
+> "alloc.h", which is the new home of `ALLOC_GROW()` (and
+> `ALLOC_GROW_BY()`).
+
+Good.
+Insert something like:
+
+    We can see that run-command.c is the only one that try to use
+    these macros without including <alloc.h>.
+
+      $ git grep -l -e '[^_]ALLOC_GROW(' -e 'ALLOC_GROW_BY(' \*.c | sort =
+>/tmp/1
+      $ git grep -l 'alloc\.h' \*.c | sort >/tmp/2
+      $ comm -23 /tmp/[12]
+      compat/simple-ipc/ipc-unix-socket.c
+      run-command.c
+
+    The "compat/" file only talks about the macro in the comment,
+    and is not broken.
+
+here.  What I am aiming for is to tell readers what they do not have
+to spend their time on.  As we encourage people to make sure to look
+for other errors that come from the same root cause when making a
+fix, avoiding duplicated work by telling what they do not have to
+look at is rather important.
+
+> run-command.c compiles fine when `NO_PTHREADS` is undefined, since its
+> use of `ALLOC_GROW()` is behind a `#ifndef NO_PTHREADS`. (Everything
+> else compiles fine when NO_PTHREADS is defined, so this is the only spo=
+t
+> that needs fixing).
+
+I think we can say that, but is probably coered by the three-line
+summary I gave above.
+
+> We could fix this by conditionally including "alloc.h" when
+> `NO_PTHREADS` is defined.  But we have relatively few examples of
+> conditional includes throughout the tree[^1].
+>
+> Instead, include "alloc.h" unconditionally in run-command.c to allow it
+> to successfully compile even when NO_PTHREADS is defined.
+
+Good.
+
+> [^1]: With `git grep -E -A1 '#if(n)?def' -- **/*.c | grep '#include' -B=
+1`.
+
+Good.
