@@ -2,120 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52365C77B7A
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3248BC77B75
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231361AbjEPR4j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 13:56:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45954 "EHLO
+        id S232032AbjEPR4l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 13:56:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232007AbjEPR4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 13:56:33 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0BE28688
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:56:32 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-ba81f71dfefso1566377276.0
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:56:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684259791; x=1686851791;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bTRtnKgGh6HGZKklYtS0NP2tpPf1hNdsytBKswMf5BY=;
-        b=J0f+J4BT5W4o6kwdfJpIGxlJPbjN7lEA5wL5a2qCHcrb49KXSUmyZah1KhuhmHFyJB
-         CdOyW7nTcxbgBpblI28/MTk4CVrI+keTRpZVUHKrieZJRfRja8djurLRImEidrtmWLRs
-         wJe+0H3JbgOIH/Onm6R8XIgxKTmx3OxSesoTxEi8+Ss3Cbfa0prfOXdBIiLSSp+0Pox2
-         XEd5GZhdDdO6pMze9HY0BqaIDaMYYzPln67ztzBFKYi5y0rPJv5L4n7rYI/rpS9zmJlo
-         dll0XcUsDv7JHjoyGynGAzTTt3jfO2/oXa8xr/GB00425YsRtogW2EqGxgCgY7nuEpZv
-         Ramw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684259791; x=1686851791;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bTRtnKgGh6HGZKklYtS0NP2tpPf1hNdsytBKswMf5BY=;
-        b=bzoYYa7YgvpvLe384U3ISuoBFph5T4guv+vCErLijmvN9kDabrSwP9NBCtaj8rQrwH
-         Zw+aZc917USm7Nyw4hrYEu8Vwo07ECAfjCB1mw4qcfNqyX2cH0hxfaDOtJIlniYwkOcB
-         18tblmJYW7YB9K82aVyAgQrJAXkYNoVwy1Znkq8E9W49eV8cJWyM6CGVYvtQTmXfN2qz
-         fEUMHxVA5Wt9DFymqIcndR95Cp5Iijd3yyVFdjioYGdCOt0yFLaNh3EKGh5LEd2DDwZX
-         mkZwPI9zZ7XZcxkjCFMQAen27LUqs5ftXgvO83FL6ydw49fp9ZjBlSH1gIYSkq+vBu1g
-         PctA==
-X-Gm-Message-State: AC+VfDylV/PW5gP7nojhVk064R4IYbz7C4LFdVIw4Ei4PRcY2x/nXIje
-        MIdibhuxVpfto3g0f0MNV/34GsyDcx+0fLH+OrGc5Q==
-X-Google-Smtp-Source: ACHHUZ4AAoUMS/7jb8OF15J8MMUNP/46aQQBGCEX4iqB1Ayr5FY95jSQPbfDrIUtze/WuWpgjBv0dQ==
-X-Received: by 2002:a25:fc0a:0:b0:b9d:e253:d25 with SMTP id v10-20020a25fc0a000000b00b9de2530d25mr35026548ybd.11.1684259791610;
-        Tue, 16 May 2023 10:56:31 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x13-20020a5b028d000000b00b9db62abff3sm16312ybl.58.2023.05.16.10.56.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 10:56:31 -0700 (PDT)
-Date:   Tue, 16 May 2023 13:56:21 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        with ESMTP id S232039AbjEPR4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 13:56:37 -0400
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91E9272C
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:56:35 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 35FBB5C01C1;
+        Tue, 16 May 2023 13:56:35 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 16 May 2023 13:56:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1684259795; x=1684346195; bh=HfdWM7fhrIi6lJ4mjm+Ay7PeK
+        uIYlgz2OsqGLwcfRIY=; b=pJfz2j6glVZwuiSFvA+OOGP8XveoJPF61ufOfoTON
+        /py9meWUURofqCWrEMw1jk1jk4g4aYyCkI0dLS9SZfObiNlZ3+9HR12tIwfGeYOp
+        ajNaqM/oqS+7CZXbpNQQWyBm7lC4iENZMmRG50GXcbGJQ72FboExDItpB6C/eOnF
+        R6trz78tTKvTO5wYGDUPTi5OTNUkROAV42JSKwb6dkX1TmqcSbhvQA4buU6UcW2N
+        TrF+JNjV6DKrTDuybREDDCWrAKauqaaR+u+So8wnxUf/8ZA3plDtDi//0cnMddpR
+        7kS4wq1apGNiRX1MVN+L7Y6X3Qorp8v/tZr7ghdcNmrNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1684259795; x=1684346195; bh=HfdWM7fhrIi6lJ4mjm+Ay7PeKuIYlgz2Osq
+        GLwcfRIY=; b=iKfQjcFREG6sb5/zrgnMzQOyuPT+5h7ROn6bjBKP7yJ1boZ0bxD
+        6Ymgm/GlDEcHnaAL1380xri3cWhvWVRWGSDkl5uAnPUHFMsyju+UbmIqVpoPvdaP
+        nkyFWXdO5Z1CeoNUphXWH6kekcFzusa2/2AJHsXHmbCDqnQpE6641IsuyjsCuOWT
+        9iuOkvVfXwHk7coKG18vF1odJyGzd0Goe70PdwdjzESHZavlSVWcMsMWTTe1/giY
+        ONTl7i1aQg5ZT23nMr/YMPj82QuYlX4eH/g9W7rKcDSHon5QyIY93lyhD/D1O6/i
+        yPMZ1eHehWzGoMb5yRXI8OsqUJgabvIEv6A==
+X-ME-Sender: <xms:08NjZFbijB-AFpyF3GMuImL4KOgsCOgN4oEnOXTcPS1WI0TK27ENXd4>
+    <xme:08NjZMa-k4XdjuIjrS3v72gtgOP2gNOju3PA4YjIaD1GhIa1R7urlg0G88fyMFtZ2
+    b97K6pnm5jjl3HjXA>
+X-ME-Received: <xmr:08NjZH92NicQdxhUZSWLLE6ezTJnvI4-9vVAWIQaOmHi7Ji6rrlQ0MZ5VIZLA5MxR2u8SjNnGeXb9e91_F5tXOX3OhjgvWqYlogi1oALshvUDQWH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehledguddukecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
+    htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
+    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepue
+    eiueffuefftefhhfefleelhfeuheettedtheevgeejteehgfevffeugffglefhnecuffho
+    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:08NjZDr6nUSCrOpU3wuOc5xkcYz9cgCwHR0FVz4k5yI80N9fOF1HLg>
+    <xmx:08NjZAprz1vdtDFsTIL7VleKQOeTCA3cpCjASUowx_Nu12WAOuzuYA>
+    <xmx:08NjZJQrmkvbeaEX-_Eq24Oug9gul3bjrLYmgZbSwwv1SW35PnatAw>
+    <xmx:08NjZH0PdRQEM1nBNnUbXfVz4ARPLbeCt2caGFwAeRx52Iju2gQo_g>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 May 2023 13:56:34 -0400 (EDT)
+From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <randall.becker@nexbridge.ca>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH] run-command.c: fix missing include under `NO_PTHREADS`
-Message-ID: <db403de74da839084165f11dab05d71484457c6f.1684259780.git.me@ttaylorr.com>
-References: <ZGO4LesPe4A2ftdm@nand.local>
+Cc:     peff@peff.net, gitster@pobox.com,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH v3 1/3] doc: tag: document `TAG_EDITMSG`
+Date:   Tue, 16 May 2023 19:55:44 +0200
+Message-Id: <882008e32a482d4b05d522430abf3419476f2302.1684258780.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <cover.1684258780.git.code@khaugsbakk.name>
+References: <cover.1684067644.git.code@khaugsbakk.name> <cover.1684258780.git.code@khaugsbakk.name>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZGO4LesPe4A2ftdm@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When building git with `NO_PTHREADS=YesPlease`, we fail to build
-run-command.o since we don't have a definition for ALLOC_GROW:
+Document `TAG_EDITMSG` which we have told the user about on unsuccessful
+command invocations since commit 3927bbe9a4 (tag: delete TAG_EDITMSG
+only on successful tag, 2008-12-06).
 
-    $ make NO_PTHREADS=1 DEVELOPER=1 run-command.o
-    GIT_VERSION = 2.41.0.rc0.1.g787eb3beae.dirty
-        CC run-command.o
-    run-command.c: In function ‘git_atexit’:
-    run-command.c:1103:9: error: implicit declaration of function ‘ALLOC_GROW’ [-Werror=implicit-function-declaration]
-     1103 |         ALLOC_GROW(git_atexit_hdlrs.handlers, git_atexit_hdlrs.nr + 1, git_atexit_hdlrs.alloc);
-          |         ^~~~~~~~~~
-    cc1: all warnings being treated as errors
-    make: *** [Makefile:2715: run-command.o] Error 1
+Introduce this documentation since we are going to add tests for the
+lifetime of this file in the case of command failure and success.
 
-This bisects to 36bf195890 (alloc.h: move ALLOC_GROW() functions from
-cache.h, 2023-02-24), which replaced includes of "cache.h" with
-"alloc.h", which is the new home of `ALLOC_GROW()` (and
-`ALLOC_GROW_BY()`).
+Use the documentation for `COMMIT_EDITMSG` from `git-commit.txt` as a
+template since these two files share the same purpose.[1]
 
-run-command.c compiles fine when `NO_PTHREADS` is undefined, since its
-use of `ALLOC_GROW()` is behind a `#ifndef NO_PTHREADS`. (Everything
-else compiles fine when NO_PTHREADS is defined, so this is the only spot
-that needs fixing).
+† 1: from commit 3927bbe9a4:
 
-We could fix this by conditionally including "alloc.h" when
-`NO_PTHREADS` is defined.  But we have relatively few examples of
-conditional includes throughout the tree[^1].
+     “ This matches the behavior of COMMIT_EDITMSG, which stays around
+       in case of error.
 
-Instead, include "alloc.h" unconditionally in run-command.c to allow it
-to successfully compile even when NO_PTHREADS is defined.
-
-[^1]: With `git grep -E -A1 '#if(n)?def' -- **/*.c | grep '#include' -B1`.
-
-Reported-by: Randall S. Becker <randall.becker@nexbridge.ca>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- run-command.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/run-command.c b/run-command.c
-index d4247d5fcc..60c9419866 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "hook.h"
- #include "compat/nonblock.h"
-+#include "alloc.h"
+Notes (series):
+    § From v2
+    
+    • I changed (from `COMMIT_EDITMSG`) “will be overwritten” to “may” since
+      I don’t see the point in giving a guarantee
+    • Unsure if I was going to put this before or after “NOTES” as there seems
+      to be no precedence
+    
+    Suggested in: https://lore.kernel.org/git/xmqqy1lqaxln.fsf@gitster.g/T/#u
+
+ Documentation/git-tag.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index fdc72b5875a..46e56b02455 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -377,6 +377,16 @@ $ GIT_COMMITTER_DATE="2006-10-02 10:31" git tag -s v1.0.1
  
- void child_process_init(struct child_process *child)
- {
+ include::date-formats.txt[]
+ 
++FILES
++-----
++
++`$GIT_DIR/TAG_EDITMSG`::
++	This file contains the message of an in-progress annotated
++	tag. If `git tag` exits due to an error before creating an
++	annotated tag then the tag message that has been provided by the
++	user in an editor session will be available in this file, but
++	may be overwritten by the next invocation of `git tag`.
++
+ NOTES
+ -----
+ 
 -- 
-2.41.0.rc0.dirty
+2.40.1
+
