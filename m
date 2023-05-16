@@ -2,81 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF557C77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D4FCC77B7F
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:06:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230318AbjEPRBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 13:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
+        id S229579AbjEPRG7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 13:06:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbjEPRBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 13:01:50 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E4AA5F5
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:01:25 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7569A19C552;
-        Tue, 16 May 2023 13:00:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lzP5HozLO0CO4SCaZ9u90As7lTpKZqbgx1Oe6P
-        ozIgo=; b=gNh5Pz3lVtfC/sL4ZArz6EOHgfjrjQwE/TiOW/GBkRm4yyjUNsfvbL
-        8BKXnstfzl+B2sdvcE85Gw7aG7iBbVnKCzRuXJ4wVi61yAZOfaBTKW+JU/Y5+FZA
-        1x0IpoIxPRQdxqBZ8ah1ZJGgVtsPe7mBKT+/NFoCuq58HqZ4uQRQ4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 658AC19C551;
-        Tue, 16 May 2023 13:00:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.203.137.187])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B439319C550;
-        Tue, 16 May 2023 13:00:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     code@khaugsbakk.name, avarab@gmail.com, git@vger.kernel.org,
-        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v9 4/6] notes.c: introduce
- '--separator=<paragraph-break>' option
-References: <2908b005-9478-4c59-ae8e-150be44a15a9@app.fastmail.com>
-        <20230512040746.2069-1-tenglong.tl@alibaba-inc.com>
-Date:   Tue, 16 May 2023 10:00:26 -0700
-In-Reply-To: <20230512040746.2069-1-tenglong.tl@alibaba-inc.com> (Teng Long's
-        message of "Fri, 12 May 2023 12:07:46 +0800")
-Message-ID: <xmqqttwcus7p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229529AbjEPRG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 13:06:57 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04882272C
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:06:57 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-55d2e87048cso206229507b3.1
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:06:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684256816; x=1686848816;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=u3tt+LXxWPAXv169+sDVTCVS8rNkKFka8G6bIV71AYo=;
+        b=NPnNXbaqluMrwy/m+EPKFPqve5zZRpWGu68iKoP/94y5IT+iapgX8B2KwkxBPmZlJg
+         REaBbb+RiE/4PD+k8Ep+xGAPKug3Uo+n64enBZAinRfubuo9iEAae+WCXstv+6SkZIaj
+         CUoz1kQ1Q9rOVyZrow617fUjC/y5asCpw/wzt6Z7hiNtmL+6NilwvtDrRDCaMMQHs0T2
+         BT3vHBATqRPI0CU7UX/oGGouTxTPVXBGpc3L3oaTfk3KZ3oZrKsf/4KJFSiiHj8k0lI+
+         v6F2vD3IiiizHIWjJe1tLNqfa9zFaoio8k4dUAzgPcNBKSGvxtzPZl77KMnE01hhVoGt
+         d4pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684256816; x=1686848816;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u3tt+LXxWPAXv169+sDVTCVS8rNkKFka8G6bIV71AYo=;
+        b=J0ONLz8jNtH6TlW1iaGTlFtZAFQgjH55oGPSmNi1vYXggMAwE4pwn5mvj/pW2OcLZ0
+         Eq8wst5WPu7G96Fy+E4Lz//yxJRqw0zuGAlSajt7XRPiN+20yFC5BJ4pWy+g+Bv+/FQO
+         L8ffOsUR2U6XBhFQ+k0X5JVsIXezdkMymHx6LI6Fnfrg4TkMCs2zlJE0bqX0/ju5n4DA
+         lFLr47dD7YPkbdEYPQCD8vBhqpkR0LHoDMDeU8RgN987yZgIRDCskNftSxuSTeeeJFON
+         DuhywQtKdVf7LeBho7dFhAC9KJpu1oheDlwk0l5Lf+noH/xotmV9Pl5NDG/4OmMnByUq
+         p0mw==
+X-Gm-Message-State: AC+VfDxkNS94pZzAtnlCr7xYL0aSuE4W0QsJMU65d044NSy5LCkS+cMS
+        LPoPq+gNLSaDck2KHeu9HixtkA==
+X-Google-Smtp-Source: ACHHUZ6D9O+oZnNgEaJhkrFOVuN/rMCfH9MvkZnPeCjmMi5jK8ENgXL2kPjhEySZnG+itG4SqSJcbg==
+X-Received: by 2002:a81:a144:0:b0:561:baab:fd22 with SMTP id y65-20020a81a144000000b00561baabfd22mr182359ywg.3.1684256814179;
+        Tue, 16 May 2023 10:06:54 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t7-20020a81c247000000b00545b02d4af5sm5090ywg.48.2023.05.16.10.06.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 May 2023 10:06:53 -0700 (PDT)
+Date:   Tue, 16 May 2023 13:06:53 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     rsbecker@nexbridge.com
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [BUG] Git 2.41.0-rc0 - Compile Error ALLOC_GROW
+Message-ID: <ZGO4LesPe4A2ftdm@nand.local>
+References: <009501d98817$9eb44560$dc1cd020$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 285F9648-F40B-11ED-B2D6-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <009501d98817$9eb44560$dc1cd020$@nexbridge.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+On Tue, May 16, 2023 at 12:58:15PM -0400, rsbecker@nexbridge.com wrote:
+> Hi Git Team,
+>
+> I am getting a compile error on rc0:
+>
+>   	ALLOC_GROW(git_atexit_hdlrs.handlers, git_atexit_hdlrs.nr + 1,
+> git_atexit_hdlrs.alloc);
+>   	^
+> "/home/ituglib/randall/jenkins/.jenkins/workspace/Git_Pipeline/run-command.c
+> ", line 1103: error(114): identifier "ALLOC_GROW" is undefined
+>
+> Any help o nthis?
 
-> Returning to the issue of -separator = "", my thought is that I want
-> --separator="" to behave the same way as
-> --separator="<any-string-without-a-trailing-\n'>" when deals a string which does
-> not contains a trailing newline. This will eliminate one more implicit logic and
-> make behavior more consistent.
+None of the code in run-command.c has changed much recently, but this
+bisects to 36bf195890 (alloc.h: move ALLOC_GROW() functions from
+cache.h, 2023-02-24).
 
-An obvious alternative would be to use the string given to the
-"--separator" option literally, I guess, and you can add your own
-newline if you want to.  But most of the time you would not want to
-have an incomplete line, so appending the newline at the end by
-default does make sense.
+Note that it only affects when building with NO_PTHREADS=1 (which I
+suspect is the case on NonStop). Here's the bisection:
 
-Special casing an empty value to "--separator" as "nothing" does
-make sort-of sense.  Using a blank line as the inter-paragraph
-separator is the default, and there is not much use in the
-"--separator=''" that becomes "--separator=$'\012'" automatically.
+    $ git bisect start
+    $ git bisect bad
+    $ git bisect good v2.40.0
+    $ git bisect run sh -c 'make DEVELOPER=1 NO_PTHREADS=1 run-command.o'
 
-> I think --no-separator maybe a better name, means that not any separator will be
-> append between two paragraphs even a newline.
+I'll attach a patch in a separate message.
 
-It would work as well.  Is it something we can safely add before
-merging the topic to upcoming -rc1?
-
-Thanks.
+Thanks,
+Taylor
