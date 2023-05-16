@@ -2,70 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6B9C77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B602DC77B7F
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231654AbjEPRT4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 13:19:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48424 "EHLO
+        id S231569AbjEPRYa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 13:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231783AbjEPRTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 13:19:53 -0400
+        with ESMTP id S229571AbjEPRY3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 13:24:29 -0400
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE2EFC
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:19:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC50FC
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:24:28 -0700 (PDT)
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9AC321F7FF4;
-        Tue, 16 May 2023 13:19:52 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A34DE1F8053;
+        Tue, 16 May 2023 13:24:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1r7+zPPtll3kS8sgqwQyB7XrjLO5VUZFbp44wg
-        47w5M=; b=B4P4jSh35feqcQ2BydVbuQbUBuuy3/Smn79mz4cKdMZhWC8Yh7hnrA
-        RI28WbAy5Vt6GA/V2iZojyW/T4KlxZcqJxp4vtE7qN+mp9K7DffBtBHn0KMAEbIw
-        ogOPX7VbKSR+ruqTvY9KfZ2wzDlkNXowEXwJD9MWCt7v02/NY+ilI=
+        :content-type; s=sasl; bh=Uu5UZaETVkp5xMuTg5XMmtX1nVdsmeLkCV03bH
+        t+ByA=; b=lWohbAG7fyTndFYWYbG+iAzimA1myQ/MVSSzLXDVLMAt1vW5cibO6P
+        zEHgGHpFkgZ5dgt1xDq+ILa1TIVk+sTPWvXjddRgOHz6AxbbCA2A6Yca0SxqEzA0
+        bxmHn3UK+WDMVMHp5DPcJU5uTZtBBEJozOVZ2qfXIoYSGMU1fs5qg=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93C961F7FF3;
-        Tue, 16 May 2023 13:19:52 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BE9E1F8052;
+        Tue, 16 May 2023 13:24:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.203.137.187])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8D8571F7FF2;
-        Tue, 16 May 2023 13:19:49 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CA7291F8051;
+        Tue, 16 May 2023 13:24:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     rsbecker@nexbridge.com, git@vger.kernel.org,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [BUG] Git 2.41.0-rc0 - Compile Error ALLOC_GROW
+Subject: [PATCH] run-command.c: need alloc.h for our own at-exit handler
+ emulation
 References: <009501d98817$9eb44560$dc1cd020$@nexbridge.com>
-        <ZGO4LesPe4A2ftdm@nand.local>
-Date:   Tue, 16 May 2023 10:19:48 -0700
-In-Reply-To: <ZGO4LesPe4A2ftdm@nand.local> (Taylor Blau's message of "Tue, 16
-        May 2023 13:06:53 -0400")
-Message-ID: <xmqqlehourbf.fsf@gitster.g>
+        <ZGO4LesPe4A2ftdm@nand.local> <xmqqlehourbf.fsf@gitster.g>
+Date:   Tue, 16 May 2023 10:24:24 -0700
+In-Reply-To: <xmqqlehourbf.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        16 May 2023 10:19:48 -0700")
+Message-ID: <xmqqh6scur3r.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DCE28B78-F40D-11ED-ADF0-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 818B3AEE-F40E-11ED-A671-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Recent header file shuffling missed this old user of ALLOC_GROW()
+that was inside "#ifdef NO_PTHREADS' section and forgot to include
+the new file, alloc.h, that defines the macro.
 
-Ah, alloc.h was introduced and everybody who took ALLOC_GROW() from
-git-compat-util.h (or was it cache.h?) now includes it, but
-apparently Elijah forgot  run-command.c and nobody caught this.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-I wonder if there are other leftover ones that we haven't caught?
+---
+ run-command.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-    $ git grep -l '[^_]ALLOC_GROW(' \*.c | sort >/var/tmp/1
-    $ git grep -l 'alloc\.h' \*.c | sort >/var/tmp/2
-    $ comm -23 /var/tmp/[12]
-    compat/simple-ipc/ipc-unix-socket.c
-    run-command.c
-
-But the former one is only in a comment, so it probably is OK.
-
+diff --git c/run-command.c w/run-command.c
+index d4247d5fcc..1affea48af 100644
+--- c/run-command.c
++++ w/run-command.c
+@@ -1073,6 +1073,7 @@ static void NORETURN async_exit(int code)
+ }
+ 
+ #else
++#include <alloc.h>
+ 
+ static struct {
+ 	void (**handlers)(void);
