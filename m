@@ -2,156 +2,355 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E88C3C77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 21:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 221A1C77B7A
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 22:08:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbjEPVeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 17:34:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50842 "EHLO
+        id S229919AbjEPWIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 18:08:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231266AbjEPVeE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 17:34:04 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C889EF4
-        for <git@vger.kernel.org>; Tue, 16 May 2023 14:33:46 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-b9daef8681fso12749525276.1
-        for <git@vger.kernel.org>; Tue, 16 May 2023 14:33:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684272825; x=1686864825;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=twj0fz32cWvcGv199Hpjb8ee42tECpERiSvyjgXoP8Q=;
-        b=hob5h6d5+pjqUeKMFXDdqOm27zq7ED0bia8CSgiZOBivTBH4k2MVARtmfdBCEZ3Jq8
-         1P6MYQU2i7gO0gJjl1oq4mMIzzjzhbILEbqxstgjWVi64Mwd9e9U/Wq3YcKAtmaDBsD0
-         loq76dn2l9iiVhXaf8wNavK9X1GlNJ72XTX0+VNbK0dbH2cPLtaf9HIbF1QTvt7niteX
-         SPLzqCYyn0I8XLa87kRp03Lt0Q8yQ6BscQeokhnoGqb4QdfCnrZvM7+2jF19qphq7htM
-         PotgjXnMoipe8Y3ktErrAMs+agtZ9Rs/ukDapy88+qX9QZLH6UNpTdwingjNJWxS2RQ5
-         O8Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684272825; x=1686864825;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=twj0fz32cWvcGv199Hpjb8ee42tECpERiSvyjgXoP8Q=;
-        b=CIj7KIw3n+rr/q2vI70iFrTnQRyAx9Rwcfv3XHv5kbP5OebF9EqUfEhBi6dwoC8f0F
-         wdhmHr/sbWvi55oLaZRUONGLCn/zx0QCsjZIk5tOlYVY/Ekxtgt0HhO6rpVXvIiMAnTR
-         +EnOLqGUyCd8cDIlE9Qr0cff+q+RnCFnuAUapD1Yr6ub1BkyL0cp/DvlHTvcFaN1sT4U
-         N3iGxNwb6kMNgYTIFLDHl97dSUS7URgJJdJrJV0jfRTP/p2jFdavRvXF8DvDM+V1t7mq
-         x+xkhavbcZSqu5fVcmvArHv5Z0G9SMU7ObQcDrwG8GvWyHwkzUqbgU6TPFIC78nctbqe
-         EU3Q==
-X-Gm-Message-State: AC+VfDw6fBRc+HZjuoTI4xZBZoY4GM3LuctSiEiO3X1xoF+7OWsz2oPs
-        XLK9i4sMMPraul23OSXL6arm8rgfo7uTiNbQW6Z1BQ==
-X-Google-Smtp-Source: ACHHUZ7iqZdGHzX2KW8awCF40J7GfE5oqVTmrrcYooNQTOG0hGYJuzrEkAp5MLCSE/uoYIDXeCpjxw==
-X-Received: by 2002:a25:ce85:0:b0:ba7:4334:1849 with SMTP id x127-20020a25ce85000000b00ba743341849mr12011976ybe.25.1684272825036;
-        Tue, 16 May 2023 14:33:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t7-20020a81c247000000b00545b02d4af5sm171483ywg.48.2023.05.16.14.33.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 14:33:44 -0700 (PDT)
-Date:   Tue, 16 May 2023 17:33:43 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "Randall S. Becker" <randall.becker@nexbridge.ca>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] run-command.c: fix missing include under `NO_PTHREADS`
-Message-ID: <ZGP2tw0USsj9oecZ@nand.local>
-References: <ZGO4LesPe4A2ftdm@nand.local>
- <db403de74da839084165f11dab05d71484457c6f.1684259780.git.me@ttaylorr.com>
- <xmqqh6sct7jx.fsf@gitster.g>
+        with ESMTP id S229501AbjEPWIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 18:08:49 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CAE2696
+        for <git@vger.kernel.org>; Tue, 16 May 2023 15:08:47 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EF40E19E325;
+        Tue, 16 May 2023 18:08:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uUIEweAryJ7oPLcjxzHuAONTPEj75rThEiiAW0
+        Wy/qE=; b=Tq1DBMKTj0OLTF9jzn5M+OZpwpO68wA+1YVfFtdxFHm0AsQMZig+mX
+        jsxQpQPf0K+JveF6yW5HzN2XmFhZV1TGpvwwT++aypn7+LT3MXDUyQCahNzh7+3n
+        B1CRmujC5CSiRpvCM72ROXPd4bUX985hYIy6q/mlFEaEODnRulx8M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAEFC19E324;
+        Tue, 16 May 2023 18:08:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.203.137.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1AD0B19E323;
+        Tue, 16 May 2023 18:08:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/6] wrapper.h: move declarations for wrapper.c
+ functions from git-compat-util.h
+References: <20230516170932.1358685-1-calvinwan@google.com>
+        <20230516170932.1358685-3-calvinwan@google.com>
+Date:   Tue, 16 May 2023 15:08:40 -0700
+In-Reply-To: <20230516170932.1358685-3-calvinwan@google.com> (Calvin Wan's
+        message of "Tue, 16 May 2023 17:09:27 +0000")
+Message-ID: <xmqq353wszdj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqh6sct7jx.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 37E0B946-F436-11ED-8876-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 16, 2023 at 12:12:02PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Calvin Wan <calvinwan@google.com> writes:
+
+> Since the functions in wrapper.c are widely used across the codebase,
+> include it by default in git-compat-util.h. A future patch will remove
+> now unnecessary inclusions of wrapper.h from other files.
+
+The description taken alone implies the move in the other direction
+(i.e. taking decls from wrapper.h and moving them to
+git-compat-util.h), but that the patch actually does makes sense.
+Slim compat-util.h by moving decls for wrapper functions that are
+defined in wrapper.c to wrapper.h, but to avoid impacting the users
+right away, include wrapper.h in the compat-util.h that these users
+expect to find these decls in.
+
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> ---
+>  git-compat-util.h | 113 +---------------------------------------------
+>  wrapper.h         | 111 +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 112 insertions(+), 112 deletions(-)
 >
-> > When building git with `NO_PTHREADS=YesPlease`, we fail to build
-> > run-command.o since we don't have a definition for ALLOC_GROW:
-> >
-> >     $ make NO_PTHREADS=1 DEVELOPER=1 run-command.o
-> >     GIT_VERSION = 2.41.0.rc0.1.g787eb3beae.dirty
-> >         CC run-command.o
-> >     run-command.c: In function ‘git_atexit’:
-> >     run-command.c:1103:9: error: implicit declaration of function ‘ALLOC_GROW’ [-Werror=implicit-function-declaration]
-> >      1103 |         ALLOC_GROW(git_atexit_hdlrs.handlers, git_atexit_hdlrs.nr + 1, git_atexit_hdlrs.alloc);
-> >           |         ^~~~~~~~~~
-> >     cc1: all warnings being treated as errors
-> >     make: *** [Makefile:2715: run-command.o] Error 1
->
-> I am OK to give a reproduction recipe, i.e. the "$ make" command
-> line, to make it easy for people, who cannot remember how to define
-> make variables from the command line, to try out themselves, but I
-> hate the "build transcript" in the log message, when a few lines of
-> prose suffices.
-
-Much appreciated. Here's a version with your changes include that is
-suitable for queueing:
-
---- 8< ---
-
-Subject: [PATCH] run-command.c: fix missing include under `NO_PTHREADS`
-
-Git 2.41-rc0 fails to compile run-command.c with `NO_PTHREADS` defined,
-i.e.
-
-  $ make NO_PTHREADS=1 run-command.o
-
-as `ALLOC_GROW()` macro is used in the `atexit()` emulation but the
-macro definition is not available.
-
-This bisects to 36bf195890 (alloc.h: move ALLOC_GROW() functions from
-cache.h, 2023-02-24), which replaced includes of <cache.h> with
-<alloc.h>, which is the new home of `ALLOC_GROW()` (and
-`ALLOC_GROW_BY()`).
-
-We can see that run-command.c is the only one that try to use these
-macros without including <alloc.h>.
-
-  $ git grep -l -e '[^_]ALLOC_GROW(' -e 'ALLOC_GROW_BY(' \*.c | sort >/tmp/1
-  $ git grep -l 'alloc\.h' \*.c | sort >/tmp/2
-  $ comm -23 /tmp/[12]
-  compat/simple-ipc/ipc-unix-socket.c
-  run-command.c
-
-The "compat/" file only talks about the macro in the comment,
-and is not broken.
-
-We could fix this by conditionally including "alloc.h" when
-`NO_PTHREADS` is defined.  But we have relatively few examples of
-conditional includes throughout the tree[^1].
-
-Instead, include "alloc.h" unconditionally in run-command.c to allow it
-to successfully compile even when NO_PTHREADS is defined.
-
-[^1]: With `git grep -E -A1 '#if(n)?def' -- **/*.c | grep '#include' -B1`.
-
-Reported-by: Randall S. Becker <randall.becker@nexbridge.ca>
-Co-authored-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- run-command.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/run-command.c b/run-command.c
-index d4247d5fcc..60c9419866 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "hook.h"
- #include "compat/nonblock.h"
-+#include "alloc.h"
-
- void child_process_init(struct child_process *child)
- {
---
-2.41.0.rc0.dirty
-
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 51af0a53aa..9898fe9374 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -626,8 +626,7 @@ static inline int git_has_dir_sep(const char *path)
+>  #include "compat/bswap.h"
+>  
+>  #include "wildmatch.h"
+> -
+> -struct strbuf;
+> +#include "wrapper.h"
+>  
+>  /* General helper functions */
+>  NORETURN void usage(const char *err);
+> @@ -1047,36 +1046,6 @@ static inline int cast_size_t_to_int(size_t a)
+>  # define xalloca(size)      (xmalloc(size))
+>  # define xalloca_free(p)    (free(p))
+>  #endif
+> -char *xstrdup(const char *str);
+> -void *xmalloc(size_t size);
+> -void *xmallocz(size_t size);
+> -void *xmallocz_gently(size_t size);
+> -void *xmemdupz(const void *data, size_t len);
+> -char *xstrndup(const char *str, size_t len);
+> -void *xrealloc(void *ptr, size_t size);
+> -void *xcalloc(size_t nmemb, size_t size);
+> -void xsetenv(const char *name, const char *value, int overwrite);
+> -void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+> -const char *mmap_os_err(void);
+> -void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+> -int xopen(const char *path, int flags, ...);
+> -ssize_t xread(int fd, void *buf, size_t len);
+> -ssize_t xwrite(int fd, const void *buf, size_t len);
+> -ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+> -int xdup(int fd);
+> -FILE *xfopen(const char *path, const char *mode);
+> -FILE *xfdopen(int fd, const char *mode);
+> -int xmkstemp(char *temp_filename);
+> -int xmkstemp_mode(char *temp_filename, int mode);
+> -char *xgetcwd(void);
+> -FILE *fopen_for_writing(const char *path);
+> -FILE *fopen_or_warn(const char *path, const char *mode);
+> -
+> -/*
+> - * Like strncmp, but only return zero if s is NUL-terminated and exactly len
+> - * characters long.  If it is not, consider it greater than t.
+> - */
+> -int xstrncmpz(const char *s, const char *t, size_t len);
+>  
+>  /*
+>   * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
+> @@ -1178,15 +1147,10 @@ static inline size_t xsize_t(off_t len)
+>  	return (size_t) len;
+>  }
+>  
+> -__attribute__((format (printf, 3, 4)))
+> -int xsnprintf(char *dst, size_t max, const char *fmt, ...);
+> -
+>  #ifndef HOST_NAME_MAX
+>  #define HOST_NAME_MAX 256
+>  #endif
+>  
+> -int xgethostname(char *buf, size_t len);
+> -
+>  /* in ctype.c, for kwset users */
+>  extern const unsigned char tolower_trans_tbl[256];
+>  
+> @@ -1427,72 +1391,6 @@ void bug_fl(const char *file, int line, const char *fmt, ...);
+>  #endif
+>  #endif
+>  
+> -enum fsync_action {
+> -	FSYNC_WRITEOUT_ONLY,
+> -	FSYNC_HARDWARE_FLUSH
+> -};
+> -
+> -/*
+> - * Issues an fsync against the specified file according to the specified mode.
+> - *
+> - * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
+> - * systems to flush the OS cache without issuing a flush command to the storage
+> - * controller. If those interfaces are unavailable, the function fails with
+> - * ENOSYS.
+> - *
+> - * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
+> - * changes are durable. It is not expected to fail.
+> - */
+> -int git_fsync(int fd, enum fsync_action action);
+> -
+> -/*
+> - * Writes out trace statistics for fsync using the trace2 API.
+> - */
+> -void trace_git_fsync_stats(void);
+> -
+> -/*
+> - * Preserves errno, prints a message, but gives no warning for ENOENT.
+> - * Returns 0 on success, which includes trying to unlink an object that does
+> - * not exist.
+> - */
+> -int unlink_or_warn(const char *path);
+> - /*
+> -  * Tries to unlink file.  Returns 0 if unlink succeeded
+> -  * or the file already didn't exist.  Returns -1 and
+> -  * appends a message to err suitable for
+> -  * 'error("%s", err->buf)' on error.
+> -  */
+> -int unlink_or_msg(const char *file, struct strbuf *err);
+> -/*
+> - * Preserves errno, prints a message, but gives no warning for ENOENT.
+> - * Returns 0 on success, which includes trying to remove a directory that does
+> - * not exist.
+> - */
+> -int rmdir_or_warn(const char *path);
+> -/*
+> - * Calls the correct function out of {unlink,rmdir}_or_warn based on
+> - * the supplied file mode.
+> - */
+> -int remove_or_warn(unsigned int mode, const char *path);
+> -
+> -/*
+> - * Call access(2), but warn for any error except "missing file"
+> - * (ENOENT or ENOTDIR).
+> - */
+> -#define ACCESS_EACCES_OK (1U << 0)
+> -int access_or_warn(const char *path, int mode, unsigned flag);
+> -int access_or_die(const char *path, int mode, unsigned flag);
+> -
+> -/* Warn on an inaccessible file if errno indicates this is an error */
+> -int warn_on_fopen_errors(const char *path);
+> -
+> -/*
+> - * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
+> - * may be racy. Do not use this as protection against an attacker who can
+> - * simultaneously create paths.
+> - */
+> -int open_nofollow(const char *path, int flags);
+> -
+>  #ifndef SHELL_PATH
+>  # define SHELL_PATH "/bin/sh"
+>  #endif
+> @@ -1632,13 +1530,4 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
+>  	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+>  #endif /* !__GNUC__ */
+>  
+> -void sleep_millisec(int millisec);
+> -
+> -/*
+> - * Generate len bytes from the system cryptographically secure PRNG.
+> - * Returns 0 on success and -1 on error, setting errno.  The inability to
+> - * satisfy the full request is an error.
+> - */
+> -int csprng_bytes(void *buf, size_t len);
+> -
+>  #endif
+> diff --git a/wrapper.h b/wrapper.h
+> index f0c7d0616d..c85b1328d1 100644
+> --- a/wrapper.h
+> +++ b/wrapper.h
+> @@ -1,6 +1,42 @@
+>  #ifndef WRAPPER_H
+>  #define WRAPPER_H
+>  
+> +char *xstrdup(const char *str);
+> +void *xmalloc(size_t size);
+> +void *xmallocz(size_t size);
+> +void *xmallocz_gently(size_t size);
+> +void *xmemdupz(const void *data, size_t len);
+> +char *xstrndup(const char *str, size_t len);
+> +void *xrealloc(void *ptr, size_t size);
+> +void *xcalloc(size_t nmemb, size_t size);
+> +void xsetenv(const char *name, const char *value, int overwrite);
+> +void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+> +const char *mmap_os_err(void);
+> +void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+> +int xopen(const char *path, int flags, ...);
+> +ssize_t xread(int fd, void *buf, size_t len);
+> +ssize_t xwrite(int fd, const void *buf, size_t len);
+> +ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+> +int xdup(int fd);
+> +FILE *xfopen(const char *path, const char *mode);
+> +FILE *xfdopen(int fd, const char *mode);
+> +int xmkstemp(char *temp_filename);
+> +int xmkstemp_mode(char *temp_filename, int mode);
+> +char *xgetcwd(void);
+> +FILE *fopen_for_writing(const char *path);
+> +FILE *fopen_or_warn(const char *path, const char *mode);
+> +
+> +/*
+> + * Like strncmp, but only return zero if s is NUL-terminated and exactly len
+> + * characters long.  If it is not, consider it greater than t.
+> + */
+> +int xstrncmpz(const char *s, const char *t, size_t len);
+> +
+> +__attribute__((format (printf, 3, 4)))
+> +int xsnprintf(char *dst, size_t max, const char *fmt, ...);
+> +
+> +int xgethostname(char *buf, size_t len);
+> +
+>  /* set default permissions by passing mode arguments to open(2) */
+>  int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
+>  int git_mkstemp_mode(char *pattern, int mode);
+> @@ -33,4 +69,79 @@ void write_file(const char *path, const char *fmt, ...);
+>  /* Return 1 if the file is empty or does not exists, 0 otherwise. */
+>  int is_empty_or_missing_file(const char *filename);
+>  
+> +enum fsync_action {
+> +	FSYNC_WRITEOUT_ONLY,
+> +	FSYNC_HARDWARE_FLUSH
+> +};
+> +
+> +/*
+> + * Issues an fsync against the specified file according to the specified mode.
+> + *
+> + * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
+> + * systems to flush the OS cache without issuing a flush command to the storage
+> + * controller. If those interfaces are unavailable, the function fails with
+> + * ENOSYS.
+> + *
+> + * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
+> + * changes are durable. It is not expected to fail.
+> + */
+> +int git_fsync(int fd, enum fsync_action action);
+> +
+> +/*
+> + * Writes out trace statistics for fsync using the trace2 API.
+> + */
+> +void trace_git_fsync_stats(void);
+> +
+> +/*
+> + * Preserves errno, prints a message, but gives no warning for ENOENT.
+> + * Returns 0 on success, which includes trying to unlink an object that does
+> + * not exist.
+> + */
+> +int unlink_or_warn(const char *path);
+> + /*
+> +  * Tries to unlink file.  Returns 0 if unlink succeeded
+> +  * or the file already didn't exist.  Returns -1 and
+> +  * appends a message to err suitable for
+> +  * 'error("%s", err->buf)' on error.
+> +  */
+> +int unlink_or_msg(const char *file, struct strbuf *err);
+> +/*
+> + * Preserves errno, prints a message, but gives no warning for ENOENT.
+> + * Returns 0 on success, which includes trying to remove a directory that does
+> + * not exist.
+> + */
+> +int rmdir_or_warn(const char *path);
+> +/*
+> + * Calls the correct function out of {unlink,rmdir}_or_warn based on
+> + * the supplied file mode.
+> + */
+> +int remove_or_warn(unsigned int mode, const char *path);
+> +
+> +/*
+> + * Call access(2), but warn for any error except "missing file"
+> + * (ENOENT or ENOTDIR).
+> + */
+> +#define ACCESS_EACCES_OK (1U << 0)
+> +int access_or_warn(const char *path, int mode, unsigned flag);
+> +int access_or_die(const char *path, int mode, unsigned flag);
+> +
+> +/* Warn on an inaccessible file if errno indicates this is an error */
+> +int warn_on_fopen_errors(const char *path);
+> +
+> +/*
+> + * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
+> + * may be racy. Do not use this as protection against an attacker who can
+> + * simultaneously create paths.
+> + */
+> +int open_nofollow(const char *path, int flags);
+> +
+> +void sleep_millisec(int millisec);
+> +
+> +/*
+> + * Generate len bytes from the system cryptographically secure PRNG.
+> + * Returns 0 on success and -1 on error, setting errno.  The inability to
+> + * satisfy the full request is an error.
+> + */
+> +int csprng_bytes(void *buf, size_t len);
+> +
+>  #endif /* WRAPPER_H */
