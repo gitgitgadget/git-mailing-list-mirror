@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 160D2C77B75
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 06:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2DBBC77B7F
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 06:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbjEPGfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 02:35:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49024 "EHLO
+        id S230299AbjEPGfG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 02:35:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbjEPGeq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 02:34:46 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BDF34215
-        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:29 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3062db220a3so8875302f8f.0
-        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:29 -0700 (PDT)
+        with ESMTP id S230308AbjEPGer (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 02:34:47 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52ED746AE
+        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:31 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f475366522so43981855e9.1
+        for <git@vger.kernel.org>; Mon, 15 May 2023 23:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684218867; x=1686810867;
+        d=gmail.com; s=20221208; t=1684218869; x=1686810869;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=siTYCzcFqM4BrwbGK2xSh1viUfSy9pAhhIrOWJ60wqY=;
-        b=N0w33q0EzbFuq7FybChJd5R7ZPouAt5aduUpH9FtdRf4xd611Z3K9mxVZ9MpF5NszH
-         wnJEsRHI1f/RyPK4XqeWHtG8ktfXU92/I8unUoKjicmH1a7KaWfYkJXIkhYW61blYttv
-         //2fHr0qWM3cQxpEWkDW6CqeSo3ydPxxHuB9rK9ZBKbl8EUUMsbenTzDhynp+Cd3+/WK
-         HzCJkuDjQl1kPPOOq8vFJE3PikwXFwAZfEEP3Zq3qskpvJPA7Mi64SdN9wIccg1MPdID
-         T9zYnxt6MD5wn0SIeoV2dCji4QnPOciveYRr64fc1FF/+zq7SmWbkBr3Q5xJsA7iHeHd
-         47yg==
+        bh=rCGUWfMTa72akBAHQ1unEi/WpotVdZJ6yNJXRlRlCI8=;
+        b=e4ObqYpA8bY0oZNvGJFvGYUw4DCzHpLLMVJ2EeFVrkYSqHYALARnXiJcYOYzHxULFV
+         C3Lt/fMYn+AOY2eo4lCh2ItYhktRYdVmEP8sp9zmSnHlyCcVu9vxHkXWmHLuXSvONM+w
+         6fnQEVtHfk4D6qh+5XWhTXCLw1tSfPYB2+ElyVlRB2KO4DJmOfQSfhhiCXHCDfAIzdBv
+         FiD1R2lVGFj5Sd1tEdrr8U5mrDzHBwsDYi5rl/wO27vXLeFVWXJXbxwmtimADmch/YRX
+         QVfGya3JOrr27H4LQqt3ZGym2Kbx/T3xAzDGRCctuZ3D1c1w81AT746Xia1UMs+GooUA
+         CnKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684218867; x=1686810867;
+        d=1e100.net; s=20221208; t=1684218869; x=1686810869;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=siTYCzcFqM4BrwbGK2xSh1viUfSy9pAhhIrOWJ60wqY=;
-        b=lTMOBEm9dC5Ql2b8gNoQ0BmWXV84q6PfpOBuzC1jqDLMjwhHWdX8nHscSfDB1jOOLR
-         pUoZ3q8NZtj6l7ANtk8/OnCY4t6mDSxy3AqQjnq2/yL/aBo8EGbfAziULyTYX8YuwMPQ
-         rpd4skhJMMv+YNOGl4wGOwpZyO/1panQsblZ5HJW7N7+lzS5TTDWHz4MSIsCIuRmPqqX
-         9A9gQxacAjMma824vdpVsYc5mDhPrWJQNuOSoVxSOIG0gvExBsHmR6BvNNG/gOPXoljd
-         qJ+hOpCphz52OGAhZjzLLAodfyT2iK4N+E+Fxrmiuk2vbTqmKGLRMbU2pxOmJRWfcS9K
-         H3Iw==
-X-Gm-Message-State: AC+VfDwo4tfiP6i+Zb6MLgEhS9iLBoPuiEh4fA/WUXdLUqpnQQnGYhJx
-        2KmhY43XXNvKjFBOjq5OF3FJWgTHk44=
-X-Google-Smtp-Source: ACHHUZ6Akm7YeYhRSojKvl4IxJmRFhdQC0ctUEl4Aw1q8wZmAK2HQ1WpgB26agwf6QEgOLKtKV5itQ==
-X-Received: by 2002:adf:fc46:0:b0:2f4:9f46:6865 with SMTP id e6-20020adffc46000000b002f49f466865mr26518327wrs.30.1684218867383;
-        Mon, 15 May 2023 23:34:27 -0700 (PDT)
+        bh=rCGUWfMTa72akBAHQ1unEi/WpotVdZJ6yNJXRlRlCI8=;
+        b=jyOpGeUFjzcaVlv2ahcgGcVtKh/hWTYi3uR6ddxqfv8J8eaeYNFcvHyMz9/YSFaC+M
+         c4KBi3RWTvH0WMX2pQ/Bf7hQwUCi6y0BbXThQE8oGxsEoMKr8BRuCXje/2AXe5peG/Gk
+         s9XMdBxzkCZeHLuNmWWwBgqbAamHD9DIAtIrhAuV9K5HTTWobcUIkLMSdFTz251/+/RX
+         U9N76AfIHk3gfyOMcm6jrPacTHVcdrnpFeGoxQ/IxeQaLQyS5jQzx6x2aqB7JgwIT4H5
+         0xr7L83yKu6m51GlvMc0MP82Z1DAujZdGMTuGEi5NOzBPAe+wnzjQlsTHR24sUGbGyqW
+         jDbA==
+X-Gm-Message-State: AC+VfDxannODD0mh0gP/ALNYzOeShLdVxley8CCiLNTjoyUsuHhIL2PF
+        bm3bEbOw1uLQN0VLZKEDRWuVUdicHCE=
+X-Google-Smtp-Source: ACHHUZ6cRY8yVwGzvH963lnyneQUvMGIXb3xVjIj/FPeCHNAS61VOl9PeqxV0c4j3BaPaxjuUi7xMw==
+X-Received: by 2002:a1c:7c0b:0:b0:3f4:fc57:1c3e with SMTP id x11-20020a1c7c0b000000b003f4fc571c3emr6904377wmc.12.1684218869363;
+        Mon, 15 May 2023 23:34:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h18-20020adffd52000000b003063db8f45bsm1399948wrs.23.2023.05.15.23.34.26
+        by smtp.gmail.com with ESMTPSA id l24-20020a7bc458000000b003f4e4b5713esm1115501wmi.37.2023.05.15.23.34.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 23:34:27 -0700 (PDT)
-Message-Id: <19226c30cdffbfbf074d2182875a2308c3fb2d63.1684218851.git.gitgitgadget@gmail.com>
+        Mon, 15 May 2023 23:34:29 -0700 (PDT)
+Message-Id: <c8d8032c75c29c3c48c77b6e3cd3ced3b0ea9864.1684218851.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
 References: <pull.1525.v2.git.1683875068.gitgitgadget@gmail.com>
         <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 May 2023 06:33:52 +0000
-Subject: [PATCH v3 12/28] preload-index.h: move declarations for
- preload-index.c from elsewhere
+Date:   Tue, 16 May 2023 06:33:55 +0000
+Subject: [PATCH v3 15/28] repository.h: move declaration of the_index from
+ cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,223 +74,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-We already have a preload-index.c file; move the declarations for the
-functions in that file into a new preload-index.h.  These were
-previously split between cache.h and repository.h.
+the_index is a global variable defined in repository.c; as such, its
+declaration feels better suited living in repository.h rather than
+cache.h.  Move it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- add-interactive.c           |  1 +
- builtin/add.c               |  1 +
- builtin/am.c                |  1 +
- builtin/checkout.c          |  1 +
- builtin/commit.c            |  1 +
- builtin/diff-files.c        |  1 +
- builtin/diff-index.c        |  1 +
- builtin/diff.c              |  1 +
- builtin/stash.c             |  1 +
- builtin/submodule--helper.c |  1 +
- cache.h                     |  3 ---
- preload-index.c             |  1 +
- preload-index.h             | 15 +++++++++++++++
- read-cache.c                |  1 +
- repository.h                |  3 ---
- 15 files changed, 27 insertions(+), 6 deletions(-)
- create mode 100644 preload-index.h
+ cache.h                          | 4 ----
+ repository.h                     | 3 +++
+ t/helper/test-dump-split-index.c | 1 +
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index de877ca0525..99f7dc3b0d1 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -5,6 +5,7 @@
- #include "diffcore.h"
- #include "gettext.h"
- #include "hex.h"
-+#include "preload-index.h"
- #include "revision.h"
- #include "refs.h"
- #include "string-list.h"
-diff --git a/builtin/add.c b/builtin/add.c
-index 36ddbb159bf..8397be4f8de 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -17,6 +17,7 @@
- #include "cache-tree.h"
- #include "run-command.h"
- #include "parse-options.h"
-+#include "preload-index.h"
- #include "diff.h"
- #include "diffcore.h"
- #include "revision.h"
-diff --git a/builtin/am.c b/builtin/am.c
-index 5c83f2e003f..0d8f46f8d5a 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -29,6 +29,7 @@
- #include "unpack-trees.h"
- #include "branch.h"
- #include "object-name.h"
-+#include "preload-index.h"
- #include "sequencer.h"
- #include "revision.h"
- #include "merge-recursive.h"
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index d6765c9dbd9..2d72a742d9d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -20,6 +20,7 @@
- #include "object-name.h"
- #include "object-store.h"
- #include "parse-options.h"
-+#include "preload-index.h"
- #include "refs.h"
- #include "remote.h"
- #include "resolve-undo.h"
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 02e2ef3e307..fa769045c88 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -30,6 +30,7 @@
- #include "utf8.h"
- #include "object-name.h"
- #include "parse-options.h"
-+#include "preload-index.h"
- #include "string-list.h"
- #include "rerere.h"
- #include "unpack-trees.h"
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index dc991f753bb..2e6b59a8bb3 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -8,6 +8,7 @@
- #include "diff.h"
- #include "diff-merges.h"
- #include "commit.h"
-+#include "preload-index.h"
- #include "revision.h"
- #include "builtin.h"
- #include "submodule.h"
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index b9a19bb7d38..9b98db2e77e 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -3,6 +3,7 @@
- #include "diff.h"
- #include "diff-merges.h"
- #include "commit.h"
-+#include "preload-index.h"
- #include "revision.h"
- #include "builtin.h"
- #include "setup.h"
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 7b64659fe79..967550739a6 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -16,6 +16,7 @@
- #include "diff.h"
- #include "diff-merges.h"
- #include "diffcore.h"
-+#include "preload-index.h"
- #include "revision.h"
- #include "log-tree.h"
- #include "builtin.h"
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 8856ac6d5c7..06527ee8471 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -17,6 +17,7 @@
- #include "run-command.h"
- #include "dir.h"
- #include "entry.h"
-+#include "preload-index.h"
- #include "rerere.h"
- #include "revision.h"
- #include "setup.h"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c58cfbfd6d3..597e780a93a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -11,6 +11,7 @@
- #include "parse-options.h"
- #include "quote.h"
- #include "pathspec.h"
-+#include "preload-index.h"
- #include "dir.h"
- #include "setup.h"
- #include "sparse-index.h"
 diff --git a/cache.h b/cache.h
-index 79daaa166b1..b79802a4639 100644
+index 5b690b80a16..11882897741 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -318,9 +318,6 @@ extern struct index_state the_index;
+@@ -312,10 +312,6 @@ typedef int (*must_prefetch_predicate)(const struct cache_entry *);
+ void prefetch_cache_entries(const struct index_state *istate,
+ 			    must_prefetch_predicate must_prefetch);
  
+-#ifdef USE_THE_INDEX_VARIABLE
+-extern struct index_state the_index;
+-#endif
+-
  /* Initialize and use the cache information */
  struct lock_file;
--void preload_index(struct index_state *index,
--		   const struct pathspec *pathspec,
--		   unsigned int refresh_flags);
  int do_read_index(struct index_state *istate, const char *path,
- 		  int must_exist); /* for testting only! */
- int read_index_from(struct index_state *, const char *path,
-diff --git a/preload-index.c b/preload-index.c
-index 7a26b08c213..c26739debf8 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -8,6 +8,7 @@
- #include "fsmonitor.h"
- #include "gettext.h"
- #include "config.h"
-+#include "preload-index.h"
- #include "progress.h"
- #include "thread-utils.h"
- #include "repository.h"
-diff --git a/preload-index.h b/preload-index.h
-new file mode 100644
-index 00000000000..251b1ed88e9
---- /dev/null
-+++ b/preload-index.h
-@@ -0,0 +1,15 @@
-+#ifndef PRELOAD_INDEX_H
-+#define PRELOAD_INDEX_H
-+
-+struct index_state;
-+struct pathspec;
-+struct repository;
-+
-+void preload_index(struct index_state *index,
-+		   const struct pathspec *pathspec,
-+		   unsigned int refresh_flags);
-+int repo_read_index_preload(struct repository *,
-+			    const struct pathspec *pathspec,
-+			    unsigned refresh_flags);
-+
-+#endif /* PRELOAD_INDEX_H */
-diff --git a/read-cache.c b/read-cache.c
-index e1016ae0317..3fad839fb6f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -27,6 +27,7 @@
- #include "mem-pool.h"
- #include "name-hash.h"
- #include "object-name.h"
-+#include "preload-index.h"
- #include "resolve-undo.h"
- #include "revision.h"
- #include "run-command.h"
 diff --git a/repository.h b/repository.h
-index 1a13ff28677..f81228bcfb5 100644
+index f81228bcfb5..763794880ed 100644
 --- a/repository.h
 +++ b/repository.h
-@@ -220,9 +220,6 @@ int repo_hold_locked_index(struct repository *repo,
- 			   struct lock_file *lf,
- 			   int flags);
+@@ -169,6 +169,9 @@ struct repository {
+ };
  
--int repo_read_index_preload(struct repository *,
--			    const struct pathspec *pathspec,
--			    unsigned refresh_flags);
- int repo_read_index_unmerged(struct repository *);
+ extern struct repository *the_repository;
++#ifdef USE_THE_INDEX_VARIABLE
++extern struct index_state the_index;
++#endif
+ 
  /*
-  * Opportunistically update the index but do not complain if we can't.
+  * Define a custom repository layout. Any field can be NULL, which
+diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
+index d1badd71126..63fde9157c4 100644
+--- a/t/helper/test-dump-split-index.c
++++ b/t/helper/test-dump-split-index.c
+@@ -2,6 +2,7 @@
+ #include "test-tool.h"
+ #include "cache.h"
+ #include "hex.h"
++#include "repository.h"
+ #include "setup.h"
+ #include "split-index.h"
+ #include "ewah/ewok.h"
 -- 
 gitgitgadget
 
