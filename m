@@ -2,62 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62E02C77B7F
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 16:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF557C77B7F
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231297AbjEPQ63 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 12:58:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60196 "EHLO
+        id S230318AbjEPRBy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 13:01:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230475AbjEPQ60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 12:58:26 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02CED83FD
-        for <git@vger.kernel.org>; Tue, 16 May 2023 09:58:24 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 34GGv7PL2467192
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Tue, 16 May 2023 16:57:07 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [BUG] Git 2.41.0-rc0 - Compile Error ALLOC_GROW
-Date:   Tue, 16 May 2023 12:58:15 -0400
-Organization: Nexbridge Inc.
-Message-ID: <009501d98817$9eb44560$dc1cd020$@nexbridge.com>
+        with ESMTP id S230432AbjEPRBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 13:01:50 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E4AA5F5
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:01:25 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7569A19C552;
+        Tue, 16 May 2023 13:00:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lzP5HozLO0CO4SCaZ9u90As7lTpKZqbgx1Oe6P
+        ozIgo=; b=gNh5Pz3lVtfC/sL4ZArz6EOHgfjrjQwE/TiOW/GBkRm4yyjUNsfvbL
+        8BKXnstfzl+B2sdvcE85Gw7aG7iBbVnKCzRuXJ4wVi61yAZOfaBTKW+JU/Y5+FZA
+        1x0IpoIxPRQdxqBZ8ah1ZJGgVtsPe7mBKT+/NFoCuq58HqZ4uQRQ4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 658AC19C551;
+        Tue, 16 May 2023 13:00:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.203.137.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B439319C550;
+        Tue, 16 May 2023 13:00:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     code@khaugsbakk.name, avarab@gmail.com, git@vger.kernel.org,
+        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v9 4/6] notes.c: introduce
+ '--separator=<paragraph-break>' option
+References: <2908b005-9478-4c59-ae8e-150be44a15a9@app.fastmail.com>
+        <20230512040746.2069-1-tenglong.tl@alibaba-inc.com>
+Date:   Tue, 16 May 2023 10:00:26 -0700
+In-Reply-To: <20230512040746.2069-1-tenglong.tl@alibaba-inc.com> (Teng Long's
+        message of "Fri, 12 May 2023 12:07:46 +0800")
+Message-ID: <xmqqttwcus7p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdmIF5sWYpJ+5PxQREWvJPJAD3QU5Q==
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: 285F9648-F40B-11ED-B2D6-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git Team,
+Teng Long <dyroneteng@gmail.com> writes:
 
-I am getting a compile error on rc0:
+> Returning to the issue of -separator = "", my thought is that I want
+> --separator="" to behave the same way as
+> --separator="<any-string-without-a-trailing-\n'>" when deals a string which does
+> not contains a trailing newline. This will eliminate one more implicit logic and
+> make behavior more consistent.
 
-  	ALLOC_GROW(git_atexit_hdlrs.handlers, git_atexit_hdlrs.nr + 1,
-git_atexit_hdlrs.alloc);
-  	^
-"/home/ituglib/randall/jenkins/.jenkins/workspace/Git_Pipeline/run-command.c
-", line 1103: error(114): identifier "ALLOC_GROW" is undefined
+An obvious alternative would be to use the string given to the
+"--separator" option literally, I guess, and you can add your own
+newline if you want to.  But most of the time you would not want to
+have an incomplete line, so appending the newline at the end by
+default does make sense.
 
-Any help o nthis?
+Special casing an empty value to "--separator" as "nothing" does
+make sort-of sense.  Using a blank line as the inter-paragraph
+separator is the default, and there is not much use in the
+"--separator=''" that becomes "--separator=$'\012'" automatically.
 
-Thanks,
-Randall
+> I think --no-separator maybe a better name, means that not any separator will be
+> append between two paragraphs even a newline.
 
---
-Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)
-NonStop(211288444200000000)
--- In real life, I talk too much.
+It would work as well.  Is it something we can safely add before
+merging the topic to upcoming -rc1?
 
-
-
+Thanks.
