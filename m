@@ -2,136 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3248BC77B75
-	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 907EAC77B75
+	for <git@archiver.kernel.org>; Tue, 16 May 2023 17:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232032AbjEPR4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 May 2023 13:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
+        id S232095AbjEPR46 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 May 2023 13:56:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232039AbjEPR4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2023 13:56:37 -0400
+        with ESMTP id S232085AbjEPR4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2023 13:56:49 -0400
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91E9272C
-        for <git@vger.kernel.org>; Tue, 16 May 2023 10:56:35 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 35FBB5C01C1;
-        Tue, 16 May 2023 13:56:35 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5581CD3
+        for <git@vger.kernel.org>; Tue, 16 May 2023 10:56:45 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id A6F465C00FF;
+        Tue, 16 May 2023 13:56:44 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 16 May 2023 13:56:35 -0400
+  by compute5.internal (MEProxy); Tue, 16 May 2023 13:56:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm3; t=1684259795; x=1684346195; bh=HfdWM7fhrIi6lJ4mjm+Ay7PeK
-        uIYlgz2OsqGLwcfRIY=; b=pJfz2j6glVZwuiSFvA+OOGP8XveoJPF61ufOfoTON
-        /py9meWUURofqCWrEMw1jk1jk4g4aYyCkI0dLS9SZfObiNlZ3+9HR12tIwfGeYOp
-        ajNaqM/oqS+7CZXbpNQQWyBm7lC4iENZMmRG50GXcbGJQ72FboExDItpB6C/eOnF
-        R6trz78tTKvTO5wYGDUPTi5OTNUkROAV42JSKwb6dkX1TmqcSbhvQA4buU6UcW2N
-        TrF+JNjV6DKrTDuybREDDCWrAKauqaaR+u+So8wnxUf/8ZA3plDtDi//0cnMddpR
-        7kS4wq1apGNiRX1MVN+L7Y6X3Qorp8v/tZr7ghdcNmrNw==
+         h=cc:cc:content-transfer-encoding:content-type:date:date:from
+        :from:in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1684259804; x=
+        1684346204; bh=QQfCK7xt0TQxzeQRmCOhBfHqdfVFQ3VIA+4jYkq1VSw=; b=a
+        tyay+EKFsAq9ROWuA2iVSZaTAPhWmfbvgJhu20fDzajIpWgNvCd0eTkZ3JmshweM
+        wnKs30fM9j3Lze3Eg8uM6tdCAUINmgi5grlQwsgFhAlBr1MOXseF3nbpIl1N9irB
+        8sg5hpNb7Q62Ft/Y2BxBmK3vn4Y0jpNWYNZ8N9sXV5RWspR5PEDhYBolZUSNo1Xk
+        Ve3ttP2vhDyVhUHOzKbO1oBpdrpBOa3bjKS8x7/BPp3u/N0T5TXLHvWxxUjLbYUE
+        f4deIIH/4V4U+MmdfNPOtk0CxUzOtPY8VLmkHEhGADcmVeFknqbEBx3Vlc2ZH8nO
+        P42qOidSWzJHpi+m+JDGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-        1684259795; x=1684346195; bh=HfdWM7fhrIi6lJ4mjm+Ay7PeKuIYlgz2Osq
-        GLwcfRIY=; b=iKfQjcFREG6sb5/zrgnMzQOyuPT+5h7ROn6bjBKP7yJ1boZ0bxD
-        6Ymgm/GlDEcHnaAL1380xri3cWhvWVRWGSDkl5uAnPUHFMsyju+UbmIqVpoPvdaP
-        nkyFWXdO5Z1CeoNUphXWH6kekcFzusa2/2AJHsXHmbCDqnQpE6641IsuyjsCuOWT
-        9iuOkvVfXwHk7coKG18vF1odJyGzd0Goe70PdwdjzESHZavlSVWcMsMWTTe1/giY
-        ONTl7i1aQg5ZT23nMr/YMPj82QuYlX4eH/g9W7rKcDSHon5QyIY93lyhD/D1O6/i
-        yPMZ1eHehWzGoMb5yRXI8OsqUJgabvIEv6A==
-X-ME-Sender: <xms:08NjZFbijB-AFpyF3GMuImL4KOgsCOgN4oEnOXTcPS1WI0TK27ENXd4>
-    <xme:08NjZMa-k4XdjuIjrS3v72gtgOP2gNOju3PA4YjIaD1GhIa1R7urlg0G88fyMFtZ2
-    b97K6pnm5jjl3HjXA>
-X-ME-Received: <xmr:08NjZH92NicQdxhUZSWLLE6ezTJnvI4-9vVAWIQaOmHi7Ji6rrlQ0MZ5VIZLA5MxR2u8SjNnGeXb9e91_F5tXOX3OhjgvWqYlogi1oALshvUDQWH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehledguddukecutefuodetggdotefrod
+        :content-type:date:date:feedback-id:feedback-id:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1684259804; x=
+        1684346204; bh=QQfCK7xt0TQxzeQRmCOhBfHqdfVFQ3VIA+4jYkq1VSw=; b=h
+        JatWEAB6Z0uMaTf9YvLicY6HM3SoClh2klbep187iKQuM5GBGhf+RILlMdzy2GxV
+        iF4ueupjy57OjGdzk2Lg9ole09305KFWWHE4bEEm2VNQsWwvIzdiNzVJOD7avQAl
+        Ow47pAJs/gffFB6ET/neZe/BkL39qaLNeD7IAQQZUkA2yw4smxSKov/O3/bpbe/q
+        If7W4mveLShFBXJacMN13mFMtQFg2Pth7fboFB5Lo6yFx33k0Z6dvvLfiVy7EPf2
+        MMxcwxCl/WQZxffUo/OuShUQYXZGHpFxAGhE31SxmYCnVI1H5K/VPXWwo29sMVeu
+        M/s2Mo9g8g59iON7DdIpw==
+X-ME-Sender: <xms:3MNjZAyYY13nRdrtWXen0vFYQt6foOw-lARK8_pkY0-UMPm50Ht9A8M>
+    <xme:3MNjZEShCBm7BjmZiJ9M15I3sti33kQeOZgKjpYszfmd--Zl1v8rtKJ889rNFu8Mr
+    1R1jbAulMfub4qYgQ>
+X-ME-Received: <xmr:3MNjZCUaoANFLIytRUbMdSLipxSyH4sJ2_6JZa0OF_Q9be3jCeqt50tMu_Fm2OGeLrNyH4FUj1M7HLDAbEnRYou1Ys3gdKkJ2jgWoeIoJ4evG63q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehledguddujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
-    htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
-    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepue
-    eiueffuefftefhhfefleelhfeuheettedtheevgeejteehgfevffeugffglefhnecuffho
-    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:08NjZDr6nUSCrOpU3wuOc5xkcYz9cgCwHR0FVz4k5yI80N9fOF1HLg>
-    <xmx:08NjZAprz1vdtDFsTIL7VleKQOeTCA3cpCjASUowx_Nu12WAOuzuYA>
-    <xmx:08NjZJQrmkvbeaEX-_Eq24Oug9gul3bjrLYmgZbSwwv1SW35PnatAw>
-    <xmx:08NjZH0PdRQEM1nBNnUbXfVz4ARPLbeCt2caGFwAeRx52Iju2gQo_g>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhgggfestd
+    ekredtredttdenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceo
+    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpefhud
+    evveejtddttedvhfelffeuuefhffeugeeluedtgfdtuefhtefhudelleekteenucffohhm
+    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:3MNjZOjLp9dzSbvm45of4ftx7RiHKRE8082Awdl02-4WuyHcYFGoaw>
+    <xmx:3MNjZCAGyPlJcs41dhB3clap6IDK0kzoGMNvvtbSMxGfCAVrEqOyHw>
+    <xmx:3MNjZPL3EfZM7HE_scEkdgAW6tnUfcudTRWO211iMZz_BiduIhg7Ew>
+    <xmx:3MNjZFO3Ae5hoP1p8fu7SPk1jClE-mobAOxnnzONcaY0IaxjIsiyjQ>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 May 2023 13:56:34 -0400 (EDT)
+ 16 May 2023 13:56:43 -0400 (EDT)
 From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com,
         Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v3 1/3] doc: tag: document `TAG_EDITMSG`
-Date:   Tue, 16 May 2023 19:55:44 +0200
-Message-Id: <882008e32a482d4b05d522430abf3419476f2302.1684258780.git.code@khaugsbakk.name>
+Subject: [PATCH v3 2/3] t/t7004-tag: add regression test for successful tag creation
+Date:   Tue, 16 May 2023 19:55:45 +0200
+Message-Id: <d1490b8f0b70efca03ed6bf166756a2d93ff1e35.1684258780.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <cover.1684258780.git.code@khaugsbakk.name>
 References: <cover.1684067644.git.code@khaugsbakk.name> <cover.1684258780.git.code@khaugsbakk.name>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document `TAG_EDITMSG` which we have told the user about on unsuccessful
-command invocations since commit 3927bbe9a4 (tag: delete TAG_EDITMSG
-only on successful tag, 2008-12-06).
+The standard tag message file is unlinked if the tag is created.
 
-Introduce this documentation since we are going to add tests for the
-lifetime of this file in the case of command failure and success.
-
-Use the documentation for `COMMIT_EDITMSG` from `git-commit.txt` as a
-template since these two files share the same purpose.[1]
-
-† 1: from commit 3927bbe9a4:
-
-     “ This matches the behavior of COMMIT_EDITMSG, which stays around
-       in case of error.
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    § From v2
+    See: https://lore.kernel.org/git/xmqq353x8de3.fsf@gitster.g/T/#m594378bc6fe2545e638ce2d5f9c11861d4e33082
     
-    • I changed (from `COMMIT_EDITMSG`) “will be overwritten” to “may” since
-      I don’t see the point in giving a guarantee
-    • Unsure if I was going to put this before or after “NOTES” as there seems
-      to be no precedence
-    
-    Suggested in: https://lore.kernel.org/git/xmqqy1lqaxln.fsf@gitster.g/T/#u
+    > What you want to use is test_path_is_missing, without "!".
 
- Documentation/git-tag.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ t/t7004-tag.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index fdc72b5875a..46e56b02455 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -377,6 +377,16 @@ $ GIT_COMMITTER_DATE="2006-10-02 10:31" git tag -s v1.0.1
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 9aa1660651b..1cb738b00d2 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -2127,4 +2127,13 @@ test_expect_success 'Does --[no-]contains stop at commits? Yes!' '
+ 	test_cmp expected actual
+ '
  
- include::date-formats.txt[]
- 
-+FILES
-+-----
++test_expect_success 'If tag is created then tag message file is unlinked' '
++	test_when_finished "git tag -d foo" &&
++	write_script fakeeditor <<-\EOF &&
++	echo Message >.git/TAG_EDITMSG
++	EOF
++	GIT_EDITOR=./fakeeditor git tag -a foo &&
++	test_path_is_missing .git/TAG_EDITMSG
++'
 +
-+`$GIT_DIR/TAG_EDITMSG`::
-+	This file contains the message of an in-progress annotated
-+	tag. If `git tag` exits due to an error before creating an
-+	annotated tag then the tag message that has been provided by the
-+	user in an editor session will be available in this file, but
-+	may be overwritten by the next invocation of `git tag`.
-+
- NOTES
- -----
- 
+ test_done
 -- 
 2.40.1
 
