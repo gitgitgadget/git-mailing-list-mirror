@@ -2,109 +2,281 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7956FC77B7A
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 21:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EBF5C77B7A
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 21:47:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229922AbjEQVib (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 17:38:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46090 "EHLO
+        id S229556AbjEQVrp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 17:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjEQVia (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 17:38:30 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76CC01BD0
-        for <git@vger.kernel.org>; Wed, 17 May 2023 14:38:29 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-ba81031424dso1883025276.2
-        for <git@vger.kernel.org>; Wed, 17 May 2023 14:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684359508; x=1686951508;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0aYc0BwucyQJ/Drybw2jYZcTMw5IOligaxiKgtee+ag=;
-        b=OoNn7AxpvFKLIsgIfPJksZI+wLY59b0Gz22sy0/7CfPjJDXx+tlVi/k6YJYpjtukW+
-         WUs7WtqY2muBPjwg2IbeEeVEsiM5AUPHRiWMRAfFNf6pxlpIRxcph0PGKSKQOA8wNGvt
-         mBFVBoDtEto+d5/kc/Ke2OGXdHIwa+/Hrgo8IDWLbLyiEAxorBGXtwe/m2zlvQE4hF0l
-         CF86Dsv98hXLNxKr+npOkbFHZ9I2Q4RyQG7qHzpw8ZSbZpIb7LNrsqJbQ39aOIliE0mA
-         1/X9b37G3/i4q6Ku67ctagB3GczOQwxLHY57KHVTmJ0nNX9pBoGtmv6K86S82Qqeku5n
-         iT1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684359508; x=1686951508;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0aYc0BwucyQJ/Drybw2jYZcTMw5IOligaxiKgtee+ag=;
-        b=c0P23vgprGQ/rHEC2E123KcsMcsFfIBEgL9dbWAr0be+MWGSys8FDKo7j3VvfsAKdT
-         x6IB9OiQRUzHZ8Um30R++FeC086qh8UO99eRvDIWTq8nCGIbM/9hZv/YYmr7IxD1aYgk
-         xLsNhFJAQYSaoPQtJl0IAOBV3iCrd8CN34KfbZFY2Ptdv0Id2FLQVdul7KlyzTxguqWd
-         p+JnbUdEtbJYX7ugOJkpsx1rjhShUHQ2bYyJ7Xi8owyC44XkjFVVz9O/2RacQoiof0Mg
-         rXfSDkteSIyqfbDsimEkjCQxZxQWEynIAlg6PNk0aEjEs6wBV8gu/fmH4KkoQ1hV1J8z
-         2cLw==
-X-Gm-Message-State: AC+VfDyIrtpzaXK2r27zkNdQ+jDW3Px/rZnge9gTfdfx8GqF/v5bPcX7
-        6t39tDNYXYh58xVNrVxSSoec4g==
-X-Google-Smtp-Source: ACHHUZ6X9mtmm95Wqr7tY8AmTkxdfzX9nzzqakzKioYojMFKWazDIdLeGCP1ngrOAdOsC4oAmhfBtw==
-X-Received: by 2002:a81:6dd6:0:b0:561:dd1b:e516 with SMTP id i205-20020a816dd6000000b00561dd1be516mr2171207ywc.35.1684359507322;
-        Wed, 17 May 2023 14:38:27 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f63-20020a0dc342000000b0055d725edafbsm937768ywd.113.2023.05.17.14.38.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 14:38:26 -0700 (PDT)
-Date:   Wed, 17 May 2023 17:38:25 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Hesse <list@eworm.de>, git@vger.kernel.org,
-        Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] imap-send: include strbuf.h
-Message-ID: <ZGVFnzyStiscDKh3@nand.local>
-References: <20230517070632.71884-1-list@eworm.de>
- <xmqqwn17q7ou.fsf@gitster.g>
- <ZGT6fEZFumAsZnxu@nand.local>
- <ZGT/eK6+IKlCM6Sg@nand.local>
- <xmqqcz2yrjbe.fsf@gitster.g>
- <xmqq8rdmrixc.fsf@gitster.g>
- <ZGUVvjG+xou3w8YW@nand.local>
- <xmqqy1lmq183.fsf@gitster.g>
+        with ESMTP id S229445AbjEQVro (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 17:47:44 -0400
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99798559D
+        for <git@vger.kernel.org>; Wed, 17 May 2023 14:47:38 -0700 (PDT)
+Date:   Wed, 17 May 2023 21:47:30 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail; t=1684360056; x=1684619256;
+        bh=cJ/0hg+60IiX2KEXba3jk+VK2tZwGrrsyODi+JUZPBg=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=mlk7ylXnzGLGWWx8UjcE48yt8/oD3IEsNi6ouLX0D+Ffi0lziBLwkNiuou3u7ByX8
+         XC42vTjw3AABqRqqnBsPiIPQRA03lcD3lOdTZEMCWKZgEvnOQkbsb070VHHRd38pXo
+         xRFcNgTxO4xx975N7qTE/FME8BvVlB1UZCx3EOI+JvIChdZ/pNLv+TtRbtxWEMEPY2
+         2gDEXLX1EdCsATHLqqvzqFz/RBbxiZ4fVmJ3EuRvAmdHll3bNPR8bMoRhP1HqHDryq
+         9n+tkPswjP4q08wG4IFJiQ5W33NP3kL1ZcxgA3kejLYJZyrbLuS+W8HsPe/d5NYcRz
+         901ri7u6/M87w==
+To:     git@vger.kernel.org
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     Jacob Abel <jacobabel@nullpo.dev>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: [RESEND PATCH v10 0/8] worktree: Support `--orphan` when creating new worktrees
+Message-ID: <20230517214711.12467-1-jacobabel@nullpo.dev>
+In-Reply-To: <20230417093255.31079-1-jacobabel@nullpo.dev>
+References: <20230417093255.31079-1-jacobabel@nullpo.dev>
+Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy1lmq183.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 17, 2023 at 11:09:16AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > On Wed, May 17, 2023 at 10:01:35AM -0700, Junio C Hamano wrote:
-> >> Junio C Hamano <gitster@pobox.com> writes:
-> >>
-> >> >>         if ! gcc -I $(pwd) -E $f | grep -q 'struct strbuf {'
-> >> > ...
-> >> > What does the above prove, more than what your regular compilation
-> >> > that does not fail, tells us?
-> >>
-> >> It is actually worse than that, isn't it?  This does not even use
-> >> the definition in the config.mak.uname, so it is not even matching
-> >> your build environment.
-> >>
-> >> I am uncomfortable to use this as an explanation of what due
-> >> diligence we did to convince ourselves that this fix should cover
-> >> all similar issues.  Perhaps I am grossly misunderstanding what your
-> >> investigation did?
-> >
-> > Oof, yes, you are right:
-> >
-> >     diff -u \
-> >       <(gcc -I . -E imap-send.c) \
-> >       <(gcc -DNO_CURL=1 -I . -E imap-send.c)
-> >
-> > How *should* we test this?
->
-> My inclination is punt and simply do not to claim that we have done
-> a good due diligence to ensure with all permutations of ifdef we are
-> including necessary headers.
+This patchset introduces the ability to create new worktrees from orphan/un=
+born
+branches and introduces DWIM behavior to create worktrees from an orphan br=
+anch
+when no valid refs exists locally in the repository (as is typical in newly
+initialized repositories) or on a remote (when `--guess-remote` is used).=
+=20
 
-I think that's the best course of action, too. I see that it's already
-on 'next', thanks.
+This addresses the issue of `git worktree add` failing when attempting to c=
+reate
+a worktree from a newly initialized repository (which can be seen in this S=
+O
+question [1]).
 
-Thanks,
-Taylor
+NOTE: Resend of Patch v10 as my mail setup tampered with and broke the patc=
+hset.=20
+original v10 cover: <20230507120530.14669-1-jacobabel@nullpo.dev>
+
+This patchset has eight parts:
+  * adding `-B` to the usage docs (noticed during dev and it seemed too sma=
+ll
+    to justify a separate submission)
+  * cleaning up a left-behind worktree in t2400
+  * adding a helper fn to simplify testing for mutual exclusion of options
+    in `t/t2400-worktree-add.sh`
+  * adding additional test cases to verify both that behavior doesn't chang=
+e
+    when using `--quiet` and that the extraneous output is properly suppres=
+sed.
+  * adding the ability to create a worktree from an unborn/orphan branch
+    to `git-worktree-add`
+  * adding an advise for using --orphan when `git worktree add` fails due t=
+o=20
+    a bad ref.
+  * adding functionality to DWIM when there are no existing branches and th=
+e
+    user likely intends to create an orphan branch.
+  * updating worktree add to emit a warning (containing debug information=
+=20
+    about the current HEAD) when trying to use a HEAD that points to a
+    non-existant (or unborn) reference and there exist other valid branches=
+.
+
+Changes from v9:
+  * Revert `test_when_finished cat actual` changes in t2400 (2/8)[2].
+  * Rename commit 2/8 to reflect changes.
+  * Revert `test_when_finished cat actual` changes in t2400 (3/8)[3].
+  * Revert `test_when_finished cat actual` changes in t2400 (4/8)[4].
+  * Revert `test_when_finished cat actual` changes in t2400 (5/8).
+  * Remove extraneous whitespace from command in t2400 (5/8).
+  * Revert `test_when_finished cat actual` changes in t2400 (6/8).
+  * Include `advice.h` in `worktree.c` to resolve missing include when=20
+    applying patch on top of main (6/8).
+  * Revert `test_when_finished cat actual` changes in t2400 (7/8).
+  * Remove extraneous whitespace from comment in `worktree.c` (7/8).
+
+1. https://stackoverflow.com/a/68717229/15064705/
+2. https://lore.kernel.org/git/xmqq8reqkyfz.fsf@gitster.g/
+3. https://lore.kernel.org/git/xmqqmt36jixr.fsf@gitster.g/
+4. https://lore.kernel.org/git/xmqqfs8yjisl.fsf@gitster.g/
+
+Jacob Abel (8):
+  worktree add: include -B in usage docs
+  t2400: cleanup created worktree in test
+  t2400: refactor "worktree add" opt exclusion tests
+  t2400: add tests to verify --quiet
+  worktree add: add --orphan flag
+  worktree add: introduce "try --orphan" hint
+  worktree add: extend DWIM to infer --orphan
+  worktree add: emit warn when there is a bad HEAD
+
+ Documentation/config/advice.txt |   4 +
+ Documentation/git-worktree.txt  |  16 +-
+ advice.c                        |   1 +
+ advice.h                        |   1 +
+ builtin/worktree.c              | 227 +++++++++++++-
+ t/t2400-worktree-add.sh         | 507 +++++++++++++++++++++++++++++++-
+ 6 files changed, 735 insertions(+), 21 deletions(-)
+
+Range-diff against v9:
+1:  91153fdb4c =3D 1:  91153fdb4c worktree add: include -B in usage docs
+2:  8cfbc89dd5 ! 2:  0f30e9a9e3 t2400: print captured git output when finis=
+hed
+    @@ Metadata
+     Author: Jacob Abel <jacobabel@nullpo.dev>
+    =20
+      ## Commit message ##
+    -    t2400: print captured git output when finished
+    -
+    -    Update tests that capture stderr so that at the end of the test th=
+ey
+    -    print the captured text back out to stderr. This simplifies debugg=
+ing
+    -    when inspecting test logs after executing with `-x`.
+    +    t2400: cleanup created worktree in test
+    =20
+         Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
+    =20
+    @@ t/t2400-worktree-add.sh: test_expect_success 'add -B' '
+     =20
+      test_expect_success 'add --quiet' '
+     +=09test_when_finished "git worktree remove -f -f another-worktree" &&
+    -+=09test_when_finished cat actual >&2 &&
+      =09git worktree add --quiet another-worktree main 2>actual &&
+      =09test_must_be_empty actual
+      '
+3:  ab03d92c3a ! 3:  06e8c53bc6 t2400: refactor "worktree add" opt exclusio=
+n tests
+    @@ t/t2400-worktree-add.sh: test_expect_success '"add" no auto-vivify w=
+ith --detach
+     +test_wt_add_excl () {
+     +=09local opts=3D"$*" &&
+     +=09test_expect_success "'worktree add' with '$opts' has mutually excl=
+usive options" '
+    -+=09=09test_when_finished cat actual >&2 &&
+     +=09=09test_must_fail git worktree add $opts 2>actual &&
+     +=09=09grep -E "fatal:( options)? .* cannot be used together" actual
+     +=09'
+4:  d9a3468c93 ! 4:  d9330db91f t2400: add tests to verify --quiet
+    @@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet' '
+     +test_expect_success 'add --quiet -b' '
+     +=09test_when_finished "git branch -D quietnewbranch" &&
+     +=09test_when_finished "git worktree remove -f -f another-worktree" &&
+    -+=09test_when_finished cat actual >&2 &&
+     +=09git worktree add --quiet -b quietnewbranch another-worktree 2>actu=
+al &&
+     +=09test_must_be_empty actual
+     +'
+    @@ t/t2400-worktree-add.sh: test_expect_success 'git worktree add --gue=
+ss-remote se
+      '
+     +test_expect_success 'git worktree add --guess-remote sets up tracking=
+ (quiet)' '
+     +=09test_when_finished rm -rf repo_a repo_b foo &&
+    -+=09test_when_finished cat repo_b/actual >&2 &&
+     +=09setup_remote_repo repo_a repo_b &&
+     +=09(
+     +=09=09cd repo_b &&
+5:  8ef9587deb ! 5:  a5a78e5f53 worktree add: add --orphan flag
+    @@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet -b' '
+     +
+     +test_expect_success '"add --orphan --quiet"' '
+     +=09test_when_finished "git worktree remove -f -f orphandir" &&
+    -+=09test_when_finished cat log.actual >&2 &&
+     +=09git worktree add --quiet --orphan -b neworphan orphandir 2>log.act=
+ual &&
+     +=09test_must_be_empty log.actual &&
+     +=09echo refs/heads/neworphan >expected &&
+    @@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet -b' '
+     +=09test_when_finished "rm -rf empty_repo" &&
+     +=09echo refs/heads/newbranch >expected &&
+     +=09GIT_DIR=3D"empty_repo" git init --bare &&
+    -+=09git -C empty_repo  worktree add --orphan -b newbranch worktreedir =
+&&
+    ++=09git -C empty_repo worktree add --orphan -b newbranch worktreedir &=
+&
+     +=09git -C empty_repo/worktreedir symbolic-ref HEAD >actual &&
+     +=09test_cmp expected actual
+     +'
+6:  d2800266f9 ! 6:  96b1946e64 worktree add: introduce "try --orphan" hint
+    @@ advice.h: struct string_list;
+      int git_default_advice_config(const char *var, const char *value);
+    =20
+      ## builtin/worktree.c ##
+    +@@
+    + #include "cache.h"
+    + #include "abspath.h"
+    ++#include "advice.h"
+    + #include "checkout.h"
+    + #include "config.h"
+    + #include "builtin.h"
+     @@
+      #define BUILTIN_WORKTREE_UNLOCK_USAGE \
+      =09N_("git worktree unlock <worktree>")
+    @@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with or=
+phan branch,
+     +=09=09git init repo &&
+     +=09=09(cd repo && test_commit commit) &&
+     +=09=09git -C repo switch --orphan noref &&
+    -+=09=09test_when_finished cat actual >&2 &&
+     +=09=09test_must_fail git -C repo worktree add $opts foobar/ 2>actual =
+&&
+     +=09=09! grep "error: unknown switch" actual &&
+     +=09=09grep "hint: If you meant to create a worktree containing a new =
+orphan branch" actual &&
+    @@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with or=
+phan branch,
+     +=09test_when_finished "rm -rf repo" &&
+     +=09git init repo &&
+     +=09(cd repo && test_commit commit) &&
+    -+=09test_when_finished cat actual >&2 &&
+     +=09test_must_fail git -C repo worktree add --quiet foobar_branch foob=
+ar/ 2>actual &&
+     +=09! grep "error: unknown switch" actual &&
+     +=09! grep "hint: If you meant to create a worktree containing a new o=
+rphan branch" actual
+7:  e5e139766c ! 7:  52fef9672c worktree add: extend DWIM to infer --orphan
+    @@ builtin/worktree.c: static void print_preparing_worktree_line(int de=
+tach,
+     +/**
+     + * Determines whether `--orphan` should be inferred in the evaluation=
+ of
+     + * `worktree add path/` or `worktree add -b branch path/` and emits a=
+n error
+    -+ * if the supplied arguments would produce an illegal combination  wh=
+en the
+    ++ * if the supplied arguments would produce an illegal combination whe=
+n the
+     + * `--orphan` flag is included.
+     + *
+     + * `opts` and `opt_track` contain the other options & flags supplied =
+to the
+    @@ t/t2400-worktree-add.sh: test_expect_success 'git worktree --no-gues=
+s-remote opt
+     +=09=09then
+     +=09=09=09test_when_finished git -C repo worktree remove ../foo
+     +=09=09fi &&
+    -+=09=09if [ $use_cd -eq 1 ]
+    -+=09=09then
+    -+=09=09=09test_when_finished cat "$git_ns/actual" >&2
+    -+=09=09else
+    -+=09=09=09test_when_finished cat actual >&2
+    -+=09=09fi &&
+     +=09=09(
+     +=09=09=09if [ $use_cd -eq 1 ]
+     +=09=09=09then
+8:  296226ffd5 =3D 8:  8c3fded12b worktree add: emit warn when there is a b=
+ad HEAD
+--=20
+2.39.3
+
+
