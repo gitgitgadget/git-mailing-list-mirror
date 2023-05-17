@@ -2,106 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7217BC7EE22
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 22:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38D07C7EE22
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 23:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229564AbjEQW2k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 18:28:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33260 "EHLO
+        id S229609AbjEQX4h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 19:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbjEQW2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 18:28:39 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA9F5BAC
-        for <git@vger.kernel.org>; Wed, 17 May 2023 15:28:35 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 286F15AF40;
-        Wed, 17 May 2023 22:28:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1684362515;
-        bh=Ss/FiFOO7y8ZKZlDDfBBZuJEWTBu91tEY5TVjYPP0XM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Xf9H/Q7vCcR0TCPHCVNYa/l0jk6pttuHIlGbPccUCNBatPOU4UqROhnMUpVa8Gnxc
-         WkSdl1ud8SzkTnLCh4uzBd4ttoc0yv7Dh5eIxMitWAz06u2yscUYrbnYFwjKLkh52I
-         EzgnbuR9mmHPykwd07tgZE6R0yhxgcfqOU+aP1kUkfHzJIRqeuaJRXYr6/kBgyAZgQ
-         lBUI/Mr/Cm6ZF5FYOTgHvUIdcNFzN97M4vqqH+Hm+sHhYXXeSPiaSRvrgM51scAHvs
-         oWM+GCYC68SUkXFPg7pWDM3cLT6eo9igHnlAaWb8EVQgfglp7SW0YS05UUYkHHHpNm
-         uJ25iORnzaPj1MqLC0tbbi/uchZGxPCS9922O5PGfvbng9B7wMS0CfidZWwLefbgvd
-         EmLY1onYL3j7eMHDIQ5l+tMcHiI7ZlZ3NRNW1sa+yUG9sTL3733mcqA8fJGYthoHG0
-         ZoPUv/lNOJ0apnm2h6OLYNgY6fGaJ/8IchaarE5teQpto2Raz+7
-Date:   Wed, 17 May 2023 22:28:33 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Adam Majer <adamm@zombino.com>
-Subject: Re: [PATCH v3 0/1] Fix empty SHA-256 clones with v0 and v1
-Message-ID: <ZGVVEafBY3Rs65uD@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Adam Majer <adamm@zombino.com>
-References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
- <20230517192443.1149190-1-sandals@crustytoothpaste.net>
- <xmqqv8gqoci0.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fEaPDr5lSuAXWFhF"
-Content-Disposition: inline
-In-Reply-To: <xmqqv8gqoci0.fsf@gitster.g>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+        with ESMTP id S229501AbjEQX4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 19:56:36 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648813AA2
+        for <git@vger.kernel.org>; Wed, 17 May 2023 16:56:35 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-ba88ec544ddso811216276.1
+        for <git@vger.kernel.org>; Wed, 17 May 2023 16:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1684367794; x=1686959794;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=o/Sj4GArNF/SZJmKGEU2zY3hbH1bdZiadnbfVyt+HWE=;
+        b=0RlNDt1gLl7oeeOWzeLQ9FOU9l22CoQpIVKhnNaL0E9NWNq/XJiwkNJm9KIVxhteBY
+         N3uKlIuCe6JdYjLlL+XycyPSvIrgwYRmDbUWO8W0OGu8AAoE1aBPhPUlAg2/8IKHGD4U
+         CMMJi/Vkx5ABC6ZLkgjBrOWVfaRBaunUT6mkVR/iewYPlgpfV7BGOCrQblUR85vrQ6UL
+         XVwNJuP5bzdQtxxBjeerIZeHowqB7eAmLPIR7kXVLwJP5Hi4bfxYRQLn+GYO7wUJVStY
+         Yxoffd1rsZkJDjdOylzQgxCvb/3I6szUrF4O7zqEa/VHr1V5r8gWYV09P9Uz2ffs6t7a
+         pzzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684367794; x=1686959794;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=o/Sj4GArNF/SZJmKGEU2zY3hbH1bdZiadnbfVyt+HWE=;
+        b=RVbQbZzTqhTqAp9nqb7wQCLnZO8ICKazrVoTDI7epaxj37AVaF/OegYA3nEfqLHAWb
+         bBygL8EanCf6DQ/0qQGSZerjPxqTnteoYITxxPxJzEtzdUXXbScYf7wKCCXYuSWhHKX5
+         RvjOTqwRNXlBIleS7hF/ld6qiuURtAPOic4zupBDjolQnBObm3464Loy0v/WhA5VHuxX
+         nlDNoUsWiZABxYSJISuS+TDKLdNTmlYxT7ltEr6T/KCD4C74WTBA9wrKXEzU25jE3w96
+         f9KzyPmzr4R5nhznolqD4sD/KWD42L94WifxOjJa+/E1/3PzYKE4nVwhfiRkN8Br+YEl
+         eBuQ==
+X-Gm-Message-State: AC+VfDywXgC/BlQQNyCWDokm6bxc/ouOYRdxTUGgFsV21tLJQpkEtCDe
+        dztOTmARBzM/UEvzctQi+N+cw2iMnuoO+TAaSo59pWkZSBE3G+PtbKrnK/et/qGe848ADCME+5P
+        kfBRrSzVurWqG141OIKzIDFdKEcbB26pynTShdCM2IgIvSiYFVLtv2U3J9R3SN4Q=
+X-Google-Smtp-Source: ACHHUZ5zmEwhNq0c1y/bcpIgqNt2k01bJrfHCoj7AAEdiUui0X7C49juri02dwJrzNibAdhIik9QSDf2Swz84A==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:202:f597:a1b7:3c54:2bc8])
+ (user=steadmon job=sendgmr) by 2002:a05:6902:1504:b0:ba8:939b:6574 with SMTP
+ id q4-20020a056902150400b00ba8939b6574mr422938ybu.12.1684367794494; Wed, 17
+ May 2023 16:56:34 -0700 (PDT)
+Date:   Wed, 17 May 2023 16:56:30 -0700
+Mime-Version: 1.0
+X-B4-Tracking: v=1; b=H4sIAK5pZWQC/x2NQQqDQAwAvyI5N7BuK7a9FnxAr9JDXGPNwa0kq
+ xTEv3ftcRiG2cBYhQ3uxQbKq5h8YgZ/KiCMFN+M0mcG7/zZVWWNS5SEiS0Zrh5vl6FyVIfQXwl y05ExdkoxjEc1kSXWQ8zKg3z/oxaezQNe+/4DANVBL30AAAA=
+X-Mailer: b4 0.12.2
+Message-ID: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
+Subject: [PATCH RFC v2 0/4] Add an external testing library for unit tests
+From:   steadmon@google.com
+To:     git@vger.kernel.org
+Cc:     Josh Steadmon <steadmon@google.com>, calvinwan@gmail.com,
+        szeder.dev@gmail.com, phillip.wood123@gmail.com,
+        chooglen@google.com, avarab@gmail.com, gitster@pobox.com,
+        sandals@crustytoothpaste.net, Calvin Wan <calvinwan@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In our current testing environment, we spend a significant amount of
+effort crafting end-to-end tests for error conditions that could easily
+be captured by unit tests (or we simply forgo some hard-to-setup and
+rare error conditions). Unit tests additionally provide stability to the
+codebase and can simplify debugging through isolation. Turning parts of
+Git into libraries[1] gives us the ability to run unit tests on the
+libraries and to write unit tests in C. Writing unit tests in pure C,
+rather than with our current shell/test-tool helper setup, simplifies
+test setup, simplifies passing data around (no shell-isms required), and
+reduces testing runtime by not spawning a separate process for every
+test invocation.
 
---fEaPDr5lSuAXWFhF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Unit testing in C requires a separate testing harness that we ideally
+would like to be TAP-style and to come with a non-restrictive license.
+Fortunately, there already exists a C TAP harness library[2] with an MIT
+license (at least for the files included in this series). Phillip Wood
+has also proposed an alternative implementation[3]. I have not had a
+chance to review that patch in much detail, but I have hopefully made
+the Makefile integration here somewhat pluggable so that we can easily
+switch to his version if it proves superior. For now, I have continued
+with the C TAP library.
 
-On 2023-05-17 at 21:48:39, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > We recently fixed empty clones with SHA-256 over protocol v2 by
-> > honouring the hash algorithm specified even when no refs are present.
-> > However, in doing so, we made it impossible to set up a v0 or v1
-> > repository by cloning from an empty SHA-256 repository.  In doing so, we
-> > also broke the Git LFS testsuite for SHA-256 repositories.
-> >
-> > This series introduces the dummy `capabilities^{}` entry for fetches and
-> > clones from an empty repository for v0 and v1, just as we do for clones.
-> > This is already supported by older versions of Git, as well as libgit2,
-> > dulwich, and JGit.
-> >
-> > Changes since v2:
-> > * Move advertisement of fake capabilities ref to a separate function to
-> >   avoid an extra strcmp.
->=20
-> We want this in -rc2 if not -rc1 for the upcoming release, right?
-> I've read the patch again and it all looked sensible.
+The first patch is a small cleanup to allow linking common_exit()
+separately from common-main.o. In the second patch, I've added a rough
+draft project plan listing some goals. Patch 3 adds the C TAP libraries.
+Patch 4 is a modified version of Calvin's previous implemenation with
+better integration to our Makefiles.
 
-If it's possible, that would be great.  I understand you just put out
--rc0, and I apologize for the delay in getting back to you, but it would
-be ideal to avoid having the problem we're fixing in the release.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+[1] https://lore.kernel.org/git/CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com/
+[2] https://github.com/rra/c-tap-harness/
+[3]: https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/
 
---fEaPDr5lSuAXWFhF
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+Calvin Wan (1):
+      Add C TAP harness
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+Josh Steadmon (3):
+      common-main: split common_exit() into a new file
+      unit tests: Add a project plan document
+      unit test: add basic example and build rules
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZGVVEQAKCRB8DEliiIei
-gRckAP9Upfm9kV/QorZekyX0e3T+BcatgY5Dr2Q8R/OuPZAn/AD9HdsM9MYaTtFe
-JjMCwDwFY6XWo7AyqX+6lnme3FLyLA0=
-=MW+v
------END PGP SIGNATURE-----
+ .gitignore                             |    2 +
+ Documentation/Makefile                 |    1 +
+ Documentation/technical/unit-tests.txt |   47 +
+ Makefile                               |   25 +-
+ common-exit.c                          |   26 +
+ common-main.c                          |   24 -
+ t/Makefile                             |   10 +
+ t/runtests.c                           | 1789 ++++++++++++++++++++++++++++++++
+ t/strbuf-test.c                        |   54 +
+ t/tap/basic.c                          | 1029 ++++++++++++++++++
+ t/tap/basic.h                          |  198 ++++
+ t/tap/macros.h                         |  109 ++
+ 12 files changed, 3289 insertions(+), 25 deletions(-)
+---
+base-commit: 69c786637d7a7fe3b2b8f7d989af095f5f49c3a8
+change-id: 20230517-unit-tests-v2-94f50a7ccd8a
 
---fEaPDr5lSuAXWFhF--
+Best regards,
+-- 
+Josh Steadmon <steadmon@google.com>
+
