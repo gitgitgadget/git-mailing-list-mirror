@@ -2,142 +2,289 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20DDFC7EE23
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 23:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0BE9C7EE23
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 23:56:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbjEQX4n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 19:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36048 "EHLO
+        id S229765AbjEQX4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 19:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbjEQX4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 19:56:41 -0400
+        with ESMTP id S229767AbjEQX4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 19:56:48 -0400
 Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85AFC40E4
-        for <git@vger.kernel.org>; Wed, 17 May 2023 16:56:39 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba8337ade1cso2808813276.2
-        for <git@vger.kernel.org>; Wed, 17 May 2023 16:56:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B125049DC
+        for <git@vger.kernel.org>; Wed, 17 May 2023 16:56:43 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba802c775caso2571407276.2
+        for <git@vger.kernel.org>; Wed, 17 May 2023 16:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684367799; x=1686959799;
+        d=google.com; s=20221208; t=1684367803; x=1686959803;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WumVw8pfyzqyi4gRTvcKTYmddmYbNOaLTISxCz/HumE=;
-        b=CnGw/+q3+geD7I+Zweu/MBfJUEHEI+pR8qpwWf+y1fVaRdqWnsCMwMzXcGsRSu1yEU
-         ODmxoXswIPx5SWJdgfvFJesUaw+MMB4Gm39OtEpa+xv2EDbyzj+1lbbDiiWckwi161Nz
-         H/SuFR+StAS+W85ptsF14cgObdhEfXOtoEjZhRjIP94r0stWXxW3AEw9q1jxRZgznzRr
-         tpNewt784kt91xu4MuQk546Xji2eczAK/HmqQxlyTee2bl+a+9nGbZL9ZXTIOBqH0Cr5
-         c6+wyBmORp0oqNer+IVS3fkj+7TbiOpftEHs0P8JNzrN8JPRL5RdbCwHaxeRN7fI5JQk
-         3GDQ==
+        bh=2AKuE9r6n8FKqfM9kKnAgVnNixDFjb0M1StSgfl1Ot0=;
+        b=xkn8oRz5Lg/sC3MvKOJMBiMUF28tkFYyy4a9tF2G4tIEmMeThgMexUQmej5r0hFDV9
+         3ybunEsk4RXibf8Jze8EADdKP5CL5ZWfJrXuDtkdKmOObC+7/cPiE2liT7OSojrfIenh
+         eIWREGbJrIiWvoNwOl1bYUCalQpPL0JdUXm9QTEDaHN49li7QXXDXXirPxxbsobCY87b
+         uqlKKGbJxvYjNRDCslJDksC47AAyhS4ZzcykabLgRVaYGCLd1imlLa2+DDk8OYlLkmDJ
+         1ONYFXygh6czpy6PIUVLV++FrAYs+BxVp1WDLI2uAAPvylnpZzF9Dybt4JtG2VufFfFg
+         Uscw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684367799; x=1686959799;
+        d=1e100.net; s=20221208; t=1684367803; x=1686959803;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WumVw8pfyzqyi4gRTvcKTYmddmYbNOaLTISxCz/HumE=;
-        b=TWbpVo+Ykjv/rf88++D6Y1CxA4bPDVgCVhFYB+t/0Ynhxazl4n2+VYUMOvltXoLxTy
-         qn4opnD79ySfzt02wlYlNm1dzQoUsohY5AJoDC0tB+JoWxSFx/AW4vrjRL6bv43bQTpr
-         Sa7UeSq6CJn5tfoK0qwPOFXiRJSCiMhbF2NuznQVvLQmWE4jSp6QgEa55XqzAWT0CPyz
-         easgNjArwh5/nhxuymtzSmbvTCrQB3MMuqRxBC5cppFs9ET9cnbbqfae8Sqb5lLgp2zY
-         OKUepiQavoRMfh6vF/qqLu6wWmG05/n/846xG2MKxwZKCU7zvXsjfctK1hXR2EeM3I8V
-         KfCQ==
-X-Gm-Message-State: AC+VfDzu0BjTiDLYXI3dhVfJKTjPm0k55dF57nsp6XujBSk3STPF0ztz
-        vvmOCLyquw9nf3ZizynB8wtr/icghepz3XQW72Uc87kX63zBNPMyJXZ03tv3RSEkeAYohI5ntKy
-        V+qOgY/uJ9hPzRYVk8O6DJNTV5rG9RiawJmXDB+AtCDmtbg/kaqvU42JTKH0typo=
-X-Google-Smtp-Source: ACHHUZ65Wu6N23IoMb5LBN8RU6NgzQ0wn29Y8Xv8ljkaQH5Hi1mADzDzfLEm3I5yb7Y/7v+4fHYTADFWt6pjPA==
+        bh=2AKuE9r6n8FKqfM9kKnAgVnNixDFjb0M1StSgfl1Ot0=;
+        b=eDEQgn5oSBc+rkWpe5LzZ7Ygbf/bOp5zP1xLXoAnoNuP28sjUJPK3Fwoch/eo27Ly2
+         fQVuvDy52gVU/HLCPyr/cTxfu0F64EHT6zAgTbw7PDNulR/Na6EAVDBml10thXRHfVVM
+         ycoykPRCHJ5BLKaNY4It0pK9pZVKOnTUJRlhNGFVRzD0M9F8XLhsIV7IpR5tP2T++k+h
+         WWrVncwPm8N2Du3qZZHpr0E2zKP8SCuAXE2bSNCUAEumtI7ezDOKtNTdn+wlhZkOrjeK
+         8kMT5RYglvYtHDKqYjLp7GRw8sRWhiB/R+A/vPShZaPT5da+tuqR8UZK1D2TqO/HY5eR
+         jzTQ==
+X-Gm-Message-State: AC+VfDwZQjnrZ1kQtLCbiw1GxRZJsvd64tv0VxOKtkAqos4FSGjD6Ck2
+        uthIyRt4yUUb8QD6kiUIGRnP8AxDyZe9b8a1sPSkvN3wRxFuWtYnVTvrIAhuW9RrbF5uEAeaxjp
+        v3F+t+p6zT6rD6yqUzTklwHVFde2l3iUMENAv25QJJ/jx5gLuF/wBkn7XVMUx82M=
+X-Google-Smtp-Source: ACHHUZ4M/hIG/f3JD1jfPv1Qqo8NMwXsf/vWB3Cg/N8fmdZr9AF6NjT/BtHx+VoIAZYTV4/MVJy+okLziBW4AA==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:202:f597:a1b7:3c54:2bc8])
- (user=steadmon job=sendgmr) by 2002:a05:6902:2d1:b0:ba1:d0:7f7c with SMTP id
- w17-20020a05690202d100b00ba100d07f7cmr18783074ybh.2.1684367798779; Wed, 17
- May 2023 16:56:38 -0700 (PDT)
-Date:   Wed, 17 May 2023 16:56:32 -0700
+ (user=steadmon job=sendgmr) by 2002:a25:ae9d:0:b0:ba8:2e68:7715 with SMTP id
+ b29-20020a25ae9d000000b00ba82e687715mr3971848ybj.2.1684367802841; Wed, 17 May
+ 2023 16:56:42 -0700 (PDT)
+Date:   Wed, 17 May 2023 16:56:34 -0700
 In-Reply-To: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
 Mime-Version: 1.0
 References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
 X-Mailer: b4 0.12.2
-Message-ID: <20230517-unit-tests-v2-v2-2-21b5b60f4b32@google.com>
-Subject: [PATCH RFC v2 2/4] unit tests: Add a project plan document
+Message-ID: <20230517-unit-tests-v2-v2-4-21b5b60f4b32@google.com>
+Subject: [PATCH RFC v2 4/4] unit test: add basic example and build rules
 From:   steadmon@google.com
 To:     git@vger.kernel.org
 Cc:     Josh Steadmon <steadmon@google.com>, calvinwan@gmail.com,
         szeder.dev@gmail.com, phillip.wood123@gmail.com,
         chooglen@google.com, avarab@gmail.com, gitster@pobox.com,
-        sandals@crustytoothpaste.net
+        sandals@crustytoothpaste.net, Calvin Wan <calvinwan@google.com>
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Describe what we hope to accomplish by implementing unit tests, and
-explain some open questions and milestones.
+Integrate a simple strbuf unit test with Git's Makefiles.
 
-Change-Id: I182cdc1c15bdd1cbef6ffcf3d216b386f951e9fc
+You can build and run the unit tests with `make unit-tests` (or just
+build them with `make build-unit-tests`). By default we use the basic
+test runner from the C-TAP project, but users who prefer prove as a test
+runner can set `DEFAULT_UNIT_TEST_TARGET=prove-unit-tests` instead.
+
+We modify the `#include`s in the C TAP libraries so that we can build
+them without having to include the t/ directory in our include search
+path.
+
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+Change-Id: Ie61eafd2bd8f8dc5b30449af1e436889f91da3b7
 ---
- Documentation/Makefile                 |  1 +
- Documentation/technical/unit-tests.txt | 47 ++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ .gitignore      |  2 ++
+ Makefile        | 24 +++++++++++++++++++++++-
+ t/Makefile      | 10 ++++++++++
+ t/strbuf-test.c | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/tap/basic.c   |  2 +-
+ t/tap/basic.h   |  2 +-
+ 6 files changed, 91 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index b629176d7d..3f2383a12c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -122,6 +122,7 @@ TECH_DOCS += technical/scalar
- TECH_DOCS += technical/send-pack-pipeline
- TECH_DOCS += technical/shallow
- TECH_DOCS += technical/trivial-merge
-+TECH_DOCS += technical/unit-tests
- SP_ARTICLES += $(TECH_DOCS)
- SP_ARTICLES += technical/api-index
+diff --git a/.gitignore b/.gitignore
+index e875c59054..464e301345 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -245,3 +245,5 @@ Release/
+ /git.VC.db
+ *.dSYM
+ /contrib/buildsystems/out
++/t/runtests
++/t/unit-tests/
+diff --git a/Makefile b/Makefile
+index 8ee7c7e5a8..aa94e3ba45 100644
+--- a/Makefile
++++ b/Makefile
+@@ -661,6 +661,7 @@ BUILTIN_OBJS =
+ BUILT_INS =
+ COMPAT_CFLAGS =
+ COMPAT_OBJS =
++CTAP_OBJS =
+ XDIFF_OBJS =
+ GENERATED_H =
+ EXTRA_CPPFLAGS =
+@@ -682,6 +683,8 @@ TEST_BUILTINS_OBJS =
+ TEST_OBJS =
+ TEST_PROGRAMS_NEED_X =
+ THIRD_PARTY_SOURCES =
++UNIT_TEST_PROGRAMS =
++UNIT_TEST_DIR = t/unit-tests
  
-diff --git a/Documentation/technical/unit-tests.txt b/Documentation/technical/unit-tests.txt
+ # Having this variable in your environment would break pipelines because
+ # you cause "cd" to echo its destination to stdout.  It can also take
+@@ -1318,6 +1321,10 @@ BUILTIN_OBJS += builtin/verify-tag.o
+ BUILTIN_OBJS += builtin/worktree.o
+ BUILTIN_OBJS += builtin/write-tree.o
+ 
++CTAP_OBJS += t/tap/basic.o
++UNIT_TEST_RUNNER = t/runtests
++UNIT_TEST_PROGRAMS += $(UNIT_TEST_DIR)/strbuf-test-t
++
+ # THIRD_PARTY_SOURCES is a list of patterns compatible with the
+ # $(filter) and $(filter-out) family of functions. They specify source
+ # files which are taken from some third-party source where we want to be
+@@ -2673,6 +2680,7 @@ OBJECTS += $(TEST_OBJS)
+ OBJECTS += $(XDIFF_OBJS)
+ OBJECTS += $(FUZZ_OBJS)
+ OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
++OBJECTS += $(CTAP_OBJS)
+ 
+ ifndef NO_CURL
+ 	OBJECTS += http.o http-walker.o remote-curl.o
+@@ -3654,7 +3662,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(OBJECTS)
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
+-	$(RM) $(TEST_PROGRAMS)
++	$(RM) $(TEST_PROGRAMS) $(UNIT_TEST_RUNNER) $(UNIT_TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) $(SP_OBJ)
+ 	$(RM) $(HCC)
+@@ -3832,3 +3840,17 @@ $(FUZZ_PROGRAMS): all
+ 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+ 
+ fuzz-all: $(FUZZ_PROGRAMS)
++
++$(UNIT_TEST_DIR):
++	$(QUIET)mkdir $(UNIT_TEST_DIR)
++
++$(UNIT_TEST_PROGRAMS): $(UNIT_TEST_DIR) $(CTAP_OBJS) $(GITLIBS)
++	$(QUIET_CC)$(CC) -o $@ t/$(patsubst %-t,%,$(notdir $@)).c $(CTAP_OBJS) $(LIBS)
++
++$(UNIT_TEST_RUNNER): $(patsubst %,%.c,$(UNIT_TEST_RUNNER))
++	$(QUIET_CC)$(CC) -o $@ $^
++
++.PHONY: build-unit-tests unit-tests
++build-unit-tests: $(UNIT_TEST_PROGRAMS)
++unit-tests: $(UNIT_TEST_PROGRAMS) $(UNIT_TEST_RUNNER)
++	$(MAKE) -C t/ unit-tests
+diff --git a/t/Makefile b/t/Makefile
+index 3e00cdd801..9df1a4e34b 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -17,6 +17,7 @@ TAR ?= $(TAR)
+ RM ?= rm -f
+ PROVE ?= prove
+ DEFAULT_TEST_TARGET ?= test
++DEFAULT_UNIT_TEST_TARGET ?= run-unit-tests
+ TEST_LINT ?= test-lint
+ 
+ ifdef TEST_OUTPUT_DIRECTORY
+@@ -41,6 +42,7 @@ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
+ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
+ CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
+ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
++UNIT_TESTS = $(sort $(wildcard unit-tests/*))
+ 
+ # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
+ # checks all tests in all scripts via a single invocation, so tell individual
+@@ -65,6 +67,14 @@ prove: pre-clean check-chainlint $(TEST_LINT)
+ $(T):
+ 	@echo "*** $@ ***"; '$(TEST_SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
+ 
++unit-tests: $(DEFAULT_UNIT_TEST_TARGET)
++
++run-unit-tests:
++	./runtests $(UNIT_TESTS)
++
++prove-unit-tests:
++	@echo "*** prove - unit tests ***"; $(PROVE) $(GIT_PROVE_OPTS) $(UNIT_TESTS)
++
+ pre-clean:
+ 	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
+ 
+diff --git a/t/strbuf-test.c b/t/strbuf-test.c
 new file mode 100644
-index 0000000000..7c575e6ef7
+index 0000000000..8f8d4e11db
 --- /dev/null
-+++ b/Documentation/technical/unit-tests.txt
-@@ -0,0 +1,47 @@
-+= Unit Testing
++++ b/t/strbuf-test.c
+@@ -0,0 +1,54 @@
++#include "tap/basic.h"
 +
-+In our current testing environment, we spend a significant amount of effort
-+crafting end-to-end tests for error conditions that could easily be captured by
-+unit tests (or we simply forgo some hard-to-setup and rare error conditions).
-+Unit tests additionally provide stability to the codebase and can simplify
-+debugging through isolation. Writing unit tests in pure C, rather than with our
-+current shell/test-tool helper setup, simplifies test setup, simplifies passing
-+data around (no shell-isms required), and reduces testing runtime by not
-+spawning a separate process for every test invocation.
++#include "../git-compat-util.h"
++#include "../strbuf.h"
 +
-+Unit testing in C requires a separate testing harness that we ideally would
-+like to be TAP-style and to come with a non-restrictive license. Fortunately,
-+there already exists a https://github.com/rra/c-tap-harness/[C TAP harness
-+library] with an MIT license (at least for the files needed for our purposes).
-+We might also consider implementing
-+https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/[our
-+own TAP harness] just for Git.
++int strbuf_init_test()
++{
++	struct strbuf *buf = malloc(sizeof(void*));
++	strbuf_init(buf, 0);
 +
-+We believe that a large body of unit tests, living alongside the existing test
-+suite, will improve code quality for the Git project.
++	if (buf->buf[0] != '\0')
++		return 0;
++	if (buf->alloc != 0)
++		return 0;
++	if (buf->len != 0)
++		return 0;
++	return 1;
++}
 +
-+== Open questions
++int strbuf_init_test2() {
++	struct strbuf *buf = malloc(sizeof(void*));
++	strbuf_init(buf, 100);
 +
-+=== TAP harness
++	if (buf->buf[0] != '\0')
++		return 0;
++	if (buf->alloc != 101)
++		return 0;
++	if (buf->len != 0)
++		return 0;
++	return 1;
++}
 +
-+We'll need to decide on a TAP harness. The C TAP library is easy to integrate,
-+but has a few drawbacks:
-+* (copy objections from lore thread)
-+* We may need to carry local patches against C TAP. We'll need to decide how to
-+  manage these. We could vendor the code in and modify them directly, or use a
-+  submodule (but then we'll need to decide on where to host the submodule with
-+  our patches on top).
 +
-+Phillip Wood has also proposed a new implementation of a TAP harness (linked
-+above). While it hasn't been thoroughly reviewed yet, it looks to support a few
-+nice features that C TAP does not, e.g. lazy test plans and skippable tests.
++int strbuf_grow_test() {
++	struct strbuf *buf = malloc(sizeof(void*));
++	strbuf_grow(buf, 100);
 +
-+== Milestones
++	if (buf->buf[0] != '\0')
++		return 0;
++	if (buf->alloc != 101)
++		return 0;
++	if (buf->len != 0)
++		return 0;
++	return 1;
++}
 +
-+* Settle on final TAP harness
-+* Add useful tests of library-ish code
-+* Integrate with CI
-+* Integrate with
-+  https://lore.kernel.org/git/20230502211454.1673000-1-calvinwan@google.com/[stdlib
-+  work]
-+* Run along with regular `make test` target
++int main(void)
++{
++	plan(3);
++	ok(strbuf_init_test(), "strbuf_init initializes properly");
++	ok(strbuf_init_test2(), "strbuf_init with hint initializes properly");
++	ok(strbuf_grow_test(), "strbuf_grow grows properly");
++	return 0;
++}
+diff --git a/t/tap/basic.c b/t/tap/basic.c
+index 704282b9c1..37c2d6f082 100644
+--- a/t/tap/basic.c
++++ b/t/tap/basic.c
+@@ -52,7 +52,7 @@
+ #include <sys/types.h>
+ #include <unistd.h>
+ 
+-#include <tap/basic.h>
++#include "basic.h"
+ 
+ /* Windows provides mkdir and rmdir under different names. */
+ #ifdef _WIN32
+diff --git a/t/tap/basic.h b/t/tap/basic.h
+index afea8cb210..a0c0ef2c87 100644
+--- a/t/tap/basic.h
++++ b/t/tap/basic.h
+@@ -36,7 +36,7 @@
+ #include <stdarg.h> /* va_list */
+ #include <stddef.h> /* size_t */
+ #include <stdlib.h> /* free */
+-#include <tap/macros.h>
++#include "macros.h"
+ 
+ /*
+  * Used for iterating through arrays.  ARRAY_SIZE returns the number of
 
 -- 
 2.40.1.606.ga4b1b128d6-goog
