@@ -2,98 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 146DEC77B75
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 19:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AABBCC77B75
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 19:22:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229749AbjEQTG2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 15:06:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54056 "EHLO
+        id S230081AbjEQTWL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 15:22:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjEQTG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 15:06:27 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEFB40CF
-        for <git@vger.kernel.org>; Wed, 17 May 2023 12:06:26 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D81951E9F2A;
-        Wed, 17 May 2023 15:06:25 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=XiWFHioLNVWE+JCQsUUBv0Skr
-        smGNSivu0ZMSpnkFbI=; b=LxKnBFghYGRNovrIyueFxRKJYObjILt8GUdi+d9u/
-        rMK9SbAE752xKypMBiB7Id9/mAbDaHjf6fP51BiiKG4/kbrSri26gMtB/HEl3yFc
-        z0Q6LM35r2awZP7gQdeYXTEIP1AitRmQpS8FLIk55gNscEFE/3yQYSOuS/y4wyqM
-        H8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D13411E9F29;
-        Wed, 17 May 2023 15:06:25 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EEFA61E9F28;
-        Wed, 17 May 2023 15:06:21 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Wed, 17 May 2023 15:06:18 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Matthew John Cheetham <mjcheetham@outlook.com>,
-        Jeff King <peff@peff.net>
-Subject: [BUG 2.41.0] t/lib-httpd/apache.conf incompatible with RHEL/CentOS 7
-Message-ID: <ZGUlqu7sP7yxbaTI@pobox.com>
+        with ESMTP id S229590AbjEQTWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 15:22:10 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16FD72119
+        for <git@vger.kernel.org>; Wed, 17 May 2023 12:22:03 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1ae4d1d35e6so10115815ad.0
+        for <git@vger.kernel.org>; Wed, 17 May 2023 12:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684351322; x=1686943322;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=43lZo/Po0ytGBnVl84lz3Zxt7f9rDBsOfHyOfLJCA1A=;
+        b=VquGsT075dpYDyyywIR6fIUhO+nknMghNUyydCynXVeNZkXfU8gcZbNtGruETeA+QM
+         NgeiYTNis6pH9gce8UuQYjkNMRsxm5aJ7JXqzS6UuAk7zwUbSHyYsSNPBvZjBwQO/udW
+         S1bEc0UNCIkG+Gjwibthw5zwtGAL4LCTJUcxbpVAQ0/g+SSQqwgdyTlGs7b1opVccxtv
+         KvMvvKhNEuiQQzI7YFJNRE5AUXHEcKA+w+lKUJ0ospGOgJToX/hOXyyz5g0lAsBtY843
+         BkqmiILfijI4o8uGEFTlyb/QWr9ycPmgyzFDDzNvj7Sv/VXFd1Mlioo2JywzdeXRYiSl
+         oNcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684351322; x=1686943322;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=43lZo/Po0ytGBnVl84lz3Zxt7f9rDBsOfHyOfLJCA1A=;
+        b=UPisJmsdHz0ZR8VIY/wsPa4pvWBmpW8JIKFaH/e6c4S88mFAWg66GEj+32X4DWzTSM
+         C5vMCZ5Jgc4KgWHDtdolkG9cH3VxX3eirDALgTFmmaqOGqL6bXoFBUq1sG64syWn8SEx
+         /fmAQ9XGpPcTyrF3cQl8VH/qwZ6A1yBL5S8niWbUccvC2bC3kwQGTqIKQinvP3KD7G7Z
+         JG2qI9GJ8eay6zkIaeOss/nLamUoz/5Rncey1tkzpAJmvm+mFfrvfP9L7rCGPJCT5Z3Q
+         zQbs8VCA08lbWb5mR42p6APGjKHYVaBdbuFi1DkRLvtb210WLIzn54bXah1Ffk7kInm6
+         8mag==
+X-Gm-Message-State: AC+VfDwO/9nsykmetCt7NRbNphNTpZ7AEDtY6wWvvYNMptvyOBlRb5Rz
+        3Gc+aG85y1okzTi0ZsbA2GM=
+X-Google-Smtp-Source: ACHHUZ4yk7tIdq/YGzQ0wW953Z65Uf/NzFym+yAorcgL2Op1GgQT/DmtHFRu3V6qnimHg2oFfetEKg==
+X-Received: by 2002:a17:902:ecc5:b0:1ac:6882:1a6f with SMTP id a5-20020a170902ecc500b001ac68821a6fmr44439260plh.30.1684351322408;
+        Wed, 17 May 2023 12:22:02 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id i8-20020a170902c94800b001a96562642dsm17826994pla.277.2023.05.17.12.22.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 May 2023 12:22:01 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <nasamuffin@google.com>
+Cc:     Git List <git@vger.kernel.org>, michael.strawbridge@amd.com,
+        dianders@chromium.org
+Subject: Re: bug report: cover letter is inheriting last patch's message ID
+ with send-email
+References: <CAJoAoZ=GGgjGOeaeo6RFBO7=6msdRf-Ze6XcnL04K5ugupLUJA@mail.gmail.com>
+        <xmqqo7mipyt0.fsf@gitster.g>
+Date:   Wed, 17 May 2023 12:22:01 -0700
+In-Reply-To: <xmqqo7mipyt0.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        17 May 2023 12:01:31 -0700")
+Message-ID: <xmqqjzx6pxuu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-X-Pobox-Relay-ID: E9991AD4-F4E5-11ED-8488-B31D44D1D7AA-09356542!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After applying the imap-send.c patch=B9 on RHEL/CentOS 7, I
-noticed the http tests fail because the Apache httpd config
-is not valid with httpd-2.4.6=B2 on CentOS 7.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The tests fail with:
+>> # With the attached patches, where all of the patches have a
+>> # Message-Id but the cover letter doesn't.
+>> git send-email *.patch
 
-    Parse errors: No plan found in TAP output
+I suspect this is a recent regression with the addition of the
+pre_process_file step.  56adddaa (send-email: refactor header
+generation functions, 2023-04-19) makes all messages parsed
+before the first message is sent out, by calling a sub
+"pre_process_file" before invoking the validate hook.  The same sub
+is called again for each message when it is sent out, as the
+processing in that step is shared between the time the message gets
+vetted and the time the message gets sent.
 
-The problem is that CGIPassAuth, added in 988aad99b4 (t5563:
-add tests for basic and anoymous HTTP access, 2023-02-27) is
-not supported by httpd < 2.4.13:
+Unfortunately, $message_id variable is assigned to in that sub.  So
+it is very much understandable why this happens.
 
-    Starting httpd on port 10410
-    [Wed May 17 17:06:52.184409 2023] [core:warn] [pid 477886] AH00111: C=
-onfig variable ${LIB_HTTPD_SVN} is not defined
-    [Wed May 17 17:06:52.184495 2023] [core:warn] [pid 477886] AH00111: C=
-onfig variable ${LIB_HTTPD_SVNPATH} is not defined
-    AH00526: Syntax error on line 149 of /builddir/build/BUILD/git-2.41.0=
-.rc0/t/lib-httpd/apache.conf:
-    Invalid command 'CGIPassAuth', perhaps misspelled or defined by a mod=
-ule not included in the server configuration
-    error: web server setup failed
+I wonder if it is just doing something silly like this?
 
-Since edd060dc84 (t/lib-httpd: bump required apache version
-to 2.4, 2023-02-01), we require httpd-2.4 and no longer have
-any <IfVersion> conditions.  I'm not sure if this a reason
-to add some again (nor am I certain if httpd's IfVersion
-supports minor versions).
+--- >8 ---
+Subject: [PATCH] send-email: clear the $message_id after validation
 
-Perhaps there's a more elegant way to fix this?  (I haven't
-thought of anything in patch form yet, apologies.)
+Recently git-send-email started parsing the same message twice, once
+to validate _all_ the message before sending even the first one, and
+then after the validation hook is happy and each message gets sent,
+to read the contents to find out where to send to etc.
 
-I'd like to still build git for CentOS 7 and not skip all
-the http tests, but if it's time to say it is not worth
-supporting, I can understand.  RHEL/CentOS 7 has a little
-over a year left before it is EOL=B3.
+Unfortunately, the effect of reading the messages for validation
+lingered even after the validation is done.  Namely $message_id gets
+assigned if exists in the input files but the variable is global,
+and it is not cleared before pre_process_file runs.  This causes
+reading a message without a message-id followed by reading a message
+with a message-id to misbehave---the sub reports as if the message
+had the same id as the previously written one.
 
-=B9 <20230517070632.71884-1-list@eworm.de>
-=B2 https://httpd.apache.org/docs/2.4/mod/core.html#cgipassauth
-=B3 https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-strea=
-m-8-and-centos-linux-7/#centos-linux-7-end-of-life-june-30-2024
+Clear the variable before starting to read the headers in
+pre_process_file
 
-Thanks,
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
---=20
-Todd
+ * I am not surprised at all if there are similar problems in this
+   function around variables other than $message_id; this patch is
+   merely reacting to the bug report and not systematically hunting
+   and fixing the bugs coming from the same root cause.  If the
+   original author of the pre_process_file change is still around,
+   the second sets of eyes from them is very much appreciated.
+
+ git-send-email.perl | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git c/git-send-email.perl w/git-send-email.perl
+index 89d8237e89..889ef388c8 100755
+--- c/git-send-email.perl
++++ w/git-send-email.perl
+@@ -1771,6 +1771,7 @@ sub send_message {
+ sub pre_process_file {
+ 	my ($t, $quiet) = @_;
+ 
++	undef $message_id;
+ 	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
+ 
+ 	my $author = undef;
