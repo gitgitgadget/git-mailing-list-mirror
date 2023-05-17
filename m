@@ -2,125 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BADB2C77B75
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 20:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7902BC7EE22
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 21:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229585AbjEQUWg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 16:22:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51684 "EHLO
+        id S229489AbjEQVKn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 17:10:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjEQUWf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 16:22:35 -0400
-X-Greylist: delayed 584 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 17 May 2023 13:22:30 PDT
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [IPv6:2a01:4f8:13a:16c2::25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1837AA9
-        for <git@vger.kernel.org>; Wed, 17 May 2023 13:22:30 -0700 (PDT)
-Received: from leda.eworm.net (p200300cf2f18320018F6571B32b1Eeb8.dip0.t-ipconnect.de [IPv6:2003:cf:2f18:3200:18f6:571b:32b1:eeb8])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mx.mylinuxtime.de (Postfix) with ESMTPSA id DEAC9223E8B;
-        Wed, 17 May 2023 22:12:41 +0200 (CEST)
-Date:   Wed, 17 May 2023 22:12:37 +0200
-From:   Christian Hesse <list@eworm.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] imap-send: include strbuf.h
-Message-ID: <20230517221237.590fb984@leda.eworm.net>
-In-Reply-To: <xmqqilcrq6a9.fsf@gitster.g>
-References: <20230517070632.71884-1-list@eworm.de>
-        <xmqqwn17q7ou.fsf@gitster.g>
-        <ZGT6fEZFumAsZnxu@nand.local>
-        <xmqqilcrq6a9.fsf@gitster.g>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
-X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;|\QFlOg>\Bt!b#{;dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;ftj!Hxx\1@;LM)Pz)|B%1#sfF;s;,N?*K*^)
-Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
+        with ESMTP id S229452AbjEQVKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 17:10:42 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D5655A9
+        for <git@vger.kernel.org>; Wed, 17 May 2023 14:10:41 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-64cfb8d33a5so258969b3a.2
+        for <git@vger.kernel.org>; Wed, 17 May 2023 14:10:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684357840; x=1686949840;
+        h=mime-version:user-agent:message-id:date:cc:subject:to:from:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GRehayxZ9PuKq9fyZHs/Qp5ak09d6w8ugEE2QmZLuRk=;
+        b=oVzptOXFeEmNYps9ru9eocT9vpsG1JwoIlHb92faU5awDZ3OXW+L87Fw91dvwKNVSm
+         Wx7NDTpj7lpele6Tt3OxPk6qBV/HKIvhL1tGoKltJx63uDsJIQQhE865l6RVJ5QX569e
+         tq09iydDJXmoMdoVecC+pcbZWc7JEVTCyCL4QOgW/0ceaLcvwlpUamrTDUM2tWdDWeA2
+         B0dnQtpooZIdvoV5Xe6zTSBapZTqNUNwOXf/xc1NDUWUaaKDXR+tsQen2LTx7zrlkXSA
+         Di7W9gE3dWef3TYabSBQ8ZSiZne5Y2XJiLErZB4UtNovQeTZyBgwFxL+NUc/IXik/DBf
+         p8mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684357840; x=1686949840;
+        h=mime-version:user-agent:message-id:date:cc:subject:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GRehayxZ9PuKq9fyZHs/Qp5ak09d6w8ugEE2QmZLuRk=;
+        b=NQtggt+oMxdM4MpwlwXC13il2hZaWE39a6WALlHpndjyQVJDd3wkrAOxt15/LYaPd7
+         sgpyDMTtSoaFWBO4hSY1FivDf0SHWosrxwYzJt518KcnXweIwIuSczIz/1cTES3hl/vD
+         2gghXCxLU/fHZRIWLWW8JCsTxpBTdAHzcsfpkgdn4pG4W7B1eUDl3IvsxILMLyQLa3Jy
+         lcTNwVmG4gz3QNfANT6MW85QUdQfM/ie0I0xQgsvbE+0rI+zpvi+94dVEcnl/sSw3b+B
+         4hcbosDoxZgwl5GDa0yLRIuJ3PnE9wRLaxkSv+MvSyJqtEsJOCTHu7k4Ni+6CMHCf7xF
+         fArQ==
+X-Gm-Message-State: AC+VfDyqIJ810k+hT/GWQKz7+RsbHLUOoq6ZyNKEW+sk3SBtyackJjUz
+        V2DyNBqOkDxXH0OO+DQvW0iTKZdmJZc=
+X-Google-Smtp-Source: ACHHUZ66bozQsLOBDf96LX117+fVTCkEz241pCU9FqcSJO4yKPrcWD1JmZFuVwN+y6xmiL5LRYJM1Q==
+X-Received: by 2002:a05:6a00:2185:b0:64b:f03b:2639 with SMTP id h5-20020a056a00218500b0064bf03b2639mr1361557pfi.22.1684357840293;
+        Wed, 17 May 2023 14:10:40 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id g17-20020aa78751000000b005aa60d8545esm15560561pfo.61.2023.05.17.14.10.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 May 2023 14:10:39 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] send-email: clear the $message_id after validation
+cc:     Michael Strawbridge <michael.strawbridge@amd.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Emily Shaffer <nasamuffin@google.com>
+Date:   Wed, 17 May 2023 14:10:39 -0700
+Message-ID: <xmqqzg62oe9c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/I5B+Uz/ilBp1BbdywpBIIdb";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/I5B+Uz/ilBp1BbdywpBIIdb
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Recently git-send-email started parsing the same message twice, once
+to validate _all_ the message before sending even the first one, and
+then after the validation hook is happy and each message gets sent,
+to read the contents to find out where to send to etc.
 
-Junio C Hamano <gitster@pobox.com> on Wed, 2023/05/17 09:19:
-> Taylor Blau <me@ttaylorr.com> writes:
->=20
-> > On Wed, May 17, 2023 at 08:49:37AM -0700, Junio C Hamano wrote: =20
-> >> Christian Hesse <list@eworm.de> writes:
-> >> =20
-> >> > From: Christian Hesse <mail@eworm.de>
-> >> >
-> >> > We use xstrfmt() here, so let's include the header file.
-> >> >
-> >> > Signed-off-by: Christian Hesse <mail@eworm.de>
-> >> > ---
-> >> >  imap-send.c | 1 +
-> >> >  1 file changed, 1 insertion(+) =20
-> >>
-> >> Puzzled.  For me Git 2.41-rc0 builds as-is without this change just
-> >> fine, it seems. =20
+Unfortunately, the effect of reading the messages for validation
+lingered even after the validation is done.  Namely $message_id gets
+assigned if exists in the input files but the variable is global,
+and it is not cleared before pre_process_file runs.  This causes
+reading a message without a message-id followed by reading a message
+with a message-id to misbehave---the sub reports as if the message
+had the same id as the previously written one.
 
-I prepared cgit to build with libgit.a 2.41.0-rc0. While cgit itself builds
-fine (with some justifications of course), building git for the test suite
-failed.
+Clear the variable before starting to read the headers in
+pre_process_file.
 
-> > It will fail to build for ancient versions of curl (pre-7.34.0, which
-> > was released in 2013), or if you build with `NO_CURL=3D1`. =20
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Indeed we have NO_CURL=3D1 in cgit's Makefile...
+ * This time with a minimum test.  I eyeballed what variables are
+   assigned in pre_process_file and it _appears_ to me that most of
+   them are cleared in the function before it processes one file
+   (except for $message_num that gets incremented per invocation for
+   obvious reasons---and it does get reset to 0 before the real loop
+   calls the function before sending each message).  So $message_id
+   may indeed be the only one that needs fixing.
 
-> xstrfmt() is used at exactly one place, inside "#ifndef NO_OPENSSL",
-> in the implementation of the static function cram().
->
-> Ah, the mention of that function was a huge red herring.
+   But that can hardly qualify as an exhaustive verification X-<.
 
-Well, the warning about implicit declaration of xstrfmt() was this one that
-popped up... :)
-Sorry for the confusion.
+ git-send-email.perl   |  2 ++
+ t/t9001-send-email.sh | 17 ++++++++++++++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-> There are
-> tons of strbuf API calls in the file outside any conditional
-> compilation, and where it inherits the include from is "http.h",
-> that is conditionally included.
->=20
-> OK, so the fix seems to make sense, but the justification for the
-> change needs to be rewritten, I think.
->=20
->     We make liberal use of the strbuf API functions and types, but
->     the inclusion of <strbuf.h> comes indirectly by including
->     <http.h>, which does not happen if you build with NO_CURL.
->=20
-> or something like that?
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 10c450ef68..37dfd4b8c5 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1768,6 +1768,8 @@ sub pre_process_file {
+ 	$subject = $initial_subject;
+ 	$message = "";
+ 	$message_num++;
++	undef $message_id;
++
+ 	# First unfold multiline header fields
+ 	while(<$fh>) {
+ 		last if /^\s*$/;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 36bb85d6b4..8d49eff91a 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -47,7 +47,7 @@ clean_fake_sendmail () {
+ 
+ test_expect_success $PREREQ 'Extract patches' '
+ 	patches=$(git format-patch -s --cc="One <one@example.com>" --cc=two@example.com -n HEAD^1) &&
+-	threaded_patches=$(git format-patch -o threaded -s --in-reply-to="format" HEAD^1)
++	threaded_patches=$(git format-patch -o threaded --thread=shallow -s --in-reply-to="format" HEAD^1)
+ '
+ 
+ # Test no confirm early to ensure remaining tests will not hang
+@@ -588,6 +588,21 @@ test_expect_success $PREREQ "--validate hook supports header argument" '
+ 		outdir/000?-*.patch
+ '
+ 
++test_expect_success $PREREQ 'clear message-id before parsing a new message' '
++	clean_fake_sendmail &&
++	echo true | write_script my-hooks/sendemail-validate &&
++	test_config core.hooksPath my-hooks &&
++	GIT_SEND_EMAIL_NOTTY=1 \
++	git send-email --validate --to=recipient@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		$patches $threaded_patches &&
++	id0=$(grep "^Message-ID: " $threaded_patches) &&
++	id1=$(grep "^Message-ID: " msgtxt1) &&
++	id2=$(grep "^Message-ID: " msgtxt2) &&
++	test "z$id0" = "z$id2" &&
++	test "z$id1" != "z$id2"
++'
++
+ for enc in 7bit 8bit quoted-printable base64
+ do
+ 	test_expect_success $PREREQ "--transfer-encoding=$enc produces correct header" '
+-- 
+2.41.0-rc0-4-g004e0f790f
 
-Fine with me!
-Do you want me to re-send the patch or do you modify this on the fly?
-=20
-> Thanks.
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
-
---Sig_/I5B+Uz/ilBp1BbdywpBIIdb
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAmRlNTUACgkQiUUh18yA
-9HaSeAgAiYsWlY0JBDnbzWM2VwDV1xbjrKjsgLoQIQWJcai7329bvj8fgoqOUSA8
-goLv/nuMy88JxZgcmnabYHsOXcPEuypV/O+dxNmzNdBV/aGHM+8KyA0w2kl3Aua0
-3xtzi/WTXv08bn8k26nOGAzwk9VqnFQHIu2Kfmv/xHDuMnf7+nbukWmgmeO2oN4E
-eiVR8XCtBCM0kdRtajC0Z3uTC+PWl7A9+V5Cty6EhLwxDvFWUhY7vTxKiXCnRxmT
-Ua84X3ivC0t00bFOL1Xqff4Rf1WNqOBeVFh86P842pc4s8pRdLOh88Nsrz5THG4c
-6Ezh9rFP79jG4gek0VE8w3m87A8lOg==
-=MgQv
------END PGP SIGNATURE-----
-
---Sig_/I5B+Uz/ilBp1BbdywpBIIdb--
