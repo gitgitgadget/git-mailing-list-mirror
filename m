@@ -2,68 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7EAEC77B75
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 09:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C24C77B75
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 09:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbjEQJGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 05:06:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53514 "EHLO
+        id S229608AbjEQJYB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 05:24:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjEQJGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 05:06:07 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43187E5C
-        for <git@vger.kernel.org>; Wed, 17 May 2023 02:05:56 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f4249b7badso5220065e9.3
-        for <git@vger.kernel.org>; Wed, 17 May 2023 02:05:56 -0700 (PDT)
+        with ESMTP id S229471AbjEQJX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 05:23:59 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C9EE67
+        for <git@vger.kernel.org>; Wed, 17 May 2023 02:23:58 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f42b984405so3388145e9.3
+        for <git@vger.kernel.org>; Wed, 17 May 2023 02:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684314355; x=1686906355;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20221208; t=1684315436; x=1686907436;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LxkIAisNN9sORuaM05+mPVPYpEHxnKyE22SKPd4WvAU=;
-        b=PB7tg5T3Eti1yOovopOXnmpzClxfMUcJlexTL8Rw0OWTKa+uJE80PKoErJ5S7EWIgy
-         2o3eC1+sR9VCR3q9YqRgi7pvDArw/Fhy6VY/FRfRAvsjPo+RFaSk2nnwOBxCQtID8nu1
-         djkdwDv8CpMr1+hZT6/Sfc2d03HacDJP1JsPT6BHKV9RUswQ2rkUcKsAhNgWSCnQp0za
-         m94MHt/pAGjf9UmNycGfzKdOc0LVzbkdV6ws7V3ZhWBTJBw8Q6Dx9ueW51acYluHm3h4
-         cjZHCVRTzxYLbwrYpvGfLy0QcVDyPpl/eQjO08f2eWed0ZHZgeX9/vcXbFPHbWAieUHr
-         xQsA==
+        bh=zgDPcLL5qKa4PzYrakB0KknDdrbDjbAKgFtWQbUSO34=;
+        b=r9xYS9Wh73qqFWq3VaSpIjmcRVDgKNpvCrOiODk7jh1DDeEPcZXyZjtP+bbkNXDg5R
+         o1LoyH+I9WLhWxhmlTpNMEOQ+3lTdCugY2vhkrel85egk0TUnxE/bqDyRMgO/pasputw
+         WIZi+njSHJSaNxbKxJ5X3HcruB+enOfFVFp+WoPsLyDnaKAccQKbQb5J7kQXW3tdI8D6
+         QkRgkRVubTM8nqC1WSt/r5GdatKOT85im94iaJu1XyARfJptta4hi8KhDmlYwl+DM1Te
+         NVE+MULXueqHt1lOaJo0K3Eg17Gw+WqF8inMntx4ESgdExDVip2uNcI+XPVDEs8juwMI
+         CjqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684314355; x=1686906355;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20221208; t=1684315436; x=1686907436;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LxkIAisNN9sORuaM05+mPVPYpEHxnKyE22SKPd4WvAU=;
-        b=Jj0iS79NtG+50MAL4IQe3TbP/LQWxoE0Af6kl0fMWbDMGDkfpp+A9ya8w0JpJ991yT
-         0P37i5og6Oa2tjfULpWaPTTamzgJ5daDT9gNCB3Pw78l4oBEi5kqKKbOyfTVpO8qWtFc
-         zluJk1SVxonhNHun6jjZZSESlK5iv4cDKI+zb2lFahI3i5yLmGCv/U27CdjYvkEowTSn
-         z7xeEregLZxUGSVNFf4PpLdWoKLnqGujXErWnYHZqZ824bkyNM9fU8z0Fweo7NKexiQ+
-         O8oxo2xdCH9W4DbvoiYE2+oVLRix3daS9Q6MRO59vzGMk1U9DYrh/JX/n8kG0BTrflJ0
-         I+9w==
-X-Gm-Message-State: AC+VfDysxcEM40k/l202pMs6SVvV7C/BlVgwiJ6IZMmbMECLWT6nK2O8
-        B8n5tSFzS5ZyvT464i+bCUujzPKFDWk=
-X-Google-Smtp-Source: ACHHUZ4Jt8cbvbFxy+ftILfA/OtMgYgh2lhXy+zDOdJTwofSEwZ27I36oUbz8DIEaVZ8HifvV7eWig==
-X-Received: by 2002:a05:600c:217:b0:3f4:f0c2:143 with SMTP id 23-20020a05600c021700b003f4f0c20143mr12969634wmi.20.1684314354503;
-        Wed, 17 May 2023 02:05:54 -0700 (PDT)
+        bh=zgDPcLL5qKa4PzYrakB0KknDdrbDjbAKgFtWQbUSO34=;
+        b=Z9TAZ72hV2no20135DHrQu5aBrYVQT6xtZlYiHnMqj2PhRh5J9f7BPhk5XNsu+eaCC
+         HYqjrkp0HLqN0tLB+ePGLmxLGWqXIg2RT+hhdrRGfirLf7ADiGWDRiC6uHz0rXtUUUJt
+         OYSWpRX9o1ldUp14jRW2C0uaXUldO+fGZV8nKC/pPfVp4fHQia0cFzr0GF+svYPh5ziy
+         dZ1ZUDrQiFu7fnxkyVDUEqPHHUtdqt7337KyzOXnfDS4n+0pR/YdvtRxohmemGG1zHQZ
+         Gq7Rrk/wkvwyObHJjp8UeFVBeXjsGBKKhZHcjb/JzVvM93g65v2ls+QdI0INumHEvI8k
+         jtvw==
+X-Gm-Message-State: AC+VfDzLYtLgn23gnCMcfdjINCyLC6OBZ4QgXwIVbDkrZFe4IgjhjIqE
+        +oSpFcquNaYy2G2aEyeN16I=
+X-Google-Smtp-Source: ACHHUZ61YSdtPO5N/zRXeLW6Og8w2ZsPU7yDfUNUKqbrVNlFZC540XCMBGUYNNNcetU8mkN0SRkSZQ==
+X-Received: by 2002:a1c:f718:0:b0:3f5:18f2:8557 with SMTP id v24-20020a1cf718000000b003f518f28557mr2742360wmh.33.1684315436331;
+        Wed, 17 May 2023 02:23:56 -0700 (PDT)
 Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id p5-20020a7bcc85000000b003f4248dcfcbsm1521185wma.30.2023.05.17.02.05.53
+        by smtp.gmail.com with ESMTPSA id m19-20020a7bcb93000000b003f4247fbb5fsm1578922wmi.10.2023.05.17.02.23.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 02:05:53 -0700 (PDT)
-Message-ID: <3f5e4116-54e6-9753-f925-ed4a9f6e3518@gmail.com>
-Date:   Wed, 17 May 2023 10:05:51 +0100
+        Wed, 17 May 2023 02:23:55 -0700 (PDT)
+Message-ID: <a803e1ad-1025-164a-f7ca-cc1a41e4f12b@gmail.com>
+Date:   Wed, 17 May 2023 10:23:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] sequencer: beautify subject of reverts of reverts
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
+Subject: Re: [PATCH] t/lib-rebase: (mostly) cosmetic improvements to
+ set_fake_editor()
 Content-Language: en-US
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+References: <20230323162234.995450-1-oswald.buddenhagen@gmx.de>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
+In-Reply-To: <20230323162234.995450-1-oswald.buddenhagen@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -72,130 +71,99 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Oswald
 
-On 28/04/2023 09:35, Oswald Buddenhagen wrote:
-> Instead of generating a silly-looking `Revert "Revert "foo""`, make it
-> a more humane `Reapply "foo"`.
-> 
-> The alternative `Revert^2 "foo"`, etc. was considered, but it was deemed
-> over-engineered and "too nerdy". Instead, people should get creative
-> with the subjects when they recurse reverts that deeply. The proposed
-> change encourages that by example and explicit recommendation.
-> 
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> Cc: Junio C Hamano <gitster@pobox.com>
-> Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
-> v2:
-> - add discussion to commit message
-> - add paragraph to docu
-> - add test
-> - use skip_prefix() instead of starts_with()
-> - catch pre-existing double reverts
-> ---
->   Documentation/git-revert.txt |  6 ++++++
->   sequencer.c                  | 14 ++++++++++++++
->   t/t3515-revert-subjects.sh   | 32 ++++++++++++++++++++++++++++++++
->   3 files changed, 52 insertions(+)
->   create mode 100755 t/t3515-revert-subjects.sh
-> 
-> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-> index d2e10d3dce..e8fa513607 100644
-> --- a/Documentation/git-revert.txt
-> +++ b/Documentation/git-revert.txt
-> @@ -31,6 +31,12 @@ both will discard uncommitted changes in your working directory.
->   See "Reset, restore and revert" in linkgit:git[1] for the differences
->   between the three commands.
->   
-> +The command generates the subject 'Revert "<title>"' for the resulting
-> +commit, assuming the original commit's subject is '<title>'.  Reverting
-> +such a reversion commit in turn yields the subject 'Reapply "<title>"'.
-> +These can of course be modified in the editor when the reason for
-> +reverting is described.
-> +
->   OPTIONS
->   -------
->   <commit>...::
-> diff --git a/sequencer.c b/sequencer.c
-> index 3be23d7ca2..61e466470e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2227,13 +2227,27 @@ static int do_pick_commit(struct repository *r,
->   	 */
->   
->   	if (command == TODO_REVERT) {
-> +		const char *orig_subject;
-> +
->   		base = commit;
->   		base_label = msg.label;
->   		next = parent;
->   		next_label = msg.parent_label;
->   		if (opts->commit_use_reference) {
->   			strbuf_addstr(&msgbuf,
->   				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-> +		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject)) {
-> +			if (skip_prefix(orig_subject, "Revert \"", &orig_subject)) {
+On 23/03/2023 16:22, Oswald Buddenhagen wrote:
 
-I think it is probably worth adding
+This project avoids commit messages that are a list of changes instead 
+preferring the commit message to explain _why_ the changes are being 
+made. The reason for this is that it makes it much easier for a future 
+contributor to understand the reasoning behind a particular change. 
+Having a list of changes is often a symptom that the commit is trying to 
+do more than one thing at once and should be split up. Here there are 
+three separate changes all mixed into the same commit.
 
-	if (starts_with(orig_subject, "Revert \""))
-		strbuf_addstr(&msgbuf, "Revert \"");
-	else
+> - Make the documentation reflect better what actually happens, and add
+>    some missing info
 
-here to make sure that we don't end up with a subject starting "Revert 
-\"Reapply \"Revert ...".
+Having read the proposed changes to the documentation I'm not sure what 
+it is in the original you're objecting to. The script may well process 
+each token separately but as far as the user is concerned it appears to 
+take either "<cmd> <lineno>" or "<lineno>"
+
+> - Fix recognition of reset's short command in FAKE_LINES
+
+This fix is definitely needed and should be in its own commit in a 
+separate series to any of the other changes here so it can be applied 
+without being held up by discussions on those other changes. Presumably 
+we don't have any users of the short reset command name as it has been 
+broken ever since it was introduced in 5dcdd7409a (t/lib-rebase: prepare 
+for testing `git rebase --rebase-merges`, 2019-07-31)
+
+> - Default next action after 'fakesha' to preserving the command instead
+>    of forcing 'pick'. This is consistent with other "instant-effect"
+>    keywords.
+
+I'm not sure what the motivation for this change is. What does it 
+facilitate that we cannot do now and why do we want to do whatever that is?
 
 Best Wishes
 
 Phillip
 
-> +				/*
-> +				 * This prevents the generation of somewhat unintuitive (even if
-> +				 * not incorrect) 'Reapply "Revert "' titles from legacy double
-> +				 * reverts. Fixing up deeper recursions is left to the user.
-> +				 */
-> +				strbuf_addstr(&msgbuf, "Revert \"Reapply \"");
-> +			} else {
-> +				strbuf_addstr(&msgbuf, "Reapply \"");
-> +			}
-> +			strbuf_addstr(&msgbuf, orig_subject);
->   		} else {
->   			strbuf_addstr(&msgbuf, "Revert \"");
->   			strbuf_addstr(&msgbuf, msg.subject);
-> diff --git a/t/t3515-revert-subjects.sh b/t/t3515-revert-subjects.sh
-> new file mode 100755
-> index 0000000000..ea4319fd15
-> --- /dev/null
-> +++ b/t/t3515-revert-subjects.sh
-> @@ -0,0 +1,32 @@
-> +#!/bin/sh
-> +
-> +test_description='git revert produces the expected subject'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'fresh reverts' '
-> +    test_commit --no-tag A file1 &&
-> +    test_commit --no-tag B file1 &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Revert \"B\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Reapply \"B\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Revert \"Reapply \"B\"\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'legacy double revert' '
-> +    test_commit --no-tag "Revert \"Revert \"B\"\"" file1 &&
-> +    git revert --no-edit HEAD &&
-> +    echo "Revert \"Reapply \"B\"\"" > expect &&
-> +    git log -1 --pretty=%s > actual &&
-> +    test_cmp expect actual
-> +'
-> +
-> +test_done
+> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+> ---
+>   t/lib-rebase.sh | 25 ++++++++++++++-----------
+>   1 file changed, 14 insertions(+), 11 deletions(-)
+> 
+> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+> index 7ca5b918f0..184b25b427 100644
+> --- a/t/lib-rebase.sh
+> +++ b/t/lib-rebase.sh
+> @@ -8,18 +8,21 @@
+>   # - check that non-commit messages have a certain line count with $EXPECT_COUNT
+>   # - check the commit count in the commit message header with $EXPECT_HEADER_COUNT
+>   # - rewrite a rebase -i script as directed by $FAKE_LINES.
+> -#   $FAKE_LINES consists of a sequence of words separated by spaces.
+> -#   The following word combinations are possible:
+> +#   $FAKE_LINES consists of a sequence of words separated by spaces;
+> +#   spaces inside the words are encoded as underscores.
+> +#   The following words are possible:
+>   #
+> -#   "<lineno>" -- add a "pick" line with the SHA1 taken from the
+> -#       specified line.
+> +#   "<cmd>" -- override the command for the next line specification. Can be
+> +#       "pick", "squash", "fixup"|"fixup_-C"|"fixup_-c", "edit", "reword",
+> +#       "drop", "merge[_-{c|C}_<SHA1>]", or "bad" for an invalid command.
+>   #
+> -#   "<cmd> <lineno>" -- add a line with the specified command
+> -#       ("pick", "squash", "fixup"|"fixup_-C"|"fixup_-c", "edit", "reword" or "drop")
+> -#       and the SHA1 taken from the specified line.
+> +#   "<lineno>" -- add a command, using the specified line as a template.
+> +#       If the command has not been overridden, the line will be copied
+> +#       verbatim, usually resulting in a "pick" line.
+>   #
+> -#   "_" -- add a space, like "fixup_-C" implies "fixup -C" and
+> -#       "exec_cmd_with_args" add an "exec cmd with args" line.
+> +#   "fakesha" -- add a command ("pick" by default), using a fake SHA1.
+> +#
+> +#   "exec_[...]", "break" -- add the specified command.
+>   #
+>   #   "#" -- Add a comment line.
+>   #
+> @@ -49,7 +52,7 @@ set_fake_editor () {
+>   	action=\&
+>   	for line in $FAKE_LINES; do
+>   		case $line in
+> -		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d|label|l|reset|r|merge|m)
+> +		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d|label|l|reset|t|merge|m)
+>   			action="$line";;
+>   		exec_*|x_*|break|b)
+>   			echo "$line" | sed 's/_/ /g' >> "$1";;
+> @@ -64,7 +67,7 @@ set_fake_editor () {
+>   		fakesha)
+>   			test \& != "$action" || action=pick
+>   			echo "$action XXXXXXX False commit" >> "$1"
+> -			action=pick;;
+> +			action=\&;;
+>   		*)
+>   			sed -n "${line}s/^[a-z][a-z]*/$action/p" < "$1".tmp >> "$1"
+>   			action=\&;;
