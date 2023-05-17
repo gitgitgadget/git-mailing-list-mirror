@@ -2,149 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7902BC7EE22
-	for <git@archiver.kernel.org>; Wed, 17 May 2023 21:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7956FC77B7A
+	for <git@archiver.kernel.org>; Wed, 17 May 2023 21:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbjEQVKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 May 2023 17:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
+        id S229922AbjEQVib (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 May 2023 17:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjEQVKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2023 17:10:42 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D5655A9
-        for <git@vger.kernel.org>; Wed, 17 May 2023 14:10:41 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-64cfb8d33a5so258969b3a.2
-        for <git@vger.kernel.org>; Wed, 17 May 2023 14:10:41 -0700 (PDT)
+        with ESMTP id S229502AbjEQVia (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2023 17:38:30 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76CC01BD0
+        for <git@vger.kernel.org>; Wed, 17 May 2023 14:38:29 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-ba81031424dso1883025276.2
+        for <git@vger.kernel.org>; Wed, 17 May 2023 14:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684357840; x=1686949840;
-        h=mime-version:user-agent:message-id:date:cc:subject:to:from:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GRehayxZ9PuKq9fyZHs/Qp5ak09d6w8ugEE2QmZLuRk=;
-        b=oVzptOXFeEmNYps9ru9eocT9vpsG1JwoIlHb92faU5awDZ3OXW+L87Fw91dvwKNVSm
-         Wx7NDTpj7lpele6Tt3OxPk6qBV/HKIvhL1tGoKltJx63uDsJIQQhE865l6RVJ5QX569e
-         tq09iydDJXmoMdoVecC+pcbZWc7JEVTCyCL4QOgW/0ceaLcvwlpUamrTDUM2tWdDWeA2
-         B0dnQtpooZIdvoV5Xe6zTSBapZTqNUNwOXf/xc1NDUWUaaKDXR+tsQen2LTx7zrlkXSA
-         Di7W9gE3dWef3TYabSBQ8ZSiZne5Y2XJiLErZB4UtNovQeTZyBgwFxL+NUc/IXik/DBf
-         p8mQ==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684359508; x=1686951508;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0aYc0BwucyQJ/Drybw2jYZcTMw5IOligaxiKgtee+ag=;
+        b=OoNn7AxpvFKLIsgIfPJksZI+wLY59b0Gz22sy0/7CfPjJDXx+tlVi/k6YJYpjtukW+
+         WUs7WtqY2muBPjwg2IbeEeVEsiM5AUPHRiWMRAfFNf6pxlpIRxcph0PGKSKQOA8wNGvt
+         mBFVBoDtEto+d5/kc/Ke2OGXdHIwa+/Hrgo8IDWLbLyiEAxorBGXtwe/m2zlvQE4hF0l
+         CF86Dsv98hXLNxKr+npOkbFHZ9I2Q4RyQG7qHzpw8ZSbZpIb7LNrsqJbQ39aOIliE0mA
+         1/X9b37G3/i4q6Ku67ctagB3GczOQwxLHY57KHVTmJ0nNX9pBoGtmv6K86S82Qqeku5n
+         iT1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684357840; x=1686949840;
-        h=mime-version:user-agent:message-id:date:cc:subject:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GRehayxZ9PuKq9fyZHs/Qp5ak09d6w8ugEE2QmZLuRk=;
-        b=NQtggt+oMxdM4MpwlwXC13il2hZaWE39a6WALlHpndjyQVJDd3wkrAOxt15/LYaPd7
-         sgpyDMTtSoaFWBO4hSY1FivDf0SHWosrxwYzJt518KcnXweIwIuSczIz/1cTES3hl/vD
-         2gghXCxLU/fHZRIWLWW8JCsTxpBTdAHzcsfpkgdn4pG4W7B1eUDl3IvsxILMLyQLa3Jy
-         lcTNwVmG4gz3QNfANT6MW85QUdQfM/ie0I0xQgsvbE+0rI+zpvi+94dVEcnl/sSw3b+B
-         4hcbosDoxZgwl5GDa0yLRIuJ3PnE9wRLaxkSv+MvSyJqtEsJOCTHu7k4Ni+6CMHCf7xF
-         fArQ==
-X-Gm-Message-State: AC+VfDyqIJ810k+hT/GWQKz7+RsbHLUOoq6ZyNKEW+sk3SBtyackJjUz
-        V2DyNBqOkDxXH0OO+DQvW0iTKZdmJZc=
-X-Google-Smtp-Source: ACHHUZ66bozQsLOBDf96LX117+fVTCkEz241pCU9FqcSJO4yKPrcWD1JmZFuVwN+y6xmiL5LRYJM1Q==
-X-Received: by 2002:a05:6a00:2185:b0:64b:f03b:2639 with SMTP id h5-20020a056a00218500b0064bf03b2639mr1361557pfi.22.1684357840293;
-        Wed, 17 May 2023 14:10:40 -0700 (PDT)
-Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
-        by smtp.gmail.com with ESMTPSA id g17-20020aa78751000000b005aa60d8545esm15560561pfo.61.2023.05.17.14.10.39
+        d=1e100.net; s=20221208; t=1684359508; x=1686951508;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0aYc0BwucyQJ/Drybw2jYZcTMw5IOligaxiKgtee+ag=;
+        b=c0P23vgprGQ/rHEC2E123KcsMcsFfIBEgL9dbWAr0be+MWGSys8FDKo7j3VvfsAKdT
+         x6IB9OiQRUzHZ8Um30R++FeC086qh8UO99eRvDIWTq8nCGIbM/9hZv/YYmr7IxD1aYgk
+         xLsNhFJAQYSaoPQtJl0IAOBV3iCrd8CN34KfbZFY2Ptdv0Id2FLQVdul7KlyzTxguqWd
+         p+JnbUdEtbJYX7ugOJkpsx1rjhShUHQ2bYyJ7Xi8owyC44XkjFVVz9O/2RacQoiof0Mg
+         rXfSDkteSIyqfbDsimEkjCQxZxQWEynIAlg6PNk0aEjEs6wBV8gu/fmH4KkoQ1hV1J8z
+         2cLw==
+X-Gm-Message-State: AC+VfDyIrtpzaXK2r27zkNdQ+jDW3Px/rZnge9gTfdfx8GqF/v5bPcX7
+        6t39tDNYXYh58xVNrVxSSoec4g==
+X-Google-Smtp-Source: ACHHUZ6X9mtmm95Wqr7tY8AmTkxdfzX9nzzqakzKioYojMFKWazDIdLeGCP1ngrOAdOsC4oAmhfBtw==
+X-Received: by 2002:a81:6dd6:0:b0:561:dd1b:e516 with SMTP id i205-20020a816dd6000000b00561dd1be516mr2171207ywc.35.1684359507322;
+        Wed, 17 May 2023 14:38:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f63-20020a0dc342000000b0055d725edafbsm937768ywd.113.2023.05.17.14.38.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 14:10:39 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] send-email: clear the $message_id after validation
-cc:     Michael Strawbridge <michael.strawbridge@amd.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Emily Shaffer <nasamuffin@google.com>
-Date:   Wed, 17 May 2023 14:10:39 -0700
-Message-ID: <xmqqzg62oe9c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Wed, 17 May 2023 14:38:26 -0700 (PDT)
+Date:   Wed, 17 May 2023 17:38:25 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Hesse <list@eworm.de>, git@vger.kernel.org,
+        Christian Hesse <mail@eworm.de>
+Subject: Re: [PATCH 1/1] imap-send: include strbuf.h
+Message-ID: <ZGVFnzyStiscDKh3@nand.local>
+References: <20230517070632.71884-1-list@eworm.de>
+ <xmqqwn17q7ou.fsf@gitster.g>
+ <ZGT6fEZFumAsZnxu@nand.local>
+ <ZGT/eK6+IKlCM6Sg@nand.local>
+ <xmqqcz2yrjbe.fsf@gitster.g>
+ <xmqq8rdmrixc.fsf@gitster.g>
+ <ZGUVvjG+xou3w8YW@nand.local>
+ <xmqqy1lmq183.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy1lmq183.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Recently git-send-email started parsing the same message twice, once
-to validate _all_ the message before sending even the first one, and
-then after the validation hook is happy and each message gets sent,
-to read the contents to find out where to send to etc.
+On Wed, May 17, 2023 at 11:09:16AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > On Wed, May 17, 2023 at 10:01:35AM -0700, Junio C Hamano wrote:
+> >> Junio C Hamano <gitster@pobox.com> writes:
+> >>
+> >> >>         if ! gcc -I $(pwd) -E $f | grep -q 'struct strbuf {'
+> >> > ...
+> >> > What does the above prove, more than what your regular compilation
+> >> > that does not fail, tells us?
+> >>
+> >> It is actually worse than that, isn't it?  This does not even use
+> >> the definition in the config.mak.uname, so it is not even matching
+> >> your build environment.
+> >>
+> >> I am uncomfortable to use this as an explanation of what due
+> >> diligence we did to convince ourselves that this fix should cover
+> >> all similar issues.  Perhaps I am grossly misunderstanding what your
+> >> investigation did?
+> >
+> > Oof, yes, you are right:
+> >
+> >     diff -u \
+> >       <(gcc -I . -E imap-send.c) \
+> >       <(gcc -DNO_CURL=1 -I . -E imap-send.c)
+> >
+> > How *should* we test this?
+>
+> My inclination is punt and simply do not to claim that we have done
+> a good due diligence to ensure with all permutations of ifdef we are
+> including necessary headers.
 
-Unfortunately, the effect of reading the messages for validation
-lingered even after the validation is done.  Namely $message_id gets
-assigned if exists in the input files but the variable is global,
-and it is not cleared before pre_process_file runs.  This causes
-reading a message without a message-id followed by reading a message
-with a message-id to misbehave---the sub reports as if the message
-had the same id as the previously written one.
+I think that's the best course of action, too. I see that it's already
+on 'next', thanks.
 
-Clear the variable before starting to read the headers in
-pre_process_file.
-
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * This time with a minimum test.  I eyeballed what variables are
-   assigned in pre_process_file and it _appears_ to me that most of
-   them are cleared in the function before it processes one file
-   (except for $message_num that gets incremented per invocation for
-   obvious reasons---and it does get reset to 0 before the real loop
-   calls the function before sending each message).  So $message_id
-   may indeed be the only one that needs fixing.
-
-   But that can hardly qualify as an exhaustive verification X-<.
-
- git-send-email.perl   |  2 ++
- t/t9001-send-email.sh | 17 ++++++++++++++++-
- 2 files changed, 18 insertions(+), 1 deletion(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 10c450ef68..37dfd4b8c5 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1768,6 +1768,8 @@ sub pre_process_file {
- 	$subject = $initial_subject;
- 	$message = "";
- 	$message_num++;
-+	undef $message_id;
-+
- 	# First unfold multiline header fields
- 	while(<$fh>) {
- 		last if /^\s*$/;
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 36bb85d6b4..8d49eff91a 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -47,7 +47,7 @@ clean_fake_sendmail () {
- 
- test_expect_success $PREREQ 'Extract patches' '
- 	patches=$(git format-patch -s --cc="One <one@example.com>" --cc=two@example.com -n HEAD^1) &&
--	threaded_patches=$(git format-patch -o threaded -s --in-reply-to="format" HEAD^1)
-+	threaded_patches=$(git format-patch -o threaded --thread=shallow -s --in-reply-to="format" HEAD^1)
- '
- 
- # Test no confirm early to ensure remaining tests will not hang
-@@ -588,6 +588,21 @@ test_expect_success $PREREQ "--validate hook supports header argument" '
- 		outdir/000?-*.patch
- '
- 
-+test_expect_success $PREREQ 'clear message-id before parsing a new message' '
-+	clean_fake_sendmail &&
-+	echo true | write_script my-hooks/sendemail-validate &&
-+	test_config core.hooksPath my-hooks &&
-+	GIT_SEND_EMAIL_NOTTY=1 \
-+	git send-email --validate --to=recipient@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches $threaded_patches &&
-+	id0=$(grep "^Message-ID: " $threaded_patches) &&
-+	id1=$(grep "^Message-ID: " msgtxt1) &&
-+	id2=$(grep "^Message-ID: " msgtxt2) &&
-+	test "z$id0" = "z$id2" &&
-+	test "z$id1" != "z$id2"
-+'
-+
- for enc in 7bit 8bit quoted-printable base64
- do
- 	test_expect_success $PREREQ "--transfer-encoding=$enc produces correct header" '
--- 
-2.41.0-rc0-4-g004e0f790f
-
+Thanks,
+Taylor
