@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14082C77B7A
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD00C77B73
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbjERUEL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 16:04:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40090 "EHLO
+        id S230292AbjERUEM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 16:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230317AbjERUDv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230319AbjERUDv (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 May 2023 16:03:51 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F6210E6
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F5710EC
         for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:37 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3078d1c8828so2341221f8f.3
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f42d937d2eso15519375e9.2
         for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684440215; x=1687032215;
+        d=gmail.com; s=20221208; t=1684440216; x=1687032216;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gdzRST7dXwJS32J+quJIiHJUCxEYeHVLa5ls61tRwk4=;
-        b=mxPw8taOxHDRGzCllz+8O5yM4RdhwhZERywBqzj9Eez6V57CmjxR6RGgtOrF39466l
-         fJVvgGNMh24dCQmwjKW7ikR5vMF0dBga6bHPMtZgsZbl6IdW4Vtwbjw95+DooRV2w0U4
-         JKoW5JH8Hz2PHOltJ3HXuIyfzjrxCx6OZWTPUWZVFCTxQ9v1YroIjw4Z3e8jWL5Ikocr
-         V8LljlNN58Zuz9t0qDN4H+eVfQkNPG1BjkDQNgg+zLEyTF/qd6BJVYLaMFOhq7cN7Qvb
-         Qix1h/6Re1lj1c/ddtNPmlFczSuEQq+q3+I4ffLWdxAA9l+gd1viQVxjv06naicfksjg
-         GOWw==
+        bh=cxJsDxdZGwZ154kis2C/LN3+sQEvzZKL7/V13pRIBK4=;
+        b=KIaVdYy2VVw38xYb2TIyKDq5kBnEVZs8d2Eh2AwfU3shyvqYbWasO9EL2fOkwRTDBW
+         6UeRdsd5BKpyqdAlkxLZ+CW/hIC/aE3fkOTNV0iJzXj1fB+e8og6oGlLsWuyZes/3Q+e
+         BkAUSXsNjjLs4VM56F7yf8qhH/ZOMuoXqmCC9C9q/Yg6voNAWacyg4j7p++MHPEGI+R5
+         y2JPG24sdxOOwMiPedxMABC6I4AJA+Ocq7CFWyElAJd+idR7CDB7/h6WDAwXo/zjGg+n
+         gyGDpf0xWJaiCBGD0OHrPg7dZ9T0DOlT5+xg9UHO1BR0Kqh8ZDU+hKyHBjCgR4/dP6Sf
+         S80A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684440215; x=1687032215;
+        d=1e100.net; s=20221208; t=1684440216; x=1687032216;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gdzRST7dXwJS32J+quJIiHJUCxEYeHVLa5ls61tRwk4=;
-        b=PuA44AcW/pcyJWCcwAwPoCFMOuO9U/w7Ddyz4wuvkRwHTmvZIP0LHScMmjzb55J0Ip
-         QICRvXsccn4Wjgk+g+nHFvgz9e/62vVepQ5KLtDR2KEl7gkIj64v+AqseajSeXfdR3bd
-         2Rd9guNIC75DKQ/nT7RGcVt95M7ctRqTPCZAPp9jD1O+4PkUu/hY5yJbayMzJ05wd7Bg
-         t4qDw16lWogeIMFiq/jSOwqowL/dlradfxb2Az0fp8uyBB9ddFZFzKrO/ICPAeTURuRm
-         wiYf8VOJwCgnV+OXJa2k3CbSLOU8AqSLYK2cmVq8GHo1esKNJSlPrZzC8IPUrbRmrHTD
-         zihw==
-X-Gm-Message-State: AC+VfDzlkCXsTXlbNcGI7PFOrczq5wqIROWp61CJ5NsFyqRaIqRFKyou
-        qZW7Vkr4tb0cplU72z+KNEtI4sBsRBc=
-X-Google-Smtp-Source: ACHHUZ52FAXhGC2OONUL4Kmvvgp9yndHvIhioPIF1oFaBgLbuQqBnQiI/2IMkrvuj9et/fqWqEJGDw==
-X-Received: by 2002:a5d:6a52:0:b0:309:3bc3:7d1f with SMTP id t18-20020a5d6a52000000b003093bc37d1fmr2128293wrw.70.1684440215274;
+        bh=cxJsDxdZGwZ154kis2C/LN3+sQEvzZKL7/V13pRIBK4=;
+        b=gn/jlprt05EiGM36i7z3T4nLbAbIUknW17xvxcNsnPyaegG/rQjnFYc3CIPgXY2Rj0
+         kSTU8jhJUuybiNtkG8GQIW+iU3N9EqBg8pecc3fjihLuMcRmFS2mP88vS0c06RH3d+qh
+         PXI8LpPHGLx9iv7ipINPGDevPlfFKsWGrSpEG9VJGd60G5DcFl7p+bj5ZvtiMV09XImR
+         5GP41fY44+10yWBJsJakX3lM6FGM6k86LbS+R+1Iss0eqMfXTZDmIOZz+P+fp0hv5VIw
+         /xJUXHJu/mKA1r2DH5817vp1Ac7/bB5UgVxwaqlsQLzQF0Xt0tfpLSEJ2djk2f54EMRe
+         9PAA==
+X-Gm-Message-State: AC+VfDxfLxyc/iC/v0cmbJl+Sl8GMNqYnIdlobHVzekhMU0HdiqLbzx9
+        kbhqPUPfnYxL7OGe7pA1DUskxVaZzo4=
+X-Google-Smtp-Source: ACHHUZ5MDgkQ6OSdf7ZQFlwMSHm3AwRHxJPOCXvhNK1KoLMtt4JAliHcSq7neBiFVThF0KmsXo8C/A==
+X-Received: by 2002:a7b:c012:0:b0:3f1:662a:93d0 with SMTP id c18-20020a7bc012000000b003f1662a93d0mr2592719wmb.15.1684440215767;
         Thu, 18 May 2023 13:03:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m9-20020a7bce09000000b003f4247fbb5fsm240767wmc.10.2023.05.18.13.03.34
+        by smtp.gmail.com with ESMTPSA id w1-20020a1cf601000000b003f4e3ed98ffsm195173wmc.35.2023.05.18.13.03.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 13:03:34 -0700 (PDT)
-Message-Id: <7c2903d1fe913ec3cc38cda7ec18bcc225751dc3.1684440206.git.gitgitgadget@gmail.com>
+        Thu, 18 May 2023 13:03:35 -0700 (PDT)
+Message-Id: <75a6b73d1bb196be2e4f3800c458e730b6f71237.1684440206.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 References: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 18 May 2023 20:03:18 +0000
-Subject: [PATCH 13/20] t4202-log: modernize test format
+Date:   Thu, 18 May 2023 20:03:19 +0000
+Subject: [PATCH 14/20] t4206-log-follow-harder-copies: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,28 +72,70 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t4202-log.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t4206-log-follow-harder-copies.sh | 36 ++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index ae73aef922f..f5c0f06a56b 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -2343,10 +2343,10 @@ test_expect_success 'log --decorate does not include things outside filter' '
+diff --git a/t/t4206-log-follow-harder-copies.sh b/t/t4206-log-follow-harder-copies.sh
+index 33ecf82c7f9..9167b0351f2 100755
+--- a/t/t4206-log-follow-harder-copies.sh
++++ b/t/t4206-log-follow-harder-copies.sh
+@@ -16,29 +16,29 @@ Line 2
+ Line 3
  '
  
- test_expect_success 'log --end-of-options' '
--       git update-ref refs/heads/--source HEAD &&
--       git log --end-of-options --source >actual &&
--       git log >expect &&
--       test_cmp expect actual
-+	git update-ref refs/heads/--source HEAD &&
-+	git log --end-of-options --source >actual &&
-+	git log >expect &&
-+	test_cmp expect actual
- '
+-test_expect_success \
+-    'add a file path0 and commit.' \
+-    'git add path0 &&
+-     git commit -m "Add path0"'
++test_expect_success 'add a file path0 and commit.' '
++	git add path0 &&
++	git commit -m "Add path0"
++'
  
- test_expect_success 'set up commits with different authors' '
+ echo >path0 'New line 1
+ New line 2
+ New line 3
+ '
+-test_expect_success \
+-    'Change path0.' \
+-    'git add path0 &&
+-     git commit -m "Change path0"'
++test_expect_success 'Change path0.' '
++	git add path0 &&
++	git commit -m "Change path0"
++'
+ 
+ cat <path0 >path1
+-test_expect_success \
+-    'copy path0 to path1.' \
+-    'git add path1 &&
+-     git commit -m "Copy path1 from path0"'
++test_expect_success 'copy path0 to path1.' '
++	git add path1 &&
++	git commit -m "Copy path1 from path0"
++'
+ 
+-test_expect_success \
+-    'find the copy path0 -> path1 harder' \
+-    'git log --follow --name-status --pretty="format:%s"  path1 > current'
++test_expect_success 'find the copy path0 -> path1 harder' '
++	git log --follow --name-status --pretty="format:%s"  path1 > current
++'
+ 
+ cat >expected <<\EOF
+ Copy path1 from path0
+@@ -51,8 +51,8 @@ Add path0
+ A	path0
+ EOF
+ 
+-test_expect_success \
+-    'validate the output.' \
+-    'compare_diff_patch current expected'
++test_expect_success 'validate the output.' '
++	compare_diff_patch current expected
++'
+ 
+ test_done
 -- 
 gitgitgadget
 
