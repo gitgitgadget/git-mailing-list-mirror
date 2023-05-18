@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C81A4C7EE23
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 12:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D32E1C77B7A
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 12:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231552AbjERMCq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 08:02:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49814 "EHLO
+        id S230233AbjERMCs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 08:02:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231476AbjERMCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 08:02:39 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8C0E4C
-        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:34 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-64d24136663so239831b3a.0
-        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:34 -0700 (PDT)
+        with ESMTP id S230527AbjERMCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 08:02:42 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0798C6
+        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:39 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-52867360efcso1288238a12.2
+        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684411354; x=1687003354;
+        d=gmail.com; s=20221208; t=1684411359; x=1687003359;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=leKsjfw/EgVM79GjhGocJy6eeBsAsNNB0AYTS24gvRk=;
-        b=PWqDWgN0OeWGmaRC6n+t7LvSmVgphh1e/0CEvBK0YWgzcdQrhbbgzmmFpZPjf/b7sQ
-         heo8bi/hmABXar25CCh6coZulI7U80NuEWTxkPlhEpNu2DIkXLTSsdcflvPIZsDRt+wd
-         Pd6BEOJOtB06siBzeJZp8rAXzIjgJ09bMKQKPFMEPNcN87IwsVP6NHxhao10yRn7kKlU
-         UmZShd+gFLV7CizmeCqo5JEC/u9GTx0vPE9EnOyV1wVm5Xfb3U6ynFkCQe8KXoDawHGG
-         zbY8a3QX1gerbXtkODINLzYU8DoUb1+4h5Z5eKy4n+kcdfAwT6qpbHaCKixsrdlYqWGh
-         LADw==
+        bh=76xCts3wHXyJCRZGmYE0JBAQwkOjqpS+4j1DxVbHjYE=;
+        b=jwAXF/XJmwd2TcI5tR13XxnMumoeQ6S2KomGSLY0UHIqGmMIpoXC8uLRMrpdepu3kP
+         pmv7DZnqOahefBeHEjjoJDypqtXcR84ZzrYs2uL4PdDT+vU1U9YlXjGiZICcU+ItsxXN
+         TGLn16kk2G9HB+NGkZecuKMFTGneip9bWNAfC+Aanao6Q7XK8pZz82X1P0Hx7AWu7ax3
+         RZeylNo3JF4xcNffchSn7V3mXtD6UB52XBVhaBmIabFOkdYqaMZD8VLQ6vpLENKtT3K5
+         jYZQvPt5M44f7T/sy6VWPIfGyQ0cRLnu8qTw3hQYXZvjwjuQfn7K7/LtqB2KdZG+trnX
+         ENkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684411354; x=1687003354;
+        d=1e100.net; s=20221208; t=1684411359; x=1687003359;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=leKsjfw/EgVM79GjhGocJy6eeBsAsNNB0AYTS24gvRk=;
-        b=MtxaCZIyoi+gumL8Qbhh/8RtJ1cI/5QK04Cd4Xq1fzbZ/9kG3HYff9yOZDZNGJgVgG
-         FC1++LzWdEnLEoGTTSPM/MxcpSw7RAQVEwKZ5oQr5arzmCnRrKSYt4GVB5oBbGH4D3Gu
-         y/OJ3q5Z0yXw8tgzb1opMZnBL0LnGjfwSHbVBley/NP9jR2tdaMRAizUqpDIL8VqTQ4I
-         U4OIKowxrZeQiOnMIlVbkx7jpPoRGmJ8qTuDLT4cMrOdtzAUEbt08j6beW9gPhAeJhdc
-         Q1xfHA/QHPS2Qh7Dz3UzN8p1HrRWkproOMKifx9QMprcsy3hIkqKonrWjabA7pzIYeI2
-         Q7Ag==
-X-Gm-Message-State: AC+VfDyS9cp3Ddmnp70T/ol4bvZpUD9mSRjko/Mz8LXn8eWsPKOHKpDM
-        mFruIzUckwmE/S3wwHqMJlo=
-X-Google-Smtp-Source: ACHHUZ7NbDKWoyRLAxuSUrkhv7LRwFwvBR/s5zQia/C+xq1UD/T/CkshzYflupJKf61+aGFz3WpR/g==
-X-Received: by 2002:a05:6a20:840c:b0:f1:c63a:f7fa with SMTP id c12-20020a056a20840c00b000f1c63af7famr2006339pzd.15.1684411353825;
-        Thu, 18 May 2023 05:02:33 -0700 (PDT)
+        bh=76xCts3wHXyJCRZGmYE0JBAQwkOjqpS+4j1DxVbHjYE=;
+        b=durroAKpA8mLReNJweBOrDHezXCWxQsTvvLGZzkiNnIUb9cAjKraYVvyRHYIRUrx4j
+         zr+Qwd5fFkVIFpAG0chJSmQHpexArXnzh6PvASTkTge8IrNKbrN/q/RFMhqmGHi8xq7I
+         VDYoVukb2fTy9dXQGo9fQVsDIItxXdDmiYdCtfdaJIeo9okuaj3dhWF/OYtGxguYkMI9
+         4/XPC/zz29vy9br5thGktpEmIcCw6G8grnWviJGDSsIaSmn3b95/S+KZEMjXwGWOB1Ty
+         q/vgunGXf1phvtgtsIuurNlgqYMxDSeDvGPYWM0KbAUDQI2hbiiJte1crdadS+aOyIBp
+         8pHQ==
+X-Gm-Message-State: AC+VfDzyJtmCPocHcAPFdCoepIjy4sA1PYDweCDUdCWrgkjPDmphst4E
+        wmiImBdVVbv+WTnDcNqB++05KoBmiF/xL754
+X-Google-Smtp-Source: ACHHUZ5ltKtC4sOkHEQZ28Ev7wPvCtRAZydPViC/j508OhuWzmd307wmDXd/doyzEwz7B91oGzpX4w==
+X-Received: by 2002:a17:903:247:b0:1ac:3ddf:2299 with SMTP id j7-20020a170903024700b001ac3ddf2299mr2322532plh.44.1684411359294;
+        Thu, 18 May 2023 05:02:39 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.101.51])
-        by smtp.gmail.com with ESMTPSA id ji17-20020a170903325100b001960706141fsm1264203plb.149.2023.05.18.05.02.31
+        by smtp.gmail.com with ESMTPSA id ji17-20020a170903325100b001960706141fsm1264203plb.149.2023.05.18.05.02.36
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 May 2023 05:02:33 -0700 (PDT)
+        Thu, 18 May 2023 05:02:38 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
         sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v10 4/6] notes.c: introduce '[--[no-]separator|--separator=<paragraph-break>]' option
-Date:   Thu, 18 May 2023 20:02:09 +0800
-Message-ID: <820dda0458994fdf7ff37870736ce6ed7871720c.1684411136.git.dyroneteng@gmail.com>
+Subject: [PATCH v10 6/6] notes.c: introduce "--[no-]stripspace" option
+Date:   Thu, 18 May 2023 20:02:11 +0800
+Message-ID: <d65f067cb216bb8ce6824f8567c2ac5d958ec54c.1684411136.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.40.0.356.g67a1c1d0
 In-Reply-To: <cover.1684411136.git.dyroneteng@gmail.com>
 References: <cover.1684411136.git.dyroneteng@gmail.com>
@@ -68,567 +68,601 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Teng Long <dyroneteng@gmail.com>
 
-When adding new notes or appending to an existing notes, we will
-insert a blank line between the paragraphs, like:
+This commit introduces a new option "--[no-]stripspace" to git notes
+append, git notes edit, and git notes add. This option allows users to
+control whether the note message need to stripped out.
 
-     $ git notes add -m foo -m bar
-     $ git notes show HEAD
-     foo
+For the consideration of backward compatibility, let's look at the
+behavior about "stripspace" in "git notes" command:
 
-     bar
+1. "Edit Message" case: using the default editor to edit the note
+message.
 
-The default behavour sometimes is not enough, the user may want
-to use a custom delimiter between paragraphs, like when
-specifying '-m', '-F', '-C', '-c' options. So this commit
-introduce a new '--separator' option for 'git notes add' and
-'git notes append', for example when executing:
+    In "edit" case, the edited message will always be stripped out, the
+    implementation which can be found in the "prepare_note_data()". In
+    addition, the "-c" option supports to reuse an existing blob as a
+    note message, then open the editor to make a further edition on it,
+    the edited message will be stripped.
 
-    $ git notes add -m foo -m bar --separator="-"
-    $ git notes show HEAD
-    foo
-    -
-    bar
+    This commit doesn't change the default behavior of "edit" case by
+    using an enum "notes_stripspace", only when "--no-stripspace" option
+    is specified, the note message will not be stripped out. If you do
+    not specify the option or you specify "--stripspace", clearly, the
+    note message will be stripped out.
 
-a newline is added to the value given to --separator if it
-does not end with one already. So when executing:
+2. "Assign Message" case: using the "-m"/"-F"/"-C" option to specify the
+note message.
 
-      $ git notes add -m foo -m bar --separator="-"
-and
-      $ export LF="
-      "
-      $ git notes add -m foo -m bar --separator="-$LF"
+    In "assign" case, when specify message by "-m" or "-F", the message
+    will be stripped out by default, but when specify message by "-C",
+    the message will be copied verbatim, in other word, the message will
+    not be stripped out. One more thing need to note is "the order of
+    the options matter", that is, if you specify "-C" before "-m" or
+    "-F", the reused message by "-C" will be stripped out together,
+    because everytime concat "-m" or "-F" message, the concated message
+    will be stripped together. Oppositely, if you specify "-m" or "-F"
+    before "-C", the reused message by "-C" will not be stripped out.
 
-Both the two exections produce the same result.
-
-Alternatively, if you do not want any new paragraph
-separators, even a newline by default, you can specify
-'--no-separator'.
-
-The reason we use a "strbuf" array to concat but not "string_list", is
-that the binary file content may contain '\0' in the middle, this will
-cause the corrupt result if using a string to save.
+    This commit doesn't change the default behavior of "assign" case by
+    extending the "stripspace" field in "struct note_msg", so we can
+    distinguish the different behavior of "-m"/"-F" and "-C" options
+    when we need to parse and concat the message.
 
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- Documentation/git-notes.txt |  22 +++--
- builtin/notes.c             | 124 +++++++++++++++++++++-----
- t/t3301-notes.sh            | 169 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 286 insertions(+), 29 deletions(-)
+ Documentation/git-notes.txt |  25 ++-
+ builtin/notes.c             |  34 +++--
+ t/t3321-notes-stripspace.sh | 296 +++++++++++++++++++++++++++++++++++-
+ 3 files changed, 334 insertions(+), 21 deletions(-)
 
 diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index efbc10f0..56d25a79 100644
+index 56d25a79..bc1bfa37 100644
 --- a/Documentation/git-notes.txt
 +++ b/Documentation/git-notes.txt
-@@ -9,9 +9,9 @@ SYNOPSIS
+@@ -9,10 +9,10 @@ SYNOPSIS
  --------
  [verse]
  'git notes' [list [<object>]]
--'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-+'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+-'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
++'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
  'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
--'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-+'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [--allow-empty] [<object>]
+-'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+-'git notes' edit [--allow-empty] [<object>]
++'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
++'git notes' edit [--allow-empty] [<object>] [--[no-]stripspace]
  'git notes' show [<object>]
  'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-@@ -65,7 +65,9 @@ add::
- 	However, if you're using `add` interactively (using an editor
- 	to supply the notes contents), then - instead of aborting -
- 	the existing notes will be opened in the editor (like the `edit`
--	subcommand).
-+	subcommand). If you specify multiple `-m` and `-F`, a blank
-+	line will be inserted between the messages. Use the `--separator`
-+	option to insert other delimiters.
+ 'git notes' merge --commit [-v | -q]
+@@ -141,20 +141,26 @@ OPTIONS
+ 	If multiple `-m` options are given, their values
+ 	are concatenated as separate paragraphs.
+ 	Lines starting with `#` and empty lines other than a
+-	single line between paragraphs will be stripped out.
++	single line between paragraphs will be stripped out,
++	if you wish to keep them verbatim, use `--no-stripspace`.
  
- copy::
- 	Copy the notes for the first object onto the second object (defaults to
-@@ -85,8 +87,12 @@ corresponding <to-object>.  (The optional `<rest>` is ignored so that
- the command can read the input given to the `post-rewrite` hook.)
+ -F <file>::
+ --file=<file>::
+ 	Take the note message from the given file.  Use '-' to
+ 	read the note message from the standard input.
+ 	Lines starting with `#` and empty lines other than a
+-	single line between paragraphs will be stripped out.
++	single line between paragraphs will be stripped out,
++	if you wish to keep them verbatim, use with
++	`--no-stripspace` option.
  
- append::
--	Append to the notes of an existing object (defaults to HEAD).
--	Creates a new notes object if needed.
-+	Append new message(s) given by `-m` or `-F` options to an
-+	existing note, or add them as a new note if one does not
-+	exist, for the object (defaults to HEAD).  When appending to
-+	an existing note, a blank line is added before each new
-+	message as an inter-paragraph separator.  The separator can
-+	be customized with the `--separator` option.
+ -C <object>::
+ --reuse-message=<object>::
+ 	Take the given blob object (for example, another note) as the
+ 	note message. (Use `git notes copy <object>` instead to
+-	copy notes between objects.)
++	copy notes between objects.).  By default, message will be
++	copied verbatim, but if you wish to strip out the lines
++	starting with `#` and empty lines other than a single line
++	between paragraphs, use with`--stripspace` option.
  
- edit::
- 	Edit the notes for a given object (defaults to HEAD).
-@@ -159,6 +165,12 @@ OPTIONS
- 	Allow an empty note object to be stored. The default behavior is
- 	to automatically remove empty notes.
+ -c <object>::
+ --reedit-message=<object>::
+@@ -171,6 +177,13 @@ OPTIONS
+ 	separators will be added between paragraphs.  Defaults to a blank
+ 	line.
  
-+--[no-]separator, --separator=<paragraph-break>::
-+	Specify a string used as a custom inter-paragraph separator
-+	(a newline is added at the end as needed). If `--no-separator`, no
-+	separators will be added between paragraphs.  Defaults to a blank
-+	line.
++--[no-]stripspace::
++	Strip leading and trailing whitespace from the note message.
++	Also strip out empty lines other than a single line between
++	paragraphs. For lines starting with `#` will be stripped out
++	in non-editor cases like "-m", "-F" and "-C", but not in
++	editor case like "git notes edit", "-c", etc.
 +
  --ref <ref>::
  	Manipulate the notes tree in <ref>.  This overrides
  	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 9d8ca795..7aa2f923 100644
+index 84c010fe..61e0b227 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include "cache.h"
-+#include "alloc.h"
- #include "config.h"
- #include "builtin.h"
- #include "gettext.h"
-@@ -27,11 +28,12 @@
- #include "worktree.h"
- #include "write-or-die.h"
- 
-+static const char *separator = "\n";
+@@ -31,9 +31,9 @@
+ static const char *separator = "\n";
  static const char * const git_notes_usage[] = {
  	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
--	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-+	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+-	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
  	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
--	N_("git notes [--ref <notes-ref>] append [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-+	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+-	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
  	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
  	N_("git notes [--ref <notes-ref>] show [<object>]"),
  	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
-@@ -99,11 +101,19 @@ static const char * const git_notes_get_ref_usage[] = {
+@@ -101,14 +101,21 @@ static const char * const git_notes_get_ref_usage[] = {
  static const char note_template[] =
  	N_("Write/edit the notes for the following object:");
  
-+struct note_msg {
-+	int stripspace;
-+	struct strbuf buf;
++enum notes_stripspace {
++	UNSPECIFIED = -1,
++	NO_STRIPSPACE = 0,
++	STRIPSPACE = 1,
 +};
 +
+ struct note_msg {
+-	int stripspace;
++	enum notes_stripspace stripspace;
+ 	struct strbuf buf;
+ };
+ 
  struct note_data {
  	int given;
  	int use_editor;
++	int stripspace;
  	char *edit_path;
  	struct strbuf buf;
-+	struct note_msg **messages;
-+	size_t msg_nr;
-+	size_t msg_alloc;
- };
- 
- static void free_note_data(struct note_data *d)
-@@ -113,6 +123,12 @@ static void free_note_data(struct note_data *d)
- 		free(d->edit_path);
- 	}
- 	strbuf_release(&d->buf);
-+
-+	while (d->msg_nr--) {
-+		strbuf_release(&d->messages[d->msg_nr]->buf);
-+		free(d->messages[d->msg_nr]);
-+	}
-+	free(d->messages);
- }
- 
- static int list_each_note(const struct object_id *object_oid,
-@@ -213,65 +229,98 @@ static void write_note_data(struct note_data *d, struct object_id *oid)
+ 	struct note_msg **messages;
+@@ -213,7 +220,8 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
+ 		if (launch_editor(d->edit_path, &d->buf, NULL)) {
+ 			die(_("please supply the note contents using either -m or -F option"));
+ 		}
+-		strbuf_stripspace(&d->buf, 1);
++		if (d->stripspace)
++			strbuf_stripspace(&d->buf, 1);
  	}
  }
  
-+static void insert_separator(struct strbuf *message, size_t pos)
-+{
-+	if (!separator)
-+		return;
-+	else if (separator[strlen(separator) - 1] == '\n')
-+		strbuf_insertstr(message, pos, separator);
-+	else
-+		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-+}
-+
-+static void concat_messages(struct note_data *d)
-+{
-+	struct strbuf msg = STRBUF_INIT;
-+	size_t i;
-+
-+	for (i = 0; i < d->msg_nr ; i++) {
-+		if (d->buf.len)
-+			insert_separator(&d->buf, d->buf.len);
-+		strbuf_add(&msg, d->messages[i]->buf.buf, d->messages[i]->buf.len);
-+		strbuf_addbuf(&d->buf, &msg);
-+		if (d->messages[i]->stripspace)
-+			strbuf_stripspace(&d->buf, 0);
-+		strbuf_reset(&msg);
-+	}
-+	strbuf_release(&msg);
-+}
-+
- static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
- {
- 	struct note_data *d = opt->value;
-+	struct note_msg *msg = xmalloc(sizeof(*msg));
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	if (d->buf.len)
--		strbuf_addch(&d->buf, '\n');
--	strbuf_addstr(&d->buf, arg);
--	strbuf_stripspace(&d->buf, 0);
--
--	d->given = 1;
-+	strbuf_init(&msg->buf, strlen(arg));
-+	strbuf_addstr(&msg->buf, arg);
-+	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
-+	d->messages[d->msg_nr - 1] = msg;
-+	msg->stripspace = 1;
- 	return 0;
- }
- 
- static int parse_file_arg(const struct option *opt, const char *arg, int unset)
- {
- 	struct note_data *d = opt->value;
-+	struct note_msg *msg = xmalloc(sizeof(*msg));
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	if (d->buf.len)
--		strbuf_addch(&d->buf, '\n');
-+	strbuf_init(&msg->buf , 0);
- 	if (!strcmp(arg, "-")) {
--		if (strbuf_read(&d->buf, 0, 1024) < 0)
-+		if (strbuf_read(&msg->buf, 0, 1024) < 0)
- 			die_errno(_("cannot read '%s'"), arg);
--	} else if (strbuf_read_file(&d->buf, arg, 1024) < 0)
-+	} else if (strbuf_read_file(&msg->buf, arg, 1024) < 0)
- 		die_errno(_("could not open or read '%s'"), arg);
--	strbuf_stripspace(&d->buf, 0);
- 
--	d->given = 1;
-+	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
-+	d->messages[d->msg_nr - 1] = msg;
-+	msg->stripspace = 1;
- 	return 0;
- }
- 
- static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- {
- 	struct note_data *d = opt->value;
--	char *buf;
-+	struct note_msg *msg = xmalloc(sizeof(*msg));
-+	char *value;
- 	struct object_id object;
- 	enum object_type type;
- 	unsigned long len;
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	if (d->buf.len)
--		strbuf_addch(&d->buf, '\n');
--
-+	strbuf_init(&msg->buf, 0);
- 	if (repo_get_oid(the_repository, arg, &object))
- 		die(_("failed to resolve '%s' as a valid ref."), arg);
--	if (!(buf = repo_read_object_file(the_repository, &object, &type, &len)))
-+	if (!(value = repo_read_object_file(the_repository, &object, &type, &len)))
- 		die(_("failed to read object '%s'."), arg);
- 	if (type != OBJ_BLOB) {
--		free(buf);
-+		strbuf_release(&msg->buf);
-+		free(value);
-+		free(msg);
- 		die(_("cannot read note data from non-blob object '%s'."), arg);
+@@ -249,7 +257,9 @@ static void concat_messages(struct note_data *d)
+ 			append_separator(&d->buf);
+ 		strbuf_add(&msg, d->messages[i]->buf.buf, d->messages[i]->buf.len);
+ 		strbuf_addbuf(&d->buf, &msg);
+-		if (d->messages[i]->stripspace)
++		if ((d->stripspace == UNSPECIFIED &&
++		     d->messages[i]->stripspace == STRIPSPACE) ||
++		    d->stripspace == STRIPSPACE)
+ 			strbuf_stripspace(&d->buf, 0);
+ 		strbuf_reset(&msg);
  	}
--	strbuf_add(&d->buf, buf, len);
--	free(buf);
- 
--	d->given = 1;
-+	strbuf_add(&msg->buf, value, len);
-+	free(value);
-+
-+	msg->buf.len = len;
-+	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
-+	d->messages[d->msg_nr - 1] = msg;
-+	msg->stripspace = 0;
+@@ -267,7 +277,7 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+ 	strbuf_addstr(&msg->buf, arg);
+ 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
+ 	d->messages[d->msg_nr - 1] = msg;
+-	msg->stripspace = 1;
++	msg->stripspace = STRIPSPACE;
  	return 0;
  }
  
-@@ -283,6 +332,16 @@ static int parse_reedit_arg(const struct option *opt, const char *arg, int unset
- 	return parse_reuse_arg(opt, arg, unset);
+@@ -287,7 +297,7 @@ static int parse_file_arg(const struct option *opt, const char *arg, int unset)
+ 
+ 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
+ 	d->messages[d->msg_nr - 1] = msg;
+-	msg->stripspace = 1;
++	msg->stripspace = STRIPSPACE;
+ 	return 0;
  }
  
-+static int parse_separator_arg(const struct option *opt, const char *arg,
-+			       int unset)
-+{
-+	if (unset)
-+		*(const char **)opt->value = NULL;
-+	else
-+		*(const char **)opt->value = arg ? arg : "\n";
-+	return 0;
-+}
-+
- static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -406,6 +465,7 @@ static int add(int argc, const char **argv, const char *prefix)
+@@ -320,7 +330,7 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ 	msg->buf.len = len;
+ 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
+ 	d->messages[d->msg_nr - 1] = msg;
+-	msg->stripspace = 0;
++	msg->stripspace = NO_STRIPSPACE;
+ 	return 0;
+ }
+ 
+@@ -464,7 +474,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 	struct notes_tree *t;
  	struct object_id object, new_note;
  	const struct object_id *note;
- 	struct note_data d = { .buf = STRBUF_INIT };
-+
+-	struct note_data d = { .buf = STRBUF_INIT };
++	struct note_data d = { .buf = STRBUF_INIT, .stripspace = UNSPECIFIED };
+ 
+ 	struct option options[] = {
+ 		OPT_CALLBACK_F('m', "message", &d, N_("message"),
+@@ -486,6 +496,8 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			N_("<paragraph-break>"),
+ 			N_("insert <paragraph-break> between paragraphs"),
+ 			PARSE_OPT_OPTARG, parse_separator_arg),
++		OPT_BOOL(0, "stripspace", &d.stripspace,
++			N_("remove unnecessary whitespace")),
+ 		OPT_END()
+ 	};
+ 
+@@ -639,7 +651,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	const struct object_id *note;
+ 	char *logmsg;
+ 	const char * const *usage;
+-	struct note_data d = { .buf = STRBUF_INIT };
++	struct note_data d = { .buf = STRBUF_INIT, .stripspace = UNSPECIFIED };
  	struct option options[] = {
  		OPT_CALLBACK_F('m', "message", &d, N_("message"),
  			N_("note contents as a string"), PARSE_OPT_NONEG,
-@@ -422,6 +482,10 @@ static int add(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "allow-empty", &allow_empty,
- 			N_("allow storing empty note")),
- 		OPT__FORCE(&force, N_("replace existing notes"), PARSE_OPT_NOCOMPLETE),
-+		OPT_CALLBACK_F(0, "separator", &separator,
-+			N_("<paragraph-break>"),
-+			N_("insert <paragraph-break> between paragraphs"),
-+			PARSE_OPT_OPTARG, parse_separator_arg),
- 		OPT_END()
- 	};
- 
-@@ -433,6 +497,10 @@ static int add(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_add_usage, options);
- 	}
- 
-+	if (d.msg_nr)
-+		concat_messages(&d);
-+	d.given = !!d.buf.len;
-+
- 	object_ref = argc > 1 ? argv[1] : "HEAD";
- 
- 	if (repo_get_oid(the_repository, object_ref, &object))
-@@ -587,6 +655,10 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 			parse_reuse_arg),
- 		OPT_BOOL(0, "allow-empty", &allow_empty,
- 			N_("allow storing empty note")),
-+		OPT_CALLBACK_F(0, "separator", &separator,
-+			N_("<paragraph-break>"),
-+			N_("insert <paragraph-break> between paragraphs"),
-+			PARSE_OPT_OPTARG, parse_separator_arg),
+@@ -659,6 +671,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 			N_("<paragraph-break>"),
+ 			N_("insert <paragraph-break> between paragraphs"),
+ 			PARSE_OPT_OPTARG, parse_separator_arg),
++		OPT_BOOL(0, "stripspace", &d.stripspace,
++			N_("remove unnecessary whitespace")),
  		OPT_END()
  	};
  	int edit = !strcmp(argv[0], "edit");
-@@ -600,6 +672,10 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		usage_with_options(usage, options);
- 	}
- 
-+	if (d.msg_nr)
-+		concat_messages(&d);
-+	d.given = !!d.buf.len;
-+
- 	if (d.given && edit)
- 		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
- 			"for the 'edit' subcommand.\n"
-@@ -623,7 +699,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 						       &type, &size);
- 
- 		if (d.buf.len && prev_buf && size)
--			strbuf_insertstr(&d.buf, 0, "\n");
-+			insert_separator(&d.buf, 0);
- 		if (prev_buf && size)
- 			strbuf_insert(&d.buf, 0, prev_buf, size);
- 		free(prev_buf);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 3288aaec..d734000d 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -362,6 +362,7 @@ test_expect_success 'do not create empty note with -m ""' '
+diff --git a/t/t3321-notes-stripspace.sh b/t/t3321-notes-stripspace.sh
+index 89977873..028d825e 100755
+--- a/t/t3321-notes-stripspace.sh
++++ b/t/t3321-notes-stripspace.sh
+@@ -32,7 +32,7 @@ test_expect_success 'add note by editor' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'create note with combination of -m and -F' '
-+	test_when_finished git notes remove HEAD &&
- 	cat >expect-combine_m_and_F <<-EOF &&
- 		foo
- 
-@@ -380,6 +381,41 @@ test_expect_success 'create note with combination of -m and -F' '
- 	test_cmp expect-combine_m_and_F actual
- '
- 
-+test_expect_success 'create note with combination of -m and -F and --separator' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect-combine_m_and_F <<-\EOF &&
-+	foo
-+	-------
-+	xyzzy
-+	-------
-+	bar
-+	-------
-+	zyxxy
-+	-------
-+	baz
-+	EOF
-+	echo "xyzzy" >note_a &&
-+	echo "zyxxy" >note_b &&
-+	git notes add -m "foo" -F note_a -m "bar" -F note_b -m "baz" --separator="-------" &&
-+	git notes show >actual &&
-+	test_cmp expect-combine_m_and_F actual
-+'
-+
-+test_expect_success 'create note with combination of -m and -F and --no-separator' '
-+	cat >expect-combine_m_and_F <<-\EOF &&
-+	foo
-+	xyzzy
-+	bar
-+	zyxxy
-+	baz
-+	EOF
-+	echo "xyzzy" >note_a &&
-+	echo "zyxxy" >note_b &&
-+	git notes add -m "foo" -F note_a -m "bar" -F note_b -m "baz" --no-separator &&
-+	git notes show >actual &&
-+	test_cmp expect-combine_m_and_F actual
-+'
-+
- test_expect_success 'remove note with "git notes remove"' '
- 	git notes remove HEAD^ &&
- 	git notes remove &&
-@@ -521,6 +557,112 @@ test_expect_success 'listing non-existing notes fails' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'append: specify a separator with an empty arg' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify a separator without arg' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify as --no-separator' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --no-separator -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator with line break' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------$LF" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator without line break' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator with multiple messages' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	-------
-+	notes-3
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------" -m "notes-2" -m "notes-3" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append note with combination of -m and -F and --separator' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect-combine_m_and_F <<-\EOF &&
-+	m-notes-1
-+	-------
-+	f-notes-1
-+	-------
-+	m-notes-2
-+	-------
-+	f-notes-2
-+	-------
-+	m-notes-3
-+	EOF
-+
-+	echo "f-notes-1" >note_a &&
-+	echo "f-notes-2" >note_b &&
-+	git notes append -m "m-notes-1" -F note_a -m "m-notes-2" -F note_b -m "m-notes-3" --separator="-------" &&
-+	git notes show >actual &&
-+	test_cmp expect-combine_m_and_F actual
-+'
-+
- test_expect_success 'append to existing note with "git notes append"' '
+-test_expect_success 'add note by specifying single "-m"' '
++test_expect_success 'add note by specifying single "-m", "--stripspace" is the default behavior' '
+ 	test_when_finished "git notes remove" &&
  	cat >expect <<-EOF &&
- 		Initial set of notes
-@@ -818,6 +960,33 @@ test_expect_success 'create note from blob with "git notes add -C" reuses blob i
- 	test_cmp blob actual
+ 	first-line
+@@ -42,10 +42,26 @@ test_expect_success 'add note by specifying single "-m"' '
+ 
+ 	git notes add -m "${LF}first-line${MULTI_LF}second-line${LF}" &&
+ 	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	git notes add --stripspace -m "${LF}first-line${MULTI_LF}second-line${LF}" &&
++	git notes show >actual &&
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'create note from blob with "-C", also specify "-m", "-F" and "--separator"' '
-+	# 8th will be reuseed in following tests, so rollback when the test is done
-+	test_when_finished "git notes remove && git notes add -C $(cat blob)" &&
-+	commit=$(git rev-parse HEAD) &&
+-test_expect_success 'add note by specifying multiple "-m"' '
++test_expect_success 'add note by specifying single "-m" and "--no-stripspace" ' '
++	test_when_finished "git notes remove" &&
 +	cat >expect <<-EOF &&
-+		commit $commit
-+		Author: A U Thor <author@example.com>
-+		Date:   Thu Apr 7 15:20:13 2005 -0700
-+
-+		${indent}8th
-+
-+		Notes:
-+		${indent}This is a blob object
-+		${indent}-------
-+		${indent}This is created by -m
-+		${indent}-------
-+		${indent}This is created by -F
++	${LF}first-line${MULTI_LF}second-line
 +	EOF
 +
-+	git notes remove &&
-+	echo "This is a blob object" | git hash-object -w --stdin >blob &&
-+	echo "This is created by -F" >note_a &&
-+	git notes add -C $(cat blob) -m "This is created by -m" -F note_a --separator="-------" &&
-+	git log -1 >actual &&
++	git notes add --no-stripspace \
++		      -m "${LF}first-line${MULTI_LF}second-line${LF}" &&
++	git notes show >actual &&
 +	test_cmp expect actual
 +'
 +
- test_expect_success 'create note from other note with "git notes add -c"' '
- 	test_commit 9th &&
- 	commit=$(git rev-parse HEAD) &&
++test_expect_success 'add note by specifying multiple "-m", "--stripspace" is the default behavior' '
+ 	test_when_finished "git notes remove" &&
+ 	cat >expect <<-EOF &&
+ 	first-line
+@@ -59,9 +75,156 @@ test_expect_success 'add note by specifying multiple "-m"' '
+ 		      -m "second-line" \
+ 		      -m "${LF}" &&
+ 	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	git notes add --stripspace -m "${LF}" \
++		      -m "first-line" \
++		      -m "${MULTI_LF}" \
++		      -m "second-line" \
++		      -m "${LF}" &&
++	git notes show >actual &&
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'add notes by specifying multiple "-m" and "--no-stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line${LF}
++	EOF
++
++	git notes add --no-stripspace \
++		      -m "${LF}" \
++		      -m "first-line" \
++		      -m "${MULTI_LF}" \
++		      -m "second-line" \
++		      -m "${LF}" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying single "-F", "--stripspace" is the default behavior' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	cat >note-file <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	git notes add -F note-file &&
++	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	git notes add --stripspace -F note-file &&
++	git notes show >actual
++'
++
++test_expect_success 'add note by specifying single "-F" and "--no-stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	cat >note-file <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	git notes add --no-stripspace -F note-file &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying multiple "-F", "--stripspace" is the default behavior' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	file-1-first-line
++
++	file-1-second-line
++
++	file-2-first-line
++
++	file-2-second-line
++	EOF
++
++	cat >note-file-1 <<-EOF &&
++	${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++	EOF
++
++	cat >note-file-2 <<-EOF &&
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	git notes add -F note-file-1 -F note-file-2 &&
++	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	git notes add --stripspace -F note-file-1 -F note-file-2 &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying multiple "-F" with "--no-stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	cat >note-file-1 <<-EOF &&
++	${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++	EOF
++
++	cat >note-file-2 <<-EOF &&
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	git notes add --no-stripspace -F note-file-1 -F note-file-2 &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
+ 
+ test_expect_success 'append note by editor' '
+ 	test_when_finished "git notes remove" &&
+@@ -221,6 +384,45 @@ test_expect_success 'append notes by specifying multiple "-F"' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'append note by specifying multiple "-F" with "--no-stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	initial-line
++	${LF}${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	cat >note-file-1 <<-EOF &&
++	${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++	EOF
++
++	cat >note-file-2 <<-EOF &&
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	git notes add -m "initial-line" &&
++	git notes append --no-stripspace -F note-file-1 -F note-file-2 &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'add notes with empty messages' '
+ 	rev=$(git rev-parse HEAD) &&
+ 	git notes add -m "${LF}" \
+@@ -229,7 +431,7 @@ test_expect_success 'add notes with empty messages' '
+ 	test_i18ngrep "Removing note for object" actual
+ '
+ 
+-test_expect_success 'add note by specifying "-C" , do not stripspace is the default behavior' '
++test_expect_success 'add note by specifying "-C", "--no-stripspace" is the default behavior' '
+ 	test_when_finished "git notes remove" &&
+ 	cat >expect <<-EOF &&
+ 	${LF}
+@@ -242,10 +444,36 @@ test_expect_success 'add note by specifying "-C" , do not stripspace is the defa
+ 	cat expect | git hash-object -w --stdin >blob &&
+ 	git notes add -C $(cat blob) &&
+ 	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	git notes add --no-stripspace -C $(cat blob) &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'reuse note by specifying "-C" and "--stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >data <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	cat data | git hash-object -w --stdin >blob &&
++	git notes add --stripspace -C $(cat blob) &&
++	git notes show >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'add notes with "-C" and "-m", "-m" will stripspace all together' '
++test_expect_success 'reuse with "-C" and add note with "-m", "-m" will stripspace all together' '
+ 	test_when_finished "git notes remove" &&
+ 	cat >data <<-EOF &&
+ 	${LF}
+@@ -269,7 +497,7 @@ test_expect_success 'add notes with "-C" and "-m", "-m" will stripspace all toge
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'add notes with "-m" and "-C", "-C" will not stripspace all together' '
++test_expect_success 'add note with "-m" and reuse note with "-C", "-C" will not stripspace all together' '
+ 	test_when_finished "git notes remove" &&
+ 	cat >data <<-EOF &&
+ 
+@@ -288,4 +516,62 @@ test_expect_success 'add notes with "-m" and "-C", "-C" will not stripspace all
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'add note by specifying "-c", "--stripspace" is the default behavior' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	echo "initial-line" | git hash-object -w --stdin >blob &&
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes add -c $(cat blob) &&
++	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes add --stripspace -c $(cat blob) &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying "-c" with "--no-stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	${LF}first-line${MULTI_LF}second-line${LF}
++	EOF
++
++	echo "initial-line" | git hash-object -w --stdin >blob &&
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes add --no-stripspace -c $(cat blob) &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'edit note by specifying "-c", "--stripspace" is the default behavior' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes edit &&
++	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove &&
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes edit --stripspace &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'edit note by specifying "-c" with "--no-stripspace"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	${LF}first-line${MULTI_LF}second-line${LF}
++	EOF
++
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes add --no-stripspace &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.40.0.356.g67a1c1d0
 
