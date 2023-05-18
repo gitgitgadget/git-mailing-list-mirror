@@ -2,64 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E194C7EE22
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 12:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA406C77B7A
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 12:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231193AbjERMC3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 08:02:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49680 "EHLO
+        id S231462AbjERMCa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 08:02:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231404AbjERMC1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 08:02:27 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76B6E10E
-        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:24 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-64d247a023aso242496b3a.2
-        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:24 -0700 (PDT)
+        with ESMTP id S231272AbjERMC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 08:02:28 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C5DCF7
+        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:27 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1ae5dc9eac4so9603585ad.1
+        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684411344; x=1687003344;
+        d=gmail.com; s=20221208; t=1684411347; x=1687003347;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8wqFOX2ZB/lM0LHojfJH3cwwJ0JAeq3kb3Fm4kmaGV8=;
-        b=OaQsuYKFOIM78rPh3/TH5fhvwZ1dk+QNJpO/1l2/3iRy2BZFo43yjNipNxvYhEUd98
-         kQ0Y/wSgZOicWE+cjWrDhxh/kaoflCXUlkLuS/bNACKEf9uKGoV+49pAD0BrfcvVU7YH
-         iwbAB1EhGhqeVVIKbJGzS6g0UMF3HdpI0C4FAvNPvwKbC3lC/HoPk5nWcxYTk01SyNgw
-         uTXRa8wlu7raDDrudWvnEPW9t+G2s6zJTE3WtJPIIE/8IqodS3vFWVl/qvQGOJJIB3dt
-         K+H74veOGtwmWASg7m6mBfvilQobq6LSkiAfXG8tqatqFyC9toflVqLeR7k4PNICYatD
-         wt/A==
+        bh=o5Lim86nXQck3hwdqkWO/kZgVNn5qOIL/Z+/sAjNTLc=;
+        b=I5YNob83pZXaxgGfVv3MAb/phwKWBpHIv/Jj7w+OtZBb/udveoYe8XsDRPR13G6/oT
+         QUIcOpnCxEx02rAwMkkqBXNBTa8yyBCjfalzuejKTJM8dJjboECLLyAa3YAp3/KMWL0V
+         IMGbqrZ+dA3AU2Tm1RuNeoq3QjFIayMJPLMZiQq4IbIU3pmLq0B67TrUPsNJifxvW5b3
+         ktlZ6ODEDEgV03yaA019DdXFICrlPFFF9lfbTGSoL9JLmS7iQdpctObhQDrncLgXYV3x
+         5SIPjLor+OQc/buu7U/YUHYBiVctJrsAhQ/wNBZ/I8JQIVIDQXZkrVwZlftxUkdOiCAR
+         53lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684411344; x=1687003344;
+        d=1e100.net; s=20221208; t=1684411347; x=1687003347;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8wqFOX2ZB/lM0LHojfJH3cwwJ0JAeq3kb3Fm4kmaGV8=;
-        b=h7BhoLs+AEBQYt+uTrPlIxRuMh7LUyRNKkfPH8CkEtH5pr4xGibnRwuE6nM9+B/nK5
-         gYfe5b9Ggx4nP/fpRL3nB8W7FLv/g7C7Bt7wkeIuAYa5tAKlxjJ/kKe3c2jOVPyCr4d9
-         0L/yeAXBUL+M+I9CqQAu8DSasJUgqxqfSXD9cyaPO8CLCgS8+BUt01QmkcOV8juO/+Wn
-         QkAVEu8/+vPko33VuG/sfN7AbUlteCwLubfvayypo2/TsCtkTkxi3qmdQkHzmgfVaThe
-         7k8Twv1xquD1Q8SvNPMqpLl8NykMXchJ8iqVnyroaRVbxp3xbpV9DXCXDfK3oQ2fVCfW
-         1N/Q==
-X-Gm-Message-State: AC+VfDzCA62tj6shVkT+60f114ykYTPL4HZhrDB+ur2ix1ncdRfds12X
-        aYBx1LQzBf08R9tf4vslhAg=
-X-Google-Smtp-Source: ACHHUZ65W4+eA72lMBDsDuTpav98WVcIQSQpokI1MEMjZ/26ZLp158PTMTmTpy1/vTx7l2l8Olz19Q==
-X-Received: by 2002:a17:902:ea06:b0:1ac:8ad0:1707 with SMTP id s6-20020a170902ea0600b001ac8ad01707mr2738206plg.1.1684411343651;
-        Thu, 18 May 2023 05:02:23 -0700 (PDT)
+        bh=o5Lim86nXQck3hwdqkWO/kZgVNn5qOIL/Z+/sAjNTLc=;
+        b=lC9ENDidAU1qrHdvo0IFgCFWCQSq97a7ZMkon0vqZtSlakTWOiFymyNn34jmSHSXw5
+         DqBLpYqW6EHox4kSmX8O6zBrfGLuvV93zAE7L32591nLVv5SMqm0eHK1kfV9UbU1zWA3
+         3SHs0a9LZffqq9Qz4EnWr/el/kUaf9/VCWbMerGWUUONrf8+QFH/3/FuNLgoeeJ3oMTz
+         TgKk+PU/r68KRn9ER+5MlCgMwNpCubpP3qV311LGOTH7qvEbAJPdMY2wS6wm9y+UfhZU
+         xmdYJlBpTVBNxjEi5+4pCjdz5JvdAuPd9+L4vWrrn1xFWXA76Rn+EUjt+VvAt8G34Yx+
+         R5yQ==
+X-Gm-Message-State: AC+VfDzVvBilzQVDBxxFMejsmEWHp/l3wognx4VUVWCGCDILnFKA6x4q
+        kZM200gwv72v/VsJOGHYtyU=
+X-Google-Smtp-Source: ACHHUZ6Q/VB2Lqwo1NkYUeNPwQXa0Tc9r4termzr9KIAgLqyAVd4KIrgF5TH8aslad4QQEmZcOApzg==
+X-Received: by 2002:a17:902:7205:b0:1a6:4127:857 with SMTP id ba5-20020a170902720500b001a641270857mr1899138plb.5.1684411346566;
+        Thu, 18 May 2023 05:02:26 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.101.51])
-        by smtp.gmail.com with ESMTPSA id ji17-20020a170903325100b001960706141fsm1264203plb.149.2023.05.18.05.02.19
+        by smtp.gmail.com with ESMTPSA id ji17-20020a170903325100b001960706141fsm1264203plb.149.2023.05.18.05.02.23
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 May 2023 05:02:21 -0700 (PDT)
+        Thu, 18 May 2023 05:02:25 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
         sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v10 0/6] notes.c: introduce "--separator" option
-Date:   Thu, 18 May 2023 20:02:05 +0800
-Message-ID: <cover.1684411136.git.dyroneteng@gmail.com>
+Subject: [PATCH v10 1/6] notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+Date:   Thu, 18 May 2023 20:02:06 +0800
+Message-ID: <0634434e2a3e40ef4af5013349202491d55fe1d7.1684411136.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.40.0.356.g67a1c1d0
-In-Reply-To: <cover.1682671758.git.dyroneteng@gmail.com>
-References: <cover.1682671758.git.dyroneteng@gmail.com>
+In-Reply-To: <cover.1684411136.git.dyroneteng@gmail.com>
+References: <cover.1684411136.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -68,357 +68,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Teng Long <dyroneteng@gmail.com>
 
-Diff since v9:
+Let's cleanup the unnecessary 'strbuf_grow' call in 'append_edit'. This
+"strbuf_grow(&d.buf, size + 1);" is prepared for insert a blank line if
+needed, but actually when inserting, "strbuf_insertstr(&d.buf, 0,
+"\n");" will do the "grow" for us.
 
-1. [4/6] support `--no-separator` which means not to add any paragraph-breaks.
-2. [4/6] Fix the problems by the Junio's suggestion [1]
+348f199b (builtin-notes: Refactor handling of -F option to allow
+combining -m and -F, 2010-02-13) added these to mimic the code
+introduced by 2347fae5 (builtin-notes: Add "append" subcommand for
+appending to note objects, 2010-02-13) that reads in previous note
+before the message.  And the resulting code with explicit sizing is
+carried to this day.
 
-[1] https://public-inbox.org/git/xmqqsfcjbuud.fsf@gitster.g/
+In the context of reading an existing note in, exact sizing may have
+made sense, but because the resulting note needs cleansing with
+stripspace() when appending with this option, such an exact sizing
+does not buy us all that much in practice.
 
-Thanks.
+It may help avoiding overallocation due to ALLOC_GROW() slop, but
+nobody can feed so many long messages for it to matter from the
+command line.
 
-Teng Long (6):
-  notes.c: cleanup 'strbuf_grow' call in 'append_edit'
-  notes.c: use designated initializers for clarity
-  t3321: add test cases about the notes stripspace behavior
-  notes.c: introduce '[--[no-]separator|--separator=<paragraph-break>]'
-    option
-  notes.c: append separator instead of insert by pos
-  notes.c: introduce "--[no-]stripspace" option
+Signed-off-by: Teng Long <dyroneteng@gmail.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/notes.c | 2 --
+ 1 file changed, 2 deletions(-)
 
- Documentation/git-notes.txt |  43 ++-
- builtin/notes.c             | 157 +++++++---
- t/t3301-notes.sh            | 169 +++++++++++
- t/t3321-notes-stripspace.sh | 577 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 904 insertions(+), 42 deletions(-)
- create mode 100755 t/t3321-notes-stripspace.sh
-
-Range-diff against v9:
-1:  0634434e = 1:  0634434e notes.c: cleanup 'strbuf_grow' call in 'append_edit'
-2:  4ad78405 = 2:  4ad78405 notes.c: use designated initializers for clarity
-3:  c2fc2091 = 3:  c2fc2091 t3321: add test cases about the notes stripspace behavior
-4:  ed930ef4 ! 4:  820dda04 notes.c: introduce '--separator=<paragraph-break>' option
-    @@ Metadata
-     Author: Teng Long <dyroneteng@gmail.com>
-     
-      ## Commit message ##
-    -    notes.c: introduce '--separator=<paragraph-break>' option
-    +    notes.c: introduce '[--[no-]separator|--separator=<paragraph-break>]' option
-     
-         When adding new notes or appending to an existing notes, we will
-         insert a blank line between the paragraphs, like:
-    @@ Commit message
-     
-         Both the two exections produce the same result.
-     
-    +    Alternatively, if you do not want any new paragraph
-    +    separators, even a newline by default, you can specify
-    +    '--no-separator'.
-    +
-         The reason we use a "strbuf" array to concat but not "string_list", is
-         that the binary file content may contain '\0' in the middle, this will
-         cause the corrupt result if using a string to save.
-    @@ Documentation/git-notes.txt: SYNOPSIS
-      [verse]
-      'git notes' [list [<object>]]
-     -'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    -+'git notes' add [-f] [--allow-empty] [--separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    ++'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-      'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
-     -'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    -+'git notes' append [--allow-empty] [--separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    ++'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-      'git notes' edit [--allow-empty] [<object>]
-      'git notes' show [<object>]
-      'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-    @@ Documentation/git-notes.txt: OPTIONS
-      	Allow an empty note object to be stored. The default behavior is
-      	to automatically remove empty notes.
-      
-    -+--separator <paragraph-break>::
-    ++--[no-]separator, --separator=<paragraph-break>::
-     +	Specify a string used as a custom inter-paragraph separator
-    -+	(a newline is added at the end as needed).  Defaults to a
-    -+	blank line.
-    ++	(a newline is added at the end as needed). If `--no-separator`, no
-    ++	separators will be added between paragraphs.  Defaults to a blank
-    ++	line.
-     +
-      --ref <ref>::
-      	Manipulate the notes tree in <ref>.  This overrides
-    @@ builtin/notes.c
-      #include "worktree.h"
-      #include "write-or-die.h"
-      
-    -+static char *separator = "\n";
-    ++static const char *separator = "\n";
-      static const char * const git_notes_usage[] = {
-      	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-     -	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    -+	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    ++	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-      	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
-     -	N_("git notes [--ref <notes-ref>] append [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    -+	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    ++	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-      	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
-      	N_("git notes [--ref <notes-ref>] show [<object>]"),
-      	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
-    @@ builtin/notes.c: static void write_note_data(struct note_data *d, struct object_
-      
-     +static void insert_separator(struct strbuf *message, size_t pos)
-     +{
-    -+	if (separator[strlen(separator) - 1] == '\n')
-    -+		strbuf_addstr(message, separator);
-    ++	if (!separator)
-    ++		return;
-    ++	else if (separator[strlen(separator) - 1] == '\n')
-    ++		strbuf_insertstr(message, pos, separator);
-     +	else
-     +		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-     +}
-    @@ builtin/notes.c: static void write_note_data(struct note_data *d, struct object_
-     +static void concat_messages(struct note_data *d)
-     +{
-     +	struct strbuf msg = STRBUF_INIT;
-    -+
-     +	size_t i;
-    ++
-     +	for (i = 0; i < d->msg_nr ; i++) {
-     +		if (d->buf.len)
-     +			insert_separator(&d->buf, d->buf.len);
-    @@ builtin/notes.c: static void write_note_data(struct note_data *d, struct object_
-      	return 0;
-      }
-      
-    +@@ builtin/notes.c: static int parse_reedit_arg(const struct option *opt, const char *arg, int unset
-    + 	return parse_reuse_arg(opt, arg, unset);
-    + }
-    + 
-    ++static int parse_separator_arg(const struct option *opt, const char *arg,
-    ++			       int unset)
-    ++{
-    ++	if (unset)
-    ++		*(const char **)opt->value = NULL;
-    ++	else
-    ++		*(const char **)opt->value = arg ? arg : "\n";
-    ++	return 0;
-    ++}
-    ++
-    + static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
-    + {
-    + 	struct strbuf buf = STRBUF_INIT;
-     @@ builtin/notes.c: static int add(int argc, const char **argv, const char *prefix)
-      	struct object_id object, new_note;
-      	const struct object_id *note;
-    @@ builtin/notes.c: static int add(int argc, const char **argv, const char *prefix)
-      		OPT_BOOL(0, "allow-empty", &allow_empty,
-      			N_("allow storing empty note")),
-      		OPT__FORCE(&force, N_("replace existing notes"), PARSE_OPT_NOCOMPLETE),
-    -+		OPT_STRING(0, "separator", &separator, N_("separator"),
-    -+			N_("insert <paragraph-break> between paragraphs")),
-    ++		OPT_CALLBACK_F(0, "separator", &separator,
-    ++			N_("<paragraph-break>"),
-    ++			N_("insert <paragraph-break> between paragraphs"),
-    ++			PARSE_OPT_OPTARG, parse_separator_arg),
-      		OPT_END()
-      	};
-      
-    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
-      			parse_reuse_arg),
-      		OPT_BOOL(0, "allow-empty", &allow_empty,
-      			N_("allow storing empty note")),
-    -+		OPT_STRING(0, "separator", &separator, N_("separator"),
-    -+			N_("insert <paragraph-break> between paragraphs")),
-    ++		OPT_CALLBACK_F(0, "separator", &separator,
-    ++			N_("<paragraph-break>"),
-    ++			N_("insert <paragraph-break> between paragraphs"),
-    ++			PARSE_OPT_OPTARG, parse_separator_arg),
-      		OPT_END()
-      	};
-      	int edit = !strcmp(argv[0], "edit");
-    @@ t/t3301-notes.sh: test_expect_success 'create note with combination of -m and -F
-      '
-      
-     +test_expect_success 'create note with combination of -m and -F and --separator' '
-    ++	test_when_finished git notes remove HEAD &&
-     +	cat >expect-combine_m_and_F <<-\EOF &&
-     +	foo
-     +	-------
-    @@ t/t3301-notes.sh: test_expect_success 'create note with combination of -m and -F
-     +	EOF
-     +	echo "xyzzy" >note_a &&
-     +	echo "zyxxy" >note_b &&
-    -+	git notes add -m "foo" -F note_a -m "bar" -F note_b -m "baz" --separator "-------" &&
-    ++	git notes add -m "foo" -F note_a -m "bar" -F note_b -m "baz" --separator="-------" &&
-    ++	git notes show >actual &&
-    ++	test_cmp expect-combine_m_and_F actual
-    ++'
-    ++
-    ++test_expect_success 'create note with combination of -m and -F and --no-separator' '
-    ++	cat >expect-combine_m_and_F <<-\EOF &&
-    ++	foo
-    ++	xyzzy
-    ++	bar
-    ++	zyxxy
-    ++	baz
-    ++	EOF
-    ++	echo "xyzzy" >note_a &&
-    ++	echo "zyxxy" >note_b &&
-    ++	git notes add -m "foo" -F note_a -m "bar" -F note_b -m "baz" --no-separator &&
-     +	git notes show >actual &&
-     +	test_cmp expect-combine_m_and_F actual
-     +'
-    @@ t/t3301-notes.sh: test_expect_success 'listing non-existing notes fails' '
-      	test_must_be_empty actual
-      '
-      
-    -+test_expect_success 'append: specify an empty separator' '
-    ++test_expect_success 'append: specify a separator with an empty arg' '
-     +	test_when_finished git notes remove HEAD &&
-     +	cat >expect <<-\EOF &&
-     +	notes-1
-    @@ t/t3301-notes.sh: test_expect_success 'listing non-existing notes fails' '
-     +	test_cmp expect actual
-     +'
-     +
-    ++test_expect_success 'append: specify a separator without arg' '
-    ++	test_when_finished git notes remove HEAD &&
-    ++	cat >expect <<-\EOF &&
-    ++	notes-1
-    ++
-    ++	notes-2
-    ++	EOF
-    ++
-    ++	git notes add -m "notes-1" &&
-    ++	git notes append --separator -m "notes-2" &&
-    ++	git notes show >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    ++test_expect_success 'append: specify as --no-separator' '
-    ++	test_when_finished git notes remove HEAD &&
-    ++	cat >expect <<-\EOF &&
-    ++	notes-1
-    ++	notes-2
-    ++	EOF
-    ++
-    ++	git notes add -m "notes-1" &&
-    ++	git notes append --no-separator -m "notes-2" &&
-    ++	git notes show >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-     +test_expect_success 'append: specify separator with line break' '
-     +	test_when_finished git notes remove HEAD &&
-     +	cat >expect <<-\EOF &&
-    @@ t/t3301-notes.sh: test_expect_success 'listing non-existing notes fails' '
-     +
-     +	echo "f-notes-1" >note_a &&
-     +	echo "f-notes-2" >note_b &&
-    -+	git notes append -m "m-notes-1" -F note_a -m "m-notes-2" -F note_b -m "m-notes-3" --separator "-------" &&
-    ++	git notes append -m "m-notes-1" -F note_a -m "m-notes-2" -F note_b -m "m-notes-3" --separator="-------" &&
-     +	git notes show >actual &&
-     +	test_cmp expect-combine_m_and_F actual
-     +'
-5:  eea2246f ! 5:  76c93f19 notes.c: append separator instead of insert by pos
-    @@ builtin/notes.c: static void write_note_data(struct note_data *d, struct object_
-     -static void insert_separator(struct strbuf *message, size_t pos)
-     +static void append_separator(struct strbuf *message)
-      {
-    - 	if (separator[strlen(separator) - 1] == '\n')
-    - 		strbuf_addstr(message, separator);
-    + 	if (!separator)
-    + 		return;
-    + 	else if (separator[strlen(separator) - 1] == '\n')
-    +-		strbuf_insertstr(message, pos, separator);
-    ++		strbuf_addstr(message, separator);
-      	else
-     -		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-     +		strbuf_addf(message, "%s%s", separator, "\n");
-    @@ builtin/notes.c: static void write_note_data(struct note_data *d, struct object_
-      
-      static void concat_messages(struct note_data *d)
-     @@ builtin/notes.c: static void concat_messages(struct note_data *d)
-    - 	size_t i;
-    + 
-      	for (i = 0; i < d->msg_nr ; i++) {
-      		if (d->buf.len)
-     -			insert_separator(&d->buf, d->buf.len);
-6:  20063bea ! 6:  d65f067c notes.c: introduce "--[no-]stripspace" option
-    @@ Documentation/git-notes.txt: SYNOPSIS
-      --------
-      [verse]
-      'git notes' [list [<object>]]
-    --'git notes' add [-f] [--allow-empty] [--separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    -+'git notes' add [-f] [--allow-empty] [--separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    +-'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    ++'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-      'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
-    --'git notes' append [--allow-empty] [--separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    +-'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-     -'git notes' edit [--allow-empty] [<object>]
-    -+'git notes' append [--allow-empty] [--separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-    ++'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-     +'git notes' edit [--allow-empty] [<object>] [--[no-]stripspace]
-      'git notes' show [<object>]
-      'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-    @@ Documentation/git-notes.txt: OPTIONS
-      -c <object>::
-      --reedit-message=<object>::
-     @@ Documentation/git-notes.txt: OPTIONS
-    - 	(a newline is added at the end as needed).  Defaults to a
-    - 	blank line.
-    + 	separators will be added between paragraphs.  Defaults to a blank
-    + 	line.
-      
-     +--[no-]stripspace::
-     +	Strip leading and trailing whitespace from the note message.
-    @@ Documentation/git-notes.txt: OPTIONS
-      	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
-     
-      ## builtin/notes.c ##
-    +@@
-    + static const char *separator = "\n";
-    + static const char * const git_notes_usage[] = {
-    + 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-    +-	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    ++	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    + 	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
-    +-	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    ++	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-    + 	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
-    + 	N_("git notes [--ref <notes-ref>] show [<object>]"),
-    + 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
-     @@ builtin/notes.c: static const char * const git_notes_get_ref_usage[] = {
-      static const char note_template[] =
-      	N_("Write/edit the notes for the following object:");
-    @@ builtin/notes.c: static int add(int argc, const char **argv, const char *prefix)
-      	struct option options[] = {
-      		OPT_CALLBACK_F('m', "message", &d, N_("message"),
-     @@ builtin/notes.c: static int add(int argc, const char **argv, const char *prefix)
-    - 		OPT__FORCE(&force, N_("replace existing notes"), PARSE_OPT_NOCOMPLETE),
-    - 		OPT_STRING(0, "separator", &separator, N_("separator"),
-    - 			N_("insert <paragraph-break> between paragraphs")),
-    + 			N_("<paragraph-break>"),
-    + 			N_("insert <paragraph-break> between paragraphs"),
-    + 			PARSE_OPT_OPTARG, parse_separator_arg),
-     +		OPT_BOOL(0, "stripspace", &d.stripspace,
-     +			N_("remove unnecessary whitespace")),
-      		OPT_END()
-    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
-      		OPT_CALLBACK_F('m', "message", &d, N_("message"),
-      			N_("note contents as a string"), PARSE_OPT_NONEG,
-     @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char *prefix)
-    - 			N_("allow storing empty note")),
-    - 		OPT_STRING(0, "separator", &separator, N_("separator"),
-    - 			N_("insert <paragraph-break> between paragraphs")),
-    + 			N_("<paragraph-break>"),
-    + 			N_("insert <paragraph-break> between paragraphs"),
-    + 			PARSE_OPT_OPTARG, parse_separator_arg),
-     +		OPT_BOOL(0, "stripspace", &d.stripspace,
-     +			N_("remove unnecessary whitespace")),
-      		OPT_END()
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 4ff44f1e..c501c6ee 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -219,7 +219,6 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 
+-	strbuf_grow(&d->buf, strlen(arg) + 2);
+ 	if (d->buf.len)
+ 		strbuf_addch(&d->buf, '\n');
+ 	strbuf_addstr(&d->buf, arg);
+@@ -623,7 +622,6 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		char *prev_buf = repo_read_object_file(the_repository, note,
+ 						       &type, &size);
+ 
+-		strbuf_grow(&d.buf, size + 1);
+ 		if (d.buf.len && prev_buf && size)
+ 			strbuf_insertstr(&d.buf, 0, "\n");
+ 		if (prev_buf && size)
 -- 
 2.40.0.356.g67a1c1d0
 
