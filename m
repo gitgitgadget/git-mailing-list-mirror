@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DEE0C77B7A
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 12:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15956C7EE22
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 12:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231589AbjERMCk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 08:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49718 "EHLO
+        id S231272AbjERMCm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 08:02:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231461AbjERMCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 08:02:30 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6A0FE
-        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:29 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-64d1a0d640cso414792b3a.1
-        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:29 -0700 (PDT)
+        with ESMTP id S231556AbjERMCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 08:02:38 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52303185
+        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:32 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-517c840f181so995514a12.3
+        for <git@vger.kernel.org>; Thu, 18 May 2023 05:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684411349; x=1687003349;
+        d=gmail.com; s=20221208; t=1684411352; x=1687003352;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0XQTaH+LflmzkJp6Eb70FB5YRg/xxwCc9JOFrQmK1Ak=;
-        b=fStYNM+Hr6k2ly9dsqsa8GJKRT4IylGpZhoC9Qixy4TrkUnEVl9IJtplBDQPALgGc6
-         JyY+ZYGy+EBNt2K6W5njC8SA1GcOha/+dtk9FApJTEg+OyXLnLRwdeVY8Z3MPAlh4n6n
-         0mQXqkmozDJMoXb/hiZZPdkkMZxPzcEu8Ut4W1b4HZe3jowQ3cyW9rplYqVZ3P9+ETty
-         VkfanBk79V8ftecxHgdRFX90culWQrSOZ8vLjOiqL6TbMvYGz1p0Q4Jvj4S3Ov0KgP/Y
-         l/LBVxWcUG+rR8DoIe3kHixs+8S6klzB2xBGjLHyc4okcaWnkDKzyumQWPK+WhgQEaoR
-         csPw==
+        bh=txXP1AgyuZeTON+cUCF1GTyrdaR6B8CaHjgRnJq4iTk=;
+        b=ooWpDTVqZ0ur5nXiL5Ds/mO4/1o+LR4Jw+Rt42DIK24B2wlRQGxlBlfPH4/vp0u8rs
+         a1mSVpjOcUzZWqjplznt6pBGgYZJJ/ln9BE3RnbZ/51ngDOBYESTeruBqMuSSf8zxOl9
+         ngam3n8gChA94kkvvkZO7B7iC+cUAIV6S0BCHRPV9LXakg1qmuvVYl0Z8k7i1R1sJutj
+         FpH4M1n//gUilwDRK3S9LE6j/p0FcpFA0+RkQhxzIiV8vRgcFj7RWxdRS02UJIAQFgjn
+         4Xb71/ikZZd0CfwtZAQcXkBNHEEkT72z2XxO6WB8asi/2XbDGaWmvSyjXLWgVGoOXwJW
+         H+Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684411349; x=1687003349;
+        d=1e100.net; s=20221208; t=1684411352; x=1687003352;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0XQTaH+LflmzkJp6Eb70FB5YRg/xxwCc9JOFrQmK1Ak=;
-        b=IlCz/E+JSySWme7FuF1fYEcs2FZ0nPs7T9Hm6m6jGASd58lFFFqXqbP53XiYRY/Avq
-         OeQeSf6hS+aEpd2fZhoQQAuMhA827ANfTrpdCNu9DiPT0ZBm944nD88VnHYhQ90uMICR
-         sMOIwnKqMAsO7y1gmY6Jsk5zQtXhKEpPvIIDjB9HADL+Gje30uQWh/kqg9aShRK27r7S
-         yawqZ+V6qQM7PUTjnnzoButz9bqPbDPU145EMaM5K0kq97cFp+Go6wAKbShuQmDA7CCJ
-         YaSsSeOMZ/JaL7Lnen9kcdW54L8NXS+ttzlWCf0W49k2CGVY33rQFkZ6aXmyqyP3rhx4
-         d4dg==
-X-Gm-Message-State: AC+VfDz5Sgr2Y9lvooJ65lFmrzFrIdM9T1MudioqnZE80OG4mlOOwil5
-        oDbGYEDLTGgxJSsYYNLQ3Ck=
-X-Google-Smtp-Source: ACHHUZ4EgiF3FYJHa2JHD7TMmwqbACqgN8V7J2Yd11efwbbu2uaAnyLoFYC7vNCHBwiUy7Pyg6OfqA==
-X-Received: by 2002:a17:902:7fc9:b0:1ac:8062:4f31 with SMTP id t9-20020a1709027fc900b001ac80624f31mr1954755plb.37.1684411348809;
-        Thu, 18 May 2023 05:02:28 -0700 (PDT)
+        bh=txXP1AgyuZeTON+cUCF1GTyrdaR6B8CaHjgRnJq4iTk=;
+        b=hUUvkMAAnonAmvMeOkiFA04vPtlxXKgGeXLBW0Y51fp4/0+0MKdMu01PGkQ/S/8W2+
+         VLfLqVM/12lsC1LYOiNyw7cCb3uSjNUk9Y0N+n99NqEo7dp3iJo8dDJNVEF7TGhuQVNq
+         lVErKmPftPytqKLsEr54qYxjzgJwe8TrxRuJXvob0T8+M6xXtZBdhrIpBqd/uSb8QCS/
+         W0uowsoplwDFOeNo5w2OGcU2EN8x38ndy7ElYRxnoOiKy+YEtsxn/Xb7E/GH0utFTJuH
+         YJihhO3GGW/rNbA56xvdmVBiAZxeIAXClJ2k6F3a34eplu92JNwOpEBdoqts0Hf0Mo0v
+         Ch6w==
+X-Gm-Message-State: AC+VfDw5aIysRUbhbdBcAy4eT8t1JYOQvvSOf7qocFLdbgfkzglFRWZB
+        nqjLkU7jXkr0dg7A8bVuw2sjBr7BBhYcq4mE
+X-Google-Smtp-Source: ACHHUZ6NZMh/zRz1GREhLhlx+iZuR99XptKT0DU8INmN3mgv9WL9GRkWc3jYKcTGcN9aEcEn5jC0tw==
+X-Received: by 2002:a17:902:e751:b0:1aa:df9e:2d19 with SMTP id p17-20020a170902e75100b001aadf9e2d19mr2836946plf.54.1684411351467;
+        Thu, 18 May 2023 05:02:31 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.101.51])
-        by smtp.gmail.com with ESMTPSA id ji17-20020a170903325100b001960706141fsm1264203plb.149.2023.05.18.05.02.26
+        by smtp.gmail.com with ESMTPSA id ji17-20020a170903325100b001960706141fsm1264203plb.149.2023.05.18.05.02.29
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 May 2023 05:02:28 -0700 (PDT)
+        Thu, 18 May 2023 05:02:30 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
         sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v10 2/6] notes.c: use designated initializers for clarity
-Date:   Thu, 18 May 2023 20:02:07 +0800
-Message-ID: <4ad7840584191d6bbb3fcba72887aa569c797a15.1684411136.git.dyroneteng@gmail.com>
+Subject: [PATCH v10 3/6] t3321: add test cases about the notes stripspace behavior
+Date:   Thu, 18 May 2023 20:02:08 +0800
+Message-ID: <c2fc2091d2afbb5911220bb55574fae11cf1c1dc.1684411136.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.40.0.356.g67a1c1d0
 In-Reply-To: <cover.1684411136.git.dyroneteng@gmail.com>
 References: <cover.1684411136.git.dyroneteng@gmail.com>
@@ -68,37 +68,309 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Teng Long <dyroneteng@gmail.com>
 
-The "struct note_data d = { 0, 0, NULL, STRBUF_INIT };" style could be
-replaced with designated initializer for clarity.
-
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/notes.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t3321-notes-stripspace.sh | 291 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 291 insertions(+)
+ create mode 100755 t/t3321-notes-stripspace.sh
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index c501c6ee..9d8ca795 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -405,7 +405,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 	struct notes_tree *t;
- 	struct object_id object, new_note;
- 	const struct object_id *note;
--	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
-+	struct note_data d = { .buf = STRBUF_INIT };
- 	struct option options[] = {
- 		OPT_CALLBACK_F('m', "message", &d, N_("message"),
- 			N_("note contents as a string"), PARSE_OPT_NONEG,
-@@ -571,7 +571,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	const struct object_id *note;
- 	char *logmsg;
- 	const char * const *usage;
--	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
-+	struct note_data d = { .buf = STRBUF_INIT };
- 	struct option options[] = {
- 		OPT_CALLBACK_F('m', "message", &d, N_("message"),
- 			N_("note contents as a string"), PARSE_OPT_NONEG,
+diff --git a/t/t3321-notes-stripspace.sh b/t/t3321-notes-stripspace.sh
+new file mode 100755
+index 00000000..89977873
+--- /dev/null
++++ b/t/t3321-notes-stripspace.sh
+@@ -0,0 +1,291 @@
++#!/bin/sh
++#
++# Copyright (c) 2023 Teng Long
++#
++
++test_description='Test commit notes with stripspace behavior'
++
++. ./test-lib.sh
++
++MULTI_LF="$LF$LF$LF"
++write_script fake_editor <<\EOF
++echo "$MSG" >"$1"
++echo "$MSG" >&2
++EOF
++GIT_EDITOR=./fake_editor
++export GIT_EDITOR
++
++test_expect_success 'setup the commit' '
++	test_commit 1st
++'
++
++test_expect_success 'add note by editor' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	MSG="${LF}first-line${MULTI_LF}second-line${LF}" git notes add  &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying single "-m"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	git notes add -m "${LF}first-line${MULTI_LF}second-line${LF}" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying multiple "-m"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	git notes add -m "${LF}" \
++		      -m "first-line" \
++		      -m "${MULTI_LF}" \
++		      -m "second-line" \
++		      -m "${LF}" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++
++test_expect_success 'append note by editor' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	git notes add -m "first-line" &&
++	MSG="${MULTI_LF}second-line${LF}" git notes append  &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'append note by specifying single "-m"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	git notes add -m "${LF}first-line" &&
++	git notes append -m "${MULTI_LF}second-line${LF}" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'append note by specifying multiple "-m"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	git notes add -m "${LF}first-line" &&
++	git notes append -m "${MULTI_LF}" \
++		      -m "second-line" \
++		      -m "${LF}" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add note by specifying single "-F"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++	EOF
++
++	cat >note-file <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	git notes add -F note-file &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add notes by specifying multiple "-F"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	file-1-first-line
++
++	file-1-second-line
++
++	file-2-first-line
++
++	file-2-second-line
++	EOF
++
++	cat >note-file-1 <<-EOF &&
++	${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++	EOF
++
++	cat >note-file-2 <<-EOF &&
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	git notes add -F note-file-1 -F note-file-2 &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'append note by specifying single "-F"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	initial-line
++
++	first-line
++
++	second-line
++	EOF
++
++	cat >note-file <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	git notes add -m "initial-line" &&
++	git notes append -F note-file &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'append notes by specifying multiple "-F"' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	initial-line
++
++	file-1-first-line
++
++	file-1-second-line
++
++	file-2-first-line
++
++	file-2-second-line
++	EOF
++
++	cat >note-file-1 <<-EOF &&
++	${LF}
++	file-1-first-line
++	${MULTI_LF}
++	file-1-second-line
++	${LF}
++	EOF
++
++	cat >note-file-2 <<-EOF &&
++	${LF}
++	file-2-first-line
++	${MULTI_LF}
++	file-2-second-line
++	${LF}
++	EOF
++
++	git notes add -m "initial-line" &&
++	git notes append -F note-file-1 -F note-file-2 &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add notes with empty messages' '
++	rev=$(git rev-parse HEAD) &&
++	git notes add -m "${LF}" \
++		      -m "${MULTI_LF}" \
++		      -m "${LF}" >actual 2>&1 &&
++	test_i18ngrep "Removing note for object" actual
++'
++
++test_expect_success 'add note by specifying "-C" , do not stripspace is the default behavior' '
++	test_when_finished "git notes remove" &&
++	cat >expect <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	cat expect | git hash-object -w --stdin >blob &&
++	git notes add -C $(cat blob) &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add notes with "-C" and "-m", "-m" will stripspace all together' '
++	test_when_finished "git notes remove" &&
++	cat >data <<-EOF &&
++	${LF}
++	first-line
++	${MULTI_LF}
++	second-line
++	${LF}
++	EOF
++
++	cat >expect <<-EOF &&
++	first-line
++
++	second-line
++
++	third-line
++	EOF
++
++	cat data | git hash-object -w --stdin >blob &&
++	git notes add -C $(cat blob) -m "third-line" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add notes with "-m" and "-C", "-C" will not stripspace all together' '
++	test_when_finished "git notes remove" &&
++	cat >data <<-EOF &&
++
++	second-line
++	EOF
++
++	cat >expect <<-EOF &&
++	first-line
++	${LF}
++	second-line
++	EOF
++
++	cat data | git hash-object -w --stdin >blob &&
++	git notes add -m "first-line" -C $(cat blob)  &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 2.40.0.356.g67a1c1d0
 
