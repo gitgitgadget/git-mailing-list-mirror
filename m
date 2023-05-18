@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99AE0C7EE2C
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF192C77B73
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230427AbjERUEW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 16:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40200 "EHLO
+        id S230426AbjERUE1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 16:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230310AbjERUEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 16:04:01 -0400
+        with ESMTP id S230216AbjERUEK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 16:04:10 -0400
 Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06398E45
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:40 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f4c6c4b425so16001515e9.2
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6252B1716
+        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:41 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f420618d5bso16019515e9.1
+        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684440218; x=1687032218;
+        d=gmail.com; s=20221208; t=1684440219; x=1687032219;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GgU1OssP17DowgeYVI6AkXEVwnwzxvc59lV61R1ihd0=;
-        b=qiUW4TUEkVJjxjv05jgo8afKYJufFuy+MCnobYlsjyBE9R9LeSyzM9aHPpgFHf7W6c
-         l9BNcOnpvl4AztCGs96GskpGfRwrtBo8o2nqo5rc7oDrs0FOoo8jWj9uAFYlYCOl1XY6
-         f6AyYHgs53HyuMjOTclS0Gifl7fCG1wY+UNkFpEJT7VYUImNVVE53JrGAhQKLuFabVWH
-         Gfzdsuutk6jHH8aaMmhdMNSQFowA3VQl9niza+jLPgL2t8NQR4FPXzdfGEVfRY5TpVfr
-         IqMcawFcAeQrs3rhw8viz+kP9/Jq35/zpICeh9gV1TQrNpAZZzxP02obGrq6Fsr+t6N2
-         PeXw==
+        bh=X13CbSEPFsVaekiJUpfKoyxpS+t3QC/WUgonTA1XvVY=;
+        b=YCNT70Wx2lCVnIMgGKpryWqyUBMF2PBWK686xKSlQwN+FUffjZ5njuwa/rlLnxJuW9
+         ZRI81RP5XbYgUpDn216w2mmwa0KrB4BB4T8E0wy55/XbgBirkJoOi7oh6nlFzRw3j1as
+         ZTVyObEftXW+3RMazUzrPioGD3XsPYPGhLfbIZEgaNlM9dzif0VNFtihVPkyXgDpZD80
+         iQ7YxTf+tFI2FPqA8iQCkThQ9sMNdeaQDrH+dHKIEmX0EdRyRSHWxBAqAkpC3xW/dOCN
+         dZKjJeKUzIFakF62PoZHtuVIwYyT1ihDjwDVl4f/wqEUyVH9R3m6QZ5maBnJ16YxtVvg
+         9etQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684440218; x=1687032218;
+        d=1e100.net; s=20221208; t=1684440219; x=1687032219;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GgU1OssP17DowgeYVI6AkXEVwnwzxvc59lV61R1ihd0=;
-        b=EGQOEAahBN70tYgENmu8jQSNCyPGt3c6ci+QLdgPNeoWtXACEEqdOafPFxr52q/lFm
-         JPUl2CV0FMo3CpfXCvCZ7kBA1Z6yE04iTw5gfCzWfDXMaAbtFxg1XMWTajM4kfa4aIRh
-         DXwjl7NmzjWyvoISr7qtEnFgYeqiilf+/UuwQ5T/T+6ZEnfi5O+LNTeeQVVo72Z03ZEO
-         qzRTZ2aEAum6eubWOiylPxRs7ba5lpA4LTgZrbcmADa7VGR4lxCFoQglaXQsbSBXJ1dq
-         4mXlD0QJnMKo6NhhiHaSqm9xxnNIyRCMd1Od/Myd/+Qx4cGFAWyFmgosJZRkksooS9fQ
-         2eOw==
-X-Gm-Message-State: AC+VfDzitn9U6CHlZwEQDLM9PrhwqOCEUIhRZMt5XtpcRsoJr9+Ta1cT
-        xbNiLmeDoFPqniEAF5ujA1Xk0pCsRO4=
-X-Google-Smtp-Source: ACHHUZ7N7mkwYZVV4Thkg44e53bK7SOreb8OTaoNXmg2INtWfIG+gfIlTaAyU+DrjVqQvWK2e1pAXw==
-X-Received: by 2002:a1c:720e:0:b0:3f4:2d31:11b2 with SMTP id n14-20020a1c720e000000b003f42d3111b2mr2546150wmc.13.1684440218047;
-        Thu, 18 May 2023 13:03:38 -0700 (PDT)
+        bh=X13CbSEPFsVaekiJUpfKoyxpS+t3QC/WUgonTA1XvVY=;
+        b=QIQqUwsdIBpjATJ+3/9BugqomCqviRnC3+nLwkY74xNlnAUuhjNzybgfnfNf4Iky1M
+         8Ut2b1feZa0K2/X1pln4e43mTokq2uGAk4rLCRh0bN20/fQfxxy1Kd6ah4zot6sdMkIh
+         bDnAgSRdmICjuZtkmvNMR71zeviO8bN33cI+VK6bfGZf2ksn9ODS2QWXlrhBZl4p3bn3
+         f26Pl7vA+XW1dvtZCaLreSVDilzr+KJuR1oJY3dVPuCAEDqMbGzw79n6YfsP9m+eOoZX
+         jBAh1oyIKgfwf9ZO7f7/b/SLwfHhh5Sx8IO+ogNvfAoeH8YsG+z7PC5LAu2vL02Ngwx4
+         AmTQ==
+X-Gm-Message-State: AC+VfDyfavQRkLwbmajy6hdPbxkTx/dbA5z7LR3LIWKyTx1r9Pc0Ph12
+        6PqGXj/kEGxB+0MyGWJzknnH+O6Lo1A=
+X-Google-Smtp-Source: ACHHUZ4oPAZVQJnlhnLXw52fBY5CmhekR8pGfq653ImGzG8jDND+NAd9jHVeBG53LiTjmqXbAU8U1w==
+X-Received: by 2002:a7b:c7ce:0:b0:3f4:2158:68ae with SMTP id z14-20020a7bc7ce000000b003f4215868aemr2301876wmk.15.1684440219492;
+        Thu, 18 May 2023 13:03:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q28-20020a056000137c00b003093a412310sm3052313wrz.92.2023.05.18.13.03.37
+        by smtp.gmail.com with ESMTPSA id y9-20020a05600c364900b003f4266965fbsm250046wmq.5.2023.05.18.13.03.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 13:03:37 -0700 (PDT)
-Message-Id: <8e5a934ae1e9b2a1fde670ba54a9c2f141f13110.1684440206.git.gitgitgadget@gmail.com>
+        Thu, 18 May 2023 13:03:39 -0700 (PDT)
+Message-Id: <3ddb6dbe9d5b2bbede84e389e57a33ded8bc7b3f.1684440206.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 References: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 18 May 2023 20:03:22 +0000
-Subject: [PATCH 17/20] t5303-pack-corruption-resilience: modernize test format
+Date:   Thu, 18 May 2023 20:03:24 +0000
+Subject: [PATCH 19/20] t6050-replace: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,651 +72,366 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t5303-pack-corruption-resilience.sh | 584 +++++++++++++-------------
- 1 file changed, 292 insertions(+), 292 deletions(-)
+ t/t6050-replace.sh | 296 ++++++++++++++++++++++-----------------------
+ 1 file changed, 148 insertions(+), 148 deletions(-)
 
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index 2926e8dfc41..61469ef4a68 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -59,304 +59,304 @@ do_corrupt_object() {
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 2500acc2ef8..c9925edf20e 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -62,59 +62,59 @@ HASH6=
+ HASH7=
  
- printf '\0' > zero
+ test_expect_success 'set up buggy branch' '
+-     echo "line 1" >>hello &&
+-     echo "line 2" >>hello &&
+-     echo "line 3" >>hello &&
+-     echo "line 4" >>hello &&
+-     add_and_commit_file hello "4 lines" &&
+-     HASH1=$(git rev-parse --verify HEAD) &&
+-     echo "line BUG" >>hello &&
+-     echo "line 6" >>hello &&
+-     echo "line 7" >>hello &&
+-     echo "line 8" >>hello &&
+-     add_and_commit_file hello "4 more lines with a BUG" &&
+-     HASH2=$(git rev-parse --verify HEAD) &&
+-     echo "line 9" >>hello &&
+-     echo "line 10" >>hello &&
+-     add_and_commit_file hello "2 more lines" &&
+-     HASH3=$(git rev-parse --verify HEAD) &&
+-     echo "line 11" >>hello &&
+-     add_and_commit_file hello "1 more line" &&
+-     HASH4=$(git rev-parse --verify HEAD) &&
+-     sed -e "s/BUG/5/" hello >hello.new &&
+-     mv hello.new hello &&
+-     add_and_commit_file hello "BUG fixed" &&
+-     HASH5=$(git rev-parse --verify HEAD) &&
+-     echo "line 12" >>hello &&
+-     echo "line 13" >>hello &&
+-     add_and_commit_file hello "2 more lines" &&
+-     HASH6=$(git rev-parse --verify HEAD) &&
+-     echo "line 14" >>hello &&
+-     echo "line 15" >>hello &&
+-     echo "line 16" >>hello &&
+-     add_and_commit_file hello "again 3 more lines" &&
+-     HASH7=$(git rev-parse --verify HEAD)
++	echo "line 1" >>hello &&
++	echo "line 2" >>hello &&
++	echo "line 3" >>hello &&
++	echo "line 4" >>hello &&
++	add_and_commit_file hello "4 lines" &&
++	HASH1=$(git rev-parse --verify HEAD) &&
++	echo "line BUG" >>hello &&
++	echo "line 6" >>hello &&
++	echo "line 7" >>hello &&
++	echo "line 8" >>hello &&
++	add_and_commit_file hello "4 more lines with a BUG" &&
++	HASH2=$(git rev-parse --verify HEAD) &&
++	echo "line 9" >>hello &&
++	echo "line 10" >>hello &&
++	add_and_commit_file hello "2 more lines" &&
++	HASH3=$(git rev-parse --verify HEAD) &&
++	echo "line 11" >>hello &&
++	add_and_commit_file hello "1 more line" &&
++	HASH4=$(git rev-parse --verify HEAD) &&
++	sed -e "s/BUG/5/" hello >hello.new &&
++	mv hello.new hello &&
++	add_and_commit_file hello "BUG fixed" &&
++	HASH5=$(git rev-parse --verify HEAD) &&
++	echo "line 12" >>hello &&
++	echo "line 13" >>hello &&
++	add_and_commit_file hello "2 more lines" &&
++	HASH6=$(git rev-parse --verify HEAD) &&
++	echo "line 14" >>hello &&
++	echo "line 15" >>hello &&
++	echo "line 16" >>hello &&
++	add_and_commit_file hello "again 3 more lines" &&
++	HASH7=$(git rev-parse --verify HEAD)
+ '
  
--test_expect_success \
--    'initial setup validation' \
--    'create_test_files &&
--     create_new_pack &&
--     git prune-packed &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'create corruption in header of first object' \
--    'do_corrupt_object $blob_1 0 < zero &&
--     test_must_fail git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_1 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and loose copy of first delta allows for partial recovery' \
--    'git prune-packed &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     test_must_fail git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'create corruption in data of first object' \
--    'create_new_pack &&
--     git prune-packed &&
--     chmod +w ${pack}.pack &&
--     perl -i.bak -pe "s/ base /abcdef/" ${pack}.pack &&
--     test_must_fail git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_1 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and loose copy of second object allows for partial recovery' \
--    'git prune-packed &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     test_must_fail git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'create corruption in header of first delta' \
--    'create_new_pack &&
--     git prune-packed &&
--     do_corrupt_object $blob_2 0 < zero &&
--     git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and then a repack "clears" the corruption' \
--    'do_repack &&
--     git prune-packed &&
--     git verify-pack ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'create corruption in data of first delta' \
--    'create_new_pack &&
--     git prune-packed &&
--     chmod +w ${pack}.pack &&
--     perl -i.bak -pe "s/ delta1 /abcdefgh/" ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and then a repack "clears" the corruption' \
--    'do_repack &&
--     git prune-packed &&
--     git verify-pack ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'corruption in delta base reference of first delta (OBJ_REF_DELTA)' \
--    'create_new_pack &&
--     git prune-packed &&
--     do_corrupt_object $blob_2 2 < zero &&
--     git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and then a repack "clears" the corruption' \
--    'do_repack &&
--     git prune-packed &&
--     git verify-pack ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'corruption #0 in delta base reference of first delta (OBJ_OFS_DELTA)' \
--    'create_new_pack --delta-base-offset &&
--     git prune-packed &&
--     do_corrupt_object $blob_2 2 < zero &&
--     git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and then a repack "clears" the corruption' \
--    'do_repack --delta-base-offset &&
--     git prune-packed &&
--     git verify-pack ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'corruption #1 in delta base reference of first delta (OBJ_OFS_DELTA)' \
--    'create_new_pack --delta-base-offset &&
--     git prune-packed &&
--     printf "\001" | do_corrupt_object $blob_2 2 &&
--     git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_2 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and then a repack "clears" the corruption' \
--    'do_repack --delta-base-offset &&
--     git prune-packed &&
--     git verify-pack ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and a redundant pack allows for full recovery too' \
--    'do_corrupt_object $blob_2 2 < zero &&
--     git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null &&
--     mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_1 &&
--     git hash-object -t blob -w file_2 &&
--     printf "$blob_1\n$blob_2\n" | git pack-objects .git/objects/pack/pack &&
--     git prune-packed &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'corruption of delta base reference pointing to wrong object' \
--    'create_new_pack --delta-base-offset &&
--     git prune-packed &&
--     printf "\220\033" | do_corrupt_object $blob_3 2 &&
--     git cat-file blob $blob_1 >/dev/null &&
--     git cat-file blob $blob_2 >/dev/null &&
--     test_must_fail git cat-file blob $blob_3 >/dev/null'
--
--test_expect_success \
--    '... but having a loose copy allows for full recovery' \
--    'mv ${pack}.idx tmp &&
--     git hash-object -t blob -w file_3 &&
--     mv tmp ${pack}.idx &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    '... and then a repack "clears" the corruption' \
--    'do_repack --delta-base-offset --no-reuse-delta &&
--     git prune-packed &&
--     git verify-pack ${pack}.pack &&
--     git cat-file blob $blob_1 > /dev/null &&
--     git cat-file blob $blob_2 > /dev/null &&
--     git cat-file blob $blob_3 > /dev/null'
--
--test_expect_success \
--    'corrupting header to have too small output buffer fails unpack' \
--    'create_new_pack &&
--     git prune-packed &&
--     printf "\262\001" | do_corrupt_object $blob_1 0 &&
--     test_must_fail git cat-file blob $blob_1 > /dev/null &&
--     test_must_fail git cat-file blob $blob_2 > /dev/null &&
--     test_must_fail git cat-file blob $blob_3 > /dev/null'
-+test_expect_success 'initial setup validation' '
-+	create_test_files &&
-+	create_new_pack &&
-+	git prune-packed &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'create corruption in header of first object' '
-+	do_corrupt_object $blob_1 0 < zero &&
-+	test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_1 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and loose copy of first delta allows for partial recovery' '
-+	git prune-packed &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'create corruption in data of first object' '
-+	create_new_pack &&
-+	git prune-packed &&
-+	chmod +w ${pack}.pack &&
-+	perl -i.bak -pe "s/ base /abcdef/" ${pack}.pack &&
-+	test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_1 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and loose copy of second object allows for partial recovery' '
-+	git prune-packed &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'create corruption in header of first delta' '
-+	create_new_pack &&
-+	git prune-packed &&
-+	do_corrupt_object $blob_2 0 < zero &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and then a repack "clears" the corruption' '
-+	do_repack &&
-+	git prune-packed &&
-+	git verify-pack ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'create corruption in data of first delta' '
-+	create_new_pack &&
-+	git prune-packed &&
-+	chmod +w ${pack}.pack &&
-+	perl -i.bak -pe "s/ delta1 /abcdefgh/" ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and then a repack "clears" the corruption' '
-+	do_repack &&
-+	git prune-packed &&
-+	git verify-pack ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'corruption in delta base reference of first delta (OBJ_REF_DELTA)' '
-+	create_new_pack &&
-+	git prune-packed &&
-+	do_corrupt_object $blob_2 2 < zero &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and then a repack "clears" the corruption' '
-+	do_repack &&
-+	git prune-packed &&
-+	git verify-pack ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'corruption #0 in delta base reference of first delta (OBJ_OFS_DELTA)' '
-+	create_new_pack --delta-base-offset &&
-+	git prune-packed &&
-+	do_corrupt_object $blob_2 2 < zero &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and then a repack "clears" the corruption' '
-+	do_repack --delta-base-offset &&
-+	git prune-packed &&
-+	git verify-pack ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'corruption #1 in delta base reference of first delta (OBJ_OFS_DELTA)' '
-+	create_new_pack --delta-base-offset &&
-+	git prune-packed &&
-+	printf "\001" | do_corrupt_object $blob_2 2 &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_2 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and then a repack "clears" the corruption' '
-+	do_repack --delta-base-offset &&
-+	git prune-packed &&
-+	git verify-pack ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and a redundant pack allows for full recovery too' '
-+	do_corrupt_object $blob_2 2 < zero &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null &&
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_1 &&
-+	git hash-object -t blob -w file_2 &&
-+	printf "$blob_1\n$blob_2\n" | git pack-objects .git/objects/pack/pack &&
-+	git prune-packed &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'corruption of delta base reference pointing to wrong object' '
-+	create_new_pack --delta-base-offset &&
-+	git prune-packed &&
-+	printf "\220\033" | do_corrupt_object $blob_3 2 &&
-+	git cat-file blob $blob_1 >/dev/null &&
-+	git cat-file blob $blob_2 >/dev/null &&
-+	test_must_fail git cat-file blob $blob_3 >/dev/null
-+'
-+
-+test_expect_success '... but having a loose copy allows for full recovery' '
-+	mv ${pack}.idx tmp &&
-+	git hash-object -t blob -w file_3 &&
-+	mv tmp ${pack}.idx &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success '... and then a repack "clears" the corruption' '
-+	do_repack --delta-base-offset --no-reuse-delta &&
-+	git prune-packed &&
-+	git verify-pack ${pack}.pack &&
-+	git cat-file blob $blob_1 > /dev/null &&
-+	git cat-file blob $blob_2 > /dev/null &&
-+	git cat-file blob $blob_3 > /dev/null
-+'
-+
-+test_expect_success 'corrupting header to have too small output buffer fails unpack' '
-+	create_new_pack &&
-+	git prune-packed &&
-+	printf "\262\001" | do_corrupt_object $blob_1 0 &&
-+	test_must_fail git cat-file blob $blob_1 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_2 > /dev/null &&
-+	test_must_fail git cat-file blob $blob_3 > /dev/null
-+'
+ test_expect_success 'replace the author' '
+-     git cat-file commit $HASH2 | grep "author A U Thor" &&
+-     R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-     git cat-file commit $R | grep "author O Thor" &&
+-     git update-ref refs/replace/$HASH2 $R &&
+-     git show HEAD~5 | grep "O Thor" &&
+-     git show $HASH2 | grep "O Thor"
++	git cat-file commit $HASH2 | grep "author A U Thor" &&
++	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $R | grep "author O Thor" &&
++	git update-ref refs/replace/$HASH2 $R &&
++	git show HEAD~5 | grep "O Thor" &&
++	git show $HASH2 | grep "O Thor"
+ '
  
- # \0 - empty base
- # \1 - one byte in result
- # \1 - one literal byte (X)
--test_expect_success \
--    'apply good minimal delta' \
--    'printf "\0\1\1X" > minimal_delta &&
--     test-tool delta -p /dev/null minimal_delta /dev/null'
-+test_expect_success 'apply good minimal delta' '
-+	printf "\0\1\1X" > minimal_delta &&
-+	test-tool delta -p /dev/null minimal_delta /dev/null
-+'
+ test_expect_success 'test --no-replace-objects option' '
+-     git cat-file commit $HASH2 | grep "author O Thor" &&
+-     git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
+-     git show $HASH2 | grep "O Thor" &&
+-     git --no-replace-objects show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 | grep "author O Thor" &&
++	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
++	git show $HASH2 | grep "O Thor" &&
++	git --no-replace-objects show $HASH2 | grep "A U Thor"
+ '
  
- # \0 - empty base
- # \1 - 1 byte in result
- # \2 - two literal bytes (one too many)
--test_expect_success \
--    'apply delta with too many literal bytes' \
--    'printf "\0\1\2XX" > too_big_literal &&
--     test_must_fail test-tool delta -p /dev/null too_big_literal /dev/null'
-+test_expect_success 'apply delta with too many literal bytes' '
-+	printf "\0\1\2XX" > too_big_literal &&
-+	test_must_fail test-tool delta -p /dev/null too_big_literal /dev/null
-+'
+ test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+-     GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+-     GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
++	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
++	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
+ '
  
- # \4 - four bytes in base
- # \1 - one byte in result
- # \221 - copy, one byte offset, one byte size
- #   \0 - copy from offset 0
- #   \2 - copy two bytes (one too many)
--test_expect_success \
--    'apply delta with too many copied bytes' \
--    'printf "\4\1\221\0\2" > too_big_copy &&
--     printf base >base &&
--     test_must_fail test-tool delta -p base too_big_copy /dev/null'
-+test_expect_success 'apply delta with too many copied bytes' '
-+	printf "\4\1\221\0\2" > too_big_copy &&
-+	printf base >base &&
-+	test_must_fail test-tool delta -p base too_big_copy /dev/null
-+'
+ test_expect_success 'test core.usereplacerefs config option' '
+@@ -132,64 +132,64 @@ tagger T A Gger <> 0 +0000
+ EOF
  
- # \0 - empty base
- # \2 - two bytes in result
- # \2 - two literal bytes (we are short one)
--test_expect_success \
--    'apply delta with too few literal bytes' \
--    'printf "\0\2\2X" > truncated_delta &&
--     test_must_fail test-tool delta -p /dev/null truncated_delta /dev/null'
-+test_expect_success 'apply delta with too few literal bytes' '
-+	printf "\0\2\2X" > truncated_delta &&
-+	test_must_fail test-tool delta -p /dev/null truncated_delta /dev/null
-+'
+ test_expect_success 'tag replaced commit' '
+-     git update-ref refs/tags/mytag $(git mktag <tag.sig)
++	git update-ref refs/tags/mytag $(git mktag <tag.sig)
+ '
  
- # \0 - empty base
- # \1 - one byte in result
- # \221 - copy, one byte offset, one byte size
- #   \0 - copy from offset 0
- #   \1 - copy one byte (we are short one)
--test_expect_success \
--    'apply delta with too few bytes in base' \
--    'printf "\0\1\221\0\1" > truncated_base &&
--     test_must_fail test-tool delta -p /dev/null truncated_base /dev/null'
-+test_expect_success 'apply delta with too few bytes in base' '
-+	printf "\0\1\221\0\1" > truncated_base &&
-+	test_must_fail test-tool delta -p /dev/null truncated_base /dev/null
-+'
+ test_expect_success '"git fsck" works' '
+-     git fsck main >fsck_main.out &&
+-     test_i18ngrep "dangling commit $R" fsck_main.out &&
+-     test_i18ngrep "dangling tag $(git show-ref -s refs/tags/mytag)" fsck_main.out &&
+-     test -z "$(git fsck)"
++	git fsck main >fsck_main.out &&
++	test_i18ngrep "dangling commit $R" fsck_main.out &&
++	test_i18ngrep "dangling tag $(git show-ref -s refs/tags/mytag)" fsck_main.out &&
++	test -z "$(git fsck)"
+ '
  
- # \4 - four bytes in base
- # \2 - two bytes in result
-@@ -366,20 +366,20 @@ test_expect_success \
+ test_expect_success 'repack, clone and fetch work' '
+-     git repack -a -d &&
+-     git clone --no-hardlinks . clone_dir &&
+-     (
+-	  cd clone_dir &&
+-	  git show HEAD~5 | grep "A U Thor" &&
+-	  git show $HASH2 | grep "A U Thor" &&
+-	  git cat-file commit $R &&
+-	  git repack -a -d &&
+-	  test_must_fail git cat-file commit $R &&
+-	  git fetch ../ "refs/replace/*:refs/replace/*" &&
+-	  git show HEAD~5 | grep "O Thor" &&
+-	  git show $HASH2 | grep "O Thor" &&
+-	  git cat-file commit $R
+-     )
++	git repack -a -d &&
++	git clone --no-hardlinks . clone_dir &&
++	(
++		cd clone_dir &&
++		git show HEAD~5 | grep "A U Thor" &&
++		git show $HASH2 | grep "A U Thor" &&
++		git cat-file commit $R &&
++		git repack -a -d &&
++		test_must_fail git cat-file commit $R &&
++		git fetch ../ "refs/replace/*:refs/replace/*" &&
++		git show HEAD~5 | grep "O Thor" &&
++		git show $HASH2 | grep "O Thor" &&
++		git cat-file commit $R
++	)
+ '
+ 
+ test_expect_success '"git replace" listing and deleting' '
+-     test "$HASH2" = "$(git replace -l)" &&
+-     test "$HASH2" = "$(git replace)" &&
+-     aa=${HASH2%??????????????????????????????????????} &&
+-     test "$HASH2" = "$(git replace --list "$aa*")" &&
+-     test_must_fail git replace -d $R &&
+-     test_must_fail git replace --delete &&
+-     test_must_fail git replace -l -d $HASH2 &&
+-     git replace -d $HASH2 &&
+-     git show $HASH2 | grep "A U Thor" &&
+-     test -z "$(git replace -l)"
++	test "$HASH2" = "$(git replace -l)" &&
++	test "$HASH2" = "$(git replace)" &&
++	aa=${HASH2%??????????????????????????????????????} &&
++	test "$HASH2" = "$(git replace --list "$aa*")" &&
++	test_must_fail git replace -d $R &&
++	test_must_fail git replace --delete &&
++	test_must_fail git replace -l -d $HASH2 &&
++	git replace -d $HASH2 &&
++	git show $HASH2 | grep "A U Thor" &&
++	test -z "$(git replace -l)"
+ '
+ 
+ test_expect_success '"git replace" replacing' '
+-     git replace $HASH2 $R &&
+-     git show $HASH2 | grep "O Thor" &&
+-     test_must_fail git replace $HASH2 $R &&
+-     git replace -f $HASH2 $R &&
+-     test_must_fail git replace -f &&
+-     test "$HASH2" = "$(git replace)"
++	git replace $HASH2 $R &&
++	git show $HASH2 | grep "O Thor" &&
++	test_must_fail git replace $HASH2 $R &&
++	git replace -f $HASH2 $R &&
++	test_must_fail git replace -f &&
++	test "$HASH2" = "$(git replace)"
+ '
+ 
+ test_expect_success '"git replace" resolves sha1' '
+-     SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
+-     git replace -d $SHORTHASH2 &&
+-     git replace $SHORTHASH2 $R &&
+-     git show $HASH2 | grep "O Thor" &&
+-     test_must_fail git replace $HASH2 $R &&
+-     git replace -f $HASH2 $R &&
+-     test_must_fail git replace --force &&
+-     test "$HASH2" = "$(git replace)"
++	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
++	git replace -d $SHORTHASH2 &&
++	git replace $SHORTHASH2 $R &&
++	git show $HASH2 | grep "O Thor" &&
++	test_must_fail git replace $HASH2 $R &&
++	git replace -f $HASH2 $R &&
++	test_must_fail git replace --force &&
++	test "$HASH2" = "$(git replace)"
+ '
+ 
+ # This creates a side branch where the bug in H2
+@@ -207,79 +207,79 @@ test_expect_success '"git replace" resolves sha1' '
+ # Then we replace H6 with P6.
  #
- # Note that the literal byte is necessary to get past the uninteresting minimum
- # delta size check.
--test_expect_success \
--    'apply delta with truncated copy parameters' \
--    'printf "\4\2\1X\221" > truncated_copy_delta &&
--     printf base >base &&
--     test_must_fail test-tool delta -p base truncated_copy_delta /dev/null'
-+test_expect_success 'apply delta with truncated copy parameters' '
-+	printf "\4\2\1X\221" > truncated_copy_delta &&
-+	printf base >base &&
-+	test_must_fail test-tool delta -p base truncated_copy_delta /dev/null
-+'
+ test_expect_success 'create parallel branch without the bug' '
+-     git replace -d $HASH2 &&
+-     git show $HASH2 | grep "A U Thor" &&
+-     git checkout $HASH1 &&
+-     git cherry-pick $HASH2 &&
+-     git show $HASH5 | git apply &&
+-     git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
+-     PARA2=$(git rev-parse --verify HEAD) &&
+-     git cherry-pick $HASH3 &&
+-     PARA3=$(git rev-parse --verify HEAD) &&
+-     git cherry-pick $HASH4 &&
+-     PARA4=$(git rev-parse --verify HEAD) &&
+-     git cherry-pick $HASH6 &&
+-     PARA6=$(git rev-parse --verify HEAD) &&
+-     git replace $HASH6 $PARA6 &&
+-     git checkout main &&
+-     cur=$(git rev-parse --verify HEAD) &&
+-     test "$cur" = "$HASH7" &&
+-     git log --pretty=oneline | grep $PARA2 &&
+-     git remote add cloned ./clone_dir
++	git replace -d $HASH2 &&
++	git show $HASH2 | grep "A U Thor" &&
++	git checkout $HASH1 &&
++	git cherry-pick $HASH2 &&
++	git show $HASH5 | git apply &&
++	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
++	PARA2=$(git rev-parse --verify HEAD) &&
++	git cherry-pick $HASH3 &&
++	PARA3=$(git rev-parse --verify HEAD) &&
++	git cherry-pick $HASH4 &&
++	PARA4=$(git rev-parse --verify HEAD) &&
++	git cherry-pick $HASH6 &&
++	PARA6=$(git rev-parse --verify HEAD) &&
++	git replace $HASH6 $PARA6 &&
++	git checkout main &&
++	cur=$(git rev-parse --verify HEAD) &&
++	test "$cur" = "$HASH7" &&
++	git log --pretty=oneline | grep $PARA2 &&
++	git remote add cloned ./clone_dir
+ '
  
- # \0 - empty base
- # \1 - one byte in result
- # \1 - one literal byte (X)
- # \1 - trailing garbage command
--test_expect_success \
--    'apply delta with trailing garbage literal' \
--    'printf "\0\1\1X\1" > tail_garbage_literal &&
--     test_must_fail test-tool delta -p /dev/null tail_garbage_literal /dev/null'
-+test_expect_success 'apply delta with trailing garbage literal' '
-+	printf "\0\1\1X\1" > tail_garbage_literal &&
-+	test_must_fail test-tool delta -p /dev/null tail_garbage_literal /dev/null
-+'
+ test_expect_success 'push to cloned repo' '
+-     git push cloned $HASH6^:refs/heads/parallel &&
+-     (
+-	  cd clone_dir &&
+-	  git checkout parallel &&
+-	  git log --pretty=oneline | grep $PARA2
+-     )
++	git push cloned $HASH6^:refs/heads/parallel &&
++	(
++		cd clone_dir &&
++		git checkout parallel &&
++		git log --pretty=oneline | grep $PARA2
++	)
+ '
  
- # \4 - four bytes in base
- # \1 - one byte in result
-@@ -387,19 +387,19 @@ test_expect_success \
- # \221 - copy, one byte offset, one byte size
- #   \0 - copy from offset 0
- #   \1 - copy 1 byte
--test_expect_success \
--    'apply delta with trailing garbage copy' \
--    'printf "\4\1\1X\221\0\1" > tail_garbage_copy &&
--     printf base >base &&
--     test_must_fail test-tool delta -p /dev/null tail_garbage_copy /dev/null'
-+test_expect_success 'apply delta with trailing garbage copy' '
-+	printf "\4\1\1X\221\0\1" > tail_garbage_copy &&
-+	printf base >base &&
-+	test_must_fail test-tool delta -p /dev/null tail_garbage_copy /dev/null
-+'
+ test_expect_success 'push branch with replacement' '
+-     git cat-file commit $PARA3 | grep "author A U Thor" &&
+-     S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-     git cat-file commit $S | grep "author O Thor" &&
+-     git replace $PARA3 $S &&
+-     git show $HASH6~2 | grep "O Thor" &&
+-     git show $PARA3 | grep "O Thor" &&
+-     git push cloned $HASH6^:refs/heads/parallel2 &&
+-     (
+-	  cd clone_dir &&
+-	  git checkout parallel2 &&
+-	  git log --pretty=oneline | grep $PARA3 &&
+-	  git show $PARA3 | grep "A U Thor"
+-     )
++	git cat-file commit $PARA3 | grep "author A U Thor" &&
++	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $S | grep "author O Thor" &&
++	git replace $PARA3 $S &&
++	git show $HASH6~2 | grep "O Thor" &&
++	git show $PARA3 | grep "O Thor" &&
++	git push cloned $HASH6^:refs/heads/parallel2 &&
++	(
++		cd clone_dir &&
++		git checkout parallel2 &&
++		git log --pretty=oneline | grep $PARA3 &&
++		git show $PARA3 | grep "A U Thor"
++	)
+ '
  
- # \0 - empty base
- # \1 - one byte in result
- # \1 - one literal byte (X)
- # \0 - bogus opcode
--test_expect_success \
--    'apply delta with trailing garbage opcode' \
--    'printf "\0\1\1X\0" > tail_garbage_opcode &&
--     test_must_fail test-tool delta -p /dev/null tail_garbage_opcode /dev/null'
-+test_expect_success 'apply delta with trailing garbage opcode' '
-+	printf "\0\1\1X\0" > tail_garbage_opcode &&
-+	test_must_fail test-tool delta -p /dev/null tail_garbage_opcode /dev/null
-+'
+ test_expect_success 'fetch branch with replacement' '
+-     git branch tofetch $HASH6 &&
+-     (
+-	  cd clone_dir &&
+-	  git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
+-	  git log --pretty=oneline parallel3 >output.txt &&
+-	  ! grep $PARA3 output.txt &&
+-	  git show $PARA3 >para3.txt &&
+-	  grep "A U Thor" para3.txt &&
+-	  git fetch origin "refs/replace/*:refs/replace/*" &&
+-	  git log --pretty=oneline parallel3 >output.txt &&
+-	  grep $PARA3 output.txt &&
+-	  git show $PARA3 >para3.txt &&
+-	  grep "O Thor" para3.txt
+-     )
++	git branch tofetch $HASH6 &&
++	(
++		cd clone_dir &&
++		git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
++		git log --pretty=oneline parallel3 >output.txt &&
++		! grep $PARA3 output.txt &&
++		git show $PARA3 >para3.txt &&
++		grep "A U Thor" para3.txt &&
++		git fetch origin "refs/replace/*:refs/replace/*" &&
++		git log --pretty=oneline parallel3 >output.txt &&
++		grep $PARA3 output.txt &&
++		git show $PARA3 >para3.txt &&
++		grep "O Thor" para3.txt
++	)
+ '
  
- test_done
+ test_expect_success 'bisect and replacements' '
+-     git bisect start $HASH7 $HASH1 &&
+-     test "$PARA3" = "$(git rev-parse --verify HEAD)" &&
+-     git bisect reset &&
+-     GIT_NO_REPLACE_OBJECTS=1 git bisect start $HASH7 $HASH1 &&
+-     test "$HASH4" = "$(git rev-parse --verify HEAD)" &&
+-     git bisect reset &&
+-     git --no-replace-objects bisect start $HASH7 $HASH1 &&
+-     test "$HASH4" = "$(git rev-parse --verify HEAD)" &&
+-     git bisect reset
++	git bisect start $HASH7 $HASH1 &&
++	test "$PARA3" = "$(git rev-parse --verify HEAD)" &&
++	git bisect reset &&
++	GIT_NO_REPLACE_OBJECTS=1 git bisect start $HASH7 $HASH1 &&
++	test "$HASH4" = "$(git rev-parse --verify HEAD)" &&
++	git bisect reset &&
++	git --no-replace-objects bisect start $HASH7 $HASH1 &&
++	test "$HASH4" = "$(git rev-parse --verify HEAD)" &&
++	git bisect reset
+ '
+ 
+ test_expect_success 'index-pack and replacements' '
 -- 
 gitgitgadget
 
