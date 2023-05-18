@@ -2,95 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28673C7EE2A
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85390C77B7D
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 21:20:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbjERUuh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 16:50:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58522 "EHLO
+        id S229884AbjERVUo convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 18 May 2023 17:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbjERUue (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 16:50:34 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86B2170B
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:50:17 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1ae4e49727eso25382535ad.1
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:50:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684443008; x=1687035008;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UI3ib59ZZO22MUyKoYPEt/vDuDsanf0hQfzpOwJut6k=;
-        b=UXha9Dzmki+8APLjBCI+XiuCngnPe0uXH4C0tc5EkcIBXUNV5bRaBTpigCwj6PjJf4
-         s/3KDH/xA4GHzkM/rehKBzrP5427VclyutIoQODBUm+ZUvb4uDiyAGmaqU7K9ZG+k3sv
-         G9rC0+bm5zWhs+/FdXFKZenkSNBo6WF/i+BBKeWNi0eLwWzxj6thLM31/D/nkpe2ZFKD
-         NMUnZw1+j4LOfWt1zOD9aU0Bp7UzdnyTxNU6UW1GiI0lxbJgJHADasW4wWvvYG5fDe+3
-         qvpXe0zCCYSvBVyGcUBREYHIC6O42o0VpQ+X3ND18q5AbUSIH4nNskL1ghRCwG6YTzeK
-         QuNw==
+        with ESMTP id S229697AbjERVUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 17:20:42 -0400
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E85E4A
+        for <git@vger.kernel.org>; Thu, 18 May 2023 14:20:41 -0700 (PDT)
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6238cd06d5fso13349696d6.3
+        for <git@vger.kernel.org>; Thu, 18 May 2023 14:20:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684443008; x=1687035008;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UI3ib59ZZO22MUyKoYPEt/vDuDsanf0hQfzpOwJut6k=;
-        b=HT9z8b7Cvb+MWRODy5pFqOccnH5TdXt3z0bD1B2pLf3Wic6GCfkyt7c1YVyRd8dAHM
-         SMjseTvINL5KxkB5rGVx2QM06zD7x59nJrnRhN1U8wyC+DVD1tq3EGPe1D5FJOde8wu6
-         PhP6OlJ+/VAybLzd7EUEIp9NHMVztHw+0ORE5SVu3hmZNV++WE+lrP8Wq9d6LbVD4dyk
-         0S1n3uJcO69ZKyNFD/vaZS0rUcNC3k/dBpznqtvV3nZ8lbdjOzD4m/1dxJ8kW8pwluXC
-         Yme1k54TYyCKobwtd+H+ReJk6iaq1KAJTLs6vmvvWh5MRe+by3k3TxYHfLFQ7V39+Z8h
-         j+/Q==
-X-Gm-Message-State: AC+VfDx48vsiwve2FOJBVv1U6mZDOE1XsfjL8zM64VWZLBu/mQYFk2h6
-        EnTqZ+g5kWtUyYLfwMmeDWZE+A==
-X-Google-Smtp-Source: ACHHUZ6sqDNUWQFq/SnUTh4pAJGMVZ1rkRYAraUxLIDJ+jHmAqvjYdKRFy4g5tOEx/i9uhanbTK8Rw==
-X-Received: by 2002:a17:902:ebd2:b0:1ad:c627:87de with SMTP id p18-20020a170902ebd200b001adc62787demr324863plg.32.1684443007852;
-        Thu, 18 May 2023 13:50:07 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:202:3344:75d5:a3ff:a602])
-        by smtp.gmail.com with ESMTPSA id q4-20020a170902b10400b001aad4be4503sm1924547plr.2.2023.05.18.13.50.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 13:50:07 -0700 (PDT)
-Date:   Thu, 18 May 2023 13:50:02 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, calvinwan@gmail.com, szeder.dev@gmail.com,
-        chooglen@google.com, avarab@gmail.com, gitster@pobox.com,
-        sandals@crustytoothpaste.net, Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH RFC v2 3/4] Add C TAP harness
-Message-ID: <ZGaPeqBSkDEQLmGw@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        calvinwan@gmail.com, szeder.dev@gmail.com, chooglen@google.com,
-        avarab@gmail.com, gitster@pobox.com, sandals@crustytoothpaste.net,
-        Calvin Wan <calvinwan@google.com>
-References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
- <20230517-unit-tests-v2-v2-3-21b5b60f4b32@google.com>
- <c891c417-2859-b4c2-2838-e336ff72173f@gmail.com>
+        d=1e100.net; s=20221208; t=1684444840; x=1687036840;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Uv+RhOsqI10N4t48tcI9NrAQfmtEATmZmULPaYaE8H0=;
+        b=EDRHRGnhGATqicgB3H9e3cGdu/b7e8ZhjlWmsDstzvFR9/ZbmI3n6/4Z5w/i3LIrvS
+         O1XLSJwoMbJNHnzsTEszyNH6KKrZyshAjI/Tcrx1mcWalgR6UNOc/8gPc1dtY8dx2Rai
+         goxhEm/AMEro3GJ2ynLtJ+Qts38DeITInE4kwFo70va5uCYqcYj8tS43c1swljwAsgoS
+         xo9U5hRwmxlG1AKwkA7I273L3g1eEURADhR2BM9Xde1UBbsprhjaz+YBzJ/zk4UMAKxX
+         i+6OwQHLOH8wlUYkTKLFDvHy8/xg+QO2ktxVTh7EtzYxxBfEDMPiXNdiu45jIF3z9Ufn
+         YusA==
+X-Gm-Message-State: AC+VfDxTbf3nRWJEcOx5BzesJuBCrgLYJ4/j7RCdEKbeKJIQgvLiB8EK
+        zMd6W633ljpmGWMUMSopy6uYq39rl7o3SJ3VVR0=
+X-Google-Smtp-Source: ACHHUZ4f13sRv6rOHqN0EvP1OChV7suQUeuvsxOtz5l361dJCKCtqlgCkmoK3dRffrak5QxDgzzjdiLx9pqGGi94m2U=
+X-Received: by 2002:a05:6214:f6d:b0:623:8fa2:bc17 with SMTP id
+ iy13-20020a0562140f6d00b006238fa2bc17mr950645qvb.35.1684444840123; Thu, 18
+ May 2023 14:20:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c891c417-2859-b4c2-2838-e336ff72173f@gmail.com>
+References: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com> <b974c43ef661db2f34b157c853d59b01f35a4767.1684440205.git.gitgitgadget@gmail.com>
+In-Reply-To: <b974c43ef661db2f34b157c853d59b01f35a4767.1684440205.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 18 May 2023 17:20:29 -0400
+Message-ID: <CAPig+cT_Aq4zZjgf97oytqpox2KAMM_HtCGdfAmt7fPnHw9k3w@mail.gmail.com>
+Subject: Re: [PATCH 01/20] t1000-basic: modernize test format
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023.05.18 14:15, Phillip Wood wrote:
-> On 18/05/2023 00:56, steadmon@google.com wrote:
-> > From: Calvin Wan <calvinwan@google.com>
-> > 
-> > Introduces the C TAP harness from https://github.com/rra/c-tap-harness/
-> > 
-> > There is also more complete documentation at
-> > https://www.eyrie.org/~eagle/software/c-tap-harness/
-> > 
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> Is that a mistake? I don't think I've contributed anything to this patch
-> (unless you count complaining about it :-/)
+On Thu, May 18, 2023 at 4:04 PM John Cai via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> t1000-basic: modernize test format
 
-Yes, sorry. I was experimenting with b4[1] for my mailing list workflow,
-I think it got confused by your patch in [2]. I'll try to make sure it
-doesn't reoccur for v3.
+s/t1000/t0000/
 
-[1]: https://github.com/mricon/b4
-[2]: https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/
+> Some tests in t1000-basic.sh used the older four space indent format.
+> Update these to use tabs.
+
+Ditto.
+
+> Signed-off-by: John Cai <johncai86@gmail.com>
