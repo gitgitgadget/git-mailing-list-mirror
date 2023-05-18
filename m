@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD00C77B73
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6C6AC77B7A
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbjERUEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 16:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40442 "EHLO
+        id S230405AbjERUER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 16:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230319AbjERUDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 16:03:51 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F5710EC
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:37 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f42d937d2eso15519375e9.2
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:37 -0700 (PDT)
+        with ESMTP id S230327AbjERUDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 16:03:52 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74EF910F8
+        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:38 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3063433fa66so1589634f8f.3
+        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1684440216; x=1687032216;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cxJsDxdZGwZ154kis2C/LN3+sQEvzZKL7/V13pRIBK4=;
-        b=KIaVdYy2VVw38xYb2TIyKDq5kBnEVZs8d2Eh2AwfU3shyvqYbWasO9EL2fOkwRTDBW
-         6UeRdsd5BKpyqdAlkxLZ+CW/hIC/aE3fkOTNV0iJzXj1fB+e8og6oGlLsWuyZes/3Q+e
-         BkAUSXsNjjLs4VM56F7yf8qhH/ZOMuoXqmCC9C9q/Yg6voNAWacyg4j7p++MHPEGI+R5
-         y2JPG24sdxOOwMiPedxMABC6I4AJA+Ocq7CFWyElAJd+idR7CDB7/h6WDAwXo/zjGg+n
-         gyGDpf0xWJaiCBGD0OHrPg7dZ9T0DOlT5+xg9UHO1BR0Kqh8ZDU+hKyHBjCgR4/dP6Sf
-         S80A==
+        bh=MX9byp9YEf3LduogluBdzZY8lnkvGrb/QWlpSKzr7Eo=;
+        b=Acy81lYW1cx8QKuhVeVhYQnr6d3+eaxw3CR5Vm+q1PAUBI42+BsfkZoikbm7u1cnZJ
+         MsL1SZLu2RyAZDlreabtSsrXK5GzHUYExYEJ0QSu1JvXRtWWdybQD5B8z1xWT2jJ3VbW
+         IifC0VxqmBgdxpfhos/dQWxEDQqoG63Lp5O86+nN7wJJS5pXAuwN5Nr/pjNc7QtfdsQg
+         QEeUflnPFuxU/RZXgUEAcv/yAXWlclBLRzyb7HDFZXSX6sFTO+CSywiXadKbAY3ranvW
+         yeZdhlODy6I+QKBLc10TG/dz5rNZVtlH9otx+OFcbevHkbn/49XqwyfJSaFLI8EL/7kP
+         JqNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1684440216; x=1687032216;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cxJsDxdZGwZ154kis2C/LN3+sQEvzZKL7/V13pRIBK4=;
-        b=gn/jlprt05EiGM36i7z3T4nLbAbIUknW17xvxcNsnPyaegG/rQjnFYc3CIPgXY2Rj0
-         kSTU8jhJUuybiNtkG8GQIW+iU3N9EqBg8pecc3fjihLuMcRmFS2mP88vS0c06RH3d+qh
-         PXI8LpPHGLx9iv7ipINPGDevPlfFKsWGrSpEG9VJGd60G5DcFl7p+bj5ZvtiMV09XImR
-         5GP41fY44+10yWBJsJakX3lM6FGM6k86LbS+R+1Iss0eqMfXTZDmIOZz+P+fp0hv5VIw
-         /xJUXHJu/mKA1r2DH5817vp1Ac7/bB5UgVxwaqlsQLzQF0Xt0tfpLSEJ2djk2f54EMRe
-         9PAA==
-X-Gm-Message-State: AC+VfDxfLxyc/iC/v0cmbJl+Sl8GMNqYnIdlobHVzekhMU0HdiqLbzx9
-        kbhqPUPfnYxL7OGe7pA1DUskxVaZzo4=
-X-Google-Smtp-Source: ACHHUZ5MDgkQ6OSdf7ZQFlwMSHm3AwRHxJPOCXvhNK1KoLMtt4JAliHcSq7neBiFVThF0KmsXo8C/A==
-X-Received: by 2002:a7b:c012:0:b0:3f1:662a:93d0 with SMTP id c18-20020a7bc012000000b003f1662a93d0mr2592719wmb.15.1684440215767;
-        Thu, 18 May 2023 13:03:35 -0700 (PDT)
+        bh=MX9byp9YEf3LduogluBdzZY8lnkvGrb/QWlpSKzr7Eo=;
+        b=FqY5ZxGdqLDtxs/03XHk4sA1oU/YVl3oxIZ+J6ZzMu4amWeNUeHo8HJlB5cqOY1j+H
+         7nIddcCZGcoSuNdZ5l6oMduvpdAFaK4qtAj8UFPaNQTRciV1/xWRQ74YoaJXHbjCFf7X
+         w9ALeKq6KgAsO1Nt2/xHmL6DsjV1577SbNNvyVeHbVj8bxVQlLZs6xPoMMB661wlDRmM
+         ZnrZ57OxNZT04+CgbdU50rfqDPpBkfYwK1jjRaeKEyjSHbw0auOUWxjKA6vAgnnIncko
+         jgFAVBosGLu247j1kGAujSebukdCFV7vt+STBjihmEyJ2FuLC/ImdVhCaYguyqLW+02R
+         GbIg==
+X-Gm-Message-State: AC+VfDxfLo9D29xhMQnKCi+UDyigNkeyF4QXPgsgtqTW7QVH5dpan1U+
+        qcDG4Naea+D6+6XiKxmErHxBAxrusmk=
+X-Google-Smtp-Source: ACHHUZ6ISx84I1FHMHQyItqZofM95X94M8UyD0r2wQq7vUyLgic18W7y3s36hzEHYcxFIBp8xAfz1g==
+X-Received: by 2002:a5d:6306:0:b0:306:37ac:ef8e with SMTP id i6-20020a5d6306000000b0030637acef8emr2387900wru.56.1684440216502;
+        Thu, 18 May 2023 13:03:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w1-20020a1cf601000000b003f4e3ed98ffsm195173wmc.35.2023.05.18.13.03.35
+        by smtp.gmail.com with ESMTPSA id d2-20020a1c7302000000b003f3e50eb606sm231449wmb.13.2023.05.18.13.03.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 13:03:35 -0700 (PDT)
-Message-Id: <75a6b73d1bb196be2e4f3800c458e730b6f71237.1684440206.git.gitgitgadget@gmail.com>
+        Thu, 18 May 2023 13:03:36 -0700 (PDT)
+Message-Id: <7b348f3481f52bab876eb22485d3ec21c3f927f4.1684440206.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 References: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 18 May 2023 20:03:19 +0000
-Subject: [PATCH 14/20] t4206-log-follow-harder-copies: modernize test format
+Date:   Thu, 18 May 2023 20:03:20 +0000
+Subject: [PATCH 15/20] t5300-pack-object: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,70 +72,211 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t4206-log-follow-harder-copies.sh | 36 ++++++++++++++---------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ t/t5300-pack-object.sh | 184 ++++++++++++++++++++---------------------
+ 1 file changed, 92 insertions(+), 92 deletions(-)
 
-diff --git a/t/t4206-log-follow-harder-copies.sh b/t/t4206-log-follow-harder-copies.sh
-index 33ecf82c7f9..9167b0351f2 100755
---- a/t/t4206-log-follow-harder-copies.sh
-+++ b/t/t4206-log-follow-harder-copies.sh
-@@ -16,29 +16,29 @@ Line 2
- Line 3
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index d2ce236d612..745089479ca 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -208,7 +208,7 @@ test_expect_success 'unpack with OFS_DELTA' '
+ '
+ 
+ test_expect_success 'unpack with OFS_DELTA (core.fsyncmethod=batch)' '
+-       check_unpack test-3-${packname_3} obj-list "$BATCH_CONFIGURATION"
++	check_unpack test-3-${packname_3} obj-list "$BATCH_CONFIGURATION"
+ '
+ 
+ test_expect_success 'compare delta flavors' '
+@@ -263,97 +263,97 @@ test_expect_success 'survive missing objects/pack directory' '
+ 	)
  '
  
 -test_expect_success \
--    'add a file path0 and commit.' \
--    'git add path0 &&
--     git commit -m "Add path0"'
-+test_expect_success 'add a file path0 and commit.' '
-+	git add path0 &&
-+	git commit -m "Add path0"
-+'
- 
- echo >path0 'New line 1
- New line 2
- New line 3
- '
+-    'verify pack' \
+-    'git verify-pack	test-1-${packname_1}.idx \
+-			test-2-${packname_2}.idx \
+-			test-3-${packname_3}.idx'
+-
 -test_expect_success \
--    'Change path0.' \
--    'git add path0 &&
--     git commit -m "Change path0"'
-+test_expect_success 'Change path0.' '
-+	git add path0 &&
-+	git commit -m "Change path0"
-+'
- 
- cat <path0 >path1
+-    'verify pack -v' \
+-    'git verify-pack -v	test-1-${packname_1}.idx \
+-			test-2-${packname_2}.idx \
+-			test-3-${packname_3}.idx'
+-
 -test_expect_success \
--    'copy path0 to path1.' \
--    'git add path1 &&
--     git commit -m "Copy path1 from path0"'
-+test_expect_success 'copy path0 to path1.' '
-+	git add path1 &&
-+	git commit -m "Copy path1 from path0"
-+'
- 
+-    'verify-pack catches mismatched .idx and .pack files' \
+-    'cat test-1-${packname_1}.idx >test-3.idx &&
+-     cat test-2-${packname_2}.pack >test-3.pack &&
+-     if git verify-pack test-3.idx
+-     then false
+-     else :;
+-     fi'
+-
 -test_expect_success \
--    'find the copy path0 -> path1 harder' \
--    'git log --follow --name-status --pretty="format:%s"  path1 > current'
-+test_expect_success 'find the copy path0 -> path1 harder' '
-+	git log --follow --name-status --pretty="format:%s"  path1 > current
-+'
- 
- cat >expected <<\EOF
- Copy path1 from path0
-@@ -51,8 +51,8 @@ Add path0
- A	path0
- EOF
- 
+-    'verify-pack catches a corrupted pack signature' \
+-    'cat test-1-${packname_1}.pack >test-3.pack &&
+-     echo | dd of=test-3.pack count=1 bs=1 conv=notrunc seek=2 &&
+-     if git verify-pack test-3.idx
+-     then false
+-     else :;
+-     fi'
+-
 -test_expect_success \
--    'validate the output.' \
--    'compare_diff_patch current expected'
-+test_expect_success 'validate the output.' '
-+	compare_diff_patch current expected
+-    'verify-pack catches a corrupted pack version' \
+-    'cat test-1-${packname_1}.pack >test-3.pack &&
+-     echo | dd of=test-3.pack count=1 bs=1 conv=notrunc seek=7 &&
+-     if git verify-pack test-3.idx
+-     then false
+-     else :;
+-     fi'
+-
+-test_expect_success \
+-    'verify-pack catches a corrupted type/size of the 1st packed object data' \
+-    'cat test-1-${packname_1}.pack >test-3.pack &&
+-     echo | dd of=test-3.pack count=1 bs=1 conv=notrunc seek=12 &&
+-     if git verify-pack test-3.idx
+-     then false
+-     else :;
+-     fi'
+-
+-test_expect_success \
+-    'verify-pack catches a corrupted sum of the index file itself' \
+-    'l=$(wc -c <test-3.idx) &&
+-     l=$(expr $l - 20) &&
+-     cat test-1-${packname_1}.pack >test-3.pack &&
+-     printf "%20s" "" | dd of=test-3.idx count=20 bs=1 conv=notrunc seek=$l &&
+-     if git verify-pack test-3.pack
+-     then false
+-     else :;
+-     fi'
+-
+-test_expect_success \
+-    'build pack index for an existing pack' \
+-    'cat test-1-${packname_1}.pack >test-3.pack &&
+-     git index-pack -o tmp.idx test-3.pack &&
+-     cmp tmp.idx test-1-${packname_1}.idx &&
+-
+-     git index-pack --promisor=message test-3.pack &&
+-     cmp test-3.idx test-1-${packname_1}.idx &&
+-     echo message >expect &&
+-     test_cmp expect test-3.promisor &&
+-
+-     cat test-2-${packname_2}.pack >test-3.pack &&
+-     git index-pack -o tmp.idx test-2-${packname_2}.pack &&
+-     cmp tmp.idx test-2-${packname_2}.idx &&
+-
+-     git index-pack test-3.pack &&
+-     cmp test-3.idx test-2-${packname_2}.idx &&
+-
+-     cat test-3-${packname_3}.pack >test-3.pack &&
+-     git index-pack -o tmp.idx test-3-${packname_3}.pack &&
+-     cmp tmp.idx test-3-${packname_3}.idx &&
+-
+-     git index-pack test-3.pack &&
+-     cmp test-3.idx test-3-${packname_3}.idx &&
+-
+-     cat test-1-${packname_1}.pack >test-4.pack &&
+-     rm -f test-4.keep &&
+-     git index-pack --keep=why test-4.pack &&
+-     cmp test-1-${packname_1}.idx test-4.idx &&
+-     test -f test-4.keep &&
+-
+-     :'
++test_expect_success 'verify pack' '
++	git verify-pack test-1-${packname_1}.idx \
++		test-2-${packname_2}.idx \
++		test-3-${packname_3}.idx
++'
++
++test_expect_success 'verify pack -v' '
++	git verify-pack -v test-1-${packname_1}.idx \
++		test-2-${packname_2}.idx \
++		test-3-${packname_3}.idx
++'
++
++test_expect_success 'verify-pack catches mismatched .idx and .pack files' '
++	cat test-1-${packname_1}.idx >test-3.idx &&
++	cat test-2-${packname_2}.pack >test-3.pack &&
++	if git verify-pack test-3.idx
++	then false
++	else :;
++	fi
++'
++
++test_expect_success 'verify-pack catches a corrupted pack signature' '
++	cat test-1-${packname_1}.pack >test-3.pack &&
++	echo | dd of=test-3.pack count=1 bs=1 conv=notrunc seek=2 &&
++	if git verify-pack test-3.idx
++	then false
++	else :;
++	fi
++'
++
++test_expect_success 'verify-pack catches a corrupted pack version' '
++	cat test-1-${packname_1}.pack >test-3.pack &&
++	echo | dd of=test-3.pack count=1 bs=1 conv=notrunc seek=7 &&
++	if git verify-pack test-3.idx
++	then false
++	else :;
++	fi
++'
++
++test_expect_success 'verify-pack catches a corrupted type/size of the 1st packed object data' '
++	cat test-1-${packname_1}.pack >test-3.pack &&
++	echo | dd of=test-3.pack count=1 bs=1 conv=notrunc seek=12 &&
++	if git verify-pack test-3.idx
++	then false
++	else :;
++	fi
++'
++
++test_expect_success 'verify-pack catches a corrupted sum of the index file itself' '
++	l=$(wc -c <test-3.idx) &&
++	l=$(expr $l - 20) &&
++	cat test-1-${packname_1}.pack >test-3.pack &&
++	printf "%20s" "" | dd of=test-3.idx count=20 bs=1 conv=notrunc seek=$l &&
++	if git verify-pack test-3.pack
++	then false
++	else :;
++	fi
++'
++
++test_expect_success 'build pack index for an existing pack' '
++	cat test-1-${packname_1}.pack >test-3.pack &&
++	git index-pack -o tmp.idx test-3.pack &&
++	cmp tmp.idx test-1-${packname_1}.idx &&
++
++	git index-pack --promisor=message test-3.pack &&
++	cmp test-3.idx test-1-${packname_1}.idx &&
++	echo message >expect &&
++	test_cmp expect test-3.promisor &&
++
++	cat test-2-${packname_2}.pack >test-3.pack &&
++	git index-pack -o tmp.idx test-2-${packname_2}.pack &&
++	cmp tmp.idx test-2-${packname_2}.idx &&
++
++	git index-pack test-3.pack &&
++	cmp test-3.idx test-2-${packname_2}.idx &&
++
++	cat test-3-${packname_3}.pack >test-3.pack &&
++	git index-pack -o tmp.idx test-3-${packname_3}.pack &&
++	cmp tmp.idx test-3-${packname_3}.idx &&
++
++	git index-pack test-3.pack &&
++	cmp test-3.idx test-3-${packname_3}.idx &&
++
++	cat test-1-${packname_1}.pack >test-4.pack &&
++	rm -f test-4.keep &&
++	git index-pack --keep=why test-4.pack &&
++	cmp test-1-${packname_1}.idx test-4.idx &&
++	test -f test-4.keep &&
++
++	:
 +'
  
- test_done
+ test_expect_success 'unpacking with --strict' '
+ 
 -- 
 gitgitgadget
 
