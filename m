@@ -2,109 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 548FBC77B7A
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 14:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98CA2C77B7A
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 15:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbjEROeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 10:34:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55468 "EHLO
+        id S231177AbjERPRt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 11:17:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230049AbjEROeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 10:34:36 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B91795
-        for <git@vger.kernel.org>; Thu, 18 May 2023 07:34:35 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 779ED320069B;
-        Thu, 18 May 2023 10:34:32 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Thu, 18 May 2023 10:34:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1684420472; x=
-        1684506872; bh=XoAM4gb8Uv9GTEmkuBB5M58eGcqpo65hqs/BNCiEF4Y=; b=N
-        B9yDj2qaouFCQjxszKHznuRUo97hRaHarJb5iONWNMCpk/sCbHrcKvDWn39pQ7Yd
-        pon+d2Ckr/FEMGvKUyXbCDLrs2oby28R8SCwlG2eTQdz2SoYlDVKCw5anp5LoEBX
-        qMPhiA0G8lQAWVoH7mP3XbK+bT01Qrcsb8Ccz3itFUILyAETSM7t0LyicHLaE+ZD
-        QHO4Awb0iTlw/Ab7Ki0LrJ0F8owzJppX6gWcfCw7R1rh6GFfp/it5YW4zbNAy7xt
-        F9+yC9LYPJLjZTyKCStxbrPRERwYfJvmJYFM/pJEQkAXrnxpsQYO4sqtQFUnBoVQ
-        Iy9zaUB0XD6pBXNCiybNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1684420472; x=1684506872; bh=XoAM4gb8Uv9GT
-        EmkuBB5M58eGcqpo65hqs/BNCiEF4Y=; b=w+MBNNsvqJfAWVAVo4Yt8RC9KTwZF
-        OpiYjCS4CnWMCf+X1aDympdk9EvdG29oijv2c+uKLOM0qnjKev22+6KZRUmYJNRd
-        MTzAF5EhFAQyZVls2QEo4i37KJXjdJbEOpvtl6HdWmEn+mVAnJgsRhkte9+QfmjJ
-        mAHKqK+4Y4UAaxOzWi35m9vCnJ8VwTZamErkjr+fnaBvU3kXnETjQdvOrwXH/iZ+
-        d6hUWO+eAH/10hjkCRNQJzNnAJi3tnCON6jnq8xKrQD42NPI0curcIHv/GFx/mux
-        xfh351YzJpwbcEZlFDWOiaPQtsfI3gElxHA78+9QxtHgIEm4KMOICH6qw==
-X-ME-Sender: <xms:dzdmZA6vXNgA0wsSJNNK7V5UtzA0PbMd2DfdwJKEzwMBxrsKI-xW1es>
-    <xme:dzdmZB45mzFfeLCqzaXV6JYxsiRwAWKKJqe89UiIxS8BrVXxd3QLevfij4sbl6Q3O
-    OnGlIkXiKNaJOAPug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeifedgjeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfeh
-    leeufedtjeekueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:dzdmZPedcDen3i82iUU0IB11JprrOfSWIoC0C_Gi8PIuJfZSy-dxQw>
-    <xmx:dzdmZFKYdt9d_FCWCAia5RXtAlSw6JTpqLDZo2ttHbW0QauDBdtEAQ>
-    <xmx:dzdmZEJLNHYHOOHMLJsH-NTu5jKfgwGllEyWqrKN8djQAggWOPg_jQ>
-    <xmx:eDdmZI3aEqLgb9clQIaM6isTf1BAJ93SZfTetCHegFlM_hd-CiI-4Q>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id B952215A008E; Thu, 18 May 2023 10:34:31 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-431-g1d6a3ebb56-fm-20230511.001-g1d6a3ebb
-Mime-Version: 1.0
-Message-Id: <51690df7-1788-469f-aabe-84fc7a576951@app.fastmail.com>
-In-Reply-To: <820dda0458994fdf7ff37870736ce6ed7871720c.1684411136.git.dyroneteng@gmail.com>
-References: <cover.1684411136.git.dyroneteng@gmail.com>
- <820dda0458994fdf7ff37870736ce6ed7871720c.1684411136.git.dyroneteng@gmail.com>
-Date:   Thu, 18 May 2023 16:34:11 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Teng Long" <dyroneteng@gmail.com>
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
+        with ESMTP id S230211AbjERPRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 11:17:47 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FAD0C9
+        for <git@vger.kernel.org>; Thu, 18 May 2023 08:17:46 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1ab1b79d3a7so16209705ad.3
+        for <git@vger.kernel.org>; Thu, 18 May 2023 08:17:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684423066; x=1687015066;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N/TohTk5f4fy4aOqvTv2kE2jHD5uODuYWZMHdGwAI4A=;
+        b=PN5KASz1eRroLzZ84yFBb8AUp9/mMKFHGUIi2ljmDETecWGvEojtuPGYxgQSA6NyZ7
+         tKWVPHN76TpvRPQES6NQ4Yf3Ij93hTdo7Fl1oUUs/rbLA/45gH3Wy+rkLkQBkC8ndGXQ
+         JX1OzrE9NL3XbITnImNKLsx6VUByiinyrFxbmoTOJQHEewQxE2eh14hZbGoRqz+R/MgK
+         CVX6Pl/jUAiKaB5FDWv6lc/w8IKdS3VZtNgvwMeZOiXYzX0rjG29rhHWqrlYpxGkJa8H
+         6AN85xtyIKcBKOIwIBxtmOgUdNdBDZnV2Sr93vI3mus2y2qIZY4PrQI1rHRusPuNSpvt
+         CGrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684423066; x=1687015066;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=N/TohTk5f4fy4aOqvTv2kE2jHD5uODuYWZMHdGwAI4A=;
+        b=DH9ATeSbsrOttY4bKFyC3Bku3bI34gOLEUCM4FHOvam0Ippmrmww9ig/0Un1IEC7OG
+         NO1PdFe1boDk/+rNaO2GQxVZQ31nD2dlwMHbT4kmDyU3FGENJslv5Jj+tRS16GycLBNE
+         XQyW9RJI4a6f1cxlpFvqG6wc9ujpc17FlXmQPnBlK2BU7TgUhspZr0WrWjtmLRpcZmql
+         UIqvxTRGzBmdYjDy0IdqA0f2j7HD17KnEikNO9tRWw4KxlV0529zxZ/85/wcEPuOFpNF
+         EkicQb8iHTuDxFn2LuHZxh5T64K8vxPi4w9l326Ide4RCmivyvIDvqXPB/8Biqsibudo
+         KQ9A==
+X-Gm-Message-State: AC+VfDybHGz5KPpX5cU6MeZyvYLpY5oPxKXPfOMiWp/3b8uloA0ofnOo
+        nHaE08771T9sqDAOSZ9dZ1g=
+X-Google-Smtp-Source: ACHHUZ62DNYqdFGff1zaW2gsuOcVUsCXPlw14VgLbaHZea0P1YpWLRRTbtQV/cX3fkKtw3f6Q7Lnrw==
+X-Received: by 2002:a17:902:e80c:b0:1a9:581e:d809 with SMTP id u12-20020a170902e80c00b001a9581ed809mr3670024plg.7.1684423065763;
+        Thu, 18 May 2023 08:17:45 -0700 (PDT)
+Received: from localhost (187.137.203.35.bc.googleusercontent.com. [35.203.137.187])
+        by smtp.gmail.com with ESMTPSA id j6-20020a170902c08600b001ac2be26340sm1551635pld.222.2023.05.18.08.17.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 May 2023 08:17:44 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v10 4/6] notes.c: introduce
- '[--[no-]separator|--separator=<paragraph-break>]' option
+Subject: Re: [PATCH v10 0/6] notes.c: introduce "--separator" option
+References: <cover.1682671758.git.dyroneteng@gmail.com>
+        <cover.1684411136.git.dyroneteng@gmail.com>
+Date:   Thu, 18 May 2023 08:17:44 -0700
+In-Reply-To: <cover.1684411136.git.dyroneteng@gmail.com> (Teng Long's message
+        of "Thu, 18 May 2023 20:02:05 +0800")
+Message-ID: <xmqqfs7tvfc7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Teng Long <dyroneteng@gmail.com> writes:
 
-On Thu, May 18, 2023, at 14:02, Teng Long wrote:
 > From: Teng Long <dyroneteng@gmail.com>
 >
-> When adding new notes or appending to an existing notes, we will
-> insert a blank line between the paragraphs, like:
-
-I was wondering why it acts this way. So of minor historical note (may
-be obvious to everyone else): it was in order to mirror how `git commit
--m` works. From commit d9246d4303f (Teach "-m <msg>" and "-F <file>" to
-"git notes edit", 2009-10-09):
-
-> Teach "-m <msg>" and "-F <file>" to "git notes edit"
+> Diff since v9:
 >
-> The "-m" and "-F" options are already the established method
-> (in both git-commit and git-tag) to specify a commit/tag message
-> without invoking the editor. This patch teaches "git notes edit"
-> to respect the same options for specifying a notes message without
-> invoking the editor.
+> 1. [4/6] support `--no-separator` which means not to add any paragraph-breaks.
+> 2. [4/6] Fix the problems by the Junio's suggestion [1]
 >
-> Multiple "-m" and/or "-F" options are concatenated as separate
-> paragraphs.
+> [1] https://public-inbox.org/git/xmqqsfcjbuud.fsf@gitster.g/
 
--- 
-Kristoffer Haugsbakk
+Thanks for an update, but it was a bit unexpected to see a full
+reroll instead of a new patch to add --no-separator support on top
+of what has already been queued in 'next' for the past 10+ days.
+
+
+
+
+
