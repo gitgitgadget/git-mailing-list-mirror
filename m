@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B940C77B73
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41739C7EE2A
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 20:04:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbjERUET (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 16:04:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40106 "EHLO
+        id S230353AbjERUEV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 16:04:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230329AbjERUDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 16:03:52 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24EC010FE
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:39 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-3094871953bso883738f8f.0
-        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:39 -0700 (PDT)
+        with ESMTP id S230289AbjERUDx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 16:03:53 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A40EE75
+        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:40 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f427118644so23996615e9.0
+        for <git@vger.kernel.org>; Thu, 18 May 2023 13:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684440217; x=1687032217;
+        d=gmail.com; s=20221208; t=1684440218; x=1687032218;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wMpnjhFcqPYC4U7jxJ8zzzEv2kPfKjnO405BMGeoM1c=;
-        b=lrTTv5tC0RiQWyHpzfyhM6v1SkDOAe/gvQH42I+7GUl+FxxS0j54d3X4k6DUfhYYiH
-         QR/rvJNkQVFEq1qCx6449hJubWOZoaSuPDv5aVvTWQiYmINHjmFdsaeNsLGk0+mVtmEd
-         687GYHDGbt5FZfZH7G98YknNWUAAeTe53jrAO/LdYiJps1V4qLhl5JlT6/JnDAkh7THr
-         6BPmJGGcm5cMWRmV2vwqLV8Jdd5pBkBk/vXEO/aIgpwWrqAtrc4ZnESf22vv8qDubluf
-         SKPhWWiwT61EmVRjxKAoCyDW31wAzOf2IeEkRr6fm0HNjOe8hwvx0iZU0fJ32cmCT4hq
-         rsIw==
+        bh=0zzhedQPVEvCLK19lp+Wr664ssQJ62Ear/0zHPmrx84=;
+        b=Smk6FchNFdN/n2GUdcvoscKrLp0aAEVoPdQc3N0v+y3v9IaJqevipGDmXMloFm+63V
+         xL7yzQByCNtiqSP9GkDp+xrRCqlxIBB1AAX0/uC7uV5Rj/gdJgq/HWMIG36lOYA96KzD
+         OJVVKKj00hZubfkp46YX6yq6ttOZ+04O+kb6Uw3rJmuFNjGxn/PqyhldUqMLnCggDu+L
+         Y9RiVXVbci0V4NswCNgxBwwnxY/ZfZ63afm1NKaLCwqBepzqzdkYB9tAbe2mnSGZHXi3
+         UKCAoalskzOAFPK7FdFD0Y3VbcBlyfqpW4vvKsBfnOuZDfxQZDum+ul2jnuGoQ9+QFND
+         ZU5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684440217; x=1687032217;
+        d=1e100.net; s=20221208; t=1684440218; x=1687032218;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wMpnjhFcqPYC4U7jxJ8zzzEv2kPfKjnO405BMGeoM1c=;
-        b=Bl30vCHrOREqUgZJwmwdL4nVAaTTRQ/4ewSw+Ln6FHu3fD+tLVyeZIJiJNLR4nEmu+
-         vheCDSYp4lSP6sshZE1qjBW4nkK0vRey31gwiKzxuXlezz7Q25ncYbY3jF5XRg3w1wx5
-         ZBgmuiCD2281WTJGKrImmY83c1vd1Qx/PMymnrWZLByR77cGRjGUTTBheaLvpfenM5bJ
-         uDHtfR+DAGZ08B7F72ReKD8QlH/Nweq0BcO1/W5YvimPgWkJBVvm/t6RmIlumm5vwZyq
-         V28rL36qWCXsW6Qvgvlj+0TL4qG7mLl/HgXomjqZqB9ygf14Uk7BOTs6scJdnoWPCg7d
-         ZmKw==
-X-Gm-Message-State: AC+VfDwEPy3ZXYpcxAN07kPe2/SqX2c1xrO0x5/HgGZwK5IelYlmymdX
-        epZHp1Qhx3pAdqFhWBnI+g9a9PiK510=
-X-Google-Smtp-Source: ACHHUZ4Ynw7uw4HnKdpEkx33BQe4rWi5oyvbJFZNAV63uuaucu94cgMtYMWGxI5JzBPjUSCDkBI2Ng==
-X-Received: by 2002:adf:eb0a:0:b0:306:3711:11d7 with SMTP id s10-20020adfeb0a000000b00306371111d7mr2480136wrn.48.1684440217351;
-        Thu, 18 May 2023 13:03:37 -0700 (PDT)
+        bh=0zzhedQPVEvCLK19lp+Wr664ssQJ62Ear/0zHPmrx84=;
+        b=BhaPS8VRHFPgW3Y0fcZW6mu0M2gKRL3xd/aVfeywlHzCKOF2I9w0H4S6Fj6TROEl+T
+         TRs3TyLxHJJ7qnQVFAFsMlTkDmvmpHvFyu292KVzP9+bW/Xm523XnL8sGL8qiKoTGhoo
+         hy2ke7dJSFNBlEIKybyWw36A/IlNgr22iZomIghSyrYbfCl8PXkUvUFy5IjmKN8H3m4v
+         UwRooWEqAAoyXxiRMZug3DDjBH50q8GIXVp9SYcANX39BgkRqSShCZAKnb/McAIwbxBh
+         3p/YKYP90OoChdC1coEf/IF7Sge9JAByFKgVMUARBwYaVhOQfVPPYsTsKx05YQaeJ/qK
+         vxxQ==
+X-Gm-Message-State: AC+VfDwf4k7ZoSQkHfUvsOr2guFbJ41bQDlfJQ+ttaelxsPnPp6kQW2E
+        e0E4LCzZ0JKHXKXFDenKOJaxvSRXo84=
+X-Google-Smtp-Source: ACHHUZ4Z+HjxfC4GGrl6xIJDk/PS/hw3n7j6NmblFj08IOMr+XZbz40oRBtmbj2r/LZBULik/R3Mmw==
+X-Received: by 2002:a05:600c:218f:b0:3f5:9ba:442e with SMTP id e15-20020a05600c218f00b003f509ba442emr2456486wme.10.1684440218531;
+        Thu, 18 May 2023 13:03:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16-20020a5d4bd0000000b0030642f5da27sm3095527wrt.37.2023.05.18.13.03.36
+        by smtp.gmail.com with ESMTPSA id k1-20020a7bc301000000b003f42d8dd7ffsm222161wmj.19.2023.05.18.13.03.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 13:03:36 -0700 (PDT)
-Message-Id: <6325c8f48c4fd36cc509d4a20e5eb4d6377547b0.1684440206.git.gitgitgadget@gmail.com>
+        Thu, 18 May 2023 13:03:38 -0700 (PDT)
+Message-Id: <bef72336ae83266ecdd8f61e2715a48dc21214e0.1684440206.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 References: <pull.1513.git.git.1684440205.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 18 May 2023 20:03:21 +0000
-Subject: [PATCH 16/20] t5301-sliding-window: modernize test format
+Date:   Thu, 18 May 2023 20:03:23 +0000
+Subject: [PATCH 18/20] t5306-pack-nobase: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,116 +72,127 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t5301-sliding-window.sh | 100 +++++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 50 deletions(-)
+ t/t5306-pack-nobase.sh | 94 ++++++++++++++++++++----------------------
+ 1 file changed, 45 insertions(+), 49 deletions(-)
 
-diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
-index 3ccaaeb3977..226490d60df 100755
---- a/t/t5301-sliding-window.sh
-+++ b/t/t5301-sliding-window.sh
-@@ -8,55 +8,55 @@ test_description='mmap sliding window tests'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+diff --git a/t/t5306-pack-nobase.sh b/t/t5306-pack-nobase.sh
+index 846c5ca7d34..0d50c6b4bca 100755
+--- a/t/t5306-pack-nobase.sh
++++ b/t/t5306-pack-nobase.sh
+@@ -12,18 +12,17 @@ TEST_PASSES_SANITIZE_LEAK=true
  
+ # Create A-B chain
+ #
 -test_expect_success \
--    'setup' \
--    'rm -f .git/index* &&
--     for i in a b c
--     do
--         echo $i >$i &&
--	 test-tool genrandom "$i" 32768 >>$i &&
--         git update-index --add $i || return 1
--     done &&
--     echo d >d && cat c >>d && git update-index --add d &&
--     tree=$(git write-tree) &&
--     commit1=$(git commit-tree $tree </dev/null) &&
--     git update-ref HEAD $commit1 &&
--     git repack -a -d &&
--     test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
--     pack1=$(ls .git/objects/pack/*.pack) &&
--     test -f "$pack1"'
--
--test_expect_success \
--    'verify-pack -v, defaults' \
--    'git verify-pack -v "$pack1"'
--
--test_expect_success \
--    'verify-pack -v, packedGitWindowSize == 1 page' \
--    'git config core.packedGitWindowSize 512 &&
--     git verify-pack -v "$pack1"'
--
--test_expect_success \
--    'verify-pack -v, packedGit{WindowSize,Limit} == 1 page' \
--    'git config core.packedGitWindowSize 512 &&
--     git config core.packedGitLimit 512 &&
--     git verify-pack -v "$pack1"'
--
--test_expect_success \
--    'repack -a -d, packedGit{WindowSize,Limit} == 1 page' \
--    'git config core.packedGitWindowSize 512 &&
--     git config core.packedGitLimit 512 &&
--     commit2=$(git commit-tree $tree -p $commit1 </dev/null) &&
--     git update-ref HEAD $commit2 &&
--     git repack -a -d &&
--     test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
--     pack2=$(ls .git/objects/pack/*.pack) &&
--     test -f "$pack2" &&
--     test "$pack1" \!= "$pack2"'
--
--test_expect_success \
--    'verify-pack -v, defaults' \
--    'git config --unset core.packedGitWindowSize &&
--     git config --unset core.packedGitLimit &&
--     git verify-pack -v "$pack2"'
-+test_expect_success 'setup' '
-+	rm -f .git/index* &&
-+	for i in a b c
-+	do
-+	echo $i >$i &&
-+	test-tool genrandom "$i" 32768 >>$i &&
-+	git update-index --add $i || return 1
-+	done &&
-+	echo d >d && cat c >>d && git update-index --add d &&
-+	tree=$(git write-tree) &&
-+	commit1=$(git commit-tree $tree </dev/null) &&
-+	git update-ref HEAD $commit1 &&
-+	git repack -a -d &&
-+	test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
-+	pack1=$(ls .git/objects/pack/*.pack) &&
-+	test -f "$pack1"
+-    'setup base' \
+-    'test_write_lines a b c d e f g h i >text &&
+-     echo side >side &&
+-     git update-index --add text side &&
+-     A=$(echo A | git commit-tree $(git write-tree)) &&
++test_expect_success 'setup base' '
++	test_write_lines a b c d e f g h i >text &&
++	echo side >side &&
++	git update-index --add text side &&
++	A=$(echo A | git commit-tree $(git write-tree)) &&
+ 
+-     echo m >>text &&
+-     git update-index text &&
+-     B=$(echo B | git commit-tree $(git write-tree) -p $A) &&
+-     git update-ref HEAD $B
+-    '
++	echo m >>text &&
++	git update-index text &&
++	B=$(echo B | git commit-tree $(git write-tree) -p $A) &&
++	git update-ref HEAD $B
 +'
-+
-+test_expect_success 'verify-pack -v, defaults' '
-+	git verify-pack -v "$pack1"
+ 
+ # Create repository with C whose parent is B.
+ # Repository contains C, C^{tree}, C:text, B, B^{tree}.
+@@ -31,52 +30,49 @@ test_expect_success \
+ # Repository is missing A (parent of B).
+ # Repository is missing A:side.
+ #
+-test_expect_success \
+-    'setup patch_clone' \
+-    'base_objects=$(pwd)/.git/objects &&
+-     (mkdir patch_clone &&
+-      cd patch_clone &&
+-      git init &&
+-      echo "$base_objects" >.git/objects/info/alternates &&
+-      echo q >>text &&
+-      git read-tree $B &&
+-      git update-index text &&
+-      git update-ref HEAD $(echo C | git commit-tree $(git write-tree) -p $B) &&
+-      rm .git/objects/info/alternates &&
++test_expect_success 'setup patch_clone' '
++	base_objects=$(pwd)/.git/objects &&
++	(mkdir patch_clone &&
++	cd patch_clone &&
++	git init &&
++	echo "$base_objects" >.git/objects/info/alternates &&
++	echo q >>text &&
++	git read-tree $B &&
++	git update-index text &&
++	git update-ref HEAD $(echo C | git commit-tree $(git write-tree) -p $B) &&
++	rm .git/objects/info/alternates &&
+ 
+-      git --git-dir=../.git cat-file commit $B |
+-      git hash-object -t commit -w --stdin &&
++	git --git-dir=../.git cat-file commit $B |
++	git hash-object -t commit -w --stdin &&
+ 
+-      git --git-dir=../.git cat-file tree "$B^{tree}" |
+-      git hash-object -t tree -w --stdin
+-     ) &&
+-     C=$(git --git-dir=patch_clone/.git rev-parse HEAD)
+-    '
++	git --git-dir=../.git cat-file tree "$B^{tree}" |
++	git hash-object -t tree -w --stdin
++	) &&
++	C=$(git --git-dir=patch_clone/.git rev-parse HEAD)
 +'
-+
-+test_expect_success 'verify-pack -v, packedGitWindowSize == 1 page' '
-+	git config core.packedGitWindowSize 512 &&
-+	git verify-pack -v "$pack1"
+ 
+ # Clone patch_clone indirectly by cloning base and fetching.
+ #
+-test_expect_success \
+-    'indirectly clone patch_clone' \
+-    '(mkdir user_clone &&
+-      cd user_clone &&
+-      git init &&
+-      git pull ../.git &&
+-      test $(git rev-parse HEAD) = $B &&
++test_expect_success 'indirectly clone patch_clone' '
++	(mkdir user_clone &&
++	 cd user_clone &&
++	 git init &&
++	 git pull ../.git &&
++	 test $(git rev-parse HEAD) = $B &&
+ 
+-      git pull ../patch_clone/.git &&
+-      test $(git rev-parse HEAD) = $C
+-     )
+-    '
++	 git pull ../patch_clone/.git &&
++	 test $(git rev-parse HEAD) = $C
++	)
 +'
-+
-+test_expect_success 'verify-pack -v, packedGit{WindowSize,Limit} == 1 page' '
-+	git config core.packedGitWindowSize 512 &&
-+	git config core.packedGitLimit 512 &&
-+	git verify-pack -v "$pack1"
-+'
-+
-+test_expect_success 'repack -a -d, packedGit{WindowSize,Limit} == 1 page' '
-+	git config core.packedGitWindowSize 512 &&
-+	git config core.packedGitLimit 512 &&
-+	commit2=$(git commit-tree $tree -p $commit1 </dev/null) &&
-+	git update-ref HEAD $commit2 &&
-+	git repack -a -d &&
-+	test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
-+	pack2=$(ls .git/objects/pack/*.pack) &&
-+	test -f "$pack2" &&
-+	test "$pack1" \!= "$pack2"
-+'
-+
-+test_expect_success 'verify-pack -v, defaults' '
-+	git config --unset core.packedGitWindowSize &&
-+	git config --unset core.packedGitLimit &&
-+	git verify-pack -v "$pack2"
+ 
+ # Cloning the patch_clone directly should fail.
+ #
+-test_expect_success \
+-    'clone of patch_clone is incomplete' \
+-    '(mkdir user_direct &&
+-      cd user_direct &&
+-      git init &&
+-      test_must_fail git fetch ../patch_clone/.git
+-     )
+-    '
++test_expect_success 'clone of patch_clone is incomplete' '
++	(mkdir user_direct &&
++	 cd user_direct &&
++	 git init &&
++	 test_must_fail git fetch ../patch_clone/.git
++	)
 +'
  
  test_done
