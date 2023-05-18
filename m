@@ -2,187 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7F38C77B7A
-	for <git@archiver.kernel.org>; Thu, 18 May 2023 13:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2855AC77B7D
+	for <git@archiver.kernel.org>; Thu, 18 May 2023 13:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230020AbjERNdB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 09:33:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57126 "EHLO
+        id S231268AbjERN4s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 09:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230021AbjERNdA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 09:33:00 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E450F1A7
-        for <git@vger.kernel.org>; Thu, 18 May 2023 06:32:54 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-30626f4d74aso1377246f8f.0
-        for <git@vger.kernel.org>; Thu, 18 May 2023 06:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684416773; x=1687008773;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=A1RvlDKpdYd7ejFdrIfD//YkZ7B6AONKy7vK/wOEs4s=;
-        b=GHgOOgzZ8rFYM9NF1PDACbyDlS8Q4lrLMRl84jCHSvy3PuDdggKGBgQPHaoANi8TkR
-         IPiJ7HaDMIOvGhnTsyGxzWYeRoXZgDJUER2MuzJnWfDtty6uai78lxmKttyCqjpQO/bX
-         Mbr/p1jEYXp+i6wZwh0DU/vdK9KLZ2wgX59W7Nm6Ii2+qZJeWMntAMS16AgyZL6mpW82
-         HxPHgSLWy4c84lLR4pc/uwod2le+RYzIvUOn/3cdAWPXrXfrF3tp3hU5hwzs2a+UANp2
-         VguBYO1nzfEkiZ4i5d3utAzdHP2G+l4Wi8HjNggrCp7F3n2Rs5ODFHSq0RDaoOM8DY21
-         7y+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684416773; x=1687008773;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A1RvlDKpdYd7ejFdrIfD//YkZ7B6AONKy7vK/wOEs4s=;
-        b=SyYEVEmaWSGMkcRLwFZfDAb5gFJ67o90PY2Jqc4LsEIgGZYUVIc9ThEilDfEGnJD/2
-         tdHMteEuXxuZef0KXFMYSdYAwk7hWkkGkRupxCGMf/4xix7zNdN5pvvclaY4QhukwzMP
-         yXPvExpBtHcgUk4oGDYGsstaFSEX+YoABmLq/cB3t42IFx+c1BdxARb2WAr9q1kNhdln
-         zJvtYClr75GxJGdamTnY96vQ/BLDuo6TNRTvmIiQApT8DMnXiq4Ad7j/GGbNegKoQ6cr
-         fVT16dgCoWTvknUwZrbBbtqIB/+OHQFN/PUqI+/J4bLuuMDR+IzBBLYoR95ds2SNtSzW
-         FGkQ==
-X-Gm-Message-State: AC+VfDxSDS9QOJxk2UyJ/e/hnwxiFPOT3xqjAeLgitoChXtncsnWBsdJ
-        lVIW3SH+TRCUSAg8bmr9zvMGrvnquu4=
-X-Google-Smtp-Source: ACHHUZ4mt9FVrQ3J3FdKxvsFsjc4mmFHaR34YkMZoghWUONZzQdjPjmQePDAGtTegq4nAmoYYqD6nA==
-X-Received: by 2002:adf:f20b:0:b0:306:36e7:db27 with SMTP id p11-20020adff20b000000b0030636e7db27mr1689611wro.16.1684416773167;
-        Thu, 18 May 2023 06:32:53 -0700 (PDT)
-Received: from [192.168.1.195] ([90.255.142.254])
-        by smtp.googlemail.com with ESMTPSA id z2-20020a1cf402000000b003f4f9274d10sm2098430wma.16.2023.05.18.06.32.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 06:32:52 -0700 (PDT)
-Message-ID: <e26789b2-21fd-668d-ee00-2640d5b8d5c2@gmail.com>
-Date:   Thu, 18 May 2023 14:32:51 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH RFC v2 4/4] unit test: add basic example and build rules
-Content-Language: en-US
-To:     steadmon@google.com, git@vger.kernel.org
-Cc:     calvinwan@gmail.com, szeder.dev@gmail.com, chooglen@google.com,
-        avarab@gmail.com, gitster@pobox.com, sandals@crustytoothpaste.net,
-        Calvin Wan <calvinwan@google.com>
-References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
- <20230517-unit-tests-v2-v2-4-21b5b60f4b32@google.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230517-unit-tests-v2-v2-4-21b5b60f4b32@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S230339AbjERN4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 09:56:47 -0400
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22DD110D1
+        for <git@vger.kernel.org>; Thu, 18 May 2023 06:56:46 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 44E94320025E;
+        Thu, 18 May 2023 09:56:45 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Thu, 18 May 2023 09:56:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1684418204; x=1684504604; bh=Gk3/QCeM6BALfYICLv4HnV79g
+        uN/jCzafy7QfYvvTvM=; b=dalLNeRm3T57L7nj0GYiwfhpLKDa3JgW0GMYn8DDr
+        FQrCfKFxKxdZEcfY2Rm0SaHtrHLH+6Ltb0EcEj34r8nUjlOg5JkuM58pTsIMt4qD
+        jTRNrCUjFtLD0vqILLUW5V0vmbcLsXWPPmUaBHa+vhlBVKrOQngpSlE1bGzTLh5G
+        PEr7X3DJ4MxvQBfbi7tPHZBP40OjHmMQ6BxCugmYwP1XIqxFo39jTYaaAqjLuWc9
+        iSapldPMICxvHDjbLHxeCWdmvROWLZDgegBMVWmoRPaY7OVkmfHwaFw9nwQ5tOcZ
+        GEKzknCTk/LLXSBQQVayh9Dad4TJpzXsVeqfZBy3KU0jg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1684418204; x=1684504604; bh=Gk3/QCeM6BALfYICLv4HnV79guN/jCzafy7
+        QfYvvTvM=; b=aSjhkM/5Ol4fDUt9Vd9mwBherRM1S9Q4gXyxn1yfMCVuRPidPZV
+        ROu1G2gWhotCu7ktqgakGiekiIWJ63ZWX6TomxE0B9q9BBlarxLTs+DpL4AXNjV/
+        t3hP/ZISUyUk2POUtg7EXAHJSmDPvYj1nnsIo+rfscUiLBJhyvwjTZF3nkO6U/kc
+        w4lNEoQjf5r70n0N0i6504JoKuM3o2mbAz4k0Daql+aDwFMsAbJmpLk+BfOWHfjT
+        HNuxAXZVcwcnJZRZV67cSwsI7Rkfx+Q9LfYP2u7eef4BBs714Uabktkhl3dl9FTp
+        3dMXaWnEW/WcvORdA0mmWb7ovUwXkf5kTLA==
+X-ME-Sender: <xms:nC5mZIX1P69GPVgTt9S6rPfSp82Wnf71xjlGhwX_PdtXESjO1_oCL8Q>
+    <xme:nC5mZMkjYwnrTbONqgZwW9u9MMNtc6Ih5ggECIop6Fp3gdT5wNzq6H17v5O-LamRW
+    X9dMWgPV8hjQYxsNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeifedgjeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
+    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:nC5mZMYqCVQUfvNPwBvX62ZMQ1X9Wja7dteZ73w9DHITjcuzu0dqwg>
+    <xmx:nC5mZHWGwGskVREwOIRmgAV5c8x4x2nqnBvZwOMsAtuZ8LiLCm1mng>
+    <xmx:nC5mZCki5n_iJGsP-_P-ICnanAfHCvUcaP6o7sE-ZBxS-ezOQc0v6w>
+    <xmx:nC5mZEi1aRsvk8n6ZtdpKOfE-h1CoO-o4bB8sMApRUp3X034UKIDoA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 66A4415A008E; Thu, 18 May 2023 09:56:44 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-431-g1d6a3ebb56-fm-20230511.001-g1d6a3ebb
+Mime-Version: 1.0
+Message-Id: <3f86a553-246a-4626-b1bd-bacd8148318a@app.fastmail.com>
+In-Reply-To: <cover.1684411136.git.dyroneteng@gmail.com>
+References: <cover.1682671758.git.dyroneteng@gmail.com>
+ <cover.1684411136.git.dyroneteng@gmail.com>
+Date:   Thu, 18 May 2023 15:56:23 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Teng Long" <dyroneteng@gmail.com>
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v10 0/6] notes.c: introduce "--separator" option
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/05/2023 00:56, steadmon@google.com wrote:
-> Integrate a simple strbuf unit test with Git's Makefiles.
-> 
-> You can build and run the unit tests with `make unit-tests` (or just
-> build them with `make build-unit-tests`). By default we use the basic
-> test runner from the C-TAP project, but users who prefer prove as a test
-> runner can set `DEFAULT_UNIT_TEST_TARGET=prove-unit-tests` instead.
-> 
-> We modify the `#include`s in the C TAP libraries so that we can build
-> them without having to include the t/ directory in our include search
-> path.
+On Thu, May 18, 2023, at 14:02, Teng Long wrote:
+> From: Teng Long <dyroneteng@gmail.com>
+>
+> Diff since v9:
+>
+> 1. [4/6] support `--no-separator` which means not to add any paragraph=
+-breaks.
 
-Thanks for adding some example tests, it is really helpful to see how 
-the library will be used.
+Nice to see. :) I think this will be useful. Specifically:
 
-I tried building the units test with SANITIZE=address set and I get lots 
-of link errors complaining about undefined references to __asan_*
+Johan Herland wrote (2010):[1]
+> BTW, since I started talking about git notes, people on this list have=
+ found
+> more and more interesting use cases for them:
+>
+> [=E2=80=A6]
+>
+> - Help in bug tracking with header-like lines such as:
+>     - Causes-Bug: #12345
+>     - Fixes-Bug: #54321
+>
+> - Store after-the-fact "Acked-By", "Reviewed-By", etc. annotations
 
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> Change-Id: Ie61eafd2bd8f8dc5b30449af1e436889f91da3b7
+This switch is nice for that since you you don=E2=80=99t really want
+blank lines for those kinds of format.
 
-> diff --git a/t/strbuf-test.c b/t/strbuf-test.c
-> new file mode 100644
-> index 0000000000..8f8d4e11db
-> --- /dev/null
-> +++ b/t/strbuf-test.c
-> @@ -0,0 +1,54 @@
-> +#include "tap/basic.h"
-> +
-> +#include "../git-compat-util.h"
-> +#include "../strbuf.h"
-> +
-> +int strbuf_init_test()
-> +{
-> +	struct strbuf *buf = malloc(sizeof(void*));
+Cheers
 
-Is there a reason to use dynamic allocation here. Also I think you need 
-sizeof(*buf) to allocate the correct size.
+[1]: https://lore.kernel.org/git/201001201148.11701.johan@herland.net/
 
-> +	strbuf_init(buf, 0);
-> +
-> +	if (buf->buf[0] != '\0')
-> +		return 0;
-> +	if (buf->alloc != 0)
-> +		return 0;
-> +	if (buf->len != 0)
-> +		return 0;
-> +	return 1;
-> +}
-
-This test nicely illustrates why I'd prefer a different approach. The 
-test author has to maintain the pass/fail state and there are no 
-diagnostics if it fails to tell you which check failed. To be clear I 
-view the lack of diagnostics as the fault of the test framework, not the 
-test author. I'd prefer something like
-
-	void strbuf_init_test(void)
-	{
-		struct strbuf buf;
-
-		strbuf_init(&buf, 0);
-		check_char(buf.buf[0] == '\0');
-		check_uint(buf.alloc, ==, 0);
-		check_uint(buf.len, ==, 0);
-	}
-
-which would be run as
-
-	TEST(strbuf_init_test(), "strbuf_init initializes properly");
-
-in main() and provide diagnostics like
-
-     # check "buf.alloc == 0" failed at my-test.c:102
-     #    left: 2
-     #   right: 0
-
-when a check fails.
-
-> +int strbuf_init_test2() {
-> +	struct strbuf *buf = malloc(sizeof(void*));
-> +	strbuf_init(buf, 100);
-> +
-> +	if (buf->buf[0] != '\0')
-> +		return 0;
-> +	if (buf->alloc != 101)
-
-Strictly speaking I think the API guarantees that at least 100 bytes 
-will be allocated, not the exact amount as does alloc_grow() below.
-
-> +		return 0;
-> +	if (buf->len != 0)
-> +		return 0;
-> +	return 1;
-> +}
-> +
-> +
-> +int strbuf_grow_test() {
-> +	struct strbuf *buf = malloc(sizeof(void*));
-> +	strbuf_grow(buf, 100);
-> +
-> +	if (buf->buf[0] != '\0')
-> +		return 0;
-> +	if (buf->alloc != 101)
-> +		return 0;
-> +	if (buf->len != 0)
-> +		return 0;
-> +	return 1;
-> +}
-
-Best Wishes
-
-Phillip
-
+--=20
+Kristoffer Haugsbakk
