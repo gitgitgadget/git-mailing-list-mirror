@@ -2,55 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C448C7EE26
-	for <git@archiver.kernel.org>; Fri, 19 May 2023 07:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB167C77B75
+	for <git@archiver.kernel.org>; Fri, 19 May 2023 08:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231537AbjESHwV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 May 2023 03:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39688 "EHLO
+        id S230326AbjESIU2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 May 2023 04:20:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231409AbjESHwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2023 03:52:05 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648611730
-        for <git@vger.kernel.org>; Fri, 19 May 2023 00:51:39 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 85007240DB;
-        Fri, 19 May 2023 03:51:29 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.4, from userid 1000)
-        id 1pzutd-kKV-00; Fri, 19 May 2023 09:51:29 +0200
-Date:   Fri, 19 May 2023 09:51:29 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [not even design notes yet] teaching rerere to remember removal?
-Message-ID: <ZGcqgR5RimHJiwFv@ugly>
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq353ts2qt.fsf@gitster.g>
+        with ESMTP id S230364AbjESIUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2023 04:20:22 -0400
+X-Greylist: delayed 302 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 19 May 2023 01:20:10 PDT
+Received: from zucker.schokokeks.org (zucker.schokokeks.org [IPv6:2a01:4f8:121:1ffe:1::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745C5171E
+        for <git@vger.kernel.org>; Fri, 19 May 2023 01:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+        t=1684484106; bh=5Kg8VqFkXMVkPHB8FVpcXIRZCP3fT2jfvBb1rWr5UZk=;
+        h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+         Content-Transfer-Encoding;
+        b=SPCDOZ5D1eF8VrZLhECMHJo6SVb3m+M6uNKhs+ZgYNRmv/Rqqt0RoXFYYfaHZsBOu
+         0IJYmKlcqWHuJ1zM8eclOOiXh569or6mFkTj6srMMqwlMEt0MGXWWRdV22x5JzBf3X
+         gzGri4taROHgaqGJwh/qg0mli0uK6dSC7Twd3IX8/5S5J3Gy0ri8f4VP4pHwO84ejU
+         90f2VPI6u2IjaWjsfUCP7YYVfOtFwV/yvXe1u2TAr+cKCEo+8DAE1HhqPjLEXA0Qvw
+         5EfdR/dtq1jwhgnh+d18lpXRKUgWJ9nbSEgTOjx0PqjkLeNRs3pRYPvQPS1z+OGe2+
+         6MKie7KAHOwKg==
+Original-Subject: git push --quiet is not quiet
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date:   Fri, 19 May 2023 10:15:05 +0200
+From:   Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To:     git@vger.kernel.org
+Subject: git push --quiet is not quiet
+Message-ID: <20230519101505.416d0963.hanno@hboeck.de>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqq353ts2qt.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2023 at 03:18:02PM -0700, Junio C Hamano wrote:
->So I am wondering what should be used as the record of "if the other
->branch made this change, we have seen this conflict already, and we
->know it is safe to resolve it to remove the path".
->
-i suppose i may be missing the obvious, but why not just treat the 
-removal as a full diff (like a traditional patch would do) and remember 
-the resolution accordingly like any other conflict?
+I believe this is a bug in git: According to the man page for git push,
+the -q/--quiet parameter should "Suppress all output".
 
-the key to making this useful is presenting followup conflicts in a 
-sensible way that highlights where they actually are, but that would be 
-useful regardless - i often run into this while rebasing, where finding 
-that one line that i added to a bigger section that was (re-)moved 
-requires so much attention that i instead look at the original patch 
-rather than the conflict to see what it was. (note that i'm using diff3 
-markers.)
+However, it does not. To reproduce: Create a commit in a repo and run:
+git push -q
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 
-regards,
-ossi
+
+[System Info]
+git version:
+git version 2.40.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.3.3 #1 SMP Thu May 18 21:38:29 CEST 2023 x86_64
+compiler info: gnuc: 13.1
+libc info: glibc: 2.37
+$SHELL (typically, interactive shell): /bin/bash
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
