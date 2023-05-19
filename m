@@ -2,90 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF1BAC77B75
-	for <git@archiver.kernel.org>; Fri, 19 May 2023 15:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C846C77B7A
+	for <git@archiver.kernel.org>; Fri, 19 May 2023 15:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231959AbjESPct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 May 2023 11:32:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54908 "EHLO
+        id S232145AbjESPdj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 May 2023 11:33:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230414AbjESPcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2023 11:32:48 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4444713E
-        for <git@vger.kernel.org>; Fri, 19 May 2023 08:32:46 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [67.221.154.42])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id EED745AF40;
-        Fri, 19 May 2023 15:32:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1684510366;
-        bh=banFCDm5SZbFtqNo39cFFelCZ6TpbgsZ+3j/1iF/Ls8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=SnZ//nitoFY9jwQjUUsSjaiDLRz8zKvh+JzPHDNpj+PzsiAJcyuCOZ+7ZGsUE+tJt
-         HptbD0Fcy+lu+iZnZCETnEUssi9eFuf6V/TRs7DL4CWwV0JlO+TncvV6qsUQffFyS1
-         Kh4tsUybicPcKqgL01bIRlLUvkJfXkvPuQshv2xt1LESgWBio73b3yH3FNCcJwPGGl
-         dZIP4o07kseHlp0IDIi7bj3kCGASbNMqX+uRWLeg74Jo9oxz2IK4BKi3J1k10JvYZ/
-         MQO6TZsoNREuoC89LNGLV12/5NXwYFgPTn4aFfIzOMI8xEuAUzdae6GjacYEFBRC4q
-         CY/f6MtE/kF9SYV2/6fnLgBWij8Msx8MJPHKmKRKGJsPIR1R7ANqUKXaVEz9c4Demy
-         Wz/c4cJcUZrVSn9t+whLxaxpdGfWiPvbqlebPN3FTPPgjhbmJBrIiDvkJcPAjLvbur
-         87Mxafc1FRTHZ+fIVIQt2uR9ZWxs/UKpCDm1BCB9oR+GN0738rU
-Date:   Fri, 19 May 2023 15:32:41 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Adam Majer <adamm@zombino.com>
-Subject: Re: [PATCH v3 0/1] Fix empty SHA-256 clones with v0 and v1
-Message-ID: <ZGeWmZzbPFviQBmB@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, Adam Majer <adamm@zombino.com>
-References: <ZEmMUFR7AJn+v7jV@tapette.crustytoothpaste.net>
- <20230517192443.1149190-1-sandals@crustytoothpaste.net>
- <20230518182838.GB557383@coredump.intra.peff.net>
+        with ESMTP id S232106AbjESPdi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2023 11:33:38 -0400
+X-Greylist: delayed 2337 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 19 May 2023 08:33:34 PDT
+Received: from fallback17.i.mail.ru (fallback17.i.mail.ru [79.137.243.72])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 941BC19B
+        for <git@vger.kernel.org>; Fri, 19 May 2023 08:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=USXZyri140AWO/A9gxMuqzHaUft4i2HH/vjNgyOmgpI=;
+        t=1684510414;x=1684600414; 
+        b=HMVm9w9nLKNqUzHzgPJVsVY2J1hbW6uK2SyOO/iEUeKPpnewWDnLZfLsEIhCg8lqkoAFxf4eJ4pPebka8SF5wUPZqd1h1hBOc7X7ZbKQPPIPOTgroWDpzNQVCHNS4MeWM4s/5JeNAdNLg0uc4f/T8YFZA+CqyzsnS2ej8kneoFw=;
+Received: from [10.12.4.7] (port=36360 helo=smtp33.i.mail.ru)
+        by fallback17.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1q01V5-000UPF-6Y
+        for git@vger.kernel.org; Fri, 19 May 2023 17:54:35 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=USXZyri140AWO/A9gxMuqzHaUft4i2HH/vjNgyOmgpI=;
+        t=1684508075;x=1684598075; 
+        b=NqWeIG+7/hno5/k8Z/4z4ABAs0FREhb2nII4cUEnF+/q9ltd5eJPGGfPAYJ20wnxRsiJu8VJ2b2xeQTeYBm0btk9FYQUESXXy94jv3bGHEfimV/8JBzZgD1vgtXeGYdY6+ctNqPxTdLXHC9hzFglAg/kv+6jamicV0g4z5SyZMU=;
+Received: by smtp33.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1q01V1-00EvKy-SX
+        for git@vger.kernel.org; Fri, 19 May 2023 17:54:32 +0300
+Date:   Fri, 19 May 2023 17:54:31 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] format-patch: free elements of rev.ref_message_ids
+ list
+Message-ID: <20230519145431.mnn2rpptvplorsf2@carbon>
+Mail-Followup-To: git@vger.kernel.org
+References: <20230519000239.GA1975039@coredump.intra.peff.net>
+ <20230519000543.GB1975194@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jVajtK9hFhlleI63"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230518182838.GB557383@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+In-Reply-To: <20230519000543.GB1975194@coredump.intra.peff.net>
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD921E8753A900160F1284B0F69140CBAD176CF7240C0898F5B182A05F538085040706E76B280B6C13048D6EEEAA2F1F3F6B8884609F10D9812E2CFF83E1D7018F7
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7DB84ED444C624799EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063775FF68B4B43662428638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8336E8DCA27D21B95E65E3294289B7F87117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCE3B0F63F495E1F96A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735208B49E537791A9F7DC26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B294D0DA9BD313A0613D8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE3AD74539164518AE56136E347CC761E07C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F7900637F765F39FA4E70FFE43847C11F186F3C59DAA53EE0834AAEE
+X-C1DE0DAB: 0D63561A33F958A5802549E172532A8D01EEED924532454A65745366ED8E87BDF87CCE6106E1FC07E67D4AC08A07B9B06A1CB4668A9CA5FACB5012B2E24CD356
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3498EF79680EE3725C5E4DF07ECF0D9D5F35226EF9E0B03A4645FFD7DBDD172E097835A873B08A82881D7E09C32AA3244CE24D2520D79968D63B5298690D57843730452B15D76AEC143EB3F6AD6EA9203E
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojlaZ30BpkxfJjJ4cM8V+ItA==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1380FC2BFB7702AE503DCA42576DA25C6C8E9E482D72192AFA413BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4A5B6606E68C034E199DB73AF1FB24621F3C2DADD26A0E11F68F3CF0E9FE49B6943A784ADF5694283F2D6CE323301DF1D95F95E93E7D9DE5254CAD4AA42D92AC2
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5xhPKz0ZEsZ5k6NOOPWz5QAiZSCXKGQRq3/7KxbCLSB2ESzQkaOXqCBFZPLWFrEGlV1shfWe2EVcxl5toh0c/aCGOghz/frdRhzMe95NxDFdsrJFYzR+oMo58fx7jPbKQQ==
+X-Mailru-MI: C000000000000800
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, May 18, 2023 at 08:05:43PM -0400, Jeff King wrote:
 
---jVajtK9hFhlleI63
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[...]
 
-On 2023-05-18 at 18:28:38, Jeff King wrote:
-> I'm still a little puzzled why we need http tests both in t5551 and
-> t5700. Not too big a deal to have redundant tests, obviously, but I
-> wonder if I am missing something.
+> There's no new test here, as the leak can already be see in t4014.44 (as
+> well as others in that script). We can't mark all of t4014 as leak-free,
+> though, as there are other unrelated leaks that it triggers.
 
-Technically, they work with v0 and v1, which are separate, and I wanted
-to test both, not just v0.  I realize that practically, they are very
-similar, but I prefer to be a bit more thorough.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Probably s/be see/be seen/.
 
---jVajtK9hFhlleI63
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZGeWmQAKCRB8DEliiIei
-gblRAQCAd0XNeoUT3mOuQIA5uxqHO3ewtoMYklPWwAeRsUfYpAD+LDinZHpuXw3N
-paqGO9/3MV0rGVrMhs73r/USN/rYzQo=
-=Muh0
------END PGP SIGNATURE-----
-
---jVajtK9hFhlleI63--
+[...]
