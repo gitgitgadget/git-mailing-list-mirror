@@ -2,32 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA825C77B73
-	for <git@archiver.kernel.org>; Fri, 19 May 2023 00:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDBC7C77B7D
+	for <git@archiver.kernel.org>; Fri, 19 May 2023 00:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbjESAD3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 May 2023 20:03:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49572 "EHLO
+        id S229524AbjESAGG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 May 2023 20:06:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229973AbjESAD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2023 20:03:28 -0400
+        with ESMTP id S229880AbjESAGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2023 20:06:04 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63337E7A
-        for <git@vger.kernel.org>; Thu, 18 May 2023 17:03:26 -0700 (PDT)
-Received: (qmail 6087 invoked by uid 109); 19 May 2023 00:03:26 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA037198D
+        for <git@vger.kernel.org>; Thu, 18 May 2023 17:05:44 -0700 (PDT)
+Received: (qmail 6104 invoked by uid 109); 19 May 2023 00:05:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 May 2023 00:03:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 May 2023 00:05:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26636 invoked by uid 111); 19 May 2023 00:03:25 -0000
+Received: (qmail 26675 invoked by uid 111); 19 May 2023 00:05:43 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 May 2023 20:03:25 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 May 2023 20:05:43 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 18 May 2023 20:03:25 -0400
+Date:   Thu, 18 May 2023 20:05:43 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] format-patch: free rev.message_id when exiting
-Message-ID: <20230519000325.GA1975194@coredump.intra.peff.net>
+Subject: [PATCH 2/2] format-patch: free elements of rev.ref_message_ids list
+Message-ID: <20230519000543.GB1975194@coredump.intra.peff.net>
 References: <20230519000239.GA1975039@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,49 +37,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We may allocate a message-id string via gen_message_id(), but we never
-free it, causing a small leak. This can be demonstrated by running t9001
-with a leak-checking build. The offending test is the one touched by
-3ece9bf0f9 (send-email: clear the $message_id after validation,
-2023-05-17), but the leak is much older than that. The test was simply
-unlucky enough to trigger the leaking code path for the first time.
+When we are showing multiple patches with format-patch, we have to
+repeatedly overwrite the rev.message_id field. We take care to avoid
+leaking the old value by either freeing it, or adding it to
+ref_message_ids, a string list of ids to reference in subsequent
+messages.
 
-We can fix this by freeing the string at the end of the function. We can
-also re-mark the test script as leak-free, effectively reverting
-20bd08aefb (t9001: mark the script as no longer leak checker clean,
-2023-05-17).
+But unfortunately we do leak the value via that string list. We try
+to clear the string list, courtesy of 89f45cf4eb (format-patch: don't
+leak "extra_headers" or "ref_message_ids", 2022-04-13). But since it was
+initialized as "nodup", the string list doesn't realize it owns the
+strings, and it leaks them.
+
+We have two options here:
+
+  1. Continue to init with "nodup", but then tweak the value of
+     ref_message_ids.strdup_strings just before clearing.
+
+  2. Init with "dup", but use "append_nodup" when transferring ownership
+     of strings to the list. Clearing just works.
+
+I picked the second here, as I think it calls attention to the tricky
+part (transferring ownership via the nodup call).
+
+There's one other related fix we have to do, though. We also insert the
+result of clean_message_id() into the list. This _sometimes_ allocates
+and sometimes does not, depending on whether we have to remove cruft
+from the end of the string. Let's teach it to consistently return an
+allocated string, so that the caller knows it must be freed.
+
+There's no new test here, as the leak can already be see in t4014.44 (as
+well as others in that script). We can't mark all of t4014 as leak-free,
+though, as there are other unrelated leaks that it triggers.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/log.c         | 1 +
- t/t9001-send-email.sh | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ builtin/log.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index 7d19578963..ab74760386 100644
+index ab74760386..fee5834c0f 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -2415,6 +2415,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&rdiff_title);
- 	strbuf_release(&sprefix);
- 	free(to_free);
-+	free(rev.message_id);
- 	if (rev.ref_message_ids)
- 		string_list_clear(rev.ref_message_ids, 0);
- 	free(rev.ref_message_ids);
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 2051103226..8d49eff91a 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -4,7 +4,7 @@ test_description='git send-email'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+@@ -1401,7 +1401,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 	}
+ }
  
--# no longer TEST_PASSES_SANITIZE_LEAK=true - format-patch --thread leaks
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+-static const char *clean_message_id(const char *msg_id)
++static char *clean_message_id(const char *msg_id)
+ {
+ 	char ch;
+ 	const char *a, *z, *m;
+@@ -1419,7 +1419,7 @@ static const char *clean_message_id(const char *msg_id)
+ 	if (!z)
+ 		die(_("insane in-reply-to: %s"), msg_id);
+ 	if (++z == m)
+-		return a;
++		return xstrdup(a);
+ 	return xmemdupz(a, z - a);
+ }
  
- # May be altered later in the test
+@@ -2305,11 +2305,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 
+ 	if (in_reply_to || thread || cover_letter) {
+ 		rev.ref_message_ids = xmalloc(sizeof(*rev.ref_message_ids));
+-		string_list_init_nodup(rev.ref_message_ids);
++		string_list_init_dup(rev.ref_message_ids);
+ 	}
+ 	if (in_reply_to) {
+-		const char *msgid = clean_message_id(in_reply_to);
+-		string_list_append(rev.ref_message_ids, msgid);
++		char *msgid = clean_message_id(in_reply_to);
++		string_list_append_nodup(rev.ref_message_ids, msgid);
+ 	}
+ 	rev.numbered_files = just_numbers;
+ 	rev.patch_suffix = fmt_patch_suffix;
+@@ -2365,8 +2365,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 				    && (!cover_letter || rev.nr > 1))
+ 					free(rev.message_id);
+ 				else
+-					string_list_append(rev.ref_message_ids,
+-							   rev.message_id);
++					string_list_append_nodup(rev.ref_message_ids,
++								 rev.message_id);
+ 			}
+ 			gen_message_id(&rev, oid_to_hex(&commit->object.oid));
+ 		}
 -- 
 2.41.0.rc0.359.g22664e20e7
-
