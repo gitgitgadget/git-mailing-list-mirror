@@ -2,130 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85907C7EE26
-	for <git@archiver.kernel.org>; Fri, 19 May 2023 21:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5078C77B75
+	for <git@archiver.kernel.org>; Fri, 19 May 2023 22:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230365AbjESVgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 May 2023 17:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56964 "EHLO
+        id S230446AbjESWCJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 May 2023 18:02:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230156AbjESVgt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2023 17:36:49 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15A949D
-        for <git@vger.kernel.org>; Fri, 19 May 2023 14:36:47 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id CA56A5C0120;
-        Fri, 19 May 2023 17:36:44 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Fri, 19 May 2023 17:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm3; t=1684532204; x=1684618604; bh=VV873izQoMXQnJAiWkL0DZRX4
-        tg7zkRdIT3n4PAmb5M=; b=fE+Dkq3kC06QzYxbMYwF9/fJShGhr1g7u8a8Ju/Bk
-        Oe4KfyVX3FuTvnpX2koFFvz0XFfHi1IMpv0Ib4bTsLSwhHaDct9pkpdOxfkgOwOj
-        vcXcjK801z/uhx2k3ERjhdUnyzyT5c+BKB/4MJJ0d0WHwD7yPV8q9Gtb9KUMBR6n
-        IpCpQi6yc6d9PKeaifOUkzsCUiqH/M2MFLbwTZBYxHgHxpNvH3tx1MU791Nj0Wc/
-        tANz0yA/lVhK7DGA5r2l92AoEgEjoXTSKiFvbECAo2FuO08LxOibgcN103GgZ+3C
-        fS9Yl5Q/uPtqPKZ+gYH/myVYw5u0asPe1YwE1OTsHwxiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-        1684532204; x=1684618604; bh=VV873izQoMXQnJAiWkL0DZRX4tg7zkRdIT3
-        n4PAmb5M=; b=RMXem5ts6+STeqZDLVRqAnHn2zimWway4QNqrLIyf0lgFYaAtgv
-        eT0i0wzrvGFtPjCRtqYSAxgOP1vsiKefz57k+vsFPZExLBC6j9NBQ77soeH1rSup
-        33v8sPSoiE46Wqff9tIiA8PFj+Bs7D8z8ih2wKe0S+Tu0c2L+pijg5ZSPT1RvMpW
-        FmfvqxHa87cfVMOaTmJ+lQX96Rw6NDgMTtTi1R3Vk13nlniendqa9PmAhxA/afZy
-        2KhyGORcl95wYBAUjBsO3JWRZCUc0MgHzDc7Tftl4GGcffhOCRxrY8wvjoO1hr+k
-        ng8bSOQWgVGH47fc1rFrBhuCbqe3gi8HymQ==
-X-ME-Sender: <xms:7OtnZDtJPdzl1QD6SVbFigxGqJFRcc3WvQ8g-cIBHOTVF2kV_PDHdDI>
-    <xme:7OtnZEdMPcrdD-SE8V9QcTOAQePTKzadwQKxFmJgrLPmgj7cySnd-ofU0gnhO-Qzm
-    _79-CkX0IG55yRGhw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeiiecutefuodetggdotefrodftvfcurf
-    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfeliefg
-    kedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:7OtnZGycdQmsDZDXi1T5EfNSrFiGG-jHLu3MGnVFPo5pRW7bp8aVaA>
-    <xmx:7OtnZCMOENLVpEfG5U8rGSVu_p_SKU5pjf2wblLhyTDpzXrWLw3lwQ>
-    <xmx:7OtnZD87EXylm4Q-iLEQhMH0sRRtZ-UrAeLT5OhsYJGDgwremGIVqA>
-    <xmx:7OtnZOmVzvl_eYZ8DMDrbHnBqeTQH0rrRHGw8dhtZhc2MNa2g9fFbA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 4FB0515A008E; Fri, 19 May 2023 17:36:44 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-431-g1d6a3ebb56-fm-20230511.001-g1d6a3ebb
-Mime-Version: 1.0
-Message-Id: <90871d5e-2838-4026-bd83-ab259f7b18dc@app.fastmail.com>
-In-Reply-To: <20230513165657.812-1-philipoakley@iee.email>
-References: <xmqq5ybug8s8.fsf@gitster.g>
- <20230513165657.812-1-philipoakley@iee.email>
-Date:   Fri, 19 May 2023 23:35:49 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Philip Oakley" <philipoakley@iee.email>
-Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        alexhenrie24@gmail.com, git@vger.kernel.org,
-        "Elijah Newren" <newren@gmail.com>,
-        "Phillip Wood" <phillip.wood123@gmail.com>, tao@klerks.biz,
-        "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] doc: Glossary, describe Flattening
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229923AbjESWCH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2023 18:02:07 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A3B0B8
+        for <git@vger.kernel.org>; Fri, 19 May 2023 15:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1684533723; i=johannes.schindelin@gmx.de;
+        bh=VTcT2k/OWrSzHDSqU2OtPnLLW870D1zLMWvciPz8RvQ=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=T/6EeEH7LaxWIguh85rRc/NjZNT8w8dvl6XdqtBUzwkPikXhyKUD7t+3PEPMEN2Dx
+         UZNXJp24S++Q2EQb1PtwOnu7hY0j745Qe9/bXg1o2U3KXw0RtEvtFwDuiIQjR2Ytm5
+         Nqz42C17FJvOtRXdMKtOh4g+Yx8ZPUjwwCGFaEH9LA46QIoxgbj5DVbGJMgTli78Kx
+         68LZD/XwZORpLj6VTI4SQSteweBlwi2GQDa4hTwibzrlg6+e1/IIs5eyHfyhaZFcTF
+         29ppYSh8oyF0GUT5UPudqgk/xoaVjPgC/zDAr3msVTEFouqTMPhc5W0NEJ32SgUzwH
+         0VsuQeW6stpPQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az363-260.0qefokmwsevehmldsb4n4mgtje.cx.internal.cloudapp.net
+ ([172.177.96.32]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1Mq2nK-1qUBw10jjO-00n7Fm; Sat, 20 May 2023 00:02:03 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.41.0-rc1
+Date:   Fri, 19 May 2023 22:02:00 +0000
+Message-Id: <20230519220200.3563-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.40.1
+Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Fcc:    Sent
+X-Provags-ID: V03:K1:FGKGCnf7lyTh39WBVJSGWQy/f4xjZtfLZqjLQhFF9yjqgoLBZXv
+ 6nJcRWs838EhchjkUBLEwGNAXDDA6F3E6vFO/Da6Kj0weRhHyJ8Rm/YhgjFauOyI/xFApTb
+ xvSI97wTgMhQoOl+IoiJXAlHLHQpONWenaXzAMVO7ISj4eiEM55NwExuIZak1qsQ3qj3KjL
+ hlc4N1lBEoNYQcVl6yiKg==
+UI-OutboundReport: notjunk:1;M01:P0:91tzYwhMiIc=;nttnjsm5KslMl4DBWehOxAUD/Zj
+ xGOv6FzUC5CttSTdLTlzjYL6w/NpM7ZPwm8Z3Kkte29IFcAqBCn/oop678kRjDSTQdBieFmC/
+ yZbk7m8Rs/HUjamhayqyvXVZUNKk213uAZTa4fTaEuY3Ie3+V2pgpo/pcbwr7k1KdkrCuT2h0
+ Tnx36IAM7fa+LPz8T1Yom3kIzZKjpgux1BUGWpt/OYRRtQb4IRrjp7FZppaYF+6mPHXDLDB5r
+ GqaGwSySPuY74ykTtGhKf88iSx5oFLGHnoBeynkDhm8c0wSBXgEZ5rCHypHsKDmzn0JwprURV
+ 8rRaxJEvTYeGnA92u4RX4rLynIfeVj8maNgSTRXALSvVrEY0DbL56tBsjHbBnwLT0CgRjoqUg
+ HKzAPvW1QOTAXINPuTrwAV3AzIXvfbb55h1EiWvDe7xVPmjrfvApj9odMZmOuckWkuJPOqhpL
+ xSybpn72W9yk6gJNVuo8iSm9QQODGoM7lwU1Gub+ib1JcEI2WTRjYKr1NxY8V6q/DbQpXNjgE
+ LCOxyjSi5eLDMV65xPegPlxYeGAIH0wo3PXQr6D86tRr4IodDyCOY6NtpL8E7CyDTLYvu/QEe
+ 2CW3Jf1Ejm9T0czpjrR1fIdh5uZ5PRM4DHT+iryYM8BqQEq8Lldhaq4BQQIAvtEDvM8IwRKpK
+ 1H+8XxGes8d1mXhisqOMwSQkG58KvHvmGvdMdAxSzYr4x30YVaxs1LCCC9WFsj+e3NK6tNsZx
+ 73dZy3lpT8ST2jICidmUWAN2O1gJFz+Yal1oLuNybZ1cXLXGs1lPnl8rO7k/PoJbyi9riezRn
+ zRGA2qgOr+7zSpbtMbTmoCGwLMcu1KeDDPJctfA4PRtZhRvcp6AeFFoCVfJV0mZ/8UnB9bcqq
+ VhzNkjCJhieV1gjO8ATIvtWQI+GDr+2kgqwcQBVtSM+XwPRkop6MXIq6spPgEVPaKlrrfbB9e
+ NgdhFHcyDCJc5m1gyXo66b7RxC8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Dear Git users,
 
-On Sat, May 13, 2023, at 18:56, Philip Oakley wrote:
-> Clarify the term 'flatten' and the unexpected effects that the user
-> may come across, such as discussed in [1] and [2].
+I hereby announce that Git for Windows 2.41.0-rc1 is available from:
 
-Nice to see this effort. I would like more =E2=80=9Clabels=E2=80=9D such=
- as this one to
-conceptualize things because sometimes it feels that Git concepts are
-just handled bottom-up. Specifically in the case of rebase it seems that
-(judging by things like StackOverflow) the pedagogy amounts to
-explaining how rebase *works* (without factoring in `--rebase-merges`)
-and then explaining how that in turn means that a linearization kind of
-=E2=80=9Cfalls out=E2=80=9D of that process. And then it seems that you =
-are expected to
-remember that bottom-up explanation without putting any kind of label on
-it; it=E2=80=99s just what it is.
+    https://github.com/git-for-windows/git/releases/tag/v2.41.0-rc1.windows.1
 
-> +[[def_flatten]]flatten::
-> +	Flattening is a common term for the 'linearizing' of a
-> +	selected portion of the <<def_commit_graph_general,commit graph>>.
-> +	Flattening may include excluding commits, or rearranging commits,
-> +	for the linearized sequence.
-> +	In particular, linkgit:git-log[1] and linkgit:git-show[1] have a
-> +	range of "History Simplification" techniques that affect which
-> +	commits are included, and how they are linearized.
-> +	The default linkgit:git-rebase[1] will drop merge commits when it
-> +	flattens history, which also may be unexpected.
-> +	The two common linearization types are chronological (date-time), and
-> +	topological (shape) based orderings. Generation numbering is topolog=
-ical.
+Changes since Git for Windows v2.40.1 (April 25th 2023)
 
-When I first read this I thought, ah, so this is an explanation of how
-linearized rebases are born. But this part also mentions history
-viewing. Then I thought: does my history viewing (git-log(1)) work the
-same as shuffling around changes into new (and linearized) commits? And
-can git-rebase-(1) move between chronological and topological and
-ordering? But these two things feel different to me (just a feeling,
-UX-wise). So after reading this I am left wondering if different parts
-of this paragraph apply *only* to history viewing and to rebase
-(=E2=80=9Crewriting=E2=80=9D).
+As announced previously, Git for Windows will drop support for Windows
+7 and for Windows 8 in one of the next versions, following Cygwin's and
+MSYS2's lead (Git for Windows relies on MSYS2 for components such as
+Bash and Perl).
 
-Again, this is just how I immediately read this paragraph as a user.
+Following the footsteps of the MSYS2 and Cygwin projects on which Git
+for Windows depends, the 32-bit variant of Git for Windows is being
+phased out. As of Git for Windows v2.41.0, the 32-bit variant of the
+POSIX emulation layer (known as "MSYS2 runtime", powering Git Bash
+among other components shipped with Git for Windows) is in maintenance
+mode and will only see security bug fixes (if any). Users relying on
+32-bit Git for Windows are highly encouraged to switch to the 64-bit
+version whenever possible.
 
---=20
-Kristoffer Haugsbakk
+Please also note that the code-signing certificate used to sign Git for
+Windows' executables was renewed and may cause Smart Screen to show a
+warning until the certificate has gained a certain minimum reputation.
+
+New Features
+
+  * Comes with Git v2.41.0-rc1.
+  * Comes with OpenSSH v9.3p1
+  * Comes with MinTTY v3.6.4.
+  * The Git for Windows installer now also includes the Git LFS
+    documentation (i.e. git help git-lfs now works).
+  * Comes with Perl v5.36.1.
+  * Comes with GNU Privacy Guard v2.2.41.
+  * Comes with Git Credential Manager v2.1.2.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.4.6. (This does not extend to 32-bit Git for Windows, which is
+    stuck with v3.3.* of the MSYS2 runtime forever.)
+  * To help with Git for Windows' release mechanics, Git for Windows
+    now ships with two variants of libcurl.
+  * Comes with cURL v8.1.0.
+
+Bug Fixes
+
+  * Git GUI's Repository>Explore Working Copy was broken since v2.39.1,
+    which has been fixed.
+  * The MSYS2 runtime was adjusted to prepare for an upcoming Windows
+    version.
+
+Git-2.41.0-rc1-64-bit.exe | 37d36db30796e6401ab76f4a5f3fa0b80e914b9af4b0c5d97be9fcf1642fd36c
+Git-2.41.0-rc1-32-bit.exe | 3deea54ce26fcba56434c3cb36b074e1c451927cb43e0f60cf58d8e581c2b03d
+PortableGit-2.41.0-rc1-64-bit.7z.exe | 0a28381184492f971223cafeb71e1a1cdb9d8ece71c4f57f765d6fa5a60cd97a
+PortableGit-2.41.0-rc1-32-bit.7z.exe | 1b94097071c50ad6b8850eb83292099d27ca0faa854c3586a910610f34987279
+MinGit-2.41.0-rc1-64-bit.zip | 58829de797032949eb0b72439b20faf820f2ff392351decb075c7104eea586ab
+MinGit-2.41.0-rc1-32-bit.zip | cdaeac00ae4c54e1b965cee38651bf4c4c2c252244d3ea43cb2dba4e21d8994a
+MinGit-2.41.0-rc1-busybox-64-bit.zip | febe0ce127ecca8beb81b12896bf59fe13a729ee88930eb6881bfe66a3afbdac
+MinGit-2.41.0-rc1-busybox-32-bit.zip | 6a796b8c131c65d9cb18be384297c8ac8c3a3fd28bf85443a19ec9faf65f77b7
+Git-2.41.0-rc1-64-bit.tar.bz2 | 4a596eff01a7d431c6365628d523ab513faf186060dcdfd67c2021ae2e08ac10
+Git-2.41.0-rc1-32-bit.tar.bz2 | c3f6829c1f975e738f96a2b1721e1cdd6d0aa3ab427f5e20f3526e0798403b50
+
+Ciao,
+Johannes
