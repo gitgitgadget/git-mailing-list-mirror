@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EF69C77B7A
-	for <git@archiver.kernel.org>; Sat, 20 May 2023 16:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4366AC7EE26
+	for <git@archiver.kernel.org>; Sat, 20 May 2023 16:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231890AbjETQON (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 May 2023 12:14:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43488 "EHLO
+        id S231896AbjETQOO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 May 2023 12:14:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231838AbjETQOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2023 12:14:06 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82435125
-        for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:05 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30644c18072so2787600f8f.2
-        for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:05 -0700 (PDT)
+        with ESMTP id S231862AbjETQOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2023 12:14:07 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 537C810A
+        for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:06 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f420618d5bso27517455e9.1
+        for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1684599244; x=1687191244;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sHwtL0xYMkRMvlNmjMvdbIByoM2zyOmpjE1feWKhVTo=;
-        b=HUspz8pQKCPLgOpcyPS+4U396MyIpfLUamCfbMntmDOCIll412i5E+8W3CYpgs8cOE
-         bmsX1PAra+N6aLkldIoMfZLoshy8idlwVNGPmNnnyfArHEiDz5uMTDnYsSm5zG/3l4fB
-         T2EdmpjvMUYhIYF1YnsMqf2LvKsI0nxGxxzXvMjxVEMZ8ytpS/aW0W3qJ7mfGVnIBja1
-         Zul+Or+TLM59FDxPcLhs6SFT8bSJ8DXJB98kyTi23wZytLYcnbc6dsFKOY7yDj/UTWPS
-         yxEbqtknHHY2o5qhl1PUS8Ui1C0Ee5wY3pmDR06d37bLZnT+iNp/cjn0Js41uturAqDY
-         xayA==
+        bh=10zWt/GB2YlEdRKE9G/e9Jlyd+WQNy3R5+Sx8mZ8ePg=;
+        b=GtxgB0Cf2hSk5AoWn0SmMxV9MtAM1K2HPtHnKjKXmTyxmxwHN+QJlvPmg+ZeAjbLvk
+         nhbEQfaU69z+yRiAkKV7T4YdVJCxlP+VQW0JRQ1+ZfeaOze5Lat9rbhtqa2dP4VLYUmX
+         YTn+dc1vT0Y3tmPxaiSgG9xvuGG37hcL/hamMAGJLhGMSSJvtXvuv5DgSHEdvX7HCK0z
+         /tme6mjhnkiYeb/k3RNQdb66HS/51TXUYLG1pWtTzcjDbtBMdHQO5hedoO56v7yhfAsl
+         B3dmm5ln3X4lzgIikFoWxzpGmypa1CoqYlCY5CWXlkYvprDhoMjihlSMzc36DtZbFTI0
+         uZ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1684599244; x=1687191244;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sHwtL0xYMkRMvlNmjMvdbIByoM2zyOmpjE1feWKhVTo=;
-        b=IQcnLu2HTrKzLibsJxhR0U3Y6ysz748jjXA1PgcWaFZghnpvXrU30UcaKeFDaoU94b
-         kIwrpoJ4CB5o2Zk+Cq8EcK/zuAjqGgLRxKjw8uIwh09bnCBgfofLBhni+wmrUMj+qfAv
-         m9RE0m4H0dBPazM40Km5E/mjCbVpJHwPv1dnqV6gSrsxm5HxBQpZfMXcOdm+rO1eOFV+
-         y6tGNaWG04CxREwRx/j3zC43fEzJ/P+4077X0HR6qgF0kgQAY+Q/Za3jNV6tUOsTsoBl
-         DiwUQN2UGCSyq+3b6E2dkJsmBQHFcW6biU1/hnXC1abLU2b0e1j7NhXoKdNl0oqBCucL
-         0VRw==
-X-Gm-Message-State: AC+VfDxxpEf4z48YQd/jQdVpe5eT5TY3Amq60epfuQjZ5rk6k2OA9WuY
-        l002MkX+p0whWllCH4UxPlu6PK2jGiA=
-X-Google-Smtp-Source: ACHHUZ7+VK9H7HfmMw9zkXTDfIhkxo92Sucd/fUalUm7WZrmTH9zyOOwu0vt4y7VeNlfwJZek9wQGQ==
-X-Received: by 2002:adf:cc87:0:b0:30a:37aa:1fab with SMTP id p7-20020adfcc87000000b0030a37aa1fabmr1244271wrj.6.1684599243760;
-        Sat, 20 May 2023 09:14:03 -0700 (PDT)
+        bh=10zWt/GB2YlEdRKE9G/e9Jlyd+WQNy3R5+Sx8mZ8ePg=;
+        b=kEgwp4pgC+k20Fw9ikS3XxhtSUEjXeE/TeoAh7cls6f5O2LViHJ4uOxw7CfAXSAWeC
+         FrYkAtUpJFE7yfvwp5PYPYpXy5f7l/D737qV/JcyE2OVdqXgxfzIcrbzfp8cOlK+s07C
+         o59CepFFozGXJ40vUnoUh8xNg5WQkwzBgMtvozgqqKty9cyKMo1TGdS2ht1F0u9uVjKP
+         XCpg4WkxpZVs9NPiaM0zO5wl4H/a4uwPxIi8YYallfKBqWcRDYL54ZgXjymV+szxs7YC
+         oPmGv1KPK9gBbMo8v33R8RnUkGGXDYK756AQd45j8CglzFR/eoy4VfkQm7ttq50L+giz
+         4hmw==
+X-Gm-Message-State: AC+VfDyk+CVALBD0+7OtjV0K+7stlVPGpkFwitADO2IAI7u1LtxE/t6K
+        LTZrLb+zwVDzESbwjUP3LM1JXt9BBB0=
+X-Google-Smtp-Source: ACHHUZ6MHB/guLCQeamB3o/upP+b2xD1hxNx+hBaBEUUtFPSGpk+lUnCAVNebNYueAw2JldC23QbQA==
+X-Received: by 2002:a05:600c:2116:b0:3f4:298f:4cf2 with SMTP id u22-20020a05600c211600b003f4298f4cf2mr3918860wml.24.1684599244402;
+        Sat, 20 May 2023 09:14:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l17-20020adfe591000000b003079c402762sm2338576wrm.19.2023.05.20.09.14.03
+        by smtp.gmail.com with ESMTPSA id q10-20020a1cf30a000000b003f423508c6bsm2602363wmq.44.2023.05.20.09.14.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 May 2023 09:14:03 -0700 (PDT)
-Message-Id: <4774e05d099234887acb210af86a7ce484b6def9.1684599239.git.gitgitgadget@gmail.com>
+        Sat, 20 May 2023 09:14:04 -0700 (PDT)
+Message-Id: <c70af95a7998c7f0d1585cb412359d55d9ed4db6.1684599239.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1514.git.git.1684599239.gitgitgadget@gmail.com>
 References: <pull.1514.git.git.1684599239.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 May 2023 16:13:53 +0000
-Subject: [PATCH 05/10] t7600-merge: modernize test format
+Date:   Sat, 20 May 2023 16:13:54 +0000
+Subject: [PATCH 06/10] t7700-repack: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,75 +72,37 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t7600-merge.sh | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ t/t7700-repack.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 060e145957f..fdc607277c2 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -639,41 +639,41 @@ test_expect_success 'merge log message' '
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c0, c2, c0, and c1' '
--       git reset --hard c1 &&
--       test_tick &&
--       git merge c0 c2 c0 c1 &&
--       verify_merge file result.1-5 &&
--       verify_parents $c1 $c2
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git merge c0 c2 c0 c1 &&
-+	verify_merge file result.1-5 &&
-+	verify_parents $c1 $c2
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index faa739eeb91..3f930fa4762 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -460,10 +460,10 @@ test_expect_success '--write-midx -b packs non-kept objects' '
  '
  
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c0, c2, c0, and c1' '
--       git reset --hard c1 &&
--       test_tick &&
--       git merge c0 c2 c0 c1 &&
--       verify_merge file result.1-5 &&
--       verify_parents $c1 $c2
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git merge c0 c2 c0 c1 &&
-+	verify_merge file result.1-5 &&
-+	verify_parents $c1 $c2
+ test_expect_success '--write-midx removes stale pack-based bitmaps' '
+-       rm -fr repo &&
+-       git init repo &&
+-       test_when_finished "rm -fr repo" &&
+-       (
++	rm -fr repo &&
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
++	(
+ 		cd repo &&
+ 		test_commit base &&
+ 		GIT_TEST_MULTI_PACK_INDEX=0 git repack -Ab &&
+@@ -477,7 +477,7 @@ test_expect_success '--write-midx removes stale pack-based bitmaps' '
+ 		test_path_is_file $midx &&
+ 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+ 		test_path_is_missing $pack_bitmap
+-       )
++	)
  '
  
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c1 and c2' '
--       git reset --hard c1 &&
--       test_tick &&
--       git merge c1 c2 &&
--       verify_merge file result.1-5 &&
--       verify_parents $c1 $c2
-+	git reset --hard c1 &&
-+	test_tick &&
-+	git merge c1 c2 &&
-+	verify_merge file result.1-5 &&
-+	verify_parents $c1 $c2
- '
- 
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge fast-forward in a dirty tree' '
--       git reset --hard c0 &&
--       mv file file1 &&
--       cat file1 >file &&
--       rm -f file1 &&
--       git merge c2
-+	git reset --hard c0 &&
-+	mv file file1 &&
-+	cat file1 >file &&
-+	rm -f file1 &&
-+	git merge c2
- '
- 
- test_debug 'git log --graph --decorate --oneline --all'
+ test_expect_success '--write-midx with --pack-kept-objects' '
 -- 
 gitgitgadget
 
