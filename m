@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4366AC7EE26
-	for <git@archiver.kernel.org>; Sat, 20 May 2023 16:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9053BC77B7A
+	for <git@archiver.kernel.org>; Sat, 20 May 2023 16:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231896AbjETQOO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 May 2023 12:14:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43492 "EHLO
+        id S231898AbjETQOQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 May 2023 12:14:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231862AbjETQOH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231865AbjETQOH (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 20 May 2023 12:14:07 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 537C810A
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF64DB
         for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:06 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f420618d5bso27517455e9.1
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-30a4ebbda56so375650f8f.1
         for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684599244; x=1687191244;
+        d=gmail.com; s=20221208; t=1684599245; x=1687191245;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=10zWt/GB2YlEdRKE9G/e9Jlyd+WQNy3R5+Sx8mZ8ePg=;
-        b=GtxgB0Cf2hSk5AoWn0SmMxV9MtAM1K2HPtHnKjKXmTyxmxwHN+QJlvPmg+ZeAjbLvk
-         nhbEQfaU69z+yRiAkKV7T4YdVJCxlP+VQW0JRQ1+ZfeaOze5Lat9rbhtqa2dP4VLYUmX
-         YTn+dc1vT0Y3tmPxaiSgG9xvuGG37hcL/hamMAGJLhGMSSJvtXvuv5DgSHEdvX7HCK0z
-         /tme6mjhnkiYeb/k3RNQdb66HS/51TXUYLG1pWtTzcjDbtBMdHQO5hedoO56v7yhfAsl
-         B3dmm5ln3X4lzgIikFoWxzpGmypa1CoqYlCY5CWXlkYvprDhoMjihlSMzc36DtZbFTI0
-         uZ8g==
+        bh=jzsGqgsevrUhodzdFAxQK9whsckAIVJLXwzvdwvULrk=;
+        b=D7tnqNWGWiffWmYmoitRWGUf2vNY1WaPBj7moCcc33f8jAnens0dRI9s2h6P9G+yLc
+         E5BIo0W3KT2an+5HwZ5jPJUwKD0zk3+fzduo2dvO5X9eazUOfcYV/GNfITUq/PH7qruy
+         VbZ63tK0TONLZpPxtv5oreYjYKGQE/uYgDY9JmP+VfZSCkSfdH7WROFW/VXizT9gUKnK
+         dy5H+YJB5J7nYY5Q2+GwiC2RC0R9q+VdBq1JDivw8XSk7nv30iPQ54BbzB0e8HmA+NkI
+         gNb/DcTE1iNDl3rMXh79lvpmSm4DSsFiagZCin4MPeESrrqzSe/X0Fr4oV9AI3sd2zzP
+         /ctA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684599244; x=1687191244;
+        d=1e100.net; s=20221208; t=1684599245; x=1687191245;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=10zWt/GB2YlEdRKE9G/e9Jlyd+WQNy3R5+Sx8mZ8ePg=;
-        b=kEgwp4pgC+k20Fw9ikS3XxhtSUEjXeE/TeoAh7cls6f5O2LViHJ4uOxw7CfAXSAWeC
-         FrYkAtUpJFE7yfvwp5PYPYpXy5f7l/D737qV/JcyE2OVdqXgxfzIcrbzfp8cOlK+s07C
-         o59CepFFozGXJ40vUnoUh8xNg5WQkwzBgMtvozgqqKty9cyKMo1TGdS2ht1F0u9uVjKP
-         XCpg4WkxpZVs9NPiaM0zO5wl4H/a4uwPxIi8YYallfKBqWcRDYL54ZgXjymV+szxs7YC
-         oPmGv1KPK9gBbMo8v33R8RnUkGGXDYK756AQd45j8CglzFR/eoy4VfkQm7ttq50L+giz
-         4hmw==
-X-Gm-Message-State: AC+VfDyk+CVALBD0+7OtjV0K+7stlVPGpkFwitADO2IAI7u1LtxE/t6K
-        LTZrLb+zwVDzESbwjUP3LM1JXt9BBB0=
-X-Google-Smtp-Source: ACHHUZ6MHB/guLCQeamB3o/upP+b2xD1hxNx+hBaBEUUtFPSGpk+lUnCAVNebNYueAw2JldC23QbQA==
-X-Received: by 2002:a05:600c:2116:b0:3f4:298f:4cf2 with SMTP id u22-20020a05600c211600b003f4298f4cf2mr3918860wml.24.1684599244402;
+        bh=jzsGqgsevrUhodzdFAxQK9whsckAIVJLXwzvdwvULrk=;
+        b=JrodFxu3irlqcpwQGE/ri2slHQJXYt0Tk23o/apQ5eH0A5bwPGes4rx2L7x0U+rHH9
+         XBVTtX5rw6MG+OZB4AFXsc8Ii9wn/XHgH4+EMs9ROu/3QWjdVcOB45hNkLXcrXFld6AS
+         9DV+gjzcrpH0Gn0jK1KrGZYekzgM8xprUetiaIVNRpqiHZJPevgXNrR/UNNcPfkw3eAE
+         K8ZwgcdWZmCZ/g9RkH6cS1wv9OBaO3R2U+gfGwDvZgCB6PVLk/JQDngq2FYI2edYjoPt
+         CB+K4QY6pKDtpwrc3AQ1quCeIqnw3YVZzg10IcizIMVe2qeiCaXoVMQqqA0gsBwD2rgc
+         0w7w==
+X-Gm-Message-State: AC+VfDyLdjpxKjnvEgYzGVTKGTssMOwsmgzU/zKVerVq+iwGObQIyiKL
+        XKbXk35/blJqU+6MjAnCC6BDueCKyZk=
+X-Google-Smtp-Source: ACHHUZ78Pg3BkGzGPmSYHX4p0o8GsvauVawqnM2MvLYVMlbjfMHzff/M0dLbGy3T6UMVvwPsFR+XUA==
+X-Received: by 2002:a05:6000:1052:b0:301:2452:e4d with SMTP id c18-20020a056000105200b0030124520e4dmr4112978wrx.46.1684599244918;
         Sat, 20 May 2023 09:14:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q10-20020a1cf30a000000b003f423508c6bsm2602363wmq.44.2023.05.20.09.14.03
+        by smtp.gmail.com with ESMTPSA id o5-20020a5d62c5000000b003068f5cca8csm2307573wrv.94.2023.05.20.09.14.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 20 May 2023 09:14:04 -0700 (PDT)
-Message-Id: <c70af95a7998c7f0d1585cb412359d55d9ed4db6.1684599239.git.gitgitgadget@gmail.com>
+Message-Id: <86b3b91d94ec7bb8f296d69ee226cc8bb37c9300.1684599239.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1514.git.git.1684599239.gitgitgadget@gmail.com>
 References: <pull.1514.git.git.1684599239.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 May 2023 16:13:54 +0000
-Subject: [PATCH 06/10] t7700-repack: modernize test format
+Date:   Sat, 20 May 2023 16:13:55 +0000
+Subject: [PATCH 07/10] t9100-git-svn-basic: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,37 +72,74 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t7700-repack.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t9100-git-svn-basic.sh | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index faa739eeb91..3f930fa4762 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -460,10 +460,10 @@ test_expect_success '--write-midx -b packs non-kept objects' '
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index fea41b3c360..af28b01fefa 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -21,7 +21,7 @@ test_expect_success 'git svn help works anywhere' '
  '
  
- test_expect_success '--write-midx removes stale pack-based bitmaps' '
--       rm -fr repo &&
--       git init repo &&
--       test_when_finished "rm -fr repo" &&
--       (
-+	rm -fr repo &&
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
- 		cd repo &&
- 		test_commit base &&
- 		GIT_TEST_MULTI_PACK_INDEX=0 git repack -Ab &&
-@@ -477,7 +477,7 @@ test_expect_success '--write-midx removes stale pack-based bitmaps' '
- 		test_path_is_file $midx &&
- 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
- 		test_path_is_missing $pack_bitmap
--       )
-+	)
+ test_expect_success \
+-    'initialize git svn' '
++	'initialize git svn' '
+ 	mkdir import &&
+ 	(
+ 		cd import &&
+@@ -38,9 +38,9 @@ test_expect_success \
+ 	rm -rf import &&
+ 	git svn init "$svnrepo"'
+ 
+-test_expect_success \
+-    'import an SVN revision into git' \
+-    'git svn fetch'
++test_expect_success 'import an SVN revision into git' '
++	git svn fetch
++'
+ 
+ test_expect_success "checkout from svn" 'svn co "$svnrepo" "$SVN_TREE"'
+ 
+@@ -233,27 +233,26 @@ test_expect_success POSIXPERM,SYMLINKS "$name" '
  '
  
- test_expect_success '--write-midx with --pack-kept-objects' '
+ test_expect_success 'exit if remote refs are ambigious' '
+-        git config --add svn-remote.svn.fetch \
++	git config --add svn-remote.svn.fetch \
+ 		bar:refs/remotes/git-svn &&
+ 	test_must_fail git svn migrate
+ '
+ 
+ test_expect_success 'exit if init-ing a would clobber a URL' '
+-        svnadmin create "${PWD}/svnrepo2" &&
+-        svn mkdir -m "mkdir bar" "${svnrepo}2/bar" &&
+-        git config --unset svn-remote.svn.fetch \
++	svnadmin create "${PWD}/svnrepo2" &&
++	svn mkdir -m "mkdir bar" "${svnrepo}2/bar" &&
++	git config --unset svn-remote.svn.fetch \
+ 		"^bar:refs/remotes/git-svn$" &&
+ 	test_must_fail git svn init "${svnrepo}2/bar"
+         '
+ 
+-test_expect_success \
+-  'init allows us to connect to another directory in the same repo' '
+-        git svn init --minimize-url -i bar "$svnrepo/bar" &&
+-        git config --get svn-remote.svn.fetch \
+-                              "^bar:refs/remotes/bar$" &&
+-        git config --get svn-remote.svn.fetch \
+-			      "^:refs/remotes/git-svn$"
+-        '
++test_expect_success 'init allows us to connect to another directory in the same repo' '
++	git svn init --minimize-url -i bar "$svnrepo/bar" &&
++	git config --get svn-remote.svn.fetch \
++		"^bar:refs/remotes/bar$" &&
++	git config --get svn-remote.svn.fetch \
++		"^:refs/remotes/git-svn$"
++'
+ 
+ test_expect_success 'dcommit $rev does not clobber current branch' '
+ 	git svn fetch -i bar &&
 -- 
 gitgitgadget
 
