@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D20FDC77B7A
-	for <git@archiver.kernel.org>; Sat, 20 May 2023 16:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CDE9C77B7F
+	for <git@archiver.kernel.org>; Sat, 20 May 2023 16:14:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231945AbjETQO1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 May 2023 12:14:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43748 "EHLO
+        id S231922AbjETQO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 May 2023 12:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231868AbjETQOR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2023 12:14:17 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E21310A
+        with ESMTP id S231873AbjETQOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2023 12:14:25 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC9D3134
         for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:08 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f41d087a84so13022975e9.1
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-306dbad5182so2828004f8f.1
         for <git@vger.kernel.org>; Sat, 20 May 2023 09:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684599246; x=1687191246;
+        d=gmail.com; s=20221208; t=1684599247; x=1687191247;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d1TGazJy898k5wxyTYl93NPRr+S0GZ3T/j5KJOKpJ/o=;
-        b=E1tYhNvlz6fzxeSlw/g6Bjh8fu/dcOgaVTIjQqn6JErg/S18fJo04NEcBkrob8yJho
-         N+gzFdSGQdn95xrwDUPDx3GJejNouX2vWru25VgW9se/o/qjaeqH7/V6vuIYdjjEPxOf
-         WazFqUauZMc1cbvfs8uUgtS/kORjhvhq3PeoDf0dTXGDt1Z+Xf1khu8V0yCRKOPJuXVh
-         xhcH0XDw19hQVcKjp3nT5hrxTu7cSAJh8pz5MVOggsX4eZy7CQa48HVolSBHAuVxhFma
-         uOxVfdy/Hq/TuGvVAZL6arvAKjJ/U8Yp/Sz2RLqfU/oTbjYwhG3/+bRRxKbkXj6qcjgu
-         cUdw==
+        bh=J3ApEPrKyxK3yGm9+ENIqBlijwSY/g5JuPIFy5wRFBc=;
+        b=ABh/4zPyxx9zEQpiwZbJ7quTPzkQJrqMicELQCPwIbM+NVVURNaRFAtEUlvpH27x3b
+         4bodEY18T8CgtAMe11SPHbsxdd3pg5WjQCeFeBvz4m9rTH6Mo4WTR1k7gLgIXin8m5pZ
+         clmYYdVHf1ThRp8YizxV9eHShqFe9MsjTIAAOtTz66WX6YU8CVvVueQj6dLx5l9FsnKT
+         Ii/5C+aee9w2A/jkWxvCQzz6zXOQlwBGLO5Ecs42RC8GJYPGtNv1Yl0KJNnXZIsY9+nK
+         atQVW/z1Vl5C34gKOY6moz38c9IDVPNRaMEUzgYzewiN90iY/hQ8FqWQwUeEue1J+oBC
+         J4QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684599246; x=1687191246;
+        d=1e100.net; s=20221208; t=1684599247; x=1687191247;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=d1TGazJy898k5wxyTYl93NPRr+S0GZ3T/j5KJOKpJ/o=;
-        b=XU3kFcruHB6YBZTfwQbRHM50YdoepHb5+4NsH/NX6/X+umqMniXJ4UxPTIdL3EQYdY
-         GLmgIQUN/LWihWsfTqlS1LvsRI8CysbXc6Lg0/AyQ0QC56QHE8W/T6xa4iAYKr+XgvrF
-         idc5IFnfPV5vRbcK6jopIlCS//ab+sfEiGkQC0DiAFcl5PxGy/FUkdKv3gHOpf8XAD0k
-         SnueCYDjuobv/D4r+XP1sXzjMd0kyrk8o/eiCTFJ+TCFyv6w7KEQRN0wjD7UAjcHC5wD
-         mqfPkSRJyskTM5R3djpXxQONSgYCiR3YXEvDc5b+XKoy8/cHbR4RBsjFf6iY7PRrvx1T
-         KVcg==
-X-Gm-Message-State: AC+VfDw0/oT0aCemGDCvMPsr//VHirRfxW0Yr8WqmJrkITyr932vQl+z
-        3THgBia1Jx42JLJ1vXBgwzzupNb+2Nc=
-X-Google-Smtp-Source: ACHHUZ5ak9l1dw0skxND5MNS2zcgH6XOtcXaYnjoyy3VgA2yspCFIhtdpYhqgr3YH+lZVpgg4Tk9IA==
-X-Received: by 2002:a1c:7503:0:b0:3f5:e29:bcde with SMTP id o3-20020a1c7503000000b003f50e29bcdemr4208545wmc.17.1684599246417;
+        bh=J3ApEPrKyxK3yGm9+ENIqBlijwSY/g5JuPIFy5wRFBc=;
+        b=cW/Qtp83TLkLd/lIvY1X82E6FzV6ZcxBlYagAqfLoKBOhrsl7aG92YOiIekPKXqSZ5
+         GafST6gwLM+3riJzfF7HbIyxIxO2WrTws5VZDUm6pYLCkFpmIojVlKwMMkQnmORo19x5
+         +zwSrdflLtgSkPBxp09YXLeO41WS5oocNbJp5QwaDP4cAVPtrTnPkN/wkbORMRD+80kC
+         LyWnWGpZjRaXXJOmgR185epB34STKK9n0G32F0mcc7XcIs10ZWPHqAUJZUWbuwf3ZQ7V
+         bOwNiSJ4mFZ1I1mv5GHXgREuKmAx4+sDxuC1VspUVlRo0Gqj6gz3PgPkzZPMh0/fjkq6
+         0hhw==
+X-Gm-Message-State: AC+VfDwLqTXr1c90n9iVCF8c64pMHLKi0un2zABF889xO2Ngt6Uciie1
+        Ntavq2zcSwWggMm8K97sNTH1Qr8eoZ0=
+X-Google-Smtp-Source: ACHHUZ7Jfdpp6L+Z8cONfbPijpQpknJ9x3xagotsvph9fdx71LNpVWkrbf/fBRz92qCGPlr6vAfhGA==
+X-Received: by 2002:adf:e60b:0:b0:309:a4e:52d3 with SMTP id p11-20020adfe60b000000b003090a4e52d3mr4814348wrm.5.1684599246901;
         Sat, 20 May 2023 09:14:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g3-20020a7bc4c3000000b003f427687ba7sm2631108wmk.41.2023.05.20.09.14.05
+        by smtp.gmail.com with ESMTPSA id z12-20020a5d640c000000b00307c8d6b4a0sm2344428wru.26.2023.05.20.09.14.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 May 2023 09:14:05 -0700 (PDT)
-Message-Id: <01f752d38c6fe38351410540514c1408948fe65e.1684599239.git.gitgitgadget@gmail.com>
+        Sat, 20 May 2023 09:14:06 -0700 (PDT)
+Message-Id: <c324ec087fb6d31b19b57c1dce5aa72c5ae6c9e4.1684599239.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1514.git.git.1684599239.gitgitgadget@gmail.com>
 References: <pull.1514.git.git.1684599239.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 May 2023 16:13:57 +0000
-Subject: [PATCH 09/10] t9200-git-cvsexportcommit: modernize test format
+Date:   Sat, 20 May 2023 16:13:58 +0000
+Subject: [PATCH 10/10] t9400-git-cvsserver-server: modernize test format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,404 +72,679 @@ Standardize the tests to the new format with tab indentation.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t9200-git-cvsexportcommit.sh | 351 ++++++++++++++++-----------------
- 1 file changed, 175 insertions(+), 176 deletions(-)
+ t/t9400-git-cvsserver-server.sh | 530 +++++++++++++++++---------------
+ 1 file changed, 278 insertions(+), 252 deletions(-)
 
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index c5946cb0b8a..a44eabf0d80 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -50,56 +50,56 @@ check_entries () {
- 	fi
- }
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 379b19f2f85..003c0b61d0f 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -66,10 +66,11 @@ test_expect_success 'setup' '
  
--test_expect_success \
--    'New file' \
--    'mkdir A B C D E F &&
--     echo hello1 >A/newfile1.txt &&
--     echo hello2 >B/newfile2.txt &&
--     cp "$TEST_DIRECTORY"/test-binary-1.png C/newfile3.png &&
--     cp "$TEST_DIRECTORY"/test-binary-1.png D/newfile4.png &&
--     git add A/newfile1.txt &&
--     git add B/newfile2.txt &&
--     git add C/newfile3.png &&
--     git add D/newfile4.png &&
--     git commit -a -m "Test: New file" &&
--     id=$(git rev-list --max-count=1 HEAD) &&
--     (cd "$CVSWORK" &&
--     git cvsexportcommit -c $id &&
--     check_entries A "newfile1.txt/1.1/" &&
--     check_entries B "newfile2.txt/1.1/" &&
--     check_entries C "newfile3.png/1.1/-kb" &&
--     check_entries D "newfile4.png/1.1/-kb" &&
--     test_cmp A/newfile1.txt ../A/newfile1.txt &&
--     test_cmp B/newfile2.txt ../B/newfile2.txt &&
--     test_cmp C/newfile3.png ../C/newfile3.png &&
--     test_cmp D/newfile4.png ../D/newfile4.png
--     )'
-+test_expect_success 'New file' '
-+	mkdir A B C D E F &&
-+	echo hello1 >A/newfile1.txt &&
-+	echo hello2 >B/newfile2.txt &&
-+	cp "$TEST_DIRECTORY"/test-binary-1.png C/newfile3.png &&
-+	cp "$TEST_DIRECTORY"/test-binary-1.png D/newfile4.png &&
-+	git add A/newfile1.txt &&
-+	git add B/newfile2.txt &&
-+	git add C/newfile3.png &&
-+	git add D/newfile4.png &&
-+	git commit -a -m "Test: New file" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c $id &&
-+	check_entries A "newfile1.txt/1.1/" &&
-+	check_entries B "newfile2.txt/1.1/" &&
-+	check_entries C "newfile3.png/1.1/-kb" &&
-+	check_entries D "newfile4.png/1.1/-kb" &&
-+	test_cmp A/newfile1.txt ../A/newfile1.txt &&
-+	test_cmp B/newfile2.txt ../B/newfile2.txt &&
-+	test_cmp C/newfile3.png ../C/newfile3.png &&
-+	test_cmp D/newfile4.png ../D/newfile4.png
-+	)
+ # note that cvs doesn't accept absolute pathnames
+ # as argument to co -d
+-test_expect_success 'basic checkout' \
+-  'GIT_CONFIG="$git_config" cvs -Q co -d cvswork main &&
+-   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | head -n 1))" = "empty/1.1/" &&
+-   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | sed -ne \$p))" = "secondrootfile/1.1/"'
++test_expect_success 'basic checkout' '
++	GIT_CONFIG="$git_config" cvs -Q co -d cvswork main &&
++	test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | head -n 1))" = "empty/1.1/" &&
++	test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | sed -ne \$p))" = "secondrootfile/1.1/"
 +'
  
--test_expect_success \
--    'Remove two files, add two and update two' \
--    'echo Hello1 >>A/newfile1.txt &&
--     rm -f B/newfile2.txt &&
--     rm -f C/newfile3.png &&
--     echo Hello5  >E/newfile5.txt &&
--     cp "$TEST_DIRECTORY"/test-binary-2.png D/newfile4.png &&
--     cp "$TEST_DIRECTORY"/test-binary-1.png F/newfile6.png &&
--     git add E/newfile5.txt &&
--     git add F/newfile6.png &&
--     git commit -a -m "Test: Remove, add and update" &&
--     id=$(git rev-list --max-count=1 HEAD) &&
--     (cd "$CVSWORK" &&
--     git cvsexportcommit -c $id &&
--     check_entries A "newfile1.txt/1.2/" &&
--     check_entries B "" &&
--     check_entries C "" &&
--     check_entries D "newfile4.png/1.2/-kb" &&
--     check_entries E "newfile5.txt/1.1/" &&
--     check_entries F "newfile6.png/1.1/-kb" &&
--     test_cmp A/newfile1.txt ../A/newfile1.txt &&
--     test_cmp D/newfile4.png ../D/newfile4.png &&
--     test_cmp E/newfile5.txt ../E/newfile5.txt &&
--     test_cmp F/newfile6.png ../F/newfile6.png
--     )'
-+test_expect_success 'Remove two files, add two and update two' '
-+	echo Hello1 >>A/newfile1.txt &&
-+	rm -f B/newfile2.txt &&
-+	rm -f C/newfile3.png &&
-+	echo Hello5  >E/newfile5.txt &&
-+	cp "$TEST_DIRECTORY"/test-binary-2.png D/newfile4.png &&
-+	cp "$TEST_DIRECTORY"/test-binary-1.png F/newfile6.png &&
-+	git add E/newfile5.txt &&
-+	git add F/newfile6.png &&
-+	git commit -a -m "Test: Remove, add and update" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c $id &&
-+	check_entries A "newfile1.txt/1.2/" &&
-+	check_entries B "" &&
-+	check_entries C "" &&
-+	check_entries D "newfile4.png/1.2/-kb" &&
-+	check_entries E "newfile5.txt/1.1/" &&
-+	check_entries F "newfile6.png/1.1/-kb" &&
-+	test_cmp A/newfile1.txt ../A/newfile1.txt &&
-+	test_cmp D/newfile4.png ../D/newfile4.png &&
-+	test_cmp E/newfile5.txt ../E/newfile5.txt &&
-+	test_cmp F/newfile6.png ../F/newfile6.png
-+	)
+ #------------------------
+ # PSERVER AUTHENTICATION
+@@ -115,35 +116,40 @@ Ah<Z:yZZ30 e
+ END VERIFICATION REQUEST
+ EOF
+ 
+-test_expect_success 'pserver authentication' \
+-  'cat request-anonymous | git-cvsserver pserver >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'pserver authentication' '
++	cat request-anonymous | git-cvsserver pserver >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
 +'
  
- # Should fail (but only on the git cvsexportcommit stage)
- test_expect_success \
-@@ -129,67 +129,67 @@ test_expect_success \
- 
- # This test is here because a patch for only binary files will
- # fail with gnu patch, so cvsexportcommit must handle that.
--test_expect_success \
--    'Remove only binary files' \
--    'git reset --hard HEAD^^ &&
--     rm -f D/newfile4.png &&
--     git commit -a -m "test: remove only a binary file" &&
--     id=$(git rev-list --max-count=1 HEAD) &&
--     (cd "$CVSWORK" &&
--     git cvsexportcommit -c $id &&
--     check_entries A "newfile1.txt/1.2/" &&
--     check_entries B "" &&
--     check_entries C "" &&
--     check_entries D "" &&
--     check_entries E "newfile5.txt/1.1/" &&
--     check_entries F "newfile6.png/1.1/-kb" &&
--     test_cmp A/newfile1.txt ../A/newfile1.txt &&
--     test_cmp E/newfile5.txt ../E/newfile5.txt &&
--     test_cmp F/newfile6.png ../F/newfile6.png
--     )'
-+test_expect_success 'Remove only binary files' '
-+	git reset --hard HEAD^^ &&
-+	rm -f D/newfile4.png &&
-+	git commit -a -m "test: remove only a binary file" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c $id &&
-+	check_entries A "newfile1.txt/1.2/" &&
-+	check_entries B "" &&
-+	check_entries C "" &&
-+	check_entries D "" &&
-+	check_entries E "newfile5.txt/1.1/" &&
-+	check_entries F "newfile6.png/1.1/-kb" &&
-+	test_cmp A/newfile1.txt ../A/newfile1.txt &&
-+	test_cmp E/newfile5.txt ../E/newfile5.txt &&
-+	test_cmp F/newfile6.png ../F/newfile6.png
-+	)
+-test_expect_success 'pserver authentication failure (non-anonymous user)' \
+-  'if cat request-git | git-cvsserver pserver >log 2>&1
+-   then
+-       false
+-   else
+-       true
+-   fi &&
+-   sed -ne \$p log | grep "^I HATE YOU\$"'
++test_expect_success 'pserver authentication failure (non-anonymous user)' '
++	if cat request-git | git-cvsserver pserver >log 2>&1
++	then
++	    false
++	else
++	    true
++	fi &&
++	sed -ne \$p log | grep "^I HATE YOU\$"
 +'
  
--test_expect_success \
--    'Remove only a text file' \
--    'rm -f A/newfile1.txt &&
--     git commit -a -m "test: remove only a binary file" &&
--     id=$(git rev-list --max-count=1 HEAD) &&
--     (cd "$CVSWORK" &&
--     git cvsexportcommit -c $id &&
--     check_entries A "" &&
--     check_entries B "" &&
--     check_entries C "" &&
--     check_entries D "" &&
--     check_entries E "newfile5.txt/1.1/" &&
--     check_entries F "newfile6.png/1.1/-kb" &&
--     test_cmp E/newfile5.txt ../E/newfile5.txt &&
--     test_cmp F/newfile6.png ../F/newfile6.png
--     )'
-+test_expect_success 'Remove only a text file' '
-+	rm -f A/newfile1.txt &&
-+	git commit -a -m "test: remove only a binary file" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c $id &&
-+	check_entries A "" &&
-+	check_entries B "" &&
-+	check_entries C "" &&
-+	check_entries D "" &&
-+	check_entries E "newfile5.txt/1.1/" &&
-+	check_entries F "newfile6.png/1.1/-kb" &&
-+	test_cmp E/newfile5.txt ../E/newfile5.txt &&
-+	test_cmp F/newfile6.png ../F/newfile6.png
-+	)
+-test_expect_success 'pserver authentication success (non-anonymous user with password)' \
+-  'cat login-git-ok | git-cvsserver pserver >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'pserver authentication success (non-anonymous user with password)' '
++	cat login-git-ok | git-cvsserver pserver >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
 +'
  
--test_expect_success \
--     'New file with spaces in file name' \
--     'mkdir "G g" &&
--      echo ok then >"G g/with spaces.txt" &&
--      git add "G g/with spaces.txt" && \
--      cp "$TEST_DIRECTORY"/test-binary-1.png "G g/with spaces.png" && \
--      git add "G g/with spaces.png" &&
--      git commit -a -m "With spaces" &&
--      id=$(git rev-list --max-count=1 HEAD) &&
--      (cd "$CVSWORK" &&
--      git cvsexportcommit -c $id &&
--      check_entries "G g" "with spaces.png/1.1/-kb|with spaces.txt/1.1/"
--      )'
-+test_expect_success 'New file with spaces in file name' '
-+	mkdir "G g" &&
-+	echo ok then >"G g/with spaces.txt" &&
-+	git add "G g/with spaces.txt" && \
-+	cp "$TEST_DIRECTORY"/test-binary-1.png "G g/with spaces.png" && \
-+	git add "G g/with spaces.png" &&
-+	git commit -a -m "With spaces" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c $id &&
-+	check_entries "G g" "with spaces.png/1.1/-kb|with spaces.txt/1.1/"
-+	)
+-test_expect_success 'pserver authentication (login)' \
+-  'cat login-anonymous | git-cvsserver pserver >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'pserver authentication (login)' '
++	cat login-anonymous | git-cvsserver pserver >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
 +'
  
--test_expect_success \
--     'Update file with spaces in file name' \
--     'echo Ok then >>"G g/with spaces.txt" &&
--      cat "$TEST_DIRECTORY"/test-binary-1.png >>"G g/with spaces.png" && \
--      git add "G g/with spaces.png" &&
--      git commit -a -m "Update with spaces" &&
--      id=$(git rev-list --max-count=1 HEAD) &&
--      (cd "$CVSWORK" &&
--      git cvsexportcommit -c $id &&
--      check_entries "G g" "with spaces.png/1.2/-kb|with spaces.txt/1.2/"
--      )'
-+test_expect_success 'Update file with spaces in file name' '
-+	echo Ok then >>"G g/with spaces.txt" &&
-+	cat "$TEST_DIRECTORY"/test-binary-1.png >>"G g/with spaces.png" && \
-+	git add "G g/with spaces.png" &&
-+	git commit -a -m "Update with spaces" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c $id &&
-+	check_entries "G g" "with spaces.png/1.2/-kb|with spaces.txt/1.2/"
-+	)
+-test_expect_success 'pserver authentication failure (login/non-anonymous user)' \
+-  'if cat login-git | git-cvsserver pserver >log 2>&1
+-   then
+-       false
+-   else
+-       true
+-   fi &&
+-   sed -ne \$p log | grep "^I HATE YOU\$"'
++test_expect_success 'pserver authentication failure (login/non-anonymous user)' '
++	if cat login-git | git-cvsserver pserver >log 2>&1
++	then
++	    false
++	else
++	    true
++	fi &&
++	sed -ne \$p log | grep "^I HATE YOU\$"
 +'
  
- # Some filesystems mangle pathnames with UTF-8 characters --
- # check and skip
-@@ -202,68 +202,68 @@ if p="Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö" &&
- then
  
- # This test contains UTF-8 characters
--test_expect_success !MINGW \
--     'File with non-ascii file name' \
--     'mkdir -p Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö &&
--      echo Foo >Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.txt &&
--      git add Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.txt &&
--      cp "$TEST_DIRECTORY"/test-binary-1.png Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.png &&
--      git add Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.png &&
--      git commit -a -m "Går det så går det" && \
--      id=$(git rev-list --max-count=1 HEAD) &&
--      (cd "$CVSWORK" &&
--      git cvsexportcommit -v -c $id &&
--      check_entries \
--      "Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö" \
--      "gårdetsågårdet.png/1.1/-kb|gårdetsågårdet.txt/1.1/"
--      )'
-+test_expect_success !MINGW 'File with non-ascii file name' '
-+	mkdir -p Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö &&
-+	echo Foo >Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.txt &&
-+	git add Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.txt &&
-+	cp "$TEST_DIRECTORY"/test-binary-1.png Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.png &&
-+	git add Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö/gårdetsågårdet.png &&
-+	git commit -a -m "Går det så går det" && \
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -v -c $id &&
-+	check_entries \
-+	"Å/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/å/ä/ö" \
-+	"gårdetsågårdet.png/1.1/-kb|gårdetsågårdet.txt/1.1/"
-+	)
+ # misuse pserver authentication for testing of req_Root
+@@ -165,36 +171,40 @@ END AUTH REQUEST
+ Root $WORKDIR
+ EOF
+ 
+-test_expect_success 'req_Root failure (relative pathname)' \
+-  'if cat request-relative | git-cvsserver pserver >log 2>&1
+-   then
+-       echo unexpected success
+-       false
+-   else
+-       true
+-   fi &&
+-   tail log | grep "^error 1 Root must be an absolute pathname$"'
++test_expect_success 'req_Root failure (relative pathname)' '
++	if cat request-relative | git-cvsserver pserver >log 2>&1
++	then
++		echo unexpected success
++		false
++	else
++		true
++	fi &&
++	tail log | grep "^error 1 Root must be an absolute pathname$"
 +'
  
- fi
- 
- rm -fr tst
- 
--test_expect_success \
--     'Mismatching patch should fail' \
--     'date >>"E/newfile5.txt" &&
--      git add "E/newfile5.txt" &&
--      git commit -a -m "Update one" &&
--      date >>"E/newfile5.txt" &&
--      git add "E/newfile5.txt" &&
--      git commit -a -m "Update two" &&
--      id=$(git rev-list --max-count=1 HEAD) &&
--      (cd "$CVSWORK" &&
--      test_must_fail git cvsexportcommit -c $id
--      )'
--
--test_expect_success FILEMODE \
--     'Retain execute bit' \
--     'mkdir G &&
--      echo executeon >G/on &&
--      chmod +x G/on &&
--      echo executeoff >G/off &&
--      git add G/on &&
--      git add G/off &&
--      git commit -a -m "Execute test" &&
--      (cd "$CVSWORK" &&
--      git cvsexportcommit -c HEAD &&
--      test -x G/on &&
--      ! test -x G/off
--      )'
-+test_expect_success 'Mismatching patch should fail' '
-+	date >>"E/newfile5.txt" &&
-+	git add "E/newfile5.txt" &&
-+	git commit -a -m "Update one" &&
-+	date >>"E/newfile5.txt" &&
-+	git add "E/newfile5.txt" &&
-+	git commit -a -m "Update two" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$CVSWORK" &&
-+	test_must_fail git cvsexportcommit -c $id
-+	)
-+'
-+
-+test_expect_success FILEMODE 'Retain execute bit' '
-+	mkdir G &&
-+	echo executeon >G/on &&
-+	chmod +x G/on &&
-+	echo executeoff >G/off &&
-+	git add G/on &&
-+	git add G/off &&
-+	git commit -a -m "Execute test" &&
-+	(cd "$CVSWORK" &&
-+	git cvsexportcommit -c HEAD &&
-+	test -x G/on &&
-+	! test -x G/off
-+	)
+-test_expect_success 'req_Root failure (conflicting roots)' \
+-  'cat request-conflict | git-cvsserver pserver >log 2>&1 &&
+-   tail log | grep "^error 1 Conflicting roots specified$"'
++test_expect_success 'req_Root failure (conflicting roots)' '
++	cat request-conflict | git-cvsserver pserver >log 2>&1 &&
++	tail log | grep "^error 1 Conflicting roots specified$"
 +'
  
- test_expect_success '-w option should work with relative GIT_DIR' '
--      mkdir W &&
--      echo foobar >W/file1.txt &&
--      echo bazzle >W/file2.txt &&
--      git add W/file1.txt &&
--      git add W/file2.txt &&
--      git commit -m "More updates" &&
--      id=$(git rev-list --max-count=1 HEAD) &&
--      (cd "$GIT_DIR" &&
--      GIT_DIR=. git cvsexportcommit -w "$CVSWORK" -c $id &&
--      check_entries "$CVSWORK/W" "file1.txt/1.1/|file2.txt/1.1/" &&
--      test_cmp "$CVSWORK/W/file1.txt" ../W/file1.txt &&
--      test_cmp "$CVSWORK/W/file2.txt" ../W/file2.txt
--      )
-+	mkdir W &&
-+	echo foobar >W/file1.txt &&
-+	echo bazzle >W/file2.txt &&
-+	git add W/file1.txt &&
-+	git add W/file2.txt &&
-+	git commit -m "More updates" &&
-+	id=$(git rev-list --max-count=1 HEAD) &&
-+	(cd "$GIT_DIR" &&
-+	GIT_DIR=. git cvsexportcommit -w "$CVSWORK" -c $id &&
-+	check_entries "$CVSWORK/W" "file1.txt/1.1/|file2.txt/1.1/" &&
-+	test_cmp "$CVSWORK/W/file1.txt" ../W/file1.txt &&
-+	test_cmp "$CVSWORK/W/file2.txt" ../W/file2.txt
-+	)
+-test_expect_success 'req_Root (strict paths)' \
+-  'cat request-anonymous | git-cvsserver --strict-paths pserver "$SERVERDIR" >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'req_Root (strict paths)' '
++	cat request-anonymous | git-cvsserver --strict-paths pserver "$SERVERDIR" >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
++'
+ 
+ test_expect_success 'req_Root failure (strict-paths)' '
+-    ! cat request-anonymous |
+-    git-cvsserver --strict-paths pserver "$WORKDIR" >log 2>&1
++	! cat request-anonymous |
++	git-cvsserver --strict-paths pserver "$WORKDIR" >log 2>&1
  '
  
- test_expect_success 'check files before directories' '
-@@ -290,21 +290,20 @@ test_expect_success 'check files before directories' '
+-test_expect_success 'req_Root (w/o strict-paths)' \
+-  'cat request-anonymous | git-cvsserver pserver "$WORKDIR/" >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'req_Root (w/o strict-paths)' '
++	cat request-anonymous | git-cvsserver pserver "$WORKDIR/" >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
++'
+ 
+ test_expect_success 'req_Root failure (w/o strict-paths)' '
+-    ! cat request-anonymous |
+-    git-cvsserver pserver "$WORKDIR/gitcvs" >log 2>&1
++	! cat request-anonymous |
++	git-cvsserver pserver "$WORKDIR/gitcvs" >log 2>&1
  '
  
- test_expect_success 're-commit a removed filename which remains in CVS attic' '
--
--    (cd "$CVSWORK" &&
--     echo >attic_gremlin &&
--     cvs -Q add attic_gremlin &&
--     cvs -Q ci -m "added attic_gremlin" &&
--     rm attic_gremlin &&
--     cvs -Q rm attic_gremlin &&
--     cvs -Q ci -m "removed attic_gremlin") &&
--
--    echo > attic_gremlin &&
--    git add attic_gremlin &&
--    git commit -m "Added attic_gremlin" &&
-+	(cd "$CVSWORK" &&
-+	echo >attic_gremlin &&
-+	cvs -Q add attic_gremlin &&
-+	cvs -Q ci -m "added attic_gremlin" &&
-+	rm attic_gremlin &&
-+	cvs -Q rm attic_gremlin &&
-+	cvs -Q ci -m "removed attic_gremlin") &&
-+
-+	echo > attic_gremlin &&
-+	git add attic_gremlin &&
-+	git commit -m "Added attic_gremlin" &&
- 	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
--    (cd "$CVSWORK" && cvs -Q update -d) &&
--    test -f "$CVSWORK/attic_gremlin"
-+	(cd "$CVSWORK" && cvs -Q update -d) &&
-+	test -f "$CVSWORK/attic_gremlin"
+ cat >request-base  <<EOF
+@@ -206,27 +216,30 @@ END AUTH REQUEST
+ Root /gitcvs.git
+ EOF
+ 
+-test_expect_success 'req_Root (base-path)' \
+-  'cat request-base | git-cvsserver --strict-paths --base-path "$WORKDIR/" pserver "$SERVERDIR" >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'req_Root (base-path)' '
++	cat request-base | git-cvsserver --strict-paths --base-path "$WORKDIR/" pserver "$SERVERDIR" >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
++'
+ 
+ test_expect_success 'req_Root failure (base-path)' '
+-    ! cat request-anonymous |
+-    git-cvsserver --strict-paths --base-path "$WORKDIR" pserver "$SERVERDIR" >log 2>&1
++	! cat request-anonymous |
++	git-cvsserver --strict-paths --base-path "$WORKDIR" pserver "$SERVERDIR" >log 2>&1
  '
  
- # the state of the CVS sandbox may be indeterminate for ' space'
+ GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false || exit 1
+ 
+-test_expect_success 'req_Root (export-all)' \
+-  'cat request-anonymous | git-cvsserver --export-all pserver "$WORKDIR" >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'req_Root (export-all)' '
++	cat request-anonymous | git-cvsserver --export-all pserver "$WORKDIR" >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
++'
+ 
+-test_expect_success 'req_Root failure (export-all w/o directory list)' \
+-  '! (cat request-anonymous | git-cvsserver --export-all pserver >log 2>&1 || false)'
++test_expect_success 'req_Root failure (export-all w/o directory list)' '
++	! (cat request-anonymous | git-cvsserver --export-all pserver >log 2>&1 || false)'
+ 
+-test_expect_success 'req_Root (everything together)' \
+-  'cat request-base | git-cvsserver --export-all --strict-paths --base-path "$WORKDIR/" pserver "$SERVERDIR" >log 2>&1 &&
+-   sed -ne \$p log | grep "^I LOVE YOU\$"'
++test_expect_success 'req_Root (everything together)' '
++	cat request-base | git-cvsserver --export-all --strict-paths --base-path "$WORKDIR/" pserver "$SERVERDIR" >log 2>&1 &&
++	sed -ne \$p log | grep "^I LOVE YOU\$"
++'
+ 
+ GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true || exit 1
+ 
+@@ -247,45 +260,49 @@ test_expect_success 'gitcvs.enabled = false' \
+    test ! -d cvswork2'
+ 
+ rm -fr cvswork2
+-test_expect_success 'gitcvs.ext.enabled = true' \
+-  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
+-   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false &&
+-   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
+-   test_cmp cvswork cvswork2'
++test_expect_success 'gitcvs.ext.enabled = true' '
++	GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
++	GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false &&
++	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
++	test_cmp cvswork cvswork2
++'
+ 
+ rm -fr cvswork2
+-test_expect_success 'gitcvs.ext.enabled = false' \
+-  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled false &&
+-   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
+-   if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1
+-   then
+-     echo unexpected cvs success
+-     false
+-   else
+-     true
+-   fi &&
+-   grep "GITCVS emulation disabled" cvs.log &&
+-   test ! -d cvswork2'
++test_expect_success 'gitcvs.ext.enabled = false' '
++	GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled false &&
++	GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
++	if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1
++	then
++		echo unexpected cvs success
++		false
++	else
++		true
++	fi &&
++	grep "GITCVS emulation disabled" cvs.log &&
++	test ! -d cvswork2
++'
+ 
+ rm -fr cvswork2
+-test_expect_success 'gitcvs.dbname' \
+-  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
+-   GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs.%a.%m.sqlite &&
+-   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
+-   test_cmp cvswork cvswork2 &&
+-   test -f "$SERVERDIR/gitcvs.ext.main.sqlite" &&
+-   cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs.ext.main.sqlite"'
++test_expect_success 'gitcvs.dbname' '
++	GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
++	GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs.%a.%m.sqlite &&
++	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
++	test_cmp cvswork cvswork2 &&
++	test -f "$SERVERDIR/gitcvs.ext.main.sqlite" &&
++	cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs.ext.main.sqlite"
++'
+ 
+ rm -fr cvswork2
+-test_expect_success 'gitcvs.ext.dbname' \
+-  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
+-   GIT_DIR="$SERVERDIR" git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
+-   GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
+-   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
+-   test_cmp cvswork cvswork2 &&
+-   test -f "$SERVERDIR/gitcvs1.ext.main.sqlite" &&
+-   test ! -f "$SERVERDIR/gitcvs2.ext.main.sqlite" &&
+-   cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs1.ext.main.sqlite"'
++test_expect_success 'gitcvs.ext.dbname' '
++	GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
++	GIT_DIR="$SERVERDIR" git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
++	GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
++	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
++	test_cmp cvswork cvswork2 &&
++	test -f "$SERVERDIR/gitcvs1.ext.main.sqlite" &&
++	test ! -f "$SERVERDIR/gitcvs2.ext.main.sqlite" &&
++	cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs1.ext.main.sqlite"
++'
+ 
+ 
+ #------------
+@@ -299,109 +316,115 @@ GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
+ GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
+ exit 1
+ 
+-test_expect_success 'cvs update (create new file)' \
+-  'echo testfile1 >testfile1 &&
+-   git add testfile1 &&
+-   git commit -q -m "Add testfile1" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.1/" &&
+-   test_cmp testfile1 ../testfile1'
++test_expect_success 'cvs update (create new file)' '
++	echo testfile1 >testfile1 &&
++	git add testfile1 &&
++	git commit -q -m "Add testfile1" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.1/" &&
++	test_cmp testfile1 ../testfile1
++'
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (update existing file)' \
+-  'echo line 2 >>testfile1 &&
+-   git add testfile1 &&
+-   git commit -q -m "Append to testfile1" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.2/" &&
+-   test_cmp testfile1 ../testfile1'
++test_expect_success 'cvs update (update existing file)' '
++	echo line 2 >>testfile1 &&
++	git add testfile1 &&
++	git commit -q -m "Append to testfile1" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.2/" &&
++	test_cmp testfile1 ../testfile1
++'
+ 
+ cd "$WORKDIR"
+ #TODO: cvsserver doesn't support update w/o -d
+ test_expect_failure "cvs update w/o -d doesn't create subdir (TODO)" '
+-   mkdir test &&
+-   echo >test/empty &&
+-   git add test &&
+-   git commit -q -m "Single Subdirectory" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test ! -d test
++	mkdir test &&
++	echo >test/empty &&
++	git add test &&
++	git commit -q -m "Single Subdirectory" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test ! -d test
+ '
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (subdirectories)' \
+-  '(for dir in A A/B A/B/C A/D E; do
+-      mkdir $dir &&
+-      echo "test file in $dir" >"$dir/file_in_$(echo $dir|sed -e "s#/# #g")"  &&
+-      git add $dir || exit 1
+-   done) &&
+-   git commit -q -m "deep sub directory structure" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update -d &&
+-   (for dir in A A/B A/B/C A/D E; do
+-      filename="file_in_$(echo $dir|sed -e "s#/# #g")" &&
+-      if test "$(echo $(grep -v ^D $dir/CVS/Entries|cut -d/ -f2,3,5))" = "$filename/1.1/" &&
+-	test_cmp "$dir/$filename" "../$dir/$filename"; then
+-        :
+-      else
+-	exit 1
+-      fi
+-    done)'
++test_expect_success 'cvs update (subdirectories)' '
++	(for dir in A A/B A/B/C A/D E; do
++		mkdir $dir &&
++		echo "test file in $dir" >"$dir/file_in_$(echo $dir|sed -e "s#/# #g")"  &&
++		git add $dir || exit 1
++	done) &&
++	git commit -q -m "deep sub directory structure" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update -d &&
++	(for dir in A A/B A/B/C A/D E; do
++		filename="file_in_$(echo $dir|sed -e "s#/# #g")" &&
++		if test "$(echo $(grep -v ^D $dir/CVS/Entries|cut -d/ -f2,3,5))" = "$filename/1.1/" &&
++			test_cmp "$dir/$filename" "../$dir/$filename"; then
++		:
++		else
++			exit 1
++		fi
++	done)
++'
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (delete file)' \
+-  'git rm testfile1 &&
+-   git commit -q -m "Remove testfile1" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test -z "$(grep testfile1 CVS/Entries)" &&
+-   test ! -f testfile1'
++test_expect_success 'cvs update (delete file)' '
++	git rm testfile1 &&
++	git commit -q -m "Remove testfile1" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test -z "$(grep testfile1 CVS/Entries)" &&
++	test ! -f testfile1
++'
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (re-add deleted file)' \
+-  'echo readded testfile >testfile1 &&
+-   git add testfile1 &&
+-   git commit -q -m "Re-Add testfile1" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.4/" &&
+-   test_cmp testfile1 ../testfile1'
++test_expect_success 'cvs update (re-add deleted file)' '
++	echo readded testfile >testfile1 &&
++	git add testfile1 &&
++	git commit -q -m "Re-Add testfile1" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.4/" &&
++	test_cmp testfile1 ../testfile1
++'
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (merge)' \
+-  'echo Line 0 >expected &&
+-   for i in 1 2 3 4 5 6 7
+-   do
+-     echo Line $i >>merge &&
+-     echo Line $i >>expected || return 1
+-   done &&
+-   echo Line 8 >>expected &&
+-   git add merge &&
+-   git commit -q -m "Merge test (pre-merge)" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test "$(echo $(grep merge CVS/Entries|cut -d/ -f2,3,5))" = "merge/1.1/" &&
+-   test_cmp merge ../merge &&
+-   ( echo Line 0 && cat merge ) >merge.tmp &&
+-   mv merge.tmp merge &&
+-   cd "$WORKDIR" &&
+-   echo Line 8 >>merge &&
+-   git add merge &&
+-   git commit -q -m "Merge test (merge)" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   sleep 1 && touch merge &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test_cmp merge ../expected'
++test_expect_success 'cvs update (merge)' '
++	echo Line 0 >expected &&
++	for i in 1 2 3 4 5 6 7
++	do
++		echo Line $i >>merge &&
++		echo Line $i >>expected || return 1
++	done &&
++	echo Line 8 >>expected &&
++	git add merge &&
++	git commit -q -m "Merge test (pre-merge)" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test "$(echo $(grep merge CVS/Entries|cut -d/ -f2,3,5))" = "merge/1.1/" &&
++	test_cmp merge ../merge &&
++	( echo Line 0 && cat merge ) >merge.tmp &&
++	mv merge.tmp merge &&
++	cd "$WORKDIR" &&
++	echo Line 8 >>merge &&
++	git add merge &&
++	git commit -q -m "Merge test (merge)" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	sleep 1 && touch merge &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test_cmp merge ../expected
++'
+ 
+ cd "$WORKDIR"
+ 
+@@ -418,55 +441,58 @@ do
+   echo Line $i >>expected.C
+ done
+ 
+-test_expect_success 'cvs update (conflict merge)' \
+-  '( echo LINE 0 && cat merge ) >merge.tmp &&
+-   mv merge.tmp merge &&
+-   git add merge &&
+-   git commit -q -m "Merge test (conflict)" &&
+-   git push gitcvs.git >/dev/null &&
+-   cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update &&
+-   test_cmp merge ../expected.C'
++test_expect_success 'cvs update (conflict merge)' '
++	( echo LINE 0 && cat merge ) >merge.tmp &&
++	mv merge.tmp merge &&
++	git add merge &&
++	git commit -q -m "Merge test (conflict)" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test_cmp merge ../expected.C
++'
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (-C)' \
+-  'cd cvswork &&
+-   GIT_CONFIG="$git_config" cvs -Q update -C &&
+-   test_cmp merge ../merge'
++test_expect_success 'cvs update (-C)' '
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs -Q update -C &&
++	test_cmp merge ../merge
++'
+ 
+ cd "$WORKDIR"
+-test_expect_success 'cvs update (merge no-op)' \
+-   'echo Line 9 >>merge &&
+-    cp merge cvswork/merge &&
+-    git add merge &&
+-    git commit -q -m "Merge test (no-op)" &&
+-    git push gitcvs.git >/dev/null &&
+-    cd cvswork &&
+-    sleep 1 && touch merge &&
+-    GIT_CONFIG="$git_config" cvs -Q update &&
+-    test_cmp merge ../merge'
++test_expect_success 'cvs update (merge no-op)' '
++	echo Line 9 >>merge &&
++	cp merge cvswork/merge &&
++	git add merge &&
++	git commit -q -m "Merge test (no-op)" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	sleep 1 && touch merge &&
++	GIT_CONFIG="$git_config" cvs -Q update &&
++	test_cmp merge ../merge
++'
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs update (-p)' '
+-    touch really-empty &&
+-    echo Line 1 > no-lf &&
+-    printf "Line 2" >> no-lf &&
+-    git add really-empty no-lf &&
+-    git commit -q -m "Update -p test" &&
+-    git push gitcvs.git >/dev/null &&
+-    cd cvswork &&
+-    GIT_CONFIG="$git_config" cvs update &&
+-    for i in merge no-lf empty really-empty; do
+-	GIT_CONFIG="$git_config" cvs update -p "$i" >$i.out &&
+-	test_cmp $i.out ../$i || return 1
+-    done
++	touch really-empty &&
++	echo Line 1 > no-lf &&
++	printf "Line 2" >> no-lf &&
++	git add really-empty no-lf &&
++	git commit -q -m "Update -p test" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs update &&
++	for i in merge no-lf empty really-empty; do
++		GIT_CONFIG="$git_config" cvs update -p "$i" >$i.out &&
++		test_cmp $i.out ../$i || return 1
++	done
+ '
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs update (module list supports packed refs)' '
+-    GIT_DIR="$SERVERDIR" git pack-refs --all &&
+-    GIT_CONFIG="$git_config" cvs -n up -d 2> out &&
+-    grep "cvs update: New directory \`main'\''" < out
++	GIT_DIR="$SERVERDIR" git pack-refs --all &&
++	GIT_CONFIG="$git_config" cvs -n up -d 2> out &&
++	grep "cvs update: New directory \`main'\''" < out
+ '
+ 
+ #------------
+@@ -475,30 +501,30 @@ test_expect_success 'cvs update (module list supports packed refs)' '
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs status' '
+-    mkdir status.dir &&
+-    echo Line > status.dir/status.file &&
+-    echo Line > status.file &&
+-    git add status.dir status.file &&
+-    git commit -q -m "Status test" &&
+-    git push gitcvs.git >/dev/null &&
+-    cd cvswork &&
+-    GIT_CONFIG="$git_config" cvs update &&
+-    GIT_CONFIG="$git_config" cvs status | grep "^File: status.file" >../out &&
+-    test_line_count = 2 ../out
++	mkdir status.dir &&
++	echo Line > status.dir/status.file &&
++	echo Line > status.file &&
++	git add status.dir status.file &&
++	git commit -q -m "Status test" &&
++	git push gitcvs.git >/dev/null &&
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs update &&
++	GIT_CONFIG="$git_config" cvs status | grep "^File: status.file" >../out &&
++	test_line_count = 2 ../out
+ '
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs status (nonrecursive)' '
+-    cd cvswork &&
+-    GIT_CONFIG="$git_config" cvs status -l | grep "^File: status.file" >../out &&
+-    test_line_count = 1 ../out
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs status -l | grep "^File: status.file" >../out &&
++	test_line_count = 1 ../out
+ '
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs status (no subdirs in header)' '
+-    cd cvswork &&
+-    GIT_CONFIG="$git_config" cvs status | grep ^File: >../out &&
+-    ! grep / <../out
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs status | grep ^File: >../out &&
++	! grep / <../out
+ '
+ 
+ #------------
+@@ -507,9 +533,9 @@ test_expect_success 'cvs status (no subdirs in header)' '
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs co -c (shows module database)' '
+-    GIT_CONFIG="$git_config" cvs co -c > out &&
+-    grep "^main[	 ][ 	]*main$" <out &&
+-    ! grep -v "^main[	 ][ 	]*main$" <out
++	GIT_CONFIG="$git_config" cvs co -c > out &&
++	grep "^main[	 ][ 	]*main$" <out &&
++	! grep -v "^main[	 ][ 	]*main$" <out
+ '
+ 
+ #------------
+@@ -575,11 +601,11 @@ expectStat="$?"
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs log' '
+-    cd cvswork &&
+-    test x"$expectStat" = x"0" &&
+-    GIT_CONFIG="$git_config" cvs log merge >../out &&
+-    sed -e "s%2[0-9][0-9][0-9]/[01][0-9]/[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]%__DATE__%" ../out > ../actual &&
+-    test_cmp ../expect ../actual
++	cd cvswork &&
++	test x"$expectStat" = x"0" &&
++	GIT_CONFIG="$git_config" cvs log merge >../out &&
++sed -e "s%2[0-9][0-9][0-9]/[01][0-9]/[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]%__DATE__%" ../out > ../actual &&
++	test_cmp ../expect ../actual
+ '
+ 
+ #------------
+@@ -588,11 +614,11 @@ test_expect_success 'cvs log' '
+ 
+ cd "$WORKDIR"
+ test_expect_success 'cvs annotate' '
+-    cd cvswork &&
+-    GIT_CONFIG="$git_config" cvs annotate merge >../out &&
+-    sed -e "s/ .*//" ../out >../actual &&
+-    printf "1.%d\n" 3 1 1 1 1 1 1 1 2 4 >../expect &&
+-    test_cmp ../expect ../actual
++	cd cvswork &&
++	GIT_CONFIG="$git_config" cvs annotate merge >../out &&
++	sed -e "s/ .*//" ../out >../actual &&
++	printf "1.%d\n" 3 1 1 1 1 1 1 1 2 4 >../expect &&
++	test_cmp ../expect ../actual
+ '
+ 
+ #------------
 -- 
 gitgitgadget
-
