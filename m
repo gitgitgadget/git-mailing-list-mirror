@@ -2,99 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BDD2C77B7A
-	for <git@archiver.kernel.org>; Sat, 20 May 2023 22:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C16B9C7EE23
+	for <git@archiver.kernel.org>; Sun, 21 May 2023 11:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229621AbjETW1Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 May 2023 18:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55920 "EHLO
+        id S232080AbjEUK4Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 May 2023 06:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjETW1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2023 18:27:24 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB09184
-        for <git@vger.kernel.org>; Sat, 20 May 2023 15:27:23 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-64d30ab1f89so1437168b3a.3
-        for <git@vger.kernel.org>; Sat, 20 May 2023 15:27:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684621643; x=1687213643;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C/mcdC9xr/7NFYc2E5Kh9RPbsT5yvP/3edFC+3XIhtQ=;
-        b=aPGARSiNWbUoe1EUyXuumpy0wlKLl6Pe2f/iaClbJkKNMqEuC+jBTQ+G5R1lqAULsM
-         KL1AVS4aM7DnEFm6Z6FLTa6hGMxIG6D4+3CSB4Nqy+Ye9d0dAUTAF3XCVDyPmr+309GC
-         kFIOONaDOpUCzhJkq2vYBEpcF1b3e9Mu90wYbxJsoQKpcdcRaOsVb9vH/ezCFOBsvece
-         RFYnK3Go3W3kVzyE4lSemIjlz2qs8InrjilvxzBu18s+2F+gu3EXZU1ehb/lljDezuqr
-         Zl8acbT0TEYy7bnmmSOvUK1D/5E/0DgjZFrS3BqCyv3Sh0zT5IiG7l6kLUfBamw8KpQ7
-         C7JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684621643; x=1687213643;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=C/mcdC9xr/7NFYc2E5Kh9RPbsT5yvP/3edFC+3XIhtQ=;
-        b=hYEooXVS3O8NEglcX13rjb3NtPrknfcwJub5jadV5zVRx2CCNkHCiINM1N8cc+1S0L
-         D+3t/jzkSPNSLQmtwOg/j+Yug4/27O+ysb/wHblP88noCCMn6m17RyFYJOmE4u/E0Kx3
-         vm79CFbfgR7fQZGi5dxGw5ePIp2lQZwr3owja7K5Ib3IKwYwXv6oL33cQRpc1G5UqacA
-         elMCoNPthk6tO3KcjU/eMpB4M0cE7UTH9qxF87LaWJC4L8XkkO7CFFUij1L/Ba3t73zj
-         yo/sC3xpRYdRHLYCuu55O9IpXu/tRdcJ26b1czVEffBsnUroyZFztWJ52h8N87eJUAYn
-         3/nQ==
-X-Gm-Message-State: AC+VfDz2d/S1N+4BdLUuMuQKP/VZWlxe+qsrfQe9Z/Fx5uThtj5saOhy
-        qDp+FJK8spTCxGlf7dDNnrY=
-X-Google-Smtp-Source: ACHHUZ5spzZATn4+3tLJEXV/PWbdMsmCFQykKc6XqGt5hlUSmsYIEonjkTL3aYebLu+klIu0juWAEw==
-X-Received: by 2002:a05:6a00:15c7:b0:626:2ce1:263c with SMTP id o7-20020a056a0015c700b006262ce1263cmr8770050pfu.5.1684621642847;
-        Sat, 20 May 2023 15:27:22 -0700 (PDT)
-Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id y1-20020aa78541000000b0064d32771fa8sm100904pfn.134.2023.05.20.15.27.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 May 2023 15:27:22 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Minnie Shi <minnie.shi@gmail.com>
+        with ESMTP id S231956AbjEUKuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2023 06:50:08 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869491703
+        for <git@vger.kernel.org>; Sun, 21 May 2023 03:49:55 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 52C0632004E7;
+        Sun, 21 May 2023 06:49:51 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Sun, 21 May 2023 06:49:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1684666190; x=1684752590; bh=L+beVc5/ep+sLjxOwWnOLIHW4
+        S8+VMO7MYqO1QgRIWI=; b=ATDcASEfhTV3mssrRuiIVsTgwI1lj7tR4xfPCzW3K
+        fzWFtjKYsPsI49t3qGX6y/CAwX0PLBHEpiNiCTYW6fUPcuK1Y55rw6leyQTKIBZD
+        eXQkuZouusLBHsXr+pfsOq7Ie785pAPad9+dHxF5vd20/uLvuHCogssMIFRsmDIS
+        l4oJ+vav7z0zD3qIleVVjLC/F3pC6MBAH3q0SCnA0cRMO8lErAq805Bxk7+lBUv5
+        cGb1+Og5xXJcJirgP22kHkQMU15BcebrTtwsBJ6y1UxL5n4VeuEM1O+JLIs+jIin
+        xZSGm3QeXb+mamti0OO0mYrQ5YrNwhCckEn8ryZNkti9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1684666190; x=1684752590; bh=L+beVc5/ep+sLjxOwWnOLIHW4S8+VMO7MYq
+        O1QgRIWI=; b=DA6LjaimGTE+r0BhzJpjWYoNKyU8w3QSk83DL++0ABQrGgI82xG
+        FC7bd9atrqMXdVlpPJFkDAZqz/3rp44yun9B5BbLD/k0h1pubQYRRPs5ITzOENRg
+        F525ZBPO7Mjc2yl+lSCKhYLegI7VLL7J6iASj5V3urt4EdaA8RczrFadNgIIWDuV
+        SYlKXgShI0bpkSSfIfISFGThR0LhqzBc1J0XyvxdXF0EUlbCnsE1TCf5KEgJRSeD
+        gdrHr8a6Q5BL5TeO/yH2cl1yxBvj+tmwpmZ+62kuxmwAle3rJ+ODHMrzHPqRZhUZ
+        FynYzvGeMrpXxCjnjDELDtlQ8moD6Qrfkiw==
+X-ME-Sender: <xms:TvdpZITRIc4iFzImfXGtPFjfQ8JPsG6ryNX1oFKNKq4TnJR9kVRuXlY>
+    <xme:TvdpZFzpSAwnVjlVgipxryi2hWhl1qa8TbSrVtsKxVyx35G1WJuwtkgjTRFQA9939
+    4r9zdcTACEZTN6hPQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeiledgfedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:TvdpZF1c5JwGoTs5ILTZyVlLHOkkKh-IThdScMhiCIMuW7I-s37DdA>
+    <xmx:TvdpZMBN1ggScPH2rr3pKGdnhGmWwAq5Jxg-zzUU9iYJ98W7lGbQnA>
+    <xmx:TvdpZBhfXbbWH8kiVSkz2KFfrqtSfY6-3PJaAOeryd7wcU5BJcIugQ>
+    <xmx:TvdpZBLIi1P_3vC22_qHdGCWu82W8i_V53asLKCFMJqqhEsTskfdhQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id A603E15A008E; Sun, 21 May 2023 06:49:50 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-431-g1d6a3ebb56-fm-20230511.001-g1d6a3ebb
+Mime-Version: 1.0
+Message-Id: <948e8a46-4257-45f6-8486-7cd1481779f2@app.fastmail.com>
+In-Reply-To: <xmqq353qk59y.fsf@gitster.g>
+References: <CAOQx3AYx+sSD4REfTdQ0muY2zRgzE2nR7RgG7cxNgXvwzYzixg@mail.gmail.com>
+ <xmqq353qk59y.fsf@gitster.g>
+Date:   Sun, 21 May 2023 12:49:30 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Minnie Shi" <minnie.shi@gmail.com>
 Cc:     git@vger.kernel.org
 Subject: Re: I think there is error in merge documents - current branch
-References: <CAOQx3AYx+sSD4REfTdQ0muY2zRgzE2nR7RgG7cxNgXvwzYzixg@mail.gmail.com>
-Date:   Sun, 21 May 2023 07:27:21 +0900
-In-Reply-To: <CAOQx3AYx+sSD4REfTdQ0muY2zRgzE2nR7RgG7cxNgXvwzYzixg@mail.gmail.com>
-        (Minnie Shi's message of "Sat, 20 May 2023 10:01:55 +0200")
-Message-ID: <xmqq353qk59y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Minnie Shi <minnie.shi@gmail.com> writes:
+On Sun, May 21, 2023, at 00:27, Junio C Hamano wrote:
+> My reading also hiccupped with "replay"; the first sentence to
+> explain the command says "incorporate the changes", and that may be
+> a less confusing expression; "replay" somehow makes me imagine that
+> the changes are cherry-picked one by one---it may be only me, so I
+> left it as-is in the suggestion above.
 
-> in summary the sentence should be read as
->
-> Before the operation, ORIG_HEAD is set to the tip of the current branch (H).
-> instead of
-> Before the operation, ORIG_HEAD is set to the tip of the current branch (C).
+Yeah, it made me think of cherry-picks, essentially (specifically a
+rebase). =E2=80=9CReplaying=E2=80=9D doesn=E2=80=99t seem relevant in th=
+is context, but that=E2=80=99s
+just based on my layman conceptualization of how git-merge works.
 
-Not C but G (i.e. the tip _before_ the history is updated).
+=E2=80=9Cwill replay the changes made on the=E2=80=9D comes from b40bb37=
+4a61
+(Documentation: merge: add an overview, 2010-01-23), which expanded the
+first paragraph of Description and added the two examples.
 
-I notice that we overuse "current" there.  One is to refer to the
-most recent commit on a branch, the other is to refer to the branch
-that is checked out.  For the former, we say "the tip" in the other
-sentence, and it probably will make it less ambiguous if used that
-phrase.
-
-    Then "`git merge topic`" will replay the changes made on the
-    `topic` branch since it diverged from `master` (i.e., `E`) until
-    the commit at the tip of the `topic` (`C`) on top of `master`,
-    and record the result
-    in a new commit along with the names of the two parent commits and
-    a log message from the user describing the changes. Before the operation,
-    `ORIG_HEAD` is set to the tip of the current branch (`G`).
-
-My reading also hiccupped with "replay"; the first sentence to
-explain the command says "incorporate the changes", and that may be
-a less confusing expression; "replay" somehow makes me imagine that
-the changes are cherry-picked one by one---it may be only me, so I
-left it as-is in the suggestion above.
-
-Thanks.
-
+--=20
+Kristoffer Haugsbakk
