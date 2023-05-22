@@ -2,77 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE44CC77B73
-	for <git@archiver.kernel.org>; Mon, 22 May 2023 21:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C46AC77B73
+	for <git@archiver.kernel.org>; Mon, 22 May 2023 21:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230034AbjEVVjO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 May 2023 17:39:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46728 "EHLO
+        id S231782AbjEVVsP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 May 2023 17:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbjEVVjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2023 17:39:13 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D42C6
-        for <git@vger.kernel.org>; Mon, 22 May 2023 14:39:12 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1ae4a0b5a90so35789675ad.1
-        for <git@vger.kernel.org>; Mon, 22 May 2023 14:39:12 -0700 (PDT)
+        with ESMTP id S231418AbjEVVsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2023 17:48:14 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F64EDB
+        for <git@vger.kernel.org>; Mon, 22 May 2023 14:48:13 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba81b37d9d2so11959869276.3
+        for <git@vger.kernel.org>; Mon, 22 May 2023 14:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684791551; x=1687383551;
+        d=google.com; s=20221208; t=1684792092; x=1687384092;
         h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=CdWoqTKagcv/drkjBteVzOf/jfhYEIsfH9RFj5ugtTU=;
-        b=rvIBhLBWiRv4RDn2o3WNv/3Qii97Dwo4iy+JNf8DrcWII0mTIegB+uhlrnPol3Ppmk
-         jGvy9/KdNY8daLKoWYWRQ3lPqYwJ9GPOVob6Ogy6y0jpmN+t/ha7awb6OdZ87etXvxtO
-         doMeuAYyh9t7rk8XwQ+aeQgmvt/xnI2CutJ7nr/otxrnvFNKLExpOxmxGFWF1M6296bc
-         EZzct340gHDlEu9sOB6CoWw4fulwYbA8Jl/ukRwlyjKjEiLKRiSf48BbSjgHV4OW26mX
-         yECkdRB9/cBuOfDT9JZh1FHZOGVT7U8pzlubNSzeeZDfbTQj2XVt59BXjjqTNBsmHwpE
-         wDdw==
+        bh=+jeMCbUadJSxfUWrWXagNO+/xHaPl9VK60GVKOcporQ=;
+        b=oxwHhNkDAtYbbZcY/ep/WAjs+6KYmIFz0reLhoPOCXJru0SXMSrpumUF2+3lj8tXIQ
+         /w/L+fl0IqKUKtZNaKSw6LEbaEnrdunvCx+HqhPbBsz/Qff3X2ccdPcW9ZoiXL2hdVTL
+         5qbVhUGUfp/2JPgCddLaatcZZEtl2g/Ada1DSv7uwUzfVaLl945fnCmW65KXFwvu3XzK
+         MH2qd6UQU+W/5Hhg3qbhmWGB6zhuIQp4Ex/RiYdVOza50ahOWaEuUZjah7BELeuvQ3JU
+         Jy9vazKl/Ev3qEBSnOwf5j2oQNqyTo7Z4mTAWv5cshI3NlgB+Cz6rTCxiOAb09ipkgne
+         RB2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684791551; x=1687383551;
+        d=1e100.net; s=20221208; t=1684792092; x=1687384092;
         h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CdWoqTKagcv/drkjBteVzOf/jfhYEIsfH9RFj5ugtTU=;
-        b=BPiBBd+E6tWUIxLILq05p19vaqeMr5lmWURcnKXsdbpkq8VMYkDkShnx+E5M4alP51
-         Afv7tXYpEFKEd00BwrJKo0mPczjMZUFoIRUuzGXWXUOejpZdyAbu0cgoOIFT45g3SV8s
-         QU/guTOHFhnSRjVjudQ1S1ovbk1IHjCFxxfhLJxMe0zbiLpM4rcWtHVhXNr1SpnB3VPu
-         HTUM28VZvHnKkIFXiNnt8vkdK79HeMht+IybDM20QewD/govR49Cqi4n/+BlVJ0JTmgJ
-         OGwmzXg7VfHq8VX6KB2i5dIFtWSfuF8Dpa1paZs2NaV3D7PUdLqQhjme3yI0sUwnpcbx
-         tf4Q==
-X-Gm-Message-State: AC+VfDwW+JawfDOEX+7xVrYxtccioUhssben6YALljKbI6eZfemPclQG
-        JsRYhyb1rmYeWuhH5RPQI1moNSWJZZ0nB1oFfEwrHhuP/3X5Lmmed6crYkSVH2TXMsqVepiSCmp
-        CxwEnArW8Ndn+y4yb9m+RiN3mw2KO19hTp4OzdbxsjiEBv3GyZ3iRx7YDMPP5370=
-X-Google-Smtp-Source: ACHHUZ4gKg46BFd0LvS3di6Jl8rBR2WtK/eUyEUImaNR98tVrCs+7grHL9x6Ij5rT3kiA9v7jKkXlkdVaZULxA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:903:284b:b0:1af:93cf:5ffc with SMTP
- id kq11-20020a170903284b00b001af93cf5ffcmr2014665plb.2.1684791551414; Mon, 22
- May 2023 14:39:11 -0700 (PDT)
-Date:   Mon, 22 May 2023 14:39:09 -0700
+        bh=+jeMCbUadJSxfUWrWXagNO+/xHaPl9VK60GVKOcporQ=;
+        b=lDeM9eewPdE9vymsJncGkpaeVljth7y6oq3/B+paMrEkSBoghmQSp2mY0tmLQcu7fP
+         /cfgfh1StnL9DwMO/z2mISmzV0o9Ji6nGuPEjGFE4t9wQzpwhSL+6aGTDLuhnA/8Bhps
+         Ygqe+33lvglF+riP1nUtCrizijbiKhkByWDtzacuCemTEfPuxCYaJKaZv8fXkZcCZXMN
+         tM4qSeiZuLPluHwQpRroP7JOb8/t11zaOItYh13h/2Zbps+u9tlwE+Z7SNdk/8vIIkX+
+         iFpJMtss969bdLwD7o2dQt2YB9EBDcMZQaNltDS72nhRcGJQBm7LCRgQD4tqntwBH4oy
+         zP3Q==
+X-Gm-Message-State: AC+VfDyBo5Q6qrfVzcR4J3hvVY83dY+N6BI9ampHs7cQb6crWSkZmrxr
+        8sva0qZ5aF5kYcp1AhDszcV60FYifUvjQcCSOlu6mvKFoIK/V4FAqDckXJz65DjgneSM0MY5BQa
+        JtsMUPvt3pfl8tvahR59EMyoefcp6QPUGCxlw4DkUk+N9libli4RUt47jz1ouM5umjhl0MFC5SM
+        oy
+X-Google-Smtp-Source: ACHHUZ53IzUIBKBEBaAShKkKDfj83YdWegpPboM9MWf3974jFS7VHBcagQ/+yqTQxHFS00q16nmVgnPHWGRR2V+HIuod
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:e715:4b4d:d1be:8ec0])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:9191:0:b0:bac:2448:2aa3 with
+ SMTP id w17-20020a259191000000b00bac24482aa3mr1405262ybl.9.1684792092556;
+ Mon, 22 May 2023 14:48:12 -0700 (PDT)
+Date:   Mon, 22 May 2023 14:48:05 -0700
 Mime-Version: 1.0
-Message-ID: <kl6lv8gkxczm.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Join us for Review Club
-From:   Glen Choo <chooglen@google.com>
+X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
+Message-ID: <cover.1684790529.git.jonathantanmy@google.com>
+Subject: [PATCH 0/2] Changed path filter hash fix and version bump
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Following the conversation in [1], here are patches to fix the murmur3
+hash function used in creating (and interpreting) changed path filters,
+and also to bump the version number to 2.
 
-Review Club is happening this Wednesday, 22 May, 10:00 Pacific time
-(UTC-8). Note the different time (it's usually 14:00)! I'm pushing for
-alternate sessions to happen around this time, so if you have a
-preference for either timing, do let me know.
+This is I think the simplest way to do this (invalidating all existing
+changed path filters). The resource-consuming part of creating a changed
+path filter is in computing the changed paths (thus, reading trees and
+calculating changes), and to check if a changed path filter could be
+reused, one would need to compute the changed paths anyway in order to
+determine if any of them have high-bit strings, so I did not pursue this
+further. Server operators might be able to reuse changed path filters
+if, for example, they have a more efficient way to determine that no
+paths in a repo have the high bit set, but I think that this is out of
+scope for the Git project.
 
-You can find more info at [1] and on gitcal [2]. We run a session every
-other week. This week, we'll be discussing a series from Taylor Blau
-that introduces a hook to tell "git gc" about recent objects [3]. Let me
-know if you're interested and would like to join (off-list is fine), and
-I'll send you an invite.
+In patch 2, I couldn't figure out how to make Bash pass high-bit strings
+as a CLI argument for some reason, so I hardcoded the string I wanted
+in the test helper instead. If anyone knows how to pass such strings,
+please let me know.
 
-See you there!
+[1] https://lore.kernel.org/git/20230511224101.972442-1-jonathantanmy@google.com/
 
-[1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
-[2] http://tinyurl.com/gitcal
-[3] https://lore.kernel.org/git/cover.1684196634.git.me@ttaylorr.com/
+Jonathan Tan (2):
+  t4216: test wrong bloom filter version rejection
+  commit-graph: fix murmur3, bump filter ver. to 2
+
+ bloom.c               | 14 +++++++-------
+ bloom.h               |  9 ++++++---
+ commit-graph.c        |  4 ++--
+ t/helper/test-bloom.c |  7 +++++++
+ t/t0095-bloom.sh      |  8 ++++++++
+ t/t4216-log-bloom.sh  | 36 +++++++++++++++++++++++++++++++++---
+ 6 files changed, 63 insertions(+), 15 deletions(-)
+
+-- 
+2.40.1.698.g37aff9b760-goog
+
