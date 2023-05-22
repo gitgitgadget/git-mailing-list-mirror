@@ -2,154 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BCAFC77B73
-	for <git@archiver.kernel.org>; Mon, 22 May 2023 21:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE44CC77B73
+	for <git@archiver.kernel.org>; Mon, 22 May 2023 21:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232748AbjEVVNT convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 22 May 2023 17:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37332 "EHLO
+        id S230034AbjEVVjO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 May 2023 17:39:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230480AbjEVVNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2023 17:13:17 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DBD29C
-        for <git@vger.kernel.org>; Mon, 22 May 2023 14:13:16 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 34MLBuOQ3886683
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 21:11:56 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     <rsbecker@nexbridge.com>,
-        "=?UTF-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        <git@vger.kernel.org>
-References: <022e01d8ceb5$c2da52c0$488ef840$@nexbridge.com> <003501d8cf8d$21ce5ba0$656b12e0$@nexbridge.com> <013701d90f80$692ba9c0$3b82fd40$@nexbridge.com> <2e3be2e9-191d-fbfd-54c6-a3958e35637c@web.de> <013501d98cee$e58dc980$b0a95c80$@nexbridge.com>
-In-Reply-To: <013501d98cee$e58dc980$b0a95c80$@nexbridge.com>
-Subject: RE: [BUG] Git 2.38.0-rc1 t1800 message text comparison
-Date:   Mon, 22 May 2023 17:13:09 -0400
-Organization: Nexbridge Inc.
-Message-ID: <013601d98cf2$392153c0$ab63fb40$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFwJ678f40H0J9aM+Un1S82qzKFhgIJQNYvAYSG8xkChVcsKgLIiJDMr/K3PnA=
-Content-Language: en-ca
+        with ESMTP id S229707AbjEVVjN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2023 17:39:13 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D42C6
+        for <git@vger.kernel.org>; Mon, 22 May 2023 14:39:12 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1ae4a0b5a90so35789675ad.1
+        for <git@vger.kernel.org>; Mon, 22 May 2023 14:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1684791551; x=1687383551;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=CdWoqTKagcv/drkjBteVzOf/jfhYEIsfH9RFj5ugtTU=;
+        b=rvIBhLBWiRv4RDn2o3WNv/3Qii97Dwo4iy+JNf8DrcWII0mTIegB+uhlrnPol3Ppmk
+         jGvy9/KdNY8daLKoWYWRQ3lPqYwJ9GPOVob6Ogy6y0jpmN+t/ha7awb6OdZ87etXvxtO
+         doMeuAYyh9t7rk8XwQ+aeQgmvt/xnI2CutJ7nr/otxrnvFNKLExpOxmxGFWF1M6296bc
+         EZzct340gHDlEu9sOB6CoWw4fulwYbA8Jl/ukRwlyjKjEiLKRiSf48BbSjgHV4OW26mX
+         yECkdRB9/cBuOfDT9JZh1FHZOGVT7U8pzlubNSzeeZDfbTQj2XVt59BXjjqTNBsmHwpE
+         wDdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684791551; x=1687383551;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CdWoqTKagcv/drkjBteVzOf/jfhYEIsfH9RFj5ugtTU=;
+        b=BPiBBd+E6tWUIxLILq05p19vaqeMr5lmWURcnKXsdbpkq8VMYkDkShnx+E5M4alP51
+         Afv7tXYpEFKEd00BwrJKo0mPczjMZUFoIRUuzGXWXUOejpZdyAbu0cgoOIFT45g3SV8s
+         QU/guTOHFhnSRjVjudQ1S1ovbk1IHjCFxxfhLJxMe0zbiLpM4rcWtHVhXNr1SpnB3VPu
+         HTUM28VZvHnKkIFXiNnt8vkdK79HeMht+IybDM20QewD/govR49Cqi4n/+BlVJ0JTmgJ
+         OGwmzXg7VfHq8VX6KB2i5dIFtWSfuF8Dpa1paZs2NaV3D7PUdLqQhjme3yI0sUwnpcbx
+         tf4Q==
+X-Gm-Message-State: AC+VfDwW+JawfDOEX+7xVrYxtccioUhssben6YALljKbI6eZfemPclQG
+        JsRYhyb1rmYeWuhH5RPQI1moNSWJZZ0nB1oFfEwrHhuP/3X5Lmmed6crYkSVH2TXMsqVepiSCmp
+        CxwEnArW8Ndn+y4yb9m+RiN3mw2KO19hTp4OzdbxsjiEBv3GyZ3iRx7YDMPP5370=
+X-Google-Smtp-Source: ACHHUZ4gKg46BFd0LvS3di6Jl8rBR2WtK/eUyEUImaNR98tVrCs+7grHL9x6Ij5rT3kiA9v7jKkXlkdVaZULxA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:903:284b:b0:1af:93cf:5ffc with SMTP
+ id kq11-20020a170903284b00b001af93cf5ffcmr2014665plb.2.1684791551414; Mon, 22
+ May 2023 14:39:11 -0700 (PDT)
+Date:   Mon, 22 May 2023 14:39:09 -0700
+Mime-Version: 1.0
+Message-ID: <kl6lv8gkxczm.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Join us for Review Club
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday, May 22, 2023 4:49 PM, I wrote:
->On Monday, May 22, 2023 4:39 PM, René Scharfe wrote:
->>Am 14.12.22 um 06:53 schrieb rsbecker@nexbridge.com:
->>> On September 23, 2022 4:43 PM, I wrote:
->>>> On September 22, 2022 3:03 PM, I wrote:
->>>>> On September 22, 2022 3:02 PM, I wrote:
->>>>>> Rc1 is looking good except for this test.
->>>>>>
->>>>>> We get a diff as follows:
->>>>>>
->>>>>> -fatal: cannot run bad-hooks/test-hook: ...
->>>>>> +fatal: cannot exec 'bad-hooks/test-hook': Permission denied
->>>>>>
->>>>>> It looks like the pattern
->>>>>> sed -e s/test-hook: .*/test-hook: .../
->>>>>>
->>>>>> needs to be a bit extended. Adding
->>>>>>
->>>>>> sed -e s/exec/run/ | send -e s/["']//g
->>>>>>
->>>>>> might help clear off the other noise.
->>>>
->>>> A patch that might work is as follows:
->>>>
->>>> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh index
->>>> 43fcb7c0bf..9a723631a2
->>>> 100755
->>>> --- a/t/t1800-hook.sh
->>>> +++ b/t/t1800-hook.sh
->>>> @@ -173,7 +173,10 @@ test_expect_success 'git hook run a hook with a
->>>> bad shebang' '
->>>>                -c core.hooksPath=bad-hooks \
->>>>                hook run test-hook >out 2>err &&
->>>>        test_must_be_empty out &&
->>>> -       sed -e "s/test-hook: .*/test-hook: .../" <err >actual &&
->>>> +       quot=`echo "\047"` &&
->>>> +       sed -e "s/exec/run/" <err | \
->>>> +               sed -e "s/$quot//g" | \
->>>> +               sed -e "s/test-hook: .*/test-hook: .../" >actual &&
->>>>        test_cmp expect actual
->>>> '
->>>>
->>>> This does not require setting up a prerequisite for NonStop and the
->>> technique
->>>> might make the MING code easier but adding a change from spawn to run.
->>>
->>> This is still broken on NonStop. Is there any hope of a resolution?
->>
->>So trying to execute an executable file consisting only of the line
->>"#!/bad/path/no/spaces" causes NonStop to report "Permission denied"?
->>That message text belongs to error code EACCES, not to EPERM
->>("Operation not permitted"), right?
->
->That should be correct, although the OS Devs I spoke to about this said "EPERM". I
->am experimenting.
->
->>POSIX allows execve to return EACCES if the file to execute is not a
->>regular file and executing that file type is not supported or if
->>permissions are missing to one of its path components.
->
->Part of the OS Dev's response was that POSIX is actually ambiguous on this point.
->Linux made the decision to use ENOENT. NonStop decided to use EPERM (although it
->may actually be EACCESS - I will report back.
->
->>Either you have something called /bad that is not a regular file (e.g.
->>a
->>directory) -- then it's just a matter of changing the test to use a
->>different supposedly non-existing filename, perhaps by creating and
->>deleting a temporary file for just that purpose.
->>
->>Or NonStop correctly returns ENOEXEC on the first execve(2) call in
->>run-command.c and returns ENOACCES on the fallback with SHELL_PATH
->>(default value /usr/coreutils/bin/bash), because you are not allowed to
->>execute that shell.  Then SHELL_PATH needs to be corrected.
->>
->>Or valid shells need to be placed in some kind of allow list to be
->>accepted in #!-lines, lest NonStop returns ENOACCES on them.  Or
->>NonStop is simply reporting a bogus error code for some reason.  In
->>those cases you probably need an execve) compat/ wrapper that corrects the error
->code.
->>
->>Or I'm missing something here, which is a relatively safe bet.  Anyway,
->>depending on the cause of the "Permission denied" message, loosening
->>the textual comparison in the test might not be enough.  There may not
->>be a point for end users to distinguish between "exec" vs. "run", but
->>the silent_exec_failure feature of run-command depends on the error code being
->ENOENT.
->
->I will report my debug findings.
+Hi everyone!
 
-NonStop actually does report EACCES, not EPERM. The comment at the front of run-command.c does describe the situation. The following is a potential fix:
+Review Club is happening this Wednesday, 22 May, 10:00 Pacific time
+(UTC-8). Note the different time (it's usually 14:00)! I'm pushing for
+alternate sessions to happen around this time, so if you have a
+preference for either timing, do let me know.
 
-diff --git a/run-command.c b/run-command.c
-index 60c9419866..b76e117d35 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -846,7 +846,7 @@ int start_command(struct child_process *cmd)
-                        execve(argv.v[0], (char *const *) argv.v,
-                               (char *const *) childenv);
+You can find more info at [1] and on gitcal [2]. We run a session every
+other week. This week, we'll be discussing a series from Taylor Blau
+that introduces a hook to tell "git gc" about recent objects [3]. Let me
+know if you're interested and would like to join (off-list is fine), and
+I'll send you an invite.
 
--               if (errno == ENOENT) {
-+               if (errno == ENOENT || errno == EACCES) {
-                        if (cmd->silent_exec_failure)
-                                child_die(CHILD_ERR_SILENT);
-                        child_die(CHILD_ERR_ENOENT);
+See you there!
 
-This does pass and should cover all POSIX interpretations.
-
-Regards,
-Randall
-
+[1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
+[2] http://tinyurl.com/gitcal
+[3] https://lore.kernel.org/git/cover.1684196634.git.me@ttaylorr.com/
