@@ -2,90 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AF60C7EE23
-	for <git@archiver.kernel.org>; Mon, 22 May 2023 15:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BD2AC7EE2D
+	for <git@archiver.kernel.org>; Mon, 22 May 2023 19:07:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234527AbjEVPo0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 May 2023 11:44:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41630 "EHLO
+        id S233898AbjEVTH3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 May 2023 15:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231397AbjEVPoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2023 11:44:25 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 208F4BB
-        for <git@vger.kernel.org>; Mon, 22 May 2023 08:44:24 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id 5b1f17b1804b1-3f607766059so8151545e9.3
-        for <git@vger.kernel.org>; Mon, 22 May 2023 08:44:24 -0700 (PDT)
+        with ESMTP id S230062AbjEVTH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2023 15:07:27 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E553A7
+        for <git@vger.kernel.org>; Mon, 22 May 2023 12:07:27 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1ae452c2777so28307995ad.0
+        for <git@vger.kernel.org>; Mon, 22 May 2023 12:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684770262; x=1687362262;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=WD8E0f06ablgjcVUmI9ch+QB6ddLb4iHDcSMHRjcDPo=;
-        b=YTJ+3SxgHLFIGjJlILk95poW4uCS5HbYZfazLcFexrD9UPxZRRbiuvlKPCWqLjrzCL
-         Luwu+CL/Uh1fCngpmFHx13D7HNbisjCLqSbqtdPAldwSTkhIR4ksLodgq5qVlBWk8w/p
-         IuNW42CghBhfXnKOn1Eg2UGTvsCFK/z1TCMglre0oxzrgKrm2bE9Y+W8sYPQr/IutRf3
-         r3l5QwGPYM3ZjisK6OxZWor3XxJqY76820ceePIAVOQssgUziHC3YR5BcBktHyZZQuu7
-         3cPf9oLX+bPngUJ1lsW8vYNEZuhZK9YZ231FFjgQbbwbeV0IYLMr9rwbYFh7ti4lVIlL
-         LjiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684770262; x=1687362262;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=github.com; s=google; t=1684782446; x=1687374446;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WD8E0f06ablgjcVUmI9ch+QB6ddLb4iHDcSMHRjcDPo=;
-        b=QSgzCeFsbYPf4GjZHG0CEsCe/3ndPsYyL+jmx9ptRnCoGouC7j76RIHl/2ZE/rZ0Pn
-         hQcVtwgMf6LI3Wdh8q+QnDPsCQ8LySJlpG0DXmjDW5tAHIDQiQZ3f+OlApXeKvtQzKc8
-         9fB63oArmjB4+gHbevm7cdwqNBDaZKbt1jWVHkme7kA1ASjrTaLzdbk3QgB9OR+CWEXD
-         9HwJK6SEMc/gA0KGGsj5OBjd7bD/btGYHUCM5PUYyU6gZBsV712pCVPKy4fVDW6XUgHt
-         9KOuXnylh8MXWHFobuDXEzgk3TWD1kBux0RotQPrhJNxc31somaAtARjlXiZFQzALE5T
-         mNDw==
-X-Gm-Message-State: AC+VfDyb+IUTQdfDjQie6qvVUUu3DYgqL9BmOErdhe3zx1Zv9t4++cNn
-        cuLYjWNs35Gf+hLMpna8oXTUhVn5HUglQlqjzYKQ4if5YXHm25GD
-X-Google-Smtp-Source: ACHHUZ7PfqgrTT0yLQXntPZTIMK2okaQYrkXXOfDNzBaHet2eketF5TWD6FMNs6JZSgOyV/LmywiHy2Z3SDX9M3ld3Q=
-X-Received: by 2002:a05:600c:2105:b0:3f5:fc88:dcb9 with SMTP id
- u5-20020a05600c210500b003f5fc88dcb9mr5277520wml.19.1684770262157; Mon, 22 May
- 2023 08:44:22 -0700 (PDT)
+        bh=DKeX3jAG+Y+G5G5h0xhU2tDh2Lk+CJRbksVlSmkDfrE=;
+        b=SrfLw8O1VUwC/ByvX0wRUqhcWMU+o/X64DPT8FV6LLbREFW1K/KNgGEwiJNfEQBBZT
+         jvFkDUbrC3MLE+GVyJ8d8c/n/dyVCiiyxsEEYjxzJexP1VN+bckrtFUgkJQclDKXXYVO
+         yG10/k36FoS+oLIh9h5xjErjPOajPElCOvnwCT58KEzRIpEIhIB08UdenkqY9/QaDzAS
+         F4ubSa28JH2bOsm1etIIWxH/SDlwrb51UfNf9BfL9tdKMv+joDfOY7kjqruD2UuD1UCr
+         dzRN9GwrG+BXRE3tWLHOdDfVhkDTmTWdGKv0uIdX1oOXmXsLYD1uEIvx/cX8lcjxSHS4
+         Leqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684782446; x=1687374446;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DKeX3jAG+Y+G5G5h0xhU2tDh2Lk+CJRbksVlSmkDfrE=;
+        b=hdvkvm33WLEUCfZqzznOnM+bxXBRmLp/8UMs4UjKfjGVbdhWQm4993og5RrE3AVY8w
+         6vwC1m9SnLJ9gfZG9Cw/VqQOI839PRQ1bhVsyWKbSf8Kp2U7yAhCDqkx1zZUkOzP/8JH
+         oVZPTMT4HtExGPjBuHxYTjbu0Lv07m76sq7eVOTgc/rLR3qcpvfpoM+/R109Z2HDGkDn
+         8SAC9zbMUmD+Lc7w5qrURt2Q1PRl1zSElQzHrZ+OKvosFBD5TzvhcKxCWEKS6m0VTqiK
+         Lqc0vnKboomVp0Y2rNJjE09LAVvoTl6jiIKJXiTklmnfNftJugb0ezV/wNCBOsQAEJBH
+         mO2w==
+X-Gm-Message-State: AC+VfDyr/WEDh4cK5bqdEMQtf/IeIUf/lA0q89S516T1dm4iBcTPEpas
+        EU5G74+B60ILMGgBVsGbvP/LdfFivZ7bwSUQ9w==
+X-Google-Smtp-Source: ACHHUZ7BrinRKxXBFI1RO+/OXTnv1gxsNk2zlnNHTIS4TtXfsR9LYJyxPWPSWUi69r7+htsiiTyqzg==
+X-Received: by 2002:a17:902:dac8:b0:1ae:89a:a4 with SMTP id q8-20020a170902dac800b001ae089a00a4mr13188749plx.8.1684782446569;
+        Mon, 22 May 2023 12:07:26 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id l12-20020a170902d34c00b0019e5fc21663sm5177177plk.218.2023.05.22.12.07.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 May 2023 12:07:26 -0700 (PDT)
+Message-ID: <2a2b7223-bb5d-65f9-95bb-9be45d329c87@github.com>
+Date:   Mon, 22 May 2023 12:07:23 -0700
 MIME-Version: 1.0
-From:   Iakov Nakhimovski <iakov.nakhimovski@gmail.com>
-Date:   Mon, 22 May 2023 17:44:11 +0200
-Message-ID: <CAM9q8UoE5OGLkZ7MduXqWjxyGV7xNFBXsEbaYG1H61zZ9AO_XA@mail.gmail.com>
-Subject: fatal: could not fetch SHA from promisor remote with git 2.40
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.10.1
+Subject: Re: [PATCH v2] diff-tree: integrate with sparse index
+Content-Language: en-US
+To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, derrickstolee@github.com
+References: <20230515191836.674234-1-cheskaqiqi@gmail.com>
+ <20230518154454.475487-1-cheskaqiqi@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20230518154454.475487-1-cheskaqiqi@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
-We are running a Jenkins server with a number of worker nodes both
-Linux and Windows and have recently got a problem on some of the
-Windows nodes. The following git call sequence:
-git clone --filter=blob:none --no-checkout <internal-gitlab-hosted-repo-url> .
-git sparse-checkout init --cone
-git sparse-checkout set <list of dirs>
-git checkout <sha>
-and then after some commits when trying to reuse the working tree:
-git clean -f -x -d
-git sparse-checkout set <same list of dirs>
-git fetch --filter=blob:none
-git checkout <sha_new>
+Shuqi Liang wrote:
+> Change since v1:
+> 
+> * Update commit message.
+> * Use existing test repo to simplify the test.
+> * Add test to ensure index won't expand regardless of 'diff-tree' a file
+> inside or outside the cone
 
-fails with: "fatal: could not fetch SHA from promisor remote". The
-"SHA" in the error message does not match the requested one.
+Thanks for these updates! This version looks ready for 'next' to me.
 
-After googling for the error message we found
-https://stackoverflow.com/questions/75514869/cannot-rebase-after-fetch-fetch-says-fatal-could-not-fetch-sha-from-promisor
-which seemed similar. We checked and confirmed that things work just
-fine with git 2.38.0.windows.1 (and 2.35.1.windows.2) but not with
-2.40.0.windows.1. Downgrading solved the immediate problem.
-
-Now, we could not find any other references to the issue and unable to
-reproduce this in an isolated environment which is worrying as we
-would need to update git at some point and would like to be sure that
-the issue is fixed by then.
-
-Question: is this issue known and tracked somewhere in git development?
-
-Appreciate any tips and comments.
-
-Best regards,
-Iakov
