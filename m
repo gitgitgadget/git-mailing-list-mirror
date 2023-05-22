@@ -2,56 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C46AC77B73
-	for <git@archiver.kernel.org>; Mon, 22 May 2023 21:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF1DDC7EE2A
+	for <git@archiver.kernel.org>; Mon, 22 May 2023 21:48:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231782AbjEVVsP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 May 2023 17:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50212 "EHLO
+        id S234331AbjEVVsV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 May 2023 17:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231418AbjEVVsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2023 17:48:14 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F64EDB
-        for <git@vger.kernel.org>; Mon, 22 May 2023 14:48:13 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba81b37d9d2so11959869276.3
-        for <git@vger.kernel.org>; Mon, 22 May 2023 14:48:13 -0700 (PDT)
+        with ESMTP id S231889AbjEVVsR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2023 17:48:17 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B7DB9B
+        for <git@vger.kernel.org>; Mon, 22 May 2023 14:48:15 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-561d565cb0aso67617807b3.3
+        for <git@vger.kernel.org>; Mon, 22 May 2023 14:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684792092; x=1687384092;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+jeMCbUadJSxfUWrWXagNO+/xHaPl9VK60GVKOcporQ=;
-        b=oxwHhNkDAtYbbZcY/ep/WAjs+6KYmIFz0reLhoPOCXJru0SXMSrpumUF2+3lj8tXIQ
-         /w/L+fl0IqKUKtZNaKSw6LEbaEnrdunvCx+HqhPbBsz/Qff3X2ccdPcW9ZoiXL2hdVTL
-         5qbVhUGUfp/2JPgCddLaatcZZEtl2g/Ada1DSv7uwUzfVaLl945fnCmW65KXFwvu3XzK
-         MH2qd6UQU+W/5Hhg3qbhmWGB6zhuIQp4Ex/RiYdVOza50ahOWaEuUZjah7BELeuvQ3JU
-         Jy9vazKl/Ev3qEBSnOwf5j2oQNqyTo7Z4mTAWv5cshI3NlgB+Cz6rTCxiOAb09ipkgne
-         RB2A==
+        d=google.com; s=20221208; t=1684792094; x=1687384094;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eZUYYQQ1BpRMoDUQ1kAi/oHnQvlgf9G9N53iDWEzsXk=;
+        b=fKdJ/BILedtPqbgiNtqLRIfh1D5PGepdhZdW3Q+19lf7cVntruy+JFk1wIKoGoKATZ
+         ndU+NGRsuLaWLHjSvW2HAOcC/UGiWeo24POVzaohVRhGtCsVXcdUNarE3GRF0egXC6n+
+         bGoqhGdLAAOsmSn4NozKTj0sNIed8vPBziiDHT90HVh8vvfxg5xaNDbCPK5TIcwbNjme
+         JgpnLfQfcAFDzxxg0IDShPf/1rw9Kur6sfdGLgzCgGvc6SWzR+gKkSw6A6Pt26foldTx
+         PfKvCF0o1SQNQvgF0lkybBW3YMuttQSPgknwRgmI4ib7IssStaksx1I6uCaEX9ezHVqg
+         Rq9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684792092; x=1687384092;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+jeMCbUadJSxfUWrWXagNO+/xHaPl9VK60GVKOcporQ=;
-        b=lDeM9eewPdE9vymsJncGkpaeVljth7y6oq3/B+paMrEkSBoghmQSp2mY0tmLQcu7fP
-         /cfgfh1StnL9DwMO/z2mISmzV0o9Ji6nGuPEjGFE4t9wQzpwhSL+6aGTDLuhnA/8Bhps
-         Ygqe+33lvglF+riP1nUtCrizijbiKhkByWDtzacuCemTEfPuxCYaJKaZv8fXkZcCZXMN
-         tM4qSeiZuLPluHwQpRroP7JOb8/t11zaOItYh13h/2Zbps+u9tlwE+Z7SNdk/8vIIkX+
-         iFpJMtss969bdLwD7o2dQt2YB9EBDcMZQaNltDS72nhRcGJQBm7LCRgQD4tqntwBH4oy
-         zP3Q==
-X-Gm-Message-State: AC+VfDyBo5Q6qrfVzcR4J3hvVY83dY+N6BI9ampHs7cQb6crWSkZmrxr
-        8sva0qZ5aF5kYcp1AhDszcV60FYifUvjQcCSOlu6mvKFoIK/V4FAqDckXJz65DjgneSM0MY5BQa
-        JtsMUPvt3pfl8tvahR59EMyoefcp6QPUGCxlw4DkUk+N9libli4RUt47jz1ouM5umjhl0MFC5SM
-        oy
-X-Google-Smtp-Source: ACHHUZ53IzUIBKBEBaAShKkKDfj83YdWegpPboM9MWf3974jFS7VHBcagQ/+yqTQxHFS00q16nmVgnPHWGRR2V+HIuod
+        d=1e100.net; s=20221208; t=1684792094; x=1687384094;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eZUYYQQ1BpRMoDUQ1kAi/oHnQvlgf9G9N53iDWEzsXk=;
+        b=RKdfMN0sgSTLqXqeu4COYs1bO2qs1M6tigRoMPPYLQtwmch2RxniPpOzi1h4zYYoFB
+         OHHa6TpkgfBY9LYbz+xxkRQywuN3FhtFbNw4nVxtlbDfwbzx68Ukqx8Jokx+ClZUGqWO
+         Gh/y3U2dLIkCICUn19x60ZNX8kxIEQn5aI5rDQaBrnB+onJGvOsC6DidLPhSlwPsu/DF
+         Z0UjEp7+Nih4BNc1tnrKJQ9ieA0tLVfuSx8IbAl27ATL546OukfXM/dsjIlMxzLANque
+         Mb1EZbfqovnewd490106kQ6GtJ3slppo/jTbzi1wc+J/tskDXlIHudvHBELQNhT1UY19
+         8X8g==
+X-Gm-Message-State: AC+VfDxy3Dvq4s6vp6OEdvAaRLp/kvQBevMX2DC1Tz7ik1aGSPUARC5S
+        /O0L/AHBc0AyVd/yIDTJhqeeMzyOvGZOX8Nzp+wKhUd7TBjazz3eLR8OuKLWAbASW5MuyoRjW9b
+        Se4LRmLb0Ddtc2dU7LsbrfRt2bRRQdc33DhAOwA4fHWSYvyWqNDin6V9bgFLNHwDHJ8Wi+fJ00S
+        QL
+X-Google-Smtp-Source: ACHHUZ46CR1rMXyuVH5gSKQef3Fckk86YwOyq2IMXOQKOww6t+0+n+9xpk6wlhlnMmZYTecTeXMFWZCT6cYGi+Oekvis
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:e715:4b4d:d1be:8ec0])
- (user=jonathantanmy job=sendgmr) by 2002:a25:9191:0:b0:bac:2448:2aa3 with
- SMTP id w17-20020a259191000000b00bac24482aa3mr1405262ybl.9.1684792092556;
- Mon, 22 May 2023 14:48:12 -0700 (PDT)
-Date:   Mon, 22 May 2023 14:48:05 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a81:ad48:0:b0:55d:d5b1:c2bd with
+ SMTP id l8-20020a81ad48000000b0055dd5b1c2bdmr7657779ywk.8.1684792094368; Mon,
+ 22 May 2023 14:48:14 -0700 (PDT)
+Date:   Mon, 22 May 2023 14:48:06 -0700
+In-Reply-To: <cover.1684790529.git.jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <cover.1684790529.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
-Message-ID: <cover.1684790529.git.jonathantanmy@google.com>
-Subject: [PATCH 0/2] Changed path filter hash fix and version bump
+Message-ID: <2e154c9088e83fa9433ebe3e9ddf99dc30155d94.1684790529.git.jonathantanmy@google.com>
+Subject: [PATCH 1/2] t4216: test wrong bloom filter version rejection
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com
@@ -60,40 +62,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following the conversation in [1], here are patches to fix the murmur3
-hash function used in creating (and interpreting) changed path filters,
-and also to bump the version number to 2.
+Add a test that checks that Git does not make use of changed path
+filters that have an unrecognized version.
 
-This is I think the simplest way to do this (invalidating all existing
-changed path filters). The resource-consuming part of creating a changed
-path filter is in computing the changed paths (thus, reading trees and
-calculating changes), and to check if a changed path filter could be
-reused, one would need to compute the changed paths anyway in order to
-determine if any of them have high-bit strings, so I did not pursue this
-further. Server operators might be able to reuse changed path filters
-if, for example, they have a more efficient way to determine that no
-paths in a repo have the high bit set, but I think that this is out of
-scope for the Git project.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ t/t4216-log-bloom.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-In patch 2, I couldn't figure out how to make Bash pass high-bit strings
-as a CLI argument for some reason, so I hardcoded the string I wanted
-in the test helper instead. If anyone knows how to pass such strings,
-please let me know.
-
-[1] https://lore.kernel.org/git/20230511224101.972442-1-jonathantanmy@google.com/
-
-Jonathan Tan (2):
-  t4216: test wrong bloom filter version rejection
-  commit-graph: fix murmur3, bump filter ver. to 2
-
- bloom.c               | 14 +++++++-------
- bloom.h               |  9 ++++++---
- commit-graph.c        |  4 ++--
- t/helper/test-bloom.c |  7 +++++++
- t/t0095-bloom.sh      |  8 ++++++++
- t/t4216-log-bloom.sh  | 36 +++++++++++++++++++++++++++++++++---
- 6 files changed, 63 insertions(+), 15 deletions(-)
-
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index fa9d32facf..f14cc1c1f1 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -85,6 +85,36 @@ test_bloom_filters_not_used () {
+ 	test_cmp log_wo_bloom log_w_bloom
+ }
+ 
++get_bdat_offset () {
++	perl -0777 -ne \
++		'print unpack("N", "$1") if /BDAT\0\0\0\0(....)/ or exit 1' \
++		.git/objects/info/commit-graph
++}
++
++test_expect_success 'incompatible bloom filter versions are not used' '
++	cp .git/objects/info/commit-graph old-commit-graph &&
++	test_when_finished "mv old-commit-graph .git/objects/info/commit-graph" &&
++
++	BDAT_OFFSET=$(get_bdat_offset) &&
++
++	# Write an arbitrary number to the least significant byte of the
++	# version field in the BDAT chunk
++	cat old-commit-graph >new-commit-graph &&
++	printf "\aa" |
++		dd of=new-commit-graph bs=1 count=1 \
++			seek=$((BDAT_OFFSET + 3)) conv=notrunc &&
++	mv new-commit-graph .git/objects/info/commit-graph &&
++	test_bloom_filters_not_used "-- A" &&
++
++	# But the correct version number works
++	cat old-commit-graph >new-commit-graph &&
++	printf "\01" |
++		dd of=new-commit-graph bs=1 count=1 \
++			seek=$((BDAT_OFFSET + 3)) conv=notrunc &&
++	mv new-commit-graph .git/objects/info/commit-graph &&
++	test_bloom_filters_used "-- A"
++'
++
+ for path in A A/B A/B/C A/file1 A/B/file2 A/B/C/file3 file4 file5 file5_renamed file_to_be_deleted
+ do
+ 	for option in "" \
 -- 
 2.40.1.698.g37aff9b760-goog
 
