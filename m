@@ -2,141 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 516B2C7EE29
-	for <git@archiver.kernel.org>; Tue, 23 May 2023 13:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDE8CC77B75
+	for <git@archiver.kernel.org>; Tue, 23 May 2023 13:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236999AbjEWNBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 May 2023 09:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S236763AbjEWNJQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 May 2023 09:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236858AbjEWNBI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2023 09:01:08 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC29FF
-        for <git@vger.kernel.org>; Tue, 23 May 2023 06:01:03 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-561d5a16be0so93991347b3.2
-        for <git@vger.kernel.org>; Tue, 23 May 2023 06:01:03 -0700 (PDT)
+        with ESMTP id S236851AbjEWNJN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2023 09:09:13 -0400
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CEF2FF
+        for <git@vger.kernel.org>; Tue, 23 May 2023 06:09:12 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-4f3b5881734so4346802e87.0
+        for <git@vger.kernel.org>; Tue, 23 May 2023 06:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1684846862; x=1687438862;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wmbNAfIp5l+R9ga3+hlHuA91W+mX8CjZRVaiOsCTKLk=;
-        b=cCJGgYK4uuW6ZwzIN1p4BBMaVot77mBFGvkv2dxj7YAc972z8S29jgiCo7qzZV4Pn0
-         u3HN7QAzK9Z821yfEvajh0iOJicKqXxEN1pxdTN8Ls+F/mLs7y0AhvZoxoUewHKiN+u/
-         qqwwEzWAOnliUQMlHvL/Xc92RUctNqqQRDAzN6DIVfbyieI0wL39/FTYPT7B3i7xfxIU
-         wS1QNe7HA3jnqnzcU6RjwVZ9bxdh7G1+e+/MIsFA9oYvTcsrMP5jI1MRVGjKCwZ3Z8Yc
-         r5SFMQ9gM1wff+FhAFYquvftXmElLlZmHXT/I6oiQkG8WqLpMIkwyhrbnAWYn/NqefOq
-         AECg==
+        d=gmail.com; s=20221208; t=1684847290; x=1687439290;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a6sfnY9nYMVeCzBV6FRUjn1RLoa/QlG1BLcnLMnzzSg=;
+        b=HOCIp92GE27x3FXZznqpMigN+FGSzrpkmHDQtRmT+75BJ/SnP9fpCT5H/bXPn4wd8T
+         w+x1BExfDCfBKlvwfQxNRK8MiLRflZM5h11PEI0guXCXk/N7IBRGKKPYCY/C9AK5Z4xT
+         L+qpGg3f3wpE2mFWtTIGQvjsiuYB385Sf2YleU9QC0IYpuwtGg3MYuh1iomgEVtjof1A
+         SmYcKbLlP44sQwaZo0fvwFFGVGvzEM9TyoKjVff4fz7HieE5IsPDyEwM9L/yUrBHWX2u
+         FHOH9ZNlWAL0cyjJSifYoOXB9Tes+IrRqxjoC6/7uJDet2I4DzcfepJFjkX3Tsevx+7Q
+         9YXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684846862; x=1687438862;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wmbNAfIp5l+R9ga3+hlHuA91W+mX8CjZRVaiOsCTKLk=;
-        b=PvTPIWyQoz9MDKaJSCrvTewJ1AgCj5+cLRHTCmKRzsfcxJsj/JCtMfzwS0lLLLoZS1
-         PFvTohOzy8xdE4beafMcbMj79dn4q7JzfiMvd0sN3am4oX4AuteE3CoKstp6DpobGhOb
-         y5ArKwq7MMyYyASWNCZg9pgy5oZqYsbnfKWKPPBMKMJ9kkhsRVr3cN/sl9Fp5q9xSPkv
-         j4R4G+GU6DT+goSAHjwgSqji446p0OcFb0GM0GaP7h5mw9DSHT0bEeRsr5Df79/PgRXZ
-         8aj2Uz0/gOe5w94raI/lmxM4r83DaSSnHv/5CqhEOUDVj9kjrt73xB0gKFWliEAnLOez
-         gBmQ==
-X-Gm-Message-State: AC+VfDxQKFSPkkvGI2cSKPOwo9D7GL7JBOoj9xLMKcfPvSecmxeGd5EK
-        Xp3ebmlZlUDbDiBgXSMiUTCTVlgt/jsqpqLFYw==
-X-Google-Smtp-Source: ACHHUZ4JBNTDWOcueX7NcAbPm2LY8Udj9386Sjp9o+tgNMWr2DkaSTDpH42Z4ihM+Ies8ShzeVzfwg==
-X-Received: by 2002:a0d:c2c1:0:b0:561:bae4:c377 with SMTP id e184-20020a0dc2c1000000b00561bae4c377mr12971876ywd.14.1684846862241;
-        Tue, 23 May 2023 06:01:02 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:e927:d084:264a:5182? ([2600:1700:e72:80a0:e927:d084:264a:5182])
-        by smtp.gmail.com with ESMTPSA id g65-20020a0dc444000000b005612fc707bfsm2856474ywd.120.2023.05.23.06.01.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 06:01:01 -0700 (PDT)
-Message-ID: <def26c71-0fbb-58a3-f1cd-f8e532b67503@github.com>
-Date:   Tue, 23 May 2023 09:00:59 -0400
+        d=1e100.net; s=20221208; t=1684847290; x=1687439290;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a6sfnY9nYMVeCzBV6FRUjn1RLoa/QlG1BLcnLMnzzSg=;
+        b=XoVQkCW1AtAihqMKfBxN67cGRdVKJMJNtLf7+Dyo5FgU3BBtDB+/1fwg/UXsMUnafs
+         rpKERZBUKeXUrn40NzoX3b1y/idWzn1vUuDiqe7g4461FUBbKdg1fv5CRhi5hLDB6sXc
+         bW3u/NrBeIRDV5ULf4CCKi1WDOsAcV5kKU0zmN/T8zdzo5uuI+97lbKdoJ4ucUv1kUVt
+         I1Wk2nPdlSff9BeJEi+h+eaaarw8Q7DJhhbX+aErEQlgWSBsbg1yK0YDs4JF+BTA665Y
+         lKtdOUuuwVsquFkGx5Po0tlAPME3Kccm1X+dhPYFvo1Dan4JBCw5EXhwsjSy0Rw25EZe
+         LjkQ==
+X-Gm-Message-State: AC+VfDxQytRqPiPuYvAUJSqSgvn+V9Eo2AgtAajFzzUOnWzlAhz0/oil
+        key5LSsgoWQVX9dboFjqNZGh6ieDO4M=
+X-Google-Smtp-Source: ACHHUZ7Y5gvV5kG/lE7qNlwscCkmAoFukwCUyxP2Mq636V4TR0hyqQBHkOfFv3v/P4PNUpAA28yrnw==
+X-Received: by 2002:ac2:5106:0:b0:4ec:7b87:931a with SMTP id q6-20020ac25106000000b004ec7b87931amr4712715lfb.13.1684847289999;
+        Tue, 23 May 2023 06:08:09 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4641:9d1:0:9c74:f016:4c88:53bb])
+        by smtp.gmail.com with ESMTPSA id u27-20020ac24c3b000000b004f4c3feb9fbsm126848lfq.61.2023.05.23.06.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 May 2023 06:08:09 -0700 (PDT)
+From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.41.0-rc1
+Date:   Tue, 23 May 2023 15:08:08 +0200
+Message-Id: <20230523130808.17591-1-oystwa@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <xmqqedncqkzf.fsf@gitster.g>
+References: <xmqqedncqkzf.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/2] commit-graph: fix murmur3, bump filter ver. to 2
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Cc:     me@ttaylorr.com
-References: <cover.1684790529.git.jonathantanmy@google.com>
- <1cb0ee10253ab38b194c6554ecc68a5267e21145.1684790529.git.jonathantanmy@google.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <1cb0ee10253ab38b194c6554ecc68a5267e21145.1684790529.git.jonathantanmy@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/22/2023 5:48 PM, Jonathan Tan wrote:
-> The murmur3 implementation in bloom.c has a bug when converting series
-> of 4 bytes into network-order integers when char is signed (which is
-> controllable by a compiler option, and the default signedness of char is
-> platform-specific). When a string contains characters with the high bit
-> set, this bug causes results that, although internally consistent within
-> Git, does not accord with other implementations of murmur3 and even with
-> Git binaries that were compiled with different signedness of char. This
-> bug affects both how Git writes changed path filters to disk and how Git
-> interprets changed path filters on disk.
-> 
-> Therefore, fix this bug. And because changed path filters on disk might
-> no longer be compatible, teach Git to write "2" as the version when
-> writing changed path filters (instead of "1" currently), and only accept
-> "2" as the version when reading them (instead of "1" currently).
+On Fri, 19 May 2023 at 10:39, Junio C Hamano <gitster@pobox.com> wrote:
 
-I appreciate that you discovered and are presenting a way out of this
-problem, however the current approach does not preserve compatibility
-enough.
+> * "git branch --format=..." and "git format-patch --format=..."
+>   learns "--omit-empty" to hide refs that whose formatting result
+>   becomes an empty string from the output.
 
-> @@ -82,10 +82,10 @@ uint32_t murmur3_seeded(uint32_t seed, const char *data, size_t len)
->  
->  	uint32_t k;
->  	for (i = 0; i < len4; i++) {
-> -		uint32_t byte1 = (uint32_t)data[4*i];
-> -		uint32_t byte2 = ((uint32_t)data[4*i + 1]) << 8;
-> -		uint32_t byte3 = ((uint32_t)data[4*i + 2]) << 16;
-> -		uint32_t byte4 = ((uint32_t)data[4*i + 3]) << 24;
-> +		uint32_t byte1 = (uint32_t)(unsigned char)data[4*i];
-> +		uint32_t byte2 = ((uint32_t)(unsigned char)data[4*i + 1]) << 8;
-> +		uint32_t byte3 = ((uint32_t)(unsigned char)data[4*i + 2]) << 16;
-> +		uint32_t byte4 = ((uint32_t)(unsigned char)data[4*i + 3]) << 24;
->  		k = byte1 | byte2 | byte3 | byte4;
->  		k *= c1;
->  		k = rotate_left(k, r1);
+Typo here. branch, tag and for-each-ref learn this, not format-patch :-)
 
-By changing this algorithm directly (instead of making an "unsigned" version,
-or renaming this one to the "maybe signed" version), you are making it
-impossible for us to ship a version that can read version 1 Bloom filters,
-so all read-only history operations will immediately slow down (because they
-will ignore v1 chunks, better than incorrectly parsing v1 chunks).
-
-> @@ -314,7 +314,7 @@ static int graph_read_bloom_data(const unsigned char *chunk_start,
->  	g->chunk_bloom_data = chunk_start;
->  	hash_version = get_be32(chunk_start);
->  
-> -	if (hash_version != 1)
-> +	if (hash_version != BLOOM_HASH_VERSION)
->  		return 0;
-  
-Here's where we would ignore v1 filters, instead of continuing to read them
-(with all the risks involved).
-
-In order for this to be something we can ship safely to environments that depend
-on changed-path Bloom filters, we need to be able to parse v1 filters. It would
-be even better if we didn't write v2 filters by default, but instead hid it
-behind a config option that is off by default for at least one major release.
-
-I notice that you didn't update the commit-graph format docs, which seems like
-a valuable place to describe the new version number, as well as any plans to
-completely deprecate v1. For instance, describing the v1 implementation as
-having inconsistent application of murmur3 is a valuable thing to have, but
-then describe the plans for deprecating it as an unsafe format.
-
-Here is a potential plan to consider:
-
- 1. v2.42.0 includes writing v2 format, off by default.
- 2. v2.43.0 writes v2 format by default.
- 3. v2.44.0 no longer parses v1 format (ignored without error).
-
-Thanks,
--Stolee
+Øsse
