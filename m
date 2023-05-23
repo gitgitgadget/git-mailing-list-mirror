@@ -2,106 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71505C77B7A
-	for <git@archiver.kernel.org>; Tue, 23 May 2023 04:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2369BC7EE30
+	for <git@archiver.kernel.org>; Tue, 23 May 2023 08:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232085AbjEWEma (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 May 2023 00:42:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57004 "EHLO
+        id S232769AbjEWIfb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 May 2023 04:35:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229844AbjEWEm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2023 00:42:28 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1F96FA
-        for <git@vger.kernel.org>; Mon, 22 May 2023 21:42:27 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1ae79528d4dso45464565ad.2
-        for <git@vger.kernel.org>; Mon, 22 May 2023 21:42:27 -0700 (PDT)
+        with ESMTP id S236187AbjEWIem (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2023 04:34:42 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97632E71
+        for <git@vger.kernel.org>; Tue, 23 May 2023 01:32:50 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-30a8c4afa46so1785150f8f.1
+        for <git@vger.kernel.org>; Tue, 23 May 2023 01:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684816947; x=1687408947;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rtuSw3Wy8coc5jNkvnp7wslXGxhKIqTOIrtSDhs+j0Q=;
-        b=DkOSAfPGdkWMezyVYc+HBxqGE8cGkNbS9zeGAoWEsHan6OdYrlL5o0yrDN6Ai6986K
-         UUVgYOQ1V1UFJS1pByBMtKualGvQErFaA+n50ylG534OtIASnxG9rx4LtdyzhvTDSHMi
-         ZOzn8MNub9cCwdFW7DwqenAJ+/MpRbLLBY/bhpjRkCn9G5t9qWm/KTHMw0Gx8mfAbcLL
-         Md/0pN5KgSolCxoSkK9M7eELrQLhX5wdrXxG95S1TYTZZk0inbTrCrfLjbfEgxBzF38c
-         o2R9Wd9yqRDLZ8tbbbn76FKgSJTUcz49XpsapWYh4NjazhH/MhHMSL3gGnhKWBopaJYG
-         0gwg==
+        d=gmail.com; s=20221208; t=1684830769; x=1687422769;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=FO/V+nBeXJvmQyGTWmGM2jpGK/jMDdXvxMEcZ9unhiw=;
+        b=VgfbdL68VA3sKf9ts98soAwA+g41Gfc92q5YadllOXIFBHV5hxfYh2CyARU+qrhvxs
+         s6nl2XAS55HWesDwMhotSrcy0wphbDdePx+sEYPcXIssd9FmRJ92q66TXj2GMcKeGw5y
+         0NzdyOTgB7DzJ3o31gAw/HYNAaODA/c0M/WutSCAFUzGd5+SOFXVaxNORjZPAouoZA5L
+         4aqsuKmXPrgcwNRX5iYzy5HMIBQEGnBmKZCfkIU+mXLlE9YVaP6q3p8BXX4EPZpGhUxg
+         c6+HE8AIl+4doPcJLXiiPi2Dd9nXqPP0T3htpt3BBQ5unaY5fDZDwvn5zO+HHvf+NgND
+         2b8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684816947; x=1687408947;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rtuSw3Wy8coc5jNkvnp7wslXGxhKIqTOIrtSDhs+j0Q=;
-        b=cSgr2P38GmGaBw0dhfrVq/KyV5RQ90J0v78AIlIa6sMO6u2ZY/4cEHyZJRbCaA81gc
-         2a2+nAOK0hinPffmf/2+RJFnUUdD5WdG5DbFEVpF13cMzhl74SNJySI3cN2Htfc2XfUZ
-         +ZmT/VgOoGGBxZpklAU+lcjKW35dK0yfCOt2jIzPnV+OEJDdpU3cWhASXs5j9uJDwKE+
-         nVm1Md4ECyfSOcnzYJjQcDcdmFsVoPC+bdPvpp0Yh+N88HMQnw7M/wvlxDYqD3WgeAbQ
-         mu2ZQ4BhCG6BsLrwd4ZsZpasOcYJiPtEQ1SKYwjHNnbKo7wrENFmvZKDyl+RxthOw0u9
-         OEvw==
-X-Gm-Message-State: AC+VfDxm8eO1qRTuGY9+KXWepyALwGhrtymm36OSXwW2VdL2lDHY89U+
-        Fp4yV1YLowwUjIyQcLSc0HP4piH7RJVJEA==
-X-Google-Smtp-Source: ACHHUZ6PAgIsrf2IuxF+NtdqVwpIBoGfe8nKxqrzdKjo4vsL4OL+Lgq0tdXxdBnjxgOQ3EjMdQGF9Q==
-X-Received: by 2002:a17:902:7683:b0:1ac:637d:5888 with SMTP id m3-20020a170902768300b001ac637d5888mr12028223pll.43.1684816946967;
-        Mon, 22 May 2023 21:42:26 -0700 (PDT)
-Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id b21-20020a170902d31500b001acaf7e22bdsm5692335plc.14.2023.05.22.21.42.26
+        d=1e100.net; s=20221208; t=1684830769; x=1687422769;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FO/V+nBeXJvmQyGTWmGM2jpGK/jMDdXvxMEcZ9unhiw=;
+        b=dM9hKhSwwNiUF6oojKUA9ajJG0Q/UQksf1rKDKoQE1IbMDtVquVoJ9gBm/6v1m1ueG
+         RQ/hqxyy3Riny+U0FHv46NXNvtkqeti59gc9BkQC5dVLdRuNfOmOi8W8XzQuxK0yddEN
+         lN8zM2k3nFLtvv6DIerCRKgZcG9Xv0JSwL8g3MJo+rIWd/90agK7EXEtGcVA4PFJ90+1
+         /4wkJYc/MolK4OJNngThb5OFuozHLbHrymFqQQl5a9z1R7WJiDQCX3GbIutZhuEQRVJz
+         oGKTQQN12pJiKzL8nXuMIcjycDktXJRvLYW9n2LFA7mHm0NSzi/jAE7Ky2C9wPGMHyCu
+         wC2A==
+X-Gm-Message-State: AC+VfDzfZSzBZtwexuN10hfWD7Qpaiwivb+BMopFZ8W9nQ+zbcJgND1Z
+        rVzYGmVYFoXpr6gkgvf2vZ8knltaj9Q=
+X-Google-Smtp-Source: ACHHUZ5lZdGhExWJmy53XaOL8CP3Kym4qCRJX1yQDLyeprmX1c331qd57sQo7B6jBarqdEnLmhZTmw==
+X-Received: by 2002:a05:6000:1002:b0:307:c0c4:1094 with SMTP id a2-20020a056000100200b00307c0c41094mr9338511wrx.34.1684830768540;
+        Tue, 23 May 2023 01:32:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o14-20020a5d58ce000000b003062675d4c9sm10192929wrf.39.2023.05.23.01.32.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 May 2023 21:42:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH 0/2] Changed path filter hash fix and version bump
-References: <cover.1684790529.git.jonathantanmy@google.com>
-Date:   Tue, 23 May 2023 13:42:26 +0900
-In-Reply-To: <cover.1684790529.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Mon, 22 May 2023 14:48:05 -0700")
-Message-ID: <xmqqttw3irpp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 23 May 2023 01:32:48 -0700 (PDT)
+Message-Id: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
+From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 May 2023 08:32:47 +0000
+Subject: [PATCH] cherry-pick: refuse cherry-pick sequence if index is dirty
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+From: Tao Klerks <tao@klerks.biz>
 
-> Following the conversation in [1], here are patches to fix the murmur3
-> hash function used in creating (and interpreting) changed path filters,
-> and also to bump the version number to 2.
+Cherry-pick, like merge or rebase, refuses to run when there are changes
+in the index. However, if a cherry-pick sequence is requested, this
+refusal happens "too late": when the cherry-pick sequence has already
+started, and an "--abort" or "--quit" is needed to resume normal
+operation.
 
-Wonderful.  Thanks for a quick update.  Will take a look when I come
-back to the keyboard (I'm on half-vacation right now).
+Normally, when an operation is "in-progress" and you want to go back to
+where you were before, "--abort" is the right thing to run. If you run
+"git cherry-pick --abort" in this specific situation, however, your
+staged changes are destroyed as part of the abort! Generally speaking,
+the abort process assumes any changes in the index are part of the
+operation to be aborted.
 
->
-> This is I think the simplest way to do this (invalidating all existing
-> changed path filters). The resource-consuming part of creating a changed
-> path filter is in computing the changed paths (thus, reading trees and
-> calculating changes), and to check if a changed path filter could be
-> reused, one would need to compute the changed paths anyway in order to
-> determine if any of them have high-bit strings, so I did not pursue this
-> further. Server operators might be able to reuse changed path filters
-> if, for example, they have a more efficient way to determine that no
-> paths in a repo have the high bit set, but I think that this is out of
-> scope for the Git project.
->
-> In patch 2, I couldn't figure out how to make Bash pass high-bit strings
-> as a CLI argument for some reason, so I hardcoded the string I wanted
-> in the test helper instead. If anyone knows how to pass such strings,
-> please let me know.
->
-> [1] https://lore.kernel.org/git/20230511224101.972442-1-jonathantanmy@google.com/
->
-> Jonathan Tan (2):
->   t4216: test wrong bloom filter version rejection
->   commit-graph: fix murmur3, bump filter ver. to 2
->
->  bloom.c               | 14 +++++++-------
->  bloom.h               |  9 ++++++---
->  commit-graph.c        |  4 ++--
->  t/helper/test-bloom.c |  7 +++++++
->  t/t0095-bloom.sh      |  8 ++++++++
->  t/t4216-log-bloom.sh  | 36 +++++++++++++++++++++++++++++++++---
->  6 files changed, 63 insertions(+), 15 deletions(-)
+Add an earlier check in the cherry-pick sequence process to ensure that
+the index is clean, reusing the already-generalized method used for
+rebase. Also add a test.
+
+Signed-off-by: Tao Klerks <tao@klerks.biz>
+---
+    cherry-pick: refuse cherry-pick sequence if index is dirty
+    
+    I encountered this data-loss bug (performing normally-safe operations
+    results in loss of local staged changes) while exploring
+    largely-unrelated changes as per thread
+    CAPMMpogFHnX2YPA4VmffmA0pku=43CQJ8iebCOkFm4ravBVTeg@mail.gmail.com on
+    "git checkout --force", and on the possibility of supporting same-commit
+    switch while preserving merge metadata.
+    
+    I believe it is best handled as a standalone issue, it looks like a
+    simple bugfix to me, hence this separate patch.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1535%2FTaoK%2Ftao-cherry-pick-sequence-safety-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1535/TaoK/tao-cherry-pick-sequence-safety-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1535
+
+ builtin/revert.c                |  2 +-
+ sequencer.c                     | 14 +++++++++-----
+ sequencer.h                     |  3 ++-
+ t/t3510-cherry-pick-sequence.sh | 10 ++++++++++
+ 4 files changed, 22 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 0240ec8593b..91ebba38eaa 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -224,7 +224,7 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 		return sequencer_rollback(the_repository, opts);
+ 	if (cmd == 's')
+ 		return sequencer_skip(the_repository, opts);
+-	return sequencer_pick_revisions(the_repository, opts);
++	return sequencer_pick_revisions(the_repository, opts, me);
+ }
+ 
+ int cmd_revert(int argc, const char **argv, const char *prefix)
+diff --git a/sequencer.c b/sequencer.c
+index b553b49fbb6..9abea3b97fc 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3162,7 +3162,7 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
+ 	return 0;
+ }
+ 
+-static int create_seq_dir(struct repository *r)
++static int create_seq_dir(struct repository *r, const char *requested_action)
+ {
+ 	enum replay_action action;
+ 	const char *in_progress_error = NULL;
+@@ -3194,6 +3194,9 @@ static int create_seq_dir(struct repository *r)
+ 				advise_skip ? "--skip | " : "");
+ 		return -1;
+ 	}
++	if (require_clean_work_tree(r, requested_action,
++				    _("Please commit or stash them."), 1, 1))
++		return -1;
+ 	if (mkdir(git_path_seq_dir(), 0777) < 0)
+ 		return error_errno(_("could not create sequencer directory '%s'"),
+ 				   git_path_seq_dir());
+@@ -5169,7 +5172,8 @@ static int single_pick(struct repository *r,
+ }
+ 
+ int sequencer_pick_revisions(struct repository *r,
+-			     struct replay_opts *opts)
++			     struct replay_opts *opts,
++			     const char *action)
+ {
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+ 	struct object_id oid;
+@@ -5223,12 +5227,12 @@ int sequencer_pick_revisions(struct repository *r,
+ 
+ 	/*
+ 	 * Start a new cherry-pick/ revert sequence; but
+-	 * first, make sure that an existing one isn't in
+-	 * progress
++	 * first, make sure that the index is clean and that
++	 * an existing one isn't in progress.
+ 	 */
+ 
+ 	if (walk_revs_populate_todo(&todo_list, opts) ||
+-			create_seq_dir(r) < 0)
++			create_seq_dir(r, action) < 0)
+ 		return -1;
+ 	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT))
+ 		return error(_("can't revert as initial commit"));
+diff --git a/sequencer.h b/sequencer.h
+index 913a0f652d9..1b39325c52c 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -159,7 +159,8 @@ void todo_list_filter_update_refs(struct repository *r,
+ /* Call this to setup defaults before parsing command line options */
+ void sequencer_init_config(struct replay_opts *opts);
+ int sequencer_pick_revisions(struct repository *repo,
+-			     struct replay_opts *opts);
++			     struct replay_opts *opts,
++			     const char *action);
+ int sequencer_continue(struct repository *repo, struct replay_opts *opts);
+ int sequencer_rollback(struct repository *repo, struct replay_opts *opts);
+ int sequencer_skip(struct repository *repo, struct replay_opts *opts);
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 3b0fa66c33d..e8f4138bf89 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -47,6 +47,16 @@ test_expect_success 'cherry-pick persists data on failure' '
+ 	test_path_is_file .git/sequencer/opts
+ '
+ 
++test_expect_success 'cherry-pick sequence refuses to run on dirty index' '
++	pristine_detach initial &&
++	touch localindexchange &&
++	git add localindexchange &&
++	echo picking &&
++	test_must_fail git cherry-pick initial..picked &&
++	test_path_is_missing .git/sequencer &&
++	test_must_fail git cherry-pick --abort
++'
++
+ test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
+ 	pristine_detach initial &&
+ 	test_must_fail git cherry-pick base..anotherpick &&
+
+base-commit: 4a714b37029a4b63dbd22f7d7ed81f7a0d693680
+-- 
+gitgitgadget
