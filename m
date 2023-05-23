@@ -2,95 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B994DC7EE26
-	for <git@archiver.kernel.org>; Tue, 23 May 2023 16:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E829C7EE26
+	for <git@archiver.kernel.org>; Tue, 23 May 2023 17:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237677AbjEWQBp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 May 2023 12:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57524 "EHLO
+        id S238131AbjEWRYn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 May 2023 13:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237670AbjEWQBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2023 12:01:39 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A7E91
-        for <git@vger.kernel.org>; Tue, 23 May 2023 09:01:37 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-96f7bf3cf9eso916076666b.0
-        for <git@vger.kernel.org>; Tue, 23 May 2023 09:01:37 -0700 (PDT)
+        with ESMTP id S238128AbjEWRYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2023 13:24:31 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4107AE58
+        for <git@vger.kernel.org>; Tue, 23 May 2023 10:24:08 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-51400fa347dso329a12.0
+        for <git@vger.kernel.org>; Tue, 23 May 2023 10:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1684857696; x=1687449696;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vXSV6H9ZA3vCC4P9y9PFZX7/1roABB4ofFw5tv9vrnU=;
-        b=eepHzaAMSWjOPg4AuoKhQJ6VY8gtU1WdtxcEzxaad+UeOTnmY5qb3ENbYQnX02EP4n
-         8tiFrrhHRcyxlRSAJETOR5GAhHWH+MzfUUshzaPAmOAFh6Izlyu/M11tLXDE3wMAn1CO
-         mkShKX3RahBtJQwA0PVCpQMYxcAi6qx7HUws4=
+        d=google.com; s=20221208; t=1684862645; x=1687454645;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i/p5XbLkWpteeRi9cBOzoJzLD/7UWTQ2/KKZjf/aWf4=;
+        b=lyCk9nR0d3tPxIY6IcOL0eB8TKKd8ZAN2qfGiPjloB+UqMh/aY9hkmwolZQx38tdHp
+         bOMrSQdbdMhvtPtjAlHlvBt+EnNUv6/giYzHUsD8a7Cp2odNi6wTQxfG24JJqjb8U7os
+         K+Dq4q2O/99rGziDPTgG/6CSxMBzR6TPz9ACOgqPhR8OzdOmkjF2CONZ+3B2iABqMZ21
+         Dl52L4Hhan4QldHKsklbsBMYy6J+vCyANQ5vIWJOXeuCn9LaplegUbLl5hBmAUiMB3YS
+         KpGipTk4WVIpJB4JvmkOp3DYHlkhHU58NZ+dsXmxISPNiAhbsLON7EYIGLMnEuT7KEkJ
+         l2XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684857696; x=1687449696;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vXSV6H9ZA3vCC4P9y9PFZX7/1roABB4ofFw5tv9vrnU=;
-        b=RJNlhtoqMsfmcQYEy22q/IchOjVDeS9ci3jIQKgIsaLY/JlFXRN6Yz+Qg9Lqz3zMZJ
-         UfuV3vjBU4U/D7G1WBVwAVvJrOJ0IAUZvMQHYQoyKKY6JJsp+WDAXfR8LCLyUJ/73xnh
-         YCQRt1Hvqi9mT8hfg1KT2XOH1V71gm6snIN7uKz9Ap7rzc81qdYZ57Kwt88s/dkwomvR
-         fgXmMQz8gXeqhoz0oMQppaUpd1z7e6Y8KLxsVooNg8U/cszG8zHyVFFA53im8mt/TzHg
-         5b6a0wtq2+y3a7bnx6B6/F7z+jKvEBzvohLflDYcwxnqm7bk1sjBE8Zvge1uA4GB9+LM
-         Z7iw==
-X-Gm-Message-State: AC+VfDzHC3eYSeuzSXGXfiEExpsCPeh62LSdwGVpALJgSXnyBygAl9W2
-        sYdK2wBH/BbychpTSYDjqWVCdfK2ggs4tGGBNbDC65wGqbcrzUDNK6c=
-X-Google-Smtp-Source: ACHHUZ6b7RI+1jagjiLyb+XQIz0YiBUorVUhpGh57lTjOa1aGVeoKv63YX7dhHufkKgsx74aRRX2qCVYCrPWnV3Bnro=
-X-Received: by 2002:a17:906:9b84:b0:94f:5b91:7952 with SMTP id
- dd4-20020a1709069b8400b0094f5b917952mr15995961ejc.21.1684857696260; Tue, 23
- May 2023 09:01:36 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684862645; x=1687454645;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i/p5XbLkWpteeRi9cBOzoJzLD/7UWTQ2/KKZjf/aWf4=;
+        b=DpHdQZgRoRvIn4nrp2OiYjO1f63teHXmHcfet8CiSkjEsgUBgaQnptvF0WeWrr4cGy
+         BbNTTBNlOBJhDjMynCCL16F1aNjgn/L3Li2eUacBeIwfmyAVUz7IbyDcsEwKOjEtiyPB
+         CCLLmX2SK/CKzeqMvedQPjN7hejwZaPjjCLht0rNpnghqMDYhY8g/0joWRtmTtjt4Xtv
+         66BMieFjVv+q5/QjqjQAzt8IqqAWg+Bxd/mkLVl8otCz1Bke0yVSdRctStSRnEXmVzOl
+         3QPwYiLlLayujeiQYI19h24/jcfhnbPBlW+Tz6HE/trmxJWJptr9FLPIGmP5u00Bay/B
+         I9yg==
+X-Gm-Message-State: AC+VfDwq4LbXedkRIKRPw/96sRpU5w6j55+Zegqu1JiiybP8utzSCQJZ
+        k3lK8418loAVg3erlSZxVE/Hn/9FrsALmimdNBp5Un9MgCxu6apmafXwXy6K
+X-Google-Smtp-Source: ACHHUZ7JmWTwbaMwQNqAhK9Z51OtqjzPvBF04ZfTGw5uHVq/PmjKSc+/614KComZzzx+KCNCFCkHXpVZ6DnfML0cRto=
+X-Received: by 2002:a50:d61e:0:b0:502:7e99:a1a7 with SMTP id
+ x30-20020a50d61e000000b005027e99a1a7mr6498edi.1.1684862645548; Tue, 23 May
+ 2023 10:24:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 23 May 2023 18:01:25 +0200
-Message-ID: <CAPMMpojV1Ts=OKM0FbBHU6=EB5RKNxHucX-8VQmYoQBNefKpqQ@mail.gmail.com>
-Subject: Re: [PATCH] cherry-pick: refuse cherry-pick sequence if index is dirty
-To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Tue, 23 May 2023 10:23:54 -0700
+Message-ID: <CAJoAoZkdkA9zwDJbasfyjS-fcgfDquzJy9kpLVTv71p7YZasoA@mail.gmail.com>
+Subject: Video conference libification eng discussion, this Thursday 17:00 UTC
+To:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2023 at 10:32=E2=80=AFAM Tao Klerks via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Tao Klerks <tao@klerks.biz>
->
-> Cherry-pick, like merge or rebase, refuses to run when there are changes
-> in the index. However, if a cherry-pick sequence is requested, this
-> refusal happens "too late": when the cherry-pick sequence has already
-> started, and an "--abort" or "--quit" is needed to resume normal
-> operation.
->
-> Normally, when an operation is "in-progress" and you want to go back to
-> where you were before, "--abort" is the right thing to run. If you run
-> "git cherry-pick --abort" in this specific situation, however, your
-> staged changes are destroyed as part of the abort! Generally speaking,
-> the abort process assumes any changes in the index are part of the
-> operation to be aborted.
->
-> Add an earlier check in the cherry-pick sequence process to ensure that
-> the index is clean, reusing the already-generalized method used for
-> rebase. Also add a test.
->
-> Signed-off-by: Tao Klerks <tao@klerks.biz>
-> ---
+Hello folks,
 
-My apologies for the premature submission: I've now realized I used
-the wrong existing check. "git rebase" checks for a clean *worktree*
-(ignoring untracked files), and that is what I reused here. What git
-merge and git cherry-pick check for, and what I should have added a
-check for here, is a clean *index*.
+Google is hosting a standing engineering discussion about libifying
+Git, for contributors interested in participating in or hearing about
+the progress of this effort. Expect this discussion to be free-form
+and casual - no powerpoints here!
 
-The current implementation of this patch is far too restrictive. It
-doesn't break any tests (and maybe I should add one now that I know),
-but it's doing the wrong thing.
+We're hoping to hold this meeting every Thursday at 10am Pacific
+(17:00 UTC) via Google Meet. Please note the time change from previous
+weeks.
 
-Tao
+To get an invite to the video conference and the notes document,
+please reply to this email. Please also add points to the agenda
+(template follows) if you want to raise awareness of them.
+
+We'll choose a topic to discuss at the beginning of the meeting, and
+I'll reply afterwards with the notes.
+
+
+
+*   (asynchronous) What's cooking in libification?
+    *   Patches we sent regarding libification
+    *   Patches for review related to the libification effort
+*   (asynchronous) What happened in the past 1-2 weeks that interested
+parties or intermittent contributors need to know?
+*   (asynchronous) Where are you stuck? What eng discussions do we
+want to have? (We'll choose a topic from this list at the beginning of
+the meeting.)
+*   Session topic: &lt;TBD>
