@@ -2,87 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33523C77B7A
-	for <git@archiver.kernel.org>; Wed, 24 May 2023 20:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6CF1C77B7C
+	for <git@archiver.kernel.org>; Wed, 24 May 2023 20:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231863AbjEXU3u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 May 2023 16:29:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
+        id S229565AbjEXUdZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 May 2023 16:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjEXU3s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2023 16:29:48 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7E8122
-        for <git@vger.kernel.org>; Wed, 24 May 2023 13:29:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1684960180; i=l.s.r@web.de;
-        bh=zfSvO1tStPaaab7aVvICUs+reYYqKDAqXLgR9BZ+EXE=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=nzfZjfUQqtz64rAVEGiV1o8ztYEflDg8PfKvjw5lPFLzwpHeSOGYP/ECBhJJeP6kR
-         75NbSL+s9P33aBhTJM7k3q1KB/2WPcso9Fcmza5rMX2XZbyEyH0zzV5YTMvsFIVoRx
-         mh+6rWIKK8Ur8ywTR3Wl5Hvhc42a+OeagOOfHK264KmRxJnFYH0rgR7/V5wGcKZidH
-         qIlgzbkaspwRu92bB4iYpKh1/B5tRL5GEwHcsG8d+pei3xZKEafbfd+sH9bLCuwOhg
-         0P9HLpNo/9SxT/G1CHUeaKmkXbXk8h5or9rGXOIfZp5dnR1s2n68jJ4phxJF+k8d3h
-         tdpxBl/8UctDQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.31.75]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MbCI8-1qZ40Z3gKW-00bs1Z; Wed, 24
- May 2023 22:29:39 +0200
-Message-ID: <c8d32d5a-9803-9eb7-baaa-49b4521f0c37@web.de>
-Date:   Wed, 24 May 2023 22:29:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH v3] builtin/submodule--helper.c: handle missing submodule
- URLs
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Tribo Dar <3bodar@gmail.com>,
+        with ESMTP id S229514AbjEXUdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2023 16:33:24 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB5318C
+        for <git@vger.kernel.org>; Wed, 24 May 2023 13:33:22 -0700 (PDT)
+Received: (qmail 25020 invoked by uid 109); 24 May 2023 20:33:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 May 2023 20:33:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27622 invoked by uid 111); 24 May 2023 20:33:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 May 2023 16:33:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 24 May 2023 16:33:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Tribo Dar <3bodar@gmail.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] builtin/submodule--helper.c: handle missing submodule
+ URLs
+Message-ID: <20230524203321.GD892557@coredump.intra.peff.net>
 References: <f7a8de14fe255286e62fc46d0a3083189f46bcc6.1684944140.git.me@ttaylorr.com>
  <ae6cf3fa461b85e346f034371dae56a2790dfa20.1684957882.git.me@ttaylorr.com>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <ae6cf3fa461b85e346f034371dae56a2790dfa20.1684957882.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:birfdftro0nmH/WZhkJIFV/tSwKJ4uOAONjWjGBnUoSFJslBuNY
- NG3jGyY6xQbamsgGoaxkrdTZfL3u28fUi8qtrcMdgu/2kcOzhpfgDh0mVptF9wB/UJeMLEv
- EIFLfTJYs/8/lvYccGDnbuj8iMNrS4PoA6HyogIzCDPQ8PLNaYFP7ddlVFDoHE7LeU2UsD3
- MKVhBsEzA1TdZkgR8FMiQ==
-UI-OutboundReport: notjunk:1;M01:P0:TFpm3w+by3o=;VBWYagOs16RnnTwdtEEwz8Hcs+I
- ag3r2j4NQohV9btHolBnWxoy5OUM4cbTAIEbsm4uT7Pjlw6q0l+V6ja4FgjR/Ha4GKmgagEB6
- LGKHuy2Y9VP2rpaBiXo6CDqp88OOPB3SuVBx35QdRN7vI2QyqdlHP3hPzORicIfpEDmD2Aa95
- Rk6UW6VVZhg72S3WM6mtwFK3wxqZaPmnfZ/d9v4THUsWPwMzSe1u0j8SrNLHgKnfQwsONGEDD
- a8h1nFkpAD4Vdgc4CMhplFe4QZhtrcaBPizbmspcYYtdEfj632TT2uM19swE/JpecMAEcumqk
- 9z5A6UY3iIIukV1MwTcH61A4Bf9ecW1BDW1HXoxDKT00PZXGu8rWbGnnwRbXabYkrFEzt9LC6
- +lcTtSU0+6mBbHNDV0C8+YGplfZ6lZAcdSNtq81wYkucjh6/m7arIsCYCf4tL66Ckrn2ErDqk
- H0qXd13Cji6xFWGmAtQJo1rFwRaZcO8XJ0lOxDacMyTrE9XvUbqAzGy9cHdvPpyarsE0rsu70
- J8dAcamgL0M9Lxqh24ipR+sxr4yKp/lPa5p+oE4/hsz+sVJhekZijdI9EuGizuq5psmrAQpCm
- KfCG2Y6XopHYZloXuSnI1S9jAVUMK0yDCw1FgNZ0GiHRmnf4XYMuwOVP8mM2JFSbKqLj9B8PD
- VvQlCIal+9iuhQVvpOhyugDWwJLB34K/cIfpYhcsdSfjEIYQZpfNtKZWQYIpAuEWHwPugwnuR
- 6QXYDMeTHRw2WTgfYS/0tZfQYf0KBOUFf4Os3iuRIUPEHk3dQ7pWx8IV+qTlSG8FCpOphAVy7
- Petdf2oNLbasPhmbk4b53tF6eVHgl7ZN7ANfJthgVc0nDRnWXvh4ZKBFWIvxsRcLB0y8tlzmh
- KsY9HQUCPkZrZ/GOeMT3BNDQAccKbSCdZjQDthgrtmq4UUfSuhlHZ79Xq2mm36fUZ8JZ+DHxX
- HIlhuZnPgKP7bA9rh+czoioVUe4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.05.23 um 21:51 schrieb Taylor Blau:
-> There is no need to check whether `sub`
+On Wed, May 24, 2023 at 03:51:43PM -0400, Taylor Blau wrote:
+
+> In e0a862fdaf (submodule helper: convert relative URL to absolute URL if
+> needed, 2018-10-16), `prepare_to_clone_next_submodule()` lost the
+> ability to handle URL-less submodules, due to a change from:
+> 
+>     if (repo_get_config_string_const(the_repostiory, sb.buf, &url))
+>         url = sub->url;
+> 
+> to
+> 
+>     if (repo_get_config_string_const(the_repostiory, sb.buf, &url)) {
+>         if (starts_with_dot_slash(sub->url) ||
+>             starts_with_dot_dot_slash(sub->url)) {
+>                 /* ... */
+>             }
+>     }
+
+This patch looks pretty good to me. I read your v1 and the word "gross"
+also crossed my mind at the "--url" handling. This one is much better.
+I did have a few questions, though (below).
+
+If I understand correctly, this is not at all new in the -rc releases,
+but just something that happened to get unearthed? I.e., it can wait
+until post-release.
+
+> , which will segfault when `sub->url` is NULL, since both
+> `starts_with_dot_slash()` does not guard its arguments as non-NULL.
+
+Funny gramm-o, presumably from editing: "both" is plural, but "does" and
+"its" are singular. I think the gist of it is communicated, though.
+
+> Guard the checks to both of the above functions by first checking
+> whether `sub->url` is non-NULL. There is no need to check whether `sub`
 > itself is NULL, since we already perform this check earlier in
 > `prepare_to_clone_next_submodule()`.
 
-Right, and if "sub" is NULL then next_submodule_warn_missing() is called
-and prepare_to_clone_next_submodule() is exited early.
+Good, thanks for checking (and communicating) that possible gotha.
 
 > By adding a NULL-ness check on `sub->url`, we'll fall into the 'else'
 > branch, setting `url` to `sub->url` (which is NULL). Before attempting
 > to invoke `git submodule--helper clone`, check whether `url` is NULL,
 > and die() if it is.
 
-Why die() here instead of just warn and skip as well?
+If I hadn't read v1, I might wonder whether this die() is consistent
+with the existing behavior. But the point is that submodule--helper
+would have barfed in such a case anyway, so we are just trading one
+error for another.
 
-Ren=C3=A9
+One side effect, though, is that this die() will take down the whole
+superproject process. Whereas I think the intent of the submodule code
+is to keep going, handling other submodules, even if one fails. This
+isn't a failure exactly (more of a misconfiguration, if I understand
+it). But should we be somehow returning an error instead?
 
+I say "somehow" because it's not clear how to work that in with the
+needs_cloning return value (obviously we can say "0", but that is the
+same as the "skipped" code path; we presumably want to tell the caller
+there was a failure, so it affects the ultimate return code).
+
+> +test_expect_success 'update submodules without url set in .gitconfig' '
+
+Should this be .gitmodules in the title?
+
+-Peff
