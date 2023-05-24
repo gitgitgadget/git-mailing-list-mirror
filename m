@@ -2,93 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC01C77B7A
-	for <git@archiver.kernel.org>; Wed, 24 May 2023 20:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 439A5C77B7C
+	for <git@archiver.kernel.org>; Wed, 24 May 2023 21:27:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230072AbjEXUgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 May 2023 16:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42374 "EHLO
+        id S229680AbjEXV1D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 May 2023 17:27:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjEXUgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2023 16:36:50 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BB610B
-        for <git@vger.kernel.org>; Wed, 24 May 2023 13:36:48 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-561deaad117so19800907b3.0
-        for <git@vger.kernel.org>; Wed, 24 May 2023 13:36:48 -0700 (PDT)
+        with ESMTP id S229447AbjEXV1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2023 17:27:02 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575C9C5
+        for <git@vger.kernel.org>; Wed, 24 May 2023 14:27:01 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba83fed51adso2626644276.0
+        for <git@vger.kernel.org>; Wed, 24 May 2023 14:27:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1684960607; x=1687552607;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+        d=google.com; s=20221208; t=1684963620; x=1687555620;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=ZwcG7nn4GYM8bXsMVVev1IvB2KQN163mHyuBppg3RQQ=;
-        b=OYjybc3cNVslVpD/qXTq7AtSlwp5/unrU3ulQpxt2jUZIPBr0LowvmG8KnR37Wa7I4
-         s7hSUkmyS+7Km3yqJCV3ds4UCGyTTl8kX/DkQmLAJqV7/eTSxDfbb9fl/Gcd3Jm0KiVU
-         pwugDeTnle9z3dq7WfcoijuQpjOR554j/R8/QVLed4l8Re2Ux395ZpNhqD50hwdQ3CRv
-         ZsjWQfwwxf9Zqe31HQKHN42xQvyHxpDefMbZclKaiUYK9v4mWGPN3oyds8VKVmSf5dre
-         0XxOrrvrmq+jCUkjm1UDmvYw1TXD4bG5nvMHTZwdJWfBMznB0BFzfLiJasxN2kFAZf/n
-         v0vQ==
+        bh=TqinlcTRjLWdajcl3jgUT0y06NKnvLWSm2Q3OI6ONsY=;
+        b=Jn1920DzNxSaZKLTaZljiti0+VNgCB8dpbKmAcSDt5rRQgYbo6ZuVCwSMt4lDBlkz5
+         96DXds/wPUTgo87SlcPCKDI/UYjWbxr6pXpctAvdvS6A/hUR+1Oh2PB73gLHFkWcVtAG
+         vZn3wTlUyuqwsTdvG009HMNIFzI+S1G3g+eTg37aWZHzwJaAfNcQrMM9yWsJ72QHfoPi
+         XZShkb+JYmRW5ixcoJStAQw1sdcsHnzl/HkozZyTFIsx+a87WpEP5Qs0CbEY2N7C/6xG
+         3VHd7OwKahJV4qemoQXSE5L/ojLACaXsH93sb3QP90n+4Z0CwnQUW16QzZmBEq40rJj+
+         MwAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684960607; x=1687552607;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1684963620; x=1687555620;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZwcG7nn4GYM8bXsMVVev1IvB2KQN163mHyuBppg3RQQ=;
-        b=hSMKQrMMkLIfRZQ4jrk9aE+4DXWwaNiQNtGQzQvyBXBqDBWRcXcxhte+oPSIbwWC58
-         GzPA3R6YU5gPEBgxO8lhvO8gRAVrnaA+9/kf/AQYrQCcAToLZHqPjgTdxuIaKOTe4MFA
-         7jxAUNLvzLF9A512g7Cs5uPQIZ8x2H1HLxo6fV+U53a+sKQya4Vr5DwWRWWHNSDfuiNI
-         3+ERMt6vF7fhDW7ZcIwIHFIiL8tkjtyapLHcvCAp2xnBvRiEOQADUjvDkfmQoU3CuEp4
-         ZEpNpTqHm4iZ4uy0HyR480yCWFgQIM0T47FUBsAbM//wY1ZiL0NeobgsOclCdoldyUtR
-         8czQ==
-X-Gm-Message-State: AC+VfDy2ulFuFgAHEkp3gInp9Mj8bFrV7tRZSog+sOD2et4h4Ks0EkML
-        KuIYr220gbPZIei/z09GrkFGwg==
-X-Google-Smtp-Source: ACHHUZ7sKJVAs9YCyW4ZhpZeqAZ1n1rCv8jq5pYtJSHm5ql4qSGtEycKd2ZG3813TesH6y+dPpTFyA==
-X-Received: by 2002:a81:6903:0:b0:539:1b13:3d64 with SMTP id e3-20020a816903000000b005391b133d64mr19920836ywc.48.1684960607195;
-        Wed, 24 May 2023 13:36:47 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z62-20020a816541000000b0055a7c2375dfsm3929365ywb.101.2023.05.24.13.36.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 13:36:46 -0700 (PDT)
-Date:   Wed, 24 May 2023 16:36:46 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Tribo Dar <3bodar@gmail.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] builtin/submodule--helper.c: handle missing submodule
- URLs
-Message-ID: <ZG51XsEq4JB9IK33@nand.local>
-References: <f7a8de14fe255286e62fc46d0a3083189f46bcc6.1684944140.git.me@ttaylorr.com>
- <ae6cf3fa461b85e346f034371dae56a2790dfa20.1684957882.git.me@ttaylorr.com>
- <c8d32d5a-9803-9eb7-baaa-49b4521f0c37@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c8d32d5a-9803-9eb7-baaa-49b4521f0c37@web.de>
+        bh=TqinlcTRjLWdajcl3jgUT0y06NKnvLWSm2Q3OI6ONsY=;
+        b=K7xfasXpFccWZC8gm7+2oi6oY+YtPFDjQMZQHZwxHNZiDrpo0f+30K/LqQvi2ufojY
+         z3fCwOlEaxyB20D6X+U/7SRev5XeJC6oV2Zo/N7Cv0slWHWgX4/oDJl2BzM+KGjrvd2L
+         yITsEz2TI1W0z4L1Rx5GC7lZZsPxbE8tCDWR6sTzmz5gjWaGyLb3sln9EMtonTBmJHnp
+         EKB+BZq56t0UcQ1iyqjxf4EUpBQM7uo4+sYColss1o6+79hAZrU/di8zTSGDaswq4q/T
+         ifd38xHvu7R3bknua4c9mxKFTkIaxJyIBD1FgNV1Nv75lNZuemp6KFlGGhOqfM5HEYAX
+         Bo3g==
+X-Gm-Message-State: AC+VfDy559mtly9dkzMYEkCT3TDsMZ/yHwumUDKmyf0LzPkhY8SrvVgz
+        LFlrGLlKDQlbsXc9Ji5yZFO/QwhvVBJWo1nVppCg
+X-Google-Smtp-Source: ACHHUZ4aS1MAT54Aq3eeJRrmvV7sC94Ce8swYdCQkl65GDIcTgZ49gH9kTFWyaArcIJsAb+VO9v9gc0wnHfWfowUp9CB
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:77af:4a9f:351d:a204])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:69c1:0:b0:b9f:14a5:b3b5 with
+ SMTP id e184-20020a2569c1000000b00b9f14a5b3b5mr499106ybc.6.1684963620641;
+ Wed, 24 May 2023 14:27:00 -0700 (PDT)
+Date:   Wed, 24 May 2023 14:26:57 -0700
+In-Reply-To: <xmqqv8gihahz.fsf@gitster.g>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
+Message-ID: <20230524212657.1348621-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 2/2] commit-graph: fix murmur3, bump filter ver. to 2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 24, 2023 at 10:29:39PM +0200, René Scharfe wrote:
-> Am 24.05.23 um 21:51 schrieb Taylor Blau:
->
-> > By adding a NULL-ness check on `sub->url`, we'll fall into the 'else'
-> > branch, setting `url` to `sub->url` (which is NULL). Before attempting
-> > to invoke `git submodule--helper clone`, check whether `url` is NULL,
-> > and die() if it is.
->
-> Why die() here instead of just warn and skip as well?
+Junio C Hamano <gitster@pobox.com> writes:
+> I may be misremembering the original discussion, but wasn't the
+> conclusion that v1 data is salvageable in the sense that it can
+> still reliably say that, given a pathname without bytes with
+> high-bit set, it cannot possibly belong to the set of changed paths,
+> even though, because the filter is contaminated with "signed" data,
+> its false-positive rate may be higher than using "unsigned" version?
+> And based on that observation, we can still read v1 data but only
+> use the Bloom filters when the queried paths have no byte with
+> high-bit set.
 
-That's a good point. When I read prepare_to_clone_next_submodule(), I
-thought that it was already too late to skip that submodule. But my
-understanding was incorrect, we could easily issue a warning() and
-return '0', which would indicate to skip it.
+There are at least 3 ways of salvaging the data that we've discussed:
 
-But I concur with Junio earlier in the thread that we don't have to rush
-things to get this into -rc2 or even 2.41, since this bug has been with
-us since v2.20.0.
+- Enumerating all of a repo's paths and if none of them have a high bit,
+  retain the existing filters.
+- Walking all of a repo's trees (so that we know which tree corresponds
+  to which commit) and if for a commit, all its trees have no high bit,
+  retain the filter for that tree (otherwise recompute it).
+- Keep using a version 1 filter but only when the sought-for path has no
+  high bit (as you describe here).
 
-Thanks,
-Taylor
+(The first 2 is my interpretation of what Taylor described [1].)
+
+I'm not sure if we want to keep version 1 filters around at all -
+this would work with Git as long as it is not compiled with different
+signedness of char, but would not work with other implementations of
+Git (unless they replicate the hashing bug). There is also the issue of
+how we're going to indicate that in a commit graph file, some filters
+are version 1 and some filters are version 2 (unless the plan is to
+completely rewrite the filters in this case, but then we'll run into
+the issue that computing these filters en-masse is expensive, as Taylor
+describes also in [1]).
+
+> Also if we are operating in such an environment then would it be
+> possible to first compute as if we were going to generate v2 data,
+> but write it as v1 after reading all the path and realizing there
+> are no problematic paths?  
+
+I think in this case, we would want to write it as v2 anyway, because
+there's no way to distinguish a v1 that has high bits and is written
+incorrectly versus a v1 that happens to have no high bits and therefore
+is identical under v2.
+
+> IOW, even if the version of Git is
+> capable of writing and reading v2, it does not have to use v2,
+> right?  To put it the other way around, we will have to and can keep
+> supporting data that is labeled as v1, no?
+
+I think this is the main point - whether we want to continue supporting
+data labeled as v1. I personally think that we should migrate to v2
+as quickly as possible. But if the consensus is that we should support
+both, at least for a few releases of Git, I'll go with that.
+
+[1] https://lore.kernel.org/git/ZF116EDcmAy7XEbC@nand.local/
