@@ -2,124 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC39BC7EE26
-	for <git@archiver.kernel.org>; Wed, 24 May 2023 00:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FE1FC77B7A
+	for <git@archiver.kernel.org>; Wed, 24 May 2023 07:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238828AbjEXAL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 May 2023 20:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38890 "EHLO
+        id S239596AbjEXHAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 May 2023 03:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231991AbjEXALZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2023 20:11:25 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26D1B5
-        for <git@vger.kernel.org>; Tue, 23 May 2023 17:11:23 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2af316b4515so5256781fa.1
-        for <git@vger.kernel.org>; Tue, 23 May 2023 17:11:23 -0700 (PDT)
+        with ESMTP id S239504AbjEXHAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2023 03:00:07 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF016B3
+        for <git@vger.kernel.org>; Wed, 24 May 2023 00:00:06 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-253e0edc278so500988a91.3
+        for <git@vger.kernel.org>; Wed, 24 May 2023 00:00:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684887082; x=1687479082;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1JkBmgKxvYNxFcLMRV9ClpH2ge7I0CzwRIbNvcXigBo=;
-        b=WJ7wWoJ7I6QcegqdZbNjVI9Nh4TS2aSqeQX3X7r1nvKd62CqTWZ5N3gcg3MGujzboH
-         q1xHdmRrKKOWeQ/UOrjHqnEA1o9G1usFaxSfNEYzoEKOCyv4ndHNiEJ79ckEcefTPW4F
-         invE3RV6ORoIHqUDKQde4NduAOdc822XtR8RvIhT5SZR7GDS3vPKg1OMvVs7pb6rERKT
-         PLz8kHHK1QGdOUZsismbHWJ9Xs64YE1dx35Z52DsXGJUJDPw2fj+eIjzuDeJY70Xaj8p
-         aZ14eE9z81nWrXLpYPuHNp1RadSuHW+HsFDHkdjCaupC7ka1BWKZoG6f4TuzJN184VPw
-         f0uQ==
+        d=gmail.com; s=20221208; t=1684911606; x=1687503606;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rNrqcbF5MhGyteVig5rQtzFtIHzUsS5GJ3C4jxk23fY=;
+        b=l4Bb6iUtDWzCHsZWorbF5wuWe8DJQn18eCdg+3Cf7x+t5dCIRiU5qroC1tyZifDfG+
+         alr2mtSj9S+0X3uLQzaAJa5UppytwPGPNNy0BEJi56+6bOlNJnqR6SVgyBbQU8iPLRp3
+         b3nt0PDFRL0KQqU9oKlsilrMElfK9oSBW1xYm2VZTtr2K8dRCbU2AZ96gNxSFDZyG+y/
+         vxkSiq7MupCvy/XCSxoeEKE0kK8cN9ufzOyB+B10EegrO1RCaJKsA+1hhx4bHgOCo91u
+         PCT+P4ngcr0tCn9cf7wMvdZcccCO7aMo6KpP0Q9yKXCipVfK+qMNTtN5NXLXvDIspxb0
+         qv4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684887082; x=1687479082;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1JkBmgKxvYNxFcLMRV9ClpH2ge7I0CzwRIbNvcXigBo=;
-        b=Zxp5Fnp1B5GXfPqCuNpAzSuUu4wU5b1N6s2G8/C1b/ZQU/dQ21p2oj6G7FHHnFb0S8
-         pN8gfmCCK3BpOpwxxoZn9t2ypZUzYC9IwqaOYnGUEC6dLPiVJPRC/wSk7CpUIvsILdQ4
-         P3fCS+nudV9MPiX7CjQkI4NM9lW4TbyWPCThDMLzuTEfrrkPPUwyIk66RFa7F+3Qr9ti
-         n6ed5FlKdQ3YYDZOuUSD/nI+b5U767CElRaRXJLhfpvsU1xpm7mnbZnwBfgBDmO4YL2v
-         mTdNab9gX0E0wxieZdb/8BsZwywcyd30oMr1rus4zmgmU5cgoYN8lIhhlE756jRAfGBZ
-         bGcQ==
-X-Gm-Message-State: AC+VfDz9YdLUY4wEmiV8WW9+PhAnfoiVLwrocj++pb4cvICl0I6p8yhy
-        ELAG+PEVhSp4YZqe19UbpZis6QHhQTSuxuAEdS0=
-X-Google-Smtp-Source: ACHHUZ4Yg12rX3PiHT0O0vAB9DDespPHpQ70YyDtloRJn/RHB1itxGBBjB5PsyulXFmw9Nhlx2nBe17EHqivqV/WZeM=
-X-Received: by 2002:a2e:9b81:0:b0:2a8:e53f:c174 with SMTP id
- z1-20020a2e9b81000000b002a8e53fc174mr5000564lji.26.1684887081695; Tue, 23 May
- 2023 17:11:21 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684911606; x=1687503606;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rNrqcbF5MhGyteVig5rQtzFtIHzUsS5GJ3C4jxk23fY=;
+        b=La4Mc1FCRW89GlfzE9k8pAbOIrivOyW5OvB0hpnJXgXO4COjn0kSsxC45IYWty3kc8
+         7GexQokvqMJ1z4oSA4cMfCzva9APBIXkYQs+ZT4xRMmM9TkO6MYZV6G+U0oSaS203qhI
+         dsAM4N3UvcvycQ8f8cSAqjDAZnom4mAHcA6uuzK17Rloq2yhB43Z+kUrUl1ZmQiDhq0i
+         9ee4vrpwEH3cT7MSyjVBXoQvZ1wvXAc/YqoatEeP7FvUWbXW1/63JCH3B5G+hgoOWGFI
+         nhzny7FDFLfKsJ2/Ksy8/0E4jG0yOx1naE8UGaMDpiA2agk4OaXwx6b+YGX2DfmOr1Ye
+         9sLQ==
+X-Gm-Message-State: AC+VfDyY6LkVVIfXlfQVSm28ZT1RMnMduWg319sxsuRS8SPuYTKF5Qx6
+        qEXSsJ2plWClV83n8qpztAOzvlt7CoQUbssJEd0OlOn+Aww=
+X-Google-Smtp-Source: ACHHUZ6wOs1MyAyBISkcHXuP2y8G3M4USkY3DciPI9Lvpn/LLoGGlDJMCN6r9Q+SybKXZkagFdTS26pR7xvlF9LAL/A=
+X-Received: by 2002:a17:90a:668e:b0:253:9766:749e with SMTP id
+ m14-20020a17090a668e00b002539766749emr13214725pjj.16.1684911606182; Wed, 24
+ May 2023 00:00:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com> <20230523194949.1285748-1-calvinwan@google.com>
-In-Reply-To: <20230523194949.1285748-1-calvinwan@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 May 2023 17:11:08 -0700
-Message-ID: <CABPp-BG_+TYDcL0sRMLOWwncXWPBp2RrUaK0CNvVLruPkqC+0A@mail.gmail.com>
-Subject: Re: [PATCH v3 00/28] Header cleanups (final splitting of cache.h, and
- some splitting of other headers)
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+From:   Tribo Dar <3bodar@gmail.com>
+Date:   Wed, 24 May 2023 06:59:55 +0000
+Message-ID: <CACJVABb8tvgXAowgtHLrC6Uau8Q03VRFu1m7K91SJwjvufqXYw@mail.gmail.com>
+Subject: [BUG] Segmentation fault in git v2.41.0.rc1
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2023 at 12:49=E2=80=AFPM Calvin Wan <calvinwan@google.com> =
-wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >  * a textual & semantic conflict with cw/strbuf-cleanup (affecting strb=
-uf.c;
-> >    to address, delete the conflict region and also delete the include o=
-f
-> >    repository.h)
->
-> In patch 19, you also include path.h into strbuf.c because before my
-> series, strbuf.c had a dependency on repository.h. Since that dependency
-> is removed, there is no need to include path.h anymore.
+Running `git submodule update` after commenting out the url setting in both
+.gitmodules and the corresponding section for the submodule in .git/config
+results in a segmentation fault instead of a suitable error message.
 
-The path.h include is shown within the conflict markers, thus removing
-it was already part of my instructions ("delete the conflict
-region...").
+The cause is `sub->url` being NULL here (actual segfault
+comes a couple calls further):
+https://github.com/git/git/blob/9e49351c3060e1fa6e0d2de64505b7becf157f28/builtin/submodule--helper.c#L2027
 
-It looks like Junio merged your series to seen first, as I was
-assuming in my instructions, so this suggests there was an error of
-some sort when he merged my series:
-
-$ git show --oneline --remerge-diff
-862248e47048c9282bc00ac6d9dcc7a21bd11ab1 -- strbuf.c
-862248e4704 (gitster/jch, gitgitgadget/jch) Merge branch
-'en/header-split-cache-h-part-3' into jch
-diff --git a/strbuf.c b/strbuf.c
-remerge CONFLICT (content): Merge conflict in strbuf.c
-index dfaf41d2f18..37fd5247b32 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -2,16 +2,7 @@
- #include "alloc.h"
- #include "gettext.h"
- #include "hex.h"
--<<<<<<< d1af2a2c773 (Merge branch 'la/doc-interpret-trailers' into jch)
--||||||| merged common ancestors
--#include "object-name.h"
--#include "refs.h"
--=3D=3D=3D=3D=3D=3D=3D
--#include "object-name.h"
--#include "refs.h"
- #include "path.h"
-->>>>>>> d677f7e76ab (fsmonitor-ll.h: split this header out of fsmonitor.h)
--#include "repository.h"
- #include "strbuf.h"
- #include "string-list.h"
- #include "utf8.h"
-
-Junio: Do you want to fix/amend that merge to remove the entire
-conflict region (so removing the line involving path.h too)?  Or are
-you preserving that line for some reason?
-
-Anyway, not a real big deal; it'll still compile with the extra
-include.  If Junio doesn't tweak the merges to clean this up, then
-I'll just add this into my follow-on series dealing with extra include
-cleanups.
+Possibly relevant: a similar snippet is being properly protected against
+null-pointer dereferencing here:
+https://github.com/git/git/blob/9e49351c3060e1fa6e0d2de64505b7becf157f28/builtin/submodule--helper.c#L1243
