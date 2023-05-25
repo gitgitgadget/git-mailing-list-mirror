@@ -2,144 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6057AC77B7E
-	for <git@archiver.kernel.org>; Thu, 25 May 2023 20:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42A1AC77B7E
+	for <git@archiver.kernel.org>; Thu, 25 May 2023 20:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240830AbjEYUFh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 May 2023 16:05:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54498 "EHLO
+        id S234939AbjEYUNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 May 2023 16:13:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233083AbjEYUFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2023 16:05:30 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD9B69B
-        for <git@vger.kernel.org>; Thu, 25 May 2023 13:05:29 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-ba81ded8d3eso103562276.3
-        for <git@vger.kernel.org>; Thu, 25 May 2023 13:05:29 -0700 (PDT)
+        with ESMTP id S234563AbjEYUNr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2023 16:13:47 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECDC09B
+        for <git@vger.kernel.org>; Thu, 25 May 2023 13:13:45 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-ba827a34ba8so151893276.0
+        for <git@vger.kernel.org>; Thu, 25 May 2023 13:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1685045129; x=1687637129;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=github.com; s=google; t=1685045625; x=1687637625;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1sFWXYWdE8oE1Tr4ltfUfIwL1FAGalckXmzj4rx22j4=;
-        b=H84JpXY3d14rUMyVt4qttFxliPZeBvRRawFSEbcuUXoMNjKrP5aeP83UR2dPRjg9wk
-         94PzJOJ9XG3gjpMPlNSYBUtaNftpFkMqa7p3CxwJwVT1GYHn0z2rv5tP6XqxSWREnF3v
-         MLCP6qFtVVUbpVQQCF5MNvlyJzBgzebYFNOKl0wL6KI6TDBzT+ytKKH4bqZ92B6NWytX
-         LG7numoAQKqZZ0ooeZQS9bMv6qiSuJIuWHQEflYgzEu4pagDgRSwC+4UHWbrgxUwOpy3
-         BAqD4fcZ/9Gq4EXHSIzyvW1Vcf4DWl2hk/FxFM9JCAMA9tPtsc0DPJxqXDHvQSNDw1SZ
-         HLEA==
+        bh=/FoP7Pa1Z7I8XT6nBMJdOUNpTUZjbcIWRzzbDwIhs7k=;
+        b=chaxfl9pLewnleAt627SoHLlZmohVnrfqP7rAxKCFPDctUd516XyA2YvDwS8mCjmKP
+         ffVji7tklllq7Ot45BX1UFcHgLB7U2n/n8erjeN2KfheYsVZZGFPFg6XZHUGgZ45Q3mG
+         iVgBcHklx8Xn5eHG47ujD/aVG0KhfuE71FxCsf3cgsJcr5k9vJfy7Qj3+o3K4Za5/wBZ
+         pdWCmCu+URX8t66Kow4mW/Yw3lZineaK8REGeeS7N7MkWPC4W0ywPYRL9LL3VXysLW/p
+         oiuVvUFVF17810OjWleo6oB+ppV+EHBYruuJQWilPMg3x9LJJVHWene2XU+VHzmMtxy3
+         ZShA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685045129; x=1687637129;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685045625; x=1687637625;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1sFWXYWdE8oE1Tr4ltfUfIwL1FAGalckXmzj4rx22j4=;
-        b=MU5kVfsuTi/ypLfzPFhtiSpBb5A0m9rEFbIRKE2k3MNlWLvtRq1aO4mm0Jwf+nWKDZ
-         aY1oZpRgu5fuLBCQq3gt51OhsbTkxxnuffk4KnGg4VNq5KhvQoKp0TXq/NegsAr710+X
-         mGgiDhBBwqwIUv8KNZk3ZzBTAxqMgjNAIjwwNCAClAhr11qwHpOnjab0nf2nS9jPxMfF
-         jq2SSTdFPWjrSGWQEGZwN/M4jrGyzhlzVTq7jVATrfA3Blncvjna22fzABRYsT8XSFAp
-         VhveVSKPP11af27WEY6Iax25a5/+GOCI7bQQd0R001i1R+i0oIob3wsMOe52YCQoEld5
-         ouFQ==
-X-Gm-Message-State: AC+VfDwgdnGnNUU13zYNWzBdnppGj/I0rXbTQEGiqrEnRPwb6849p+2C
-        ZXktzPEuUjznpjOZqimqxRFVbsZH/iXWfvqscw==
-X-Google-Smtp-Source: ACHHUZ77xN7By9/lnEdSiayZHpd5T00Ic3OsXYult0dapzAyy6SIddumhu+rlnjwuDPpKoPBT1x3ag==
-X-Received: by 2002:a25:34c4:0:b0:ba8:68b3:c67c with SMTP id b187-20020a2534c4000000b00ba868b3c67cmr4015012yba.34.1685045128994;
-        Thu, 25 May 2023 13:05:28 -0700 (PDT)
+        bh=/FoP7Pa1Z7I8XT6nBMJdOUNpTUZjbcIWRzzbDwIhs7k=;
+        b=d5OiQydwuBuRNUd1GU2roPDL3An2yZPuDF4JvSByAwRKUTt8TnPWW6Plgpvm3AKWhv
+         s8H0Oy/uAwB4hJiFUpUMgfsH2TrT5Nq98zXaFK5FO7CyHCqPupfkpOXbzyCPZru4NnUY
+         abgkJl+0kZRSgSuDeBV9CWpfg7IzA6cF5prPncA1IvbB0p/rp1xFBAyYX9l0pDDgcoLJ
+         KfBwgs/RL30KkiJI91JpnafFM3dOJidOALANmxDLDyzgFhK+q16WwCYGyzJ+pD+lk9UK
+         OTX9Vgbezbu2e7qRd1LUzEfghdsi49zZojtECIDCOKUsu9YOTKS9npE5IzkTgJf1V00f
+         XByA==
+X-Gm-Message-State: AC+VfDx2jgW1p0fzxYRNP+oBoY8gqs7tsyKYtn/uB/rdvM7oAP8QoK/F
+        R/dKqunHjsiYG4BC8R3QxrZ+
+X-Google-Smtp-Source: ACHHUZ7u+poA3QKeFEjmnT+CaqGh5L7ogKtm4lHYnc8h0iy06j7Bdnyn5GgrN/5fDvG0278i2fob9Q==
+X-Received: by 2002:a0d:d456:0:b0:561:da0d:6488 with SMTP id w83-20020a0dd456000000b00561da0d6488mr534444ywd.50.1685045624998;
+        Thu, 25 May 2023 13:13:44 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:2c68:6384:8f43:adfe? ([2600:1700:e72:80a0:2c68:6384:8f43:adfe])
-        by smtp.gmail.com with ESMTPSA id 63-20020a251142000000b00ba7cb887380sm540846ybr.14.2023.05.25.13.05.28
+        by smtp.gmail.com with ESMTPSA id t20-20020a81c254000000b00561949f713fsm580401ywg.39.2023.05.25.13.13.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 May 2023 13:05:28 -0700 (PDT)
-Message-ID: <2b52aac0-46c3-6780-9411-d35c819f3673@github.com>
-Date:   Thu, 25 May 2023 16:05:28 -0400
+        Thu, 25 May 2023 13:13:44 -0700 (PDT)
+Message-ID: <4d8907ba-3fe5-5bc1-e7bd-237edec31261@github.com>
+Date:   Thu, 25 May 2023 16:13:44 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] config: use gitdir to get worktree config
-To:     Glen Choo <chooglen@google.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>
-References: <pull.1536.git.1684883872.gitgitgadget@gmail.com>
- <aead2fe1ce162949fb313a92fe960e5a64512f60.1684883872.git.gitgitgadget@gmail.com>
- <kl6ly1ldxlsv.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 2/2] repository: move 'repository_format_worktree_config'
+ to repo scope
 Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     chooglen@google.com, Victoria Dye <vdye@github.com>
+References: <pull.1536.git.1684883872.gitgitgadget@gmail.com>
+ <5ed9100a7707a529b309005419244d083cdc85ba.1684883872.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <kl6ly1ldxlsv.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <5ed9100a7707a529b309005419244d083cdc85ba.1684883872.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/24/2023 9:05 PM, Glen Choo wrote:
-> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 5/23/2023 7:17 PM, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
 > 
->> From: Victoria Dye <vdye@github.com>
->>
->> Update 'do_git_config_sequence()' to read the worktree config from
->> 'config.worktree' in 'opts->git_dir' rather than the gitdir of
->> 'the_repository'.
+> Move 'repository_format_worktree_config' out of the global scope and into
+> the 'repository' struct. This change is similar to how
+> 'repository_format_partial_clone' was moved in ebaf3bcf1ae (repository: move
+> global r_f_p_c to repo struct, 2021-06-17), adding to the 'repository'
+> struct and updating 'setup.c' & 'repository.c' functions to assign the value
+> appropriately. In addition, update usage of the setting to reference the
+> relevant context's repo or, as a fallback, 'the_repository'.
 > 
-> Thanks for the patches! This makes sense. do_git_config_sequence() is
-> eventually called by repo_config(), which is supposed to read config
-> into a "struct repository", so any reliance on the_repository's settings
-> is wrong.
-
->> +test_expect_success '--recurse-submodules parses submodule repo config' '
->> +	test_when_finished "git -C submodule config --unset feature.experimental" &&
->> +	git -C submodule config feature.experimental "invalid non-boolean value" &&
->> +	test_must_fail git ls-files --recurse-submodules 2>err &&
->> +	grep "bad boolean config value" err
->> +'
+> The primary goal of this change is to be able to load worktree config for a
+> submodule depending on whether that submodule - not the super project - has
+> 'extensions.worktreeConfig' enabled. To ensure 'do_git_config_sequence()'
+> has access to the newly repo-scoped configuration:
 > 
-> This test has a few bits that are important but non-obvious. It would be
-> useful to capture them in either the commit message or a comment.
+> - update 'repo_read_config()' to create a 'config_source' to hold the
+>   repo instance
+> - add a 'repo' argument to 'do_git_config_sequence()'
+> - update 'config_with_options' to call 'do_git_config_sequence()' with
+>   'config_source.repo', or 'the_repository' as a fallback
 > 
-> Firstly, we can't test this using "git config" because that only uses
-> the_repository, and we specifically need to read config in-core into a
-> "struct repository" that is a submodule, so we need a command that
-> recurses into a submodule without using subprocesses. IIRC the only
-> choices are "git grep" and "git ls-files".
-> 
-> Secondly, when we test that config is read from the submodule the choice
-> of "feature.experimental" is quite important. The config is read quite
-> indirectly: "git ls-files" reads from the submodule's index, which
-> will call prepare_repo_settings() on the submodule, and eventually calls
-> repo_config_get_bool() on "feature.experimental". Any of the configs in
-> prepare_repo_settings() should do, though. A tiny suggestion would be to
-> use "index.sparse" instead of "feature.experimental", since (I presume)
-> we'll have to add sparse index + submodule tests for "git ls-files"
-> eventually.
-
-Some of the points you bring up are definitely subtle, like the choice
-of config variable.
-
-I appreciate that there are two tests here: one to verify the test
-checks have a similar effect without using the worktree config, and
-then a second test to show the same behavior with worktree config.
-
-If I understand correctly, the first test would pass without this
-code change, but it is a helpful one to help add confidence in the
-second test.
+> Finally, add/update tests in 't3007-ls-files-recurse-submodules.sh' to
+> verify 'extensions.worktreeConfig' is read an used independently by super
+> projects and submodules.
  
-> +test_expect_success '--recurse-submodules parses submodule worktree config' '
->> +	test_when_finished "git -C submodule config --unset extensions.worktreeConfig" &&
-> 
-> I believe "test_config -C" will achieve the desired effect.
+> @@ -2277,7 +2278,7 @@ int config_with_options(config_fn_t fn, void *data,
+>  		data = &inc;
+>  	}
+>  
+> -	if (config_source)
+> +	if (config_source && config_source->scope != CONFIG_SCOPE_UNKNOWN)
+>  		config_reader_set_scope(&the_reader, config_source->scope);
 
-This should work, though it requires acting a bit strangely, at least
-if we want to replace the 'git config --worktree' command.
+This extra condition on config_source->scope surprised me. Could you
+elaborate on the reason this is necessary?
 
-test_config treats the positions of the arguments as special, so we
-would need to write it as:
+> @@ -2667,11 +2670,14 @@ static void repo_read_config(struct repository *repo)
+>  {
+>  	struct config_options opts = { 0 };
+>  	struct configset_add_data data = CONFIGSET_ADD_INIT;
+> +	struct git_config_source config_source = { 0 };
 
- test_config -C submodule feature.experimental --worktree "non boolean value"
+This could be...
 
-and that's assuming that 'git -C submodule config feature.experimental
---worktree "non boolean value"' is parsed correctly to use the --worktree
-argument. (I haven't tried it.) By using this order, that allows the
-test_config helper to run the appropriate 'test_when_finished git config
---unset feature.experimental' command.
+	struct git_config_source config_source = { .repo = repo };
+
+>  
+>  	opts.respect_includes = 1;
+>  	opts.commondir = repo->commondir;
+>  	opts.git_dir = repo->gitdir;
+>  
+> +	config_source.repo = repo;
+> +
+
+...avoiding these lines.
+
+> diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+> index e35c203241f..6d0bacef4de 100755
+> --- a/t/t3007-ls-files-recurse-submodules.sh
+> +++ b/t/t3007-ls-files-recurse-submodules.sh
+> @@ -309,19 +309,30 @@ test_expect_success '--recurse-submodules parses submodule repo config' '
+>  test_expect_success '--recurse-submodules parses submodule worktree config' '
+>  	test_when_finished "git -C submodule config --unset extensions.worktreeConfig" &&
+>  	test_when_finished "git -C submodule config --worktree --unset feature.experimental" &&
+> -	test_when_finished "git config --unset extensions.worktreeConfig" &&
+>  
+>  	git -C submodule config extensions.worktreeConfig true &&
+>  	git -C submodule config --worktree feature.experimental "invalid non-boolean value" &&
+>  
+> -	# NEEDSWORK: the extensions.worktreeConfig is set globally based on super
+> -	# project, so we need to enable it in the super project.
+> -	git config extensions.worktreeConfig true &&
+> -
+>  	test_must_fail git ls-files --recurse-submodules 2>err &&
+>  	grep "bad boolean config value" err
+>  '
+
+These are my favorite kind of test updates: deleting extra setup that's no
+longer needed.
+
+> +test_expect_success '--recurse-submodules submodules ignore super project worktreeConfig extension' '
+> +	test_when_finished "git config --unset extensions.worktreeConfig" &&
+> +
+> +	# Enable worktree config in both super project & submodule, set an
+> +	# invalid config in the submodule worktree config, then disable worktree
+> +	# config in the submodule. The invalid worktree config should not be
+> +	# picked up.
+> +	git config extensions.worktreeConfig true &&
+> +	git -C submodule config extensions.worktreeConfig true &&
+> +	git -C submodule config --worktree feature.experimental "invalid non-boolean value" &&
+> +	git -C submodule config --unset extensions.worktreeConfig &&
+> +
+> +	git ls-files --recurse-submodules 2>err &&
+> +	! grep "bad boolean config value" err
+> +'
+
+We have the same ways to improve here using 'test_config' as recommended
+in patch 1.
 
 Thanks,
 -Stolee
