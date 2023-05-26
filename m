@@ -2,108 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C614C7EE23
-	for <git@archiver.kernel.org>; Fri, 26 May 2023 15:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EA2CC77B7A
+	for <git@archiver.kernel.org>; Fri, 26 May 2023 18:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237003AbjEZPsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 May 2023 11:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48056 "EHLO
+        id S243187AbjEZSoM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 May 2023 14:44:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244193AbjEZPsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2023 11:48:10 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19181F3
-        for <git@vger.kernel.org>; Fri, 26 May 2023 08:48:09 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bad041bf313so1509864276.0
-        for <git@vger.kernel.org>; Fri, 26 May 2023 08:48:09 -0700 (PDT)
+        with ESMTP id S242986AbjEZSoI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2023 14:44:08 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2207C10CB
+        for <git@vger.kernel.org>; Fri, 26 May 2023 11:43:41 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f601c57d8dso8968245e9.0
+        for <git@vger.kernel.org>; Fri, 26 May 2023 11:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1685116088; x=1687708088;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bNuxT9nbZz1VCFOVBGo4yUFGT2RFNVG0JIp1UEWg0ts=;
-        b=gKe4utJBGBGyRg7XsktXn29m06FGx20SaQYulrI0YxYeZ6NFU+e6jRV7sgX0Q4FJdk
-         rkxK3s1Rgp20GqrUdu7CNUeE8SUeYEuWhOyMRUIDLHtTCipfdgtEP4TlTttcJAGCd0Me
-         Mk11ODbyYc747zicJbJtPtnszgy2wB5Vgc1CEcAUfoaWlAyKYSV1HxxQk3J8sE1mi+5M
-         CHBjtP/05X61VSyPqxYG3sKEDdty8eozyTJzEF/JKOaukmOg+8YMH12OOF60g1yPMnH1
-         i3+qi5v+2VGMeacVRs25RMT5+OS+rWRw6dbX5hASnqoYCN1Hg+Viz2eQFp99A7uyaRpF
-         BRlQ==
+        d=gmail.com; s=20221208; t=1685126619; x=1687718619;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4r7E2s9fhTFJNZ8wJvm/4lJz7b04xB0Z+0++soQVcKE=;
+        b=r/fJdR0dxbGyAMrA4DJL3ne/vo+18ioxqfTjHxlWeerRWEvY6IWcwPPs/bv45zDHD9
+         JveRBDKaE/zW9EZ2PQ+Vhl2y2D93rTm4iv9ugkDSGFxWd61AFCrEFA+ISL7ZZ+psUHs2
+         JgihkA7kcHUE7KJQlhyOt7CVgWkfVj/g/DCYBb7wUyMi/XAIOZAh0szR6xJKUa5Q2l+8
+         FXM0TsL58kR3Mq9wVTQmu2b/TNDy5FCQmI9sFflcrYjx8BRr0/MxSZTKtVJ/zlgJFD80
+         VJ4sL6GpvRUbfTT+lbLABtvGWQWaGpMF1D528dsRTXlwn+8qTaMprJg/jJbudmEwXtJO
+         DHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685116088; x=1687708088;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bNuxT9nbZz1VCFOVBGo4yUFGT2RFNVG0JIp1UEWg0ts=;
-        b=Y45lbVQ1zs4544OuiT9LIv6i+xt/zNlRYGxDhvDPB1hyO5eohS59ekv/sIyOpFS11e
-         hGsyoB2jtvWmVpnLU+OEVdB+1c2XKpAQ4qkO4fCjHdazcF/WDH220oNjSTe2WSaDw9N8
-         Lt6Wb+cj6UC35Yf1oreXVOo0zx8OgPQbXwblvoMVprm4h1NaaFkihS5u3kHc4dADRFsV
-         Y9ibLr94dpIni15xqzgfd1zgQ4H5jDzFzQ52JY1ppvQlbye4ItVzhFgHmyqHhEftxbtG
-         j1AwTpXRTHRtIJkubgCB/3dG93tly66gcxn/w7F1CSYWAkjuMYIQftX9l/PR05RXKDhl
-         6zRw==
-X-Gm-Message-State: AC+VfDxz21VEQKu44gZZ43lC5EKfzqGKJLqlRfvMqsijbHUR1m8/al3k
-        1uf8R1hCjFEbioj/XM8Se8b1
-X-Google-Smtp-Source: ACHHUZ7QT7Y2b6HKskGZsP1KOUs6svFvQj860oSJ7lYtXu7MGJhXXDJ2qwMzfft3V/ntZRFNgdK5Ow==
-X-Received: by 2002:a0d:d5d1:0:b0:561:aa98:1a99 with SMTP id x200-20020a0dd5d1000000b00561aa981a99mr2195468ywd.45.1685116088260;
-        Fri, 26 May 2023 08:48:08 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:ac38:474f:c310:a7c6? ([2600:1700:e72:80a0:ac38:474f:c310:a7c6])
-        by smtp.gmail.com with ESMTPSA id d17-20020a0ddb11000000b005623ae13106sm1247201ywe.100.2023.05.26.08.48.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 08:48:07 -0700 (PDT)
-Message-ID: <3145f4f3-7bd4-8a1b-4943-11b7d22b60c6@github.com>
-Date:   Fri, 26 May 2023 11:48:06 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Subject: Re: [PATCH v2 0/3] Fix behavior of worktree config in submodules
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     chooglen@google.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>
-References: <pull.1536.git.1684883872.gitgitgadget@gmail.com>
- <pull.1536.v2.git.1685064781.gitgitgadget@gmail.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1536.v2.git.1685064781.gitgitgadget@gmail.com>
+        d=1e100.net; s=20221208; t=1685126619; x=1687718619;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4r7E2s9fhTFJNZ8wJvm/4lJz7b04xB0Z+0++soQVcKE=;
+        b=B0Wr0Pi82XJzXmfZYWNdRWN4EfVPeBQxfZfGpUM5o6CLEQj1lIMab+APdovJKl4B9U
+         iBn7m3hiQ6rljuEEVD8ftM5AFw3xOFCj93sECcO2mbdLUWa3f6JL7neiDFD2SZFKx19D
+         I3CeA/2XCPN5sHtJiyW0gkUTWJkhnKhFITFJAXic9g3DNXl/b/HVD2N5Afo98JtwlsSo
+         rSA3gRYq0EtPx3JqSdOXeLs8LhbS/ftAy/Z7ZAR2lLENz/kl9/NcbVSfy2KXvfUw5f7k
+         CG8eGBXx1t8ilUiee0ADfi58Z9fcF8LrTAi0Ta+qnMpvRX/UvKGrJFkeOnqPm33lxUqs
+         nHMg==
+X-Gm-Message-State: AC+VfDyJNfTbaaJVny2hMhNPjG+rjCBQLtO5jPVN/+VxGzs5YldbJh9Y
+        B4LUft64rSn37/1JSi6gxsVIywAayo4=
+X-Google-Smtp-Source: ACHHUZ67UsHds0DCjX7sG+RE5phrIWK0RwrgF/3+ovAwOk4hAlSlfEdj593EiQKEu0I4sYMrpYRK5A==
+X-Received: by 2002:a7b:c054:0:b0:3f4:2610:5cc5 with SMTP id u20-20020a7bc054000000b003f426105cc5mr2153867wmc.5.1685126619110;
+        Fri, 26 May 2023 11:43:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y8-20020a7bcd88000000b003f6038faa19sm9415596wmj.19.2023.05.26.11.43.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 May 2023 11:43:38 -0700 (PDT)
+Message-Id: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 26 May 2023 18:43:34 +0000
+Subject: [PATCH 0/3] Create stronger guard rails on replace refs
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     vdye@github.com, me@ttaylorr.com, newren@gmail.com,
+        gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/25/2023 9:32 PM, Victoria Dye via GitGitGadget wrote:
-> About a year ago, discussion on the sparse index integration of 'git grep'
-> surfaced larger incompatibilities between sparse-checkout and submodules
-> [1]. This series fixes one of the underlying issues to that incompatibility,
-> which is that the worktree config of the submodule (where
-> 'core.sparseCheckout', 'core.sparseCheckoutCone', and 'index.sparse' are
-> set) is not used when operating on the submodule from its super project
-> (e.g., in a command with '--recurse-submodules').
-> 
-> The outcome of this series is that 'extensions.worktreeConfig' and the
-> contents of the repository's worktree config are read and applied to (and
-> only to) the relevant repo when working in a super project/submodule setup.
-> This alone doesn't fix sparse-checkout/submodule interoperability; the
-> additional changes needed for that will be submitted in a later series. I'm
-> also hoping this will help (or at least not hurt) the work to avoid use of
-> global state in config parsing [2].
-> 
-> 
-> Changes since V1
-> ================
-> 
->  * In 't3007', replaced manual 'git config'/'test_when_finished "git config
->    --unset"' pairs with 'test_config' helper. Updated 'test_config' to
->    handle the '--worktree' option.
->  * Updated commit messages & test comments to better explain the purpose and
->    more subtle functionality details to the new tests
->  * Added a commit to move 'struct repository' out of 'git_config_source',
->    rather than creating a dummy 'config_source' just to hold a repository
->    instance.
->  * Changed the config setting in the new tests from 'feature.experimental'
->    to 'index.sparse' to tie these changes to their intended use case.
->  * "super project" -> "superproject"
+(This series is based on tb/pack-bitmap-traversal-with-boundary due to
+wanting to modify prepare_repo_settings() in a similar way.)
 
-Thanks for these updates. I'm happy with this version.
+The replace-refs can be ignored via the core.useReplaceRefs=false config
+setting. This setting is possible to miss in some Git commands if they do
+not load default config at the appropriate time. See [1] for a recent
+example of this.
 
-Thanks,
--Stolee
+[1]
+https://lore.kernel.org/git/pull.1530.git.1683745654800.gitgitgadget@gmail.com/
+
+This series aims to avoid this kind of error from happening in the future.
+The idea is to encapsulate the setting in such a way that we can guarantee
+that config has been checked before using the in-memory value.
+
+Further, we must be careful that some Git commands want to disable replace
+refs unconditionally, as if GIT_NO_REPLACE_REFS was enabled in the
+environment.
+
+The approach taken here is to split the global into two different sources.
+First, read_replace_refs is kept (but moved to replace-objects.c scope) and
+reflects whether or not the feature is permitted by the environment and the
+current command. Second, a new value is added to repo-settings and this is
+checked after using prepare_repo_settings() to guarantee the config has been
+read.
+
+This presents a potential behavior change, in that now core.useReplaceRefs
+is specific to each in-memory repository instead of applying the
+superproject value to all submodules. I could not find a Git command that
+has multiple in-memory repositories and follows OIDs to object contents, so
+I'm not sure how to demonstrate it in a test.
+
+Here is the breakdown of the series:
+
+ * Patch 1 creates disable_replace_refs() to encapsulate the global
+   disabling of the feature.
+ * Patch 2 creates replace_refs_enabled() to check if the feature is enabled
+   (with respect to a given repository). This is a thin wrapper of the
+   global at this point, but does allow us to remove it from environment.h.
+ * Patch 3 creates the value in repo-settings as well as ensures that the
+   repo settings have been prepared before accessing the value within
+   replace_refs_enabled().
+
+Thanks, -Stolee
+
+Derrick Stolee (3):
+  repository: create disable_replace_refs()
+  replace-objects: create wrapper around setting
+  repository: create read_replace_refs setting
+
+ builtin/cat-file.c       |  2 +-
+ builtin/commit-graph.c   |  5 ++---
+ builtin/fsck.c           |  2 +-
+ builtin/index-pack.c     |  2 +-
+ builtin/pack-objects.c   |  3 +--
+ builtin/prune.c          |  3 ++-
+ builtin/replace.c        |  3 ++-
+ builtin/unpack-objects.c |  3 +--
+ builtin/upload-pack.c    |  3 ++-
+ commit-graph.c           |  4 +---
+ config.c                 |  5 -----
+ environment.c            |  3 +--
+ git.c                    |  2 +-
+ log-tree.c               |  2 +-
+ replace-object.c         | 23 ++++++++++++++++++++++-
+ replace-object.h         | 31 ++++++++++++++++++++++---------
+ repo-settings.c          |  2 ++
+ repository.h             |  8 ++++++++
+ 18 files changed, 71 insertions(+), 35 deletions(-)
+
+
+base-commit: b0afdce5dab61f224fd66c13768facc36a7f8705
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1537%2Fderrickstolee%2Freplace-refs-safety-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1537/derrickstolee/replace-refs-safety-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1537
+-- 
+gitgitgadget
