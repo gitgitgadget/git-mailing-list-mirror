@@ -2,276 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF1EBC77B7A
-	for <git@archiver.kernel.org>; Fri, 26 May 2023 08:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 915D1C77B7C
+	for <git@archiver.kernel.org>; Fri, 26 May 2023 11:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242470AbjEZI2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 May 2023 04:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34516 "EHLO
+        id S242666AbjEZLN6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 May 2023 07:13:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229981AbjEZI2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2023 04:28:50 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2283B12F
-        for <git@vger.kernel.org>; Fri, 26 May 2023 01:28:45 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f3a611b3ddso2295250e87.0
-        for <git@vger.kernel.org>; Fri, 26 May 2023 01:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=eficode.com; s=google; t=1685089723; x=1687681723;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TrES/oDZBGl/LZRpU/vpWAyBQI6Z3AElCxvgm41gUM4=;
-        b=dsNmLssnKbvQeap1e1RZQlwWcp+3/HjdPjzAMub/wva+8jbJTGs4QkpF6hQG8/Ddlj
-         aCnRoYtakjhkGjHNI5E8dV3peEYU2uYTaikqnIh+oYWJWiCiKpUDR/ESO5mCaISZZz+C
-         kN5xlrFbK88sgQTfH2Z2ji/u3+ATaVe8Y+fFnDqCLDD9pdsGbbMa4j0Zrt6wC6b+a8a/
-         Xr4yRU36hzf3kjOcwyW1/h9+0GR+zV2/PXcxGiSy56n/CpgnmMtctwWyf2IC387ZXbFn
-         0vflPr3WuX6XWcNQMRTh2hHOS3KAokq9COQwBCcR1Z+VZGlXC4evAnfkGTv8T4WrdoiU
-         0HQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685089723; x=1687681723;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TrES/oDZBGl/LZRpU/vpWAyBQI6Z3AElCxvgm41gUM4=;
-        b=E954eY0Dh7/3O0jzUx0StmzPz/JlUSw8SXAAm9ukwftplwbuJ/97HYXVtd4I5yejqb
-         dbYqjXGA2jkrlCs4OAw6CFp6RH3awV17GBV+g70ZkxAXT3bbuBmps9UaxWUHS+4AEh7I
-         Em7r0S82UrlJN5xJIvWYHUH8oMoNZZtNvFsMBPzJc4+O4AgWGcUUzT6rcpenhK0DbZTp
-         rIZhOplgbojFOIUqcRPkK06tSKkuqHMacT0JaPg9u8z7mX0Yz9ShtA1VQExasNVLvZmM
-         Obe3/YeHbaGMyWd4dG+iqkoPdNNQJRRgndr2wQdJtC3kWGuDrTGwycuk7NmhVVIji3zi
-         pdFA==
-X-Gm-Message-State: AC+VfDxBmpXgXMYvWEBFgJ/tcL0up8o5ts1iOd8lcgz4kX07S68HE74f
-        R8fvI3xU6rMIRbFhuoy1NG14YU3Ni7w/750u6V29hyZZZ8ATN8RsGgFBbQ==
-X-Google-Smtp-Source: ACHHUZ7fXPuYr1thqK+UoskpYLkSYF1nYbpaMUJDDodTVNxzrUK6pNVdXOO14FvjyyVy4ZfymppR0evLsXSdqZRxwfw=
-X-Received: by 2002:a05:6512:3e16:b0:4f2:47ea:2f32 with SMTP id
- i22-20020a0565123e1600b004f247ea2f32mr1727441lfv.23.1685089722906; Fri, 26
- May 2023 01:28:42 -0700 (PDT)
-MIME-Version: 1.0
-From:   Jan Krag <jan.krag@eficode.com>
-Date:   Fri, 26 May 2023 10:28:26 +0200
-Message-ID: <CAF0TW5uB0zbSqw7rUFxED77683h7qHoqeBD6dnSOCpajGV=tYw@mail.gmail.com>
-Subject: Bug: global remote.origin.url silently overrides git clone <URL>
+        with ESMTP id S235099AbjEZLNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2023 07:13:55 -0400
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73910101
+        for <git@vger.kernel.org>; Fri, 26 May 2023 04:13:51 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id E14235C00C6;
+        Fri, 26 May 2023 07:13:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 26 May 2023 07:13:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sebyte.me; h=cc
+        :content-transfer-encoding:content-type:content-type:date:date
+        :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+        :subject:subject:to:to; s=fm1; t=1685099630; x=1685186030; bh=xL
+        PPqoEooNHw7T7s2MR7Culw6XGm4Qs1s6g4Dz+ahmc=; b=ELBUmOHDxJ0NPagZmm
+        gXC2c9VfyR2vZdyTxd/PGoVys+wUj6EeLLAy5Bv9jdbT84lnCgM+s8WgI6gcVVQ7
+        FJ+VYp1a0MiO2lEsvViSUI1MbabAbZcQXGf9/OeizvIP8bGAtui7a/iSdrgIMDkR
+        mD8TnosVfZXF5vVdw5sWHcoQoUSRYpNmXXIQHiu2ZhbSh/ps4MXhcdnfYuP/O8fE
+        6YSBJpSt2DhATVDSEXeGU3ZtNcnuYZe06x/v1dJ3q9Cosd4W16cIQNIZp3E7DtGT
+        76GBqQCLrWc1CO6HDA6sxsZRTxUuJWwWA6cf90/oG/YA9GBqpIeuHIYkAJ+DfTPp
+        KnoQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :content-type:date:date:feedback-id:feedback-id:from:from
+        :in-reply-to:message-id:mime-version:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; t=1685099630; x=1685186030; bh=xLPPqoEooNHw7
+        T7s2MR7Culw6XGm4Qs1s6g4Dz+ahmc=; b=hhiK2pQrhaRmMd+OzxQhJZ9Mn7VCh
+        GN+P36mccMy9NSalAHt8646Rp2HtOYmMfn+jC9uGnd4hAei1tVWkVw4dhU1c6NY+
+        g4XpdA4upjxS3Pnlrl1SdqdgkMtwMQdik/CpibAMMx/lGS7L4djGrs0BUqhAUVsk
+        DuRrFAlLH0iBgwHNIXnPbZnsCPEVI5+y94TJV7IJnC9WV9Hjdl2ua4ne5ifsinFE
+        rhjvyT9EcCIdTSQME49bZC2AjOKOxY0dWvBN/MgvsN+JDfy0OLy2MRG4zClURozR
+        JfWNs9oaJdHA1o3814D6jihTmUTv2pv/IOkJJyqNEh9TgjBrobD9cM7Ag==
+X-ME-Sender: <xms:bpRwZOy8IZTqiTWOdYwKJrHvSjb6ebVcSqZlQLQfiOtbrh1vrI4Evw>
+    <xme:bpRwZKSUn3uEytCPhjhR0X7D1wepmc75FXVjkXsOHgGlHhTexF_v0ErtwkLYr7hXN
+    CxM6EvAbybUeoj-4Q>
+X-ME-Received: <xmr:bpRwZAX6DTmn5I8HmgpblOgfwy6x81G1OOlLpSQLoVDyz4XPS8C388W9RU9EZvdF-ghEO-U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeejledgfeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgfgsehtqhertd
+    dtreejnecuhfhrohhmpefuvggsrghsthhirghnucfvvghnnhgrnhhtuceoshguthesshgv
+    sgihthgvrdhmvgeqnecuggftrfgrthhtvghrnhephefgffelteefueffvdeffeffheejve
+    eigfdvtdeufeefveelleeivddttdegtdefnecuffhomhgrihhnpegvgigrmhhplhgvrdgt
+    ohhmpdhfohhrkhdrhhhoshhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepshgvsgihthgvodhrvghtuhhrnhdqphgrthhhsehfrghsthhmrghi
+    lhdrtghomh
+X-ME-Proxy: <xmx:bpRwZEheE_HkLo6MbcMpMq6tzXs85PM62ZaBJStSkDdUzb979F15OQ>
+    <xmx:bpRwZACZl6Luxt0Ej8RCYL2T0jKReZU0UVSOMFtplXq1hhLQ64xXgQ>
+    <xmx:bpRwZFLB6PpWZ8bPzqvZix6CXB0FtXmeOx7huRteum08MPyVTXPsvA>
+    <xmx:bpRwZP83XNSjytkg0MzJH4WAvYjTuN-1Pg6qV8iluRaHgeZmcU4bTA>
+Feedback-ID: i9e78401f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 26 May 2023 07:13:50 -0400 (EDT)
+Received: from sebyte by balor with local (Exim 4.94.2)
+        (envelope-from <sebyte@balor.gnukahvesi.net>)
+        id 1q2VOH-000JER-8T
+        for git@vger.kernel.org; Fri, 26 May 2023 11:13:49 +0000
+From:   Sebastian Tennant <sdt@sebyte.me>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: How to publish a fork
+Date:   Fri, 26 May 2023 11:13:49 +0000
+Message-ID: <87pm6ne45u.fsf@sebyte.me>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have stumbled across some very unexpected behaviour in git related
-to remote.origin.url. I initially reported it to the security mailing
-list because of concern of possible exploits, but Glenn Choo and
-Taylor Blau deemed that the issue was outside Git's security boundary,
-and thus safe to discuss on the public list.
+Hello list,
 
-In short, I found out that if a user for some reason, either
-intentionally/maliciously or unintentionally sets `remote.origin.url`
-to a repo URL in their *global* config, then a subsequent `git
-clone`operation will *silently* use this URL instead of the one
-provided as the command line argument to `git clone`.
+I wish to publish a fork of an upstream git repository (as a means of
+distributing modifications to upstream across multiple machines).
 
-I believe this is unintentional behaviour, and not just a corner case
-I haven=E2=80=99t thought of, because of the following observations:
+Let's call the publishing repo fork.git, the machine which hosts
+fork.git the fork host, and the machines which clone fork.git clients
+of the fork host.
 
-* The folder name to clone to is still taken from the command-line specifie=
-d URL
-* Git still prints =E2=80=9Ccloning into=E2=80=A6=E2=80=9D and the folder n=
-ame that the user specified
-* Git sets sets the *local* `remote.origin.url` to the value provided
-* However, Git fetches the actual repo content, and subsequent
-workspace checkout, from the URL in the global config, without any
-notification to the user.
+fork.git includes unmodified upstream branches and additional branches
+not found upstream.  The additional branches all share a common
+namespace; mod-*.  For example, mod-master is an additional branch
+based on upstream branch master.  A cron job running on the fork host
+automatically fetches from upstream every 30 minutes using a mirror
+refspec, e.g. +refs/heads/master:refs/heads/master.  Clients of the
+fork host also use a mirror refspec for upstream branches and an
+ordinary fetch refspec for the additional branches,
+e.g. +refs/heads/mod-master:refs/remotes/forkhost/mod-master.
 
-Security implications: I believe that this behaviour could
-theoretically be mis-used for supply-chain attacks, especially on a
-build server, but Glenn and Taylor pointed out that if an attacker has
-access to modify a global git config, then there are much worse things
-they could do. Also, I realise that most build servers these days
-don=E2=80=99t actually use `git clone` under normal operations (rather they
-use git init, git remote add, git fetch) so the problem isn't that
-severe.
+To summarise, the resulting configs look something like this:
 
-If a team disables the regular build server fake cloning behaviour and
-does actual cloning in e.g. a shell step for more control, an attacker
-with access to pipelines running on the same build node, could
-potentially set the global url to a malicious fork of a repo used in
-other pipelines, and silently make the other pipelines clone this
-forked and patched repo, and potentially execute code within.
+Fork host config (extract):
+--8<---------------cut here---------------start------------->8---
+[remote "upstream"]
+	url =3D https://example.com/upstream.git
+	fetch =3D +refs/heads/master:refs/heads/master
+--8<---------------cut here---------------end--------------->8---
 
+Fork host client config (extract):
+--8<---------------cut here---------------start------------->8---
+[remote "forkhost"]
+	url =3D https://fork.host/fork.git
+	fetch =3D +refs/heads/master:refs/heads/master
+	fetch =3D +refs/heads/mod-master:refs/remotes/forkhost/mod-master
+[branch "mod-master"]
+	remote =3D forkhost
+	merge =3D refs/heads/mod-master
+--8<---------------cut here---------------end--------------->8---
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-What happened instead? (Actual behaviour)
-------------------------------------------------------------------
+In order to keep an additional branch up to date with upstream, a
+client need only fetch from the fork host, rebase on the upstream
+branch, and then push (back to the fork host).  For example:
 
-I discovered the problem in the wild, reproduced it on my Mac (see
-later) and then went through the following controlled reproduction in
-a Docker environment.
+ $ cd mod-master
 
-`docker run -it --entrypoint /bin/bash bitnami/git:2.19.2`
+ $ git fetch --verbose forkhost
+ [=E2=80=A6]
+ 4b3de748b0..f35648ba0c  master     -> master
+ =3D [up to date]          mod-master -> forkhost/mod-master
 
-```
-$ git config --global remote.origin.url https://github.com/JKrag/sc_demo.gi=
-t
-$ git clone https://github.com/eficode-academy/git-katas.git
+ $ git status --short --branch
+ ## mod-master...forkhost/mod-master
 
-Cloning into 'git-katas'...
+ $ git log --oneline ..master | wc -l
+ 1
 
-$ cd git-katas
-$ ls
-README.md (i.e. content from sc_demo, not git-katas)
+ $ git rebase master
+ Successfully rebased and updated refs/heads/mod-master.
 
-$ git remote show origin
-* remote origin
-Fetch URL: https://github.com/JKrag/sc_demo.git
-Push URL: https://github.com/JKrag/sc_demo.git
-Push URL: https://github.com/eficode-academy/git-katas.git
+ $ git status --short --branch
+ ## mod-master...forkhost/mod-master [ahead 3, behind 2]
 
-$ cat .git/config
-...
-[remote "origin"]
-url =3D https://github.com/eficode-academy/git-katas.git
-...
+Note that, although there was only one =E2=80=98incoming=E2=80=99 commit, m=
+od-master
+and forkhost/mod-master have diverged (by 3 and 2 commits
+respectively).  This is because there were (and are) two commits on
+mod-master not found on master.
 
+After fetching, C is the =E2=80=98incoming=E2=80=99 commit:
 
-$ git config --list --show-origin |grep "remote\.origin"
-file:/root/.gitconfig remote.origin.url=3Dhttps://github.com/JKrag/sc_demo.=
-git
-file:.git/config
-remote.origin.url=3Dhttps://github.com/eficode-academy/git-katas.git
-file:.git/config remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin/*
+               master:  ---A---B---C
 
+           mod-master:  ---A---B---X---Y
 
-$ git fetch
-$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
+  forkhost/mod-master:  ---A---B---X---Y
 
-nothing to commit, working tree clean
+After reabsing:
 
-$ git config --global --unset remote.origin.url
-$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
+               master:  ---A---B---C
 
-nothing to commit, working tree clean
+           mod-master:  ---A---B---C---X'---Y'
 
-$ git fetch
-remote: Enumerating objects: 2443, done.
-remote: Counting objects: 100% (1109/1109), done.
-remote: Compressing objects: 100% (465/465), done.
-remote: Total 2443 (delta 699), reused 674 (delta 642), pack-reused 1334
-Receiving objects: 100% (2443/2443), 2.46 MiB | 6.29 MiB/s, done.
-Resolving deltas: 100% (1052/1052), done.
-From https://github.com/eficode-academy/git-katas
-+ 398b171...8bc6cc8 master -> origin/master (forced update)
-* [new branch] brent-clark-SED-Sw-Mgr/improve-overview ->
-origin/brent-clark-SED-Sw-Mgr/improve-overview
-* [new branch] improve-rebase-powershell -> origin/improve-rebase-powershel=
-l
-* [new branch] pr-verify -> origin/pr-verify
-* [new branch] reorder-instructions-unclear ->
-origin/reorder-instructions-unclear
-* [new branch] sofusalbertsen-patch-1 -> origin/sofusalbertsen-patch-1
-* [new branch] sofusalbertsen-patch-2 -> origin/sofusalbertsen-patch-2
-* [new branch] test-script -> origin/test-script
-* [new branch] tree-vis -> origin/tree-vis
-* [new branch] uppercase -> origin/uppercase
-* [new tag] 0.1.1 -> 0.1.1
-* [new tag] 0.2.0 -> 0.2.0
-* [new tag] 0.3.0 -> 0.3.0
+  forkhost/mod-master:  ---A---B---X---Y
 
-$ git rev-list --max-parents=3D0 --all
-398b17173d150371977cc12d4406f927a4be32ea # Initial commit from sc-demo repo
-ad31d12363a181b998317d5f075d89b3fb990122 # Initial commit from git-katas re=
-po
+As you can see, mod-master and forkhost/mod-master now diverge after B
+(by 3 and 2 commits respectively).
 
-```
+This means that when the client tries to push, the updates are
+rejected:
 
+ $ git push
+ To [forkhost]
+  ! [rejected]              mod-master -> mod-master (non-fast-forward)
+ error: failed to push some refs to [forkhost]
+ hint: Updates were rejected because the tip of your current branch is behi=
+nd
+ hint: its remote counterpart. Integrate the remote changes (e.g.
+ hint: 'git pull ...') before pushing again.
+ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
-What did you expect to happen? (Expected behaviour)
+unless force is used:
 
-First off, I would expect that Git used the url specified on the
-command line, as it is normal that command-line arguments override
-both local and global configs.
-Alternatively, if there really is a good reason to use the global
-configured one, git should at least take the folder name from there
-and print out =E2=80=9CCloning into [global configured repo name]=E2=80=9D
+ $ git push --force
+ [=E2=80=A6]
+  + cbb90030a9...5299b8bf0d mod-master -> mod-master (forced update)
 
-In reality, I can=E2=80=99t see any reason why there would ever be a need t=
-o
-configure global remote.origin.url, and ideally doing so could lead to
-an error/warning message, but I also know that the philosophy behind
-Git config is to basically allow any settings, and there is no natural
-place to =E2=80=9Cstop=E2=80=9D such entries, although I guess it might be =
-reasonable
-to expect a warning at least when cloning a new repo.
+It is obviously dangerous and wrong for a client to use force every
+time it pushes to fork.git.  What if the client failed to notice
+incoming commits on mod-master (as well as on master)?  Those missed,
+incoming commits might be irretrievably lost.
 
-Anything else you want to add:
---------------------------------------------
-Yes, I am aware that this is a very obscure scenario, and as an
-experienced Git user, it had never crossed my mind that this could
-happen, but I saw it =E2=80=9Cin the wild=E2=80=9D a few weeks ago, when de=
-livering a
-2-day Git training. I asked the participants to clone our =E2=80=9Cgit-kata=
-s=E2=80=9D
-repo (as in the reproduced scenario above), and then one participant
-was VERY confused because the folder then had =E2=80=9Cher own code=E2=80=
-=9D, and she
-couldn=E2=80=99t understand why. After going through her bash history and
-verifying that there was no other good explanation, I finally found
-the explanation by looking in the global config where I found the
-unexpected setting. The user had no real idea how it had gotten there,
-except some vague idea of having tried =E2=80=9Csome stuff=E2=80=9D to fix =
-=E2=80=9Csome
-issue=E2=80=9D a long time ago. Since she only used a single repo on her
-computer, she would never really have noticed under normal conditions.
+So, how should one _safely_ publish a fork?
 
-Platform:
-----------------
-Problem originally seen =E2=80=9Cin the wild=E2=80=9D on an Ubuntu laptop r=
-unning Git
-2.17 as I recall.
-Issue reproduced on OSX Git 2.39.2, and in docker containers running
-2.19.2 and 2.40.
-
-[ Local Mac ]
-[System Info]
-git version:
-git version 2.39.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 22.4.0 Darwin Kernel Version 22.4.0: Mon Mar 6 21:00:17
-PST 2023; root:xnu-8796.101.5~3/RELEASE_X86_64 x86_64
-compiler info: clang: 14.0.0 (clang-1400.0.29.202)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-[ Bitnami/git:2:40 ]
-$ docker run -it --entrypoint /bin/bash bitnami/git:2.40.0
-root@89543b59ce2c:/# git version --build-options
-git version 2.40.0
-cpu: x86_64
-$SHELL =3D /bin/bash
-
-[ Bitnami/git:2.19.2 ]
-$ docker run -it --entrypoint /bin/bash bitnami/git:2.19.2
-root@6a86a5c92e58:/# git version --build-options
-git version 2.19.2
-cpu: x86_64
-$SHELL =3D /bin/bash
-$ uname -a
-Linux 6a86a5c92e58 5.15.49-linuxkit #1 SMP Tue Sep 13 07:51:46 UTC
-2022 x86_64 GNU/Linux
-
-
-Regards Jan
-
------------------------
-Jan Krag
-Git Trainer & DevOps Consultant
-jan.krag@eficode.com
-www.eficode.com
-Copenhagen, Denmark
+Sebastian
