@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DEF5C7EE29
-	for <git@archiver.kernel.org>; Fri, 26 May 2023 01:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F257C77B7A
+	for <git@archiver.kernel.org>; Fri, 26 May 2023 01:33:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241824AbjEZBdO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 May 2023 21:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33140 "EHLO
+        id S241849AbjEZBdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 May 2023 21:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240535AbjEZBdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241524AbjEZBdJ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 25 May 2023 21:33:09 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C9F19C
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C64C125
         for <git@vger.kernel.org>; Thu, 25 May 2023 18:33:06 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f6dbe3c230so2320345e9.3
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f6d7abe934so1396925e9.2
         for <git@vger.kernel.org>; Thu, 25 May 2023 18:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685064784; x=1687656784;
+        d=gmail.com; s=20221208; t=1685064785; x=1687656785;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L5In658HuEr9Imsym7VWv+SQUBncebTUUIorKDBJEL8=;
-        b=se8vE6dHrWYXSM4VT/qisURjuAFIVrbPwETPSEShLs0C7QmqM+R71D5Z+qfs7x8vkd
-         Yr5Fc2vPQn/r0oFYLsUjHp0QcrwNto8Mb0QMA0urj/Pm8Ld1ZnZGijgURuy8vNgsuq+4
-         S6x1+Brb79vZVeipaa6EOZ5NoJAY7Yg3PQfA4LU9XelBYz4hmdMhW2sj8oy9lEcIkQqS
-         mfjmkcjakpvCxCN/BPN7cEbRt+L5Qs7fdttltNn6snxnDGLsoJ6bY8HEPG+IqGs6LmNt
-         0QdofXijvS3spH+YyqEoCKEFHfFrnyOEgfGZnq+Zusy6RcZX3N3wmcr6pS0SCWLcJG1W
-         ln2Q==
+        bh=Zo4CMUwe7SuXuNnxUFCBybaxtaKoPLzgZSQP50aHvKA=;
+        b=mgiq/HiC0Ds2yhjRFeGC3QRHY/FKLK14TgOKe7zjDP3o+xxRhw/Y4ReW2GKnsgsO/i
+         5fK1U7qSu65P7QuZ/0tqijRUQsFRwJWQOWzztLFVg7Tk9cniYtT9WuzB3U24Xn3EY0kT
+         U032jqELqJMyvlSL4J+rkQRKpp58p7lyGVuvyOjkv9VkdwdMy4EdmpgUsw3VB2Ro9gag
+         TRgRWJRnCXQ/4nYFCFSnHSA2EDyQS1sDQofNUZmPjq5vchbCCCalGnsUc9oOqPnoJWnE
+         WIBc20IpmFhMVN3Pm+wgC+cOgoIm+JqBEU2/RB0u91rAukLPcpTgbaBsgVaOL/bCX4B7
+         0oCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685064784; x=1687656784;
+        d=1e100.net; s=20221208; t=1685064785; x=1687656785;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L5In658HuEr9Imsym7VWv+SQUBncebTUUIorKDBJEL8=;
-        b=b5cnc7vuAl+WZgMS/BZAt8BBrnoJ+Iwu4l3WB+VZOxKWCG4A27g/ADj/+G7JosP3Nx
-         G2YN8shLyXz5B3YuIty1fyMu3t6VGGlfMg7Cu21Z2sv1h/9U53FJ4g2ZOmPB/BJ+Qeu7
-         YG+g7n4PtWdsDiLrfxVzas0f+qQnSSq9J0qF5f5wO7NOaGC6Yy8BthcD63UzqXETmvWW
-         XY9qFX9M52ylMgcIZfw4mhxAO1w/88sXycWBbSOLmww9v6Uqzggs7o39hgUAuhEE6Zjq
-         +bJsd4AYSrcnLM3/AICZQrnbnvHXd9KSTc1w/Zs6LGQUF/BOAkoe3JceoutX9me0Cy67
-         j8hg==
-X-Gm-Message-State: AC+VfDyDeZE53MKqP/+xGFn+58QUrRNpjERqI4vctRfseF1gPFI/3Gni
-        a6iMzdy9u26z80C1F/pyxndI/0330wE=
-X-Google-Smtp-Source: ACHHUZ5QCA3xSf/v5x+vKq8+8OFAIILNvsmBxyiKsZ1xWMq3HtowHxHdy3DPJQQ0J89vOZbh2v+7Bg==
-X-Received: by 2002:a05:600c:245:b0:3f6:683:627d with SMTP id 5-20020a05600c024500b003f60683627dmr285027wmj.18.1685064784058;
+        bh=Zo4CMUwe7SuXuNnxUFCBybaxtaKoPLzgZSQP50aHvKA=;
+        b=U/+vBcjgMZKuiIfSNbmBCW2UmjtpxiWHKLmZFiFvn9yoBa9r7OxGMjOgTuGCO7bYNG
+         DTfAgSpH9PlVYNHm60CZWA5maXTkQY9rkAxVhl6TUQOKdcruV5WvaHrSqs834Er0VndC
+         aP61YGewYelxclAQpv87wN+4lClSXU0LL+3yIpPggXoZJfaF9UKvyk+KTvCfeJA6uEtm
+         dSvUGdUkeuqz7jo6+VkL/45vuCqLOUmyOWN4g9W0pIAn/zXIJrY0lPfFYshEISKX+yq2
+         JiKCiNvRkJpX5lku52mi9P4dJ+DbABRLmE8aEWW127OMfp8mQ4Co5lHJx6XF9knV6U8y
+         omkA==
+X-Gm-Message-State: AC+VfDzwFYY07fBjXtLr+RPa1jf0jMA/oGu0j+wXjd2DmAa4X2dM4pb/
+        GKKGBqkXbaj9+FeqDalYQ/gc5GsYWqU=
+X-Google-Smtp-Source: ACHHUZ7OzEOn411EZ7NySKZzHnGbDD6xWsItRXd0t/P9rGJ5QtgFWEjlM/tzaph51z6WT+lPTnTwyg==
+X-Received: by 2002:a7b:c006:0:b0:3f6:389:73b1 with SMTP id c6-20020a7bc006000000b003f6038973b1mr226917wmb.6.1685064784661;
         Thu, 25 May 2023 18:33:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t11-20020a5d49cb000000b0030732d6e104sm3364245wrs.105.2023.05.25.18.33.03
+        by smtp.gmail.com with ESMTPSA id i7-20020a05600c290700b003f42d8dd7ffsm3611731wmd.19.2023.05.25.18.33.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 May 2023 18:33:03 -0700 (PDT)
-Message-Id: <26a36423a8a8449871a0695e835e7a2616487251.1685064781.git.gitgitgadget@gmail.com>
+        Thu, 25 May 2023 18:33:04 -0700 (PDT)
+Message-Id: <506a2cf8c73549bc8f9761b56532ef08ed220da4.1685064781.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1536.v2.git.1685064781.gitgitgadget@gmail.com>
 References: <pull.1536.git.1684883872.gitgitgadget@gmail.com>
         <pull.1536.v2.git.1685064781.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 26 May 2023 01:32:59 +0000
-Subject: [PATCH v2 2/3] config: pass 'repo' directly to
- 'config_with_options()'
+Date:   Fri, 26 May 2023 01:33:00 +0000
+Subject: [PATCH v2 3/3] repository: move 'repository_format_worktree_config'
+ to repo scope
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,229 +70,263 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add a 'struct repository' argument to 'config_with_options()' and remove the
-'repo' field from 'struct git_config_source'.
+Move 'repository_format_worktree_config' out of the global scope and into
+the 'repository' struct. This change is similar to how
+'repository_format_partial_clone' was moved in ebaf3bcf1ae (repository: move
+global r_f_p_c to repo struct, 2021-06-17), adding it to the 'repository'
+struct and updating 'setup.c' & 'repository.c' functions to assign the value
+appropriately.
 
-A 'struct repository' instance was originally added to the config source in
-e3e8bf046e9 (submodule-config: pass repo upon blob config read, 2021-08-16)
-to improve how submodule blob config content was accessed. At the time, this
-was the only use for a 'repository' instance, so it was naturally added only
-where it was needed: to 'struct git_config_source'. However, in upcoming
-patches, 'config_with_options()' will need the repository instance to access
-extension information (regardless of whether a 'config_source' exists). To
-make the 'struct repository' instance more easily accessible, move it into
-the function's arguments.
+The primary goal of this change is to be able to load the worktree config of
+a submodule depending on whether that submodule - not its superproject - has
+'extensions.worktreeConfig' enabled. To ensure 'do_git_config_sequence()'
+has access to the newly repo-scoped configuration, add a 'struct repository'
+argument to 'do_git_config_sequence()' and pass it the 'repo' value from
+'config_with_options()'.
 
-Update all callers of 'config_with_options()' to pass the appropriate 'repo'
-value:
-
-* in 'builtin/config.c', use 'the_repository'
-* in 'submodule--config.c', use the 'repo' arg in 'config_from_gitmodules()'
-* in 'read_[very_]early_config()' & 'read_protected_config()', set 'repo' to
-  NULL (repository instances aren't available there)
-* in 'populate_remote_urls()', use the repo instance that has been added to
-  the 'struct config_include_data'
-* in 'repo_read_config()', use the given 'repo' arg
-
-Finally, note that this patch eliminates the fallback to 'the_repository'
-that previously existed for the 'config_source' repo instance if it was
-NULL. The fallback is no longer necessary, as the 'repo' is set explicitly
-in all cases where it is needed.
+Finally, add/update tests in 't3007-ls-files-recurse-submodules.sh' to
+verify 'extensions.worktreeConfig' is read an used independently by
+superprojects and submodules.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/config.c   | 14 +++++++++-----
- config.c           | 16 +++++++++-------
- config.h           |  4 ++--
- submodule-config.c |  3 +--
- 4 files changed, 21 insertions(+), 16 deletions(-)
+ builtin/config.c                       |  3 ++-
+ builtin/worktree.c                     |  2 +-
+ config.c                               |  7 ++++---
+ environment.c                          |  1 -
+ environment.h                          |  1 -
+ repository.c                           |  1 +
+ repository.h                           |  1 +
+ setup.c                                | 10 ++++++++--
+ t/t3007-ls-files-recurse-submodules.sh | 23 +++++++++++++++++++----
+ worktree.c                             |  4 ++--
+ 10 files changed, 38 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index ff2fe8ef125..8fc90288f9e 100644
+index 8fc90288f9e..d40fddb042a 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -375,7 +375,8 @@ static int get_value(const char *key_, const char *regex_, unsigned flags)
- 	}
+@@ -5,6 +5,7 @@
+ #include "color.h"
+ #include "editor.h"
+ #include "environment.h"
++#include "repository.h"
+ #include "gettext.h"
+ #include "ident.h"
+ #include "parse-options.h"
+@@ -717,7 +718,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		given_config_source.scope = CONFIG_SCOPE_LOCAL;
+ 	} else if (use_worktree_config) {
+ 		struct worktree **worktrees = get_worktrees();
+-		if (repository_format_worktree_config)
++		if (the_repository->repository_format_worktree_config)
+ 			given_config_source.file = git_pathdup("config.worktree");
+ 		else if (worktrees[0] && worktrees[1])
+ 			die(_("--worktree cannot be used with multiple "
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index f3180463be2..60e389aaedb 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -483,7 +483,7 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * values from the current worktree into the new one, that way the
+ 	 * new worktree behaves the same as this one.
+ 	 */
+-	if (repository_format_worktree_config)
++	if (the_repository->repository_format_worktree_config)
+ 		copy_filtered_worktree_config(sb_repo.buf);
  
- 	config_with_options(collect_config, &values,
--			    &given_config_source, &config_options);
-+			    &given_config_source, the_repository,
-+			    &config_options);
- 
- 	if (!values.nr && default_value) {
- 		struct strbuf *item;
-@@ -486,7 +487,8 @@ static void get_color(const char *var, const char *def_color)
- 	get_color_found = 0;
- 	parsed_color[0] = '\0';
- 	config_with_options(git_get_color_config, NULL,
--			    &given_config_source, &config_options);
-+			    &given_config_source, the_repository,
-+			    &config_options);
- 
- 	if (!get_color_found && def_color) {
- 		if (color_parse(def_color, parsed_color) < 0)
-@@ -518,7 +520,8 @@ static int get_colorbool(const char *var, int print)
- 	get_diff_color_found = -1;
- 	get_color_ui_found = -1;
- 	config_with_options(git_get_colorbool_config, NULL,
--			    &given_config_source, &config_options);
-+			    &given_config_source, the_repository,
-+			    &config_options);
- 
- 	if (get_colorbool_found < 0) {
- 		if (!strcmp(get_colorbool_slot, "color.diff"))
-@@ -607,7 +610,8 @@ static int get_urlmatch(const char *var, const char *url)
- 	}
- 
- 	config_with_options(urlmatch_config_entry, &config,
--			    &given_config_source, &config_options);
-+			    &given_config_source, the_repository,
-+			    &config_options);
- 
- 	ret = !values.nr;
- 
-@@ -827,7 +831,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (actions == ACTION_LIST) {
- 		check_argc(argc, 0, 0);
- 		if (config_with_options(show_all_config, NULL,
--					&given_config_source,
-+					&given_config_source, the_repository,
- 					&config_options) < 0) {
- 			if (given_config_source.file)
- 				die_errno(_("unable to read config file '%s'"),
+ 	strvec_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
 diff --git a/config.c b/config.c
-index a93f7bfa3aa..67e60e131c2 100644
+index 67e60e131c2..f5bdac0aeed 100644
 --- a/config.c
 +++ b/config.c
-@@ -199,6 +199,7 @@ struct config_include_data {
- 	void *data;
- 	const struct config_options *opts;
- 	struct git_config_source *config_source;
-+	struct repository *repo;
- 	struct config_reader *config_reader;
+@@ -2195,6 +2195,7 @@ int git_config_system(void)
  
- 	/*
-@@ -415,7 +416,8 @@ static void populate_remote_urls(struct config_include_data *inc)
- 
- 	inc->remote_urls = xmalloc(sizeof(*inc->remote_urls));
- 	string_list_init_dup(inc->remote_urls);
--	config_with_options(add_remote_url, inc->remote_urls, inc->config_source, &opts);
-+	config_with_options(add_remote_url, inc->remote_urls,
-+			    inc->config_source, inc->repo, &opts);
- 
- 	config_reader_set_scope(inc->config_reader, store_scope);
- }
-@@ -2261,6 +2263,7 @@ static int do_git_config_sequence(struct config_reader *reader,
- 
- int config_with_options(config_fn_t fn, void *data,
- 			struct git_config_source *config_source,
-+			struct repository *repo,
- 			const struct config_options *opts)
+ static int do_git_config_sequence(struct config_reader *reader,
+ 				  const struct config_options *opts,
++				  const struct repository *repo,
+ 				  config_fn_t fn, void *data)
  {
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
-@@ -2271,6 +2274,7 @@ int config_with_options(config_fn_t fn, void *data,
- 		inc.fn = fn;
- 		inc.data = data;
- 		inc.opts = opts;
-+		inc.repo = repo;
- 		inc.config_source = config_source;
- 		inc.config_reader = &the_reader;
- 		fn = git_config_include;
-@@ -2289,8 +2293,6 @@ int config_with_options(config_fn_t fn, void *data,
- 	} else if (config_source && config_source->file) {
- 		ret = git_config_from_file(fn, config_source->file, data);
- 	} else if (config_source && config_source->blob) {
--		struct repository *repo = config_source->repo ?
--			config_source->repo : the_repository;
+ 	int ret = 0;
+@@ -2243,7 +2244,7 @@ static int do_git_config_sequence(struct config_reader *reader,
+ 
+ 	config_reader_set_scope(reader, CONFIG_SCOPE_WORKTREE);
+ 	if (!opts->ignore_worktree && worktree_config &&
+-	    repository_format_worktree_config &&
++	    repo && repo->repository_format_worktree_config &&
+ 	    !access_or_die(worktree_config, R_OK, 0)) {
+ 		ret += git_config_from_file(fn, worktree_config, data);
+ 	}
+@@ -2296,7 +2297,7 @@ int config_with_options(config_fn_t fn, void *data,
  		ret = git_config_from_blob_ref(fn, repo, config_source->blob,
  						data);
  	} else {
-@@ -2353,7 +2355,7 @@ void read_early_config(config_fn_t cb, void *data)
- 		opts.git_dir = gitdir.buf;
+-		ret = do_git_config_sequence(&the_reader, opts, fn, data);
++		ret = do_git_config_sequence(&the_reader, opts, repo, fn, data);
  	}
  
--	config_with_options(cb, data, NULL, &opts);
-+	config_with_options(cb, data, NULL, NULL, &opts);
+ 	if (inc.remote_urls) {
+@@ -3339,7 +3340,7 @@ int repo_config_set_worktree_gently(struct repository *r,
+ 				    const char *key, const char *value)
+ {
+ 	/* Only use worktree-specific config if it is already enabled. */
+-	if (repository_format_worktree_config) {
++	if (r->repository_format_worktree_config) {
+ 		char *file = repo_git_path(r, "config.worktree");
+ 		int ret = git_config_set_multivar_in_file_gently(
+ 					file, key, value, NULL, 0);
+diff --git a/environment.c b/environment.c
+index 28d18eaca8e..6bd001efbde 100644
+--- a/environment.c
++++ b/environment.c
+@@ -42,7 +42,6 @@ int is_bare_repository_cfg = -1; /* unspecified */
+ int warn_ambiguous_refs = 1;
+ int warn_on_object_refname_ambiguity = 1;
+ int repository_format_precious_objects;
+-int repository_format_worktree_config;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
+ char *apply_default_whitespace;
+diff --git a/environment.h b/environment.h
+index 30cb7e0fa34..e6668079269 100644
+--- a/environment.h
++++ b/environment.h
+@@ -197,7 +197,6 @@ extern char *notes_ref_name;
+ extern int grafts_replace_parents;
  
- 	strbuf_release(&commondir);
- 	strbuf_release(&gitdir);
-@@ -2373,7 +2375,7 @@ void read_very_early_config(config_fn_t cb, void *data)
- 	opts.ignore_cmdline = 1;
- 	opts.system_gently = 1;
+ extern int repository_format_precious_objects;
+-extern int repository_format_worktree_config;
  
--	config_with_options(cb, data, NULL, &opts);
-+	config_with_options(cb, data, NULL, NULL, &opts);
- }
+ /*
+  * Create a temporary file rooted in the object database directory, or
+diff --git a/repository.c b/repository.c
+index c53e480e326..104960f8f59 100644
+--- a/repository.c
++++ b/repository.c
+@@ -182,6 +182,7 @@ int repo_init(struct repository *repo,
+ 		goto error;
  
- RESULT_MUST_BE_USED
-@@ -2681,7 +2683,7 @@ static void repo_read_config(struct repository *repo)
- 	data.config_set = repo->config;
- 	data.config_reader = &the_reader;
+ 	repo_set_hash_algo(repo, format.hash_algo);
++	repo->repository_format_worktree_config = format.worktree_config;
  
--	if (config_with_options(config_set_callback, &data, NULL, &opts) < 0)
-+	if (config_with_options(config_set_callback, &data, NULL, repo, &opts) < 0)
+ 	/* take ownership of format.partial_clone */
+ 	repo->repository_format_partial_clone = format.partial_clone;
+diff --git a/repository.h b/repository.h
+index 1a13ff28677..74ae26635a4 100644
+--- a/repository.h
++++ b/repository.h
+@@ -163,6 +163,7 @@ struct repository {
+ 	struct promisor_remote_config *promisor_remote_config;
+ 
+ 	/* Configurations */
++	int repository_format_worktree_config;
+ 
+ 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
+ 	unsigned different_commondir:1;
+diff --git a/setup.c b/setup.c
+index 458582207ea..d8663954350 100644
+--- a/setup.c
++++ b/setup.c
+@@ -650,11 +650,10 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+ 	}
+ 
+ 	repository_format_precious_objects = candidate->precious_objects;
+-	repository_format_worktree_config = candidate->worktree_config;
+ 	string_list_clear(&candidate->unknown_extensions, 0);
+ 	string_list_clear(&candidate->v1_only_extensions, 0);
+ 
+-	if (repository_format_worktree_config) {
++	if (candidate->worktree_config) {
  		/*
- 		 * config_with_options() normally returns only
- 		 * zero, as most errors are fatal, and
-@@ -2825,7 +2827,7 @@ static void read_protected_config(void)
- 	git_configset_init(&protected_config);
- 	data.config_set = &protected_config;
- 	data.config_reader = &the_reader;
--	config_with_options(config_set_callback, &data, NULL, &opts);
-+	config_with_options(config_set_callback, &data, NULL, NULL, &opts);
- }
+ 		 * pick up core.bare and core.worktree from per-worktree
+ 		 * config if present
+@@ -1423,6 +1422,9 @@ int discover_git_directory(struct strbuf *commondir,
+ 		return -1;
+ 	}
  
- void git_protected_config(config_fn_t fn, void *data)
-diff --git a/config.h b/config.h
-index 247b572b37b..d1c5577589e 100644
---- a/config.h
-+++ b/config.h
-@@ -3,6 +3,7 @@
- 
- #include "hashmap.h"
- #include "string-list.h"
-+#include "repository.h"
- 
- 
- /**
-@@ -49,8 +50,6 @@ const char *config_scope_name(enum config_scope scope);
- struct git_config_source {
- 	unsigned int use_stdin:1;
- 	const char *file;
--	/* The repository if blob is not NULL; leave blank for the_repository */
--	struct repository *repo;
- 	const char *blob;
- 	enum config_scope scope;
- };
-@@ -196,6 +195,7 @@ void git_config(config_fn_t fn, void *);
-  */
- int config_with_options(config_fn_t fn, void *,
- 			struct git_config_source *config_source,
-+			struct repository *repo,
- 			const struct config_options *opts);
- 
- /**
-diff --git a/submodule-config.c b/submodule-config.c
-index 58dfbde9ae5..7eb7a0d88d2 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -659,7 +659,6 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
- 			config_source.file = file;
- 		} else if (repo_get_oid(repo, GITMODULES_INDEX, &oid) >= 0 ||
- 			   repo_get_oid(repo, GITMODULES_HEAD, &oid) >= 0) {
--			config_source.repo = repo;
- 			config_source.blob = oidstr = xstrdup(oid_to_hex(&oid));
- 			if (repo != the_repository)
- 				add_submodule_odb_by_path(repo->objects->odb->path);
-@@ -667,7 +666,7 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
- 			goto out;
++	the_repository->repository_format_worktree_config =
++		candidate.worktree_config;
++
+ 	/* take ownership of candidate.partial_clone */
+ 	the_repository->repository_format_partial_clone =
+ 		candidate.partial_clone;
+@@ -1560,6 +1562,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
  		}
+ 		if (startup_info->have_repository) {
+ 			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
++			the_repository->repository_format_worktree_config =
++				repo_fmt.worktree_config;
+ 			/* take ownership of repo_fmt.partial_clone */
+ 			the_repository->repository_format_partial_clone =
+ 				repo_fmt.partial_clone;
+@@ -1651,6 +1655,8 @@ void check_repository_format(struct repository_format *fmt)
+ 	check_repository_format_gently(get_git_dir(), fmt, NULL);
+ 	startup_info->have_repository = 1;
+ 	repo_set_hash_algo(the_repository, fmt->hash_algo);
++	the_repository->repository_format_worktree_config =
++		fmt->worktree_config;
+ 	the_repository->repository_format_partial_clone =
+ 		xstrdup_or_null(fmt->partial_clone);
+ 	clear_repository_format(&repo_fmt);
+diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+index a3e26751427..7308a3d4e25 100755
+--- a/t/t3007-ls-files-recurse-submodules.sh
++++ b/t/t3007-ls-files-recurse-submodules.sh
+@@ -309,14 +309,29 @@ test_expect_success '--recurse-submodules parses submodule worktree config' '
+ 	test_config -C submodule extensions.worktreeConfig true &&
+ 	test_config -C submodule --worktree index.sparse "invalid non-boolean value" &&
  
--		config_with_options(fn, data, &config_source, &opts);
-+		config_with_options(fn, data, &config_source, repo, &opts);
+-	# NEEDSWORK: the extensions.worktreeConfig is set globally based on
+-	# superproject, so we need to enable it in the superproject.
+-	test_config extensions.worktreeConfig true &&
+-
+ 	test_must_fail git ls-files --recurse-submodules 2>err &&
+ 	grep "bad boolean config value" err
+ '
  
- out:
- 		free(oidstr);
++test_expect_success '--recurse-submodules submodules ignore super project worktreeConfig extension' '
++	# Enable worktree config in both super project & submodule, set an
++	# invalid config in the submodule worktree config
++	test_config extensions.worktreeConfig true &&
++	test_config -C submodule extensions.worktreeConfig true &&
++	test_config -C submodule --worktree index.sparse "invalid non-boolean value" &&
++
++	# Now, disable the worktree config in the submodule. Note that we need
++	# to manually re-enable extensions.worktreeConfig when the test is
++	# finished, otherwise the test_unconfig of index.sparse will not work.
++	test_unconfig -C submodule extensions.worktreeConfig &&
++	test_when_finished "git -C submodule config extensions.worktreeConfig true" &&
++
++	# With extensions.worktreeConfig disabled in the submodule, the invalid
++	# worktree config is not picked up.
++	git ls-files --recurse-submodules 2>err &&
++	! grep "bad boolean config value" err
++'
++
+ test_incompatible_with_recurse_submodules () {
+ 	test_expect_success "--recurse-submodules and $1 are incompatible" "
+ 		test_must_fail git ls-files --recurse-submodules $1 2>actual &&
+diff --git a/worktree.c b/worktree.c
+index b5ee71c5ebd..c448fecd4b3 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -806,7 +806,7 @@ int init_worktree_config(struct repository *r)
+ 	 * If the extension is already enabled, then we can skip the
+ 	 * upgrade process.
+ 	 */
+-	if (repository_format_worktree_config)
++	if (r->repository_format_worktree_config)
+ 		return 0;
+ 	if ((res = git_config_set_gently("extensions.worktreeConfig", "true")))
+ 		return error(_("failed to set extensions.worktreeConfig setting"));
+@@ -846,7 +846,7 @@ int init_worktree_config(struct repository *r)
+ 	 * Ensure that we use worktree config for the remaining lifetime
+ 	 * of the current process.
+ 	 */
+-	repository_format_worktree_config = 1;
++	r->repository_format_worktree_config = 1;
+ 
+ cleanup:
+ 	git_configset_clear(&cs);
 -- 
 gitgitgadget
-
