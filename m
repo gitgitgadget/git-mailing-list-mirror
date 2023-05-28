@@ -2,139 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFA74C77B7C
-	for <git@archiver.kernel.org>; Sun, 28 May 2023 12:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76BB7C77B7C
+	for <git@archiver.kernel.org>; Sun, 28 May 2023 19:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbjE1MER (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 May 2023 08:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44292 "EHLO
+        id S230313AbjE1TeK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 May 2023 15:34:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjE1MEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2023 08:04:15 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CEE8AF
-        for <git@vger.kernel.org>; Sun, 28 May 2023 05:04:14 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-30ae967ef74so130827f8f.0
-        for <git@vger.kernel.org>; Sun, 28 May 2023 05:04:14 -0700 (PDT)
+        with ESMTP id S230315AbjE1TeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2023 15:34:09 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C991FA8
+        for <git@vger.kernel.org>; Sun, 28 May 2023 12:34:07 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-514924b4f8cso2193591a12.3
+        for <git@vger.kernel.org>; Sun, 28 May 2023 12:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685275453; x=1687867453;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PrUOZwnx9qDI30hKgWIlEU8P3hWIuMStwFwuPIJu5J0=;
-        b=WwAIRO7bLXm4xMF0tiUvc72IC0ro9LnS+pyaxk3x0EysWpK7zjhOidZ6tsUF4QZPud
-         DK15iSHhuhcpsS20DuA1SlfY2hSRbBgiSaF66Wk3Et2gGdg2y6ZfvwEjWZ3RhtIuuJ4E
-         ArXvKsZU7x/LTiEJQ7vJjjjeODzCstRzZMHErjSZir3XVvul9m/v9Wk7GUfcogtWl+FS
-         HuqKXfDRNZiBk/4D25Pa0lw0JpTMFaOAsZBTtv4IjLRhZxOrVnIYdimDcdIww90Yh7pL
-         OnkgHExelHT21lO//jUvvExxIhWAwYjW+lSqt/NrpK8aGl33SJ4frY+Com4AbPJkC1n5
-         6bQQ==
+        d=gmail.com; s=20221208; t=1685302446; x=1687894446;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aIY+yS3DYIN8cL7VIRe9ONhtxLeSpN6CcatvVwGGXXg=;
+        b=bwIpSwHv45D6A2L/Uxboe+cZN9vLy5BJg233+W3brSQr5TfGgyIofqBXDEhWnLzox+
+         nu1Hyo7C1FxUm2xXWWTqTizhAzaXM73SJ2QYuhSJqqM8Vv+keXhsZYNrlT45REpMBF4B
+         xI2O/5g5tiwYpgj+6MrKqm4tvur5hotK1+UYOjqjajVd9O0aH+oNIKm0EIuU29fcEACv
+         7vgtBEm2zJyBjsvTwz8Ix0a/635lpAVT6Wv+Mec0sKqgyuV/alI9y2QUSLy/aE0mI3RW
+         QMhFcysvOCJujJws5h7WtcVC+e9+u0y/p0u6jp4fBAdrKZsdi5B5EEl47YsB1sNZ31TZ
+         emfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685275453; x=1687867453;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1685302446; x=1687894446;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PrUOZwnx9qDI30hKgWIlEU8P3hWIuMStwFwuPIJu5J0=;
-        b=ff2KRM1R4TXX0ClvNjzSpH4e05nFoP6i9j65X2cLB2vMqUPH2GDE4lc45Oh8sm6Dm7
-         mA4pSt8d5vdWwJyqETJQM3H+RgX/pmSim24Q185Pga9ldA7CH+hbsJHgiDGl3ZzfzdR8
-         dSFwyOpg41ACQUO8LfpsA9N/NbxmoCFe+cLNTcpGMFbxG3pdiO4L3wCDPPw0tlNOTmNa
-         stbXkIp2UGWO+Hyb9ktfGHAB7kj++0IA5+H4RwawsBLksD8mo3Bv/C2ZbQyBIcHsR8rH
-         BN/wX57C0MaNLFvK1jnnkFVJmF+0n9VhbGELzKDS327tM3Y/dlenol82GS3Wmt8yZpEh
-         nrLA==
-X-Gm-Message-State: AC+VfDw8WbGLRd3TElQPJQ7jHPournpkzW8R8AKSupb9wJ3OM6vqff1a
-        +RwfabN8ZZDbiBlk56+Sn34BtHGURJE=
-X-Google-Smtp-Source: ACHHUZ78ZIIX1J+iRLIjG8nxR727o0/a+2wwCLnyxixPlh1XBSwvcKVc3e/nY5z2g0WjpYsAmPgsUA==
-X-Received: by 2002:a5d:5648:0:b0:307:8fa5:6e36 with SMTP id j8-20020a5d5648000000b003078fa56e36mr7184876wrw.54.1685275452638;
-        Sun, 28 May 2023 05:04:12 -0700 (PDT)
-Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id o8-20020adfcf08000000b00306c5900c10sm10759889wrj.9.2023.05.28.05.04.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 May 2023 05:04:12 -0700 (PDT)
-Message-ID: <4d29e5d4-6ce3-c099-15a7-e89ad787780d@gmail.com>
-Date:   Sun, 28 May 2023 13:04:11 +0100
+        bh=aIY+yS3DYIN8cL7VIRe9ONhtxLeSpN6CcatvVwGGXXg=;
+        b=DGV6Fjhf6l2C9GvsvOBqYhVoxBEmHL2f6wFw6N2kkPJCyN51S2OF9RvNTDWYuCuQ9C
+         XpsTsEsSqAZecUthe++lbnvSYInDa6/tXwvSjisPKD5/Td5JljTaH5+CCGcj4CJtFQ6W
+         B4C1boCawC+N8dHf0GlClItPThcPEYl1AqMSpOlRvH52n/KlQIUfuTrAo5ezmROek9sb
+         5e6hSCcpcrT7RgX+3FQQ74VT5ONhXiFkVgIk8gtHXHwi97PN8k89QCRnj3p0ML/yYvPI
+         f4HuXMETJLt1Zq9x8wN62B3fFhXU/6zBikxOGWK6c92zzR2OOpbZ6gtzCcfbLpvukc2m
+         lIAg==
+X-Gm-Message-State: AC+VfDzkXnC8fAVrH4N4LG6/5pepke+CRjn1XEl/OF9g6A9+NnxEOEYB
+        4cSNSKfYcKocMFSZXdg0qyhe/GHF3zymI6bpW+F4piUgaEBS8A==
+X-Google-Smtp-Source: ACHHUZ6HXUGdA7Nw6BkFlEEaSVPyeKYO7ZTDUGL8KPCC9C+35WdL/JXxXNNf713c8Y7flHLL3LnaFd18WYgvIrUCgDY=
+X-Received: by 2002:a17:907:6090:b0:96a:58a:6cd8 with SMTP id
+ ht16-20020a170907609000b0096a058a6cd8mr9829664ejc.9.1685302445932; Sun, 28
+ May 2023 12:34:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/7] sane-ctype.h: move sane-ctype macros from
- git-compat-util.h
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org
-References: <20230526211911.2291886-1-jonathantanmy@google.com>
-Content-Language: en-US
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230526211911.2291886-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
+ <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net> <AS2PR03MB98158D49DC655F6DC6D10ECDC0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
+ <Y3aCx1SYq6jrYfuO@coredump.intra.peff.net>
+In-Reply-To: <Y3aCx1SYq6jrYfuO@coredump.intra.peff.net>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Sun, 28 May 2023 20:33:29 +0100
+Message-ID: <CAGJzqskaM80+8+79yUf435tP93Sk8sFu7marCvyimE=2gOKnog@mail.gmail.com>
+Subject: Re: The enduring popularity of git-credential-store
+To:     Jeff King <peff@peff.net>
+Cc:     Matthew John Cheetham <mjcheetham@outlook.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Calvin and Jonathan
+On Thu, 17 Nov 2022 at 18:51, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Nov 17, 2022 at 09:17:53AM -0800, Matthew John Cheetham wrote:
+>
+> > > In the ideal world, we'd ship an encrypted store that people could use,
+> > > but then we have to deal with export regulations and sanctions and
+> > > nobody wants to do that.  We'd also have to deal with multiple
+> > > cryptographic libraries for portability and license reasons and nobody
+> > > wants to do that, either.
+> >
+> > One option rather than shipping (or including in contrib/) any of these
+> > credential helpers, could we not reference several other popular helpers
+> > in the docs, and let users make their own choice (but at least some are
+> > then possibly more discoverable)?
+>
+> I don't have any problem with documenting the options better. The main
+> reason we have store/cache at all, even though they kind of suck, was to
+> act as least-common-denominators and pave the way for people making
+> better helpers. That happened, but nobody ever went back to adjust the
+> docs.
+>
+> I do think having the docs say "you should go use X" means that X will
+> have an advantage over other projects which may compete with it. So I
+> think we need to be careful to be inclusive of what we'll mention, and
+> to word it so that we're not endorsing any one project.
 
-On 26/05/2023 22:19, Jonathan Tan wrote:
-> Calvin Wan <calvinwan@google.com> writes:
->> Splitting these macros from git-compat-util.h cleans up the file and
->> allows future third-party sources to not use these overrides if they do
->> not wish to.
+I agree, although Git for Windows installs Git Credential Manager by
+default. Hard to compete with that, but it's fantastic for users.
 
-I think splitting these out makes sense. If you have time to add a 
-comment highlighting the differences from the standard library versions 
-that would be really helpful. As far as I know the differences are
-
-  - our versions are locale independent
-  - our isspace() does not consider '\v' or '\f' to be space
-  - our versions expect a signed or unsigned char rather than an int
-    as their argument
-  - our versions do not accept EOF
-  - our versions do not require an explicit cast to avoid undefined
-    behavior when passing char on systems where char is signed
-
->> Signed-off-by: Calvin Wan <calvinwan@google.com>
->> ---
->>   git-compat-util.h | 65 +-------------------------------------------
->>   sane-ctype.h      | 69 +++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> Any specific reason for the "sane-" prefix? I think it would make more
-> sense if it was just named ctype.h: see below.
-
-I don't have a strong opinion either way but "sane-ctype.h" makes it 
-clearer why we're doing something different to the standard library.
-
->> -/* in ctype.c, for kwset users */
->> -extern const unsigned char tolower_trans_tbl[256];
-> 
-> I'm not sure what this has to do with sanity, but this is indeed defined
-> in ctype.c, so it's easier to justify moving this out if the criterion
-> was "what's in ctype.c" rather than "what's related to sane ctypes".
-
-There is only one user of this so it could be moved to 
-diffcore-pickaxe.c or kwset.c where it would be more discoverable if 
-anyone needs to add another user in the future.
-
->> -extern const signed char hexval_table[256];
-> 
-> And this one has nothing to do with ctypes or sanity, but rather, what's
-> considered to be a hex character. I think we need another patch to move
-> this to hex.h.
-
-Isn't "what's considered  to be a hex character" related to ctypes and 
-sanity though as it is used by the "sane" definition of isxdigit().
-
->> -#define isxdigit(x) (hexval_table[(unsigned char)(x)] != -1)
-> 
-> Same for this one.
-
-I'd much rather keep all of our "sane" ctype replacements in one place 
-as Calvin is proposing. isxdigit() is defined in <ctype.h> so it should 
-be in our "sane" version of that header.
-
-Best Wishes
-
-Phillip
-
-> With the above suggestions, I think we do get what we want - a split
-> between things that make ctype more sane and between other compat stuff,
-> and also a split between those two and more platform-agnostic things
-> like what a hex character is.
+OAuth credential helpers are so widely useful I think it's worth
+introducing them in the documentation. I'll draft a patch.
