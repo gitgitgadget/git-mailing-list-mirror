@@ -2,566 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5607BC77B7C
-	for <git@archiver.kernel.org>; Sun, 28 May 2023 09:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3870EC7EE23
+	for <git@archiver.kernel.org>; Sun, 28 May 2023 09:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbjE1JIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 May 2023 05:08:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50332 "EHLO
+        id S229519AbjE1J6t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 May 2023 05:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjE1JIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2023 05:08:15 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF595C3
-        for <git@vger.kernel.org>; Sun, 28 May 2023 02:08:12 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3078cc99232so2094888f8f.3
-        for <git@vger.kernel.org>; Sun, 28 May 2023 02:08:12 -0700 (PDT)
+        with ESMTP id S229445AbjE1J6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2023 05:58:48 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E477B9
+        for <git@vger.kernel.org>; Sun, 28 May 2023 02:58:46 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f6d3f83d0cso24390725e9.2
+        for <git@vger.kernel.org>; Sun, 28 May 2023 02:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685264891; x=1687856891;
+        d=gmail.com; s=20221208; t=1685267924; x=1687859924;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cJoERykN9R8iIyRzUYs4xObJFGSHz3GzNJjmFzeENOs=;
-        b=VtkpcttlxW6ytoO/D7cCg31PKdhQqviLF9d1mBhgrCP5ca2WQqnTf4PjqLS3d18xlf
-         CfvvRgcYkXzd6soJuAdP/F1cdIHLrJjpB4MoSs6MCIXACp9qoLl54Jst9Y8eDN0fs7Ii
-         DlXdnaA4uvaLZy3Aw777mHq5GPjGzxtWRds0NK8106oOh6uTkeL5A6LZOGGoUR9a5xfI
-         rUZKREeXFEIZB9QAQhAFz6WPFMSATA3oKYjifVNzDVPzsiDNM9CZ2HOxptf8i0yqcq9r
-         6EJ8ClHQIa0ea2vVrp6bviAsGNNL5j80tvMriie4sbKPDwi61rzLPlh62XDx/fKoyEgq
-         hTZA==
+        bh=HouzmJDMWaY5T9pp6zZ6Fs/2/SP53e+peh1EBdbMLwI=;
+        b=nSoB8JxF5CEXvgUd/OpqY0D2ja+fOZChFhXw8tZCt4SHKpIOxAYsttbJKPV0wjegZk
+         adVYrNPix+/jrvlcsYg+rx49wYfi9tuXcQ83e7pAG8J1fqMjAcpgaBpSUvw4C+f326of
+         nUMApQ0mrOvwS5CLEhynngRu9nu08xvmFUzUaD4OuExfH4AoOmkm6siFQEvrLszzPETb
+         cvf1WBlf10kB+5Hh7ylBvku7EGj4cD6vpMbEl0PW+4aYsPsCrKMDfCSzTW0ujjDBR+7i
+         8w6DpuZ6Y4rSiV8aROyVFoq3mjxS15PbDO4MZybGW1uR74FO6swzAzYtuPloLBmbhPTJ
+         y+iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685264891; x=1687856891;
+        d=1e100.net; s=20221208; t=1685267924; x=1687859924;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cJoERykN9R8iIyRzUYs4xObJFGSHz3GzNJjmFzeENOs=;
-        b=jM6L2qnNTt4PS1OIFd4sybiWrbT3LTn8baUUmpJg0dUbXasQmq2AVpL3l8uyCm/+bJ
-         Rxb36xOxs+h8FyGdChfBTkgYOThTyQTuwCWQTCLYecM8BELcIaUwF3grb8Ydru2nbTqT
-         4fqWrw2uTE2NxZOOpLa9fLOkYp7tpNeiJ9/plDCuXU43uQtEBvZ4EfR8H7ZMpbXg3rIn
-         6kx5KKkAq4L9cpkUmHMCgkT7sekwYHF8pLxXy1PN1oTXlI2AA903u1iIjGv3N0lQ3fb+
-         CRe05yWOiR4GqrQQ2KAialLjo7FB1xOETiYPsIfB6p1w5WPTPBj34x4JTeStDR0wqmvY
-         0ckg==
-X-Gm-Message-State: AC+VfDy1AzREWz8cc5QNoK+GpJn/BnnoMbKPMj8RGeI00z+cWOt95aJP
-        oAjXVbfoqlZy7jHQ+xUddisjHYiUhpk=
-X-Google-Smtp-Source: ACHHUZ6iLMXbWr84EF63D8DM0R1CLRxWoPNwijrY/JKK3JywYXBTih7O66C2FXtAMicma5aPd/FzkA==
-X-Received: by 2002:a5d:54c2:0:b0:306:2cf5:79dc with SMTP id x2-20020a5d54c2000000b003062cf579dcmr6392710wrv.35.1685264890856;
-        Sun, 28 May 2023 02:08:10 -0700 (PDT)
+        bh=HouzmJDMWaY5T9pp6zZ6Fs/2/SP53e+peh1EBdbMLwI=;
+        b=MJm0Ym9zSuxupGKhw5vYpPDZgrUzF+WW//qQoG5D+BfjKxp3tmAk9OOjPCtkrEmgFX
+         mK0OzxgSEhswYqwgVByhmCjZol4XXu7Vuo2YecldLICICwuxaUYfTSmuPvjc730EnHAz
+         Z8ANqbEOTs8zCr/ow/StEVMlL/v+zAhYyjiy8hDs2v/2wC3Pei5w+erUTHPuW1UsQR0J
+         Z99PGVso/0jDFbGqu6GMgcaOfoJVbwEBDb6m/taQRFk1o0xx2nm8IMxESqJP5mczIH2x
+         yW0qy65kHFSYIttqNbLdQiYUy1x6S7rdhDeOmtWx10HviBsTj0W/ms3H9g3yMGYoY6E5
+         medA==
+X-Gm-Message-State: AC+VfDzd74o0gMjr1pXlk89UA8yIO94kPtS6go1Fabu3W1RTh2QG8jQs
+        qYXz5eY6V0DpYAO246p3aufoEqXhi1c=
+X-Google-Smtp-Source: ACHHUZ5W/gaMio35QoxkFR2c9/K6Q83/Hd8XaGa6f3XtmbtCoXTroAiNATN1eoa8J9u9Dif8HhhtGQ==
+X-Received: by 2002:a7b:c006:0:b0:3f1:789d:ad32 with SMTP id c6-20020a7bc006000000b003f1789dad32mr5913835wmb.11.1685267924328;
+        Sun, 28 May 2023 02:58:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o11-20020a05600c378b00b003f195d540d9sm14244488wmr.14.2023.05.28.02.08.10
+        by smtp.gmail.com with ESMTPSA id v15-20020a5d4a4f000000b00307c0afc030sm10456599wrs.4.2023.05.28.02.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 May 2023 02:08:10 -0700 (PDT)
-Message-Id: <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
-References: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
+        Sun, 28 May 2023 02:58:43 -0700 (PDT)
+Message-Id: <pull.1279.v2.git.1685267922901.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1279.git.1657480594123.gitgitgadget@gmail.com>
+References: <pull.1279.git.1657480594123.gitgitgadget@gmail.com>
 From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 28 May 2023 09:08:08 +0000
-Subject: [PATCH v2] cherry-pick: refuse cherry-pick sequence if index is dirty
+Date:   Sun, 28 May 2023 09:58:42 +0000
+Subject: [PATCH v2] rev-parse: respect push.autosetupremote when evaluating
+ @{push}
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
-        Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
+Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>,
+        Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 From: Tao Klerks <tao@klerks.biz>
 
-Cherry-pick, like merge or rebase, refuses to run when there are changes
-in the index. However, if a cherry-pick sequence is requested, this
-refusal happens "too late": when the cherry-pick sequence has already
-started, and an "--abort" or "--quit" is needed to resume normal
-operation.
+In a previous release, the push.autosetupremote config was introduced to
+ease new branch management in "simple" single-remote workflows. This makes
+"git push" work on new branches (without configured upstream) with
+push.default set to "simple" or "upstream" and it implies
+"--set-upstream" regardless of whether the same-name remote branch exists
+or not.
 
-Normally, when an operation is "in-progress" and you want to go back to
-where you were before, "--abort" is the right thing to run. If you run
-"git cherry-pick --abort" in this specific situation, however, your
-staged changes are destroyed as part of the abort! Generally speaking,
-the abort process assumes any changes in the index are part of the
-operation to be aborted.
+The "@{push}" suffix logic was not adjusted to account for this new option,
+however, and sometimes returns an error when "git push" would successfully
+push to an existing remote branch.
 
-Add an earlier check in the cherry-pick sequence process to ensure that
-the index is clean, introducing a new general "quit if index dirty" function
-derived from the existing worktree-level function used in rebase and pull.
-Also add a test.
+This is an edge-case, as the main context where push.autosetupremote will
+apply is for *new* branches, with no corresponding remote branch yet, and
+so even if the defaulting is handled correctly, the rev-parse will still
+fail with "unknown revision or path not in the working tree".
+
+Fix this edge-case so "git rev-parse @{push}" works, if there is no
+upstream tracking relationship set up but the remote tracking branch that
+will be defaulted to does already exist and can be resolved.
+
+Also add corresponding test cases.
 
 Signed-off-by: Tao Klerks <tao@klerks.biz>
 ---
-    cherry-pick: refuse cherry-pick sequence if index is dirty
+    rev-parse: respect push.autosetupremote when evaluating @{push}
     
-    V2: In the first version I had reused the require_clean_work_tree()
-    function, which meant I accidentally tightened the requirements for
-    sequence cherry-pick, from "no staged changes" to "no staged or
-    uncommitted changes".
+    Minor consistency fix for previously-introduced "push.autosetupremote"
+    option.
     
-    I've now introduced a new function require_clean_index() reusing the
-    existing code.
+    V2:
     
-    In the thread, Junio suggested it might make sense to make the
-    requirements for sequence-cherry-pick the same as rebase - either to
-    tighten them as I accidentally did before, or relax rebase to match the
-    existing behavior of merge and cherry-pick. I am not sure the right way
-    to make such changes would be, I think it might warrant a new
-    configuration option, but I definitely think it is beyond the scope of
-    this simple bugfix.
+     * Rebased onto recent main, 10 months later.
+    
+    On the original thread, Junio expressed some concerns over the clarity
+    of the code / the obviousness of the change, but I did not find any
+    better approach.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1535%2FTaoK%2Ftao-cherry-pick-sequence-safety-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1535/TaoK/tao-cherry-pick-sequence-safety-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1535
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1279%2FTaoK%2Ftao-rev-parse-autosetupremote-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1279/TaoK/tao-rev-parse-autosetupremote-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1279
 
 Range-diff vs v1:
 
- 1:  ed225309835 ! 1:  be9a592a34a cherry-pick: refuse cherry-pick sequence if index is dirty
+ 1:  147e40ce932 ! 1:  d895e380b98 rev-parse: respect push.autosetupremote when evaluating @{push}
      @@ Commit message
-          operation to be aborted.
       
-          Add an earlier check in the cherry-pick sequence process to ensure that
-     -    the index is clean, reusing the already-generalized method used for
-     -    rebase. Also add a test.
-     +    the index is clean, introducing a new general "quit if index dirty" function
-     +    derived from the existing worktree-level function used in rebase and pull.
-     +    Also add a test.
+          Fix this edge-case so "git rev-parse @{push}" works, if there is no
+          upstream tracking relationship set up but the remote tracking branch that
+     -    will be defaulted to does exist and can be resolved.
+     +    will be defaulted to does already exist and can be resolved.
       
-          Signed-off-by: Tao Klerks <tao@klerks.biz>
+          Also add corresponding test cases.
       
-     - ## builtin/revert.c ##
-     -@@ builtin/revert.c: static int run_sequencer(int argc, const char **argv, const char *prefix,
-     - 		return sequencer_rollback(the_repository, opts);
-     - 	if (cmd == 's')
-     - 		return sequencer_skip(the_repository, opts);
-     --	return sequencer_pick_revisions(the_repository, opts);
-     -+	return sequencer_pick_revisions(the_repository, opts, me);
-     - }
-     - 
-     - int cmd_revert(int argc, const char **argv, const char *prefix)
-     -
-       ## sequencer.c ##
-      @@ sequencer.c: static int walk_revs_populate_todo(struct todo_list *todo_list,
-       	return 0;
-       }
-       
-      -static int create_seq_dir(struct repository *r)
-     -+static int create_seq_dir(struct repository *r, const char *requested_action)
-     ++static const char *cherry_pick_action_name(enum replay_action action) {
-     ++	switch (action) {
-     ++	case REPLAY_REVERT:
-     ++		return "revert";
-     ++		break;
-     ++	case REPLAY_PICK:
-     ++		return "cherry-pick";
-     ++		break;
-     ++	default:
-     ++		BUG("unexpected action in cherry_pick_action_name");
-     ++	}
-     ++}
-     ++
-     ++static int create_seq_dir(struct repository *r, enum replay_action requested_action)
-       {
-     - 	enum replay_action action;
-     +-	enum replay_action action;
-     ++	enum replay_action in_progress_action;
-     ++	const char *in_progress_action_name = NULL;
-       	const char *in_progress_error = NULL;
-     -@@ sequencer.c: static int create_seq_dir(struct repository *r)
-     + 	const char *in_progress_advice = NULL;
-     ++	const char *requested_action_name = NULL;
-     + 	unsigned int advise_skip =
-     + 		refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") ||
-     + 		refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD");
-     + 
-     +-	if (!sequencer_get_last_command(r, &action)) {
-     +-		switch (action) {
-     +-		case REPLAY_REVERT:
-     +-			in_progress_error = _("revert is already in progress");
-     +-			in_progress_advice =
-     +-			_("try \"git revert (--continue | %s--abort | --quit)\"");
-     +-			break;
-     +-		case REPLAY_PICK:
-     +-			in_progress_error = _("cherry-pick is already in progress");
-     +-			in_progress_advice =
-     +-			_("try \"git cherry-pick (--continue | %s--abort | --quit)\"");
-     +-			break;
-     +-		default:
-     +-			BUG("unexpected action in create_seq_dir");
-     +-		}
-     ++	if (!sequencer_get_last_command(r, &in_progress_action)) {
-     ++		in_progress_action_name = cherry_pick_action_name(in_progress_action);
-     ++		in_progress_error = _("%s is already in progress");
-     ++		in_progress_advice =
-     ++		_("try \"git %s (--continue | %s--abort | --quit)\"");
-     + 	}
-     + 	if (in_progress_error) {
-     +-		error("%s", in_progress_error);
-     ++		error(in_progress_error, in_progress_action_name);
-     + 		if (advice_enabled(ADVICE_SEQUENCER_IN_USE))
-     + 			advise(in_progress_advice,
-     ++				in_progress_action_name,
-       				advise_skip ? "--skip | " : "");
-       		return -1;
-       	}
-     -+	if (require_clean_work_tree(r, requested_action,
-     ++	requested_action_name = cherry_pick_action_name(requested_action);
-     ++	if (require_clean_index(r, requested_action_name,
-      +				    _("Please commit or stash them."), 1, 1))
-      +		return -1;
-       	if (mkdir(git_path_seq_dir(), 0777) < 0)
-       		return error_errno(_("could not create sequencer directory '%s'"),
-       				   git_path_seq_dir());
-     -@@ sequencer.c: static int single_pick(struct repository *r,
-     - }
-     - 
-     - int sequencer_pick_revisions(struct repository *r,
-     --			     struct replay_opts *opts)
-     -+			     struct replay_opts *opts,
-     -+			     const char *action)
-     - {
-     - 	struct todo_list todo_list = TODO_LIST_INIT;
-     - 	struct object_id oid;
-      @@ sequencer.c: int sequencer_pick_revisions(struct repository *r,
-       
-       	/*
-     @@ sequencer.c: int sequencer_pick_revisions(struct repository *r,
-      +	 * first, make sure that the index is clean and that
-      +	 * an existing one isn't in progress.
-       	 */
-     - 
-     +-
-       	if (walk_revs_populate_todo(&todo_list, opts) ||
-      -			create_seq_dir(r) < 0)
-     -+			create_seq_dir(r, action) < 0)
-     ++			create_seq_dir(r, opts->action) < 0)
-       		return -1;
-       	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT))
-       		return error(_("can't revert as initial commit"));
-      
-     - ## sequencer.h ##
-     -@@ sequencer.h: void todo_list_filter_update_refs(struct repository *r,
-     - /* Call this to setup defaults before parsing command line options */
-     - void sequencer_init_config(struct replay_opts *opts);
-     - int sequencer_pick_revisions(struct repository *repo,
-     --			     struct replay_opts *opts);
-     -+			     struct replay_opts *opts,
-     -+			     const char *action);
-     - int sequencer_continue(struct repository *repo, struct replay_opts *opts);
-     - int sequencer_rollback(struct repository *repo, struct replay_opts *opts);
-     - int sequencer_skip(struct repository *repo, struct replay_opts *opts);
-     -
-       ## t/t3510-cherry-pick-sequence.sh ##
-      @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'cherry-pick persists data on failure' '
-       	test_path_is_file .git/sequencer/opts
-     @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'cherry-pick persists data
-       test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
-       	pristine_detach initial &&
-       	test_must_fail git cherry-pick base..anotherpick &&
-     +
-     + ## wt-status.c ##
-     +@@ wt-status.c: int has_uncommitted_changes(struct repository *r,
-     + 	return result;
-     + }
-     + 
-     +-/**
-     +- * If the work tree has unstaged or uncommitted changes, dies with the
-     +- * appropriate message.
-     +- */
-     +-int require_clean_work_tree(struct repository *r,
-     +-			    const char *action,
-     +-			    const char *hint,
-     +-			    int ignore_submodules,
-     +-			    int gently)
-     ++static int require_clean_index_or_work_tree(struct repository *r,
-     ++				     const char *action,
-     ++				     const char *hint,
-     ++				     int ignore_submodules,
-     ++				     int check_index_only,
-     ++				     int gently)
-     + {
-     + 	struct lock_file lock_file = LOCK_INIT;
-     + 	int err = 0, fd;
-     +@@ wt-status.c: int require_clean_work_tree(struct repository *r,
-     + 		repo_update_index_if_able(r, &lock_file);
-     + 	rollback_lock_file(&lock_file);
-     + 
-     +-	if (has_unstaged_changes(r, ignore_submodules)) {
-     +-		/* TRANSLATORS: the action is e.g. "pull with rebase" */
-     +-		error(_("cannot %s: You have unstaged changes."), _(action));
-     +-		err = 1;
-     ++	if (!check_index_only) {
-     ++		if (has_unstaged_changes(r, ignore_submodules)) {
-     ++			/* TRANSLATORS: the action is e.g. "pull with rebase" */
-     ++			error(_("cannot %s: You have unstaged changes."), _(action));
-     ++			err = 1;
-     ++		}
-     + 	}
-     + 
-     + 	if (has_uncommitted_changes(r, ignore_submodules)) {
-     +@@ wt-status.c: int require_clean_work_tree(struct repository *r,
-     + 
-     + 	return err;
-     + }
-     ++
-     ++/**
-     ++ * If the work tree has unstaged or uncommitted changes, dies with the
-     ++ * appropriate message.
-     ++ */
-     ++int require_clean_work_tree(struct repository *r,
-     ++			    const char *action,
-     ++			    const char *hint,
-     ++			    int ignore_submodules,
-     ++			    int gently)
-     ++{
-     ++	return require_clean_index_or_work_tree(r,
-     ++						action,
-     ++						hint,
-     ++						ignore_submodules,
-     ++						0,
-     ++						gently);
-     ++}
-     ++
-     ++/**
-     ++ * If the work tree has uncommitted changes, dies with the appropriate
-     ++ * message.
-     ++ */
-     ++int require_clean_index(struct repository *r,
-     ++			const char *action,
-     ++			const char *hint,
-     ++			int ignore_submodules,
-     ++			int gently)
-     ++{
-     ++	return require_clean_index_or_work_tree(r,
-     ++						action,
-     ++						hint,
-     ++						ignore_submodules,
-     ++						1,
-     ++						gently);
-     ++}
-     +
-     + ## wt-status.h ##
-     +@@ wt-status.h: int require_clean_work_tree(struct repository *repo,
-     + 			    const char *hint,
-     + 			    int ignore_submodules,
-     + 			    int gently);
-     ++int require_clean_index(struct repository *repo,
-     ++			    const char *action,
-     ++			    const char *hint,
-     ++			    int ignore_submodules,
-     ++			    int gently);
-     + 
-     + #endif /* STATUS_H */
 
 
- sequencer.c                     | 53 ++++++++++++++++------------
- t/t3510-cherry-pick-sequence.sh | 10 ++++++
- wt-status.c                     | 61 ++++++++++++++++++++++++++-------
- wt-status.h                     |  5 +++
- 4 files changed, 94 insertions(+), 35 deletions(-)
+ remote.c                  | 30 ++++++++++++++++++++++++++++--
+ t/t1514-rev-parse-push.sh | 20 ++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 2 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index b553b49fbb6..ea1c34045d3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3162,38 +3162,48 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
- 	return 0;
+diff --git a/remote.c b/remote.c
+index 0764fca0db9..07194c616da 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1906,6 +1906,23 @@ static const char *tracking_for_push_dest(struct remote *remote,
+ 	return ret;
  }
  
--static int create_seq_dir(struct repository *r)
-+static const char *cherry_pick_action_name(enum replay_action action) {
-+	switch (action) {
-+	case REPLAY_REVERT:
-+		return "revert";
-+		break;
-+	case REPLAY_PICK:
-+		return "cherry-pick";
-+		break;
-+	default:
-+		BUG("unexpected action in cherry_pick_action_name");
++static const char *default_missing_upstream(struct remote *remote,
++				    struct branch *branch,
++				    struct strbuf *err)
++{
++	int autosetupremote = 0;
++
++	if (branch && (!branch->merge || !branch->merge[0])) {
++		repo_config_get_bool(the_repository,
++				     "push.autosetupremote",
++				     &autosetupremote);
++		if (autosetupremote)
++			return tracking_for_push_dest(remote, branch->refname, err);
 +	}
++
++	return NULL;
 +}
 +
-+static int create_seq_dir(struct repository *r, enum replay_action requested_action)
+ static const char *branch_get_push_1(struct remote_state *remote_state,
+ 				     struct branch *branch, struct strbuf *err)
  {
--	enum replay_action action;
-+	enum replay_action in_progress_action;
-+	const char *in_progress_action_name = NULL;
- 	const char *in_progress_error = NULL;
- 	const char *in_progress_advice = NULL;
-+	const char *requested_action_name = NULL;
- 	unsigned int advise_skip =
- 		refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") ||
- 		refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD");
+@@ -1946,13 +1963,22 @@ static const char *branch_get_push_1(struct remote_state *remote_state,
+ 		return tracking_for_push_dest(remote, branch->refname, err);
  
--	if (!sequencer_get_last_command(r, &action)) {
--		switch (action) {
--		case REPLAY_REVERT:
--			in_progress_error = _("revert is already in progress");
--			in_progress_advice =
--			_("try \"git revert (--continue | %s--abort | --quit)\"");
--			break;
--		case REPLAY_PICK:
--			in_progress_error = _("cherry-pick is already in progress");
--			in_progress_advice =
--			_("try \"git cherry-pick (--continue | %s--abort | --quit)\"");
--			break;
--		default:
--			BUG("unexpected action in create_seq_dir");
--		}
-+	if (!sequencer_get_last_command(r, &in_progress_action)) {
-+		in_progress_action_name = cherry_pick_action_name(in_progress_action);
-+		in_progress_error = _("%s is already in progress");
-+		in_progress_advice =
-+		_("try \"git %s (--continue | %s--abort | --quit)\"");
- 	}
- 	if (in_progress_error) {
--		error("%s", in_progress_error);
-+		error(in_progress_error, in_progress_action_name);
- 		if (advice_enabled(ADVICE_SEQUENCER_IN_USE))
- 			advise(in_progress_advice,
-+				in_progress_action_name,
- 				advise_skip ? "--skip | " : "");
- 		return -1;
- 	}
-+	requested_action_name = cherry_pick_action_name(requested_action);
-+	if (require_clean_index(r, requested_action_name,
-+				    _("Please commit or stash them."), 1, 1))
-+		return -1;
- 	if (mkdir(git_path_seq_dir(), 0777) < 0)
- 		return error_errno(_("could not create sequencer directory '%s'"),
- 				   git_path_seq_dir());
-@@ -5223,12 +5233,11 @@ int sequencer_pick_revisions(struct repository *r,
- 
- 	/*
- 	 * Start a new cherry-pick/ revert sequence; but
--	 * first, make sure that an existing one isn't in
--	 * progress
-+	 * first, make sure that the index is clean and that
-+	 * an existing one isn't in progress.
- 	 */
+ 	case PUSH_DEFAULT_UPSTREAM:
+-		return branch_get_upstream(branch, err);
 -
- 	if (walk_revs_populate_todo(&todo_list, opts) ||
--			create_seq_dir(r) < 0)
-+			create_seq_dir(r, opts->action) < 0)
- 		return -1;
- 	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT))
- 		return error(_("can't revert as initial commit"));
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 3b0fa66c33d..e8f4138bf89 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -47,6 +47,16 @@ test_expect_success 'cherry-pick persists data on failure' '
- 	test_path_is_file .git/sequencer/opts
++		{
++			const char *up;
++			up = default_missing_upstream(remote, branch, err);
++			if (up)
++				return up;
++			return branch_get_upstream(branch, err);
++		}
+ 	case PUSH_DEFAULT_UNSPECIFIED:
+ 	case PUSH_DEFAULT_SIMPLE:
+ 		{
+ 			const char *up, *cur;
+ 
++			up = default_missing_upstream(remote, branch, err);
++			if (up)
++				return up;
++
+ 			up = branch_get_upstream(branch, err);
+ 			if (!up)
+ 				return NULL;
+diff --git a/t/t1514-rev-parse-push.sh b/t/t1514-rev-parse-push.sh
+index d868a081105..ffa0db14585 100755
+--- a/t/t1514-rev-parse-push.sh
++++ b/t/t1514-rev-parse-push.sh
+@@ -21,7 +21,10 @@ test_expect_success 'setup' '
+ 	git push origin HEAD &&
+ 	git branch --set-upstream-to=origin/main main &&
+ 	git branch --track topic origin/main &&
++	git branch --no-track indie_topic origin/main &&
++	git branch --no-track new_topic origin/main &&
+ 	git push origin topic &&
++	git push origin indie_topic &&
+ 	git push other topic
  '
  
-+test_expect_success 'cherry-pick sequence refuses to run on dirty index' '
-+	pristine_detach initial &&
-+	touch localindexchange &&
-+	git add localindexchange &&
-+	echo picking &&
-+	test_must_fail git cherry-pick initial..picked &&
-+	test_path_is_missing .git/sequencer &&
-+	test_must_fail git cherry-pick --abort
+@@ -73,4 +76,21 @@ test_expect_success 'resolving @{push} fails with a detached HEAD' '
+ 	test_must_fail git rev-parse @{push}
+ '
+ 
++test_expect_success '@{push} with default=simple without tracking' '
++	test_config push.default simple &&
++	test_must_fail git rev-parse indie_topic@{push}
 +'
 +
- test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick base..anotherpick &&
-diff --git a/wt-status.c b/wt-status.c
-index 068b76ef6d9..e6ecb3fa606 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2616,15 +2616,12 @@ int has_uncommitted_changes(struct repository *r,
- 	return result;
- }
- 
--/**
-- * If the work tree has unstaged or uncommitted changes, dies with the
-- * appropriate message.
-- */
--int require_clean_work_tree(struct repository *r,
--			    const char *action,
--			    const char *hint,
--			    int ignore_submodules,
--			    int gently)
-+static int require_clean_index_or_work_tree(struct repository *r,
-+				     const char *action,
-+				     const char *hint,
-+				     int ignore_submodules,
-+				     int check_index_only,
-+				     int gently)
- {
- 	struct lock_file lock_file = LOCK_INIT;
- 	int err = 0, fd;
-@@ -2635,10 +2632,12 @@ int require_clean_work_tree(struct repository *r,
- 		repo_update_index_if_able(r, &lock_file);
- 	rollback_lock_file(&lock_file);
- 
--	if (has_unstaged_changes(r, ignore_submodules)) {
--		/* TRANSLATORS: the action is e.g. "pull with rebase" */
--		error(_("cannot %s: You have unstaged changes."), _(action));
--		err = 1;
-+	if (!check_index_only) {
-+		if (has_unstaged_changes(r, ignore_submodules)) {
-+			/* TRANSLATORS: the action is e.g. "pull with rebase" */
-+			error(_("cannot %s: You have unstaged changes."), _(action));
-+			err = 1;
-+		}
- 	}
- 
- 	if (has_uncommitted_changes(r, ignore_submodules)) {
-@@ -2659,3 +2658,39 @@ int require_clean_work_tree(struct repository *r,
- 
- 	return err;
- }
++test_expect_success '@{push} with default=simple with autosetupremote' '
++	test_config push.default simple &&
++	test_config push.autosetupremote true &&
++	resolve indie_topic@{push} refs/remotes/origin/indie_topic
++'
 +
-+/**
-+ * If the work tree has unstaged or uncommitted changes, dies with the
-+ * appropriate message.
-+ */
-+int require_clean_work_tree(struct repository *r,
-+			    const char *action,
-+			    const char *hint,
-+			    int ignore_submodules,
-+			    int gently)
-+{
-+	return require_clean_index_or_work_tree(r,
-+						action,
-+						hint,
-+						ignore_submodules,
-+						0,
-+						gently);
-+}
++test_expect_success '@{push} with default=simple with autosetupremote, new branch' '
++	test_config push.default simple &&
++	test_config push.autosetupremote true &&
++	test_must_fail git rev-parse new_topic@{push}
++'
 +
-+/**
-+ * If the work tree has uncommitted changes, dies with the appropriate
-+ * message.
-+ */
-+int require_clean_index(struct repository *r,
-+			const char *action,
-+			const char *hint,
-+			int ignore_submodules,
-+			int gently)
-+{
-+	return require_clean_index_or_work_tree(r,
-+						action,
-+						hint,
-+						ignore_submodules,
-+						1,
-+						gently);
-+}
-diff --git a/wt-status.h b/wt-status.h
-index ab9cc9d8f03..9f424d7c16c 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -181,5 +181,10 @@ int require_clean_work_tree(struct repository *repo,
- 			    const char *hint,
- 			    int ignore_submodules,
- 			    int gently);
-+int require_clean_index(struct repository *repo,
-+			    const char *action,
-+			    const char *hint,
-+			    int ignore_submodules,
-+			    int gently);
- 
- #endif /* STATUS_H */
+ test_done
 
 base-commit: 4a714b37029a4b63dbd22f7d7ed81f7a0d693680
 -- 
