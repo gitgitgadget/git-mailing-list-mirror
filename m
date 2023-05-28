@@ -2,95 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76BB7C77B7C
-	for <git@archiver.kernel.org>; Sun, 28 May 2023 19:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81ACFC77B7E
+	for <git@archiver.kernel.org>; Sun, 28 May 2023 19:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230313AbjE1TeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 May 2023 15:34:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
+        id S231281AbjE1Tpd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 May 2023 15:45:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230315AbjE1TeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2023 15:34:09 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C991FA8
-        for <git@vger.kernel.org>; Sun, 28 May 2023 12:34:07 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-514924b4f8cso2193591a12.3
-        for <git@vger.kernel.org>; Sun, 28 May 2023 12:34:07 -0700 (PDT)
+        with ESMTP id S231279AbjE1Tpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2023 15:45:31 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294D2AB
+        for <git@vger.kernel.org>; Sun, 28 May 2023 12:45:30 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f606a80d34so17313975e9.0
+        for <git@vger.kernel.org>; Sun, 28 May 2023 12:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685302446; x=1687894446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aIY+yS3DYIN8cL7VIRe9ONhtxLeSpN6CcatvVwGGXXg=;
-        b=bwIpSwHv45D6A2L/Uxboe+cZN9vLy5BJg233+W3brSQr5TfGgyIofqBXDEhWnLzox+
-         nu1Hyo7C1FxUm2xXWWTqTizhAzaXM73SJ2QYuhSJqqM8Vv+keXhsZYNrlT45REpMBF4B
-         xI2O/5g5tiwYpgj+6MrKqm4tvur5hotK1+UYOjqjajVd9O0aH+oNIKm0EIuU29fcEACv
-         7vgtBEm2zJyBjsvTwz8Ix0a/635lpAVT6Wv+Mec0sKqgyuV/alI9y2QUSLy/aE0mI3RW
-         QMhFcysvOCJujJws5h7WtcVC+e9+u0y/p0u6jp4fBAdrKZsdi5B5EEl47YsB1sNZ31TZ
-         emfQ==
+        d=gmail.com; s=20221208; t=1685303128; x=1687895128;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=iFMGUNRSMliBIQkDMQ8+9ztZpDwMqU1oCr25l7bCwBc=;
+        b=szemSkDfE55t2A2Ta6p4ZerkJ6SwFb0WKteCFX6H+AwLC2cW7W5Y9aMKIV9B56Gvbs
+         oHAYGPgAlyUkGQ7b0t0cxVCR1LKpRNPw3YbkJo7BEqUjyAJjORWVRUGmwh6yQW9au54n
+         bD2hkQe+/28nL8V8skRwvMe0ThvCiApoJYdb0zUZ/+3dxwIVe7HFgi1GhjPmt/Wa+E/B
+         0N1vcViUKRfIOSLHeNvh0rmlLVmS5iU8FlWHIz8PMuXwcD7JQ6yGkojxO/S+VxeqWH8Q
+         hx+SZjwFubY1krCythN1rdOz09G4bfY3XpKCg9up8XDXikPRX5Ev1+hJ/yAXys660FW4
+         0Q0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685302446; x=1687894446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1685303128; x=1687895128;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aIY+yS3DYIN8cL7VIRe9ONhtxLeSpN6CcatvVwGGXXg=;
-        b=DGV6Fjhf6l2C9GvsvOBqYhVoxBEmHL2f6wFw6N2kkPJCyN51S2OF9RvNTDWYuCuQ9C
-         XpsTsEsSqAZecUthe++lbnvSYInDa6/tXwvSjisPKD5/Td5JljTaH5+CCGcj4CJtFQ6W
-         B4C1boCawC+N8dHf0GlClItPThcPEYl1AqMSpOlRvH52n/KlQIUfuTrAo5ezmROek9sb
-         5e6hSCcpcrT7RgX+3FQQ74VT5ONhXiFkVgIk8gtHXHwi97PN8k89QCRnj3p0ML/yYvPI
-         f4HuXMETJLt1Zq9x8wN62B3fFhXU/6zBikxOGWK6c92zzR2OOpbZ6gtzCcfbLpvukc2m
-         lIAg==
-X-Gm-Message-State: AC+VfDzkXnC8fAVrH4N4LG6/5pepke+CRjn1XEl/OF9g6A9+NnxEOEYB
-        4cSNSKfYcKocMFSZXdg0qyhe/GHF3zymI6bpW+F4piUgaEBS8A==
-X-Google-Smtp-Source: ACHHUZ6HXUGdA7Nw6BkFlEEaSVPyeKYO7ZTDUGL8KPCC9C+35WdL/JXxXNNf713c8Y7flHLL3LnaFd18WYgvIrUCgDY=
-X-Received: by 2002:a17:907:6090:b0:96a:58a:6cd8 with SMTP id
- ht16-20020a170907609000b0096a058a6cd8mr9829664ejc.9.1685302445932; Sun, 28
- May 2023 12:34:05 -0700 (PDT)
+        bh=iFMGUNRSMliBIQkDMQ8+9ztZpDwMqU1oCr25l7bCwBc=;
+        b=YH27peBqBOavZDb0QTYUHWPJfNXEXaYnQQ6VRmA6gq9bMFUglcZCCRa+Pky4UDhyvP
+         D4/7Cdb8c7TS1BjMFyG9QRtR5zVYrMPur5skkxcD7E/NE7nN7t0c/vYFfRRBSzW8O6st
+         SsFUlb7PAiwhVYNjoA4BksrvzinAbXkEyR4XmyUhXBw72sw8CxkFZ0UX6m8XBnXC+C38
+         wlDz2cx6NajT+tzB1wkUY42Zk6GDlmFqqL6fQhgmxN56njmwZ0o4FQ2hq3CU8feQ8xpo
+         bdKRwf29Bv/6dTdPqO4jfeNvjGWv9ld0rjljWFOra0Pa/6r4WaarrNfQ04UKweROutC8
+         ghAA==
+X-Gm-Message-State: AC+VfDzo/GOrAoWZL+0L8dTxctw0lNd2W807ybaS4wTjLgQDPiqofeIu
+        +j3j2jTIFiMvF/TEIIBbEKyS+85Ymdc=
+X-Google-Smtp-Source: ACHHUZ6pN9xBA7VvMoSyXjAOXtBaPfmXAoX6owSsMwjd64eoDSeZZxT6LHirrefysURSYaeHraPZeQ==
+X-Received: by 2002:a1c:770a:0:b0:3f4:2365:e5ac with SMTP id t10-20020a1c770a000000b003f42365e5acmr7002610wmi.13.1685303128031;
+        Sun, 28 May 2023 12:45:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n15-20020a1c720f000000b003f6cf9afc25sm11883194wmc.40.2023.05.28.12.45.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 May 2023 12:45:27 -0700 (PDT)
+Message-Id: <pull.1538.git.1685303127237.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 28 May 2023 19:45:27 +0000
+Subject: [PATCH] doc: gitcredentials: introduce OAuth helpers
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
- <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net> <AS2PR03MB98158D49DC655F6DC6D10ECDC0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
- <Y3aCx1SYq6jrYfuO@coredump.intra.peff.net>
-In-Reply-To: <Y3aCx1SYq6jrYfuO@coredump.intra.peff.net>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Sun, 28 May 2023 20:33:29 +0100
-Message-ID: <CAGJzqskaM80+8+79yUf435tP93Sk8sFu7marCvyimE=2gOKnog@mail.gmail.com>
-Subject: Re: The enduring popularity of git-credential-store
-To:     Jeff King <peff@peff.net>
-Cc:     Matthew John Cheetham <mjcheetham@outlook.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, msuchanek@suse.de, sandals@crustytoothpaste.net,
+        lessleydennington@gmail.com, me@ttaylorr.com,
+        mjcheetham@github.com, M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 17 Nov 2022 at 18:51, Jeff King <peff@peff.net> wrote:
->
-> On Thu, Nov 17, 2022 at 09:17:53AM -0800, Matthew John Cheetham wrote:
->
-> > > In the ideal world, we'd ship an encrypted store that people could use,
-> > > but then we have to deal with export regulations and sanctions and
-> > > nobody wants to do that.  We'd also have to deal with multiple
-> > > cryptographic libraries for portability and license reasons and nobody
-> > > wants to do that, either.
-> >
-> > One option rather than shipping (or including in contrib/) any of these
-> > credential helpers, could we not reference several other popular helpers
-> > in the docs, and let users make their own choice (but at least some are
-> > then possibly more discoverable)?
->
-> I don't have any problem with documenting the options better. The main
-> reason we have store/cache at all, even though they kind of suck, was to
-> act as least-common-denominators and pave the way for people making
-> better helpers. That happened, but nobody ever went back to adjust the
-> docs.
->
-> I do think having the docs say "you should go use X" means that X will
-> have an advantage over other projects which may compete with it. So I
-> think we need to be careful to be inclusive of what we'll mention, and
-> to word it so that we're not endorsing any one project.
+From: M Hickford <mirth.hickford@gmail.com>
 
-I agree, although Git for Windows installs Git Credential Manager by
-default. Hard to compete with that, but it's fantastic for users.
+OAuth credential helpers are widely useful but work differently to other
+credential helpers, so worth introducing in the docs.
 
-OAuth credential helpers are so widely useful I think it's worth
-introducing them in the documentation. I'll draft a patch.
+Link to relevant projects.
+
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    gitcredentials: describe OAuth credential helpers
+    
+    See also discussion
+    https://lore.kernel.org/git/CAGJzqskaM80+8+79yUf435tP93Sk8sFu7marCvyimE=2gOKnog@mail.gmail.com/
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1538%2Fhickford%2Fhelpers-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1538/hickford/helpers-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1538
+
+ Documentation/gitcredentials.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+index 100f045bb1a..d2a7249d52b 100644
+--- a/Documentation/gitcredentials.txt
++++ b/Documentation/gitcredentials.txt
+@@ -105,6 +105,19 @@ $ git config --global credential.helper foo
+ -------------------------------------------
+ 
+ 
++=== OAuth credential helpers
++
++An alternative to entering passwords or personal access tokens is to use an
++OAuth credential helper. Many popular Git hosts support OAuth. The first time
++you authenticate, the helper opens a browser window to the host.
++Subsequent authentication is non interactive.
++
++Two cross-platform open-source OAuth credential helpers are:
++
++* https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
++* https://github.com/hickford/git-credential-oauth[git-credential-oauth]
++
++
+ CREDENTIAL CONTEXTS
+ -------------------
+ 
+
+base-commit: 79bdd48716a4c455bdc8ffd91d57a18d5cd55baa
+-- 
+gitgitgadget
