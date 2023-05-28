@@ -2,223 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3870EC7EE23
-	for <git@archiver.kernel.org>; Sun, 28 May 2023 09:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B8AC7EE23
+	for <git@archiver.kernel.org>; Sun, 28 May 2023 10:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbjE1J6t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 May 2023 05:58:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55066 "EHLO
+        id S229534AbjE1KAG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 May 2023 06:00:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjE1J6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2023 05:58:48 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E477B9
-        for <git@vger.kernel.org>; Sun, 28 May 2023 02:58:46 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f6d3f83d0cso24390725e9.2
-        for <git@vger.kernel.org>; Sun, 28 May 2023 02:58:46 -0700 (PDT)
+        with ESMTP id S229445AbjE1KAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2023 06:00:05 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313A3B9
+        for <git@vger.kernel.org>; Sun, 28 May 2023 03:00:03 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-309382efe13so1377349f8f.2
+        for <git@vger.kernel.org>; Sun, 28 May 2023 03:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685267924; x=1687859924;
+        d=gmail.com; s=20221208; t=1685268001; x=1687860001;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HouzmJDMWaY5T9pp6zZ6Fs/2/SP53e+peh1EBdbMLwI=;
-        b=nSoB8JxF5CEXvgUd/OpqY0D2ja+fOZChFhXw8tZCt4SHKpIOxAYsttbJKPV0wjegZk
-         adVYrNPix+/jrvlcsYg+rx49wYfi9tuXcQ83e7pAG8J1fqMjAcpgaBpSUvw4C+f326of
-         nUMApQ0mrOvwS5CLEhynngRu9nu08xvmFUzUaD4OuExfH4AoOmkm6siFQEvrLszzPETb
-         cvf1WBlf10kB+5Hh7ylBvku7EGj4cD6vpMbEl0PW+4aYsPsCrKMDfCSzTW0ujjDBR+7i
-         8w6DpuZ6Y4rSiV8aROyVFoq3mjxS15PbDO4MZybGW1uR74FO6swzAzYtuPloLBmbhPTJ
-         y+iA==
+        bh=8BuH6Hmtl39jdHzinfr2GUp+6i8L+Kk7QBwOIV9LTeI=;
+        b=iKRfbVKZwJJMj6ZJhHLfXBlDsDXlYi+yNPqhKu+IcDaUFmwbAyW3JBkQky/vYSaWpo
+         jSRGgGvGrWnQifN0EVPRGqcEfouRJ6dXcUp2fLKgHF/fUcCRCih1v7R7iBcyuR0DYtO1
+         jTP3PEUDWpHEeOnofylo4yqJWilqHKRVfw31Ohd4wwk+DNvVhbjq63hgvThaHoQhMDFK
+         yU0lIg4ZkGI9PZsWHx2mU8qSVBftnrSdca7Iijf3ne0ZYuxX/D2Dmf8sVva1/9FFee1L
+         +XakvDWwOSAZ6mLebBqULg3ERWVuuK/mfQOisGjBqv3uJq6E2TUn/Ro3mhwttGNLOk5X
+         NmUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685267924; x=1687859924;
+        d=1e100.net; s=20221208; t=1685268001; x=1687860001;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HouzmJDMWaY5T9pp6zZ6Fs/2/SP53e+peh1EBdbMLwI=;
-        b=MJm0Ym9zSuxupGKhw5vYpPDZgrUzF+WW//qQoG5D+BfjKxp3tmAk9OOjPCtkrEmgFX
-         mK0OzxgSEhswYqwgVByhmCjZol4XXu7Vuo2YecldLICICwuxaUYfTSmuPvjc730EnHAz
-         Z8ANqbEOTs8zCr/ow/StEVMlL/v+zAhYyjiy8hDs2v/2wC3Pei5w+erUTHPuW1UsQR0J
-         Z99PGVso/0jDFbGqu6GMgcaOfoJVbwEBDb6m/taQRFk1o0xx2nm8IMxESqJP5mczIH2x
-         yW0qy65kHFSYIttqNbLdQiYUy1x6S7rdhDeOmtWx10HviBsTj0W/ms3H9g3yMGYoY6E5
-         medA==
-X-Gm-Message-State: AC+VfDzd74o0gMjr1pXlk89UA8yIO94kPtS6go1Fabu3W1RTh2QG8jQs
-        qYXz5eY6V0DpYAO246p3aufoEqXhi1c=
-X-Google-Smtp-Source: ACHHUZ5W/gaMio35QoxkFR2c9/K6Q83/Hd8XaGa6f3XtmbtCoXTroAiNATN1eoa8J9u9Dif8HhhtGQ==
-X-Received: by 2002:a7b:c006:0:b0:3f1:789d:ad32 with SMTP id c6-20020a7bc006000000b003f1789dad32mr5913835wmb.11.1685267924328;
-        Sun, 28 May 2023 02:58:44 -0700 (PDT)
+        bh=8BuH6Hmtl39jdHzinfr2GUp+6i8L+Kk7QBwOIV9LTeI=;
+        b=Xk5xRdArO0iRl+b0X9/l2H9wdv4wHvtHlVUpptv3il3Kin7Jr6sEI7XHr/sAACPY/B
+         fQsbx91bKSlIkHDraWShlPgmrC33vHJ/74QK0ZIE48KzoyFWS9zaRJ4QF40iYc3vvvsc
+         UoL73zO/xZr0M2LWH61RUYhh3Wm+8sezrF9KYt+F1l8bBrT5pPsbfglQmxj/OmH4hzG6
+         tc+qEhNHr4MAuSlFh38GDpxwuMrplNuEIZ5XVc8L2R0PgUXxrdVB90H9FsHyP0jBPqDz
+         MVcc4f8ZaGTpuVWZgDmgkQaLD2id5hH7GarR7490Iautcu+0tCEodW+gwxmRPlLqZqh2
+         NBcg==
+X-Gm-Message-State: AC+VfDxZg3XIdB80W1NJq5qtl59RcbcIz5t+8nwjVCobc7WCXvc+qqGY
+        Gcv8GiLicBuhY2Ne5J/YKG7goeyRUHA=
+X-Google-Smtp-Source: ACHHUZ7lsgkevS0+EdDrOR6sRzkb14uT7/qDxwXIUgqGZCoaHXOB3xgkOgaYgkAdI+rgiNg3pN/xaQ==
+X-Received: by 2002:a5d:650c:0:b0:309:46f5:cea7 with SMTP id x12-20020a5d650c000000b0030946f5cea7mr5815026wru.17.1685268001077;
+        Sun, 28 May 2023 03:00:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v15-20020a5d4a4f000000b00307c0afc030sm10456599wrs.4.2023.05.28.02.58.43
+        by smtp.gmail.com with ESMTPSA id o12-20020adfe80c000000b002fe13ec49fasm10272167wrm.98.2023.05.28.03.00.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 May 2023 02:58:43 -0700 (PDT)
-Message-Id: <pull.1279.v2.git.1685267922901.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1279.git.1657480594123.gitgitgadget@gmail.com>
-References: <pull.1279.git.1657480594123.gitgitgadget@gmail.com>
+        Sun, 28 May 2023 03:00:00 -0700 (PDT)
+Message-Id: <pull.1257.v3.git.1685267999.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1257.v2.git.1655655027.gitgitgadget@gmail.com>
+References: <pull.1257.v2.git.1655655027.gitgitgadget@gmail.com>
 From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 28 May 2023 09:58:42 +0000
-Subject: [PATCH v2] rev-parse: respect push.autosetupremote when evaluating
- @{push}
+Date:   Sun, 28 May 2023 09:59:56 +0000
+Subject: [PATCH v3 0/3] apply: support case-only renames in case-insensitive filesystems
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>,
+Cc:     Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+As suggested almost a year ago in thread
+CAPMMpojwV+f=z9sgc_GaUOTFBCUVdbrGW8WjatWWmC3WTcsoXw@mail.gmail.com,
+proposing a fix to git-apply for case-only renames on case-insensitive
+filesystems.
 
-In a previous release, the push.autosetupremote config was introduced to
-ease new branch management in "simple" single-remote workflows. This makes
-"git push" work on new branches (without configured upstream) with
-push.default set to "simple" or "upstream" and it implies
-"--set-upstream" regardless of whether the same-name remote branch exists
-or not.
+Changes in V3:
 
-The "@{push}" suffix logic was not adjusted to account for this new option,
-however, and sometimes returns an error when "git push" would successfully
-push to an existing remote branch.
+ * Rebased onto recent main
+ * Renumbered now-duplicate-number test t4141 to t4142
+ * Removed "RFC" prefix to officially submit; I don't see a better
+   direction, and haven't received any corresponding feedback
 
-This is an edge-case, as the main context where push.autosetupremote will
-apply is for *new* branches, with no corresponding remote branch yet, and
-so even if the defaulting is handled correctly, the rev-parse will still
-fail with "unknown revision or path not in the working tree".
+As mentioned in V2, I'm not super-happy with the duplication of filename
+tracking tables, but I do think this bug needs to be fixed, and I don't see
+any other way to do so. The fundamental rule this change implements is that
+filesystem filename duplication checks should respect the core.ignorecase
+option, but index filename duplication checks should not.
 
-Fix this edge-case so "git rev-parse @{push}" works, if there is no
-upstream tracking relationship set up but the remote tracking branch that
-will be defaulted to does already exist and can be resolved.
+Junio C Hamano (1):
+  t4142: test "git apply" with core.ignorecase
 
-Also add corresponding test cases.
+Tao Klerks (2):
+  reset: new failing test for reset of case-insensitive duplicate in
+    index
+  apply: support case-only renames in case-insensitive filesystems
 
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
-    rev-parse: respect push.autosetupremote when evaluating @{push}
-    
-    Minor consistency fix for previously-introduced "push.autosetupremote"
-    option.
-    
-    V2:
-    
-     * Rebased onto recent main, 10 months later.
-    
-    On the original thread, Junio expressed some concerns over the clarity
-    of the code / the obviousness of the change, but I did not find any
-    better approach.
+ apply.c                |  81 +++++++++----
+ apply.h                |   5 +-
+ t/t4142-apply-icase.sh | 258 +++++++++++++++++++++++++++++++++++++++++
+ t/t7104-reset-hard.sh  |  11 ++
+ 4 files changed, 334 insertions(+), 21 deletions(-)
+ create mode 100755 t/t4142-apply-icase.sh
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1279%2FTaoK%2Ftao-rev-parse-autosetupremote-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1279/TaoK/tao-rev-parse-autosetupremote-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1279
-
-Range-diff vs v1:
-
- 1:  147e40ce932 ! 1:  d895e380b98 rev-parse: respect push.autosetupremote when evaluating @{push}
-     @@ Commit message
-      
-          Fix this edge-case so "git rev-parse @{push}" works, if there is no
-          upstream tracking relationship set up but the remote tracking branch that
-     -    will be defaulted to does exist and can be resolved.
-     +    will be defaulted to does already exist and can be resolved.
-      
-          Also add corresponding test cases.
-      
-
-
- remote.c                  | 30 ++++++++++++++++++++++++++++--
- t/t1514-rev-parse-push.sh | 20 ++++++++++++++++++++
- 2 files changed, 48 insertions(+), 2 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 0764fca0db9..07194c616da 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1906,6 +1906,23 @@ static const char *tracking_for_push_dest(struct remote *remote,
- 	return ret;
- }
- 
-+static const char *default_missing_upstream(struct remote *remote,
-+				    struct branch *branch,
-+				    struct strbuf *err)
-+{
-+	int autosetupremote = 0;
-+
-+	if (branch && (!branch->merge || !branch->merge[0])) {
-+		repo_config_get_bool(the_repository,
-+				     "push.autosetupremote",
-+				     &autosetupremote);
-+		if (autosetupremote)
-+			return tracking_for_push_dest(remote, branch->refname, err);
-+	}
-+
-+	return NULL;
-+}
-+
- static const char *branch_get_push_1(struct remote_state *remote_state,
- 				     struct branch *branch, struct strbuf *err)
- {
-@@ -1946,13 +1963,22 @@ static const char *branch_get_push_1(struct remote_state *remote_state,
- 		return tracking_for_push_dest(remote, branch->refname, err);
- 
- 	case PUSH_DEFAULT_UPSTREAM:
--		return branch_get_upstream(branch, err);
--
-+		{
-+			const char *up;
-+			up = default_missing_upstream(remote, branch, err);
-+			if (up)
-+				return up;
-+			return branch_get_upstream(branch, err);
-+		}
- 	case PUSH_DEFAULT_UNSPECIFIED:
- 	case PUSH_DEFAULT_SIMPLE:
- 		{
- 			const char *up, *cur;
- 
-+			up = default_missing_upstream(remote, branch, err);
-+			if (up)
-+				return up;
-+
- 			up = branch_get_upstream(branch, err);
- 			if (!up)
- 				return NULL;
-diff --git a/t/t1514-rev-parse-push.sh b/t/t1514-rev-parse-push.sh
-index d868a081105..ffa0db14585 100755
---- a/t/t1514-rev-parse-push.sh
-+++ b/t/t1514-rev-parse-push.sh
-@@ -21,7 +21,10 @@ test_expect_success 'setup' '
- 	git push origin HEAD &&
- 	git branch --set-upstream-to=origin/main main &&
- 	git branch --track topic origin/main &&
-+	git branch --no-track indie_topic origin/main &&
-+	git branch --no-track new_topic origin/main &&
- 	git push origin topic &&
-+	git push origin indie_topic &&
- 	git push other topic
- '
- 
-@@ -73,4 +76,21 @@ test_expect_success 'resolving @{push} fails with a detached HEAD' '
- 	test_must_fail git rev-parse @{push}
- '
- 
-+test_expect_success '@{push} with default=simple without tracking' '
-+	test_config push.default simple &&
-+	test_must_fail git rev-parse indie_topic@{push}
-+'
-+
-+test_expect_success '@{push} with default=simple with autosetupremote' '
-+	test_config push.default simple &&
-+	test_config push.autosetupremote true &&
-+	resolve indie_topic@{push} refs/remotes/origin/indie_topic
-+'
-+
-+test_expect_success '@{push} with default=simple with autosetupremote, new branch' '
-+	test_config push.default simple &&
-+	test_config push.autosetupremote true &&
-+	test_must_fail git rev-parse new_topic@{push}
-+'
-+
- test_done
 
 base-commit: 4a714b37029a4b63dbd22f7d7ed81f7a0d693680
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1257%2FTaoK%2Ftao-apply-case-insensitive-renames-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1257/TaoK/tao-apply-case-insensitive-renames-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1257
+
+Range-diff vs v2:
+
+ 1:  efd3bd4cdda ! 1:  8ad60943c66 t4141: test "git apply" with core.ignorecase
+     @@ Metadata
+      Author: Junio C Hamano <gitster@pobox.com>
+      
+       ## Commit message ##
+     -    t4141: test "git apply" with core.ignorecase
+     +    t4142: test "git apply" with core.ignorecase
+      
+          Signed-off-by: Junio C Hamano <gitster@pobox.com>
+      
+     - ## t/t4141-apply-icase.sh (new) ##
+     + ## t/t4142-apply-icase.sh (new) ##
+      @@
+      +#!/bin/sh
+      +
+ 2:  1226fbd3caf = 2:  ab1cdd95e03 reset: new failing test for reset of case-insensitive duplicate in index
+ 3:  04d83283716 ! 3:  52359738532 apply: support case-only renames in case-insensitive filesystems
+     @@ Commit message
+          account for case-insensitive filesystems yet.
+      
+          Because the index is inherently case-sensitive even on a
+     -    case-insensitive filesystem, we actually need this mechanism to be
+     +    case-insensitive filesystem, we actually need this mechanism to
+          handle both requirements, lest we fail to account for conflicting
+          files only in the index.
+      
+     @@ apply.c: void clear_apply_state(struct apply_state *state)
+      +	 */
+       }
+       
+     - static void mute_routine(const char *msg, va_list params)
+     + static void mute_routine(const char *msg UNUSED, va_list params UNUSED)
+      @@ apply.c: static int read_file_or_gitlink(const struct cache_entry *ce, struct strbuf *buf
+       	return read_blob_object(buf, &ce->oid, ce->ce_mode);
+       }
+     @@ apply.h: struct apply_state {
+       	/*
+       	 * This is to save reporting routines before using
+      
+     - ## t/t4141-apply-icase.sh ##
+     -@@ t/t4141-apply-icase.sh: test_expect_success setup '
+     + ## t/t4142-apply-icase.sh ##
+     +@@ t/t4142-apply-icase.sh: test_expect_success setup '
+              git diff HEAD HEAD^ -- file1 >deletion-patch &&
+              git diff --cached HEAD -- file1 file2 >rename-file1-to-file2-patch &&
+              git diff --cached HEAD -- file1 File1 >rename-file1-to-File1-patch &&
+     @@ t/t4141-apply-icase.sh: test_expect_success setup '
+       '
+       
+       # Basic creation, deletion, modification and renaming.
+     -@@ t/t4141-apply-icase.sh: test_expect_success 'creation and deletion' '
+     +@@ t/t4142-apply-icase.sh: test_expect_success 'creation and deletion' '
+              test_must_fail git rev-parse --verify :file1
+       '
+       
+     @@ t/t4141-apply-icase.sh: test_expect_success 'creation and deletion' '
+              # start at "initial" with file0 only
+              git reset --hard initial &&
+       
+     -@@ t/t4141-apply-icase.sh: test_expect_success 'modificaiton' '
+     +@@ t/t4142-apply-icase.sh: test_expect_success 'modificaiton' '
+              test_cmp_rev :file0 "$file0blob"
+       '
+       
+     @@ t/t4141-apply-icase.sh: test_expect_success 'modificaiton' '
+              # start from file0 and file1
+              git reset --hard current &&
+       
+     -@@ t/t4141-apply-icase.sh: test_expect_success 'rename file1 to file2' '
+     +@@ t/t4142-apply-icase.sh: test_expect_success 'rename file1 to file2' '
+              test_cmp_rev :file1 "$file1blob"
+       '
+       
+     @@ t/t4141-apply-icase.sh: test_expect_success 'rename file1 to file2' '
+              # start from file0 and file1
+              git reset --hard current &&
+       
+     -@@ t/t4141-apply-icase.sh: test_expect_success 'rename file1 to file2' '
+     +@@ t/t4142-apply-icase.sh: test_expect_success 'rename file1 to file2' '
+              test_cmp_rev :file1 "$file1blob"
+       '
+       
+
 -- 
 gitgitgadget
