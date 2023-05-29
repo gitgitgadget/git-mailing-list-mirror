@@ -2,92 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 736C5C77B7A
-	for <git@archiver.kernel.org>; Mon, 29 May 2023 13:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12B3DC77B7A
+	for <git@archiver.kernel.org>; Mon, 29 May 2023 14:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbjE2NlS convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 29 May 2023 09:41:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
+        id S230194AbjE2OCi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 May 2023 10:02:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjE2NlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2023 09:41:17 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A8278E
-        for <git@vger.kernel.org>; Mon, 29 May 2023 06:41:16 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 34TDdotf1065017
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 29 May 2023 13:39:51 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Paul Jolly'" <paul@myitcv.io>, <git@vger.kernel.org>
-References: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
-In-Reply-To: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
-Subject: RE: Automatically re-running commands during an interactive rebase or post commit
-Date:   Mon, 29 May 2023 09:41:08 -0400
-Organization: Nexbridge Inc.
-Message-ID: <002901d99233$3d0c8b80$b725a280$@nexbridge.com>
+        with ESMTP id S229483AbjE2OCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2023 10:02:35 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62FB91BE
+        for <git@vger.kernel.org>; Mon, 29 May 2023 07:02:06 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-256797b5664so719926a91.2
+        for <git@vger.kernel.org>; Mon, 29 May 2023 07:02:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=myitcv.io; s=google; t=1685368922; x=1687960922;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lkms7/KLeRKWAHFJtRrxscQD38mEH1TmGgQA6tVJjbM=;
+        b=RgLLHZriBs/VvM6en/oekeHFxa+ThCzetxzb5wLPYJ+lRue4QoJVGIhe6aZ2oDCk+F
+         MkaIMsTJmwGuCOsZ3lroQjCbR1POUIPHkKt6R6I3BDTZZRNK2gdZkpa8xyIH+laLjIvD
+         HDa9pX5sk7oLSY2PDN9So1q4Mg1A4gDpJPGDQSXPwtfLG5k0W3rPeSmsvHvZZlAGwMCX
+         HJpZBxM98HT5rluAkD8IYv2ue7OcaNdRTYhYQpwOFKEKkSElC3oUgK9UQyUQZ1CNEYJc
+         aEC5XcDcaaB4QX7brR6uMz6iNK9pWtfIM1jWA3D92VcA991WT2ZM8qOXkq+Y+anIiZs/
+         VgUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685368922; x=1687960922;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lkms7/KLeRKWAHFJtRrxscQD38mEH1TmGgQA6tVJjbM=;
+        b=MupOBm/a7UQ0nRhucenlvmkQ+5vMQpmvqdY1FXmXTVtX6QzYrXA2j+wH+bl1ZHxCb0
+         Rrg5ptp6YGOjK7mqD8Pe672HbehQCr7fIWlM1CHj8RZ9R5AatGgP2cFS/6F26n9Ywrq8
+         i8jfajaQHjhFk1644r0Dyz6bjwoIiYBHaouJylEVVq1osKtFklDFTdbJpukp/Cg+6IR3
+         ++oxxScLgFLrkdsfLrYd8bRIcQaADej/OhMA4AA6MQDYvlhsRqeur3RglcU8QLMFfI1w
+         H24ZG5/Vwc85fLlvY7ZVoys9SoR0N5BGyKh6cw1yZKmelBwFZ1sMs3m9hNKZA8u3Vx9P
+         Vl+A==
+X-Gm-Message-State: AC+VfDx2ch4qRihk+dfIXLECopCrba2t0x3Fas6XZeqpYg3Rw50/2nZG
+        OQMWRPw4cz69tXFFK7BHhGDtWAC/sJGmpNMQEeYVSRqZeFiOumtkiOQ=
+X-Google-Smtp-Source: ACHHUZ7CahpgJfweEtzY48WnrxbFdtHrAP9D4FlvkO1Gbz9Ug0mCP+BKYg3wM6V997SluXA/AaDM/cgx/RxdSwk9oqQ=
+X-Received: by 2002:a17:903:41c5:b0:1ad:edbd:8547 with SMTP id
+ u5-20020a17090341c500b001adedbd8547mr12598106ple.15.1685368921997; Mon, 29
+ May 2023 07:02:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQDneTaXbkso+fEzMDaNKqU33vFREbFVc67A
-Content-Language: en-ca
+References: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
+ <002901d99233$3d0c8b80$b725a280$@nexbridge.com>
+In-Reply-To: <002901d99233$3d0c8b80$b725a280$@nexbridge.com>
+From:   Paul Jolly <paul@myitcv.io>
+Date:   Mon, 29 May 2023 15:01:50 +0100
+Message-ID: <CACoUkn6wzoHph+BU3eYWqmf4ZWGji08Qhhjn+z4zrWJp1csPbQ@mail.gmail.com>
+Subject: Re: Automatically re-running commands during an interactive rebase or
+ post commit
+To:     rsbecker@nexbridge.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> >Please can someone help nudge me in the right direction?
+>
+> I wonder whether setting up a clean/smudge filter might help. You might want to look into a clean filter that runs your code generator.
 
+Thanks. I'm not clear that this will help, because the main problem is
+that the rebase stops when trying to apply a later commit. In this
+case, the previous commit will be "clean", but the commit the rebase
+is trying to apply will conflict and the rebase process will stop
 
->-----Original Message-----
-On Monday, May 29, 2023 9:39 AM, Paul Jolly wrote:
->I would appreciate some advice on the best way to solve the following problem.
->
->As part of my project, I have a code generation script that sha256 hashes a number of
->files to another file. This produces a deterministic "has this part of the project
->changed" indicator via the code generated file's content, that I then use in various
->cache invalidation steps.
->
->This means, however, that I need to re-run that code generation script as part of each
->commit in order to ensure that the code generated hash file is current (I have a step
->in CI that detects if it is not, which re-runs the code generation script to then see if
->the commit is "clean").
->
->As part of my development setup I do a lot of interactive rebasing to edit earlier
->commits in a branch (these "stacks" of changes are reviewed via Gerrit, which
->understands a relation chain of changes).
->Via this workflow, I often do a git rebase and edit an earlier commit in such a way
->that I need to re-run the code generation script.
->
->The challenge is that any commit in such a "stack" of commits might need me to re-
->run the code generation script. But I clearly don't want to do this manually!
->
->What I'm looking for is a way to automatically re-run this code generation script
->when I commit changes, or perform a rebase-edit step etc.
->
->I've tried to experiment with how I might do this using git commit hooks. But so far,
->my git foo is failing me. It mainly fails because when doing an edit of an earlier
->commit via an interactive rebase, later changes might well conflict (in the generated
->file) with the results of the code generator having been re-run on the edited commit.
->At this point, my git rebase --continue stops until I have fixed the conflict. But in
->almost all situations, the conflict comes in the generated hash file. Which I fix by
->simply re-running the code generation script (I could optionally fix it by doing a git
->checkout --theirs, and then re-running the code generation script).
->
->This all feels tantalisingly close to being a perfect workflow! But I can't quite figure
->out how to make the git hooks "work" in such a way that doesn't require any
->intervention from me (except in those situations where there is a conflict during the
->rebase that is _not_ in the code generated file and so does require my intervention).
->
->The code generation step is incredibly fast if there is nothing to do, and is quite fast
->even when there is something to do (in any case it can't avoid doing this work).
->
->Please can someone help nudge me in the right direction?
-
-I wonder whether setting up a clean/smudge filter might help. You might want to look into a clean filter that runs your code generator.
-
---Randall
-
+Reading elsewhere, I'm now looking into whether wrapping the default
+mergetool will help provide the "hooks" I need.
