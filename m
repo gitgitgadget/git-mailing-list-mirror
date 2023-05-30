@@ -2,129 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E71E3C77B7A
-	for <git@archiver.kernel.org>; Tue, 30 May 2023 01:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAD1FC7EE23
+	for <git@archiver.kernel.org>; Tue, 30 May 2023 07:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbjE3BRU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 May 2023 21:17:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56494 "EHLO
+        id S230143AbjE3HXu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 May 2023 03:23:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjE3BRS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2023 21:17:18 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11EEE9C
-        for <git@vger.kernel.org>; Mon, 29 May 2023 18:17:17 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id 41be03b00d2f7-53202149ae2so2342466a12.3
-        for <git@vger.kernel.org>; Mon, 29 May 2023 18:17:17 -0700 (PDT)
+        with ESMTP id S230311AbjE3HXX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2023 03:23:23 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8626C9
+        for <git@vger.kernel.org>; Tue, 30 May 2023 00:22:53 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id 6a1803df08f44-6261890b4d7so19604206d6.1
+        for <git@vger.kernel.org>; Tue, 30 May 2023 00:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685409436; x=1688001436;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y2LhFSzZLLUcjtlkcZZGlldmduHyRv6RMHPaWgGhc7k=;
-        b=ZnomUpRI22h5HjXX3xQk4xBckjIOmK54s/71s9VRwiA+VzVG7MsAKHgG8Z7k1EGrwN
-         gffdPZXy33KxQsFyedMR/v+I4WUZcBQtqXIZZzF2faAiVYoV9Esq8tarX0IlqLDg1Jr2
-         T5fQLfKCCEoAebuWHa080Y/LBmOFIYdqGSbxtLBynlPRIVZTWUIlkLbhZaSNLEf/V+ht
-         05A6SR1uH/41xB1ZRwvzWBOB32zburB/eHfCDXy91bJC/zcBnPYIx3dxCORRnifGlT0g
-         cI4uvwevKH/09HvXUq7VIHxvf1mFcEMbjMvWnoY79A/QcvRarKm4xjsZiAcCQoo3DlbT
-         v2RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685409436; x=1688001436;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1685431373; x=1688023373;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y2LhFSzZLLUcjtlkcZZGlldmduHyRv6RMHPaWgGhc7k=;
-        b=hKLq7TWv17ny835tDIS+i3vCgBB25ckx0CeGNW46gJL85zWQHdJKmhOqZGF08gDqbD
-         l18uQW55MkOGuDrwCBdND/NCu0LulAVWfBdoue1Y/39gKlvf8BUQAqJMLZong30CHJ15
-         42eyltc+LopjvFMMmjAMiVST/bldkrc38TrVSYHGplOhq5WKpxW6ZNRVkLfBVscg+Ars
-         i59J7h79ZP7HPGYMPgMMQwksd0IjBhBfbzADxI2Xh71+YwKqsTATn7muC/nV1+NA2uoL
-         x3txnl7boBptWtkE8c0R3FrMTK+l1G5XMP7JrywlrVv4EMxVgOER7tD5HcV9DdaRO/h7
-         PdiA==
-X-Gm-Message-State: AC+VfDzBHKAH8h1kFsu9XYdelSiAHOOCLxw9YPZKTVxjPLGUrI5lITcr
-        lmzjeYdg1zb4FYFVkYofvMU=
-X-Google-Smtp-Source: ACHHUZ4RZ81L6BAJyOOCwNRVZskAuAX6OACJ6bQhgD9T5I6J11Ups+6nY2TO6EMhEIurm3wUFtxc8g==
-X-Received: by 2002:a17:902:dac2:b0:1b0:46ae:ff8b with SMTP id q2-20020a170902dac200b001b046aeff8bmr796163plx.48.1685409436326;
-        Mon, 29 May 2023 18:17:16 -0700 (PDT)
-Received: from debian.me (subs28-116-206-12-46.three.co.id. [116.206.12.46])
-        by smtp.gmail.com with ESMTPSA id n21-20020a170902969500b00192aa53a7d5sm3586331plp.8.2023.05.29.18.17.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 18:17:15 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 2173E1069B8; Tue, 30 May 2023 08:10:01 +0700 (WIB)
-Date:   Tue, 30 May 2023 08:10:01 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bruno Brito <bruno@git-tower.com>,
-        Thomas Bock <bockthom@cs.uni-saarland.de>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: Draft of Git Rev News edition 99
-Message-ID: <ZHVM6dw4lIHjdLGw@debian.me>
-References: <CAP8UFD2zaEPKNj2SpgGQUyFRmNp24E-8n1O9K5Se9=OhXckxGQ@mail.gmail.com>
+        bh=Mm2p6zLW7iD8l+meYbUZCp3vn/bnSARP5PuTyJ4Lrhs=;
+        b=XImd2GaqduUL99DCe6hsaKeQt3oWT1YTHYlaYzUok0vuIb038QuG329l4D7wBrhdye
+         N6neuGwpO11G0e0Lln2YVkKAI2NnuCa/gur+YHN15Y2mKHq7oseKwbl/7aQoYJpcvBKX
+         EOSFEjrtmWIzbEXdYgInRamF7wetyNPl9wWgVxuMzuuCOxBcKpM+IamPRXcKCbowWcv4
+         /sGRchP/yI+PloB7kucUoy3EmyMadnWaRpVzTT+bFdrRpjv1/QgryOpi9PkWIedkdAsz
+         S8Ix2HcY63qX6v7DLFxCHGT+gPcn38Oa8xwotNZP8HTpttACvnht9we5iBdVIXtBhPpB
+         Hvlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685431373; x=1688023373;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Mm2p6zLW7iD8l+meYbUZCp3vn/bnSARP5PuTyJ4Lrhs=;
+        b=HqUC4963rEH45AAt03SAccCm2TQGf2vjkgFUbU4oiyELUQ0pqU1H+bU2Z48HmjiAmb
+         dox83YHGCMXAjtctdX8m1TTILOd9FjDnKZoQ6tf4LNKv2VRf36XWzZf1cHKW9QCxgDcg
+         pgpYBjwXn1qSrQJQ+FO9Dta2LZZn7+GSuJCVujKVgGa6U0XlQH+LkwMR9IPQveteBesB
+         6fYZuYydqvxtTRcoPb948QdJw7mlXurlTcWwLcc9tW8MKxqjt/EA9ZUp+3x6BBD6QLI4
+         XIkKCKCp/bpCRtmMcWwhTdk1vIbLkkBCRlNFc0wzJKaeKDp2uvkOG0pLNftv1BK+uXk1
+         F0zA==
+X-Gm-Message-State: AC+VfDz2dNLFoM2WmdaUdYQo6F/pvsIAjJ1Rb0hX0h++1YVqaeaLNfts
+        EwVX8juiAVj5hoa9aJ0OdLQaSFncOomNWKwGKLe/vunnV66sTA==
+X-Google-Smtp-Source: ACHHUZ5r16VCfkKeVQwl/ija46gAzsIsuC1gBKrginQnv4uAPQqTyFA3w67eIogmqn9rBOTRz4tCW+3KEagLsNA9nbM=
+X-Received: by 2002:a05:6214:76a:b0:626:32fc:999a with SMTP id
+ f10-20020a056214076a00b0062632fc999amr1079753qvz.28.1685431372757; Tue, 30
+ May 2023 00:22:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0DmM9OMtK3+3LOgk"
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD2zaEPKNj2SpgGQUyFRmNp24E-8n1O9K5Se9=OhXckxGQ@mail.gmail.com>
+References: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
+In-Reply-To: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
+From:   Son Luong Ngoc <sluongng@gmail.com>
+Date:   Tue, 30 May 2023 09:22:41 +0200
+Message-ID: <CAL3xRKfj6R9BfnKEcEqcD5Z+y_A1uocSgEsPyoaV95VXenjHbQ@mail.gmail.com>
+Subject: Re: Automatically re-running commands during an interactive rebase or
+ post commit
+To:     Paul Jolly <paul@myitcv.io>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hey Paul,
 
---0DmM9OMtK3+3LOgk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, May 29, 2023 at 3:44=E2=80=AFPM Paul Jolly <paul@myitcv.io> wrote:
+>
+> Hi all,
+>
+> I would appreciate some advice on the best way to solve the following pro=
+blem.
+>
+...
+>
+> I've tried to experiment with how I might do this using git commit
+> hooks. But so far, my git foo is failing me. It mainly fails because
+> when doing an edit of an earlier commit via an interactive rebase,
+> later changes might well conflict (in the generated file) with the
+> results of the code generator having been re-run on the edited commit.
+> At this point, my git rebase --continue stops until I have fixed the
+> conflict. But in almost all situations, the conflict comes in the
+> generated hash file. Which I fix by simply re-running the code
+> generation script (I could optionally fix it by doing a git checkout
+> --theirs, and then re-running the code generation script).
+>
+> This all feels tantalisingly close to being a perfect workflow! But I
+> can't quite figure out how to make the git hooks "work" in such a way
+> that doesn't require any intervention from me (except in those
+> situations where there is a conflict during the rebase that is _not_
+> in the code generated file and so does require my intervention).
+>
+> The code generation step is incredibly fast if there is nothing to do,
+> and is quite fast even when there is something to do (in any case it
+> can't avoid doing this work).
+>
+> Please can someone help nudge me in the right direction?
 
-On Tue, May 30, 2023 at 12:34:17AM +0200, Christian Couder wrote:
-> Everyone is welcome to contribute in any section either by editing the
-> above page on GitHub and sending a pull request, or by commenting on
-> this GitHub issue:
->=20
->   https://github.com/git/git.github.io/issues/643
->=20
-> You can also reply to this email.
+In general, there are 2 cases that you would want to handle:
+1. Inserting format directive in between commit rebase that DOES NOT
+    come with merge conflicts
+2. Same but DOES come with merge conflicts.
 
-=46rom the draft:
+For (1), you might be interested in tools such as
+- Git Absorb(a) that automatically fixup your stack of commits with your
+  current dirty changes.
+- Git Branchless(b) "git test" feature
 
-> After some discussions between Peff, Phillip and Junio, Peff sent a versi=
-on 3
-> of his patch series with small changes. Especially the new version makes =
-sure
-> we reject timestamps that start with a character that we don't consider a
-> whitespace or a digit or the - character before using strtoumax(3) as thi=
-s was
-> considered enough to avoid issues related to this function.
+Both of these tools are heavily influenced by Meta's internal Phabricator
+mercurial workflow. Since the release of these tools, Meta has also
+open-sourced their internal tool at Sapling SCM(c) which they touted
+to be git-compatible.
 
-I think it's odd to have second person (we) when the text is written in
-third-person perspective. Thus, abouve should have been:
+For (2), and if none of the tools above solve your problem,
+then I recommend using git-rebase interactive with a vim macro to
+generate the needed rebase todo. You can find my comment in (d)
+to see what such a rebase todo list would look like.
 
-> ... Especially in the new version, it made sure that timestamps that were
-> started with a character that wasn't considered as either a whitespace, a
-> digit, or - character, were rejected before using strtoumax(3) ...
+Tools such as Restack (e) take it a step further by providing a custom Git
+`sequence.editor` to programmatically generate the rebase todo for you.
+This could be a bash script, or a perl script... or a custom Go binary of
+your choosing. You might want to go down this route if a vim macro is
+not sufficient and you require some custom logic.
 
-Thanks.
+Finally, I would recommend turning on rerere.enabled (f) config to store
+the conflict resolution for subsequent rebase attempts. This way, you would
+only need to resolve each rebase conflict once.
 
---=20
-An old man doll... just what I always wanted! - Clara
+(a): https://github.com/tummychow/git-absorb
+(b): https://github.com/arxanas/git-branchless/wiki/Command:-git-test#fixin=
+g-formatting-and-linting-issues
+(c): https://sapling-scm.com/docs/commands/absorb
+(d): https://github.com/arxanas/git-branchless/discussions/45#discussioncom=
+ment-3364792
+(e): https://github.com/abhinav/restack
+(f): https://git-scm.com/docs/git-config#Documentation/git-config.txt-rerer=
+eenabled
 
---0DmM9OMtK3+3LOgk
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> Many thanks,
+>
+>
+> Paul
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZHVM4gAKCRB7tWyQc2rT
-CKiKAQC2EVpuS2rT6mtzs4+iWV1uvBrKy9Tz2peqe/23vvGPmQEA6lA6/5npUtYa
-smlvflVDLrdhl3ZHuq/5j3q3DtS+jA8=
-=hRLG
------END PGP SIGNATURE-----
-
---0DmM9OMtK3+3LOgk--
+Cheers,
+Son Luong.
