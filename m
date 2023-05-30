@@ -2,142 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C90BC7EE23
-	for <git@archiver.kernel.org>; Tue, 30 May 2023 10:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E0BC77B73
+	for <git@archiver.kernel.org>; Tue, 30 May 2023 10:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbjE3K3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 May 2023 06:29:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56666 "EHLO
+        id S231630AbjE3KnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 May 2023 06:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjE3K2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2023 06:28:25 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA11E58
-        for <git@vger.kernel.org>; Tue, 30 May 2023 03:27:26 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b01d7b3ee8so25178845ad.0
-        for <git@vger.kernel.org>; Tue, 30 May 2023 03:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=myitcv.io; s=google; t=1685442446; x=1688034446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hqg5FoSa1MR9LJqC1AFW32qQaxBhsTo7SuYiogPrJ+s=;
-        b=SMZeo9NbEVx5Ab6eeZ/8qkrerrQURDwWwwsUF9yE23K/113yLyDcGZaitKtJNyjIvM
-         mcJ1MjzD8B5eLkYLn33sJ92ZvuGuyH52Aq0MjPeNQIl2YhhoIDKI88wXuVFBYjoevy/u
-         CflJpvSdL05HOCQUJCvm4wJmN96sJP8sJtbZkKwMEBMss2moO9VkD5llThFbh1g9PTNs
-         xNEZa2Tw/ONS7ppnJlBeIKeNbs6f3XU/BT61vAzakjpSZxYQgLSj64vPb7MuzUFCAz3J
-         KA2jYiD3zLzJcX1Yu/E+tmfVw8V1tN6FEEGWwfxDYz4ahNZ3wm5LB+mIBma2+ww5ObGO
-         eokQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685442446; x=1688034446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hqg5FoSa1MR9LJqC1AFW32qQaxBhsTo7SuYiogPrJ+s=;
-        b=iU2yyDUHXbDLVop/eifis/vQLGqfOgL2VqDtGA1w+uk28t8ony5VZZAelqWfpHwWUM
-         gpsip3Yrz7X/ZKiV7s1Cp+qpzAGjkvAIW6APjyEUU1ahvBD208a7ojqtJy7/wmQllAxh
-         fsj4BBgwG4aM4WDdenX4dJO9gPr0Y9c8wkHMRFGQxl+wXB+ifgtWkQC48/jnv46b7Lul
-         SrbVyDOop7fZ8tuaKN6nWwZWT1Ionm6u7kPXL9Z2GINafEKn6cOTWss+Qe1B3zhUpiDp
-         epaXxgp29WG8kzjvgb77psoWKHHV8SwA78oxwElYiAQ6fBYmmwYaVdDmYCo+cTnNhH11
-         G8Kg==
-X-Gm-Message-State: AC+VfDxpA/NtBzJ0kYz0UKnP8sSGAo3Bnu/5z1wKp3lyj7yXmMCouuNN
-        kyM/SXxZH6jS8si8oo69av5GglY24yw4zHVW/HeyISspjQ6n+QPiWxlnQg==
-X-Google-Smtp-Source: ACHHUZ7n5EbyCwsrCe338kjHJInNk0Cp1MtgVBKWuExx6WXEEnI0GkZk+6YlO3NYV0ajunyg2kfZAFK+0axmvcsdJwk=
-X-Received: by 2002:a17:902:ab8b:b0:1ae:6882:5bc4 with SMTP id
- f11-20020a170902ab8b00b001ae68825bc4mr1633765plr.64.1685442446396; Tue, 30
- May 2023 03:27:26 -0700 (PDT)
+        with ESMTP id S231618AbjE3KnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2023 06:43:08 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EFCD127
+        for <git@vger.kernel.org>; Tue, 30 May 2023 03:42:55 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id D56B83200708;
+        Tue, 30 May 2023 06:42:54 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 30 May 2023 06:42:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:message-id:mime-version
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1685443374; x=
+        1685529774; bh=6xfJ7EJhLu6AoIWX4oqKQrRCtAuceEAND8UneaCZwJ8=; b=V
+        NfXwQgZXJkHE1OC0xc0BKcZGwMH0IlT1Dg3Wq1UlvNa7bX60+78wuVcc/eA7rJ04
+        CvbdOFzwXb1qf/x7OZ1w3Hwoa+6q86SVtDRwWTWIU23XXuclXDedlkt2IGpoFqi7
+        LbfU3wxJKEZhLDFGvAL5wMtbpWxXt/gcEVT0gppPleXYLwJw0ECkA8O45BB6AhWF
+        +gi8iBU8yMGuYDSqGBbhLSCs8QaEiQO9/vpAw/Af8/mtvBuzbpwfuHZena1BQyXJ
+        Mz/CYKL6qrkSUooPIRFHyN2QsjvXQZJDkQO706SOZCfuMlJ3U93Utzel16W66uvy
+        9TjDaarw0SNkLnKRndd9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+        :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; t=1685443374; x=1685529774; bh=6
+        xfJ7EJhLu6AoIWX4oqKQrRCtAuceEAND8UneaCZwJ8=; b=SwxqmBGGv4DOSIPVI
+        aTetzjXFFB4raKqfam5j1SCOT9kobO3MOA/AiRdEbs0sjrM8Dzn6raFjvB7wyqN2
+        Vv6Pah/hShgEzQgrIWo02+o7XiDiktkqW0U2Nvhgm8nke4KXcHZowNqODnqjbY/E
+        eyCdak4jyuIgxgsCa1RC6lGdg1yIie5Ht/ipgtbeQeXWSe9sSVZhnYu0WBTWedlg
+        4cN4FPmzFiBeFVqSECMBFX/3W4JbGZUyLvE6Bznx3rrwNTfPUQs39XL1sMafVLE7
+        yE/vzZ8GQ5dbYliXe7dquv2PAhiLSipfXgRK9mgHaSx0leZvKTg/AF0YhyP/bRSA
+        jmqZA==
+X-ME-Sender: <xms:LtN1ZN86oa-RIqH76-R0OkuHDcKOSfnDwYbkSeqUmf47e2fdRowF9Hs>
+    <xme:LtN1ZBuHFJJF8La8VfX-nEAQv8pyw11b2PUeoMnkCk34qlpODt7D4AFKRxXf7IPU4
+    J3qCnEL73yYlTxlXQ>
+X-ME-Received: <xmr:LtN1ZLAgZJIXcYjRZ8GHMejEZbeqyubA8Gj0RMEffRurHQjCsA7HqWXw3590-OJMqs4rhwMgM9C-HRezDtrr2Cd2oR2VaNoF3Mo1YRU2VitvgbIZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeekjedgfedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrg
+    hmvgeqnecuggftrfgrthhtvghrnhepteegtdegheeiheefjedtlefhueeuieettdetgfet
+    hfevveeutdelvdefjeehveejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhh
+    rghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:LtN1ZBd3I1H0yFFhj1Ku-Dl_Gd3_JpIFSgfsMUob7SmprlJIi8yMUA>
+    <xmx:LtN1ZCMjkGD2bBtiHtK8z0qKsRDFp51UhaDoJ29md2HV463eyISOtw>
+    <xmx:LtN1ZDkEG9ySXDmO4QkrcwUcFE-rcsQ0DOjFcicF9W-WgkZgYGXNmQ>
+    <xmx:LtN1ZPpXABBtv3Y4vLrRd3FVaRnUAB2l_l3Nw2ON3m0Rvx5IYKOvOg>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 May 2023 06:42:53 -0400 (EDT)
+From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
+To:     git@vger.kernel.org
+Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: [RFC PATCH 0/3] range-diff: treat notes like `log`
+Date:   Tue, 30 May 2023 12:41:28 +0200
+Message-ID: <cover.1685441207.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.41.0.rc2
 MIME-Version: 1.0
-References: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
- <ZHXFdRnrwzNCA227@ugly>
-In-Reply-To: <ZHXFdRnrwzNCA227@ugly>
-From:   Paul Jolly <paul@myitcv.io>
-Date:   Tue, 30 May 2023 11:27:15 +0100
-Message-ID: <CACoUkn5i_nR5Tpd_ZBBQyP4e0ObYKVXXa9d+umkdpF5PPXa-pg@mail.gmail.com>
-Subject: Re: Automatically re-running commands during an interactive rebase or
- post commit
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi ossi,
+Currently, `range-diff` shows the default notes if no notes-related
+arguments are given. This is also how `log` behaves. But unlike
+`range-diff`, `log` does *not* show the default notes if
+`--notes=<custom>` are given.
 
-Thanks for the response.
+These changes are supposed to make `format-range` behave like `log` with
+regards to notes.
 
-> i would recommend taking a step back and considering whether you're
-> actually trying to fix the right problem.
->
-> why are you checking in an auto-generated file, esp. given that it can
-> be generated very quickly as you report?
->
-> usually, this should be done by the build system.
+These changes also fixes an issue with notes being shared in the cover
+letter via `range-diff`, and that’s really the main motivation for
+making these changes.
 
-Thanks for asking about this and forcing me to think more on the point.
+§ How `log` works
 
-To add a bit more context, and explanation behind the current design decisions.
+`log` shows the default notes if no notes arguments are given. But if
+you give it specific notes to show then it forgets about the default
+notes. Further, there is the convenience `--notes` option which will
+show the default notes again. These options are cumulative. For example:
 
-The system I have described is a pipeline that supports a
-documentation site for https://cuelang.org/. The architecture I have
-described is that of the preprocessor, a tool which helps to automate
-the testing of examples in documentation. Content authors write
-documentation in format X, the preprocessor validates (and runs, as
-required) that content, and produces format Y. Format Y is the input
-to a Hugo (https://gohugo.io/) static site; hugo processes format Y to
-produce format Z, the HTML that then renders the site.
+    git log --notes --notes=custom
 
-The generation of hashes that I referred to before relates to the
-contents of format X. If when the preprocessor runs it detects
-(according to the cache files commited with the content) a cache hit,
-then there is no need to re-run an example in some documentation. We
-commit those hashes for now to sidestep needing to create and maintain
-a shared preprocessor cache (a cache that is shared between CI systems
-and users). We might move to a system like that in the future; for now
-this feels like a sufficient setup.
+Will show the default notes as well as the `custom` notes.
 
-The cache right now is very dumb; well-known files are updated with
-hash values. And this is what creates the git conflicts. One thing we
-could do to eliminate the conflicts altogether is commit a
-content-addressed cache. This would have the problem of growing over
-time... but I think we could solve that problem a different way.
+See discussion in: https://lore.kernel.org/git/20110329143357.GA10771@sigill.intra.peff.net/
 
-> if the used build tool really is too dumb to integrate it into the build
-> system, you might have luck with a post-checkout hook.
->
-> you can also obtain existing hashes directly from git, with ls-tree,
-> though this would again require some kind of integration with the build
-> or checkout process.
->
-> if you can't get around checking in the hash, i can think of hacking it
-> using rebase --exec. basically, before each pick you'd create a commit
-> that reverts the hash change (by checking out that path from the parent
-> of the last commit that touched it, found automatically with git log),
-> and after the pick you'd squash away the revert (using `reset HEAD~2 &&
-> commit -C @{1}` or something to that effect). very ugly, very fragile.
+§ How `range-format` works
 
-Thanks. I have a working setup now using a combination of git rebase
--x and a script that I run whenever git rebase fails because of a
-conflict. This works but is not ideal for a couple of reasons:
+`range-format` passes `--notes` to `log`, which means that it does not
+have the default behavior of `log` (forget the default logs if you say
+e.g. `--notes=custom`). However, the man page says that (under
+`--[no-]notes[=<ref>]`):
 
-1. Each interactive rebase is "littered" with exec lines which should
-be a detail
-2. I need to re-run the script manually when conflicts are detected
+> This flag is passed to the git log program (see git-log(1)) that generates the patches.
 
-Point 1 would be nicely addressed by a git hook that fires "pre
-commit" during a rebase.
+This makes me (at least) think that `range-format` is supposed to work
+just like `log` with regards to notes.
 
-Point 2 could be solved by a custom merge driver, but that's seemingly
-not possible right now:
-https://lore.kernel.org/git/ZHXFdRnrwzNCA227@ugly/T/#m14b204843fea1fe9ff1c7500244049a43ed610eb.
-Alternatively it could be solved by another hook that fires when
-rebase detects a conflict, a hook that attempts to "recover" the
-situation before rebase actually fails.
+§ `format-patch` and the difference between showing and sharing
 
-Thanks again for asking about whether we are solving the right problem
-here. Writing my response above prompted me to think again about
-different solutions.
+`format-patch` has a different default: it shows no notes. This makes
+sense in my opinion since `format-patch` is meant to be used to share
+changes with others, and you might be surprised if your notes (which
+might have only been notes to yourself) are sent out in your emails
+(keep in mind that notes refs are *not* pushed by default).
 
-Best,
+But the slightly faulty behavior of `range-diff` bleeds through to
+`format-patch` since the latter calls the former; if you have default
+notes they can be shared in the range-diff on the cover letter, even
+though `format-patch` isn’t supposed to show them.
 
+§ Code layout and approach to the problem
 
-Paul
+As I’ve said, my focus was on fixing `format-patch`, so I’ve considered
+how `format-patch` calls `range-diff` which in turn calls `log`.
+
+`format-patch` is a command which is defined in `builtin/log.c`. For
+notes in particular it in fact has some explicit logic for handling
+notes based on the value of `rev`. (There seems to be no issues with
+this part of the code; only the code in `range-diff.c` which passes the
+default argument to `log`.) It then calls
+`range-diff.c:show_range_diff`. That function on `master` loads some
+default arguments, among them `--notes`. It then eventually calls `log`
+as a subprocess.
+
+My change consists of co-opting the deprecated `--standard-notes` and
+changing its behavior so that it can be used in
+`range-diff.c:show_range_diff`.
+
+Using a special switch/option was the only way I found in order to fix
+this problem.
+
+I could have also created a new option but I thought that doing a
+smaller change initially would be better.
+
+§ RFC
+
+This is marked as RFC since I chose to co-opt a deprecated option in
+order to get `range-format` to work, in my opinion, as it should.
+
+§ Carbon copy
+
+Based on `contrib/contacts/git-contacts master..@`.
+
+Kristoffer Haugsbakk (3):
+  range-diff: treat notes like `log`
+  doc: pretty-options: remove documentation for deprecated options
+  revision: comment `--no-standard-notes` as deprecated
+
+ Documentation/pretty-options.txt |  1 -
+ range-diff.c                     |  2 +-
+ revision.c                       |  8 ++++++--
+ t/t3206-range-diff.sh            | 28 ++++++++++++++++++++++++++++
+ 4 files changed, 35 insertions(+), 4 deletions(-)
+
+-- 
+2.41.0.rc2
+
