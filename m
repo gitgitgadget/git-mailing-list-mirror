@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5902C77B7C
-	for <git@archiver.kernel.org>; Wed, 31 May 2023 04:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3457CC77B73
+	for <git@archiver.kernel.org>; Wed, 31 May 2023 05:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234199AbjEaElx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 May 2023 00:41:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40692 "EHLO
+        id S231745AbjEaFMP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 May 2023 01:12:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231314AbjEaElu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2023 00:41:50 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5B710E
-        for <git@vger.kernel.org>; Tue, 30 May 2023 21:41:47 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2af2958db45so55495221fa.1
-        for <git@vger.kernel.org>; Tue, 30 May 2023 21:41:47 -0700 (PDT)
+        with ESMTP id S229541AbjEaFMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2023 01:12:13 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EECF7EC
+        for <git@vger.kernel.org>; Tue, 30 May 2023 22:12:11 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2af2e1725bdso6979261fa.0
+        for <git@vger.kernel.org>; Tue, 30 May 2023 22:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685508106; x=1688100106;
+        d=gmail.com; s=20221208; t=1685509930; x=1688101930;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=a8m5lycifajSeR/xxN25rwrD/AtNXC1kjlWheJKQJfM=;
-        b=hufthvW5TXDUCHR+GgofasJ2rdnBX9Ry2lJE54yvn9I99PwQ989JCq+iGhJ/y+qat2
-         4dwbcO5zPaXxysuH81SDzDVs1f+V6ZHVxo2toApeVPOc4u2E56ZvVZ0W/dcPddAbr7au
-         XS2qOgX4vi7KmxBMW8W7NLC9tMSokbkI8rjsaluf5LV/zHfpZV600ldI6S/3wnxj0aP0
-         r3JYZG7oufGBLaUhmTVAm+sJUjBUYmM5vFHNDyrAY2cMNzXvSzRFo3lTF9/lsffSsvel
-         DfFAhy22MSu94W4PYks0eioaMShQb6sIHab56xjfCsV0XZ0YNWjeAMk4VXt3N1Pq9JIi
-         lkqQ==
+        bh=IKLiHfFX0vdlko/mtZGGTf8i9WzVA4tSxRXvC42/hnI=;
+        b=I3Q1MWcfCjN1GiLZ/1+F9RZia9Acomos0yGc6ebPFzeIwjdpUh9iOx1+1q15Ca2K3U
+         /XRCjl+piXh45+a3koXnooJ0jeu95X1DGK3FBUUsFJsQptMCT9Fiq95qnUVlXkerTENT
+         9NVg1unf4iJsMvSlJ/8vKUA3CphvAt/AmVrWGc6gB9vGSs4zAQjYK0G+Ggp/Jxx6yq+G
+         u7QAEGA7aR/vw+LqKBusWUKExDzLECr36MIEX4IA+mzJFcpUC+ZI8mJzxdOjhPjAAKck
+         srfDu4aSwOMWHfJC2F0HTg08ODNIDGRd6/We1tjyGQqTf5zIsLn9e18QdZ4R2GCddDem
+         UwRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685508106; x=1688100106;
+        d=1e100.net; s=20221208; t=1685509930; x=1688101930;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=a8m5lycifajSeR/xxN25rwrD/AtNXC1kjlWheJKQJfM=;
-        b=Ij8bX+RwzUMrsov6efYaoFWm+BY7cmZ4O8/0/81vY5Ad0iLFpt119h//K+NbPhc+lM
-         lw3F+jX/h9g6BLEjhJEGkeG9nQrzBW59R6SmNzgIzqHQ21+QcRZa0eH9RcCnfY1Bdjmf
-         Nf3noNXKRRkRMmzUUJ5XNnvsM+nQN48OKaeJUvRt1Ymz+T4pB2QgHyKjdwNPYQC60qWZ
-         CrsL+zYB7QeSr7sk5J541YWQLWvigf/RNQSgayG4E1B5thv+CsFeumvDWD5jaDM8CkbE
-         9q78LLNMGc9hKF1feMvz6HCKiZ6vr2S/u2neerjSww8oCPvVdn7Qz1R5HO1i+i43nc18
-         ey+Q==
-X-Gm-Message-State: AC+VfDx+dSw4RDyPnpfl8wwUIpGGpzG5YLPxvkuBvhSU5IqlXfXckgeh
-        3qBNJ4FezqGjMEG9CS1gMLqOuQJjjzHSOacxCes=
-X-Google-Smtp-Source: ACHHUZ7mr5uGBAhYt2vPyGw7GcAtCEwmBYD+K/MicphUfQzm0qE/Uk/xpjbfbsfj8/sx9GE2tN1hGWKHL191e4sWb44=
-X-Received: by 2002:a2e:9f0d:0:b0:2ac:7ae8:2c24 with SMTP id
- u13-20020a2e9f0d000000b002ac7ae82c24mr1782188ljk.45.1685508105865; Tue, 30
- May 2023 21:41:45 -0700 (PDT)
+        bh=IKLiHfFX0vdlko/mtZGGTf8i9WzVA4tSxRXvC42/hnI=;
+        b=jyDz9amlRHOP7VmNRd6dWHDKmSV6Ei5/Nfe4uZ7q9mLkHM5FVP0xT6zcSJxp9kcLxf
+         xtDJ9+t+r1heoGw4XHcAN+SE6CsMQoGgIgKKwZ+WRUe1T1cJrPyJkLuH5hWlGCzQVQes
+         u0kzHhY7Lq43fqXuxhgLtH/s640QCcgG7eiKSiHihFBkDdnC88io8mtvsKY9gqBEraG4
+         xT9EDyA5B2pZVdfeKH+bpW7GHM8iClSPOorFDD4lVCoJXtnGFGRoPE+AqdckVJ4qn+jj
+         q5g+6jLMaDjdwCP47PQWB9JQKeBFm+N9gCZ5ONBripLZZFysRUrI1WF/KOTbfGF0Lu6n
+         g8tg==
+X-Gm-Message-State: AC+VfDzE+VAAmNnUk+tz0wdwpyy+dk2bri9lRXDreDoEt7L2vkQF95gO
+        fxruek1PYeN8WDroUtc+zLRABoXjjRmOqo+upY4=
+X-Google-Smtp-Source: ACHHUZ5AQWKp13c+4YCIOR9Q26cUQsGXiuhJ/3B/iGR4LS237JS3+xSV0PcbuWTmgNYIS5sKbE1hOYrH+/b42guBJw4=
+X-Received: by 2002:a2e:b74e:0:b0:2af:23dd:fd71 with SMTP id
+ k14-20020a2eb74e000000b002af23ddfd71mr4088114ljo.25.1685509929839; Tue, 30
+ May 2023 22:12:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1537.git.1685126617.gitgitgadget@gmail.com> <56544abc15d1fce6fb4a0946e709470af9225395.1685126618.git.gitgitgadget@gmail.com>
-In-Reply-To: <56544abc15d1fce6fb4a0946e709470af9225395.1685126618.git.gitgitgadget@gmail.com>
+References: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 30 May 2023 21:41:33 -0700
-Message-ID: <CABPp-BFzA0yVecHK1DEGMpAhewm7oyqEim7BCw7-DTKpUzWnpw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] repository: create disable_replace_refs()
+Date:   Tue, 30 May 2023 22:11:57 -0700
+Message-ID: <CABPp-BFj0+3y7C4FKy9qzVjHWP2r6-=azW8g0j3WGX-zYpaCQQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Create stronger guard rails on replace refs
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, vdye@github.com, me@ttaylorr.com,
         gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>
@@ -65,315 +65,64 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, May 26, 2023 at 11:43=E2=80=AFAM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
-> From: Derrick Stolee <derrickstolee@github.com>
+> (This series is based on tb/pack-bitmap-traversal-with-boundary due to
+> wanting to modify prepare_repo_settings() in a similar way.)
 >
-> Several builtins depend on being able to disable the replace references
-> so we actually operate on each object individually. These currently do
-> so by directly mutating the 'read_replace_refs' global.
+> The replace-refs can be ignored via the core.useReplaceRefs=3Dfalse confi=
+g
+> setting. This setting is possible to miss in some Git commands if they do
+> not load default config at the appropriate time. See [1] for a recent
+> example of this.
 >
-> A future change will move this global into a different place, so it will
-> be necessary to change all of these lines. However, we can simplify that
-> transition by abstracting the purpose of these global assignments with a
-> method call.
+> [1]
+> https://lore.kernel.org/git/pull.1530.git.1683745654800.gitgitgadget@gmai=
+l.com/
 >
-> We will never scope this to an in-memory repository as we want to make
-> sure that we never use replace refs throughout the life of the process
-> if this method is called.
+> This series aims to avoid this kind of error from happening in the future=
+.
+> The idea is to encapsulate the setting in such a way that we can guarante=
+e
+> that config has been checked before using the in-memory value.
+>
+> Further, we must be careful that some Git commands want to disable replac=
+e
+> refs unconditionally, as if GIT_NO_REPLACE_REFS was enabled in the
+> environment.
+>
+> The approach taken here is to split the global into two different sources=
+.
+> First, read_replace_refs is kept (but moved to replace-objects.c scope) a=
+nd
+> reflects whether or not the feature is permitted by the environment and t=
+he
+> current command. Second, a new value is added to repo-settings and this i=
+s
+> checked after using prepare_repo_settings() to guarantee the config has b=
+een
+> read.
+>
+> This presents a potential behavior change, in that now core.useReplaceRef=
+s
+> is specific to each in-memory repository instead of applying the
+> superproject value to all submodules. I could not find a Git command that
+> has multiple in-memory repositories and follows OIDs to object contents, =
+so
+> I'm not sure how to demonstrate it in a test.
+>
+> Here is the breakdown of the series:
+>
+>  * Patch 1 creates disable_replace_refs() to encapsulate the global
+>    disabling of the feature.
+>  * Patch 2 creates replace_refs_enabled() to check if the feature is enab=
+led
+>    (with respect to a given repository). This is a thin wrapper of the
+>    global at this point, but does allow us to remove it from environment.=
+h.
+>  * Patch 3 creates the value in repo-settings as well as ensures that the
+>    repo settings have been prepared before accessing the value within
+>    replace_refs_enabled().
 
-I'm confused; doesn't the 3rd patch do exactly what this paragraph
-says you'll never do?
-
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  builtin/cat-file.c       | 2 +-
->  builtin/commit-graph.c   | 5 ++---
->  builtin/fsck.c           | 2 +-
->  builtin/index-pack.c     | 2 +-
->  builtin/pack-objects.c   | 3 +--
->  builtin/prune.c          | 3 ++-
->  builtin/replace.c        | 3 ++-
->  builtin/unpack-objects.c | 3 +--
->  builtin/upload-pack.c    | 3 ++-
->  environment.c            | 2 +-
->  git.c                    | 2 +-
->  replace-object.c         | 5 +++++
->  replace-object.h         | 8 ++++++++
->  repo-settings.c          | 1 +
->  14 files changed, 29 insertions(+), 15 deletions(-)
->
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 0bafc14e6c0..27f070267a4 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -805,7 +805,7 @@ static int batch_objects(struct batch_options *opt)
->                 if (repo_has_promisor_remote(the_repository))
->                         warning("This repository uses promisor remotes. S=
-ome objects may not be loaded.");
->
-> -               read_replace_refs =3D 0;
-> +               disable_replace_refs();
->
->                 cb.opt =3D opt;
->                 cb.expand =3D &data;
-> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-> index a3d00fa232b..639c9ca8b91 100644
-> --- a/builtin/commit-graph.c
-> +++ b/builtin/commit-graph.c
-> @@ -122,7 +122,6 @@ static int graph_verify(int argc, const char **argv, =
-const char *prefix)
->         return ret;
->  }
->
-> -extern int read_replace_refs;
->  static struct commit_graph_opts write_opts;
->
->  static int write_option_parse_split(const struct option *opt, const char=
- *arg,
-> @@ -323,13 +322,13 @@ int cmd_commit_graph(int argc, const char **argv, c=
-onst char *prefix)
->         struct option *options =3D parse_options_concat(builtin_commit_gr=
-aph_options, common_opts);
->
->         git_config(git_default_config, NULL);
-> -
-> -       read_replace_refs =3D 0;
->         save_commit_buffer =3D 0;
->
->         argc =3D parse_options(argc, argv, prefix, options,
->                              builtin_commit_graph_usage, 0);
->         FREE_AND_NULL(options);
->
-> +       disable_replace_refs();
-> +
-
-In this place and several others in the file, you opt to not just
-replace the assignment with a function call, but move the action line
-to later in the file.  In some cases, much later.
-
-I don't think it hurts things, but it certainly makes me wonder why it
-was moved.  Did it break for some reason when called earlier?  (Is
-there something trickier about this patch than I expected?)
-
->         return fn(argc, argv, prefix);
->  }
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 2cd461b84c1..8a2d7afc83a 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -927,7 +927,6 @@ int cmd_fsck(int argc, const char **argv, const char =
-*prefix)
->         fetch_if_missing =3D 0;
->
->         errors_found =3D 0;
-> -       read_replace_refs =3D 0;
->         save_commit_buffer =3D 0;
->
->         argc =3D parse_options(argc, argv, prefix, fsck_opts, fsck_usage,=
- 0);
-> @@ -953,6 +952,7 @@ int cmd_fsck(int argc, const char **argv, const char =
-*prefix)
->
->         git_config(git_fsck_config, &fsck_obj_options);
->         prepare_repo_settings(the_repository);
-> +       disable_replace_refs();
->
->         if (connectivity_only) {
->                 for_each_loose_object(mark_loose_for_connectivity, NULL, =
-0);
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index bb67e166559..d0d8067510b 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1752,7 +1752,7 @@ int cmd_index_pack(int argc, const char **argv, con=
-st char *prefix)
->         if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
->                 usage(index_pack_usage);
->
-> -       read_replace_refs =3D 0;
-> +       disable_replace_refs();
->         fsck_options.walk =3D mark_link;
->
->         reset_pack_idx_option(&opts);
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index a5b466839ba..55635bdf4b4 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -4284,9 +4284,8 @@ int cmd_pack_objects(int argc, const char **argv, c=
-onst char *prefix)
->         if (DFS_NUM_STATES > (1 << OE_DFS_STATE_BITS))
->                 BUG("too many dfs states, increase OE_DFS_STATE_BITS");
->
-> -       read_replace_refs =3D 0;
-> -
->         sparse =3D git_env_bool("GIT_TEST_PACK_SPARSE", -1);
-> +       disable_replace_refs();
->         if (the_repository->gitdir) {
->                 prepare_repo_settings(the_repository);
->                 if (sparse < 0)
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 5dc9b207200..a8f3848c3a3 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -164,7 +164,6 @@ int cmd_prune(int argc, const char **argv, const char=
- *prefix)
->
->         expire =3D TIME_MAX;
->         save_commit_buffer =3D 0;
-> -       read_replace_refs =3D 0;
->         repo_init_revisions(the_repository, &revs, prefix);
->
->         argc =3D parse_options(argc, argv, prefix, options, prune_usage, =
-0);
-> @@ -172,6 +171,8 @@ int cmd_prune(int argc, const char **argv, const char=
- *prefix)
->         if (repository_format_precious_objects)
->                 die(_("cannot prune in a precious-objects repo"));
->
-> +       disable_replace_refs();
-> +
->         while (argc--) {
->                 struct object_id oid;
->                 const char *name =3D *argv++;
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index 981f1894436..6c6f0b3ed01 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -566,11 +566,12 @@ int cmd_replace(int argc, const char **argv, const =
-char *prefix)
->                 OPT_END()
->         };
->
-> -       read_replace_refs =3D 0;
->         git_config(git_default_config, NULL);
->
->         argc =3D parse_options(argc, argv, prefix, options, git_replace_u=
-sage, 0);
->
-> +       disable_replace_refs();
-> +
->         if (!cmdmode)
->                 cmdmode =3D argc ? MODE_REPLACE : MODE_LIST;
->
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index 2c52c3a741f..3f5f6719405 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -609,9 +609,8 @@ int cmd_unpack_objects(int argc, const char **argv, c=
-onst char *prefix UNUSED)
->         int i;
->         struct object_id oid;
->
-> -       read_replace_refs =3D 0;
-> -
->         git_config(git_default_config, NULL);
-> +       disable_replace_refs();
->
->         quiet =3D !isatty(2);
->
-> diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-> index beb9dd08610..6fc9a8feab0 100644
-> --- a/builtin/upload-pack.c
-> +++ b/builtin/upload-pack.c
-> @@ -36,7 +36,6 @@ int cmd_upload_pack(int argc, const char **argv, const =
-char *prefix)
->         };
->
->         packet_trace_identity("upload-pack");
-> -       read_replace_refs =3D 0;
->
->         argc =3D parse_options(argc, argv, prefix, options, upload_pack_u=
-sage, 0);
->
-> @@ -50,6 +49,8 @@ int cmd_upload_pack(int argc, const char **argv, const =
-char *prefix)
->         if (!enter_repo(dir, strict))
->                 die("'%s' does not appear to be a git repository", dir);
->
-> +       disable_replace_refs();
-> +
->         switch (determine_protocol_version_server()) {
->         case protocol_v2:
->                 if (advertise_refs)
-> diff --git a/environment.c b/environment.c
-> index 8a96997539a..3b4d87c322f 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -185,7 +185,7 @@ void setup_git_env(const char *git_dir)
->         strvec_clear(&to_free);
->
->         if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
-> -               read_replace_refs =3D 0;
-> +               disable_replace_refs();
->         replace_ref_base =3D getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
->         git_replace_ref_base =3D xstrdup(replace_ref_base ? replace_ref_b=
-ase
->                                                           : "refs/replace=
-/");
-> diff --git a/git.c b/git.c
-> index 45899be8265..3252d4c7661 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -185,7 +185,7 @@ static int handle_options(const char ***argv, int *ar=
-gc, int *envchanged)
->                         if (envchanged)
->                                 *envchanged =3D 1;
->                 } else if (!strcmp(cmd, "--no-replace-objects")) {
-> -                       read_replace_refs =3D 0;
-> +                       disable_replace_refs();
->                         setenv(NO_REPLACE_OBJECTS_ENVIRONMENT, "1", 1);
->                         if (envchanged)
->                                 *envchanged =3D 1;
-> diff --git a/replace-object.c b/replace-object.c
-> index e98825d5852..ceec81c940c 100644
-> --- a/replace-object.c
-> +++ b/replace-object.c
-> @@ -84,3 +84,8 @@ const struct object_id *do_lookup_replace_object(struct=
- repository *r,
->         }
->         die(_("replace depth too high for object %s"), oid_to_hex(oid));
->  }
-> +
-> +void disable_replace_refs(void)
-> +{
-> +       read_replace_refs =3D 0;
-> +}
-> diff --git a/replace-object.h b/replace-object.h
-> index 500482b02b3..7786d4152b0 100644
-> --- a/replace-object.h
-> +++ b/replace-object.h
-> @@ -48,4 +48,12 @@ static inline const struct object_id *lookup_replace_o=
-bject(struct repository *r
->         return do_lookup_replace_object(r, oid);
->  }
->
-> +/*
-> + * Some commands override config and environment settings for using
-> + * replace references. Use this method to disable the setting and ensure
-> + * those other settings will not override this choice. This applies
-> + * globally to all in-process repositories.
-> + */
-> +void disable_replace_refs(void);
-> +
->  #endif /* REPLACE_OBJECT_H */
-> diff --git a/repo-settings.c b/repo-settings.c
-> index 7b566d729d0..1df0320bf33 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -3,6 +3,7 @@
->  #include "repository.h"
->  #include "midx.h"
->  #include "compat/fsmonitor/fsm-listen.h"
-> +#include "environment.h"
-
-Why?  There are no other changes in this file, so I don't see why
-you'd need another include.
-
->
->  static void repo_cfg_bool(struct repository *r, const char *key, int *de=
-st,
->                           int def)
-> --
-> gitgitgadget
-
-I think the patch is probably fine, but I saw a few things that made
-me wonder if I had missed something important, highlighted above.
+Thanks for implementing this.  I had a few questions on the first
+patch (though I think one of them was answered by noting that you have
+both a global and a repository setting for the flag), but otherwise it
+looks good.
