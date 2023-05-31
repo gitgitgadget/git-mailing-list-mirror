@@ -2,160 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B104C77B7A
-	for <git@archiver.kernel.org>; Wed, 31 May 2023 21:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE87AC77B73
+	for <git@archiver.kernel.org>; Wed, 31 May 2023 22:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbjEaVlg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 May 2023 17:41:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46652 "EHLO
+        id S229648AbjEaWRf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 May 2023 18:17:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjEaVlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2023 17:41:35 -0400
-Received: from ciao.gmane.io (ciao.gmane.io [116.202.254.214])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151A1A3
-        for <git@vger.kernel.org>; Wed, 31 May 2023 14:41:33 -0700 (PDT)
-Received: from list by ciao.gmane.io with local (Exim 4.92)
-        (envelope-from <gcvg-git-3@m.gmane-mx.org>)
-        id 1q4TUJ-0000OH-NJ
-        for git@vger.kernel.org; Wed, 31 May 2023 23:36:11 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To:     git@vger.kernel.org
-From:   Carlos <kaploceh@gmail.com>
-Subject: Re: not robust inconsistent git 2.40.1 with HEAD -> master,
- origin/main, origin/HEAD, origin/master, main
-Date:   Wed, 31 May 2023 17:35:58 -0400
-Message-ID: <a7xmox7j6katje62wx6hhclb7itfbhxnda44s4ve7g3cjyzm6j@2tosx6g6cpgv>
-References: <lxh4jpacuv5ivqp35w5vpbcjlw67r7ix3yog6cc3cu5ij7yqho@mrtr24xxdstx>
- <319cfa79-a508-127f-c201-9f50d5e6fe6a@iee.email>
- <30385b42-0c6a-3588-2b13-0552c23727f2@iee.email>
+        with ESMTP id S230487AbjEaWRd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2023 18:17:33 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B93E1BC
+        for <git@vger.kernel.org>; Wed, 31 May 2023 15:17:10 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-64d60dafa80so129088b3a.3
+        for <git@vger.kernel.org>; Wed, 31 May 2023 15:17:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1685571423; x=1688163423;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kEh0VjWAAuDKMSF35Y82cdCzcD00T6AlvnZWVGbGa6k=;
+        b=xj3KC0gr9liapYnKrxV8hAUKH2mzMT6ssWsF4ryEWUFR3q0SZGpXKd1yjU5vWJ9d4i
+         S6Vty9gqOKvwCYsLL29ozLs794xmaOSCrjJAnY3mO19FsfteyUAYaSM4ZLPjILrbtsyY
+         YR4guSi2QhVYeVGzdozaWNcp8hhnrvDyBRvVQIUnPb/H3spC+7yP3B43KNw/yH/Nc3/i
+         NcbcNI3l0QUug0ih93/lth+FOdNV1sGBO9C5dZHWrj2u4fGWm36k+AmqxjgDTf8NYw2d
+         hskZFiLGjOeRM3RrMLw58ocjOkaI3Gum0LlOZt/iE7t+tvZ+NXkyq9GaWy3vNVi1/n8r
+         JSdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685571423; x=1688163423;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kEh0VjWAAuDKMSF35Y82cdCzcD00T6AlvnZWVGbGa6k=;
+        b=HLGOEOmvZm5VZ8jpo8y7UzTOp93kuggZgj4ul/hJ2xq0GgmbKgFYm+JygIU2ZFKb1L
+         JStjHZwFWOsUoAPsSuhPmpW7qCmgT16PQPYXOlDDcBuo8cmAjx0KOLOacfRsBZWUvgUW
+         gUl8Jp40AT5HXN4Y+Yo7xunoP6KWlU/THnEvID1HnUl/4gOs7wFVWBRZs5iwLkgxXFfB
+         F6CIQhh7GNCK6XFZqhrrDbqpjUs8HuAkR1zE987IsqfVcisp/YniNw5rbv0qk5/L0372
+         8xNGs+xLJr8h/4JrZ+lp7fENACuAFSsy9lEBLzJCdUrLc62DTKGJI9dbbdeUE9QOe+w6
+         zTqA==
+X-Gm-Message-State: AC+VfDxOsK62hk4Vwlx60C2rHdPfqgxYyKM7i2etqXVUrKUotFvCegpi
+        I6V7RsfFSZ06D3ms+y2y+o9B9oDhBqV93g==
+X-Google-Smtp-Source: ACHHUZ4XSVyO0Prg0pJW2YwoIdE88Q8cCKFoZ1qUvz/fqdLccMkjUzMb2cYpUiigy+BuA4gSQxISVNG6fSccwg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2316:b0:64c:b6d6:6f60 with SMTP
+ id h22-20020a056a00231600b0064cb6d66f60mr2746167pfh.1.1685571423186; Wed, 31
+ May 2023 15:17:03 -0700 (PDT)
+Date:   Wed, 31 May 2023 15:17:01 -0700
+In-Reply-To: <506a2cf8c73549bc8f9761b56532ef08ed220da4.1685064781.git.gitgitgadget@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <30385b42-0c6a-3588-2b13-0552c23727f2@iee.email>
+References: <pull.1536.git.1684883872.gitgitgadget@gmail.com>
+ <pull.1536.v2.git.1685064781.gitgitgadget@gmail.com> <506a2cf8c73549bc8f9761b56532ef08ed220da4.1685064781.git.gitgitgadget@gmail.com>
+Message-ID: <kl6lr0qwno2q.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 3/3] repository: move 'repository_format_worktree_config'
+ to repo scope
+From:   Glen Choo <chooglen@google.com>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Cc:     derrickstolee@github.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2023 at 02:22:59PM +0100, Philip Oakley wrote:
-> On 31/05/2023 11:57, Philip Oakley wrote:
-> > On 30/05/2023 19:14, Carlos wrote:
-> >> Running git 2.40.1 with HEAD -> master, origin/main, origin/HEAD, origin/master, main with initial commit on main does not show all the objects from master
-> >>
-> >>
-> >> ! [main] Initial commit
-> >>  * [master] Initial commit
-> >>   ! [origin/master] Initial commit
-> >> ---
-> >> +*+ [main] Initial commit
-> >>
-> > 
-> > this is the output of `git show-branch` [1] which has its own special
-> > display format. It's not often used these days.
-> > 
-> > The `!` are column markers, as is `*` for the current branch.
-> > You have three branches listed
-> > Then you have the `---` divider
-> > 
-> > Finally you has the single commit, showing which branches the commit is
-> > 'on'.
-> > 
-> > Be careful to discriminate between being 'on' a branch (at it's tip, by
-> > name); 'at' an oid (object id / hash); and `in` a branch (below its
-> > tip); etc.
-> > 
-> > 
-> > [1] https://git-scm.com/docs/git-show-branch
-> > 
-> >> the chunk of objects are on master and not main, and yet it shows
-> >> nothing once checking out to master. 
-> >>
-> >> the git-clone operation is not consistent either. It's a disaster.
-> >>
-> >> One would think that by now with the more developed work put on to git, it'd
-> >> be safe to assume the more sense there's on newer versions. But no. This
-> >>  is the opposite actually. 
-> >>
-> >> Now. If by any chance the git-branch operation were to return:
-> >>
-> >>   main
-> >> * master
-> >>
-> >> after git-clone, then objects are indeed in place. That is. On master
-> >>
-> >> but not if git-branch returns 
-> >>
-> >>   main
-> >> * master
-> >>   origin/master
-> >>
-> 
-> You may have accidentally created a local branch called `origin/master`
-> which you are now confusing with the (unlisted) remote tracking branches.
-> 
+The changes that replace repository_format_worktree_config with "struct
+repository".worktree_config look trivially good. The "struct
+repository_format" bits track ebaf3bcf1ae (repository: move global
+r_f_p_c to repo struct, 2021-06-17) so it preserves the status quo, but
+I have some questions about ebaf3bcf1ae. Cc-ing the author (Jonathan
+Tan) for context.
 
-if the remotes are in place, 
+Rearranging the hunks for clarity,
 
-  main
-* master
-  origin/master
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/main
-  remotes/origin/master
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> @@ -1560,6 +1562,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>  		}
+>  		if (startup_info->have_repository) {
+>  			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
+> +			the_repository->repository_format_worktree_config =
+> +				repo_fmt.worktree_config;
+>  			/* take ownership of repo_fmt.partial_clone */
+>  			the_repository->repository_format_partial_clone =
+>  				repo_fmt.partial_clone;
 
-what exactly is origin/master doing there? even by assuming I created it
-(which I didn't but let's say I did) then:
+[snip]
 
-git checkout origin/master
+> @@ -1651,6 +1655,8 @@ void check_repository_format(struct repository_format *fmt)
+>  	check_repository_format_gently(get_git_dir(), fmt, NULL);
+>  	startup_info->have_repository = 1;
+>  	repo_set_hash_algo(the_repository, fmt->hash_algo);
+> +	the_repository->repository_format_worktree_config =
+> +		fmt->worktree_config;
+>  	the_repository->repository_format_partial_clone =
+>  		xstrdup_or_null(fmt->partial_clone);
+>  	clear_repository_format(&repo_fmt);
 
-warning: refname 'origin/master' is ambiguous.
-Switched to branch 'origin/master'
+[snip]
 
-confirms it that given the above, it follows that `git checkout
-origin/master` would fail to create and to be in quote  in 'detached
-HEAD' state. To look around, make experimental changes and commit them,
-and to discard any commits one makes in this state without impacting
-any branches by switching back to a branch` . blah blah blah
+> diff --git a/repository.c b/repository.c
+> index c53e480e326..104960f8f59 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -182,6 +182,7 @@ int repo_init(struct repository *repo,
+>  		goto error;
+>  
+>  	repo_set_hash_algo(repo, format.hash_algo);
+> +	repo->repository_format_worktree_config = format.worktree_config;
+>  
+>  	/* take ownership of format.partial_clone */
+>  	repo->repository_format_partial_clone = format.partial_clone;
 
-as does the one without the origin/master , right? 
+This patch adds another instance of copying fields from "struct
+repository_format" to "struct repository", so I think that we should
+start doing this with a helper function instead of copy-pasting the
+logic.
 
-Now, if I were to do the same under the worktree (the tree holding the
-contents correctly on both main and master, right?) with git branch -ra:
+As for what should be in the helper function, the above hunks suggest
+that we should copy .hash_algo, .partial_clone, and .worktree_config.
+However...
 
+> @@ -1423,6 +1422,9 @@ int discover_git_directory(struct strbuf *commondir,
+>  		return -1;
+>  	}
+>  
+> +	the_repository->repository_format_worktree_config =
+> +		candidate.worktree_config;
+> +
+>  	/* take ownership of candidate.partial_clone */
+>  	the_repository->repository_format_partial_clone =
+>  		candidate.partial_clone;
 
-  main
-* master
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/main
-  remotes/origin/master
+This hunk does not copy .hash_algo. I initially wondered if it is safe
+to just copy .hash_algo here too, but I now suspect that we shouldn't
+have done the_repository setup in discover_git_directory() in the first
+place. It isn't used by the setup.c machinery - its one caller in "git"
+(it's used by "scalar") is read_early_config(), which is supposed to
+work without a fully set up repository, and bears a comment saying that
+"no global state is changed" by calling discover_git_directory() (which
+stopped being true in ebaf3bcf1ae). It looks like
+discover_git_directory() is just a lightweight entrypoint into the
+setup.c machinery. 16ac8b8db6 (setup: introduce the
+discover_git_directory() function, 2017-03-13)) says "Let's just provide
+a convenient wrapper function with an easier signature that *just*
+discovers the .git/ directory. We will use it in a subsequent patch to
+fix the early config."
 
-which behaves accordingly
-
-* (HEAD detached at origin/master)
-  main
-  master
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/main
-  remotes/origin/master
-
-
-> What does
-> 
-> 	git branch -ra
-> 
-> produce?
-> 
-> It will show the local branches first, and then your
-> `remotes/repo/branches` list (probably colourised).
-> 
-> This should help confirm what you have.
-> >>
-> >>
-> > Philip
-> P.
-> 
-
--- 
-Modeling paged and segmented memories is tricky business.
-		-- P. J. Denning
-
+If I'm wrong and we _should_ be doing the_repository setup, then I'm
+guessing it's safe to copy .hash_algo here too. So either way, I think
+we should introduce a helper function to do the copying, especially
+because we will probably need to repeat this process yet again for
+"repository_format_precious_objects".
