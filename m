@@ -2,92 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BB14C77B73
-	for <git@archiver.kernel.org>; Wed, 31 May 2023 22:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 350F8C77B73
+	for <git@archiver.kernel.org>; Wed, 31 May 2023 22:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230211AbjEaWfw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 May 2023 18:35:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49046 "EHLO
+        id S230312AbjEaWg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 May 2023 18:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjEaWfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2023 18:35:50 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CC139F
-        for <git@vger.kernel.org>; Wed, 31 May 2023 15:35:48 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-565eb83efe4so1666887b3.0
-        for <git@vger.kernel.org>; Wed, 31 May 2023 15:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1685572547; x=1688164547;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=M446xzsuTtJ0N/z5MYZWCsm+9DkjmCYhcbaG1CWdOws=;
-        b=XD+JvG51C4WYEJCbximUmjjhrSRRe04XlIU6DxX2kJ+UEIz3NSpNKURMzUTkp3Fw7z
-         uugMmYYnnCBpOaFVjpBpfiv0OqfWbk6HPaaZac17Q0AkhhUuIClnQ3ocKMzX8OuwcfTY
-         1B4zDko2ed90Tsmei/rCLe9bLmdNUrYTG5e4K0TVbUtBxj44AnwW2waSp/njBthrNxii
-         UyHmSYvaDh9EUhVqIkSESeh4Ub1rX3qSi7wfhsl/Ch/QSpS0f7yV5SCMd/wSBvRjmV1O
-         DbgK6W4OmV2gajS61QuyOe5tLbSDmR2VUNWGgwizXZQfviXkfYaaSB4XLnWcoYSiz1rl
-         xVcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685572547; x=1688164547;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M446xzsuTtJ0N/z5MYZWCsm+9DkjmCYhcbaG1CWdOws=;
-        b=AOScrWiO3IQIsR54ftJpOTmEQ7B2vu7GqgBBT0LGhc4AgAFg3AWFE3pJHdHqtSkt35
-         DOqzqnz0VM5xgOJgqha8ORuQktICusCyQJQywPPH6Lm/lcbCrKB569dX4VlEMGsxqnm6
-         3Fgh3S7l/zVSMsrsK/XnKa6eNkxnGe/SzKwfZljcUwreXpIO/LrNLTmS0yTNRi6mIl03
-         6hZNMv034rOD14yYuddLKS5YQvwC6goyJ+E566qT/xSTeS/o2AVJyC5Y8NrvvOWTxYw7
-         oAw/v4pLtAxA1yku0lF6M36ODhg9fLHhF4bwPlGhKFQrMTAVJGte7g1aUconPIgaQO06
-         OzLg==
-X-Gm-Message-State: AC+VfDy3Br7uiS2k7EDTdGH6e5ixDifmIBicMVjz1TZkgEDp0na7pr88
-        G272zo+sPCYwgIaUTjTpDaaRLg==
-X-Google-Smtp-Source: ACHHUZ4biEOWem7jPtss7RJL7XbETk2uszL+tdQNNVqjvkrtIboCCJ2earFMAPxBsigcV+UjfNMBqg==
-X-Received: by 2002:a0d:d64e:0:b0:565:c966:60dd with SMTP id y75-20020a0dd64e000000b00565c96660ddmr7517336ywd.48.1685572547423;
-        Wed, 31 May 2023 15:35:47 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t62-20020a814641000000b0054f8b201c70sm5704226ywa.108.2023.05.31.15.35.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 15:35:47 -0700 (PDT)
-Date:   Wed, 31 May 2023 18:35:46 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Siddharth Singh <siddhartth@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/1] Unit tests for khash.h
-Message-ID: <ZHfLwpX7nNVjBvE5@nand.local>
-References: <20230531155142.3359886-1-siddhartth@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        with ESMTP id S230272AbjEaWg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2023 18:36:57 -0400
+Received: from ciao.gmane.io (ciao.gmane.io [116.202.254.214])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E2BB3
+        for <git@vger.kernel.org>; Wed, 31 May 2023 15:36:55 -0700 (PDT)
+Received: from list by ciao.gmane.io with local (Exim 4.92)
+        (envelope-from <gcvg-git-3@m.gmane-mx.org>)
+        id 1q4UR3-00059z-T5
+        for git@vger.kernel.org; Thu, 01 Jun 2023 00:36:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Carlos <kaploceh@gmail.com>
+Subject: Re: not robust inconsistent git 2.40.1 with HEAD -> master,
+ origin/main, origin/HEAD, origin/master, main
+Date:   Wed, 31 May 2023 18:36:44 -0400
+Message-ID: <kewfqedoob2cptihhxoe6pp4jj63pw7qcldqvmb52cg7fbhzv5@xypplc3psbv5>
+References: <lxh4jpacuv5ivqp35w5vpbcjlw67r7ix3yog6cc3cu5ij7yqho@mrtr24xxdstx>
+ <319cfa79-a508-127f-c201-9f50d5e6fe6a@iee.email>
+ <30385b42-0c6a-3588-2b13-0552c23727f2@iee.email>
+ <a7xmox7j6katje62wx6hhclb7itfbhxnda44s4ve7g3cjyzm6j@2tosx6g6cpgv>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230531155142.3359886-1-siddhartth@google.com>
+In-Reply-To: <a7xmox7j6katje62wx6hhclb7itfbhxnda44s4ve7g3cjyzm6j@2tosx6g6cpgv>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Siddharth,
+On Wed, May 31, 2023 at 05:35:58PM -0400, Carlos wrote:
+> On Wed, May 31, 2023 at 02:22:59PM +0100, Philip Oakley wrote:
+> > On 31/05/2023 11:57, Philip Oakley wrote:
+> > > On 30/05/2023 19:14, Carlos wrote:
+> > >> Running git 2.40.1 with HEAD -> master, origin/main, origin/HEAD, origin/master, main with initial commit on main does not show all the objects from master
+> > >>
+> > >>
+> > >> ! [main] Initial commit
+> > >>  * [master] Initial commit
+> > >>   ! [origin/master] Initial commit
+> > >> ---
+> > >> +*+ [main] Initial commit
+> > >>
+> > > 
+> > > this is the output of `git show-branch` [1] which has its own special
+> > > display format. It's not often used these days.
+> > > 
+> > > The `!` are column markers, as is `*` for the current branch.
+> > > You have three branches listed
+> > > Then you have the `---` divider
+> > > 
+> > > Finally you has the single commit, showing which branches the commit is
+> > > 'on'.
+> > > 
+> > > Be careful to discriminate between being 'on' a branch (at it's tip, by
+> > > name); 'at' an oid (object id / hash); and `in` a branch (below its
+> > > tip); etc.
+> > > 
+> > > 
+> > > [1] https://git-scm.com/docs/git-show-branch
+> > > 
+> > >> the chunk of objects are on master and not main, and yet it shows
+> > >> nothing once checking out to master. 
+> > >>
+> > >> the git-clone operation is not consistent either. It's a disaster.
+> > >>
+> > >> One would think that by now with the more developed work put on to git, it'd
+> > >> be safe to assume the more sense there's on newer versions. But no. This
+> > >>  is the opposite actually. 
+> > >>
+> > >> Now. If by any chance the git-branch operation were to return:
+> > >>
+> > >>   main
+> > >> * master
+> > >>
+> > >> after git-clone, then objects are indeed in place. That is. On master
+> > >>
+> > >> but not if git-branch returns 
+> > >>
+> > >>   main
+> > >> * master
+> > >>   origin/master
+> > >>
+> > 
+> > You may have accidentally created a local branch called `origin/master`
+> > which you are now confusing with the (unlisted) remote tracking branches.
+> > 
+> 
+> if the remotes are in place, 
+> 
+>   main
+> * master
+>   origin/master
+>   remotes/origin/HEAD -> origin/main
+>   remotes/origin/main
+>   remotes/origin/master
+> 
+> 
+> what exactly is origin/master doing there? even by assuming I created it
+> (which I didn't but let's say I did) then:
+> 
+> git checkout origin/master
+> 
+> warning: refname 'origin/master' is ambiguous.
+> Switched to branch 'origin/master'
+> 
+> confirms it that given the above, it follows that `git checkout
+> origin/master` would fail to create and to be in quote  in 'detached
+> HEAD' state. To look around, make experimental changes and commit them,
+> and to discard any commits one makes in this state without impacting
+> any branches by switching back to a branch` . blah blah blah
+> 
+> as does the one without the origin/master , right? 
+> 
 
-On Wed, May 31, 2023 at 05:51:41PM +0200, Siddharth Singh wrote:
-> This RFC patch adds unit tests for khash.h. It uses the C TAP harness
-> to illustrate the test cases [1]. This is not intended to be a
-> complete implementation. The purpose of this patch to get your
-> thoughts on the unit test content, not the test framework itself.
+Fe de errata:
 
-Thanks for working on this, and for opening the discussion up. I took
-only a brief look through the actual changes. But I think the much more
-interesting discussion is on the approach, so I'll refrain from
-commenting on the tests themselves.
+*unlike the one without the origin/master, which *successfully* does,
+as shown below:
 
-I am somewhat skeptical of this as a productive direction, primarily
-because khash already has tests [1] that exercise its functionality. I'm
-not necessarily opposed to (light) testing of oid_set, oid_map, and
-oid_pos, which are khash structures, but declared by Git.
+> Now, if I were to do the same under the worktree (the tree holding the
+> contents correctly on both main and master, right?) with git branch -ra:
+> 
+> 
+>   main
+> * master
+>   remotes/origin/HEAD -> origin/main
+>   remotes/origin/main
+>   remotes/origin/master
+> 
+> which behaves accordingly
+> 
+> * (HEAD detached at origin/master)
+>   main
+>   master
+>   remotes/origin/HEAD -> origin/main
+>   remotes/origin/main
+>   remotes/origin/master
+> 
+> 
+> > What does
+> > 
+> > 	git branch -ra
+> > 
+> > produce?
+> > 
+> > It will show the local branches first, and then your
+> > `remotes/repo/branches` list (probably colourised).
+> > 
+> > This should help confirm what you have.
+> > >>
+> > >>
+> > > Philip
+> > P.
+> > 
+> 
+> -- 
+> Modeling paged and segmented memories is tricky business.
+> 		-- P. J. Denning
+> 
+> 
 
-Even still, I don't think that we are testing much in that case, since
-the boundary between Git and khash is limited to the KHASH_INIT macro.
+-- 
+Put no trust in cryptic comments.
 
-So... I dunno. I'm not strongly opposed here, but I think this is
-probably not the most productive place to start adding tests.
-
-Thanks,
-Taylor
-
-[1]: https://github.com/attractivechaos/klib/blob/master/test/khash_test.c
