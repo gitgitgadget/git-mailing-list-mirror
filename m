@@ -2,68 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D25D0C77B7A
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 16:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E7D2C7EE23
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 16:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231759AbjFAQfp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 12:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52978 "EHLO
+        id S231761AbjFAQgS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 12:36:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231664AbjFAQfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 12:35:44 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC73B186
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 09:35:42 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-65299178ac5so82274b3a.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 09:35:42 -0700 (PDT)
+        with ESMTP id S231651AbjFAQgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 12:36:16 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF107D1
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 09:36:15 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id 41be03b00d2f7-54290603887so56205a12.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 09:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1685637342; x=1688229342;
+        d=github.com; s=google; t=1685637375; x=1688229375;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6Yo4uAKFJh5JYSm+nsckjQ/yzwcwVpmY10lEcCxKA18=;
-        b=j1xmAAaHRVqnY56oEMZqdOw1qPfpo+MRNjNomcSBt2ye3xoJHr00/VCOBeBpo7Il0/
-         AvA3ntMBtZvQiMTLZ8ctACG1Z7PFkovZ2V0n1+uSX5KPCMkQ715iAKe2mmTqV185o+Hh
-         IWGHdM/m5mx0Vk62DTQ8Dkmipeaa/2gu1ZhYP45J0xp3XoJgb2Ez5hrXyvv6S+e6rhq0
-         fRo6MX4GRlASKCmr1Ky7gRzPxgOuLVd5MhZ+o+L0zlyppZjGPIyPDKPLj7eVK8HjE0Q9
-         8spmuaVz8yAYa8yd/E4HmC0NkeXJHz0lS7bwa+sj1gywp393NeDazRpgSXtBl8azBZME
-         7yCg==
+        bh=bKW+XWVfLHZ7bwHLlCCppE+Sm7ehziRneA0auaYz2r8=;
+        b=EclS6m7iu1gtHAlru2VxDy41a7sT6sKIR7P805Cn1Quv/3E0z3Pub2Xx9se0v+DDCH
+         pV3KS0HhUg77l4Ejm5Xi0W9ANjDVgPtT3O4effd51asfZDl4iBlaiEwfkg93LybxmYNo
+         +7RAL9W3fmgd0ImHMn6Nz/0b4Qqkf8JuR1+mXpMmxgdzINiOZczl98/kkD4mhgTvckyq
+         evv3W/I6/+xnFgHt9xn3scwOAbVe08xHaXG5NmRsZidz+2EosLXH99EV1xe3g6b4coiX
+         veTGFVgbemyW2ifzDsRfbv2T461C0urbkeaLWhZcXwUlbT0ATJSqbutB8LtSTXdxlwNA
+         TiMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685637342; x=1688229342;
+        d=1e100.net; s=20221208; t=1685637375; x=1688229375;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Yo4uAKFJh5JYSm+nsckjQ/yzwcwVpmY10lEcCxKA18=;
-        b=UNM9tclS2S4BpaFZ/1PYPSHzi2vg3QjEahkv0xxjZIv7f8XnLCvAJbigXP8eqeOY0T
-         BHXFlSPsS59DGaB2UZfGVtreHPQ/+VXBq3exbiEAYhJ1sZ9wisOiXAeLmele9XUQ8J4w
-         tYRMlCVyaMCm0HjgQil+rgoMUFmK2OjATj0yIY5ZQYYjk2/q0PtLrk+sBPjKIx2Tpa8P
-         pRQ6ylC+qQeVf5hwiNHb6+NuSSHK9t57aTxPFmBED7MbP0daYspbHHvWD0PCvsjEQqPy
-         vlPHlekytVbMcOfiDqpC6ub0DQCT1nhylV+mCI4iFk7F/2DVQCqQeB+Y9ZdyaT4z8Bjh
-         aNVQ==
-X-Gm-Message-State: AC+VfDxzRRX+tHwB6CVQrHk+DGMqyUu4vbBaWNDwy4F8s3qPYBF2R0qy
-        ElfeYvMr9wCdClJhjWgfPp9N
-X-Google-Smtp-Source: ACHHUZ5DZEVigknvI9oJ3CniWgnA1WSJa9xx2Ph+p/ueEeLFLJ3mDLOOk1Y6C2C7ysXq392l8E4rrg==
-X-Received: by 2002:a05:6a20:1583:b0:10d:b160:3d5f with SMTP id h3-20020a056a20158300b0010db1603d5fmr12390258pzj.38.1685637342251;
-        Thu, 01 Jun 2023 09:35:42 -0700 (PDT)
+        bh=bKW+XWVfLHZ7bwHLlCCppE+Sm7ehziRneA0auaYz2r8=;
+        b=KzqsJA69NtLcpnkRE/PiW4cRhMs8FdDXp2sE5VpEhKUa0vsSwFC8k3lwFL6IY95RXs
+         tYKFaLJAWgSeGwbEXO3PnX3hfjRdTMVq1MSWBnZ+5uShvDg6GCkTGa3fsmnfuN1liMAB
+         ZzgxPXSVWPKkBvpHo3iZGYIWdFVKCtPTkdVDq37QWNnWdk3vxkChuyT0TE5Gn2lyPzjd
+         sxloLPeG5/sG2rbB+ZUxXWjUIOGpi86G/7MzkXjV5F3SZCwFGNKeniJw6XB6nMMUql+L
+         fEBlQGXm994IHNWlBAu/dNcIgaB/+5Zm9W7lVKwS1npvQ+F5Aa/N7xDQdPQ3+2ATRNuV
+         gyqw==
+X-Gm-Message-State: AC+VfDyFtQ5Xo9n7ti80GeZVKdWS5O4oXkEpZXCOI2XXtZt8T/mDHIai
+        EAly0+OjRkTsqHQvz8crKNmi
+X-Google-Smtp-Source: ACHHUZ5z5hHHcXp0MkdV2nxijBaTRk3i7G7h4cZ5mvZrDOgK+5G/zLj/4LqjBWXKU0O/Mg8maTAYVg==
+X-Received: by 2002:a17:902:8341:b0:1b1:9d43:ad4a with SMTP id z1-20020a170902834100b001b19d43ad4amr1223174pln.44.1685637374934;
+        Thu, 01 Jun 2023 09:36:14 -0700 (PDT)
 Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id a23-20020a62e217000000b0062dba4e4706sm4767325pfi.191.2023.06.01.09.35.41
+        by smtp.gmail.com with ESMTPSA id ay9-20020a1709028b8900b001aae909cfbbsm3731411plb.119.2023.06.01.09.36.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 09:35:41 -0700 (PDT)
-Message-ID: <49ea603b-ebbd-4a14-e0dd-07078e56de0a@github.com>
-Date:   Thu, 1 Jun 2023 09:35:40 -0700
+        Thu, 01 Jun 2023 09:36:14 -0700 (PDT)
+Message-ID: <68fd5ca2-a6c2-d742-5d74-ba93c1497169@github.com>
+Date:   Thu, 1 Jun 2023 09:36:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH 2/3] replace-objects: create wrapper around setting
+Subject: Re: [PATCH 3/3] repository: create read_replace_refs setting
 Content-Language: en-US
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     me@ttaylorr.com, newren@gmail.com, gitster@pobox.com,
         Derrick Stolee <derrickstolee@github.com>
 References: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
- <5fc2f923d9e6aa13781d7d6567c9bd38a9dd1f0e.1685126618.git.gitgitgadget@gmail.com>
+ <481a81a515efb29bc4eb0b1a09b7d1df3f3c074b.1685126618.git.gitgitgadget@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <5fc2f923d9e6aa13781d7d6567c9bd38a9dd1f0e.1685126618.git.gitgitgadget@gmail.com>
+In-Reply-To: <481a81a515efb29bc4eb0b1a09b7d1df3f3c074b.1685126618.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -73,97 +73,125 @@ X-Mailing-List: git@vger.kernel.org
 Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <derrickstolee@github.com>
 > 
-> The 'read_replace_objects' constant is initialized by git_default_config
-> (if core.useReplaceRefs is disabled) and within setup_git_env (if
-> GIT_NO_REPLACE_OBJECTS) is set. To ensure that this variable cannot be
-> set accidentally in other places, wrap it in a replace_refs_enabled()
-> method.
+> The 'read_replace_refs' global specifies whether or not we should
+> respect the references of the form 'refs/replace/<oid>' to replace which
+> object we look up when asking for '<oid>'. This global has caused issues
+> when it is not initialized properly, such as in b6551feadfd (merge-tree:
+> load default git config, 2023-05-10).
 > 
-> This allows us to remove the global from being recognized outside of
-> replace-objects.c.
+> To make this more robust, move its config-based initialization out of
+> git_default_config and into prepare_repo_settings(). This provides a
+> repository-scoped version of the 'read_replace_refs' global.
+
+As you noted in [1], this could be clearer. I think the most confusing part
+is referring to it as "a repository-scoped version of the...global" because
+it implies that the global and repo-scoped setting do the same thing/take
+the same precedence (when, in reality, if replace refs are disabled
+globally, the config doesn't do anything). Maybe something like this would
+make that clearer?
+
+"This provides a repository-scoped configuration that's only used if replace
+refs are not already disabled process-wide with the global
+'read_replace_refs'."
+
+[1] https://lore.kernel.org/git/ae89feda-0a76-29d7-14ce-662214414638@github.com/
+
 > 
-> Further, a future change will help prevent the variable from being read
-> before it is initialized. Centralizing its access is an important first
-> step.
+> The global still has its purpose: it is disabled process-wide by the
+> GIT_NO_REPLACE_OBJECTS environment variable or by a call to
+> disable_replace_refs() in some specific Git commands.
 > 
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  commit-graph.c   |  4 +---
->  environment.c    |  1 -
->  log-tree.c       |  2 +-
->  replace-object.c |  7 +++++++
->  replace-object.h | 15 ++++++++++++++-
->  5 files changed, 23 insertions(+), 6 deletions(-)
+> Since we already encapsulated the use of the constant inside
+> replace_refs_enabled(), we can perform the initialization inside that
+> method, if necessary. This solves the problem of forgetting to check the
+> config, as we will check it before returning this value.
 > 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 43558b4d9b0..95873317bf7 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -203,14 +203,12 @@ static struct commit_graph *alloc_commit_graph(void)
->  	return g;
->  }
+> There is an interesting behavior change possible here: we now have a
+> repository-scoped understanding of this config value. Thus, if there was
+> a command that recurses into submodules and might follow replace refs,
+> then it would now respect the core.useReplaceRefs config value in each
+> repository.
+> 
+> Unfortunately, the existing processes that recurse into submodules do
+> not appear to follow object IDs to their contents, so this behavior
+> change is not visible in the current implementation. It is something
+> valuable for future behavior changes.
+
+AFAIK, the only '--recurse-submodules' commands that recurse in-process are
+'ls-files' and 'grep'. However, 'grep' does call 'parse_object_or_die()',
+which (further down in the call stack) calls 'lookup_replace_object()'.
+Maybe I'm misreading and the replaced object isn't actually used, but could
+'git grep --recurse-submodules' be used to test this?
+
+> @@ -94,5 +94,14 @@ void disable_replace_refs(void)
 >  
-> -extern int read_replace_refs;
-> -
->  static int commit_graph_compatible(struct repository *r)
+>  int replace_refs_enabled(struct repository *r)
 >  {
->  	if (!r->gitdir)
->  		return 0;
->  
-> -	if (read_replace_refs) {
-> +	if (replace_refs_enabled(r)) {
->  		prepare_replace_object(r);
->  		if (hashmap_get_size(&r->objects->replace_map->map))
->  			return 0;
-
-This and the other 'read_replace_refs' -> 'replace_refs_enabled()'
-replacements all look good. Although we're not using the 'struct repository'
-argument yet, I see that it'll be used in patch 3 - adding the (unused) arg
-here helps avoid the extra churn there.
-
-> diff --git a/replace-object.c b/replace-object.c
-> index ceec81c940c..cf91c3ba456 100644
-> --- a/replace-object.c
-> +++ b/replace-object.c
-> @@ -85,7 +85,14 @@ const struct object_id *do_lookup_replace_object(struct repository *r,
->  	die(_("replace depth too high for object %s"), oid_to_hex(oid));
+> -	return read_replace_refs;
+> +	if (!read_replace_refs)
+> +		return 0;
+> +
+> +	if (r->gitdir) {
+> +		prepare_repo_settings(r);
+> +		return r->settings.read_replace_refs;
+> +	}
+> +
+> +	/* repository has no objects or refs. */
+> +	return 0;
 >  }
->  
-> +static int read_replace_refs = 1;
-> +
->  void disable_replace_refs(void)
->  {
->  	read_replace_refs = 0;
->  }
-> +
-> +int replace_refs_enabled(struct repository *r)
-> +{
-> +	return read_replace_refs;
-> +}
-> diff --git a/replace-object.h b/replace-object.h
-> index 7786d4152b0..b141075023e 100644
-> --- a/replace-object.h
-> +++ b/replace-object.h
-> @@ -27,6 +27,19 @@ void prepare_replace_object(struct repository *r);
->  const struct object_id *do_lookup_replace_object(struct repository *r,
->  						 const struct object_id *oid);
->  
-> +
-> +/*
-> + * Some commands disable replace-refs unconditionally, and otherwise each
-> + * repository could alter the core.useReplaceRefs config value.
-> + *
-> + * Return 1 if and only if all of the following are true:
-> + *
-> + *  a. disable_replace_refs() has not been called.
-> + *  b. GIT_NO_REPLACE_OBJECTS is unset or zero.
-> + *  c. the given repository does not have core.useReplaceRefs=false.
-> + */
-> +int replace_refs_enabled(struct repository *r);
 
-Since the purpose of this function is to access global state, would
-'environment.[c|h]' be a more appropriate place for it (and
-'disable_replace_refs()', for that matter)? There's also some precedent;
-'set_shared_repository()' and 'get_shared_repository()' have a very similar
-design to what you've added here.
+This implementation matches the intent outlined in this patch/the cover
+letter:
+
+- if replace refs are disabled process-wide, always return 0
+- if the gitdir is present, return the value of 'core.usereplacerefs'
+- if there's no gitdir, there's no repository set up (and therefore no
+  config to read/objects to replace), so return 0
+
+I was a bit unsure about whether 'r->gitdir' was the right check to make,
+but it's consistent with other gates to 'prepare_repo_settings()' (e.g.
+those added in 059fda19021 (checkout/fetch/pull/pack-objects: allow `-h`
+outside a repository, 2022-02-08)), so I'm happy with it.
+
+> diff --git a/repo-settings.c b/repo-settings.c
+> index 1df0320bf33..5a7c990300d 100644
+> --- a/repo-settings.c
+> +++ b/repo-settings.c
+> @@ -68,6 +68,7 @@ void prepare_repo_settings(struct repository *r)
+>  	repo_cfg_bool(r, "pack.usebitmapboundarytraversal",
+>  		      &r->settings.pack_use_bitmap_boundary_traversal,
+>  		      r->settings.pack_use_bitmap_boundary_traversal);
+> +	repo_cfg_bool(r, "core.usereplacerefs", &r->settings.read_replace_refs, 1);
+
+This defaults to enabling replace refs, consistent with the (intended)
+behavior prior to this series. Good!
+
+>  
+>  	/*
+>  	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
+> diff --git a/repository.h b/repository.h
+> index c42f7ab6bdc..13fefa540bc 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -39,6 +39,14 @@ struct repo_settings {
+>  	int pack_read_reverse_index;
+>  	int pack_use_bitmap_boundary_traversal;
+>  
+> +	/*
+> +	 * Do replace refs need to be checked this run?  This variable is
+> +	 * initialized to true unless --no-replace-object is used or
+> +	 * $GIT_NO_REPLACE_OBJECTS is set, but is set to false by some
+> +	 * commands that do not want replace references to be active.
+> +	 */
+> +	int read_replace_refs;
+
+I don't think this comment is accurate anymore, since the repo-scoped
+'read_replace_refs' value is determined *only* by the 'core.usereplacerefs'
+config. It's 'replace_refs_enabled()' that makes the overall determination
+(taking into account 'GIT_NO_REPLACE_OBJECTS'/'--no-replace-object').
+
+> +
+>  	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
+>  
+>  	int index_version;
 
