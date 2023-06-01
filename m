@@ -2,82 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 600BCC77B7E
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 15:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E96C4C77B7A
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 16:22:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235144AbjFAPbI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 11:31:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41000 "EHLO
+        id S231334AbjFAQWr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 12:22:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233546AbjFAPbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 11:31:00 -0400
-X-Greylist: delayed 611 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 01 Jun 2023 08:30:38 PDT
-Received: from new-athena.mit.edu (unknown [18.1.104.228])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6A6D1107
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 08:30:37 -0700 (PDT)
-Received: by new-athena.mit.edu (Postfix, from userid 32861)
-        id D011616003C; Thu,  1 Jun 2023 11:20:25 -0400 (EDT)
-From:   =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
-To:     newren@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: Problems with 592fc5b349
-Date:   Thu,  1 Jun 2023 11:20:25 -0400
-Message-Id: <20230601152025.116126-1-asedeno@mit.edu>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <CABPp-BHKR5GP2NUFWDMSw-Pnra+yGP0kYAiwu-iWgtu66p-1RQ@mail.gmail.com>
-References: <CABPp-BHKR5GP2NUFWDMSw-Pnra+yGP0kYAiwu-iWgtu66p-1RQ@mail.gmail.com>
+        with ESMTP id S231268AbjFAQWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 12:22:44 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA4B4138
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 09:22:43 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-64d285fc7ecso1097112b3a.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 09:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1685636563; x=1688228563;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+D/6aomJ4XpgeqPSbgMStqgONZn+JiWaqx7b3Z33Abo=;
+        b=6I0XtL/CTf3SsVPDn1uvNCZ2v9y8LkQ7O7dX7HbMGdmO31v44+Jgon1u2gJ192L0bS
+         unZDqHP25agQmu8hCzvl/s+bcKgTZKltyVithxHgH58LvYT9PZoUorcam3je/CK8ik6H
+         HlugrMYbBK1VWbX85LigTYWvWqh1/pa0wCIhfoolTBfMO3XsUQ7qjK0h7kMnirWMb1Wa
+         X7uYzNPet+eQEyLUeCVRypM0+Crbf0Dk40G/dkkuEvZAo4i29+ArYQ4yhtxR4mLa1lw6
+         sP/oc7xVQUl+yfCFURRKUInwLzxL57KhXRvQNDUIr8PsL3ZrHygVw9aitbHRUNaCYU6L
+         SYRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685636563; x=1688228563;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+D/6aomJ4XpgeqPSbgMStqgONZn+JiWaqx7b3Z33Abo=;
+        b=KBV7z7k9ghzKZ2RDm7hb8vrm+TDe7yIuzQlHh/BrD0gTnn7GcJCrPEyippFuBCoFa9
+         nIL51TSqQzSTLWvbRJzklhOX98b4ThMLy17dTN/IL5/BUq7yyoTs6X5cdhiI7eRdrraO
+         YyNPOPeRFsvpkdf8MFjvIDqtMF3576rQPor6+hOklSvTkJag88aS+3b7TEean8mLDKi4
+         I/Hc1r3Ru2QKhmAYnBC77jOSI6dd7SwPpR1CjjOho30CI2W7K5EY/YOw4YCCLqjTl4VK
+         rBlr9GP6N6j4oGNzvlzSrdKXBESxjyWnvViEt4ngon7RNmHb458vqJaLTMNANb3+F7iv
+         QAcg==
+X-Gm-Message-State: AC+VfDyXvh4nQbrsOWQrvC9g5Avyxg2lJnNtcj3pMbuLUiCrGcAazsRa
+        Zc3+ZR3Cq33Nkmj5tZtYMwHAa/UKsNgmFg==
+X-Google-Smtp-Source: ACHHUZ7oJo8eh6cUPUhZfVluyQ8vB/YfQ+674NJcuWfG7A5QGR2BVdT0xxyOR2/3FYTk7Wv/BWxaEJoIYf9xSQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:b8a:b0:643:b756:d39e with SMTP
+ id g10-20020a056a000b8a00b00643b756d39emr3617507pfj.6.1685636563343; Thu, 01
+ Jun 2023 09:22:43 -0700 (PDT)
+Date:   Thu, 01 Jun 2023 09:22:41 -0700
+In-Reply-To: <6faf1b17-a1ca-0c22-2e43-aee121c4e36a@gmail.com>
+Mime-Version: 1.0
+References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
+ <pull.1497.v2.git.git.1685472132.gitgitgadget@gmail.com> <6834e37066e7877646fc7c37aa79704d14381251.1685472133.git.gitgitgadget@gmail.com>
+ <6faf1b17-a1ca-0c22-2e43-aee121c4e36a@gmail.com>
+Message-ID: <kl6l4jnr17am.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 03/14] (RFC-only) config: add kvi arg to config_fn_t
+From:   Glen Choo <chooglen@google.com>
+To:     phillip.wood@dunelm.org.uk,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason" 
+        <avarab@gmail.com>, Emily Shaffer <nasamuffin@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, June 1, 2023 at 10:33AM Elijah Newren <newren@gmail.com> wrote:
-> Oh, interesting; none of our platform testing caught this.  After a
-> little digging, I'm guessing you're on cygwin < 1.7?  However, I'm
-> still surprised you noticed, on any platform.  The only use of the
-> DT_* defines in cache.h is in the inline function ce_to_dtype().  The
-> only places ce_to_dtype() is used are in (1) unpack-trees.c (which
-> includes both cache.h and dir.h) and (2) builtin/ls-files.c (which
-> also includes both cache.h and dir.h).  So, as far as I can tell, this
-> can't cause compilation issues anywhere.  How did you find this?
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I build on an ancient Solaris (5.10), for reasons. One day I'll give up
-on it, but today is not that day.
+>   - is it worth making struct key_value_info opaque and provide getters
+>     for the fields so we can change the implementation in the future
+>     without having to modify every user. We could rename it
+>     config_context or something generic like that if we think it might
+>     grow in scope in the future.
 
-> In commits in follow-on series, I moved this inline function to a new
-> header, read-cache.h.  name-cache.c does not end up including that
-> header, so we could add a #include "dir.h" directive to read-cache.h.
+Yes! I planned to do the key_value_info -> config_context conversion
+when I send the first non-RFC version for this exact reason.
 
-> An alternative fix, if you need something for v2.41.0 (am I guessing
-> correctly that you tried out v2.41.0 right after it's release and
-> that's when you found this?), would be to move the DT_ defines from
-> dir.h to statinfo.h (a header included by both dir.h and cache.h).
+>   - (probably impractical) could we stuff the key and value into struct
+>     key_value_info so config_fn_t becomes
+>     fn(const struct key_value_info, void *data)
+>     that would get rid of all the UNUSED annotations but would mean even
+>     more churn.
 
-Yeah, I built v2.41.0 this morning and saw that my sun4x_510 build
-failed with DT_REG not defined in cache.h while building
-add-interactive.c I tried the patch I described earlier (add dir.h
-to cache.h) and ran into the duplicate `struct dir_entry` in
-name-hash.c. I'm testing a patch where I move DT_ definitions into
-a new dtype.h, and include it where needed, but statinfo.h seems
-resonable.
+Some of my colleagues also suggested this off-list. I think it is
+impractical for this series because I don't think anyone could
+reasonably review with all of the added churn. At least its current
+form, the churn is mostly concentrated in the signatures, but performing
+^this change would make the bodies quite churny too.
 
+After this series, I think it becomes somewhat feasible with coccinelle.
+My .cocci files were difficult to craft because we couldn't rely on the
+signature of config_fn_t alone to tell us if the function is actually
+used as config_fn_t, but after this series, we can just use the
+signature since config_fn_t has a struct key_value_info param.
 
-> ... Or
-> perhaps another fix is to stop having two things in the codebase named
-> "struct dir_entry", since it's bound to cause confusion for humans if
-> not also be a lurking timebomb for some future code file that needs
-> access to both.
+>     The advantage is that one could add functions like
+>     kvi_bool_or_int(kvi, &is_bool) and get good error messages because
+>     all the config parsing functions would all have access to location
+>     information.
 
-Agreed, though I did not want to pull on that particular thread for fear
-of what else might unravel.
-
-> ... But I still don't understand why any suggestions are
-> needed for an immediate fix, since all users of ce_to_dtype() should
-> have the necessary headers.  Is there an issue where "inline" is
-> ignored, and this function is being defined & compiled for every file
-> that includes cache.h, and then the linker removes the duplicates or
-> something?
-
-I could believe that gcc 3.4.3 (again, ancient), is not being as clever
-as newer compilers here.
-
--Alejandro
+Interesting, I hadn't considered this possibility. This seems like a
+pretty good abstraction to me, though I worry about the feasibility
+since this is yet again more churn.
