@@ -2,196 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E7D2C7EE23
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 16:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91A13C7EE23
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 17:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbjFAQgS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 12:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53208 "EHLO
+        id S231895AbjFARfk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 13:35:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231651AbjFAQgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 12:36:16 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF107D1
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 09:36:15 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id 41be03b00d2f7-54290603887so56205a12.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 09:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1685637375; x=1688229375;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bKW+XWVfLHZ7bwHLlCCppE+Sm7ehziRneA0auaYz2r8=;
-        b=EclS6m7iu1gtHAlru2VxDy41a7sT6sKIR7P805Cn1Quv/3E0z3Pub2Xx9se0v+DDCH
-         pV3KS0HhUg77l4Ejm5Xi0W9ANjDVgPtT3O4effd51asfZDl4iBlaiEwfkg93LybxmYNo
-         +7RAL9W3fmgd0ImHMn6Nz/0b4Qqkf8JuR1+mXpMmxgdzINiOZczl98/kkD4mhgTvckyq
-         evv3W/I6/+xnFgHt9xn3scwOAbVe08xHaXG5NmRsZidz+2EosLXH99EV1xe3g6b4coiX
-         veTGFVgbemyW2ifzDsRfbv2T461C0urbkeaLWhZcXwUlbT0ATJSqbutB8LtSTXdxlwNA
-         TiMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685637375; x=1688229375;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bKW+XWVfLHZ7bwHLlCCppE+Sm7ehziRneA0auaYz2r8=;
-        b=KzqsJA69NtLcpnkRE/PiW4cRhMs8FdDXp2sE5VpEhKUa0vsSwFC8k3lwFL6IY95RXs
-         tYKFaLJAWgSeGwbEXO3PnX3hfjRdTMVq1MSWBnZ+5uShvDg6GCkTGa3fsmnfuN1liMAB
-         ZzgxPXSVWPKkBvpHo3iZGYIWdFVKCtPTkdVDq37QWNnWdk3vxkChuyT0TE5Gn2lyPzjd
-         sxloLPeG5/sG2rbB+ZUxXWjUIOGpi86G/7MzkXjV5F3SZCwFGNKeniJw6XB6nMMUql+L
-         fEBlQGXm994IHNWlBAu/dNcIgaB/+5Zm9W7lVKwS1npvQ+F5Aa/N7xDQdPQ3+2ATRNuV
-         gyqw==
-X-Gm-Message-State: AC+VfDyFtQ5Xo9n7ti80GeZVKdWS5O4oXkEpZXCOI2XXtZt8T/mDHIai
-        EAly0+OjRkTsqHQvz8crKNmi
-X-Google-Smtp-Source: ACHHUZ5z5hHHcXp0MkdV2nxijBaTRk3i7G7h4cZ5mvZrDOgK+5G/zLj/4LqjBWXKU0O/Mg8maTAYVg==
-X-Received: by 2002:a17:902:8341:b0:1b1:9d43:ad4a with SMTP id z1-20020a170902834100b001b19d43ad4amr1223174pln.44.1685637374934;
-        Thu, 01 Jun 2023 09:36:14 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id ay9-20020a1709028b8900b001aae909cfbbsm3731411plb.119.2023.06.01.09.36.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 09:36:14 -0700 (PDT)
-Message-ID: <68fd5ca2-a6c2-d742-5d74-ba93c1497169@github.com>
-Date:   Thu, 1 Jun 2023 09:36:12 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH 3/3] repository: create read_replace_refs setting
-Content-Language: en-US
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     me@ttaylorr.com, newren@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
- <481a81a515efb29bc4eb0b1a09b7d1df3f3c074b.1685126618.git.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <481a81a515efb29bc4eb0b1a09b7d1df3f3c074b.1685126618.git.gitgitgadget@gmail.com>
+        with ESMTP id S229459AbjFARfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 13:35:38 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA17AF2
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 10:35:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1685640934; x=1686245734; i=johannes.schindelin@gmx.de;
+ bh=o6tdw0iqJBPQW491tt/52yy9fe4SVqbIr/2dJutyZLM=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=TMpopUFBL/PAb5v1LLP1o/QtRWXNb8CVIN78Zf0mG7w9lebHKipRa85gQMhXwQKXmgv8icr
+ WeE0atHHRT2+G9BfAlbQnJJYCRPt8c4Z5uMbf6LLtYn1XjNFA6JOsaOCLL2oNbWea09XXxeVX
+ 9aiYxgnK8cWGNGNFKr4lGaAqeaDAm2YQWE0f8C6m0NWiVXHiWv2YWLU0boLNdfuqmrcRZz/pb
+ fL4Nsr8LS10wAoSNC0Z+tLMJZwjrcg9pzd6NsrThN17gH8YtQevRw/zOvbqQb4gsL71BNMwHa
+ yo4r0VA2JM0lmHzYk93/Rlkn4EtfqEUdRf28luNhKEfRa30onvnQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az574-199.esnmgxn14wlejbqjnvhsbsbtxa.dx.internal.cloudapp.net
+ ([13.88.61.225]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MFKGZ-1ppgBI465B-00FheJ; Thu, 01 Jun 2023 19:35:34 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.41.0
+Date:   Thu,  1 Jun 2023 17:35:30 +0000
+Message-Id: <20230601173530.3592-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.40.1
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Fcc:    Sent
+X-Provags-ID: V03:K1:LM/6g8WRsExd/NBnrS56wLISFqVDHegT5/qjUK11UmUbg1z8Mlv
+ K6A077t+EuIfELsqj3WdnWILFU5tNpnPrw4wVJeai0sQ2A0+dATJrfkWkDlAXICCfJqeVMZ
+ IlROHRGoELVi8MS4vTe+KWg/WcqbTs6tHFEwn6+65lTzzCXi704iMyQJlDsMs/ePDaco9Jl
+ m7xD5G+VWaWHdjbd+Y/tg==
+UI-OutboundReport: notjunk:1;M01:P0:h96QZej0AHI=;w9IXm50hCsvwUSjjkF1NMtFc2zi
+ MJLloQunrNqD0oV0WyAIabdJMniER3Q8tqMll/UnFMuAlAgEYQaKjH/r535OnnyudORQdgJGw
+ 3QFuZEakTbYVpa7G0GF71RDd/1nkJmLHuA8pYb7jRfzhVtoGD2ZUZXdwwjIcZ1emVdxfSPbrT
+ BuE60dzIoLPopOq7+tk88yiXDDI3W4ZGFR0LizIEhY6qSoxR4omxCrfTBSKWrX8+b2l184Tfb
+ Jso2B31JyhG5F1XJZjSCODTx4nj+QWrdOkIGkPuxb2+r25+nhaWPqpg9ta17EVzy0J7IUca4w
+ AxeQ7NYIEKomfFV7kXmtGyc4a1qP2rUHPu8X3yTafnskmssVfHLwzg6jC0rU+aijds0i2XKQw
+ LceOcaIgLL2JEoFpphAxQ1I0Njj/k/zGkXNPxbk01LriIdLLvfIKg4HTMWyhRhoirWnMRfcns
+ iaQ00CVkQ/dHpfFNof6f/rDQyKfiKATKoucROnYWYnshcR7PkdtpWOxgs4Ra6FFLAIxl+xTe8
+ Yhan4Q88NrH3gtPsjN9LuaJrW16Tdq9uJeeEiQN/AayBoBE8PkOHX3dkzGhpSYwz0CKs9vZ/3
+ J4yE6+Pr63W7VQ1QqXXfvqMhzMiwyJceN8TQHkblriWCZ3W0icxTgjHLW4IXEK23uZj4oNTfG
+ ftmxDL3VV5z2I3hsLRCdGB2jbWcz9i2yic6zc+NoXnpsPtDDLnSRKtKiYOLoNJjmzH37v5f0y
+ +qzsZxvH7FGBgfSe4OeFOB1a2iXUlDwNxNPftQqvgt6w++7u08coaayVcrx9gw1QJx3vsv/3J
+ kj77dD7XI/6YDtcEr9auDt9JbxLuD+y/WFgQjfQNuUgTujJnbPVajDgzPn9FJBQplntlImlbc
+ J917gGslZBoFwKThZ7ptzofIpCOwQuWywOt0nMX0CQi1qsViqV3DXPo4YoyznVuuwz/BGGOct
+ MQxnwQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
-> The 'read_replace_refs' global specifies whether or not we should
-> respect the references of the form 'refs/replace/<oid>' to replace which
-> object we look up when asking for '<oid>'. This global has caused issues
-> when it is not initialized properly, such as in b6551feadfd (merge-tree:
-> load default git config, 2023-05-10).
-> 
-> To make this more robust, move its config-based initialization out of
-> git_default_config and into prepare_repo_settings(). This provides a
-> repository-scoped version of the 'read_replace_refs' global.
+Dear Git users,
 
-As you noted in [1], this could be clearer. I think the most confusing part
-is referring to it as "a repository-scoped version of the...global" because
-it implies that the global and repo-scoped setting do the same thing/take
-the same precedence (when, in reality, if replace refs are disabled
-globally, the config doesn't do anything). Maybe something like this would
-make that clearer?
+I hereby announce that Git for Windows 2.41.0 is available from:
 
-"This provides a repository-scoped configuration that's only used if replace
-refs are not already disabled process-wide with the global
-'read_replace_refs'."
+    https://gitforwindows.org/
 
-[1] https://lore.kernel.org/git/ae89feda-0a76-29d7-14ce-662214414638@github.com/
+Changes since Git for Windows v2.40.1 (April 25th 2023)
 
-> 
-> The global still has its purpose: it is disabled process-wide by the
-> GIT_NO_REPLACE_OBJECTS environment variable or by a call to
-> disable_replace_refs() in some specific Git commands.
-> 
-> Since we already encapsulated the use of the constant inside
-> replace_refs_enabled(), we can perform the initialization inside that
-> method, if necessary. This solves the problem of forgetting to check the
-> config, as we will check it before returning this value.
-> 
-> There is an interesting behavior change possible here: we now have a
-> repository-scoped understanding of this config value. Thus, if there was
-> a command that recurses into submodules and might follow replace refs,
-> then it would now respect the core.useReplaceRefs config value in each
-> repository.
-> 
-> Unfortunately, the existing processes that recurse into submodules do
-> not appear to follow object IDs to their contents, so this behavior
-> change is not visible in the current implementation. It is something
-> valuable for future behavior changes.
+As announced previously, Git for Windows will drop support for Windows
+7 and for Windows 8 in one of the next versions, following Cygwin's and
+MSYS2's lead (Git for Windows relies on MSYS2 for components such as
+Bash and Perl).
 
-AFAIK, the only '--recurse-submodules' commands that recurse in-process are
-'ls-files' and 'grep'. However, 'grep' does call 'parse_object_or_die()',
-which (further down in the call stack) calls 'lookup_replace_object()'.
-Maybe I'm misreading and the replaced object isn't actually used, but could
-'git grep --recurse-submodules' be used to test this?
+Following the footsteps of the MSYS2 and Cygwin projects on which Git
+for Windows depends, the 32-bit variant of Git for Windows is being
+phased out. As of Git for Windows v2.41.0, the 32-bit variant of the
+POSIX emulation layer (known as "MSYS2 runtime", powering Git Bash
+among other components shipped with Git for Windows) is in maintenance
+mode and will only see security bug fixes (if any). Users relying on
+32-bit Git for Windows are highly encouraged to switch to the 64-bit
+version whenever possible.
 
-> @@ -94,5 +94,14 @@ void disable_replace_refs(void)
->  
->  int replace_refs_enabled(struct repository *r)
->  {
-> -	return read_replace_refs;
-> +	if (!read_replace_refs)
-> +		return 0;
-> +
-> +	if (r->gitdir) {
-> +		prepare_repo_settings(r);
-> +		return r->settings.read_replace_refs;
-> +	}
-> +
-> +	/* repository has no objects or refs. */
-> +	return 0;
->  }
+Please also note that the code-signing certificate used to sign Git for
+Windows' executables was renewed and may cause Smart Screen to show a
+warning until the certificate has gained a certain minimum reputation.
 
-This implementation matches the intent outlined in this patch/the cover
-letter:
+New Features
 
-- if replace refs are disabled process-wide, always return 0
-- if the gitdir is present, return the value of 'core.usereplacerefs'
-- if there's no gitdir, there's no repository set up (and therefore no
-  config to read/objects to replace), so return 0
+  * Comes with Git v2.41.0.
+  * Comes with OpenSSH v9.3p1
+  * Comes with MinTTY v3.6.4.
+  * The Git for Windows installer now also includes the Git LFS
+    documentation (i.e. git help git-lfs now works).
+  * Comes with Perl v5.36.1.
+  * Comes with GNU Privacy Guard v2.2.41.
+  * Comes with Git Credential Manager v2.1.2.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.4.6. (This does not extend to 32-bit Git for Windows, which is
+    stuck with v3.3.* of the MSYS2 runtime forever.)
+  * To help with Git for Windows' release mechanics, Git for Windows
+    now ships with two variants of libcurl.
+  * Comes with cURL v8.1.2.
+  * Comes with OpenSSL v1.1.1u.
 
-I was a bit unsure about whether 'r->gitdir' was the right check to make,
-but it's consistent with other gates to 'prepare_repo_settings()' (e.g.
-those added in 059fda19021 (checkout/fetch/pull/pack-objects: allow `-h`
-outside a repository, 2022-02-08)), so I'm happy with it.
+Bug Fixes
 
-> diff --git a/repo-settings.c b/repo-settings.c
-> index 1df0320bf33..5a7c990300d 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -68,6 +68,7 @@ void prepare_repo_settings(struct repository *r)
->  	repo_cfg_bool(r, "pack.usebitmapboundarytraversal",
->  		      &r->settings.pack_use_bitmap_boundary_traversal,
->  		      r->settings.pack_use_bitmap_boundary_traversal);
-> +	repo_cfg_bool(r, "core.usereplacerefs", &r->settings.read_replace_refs, 1);
+  * Git GUI's Repository>Explore Working Copy was broken since v2.39.1,
+    which has been fixed.
+  * The MSYS2 runtime was adjusted to prepare for an upcoming Windows
+    version.
 
-This defaults to enabling replace refs, consistent with the (intended)
-behavior prior to this series. Good!
+Git-2.41.0-64-bit.exe | 45dc30410916b8ec5501be39d01d5b60535731c04fa68283b4f9df4920877d4e
+Git-2.41.0-32-bit.exe | 25c9077aa60aca41fa8a7b89a8581492e04155786799653ef3010d165e11000e
+PortableGit-2.41.0-64-bit.7z.exe | fcbaeffd24fdf435a1f7844825253509136377915e6720aa66aa256ec1f83c30
+PortableGit-2.41.0-32-bit.7z.exe | 12190f5bec59a187ec0368f39dba55a7802706076b91fe400ef5da4247999467
+MinGit-2.41.0-64-bit.zip | c9cffc25e2ef81f51029138678b7bfc538a56095ec0538125dc790a01e20d77a
+MinGit-2.41.0-32-bit.zip | 2643d9b1c663258bc5ec966f2b8493884ba3e247a41edc5a1496068a0a0a6ef4
+MinGit-2.41.0-busybox-64-bit.zip | 6ca0a62dea4440a9564b93a85f0dd0b3db27e53782b5ade5a82382d7abc1453c
+MinGit-2.41.0-busybox-32-bit.zip | 9e069bffb19da682fb80ef1c3d6c98417dd604cc0e2e1c1c7f23c0edd704aec6
+Git-2.41.0-64-bit.tar.bz2 | 4f213f90ff3ef3e9c1bc4184b3cd8e9735f7108be0e4bf846158b9f8c4d5130d
+Git-2.41.0-32-bit.tar.bz2 | 9cc7c2a9450b82ec6bb93ba15a192bbab52907ceff018366a189ce66d63b4b06
 
->  
->  	/*
->  	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
-> diff --git a/repository.h b/repository.h
-> index c42f7ab6bdc..13fefa540bc 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -39,6 +39,14 @@ struct repo_settings {
->  	int pack_read_reverse_index;
->  	int pack_use_bitmap_boundary_traversal;
->  
-> +	/*
-> +	 * Do replace refs need to be checked this run?  This variable is
-> +	 * initialized to true unless --no-replace-object is used or
-> +	 * $GIT_NO_REPLACE_OBJECTS is set, but is set to false by some
-> +	 * commands that do not want replace references to be active.
-> +	 */
-> +	int read_replace_refs;
-
-I don't think this comment is accurate anymore, since the repo-scoped
-'read_replace_refs' value is determined *only* by the 'core.usereplacerefs'
-config. It's 'replace_refs_enabled()' that makes the overall determination
-(taking into account 'GIT_NO_REPLACE_OBJECTS'/'--no-replace-object').
-
-> +
->  	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
->  
->  	int index_version;
-
+Ciao,
+Johannes
