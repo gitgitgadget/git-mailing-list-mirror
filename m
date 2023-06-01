@@ -2,96 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCEB4C7EE23
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 21:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C848C77B7A
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 22:17:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbjFAV0u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 17:26:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47148 "EHLO
+        id S231710AbjFAWRr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 18:17:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbjFAV0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 17:26:48 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F114DE61
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 14:26:25 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-75b064451d3so120484585a.0
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 14:26:25 -0700 (PDT)
+        with ESMTP id S229610AbjFAWRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 18:17:45 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A790189
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 15:17:44 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-ba82ed6e450so1851456276.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 15:17:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=adamj.eu; s=google; t=1685654785; x=1688246785;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=cOqzu42uMWQMNgVLrvWCsCUKJ7je2G1GBW4EQIzcIpg=;
-        b=k1qGjRQlPnL9WDNjt4Egt1xv1jgAxChqHAA5SOSlp8e/ko9oWZSv7ZX0gNXHnc8GE4
-         IZ8ZZWT+8K1JGV1t6vgDrKDf3wNAHF1az4yGHDtIt3hDiKRhkJ7Om3IijesBlOlKM/2M
-         vHZyxgtYis2GjJBtZfW+bTbLzC7+0TPlGCmdJOTo/eoGk7iZgnMaH7TNGvNQybHL9vHn
-         wvUgOu1mo4pb8dVyUlZykdjdbxzB+vuCssv6fDUpoqSY7jstlig4bzFvk3JV2xao/LuU
-         qct/C0pitV3cY2njg1OhfBgFuH8PMfdIDeocVN4PvP6JBVOeKgeN7Mrvw8OFXAoRfIb4
-         BLNg==
+        d=google.com; s=20221208; t=1685657863; x=1688249863;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=51PWPY6BMWoDg45MlG9I1qZfsIaUCeI0YrMX7qE5Pw8=;
+        b=p/kE9Gg97TCYGYtg3EBw2VYVyGwT+ORz/QNnDv0SpxKTqyJH0mWm8eq04pbzgRIJso
+         hj7bBUwqfVqxQzwNK99RI7RHBYHM8Hw1KPjj6Y3AkrLNBIStOvA3CHuomeu0kWdsrx4D
+         KLSzOqot5GF2isxWgrfoJ6PZgBVk8mBvWWfolkI5Jf0O0Ufn/1cRnGNk5ke2Rxudw4H8
+         m8by2o6+/HBBHNXsHdI99YFpHtoBNYvp/QPy/vH+ScR/MExXU/Mfs5d5G+2UH1Hxs892
+         FzGVweQAdpxtMsqVFlX9dfcLFcfgysFlezBrw7CpySCkF5ZVEVwQVzEwJuMhSVQiZ8YE
+         NEzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685654785; x=1688246785;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cOqzu42uMWQMNgVLrvWCsCUKJ7je2G1GBW4EQIzcIpg=;
-        b=Jx1bWxy+I4MGYYpsSLkrfldWWMWwKToHy3AZpo98M8Tn+IgX+mRtIueN9OMO3+mNuS
-         jxDara0Tnqnypvtq2PJi/+5maLntMUXe2YJejF0y2/mtyP+8QpT1HVBgZaZAcqtaFLfb
-         dIkcMy0h3LWNpDAUwH4hX3w57xPquGluTtlLqXfDsGTjfv4sRLd9YBXKkzwtUWOqILVI
-         2hoh+rqerBC/UWPzojNnn9I5RXu55CnZD+xSLgPpT0q43TLelAvwu98l7V0IoRRIErlX
-         vOUIwzsXEK9vGOf86HfJyHvh+IMgJpMrt2K0keXDVVwSRWKppSI3vdYf2sj7TUxxeWqY
-         Pw1w==
-X-Gm-Message-State: AC+VfDzYACZ/xCZ0QaVhbhnVkmJJSnLxaw6XVHrIwtZ3kcqmtg1uC4KR
-        EX7gbTEtBt/ATuj/8uoyUwlLdvAPe5eUjkhbWIC9cF2S/ZIS7Q==
-X-Google-Smtp-Source: ACHHUZ5MmD3aVqbYTC7FMIZYFxdKIgoNNOKl2d63H5wHBHd1lX7haVDWAwSacRf6Kd2QHihFqxjLz5PvG8Jf6jPQeIM=
-X-Received: by 2002:a05:6214:f0c:b0:625:aa48:fb72 with SMTP id
- gw12-20020a0562140f0c00b00625aa48fb72mr12429118qvb.60.1685654784640; Thu, 01
- Jun 2023 14:26:24 -0700 (PDT)
-MIME-Version: 1.0
-From:   Adam Johnson <me@adamj.eu>
-Date:   Thu, 1 Jun 2023 22:26:13 +0100
-Message-ID: <CAMyDDM3DFyru6zph4qqf_QoaOeezvYkT7SmwinCfJNnFsnuRjQ@mail.gmail.com>
-Subject: Bug: 'git stash --staged' crashes with binary files
-To:     git@vger.kernel.org
+        d=1e100.net; s=20221208; t=1685657863; x=1688249863;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=51PWPY6BMWoDg45MlG9I1qZfsIaUCeI0YrMX7qE5Pw8=;
+        b=eD2HWmu+3Rci0ZbZMAMP19gnLWSJ6Xm6bZ1rTNGSgaKJaEPGY9FHeWYWWiQF7+SEVL
+         81mygbej5DINKGOTIzY0P7nQUG91AK4iy44FsJN5zfNWi+aOhxxyOjB8fDgHPzZvYtOk
+         Ex6+iCM+U3mcM1MXVRDWhl4+E7Pt1tl0VJXekCbcUgouyK84CoNQq9rBl35L0rO78fTN
+         ME1hECxrAteEQjVKpRmr0yQLN6rnr6+V9NkYBbcxjHTYcg78zoYpB3X5w9Cq1zQDgZYG
+         1v2e78T0BpUZga6JngYs8w8+kKNJKxKLnq71yz4YT1J0vfE5NRgYDM+F/zmAlO/DPlik
+         saBw==
+X-Gm-Message-State: AC+VfDwO9Kczxzn+vP4er+nd6MK3pHaUxdq3pZJnCNDMs8xmjg7BbVrg
+        x7xLZQS8RwNskD69lSbjA8fqiv2zfHWdKT7H+RpV
+X-Google-Smtp-Source: ACHHUZ75Jjxez2fX0Ji8LUknD5INbgCFFSL+ONUxcQYPLsmdk0xOx+qNNyf4OVpFlNtpqmWb2uGJthRWT0u0WoOmra7g
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:9bd:7d22:5bbe:5b1c])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6902:120a:b0:ba7:5bec:7772 with
+ SMTP id s10-20020a056902120a00b00ba75bec7772mr606468ybu.5.1685657863747; Thu,
+ 01 Jun 2023 15:17:43 -0700 (PDT)
+Date:   Thu,  1 Jun 2023 15:17:41 -0700
+In-Reply-To: <f363b16025996f6cf16a683f5e2b3fe3721f4d93.1685472133.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
+Message-ID: <20230601221741.420194-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 05/14] (RFC-only) config: finish config_fn_t refactor
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Emily Shaffer <nasamuffin@google.com>,
+        Glen Choo <chooglen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stage a binary file and run 'git stash --staged'. The stash is created but
-the command fails to remove changes from the index:
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> From: Glen Choo <chooglen@google.com>
+> 
+> Here's an exhaustive list of all of the changes:
 
-$ echo -n "\0" >file
-
-$ git add file
-
-$ git stash --staged
-Saved working directory and index state WIP on main: e7911b6 Whatever
-error: cannot apply binary patch to 'file' without full index line
-error: file: patch does not apply
-Cannot remove worktree changes
-
-$ git status
-...
-Changes to be committed:
-        new file:   file
-
-The "remove from the index" step seems not to be binary-compatible.
-
-The below patch adds a reproducing test.
-
-diff --git t/t3903-stash.sh t/t3903-stash.sh
-index 376cc8f4ab..5e3ea64f38 100755
---- t/t3903-stash.sh
-+++ t/t3903-stash.sh
-@@ -392,6 +392,13 @@ setup_stash()
-     git stash pop &&
-     test bar,bar4 = $(cat file),$(cat file2)
- '
-+test_expect_success 'stash --staged with binary file' '
-+    echo -n "\0" >file &&
-+    git add file &&
-+    git stash --staged &&
-+    git stash pop &&
-+    test "\0" = $(cat file)
-+'
-
- test_expect_success 'dont assume push with non-option args' '
-     test_must_fail git stash -q drop 2>err &&
+Up to here the changes are all mechanical, and look good.
