@@ -2,90 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA8FC7EE23
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 12:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 341F6C77B7E
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 12:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233247AbjFAMEy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 08:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52518 "EHLO
+        id S232705AbjFAMQY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 08:16:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233179AbjFAMEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 08:04:49 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4564FC
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 05:04:47 -0700 (PDT)
+        with ESMTP id S232769AbjFAMQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 08:16:18 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34ADE73
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 05:15:41 -0700 (PDT)
 Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id 58D1521879;
-        Thu,  1 Jun 2023 12:04:46 +0000 (UTC)
+        by smtp-out2.suse.de (Postfix) with ESMTP id 4EAFC1F390;
+        Thu,  1 Jun 2023 12:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1685621086; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+        t=1685621740; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=EGL29b0pTZqUSGEwQjcxA4z2z1FA0Uctl7I0ot9KIAA=;
-        b=bL3o5qj26R85rf+TsUkquAa+EIXhUtS/EHNXsQg7NGovumtoIjEiuCKKnKs7RI1VyvJP5E
-        FuFZnIZ9/7GAUe+2Cw5SuERIZeGhZ1iU9JW/gVuumfeW0mbCR9ZjXRDSnx49Sx4LouCKKr
-        ceHSpB29PKw/IogceDqaOyHhurZ3SMg=
+        bh=mbO/dSb1x9tFR53SHNtAGQX6GnS1dDERXp1VAoLaJxI=;
+        b=eI6l4kKMrmU7cZSxY84kv/icb/BBroFIIjCobMmVLORwSbL8sEHAjsWC9aWgwtahhGOg5M
+        iDtNy1uvLocu+psQ9PsvKFssAH1FvqRv6fN4SRL6s78gBohi0/4+cfkAQNdOgtIjkwugQd
+        75TS4pTwZGdkHJjTuN/xpfy/PFBHycw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1685621086;
+        s=susede2_ed25519; t=1685621740;
         h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=EGL29b0pTZqUSGEwQjcxA4z2z1FA0Uctl7I0ot9KIAA=;
-        b=3AWqm7Q7y9Nq0+WMNuF/VtTAEqS4j9/LA3mlC4TLjwiwAwGWl/55QQMEi9xDoux6aK+nii
-        1gnd5lEU79KUVxDQ==
+        bh=mbO/dSb1x9tFR53SHNtAGQX6GnS1dDERXp1VAoLaJxI=;
+        b=lCyXvm6V9UUd23z04SR3qEGwIzoS2eycCCS1EHj14RoJVFCj0ta7FVwl06if4G18obuUix
+        Gl595pjtb4bNqdBg==
 Received: from hawking.suse.de (unknown [10.168.4.11])
-        by relay2.suse.de (Postfix) with ESMTP id 4B3EC2C141;
-        Thu,  1 Jun 2023 12:04:46 +0000 (UTC)
+        by relay2.suse.de (Postfix) with ESMTP id 410ED2C141;
+        Thu,  1 Jun 2023 12:15:40 +0000 (UTC)
 Received: by hawking.suse.de (Postfix, from userid 17005)
-        id A7DDB4A0785; Thu,  1 Jun 2023 14:04:45 +0200 (CEST)
+        id D92904A0785; Thu,  1 Jun 2023 14:15:39 +0200 (CEST)
 From:   Andreas Schwab <schwab@suse.de>
 To:     Jeff King <peff@peff.net>
-Cc:     Stefan Monnier <monnier@iro.umontreal.ca>, git@vger.kernel.org
-Subject: Re: `git gc` says "unable to read" but `git fsck` happy
-In-Reply-To: <20230330181716.GA3286761@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 30 Mar 2023 14:17:16 -0400")
-References: <jwvfs9nusjm.fsf-monnier+Inbox@gnu.org>
-        <20230329233735.GD2314218@coredump.intra.peff.net>
-        <jwvfs9mz9n7.fsf-monnier+Inbox@gnu.org>
-        <20230330181716.GA3286761@coredump.intra.peff.net>
-X-Yow:  YOW!  I can see 1987!!  PRESIDENT FORD is doing the REMAKE of "PAGAN
- LOVE SONG"...he's playing ESTHER WILLIAMS!!
-Date:   Thu, 01 Jun 2023 14:04:45 +0200
-Message-ID: <mvm4jnr9yn6.fsf@suse.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] fsck: mention file path for index errors
+In-Reply-To: <Y/hxW9i9GyKblNV4@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 24 Feb 2023 03:12:11 -0500")
+References: <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net>
+        <Y/hxW9i9GyKblNV4@coredump.intra.peff.net>
+X-Yow:  .. If I cover this entire WALL with MAZOLA, who I have to give my
+ AGENT ten per cent??
+Date:   Thu, 01 Jun 2023 14:15:39 +0200
+Message-ID: <mvmzg5j8jkk.fsf@suse.de>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mär 30 2023, Jeff King wrote:
+On Feb 24 2023, Jeff King wrote:
 
-> On Thu, Mar 30, 2023 at 09:01:39AM -0400, Stefan Monnier wrote:
+> If we encounter an error in an index file, we may say something like:
 >
->> > If it is the same problem (which would be a blob or maybe cached tree
->> > missing in one of the worktree's index files), then probably you'd
->> > either:
->> >
->> >   1. Accept the loss and blow away that worktree's index file (or
->> >      perhaps even the whole worktree, and just recreate it).
->> 
->> Hmm... the problem is "that": I have about a hundred worktrees for
->> this repository.
->> But yes, I can just throw away all those `index` files, I guess.
+>   error: 1234abcd: invalid sha1 pointer in resolve-undo
 >
-> If you try "git fsck" from the tip of master, it should identify the
-> worktree index that is the source of the problem, I think. You might
-> need to pass "--name-objects".
+> But if you have multiple worktrees, each with its own index, it can be
+> very helpful to know which file had the problem. So let's pass that path
+> down through the various index-fsck functions and use it where
+> appropriate. After this patch you should get something like:
+>
+>   error: 1234abcd: invalid sha1 pointer in resolve-undo of .git/worktrees/wt/index
 
-I had the same problem, and after Junio refreshed my memory by pointing
-me to this thread, I updated to the brand new git 2.41 and re-ran git
-fsck.  That duely identified problems in two of the worktree indexes
-(invalid sha1 pointer in resolve-undo).  After recreating those indexes
-there were no more complaints from git gc.
+That is still suboptimal, because there is no obvious mapping from the
+internal worktree name to the directory where it lives (git worktree
+list doesn't mention the internal name).  If you have several worktrees
+with the same base name in different places, the name under
+.git/worktrees is just made unique by appending a number.  Normally you
+would want to change to the affected worktree directory to repair it.
 
 -- 
 Andreas Schwab, SUSE Labs, schwab@suse.de
