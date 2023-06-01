@@ -2,85 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA98C7EE23
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 22:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CBD3C77B7E
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 23:35:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbjFAW5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 18:57:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
+        id S232093AbjFAXf4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 19:35:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231298AbjFAW5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 18:57:54 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EDAA138
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 15:57:53 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-96f5685f902so196280366b.2
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 15:57:52 -0700 (PDT)
+        with ESMTP id S229689AbjFAXfy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 19:35:54 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE70BF2
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 16:35:53 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1b024ab0c28so13329285ad.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 16:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685660271; x=1688252271;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pFrAgoJf6H6wqkULjnwtmqKbTc0ug8QYNL/8+uixZc0=;
-        b=iXlCIN61FFLAYrXRR6rzNoa5oNooDIt5YHnuido/XyFCDa/5JaOxBRQadYcgVihymo
-         5zksaXw1I9YeILkU369ZVd/Jy5QXcBAqbzxoLKBVAfe5+4E7gsX/FrtsS2yPwii29c1F
-         0UDTknkpaJSDlCtBUvKqO80ls060FQZKxtgm6q3Hej43rB/UJ6fzqiTa8tVcWYlwMnLB
-         keKS51LoSBf58TUsdEMhEF3LVuXqMPFequsul6jUNsp3hw9IyFSrHAXtLa7qr7JcpIur
-         S2j6X+ypEUxXuPf80wCCEmr4sXjgRhD3OAPGGnYHtaRRYyjPbR/OIjprcXIosL25ZmHQ
-         3L1Q==
+        d=google.com; s=20221208; t=1685662553; x=1688254553;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+LbuiwLq1wL4Ty/jNANMqQBZFFdufTP29VPRokwCy94=;
+        b=ZIdJG5irjRC5aQH1UODGLEz3tocPyWqaIBoM5zpAh7YaLYKBh7EW/10xgEUMt+gM/9
+         lV/RMGrSnCnJ5U8tbApvQtsCJkvph4H6d1icnkvHJP4T89Zr1DTlFGqz9vQwRdqhMKUQ
+         BuE393IVzF/WgljuZrEcySBwn48+Pf4MvOgSQHu8o8SCSjiMt9RBUw26K/xRVoyzFSH0
+         mT9B4GTRwN7D9+TvaflM8DjmFkTQSObj6Ri0nwFMr/P15hw510AOn1KMlW1wHhxC/7cF
+         CUf8FKBRg1RdfL8Vg+mermY5Hx2uairgJzfG/8tD1kH2dAlaPuRcvYrFFTSV0Zhzqc29
+         hZ9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685660271; x=1688252271;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pFrAgoJf6H6wqkULjnwtmqKbTc0ug8QYNL/8+uixZc0=;
-        b=NpVnjfoW+329rCdB7+g/doNQvh6GOovUIvCbK9Y4RXDk8txnScZ1i83qaIh5Zlwcws
-         DM4mKQL8PAeJDtQjsUBpb0maBw53N74tYGOu9hKjk1mJpJ3+BlVzV+c/mXctWl8mX6tQ
-         VMKNkQx8CxhPcT3uxxgZhs71V/1E6vZ4uGFwahq97lDpcK4Ws94lfsUsVRQvUTL1HXQD
-         3pVgl3cX04dIfZXVtCJfCWOpIAS0C9GYz0aBUlWj4zH7N62gePAZ+enLIz/hvnqblVkr
-         jRsseVK/2kA69pmRcWcVk5Fh4slxKCFwYpc7GRIJAX3lLquvdNWaFYGfYa0rswoe1Ug3
-         /Khg==
-X-Gm-Message-State: AC+VfDz1UYddnpFWJvCx8/D6RvnraPcauzj+GsOyks67OPKw+7lI02DU
-        VMdO3g+dcX2JHqITcJ844NbtHApgiXoQzeXDvKOqNDmZLMYgVw==
-X-Google-Smtp-Source: ACHHUZ5qKlk93g+jCzP/W0xtPu+3oLd4MKF7OqWziIuBznreND7mnqlZLSMvNjzQbfyKOBXHltKADunRTcyB8Ht7cE0=
-X-Received: by 2002:a17:907:9610:b0:971:eb29:a086 with SMTP id
- gb16-20020a170907961000b00971eb29a086mr10688069ejc.75.1685660271289; Thu, 01
- Jun 2023 15:57:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+3o5aPQ3BkbAn3u6qSMCkAfNgTcpjT+_ikdqAkkc69NBGybpw@mail.gmail.com>
- <kl6lzg5iztzw.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6lzg5iztzw.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Fraser Hanson <fraser.hanson@gmail.com>
-Date:   Thu, 1 Jun 2023 15:57:39 -0700
-Message-ID: <CA+3o5aNgChKi-m6F_sYr4Sc+VXP-K2BCMpTpY8Km+kH5u9tkCQ@mail.gmail.com>
-Subject: Re: git fetch recursion problem
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
+        d=1e100.net; s=20221208; t=1685662553; x=1688254553;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+LbuiwLq1wL4Ty/jNANMqQBZFFdufTP29VPRokwCy94=;
+        b=Yi2slbORKvqwVbOs1EavNbpdul0nFDYX1QoSw69oxbkorAVUAKuSI4yRKJkwM9wUC7
+         sRWZqGkk0wIsFr0KDvCbTvBr871hw+rMI4Swgmb+C4ndvGIvC3Xth7gDIaIbW483aghr
+         SwTpj6Adsmi+Uc6+sesPLX9TmETzVtBkmkpXql23xu0P2r10YYYtYGhrBqSPIjM6RyRv
+         RLhWB05iG7JN0adcoDOpQ/o73KyJlTBcLaB8+E+AxpvQVbZZEZRgfkB1GOVxYiggdNpJ
+         pmVuaZMrivAH8f4gp6AQtWA0eBU4XxI7fjwx915VlVBGmm2+yyrw1+dAC3LHbIiA+pnv
+         ChBA==
+X-Gm-Message-State: AC+VfDw8/+8vI8nx7AR2xRVAFI4Xb0h8JaP6WEHrQtkkV4B8rOQXILiE
+        WPGB8KyZgNmnFibgMri46BZgc6qOiV2kW0Nzc/es
+X-Google-Smtp-Source: ACHHUZ63n8ygC6H/h1LVpoQ/biqfyFTLdDb7ahvZTjwxd5SnKa7rIRhwNowBfwhJNy/QEgmkOXPv77YXJUF4W/S+ywfc
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:9bd:7d22:5bbe:5b1c])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:903:234d:b0:1ac:6a9e:82dc with
+ SMTP id c13-20020a170903234d00b001ac6a9e82dcmr216099plh.11.1685662553185;
+ Thu, 01 Jun 2023 16:35:53 -0700 (PDT)
+Date:   Thu,  1 Jun 2023 16:35:50 -0700
+In-Reply-To: <3760015d2c000c59d354bae872c431ee3266e9da.1685472134.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
+Message-ID: <20230601233550.429921-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 09/14] config.c: provide kvi with CLI config
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Emily Shaffer <nasamuffin@google.com>,
+        Glen Choo <chooglen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the theory!
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> From: Glen Choo <chooglen@google.com>
+> 
+> plumb "kvi" so that we can replace
+> nearly all calls to current_config_*(). (The exception is an edge case
+> where trace2/*.c calls current_config_scope().
 
-This repo has no .gitmodules file.
-I tried running `git fetch --no-recurse-submodules` in one of my
-broken repos, but it does not prevent the bug from happening.
+Probably clearer to say:
 
-I also tried removing the submodule configuration in .git/config, that
-had no effect either.
+  plumb "kvi" so that we can remove all calls of
+  current_config_scope() except from trace2/*.c (which will be handled in
+  a later commit), and remove all other current_config_*() (the
+  functions themselves and their calls).
 
-Maybe something is unusual on the server side.  I've set up my own git
-server attempting to reproduce similar apache and git versions as on
-our corporate mirror but so far cannot reproduce the bug.
-I've compared the GIT_CURL_VERBOSE output to what I get for the same
-repo from github, but it's not very helpful.
-Github uses HTTP2 and my git client sends different service api calls
-to github so there's not much basis for comparison here.
+> Plumbing "kvi" reveals a few places where we've been doing the wrong
+> thing:
+> 
+> * git_config_parse_parameter() hasn't been setting config source
+>   information, so plumb "kvi" there too.
+> 
+> * "git config --get-urlmatch --show-scope" iterates config to collect
+>   values, but then attempts to display the scope after config iteration.
+>   Fix this by copying the "kvi" arg in the collection phase so that it
+>   can be read back later. This means that we can now support "git config
+>   --get-urlmatch --show-origin" (we don't allow this combination of args
+>   because of this bug), but that is left unchanged for now.
+> 
+> * "git config --default" doesn't have config source metadata when
+>   displaying the default value. Fix this by treating the default value
+>   as if it came from the command line (e.g. like we do with "git -c" or
+>   "git config --file"), using kvi_from_param().
+> 
+> Signed-off-by: Glen Choo <chooglen@google.com>
 
-My main theory was that maybe the server-side git version was too old
-to handle partial clones properly.
-Partial clones were introduced in git 2.25.  On my test git server, I
-set the server-side git version to 2.7.2.
-This did not reproduce the bug -- on the client side using a recent
-git version, I was still able to pull partial clones and then fetch
-from origin after my local copy went out of date.
+Thanks for noticing and fixing these.
+
+> +	memcpy(&matched->kvi, kvi, sizeof(struct key_value_info));
+
+Can this just be
+
+  matched->kvi = *kvi;
+
+?
+
+If not, for the sizeof, use *kvi as the argument instead of struct
+key_value_info.
+ 
