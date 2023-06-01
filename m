@@ -2,155 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF645C77B7A
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 19:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FAE8C77B7E
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 19:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbjFATsx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 1 Jun 2023 15:48:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36518 "EHLO
+        id S229724AbjFATuz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 15:50:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231818AbjFATss (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 15:48:48 -0400
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 572C8184
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 12:48:47 -0700 (PDT)
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-626117a8610so11147966d6.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 12:48:47 -0700 (PDT)
+        with ESMTP id S229554AbjFATuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 15:50:54 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF5518D
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 12:50:52 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-565de553de1so20778757b3.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 12:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1685649052; x=1688241052;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DFIlO3mbxXIeTXC3BhNawLUqJS21OG5nkQSlZRPCz18=;
+        b=P3sukYYbpfWo1+VRLsEaCIsvftqoQXyNoXH2UwZ5Yo+wTTci7Bih1Xn9+S089oQgbW
+         56YjdFkaVl6Yt24B7lF+6a5Ll9jvT0Yrs5k4rIeKrf6titFP+hawNnsJLAF2D9oFcFoZ
+         92t5rjHkCNRMr8wIK6TARzyx0jrDagBZ4pHvlmqJzPRrAKXaLiInWOtt+s+utI47zqfA
+         h/V7LcWIEFQcOhnKp0F9eSwb/vrj9F8UnRIza5EvLDeqnVqPP7kKdyn5QmCLbeiii3WQ
+         cM1kPzv/MGwDdbe0ph7C5jKWHWDqmi56bW9dVaeTbKiqOKGc2a3Zu6PkRHL73SWMJh/D
+         rZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685648926; x=1688240926;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Divl12jSy6HmhwL/hxATYNm7WIcgbyIb7MYWvUiQFDw=;
-        b=bxO2Wek+mYrMZ48TaaOY1/maHGf/8RQP+sy86rJ5LRpuVp0QYYuS1SMBiYUbCQhyDz
-         etda2qBKLcnqsE+/2eZh5rZhkfOy7G3q9p3CpZbByyW9jD7Q8B+Z1g2pvvoCvb97dqnV
-         /x3saJSSAKs+7Y1E5IbB7FXCVNsPIvBPvATLWdr625Pu9AimIE9FZBDqu4utVBdp8r9C
-         Wpa7Y8YoIEp5sAjj4jgHXMM8mxnwKtEVECfV7DErqS6aELuspHBmagjMbEaN9qCgmnj7
-         Vqe3f+6RvDTFcJmrmWesrY2COMPz7no4ul8eNqhxKd1J0WrUrDs6MURjc11v7UgZ/nph
-         goeg==
-X-Gm-Message-State: AC+VfDwhEbvOFiIyEIclvdH1GlAT7OZICClGNLX1+O/GYM+Sa7KCWc+U
-        AEUBeKmM6ZSzquaYgqJklNWYWlMfN6HD1Y2GbYpZ5AdxmpY=
-X-Google-Smtp-Source: ACHHUZ7c5ehzcGxxITJq/UgAvrE8Msi8j/YHuX5YOtHXwaD7rGpiQ4mmjx7DajBL39oLa30gWp4K5EB4QNuyVD9KoMk=
-X-Received: by 2002:a05:6214:490:b0:626:2047:c845 with SMTP id
- pt16-20020a056214049000b006262047c845mr11800820qvb.55.1685648926357; Thu, 01
- Jun 2023 12:48:46 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685649052; x=1688241052;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DFIlO3mbxXIeTXC3BhNawLUqJS21OG5nkQSlZRPCz18=;
+        b=DPN0iYMBUsJeyk0OavC3XbWIRrPEwr5Kq42g+Xr2xayhoJ3j+Tlsg+jpsfvEterPJT
+         pGQkhtaRoinx6vWSwJfRZ+tLdAcvxf0dBVRm3LgteaYpZJoPlsRuIf4P5Dx3kjdOf3se
+         Or/AKiU8T7MX9he8/pqd75Cnoke9uZk0hhTMJRFL+D0gAqFwbXqfJf4MZ67l2pA7BeeM
+         7s3LAyFBSddC3cpPCu5Kty5OKxYma9mM5X1ZVCqGQ6roRA2OyL4IYBGmUEew5ZoyY99U
+         6dcrUNUnmB0YZ/8HrxZfC+8rUmiJ81Zro88uXNnxKrZMrpv1KDOhAfIOPnIWb4XGwIYg
+         J6aw==
+X-Gm-Message-State: AC+VfDxo29OWfKrUXOxdncfuGDnMxXtFARY4gtEVARXQp+mrg1wutDUM
+        Rvsnhr4KpsgPx9SjSMtKKRs2
+X-Google-Smtp-Source: ACHHUZ7gXdIDZ7rTIBe21OsGy895fMzRkhD3eSDbrns9CdmV3tuM/u1OEU3bkTeOTABnBlycjw4Opw==
+X-Received: by 2002:a0d:d743:0:b0:565:de18:4589 with SMTP id z64-20020a0dd743000000b00565de184589mr3339975ywd.4.1685649051841;
+        Thu, 01 Jun 2023 12:50:51 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:c920:7fe5:ab49:f151? ([2600:1700:e72:80a0:c920:7fe5:ab49:f151])
+        by smtp.gmail.com with ESMTPSA id h204-20020a816cd5000000b00568c29c3c4csm2562841ywc.38.2023.06.01.12.50.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 12:50:51 -0700 (PDT)
+Message-ID: <72fb4420-2492-e644-58cc-b9b3dbfb8037@github.com>
+Date:   Thu, 1 Jun 2023 15:50:49 -0400
 MIME-Version: 1.0
-References: <CAPMMpohHo2co7n_NjD9XntBs3DVU91Rqx8dmRrSWg=1eof+Rhw@mail.gmail.com>
-In-Reply-To: <CAPMMpohHo2co7n_NjD9XntBs3DVU91Rqx8dmRrSWg=1eof+Rhw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 1 Jun 2023 15:48:35 -0400
-Message-ID: <CAPig+cQ6tuh1nGG+t6c2O8VL-=Ggy+hWzJHTFWCb7xRH2HZkXg@mail.gmail.com>
-Subject: Re: When someone creates a new worktree by copying an existing one
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 2/3] replace-objects: create wrapper around setting
+To:     Victoria Dye <vdye@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     me@ttaylorr.com, newren@gmail.com, gitster@pobox.com,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
+ <5fc2f923d9e6aa13781d7d6567c9bd38a9dd1f0e.1685126618.git.gitgitgadget@gmail.com>
+ <49ea603b-ebbd-4a14-e0dd-07078e56de0a@github.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <49ea603b-ebbd-4a14-e0dd-07078e56de0a@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2023 at 3:00 PM Tao Klerks <tao@klerks.biz> wrote:
-> I've recently encountered some users who've got themselves into
-> trouble by copying a worktree into another folder, to create a second
-> worktree, instead of using "git worktree add".
->
-> They assumed this would be fine, just the same as creating a new
-> *repository* by copying an new *repository* is generally fine (except
-> when you introduce worktrees, of course).
->
-> There users eventually understood that something was wrong, as you
-> might expect, when a checkout in one worktree also "checked out" (and
-> produced lots of unexpected changes) in the other worktree - or
-> similar weirdnesses, eg on commit.
->
-> Ideally, as I user, I would expect git to start shouting at me to "git
-> worktree repair" the moment the mutual reference between the ".git"
-> file of the worktree, and the "gitdir" file of the repo's worktree
-> metadata, stopped agreeing.
->
-> Is there any reason we can't/don't have such a safety check? (would it
-> be expensive??)
->
-> I think I can implement something reasonably effective with a pair of
-> hooks (pre-commit and post-checkout look like good candidates), but
-> I'm weirded out that something like this should need to be "custom".
->
-> I did a quick search of the archives but didn't find anything
-> relevant. Has this been discussed? Should I try to prepare a patch
-> including that sort of validation... somewhere?
+On 6/1/2023 12:35 PM, Victoria Dye wrote:
+> Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <derrickstolee@github.com>
 
-Just some thoughts, not a proper answer...
+>> diff --git a/replace-object.h b/replace-object.h
+>> index 7786d4152b0..b141075023e 100644
+>> --- a/replace-object.h
+>> +++ b/replace-object.h
+>> @@ -27,6 +27,19 @@ void prepare_replace_object(struct repository *r);
+>>  const struct object_id *do_lookup_replace_object(struct repository *r,
+>>  						 const struct object_id *oid);
+>>  
+>> +
+>> +/*
+>> + * Some commands disable replace-refs unconditionally, and otherwise each
+>> + * repository could alter the core.useReplaceRefs config value.
+>> + *
+>> + * Return 1 if and only if all of the following are true:
+>> + *
+>> + *  a. disable_replace_refs() has not been called.
+>> + *  b. GIT_NO_REPLACE_OBJECTS is unset or zero.
+>> + *  c. the given repository does not have core.useReplaceRefs=false.
+>> + */
+>> +int replace_refs_enabled(struct repository *r);
+> 
+> Since the purpose of this function is to access global state, would
+> 'environment.[c|h]' be a more appropriate place for it (and
+> 'disable_replace_refs()', for that matter)? There's also some precedent;
+> 'set_shared_repository()' and 'get_shared_repository()' have a very similar
+> design to what you've added here.
+ 
+That's an interesting idea that I had not considered. My vague sense
+is that it is worth isolating the functionality to this header instead
+of lumping it into the giant environment.h header, but I've CC'd
+Elijah (who is leading a lot of this header organization stuff) to see
+if he has an opinion on this matter.
 
-If you want to detect this sort of problem early, then patching one of
-the initialization functions which is called by each Git command which
-requires a working tree (i.e. those with NEED_WORK_TREE set or which
-call setup_work_tree() manually) would be one approach. It's not
-immediately obvious which function should be patched since there is
-deep and mysterious interaction between the various startup functions,
-but probably something in setup.c or environment.c.
-
-An alternative might be to perform the detection only when the "index"
-is about to be updated or some other worktree-local administrative
-entry, but that seems like a much less tractable approach.
-
-Aside from the corruption you describe above, there may be other types
-of corruption worth detecting early, but any such detection may be
-prohibitively expensive, even if it's just the type you mentioned. (By
-"prohibitively", I'm referring to previous work to reduce the startup
-time of Git commands; people may not want to see those gains reversed,
-especially for a case such as this which is likely to be rare.)
-
-Unless I'm mistaken, the described corruption can only be detected by
-a Git command running within the duplicate directory itself since
-there will be no entry in .git/worktrees/ corresponding to the
-manually-created copy. Hence, Git commands run in any other worktree
-will be unable to detect it, not even the "git worktree" command.
-
-The validation performed by worktree.c:validate_worktree() is already
-capable of detecting the sort of corruption you describe, if handed a
-`struct worktree` populated to point at the worktree which is a copy
-of the original worktree. However, there is no API presently to create
-a `struct worktree` from an arbitrary path, so that is something you'd
-have to add if you want to take advantage of
-worktree.c:validate_worktree(). Adding such a function does feel
-somewhat ugly and special-purpose, though.
-
-I was going to mention that suggesting to the user merely to use "git
-worktree repair" would not help in this situation, but I see in your
-followup email that you instruct the user to first delete one of the
-worktrees before running "git worktree repair", which would indeed
-work. However, you probably want the instructions to be clearer,
-saying that the user should delete the worktree directory manually
-(say, with "rm -rf"), _not_ with "git worktree remove".
-
-It wouldn't help with early-detection, but it might be worthwhile to
-add a "git worktree validate" command which detects and reports
-problems with worktree administrative data (i.e. call
-worktree.c:validate_worktree() for each worktree). However, the above
-caveat still applies about inability to detect the problem from other
-worktrees.
-
-Upgrading "git worktree repair" to report the problem might be
-worthwhile, but it also is subject to the same caveat about inability
-to detect the problem from other worktrees.
-
-One might suggest that "git worktree repair" should somehow repair the
-situation itself, perhaps by creating a new entry in .git/worktrees/,
-but it's not at all clear if that is a good idea. Any such automated
-solution would need to be very careful not to throw away the user's
-work (for instance, work which is staged in the "index").
-
-It may be possible to add some option or subcommand to "git worktree"
-which would allow a user to "attach" an existing directory as a
-worktree. For instance:
-
-    % cp -R worktreeA worktreeB
-    % git worktree attach worktreeB
-
-would create the necessary administrative entries in
-.git/worktrees/worktreeB/ and make worktreeB/.git point at
-.git/worktrees/worktreeB. However, I'm extremely reluctant to suggest
-doing this since we don't want to encourage users to perform worktree
-manipulation manually; they should be using "git worktree" for all
-such tasks. (We also don't want users hijacking a worktree which
-belongs to some other repository.)
+Thanks,
+-Stolee
