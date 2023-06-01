@@ -2,59 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62628C77B7E
-	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 13:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3FE8C77B7E
+	for <git@archiver.kernel.org>; Thu,  1 Jun 2023 14:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232817AbjFANrq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 09:47:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47490 "EHLO
+        id S232873AbjFAOEk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 10:04:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230268AbjFANrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 09:47:45 -0400
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34342129
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 06:47:44 -0700 (PDT)
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-64d722dac08so196833b3a.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 06:47:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685627263; x=1688219263;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t4LMLc/BnxUyJ+Nl0OBafqNPQwhiNBMabUV3gnpaatc=;
-        b=Qve3QKda9eflGorWsHO/LDsGstuS01S29v+KAt3ftt8e4oo93phr/AqJ922IKx96Zb
-         3U1vBZQTldiT/zkuHb5aFZBbCkI7KjkJCtefJ6wJotJD4BDB8eL0MhTc8u0yFTrKB0s3
-         4j3ILzmdfhvu25Ng4ZF9goN5fd/5gc79h/B9OldYE0N7FmoKwevjS26ipi7WsC+e3QBq
-         ZU6dIvQ+T1gB7Iwc9SnSfwOvgM1mepWD7tS4J6ybKSNNmUD/JcM6497V4yjZQ5SKv7WK
-         eAO2j2T/GyDquzQiTD8AzADW5Ly9T5vYzO8N6DXb8OQ+AHMBT8DhRQr3LO7wK55B5dwT
-         dREQ==
-X-Gm-Message-State: AC+VfDzAZ5bhdtcnZpXluA+4fgcFmGVJu8CBoDG8dDrttWjcXNbJ3TgG
-        22GsS2IXyNW6p6fCNvRwRaZnI6yzckC1Naxm//KNHARZvxg=
-X-Google-Smtp-Source: ACHHUZ7yQY+b/E/iK0uMxLNuSNi8f06+rmCH+hsSxF2nqX5AQnimZd3SoZrK+IOejr+eJw+j7bn4kQUq0qVP3oqV6RM=
-X-Received: by 2002:a05:6a21:78a6:b0:111:a0e5:d29d with SMTP id
- bf38-20020a056a2178a600b00111a0e5d29dmr10472339pzc.4.1685627262894; Thu, 01
- Jun 2023 06:47:42 -0700 (PDT)
+        with ESMTP id S231608AbjFAOEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 10:04:39 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC2E184
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 07:04:38 -0700 (PDT)
+Received: (qmail 4870 invoked by uid 109); 1 Jun 2023 14:04:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Jun 2023 14:04:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23428 invoked by uid 111); 1 Jun 2023 14:04:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Jun 2023 10:04:36 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 1 Jun 2023 10:04:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andreas Schwab <schwab@suse.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] fsck: mention file path for index errors
+Message-ID: <20230601140436.GB2458601@coredump.intra.peff.net>
+References: <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net>
+ <Y/hxW9i9GyKblNV4@coredump.intra.peff.net>
+ <mvmzg5j8jkk.fsf@suse.de>
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Date:   Thu, 1 Jun 2023 09:47:27 -0400
-Message-ID: <CAOO-Oz2ua31xDOA9hdE-mMx3qwctDHK6Tu6AKdGc1_beuJMkwA@mail.gmail.com>
-Subject: Problems with 592fc5b349
-To:     Git List <git@vger.kernel.org>
-Cc:     newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <mvmzg5j8jkk.fsf@suse.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-592fc5b3495bf4ff17252d31109f1d9c0134684b moved backup definitions of
+On Thu, Jun 01, 2023 at 02:15:39PM +0200, Andreas Schwab wrote:
 
-  #define DT_
+> On Feb 24 2023, Jeff King wrote:
+> 
+> > If we encounter an error in an index file, we may say something like:
+> >
+> >   error: 1234abcd: invalid sha1 pointer in resolve-undo
+> >
+> > But if you have multiple worktrees, each with its own index, it can be
+> > very helpful to know which file had the problem. So let's pass that path
+> > down through the various index-fsck functions and use it where
+> > appropriate. After this patch you should get something like:
+> >
+> >   error: 1234abcd: invalid sha1 pointer in resolve-undo of .git/worktrees/wt/index
+> 
+> That is still suboptimal, because there is no obvious mapping from the
+> internal worktree name to the directory where it lives (git worktree
+> list doesn't mention the internal name).  If you have several worktrees
+> with the same base name in different places, the name under
+> .git/worktrees is just made unique by appending a number.  Normally you
+> would want to change to the affected worktree directory to repair it.
 
-from cache.h to dir.h, but did not include dir.h in cache.h despite those
-#defines being used there. Easy fix, `#include "dir.h"` in cache.h,
-which I'd submit as a patch, but then name-hash.c, which includes
-cache.h, which would now include dir.h, ends up with two definitions
-of `struct dir_entry`.
+I don't use worktrees all that much, and I never had to repair one of
+these cases in the real world, but I would have imagined you'd chdir
+into the affected .git directory to fix things (either by blowing away
+the index, or by running Git commands inside there).
 
-Suggestions?
+I don't think it would be too hard to print more information. The caller
+of fsck_index() has the "struct worktree", which contains more path
+information. But we'd need to figure out how to present it, as well as
+which paths to show in fsck_cache_tree(), etc.
 
--Alejandro
+So I'd say "patches welcome" if anybody wants to figure out those
+issues. :)
+
+-Peff
