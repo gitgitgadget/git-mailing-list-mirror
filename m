@@ -2,100 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96063C7EE24
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 21:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B74EEC7EE2C
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 22:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236162AbjFBVXI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 17:23:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40540 "EHLO
+        id S236190AbjFBW10 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 18:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235681AbjFBVXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 17:23:07 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7141CE45
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 14:23:06 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-96fab30d1e1so547419466b.0
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 14:23:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1685740984; x=1688332984;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MWVvjv2yQwYeCrjKKrnGrorKd0NPqCiS3w4I7nXNlYk=;
-        b=gnPUqefkPffdeAQgvsHmJFfSXATbc5cZDCg/yWOFqCSd8uvmbOQROTaNg4AstfQ4se
-         b9SGg6aVhJmv2yAZdO/W5np4X1q79gmSvriTGqLZKplk8LM5ZM1oE3W8Yjfk1NwBwrJA
-         aFHi2Tc9H1d94RU2nqe44lf7my3FzUKymO+6U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685740984; x=1688332984;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MWVvjv2yQwYeCrjKKrnGrorKd0NPqCiS3w4I7nXNlYk=;
-        b=W243xf4Fo2Pn/8lLAuEYfA3jUZOYwC8GRoMPHp6RlGwGyRxFH8JyDWDAYLJMYIQrVL
-         rIg8rSTJuPKQgiHFC534oKdeRGLLAfa3kv3/37dpYeRA+GBxywydDAiWOWAYKb8lwOPV
-         pLGKolqok/E/AAqquXTk02RJjRlKDw46F37C4ETC0zhxr4dSv0Fzj4seW+HlimmG7KQf
-         pWbZNeLUEoY+SnMnP0eWSxJZSaVRYCzlBt3Z7tPGnEhraJ/+KHb7HgLu5hpFjACxj8wx
-         LOt9VusHbo+La5KVfeY3kqyuij5vgQY9/ooETEtv/D7Be70BNDM5nisY2jNXjVlPwYsi
-         UFjg==
-X-Gm-Message-State: AC+VfDwbQFHiKD68+WGNVIhn75jW2hIag0ujBTug3Z7AH0Dw8zFrDdDc
-        YKXq/WPC3IjbVw0LEfZyh26KRFUDiSkDmzKyxoMP8VXiRHL9k+/XIjvAMw==
-X-Google-Smtp-Source: ACHHUZ7GskYPk+PEu2NJ8bGbqWBy48O8VHyEf9K2DShVeFBBkBZVUzApnbzlgbY6AqKs3At1TrdLJXzG9xUSYQLalVQ=
-X-Received: by 2002:a17:907:161e:b0:973:70a8:483 with SMTP id
- hb30-20020a170907161e00b0097370a80483mr6538978ejc.24.1685740984441; Fri, 02
- Jun 2023 14:23:04 -0700 (PDT)
+        with ESMTP id S236526AbjFBW1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 18:27:21 -0400
+X-Greylist: delayed 1038 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 02 Jun 2023 15:27:17 PDT
+Received: from USG02-BN3-obe.outbound.protection.office365.us (mail-bn3usg02on0103.outbound.protection.office365.us [23.103.208.103])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C1A1BB
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 15:27:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector5401; d=microsoft.com; cv=none;
+ b=hAuPt8uz/U3ak+sdyKXVmPLbmEj0Mz8PkEzJTY66gRbn00+XXc6wSoNArQWjIeKCAqWR4fn1uVgPWjkunvt5vcRVrIoEBbCzoGQj/kogjeCW6U8WGwRXu953jPEmd7R7xSP3/mhCS8CpqO46RArXAy9uGOPJ8fmfNYi7a6rQf1zDtKP6BJcO0SFqZ2gPwb8ueuYofsxO0TCdshWkh3CIXeGcv+Lf4074RJIpynSTVhPIrozyZyMrnSROR4/cFe9nVkNLOvy7Wg0tJn4u+CZf56ZdhALg+PGLwqfnNyK1ya3KeWg6Ya/BY4zJO4G8YJWkxg5hnC6cheGtVJFszsQQ5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector5401;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rPUfr6LUJrT82LTBndIGplijVN5thy8ZjD3xiyKtx0o=;
+ b=Qe7UAzkpRBUi+L8xyRepLz2fXbhcZV1XybAMdAH9I0Y66UDJbArAUaGZspD1u8GmOSOZXt8jqQbmOKULbrjybQ3BykGJqoUnhyoPVzlWjfFp70WePgit7wNPbAtjsFgaxAHByTxuEX5RAzNsBuj46m95LDMvqkz65FDFZCceADkq/cDi2I94TCnQ3XifQhIRi6Jgq9erXVMsNYVr78S1/Nie5U9qv3uPzyHiA+GT8blhTzMQly9fMZBwRNde/bXDK/r5kRcgiZQuxnUxpUawDhykg+wrS0JDSy+SVRvkDb2wIDAShF+H4gApOVI7f50yH4neVn11dWQ5j5FCjA4Kdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=noblis.org; dmarc=pass action=none header.from=noblis.org;
+ dkim=pass header.d=noblis.org; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noblis.org;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rPUfr6LUJrT82LTBndIGplijVN5thy8ZjD3xiyKtx0o=;
+ b=eMW4UKz4Pl04fPVYNMjVLchpApfuSq5zI38O/YryP60SLdH3GRwNNOL1ICuH6P9/G27+RFMM4g3PVTqFTQ0Gue2ynCN96IdVKpoarMp/CF3ZWycS5+xShjtjRzmaGcrV99nAQ7rkAmPloHnHl3O2Ec9hkTGgg/EZdtF1Afr5pt/qocpWLjdj2O6Hjd94ka1vR7IpalhuUoqINo+mI5liiwwSpDLpuUkgk0CVwO966spQUQog1fqc4b1aOxJU0Fu2ZKSsBnJHP8Hso2ZGJhUtvFIyT3go6tkpiVsKgJwfX7RmhJUbzjNKy6DUr/zL5AlaqNr2ADk9Ed1UlMIprezYhg==
+Received: from BN2P110MB1224.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:17a::14)
+ by BN2P110MB1575.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:17d::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.23; Fri, 2 Jun
+ 2023 21:55:21 +0000
+Received: from BN2P110MB1224.NAMP110.PROD.OUTLOOK.COM
+ ([fe80::848f:7279:d705:8b4]) by BN2P110MB1224.NAMP110.PROD.OUTLOOK.COM
+ ([fe80::848f:7279:d705:8b4%6]) with mapi id 15.20.6433.022; Fri, 2 Jun 2023
+ 21:55:21 +0000
+From:   "Duffey, Blake" <Blake.Duffey@noblis.org>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: CTRL-C in ssh included with git kills the pipe
+Thread-Topic: CTRL-C in ssh included with git kills the pipe
+Thread-Index: AdmVnM/kIWRKKRbkTn6hHEztQh+l7w==
+Date:   Fri, 2 Jun 2023 21:55:21 +0000
+Message-ID: <45dd0347ff2646e8a9770644728afb07@BN2P110MB1224.NAMP110.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=noblis.org;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN2P110MB1224:EE_|BN2P110MB1575:EE_
+x-ms-office365-filtering-correlation-id: c3e507e4-85c9-4f14-2912-08db63b40fa7
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: hnCE3mVGcTNhw5AcFGlp0mFODV5bZRWWKVh1+absAjg/+1bVxhLgNauXJsN+3UmCBdYZmcniyb2w+T/66wviJwUHJyu8dqhb+1v/Kk0Qw1V0HqYOEhnU/FiQb++0aduzFGtBvqADTpdkwD7lfvm7A1StJY4P7kFk90MK2YlCaVzsTCtwcZKefEAA0eXKsgpWBTMXnQab25svyd1jsuBV3sRxa6mQpv5yHVgqM7wgWxJ1Y5saKlIvqiSWGaQOYpvVyWic3cGKC+3FXiZILdLPfID5n1wn62hxWA76RrYP6o81oSforTvMVNbPtX+j4/Coo8jCXZdycbWoK0D1s95tzEDeXDO2PDsXLoNtOKJ36N/X715b1I9Y8h5qFZHbSrGnfxZmOlA34fVDFaJFRedaFlw9Ucjuy//zhFqMYfE5IVK2kPqaC44sS3GM1mBLE8xzeFoFRP+uFx6Lu1JSoILjLc/y9aVaZHTXnt8AnzYzymXUR0F7UnIxUCoXtratSiZmZefpoUoZiJc29KKiJvaWHG5v+6n4yTCmzuFeAH6XvHy2Kr5/pC6Soe8DAxWIKAlR
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN2P110MB1224.NAMP110.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(39830400003)(396003)(366004)(451199021)(122000001)(38100700002)(38070700005)(86362001)(6916009)(76116006)(66446008)(66946007)(66556008)(64756008)(66476007)(508600001)(41320700001)(55016003)(108616005)(24736004)(71200400001)(186003)(966005)(9686003)(6506007)(26005)(2906002)(8676002)(4744005)(5660300002)(8936002)(7696005)(41300700001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: S5rGJrryvXXL5wUCL6oy+q3TRl2i0DkU2Z00j6pgxkY7c9/jjQn2qBZUaO3B5zLVUdciE6yf7Vbn1XxP9Ob6Ven0YzkZb4RdzDh9LQtIgAh17gKq1q8lzSVjXCkXGo7wZoy7K2TB4ue60F2zbdrrDUx+aW3UG7Mhxrdo+0THPYtRinHYrJDE44hPXhdk/VoSl/nHOszzgdUstUT7fhhYzMh06OuYsn0EwugCbta20klZMAG484lqU+SqPbPPtCGRB4HuRae5NkmNd0PjM/JvjOLOUg3ak+/ibdwAtKSEXHwVTnoyEqy3LNVS8JrwiM4XsO3dKSt2IyKKnvvQspL6/HJfz/Tmj9lsBOy5eh4QgKuozdbyyagUIMXoBd2V0N+EGs7qMipbTqibDQXPj41nOHwlyGOK9sXceyleSVfrbHM=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 2 Jun 2023 23:22:53 +0200
-Message-ID: <CAPMMpoiJ4cNcAR9gO5d-749N3YW-88p1gMnX8ySGgz84Mr9coA@mail.gmail.com>
-Subject: "git fetch --refetch" and multiple (separate/orphan) branches
-To:     git <git@vger.kernel.org>
-Cc:     Robert Coup <robert@coup.net.nz>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: noblis.org
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN2P110MB1224.NAMP110.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3e507e4-85c9-4f14-2912-08db63b40fa7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2023 21:55:21.0812
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3ce0b61c-3e9d-4790-85f1-d44a713bf642
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN2P110MB1575
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+The version of OpenSSH included with git 2.41 reports as:
+OpenSSH_9.3p1, OpenSSL 1.1.1u 30 May 2023
 
-I just recently noticed that "--refetch" was added in 2.36, and I got
-pretty excited - the ability to "fill in" missing blobs after a
-too-filtered clone is something that I've wanted a number of times, as
-I mentioned in 2021 in thread
-https://public-inbox.org/git/CAPMMpohOuXX-0YOjV46jFZFvx7mQdj0p7s8SDR4SQxj5hEhCgg@mail.gmail.com/
-.
+The version of OpenSSH available from=A0https://github.com/PowerShell/Win32=
+-OpenSSH/releases=A0reports as:
+OpenSSH_for_Windows_9.2p1, LibreSSL 3.7.2
 
-When I first ran "git fetch --refetch" today however (git 2.38.1,
-against server git/2.38.4.gl1), with a configured blob filter of
-"blob:1100M", a much higher size than any blob in the history, it only
-got a *relatively* small number of objects - 3GB of data rather than
-the 18GB that a new unfiltered fetch would have retrieved.
+If I connect to server X with the first client, run top, and issue CTRL-C -=
+ I get
+client_loop: send disconnect: Broken pipe
 
-After some more testing I tried again, and got the expected outcome
-that time. The relevant difference between the two attempts is that in
-the first case, when I only got some of the objects I expected, there
-was an updated tag as a result of the fetch. The second time, when I
-got everything, there were no updated refs.
+If I connect to server X with the second client, run top, and issue CTRL-C.=
+..
+it ends top and the connection remains
 
-In this repository there are several "independent" sets of branches,
-and the tag updated in that first fetch belongs to one of the
-smaller-history branches.
 
-What I believe is happening is that *if* there are refs to be updated
-(or new refs, presumably), *then* the objects returned to the client
-are only those required for those refs. If, on the other hand, there
-are no updated refs, then you get what is advertised in the doc: "all
-objects as a fresh clone would [...]".
 
-I've tested a couple of different scenarios and the behavior seems
-consistent with this explanation.
 
-In a repo where all branches are derived from the same history, this
-probably isn't very noticeable; in the repo I'm working on it makes a
-huge difference, so the only way I can imagine getting "correct"
-behavior would be to always to a "git fetch" right before the "git
-fetch --refetch".
-
-Is this a bug, or expected behavior that should be noted in the doc,
-or do we consider the multiple-independent-branches usecase to be
-edge-casey enough to be an easter egg for people like me?
-
-Thanks,
-Tao
