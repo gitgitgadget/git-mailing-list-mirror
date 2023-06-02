@@ -2,110 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B7CC77B7A
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 00:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D96F2C7EE2A
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 02:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232876AbjFBAfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jun 2023 20:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56042 "EHLO
+        id S233327AbjFBCb0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jun 2023 22:31:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231320AbjFBAfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2023 20:35:41 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF4019F
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 17:35:39 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 08B825A1A8;
-        Fri,  2 Jun 2023 00:35:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1685666138;
-        bh=HOV0weHpTkdqiFwwSnYMIObnanOzYNSz1U4C91u2yX8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Lj90A7zV9/bUqBWeOkqj97+e7s7QBO+MeWQES5yiu1uQ/RQNbR34wRtb1AKzyZ8VK
-         mYNx0zAZO0GP20cblRRKxI4es/XN2QxxwkSE5jRgYsSk6G26KBiSMziOugTpp1xpka
-         lpUvJBEdHzYtCfzj22YjfWJLFM1J9R1XWZQ6t8Sj1f9CYNDJ3bNaBwA1FMih9F/NvY
-         DcHX5ITBBvbRbjLk8uFlitUTkcvgCebPyygLGvtWeMTynhn8CRaq+D1xzriRMnE/oH
-         7kIkbBNOlgP1igK6MgchTnP6Hs0oCF/O1cXSBfv3C0/fHvaAlIjcQQ13eG2nARcPSb
-         XCRtBLH/5/ucYuX65POyzqMlycs2glBU+NXadz0Nx+q/ilar8VtOIy86dhtEHZjbr4
-         tDxSti0F0imrsy772xWWGrQQOKXM0/PaPqxD0HHffG4EiChyy3rnKNkW3h/pc9mAxA
-         prsK10ewq+alCc2pQp6YH54z/s9/hr6XCsZRw5sfPJXYTikMr2/
-Date:   Fri, 2 Jun 2023 00:35:35 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Priedhorsky, Reid" <reidpr@lanl.gov>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: bug? subprocesses can use wrong Git if $PATH is unset
-Message-ID: <ZHk5V6U9gfkuwErH@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Priedhorsky, Reid" <reidpr@lanl.gov>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <E7D87B07-C416-4A58-8726-CCDA0907AC66@lanl.gov>
+        with ESMTP id S233218AbjFBCbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2023 22:31:25 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A963B194
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 19:31:23 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-53482b44007so962517a12.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 19:31:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685673083; x=1688265083;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E4A+84/SxPcNeAfquDx3w8qZXhfX1JlrEBXNgjfIw1U=;
+        b=O3C8Le1M8agafz9dZoqpN/pZ0cg2OcAeQcHnnajNHHPixJjtERS7zKdHxFjfNmj2cI
+         TKPZ4IwEHWYSV8XFJuFa+/YRVt6x7darrW8Y17p9Z27CrfnS236usOaOLC2cKM13956S
+         /7sE11686sW2JiFNplzAxZNYu+aM1rbiaU5kCH3UZKdlGT9zzN9cxr14pENmUgNw/mLS
+         kAOxh+A5mQp3lJuB8hF3ovrFmqhnpZZ3gTNBXGAdMfaY/QasXFK9HIABblTK7A2up418
+         R94N4/EzfI3/6TfCbieM3DLoshhwKMtKnjQgx+R9xkZW6jCL7hkifmGvpVF44qq53EEJ
+         zvZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685673083; x=1688265083;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E4A+84/SxPcNeAfquDx3w8qZXhfX1JlrEBXNgjfIw1U=;
+        b=id8r7i7aoDE1aOBj5kpYo1+YM+551HT3V4TPPtEv20S80tAJJPphnh+gZso3XOEZmp
+         qX2kKxTTZw4Ta3nAhc+3eWis02G8YiCAAuibU+JLHK7ef8Arfpo4QCcocSAMeULrNvsT
+         GgZPOmNV5wXG4NPrDhnKMLK6UmbBV+o8RCSG+psk+Z4hsk4bJmubaUQqEqPseki1kRgE
+         zwV51Ct1RW+ZJ+QZmaLvTvzPGxajPwYC9QL5uFTCd1TgK7g1cm0esnYBhNtBD2d8QFi+
+         ZMCo9AqMINbDrkUQalmfuOHzetRDodqhPs6E8K6/OvSdhi7uWXS2kxbqP8xwcnHHvOXQ
+         cNmg==
+X-Gm-Message-State: AC+VfDy/RZWrMiKJUTW5YVuZYqoh6pRuamgqHK41szvA4VBjtkyVNk1Q
+        9BvRWoHKQT5VWTYumMbbUzNYRWuiVoVRLw==
+X-Google-Smtp-Source: ACHHUZ4gtOtB4Q+5cSoaom7u5qKFIT2XErR0NVPsqYHpEI6Y76Ax6ccUWRGCWn6w+7y7y/z+zJTqpQ==
+X-Received: by 2002:a05:6a20:6a27:b0:110:32ba:33c3 with SMTP id p39-20020a056a206a2700b0011032ba33c3mr9812942pzk.57.1685673082628;
+        Thu, 01 Jun 2023 19:31:22 -0700 (PDT)
+Received: from fivlite-virtual-machine.localdomain ([49.37.144.109])
+        by smtp.gmail.com with ESMTPSA id o16-20020a170902d4d000b001b0395c4002sm71251plg.210.2023.06.01.19.31.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 19:31:22 -0700 (PDT)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Kousik Sanagavarapu <five231003@gmail.com>
+Subject: [PATCH v2 0/2] Add new "signature" atom 
+Date:   Fri,  2 Jun 2023 07:41:53 +0530
+Message-ID: <20230602023105.17979-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230529192209.17747-1-five231003@gmail.com>
+References: <20230529192209.17747-1-five231003@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0xwK1SMtrsrL/ooL"
-Content-Disposition: inline
-In-Reply-To: <E7D87B07-C416-4A58-8726-CCDA0907AC66@lanl.gov>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---0xwK1SMtrsrL/ooL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for the review.
 
-On 2023-06-01 at 22:21:05, Priedhorsky, Reid wrote:
-> Hello,
->=20
-> I may have found a bug in Git. It seems that if (1) multiple git(1) are i=
-nstalled on the system, (2) one is in the shell=E2=80=99s default path (i.e=
-=2E, used if $PATH is unset, not the default value of $PATH), and (3) the d=
-esired git(1) is at a different path, then subprocesses of the desired git(=
-1) invoke the undesired git(1) instead.
->=20
-> $PATH unset is indeed a pathological situation; one of our own bugs in ou=
-r software that calls git(1) inappropriately cleared it. However, in my vie=
-w it=E2=80=99s surprising enough to be a usability bug. I would expect git(=
-1) to call itself for subprocesses regardless of the environment.
+Changes since v1:
 
-I don't believe this is a bug in Git, but rather a behaviour of your
-operating system kernel.  If you don't set PATH, then when Git does an
-exec, the kernel or libc supplies a default PATH value.  Traditionally
-this includes /bin and /usr/bin, and on some systems, it used to contain
-the current working directory, which has typically been removed for
-security.
+    PATCH 1/2 -
+	Changed the condition so that prereq GPG2 will only fail
+	if we have GPG v0.* or v1.* instead of failing when we
+	don't have v2.* (this will have an effect if in the future
+	GPG v3.*, v4.* were introduced).
 
-It isn't possibly to portably determine that path that was used to exec
-the current binary, so Git doesn't try to do so, and it assumes that you
-set PATH appropriately.  In fact, on some systems, you can use fexecve
-to execute file descriptors pointing to files that have been unlinked,
-so in general, it's not possible to determine which binary to use
-without the PATH.
+    PATCH 2/2 -
+	Renamed the setup tests to be more clear about their purpose.
 
-I'm not aware of any other major programs which do this in a better or
-more useful way, so I don't think there's anything to change here in
-Git.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+    Common to both the patches is the change where we introduce a
+    newline to a file. Use "echo >" instead of "echo "" >".
 
---0xwK1SMtrsrL/ooL
-Content-Type: application/pgp-signature; name="signature.asc"
+I have also rebased this to be on top of v2.41.0, the previous version
+was on top of v2.41.0-rc0.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+Range-diff against v1:
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZHk5VwAKCRB8DEliiIei
-gZSoAQDEVFP2Vag8XVmkCx6mvKwKI6MeN3elVLs/W9chvSeYugD/RFYtfNbWpvzT
-u5ynoPwxTvxbMuSR4Z0fL+GrTz+HYg4=
-=/+FU
------END PGP SIGNATURE-----
+1:  5c97d11b79 ! 1:  87465ef1a8 t/lib-gpg: introduce new prereq GPG2
+    @@ t/lib-gpg.sh: test_lazy_prereq GPG '
+     +  test $? != 127 || exit 1
+     +
+     +  case "$gpg_version" in
+    -+  !"gpg (GnuPG) 2."*)
+    ++  "gpg (GnuPG) 0."* | "gpg (GnuPG) 1.*")
+     +          say "This test requires a GPG version >= v2.0.0"
+     +          exit 1
+     +          ;;
+    @@ t/t7510-signed-commit.sh: test_expect_success GPG 'amending
+already signed commi
+      
+     +test_expect_success GPG2 'bare signature' '
+     +  git verify-commit fifth-signed 2>expect &&
+    -+  echo "" >>expect &&
+    ++  echo >>expect &&
+     +  git log -1 --format="%GG" fifth-signed >actual &&
+     +  test_cmp expect actual
+     +'
+2:  e89f14283d ! 2:  690869aa47 ref-filter: add new "signature" atom
+    @@ t/t6300-for-each-ref.sh: test_expect_success 'git for-each-ref
+with non-existing
+     +GRADE_FORMAT="%(signature:grade)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
+     +TRUSTLEVEL_FORMAT="%(signature:trustlevel)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
+     +
+    -+test_expect_success GPG 'setup: signature gpg' '
+    ++test_expect_success GPG 'setup for signature atom using gpg' '
+     +  git checkout -b signed &&
+     +
+     +  test_when_finished "test_unconfig commit.gpgSign" &&
+    @@ t/t6300-for-each-ref.sh: test_expect_success 'git for-each-ref
+with non-existing
+     +  git tag seventh-unsigned
+     +'
+     +
+    -+test_expect_success GPGSSH 'setup: signature ssh' '
+    ++test_expect_success GPGSSH 'setup for signature atom using ssh' '
+    ++  test_when_finished "test_unconfig gpg.format user.signingkey" &&
+    ++
+     +  test_config gpg.format ssh &&
+     +  test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
+     +  echo "8" >file &&
+    @@ t/t6300-for-each-ref.sh: test_expect_success 'git for-each-ref
+with non-existing
+     +  grep -Ev "checking the trustdb|PGP trust model" out.raw >out &&
+     +  head -3 out >expect &&
+     +  tail -1 out >>expect &&
+    -+  echo "" >>expect &&
+    ++  echo  >>expect &&
+     +  git for-each-ref refs/tags/first-signed \
+     +          --format="%(signature)" >actual &&
+     +  test_cmp expect actual
 
---0xwK1SMtrsrL/ooL--
+Kousik Sanagavarapu (2):
+  t/lib-gpg: introduce new prereq GPG2
+  ref-filter: add new "signature" atom
+
+ Documentation/git-for-each-ref.txt |  27 ++++
+ ref-filter.c                       | 111 ++++++++++++++++-
+ t/lib-gpg.sh                       |  21 ++++
+ t/t6300-for-each-ref.sh            | 191 +++++++++++++++++++++++++++++
+ t/t7510-signed-commit.sh           |   7 ++
+ 5 files changed, 355 insertions(+), 2 deletions(-)
+
+-- 
+2.41.0
+
