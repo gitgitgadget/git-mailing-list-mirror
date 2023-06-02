@@ -2,81 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA43CC77B7A
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 17:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57C23C77B7A
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 18:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235563AbjFBR0i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 13:26:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47370 "EHLO
+        id S237058AbjFBSqz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 14:46:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234602AbjFBR0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 13:26:37 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7F601AB
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 10:26:36 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-561eb6c66f6so31595877b3.0
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 10:26:36 -0700 (PDT)
+        with ESMTP id S235496AbjFBSqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 14:46:53 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB891B0
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 11:46:52 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-56552a72cfbso35263497b3.3
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 11:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685726796; x=1688318796;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZStPsKaIP5FVvBA6ciPbXDN/E0JGlhAajMyO3JAmIrU=;
-        b=caI74KQreI7Y6+GBWTPA+74TED2Sm+LFWPlLu3dyHdWHOrnkegNSDBtE1+pmUdA9Y/
-         p6m99lDhNNtUQHh8YUSfd14oCTKFS6Yv8bGJ+P8NIWxVbSzhv+X/X82xlnjzooYz3O8k
-         pgnYAS2+frA/lm/rqQVTvy3hbSkZlw++9Gbi/Ef3UTcNrp3QgIk/NPP9vbzFkOvGPsfS
-         1Bf6C/LYCSAQq++qy2SSMsu0et+IKJJwCbVQokgt6ywyNa7qbw8GEQCmLwd8YBZW9GYV
-         H8eHybHgBJs7iv7AuUOdk+uCzgz/U8Wma+zf4+kiQyMgdBbDp6JZ3S/Fol2+EsRDQoUF
-         3VIw==
+        d=google.com; s=20221208; t=1685731611; x=1688323611;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WEatwM26XTR51ujKkT8yBvI29jB7sa2tzSSVpC79R1U=;
+        b=ecB2AGFmL6w15QDRDrcb6tLjYB4NjxUAFXPPkJRdzbxcQpHRiA1Nbh65eN2ZYXJFg1
+         GvMhjQxXieFvMpDFURuUP1TvICBJOF/RVyjp1JVp4VfpgB08hFpGVTjsg97hVbdc9y3G
+         3JpIvVXYheX2SL1oc1UrRuc2opDKXmMQ7XE4k8OTSdthBph2lY/U5E+eybJgESHopvD1
+         rf7aZkInRSwKk8xRiA5K6J4K9akgD2ggF6yVa64+cDlI/jn7gIYYIFUuD8ElbN449hk6
+         99E2X4RyVkDdkde3EOBkk0+uhBM08gxottxxy0/YsJNpUMhQWjhcgtfQukcYv1OMddDu
+         QZWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685726796; x=1688318796;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZStPsKaIP5FVvBA6ciPbXDN/E0JGlhAajMyO3JAmIrU=;
-        b=IWaqfg9rmZfWAV9lUelNGVvQ2p3jXm06TzTQ2o9vXUj7rqxmWebTTnznZWYYWubhmX
-         7xGu9LmZ+NuP6bi2TmYk+L+HgbBsx92LXlzTNy6fBjKldV98IvdaSo9aIkH7cMuLWFzC
-         b4ZrNC9eTsNxjyRR1hbWeymFNF/gvPKMDt2mTxoqjmR7SjydHo5DYpZhsUdZOCz3Gai6
-         9wVN04QdDfExrE/OqsztRdhSF+dDjc53WDqzYVQqwdi7UZRhUKGoI/8l3S7I6JY8r8Cb
-         I1KXF7OxkQsqaHG/nQdI2yBXrc7h9W8OLb5fzH5x5lwfPOSD+Q9pipo2mN/8jQnuqR+0
-         6oWw==
-X-Gm-Message-State: AC+VfDzYkqGqlrHZnWWA3XGI7unylRWzSsC1JLBBuFXwTmUQhfPPEx3h
-        wsParOaTQegcoHT00cTZXzHx4PzsmZ4Hcg==
-X-Google-Smtp-Source: ACHHUZ6MGyT69gzJ6D3bqyQKlNOhVry/stlJrEpi08sPCtT6bpaCSTlz8ItDTVdnaQ1XSR/bcQs4cF1yJNZSlA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a81:a889:0:b0:552:b607:634b with SMTP id
- f131-20020a81a889000000b00552b607634bmr309660ywh.4.1685726796083; Fri, 02 Jun
- 2023 10:26:36 -0700 (PDT)
-Date:   Fri, 02 Jun 2023 10:26:34 -0700
-In-Reply-To: <20230601233550.429921-1-jonathantanmy@google.com>
+        d=1e100.net; s=20221208; t=1685731611; x=1688323611;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WEatwM26XTR51ujKkT8yBvI29jB7sa2tzSSVpC79R1U=;
+        b=Fxv0agTz0HK7mq0uamXU25TFTuuKHxsyYwSOZx5KwRJzzYh9dTH0BR1XXcnXZE1VZk
+         fGKyHI7ZWvrDi8psKibx7vTEuG8P0FOHAeNXHmbiqIGXGcrIUVyGIdfYGuClrVlXWUD2
+         bwv6qz9i4nuWy9VvCMeFABLArbc5TpiMCpV077982/Zkhr6AF2apHbASVLkWinx3FUUJ
+         6n6Orq1n1+Gv6H1EbhQT3vuqnRugngTi0bvUkOe+lqcsCpVP7FNBNW0VmP46Zzc4YLEM
+         pDjLvSqm7SU9C3kU3rNWvFog40aJTCrDb9jo1xJDRNQQ8aZBVt/USdD3wY9M4fnq+3Z2
+         xWvw==
+X-Gm-Message-State: AC+VfDzRz31fLppkpGjykahdtfr5iJqvAiaWTD+pwcMCzTHtYqT1HF67
+        P0krXLQbyex+yZcSC82pRdI90TdD038fqdk7s8XbGOI7VhH89Y3XLiZ4w2eDN0IwRaQx0QrE+T4
+        RtwHVXSG6lXV23QdiiqmlgHlYIyNHnU/0nNQvy3VKrbUio8cY4TcndTYVGaeB
+X-Google-Smtp-Source: ACHHUZ73ohLTTIG+VnlsZJ9UcPogCuV/QtZv1MXPOtbB9f/d1vahbPeG+SlwuzksNhGugYE72Fm/eX5y2TUc
+X-Received: from nayru.cam.corp.google.com ([2620:15c:93:4:46de:3427:10c3:915f])
+ (user=asedeno job=sendgmr) by 2002:a81:b620:0:b0:561:b8d1:743b with SMTP id
+ u32-20020a81b620000000b00561b8d1743bmr374496ywh.10.1685731611221; Fri, 02 Jun
+ 2023 11:46:51 -0700 (PDT)
+Date:   Fri,  2 Jun 2023 14:45:57 -0400
 Mime-Version: 1.0
-References: <20230601233550.429921-1-jonathantanmy@google.com>
-Message-ID: <kl6lmt1hzsfp.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 09/14] config.c: provide kvi with CLI config
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Emily Shaffer <nasamuffin@google.com>
+X-Mailer: git-send-email 2.41.0.rc2.161.g9c6817b8e7-goog
+Message-ID: <20230602184557.1445044-1-asedeno@google.com>
+Subject: [PATCH] statinfo.h: move DTYPE defines from dir.h
+From:   "=?UTF-8?q?Aleajndro=20R=20Sede=C3=B1o?=" <asedeno@google.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        "=?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?=" <asedeno@mit.edu>,
+        "=?UTF-8?q?Alejandro=20R=20Sede=C3=B1o?=" <asedeno@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+From: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
 
->> +	memcpy(&matched->kvi, kvi, sizeof(struct key_value_info));
->
-> Can this just be
->
->   matched->kvi = *kvi;
->
-> ?
+These definitions are used in cache.h, which can't include dir.h
+without causing name-info.cc to have two definitions of
+`struct dir_entry`.
 
-If I remember correctly (big if), we have to copy the memory because the
-config machinery allocates kvi on the stack, and the relevant functions
-have returned by then. Hm, does this suggest that kvi should be const?
+Both dir.h and cache.h include statinfo.h, and this seems a reasonable
+place for these definitions.
 
-> If not, for the sizeof, use *kvi as the argument instead of struct
-> key_value_info.
+This change fixes a broken build issue on old SunOS.
 
-Makes sense.
+Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+Signed-off-by: Alejandro R Sede=C3=B1o <asedeno@google.com>
+---
+ dir.h      | 14 --------------
+ statinfo.h | 14 ++++++++++++++
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/dir.h b/dir.h
+index 79b85a01ee..d65a40126c 100644
+--- a/dir.h
++++ b/dir.h
+@@ -641,18 +641,4 @@ static inline int starts_with_dot_dot_slash_native(con=
+st char *const path)
+ 	return path_match_flags(path, what | PATH_MATCH_NATIVE);
+ }
+=20
+-#if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+-#define DTYPE(de)	((de)->d_type)
+-#else
+-#undef DT_UNKNOWN
+-#undef DT_DIR
+-#undef DT_REG
+-#undef DT_LNK
+-#define DT_UNKNOWN	0
+-#define DT_DIR		1
+-#define DT_REG		2
+-#define DT_LNK		3
+-#define DTYPE(de)	DT_UNKNOWN
+-#endif
+-
+ #endif
+diff --git a/statinfo.h b/statinfo.h
+index e49e3054ea..fe8df633a4 100644
+--- a/statinfo.h
++++ b/statinfo.h
+@@ -21,4 +21,18 @@ struct stat_data {
+ 	unsigned int sd_size;
+ };
+=20
++#if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
++#define DTYPE(de)	((de)->d_type)
++#else
++#undef DT_UNKNOWN
++#undef DT_DIR
++#undef DT_REG
++#undef DT_LNK
++#define DT_UNKNOWN	0
++#define DT_DIR		1
++#define DT_REG		2
++#define DT_LNK		3
++#define DTYPE(de)	DT_UNKNOWN
++#endif
++
+ #endif
+--=20
+2.41.0.rc2.161.g9c6817b8e7-goog
+
