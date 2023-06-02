@@ -2,103 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E929C7EE24
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 19:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1384DC7EE29
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 19:13:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235988AbjFBTLu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 15:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58882 "EHLO
+        id S236374AbjFBTN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 15:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237071AbjFBTLs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 15:11:48 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C18133
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 12:11:46 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 128145A210;
-        Fri,  2 Jun 2023 19:11:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1685733105;
-        bh=zwpRX3QRhFkenV2/yf87nlupZRyjOuqdnVK29pF1VZ4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=LIOwaiquiMqMe1dgUSO07/0DaIZ3+AspRYgkuvSYGgwTZDA8NDaJSX0Zr5ekQbO4k
-         Pwa83+InxLK86mEYcgOt9VHS+dzLDfCr7zY9zGYNdmAIT5eESkfMzTpteUorWYTtRv
-         m/tPmDg5E/202F7GDANElkIwqOOwY78VthhP0WY/GFKLtkDGU3euSE+REUWBhFuFra
-         ojouveKZEWNplLig9q6GffwQK18TOte7M72pNZE5fQv7BX0rxLh0sKpKM+b9062/rO
-         DIJBsIhqvjPXiNiwcyvISaZ5shMlFTZSYoTT7p1MIyaHc3rxOiFjfIH258SKc2rP5k
-         9HjNPDugLWjsiUDyL9zvG2WYGviv82SlWt+LYnNjOSmD1sH1ObOmXx2o7TqLbLZou7
-         O5klxBLR3CTuV0ISMpuTCCJvruGm2oJtMomOjBP+F8s8srjCWMMScArLrAOO1KEFuZ
-         AXx9JQ/qhx0g4E/qACCceKl8OIkOecpbjVyLZeY8O/6T/e892S7
-Date:   Fri, 2 Jun 2023 19:11:43 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Shahin Dohan <shahin.dohan@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug: Git bash slow after update
-Message-ID: <ZHo+742ova7QTAe1@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Shahin Dohan <shahin.dohan@gmail.com>, git@vger.kernel.org
-References: <CAHsf_F2CgyTWr82htsyg8aiA-WhrKa4zJQUc_wJwF0pfRYR7yQ@mail.gmail.com>
+        with ESMTP id S234942AbjFBTNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 15:13:55 -0400
+Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B84133
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 12:13:54 -0700 (PDT)
+Received: from outbound-ss-761.bluehost.com (outbound-ss-761.bluehost.com [74.220.211.250])
+        by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 9E4EE80298DE
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 19:13:54 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+        by progateway8.mail.pro1.eigbox.com (Postfix) with ESMTP id B9F191003E919
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 19:12:53 +0000 (UTC)
+Received: from box5922.bluehost.com ([162.241.30.80])
+        by cmsmtp with ESMTP
+        id 5ACjqomcE0K9w5ACjqo52P; Fri, 02 Jun 2023 19:12:53 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Xf5McK15 c=1 sm=1 tr=0 ts=647a3f35
+ a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=of4jigFt-DYA:10:nop_rcvd_month_year
+ a=3EOfIcITIxQA:10:endurance_base64_authed_username_1 a=fT6DP1TIeAv9dCBC-a0A:9
+ a=QEXdDO2ut3YA:10:nop_charset_2
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=wHTsuH7cZXmnhILEne9lK0Xfo0aDtcn+7a56BoU1DvE=; b=b/PB4iofR9iTHC/MScXx/UEiT1
+        HFTE/WBHxkk6YO4gNGHXowwtL2jUVb010R7GIJYKtDjI1QLAPxaNJHf1ORQfzEzNvm+AXV5BgStU3
+        yR6fJJvSIVTe2UIfFgSwvYTEF;
+Received: from [160.231.0.90] (port=57788 helo=llin-psh13-dsa.dsone.3ds.com)
+        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1q5ACj-000TjE-D6
+        for git@vger.kernel.org;
+        Fri, 02 Jun 2023 13:12:53 -0600
+Message-ID: <7aa2ab6714bd14671ba9cfff611dea2fa088c99e.camel@mad-scientist.net>
+Subject: Re: Anyone know why git ls-remote output might be corrupted?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     git@vger.kernel.org
+Date:   Fri, 02 Jun 2023 15:12:52 -0400
+In-Reply-To: <b6f210da2c3cc7746b984b797ad89687cba2d1f8.camel@mad-scientist.net>
+References: <b6f210da2c3cc7746b984b797ad89687cba2d1f8.camel@mad-scientist.net>
+Organization: Please remain calm--I may be mad but I am a professional!
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vWuW61ykFNKnEakw"
-Content-Disposition: inline
-In-Reply-To: <CAHsf_F2CgyTWr82htsyg8aiA-WhrKa4zJQUc_wJwF0pfRYR7yQ@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 160.231.0.90
+X-Source-L: No
+X-Exim-ID: 1q5ACj-000TjE-D6
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.0.90]:57788
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 2023-06-02 at 14:59 -0400, Paul Smith wrote:
+> Also a bunch of the heads are missing.=C2=A0 It's pretty clear that right
+> in the middle of printing one of the SHAs we suddenly lost a bunch of
+> output, and started printing stuff from later (in the last instance
+> 66 out of 131 heads were missing).
 
---vWuW61ykFNKnEakw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I forgot to mention: git ls-remote does not exit with an error code.=20
+The exit code is 0 (success).
 
-On 2023-06-02 at 06:42:01, Shahin Dohan wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Updated Git to 2.41.0
->=20
-> What did you expect to happen? (Expected behavior)
-> Same performance in Git bash as before
->=20
-> What happened instead? (Actual behavior)
-> Every operation is significantly slower. CD is slower, git pull is a
-> lot slower, etc...
->=20
-> What's different between what you expected and what actually happened?
-> Git bash performance is significantly worse
-
-The Git project doesn't distribute any binaries at all.  If you're using
-Git for Windows and seeing problems that are in Git Bash and don't
-involve Git (e.g., slowness in the shell with cd), then you'll probably
-want to report it to https://github.com/git-for-windows/git/issues/
-after searching for any existing issues.
-
-I will also mention that you'll also want to indicate in your report to
-the Git for Windows project if downgrading again solves the problem
-(which you should try) and if you have any sort of non-default
-antivirus, firewall, or monitoring software, since those can affect the
-performance of programs on Windows.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---vWuW61ykFNKnEakw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZHo+7wAKCRB8DEliiIei
-gZ2fAQDNCyycg79t3nwR41+92H+yl4P8WcaSugwJrzrIM6WQZwEA5kMg4umTvNwo
-XpzE4Ld5asLARq93FBi8s8Q5y6Ifngo=
-=rX+w
------END PGP SIGNATURE-----
-
---vWuW61ykFNKnEakw--
+The reason I get this failure is that as I parse the output I notice
+that the SHA is invalid (contains a non-hex character "i") and it
+throws this error.
