@@ -2,85 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E640C7EE24
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 12:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25FEAC77B7A
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 12:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234946AbjFBM6P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 08:58:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50762 "EHLO
+        id S234971AbjFBM6c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 08:58:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbjFBM6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 08:58:14 -0400
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A0B01A2
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 05:58:13 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 388C2320095C;
-        Fri,  2 Jun 2023 08:58:10 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Fri, 02 Jun 2023 08:58:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1685710689; x=
-        1685797089; bh=xpRJG57JGWyxhmxnTEfaFB3Bp5Mf0xmX+YiJdpDLKEw=; b=T
-        lo44HeFKSD0lz+mTTV8blGcuo+s992aNhMEmFtqzLG9RWXyYVEVfpqNTTLXT5TrG
-        691925mORFNYl65wFUbGlbordAg1ur27Ae2ye/WWsmwGriV6CbVyd/niTkHJD8IE
-        EZwf+von+XaZkbN+0hv/xJLD34urrJj3cPWCq2KUAWM24PNchygx0fVJDIabAK7w
-        NiisGqkmRlr6h9vWh8jAOdMpxqEHFcObdk6eL7p1UAljlZ+SoM6yMZSDc+l2k9KP
-        QyjZxNLDJWq6m/p+Gz9oXwNqG9bfrVofb9Mv6rWyMzVcvo8hKd0WKNsX9cUHyIxT
-        yF3OhbUwBvZNdmzuUOspQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1685710689; x=1685797089; bh=xpRJG57JGWyxh
-        mxnTEfaFB3Bp5Mf0xmX+YiJdpDLKEw=; b=sz0qmp8qjyNek8tCd3NFNhezOaGQQ
-        TEUjHYXe0QPoO2JnkMgtiFpjh92iYFyp1yrdhG0rdmG+0VlV5yVm30vT64sIz6OS
-        DFbrELV2zkInM1GARd7MhEXBkynVG+50+kWtDcPF8Et5qmdKamBwKk62G8UR+yxu
-        L22fhO6A6dxYNbdHbgDd8p/Z99emtQPrG42/mLnwrdhxEgTuwVsI5sLYKCkxXb7J
-        zHXqtbfsC891pRnD1Jn5X9ThlSPMkKkCRZLJjvkZB8aeFQJwTk74Ad3GWXI7/QpY
-        Gf8e2myh7ntEvfutSAGOgtZqNVqKpKAh2mWcgLnE9xqROlmCUmEU9eBYA==
-X-ME-Sender: <xms:Yed5ZIP6s-w4ADW6wO9QJE5Y3b9OsdD2BcQmAFEOiesUkOzP4Ctpg54>
-    <xme:Yed5ZO93bU5KYjM6EGuhkAtsJJyhxbeNyoWeTEDzIOwzFbJbM_VTnDSq-SjrmSty0
-    Kx5RLkh-T7rSl1Ceg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeelfedgheeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    dtkedtjeeiffelteffheeiheeufffgheelueeftdejkeeufffgiefhgeekffffueenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:Yed5ZPQiEYiQSyr0pANyOzna-fFjHfftktXE0oDBUquqLq8D_wKBuw>
-    <xmx:Yed5ZAuGhmrLNCIOjWG_dL4gVgC9ZOYyJyDM4yRPXEKyeFZMfrTxdg>
-    <xmx:Yed5ZAe5HJCDhkUpETyeB_akgmLqZoSYydqmQrAthOOG9XRHFc1LBA>
-    <xmx:Yed5ZKoZ6U-X8vgtzv28f1IcSZx6HJrVRTYHzlxQ_yQkJjCHe1h3-Q>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 6531F15A0091; Fri,  2 Jun 2023 08:58:09 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-447-ge2460e13b3-fm-20230525.001-ge2460e13
-Mime-Version: 1.0
-Message-Id: <79bddb7f-d120-4898-ac9e-cff9b404918b@app.fastmail.com>
-In-Reply-To: <1201c202-e046-01a3-df87-d959f0611725@decentral.ch>
-References: <1201c202-e046-01a3-df87-d959f0611725@decentral.ch>
-Date:   Fri, 02 Jun 2023 14:56:24 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Tim Tassonis" <stuff@decentral.ch>
+        with ESMTP id S232201AbjFBM6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 08:58:30 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C869180
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 05:58:29 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1b04949e4e9so9778485ad.3
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 05:58:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685710709; x=1688302709;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3q1ZE4R3pBGXpsDWEM4poz+B5YrR9yu9KSckAjxRZ4E=;
+        b=LKyqmt20j0if/u+wzsCWThhe36gQJLTd5Zi090532gsGH0xiwYCtQZ5Nty+5Ho5BkL
+         u1e5z7YgKhwnpuI/WfNnkdRzCddpcuPgZP0LZzgeqHUPf3ZHejKc86qQcSndN3UX16Yc
+         tpENHADDMy/4xePe+9zMVZWZN2hiM6dLfRyetyfnURLIWiG9ha3J6jKbwPQ7yHTOO0Mh
+         wuKneyZOSTKD8YXtYJMbOp7084L0S2s+vKr6QZD0S93hAF2sTLg6xALEeFRNlkIt7w99
+         cOi2VJPrv+3ygO+E3GbLARVVA8D73Lx15a5A3GynQevUiOyCnURvhHAL8QWamb9fCUMl
+         Wbww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685710709; x=1688302709;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3q1ZE4R3pBGXpsDWEM4poz+B5YrR9yu9KSckAjxRZ4E=;
+        b=RDzIR3i3uYx+dCMPem2qCmFEJbs6VOMfdwrCiNxdlyOIb+mgwhyDQJCZS7ayR56h6f
+         nAj42uvAN9IHdD2+dGDHhGnwaz2SwSGzlQta7pe4OdDmcVpIx27oFNxXw2lWGMLKk4Ag
+         tcvcfXGrgvB/+kpJ9PD0V5V2OlYPi52MfcK6zOIOhqfwpR6z5bZ0drzKixqrXDserPRc
+         CRxKGEb1PgF03IvJie7H91HI+E5HxBgCByuCA5HNiJy7EgSehD9PhPyJegVRLuMwEcSj
+         t2Hmqrw/Rud1eFN3IKHMqz0vA/DIXmy6FyI1+Z61N36IpcIvOK7KeLbdL1McmNrMT8aJ
+         rAvQ==
+X-Gm-Message-State: AC+VfDzpSKaADjnZkXI7OJG+pX1qLd7h7oPFKD3hxeNVlWumNPzxCQyu
+        Mz22XQFki574guc178K7Mq8xI3DVJLmWKg==
+X-Google-Smtp-Source: ACHHUZ78fTuAoXdVr2oMLhZBDXJyB4JIA5woxuKFOc9+oEXfA8kV+1fTKdYNziB/SfFKuPfbPhIukg==
+X-Received: by 2002:a17:902:dac7:b0:1ac:8837:de9 with SMTP id q7-20020a170902dac700b001ac88370de9mr1424329plx.3.1685710708498;
+        Fri, 02 Jun 2023 05:58:28 -0700 (PDT)
+Received: from fivlite-virtual-machine ([49.37.144.109])
+        by smtp.gmail.com with ESMTPSA id t21-20020a170902b21500b001ac45598b59sm1294272plr.163.2023.06.02.05.58.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jun 2023 05:58:28 -0700 (PDT)
+Date:   Fri, 2 Jun 2023 18:28:15 +0530
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Release Notes wrongly identify git as a self-learning program
-Content-Type: text/plain
+Subject: Re: [PATCH v2 1/2] t/lib-gpg: introduce new prereq GPG2
+Message-ID: <ZHnnZ_plMZ-wdO4M@fivlite-virtual-machine>
+References: <20230529192209.17747-1-five231003@gmail.com>
+ <20230602023105.17979-1-five231003@gmail.com>
+ <20230602023105.17979-2-five231003@gmail.com>
+ <CAP8UFD2wcnNaihGv=SQ_77OLQ5PN3DG73rnh2F_C_j+BFTcCyw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD2wcnNaihGv=SQ_77OLQ5PN3DG73rnh2F_C_j+BFTcCyw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jun 02, 2023 at 08:50:18AM +0200, Christian Couder wrote:
+> On Fri, Jun 2, 2023 at 4:31 AM Kousik Sanagavarapu <five231003@gmail.com> wrote:
+> 
+> > +test_lazy_prereq GPG2 '
+> > +       gpg_version=$(gpg --version 2>&1)
+> > +       test $? != 127 || exit 1
+> > +
+> > +       case "$gpg_version" in
+> > +       "gpg (GnuPG) 0."* | "gpg (GnuPG) 1.*")
+> 
+> s/"gpg (GnuPG) 1.*"/"gpg (GnuPG) 1."*/
+> 
+> I am not sure if it changes anything, but for testing if we have v0
+> here and v1.0.6 in the "test_lazy_prereq PGP", we put the '*'
+> character outside the double quoted string.
 
-Hi
+It does seem that it changes things, thanks for catching. I'll reroll
+with the necessary changes (there are also some style issues that
+Oswald pointed out).
 
-This is just the commit messsge jargon. :) it's been like this for years.
-
-Long before ChatGPT.
--- 
-Kristoffer Haugsbakk
+Thanks
