@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDCF3C7EE24
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 10:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DA5C7EE24
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 10:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235691AbjFBKb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 06:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
+        id S235485AbjFBKbc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 06:31:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235706AbjFBK30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 06:29:26 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D791718
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 03:27:15 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4f8b94c06so2518536e87.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 03:27:14 -0700 (PDT)
+        with ESMTP id S235623AbjFBK3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 06:29:30 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D7F194
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 03:27:23 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6ef9a928fso17849865e9.3
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 03:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685701571; x=1688293571;
+        d=gmail.com; s=20221208; t=1685701574; x=1688293574;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v3gs0oBPqSPSDtXxAIn4Q4FHrFsumrFKkrw0+iopqUo=;
-        b=IhO4t7UtTc1oneztP3lzB0AQrenlxY9BKKySRdLMHjULrfGNModeA/9VJzZrjVC7pY
-         3UyZyCK/o+v0bjQ1MXnvPrUzt9MxEQXpOgpivRIhZsNFlHaN0DPPbEC4DDNSnAV38SgE
-         TWdFf/76Ik3t6s1MzEDnqGpXLJTkZikgPZJio8UPcAkUasIoQ4CNu8HRCLHdGXaz2x/r
-         uWXY0KcL9Nbf1srn6lG0qk5Tk8tz86b5XLvt/u8CpfuamN5w6e1hRymwCfZ6vGC+3u4R
-         k9JhjmuDYUJRZHhKVoavuljL50LpBPTkZbJli+vCF3hl+gsCxaViRfD4giQB2reiWQ/S
-         /Fcg==
+        bh=ajPa/7hZEf7DJsyM+tg3YsLxH55ulGSSY2NvYdm6oV4=;
+        b=KdqNKCKwf2k/wlClR4LDe70r5hW966jm+9qmjEgug4m9sj2p8YOZumgfGLE3a5YolW
+         dyZz8Fso3LwXsAf0msfDMVDacCLy6RNHnqBb2oQDA3JVO5GnzMxUuo3W7o3VnWtex1CV
+         qnuRtzt5CdHmPIEWbaGeHh5ZyT3NmRd32rlpimMHFv1FXgyoT8tTIvkfekEzedSfz7gT
+         jm+PZ5+aIyrneEAQ5tjou2dLOJ/fnkwxirX8kW6BLSWOX4WaHUOPxygZaf4ME9U9Vss5
+         8vS38EzDL04zcML6Prus3dtSd6ss3A3YFAB5PUgAdNFbKwGj97NaHurCIl9aprm+sKHN
+         g43g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685701571; x=1688293571;
+        d=1e100.net; s=20221208; t=1685701574; x=1688293574;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=v3gs0oBPqSPSDtXxAIn4Q4FHrFsumrFKkrw0+iopqUo=;
-        b=fSkRUDCVNFsjFDhstb8Ph2puAFEpqdrC9YLsRC651eb9d2l9l3st7S7hmj+5WSTHp+
-         EjGvdEjy4XDQyN+AXHO84ayQSG6Qk15dWD6eB6Jv/IunQ2Upgl0RbnvDuMLGM76ee+qF
-         Tp2wHVHqwSEO8712nOvt1T+0yO7q10/UaObrR4s5QaPB+Ba4P6S9r85yYSnLPdCjPNUC
-         hOyyIMtILzfJWJdvyG8QYFVotaX+82B+AQVpeI80Fec6Xrh8IITdWdKffLWhN2wWgZk7
-         v2zZOQL/jF+COcmLIEBInuAvdDl5e0I2tpZz/KHuoDCTtvzwpzx/+518WsvQCFqgjhcg
-         5T4Q==
-X-Gm-Message-State: AC+VfDwvcRNDOxoqe7NTH4Tkk4mqM4cW1sI5JhYrLTwHnhh3QjDjVo0H
-        wUNgtCLmjzfBsVHXJuhWC6PEyKJw6w0LZg==
-X-Google-Smtp-Source: ACHHUZ5TdZmM4eYT4feAY9FQkVXWAa4Zeeh4nn0CsAYAiBz95ETCXWOjqFNlZWTnewDcVvJeqqWW3Q==
-X-Received: by 2002:a05:6512:376f:b0:4f4:e1f8:98e with SMTP id z15-20020a056512376f00b004f4e1f8098emr1281102lft.23.1685701571072;
-        Fri, 02 Jun 2023 03:26:11 -0700 (PDT)
+        bh=ajPa/7hZEf7DJsyM+tg3YsLxH55ulGSSY2NvYdm6oV4=;
+        b=lQadLWsbsdZArUE61irkSdJdgZsNiYdfNdSLUvQjzXoOgpVq53I3nv+G/bUld4dLpu
+         cBqo6z+nWFvKnUslJEZOc1e3pLNzZiae8fS9qWei1Hl/qAQGueMV6axQILpi3u5I8A0A
+         XBA/OzxUJ4rdCL7lUU3IqbHyJwIYcJ5wOVVCT6JFrzqBAv8rFkM6LLAvPQ5ok3WeffHd
+         ylTAzMvb2ReCssfMDpz4BxQfhgammWd9WhYaqf3nrRLy/NVZo/tiXoA57xEDPtHFO7y9
+         GqSGEa394o1juIXpTjt+RSZGBe/9RGCwBC/8EJuIPuP3DoLS7QgxzijLOzg4fq6hpfAZ
+         eJMQ==
+X-Gm-Message-State: AC+VfDxKbaJ0e5fyttJXD9pYe4jMdBPtH4+ORTRX5GhZhmN1vyqKQbow
+        dI1kCcsTHjIcrMI/Q3NlFP7HK7exlZXs2w==
+X-Google-Smtp-Source: ACHHUZ6KXw3Nlfvu9G5hmz/h7AiJWeirF4TUgDrtYxISRc6E9fQrI2QZ8GbN2A0UQxWXEpctDRf4pg==
+X-Received: by 2002:a7b:c412:0:b0:3f1:74bd:bc22 with SMTP id k18-20020a7bc412000000b003f174bdbc22mr1532186wmi.6.1685701573976;
+        Fri, 02 Jun 2023 03:26:13 -0700 (PDT)
 Received: from christian-Precision-5550.. ([2a04:cec0:1169:70dc:520b:5de9:c23d:7cde])
-        by smtp.gmail.com with ESMTPSA id 18-20020a05600c029200b003f601a31ca2sm1468035wmk.33.2023.06.02.03.26.09
+        by smtp.gmail.com with ESMTPSA id 18-20020a05600c029200b003f601a31ca2sm1468035wmk.33.2023.06.02.03.26.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 03:26:10 -0700 (PDT)
+        Fri, 02 Jun 2023 03:26:13 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         Calvin Wan <calvinwan@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 13/15] replay: add --advance or 'cherry-pick' mode
-Date:   Fri,  2 Jun 2023 12:25:31 +0200
-Message-ID: <20230602102533.876905-14-christian.couder@gmail.com>
+Subject: [PATCH v3 15/15] replay: stop assuming replayed branches do not diverge
+Date:   Fri,  2 Jun 2023 12:25:33 +0200
+Message-ID: <20230602102533.876905-16-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.41.0.15.ga6d88fc8f0
 In-Reply-To: <20230602102533.876905-1-christian.couder@gmail.com>
 References: <20230509175347.1714141-1-christian.couder@gmail.com>
@@ -75,384 +75,190 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-There is already a 'rebase' mode with `--onto`. Let's add an 'advance' or
-'cherry-pick' mode with `--advance`. This new mode will make the target
-branch advance as we replay commits onto it.
+The replay command is able to replay multiple branches but when some of
+them are based on other replayed branches, their commit should be
+replayed onto already replayed commits.
+
+For this purpose, let's store the replayed commit and its original
+commit in a key value store, so that we can easily find and reuse a
+replayed commit instead of the original one.
 
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-replay.txt |  33 ++++++-
- builtin/replay.c             | 185 +++++++++++++++++++++++++++++++++--
- t/t3650-replay-basics.sh     |  26 +++++
- 3 files changed, 230 insertions(+), 14 deletions(-)
+ builtin/replay.c         | 44 ++++++++++++++++++++++++++--------
+ t/t3650-replay-basics.sh | 52 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-index 394d7b0050..439b2f92e7 100644
---- a/Documentation/git-replay.txt
-+++ b/Documentation/git-replay.txt
-@@ -9,7 +9,7 @@ git-replay - Replay commits on a different base, without touching working tree
- SYNOPSIS
- --------
- [verse]
--'git replay' --onto <newbase> <revision-range>...
-+'git replay' (--onto <newbase> | --advance <branch>) <revision-range>...
- 
- DESCRIPTION
- -----------
-@@ -29,9 +29,17 @@ OPTIONS
- 	Starting point at which to create the new commits.  May be any
- 	valid commit, and not just an existing branch name.
- +
--The update-ref commands in the output will update the branch(es)
--in the revision range to point at the new commits (in other
--words, this mimics a rebase operation).
-+When `--onto` is specified, the update-ref command(s) in the output will
-+update the branch(es) in the revision range to point at the new
-+commits (in other words, this mimics a rebase operation).
-+
-+--advance <branch>::
-+	Starting point at which to create the new commits; must be a
-+	branch name.
-++
-+When `--advance` is specified, the update-ref command(s) in the output
-+will update the branch passed as an argument to `--advance` to point at
-+the new commits (in other words, this mimics a cherry-pick operation).
- 
- <revision-range>::
- 	Range of commits to replay; see "Specifying Ranges" in
-@@ -47,7 +55,10 @@ input to `git update-ref --stdin`.  It is basically of the form:
- 	update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
- 	update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
- 
--where the number of refs updated depend on the arguments passed.
-+where the number of refs updated depend on the arguments passed.  When
-+using `--advance`, the number of refs updated is always one, but for
-+`--onto`, it can be one or more (rebasing multiple branches
-+simultaneously is supported).
- 
- EXIT STATUS
- -----------
-@@ -67,6 +78,18 @@ $ git replay --onto target origin/main..mybranch
- update refs/heads/mybranch ${NEW_mybranch_HASH} ${OLD_mybranch_HASH}
- ------------
- 
-+To cherry-pick the commits from mybranch onto target:
-+
-+------------
-+$ git replay --advance target origin/main..mybranch
-+update refs/heads/target ${NEW_target_HASH} ${OLD_target_HASH}
-+------------
-+
-+Note that the first two examples replay the exact same commits and on
-+top of the exact same new base, they only differ in that the first
-+provides instructions to make mybranch point at the new commits and
-+the second provides instructions to make target point at them.
-+
- When calling `git replay`, one does not need to specify a range of
- commits to replay using the syntax `A..B`; any range expression will
- do:
 diff --git a/builtin/replay.c b/builtin/replay.c
-index cffbf34290..4b64d15159 100644
+index 9b182eaa90..a06649fa6e 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -14,6 +14,7 @@
- #include "parse-options.h"
- #include "refs.h"
- #include "revision.h"
-+#include "strmap.h"
- #include <oidset.h>
- #include <tree.h>
- 
-@@ -82,6 +83,146 @@ static struct commit *create_commit(struct tree *tree,
- 	return (struct commit *)obj;
+@@ -223,20 +223,33 @@ static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+ 	strset_clear(&rinfo.positive_refs);
  }
  
-+struct ref_info {
-+	struct commit *onto;
-+	struct strset positive_refs;
-+	struct strset negative_refs;
-+	int positive_refexprs;
-+	int negative_refexprs;
-+};
-+
-+static void get_ref_information(struct rev_cmdline_info *cmd_info,
-+				struct ref_info *ref_info)
++static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
++				    struct commit *commit,
++				    struct commit *fallback)
 +{
-+	int i;
-+
-+	ref_info->onto = NULL;
-+	strset_init(&ref_info->positive_refs);
-+	strset_init(&ref_info->negative_refs);
-+	ref_info->positive_refexprs = 0;
-+	ref_info->negative_refexprs = 0;
-+
-+	/*
-+	 * When the user specifies e.g.
-+	 *   git replay origin/main..mybranch
-+	 *   git replay ^origin/next mybranch1 mybranch2
-+	 * we want to be able to determine where to replay the commits.  In
-+	 * these examples, the branches are probably based on an old version
-+	 * of either origin/main or origin/next, so we want to replay on the
-+	 * newest version of that branch.  In contrast we would want to error
-+	 * out if they ran
-+	 *   git replay ^origin/master ^origin/next mybranch
-+	 *   git replay mybranch~2..mybranch
-+	 * the first of those because there's no unique base to choose, and
-+	 * the second because they'd likely just be replaying commits on top
-+	 * of the same commit and not making any difference.
-+	 */
-+	for (i = 0; i < cmd_info->nr; i++) {
-+		struct rev_cmdline_entry *e = cmd_info->rev + i;
-+		struct object_id oid;
-+		const char *refexpr = e->name;
-+		char *fullname = NULL;
-+		int can_uniquely_dwim = 1;
-+
-+		if (*refexpr == '^')
-+			refexpr++;
-+		if (repo_dwim_ref(the_repository, refexpr, strlen(refexpr), &oid, &fullname, 0) != 1)
-+			can_uniquely_dwim = 0;
-+
-+		if (e->flags & BOTTOM) {
-+			if (can_uniquely_dwim)
-+				strset_add(&ref_info->negative_refs, fullname);
-+			if (!ref_info->negative_refexprs)
-+				ref_info->onto = lookup_commit_reference_gently(the_repository,
-+										&e->item->oid, 1);
-+			ref_info->negative_refexprs++;
-+		} else {
-+			if (can_uniquely_dwim)
-+				strset_add(&ref_info->positive_refs, fullname);
-+			ref_info->positive_refexprs++;
-+		}
-+
-+		free(fullname);
-+	}
-+}
-+
-+static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
-+				  const char *onto_name,
-+				  const char **advance_name,
-+				  struct commit **onto,
-+				  struct strset **update_refs)
-+{
-+	struct ref_info rinfo;
-+
-+	get_ref_information(cmd_info, &rinfo);
-+	if (!rinfo.positive_refexprs)
-+		die(_("need some commits to replay"));
-+	if (onto_name && *advance_name)
-+		die(_("--onto and --advance are incompatible"));
-+	else if (onto_name) {
-+		*onto = peel_committish(onto_name);
-+		if (rinfo.positive_refexprs <
-+		    strset_get_size(&rinfo.positive_refs))
-+			die(_("all positive revisions given must be references"));
-+	} else if (*advance_name) {
-+		struct object_id oid;
-+		char *fullname = NULL;
-+
-+		*onto = peel_committish(*advance_name);
-+		if (repo_dwim_ref(the_repository, *advance_name, strlen(*advance_name),
-+			     &oid, &fullname, 0) == 1) {
-+			*advance_name = fullname;
-+		} else {
-+			die(_("argument to --advance must be a reference"));
-+		}
-+		if (rinfo.positive_refexprs > 1)
-+			die(_("cannot advance target with multiple source branches because ordering would be ill-defined"));
-+	} else {
-+		int positive_refs_complete = (
-+			rinfo.positive_refexprs ==
-+			strset_get_size(&rinfo.positive_refs));
-+		int negative_refs_complete = (
-+			rinfo.negative_refexprs ==
-+			strset_get_size(&rinfo.negative_refs));
-+		/*
-+		 * We need either positive_refs_complete or
-+		 * negative_refs_complete, but not both.
-+		 */
-+		if (rinfo.negative_refexprs > 0 &&
-+		    positive_refs_complete == negative_refs_complete)
-+			die(_("cannot implicitly determine whether this is an --advance or --onto operation"));
-+		if (negative_refs_complete) {
-+			struct hashmap_iter iter;
-+			struct strmap_entry *entry;
-+
-+			if (rinfo.negative_refexprs == 0)
-+				die(_("all positive revisions given must be references"));
-+			else if (rinfo.negative_refexprs > 1)
-+				die(_("cannot implicitly determine whether this is an --advance or --onto operation"));
-+			else if (rinfo.positive_refexprs > 1)
-+				die(_("cannot advance target with multiple source branches because ordering would be ill-defined"));
-+
-+			/* Only one entry, but we have to loop to get it */
-+			strset_for_each_entry(&rinfo.negative_refs,
-+					      &iter, entry) {
-+				*advance_name = entry->key;
-+			}
-+		} else { /* positive_refs_complete */
-+			if (rinfo.negative_refexprs > 1)
-+				die(_("cannot implicitly determine correct base for --onto"));
-+			if (rinfo.negative_refexprs == 1)
-+				*onto = rinfo.onto;
-+		}
-+	}
-+	if (!*advance_name) {
-+		*update_refs = xcalloc(1, sizeof(**update_refs));
-+		**update_refs = rinfo.positive_refs;
-+		memset(&rinfo.positive_refs, 0, sizeof(**update_refs));
-+	}
-+	strset_clear(&rinfo.negative_refs);
-+	strset_clear(&rinfo.positive_refs);
++	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
++	if (pos == kh_end(replayed_commits))
++		return fallback;
++	return kh_value(replayed_commits, pos);
 +}
 +
  static struct commit *pick_regular_commit(struct commit *pickme,
- 					  struct commit *last_commit,
+-					  struct commit *last_commit,
++					  kh_oid_map_t *replayed_commits,
++					  struct commit *onto,
  					  struct merge_options *merge_opt,
-@@ -114,20 +255,26 @@ static struct commit *pick_regular_commit(struct commit *pickme,
+ 					  struct merge_result *result)
+ {
+-	struct commit *base;
++	struct commit *base, *replayed_base;
+ 	struct tree *pickme_tree, *base_tree;
+ 
+ 	base = pickme->parents->item;
++	replayed_base = mapped_commit(replayed_commits, base, onto);
+ 
++	result->tree = repo_get_commit_tree(the_repository, replayed_base);
+ 	pickme_tree = repo_get_commit_tree(the_repository, pickme);
+ 	base_tree = repo_get_commit_tree(the_repository, base);
+ 
+-	merge_opt->branch1 = short_commit_name(last_commit);
++	merge_opt->branch1 = short_commit_name(replayed_base);
+ 	merge_opt->branch2 = short_commit_name(pickme);
+ 	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
+ 
+@@ -250,7 +263,7 @@ static struct commit *pick_regular_commit(struct commit *pickme,
+ 	merge_opt->ancestor = NULL;
+ 	if (!result->clean)
+ 		return NULL;
+-	return create_commit(result->tree, pickme, last_commit);
++	return create_commit(result->tree, pickme, replayed_base);
+ }
  
  int cmd_replay(int argc, const char **argv, const char *prefix)
- {
--	struct commit *onto;
-+	const char *advance_name = NULL;
-+	struct commit *onto = NULL;
- 	const char *onto_name = NULL;
--	struct commit *last_commit = NULL;
-+
- 	struct rev_info revs;
-+	struct commit *last_commit = NULL;
- 	struct commit *commit;
+@@ -266,6 +279,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  	struct merge_options merge_opt;
  	struct merge_result result;
-+	struct strset *update_refs = NULL;
+ 	struct strset *update_refs = NULL;
++	kh_oid_map_t *replayed_commits;
  	int ret = 0, i;
  
  	const char * const replay_usage[] = {
--		N_("git replay --onto <newbase> <revision-range>..."),
-+		N_("git replay (--onto <newbase> | --advance <branch>) <revision-range>..."),
- 		NULL
- 	};
- 	struct option replay_options[] = {
-+		OPT_STRING(0, "advance", &advance_name,
-+			   N_("branch"),
-+			   N_("make replay advance given branch")),
- 		OPT_STRING(0, "onto", &onto_name,
- 			   N_("revision"),
- 			   N_("replay onto given commit")),
-@@ -151,13 +298,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 			usage_with_options(replay_usage, replay_options);
- 		}
- 
--	if (!onto_name) {
--		error(_("option --onto is mandatory"));
-+	if (!onto_name && !advance_name) {
-+		error(_("option --onto or --advance is mandatory"));
- 		usage_with_options(replay_usage, replay_options);
- 	}
- 
--	onto = peel_committish(onto_name);
--
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
- 	argc = setup_revisions(argc, argv, &revs, NULL);
-@@ -182,6 +327,12 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	revs.topo_order = 1;
- 	revs.simplify_history = 0;
- 
-+	determine_replay_mode(&revs.cmdline, onto_name, &advance_name,
-+			      &onto, &update_refs);
-+
-+	if (!onto) /* FIXME: Should handle replaying down to root commit */
-+		die("Replaying down to root commit is not supported yet!");
-+
- 	if (prepare_revision_walk(&revs) < 0) {
- 		ret = error(_("error preparing revisions"));
- 		goto cleanup;
-@@ -190,6 +341,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+@@ -348,21 +362,30 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  	init_merge_options(&merge_opt, the_repository);
  	memset(&result, 0, sizeof(result));
  	merge_opt.show_rename_progress = 0;
-+
- 	result.tree = repo_get_commit_tree(the_repository, onto);
+-
+-	result.tree = repo_get_commit_tree(the_repository, onto);
  	last_commit = onto;
++	replayed_commits = kh_init_oid_map();
  	while ((commit = get_revision(&revs))) {
-@@ -204,12 +356,15 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		const struct name_decoration *decoration;
++		khint_t pos;
++		int hr;
+ 
+ 		if (!commit->parents)
+ 			die(_("replaying down to root commit is not supported yet!"));
+ 		if (commit->parents->next)
+ 			die(_("replaying merge commits is not supported yet!"));
+ 
+-		last_commit = pick_regular_commit(commit, last_commit, &merge_opt, &result);
++		last_commit = pick_regular_commit(commit, replayed_commits, onto,
++						  &merge_opt, &result);
  		if (!last_commit)
  			break;
  
-+		/* Update any necessary branches */
-+		if (advance_name)
-+			continue;
- 		decoration = get_name_decoration(&commit->object);
- 		if (!decoration)
- 			continue;
--
- 		while (decoration) {
--			if (decoration->type == DECORATION_REF_LOCAL) {
-+			if (decoration->type == DECORATION_REF_LOCAL &&
-+			    strset_contains(update_refs, decoration->name)) {
- 				printf("update %s %s %s\n",
- 				       decoration->name,
- 				       oid_to_hex(&last_commit->object.oid),
-@@ -219,11 +374,23 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	/* In --advance mode, advance the target ref */
-+	if (result.clean == 1 && advance_name) {
-+		printf("update %s %s %s\n",
-+		       advance_name,
-+		       oid_to_hex(&last_commit->object.oid),
-+		       oid_to_hex(&onto->object.oid));
-+	}
++		/* Record commit -> last_commit mapping */
++		pos = kh_put_oid_map(replayed_commits, commit->object.oid, &hr);
++		if (hr == 0)
++			BUG("Duplicate rewritten commit: %s\n",
++			    oid_to_hex(&commit->object.oid));
++		kh_value(replayed_commits, pos) = last_commit;
 +
+ 		/* Update any necessary branches */
+ 		if (advance_name)
+ 			continue;
+@@ -392,13 +415,14 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 
  	/* Cleanup */
  	merge_finalize(&merge_opt, &result);
- 	ret = result.clean;
- 
- cleanup:
-+	if (update_refs) {
-+		strset_clear(update_refs);
-+		free(update_refs);
-+	}
+-	ret = result.clean;
+-
+-cleanup:
++	kh_destroy_oid_map(replayed_commits);
+ 	if (update_refs) {
+ 		strset_clear(update_refs);
+ 		free(update_refs);
+ 	}
++	ret = result.clean;
++
++cleanup:
  	release_revisions(&revs);
  
  	/* Return */
 diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index de6e40950e..bca405c431 100755
+index 3fb4167e69..5aafad448f 100755
 --- a/t/t3650-replay-basics.sh
 +++ b/t/t3650-replay-basics.sh
-@@ -96,4 +96,30 @@ test_expect_success 'using replay on bare repo with disallowed pathspec' '
- 	test_must_fail git -C bare replay --onto main topic1..topic2 -- A.t
+@@ -151,4 +151,56 @@ test_expect_success 'using replay on bare repo to also rebase a contained branch
+ 	test_cmp expect result-bare
  '
  
-+test_expect_success 'using replay to perform basic cherry-pick' '
-+	# The differences between this test and previous ones are:
-+	#   --advance vs --onto
-+	# 2nd field of result is refs/heads/main vs. refs/heads/topic2
-+	# 4th field of result is hash for main instead of hash for topic2
++test_expect_success 'using replay to rebase multiple divergent branches' '
++	git replay --onto main ^topic1 topic2 topic4 >result &&
 +
-+	git replay --advance main topic1..topic2 >result &&
++	test_line_count = 2 result &&
++	cut -f 3 -d " " result >new-branch-tips &&
 +
-+	test_line_count = 1 result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
++	git log --format=%s $(head -n 1 new-branch-tips) >actual &&
 +	test_write_lines E D M L B A >expect &&
 +	test_cmp expect actual &&
 +
-+	printf "update refs/heads/main " >expect &&
-+	printf "%s " $(cut -f 3 -d " " result) >>expect &&
-+	git rev-parse main >>expect &&
++	git log --format=%s $(tail -n 1 new-branch-tips) >actual &&
++	test_write_lines J I M L B A >expect &&
++	test_cmp expect actual &&
++
++	printf "update refs/heads/topic2 " >expect &&
++	printf "%s " $(head -n 1 new-branch-tips) >>expect &&
++	git rev-parse topic2 >>expect &&
++	printf "update refs/heads/topic4 " >>expect &&
++	printf "%s " $(tail -n 1 new-branch-tips) >>expect &&
++	git rev-parse topic4 >>expect &&
 +
 +	test_cmp expect result
 +'
 +
-+test_expect_success 'using replay on bare repo to perform basic cherry-pick' '
-+	git -C bare replay --advance main topic1..topic2 >result-bare &&
-+	test_cmp expect result-bare
++test_expect_success 'using replay on bare repo to rebase multiple divergent branches, including contained ones' '
++	git -C bare replay --contained --onto main ^main topic2 topic3 topic4 >result &&
++
++	test_line_count = 4 result &&
++	cut -f 3 -d " " result >new-branch-tips &&
++
++	>expect &&
++	for i in 2 1 3 4
++	do
++		printf "update refs/heads/topic$i " >>expect &&
++		printf "%s " $(grep topic$i result | cut -f 3 -d " ") >>expect &&
++		git -C bare rev-parse topic$i >>expect || return 1
++	done &&
++
++	test_cmp expect result &&
++
++	test_write_lines F C M L B A >expect1 &&
++	test_write_lines E D C M L B A >expect2 &&
++	test_write_lines H G F C M L B A >expect3 &&
++	test_write_lines J I M L B A >expect4 &&
++
++	for i in 1 2 3 4
++	do
++		git -C bare log --format=%s $(grep topic$i result | cut -f 3 -d " ") >actual &&
++		test_cmp expect$i actual || return 1
++	done
 +'
 +
  test_done
