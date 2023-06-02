@@ -2,81 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA792C7EE24
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 06:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBF8FC7EE24
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 06:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233999AbjFBGmT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 02:42:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47958 "EHLO
+        id S233572AbjFBGue (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 02:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234090AbjFBGmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 02:42:16 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C9BEB
-        for <git@vger.kernel.org>; Thu,  1 Jun 2023 23:42:14 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-51494659d49so2469187a12.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2023 23:42:14 -0700 (PDT)
+        with ESMTP id S232921AbjFBGud (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 02:50:33 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A01EB
+        for <git@vger.kernel.org>; Thu,  1 Jun 2023 23:50:32 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5149aafef44so2498780a12.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2023 23:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685688133; x=1688280133;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=n4dps6NGy1Pv65fVAl2EwCdtGHminGybVjwrNiQk/Jg=;
-        b=J0Mpm5mvH522+IiDDHQlZtDCulJhySzpGyK3+JmUr16z9dHzwwHbrg6muOdrWj8qcL
-         dfwLRL5TicKGrN73ltC9YuvZRtJUnfMQ/2PBSARI306dHDtX0pQMmBgkHp74mk/CWTh+
-         I7PdibxaH3c0tUM0nYdmCEIYV9IAiXe7JoHvg0O8i7ECab+R80sEkZBzRx/g6rO0dDbS
-         yt7cK3j52xk29awicc0RwPrFxm2/nnFwols3JVm8RGLLmGDKIAuECqZ9Jj+e6goRNC+o
-         9iwlVA3OWLs5BR4J0wHOgjtHYYZv7G/2QUMatRzS+xnbLwHN6VXV3o2qaF5o5LuZnVE/
-         PzyQ==
+        d=gmail.com; s=20221208; t=1685688631; x=1688280631;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DUmRJ82FMzKUR9NxRFGFt+mNf7YCDvGjRrSj5JMemAA=;
+        b=YIdysFFoxsEOByhjkqo+C4JJENJ5bCkqmzT4WUmS4edacx0ukRft4mvF4o5UWN0po+
+         zEaJqhnp4xCAQe3sTK4Xno2zd9E4PwvN4f67TL9UMh1XTTFta4nNd2UYGoA64AkevIco
+         x87HrjJc1wYPe8jIONvlfX35o4Hy3+ewyDmR3797SamtMMsoaEeiSAIlaMvRb6vJsfIW
+         20hAiIFSgPgnM/sHLAPawuqpd/mLT/axJ7aDyVaOPq8s5c0RaIYFRISLEDfJLdCcvQDD
+         MGtVGw0HU2sx6+J0xw2HOTs1CRWVpYgBFpsZGcCYKgNcSazIIAP22R/Qnli9qDfE7w/f
+         o21A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685688133; x=1688280133;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n4dps6NGy1Pv65fVAl2EwCdtGHminGybVjwrNiQk/Jg=;
-        b=kZiFcInnQy79sn6ul39HArlWUfUyzF/x4HCVOpaq4B6pUA9UP73RCz01IEMORzupWd
-         QeRmAE6ZOG+eIAqvKIw/LK52z3jvX2JLVYdVUnyQBtMJDzEDSx1lSXHy/kbYEalhfvbV
-         pOF3CnUil4LibeDb9oKR4RdGOi0rzOTNBed3o8EhijP6yZktCmh2G+N/UL7JRN+f1KpB
-         uZbBIoCEQ3SqVXa/NHoAZAr2Qv5vF9Gse60UpM3i9266ZGt6u5oAJ5NXgHZPA/52VYn6
-         VXnx0azwgS2JduXHhMk2NhNQ1TniQN7M4qmWKpW+Lktz8QlGLril6x9EiYXMrKimvOkV
-         eyOA==
-X-Gm-Message-State: AC+VfDxwh++sZUjMy4t35rs2WCEwBYtr43kkhFbKTO/r4wV1x/2QjP+r
-        maqQUTOGLwPq9EyalZtoMS7dl8C2cewat+aiNgGrvGtZtQw=
-X-Google-Smtp-Source: ACHHUZ4a+jNxUrCI8uwpz7UWf3KAN3p3ZoDOpKk0MleCnW+AuRSsXl2Q1w/F0RAENRiZ7v1CDRFRVXGe/jfjilI9koM=
-X-Received: by 2002:aa7:ccd6:0:b0:514:961d:beab with SMTP id
- y22-20020aa7ccd6000000b00514961dbeabmr1346965edt.7.1685688132573; Thu, 01 Jun
- 2023 23:42:12 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685688631; x=1688280631;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DUmRJ82FMzKUR9NxRFGFt+mNf7YCDvGjRrSj5JMemAA=;
+        b=N/v3YDj4GPVqFMnpBF+eYpYqhWcEgAiop1qDddrnQucNM4uuuy2L79mUU7XrZgeZID
+         nla/pM5JHK7IRmndXcxZxFKUK//2rMB5IjFl23qcgkR3/5UlpDBjfFi88Yl6WbsEb4zf
+         2KV6UEE27j9sSSFWp7M7yxXqLNQn2pEwpWXw7vxVC0hV+/fbsZYxxT2P+q5gj4kFRpI9
+         J+MKZ4v+j7OWpWzosiDVe4forzRE/Qp7HVWxeH8hrJIEK4kTq68RRh9eozcZipZmhNsy
+         pyXNKm3BjZxrqLqq4HHBrKDHwVweDnqMG+Z6MY1dFa1j/Ksdc/ypZ6YkWk2qcmRhGPAs
+         JAZQ==
+X-Gm-Message-State: AC+VfDwFZJaepZIC9sbAJv46J7dwKs+R/xJprnk+1LlYR1fepuApcZTD
+        Zu9KMM4Rz7tm9XrEu1jfA4uDwJFDKmqQO9nuVBg=
+X-Google-Smtp-Source: ACHHUZ5L5NRoGC6riHhON2wMgZZE40ZHg9VBeYGVy2u3lSD9GPdTXF/P9QTxR1zY/OFWbrnSqaIyFgDinBZhtlJ7n64=
+X-Received: by 2002:a05:6402:31e7:b0:514:a57c:b4ac with SMTP id
+ dy7-20020a05640231e700b00514a57cb4acmr1404355edb.7.1685688630559; Thu, 01 Jun
+ 2023 23:50:30 -0700 (PDT)
 MIME-Version: 1.0
-From:   Shahin Dohan <shahin.dohan@gmail.com>
-Date:   Fri, 2 Jun 2023 09:42:01 +0300
-Message-ID: <CAHsf_F2CgyTWr82htsyg8aiA-WhrKa4zJQUc_wJwF0pfRYR7yQ@mail.gmail.com>
-Subject: Bug: Git bash slow after update
-To:     git@vger.kernel.org
+References: <20230529192209.17747-1-five231003@gmail.com> <20230602023105.17979-1-five231003@gmail.com>
+ <20230602023105.17979-2-five231003@gmail.com>
+In-Reply-To: <20230602023105.17979-2-five231003@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 2 Jun 2023 08:50:18 +0200
+Message-ID: <CAP8UFD2wcnNaihGv=SQ_77OLQ5PN3DG73rnh2F_C_j+BFTcCyw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] t/lib-gpg: introduce new prereq GPG2
+To:     Kousik Sanagavarapu <five231003@gmail.com>
+Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Updated Git to 2.41.0
+On Fri, Jun 2, 2023 at 4:31=E2=80=AFAM Kousik Sanagavarapu <five231003@gmai=
+l.com> wrote:
 
-What did you expect to happen? (Expected behavior)
-Same performance in Git bash as before
+> +test_lazy_prereq GPG2 '
+> +       gpg_version=3D$(gpg --version 2>&1)
+> +       test $? !=3D 127 || exit 1
+> +
+> +       case "$gpg_version" in
+> +       "gpg (GnuPG) 0."* | "gpg (GnuPG) 1.*")
 
-What happened instead? (Actual behavior)
-Every operation is significantly slower. CD is slower, git pull is a
-lot slower, etc...
+s/"gpg (GnuPG) 1.*"/"gpg (GnuPG) 1."*/
 
-What's different between what you expected and what actually happened?
-Git bash performance is significantly worse
+I am not sure if it changes anything, but for testing if we have v0
+here and v1.0.6 in the "test_lazy_prereq PGP", we put the '*'
+character outside the double quoted string.
 
-[System Info]
-git version:
-git version 2.41.0.windows.1
-cpu: x86_64
-built from commit: ff94e79c4724635915dbb3d4ba38f6
-bb91528260
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 22621
-compiler info: gnuc: 13.1
+> +               say "This test requires a GPG version >=3D v2.0.0"
+> +               exit 1
+> +               ;;
+> +       *)
+> +               (gpgconf --kill all || : ) &&
+> +               gpg --homedir "${GNUPGHOME}" --import \
+> +                       "$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+> +               gpg --homedir "${GNUPGHOME}" --import-ownertrust \
+> +                       "$TEST_DIRECTORY"/lib-gpg/ownertrust &&
+> +               gpg --homedir "${GNUPGHOME}" </dev/null >/dev/null \
+> +                       --sign -u committer@example.com
+> +               ;;
+> +       esac
+> +'
