@@ -2,141 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75B40C7EE29
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 19:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A0AC77B7A
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 19:53:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235751AbjFBTgo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 15:36:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40508 "EHLO
+        id S235634AbjFBTxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 15:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236034AbjFBTg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 15:36:27 -0400
-Received: from pv50p00im-hyfv10021501.me.com (pv50p00im-hyfv10021501.me.com [17.58.6.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DC5198
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 12:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1685734586;
-        bh=9DUk1W7QBq+Rqp9RpTb27AWW7Hkk7YkGeufRTPztR9Q=;
-        h=From:Content-Type:Mime-Version:Subject:Date:To:Message-Id;
-        b=vqIcslgWLDnrqHiwGEc2/eOAOuAI8jZsPaeUQIM+gcFkUINIfSMVuv9UL7TO3HyES
-         c0JynyRfXqctWzqnrUQ46HWt2oXHWZL3xVqejwMTny5FSYINZBj87fjzHyGaGX1vj4
-         bcoAB+/Y4xuMQnEezOAhnVHnzlhVQ8Vyp97+Glbp9KX2iDO1apC7ihGoGMSN9sNeuI
-         92XH6xYj1CS4nP1+jYrZNKZlr0p+LEh2DdxtWpIcFlADL5osFOMbQhIW0uE+wALQ7f
-         dvQol/QR15GKaFEuLhL2lg5tAQV5FYxz9PoQNtEkwB6VZJOvcj5LIUeV8cydKa/R2w
-         73ytPCN38mNGQ==
-Received: from smtpclient.apple (pv50p00im-dlb-asmtp-mailmevip.me.com [17.56.9.10])
-        by pv50p00im-hyfv10021501.me.com (Postfix) with ESMTPSA id 411672C0168
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 19:36:23 +0000 (UTC)
-From:   Emir SARI <emir_sari@icloud.com>
-Content-Type: text/plain;
-        charset=utf-8
+        with ESMTP id S235107AbjFBTxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 15:53:13 -0400
+Received: from qproxy2-pub.mail.unifiedlayer.com (qproxy2-pub.mail.unifiedlayer.com [69.89.16.161])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1928419A
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 12:53:12 -0700 (PDT)
+Received: from alt-proxy28.mail.unifiedlayer.com (alt-proxy28.mail.unifiedlayer.com [74.220.216.123])
+        by qproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id C986680493EA
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 19:53:11 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+        by progateway1.mail.pro1.eigbox.com (Postfix) with ESMTP id 5A3951003F978
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 19:53:11 +0000 (UTC)
+Received: from box5922.bluehost.com ([162.241.30.80])
+        by cmsmtp with ESMTP
+        id 5Apjqp2eE0K9w5ApjqoKpP; Fri, 02 Jun 2023 19:53:11 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Xf5McK15 c=1 sm=1 tr=0 ts=647a48a7
+ a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=of4jigFt-DYA:10:nop_rcvd_month_year
+ a=3EOfIcITIxQA:10:endurance_base64_authed_username_1 a=Dx4yW56zAAAA:8
+ a=xGwI6Rj7CTxsdUQT0vcA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=X_u8qhY6y2Nm79co_leF:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=s0p++Y+ECvskAhAmP7mFuBp7t8JQBB85YtUBVM1XQ0M=; b=zUdvMq4TAjVgffFAD3Ox762XAA
+        VLM9k4rdgtX0L9u6RLVcjYqnW/fWIatLV8lmG/9XohwXIZ1cXTcEoZVJazCS/kyS0ARomCblFbatm
+        tD9AsxFrFCwAGby8K4cLSUntt;
+Received: from [160.231.0.90] (port=42044 helo=llin-psh13-dsa.dsone.3ds.com)
+        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1q5Api-000t5N-VL;
+        Fri, 02 Jun 2023 13:53:11 -0600
+Message-ID: <679863bd1ed8a54b48472ad310c2bae7f274e1ec.camel@mad-scientist.net>
+Subject: Re: Anyone know why git ls-remote output might be corrupted?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     rsbecker@nexbridge.com, git@vger.kernel.org
+Date:   Fri, 02 Jun 2023 15:53:09 -0400
+In-Reply-To: <000501d99589$358d4850$a0a7d8f0$@nexbridge.com>
+References: <b6f210da2c3cc7746b984b797ad89687cba2d1f8.camel@mad-scientist.net>
+         <7aa2ab6714bd14671ba9cfff611dea2fa088c99e.camel@mad-scientist.net>
+         <000501d99589$358d4850$a0a7d8f0$@nexbridge.com>
+Organization: Please remain calm--I may be mad but I am a professional!
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.600.7\))
-Subject: Re: [PATCH] i18n: Enable percentage l10n for more strings
-Date:   Fri, 2 Jun 2023 22:36:08 +0300
-References: <20230516101911.93809-1-emir_sari@icloud.com>
-To:     git@vger.kernel.org
-In-Reply-To: <20230516101911.93809-1-emir_sari@icloud.com>
-Message-Id: <9C76C476-0E54-4980-8138-EB9077E00523@icloud.com>
-X-Mailer: Apple Mail (2.3731.600.7)
-X-Proofpoint-GUID: i0juqRGfj2zYhmAEJ5iVUOJ_LZyNVpjE
-X-Proofpoint-ORIG-GUID: i0juqRGfj2zYhmAEJ5iVUOJ_LZyNVpjE
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.517,18.0.883,17.11.64.514.0000000_definitions?=
- =?UTF-8?Q?=3D2022-06-21=5F08:2022-06-21=5F01,2022-06-21=5F08,2022-02-23?=
- =?UTF-8?Q?=5F01_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxscore=0 spamscore=0
- malwarescore=0 clxscore=1015 phishscore=0 mlxlogscore=999 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2306020150
+User-Agent: Evolution 3.48.2 (by Flathub.org) 
+MIME-Version: 1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 160.231.0.90
+X-Source-L: No
+X-Exim-ID: 1q5Api-000t5N-VL
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.0.90]:42044
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 2
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-
-Ping, in case this got buried down the list.
-
-> Emir SARI <emir_sari@icloud.com> =C5=9Funlar=C4=B1 yazd=C4=B1 (16 May =
-2023 13:19):
+On Fri, 2023-06-02 at 15:34 -0400, rsbecker@nexbridge.com wrote:
+> On Friday, June 2, 2023 3:13 PM, Paul Smith wrote:
+> > On Fri, 2023-06-02 at 14:59 -0400, Paul Smith wrote:
+> > > Also a bunch of the heads are missing.=C2=A0 It's pretty clear that
+> > > right in the middle of printing one of the SHAs we suddenly lost
+> > > a bunch of output, and started printing stuff from later (in the
+> > > last instance 66 out of 131 heads were missing).
+> >=20
+> > I forgot to mention: git ls-remote does not exit with an error
+> > code.  The exit code is 0 (success).
+> >=20
+> > The reason I get this failure is that as I parse the output I
+> > notice that the SHA is invalid (contains a non-hex character "i")
+> > and it throws this error.
 >=20
-> This enables percentage localization in more progress views, and
-> provides a more cohesive l10n environment among the translated =
-messages.
-> ---
-> apply.c    |  8 ++++----
-> progress.c | 18 ++++++++++++++++--
-> 2 files changed, 20 insertions(+), 6 deletions(-)
->=20
-> diff --git a/apply.c b/apply.c
-> index 6212ab3..3e1d08d 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4247,11 +4247,11 @@ static void show_rename_copy(struct patch *p)
-> * new_name through the end of names are renames
-> */
-> if (old_name !=3D p->old_name)
-> - printf(" %s %.*s{%s =3D> %s} (%d%%)\n", renamecopy,
-> + printf(_(" %s %.*s{%s =3D> %s} (%d%%)\n"), renamecopy,
->       (int)(old_name - p->old_name), p->old_name,
->       old_name, new_name, p->score);
-> else
-> - printf(" %s %s =3D> %s (%d%%)\n", renamecopy,
-> + printf(_(" %s %s =3D> %s (%d%%)\n"), renamecopy,
->       p->old_name, p->new_name, p->score);
-> show_mode_change(p, 0);
-> }
-> @@ -4270,8 +4270,8 @@ static void summary_patch_list(struct patch =
-*patch)
-> show_rename_copy(p);
-> else {
-> if (p->score) {
-> - printf(" rewrite %s (%d%%)\n",
-> -       p->new_name, p->score);
-> + printf(" rewrite %s ", p->new_name);
-> + printf(_("(%d%%)\n"), p->score);
-> show_mode_change(p, 0);
-> }
-> else
-> diff --git a/progress.c b/progress.c
-> index f695798..1f8d372 100644
-> --- a/progress.c
-> +++ b/progress.c
-> @@ -124,10 +124,24 @@ static void display(struct progress *progress, =
-uint64_t n, const char *done)
-> progress->last_percent =3D percent;
->=20
-> strbuf_reset(counters_sb);
-> - strbuf_addf(counters_sb,
-> -    "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
-> +
-> + struct strbuf progress_sb =3D STRBUF_INIT;
-> + strbuf_addf(&progress_sb,
-> + _("%u%% (%"PRIuMAX"/%"PRIuMAX")%s"), percent,
->    (uintmax_t)n, (uintmax_t)progress->total,
->    tp);
-> + struct strbuf progress_str =3D STRBUF_INIT;
-> + strbuf_addstr(&progress_str, progress_sb.buf);
-> + strbuf_release(&progress_sb);
-> +
-> + if (percent < 10)
-> +    strbuf_insert(&progress_str, 0, "  ", 2);
-> + else if (percent < 100)
-> +    strbuf_insert(&progress_str, 0, " ", 1);
-> +
-> + strbuf_addf(counters_sb, "%s", progress_str.buf);
-> + strbuf_release(&progress_str);
-> +
-> show_update =3D 1;
-> }
-> } else if (progress_update) {
-> --=20
-> 2.40.1
->=20
+> Does your CI/CD system use sparse checkout or depth=3D1 or some other
+> partial clone?
 
-Best regards,
-Emir (=F0=90=B0=BD=F0=90=B0=BA=F0=90=B0=8D)
+Yes, the local copy of the repo is a sparse checkout.
 
-** E-mail needs to stay simple
-** Use plain text e-mail
-
+I'm surprised that matters to ls-remote... I would have expected that
+the "sparseness" of the local repo is irrelevant when listing the state
+of the remote's heads?  Is that the reason for the issue I'm seeing?
