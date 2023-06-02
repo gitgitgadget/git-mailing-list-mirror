@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8213FC77B7A
-	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 13:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC206C7EE24
+	for <git@archiver.kernel.org>; Fri,  2 Jun 2023 13:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235594AbjFBNCs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 09:02:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52290 "EHLO
+        id S235761AbjFBNC4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 09:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235525AbjFBNCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 09:02:45 -0400
+        with ESMTP id S235595AbjFBNCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 09:02:50 -0400
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D24B51B3
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 06:02:43 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 4E61A5C00CA;
-        Fri,  2 Jun 2023 09:02:43 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 350811B5
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 06:02:48 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 752AB5C010C;
+        Fri,  2 Jun 2023 09:02:47 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Fri, 02 Jun 2023 09:02:43 -0400
+  by compute4.internal (MEProxy); Fri, 02 Jun 2023 09:02:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1685710963; x=1685797363; bh=gS
-        rqGwai2YoT4E5P+7bATvRnXf1bno75BnQgcusaOxk=; b=mV/ppVXmTvybOPrxfJ
-        RyrpIVg4QjR1OYP8Ft8bE2vxBYdWA5oVeuK+K1oo1/XQmgMlfZES7Rnd5Zpq0mHd
-        vLnounbyUVsW5wVz7VcM2BfzolkLZEkOn519LMbZNiwIr6b+Uds/raQPL3UwW0oC
-        0FZO+t+2K4t/hfFt0pCFVnC/iYLECAq+QIO3AJwpkzeXHamdORVLxPxfYlox/Lut
-        KGwqb/Wg2XE7hw83xgXyiHl2OXlpwYdGxZcUj8cEYmgL3VCms+tYbrNTBsPBCBFG
-        0rzOWT2Ql1DKE12q8gxkgJVTMOlg/E/F+HnKNBMxprKkbLdf4l58ksqhXyvFgLHy
-        LtyQ==
+        :subject:subject:to:to; s=fm1; t=1685710967; x=1685797367; bh=q7
+        GCfA8V7HDnBKB1Tk915p6kG3FU/Mzd1fXGookrldg=; b=ALJEmeBqDEIIgyPm1f
+        KNynlvhwQpASJGCmr+qsbV/GJazqh3I1psc4mx1gAp3w1Vp0FjKhHc5oCH+JP2oM
+        29mhyVA2XC7l56TKtP+YiMC2O/h+zEjeYob6dtL+bDS7fjPtTWGVX7K1Fs8ujhNy
+        BkeBffhlLZiiUpmOtGXG+2foieNmbJI89BUBzWJ7X+NHu0yxpvVayzofWXSeQVXC
+        VkzlChxppkoy3S93HLaNnAYFUd/lxAIkYWKPCnfy5A5mRVPaC9sym8/9NIEhMsTO
+        xLwJ82aMbj7UX2pavlCOti0ynV9itqDFkBp7WZnQN1KzxiUzSx3vx5TAaUuOEegj
+        z0GA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1685710963; x=1685797363; bh=gSrqGwai2YoT4
-        E5P+7bATvRnXf1bno75BnQgcusaOxk=; b=D/TDxl55LeBbrcw6h8jOX9kR+9dsc
-        71A7eLbmL86UhAoM9kNgcLghNYDb5TzJQ/2Wel6SJIIcfa9lDvu+1zIbTJ0dCyl6
-        AR8hZ8Oo5EII1yrUsxqMyb4g9/ZqG3GZDDgkRqPYG0+yZQJN3CxsUJjURFZhAaVw
-        2G1VZ+ImQYCipEpeAii73bJaHbDQy0WQuP3/9p+YPwqY4rPrZP1KO251Cgmqi+Uk
-        rYeTv3ZfgkeD5OMsxZVIv5LMDlTcdL6yTEVCgQUOTo5zRhhaPEpTkqjMhCpry7s9
-        2Lt+YoUshv3Rq5+BD8IKaDh664hUWUOTDE0yxvHqQk6DrbrER58Dt2pdg==
-X-ME-Sender: <xms:cuh5ZFOrcW0jnfqBC0blM0x3yJ-zc4h2q_cWkDcZVFlcX1KQT00k-A>
-    <xme:cuh5ZH-gzOs5JuqSJ6JN6zlcG15HXvP_Q_1Vmix7Kmlh4hqz58Zs7Z0Rn6cZOHei_
-    wq9odcT8Epw-qoBQw>
-X-ME-Received: <xmr:cuh5ZETIxkwj2x08atFnPgKIOe9ADbwfJ5eS544G7Shkfl0rZ4bTSUlWN_CRWt7bDOKr39WydCCflge3H4CCqsB4ngRc-tZKBs-qEnB3_XN4sw>
+        :x-sasl-enc; s=fm1; t=1685710967; x=1685797367; bh=q7GCfA8V7HDnB
+        KB1Tk915p6kG3FU/Mzd1fXGookrldg=; b=nLPBtL9N94jISAWIqBsAHNhw/A/ID
+        xu6p9llSHcecaKj5fd8UsZEHEgTmbJ7Kxur8TExIZnLxjdo0cr1kRg+O+bNix0DT
+        mzEYNxKiX9nvBs//pqPqBCodGTUdGrY08zTTfqkuJp/39ayrdiRfsZaUnvuT2FA7
+        WiyHyKePLCF4jT3FpA0cLoUM1KKi5tByyX4yQNa1PGsbvBxnw96CFnSJ6bOat0d4
+        qaBqMd4HM8sePEdkAIDJmOVSeZGqkUD5AmUJNYTHM1iibQCDFY5ohy5f5Fy6wv5N
+        ynqpTqvHjrYHGopmzMwKG9o/zkMjVe9KKsumA7A2lephsmbi4mZH8C2MQ==
+X-ME-Sender: <xms:duh5ZNGQlN762hk7AhlRWXxiH-5O3CzzY3N8q0hXHaT3Qx65kS_bgQ>
+    <xme:duh5ZCWL_0Ued2erdHXnZ-TUDr1go_GY7f2i7eFm_zCvvfvkszDR--jlI2gWlxafH
+    bseNqegu791fT8Bug>
+X-ME-Received: <xmr:duh5ZPLUTbiL9B-uY4-1pt9RMSV-H_eWDKUB8MKf2CFXwynJjX_8Sq_prf13llTEdw8DbiParcQPQe4st0-L7hHwAzE42JiDfBWLziheppeFtg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeelfedgheejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -54,28 +54,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeelfedgheejucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:cuh5ZBvJIyRfZWxXLKEx3364ZozB4RPYEAhn6Hw07VUTQ1NB2xeb5w>
-    <xmx:cuh5ZNemEpXGeoG9htqiIkg6RsdIAcCL50qVhpWFMY1lwDeqY7UAfA>
-    <xmx:cuh5ZN3P8PsjwOfTAQwEXFSz_5wJx0aVbw9MWUuSOnAqWzg6L__SJQ>
-    <xmx:c-h5ZB50vj4tzlfVy5xhZifUhzca8RbvF2IMxg-ACsTq5SLoYj3M5w>
+X-ME-Proxy: <xmx:duh5ZDGDcNYkvhmNsGX1P6YJFp4D7CmNZH31hNEzH4CZFilm4v4pJg>
+    <xmx:duh5ZDWmNQ-usGFQwz5I-FFZ9wCKoaNuVJkhlq8iYGHR0iorrc60ag>
+    <xmx:duh5ZOP-7VxujC5O_tdujUil0vAb15QlaMSoABAjnCMpJKNQv7FHIQ>
+    <xmx:d-h5ZOQ9dIVqSbsyK5zU4PeGozczVuu_y5M0ENtEP-xwUJ6TH_EtcA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Jun 2023 09:02:41 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id ba69e51e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 2 Jun 2023 13:01:45 +0000 (UTC)
-Date:   Fri, 2 Jun 2023 15:02:38 +0200
+ 2 Jun 2023 09:02:45 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 7593346e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 2 Jun 2023 13:01:49 +0000 (UTC)
+Date:   Fri, 2 Jun 2023 15:02:42 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] strbuf: provide CRLF-aware helper to read until a
- specified delimiter
-Message-ID: <8127eeac97200da9aafccdf16cb7ba06f68b0121.1685710884.git.ps@pks.im>
+Subject: [PATCH 4/5] cat-file: simplify reading from standard input
+Message-ID: <e7cba8dc4cebde0841ac04702155890d87e74492.1685710884.git.ps@pks.im>
 References: <cover.1685710884.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8wL/FdWoJxk/YEcD"
+        protocol="application/pgp-signature"; boundary="WN44MJKrqWK7T5ux"
 Content-Disposition: inline
 In-Reply-To: <cover.1685710884.git.ps@pks.im>
 Precedence: bulk
@@ -83,134 +82,159 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---8wL/FdWoJxk/YEcD
+--WN44MJKrqWK7T5ux
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Many of our commands support reading input that is separated either via
-newlines or via NUL characters. Furthermore, in order to be a better
-cross platform citizen, these commands typically know to strip the CRLF
-sequence so that we also support reading newline-separated inputs on
-e.g. the Windows platform. This results in the following kind of awkward
-pattern:
+The batch modes of git-cat-file(1) read queries from stantard input that
+are either newline- or NUL-delimited. This code was introduced via
+db9d67f2e9 (builtin/cat-file.c: support NUL-delimited input with `-z`,
+2022-07-22), which notes that:
 
-```
-struct strbuf input =3D STRBUF_INIT;
+"""
+The refactoring here is slightly unfortunate, since we turn loops like:
 
-while (1) {
-	int ret;
+     while (strbuf_getline(&buf, stdin) !=3D EOF)
 
-	if (nul_terminated)
-		ret =3D strbuf_getline_nul(&input, stdin);
-	else
-		ret =3D strbuf_getline(&input, stdin);
-	if (ret)
-		break;
+ into:
 
-	...
-}
-```
+     while (1) {
+         int ret;
+         if (opt->nul_terminated)
+             ret =3D strbuf_getline_nul(&input, stdin);
+         else
+             ret =3D strbuf_getline(&input, stdin);
 
-Introduce a new CRLF-aware helper function that can read up to a user
-specified delimiter. If the delimiter is `\n` the function knows to also
-strip CRLF, otherwise it will only strip the specified delimiter. This
-results in the following, much more readable code pattern:
+         if (ret =3D=3D EOF)
+             break;
+     }
+"""
 
-```
-struct strbuf input =3D STRBUF_INIT;
-
-while (strbuf_getdelim_strip_crlf(&input, stdin, delim) !=3D EOF) {
-	...
-}
-```
-
-The new function will be used in a subsequent commit.
+The commit proposed introducing a helper function that is easier to use,
+which is just what we have done in the preceding commit. Refactor the
+code to use this new helper to simplify the loop.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- strbuf.c | 11 ++++++++---
- strbuf.h | 12 ++++++++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ builtin/cat-file.c | 32 +++++++++-----------------------
+ 1 file changed, 9 insertions(+), 23 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index 08eec8f1d8..31dc48c0ab 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -721,11 +721,11 @@ static int strbuf_getdelim(struct strbuf *sb, FILE *f=
-p, int term)
- 	return 0;
- }
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0bafc14e6c..001dcb24d6 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -42,7 +42,7 @@ struct batch_options {
+ 	int all_objects;
+ 	int unordered;
+ 	int transform_mode; /* may be 'w' or 'c' for --filters or --textconv */
+-	int nul_terminated;
++	char input_delim;
+ 	const char *format;
+ };
 =20
--int strbuf_getline(struct strbuf *sb, FILE *fp)
-+int strbuf_getdelim_strip_crlf(struct strbuf *sb, FILE *fp, int term)
- {
--	if (strbuf_getwholeline(sb, fp, '\n'))
-+	if (strbuf_getwholeline(sb, fp, term))
- 		return EOF;
--	if (sb->buf[sb->len - 1] =3D=3D '\n') {
-+	if (term =3D=3D '\n' && sb->buf[sb->len - 1] =3D=3D '\n') {
- 		strbuf_setlen(sb, sb->len - 1);
- 		if (sb->len && sb->buf[sb->len - 1] =3D=3D '\r')
- 			strbuf_setlen(sb, sb->len - 1);
-@@ -733,6 +733,11 @@ int strbuf_getline(struct strbuf *sb, FILE *fp)
- 	return 0;
- }
+@@ -694,20 +694,12 @@ static void batch_objects_command(struct batch_option=
+s *opt,
+ 	struct queued_cmd *queued_cmd =3D NULL;
+ 	size_t alloc =3D 0, nr =3D 0;
 =20
-+int strbuf_getline(struct strbuf *sb, FILE *fp)
-+{
-+	return strbuf_getdelim_strip_crlf(sb, fp, '\n');
-+}
+-	while (1) {
+-		int i, ret;
++	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) !=3D E=
+OF) {
++		int i;
+ 		const struct parse_cmd *cmd =3D NULL;
+ 		const char *p =3D NULL, *cmd_end;
+ 		struct queued_cmd call =3D {0};
+=20
+-		if (opt->nul_terminated)
+-			ret =3D strbuf_getline_nul(&input, stdin);
+-		else
+-			ret =3D strbuf_getline(&input, stdin);
+-
+-		if (ret)
+-			break;
+-
+ 		if (!input.len)
+ 			die(_("empty command in input"));
+ 		if (isspace(*input.buf))
+@@ -851,16 +843,7 @@ static int batch_objects(struct batch_options *opt)
+ 		goto cleanup;
+ 	}
+=20
+-	while (1) {
+-		int ret;
+-		if (opt->nul_terminated)
+-			ret =3D strbuf_getline_nul(&input, stdin);
+-		else
+-			ret =3D strbuf_getline(&input, stdin);
+-
+-		if (ret =3D=3D EOF)
+-			break;
+-
++	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) !=3D E=
+OF) {
+ 		if (data.split_on_whitespace) {
+ 			/*
+ 			 * Split at first whitespace, tying off the beginning
+@@ -929,6 +912,7 @@ int cmd_cat_file(int argc, const char **argv, const cha=
+r *prefix)
+ 	const char *exp_type =3D NULL, *obj_name =3D NULL;
+ 	struct batch_options batch =3D {0};
+ 	int unknown_type =3D 0;
++	int input_nul_terminated =3D 0;
+=20
+ 	const char * const usage[] =3D {
+ 		N_("git cat-file <type> <object>"),
+@@ -965,7 +949,7 @@ int cmd_cat_file(int argc, const char **argv, const cha=
+r *prefix)
+ 			N_("like --batch, but don't emit <contents>"),
+ 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
+ 			batch_option_callback),
+-		OPT_BOOL('z', NULL, &batch.nul_terminated, N_("stdin is NUL-terminated")=
+),
++		OPT_BOOL('z', NULL, &input_nul_terminated, N_("stdin is NUL-terminated")=
+),
+ 		OPT_CALLBACK_F(0, "batch-command", &batch, N_("format"),
+ 			N_("read commands from stdin"),
+ 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
+@@ -1024,10 +1008,12 @@ int cmd_cat_file(int argc, const char **argv, const=
+ char *prefix)
+ 	else if (batch.all_objects)
+ 		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+ 			       "--batch-all-objects");
+-	else if (batch.nul_terminated)
++	else if (input_nul_terminated)
+ 		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+ 			       "-z");
+=20
++	batch.input_delim =3D input_nul_terminated ? '\0' : '\n';
 +
- int strbuf_getline_lf(struct strbuf *sb, FILE *fp)
- {
- 	return strbuf_getdelim(sb, fp, '\n');
-diff --git a/strbuf.h b/strbuf.h
-index 3dfeadb44c..0e69b656bc 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -475,6 +475,18 @@ int strbuf_readlink(struct strbuf *sb, const char *pat=
-h, size_t hint);
-  */
- ssize_t strbuf_write(struct strbuf *sb, FILE *stream);
-=20
-+/**
-+ * Read from a FILE * until the specified terminator is encountered,
-+ * overwriting the existing contents of the strbuf.
-+ *
-+ * Reading stops after the terminator or at EOF.  The terminator is
-+ * removed from the buffer before returning.  If the terminator is LF
-+ * and if it is preceded by a CR, then the whole CRLF is stripped.
-+ * Returns 0 unless there was nothing left before EOF, in which case
-+ * it returns `EOF`.
-+ */
-+int strbuf_getdelim_strip_crlf(struct strbuf *sb, FILE *fp, int term);
-+
- /**
-  * Read a line from a FILE *, overwriting the existing contents of
-  * the strbuf.  The strbuf_getline*() family of functions share
+ 	/* Batch defaults */
+ 	if (batch.buffer_output < 0)
+ 		batch.buffer_output =3D batch.all_objects;
 --=20
 2.40.1
 
 
---8wL/FdWoJxk/YEcD
+--WN44MJKrqWK7T5ux
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmR56G0ACgkQVbJhu7ck
-PpTNmA//WVTuHhee9de2+cE2Wv5TVc6SrjuTzbJSradqVsQJLfmUE+bmm9oxwKtV
-ZY7+1xZhUlDzOFFVVzjz3D7bRUfGpMtPtdCksHv8QIJ8PnFuYGr8HTkqmF/0bWTT
-6XyKOs7qm7dwZJWAFEFYuufxFl8911t+Fky6EkXbygtrA0VdZ4xqhWYlxjApi8qv
-0RP/aV/WAe2afEP1whMt2zs5E+2jdaXx7eInY/StZjZvZeCf0Q0joQf73xewGSTr
-7FPfkhTouCngyy3I09nQhK90ENOf6Wxow4jkJHM1lFLGFrhErv2x3isoCDpc5mW7
-2zEGzgS8rfNVMi1mwyjwl1vPZ9EKJdq4neKqXoi7QA+/+JHiIsToVqAvl0AZHbWm
-rmpkHpfn9yPoMqRZllO21RC/dzxmCMOP3oYaYDISdNtc5NpDxAASlylIlmNFQCfa
-oCA0tUGhR3uc+es1cfcVHnkuGAOPL9Ht++AkR2/dg9t4Jouhr0tcm24KIMvxuk4w
-gZ9hjhcBW4G2RegrJuYkcEMtPuyTSbo0M5DwjOUXgwuWPGz7WCu4CB7lVZnOYV7v
-uui5jVcL7G/jDQtFMDPKPifQekvqBHaI8oY3TOJQ5Q/XVyES9Tp1/UY+NwiCsH11
-J4TdTOqjg3eENvApeePBMC66ngk+61TvzZ8R/QXegbqnuEsByu4=
-=WpY9
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmR56HEACgkQVbJhu7ck
+PpSLJhAAm6S+nFTnfnj/IvGIW/YfTvBhEbWcSoZ6rQsvvj6d3sMBDUl9bV/da+9D
+yEpmaP64ZCdUln1Cl/rR4na5WmgjPjWlwlipSAw/0MsBMMVja9tdXsdyctHrVyTs
+Q0iUmz577siqMhP5pbUXlO6qglYbnRb3UbfzZU/rBZEGG6z+AF4g3IdcR1B7Xb7W
+MUU3048at5qP1qbcEsLcyYcafd2R0a41z3UZyCDYTiOyWwKH+Ab8UicfyBKD7eXi
+NYP4FdKD0T0rvfg389QbKZ2RKaBsUUtVqWKje5XMkklFjopAh6tkpzGt5TTWhDaI
+jZtXqMIQzYf5dAAmdvfFjr1cIwESHPO3x9SoVNw9Srz2lEVRgw68y6+5NQpgc3za
+SZRKVdkTDjF9LL4mK48HHvAqHoJHXF491ESk/QJT8RFbzoEuijkTisa4PVTmyxxL
+rb/F86GJgwxz+YFbi8I0M1545ZNjb6NGSvMH0tShyFacvM8njtmgmT1h7HkdGNsA
+acTsUmFkr0jeyMboZNjpncUM2+C6PeJZ9acLrAkjZ2uq7zQSU9lylU1WtmjDFYbh
+bItogpTAc1sBUYzry8hM/qhBhkEl4iJa2A1TqNkigM6ICFq9xQL1cRaRTM5a3MsZ
+ZLi+VhGyKHjff3nTHurqmc426oTqrJjVGLaGHyR7pZ1Iwnt/Lcc=
+=Dag2
 -----END PGP SIGNATURE-----
 
---8wL/FdWoJxk/YEcD--
+--WN44MJKrqWK7T5ux--
