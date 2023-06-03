@@ -2,125 +2,470 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F23DFC7EE24
-	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 18:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A2AC77B73
+	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 18:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229477AbjFCSSj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jun 2023 14:18:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59652 "EHLO
+        id S229616AbjFCSVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jun 2023 14:21:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjFCSSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jun 2023 14:18:37 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88389B9
-        for <git@vger.kernel.org>; Sat,  3 Jun 2023 11:18:36 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5147e441c33so6946211a12.0
-        for <git@vger.kernel.org>; Sat, 03 Jun 2023 11:18:36 -0700 (PDT)
+        with ESMTP id S229546AbjFCSVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jun 2023 14:21:09 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C56019A
+        for <git@vger.kernel.org>; Sat,  3 Jun 2023 11:21:06 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-30c55d2b9f3so2253112f8f.2
+        for <git@vger.kernel.org>; Sat, 03 Jun 2023 11:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jetbrains.com; s=googleapps; t=1685816315; x=1688408315;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MNB5bfypuiPn+JbDlGqToRzEkP5cljurNYHkeiszCKo=;
-        b=aCp9Ovr4UAkTlH2onA5oVOSepHSblqnmAPKtld7xnpFkS26+soSaftLhdtagO8B8Wq
-         Ih9/cfSAeh1c/xC07e8Hv/5WmoJfTeqZx3DcNlgXgx0SaD5ipYHBmrYzLpnKEetn5n8J
-         2H/vcpXw6hFxvSurv8BHQOmuY/NzsVF9d0a+o=
+        d=gmail.com; s=20221208; t=1685816465; x=1688408465;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nfrYtG9nD0AK8FWenGJxySOHsfPIsJTqUt0Cnv2oOyM=;
+        b=iF99sFGRRhEwoMTzHY9To5w38rJok7Axxxa7ISSj7oGMiaBFAPbnsnZGzxnOoNpIV9
+         oyfkLzGMe8Fzk1RzLEHT6SFwszpAXkEi3RPs07jz1xSzRyMNAKcJIkOk4CsC7ma0bKzT
+         vppVtxVBJ1J2UP7JGuVSsoyYRAluU/6iC01e6DarB00fJNvGHo8EM/m77ijMi40+TxOL
+         pn0mzCpOC4BtHipWxDzJP+q7sDsbiuSJqU7PjF/PgybU9cokkYF0lWsx/v3Yge4ipidF
+         ygBSbX4WBH3adMMH0cW9r77qeX25rcuhydn9C2nQpaBK+97N9t0F3h9Y6aHFsanL4EzJ
+         SkDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685816315; x=1688408315;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MNB5bfypuiPn+JbDlGqToRzEkP5cljurNYHkeiszCKo=;
-        b=UwhOz5BloZv0EgFANYZX4JYXZ6CCzjTSqnRFXMtdPo+2Pb0zDiis9dm2U0G7IN7K5y
-         EYB3pzU9I/4fUMdBbTev/oEK2rmfSOieaw/Cf0VSJRblHyA/XImzg3A3yixAb7UUdJQZ
-         NuEjx+R+RFnMjAf6wYA1gixn8s4vkJdCqA+XhHmaLvRmWmshW8999mkGrNCw5ArgBHRB
-         W48mdl3glkqaiwX0uxRHpFd6mO22t6KH+Nj8ybQUnBs/azWjVLgk/kQLEPYDnRqSZU1a
-         pdPprL1X6YfJ9I6d4k26oWctIOPNZttLCzhKMH7cxqsSmHRlSaJdKqBxKD9DSOxXiVgo
-         F0XA==
-X-Gm-Message-State: AC+VfDzbFlCS0EDmSZOmKFsU+lqYicSCNatUieAjFhabKno8cxYBOfiJ
-        OMFrFRQvA8KbJKWq5AOExYe/2uDIKe8OZCKW8Ycr
-X-Google-Smtp-Source: ACHHUZ54bBbPt03nVfXeNCW0gsQGTp8L7qb6T5kpZCkdNx+/e8f+fyY0tYCU8jA3KbeNRPPGlE/FNQ==
-X-Received: by 2002:a05:6402:50ce:b0:510:e8dc:f2a7 with SMTP id h14-20020a05640250ce00b00510e8dcf2a7mr6040505edb.7.1685816314672;
-        Sat, 03 Jun 2023 11:18:34 -0700 (PDT)
-Received: from smtpclient.apple (2a02-a210-21c2-5f80-8ccd-9cd6-fe1e-5deb.cable.dynamic.v6.ziggo.nl. [2a02:a210:21c2:5f80:8ccd:9cd6:fe1e:5deb])
-        by smtp.gmail.com with ESMTPSA id d13-20020a05640208cd00b0051643d71ce9sm1484167edz.26.2023.06.03.11.18.34
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Jun 2023 11:18:34 -0700 (PDT)
-From:   Fedor Bocharov <fedor.bocharov@jetbrains.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.600.7\))
-Subject: BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
-Message-Id: <2B864C9E-9693-49F2-AE50-CB56DE872AB9@jetbrains.com>
-Date:   Sat, 3 Jun 2023 20:18:23 +0200
+        d=1e100.net; s=20221208; t=1685816465; x=1688408465;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nfrYtG9nD0AK8FWenGJxySOHsfPIsJTqUt0Cnv2oOyM=;
+        b=JHQ8maP3sWlVEqKOq8eEfja1qc/sLnL5uV5asBnghix3/H6HufJvqoVHi1YcTf+kyB
+         5wpcCkKHXAJKPg+9vw9sR0pVsay9Pen7hEhfUT205PEllYbx5hUpCZ9ZAd4XNum+Hwm4
+         JMzTiu2yfprPFFiPW+VHzENY6zH2DUBSKJ/EgGUgVxsMXOJRYHkNq4Fydjf4cYqH76oe
+         M6o+cO9ynFCuxRyn/SXzpxdzvUbKL+JmhKx57/vbkck2oP32E+iIVACY/QB56GecF1DZ
+         9NkkCiVHjEiLetO11b5S8kQthUKe5XaB67RW566t6X7ztcBlWUgodm93COBFwkGgWVNG
+         Hdww==
+X-Gm-Message-State: AC+VfDwoBKBYwi6OqFFpwRZqVFzhPY+Fw/Tc9/2fWJQZRTfCqsrQxbWT
+        CJxNQ4qztHiaiXrzugjlmvr/Nh6xTJo=
+X-Google-Smtp-Source: ACHHUZ66P57cXyqO2JU8ptBmzeqK1OoAX3Ouwb5epX+YE5fYbbHSmNYHjgZFA9DC1MX2NZkeJFdTrA==
+X-Received: by 2002:a5d:4884:0:b0:30a:efd2:c170 with SMTP id g4-20020a5d4884000000b0030aefd2c170mr2651504wrq.37.1685816464571;
+        Sat, 03 Jun 2023 11:21:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x11-20020a5d650b000000b00307972e46fasm5072913wru.107.2023.06.03.11.21.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Jun 2023 11:21:04 -0700 (PDT)
+Message-Id: <pull.1519.v2.git.git.1685816463240.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1519.git.git.1685815011553.gitgitgadget@gmail.com>
+References: <pull.1519.git.git.1685815011553.gitgitgadget@gmail.com>
+From:   "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 03 Jun 2023 18:21:03 +0000
+Subject: [PATCH v2] cherry-pick: use trailer instead of free-text for `-x`
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3731.600.7)
+Cc:     Sean Allred <code@seanallred.com>,
+        Sean Allred <allred.sean@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+From: Sean Allred <allred.sean@gmail.com>
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-1. create commit in master (default branch)
-2. amend it
-3. send commit to the upstream via pull request
-4. after commit is merged into the upstream, execute `git pull =
---rebase=3Dmerges --ff --autostash`
-5. run git status
+When recording the origin commit during a cherry-pick, the current label
+used is not understood by git-interpret-trailers. Standardize onto the
+'normal' trailer format that can be reasonably/reliably parsed and used
+by external tooling leveraging git-interpret-trailers.
 
-What did you expect to happen? (Expected behavior)
-Git will print repository status
+The prior language was introduced way back in 2005 (48313592, "Redo
+'revert' using three-way merge machinery"), long before
+git-interpret-trailers was introduced in 2014 (dfd66ddf, "add
+documentation for 'git interpret-trailers'").
 
-What happened instead? (Actual behavior)
-BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index =
-(547842 > 54)
-error: git died of signal 6
+This also somewhat improves the readability of resulting commit messages
+in some scenarios where trailers are already in use. Consider the
+example already present in cd650a4e (2023-02-12, "recognize '(cherry
+picked from ...' as part of s-o-b footer"):
 
-What's different between what you expected and what actually happened?
-I don't expect git to come into broken state after executing ordinary =
-commands.
+>   Signed-off-by: A U Thor <author@example.com>
+>   (cherry picked from commit da39a3ee5e6b4b0d3255bfef95601890afd80709)
+>   Signed-off-by: C O Mmitter <committer@example.com>
 
-Anything else you want to add:
-I have this options set in the config:
-core.fsmonitor=3Dtrue
-core.repositoryformatversion=3D0
-core.filemode=3Dtrue
-core.bare=3Dfalse
-core.logallrefupdates=3Dtrue
-core.ignorecase=3Dtrue
-core.precomposeunicode=3Dtrue
-core.fsmonitor=3Dtrue
-core.fscache=3Dfalse
-core.preloadindex=3Dtrue
-core.multipackindex=3Dtrue
-core.splitindex=3Dtrue
-core.untrackedcache=3Dtrue
-submodule.active=3D.
-branch.master.remote=3Dorigin
-branch.master.merge=3Drefs/heads/master
-status.showuntrackedfiles=3Dall
+This will now show as
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+>   Signed-off-by: A U Thor <author@example.com>
+>   Cherry-Picked-From-Commit: da39a3ee5e6b4b0d3255bfef95601890afd80709
+>   Signed-off-by: C O Mmitter <committer@example.com>
 
+Most tests are adjusted for the new format. A test is added to
+demonstrate that the old free-text format in existing commit data is
+still considered part of the trailer block (i.e., the problem fixed by
+the above commit has not been re-introduced).
 
-[System Info]
-git version:
-git version 2.39.1
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 22.5.0 Darwin Kernel Version 22.5.0: Mon Apr 24 20:52:24 =
-PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T6000 arm64
-compiler info: clang: 14.0.0 (clang-1400.0.29.202)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+The change to trailer.c is not necessary for current tests to pass, but
+appear to be necessary to maintain the stated goal and semantics of the
+`find_trailer_start` with the addition of this new generated header. The
+old format is left, of course, to handle historical commit data.
+
+---
+    cherry-pick: use trailer instead of free-text for -x
+    
+    Sincere apologies for the very quick v2; while I've been sitting on this
+    patch for a while in one form or another, I neglected to update the
+    documentation. This has now been addressed, as well as addressing
+    another reference to the old format in trailer.c. (I've now evaluated
+    results of regexp searches of cherry.picked and picked.from; there is
+    nothing left that seems to be necessary to update.)
+
+I considered (but did not pursue) a new configuration option for two
+reasons:
 
 
-[Enabled Hooks]
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1519%2Fvermiculus%2Fsa%2Fcherry-pick-origin-trailer-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1519/vermiculus/sa/cherry-pick-origin-trailer-v2
+Pull-Request: https://github.com/git/git/pull/1519
 
+Range-diff vs v1:
+
+ 1:  14c9e39be69 ! 1:  b163a45b48a cherry-pick: use trailer instead of free-text for `-x`
+     @@ Commit message
+          'normal' trailer format that can be reasonably/reliably parsed and used
+          by external tooling leveraging git-interpret-trailers.
+      
+     +    The prior language was introduced way back in 2005 (48313592, "Redo
+     +    'revert' using three-way merge machinery"), long before
+     +    git-interpret-trailers was introduced in 2014 (dfd66ddf, "add
+     +    documentation for 'git interpret-trailers'").
+     +
+          This also somewhat improves the readability of resulting commit messages
+          in some scenarios where trailers are already in use. Consider the
+          example already present in cd650a4e (2023-02-12, "recognize '(cherry
+     @@ Commit message
+          still considered part of the trailer block (i.e., the problem fixed by
+          the above commit has not been re-introduced).
+      
+     +    The change to trailer.c is not necessary for current tests to pass, but
+     +    appear to be necessary to maintain the stated goal and semantics of the
+     +    `find_trailer_start` with the addition of this new generated header. The
+     +    old format is left, of course, to handle historical commit data.
+     +
+          ---
+      
+          I considered (but did not pursue) a new configuration option for two
+     @@ Commit message
+      
+          Signed-off-by: Sean Allred <allred.sean@gmail.com>
+      
+     + ## Documentation/git-cherry-pick.txt ##
+     +@@ Documentation/git-cherry-pick.txt: OPTIONS
+     + 
+     + -x::
+     + 	When recording the commit, append a line that says
+     +-	"(cherry picked from commit ...)" to the original commit
+     ++	"Cherry-Picked-From-Commit:" to the original commit
+     + 	message in order to indicate which commit this change was
+     + 	cherry-picked from.  This is done only for cherry
+     + 	picks without conflicts.  Do not use this option if
+     +@@ Documentation/git-cherry-pick.txt: OPTIONS
+     + 	visible branches (e.g. backporting a fix to a
+     + 	maintenance branch for an older release from a
+     + 	development branch), adding this information can be
+     +-	useful.
+     ++	useful. See also linkgit:git-interpret-trailers[1].
+     + 
+     + -r::
+     + 	It used to be that the command defaulted to do `-x`
+     +
+       ## sequencer.c ##
+      @@
+       #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+     @@ t/t3511-cherry-pick-x.sh: test_expect_success 'cherry-pick -x respects commit.cl
+       		"$mesg_unclean" $(git rev-parse mesg-unclean) |
+       			git stripspace -s >expect &&
+       	test_cmp expect actual
+     +
+     + ## trailer.c ##
+     +@@ trailer.c: static int configured;
+     + static const char *git_generated_prefixes[] = {
+     + 	"Signed-off-by: ",
+     + 	"(cherry picked from commit ",
+     ++	"Cherry-Picked-From-Commit: ",
+     + 	NULL
+     + };
+     + 
+
+
+  1. Without regard to historical data, using a 'real' trailer seems
+     inherently better than the current free-text state.
+
+  2. Regarding historical data, adding a user-configurable option
+     doesn't make things simpler for systems maintainers; those systems
+     still have to handle both formats if they have such a need to begin
+     with. As it's still a clear and readable format, end-user
+     developers are unlikely to care to change it back.
+
+The maintenance and cognitive costs of a new configuration option are
+not worth the minimal benefit it seems it would bring.
+
+Signed-off-by: Sean Allred <allred.sean@gmail.com>
+---
+ Documentation/git-cherry-pick.txt |  4 +--
+ sequencer.c                       |  6 ++--
+ t/t3510-cherry-pick-sequence.sh   | 12 ++++----
+ t/t3511-cherry-pick-x.sh          | 47 ++++++++++++++++++++++---------
+ trailer.c                         |  1 +
+ 5 files changed, 45 insertions(+), 25 deletions(-)
+
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index fdcad3d2006..22217480e45 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -64,7 +64,7 @@ OPTIONS
+ 
+ -x::
+ 	When recording the commit, append a line that says
+-	"(cherry picked from commit ...)" to the original commit
++	"Cherry-Picked-From-Commit:" to the original commit
+ 	message in order to indicate which commit this change was
+ 	cherry-picked from.  This is done only for cherry
+ 	picks without conflicts.  Do not use this option if
+@@ -74,7 +74,7 @@ OPTIONS
+ 	visible branches (e.g. backporting a fix to a
+ 	maintenance branch for an older release from a
+ 	development branch), adding this information can be
+-	useful.
++	useful. See also linkgit:git-interpret-trailers[1].
+ 
+ -r::
+ 	It used to be that the command defaulted to do `-x`
+diff --git a/sequencer.c b/sequencer.c
+index bceb6abcb6c..410f8469379 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -51,7 +51,7 @@
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+ static const char sign_off_header[] = "Signed-off-by: ";
+-static const char cherry_picked_prefix[] = "(cherry picked from commit ";
++static const char cherry_picked_header[] = "Cherry-Picked-From-Commit: ";
+ 
+ GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
+ 
+@@ -2277,9 +2277,9 @@ static int do_pick_commit(struct repository *r,
+ 			strbuf_complete_line(&msgbuf);
+ 			if (!has_conforming_footer(&msgbuf, NULL, 0))
+ 				strbuf_addch(&msgbuf, '\n');
+-			strbuf_addstr(&msgbuf, cherry_picked_prefix);
++			strbuf_addstr(&msgbuf, cherry_picked_header);
+ 			strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+-			strbuf_addstr(&msgbuf, ")\n");
++			strbuf_addstr(&msgbuf, "\n");
+ 		}
+ 		if (!is_fixup(command))
+ 			author = get_author(msg.message);
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 3b0fa66c33d..958fa019aed 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -548,10 +548,10 @@ test_expect_success '--continue respects opts' '
+ 	git cat-file commit HEAD~1 >picked_msg &&
+ 	git cat-file commit HEAD~2 >unrelatedpick_msg &&
+ 	git cat-file commit HEAD~3 >initial_msg &&
+-	! grep "cherry picked from" initial_msg &&
+-	grep "cherry picked from" unrelatedpick_msg &&
+-	grep "cherry picked from" picked_msg &&
+-	grep "cherry picked from" anotherpick_msg
++	! grep "Cherry-Picked-From-Commit" initial_msg &&
++	grep "Cherry-Picked-From-Commit" unrelatedpick_msg &&
++	grep "Cherry-Picked-From-Commit" picked_msg &&
++	grep "Cherry-Picked-From-Commit" anotherpick_msg
+ '
+ 
+ test_expect_success '--continue of single-pick respects -x' '
+@@ -562,7 +562,7 @@ test_expect_success '--continue of single-pick respects -x' '
+ 	git cherry-pick --continue &&
+ 	test_path_is_missing .git/sequencer &&
+ 	git cat-file commit HEAD >msg &&
+-	grep "cherry picked from" msg
++	grep "Cherry-Picked-From-Commit" msg
+ '
+ 
+ test_expect_success '--continue respects -x in first commit in multi-pick' '
+@@ -574,7 +574,7 @@ test_expect_success '--continue respects -x in first commit in multi-pick' '
+ 	test_path_is_missing .git/sequencer &&
+ 	git cat-file commit HEAD^ >msg &&
+ 	picked=$(git rev-parse --verify picked) &&
+-	grep "cherry picked from.*$picked" msg
++	grep "Cherry-Picked-From-Commit: $picked" msg
+ '
+ 
+ test_expect_failure '--signoff is automatically propagated to resolved conflict' '
+diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+index dd5d92ef302..809afba48e1 100755
+--- a/t/t3511-cherry-pick-x.sh
++++ b/t/t3511-cherry-pick-x.sh
+@@ -33,6 +33,10 @@ mesg_with_footer_sob="$mesg_with_footer
+ Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+ 
+ mesg_with_cherry_footer="$mesg_with_footer_sob
++Cherry-Picked-From-Commit: da39a3ee5e6b4b0d3255bfef95601890afd80709
++Tested-by: C.U. Thor <cuthor@example.com>"
++
++mesg_with_old_cherry_footer="$mesg_with_footer_sob
+ (cherry picked from commit da39a3ee5e6b4b0d3255bfef95601890afd80709)
+ Tested-by: C.U. Thor <cuthor@example.com>"
+ 
+@@ -68,6 +72,8 @@ test_expect_success setup '
+ 	git reset --hard initial &&
+ 	test_commit "$mesg_with_cherry_footer" foo b mesg-with-cherry-footer &&
+ 	git reset --hard initial &&
++	test_commit "$mesg_with_old_cherry_footer" foo b mesg-with-old-cherry-footer &&
++	git reset --hard initial &&
+ 	test_config commit.cleanup verbatim &&
+ 	test_commit "$mesg_unclean" foo b mesg-unclean &&
+ 	test_unconfig commit.cleanup &&
+@@ -82,7 +88,7 @@ test_expect_success 'cherry-pick -x inserts blank line after one line subject' '
+ 	cat <<-EOF >expect &&
+ 		$mesg_one_line
+ 
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+ 	test_cmp expect actual
+@@ -130,7 +136,7 @@ test_expect_success 'cherry-pick -x inserts blank line when conforming footer no
+ 	cat <<-EOF >expect &&
+ 		$mesg_no_footer
+ 
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+ 	test_cmp expect actual
+@@ -155,7 +161,7 @@ test_expect_success 'cherry-pick -x -s inserts blank line when conforming footer
+ 	cat <<-EOF >expect &&
+ 		$mesg_no_footer
+ 
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
+ 		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+@@ -179,7 +185,7 @@ test_expect_success 'cherry-pick -x -s adds sob when last sob doesnt match commi
+ 	git cherry-pick -x -s mesg-with-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_footer
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
+ 		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+@@ -202,7 +208,7 @@ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists fo
+ 	git cherry-pick -x -s mesg-with-footer-sob &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_footer_sob
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
+ 		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+@@ -216,7 +222,7 @@ test_expect_success 'cherry-pick -x handles commits with no NL at end of message
+ 	git cherry-pick -x $sha1 &&
+ 	git log -1 --pretty=format:%B >actual &&
+ 
+-	printf "\n(cherry picked from commit %s)\n" $sha1 >>msg &&
++	printf "\nCherry-Picked-From-Commit: %s\n" $sha1 >>msg &&
+ 	test_cmp msg actual
+ '
+ 
+@@ -227,7 +233,7 @@ test_expect_success 'cherry-pick -x handles commits with no footer and no NL at
+ 	git cherry-pick -x $sha1 &&
+ 	git log -1 --pretty=format:%B >actual &&
+ 
+-	printf "\n\n(cherry picked from commit %s)\n" $sha1 >>msg &&
++	printf "\n\nCherry-Picked-From-Commit: %s\n" $sha1 >>msg &&
+ 	test_cmp msg actual
+ '
+ 
+@@ -253,19 +259,19 @@ test_expect_success 'cherry-pick -s handles commits with no footer and no NL at
+ 	test_cmp msg actual
+ '
+ 
+-test_expect_success 'cherry-pick -x treats "(cherry picked from..." line as part of footer' '
++test_expect_success 'cherry-pick -x treats "Cherry-Picked-From-Commit" line as part of footer' '
+ 	pristine_detach initial &&
+ 	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
+ 	git cherry-pick -x mesg-with-cherry-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_cherry_footer
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'cherry-pick -s treats "(cherry picked from..." line as part of footer' '
++test_expect_success 'cherry-pick -s treats "Cherry-Picked-From-Commit" line as part of footer' '
+ 	pristine_detach initial &&
+ 	git cherry-pick -s mesg-with-cherry-footer &&
+ 	cat <<-EOF >expect &&
+@@ -276,13 +282,26 @@ test_expect_success 'cherry-pick -s treats "(cherry picked from..." line as part
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'cherry-pick -x -s treats "(cherry picked from..." line as part of footer' '
++test_expect_success 'cherry-pick -x -s treats "Cherry-Picked-From-Commit" line as part of footer' '
+ 	pristine_detach initial &&
+ 	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
+ 	git cherry-pick -x -s mesg-with-cherry-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_cherry_footer
+-		(cherry picked from commit $sha1)
++		Cherry-Picked-From-Commit: $sha1
++		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	EOF
++	git log -1 --pretty=format:%B >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'cherry-pick -x -s still treats "(cherry picked from commit.." line as part of footer' '
++	pristine_detach initial &&
++	sha1=$(git rev-parse mesg-with-old-cherry-footer^0) &&
++	git cherry-pick -x -s mesg-with-old-cherry-footer &&
++	cat <<-EOF >expect &&
++		$mesg_with_old_cherry_footer
++		Cherry-Picked-From-Commit: $sha1
+ 		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+ 	EOF
+ 	git log -1 --pretty=format:%B >actual &&
+@@ -303,7 +322,7 @@ test_expect_success 'cherry-pick -x cleans commit message' '
+ 	pristine_detach initial &&
+ 	git cherry-pick -x mesg-unclean &&
+ 	git log -1 --pretty=format:%B >actual &&
+-	printf "%s\n(cherry picked from commit %s)\n" \
++	printf "%s\nCherry-Picked-From-Commit: %s\n" \
+ 		"$mesg_unclean" $(git rev-parse mesg-unclean) |
+ 			git stripspace >expect &&
+ 	test_cmp expect actual
+@@ -313,7 +332,7 @@ test_expect_success 'cherry-pick -x respects commit.cleanup' '
+ 	pristine_detach initial &&
+ 	git -c commit.cleanup=strip cherry-pick -x mesg-unclean &&
+ 	git log -1 --pretty=format:%B >actual &&
+-	printf "%s\n(cherry picked from commit %s)\n" \
++	printf "%s\nCherry-Picked-From-Commit: %s\n" \
+ 		"$mesg_unclean" $(git rev-parse mesg-unclean) |
+ 			git stripspace -s >expect &&
+ 	test_cmp expect actual
+diff --git a/trailer.c b/trailer.c
+index a2c3ed6f28c..59f7ef92b29 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -53,6 +53,7 @@ static int configured;
+ static const char *git_generated_prefixes[] = {
+ 	"Signed-off-by: ",
+ 	"(cherry picked from commit ",
++	"Cherry-Picked-From-Commit: ",
+ 	NULL
+ };
+ 
+
+base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
+-- 
+gitgitgadget
