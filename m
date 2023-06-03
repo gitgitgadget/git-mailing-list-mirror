@@ -2,103 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0484FC7EE2D
-	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CD7EC77B7A
+	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237033AbjFCBRT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 21:17:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48346 "EHLO
+        id S236734AbjFCBfo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 21:35:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229802AbjFCBRR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 21:17:17 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3FBD3
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:17:16 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b1adf27823so17305651fa.2
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:17:16 -0700 (PDT)
+        with ESMTP id S235959AbjFCBfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 21:35:41 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CABF219B
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:35:38 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id 5614622812f47-39a55e5cfc0so2414876b6e.3
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685755034; x=1688347034;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cVNSqqP3LqZHsUPKK5kiE3UtUVjk1nD8pzgN6IKPJ+0=;
-        b=MA4fblSei/3f/qh2oMn77SX+D7s07o9Vd04z845il3gpemVcriZbkSgP0yEDIDn2TD
-         REfIxTYVMlyitif8A5dyHgyMhxVmB02IZnAWmdjr+uViy7uAGcuZWFnD25XMiCFygg/T
-         nulxmlROHIGo8nNOvasizkZhSDobZ9/9Dr+nJdo1Q2vi48v7tiyQuY1Y14Ahl2nLxtYe
-         91MGNvbMJGgkH/uXY0k5WMwC3l6K/17nHuMCwkhlinYyRIfZP66zb+E7F0jFwF3Wi+c4
-         k4VZMykiqCz5bHG51VLK/JSwF8RQDz4ja4VaVRoxxAzCPGOy+f50JndKTDHyXhbQcDaW
-         qtTA==
+        d=gmail.com; s=20221208; t=1685756138; x=1688348138;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RHK9n/2fYZceA6Nu0lwCTWAYzDOdkdtVigGbNHl3Uvw=;
+        b=N3mk5YGuSFeUzKy5F4TAMDrgKGL5KR3Z+EVvtfCEE7IR2ky4VEXDR7UVfXNuKjOq9m
+         FzODpQArH0EGRZKbEXtm59lxpoWvIbcZCqbEnIMpW7Qafsbu6zbcTGxBqQ3HU3CuT+Qi
+         qjTlCn4cT471HuwyE3SujzZlovJbFtYVX1qupfElJmSYCa/S+U/Bd5tsAmsjxeStcUUL
+         iHAMXnA/wiksGflDN2QhqYL/tbh4791R9P0Fa+QQ8pHPvTLYQy6nD+hYLkzB7pI2cZzq
+         QRvFOlhj8SL6lXzpmlLV+hQRkX1kMHrY1fmOms5+GwsKy8h/LhQKGkFt3fpzJvWv8ZhB
+         lQ0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685755034; x=1688347034;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cVNSqqP3LqZHsUPKK5kiE3UtUVjk1nD8pzgN6IKPJ+0=;
-        b=gzlx6/uMvxc0Ydr1XzJPZL8AqL3DlWGpPeK2VK6A7BUPqnEwNv59aLWW/lPG7/0KBC
-         pJYzdjPo+Sr5fHyEsyqbyhwulgDU+xoS+kXEd3QtPw6r+lBSd9/wEbmHMQeQJwbmPN6x
-         OITOvtTVgT90x9wsN7A9yQ2CiJqI2xWJrjn0uqDux0uIONuja9OXGpzTjmzRJ2umPxpu
-         IXppR6eAqt+yVzyrSm1oY/qzDFpxnOrphgIfBahtMTw0Taz9mdJ5sBe7QtNilXhXfvo7
-         sapVuIbTR9hqJLFWdQ8dWE78p6cWVXypaUmT8ZqCRLoamMjKOqGqnSL5vsQVRIL6coGX
-         ikcg==
-X-Gm-Message-State: AC+VfDzaTajpEg30o5QyWnbPnNVr13AudIvzuwBeG+mc9RhSbbXe3nHU
-        iFA+m+Gwb7PLI9rSIZdU35L/GYIDjPCdx94NR1Y=
-X-Google-Smtp-Source: ACHHUZ6k0OME5agUeAiD9qfGkVwVBKXizK8NW82BOZ1IIIMtdCq5ru2QjRBVhEJELiLPWTzlDjK+IDKDv2wzisxakKs=
-X-Received: by 2002:a2e:9c50:0:b0:2ad:509a:22b8 with SMTP id
- t16-20020a2e9c50000000b002ad509a22b8mr847443ljj.16.1685755034052; Fri, 02 Jun
- 2023 18:17:14 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685756138; x=1688348138;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RHK9n/2fYZceA6Nu0lwCTWAYzDOdkdtVigGbNHl3Uvw=;
+        b=lmiq3FZIPwSIBAksV3rIq+wbxpV7TfFs4YD7/r2AWRHusBxZoK1WLvTWQF/nPPNp0z
+         S6a6cny9ZiwEyWFg39Ec2zXpyoSdGSqQhiBx0K25BD05gkYnGVmbMmd1DYKumIonMuuL
+         t42FdiC4fEUzi4nXJbg9Frn2aLiOrBwwmrw/eCac3IGwwqaX5tifjQ4Y3nd3GG0q5dWE
+         Z8IWKsITqgZ6mNeFt5D+7sN3OR3l/iRQIGqMZgrbflgIyJg6jv/HKD2rP1Mwwskc4RNp
+         L+Gkdp4WHzpDGRFk5kqiP+BnGvJlXk1ETURxWi9lSQb2eA55l3DsdsFkuWU9757zEBwW
+         t+kQ==
+X-Gm-Message-State: AC+VfDyWkpkBmjpCakZJBTTpIoaNF7FRj558KJo3xvVno8ddGvYMJlHG
+        BtCGbI3qWx4rhPhsoZfxHDA=
+X-Google-Smtp-Source: ACHHUZ5BdeVYWtwBLvKnGE0+vGR1Wmb4QUHmRFaRPZHfR9saJYB5iTmQhWkjTIGnGDQRsYu3wW1urg==
+X-Received: by 2002:a05:6808:3b0:b0:398:5a28:d80f with SMTP id n16-20020a05680803b000b003985a28d80fmr1803751oie.4.1685756137934;
+        Fri, 02 Jun 2023 18:35:37 -0700 (PDT)
+Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
+        by smtp.gmail.com with ESMTPSA id l18-20020a170902d35200b001a060007fcbsm1970167plk.213.2023.06.02.18.35.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jun 2023 18:35:37 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH 0/3] ci sanitizer cleanups and performance improvements
+References: <20230601180220.GA4167745@coredump.intra.peff.net>
+Date:   Sat, 03 Jun 2023 10:35:37 +0900
+In-Reply-To: <20230601180220.GA4167745@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 1 Jun 2023 14:02:20 -0400")
+Message-ID: <xmqq1qit8h06.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <b6f210da2c3cc7746b984b797ad89687cba2d1f8.camel@mad-scientist.net>
- <7aa2ab6714bd14671ba9cfff611dea2fa088c99e.camel@mad-scientist.net>
- <000501d99589$358d4850$a0a7d8f0$@nexbridge.com> <679863bd1ed8a54b48472ad310c2bae7f274e1ec.camel@mad-scientist.net>
- <000f01d9958d$347d6220$9d782660$@nexbridge.com>
-In-Reply-To: <000f01d9958d$347d6220$9d782660$@nexbridge.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 2 Jun 2023 18:17:01 -0700
-Message-ID: <CABPp-BF0VZzDbB87JNCfCxkCDZk7LGZ=1SfnxCyHwCpQ3ZFPoQ@mail.gmail.com>
-Subject: Re: Anyone know why git ls-remote output might be corrupted?
-To:     rsbecker@nexbridge.com
-Cc:     paul@mad-scientist.net, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 2, 2023 at 1:26=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
->
-> On Friday, June 2, 2023 3:53 PM, Paul Smith wrote:
-> >On Fri, 2023-06-02 at 15:34 -0400, rsbecker@nexbridge.com wrote:
-> >> On Friday, June 2, 2023 3:13 PM, Paul Smith wrote:
-> >> > On Fri, 2023-06-02 at 14:59 -0400, Paul Smith wrote:
-> >> > > Also a bunch of the heads are missing.  It's pretty clear that
-> >> > > right in the middle of printing one of the SHAs we suddenly lost a
-> >> > > bunch of output, and started printing stuff from later (in the
-> >> > > last instance 66 out of 131 heads were missing).
-> >> >
-> >> > I forgot to mention: git ls-remote does not exit with an error code.
-> >> > The exit code is 0 (success).
-> >> >
-> >> > The reason I get this failure is that as I parse the output I notice
-> >> > that the SHA is invalid (contains a non-hex character "i") and it
-> >> > throws this error.
-> >>
-> >> Does your CI/CD system use sparse checkout or depth=3D1 or some other
-> >> partial clone?
-> >
-> >Yes, the local copy of the repo is a sparse checkout.
-> >
-> >I'm surprised that matters to ls-remote... I would have expected that th=
-e "sparseness"
-> >of the local repo is irrelevant when listing the state of the remote's h=
-eads?  Is that
-> >the reason for the issue I'm seeing?
->
-> I'm just wondering whether this might be an impact somehow and adding inf=
-o to help the team diagnose. I have seen other commands have some issues in=
- the past with --depth=3Dn
-> --Randall
+Jeff King <peff@peff.net> writes:
 
-I think if shallowness or sparseness affected ls-remote output in any
-way whatsoever, that would itself be a bug.  Granted, I don't know
-much about the protocol side of things, but I'd be very surprised if
-either of these conditions mattered.
+> Here are a few patches to tweak our CI sanitizer setup. The first one
+> hopefully increases coverage. The other two just aim to reduce the
+> amount of CPU we use.
+>
+>   [1/3]: ci: use clang for ASan/UBSan checks
+>   [2/3]: ci: run ASan/UBSan in a single job
+>   [3/3]: ci: drop linux-clang job
+>
+>  .github/workflows/main.yml | 10 ++--------
+>  ci/lib.sh                  |  7 ++-----
+>  2 files changed, 4 insertions(+), 13 deletions(-)
+
+Makes sense.  Will queue.  Thanks.
