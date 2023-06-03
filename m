@@ -2,70 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62757C7EE29
-	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 00:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 870BEC77B7A
+	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236844AbjFCA2S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 20:28:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60754 "EHLO
+        id S237037AbjFCBB6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 21:01:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236735AbjFCA2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 20:28:15 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED36BE50
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 17:28:14 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-256e1d87998so2242366a91.3
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 17:28:14 -0700 (PDT)
+        with ESMTP id S236527AbjFCBB5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 21:01:57 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98887180
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:01:56 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-19a13476ffeso2938182fac.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:01:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685752094; x=1688344094;
+        d=gmail.com; s=20221208; t=1685754116; x=1688346116;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lH6UJe4POf0BJYNZS+Ak7xHySjGOBRmvx9RW0wKMxZw=;
-        b=DmhYF38U5y3CXVnWq3HmGk52k9kaNjD+qW3p32vDvw/ZqlN79jvpx1I1MVTUovrLLh
-         nta+i8AIZzvG4BERhxi3Bfa6thAYg5emVXhA8DAhNGqXI1he393o9ix/Pf5+1poA2O4n
-         LJD1xUmb1HAIghEdJWoDakDTFv0xhRU6zdhl6zcFIVP2AGSwScNSMpeUl+wxYWWj5LMj
-         B4avDe6btPHujXNJAZbELTraA12LjEeIUhNpO393LD/Ngss/NfofLIu2jVYz1kaKnOgu
-         BMMEteiajZeaLNKEu8t29NklE3Ueteehr1vm5Je4xdS/j4SGscPg2A0MZoUXEQgmmGbO
-         aUdw==
+        bh=UyvV5opNLsnrlR01PKGiY3LZmPl3ylI82cugsiFkFFk=;
+        b=mv93VnlFjRcdpKPgpFI9NwuSlTa9feF5LPP3M80cIMuLBXgkBiVTF/cCkkwfUCTQxu
+         +qDgHEzjIHRun5wqYGklJEYV/+I0/Ogz1WzLu45YpDXoJU0zpJx0m3Ds3Mvl+/XFT0md
+         mfefM/CXC7X799cLRbKfy5v3sWliMToa0f+v/189trE6pP0RKK5UnFCRK+6xUrpdauOW
+         H9GiHT+dCLNeU+T0UWWXoya0R8rjPkmKl8Eob54PmzkhioBbY5yzOammznLAPifEUnxq
+         5RQGw0SyHeTOQjTLqnahZK+rm6QHq53qMVNsJkocPGJknUfoAm3SzT6sCMFZtXOldH8n
+         Z/UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685752094; x=1688344094;
+        d=1e100.net; s=20221208; t=1685754116; x=1688346116;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=lH6UJe4POf0BJYNZS+Ak7xHySjGOBRmvx9RW0wKMxZw=;
-        b=E3YnAMATVkAELlY6+tiUh2uHEbO/dDxM27cQrzWeWCqoqyBNRCWkiOmGDXDWhYm1xu
-         3BW1DFqzwk+dYqfbY9VeeyzWlZ0rXuNivn6VBWDMwspTUH/443Ee+MY09KQZNmBzYkfo
-         yGwOrxItSYvF4Wk8tanvIkvcZ3Y/viQyhKwLWTdSJWuzwqhduOZThEbWSdVCI1xjDPpZ
-         P9pwN8wSjLlCs6ID0RgU4vzDJW1LdNOi5nn6MCTztF/uAyX22/yEXYvPn707qoDrqFAA
-         WGdQbDQTL9eV6EYLt7CI5YdybDxO5oIcFIwsC8ujkYVpnRjvyBs/OWqdHTx7sS76XiuK
-         SKgg==
-X-Gm-Message-State: AC+VfDxOVcHGVSnWapY5w85xLyAbecKv+zXuSk9kMdt3bjZ/fAXbaoTs
-        VADbPVmAwMNm31hLKb+QqStqG4wD+WlWFQ==
-X-Google-Smtp-Source: ACHHUZ77cBY1L1F0ezaPBXpHxkHqqKFGGHZA0eMHstRkrfd5wvPRWsnuI6am+PiywkkKtqd89gURXg==
-X-Received: by 2002:a17:902:f54d:b0:1af:981b:eeff with SMTP id h13-20020a170902f54d00b001af981beeffmr1653630plf.64.1685752094318;
-        Fri, 02 Jun 2023 17:28:14 -0700 (PDT)
+        bh=UyvV5opNLsnrlR01PKGiY3LZmPl3ylI82cugsiFkFFk=;
+        b=Mho64WccUOahuHVZ0RFdN6dEM9szrx6+dJwU5pCCfhdSnc8j2AcOXjt/b1maTU90f3
+         dN9QMAHnhfPMmRl55fusXcEERssbovm6xY+2tVN8Yo3r6hEQga8jWj+1xutsAaA6urgE
+         cYsv7kOgbv1w3iXMIUtz2LcraG0tx0cLPgO5Axi4RZktOqATcSmk895pIQ7qBM65F8NU
+         ExTZpGDklx2pd9dhV2Qfoy10DDUfr1TDXOu2O0bCzsPpeFlyWFnFOSSNSxXcal1Y+/0+
+         tuJIQZTRSIDqPnh7YuM2Dy5/7w0CshUgtlkIrx+d9dUCVFvcZGOIclV6PRUJYvRVBG5+
+         pVDw==
+X-Gm-Message-State: AC+VfDzKR/BdCynVW8q5c7YR3XXcRSL/pjm0HEAtAPC1jxglQ2Gwb/SS
+        gEOumcguUK2S7X6wlqbljxU=
+X-Google-Smtp-Source: ACHHUZ49MEJ5jIizYaMIm/zsjI0idsIccGpJsZr2lLH6ONYP8PjW1SYw8Ncw0GTvTbdXwIr4GkB87A==
+X-Received: by 2002:a05:6808:47:b0:394:ba74:a522 with SMTP id v7-20020a056808004700b00394ba74a522mr1438476oic.57.1685754115780;
+        Fri, 02 Jun 2023 18:01:55 -0700 (PDT)
 Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id k17-20020a170902ce1100b0019aaab3f9d7sm1927069plg.113.2023.06.02.17.28.13
+        by smtp.gmail.com with ESMTPSA id s22-20020a170902989600b001b03b1bcf6bsm1921604plp.252.2023.06.02.18.01.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 17:28:14 -0700 (PDT)
+        Fri, 02 Jun 2023 18:01:55 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, vdye@github.com, me@ttaylorr.com
-Subject: Re: [PATCH 1/3] repository: create disable_replace_refs()
-References: <pull.1537.git.1685126617.gitgitgadget@gmail.com>
-        <56544abc15d1fce6fb4a0946e709470af9225395.1685126618.git.gitgitgadget@gmail.com>
-        <CABPp-BFzA0yVecHK1DEGMpAhewm7oyqEim7BCw7-DTKpUzWnpw@mail.gmail.com>
-        <ae89feda-0a76-29d7-14ce-662214414638@github.com>
-        <20230601174746.GA4165405@coredump.intra.peff.net>
-Date:   Sat, 03 Jun 2023 09:28:13 +0900
-In-Reply-To: <20230601174746.GA4165405@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 1 Jun 2023 13:47:46 -0400")
-Message-ID: <xmqqa5xh8k4i.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 0/3] Changed path filter hash fix and version bump
+References: <cover.1684790529.git.jonathantanmy@google.com>
+        <cover.1685574402.git.jonathantanmy@google.com>
+Date:   Sat, 03 Jun 2023 10:01:54 +0900
+In-Reply-To: <cover.1685574402.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Wed, 31 May 2023 16:12:34 -0700")
+Message-ID: <xmqq5y858ikd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,29 +67,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->> Generally, I decided to move it after option-parsing, so it wouldn't
->> be called if we are hitting an option-parse error.
->
-> Playing devil's advocate: would option parsing ever access an object? I
-> think in most cases the answer is no, but I could imagine it happening
-> for some special cases (e.g., update-index uses callbacks to act on
-> options as we parse them, since order is important).
->
-> So I think as a general principle it makes sense for commands to set
-> this flag as early as possible.
+> Here's a new version. With this, Git can function with both version
+> 1 (incorrect murmur3) and version 2 (correct murmur3) changed path
+> filters, but not at the same time: the user can set a config variable to
+> choose which one, and Git will ignore existing changed path filters of
+> the wrong version (and always write the version that the config variable
+> says).
 
-I agree with the "devil's advocate" above; indeed my suggestion to
-follow-on work that is enabled by introducing this function, i.e. we
-can ensure that the objects already instantiated when the call is
-made are not affected by the replace mechanism, was exactly for such
-a "we already accessed some objects via the replace mechanism and
-then try to close the door of the barn afterwards with this call"
-case.
+Hmph.  On a system with unsigned char, we should be able to keep
+using version 1 without losing correctness, I suspect, but probably
+they are in the minority we do not have to care about?  I can see
+the desire to simplify the migration plan (i.e. essentially have no
+migration---this will give us just a flag day per repository), but
+I'll let others to comment.
 
-Indeed, I think "git branch --no-merged 0369cf" resolves the object
-name down to a commit object in parse_opt_merge_filter() before
-parse_options() call returns.
+> In patch 1, the test assumes that char is signed. I'm not sure if it's
+> worth asserting on the contents of the filter, since it depends on
+> whether char is signed, but I've included it anyway (since it's easy
+> to remove).
 
-Yes.
+So, on a system with unsigned char, would these tests fail?  Do we
+need a prereq to skip them?
+
+Thanks.
