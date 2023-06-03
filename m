@@ -2,83 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73ABFC7EE29
-	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69E23C7EE2C
+	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236923AbjFCBpC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 21:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54902 "EHLO
+        id S236935AbjFCBrW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 21:47:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231202AbjFCBpB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 21:45:01 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F285E42
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:45:00 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id 5614622812f47-3980f2df1e7so2243464b6e.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:45:00 -0700 (PDT)
+        with ESMTP id S231202AbjFCBrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 21:47:21 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4239194
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:47:19 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f3b5881734so3754027e87.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:47:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685756699; x=1688348699;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qdXN/YI+pcW4bgWkG/vz/eY1UBYF2mpyPu8wc/D3Lsg=;
-        b=CQxWWq3eZq9j3LaAqdUtwYwVak+eF/tnDf9OXdrxLo8RB3nVV5EgLbyWOCnks/GBXI
-         imiSehNgkPsgs8jeQ5WmsCYCbRe4bn2abcvjcClDxgLodYQnQDoIZBwRSh+ftKxeYqpM
-         TeSwNHNYf4XNLhLfKAQAkaJlf9TDXEhby3ZZgPt/lptNmx9EBEMDq7yyHJxkcr4hDh9U
-         5prG3A5U9b9xRxzIugPUYdCf4wNrUycxIdQOtdXlocx1Win7j6MtxcV4HWqxYJKvrvIB
-         q3LMC6Hsh7/liz3SVrDk5W/PrLv/+1E+WDolguG7l9wCbOukXFNR+SlvmLod8NsZ6xR4
-         O/eg==
+        d=gmail.com; s=20221208; t=1685756838; x=1688348838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9UpQJyb/2RLmBY5YUk2cWmttpp9dvPsfuflvX+M7mD4=;
+        b=QZLh+RRW9nMmZE5jwubl92h8j00ZswzuExszXyms+foMsb/zynZbAyZiilpJbXt9gB
+         F4siL6OU/+hl8cFYXYCPiSZavufQ/C4wnb6uuEUEbkMaLjhfBuicO7BxjGAjRO8TW8Cd
+         wuwDFh/fZWcMOW4XP1Z8oY7u/PGG7JDR04vhIQvjvISJWLDarOAPc3NpwlxHkq2ku665
+         cvxgcZFktsg/KjgbL6J1ZswIeS/UlocgKXiWIygHQXwNqDBDLBPLmwYgA/c83vVg4cW6
+         Q/Uby9hS1r4BpeKIZCFGq3phxpTFT1V0e3JhngCUDr/2mZsPkrxZimlfms5M1J57Ykms
+         hSbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685756699; x=1688348699;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qdXN/YI+pcW4bgWkG/vz/eY1UBYF2mpyPu8wc/D3Lsg=;
-        b=HdWaq+owE6yCsLUNDwBPhg8E+mPdIUKcyaLhjBjpDWDGMxMdkz+ikL56J5X+ouh0Nr
-         gGmhU649ahbR12QyYFVCfC/Yap7ANJvhmm0c5XX49odhk8tWnJdBsso3eQDvCjkAyVxt
-         ZkjEt2eQDNb8o4fPxgX9fUBRYVXGspjNrI+dY9fHaMgABFAZyDOhFF6VYlnktSlvslKx
-         gOoYeUmN0Mb1Rl6giOpvVmzdpdYYZQZRRS7trVtWXHr/kqrz4KnF004DDPI2MTHbbdHY
-         xjZuxwEjjYJfuIIw3Q/Usgu0tvntZD7zS1EVcaSDxOwBf+PPY4NPRC1V7s76bG3w0Ee5
-         kNpw==
-X-Gm-Message-State: AC+VfDxkBUYIHdSWR4peb7ky09VGqHZ9SVLtAkshJDYoFwfEhgWYjtM9
-        bSmS0FFKGt4sakSmloXQIlA=
-X-Google-Smtp-Source: ACHHUZ6O7tBx9dH4t0DawD4EICdssqC6MlGsdPbbArlWvBZjEEli5BJ0L2rWV3M6c9kS7kGPv7QHBA==
-X-Received: by 2002:a05:6808:428b:b0:398:6d:4900 with SMTP id dq11-20020a056808428b00b00398006d4900mr1685113oib.24.1685756699440;
-        Fri, 02 Jun 2023 18:44:59 -0700 (PDT)
-Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id 21-20020a170902c11500b001ac94b33ab1sm1944809pli.304.2023.06.02.18.44.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 18:44:59 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Toon Claes <toon@iotcl.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 0/5] cat-file: introduce NUL-terminated output format
-References: <cover.1685710884.git.ps@pks.im>
-Date:   Sat, 03 Jun 2023 10:44:58 +0900
-In-Reply-To: <cover.1685710884.git.ps@pks.im> (Patrick Steinhardt's message of
-        "Fri, 2 Jun 2023 15:02:26 +0200")
-Message-ID: <xmqqmt1h7205.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20221208; t=1685756838; x=1688348838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9UpQJyb/2RLmBY5YUk2cWmttpp9dvPsfuflvX+M7mD4=;
+        b=Zucd84WSI1TEHKZEVTFP9WgwARkbbqyQmlwCH1G8dOHF9jAT2tr9tGx34pCBt8cBKG
+         73Xc2kbGnBgg7ySiixjEy7rEvLXs5RzXT1zKGGnD3JzQR768xDk4v7Gsrn4YwA5BnjQ4
+         QmXu82qR6E41KFANGMPI/ZD8K+QAwekHBZbtYWygJgycLsMXJfYGe9fFUvO9oyApHfWL
+         hwfGYZ+mj70pIQFu0tThKVWTSM0AGoMjWU6+hoaB5IDSLC+1V3M7PLhyv4MfT1PzZHyq
+         6go8XBuxBzB1P07niUHbZOAOlR3/Ko1u42n4bSwhHfqyZJWGa+CdCGQm0OpS3TFZ5o5K
+         l2qw==
+X-Gm-Message-State: AC+VfDwnixjDX6tcAsk8K2TUB0V8TKP52obXCpSSYL8tSTMRccJDxpmm
+        l31uVdun++4q0cvC4CVdFFaaTtDwl0835wJ4RkE=
+X-Google-Smtp-Source: ACHHUZ6Ry2q5+65frsgmJaUuFSFIV17vDe6DwS8VbVCGs0vuEh+K1SHtiWY1KJK6kiIPwU+/NA/S1NnErZasTk7eOAk=
+X-Received: by 2002:ac2:5dd5:0:b0:4f4:d83e:4134 with SMTP id
+ x21-20020ac25dd5000000b004f4d83e4134mr2894921lfq.57.1685756837890; Fri, 02
+ Jun 2023 18:47:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CALVMLfLw4P=VnBOYA-WbHRNPZiAiO05h4k+cSvPJuaqkjgp5ew@mail.gmail.com>
+ <20230602192700.1548636-1-asedeno@google.com>
+In-Reply-To: <20230602192700.1548636-1-asedeno@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 2 Jun 2023 18:47:05 -0700
+Message-ID: <CABPp-BEH46_daydTZpt0YLXLDYEOOeBobuht3hUgJvucSyUKMA@mail.gmail.com>
+Subject: Re: [PATCH] statinfo.h: move DTYPE defines from dir.h
+To:     =?UTF-8?Q?Alejandro_R_Sede=C3=B1o?= <asedeno@google.com>
+Cc:     asedeno@mit.edu, git@vger.kernel.org, gitster@pobox.com,
+        sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Jun 2, 2023 at 12:27=E2=80=AFPM Alejandro R Sede=C3=B1o <asedeno@go=
+ogle.com> wrote:
+>
+> From: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+>
+> These definitions are used in cache.h, which can't include dir.h
+> without causing name-hash.c to have two definitions of
+> `struct dir_entry`.
 
-> Note that Toon has sent a patch series for this issue to address the
-> same issue, see the thread starting at [1]. I've collaborated with him
-> internally at GitLab to arrive at this new patch series which thus
-> effectively supersedes the patches he has sent. The approach is also
-> different: while his patches start quoting the output, the approach
-> chosen by my series only changes the lines to be NUL terminated. This
-> should make it easier to use for scripted purposes compared to having to
-> de-quote the input.
+...are _currently_ used in cache.h (your commit message is fine, just
+pointing it out for below...)
 
-OK.  Will try to drop the other topic and queue this one instead.
+> Both dir.h and cache.h include statinfo.h, and this seems a reasonable
+> place for these definitions.
+>
+> This change fixes a broken build issue on old SunOS.
 
-Thanks.
+Maintainer note for Junio: en/header-split-cache-h-part-3 moves the
+inline functions in cache.h that use the DT_* defines, but that series
+should both textually and semantically merge cleanly with this change.
+(Just noting this for your peace of mind.)
+
+After en/header-split-cache-h-part-3 merges down, I might opt for a
+different fix (I'm still mulling it over), but that other fix isn't
+possible until cache.h is split up more.  Alejandro's fix is the
+cleanest interim solution I can think of.
+
+
+Reviewed-by: Elijah Newren <newren@gmail.com>
