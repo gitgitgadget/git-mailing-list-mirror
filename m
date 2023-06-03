@@ -2,92 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB37C7EE2C
-	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2CA7C7EE2C
+	for <git@archiver.kernel.org>; Sat,  3 Jun 2023 01:42:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237121AbjFCBiQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jun 2023 21:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53124 "EHLO
+        id S236923AbjFCBmb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jun 2023 21:42:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237044AbjFCBiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2023 21:38:13 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72961B6
-        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:38:12 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1b0424c5137so24437775ad.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:38:12 -0700 (PDT)
+        with ESMTP id S235954AbjFCBm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2023 21:42:29 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8574E42
+        for <git@vger.kernel.org>; Fri,  2 Jun 2023 18:42:28 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-654f8b56807so48571b3a.1
+        for <git@vger.kernel.org>; Fri, 02 Jun 2023 18:42:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685756292; x=1688348292;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8Ihz/rDOg0fJ6WUpoI5WrknwJIw9C5udCnZ3ifBB98g=;
-        b=pAdRtG1bsRUn8/cFBnmTOlgIaBpLT41KK0h2G0FViquaWVnI9xgd0Yg2b8GqPozjBK
-         E4wdSR4uEvfOAPef2wuq0cYLN7YL2eXpLg33YjZUKvBgwUToFrgUN+wPd/Gw2ULjH2LM
-         8hiMENdzcWK1Gz8d6TYfqcXqZ97OgDZsmdUof0IwoL9dc/2SeFII5GmDRhAzjXmUNC26
-         nnk9mrd5LXhRAypNQMfUs/f2eP/7XQvfir0M4B4LUfEazbOiAua+1JojWE3Tc8d+jCLE
-         aoBuzijma4NveGpjCmDowOfvUS8mq9wSZAZX1JwesMJG1w4X4gf1/2So9dRJdnZZcHSp
-         yPKw==
+        d=gmail.com; s=20221208; t=1685756548; x=1688348548;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4tYXyKpp5T10tflgsMVzX6MrIuAfwRkX9DraaQVMk5c=;
+        b=m9d0b9IR87y1PFWevzA10qqhhJMGELbH6kWaShhDM1SqOwvaUiuP97JxVCCt60AgRz
+         jFXApDg0vQBDfPh3Xw+EhYxQuLRKssclcd0uScycieWYGm03GXZuOmgfHtk9EQ7jRYYi
+         4DMCVNCDhqrwdypKNTKR9m9Wdsr+Vc03uznUY/HbjMhlgxHuKCqEwu20MkuV7jo9KCiR
+         yWBoXXowrLxL/aQ9/71THJ6fLGSs4kcLaPAhLUJv2dRRbBPxlbMXUVIburXrfV0tbgy9
+         z9inhWhbDzRVT34vDzRfHMj9kL7/6QzYukxksA1O9crBAvp4LygDknJzdXqrV2otuea0
+         9eLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685756292; x=1688348292;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Ihz/rDOg0fJ6WUpoI5WrknwJIw9C5udCnZ3ifBB98g=;
-        b=U3ttBYpG+FtRfV0eC4Sw8NzSGfUEqgUXMukgx6gvWNyILL34xeRZXUluHHleFrUQIh
-         5xdD3eKgqcFLGBrApv+DBrxVWF8ZHG84jV4kw7k/wCPw4KQQfcyqALxVNE5gJRn5ZD54
-         /se/OK70f55cgYNxPjUeL38F6BfWv8eOQkl0XoBvwBVocdmQ6N7BQBrLDkewMGoocIVm
-         7rSqEAg5WFT/xcHltZvWGYMl4yYmJMHscCWWmhUnwyAgpb0tpU5UmHILBGYSyWC1+Xdr
-         L2l9lyS66JNmpwC9L/6fhQIf6/WrBTz0CAdT0e4pvsCqvY2GkOWeREGgl31gKxzd9D5F
-         jiWw==
-X-Gm-Message-State: AC+VfDwg4GCx/IFm1mXPavO6IvkAnmnuMXNx4Is8QEUTVSm/QuMsKOye
-        EGyVsRE1t5QOJex5xDymb/4UYR7i9+cIyQ==
-X-Google-Smtp-Source: ACHHUZ4+qXdyhRxFMSISZdCgTfX2/64NN70fO+6rYfsf3Zy7G3qFqmYy4rQNUzhxH7ukXi9cPpQM/g==
-X-Received: by 2002:a17:902:e543:b0:1b1:a617:7df3 with SMTP id n3-20020a170902e54300b001b1a6177df3mr1774875plf.30.1685756292064;
-        Fri, 02 Jun 2023 18:38:12 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685756548; x=1688348548;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4tYXyKpp5T10tflgsMVzX6MrIuAfwRkX9DraaQVMk5c=;
+        b=kpM2Jz2+SGkMoVbT+VhoBcpWC0ReyGKwgI0tAKfZHYgO8hS1VlN3FgZEOQsY6JVlJZ
+         cU2jWKeq3oJKL+xkQz4tVJKhBAfdapArD2WRDzWBGOR6EAzYevDpu7xtB9rw3pju/PUO
+         3wTI0ZND8LcGwjPDxMEB300ZpYIO2lLzSQFZg8JYiN3mH0I0a2Waj9iRI7dlAkFFJ+CU
+         g5hB6lKj6M8+xBGVJu/K1kW8pPP+ZuV0EsUJWwr8wKVgOgmzOUvlBX3WjwocHpgIdBql
+         JOUkEOftEuOJTKjSXA/BeoN4hATCTCkgidyMTmJDCiIfycgootxAFPju7c7cTbBsvR0I
+         kBYQ==
+X-Gm-Message-State: AC+VfDzlA/CkvPfn+/at8zr5iNBHG+JWdZiRlh9DEn792TpFmFaHWup1
+        YyU5zOgkEQIHcW+r60IJB1Oo+E1Ilx37fA==
+X-Google-Smtp-Source: ACHHUZ4O2zBIJgc/y+Ts68BwI7YcluXU6GScoRDpLkdctOr6FHofYhVn/jFKCk3HZmtavrusA0Wrpg==
+X-Received: by 2002:aa7:888e:0:b0:64d:2da5:4d2d with SMTP id z14-20020aa7888e000000b0064d2da54d2dmr17369100pfe.25.1685756548282;
+        Fri, 02 Jun 2023 18:42:28 -0700 (PDT)
 Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id e11-20020a17090301cb00b001b027221393sm1985340plh.43.2023.06.02.18.38.11
+        by smtp.gmail.com with ESMTPSA id x7-20020aa793a7000000b006475f831838sm1553436pff.30.2023.06.02.18.42.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 18:38:11 -0700 (PDT)
+        Fri, 02 Jun 2023 18:42:27 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "Priedhorsky, Reid" <reidpr@lanl.gov>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: bug? subprocesses can use wrong Git if $PATH is unset
-References: <E7D87B07-C416-4A58-8726-CCDA0907AC66@lanl.gov>
-        <ZHk5V6U9gfkuwErH@tapette.crustytoothpaste.net>
-        <412E82B5-79C0-4AAD-8219-AA7664E9EE1E@lanl.gov>
-        <ZHpO9/4RSbeTy0HJ@tapette.crustytoothpaste.net>
-Date:   Sat, 03 Jun 2023 10:38:11 +0900
-In-Reply-To: <ZHpO9/4RSbeTy0HJ@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 2 Jun 2023 20:20:07 +0000")
-Message-ID: <xmqqwn0l72bg.fsf@gitster.g>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH v3 00/15] Introduce new `git replay` command
+References: <20230509175347.1714141-1-christian.couder@gmail.com>
+        <20230602102533.876905-1-christian.couder@gmail.com>
+Date:   Sat, 03 Jun 2023 10:42:27 +0900
+In-Reply-To: <20230602102533.876905-1-christian.couder@gmail.com> (Christian
+        Couder's message of "Fri, 2 Jun 2023 12:25:18 +0200")
+Message-ID: <xmqqr0qt724c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> On 2023-06-02 at 16:14:47, Priedhorsky, Reid wrote:
->> Hello Brian,
->> 
->> I do wonder if the behavior would be worth documenting, e.g. at
->> https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables,
->> where Git’s relationship to $HOME is also documented. I would be happy
->> to submit a pull request.
+> # Changes between v2 and v3
 >
-> I don't think it's necessary, since it's expected behaviour for me, but
-> I am not the only person on this list, and perhaps others would
-> appreciate a patch.
+> Thanks to Elijah and Junio for their suggestions on the previous
+> version! The very few and minor changes compared to v2 are:
+>
+> * The patch series was rebased onto master at v2.41.0.
 
-I tend to agree that it is an expected behaviour.  In addition,
-unsetting PATH is not something people deliberately do every day
-without understanding its implications, so I would rather not see us
-add "if you do this esteric thing, this would happen" for them.
+It is good to say this than not to say it, but without "in order to
+..." it does not help very much.  I was hoping "by rebasing, we can
+avoid unnecessary conflicts with what happened in the upstream in
+the meantime, namely, modify-remove conflict of X is now gone" or
+something like that.
 
-Thanks.
