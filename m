@@ -2,66 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88195C77B73
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 04:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7382BC77B73
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 04:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbjFDEcK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 00:32:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
+        id S229970AbjFDEiI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 00:38:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjFDEcI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 00:32:08 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D471B4
-        for <git@vger.kernel.org>; Sat,  3 Jun 2023 21:32:07 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1b01d912924so34022705ad.1
-        for <git@vger.kernel.org>; Sat, 03 Jun 2023 21:32:07 -0700 (PDT)
+        with ESMTP id S229969AbjFDEiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 00:38:06 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F181ED
+        for <git@vger.kernel.org>; Sat,  3 Jun 2023 21:38:05 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6532671ccc7so2351070b3a.2
+        for <git@vger.kernel.org>; Sat, 03 Jun 2023 21:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685853126; x=1688445126;
+        d=gmail.com; s=20221208; t=1685853485; x=1688445485;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pez8WWyacFgiC2+O52WlNsuPDqapKOI1vprq6SkmlvM=;
-        b=KohPiXANN9+C6GmUYjMJZWY1QDJ+BiSB+bHcuu7MRaxMjZEsLTA8G94Nnj9qnD/N8u
-         Qnn4IiQo368dxH8gwV8dmw+Kt1ZjgXgglJNhT4Gy0EJqZkG4J2kbqoI3USb9rU9VWxJb
-         sG9L+sFfat+Ut9Bhwwqnz7cjoR+bUNPa4J8+YC2WFYhwT/DwYbzRaS1Z8NZ5WILiqWfF
-         ety3vIAX09VHCVJ9341J9Uxk1VVBgIDGDlTkeJChSPnFls3+hiip+lr8SIpQNGrKEvCz
-         Kfklaf09G+gBQUs5+8dOgXsO/6NPIKscgKz6C565avoIfna/o6V/FivypdcH9y98yrML
-         aCiA==
+        bh=VwjGEzf6yNe4U+Q+IaZz93/av3nEbq2bm1mFOAFt88E=;
+        b=NGeQb+M/WJyOgbcltEGldzM9yK6IgHVC+1o19IyHoyc5dR/UrsqG83XBORB1y1okmI
+         ArWlmAepyviTMs+8tt1kDT4EA+JtiU3wAvpGG3BKziLBI2MYzeKnMwhJxoEeHAeGUkP6
+         DAV+sXbQl7DSJXSMGG6XKvAVaGto+OoBP6AFZQ+8GyqVXioJ3lOcEjPlE058x5HAGxmc
+         wlw4yNyELAvLGmIRVfF5e1TwvAExg6V84ouXNm+zNmSz7aCwdWZFm5S1srrButnfar4d
+         3r2i3+T3HmGN9d7R5rT5rc9nB5solald/xWZhroiVO4dGRofjMZGD3oTFFoG0638LyWv
+         ZzEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685853126; x=1688445126;
+        d=1e100.net; s=20221208; t=1685853485; x=1688445485;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=pez8WWyacFgiC2+O52WlNsuPDqapKOI1vprq6SkmlvM=;
-        b=OUZY7jSChfCrZQ6DPCUzr7whyaS04b7xL8smkJOTMTAWAQpYPOUjyoOgDL1Z8bXV1p
-         5C6H6bgszfm11nfBeVhlGJF7R5TRS9AwSFsblmo3AXfz8NBn5qP6JAtVJQx5wfo43ydg
-         aY4POZGcdGUUgmenldCEHPt3E48R5vL/ljehJVJVWb9nUF20Ha+z785IlxUi5874GEAZ
-         7tzoYaqkgaYjfo02kNseFL216vmvqb0Q9++KKaDZvnNpuuoLzDwzYBM5QOqKbzbxGgvp
-         g52Q1fmQGHi5bywzrkUMElYF7vbS1GiEXkVd2wv6gvZU1M3jGhZ+nGZ+JomsBgroBO67
-         umKg==
-X-Gm-Message-State: AC+VfDymMTztLOYtqtRAp0k0fejq6j4f5fV6G8phpbO/wUDJ26JL7LE6
-        RAsZQCep2jZUMW3iPEJSCwjQQfBigY4Ofg==
-X-Google-Smtp-Source: ACHHUZ4HkfKov6RXUenOJ5bdVrDg2XjQevSF9wCjPs3fivY0+9v6VsJvnZ4HUgl3nXnmiV49hFUvkQ==
-X-Received: by 2002:a17:902:ce90:b0:1b1:a829:e2b5 with SMTP id f16-20020a170902ce9000b001b1a829e2b5mr4894408plg.52.1685853126371;
-        Sat, 03 Jun 2023 21:32:06 -0700 (PDT)
+        bh=VwjGEzf6yNe4U+Q+IaZz93/av3nEbq2bm1mFOAFt88E=;
+        b=gmdvULFrgI+iUweI7S8iSFprfCgQ+Z9cqyEi0FEKjcz3OVd23RFmGXpww4eqsH0z/m
+         Rf5lfqTUqnvgfrCIA7VwwwnXN/Dj8Tzld3zn/Dh/5WhsMpB3DH8g0DQPs1p1Jm3w86jh
+         D9ffcdEsVNMVxEYOzgtW+nvrBz9WYGnWA/IipVZ3EV126+Y5gUOS/5tX3f95m3xVa5qP
+         57KjbzVORzwHMVp/QO+TVldYGC67r8gLLj+Z1EAdaF9rK65cfuVDDymBdgXLZL19q7Zg
+         c/qo/LHqdEzwv/Geg5SWap1KT+dAT4ELw/47uW18fjyoDIS+g7XUEnALpR2sFFymzDlJ
+         13+w==
+X-Gm-Message-State: AC+VfDw9gvN3Pms5RBEG26cy4ZANin1kxqI3ZwiDLEZhMKKWrPmmcT2Q
+        3/S89XNo5iAo6y0aI3r5gsI=
+X-Google-Smtp-Source: ACHHUZ7nTd0OgtrEIWALag87CMcb6xDKQ4CQMEC5bkKt2jO+H2nX4RVUwfQGvyaPcfTcEsxLQCWXPw==
+X-Received: by 2002:a05:6a20:3d95:b0:115:83f:fce1 with SMTP id s21-20020a056a203d9500b00115083ffce1mr801500pzi.5.1685853484862;
+        Sat, 03 Jun 2023 21:38:04 -0700 (PDT)
 Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id l18-20020a170902d35200b001a060007fcbsm3966247plk.213.2023.06.03.21.32.05
+        by smtp.gmail.com with ESMTPSA id y2-20020a62b502000000b0064c98c87384sm3079829pfe.44.2023.06.03.21.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jun 2023 21:32:05 -0700 (PDT)
+        Sat, 03 Jun 2023 21:38:04 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sean Allred <code@seanallred.com>,
-        Sean Allred <allred.sean@gmail.com>
-Subject: Re: [PATCH v2] cherry-pick: use trailer instead of free-text for `-x`
-References: <pull.1519.git.git.1685815011553.gitgitgadget@gmail.com>
-        <pull.1519.v2.git.git.1685816463240.gitgitgadget@gmail.com>
-Date:   Sun, 04 Jun 2023 13:32:05 +0900
-In-Reply-To: <pull.1519.v2.git.git.1685816463240.gitgitgadget@gmail.com> (Sean
-        Allred via GitGitGadget's message of "Sat, 03 Jun 2023 18:21:03
-        +0000")
-Message-ID: <xmqqfs776e62.fsf@gitster.g>
+To:     Fedor Bocharov <fedor.bocharov@jetbrains.com>
+Cc:     git@vger.kernel.org
+Subject: Re: BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the
+ index
+References: <2B864C9E-9693-49F2-AE50-CB56DE872AB9@jetbrains.com>
+Date:   Sun, 04 Jun 2023 13:38:04 +0900
+In-Reply-To: <2B864C9E-9693-49F2-AE50-CB56DE872AB9@jetbrains.com> (Fedor
+        Bocharov's message of "Sat, 3 Jun 2023 20:18:23 +0200")
+Message-ID: <xmqqbkhv6dw3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,40 +67,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Sean Allred via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Fedor Bocharov <fedor.bocharov@jetbrains.com> writes:
 
-> From: Sean Allred <allred.sean@gmail.com>
->
-> When recording the origin commit during a cherry-pick, the current label
-> used is not understood by git-interpret-trailers. Standardize onto the
-> 'normal' trailer format that can be reasonably/reliably parsed and used
-> by external tooling leveraging git-interpret-trailers.
+> Anything else you want to add:
+> I have this options set in the config:
+> core.fsmonitor=true
+> core.splitindex=true
+> ...
+> feature: fsmonitor--daemon
+> uname: Darwin 22.5.0 Darwin Kernel Version 22.5.0: Mon Apr 24 20:52:24 PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T6000 arm64
 
-I am somewhat negative on going in this direction, as we originally
-added these "cherry-picked-from" by default, but stopped doing so
-for a reason [*1*].  I'd be hesitant to see us spend any engineering
-resources on a feature we discourage (not even to deprecate and to
-remove).  It is a different story if we change the previous stance
-on the "cherry-picked-from" information, though.
+I wonder if this is similar to what the topic that includes 3704fed5
+(split-index & fsmonitor: demonstrate a bug, 2023-03-26) [*] addressed.
 
-I admit I've suggested "Cherry-picked-from:" long time ago [*2*], as
-an aside in a discussion, but the discussion was more about treating
-the line as a very distinct thing that is different from any other
-"trailer" lines.  The last time this was brought up, I thought that
-it was deemed unnecessary because interpret-trailer code already
-understood by the trailer code [*3*], and we _could_ teach the
-interpret-trailer code to rewrite it to "Cherry-picked-from:".  Any
-renewed efforts should build on the discussion there, addressing
-points raised during the discussion, I think.
+The fix appeared in Git 2.41-rc0 and above.
 
-Thanks.
 
-[Footnotes and references]
+[References]
 
-*1* Unlike "revert", "cherry-pick" is done from an unrelated and
-    often not even published history, and referring to such a commit
-    that the end-user cannot do "git show" does not add much value
-    to the history.
-
-*2* https://lore.kernel.org/git/xmqqtwcycqul.fsf@gitster.mtv.corp.google.com/
-*3* https://lore.kernel.org/git/20181106221118.GA9975@sigill.intra.peff.net/
+* https://lore.kernel.org/git/pull.1497.v2.git.1679870743.gitgitgadget@gmail.com/
