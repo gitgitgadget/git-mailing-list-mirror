@@ -2,109 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AF5CC77B73
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 12:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E825C77B73
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 18:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbjFDMnu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 08:43:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
+        id S232269AbjFDSyg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 14:54:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbjFDMnt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 08:43:49 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49410B8
-        for <git@vger.kernel.org>; Sun,  4 Jun 2023 05:43:48 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51458e3af68so5635823a12.2
-        for <git@vger.kernel.org>; Sun, 04 Jun 2023 05:43:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685882627; x=1688474627;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gWJEep1btwdv4enfGifOaZD5c5chuuApgiKIcguGkq8=;
-        b=TyowkmmArdByZ9o5JVEOzBG3feo0Sn49bGir7nVQ3gjmNQxsjqAdomtG5jZcEpPkCn
-         IZB0b4mnM3sN/YlHd30xAPY0HX3WNKIwm5C5TQ+KsOR0Bq9BSC9QgPkquoy8Oe/OeGWy
-         6Nr2CuVuYSPJcS41n1Bu2FnM/hfYpNkQk5+yWWixusSt4CoaCNdUiNVywdrO0cpYhOMI
-         DIl9qD13WArVsMBZK/nbgKrKEfdQzgNVNg3zUAYI6rrgG/wYzxwNAN5LIH/ayB8f9bTN
-         lmw14n2+tOW7eO3lFB4J0XoosFp0E+ilouVaMI5TT0zBxaWwPJRGCWDthfjAYimWltPg
-         0+kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685882627; x=1688474627;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gWJEep1btwdv4enfGifOaZD5c5chuuApgiKIcguGkq8=;
-        b=Qwn5ImSPXIfofm3LvuVeoPrV69bj+jfHDGNOakmZTOvmgh30yNy/3FEUowxP1u8R17
-         KZZCoizM84U1eM9pNDiNpXpuroh+oXgLrEcj4gyuWva/IgGMGK0W3o7zT6B/fVtpyvfS
-         lH8eIwEtFNEVf/SdAdzLJDB7cSHsJ9aUQs/usURw68FuF73exqMZm3nqTn4Lk6AyeSSt
-         lE42Mw9cGuIspTb+EYhrJ5+uiu+laByKuyobuI/ixBdx7JBF4Ga/dupw7FNLVvJY726n
-         hiDh50i/w/jGU7tshcG25Nz5WZjhWiyPlhrv3CNCjdLg5JWqYY0vOkL36YKy1W3V195k
-         GEkQ==
-X-Gm-Message-State: AC+VfDzQkbZMyy47TZaTZZ7X3DHvuZm+WKttjX09WoTKCaSiHvJPKyuE
-        Cf1kgaVBO9qHs2UK89DUugw3wXkbA4tWb2mcBkWumLWe
-X-Google-Smtp-Source: ACHHUZ4Af5RsqZYyDBPW7Fu1BBzvqOXUMUMGEJEmDkGbG+VD8uwLaeHWby5aUdm1X5ZEyVQlnl4O5kieqOBs73BOyNM=
-X-Received: by 2002:aa7:c718:0:b0:514:3e1:239c with SMTP id
- i24-20020aa7c718000000b0051403e1239cmr5148994edq.42.1685882626375; Sun, 04
- Jun 2023 05:43:46 -0700 (PDT)
+        with ESMTP id S229879AbjFDSyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 14:54:35 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29CBDDB
+        for <git@vger.kernel.org>; Sun,  4 Jun 2023 11:54:33 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id BC8E2320090A;
+        Sun,  4 Jun 2023 14:54:30 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Sun, 04 Jun 2023 14:54:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1685904870; x=1685991270; bh=3XQuOaDd2byUbv7qYtSXae94U
+        kFDQOyWI5MlvPCgRVU=; b=IZkunValRLxFhzKZwf0nBIM9LKAVrIKLT8NnsnxDw
+        DlJQQ4NusTiuOYlV2tzPIJvdKzz63DzdBBnzAPVL3xe3CRVt/jzL99/KqdJoc6bc
+        DdJBv0RgrCRdvcK3erOR7P9E/JGdmEzEFcE3yYfSUXtyE2IwnleCP6vvdAX5cTp1
+        taG35DHqEeqejENcAboQTdmL536TLZp1heEvoAcY07MxBqMReuZcH0/pYVIUhvTD
+        TUe2tZBQmlb6JVAUo/hEynqJx2/LXy56OkB4N7b7l6JDcZiQvAG49p/8B6UuNFhx
+        akVKcW4jEl+EdVjg751K/Yw2gLVkG9S+cgtzhTuabxw7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1685904870; x=1685991270; bh=3XQuOaDd2byUbv7qYtSXae94UkFDQOyWI5M
+        lvPCgRVU=; b=lL5uGgPQskBgUkbV8RvhQENVNdka33E8w58Bcz/esypIH4BZSg6
+        T26dxTasYrdFoxLyd5AvVp2Brs54JflH1AgDrUarXVIZ9+0ilnTenafzKXlEqQDt
+        Xg7dVP8btL8oQWfK0uD9qpsz8xh+PHl39ZOf6q1SlspPR2Kdy9x1jyM3uTn0oiTw
+        ELu01cA2Rs8JcOmvFr25NrXoyxHljLy+nYS3KLMLUyh50BQEV79eVLJ9OFX1NVLu
+        F8VgVtZU1c9dMg7yn/DHuKMmYQPynV1LbeMvNZRDtw4oXvjftghhHElYgoPoLWUC
+        iIaRfqmtLTNLtIPPpZUDXuHsOudra0bl+8A==
+X-ME-Sender: <xms:5t18ZPPBOV9rHFqV03gsqF9GorUtE7wE-Gdn4nPyWYH6O-B2P_cTr8Y>
+    <xme:5t18ZJ8C0j1JPTwx0HtNzAesP7YBqA7KHkqJ7-xwNIVTSrEORAFJQsKiwQZQBueQn
+    sYWKuxqL8yjIm0Lug>
+X-ME-Received: <xmr:5t18ZORPukTzgQolaCTHHnQXhu27pnCGmh0FUI7wm-uUf25Wx9yjNhA_5rIVN1a1WFNAL47zipcpgEuI7mdNHvfp6UhYkukdaaClGOymGiS_5jyZDD0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeljedgudefudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
+    htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
+    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepue
+    eiueffuefftefhhfefleelhfeuheettedtheevgeejteehgfevffeugffglefhnecuffho
+    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:5t18ZDtILkpmTU-j-zp_IURbI_QTpntqQxZ5uIs354j8RTIt9qz9Sw>
+    <xmx:5t18ZHeHQScgaplaIm2xVbDTVZMpACiSVRoOROxQwXv0-JMT_mD_eg>
+    <xmx:5t18ZP0zNiscFvsiBcKd2Opy1-LZZ6FM6eb9JqWSxmrSYoZErFUC4w>
+    <xmx:5t18ZIpsk_z_ncKSCt0Q-RCfS1r82RnMsZuzRivkXlqjRrpuHwQcOQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 4 Jun 2023 14:54:29 -0400 (EDT)
+From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: [PATCH v3 0/2] notes: update documentation for `use_default_notes`
+Date:   Sun,  4 Jun 2023 20:53:58 +0200
+Message-ID: <cover.1685904424.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <b3829cb0d1e36a5ebb44a315fe32037f2a3f6c7a.1685526558.git.code@khaugsbakk.name>
+References: <b3829cb0d1e36a5ebb44a315fe32037f2a3f6c7a.1685526558.git.code@khaugsbakk.name>
 MIME-Version: 1.0
-References: <CAHsf_F2CgyTWr82htsyg8aiA-WhrKa4zJQUc_wJwF0pfRYR7yQ@mail.gmail.com>
- <ZHo+742ova7QTAe1@tapette.crustytoothpaste.net>
-In-Reply-To: <ZHo+742ova7QTAe1@tapette.crustytoothpaste.net>
-From:   Shahin Dohan <shahin.dohan@gmail.com>
-Date:   Sun, 4 Jun 2023 15:43:36 +0300
-Message-ID: <CAHsf_F3m8U+gPSVk8wMmF6ozEW0YgMUQ9qbYBAE+J_FmeAge0Q@mail.gmail.com>
-Subject: Re: Bug: Git bash slow after update
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Shahin Dohan <shahin.dohan@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian & Bagas,
+While I was working on [1] I found that the doc for the struct
+`display_notes_opt` hadn’t been updated when one of the members were
+renamed. I chose to post a separate patch/series.
 
-Thanks for your replies, no other processes affect performance and yes
-the issue seems to be in Git Bash for Windows rather than Git itself,
-I thought it came from you guys as well :)
+[1] https://lore.kernel.org/git/cover.1685441207.git.code@khaugsbakk.name
 
-Apologies for the late response, could not send plain text emails from mobi=
-le.
+§ Changes in v3 by patch
 
-I'll report this to Git for Windows project!
+• 1: change initial “else” to “otherwise”
+• 1. tweak commit message
+• 2: New: move documentation to struct definition
 
-Thanks,
-Shahin
+Kristoffer Haugsbakk (2):
+  notes: update documentation for `use_default_notes`
+  notes: move the documentation to the struct
 
-On Fri, Jun 2, 2023 at 10:11=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2023-06-02 at 06:42:01, Shahin Dohan wrote:
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> > Updated Git to 2.41.0
-> >
-> > What did you expect to happen? (Expected behavior)
-> > Same performance in Git bash as before
-> >
-> > What happened instead? (Actual behavior)
-> > Every operation is significantly slower. CD is slower, git pull is a
-> > lot slower, etc...
-> >
-> > What's different between what you expected and what actually happened?
-> > Git bash performance is significantly worse
->
-> The Git project doesn't distribute any binaries at all.  If you're using
-> Git for Windows and seeing problems that are in Git Bash and don't
-> involve Git (e.g., slowness in the shell with cd), then you'll probably
-> want to report it to https://github.com/git-for-windows/git/issues/
-> after searching for any existing issues.
->
-> I will also mention that you'll also want to indicate in your report to
-> the Git for Windows project if downgrading again solves the problem
-> (which you should try) and if you have any sort of non-default
-> antivirus, firewall, or monitoring software, since those can affect the
-> performance of programs on Windows.
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+ notes.h | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+Range-diff against v2:
+1:  3c757bcb3d ! 1:  3eaa725d3a notes: update documentation for `use_default_notes`
+    @@ Commit message
+         2011-03-29).
+
+         The commit message says that “values less than one [indicates] “not
+    -    set” ”, but I think what was meant was “less than zero”.
+    +    set” ”, but what was meant was probably “less than zero” (the author of
+    +    3a03cf6b1d agrees on this point).
+
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+
+    -
+    - ## Notes (series) ##
+    -    § v2
+    -
+    -    • Fix sloppy typos (sorry about that)
+    -    • “default notes” instead of “default refs”
+    -    • Don’t drop “it” (“treat it like”)
+    -
+      ## notes.h ##
+     @@ notes.h: void disable_display_notes(struct display_notes_opt *opt, int *show_notes);
+       * If 'opt' is not NULL, then it specifies additional settings for the
+    @@ notes.h: void disable_display_notes(struct display_notes_opt *opt, int *show_not
+     - * - suppress_default_notes indicates that the notes from
+     - *   core.notesRef and notes.displayRef should not be loaded.
+     + * - use_default_notes: less than `0` is "unset", which means that the
+    -+ *   default notes are shown iff no other notes are given. Else treat it
+    -+ *   like a boolean.
+    ++ *   default notes are shown iff no other notes are given. Otherwise,
+    ++ *   treat it like a boolean.
+       *
+       * - extra_notes_refs may contain a list of globs (in the same style
+       *   as notes.displayRef) where notes should be loaded from.
+-:  ---------- > 2:  99c88c74ce notes: move the documentation to the struct
+--
+2.41.0
