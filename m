@@ -2,78 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC60C7EE2A
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 04:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67D86C77B73
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 06:04:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230027AbjFDEml (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 00:42:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54818 "EHLO
+        id S230134AbjFDGAy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 02:00:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbjFDEmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 00:42:39 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 477BFCF
-        for <git@vger.kernel.org>; Sat,  3 Jun 2023 21:42:37 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b025d26f4fso31483565ad.1
-        for <git@vger.kernel.org>; Sat, 03 Jun 2023 21:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685853757; x=1688445757;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SwCnFVw6pvsD7qgy9NCQhlO7xnK9EeYr6iH2k/0ntE8=;
-        b=sdTJFOSLindyRObw9yJ8xK4d88iGIqNbcJR2pSyOWCA5SzipuSi/ly/SQnMo+N/c/e
-         gDVtZGOpiRzIW9M8hcGRlRwOQcaIOPbh9Oa7RiVtpGhrKbmLkm+4Puvgc2VYykXNRELQ
-         ld6yCvSFkFmVGjRvv369jXtQvuw/HvtQDl5qMjOA6bjkayMhx4STUlxCWG4ED6GatijG
-         dAYcTKWzkpz1PtOoLoe6ifPTS6vBaQAbeBADTI53X6SZqvwX5N1f9LBeKTaNmEAuh5ny
-         +8itKOFtEdfpCK/k3f6UMtd6Esqsnnb+AW3RHkciPDhdQpeaTqjGhcrGOxvKFP+fZmXM
-         7WrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685853757; x=1688445757;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SwCnFVw6pvsD7qgy9NCQhlO7xnK9EeYr6iH2k/0ntE8=;
-        b=cqZ8HnygEQ2sWg7M0NvHVHP0k6Kn0gLNU2bLVawGyyWCXWyvaboj9mGHpb27J0k5pa
-         ghQsWu+yJUHBw7rB9TRagW80m41XYjYQuEKwZpFGMai477FXMlKa0J1oz+0bSRadhvOa
-         DHGbkLTi9irns/fID0aquRFz7SL9L7ldBEbg6NsB8AaC2OFmYg85oSekSx6mt0IVEDQI
-         +F+TAQgvtdDHb7CWsbBlhWNMzYWT06eqaOrHC3/Jo14XZJf+x8KpZPsFUQmPm/NC4pBJ
-         YNAvPMQo7XhkVkEui897oG1hI5r5gCV8HXFwIiIr/wM36aXvjxhmX0s0R2kzbioYNbmN
-         r5/Q==
-X-Gm-Message-State: AC+VfDx01wfOaO7qJ7WGtJqqnbxlvslJea7+GKNQc8XWV9xCybRLn1qJ
-        EnBaCXjKb1V8PPnts7anMD0=
-X-Google-Smtp-Source: ACHHUZ5HDdp7TsZr0tMoueZMRoTJenQbu4BGp6/MWW9ViHRMpb8ely7vLlDeLfOMj8BmWshdtpCMZw==
-X-Received: by 2002:a17:902:da8c:b0:1a1:9020:f9c7 with SMTP id j12-20020a170902da8c00b001a19020f9c7mr4880663plx.44.1685853756612;
-        Sat, 03 Jun 2023 21:42:36 -0700 (PDT)
-Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id i3-20020a170902c28300b001a245b49731sm3973651pld.128.2023.06.03.21.42.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jun 2023 21:42:36 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Fix memory leak in get_reachable_subset
-References: <20230603002819.1122129-1-mh@glandium.org>
-        <xmqqedmt7167.fsf@gitster.g>
-        <21d3f105-ed32-e397-a1fe-53344894bd44@web.de>
-Date:   Sun, 04 Jun 2023 13:42:35 +0900
-In-Reply-To: <21d3f105-ed32-e397-a1fe-53344894bd44@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 3 Jun 2023 08:02:51 +0200")
-Message-ID: <xmqq7csj6dok.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229462AbjFDGAx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 02:00:53 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 809F7CF
+        for <git@vger.kernel.org>; Sat,  3 Jun 2023 23:00:51 -0700 (PDT)
+Received: (qmail 647 invoked by uid 109); 4 Jun 2023 06:00:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 04 Jun 2023 06:00:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17632 invoked by uid 111); 4 Jun 2023 06:00:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 04 Jun 2023 02:00:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 4 Jun 2023 02:00:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     paul@mad-scientist.net, git@vger.kernel.org
+Subject: Re: Anyone know why git ls-remote output might be corrupted?
+Message-ID: <20230604060048.GA38176@coredump.intra.peff.net>
+References: <b6f210da2c3cc7746b984b797ad89687cba2d1f8.camel@mad-scientist.net>
+ <CABPp-BF9Xjww=BBkL4qQcENo-UCHd8eEj334ho1iO1EMbGxhZw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CABPp-BF9Xjww=BBkL4qQcENo-UCHd8eEj334ho1iO1EMbGxhZw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+On Fri, Jun 02, 2023 at 06:12:52PM -0700, Elijah Newren wrote:
 
-> Stolee reviewed it already when the patch was sent the first time, here:
-> https://lore.kernel.org/git/20230421234409.1925489-1-mh@glandium.org/T/#u
+> > Also a bunch of the heads are missing.  It's pretty clear that right in
+> > the middle of printing one of the SHAs we suddenly lost a bunch of
+> > output, and started printing stuff from later (in the last instance 66
+> > out of 131 heads were missing).  Breaking down the output above you can
+> > see:
+> >
+> >   3a2e8036a6f6605d4dd14c72bd395298bff9d80e        refs/heads/xxx2
+> >   795d2ff669041fc91341cf5bf820aibab79dc92bd741e77a7dcf71d94285a6ae494dc0        refs/heads/yyy1
+> >                                ^
+> >
+> > where the "795d2ff669041fc91341cf5bf820a" before the "i" char is a
+> > valid start of a SHA for a head (not shown), then the "i", then a fully
+> > valid SHA for heads/yyy1 which is 66 heads later.
+> 
+> Sounds kind of like
+> https://lore.kernel.org/git/6786526.72e2EbofS7@devpool47/ which also
+> triggered for some other tooling and then was reduced down to some
+> shell commands.  Unfortunately, the thread ended without a lot of
+> resolution other than "don't mix stdout and stderr" and "if we slow
+> down the network connection somehow, that'll avoid the problem".
 
-OK.  Thanks.
+Thanks for digging up that thread. I had a vague memory of this coming
+up before, but wasn't sure what to search for to find it. :)
+
+From that thread, one theory that I think remains unexplored: could
+ls-remote's stdout be opened in non-blocking mode?
+
+The output of ls-remote is written with printf(). We don't bother
+checking for errors from stdio, since typically a write error would
+result in us getting EPIPE and being killed. But if stdout were
+unexpectedly in non-blocking mode, we might get EAGAIN. I'm not sure how
+libc would handle that.
+
+Now, why the descriptor would be in non-blocking mode, I have no idea.
+But maybe something funny going on in your python script.
+
+I'd be curious if applying the patch from:
+
+  https://lore.kernel.org/git/YUTo1BTp7BXOw6K9@coredump.intra.peff.net/
+
+reports any problems. As well as whether the suggested "sleep" pipeline
+there (triggered via your script in this case) shows the problem more
+reliably.
+
+-Peff
