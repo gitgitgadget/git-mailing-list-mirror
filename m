@@ -2,87 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7382BC77B73
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 04:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC60C7EE2A
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 04:42:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229970AbjFDEiI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 00:38:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54326 "EHLO
+        id S230027AbjFDEml (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 00:42:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbjFDEiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 00:38:06 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F181ED
-        for <git@vger.kernel.org>; Sat,  3 Jun 2023 21:38:05 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6532671ccc7so2351070b3a.2
-        for <git@vger.kernel.org>; Sat, 03 Jun 2023 21:38:05 -0700 (PDT)
+        with ESMTP id S230009AbjFDEmj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 00:42:39 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 477BFCF
+        for <git@vger.kernel.org>; Sat,  3 Jun 2023 21:42:37 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b025d26f4fso31483565ad.1
+        for <git@vger.kernel.org>; Sat, 03 Jun 2023 21:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685853485; x=1688445485;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VwjGEzf6yNe4U+Q+IaZz93/av3nEbq2bm1mFOAFt88E=;
-        b=NGeQb+M/WJyOgbcltEGldzM9yK6IgHVC+1o19IyHoyc5dR/UrsqG83XBORB1y1okmI
-         ArWlmAepyviTMs+8tt1kDT4EA+JtiU3wAvpGG3BKziLBI2MYzeKnMwhJxoEeHAeGUkP6
-         DAV+sXbQl7DSJXSMGG6XKvAVaGto+OoBP6AFZQ+8GyqVXioJ3lOcEjPlE058x5HAGxmc
-         wlw4yNyELAvLGmIRVfF5e1TwvAExg6V84ouXNm+zNmSz7aCwdWZFm5S1srrButnfar4d
-         3r2i3+T3HmGN9d7R5rT5rc9nB5solald/xWZhroiVO4dGRofjMZGD3oTFFoG0638LyWv
-         ZzEw==
+        d=gmail.com; s=20221208; t=1685853757; x=1688445757;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SwCnFVw6pvsD7qgy9NCQhlO7xnK9EeYr6iH2k/0ntE8=;
+        b=sdTJFOSLindyRObw9yJ8xK4d88iGIqNbcJR2pSyOWCA5SzipuSi/ly/SQnMo+N/c/e
+         gDVtZGOpiRzIW9M8hcGRlRwOQcaIOPbh9Oa7RiVtpGhrKbmLkm+4Puvgc2VYykXNRELQ
+         ld6yCvSFkFmVGjRvv369jXtQvuw/HvtQDl5qMjOA6bjkayMhx4STUlxCWG4ED6GatijG
+         dAYcTKWzkpz1PtOoLoe6ifPTS6vBaQAbeBADTI53X6SZqvwX5N1f9LBeKTaNmEAuh5ny
+         +8itKOFtEdfpCK/k3f6UMtd6Esqsnnb+AW3RHkciPDhdQpeaTqjGhcrGOxvKFP+fZmXM
+         7WrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685853485; x=1688445485;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VwjGEzf6yNe4U+Q+IaZz93/av3nEbq2bm1mFOAFt88E=;
-        b=gmdvULFrgI+iUweI7S8iSFprfCgQ+Z9cqyEi0FEKjcz3OVd23RFmGXpww4eqsH0z/m
-         Rf5lfqTUqnvgfrCIA7VwwwnXN/Dj8Tzld3zn/Dh/5WhsMpB3DH8g0DQPs1p1Jm3w86jh
-         D9ffcdEsVNMVxEYOzgtW+nvrBz9WYGnWA/IipVZ3EV126+Y5gUOS/5tX3f95m3xVa5qP
-         57KjbzVORzwHMVp/QO+TVldYGC67r8gLLj+Z1EAdaF9rK65cfuVDDymBdgXLZL19q7Zg
-         c/qo/LHqdEzwv/Geg5SWap1KT+dAT4ELw/47uW18fjyoDIS+g7XUEnALpR2sFFymzDlJ
-         13+w==
-X-Gm-Message-State: AC+VfDw9gvN3Pms5RBEG26cy4ZANin1kxqI3ZwiDLEZhMKKWrPmmcT2Q
-        3/S89XNo5iAo6y0aI3r5gsI=
-X-Google-Smtp-Source: ACHHUZ7nTd0OgtrEIWALag87CMcb6xDKQ4CQMEC5bkKt2jO+H2nX4RVUwfQGvyaPcfTcEsxLQCWXPw==
-X-Received: by 2002:a05:6a20:3d95:b0:115:83f:fce1 with SMTP id s21-20020a056a203d9500b00115083ffce1mr801500pzi.5.1685853484862;
-        Sat, 03 Jun 2023 21:38:04 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685853757; x=1688445757;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SwCnFVw6pvsD7qgy9NCQhlO7xnK9EeYr6iH2k/0ntE8=;
+        b=cqZ8HnygEQ2sWg7M0NvHVHP0k6Kn0gLNU2bLVawGyyWCXWyvaboj9mGHpb27J0k5pa
+         ghQsWu+yJUHBw7rB9TRagW80m41XYjYQuEKwZpFGMai477FXMlKa0J1oz+0bSRadhvOa
+         DHGbkLTi9irns/fID0aquRFz7SL9L7ldBEbg6NsB8AaC2OFmYg85oSekSx6mt0IVEDQI
+         +F+TAQgvtdDHb7CWsbBlhWNMzYWT06eqaOrHC3/Jo14XZJf+x8KpZPsFUQmPm/NC4pBJ
+         YNAvPMQo7XhkVkEui897oG1hI5r5gCV8HXFwIiIr/wM36aXvjxhmX0s0R2kzbioYNbmN
+         r5/Q==
+X-Gm-Message-State: AC+VfDx01wfOaO7qJ7WGtJqqnbxlvslJea7+GKNQc8XWV9xCybRLn1qJ
+        EnBaCXjKb1V8PPnts7anMD0=
+X-Google-Smtp-Source: ACHHUZ5HDdp7TsZr0tMoueZMRoTJenQbu4BGp6/MWW9ViHRMpb8ely7vLlDeLfOMj8BmWshdtpCMZw==
+X-Received: by 2002:a17:902:da8c:b0:1a1:9020:f9c7 with SMTP id j12-20020a170902da8c00b001a19020f9c7mr4880663plx.44.1685853756612;
+        Sat, 03 Jun 2023 21:42:36 -0700 (PDT)
 Received: from localhost (217.195.118.34.bc.googleusercontent.com. [34.118.195.217])
-        by smtp.gmail.com with ESMTPSA id y2-20020a62b502000000b0064c98c87384sm3079829pfe.44.2023.06.03.21.38.04
+        by smtp.gmail.com with ESMTPSA id i3-20020a170902c28300b001a245b49731sm3973651pld.128.2023.06.03.21.42.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jun 2023 21:38:04 -0700 (PDT)
+        Sat, 03 Jun 2023 21:42:36 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Fedor Bocharov <fedor.bocharov@jetbrains.com>
-Cc:     git@vger.kernel.org
-Subject: Re: BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the
- index
-References: <2B864C9E-9693-49F2-AE50-CB56DE872AB9@jetbrains.com>
-Date:   Sun, 04 Jun 2023 13:38:04 +0900
-In-Reply-To: <2B864C9E-9693-49F2-AE50-CB56DE872AB9@jetbrains.com> (Fedor
-        Bocharov's message of "Sat, 3 Jun 2023 20:18:23 +0200")
-Message-ID: <xmqqbkhv6dw3.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Fix memory leak in get_reachable_subset
+References: <20230603002819.1122129-1-mh@glandium.org>
+        <xmqqedmt7167.fsf@gitster.g>
+        <21d3f105-ed32-e397-a1fe-53344894bd44@web.de>
+Date:   Sun, 04 Jun 2023 13:42:35 +0900
+In-Reply-To: <21d3f105-ed32-e397-a1fe-53344894bd44@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 3 Jun 2023 08:02:51 +0200")
+Message-ID: <xmqq7csj6dok.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fedor Bocharov <fedor.bocharov@jetbrains.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> Anything else you want to add:
-> I have this options set in the config:
-> core.fsmonitor=true
-> core.splitindex=true
-> ...
-> feature: fsmonitor--daemon
-> uname: Darwin 22.5.0 Darwin Kernel Version 22.5.0: Mon Apr 24 20:52:24 PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T6000 arm64
+> Stolee reviewed it already when the patch was sent the first time, here:
+> https://lore.kernel.org/git/20230421234409.1925489-1-mh@glandium.org/T/#u
 
-I wonder if this is similar to what the topic that includes 3704fed5
-(split-index & fsmonitor: demonstrate a bug, 2023-03-26) [*] addressed.
-
-The fix appeared in Git 2.41-rc0 and above.
-
-
-[References]
-
-* https://lore.kernel.org/git/pull.1497.v2.git.1679870743.gitgitgadget@gmail.com/
+OK.  Thanks.
