@@ -2,134 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BADDC7EE29
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 12:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AF5CC77B73
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 12:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231288AbjFDMNU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 08:13:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43538 "EHLO
+        id S229954AbjFDMnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 08:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbjFDMNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 08:13:19 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8344EC4
-        for <git@vger.kernel.org>; Sun,  4 Jun 2023 05:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1685880787; x=1686485587; i=l.s.r@web.de;
- bh=7QnWbqtoK4HY4qZ9dPEX27XusxCKYUaWdpkVMWnMlp4=;
- h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
- b=cDQxZHoVrDm+FOg/iI8yX2nLq0BhOu5HS0kMBJ7cdL8rFgQYnh4/Kfbpwqos40WnfAcVkeY
- MVeBuZM6kB1mkny7DpuGihHYePJga7Djg1x26n5QyIc6zzOm507ARBmMC5d/yTQgPZynX1Hrm
- xs+qUDaSpaBamEKF3E/38wbsUQB2p/VeqvT05jBCAky89QtS0OzHL7T5IJO7yVK/YsAO8WrKz
- yFJbk0ChCMAIs4J8lKa8VoaWWmlOS9WJaG82nW65rNlU6Lp5IRt5rkVzUB1RLaesmTzFdGJfZ
- F7zg/aEfvQ3oUV1aR0LVuaxX3sxuZqP89IgzKSaQpNlmB/7CDFDQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.146.76]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M5QqN-1q4x7u0mHd-001ONW; Sun, 04
- Jun 2023 14:13:07 +0200
-Message-ID: <f5519f93-bca7-ecbc-9da3-b25ce8aef618@web.de>
-Date:   Sun, 4 Jun 2023 14:13:06 +0200
+        with ESMTP id S229703AbjFDMnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 08:43:49 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49410B8
+        for <git@vger.kernel.org>; Sun,  4 Jun 2023 05:43:48 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51458e3af68so5635823a12.2
+        for <git@vger.kernel.org>; Sun, 04 Jun 2023 05:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685882627; x=1688474627;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gWJEep1btwdv4enfGifOaZD5c5chuuApgiKIcguGkq8=;
+        b=TyowkmmArdByZ9o5JVEOzBG3feo0Sn49bGir7nVQ3gjmNQxsjqAdomtG5jZcEpPkCn
+         IZB0b4mnM3sN/YlHd30xAPY0HX3WNKIwm5C5TQ+KsOR0Bq9BSC9QgPkquoy8Oe/OeGWy
+         6Nr2CuVuYSPJcS41n1Bu2FnM/hfYpNkQk5+yWWixusSt4CoaCNdUiNVywdrO0cpYhOMI
+         DIl9qD13WArVsMBZK/nbgKrKEfdQzgNVNg3zUAYI6rrgG/wYzxwNAN5LIH/ayB8f9bTN
+         lmw14n2+tOW7eO3lFB4J0XoosFp0E+ilouVaMI5TT0zBxaWwPJRGCWDthfjAYimWltPg
+         0+kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685882627; x=1688474627;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gWJEep1btwdv4enfGifOaZD5c5chuuApgiKIcguGkq8=;
+        b=Qwn5ImSPXIfofm3LvuVeoPrV69bj+jfHDGNOakmZTOvmgh30yNy/3FEUowxP1u8R17
+         KZZCoizM84U1eM9pNDiNpXpuroh+oXgLrEcj4gyuWva/IgGMGK0W3o7zT6B/fVtpyvfS
+         lH8eIwEtFNEVf/SdAdzLJDB7cSHsJ9aUQs/usURw68FuF73exqMZm3nqTn4Lk6AyeSSt
+         lE42Mw9cGuIspTb+EYhrJ5+uiu+laByKuyobuI/ixBdx7JBF4Ga/dupw7FNLVvJY726n
+         hiDh50i/w/jGU7tshcG25Nz5WZjhWiyPlhrv3CNCjdLg5JWqYY0vOkL36YKy1W3V195k
+         GEkQ==
+X-Gm-Message-State: AC+VfDzQkbZMyy47TZaTZZ7X3DHvuZm+WKttjX09WoTKCaSiHvJPKyuE
+        Cf1kgaVBO9qHs2UK89DUugw3wXkbA4tWb2mcBkWumLWe
+X-Google-Smtp-Source: ACHHUZ4Af5RsqZYyDBPW7Fu1BBzvqOXUMUMGEJEmDkGbG+VD8uwLaeHWby5aUdm1X5ZEyVQlnl4O5kieqOBs73BOyNM=
+X-Received: by 2002:aa7:c718:0:b0:514:3e1:239c with SMTP id
+ i24-20020aa7c718000000b0051403e1239cmr5148994edq.42.1685882626375; Sun, 04
+ Jun 2023 05:43:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.2
-Subject: Re: [BUG] Git 2.38.0-rc1 t1800 message text comparison
-Content-Language: en-US
-To:     rsbecker@nexbridge.com, git@vger.kernel.org
-References: <022e01d8ceb5$c2da52c0$488ef840$@nexbridge.com>
- <003501d8cf8d$21ce5ba0$656b12e0$@nexbridge.com>
- <013701d90f80$692ba9c0$3b82fd40$@nexbridge.com>
- <2e3be2e9-191d-fbfd-54c6-a3958e35637c@web.de>
- <013501d98cee$e58dc980$b0a95c80$@nexbridge.com>
- <013601d98cf2$392153c0$ab63fb40$@nexbridge.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <013601d98cf2$392153c0$ab63fb40$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8
+References: <CAHsf_F2CgyTWr82htsyg8aiA-WhrKa4zJQUc_wJwF0pfRYR7yQ@mail.gmail.com>
+ <ZHo+742ova7QTAe1@tapette.crustytoothpaste.net>
+In-Reply-To: <ZHo+742ova7QTAe1@tapette.crustytoothpaste.net>
+From:   Shahin Dohan <shahin.dohan@gmail.com>
+Date:   Sun, 4 Jun 2023 15:43:36 +0300
+Message-ID: <CAHsf_F3m8U+gPSVk8wMmF6ozEW0YgMUQ9qbYBAE+J_FmeAge0Q@mail.gmail.com>
+Subject: Re: Bug: Git bash slow after update
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Shahin Dohan <shahin.dohan@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5btjVOuq+F+0qvsaaIs+8n0X6QfKJ7OQUE9EilB20i4+Cs+G/dz
- rdK8G00VFZ+YbRyuHM1sFFd4/6eslCNkUlGoK1487DkXS3zhlP5t5R+GerB3uLPscmf7Jh6
- fQqFKIQqqXqDHmg4iAfA5sPQTJSlrqyrvaY3RBtO2LBnmg1PhOET4ztNLU8el8CRGzbNpSs
- esjj552cDfIiYkq9KWEcg==
-UI-OutboundReport: notjunk:1;M01:P0:2pM49xh5YgQ=;cHWa/HaRLOT4NhOR6Fyw46t9d/9
- O2b2glA60tCdXbIyHUr3q0kMTfoHU30QA7mYvq3sY9+i2K+XADNdPF1UWxhlrY5FeOpdcXmL6
- k5uvTVYmTQ/HFVWg15v4FiG94P8UeFrdQDFNYFdPYK4RRruGSREmnpd9vjvmkkO2FLbKeeSFb
- l8j+R4yoS0eL+/lD1CmR2PqpdHykTVQeBnnuz2j3zUiGQo8b2+3JgjyhmRUPKc+8Pm9PdeXI/
- ZHmN15a5upNLBLXCMRnTgMppy9D7FFev4d+heyR05bxX29KI9cuNJIKy5nyMebrwTlR56eVEo
- zHOM3S0Q893mCXmPrmChUbdSEV352Y+vBv937f6h/YoQqn7r9oBc029en/wARHNQXV/JLh4KE
- OC0ej765hC5c7KZ1LYL+f0a2d6QyyttRTHLzG8oSViapmeTrLvIwSXXpK+KsYmBb+U16fKopn
- hnruWUkDRsKjLDB09JGZ+MBMg9BUeWohXfcdqO8dZjkC0tw3d4Vkgz+D73dQ+xCG30AzxsK9v
- Y8cQmbzDlrGsx2qYQylY5OJYOICLR0G0O4dpXfH3fBjSa+sY44kCQvc8y8DaJtWRexC+qOXZ8
- o3F/t6YIM/S08+OMvolXr7WSEgb3a2m4Q6u0bR3Vj7R4ThVKfuTbaBqN6IVubuTqjTJlbZg9Q
- 0LzNl+qRL53FHssyT2FRoCnTyTqZR2IE0wGxkYWsEcXSDMDSHQ/J1zZ57o3LlutrRyMKBKRJr
- YCl3kD7OPIZYfQL8ClkoduKazqyH8+u5kF4PYONWACas+LYN36XzDPxZKhK61mC9SSkV7Jv3i
- kfuGppxYblqHst9QcFZMh/C6rKm4LVucmQIRYoQIeJp2MFlDKYleGwt0tOsd4ZrWbqefOulZC
- OqXlg7pzyYMKctWX3Rqo/GYwEjssiGCsc8+xn/AslDCRaUWG5JwttVcMKJ/4yawH1lgQPs08H
- ytXckxlfV/KPGh82OJpmj9ZSB88=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.05.23 um 23:13 schrieb rsbecker@nexbridge.com:
-> On Monday, May 22, 2023 4:49 PM, I wrote:
->> On Monday, May 22, 2023 4:39 PM, Ren=C3=A9 Scharfe wrote:
->>> So trying to execute an executable file consisting only of the line
->>> "#!/bad/path/no/spaces" causes NonStop to report "Permission denied"?
->>> That message text belongs to error code EACCES, not to EPERM
->>> ("Operation not permitted"), right?
->>
->> That should be correct, although the OS Devs I spoke to about this said=
- "EPERM". I
->> am experimenting.
->>
->>> POSIX allows execve to return EACCES if the file to execute is not a
->>> regular file and executing that file type is not supported or if
->>> permissions are missing to one of its path components.
->>
->> Part of the OS Dev's response was that POSIX is actually ambiguous on t=
-his point.
->> Linux made the decision to use ENOENT. NonStop decided to use EPERM (al=
-though it
->> may actually be EACCESS - I will report back.
+Hi Brian & Bagas,
 
-In https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html
-I don't see how EACCES would be a valid response in this case.  And it
-makes no intuitive sense -- which permission is missing in this
-situation?
+Thanks for your replies, no other processes affect performance and yes
+the issue seems to be in Git Bash for Windows rather than Git itself,
+I thought it came from you guys as well :)
 
-That doesn't change the fact that this issue needs to be dealt with in
-Git somehow.
+Apologies for the late response, could not send plain text emails from mobi=
+le.
 
-> NonStop actually does report EACCES, not EPERM. The comment at the
-> front of run-command.c does describe the situation.
-Do you mean the one about EACCES being reported if a directory in $PATH
-is inaccessible in sane_execvp()?  That does not apply here because
-"#!/bad/path/no/spaces" specifies an absolute path, so $PATH is not
-searched.
+I'll report this to Git for Windows project!
 
-> The following is a potential fix:
+Thanks,
+Shahin
+
+On Fri, Jun 2, 2023 at 10:11=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> diff --git a/run-command.c b/run-command.c
-> index 60c9419866..b76e117d35 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -846,7 +846,7 @@ int start_command(struct child_process *cmd)
->                         execve(argv.v[0], (char *const *) argv.v,
->                                (char *const *) childenv);
+> On 2023-06-02 at 06:42:01, Shahin Dohan wrote:
+> > What did you do before the bug happened? (Steps to reproduce your issue=
+)
+> > Updated Git to 2.41.0
+> >
+> > What did you expect to happen? (Expected behavior)
+> > Same performance in Git bash as before
+> >
+> > What happened instead? (Actual behavior)
+> > Every operation is significantly slower. CD is slower, git pull is a
+> > lot slower, etc...
+> >
+> > What's different between what you expected and what actually happened?
+> > Git bash performance is significantly worse
 >
-> -               if (errno =3D=3D ENOENT) {
-> +               if (errno =3D=3D ENOENT || errno =3D=3D EACCES) {
->                         if (cmd->silent_exec_failure)
->                                 child_die(CHILD_ERR_SILENT);
->                         child_die(CHILD_ERR_ENOENT);
+> The Git project doesn't distribute any binaries at all.  If you're using
+> Git for Windows and seeing problems that are in Git Bash and don't
+> involve Git (e.g., slowness in the shell with cd), then you'll probably
+> want to report it to https://github.com/git-for-windows/git/issues/
+> after searching for any existing issues.
 >
-> This does pass and should cover all POSIX interpretations.
-
-That would misreport execution failures due to missing permissions
-(think e.g. "chmod 0 file") as "No such file or directory".  So this
-should be only done if really needed, perhaps guarded by an access(2)
-check for verifying that EACCES is bogus, and only on affected
-platforms.
-
-Ren=C3=A9
-
-
-
+> I will also mention that you'll also want to indicate in your report to
+> the Git for Windows project if downgrading again solves the problem
+> (which you should try) and if you have any sort of non-default
+> antivirus, firewall, or monitoring software, since those can affect the
+> performance of programs on Windows.
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
