@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E043C77B73
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 06:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CDC1C7EE2A
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 06:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbjFDG0A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 02:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40182 "EHLO
+        id S229891AbjFDGaN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 02:30:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjFDGZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 02:25:59 -0400
+        with ESMTP id S229462AbjFDGaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 02:30:12 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C64B9F
-        for <git@vger.kernel.org>; Sat,  3 Jun 2023 23:25:58 -0700 (PDT)
-Received: (qmail 1102 invoked by uid 109); 4 Jun 2023 06:25:58 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2656BD
+        for <git@vger.kernel.org>; Sat,  3 Jun 2023 23:30:11 -0700 (PDT)
+Received: (qmail 1223 invoked by uid 109); 4 Jun 2023 06:30:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 04 Jun 2023 06:25:58 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 04 Jun 2023 06:30:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17785 invoked by uid 111); 4 Jun 2023 06:25:56 -0000
+Received: (qmail 17817 invoked by uid 111); 4 Jun 2023 06:30:10 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 04 Jun 2023 02:25:56 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 04 Jun 2023 02:30:10 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 4 Jun 2023 02:25:56 -0400
+Date:   Sun, 4 Jun 2023 02:30:10 -0400
 From:   Jeff King <peff@peff.net>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     paul@mad-scientist.net, git@vger.kernel.org
 Subject: Re: Anyone know why git ls-remote output might be corrupted?
-Message-ID: <20230604062556.GA42964@coredump.intra.peff.net>
+Message-ID: <20230604063010.GA47137@coredump.intra.peff.net>
 References: <b6f210da2c3cc7746b984b797ad89687cba2d1f8.camel@mad-scientist.net>
  <CABPp-BF9Xjww=BBkL4qQcENo-UCHd8eEj334ho1iO1EMbGxhZw@mail.gmail.com>
  <20230604060048.GA38176@coredump.intra.peff.net>
+ <20230604062556.GA42964@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230604060048.GA38176@coredump.intra.peff.net>
+In-Reply-To: <20230604062556.GA42964@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 04, 2023 at 02:00:48AM -0400, Jeff King wrote:
+On Sun, Jun 04, 2023 at 02:25:57AM -0400, Jeff King wrote:
 
-> Now, why the descriptor would be in non-blocking mode, I have no idea.
-> But maybe something funny going on in your python script.
+> It does look like glibc's stdio will throw away buffer contents that get
+> EAGAIN. Doing:
 > 
-> I'd be curious if applying the patch from:
+>   perl -MFcntl -e '
+>     fcntl(STDOUT, F_GETFL, $flags);
+>     $flags |= O_NONBLOCK;
+>     fcntl(STDOUT, F_SETFL, $flags);
+>     exec @ARGV;
+>   ' git ls-remote . | (sleep 1; tee output) | sha256sum
 > 
->   https://lore.kernel.org/git/YUTo1BTp7BXOw6K9@coredump.intra.peff.net/
-> 
-> reports any problems. As well as whether the suggested "sleep" pipeline
-> there (triggered via your script in this case) shows the problem more
-> reliably.
+> does result in some missing writes and broken input that looks like
+> what's going on in this thread (in this case, it's writing to my
+> terminal, which isn't fast enough to keep up; but you could also pipe to
+> something like "tee output | sha256sum" to see that the output changes
+> with each run). And naturally you'll need a big enough output from
+> ls-remote to fill the pipe buffer.
 
-It does look like glibc's stdio will throw away buffer contents that get
-EAGAIN. Doing:
+Sorry for some slight confusion above. I edited my example command to
+show piping to "sha256sum", but didn't modify the paragraph below it
+(originally I was not piping anywhere, just sending to the terminal).
 
-  perl -MFcntl -e '
-    fcntl(STDOUT, F_GETFL, $flags);
-    $flags |= O_NONBLOCK;
-    fcntl(STDOUT, F_SETFL, $flags);
-    exec @ARGV;
-  ' git ls-remote . | (sleep 1; tee output) | sha256sum
+Adding the "sleep 1" means that the command will always fail (ls-remote
+easily writes all of its output and hits EAGAIN before the other side
+reads anything). But it means that the output is deterministic (the
+first PIPE_BUF bytes make it through, and nothing else does). Removing
+the sleep makes the output non-deterministic, but much more interesting
+(you get missing chunks in the interior of the output).
 
-does result in some missing writes and broken input that looks like
-what's going on in this thread (in this case, it's writing to my
-terminal, which isn't fast enough to keep up; but you could also pipe to
-something like "tee output | sha256sum" to see that the output changes
-with each run). And naturally you'll need a big enough output from
-ls-remote to fill the pipe buffer.
+So perhaps:
 
-However, Git _does_ eventually produce a non-zero exit code in this
-case, because we check ferror() after running any builtin. So it
-eventually ends with:
+  perl ... git ls-remote . | tee output | sha256sum
 
-  fatal: unknown write failure on standard output
-
-So I dunno. Maybe this is not the same thing. I do think running
-the problematic case under "strace -o foo.out" may yield more
-information.
+is the most interesting case, because you'll get one of several possible
+broken outputs, which you can identify by the changing sha256 output
+(and then see the actual breakage by peeking at the "output" file).
 
 -Peff
