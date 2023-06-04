@@ -2,112 +2,267 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DE04C77B73
-	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 18:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EDEDC7EE23
+	for <git@archiver.kernel.org>; Sun,  4 Jun 2023 18:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232347AbjFDSyr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jun 2023 14:54:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41962 "EHLO
+        id S231481AbjFDS6v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jun 2023 14:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232384AbjFDSyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2023 14:54:43 -0400
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112CCFD
-        for <git@vger.kernel.org>; Sun,  4 Jun 2023 11:54:42 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 24F893200312;
-        Sun,  4 Jun 2023 14:54:41 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Sun, 04 Jun 2023 14:54:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm3; t=1685904880; x=1685991280; bh=Vvo1TPjnwQYCV0GHxONkdkl5y
-        sAT/81X67gMojfy86w=; b=qMN1t+B1aNT4+0nOS2D2apyURyvnd7m1XgvY2qN5o
-        xeH8iGCB/GPz9D8hNR2ALcJcxQruv/xu0Y2YK7GAXyUhV8nJwCCN1lVQZ5rU+jLq
-        PGjisAcJ2SW1y7fsluxNEc9JBKqDhabSp27aw+pCLprEVIGKisFzOMo83gosa4k6
-        g8mF7ecUbNRCm8gISYESK48HUc/dg4kB3ndRkM4cgasgx4YvzDw31NMn2n4nMq9V
-        nzr8dDjmVjdDUxJ5msolZFADQNT55W/gKh63++J46GoI11m368mfkJE5Ly7AndZa
-        BhOK65GQakbhdaPE8iRTqH5JVdC2eQbzOGioMJRjwNjpg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-        1685904880; x=1685991280; bh=Vvo1TPjnwQYCV0GHxONkdkl5ysAT/81X67g
-        Mojfy86w=; b=cIcnz6CqedTZqrnHEsnDm8Zd+jQmCn0vyxIyNKt2j+JNYb+xnDl
-        aAupUyDfgnpCa3qdMmXRB+0uGGnA3PfJmo8U1sh0F/CsHCJNENiBc7QXTrr6+gDo
-        tdDnzebec3mdKSzy9J2h084BQPzqw/Z7ZKDb/x1q7C55qkq4z2inADQhWF2VZBn0
-        +LLyUYQiQrsSS/9b7qwX/1CnJoD/YmzMKIFip8Uq9JtWwxY0L9P0n+zZ9kOdmHkO
-        wkRZXzh7ZiuWtPdhgY6bs/0dWkTxkr4vPXr/tO5HMxac0TKe62vKe69es8lxuQ/u
-        iKe4bgA5IcKwhM6OlCYKJ2wyK0OXc8NITdw==
-X-ME-Sender: <xms:8N18ZHek6t2BfCNG9t4qyNt0w6_0LfyIxJNFu06YIGe2SOkSLEefh9E>
-    <xme:8N18ZNMMVWT2tC2DTk10hSTPenanx407JC3Epp-luAxzjD6c7lWULAcUyGT3jAWC_
-    88aaffoBu8n3_YNBA>
-X-ME-Received: <xmr:8N18ZAhgoOXHzZA7_-FTFMfrVOnE0fBtmRZiL6rw45f6-FjNpVDVqUSzVjod1nUtGjSy-LgtEjAPmgoofnBy8ELe5Zyve2t4I0_n3HsOdnib8xxA4Cs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeljedgudefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgse
-    htkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcu
-    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepve
-    fgleevieekgeejieekueevhfelieduvdelgeefkeejtdekvedttefgffevtedtnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhh
-    gruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:8N18ZI9_05eHUcGfAFRFhDaOIMylVaaj-tOvWNCrj1iblDE4n6sBog>
-    <xmx:8N18ZDuOv3-4gb5YxMZWWu0dlir-Ha0W_9RogGjwYOUeAG1pjM4icw>
-    <xmx:8N18ZHEto0eBug167dNANyHtIjuxsH8PXFvVOzhqZYWVVCma7oAclQ>
-    <xmx:8N18ZM4HWmGRZGNjriceQyxbcxHMfxx8krU5PNpHYRIDR9NDJUGTdA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 4 Jun 2023 14:54:39 -0400 (EDT)
-From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: [PATCH v3 1/2] notes: update documentation for `use_default_notes`
-Date:   Sun,  4 Jun 2023 20:53:59 +0200
-Message-ID: <3eaa725d3a476e3cfd7331104f35bbd322d9394f.1685904424.git.code@khaugsbakk.name>
+        with ESMTP id S230366AbjFDS6u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2023 14:58:50 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14699B3
+        for <git@vger.kernel.org>; Sun,  4 Jun 2023 11:58:49 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id 006d021491bc7-558cf19575dso190843eaf.3
+        for <git@vger.kernel.org>; Sun, 04 Jun 2023 11:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685905128; x=1688497128;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zfci1FB6QNhwA7NYZUGdUNhB732GCQ+u8ugySF9rGys=;
+        b=qjSuHro02/aEGCqa2/bd8P3pSayh5igAJ69igajyEmtwYST6JTH+ME6bMWga8WLMKE
+         0qTYvWeFBc/vgIiMIhPTc6gCTBRAS+sS2Ja3LaXG4ewnu+HdUFnwFh4uTkVRnV2OzGy5
+         2aLcOaQFkiF3bxT8R/dDj9PTpyig7KmPYGJhRtF3+6fLSdJZ87K8FZLG+d3Gfh3eXDQk
+         BxujbVlZIraJpe7QcIa+NJVr43itTlObv1EVNWfH2YpzcjlnXDn+/tIRpjGAYaSs7+W1
+         uVTfxDe8Zd32+pZ5ANmgCJc9ZxU3qeaTABiYtRc2mq2O+3KIye+FgHBmBTjCmgc5YiZB
+         xjCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685905128; x=1688497128;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zfci1FB6QNhwA7NYZUGdUNhB732GCQ+u8ugySF9rGys=;
+        b=H759O349YnZ6fDv8cG2B3zYPMDLlophhy28lL9bVBb/qMYfOM24b9eD97XvITpTBSO
+         xK6N0zxuJMjtfUs66mPuBwBCo6TCP6sMT1bjurfl08MVbankFAxXRwyqmGCwAtCEdUes
+         yw8ogBDevwUjtx7DU5M+7lnsWO1CN2c8TZRiQ63c4jHSYdT5nb9bqLqsptq3ynhdX644
+         6zOXtzynQ6z+8UvhwtZt7fS2ALxkBJ8S4hJkLEgEE7IONMmRhaA28tC82MBq0M+sqh4D
+         YDMl57O2FTh0OkZde2pe+Kz5C/iYJw2xp7srhAKTPfeSscqB3npwlTtncFwOK/Bui8pH
+         pWew==
+X-Gm-Message-State: AC+VfDzBM4e9HAtwbspnMPe+od4XWF824ltQuBRwkFHFbi9VPGRjGpg+
+        vQCKwHG2qy5a5qvGg1+LD8VJwQayu/EPiG71
+X-Google-Smtp-Source: ACHHUZ6p95chQuxJRuKkvIeUHuykgMzakQ8kEvblkgrFCqxnL+sEMBvtvpHH6rxkwQkCoL3PYqSsug==
+X-Received: by 2002:a05:6358:c1d:b0:127:96d6:be18 with SMTP id f29-20020a0563580c1d00b0012796d6be18mr23880898rwj.21.1685905127935;
+        Sun, 04 Jun 2023 11:58:47 -0700 (PDT)
+Received: from fivlite-virtual-machine.localdomain ([49.37.151.19])
+        by smtp.gmail.com with ESMTPSA id mh12-20020a17090b4acc00b00256a4657519sm4495805pjb.15.2023.06.04.11.58.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Jun 2023 11:58:47 -0700 (PDT)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+        Kousik Sanagavarapu <five231003@gmail.com>
+Subject: [PATCH v3 0/2] Add new "signature" atom 
+Date:   Sun,  4 Jun 2023 23:52:45 +0530
+Message-ID: <20230604185815.15761-1-five231003@gmail.com>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <cover.1685904424.git.code@khaugsbakk.name>
-References: <b3829cb0d1e36a5ebb44a315fe32037f2a3f6c7a.1685526558.git.code@khaugsbakk.name> <cover.1685904424.git.code@khaugsbakk.name>
+In-Reply-To: <20230602023105.17979-1-five231003@gmail.com>
+References: <20230602023105.17979-1-five231003@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`suppress_default_notes` was renamed to `use_default_notes` in
-3a03cf6b1d (notes: refactor display notes default handling,
-2011-03-29).
+Hi,
 
-The commit message says that “values less than one [indicates] “not
-set” ”, but what was meant was probably “less than zero” (the author of
-3a03cf6b1d agrees on this point).
+Thanks for the reviews.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- notes.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Changes since v2:
 
-diff --git a/notes.h b/notes.h
-index c1682c39a9..a823840e49 100644
---- a/notes.h
-+++ b/notes.h
-@@ -286,8 +286,9 @@ void disable_display_notes(struct display_notes_opt *opt, int *show_notes);
-  * If 'opt' is not NULL, then it specifies additional settings for the
-  * displaying:
-  *
-- * - suppress_default_notes indicates that the notes from
-- *   core.notesRef and notes.displayRef should not be loaded.
-+ * - use_default_notes: less than `0` is "unset", which means that the
-+ *   default notes are shown iff no other notes are given. Otherwise,
-+ *   treat it like a boolean.
-  *
-  * - extra_notes_refs may contain a list of globs (in the same style
-  *   as notes.displayRef) where notes should be loaded from.
+  PATCH 1/2 -
+    Changed "it's" to "its" in the commit message.
+
+    Changed the `case` statement in prereq GPG2 to use the glob pattern
+    instead. This has the advantage of being precise and less typo-prone.
+
+  PATCH 2/2 -
+    Changed "it's" to "its" in the commit message.
+
+    Changed the `if else` to `switch` when handling options in
+    grab_siganture(). This increases the readability of code unlike the
+    previous `if else` checking for the type of option, which also
+    didn't comply with the style.
+
+    The same kind of refactoring of can be done in other parts of
+    ref-filter as well. ZheNing Hu has done some work on it [1], but it
+    looks like they were generated by some kind of a script and there
+    are unnecessary braces around.
+
+[1]: https://lore.kernel.org/git/2321b873d0c0223e553492d80ced2a51d8ce7281.1629189701.git.gitgitgadget@gmail.com/ 
+Range-diff against v2:
+
+1:  87465ef1a8 ! 1:  a7ed6628e0 t/lib-gpg: introduce new prereq GPG2
+    @@ Commit message
+     
+         is the "First stable version of GnuPG integrating OpenPGP and
+S/MIME".
+     
+    -    Use this version or it's successors for tests that will fail
+         for
+    +    Use this version or its successors for tests that will fail for
+         versions less than v2.0.0 because of the difference in the
+output on
+         stderr between the versions (v2.* vs v0.* or v2.* vs v1.*).
+Skip if
+         the GPG version detected is less than v2.0.0.
+    @@ t/lib-gpg.sh: test_lazy_prereq GPG '
+     +  test $? != 127 || exit 1
+     +
+     +  case "$gpg_version" in
+    -+  "gpg (GnuPG) 0."* | "gpg (GnuPG) 1.*")
+    ++  "gpg (GnuPG) "[01].*)
+     +          say "This test requires a GPG version >= v2.0.0"
+     +          exit 1
+     +          ;;
+2:  690869aa47 ! 2:  b6da96dab2 ref-filter: add new "signature" atom
+    @@ Metadata
+      ## Commit message ##
+         ref-filter: add new "signature" atom
+     
+    -    Duplicate the code for outputting the signature and it's other
+    +    Duplicate the code for outputting the signature and its other
+         parameters for commits and tags in ref-filter from pretty. In
+the
+         future, this will help in getting rid of the current duplicate
+         implementations of such logic everywhere, when ref-filter can
+do
+         everything that pretty is doing.
+     
+    -    The new atom "signature" and it's friends are equivalent to the
+         existing
+    +    The new atom "signature" and its friends are equivalent to the
+existing
+         pretty formats as follows:
+     
+                 %(signature) = %GG
+    @@ Documentation/git-for-each-ref.txt: symref::
+     +  The fingerprint of the GPG signature of a commit.
+     +
+     +signature:primarykeyfingerprint::
+    -+  The Primary Key fingerprint of the GPG signature of a commit.
+    ++  The primary key fingerprint of the GPG signature of a commit.
+     +
+     +signature:trustlevel::
+    -+  The Trust level of the GPG signature of a commit. Possible
+    ++  The trust level of the GPG signature of a commit. Possible
+     +  outputs are `ultimate`, `fully`, `marginal`, `never` and
+`undefined`.
+     +
+      worktreepath::
+    @@ ref-filter.c: static struct used_atom {
+                } email_option;
+     +          struct {
+     +                  enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
+    -+                         S_FINGERPRINT, S_PRI_KEY_FP,
+S_TRUST_LEVEL} option;
+    ++                         S_FINGERPRINT, S_PRI_KEY_FP,
+S_TRUST_LEVEL } option;
+     +          } signature;
+                struct refname_atom refname;
+                char *head;
+    @@ ref-filter.c: static void grab_person(const char *who, struct
+atom_value *val, i
+     +          struct used_atom *atom = &used_atom[i];
+     +          const char *name = atom->name;
+     +          struct atom_value *v = &val[i];
+    ++          int opt;
+     +
+     +          if (!!deref != (*name == '*'))
+     +                  continue;
+     +          if (deref)
+     +                  name++;
+     +
+    -+          if (!skip_prefix(name, "signature", &name) || (*name &&
+    -+                  *name != ':'))
+    ++          if (!skip_prefix(name, "signature", &name) ||
+    ++              (*name && *name != ':'))
+     +                  continue;
+     +          if (!*name)
+     +                  name = NULL;
+     +          else
+     +                  name++;
+    -+          if (parse_signature_option(name) < 0)
+    ++
+    ++          opt = parse_signature_option(name);
+    ++          if (opt < 0)
+     +                  continue;
+     +
+     +          if (!signature_checked) {
+    @@ ref-filter.c: static void grab_person(const char *who, struct
+atom_value *val, i
+     +                  signature_checked = 1;
+     +          }
+     +
+    -+          if (atom->u.signature.option == S_BARE)
+    ++          switch (opt) {
+    ++          case S_BARE:
+     +                  v->s = xstrdup(sigc.output ? sigc.output: "");
+    -+          else if (atom->u.signature.option == S_SIGNER)
+    ++                  break;
+    ++          case S_SIGNER:
+     +                  v->s = xstrdup(sigc.signer ? sigc.signer : "");
+    -+          else if (atom->u.signature.option == S_GRADE) {
+    ++                  break;
+    ++          case S_GRADE:
+     +                  switch (sigc.result) {
+     +                  case 'G':
+     +                          switch (sigc.trust_level) {
+    @@ ref-filter.c: static void grab_person(const char *who, struct
+atom_value *val, i
+     +                  case 'Y':
+     +                  case 'R':
+     +                          v->s = xstrfmt("%c", (char)sigc.result);
+    ++                          break;
+     +                  }
+    -+          }
+    -+          else if (atom->u.signature.option == S_KEY)
+    ++                  break;
+    ++          case S_KEY:
+     +                  v->s = xstrdup(sigc.key ? sigc.key : "");
+    -+          else if (atom->u.signature.option == S_FINGERPRINT)
+    -+                  v->s = xstrdup(sigc.fingerprint ?
+sigc.fingerprint : "");
+    -+          else if (atom->u.signature.option == S_PRI_KEY_FP)
+    -+                  v->s = xstrdup(sigc.primary_key_fingerprint ?
+sigc.primary_key_fingerprint : "");
+    -+          else if (atom->u.signature.option == S_TRUST_LEVEL)
+    ++                  break;
+    ++          case S_FINGERPRINT:
+    ++                  v->s = xstrdup(sigc.fingerprint ?
+    ++                                 sigc.fingerprint : "");
+    ++                  break;
+    ++          case S_PRI_KEY_FP:
+    ++                  v->s = xstrdup(sigc.primary_key_fingerprint ?
+    ++                                 sigc.primary_key_fingerprint :
+"");
+    ++                  break;
+    ++          case S_TRUST_LEVEL:
+     +                  v->s =
+xstrdup(gpg_trust_level_to_str(sigc.trust_level));
+    ++                  break;
+    ++          }
+     +  }
+    ++
+     +  if (signature_checked)
+     +          signature_check_clear(&sigc);
+     +}
+
+Kousik Sanagavarapu (2):
+  t/lib-gpg: introduce new prereq GPG2
+  ref-filter: add new "signature" atom
+
+ Documentation/git-for-each-ref.txt |  27 ++++
+ ref-filter.c                       | 126 ++++++++++++++++++-
+ t/lib-gpg.sh                       |  21 ++++
+ t/t6300-for-each-ref.sh            | 191 +++++++++++++++++++++++++++++
+ t/t7510-signed-commit.sh           |   7 ++
+ 5 files changed, 370 insertions(+), 2 deletions(-)
+
 -- 
 2.41.0
 
