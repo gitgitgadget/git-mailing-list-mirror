@@ -2,86 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8629CC7EE24
-	for <git@archiver.kernel.org>; Mon,  5 Jun 2023 15:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 403B0C77B73
+	for <git@archiver.kernel.org>; Mon,  5 Jun 2023 16:17:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234400AbjFEPvO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jun 2023 11:51:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54252 "EHLO
+        id S231309AbjFEQRV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jun 2023 12:17:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234383AbjFEPuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2023 11:50:51 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F7E41A7
-        for <git@vger.kernel.org>; Mon,  5 Jun 2023 08:50:37 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-565eaf83853so54763017b3.3
-        for <git@vger.kernel.org>; Mon, 05 Jun 2023 08:50:37 -0700 (PDT)
+        with ESMTP id S230259AbjFEQRT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2023 12:17:19 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62A198
+        for <git@vger.kernel.org>; Mon,  5 Jun 2023 09:17:18 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-3f80cd74c63so55498021cf.3
+        for <git@vger.kernel.org>; Mon, 05 Jun 2023 09:17:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1685980237; x=1688572237;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TS61atI0XLMLxr+mbgle9dFqLF9uBTE7xVWATSTYJnY=;
-        b=UjdYkTQ0jiGu9jD3qwYsNROLkfThXczbSt1stpgq9EWZe2qIaNPPCys7BuEyi39uMS
-         slO+Zuig/44mnBv5MK+wRKe8xV4onNafnTevKhUkQiPntmWo2hZ0nhnLvdMCpEHd0DmP
-         Maz2QYIO+puiPz8vnqW3iEHe3ENkS9ve9ewwsgdHCu340J7eHPql+G3SEX7BuQV2xDgD
-         wze+dDUCWgHmKlsFe9kUZiVjH2AMI4GNFP+Ubo7mRJUOHFxI/MZS+q48bEZTqxQekcA1
-         LBorYldKqnDFg/BduXAkHk5sW+VWnQ+bVS2G/zgQMmvhy3wV0cVu4+fanTH3v6ikMfK5
-         6EQg==
+        d=gmail.com; s=20221208; t=1685981837; x=1688573837;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9HGT0VPeKF13Hwi4AYE8t6n4mAZhg7LEMKTe3KsAXA0=;
+        b=TaxdjG9XrU4LrbPTKqFG+tlo/lDiiig5s0LBrHwTfyngMQE6r0nhmRcymr7C9JEqYT
+         SZPZvadYK5bsg6zKv/t3BiPicACZeQ9zGZKVTpHvrYCzCTzrzRN+Rln+XuFrH3w5rfpF
+         TwrJvL4QzrXhyLEDc/m/Xy2xJuWWbNhRidiUvOk/c05K5VGpgI7+BU0CRSLBQ+R7y5OB
+         8zV2sPd8fsvrGqnDiZzGT/IeZ+tFZLcBrTm4ZPCfpBlWu9by5yre7J3DQvP2kABipdmw
+         lAqvM6ZHKBY0v3kJYRcRUJ0eq9fQ9fKEZs3Vic5mUYE+DAPzFLZvdTT9JpOeUNOtt8pa
+         1zpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685980237; x=1688572237;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TS61atI0XLMLxr+mbgle9dFqLF9uBTE7xVWATSTYJnY=;
-        b=Gzy8fRPRZJ21vMhkw25MHDn/qY8d9PHQDXkypBeeGoQlVX3ArBIOWd0hCkleQDvmMx
-         2m1fQ6NVY4Hf50fRLLQwtpJF3hjq37+Xk6vRJhYlwTE7teqIdltJjvYvfD6fKMURsnUR
-         luYZC7vpMFgfmq2xiXpoi+Fi8qGbx1LHVrm4XGWYQS1s/mbciqr3WSG3q9TI2TyednvW
-         Fiu4FKszHGOawqH6QZknxtpBpg/rX59aCLvP0S6mt+kOLiVxIJXNemQrOOsx7VZFYSZW
-         mpnBwpQM+Ta68UiEdFkWk5CJFsBD3fI/HGKVZ/h+psvZApzvcS1tZuGJb/QIGg/cqYv9
-         UssQ==
-X-Gm-Message-State: AC+VfDwJ+Jt2XZpf4xy0gdabz9vIuI30T9OFKGYG22rbEcBXokAvZ86n
-        rDVyDz3o1KOJqNMIP/z3FGpn
-X-Google-Smtp-Source: ACHHUZ4Xy7TGz06E6EM+Xi+Xl9n0bllVOLK5ifDiPIK7aXt9KpnvPzE2RUg9F1iv10O+qW4uyqi/cA==
-X-Received: by 2002:a81:6d89:0:b0:565:798b:949e with SMTP id i131-20020a816d89000000b00565798b949emr10441333ywc.20.1685980236784;
-        Mon, 05 Jun 2023 08:50:36 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:6cc2:3d2c:f002:d37d? ([2600:1700:e72:80a0:6cc2:3d2c:f002:d37d])
-        by smtp.gmail.com with ESMTPSA id v1-20020a0dd301000000b00559d9989490sm3437677ywd.41.2023.06.05.08.50.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 08:50:36 -0700 (PDT)
-Message-ID: <221ddd01-c058-dd87-9f3f-25146770f606@github.com>
-Date:   Mon, 5 Jun 2023 11:50:32 -0400
+        d=1e100.net; s=20221208; t=1685981837; x=1688573837;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9HGT0VPeKF13Hwi4AYE8t6n4mAZhg7LEMKTe3KsAXA0=;
+        b=Mnv0w9HKI8l3wp+sQt0TKaty0001mpQQR58OYyBJ9De80EaSp9gI7PKSo5k+lEKiaN
+         N/UXQE+kvEVU5RfW58Y+axAo/PhktnxGhCHVDUSfQb1VyRvw4OFwAIymPv7K85Ym7j9k
+         NBT0XPAObMRJBe2CoKhSRD1YqTwfShq/cOJq5Q9830Ym7fJhOqelLosQbviM+Qpm43Uf
+         QTuVQr+RPMbWPSIgEVAZGebAymEebHiu1zAn43XNr5hRadh1hLLrztAtZ1FA8b2SVmwT
+         nA2OaYRP8vznyMxHBlOMSoNaFDSNB3tI4zzRJd2af8EvJJ8WJAJ14Q0JOc5dH/uBbte+
+         fOsg==
+X-Gm-Message-State: AC+VfDzJg4TiJp2LG/zuGx/x3ebnIMTxRFtbW+A3E82J5XJxNL0r5m2a
+        udK6CNaWq3Jrexax61r6VEOTyaww+iUK2w==
+X-Google-Smtp-Source: ACHHUZ6E9cusx2uG57dW65So4ISWHPZ25jeilHWWWKvioZJHNZfvxqNN7//mw/7WavOUELKd0/Fi4g==
+X-Received: by 2002:a05:622a:387:b0:3f7:fe04:bf30 with SMTP id j7-20020a05622a038700b003f7fe04bf30mr9505656qtx.28.1685981837384;
+        Mon, 05 Jun 2023 09:17:17 -0700 (PDT)
+Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
+        by smtp.googlemail.com with ESMTPSA id p11-20020ac8740b000000b003f81ae50c90sm4832011qtq.12.2023.06.05.09.17.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jun 2023 09:17:16 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: [PATCH v1] worktree: integrate with sparse-index
+Date:   Mon,  5 Jun 2023 12:16:44 -0400
+Message-Id: <20230605161644.491424-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] Fix memory leak in get_reachable_subset
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Mike Hommey <mh@glandium.org>
-References: <20230603002819.1122129-1-mh@glandium.org>
- <xmqqedmt7167.fsf@gitster.g> <21d3f105-ed32-e397-a1fe-53344894bd44@web.de>
- <xmqq7csj6dok.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq7csj6dok.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/4/2023 12:42 AM, Junio C Hamano wrote:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Stolee reviewed it already when the patch was sent the first time, here:
->> https://lore.kernel.org/git/20230421234409.1925489-1-mh@glandium.org/T/#u
-> 
-> OK.  Thanks.
+The index is read in 'worktree.c' at two points:
 
-Thanks for finding this link. I saw this patch and immediately thought,
-"I made this mistake a _second_ time?"
+1.The 'validate_no_submodules' function, which checks if there are any
+submodules present in the worktree.
 
-The patch continues to look good to me.
+2.The 'check_clean_worktree' function, which verifies if a worktree is
+'clean', i.e., there are no untracked or modified but uncommitted files.
+This is done by running the 'git status' command, and an error message
+is thrown if the worktree is not clean. Given that 'git status' is
+already sparse-aware, the function is also sparse-aware.
 
-Thanks,
--Stolee
+Hence we can just set the requires-full-index to false for
+"git worktree".
+
+Add tests that verify that 'git worktree' behaves correctly when the
+sparse index is enabled and test to ensure the index is not expanded.
+
+The `p2000` tests demonstrate a ~20% execution time reduction for
+'git worktree' using a sparse index:
+
+(Note:the p2000 test results did't reflect the huge speedup because of
+the index reading time is minuscule comparing to the filesystem
+operations.)
+
+Test                                       before  after
+-----------------------------------------------------------------------
+2000.102: git worktree add....(full-v3)    3.15    2.82  -10.5%
+2000.103: git worktree add....(full-v4)    3.14    2.84  -9.6%
+2000.104: git worktree add....(sparse-v3)  2.59    2.14  -16.4%
+2000.105: git worktree add....(sparse-v4)  2.10    1.57  -25.2%
+
+Helped-by: Victoria Dye <vdye@github.com>
+Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+---
+ builtin/worktree.c                       |  4 ++++
+ t/perf/p2000-sparse-operations.sh        |  1 +
+ t/t1092-sparse-checkout-compatibility.sh | 23 +++++++++++++++++++++++
+ 3 files changed, 28 insertions(+)
+
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index f3180463be..db14bff1a3 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1200,5 +1200,9 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
+ 		prefix = "";
+ 
+ 	ac = parse_options(ac, av, prefix, options, git_worktree_usage, 0);
++
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	return fn(ac, av, prefix);
+ }
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 901cc493ef..1422136c73 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -131,5 +131,6 @@ test_perf_on_all git describe --dirty
+ test_perf_on_all 'echo >>new && git describe --dirty'
+ test_perf_on_all git diff-files
+ test_perf_on_all git diff-files -- $SPARSE_CONE/a
++test_perf_on_all "git worktree add ../temp && git worktree remove ../temp"
+ 
+ test_done
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index a63d0cc222..6ed691d338 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -2180,4 +2180,27 @@ test_expect_success 'sparse index is not expanded: diff-files' '
+ 	ensure_not_expanded diff-files -- "deep/*"
+ '
+ 
++test_expect_success 'worktree' '
++	init_repos &&
++
++	write_script edit-contents <<-\EOF &&
++	echo text >>"$1"
++	EOF
++
++	test_all_match git worktree add .worktrees/hotfix &&
++	test_sparse_match ls .worktrees/hotfix &&
++	test_all_match git worktree remove .worktrees/hotfix &&
++
++	test_all_match git worktree add .worktrees/hotfix &&
++	run_on_all ../edit-contents .worktrees/hotfix/deep/a &&
++	test_all_match test_must_fail git worktree remove .worktrees/hotfix
++'
++
++test_expect_success 'worktree is not expanded' '
++	init_repos &&
++
++	test_all_match git worktree add .worktrees/hotfix &&
++	ensure_not_expanded worktree remove .worktrees/hotfix
++'
++
+ test_done
+-- 
+2.39.0
+
