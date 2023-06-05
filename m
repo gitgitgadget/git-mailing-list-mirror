@@ -2,106 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F2C0C7EE23
-	for <git@archiver.kernel.org>; Mon,  5 Jun 2023 09:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19F88C7EE23
+	for <git@archiver.kernel.org>; Mon,  5 Jun 2023 10:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231287AbjFEJiu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jun 2023 05:38:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57492 "EHLO
+        id S229754AbjFEKGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jun 2023 06:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjFEJis (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2023 05:38:48 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC36FBD
-        for <git@vger.kernel.org>; Mon,  5 Jun 2023 02:38:46 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f6dfc4e01fso47043895e9.0
-        for <git@vger.kernel.org>; Mon, 05 Jun 2023 02:38:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685957925; x=1688549925;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=uyUVBnItV7lubLq1D3BaRflb2GegAJeRzV7YhTKjgQw=;
-        b=XVrzwAOFWJRuincphApeKcydYUKgOIQ9teEcw1CV4EEI1/897H6/4qnGODPWK7koZ+
-         zy3yJVU/KuMqp8ThzBe3cgIeUDc4jkxBK/WxbvfQwcVXfqNthWYuv6t59QAkw3+FRH4+
-         Gb5hSzFktpuUPhC+/KdX+WeJa/AqH1kpKNftxTSrz/08y2lZS6ShgagFLwrWyu40PPsa
-         Ze7LJO1NjO+EBBqijQan6YbUwQ8fhyNky3m+CqPivAjWQjfimlSq3UoPsEZPP919Jo0g
-         C6x+HoWD1qMn8/suf7JqyAjpNI31bp7MlceYO6n1R3kwGJIAa9DUq5VW/jc4l4xMLfhw
-         FELA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685957925; x=1688549925;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uyUVBnItV7lubLq1D3BaRflb2GegAJeRzV7YhTKjgQw=;
-        b=R9QNOBzvMHY8NczkNyyJOgy4//wSx1d/JG8FkLEykO/6VG2/3ZbLKKgJknMeAwNXFK
-         ipRUQPL9ZSTqxZGOnTQrUZxl/Xq5bQEDNqWpYo3SGJaL4HyvJSFoalt0YvWr3jZKEmV7
-         EM5hWfrJf8fq4gVK3FzL6yatpdPcQtMoqKgU01hbac+m2GvrNI3EEtDD/5+8cZwMLodi
-         Xfs2mWS8wdyhcR5jvE2QdtsRrYpM8jvQHeUTlZQm8CsxGZ6GmI0i6imx4hz4/i0kyM+D
-         SEcWpTjJbiRQyB//zdWhZyWKhMgwQD2eqqpL4+JzCq3tgCfQ3XhBcAGH7rHHVP22Mo2N
-         xmCw==
-X-Gm-Message-State: AC+VfDzO/Wvb/F3Xydmcr4vUQizctBZykoJlwpURoEStyc1OYvZk/2+J
-        fD7/o9QzKCfylv5HVuxv2AaryXJUI+Q=
-X-Google-Smtp-Source: ACHHUZ4ae5JscuoIHWyvg/IXsXhwRDmX5G3ef3rBB6ObD73Kud///7Pl1vEXTFoE15sarAOOLHtg1Q==
-X-Received: by 2002:a1c:7713:0:b0:3f6:40d:136a with SMTP id t19-20020a1c7713000000b003f6040d136amr8147447wmi.41.1685957925057;
-        Mon, 05 Jun 2023 02:38:45 -0700 (PDT)
-Received: from [192.168.1.212] ([90.255.142.254])
-        by smtp.gmail.com with ESMTPSA id q7-20020adff787000000b0030af1d87342sm9299462wrp.6.2023.06.05.02.38.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 02:38:44 -0700 (PDT)
-Message-ID: <1ca04355-8faf-e7f9-051f-a6a568ff99c5@gmail.com>
-Date:   Mon, 5 Jun 2023 10:38:41 +0100
+        with ESMTP id S229449AbjFEKGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2023 06:06:22 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1A1D3
+        for <git@vger.kernel.org>; Mon,  5 Jun 2023 03:06:21 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 43AB4320090C;
+        Mon,  5 Jun 2023 06:06:18 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 05 Jun 2023 06:06:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1685959577; x=1686045977; bh=xh8Zg7aK9ZofmNfsQ7ABRlDGa
+        CDynnlNsao/GLLhjzA=; b=Ux+vjVzCbeV1ss5qlI1T3xm8zIU35y0mDmricaEYp
+        Pt5NyIyEt+KIF8/jJTKtPkzS+amyuVOYleekYbB+k1Eqplmaj9zJhQxkxAqefNip
+        UMUQcS4zovGkU5ARTZWGv+SSpyt0KI5HV+FZ19l/wRp8BKiEcKD/xpnn1zBTxWNW
+        M7V3eXl/0YoMcYtRJPZFTmdCfvXWkZETpcA4ZGMQu065+XwD0mZyU8TcnPBehmMq
+        mn5prK6KaTQv4HmEFwB0HYC/y4uB+k/10JX16htqT5bkguJDY3xJEKK/ASTuj1VX
+        CL5ZAOvvi9JPUMoz+x0Dx/j8fPWkPnsEPh0QmVsQg2tkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1685959577; x=1686045977; bh=xh8Zg7aK9ZofmNfsQ7ABRlDGaCDynnlNsao
+        /GLLhjzA=; b=EcNY5Cb4oA8e2nssUd6ee5v6vkH95QIgLScSJCbzHcGzcOiJ4zI
+        h1DfQ1R97c5EeyooQWD4lhU+euM6B7haTxBGwqL9UyMTqk6pD/7mCOdaONHwyGRT
+        sy1ez5jEhxA6TqOeThaTV7iA9StQV1aWwV4j62CJvX4hFvq2baV2M5068uwnmrqG
+        StTEgHZScNaRoE85qy2l1Lol29XuFMHlIWmcfYL9LDr6vv+MvuYpo7jPha6YJtxH
+        uXVXrEFrimK9NWy6/tIUxIJROu6tLNBrWWedbcQJG4p0l9lm9VBWYWQ3RtcCcuvo
+        lZ+ipQEqdtta7ff+wvhr497PPs441DpnHhQ==
+X-ME-Sender: <xms:mbN9ZJexE6VAJVBPmjvxuj0EpLAdrNR2IXR1iHWBPswx2NvLzWsS8DA>
+    <xme:mbN9ZHNjGuzka_OP99fYwJtRDCUPfufFjj16nj9FhGw3qqbK3zvR0fC-GKG-d2acZ
+    TNe8Ebh-zC94kbVcQ>
+X-ME-Received: <xmr:mbN9ZCgC-psC7iUay6OIp4rIW7AfZloFo8RMAr1qM9DPSluilLR2lfaZPBBH5srRsDo4t2aFiuhIw-Hfz12dXmyrtl9dNxhy8PCLbM31p2BRnVZV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeelledgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesth
+    ekredtredtjeenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceo
+    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeeuie
+    euffeuffethffhfeellefhueehteettdehveegjeethefgveffuefggfelhfenucffohhm
+    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:mbN9ZC9HJvmfx-HpxVjyjOCMQHXAMeEgb_pxCVAMCoDguQYi8LqPYQ>
+    <xmx:mbN9ZFtN2BY0H53ziI_BazeCw_tZh5gSXnqdWZpIw7rKEroSA_nqyw>
+    <xmx:mbN9ZBFOY8rH5phI9nYxo8aDrFSE5xh88D9bzh3j4dyX3Z8I6zmYyg>
+    <xmx:mbN9ZO6K37lh3RNOnMCYjNwXzllwgvLfYQnB-B5uA4pK_JCVsOtXWA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jun 2023 06:06:16 -0400 (EDT)
+From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
+To:     git@vger.kernel.org
+Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 0/2] notes: update documentation for `use_default_notes`
+Date:   Mon,  5 Jun 2023 12:05:21 +0200
+Message-ID: <cover.1685958731.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <b3829cb0d1e36a5ebb44a315fe32037f2a3f6c7a.1685526558.git.code@khaugsbakk.name>
+References: <b3829cb0d1e36a5ebb44a315fe32037f2a3f6c7a.1685526558.git.code@khaugsbakk.name>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 03/14] (RFC-only) config: add kvi arg to config_fn_t
-Content-Language: en-US
-To:     Glen Choo <chooglen@google.com>, phillip.wood@dunelm.org.uk,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Emily Shaffer <nasamuffin@google.com>
-References: <pull.1497.git.git.1682104398.gitgitgadget@gmail.com>
- <pull.1497.v2.git.git.1685472132.gitgitgadget@gmail.com>
- <6834e37066e7877646fc7c37aa79704d14381251.1685472133.git.gitgitgadget@gmail.com>
- <6faf1b17-a1ca-0c22-2e43-aee121c4e36a@gmail.com>
- <kl6l4jnr17am.fsf@chooglen-macbookpro.roam.corp.google.com>
- <4de362b4-dcce-3b5a-0011-73dc7dec79c3@gmail.com>
- <kl6lv8g5zu9v.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <kl6lv8g5zu9v.fsf@chooglen-macbookpro.roam.corp.google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/06/2023 17:46, Glen Choo wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->> As an aside, I think we'd also want a couple of helpers for matching
->> keys so we can just write kvi_match_key(kvi, "user.name") or
->> kvi_skip_key_prefix(kvi, "core.", &p) rather than having to extract the
->> key name first.
-> 
-> Yes, and that would also abstract over implementation details like
-> matching keys using strcasecmp() and not strcmp(). For reasons like
-> this, I think your proposal paves the way for a harder-to-misuse API.
-> 
-> I still have some nagging, probably irrational fear that consolidating
-> all of the config_fn_t args is trickier to manage than adding a single
-> key_value_info arg. It definitely *sounds* trickier, but I can't really
-> think of a real downside.
->
-> Maybe I just have to try it and send the result for others to consider.
+While I was working on [1] I found that the doc for the struct
+`display_notes_opt` hadn’t been updated when one of the members were
+renamed. I chose to post a separate patch/series.
 
-That's probably the best way to see if it is an improvement - you can 
-always blame me if it turns out not to be! Hopefully it isn't too much 
-work to add enough api to be able to convert a couple of config_fn_t 
-functions to see how it pans out.
+[1] https://lore.kernel.org/git/cover.1685441207.git.code@khaugsbakk.name
 
-Best Wishes
+§ Changes in v4 by patch
 
-Phillip
+• 2: Document the struct members directly
+
+Kristoffer Haugsbakk (2):
+  notes: update documentation for `use_default_notes`
+  notes: move the documentation to the struct
+
+ notes.h | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+Range-diff against v3:
+-:  ---------- > 1:  3eaa725d3a notes: update documentation for `use_default_notes`
+1:  99c88c74ce ! 2:  ba147707ef notes: move the documentation to the struct
+    @@ Metadata
+      ## Commit message ##
+         notes: move the documentation to the struct
+
+    -    Its better to document the struct members on the struct definition
+    -    instead of on a function that takes a pointer to such a struct. This
+    -    will also make it easier to update the documentation in the future.
+    +    Its better to document the struct members directly instead of on a
+    +    function that takes a pointer to the struct. This will also make it
+    +    easier to update the documentation in the future.
+    +
+    +    Make adjustments for this new context. Also drop “may contain” since we
+    +    don’t need to emphasize that a list could be empty.
+
+         Suggested-by: Jeff King <peff@peff.net>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+
+
+      ## Notes (series) ##
+    -    Suggested in: https://lore.kernel.org/git/20230601175218.GB4165405@coredump.intra.peff.net/
+    +    v3: Suggested in: https://lore.kernel.org/git/20230601175218.GB4165405@coredump.intra.peff.net/
+    +    v4:
+    +        • Put docs on each member instead
+    +        • Update commit message accordingly
+    +        • Drop “may contain” since we don’t have to emphasize that a list
+    +          could be empty
+    +        • Formatting is based on clang-format and `bloom_filter_settings` in
+    +          `bloom.h`
+
+      ## notes.h ##
+     @@ notes.h: void free_notes(struct notes_tree *t);
+    -
+      struct string_list;
+
+    -+/*
+    -+ * - use_default_notes: less than `0` is "unset", which means that the
+    -+ *   default notes are shown iff no other notes are given. Otherwise,
+    -+ *   treat it like a boolean.
+    -+ *
+    -+ * - extra_notes_refs may contain a list of globs (in the same style
+    -+ *   as notes.displayRef) where notes should be loaded from.
+    -+ */
+      struct display_notes_opt {
+    ++	/*
+    ++	 * Less than `0` is "unset", which means that the default notes
+    ++	 * are shown iff no other notes are given. Otherwise,
+    ++	 * treat it like a boolean.
+    ++	 */
+      	int use_default_notes;
+    ++
+    ++	/*
+    ++	 * A list of globs (in the same style as notes.displayRef) where
+    ++	 * notes should be loaded from.
+    ++	 */
+      	struct string_list extra_notes_refs;
+    + };
+    +
+     @@ notes.h: void disable_display_notes(struct display_notes_opt *opt, int *show_notes);
+      /*
+       * Load the notes machinery for displaying several notes trees.
+--
+2.41.0
