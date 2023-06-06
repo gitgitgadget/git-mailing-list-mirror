@@ -2,135 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 463EEC77B7A
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 20:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E198C7EE2F
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 21:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239215AbjFFU7r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 16:59:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59408 "EHLO
+        id S239777AbjFFVra (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 17:47:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbjFFU7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 16:59:46 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C771717
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 13:59:45 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5695f6ebd85so75145607b3.3
-        for <git@vger.kernel.org>; Tue, 06 Jun 2023 13:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686085184; x=1688677184;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NDoHpzWxEzo66a3vKqJ38sCQrQXqNPH+DNQNbvZGjwI=;
-        b=OAEVRQbO3x/ePhZ0n2oIRWdVXVEw6hPPVJz71GPcA2TDksf/l4g5Oc3bcpNUNQ/sVq
-         6m1goEumPWG9cJC/vecck/Oz2VeuzoGR0hEt84JFA9f9C7AT5HfVu+rKY5L+vGvxp78f
-         qnxJiUFw3AxHpYoiSGF5d/1aylJqM0OYJHUFbPt406xS9uHHhVrpoaPrA4uFpXSO1L1V
-         6YQ423p3iexf2PNjDtBn93o8TVYjLHUxh77u/6mDGn7/f0K6NdYTA7Bs8E03D78YiA73
-         H69xQEJypQeBqnQQqgr/C4Y4VwwfL0wchMPhgFqyr3kJef6+IFgKTSDeJC3lqeiM47rO
-         u1zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686085184; x=1688677184;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=NDoHpzWxEzo66a3vKqJ38sCQrQXqNPH+DNQNbvZGjwI=;
-        b=iUQusrOanpIrQCexVSfa09hedDgOpMmHRj+PrZ3LgiDZKOHgSKjG8kYRChaQEAOWx7
-         TDyuuv6Gdo+FLwq8hVAsAzuK7AlCGLIy0zfKTBuORuNTihg63Vpwz48Pcx+oMKSkDexF
-         aFAWHjVBb0ccwJBYECUAiK5YFioyqddRqWDu4y2sFE3gp2CxWNw5Ii3TJS8WgJyVXD3x
-         eCKLM2OnHKMgoaL5UBPsO/mxC3mnWhrssxFOUJa6F5VrXHBymIgeRP07zA/1VeGAJX7Y
-         iMwml9xGVVTOk6Y2ZuJ10yczWYqbbuPGLpYROeErQkqiOjhFvHshDgnk5yXRtjseDczK
-         qpRA==
-X-Gm-Message-State: AC+VfDyx2vLVan61ieu8ycOivF6p2wyq7T0UVBMMsiXdJRC/hYASQ9oR
-        Wvhvm3QRkU8f0XNG6ZYIOvdHKkmp/W/q
-X-Google-Smtp-Source: ACHHUZ5HQXcKFgocFW07mGE9OO7RQNHL33ag4B6AErBdV/8RFEDRNb4kKcBXlqYDAGdh/g4SUc1caNTmfsyQ
-X-Received: from nayru.cam.corp.google.com ([2620:15c:93:4:c99f:feb:b1e3:2144])
- (user=asedeno job=sendgmr) by 2002:a05:6902:110c:b0:bac:c28a:e025 with SMTP
- id o12-20020a056902110c00b00bacc28ae025mr1218423ybu.5.1686085184354; Tue, 06
- Jun 2023 13:59:44 -0700 (PDT)
-Date:   Tue,  6 Jun 2023 16:59:35 -0400
-In-Reply-To: <xmqqilc571hf.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqilc571hf.fsf@gitster.g>
-X-Mailer: git-send-email 2.41.0.rc2.161.g9c6817b8e7-goog
-Message-ID: <20230606205935.3183276-1-asedeno@google.com>
-Subject: [PATCH] statinfo.h: move DTYPE defines from dir.h
-From:   "=?UTF-8?q?Alejandro=20R=20Sede=C3=B1o?=" <asedeno@google.com>
-To:     gitster@pobox.com
-Cc:     asedeno@google.com, asedeno@mit.edu, git@vger.kernel.org,
-        newren@gmail.com, sunshine@sunshineco.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S234412AbjFFVr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 17:47:28 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7541E78
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 14:47:27 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 040001F505;
+        Tue,  6 Jun 2023 17:47:27 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references:mime-version
+        :content-transfer-encoding; s=sasl; bh=oNfVVH81+QArO/rjzaPrpMufJ
+        TsJ43/h/Z0VE33+ggk=; b=Rk58YS3R0/RMymAFLATGKTQTBCrXgiAB00evFdYVL
+        oH6oL80r2otCr1MoGqCrqWAt+tmRwm04A4h/fhpj+IOjznQMSK3Q9Tuu3T+szqSr
+        HiwGBw78GKC9zPHxorE68Nb0XPwVpF1gvCdMNGHJN//fnX1eAxKclwHfA0dLboKI
+        b0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EFA2F1F504;
+        Tue,  6 Jun 2023 17:47:26 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.204.171.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C25DE1F503;
+        Tue,  6 Jun 2023 17:47:22 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH] t/lib-gpg: require GPGSSH for GPGSSH_VERIFYTIME prereq
+Date:   Tue,  6 Jun 2023 17:47:07 -0400
+Message-ID: <20230606214707.55739-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <xmqqa5xjeqmm.fsf@gitster.g>
+References: <xmqqa5xjeqmm.fsf@gitster.g>
+MIME-Version: 1.0
+X-Pobox-Relay-ID: B834D1E4-04B3-11EE-8EB1-C2DA088D43B2-09356542!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+The GPGSSH_VERIFYTIME prequeq makes use of "${GNUPGHOME}" but does not
+create it.  Require GPGSSH which creates the "${GNUPGHOME}" directory.
 
-592fc5b3 (dir.h: move DTYPE defines from cache.h, 2023-04-22) moved
-DTYPE macros from cache.h to dir.h, but they are still used by cache.h
-to implement ce_to_dtype(); cache.h cannot include dir.h because that
-would cause name-hash.c to have two different and conflicting
-definitions of `struct dir_entry`. (That should be separately fixed.)
+Additionally, it makes sense to require GPGSSH in GPGSSH_VERIFYTIME
+because the latter builds on the former.  If we can't use GPGSSH,
+there's little point in checking whether GPGSSH_VERIFYTIME is usable.
 
-Both dir.h and cache.h include statinfo.h, and this seems a reasonable
-place for these definitions.
-
-This change fixes a broken build issue on old SunOS.
-
-Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
-Signed-off-by: Alejandro R Sede=C3=B1o <asedeno@google.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- dir.h      | 14 --------------
- statinfo.h | 14 ++++++++++++++
- 2 files changed, 14 insertions(+), 14 deletions(-)
+Hi,
 
-diff --git a/dir.h b/dir.h
-index 79b85a01ee..d65a40126c 100644
---- a/dir.h
-+++ b/dir.h
-@@ -641,18 +641,4 @@ static inline int starts_with_dot_dot_slash_native(con=
-st char *const path)
- 	return path_match_flags(path, what | PATH_MATCH_NATIVE);
- }
+Junio C Hamano wrote:
+>> Good idea. Perhaps:
+>>
+>>      test_lazy_prereq GPGSSH_VERIFYTIME '
+>>              test_have_prereq GPGSSH &&
+>>
+>> is best there?  The GPGSSH prereq creates ${GNUPGHOME}.  It
+>> may not be common, but there may be folks who want to run
+>> the SSH tests and don't care about GPG.
+>=20
+> OK.  I'll certainly forget, so hold on to the patch and resend after
+> the dust settles from the release.
+
+Alright.  Here's that patch.  Hopefully it's not too dusty
+where you are.  If so, I can re-send later. :)
+
+Cheers,
+
+Todd
+
+ t/lib-gpg.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 114785586a..db63aeb6ed 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -135,6 +135,7 @@ test_lazy_prereq GPGSSH '
+ '
 =20
--#if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
--#define DTYPE(de)	((de)->d_type)
--#else
--#undef DT_UNKNOWN
--#undef DT_DIR
--#undef DT_REG
--#undef DT_LNK
--#define DT_UNKNOWN	0
--#define DT_DIR		1
--#define DT_REG		2
--#define DT_LNK		3
--#define DTYPE(de)	DT_UNKNOWN
--#endif
--
- #endif
-diff --git a/statinfo.h b/statinfo.h
-index e49e3054ea..fe8df633a4 100644
---- a/statinfo.h
-+++ b/statinfo.h
-@@ -21,4 +21,18 @@ struct stat_data {
- 	unsigned int sd_size;
- };
+ test_lazy_prereq GPGSSH_VERIFYTIME '
++	test_have_prereq GPGSSH &&
+ 	# Check if ssh-keygen has a verify-time option by passing an invalid da=
+te to it
+ 	ssh-keygen -Overify-time=3DINVALID -Y check-novalidate -s doesnotmatter=
+ 2>&1 | grep -q -F "Invalid \"verify-time\"" &&
 =20
-+#if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
-+#define DTYPE(de)	((de)->d_type)
-+#else
-+#undef DT_UNKNOWN
-+#undef DT_DIR
-+#undef DT_REG
-+#undef DT_LNK
-+#define DT_UNKNOWN	0
-+#define DT_DIR		1
-+#define DT_REG		2
-+#define DT_LNK		3
-+#define DTYPE(de)	DT_UNKNOWN
-+#endif
-+
- #endif
 --=20
-2.41.0.rc2.161.g9c6817b8e7-goog
-
+2.41.0
