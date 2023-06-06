@@ -2,103 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E198C7EE2F
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 21:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D4B9C7EE43
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 22:49:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239777AbjFFVra (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 17:47:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47500 "EHLO
+        id S240055AbjFFWtN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 18:49:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234412AbjFFVr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 17:47:28 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7541E78
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 14:47:27 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 040001F505;
-        Tue,  6 Jun 2023 17:47:27 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=oNfVVH81+QArO/rjzaPrpMufJ
-        TsJ43/h/Z0VE33+ggk=; b=Rk58YS3R0/RMymAFLATGKTQTBCrXgiAB00evFdYVL
-        oH6oL80r2otCr1MoGqCrqWAt+tmRwm04A4h/fhpj+IOjznQMSK3Q9Tuu3T+szqSr
-        HiwGBw78GKC9zPHxorE68Nb0XPwVpF1gvCdMNGHJN//fnX1eAxKclwHfA0dLboKI
-        b0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EFA2F1F504;
-        Tue,  6 Jun 2023 17:47:26 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from morphine.paradise.teonanacatl.net (unknown [47.204.171.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C25DE1F503;
-        Tue,  6 Jun 2023 17:47:22 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
-Subject: [PATCH] t/lib-gpg: require GPGSSH for GPGSSH_VERIFYTIME prereq
-Date:   Tue,  6 Jun 2023 17:47:07 -0400
-Message-ID: <20230606214707.55739-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <xmqqa5xjeqmm.fsf@gitster.g>
-References: <xmqqa5xjeqmm.fsf@gitster.g>
+        with ESMTP id S239715AbjFFWtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 18:49:05 -0400
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 06 Jun 2023 15:49:03 PDT
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3129E
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 15:49:03 -0700 (PDT)
+Received: from [10.0.2.15] ([147.147.167.102])
+        by smtp with ESMTPA
+        id 6fR9qHWDrfWm36fRAqdrBP; Tue, 06 Jun 2023 23:46:00 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1686091560; bh=PLa7hEkMGi7s6BqyyK5c5am+jdu//WyZTdX451EAZUM=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=FGEBjACAojOI7tXaYkaAM3ZNu+HDtBNmeMJ4I9CXFRUXMhhcNtZi3P7/+RzrmBWjs
+         9abZzxwW7KuZ00qNAizdEl5renTQkySENBVR+Kdk12AusP3w+AVCLo7ukFRNAKjmDx
+         Vp6Ec1E31sDKw0wFEodJZLWULptj0UbKbiTmtogxYDjuPSBbc5lwsv6TDgmabLPySO
+         VIOPmNlccDBYHjbHuKxu4QlUWnobNSCx83op3ONhc4qEhBKGETpNuV0NuxDaCmwYDU
+         S4qQg6vIqrcFem56tR1b/hjQcc3zBsqQnpHk78IH4EBWvFw3c2FrMM+ieL7jZmRtSJ
+         JMcffQapcUAWw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=GJAbr8BK c=1 sm=1 tr=0 ts=647fb728
+ a=O4HnXJxpn4bBnFCb4s/IkQ==:117 a=O4HnXJxpn4bBnFCb4s/IkQ==:17
+ a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8 a=G0YMkZFut-bV4kl7-L4A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <25d47081-2096-bb8a-dca3-bd5ea931c879@ramsayjones.plus.com>
+Date:   Tue, 6 Jun 2023 23:45:59 +0100
 MIME-Version: 1.0
-X-Pobox-Relay-ID: B834D1E4-04B3-11EE-8EB1-C2DA088D43B2-09356542!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 5/8] common.h: move non-compat specific macros and
+ functions
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     phillip.wood123@gmail.com, jonathantanmy@google.com
+References: <20230606170711.912972-1-calvinwan@google.com>
+ <20230606171002.914075-5-calvinwan@google.com>
+Content-Language: en-GB
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20230606171002.914075-5-calvinwan@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfOwY4iKV/WN1Jyh29efakgFnXDf/ICiOm5U86x4+172HO4CCE5Mf3mi08GVAIzhpDoozpFruuX2ucVSabWWvb9KTjSZSR2IeLcGCtndsDq+HWiy0Y+KO
+ e2aQDcD1XsdTKvP99srX7k2dcW8Bk+LqurLwse5APedtLdIfScWHH3//ny+u0mI1jQJ1w3aB11yTqdEHVhT6PUyykFlz+gVbmTw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The GPGSSH_VERIFYTIME prequeq makes use of "${GNUPGHOME}" but does not
-create it.  Require GPGSSH which creates the "${GNUPGHOME}" directory.
 
-Additionally, it makes sense to require GPGSSH in GPGSSH_VERIFYTIME
-because the latter builds on the former.  If we can't use GPGSSH,
-there's little point in checking whether GPGSSH_VERIFYTIME is usable.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
-Hi,
+On 06/06/2023 18:09, Calvin Wan wrote:
+> git-compat-util.h has grown to a large and difficult to read file partly
+> because its set of functionality is overloaded. Besides being a
+> compatibility file that ensures Git's operation across different
+> operating systems, it has also become a dumping ground for commonly used
+> macros and static inline functions.
+> 
+> This commit separates out macros and static inline functions that are
+> compatible across operating systems into common.h. common.h is
+> reincluded back into git-compat-util.h so that other files do not also
+> have to include it. The eventual goal is for common.h to be separated
+> out into more reasonable boundaries, but for now this should be a good
+> first step towards that goal.
+> 
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> ---
+>  common.h          | 410 ++++++++++++++++++++++++++++++++++++++++++++++
+>  git-compat-util.h | 402 +--------------------------------------------
+>  2 files changed, 412 insertions(+), 400 deletions(-)
+>  create mode 100644 common.h
+> 
+> diff --git a/common.h b/common.h
+> new file mode 100644
+> index 0000000000..0f164c1071
+> --- /dev/null
+> +++ b/common.h
+> @@ -0,0 +1,410 @@
+> +#ifndef COMMON_H
+> +#define COMMON_H
+> +
+> +#include "git-compat-util.h"
 
-Junio C Hamano wrote:
->> Good idea. Perhaps:
->>
->>      test_lazy_prereq GPGSSH_VERIFYTIME '
->>              test_have_prereq GPGSSH &&
->>
->> is best there?  The GPGSSH prereq creates ${GNUPGHOME}.  It
->> may not be common, but there may be folks who want to run
->> the SSH tests and don't care about GPG.
->=20
-> OK.  I'll certainly forget, so hold on to the patch and resend after
-> the dust settles from the release.
+Hmm, ... So, "common.h" includes "git-compat-util.h", which
+in turn includes "common.h" ?
 
-Alright.  Here's that patch.  Hopefully it's not too dusty
-where you are.  If so, I can re-send later. :)
+Something is not right here! ;)
 
-Cheers,
+(Sorry, I have not been following this series, it just floated
+past on the ML and looked odd ...)
 
-Todd
+ATB,
+Ramsay Jones
 
- t/lib-gpg.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 114785586a..db63aeb6ed 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -135,6 +135,7 @@ test_lazy_prereq GPGSSH '
- '
-=20
- test_lazy_prereq GPGSSH_VERIFYTIME '
-+	test_have_prereq GPGSSH &&
- 	# Check if ssh-keygen has a verify-time option by passing an invalid da=
-te to it
- 	ssh-keygen -Overify-time=3DINVALID -Y check-novalidate -s doesnotmatter=
- 2>&1 | grep -q -F "Invalid \"verify-time\"" &&
-=20
---=20
-2.41.0
