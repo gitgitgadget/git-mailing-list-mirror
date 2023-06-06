@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB561C7EE24
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 17:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 449FDC7EE24
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 17:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238504AbjFFRK3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 13:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54994 "EHLO
+        id S238642AbjFFRKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 13:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238491AbjFFRKW (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238555AbjFFRKW (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Jun 2023 13:10:22 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EDA210FA
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 10:10:13 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5618857518dso78763247b3.2
-        for <git@vger.kernel.org>; Tue, 06 Jun 2023 10:10:13 -0700 (PDT)
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B10A3170C
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 10:10:14 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-ba81b37d9d2so8668686276.3
+        for <git@vger.kernel.org>; Tue, 06 Jun 2023 10:10:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686071412; x=1688663412;
+        d=google.com; s=20221208; t=1686071414; x=1688663414;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WyZTEiGAypHXOyj7D7HnVmQgVcVe7qtxhafBAQTMeeE=;
-        b=U0EN1HQfWdDNVopeBPtGP0nDhsL+DeIMKzm+iZzzSyghePmiqx3tH4LC0pkyyReCKw
-         avMxbjX+9bmMAXVgiNCh6dXpf5nQ+vyEElkTnKVqjOcmafFvQMTkPzKaafrXjI+DdZ+i
-         xtqL/vNELRmb46BRPRaX6PhSQOI7j2L+5kxY7Xb6lYo0dn/qFOtLfRhsX/+nI/WLzJBG
-         2jautGWNJbhiMvOXtzO6a0mrOsNsrnrzrMFti9bdPw5cpS5LSru//hykrXcCLGCLO99/
-         mbF07PFsW4klNMIHLm4P/Jd80sJb7hrPXTYCa5+OsnHwB9NK8YMKTwBSQdJ86CPyE1N3
-         FA/Q==
+        bh=C79XVMVTZWBnTLPrgNeM1GcFPEM1uSWbgrhNAMDc8cE=;
+        b=vH3HIQEDuNwcuEztZpl3x5PntptHqKRWFyY6uHMZ2SgWceOcGr+Kv87v+4U1YXmcbE
+         dPGvSrqxDaj6QP2P/WJwqvzVoQz5AnFrs0uZI3FPYNc8ewIAK7j0iO4TkflY6md3aBFA
+         Xcai0Te47fPzTe1kid04/fvbxNTLumrMuXUepUxtjorbyk+hRl3MGnd0VXA1the3TQBU
+         YOYAtVvfYqRKMtSnkxmwI/5M0PcCpdEEVwUI6HRGH8zEEosm5IlKdEj4SIryi1RD1NWL
+         OZAPxFbTJPm1fmVYy1oi2yrJJ/rpOvswW2sBykVV+JoIRRl5ZEBx7LxIA9U6oqxKgS3A
+         OQjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686071412; x=1688663412;
+        d=1e100.net; s=20221208; t=1686071414; x=1688663414;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WyZTEiGAypHXOyj7D7HnVmQgVcVe7qtxhafBAQTMeeE=;
-        b=QcKOaUdsdNyJX0ByX0xpM2wHgc4lDxwEcf1XcoS4Ld/hcTdevEBFoyJKDe5Tg8jFcK
-         Mcfo1ucXuz6D+wSks4tiVQ6juXXp2s2Fp5ZkMbSJUrXBWc+lbIsHMOUTHncVSHA/aiwu
-         rPImxh2X/9nEbzLsYkGiHCqdHCp4ijQGtbQihr+ENiM78sJvF6R88pJlokN3HwzBxmOo
-         oAizGrrHujXD8uQL+vSZDtt3Fwu5q5oJZWoFhI0lIRrg6U3wkTqlW/ZTD70/+83+DLLx
-         Dva3i06S8MvsxoXUxzVMWCeD4H3PMaATqoeNoldujQ8wNCL9Snsqdjm4r231PvceDW7N
-         PZVw==
-X-Gm-Message-State: AC+VfDxHaBDSv4Y/mfWGCckenNVJM6HdZ41M4AAN9BK+FHFT6YGpc6Qf
-        x3ApLwNtXtpx/5UwaNGOfNMouikrOlc38KsAfb2PxokuLgXefnIt1mXkLHXCbIqqtAX+/5yLrAF
-        duuZ28FfoPgjDftwR/kG6fxvoWWE+gH1sBSSYc8f6ExKjto3138zverBDSJDGjoMOxQ==
-X-Google-Smtp-Source: ACHHUZ5JC+MSbUR33QKcLuB7z02BzkfROfOXfZYFnu4x6O9ocD59WXyYfmLw5XTlbuMXMYyTEzzvUIIAnXOBOec=
+        bh=C79XVMVTZWBnTLPrgNeM1GcFPEM1uSWbgrhNAMDc8cE=;
+        b=iwEY4gCq0EGQDO5w9/LtyN397XrB5jH3h5tYvENt7hVjD3bXCamx3nQ2iS94bGtuz5
+         M9AlxzTU0jbkzBZPxShwLJU8rf22pTtcBO2PpAQe5oVVnH2dVcFCR6yc6aLPNaYK15Lu
+         scaZIt59Xhhzup4VdJNi15v6uihVUyrjF40NjXFddB4pU08HL1FafAbTUR5qlUq8lTfB
+         1NQ5/yAXd12/xIIIGXPv3RPcrbyeE17BXRIqoew4AE1th9uuBfNOqEtcFoGSYh7wgAby
+         mwA9STOns80Er1qkz14SKa61HYCy99q/d/5PayfZH1JZFXSA1DV3dUWF8WXLEHmgP++O
+         JgbQ==
+X-Gm-Message-State: AC+VfDxk+TVftd33Lx26Yw7Hc+lvnyEf+TKXJx/P0gVSrrDsFCA1/MOM
+        OvKBJp3JUxuVXOf2f5HywVORl615X6+lPLtInBoTR/fWt1b7v6fzNB3UumF7Tn8D0r+A0Vx3fSa
+        61jFqyDJppHX/EVyn3StOYQAY4mf2o2mgIZGkA812L3Q6G9HCEj2UY1CR+b8x9IF/1g==
+X-Google-Smtp-Source: ACHHUZ5jFmOoclx7rCH7NQUgv8HgRcrH7FDVYKmt2+1zb+0F+ZUJX1Ei8bCnZ3S6hB2ozt1Czmf7hBDUZPLOcKA=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a81:4312:0:b0:569:5003:7d79 with SMTP id
- q18-20020a814312000000b0056950037d79mr1442839ywa.3.1686071412329; Tue, 06 Jun
- 2023 10:10:12 -0700 (PDT)
-Date:   Tue,  6 Jun 2023 17:09:59 +0000
+ (user=calvinwan job=sendgmr) by 2002:a25:4c8:0:b0:bac:2448:2aa3 with SMTP id
+ 191-20020a2504c8000000b00bac24482aa3mr920141ybe.9.1686071413944; Tue, 06 Jun
+ 2023 10:10:13 -0700 (PDT)
+Date:   Tue,  6 Jun 2023 17:10:00 +0000
 In-Reply-To: <20230606170711.912972-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230606170711.912972-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.41.0.rc2.161.g9c6817b8e7-goog
-Message-ID: <20230606171002.914075-5-calvinwan@google.com>
-Subject: [PATCH v3 5/8] common.h: move non-compat specific macros and functions
+Message-ID: <20230606171002.914075-6-calvinwan@google.com>
+Subject: [PATCH v3 6/8] git-compat-util: move usage.c funcs to its header
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
@@ -62,916 +62,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-compat-util.h has grown to a large and difficult to read file partly
-because its set of functionality is overloaded. Besides being a
-compatibility file that ensures Git's operation across different
-operating systems, it has also become a dumping ground for commonly used
-macros and static inline functions.
-
-This commit separates out macros and static inline functions that are
-compatible across operating systems into common.h. common.h is
-reincluded back into git-compat-util.h so that other files do not also
-have to include it. The eventual goal is for common.h to be separated
-out into more reasonable boundaries, but for now this should be a good
-first step towards that goal.
-
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- common.h          | 410 ++++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h | 402 +--------------------------------------------
- 2 files changed, 412 insertions(+), 400 deletions(-)
- create mode 100644 common.h
+ common.h          |  1 +
+ git-compat-util.h | 55 -------------------------------------------
+ usage.h           | 60 +++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 61 insertions(+), 55 deletions(-)
+ create mode 100644 usage.h
 
 diff --git a/common.h b/common.h
-new file mode 100644
-index 0000000000..0f164c1071
---- /dev/null
+index 0f164c1071..e3b673847d 100644
+--- a/common.h
 +++ b/common.h
-@@ -0,0 +1,410 @@
-+#ifndef COMMON_H
-+#define COMMON_H
-+
-+#include "git-compat-util.h"
-+#include "wrapper.h"
-+
-+/*
-+ * ARRAY_SIZE - get the number of elements in a visible array
-+ * @x: the array whose size you want.
-+ *
-+ * This does not work on pointers, or arrays declared as [], or
-+ * function parameters.  With correct compiler support, such usage
-+ * will cause a build error (see the build_assert_or_zero macro).
-+ */
-+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]) + BARF_UNLESS_AN_ARRAY(x))
-+
-+#define bitsizeof(x)  (CHAR_BIT * sizeof(x))
-+
-+#define maximum_signed_value_of_type(a) \
-+    (INTMAX_MAX >> (bitsizeof(intmax_t) - bitsizeof(a)))
-+
-+#define maximum_unsigned_value_of_type(a) \
-+    (UINTMAX_MAX >> (bitsizeof(uintmax_t) - bitsizeof(a)))
-+
-+/*
-+ * Signed integer overflow is undefined in C, so here's a helper macro
-+ * to detect if the sum of two integers will overflow.
-+ *
-+ * Requires: a >= 0, typeof(a) equals typeof(b)
-+ */
-+#define signed_add_overflows(a, b) \
-+    ((b) > maximum_signed_value_of_type(a) - (a))
-+
-+#define unsigned_add_overflows(a, b) \
-+    ((b) > maximum_unsigned_value_of_type(a) - (a))
-+
-+/*
-+ * Returns true if the multiplication of "a" and "b" will
-+ * overflow. The types of "a" and "b" must match and must be unsigned.
-+ * Note that this macro evaluates "a" twice!
-+ */
-+#define unsigned_mult_overflows(a, b) \
-+    ((a) && (b) > maximum_unsigned_value_of_type(a) / (a))
-+
-+/*
-+ * Returns true if the left shift of "a" by "shift" bits will
-+ * overflow. The type of "a" must be unsigned.
-+ */
-+#define unsigned_left_shift_overflows(a, shift) \
-+    ((shift) < bitsizeof(a) && \
-+     (a) > maximum_unsigned_value_of_type(a) >> (shift))
-+
-+#define MSB(x, bits) ((x) & TYPEOF(x)(~0ULL << (bitsizeof(x) - (bits))))
-+#define HAS_MULTI_BITS(i)  ((i) & ((i) - 1))  /* checks if an integer has more than 1 bit set */
-+
-+#define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
-+
-+/* Approximation of the length of the decimal representation of this type. */
-+#define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
-+
-+/*
-+ * If the string "str" begins with the string found in "prefix", return 1.
-+ * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
-+ * the string right after the prefix).
-+ *
-+ * Otherwise, return 0 and leave "out" untouched.
-+ *
-+ * Examples:
-+ *
-+ *   [extract branch name, fail if not a branch]
-+ *   if (!skip_prefix(ref, "refs/heads/", &branch)
-+ *	return -1;
-+ *
-+ *   [skip prefix if present, otherwise use whole string]
-+ *   skip_prefix(name, "refs/heads/", &name);
-+ */
-+static inline int skip_prefix(const char *str, const char *prefix,
-+			      const char **out)
-+{
-+	do {
-+		if (!*prefix) {
-+			*out = str;
-+			return 1;
-+		}
-+	} while (*str++ == *prefix++);
-+	return 0;
-+}
-+
-+/*
-+ * Like skip_prefix, but promises never to read past "len" bytes of the input
-+ * buffer, and returns the remaining number of bytes in "out" via "outlen".
-+ */
-+static inline int skip_prefix_mem(const char *buf, size_t len,
-+				  const char *prefix,
-+				  const char **out, size_t *outlen)
-+{
-+	size_t prefix_len = strlen(prefix);
-+	if (prefix_len <= len && !memcmp(buf, prefix, prefix_len)) {
-+		*out = buf + prefix_len;
-+		*outlen = len - prefix_len;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * If buf ends with suffix, return 1 and subtract the length of the suffix
-+ * from *len. Otherwise, return 0 and leave *len untouched.
-+ */
-+static inline int strip_suffix_mem(const char *buf, size_t *len,
-+				   const char *suffix)
-+{
-+	size_t suflen = strlen(suffix);
-+	if (*len < suflen || memcmp(buf + (*len - suflen), suffix, suflen))
-+		return 0;
-+	*len -= suflen;
-+	return 1;
-+}
-+
-+/*
-+ * If str ends with suffix, return 1 and set *len to the size of the string
-+ * without the suffix. Otherwise, return 0 and set *len to the size of the
-+ * string.
-+ *
-+ * Note that we do _not_ NUL-terminate str to the new length.
-+ */
-+static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
-+{
-+	*len = strlen(str);
-+	return strip_suffix_mem(str, len, suffix);
-+}
-+
-+#define SWAP(a, b) do {						\
-+	void *_swap_a_ptr = &(a);				\
-+	void *_swap_b_ptr = &(b);				\
-+	unsigned char _swap_buffer[sizeof(a)];			\
-+	memcpy(_swap_buffer, _swap_a_ptr, sizeof(a));		\
-+	memcpy(_swap_a_ptr, _swap_b_ptr, sizeof(a) +		\
-+	       BUILD_ASSERT_OR_ZERO(sizeof(a) == sizeof(b)));	\
-+	memcpy(_swap_b_ptr, _swap_buffer, sizeof(a));		\
-+} while (0)
-+
-+static inline size_t st_add(size_t a, size_t b)
-+{
-+	if (unsigned_add_overflows(a, b))
-+		die("size_t overflow: %"PRIuMAX" + %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a + b;
-+}
-+#define st_add3(a,b,c)   st_add(st_add((a),(b)),(c))
-+#define st_add4(a,b,c,d) st_add(st_add3((a),(b),(c)),(d))
-+
-+static inline size_t st_mult(size_t a, size_t b)
-+{
-+	if (unsigned_mult_overflows(a, b))
-+		die("size_t overflow: %"PRIuMAX" * %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a * b;
-+}
-+
-+static inline size_t st_sub(size_t a, size_t b)
-+{
-+	if (a < b)
-+		die("size_t underflow: %"PRIuMAX" - %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a - b;
-+}
-+
-+static inline size_t st_left_shift(size_t a, unsigned shift)
-+{
-+	if (unsigned_left_shift_overflows(a, shift))
-+		die("size_t overflow: %"PRIuMAX" << %u",
-+		    (uintmax_t)a, shift);
-+	return a << shift;
-+}
-+
-+static inline unsigned long cast_size_t_to_ulong(size_t a)
-+{
-+	if (a != (unsigned long)a)
-+		die("object too large to read on this platform: %"
-+		    PRIuMAX" is cut off to %lu",
-+		    (uintmax_t)a, (unsigned long)a);
-+	return (unsigned long)a;
-+}
-+
-+static inline int cast_size_t_to_int(size_t a)
-+{
-+	if (a > INT_MAX)
-+		die("number too large to represent as int on this platform: %"PRIuMAX,
-+		    (uintmax_t)a);
-+	return (int)a;
-+}
-+
-+
-+/*
-+ * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
-+ * that ptr is used twice, so don't pass e.g. ptr++.
-+ */
-+#define FREE_AND_NULL(p) do { free(p); (p) = NULL; } while (0)
-+
-+#define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
-+#define CALLOC_ARRAY(x, alloc) (x) = xcalloc((alloc), sizeof(*(x)))
-+#define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
-+
-+#define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(dst)) + \
-+	BARF_UNLESS_COPYABLE((dst), (src)))
-+static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
-+{
-+	if (n)
-+		memcpy(dst, src, st_mult(size, n));
-+}
-+
-+#define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(dst)) + \
-+	BARF_UNLESS_COPYABLE((dst), (src)))
-+static inline void move_array(void *dst, const void *src, size_t n, size_t size)
-+{
-+	if (n)
-+		memmove(dst, src, st_mult(size, n));
-+}
-+
-+#define DUP_ARRAY(dst, src, n) do { \
-+	size_t dup_array_n_ = (n); \
-+	COPY_ARRAY(ALLOC_ARRAY((dst), dup_array_n_), (src), dup_array_n_); \
-+} while (0)
-+
-+/*
-+ * These functions help you allocate structs with flex arrays, and copy
-+ * the data directly into the array. For example, if you had:
-+ *
-+ *   struct foo {
-+ *     int bar;
-+ *     char name[FLEX_ARRAY];
-+ *   };
-+ *
-+ * you can do:
-+ *
-+ *   struct foo *f;
-+ *   FLEX_ALLOC_MEM(f, name, src, len);
-+ *
-+ * to allocate a "foo" with the contents of "src" in the "name" field.
-+ * The resulting struct is automatically zero'd, and the flex-array field
-+ * is NUL-terminated (whether the incoming src buffer was or not).
-+ *
-+ * The FLEXPTR_* variants operate on structs that don't use flex-arrays,
-+ * but do want to store a pointer to some extra data in the same allocated
-+ * block. For example, if you have:
-+ *
-+ *   struct foo {
-+ *     char *name;
-+ *     int bar;
-+ *   };
-+ *
-+ * you can do:
-+ *
-+ *   struct foo *f;
-+ *   FLEXPTR_ALLOC_STR(f, name, src);
-+ *
-+ * and "name" will point to a block of memory after the struct, which will be
-+ * freed along with the struct (but the pointer can be repointed anywhere).
-+ *
-+ * The *_STR variants accept a string parameter rather than a ptr/len
-+ * combination.
-+ *
-+ * Note that these macros will evaluate the first parameter multiple
-+ * times, and it must be assignable as an lvalue.
-+ */
-+#define FLEX_ALLOC_MEM(x, flexname, buf, len) do { \
-+	size_t flex_array_len_ = (len); \
-+	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
-+	memcpy((void *)(x)->flexname, (buf), flex_array_len_); \
-+} while (0)
-+#define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
-+	size_t flex_array_len_ = (len); \
-+	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
-+	memcpy((x) + 1, (buf), flex_array_len_); \
-+	(x)->ptrname = (void *)((x)+1); \
-+} while(0)
-+#define FLEX_ALLOC_STR(x, flexname, str) \
-+	FLEX_ALLOC_MEM((x), flexname, (str), strlen(str))
-+#define FLEXPTR_ALLOC_STR(x, ptrname, str) \
-+	FLEXPTR_ALLOC_MEM((x), ptrname, (str), strlen(str))
-+
-+static inline char *xstrdup_or_null(const char *str)
-+{
-+	return str ? xstrdup(str) : NULL;
-+}
-+
-+static inline size_t xsize_t(off_t len)
-+{
-+	if (len < 0 || (uintmax_t) len > SIZE_MAX)
-+		die("Cannot handle files this big");
-+	return (size_t) len;
-+}
-+
-+/*
-+ * Like skip_prefix, but compare case-insensitively. Note that the comparison
-+ * is done via tolower(), so it is strictly ASCII (no multi-byte characters or
-+ * locale-specific conversions).
-+ */
-+static inline int skip_iprefix(const char *str, const char *prefix,
-+			       const char **out)
-+{
-+	do {
-+		if (!*prefix) {
-+			*out = str;
-+			return 1;
-+		}
-+	} while (tolower(*str++) == tolower(*prefix++));
-+	return 0;
-+}
-+
-+/*
-+ * Like skip_prefix_mem, but compare case-insensitively. Note that the
-+ * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
-+ * characters or locale-specific conversions).
-+ */
-+static inline int skip_iprefix_mem(const char *buf, size_t len,
-+				   const char *prefix,
-+				   const char **out, size_t *outlen)
-+{
-+	do {
-+		if (!*prefix) {
-+			*out = buf;
-+			*outlen = len;
-+			return 1;
-+		}
-+	} while (len-- > 0 && tolower(*buf++) == tolower(*prefix++));
-+	return 0;
-+}
-+
-+static inline int strtoul_ui(char const *s, int base, unsigned int *result)
-+{
-+	unsigned long ul;
-+	char *p;
-+
-+	errno = 0;
-+	/* negative values would be accepted by strtoul */
-+	if (strchr(s, '-'))
-+		return -1;
-+	ul = strtoul(s, &p, base);
-+	if (errno || *p || p == s || (unsigned int) ul != ul)
-+		return -1;
-+	*result = ul;
-+	return 0;
-+}
-+
-+static inline int strtol_i(char const *s, int base, int *result)
-+{
-+	long ul;
-+	char *p;
-+
-+	errno = 0;
-+	ul = strtol(s, &p, base);
-+	if (errno || *p || p == s || (int) ul != ul)
-+		return -1;
-+	*result = ul;
-+	return 0;
-+}
-+
-+static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
-+			      size_t nmatch, regmatch_t pmatch[], int eflags)
-+{
-+	assert(nmatch > 0 && pmatch);
-+	pmatch[0].rm_so = 0;
-+	pmatch[0].rm_eo = size;
-+	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
-+}
-+
-+/*
-+ * Our code often opens a path to an optional file, to work on its
-+ * contents when we can successfully open it.  We can ignore a failure
-+ * to open if such an optional file does not exist, but we do want to
-+ * report a failure in opening for other reasons (e.g. we got an I/O
-+ * error, or the file is there, but we lack the permission to open).
-+ *
-+ * Call this function after seeing an error from open() or fopen() to
-+ * see if the errno indicates a missing file that we can safely ignore.
-+ */
-+static inline int is_missing_file_error(int errno_)
-+{
-+	return (errno_ == ENOENT || errno_ == ENOTDIR);
-+}
-+
-+/*
-+ * container_of - Get the address of an object containing a field.
-+ *
-+ * @ptr: pointer to the field.
-+ * @type: type of the object.
-+ * @member: name of the field within the object.
-+ */
-+#define container_of(ptr, type, member) \
-+	((type *) ((char *)(ptr) - offsetof(type, member)))
-+
-+/*
-+ * helper function for `container_of_or_null' to avoid multiple
-+ * evaluation of @ptr
-+ */
-+static inline void *container_of_or_null_offset(void *ptr, size_t offset)
-+{
-+	return ptr ? (char *)ptr - offset : NULL;
-+}
-+
-+/*
-+ * like `container_of', but allows returned value to be NULL
-+ */
-+#define container_of_or_null(ptr, type, member) \
-+	(type *)container_of_or_null_offset(ptr, offsetof(type, member))
-+
-+
-+#endif
+@@ -3,6 +3,7 @@
+ 
+ #include "git-compat-util.h"
+ #include "wrapper.h"
++#include "usage.h"
+ 
+ /*
+  * ARRAY_SIZE - get the number of elements in a visible array
 diff --git a/git-compat-util.h b/git-compat-util.h
-index 9d3c21acbb..f73c8727d1 100644
+index f73c8727d1..481dac22b0 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -106,51 +106,6 @@ struct strbuf;
- 	BUILD_ASSERT_OR_ZERO(0 ? ((*(dst) = *(src)), 0) : \
- 				 sizeof(*(dst)) == sizeof(*(src)))
- #endif
--/*
-- * ARRAY_SIZE - get the number of elements in a visible array
-- * @x: the array whose size you want.
-- *
-- * This does not work on pointers, or arrays declared as [], or
-- * function parameters.  With correct compiler support, such usage
-- * will cause a build error (see the build_assert_or_zero macro).
-- */
--#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]) + BARF_UNLESS_AN_ARRAY(x))
--
--#define bitsizeof(x)  (CHAR_BIT * sizeof(x))
--
--#define maximum_signed_value_of_type(a) \
--    (INTMAX_MAX >> (bitsizeof(intmax_t) - bitsizeof(a)))
--
--#define maximum_unsigned_value_of_type(a) \
--    (UINTMAX_MAX >> (bitsizeof(uintmax_t) - bitsizeof(a)))
--
--/*
-- * Signed integer overflow is undefined in C, so here's a helper macro
-- * to detect if the sum of two integers will overflow.
-- *
-- * Requires: a >= 0, typeof(a) equals typeof(b)
-- */
--#define signed_add_overflows(a, b) \
--    ((b) > maximum_signed_value_of_type(a) - (a))
--
--#define unsigned_add_overflows(a, b) \
--    ((b) > maximum_unsigned_value_of_type(a) - (a))
--
--/*
-- * Returns true if the multiplication of "a" and "b" will
-- * overflow. The types of "a" and "b" must match and must be unsigned.
-- * Note that this macro evaluates "a" twice!
-- */
--#define unsigned_mult_overflows(a, b) \
--    ((a) && (b) > maximum_unsigned_value_of_type(a) / (a))
--
--/*
-- * Returns true if the left shift of "a" by "shift" bits will
-- * overflow. The type of "a" must be unsigned.
-- */
--#define unsigned_left_shift_overflows(a, shift) \
--    ((shift) < bitsizeof(a) && \
--     (a) > maximum_unsigned_value_of_type(a) >> (shift))
+@@ -572,20 +572,6 @@ static inline int git_has_dir_sep(const char *path)
  
- #ifdef __GNUC__
- #define TYPEOF(x) (__typeof__(x))
-@@ -158,14 +113,6 @@ struct strbuf;
- #define TYPEOF(x)
+ #include "compat/bswap.h"
+ 
+-#include "wrapper.h"
+-
+-/* General helper functions */
+-NORETURN void usage(const char *err);
+-NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-NORETURN void die_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-int die_message(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-int die_message_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-
+ #ifndef NO_OPENSSL
+ #ifdef APPLE_COMMON_CRYPTO
+ #include "compat/apple-common-crypto.h"
+@@ -600,30 +586,6 @@ void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ #include <openssl/rand.h>
  #endif
  
--#define MSB(x, bits) ((x) & TYPEOF(x)(~0ULL << (bitsizeof(x) - (bits))))
--#define HAS_MULTI_BITS(i)  ((i) & ((i) - 1))  /* checks if an integer has more than 1 bit set */
--
--#define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
--
--/* Approximation of the length of the decimal representation of this type. */
--#define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
--
- #ifdef __MINGW64__
- #define _POSIX_C_SOURCE 1
- #elif defined(__sun__)
-@@ -677,88 +624,6 @@ void set_warn_routine(report_fn routine);
- report_fn get_warn_routine(void);
- void set_die_is_recursing_routine(int (*routine)(void));
- 
 -/*
-- * If the string "str" begins with the string found in "prefix", return 1.
-- * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
-- * the string right after the prefix).
-- *
-- * Otherwise, return 0 and leave "out" untouched.
-- *
-- * Examples:
-- *
-- *   [extract branch name, fail if not a branch]
-- *   if (!skip_prefix(ref, "refs/heads/", &branch)
-- *	return -1;
-- *
-- *   [skip prefix if present, otherwise use whole string]
-- *   skip_prefix(name, "refs/heads/", &name);
+- * Let callers be aware of the constant return value; this can help
+- * gcc with -Wuninitialized analysis. We restrict this trick to gcc, though,
+- * because other compilers may be confused by this.
 - */
--static inline int skip_prefix(const char *str, const char *prefix,
--			      const char **out)
+-#if defined(__GNUC__)
+-static inline int const_error(void)
 -{
--	do {
--		if (!*prefix) {
--			*out = str;
--			return 1;
--		}
--	} while (*str++ == *prefix++);
--	return 0;
+-	return -1;
 -}
+-#define error(...) (error(__VA_ARGS__), const_error())
+-#define error_errno(...) (error_errno(__VA_ARGS__), const_error())
+-#endif
 -
--/*
-- * Like skip_prefix, but promises never to read past "len" bytes of the input
-- * buffer, and returns the remaining number of bytes in "out" via "outlen".
-- */
--static inline int skip_prefix_mem(const char *buf, size_t len,
--				  const char *prefix,
--				  const char **out, size_t *outlen)
--{
--	size_t prefix_len = strlen(prefix);
--	if (prefix_len <= len && !memcmp(buf, prefix, prefix_len)) {
--		*out = buf + prefix_len;
--		*outlen = len - prefix_len;
--		return 1;
--	}
--	return 0;
--}
+-typedef void (*report_fn)(const char *, va_list params);
 -
--/*
-- * If buf ends with suffix, return 1 and subtract the length of the suffix
-- * from *len. Otherwise, return 0 and leave *len untouched.
-- */
--static inline int strip_suffix_mem(const char *buf, size_t *len,
--				   const char *suffix)
--{
--	size_t suflen = strlen(suffix);
--	if (*len < suflen || memcmp(buf + (*len - suflen), suffix, suflen))
--		return 0;
--	*len -= suflen;
--	return 1;
--}
--
--/*
-- * If str ends with suffix, return 1 and set *len to the size of the string
-- * without the suffix. Otherwise, return 0 and set *len to the size of the
-- * string.
-- *
-- * Note that we do _not_ NUL-terminate str to the new length.
-- */
--static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
--{
--	*len = strlen(str);
--	return strip_suffix_mem(str, len, suffix);
--}
--
--#define SWAP(a, b) do {						\
--	void *_swap_a_ptr = &(a);				\
--	void *_swap_b_ptr = &(b);				\
--	unsigned char _swap_buffer[sizeof(a)];			\
--	memcpy(_swap_buffer, _swap_a_ptr, sizeof(a));		\
--	memcpy(_swap_a_ptr, _swap_b_ptr, sizeof(a) +		\
--	       BUILD_ASSERT_OR_ZERO(sizeof(a) == sizeof(b)));	\
--	memcpy(_swap_b_ptr, _swap_buffer, sizeof(a));		\
--} while (0)
+-void set_die_routine(NORETURN_PTR report_fn routine);
+-report_fn get_die_message_routine(void);
+-void set_error_routine(report_fn routine);
+-report_fn get_error_routine(void);
+-void set_warn_routine(report_fn routine);
+-report_fn get_warn_routine(void);
+-void set_die_is_recursing_routine(int (*routine)(void));
 -
  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
  
  #ifndef PROT_READ
-@@ -964,57 +829,6 @@ const char *inet_ntop(int af, const void *src, char *dst, size_t size);
- int git_atexit(void (*handler)(void));
+@@ -942,23 +904,6 @@ int git_regcomp(regex_t *preg, const char *pattern, int cflags);
+ #endif
  #endif
  
--static inline size_t st_add(size_t a, size_t b)
--{
--	if (unsigned_add_overflows(a, b))
--		die("size_t overflow: %"PRIuMAX" + %"PRIuMAX,
--		    (uintmax_t)a, (uintmax_t)b);
--	return a + b;
--}
--#define st_add3(a,b,c)   st_add(st_add((a),(b)),(c))
--#define st_add4(a,b,c,d) st_add(st_add3((a),(b),(c)),(d))
+-/* usage.c: only to be used for testing BUG() implementation (see test-tool) */
+-extern int BUG_exit_code;
 -
--static inline size_t st_mult(size_t a, size_t b)
--{
--	if (unsigned_mult_overflows(a, b))
--		die("size_t overflow: %"PRIuMAX" * %"PRIuMAX,
--		    (uintmax_t)a, (uintmax_t)b);
--	return a * b;
--}
+-/* usage.c: if bug() is called we should have a BUG_if_bug() afterwards */
+-extern int bug_called_must_BUG;
 -
--static inline size_t st_sub(size_t a, size_t b)
--{
--	if (a < b)
--		die("size_t underflow: %"PRIuMAX" - %"PRIuMAX,
--		    (uintmax_t)a, (uintmax_t)b);
--	return a - b;
--}
--
--static inline size_t st_left_shift(size_t a, unsigned shift)
--{
--	if (unsigned_left_shift_overflows(a, shift))
--		die("size_t overflow: %"PRIuMAX" << %u",
--		    (uintmax_t)a, shift);
--	return a << shift;
--}
--
--static inline unsigned long cast_size_t_to_ulong(size_t a)
--{
--	if (a != (unsigned long)a)
--		die("object too large to read on this platform: %"
--		    PRIuMAX" is cut off to %lu",
--		    (uintmax_t)a, (unsigned long)a);
--	return (unsigned long)a;
--}
--
--static inline int cast_size_t_to_int(size_t a)
--{
--	if (a > INT_MAX)
--		die("number too large to represent as int on this platform: %"PRIuMAX,
--		    (uintmax_t)a);
--	return (int)a;
--}
--
- /*
-  * Limit size of IO chunks, because huge chunks only cause pain.  OS X
-  * 64-bit is buggy, returning EINVAL if len >= INT_MAX; and even in
-@@ -1046,177 +860,12 @@ static inline int cast_size_t_to_int(size_t a)
- # define xalloca_free(p)    (free(p))
- #endif
- 
--/*
-- * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
-- * that ptr is used twice, so don't pass e.g. ptr++.
-- */
--#define FREE_AND_NULL(p) do { free(p); (p) = NULL; } while (0)
--
--#define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
--#define CALLOC_ARRAY(x, alloc) (x) = xcalloc((alloc), sizeof(*(x)))
--#define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
--
--#define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(dst)) + \
--	BARF_UNLESS_COPYABLE((dst), (src)))
--static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
--{
--	if (n)
--		memcpy(dst, src, st_mult(size, n));
--}
--
--#define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(dst)) + \
--	BARF_UNLESS_COPYABLE((dst), (src)))
--static inline void move_array(void *dst, const void *src, size_t n, size_t size)
--{
--	if (n)
--		memmove(dst, src, st_mult(size, n));
--}
--
--#define DUP_ARRAY(dst, src, n) do { \
--	size_t dup_array_n_ = (n); \
--	COPY_ARRAY(ALLOC_ARRAY((dst), dup_array_n_), (src), dup_array_n_); \
+-__attribute__((format (printf, 3, 4))) NORETURN
+-void BUG_fl(const char *file, int line, const char *fmt, ...);
+-#define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
+-__attribute__((format (printf, 3, 4)))
+-void bug_fl(const char *file, int line, const char *fmt, ...);
+-#define bug(...) bug_fl(__FILE__, __LINE__, __VA_ARGS__)
+-#define BUG_if_bug(...) do { \
+-	if (bug_called_must_BUG) \
+-		BUG_fl(__FILE__, __LINE__, __VA_ARGS__); \
 -} while (0)
 -
--/*
-- * These functions help you allocate structs with flex arrays, and copy
-- * the data directly into the array. For example, if you had:
-- *
-- *   struct foo {
-- *     int bar;
-- *     char name[FLEX_ARRAY];
-- *   };
-- *
-- * you can do:
-- *
-- *   struct foo *f;
-- *   FLEX_ALLOC_MEM(f, name, src, len);
-- *
-- * to allocate a "foo" with the contents of "src" in the "name" field.
-- * The resulting struct is automatically zero'd, and the flex-array field
-- * is NUL-terminated (whether the incoming src buffer was or not).
-- *
-- * The FLEXPTR_* variants operate on structs that don't use flex-arrays,
-- * but do want to store a pointer to some extra data in the same allocated
-- * block. For example, if you have:
-- *
-- *   struct foo {
-- *     char *name;
-- *     int bar;
-- *   };
-- *
-- * you can do:
-- *
-- *   struct foo *f;
-- *   FLEXPTR_ALLOC_STR(f, name, src);
-- *
-- * and "name" will point to a block of memory after the struct, which will be
-- * freed along with the struct (but the pointer can be repointed anywhere).
-- *
-- * The *_STR variants accept a string parameter rather than a ptr/len
-- * combination.
-- *
-- * Note that these macros will evaluate the first parameter multiple
-- * times, and it must be assignable as an lvalue.
-- */
--#define FLEX_ALLOC_MEM(x, flexname, buf, len) do { \
--	size_t flex_array_len_ = (len); \
--	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
--	memcpy((void *)(x)->flexname, (buf), flex_array_len_); \
--} while (0)
--#define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
--	size_t flex_array_len_ = (len); \
--	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
--	memcpy((x) + 1, (buf), flex_array_len_); \
--	(x)->ptrname = (void *)((x)+1); \
--} while(0)
--#define FLEX_ALLOC_STR(x, flexname, str) \
--	FLEX_ALLOC_MEM((x), flexname, (str), strlen(str))
--#define FLEXPTR_ALLOC_STR(x, ptrname, str) \
--	FLEXPTR_ALLOC_MEM((x), ptrname, (str), strlen(str))
--
--static inline char *xstrdup_or_null(const char *str)
--{
--	return str ? xstrdup(str) : NULL;
--}
--
--static inline size_t xsize_t(off_t len)
--{
--	if (len < 0 || (uintmax_t) len > SIZE_MAX)
--		die("Cannot handle files this big");
--	return (size_t) len;
--}
--
- #ifndef HOST_NAME_MAX
- #define HOST_NAME_MAX 256
- #endif
- 
- #include "sane-ctype.h"
- 
--/*
-- * Like skip_prefix, but compare case-insensitively. Note that the comparison
-- * is done via tolower(), so it is strictly ASCII (no multi-byte characters or
-- * locale-specific conversions).
-- */
--static inline int skip_iprefix(const char *str, const char *prefix,
--			       const char **out)
--{
--	do {
--		if (!*prefix) {
--			*out = str;
--			return 1;
--		}
--	} while (tolower(*str++) == tolower(*prefix++));
--	return 0;
--}
--
--/*
-- * Like skip_prefix_mem, but compare case-insensitively. Note that the
-- * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
-- * characters or locale-specific conversions).
-- */
--static inline int skip_iprefix_mem(const char *buf, size_t len,
--				   const char *prefix,
--				   const char **out, size_t *outlen)
--{
--	do {
--		if (!*prefix) {
--			*out = buf;
--			*outlen = len;
--			return 1;
--		}
--	} while (len-- > 0 && tolower(*buf++) == tolower(*prefix++));
--	return 0;
--}
--
--static inline int strtoul_ui(char const *s, int base, unsigned int *result)
--{
--	unsigned long ul;
--	char *p;
--
--	errno = 0;
--	/* negative values would be accepted by strtoul */
--	if (strchr(s, '-'))
--		return -1;
--	ul = strtoul(s, &p, base);
--	if (errno || *p || p == s || (unsigned int) ul != ul)
--		return -1;
--	*result = ul;
--	return 0;
--}
--
--static inline int strtol_i(char const *s, int base, int *result)
--{
--	long ul;
--	char *p;
--
--	errno = 0;
--	ul = strtol(s, &p, base);
--	if (errno || *p || p == s || (int) ul != ul)
--		return -1;
--	*result = ul;
--	return 0;
--}
--
- void git_stable_qsort(void *base, size_t nmemb, size_t size,
- 		      int(*compar)(const void *, const void *));
- #ifdef INTERNAL_QSORT
-@@ -1249,15 +898,6 @@ int git_qsort_s(void *base, size_t nmemb, size_t size,
- #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
- #endif
- 
--static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
--			      size_t nmatch, regmatch_t pmatch[], int eflags)
--{
--	assert(nmatch > 0 && pmatch);
--	pmatch[0].rm_so = 0;
--	pmatch[0].rm_eo = size;
--	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
--}
--
- #ifdef USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
- int git_regcomp(regex_t *preg, const char *pattern, int cflags);
- #define regcomp git_regcomp
-@@ -1366,21 +1006,6 @@ int git_access(const char *path, int mode);
- # endif
- #endif
- 
--/*
-- * Our code often opens a path to an optional file, to work on its
-- * contents when we can successfully open it.  We can ignore a failure
-- * to open if such an optional file does not exist, but we do want to
-- * report a failure in opening for other reasons (e.g. we got an I/O
-- * error, or the file is there, but we lack the permission to open).
-- *
-- * Call this function after seeing an error from open() or fopen() to
-- * see if the errno indicates a missing file that we can safely ignore.
-- */
--static inline int is_missing_file_error(int errno_)
--{
--	return (errno_ == ENOENT || errno_ == ENOTDIR);
--}
--
- int cmd_main(int, const char **);
- 
- /*
-@@ -1422,37 +1047,14 @@ int uncompress2(Bytef *dest, uLongf *destLen, const Bytef *source,
- 		uLong *sourceLen);
- #endif
- 
-+#include "common.h"
+ #ifndef FSYNC_METHOD_DEFAULT
+ #ifdef __APPLE__
+ #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_WRITEOUT_ONLY
+diff --git a/usage.h b/usage.h
+new file mode 100644
+index 0000000000..770076e684
+--- /dev/null
++++ b/usage.h
+@@ -0,0 +1,60 @@
++#ifndef USAGE_H
++#define USAGE_H
 +
- /*
-  * This include must come after system headers, since it introduces macros that
-  * replace system names.
-  */
- #include "banned.h"
- 
--/*
-- * container_of - Get the address of an object containing a field.
-- *
-- * @ptr: pointer to the field.
-- * @type: type of the object.
-- * @member: name of the field within the object.
-- */
--#define container_of(ptr, type, member) \
--	((type *) ((char *)(ptr) - offsetof(type, member)))
--
--/*
-- * helper function for `container_of_or_null' to avoid multiple
-- * evaluation of @ptr
-- */
--static inline void *container_of_or_null_offset(void *ptr, size_t offset)
--{
--	return ptr ? (char *)ptr - offset : NULL;
--}
--
--/*
-- * like `container_of', but allows returned value to be NULL
-- */
--#define container_of_or_null(ptr, type, member) \
--	(type *)container_of_or_null_offset(ptr, offsetof(type, member))
--
- /*
-  * like offsetof(), but takes a pointer to a variable of type which
-  * contains @member, instead of a specified type.
++#include "git-compat-util.h"
++
++/* General helper functions */
++NORETURN void usage(const char *err);
++NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
++NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
++NORETURN void die_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int die_message(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int die_message_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++
++void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
++void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++
++/*
++ * Let callers be aware of the constant return value; this can help
++ * gcc with -Wuninitialized analysis. We restrict this trick to gcc, though,
++ * because other compilers may be confused by this.
++ */
++#if defined(__GNUC__)
++static inline int const_error(void)
++{
++	return -1;
++}
++#define error(...) (error(__VA_ARGS__), const_error())
++#define error_errno(...) (error_errno(__VA_ARGS__), const_error())
++#endif
++
++typedef void (*report_fn)(const char *, va_list params);
++
++void set_die_routine(NORETURN_PTR report_fn routine);
++report_fn get_die_message_routine(void);
++void set_error_routine(report_fn routine);
++report_fn get_error_routine(void);
++void set_warn_routine(report_fn routine);
++report_fn get_warn_routine(void);
++void set_die_is_recursing_routine(int (*routine)(void));
++
++/* usage.c: only to be used for testing BUG() implementation (see test-tool) */
++extern int BUG_exit_code;
++
++/* usage.c: if bug() is called we should have a BUG_if_bug() afterwards */
++extern int bug_called_must_BUG;
++
++__attribute__((format (printf, 3, 4))) NORETURN
++void BUG_fl(const char *file, int line, const char *fmt, ...);
++#define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
++__attribute__((format (printf, 3, 4)))
++void bug_fl(const char *file, int line, const char *fmt, ...);
++#define bug(...) bug_fl(__FILE__, __LINE__, __VA_ARGS__)
++#define BUG_if_bug(...) do { \
++	if (bug_called_must_BUG) \
++		BUG_fl(__FILE__, __LINE__, __VA_ARGS__); \
++} while (0)
++
++#endif /* USAGE_H */
 -- 
 2.41.0.rc2.161.g9c6817b8e7-goog
 
