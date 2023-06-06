@@ -2,106 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B31FC7EE29
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 04:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D3B9C77B73
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 04:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233849AbjFFEW4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 00:22:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57910 "EHLO
+        id S234015AbjFFEwU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 00:52:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232421AbjFFEWi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 00:22:38 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10C7E9
-        for <git@vger.kernel.org>; Mon,  5 Jun 2023 21:22:35 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id 41be03b00d2f7-543ae6ce8d1so1819500a12.2
-        for <git@vger.kernel.org>; Mon, 05 Jun 2023 21:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1686025355; x=1688617355;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r+YVGS7dCERCrwtQvd4EiJ5JAyJujoTZwiDdkXIDyRI=;
-        b=IMvxK4/RaIiMn4dkvhr0nEQrS8oKreCYMoGsR85IuKO1Du1a4dD6LDabrYnmpnn+zy
-         9PiiQB3vjrzlunJWIjtKq58xSqQsWFjkW/M1fjJw/mWN0ixsaq15IrahIqQNhqDIvF9X
-         j8GlmC/HwKbhTN97KLHDcFQvoXuN7GcK3Ldwu8BkbOFsUZ4Vruv46WToPCGvpa1iLf+U
-         bE29pc/M4rjLTblcwdKZcn3WKXkvV6Tkvwuku22SFIW7svHdlQpp+KeZ0Ybi7bBSprhk
-         qVufXG4rPAyTGodW1wOC/lkIapufy4uXgCQfLqBuc4FCMpTVxfp2owxl+5z8IP3azWlT
-         N8BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686025355; x=1688617355;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r+YVGS7dCERCrwtQvd4EiJ5JAyJujoTZwiDdkXIDyRI=;
-        b=JN7A3cdCCWBTgzJUZTDl9wsjrrN7XsF8wCfpRTAckh0leWOWnPU/eYk1+LMo4DjL/f
-         n7c7i69IcZg5pba1F6zdcQ4Nii4wnlpysZ1IRjO8LSPXFMVY+seHkACFaFuAI3qSRR7F
-         0qE+c8Os0kmUuM5x6YnnGQ70TLlJarUejG/I9NH773r9qlN9eCSbDh5cmmx3T6kcizX/
-         0ZG7WYjxuA2p8JENEVywu7NkUI4tpFveuo04oOEjwzBidDkxy96WuvI3eslQ4FFQDGF8
-         IA767OpXuDEQwf5/owfzVdVYUi5daNhMAt3zHGejQjIo1F03ViurMGq71fQ4gVnRkSmA
-         aWiw==
-X-Gm-Message-State: AC+VfDyvcMjktX3kQpF0vZFj7uxM48FSM4ARNqdVMkTer8uAEyjOsye4
-        oBdgiUdL8adj0c6F9iF1h2fyl2yAXyXZH37u1A==
-X-Google-Smtp-Source: ACHHUZ7YhW34LZOa+XyImJ4OCdeDXgMzXPPcAvoTlObtaT3M5CLOUWPqntxRk0RGPD3u7PrJgy0rgw==
-X-Received: by 2002:a17:90a:2c85:b0:24d:f59a:d331 with SMTP id n5-20020a17090a2c8500b0024df59ad331mr767745pjd.26.1686025355423;
-        Mon, 05 Jun 2023 21:22:35 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id i7-20020a17090adc0700b0025043a8185dsm6712008pjv.23.2023.06.05.21.22.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 21:22:34 -0700 (PDT)
-Message-ID: <523de20d-a816-5101-af82-5bfff26fbcac@github.com>
-Date:   Mon, 5 Jun 2023 21:22:33 -0700
+        with ESMTP id S230362AbjFFEwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 00:52:19 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABCFB83
+        for <git@vger.kernel.org>; Mon,  5 Jun 2023 21:52:17 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 14DDC32002D8;
+        Tue,  6 Jun 2023 00:52:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Tue, 06 Jun 2023 00:52:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm1; t=1686027134; x=1686113534; bh=gp
+        rLau4OppZ5kYyLTnUhnFg50UQUjwBfIvudhC2jvXY=; b=fd6pjccKKXpo240nkt
+        kOUyVzpT5HpclgveF+X7scaNIxDu3ldOb7LqVW0th309Vp9KbLWecBxTHIoZYdir
+        myHKv0ijRdig8zRtt7d1cWm0lC5evcweRwiKnA2M8fA3I2tSPra8sBzpsjOxSwYR
+        MX4p1iNaaDDWjUgFMDdQwLLeFHM9WsIJEMQTmy2ClQf2/Abqd8oeWzYwsa+ILnEa
+        Cf/UToT5f/UVD+EiBDMIgoLO4M2VX6ZbA0H8yF2NVNEQvvSwFtMeJcwLAXaNeC6V
+        /Xq0NLrmNj+izNv7s9Kx36LRbdI+V2KANC2eeuvj2BJQaBobdWakfg8Nsi3LcLBv
+        dPZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; t=1686027134; x=1686113534; bh=gprLau4OppZ5k
+        YyLTnUhnFg50UQUjwBfIvudhC2jvXY=; b=kJvUe8xFlaU19mv+cz2TpIaJ8Hbbf
+        FZiihOBuIN2+WR+ctSvRHtiSlA17TMnoZUHj5O5L1PxCS03IYVoDjamKB6qnHp3j
+        z2RvNQLorOx8ojzBoHgYuQtkUMA169msFWeGTKGltTpzsT+WJGNpPKuTGQsuWDAf
+        jmDULo44EwQC4UiRTtTEYsHBeL5cSEUoRKFcME0i/pTYE2eCPl4SRIivS1tJp1kp
+        7rhhQ/BzNkA0WUQFPs8RczNvNMfVJwDC7AJgjA6a3x1opopzsF1M6T9P5GkBye7N
+        Crm8K4150kTmdmhsQ4b0GExeKqd1jEgvCq7el8EQuQ1HpQ1UKVMQqIHHg==
+X-ME-Sender: <xms:frt-ZEeljM0AvPfnnTVwOIGtbkYpyKQSFt8HA1t_RFx7bgtxYfkQ6A>
+    <xme:frt-ZGNFyhh_isY9CIaHpNoy8Xrlpy10nhAsMe2Z1s53C-Bkt8kp6NrhJIXtTphV4
+    SHGi9VELHRRFUME7A>
+X-ME-Received: <xmr:frt-ZFjVGhGsW89qhTD47-C2NtKophK2Fd-jht6GCKSXLgVvCzbf-ruZeddii06XuLW-eDDqXR6v-nTi7AYP5a2yqZvJ2Cq_p2Uw3aZ_qHY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedttddgkeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:frt-ZJ9SHaYlvJZsq7p7oYdsYwv7xzWWT2TrxUm9V9VzcHHbkEA1Eg>
+    <xmx:frt-ZAvMjluX6hamFfnPe79D0D4D1ML0PmjiYG1UcKtnDEYz9O2C_g>
+    <xmx:frt-ZAFfKWwJmRQ8uIASsgPU9y_DaDgK8lnDXcIjsL6Tc60-N86jLw>
+    <xmx:frt-ZMJDJOOZEtM-F8S8AMaPK8tTyEA-aA7o-e0a3kcF2vMVdgmPkw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jun 2023 00:52:13 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 7948d130 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 6 Jun 2023 04:51:06 +0000 (UTC)
+Date:   Tue, 6 Jun 2023 06:52:08 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH 5/5] cat-file: Introduce new option to delimit output
+ with NUL characters
+Message-ID: <ZH67eBAtFxo95aBL@ncase>
+References: <cover.1685710884.git.ps@pks.im>
+ <07a7c34615ec68fa42c725fd34d6144b6b191f03.1685710884.git.ps@pks.im>
+ <9900512f-b0da-2e47-f1ab-ed51ec2c78ff@gmail.com>
+ <xmqq35355utz.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.2
-Subject: Re: [PATCH v1] worktree: integrate with sparse-index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <20230605161644.491424-1-cheskaqiqi@gmail.com>
- <773c2f7a-8637-ab0b-e0a8-ab553c90e88b@github.com>
- <CAMO4yUEQZz8DqPb7RyN8Owb=23p==6XS6G7Bza77p4-iydo6Qg@mail.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <CAMO4yUEQZz8DqPb7RyN8Owb=23p==6XS6G7Bza77p4-iydo6Qg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="8nwHKXDSjX29v71M"
+Content-Disposition: inline
+In-Reply-To: <xmqq35355utz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
->>> +test_expect_success 'worktree is not expanded' '
->>> +     init_repos &&
->>> +
->>> +     test_all_match git worktree add .worktrees/hotfix &&
->>
->> Shouldn't 'git worktree add' not expand the index? Why use 'test_all_match'
->> instead of 'ensure_not_expanded'?
-> 
-> Here's my perspective on why my use of "test_all_match" instead of
-> "ensure_not_expanded" in "git worktree add":
-> 
-> The functions "validate_no_submodules" and "check_clean_worktree" are
-> specifically related to the "git worktree remove" command, and "git
-> worktree add" doesn't require index reading, so with or without the
-> "ensure_full_index" wouldn't affect the "git worktree add" command.
-> I look forward to hearing your thoughts regarding whether my
-> understanding is correct or not.
 
-I see, thanks for the explanation. I could understand it both ways: on one
-hand, you don't want redundant/unnecessary tests; on the other hand, that
-test design decision relies pretty heavily on knowing the internal
-implementation details, which the tests conceptually shouldn't have
-visibility to. 
+--8nwHKXDSjX29v71M
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'd still lean towards using 'ensure_not_expanded' (it protects us from
-future changes causing index expansion, although that seems fairly
-unlikely). However, if you do choose to stick with not using
-'ensure_not_expanded', I'd recommend using 'git -C sparse-index worktree add
-.worktrees/hotfix' instead of 'test_all_match'. The 'worktree' test already
-compares behavior across the three test repositories; to keep things focused
-on index expansion, only the 'sparse-index' repo should be set up & tested.
+On Tue, Jun 06, 2023 at 08:54:16AM +0900, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>=20
+> >> Instead, introduce a new option `-Z` that switches to NUL-delimited
+> >> input and output. The old `-z` option is marked as deprecated with a
+> >> hint that its output may become unparsable.
+> >
+> > The commit message explains the problem well, I agree adding a new
+> > option is the cleanest solution.
+> >
+> >...
+> >>   @@ -246,6 +246,12 @@ respectively print:
+> >>   -z::
+> >>   	Only meaningful with `--batch`, `--batch-check`, or
+> >>   	`--batch-command`; input is NUL-delimited instead of
+> >> +	newline-delimited. This option is deprecated in favor of
+> >> +	`-Z` as the output can otherwise be ambiguous.
+> >> +
+> >> +-Z::
+> >> +	Only meaningful with `--batch`, `--batch-check`, or
+> >> +	`--batch-command`; input and output is NUL-delimited instead of
+> >>   	newline-delimited.
+> >
+> > The documentation changes look good. I wonder if we should put the
+> > documentation for "-Z" above "-z" so users see the preferred option
+> > first.
+>=20
+> Hmph, I expected "-z" and "-Z" to be orthogonal, the former
+> controlling how input records are delimited, the latter controlling
+> how output records are delimited, as it usually is a good idea to
+> keep things that could be orthogonal to be orthogonal to avoid
+> unnecessarily robbing users flexibility.  "-Z is a new way that is
+> preferred over -z" was something I did not expect, actually.
+>=20
+> I am not outright rejecting such a deliberately limiting design, but
+> I'll have to think about it a bit.
 
-> 
-> Thanks for your valuable feedback！
+Well, the way I see it we shouldn't have ever decoupled the input and
+output format, and I consider it a bug that `-z` did as it makes it
+unusable with arbitrary input. So I'd rather be helping the user of
+these modes to do the right thing and NUL-delimit both input and output
+than running into these edge cases later down the road.
 
+That being said I'd be fine to change this series to mean "-Z changes
+stdout" if you insist. In that case we should be pointing out in our
+documentation that "You should never use `-z` without `-Z` when you
+process arbitrary input".
+
+Patrick
+
+--8nwHKXDSjX29v71M
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmR+u3cACgkQVbJhu7ck
+PpQXjA/9HTmOEiRdNFdyu7w00dcXyhiDgorIoARQjVRzCR6OA6lTWRtvfRRZNgE4
+e/qalFvror5QstKWJAS9/zCzDSYcaAe9tVL4eKShan7d5TgYTQGxuH3akpXjNV88
+M/Crh22nRBboB1Sv0k4xoFNj69AOntryE0tyzzKJ3k+cVOsa4dkVJzL4FGQEhG5W
+fPYV2aLicEEALcbVkiUxTxXOhdQEHBUM1PwvLHLS9DL2oGZ1QRde2CZeRb6/D8FQ
+jaD3E0teTnOuXF0BArUzLi1eJUnEh5kNXBSoTcFJcKoSHU4IzGJYTb4aX3PgMPXG
+tyWMytEa8PcfLwP2J1BbS4GbJ8xpWPvv36mg4h69IXE/7WrWFY/+oRk6P40byy10
+G4l/XyzzFK3ixCfk+JWmtpRihoXMeWKa324QVYhiUWwqj/M1aHp8fhPDG4HqvOfn
+AMpzBIhYSU5IsAC6n9ONfoxBKZ7eutvODOWaQ+aSEu1MlrNIEyJFreuJQm/LTCvY
+Qf+rQEjxSGbFUDaouJmVKwJS3RFY8VjTHO5W5aQJCocXIP5ElfxN3srUAgzypVXF
+ZhVNWh5KVJ9pbhbumJDAr1lt+mLpBiYTjMGbj2KqhUa+4PIdXZlVsl5SYBnGh35z
+XET80jv4HlVBDYuyhnxxkJIt0dyrh6q4V4kfHWctrgi1gjU0HfA=
+=mwd2
+-----END PGP SIGNATURE-----
+
+--8nwHKXDSjX29v71M--
