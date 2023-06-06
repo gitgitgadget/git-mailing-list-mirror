@@ -2,241 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1019C7EE24
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 17:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 321A8C77B7A
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 19:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237339AbjFFR0w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 13:26:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35620 "EHLO
+        id S239586AbjFFTsS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 15:48:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231470AbjFFR0v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 13:26:51 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E79119
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 10:26:47 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id 6a1803df08f44-6261d4ea5f0so45442856d6.0
-        for <git@vger.kernel.org>; Tue, 06 Jun 2023 10:26:47 -0700 (PDT)
+        with ESMTP id S237090AbjFFTrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 15:47:47 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D5510D7
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 12:47:25 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-53f06f7cc74so3516832a12.1
+        for <git@vger.kernel.org>; Tue, 06 Jun 2023 12:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686072406; x=1688664406;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=haWNbJYyfuSJFdFAlQ4H05g5OdYqlwTfPlg3ujg32V8=;
-        b=AOEAkbz9FgiVgh41X1YtsoPG7+T+OyMnwrfoqGJ/filBrsY4CqShFvTf6Yh5B10GD2
-         iDMZ14V0lTlBHIGHzCsvO0NE2B3k67OXkEgZChsi/bw83FoXgTXT3jwxqhRGh+M4qksC
-         ZoZMWBHuDuGDj9jv51d8AJF6uBsQQ6Vs9f+I5vQjTLpXsigPNrpyX8+N/pRqeQQqArR4
-         Viy/NCb35YUpt5kilqcRHg/RXbJ1TSD8u2poabBY+d5e/wViFKoJ3HHVe0Z4RUWPFfa4
-         352mRKA8QmfR0VGznLIScgvENbJqLSCQRgJXjUjVQZTsmXI3Fd//M4rjyYFBt3MIxvNY
-         TTfA==
+        d=google.com; s=20221208; t=1686080845; x=1688672845;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rsz6kwdtXm0PEBQNUYRlHVfk9GpsM8DMd9G4WcGajwo=;
+        b=hYivzzC4fa6PTtO5ywnoGKLBewguBUAJRQTMU5vR5Qy+X6Ul1K2oUaq+OAA2WYKuhb
+         UjoR6PNuOCmFwK3nvSAt1zLEsAcYY0ue/Sqe6leR1EfeiKBhLbmWjX5s6+n0T55UnreD
+         ou/Kq19AQtN4oFyLx8Yqkp6L2KxnvvqSqPiikXI0Rc8MHmGR1Y9NpS+E3zBuJ+leyomR
+         XvPk940MbcKDEKs5ciPhX0rlH+aAIiEFiFDcn/PlSbT1IxF1EjIhJ7QDd+gMxrpQlhL7
+         wmiAf7BG3fMfXlPMvdWUUl47FkPklX4FQp3lTqrBDiU0hPwZIjZTyX62LUHcnvICOWa6
+         d/Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686072406; x=1688664406;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=haWNbJYyfuSJFdFAlQ4H05g5OdYqlwTfPlg3ujg32V8=;
-        b=IIgoqek/PThav7mwNnSG7Q9QtwM/Ps78L6HjtSfxAwHySzGzJsCjbY44wIGoqdrvW+
-         31xh2Wxvo5nAO59yu1zxquxL0kXD02NzbuMmLTRda/rFUnAnJ1uTiWALcXfD7VVyxZLf
-         UUaOgRAgePvaGHG8Bk0PgHKyif36itquXmolKpChjyArNc7O8dmgWwHAGu2Vh8wB5mki
-         EeDGKsnTkCq9sUhBaXR20NOxT0nSXDS6OnJk8i23l9I+Qvk1kWCIqmBJwYD4tbIArGic
-         Gr1r0p5oBspFVOb+I5+MdQtrAtmv545UW7OuAGqCzH7xdZQB1jpVoDhwZIMOqzbWH6Au
-         bhWw==
-X-Gm-Message-State: AC+VfDy5y+Ass8QI+dXFPKKRxVQQBGzst4cBAWZF2oM1P8VMDCJLBF7n
-        vfGPUlb0HlEVuh+zmYWMsq3g0pzfPXvwZw==
-X-Google-Smtp-Source: ACHHUZ7+8xZuSd5Qet5KHQD+CAojhGTzKRZKjZHi6C2wJvqGPQU765MYdgO01n5u7mQFnEVLscY71w==
-X-Received: by 2002:a05:6214:20ec:b0:623:86a9:7696 with SMTP id 12-20020a05621420ec00b0062386a97696mr352178qvk.5.1686072405667;
-        Tue, 06 Jun 2023 10:26:45 -0700 (PDT)
-Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
-        by smtp.googlemail.com with ESMTPSA id d21-20020a0caa15000000b0061b2a2f949bsm5479212qvb.61.2023.06.06.10.26.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 10:26:45 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
+        d=1e100.net; s=20221208; t=1686080845; x=1688672845;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rsz6kwdtXm0PEBQNUYRlHVfk9GpsM8DMd9G4WcGajwo=;
+        b=iO3MxYPumaj/hGfhDvsRvQ7/tqKOdXizt4+xVnvQc5avA13whCtnbJo28nhsrLyJ3L
+         wW9p2Mk9YPGXatsW/mn/RPB0HEjFGr0ZEHx65yaZrrYnF1v7VrnwLnk+Gl4riZ00jcDz
+         VnFZ7DG5R+33Tk6gx2h+pmoSTa0KOOSlkOu/XbUzA1c1Baq/eO1WmZGWMkw27Ioy0fwh
+         3DPf3W0XxnnV03zi4bvP7oAPGKV9Sp9PbgZhiyGN44bQLav0Gfopu2iM25miQB6094Om
+         vrBIBv/JBAjj873PnssIRO8QMfOBIJvMiAWNgyunQQOuudKaspno7wMC4M8m+Vxy2n0Y
+         Vjvw==
+X-Gm-Message-State: AC+VfDxQr70cpgvrNZ62FXwvV08gkYLZ5AT0K9wNQsJ48LXDCqbVAoN/
+        4gGiOg+mBHMeVZ+DhdZ0pn6t6gRwhGaPtxiMykdScOHQ9qQiyb2WXHFIoPV5jJ3LqLv1MFXpvge
+        Wg6OyQPiIxnnayDlO2whF7Yc03z/tTjJYSyXNi0gz1VU2A5xPy203zLWyurKPa2ejGQ==
+X-Google-Smtp-Source: ACHHUZ60k3UoSEDNHNj5Edpef0yYOy6lmufPHY9I83I+K/Uf6FPLpXmBhqlg2nOguMJkH+lLmr8KkmGVXMYlDsE=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a63:c106:0:b0:543:fd61:5d38 with SMTP id
+ w6-20020a63c106000000b00543fd615d38mr480031pgf.2.1686080845289; Tue, 06 Jun
+ 2023 12:47:25 -0700 (PDT)
+Date:   Tue,  6 Jun 2023 19:47:20 +0000
+In-Reply-To: <20230512171429.2202982-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230512171429.2202982-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
+Message-ID: <20230606194720.2053551-1-calvinwan@google.com>
+Subject: [PATCH v7 0/7] strbuf cleanups
+From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
-        gitster@pobox.com
-Subject: [PATCH v2] worktree: integrate with sparse-index
-Date:   Tue,  6 Jun 2023 13:26:33 -0400
-Message-Id: <20230606172633.669916-1-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230605161644.491424-1-cheskaqiqi@gmail.com>
-References: <20230605161644.491424-1-cheskaqiqi@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The index is read in 'worktree.c' at two points:
+I rebased this series onto 2.41 and noticed I was getting a compilation
+error for a missing dependency to repository in dir.h. With all of the
+other cleanups happening, I assume some dependency chain that used to
+exist doesn't anymore. This reroll moves "strbuf: clarify dependency" to
+the second patch so any dependency chain broken by the other cleanup
+patches can be caught. And that is why patch 4 adds a forward
+declaration back. I also caught an additional unnecessary dependency
+that could be removed in patch 5. This series should now be able to be
+rebased onto 2.41 without any issue.
 
-1.The 'validate_no_submodules' function, which checks if there are any
-submodules present in the worktree.
+Calvin Wan (7):
+  strbuf: clarify API boundary
+  strbuf: clarify dependency
+  abspath: move related functions to abspath
+  credential-store: move related functions to credential-store file
+  object-name: move related functions to object-name
+  path: move related function to path
+  strbuf: remove global variable
 
-2.The 'check_clean_worktree' function, which verifies if a worktree is
-'clean', i.e., there are no untracked or modified but uncommitted files.
-This is done by running the 'git status' command, and an error message
-is thrown if the worktree is not clean. Given that 'git status' is
-already sparse-aware, the function is also sparse-aware.
+ abspath.c                  |  36 ++++++++++++
+ abspath.h                  |  21 +++++++
+ add-patch.c                |  12 ++--
+ builtin/am.c               |   2 +-
+ builtin/branch.c           |   4 +-
+ builtin/commit.c           |   2 +-
+ builtin/credential-store.c |  19 +++++++
+ builtin/merge.c            |  10 ++--
+ builtin/notes.c            |  16 +++---
+ builtin/rebase.c           |   2 +-
+ builtin/stripspace.c       |   6 +-
+ builtin/tag.c              |   9 ++-
+ dir.h                      |   2 +
+ fmt-merge-msg.c            |   9 ++-
+ gpg-interface.c            |   5 +-
+ hook.c                     |   1 +
+ object-name.c              |  15 +++++
+ object-name.h              |   9 +++
+ path.c                     |  20 +++++++
+ path.h                     |   5 ++
+ pretty.c                   |   1 +
+ rebase-interactive.c       |  15 ++---
+ sequencer.c                |  24 +++++---
+ strbuf.c                   | 113 ++++---------------------------------
+ strbuf.h                   |  57 ++++++-------------
+ tempfile.c                 |   1 +
+ wt-status.c                |   6 +-
+ 27 files changed, 229 insertions(+), 193 deletions(-)
 
-Hence we can just set the requires-full-index to false for
-"git worktree".
-
-Add tests that verify that 'git worktree' behaves correctly when the
-sparse index is enabled and test to ensure the index is not expanded.
-
-The `p2000` tests demonstrate a ~20% execution time reduction for
-'git worktree' using a sparse index:
-
-(Note:the p2000 test results didn't reflect the huge speedup because of
-the index reading time is minuscule comparing to the filesystem
-operations.)
-
-Test                                       before  after
------------------------------------------------------------------------
-2000.102: git worktree add....(full-v3)    3.15    2.82  -10.5%
-2000.103: git worktree add....(full-v4)    3.14    2.84  -9.6%
-2000.104: git worktree add....(sparse-v3)  2.59    2.14  -16.4%
-2000.105: git worktree add....(sparse-v4)  2.10    1.57  -25.2%
-
-Helped-by: Victoria Dye <vdye@github.com>
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
-
-Range-diff against v1:
-
-* Fix did't to didn't.
-
-* Add ensure_not_expanded for "git worktree add".
-
-* Add a section that compares each test repo's default worktree to
-a new worktree.
-
-
-Range-diff against v1:
-1:  aa772f998b ! 1:  d082c85fec worktree: integrate with sparse-index
+Range-diff against v6:
+1:  5ae531a1e2 = 1:  121788f263 strbuf: clarify API boundary
+-:  ---------- > 2:  5e91404ecd strbuf: clarify dependency
+2:  3bb2b9c01a = 3:  5c05f40181 abspath: move related functions to abspath
+3:  ff91ca2fda = 4:  e1addc77e5 credential-store: move related functions to credential-store file
+4:  10e61eb570 ! 5:  62e8c42f59 object-name: move related functions to object-name
     @@ Commit message
-         The `p2000` tests demonstrate a ~20% execution time reduction for
-         'git worktree' using a sparse index:
+         so that strbuf is focused on string manipulation routines with minimal
+         dependencies.
      
-    -    (Note:the p2000 test results did't reflect the huge speedup because of
-    +    (Note:the p2000 test results didn't reflect the huge speedup because of
-         the index reading time is minuscule comparing to the filesystem
-         operations.)
+    +    dir.h relied on the forward declration of the repository struct in
+    +    strbuf.h. Since that is removed in this patch, add the forward
+    +    declaration to dir.h.
+    +
+    + ## dir.h ##
+    +@@
+    +  *
+    +  */
+    + 
+    ++struct repository;
+    ++
+    + struct dir_entry {
+    + 	unsigned int len;
+    + 	char name[FLEX_ARRAY]; /* more */
+    +
+      ## object-name.c ##
+     @@ object-name.c: static void find_abbrev_len_packed(struct min_abbrev_data *mad)
+      		find_abbrev_len_for_pack(p, mad);
+    @@ strbuf.c
+      #include "gettext.h"
+      #include "hex.h"
+     -#include "object-name.h"
+    - #include "refs.h"
+    + #include "repository.h"
+    + #include "strbuf.h"
+      #include "string-list.h"
+    - #include "utf8.h"
+     @@ strbuf.c: void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+      	strbuf_setlen(sb, sb->len + len);
+      }
+5:  c3d5db4e11 ! 6:  0abba57acb path: move related function to path
+    @@ Commit message
+         Move path-related function from strbuf.[ch] to path.[ch] so that strbuf
+         is focused on string manipulation routines with minimal dependencies.
      
-    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse index is n
-     +	echo text >>"$1"
-     +	EOF
-     +
-    -+	test_all_match git worktree add .worktrees/hotfix &&
-    -+	test_sparse_match ls .worktrees/hotfix &&
-    -+	test_all_match git worktree remove .worktrees/hotfix &&
-    ++	for repo in full-checkout sparse-checkout sparse-index
-    ++	do
-    ++		worktree=${repo}-wt &&
-    ++		git -C $repo worktree add ../$worktree &&
-    ++
-    ++		# Compare worktree content with "ls"
-    ++		(cd $repo && ls) >worktree_contents &&
-    ++		(cd $worktree && ls) >new_worktree_contents &&
-    ++		test_cmp worktree_contents new_worktree_contents &&
-    ++
-    ++		# Compare index content with "ls-files --sparse"
-    ++		git -C $repo ls-files --sparse >index_contents &&
-    ++		git -C $worktree ls-files --sparse >new_index_contents &&
-    ++		test_cmp index_contents new_index_contents &&
-    ++
-    ++		git -C $repo worktree remove ../$worktree || return 1
-    ++	done &&
-     +
-     +	test_all_match git worktree add .worktrees/hotfix &&
-     +	run_on_all ../edit-contents .worktrees/hotfix/deep/a &&
-    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse index is n
-     +test_expect_success 'worktree is not expanded' '
-     +	init_repos &&
-     +
-    -+	test_all_match git worktree add .worktrees/hotfix &&
-    ++	ensure_not_expanded worktree add .worktrees/hotfix &&
-     +	ensure_not_expanded worktree remove .worktrees/hotfix
-     +'
-     +
+    +    repository.h is no longer a necessary dependency after moving this
+    +    function out.
+    +
+      ## path.c ##
+     @@ path.c: int normalize_path_copy(char *dst, const char *src)
+      	return normalize_path_copy_len(dst, src, NULL);
+    @@ path.h: const char *remove_leading_path(const char *in, const char *prefix);
+      int daemon_avoid_alias(const char *path);
+     
+      ## strbuf.c ##
+    +@@
+    + #include "environment.h"
+    + #include "gettext.h"
+    + #include "hex.h"
+    +-#include "repository.h"
+    + #include "strbuf.h"
+    + #include "string-list.h"
+    + #include "utf8.h"
+     @@ strbuf.c: void strbuf_stripspace(struct strbuf *sb, int skip_comments)
+      	strbuf_setlen(sb, j);
+      }
+6:  113d156195 < -:  ---------- strbuf: clarify dependency
+7:  01c923160d = 7:  d33267a390 strbuf: remove global variable
 -- 
-2.39.0
-
-
- builtin/worktree.c                       |  4 +++
- t/perf/p2000-sparse-operations.sh        |  1 +
- t/t1092-sparse-checkout-compatibility.sh | 37 ++++++++++++++++++++++++
- 3 files changed, 42 insertions(+)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index f3180463be..db14bff1a3 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -1200,5 +1200,9 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
- 		prefix = "";
- 
- 	ac = parse_options(ac, av, prefix, options, git_worktree_usage, 0);
-+
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+
- 	return fn(ac, av, prefix);
- }
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 901cc493ef..1422136c73 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -131,5 +131,6 @@ test_perf_on_all git describe --dirty
- test_perf_on_all 'echo >>new && git describe --dirty'
- test_perf_on_all git diff-files
- test_perf_on_all git diff-files -- $SPARSE_CONE/a
-+test_perf_on_all "git worktree add ../temp && git worktree remove ../temp"
- 
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index a63d0cc222..746203d375 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2180,4 +2180,41 @@ test_expect_success 'sparse index is not expanded: diff-files' '
- 	ensure_not_expanded diff-files -- "deep/*"
- '
- 
-+test_expect_success 'worktree' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>"$1"
-+	EOF
-+
-+	for repo in full-checkout sparse-checkout sparse-index
-+	do
-+		worktree=${repo}-wt &&
-+		git -C $repo worktree add ../$worktree &&
-+
-+		# Compare worktree content with "ls"
-+		(cd $repo && ls) >worktree_contents &&
-+		(cd $worktree && ls) >new_worktree_contents &&
-+		test_cmp worktree_contents new_worktree_contents &&
-+
-+		# Compare index content with "ls-files --sparse"
-+		git -C $repo ls-files --sparse >index_contents &&
-+		git -C $worktree ls-files --sparse >new_index_contents &&
-+		test_cmp index_contents new_index_contents &&
-+
-+		git -C $repo worktree remove ../$worktree || return 1
-+	done &&
-+
-+	test_all_match git worktree add .worktrees/hotfix &&
-+	run_on_all ../edit-contents .worktrees/hotfix/deep/a &&
-+	test_all_match test_must_fail git worktree remove .worktrees/hotfix
-+'
-+
-+test_expect_success 'worktree is not expanded' '
-+	init_repos &&
-+
-+	ensure_not_expanded worktree add .worktrees/hotfix &&
-+	ensure_not_expanded worktree remove .worktrees/hotfix
-+'
-+
- test_done
--- 
-2.39.0
+2.41.0.162.gfafddb0af9-goog
 
