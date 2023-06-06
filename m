@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACDB4C77B73
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 13:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B850DC77B7A
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 13:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233431AbjFFNYp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 09:24:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51232 "EHLO
+        id S237704AbjFFNYt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 09:24:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237019AbjFFNYo (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235566AbjFFNYo (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Jun 2023 09:24:44 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E941118
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F153E126
         for <git@vger.kernel.org>; Tue,  6 Jun 2023 06:24:41 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-30e53cacc10so158251f8f.0
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-30d181952a2so4127918f8f.0
         for <git@vger.kernel.org>; Tue, 06 Jun 2023 06:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686057879; x=1688649879;
+        d=gmail.com; s=20221208; t=1686057880; x=1688649880;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QLPoIt7gEahXdge9UNnfFkP1i1lLANoeVF53AuiZHx4=;
-        b=YiIm37We896ae1O4QJYNeA32opS/SzqK5YumM+wNjKAdRguFyuuiMBzzy/63HH94zC
-         twY+j+qvN7DAR2unnJ7de02rJfIGr4hRFQfjVGbhdhltT8v6yVDny5ET1X1ytk7p0brb
-         NU8Nvi+f6DEYEwNtfsnG4QAGrlNNv04DLnrGWz/X5K2Kgc8na30aDsEOHtL0cAy89kfw
-         iqIJuFyUB2g3TktjJTghh4MrrQWaNteRrr4TBQ61f2yUWR5o/DImwRh7IJB0wDOSp8Fc
-         FMoooT2FbAdRIbbakPyzmHz5y87TrfnYXvARGItXbjY7SWEJuF95Mcsv7WDE4BAfL5lg
-         I0rw==
+        bh=m1cBiQJdsh7pYsS/7KUWAs7EY/F51Yn46TGLMvgYpCk=;
+        b=bxwXQARxebV43Gk7Zi4t9Ri3Lh/di5Vp9Cn22ErN6WVXO/eP8vGLQLe4qCdksurm+y
+         Yk9VNh6ox0ag6NgfqhsCemYJ3YLUEXF5qzfdee9uxkTaM+OU8TeQVq3gw/Yq9UjmZxRi
+         Y362VsjK7y7XLaJS7oVwElu2M2mq8Cn+yoIO0LLbxebNUM58enRtVCswU0gbGLLTvM74
+         0HBWHmW53my0tI3oS4h4+vWOonqqlRMuM4G0SQAv0OosoaXdhgjhKwZq7NT366M9CqT5
+         Cb5w7T+9hmITuNk5HDGj0t9dIuA9VaQ0utPMdZMCxNZ3e4iLOTa2hP1svWMH4DdzXA1V
+         p1nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686057879; x=1688649879;
+        d=1e100.net; s=20221208; t=1686057880; x=1688649880;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QLPoIt7gEahXdge9UNnfFkP1i1lLANoeVF53AuiZHx4=;
-        b=fqsYVkyjlUADsYoxwS3GaCNzoMOCYVggO98RZmBE5kKOzSCuTP4z2bRCU3tFHMMFlT
-         mGck1ySVj1FcMOYVpi2T+Yr//vfOgiIU0Ump9HwoVU6GWQpqYnLx13uoSR9Z6FvYxFgn
-         y60RZXjiJ9vyIInEo3YAst3Zoj3jOrqCOzYZRy+xcZmHfQpJ7ZqZnJu4Eq3yiDzGvaM1
-         PI4sQlfAmNOkoS4oNolBughyJx9FaqKzUEk2bt7anXM3w9KSjCV664YQJsvgoUVx5hAd
-         7jUFTb9RSlY1Ac9JRN2j6GOcAfx+/K5IMs7HVzYVNzpMmz/JyYk7/c35G4Bpw6HJdE77
-         +fHw==
-X-Gm-Message-State: AC+VfDwZcKbCsUJZYoPRVRJMAYNAeA2w4yDIM3W4uauBH140Wh6Jf2a+
-        D+iOzuye2H5b8Sm3S2kXd9copnzyx70=
-X-Google-Smtp-Source: ACHHUZ5c5Fc10CmTFKHA7E1GJyLBCPTNPGBNjyEN5yTZ75PYzxNvvhb20wgkwbE3lg4FDjIDO70u7A==
-X-Received: by 2002:a5d:6045:0:b0:306:2e48:6ded with SMTP id j5-20020a5d6045000000b003062e486dedmr1905240wrt.13.1686057879472;
-        Tue, 06 Jun 2023 06:24:39 -0700 (PDT)
+        bh=m1cBiQJdsh7pYsS/7KUWAs7EY/F51Yn46TGLMvgYpCk=;
+        b=XwRTBsexCJLEHRobjDd6ZCL16jys5n/m2BGzMCfPYL8gRPep8zg3Fx4vk6aKax8Ony
+         7I/pvCCu33YSBbJzeqbMn2SmjphKiC98g/iGLxcUyqDa5TIxn+PiuHOvQ6IycrghqyX5
+         g7omaNBfYrjkfkZ/B96WVShFr0tDVhGWLvQ8jvSIF9aBJybvhrjNdjETDB5kdFxypnz6
+         mh8ui82ajr2x7Deyd/fDV6Cu2RL4zE0DwwBxkCuCQj9DUYaYGIKudyKkvulrOItPNBgU
+         LEEUL7b/zuje1odAnXzOYiKAfKXaZV/8QEjdhHMl8aj7PoliQTyEhxUVUg7vOKZY0dsJ
+         80tQ==
+X-Gm-Message-State: AC+VfDxAHkdj34oyhT46olSeMUc+bYa2RRQ9Z6rVcarqhIhkBAQ0rnc8
+        KYqG5XgWOvXIYnmw7QjSQRs9niv0Hh8=
+X-Google-Smtp-Source: ACHHUZ5g4MjzBkLyM50RnabT+hMAdMHTyV6Lqd4ZW3XORrgS3lw1EBcY8//OwBV/7ccrnNboEcJ5Sw==
+X-Received: by 2002:a5d:6acb:0:b0:30a:d5e2:dc6f with SMTP id u11-20020a5d6acb000000b0030ad5e2dc6fmr2038740wrw.21.1686057880242;
+        Tue, 06 Jun 2023 06:24:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w2-20020adfd4c2000000b0030aeb3731d0sm12555276wrk.98.2023.06.06.06.24.39
+        by smtp.gmail.com with ESMTPSA id p12-20020a5d458c000000b00307acec258esm12687678wrq.3.2023.06.06.06.24.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 06 Jun 2023 06:24:39 -0700 (PDT)
-Message-Id: <0616fdbf303de9d8a81a1ff1977a8da31d5e6cfd.1686057877.git.gitgitgadget@gmail.com>
+Message-Id: <4e75a76f5dd9a9fdce3c542bf885efdfb44dfe40.1686057877.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1537.v3.git.1686057877.gitgitgadget@gmail.com>
 References: <pull.1537.v2.git.1685716157.gitgitgadget@gmail.com>
         <pull.1537.v3.git.1686057877.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 06 Jun 2023 13:24:35 +0000
-Subject: [PATCH v3 1/3] repository: create disable_replace_refs()
+Date:   Tue, 06 Jun 2023 13:24:36 +0000
+Subject: [PATCH v3 2/3] replace-objects: create wrapper around setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,212 +72,105 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Several builtins depend on being able to disable the replace references
-so we actually operate on each object individually. These currently do
-so by directly mutating the 'read_replace_refs' global.
+The 'read_replace_objects' constant is initialized by git_default_config
+(if core.useReplaceRefs is disabled) and within setup_git_env (if
+GIT_NO_REPLACE_OBJECTS) is set. To ensure that this variable cannot be
+set accidentally in other places, wrap it in a replace_refs_enabled()
+method.
 
-A future change will move this global into a different place, so it will
-be necessary to change all of these lines. However, we can simplify that
-transition by abstracting the purpose of these global assignments with a
-method call.
+Since we still assign this global in config.c, we are not able to remove
+the global scope of this variable and make it a static within
+replace-object.c. This will happen in a later change which will also
+prevent the variable from being read before it is initialized.
 
-We will need to keep this read_replace_refs global forever, as we want
-to make sure that we never use replace refs throughout the life of the
-process if this method is called. Future changes may present a
-repository-scoped version of the variable to represent that repository's
-core.useReplaceRefs config value, but a zero-valued read_replace_refs
-will always override such a setting.
+Centralizing read access to the variable is an important first step.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/cat-file.c       | 2 +-
- builtin/commit-graph.c   | 2 +-
- builtin/fsck.c           | 2 +-
- builtin/index-pack.c     | 2 +-
- builtin/pack-objects.c   | 2 +-
- builtin/prune.c          | 2 +-
- builtin/replace.c        | 2 +-
- builtin/unpack-objects.c | 2 +-
- builtin/upload-pack.c    | 2 +-
- environment.c            | 2 +-
- git.c                    | 2 +-
- replace-object.c         | 5 +++++
- replace-object.h         | 8 ++++++++
- 13 files changed, 24 insertions(+), 11 deletions(-)
+ commit-graph.c   |  4 +---
+ log-tree.c       |  2 +-
+ replace-object.c |  5 +++++
+ replace-object.h | 14 +++++++++++++-
+ 4 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 0bafc14e6c0..27f070267a4 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -805,7 +805,7 @@ static int batch_objects(struct batch_options *opt)
- 		if (repo_has_promisor_remote(the_repository))
- 			warning("This repository uses promisor remotes. Some objects may not be loaded.");
+diff --git a/commit-graph.c b/commit-graph.c
+index 43558b4d9b0..95873317bf7 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -203,14 +203,12 @@ static struct commit_graph *alloc_commit_graph(void)
+ 	return g;
+ }
  
--		read_replace_refs = 0;
-+		disable_replace_refs();
+-extern int read_replace_refs;
+-
+ static int commit_graph_compatible(struct repository *r)
+ {
+ 	if (!r->gitdir)
+ 		return 0;
  
- 		cb.opt = opt;
- 		cb.expand = &data;
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index a3d00fa232b..dd732b35348 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -324,7 +324,7 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+-	if (read_replace_refs) {
++	if (replace_refs_enabled(r)) {
+ 		prepare_replace_object(r);
+ 		if (hashmap_get_size(&r->objects->replace_map->map))
+ 			return 0;
+diff --git a/log-tree.c b/log-tree.c
+index 143b86fecf9..86212af3626 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -155,7 +155,7 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
  
- 	git_config(git_default_config, NULL);
- 
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 	save_commit_buffer = 0;
- 
- 	argc = parse_options(argc, argv, prefix, options,
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 2cd461b84c1..a2fe760cc0e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -927,7 +927,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 	fetch_if_missing = 0;
- 
- 	errors_found = 0;
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 	save_commit_buffer = 0;
- 
- 	argc = parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index bb67e166559..d0d8067510b 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1752,7 +1752,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(index_pack_usage);
- 
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 	fsck_options.walk = mark_link;
- 
- 	reset_pack_idx_option(&opts);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a5b466839ba..e23fe82ca1a 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4284,7 +4284,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (DFS_NUM_STATES > (1 << OE_DFS_STATE_BITS))
- 		BUG("too many dfs states, increase OE_DFS_STATE_BITS");
- 
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", -1);
- 	if (the_repository->gitdir) {
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 5dc9b207200..28772017376 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -164,7 +164,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 
- 	expire = TIME_MAX;
- 	save_commit_buffer = 0;
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
- 	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 981f1894436..abff800276c 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -566,7 +566,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 	git_config(git_default_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 2c52c3a741f..0b4fe803cc1 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -609,7 +609,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix UNUSED)
- 	int i;
- 	struct object_id oid;
- 
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 
- 	git_config(git_default_config, NULL);
- 
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index beb9dd08610..81d2008e017 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -36,7 +36,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	packet_trace_identity("upload-pack");
--	read_replace_refs = 0;
-+	disable_replace_refs();
- 
- 	argc = parse_options(argc, argv, prefix, options, upload_pack_usage, 0);
- 
-diff --git a/environment.c b/environment.c
-index 8a96997539a..3b4d87c322f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -185,7 +185,7 @@ void setup_git_env(const char *git_dir)
- 	strvec_clear(&to_free);
- 
- 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
--		read_replace_refs = 0;
-+		disable_replace_refs();
- 	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
- 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
- 							  : "refs/replace/");
-diff --git a/git.c b/git.c
-index 45899be8265..3252d4c7661 100644
---- a/git.c
-+++ b/git.c
-@@ -185,7 +185,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			if (envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--no-replace-objects")) {
--			read_replace_refs = 0;
-+			disable_replace_refs();
- 			setenv(NO_REPLACE_OBJECTS_ENVIRONMENT, "1", 1);
- 			if (envchanged)
- 				*envchanged = 1;
+ 	if (starts_with(refname, git_replace_ref_base)) {
+ 		struct object_id original_oid;
+-		if (!read_replace_refs)
++		if (!replace_refs_enabled(the_repository))
+ 			return 0;
+ 		if (get_oid_hex(refname + strlen(git_replace_ref_base),
+ 				&original_oid)) {
 diff --git a/replace-object.c b/replace-object.c
-index e98825d5852..ceec81c940c 100644
+index ceec81c940c..07cfedd6df4 100644
 --- a/replace-object.c
 +++ b/replace-object.c
-@@ -84,3 +84,8 @@ const struct object_id *do_lookup_replace_object(struct repository *r,
- 	}
- 	die(_("replace depth too high for object %s"), oid_to_hex(oid));
+@@ -89,3 +89,8 @@ void disable_replace_refs(void)
+ {
+ 	read_replace_refs = 0;
  }
 +
-+void disable_replace_refs(void)
++int replace_refs_enabled(struct repository *r)
 +{
-+	read_replace_refs = 0;
++	return read_replace_refs;
 +}
 diff --git a/replace-object.h b/replace-object.h
-index 500482b02b3..7786d4152b0 100644
+index 7786d4152b0..3e9c3516c3c 100644
 --- a/replace-object.h
 +++ b/replace-object.h
-@@ -48,4 +48,12 @@ static inline const struct object_id *lookup_replace_object(struct repository *r
- 	return do_lookup_replace_object(r, oid);
- }
+@@ -27,6 +27,18 @@ void prepare_replace_object(struct repository *r);
+ const struct object_id *do_lookup_replace_object(struct repository *r,
+ 						 const struct object_id *oid);
  
 +/*
-+ * Some commands override config and environment settings for using
-+ * replace references. Use this method to disable the setting and ensure
-+ * those other settings will not override this choice. This applies
-+ * globally to all in-process repositories.
++ * Some commands disable replace-refs unconditionally, and otherwise each
++ * repository could alter the core.useReplaceRefs config value.
++ *
++ * Return 1 if and only if all of the following are true:
++ *
++ *  a. disable_replace_refs() has not been called.
++ *  b. GIT_NO_REPLACE_OBJECTS is unset or zero.
++ *  c. the given repository does not have core.useReplaceRefs=false.
 + */
-+void disable_replace_refs(void);
++int replace_refs_enabled(struct repository *r);
 +
- #endif /* REPLACE_OBJECT_H */
+ /*
+  * If object sha1 should be replaced, return the replacement object's
+  * name (replaced recursively, if necessary).  The return value is
+@@ -41,7 +53,7 @@ const struct object_id *do_lookup_replace_object(struct repository *r,
+ static inline const struct object_id *lookup_replace_object(struct repository *r,
+ 							    const struct object_id *oid)
+ {
+-	if (!read_replace_refs ||
++	if (!replace_refs_enabled(r) ||
+ 	    (r->objects->replace_map_initialized &&
+ 	     r->objects->replace_map->map.tablesize == 0))
+ 		return oid;
 -- 
 gitgitgadget
 
