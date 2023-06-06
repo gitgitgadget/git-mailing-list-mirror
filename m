@@ -2,147 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD90FC77B7A
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 07:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FDD2C7EE2C
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 09:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235750AbjFFHBi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 03:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55708 "EHLO
+        id S229686AbjFFJPv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 05:15:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235721AbjFFHBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 03:01:15 -0400
+        with ESMTP id S232193AbjFFJPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 05:15:49 -0400
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE47AE51
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 00:01:14 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 1D3343200488;
-        Tue,  6 Jun 2023 03:01:14 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 06 Jun 2023 03:01:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1686034873; x=1686121273; bh=G4
-        fzQ1h61yMcnuGxtg+idH6tAR/of9HWuDvSUPXOAx8=; b=PLNTgL2puMnV4zQlvg
-        vL1gzVOz9/MeG8Vw6lz4/m1CS1kLZcEB2EqawB4HMz4Jd5B20foRiuZARm+AX6FF
-        XMgIWDcbJyCA87f/swc4RYpSwOWUnpNdsaqDVbsit51kgnwPgR/zksLLpts0ewSv
-        C2V1ekL8a94tjRN63Pya9ccdN0RfgLMLq2ADAZBvZI0KEiMAGoyaPMrx2xTcgtpF
-        4Ar3Y2XCopWjxyPOLGaDf1J7/yh2edCE1R8Q5ATqyVuA3jw7HLj8MgmMHHX6xKhm
-        RXQWFqp52ApYBXAeARwXktr3D1jPncGpOGXuPO88gNhTiDKIh2K0i5nUP/0rx2SX
-        Trtw==
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51A3D100
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 02:15:48 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 758D63200A59;
+        Tue,  6 Jun 2023 05:15:47 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Tue, 06 Jun 2023 05:15:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+        cc:cc:content-transfer-encoding:content-type:content-type:date
+        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+        1686042947; x=1686129347; bh=LSEgASmT3/DwgRjrXfwU4QWV3P3/GwXvx3f
+        3qnoEf5c=; b=SCOndLWJijJzlTWYoFVw6i7616l+qI8EycCbHXCDmmxT/3mLVv8
+        iX1OxdOiotbwhKDgIufZKD8morT8ENXlrMs4fSix04oNFXSNaDuiSHbpZ9GEvHdS
+        9Qu1jIPvXC9st2MA894UgjEKnhJguSR/HKoBpV8TmOIcUnxidItL8ljBr6rDCh9p
+        IjZGb1AlzdQTkBb958a3KsOLJmoQlaOBFaUNXUsFdbpgo01bqEqAnSBabcf8j/K7
+        eIDxH9Nxn8lFkLhFFDU4tLTzje/iSAx2v2CdAp0pPTFJVlJXtwbXrWXM51VX1peA
+        3CC9OFUuDwz5Bs+zM9VNWk6/hCSHpSpR9ow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1686034873; x=1686121273; bh=G4fzQ1h61yMcn
-        uGxtg+idH6tAR/of9HWuDvSUPXOAx8=; b=nMR5dRkgddb1mnjYD4tO1f3jUifTn
-        bJv6l+YXQvywNFzKXm1dM10wk/aEUkAp4CJtbPri4jTtjtuMFX9z3QAPreK0sZr+
-        k5AJsVKoAnSDYQym0nY+YDXHZYIW6wrHBgsOIZ9tWcAvgz6bBnuHcnR2IqIBMDit
-        57p3ftcW9Gq46pqn+Nu6mkFf0JE9HD7/L/BtGHm+2pLfkVpE6TZmWnFeuft4vM1V
-        heN+mslbEVkUm9hlQcRDdN37c/d0TLgRomfRk4Fa+stlnKnkSPmPWuJbIhFexQ3C
-        KYVEjdnj9mk5Wz19LIhQTdZLm8rOtySlKCMyFWutl4gJNKgqqzb2jX2IA==
-X-ME-Sender: <xms:udl-ZAfAPcXkROGbfTSGn0ps77fL1b7yt7DoqkPFYDooydEC4695rg>
-    <xme:udl-ZCMpO9bDeDLxxpihI8kYNQrt1dIgqb5av9rRckKRBygIi1LifcfZKcPAuzOxk
-    oiVrFxqxMg-A2mrkA>
-X-ME-Received: <xmr:udl-ZBhOypslQ05g-sw5XfKsjMKYGL3hNPNefu4zDmmycUh6yebggzG1CK-wc7r8B7hIH2yllQfSAl3j80Rue106aAYgGAKriW_F7gLqyZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedttddguddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddunecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeefvdelfeeuteegiedtkeehleffkeekgfffudfhuddvfefftdehkeeihfekjeek
-    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:udl-ZF88UCqgh2QcKzd5iQFEOyhJal87QNlbdRdHNKalYqwQgqTVQg>
-    <xmx:udl-ZMvSPmCw7w7roky3OjhUp96HWHQMGTHwQ_bGeOxmaw-LAWawnw>
-    <xmx:udl-ZMG-LErWcNE5xM1JzX9Y9MHqU564zx_zV3SHIXKrxv3LFB_dkQ>
-    <xmx:udl-ZOLhbl7zglzVuR9lKWwCNTgchJzjQn6rpIFnS4kUrHZbEyKeOQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Jun 2023 03:01:11 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id ee111d09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 6 Jun 2023 07:00:08 +0000 (UTC)
-Date:   Tue, 6 Jun 2023 09:01:10 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/16] refs: implement jump lists for packed backend
-Message-ID: <ZH7ZtmUrlyJ8H0aP@ncase>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <cover.1684178576.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jtx4OKIAjHoiheLF"
-Content-Disposition: inline
-In-Reply-To: <cover.1684178576.git.me@ttaylorr.com>
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1686042947; x=1686129347; bh=LSEgASmT3/DwgRjrXfwU4QWV3P3/GwXvx3f
+        3qnoEf5c=; b=Ajl18+FcG8flCID2q9w1LZPC/xTyKpRx5WjtlUPGCBm+nQPLk3N
+        DxxQ8EiaUmIgjf+R44OaBTG5HFbHIa4U0rifJ/wJYVEMPtheTrILldmjtJ32dG7d
+        +cW39PyFIYQtQizhmF22g0AtN3AHBqM41HGRoiAofssIHpmkmE6O7LSebHQq1wKZ
+        RLAiyhla/wXEiuP4vu00SzZ15V8KRTX5ANrnH5AekbXRUVEg/3X78WR3T+s7GSWT
+        drxZlAqFgRF7vGg+dedThAj+ErLXq08rl/oyRYYK591kByQBVzw8136DxDzNwvYT
+        7Ib7w2wjbfTKh4zc606cSV+0ZeFBzCjhW9A==
+X-ME-Sender: <xms:Qvl-ZAFfeLfhkwce3-wkg4oaVKc629zXFlogZfHdEIERuZ6YuNlg8Yc>
+    <xme:Qvl-ZJV1ff5T9d1KfEAElmU4cbE2Qc2TF8WJo3PuD_Xq5ONGbnm29PHdIBcdEOloL
+    Q96OyExr6NzGi6psA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedtuddgudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgfgse
+    htqhertderreejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhk
+    fdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+    eqnecuggftrfgrthhtvghrnhepgfejleegjeffffetfeffvefhhfekueeffefgkeeuudff
+    ffeuheelkeffveefteehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgv
+    rhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Qvl-ZKJGy6V-BBH4Jmq0GcXnonQxDZfLD8qiIil_4VwapdlllX5qWA>
+    <xmx:Qvl-ZCELPhfbeoO4Fml5rpz1SCJu5mDwbIXqB0qYGgrhpCAdWbg1HA>
+    <xmx:Qvl-ZGUnGsC1i5Tjm9LZWcfKaR_Fr-rCF1RnNNiKvNVhk3APL4RQfQ>
+    <xmx:Q_l-ZPfVyZu6U7OxetCxtJ6pRrqLkpIJUFh6fAqrhqz4NB3pCdiqjw>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id CAFD815A008E; Tue,  6 Jun 2023 05:15:46 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-447-ge2460e13b3-fm-20230525.001-ge2460e13
+Mime-Version: 1.0
+Message-Id: <158e0823-3b1a-4b38-9dab-7b7ca8a93331@app.fastmail.com>
+In-Reply-To: <xmqq5y814aw8.fsf@gitster.g>
+References: <xmqq5y814aw8.fsf@gitster.g>
+Date:   Tue, 06 Jun 2023 11:15:10 +0200
+From:   "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     git@vger.kernel.org, "Jeff King" <peff@peff.net>
+Subject: Re: What's cooking in git.git (Jun 2023, #02; Tue, 6)
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jun 6, 2023, at 03:50, Junio C Hamano wrote:
+> * kh/use-default-notes-doc (2023-06-06) 2 commits
+>  - notes: move the documentation to the struct
+>  - notes: update documentation for `use_default_notes`
+>
+>  Will merge to 'next'?
+>  source: <cover.1685958731.git.code@khaugsbakk.name>
 
---jtx4OKIAjHoiheLF
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Peff posted this a little bit after What=E2=80=99s Cooking https://lore.=
+kernel.org/git/b3829cb0d1e36a5ebb44a315fe32037f2a3f6c7a.1685526558.git.c=
+ode@khaugsbakk.name/T/#m94bafe1b04d551130558c5d7aaf20b1a353cab46
 
-On Mon, May 15, 2023 at 03:23:07PM -0400, Taylor Blau wrote:
-> Here is a reroll of my series to implement jump (n=E9e skip) lists for the
-> packed refs backend.
->=20
-> Not a ton has changed since last time, but some notable things that have
-> changed include:
->=20
->   - Renaming "skip lists" to "jump lists" to clarify that this
->     implementation does not use the skip list data structure.
->   - Patch reorganization, splitting out `find_reference_location_end()`
->     more sensibly, rewording patch messages, etc.
->   - Addresses feedback from Junio and Patrick Steinhardt's helpful
->     reviews.
->=20
-> As usual, a range-diff is included below for convenience.
->=20
-> Given that we are expecting -rc0 today, we should aim to not let review
-> of this topic direct our attention away from testing the release
-> candidates. We can get more serious about it on the other side of 2.41.
->=20
-> Thanks in advance for another look.
-
-I didn't have many comments in this round. Personally though I'd split
-up this patch series into two in order to land the individual parts
-faster, where the first part introduces `git for-each-ref --exclude` and
-the second part introduces the jump list for the packed-refs backend.
-
-Each of these have merit on their own, and especially the first part
-should require less discussion. Furthermore, by splitting it up the
-review becomes easier to manage as 16 patches does require quite a long
-attention span to handle.
-
-Anyway, this is just a suggestion from my sided, please feel free to
-ignore.
-
-Patrick
-
---jtx4OKIAjHoiheLF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmR+2bUACgkQVbJhu7ck
-PpSkYhAArgsTebGPhgpPlgCuFAe8piBUY1XxyOIvb2+p0laKRQFQfvUAPz1Qg/DB
-D16cgOrAgMg8AV97zU5oKLqAPlp1MhSqq6HTw+ekNo9KGWSp1aXqXiu9yjxAiwsG
-nQvhk0S8IDRC8LbgxLt2qrVPRGTWi2jie96YIEO8SrOfrslQGiZAcccjvcy6csZw
-e+Hj/TuqP5YONf0niqpWwFrWBaOEcbQ8UNIg8xQbr4mEKU5lmfJuiUZ0O/Ge3quh
-B2rg+m1smn0FKFYZvpeVkqan8c7sul9RX1+LsXGh0XRnJ/oBuLKOIx7Xj0ozeqS+
-iOHbGAg+PEWJxeFPSLobOju9V4VICMBi0FTOZxv3G6wLvpqL0P0LL1MftYapg+bN
-F3/E0HwSfj5i1jtcLJZVp34Q+Q/8vN1J1idbaqVDv7FdjhDrE16MoUfSiqObrtna
-gvn6RhbVcG+B0op1BMPuTo0uW5IpkCMgL+f+dDVWYOfC6WvvOPE+7bRGzDNwtPzW
-YEp9P3z7ku6bxYBVLPVtZCUG3GKQ/TqAPGxZApFk3tyuQBc377FTcF9/m0kL0VI+
-J9z1+Md7oTumxcFaAMVIEkIelZsN7rsRntNVpkU5jCyjp679D1wuRoA8G/f+TqzX
-z5otcEcaa39jCqcMpugcRXcKXH4RR8IHeawayCcepuSQavd3gs8=
-=JPSr
------END PGP SIGNATURE-----
-
---jtx4OKIAjHoiheLF--
+--=20
+Kristoffer Haugsbakk
