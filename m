@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CEBDC7EE24
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 17:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85C52C7EE29
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 17:10:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238582AbjFFRKX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 13:10:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54752 "EHLO
+        id S238002AbjFFRKZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 13:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238267AbjFFRKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 13:10:10 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41CAF18E
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 10:10:09 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id d2e1a72fcca58-653bbc6e2fdso2351847b3a.0
-        for <git@vger.kernel.org>; Tue, 06 Jun 2023 10:10:09 -0700 (PDT)
+        with ESMTP id S238366AbjFFRKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 13:10:12 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3459F121
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 10:10:11 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-568ae92e492so104604577b3.3
+        for <git@vger.kernel.org>; Tue, 06 Jun 2023 10:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686071409; x=1688663409;
+        d=google.com; s=20221208; t=1686071410; x=1688663410;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6pXEHkQTV465tRVG7gPgicn5k/OJlSChLcC2rWOV9RU=;
-        b=XENFz2sbl2d2cbGZ0vEtlilbC6rRDuPcN8fBADgGeocApHrNfuPOxiuAqvgXO11ZI5
-         sUPHylB6P/tnU/SHPVlDCRZEZBersV2LU2PvsySPcZ9MtJspBCDuRthkNCN1jm+GKjoK
-         pFlek1SI06rCS+vDYnO9DEsF83BxndySFOPPKbSY8rFbo3Fhc2+HdCiUL+iKWxvBrYuC
-         lPvCVGr2RD2Ljt/Vw4v44+lkXUDYovChlwkLMSFQMj3i7EcFjDZDdeiPsasVVew2mpJY
-         B0U7IXjyGnd5VG5XImAkZlMrxN/7H8fSo4c+72mTSHZNBHQPKYOiIqunbzsb1GVjlb+G
-         PTdA==
+        bh=4bq8XCugr8bieFYszoRT0g4VB6mhhChuT5wCt+QL7bs=;
+        b=zCW/idf3AgxGNNVB8GVs8r8FA93yufIrTiCaNl92sy01mzr7vw4ktBIlplruUBDyyM
+         aod79AoGlWbaqUMmnsIYyy+FehUBGv8OQSSikJqeX5qzIlyHBH++Snj7HCCezoU1GYJA
+         q15fgoKpvTuRtO8tjtfo985z4zSsuNCsNHsJUVGZ8U0t16MxPTRZeRGTjJVQL/cEnFwt
+         5fHNAVh57EttGZYMzMS6jS81IngZM/iJDHEfSu4UefDLYawjVBhEVfbtF98gtzbvsttk
+         iLnzfQi4t7v5UbifBddwD8SmbFoGwfO0T00Qo2suzLRoSjLjOf3E0q3NprH/ezZazeDq
+         YLAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686071409; x=1688663409;
+        d=1e100.net; s=20221208; t=1686071410; x=1688663410;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6pXEHkQTV465tRVG7gPgicn5k/OJlSChLcC2rWOV9RU=;
-        b=FNG/gWqLX+R2Cmx1U0afi5s5jLN3Y6H8x2FL2C93tJXvtEnsWmAw22g+q+/jQ79dih
-         ehPgamXg3P3W9zgCcZYXn43eqIJuGYo5FCaSMLj+9+yD5cJNQT2qPHefxEnZmqBBHSzY
-         ic72uwnbZue7mHYBKovruSYTIh6Yr2MBP4Xa0oZk771JaLYsbybi2wU+7A6ptN1TXrBs
-         0Uc375VP04/v/PGrQ8NFM8nUVS+ERmCZNw2NRWa+paGDoUnnnyfaHtBr+yP83E37ApOr
-         m9DHJvISxoGKb+wfWsT0IsnAepDm8Mo7SnwO3ckmr/BJD6BecCI9Ghelx7rU6eAC3s4l
-         nG4w==
-X-Gm-Message-State: AC+VfDza3OFO9YlD83nDmOTLKwPlTiAsuTgtiNv2wuJJMs4/IMPBxI54
-        N+tZ2aeSjZpNBnXA9jTd8JuRjUkvYPWrXqrw4W4DUaKBINi2L8vhy9gjqMmSruWr/EgK/UKDEHr
-        lcG4cpR1xt19iAEAkV7rEZnqIRMdaHTXeL5EQgcyDLuZVRk893dSQB5xd7hwS1E75IA==
-X-Google-Smtp-Source: ACHHUZ6dhai9eendWYpw3H7vOb54ZhGbLJ/7mqwKcCyROQz2rm2hI3WNzZQuMS3Mo7+xaZNbARr98YruCbJHYws=
+        bh=4bq8XCugr8bieFYszoRT0g4VB6mhhChuT5wCt+QL7bs=;
+        b=VXSnkzhgEmqRlvQeGX9NCnyQ3Y5JC1XKQ/njZHgjge7gOflYnhmEuKBZv2B5+lpX7k
+         fM1Uq1yPvz2+ohYQGM1crR4MyigM5NizFBaoXIysuxgU4oALZOkEi6LZS6eZNHQiT91C
+         kSJbGWt/b9sEbP42tnVn61D5dI2UgdjM0CsbysxHNH97tUhk7HDQaUPry9AxuAwZJRaJ
+         iFOkt/g7uVOT1Gx2xXzadAGpXWUqEkLmaUDXuu3RrW4Tf8N/EnIeFizoM022H46IQJCe
+         MClvS1GXMiBfXEYOqpRah+ivuFJYxGUxqmEXyHOJRaFDCB5QemOVY7dqWn7/gS1z9cPY
+         19lw==
+X-Gm-Message-State: AC+VfDzgEOwPSM1FtWInwP/7wQzMkDL8bt7vvadkBQHDhHjwzIK0wKfS
+        avNqe+LjIWX/udrmIxP+HMgs51sYzP1IrwgN+xtqA4TKrO1ZFgzY8j4RLiL0/Vj20+wZj8sK11k
+        1u1GhD4UdPLK0v7goz6LLPsbaNoDcTzSLMJN4y51+n8vwRn/pNHcV7GUHDIealnlB6A==
+X-Google-Smtp-Source: ACHHUZ522ViNblYacKLmtZhtKrsYRZiupjs+5YxzMc5ThkGxZMDAxCRWNoHK/8Nh5mGzbc2TSB21CYCjNW04utI=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:6a00:1ad3:b0:653:b2f2:6470 with SMTP
- id f19-20020a056a001ad300b00653b2f26470mr1216364pfv.2.1686071408646; Tue, 06
- Jun 2023 10:10:08 -0700 (PDT)
-Date:   Tue,  6 Jun 2023 17:09:57 +0000
+ (user=calvinwan job=sendgmr) by 2002:a81:d84b:0:b0:54f:bb71:c7b3 with SMTP id
+ n11-20020a81d84b000000b0054fbb71c7b3mr1301369ywl.9.1686071410362; Tue, 06 Jun
+ 2023 10:10:10 -0700 (PDT)
+Date:   Tue,  6 Jun 2023 17:09:58 +0000
 In-Reply-To: <20230606170711.912972-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230606170711.912972-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.41.0.rc2.161.g9c6817b8e7-goog
-Message-ID: <20230606171002.914075-3-calvinwan@google.com>
-Subject: [PATCH v3 3/8] sane-ctype.h: create header for sane-ctype macros
+Message-ID: <20230606171002.914075-4-calvinwan@google.com>
+Subject: [PATCH v3 4/8] kwset: move translation table from ctype
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
@@ -62,162 +62,138 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Splitting these macros from git-compat-util.h cleans up the file and
-allows future third-party sources to not use these overrides if they do
-not wish to.
+This table was originally introduced to solely be used with kwset
+machinery (0f871cf56e), so it would make sense for it to belong in
+kwset.[ch] rather than ctype.c and git-compat-util.h. It is only used in
+diffcore-pickaxe.c, which already includes kwset.h so no other headers
+have to be modified.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- git-compat-util.h | 62 +-------------------------------------------
- sane-ctype.h      | 66 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 67 insertions(+), 61 deletions(-)
- create mode 100644 sane-ctype.h
+ ctype.c           | 36 ------------------------------------
+ git-compat-util.h |  3 ---
+ kwset.c           | 36 ++++++++++++++++++++++++++++++++++++
+ kwset.h           |  2 ++
+ 4 files changed, 38 insertions(+), 39 deletions(-)
 
+diff --git a/ctype.c b/ctype.c
+index fc0225cebd..3451745550 100644
+--- a/ctype.c
++++ b/ctype.c
+@@ -28,39 +28,3 @@ const unsigned char sane_ctype[256] = {
+ 	A, A, A, A, A, A, A, A, A, A, A, R, R, U, P, X,		/* 112..127 */
+ 	/* Nothing in the 128.. range */
+ };
+-
+-/* For case-insensitive kwset */
+-const unsigned char tolower_trans_tbl[256] = {
+-	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+-	0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
+-	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+-	0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
+-	 ' ',  '!',  '"',  '#',  '$',  '%',  '&', 0x27,
+-	 '(',  ')',  '*',  '+',  ',',  '-',  '.',  '/',
+-	 '0',  '1',  '2',  '3',  '4',  '5',  '6',  '7',
+-	 '8',  '9',  ':',  ';',  '<',  '=',  '>',  '?',
+-	 '@',  'a',  'b',  'c',  'd',  'e',  'f',  'g',
+-	 'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',
+-	 'p',  'q',  'r',  's',  't',  'u',  'v',  'w',
+-	 'x',  'y',  'z',  '[', 0x5c,  ']',  '^',  '_',
+-	 '`',  'a',  'b',  'c',  'd',  'e',  'f',  'g',
+-	 'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',
+-	 'p',  'q',  'r',  's',  't',  'u',  'v',  'w',
+-	 'x',  'y',  'z',  '{',  '|',  '}',  '~', 0x7f,
+-	0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
+-	0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f,
+-	0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97,
+-	0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
+-	0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7,
+-	0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf,
+-	0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7,
+-	0xb8, 0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf,
+-	0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7,
+-	0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf,
+-	0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0xd6, 0xd7,
+-	0xd8, 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0xdf,
+-	0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xe7,
+-	0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef,
+-	0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7,
+-	0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff,
+-};
 diff --git a/git-compat-util.h b/git-compat-util.h
-index f8e68baf29..2151d8b437 100644
+index 2151d8b437..9d3c21acbb 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -1153,67 +1153,7 @@ static inline size_t xsize_t(off_t len)
- /* in ctype.c, for kwset users */
- extern const unsigned char tolower_trans_tbl[256];
+@@ -1150,9 +1150,6 @@ static inline size_t xsize_t(off_t len)
+ #define HOST_NAME_MAX 256
+ #endif
  
--/* Sane ctype - no locale, and works with signed chars */
--#undef isascii
--#undef isspace
--#undef isdigit
--#undef isalpha
--#undef isalnum
--#undef isprint
--#undef islower
--#undef isupper
--#undef tolower
--#undef toupper
--#undef iscntrl
--#undef ispunct
--#undef isxdigit
+-/* in ctype.c, for kwset users */
+-extern const unsigned char tolower_trans_tbl[256];
 -
--extern const unsigned char sane_ctype[256];
--extern const signed char hexval_table[256];
--#define GIT_SPACE 0x01
--#define GIT_DIGIT 0x02
--#define GIT_ALPHA 0x04
--#define GIT_GLOB_SPECIAL 0x08
--#define GIT_REGEX_SPECIAL 0x10
--#define GIT_PATHSPEC_MAGIC 0x20
--#define GIT_CNTRL 0x40
--#define GIT_PUNCT 0x80
--#define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
--#define isascii(x) (((x) & ~0x7f) == 0)
--#define isspace(x) sane_istest(x,GIT_SPACE)
--#define isdigit(x) sane_istest(x,GIT_DIGIT)
--#define isalpha(x) sane_istest(x,GIT_ALPHA)
--#define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
--#define isprint(x) ((x) >= 0x20 && (x) <= 0x7e)
--#define islower(x) sane_iscase(x, 1)
--#define isupper(x) sane_iscase(x, 0)
--#define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
--#define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX_SPECIAL)
--#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
--#define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
--		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
--#define isxdigit(x) (hexval_table[(unsigned char)(x)] != -1)
--#define tolower(x) sane_case((unsigned char)(x), 0x20)
--#define toupper(x) sane_case((unsigned char)(x), 0)
--#define is_pathspec_magic(x) sane_istest(x,GIT_PATHSPEC_MAGIC)
--
--static inline int sane_case(int x, int high)
--{
--	if (sane_istest(x, GIT_ALPHA))
--		x = (x & ~0x20) | high;
--	return x;
--}
--
--static inline int sane_iscase(int x, int is_lower)
--{
--	if (!sane_istest(x, GIT_ALPHA))
--		return 0;
--
--	if (is_lower)
--		return (x & 0x20) != 0;
--	else
--		return (x & 0x20) == 0;
--}
-+#include "sane-ctype.h"
+ #include "sane-ctype.h"
  
  /*
-  * Like skip_prefix, but compare case-insensitively. Note that the comparison
-diff --git a/sane-ctype.h b/sane-ctype.h
-new file mode 100644
-index 0000000000..cbea1b299b
---- /dev/null
-+++ b/sane-ctype.h
-@@ -0,0 +1,66 @@
-+#ifndef SANE_CTYPE_H
-+#define SANE_CTYPE_H
+diff --git a/kwset.c b/kwset.c
+index 4b14d4f86b..bbfcf815a5 100644
+--- a/kwset.c
++++ b/kwset.c
+@@ -49,6 +49,42 @@ static void *obstack_chunk_alloc(long size)
+ 
+ #define U(c) ((unsigned char) (c))
+ 
++/* For case-insensitive kwset */
++const unsigned char tolower_trans_tbl[256] = {
++	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
++	0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
++	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
++	0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
++	 ' ',  '!',  '"',  '#',  '$',  '%',  '&', 0x27,
++	 '(',  ')',  '*',  '+',  ',',  '-',  '.',  '/',
++	 '0',  '1',  '2',  '3',  '4',  '5',  '6',  '7',
++	 '8',  '9',  ':',  ';',  '<',  '=',  '>',  '?',
++	 '@',  'a',  'b',  'c',  'd',  'e',  'f',  'g',
++	 'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',
++	 'p',  'q',  'r',  's',  't',  'u',  'v',  'w',
++	 'x',  'y',  'z',  '[', 0x5c,  ']',  '^',  '_',
++	 '`',  'a',  'b',  'c',  'd',  'e',  'f',  'g',
++	 'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',
++	 'p',  'q',  'r',  's',  't',  'u',  'v',  'w',
++	 'x',  'y',  'z',  '{',  '|',  '}',  '~', 0x7f,
++	0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
++	0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f,
++	0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97,
++	0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
++	0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7,
++	0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf,
++	0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7,
++	0xb8, 0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf,
++	0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7,
++	0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf,
++	0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0xd6, 0xd7,
++	0xd8, 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0xdf,
++	0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xe7,
++	0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef,
++	0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7,
++	0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff,
++};
 +
-+/* Sane ctype - no locale, and works with signed chars */
-+#undef isascii
-+#undef isspace
-+#undef isdigit
-+#undef isalpha
-+#undef isalnum
-+#undef isprint
-+#undef islower
-+#undef isupper
-+#undef tolower
-+#undef toupper
-+#undef iscntrl
-+#undef ispunct
-+#undef isxdigit
+ /* Balanced tree of edges and labels leaving a given trie node. */
+ struct tree
+ {
+diff --git a/kwset.h b/kwset.h
+index f50ecae573..d42a793a30 100644
+--- a/kwset.h
++++ b/kwset.h
+@@ -26,6 +26,8 @@
+    The author may be reached (Email) at the address mike@ai.mit.edu,
+    or (US mail) as Mike Haertel c/o Free Software Foundation. */
+ 
++extern const unsigned char tolower_trans_tbl[256];
 +
-+extern const unsigned char sane_ctype[256];
-+extern const signed char hexval_table[256];
-+#define GIT_SPACE 0x01
-+#define GIT_DIGIT 0x02
-+#define GIT_ALPHA 0x04
-+#define GIT_GLOB_SPECIAL 0x08
-+#define GIT_REGEX_SPECIAL 0x10
-+#define GIT_PATHSPEC_MAGIC 0x20
-+#define GIT_CNTRL 0x40
-+#define GIT_PUNCT 0x80
-+#define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
-+#define isascii(x) (((x) & ~0x7f) == 0)
-+#define isspace(x) sane_istest(x,GIT_SPACE)
-+#define isdigit(x) sane_istest(x,GIT_DIGIT)
-+#define isalpha(x) sane_istest(x,GIT_ALPHA)
-+#define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
-+#define isprint(x) ((x) >= 0x20 && (x) <= 0x7e)
-+#define islower(x) sane_iscase(x, 1)
-+#define isupper(x) sane_iscase(x, 0)
-+#define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
-+#define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX_SPECIAL)
-+#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
-+#define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
-+		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
-+#define isxdigit(x) (hexval_table[(unsigned char)(x)] != -1)
-+#define tolower(x) sane_case((unsigned char)(x), 0x20)
-+#define toupper(x) sane_case((unsigned char)(x), 0)
-+#define is_pathspec_magic(x) sane_istest(x,GIT_PATHSPEC_MAGIC)
-+
-+static inline int sane_case(int x, int high)
-+{
-+	if (sane_istest(x, GIT_ALPHA))
-+		x = (x & ~0x20) | high;
-+	return x;
-+}
-+
-+static inline int sane_iscase(int x, int is_lower)
-+{
-+	if (!sane_istest(x, GIT_ALPHA))
-+		return 0;
-+
-+	if (is_lower)
-+		return (x & 0x20) != 0;
-+	else
-+		return (x & 0x20) == 0;
-+}
-+
-+#endif
+ struct kwsmatch
+ {
+   int index;			/* Index number of matching keyword. */
 -- 
 2.41.0.rc2.161.g9c6817b8e7-goog
 
