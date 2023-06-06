@@ -2,175 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 669F5C7EE24
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 05:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7121C77B7A
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 07:01:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232348AbjFFFbY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 01:31:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46540 "EHLO
+        id S235726AbjFFHB3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 03:01:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232070AbjFFFbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 01:31:21 -0400
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BB71B1
-        for <git@vger.kernel.org>; Mon,  5 Jun 2023 22:31:20 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 3FAB03200344;
-        Tue,  6 Jun 2023 01:31:19 -0400 (EDT)
+        with ESMTP id S235815AbjFFHBF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 03:01:05 -0400
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED9E2E68
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 00:01:02 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 11CA332005C1;
+        Tue,  6 Jun 2023 03:01:02 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 06 Jun 2023 01:31:19 -0400
+  by compute6.internal (MEProxy); Tue, 06 Jun 2023 03:01:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1686029478; x=1686115878; bh=8Z
-        PvF1EIzWE7EjFieSDqbzGnaTL98CLP2++ZVBH6els=; b=o/OOsVGbHmgGMr8abc
-        E2c+243z5gB/F2LC7HS6008ME9h4CvKjl3wUaxDftYkv6PUN7pfEzADDO04MnzPb
-        dCn8nUUAdOEQbeS3aURz9UGLDz5KO2HMHpV4eXsZDXkKqX+w+Wh2D1vkIb6Q/XT+
-        G2pEumAaBGRI1Dqs9FpvIsoJf9vZIhRigyQuEDvRPtCoTPV/Xn1KPN+dLMhA6EdQ
-        DUdr15tjDtezkQMqpGXznXjsxUB/RifG6ij2pVVyrzRtiWOqaPs5DM2My2jlootW
-        xcai3nslaD9Dz4P/FxPKnTkiJCIipiA6HaD51fYyFtTS1WZtfpbFiBEnF73TD/Dd
-        Hpcg==
+        :subject:subject:to:to; s=fm1; t=1686034861; x=1686121261; bh=IB
+        a00ZSL/d/MGmwTUxXRVJAoYBUEu7jtxwqBQpCzAUc=; b=op0Y+9YBiZFPpwZoWS
+        OOj86LHdQWw3rSHSfROAW1xuBC6yrIq/uAc9wfaksz4EXcedbIfiYlRhhsBmqWWG
+        CDoOVT3KBO9swGM6XQTCrF35805eUwF5fVrEbWYDwFLRO8ebzD6ZyxlvaukycDM7
+        QX/BhF4R5U3OSG3sBnJVv1o9ZBxUCwo0y1v8ILb3x7YjOVkGhp9Jq7tdBHGTC/BN
+        PQU4JWTI3/2QSJWMIyaTxTqMxsRAzCIFkC8a9I9OOvvaxeGubO77N8Pon8147y1K
+        smZqNdofKwKQsEf/kbkFDWM41PZTd0Xvbk8rYDUuWE+PMKxHwI3A4p5bSg7U4DN7
+        FEJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1686029478; x=1686115878; bh=8ZPvF1EIzWE7E
-        jFieSDqbzGnaTL98CLP2++ZVBH6els=; b=WY/TBhc2GbcLWzTAkri7ZRakJnPMj
-        7ICrinuVe36ZMk/x6nF8j5NF14PWBNEkxWy7L4yci3I4TdyFTjGjITUcMqHAQb8J
-        XUZuqqzDRmrywpTfudNXuziD6xvT8cGrFBOnuDD/AjgSMT7RbZkgIcOMMYQZxQhj
-        G8abUlvIcYmwLmfaS9L7CLHEuryFoIgqQ0gwNLltkn1dcwWVKRqcg9ssdzKEhcPw
-        UJH2Z4zGIDqM5QN+K96oQuvOe0Oc3g8Akd/AutlMEjrTgyZ8TXqW/6ZmD/PhQgF3
-        emw5KHTXsT1xm1NCHZMmB6MRu8i+6jPpq8W7la4c+6JCCe/7NAMxfx41w==
-X-ME-Sender: <xms:psR-ZNmEsj9CubNUufvyw08VlhgQlKVxob6u0akto2viC4mfj3s4Vw>
-    <xme:psR-ZI2iX3CP7hFn1pJHnQXEL2vgGhVEwrjNMezHoYLs3SB4Zc4lEMEpsmGHqpB4q
-    kmgztOHeQ1W3vC-0Q>
-X-ME-Received: <xmr:psR-ZDo8H9w1qpQmFRBjqpMUop8my3o_IZOfcfhyyi9vHbB-yoMpK1kAONnAwL7Pft8_CESIbMxpqrzQZXDaQC3degjgiSEqLmSMXkCp8mw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedttddgleegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:psR-ZNksxN-EXesCbCIdN_NJ7go65m4UOkX-chgB-W-7PN-DAzOgsg>
-    <xmx:psR-ZL3SIUnohI-JD9ZLUTjK42Ka6NEw9q4D5knuXlW6oKaKq6OJBw>
-    <xmx:psR-ZMsk3zMeq8MIATtngW3HbK59dH2U_cNU9ZvJs33QdSuhxsKWEw>
-    <xmx:psR-ZMw4nZPslI-VU6z8dLI_4OqxjLLpSg4K2Fg8HoRmBhKuNMY2ag>
+        :x-sasl-enc; s=fm1; t=1686034861; x=1686121261; bh=IBa00ZSL/d/MG
+        mwTUxXRVJAoYBUEu7jtxwqBQpCzAUc=; b=DOgGhYe4b3Gjs5YvbEDD7A2C1efTv
+        7F7+J2TWoh76FNy5bsTVOZl3OCnrYIcFoJ2nF2UtdkBVo6UM4SPA6rNfAOnuauyA
+        WJPITbewpJYDge2MgXzKZ5UCBxOhUevyTcrOHZO9M3IVfl51MutucBUcbSaH70TT
+        Au5s1tmm0/ubFxJLNR2eVAt8tzAvMrFQeWP+f4GV4s9bZnzWEepgoJ90Wg3Akjte
+        q2JEXL4vzNKBj4mFDujkwAH1co+v8d/6hYRCYwrmzuJ0hsoE+XJYBBtNYlHM9Tw1
+        HYfLbpT2yaIICvofgmNVXWGV5nKZ2sBWIBjPBkQeNHVvO1X47PLSmFFsQ==
+X-ME-Sender: <xms:rdl-ZOODUpyM8U2FYQY7VNMmT0PbBb2UWK44Pi5XRBX7QvemwqUGzA>
+    <xme:rdl-ZM812mhAV_-MBbu9a_n0rY4VzsBO3qvQt5L8T3Vw9_Lml__io1TI4f7AayJ2Z
+    XwuFhhzrvvYjMYF-w>
+X-ME-Received: <xmr:rdl-ZFQ7dcUO9MBbXDCQbQGeF927D9kAVWBNyyhT-E4odF4TPdKBv6h-tqairKTdfm3gkrzZNM2P1K0PFAMjSuXqKVZCils_Tgl8GyLdBco>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedttddguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:rdl-ZOsmizTpuAAJEApYmRcmzqbEy8RaF6SXRoUSnYxXeTKu469TrA>
+    <xmx:rdl-ZGd4HktYFCcP3z99SR04RbiBVVXIujzyWLtOt4wt3d9nSNtKrg>
+    <xmx:rdl-ZC1qAC6YMaYM-9xdsnqYVJ9iG4sfTMDrOWcEKwVRNUhMvhG6AQ>
+    <xmx:rdl-ZF4KBz6lFPwdT3rbKnf9uFUEck6JThuUoDAXaJvSTKNafNd-zw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Jun 2023 01:31:17 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 85828f27 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 6 Jun 2023 05:30:12 +0000 (UTC)
-Date:   Tue, 6 Jun 2023 07:31:14 +0200
+ 6 Jun 2023 03:01:00 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 56166d3a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 6 Jun 2023 06:59:56 +0000 (UTC)
+Date:   Tue, 6 Jun 2023 09:00:58 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH 5/5] cat-file: Introduce new option to delimit output
- with NUL characters
-Message-ID: <ZH7Eoj_5oTzmSd4G@ncase>
-References: <cover.1685710884.git.ps@pks.im>
- <07a7c34615ec68fa42c725fd34d6144b6b191f03.1685710884.git.ps@pks.im>
- <9900512f-b0da-2e47-f1ab-ed51ec2c78ff@gmail.com>
- <xmqq35355utz.fsf@gitster.g>
- <ZH67eBAtFxo95aBL@ncase>
- <xmqqsfb5np14.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 11/16] revision.h: store hidden refs in a `strvec`
+Message-ID: <ZH7ZqjYqyvSOHY8u@ncase>
+References: <cover.1683581621.git.me@ttaylorr.com>
+ <cover.1684178576.git.me@ttaylorr.com>
+ <f765b50a8405f1653cbc2e79b375c979c4361550.1684178576.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="znZ1KOsWfUn3RjWI"
+        protocol="application/pgp-signature"; boundary="GcWKdcmbisd/leMu"
 Content-Disposition: inline
-In-Reply-To: <xmqqsfb5np14.fsf@gitster.g>
+In-Reply-To: <f765b50a8405f1653cbc2e79b375c979c4361550.1684178576.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---znZ1KOsWfUn3RjWI
+--GcWKdcmbisd/leMu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 06, 2023 at 02:22:15PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, May 15, 2023 at 03:23:39PM -0400, Taylor Blau wrote:
+> In subsequent commits, it will be convenient to have a 'const char **'
+> of hidden refs (matching `transfer.hiderefs`, `uploadpack.hideRefs`,
+> etc.), instead of a `string_list`.
 >=20
-> >> Hmph, I expected "-z" and "-Z" to be orthogonal, the former
-> >> controlling how input records are delimited, the latter controlling
-> >> how output records are delimited, as it usually is a good idea to
-> >> keep things that could be orthogonal to be orthogonal to avoid
-> >> unnecessarily robbing users flexibility.  "-Z is a new way that is
-> >> preferred over -z" was something I did not expect, actually.
-> >>=20
-> >> I am not outright rejecting such a deliberately limiting design, but
-> >> I'll have to think about it a bit.
-> >
-> > Well, the way I see it we shouldn't have ever decoupled the input and
-> > output format, and I consider it a bug that `-z` did as it makes it
-> > unusable with arbitrary input. So I'd rather be helping the user of
-> > these modes to do the right thing and NUL-delimit both input and output
-> > than running into these edge cases later down the road.
+> Convert spots throughout the tree that store the list of hidden refs
+> from a `string_list` to a `strvec`.
 >=20
-> If that is the direction we want to go in, then the title of this
-> step must be updated to say "-Z" does both output and input.  Also
-> with the same number of bytes it takes to say "new option", you can
-> say what that new option is, so do that.
-
-Sorry, my v2 and your mail crossed, so the new title doesn't yet mention
-`-Z`. I agree it would make sense to do so, and if there's a v3 I'll
-change it accordingly. Otherwise, please feel free to change:
-
-    cat-file: introduce option to delimit input and output with NUL
-
-to
-
-    cat-file: introduce `-Z` to delimit input and output with NUL
-
-> > That being said I'd be fine to change this series to mean "-Z changes
-> > stdout" if you insist. In that case we should be pointing out in our
-> > documentation that "You should never use `-z` without `-Z` when you
-> > process arbitrary input".
+> Note that in `parse_hide_refs_config()` there is an ugly const-cast used
+> to avoid an extra copy of each value before trimming any trailing slash
+> characters. This could instead be written as:
 >=20
-> You are not making sense.  If we were to leave them orthogonal to
-> keep flexibility, it is because there can be cases where using '-Z'
-> without using '-z' (and vice versa) makes sense; "you should never"
-> has no place to live in such a world.
+>     ref =3D xstrdup(value);
+>     len =3D strlen(ref);
+>     while (len && ref[len - 1] =3D=3D '/')
+>             ref[--len] =3D '\0';
+>     strvec_push(hide_refs, ref);
+>     free(ref);
+>=20
+> but the double-copy (once when calling `xstrdup()`, and another via
+> `strvec_push()`) is wasteful.
 
-Well, that's exactly what I'm arguing: I don't think it does make sense
-to keep them orthogonal. I cannot think of usecases where you'd want to
-only change either of those options once you start processing arbitrary
-input. If you exactly know that your input doesn't contain newlines then
-you don't need either `-z` nor `-Z`. On the other hand, if it does, then
-you must be using both.
-
-I only proposed the alternative with the intent of being diplomatic and
-not fully close the door on your remark in case you felt strongly about
-it.
-
-I've thus sent v2 to double down on my current approach where `-Z`
-changes both stdin and stdout and tried to make a better case for it in
-the commit message.
+I guess the proper way to fix this would be to introduce something like
+a `strvec_push_nodup()` function that takes ownership. And in fact this
+helper exists already, but it's declared as static. So we could get
+around the ugly cast with a simple change to expose the helper function.
 
 Patrick
 
---znZ1KOsWfUn3RjWI
+--GcWKdcmbisd/leMu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmR+xKEACgkQVbJhu7ck
-PpRV+w//fnq5R69Ms05RcB9Tlu63BGxH4YzPgk9er/F2WGepIXZ1jolCTUzujULy
-hUjgBQaNsxEkxRDT5+35PXTlIRpncJVto17ghC5V/IF4zzjzpARJS7nbOZI02HjX
-gJmGT+bI7AFY96gxWD+2/3LbS7KWwQR3kcswllrYW5E00XUZGv8Fwp4/stobniGy
-gb6/qrhHzUb/kWoHa1n36KDUBhg/UUuTy2HP7XxlEQoQLpSMxReahvpFxbX4J24M
-2VdQoVNo7jobR64qlfIoByMz7qtN26i3JSG9s2PxHNie05LPTticRqWC4jMcc3su
-03HcGmAa6WZa9crTc8k4jur5G+itDsErRYUfmrht4Svbce4BOznB2dWoxSGzw3sK
-8wKf2JnA3jFluBLn6nSo92NuRygj3T1OX4jWuwnBD/qQYSqDWjFNXFaPtFj0JZlZ
-QcFeuEZ2SlgF82tsI7nMJTZpFvz9YPZgiiHnk6RIR32lalJuZsEwuSv3t7zk6xcp
-Nkm55+zfWIfHQTASSJha1r1koYhtyt5/Y3fEmOUAOAY6S1eK57/d/SAfkPBip7ZY
-/XluxbQ273llA08QioeTDFlrkJFrvqF0OWpckaGEHa/Bz49QEAWEjGZGQF2MibWQ
-VPOo9tG2e/51qsyNFvI6FWcYoTTqpOGnIa5IQSUlvKILXdjStF8=
-=snv9
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmR+2akACgkQVbJhu7ck
+PpQU4xAAhMQZP5Hb6SQCI/7o1SGadWlIElTO2Bv4GRCzp/hWRop45iDDwyB9cwQa
+qSA/Hi/4jQ3qNhKU5DEyW6kIZ4Ptuu3tYiT1ILlQu7vzUNykDHBbFSalDdcVIz9w
+xgBaVLDiLVmogkDA07Xv2Xv4nZ6h/QqxK6+oHb9dnbBlnQlLKM/7XAiIAPRo/5UL
+hKG2EVzxY6r227s2uZ/6M3BDe4CtldYh0eZRQYxzfdpxuqqiFvCns1ATGR0UaYqE
+8e1X+EBKkPDc1cnuniU2pCd6uwJFGcbqKrtqm59IykEyZMJhTbkUjA+yjH3Gifoi
+eodxBvxeU0CUk8hwc7JaLkAFo2oxhiKZ29wRaOCpKHoEZFd4CAHvN61WBQ2CTDZo
+xEYgx2om6J5zxlO1KYgEHZkErRd+jnvOqlDZzO/k9SXvkbAfLPL+lvxvcS4ercnN
+JVfnRMlgcu3v9NvJIA9lMc4LqRwUlpGuGujS4uxbQYqbe/lYGHBGCtdW9J0aSHL4
+LSjt0a/m2HjwfvOCGhWoze9YWj6AOx2ijh/U2I0lVjBHyeHBZSzTbr7bqusrMzJZ
+/pMxXqXTaesLTTo9SbVcArG9W7ZAbCaPw31mdqHmwrkq23dG44U76nbQM5OVDgVh
+lHcIzx6dp2KCR6qtipYOU08YSJnCfhZbGwePhPGqbMzeFksKUAg=
+=XRi6
 -----END PGP SIGNATURE-----
 
---znZ1KOsWfUn3RjWI--
+--GcWKdcmbisd/leMu--
