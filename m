@@ -2,94 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C30ABC7EE23
-	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 02:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B31FC7EE29
+	for <git@archiver.kernel.org>; Tue,  6 Jun 2023 04:22:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232254AbjFFCOA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jun 2023 22:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47924 "EHLO
+        id S233849AbjFFEW4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 00:22:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbjFFCN5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2023 22:13:57 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8A0F7
-        for <git@vger.kernel.org>; Mon,  5 Jun 2023 19:13:51 -0700 (PDT)
-Received: (qmail 24110 invoked by uid 109); 6 Jun 2023 02:13:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Jun 2023 02:13:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2094 invoked by uid 111); 6 Jun 2023 02:13:50 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Jun 2023 22:13:50 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 5 Jun 2023 22:13:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] add: check color.ui for interactive add
-Message-ID: <20230606021349.GC89456@coredump.intra.peff.net>
-References: <pull.1541.git.1685994164018.gitgitgadget@gmail.com>
+        with ESMTP id S232421AbjFFEWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 00:22:38 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10C7E9
+        for <git@vger.kernel.org>; Mon,  5 Jun 2023 21:22:35 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id 41be03b00d2f7-543ae6ce8d1so1819500a12.2
+        for <git@vger.kernel.org>; Mon, 05 Jun 2023 21:22:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1686025355; x=1688617355;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r+YVGS7dCERCrwtQvd4EiJ5JAyJujoTZwiDdkXIDyRI=;
+        b=IMvxK4/RaIiMn4dkvhr0nEQrS8oKreCYMoGsR85IuKO1Du1a4dD6LDabrYnmpnn+zy
+         9PiiQB3vjrzlunJWIjtKq58xSqQsWFjkW/M1fjJw/mWN0ixsaq15IrahIqQNhqDIvF9X
+         j8GlmC/HwKbhTN97KLHDcFQvoXuN7GcK3Ldwu8BkbOFsUZ4Vruv46WToPCGvpa1iLf+U
+         bE29pc/M4rjLTblcwdKZcn3WKXkvV6Tkvwuku22SFIW7svHdlQpp+KeZ0Ybi7bBSprhk
+         qVufXG4rPAyTGodW1wOC/lkIapufy4uXgCQfLqBuc4FCMpTVxfp2owxl+5z8IP3azWlT
+         N8BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686025355; x=1688617355;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r+YVGS7dCERCrwtQvd4EiJ5JAyJujoTZwiDdkXIDyRI=;
+        b=JN7A3cdCCWBTgzJUZTDl9wsjrrN7XsF8wCfpRTAckh0leWOWnPU/eYk1+LMo4DjL/f
+         n7c7i69IcZg5pba1F6zdcQ4Nii4wnlpysZ1IRjO8LSPXFMVY+seHkACFaFuAI3qSRR7F
+         0qE+c8Os0kmUuM5x6YnnGQ70TLlJarUejG/I9NH773r9qlN9eCSbDh5cmmx3T6kcizX/
+         0ZG7WYjxuA2p8JENEVywu7NkUI4tpFveuo04oOEjwzBidDkxy96WuvI3eslQ4FFQDGF8
+         IA767OpXuDEQwf5/owfzVdVYUi5daNhMAt3zHGejQjIo1F03ViurMGq71fQ4gVnRkSmA
+         aWiw==
+X-Gm-Message-State: AC+VfDyvcMjktX3kQpF0vZFj7uxM48FSM4ARNqdVMkTer8uAEyjOsye4
+        oBdgiUdL8adj0c6F9iF1h2fyl2yAXyXZH37u1A==
+X-Google-Smtp-Source: ACHHUZ7YhW34LZOa+XyImJ4OCdeDXgMzXPPcAvoTlObtaT3M5CLOUWPqntxRk0RGPD3u7PrJgy0rgw==
+X-Received: by 2002:a17:90a:2c85:b0:24d:f59a:d331 with SMTP id n5-20020a17090a2c8500b0024df59ad331mr767745pjd.26.1686025355423;
+        Mon, 05 Jun 2023 21:22:35 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id i7-20020a17090adc0700b0025043a8185dsm6712008pjv.23.2023.06.05.21.22.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 21:22:34 -0700 (PDT)
+Message-ID: <523de20d-a816-5101-af82-5bfff26fbcac@github.com>
+Date:   Mon, 5 Jun 2023 21:22:33 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1541.git.1685994164018.gitgitgadget@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.2
+Subject: Re: [PATCH v1] worktree: integrate with sparse-index
+Content-Language: en-US
+To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <20230605161644.491424-1-cheskaqiqi@gmail.com>
+ <773c2f7a-8637-ab0b-e0a8-ab553c90e88b@github.com>
+ <CAMO4yUEQZz8DqPb7RyN8Owb=23p==6XS6G7Bza77p4-iydo6Qg@mail.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <CAMO4yUEQZz8DqPb7RyN8Owb=23p==6XS6G7Bza77p4-iydo6Qg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 05, 2023 at 07:42:43PM +0000, Derrick Stolee via GitGitGadget wrote:
+Shuqi Liang wrote:
+>>> +test_expect_success 'worktree is not expanded' '
+>>> +     init_repos &&
+>>> +
+>>> +     test_all_match git worktree add .worktrees/hotfix &&
+>>
+>> Shouldn't 'git worktree add' not expand the index? Why use 'test_all_match'
+>> instead of 'ensure_not_expanded'?
+> 
+> Here's my perspective on why my use of "test_all_match" instead of
+> "ensure_not_expanded" in "git worktree add":
+> 
+> The functions "validate_no_submodules" and "check_clean_worktree" are
+> specifically related to the "git worktree remove" command, and "git
+> worktree add" doesn't require index reading, so with or without the
+> "ensure_full_index" wouldn't affect the "git worktree add" command.
+> I look forward to hearing your thoughts regarding whether my
+> understanding is correct or not.
 
-> The fix is simple, to use git_color_default_config() as the fallback for
-> git_add_config(). A more robust change would instead encapsulate the
-> git_use_color_default global in methods that would check the config
-> setting if it has not been initialized yet. Some ideas are being
-> discussed on this front [1], but nothing has been finalized.
+I see, thanks for the explanation. I could understand it both ways: on one
+hand, you don't want redundant/unnecessary tests; on the other hand, that
+test design decision relies pretty heavily on knowing the internal
+implementation details, which the tests conceptually shouldn't have
+visibility to. 
 
-I think it should be OK to load the color config here, but note...
+I'd still lean towards using 'ensure_not_expanded' (it protects us from
+future changes causing index expansion, although that seems fairly
+unlikely). However, if you do choose to stick with not using
+'ensure_not_expanded', I'd recommend using 'git -C sparse-index worktree add
+.worktrees/hotfix' instead of 'test_all_match'. The 'worktree' test already
+compares behavior across the three test repositories; to keep things focused
+on index expansion, only the 'sparse-index' repo should be set up & tested.
 
->     This is also a reoccurrence of the "config not loaded" bug from [3].
+> 
+> Thanks for your valuable feedback！
 
-...that this case is a little different than the core.replaceRefs one.
-One of the reasons we don't just load all config by default is that it
-was an intentional scheme that not all programs would respect all
-config, and color in particular was one of the things that wasn't meant
-to be supported everywhere.
-
-In other words, the idea was that porcelain like "git diff" would use
-git_diff_ui_config(), which would load all the bells and whistles (like
-color). But plumbing like git-diff-tree uses git_diff_basic_config(),
-which skips those. And that way we can freely introduce new config
-options without worrying that they will unexpectedly change the behavior
-of plumbing commands (because each command has to manually opt into the
-new config).
-
-Now I won't claim that this approach hasn't created all sorts of
-headaches over the years, and we might not be better off with something
-more explicit (e.g., we parse all the config, but plumbing sets a flag
-to say "I am plumbing; do not respect color.ui"). But it is roughly the
-approach we've taken, so I'm mostly warning you that there may be
-dragons here. :)
-
-I say "roughly" because I actually think the rules have been bent a bit
-over the years. In particular, I think that git_use_color_default is
-initialized to COLOR_AUTO, so something like:
-
-  git diff-tree -p HEAD
-
-ends up colorizing, even though it's plumbing. Which is maybe not so
-bad, but it's doubly silly that:
-
-  git -c color.diff=false diff-tree -p HEAD
-
-still colorizes, even though "git diff" in an equivalent situation would
-not! That seems like a bug, but it's one that I suspect has been there
-since we flipped color on by default many years ago, and nobody has
-really complained.
-
-So all of this is a big digression from your patch. I think for "git
-add" it is probably OK to enable color by default. But I mostly want to
-point out that trying to roll this into a more elaborate fix may run
-afoul of all kinds of rabbit holes.
-
--Peff
