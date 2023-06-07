@@ -2,87 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 132F6C7EE23
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 13:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BADAAC77B7A
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 15:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235702AbjFGNv1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jun 2023 09:51:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34180 "EHLO
+        id S239714AbjFGPbb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jun 2023 11:31:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234872AbjFGNvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2023 09:51:25 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03F919BF
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 06:51:24 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-565bdae581eso91838827b3.2
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 06:51:24 -0700 (PDT)
+        with ESMTP id S240645AbjFGPb3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2023 11:31:29 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0D58E
+        for <git@vger.kernel.org>; Wed,  7 Jun 2023 08:31:23 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f6d7abe934so63065655e9.2
+        for <git@vger.kernel.org>; Wed, 07 Jun 2023 08:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1686145884; x=1688737884;
+        d=gmail.com; s=20221208; t=1686151882; x=1688743882;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Abk8qR4FuM4HF+bnzqP74omOwhGc2kHU8CEsh5bvFAU=;
-        b=ZMbE3Ik7dh1wjxndyc9+OqIfRzD+CMtm+m4GQEEhcV6pEaaqIGtn/iv+yaHwY4yXLk
-         Z0M88W0K2C5xltri/k6wWMl7shnSNqOkwjQXUlrwfu1YbHbjEN0vPGicUclngkO2WPlI
-         qGkvqBeCUHadT3HA67Wjhs41FARGtSXSW2VRBr/8jp/7Xrgf5OcaXi4lx7w3H5l9coMU
-         VXhB/zEYyVKvTi0LPkdT9kHsMVc8d+A60JWlGRU8iLDObQbVdGrFETJwLUoO1axQEJCz
-         ALzEFUlm/izZBdKGrJTi+WyQfvpiKEGtmlHGVg9lJmzLTK4XUZTO3D836LPqoLmI2Ezw
-         9+SQ==
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4p/qsvJiHnLK0L35yWd6qn8eFAC78G4rBjF50z1dsEE=;
+        b=MK6uYLW0rIyxSKX+3uYuMPrL9v5eKlQIwV6zSKCRqMKqmr39+Kf3ytlNEmkBJY4XkF
+         lBukaZsNtFIbvzMErkqtc5Gh1aiqSawHYSE6uhqN+u9k1cW0Lon7C99UxZlr4RmZy/Fz
+         k/hpm8Ubr2F+CJrTNv9JGZVZY1cJ24a+9m7gvBGiQJUL7nSqrcAG0or9vRWJyIHJ+sdR
+         sD3tQXXiT3pR91TV4Z0laHKIZVHKxgcZVznHEwqWBpA9+YqOZCft6YVAcgzsqzKd5bq+
+         mBsmA/mdvQHaFrksRMsFg7GIIvvExQUqjYWHQQDBjEHqdQGNYDzWfk5BctVjWzZrP7oa
+         GSqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686145884; x=1688737884;
+        d=1e100.net; s=20221208; t=1686151882; x=1688743882;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Abk8qR4FuM4HF+bnzqP74omOwhGc2kHU8CEsh5bvFAU=;
-        b=UkmpRol97CJsyvfWPxsWsbgFIieswFcoR4OyJzUTYsH+3UYV2hAyeT0sQcR6B39bHf
-         nwoHezWNZvykLGX8jof9CgDmiJZ9fgeR1bemzmorDUkmMANvlI3rsEwAgC2xygyv8Wr1
-         yMX+APjO+9CVI5FHEsPjFoA3rSXb18Fu1qXROH6GqkEe7CgI6+OtWcF7sZCf2sM0qPDm
-         StQQDruNPJpaH9xPRdydCxz3ylR8LkUdtj1TdG+iJ38s2yQtgeiXOWyngx4RqijuL+WU
-         WDykMTXASUVDXgABgP+35j5EldvriR9wFYABMBmZCgWRiwbPyWHNiXwoAfEjPj7MTPbV
-         WLww==
-X-Gm-Message-State: AC+VfDyhEnp1zdCDAe+4s1hBwNNlDXdAnTi4Xuw6/NmnwNi62+724jr2
-        wXKk0R1jpPsW3j/AenKexP0o
-X-Google-Smtp-Source: ACHHUZ4IW/D0Qe3JQzYV/q4+tsdjrAqlKjmR5hPZq6QK/O/rXdmgKqhSxeUnuizH1sHb+M2l1imT1Q==
-X-Received: by 2002:a0d:e291:0:b0:569:ff01:41b8 with SMTP id l139-20020a0de291000000b00569ff0141b8mr4549094ywe.15.1686145884188;
-        Wed, 07 Jun 2023 06:51:24 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:ec69:1775:6713:a647? ([2600:1700:e72:80a0:ec69:1775:6713:a647])
-        by smtp.gmail.com with ESMTPSA id p130-20020a0de688000000b0055d6b67f468sm1221804ywe.14.2023.06.07.06.51.23
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4p/qsvJiHnLK0L35yWd6qn8eFAC78G4rBjF50z1dsEE=;
+        b=dXEMJw4lenzIyIsSG1ZBJlqJJebR/CGLQzvl7hJjI96hSxR5ufElh356XblT2MxTrx
+         BX992+rRVAn6li6kalh23Pms7gIj/tQIPDHx1U0PWy1epXjq4LjME/Y9gyPjrwXcBFmT
+         yzfRaZCFOIqnxHFd31JVGh/A06VKlY2IJz7AzYyNznicie9AlWPzRLWWHobh9IthF2py
+         a8DeFldqle86jN6/vsnWQK1qw1R7ZIUMUGqhEumUw1uamTWcGGcY09ancWOfIcLR0QAR
+         hTbjiayjTyhisRdeldTFxWMtYWSMV8cje0p8u2iPUyvaKDtwB92m7+GTad0WIGTL9q+u
+         QdzQ==
+X-Gm-Message-State: AC+VfDwlYTumltwA3LIdLiRcYOKt6jC4ls7vnPyyPxbN3AVJOTeqoFm3
+        0wqJhcaDMiwIFmL5PQDjN7nEniC/6L0=
+X-Google-Smtp-Source: ACHHUZ7HiffMzY9o9xX+71XUDXQU5Yml4D/vFP/4dw8YoMAeoThBVmqBNLMDA9oll5PkO/9BbDI9Qw==
+X-Received: by 2002:a7b:ce0d:0:b0:3f7:e48b:9752 with SMTP id m13-20020a7bce0d000000b003f7e48b9752mr4705682wmc.32.1686151881937;
+        Wed, 07 Jun 2023 08:31:21 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id o10-20020a1c750a000000b003f60101074dsm2497639wmc.33.2023.06.07.08.31.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 06:51:23 -0700 (PDT)
-Message-ID: <d3c67344-a10d-f680-4601-581138985006@github.com>
-Date:   Wed, 7 Jun 2023 09:51:22 -0400
+        Wed, 07 Jun 2023 08:31:21 -0700 (PDT)
+Message-ID: <2143c98e-238b-8edc-a16c-be448a8b56e8@gmail.com>
+Date:   Wed, 7 Jun 2023 16:31:12 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] builtin/repack.c: only collect fully-formed packs
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Patch v2 2/2] add: test use of brackets when color is disabled
 Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-References: <dda5a34a3e879787ce8651674962db6cf913b7b2.1686132967.git.me@ttaylorr.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <dda5a34a3e879787ce8651674962db6cf913b7b2.1686132967.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1541.git.1685994164018.gitgitgadget@gmail.com>
+ <pull.1541.v2.git.1686061219078.gitgitgadget@gmail.com>
+ <281431b8-af40-9de9-f4b4-c596c5dbb3af@github.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <281431b8-af40-9de9-f4b4-c596c5dbb3af@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/7/2023 6:16 AM, Taylor Blau wrote:
-> To partition the set of packs based on which ones are "kept" (either
-> they have a .keep file, or were otherwise marked via the `--keep-pack`
-> option) and "non-kept" ones (anything else), `git repack` uses its
-> `collect_pack_filenames()` function.
+Hi Stolee
 
-...
+On 07/06/2023 14:44, Derrick Stolee wrote:
+>  From 02156b81bbb2cafb19d702c55d45714fcf224048 Mon Sep 17 00:00:00 2001
+> From: Derrick Stolee <derrickstolee@github.com>
+> Date: Wed, 7 Jun 2023 09:39:01 -0400
+> Subject: [PATCH v2 2/2] add: test use of brackets when color is disabled
+> 
+> The interactive add command, 'git add -i', displays a menu of options
+> using full words. When color is enabled, the first letter of each word
+> is changed to a highlight color to signal that the first letter could be
+> used as a command. Without color, brackets ("[]") are used around these
+> first letters.
+> 
+> This behavior was not previously tested directly in t3701, so add a test
+> for it now. Since we use 'git add -i >actual <input' without
+> 'force_color', the color system recognizes that colors are not available
+> on stdout and will be disabled by default.
+> 
+> This test would reproduce correctly with or without the fix in the
+> previous commit to make sure that color.ui is respected in 'git add'.
+> 
+> Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
 
-> Fix the above by teaching `collect_pack_filenames()` to only collect
-> packs with their corresponding `*.idx` files in place, indicating that
-> those packs have been fully staged.
+Thanks for adding this, the patch looks good. Strictly speaking you 
+don't need the "g" at the end of the sed expression as it only ever 
+matches a single instance within each line but that's not worth worrying 
+about.
 
-I reviewed an internal version of this patch, so I'm happy with this
-version. I'd be very interested if anyone has concerns with the
-approach, though.
+Best Wishes
 
-Thanks,
--Stolee
+Phillip
 
+> Here is the patch to add this test on top of the previous change.
+> 
+> I've only validated this on my local computer, not through the
+> GitGitGadget PR. If needed, I could send a v3 via GitGitGadget,
+> but thought this would be a simple-enough addition here.
+> 
+> Thanks,
+> -Stolee
+> 
+>   t/t3701-add-interactive.sh | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
+> 
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index a93fe54e2ad..df3e85fc8d6 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -734,6 +734,29 @@ test_expect_success 'colors can be overridden' '
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success 'brackets appear without color' '
+> +	git reset --hard &&
+> +	test_when_finished "git rm -f bracket-test" &&
+> +	test_write_lines context old more-context >bracket-test &&
+> +	git add bracket-test &&
+> +	test_write_lines context new more-context another-one >bracket-test &&
+> +
+> +	test_write_lines quit >input &&
+> +	git add -i >actual <input &&
+> +
+> +	sed "s/^|//g" >expect <<-\EOF &&
+> +	|           staged     unstaged path
+> +	|  1:        +3/-0        +2/-1 bracket-test
+> +	|
+> +	|*** Commands ***
+> +	|  1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
+> +	|  5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
+> +	|What now> Bye.
+> +	EOF
+> +
+> +	test_cmp expect actual
+> +'
+> +
+>   test_expect_success 'colors can be skipped with color.ui=false' '
+>   	git reset --hard &&
+>   	test_when_finished "git rm -f color-test" &&
