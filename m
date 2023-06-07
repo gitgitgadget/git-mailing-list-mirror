@@ -2,78 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96B66C7EE23
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 16:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2BD1C77B7A
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 17:02:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232311AbjFGQbl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jun 2023 12:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52510 "EHLO
+        id S231379AbjFGRCS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jun 2023 13:02:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232508AbjFGQbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2023 12:31:32 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C7FA1BF5
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 09:31:02 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-bacfa4ef059so12471424276.2
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 09:31:02 -0700 (PDT)
+        with ESMTP id S231206AbjFGRCQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2023 13:02:16 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABFCA1BF8
+        for <git@vger.kernel.org>; Wed,  7 Jun 2023 10:02:15 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-516500163b2so258a12.1
+        for <git@vger.kernel.org>; Wed, 07 Jun 2023 10:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686155461; x=1688747461;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JMZnoY4XqTcDt48VDkYT5pC/JnPK+jLurDYhV/yZUSs=;
-        b=7NeonI1n5/Sie6iiAQn121YG0RuVW+7uTb5RTx7MhVtxNJosZwAj4lJlUnNdIao0Fy
-         owCJBGYBKMxTwxC5wH9oJbVBcr83IShIwcr5iN5sU0A/pLAq0PecKDC2uccuiUtfiDzu
-         u6ivnAKkU9bkp6CqVqWYbRyZNadoit5Z7zRwaredpGkTdI010MQlXtJnm6hlZZdEX8G8
-         gIUKdCuMHZFw37mOOMCkg5aI1xcLBRRgL9v9eNjrLLqYEHNzGFkoYYL6SoDYuik6NfFp
-         jeHvIRbU2sOKlNrrnCZ5377qCpCxcZxLHBud6N4TDR+ZX4/yT34PHvy1uVv0Hu16Yaa1
-         8HHw==
+        d=google.com; s=20221208; t=1686157334; x=1688749334;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=33Iu9BfKhdqxsBryqx3JlHrUKvDHZMGPUzffwTjrfA8=;
+        b=peNfK7N40E7Q4080p0FQ/3WFnegiMrjLdZqUtVgFTHG9G7kk0IdmSygBkHOR5O7U3N
+         DWDZYsRdx0h2UzRZYPJyBr6+Ubz/FcHwRFBDQQosSR6uRLk8+UHYIHXvBgUj/B3Yrsqb
+         Yrtk8cr/74P5JaP3WA42XYci2kJShK87wP8NbmhZKiKXB2aN9JoyJhPSHyXKRH3/k+MH
+         E6CfcpEhyCaj/w9f9aPIISX0CNSTNXfx/5gW42UZJV/KmwnQiUcslNY1wjZjvYrj4uUv
+         neW7B8w9k69oj93LJvQkq6m/4wa6rRcZtAQlD72EmqBmb1+Squv/b5BGkOFo8omMMMu/
+         H5FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686155461; x=1688747461;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JMZnoY4XqTcDt48VDkYT5pC/JnPK+jLurDYhV/yZUSs=;
-        b=CnXl68siR1iA43BmEhYHeY34GB/6nksrMM96lUbjmjtYh9/Mi3PvdByJU7d9FiFigf
-         Qq7YPfWTibIFsyEPrLF8XYi+m7NetQxXte/y9AZWzSe6EhCGCJxCz3bGLoA6oZUGXiI8
-         +fXWwGsMVKAMshRvAbiz43pp3UESyC9a4c9sFDUSxnOrSpIqraJX5vbJqCY3WDUwa9V7
-         NlsQAjmnqrAOf+RvqTna+hqbpUTlvyD35SD7B7zMoS+0c79RgUnL/O+Ev+DsdZEikfsp
-         SBEnYqIwgeqrfKJExGVag4gp85R7Pp76esc7dHorsu04D7/LDMw89fEsq1t2xByCofGu
-         EhUw==
-X-Gm-Message-State: AC+VfDytU0CwlFWJqv0TefPGX04n6HkYOJVFjzXIuGn13gTbl4oLpdtL
-        fvICu28WC9vwY6mdNIltBVD5Q6/4DnVCIsZQv6XM
-X-Google-Smtp-Source: ACHHUZ4NyqeWJTTKgdhKhqxj5cblajTQgAH15WAKN6l8540z8TnU6dCDdIcH0cBcDcxLk1pO6MXUfbzgNTQ7hj2dAG2+
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:83cf:b5ee:dde8:2648])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6902:72a:b0:bab:cc56:76c2 with
- SMTP id l10-20020a056902072a00b00babcc5676c2mr3553507ybt.8.1686155461281;
- Wed, 07 Jun 2023 09:31:01 -0700 (PDT)
-Date:   Wed,  7 Jun 2023 09:30:56 -0700
-In-Reply-To: <xmqqa5xh705s.fsf@gitster.g>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
-Message-ID: <20230607163056.1602219-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 0/3] Changed path filter hash fix and version bump
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>
+        d=1e100.net; s=20221208; t=1686157334; x=1688749334;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=33Iu9BfKhdqxsBryqx3JlHrUKvDHZMGPUzffwTjrfA8=;
+        b=OMSRaX3uC6fsRXLsFesTK/MQ6jyLWpds9rNhMLZmHwSxco6Kr/sTmHDFDOUTXlevth
+         CcGhOTZZnQ8E2vEyZo5ZIP/VbH27uEaYO791Y/2rSzMudESymkxdoyS5uiGJyE05PdPk
+         nDsl7n1b8a8p7ksKtz6VYOsUN+D7Dtm82DG5OH6AUYTgP+FaLRECzwkNXXUqbGQsc26U
+         JVw7bb2jZrq0FkBc2Bhlkw7DFSt8HD0vxGkYBpgVlhmfDGm22eixp1r0IQI4gpuBZa/2
+         wXHYDzzjEUo7doH+MXH/dfO57HyyAl+zIVVIUWaAubq4XihzVaQjs1uQ4Mer7WdweytJ
+         9PVA==
+X-Gm-Message-State: AC+VfDyRazV/YaRkLJHH8Kny29Rvm+SytXCKCSLpuDHZROhCovdl+Hu/
+        W+kTJWksc3t+Rnx2+ZWMTGVsltORtagkBaDGGSffpGv+rP6m8Np95kA=
+X-Google-Smtp-Source: ACHHUZ46JbmOKXYAfpolwXD7z82qFa97WMgO+yJwZNjlOLPPRTyIoxZH4+w4Ne5Asad60wSXaAz9iwDWiBuwFc14yDw=
+X-Received: by 2002:a50:8acf:0:b0:514:92e4:ab9f with SMTP id
+ k15-20020a508acf000000b0051492e4ab9fmr136963edk.7.1686157333984; Wed, 07 Jun
+ 2023 10:02:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230606170711.912972-1-calvinwan@google.com> <20230606171002.914075-5-calvinwan@google.com>
+ <25d47081-2096-bb8a-dca3-bd5ea931c879@ramsayjones.plus.com>
+In-Reply-To: <25d47081-2096-bb8a-dca3-bd5ea931c879@ramsayjones.plus.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 7 Jun 2023 10:02:02 -0700
+Message-ID: <CAFySSZBZVn=7gBB19_uNxeUwS9Y8Q6ZZiCT=AwfuBy4+d34piw@mail.gmail.com>
+Subject: Re: [PATCH v3 5/8] common.h: move non-compat specific macros and functions
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        jonathantanmy@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Jonathan Tan <jonathantanmy@google.com> writes:
-> >
-> >> Here's a new version. With this, Git can function with both version
-> >> 1 (incorrect murmur3) and version 2 (correct murmur3) changed path
-> >> filters, but not at the same time: the user can set a config variable to
-> >> choose which one, and Git will ignore existing changed path filters of
-> >> the wrong version (and always write the version that the config variable
-> >> says).
-> 
-> Seems to break t4216 when merged to 'seen' to replace the previous
-> round.  Could you take a look?
-
-OK - I see that it fails CI when I upload the merge to GitHub (although
-it passes locally). I'll take a look.
+Is there a particular problem here? common.h includes
+git-compat-util.h at the top so that it has access to standard
+libraries and possibly other compat utilities. git-compat-util.h
+includes common.h at the bottom so that other files don't have to also
+include common.h as well. Imagine if instead of having git-compat-util
+include common.h, we had a third file here: git-compat-common.h. It
+includes common.h and git-compat-util.h and every file includes that
+instead of git-compat-util.h. Now git-compat-util.h wouldn't include
+common.h, but this change can be circumvented by including common.h at
+the bottom.
