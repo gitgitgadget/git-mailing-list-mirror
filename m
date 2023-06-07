@@ -2,231 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33A0AC7EE29
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 10:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C92BC77B7A
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 10:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235194AbjFGKQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jun 2023 06:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
+        id S238478AbjFGKkz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jun 2023 06:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239122AbjFGKQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2023 06:16:24 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6482B1BCE
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 03:16:22 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bb167972cffso9080067276.1
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 03:16:22 -0700 (PDT)
+        with ESMTP id S234932AbjFGKkx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2023 06:40:53 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C0CA1BD7
+        for <git@vger.kernel.org>; Wed,  7 Jun 2023 03:40:52 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-565ca65e7ffso66995847b3.0
+        for <git@vger.kernel.org>; Wed, 07 Jun 2023 03:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686132981; x=1688724981;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z5MarA02E7dw7eFDVci1aBQYA+1m7FKimAvUcf0+LpM=;
-        b=EtpPrV8jUQIwMB5edWR+Jx5srLaaBZG38Q5vOxaC6q0yNwftotkY70sVybH2QvHYMA
-         kp6XJKTsri/65XEGR/5PifjrvUgX/RVzx0Ve1jdsOXTyGQePm4JkUvUkWLedKwbQmeZ5
-         H3duCplY8AsUr521gjYk7PfdiL0X0YVqDc0Iir/MIMpUiAawxG9ytvzjFctlGkt1m+YX
-         SdyB+PX14ATes8b+b5PtewD1VvmMWs89mJhi0/Bo3FfHdgmPMBJkjKR1lMBUMDry6I2o
-         7tDQo0zRdjWLTaepNQkHdmgZxyH1hDOMt/A+DXLA3lU+hleBtr7BClCzwyxqwFqf5Dmp
-         X4og==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686134451; x=1688726451;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XJf3/E7YYMJnEGKv7kXK0wUd50/Iz7Jp8Q0PHWftm4w=;
+        b=XFyrZGP1UJuA1O/TsHRYOq6MAqPAwEAD2BvPvHYOgBfmXOZyRLCK5RmIdFrN7EAYV8
+         UmYVwaX7zxvnLKDXV0jsbdesn7UJ7wsfx2YhSLWjzsIqgjrYPBPhmizIswDSHNtqKZBU
+         a9DmygMrSjBBpg7fcrxKsWfY7tvoBoDeL9ouBBgRXX56GbZJcG0wu/owd2TSUbC5issD
+         QZSmWy+IlD4UlbxNlHEkxfxu2aGbaokWDKmvo2Q3si73Xl1m3x6ItZS3pEge0vdGx9JX
+         XgTBIJzQh85jJNGD7QDyA02Fh48ggT7elMJUL7yIAOPpekIInxHm69crqeUVoebRKkhd
+         r0OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686132981; x=1688724981;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1686134451; x=1688726451;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z5MarA02E7dw7eFDVci1aBQYA+1m7FKimAvUcf0+LpM=;
-        b=BrEmwYlPiXvFAJUuD3arxNMfjtx+1KPJ0Y049IcKRvrOZD/0Fd0RVShCkhWuhR/Xfy
-         hQHV5OACs+4o2Wqa5EPn2Vwql6nwRm1V8rVEI12F60XxYjddcgZrBZXl37B+BlwCk+Bq
-         LIdStBPFS9TSdUm1xK/84RGcpBuNbA3GQf77mfm1WgwiIEiwKp1WRiF0V7VfoFv3ttY6
-         WnySi6NFZD0w+LRZTzagOd201HNSw7T3InUPcoSUEcSy9oNpd+XRzmrdCk9EKblNGuij
-         tJJKROAkev6awYx8JgGoueTjRnkK9D3sSP/CwJV/a9XPRx1Gljxjg0Tzli0KVfPrmO+Q
-         bZBw==
-X-Gm-Message-State: AC+VfDy4C6hrV8jur+MZ7qgpBYeEd2VFpuThu15oGdaV7QznWWQA2v98
-        hYrAJispB7mN1jYVvydyW5Kr9caVN+UwTVdQmTD1ZOwg
-X-Google-Smtp-Source: ACHHUZ6EiFl1AZN0EEyaXsETx/YrVcg9jgw3MoBudRVTKD6B6+XMv5N2NRLS4E2y0Q7cMmAGyc0hoQ==
-X-Received: by 2002:a25:dc14:0:b0:b96:5fd4:c967 with SMTP id y20-20020a25dc14000000b00b965fd4c967mr5622167ybe.57.1686132981081;
-        Wed, 07 Jun 2023 03:16:21 -0700 (PDT)
+        bh=XJf3/E7YYMJnEGKv7kXK0wUd50/Iz7Jp8Q0PHWftm4w=;
+        b=fKHnuGYOc3chVHGFQ+Sq1+hesR8A0/HAKqSwNBbNX1KHqbB5IyF+EvMh1Snoa74xri
+         RE9RQ40x4GBXzzhebyEVNGga2QhLaDnbVDn8wbbuzatLp8/OhorYMl5fBcdFuMRAv/fq
+         mFRpOoisc45dT8ZcbxQrsGpDnCIscXBNbsfopXifpZv5/4avIecShN1pKckfMO+a3LAB
+         rxOYifwLkYVQ9dJvBUCFK2MnEGuXC7rsTRguRXKInEhLIYsCdxDE7BKqS1HWYZrPvx3D
+         TLzZLs3DZcsuMIcD9LT7lFOkLFEfOCdmeSBs3ME5DTxKt5HG5ncN+GxIj6T06hL8Seea
+         XS/w==
+X-Gm-Message-State: AC+VfDwCkcgYrRtMPOkflEDij3FyAydFWkp7POowyrK9+0uCi3AVnnLO
+        aKjxTkkcCtKriiUmZD2Q+ILwWzDW1q4nDQgKC1Cn+BW8
+X-Google-Smtp-Source: ACHHUZ4bw/Sj/EpmoLyoP79ZM9xf6Ys/h0i1UC8CjPjZanYvVNb6ZTUNO7/VETEtr3oZi5eYbMDUfg==
+X-Received: by 2002:a0d:c007:0:b0:565:d3c9:f4f3 with SMTP id b7-20020a0dc007000000b00565d3c9f4f3mr5289849ywd.3.1686134451258;
+        Wed, 07 Jun 2023 03:40:51 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 7-20020a250a07000000b00bb0a8342723sm3749254ybk.50.2023.06.07.03.16.20
+        by smtp.gmail.com with ESMTPSA id r2-20020a815d02000000b00569ff2d94f6sm651212ywb.19.2023.06.07.03.40.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 03:16:20 -0700 (PDT)
-Date:   Wed, 7 Jun 2023 06:16:17 -0400
+        Wed, 07 Jun 2023 03:40:50 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 06:40:47 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] builtin/repack.c: only collect fully-formed packs
-Message-ID: <dda5a34a3e879787ce8651674962db6cf913b7b2.1686132967.git.me@ttaylorr.com>
+Cc:     Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 00/16] refs: implement jump lists for packed backend
+Message-ID: <cover.1686134440.git.me@ttaylorr.com>
+References: <cover.1683581621.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1683581621.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Message-ID: <20230607101617.ges6tnMry4E52lDGld43QgtNUsIS4YQq6w-t71hEfkQ@z>
 
-To partition the set of packs based on which ones are "kept" (either
-they have a .keep file, or were otherwise marked via the `--keep-pack`
-option) and "non-kept" ones (anything else), `git repack` uses its
-`collect_pack_filenames()` function.
+Here is a reroll of my series to implement jump (née skip) lists for the
+packed refs backend, based on top of the current 'master'.
 
-Ordinarily, we would rely on a convenience function such as
-`get_all_packs()` to enumerate and partition the set of packs. But
-`collect_pack_filenames()` uses `readdir()` directly to read the
-contents of the "$GIT_DIR/objects/pack" directory, and adds each entry
-ending in ".pack" to the appropriate list (either kept, or non-kept as
-above).
+Nothing substantive has changed since the last version, where review had
+stabilized. This version just resolves a couple of merge conflicts with
+633390bd08 (Merge branch 'bc/clone-empty-repo-via-protocol-v0',
+2023-05-19).
 
-This is subtly racy, since `collect_pack_filenames()` may see a pack
-that is not fully staged (i.e., it is missing its ".idx" file).
-Ordinarily, this doesn't cause a problem. But it can cause issues when
-generating a cruft pack.
+As usual, a range-diff is included below for convenience.
 
-This is because `git repack` feeds (among other things) the list of
-existing kept packs down to `git pack-objects --cruft` to indicate that
-any kept packs will not be removed from the repository (so that the
-cruft pack machinery can avoid packing objects that appear in those
-packs as cruft).
+Thanks in advance for a hopefully final look ;-).
 
-But `read_cruft_objects()` lists packfiles by calling `get_all_packs()`.
-So if a ".pack" file exists (necessary to get that pack to appear to
-`collect_pack_filenames()`), but doesn't have a corresponding ".idx"
-file (necessary to get that pack to appear via `get_all_packs()`), we'll
-complain with:
+Jeff King (5):
+  refs.c: rename `ref_filter`
+  ref-filter.h: provide `REF_FILTER_INIT`
+  ref-filter: clear reachable list pointers after freeing
+  ref-filter: add `ref_filter_clear()`
+  ref-filter.c: parameterize match functions over patterns
 
-    fatal: could not find pack '.tmp-5841-pack-a6b0150558609c323c496ced21de6f4b66589260.pack'
+Taylor Blau (11):
+  builtin/for-each-ref.c: add `--exclude` option
+  refs: plumb `exclude_patterns` argument throughout
+  refs/packed-backend.c: refactor `find_reference_location()`
+  refs/packed-backend.c: implement jump lists to avoid excluded
+    pattern(s)
+  refs/packed-backend.c: add trace2 counters for jump list
+  revision.h: store hidden refs in a `strvec`
+  refs/packed-backend.c: ignore complicated hidden refs rules
+  refs.h: let `for_each_namespaced_ref()` take excluded patterns
+  builtin/receive-pack.c: avoid enumerating hidden references
+  upload-pack.c: avoid enumerating hidden refs where possible
+  ls-refs.c: avoid enumerating hidden refs where possible
 
-Fix the above by teaching `collect_pack_filenames()` to only collect
-packs with their corresponding `*.idx` files in place, indicating that
-those packs have been fully staged.
+ Documentation/git-for-each-ref.txt |   6 +
+ builtin/branch.c                   |   4 +-
+ builtin/for-each-ref.c             |   7 +-
+ builtin/receive-pack.c             |   7 +-
+ builtin/tag.c                      |   4 +-
+ http-backend.c                     |   2 +-
+ ls-refs.c                          |   8 +-
+ ref-filter.c                       |  63 ++++++--
+ ref-filter.h                       |  12 ++
+ refs.c                             |  61 ++++----
+ refs.h                             |  15 +-
+ refs/debug.c                       |   5 +-
+ refs/files-backend.c               |   5 +-
+ refs/packed-backend.c              | 226 ++++++++++++++++++++++++++---
+ refs/refs-internal.h               |   7 +-
+ revision.c                         |   4 +-
+ revision.h                         |   5 +-
+ t/helper/test-reach.c              |   2 +-
+ t/helper/test-ref-store.c          |  10 ++
+ t/t0041-usage.sh                   |   1 +
+ t/t1419-exclude-refs.sh            | 131 +++++++++++++++++
+ t/t3402-rebase-merge.sh            |   1 +
+ t/t6300-for-each-ref.sh            |  35 +++++
+ trace2.h                           |   2 +
+ trace2/tr2_ctr.c                   |   5 +
+ upload-pack.c                      |  43 ++++--
+ 26 files changed, 565 insertions(+), 106 deletions(-)
+ create mode 100755 t/t1419-exclude-refs.sh
 
-There are a couple of things worth noting:
-
-  - Since each entry in the `extra_keep` list (which contains the
-    `--keep-pack` names) has a `*.pack` suffix, we'll have to swap the
-    suffix from ".pack" to ".idx", and compare that instead.
-
-  - Since we use the the `fname_kept_list` to figure out which packs to
-    delete (with `git repack -d`), we would have previously deleted a
-    `*.pack` with no index (since the existince of a ".pack" file is
-    necessary and sufficient to include that pack in the list of
-    existing non-kept packs).
-
-    Now we will leave it alone (since that pack won't appear in the
-    list). This is far more correct behavior, since we don't want
-    to race with a pack being staged. Deleting a partially staged pack
-    is unlikely, however, since the window of time between staging a
-    pack and moving its .idx file into place is miniscule.
-
-    Note that this window does *not* include the time it takes to
-    receive and index the pack, since the incoming data goes into
-    "$GIT_DIR/objects/tmp_pack_XXXXXX", which does not end in ".pack"
-    and is thus ignored by collect_pack_filenames().
-
-In the future, this function should probably be rewritten as a callback
-to `for_each_file_in_pack_dir()`, but this is the simplest change we
-could do in the short-term.
-
-Reported-by: Michael Haggerty <mhagger@github.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c  | 14 ++++++++++----
- t/t7700-repack.sh | 23 +++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 0541c3ce15..1e21a21ea8 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -95,8 +95,8 @@ static int repack_config(const char *var, const char *value, void *cb)
- }
- 
- /*
-- * Adds all packs hex strings to either fname_nonkept_list or
-- * fname_kept_list based on whether each pack has a corresponding
-+ * Adds all packs hex strings (pack-$HASH) to either fname_nonkept_list
-+ * or fname_kept_list based on whether each pack has a corresponding
-  * .keep file or not.  Packs without a .keep file are not to be kept
-  * if we are going to pack everything into one file.
-  */
-@@ -107,6 +107,7 @@ static void collect_pack_filenames(struct string_list *fname_nonkept_list,
- 	DIR *dir;
- 	struct dirent *e;
- 	char *fname;
-+	struct strbuf buf = STRBUF_INIT;
- 
- 	if (!(dir = opendir(packdir)))
- 		return;
-@@ -115,11 +116,15 @@ static void collect_pack_filenames(struct string_list *fname_nonkept_list,
- 		size_t len;
- 		int i;
- 
--		if (!strip_suffix(e->d_name, ".pack", &len))
-+		if (!strip_suffix(e->d_name, ".idx", &len))
- 			continue;
- 
-+		strbuf_reset(&buf);
-+		strbuf_add(&buf, e->d_name, len);
-+		strbuf_addstr(&buf, ".pack");
-+
- 		for (i = 0; i < extra_keep->nr; i++)
--			if (!fspathcmp(e->d_name, extra_keep->items[i].string))
-+			if (!fspathcmp(buf.buf, extra_keep->items[i].string))
- 				break;
- 
- 		fname = xmemdupz(e->d_name, len);
-@@ -136,6 +141,7 @@ static void collect_pack_filenames(struct string_list *fname_nonkept_list,
- 		}
- 	}
- 	closedir(dir);
-+	strbuf_release(&buf);
- 
- 	string_list_sort(fname_kept_list);
- }
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index faa739eeb9..08b5ba0c15 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -10,6 +10,10 @@ test_description='git repack works correctly'
- commit_and_pack () {
- 	test_commit "$@" 1>&2 &&
- 	incrpackid=$(git pack-objects --all --unpacked --incremental .git/objects/pack/pack </dev/null) &&
-+	# Remove any loose object(s) created by test_commit, since they have
-+	# already been packed. Leaving these around can create subtly different
-+	# packs with `pack-objects`'s `--unpacked` option.
-+	git prune-packed 1>&2 &&
- 	echo pack-${incrpackid}.pack
- }
- 
-@@ -209,6 +213,8 @@ test_expect_success 'repack --keep-pack' '
- 	test_create_repo keep-pack &&
- 	(
- 		cd keep-pack &&
-+		# avoid producing difference packs to delta/base choices
-+		git config pack.window 0 &&
- 		P1=$(commit_and_pack 1) &&
- 		P2=$(commit_and_pack 2) &&
- 		P3=$(commit_and_pack 3) &&
-@@ -220,6 +226,23 @@ test_expect_success 'repack --keep-pack' '
- 		grep -q $P1 new-counts &&
- 		grep -q $P4 new-counts &&
- 		test_line_count = 3 new-counts &&
-+		git fsck &&
-+
-+		P5=$(commit_and_pack --no-tag 5) &&
-+		git reset --hard HEAD^ &&
-+		git reflog expire --all --expire=all &&
-+		rm -f ".git/objects/pack/${P5%.pack}.idx" &&
-+		rm -f ".git/objects/info/commit-graph" &&
-+		for from in $(find .git/objects/pack -type f -name "${P5%.pack}.*")
-+		do
-+			to="$(dirname "$from")/.tmp-1234-$(basename "$from")" &&
-+			mv "$from" "$to" || return 1
-+		done &&
-+
-+		git repack --cruft -d --keep-pack $P1 --keep-pack $P4 &&
-+
-+		ls .git/objects/pack/*.pack >newer-counts &&
-+		test_cmp new-counts newer-counts &&
- 		git fsck
- 	)
- '
+Range-diff against v2:
+ 1:  6cac42e70e =  1:  afac948f04 refs.c: rename `ref_filter`
+ 2:  8dda7db738 =  2:  b9336e3b77 ref-filter.h: provide `REF_FILTER_INIT`
+ 3:  bf21df783d =  3:  fc28b5caaa ref-filter: clear reachable list pointers after freeing
+ 4:  85ecb70957 =  4:  bc5356fe4b ref-filter: add `ref_filter_clear()`
+ 5:  385890b459 =  5:  1988ca4c0a ref-filter.c: parameterize match functions over patterns
+ 6:  1a3371a0a7 =  6:  60d85aa4ad builtin/for-each-ref.c: add `--exclude` option
+ 7:  aa05549b6e =  7:  c4fe9a1893 refs: plumb `exclude_patterns` argument throughout
+ 8:  6002c568b5 =  8:  9cab5e0699 refs/packed-backend.c: refactor `find_reference_location()`
+ 9:  8c78f49a8d =  9:  8066858bf5 refs/packed-backend.c: implement jump lists to avoid excluded pattern(s)
+10:  5059f5dd42 = 10:  3c045076a9 refs/packed-backend.c: add trace2 counters for jump list
+11:  f765b50a84 = 11:  0ff542eaef revision.h: store hidden refs in a `strvec`
+12:  254bcc4361 = 12:  ca006b2c3f refs/packed-backend.c: ignore complicated hidden refs rules
+13:  50e7df7dc0 ! 13:  cae703a425 refs.h: let `for_each_namespaced_ref()` take excluded patterns
+    @@ upload-pack.c: void upload_pack(const int advertise_refs, const int stateless_rp
+      		head_ref_namespaced(send_ref, &data);
+     -		for_each_namespaced_ref(send_ref, &data);
+     +		for_each_namespaced_ref(NULL, send_ref, &data);
+    - 		/*
+    - 		 * fflush stdout before calling advertise_shallow_grafts because send_ref
+    - 		 * uses stdio.
+    + 		if (!data.sent_capabilities) {
+    + 			const char *refname = "capabilities^{}";
+    + 			write_v0_ref(&data, refname, refname, null_oid());
+     @@ upload-pack.c: void upload_pack(const int advertise_refs, const int stateless_rpc,
+      		packet_flush(1);
+      	} else {
+14:  f6a3a5a6ba = 14:  1db10b76ea builtin/receive-pack.c: avoid enumerating hidden references
+15:  2331fa7a4d ! 15:  014243ebe6 upload-pack.c: avoid enumerating hidden refs where possible
+    @@ upload-pack.c: void upload_pack(const int advertise_refs, const int stateless_rp
+      		head_ref_namespaced(send_ref, &data);
+     -		for_each_namespaced_ref(NULL, send_ref, &data);
+     +		for_each_namespaced_ref_1(send_ref, &data);
+    - 		/*
+    - 		 * fflush stdout before calling advertise_shallow_grafts because send_ref
+    - 		 * uses stdio.
+    + 		if (!data.sent_capabilities) {
+    + 			const char *refname = "capabilities^{}";
+    + 			write_v0_ref(&data, refname, refname, null_oid());
+     @@ upload-pack.c: void upload_pack(const int advertise_refs, const int stateless_rpc,
+      		packet_flush(1);
+      	} else {
+16:  2c6b89d64a = 16:  e02fe93379 ls-refs.c: avoid enumerating hidden refs where possible
 -- 
-2.41.0.1.gcf79d13182
+2.41.0.16.g26cd413590
