@@ -2,134 +2,262 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA37BC7EE2F
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 00:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0408C7EE29
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 00:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239967AbjFGABo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jun 2023 20:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38264 "EHLO
+        id S240333AbjFGAv2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jun 2023 20:51:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234601AbjFGABj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2023 20:01:39 -0400
-Received: from AUS01-ME3-obe.outbound.protection.outlook.com (mail-me3aus01olkn2181.outbound.protection.outlook.com [40.92.63.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C561D11A
-        for <git@vger.kernel.org>; Tue,  6 Jun 2023 17:01:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kksUgDW1odAeFgKysGKzumsm6GB9uHPoS8eRmiIp0KSmpF1NUKzUAjrdSmfEaeaUQ+7Rble/9MkYP6IiZNOIu2PW/hOJt/7tpagHSnzfbyaYfxYPrxVFSgYi+LrJOgbdaLhqT5LNrTti2zZxzUFEjzNxJW3QZHO06/wLuzveaUyBIVYHJZGaESLeg0mNE51q/er3o77l0YSOxqhDwIuCSvdBqPwwc1wPjmalaCL1XCaNViQOipJ99QVmTaZHp09SWS3ZpmTXHw5G6P8TBMp749xy5o1/QNfNXcqcg8KTsz4XlK2sBmbiQ7U0DPpBYIckgwCIld9+63fM8svV20wOdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MmJjzejmrqE7G2xWy4ygZs0b5AmVRgzN7e/AJ7dYBME=;
- b=HwZJk6mI8HkYvSPUJICxPBtHBhCalQQv4gKiEiQOY/kLxh85jUAKkcy0NoVQ30Y2ypyUfO/+UGK0gZwRXLEuFrHZc5NUmjBFzO7fG22DLd+DX33cGeNVTcclZ2WngwTli2scoI+euYHJd/D00BQXrZdPA3dEZHT64I05SjtMZQbmmtt+WUuBCQMdmTtN0xmPWWhzGt/bjCf5AUHRT2GqHYYOKFbhQwTnPDQrLha4FMoEIKN7nH1XJzDsufaBaMLZ4ooVDy32fOOG/NydsYpI/BIe5jHAj9/Z98pPXuzVXD8DO5H7U/9wTirFRagu4Szj9F2z5tyVvrFlj4W/Gf+Yeg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MmJjzejmrqE7G2xWy4ygZs0b5AmVRgzN7e/AJ7dYBME=;
- b=Ou/IATuB5tmKvO8zk5jRU7bCGB8UaTCf2zZpcpXveCCvm/AZwP+sBrC+x2p/rlYDgXyl8GuhvqCb1E39gqckd7uYguZGUC8NUbUcUXBqTLEiAdywp3rWYDRxCd4fMdB2/b628W4pDRn+AvTRzNzwsoyP4k60EeqdtfOhgZb4yCDSm0lKM3wgyivt/zzXkD8q33AN7QwtAClBc/aYpIKo5qohydq4uSQwlPHckQG7o1W2aOr0qkq3lO5RwDZ055gpO7GkEFyZk2fGPHzQV97W9qucjIM3bUsjhlp7hESw8r0JtM/Z4gnm6Jgkp3GUKppydTWkVSqQwQgjswwwe3eQjw==
-Received: from ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:eb::14)
- by SYYP282MB1183.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:bd::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6477.19; Wed, 7 Jun 2023 00:01:33 +0000
-Received: from ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
- ([fe80::e7b2:ce6a:695e:ef76]) by ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
- ([fe80::e7b2:ce6a:695e:ef76%5]) with mapi id 15.20.6477.016; Wed, 7 Jun 2023
- 00:01:33 +0000
-From:   Qixing ksyx Xue <qixingxue@outlook.com>
-To:     git@vger.kernel.org
-Cc:     Qixing ksyx Xue <qixingxue@outlook.com>
-Subject: [PATCH] gitweb: wrong capture group used for grep search
-Date:   Tue,  6 Jun 2023 20:00:18 -0400
-Message-ID: <ME2P282MB224200468AFBBBD4534ED1F7B453A@ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.22.0.windows.1
+        with ESMTP id S234763AbjFGAv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2023 20:51:27 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BBD710DE
+        for <git@vger.kernel.org>; Tue,  6 Jun 2023 17:51:24 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f6e1393f13so55636965e9.0
+        for <git@vger.kernel.org>; Tue, 06 Jun 2023 17:51:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686099083; x=1688691083;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AaDJIPZAbLGsHI2CYh3hinWoI2kKYRyHQ5jOvJnbMW4=;
+        b=FCalDDrvqwv/ioINdwMf2AayK91G2s8aTXvMe6OLuGQ0WncZq5qIYdMjrErqydl7l+
+         CHDGbLLkuByYqAPvm9XfHeFrR9sqjTlAi82rlKMtlyaojqifxjtQHdbp+tHr/ZVqvjmY
+         Kdw11CUNRvXrSUAioaC5scoQGvAzK4r9zVVG6i+ChphnlNvXCnZqxiW1gUHhaBuJWkZN
+         OwtjV07ZLgrPi6YW+1RnDFW56on8bYIPTKRmj7VZMWi7/DflJ875k2Vo7RAD44f9jepm
+         ktPJEP11jtqJJUFUcEmHNA3F+4pOmE9V6JadtKcjx1gmy0vkY70eWvv+9vzBiQ9AWRHB
+         9Xrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686099083; x=1688691083;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AaDJIPZAbLGsHI2CYh3hinWoI2kKYRyHQ5jOvJnbMW4=;
+        b=ktjDXK4pZL+NJ2oBp6Dto3Oa8F2k458pfFMa7KOP/rIRpCObE2Zpgopkzxalotve2t
+         PpqLwPqQzmKzwFQjJY/UHbq5axTwgf+FUgSyoszxQjfiI8KkPjXdZ398hKKhHVNwWq4S
+         ueaFTy6cY81lgSagBCbh6n6cKGuOH73PpslRwcyo2amvwliiMWc0XOmYXSlNl75+0PLp
+         2oFMYI/IwAEcF17fmKD0KzYpn0vbUubIViojA8FwbP75mx5eU2FHyUeGNS7spJtv66YN
+         CWRs4tyCiHP2vtA6Bbrn2nWlsdGtq6M2knwDHmnRO374Md9RkCEX1Qy+LHwTRYegmri2
+         ZE6g==
+X-Gm-Message-State: AC+VfDx6+ZT1M1cpBCTrKQzLcfseDw1wRrJ4F2Rj+cXUPBoq53mJO0by
+        fCbQu4jEihpU/Y0xzLfguO/Wk2nKfCU=
+X-Google-Smtp-Source: ACHHUZ76XYB5MvIQ/XNfUkE96xNcF1GAsD/2EtANeLTr55Gv49RKStppbBTL9C5nlgeWL2h2cGTNLQ==
+X-Received: by 2002:a05:600c:254:b0:3f7:35c2:b22a with SMTP id 20-20020a05600c025400b003f735c2b22amr3205669wmj.12.1686099082589;
+        Tue, 06 Jun 2023 17:51:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k16-20020a056000005000b003079986fd71sm13993499wrx.88.2023.06.06.17.51.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jun 2023 17:51:22 -0700 (PDT)
+Message-Id: <pull.1542.git.1686099081989.gitgitgadget@gmail.com>
+From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 07 Jun 2023 00:51:21 +0000
+Subject: [PATCH] docs: typofixes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN:  [zRkPOQbBbmtLKGBFJYE7JFZ2Nyekj07HzZ7X3G0Wfe0RnlamzfVbsiSB1rSLVovV]
-X-ClientProxiedBy: BN0PR02CA0053.namprd02.prod.outlook.com
- (2603:10b6:408:e5::28) To ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:eb::14)
-X-Microsoft-Original-Message-ID: <20230607000017.606-1-qixingxue@outlook.com>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ME2P282MB2242:EE_|SYYP282MB1183:EE_
-X-MS-Office365-Filtering-Correlation-Id: bf75f542-cfd7-44aa-e6fe-08db66ea5aa7
-X-MS-Exchange-SLBlob-MailProps: 0wLWl8rLpvuY36wV1SFeMlt7XXvVGObrpVzLx8+GIDJVdyzWnP//nV/gmUqYfXNPN6QcBOUYSaM/FX4RuxmXZxGaTlhxZqwaNZ0zemPsCrT755S8REFpxT9nli1x38tfxQCzA/i3LTq8oxhDBDdZQ3nmFvs+aogodPMnUENHRD3TjukcsNkj0JjA1jUMAdo5nUz8nbRkOhJOJ0mBTMzc7NRGMc88EnVd3onv6+kvcw9ypnIMy2azDTWzaxL0ANFElQLEt17R93mN+7AxADdL9XFdqtAPayO6xploxWVKkDYylc39EVImMIHPr9PtfTmnaqkA7V5M7dGfUHhqEL2gZGmarXZNJVdqGWZcUrQzHkEQuRQ2ufkmFgl4nUOIxFaHfKc8BfLDw5p2O7VIziX2qWFK9vONIqYt7jX8e2WXBxObHD4vDxlUDl1/4v6txT6HuRRKu6+Jor3iQseI/8/fjsKmwm4bPVg/kt85eWEPzC/UPPETt5a/6jHo24ZRnM0exVpmQ7HoaaUQQ+o4gn4O+4Nlst4pWQK41qytGyGD9Bj1TCc2TVhVaAT+aCRVVOL6uMV4wu1veJ3zHkcYKvZIqtwboKgykv5zHNYwpAhJRrwm3Wi6sz9+oK/5kipiBM0Ovqx6D3S8X0YTbfy2htjL96comsnNxZ9yUqrixrS6gZJ7/SuWW3lV3FU2qiWE1mJeWpmz7spMVV3j3iSeIirjkCMtWWlNxjrYn/JM2bpUASLflMwnnA3eJL5kEmV1yunI9pyoJr2U1ZA=
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xo3h9ZDqsUtqvWvDeQSSjfX3/FOeh/ZUj79aQ6XXGmO+NuSg1bG8we13PwK9tKOzmQiiJPiSB0a8MiBOxI23KghAbl8nDy8PCusC1wMOvQGvl4svS6u3nbJFf88fYIIHxFkl0tjYd1F0aNZ8m95ktmYeZc1aXXZCWxP19uwZgy6UsgsXAv2Tp//2/0sdEImQ4CqyRRYEn9ODOtPd2UCrw6DFGODopHIqlA3XddHk31RAd1NzsGvbLxNluYKVRqV48ce0/kL2m9OLouIzYKO2OoaC0rW7FSzXQgPqL/OYH3LXUq6a4PFXSZDPgmOnU6NyT9gn2R5hesVjYBZNQ+csPqKu6aYRi3V61ER9n/IFOCxCNnteWfcQaU1bPhUt6VLAxhLoaAYiktRJyHRaeU20FxQuh6ea9jX7C4BiRVKVqZvRopekPoxcYbxxYnn7lNbXahnm5tmlfCngQ56hIJTr+oEsmfwnLUpNZrb3Uft32GmS6cA3nvMM2Z1I65lBWxTVeokqO4ynbgnKKzpaTNvEWi9VokIZMc6yRXGck88sqiiMk3tinI6Al+AhRezCt8bGjgEWJH33mOIeipLfqP0HQWHyZ7ACifRXcXUSZAeg0rOq0rZ/MXa9ZAT4LDAVx7tU
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?J9EuxM11Pkj5BPBBwoxiAJ3lRoPGzMWr4Zn0Dk1kU7WQ8HNKI0+b/N90fTIr?=
- =?us-ascii?Q?hZZtWHoZ0XvhXHWiE2nHcakf8QzY9U3lz10KDHh0/lIYOrxmG6xw+8Qgue30?=
- =?us-ascii?Q?Vqg6cblKlBeZ0/BEEty13LSnn4lmYmYo7rEZHLsWZ+NTSHqjGFHcTC39XdVt?=
- =?us-ascii?Q?q5Zoo0C4NwEEGZpaZ6LWNhl5t3F5PJsAbjNSVNR5jrm+eIUqGv/FYwtOYR4L?=
- =?us-ascii?Q?Z3JfUM8krePzWBMsjPihUtng1Z+QMnMfa1sMpUuSsKjtNaiODWvM/M0I+6vr?=
- =?us-ascii?Q?PfyPp1YVXqjYlqNBznb7YHgkGwzfeR2jOXth9daORX/GwAjH5L+P4nF4axv+?=
- =?us-ascii?Q?6w9CeeUZwnG1TyTxNc9qYglOOfnfUbHgSSJvJzayx4Ann8qezrtHB5q8RBve?=
- =?us-ascii?Q?xR91wb067N5GflRyEGHEgzB8dmwFsD8/QvH5zwLoJKz1tjTzL+msGP2xetkt?=
- =?us-ascii?Q?1Qa2Gn0dE7BC3V3Im1LdPdOFkNdWFwavdBD05cAvwv4WSf1teEANHS0SjbbK?=
- =?us-ascii?Q?V9OOzMIc0p/Gkk/aqf6sgzP53I5Iw6a2qyeDMW6vJV7yNMdQCXNdcqeY+Zoq?=
- =?us-ascii?Q?uMlnsH7MdKuE970iIyFYeOFAmPoyvPvSjC+wi+91ho+EHtcbOAj9JhMc1p0F?=
- =?us-ascii?Q?l8WM3E0w8okt4SgyOreaHTnF+uVTYkqZRzN4yaD6BLjkjUm3NjyYHYIltnNO?=
- =?us-ascii?Q?9yrKEzPBH8mElvkHy2PUAIAJIm1d3AhWYqN/Jgh0Pq+mxJOwL5deUEMTO5KR?=
- =?us-ascii?Q?zlvnqYB3y9jkho1qvc+PbEkVI1SNZHNdN5zuhz9rIfNIsqMhHJnowLNvdj5I?=
- =?us-ascii?Q?LoCBe50Rnz3LKTriDmMFDrS3fdBFaOKQsp/YKNHpt0k7tvRP3SdqZktVFd5g?=
- =?us-ascii?Q?rosDiB7noOyPYqF85tqzfPw0z/lIBFBIb2ite2dEGuTozrQ0WF+yH61to3r6?=
- =?us-ascii?Q?WmG/3MfEJ2EjFLH9AcGcpgWT5QyW/IjODNCbEW49sqQ2q6xOfYAHY3t2FMoV?=
- =?us-ascii?Q?Ylvxvow1Q9ho44HolazvAwy2SfHKfEurKaZyMdLuPyPkeLTz/uvEqhLDXASl?=
- =?us-ascii?Q?EWs5oK3FynkEO4xK50IYFyPrca7pugwnjlqSJ1gLDA5vKCxDgHetMPUxY0LZ?=
- =?us-ascii?Q?KQCQd5+UqOTjrKt8t8Gc196zMEeL9DgdEB8E5e9CcWzID4S/j5AU2uHj70Gr?=
- =?us-ascii?Q?u+18cupFPZrZ5DH2lAFuJzUUt5e0XS4lZY4IsrJKURqHjMvusHro5Zh1Z+PS?=
- =?us-ascii?Q?+DipP9B4cevdF43rpt4ieXjc/RdyQk8an+Md0kx3GrbD2D5KBv1+A/rqWJfX?=
- =?us-ascii?Q?O64=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf75f542-cfd7-44aa-e6fe-08db66ea5aa7
-X-MS-Exchange-CrossTenant-AuthSource: ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2023 00:01:33.7417
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SYYP282MB1183
+To:     git@vger.kernel.org
+Cc:     Linus Arver <linusa@google.com>, Linus Arver <linusa@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The capture group numberings $1, $2, and $3 used in the original script
-does not work well when the search term itself has capture group, and
-could be replicated with the simplest case of p(a|b), whose search
-result with regard to original text `XpaY' would yield `Xpaa' since
-capture group 3 now becomes the one in the search term, instead of
-some suffix. This patch fixes the problem with named capture group with
-capture names that hopefully would not conflict.
+From: Linus Arver <linusa@google.com>
 
-Signed-off-by: Qixing ksyx Xue <qixingxue@outlook.com>
+These were found with an automated CLI tool [1]. Only the
+"Documentation" subfolder (and not source code files) was considered
+because the docs are user-facing.
+
+[1]: https://crates.io/crates/typos-cli
+
+Signed-off-by: Linus Arver <linusa@google.com>
 ---
- gitweb/gitweb.perl | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+    docs: typofixes
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e66eb3d9ba..e868122853 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6418,12 +6418,12 @@ sub git_search_files {
- 			print "<div class=\"binary\">Binary file</div>\n";
- 		} else {
- 			$ltext = untabify($ltext);
--			if ($ltext =~ m/^(.*)($search_regexp)(.*)$/i) {
--				$ltext = esc_html($1, -nbsp=>1);
-+			if ($ltext =~ m/^(?<__gitweb__prefix>.*)(?<__gitweb__matching_text>$search_regexp)(?<__gitweb__suffix>.*)$/i) {
-+				$ltext = esc_html($+{__gitweb__prefix}, -nbsp=>1);
- 				$ltext .= '<span class="match">';
--				$ltext .= esc_html($2, -nbsp=>1);
-+				$ltext .= esc_html($+{__gitweb__matching_text}, -nbsp=>1);
- 				$ltext .= '</span>';
--				$ltext .= esc_html($3, -nbsp=>1);
-+				$ltext .= esc_html($+{__gitweb__suffix}, -nbsp=>1);
- 			} else {
- 				$ltext = esc_html($ltext, -nbsp=>1);
- 			}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1542%2Flistx%2Ftypofixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1542/listx/typofixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1542
+
+ Documentation/CodingGuidelines                  | 2 +-
+ Documentation/config.txt                        | 2 +-
+ Documentation/git-cvsserver.txt                 | 2 +-
+ Documentation/git-describe.txt                  | 4 ++--
+ Documentation/git-format-patch.txt              | 2 +-
+ Documentation/git-ls-tree.txt                   | 2 +-
+ Documentation/git-mktag.txt                     | 2 +-
+ Documentation/git-sparse-checkout.txt           | 2 +-
+ Documentation/git-stash.txt                     | 2 +-
+ Documentation/gitweb.txt                        | 2 +-
+ Documentation/technical/remembering-renames.txt | 2 +-
+ Documentation/urls-remotes.txt                  | 2 +-
+ 12 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 003393ed161..1f3290f1736 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -687,7 +687,7 @@ Writing Documentation:
+    Do: [-q | --quiet]
+    Don't: [-q|--quiet]
+ 
+- Don't use spacing around "|" tokens when they're used to seperate the
++ Don't use spacing around "|" tokens when they're used to separate the
+  alternate arguments of an option:
+     Do: --track[=(direct|inherit)]
+     Don't: --track[=(direct | inherit)]
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e93aef8626..229b63a454c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -182,7 +182,7 @@ included, Git breaks the cycle by prohibiting these files from affecting
+ the resolution of these conditions (thus, prohibiting them from
+ declaring remote URLs).
+ +
+-As for the naming of this keyword, it is for forwards compatibiliy with
++As for the naming of this keyword, it is for forwards compatibility with
+ a naming scheme that supports more variable-based include conditions,
+ but currently Git only supports the exact keyword described above.
+ 
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 53f111bc0ac..cf4a5a283ec 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -118,7 +118,7 @@ for example:
+    myuser:$5$.NqmNH1vwfzGpV8B$znZIcumu1tNLATgV2l6e1/mY8RzhUDHMOaVOeL1cxV3
+ ------
+ You can use the 'htpasswd' facility that comes with Apache to make these
+-files, but only with the -d option (or -B if your system suports it).
++files, but only with the -d option (or -B if your system supports it).
+ 
+ Preferably use the system specific utility that manages password hash
+ creation in your platform (e.g. mkpasswd in Linux, encrypt in OpenBSD or
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index c6a79c2a0f2..08ff715709c 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -140,7 +140,7 @@ at the end.
+ 
+ The number of additional commits is the number
+ of commits which would be displayed by "git log v1.0.4..parent".
+-The hash suffix is "-g" + an unambigous abbreviation for the tip commit
++The hash suffix is "-g" + an unambiguous abbreviation for the tip commit
+ of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The
+ length of the abbreviation scales as the repository grows, using the
+ approximate number of objects in the repository and a bit of math
+@@ -203,7 +203,7 @@ BUGS
+ 
+ Tree objects as well as tag objects not pointing at commits, cannot be described.
+ When describing blobs, the lightweight tags pointing at blobs are ignored,
+-but the blob is still described as <committ-ish>:<path> despite the lightweight
++but the blob is still described as <commit-ish>:<path> despite the lightweight
+ tag being favorable.
+ 
+ GIT
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index b1c13fb39a0..caaa71d30a8 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -245,7 +245,7 @@ populated with placeholder text.
+ 	or "--reroll-count=4rev2" are allowed), but the downside of
+ 	using such a reroll-count is that the range-diff/interdiff
+ 	with the previous version does not state exactly which
+-	version the new interation is compared against.
++	version the new interaction is compared against.
+ 
+ --to=<email>::
+ 	Add a `To:` header to the email headers. This is in addition
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index 0240adb8eec..fa9a6b9f2cb 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -145,7 +145,7 @@ FIELD NAMES
+ -----------
+ 
+ Various values from structured fields can be used to interpolate
+-into the resulting output. For each outputing line, the following
++into the resulting output. For each outputting line, the following
+ names can be used:
+ 
+ objectmode::
+diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
+index 466a6975191..b2a2e80d421 100644
+--- a/Documentation/git-mktag.txt
++++ b/Documentation/git-mktag.txt
+@@ -33,7 +33,7 @@ from warnings to errors (so e.g. a missing "tagger" line is an error).
+ 
+ Extra headers in the object are also an error under mktag, but ignored
+ by linkgit:git-fsck[1]. This extra check can be turned off by setting
+-the appropriate `fsck.<msg-id>` varible:
++the appropriate `fsck.<msg-id>` variable:
+ 
+     git -c fsck.extraHeaderEntry=ignore mktag <my-tag-with-headers
+ 
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 53dc17aa77a..529a8edd9c1 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -286,7 +286,7 @@ patterns in non-cone mode has a number of shortcomings:
+     problem above?  Also, if it suggests paths, what if the user has a
+     file or directory that begins with either a '!' or '#' or has a '*',
+     '\', '?', '[', or ']' in its name?  And if it suggests paths, will
+-    it complete "/pro" to "/proc" (in the root filesytem) rather than to
++    it complete "/pro" to "/proc" (in the root filesystem) rather than to
+     "/progress.txt" in the current directory?  (Note that users are
+     likely to want to start paths with a leading '/' in non-cone mode,
+     for the same reason that .gitignore files often have one.)
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index f4bb6114d91..06fb7f1d18c 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -366,7 +366,7 @@ only the commit ends-up being in the stash and not on the current branch.
+ # ... hack hack hack ...
+ $ git add --patch foo           # add unrelated changes to the index
+ $ git stash push --staged       # save these changes to the stash
+-# ... hack hack hack, finish curent changes ...
++# ... hack hack hack, finish current changes ...
+ $ git commit -m 'Massive'       # commit fully tested changes
+ $ git switch fixup-branch       # switch to another branch
+ $ git stash pop                 # to finish work on the saved changes
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 7cee9d36899..af6bf3c45ec 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -503,7 +503,7 @@ repositories, you can configure Apache like this:
+ 
+ The above configuration expects your public repositories to live under
+ `/pub/git` and will serve them as `http://git.domain.org/dir-under-pub-git`,
+-both as clonable Git URL and as browseable gitweb interface.  If you then
++both as clonable Git URL and as browsable gitweb interface.  If you then
+ start your linkgit:git-daemon[1] with `--base-path=/pub/git --export-all`
+ then you can even use the `git://` URL with exactly the same path.
+ 
+diff --git a/Documentation/technical/remembering-renames.txt b/Documentation/technical/remembering-renames.txt
+index 1e34d913901..73f41761e20 100644
+--- a/Documentation/technical/remembering-renames.txt
++++ b/Documentation/technical/remembering-renames.txt
+@@ -664,7 +664,7 @@ skip-irrelevant-renames optimization means we sometimes don't detect
+ renames for any files within a directory that was renamed, in which
+ case we will not have been able to detect any rename for the directory
+ itself.  In such a case, we do not know whether the directory was
+-renamed; we want to be careful to avoid cacheing some kind of "this
++renamed; we want to be careful to avoid caching some kind of "this
+ directory was not renamed" statement.  If we did, then a subsequent
+ commit being rebased could add a file to the old directory, and the
+ user would expect it to end up in the correct directory -- something
+diff --git a/Documentation/urls-remotes.txt b/Documentation/urls-remotes.txt
+index e410912fe52..ae8c2db427b 100644
+--- a/Documentation/urls-remotes.txt
++++ b/Documentation/urls-remotes.txt
+@@ -35,7 +35,7 @@ config file would appear like this:
+ The `<pushurl>` is used for pushes only. It is optional and defaults
+ to `<URL>`. Pushing to a remote affects all defined pushurls or to all
+ defined urls if no pushurls are defined. Fetch, however, will only
+-fetch from the first defined url if muliple urls are defined.
++fetch from the first defined url if multiple urls are defined.
+ 
+ Named file in `$GIT_DIR/remotes`
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
 -- 
-2.30.0
-
+gitgitgadget
