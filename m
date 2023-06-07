@@ -2,147 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 727ACC7EE25
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 22:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 058F8C7EE23
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 22:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232845AbjFGWaI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jun 2023 18:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43980 "EHLO
+        id S233386AbjFGW5G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jun 2023 18:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233182AbjFGW3x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2023 18:29:53 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F948213D
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 15:29:28 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-650c8cb68aeso4540522b3a.3
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 15:29:28 -0700 (PDT)
+        with ESMTP id S233385AbjFGW4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2023 18:56:40 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8039A26AF
+        for <git@vger.kernel.org>; Wed,  7 Jun 2023 15:56:37 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-565de553de1so924737b3.0
+        for <git@vger.kernel.org>; Wed, 07 Jun 2023 15:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1686176967; x=1688768967;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fkGofLq5QlojYHVO0QH+y0KJmiv2AVNJVZ69ushkfn8=;
-        b=aAjI9qkzbE15anvdkaIy2ZsjQzsacZEiuGMwGyep0Y3ToyurYpYZADOnrD/noYU93l
-         8oDRo/dw9ff5e39fVd46FHDu5M6h6sTiZD47eSxQV5T+rFLa515/smhq6qqebU/qfX1V
-         wJ1hLtEbUIKfuekP9dQKnLdm3rli1KVbwnJlWG6duXUGwy1PD/uPoMb3ZZpzCDb4uHFN
-         MDfXodZrJjL/SjBi8Vij282njFF2fjqlcdVZYbYVaAU1ayPvThmF8WX1YfZ7EQk7LdNA
-         dR5nSgLbE0pbjH26ypn8yWP7AcAfioh8as3TI8+eb+cGi1PwO+XGxSyq9fExO7A2fTzf
-         p5CA==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686178596; x=1688770596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VfWWnB5iPu+frlarXs00f0lEZpWWRJqDsQCazL4bSqA=;
+        b=xsQmB34v0/5vCRWOtthoPkOnTY1t6phAIXtuF31SksLIFJxQAxD55SyUvISaZB5Mse
+         L0RDPbw1t+QvXBWNIECI5pbDpLOOlFpRtB2+rLtByC5BWW8TAnpLD8GjsFZL4NejHCby
+         tUTWLYvKoMiyifct6+726EMUH8UsulYqJzu2pMLObwFoc/IY+1k3CjQTMukoj0T6zfE5
+         2uCd07hXwKJsNzWFdqQEb4RIBpc/ENLxM/xkyIXF9BSi63SsFy/dWLr32Y8JlhGrtV/K
+         LZp7iw1EAX33WiUUcJxVeYhEn2Qc53fbrr1gAGNp2MxELiydX7cNBZSGS96xoI2RAkIW
+         Z4ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686176967; x=1688768967;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fkGofLq5QlojYHVO0QH+y0KJmiv2AVNJVZ69ushkfn8=;
-        b=Tw3uv/RbiBPz00GEO7ayPVG/b0sio01H/TwT8DIO7Pfw68p+rBzdnvhBuT6GuVa1L3
-         FfxelDW/ns84UrCh4Cq8EKIERxBJ2aCz+s8ZI1L7e1I3z+KkOEkCfLTF4CjIqkEHZxEJ
-         8eeNUktSN6eazEcCQIj6bQ/BVbAIvjVcTRQLhy2xxVHrRIXUAHX1T/xhmIRGpHsL6kta
-         zCHbRP6G7JPdbzmNdPJXcIaviq2KK/6zDg6QgMeNb/ZN1B1O2eaNUVfthkTDx9wTgEuk
-         JOlHDXl77SeqHmDxP5YZgtk5rQok+bU1+ELJZyGCRpEa9eK4oCGpbIqeg3qnAwNSiVtd
-         KekA==
-X-Gm-Message-State: AC+VfDxcgtvLY+roEZ671OP48x3UbPdKens8iBsqJegC5HabomPHg04Z
-        qNcjgrN3kiL1/r6zxVK2oo6E
-X-Google-Smtp-Source: ACHHUZ5/KSar2/ohzEnua0QGAhhZ7BMXGCHsSWXKdd2p/FN8+UJNQ4UilIODAwOFWpYFyHnxGWaMpA==
-X-Received: by 2002:a05:6a21:3993:b0:111:366:eeb2 with SMTP id ad19-20020a056a21399300b001110366eeb2mr2226548pzc.9.1686176966739;
-        Wed, 07 Jun 2023 15:29:26 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id j14-20020aa7928e000000b0063a04905379sm8836271pfa.137.2023.06.07.15.29.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 15:29:26 -0700 (PDT)
-Message-ID: <49509708-c0a1-2439-a551-cab05d944b66@github.com>
-Date:   Wed, 7 Jun 2023 15:29:24 -0700
+        d=1e100.net; s=20221208; t=1686178596; x=1688770596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VfWWnB5iPu+frlarXs00f0lEZpWWRJqDsQCazL4bSqA=;
+        b=kny3IqsHbFMprJXCuhuNkV5sPLBL5AHuzC5fqhCNWLYx3I0tBr3ALt5AqqSxFaTEbR
+         XzSP/fnnHeHKWrgeGT0BKIUV5kISqK5KxKVmJSaXeWVcX0pgOeXpVOO4hRP071ZJkYzh
+         LyCV+m2KNRROfUZvuhFrL2Sx5ItxiGccE6In2oJW6UpEAnQ5HPwVP0Jo+LGaNwrSLAIn
+         xMnCTCJ12+5tz8uVfJctc8wx8og1MmlQtOa9XGJkbGRv2zLH7+1NZiFvZVTIgTp1V7x6
+         R8ROCh0yAIqGzXh742kukwDn0n7x0NI9KBE7vO34pw8NhP1FFjvNoGwZ/PvWCb7nLDsq
+         NF+Q==
+X-Gm-Message-State: AC+VfDwwB2V+XHRnDktxw7eseOpFaBg0AnL2VGUxEs5XUK4UPWjn59nh
+        OgGrJCjVFuies+Q8pk+sTBR/rky/EXjre+u4124bSZIl
+X-Google-Smtp-Source: ACHHUZ71pw6TaQq+DWm07FC/Z95K7jN1N/Lqp4J/4aZVppkbaHBZKpxnP0c9vpX+1A8cuaYvUu+Qdw==
+X-Received: by 2002:a81:5e46:0:b0:552:ae41:50a2 with SMTP id s67-20020a815e46000000b00552ae4150a2mr542526ywb.21.1686178596478;
+        Wed, 07 Jun 2023 15:56:36 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y188-20020a0dd6c5000000b005619cfb1b88sm1154ywd.52.2023.06.07.15.56.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 15:56:35 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 18:56:32 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Chris Torek <chris.torek@gmail.com>, me@waleedkhan.name,
+        martinvonz@google.com
+Subject: Re: [PATCH v4 2/2] gc: introduce `gc.recentObjectsHook`
+Message-ID: <ZIELIAQmW9qWyUdM@nand.local>
+References: <cover.1683847221.git.me@ttaylorr.com>
+ <cover.1684196634.git.me@ttaylorr.com>
+ <18e50d2517ba4cc81d4bafb0b029ca7a770f23a7.1684196634.git.me@ttaylorr.com>
+ <kl6l1qj5z56p.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.2
-Subject: Re: [PATCH v2 3/3] repository: move
- 'repository_format_worktree_config' to repo scope
-Content-Language: en-US
-To:     Glen Choo <chooglen@google.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Cc:     derrickstolee@github.com, gitster@pobox.com
-References: <pull.1536.git.1684883872.gitgitgadget@gmail.com>
- <pull.1536.v2.git.1685064781.gitgitgadget@gmail.com>
- <506a2cf8c73549bc8f9761b56532ef08ed220da4.1685064781.git.gitgitgadget@gmail.com>
- <kl6lr0qwno2q.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <kl6lr0qwno2q.fsf@chooglen-macbookpro.roam.corp.google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <kl6l1qj5z56p.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo wrote:
-> This patch adds another instance of copying fields from "struct
-> repository_format" to "struct repository", so I think that we should
-> start doing this with a helper function instead of copy-pasting the
-> logic.
-> 
-> As for what should be in the helper function, the above hunks suggest
-> that we should copy .hash_algo, .partial_clone, and .worktree_config.
-> However...
-> 
+Hi Glen,
 
-...
+Apologies for my delayed response. Now that we are on the other side of
+2.41 I think that it's the right time to pick this back up again.
 
-> 
-> This hunk does not copy .hash_algo. I initially wondered if it is safe
-> to just copy .hash_algo here too, but I now suspect that we shouldn't
-> have done the_repository setup in discover_git_directory() in the first
-> place. It isn't used by the setup.c machinery - its one caller in "git"
-> (it's used by "scalar") is read_early_config(), which is supposed to
-> work without a fully set up repository, and bears a comment saying that
-> "no global state is changed" by calling discover_git_directory() (which
-> stopped being true in ebaf3bcf1ae). It looks like
-> discover_git_directory() is just a lightweight entrypoint into the
-> setup.c machinery. 16ac8b8db6 (setup: introduce the
-> discover_git_directory() function, 2017-03-13)) says "Let's just provide
-> a convenient wrapper function with an easier signature that *just*
-> discovers the .git/ directory. We will use it in a subsequent patch to
-> fix the early config."
-> 
-> If I'm wrong and we _should_ be doing the_repository setup, then I'm
-> guessing it's safe to copy .hash_algo here too. So either way, I think
-> we should introduce a helper function to do the copying, especially
-> because we will probably need to repeat this process yet again for
-> "repository_format_precious_objects".
+On Wed, May 24, 2023 at 04:21:34PM -0700, Glen Choo wrote:
+> Hi Taylor! It was great seeing you at Review Club today :)
 
-Thanks for pointing this out & sharing your findings! 
+It was fun :-).
 
-I agree with the desire to reduce code duplication, but the reason I avoided
-that refactor when putting these patches together is because of the subtle
-differences across the different repository format assignment blocks.
+> It would be useful to flesh out why keeping these extra refs are
+> either "undesirable" or "infeasible". Presumably, you already have
+> some idea of why this is the case for the GitHub 'audit log'.
 
-For example, in addition to what you mentioned here w.r.t. '.hash_algo',
-there are also differences in how 'repository_format_partial_clone' is
-assigned: it's deep-copied in 'check_repository_format', but shallow-copied
-(then subsequently NULL'd in the 'struct repository_format' to avoid freeing
-the pointer when the struct is disposed of) in 'discover_git_directory()' &
-'setup_git_directory_gently()'. 
+Yes, thanks for suggesting it. I think the gap in my explanation is
+"[...] if there are many such objects". Hopefully that clarifies it.
 
-If we were to settle on a single "copy repository format settings" function,
-it's not obvious what the "right" approach is. We could change
-'check_repository_format()' to the shallow-copy-then-null like the others:
-its two callers (in 'init-db.c' and 'path.c') don't use the value of
-'repository_format_partial_clone' in 'struct repository_format' after
-calling 'check_repository_format()'. But, if we did that, it'd introduce a
-side effect to the input 'struct repository_format', which IMO would be
-surprising behavior for a function called 'check_<something>()'. Conversely,
-unifying on a deep copy or adding a flag to toggle deep vs. shallow copy
-feels like unnecessary complexity if we don't actually need a deep copy.
+> Another potential use case I can think of is client-side third party Git
+> tools that implement custom workflows on top of a Git repo, e.g.
+> git-branchless (https://github.com/arxanas/git-branchless) and jj
+> (https://github.com/martinvonz/jj/, btw I contribute a little to jj
+> too).
 
-Beyond the smaller subtleties, there's the larger question (that you sort of
-get at with the questions around 'discover_git_directory()') as to whether
-we should more heavily refactor or consolidate these setup functions. The
-similar code implies "yes", but such a refactor feels firmly out-of-scope
-for this series. A smaller change (e.g. just moving the assignments into
-their own function) could be less of a diversion, but any benefit seems like
-it'd be outweighed by the added churn/complexity of a new function.
+I thought that this was an interesting part of the discussion. I hadn't
+thought of it when writing up these patches, but I think that it could
+be potentially useful for those tools if they want to keep around some
+precious set of metadata objects without having to point refs at them.
 
-In any case, sorry for the long-winded response. I'd initially tried to
-implement your feedback, but every time I did I'd get stopped up on the
-things I mentioned above. So, rather than continue to put off responding to
-this thread, I tried to capture what kept stopping me from moving forward -
-hopefully it makes (at least a little bit of) sense!
+It also introduces a little bit of a higher barrier between the tool and
+user to destroy those objects. Without pinning them with this hook, all
+a user has to do to remove them is drop the reference(s) which points at
+them, and then GC. Now they'd have to modify the hook, etc.
 
+> > +gc.recentObjectsHook::
+>
+> I have a small preference to use "command" instead of "hook" to avoid
+> confusion with Git hooks (I've already observed some of this confusion
+> in off-list conversations). There's some precedent for "hook" in
+> `uploadpack.packObjectsHook`, but that's a one-off (and it used to
+> confuse me a lot too :P).
+
+Unless you feel strongly, let's leave it as-is. "gc.recentObjectsHook"
+is the third iteration of this name, and I'd like to avoid spending much
+more time on naming if we can help it.
+
+> > +	When considering the recency of an object (e.g., when generating
+> > +	a cruft pack or storing unreachable objects as loose), use the
+> > +	shell to execute the specified command(s). Interpret their
+> > +	output as object IDs which Git will consider as "recent",
+> > +	regardless of their age.
+>
+> >From a potential user's POV, two things seem unclear:
+>
+> - What does "recenct" mean in this context? Does it just mean
+>   "precious"?
+> - What objects do I need to list? Is it every object I want to keep or
+>   just the reachable tips?
+
+To answer your questions: recency is referring to the "mtime" of an
+object [^1], not whether or not it is precious. I clarified this by
+removing the term "recent" from this sentence altogether, to instead
+read:
+
+    "When considering whether or not to remove an object [...]"
+
+You only need to list the tips, since Git will treat the output of the
+hook as input to a traversal which allows for missing objects. Any
+object visited along that traversal will be kept in the repository and
+rescued from deletion. I tried to clarify this by adding a final
+sentence (emphasis mine):
+
+    "By treating their mtimes as "now", any objects **(and their
+    descendants)** mentioned in the output will be kept regardless of
+    their true age."
+
+> In the code changes, I noticed a few out-of-date references to "cruft
+> tips", but everything else looked reasonable to me.
+
+Thanks, I'll clean those up and resubmit it with the above fixes
+squashed in.
+
+Thanks,
+Taylor
+
+[^1]: an object's mtime is the most recent of (1) the st_mtime of a its
+  loose object file, if it exists, (2) the st_mtime of any non-cruft
+  pack(s) that contain that object, or (3) the value listed in the .mtimes
+  file of the cruft pack corresponding to that object's entry.
