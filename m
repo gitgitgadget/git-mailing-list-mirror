@@ -2,72 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2BD1C77B7A
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 17:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9931EC7EE23
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 17:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231379AbjFGRCS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jun 2023 13:02:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44182 "EHLO
+        id S229982AbjFGRJ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jun 2023 13:09:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbjFGRCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2023 13:02:16 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABFCA1BF8
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 10:02:15 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-516500163b2so258a12.1
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 10:02:15 -0700 (PDT)
+        with ESMTP id S229944AbjFGRJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2023 13:09:54 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF131BE4
+        for <git@vger.kernel.org>; Wed,  7 Jun 2023 10:09:52 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-661fcfbafdaso229475b3a.1
+        for <git@vger.kernel.org>; Wed, 07 Jun 2023 10:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686157334; x=1688749334;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=33Iu9BfKhdqxsBryqx3JlHrUKvDHZMGPUzffwTjrfA8=;
-        b=peNfK7N40E7Q4080p0FQ/3WFnegiMrjLdZqUtVgFTHG9G7kk0IdmSygBkHOR5O7U3N
-         DWDZYsRdx0h2UzRZYPJyBr6+Ubz/FcHwRFBDQQosSR6uRLk8+UHYIHXvBgUj/B3Yrsqb
-         Yrtk8cr/74P5JaP3WA42XYci2kJShK87wP8NbmhZKiKXB2aN9JoyJhPSHyXKRH3/k+MH
-         E6CfcpEhyCaj/w9f9aPIISX0CNSTNXfx/5gW42UZJV/KmwnQiUcslNY1wjZjvYrj4uUv
-         neW7B8w9k69oj93LJvQkq6m/4wa6rRcZtAQlD72EmqBmb1+Squv/b5BGkOFo8omMMMu/
-         H5FA==
+        d=google.com; s=20221208; t=1686157792; x=1688749792;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ds/cShovVtvlgxXu9aWokHc+X9aouvMGcbRfxnUcsX0=;
+        b=k+GsU1Qqv6czQwGOm77GSshH1F+xYifhC4usvPYkQzcRnCfJSOmpqLgg5C97b8VxYK
+         morGFUOaXg59z/ODB8pltg3c1bGuZOXyeJWABjrKjujB5mbjXZRuUDtge0tA2rP+VINr
+         aVhmx4baB1uWPfQ6H7b0wuqmxCekArGxAvSPUiAcL9U60r9ZuRRv977yKE36zqvoxg0Z
+         Xp9GtiwXpeI6vf0/p+HY3Mxq+or48is05W2GtLC0ZbEKeyYirINyHFPz5PjScybTHlr4
+         eE7eEcwFQVPwxYaT5ZL9K+N9OzWxcYCgyKO6B3UOD7EtTl5wu1AkjgYX/2vTxa5JxuH+
+         bkmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686157334; x=1688749334;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=33Iu9BfKhdqxsBryqx3JlHrUKvDHZMGPUzffwTjrfA8=;
-        b=OMSRaX3uC6fsRXLsFesTK/MQ6jyLWpds9rNhMLZmHwSxco6Kr/sTmHDFDOUTXlevth
-         CcGhOTZZnQ8E2vEyZo5ZIP/VbH27uEaYO791Y/2rSzMudESymkxdoyS5uiGJyE05PdPk
-         nDsl7n1b8a8p7ksKtz6VYOsUN+D7Dtm82DG5OH6AUYTgP+FaLRECzwkNXXUqbGQsc26U
-         JVw7bb2jZrq0FkBc2Bhlkw7DFSt8HD0vxGkYBpgVlhmfDGm22eixp1r0IQI4gpuBZa/2
-         wXHYDzzjEUo7doH+MXH/dfO57HyyAl+zIVVIUWaAubq4XihzVaQjs1uQ4Mer7WdweytJ
-         9PVA==
-X-Gm-Message-State: AC+VfDyRazV/YaRkLJHH8Kny29Rvm+SytXCKCSLpuDHZROhCovdl+Hu/
-        W+kTJWksc3t+Rnx2+ZWMTGVsltORtagkBaDGGSffpGv+rP6m8Np95kA=
-X-Google-Smtp-Source: ACHHUZ46JbmOKXYAfpolwXD7z82qFa97WMgO+yJwZNjlOLPPRTyIoxZH4+w4Ne5Asad60wSXaAz9iwDWiBuwFc14yDw=
-X-Received: by 2002:a50:8acf:0:b0:514:92e4:ab9f with SMTP id
- k15-20020a508acf000000b0051492e4ab9fmr136963edk.7.1686157333984; Wed, 07 Jun
- 2023 10:02:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230606170711.912972-1-calvinwan@google.com> <20230606171002.914075-5-calvinwan@google.com>
- <25d47081-2096-bb8a-dca3-bd5ea931c879@ramsayjones.plus.com>
-In-Reply-To: <25d47081-2096-bb8a-dca3-bd5ea931c879@ramsayjones.plus.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 7 Jun 2023 10:02:02 -0700
-Message-ID: <CAFySSZBZVn=7gBB19_uNxeUwS9Y8Q6ZZiCT=AwfuBy4+d34piw@mail.gmail.com>
-Subject: Re: [PATCH v3 5/8] common.h: move non-compat specific macros and functions
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1686157792; x=1688749792;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ds/cShovVtvlgxXu9aWokHc+X9aouvMGcbRfxnUcsX0=;
+        b=IleMUNYKmdHN969lEqZV9WKqjzASAyA2abgy+OP3oprWbA9Vaz6QIzyq6u2tS4A9+S
+         F+LOJmczG84V12C6gosDsvrWvw8xhS7SQwnuOFv3qmc1xlBjk6T2kcRxsDyqu1wMH+NO
+         pu53q02qLU1Oy5AbrSVwmMmUm/BwAG2rLRgZqhKsfbkvjnO7lFCBIMpufyKnNoztNnO1
+         unqjJmr8036lDpL5RY/lDMaabVnbh7vu7Pw0FZMoWH1pYxaBv0r5Coc4fqrDUtKTJgUJ
+         kxM5gDzKvdjNnVseIpWQY1SIQ55Rl6Pv+skAo5kjIb0iAImswGyqh+6VipZcZ+0D+JSJ
+         eiEQ==
+X-Gm-Message-State: AC+VfDxlFwZTguvoP7onbfMyQ/U/aWHhhSLnUmgMkqanq8K2xfqrAsst
+        iwLardFnQ1OeDWxFXp6V2g46fwoIi5o=
+X-Google-Smtp-Source: ACHHUZ6fN8p9G/FEaes7x6tpB6sZYEUfbtUzggvojhPmX4/Lr7N0Zp8rc2RK2Qe9JjUL2hHn64h32fSoNJY=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:16c7:b0:659:320e:c510 with SMTP id
+ l7-20020a056a0016c700b00659320ec510mr2622129pfc.4.1686157792265; Wed, 07 Jun
+ 2023 10:09:52 -0700 (PDT)
+Date:   Wed, 07 Jun 2023 10:09:49 -0700
+In-Reply-To: <5b796f88-949c-4bba-b4a7-19ad61171812@app.fastmail.com>
+Mime-Version: 1.0
+References: <pull.1542.git.1686099081989.gitgitgadget@gmail.com> <5b796f88-949c-4bba-b4a7-19ad61171812@app.fastmail.com>
+Message-ID: <owlyttvjnqqq.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] docs: typofixes
+From:   Linus Arver <linusa@google.com>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Is there a particular problem here? common.h includes
-git-compat-util.h at the top so that it has access to standard
-libraries and possibly other compat utilities. git-compat-util.h
-includes common.h at the bottom so that other files don't have to also
-include common.h as well. Imagine if instead of having git-compat-util
-include common.h, we had a third file here: git-compat-common.h. It
-includes common.h and git-compat-util.h and every file includes that
-instead of git-compat-util.h. Now git-compat-util.h wouldn't include
-common.h, but this change can be circumvented by including common.h at
-the bottom.
+"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+
+> Hi
+
+Hello, nice to meet you.
+
+
+> On Wed, Jun 7, 2023, at 02:51, Linus Arver via GitGitGadget wrote:
+>> From: Linus Arver <linusa@google.com>
+
+>> These were found with an automated CLI tool [1]. [1]:  
+>> https://crates.io/crates/typos-cli
+
+> Did you run a command or a script without any manual afterwork?
+
+I simply ran the tool without any configuration, which just outputs a
+list of suggested fixes. There were many false positives, but not enough
+to make the manual examination of it too difficult.
+
+> If so,
+> do you know what that command invocation/script was?
+
+FWIW the tool appears to be heavily customizable [1]. I considered
+exploring options to automate this some way (either as a script or maybe
+into the CI that runs as part of GitGitGadget submissions), but have not
+done so yet. I am currently more interested in reading the C sources in
+this project, so any immediate automation effort in this area will
+probably have to come from someone else on the list.
+
+[1]: https://github.com/crate-ci/typos#false-positives
