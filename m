@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BC2AC7EE23
-	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 10:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33A0AC7EE29
+	for <git@archiver.kernel.org>; Wed,  7 Jun 2023 10:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238907AbjFGKQU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jun 2023 06:16:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42240 "EHLO
+        id S235194AbjFGKQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jun 2023 06:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238803AbjFGKQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2023 06:16:18 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93CAD1BD3
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 03:16:17 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-ba829e17aacso9116431276.0
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 03:16:17 -0700 (PDT)
+        with ESMTP id S239122AbjFGKQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2023 06:16:24 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6482B1BCE
+        for <git@vger.kernel.org>; Wed,  7 Jun 2023 03:16:22 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bb167972cffso9080067276.1
+        for <git@vger.kernel.org>; Wed, 07 Jun 2023 03:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686132976; x=1688724976;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686132981; x=1688724981;
         h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
         bh=Z5MarA02E7dw7eFDVci1aBQYA+1m7FKimAvUcf0+LpM=;
-        b=K80sxXkc62HwfPLqGyyeMIP87sGGNAc6accsLZgvPWYg+pCzF/BTpYobj7h/v4sMjj
-         CSwc6NLhrAmr0itPX/eN2pSTwj4M053JN3KhklWBv/bfzgEL1mJzppgcDWB82I9NbRZ4
-         eKfPr+N9Oy0Pp4uHnjwx2PyKsk0LtCI+WPmj/pODiZrY2u4x3hbQXuePSm1QAro6oCZV
-         HaFAoD0Z0CklGcbIujJfyiHy1DiGDsaRIi6LxJ6aI5GaXtHOdSUbSoRFhxyWQOHjZheZ
-         WwsOv0j9fxYDhBInh0T2rN2A6FG2UG8w11BqU1UcsxB0N2P1d/pC3szQ3kSv+M4Hixap
-         eShg==
+        b=EtpPrV8jUQIwMB5edWR+Jx5srLaaBZG38Q5vOxaC6q0yNwftotkY70sVybH2QvHYMA
+         kp6XJKTsri/65XEGR/5PifjrvUgX/RVzx0Ve1jdsOXTyGQePm4JkUvUkWLedKwbQmeZ5
+         H3duCplY8AsUr521gjYk7PfdiL0X0YVqDc0Iir/MIMpUiAawxG9ytvzjFctlGkt1m+YX
+         SdyB+PX14ATes8b+b5PtewD1VvmMWs89mJhi0/Bo3FfHdgmPMBJkjKR1lMBUMDry6I2o
+         7tDQo0zRdjWLTaepNQkHdmgZxyH1hDOMt/A+DXLA3lU+hleBtr7BClCzwyxqwFqf5Dmp
+         X4og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686132976; x=1688724976;
+        d=1e100.net; s=20221208; t=1686132981; x=1688724981;
         h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=Z5MarA02E7dw7eFDVci1aBQYA+1m7FKimAvUcf0+LpM=;
-        b=gscM44sXdovyng48A/n25dmOPnygWC1jsHyv74cPQLU8vHUQM9rQ7it4/4qn31oSU2
-         SaNZD4KIMmgcmYVhtIuENyV13g3zU3vPq1eNws6v5PkV6YKwaFaV3GTzNl+YPspRP0Y3
-         MZE9YD1FXMP4CU0RDaYHakPwmemkQ/vef5JqVI+EY79yjaCI8ZWsVh6N7xZHJ+Vp3m2L
-         DQgrRNAu3bCl71Tsiu1KEYwLR2Vwc+tYAT5VMD5LLLqRmwSW+OJUhZv2CzM/eJGPKehI
-         R9potN9L95ZDwdXE0w8cykyKHAGLQosbt6Fmuev0i1LFKSTUJisuVBWQjpGLxP6nR3dJ
-         ySOw==
-X-Gm-Message-State: AC+VfDx75csEVCgZtQPQbIriKzsxvwdDaZzbswk+6sitp0kcRuhNmPBm
-        p0AiabGdCnTU/PupIBh818cufN1DOVhlSUZtpaK8+KQ/
-X-Google-Smtp-Source: ACHHUZ4hFyk7wbwRs8MXErlCn2ASInTPWC1wKmUtUJru174HqzIhUGUu6ZNMPJ30R5oKNiqileB58g==
-X-Received: by 2002:a0d:ca44:0:b0:561:dd1b:e516 with SMTP id m65-20020a0dca44000000b00561dd1be516mr5923315ywd.35.1686132976429;
-        Wed, 07 Jun 2023 03:16:16 -0700 (PDT)
+        b=BrEmwYlPiXvFAJUuD3arxNMfjtx+1KPJ0Y049IcKRvrOZD/0Fd0RVShCkhWuhR/Xfy
+         hQHV5OACs+4o2Wqa5EPn2Vwql6nwRm1V8rVEI12F60XxYjddcgZrBZXl37B+BlwCk+Bq
+         LIdStBPFS9TSdUm1xK/84RGcpBuNbA3GQf77mfm1WgwiIEiwKp1WRiF0V7VfoFv3ttY6
+         WnySi6NFZD0w+LRZTzagOd201HNSw7T3InUPcoSUEcSy9oNpd+XRzmrdCk9EKblNGuij
+         tJJKROAkev6awYx8JgGoueTjRnkK9D3sSP/CwJV/a9XPRx1Gljxjg0Tzli0KVfPrmO+Q
+         bZBw==
+X-Gm-Message-State: AC+VfDy4C6hrV8jur+MZ7qgpBYeEd2VFpuThu15oGdaV7QznWWQA2v98
+        hYrAJispB7mN1jYVvydyW5Kr9caVN+UwTVdQmTD1ZOwg
+X-Google-Smtp-Source: ACHHUZ6EiFl1AZN0EEyaXsETx/YrVcg9jgw3MoBudRVTKD6B6+XMv5N2NRLS4E2y0Q7cMmAGyc0hoQ==
+X-Received: by 2002:a25:dc14:0:b0:b96:5fd4:c967 with SMTP id y20-20020a25dc14000000b00b965fd4c967mr5622167ybe.57.1686132981081;
+        Wed, 07 Jun 2023 03:16:21 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a9-20020a0dd809000000b0055d6ae09dedsm4681782ywe.127.2023.06.07.03.16.15
+        by smtp.gmail.com with ESMTPSA id 7-20020a250a07000000b00bb0a8342723sm3749254ybk.50.2023.06.07.03.16.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 03:16:15 -0700 (PDT)
-Date:   Wed, 7 Jun 2023 06:16:12 -0400
+        Wed, 07 Jun 2023 03:16:20 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 06:16:17 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
@@ -60,6 +60,7 @@ Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Message-ID: <20230607101617.ges6tnMry4E52lDGld43QgtNUsIS4YQq6w-t71hEfkQ@z>
 
 To partition the set of packs based on which ones are "kept" (either
 they have a .keep file, or were otherwise marked via the `--keep-pack`
