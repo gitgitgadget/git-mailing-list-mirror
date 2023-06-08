@@ -2,75 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53837C7EE2E
-	for <git@archiver.kernel.org>; Thu,  8 Jun 2023 05:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98E1CC7EE25
+	for <git@archiver.kernel.org>; Thu,  8 Jun 2023 08:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233876AbjFHFLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jun 2023 01:11:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33104 "EHLO
+        id S235062AbjFHIVX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jun 2023 04:21:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjFHFLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2023 01:11:37 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D49426B3
-        for <git@vger.kernel.org>; Wed,  7 Jun 2023 22:11:36 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1b2439e9004so396515ad.3
-        for <git@vger.kernel.org>; Wed, 07 Jun 2023 22:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=myitcv.io; s=google; t=1686201096; x=1688793096;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m7A0Tw7Mp60yFLwacUgpa6O4Q5MedyhYtrLW2r8TddA=;
-        b=c+RT25MPuc+YtsPq+4kf5aAjHleQw4XYHlcuVNfYWitdH1Wd9uoH54gGVS6wyaGbHf
-         F8W0xdhaS7a5TGh1u5C8/YSNr6R6qW214XPt3OXR54KtHM9eFU0JR1rjQzBL8d/SMq6m
-         lvuAtsIaVnsP2VKUZAnF2BSHyFOoc9iTVNIWlaC59HisjK26YYxpDYf9oaTGVyyz4Fvs
-         wEy8ym9VfuZ0AZaH4tylcwqQv6WA9UaboLNWocJhdob9cd1jxc8E31l5V61TsOgE03Qu
-         En9GoKfdJreJVJ7W2PHp9VkjILi/7egyeqfYPxRDv/POYvtXZK9cTTFmhfKqxa2opJVD
-         Lpkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686201096; x=1688793096;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m7A0Tw7Mp60yFLwacUgpa6O4Q5MedyhYtrLW2r8TddA=;
-        b=cQS4sZJbhaJe0fRB3ecrlZDUzlDDdJLueinXq9zVcD12zXvpn0oXi7+p/NFn4DYy9r
-         syH6h0CPY/P3LOQmhw9ZQK7KJetZgsz2CV9d/GuyWxW8ylvQr9gK4KmLoa6IozHJ5ZS9
-         iY0MSWVdB60HaNMuxdnLU0GpQf5yISvlLPkcyLBeXlguQsoHmG/51uN4uuVjNKC0NkdM
-         wEbL+0+5Vmr2TppIzGR5V2GUKSjXi2wR0xPeuRFULjofty0ZWjiOssmgCVeCe1jx2fAm
-         q3k+4JCJYosy77tVT2IaJdV0kUBKXFXxR1+AZbvLhLqqooUEAsB9/tEZeg7nwqiXMVSb
-         iKUA==
-X-Gm-Message-State: AC+VfDzcb29ahxLck7V9F0GkHTKGslU84XRDqXXtQORpKU6ESDkCojbp
-        c9covm/UQpowvfqJYNgkwbnMzYjbH020E/AcNddqviOz0bXPGxHhX/U=
-X-Google-Smtp-Source: ACHHUZ7XuxEeaWsAk7+eI+fJMp9YFmJfF3SoJO8hNVxEomrM8yi54xvDpWlXmDEneKys9XmmMmm1PGcODPV9FFUL7Ks=
-X-Received: by 2002:a17:902:da8c:b0:1b0:5ca0:41a8 with SMTP id
- j12-20020a170902da8c00b001b05ca041a8mr4144570plx.39.1686201095895; Wed, 07
- Jun 2023 22:11:35 -0700 (PDT)
+        with ESMTP id S234894AbjFHIVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2023 04:21:17 -0400
+X-Greylist: delayed 2754 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 08 Jun 2023 01:21:14 PDT
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FDBE43
+        for <git@vger.kernel.org>; Thu,  8 Jun 2023 01:21:14 -0700 (PDT)
+Received: from bsmtp1.bon.at (unknown [192.168.181.104])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 4QcGFy6dxdz5trc
+        for <git@vger.kernel.org>; Thu,  8 Jun 2023 09:35:18 +0200 (CEST)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4QcGFt2VVhz5tl9;
+        Thu,  8 Jun 2023 09:35:14 +0200 (CEST)
+Message-ID: <67c66cd7-fb6c-3fa0-82c8-0e778f377f96@kdbg.org>
+Date:   Thu, 8 Jun 2023 09:35:14 +0200
 MIME-Version: 1.0
-References: <CACoUkn7TmZ=trtDKcQm0SG5qCqK=-+YxrDV-7xYnLH_XK7K7og@mail.gmail.com>
- <CACoUkn6F_=JR5SYBWL2sVDxDVAZbxcV5Ruif6wLba-_q_QNiZg@mail.gmail.com>
- <198eea19-fc40-de0c-8854-3cdc94925f32@gmail.com> <CACoUkn4TOGi7xojSatEowF0CcFJHJof+F5XR-QtPTL5iznZDKw@mail.gmail.com>
- <cc93b0ed-1167-a017-2138-181a490d26e2@gmail.com> <CABPp-BEAnB-6ogcohMWMmktr9SrwMtM0-dw1pypcJedcMMcsCg@mail.gmail.com>
-In-Reply-To: <CABPp-BEAnB-6ogcohMWMmktr9SrwMtM0-dw1pypcJedcMMcsCg@mail.gmail.com>
-From:   Paul Jolly <paul@myitcv.io>
-Date:   Thu, 8 Jun 2023 06:11:25 +0100
-Message-ID: <CACoUkn5OsWNMzUe=O_ObjJoDk=ULnRij90idYutgn42Z3-cWgw@mail.gmail.com>
-Subject: Re: Automatically re-running commands during an interactive rebase or
- post commit
-To:     Elijah Newren <newren@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 2/2] shortlog: introduce `--email-only` to only show
+ emails
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <cover.1686178917.git.me@ttaylorr.com>
+ <44179d28fa7676965a28734e20584d54b44e051b.1686178917.git.me@ttaylorr.com>
+Content-Language: en-US
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <44179d28fa7676965a28734e20584d54b44e051b.1686178917.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Anyway, if you want a low-level do-a-merge thing, use `git merge-tree`.
+Am 08.06.23 um 01:02 schrieb Taylor Blau:
+> When a shortlog caller wants to group output by, say, author email, they
+> can easily express this with:
+> 
+>     $ git shortlog --group=format:%ae
+> 
+> and restrict output to specific email(s) with the new `--group-filter`
+> option introduced by the previous commit.
+> 
+> But they are not able to apply the same treatment to identities that
+> appear in trailers. Doing:
+> 
+>     $ git shortlog -e --group=format:%ae --group=trailer:Co-authored-by
+> 
+> will produce funky results, interspersing proper emails with full "Name
+> <email>" identities from the Co-authored-by trailer (or anything else
+> that might appear there), like:
+> 
+>     461  me@ttaylorr.com
+>      11  Taylor Blau <me@ttaylorr.com>
+> 
+> So if the caller wants to restrict output to a set of matching email
+> addresses (say, "me@ttaylorr.com"), they cannot do it with a
+> `--group-filter`, since it would discard the group "Taylor Blau
+> <me@ttaylorr.com>".
+> 
+> Introduce a new `--email-only` option, which extracts the email
+> component of an identity from all shortlog groups, including trailers.
+> It behaves similarly to the `-e` option, but replaces its output with
+> just the email component, instead of adding it on to the end.
+> 
+> Now, `shortlog` callers can perform:
+> 
+>     $ git shortlog -s --group=author --group=trailer:Co-authored-by \
+>         --email-only --group-filter="<me@ttaylorr.com>"
+>        472  <me@ttaylorr.com>
+> 
+> to obtain the output they want.
 
-Elijah - please accept my apologies for my belated reply.
+A note from the peanut gallery: "--email-only" sounds like an option
+that affects the output of the command. But it does not (IIUC), there is
+no hint that it affects grouping and filtering. It is named too
+generically, IMHO. Can we not have the desired effect by specifying some
+token to one of the --group* options?
 
-Thank you very much for this detail. I will give the custom merge
-strategy approach another whirl!
+-- Hannes
 
-Best,
-
-
-Paul
