@@ -2,84 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B9AC7EE25
-	for <git@archiver.kernel.org>; Thu,  8 Jun 2023 16:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E83A9C7EE29
+	for <git@archiver.kernel.org>; Thu,  8 Jun 2023 16:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbjFHQYu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jun 2023 12:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34284 "EHLO
+        id S231535AbjFHQZd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jun 2023 12:25:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234594AbjFHQYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2023 12:24:37 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B0235AB
-        for <git@vger.kernel.org>; Thu,  8 Jun 2023 09:24:25 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-ba818eb96dcso842974276.0
-        for <git@vger.kernel.org>; Thu, 08 Jun 2023 09:24:25 -0700 (PDT)
+        with ESMTP id S230418AbjFHQZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2023 12:25:28 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0B262D75
+        for <git@vger.kernel.org>; Thu,  8 Jun 2023 09:25:19 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-561b7729a12so28333897b3.1
+        for <git@vger.kernel.org>; Thu, 08 Jun 2023 09:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686241464; x=1688833464;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1686241519; x=1688833519;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Uu2BWGJAowbr6TVw3p9CGFuuKkX1jcRotYACStdQoc=;
-        b=WrlIppztjA53vXKndVKhveBhxYME65AZ8BTYQHvMkk1beYbZjHbMhKk3Ygv13hZkbx
-         wwJaF6iaGm7crak1sQslG1ybPScmK0iCPW0/nnTNHx5wChl8RlHw9Dhip82gkZZ7kS4X
-         NuTbUEOu9w8XzTaWLa1xi87rvxCEOwv40QCiNGmwsLqPgsoWtlID0iyCawd6S1l8gGqU
-         OjXy60W40qL74OTWn0rpRBkS5z9B8brBk5Km8KG6h9g3L+tcK72tiykTW3FUkDEV1DdP
-         ze04iZzEzH38kWdeWA9qtPJlBOEsEaIdG/uT0QkoGBnp1HI4vmIwtpsO4cHAIz6KV6di
-         Qd5Q==
+        bh=uvbmveP+fQe9ugGoK/QmI/fz3wbNC7UZfpyYR+sfK9o=;
+        b=RFgjD2iHsuzmQA/Bkvy+svsvXaDLRjp3agFjW5Iz75IMNNZre9qsb7gbhjhf/tQe5h
+         iMCdEGqO3YZTco6DWFTDE/yb0rmxEppvn2a1OYlTGZLE2Ca1Hr0SibRP6k7CxheSEsbC
+         j+G8S8pKBDoYlcmHpIRFo3NqlIz564AC1iJCQsgcrzkdYt6+BQuuG9HOYa74O0x1s9cO
+         zi7wagGY9g3goPq5YFnUCzZjyTzb15TIeOOKmi8CyAidqf2eW3VtQPb36EUCoF4RAc7n
+         CkZw4kE3LHlW0GPdW8XbO5BmTV4m+itbonozs2dWOAfGB5k6yEaW2b+A23W+34cP+3hZ
+         vtzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686241464; x=1688833464;
+        d=1e100.net; s=20221208; t=1686241519; x=1688833519;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0Uu2BWGJAowbr6TVw3p9CGFuuKkX1jcRotYACStdQoc=;
-        b=YITeZRQCYyRHZD2muZYqkNfcGtjkozX95wiEg2QMSGSUN6SIonenknUtlggYzttby0
-         KtWlGAobtCOhS13lVo2KZu4oRKMO0VJPCEYIFBodKKd7Xtzi4xy5TbAaeh10feaINdz8
-         3JXm1sSCouTaTfvQL64azpqGFc0QWodIczla1VovktGdAjFRFwc1tG0MHT86N5Xl4EnB
-         ADcR1TO0Bqy3O00Dco8hvZC5neT5WdVufz9vr25Cj6XbBK043tTRBb7oPTRE5MLcmrAj
-         tjt7qpY5hbC9YeJWsapsZ77Og9xUIOB5XsZRBnZFuqRuYOdrY+QZSFHslXQn78I9vnF5
-         w9pw==
-X-Gm-Message-State: AC+VfDy2u5qS1gSXaaKeZw+fnoQ4tq5PnN1WDOTwgSEYtnMwx1UcUFBJ
-        /KHvzQGleYpxTDv3fff3D5uPHn57fIbP9P6NKjLw/B9I
-X-Google-Smtp-Source: ACHHUZ5rstC/2MhOUfcQF7VuP0JTMfZvKPM11n3FC9TabTMl5krgrFbbhGyEA4bJTdJ4QhQqlfEHSA==
-X-Received: by 2002:a81:48d4:0:b0:561:e8e0:2e82 with SMTP id v203-20020a8148d4000000b00561e8e02e82mr155985ywa.30.1686241464146;
-        Thu, 08 Jun 2023 09:24:24 -0700 (PDT)
+        bh=uvbmveP+fQe9ugGoK/QmI/fz3wbNC7UZfpyYR+sfK9o=;
+        b=mFBrm8bZN1Dz8JeyaWBMk8s3Za57/BfmpsfRVm6CSEqKWEHQsVYYR3giCjPFhscBpP
+         075MH/lHCApVReG/H8/QcABJRekFK8sXkmPJxdhTddKoIdAVc175u33vHCEZiS7IFxLA
+         EpZRFoG/TC2fRll10KjnJ4qL/4gLcsdZKVTUqN6d1pLjkxozFQhscClEgc9mNaDQZtHe
+         4mHcRss/+KXvVdj1SQLfKPylK3tmKK4AVcKwSz86SiGgcn3JJx0Q0hcLmSxWVtQPI1gf
+         oPvyA3pIKtl5onzn+kAB9S8Z7rhoPFLjwVM8kVEXQSS+Y+PqtqEfQy5vIjNFHQwurg/K
+         IlQA==
+X-Gm-Message-State: AC+VfDx+nDJL2h6suUOKm1UyGiROdgEhk7usRXCX4tYwcDMpMREn1+QO
+        rkh5plVPI9ZhbjPgL+0xEYDmAPe0I1bESIGUyKPJTieh
+X-Google-Smtp-Source: ACHHUZ6RwT94hK+8VWWmzfQOagWXFvP5dABG8tm9ZN90zKYcngyPgDui+cfHXgyoPYZ7L378ddDvHw==
+X-Received: by 2002:a81:a08c:0:b0:569:ef9b:eda with SMTP id x134-20020a81a08c000000b00569ef9b0edamr247265ywg.10.1686241518902;
+        Thu, 08 Jun 2023 09:25:18 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r67-20020a0dcf46000000b0055a931afe48sm25371ywd.8.2023.06.08.09.24.23
+        by smtp.gmail.com with ESMTPSA id p68-20020a0dcd47000000b0055a382ae26fsm18680ywd.49.2023.06.08.09.25.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 09:24:23 -0700 (PDT)
-Date:   Thu, 8 Jun 2023 12:24:20 -0400
+        Thu, 08 Jun 2023 09:25:18 -0700 (PDT)
+Date:   Thu, 8 Jun 2023 12:25:15 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Sixt <j6t@kdbg.org>
+To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] shortlog: introduce `--email-only` to only show
- emails
-Message-ID: <ZIIAtO3kSaKkPqu8@nand.local>
-References: <cover.1686178917.git.me@ttaylorr.com>
- <44179d28fa7676965a28734e20584d54b44e051b.1686178917.git.me@ttaylorr.com>
- <67c66cd7-fb6c-3fa0-82c8-0e778f377f96@kdbg.org>
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 0/3] pack-bitmap: boundary-based bitmap traversal
+Message-ID: <cover.1686231639.git.me@ttaylorr.com>
+References: <cover.1682380788.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <67c66cd7-fb6c-3fa0-82c8-0e778f377f96@kdbg.org>
+In-Reply-To: <cover.1682380788.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 09:35:14AM +0200, Johannes Sixt wrote:
-> A note from the peanut gallery: "--email-only" sounds like an option
-> that affects the output of the command. But it does not (IIUC), there is
-> no hint that it affects grouping and filtering. It is named too
-> generically, IMHO. Can we not have the desired effect by specifying some
-> token to one of the --group* options?
+Here is another copy of the reroll I sent a few weeks ago[1] of the
+boundary-based bitmap traversal topic.
 
-I had thought about the possibility of something like this since we (a)
-already have lots of `%(trailer)`-related pretty formatting options, and
-(b) support grouping by pretty formatted-commits with the
-`--group=format:<format>` option I introduced via c112d8d9c2 (Merge
-branch 'tb/shortlog-group', 2022-10-30).
+It is identical to the previous version, except rebased onto the current
+tip of 'master', which thankfully produced no conflicts.
 
-Thanks,
-Taylor
+My plan remains to drop the conditional after a version or two, and
+hopefully having this be in 'master'/'next' sooner rather than later
+will help us build additional confidence with folks who use those
+branches as the base for their daily driver.
+
+Thanks in advance for your review.
+
+[1]: https://lore.kernel.org/git/cover.1683567065.git.me@ttaylorr.com/
+
+Taylor Blau (3):
+  object: add object_array initializer helper function
+  pack-bitmap.c: extract `fill_in_bitmap()`
+  pack-bitmap.c: use commit boundary during bitmap traversal
+
+ Documentation/config/feature.txt |   3 +
+ Documentation/config/pack.txt    |  17 +++
+ ci/run-build-and-tests.sh        |   1 +
+ object.c                         |   6 +
+ object.h                         |   2 +
+ pack-bitmap.c                    | 241 ++++++++++++++++++++++++++-----
+ pack-bitmap.h                    |   4 +
+ repo-settings.c                  |   7 +-
+ repository.h                     |   1 +
+ t/README                         |   4 +
+ t/t5310-pack-bitmaps.sh          |  38 +++++
+ 11 files changed, 284 insertions(+), 40 deletions(-)
+
+Range-diff against v3:
+1:  c31508ac4a = 1:  1fff820874 object: add object_array initializer helper function
+2:  e7b30490da = 2:  fa67382e21 pack-bitmap.c: extract `fill_in_bitmap()`
+3:  8a8f41e0c4 = 3:  b80d17c938 pack-bitmap.c: use commit boundary during bitmap traversal
+-- 
+2.41.0.3.gb80d17c938
