@@ -2,129 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CD48C7EE29
-	for <git@archiver.kernel.org>; Sat, 10 Jun 2023 20:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBC7AC7EE29
+	for <git@archiver.kernel.org>; Sat, 10 Jun 2023 20:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232251AbjFJUVi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jun 2023 16:21:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40288 "EHLO
+        id S230403AbjFJUVm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jun 2023 16:21:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231200AbjFJUVe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2023 16:21:34 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 693FD3AAA
-        for <git@vger.kernel.org>; Sat, 10 Jun 2023 13:21:28 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-30fa23e106bso984815f8f.3
-        for <git@vger.kernel.org>; Sat, 10 Jun 2023 13:21:28 -0700 (PDT)
+        with ESMTP id S232115AbjFJUVf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2023 16:21:35 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99C2A3AB9
+        for <git@vger.kernel.org>; Sat, 10 Jun 2023 13:21:29 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-30af56f5f52so1940596f8f.1
+        for <git@vger.kernel.org>; Sat, 10 Jun 2023 13:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686428486; x=1689020486;
+        d=gmail.com; s=20221208; t=1686428488; x=1689020488;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JDmdT4WKrPIJUG3bCdTlo97yglyz+z3DKNZ3itn2+lA=;
-        b=r/aYoHfkilP1gR4Ln5uT2fg3yYGoj4k1JWEtHxJg3srfC9JMl7jUFIo9y6/qjNvenK
-         Z56WKlWsr+agInawupt9WfPWiTLg9cjQgs0co6ljQv/1/qm2it3m8tfAfujxgGAtvDh/
-         xW1wtUT+eURa5Lsip3gNllPnxiMwOgwseqZWLrSQ3X0wUfkREqP4SaBZCQ90YVlbCms+
-         Zh981NQm9W4rYbamvpUZ3I176SiuBsqg1SOU7WYPhm+UUoj+x0GlDLk1EUiIGQOF4gjb
-         Gg5eNAgu/lKZz3HawK1B/POUeXOmtoIlfpHagVe3a4ngaBvV5tJ6CECG0E7MvynBqerZ
-         6Chw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oGhLXXBoQ6UI1vHMOyV7YwVlIGSV+5Rfv8inY3ASxdE=;
+        b=L2VHsGXiCvxUsBDwlFa2dTVOjbhQoZtzVazjo8sHiCjEOOvXewNO7ddFcLRGvYi4Jm
+         BK5E0/+cVvdN5iGqrbtQ0+gTaS2lpXaQU9GgfjLFuLVV+gjQoEMp5PcxXZfEp/gdGZVR
+         6TssTSH/QacRkcbLyLtUFgnyV+nsaX5SK4KHpYsitnevoA5Sco4lmF4IhgyfUr0bIMDn
+         v35ALbZpEOHsWYAmuMk4rZRpFDcwMLlXVYlcD+nfxOZp9s7cBD83d/LdnzxiRIPEod2I
+         mnE8RJK4xJDBi/C6I7fUwviRYZxOeV/2Jnj1xkbNmFrJtD3pP/oiCMfjpaQef/N6QnPs
+         pUVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686428486; x=1689020486;
+        d=1e100.net; s=20221208; t=1686428488; x=1689020488;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JDmdT4WKrPIJUG3bCdTlo97yglyz+z3DKNZ3itn2+lA=;
-        b=bS+IZbOn900pGQ1U8WRvOGIZ5nfx+3ffQFpbFjMy8tx0VkKuj/1p9B4wT86dEvJgcZ
-         0jKASsNXnIZI9GUkTZim/GNP95qPR6anJBYXoSbNkuZYVWlg6hRHO7B3Qrk9yy1YZ5EO
-         rPlbx6PHEICGvLHq19cJ3zgGsB6qHPQp1WY4BVp077+ezSWB7C+TNzKNVgi7PNyqcIUj
-         uJy+IpeGPDKQEGUiTbqHnAKFv5/xI7NSQul+YjkLiGKFJs7yxxC9kseG1ezX2k3kp4F/
-         mt/+9QF0AnfcSHqEA5QyPDUF2S7uID+aUDyZtMCzw3JUUFdKtfJnbEYDey3oTjNI2vOQ
-         hobw==
-X-Gm-Message-State: AC+VfDypqoG2cTpPdmQmp1DrSU/DTsMCxmKmi8M1yHNYUsShGWPpAaW2
-        QV/YvEDAharuWE3kbNUyY/OHqn63qdE=
-X-Google-Smtp-Source: ACHHUZ78Lys54oCH7NHYm9rTw+FOmkccw2XzZgkWupTiQpbyo3UazkP88G38N5PmF8aI++dlhxU6ZQ==
-X-Received: by 2002:a5d:4f8a:0:b0:30f:9e98:c777 with SMTP id d10-20020a5d4f8a000000b0030f9e98c777mr1115496wru.39.1686428486324;
-        Sat, 10 Jun 2023 13:21:26 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oGhLXXBoQ6UI1vHMOyV7YwVlIGSV+5Rfv8inY3ASxdE=;
+        b=KgvhnsM5ZMkUfZC1Vk+7OGQICK6C1vln/Ps73Bv6eFSZTgQKRLbyQKIyam7Er6iHaO
+         8JfGDMInSqDoXUUkpn/3vNeLL3xo2kxZuT88C1XoUjGVUzVDRVKMmwJVvBI7DYr+E63i
+         H7jTaIcuMjqVjHVS8Wf06z38AaiaNsmryS251IGozhTvpCt22dBtYbNghUJBdf2q/j5F
+         MgxKDN4E2nGwnGTr5vLpsutR8u3l6uRcBfCyljRzbRCGl8ciQrKqSVApsabMN/VIcl9K
+         rez55/CbR/cv3Pe/R8IAcbkP/DSN8VGAclY1jz5UNedD/iMj10QwlCXdaxihhWie9Ds+
+         rKBg==
+X-Gm-Message-State: AC+VfDxh9RdO5PLl4Ri6rKFn2/kz/uoDFRZZPCh1X4JVEvxobI2a0d0H
+        Ju58PE4vF3pbwuwrZNyffAOypggdyL8=
+X-Google-Smtp-Source: ACHHUZ4bXCerI1ljQnjZsF1HGSdw2ZgNMCx+Me/ZKZPwNF7A1fjQ5qlDVgVRnIpuTrbdAPNYR50Faw==
+X-Received: by 2002:adf:e792:0:b0:30e:3f55:ebcc with SMTP id n18-20020adfe792000000b0030e3f55ebccmr1723119wrm.44.1686428487562;
+        Sat, 10 Jun 2023 13:21:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p7-20020a05600c204700b003f7a562ff31sm6590898wmg.6.2023.06.10.13.21.25
+        by smtp.gmail.com with ESMTPSA id b14-20020adfe30e000000b00307a86a4bcesm7912832wrj.35.2023.06.10.13.21.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jun 2023 13:21:25 -0700 (PDT)
-Message-Id: <pull.1543.git.1686428484.gitgitgadget@gmail.com>
+        Sat, 10 Jun 2023 13:21:27 -0700 (PDT)
+Message-Id: <1f3c9e8d417d2c9f16583da7609e8f322059f1f1.1686428485.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1543.git.1686428484.gitgitgadget@gmail.com>
+References: <pull.1543.git.1686428484.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 10 Jun 2023 20:20:59 +0000
-Subject: [PATCH 00/25] completion: add missing diff options
+Date:   Sat, 10 Jun 2023 20:21:01 +0000
+Subject: [PATCH 02/25] completion: complete --break-rewrites
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series adds missing diff options to the Bash completion script.
-Completion often serves as a discovery mechanism for options, so it is
-beneficial to users if all options are offered by the completion script.
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The list of missing options was generated by:
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- 1. Extracting all diff options from the documentation:
-    
-    git grep -h --no-column --only-match -e ^--[a-z][a-z-]*
-    Documentation/diff-options.txt
-    | sort -u > diff-options.txt
-
- 2. Searching for each option in the completion script and visually checking
-    which one was missing:
-    
-    while read p; do echo --- $p ---; echo; git grep --color -p -e $p
-    upstream/master contrib/completion/git-completion.bash done <
-    diff-options.txt
-
-The only options I left out are --skip-to and --rotate-to, since I agree
-with their documentation: they are probably not very useful outside of their
-use in 'git difftool'.
-
-Cheers,
-
-Philippe.
-
-Philippe Blain (25):
-  completion: add comments describing __git_diff_* globals
-  completion: complete --break-rewrites
-  completion: complete --cc
-  completion: complete --combined-all-paths
-  completion: complete --compact-summary
-  completion: complete --default-prefix
-  completion: complete --find-copies
-  completion: complete --find-object
-  completion: complete --find-renames
-  completion: complete --function-context
-  completion: complete --ignore-matching-lines
-  completion: complete --irreversible-delete
-  completion: complete --ita-invisible-in-index and
-    --ita-visible-in-index
-  completion: complete --line-prefix
-  completion: complete --no-relative
-  completion: complete --no-stat
-  completion: complete --output
-  completion: complete --output-indicator-{context,new,old}
-  completion: complete --patch-with-raw
-  completion: complete --unified
-  completion: complete --ws-error-highlight
-  completion: move --pickaxe-{all,regex} to __git_diff_common_options
-  completion: complete --diff-merges, its options and --no-diff-merges
-  completion: complete --remerge-diff
-  diff.c: mention completion above add_diff_options
-
- contrib/completion/git-completion.bash | 57 ++++++++++++++++++++++----
- diff.c                                 |  3 ++
- 2 files changed, 51 insertions(+), 9 deletions(-)
-
-
-base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1543%2Fphil-blain%2Fcompletion-common-diff-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1543/phil-blain/completion-common-diff-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1543
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 90fe292459b..f07b00b9c68 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1753,7 +1753,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--diff-algorithm=
+ 			--submodule --submodule= --ignore-submodules
+ 			--indent-heuristic --no-indent-heuristic
+-			--textconv --no-textconv
++			--textconv --no-textconv --break-rewrites
+ 			--patch --no-patch
+ 			--anchored=
+ "
 -- 
 gitgitgadget
+
