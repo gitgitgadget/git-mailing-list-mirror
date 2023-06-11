@@ -2,116 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2314FC7EE37
-	for <git@archiver.kernel.org>; Sun, 11 Jun 2023 08:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D53C7EE37
+	for <git@archiver.kernel.org>; Sun, 11 Jun 2023 09:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbjFKIMD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jun 2023 04:12:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35802 "EHLO
+        id S232374AbjFKJF5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Jun 2023 05:05:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjFKIMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jun 2023 04:12:02 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31AC1ED
-        for <git@vger.kernel.org>; Sun, 11 Jun 2023 01:12:00 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f6e13940daso33817655e9.0
-        for <git@vger.kernel.org>; Sun, 11 Jun 2023 01:12:00 -0700 (PDT)
+        with ESMTP id S229455AbjFKJF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Jun 2023 05:05:56 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0937136
+        for <git@vger.kernel.org>; Sun, 11 Jun 2023 02:05:54 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f7353993cbso23811635e9.0
+        for <git@vger.kernel.org>; Sun, 11 Jun 2023 02:05:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686471118; x=1689063118;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YN0l4rcBehy+nrmA4u3plNVdOAaxTbHGIskomkTE53E=;
-        b=q5VvKu8ptWvc5uNgIOs3zSGeRu5bg9S7zzCl1kKrLEErc3SCXGtIzi2+IB6fOMzcSd
-         DTvqaWSUyQuKQHruI/t/dQ+pv/5R3QOfC15D9d5SwQniK7RW1rpHPs/DID3pan3e2evF
-         jhQycpI4Qh1BH+HqDXcVof39M5ELYZrrSFDiKHaSi6X7eRJknYmYapZ6LXJ6c2JprVgY
-         GayjCPu+khAUvzYqpBJwhFdOj8A8k86NQuRkJrsYyRT9s2S3Lf9vkhenaEBGFuuBSMwp
-         f9g0XyBFXFIBxnqHdYP5nxJKV/JWQwvqiXXgxF/Y7wK6qr/AJLa3MymnFP0vzxK6ADqt
-         lQWg==
+        d=gmail.com; s=20221208; t=1686474353; x=1689066353;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ouZoL4QGrMHy1EkWdOFnmzgakHnjGfwC+p74BWowlPg=;
+        b=HHyHVWfg1KEVNI6SJVb8mTYDUF5Nx62hNgbrY6dTP7xawqaFnoGtRzRVxHAnPCX5EW
+         Hf88OFW5hfLxyc1rg1sUvkWPuGfT9IevttN6YQg3I3IocoB4Q8mtUQX+weQBmtSuJKTC
+         k0ZKQS2G7lZLT0Q3URuk+QSH4EoSRr1Fd1oLfchv2LJdAR7KwWbVsAi6dzdgDwX3QaSC
+         dfe1Xc9eeIgOFU613l0fBl26wLaibIhg4WULjKi3hrvy/6apC6c81Vc5s3rlwJTEh97m
+         EcCbDRK7BDtgxHEaewx97W3LzDJblt0Fs89or1xNfIG7iz7AADgIi67pfkLyrRj0MBbM
+         O9kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686471118; x=1689063118;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YN0l4rcBehy+nrmA4u3plNVdOAaxTbHGIskomkTE53E=;
-        b=LpbTcoxzzQs0z6nFjT0opIh19NVEmOZX8TtRMKexMdNoMQSVZBBy462bYvfqzatzCA
-         JwNZ76dUYgnAeipNGP0QxrTGlNdbBnIFY3KsfcuogSncje+pJ12idg0EOz2onpX5ybRU
-         ZJ/Vgo9gIzGLVUZsc6uPPllwpK+XgUOHEpFhv/wJvnfuleORDIynJYZjLQXzepoA+9L7
-         V2A+u564oOb4ocH1cpV6hCOIMY8RKLI9tP29KLyAWjK8hRJ1u4cryx5Em0BogZK4fVGR
-         cuKc0vw8eMjKdvYwyjLbLOTcydTNehRmMJs1R9F0wYvht8gPr2qOIOFy22TDzJ1QDRw8
-         wz5w==
-X-Gm-Message-State: AC+VfDwc8r2PCpVpPHwc4jBGiUNWt4TB7L74/U2SpmWqI0r4NzanpINZ
-        ll0KvbplQIrDT0pkUyfpyeJQTnsDmbW1sWQlDOVvcvkB
-X-Google-Smtp-Source: ACHHUZ6iaUyR2Aicz39mNWROYpO51wqWoHd50dRLT7oMgOk0uojVpDOvK2deT+CwIMcAxft1rdpW+YN9qMPHXFEbiXE=
-X-Received: by 2002:a05:600c:287:b0:3f6:f2b2:15c9 with SMTP id
- 7-20020a05600c028700b003f6f2b215c9mr5348116wmk.37.1686471118224; Sun, 11 Jun
- 2023 01:11:58 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686474353; x=1689066353;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ouZoL4QGrMHy1EkWdOFnmzgakHnjGfwC+p74BWowlPg=;
+        b=TvFIDAUwBGAgft/4qmQpczIgpibN4Bi9/fZ4nnZpjH3e85S7jv/CJa0G5btaPyEkGA
+         FgsJ+lFIgEVPysANpnVVIuNgg4yvS0yDiRBhFyas1lV1s+pqqfheHbL5bVK1Rq564aGu
+         LEPiX9lfDiLTZPMhwRoYtloO9M8GyXf4K3y2XRVPYt3vcu2MRV+lJ9ARCk3OrCY59iHo
+         iwpB111ihqjviYzeWgSXFVgB+WIf0IbIMQSlapKm2ZPRsxlSyVTRo6nT3BHLr1aH3Crw
+         lr8F5/JVgFGXfB9+v5ig9jFANnQfIMhPN4eUuaB1yUIrT2xsH3zOQujsZi6JqfwpyBpV
+         zhGw==
+X-Gm-Message-State: AC+VfDxsEw3SHzbXkUTPekDsw4DLFPvXe3vsUuupEaGW0vxyhQmdfj9b
+        YBUpHpj7G3N3KwAa2nFXWyr9KSt6u/U=
+X-Google-Smtp-Source: ACHHUZ68TcgLkPvzoBVylai3duADTATZUtreu+VBeDnniW8C7FX/5uLz599U3JVP4SMzpd9ujGrizg==
+X-Received: by 2002:a05:600c:5123:b0:3f7:e78e:8a41 with SMTP id o35-20020a05600c512300b003f7e78e8a41mr7994814wms.18.1686474352803;
+        Sun, 11 Jun 2023 02:05:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u3-20020a5d4683000000b0030aefd11892sm9180999wrq.41.2023.06.11.02.05.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jun 2023 02:05:52 -0700 (PDT)
+Message-Id: <pull.1521.git.git.1686474351611.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 11 Jun 2023 09:05:51 +0000
+Subject: [PATCH] [RFC] http: reauthenticate on 401 Unauthorized
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CADdMKP8y3TjeCyJaxazYFY9zN2QpnMVZyRWnpoTLMcZ0ZPNMzg@mail.gmail.com>
- <CADdMKP_J7BSBeEpc6oQTh=BMf4geZJ6PwNM5yqzRQmDyT=1oXw@mail.gmail.com>
-In-Reply-To: <CADdMKP_J7BSBeEpc6oQTh=BMf4geZJ6PwNM5yqzRQmDyT=1oXw@mail.gmail.com>
-From:   Douglas Leonard <dleonard.dev@gmail.com>
-Date:   Sun, 11 Jun 2023 17:11:43 +0900
-Message-ID: <CADdMKP87DU_Vdj7Se0aRoMrkN6XUX7m1dREqbYifZDF-4MeUAA@mail.gmail.com>
-Subject: Re: git-alltrees: root trees and subtrees without duplicate commits.
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just an update, this has been cleaned up with a python implementation,
-with a decent bit of added functionality, particularly tag-renaming,
-and it's been working well.  It's already pip installable.  Maybe I'll
-get around to adding it to pypl.. maybe.
+From: M Hickford <mirth.hickford@gmail.com>
 
-Cheers,
-Doug
+A credential helper may return a bad credential if the user's password
+has changed or a personal access token has expired. The user gets
+an HTTP 401 Unauthorized error. The user invariably retries the command.
 
-On Thu, Jun 24, 2021 at 8:55=E2=80=AFAM Douglas Leonard <dleonard.dev@gmail=
-.com> wrote:
->
-> For what it's worth, a demonstration script is included which makes
-> parallel changes on various local and remote repos and does origin and
-> subtree push/pull..
-> In future plans... it's possible to fully reintegrate the subtree
-> commits into the full branch point file tree locally so that they are
-> cherry-pickable too, as if all changes were made on complete local
-> branches.
->
-> Regards,
-> Doug
->
-> On Wed, Jun 23, 2021 at 10:27 AM Douglas Leonard <dleonard.dev@gmail.com>=
- wrote:
-> >
-> >
-> > Hi all,
-> >
-> > For a very quick introduction, I'm a career physicist. I just thought I=
-'d share a detailed method and implementation I developed to improve on sho=
-rtcomings of subtrees.
-> >
-> > This says it all
-> > https://gitlab.com/douglas.s.leonard/alltrees/-/wikis/home
-> >
-> > But to repeat a little...
-> >
-> > First, it allows a container "sub" tree, ie syncing only the non "sub" =
-parts of the tree to a repo.  But maybe more importantly, when it pulls fro=
-m the trees it's able to "remap" or reconstruct old commits back to their o=
-riginals to avoid the duplicate commit issue of subtrees.  This is round-tr=
-ip reproducible so consistency is kept both ways. It avoids the need for sq=
-uash with subtrees. Compare the two images in the wiki to see the differenc=
-e between subtree without squash and alltrees. Non-FF changes made in a tre=
-e repo show as branched and merged. Traditional advantages of subtrees are =
-kept, primarily that users/developers of any one repo don't need any awaren=
-ess of how to use the subtrees or the other repos.
-> >
-> > I have used this some, but not extensively yet.  In my use it has worke=
-d.  I think it's pretty quick, but I haven't tested on large projects.
-> >
-> > Cheers,
-> > Doug Leonard
-> >
+To spare the user from retrying the command, in case of HTTP 401
+Unauthorized, call `credential fill` again and reauthenticate. This will
+succeed if a helper generates a fresh credential or the user enters a
+valid password.
+
+Keep current behaviour of asking user for username and password at
+most once. Sanity check that second credential differs from first before
+trying it.
+
+Alternatives considered: add a string 'source' field to credential
+struct that records which helper (or getpass) populated credential.
+
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    [RFC] http: reauthenticate on 401 Unauthorized
+    
+    cc. Jeff King peff@peff.net
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1521%2Fhickford%2Freauth-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1521/hickford/reauth-v1
+Pull-Request: https://github.com/git/git/pull/1521
+
+ credential.c                |  1 +
+ credential.h                |  4 +++-
+ http.c                      | 30 +++++++++++++++++++++++++++---
+ t/t5551-http-fetch-smart.sh | 10 ++--------
+ t/t5563-simple-http-auth.sh |  3 +++
+ 5 files changed, 36 insertions(+), 12 deletions(-)
+
+diff --git a/credential.c b/credential.c
+index 023b59d5711..00fea51800c 100644
+--- a/credential.c
++++ b/credential.c
+@@ -379,6 +379,7 @@ void credential_fill(struct credential *c)
+ 			    c->helpers.items[i].string);
+ 	}
+ 
++	c->getpass = 1;
+ 	credential_getpass(c);
+ 	if (!c->username && !c->password)
+ 		die("unable to get password from user");
+diff --git a/credential.h b/credential.h
+index b8e2936d1dc..c176b05981a 100644
+--- a/credential.h
++++ b/credential.h
+@@ -134,7 +134,9 @@ struct credential {
+ 		 configured:1,
+ 		 quit:1,
+ 		 use_http_path:1,
+-		 username_from_proto:1;
++		 username_from_proto:1,
++		 /* Whether the user has been prompted for username or password. */
++		 getpass:1;
+ 
+ 	char *username;
+ 	char *password;
+diff --git a/http.c b/http.c
+index bb58bb3e6a3..d2897c4d9d1 100644
+--- a/http.c
++++ b/http.c
+@@ -1732,7 +1732,11 @@ static int handle_curl_result(struct slot_results *results)
+ 	else if (results->http_code == 401) {
+ 		if (http_auth.username && http_auth.password) {
+ 			credential_reject(&http_auth);
+-			return HTTP_NOAUTH;
++			if (http_auth.getpass) {
++				/* Previously prompted user, don't prompt again. */
++				return HTTP_NOAUTH;
++			}
++			return HTTP_REAUTH;
+ 		} else {
+ 			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+ 			if (results->auth_avail) {
+@@ -2125,6 +2129,9 @@ static int http_request_reauth(const char *url,
+ 			       struct http_get_options *options)
+ {
+ 	int ret = http_request(url, result, target, options);
++	int reauth = 0;
++	char* first_username;
++	char* first_password;
+ 
+ 	if (ret != HTTP_OK && ret != HTTP_REAUTH)
+ 		return ret;
+@@ -2140,6 +2147,9 @@ static int http_request_reauth(const char *url,
+ 	if (ret != HTTP_REAUTH)
+ 		return ret;
+ 
++	credential_fill(&http_auth);
++
++reauth:
+ 	/*
+ 	 * The previous request may have put cruft into our output stream; we
+ 	 * should clear it out before making our next request.
+@@ -2163,9 +2173,23 @@ static int http_request_reauth(const char *url,
+ 		BUG("Unknown http_request target");
+ 	}
+ 
+-	credential_fill(&http_auth);
++	first_username = xstrdup(http_auth.username);
++	first_password = xstrdup(http_auth.password);
++	ret = http_request(url, result, target, options);
++	if (ret == HTTP_REAUTH && reauth++ == 0) {
++		credential_fill(&http_auth);
++		/* Sanity check that second credential differs from first. */
++		if (strcmp(first_username, http_auth.username)
++		|| strcmp(first_password, http_auth.password)) {
++			free(first_username);
++			free(first_password);
++			goto reauth;
++		}
++	}
+ 
+-	return http_request(url, result, target, options);
++	free(first_username);
++	free(first_password);
++	return ret;
+ }
+ 
+ int http_get_strbuf(const char *url,
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 21b7767cbd3..be2e76133c1 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -589,14 +589,8 @@ test_expect_success 'http auth forgets bogus credentials' '
+ 		echo "password=bogus"
+ 	} | git credential approve &&
+ 
+-	# we expect this to use the bogus values and fail, never even
+-	# prompting the user...
+-	set_askpass user@host pass@host &&
+-	test_must_fail git ls-remote "$HTTPD_URL/auth/smart/repo.git" >/dev/null &&
+-	expect_askpass none &&
+-
+-	# ...but now we should have forgotten the bad value, causing
+-	# us to prompt the user again.
++	# we expect this to use the bogus values and fail, forget the bad value,
++	# then reauthenticate, prompting the user
+ 	set_askpass user@host pass@host &&
+ 	git ls-remote "$HTTPD_URL/auth/smart/repo.git" >/dev/null &&
+ 	expect_askpass both user@host
+diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+index ab8a721ccc7..1e7e426bc65 100755
+--- a/t/t5563-simple-http-auth.sh
++++ b/t/t5563-simple-http-auth.sh
+@@ -111,6 +111,9 @@ test_expect_success 'access using basic auth invalid credentials' '
+ 	protocol=http
+ 	host=$HTTPD_DEST
+ 	wwwauth[]=Basic realm="example.com"
++	protocol=http
++	host=$HTTPD_DEST
++	wwwauth[]=Basic realm="example.com"
+ 	EOF
+ 
+ 	expect_credential_query erase <<-EOF
+
+base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
+-- 
+gitgitgadget
