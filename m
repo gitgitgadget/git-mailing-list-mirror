@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19135C7EE2E
-	for <git@archiver.kernel.org>; Sun, 11 Jun 2023 18:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 386AAC7EE2E
+	for <git@archiver.kernel.org>; Sun, 11 Jun 2023 18:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232579AbjFKSul (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jun 2023 14:50:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60862 "EHLO
+        id S232598AbjFKSuv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Jun 2023 14:50:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230041AbjFKSuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jun 2023 14:50:40 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 453B3E64
-        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:39 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f739ec88b2so25329135e9.1
-        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:39 -0700 (PDT)
+        with ESMTP id S230041AbjFKSut (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Jun 2023 14:50:49 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35728E64
+        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:48 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-30ad458f085so2544303f8f.0
+        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686509438; x=1689101438;
+        d=gmail.com; s=20221208; t=1686509446; x=1689101446;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4ymGwbn81ZsgJbneBe2lCC5oLGT5ZgBzN1yZS84ornI=;
-        b=nucnYwCA396x+MyaT6p5ghygfYD1GhHx4dQOID9ZZ0miGwr2kohu12MFmzGcFB6d7O
-         RjHkXq4C94v+nu+W1hmPwuMyPETOWPyon05EFxPLmUKbMv7wR8MioP2Ad1Qp+LFqUYdF
-         Qw8UdDTXygMirUO+HQc8sQQnxeDFXn+4O4GZCnIwHRQOgzzFIMXWaWoChiHR/LHqahJO
-         njm9lKAXGyx1FKmaA/saML+C3Ugpt5ODiuiRLFMTgK5H4R08s4VLS86R0iN71lM/lcJC
-         9DbAQMV4ITiI++TvfVeYUPKf86kXRz0aT/OjpV8iFK3n3qDh+CvMl7eHTbj3etoGrW0d
-         tepg==
+        bh=9JIbPgdsiKpXM1bp1v3FWE/MNtsf9HHnjwD9ou7ZyOE=;
+        b=gFY5h5KR/O2d7uvF2STYmSpJ5OnJkxfK+tPTRQ+CNhNegHaLP6qmDS/bCp5uWn4wJ7
+         1EMV3NYw3rd9pq1cwMnRcJ5J5gxeXroclhgijoMlQXovRGrD7e4SmmJ7jaHUE8Mn18+b
+         1rRsJhHOj/DaAUUqCdz2Am6Esm5o6Dq+r8bNRf81cmZr7rHCLjHGVTrZE2Ut8OK78fZN
+         fkYnAUOJfWlG8tjshiPGwPwisOV2svr/zWNizykmkHaxCjVGxWOM/Fvg8kdsteyZgqS5
+         UUwPp4RPAgv9Eyelje+8C3OrSYvQ5HcXedwlzP+W8dnDm2bH7BcbMBJnjBnc3/GLBMit
+         hvnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686509438; x=1689101438;
+        d=1e100.net; s=20221208; t=1686509446; x=1689101446;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ymGwbn81ZsgJbneBe2lCC5oLGT5ZgBzN1yZS84ornI=;
-        b=Z68A+Oqs69LKCqWBw63FpihZCms7wIzAVSOSOYvYXqAEGgeWLqn23JziismgamOS7s
-         jKqLtnZh5MNoiFmRXck8TGrHxL93jYju+MwGV+mKsgqpYqu08KEetS6RieAp+lL9IXlj
-         MtycWBY25Xf0TpHFYEQ304SvCDNw8mcKFdE6CynzsMJCub57+pa+g1o4H8YTDxhmQ8t0
-         S3YpUfsNvJRiZg95X4eRzOYLhx+dbpJGvRcfzRtSjUuRGw3PJyZvNXqB2yLoSJq5baWq
-         IfSxFazvqhmc3NHdkVnRNTNpeHZHSaLo4ceNJ/h9ryb0x+Qm0lNrwe6Fk6gwFfunuQ5i
-         PoJg==
-X-Gm-Message-State: AC+VfDwBLaAT2943UP6v/W4UkaCcH/fjxvCTT7e6oy7DgZXifxsFjwaG
-        +tyvQqFB48dDFUcjsxCRP5+GahlTWJU=
-X-Google-Smtp-Source: ACHHUZ7S1JJScWde3hZYvq1GOb/70SG9NoqQ6yVMD8qUUAx/rJ1lWsHMfCdi9nXMXkMDEFsxyxbuPQ==
-X-Received: by 2002:a1c:ed06:0:b0:3f4:2266:8cf0 with SMTP id l6-20020a1ced06000000b003f422668cf0mr4307875wmh.10.1686509437528;
-        Sun, 11 Jun 2023 11:50:37 -0700 (PDT)
+        bh=9JIbPgdsiKpXM1bp1v3FWE/MNtsf9HHnjwD9ou7ZyOE=;
+        b=Rboi3OVw7BuT83xAyqcNZKzffHoc9pz6z/AIazK3xDuF4tgFmqvU/fb03pDYzjL6ii
+         AyHarXbA2nWkgxyaSQsB02wMwsOsSO1dh5GFjXFtYaSeIr64iZATLkUJHGYmCAcLTdJy
+         sw+TDOOsR5Txzw+bJ35L6pzjNh59vwL5HGqOpdW09jCam7/MgoMGFX2u/JLyL50IgFUs
+         2mjSxfFXO0DS5uTmFjLC+QoZ0offo0l0WMLyOs+p83fHMv0ooiPAy7/FlLuqnUQ3TRwZ
+         QujxClgolsn7zYwWDcNj9ZMwQEEODDiVRN2dths9GkyUdz0kVMq8ahLcypblq/mzYGIV
+         X1KQ==
+X-Gm-Message-State: AC+VfDwkfAhBtm7uKy1JqRtkx6G/IxW6rXUVjcq5IpdFeKxf2BYq8fH3
+        vDPQ+UCaIzrZCL+vG5VkjYXWeS0nPus=
+X-Google-Smtp-Source: ACHHUZ7erxxYmvg6M6PhjuG3u6RMtfnNjsvXq/N1kBKtg93W0ODAKcJaw4MVv2NnY1ZK/x4yacKsdg==
+X-Received: by 2002:adf:f0c9:0:b0:307:95c9:c010 with SMTP id x9-20020adff0c9000000b0030795c9c010mr3298952wro.34.1686509446650;
+        Sun, 11 Jun 2023 11:50:46 -0700 (PDT)
 Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
-        by smtp.gmail.com with ESMTPSA id v13-20020adfebcd000000b00309382eb047sm10371279wrn.112.2023.06.11.11.50.37
+        by smtp.gmail.com with ESMTPSA id r11-20020a05600c2c4b00b003f7eb5375ddsm9159576wmg.15.2023.06.11.11.50.46
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Jun 2023 11:50:37 -0700 (PDT)
-Subject: [PATCH 09/11] branch: fix a leak in setup_tracking
+        Sun, 11 Jun 2023 11:50:46 -0700 (PDT)
+Subject: [PATCH 10/11] config: fix a leak in
+ git_config_copy_or_rename_section_in_file
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 References: <9eb931e7-dd18-8ce8-4d4a-cf3d85066189@gmail.com>
-Message-ID: <471dcc04-d60c-b745-15f0-05fe4e93ff11@gmail.com>
-Date:   Sun, 11 Jun 2023 20:50:36 +0200
+Message-ID: <3ee93720-dce0-8f90-68bf-0242e5731a36@gmail.com>
+Date:   Sun, 11 Jun 2023 20:50:45 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -67,60 +68,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commit d3115660b4 (branch: add flags and config to inherit tracking,
-2021-12-20) replaced in "struct tracking", the member "char *src" by a
-new "struct string_list *srcs".
+A branch can have its configuration spread over several configuration
+sections.  This situation was already foreseen in 52d59cc645 (branch:
+add a --copy (-c) option to go with --move (-m), 2017-06-18) when
+"branch -c" was introduced.
 
-This caused a modification in find_tracked_branch().  The string
-returned by remote_find_tracking(), previously assigned to "src", is now
-added to the string_list "srcs".
-
-That string_list is initialized with STRING_LIST_INIT_DUP, which means
-that what is added is not the given string, but a duplicate.  Therefore,
-the string returned by remote_find_tracking() is leaked.
-
-The leak can be reviewed with:
+Unfortunately, a leak was also introduced:
 
    $ git branch foo
-   $ git remote add local .
-   $ git fetch local
-   $ git branch --track bar local/foo
+   $ cat >> .git/config <<EOF
+   [branch "foo"]
+   	some-key-a = a value
+   [branch "foo"]
+   	some-key-b = b value
+   [branch "foo"]
+   	some-key-c = c value
+   EOF
+   $ git branch -c foo bar
 
-   Direct leak of 24 byte(s) in 1 object(s) allocated from:
+   Direct leak of 130 byte(s) in 2 object(s) allocated from:
        ... in xrealloc wrapper.c
        ... in strbuf_grow strbuf.c
-       ... in strbuf_add strbuf.c
-       ... in match_name_with_pattern remote.c
-       ... in query_refspecs remote.c
-       ... in remote_find_tracking remote.c
-       ... in find_tracked_branch branch.c
-       ... in for_each_remote remote.c
-       ... in setup_tracking branch.c
-       ... in create_branch branch.c
+       ... in strbuf_vaddf strbuf.c
+       ... in strbuf_addf strbuf.c
+       ... in store_create_section config.c
+       ... in git_config_copy_or_rename_section_in_file config.c
+       ... in git_config_copy_section_in_file config.c
+       ... in git_config_copy_section config.c
+       ... in copy_or_rename_branch builtin/branch.c
        ... in cmd_branch builtin/branch.c
        ... in run_builtin git.c
 
-Let's fix the leak, using the "_nodup" API to add to the string_list.
-This way, the string itself will be added instead of being strdup()'d.
-And when the string_list is cleared, the string will be freed.
+Let's fix it.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ config.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/branch.c b/branch.c
-index 09b9563ae7..d88f50a48a 100644
---- a/branch.c
-+++ b/branch.c
-@@ -37,7 +37,7 @@ static int find_tracked_branch(struct remote *remote, void *priv)
- 	if (!remote_find_tracking(remote, &tracking->spec)) {
- 		switch (++tracking->matches) {
- 		case 1:
--			string_list_append(tracking->srcs, tracking->spec.src);
-+			string_list_append_nodup(tracking->srcs, tracking->spec.src);
- 			tracking->remote = remote->name;
- 			break;
- 		case 2:
+diff --git a/config.c b/config.c
+index 39a7d7422c..207e4394a3 100644
+--- a/config.c
++++ b/config.c
+@@ -3833,6 +3833,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 						output[0] = '\t';
+ 					}
+ 				} else {
++					strbuf_release(&copystr);
+ 					copystr = store_create_section(new_name, &store);
+ 				}
+ 			}
 -- 
 2.40.1
