@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A57E8C7EE2E
-	for <git@archiver.kernel.org>; Sun, 11 Jun 2023 18:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02E7EC77B7A
+	for <git@archiver.kernel.org>; Sun, 11 Jun 2023 18:50:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbjFKSuK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jun 2023 14:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60492 "EHLO
+        id S232304AbjFKSuV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Jun 2023 14:50:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230041AbjFKSuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jun 2023 14:50:09 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 716D4E64
-        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:08 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f81b449357so2509065e9.0
-        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:08 -0700 (PDT)
+        with ESMTP id S230041AbjFKSuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Jun 2023 14:50:19 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8950AE64
+        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:18 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-30af86a966eso2254929f8f.2
+        for <git@vger.kernel.org>; Sun, 11 Jun 2023 11:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686509407; x=1689101407;
+        d=gmail.com; s=20221208; t=1686509417; x=1689101417;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Tt1FB1kn+UlodWOOSYnStELOGQ4ptiZzYdo3jNYafQ4=;
-        b=Fm5oI8yV8WylDHSCL2EdyZkE3YnlYX0sOcM4SOHsPGVwbsOF5hKBsLQnDeV11uiBH7
-         bSEeSrOZJpjkEuAq1MnoGnz0MYgWLJwSypyTIcAO7PzE2WJwp6WK0+xOlKOKJUkqLmc9
-         n0wnxP/ihNuNvHdS02lHNitO8fBAxUedqPtIZFfS+0uufHqZtCLJ/XCFh2DYCokTbdkb
-         BlUVn57Yl1L9eYYYj701ztl/Gvu/nJ11oCBr/HgaiG0xtkY6JEN7YZHaeHALseGRoix5
-         IxEyHwJ+ex3xq66I/Jsb3p/TFvH8335oViLJzZb9/2zpbzHJ1FqvwJiYoZINN5TfP5tW
-         eXlg==
+        bh=iMGH5694LA6mEBuhJb4jLEC639P9iTY2nBlFubRef20=;
+        b=rWSnn9bcCvxiHz2WMVfoGHsmdvTjEpNMzAblqa43S8aTEQJ5iKf/SXeMQ/Az6poWz6
+         MEw75D0lmpANjoA757pbp/1GxFal7bjACepSYLOOs+vpycuORYU2aTf4LWduzU5H9d75
+         iWUI4Nr8ocvW52pjdfFb0GGZwowHrwxy45grhh2MY+HlHZ4G5UfpwH4RvYeIupTIrez4
+         L0wzlomRer5oxx83jBqCwBsyTI5dnKB8R6ILhwkGtxa1jYnwdJvZHwNALTWfdTJNsS8q
+         dstLg9o80f7TsGDoh9vpVVUiWDu/WMxQhkqhEhGwVN2+FbOZCaFEkq5HTmHF7ZORktT7
+         Du0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686509407; x=1689101407;
+        d=1e100.net; s=20221208; t=1686509417; x=1689101417;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tt1FB1kn+UlodWOOSYnStELOGQ4ptiZzYdo3jNYafQ4=;
-        b=POhMcy4IM5ejOrbQzRvXWnfVMiK+LvlC+cCPbL7hNpFQ5uzg1CQ2kr6xT47G1qFIm+
-         jMt6pheNLrYNkYsTeADJB21QqkXzoDtMnEFWHmmYWH4+jDCJVvPDFvPIQJ4eRnsQQ976
-         MQFxZ4JTMAgEdIAgjgJlygc3d7x6y7QsIHA6S6IhzbjKu7y0Fcmf3Dhm079cWdcZ77Wb
-         PcMMvl806Fof4Upbz7MOVuVk6u00WZPJklrDHxjdld/OpYhkuTXLWhIpMW3QqPxkE/l+
-         AY9Int5pciQObKtQ3vUIG/OGAFfSqF5AjMyYLNnOOV8ho+AGju0AUy8cGB5zf81DwJMX
-         x6CQ==
-X-Gm-Message-State: AC+VfDzcTWAHpO3us0/JCyVYGbZgFoA8Sg9/bRU10gQG0TdiqHPyZ6t8
-        WOTd1wVZUAnp93ODhvuca1YZnrUHcLQ=
-X-Google-Smtp-Source: ACHHUZ7p1QDWqnxffam0vfIXWxBqNDknpF9J/OGKbAQuZNe9xPLxdBzB4mbpZsROV3omUAkTRYBlEA==
-X-Received: by 2002:a7b:c84c:0:b0:3f7:371a:ec8f with SMTP id c12-20020a7bc84c000000b003f7371aec8fmr5483354wml.15.1686509406688;
-        Sun, 11 Jun 2023 11:50:06 -0700 (PDT)
+        bh=iMGH5694LA6mEBuhJb4jLEC639P9iTY2nBlFubRef20=;
+        b=biyS1DMbgB4uyE/jD/kB01d154vlS8kmlkHg0SRNZI0m2kP8L9Blvc2hXdsDjsXzEs
+         q40qNeuyhUEYgIAMRTPs//vhHQ2d2Xbj/WWOjbLj3lRoIkkd785WG2TYobB2UboM5sB/
+         WLNkCAcl2wcd8SKdyCT31sMgOb1ypbHcfqFR6TDgS/y2SplCUwi1JFWWvlJytaLLsDju
+         ulECoTHbpEasikuKXEFzsAWBIJ666I47G12L29SQeaZSNvMOdvF0jCVMFwFu9lK0JP35
+         YMvJpkG2PZU0YC7P2X3BtFshiJxRwdcEW5XJZH5h6DrQRC4PUsx/Og1J2MFkiFhdU72D
+         rqaw==
+X-Gm-Message-State: AC+VfDwQwfMwUPK+E+rNA8Z9kGsoEOvhZoklnd1Cwsy171zWYxyH+OO4
+        K/SFlQB92kNe37fLPSDRocjseuTPLeI=
+X-Google-Smtp-Source: ACHHUZ6SmyqSwo3ZL+xqRNhSFno5Gf+koJJjrdjK2HWEjigpP+KTYdnnAZ2Qa3x9PH1QvfGhWgMLxQ==
+X-Received: by 2002:adf:f68c:0:b0:30d:43ca:55ab with SMTP id v12-20020adff68c000000b0030d43ca55abmr2771033wrp.38.1686509417004;
+        Sun, 11 Jun 2023 11:50:17 -0700 (PDT)
 Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
-        by smtp.gmail.com with ESMTPSA id y19-20020a05600c365300b003f7f60203ffsm9073946wmq.25.2023.06.11.11.50.06
+        by smtp.gmail.com with ESMTPSA id c2-20020a5d5282000000b002fae7408544sm10320581wrv.108.2023.06.11.11.50.16
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Jun 2023 11:50:06 -0700 (PDT)
-Subject: [PATCH 06/11] branch: fix a leak in cmd_branch
+        Sun, 11 Jun 2023 11:50:16 -0700 (PDT)
+Subject: [PATCH 07/11] branch: fix a leak in inherit_tracking
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 References: <9eb931e7-dd18-8ce8-4d4a-cf3d85066189@gmail.com>
-Message-ID: <6cbdf9b9-227a-4665-5725-6a863676e95d@gmail.com>
-Date:   Sun, 11 Jun 2023 20:50:05 +0200
+Message-ID: <25e68755-7073-9523-dacc-d79e4e10eb39@gmail.com>
+Date:   Sun, 11 Jun 2023 20:50:16 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -67,59 +67,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 98e7ab6d42 (for-each-ref: delay parsing of --sort=<atom> options,
-2021-10-20) a new string_list was introduced to accumulate any
-"branch.sort" setting.
+In d3115660b4 (branch: add flags and config to inherit tracking,
+2021-12-20) a new option was introduced to allow creating a new branch,
+inheriting the tracking of another branch.
 
-That string_list is cleared in ref_sorting_options(), which is only
-called when processing the "--list" sub-command.  Therefore, with other
-sub-command, while having any sort option set, a leak is produced, e.g.:
+The new code, strdup()'d the remote_name of the existing branch, but
+unfortunately it was not freed, producing a leak.
 
-   $ git config branch.sort invalid_sort_option
-   $ git branch --edit-description
+   $ git remote add local .
+   $ git update-ref refs/remotes/local/foo HEAD
+   $ git branch --track bar local/foo
+   branch 'bar' set up to track 'local/foo'.
+   $ git branch --track=inherit baz bar
+   branch 'baz' set up to track 'local/foo'.
 
-   Direct leak of 384 byte(s) in 1 object(s) allocated from:
-       ... in xrealloc wrapper.c
-       ... in string_list_append_nodup string-list.c
-       ... in string_list_append string-list.c
-       ... in git_branch_config builtin/branch.c
-       ... in configset_iter config.c
-       ... in repo_config config.c
-       ... in git_config config.c
-       ... in cmd_branch builtin/branch.c
-       ... in run_builtin git.c
-
-   Indirect leak of 20 byte(s) in 1 object(s) allocated from:
+   Direct leak of 6 byte(s) in 1 object(s) allocated from:
        ... in xstrdup wrapper.c
-       ... in string_list_append string-list.c
-       ... in git_branch_config builtin/branch.c
-       ... in configset_iter config.c
-       ... in repo_config config.c
-       ... in git_config config.c
+       ... in inherit_tracking branch.c
+       ... in setup_tracking branch.c
+       ... in create_branch branch.c
        ... in cmd_branch builtin/branch.c
        ... in run_builtin git.c
 
-We don't have a common clean-up section in cmd_branch().  To avoid
-refactoring and keep the fix simple, and while we find a better
-solution, let's silence the leak-hunter making the list static.
+Actually, the string we're strdup()'ing is from the struct branch
+returned by get_branch().  Which, in turn, retrieves the string from the
+global "struct repository".  This makes perfectly valid to use the
+string throughout the entire execution of create_branch().  There is no
+need to duplicate it.
+
+Let's fix the leak, removing the strdup().
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/branch.c | 2 +-
+ branch.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e6c2655af6..759480fe8d 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -709,7 +709,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	enum branch_track track;
- 	struct ref_filter filter;
- 	static struct ref_sorting *sorting;
--	struct string_list sorting_options = STRING_LIST_INIT_DUP;
-+	static struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	struct ref_format format = REF_FORMAT_INIT;
+diff --git a/branch.c b/branch.c
+index ff81c2266a..19d606d360 100644
+--- a/branch.c
++++ b/branch.c
+@@ -233,7 +233,7 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
+ 		return -1;
+ 	}
  
- 	struct option options[] = {
+-	tracking->remote = xstrdup(branch->remote_name);
++	tracking->remote = branch->remote_name;
+ 	for (i = 0; i < branch->merge_nr; i++)
+ 		string_list_append(tracking->srcs, branch->merge_name[i]);
+ 	return 0;
 -- 
 2.40.1
