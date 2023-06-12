@@ -2,68 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA1AEC7EE2F
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 17:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06774C88CB2
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 17:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231563AbjFLRKP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 13:10:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54262 "EHLO
+        id S230052AbjFLRNN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 13:13:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230302AbjFLRJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2023 13:09:43 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DD27113
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 10:09:42 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1b3c4c1fbd7so9650625ad.2
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 10:09:42 -0700 (PDT)
+        with ESMTP id S229735AbjFLRNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2023 13:13:12 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BAE4188
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 10:13:10 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1b3c0c47675so14092265ad.1
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 10:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686589781; x=1689181781;
+        d=gmail.com; s=20221208; t=1686589990; x=1689181990;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sQzaJ/WrNxdxEY7mXFTLrw6z0rBA/ChW0TSeY0Fd6tk=;
-        b=c+Tbi1xdeA6LnYfgFk3kO6aYQa/3dTajlOwPlWChbXCkUUrJ/wyBNuze3dDq7B3ZTf
-         DsCjWltSLswjrXcdISKt8MHV9vu1EiIuTWf6mmQ7L0jtM+RC8m8WzQAUZb5TSMB5JkPF
-         K8mJ53MW/B9j4GOztM/OcRHrgLDVedFGVTY25VRezPpdruHC58G3z4Dk9eHw4BPm0HQD
-         UxyHap08NRilCWg/GAbO8wa9Fs0PzPkQEOmM0Q3+ZRN8V5LePaSaE+9lnChDn0oVCz6j
-         ZxQqLs0U4SSW5vbwWGOQqvbdtbziljw1CwK0C2eHWZEy2aZsdlwjdqdw81vT/hX9nsnu
-         OMkg==
+        bh=IDZNcDHQajkmrgSpvd1Cyx5iP/GobBfMRUFfb9wSyOE=;
+        b=UjspWfB/9DjaiA41K6JdHc2Yfhhv8TNVxe5bp10SDrreT4hdlfEnOQEc6wMupYi1BR
+         xkp5S9kKeqyz+3UG+p+VapL2uKjX752xF90jHdOrpReM8iFwfNqtPzaKY/PTSZWc98V3
+         naQT3LTUNTqlB0y9w7z7Ox1+v+Wlpwm8W8q2I7RZlr+x2m7GslMF4fb4oqzReYQxItql
+         RDoGkuVLoBBb0syMtayi+5yQyz7x2pVu/UxZsZoxkTXtzWMIwxKeTGe0lyv7Di8Gr4rJ
+         JCjmEeYclhQuOX3u1vZGDmK6rhi3Ir4nQUFaYs2pkVePlVWBYXljP25l6DMw8rx/HNTf
+         9niw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686589781; x=1689181781;
+        d=1e100.net; s=20221208; t=1686589990; x=1689181990;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=sQzaJ/WrNxdxEY7mXFTLrw6z0rBA/ChW0TSeY0Fd6tk=;
-        b=echrciO28QdYSjRCSuGJnLZS3vucnCjhj+nOubINA+UHHT/k0bkdoX/4wg1MT6Zlil
-         HYNz9wTWngkN20VZV6SYpvGtM2lfKkTk3BFD/Fd4809t5WeaOMpz0VGER3PRMEA4MiQe
-         efQoF0FGHbOwT0DLP/cLvVSbku2FKXFSBt+tbKlgUkrm8CLR7X+FZv1PHgb5gmJQQPKK
-         WWetaexqCyMQs8y2dwM3d5hUcTWrZ+nfm+H8Zl10TfKEpycUFP4O7saJsu/llCcClLJ5
-         t58Z54q28DdDRY2yc5Z/ds2YIEKvAl1U4NcB+geTgmg/gmRe1UcIOPpCiaT6PmfWINz1
-         DDtA==
-X-Gm-Message-State: AC+VfDx0NjwkwEtGF2XPCeo+oQTsYl0okcYAkWDRS2f8gVaK0a+l9TnH
-        WByql7T4TK+BGaZqTcT7LGw6fqZdErI=
-X-Google-Smtp-Source: ACHHUZ7NynZWSjxlgvvd+4bXC0ncBWjFzhGUP9o2MN0CxZsvK5rzWp/GHIuNSYKAaVNvjbzXFXKK6Q==
-X-Received: by 2002:a17:903:41cd:b0:1b3:d5ec:673a with SMTP id u13-20020a17090341cd00b001b3d5ec673amr2031449ple.33.1686589781380;
-        Mon, 12 Jun 2023 10:09:41 -0700 (PDT)
+        bh=IDZNcDHQajkmrgSpvd1Cyx5iP/GobBfMRUFfb9wSyOE=;
+        b=iH/SV4yz7eDuZ23Z41GH4hHB6a5hUbmUvTcvH49mIGcjJBQNkwkYlqy7PLTmyxcMFt
+         R36iu9M13djeICN04ZeWcPVC+0+i2ofJP9fXRJNTie0fuErFuSdK5WQBjTav2GYX+/YF
+         HM+hiavivnZyiaVVkdDp5IgNf6CvileH3mQJSj/YQh0uWH1R2DffhuyDItKIqfl+mO/Q
+         sBaIoxDEJfcAK/hcfKTE1nL79dw7Z6leVI4Nhf4HmVeXNR2DnDA35/0IFZD0505PdJ3U
+         2vxYKygWjMowzmvXHY4YP6tV6vQ5xEF2IXmvAof7XUWLzIwrGSZ4yeovD8oOVEfTK0DJ
+         wqpg==
+X-Gm-Message-State: AC+VfDya46hy/3QMy/gvA4nmaRfmoeyj4U6IUKw0RSgkD1QeVkyM/H1f
+        kJO3jQiWedbtCL2DOBoAli4=
+X-Google-Smtp-Source: ACHHUZ4qGUI5hms8kBIslZv9wKwp2BMJy2xzoauIzedeeN+YqLjBEC3LkJgv05gnKQM9MxRL7aJIXQ==
+X-Received: by 2002:a17:902:b218:b0:1b3:a41e:8dce with SMTP id t24-20020a170902b21800b001b3a41e8dcemr6511144plr.64.1686589989764;
+        Mon, 12 Jun 2023 10:13:09 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id o15-20020a170902d4cf00b001b211283294sm8495360plg.163.2023.06.12.10.09.40
+        by smtp.gmail.com with ESMTPSA id d8-20020a170902cec800b001b3d756a6f4sm1707335plg.13.2023.06.12.10.13.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 10:09:40 -0700 (PDT)
+        Mon, 12 Jun 2023 10:13:09 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, johannes.schindelin@gmx.de,
         Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2] add: check color.ui for interactive add
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [Patch v2 2/2] add: test use of brackets when color is disabled
 References: <pull.1541.git.1685994164018.gitgitgadget@gmail.com>
         <pull.1541.v2.git.1686061219078.gitgitgadget@gmail.com>
-        <a76a91a0-cefe-807f-f1f6-4a277d724630@gmail.com>
-Date:   Mon, 12 Jun 2023 10:09:40 -0700
-In-Reply-To: <a76a91a0-cefe-807f-f1f6-4a277d724630@gmail.com> (Phillip Wood's
-        message of "Wed, 7 Jun 2023 12:09:45 +0100")
-Message-ID: <xmqqlegoboa3.fsf@gitster.g>
+        <281431b8-af40-9de9-f4b4-c596c5dbb3af@github.com>
+        <2143c98e-238b-8edc-a16c-be448a8b56e8@gmail.com>
+Date:   Mon, 12 Jun 2023 10:13:09 -0700
+In-Reply-To: <2143c98e-238b-8edc-a16c-be448a8b56e8@gmail.com> (Phillip Wood's
+        message of "Wed, 7 Jun 2023 16:31:12 +0100")
+Message-ID: <xmqqh6rcbo4a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,23 +75,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Phillip Wood <phillip.wood123@gmail.com> writes:
 
->>       -+	*** Commands ***
->>       -+	  1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
->>       -+	  5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
->>...
-> ... The reason is that we're no-longer testing that we
-> add "[]" around the text that would have been highlighted if color was
-> enabled. That is with --color we print "1: status" with the "s"
-> highlighted rather than "1: [s]tatus". So while the revised patch
-> tests there is no color in the output, it does not test that we print
-> the output correctly in that case.
+> Thanks for adding this, the patch looks good. Strictly speaking you
+> don't need the "g" at the end of the sed expression as it only ever
+> matches a single instance within each line but that's not worth
+> worrying about.
 
-Interesting.
+Yeah, as the pattern is anchored at the left edge, "g" would cause
+no harm in this case, but the intention is "we have one extra bar at
+the left end to protect runs of spaces, and we want to strip that
+single bar" and it makes it clear not to write "g" there for that
+reason.
 
-My understanding was that the new test is about when coloring gets
-triggered (namely, does the configuration variable set to false
-disable the coloring?), and we had test coverage about how coloring
-affects the output elsewhere (hence this one does not have to test
-the same thing).
-
-
+Good eyes.  Thanks.
