@@ -2,67 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE972C7EE2E
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 21:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA3F9C7EE2E
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 21:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237685AbjFLVmi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 17:42:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52756 "EHLO
+        id S238116AbjFLV7V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 17:59:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbjFLVmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2023 17:42:36 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3E35D2
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:42:34 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1b3db8f3d07so7060325ad.2
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:42:34 -0700 (PDT)
+        with ESMTP id S230095AbjFLV7T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2023 17:59:19 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6FD7E41
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:59:18 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1b3b56dcf1bso20586145ad.2
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686606154; x=1689198154;
+        d=gmail.com; s=20221208; t=1686607158; x=1689199158;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mW9DukPWszQ1Gaj0BGywXV8wbT1yH0qrMIrI2kQ/KPE=;
-        b=f7QI4zhSfpZahk73EOVzCVjEhdFn2MaSUntWPhF/E2ruU4vMvw15GoJpsGkCuBHbiq
-         g4hJ1lm3IY9jufoCggfdKJeAjgT5N1QCXeB4cJWPnxy9PCyyFGDrPqkW1TtulL3ENj5C
-         Voxl1HBvq7JvOtEvdOSdX9KlTTU6rXtlwa+OxWh3nV0K+1ybxzgWb6ppIa6+dRmuhkqI
-         BjlbtVj1LwWbLA1kEpyybKhqGJeINryxZJI12PM5WA44+9usFZf8fN489bP5F+7fZilg
-         mxcDVqkIF90ctuKU5noGLlBXkFDKlySgj3nDGABX7F6gOfYj9it4tAZHMZd/k9tOJbuW
-         mz/g==
+        bh=vNkQwRnctNVe5gluH/Z+kM0GEySdeD1m1EQsCwQdjQ0=;
+        b=nXCcZFGqviwLZvSS7wgnWPYKizYtsdRyhxZfYHlctaPsI8vp1AudPm7vJhSOzS0+mB
+         TUvHVTmFcZImMPhGutami3jY1SkXhX+VNWjqQpr+pxtJcoleOR4zsNlAjICDWM9INPMa
+         wAn99RbCybuSXYLB0X2+t/ZyT+lAPOAhMQL8Cv8SiYEqe0Xha+slyVf5K1QhdVlkkqxv
+         L5FBqrrpL7Cn04czAsuy5EP8TWnAhcZV+/RmdxDO+U1ilXwQ7c4hvX6hhK6ESirrguLu
+         JiXdlwxklqhGYCciAQ0x6l5EXQ6i95RQAjvsEh0fPzl7HXZs0Dd1yXobMHo2eWLq6wiv
+         BtnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686606154; x=1689198154;
+        d=1e100.net; s=20221208; t=1686607158; x=1689199158;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=mW9DukPWszQ1Gaj0BGywXV8wbT1yH0qrMIrI2kQ/KPE=;
-        b=fxe7yCQo0wLXcm7L/JQn35BPJWO4U4DdV/PJUg4NI1agwSMnxaW2Cl644IK5wilaRZ
-         SJNL1hHYQA06gz/25vGTd59rBf7/odMK2E15cRhZcXNBXMkpHjRHaZiYWytNmMPD7Y9X
-         908F6npunVOyXwNz2jzRSnjnBZJlHX2whBKO68YPwS4BOGB/x4yTGHrbqjlq5eUYUht6
-         I8Fwih3tb4qCcb+iQtZMqkP601BLi3V0MtidZFhf5a9d1tCCAqfU+MHhDgdesB0wJeKq
-         cDSHdZYI+0qGdqKyx3z2fnzEI5aqb8P0ssAYCP3mR1QGq1gVhW90+1hTslUppfxfcD/A
-         izVA==
-X-Gm-Message-State: AC+VfDxX1ihAFj/jiLkyBerSvhFYRR66UVZRqvlFYKflmxCtxIUqyWSq
-        soIfMzTfGMJqkX/SqygfSbgU20SSZ6I=
-X-Google-Smtp-Source: ACHHUZ4dzT7hbMpXfsSpsMQWN+Ea5+ott/7cbYbRoJXT7mSm2+N7yUdOX7MgymSj0I4oj7HhoO2Kjg==
-X-Received: by 2002:a17:903:1247:b0:1b2:5070:c1d5 with SMTP id u7-20020a170903124700b001b25070c1d5mr8468866plh.13.1686606154306;
-        Mon, 12 Jun 2023 14:42:34 -0700 (PDT)
+        bh=vNkQwRnctNVe5gluH/Z+kM0GEySdeD1m1EQsCwQdjQ0=;
+        b=DJ6sLFctNwWrQRQZMfkJ1y6lk8PefQTUhtBRFYz9NdsmKXSPMBSqN8wQ7gaJsvkFAU
+         q2Gs0EoIE/nnLZjcgmIaU1X9MQB5WeoOanLdEGMHImoO1pcO0FdSRw7NzN6a+xA3q8rK
+         vFEabqUdeWC5m9GKoLRMpQzgybNmtnEQKV+QLzhQwgLs5ANNjnpwMEL5KpGJWilND/Xx
+         Sc6RxYYKHfKaQ5e7m6nAWNoPLGf40wvFueDRR+FhT1Y0ko8iVDSBUgZ9mbD6DvEJeS3N
+         geRybAtoLPt7oTj9vQpyKAFNTVvLR/ffF/JZzNOIEMefTaaoSM2kQ3whKkaqAl0k4jt7
+         52ug==
+X-Gm-Message-State: AC+VfDySkSG2/S4crsSw71HJjERtXZZwJOFhtdvbXTRD3lRx6j4B/k5t
+        t8WBYuTYv7kSWlB2UikR09UbsyUJG2Q=
+X-Google-Smtp-Source: ACHHUZ6sxUfdQpc9tnWbH5LSW2ljpANM9vo9TCzPhNpqupT/iQWg0eKoVLtngkQzZiTtfOs1dPExtA==
+X-Received: by 2002:a17:903:230f:b0:1a6:82ac:f277 with SMTP id d15-20020a170903230f00b001a682acf277mr8063086plh.14.1686607158073;
+        Mon, 12 Jun 2023 14:59:18 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id ba9-20020a170902720900b001ae268978cfsm8657732plb.259.2023.06.12.14.42.33
+        by smtp.gmail.com with ESMTPSA id io6-20020a17090312c600b001ab28f620d0sm8730631plb.290.2023.06.12.14.59.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 14:42:33 -0700 (PDT)
+        Mon, 12 Jun 2023 14:59:17 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 19/25] completion: complete --patch-with-raw
-References: <pull.1543.git.1686428484.gitgitgadget@gmail.com>
-        <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
-        <807b8201d145a21c629797067cee21d1d1b9a0d4.1686574374.git.gitgitgadget@gmail.com>
-Date:   Mon, 12 Jun 2023 14:42:33 -0700
-In-Reply-To: <807b8201d145a21c629797067cee21d1d1b9a0d4.1686574374.git.gitgitgadget@gmail.com>
-        (Philippe Blain via GitGitGadget's message of "Mon, 12 Jun 2023
-        12:52:47 +0000")
-Message-ID: <xmqq4jnc8iie.fsf@gitster.g>
+To:     "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] [RFC] http: reauthenticate on 401 Unauthorized
+References: <pull.1521.git.git.1686474351611.gitgitgadget@gmail.com>
+Date:   Mon, 12 Jun 2023 14:59:17 -0700
+In-Reply-To: <pull.1521.git.git.1686474351611.gitgitgadget@gmail.com>
+        (M. Hickford via GitGitGadget's message of "Sun, 11 Jun 2023 09:05:51
+        +0000")
+Message-ID: <xmqqmt147362.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,33 +67,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+> From: M Hickford <mirth.hickford@gmail.com>
 >
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> A credential helper may return a bad credential if the user's password
+> has changed or a personal access token has expired. The user gets
+> an HTTP 401 Unauthorized error. The user invariably retries the command.
 
-Everything else in the series looked OK, but I am not sure if we
-want to advertise this historical wart that has no practical
-advantage over using "-p --raw".  The only reason why we kept it is
-because we do not have to even think about how likely it will break
-ancient scripts if we removed it.
+... and no matter how many times the user retries, the command will
+never succeed?  Is that the problem the patch tries to solve?
+
+> To spare the user from retrying the command, in case of HTTP 401
+> Unauthorized, call `credential fill` again and reauthenticate. This will
+> succeed if a helper generates a fresh credential or the user enters a
+> valid password.
+>
+> Keep current behaviour of asking user for username and password at
+> most once. Sanity check that second credential differs from first before
+> trying it.
+
+Soon after changing the password is probably the time it is more
+likely that you would mistype your password, than after you got used
+to typing it over and over again.  I can understand the wish to
+avoid asking for correct password forever, but giving just one
+attempt feels a bit cruel for that reason.
+
+> diff --git a/credential.h b/credential.h
+> index b8e2936d1dc..c176b05981a 100644
+> --- a/credential.h
+> +++ b/credential.h
+> @@ -134,7 +134,9 @@ struct credential {
+>  		 configured:1,
+>  		 quit:1,
+>  		 use_http_path:1,
+> -		 username_from_proto:1;
+> +		 username_from_proto:1,
+> +		 /* Whether the user has been prompted for username or password. */
+> +		 getpass:1;
+
+Mental note: the comment here says "prompted".
+
+>  	char *username;
+>  	char *password;
+> diff --git a/http.c b/http.c
+> index bb58bb3e6a3..d2897c4d9d1 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1732,7 +1732,11 @@ static int handle_curl_result(struct slot_results *results)
+>  	else if (results->http_code == 401) {
+>  		if (http_auth.username && http_auth.password) {
+>  			credential_reject(&http_auth);
+> -			return HTTP_NOAUTH;
+> +			if (http_auth.getpass) {
+> +				/* Previously prompted user, don't prompt again. */
+> +				return HTTP_NOAUTH;
+> +			}
+> +			return HTTP_REAUTH;
+
+And here we also see "prompted" again.  Perhaps it will help make
+the result easier to read if we renamed the new member from
+"getpass" to another phrase that contains "prompt"?
+
+>  		} else {
+>  			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+>  			if (results->auth_avail) {
+> @@ -2125,6 +2129,9 @@ static int http_request_reauth(const char *url,
+>  			       struct http_get_options *options)
+>  {
+>  	int ret = http_request(url, result, target, options);
+> +	int reauth = 0;
+> +	char* first_username;
+> +	char* first_password;
+
+In our codebase, asterisk sticks to the variable, not type.
 
 Thanks.
-
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index a69421cd740..c0d2678d320 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1741,7 +1741,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
->  			--color-moved-ws= --no-color-moved-ws
->  			--full-index --binary --abbrev --diff-filter=
->  			--find-copies --find-object --find-renames
-> -			--no-relative --relative
-> +			--no-relative --relative --patch-with-raw
->  			--find-copies-harder --ignore-cr-at-eol
->  			--text --ignore-space-at-eol --ignore-space-change
->  			--ignore-all-space --ignore-blank-lines --exit-code
