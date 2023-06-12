@@ -2,84 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDCF0CA9EC1
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 21:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1AA1C7EE2F
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 21:21:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238436AbjFLVKr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 17:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57538 "EHLO
+        id S229522AbjFLVVB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 17:21:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238932AbjFLVIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2023 17:08:04 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BD483AA7
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:05:16 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b3b974fffeso15536995ad.1
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:05:16 -0700 (PDT)
+        with ESMTP id S237414AbjFLVUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2023 17:20:37 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000ED2718
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:14:45 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1b3a9e5bf6aso15810255ad.3
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 14:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686603916; x=1689195916;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/HJ1Fz1zYJbwaow6HucwAdjey9BEmoU1tXXpn6xn2X8=;
-        b=VML/MiPDSlsmsJL/Rn6UOBgJsLdL8jPr+AZrbzBEgX0o7HkjK7h9e2TW7+HhY19NQ4
-         Eb5RdexhSrwT2BxOZ0ZTQhCUTYZorQruSEhINsQMc8v3ug9eButqbKT0DCyNpFYHPZ67
-         Djqk/VbYD/q2GvHvYFkQJFibGJULJSO7f2K1bF3Ofen/UoH5Ptk7Z5lyP1CBAxqxfnZI
-         7Zs10J9j0Lqfsh5MXmy20meRaxsmno7/Gevqnug7fpwdMrfBdAkv8a5i3+DE9VDOW6rF
-         B6ecL8UyeDVynM0qEenR8QoYDspZXPOa+1eCHcMslT37KSz7tKVo+HXa6R08lLClasIc
-         JsLg==
+        d=gmail.com; s=20221208; t=1686604482; x=1689196482;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=72xHJg7LGVnhEZwb6cidrbsGrKtAQEivwpJA4VC99jg=;
+        b=N0fYCwaL2L5IA7LVFQZUQr/3my1JSJ44ssjy0BGgXSGRHWiWK+jjv9p8WLjOl3y2k4
+         f8Ta0intlbPBw3u90cZYGnuJhz8SFjfldhp+FLWBwx2R4Ih9rwZYIZ8gGnBehYeVl92K
+         QTagKArPxNo4BeV1gUcuiKy/aUuSjEU4G9EHvSsPDyxNlRuTAF78SaED9QOv5kTjsbQW
+         2II/CvNVENiiUbgNsFDgPDVTXAoRpzE6wP+WoCL4P3VHeIACyOJc2d7FDZGhwVUaDnmp
+         XJdNqr3TqiSzYvV54UmyjNVyx+anM8+lSuQ19IyOL/sQC0dh4N4gvj+W5bybOR4Q31kV
+         l04Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686603916; x=1689195916;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/HJ1Fz1zYJbwaow6HucwAdjey9BEmoU1tXXpn6xn2X8=;
-        b=HaazTrhOZ2ohpUciwphFRAsGCkd3qc3zGS9d1Wh7wsRFWVbnw3NnxxnD5KfExg0yS2
-         EV2SpOqyectUJ18SO/HoxRx7ETXS+i8HfFY2o8WuiYZJtfLgAtc1YCbTGRjw7lc0pylS
-         DTMdaGItcaJglqPA9UdKANMYJdlWV5cqq1gfRn1jXTiDpPHmNGkGT59T0afltl18gYQK
-         JwMk9LFQdefwu0ItGeFUF7Pe6fjwqIhuQgogk2C0AC1DNcgvbM2u6SoDEv2CtXJpgnhR
-         UJaPatSGikCA9XWDSeyD7r27wZHI7ootcrIMbON3jrXM93eyfPGCth37XIxqnpz73x/f
-         tKsQ==
-X-Gm-Message-State: AC+VfDylm9GTpooVA6NydUIdBtT0VSYaSRkLr7r+IPN990tinP3JTWRo
-        0yit9oAIfed6QURmma45mOw=
-X-Google-Smtp-Source: ACHHUZ57HxPTeb6R5zBNazvjwCT6thv2P67sLuDjWOhwJKpOkEJQOVxrl3qG3Vy0sZ43tFRabp0jwA==
-X-Received: by 2002:a17:902:b7cb:b0:1b3:bb42:eac with SMTP id v11-20020a170902b7cb00b001b3bb420eacmr6036520plz.11.1686603915794;
-        Mon, 12 Jun 2023 14:05:15 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686604482; x=1689196482;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=72xHJg7LGVnhEZwb6cidrbsGrKtAQEivwpJA4VC99jg=;
+        b=FmOvl9Kgok/LI+HRDVO3RRn6guzZe9zzFP+g/jaNW87TNDPP78Uah01/ia5aEy5dGi
+         K2YaAJNdIAjgzudH2ECsRcHAMF9K2VS49+QXZZ6W2AiP64Gh6FVTyld+IRDk9247Mtbg
+         QVwiHBnMCZ+Zf6SAdxYrrfjh5GbR4herAiWyE3mGOXdCdMfL4PpbMQX/c9N1LujtjQEu
+         Zi/NAzAQ4KyaY0j1xf3fIHWba0jCSvasiTsRdl/MUwoi+9bPos70LK3hlDahrruMre8O
+         t0q1m5cZHUs9gb3flhMtAVDvlbILpaPsFbiV+yi5WJ0JjChodX6bahGb1lkyCRZd/yYx
+         be0g==
+X-Gm-Message-State: AC+VfDzWcxvsBJFNLkUanqYLZGHkhyiO2z2y9In98wFfF2Yi9tF9tfcd
+        lB7lxCj3RLXmg08iWRP5AOk=
+X-Google-Smtp-Source: ACHHUZ50j2t8SdF2uMcaTOiA+F3Ph7bvwJypDfIggOhdpPl09BT4J0Wx4G8PYQshd10bNMro/nhSxQ==
+X-Received: by 2002:a17:902:850a:b0:1b0:378e:279f with SMTP id bj10-20020a170902850a00b001b0378e279fmr7302699plb.19.1686604481910;
+        Mon, 12 Jun 2023 14:14:41 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id ix4-20020a170902f80400b001b3d20ef257sm2245454plb.97.2023.06.12.14.05.15
+        by smtp.gmail.com with ESMTPSA id mu13-20020a17090b388d00b0024e1172c1d3sm7880059pjb.32.2023.06.12.14.14.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 14:05:15 -0700 (PDT)
+        Mon, 12 Jun 2023 14:14:41 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 00/16] refs: implement jump lists for packed backend
-References: <cover.1683581621.git.me@ttaylorr.com>
-        <cover.1686134440.git.me@ttaylorr.com>
-Date:   Mon, 12 Jun 2023 14:05:15 -0700
-In-Reply-To: <cover.1686134440.git.me@ttaylorr.com> (Taylor Blau's message of
-        "Wed, 7 Jun 2023 06:40:47 -0400")
-Message-ID: <xmqqzg548k8k.fsf@gitster.g>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v5 2/2] gc: introduce `gc.recentObjectsHook`
+References: <cover.1683847221.git.me@ttaylorr.com>
+        <cover.1686178684.git.me@ttaylorr.com>
+        <f661b54941a12c9bd8e226aebb4f0d53c10479c8.1686178684.git.me@ttaylorr.com>
+        <kl6lwn0cfbyh.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Mon, 12 Jun 2023 14:14:41 -0700
+In-Reply-To: <kl6lwn0cfbyh.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Fri, 09 Jun 2023 16:33:10 -0700")
+Message-ID: <xmqqv8fs8jsu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Glen Choo <chooglen@google.com> writes:
 
-> Here is a reroll of my series to implement jump (née skip) lists for the
-> packed refs backend, based on top of the current 'master'.
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+>> When performing a garbage collection operation on a repository with
+>> unreachable objects, Git makes its decision on what to do with those
+>> object(s) bed on how recent the objects are or not. Generally speaking,
+>
+> s/bed/based/ ?
 
-Hmph.  I kind of liked Patrick's suggestion to split this into two
-series to make it easier for the earlier half to graduate faster,
-but perhaps it didn't make much difference?  I certainly did not get
-the impression that "review had stabilized".  During my review of
-the initial round, for example, I lost steam in the middle because
-it was simply too long a series and didn't have a chance to give the
-remainder a proper review.  I do not know about others.
+Indeed.  Also "or not" sounds a bit extraneous.
 
+>> +		if (parse_oid_hex(buf.buf, &oid, &rest) || *rest) {
+>> +			ret = error(_("invalid extra cruft tip: '%s'"), buf.buf);
+>
+> To be consistent with the other error message, perhaps s/extra cruft
+> tip/additional recent object/?
+
+Sharp eyes.
+
+> Aside from those trivial points, everything looks good.
+
+Thanks for reviewing (and writing).
