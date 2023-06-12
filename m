@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 054D8C7EE23
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 12:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D805C7EE2E
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 12:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235726AbjFLMyd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 08:54:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41052 "EHLO
+        id S236433AbjFLMyf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 08:54:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235972AbjFLMxV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235997AbjFLMxV (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Jun 2023 08:53:21 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8D41982
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:14 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-30ae141785bso4021920f8f.3
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:14 -0700 (PDT)
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BE761984
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:15 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f6da07feb2so43205615e9.0
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686574392; x=1689166392;
+        d=gmail.com; s=20221208; t=1686574393; x=1689166393;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MbrDtTjoEqA3u0q9ubX/UT1d0EZ/dvmiutFWXqSihBI=;
-        b=AUrsiIYtikYhb/tuiwRS0HDQstPKlWvWolyjIhM7WKQWFYymAr1P+aSlbU8u41oudz
-         DzVPDMRIHblZiC4A0oPoL1lssFccTg4l2YK47lnXeuY1KjqYyKCTO7jNRY3zJHOhxWXn
-         hpQswxWkX/sHA2B+C9fpLjLEOq8t6KT7VBwWTBiPgS9owiBNr3cjfhVnRo72NKDXqHRv
-         KPuHnkC/CVCVZIuE40py7N84SOx3IJaM398TW3RXhIoUDPz3rZQReDFOfl3higugkH2W
-         vGoXkWUVVMoSLT/kzEZw2gfln/uiLJ1XvVIT7f8fwiOnWcg/YLyf2oLjPmDhujWc6G/9
-         1j2w==
+        bh=f5BkXreb400WVeOfBVlIPrRt2tE9+3uwExECt0YY96k=;
+        b=bE7BTFbcgiG4HidyhaDYYrecfY8aLrZnWFxWsHeWhibpX/ZVSGCp9lQ51iKl8IM+i1
+         J8ktWNRif7Nz5PVG/WfOHxvWcU05dTcURd1752LcPFl2LOIZ0YZX1PFiebNlg4i8BUnH
+         pReQSXfkKD0AYqJYggusaEJJDDM/KS/hAVE24J/oEHZ20yXQElghhStfe2gbP2wMDDUU
+         igEB1OD1vJBJrosnNTcj+NGzAL5JUqgq8vkscUBfuI3shhNcwkTvDj3jRG6yI8P+1C3O
+         0uQ6+aJ9GZOPubnh3IpIEqpzELc5dTR0Y0QXNm9csK92I5ZraX6xXGv0AV9MTWTGHlxM
+         cYkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686574392; x=1689166392;
+        d=1e100.net; s=20221208; t=1686574393; x=1689166393;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MbrDtTjoEqA3u0q9ubX/UT1d0EZ/dvmiutFWXqSihBI=;
-        b=IMUwG93apUTpyhG40o1hayk5qWqifICR7lDE/lhFg5+/8hIrEkFinG2HstRWIPApUa
-         9m0RfkqAOPv6ykRfVhQOwMFS8KzTPbBB7+lkGEnp221dRmsjiDpzNyM5QWgrzH8shZIa
-         3hUoMJ49gv8zNGX4JN1DoAkzTmHYWMRZfpYSqIogqm11e91mEN/DWSw9UCv1hCaOs/2U
-         2QEFFjv9PhjNoXznU/okE716F+D55j1TSJZZYSz0i1mkuyF+eUbnZ00bHzofkTXBH2lV
-         fkIuU2Bm3QSzj7o5Iu+Drh/zf2JBBFMN0YQ08F5Y8nkQxdsFCBqWW8buORrySdeuTg95
-         qzoQ==
-X-Gm-Message-State: AC+VfDxv/r+0+iol8oCsY+e566G0KsUI4B+V1dKukkDgBeiMWrmKS5tx
-        8DZW6s8f8sJhjzJFoq4+0oCh0V6y2lQ=
-X-Google-Smtp-Source: ACHHUZ7MZtThMbnYncT0OVG4VRIiLPXmBHhbBHuPn6ml0cmgx7Dp+8pDMpnQYYOEBIkOv+IZ5bo6XQ==
-X-Received: by 2002:a5d:5084:0:b0:30f:c601:4e0b with SMTP id a4-20020a5d5084000000b0030fc6014e0bmr1161638wrt.42.1686574392614;
-        Mon, 12 Jun 2023 05:53:12 -0700 (PDT)
+        bh=f5BkXreb400WVeOfBVlIPrRt2tE9+3uwExECt0YY96k=;
+        b=drfI1thEd5g6HjPu83Eve/0pYKcj+/tmyJpCUDmSWIYeyCOrI8568Ewh6NIAZnfz2U
+         UldVvctCQvMSvgVA7lafQuVtGjeIckRtwdeTMKqI1/XCB2O1hEmwIRJt96vvESttF0Aq
+         mzX1KX8shFVI2gOClsO19sjobH8nyjnJV1pjunZWvtfiQeUOQw3ZhMyfcIW4N4PZZH5L
+         Hm+0bZayasYHIqeXWKogTRziT/GT/3+feN6usezC+NTgavTEc636cNECPRJyN5FKmiG8
+         H3t+uYPn+W1uH1sILvrv57lh03Rq/GWGHj+UPqMcU2osDva4eHVq1US3JUqHClIVwJ7Q
+         L/WQ==
+X-Gm-Message-State: AC+VfDyBphCpDGeBPi9OLcBePw7ZYSrFgo7vXrPPiKyWRy34AV4DvYCx
+        mS7RFH673Ev6wdZLVTMKBH/wL1hyM3A=
+X-Google-Smtp-Source: ACHHUZ7KeGIzPYE93JiQEUae0T/dKK4f/8hKgHLxBHxTZmTiMZwuSwiAsav4CblSNnJZIDAzQwi8pQ==
+X-Received: by 2002:a7b:ca55:0:b0:3f8:1b4b:bd13 with SMTP id m21-20020a7bca55000000b003f81b4bbd13mr1972745wml.20.1686574393336;
+        Mon, 12 Jun 2023 05:53:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v4-20020a5d6784000000b0030fbf253c82sm3981313wru.104.2023.06.12.05.53.12
+        by smtp.gmail.com with ESMTPSA id t12-20020adfe10c000000b00307acec258esm12365221wrz.3.2023.06.12.05.53.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 12 Jun 2023 05:53:12 -0700 (PDT)
-Message-Id: <c78650f215e6f651ac66add302014f145b7dfc3a.1686574374.git.gitgitgadget@gmail.com>
+Message-Id: <040248a386899a611f7c10243a808624b53f290f.1686574374.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
 References: <pull.1543.git.1686428484.gitgitgadget@gmail.com>
         <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jun 2023 12:52:49 +0000
-Subject: [PATCH v2 21/25] completion: complete --ws-error-highlight
+Date:   Mon, 12 Jun 2023 12:52:50 +0000
+Subject: [PATCH v2 22/25] completion: move --pickaxe-{all,regex} to
+ __git_diff_common_options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,68 +71,43 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Add --ws-error-highlight= to the list in __git_diff_common_options, and
-add the accepted values in a new list __git_ws_error_highlight_opts.
-
-Use __git_ws_error_highlight_opts in _git_diff, _git_log and _git_show
-to offer the accepted values.
-
-As noted in fd0bc17557 (completion: add diff --color-moved[-ws],
-2020-02-21), there is no easy way to offer completion for several
-comma-separated values, so this is limited to completing a single
-value.
+The options --pickaxe-all and --pickaxe-regex are listed in
+__git_diff_difftool_options and repeated in _git_log. Move them to
+__git_diff_common_options instead, which makes them available
+automatically in the completion of other commands referencing this
+variable.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.bash | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ contrib/completion/git-completion.bash | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 230d5807860..93522558a98 100644
+index 93522558a98..8dd54fd3ae0 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1733,6 +1733,8 @@ __git_color_moved_opts="no default plain blocks zebra dimmed-zebra"
- __git_color_moved_ws_opts="no ignore-space-at-eol ignore-space-change
- 			ignore-all-space allow-indentation-change"
+@@ -1763,10 +1763,12 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--irreversible-delete --line-prefix --no-stat
+ 			--output= --output-indicator-context=
+ 			--output-indicator-new= --output-indicator-old=
++			--ws-error-highlight=
++			--pickaxe-all --pickaxe-regex
+ "
  
-+__git_ws_error_highlight_opts="context old new all default"
-+
- # Options for the diff machinery (diff, log, show, stash, range-diff, ...)
- __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--patch-with-stat --name-only --name-status --color
-@@ -1790,6 +1792,10 @@ _git_diff ()
- 		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
+ # Options for diff/difftool
+-__git_diff_difftool_options="--cached --staged --pickaxe-all --pickaxe-regex
++__git_diff_difftool_options="--cached --staged
+ 			--base --ours --theirs --no-index --merge-base
+ 			--ita-invisible-in-index --ita-visible-in-index
+ 			$__git_diff_common_options"
+@@ -2115,7 +2117,6 @@ _git_log ()
+ 			--expand-tabs --expand-tabs= --no-expand-tabs
+ 			$merge
+ 			$__git_diff_common_options
+-			--pickaxe-all --pickaxe-regex
+ 			"
  		return
  		;;
-+	--ws-error-highlight=*)
-+		__gitcomp "$__git_ws_error_highlight_opts" "" "${cur##--ws-error-highlight=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "$__git_diff_difftool_options"
- 		return
-@@ -2080,6 +2086,10 @@ _git_log ()
- 		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
- 		return
- 		;;
-+	--ws-error-highlight=*)
-+		__gitcomp "$__git_ws_error_highlight_opts" "" "${cur##--ws-error-highlight=}"
-+		return
-+		;;
- 	--no-walk=*)
- 		__gitcomp "sorted unsorted" "" "${cur##--no-walk=}"
- 		return
-@@ -3000,6 +3010,10 @@ _git_show ()
- 		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
- 		return
- 		;;
-+	--ws-error-highlight=*)
-+		__gitcomp "$__git_ws_error_highlight_opts" "" "${cur##--ws-error-highlight=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit
- 			--oneline --show-signature
 -- 
 gitgitgadget
 
