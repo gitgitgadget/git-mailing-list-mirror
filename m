@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02574C7EE23
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 12:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D33C7EE25
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 12:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235903AbjFLMy1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 08:54:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41020 "EHLO
+        id S235965AbjFLMy3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 08:54:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235914AbjFLMxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2023 08:53:20 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A602E7C
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:12 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f6d38a140bso31654055e9.1
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:12 -0700 (PDT)
+        with ESMTP id S235717AbjFLMxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2023 08:53:21 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FD67173F
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:13 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f654d713c0so4567900e87.3
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 05:53:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686574390; x=1689166390;
+        d=gmail.com; s=20221208; t=1686574391; x=1689166391;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=icmOegVGKbOh0P8m6bXToPWg2ZvsGRKdZQqlcgh5YwI=;
-        b=OgLri0pVbkN3UpMW2CN95ff2B6ijGmlTt/0welN+dJYsyASk88HVk3Jgej0WIEGH6P
-         wDatvuSdfOu2okzveCmPfkLYc+St17zxN5NNznmfPo7BcLPVA/8bkglJUtdpW11HA8NR
-         czjIB9QtOO6c68fxYwse4ydduhnGdqE7zFLC9Q43oASQIjnKuyRgdWW32nV6DrUQ6Tyg
-         0wrFq//JMQkLmX7h7XoCnTuR2LVqltALO/xgPV9SFKTFGJmf5rXVwceYBjGmVcZD9mii
-         DImyS8zz7QiMWNL0Le+nC4WyhO1csX8FDP/ZgcLJohe3USdRCRKsXA6V9H0v15ZEqjwr
-         cPnA==
+        bh=yRxjfJg1uXE6Fstm9uVOLObk2IL6n83aPh98fojxElM=;
+        b=SjqM2OxTjgMrAvaa9Cp0YAergUGVuo4K+PP3adQIyjwXiKAE4GAZieG7OC6vUn8fIb
+         aU2UAb9QHnLdNmdkrD5cDr+hOGM3be+RLhVqKUMv5LP63iU/rnPk+eb1V5Sb7ubA10mI
+         tqqsmfwLgWEcrDfEEuE3xQ5N4DHH6JkpK9leKIwgbcarWT+rsxieMNDaArr6HLv6mhtT
+         rP+7hJ+PJl5RzmnQKa0m/EsHNwYDW5fcmyVaD0Fz1MWzXts9UmmoPXpgt9R1DdRdZtUx
+         pJQaKiABaLQ/M2EqG+akUvfg9+FFcl8QXHttVL3hxvzTNWmAXvh73brrd8dH2RMmFEH9
+         LjrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686574390; x=1689166390;
+        d=1e100.net; s=20221208; t=1686574391; x=1689166391;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=icmOegVGKbOh0P8m6bXToPWg2ZvsGRKdZQqlcgh5YwI=;
-        b=jhCN5FAwsPzXA/fTibcvuzH82b83Qe9JVImDkGGsJfjQiAbyUhgtvQiMkphEaZh9Bf
-         bkV3zcuKKGbvxS6zix3lusyXgKsp7xaY6++ob+pGnfgU8PE3rrKV+d1f9kRR1kQuSNcc
-         yZQisQTRtD5r8pp6vM9w9h4kzMuG2odUsvrElglF2oq8FLi3qy73gRvZJTKiM6sNDZhO
-         lfc7HDD/knCx5VqRjLxXmDo3SuHjA9dq6zgO3uOYGVUykQiAhRlKIzpQeynFV2aiLBt0
-         g0YJyuJRqw8+FWcuem3z61F7PXzQRjRC9kebAzxsXey2TNset9NIrngLf+LnXjDfaJZl
-         vyhA==
-X-Gm-Message-State: AC+VfDz6zZdKN3sJga/SUwMFM9gXOFjdCwNbA7BKBAqEK/Qu2huRmNig
-        cqf7dQ8968npVU+6SaTATM0cHvhHc3w=
-X-Google-Smtp-Source: ACHHUZ7jpwOrhQZuTtJix2xK4Se3x9GHPU93LvNp1/U4k5GsJau/5lPmY6ASZaO5oqcvv2aX6FuDow==
-X-Received: by 2002:a1c:7204:0:b0:3f6:d90:3db with SMTP id n4-20020a1c7204000000b003f60d9003dbmr7291238wmc.3.1686574390238;
-        Mon, 12 Jun 2023 05:53:10 -0700 (PDT)
+        bh=yRxjfJg1uXE6Fstm9uVOLObk2IL6n83aPh98fojxElM=;
+        b=BKTr40SmQXS4tIrNuA7BqBDcfHBGVI6rdXYk81ceZwFh78efYQ/3NXyw5kJOXeM+u/
+         +6kCLY41HpjeXfptn+rIB6NDQtEFow6zy007k0pxzr96rSf4o9q5NrXbtr1UzCeX+Qxi
+         1itrqVLY0FguUWE3nh3SLao545Q5xI83+1E+hJt8S/vbi3C2Xey+ztwyhH6WyzUMBfpK
+         ZSXHfHlCKKPTF5g90fdsyYab0BZWPaNtWiQrTulAYBiCjzVf19sg81NyAWmBWZv8aLq5
+         Vf/2FSeGWAvy4CazpSpdW5JiQH1rXiri8U16f59OTgfVJnj3Wc1Nc5Yfekc6OyExJ2xA
+         QxIA==
+X-Gm-Message-State: AC+VfDy7Jc44DvazfSaZrhig/YnU0G6oVb7qhxSxfP5On50E3K/fBEu6
+        X79fnND7EdtisF/CjNT4W6TIw1Icv9g=
+X-Google-Smtp-Source: ACHHUZ6LYWcYqc3LDpCEs2xuaztqry3YrJd905gpzlwwaHn8WGJdPnQKY+quiwR6tDsucZzlUgJ1eQ==
+X-Received: by 2002:ac2:4db1:0:b0:4f1:3d7d:409e with SMTP id h17-20020ac24db1000000b004f13d7d409emr4398525lfe.0.1686574391047;
+        Mon, 12 Jun 2023 05:53:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x22-20020a05600c21d600b003f70a7b4537sm11387204wmj.36.2023.06.12.05.53.09
+        by smtp.gmail.com with ESMTPSA id m7-20020a7bca47000000b003f80b96097esm8717495wml.31.2023.06.12.05.53.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 05:53:09 -0700 (PDT)
-Message-Id: <f8d430639bcec85d822747aec161f1069255c10b.1686574374.git.gitgitgadget@gmail.com>
+        Mon, 12 Jun 2023 05:53:10 -0700 (PDT)
+Message-Id: <807b8201d145a21c629797067cee21d1d1b9a0d4.1686574374.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
 References: <pull.1543.git.1686428484.gitgitgadget@gmail.com>
         <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jun 2023 12:52:46 +0000
-Subject: [PATCH v2 18/25] completion: complete
- --output-indicator-{context,new,old}
+Date:   Mon, 12 Jun 2023 12:52:47 +0000
+Subject: [PATCH v2 19/25] completion: complete --patch-with-raw
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,23 +72,22 @@ From: Philippe Blain <levraiphilippeblain@gmail.com>
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.bash | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a34432796bf..a69421cd740 100644
+index a69421cd740..c0d2678d320 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1759,7 +1759,8 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--patch --no-patch --cc --combined-all-paths
- 			--anchored= --compact-summary --ignore-matching-lines=
- 			--irreversible-delete --line-prefix --no-stat
--			--output=
-+			--output= --output-indicator-context=
-+			--output-indicator-new= --output-indicator-old=
- "
- 
- # Options for diff/difftool
+@@ -1741,7 +1741,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--color-moved-ws= --no-color-moved-ws
+ 			--full-index --binary --abbrev --diff-filter=
+ 			--find-copies --find-object --find-renames
+-			--no-relative --relative
++			--no-relative --relative --patch-with-raw
+ 			--find-copies-harder --ignore-cr-at-eol
+ 			--text --ignore-space-at-eol --ignore-space-change
+ 			--ignore-all-space --ignore-blank-lines --exit-code
 -- 
 gitgitgadget
 
