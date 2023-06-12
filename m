@@ -2,69 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE980C7EE2E
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 19:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC479C7EE43
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 19:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237905AbjFLTMU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 15:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
+        id S237180AbjFLTbD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 15:31:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237769AbjFLTMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2023 15:12:19 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCCEAD
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 12:12:18 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1b3db8f3d94so5842445ad.1
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 12:12:18 -0700 (PDT)
+        with ESMTP id S238394AbjFLTau (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2023 15:30:50 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDA11BDC
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 12:30:45 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b3b974fffeso14801745ad.1
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 12:30:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686597138; x=1689189138;
+        d=gmail.com; s=20221208; t=1686598245; x=1689190245;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5ZwUq8xSI8qRkMl+NZVC1TH9GfyZWJMxu5Rt9t32e44=;
-        b=b/a507KZlKr7n8VlG4t+g28oOEBWybNVL1gQ2bq4XLBhgWGUqXAlgTlBo+cjUDhP09
-         t4bBnQb0TNfbisosgQn+P48tdO9APIHO3nlaobrbWZsU98dsJF8dAlntyhMtSb2CSeS5
-         jyYcCEtO6RmgfFFJEgR3jAcpXa30hAr/TRTsAPNaYn3CdpXov+x7XJB/3fPKvJQDy2BL
-         qW6q999DG8CnYT+Q1L/i6S3QfhG6K9l/T6goQfLSiJjBGwmgFYa/oWA+sYBC1lBZbxFP
-         VVs3MLshNsoVKuEBy+pW8sx4qXTNRSW/NKIb99bzHObUZ1KBu8ggxLWA/L3Uv3DGYthw
-         LQSw==
+        bh=vdgJJPp4JSTC/fITQ12s9Ldh15G5tLlB0Y9pxKOhwRM=;
+        b=gkKn9Ju8l6nk8qJrrPmkunUiIQZDJWpI9o7YdCNu87rJ2aWqdUbLS83ogW5kAY9iaA
+         DQRJC/kRA5Tfj2XJa/XLFK9QMGzXpf13qzAaakkhoAuH8EgVaJmPteRE3U3QMtl4Of6i
+         CFDQUy5SOMmvEdG1dsA/2IdrD5teOrFDpsnfUuk95o//qiKqtGARFZuAjs9OKr83JCfm
+         Y1Q8YJ7LoF3aX3FEPXShbKucT1daBO1yuM/NSOXFVMoRjUIndc4sbLXCFOhdfE6niEuv
+         vnbfSw4cSpBDPsIijwDEFXaasH+8TKSwMkd50lJALydPcYQEDPLBNVGBId1mvVcoVnw9
+         gr6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686597138; x=1689189138;
+        d=1e100.net; s=20221208; t=1686598245; x=1689190245;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=5ZwUq8xSI8qRkMl+NZVC1TH9GfyZWJMxu5Rt9t32e44=;
-        b=XAq04KJ6sUnfLesJvQisAqkfA7FDl5dOKsDITf3nq0UWJSdPB7MQFmTn2RyNtEcbDE
-         4dDLkPeOuNGF4gmufCezjEe4FmNQVAQiEnFW75s8THnlx7k/+6f+S2jHOsK5FQ6KLnCB
-         p9EL71ZigFwyu0RZ0tuBTtK7kzIAFZePGekOhRxpA0ITyUNc01Gp+rLOUCZxcJtF17kn
-         tEQKFoswM8QvQJgNP3ZuWoz8t5UZ1AyUTHDFqDGgzHXrwWzEpkmh7sUAFeY+0RUEPL2o
-         UG58ZqoD0XdT8bj4Nk0zx3tcua7A4lml2Bfajaonvzbcuf5JFRNfNcGvTHbDtI6ldiuc
-         pSXQ==
-X-Gm-Message-State: AC+VfDxMcgxpB2hraQWbHaSvLfyCfzH4YebJWJgMRyVjjsiw9UV9oWC/
-        sDdF1oLN3FiGnAEC+hXfU7M=
-X-Google-Smtp-Source: ACHHUZ44T+gkWFAncmlLooOTqK+Qgb0Z/Gl9vvRT1N1Iki9KLpVEUj2pto9H5YkSZfm0WbbW8kOZlA==
-X-Received: by 2002:a17:903:189:b0:1ae:4c3b:bb0b with SMTP id z9-20020a170903018900b001ae4c3bbb0bmr8399157plg.5.1686597137684;
-        Mon, 12 Jun 2023 12:12:17 -0700 (PDT)
+        bh=vdgJJPp4JSTC/fITQ12s9Ldh15G5tLlB0Y9pxKOhwRM=;
+        b=eldPiNM2SGHXxRCcgtZ8CNk5YbjEsoFg7NNSYCC3u8jKiyGrEcoYXfXQb+kywMKnm7
+         1p0GxXisVX43uvoqPyR4UlZm6tA+BfHfXDeagNDyoqapEjGZKaYyukZLXEkVWiRBPGKg
+         dtIZo/+qLaMVJVprc0RJ5jH8+zKy9quwODbe7QjyxfCr24ugR9nGwLxPZryZbm6HjHPY
+         LxGU8AOhTrv/s7znu8xDiXKjxOjke9X7XHho36J++/JZmszRiqn1dmZz2lFyG03UaAPY
+         ZjDV6K3wWVh15zDbeT1EBajMXTd41LFhRSXla3chot5QyxCB/2rScMT+iyDXV6X3ifhV
+         rvqw==
+X-Gm-Message-State: AC+VfDyKG+UWGzgApW1waNSZBJ9GFq2Oy9NzL1G+ZJnyg/SxKwDo1vWX
+        Owf8UlDLgcOak0NbOBJAHTw=
+X-Google-Smtp-Source: ACHHUZ7qA3x3Y8T2RzlDxcPbyFL46GLIVtO8ie4YM1bRYDfOzQmmHH2ieZtBwbhED/VCLxNEXUnuCA==
+X-Received: by 2002:a17:902:b714:b0:1b1:9218:6bf9 with SMTP id d20-20020a170902b71400b001b192186bf9mr7177649pls.43.1686598244771;
+        Mon, 12 Jun 2023 12:30:44 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id y12-20020a1709027c8c00b001b3d6088993sm1904546pll.24.2023.06.12.12.12.17
+        by smtp.gmail.com with ESMTPSA id n4-20020a170902d2c400b001a6d4ea7301sm8583049plc.251.2023.06.12.12.30.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 12:12:17 -0700 (PDT)
+        Mon, 12 Jun 2023 12:30:44 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH 5/5] cat-file: Introduce new option to delimit output
- with NUL characters
-References: <cover.1685710884.git.ps@pks.im>
-        <07a7c34615ec68fa42c725fd34d6144b6b191f03.1685710884.git.ps@pks.im>
-        <9900512f-b0da-2e47-f1ab-ed51ec2c78ff@gmail.com>
-        <xmqq35355utz.fsf@gitster.g> <ZH67eBAtFxo95aBL@ncase>
-        <xmqqsfb5np14.fsf@gitster.g> <ZH7Eoj_5oTzmSd4G@ncase>
-Date:   Mon, 12 Jun 2023 12:12:16 -0700
-In-Reply-To: <ZH7Eoj_5oTzmSd4G@ncase> (Patrick Steinhardt's message of "Tue, 6
-        Jun 2023 07:31:14 +0200")
-Message-ID: <xmqqr0qga41b.fsf@gitster.g>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] Use lowercase includes for some Windows headers
+References: <20230604211934.1365289-1-mh@glandium.org>
+Date:   Mon, 12 Jun 2023 12:30:43 -0700
+In-Reply-To: <20230604211934.1365289-1-mh@glandium.org> (Mike Hommey's message
+        of "Mon, 5 Jun 2023 06:19:34 +0900")
+Message-ID: <xmqqmt14a36k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,30 +69,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Mike Hommey <mh@glandium.org> writes:
 
->> > That being said I'd be fine to change this series to mean "-Z changes
->> > stdout" if you insist. In that case we should be pointing out in our
->> > documentation that "You should never use `-z` without `-Z` when you
->> > process arbitrary input".
->> 
->> You are not making sense.  If we were to leave them orthogonal to
->> keep flexibility, it is because there can be cases where using '-Z'
->> without using '-z' (and vice versa) makes sense; "you should never"
->> has no place to live in such a world.
+> When cross-compiling with the mingw toolchain on a system with a case
+> sensitive filesystem, the mixed case (which is technically correct as
+> per the contents of MS Visual C++) doesn't work (the corresponding mingw
+> headers are all lowercase for some reason).
 >
-> Well, that's exactly what I'm arguing: I don't think it does make sense
-> to keep them orthogonal.
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>  compat/win32/trace2_win32_process_info.c | 4 ++--
+>  wrapper.c                                | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 
-I was not commenting on that.
+I can guess that this will not break the primary target audience of
+the source, who build from the source on case insensitive
+filesystems.  The only possible breakage I can think of is if
+different versions of mingw toolchain have these header files in
+different cases---those who have been happily using header files
+like <tlHelp32.h> on their case sensitive filesystem now will find
+their build to fail.  Theoretically, those who _corrected_ their
+header files to mixed case themselves (as it is "technically correct
+as per the contents of MS Visual C++") will be broken the same way,
+but they should be capable of diagnosing and recovering from such a
+breakage, so I'm not worried about that.
 
-My "you are not making sense" was because you said "I'd be fine to
-make -Z to mean 'stdout is NUL delimited'".  If somebody thinks it
-is a good idea to make '-Z' mean 'stdout is NUL delimited without
-affecting how the input is delimited', it can only be because that
-somebody thinks that it makes sense to make input and output
-orthogonal.
+Appreciate input from those who builds with mingw toolchain, but in
+the meantime let me queue it on 'seen' so that we won't forget.
 
-It is perfectly OK if you are not fine to make -Z to affect only the
-standard output stream.  That stance is at least self consistent.
+Thanks.
 
+
+
+
+
+> diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
+> index a4e33768f4..438af8f818 100644
+> --- a/compat/win32/trace2_win32_process_info.c
+> +++ b/compat/win32/trace2_win32_process_info.c
+> @@ -3,8 +3,8 @@
+>  #include "../../repository.h"
+>  #include "../../trace2.h"
+>  #include "lazyload.h"
+> -#include <Psapi.h>
+> -#include <tlHelp32.h>
+> +#include <psapi.h>
+> +#include <tlhelp32.h>
+>  
+>  /*
+>   * An arbitrarily chosen value to limit the size of the ancestor
+> diff --git a/wrapper.c b/wrapper.c
+> index 67f5f5dbe1..5dc48e815a 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -17,7 +17,7 @@ static intmax_t count_fsync_hardware_flush;
+>  #ifdef HAVE_RTLGENRANDOM
+>  /* This is required to get access to RtlGenRandom. */
+>  #define SystemFunction036 NTAPI SystemFunction036
+> -#include <NTSecAPI.h>
+> +#include <ntsecapi.h>
+>  #undef SystemFunction036
+>  #endif
