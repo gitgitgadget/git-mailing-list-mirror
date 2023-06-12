@@ -2,65 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ACB1C7EE2F
-	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 20:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF998C7EE2F
+	for <git@archiver.kernel.org>; Mon, 12 Jun 2023 20:46:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236307AbjFLUod (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jun 2023 16:44:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60422 "EHLO
+        id S232236AbjFLUqY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jun 2023 16:46:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238332AbjFLUoS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2023 16:44:18 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 479A2171B
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 13:43:38 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-653fcd58880so3818866b3a.0
-        for <git@vger.kernel.org>; Mon, 12 Jun 2023 13:43:38 -0700 (PDT)
+        with ESMTP id S232986AbjFLUqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2023 16:46:08 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B63E1BDC
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 13:45:49 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1b3a82c8887so22470205ad.2
+        for <git@vger.kernel.org>; Mon, 12 Jun 2023 13:45:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686602600; x=1689194600;
+        d=gmail.com; s=20221208; t=1686602748; x=1689194748;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SrPVsf0YOZWU5Iv5gt/8+HCLZZPLcQYopbFQfXyDkfs=;
-        b=eSNDtOlNyekBIh2oFtrPAchKdxoUwHKJ9JN0k+GFi4uNaYt6GzNMBZMnZZfXe4KVrU
-         h3XiKlKsUwQttFosHmsSXehPTBHHEL3OwIep+AwLloc3PUszC3zPuLgfRr31Ui2VAlZ2
-         S107BYq5+ibtiLVQaBO1rhK0IXMU5jL24eH6QiMbE7tS/lpFUhRKOD4yCZbAYYijMzPi
-         I5afp1gUHjUs74JES/Lm2hbcomH2VziJG4zviUIRPnQeO63ZdZn4FGCIt/0GuLc4dqVK
-         JkBA4WfbGQ7BdJddSWx8SqqbbeLFQrV0p2t74fQ6pS7E4Q3eKz1mOtSz0rWC1NZVlWOX
-         /XHg==
+        bh=MaVe7Rh6M8aw38eYAXKWX5k1aW/5M3zArjQ28aoCtkE=;
+        b=cRiwE/5ffwnYi8Q7vVJAXD0V3+Zq2mLXv0BBoXRmz7lxI9/A1jF+/vp4/KhP9atQfg
+         1LpxC0N4R/3D6QI2YXCjfb95YbLWi8rrxHnIZDg4zOg5SbcPdlDRUBwNUMH2GQnl0NvD
+         ieZwj/gheJMp4Ecd/oMHBcS4RxmrKdmoMuCSHrjeC37WYmc8JonjjSO4SzAik3c7nyhB
+         H0pE/lyPxCmdKkPn8bTnf+1qaFXncdZh/t5TtBbyZgz1yPDGyfV/+6cuV7hCFVCxVVdU
+         TrCVsyVcY4ALjC0j1DMH/v+Ot18gVtJhJu4cXkbjzThL88hcqFd+CGLyn/NkpJT2RFau
+         LzZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686602600; x=1689194600;
+        d=1e100.net; s=20221208; t=1686602748; x=1689194748;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=SrPVsf0YOZWU5Iv5gt/8+HCLZZPLcQYopbFQfXyDkfs=;
-        b=h7t/B3bvqs1kZtk39/VCo3jwljxEVmjvDiALVtRxYTY6GlXweyrHIO8T7RPnORV0zi
-         7A3NP3HBoXR6r+se7ixtQfT1GgEpJQFToLaHJXOK97Cbl0Pm870xw7nLgs5hAHjq1YQk
-         5V1ySsAbcuENYtxooHZiAFtXe89JIpHs+hJW2nJ0z+3+xz8FUvpeYy+r/n21jhGdKAE0
-         x7fafbZfigr8aCjIMFEF9Gr6vORNzDzuIeBSHs9zXatc/h90n7K8AC2DdBj3nwET4cu/
-         Flk5gqHaAO+967b+xdQaiTdSK0rIgj9o/Zcc/bAN527juEAc3WxIHiLcVQfEgnX7pvs9
-         vMuw==
-X-Gm-Message-State: AC+VfDylIY9Yp8QHTkdHEr5uTIq00VbDpU4isOU/9aB15PVMIQrjRj4n
-        YoWIsJOE6TlufUbA9f1TW7M=
-X-Google-Smtp-Source: ACHHUZ6jeebZbDg169WVbryC4pnsug5WyRm/eCRyzqSx4jZVbSbqJ3F7BFjVmiW8jryeQw2UwjjPuw==
-X-Received: by 2002:a05:6a20:a987:b0:10f:2abb:c9fd with SMTP id cc7-20020a056a20a98700b0010f2abbc9fdmr8881858pzb.43.1686602600297;
-        Mon, 12 Jun 2023 13:43:20 -0700 (PDT)
+        bh=MaVe7Rh6M8aw38eYAXKWX5k1aW/5M3zArjQ28aoCtkE=;
+        b=LPJSPjvbatLyJMaFYVbKn85VIl086wPVEVuQeidCnYdM+ZFN/Iyx735+wOv5Ps1eYG
+         CM3uFPK4xxfhsnnqgnShN4K+O2G5frvu9sNGtzdSzdTp6eKg2UyJk+vXg4un/Pjlh5XV
+         cX8m7aBWM9bwFuOEKBBLatsBxFeOGLiRslOur2uWWoQXFIjiydlYr+TRnuUOpWSXA/NE
+         leFUd/1c7zUkU/HzZSbsL106zlhn4OeJFZAg//S1/vDUHWEcoTQ6E0NqYL+aJEIwRZyN
+         YRJ4kUCDukpHN8oIOvHShn8XapxFACLcx7VhKEXudqyEiARvWvZ3Gl90G1Irs1gMA5p6
+         3/1Q==
+X-Gm-Message-State: AC+VfDwAk7GwdRbi1cSrixqSzlhWM6w93VrkjMIwJwk+8IolZJcq97hg
+        ahJw4f5vH/bGqF9e0LA1UJs=
+X-Google-Smtp-Source: ACHHUZ4J8ZHBwc18/HNYT68fEbHv6nwNijVWBgbRYgSol0nHkcCgHARGk5+NBAmRDPgOMUMij6YoVQ==
+X-Received: by 2002:a17:903:41ce:b0:1ac:5b6b:df4c with SMTP id u14-20020a17090341ce00b001ac5b6bdf4cmr8710726ple.69.1686602748072;
+        Mon, 12 Jun 2023 13:45:48 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id u70-20020a638549000000b0052cbd854927sm7909153pgd.18.2023.06.12.13.43.19
+        by smtp.gmail.com with ESMTPSA id bc1-20020a170902930100b001b392bf9192sm5673929plb.145.2023.06.12.13.45.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 13:43:19 -0700 (PDT)
+        Mon, 12 Jun 2023 13:45:47 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Toon Claes <toon@iotcl.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 0/5] catfile: introduce NUL-terminated output format
-References: <cover.1685710884.git.ps@pks.im> <cover.1686028409.git.ps@pks.im>
-Date:   Mon, 12 Jun 2023 13:43:19 -0700
-In-Reply-To: <cover.1686028409.git.ps@pks.im> (Patrick Steinhardt's message of
-        "Tue, 6 Jun 2023 07:19:24 +0200")
-Message-ID: <xmqqilbs9ztk.fsf@gitster.g>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, me@ttaylorr.com,
+        newren@gmail.com, Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 0/3] Create stronger guard rails on replace refs
+References: <pull.1537.v2.git.1685716157.gitgitgadget@gmail.com>
+        <pull.1537.v3.git.1686057877.gitgitgadget@gmail.com>
+Date:   Mon, 12 Jun 2023 13:45:47 -0700
+In-Reply-To: <pull.1537.v3.git.1686057877.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Tue, 06 Jun 2023 13:24:34
+        +0000")
+Message-ID: <xmqqedmg9zpg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,10 +71,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> this is the second version of my patch series that introduces a new NUL
-> terminated output format to git-cat-file(1) in order to make its output
-> unambiguously parsable in the case where the input contains newlines.
+> Updates in v3
+> =============
+>
+> Thanks for the review on v2!
+>
+>  * The removal of the global from environment.c is delayed to patch 3
+>    because config.c still assigns the value in patch 2.
+>  * The comment for the member in the repo_settings struct is modified for
+>    better grammar.
 
-Will queue.  Thanks.
+Thanks.  Will queue.  Let's merge it down to 'next'.
