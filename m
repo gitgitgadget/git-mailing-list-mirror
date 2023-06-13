@@ -2,95 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFFC5EB64D0
-	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 19:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A86DEB64D7
+	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 19:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230498AbjFMTPa convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 13 Jun 2023 15:15:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57158 "EHLO
+        id S229472AbjFMTQe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jun 2023 15:16:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240618AbjFMTP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2023 15:15:29 -0400
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E691BE8
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:15:26 -0700 (PDT)
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-5ed99ebe076so11433646d6.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:15:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686683725; x=1689275725;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        with ESMTP id S240618AbjFMTQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2023 15:16:31 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FC8C3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:16:30 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1b3c578c602so19514275ad.2
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:16:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686683790; x=1689275790;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TcQeZz3XsHW54BL7d5M9thZ268ZZNKKOW1FV0CedOIM=;
-        b=EOSfp1vJ1VCAXEJVsVieH0AIRttzHv4vpjotKmUHATJ+wDwXWAJmRwlbR1/PKBM2Yt
-         9t7fx4dOUZzpCV96Sz44PScjf/EYDJd/RcII1d+XnEUITtjsC+9B2e+2YH5XBT7c18wg
-         U0j/myiyOuJUXQHvJcJYTGr2nPqnJz7UdtUV3+6bacDnuaJEE+b0DRrymyUCrejaVBiD
-         AsLruxcqM7IFu10zYXGe8D/cUW/tqzPZaYcgCpudTgcdgJ0I1JAlNBbdv0tWcNyFcsKK
-         8quS2/fktLCf901uFlsDmPnFBPCK+yK8QyZfOarc40rBD+YYxUCNxKC7aCb5r7BYk+5U
-         Q97A==
-X-Gm-Message-State: AC+VfDxOiLYMwkvb3fktqc/yFCRyd1j0vuzDofZ7raBZSIPb9VwtlZYd
-        AwzUtTlHNgL7prDwvC2hRgNtdSPqr30azT86T/DARcZH8Bw=
-X-Google-Smtp-Source: ACHHUZ7T77LrKwBhicR29wx6S9tucQ5/HNRyeaRvAW1nWyqU5b2W7aqHui1BCu2TbgEd73sYGPXHr3oHUtkBcDOUOQk=
-X-Received: by 2002:a05:6214:400b:b0:626:2177:2fd with SMTP id
- kd11-20020a056214400b00b00626217702fdmr16756385qvb.19.1686683725190; Tue, 13
- Jun 2023 12:15:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAPig+cRS=cpV1e4QoSy5uypA+-hECyPe2rEg3scV8LVBfzZ5hA@mail.gmail.com>
- <20230613184304.36482-1-jonathantanmy@google.com>
-In-Reply-To: <20230613184304.36482-1-jonathantanmy@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 13 Jun 2023 15:15:14 -0400
-Message-ID: <CAPig+cQnyL8-9EHVe5P_oRbUdsXA9WBiK_W4LHq7HOF4-ek5Pg@mail.gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: use octal escapes, not hex
+        bh=LndZOZ3HO8aYx9WtxFfH+mIIUX7xuTxmpfeOeeha5wI=;
+        b=FaTcaeVMbv4GqLNRaPNmZTMSPHTvqFGYtQlutw2mY5pdOZEP8/NhUwCd8oXpcbCmoK
+         Sknkrx4/XJUEpy7Glgxy9Tk/HE0TqCkh+ApU7r43uPg91kjCGLepjnK8GchaxAjHOs7u
+         VPHHiCiwDFHCV4n46tm+6XguVvHoPYvNEkCekXbExStIZtMDnbjdAvBhnpnMYQzySyta
+         3H1e+jlJZRPwgdCsu1I1QPaIqmmdGaQLLF3fhY5YIPz/UN0NcyORPWEgj+gBBNFqZQTT
+         yDt4by9gPWTNLUGcAnPsa0O4AWgVCr+q3hJoKvsSguRUAN9Pu3flI0s9fmWWhkCtyohq
+         G4JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686683790; x=1689275790;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LndZOZ3HO8aYx9WtxFfH+mIIUX7xuTxmpfeOeeha5wI=;
+        b=MIx/f6jppoFVaOBhcniDRv0mIIvFEMtWdqoq2Motkl1UJvuzkVhlELyyiSlr9ZNbu1
+         9UQbthaUR6qi8aoUAKDTG87xIs0KNYlzGmHZLHZAEZECz/zeVcuYjSOkXlQzfoBzWTO5
+         fcJeEt8NgUwUu8WXihuBYqBAGP+7CkftpJ+GgEg+8iMMEDGo2MLUCpRK9tJUkdN3Qpr6
+         CUaUZOGxtV9k5BQ1sid549DQpLKWwctf9LDwP/LAACWqZ1vfCGnvx/HNzwwYMO64o6tm
+         ciBryhuSBhwJtwX1g9S/LwzwljJua6rqjZ0zd6XaEXHEE9tlV9TMGCLoTk2dwAxx9VCW
+         ynSw==
+X-Gm-Message-State: AC+VfDzP4Y/m+5uXqrxrLK2GmXuFZzETjena26PSjXrDsFGNDGxh8iyn
+        AWH62QGBIz/bPHoMq1XStcI=
+X-Google-Smtp-Source: ACHHUZ7rp6TvxPRI15gvdTGRFW9u136U8s+qQP2M7Sk11OhVSFcvuED6rPtrm8QaGnbtLHvvqt4lYQ==
+X-Received: by 2002:a17:903:110e:b0:1a6:74f6:fa92 with SMTP id n14-20020a170903110e00b001a674f6fa92mr11091417plh.19.1686683789660;
+        Tue, 13 Jun 2023 12:16:29 -0700 (PDT)
+Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
+        by smtp.gmail.com with ESMTPSA id d10-20020a170902b70a00b001afd6647a77sm10639665pls.155.2023.06.13.12.16.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 12:16:29 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] Changed path filter hash fix and version bump
+References: <20230613171634.15985-1-jonathantanmy@google.com>
+Date:   Tue, 13 Jun 2023 12:16:29 -0700
+In-Reply-To: <20230613171634.15985-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Tue, 13 Jun 2023 10:16:33 -0700")
+Message-ID: <xmqqa5x35g1e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 2:43 PM Jonathan Tan <jonathantanmy@google.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Tue, Jun 13, 2023 at 1:44 PM Jonathan Tan <jonathantanmy@google.com> wrote:
-> > > + - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
-> > > +   "\xc2\xa2"), as the latter is not portable.
-> >
-> > The shell itself doesn't interpret these sequences, so this
-> > description feels too generic. Perhaps it would make more sense to
-> > cite specific tools for which octal sequences are needed for
-> > portability reasons, such as `printf`, `sed`, `tr`, etc.
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+>> + - In 'printf' format string, do not use hexadecimals, as they are not
+>> +   portable.  Write 
+>> +
+>> +     CENT=$(printf "\302\242")
+>> +
+>> +   not
+>> +
+>> +     CENT=$(printf "\xc2\xa2")
 >
-> Ah...good point. I checked with "echo" in "dash" and assumed that it
-> was "dash" that was interpreting the escapes, but indeed it is the
-> "echo" (and "printf") builtins in "dash" that are actually interpreting
-> them. What do you think of the following in the commit message:
->
->   Hexadecimal escapes in shell scripts are not portable across shell builtins (in
->   particular, the "printf" of "dash" does not support them). Write in the CodingGuidelines
->   document that we should be using octal escapes instead.
->
-> and in the CodingGuidelines doc:
->
-> + - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
-> +   "\xc2\xa2"), as the latter is not portable across some shell builtins like printf.
+> I've checked with "dash" and this applies to any quoted string, not just
+> when passed to printf. I'll prepare a patch describing this.
 
-The portability concern is not specific to a certain shell or whether
-a command is builtin, so it feels misleading to single out "dash" and
-builtins. The same portability problems can crop up, as well, with
-older (non-"dash") shells, and with commands which may or may not be
-builtins (such as "echo" which, historically, was not always a
-builtin), and non-builtins commands, such as "sed" and "tr".
+What do you mean by "any quoted string"?
 
-So, for the commit message, perhaps simply:
+I think built-in 'echo' of dash takes "\302\242" and emits the
+cent-sign (but /bin/echo may not), but I do not think it is "any
+quoted string".  To wit:
 
-    Extend the shell-scripting section of CodingGuidelines to suggest
-    octal escape sequences (e.g. "\302\242") over hexadecimal
-    (e.g. "\xc2\xa2") since the latter can be a source of portability
-    problems.
+    dash$ echo '\302\242'
+    ¢
 
-As for the change to CodingGuidelines, this would probably be sufficient:
+The echo built into dash shows the cent-sign.  The example does not
+let us tell if is the shell (i.e. the 'echo' command sees the
+cent-sign in its argv[1]) or if it is the command (i.e. the 'echo'
+sees 8-byte string "bs three zero two bs two four two" in its
+argv[1], and shows that as the cent-sign), though.
 
-    Use octal escape sequences (e.g. "\302\242"), not hexadecimal
-    (e.g. "\xc2\xa2"), since the latter is not portable across some
-    commands, such as `printf`, `sed`, `tr`, etc.
+    dash$ /bin/echo '\302\242'
+    \302\242
+
+This shows that shell is not doing anything fancy.  /bin/echo gets
+the 8-byte string in its argv[1] and emits that as-is.
+
+    dash$ /bin/echo "\302\242"
+    \302\242
+
+Again this shows the same; I added this example to demonstrate that
+it is _not_ like the shell interprets the backslashed octal strings
+depending on how they are quoted.
+
+    dash$ printf "%s\n" '\302\242'
+    \302\242
+    dash$ printf "%s\n" "\302\242"
+    \302\242
+
+And these demonstrates that argv[2] given to printf in these cases
+are 8-byte string "bs three zero two bs two four two" and the shell
+is not doing anything fancy.
+
+So, I would suggest not saying "any quoted string".  In addition,
+even though dash's built-in echo that recognizes "\0num" seems to be
+conformant to what POSIX specifies (cf. [*1*]), GNU requires "-e" in
+order to do so in both standalone 'echo' binary and one built into
+'bash', so we cannot rely on this POSIX behaviour when writing a
+portable script.  Hence, I would recommend us to focus on giving a
+piece of advice on use of printf in this part of the documentation.
+
+
+[References]
+
+*1* https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html
+*2* https://www.gnu.org/software/coreutils/manual/html_node/echo-invocation.html
