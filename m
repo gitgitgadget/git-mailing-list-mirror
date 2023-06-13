@@ -2,132 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A86DEB64D7
-	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 19:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC073EB64D7
+	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 19:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229472AbjFMTQe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jun 2023 15:16:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57670 "EHLO
+        id S238999AbjFMTVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jun 2023 15:21:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240618AbjFMTQb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2023 15:16:31 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FC8C3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:16:30 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1b3c578c602so19514275ad.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:16:30 -0700 (PDT)
+        with ESMTP id S229674AbjFMTVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2023 15:21:37 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EFA7B8
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:21:36 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-66619138c1eso190114b3a.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686683790; x=1689275790;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LndZOZ3HO8aYx9WtxFfH+mIIUX7xuTxmpfeOeeha5wI=;
-        b=FaTcaeVMbv4GqLNRaPNmZTMSPHTvqFGYtQlutw2mY5pdOZEP8/NhUwCd8oXpcbCmoK
-         Sknkrx4/XJUEpy7Glgxy9Tk/HE0TqCkh+ApU7r43uPg91kjCGLepjnK8GchaxAjHOs7u
-         VPHHiCiwDFHCV4n46tm+6XguVvHoPYvNEkCekXbExStIZtMDnbjdAvBhnpnMYQzySyta
-         3H1e+jlJZRPwgdCsu1I1QPaIqmmdGaQLLF3fhY5YIPz/UN0NcyORPWEgj+gBBNFqZQTT
-         yDt4by9gPWTNLUGcAnPsa0O4AWgVCr+q3hJoKvsSguRUAN9Pu3flI0s9fmWWhkCtyohq
-         G4JA==
+        d=gmail.com; s=20221208; t=1686684096; x=1689276096;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E81GEklc22AHL2TVfEgD+uaKagDkI6f3/9mJJziUZA4=;
+        b=meEdlDeCirC4a5znwyN5kjmtjns0Dvv+9qLbKzcHncVNknJy5verlFTT1mFbo6tKB9
+         IB//Khh3S87y2XnmRA5d1mlEGo5iRaE/Ab+0kkzoTbkC4a0/2W22h7CU406ZE+ORcc3K
+         wFwIqX9Jem6a5UeAbtmJVUjliNyfYDq4s4BtklkfOEIe9iMzWqUlEE8bzCroazszL1Ok
+         pmPVQDVCoQ4SFh5J34DtxtBkE4rDlgwI89SbVlG0P4CJlSoacKdfXJ+FSL2P89mRSQc+
+         Fk9ru6gJNBl7RRv5vVbb4kG0j8xsUlgi9KKSf1ZXBoy4SBEwWOWs5UGPFVtA19NfeEiI
+         oprg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686683790; x=1689275790;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LndZOZ3HO8aYx9WtxFfH+mIIUX7xuTxmpfeOeeha5wI=;
-        b=MIx/f6jppoFVaOBhcniDRv0mIIvFEMtWdqoq2Motkl1UJvuzkVhlELyyiSlr9ZNbu1
-         9UQbthaUR6qi8aoUAKDTG87xIs0KNYlzGmHZLHZAEZECz/zeVcuYjSOkXlQzfoBzWTO5
-         fcJeEt8NgUwUu8WXihuBYqBAGP+7CkftpJ+GgEg+8iMMEDGo2MLUCpRK9tJUkdN3Qpr6
-         CUaUZOGxtV9k5BQ1sid549DQpLKWwctf9LDwP/LAACWqZ1vfCGnvx/HNzwwYMO64o6tm
-         ciBryhuSBhwJtwX1g9S/LwzwljJua6rqjZ0zd6XaEXHEE9tlV9TMGCLoTk2dwAxx9VCW
-         ynSw==
-X-Gm-Message-State: AC+VfDzP4Y/m+5uXqrxrLK2GmXuFZzETjena26PSjXrDsFGNDGxh8iyn
-        AWH62QGBIz/bPHoMq1XStcI=
-X-Google-Smtp-Source: ACHHUZ7rp6TvxPRI15gvdTGRFW9u136U8s+qQP2M7Sk11OhVSFcvuED6rPtrm8QaGnbtLHvvqt4lYQ==
-X-Received: by 2002:a17:903:110e:b0:1a6:74f6:fa92 with SMTP id n14-20020a170903110e00b001a674f6fa92mr11091417plh.19.1686683789660;
-        Tue, 13 Jun 2023 12:16:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686684096; x=1689276096;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=E81GEklc22AHL2TVfEgD+uaKagDkI6f3/9mJJziUZA4=;
+        b=LEaVuNmgBTR7CyyqcboUgWFVCDENPvnSB1/1fnvBPxIU3O0LXn9mMvW5R4YVCpqaJq
+         CPic/lzOHWysawCIwobvRgSsUesAiOLhGHxoCPwG/dnPp8Svk0YK0NCDVK6eF8ywqIbP
+         i7d5M9k871yW3gUEN0cp2Wu85VBI+wNi/FP6Aaf1aH6/D0ccp4mu+JMO7HEBox6ZaE6j
+         M5OgrwixDCoAqdat8Q3ZTIsBou9bypWgDETg39FRZsGOPzIJ416cExMJduDed3Fja1Bu
+         lhhGICpCTZ3ZgmVSZUzf/XwxvI0XTPHC0/cy+0ACmfypoL627O/ixUH/83D7LbWBEinm
+         o+GA==
+X-Gm-Message-State: AC+VfDwwdSwptaYkgbdfWME1xjsswh04osx8sxuu4TFpkBd/DEcD9bpk
+        1aH69zybb0vVVGYJm8ymm28=
+X-Google-Smtp-Source: ACHHUZ5Mz0UzbPrSnvii40LRgZ58tM0zuM1xs8LM6hIK6cUbBuo3nGNmcPBp/32t87Z9ahE0Dc8lXQ==
+X-Received: by 2002:a05:6a21:6713:b0:106:c9b7:c93d with SMTP id wh19-20020a056a21671300b00106c9b7c93dmr11994185pzb.19.1686684095839;
+        Tue, 13 Jun 2023 12:21:35 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id d10-20020a170902b70a00b001afd6647a77sm10639665pls.155.2023.06.13.12.16.29
+        by smtp.gmail.com with ESMTPSA id 4-20020a630204000000b0052c9d1533b6sm2131603pgc.56.2023.06.13.12.21.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 12:16:29 -0700 (PDT)
+        Tue, 13 Jun 2023 12:21:35 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] Changed path filter hash fix and version bump
-References: <20230613171634.15985-1-jonathantanmy@google.com>
-Date:   Tue, 13 Jun 2023 12:16:29 -0700
-In-Reply-To: <20230613171634.15985-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 13 Jun 2023 10:16:33 -0700")
-Message-ID: <xmqqa5x35g1e.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v4 0/4] Changed path filter hash fix and version bump
+References: <cover.1684790529.git.jonathantanmy@google.com>
+        <cover.1686677910.git.jonathantanmy@google.com>
+Date:   Tue, 13 Jun 2023 12:21:34 -0700
+In-Reply-To: <cover.1686677910.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Tue, 13 Jun 2023 10:39:54 -0700")
+Message-ID: <xmqq5y7r5fsx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jonathan Tan <jonathantanmy@google.com> writes:
 
->> + - In 'printf' format string, do not use hexadecimals, as they are not
->> +   portable.  Write 
->> +
->> +     CENT=$(printf "\302\242")
->> +
->> +   not
->> +
->> +     CENT=$(printf "\xc2\xa2")
->
-> I've checked with "dash" and this applies to any quoted string, not just
-> when passed to printf. I'll prepare a patch describing this.
+> Thanks Ramsay for spotting the errors and mentioning that I can use
+> octal escapes. Here's an update taking into account their comments.
 
-What do you mean by "any quoted string"?
+The changes look good.  Will queue.
 
-I think built-in 'echo' of dash takes "\302\242" and emits the
-cent-sign (but /bin/echo may not), but I do not think it is "any
-quoted string".  To wit:
+Stolee, you had comments on an earlier round---how does this one
+look?
 
-    dash$ echo '\302\242'
-    ¢
-
-The echo built into dash shows the cent-sign.  The example does not
-let us tell if is the shell (i.e. the 'echo' command sees the
-cent-sign in its argv[1]) or if it is the command (i.e. the 'echo'
-sees 8-byte string "bs three zero two bs two four two" in its
-argv[1], and shows that as the cent-sign), though.
-
-    dash$ /bin/echo '\302\242'
-    \302\242
-
-This shows that shell is not doing anything fancy.  /bin/echo gets
-the 8-byte string in its argv[1] and emits that as-is.
-
-    dash$ /bin/echo "\302\242"
-    \302\242
-
-Again this shows the same; I added this example to demonstrate that
-it is _not_ like the shell interprets the backslashed octal strings
-depending on how they are quoted.
-
-    dash$ printf "%s\n" '\302\242'
-    \302\242
-    dash$ printf "%s\n" "\302\242"
-    \302\242
-
-And these demonstrates that argv[2] given to printf in these cases
-are 8-byte string "bs three zero two bs two four two" and the shell
-is not doing anything fancy.
-
-So, I would suggest not saying "any quoted string".  In addition,
-even though dash's built-in echo that recognizes "\0num" seems to be
-conformant to what POSIX specifies (cf. [*1*]), GNU requires "-e" in
-order to do so in both standalone 'echo' binary and one built into
-'bash', so we cannot rely on this POSIX behaviour when writing a
-portable script.  Hence, I would recommend us to focus on giving a
-piece of advice on use of printf in this part of the documentation.
-
-
-[References]
-
-*1* https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html
-*2* https://www.gnu.org/software/coreutils/manual/html_node/echo-invocation.html
+Thanks.
