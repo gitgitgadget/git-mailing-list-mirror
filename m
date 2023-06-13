@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC073EB64D7
-	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 19:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAE11EB64D7
+	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 19:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238999AbjFMTVi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jun 2023 15:21:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59448 "EHLO
+        id S231675AbjFMT3J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jun 2023 15:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbjFMTVh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2023 15:21:37 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EFA7B8
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:21:36 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-66619138c1eso190114b3a.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:21:36 -0700 (PDT)
+        with ESMTP id S229838AbjFMT3G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2023 15:29:06 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C166A19F
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:29:05 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1b3c0c476d1so24948535ad.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 12:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686684096; x=1689276096;
+        d=gmail.com; s=20221208; t=1686684545; x=1689276545;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=E81GEklc22AHL2TVfEgD+uaKagDkI6f3/9mJJziUZA4=;
-        b=meEdlDeCirC4a5znwyN5kjmtjns0Dvv+9qLbKzcHncVNknJy5verlFTT1mFbo6tKB9
-         IB//Khh3S87y2XnmRA5d1mlEGo5iRaE/Ab+0kkzoTbkC4a0/2W22h7CU406ZE+ORcc3K
-         wFwIqX9Jem6a5UeAbtmJVUjliNyfYDq4s4BtklkfOEIe9iMzWqUlEE8bzCroazszL1Ok
-         pmPVQDVCoQ4SFh5J34DtxtBkE4rDlgwI89SbVlG0P4CJlSoacKdfXJ+FSL2P89mRSQc+
-         Fk9ru6gJNBl7RRv5vVbb4kG0j8xsUlgi9KKSf1ZXBoy4SBEwWOWs5UGPFVtA19NfeEiI
-         oprg==
+        bh=7Z4Wh2LcivYvWSjb2vRM+y4vTbqkRaHj/0lN7Y8z49c=;
+        b=r3FXV2fmRlzg78kM4GCTmPtaieiUPLIMG7mwh3lMeK+8/EmMWOpNR5b5jN5MThabyt
+         2tH0qTZFhXjZyQ/WxVKvzllZNq6ttq4GzxfDMXEl56ufYu3zdIDoadnVgCdbMGdJqdu8
+         VBe1pRHocKg8+mqszK4KXTzKfvLeze2sMvWZMPKzEIckFsSbKtVjoaoTIuiFpxN7nCbT
+         awnEH7m+gmengbck1Z/EPnjwNnxtx5pKVUSfqMj6kWz/XgORd7wJnzB4HL+8g0Vcfdcx
+         +QYO3zonqPyk8gSq9XU7oLWQDUMKJ/RdewA0J4UOZ8Bt/nxmhsZFt61ULLCThldWhVc0
+         zg1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686684096; x=1689276096;
+        d=1e100.net; s=20221208; t=1686684545; x=1689276545;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=E81GEklc22AHL2TVfEgD+uaKagDkI6f3/9mJJziUZA4=;
-        b=LEaVuNmgBTR7CyyqcboUgWFVCDENPvnSB1/1fnvBPxIU3O0LXn9mMvW5R4YVCpqaJq
-         CPic/lzOHWysawCIwobvRgSsUesAiOLhGHxoCPwG/dnPp8Svk0YK0NCDVK6eF8ywqIbP
-         i7d5M9k871yW3gUEN0cp2Wu85VBI+wNi/FP6Aaf1aH6/D0ccp4mu+JMO7HEBox6ZaE6j
-         M5OgrwixDCoAqdat8Q3ZTIsBou9bypWgDETg39FRZsGOPzIJ416cExMJduDed3Fja1Bu
-         lhhGICpCTZ3ZgmVSZUzf/XwxvI0XTPHC0/cy+0ACmfypoL627O/ixUH/83D7LbWBEinm
-         o+GA==
-X-Gm-Message-State: AC+VfDwwdSwptaYkgbdfWME1xjsswh04osx8sxuu4TFpkBd/DEcD9bpk
-        1aH69zybb0vVVGYJm8ymm28=
-X-Google-Smtp-Source: ACHHUZ5Mz0UzbPrSnvii40LRgZ58tM0zuM1xs8LM6hIK6cUbBuo3nGNmcPBp/32t87Z9ahE0Dc8lXQ==
-X-Received: by 2002:a05:6a21:6713:b0:106:c9b7:c93d with SMTP id wh19-20020a056a21671300b00106c9b7c93dmr11994185pzb.19.1686684095839;
-        Tue, 13 Jun 2023 12:21:35 -0700 (PDT)
+        bh=7Z4Wh2LcivYvWSjb2vRM+y4vTbqkRaHj/0lN7Y8z49c=;
+        b=Op9CgxXemuQ6ZesJAJS9FM8Hh4JwyReOOUpkWOwNRV9Fo72FHIeTc7zfUwsgH6IwRk
+         rhr+6HCcrlaDxcgO6sRFzjANKtke8Je84+1/Uwngm7gWYdr7lKQhQLaCwAB5cBPLXd78
+         jsPI0F0+tOkrnMclJz6hGMQZpza61Z7aWXcGddQrx+/eHn7wWXU245zX8sdVqw0tnHDI
+         gA+Sc+x3MhkMujpOimwsIdJxp1dZrv9w1tfa+m2BWZKdlqrf0OgrYrKtzEmxeCIe0miN
+         rZGoWljq41paFZLOHVnPCtuRCAjftHNvE1LzfrGi8EhAexdAvtCrrpqlTpA38r05AU3O
+         0gNQ==
+X-Gm-Message-State: AC+VfDzaQqa9tAMI/cNzL/uEU3Qm2loDOu+KILkjjMhSwu0a4fdmfGBz
+        bJzxr7VZe2JUPOg6ciJ9PB0=
+X-Google-Smtp-Source: ACHHUZ5UmaitSk3X19CYvJKcN7gRMuUxWIXVZrALjvbifnAiBra2xyhXEm3b5OslxHNtp3Dj8XZIPw==
+X-Received: by 2002:a17:902:a50a:b0:1ae:3991:e4f9 with SMTP id s10-20020a170902a50a00b001ae3991e4f9mr8997491plq.61.1686684545184;
+        Tue, 13 Jun 2023 12:29:05 -0700 (PDT)
 Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id 4-20020a630204000000b0052c9d1533b6sm2131603pgc.56.2023.06.13.12.21.35
+        by smtp.gmail.com with ESMTPSA id q13-20020a170902dacd00b001b1a2bf5277sm3929971plx.39.2023.06.13.12.29.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 12:21:35 -0700 (PDT)
+        Tue, 13 Jun 2023 12:29:04 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4 0/4] Changed path filter hash fix and version bump
-References: <cover.1684790529.git.jonathantanmy@google.com>
-        <cover.1686677910.git.jonathantanmy@google.com>
-Date:   Tue, 13 Jun 2023 12:21:34 -0700
-In-Reply-To: <cover.1686677910.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 13 Jun 2023 10:39:54 -0700")
-Message-ID: <xmqq5y7r5fsx.fsf@gitster.g>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] CodingGuidelines: use octal escapes, not hex
+References: <CAPig+cRS=cpV1e4QoSy5uypA+-hECyPe2rEg3scV8LVBfzZ5hA@mail.gmail.com>
+        <20230613184304.36482-1-jonathantanmy@google.com>
+        <CAPig+cQnyL8-9EHVe5P_oRbUdsXA9WBiK_W4LHq7HOF4-ek5Pg@mail.gmail.com>
+Date:   Tue, 13 Jun 2023 12:29:04 -0700
+In-Reply-To: <CAPig+cQnyL8-9EHVe5P_oRbUdsXA9WBiK_W4LHq7HOF4-ek5Pg@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 13 Jun 2023 15:15:14 -0400")
+Message-ID: <xmqq1qif5fgf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,14 +68,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Thanks Ramsay for spotting the errors and mentioning that I can use
-> octal escapes. Here's an update taking into account their comments.
+> So, for the commit message, perhaps simply:
+>
+>     Extend the shell-scripting section of CodingGuidelines to suggest
+>     octal escape sequences (e.g. "\302\242") over hexadecimal
+>     (e.g. "\xc2\xa2") since the latter can be a source of portability
+>     problems.
+>
+> As for the change to CodingGuidelines, this would probably be sufficient:
+>
+>     Use octal escape sequences (e.g. "\302\242"), not hexadecimal
+>     (e.g. "\xc2\xa2"), since the latter is not portable across some
+>     commands, such as `printf`, `sed`, `tr`, etc.
 
-The changes look good.  Will queue.
+I'd prefer singling out `printf`, actually, and not talking about
+"across some commands".
 
-Stolee, you had comments on an earlier round---how does this one
-look?
+As I said in a separate message, we certainly do *not* want to rely
+on `echo` interpreting bs-escaped octal sequences without '-e', even
+though it may be expected on a POSIX systems, because it is not
+portable across systems our users commonly encounter.
+
+And `printf` has been what we chose to turn bs-escaped octal
+sequence into binary.  I'd prefer not having to even worry about
+`sed`, `tr`, etc. behaving differently and not allowing to expect
+these other commands to be usable for turning bs-escaped octal
+sequence into binary would be one way to achieve that goal.
 
 Thanks.
