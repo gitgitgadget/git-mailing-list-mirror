@@ -2,180 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 312F7EB64D8
-	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 18:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF3E6EB64D0
+	for <git@archiver.kernel.org>; Tue, 13 Jun 2023 18:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239369AbjFMSZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jun 2023 14:25:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
+        id S235326AbjFMSnK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jun 2023 14:43:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239585AbjFMSZz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2023 14:25:55 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F4319BC
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 11:25:53 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-56ff697b86cso7665327b3.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 11:25:53 -0700 (PDT)
+        with ESMTP id S231398AbjFMSnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2023 14:43:08 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EC1F1BE1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 11:43:07 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-bd6df68105cso416510276.2
+        for <git@vger.kernel.org>; Tue, 13 Jun 2023 11:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686680753; x=1689272753;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/wC7OxYLVlpkpjdnTvG5wk34KxCGp6Z9lpRvV4Sdi0k=;
-        b=NS6raMSTq6IJwoyAF9hoVnhvJ2TgdaZvPKR8oGHBsG7p7qr+H2EibaIET9kP5OiWE+
-         QzjsuCR1sL/255Czh22R6L8FLF3QEv0lObiVQ6j9EN++Gl9jxwMDdS1my1AFBcY6YX/x
-         rl5IosMS6R2fKjO9yFO7O/dalyCEwR0bRt9sZXIF1E9Ujg0vvScMVYfXMER+/tQhpV2X
-         GPQZvpxeym/pKmCwpYzaCIUIsEYxGjS4JuMzI1/3arqfMW/WlPnJIe02sc9hWU3IdqVY
-         Ef5s+UkxgaNkiFeCFRSr6qHW9IvdD3+7a+yPkYjAOzeZILJfsJXrtut6FR5ksiYNKenT
-         hYZA==
+        d=google.com; s=20221208; t=1686681787; x=1689273787;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jaIAytrkYXpcQXV+VkwzOTbeXfUP3t68kEMW6p30Das=;
+        b=wsxhAgsZYWX3sdVzp79n+uguXwl+mrfm8x+jEM7r6FwWuPDAVSrW8cdv+sXU09ip4L
+         zdu4Z5aYY+jzVMAD/zeC4FONcaWNL+lS+/4nXtHq9k28kBz4fqSgKtLOb5YTCly6sa8o
+         yRCFwXI4WOMkgsb5ApgewadLAoCBKPPqipDNutNbSb35KgwB6OAxg9Nyi0EVn66iqYnt
+         kxydVxjo+BB/aR2m8eyQwaB6tjp0xD1qACoRSxU/6fu0+SkiYpL7aobqKTZs5qlT5Khh
+         i+on75r3UhpiokAngO/hOJ49DOHZPAWMNmXL2Fzq+I5ZwY/SX1JLb9rAW7V62tjhV5BQ
+         n03A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686680753; x=1689272753;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/wC7OxYLVlpkpjdnTvG5wk34KxCGp6Z9lpRvV4Sdi0k=;
-        b=YvvQ5/TJdwxpVdSOiDVSbC5e4kVPRdX+Nnm3SMcihHrDa/237Q9a+r4LcfWIb9PaVv
-         fX57aCZD+iYz0QEB26VEfKTiNeGNQywtHi0C+JsIuP3FMnBWA1tvZ97+dInnkw67pNT/
-         aCHcB53Nm2KVqJwfgfnDSAsCnFNXJLr7s1ZwGbaYEinKopfGv6nxd56m1p/aeTLnKe4X
-         otpO9ziyr7OADkozTqj/VWwzFKzmOs6fJ8BJxLjmtqlBPUyn6QmNIMvL5+rnMdzLLP28
-         2QUHTxWPuXIqv3wM/81afcp2NSmqVFTyjUX9YWgIv8Rd2qAYsdPfMRAdWzoiIg1mtzMP
-         59lA==
-X-Gm-Message-State: AC+VfDzTqSMesCD/zXHJlAsUOCij8j6t+YVu5wSNEVxaPzGqnodOsnm9
-        q52FaP3DcfAWba6U5Y5ixIYH7OtARwF27Q==
-X-Google-Smtp-Source: ACHHUZ6fQ9w93JBMabetgswF7CQkv12yPPJuJsHgnZMmbHeSJ9Zkp7NTQ8UqEZioO8yAq4lFapqfjSjSW+xeEg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a81:4102:0:b0:56d:791:d1a4 with SMTP id
- o2-20020a814102000000b0056d0791d1a4mr1237034ywa.7.1686680752898; Tue, 13 Jun
- 2023 11:25:52 -0700 (PDT)
-Date:   Tue, 13 Jun 2023 11:25:51 -0700
-In-Reply-To: <9fb6d7b1-00b6-93ee-efec-9dd0ab91a66d@github.com>
+        d=1e100.net; s=20221208; t=1686681787; x=1689273787;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jaIAytrkYXpcQXV+VkwzOTbeXfUP3t68kEMW6p30Das=;
+        b=j3FJ3tWfwsn49slMvoM31lrsFUjWrcfQn2J7Sb8Tq5i85EGsOKyCX36mobILcc1e3v
+         oJH1z/98KDEw0kyt1YyUCq03PnBt4f3vrjfXPRyMMFfwfodhS7gsRSviidWU+ha9kaWK
+         7ov7yeJ6xdsd/bco94xvtYlYt94tCRfha+e43/j1fYqJfDJkuG424HygAZkKrUYyLYss
+         /q0bUXupPFfc1p1nfq4ILKRiAjzDa8KIz0fqVBaAyoC58wqA/RaG73XtknS0WQ7z4755
+         s9likHhG3Unylv1GGeUMk6aF9Xv8IxaD6Ko/k0lgTkMbarHIeGevMWoHYX3ikzG7xs1g
+         Dq7A==
+X-Gm-Message-State: AC+VfDzH+VwfyN1vludUr1H5+3daACUSisTk9IgfhJSLOajDuwSvPCa7
+        LutO6PdMGxur3m+0A3P/FHJIbRx73bSbEb8dKlyB
+X-Google-Smtp-Source: ACHHUZ652YOXl+gZUx2jOr2QnRtm2QLcmjWhS9643l98fIktmm1AYjJsLJPIHcLx7EdhKACIaxQmlCXeYKElssoTmclE
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:5e39:4d58:c992:1db0])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:9387:0:b0:bcc:285c:66dd with
+ SMTP id a7-20020a259387000000b00bcc285c66ddmr1101844ybm.11.1686681786856;
+ Tue, 13 Jun 2023 11:43:06 -0700 (PDT)
+Date:   Tue, 13 Jun 2023 11:43:03 -0700
+In-Reply-To: <CAPig+cRS=cpV1e4QoSy5uypA+-hECyPe2rEg3scV8LVBfzZ5hA@mail.gmail.com>
 Mime-Version: 1.0
-References: <kl6lr0qgfmzo.fsf@chooglen-macbookpro.roam.corp.google.com>
- <20230612230453.70864-1-chooglen@google.com> <9fb6d7b1-00b6-93ee-efec-9dd0ab91a66d@github.com>
-Message-ID: <kl6llegnfccw.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH] setup: copy repository_format using helper
-From:   Glen Choo <chooglen@google.com>
-To:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        derrickstolee@github.com, gitster@pobox.com
+X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
+Message-ID: <20230613184304.36482-1-jonathantanmy@google.com>
+Subject: Re: [PATCH] CodingGuidelines: use octal escapes, not hex
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+> On Tue, Jun 13, 2023 at 1:44=E2=80=AFPM Jonathan Tan <jonathantanmy@googl=
+e.com> wrote:
+> > Hexadecimal escapes in shell scripts are not portable across shells (in
+> > particular, "dash" does not support them). Write in the CodingGuideline=
+s
+> > document that we should be using octal escapes instead.
+> >
+> > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> > ---
+> > diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuide=
+lines
+> > @@ -188,6 +188,9 @@ For shell scripts specifically (not exhaustive):
+> > + - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
+> > +   "\xc2\xa2"), as the latter is not portable.
+>=20
+> The shell itself doesn't interpret these sequences, so this
+> description feels too generic. Perhaps it would make more sense to
+> cite specific tools for which octal sequences are needed for
+> portability reasons, such as `printf`, `sed`, `tr`, etc.
 
->> - All of them 'copy' .partial_clone. Most perform a shallow copy of the
->>   pointer, then set the .partial_clone = NULL so that it doesn't get
->>   cleared by clear_repository_format(). However,
->>   check_repository_format() copies the string deeply because the
->>   repository_format is sometimes read back (it is an "out" parameter).
->>   To accomodate both shallow copying and deep copying, toggle this
->>   behavior using the "modify_fmt_ok" parameter.
->
-> Do you have a specific example of this happening? I see two uses of
-> 'check_repository_format()' in the codebase:
->
-> 1. in 'enter_repo()' ('path.c')
-> 2. in 'init_db()' ('init-db.c')
->
-> The first one calls 'check_repository_format()' with 'NULL', which causes
-> the function to create a temporary 'struct repository_format' that is then
-> discarded at the end of the function - no need to worry about the value
-> being cleared there.
->
-> The second one does call 'check_repository_format()' with a 'struct
-> repository_format' instance, but the 'partial_clone' field field is not
-> accessed again after that. The only subsequent usages of the 'repo_fmt'
-> variable in 'init_db()' are:
->
-> - in 'validate_hash_algorithm()', where only the 'version' and 'hash_algo'
->   fields are accessed.
-> - in 'create_default_files()', where only 'hash_algo' is accessed.
->
-> So, shouldn't it be safe to shallow-copy-and-NULL? But as I noted earlier
-> [1], if you do that it'll make the name 'check_repository_format()' a bit
-> misleading (since it's actually modifying its arg in place). So, if you
-> update to always shallow copy, 'check_repository_format()' should be renamed
-> to reflect its side effects.
+Ah...good point. I checked with "echo" in "dash" and assumed that it
+was "dash" that was interpreting the escapes, but indeed it is the
+"echo" (and "printf") builtins in "dash" that are actually interpreting
+them. What do you think of the following in the commit message:
 
-My understanding of check_repository_format() is that it serves double
-duty of doing a) setup of the_repository and b) populating an "out"
-parameter with the appropriate values. IMO a) is the side effect that
-could warrant the rename, and b) is the expected, "read-only" use case.
-From that perspective, doing a shallow copy here isn't really
-introducing a weird side-effect (because the arg to an "out" parameter
-should be zero-ed out to begin with), but it's returning a 'wrong'
-value. You're right that it's safe because the NULL-ed value isn't read
-back right now, but it's not any good if this function gains more
-callers.
+  Hexadecimal escapes in shell scripts are not portable across shell builti=
+ns (in
+  particular, the "printf" of "dash" does not support them). Write in the C=
+odingGuidelines
+  document that we should be using octal escapes instead.
 
-Your point about not having side effects in check_*() is a good one
-though, and I'm starting to feel doubtful that we should be doing setup
-there either....
+and in the CodingGuidelines doc:
 
->> If you're comfortable with it, I would prefer for you to squash this
->> into your patches so that we don't just end up changing the same few
->> lines. If not, I'll Reviewed-by your patches (if I don't find any other
->> concerns on a re-read) and send this as a 1-patch on top.
->
-> Reading through the commit message & patch, I'm still not convinced this
-> refactor is a good idea - to me, it doesn't leave the code in a clearly
-> better state. If you feel strongly that it does, though, I'm happy to leave
-> it to others to review/decide but I would prefer that you keep it a separate
-> patch submission on top.
-
-Okay. Given how weird check_repository_format() and
-discover_git_directory() are, I think we haven't done enough
-investigation to properly consolidate this logic, and doing that
-introduces quite a lot of scope creep. It feels very unsatisfactory that
-we are propagating a pattern that is suspicious in some places and
-outright wrong in others instead of cleaning up as we go and leaving it
-in a better state for future authors, but this series does leave some
-_other_ parts in a better state (removing the global), and I think it's
-still a net positive.
-
-The helper function might not be a good idea yet, but I'm convinced that
-removing the setup from discover_git_directory() is a good idea. I think
-this series would be in a better state if we get rid of the wrong
-pattern instead of extending it. Unfortunately, I forgot to include that
-change in the patch I sent (ugh) but here's a patch that _just_ includes
-the discover_git_directory() change that I hope you can squash into your
-series (and you can use whatever bits of my commit message you see fit).
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-
-  diff --git a/setup.c b/setup.c
-  index 33ce58676f..b172ffd48a 100644
-  --- a/setup.c
-  +++ b/setup.c
-  @@ -1422,14 +1422,6 @@ int discover_git_directory(struct strbuf *commondir,
-      return -1;
-    }
-
-  -	the_repository->repository_format_worktree_config =
-  -		candidate.worktree_config;
-  -
-  -	/* take ownership of candidate.partial_clone */
-  -	the_repository->repository_format_partial_clone =
-  -		candidate.partial_clone;
-  -	candidate.partial_clone = NULL;
-  -
-    clear_repository_format(&candidate);
-    return 0;
-  }
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-
-You can see that this patch based on top of yours passes CI
-
-  https://github.com/git/git/commit/9469fe3a6b0efbe89d26ef096a2eebabea59c55f
-  https://github.com/chooglen/git/actions/runs/5258672473
-
-> I think you may be missing changes to 'discover_git_directory()'? Like I
-> mentioned above, though, if you don't think 'discover_git_directory()' needs
-> to set up 'the_repository', then those assignments should just be removed
-> (not replaced with 'setup_repository_from_format()').
-
-Ah sorry, yes they were meant to be removed. I somehow missed those as I
-was preparing the patch.
-
++ - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
++   "\xc2\xa2"), as the latter is not portable across some shell builtins l=
+ike printf.
