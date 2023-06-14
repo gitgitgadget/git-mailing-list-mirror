@@ -2,174 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80667EB64DB
-	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 19:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 221A7EB64D8
+	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 19:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237042AbjFNT0f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jun 2023 15:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51696 "EHLO
+        id S231494AbjFNTgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jun 2023 15:36:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjFNT01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2023 15:26:27 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC4A26A4
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 12:26:14 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f8d5262dc8so222345e9.0
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 12:26:14 -0700 (PDT)
+        with ESMTP id S229832AbjFNTgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2023 15:36:03 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B24E11C
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 12:36:01 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f78a32266bso11814895e9.3
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 12:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686770773; x=1689362773;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x8AjKnqmHXvW0/kE5+ku/lIt6XDqaH9ZIMcIxFtwt8c=;
-        b=goplzWAl1Jr3IP1PzjloHhTuaIEJ2w3ieWsVlOdVcGwni5mJR7xarlQ/KorNdYqjuc
-         +XQQJawZ3xl+fKILDgX10mCMvA1Jbj7G+m2Z6qCIz1nkk8A5WC20zJ1OUJQppNLTHC/J
-         FbfY8APAULXOmkGE9tJExg+1P64VXQb6qAS9Ghh0JL9PivKCSssHFTJCZCTwZlB6WVw1
-         edzJUX0XPDc43Qfj4Pzk37boXUyKp7MOTQkODs58w7fmX0ZK33VZdCTUd0YkQU/yGcpL
-         M0a3by+5l7LjefjWll04XlUaEaBCWs5FXbS9FlubOycBpL8bZRUBU6z7JCLiBObD3slx
-         0veQ==
+        d=gmail.com; s=20221208; t=1686771360; x=1689363360;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=FxqZvruQc3EEsniovDdwYAVxBtrg7EkeAHH5opFwkuk=;
+        b=NvnYnYZK9R/zo6GLq37EPpB64c9toyNPTBhJbTX9OYnWAzMDyQHWeZFVq0acVYNLMI
+         HEIHdwStHsbw8uzgH3hTqcQYcb1bAwf+aL+xI5pBIIWy13bfUcvA4OY0vO8pvZ1B94P5
+         DmvnOanx9gBZ/T2ATNWOA86sbHEZJ/qM3Ybf25yL8j6Iih5SpXdQtcRZwoyXyEm/6uPZ
+         hO9goJR3MAdQVQH+0gb9QcyKRqh78829gO480vunzbu150Nkt6xTzb2z1OmCdhFOFYqa
+         aRBiem4gF8rGTwCklPadR2FW1vA5UuOdGeZVo1P9lwrgEGwNzV7cCY7+9jeV7oszX8nh
+         XI4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686770773; x=1689362773;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x8AjKnqmHXvW0/kE5+ku/lIt6XDqaH9ZIMcIxFtwt8c=;
-        b=IdRcg4tsU9xS7dLYXN1vRshWDRKPktVVpr8DPS6FLZ2Nnn/Kgq2bQ0MnuaNxN2gNG/
-         Kj8FYAcSM/eq5Slo9BaclzI1ufyizbfb2I/f7vzILPG1N+XYRMoMzLZsPmsRU5UnuIxs
-         Vtnp5McMdeo7KfzT0wdHOPpkolhGVmYmKeTrkdyKLJxa/S2se/+Xfc+JLHA45RpC/NKe
-         XgRxtj5FKyWOQbyKjYvku6zOwI9VCpPcOl4qlkZfXtaSDXgbpCqR/elc/6O/AOk7c851
-         aX7t1YMl6MidmU7kEjPOGvPtYtB+WzI0WGdNyRVj9/4b2T7GddUs8XhaZrYEcNdbtVfx
-         ZMlA==
-X-Gm-Message-State: AC+VfDxL3LwSKFxuAsw7pwIeOucp2RFvudm+vQ84PSQ4znzcjPyC+Ivv
-        FH3jobnOBFdMJGd5BJ/AcRGpv+xhsb8=
-X-Google-Smtp-Source: ACHHUZ5ggnoo2+FHeZJHR8o/D+jcJDHHR7+GQKxZ0vnszDJQ4BilEoqt3IJZvl7BC1GuYventFW8fw==
-X-Received: by 2002:a05:600c:204e:b0:3f8:1dda:209e with SMTP id p14-20020a05600c204e00b003f81dda209emr2274722wmg.10.1686770772844;
-        Wed, 14 Jun 2023 12:26:12 -0700 (PDT)
-Received: from localhost.localdomain ([2001:861:3f04:7ca0:e164:efe0:8fdb:6ba])
-        by smtp.gmail.com with ESMTPSA id u26-20020a05600c00da00b003eddc6aa5fasm18370365wmm.39.2023.06.14.12.26.11
+        d=1e100.net; s=20221208; t=1686771360; x=1689363360;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FxqZvruQc3EEsniovDdwYAVxBtrg7EkeAHH5opFwkuk=;
+        b=ZgMueGi1IldHoZo8a0QvzHJN6iDlKy0FcnkLc7o/XXnM1c9Od7AyxaomHQK1kUBrtf
+         GEvf+9Y5WU9DIBPhAPMhZZ8BWxIjgpMqFsQx3TXJj3xUKjvniRcPGSg3doUjHDrs+Kbq
+         Ew+Qsdr+P1yx6gd4qgqg/2/bwj6T1cqlBxp0xEagDPU6DqQBTlVI4DzXKsxR5jvmbjll
+         5BxxVyAc2YVYlNomOxlm1PW1OIWE1+1AsJQ7uzRK67+2WwqsXm9AQum7L8SbknY/vLNo
+         XAd/2sO3d2lPnMs9bYdW1Z6CdAVn/CFIRl4nsxal5wYAKaMh2oVSNOtKJXqVM6H9Zpcd
+         8mAg==
+X-Gm-Message-State: AC+VfDwqJ3Za2JGgzPj2zQzX4YaIYEv44VzL9JWFFN+NmTgmtrMLh7pb
+        MHNGF/lG4mOYYoQGBnCslzeOj+didbA=
+X-Google-Smtp-Source: ACHHUZ4ndlJjcGPpGHyA6vHkqqzP3MtX8FT1bUl9oq5YX9fMpwiimAgN4VW1vhFvBUMuyGFwrlmndA==
+X-Received: by 2002:a1c:7906:0:b0:3f7:e48b:974d with SMTP id l6-20020a1c7906000000b003f7e48b974dmr13892727wme.27.1686771359676;
+        Wed, 14 Jun 2023 12:35:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h2-20020a5d5042000000b0030fd03e3d25sm4913577wrt.75.2023.06.14.12.35.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 12:26:11 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 9/9] gc: add `gc.repackFilterTo` config option
-Date:   Wed, 14 Jun 2023 21:25:41 +0200
-Message-ID: <20230614192541.1599256-10-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.41.0.37.gae45d9845e
-In-Reply-To: <20230614192541.1599256-1-christian.couder@gmail.com>
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
-MIME-Version: 1.0
+        Wed, 14 Jun 2023 12:35:59 -0700 (PDT)
+Message-Id: <pull.1526.git.git.1686771358484.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 14 Jun 2023 19:35:58 +0000
+Subject: [PATCH] setup.c: don't setup in discover_git_directory()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Victoria Dye <vdye@github.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Glen Choo <chooglen@google.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A previous commit implemented the `gc.repackFilter` config option
-to specify a filter that should be used by `git gc` when
-performing repacks.
+From: Glen Choo <chooglen@google.com>
 
-Another previous commit has implemented
-`git repack --filter-to=<dir>` to specify the location of the
-packfile containing filtered out objects when using a filter.
+discover_git_directory() started modifying the_repository in ebaf3bcf1ae
+(repository: move global r_f_p_c to repo struct, 2021-06-17), when, in
+the repository setup process, we started copying members from the
+"struct repository_format" we're inspecting to the appropriate "struct
+repository". However, discover_git_directory() isn't actually used in
+the setup process (its only caller in the Git binary is
+read_early_config()), so it shouldn't be doing this setup at all!
 
-Let's implement the `gc.repackFilterTo` config option to specify
-that location in the config when `gc.repackFilter` is used.
+As explained by 16ac8b8db6 (setup: introduce the
+discover_git_directory() function, 2017-03-13) and the comment on its
+declaration, discover_git_directory() is intended to be an entrypoint
+into setup.c machinery that allows the Git directory to be discovered
+without side effects, e.g. so that read_early_config() can read
+".git/config" before the_repository has been set up.
 
-Now when `git gc` will perform a repack with a <dir> configured
-through this option and not empty, the repack process will be
-passed a corresponding `--filter-to=<dir>` argument.
+Fortunately, we didn't start to rely on this unintended behavior between
+then and now, so we let's just remove it. It isn't harming anyone, but
+it's confusing.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- Documentation/config/gc.txt |  6 ++++++
- builtin/gc.c                |  4 ++++
- t/t6500-gc.sh               | 13 ++++++++++++-
- 3 files changed, 22 insertions(+), 1 deletion(-)
+    setup.c: don't setup in discover_git_directory()
+    
+    This is the scissors patch I sent on Victoria's series [1], but rebased
+    onto "master" since that series hasn't been merged yet. The merge
+    conflict resolution is to delete all of the conflicting lines:
+    
+    -	the_repository->repository_format_worktree_config =
+    -		candidate.worktree_config;
+    -
+    
+    
+    IOW it's the original scissors patch if queued on top of Victoria's
+    series, but it might be cleaner to invert that, i.e. if we pretended
+    that this was in "master" already, there wouldn't be reason to add those
+    lines to begin with.
+    
+    [1]
+    https://lore.kernel.org/git/kl6llegnfccw.fsf@chooglen-macbookpro.roam.corp.google.com
 
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 055c4e0db6..699ad887b3 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -135,6 +135,12 @@ gc.repackFilter::
- 	objects into a separate packfile.  See the
- 	`--filter=<filter-spec>` option of linkgit:git-repack[1].
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1526%2Fchooglen%2Fpush-nknkwmnkxolv-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1526/chooglen/push-nknkwmnkxolv-v1
+Pull-Request: https://github.com/git/git/pull/1526
+
+ setup.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index 458582207ea..bbd95f52c0f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1423,11 +1423,6 @@ int discover_git_directory(struct strbuf *commondir,
+ 		return -1;
+ 	}
  
-+gc.repackFilterTo::
-+	When repacking and using a filter, see `gc.repackFilter`, the
-+	specified location will be used to create the packfile
-+	containing the filtered out objects.  See the
-+	`--filter-to=<dir>` option of linkgit:git-repack[1].
-+
- gc.rerereResolved::
- 	Records of conflicted merge you resolved earlier are
- 	kept for this many days when 'git rerere gc' is run.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 1c57913214..87f5fc6946 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -62,6 +62,7 @@ static const char *gc_log_expire = "1.day.ago";
- static const char *prune_expire = "2.weeks.ago";
- static const char *prune_worktrees_expire = "3.months.ago";
- static char *repack_filter;
-+static char *repack_filter_to;
- static unsigned long big_pack_threshold;
- static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- 
-@@ -172,6 +173,7 @@ static void gc_config(void)
- 	git_config_get_ulong("pack.deltacachesize", &max_delta_cache_size);
- 
- 	git_config_get_string("gc.repackfilter", &repack_filter);
-+	git_config_get_string("gc.repackfilterto", &repack_filter_to);
- 
- 	git_config(git_default_config, NULL);
+-	/* take ownership of candidate.partial_clone */
+-	the_repository->repository_format_partial_clone =
+-		candidate.partial_clone;
+-	candidate.partial_clone = NULL;
+-
+ 	clear_repository_format(&candidate);
+ 	return 0;
  }
-@@ -361,6 +363,8 @@ static void add_repack_all_option(struct string_list *keep_pack)
- 
- 	if (repack_filter && *repack_filter)
- 		strvec_pushf(&repack, "--filter=%s", repack_filter);
-+	if (repack_filter_to && *repack_filter_to)
-+		strvec_pushf(&repack, "--filter-to=%s", repack_filter_to);
- }
- 
- static void add_repack_incremental_option(void)
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index 5b89faf505..37056a824b 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -203,7 +203,6 @@ test_expect_success 'one of gc.reflogExpire{Unreachable,}=never does not skip "e
- '
- 
- test_expect_success 'gc.repackFilter launches repack with a filter' '
--	test_when_finished "rm -rf bare.git" &&
- 	git clone --no-local --bare . bare.git &&
- 
- 	git -C bare.git -c gc.cruftPacks=false gc &&
-@@ -214,6 +213,18 @@ test_expect_success 'gc.repackFilter launches repack with a filter' '
- 	grep -E "^trace: (built-in|exec|run_command): git repack .* --filter=blob:none ?.*" trace.out
- '
- 
-+test_expect_success 'gc.repackFilterTo store filtered out objects' '
-+	test_when_finished "rm -rf bare.git filtered.git" &&
-+
-+	git init --bare filtered.git &&
-+	git -C bare.git -c gc.repackFilter=blob:none \
-+		-c gc.repackFilterTo=../filtered.git/objects/pack/pack \
-+		-c repack.writeBitmaps=false -c gc.cruftPacks=false gc &&
-+
-+	test_stdout_line_count = 1 ls bare.git/objects/pack/*.pack &&
-+	test_stdout_line_count = 1 ls filtered.git/objects/pack/*.pack
-+'
-+
- prepare_cruft_history () {
- 	test_commit base &&
- 
+
+base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
 -- 
-2.41.0.37.gae45d9845e
-
+gitgitgadget
