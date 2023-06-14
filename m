@@ -2,161 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F13EB64D8
-	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 04:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 511A4EB64DA
+	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 07:06:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234067AbjFNE5B convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 14 Jun 2023 00:57:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42592 "EHLO
+        id S241378AbjFNHGz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jun 2023 03:06:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233669AbjFNE5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2023 00:57:00 -0400
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6BD8122
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 21:56:58 -0700 (PDT)
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-62de5392c7bso13254286d6.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2023 21:56:58 -0700 (PDT)
+        with ESMTP id S233909AbjFNHGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2023 03:06:53 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 399E619B1
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 00:06:52 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 46e09a7af769-6b2b7ca1c5eso4510319a34.0
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 00:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686726411; x=1689318411;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=XCMvbZ+nygxaPCkCynzOrILzubNqTH2Nhnpk32aPby4=;
+        b=YYM9zqa3E6kJoXV8IEBTyz/jPvNsPdvy81MA2+H0ll57EP5DBpYe+c3fNWRTI52LyQ
+         DvgBJyh/yRH6pCdn8qa3D5jvKYJXBSTeM/IyuKz8KVCREs55mpPEd5YC2dSi4xERZ0K2
+         KC7L4UhR94SqBI3bHGPEwq3qTithYyHJkH7PfYt5Bl0E98CKooye2mko17qncKwTbByX
+         WNfx6k/EScxCsRFNn2NsKOtN9AsalbL8lPPVBoHVV5JE67n/bNfBie4c5+BKGV7o+OQE
+         fK4fU3l9oINJZxiS7VLF70IpIxP2Wtqakb49adiSfmfGg+C3WUx8OvAPw5wVDCMmFHeh
+         tZvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686718617; x=1689310617;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2rUHmXVEo32inDcwHLyljbdbNzPdqgcyj9aPiIjDFK8=;
-        b=gZXK0l0P0sw+GNk3REB/F3meDsaBavR1KGZ55AQBsY0aeQqe59hBiJM2aHXODjCXNS
-         LzvcgK/DBB3Gm1HHorfko3i4INPZI52wLXoceY1ZLiomv8TwvktDNLCMq2fuqqEH6I8z
-         5K08z0XECLmB2/B0pNGR7UnB1T0H1HaqDesrXo1rZD8kbK6o3ksxIZeFKanHsSEbWFzi
-         FQqBmINaPyFwuUDREcVX1SMmFxSPPdGtVz0l0uScdG7riv4EZYf5YUCMGPurVsGswV6J
-         dNU5bP/6ZWcRAZzYd6myqGdeLe+OtFpk84ABDLzA1hRi2FY9ourDZjBwDtzcqO+gFG/N
-         ZMmA==
-X-Gm-Message-State: AC+VfDzbCAObGTw4+KVCaaSC4Lj6StD/ISZ7tD2jpK3BPW8DbFOk6alA
-        UTIUmStx5SSr8yc750wtypfjMbE/8dV7hENpiJF526xVAFM=
-X-Google-Smtp-Source: ACHHUZ7lqa/48tK2tqRVq6jxJf8yfzfpnGsmgKgTAbG5t3bPaLSCvK7SQEPKk1fBaSc/Gszkij1kByIB1D9j8UFVx9I=
-X-Received: by 2002:ad4:594f:0:b0:62d:eb59:7806 with SMTP id
- eo15-20020ad4594f000000b0062deb597806mr10599011qvb.31.1686718617660; Tue, 13
- Jun 2023 21:56:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230614041626.2979067-2-sokcevic@google.com>
-In-Reply-To: <20230614041626.2979067-2-sokcevic@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 14 Jun 2023 00:56:46 -0400
-Message-ID: <CAPig+cQiwkwzVNHpBnXEAKo91LCUs-qgxbiZVbmGK1CbPVEQXg@mail.gmail.com>
-Subject: Re: [PATCH] diff-lib: honor override_submodule_config flag bit
+        d=1e100.net; s=20221208; t=1686726411; x=1689318411;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XCMvbZ+nygxaPCkCynzOrILzubNqTH2Nhnpk32aPby4=;
+        b=P8MEn7JXREinN3HTEfAZKg0ou1E6aNxGXhSBLxwApRot21jEKZDiZG0+PEX76OPX0W
+         WmSNIlTLdI0oclcjVbpgBeAct31jBvcyrf0yEC0G1BVTCsHlTC1tQmDTCIfCSQJW2fmJ
+         9RmxqpI1JpRYo1XqCRBHRAYp+LpX4ObNV1wKxLlmhBU6UorHl0s5jwx2AVS3k0NYriQJ
+         QnXb2E8jYqytZYg/WomO6Nk8o6d5cau1Y1KLaLiVP+PtTBZK86KdA5pLwNIjOw2URr5I
+         /tR3nJ1vCEZ+A+DJn6EhBu7ilW1osht4FYVjQW1w5w1mDHZpXJmL/b6EGKjmTWJkCNA9
+         vIPw==
+X-Gm-Message-State: AC+VfDwwDVGxGAW74h5a9WQiS1TDIzv0nwhNaWnNYkF97/lONRW9ohfq
+        Cb/mCep2zXRx7a1pHcJQ/d4=
+X-Google-Smtp-Source: ACHHUZ4ADyxBYeAXt5hdexzpNKi8ykPu3BFhse7cr0tQUVx+afMfBuhff76/Klwde+Tz/jky/95vMg==
+X-Received: by 2002:a9d:7b56:0:b0:6b2:425:fa14 with SMTP id f22-20020a9d7b56000000b006b20425fa14mr10331269oto.9.1686726411323;
+        Wed, 14 Jun 2023 00:06:51 -0700 (PDT)
+Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
+        by smtp.gmail.com with ESMTPSA id z11-20020a6552cb000000b0053051d50a48sm9644120pgp.79.2023.06.14.00.06.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jun 2023 00:06:50 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Josip Sokcevic <sokcevic@google.com>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH] diff-lib: honor override_submodule_config flag bit
+References: <20230614041626.2979067-2-sokcevic@google.com>
+Date:   Wed, 14 Jun 2023 00:06:50 -0700
+Message-ID: <xmqqedmezfn9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 14, 2023 at 12:39 AM Josip Sokcevic <sokcevic@google.com> wrote:
+Josip Sokcevic <sokcevic@google.com> writes:
+
 > When `diff.ignoreSubmodules = all` is set and a submodule commit is
 > manually staged, `git-commit` should accept it.
->
-> `index_differs_from` is called from `prepare_to_commit` with flags set to
-> `override_submodule_config = 1`. `index_differs_from` then merges the
-> default diff flags and passed flags.
->
-> When `diff.ignoreSubmodules` is set to "all", `flags` ends up having
-> both `override_submodule_config` and `ignore_submodules` set to 1. This
-> results in `git-commit` ignoring staged commits.
->
-> This patch restores original `flags.ignore_submodule` if
-> `flags.override_submodule_config` is set.
-> ---
 
-Thanks for the patch. I'm not a submodule user, so I can't comment on
-the functional changes made by the patch, but instead will provide a
-few superficial comments to help move your patch along.
+What does "it" refer to in this sentence?  Does "accept"ing mean
+"Even if the configuration tells us to ignore all submodules, the
+command should record the commit with updated submodule"?  Or does
+it mean "as the configuration tells us to ignore all submodules, the
+command should honor that wish and the command should record the
+commit with the same commit at the submodule path as the parent
+commit, ignoring the manual addition"?  The sentence needs to be
+rewritten to clarify so that readers won't have to ask the above
+question.
 
-Please add a Signed-off-by: before the "---" line above. See
-Documentation/SubmittingPatches.
+Everything else I wrote in my draft review I notice was adequately
+covered by Eric's review, so I've removed them from this message.
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> @@ -669,8 +669,13 @@ int index_differs_from(struct repository *r,
-> -       if (flags)
-> +       if (flags) {
->                 diff_flags_or(&rev.diffopt.flags, flags);
-> +               // Now that flags are merged, honor override_submodule_config
-> +               // and ignore_submodules from passed flags.
-
-This project still uses old-style /*...*/ comments; //-style are
-avoided. A multi-line comment is formatted like this:
-
-    /*
-     * This is a multi-line
-     * comment.
-     */
-
-> +               if ((*flags).override_submodule_config)
-> +                       rev.diffopt.flags.ignore_submodules = (*flags).ignore_submodules;
-
-It would be more idiomatic to use the `->` operator to access members
-of `flags`:
-
-    if (flags->override_submodule_config)
-        rev.diffopt.flags.ignore_submodules = flags->ignore_submodules;
-
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> @@ -1179,4 +1179,32 @@ test_expect_success 'submodule update --recursive skip submodules with strategy=
-
-Nice to see new tests accompanying the code change.
-
-> +add_submodule_commits_and_validate () {
-> +       HASH=$(git rev-parse HEAD) &&
-> +       git update-index --add --cacheinfo 160000,$HASH,sub &&
-> +       git commit -m "create submodule" &&
-> +       git ls-tree HEAD >output &&
-> +       test_i18ngrep "$HASH" output &&
-> +
-> +       rm output
-> +}
-
-"output" won't get cleaned up if a command earlier in the &&-chain
-fails. To ensure that it does get cleaned up regardless of whether the
-test succeeds or fails, use test_when_finished() before the file is
-created. For instance:
-
-    add_submodule_commits_and_validate () {
-        HASH=$(git rev-parse HEAD) &&
-        ...
-        test_when_finished "rm -f output" &&
-        git ls-tree HEAD >output &&
-        ...
-    }
-
-These days, test_i18ngrep() is deprecated. Just use plain old `grep` instead.
-
-> +
-> +
-> +test_expect_success 'commit with staged submodule change' '
-> +       add_submodule_commits_and_validate
-> +'
-> +
-> +
-
-Separate the tests by a single blank line rather than two.
-
-> +test_expect_success 'commit with staged submodule change with ignoreSubmodules dirty' '
-> +       git config diff.ignoreSubmodules dirty &&
-> +       add_submodule_commits_and_validate &&
-> +       git config --unset diff.ignoreSubmodules
-> +'
-
-The same observation as above regarding cleaning up: The `git config
---unset` won't be invoked if a command earlier in the &&-chain fails.
-Instead, use test_config() which will ensure cleanup regardless of
-whether the test succeeds or fails:
-
-    test_expect_success 'commit ...' '
-        test_config diff.ignoreSubmodules dirty &&
-        add_submodule_commits_and_validate
-    '
-
-> +test_expect_success 'commit with staged submodule change with ignoreSubmodules all' '
-> +       git config diff.ignoreSubmodules all &&
-> +       add_submodule_commits_and_validate &&
-> +       git config --unset diff.ignoreSubmodules
-> +'
-
-Likewise.
+Thanks.
