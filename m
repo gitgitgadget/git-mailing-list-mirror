@@ -2,255 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 779EFEB64D9
-	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 21:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99682EB64D8
+	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 21:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235541AbjFNVgA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jun 2023 17:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46702 "EHLO
+        id S233801AbjFNVgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jun 2023 17:36:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbjFNVf7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2023 17:35:59 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5006180
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 14:35:57 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-98276e2a4bbso143997766b.0
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 14:35:57 -0700 (PDT)
+        with ESMTP id S230487AbjFNVgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2023 17:36:14 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A5F180
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 14:36:13 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id 98e67ed59e1d1-25e836b733eso433483a91.0
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 14:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686778556; x=1689370556;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lAtjxwNrb1YZ8k2Qg6GkKpPVVDU22A3k/vsxVr+wCKg=;
-        b=FJJSjYV+4Ww0bEwcO3CsrTADZx1TO7b4hKaRgcyzfhkYo6vrrrKAPwK9s8MIWGMsDr
-         IuXZbsahxd6aJYit63BK8iZa5qvdvvYmdUB5TePUP/lIpGHmIXx0bmvcj7CAFl1FoIDc
-         j6+noE8lnQ+O18a5J3Cuhqxb1Ztd3+ctFYalJiJ1EGW40aqDraSe8xdELgMXeUe3N99Y
-         fLPLEZVzjUaZ/7CByzBo4cKAwt9fxaSYZDoEDJs74CxPMVR8iKNTPpS5eKgZAoHI4B5U
-         v/iAonjmaRdoYDaCfOc0Dl+EQOLv/SFGplfKaG0ySzE/sv+iJy5/VZRl6DcvhO+f20Jc
-         TDRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686778556; x=1689370556;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20221208; t=1686778573; x=1689370573;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lAtjxwNrb1YZ8k2Qg6GkKpPVVDU22A3k/vsxVr+wCKg=;
-        b=K8UgCeuSX25oaEzSX8qNjbGprI+mfGIkH7aN6xR3RJGy25EGT1OuY33dHZHmdxCds5
-         MYv/R9FIKjO1sXYMfTEJ+0YzW2Y9uBeznXB6eP7uDhlgKUfd09g/R8I8/l31E8b4y1sk
-         EvKebFxKDP9XgTqFtZ9yPdi9Y92AD9p9/DfC/1jTuemRUHKHNS+NJBrUaeGw7b6rbER8
-         DbxnRQhLKbQgspY70+LkWnpIeaRKj7928W2GsTvwnF4UYD7GFlGH2MTVGMJe/m1CtTxU
-         wV2wH9+VZzL+vfjVcZneII/rH48c2womHisIXw7hGT+8ENUBKulyhC/2lXVjpOsvzF4n
-         JBpQ==
-X-Gm-Message-State: AC+VfDxnlleTia+OWW9h6EkAXmEE5pSWCdBRuj69q+PrMjkkLwmayVWr
-        YLaT7BuMIkG3rPS4UvkNSyxUNPoNn6fnRxTgy6w=
-X-Google-Smtp-Source: ACHHUZ651dDX7mDvKH0z3pRVVnQcnwMfkhUANcO15OlHoluR6fhQcFHU6cEikhSWIN+i8ISJtiAkkqBt8aQ50jRJ8MQ=
-X-Received: by 2002:a17:907:6e10:b0:974:5ce6:f9ff with SMTP id
- sd16-20020a1709076e1000b009745ce6f9ffmr18133011ejc.32.1686778555936; Wed, 14
- Jun 2023 14:35:55 -0700 (PDT)
+        bh=a4NvuR5RZS/Cj1Q+Nze+CMUrcQPrdfNvX6vOkYFKj68=;
+        b=hEwrw/ks4tze1yyQZKqLYMr+dIcheL1olYOYsun4GHUlNlB+P1DvBYOZ6i/fG6NMFB
+         gptMNH27wk2c9SparNMHl3QmZzjqvRiylFu7fWRwLDWbrBmfimvohZ7ZzHlH8jCm1bLV
+         qBW+sj2lL33LKtHVSBoxq7I+X841ZCrjiAOplteJHXGZNHj45f9vv1YNYfWBc3PIozqc
+         95mM8E/Cowh1krjin+TruAWk0XENL/o0s4EwjCuF8btrgtnfp22XyDIOv8YcEh6PyfWi
+         H7r99i9WT5B3OEyVmu+DEu3tGccePqTZu6LZ8PLq5af9+VECWhfgtIVjKzEx2Z8Iik6S
+         4slg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686778573; x=1689370573;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a4NvuR5RZS/Cj1Q+Nze+CMUrcQPrdfNvX6vOkYFKj68=;
+        b=kwE/x5IRUNumEa7jBZn68vcy1lWSTRUgoNiqKFq1yiwDod7gxSTFuM+YkvfJL6wIph
+         V95L90yPcGFZu9pJVVvIDSrowuHBSAcy9ivV3nUxwdANA89mZJ5njrIZyL3Lc0lyKXrA
+         2T3huVxy3cf7RVcG03D+jL5t6kSaMn8/GDLuMXSdjmCJaSeVGJg98VEQ2yhvMC7viI5r
+         aBoyIW+NJy64ikK+JxF0umycz1Mufma7+8GxtalrHoDAQG64E6LITSt5ciIJlvq4wwbR
+         dlcDttCMS1DoH8SSraQeTIy8L6iOKAOociVFr2tIciwOWko7+os8bYoL5J9o6Lyi9N3m
+         2FnA==
+X-Gm-Message-State: AC+VfDzAiJGq7Kt1cMAC2uKkHweutHQz8o4o38Rt+z/NxM/PbZ1oEyha
+        WpyAZOf7dVQuJslz9dQA/kY=
+X-Google-Smtp-Source: ACHHUZ6ZjeuufuB84XwPt3Imbcm4wXs6ShsKCS0DE8455or+YumhNnqAC7P2WSekivqH7VKW9BC3nQ==
+X-Received: by 2002:a17:90a:19c1:b0:25b:bcba:1496 with SMTP id 1-20020a17090a19c100b0025bbcba1496mr2117571pjj.18.1686778572962;
+        Wed, 14 Jun 2023 14:36:12 -0700 (PDT)
+Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
+        by smtp.gmail.com with ESMTPSA id 12-20020a17090a194c00b0025c03008555sm4766228pjh.4.2023.06.14.14.36.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jun 2023 14:36:12 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/9] Repack objects into separate packfiles based on a
+ filter
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+Date:   Wed, 14 Jun 2023 14:36:12 -0700
+In-Reply-To: <20230614192541.1599256-1-christian.couder@gmail.com> (Christian
+        Couder's message of "Wed, 14 Jun 2023 21:25:32 +0200")
+Message-ID: <xmqqsfatwwtv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1525.git.git.1686741785.gitgitgadget@gmail.com>
- <fcdb579263f87dd089c50fc5799cf30b21f4d12c.1686741785.git.gitgitgadget@gmail.com>
- <xmqqv8fqxcdj.fsf@gitster.g>
-In-Reply-To: <xmqqv8fqxcdj.fsf@gitster.g>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Wed, 14 Jun 2023 22:35:20 +0100
-Message-ID: <CAGJzqsmmBYep-iRYushkEztnNMTr52APKmC_nMRQBDbGujt3rg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] credential: erase all matching credentials
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 14 Jun 2023 at 17:00, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: M Hickford <mirth.hickford@gmail.com>
-> >
-> > Users expect that
-> > `echo "url=https://example.com" | git credential reject` or
-> > `echo "url=https://example.com\nusername=tim" | git credential reject`
-> > erase all matching credentials.
->
-> Perhaps that is a sensible expectation.  It is unclear from the
-> above description what happens instead without the "fix", though.
+Christian Couder <christian.couder@gmail.com> writes:
 
-`credential reject` sends the erase action to each helper, but the
-exact behaviour of erase isn't specified in documentation or tests.
-Some helpers (such as credential-libsecret) delete all matching
-credentials, others (such as credential-cache and credential-store)
-delete at most one matching credential.
-
-Test that helpers erase all matching credentials. This behaviour is
-easiest to reason about. Users expect that `echo
-"url=https://example.com" | git credential reject` or `echo
-"url=https://example.com\nusername=tim" | git credential reject` erase
-all matching credentials.
-
-I'll update the commit message in patch v2.
-
+> In some discussions, it was mentioned that such a feature, or a
+> similar feature in `git gc`, or in a new standalone command (perhaps
+> called `git prune-filtered`), should put the filtered out objects into
+> a new packfile instead of deleting them.
 >
-> By the way, I do not think your
+> Recently there were internal discussions at GitLab about either moving
+> blobs from inactive repos onto cheaper storage, or moving large blobs
+> onto cheaper storage. This lead us to rethink at repacking using a
+> filter, but moving the filtered out objects into a separate packfile
+> instead of deleting them.
 >
->     cc. Jeff King peff@peff.net cc: Matthew John Cheetham mjcheetham@outlook.com
->
-> in 0/2 is doing anything; I've manually added them to Cc: of this
-> message and left everything in the patch below, even though I am not
-> commenting on anything there myself, to give them easier reference.
+> So here is a new patch series doing that while implementing the
+> `--filter=<filter-spec>` option in `git repack`.
 
-Thanks Junio. I'll check the GitGitGadget documentation.
+Very interesting idea, indeed, and would be very useful.
+Thanks.
 
->
-> Thanks.
->
-> > Fixes for credential-cache and credential-store.
-> >
-> > Signed-off-by: M Hickford <mirth.hickford@gmail.com>
-> > ---
-> >  Documentation/git-credential.txt   |  4 ++--
-> >  Documentation/gitcredentials.txt   |  2 +-
-> >  builtin/credential-cache--daemon.c | 15 ++++++++------
-> >  builtin/credential-store.c         |  3 ++-
-> >  t/lib-credential.sh                | 33 ++++++++++++++++++++++++++++++
-> >  5 files changed, 47 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-> > index 0e6d9e85ec7..04bfb918de6 100644
-> > --- a/Documentation/git-credential.txt
-> > +++ b/Documentation/git-credential.txt
-> > @@ -38,8 +38,8 @@ to any configured credential helpers, which may store the credential
-> >  for later use.
-> >
-> >  If the action is `reject`, git-credential will send the description to
-> > -any configured credential helpers, which may erase any stored
-> > -credential matching the description.
-> > +any configured credential helpers, which may erase stored credentials
-> > +matching the description.
-> >
-> >  If the action is `approve` or `reject`, no output should be emitted.
-> >
-> > diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-> > index 100f045bb1a..65d652dc40e 100644
-> > --- a/Documentation/gitcredentials.txt
-> > +++ b/Documentation/gitcredentials.txt
-> > @@ -260,7 +260,7 @@ appended to its command line, which is one of:
-> >
-> >  `erase`::
-> >
-> > -     Remove a matching credential, if any, from the helper's storage.
-> > +     Remove matching credentials, if any, from the helper's storage.
-> >
-> >  The details of the credential will be provided on the helper's stdin
-> >  stream. The exact format is the same as the input/output format of the
-> > diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-> > index 82f376d3351..5e3a766e42d 100644
-> > --- a/builtin/credential-cache--daemon.c
-> > +++ b/builtin/credential-cache--daemon.c
-> > @@ -33,12 +33,12 @@ static void cache_credential(struct credential *c, int timeout)
-> >       e->expiration = time(NULL) + timeout;
-> >  }
-> >
-> > -static struct credential_cache_entry *lookup_credential(const struct credential *c, int match_password)
-> > +static struct credential_cache_entry *lookup_credential(const struct credential *c)
-> >  {
-> >       int i;
-> >       for (i = 0; i < entries_nr; i++) {
-> >               struct credential *e = &entries[i].item;
-> > -             if (credential_match(c, e, match_password))
-> > +             if (credential_match(c, e, 0))
-> >                       return &entries[i];
-> >       }
-> >       return NULL;
-> > @@ -48,9 +48,12 @@ static void remove_credential(const struct credential *c)
-> >  {
-> >       struct credential_cache_entry *e;
-> >
-> > -     e = lookup_credential(c, c->password != NULL);
-> > -     if (e)
-> > -             e->expiration = 0;
-> > +     int i;
-> > +     for (i = 0; i < entries_nr; i++) {
-> > +             e = &entries[i];
-> > +             if (credential_match(c, &e->item, c->password != NULL))
-> > +                     e->expiration = 0;
-> > +     }
-> >  }
-> >
-> >  static timestamp_t check_expirations(void)
-> > @@ -127,7 +130,7 @@ static void serve_one_client(FILE *in, FILE *out)
-> >       if (read_request(in, &c, &action, &timeout) < 0)
-> >               /* ignore error */ ;
-> >       else if (!strcmp(action.buf, "get")) {
-> > -             struct credential_cache_entry *e = lookup_credential(&c, 0);
-> > +             struct credential_cache_entry *e = lookup_credential(&c);
-> >               if (e) {
-> >                       fprintf(out, "username=%s\n", e->item.username);
-> >                       fprintf(out, "password=%s\n", e->item.password);
-> > diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-> > index e0ae028b1c3..85b147e460f 100644
-> > --- a/builtin/credential-store.c
-> > +++ b/builtin/credential-store.c
-> > @@ -36,7 +36,8 @@ static int parse_credential_file(const char *fn,
-> >                       found_credential = 1;
-> >                       if (match_cb) {
-> >                               match_cb(&entry);
-> > -                             break;
-> > +                             if (strcmp(op, "erase"))
-> > +                                     break;
-> >                       }
-> >               }
-> >               else if (other_cb)
-> > diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-> > index f7e4e29c5e1..3f4100b6ce2 100644
-> > --- a/t/lib-credential.sh
-> > +++ b/t/lib-credential.sh
-> > @@ -45,6 +45,8 @@ helper_test_clean() {
-> >       reject $1 https example.com user2
-> >       reject $1 https example.com user4
-> >       reject $1 https example.com user5
-> > +     reject $1 https example.com user6
-> > +     reject $1 https example.com user7
-> >       reject $1 http path.tld user
-> >       reject $1 https timeout.tld user
-> >       reject $1 https sso.tld
-> > @@ -298,6 +300,37 @@ helper_test() {
-> >               EOF
-> >       '
-> >
-> > +     test_expect_success "helper ($HELPER) erases all matching credentials" '
-> > +             check approve $HELPER <<-\EOF &&
-> > +             protocol=https
-> > +             host=example.com
-> > +             username=user6
-> > +             password=pass1
-> > +             EOF
-> > +             check approve $HELPER <<-\EOF &&
-> > +             protocol=https
-> > +             host=example.com
-> > +             username=user7
-> > +             password=pass1
-> > +             EOF
-> > +             check reject $HELPER <<-\EOF &&
-> > +             protocol=https
-> > +             host=example.com
-> > +             EOF
-> > +             check fill $HELPER <<-\EOF
-> > +             protocol=https
-> > +             host=example.com
-> > +             --
-> > +             protocol=https
-> > +             host=example.com
-> > +             username=askpass-username
-> > +             password=askpass-password
-> > +             --
-> > +             askpass: Username for '\''https://example.com'\'':
-> > +             askpass: Password for '\''https://askpass-username@example.com'\'':
-> > +             EOF
-> > +     '
-> > +
-> >       : ${GIT_TEST_LONG_CRED_BUFFER:=1024}
-> >       # 23 bytes accounts for "wwwauth[]=basic realm=" plus NUL
-> >       LONG_VALUE_LEN=$((GIT_TEST_LONG_CRED_BUFFER - 23))
