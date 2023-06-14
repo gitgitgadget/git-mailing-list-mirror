@@ -2,224 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36EB5EB64D9
-	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 11:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB9F8EB64D9
+	for <git@archiver.kernel.org>; Wed, 14 Jun 2023 12:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243812AbjFNLXP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jun 2023 07:23:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
+        id S238639AbjFNMSn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jun 2023 08:18:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233227AbjFNLXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2023 07:23:11 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD1BB19B5
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 04:23:09 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f8d2bfec3bso6085255e9.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 04:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686741788; x=1689333788;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C4jP1ZRgeOJVTJBG1rvcJe7IZrjN7oK4Tus1E8ygicI=;
-        b=gLX0P6JK4gVFRwnz8TRJex7QOG7aRluN+++ZBzynQ52/GjWI2c0WRLN4VOE/GVbLT0
-         fCTDlLGvyQxg39g7VBDgkdSXahX1Q94Qo9c0AmxcCsRn6vxScFm0U2dQtVHK5L70qwvr
-         UFqCHZbdg9ysAExGUOqTTQx5MYpIcsNP9iKQbGjXu5NFXCTJze59L4/vOs8Qi14dFLXD
-         9k9BZIUSduPmzKTu3HI07/C2/0dyaDYrGtoz5HF9fKO7AubmN18dfVvKhk7qsG6JKWo/
-         6xZ7IwKIV5AcWslkTaex7cCuatbh1atKHg8/J5M2/DJ6XKZOo7VnnHkc9vHTk7P45YLS
-         HleA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686741788; x=1689333788;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C4jP1ZRgeOJVTJBG1rvcJe7IZrjN7oK4Tus1E8ygicI=;
-        b=XN2VJY5zlbEzUUJvN8j9vCeeQVAw/vjzmiURwqs423DIJKBi1teS49IgThPruDLoeQ
-         QPJXdYMn2qD2GC6ZM2PeEnD1kmKWhYW1KRENKw/aAkH0V56Q0XILuV01flZ33CEv9Mw2
-         4q1P2A24naSOhSd2YDqQF04o9g5IjrcAfSMgKb/xL5HkOLWkI9kWo9ntRiLtt+pVzttv
-         lccT5788GGAxPyDL64Ap01vCLbV6qY+9srzuDkzesyMIU6rxSLTn9lTtse6jV/096C8j
-         fuCKdQzDkan3VATynP7o/W9zdug1iRvbcb7k9ArRZogO3wUM6ub+gtboKw063z5+Nomw
-         Ak3w==
-X-Gm-Message-State: AC+VfDytYRihZt3SXZM3tVExt+oiuC4RgtYOH/EfLEHgu+asznDygckv
-        4sjiNiCkuK+zP7xx3fLw01Dk8x52pW4=
-X-Google-Smtp-Source: ACHHUZ4s4i9723qtUDkb7jTDpUNJb24r+423qV9fl4ebbckxGIk6MXGH15NSsW7LJBSwCW+wyiFwLQ==
-X-Received: by 2002:a1c:ed06:0:b0:3f5:fff8:d4f3 with SMTP id l6-20020a1ced06000000b003f5fff8d4f3mr12734201wmh.7.1686741787949;
-        Wed, 14 Jun 2023 04:23:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p17-20020a1c7411000000b003f7e4639aabsm17167668wmc.10.2023.06.14.04.23.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 04:23:07 -0700 (PDT)
-Message-Id: <fcdb579263f87dd089c50fc5799cf30b21f4d12c.1686741785.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1525.git.git.1686741785.gitgitgadget@gmail.com>
-References: <pull.1525.git.git.1686741785.gitgitgadget@gmail.com>
-From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 14 Jun 2023 11:23:05 +0000
-Subject: [PATCH 2/2] credential: erase all matching credentials
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S235344AbjFNMSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2023 08:18:41 -0400
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72AF41BF3
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 05:18:38 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 9C56C5C01A7
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 08:18:36 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 14 Jun 2023 08:18:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1686745116; x=1686831516; bh=0m
+        7M7izwh+xfDm0R1yxpUYx/mCbjjrxCb8RuNRfDSv0=; b=iXS1ArWMlBC+kvaTpr
+        J30aFybiXcy+rcXo7fu7YHQLKaPw7HL3AaBQ68QFodyOWE5j5b4hHDTCZSjyxqxu
+        t2CjjocBV7qS9CS8vz35XwWU89w6mNMxMN+3xHoUkyOV3jQghM/4KAFV3VH19F2p
+        djNqlKTX1O37TGAech89GyVbsrAskdNVxLxZ/RQ7nFrddKeAr4sKuxfc9TirbZco
+        REqmryfa0edCgZ8iC4W+wxteErcy2F9YglcEV/U2ETM8DZZ6rrYOfvzC2stLiwzh
+        UsXjdcHHwfvY9jHBmzabVYcbnLYez+eQEGpO29/tHBEmA03TURYf0cX+FBz5ktV7
+        nGIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1686745116; x=1686831516; bh=0m7M7izwh+xfD
+        m0R1yxpUYx/mCbjjrxCb8RuNRfDSv0=; b=NshYcGczVLLgO6v4kUqqnOqjowjS5
+        aPX+sUaAPCMUK27VcOYqup8xKlr3ea1nU0Yad/+irqxSmZmD9q+6e04hzxZb2ims
+        qwiDz+5r3nQt69f5/JiwS309GuYhche5sCEP8fe//R/xObJOItzI2ZDDUYqV47Nr
+        BC3oYVDEHhV07aRktmnfYcmZmKjIvpD1w5Ao0HhAL2LXXD2nDlxhES+fCVhEop4R
+        UAJRhdO8vbl6DO0kEqxK00fGY5B0WMWqOr1YvQTRUkYDk2vRt/8wEJjJvPVDqsLD
+        zzmWl9f0vGEJmH6qh5FO1MiYIqWOm+cUF7wFdpo+2uh3DjYW2KEGFnMrg==
+X-ME-Sender: <xms:G7CJZPyDZoaJaVruNW2b__a48ndK1hpUy2A36Xx7wsyo5eowHEOVjA>
+    <xme:G7CJZHS2gNCI8B3kimEHUERx8Z7LWsMx791L9lTGwQYV822tn82PcBhYemty-XHti
+    1tQergQnFy5hOeYYw>
+X-ME-Received: <xmr:G7CJZJU_Ci0YcCcPUG4H1oOPc_XNaMEiAcjrFgDlIsCShmWfBkwBu3N_zTnPFd0obKarTrM9ZXBn-yWcKPkIh2-XhB9nRvyfl_A6v2wJKUQa8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvtddgheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:G7CJZJhcvHpdCai3UsNWV1WerpPeOHQUaVIwVF76YR0RiSzC2ORaMw>
+    <xmx:G7CJZBDBx-WxSEvpHASKLuiOVM6TpYNzSCGzgUFERj9S_5rd4egq7A>
+    <xmx:G7CJZCIwKKnU253jhwfm4EychM4spTEylku-eHbp6cI4PxBEQutoAA>
+    <xmx:HLCJZM_DcaxKFKqWOJKe0CNxKWHyfHkNB2REc5chsBkaeJFfw9vHSA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 14 Jun 2023 08:18:34 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 955a1162 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Wed, 14 Jun 2023 12:18:31 +0000 (UTC)
+Date:   Wed, 14 Jun 2023 14:18:32 +0200
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     M Hickford <mirth.hickford@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
+Subject: [PATCH 1/3] revision: reorder `read_revisions_from_stdin()`
+Message-ID: <6cd4f79482276eae333bab8cebd114fa913659e6.1686744685.git.ps@pks.im>
+References: <cover.1686744685.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="45qttytnejnfeqk4"
+Content-Disposition: inline
+In-Reply-To: <cover.1686744685.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: M Hickford <mirth.hickford@gmail.com>
 
-Users expect that
-`echo "url=https://example.com" | git credential reject` or
-`echo "url=https://example.com\nusername=tim" | git credential reject`
-erase all matching credentials.
+--45qttytnejnfeqk4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fixes for credential-cache and credential-store.
+Reorder `read_revisions_from_stdin()` so that we can start using
+`handle_revision_pseudo_opt()` without a forward declaration in a
+subsequent commit.
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-credential.txt   |  4 ++--
- Documentation/gitcredentials.txt   |  2 +-
- builtin/credential-cache--daemon.c | 15 ++++++++------
- builtin/credential-store.c         |  3 ++-
- t/lib-credential.sh                | 33 ++++++++++++++++++++++++++++++
- 5 files changed, 47 insertions(+), 10 deletions(-)
+ revision.c | 66 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index 0e6d9e85ec7..04bfb918de6 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -38,8 +38,8 @@ to any configured credential helpers, which may store the credential
- for later use.
- 
- If the action is `reject`, git-credential will send the description to
--any configured credential helpers, which may erase any stored
--credential matching the description.
-+any configured credential helpers, which may erase stored credentials
-+matching the description.
- 
- If the action is `approve` or `reject`, no output should be emitted.
- 
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 100f045bb1a..65d652dc40e 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -260,7 +260,7 @@ appended to its command line, which is one of:
- 
- `erase`::
- 
--	Remove a matching credential, if any, from the helper's storage.
-+	Remove matching credentials, if any, from the helper's storage.
- 
- The details of the credential will be provided on the helper's stdin
- stream. The exact format is the same as the input/output format of the
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index 82f376d3351..5e3a766e42d 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -33,12 +33,12 @@ static void cache_credential(struct credential *c, int timeout)
- 	e->expiration = time(NULL) + timeout;
+diff --git a/revision.c b/revision.c
+index b33cc1d106..cc22ccd76e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2195,39 +2195,6 @@ static void read_pathspec_from_stdin(struct strbuf *=
+sb,
+ 		strvec_push(prune, sb->buf);
  }
- 
--static struct credential_cache_entry *lookup_credential(const struct credential *c, int match_password)
-+static struct credential_cache_entry *lookup_credential(const struct credential *c)
- {
- 	int i;
- 	for (i = 0; i < entries_nr; i++) {
- 		struct credential *e = &entries[i].item;
--		if (credential_match(c, e, match_password))
-+		if (credential_match(c, e, 0))
- 			return &entries[i];
- 	}
- 	return NULL;
-@@ -48,9 +48,12 @@ static void remove_credential(const struct credential *c)
- {
- 	struct credential_cache_entry *e;
- 
--	e = lookup_credential(c, c->password != NULL);
--	if (e)
--		e->expiration = 0;
-+	int i;
-+	for (i = 0; i < entries_nr; i++) {
-+		e = &entries[i];
-+		if (credential_match(c, &e->item, c->password != NULL))
-+			e->expiration = 0;
-+	}
- }
- 
- static timestamp_t check_expirations(void)
-@@ -127,7 +130,7 @@ static void serve_one_client(FILE *in, FILE *out)
- 	if (read_request(in, &c, &action, &timeout) < 0)
- 		/* ignore error */ ;
- 	else if (!strcmp(action.buf, "get")) {
--		struct credential_cache_entry *e = lookup_credential(&c, 0);
-+		struct credential_cache_entry *e = lookup_credential(&c);
- 		if (e) {
- 			fprintf(out, "username=%s\n", e->item.username);
- 			fprintf(out, "password=%s\n", e->item.password);
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index e0ae028b1c3..85b147e460f 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -36,7 +36,8 @@ static int parse_credential_file(const char *fn,
- 			found_credential = 1;
- 			if (match_cb) {
- 				match_cb(&entry);
+=20
+-static void read_revisions_from_stdin(struct rev_info *revs,
+-				      struct strvec *prune)
+-{
+-	struct strbuf sb;
+-	int seen_dashdash =3D 0;
+-	int save_warning;
+-
+-	save_warning =3D warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity =3D 0;
+-
+-	strbuf_init(&sb, 1000);
+-	while (strbuf_getline(&sb, stdin) !=3D EOF) {
+-		int len =3D sb.len;
+-		if (!len)
+-			break;
+-		if (sb.buf[0] =3D=3D '-') {
+-			if (len =3D=3D 2 && sb.buf[1] =3D=3D '-') {
+-				seen_dashdash =3D 1;
 -				break;
-+				if (strcmp(op, "erase"))
-+					break;
- 			}
- 		}
- 		else if (other_cb)
-diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-index f7e4e29c5e1..3f4100b6ce2 100644
---- a/t/lib-credential.sh
-+++ b/t/lib-credential.sh
-@@ -45,6 +45,8 @@ helper_test_clean() {
- 	reject $1 https example.com user2
- 	reject $1 https example.com user4
- 	reject $1 https example.com user5
-+	reject $1 https example.com user6
-+	reject $1 https example.com user7
- 	reject $1 http path.tld user
- 	reject $1 https timeout.tld user
- 	reject $1 https sso.tld
-@@ -298,6 +300,37 @@ helper_test() {
- 		EOF
- 	'
- 
-+	test_expect_success "helper ($HELPER) erases all matching credentials" '
-+		check approve $HELPER <<-\EOF &&
-+		protocol=https
-+		host=example.com
-+		username=user6
-+		password=pass1
-+		EOF
-+		check approve $HELPER <<-\EOF &&
-+		protocol=https
-+		host=example.com
-+		username=user7
-+		password=pass1
-+		EOF
-+		check reject $HELPER <<-\EOF &&
-+		protocol=https
-+		host=example.com
-+		EOF
-+		check fill $HELPER <<-\EOF
-+		protocol=https
-+		host=example.com
-+		--
-+		protocol=https
-+		host=example.com
-+		username=askpass-username
-+		password=askpass-password
-+		--
-+		askpass: Username for '\''https://example.com'\'':
-+		askpass: Password for '\''https://askpass-username@example.com'\'':
-+		EOF
-+	'
+-			}
+-			die("options not supported in --stdin mode");
+-		}
+-		if (handle_revision_arg(sb.buf, revs, 0,
+-					REVARG_CANNOT_BE_FILENAME))
+-			die("bad revision '%s'", sb.buf);
+-	}
+-	if (seen_dashdash)
+-		read_pathspec_from_stdin(&sb, prune);
+-
+-	strbuf_release(&sb);
+-	warn_on_object_refname_ambiguity =3D save_warning;
+-}
+-
+ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat=
+_token what)
+ {
+ 	append_grep_pattern(&revs->grep_filter, ptn, "command line", 0, what);
+@@ -2816,6 +2783,39 @@ static int handle_revision_pseudo_opt(struct rev_inf=
+o *revs,
+ 	return 1;
+ }
+=20
++static void read_revisions_from_stdin(struct rev_info *revs,
++				      struct strvec *prune)
++{
++	struct strbuf sb;
++	int seen_dashdash =3D 0;
++	int save_warning;
 +
- 	: ${GIT_TEST_LONG_CRED_BUFFER:=1024}
- 	# 23 bytes accounts for "wwwauth[]=basic realm=" plus NUL
- 	LONG_VALUE_LEN=$((GIT_TEST_LONG_CRED_BUFFER - 23))
--- 
-gitgitgadget
++	save_warning =3D warn_on_object_refname_ambiguity;
++	warn_on_object_refname_ambiguity =3D 0;
++
++	strbuf_init(&sb, 1000);
++	while (strbuf_getline(&sb, stdin) !=3D EOF) {
++		int len =3D sb.len;
++		if (!len)
++			break;
++		if (sb.buf[0] =3D=3D '-') {
++			if (len =3D=3D 2 && sb.buf[1] =3D=3D '-') {
++				seen_dashdash =3D 1;
++				break;
++			}
++			die("options not supported in --stdin mode");
++		}
++		if (handle_revision_arg(sb.buf, revs, 0,
++					REVARG_CANNOT_BE_FILENAME))
++			die("bad revision '%s'", sb.buf);
++	}
++	if (seen_dashdash)
++		read_pathspec_from_stdin(&sb, prune);
++
++	strbuf_release(&sb);
++	warn_on_object_refname_ambiguity =3D save_warning;
++}
++
+ static void NORETURN diagnose_missing_default(const char *def)
+ {
+ 	int flags;
+--=20
+2.41.0
+
+
+--45qttytnejnfeqk4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmSJsBcACgkQVbJhu7ck
+PpQ84A/+OrvR1yvhsg6c39P5QB9qihzZ1JdhxQNJ1DO/vZ/6AYUaYbN+R9Z21F2F
+rcYIRbXsKvcHwaFM5o73JSUbMccP/HeCJnpojnH3W6dFSppVY6ldvVf38YHzxCkx
+FlbIZiAQ0oyL7mUSW5MGTlufzH7bEvgZEAEneU2sEokU3SU1REBIDgJQJi91gwfP
+tck8lPWC4DBmanYWNFgJX2ORyQFHSuDMkYb9FrKQC954lulHyGE8KSNaanMaY/hA
+TSujWlQhBiDIK0ILBhLoUvoyDd+olS+2XP3Tk0Zh9uPmVFG9r+gXIeTMJ3CVXjk/
+Sll+cNjvowTPSBb+dKjZZ4JgVugiRquxCMxrfAbBbBaWwzCbtWgPuRHr1rL2rtjP
+kCrl1p2tfA8xPFthL7B/Jv3TMe6hYd3WeInuaswMun8FGttdB+GtUM7GFUHi0dqd
+fkc0xln992JjbWIDrMd2BkenL8odKBnNQ0Ya1cuKzt8xlMPXVRM1eREgWMg7FYfA
+22z8Z7N7qYgHf4QY7+V7vIR4Hssj5LL0E3aWcddkkxB8+m5MI51bSWKdmw5ZbgM8
+c8KCNzs//MTMZYvkjiGADJX3NJjlhgP+VM141wFPuCLaog1xAS3pSUGZQ5VqEx9X
+ZkXWTYHJvmLPckxk5Yl5eEPP3dyae3IjOULXb9saF0xdj6mrpL0=
+=MYpu
+-----END PGP SIGNATURE-----
+
+--45qttytnejnfeqk4--
