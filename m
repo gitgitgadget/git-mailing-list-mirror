@@ -2,134 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E729EB64D9
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 19:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40BBFEB64D9
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 19:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230139AbjFOTAH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 15:00:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49008 "EHLO
+        id S231320AbjFOTFT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 15:05:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjFOTAF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 15:00:05 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A07196
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 12:00:03 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1b01d3bb571so47907795ad.2
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 12:00:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686855602; x=1689447602;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L4N9azPRuhcw5T1b/dnXErsKVYp9Y0wuCdXSyNeuwcs=;
-        b=nvQRGsWGKAEQmhgLbSyCYIutkL1wfJI6YtOdatoY/WuY268PAmzV42/WaiRVZa6oJb
-         XjU7oMO0RLlT/KiQBHokJUw2SA9bMY77UQQ88tuqp73YL4muenU+PCc+5y8uiFmBvib8
-         wX8kh6oq/ej5S3NoVyxG5Vcab23bUlJp9uF538oahqrmSL1OzCp/f988hcxgUmZw0sc0
-         OTvXUZkl48aZ2k2/LaFNqcCqOzWKGqW80IE1CdHNg0KV4jQan3rYnQjpeHwTLIpFF7C1
-         IMu4FIUCiBbgDl7vTpUGBGTcC/t1BMav5rFv32IN5TpbUsM1y+gtM7QwUt+GunkQEsI1
-         /FxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686855602; x=1689447602;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=L4N9azPRuhcw5T1b/dnXErsKVYp9Y0wuCdXSyNeuwcs=;
-        b=OugeEt9UnJmHuFwJ/sy8gOEDWi2X0c1lP/B9KXm+xpt++QX/oO0cce3TTrL8sF/s1W
-         QhxMHpunGfnyQBw6lrJ1mCXwn4Uwi4vIGZ59bEu1V7Mg4pp4PiQxt9czYPxQ5HCgVMqj
-         rDKN73cv2ps/66Iuvjn8lFb6u9OmUceR7fRwPbTciq6MU9Ak+sArANrmITyVeZaO5r/A
-         qiUmdIgdTTTktj2Lu+mTreLMQda/ueQYFcWmTmfARqpnwUabVOfiBEEOpzDNpXRib9EL
-         AafMEEw/9hyU986Yzw5Y61lrYGf55+tVlz6cSSdWl4msG+6R0cRVej38Y867EQNxe6+i
-         pyiQ==
-X-Gm-Message-State: AC+VfDwFdmPJCn4ABQ3Y9fvDnuu2NtbO4EZskqnXihoidv+y8oET+QMN
-        1nTxlh0nEB46iYpl1BSJjoc=
-X-Google-Smtp-Source: ACHHUZ6dviQCQzlvP8eRvXBJnbCR27HU4jqirlYZnAFg/6cFr9wHrFW4iy2+HVwJICBVizbgtLUPMA==
-X-Received: by 2002:a17:902:ab1b:b0:1b5:26d4:517d with SMTP id ik27-20020a170902ab1b00b001b526d4517dmr944665plb.29.1686855602446;
-        Thu, 15 Jun 2023 12:00:02 -0700 (PDT)
-Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
-        by smtp.gmail.com with ESMTPSA id jg18-20020a17090326d200b001b3d27a7820sm1859287plb.234.2023.06.15.12.00.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 12:00:01 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jim Pryor <dubiousjim@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] diff: detect pathspec magic not supported by --follow
-References: <20230601173724.GA4158369@coredump.intra.peff.net>
-        <20230601174351.GC4165297@coredump.intra.peff.net>
-        <xmqq4jnq9vee.fsf@gitster.g>
-        <20230615072625.GD1460739@coredump.intra.peff.net>
-Date:   Thu, 15 Jun 2023 12:00:01 -0700
-In-Reply-To: <20230615072625.GD1460739@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 15 Jun 2023 03:26:25 -0400")
-Message-ID: <xmqqr0qcv9e6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S231215AbjFOTFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 15:05:18 -0400
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D301A268B
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 12:05:16 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 70EC55C00BB;
+        Thu, 15 Jun 2023 15:05:14 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Thu, 15 Jun 2023 15:05:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm1; t=1686855914; x=1686942314; bh=mJo5LURVFKR0rehvETsEg56Bz
+        m0DHyj3mL0xe0Ex/lI=; b=JSnedkwa0OgVlsQuuikd5/5E9h7p3ygkjZ+V0dLZf
+        lZsqXKqnI1SJo7OMNMuANfbdNqNRu4tV2PlDkBwAEJR0WLgKrmyPob/Saoo20JHm
+        7Il5AwF8jCoC/RscuRufLGO7SbHrqKRT5VNuETAt6hSTr37yMgbylK3chg7As4M7
+        bUGK7tS47NQWwzKVN46BL16e8zQu0WfEwu0WzsILdUSkj+3H8KitTVDZqkptEZ8S
+        BaWPTj8jWDpRbEJqQ9cVg0X3b4FtpXGfikY9wi26cqTr0qEMkdGDOdGFXxaqEQ1g
+        +oxh1ygqcM/t57OSF+JytsCaINeGWYcR8IcqREVFuVDqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1686855914; x=1686942314; bh=mJo5LURVFKR0rehvETsEg56Bzm0DHyj3mL0
+        xe0Ex/lI=; b=A5H6Bgj237/XwGy45KqzV18ml7Wfxzadd4tCojsgJhpLlnkczQs
+        NDs8oIMSQpujm3mM55CgMnCFY+YxMMpad0dQt1rrXIoFhZxSv9S+Hrp3HDjSu4jz
+        VS0L9R5Fx+bXuJlF2ZmpYEBrhDl0DXIDnLNbipTgDhTuOMtwCzNrbv0iURwScfgE
+        NVvU+8+PQDNm236R3QcJmrVP7uw656cPYm/2a+ZF3+JOkvUqSJtyYGSGi1j1mQRw
+        OSQoR9c8YTbGikyDLTdpBrlyAdbBbQcFZWCwZ5Hm79RVQwIvV0nHbBVql7kzWzkK
+        Hhhzx0m2p3CtRU09+CL4IntcGTdnZK4C7aA==
+X-ME-Sender: <xms:6mCLZMf0bDtdk6ALT27E4tFkPelnbnlrURi8k7dxBRjrbmmP2BYG7aM>
+    <xme:6mCLZOMeubKg0-essWBGUiNyxE-67Ny-uvXI3XNrR3ewm2SYzE1CV-aEu01PCh-L7
+    D969BB7e9ryzqwaTQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvvddguddvkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtgf
+    esthhqredtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghk
+    khdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrh
+    hnpedvveehiedufeehffdvteeuveekhefhleeigfektdeifeduteeuheeufeetffefuden
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvg
+    eskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:6mCLZNhwNrXnWj8yfas2mDzHuF8B2AUCrkhzKLJSEn3X9oOWUDm3Gg>
+    <xmx:6mCLZB-Ik607bQM_vBPPE6Rt0iFhLZqL2QhiTUeW2ldln7D_0O4MyA>
+    <xmx:6mCLZIuT9A4iMBWst9IkevIqlINSzMIEbDyYVSyhppQd_aS6WaPzYQ>
+    <xmx:6mCLZO3Qn8tH91PLJlIH_GDebI8cvCT6pAOCLnHQnrEXwtvMQh3tCw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 10CB115A008E; Thu, 15 Jun 2023 15:05:13 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-496-g8c46984af0-fm-20230615.001-g8c46984a
+Mime-Version: 1.0
+Message-Id: <42e4373e-b700-45a6-99cc-db2f8896d5b7@app.fastmail.com>
+In-Reply-To: <PH7PR07MB9467452EBAFAB2C825295C0C8C5BA@PH7PR07MB9467.namprd07.prod.outlook.com>
+References: <PH7PR07MB9467452EBAFAB2C825295C0C8C5BA@PH7PR07MB9467.namprd07.prod.outlook.com>
+Date:   Thu, 15 Jun 2023 21:03:42 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "eric.frederich@siemens.com" <eric.frederich@siemens.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, peff@peff.net
+Subject: Re: Possible bug regarding trailers
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi
 
-> ... except that the notion of "starting point"
-> is ambiguous. If I do:
->
->   git log --follow branch1 branch2 -- foo*
->
-> then we have two treeishes. Do we look at one? Both? What happens if the
-> pathspec resolves differently?
+On Thu, Jun 15, 2023, at 19:46, eric.frederich@siemens.com wrote:
+> I am able to produce a commit with a trailer which does not show up in:
+>     `git log
+> --format=3D"%(trailers:key=3Dold-scm-change-id,valueonly,separator=3D%=
+x2c) %H
+> %T" HEAD`
+> But does show up in:
+>     `git cat-file commit HEAD | git interpret-trailers --parse`
 
-If we consider a middle-ground where we do not keep a separate
-pathname that each history traversal is following but only keep a
-single pathname, then the answer is one of "ignore others and pick
-one" (which is essentially what needs to happen in the current
-implementation when a path gets renamed between a child commit and
-its parent while the other parents do not have renames), "ignore
-others and pick one, but give a warning that the result may be
-incomplete", or "barf".  The latter two would need us to look at all
-treeishes.
+It seems that the `--- ` (note the space) is interpreted as marking the
+start of the patch part (as in a patch file which contains a commit
+message followed by a patch).
 
-A false-positive-ridden "solution" that would slightly be better
-than that would be to still keep a global, single, pathspec that has
-more than one elements (all of which are literal pathspec elements).
-Every time we discover a rename, we add the newly discovered old
-name as an additional element, instead of replacing the single
-element.  If we were to go that route, then starting from multiple
-points, each following a pathname, would be a simple matter of
-looking at all trees and finding which pathname each history
-traversal wants to follow and creating a pathspec with all these
-(literal) pathnames.
+See `trailers.c:find_patch_start` (here on d7d8841f67 (Start the 2.42
+cycle, 2023-06-13):
 
-But once we fix the underlying problem, and start tracking which
-path each history traversal trajectory is currently following, then
-it is not a problem for each starting point to have a pathname that
-is being followed.  Each commit would _know_ which pathname it is
-interested in, and when a traversal from a commit to its parent sees
-a rename, the pathname being followed for the parent commit will be
-different from the child.
+	for (s =3D str; *s; s =3D next_line(s)) {
+		const char *v;
 
-When this happens, the parent may have a pathname it is already
-interested in, set by traversing from another child (i.e. one side
-of a fork renamed the path one way, while the other side of a fork
-kept the same name or renamed it to another way, and we traversed
-both forks down and are now at the fork point).  It most likely
-should be the same name we discovered from the other child, but in
-weird cases it may be different (e.g. a child thinks its path A came
-from parent's path X while another child thinks its path A came from
-parent's path Y), in which case we may have to follow two pathnames
-in the parent commit, as if the pathname we have been following in
-the child had combined contents from multiple paths.
+		if (skip_prefix(s, "---", &v) && isspace(*v))
+			return s - str;
+	}
 
-> So I'd suggest to let my series continue graduating, and then if anybody
-> wants to work on more sensible pathspec handling, to do so on top.
+I=E2=80=99m not good with C but it seems that this line will match:
 
-I think we are in agreement on this---otherwise I wouldn't have
-merged the patch as-is down to 'next' ;-)
+    --- let's mess stuff up ---
 
-As I said multiple times in the past, the current "log --follow" is
-more of a checkbox item than a feature, and in that context, I think
-your "fix", which may be papering over just one obvious breakage, is
-what the codepath should be happy with, before it gets reworked more
-seriously.
+Which instructs the code to put the trailer *before* this =E2=80=9Cpatch=
+ part=E2=80=9D.
 
-Thanks.
+(Or at least: if I remove this if-block then your script seems to work
+like you want it to.)
+
+This seems to be in line with the documentation in `man git
+interpret-trailers`:
+
+> The group must either be at the end of the message or be the last
+> non-whitespace lines before a line that starts with --- (followed
+> by a space or the end of the line). Such three minus signs start
+> the patch part of the message. See also --no-divider below.
+
+Note =E2=80=9Cby a space or the end of the line=E2=80=9D.
+
+This check used to be simpler: before it only checked for a line that
+started with `---`, no matter what came after on that line. But that was
+changed to match on `---` followed by `isspace(v*)` in c188668e38
+(interpret-trailers: tighten check for "---" patch boundary,
+2018-08-22). Reading the commit message it seems that the change was
+conservative. Maybe it would have been more strict (like demanding only
+lines like either `---\n` or `---\n `) if there weren=E2=80=99t concerns=
+ about
+how the behavior had been documented to match loosely up until that
+point.
+
+(+Cc the commit author)
+
+--=20
+Kristoffer Haugsbakk
