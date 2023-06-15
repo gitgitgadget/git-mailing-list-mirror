@@ -2,104 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90A53EB64D9
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 17:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 912BEEB64D9
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 17:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235541AbjFORdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 13:33:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
+        id S233557AbjFORln (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 13:41:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbjFORdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 13:33:44 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B3F1BC3
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 10:33:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1686850420; x=1687455220; i=l.s.r@web.de;
- bh=aHCItuGTa0V/5uWnbBfgeVEJ7CuZNlJ1VTUyoBRNUeI=;
- h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
- b=SlhRuVYw2fd2fCAdzs3juXMsnnLK7XO0WOa2XK8j9MUoGKLbXOT7Vwrh/3Aw6Tg24OZqu/G
- T0V3TA/V3xjHAI9OjHBttCtZKQQSGFF+x+fzgfcw+cEAAU9pivGSi7vu5obPXdREJmDbFWTQN
- /vTKzdXOnOFt1EhoP5zA2FyPiJp33kS6cYZxDV9yas8RSAm//iMy2b8v2MkZiXNAX1+6SNIvG
- EH1cznJewAPq9IyeW1GZ68et5nUmKWF4tdF1WVPxxPMj1dq3j5DS7Vq1Sne2j8/hrOlgFWsco
- +9fhTAU/871VqsbrF5iTmPoj5Q99ZVNC8ddc5ztG0g5q+JWutODg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.157.195]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M2ggX-1q7v2p0Kul-0047vQ; Thu, 15
- Jun 2023 19:33:40 +0200
-Message-ID: <23e54256-9ad5-e978-d0b8-abb511232fd1@web.de>
-Date:   Thu, 15 Jun 2023 19:33:39 +0200
+        with ESMTP id S230254AbjFORlm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 13:41:42 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BCEB2719
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 10:41:41 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-54fb1bbc3f2so2714401a12.0
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 10:41:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686850901; x=1689442901;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r/njmXvrEuV7X/anYiuzy3umz0zZ3CpYrR6kC74jKsA=;
+        b=Fj6F3zfBk7BVcy9epWgydsR80T63xOIuO+WJRiDBit6yB5sS5VMe6AjUPkCBa4du/k
+         NSlGTwpgJ4fTRh3k6IGE2016oTnfVe3hor3/F8m3PJjILiNiHwYt4CM/2w2nTR8z0gV7
+         CsgrQSj/wyThICZRbz6QbzUud9pJWioI2IBTccVrE2bm9JnnMrI7ZIIm0A3yeSBNE8Zu
+         ZjjFNzzwdgRbYQhNye+XHk4YdQimO10/TVv4AhrPTc2rutZkR6OQpICxiR1F1HaJ05CB
+         +nz7QinRVPwtBo8T6gI5e4satFgAnl9DBno1eZf4s5d681Lgj6akIygphPseSATMUMjT
+         kjog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686850901; x=1689442901;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=r/njmXvrEuV7X/anYiuzy3umz0zZ3CpYrR6kC74jKsA=;
+        b=dr5gHNMcfBQ+Fk4veaOfaX1XfxpO+KUUv3WZ/jLdEW9uWPruM1IgLpF3bScX6Clqdd
+         Rit8JBA/YNx7zJ9PgUpcwiTKNPUBd/s69FuxnLxfsjwkyixCCMyAqpmAYQL1f28g6gTh
+         CNCfCuU/Q+AZD1AucnqBoY4Sxx6VOAot9eaoQ3VhsP5XjxOybZkW39cpQh168GaKXIdY
+         B1gXUH22IaA5nry+f6sqDOnI/RjjT2I8n986vGlIHSM/EgbpFZyeKSJD3yG5xMlwMydG
+         6kjOUaEUhUo+oS/C5MrqivzXX0uqF1BP0kjPF0e/rvQY2L7dErjf7HYqKL/7Qlp4HbFt
+         e8Dg==
+X-Gm-Message-State: AC+VfDy+UkHmUU+xf5ZOzeaqa3AqnZpci2bMyLXFG0HF71OMz1W6U5f4
+        kbnfQovFJoyy67OOhZFSJe8=
+X-Google-Smtp-Source: ACHHUZ7aQTUG+MsdJdiQ3EnZ9ricC4Z22f6tzpXLkRuX9DbVjzDNzXWZoYpK8RABn3h14EQRNBQxkg==
+X-Received: by 2002:a17:90a:5183:b0:25e:3841:1921 with SMTP id u3-20020a17090a518300b0025e38411921mr4654236pjh.20.1686850900794;
+        Thu, 15 Jun 2023 10:41:40 -0700 (PDT)
+Received: from localhost (128.65.83.34.bc.googleusercontent.com. [34.83.65.128])
+        by smtp.gmail.com with ESMTPSA id mm15-20020a17090b358f00b0025c256add5dsm2930962pjb.32.2023.06.15.10.41.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jun 2023 10:41:40 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] cmake: adapt to `cache.h` being no more
+References: <pull.1544.git.1686844054022.gitgitgadget@gmail.com>
+Date:   Thu, 15 Jun 2023 10:41:39 -0700
+In-Reply-To: <pull.1544.git.1686844054022.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Thu, 15 Jun 2023 15:47:33
+        +0000")
+Message-ID: <xmqqa5x0wrl8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Content-Language: en-US
-To:     Git List <git@vger.kernel.org>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] ls-tree: fix documentation of %x format placeholder
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Vq4yVYVCik+NSnbrxL2MW7RtulhL/1FBJ3F2RuIla8qH+xs6k62
- GCYQixcZ40vACax02kpykleBD57wTGVmulAHXvxa2BY3BvXd1OniTpNqkxQF6QcOt9EsF2J
- lWe8g1Z+d/fhHNfqoZoA+H6p5O4uW+ExLaqf2ABAzy0rHQ0tHfvMBH4YSojYJqeFwlJu8eb
- KOnDPOtif1gayxJAkd4lA==
-UI-OutboundReport: notjunk:1;M01:P0:aiYhSpxysLU=;W+8SXnYy730BnUDWUVCm8C8bqVE
- ocuqxHeKHSUCJkbwHQcr7kL8qEgzRTZZU10VKcAGqKQxJxggQXoVV3Q5UOpx8BVsZppfra4Lh
- feEODCC6Z9b787ahA9x6fTpEuo1S1wWBJXg09nHxci5UbeZo1siXnOlRPZgdIJqrvLf/b4RJr
- CQEJM/Ppc/MN52nbn66++JSBP5R8INRzDEtPgx09fNeGYRGUh6elj9vQK19nQp+aZ6uNujI6E
- g0YD4gbz1emLRHMpSe5KslViiwub5rIcaUwtjm3Ct41Ma0MFSTFXTM3lvheg5FWs1axgIw+iw
- fOzWi8tolKQ+KjwuCgfquyIPi72blrh77EH2fEO9HWZhW+pOlMQjIcNXUcSjPqk5Sq9+/Goad
- Bhl5Frgw+LUNwNp/56JzXaTTGxbuJugrvwDZ9BMDebkQlLMpsxtdFSmBVuBJv16uvntg+6xAK
- svbnuW8vyrSz9j8fFR9F63BHouDEXecoekTRi3ckqj3sASRPb2CBQsKY9rif22xP0gk8L0YXK
- VROxUU6oY8+0U/yhKdTzMIUoD/mXiHXL4IsRJq3kGj8FJTOKeSVp8z/kJrHZ+DbAmXRd7vaFU
- LWmosXz7kCPoFj76ERvR7rDUap+RB0u1ZYe5d8H5iBav/x2BIQt5vFGRPABXBXomOVy79iYrr
- KRpHDUdG/55QMYCy/YoWqftvEeIIU38lItg1OCOxX2kJiP4w2lieGTY5XUyOils2tRxI3CslX
- MNZq5j/tnjyZLgR2n49KFK4I96QSEqrFJY/RO+ibM2jo2aXrKWJ7I/3m2jWu5zhlMz79Qt2/I
- nIo0T6d4tx0VZMHTXXAfouDv2XDJMLBlq0VxotGpYMLLspRSZszNkhp1ybQSDRtKcZjl7s752
- vmxAMI+4x8/ItjJ/EhMTKKHAgBKKIjETFG0J/pySGiIRtYh1GqG/0HGB6RlbHw89Fwuu8vSMw
- dfp66A==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ls-tree --format expands %x followed by two hexadecimal digits to the
-character indicated by that hexadecimal number, e.g.:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-   $ git ls-tree --format=3D%x41 HEAD | head -1
-   A
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> This is a companion to 4275a22e169c (cache.h: remove this no-longer-used
+> header, 2023-05-16).
 
-It rejects % followed by a hexadecimal digit, e.g.:
+Thanks.
 
-   $ git ls-tree --format=3D%41 HEAD | head -1
-   fatal: bad ls-tree format: element '41' does not start with '('
-
-This functionality is provided by strbuf_expand_literal_cb(), which has
-not been changed since it was factored out by fd2015b323 (strbuf:
-separate callback for strbuf_expand:ing literals, 2019-01-28).
-
-Adjust the documentation accordingly.
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Documentation/git-ls-tree.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index 0240adb8ee..af06ce14ed 100644
-=2D-- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -86,9 +86,9 @@ OPTIONS
- --format=3D<format>::
- 	A string that interpolates `%(fieldname)` from the result
- 	being shown. It also interpolates `%%` to `%`, and
--	`%xx` where `xx` are hex digits interpolates to character
--	with hex code `xx`; for example `%00` interpolates to
--	`\0` (NUL), `%09` to `\t` (TAB) and `%0a` to `\n` (LF).
-+	`%xNN` where `NN` are hex digits interpolates to character
-+	with hex code `NN`; for example `%x00` interpolates to
-+	`\0` (NUL), `%x09` to `\t` (TAB) and `%x0a` to `\n` (LF).
- 	When specified, `--format` cannot be combined with other
- 	format-altering options, including `--long`, `--name-only`
- 	and `--object-only`.
-=2D-
-2.41.0
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     cmake: adapt to cache.h being no more
+>     
+>     This is a companion to 4275a22e169c (cache.h: remove this no-longer-used
+>     header, 2023-05-16), based on en/header-split-cache-h-part-3.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1544%2Fdscho%2Fheader-split-cache-h-cmake-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1544/dscho/header-split-cache-h-cmake-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1544
+>
+>  contrib/buildsystems/CMakeLists.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> index 2f6e0197ffa..4faa419cc3d 100644
+> --- a/contrib/buildsystems/CMakeLists.txt
+> +++ b/contrib/buildsystems/CMakeLists.txt
+> @@ -227,7 +227,7 @@ add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
+>  add_compile_definitions(SHA256_BLK INTERNAL_QSORT RUNTIME_PREFIX)
+>  add_compile_definitions(NO_OPENSSL SHA1_DC SHA1DC_NO_STANDARD_INCLUDES
+>  			SHA1DC_INIT_SAFE_HASH_DEFAULT=0
+> -			SHA1DC_CUSTOM_INCLUDE_SHA1_C="cache.h"
+> +			SHA1DC_CUSTOM_INCLUDE_SHA1_C="git-compat-util.h"
+>  			SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="git-compat-util.h" )
+>  list(APPEND compat_SOURCES sha1dc_git.c sha1dc/sha1.c sha1dc/ubc_check.c block-sha1/sha1.c sha256/block/sha256.c compat/qsort_s.c)
+>  
+>
+> base-commit: d677f7e76abb837502c589d17889cf8ad591dc09
