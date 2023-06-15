@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C24AEB64D9
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 02:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A80E7EB64D8
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 02:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242572AbjFOCyF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jun 2023 22:54:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39934 "EHLO
+        id S242697AbjFOCyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jun 2023 22:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242521AbjFOCx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2023 22:53:57 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC94D26AD
+        with ESMTP id S242564AbjFOCx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2023 22:53:58 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E48B26A9
         for <git@vger.kernel.org>; Wed, 14 Jun 2023 19:53:56 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-30fc2b44281so3889544f8f.2
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30fb7be435dso3654491f8f.1
         for <git@vger.kernel.org>; Wed, 14 Jun 2023 19:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686797635; x=1689389635;
+        d=gmail.com; s=20221208; t=1686797634; x=1689389634;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T5D/54p+HpeCu+GmS68q0IoXxV4LWpBoO9Tq42MbRDU=;
-        b=UgtXxZSBzZA8TGFT5V6txdeqZiol1HHuA8V0A5wXia5z64BZYQVfFYw5W4fcC4A+mH
-         iSteFsGAeuNRU81ajFf3wcOd/GcKKlZ5wlf+Nk+WEnFnomtUXYejnHmb6l1cjf6ow510
-         t0QG5x7XNrD+A2b6eKEHPtXpECWZfPrjDgX3xLwnblINELHFj/t0MpIOm+KbRxeKkYRQ
-         QZpMwaBRzhA2ivmFzEH5A+rz4mYMoASUn0MXLQ69Qp9jGWvRyK9MR1k23dXij57wa3XF
-         QZXqyT6k4lIu0Qn0x67MQuEuU16Fy/z4HLQGXXufhO+VW9MQrIv+zM5mtB6H/31qvEA0
-         OXuw==
+        bh=3Qqv650L8XotgZ0aR4Jqb6NGuW3Hg6cdUtqyWLiBjzU=;
+        b=BE2248QGrKlDAvFm9MxkCySzLJaMU8axaZoSVG2s107qScw9hwPAY9Ycc9NqqdDjvT
+         OM9o1CXuF8HK3Cq/Z25VqZkgq9NID2wiQ1AXz7JonsPB3rMFcm6nFsYWDWhvuUqsozi6
+         ONoxYLVIdLGCUd11tmozh0UxpqsE457F8XaXhtUMTe6oRKQ/WhkdF0caT36lhkwIxYM3
+         tCm+I/o0yDEsv4vaM7+Lt42a7MMTp3HBXKrt+GFr9SWFxOuHppeojErq5itSFhSnQ1ZK
+         LkDaNGsZ2QA5SW6U7P7WO/2fikaQkUpyfiW37++qQTQANmMd7ShK2N/4kVmuXJOKwO6k
+         pAtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686797635; x=1689389635;
+        d=1e100.net; s=20221208; t=1686797634; x=1689389634;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=T5D/54p+HpeCu+GmS68q0IoXxV4LWpBoO9Tq42MbRDU=;
-        b=L2ZZ7cJR+PU4tPzAGhIYdSxZv/DbpZ06RyIraKYmMxOSEhG0wRerYeJC0kGyvia/vp
-         g3gVP0RGPTuUh+kz3Ren5jYLRn6U5cPVGhjCHgBekcUE67ehHO9LvhzNtmOX01oyDuuf
-         FssL0da6zdsuOJYqlo88mPwrZl/kdk85uTem/aN1tD88/JgulS/RirNUgyDLMOFRzvpo
-         YrpG5/V74VChXWkvHFnLyLtwOKChk5EE6VgRNZO0U9n6RCbeHNZBdTsKYFiAU8qqPvUi
-         gYcdxCPPsNW9KiuLApQe5wkqJN4BPz/Z5+EtfYlkNxWlNH2aGnEYk0OD2GaxVJ6wBxTC
-         3f/w==
-X-Gm-Message-State: AC+VfDxWhVLtiZMdWcRlG4AJvlXA7dmfbmEshjVkbbzfrcyepuI1ZZph
-        IB9VnKbseuimPbTvEOPaIVO3WyKSMDg=
-X-Google-Smtp-Source: ACHHUZ7/R1bNSDuY8qq7mTJCAniu0gO+tNJWrry2TK/MwnuRC04ec1Q4cqViwZteAczs0AOB11bG5g==
-X-Received: by 2002:adf:dec5:0:b0:30f:bf71:501b with SMTP id i5-20020adfdec5000000b0030fbf71501bmr8129216wrn.61.1686797635112;
-        Wed, 14 Jun 2023 19:53:55 -0700 (PDT)
+        bh=3Qqv650L8XotgZ0aR4Jqb6NGuW3Hg6cdUtqyWLiBjzU=;
+        b=lv4rz14lDvyfYMwsfw8HFmb5DujPe/X2+it4H1qDC495Bqd2knqHyulai27/WH81+e
+         euTrCOWpsUtvlew2b44LNyiaggSONsu5tFC0gf1kjumPzEyYEPtXO8lAzoH+TInbuHvp
+         T8+Gh4GcH4K3JyPcyyn8cT6QIVLl6zeGnWw1mBvMkzQc2F23TePcS4Ut5vZHvtfk52id
+         Py5yO5R2A6gcUjLK8yby1UtHY19MTlyD9ZWvCa81mD/WaZma2vzbp4uePagWniUGLQpT
+         hoUL5dNwM927fpSwEHMs10S6HNBl1MOJSiD7CQEwZ7TyF6Cv5Ur/IWPKvJ/GHwT4hVC6
+         AhRQ==
+X-Gm-Message-State: AC+VfDyMBeuYVCE3b25wi5cjt6a8XNJaLvmRBD78lHopKkRYMugFMfL1
+        usTQ0HxTikl/QtC7ceDwoI+hkAn+kFk=
+X-Google-Smtp-Source: ACHHUZ7lqKBrR02G/8tVsN14I7n/5mfLBwHPG27pG1D0Zlad9iaHM1nh3UJ59jR2rgu7TT07dyMLFg==
+X-Received: by 2002:a5d:484f:0:b0:30f:ca58:39ca with SMTP id n15-20020a5d484f000000b0030fca5839camr5933167wrs.31.1686797634499;
+        Wed, 14 Jun 2023 19:53:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i4-20020a5d5584000000b0030fc576633dsm8988789wrv.16.2023.06.14.19.53.54
+        by smtp.gmail.com with ESMTPSA id p4-20020a5d48c4000000b0030903d44dbcsm19593274wrs.33.2023.06.14.19.53.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 14 Jun 2023 19:53:54 -0700 (PDT)
-Message-Id: <a4a2ed16dcce9cd01b46d01661fcbce80413e2fb.1686797630.git.gitgitgadget@gmail.com>
+Message-Id: <6b4cb31b17077181a311ca87e82464a1e2ad67dd.1686797630.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1506.v4.git.git.1686797630.gitgitgadget@gmail.com>
 References: <pull.1506.v3.git.git.1686017304.gitgitgadget@gmail.com>
         <pull.1506.v4.git.git.1686797630.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jun 2023 02:53:46 +0000
-Subject: [PATCH v4 5/9] doc: trailer: remove redundant phrasing
+Date:   Thu, 15 Jun 2023 02:53:45 +0000
+Subject: [PATCH v4 4/9] doc: trailer: examples: avoid the word "message" by
+ itself
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,30 +72,218 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-The phrase "many rules" gets essentially repeated again with "many other
-rules", so remove this repetition.
+Previously, "message" could mean the input, output, commit message, or
+"internal body text inside the commit message" (in the EXAMPLES
+section). Avoid overloading this term by using the appropriate meanings
+explicitly.
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/git-interpret-trailers.txt | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ Documentation/git-interpret-trailers.txt | 50 ++++++++++++------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 58a9c691492..7516593c470 100644
+index d0a0b303880..58a9c691492 100644
 --- a/Documentation/git-interpret-trailers.txt
 +++ b/Documentation/git-interpret-trailers.txt
-@@ -72,9 +72,8 @@ inside or after the value. The value may be split over multiple lines
- with each subsequent line starting with at least one whitespace, like
- the "folding" in RFC 822.
+@@ -83,12 +83,12 @@ OPTIONS
  
--Note that 'trailers' do not follow and are not intended to follow many
--rules for RFC 822 headers. For example they do not follow
--the encoding rules and probably many other rules.
-+Note that trailers do not follow (nor are they intended to follow) many of the
-+rules for RFC 822 headers. For example they do not follow the encoding rule.
+ --trim-empty::
+ 	If the <value> part of any trailer contains only whitespace,
+-	the whole trailer will be removed from the resulting message.
++	the whole trailer will be removed from the output.
+ 	This applies to existing trailers as well as new trailers.
  
- OPTIONS
- -------
+ --trailer <token>[(=|:)<value>]::
+ 	Specify a (<token>, <value>) pair that should be applied as a
+-	trailer to the input messages. See the description of this
++	trailer to the inputs. See the description of this
+ 	command.
+ 
+ --where <placement>::
+@@ -102,7 +102,7 @@ OPTIONS
+ --if-exists <action>::
+ --no-if-exists::
+ 	Specify what action will be performed when there is already at
+-	least one trailer with the same <token> in the message.  A setting
++	least one trailer with the same <token> in the input.  A setting
+ 	provided with '--if-exists' overrides all configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+ 	'--if-exists' or '--no-if-exists'. Possible actions are `addIfDifferent`,
+@@ -111,7 +111,7 @@ OPTIONS
+ --if-missing <action>::
+ --no-if-missing::
+ 	Specify what action will be performed when there is no other
+-	trailer with the same <token> in the message.  A setting
++	trailer with the same <token> in the input.  A setting
+ 	provided with '--if-missing' overrides all configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+ 	'--if-missing' or '--no-if-missing'. Possible actions are `doNothing`
+@@ -178,7 +178,7 @@ first trailer with the same <token>.
+ trailer.ifexists::
+ 	This option makes it possible to choose what action will be
+ 	performed when there is already at least one trailer with the
+-	same <token> in the message.
++	same <token> in the input.
+ +
+ The valid values for this option are: `addIfDifferentNeighbor` (this
+ is the default), `addIfDifferent`, `add`, `replace` or `doNothing`.
+@@ -188,10 +188,10 @@ trailer with the same (<token>, <value>) pair is above or below the line
+ where the new trailer will be added.
+ +
+ With `addIfDifferent`, a new trailer will be added only if no trailer
+-with the same (<token>, <value>) pair is already in the message.
++with the same (<token>, <value>) pair is already in the input.
+ +
+ With `add`, a new trailer will be added, even if some trailers with
+-the same (<token>, <value>) pair are already in the message.
++the same (<token>, <value>) pair are already in the input.
+ +
+ With `replace`, an existing trailer with the same <token> will be
+ deleted and the new trailer will be added. The deleted trailer will be
+@@ -199,12 +199,12 @@ the closest one (with the same <token>) to the place where the new one
+ will be added.
+ +
+ With `doNothing`, nothing will be done; that is no new trailer will be
+-added if there is already one with the same <token> in the message.
++added if there is already one with the same <token> in the input.
+ 
+ trailer.ifmissing::
+ 	This option makes it possible to choose what action will be
+ 	performed when there is not yet any trailer with the same
+-	<token> in the message.
++	<token> in the input.
+ +
+ The valid values for this option are: `add` (this is the default) and
+ `doNothing`.
+@@ -276,37 +276,37 @@ EXAMPLES
+ --------
+ 
+ * Configure a 'sign' trailer with a 'Signed-off-by' key, and then
+-  add two of these trailers to a message:
++  add two of these trailers to a commit message file:
+ +
+ ------------
+ $ git config trailer.sign.key "Signed-off-by"
+ $ cat msg.txt
+ subject
+ 
+-message
++body text
+ $ git interpret-trailers --trailer 'sign: Alice <alice@example.com>' --trailer 'sign: Bob <bob@example.com>' <msg.txt
+ subject
+ 
+-message
++body text
+ 
+ Signed-off-by: Alice <alice@example.com>
+ Signed-off-by: Bob <bob@example.com>
+ ------------
+ 
+-* Use the `--in-place` option to edit a message file in place:
++* Use the `--in-place` option to edit a commit message file in place:
+ +
+ ------------
+ $ cat msg.txt
+ subject
+ 
+-message
++body text
+ 
+ Signed-off-by: Bob <bob@example.com>
+ $ git interpret-trailers --trailer 'Acked-by: Alice <alice@example.com>' --in-place msg.txt
+ $ cat msg.txt
+ subject
+ 
+-message
++body text
+ 
+ Signed-off-by: Bob <bob@example.com>
+ Acked-by: Alice <alice@example.com>
+@@ -329,7 +329,7 @@ $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Re
+ $ cat msg1.txt
+ subject
+ 
+-message
++body text
+ $ git config trailer.sign.key "Signed-off-by: "
+ $ git config trailer.sign.ifmissing add
+ $ git config trailer.sign.ifexists doNothing
+@@ -337,19 +337,19 @@ $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.
+ $ git interpret-trailers --trailer sign <msg1.txt
+ subject
+ 
+-message
++body text
+ 
+ Signed-off-by: Bob <bob@example.com>
+ $ cat msg2.txt
+ subject
+ 
+-message
++body text
+ 
+ Signed-off-by: Alice <alice@example.com>
+ $ git interpret-trailers --trailer sign <msg2.txt
+ subject
+ 
+-message
++body text
+ 
+ Signed-off-by: Alice <alice@example.com>
+ ------------
+@@ -377,14 +377,14 @@ test -n "$1" && git log --author="$1" --pretty="%an <%ae>" -1 || true
+ $ cat msg.txt
+ subject
+ 
+-message
++body text
+ $ git config trailer.help.key "Helped-by: "
+ $ git config trailer.help.ifExists "addIfDifferentNeighbor"
+ $ git config trailer.help.cmd "~/bin/glog-find-author"
+ $ git interpret-trailers --trailer="help:Junio" --trailer="help:Couder" <msg.txt
+ subject
+ 
+-message
++body text
+ 
+ Helped-by: Junio C Hamano <gitster@pobox.com>
+ Helped-by: Christian Couder <christian.couder@gmail.com>
+@@ -401,14 +401,14 @@ test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
+ $ cat msg.txt
+ subject
+ 
+-message
++body text
+ $ git config trailer.ref.key "Reference-to: "
+ $ git config trailer.ref.ifExists "replace"
+ $ git config trailer.ref.cmd "~/bin/glog-grep"
+ $ git interpret-trailers --trailer="ref:Add copyright notices." <msg.txt
+ subject
+ 
+-message
++body text
+ 
+ Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
+ ------------
+@@ -420,7 +420,7 @@ Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
+ $ cat msg.txt
+ subject
+ 
+-message
++body text
+ 
+ see: HEAD~2
+ $ cat ~/bin/glog-ref
+@@ -433,7 +433,7 @@ $ git config trailer.see.cmd "glog-ref"
+ $ git interpret-trailers --trailer=see <msg.txt
+ subject
+ 
+-message
++body text
+ 
+ See-also: fe3187489d69c4 (subject of related commit)
+ ------------
 -- 
 gitgitgadget
 
