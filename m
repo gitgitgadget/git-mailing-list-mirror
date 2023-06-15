@@ -2,279 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 250EFEB64D9
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 17:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96DDBEB64D9
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 18:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233511AbjFORrL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 13:47:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52396 "EHLO
+        id S229778AbjFOSdT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 14:33:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231161AbjFORrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 13:47:04 -0400
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2084.outbound.protection.outlook.com [40.107.96.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A08B2137
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 10:47:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hPCCNB7h1itXRt2PluRrpXWTXy/WCy9i9N7mV4xNRK8aJDqflFYLyMZ6aFL9DMT/Hzhdiq3RNkR+g0QnWGs/gEXv0hAh+9a0d1LPfvS/GSErK9xGVXGGx4p5mAhyK0m7WcfGUqoNBfGA0gmYFeffsNzK/HOK0iGOdkoVL5NaUGTU7Wly7y1X8dzyykgSwmu9miCJA0EPq95hDkmNYxQdbxS2kfiTmn3VBcgjqicAYMgjBXjp3/qa4PotqT6pBXFsodfhEYNhxnkEfsUK6kiV3LvTHxDfT3QG+qBpTZy5T1k/btqQAimKS7iNYY2kATUKWDmL7MY84cr8Xe+CGX58cw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hbMea7E9I+6yqdBG4u1JZKJ1dGUMqenAhVKza42t79g=;
- b=Cso6HVlgn83+lvdeom8UUsXgeAfmYZP1JklXf9LysOLkbPR2g1ad9ny6CQwNxo/3jLgdE8shTbBVgFlGiSY2dz1xjOkDpz8XiSkgkF7/1OSiwvioQKvrscwMfDoRBf+Xn2Yaym3KMA2LEIrRxH+s2eedhCDLtvtrhN+XH8gkZvni0c9Ca4fSm/PvGC97MJnqc3nQQLU9UvplMxYzM+3kCwR4YD5Zhw2pE1lz2iEgLIPajJF19CuPlH/g5ZWqmC/XfrYE90SP+l9UiZwmtP/PLcyJchwEUhNRGPuyc4kpwzgNji/HeHhWfFZkHbSiSfSFCOCQRrOQNmc/ax6eH6AFCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
- dkim=pass header.d=siemens.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hbMea7E9I+6yqdBG4u1JZKJ1dGUMqenAhVKza42t79g=;
- b=vsNuYq/eKsX6tNZeFo/9RIAJxGooGXYvX9hHi15QfL8YQ9I7OKh+k6oEE9XEteZv27LaGHThnhcOlNSTXfBBVAI67/2l82H8oBUeQa6cxZiz8LpvAjW1W3nmh+W94Wx0QRsRnuNlfmjU1GowlISTZ/nrUleKPxqCMPekquFKAeTdT4CFgAVb2tiT6mvVPteANkmjIXC89eRhyMYRc8iWlgxHCPdDGnDMm4dHAazM3ON8zQqYdaqDZA7ogxCueHEtFKBhcOZD7l9g/BRT0zJWwViOY7SeHiEhF9CpvL8NBVE3Qi644mGFvD0UVsf7J2fjGIlUWEVF0lQRHO5pyUPWvw==
-Received: from PH7PR07MB9467.namprd07.prod.outlook.com (2603:10b6:510:1ee::12)
- by BN0PR07MB8895.namprd07.prod.outlook.com (2603:10b6:408:16d::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6477.37; Thu, 15 Jun
- 2023 17:46:58 +0000
-Received: from PH7PR07MB9467.namprd07.prod.outlook.com
- ([fe80::a5d1:273b:d763:6af1]) by PH7PR07MB9467.namprd07.prod.outlook.com
- ([fe80::a5d1:273b:d763:6af1%4]) with mapi id 15.20.6500.025; Thu, 15 Jun 2023
- 17:46:58 +0000
-From:   "eric.frederich@siemens.com" <eric.frederich@siemens.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Possible bug regarding trailers
-Thread-Topic: Possible bug regarding trailers
-Thread-Index: Admfq2AaKG0ibEbJSseXK7cc2YIRTg==
-Date:   Thu, 15 Jun 2023 17:46:58 +0000
-Message-ID: <PH7PR07MB9467452EBAFAB2C825295C0C8C5BA@PH7PR07MB9467.namprd07.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Enabled=true;
- MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_SetDate=2023-06-15T17:46:56Z;
- MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Method=Standard;
- MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Name=restricted;
- MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_SiteId=38ae3bcd-9579-4fd4-adda-b42e1495d55a;
- MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_ActionId=32f04580-79f9-4f1d-bc61-936f901e2c35;
- MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_ContentBits=0
-document_confidentiality: Restricted
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siemens.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH7PR07MB9467:EE_|BN0PR07MB8895:EE_
-x-ms-office365-filtering-correlation-id: e9d7fd03-a7f9-47f8-6017-08db6dc88439
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: HQC2VUPk/C/WKL31oQVtRCzP+57gNMn24ftEu0fXWYxgXHvvZuetUxG8d07YHIKJfecaf4zOW3Mvf2NhxMIL6ZFVSDGzuMNddqC/xUkSxOz1FPKdESwmAHVJPJu1bzfDJgClBKN4xDBWeNC6Ug7NxTXzgWWL0yMPe3dn1sEhyCNZzmqXykOZDAWXAzRLNCEcjhScqclpofmhSwiA5IYTpGeUHGK21dVrLuDu2K69K0ZiWiQU6lFavBLo5Ng1K9O3Mq1Cz5N+2vHKRJgcV5B1Yq/CKdAEViBc+fFxIh5s+oD4FHT8whTsWKWOs3UFGUKiKN6bUnfFAeIJiZHCKk7qN3LUl298VVQb6uHkdbTWodM4iqVwp98zgBu1TJ3vgaABPOuuB/S88N6mM4c4c/aMPjxAPkjEiAGD/vaDDpmE83ETZxTH/OMue7/S6teM/EzGbjt2zZxQFBQo59WBnC+W7wCGJSzDGTM7x1VGD4sOhyGXRPkew0O4WF71g9211thYqZd6vM7w2pYOhqQy4BME82NiG0dmJa51+i0nS0hmtqtjvGbJSNYtnyv5y+dpLmx47ysGqQRTDM19GRhvimT9BFOFcICS7O1pmsr6LEd8gcPIgtX6zFm1BoRXs4vK5Kqj
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR07MB9467.namprd07.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(376002)(366004)(346002)(136003)(39860400002)(451199021)(83380400001)(2906002)(38070700005)(33656002)(86362001)(38100700002)(82960400001)(122000001)(3480700007)(55016003)(8676002)(8936002)(5660300002)(52536014)(316002)(76116006)(66446008)(478600001)(66556008)(41300700001)(66476007)(71200400001)(66946007)(6916009)(64756008)(7696005)(26005)(6506007)(9686003)(186003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?NThwDYI4Dg8IbbLxT6ZLiuelRUkd+6+tE5sDxOcV/lEa0AgKGD1y4BFANf37?=
- =?us-ascii?Q?Xa1J3YLTSl4/8pnGVibgkhX3Z8aKbUF8+uLXExgDoJDN8rSrl/gePPBvFEQz?=
- =?us-ascii?Q?Mln3bJze1/I87q6WwN3Ut4YhaR9hJztIZ1bCG4eaIwanK9JLrSgn1eQ2d7yR?=
- =?us-ascii?Q?4kDb8pzypqsuGaw/9j1FWv1OeuZE44WbMKLLyGUiRF5veaKtiWP68QYgIlNw?=
- =?us-ascii?Q?f1j1X+puHLXczQpshCWMHbUmzll4JP68+t4F5/aB2lbTYdKw6k73AQjyl1cy?=
- =?us-ascii?Q?i8dI5FiE89Z93vV8tMOey/g2vkTGSQxA8LNmZmsIvdEzqHXu8QYtbuaDx89C?=
- =?us-ascii?Q?x4wo171nxlOlsqPDAOP6Eg7YLL5fERmda05UHArIw1yTlRzkHry1T1hAoGSh?=
- =?us-ascii?Q?VhqHbNEn8GNOKne/CyDTgo8BajmVWun2PGdth2YQR94n4LdNvwbxjVOy3xd2?=
- =?us-ascii?Q?eWsE8NZHqOPaaxVtqP5mmAOlo7b/KQlA1m7jZ4ag0ca3HPn6g62bR2f8qKAU?=
- =?us-ascii?Q?/R2GxgPvX00mqnS8yzgwjTDI3dBtCaWXxdyX/MMWoo67lTFDOS1BoaOGfEZV?=
- =?us-ascii?Q?eW5ZvsuBj1ai0pHDc467+BjPvWX1r3hXYDeTllALIVfbNaWIyOejr0kAPxVc?=
- =?us-ascii?Q?PJBloc2A5Qi0P4qAjiUceG0IUsTvcVUsFx7qfyd5Q+tAxs/ZPf5M9Q+SLNGe?=
- =?us-ascii?Q?Khta+WSITBPH/QNq3R70qQxc9QbJbHsmY8HSFfH0ZxM01Z5voWX91Q23/hIr?=
- =?us-ascii?Q?jAxCY1iEK0lFWOGtLzfclfTmXW5jea3goiUKRlNe09yu+D+fZyeeU6Boh7ZJ?=
- =?us-ascii?Q?m1HXftr6Kzh+PNprzHMSAVJ87svZAv1R1Jqvp31QGzYYsCsJ8If/sTXV9oSO?=
- =?us-ascii?Q?7vxgYB0anFb7R0OvcKjB7nmrLpiEo6xr7UN4DrLQXEKOOdaJ8dT6CmXPs4Be?=
- =?us-ascii?Q?uRyi5dBYX/JQlxxfqWUc8kSt9TDrpv2fLR8aFiqzoREF4UXltvGS9/KMeHdu?=
- =?us-ascii?Q?kmrbCS3Ty44qU9hkWvkf5V0AsW1ACTVDmRiMkCOOhrxuEnlaGfuxW6THobJI?=
- =?us-ascii?Q?AiAM+RqSZvVhw2a3I3X9Dy2D7ZsuZvsV39uGmMPgcTexktnlb+0KBgrWpYm1?=
- =?us-ascii?Q?yzXI2qDhN4UswnVx1BNsu/CrXKV/zM/DM6kpzKXduxGnaJtxUdE58Yw7Av4/?=
- =?us-ascii?Q?joM/BvXngYdb5gFEx3KI/UEP2ogXBFB5YwqpKB80IHSY+bsif2HD84qHFXoF?=
- =?us-ascii?Q?0TfKgGHXzC5BFQ/qDSf/4QTUsPIuYIK6avtOiYUtJ8nR6SHbZa9uzk7yGmKb?=
- =?us-ascii?Q?rhwX2r4/s0wck3K9+3EaQIAV9VTp/SWU+NeDa9qJu+Qmi6a8GtGpeRQ9KsWR?=
- =?us-ascii?Q?nJR3KPNvClryorkSR0eTZKFJpM2fyKs4hQq6j0u093dYVhn2XOtkgH2fW9DJ?=
- =?us-ascii?Q?aecoLLGzwvcqIEdBdvrQBhjCYq3v1KshyI+LVFeiNfNzns6ZBS0iMhuQvaK4?=
- =?us-ascii?Q?Ebevzr6iZzRvOKoTbiNiG5f3E4XMIkVTBj45X00/lwZShM9disheFPqkPO6H?=
- =?us-ascii?Q?W/5QSnYdPE0A99tlWQJFna8KnKyYMvb3gw1K5YOR?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S237326AbjFOScq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 14:32:46 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03AE735B3
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 11:32:00 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51400fa347dso1660a12.0
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 11:31:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1686853918; x=1689445918;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mSECjdyF+C/EWr2sTMBoqX536mwPDKk9dzj863PvdTg=;
+        b=3irDmX4EOOKXU9lE6M9R+O3xx9g25qK+mG5hJu2HpucQV1ayjm6uPTiYSsHfOWaz2Q
+         iLcPysiMc6w/TWQfPYbZHeeqhLsvCRq3KnBLIU8yKfC4RGSAVut0l1h40M9diHOFbxQ6
+         zqXvVSGKrigWVEdn6ISYx6aSmxTIK+v+c8ISdgdQ5Q9fGfxJRcOeZ5yl2k4p36+GgCdb
+         XFQMK5Uhxz+7u8debAGdIlYf4SnZPGxbLVP2DTFrOALzFLSQ/Q0ULO262HOo2/q/2N1O
+         Sv5KEOvnU8HSHkYHgelcPqhzvK5JWBEwEliTWPIhYZwhFdC8ElgtIKXyq4rY47lKUul6
+         9GoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686853918; x=1689445918;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mSECjdyF+C/EWr2sTMBoqX536mwPDKk9dzj863PvdTg=;
+        b=H4mEdNm1nNhjJIL43EFNtJa2lOcuZuy7zUDN9NCe4VygGUgzQgQzFKnXt4E08ta0GF
+         C1+9uMnJk0sIRIxDbS0WPlSEHf4G1+Ha4wyyR1p+2XU/OTNWDXfFoJsVak/A1Y5Qj3gj
+         3CIzhp5Nf4q9fHVFlfeos/vImfgSSYX+Ln+i36vZ4HJ1EjfSCbWDs9mrwDnX2ULAuzxF
+         ZmQG43WqWN8PLPfHvyKkg6VtgdBuBYxz1TRPB9Xe0pfWbvk7Vs7kBEqgGFoNb6YhAglK
+         DhvktApTmcURBymrrSxExzbVyqYylFbjloWaBq7N4LNjU+1s+v1Yn84vNeJIIqdeGSpE
+         Nxmg==
+X-Gm-Message-State: AC+VfDybAv8g6ICmbcSAGocU5eHjMc/S81JQRy70Gvv0hQeUIY37yGFn
+        Jo7Jcrz5ceBWP1eVqEBPDtWBHyzhcs2A4yj7xuM53To9iEMT8VKGijohgA==
+X-Google-Smtp-Source: ACHHUZ4yhA0ba8GWZXTAANJfWJYJj3L2tnp7H97UlvRRUR6olg7GpacbgWi6sPs5q/W/M2IuydYFIjVqzUCkohLggTw=
+X-Received: by 2002:a50:9faf:0:b0:514:92e4:ab9f with SMTP id
+ c44-20020a509faf000000b0051492e4ab9fmr97966edf.7.1686853918209; Thu, 15 Jun
+ 2023 11:31:58 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR07MB9467.namprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9d7fd03-a7f9-47f8-6017-08db6dc88439
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jun 2023 17:46:58.1675
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 21WDiO4Eg/krp4v162oeHAN/MD8Xyux8rKjfJYSmFpISRkhCEilUDd2LQclEBYulMiS2FXY7taCC0xyw3K1Ou2JlCKI2pRuF43EB+5KVrtE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR07MB8895
+References: <CAFySSZB5AvP04fF+Uk4E6JovxQGQpU0eUXW3KjeMxffQHmm9Sw@mail.gmail.com>
+In-Reply-To: <CAFySSZB5AvP04fF+Uk4E6JovxQGQpU0eUXW3KjeMxffQHmm9Sw@mail.gmail.com>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Thu, 15 Jun 2023 11:31:46 -0700
+Message-ID: <CAJoAoZ=pKx413d28Y_984AMA4WqC5WzbDLWZ0iJCCH4zgRTEcA@mail.gmail.com>
+Subject: Re: Video conference libification eng discussion, this Thursday 17:00 UTC
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am able to produce a commit with a trailer which does not show up in:
-    `git log --format=3D"%(trailers:key=3Dold-scm-change-id,valueonly,separ=
-ator=3D%x2c) %H %T" HEAD`
-But does show up in:
-    `git cat-file commit HEAD | git interpret-trailers --parse`
+Hi folks, the notes from today follow:
 
-The following script reproduces the issue.  It deletes directory /tmp/foo (=
-from previous runs if you want to change something and run it again) then c=
-reates a new git directory in /tmp/foo and operates within there.
-The comments at the bottom of the script were from run of the script.  You'=
-ll see the "WE WILL SEE THIS TRAILER" but you will not see the "THIS TRAILE=
-R GETS LOST" even though they both show up on an explicit call to `git inte=
-rpret-trailers --parse`
+*   (asynchronous) What's cooking in libification?
+    *   Patches we sent regarding libification
+        *   WIP v3 of unit test project plan is on list
+(https://lore.kernel.org/git/c7729b66a42b77dfe9ef61ba7c81e78e00b4021d.16863=
+52386.git.steadmon@google.com/)
+    *   Patches for review related to the libification effort
+*   (asynchronous) What happened in the past 1-2 weeks that interested
+parties or intermittent contributors need to know?
+    *   [calvinwan] I stuck git-std-lib into Google's monorepo and
+built it, Glen built his config patches on top of git-std-lib in
+Google's monorepo too, it works, we can call some stuff from our
+internal VFS, so yay!
+    *   Patch available upstream Soon(=E2=84=A2)
+*   (asynchronous) Where are you stuck? What eng discussions do we
+want to have? (We'll choose a topic from this list at the beginning of
+the meeting.)
+    *   (see calvin's topic below)
+*   [calvinwan] How should compatibility files interact with libraries
+in the Makefile? Most files in compat/ only have a dependency on
+git-compat-util.h, but there are some files that have higher level
+dependencies. For example, on Linux, git-std-lib only needs
+compat/strlcpy.c and compat/fopen.c. In the Makefile, COMPAT\_OBJS
+already exists and correctly contains the set of files, but also
+contains compat/linux/procinfo.c and compat/qsort\_s.c. Neither of
+these files are necessary for git-std-lib and while qsort\_s.c is a
+harmless inclusion, procinfo.c contains problematic trace2
+dependencies. Therefore if a user of git-std-lib attempts to call a
+problematic function in procinfo.c, they would encounter build errors.
+Under different build settings (eg. on different OSes), it is entirely
+possible that certain functions in git-std-lib would break and users
+would have to supply their own implementation. To summarize the
+problem, I would like to piggyback off existing Makefile logic for
+compat files, but also ensure that no problematic files are included
+across OSes.
+    *   Currently git-std-lib is a set of files by itself, compat
+library is another set built by itself, link against it to make
+git-std-lib run
+    *   How do we keep using correct compat libs, make it work across
+OS and build system boundaries, without including too much that breaks
+in libified world?
+    *   Config.mac.uname could take a flag for git-std-lib for linux,
+and we'd have to add another flag for every OS, and then do the same
+for every other library, so doesn't scale very nicely.
+    *   Emily: should COMPAT\_OBJS be split into smaller multiple sets?
+        *   Calvin: yeah basically
+    *   Emily: can we just not expose procinfo/qsort\_s via that API
+boundary? Is it ok to include too much if it's not used?
+    *   Calvin: I'm worried about git-std-lib working on Linux and
+breaking on another system because of the compat stuff not being
+populated
+    *   Glen: I suspect we don't want to target all of COMPAT\_OBJS -
+stuff like fsmonitor doesn't ever need to go into the std-lib. I think
+that's the set of platform-specific stuff we need for the Git binary,
+so can we distinguish the set of platform-specific stuff that's needed
+for the std lib?
+    *   Calvin: yes, but we'd have to do the same distinguishing for
+config, objstore, other libraries. And we'd have to do that across
+each OS.
+    *   Glen: but for platforms which don't implement the thing we
+want, they'd already have to reimplement the library even to build
+normal git?
+    *   E.g. for linux and darwin we can ship the compat stuff with
+the git-std-lib and our users can use it; platforms that don't have
+the impls will have the same problem they have today.
+    *   If we're correctly defining COMPAT\_OBJS\_LIB in the makefile
+then there's not really any makefile modification that needs to happen
+    *   Emily: does git-std-lib + compat-lib cover 100% of business
+logic libraries?
+    *   Calvin: but where does procinfo go, for example?
+    *   Glen: if procinfo is just useful for trace2, then we should
+include it with trace2, not with everything, right?
+    *   Calvin: for sake of argument, if it's needed in the config
+library then it also has to be included by config library, right?
+    *   Glen: isn't it the same as other libification, that we are
+moving implementations/dependencies closer to their sole user
+libraries?
+    *   Emily: do we see any other problematic dependency chains? Or
+is it just this one? If it's just this one that might be ok?
+    *   Calvin: then I think this means we have a makefile where
+git-std-lib only includes the bare minimum it needs; at some point
+    *   Emily: i think putting the platform-specific stuff into
+git-std-lib keeps with the vision of git-std-lib being the "one stop
+shop" for building and running any other git lib, so it would be OK to
+include compat stuff not needed just to run git-std-lib code, as long
+as it doesn't have a dep on another git library (like procinfo does).
+    *   Randall: does the platform stuff remain in the standard git codebas=
+e?
+    *   Emily: everything stays in the git codebase and mailing list
+stuff and so on
+    *   Randall: is compat/ moving into the git-std-lib or staying
+where it is? Where will the platform stuff live?
+    *   Glen: git-std-lib is a .a that contains the code we think most
+lib users will need, and we'll build it from the same git tree that
+the rest of the git code lives in
+    *   Randall: procinfo doesn't have any nonstop stuff there, it
+would just be a stub for nonstop, want to make sure we can still make
+it work
+    *   Emily: procinfo leaves stubs if there's no platform-specific
+stuff, so we want to make sure that procinfo still leaves stubs on
+e.g. nonstop
+    *   Randall: yeah, and then i can make sure it still works once we
+have a series
 
-I'm looking for a reliable way to store some meta-data from an old SCM syst=
-em as we migrate to Git.
-I'd prefer to utilize Git's native trailers and not have to resort to using=
- a (foreign to Git) sqlite database or something.
-
-Thanks,
-~Eric
-
-
-#!/bin/bash
-
-rm -rf /tmp/foo
-mkdir /tmp/foo
-cd /tmp/foo
-git init
-git config user.email a@b.com
-git config user.name "example"
-git config commit.gpgSign false
-
-echo "CHANGE" >> README.md
-git add .
-git commit -m "A bad commit
-
---- let's mess stuff up ---
-
-Have fun
-" --trailer "old-scm-change-id:THIS TRAILER GETS LOST"
-
-echo "CHANGE" >> README.md
-git add .
-git commit -m "A good commit
-
-*** no problem here ***
-
-Have fun
-" --trailer "old-scm-change-id:WE WILL SEE THIS TRAILER"
-
-echo "******************** git log ********************"
-git log
-
-echo "******************** git cat-file commit HEAD^ ********************"
-git cat-file commit HEAD^
-
-echo "******************** git cat-file commit HEAD ********************"
-git cat-file commit HEAD
-
-echo "*****"
-echo "*****"
-echo "*****"
-echo "*****"
-echo "*****"
-
-echo -e "\n\n***** git cat-file commit HEAD^ | git interpret-trailers --par=
-se *****"
-git cat-file commit HEAD^ | git interpret-trailers --parse
-
-echo -e "\n\n***** git cat-file commit HEAD | git interpret-trailers --pars=
-e *****"
-git cat-file commit HEAD | git interpret-trailers --parse
-
-echo -e "\n\n******************** git log w/ trailers in format ***********=
-*********"
-git log --format=3D"%(trailers:key=3Dold-scm-change-id,valueonly,separator=
-=3D%x2c) %H %T" HEAD
-
-echo -e "\n\n******************** git version ********************"
-git version
-
-
-# OUTPUT:
-
-
-# Initialized empty Git repository in /tmp/foo/.git/
-# [main (root-commit) 62d1150] A bad commit
-#  1 file changed, 1 insertion(+)
-#  create mode 100644 README.md
-# [main 0deff83] A good commit
-#  1 file changed, 1 insertion(+)
-# ******************** git log ********************
-# commit 0deff83a2955ab5bb8aef24eca77e5399feabacc
-# Author: example <a@b.com>
-# Date:   Thu Jun 15 13:39:37 2023 -0400
-#=20
-#     A good commit
-#    =20
-#     *** no problem here ***
-#    =20
-#     Have fun
-#    =20
-#     old-scm-change-id: WE WILL SEE THIS TRAILER
-#=20
-# commit 62d11500db250440c190ebe60945789e13fb0bbf
-# Author: example <a@b.com>
-# Date:   Thu Jun 15 13:39:37 2023 -0400
-#=20
-#     A bad commit
-#    =20
-#     old-scm-change-id: THIS TRAILER GETS LOST
-#    =20
-#     --- let's mess stuff up ---
-#    =20
-#     Have fun
-# ******************** git cat-file commit HEAD^ ********************
-# tree 1dd017bdd070190005e5e162d87afebcd61e0fa8
-# author example <a@b.com> 1686850777 -0400
-# committer example <a@b.com> 1686850777 -0400
-#=20
-# A bad commit
-#=20
-# old-scm-change-id: THIS TRAILER GETS LOST
-#=20
-# --- let's mess stuff up ---
-#=20
-# Have fun
-# ******************** git cat-file commit HEAD ********************
-# tree cd83b4c038415891bff254e2954113df2f78aa62
-# parent 62d11500db250440c190ebe60945789e13fb0bbf
-# author example <a@b.com> 1686850777 -0400
-# committer example <a@b.com> 1686850777 -0400
-#=20
-# A good commit
-#=20
-# *** no problem here ***
-#=20
-# Have fun
-#=20
-# old-scm-change-id: WE WILL SEE THIS TRAILER
-# *****
-# *****
-# *****
-# *****
-# *****
-#=20
-#=20
-# ***** git cat-file commit HEAD^ | git interpret-trailers --parse *****
-# old-scm-change-id: THIS TRAILER GETS LOST
-#=20
-#=20
-# ***** git cat-file commit HEAD | git interpret-trailers --parse *****
-# old-scm-change-id: WE WILL SEE THIS TRAILER
-#=20
-#=20
-# ******************** git log w/ trailers in format ********************
-# WE WILL SEE THIS TRAILER 0deff83a2955ab5bb8aef24eca77e5399feabacc cd83b4c=
-038415891bff254e2954113df2f78aa62
-#  62d11500db250440c190ebe60945789e13fb0bbf 1dd017bdd070190005e5e162d87afeb=
-cd61e0fa8
-#=20
-#=20
-# ******************** git version ********************
-# git version 2.41.0.187.g15d354cc3d
+On Wed, Jun 14, 2023 at 9:29=E2=80=AFAM Calvin Wan <calvinwan@google.com> w=
+rote:
+>
+> Hello folks,
+>
+> Google is hosting a standing engineering discussion about libifying
+> Git, for contributors interested in participating in or hearing about
+> the progress of this effort. Expect this discussion to be free-form
+> and casual - no powerpoints here!
+>
+> We typically hold this meeting every Thursday at 10am Pacific (17:00
+> UTC) via Google Meet.
+>
+> To get an invite to the video conference and the notes document,
+> please reply to this email. Please also add points to the agenda
+> (template follows) if you want to raise awareness of them.
+>
+> We'll choose a topic to discuss at the beginning of the meeting, and
+> I'll reply afterwards with the notes.
+>
+> *   (asynchronous) What's cooking in libification?
+>     *   Patches we sent regarding libification
+>     *   Patches for review related to the libification effort
+> *   (asynchronous) What happened in the past 1-2 weeks that interested
+> parties or intermittent contributors need to know?
+> *   (asynchronous) Where are you stuck? What eng discussions do we
+> want to have? (We'll choose a topic from this list at the beginning of
+> the meeting.)
+> *   Session topic: TBD
