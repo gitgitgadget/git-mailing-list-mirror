@@ -2,156 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 596D6EB64D9
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 14:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCA54EB64DD
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 14:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343880AbjFOOZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 10:25:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50474 "EHLO
+        id S241551AbjFOOkL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 10:40:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240665AbjFOOZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 10:25:26 -0400
+        with ESMTP id S1345107AbjFOOkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 10:40:02 -0400
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C011FE5
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 07:25:23 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 319605C011C;
-        Thu, 15 Jun 2023 10:25:23 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97FCB1A2
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 07:40:01 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 08F095C0116;
+        Thu, 15 Jun 2023 10:40:01 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 15 Jun 2023 10:25:23 -0400
+  by compute4.internal (MEProxy); Thu, 15 Jun 2023 10:40:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1686839123; x=1686925523; bh=Ru
-        610nXNPMtZXsWqGLyx/X0Dbeub4ZUk8mpntHhMioA=; b=WQ8hdciJYOG+QQ6fdp
-        M+dlIXyADHaOTge0qLEWHA+cvUTWUMk+QrGVW5EmzOOAAXVm424r3EzApnvUmJ2R
-        SHpKB6jIXPy7m+VMaR0WQoaYMlqFVExFRNy7pBXLiZInJXj4SYgH0ixlgB82dYeL
-        Nv+T+aCGku02ikBLvFYhILRT9DEHnQIsfSoUxEBPH8wIITSZkCyXcZH5M1a1h4mV
-        DE6soxFk3twxFNRysdb8W3WFHHHdYDfQ62zxjnFIWXRAvnWGirg10FY92Z6EJ2cf
-        x85E4nbccfpZ0G7gQeVoJaHTkPQ4I/PG4ewZLo6A5AANndIWlFgYgtvoR3EJyTZZ
-        dluw==
+        :subject:subject:to:to; s=fm2; t=1686840001; x=1686926401; bh=d7
+        8QWvegh4rSoqDR/eNvU/g8w1IjNHkbWTQKxUluZ6o=; b=kWuoKIE23hnhmnRHe/
+        tzxcoNV7GiYtKDRZ5hjEth7hiEyg2DslwFT5P5ZEyxEE3On1dPP7igNJ/XD+lbr5
+        77GXRohkZDZRJFtBvX4N6FvjyC3SwlcFeDHHiWyiiWBPmRIsn8yT4stBQtvn4vQt
+        6f78wQb+CxUqV7CP6YoIzV5HSFn7/AuQnM3DgusjfiQR6gevSzuDxP6FMaIOy90k
+        QQrGxJsPWmo4w7MXiJRaODlv29p8sKAuscB/j+1XRilMRUv/Z9JAYAxPeDLIcgzd
+        rpw+2ALs/2xStA80YQUNikCltsz8i1L2KBeWdxNaPqmF5mFVwab0tJ1XsWJ6OSBL
+        imhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1686839123; x=1686925523; bh=Ru610nXNPMtZX
-        sWqGLyx/X0Dbeub4ZUk8mpntHhMioA=; b=oOhYgLd7faSdZXTfVAA0crD9XhGv2
-        Uyv/7vrgmvhyxPXpyuOls0a8Qv3QxH/Nh1wMoaNXsJdexa7pJUS9gy3592r1UCTn
-        vH8ZGyyOfAJrL2flcbtOatIgG6YHqkBu+6hwwmtONh6y0ocJPxGB70jgFU2+QRsm
-        zeZI40qm50bhoEQqx8lILwkfYNWWfnw7OJMXr599n5rkmkpA0o3SA/5rROWgjGty
-        U+gYpIyHDWhJSt32nAqGGkybRX6jszKqcltue2QcwO9q9Mn4njCOIgEOC/jsjxHi
-        CVpQ8sJyRm+hiW5BZty/DAAxqkFdWpI/KxFJtMT8eW4gG9G/0mR/OqYOQ==
-X-ME-Sender: <xms:Uh-LZD81OU4Sn1CQzGbBRlY_-kkUNYJyoszZrkmtazdzuMBeYT8bJA>
-    <xme:Uh-LZPthPLT_lbKRAIWBbHSSvXHI2BRulo5nypnTER4llug48Ppg-Yw9k_PHvSVRz
-    qppeVbsPV3LpGYzPw>
-X-ME-Received: <xmr:Uh-LZBCSgfIo4pjDCRhpGW9_l88Mcq31_mFP8EiQCGvtpbsFZ5ad-Pf0w_qrjsUSV9_TyhJB0WpNpCPCaYKuiA2I097X_a8tBWqR74DEku25pQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvvddgjeduucetufdoteggodetrfdotf
+        :x-sasl-enc; s=fm2; t=1686840001; x=1686926401; bh=d78QWvegh4rSo
+        qDR/eNvU/g8w1IjNHkbWTQKxUluZ6o=; b=QQutm4p3VUch5hH8EnlQ4B4kuLGsn
+        l23srif5fSuUZW//qsAT8mnKTPATB27lamHLC05bQdSbcsEXH4R+7yrXVQxEQgy7
+        r/3zxo4XEoMvbFSNcriC1IK20s4TeIKPNqMK3CNotB6NN9lng1jLd0F+OtfYb//E
+        NOfpMyXhkVIdJ7fv4HmxcLaOsbAU1G+OxtUjbMii7wjsoCYDBhJj4Wb+S0wB2n+w
+        XuHlOpLlBXx2QB/aYHI/CsODU3bN05Py2Axh62HqeDD11+u4V07AVRfnLxbA0bUG
+        CaMnMy24jDmbrrwfPmthjzbWKOTIaXnup9z+CYYPL0jrDgpZ0k6Gt9iKQ==
+X-ME-Sender: <xms:wCKLZODuvpj-infjP50vIs1UnBR6t9d6-s6AXKZzVUprt9UyRkqV3w>
+    <xme:wCKLZIgRX1Jl8Z9OH39WLW-vBL1bqJfQyhb8dIpfhoDNiN5wlfq-ebLuelByEfqAZ
+    4yHbOz1zznBprhBwg>
+X-ME-Received: <xmr:wCKLZBn_-ozXWv-QEqEnCCebYMKA0u9eH5Kz8adgu1mTXapXTY23WCujWaA0meRc6clKNkkAdnc59jiYgQsiliZ0vInhVzaux1K4h-oONFqrvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvvddgjeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    fsredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeejgffgjeevvedvleehveekheetueduud
-    fgffevueelteejhedufeevtddvudffgeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:Uh-LZPf8CHYZ1WKgRr49-EJV7oKAGI8elnfAru_IYRZnbYEhxYxvxQ>
-    <xmx:Uh-LZINjEffsnqG-aefut_RvIw6Ku-lKLiTqb5vvhV8PUWELygDSrg>
-    <xmx:Uh-LZBmteanvX-8mwp5yZWK2fTti9nDS1dZ0OFASMT3g20fEdAMvLg>
-    <xmx:Ux-LZCXhCPHcs_hBv38Jr87qoqGp-Y91DHc5nYjJ8JgTFpzGeCwG-Q>
+X-ME-Proxy: <xmx:wCKLZMx__qUopvxflq05vtyUuFvmhSSSMpgODwx5tmDP0qt_QA0CWw>
+    <xmx:wCKLZDR2gUgq4WMSDLHRfoyl-WmioLFsbxjcaF1WDxwYbdmtZS6hJQ>
+    <xmx:wCKLZHaoKMA2-e06BjcbR3LZgL7cxv4JzV6cfRnxPBnhM3-SEndFJw>
+    <xmx:wSKLZE6GtZ7taiDKA-bSHcIqSoN3CDEA1gctsquKmuDz3xAd9JrhvA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Jun 2023 10:25:22 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 2d97ff94 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 15 Jun 2023 14:25:14 +0000 (UTC)
-Date:   Thu, 15 Jun 2023 16:25:18 +0200
+ 15 Jun 2023 10:39:59 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id f6881167 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 15 Jun 2023 14:39:47 +0000 (UTC)
+Date:   Thu, 15 Jun 2023 16:39:51 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] revision: handle pseudo-opts in `--stdin` mode
-Message-ID: <2ot3z23uzikdrgsl7wdqwzpxe4xihkpekqn2rg5y3vfq5yklv6@njx2gf3wwcab>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/3] revision: reorder `read_revisions_from_stdin()`
+Message-ID: <6cd4f79482276eae333bab8cebd114fa913659e6.1686839572.git.ps@pks.im>
 References: <cover.1686744685.git.ps@pks.im>
- <457591712799719f23fa47e59d5a3c1cd497e802.1686744685.git.ps@pks.im>
- <xmqq352uyr5b.fsf@gitster.g>
+ <cover.1686839572.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4pzmbvwlnlai5yc4"
+        protocol="application/pgp-signature"; boundary="w6a7n67lcrstneqn"
 Content-Disposition: inline
-In-Reply-To: <xmqq352uyr5b.fsf@gitster.g>
+In-Reply-To: <cover.1686839572.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---4pzmbvwlnlai5yc4
+--w6a7n67lcrstneqn
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 14, 2023 at 08:56:00AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >  		if (sb.buf[0] =3D=3D '-') {
-> > +			const char *argv[2] =3D { sb.buf, NULL };
-> > +
-> >  			if (!strcmp(sb.buf, "--")) {
-> >  				seen_dashdash =3D 1;
-> >  				break;
-> >  			}
-> > =20
-> > -			die("options not supported in --stdin mode");
-> > +			if (handle_revision_pseudo_opt(revs, argv, flags))
-> > +				continue;
-> > +
-> > +			die(_("option '%s' not supported in --stdin mode"), sb.buf);
-> >  		}
->=20
-> The reason why we had the double-dash checking inside this block is
-> because we rejected any dashed options other than double-dash, but
-> with this step, that is no longer true, so it may make more sense to
-> move the "seen_dashdash" code outside the block.  Also unlike the
-> command line options that allows "--end-of-options" marker to allow
-> tweaking how a failing handle_revision_arg() call is handled, this
-> codepath does not seem to have any matching provision.  In the
-> original code, which did not accept any options, it was perfectly
-> understandable that it was unaware of "--end-of-options", but now we
-> do allow dashed options, shouldn't we be supporting it here, too?
->=20
-> Thanks.
+Reorder `read_revisions_from_stdin()` so that we can start using
+`handle_revision_pseudo_opt()` without a forward declaration in a
+subsequent commit.
 
-Good point, we should. Most importantly, the code would currently refuse
-to enumerate references with a leading dash, and there would be no way
-to work around this issue.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ revision.c | 66 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-E.g. this works:
+diff --git a/revision.c b/revision.c
+index b33cc1d106..cc22ccd76e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2195,39 +2195,6 @@ static void read_pathspec_from_stdin(struct strbuf *=
+sb,
+ 		strvec_push(prune, sb->buf);
+ }
+=20
+-static void read_revisions_from_stdin(struct rev_info *revs,
+-				      struct strvec *prune)
+-{
+-	struct strbuf sb;
+-	int seen_dashdash =3D 0;
+-	int save_warning;
+-
+-	save_warning =3D warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity =3D 0;
+-
+-	strbuf_init(&sb, 1000);
+-	while (strbuf_getline(&sb, stdin) !=3D EOF) {
+-		int len =3D sb.len;
+-		if (!len)
+-			break;
+-		if (sb.buf[0] =3D=3D '-') {
+-			if (len =3D=3D 2 && sb.buf[1] =3D=3D '-') {
+-				seen_dashdash =3D 1;
+-				break;
+-			}
+-			die("options not supported in --stdin mode");
+-		}
+-		if (handle_revision_arg(sb.buf, revs, 0,
+-					REVARG_CANNOT_BE_FILENAME))
+-			die("bad revision '%s'", sb.buf);
+-	}
+-	if (seen_dashdash)
+-		read_pathspec_from_stdin(&sb, prune);
+-
+-	strbuf_release(&sb);
+-	warn_on_object_refname_ambiguity =3D save_warning;
+-}
+-
+ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat=
+_token what)
+ {
+ 	append_grep_pattern(&revs->grep_filter, ptn, "command line", 0, what);
+@@ -2816,6 +2783,39 @@ static int handle_revision_pseudo_opt(struct rev_inf=
+o *revs,
+ 	return 1;
+ }
+=20
++static void read_revisions_from_stdin(struct rev_info *revs,
++				      struct strvec *prune)
++{
++	struct strbuf sb;
++	int seen_dashdash =3D 0;
++	int save_warning;
++
++	save_warning =3D warn_on_object_refname_ambiguity;
++	warn_on_object_refname_ambiguity =3D 0;
++
++	strbuf_init(&sb, 1000);
++	while (strbuf_getline(&sb, stdin) !=3D EOF) {
++		int len =3D sb.len;
++		if (!len)
++			break;
++		if (sb.buf[0] =3D=3D '-') {
++			if (len =3D=3D 2 && sb.buf[1] =3D=3D '-') {
++				seen_dashdash =3D 1;
++				break;
++			}
++			die("options not supported in --stdin mode");
++		}
++		if (handle_revision_arg(sb.buf, revs, 0,
++					REVARG_CANNOT_BE_FILENAME))
++			die("bad revision '%s'", sb.buf);
++	}
++	if (seen_dashdash)
++		read_pathspec_from_stdin(&sb, prune);
++
++	strbuf_release(&sb);
++	warn_on_object_refname_ambiguity =3D save_warning;
++}
++
+ static void NORETURN diagnose_missing_default(const char *def)
+ {
+ 	int flags;
+--=20
+2.41.0
 
-$ git rev-list --end-of-options -branch
 
-Whereas neither of these do in the current version:
-
-$ printf "%s\n" -branch | git rev-list
-$ printf "%s\n" --end-of-options -branch | git rev-list
-
-Will send a v2 with `--end-of-options` handling, thanks!
-
-Patrick
-
---4pzmbvwlnlai5yc4
+--w6a7n67lcrstneqn
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmSLH0gACgkQVbJhu7ck
-PpTLVBAAn9ql4k100PUT5GRlORfThYzJtVzkZhX5NFF4mT3m0IKTuzjjqLigk08x
-lFS5kE1maF3WNbqPBaOfKQbgCWnJ5BqXkEFvSrtDN7lpwr9Jw6+Fugz0DQj/dLeU
-zZMuql2fJriPEYJdjnki5r7OO++pRPVnYOY1EVGsQoaR+m9D5/WUzGTXSkoMCbRC
-tMlK+eq3FbgAxSLblNnugNtUrAcKCgnzIDEfHrh8EC7mW1cb6+qOTpzbVt/xRKPV
-yGydcaMcd+T99IADQwhtxaswxC9B5kwYanS3yM4Q3tx0fL74kuCBkGFKsqLxayES
-QcYIfDlLNGE2wjrVaeShntyhtJPKC8XmbaBxzPSjJJDvkaABOGEiKMNcUp0tnILb
-8LJ7+XIWe2yVJI0aKQNnVyI0iNB6TEfwVUtq/cHn2KKiX15YxZPdqtXWkXuTHTH8
-YAgM7YcfpkEZpPK6uxP2QnrPHAEaDN32ENdRkKcDsd1lalXtrQZTnjDo35StQuEb
-f4sSEHRRbRUbwXvMSvnXwG68BQT+UYNBVkh/JdI0N7pH8lk15tWKlbw8otnCAo+f
-frzZqrLGsLNtU03GQPeY8imvvvlHWM3umyn4tPuVITdTQog+IKt+Eb6vahMJAP9g
-Jh+0WOX+JmeLZiN+FFiOwrpdBJQOXlDhOojqKjb0nd6Y101jbsg=
-=kYTT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmSLIrYACgkQVbJhu7ck
+PpRRnQ/8ClcHZcV64nDBrPqk8/q9Ka8bsq/CzO28GkSONjhk8AjyPxdNYO8UpIfB
+hdTP/wXyOTNI7PBaZGY6czZdTD4jJ1ZWkq4jcQllkqF9GwAQclVGCIZE/p8ZLdwL
+HxnbLy94KbTzzPGUJLilAO9WR8DdB2hNsACJtporYfQ69ZOecQVycfBE2HZaBBZB
+Rnba88M9nXUQvVblXNGPK+iZAcGK2A01lrdsZYes613pK5WyLcn/S/264KxGRLmp
+v/tWNEz1nUt4JIwOILZwzgTg2pcQS131icALzYaFQZbAMzgtC/tRKyUO/g5TXkOv
+SKbPLIwcvcy8MUQ09cRH9X9dcnPZLGTdhPX74Mt1vhrSWrMkPyybF+GEI8/vSdep
+viY43oW7/RiIybBMkYyT4UALsjbkJaMNHZxhG+3hk2q9Y20Yj90S3AMhGFKL917H
+b8gJtj0fWN1Q8P55Sc4dyFGTqkFl0R4qQwqwHtZoxHpYmyrgYebfcfWbtrelm8Gy
+iQKOy7MLovCY7KikcyQLvxGCDJ2ftkrPld16/EDEefFKcDKeFw+I/pcgizAP1je7
+rP8YLhDPjl77mRAc1akugeCU9tTZ1zHYKixl1s+kPUe32IYR/YUAXAb68vQpJCwp
+yRLZOVEmZMJXcAlLXeo06I4JdHYDCYkGVjkevyVZwzRY4SBZDUo=
+=GRqg
 -----END PGP SIGNATURE-----
 
---4pzmbvwlnlai5yc4--
+--w6a7n67lcrstneqn--
