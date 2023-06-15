@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB8FFEB64D9
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 02:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B83EB64D8
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 02:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238043AbjFOCyM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jun 2023 22:54:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40014 "EHLO
+        id S240986AbjFOCyU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jun 2023 22:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235627AbjFOCyD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242629AbjFOCyD (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Jun 2023 22:54:03 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102E926B1
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAEA426B7
         for <git@vger.kernel.org>; Wed, 14 Jun 2023 19:53:59 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f8d2bfed53so2040925e9.1
-        for <git@vger.kernel.org>; Wed, 14 Jun 2023 19:53:58 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-30fb7be435dso3654510f8f.1
+        for <git@vger.kernel.org>; Wed, 14 Jun 2023 19:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686797637; x=1689389637;
+        d=gmail.com; s=20221208; t=1686797638; x=1689389638;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W1wHIMc14oKw4VoARADU2G/8t1T1JXAvLDNQoCO54L0=;
-        b=IRX8UGzhrBDmuSb4WSxS+VNYe96+21zn0VWviUxYDxCPpvrQ5gcOk+9BysmeDHatRY
-         LgyUNKdgKPyp2/0H+dLPpr9y40r+q0jUyWvOCY4I/2nSV3+3QEGJUTo0iASt6DpKDi8y
-         98XAmhxfvR9MaWwgQQ+oB+zsqmnRhzK9wScyPNrnecg/INK7GujdKwvfMZaFQo5k6+vd
-         q0ETK1ZiJfKD9n/jpHz9l96VxmQQ1sGfhgUB50xzxwni+VLzOmP5TYPJzStceGdT7crD
-         9hsPewDFBOCw/XdHHgbsAQMo2PqwAPvt7Vq3I3XgLVO2HCtoegHrLRZSL/0gOKVODtT9
-         FFjA==
+        bh=HV9gWd+BdhnDBHe1pDK/e53XygDoCp4vblwLD4ouDAI=;
+        b=QDL/erMk+FKD4J2BLDQQJ/fzP1MVwbehM8YhPvi44SRKmgw+tXgt8gRHte8bnhkB3C
+         6TG9Mq11COf3M6DrX5BpmZJBpRLVgEPlMLVMTP6EZ6VSpDz++gYmsTi9HlFJB6LTPaIz
+         pCnPlNtukZnNsjK2Ep2oWYXnN7wFDgWsxhEWEEPlZUCYdwTBpbAIl4mTMIFzacaXCI1o
+         l3JzV1MFfFm6dxhyNep1/ovL1KiZkb49L4jKdYQ/+MqQImwfGHwZzKvgNGU1ZmpeiJDp
+         m5U+c++AQI5ekUpO+5bojSN+bFixlglFD48t8LXcfY51MkWsipVZ3SnT127Qwjum26jH
+         DwWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686797637; x=1689389637;
+        d=1e100.net; s=20221208; t=1686797638; x=1689389638;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=W1wHIMc14oKw4VoARADU2G/8t1T1JXAvLDNQoCO54L0=;
-        b=MA3bXodqPe1kMm95EpdfkJzMY7Svc5v4513w3EgoT2jxpLM1ZuLU1riyB7azJmwv4R
-         3ioqN0UzSSAiezy3rynlELkjZrz6sdTDgeL67nX8WMSv4Imw3FbqxifviMaG5RziTPWq
-         x4jIWBaUtzWBwKU/K1z3MOxNcJ9yL5sAMjJXaRJAscRVQEgiMKnq0arVWYkGgWH6Wj9Y
-         Do+ArD+YlP2BWeFqGSt0Kpev2I7cqhZGOY0MfraxWwa91UEe/y99gK6U75+bVrE8fOAn
-         uvO6xlL9VqzY4KiERm6eYWYcTYpiPVDaWdbg7jJCjj965L+eqtlRJ1jZ90T7oFskzMF1
-         anKQ==
-X-Gm-Message-State: AC+VfDwZrzuxzVEGUPjEfgqr4k8LVnbYyX/1h9pvXkowZA9nGPzIZ1mB
-        KAG3BO48MajF/p3pUn7bdgHKXzYMBDs=
-X-Google-Smtp-Source: ACHHUZ4VoJmda0RWXlpZjoZO8vuHPPT2FeJmhRQYHQDuylu5myo+cQ0/ocIdIJcKkExFJcv2lqY0dA==
-X-Received: by 2002:a7b:ce09:0:b0:3f7:9b05:928e with SMTP id m9-20020a7bce09000000b003f79b05928emr2882735wmc.0.1686797637301;
+        bh=HV9gWd+BdhnDBHe1pDK/e53XygDoCp4vblwLD4ouDAI=;
+        b=XLBl2CNzSa5fC+gJZm+89iyV8T3vFJ/wrdvtpCnyweLsE/HFxbFd0hCji6nm42vZL3
+         0q+/+a6qTChJJKXO+//EDhCnR9Vvu4Ygtj69Jtw8rRFoE8dWmrs/eGNGwWojFRjaM2h4
+         dQMXjNTBoNVCgzys8yZF9ujCPJ9L30H3uGauVwPgyY2FTHl++7UXmRhyhFNmAEgNTvTQ
+         sUOxbMi9mbQE1Nyqrw0NooRwuhm0F1MzxrtPM39M6Jbgvm/NYpQDNcsvoG3kUO7EiWCk
+         X9sR50cASNVWEHb6WFmfQsNUXJjHFju9zfxCMqk+fV8AyVzhc7o0dDc3J9r+Xyx6kx0c
+         MnvQ==
+X-Gm-Message-State: AC+VfDxDrUbyL6AwTx7dx9NbBvzyL8Ltl1q0afT/PteMf8e0y9WgzpzA
+        ik9aaGJ2MMa4CtV/kji1hTAPhy3lnvo=
+X-Google-Smtp-Source: ACHHUZ6n0T4bwo64KO8410q/ZO1c1c77uAGfrC8ES4nBzYizERQ1/y8LpnipmP2EJe3WruElPEJGaA==
+X-Received: by 2002:adf:eac6:0:b0:306:475d:92ff with SMTP id o6-20020adfeac6000000b00306475d92ffmr9403999wrn.3.1686797637959;
         Wed, 14 Jun 2023 19:53:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 10-20020a05600c22ca00b003f427687ba7sm18906393wmg.41.2023.06.14.19.53.56
+        by smtp.gmail.com with ESMTPSA id a8-20020a5d5088000000b0030f9c3219aasm17468629wrt.47.2023.06.14.19.53.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 14 Jun 2023 19:53:57 -0700 (PDT)
-Message-Id: <604265c54dff9b2f16b8bf3b1964cae6280b756c.1686797630.git.gitgitgadget@gmail.com>
+Message-Id: <1a3755eacbe13fda2896659e115ff0692fe29cf6.1686797630.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1506.v4.git.git.1686797630.gitgitgadget@gmail.com>
 References: <pull.1506.v3.git.git.1686017304.gitgitgadget@gmail.com>
         <pull.1506.v4.git.git.1686797630.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jun 2023 02:53:49 +0000
-Subject: [PATCH v4 8/9] doc: trailer: mention 'key' in DESCRIPTION
+Date:   Thu, 15 Jun 2023 02:53:50 +0000
+Subject: [PATCH v4 9/9] doc: trailer: add more examples in DESCRIPTION
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,30 +71,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-The 'key' option is used frequently in the examples at the bottom but
-there is no mention of it in the description.
+Be more up-front about what trailers are in practice with examples, to
+give the reader a visual cue while they go on to read the rest of the
+description.
+
+Also add an example for multiline values.
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/git-interpret-trailers.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/git-interpret-trailers.txt | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 6016af5c203..7e77cbb1cad 100644
+index 7e77cbb1cad..55d89614661 100644
 --- a/Documentation/git-interpret-trailers.txt
 +++ b/Documentation/git-interpret-trailers.txt
-@@ -49,7 +49,10 @@ token: value
- ------------------------------------------------
+@@ -16,7 +16,18 @@ DESCRIPTION
+ -----------
+ Add or parse 'trailer' lines that look similar to RFC 822 e-mail
+ headers, at the end of the otherwise free-form part of a commit
+-message.
++message. For example, in the following commit message
++
++------------------------------------------------
++subject
++
++Lorem ipsum dolor sit amet, consectetur adipiscing elit.
++
++Signed-off-by: Alice <alice@example.com>
++Signed-off-by: Bob <bob@example.com>
++------------------------------------------------
++
++the last two lines starting with "Signed-off-by" are trailers.
  
- This means that the trimmed <token> and <value> will be separated by
--`': '` (one colon followed by one space).
-+`': '` (one colon followed by one space). For convenience, the <token> can be a
-+shortened string key (e.g., "sign") instead of the full string which should
-+appear before the separator on the output (e.g., "Signed-off-by"). This can be
-+configured using the 'trailer.<token>.key' configuration variable.
+ This command reads commit messages from either the
+ <file> arguments or the standard input if no <file> is specified.
+@@ -73,7 +84,12 @@ When reading trailers, there can be no whitespace before or inside the
+ between the <token> and the separator. There can be whitespaces before,
+ inside or after the <value>. The <value> may be split over multiple lines
+ with each subsequent line starting with at least one whitespace, like
+-the "folding" in RFC 822.
++the "folding" in RFC 822. Example:
++
++------------------------------------------------
++token: This is a very long value, with spaces and
++  newlines in it.
++------------------------------------------------
  
- By default the new trailer will appear at the end of all the existing
- trailers. If there is no existing trailer, the new trailer will appear
+ Note that trailers do not follow (nor are they intended to follow) many of the
+ rules for RFC 822 headers. For example they do not follow the encoding rule.
 -- 
 gitgitgadget
-
