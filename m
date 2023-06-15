@@ -2,100 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4218EB64DD
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 15:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 295FBEB64DB
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 17:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240102AbjFOPrz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 11:47:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41038 "EHLO
+        id S230108AbjFORA1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 13:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344699AbjFOPrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 11:47:40 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20A2E272C
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 08:47:37 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f7ff69824dso7236475e9.1
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 08:47:37 -0700 (PDT)
+        with ESMTP id S231626AbjFOQ7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 12:59:46 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD45110FE
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 09:59:45 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-53fa00ed93dso5721900a12.3
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 09:59:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686844055; x=1689436055;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tugfj5KLfq1Nvj6pQ47VP9dS7SY5m6xuONOEkTMhY/c=;
-        b=rj/Ra4Jpw37TPbZWwL3cSePtgmBsDvbN1hm0WYNZyJm6wz94i6tWCnYhiTxWbazH7N
-         9qGq1T4A24Bp5j5eaWK9HJLknEr+7pT5l+NKbCEa+BfVIcnezaU8n5q3ejGjzyu7A817
-         BhtwDNbkI8D4okCdu9u8ga8TsZF0zjRaRPbgb4KhjA0Vk9e4/6WGnH5madQqeTRaL30r
-         VXvXftVLocDZUZmHOmsfrjRrJNsu7yI6rvt7A4wY/rmf0OyTJlIerzjUDWXUbD87hUOl
-         3KEgMKjebkFRgCXs4Mn9sVJyE1qqqSBl22O4tNauQ/P2i+G7Aa0oTTFilUK62nz1cLyl
-         FrzA==
+        d=google.com; s=20221208; t=1686848385; x=1689440385;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QXGtBE1okUOFtT7lclIe2S0ggI9S9wuKi2xx/c47QOM=;
+        b=xC1qPz+e1yff105wtzAypJxITbo9ruLXa0UESPApZJFetD4C6LSyMfk4XXjniG4moQ
+         DGOFio2aHQdsdMXkL2QByc/BjoXyv2s7yrpESWLih18ngXH4Gvsy4+try5miadhjb0A5
+         0nUAvg6ASyrylVdze9b/Y6gjUyfqR0jajjDDlqRqeECE3sIHTvwnRHNxIllGkppwlVh6
+         BgEdcs+BZGsu4fvqIgL2tvqyf1iK65DO90vr1sroEU1eYfKQVEV9d46wXlqa/60hJjjn
+         yzVUQaXdjIRLMqOHuwAF9r4C3w8y5RcASlRxpX4LU1yFKCx0wfp/E7jvFbVSpO80QSuk
+         g/VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686844055; x=1689436055;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tugfj5KLfq1Nvj6pQ47VP9dS7SY5m6xuONOEkTMhY/c=;
-        b=ELtRHXIz2UQb0VcBRKX9yeqMuqHtyF30PTDM5LyD5+sbDF1sOiyYwkntSNSQSrKO61
-         coKJbYgWG/QxDYr9yburT3UPpl++11iFkuz9iZBvtQbekiQhE1mcV3s1xeaiM7zaVpax
-         S2jN6ZZHbOAXIskX58K8SiUcWGeUR0FcB9ZXhe7QIpLmilAO1UMpnwOsX4BipDXgW0+Y
-         sWkDacpfaR8uT6aArir35SFGa9LD6p9ZIf61hqblLG+xjzviihMqwCGx3WvETuOYe9EG
-         HsqDaXxn8WZs02rnCVjbqnnH3K80Ip71g7Wm85DO4Ii64MJlG7ZFIf1xvUVPxqHKefTK
-         cRFg==
-X-Gm-Message-State: AC+VfDz3qTgeD0t9lFLrRzsczugCT/fvKaFg9vpBGa5LCL+Vx20Pei8y
-        +iQu0magkvYYAGIEUgcogujVYavI0DM=
-X-Google-Smtp-Source: ACHHUZ4lSap3EJD8yWlzGJ47m8xgleAvo4S7ix1mLWCLOgu0g6h/EODdMtmahF9pnBIA0IcWwg2n1Q==
-X-Received: by 2002:a05:600c:19cb:b0:3f7:e559:ddf5 with SMTP id u11-20020a05600c19cb00b003f7e559ddf5mr4290686wmq.17.1686844055035;
-        Thu, 15 Jun 2023 08:47:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i17-20020adfded1000000b00301a351a8d6sm100790wrn.84.2023.06.15.08.47.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 08:47:34 -0700 (PDT)
-Message-Id: <pull.1544.git.1686844054022.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jun 2023 15:47:33 +0000
-Subject: [PATCH] cmake: adapt to `cache.h` being no more
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        d=1e100.net; s=20221208; t=1686848385; x=1689440385;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QXGtBE1okUOFtT7lclIe2S0ggI9S9wuKi2xx/c47QOM=;
+        b=cBHu+9RQbF2uFbEkzm33rhGCTSwBOSE961yvfh3yFmlUoOt2jjiNxFc+ldnXKBr7W6
+         Mfn8QqCSVs8S+3N3+Fk77OeB3KrHGgARvHm7yaSxywX/WI4xjNeUAxkpGopOmLQA6GDV
+         ug0ss6nhg+7h+9sCTfPCJt7KzPnSFQe5LsF4wODtBuUbu0g4LzxRIpHl1ZcyEr+MVC+H
+         EquzpLEPEAyzcATZtbcuRK56/M0RWvtvonkdmppnk5jwpAafXrs8YMrgpIyt6jVJK5OJ
+         k966hv07qD6F2g9sBx2pUCLxlKDZu89vrVidfmOFkmX9KiqdNRuB+S+7DMJ0B5z6VOZV
+         gHGw==
+X-Gm-Message-State: AC+VfDyo1r4a1dVUUw8pEY7OWD3HpiX97zZJofyAylVlh9CCH45Vqz7g
+        qY2CrUVtyPhJGAEgNi1v1JabjA+1UTs=
+X-Google-Smtp-Source: ACHHUZ4EXL+8oX0+jeGehkHO/R1E/FBdERXI1d0EmV33ew8H1AVJhX1BMTseuQfX5H+3zL54OOoDuMpmnG8=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a63:d16:0:b0:53f:567d:2e98 with SMTP id
+ c22-20020a630d16000000b0053f567d2e98mr2780570pgl.9.1686848385193; Thu, 15 Jun
+ 2023 09:59:45 -0700 (PDT)
+Date:   Thu, 15 Jun 2023 09:59:43 -0700
+In-Reply-To: <owlya5x1o20r.fsf@fine.c.googlers.com>
+Mime-Version: 1.0
+References: <xmqqedmdwput.fsf@gitster.g> <owlya5x1o20r.fsf@fine.c.googlers.com>
+Message-ID: <owly7cs4oe4g.fsf@fine.c.googlers.com>
+Subject: Re: What's cooking in git.git (Jun 2023, #04; Wed, 14)
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Linus Arver <linusa@google.com> writes:
 
-This is a companion to 4275a22e169c (cache.h: remove this no-longer-used
-header, 2023-05-16).
+> Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    cmake: adapt to cache.h being no more
-    
-    This is a companion to 4275a22e169c (cache.h: remove this no-longer-used
-    header, 2023-05-16), based on en/header-split-cache-h-part-3.
+>> * la/docs-typofixes (2023-06-12) 1 commit
+>>    - docs: typofixes
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1544%2Fdscho%2Fheader-split-cache-h-cmake-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1544/dscho/header-split-cache-h-cmake-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1544
+>>    Typofixes.
 
- contrib/buildsystems/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>>    Will merge to 'next'.
+>>    source: <pull.1542.v2.git.1686166007816.gitgitgadget@gmail.com>
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 2f6e0197ffa..4faa419cc3d 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -227,7 +227,7 @@ add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
- add_compile_definitions(SHA256_BLK INTERNAL_QSORT RUNTIME_PREFIX)
- add_compile_definitions(NO_OPENSSL SHA1_DC SHA1DC_NO_STANDARD_INCLUDES
- 			SHA1DC_INIT_SAFE_HASH_DEFAULT=0
--			SHA1DC_CUSTOM_INCLUDE_SHA1_C="cache.h"
-+			SHA1DC_CUSTOM_INCLUDE_SHA1_C="git-compat-util.h"
- 			SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="git-compat-util.h" )
- list(APPEND compat_SOURCES sha1dc_git.c sha1dc/sha1.c sha1dc/ubc_check.c block-sha1/sha1.c sha256/block/sha256.c compat/qsort_s.c)
- 
+> I am in the middle of addressing some review comments and have rerolled
+> to v4 [1] for the time being.
 
-base-commit: d677f7e76abb837502c589d17889cf8ad591dc09
--- 
-gitgitgadget
+> [1]
+> https://lore.kernel.org/git/pull.1506.v4.git.git.1686797630.gitgitgadget@gmail.com/
+
+v4 has been LGTM'd [1].
+
+[1]  
+https://lore.kernel.org/git/CAP8UFD3ryDoewoKnSWQcXE2H7OFn6aqK-D6Gjav=qXFGmUnHLw@mail.gmail.com/
