@@ -2,81 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 295FBEB64DB
-	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 17:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90A53EB64D9
+	for <git@archiver.kernel.org>; Thu, 15 Jun 2023 17:33:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230108AbjFORA1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 13:00:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56790 "EHLO
+        id S235541AbjFORdp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 13:33:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231626AbjFOQ7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 12:59:46 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD45110FE
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 09:59:45 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-53fa00ed93dso5721900a12.3
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 09:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686848385; x=1689440385;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QXGtBE1okUOFtT7lclIe2S0ggI9S9wuKi2xx/c47QOM=;
-        b=xC1qPz+e1yff105wtzAypJxITbo9ruLXa0UESPApZJFetD4C6LSyMfk4XXjniG4moQ
-         DGOFio2aHQdsdMXkL2QByc/BjoXyv2s7yrpESWLih18ngXH4Gvsy4+try5miadhjb0A5
-         0nUAvg6ASyrylVdze9b/Y6gjUyfqR0jajjDDlqRqeECE3sIHTvwnRHNxIllGkppwlVh6
-         BgEdcs+BZGsu4fvqIgL2tvqyf1iK65DO90vr1sroEU1eYfKQVEV9d46wXlqa/60hJjjn
-         yzVUQaXdjIRLMqOHuwAF9r4C3w8y5RcASlRxpX4LU1yFKCx0wfp/E7jvFbVSpO80QSuk
-         g/VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686848385; x=1689440385;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QXGtBE1okUOFtT7lclIe2S0ggI9S9wuKi2xx/c47QOM=;
-        b=cBHu+9RQbF2uFbEkzm33rhGCTSwBOSE961yvfh3yFmlUoOt2jjiNxFc+ldnXKBr7W6
-         Mfn8QqCSVs8S+3N3+Fk77OeB3KrHGgARvHm7yaSxywX/WI4xjNeUAxkpGopOmLQA6GDV
-         ug0ss6nhg+7h+9sCTfPCJt7KzPnSFQe5LsF4wODtBuUbu0g4LzxRIpHl1ZcyEr+MVC+H
-         EquzpLEPEAyzcATZtbcuRK56/M0RWvtvonkdmppnk5jwpAafXrs8YMrgpIyt6jVJK5OJ
-         k966hv07qD6F2g9sBx2pUCLxlKDZu89vrVidfmOFkmX9KiqdNRuB+S+7DMJ0B5z6VOZV
-         gHGw==
-X-Gm-Message-State: AC+VfDyo1r4a1dVUUw8pEY7OWD3HpiX97zZJofyAylVlh9CCH45Vqz7g
-        qY2CrUVtyPhJGAEgNi1v1JabjA+1UTs=
-X-Google-Smtp-Source: ACHHUZ4EXL+8oX0+jeGehkHO/R1E/FBdERXI1d0EmV33ew8H1AVJhX1BMTseuQfX5H+3zL54OOoDuMpmnG8=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a63:d16:0:b0:53f:567d:2e98 with SMTP id
- c22-20020a630d16000000b0053f567d2e98mr2780570pgl.9.1686848385193; Thu, 15 Jun
- 2023 09:59:45 -0700 (PDT)
-Date:   Thu, 15 Jun 2023 09:59:43 -0700
-In-Reply-To: <owlya5x1o20r.fsf@fine.c.googlers.com>
-Mime-Version: 1.0
-References: <xmqqedmdwput.fsf@gitster.g> <owlya5x1o20r.fsf@fine.c.googlers.com>
-Message-ID: <owly7cs4oe4g.fsf@fine.c.googlers.com>
-Subject: Re: What's cooking in git.git (Jun 2023, #04; Wed, 14)
-From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+        with ESMTP id S229987AbjFORdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 13:33:44 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B3F1BC3
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 10:33:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1686850420; x=1687455220; i=l.s.r@web.de;
+ bh=aHCItuGTa0V/5uWnbBfgeVEJ7CuZNlJ1VTUyoBRNUeI=;
+ h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+ b=SlhRuVYw2fd2fCAdzs3juXMsnnLK7XO0WOa2XK8j9MUoGKLbXOT7Vwrh/3Aw6Tg24OZqu/G
+ T0V3TA/V3xjHAI9OjHBttCtZKQQSGFF+x+fzgfcw+cEAAU9pivGSi7vu5obPXdREJmDbFWTQN
+ /vTKzdXOnOFt1EhoP5zA2FyPiJp33kS6cYZxDV9yas8RSAm//iMy2b8v2MkZiXNAX1+6SNIvG
+ EH1cznJewAPq9IyeW1GZ68et5nUmKWF4tdF1WVPxxPMj1dq3j5DS7Vq1Sne2j8/hrOlgFWsco
+ +9fhTAU/871VqsbrF5iTmPoj5Q99ZVNC8ddc5ztG0g5q+JWutODg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.157.195]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M2ggX-1q7v2p0Kul-0047vQ; Thu, 15
+ Jun 2023 19:33:40 +0200
+Message-ID: <23e54256-9ad5-e978-d0b8-abb511232fd1@web.de>
+Date:   Thu, 15 Jun 2023 19:33:39 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] ls-tree: fix documentation of %x format placeholder
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Vq4yVYVCik+NSnbrxL2MW7RtulhL/1FBJ3F2RuIla8qH+xs6k62
+ GCYQixcZ40vACax02kpykleBD57wTGVmulAHXvxa2BY3BvXd1OniTpNqkxQF6QcOt9EsF2J
+ lWe8g1Z+d/fhHNfqoZoA+H6p5O4uW+ExLaqf2ABAzy0rHQ0tHfvMBH4YSojYJqeFwlJu8eb
+ KOnDPOtif1gayxJAkd4lA==
+UI-OutboundReport: notjunk:1;M01:P0:aiYhSpxysLU=;W+8SXnYy730BnUDWUVCm8C8bqVE
+ ocuqxHeKHSUCJkbwHQcr7kL8qEgzRTZZU10VKcAGqKQxJxggQXoVV3Q5UOpx8BVsZppfra4Lh
+ feEODCC6Z9b787ahA9x6fTpEuo1S1wWBJXg09nHxci5UbeZo1siXnOlRPZgdIJqrvLf/b4RJr
+ CQEJM/Ppc/MN52nbn66++JSBP5R8INRzDEtPgx09fNeGYRGUh6elj9vQK19nQp+aZ6uNujI6E
+ g0YD4gbz1emLRHMpSe5KslViiwub5rIcaUwtjm3Ct41Ma0MFSTFXTM3lvheg5FWs1axgIw+iw
+ fOzWi8tolKQ+KjwuCgfquyIPi72blrh77EH2fEO9HWZhW+pOlMQjIcNXUcSjPqk5Sq9+/Goad
+ Bhl5Frgw+LUNwNp/56JzXaTTGxbuJugrvwDZ9BMDebkQlLMpsxtdFSmBVuBJv16uvntg+6xAK
+ svbnuW8vyrSz9j8fFR9F63BHouDEXecoekTRi3ckqj3sASRPb2CBQsKY9rif22xP0gk8L0YXK
+ VROxUU6oY8+0U/yhKdTzMIUoD/mXiHXL4IsRJq3kGj8FJTOKeSVp8z/kJrHZ+DbAmXRd7vaFU
+ LWmosXz7kCPoFj76ERvR7rDUap+RB0u1ZYe5d8H5iBav/x2BIQt5vFGRPABXBXomOVy79iYrr
+ KRpHDUdG/55QMYCy/YoWqftvEeIIU38lItg1OCOxX2kJiP4w2lieGTY5XUyOils2tRxI3CslX
+ MNZq5j/tnjyZLgR2n49KFK4I96QSEqrFJY/RO+ibM2jo2aXrKWJ7I/3m2jWu5zhlMz79Qt2/I
+ nIo0T6d4tx0VZMHTXXAfouDv2XDJMLBlq0VxotGpYMLLspRSZszNkhp1ybQSDRtKcZjl7s752
+ vmxAMI+4x8/ItjJ/EhMTKKHAgBKKIjETFG0J/pySGiIRtYh1GqG/0HGB6RlbHw89Fwuu8vSMw
+ dfp66A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
+ls-tree --format expands %x followed by two hexadecimal digits to the
+character indicated by that hexadecimal number, e.g.:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+   $ git ls-tree --format=3D%x41 HEAD | head -1
+   A
 
->> * la/docs-typofixes (2023-06-12) 1 commit
->>    - docs: typofixes
+It rejects % followed by a hexadecimal digit, e.g.:
 
->>    Typofixes.
+   $ git ls-tree --format=3D%41 HEAD | head -1
+   fatal: bad ls-tree format: element '41' does not start with '('
 
->>    Will merge to 'next'.
->>    source: <pull.1542.v2.git.1686166007816.gitgitgadget@gmail.com>
+This functionality is provided by strbuf_expand_literal_cb(), which has
+not been changed since it was factored out by fd2015b323 (strbuf:
+separate callback for strbuf_expand:ing literals, 2019-01-28).
 
-> I am in the middle of addressing some review comments and have rerolled
-> to v4 [1] for the time being.
+Adjust the documentation accordingly.
 
-> [1]
-> https://lore.kernel.org/git/pull.1506.v4.git.git.1686797630.gitgitgadget@gmail.com/
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ Documentation/git-ls-tree.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-v4 has been LGTM'd [1].
-
-[1]  
-https://lore.kernel.org/git/CAP8UFD3ryDoewoKnSWQcXE2H7OFn6aqK-D6Gjav=qXFGmUnHLw@mail.gmail.com/
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index 0240adb8ee..af06ce14ed 100644
+=2D-- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -86,9 +86,9 @@ OPTIONS
+ --format=3D<format>::
+ 	A string that interpolates `%(fieldname)` from the result
+ 	being shown. It also interpolates `%%` to `%`, and
+-	`%xx` where `xx` are hex digits interpolates to character
+-	with hex code `xx`; for example `%00` interpolates to
+-	`\0` (NUL), `%09` to `\t` (TAB) and `%0a` to `\n` (LF).
++	`%xNN` where `NN` are hex digits interpolates to character
++	with hex code `NN`; for example `%x00` interpolates to
++	`\0` (NUL), `%x09` to `\t` (TAB) and `%x0a` to `\n` (LF).
+ 	When specified, `--format` cannot be combined with other
+ 	format-altering options, including `--long`, `--name-only`
+ 	and `--object-only`.
+=2D-
+2.41.0
