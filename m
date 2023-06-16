@@ -2,37 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29DDBEB64D9
-	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 02:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6722EEB64DA
+	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 03:08:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231809AbjFPCzT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jun 2023 22:55:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55916 "EHLO
+        id S241750AbjFPDIz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jun 2023 23:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241149AbjFPCzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2023 22:55:18 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ACAB358C
-        for <git@vger.kernel.org>; Thu, 15 Jun 2023 19:54:48 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BE46185230;
-        Thu, 15 Jun 2023 22:54:33 -0400 (EDT)
+        with ESMTP id S241691AbjFPDIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2023 23:08:50 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE7E2D4D
+        for <git@vger.kernel.org>; Thu, 15 Jun 2023 20:08:49 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6BE5C1EEC7;
+        Thu, 15 Jun 2023 23:08:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=Y+hxdv6EJ4fpRfC9zw/WUOGJus/0eIgX/JekqD
-        J50e4=; b=HmwOmAkXPB89Zj9OHK1xEUXYXIoKJtFhb9v1DUbS1oKtqYs4ifVHLT
-        MdvvaypDzGatz/w+4kuzEnnYSnc9HDqtFQ0ORa0cDlUPW8T/HFnScd1p37NZDqGU
-        4RoiUhBXE8RqctZkrUP2hw1c8dV5lyqOnR0VZf2YWcMz/7dx3cWE4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13C6518522F;
-        Thu, 15 Jun 2023 22:54:33 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=n0urTDuVK+E+fArksXmvxJY5HacSEEFtJurNO4
+        yb2/w=; b=SVFzDJoCvaJHJVa0kErY2cjHk4ZGSzpsN4Z0E4N7R818QMjBAf7pJ8
+        WOiWkBBZHQewxm8OXVz0ybRrEgFr5yu7b2E+z7StB2beAAD1G6OPHCREKWZAbYWd
+        G4UG7azcxpgRRoyj+G2Ic3gp2OBj/caQ3sDfiJ6XGXAudj/rMhVeI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 62C561EEC6;
+        Thu, 15 Jun 2023 23:08:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7712E18522E;
-        Thu, 15 Jun 2023 22:54:32 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 818201EEC5;
+        Thu, 15 Jun 2023 23:08:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
@@ -41,43 +41,81 @@ Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 9/9] gc: add `gc.repackFilterTo` config option
-In-Reply-To: <20230614192541.1599256-10-christian.couder@gmail.com> (Christian
-        Couder's message of "Wed, 14 Jun 2023 21:25:41 +0200")
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/9] Repack objects into separate packfiles based on a
+ filter
 References: <20230614192541.1599256-1-christian.couder@gmail.com>
-        <20230614192541.1599256-10-christian.couder@gmail.com>
+        <xmqqsfatwwtv.fsf@gitster.g>
+Date:   Thu, 15 Jun 2023 20:08:44 -0700
+In-Reply-To: <xmqqsfatwwtv.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        14 Jun 2023 14:36:12 -0700")
+Message-ID: <xmqq5y7ortmr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-Date:   Thu, 15 Jun 2023 19:54:31 -0700
-Message-ID: <xmqqa5x0ruag.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1EB1D572-0BF1-11EE-8E6E-307A8E0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 1B25A72E-0BF3-11EE-B7DF-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> A previous commit implemented the `gc.repackFilter` config option
-> to specify a filter that should be used by `git gc` when
-> performing repacks.
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Another previous commit has implemented
-> `git repack --filter-to=<dir>` to specify the location of the
-> packfile containing filtered out objects when using a filter.
+>> In some discussions, it was mentioned that such a feature, or a
+>> similar feature in `git gc`, or in a new standalone command (perhaps
+>> called `git prune-filtered`), should put the filtered out objects into
+>> a new packfile instead of deleting them.
+>>
+>> Recently there were internal discussions at GitLab about either moving
+>> blobs from inactive repos onto cheaper storage, or moving large blobs
+>> onto cheaper storage. This lead us to rethink at repacking using a
+>> filter, but moving the filtered out objects into a separate packfile
+>> instead of deleting them.
+>>
+>> So here is a new patch series doing that while implementing the
+>> `--filter=<filter-spec>` option in `git repack`.
 >
-> Let's implement the `gc.repackFilterTo` config option to specify
-> that location in the config when `gc.repackFilter` is used.
->
-> Now when `git gc` will perform a repack with a <dir> configured
-> through this option and not empty, the repack process will be
-> passed a corresponding `--filter-to=<dir>` argument.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
+> Very interesting idea, indeed, and would be very useful.
+> Thanks.
 
-That's an obvious follow-up on the previous step.
+Overall, I have a split feeling on the series.
+
+One side of my brain thinks that the series does a very good job to
+address the needs of those who want to partition their objects into
+two classes, and the problem I saw in the series was mostly the way
+it was sold (in other words, if it did not mention unbloating lazily
+cloned repositories at all, I would have said "Yes!  It is an
+excellent series.", and if it said "this mechanism is not meant to
+be used to unbloat a lazily cloned repository, because the mechanism
+does not distinguish objects that are only locally available and
+objects that are retrievable from the promisor remotes, among those
+that match the filter", it would have been even better)
+
+To the other side of my brain, it smells as if the series wanted to
+address the unbloating issue, but ended up with an unsatisfactory
+solution, and used "partitioning objects in a full repository on the
+server side " as an excuse for the resulting mechanism to still
+exist, even though it is not usable for the original purpose.
+
+Ideally, it would be great to have a mechanism that can be used for
+both.  The "partitioning" can be treated as a degenerate case where
+the repository does not have its upstream promisor (hence, any
+object that match the filtering criteria can be excluded from the
+primary pack because there are no "not available (yet) in our
+promisor" objects), while the "unbloat" case can know who its
+promisors are and ask the promisors what objects, among those that
+match the filtering criteria, are still available from them to
+exclude only those objects from the primary pack.
+
+In the second ideal world, we may not be ready to tackle the
+unbloating issue, but "partitioning" alone may still be a useful
+feature.  In that case, perhaps the series can be salvaged by
+updating how the feature is sold, with some comments indicating the
+future direction to extend the mechanism later.
 
 Thanks.
+
+
+
+
