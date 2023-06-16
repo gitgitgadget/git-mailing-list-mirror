@@ -2,61 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B04EB64D7
-	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 23:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2858EB64D7
+	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 23:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345651AbjFPXen (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jun 2023 19:34:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
+        id S230432AbjFPXfD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jun 2023 19:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232716AbjFPXeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2023 19:34:37 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FB23AAE
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:33 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b448cf5d83so17708121fa.1
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:33 -0700 (PDT)
+        with ESMTP id S231781AbjFPXez (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2023 19:34:55 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A33F3AA3
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:54 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f766777605so1793774e87.1
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686958472; x=1689550472;
+        d=gmail.com; s=20221208; t=1686958492; x=1689550492;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dCuO7aOmHMwsehHwZAAEQvDE9lIDN1cQAtYHsydL2EU=;
-        b=F42KoRyqjeYrxMuRlLpJkcQwAfPr5daUCPqxx8IW/0W6hNFCrJIGLO/wJ+hLi2reZi
-         uMniyZx2nLupi1rsZey0exdGK/yamMHmZkMt6m48Cpv36HIZF2MW66hdXvvBcffs2dkN
-         f0OMWGS6e27NQQrfvWQvF/iJg7zQj3DLfh8gPEsP8q2HaH533rW05VLL3FveNZBB+5km
-         bx+M7cpfbEvEPFp8VK84jvljwcE3ejalqpdVC4bTQYCdWdjU4ya9xVDMOH5LFQnf1Gm+
-         CJABFL0C7to+VoGxkq3N8pDBis/4iNraLvi484X/LAzgNqm5sEPKVOwD8O7VwnFvV5YZ
-         iWBQ==
+        bh=VteroWcXg7OjSzSWfZStLWd+ECcjfqX7/t6DwmOoWdQ=;
+        b=X+oPHq2vmaLWbVNXXMivax0cEiMS3nKB8C1R4bPtMfC0YajIjPLC4hdV++sfa4v0is
+         f4zKlM0wB6uw+mlEUWfuRV3H75A2Sb41VnzGpWAV7bKmTFcVZV2Wt+16iHL73k5diA04
+         Njc4dxFVnWkVUe1YxMEjw2hZqx7+Qyah4LU1jXH2TL0Q6bxABZcN6aQqg+exA/uvF4G4
+         ynUBzKmqZ6nv/kZhd3DP4tlxE3alBlhMAxeuYJ5ODDHVjw1NAsJNd5//HzCDICcP0qhz
+         vWnuwj3ikZe1qdt5IqPTVSeF03lqazv3VT05PTd8TDGmWmiuUwIVpkFamq7w5HQ2DJ5/
+         7Owg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686958472; x=1689550472;
+        d=1e100.net; s=20221208; t=1686958492; x=1689550492;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dCuO7aOmHMwsehHwZAAEQvDE9lIDN1cQAtYHsydL2EU=;
-        b=Zdoo0PShHGbqsbHTE2nEKbXCAxp74KlPOy3tDnAgmkLdzS7wh99BtZTcEXag+gk3QO
-         XYwC8my/BjAUQ6hhzj2IEIRb5DnST7B3MsfVe/Jc2o9mp9DGLQGW3W6OxyE1wj76YFzN
-         QkMe2JYIEi6iRYLJFiFpWUZVfWSdIM5byRQ/rTaAkp3dGtP1pd9ccZfOYqWOcHDaJfYj
-         lyvbK0dYY6YZxKJXgaKwgvvUWPA5bA3JpSkZyZ/t3PdntwfAb4oh0H3lula86RlVVTow
-         cdkbW4s0QD52Tifq4Qbj0BvbXQ7W/gAVtb+A5B2J4I9jaXV6sLPei2GY0wwzO/kuEtSy
-         oubw==
-X-Gm-Message-State: AC+VfDznl7ZdLuWY7xsnQytviqkO6SpjBgi4B3F5nL8+KEXUV4gwADhn
-        3S1a7HDdOMxkHMUINUKV9m+4TeLShkg=
-X-Google-Smtp-Source: ACHHUZ40MJVnrLBRc7D6Qko8Qn2vXliCfy6Sf96iSIi5OS2MFdlwyX5XkbsjWWoMy02jH/1dk20BQQ==
-X-Received: by 2002:a2e:8ed7:0:b0:2b3:4cb5:ded4 with SMTP id e23-20020a2e8ed7000000b002b34cb5ded4mr3410718ljl.21.1686958471992;
-        Fri, 16 Jun 2023 16:34:31 -0700 (PDT)
+        bh=VteroWcXg7OjSzSWfZStLWd+ECcjfqX7/t6DwmOoWdQ=;
+        b=UluZFxU24p9F3J+2y3TqO4O25WoSRbtzDwRXAUIkJohPKoyIR1qCKljokR9Km38BE/
+         VeHkkzfqCJtnlKh8HC8+RcbJU+FjKundWnjFM2dxbdWRFe1fH2KIHlShMK8H1NOHKo4C
+         JSl7DHIIJhKbUz28OPih26sVz95sXLZfKf6R74Fmdm3Zr4Li2An6C2CaCEs5P+c6D2vc
+         3T47gWhY2Ji+tZuT+MiY0DOKWKHyoTM7a4JcoClUry9SZzbzFzkRGgH7UAMVIctfdtI6
+         3bZbiefpeigSSqj57jUZFaH1RbBm/bwTPJpYgVLux8CH2Tyo/grtV8OuQF+GK/Rd2Nci
+         Sflg==
+X-Gm-Message-State: AC+VfDww/UlX8X5pC3OqMBswTWFPDHctn93xzzkK7G2gZ6TYHa/Lwvxq
+        EieV1B+lATQoxUP5O70T9SmsiawMs8E=
+X-Google-Smtp-Source: ACHHUZ4zlClulfszzJR2WZSArqVSi86NesG66F7AD9VaZxPn0psTNzj0cC+bc1MQXgIuKhKkIlACCQ==
+X-Received: by 2002:a19:9118:0:b0:4f8:46a6:958c with SMTP id t24-20020a199118000000b004f846a6958cmr2236556lfd.18.1686958492515;
+        Fri, 16 Jun 2023 16:34:52 -0700 (PDT)
 Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
-        by smtp.gmail.com with ESMTPSA id x7-20020a1c7c07000000b003f809461162sm3372488wmc.16.2023.06.16.16.34.31
+        by smtp.gmail.com with ESMTPSA id l5-20020a1ced05000000b003f70a7b4537sm3368848wmh.36.2023.06.16.16.34.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 16:34:31 -0700 (PDT)
-Subject: [PATCH v2 3/5] branch: fix a leak in cmd_branch
+        Fri, 16 Jun 2023 16:34:51 -0700 (PDT)
+Subject: [PATCH v2 4/5] config: fix a leak in
+ git_config_copy_or_rename_section_in_file
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 References: <9eb931e7-dd18-8ce8-4d4a-cf3d85066189@gmail.com>
  <5650c4ed-cec0-d11e-4f68-1661b3638786@gmail.com>
-Message-ID: <cfb18a2d-381f-b9ae-865a-26c1669da3b5@gmail.com>
-Date:   Sat, 17 Jun 2023 01:34:30 +0200
+Message-ID: <adaa7fa7-befe-ce59-7391-5a4ddd3bb2b8@gmail.com>
+Date:   Sat, 17 Jun 2023 01:34:51 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -68,60 +69,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 98e7ab6d42 (for-each-ref: delay parsing of --sort=<atom> options,
-2021-10-20) a new string_list was introduced to accumulate any
-"branch.sort" setting.
+A branch can have its configuration spread over several configuration
+sections.  This situation was already foreseen in 52d59cc645 (branch:
+add a --copy (-c) option to go with --move (-m), 2017-06-18) when
+"branch -c" was introduced.
 
-That string_list is cleared in ref_sorting_options(), which is only
-called when processing the "--list" sub-command.  Therefore, with other
-sub-command, while having any sort option set, a leak is produced, e.g.:
+Unfortunately, a leak was also introduced:
 
-   $ git config branch.sort invalid_sort_option
-   $ git branch --edit-description
+   $ git branch foo
+   $ cat >> .git/config <<EOF
+   [branch "foo"]
+   	some-key-a = a value
+   [branch "foo"]
+   	some-key-b = b value
+   [branch "foo"]
+   	some-key-c = c value
+   EOF
+   $ git branch -c foo bar
 
-   Direct leak of 384 byte(s) in 1 object(s) allocated from:
+   Direct leak of 130 byte(s) in 2 object(s) allocated from:
        ... in xrealloc wrapper.c
-       ... in string_list_append_nodup string-list.c
-       ... in string_list_append string-list.c
-       ... in git_branch_config builtin/branch.c
-       ... in configset_iter config.c
-       ... in repo_config config.c
-       ... in git_config config.c
+       ... in strbuf_grow strbuf.c
+       ... in strbuf_vaddf strbuf.c
+       ... in strbuf_addf strbuf.c
+       ... in store_create_section config.c
+       ... in git_config_copy_or_rename_section_in_file config.c
+       ... in git_config_copy_section_in_file config.c
+       ... in git_config_copy_section config.c
+       ... in copy_or_rename_branch builtin/branch.c
        ... in cmd_branch builtin/branch.c
        ... in run_builtin git.c
 
-   Indirect leak of 20 byte(s) in 1 object(s) allocated from:
-       ... in xstrdup wrapper.c
-       ... in string_list_append string-list.c
-       ... in git_branch_config builtin/branch.c
-       ... in configset_iter config.c
-       ... in repo_config config.c
-       ... in git_config config.c
-       ... in cmd_branch builtin/branch.c
-       ... in run_builtin git.c
+Let's fix it.
 
-We don't have a common clean-up section in cmd_branch().  To avoid
-refactoring, keep the fix simple, and while we find a better solution
-which hopefuly will avoid entirely that string_list, when no sort
-options are needed; let's squelch the leak sanitizer using UNLEAK().
+Let's also modify the function store_create_section() so that it stops
+returning a strbuf, which is an uncommon pattern in our code base, and
+instead, starts receiving the strbuf to use from its caller.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/branch.c | 2 ++
- 1 file changed, 2 insertions(+)
+ config.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e6c2655af6..075e580d22 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -832,6 +832,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (list)
- 		setup_auto_pager("branch", 1);
+diff --git a/config.c b/config.c
+index 39a7d7422c..c5f4b59ef3 100644
+--- a/config.c
++++ b/config.c
+@@ -3140,37 +3140,36 @@ static int write_error(const char *filename)
+ 	return 4;
+ }
  
-+	UNLEAK(sorting_options);
-+
- 	if (delete) {
- 		if (!argc)
- 			die(_("branch name required"));
+-static struct strbuf store_create_section(const char *key,
+-					  const struct config_store_data *store)
++static void store_create_section(const char *key,
++				const struct config_store_data *store,
++				struct strbuf *sb)
+ {
+ 	const char *dot;
+ 	size_t i;
+-	struct strbuf sb = STRBUF_INIT;
+ 
+ 	dot = memchr(key, '.', store->baselen);
+ 	if (dot) {
+-		strbuf_addf(&sb, "[%.*s \"", (int)(dot - key), key);
++		strbuf_addf(sb, "[%.*s \"", (int)(dot - key), key);
+ 		for (i = dot - key + 1; i < store->baselen; i++) {
+ 			if (key[i] == '"' || key[i] == '\\')
+-				strbuf_addch(&sb, '\\');
+-			strbuf_addch(&sb, key[i]);
++				strbuf_addch(sb, '\\');
++			strbuf_addch(sb, key[i]);
+ 		}
+-		strbuf_addstr(&sb, "\"]\n");
++		strbuf_addstr(sb, "\"]\n");
+ 	} else {
+-		strbuf_addch(&sb, '[');
+-		strbuf_add(&sb, key, store->baselen);
+-		strbuf_addstr(&sb, "]\n");
++		strbuf_addch(sb, '[');
++		strbuf_add(sb, key, store->baselen);
++		strbuf_addstr(sb, "]\n");
+ 	}
+-
+-	return sb;
+ }
+ 
+ static ssize_t write_section(int fd, const char *key,
+ 			     const struct config_store_data *store)
+ {
+-	struct strbuf sb = store_create_section(key, store);
++	struct strbuf sb = STRBUF_INIT;
+ 	ssize_t ret;
+ 
++	store_create_section(key, store, &sb);
+ 	ret = write_in_full(fd, sb.buf, sb.len);
+ 	strbuf_release(&sb);
+ 
+@@ -3833,7 +3832,9 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 						output[0] = '\t';
+ 					}
+ 				} else {
+-					copystr = store_create_section(new_name, &store);
++					strbuf_reset(&copystr);
++					store_create_section(new_name, &store,
++							     &copystr);
+ 				}
+ 			}
+ 			remove = 0;
 -- 
 2.40.1
+
