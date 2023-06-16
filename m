@@ -2,61 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD736EB64DB
-	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 23:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24636EB64D7
+	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 23:34:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345766AbjFPXeN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jun 2023 19:34:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S229518AbjFPXef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jun 2023 19:34:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230327AbjFPXeL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2023 19:34:11 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C6C3AB9
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:07 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f845060481so1796449e87.3
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:07 -0700 (PDT)
+        with ESMTP id S232716AbjFPXed (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2023 19:34:33 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB4F3AB5
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:25 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f8f3786f20so11256865e9.2
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 16:34:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686958445; x=1689550445;
+        d=gmail.com; s=20221208; t=1686958463; x=1689550463;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EwPsKY7R0Vwjt6UV+ihATXfK7DdmLjBP90TgwI8Ncyo=;
-        b=LR1aBhuo0y4eLKcsVlhN1HGYr/9u6kSIL8x6ytr602Os34Y5+CNkkmMO8o25J5pytk
-         RDjRoBMTtfBnm9BQvoo5v2nHM5yFjYvIEA/zV1217YuGTc3pZwQ2V4OxD+FCTwBlKweK
-         9T2mBlGjQuUOOQA6/ztj7wSj5VbsPtCIm06ml96feLAK9LWWpIz/Wb/N9Y5e7SC3Cx0q
-         HsYclwfWrxEfQikVt0yr/5Py9T0Hsc2u3gxWt5l/MpowHjZwOF17zYek2wPLjOQoZfIF
-         wb/ggcuCtJuCh1HmE1UR07XKa+nYOBWUmhV9ooFQYlPgLerGazor7VMNwC+GWyo/Hala
-         oKpg==
+        bh=MgZNO4N7Lp3aOL0RIWfyplzy3WbAoT4TzJnAt4E1rDw=;
+        b=XeTrYFycksceqDCwuI56fDqADluFJrcofRNk+aab5u2iOxkhtEJAzITOvRGVMcs34O
+         Q1ox57ryzJKcXWQ6kzzIf3NlJjgusabxVVeJbStDbVy7nNozcVJf7aMRKw7eGFu6iQz9
+         suXaHrzeocMXY0REBQofi9lYqWMvu5tIjaGNycyk56fntngYUfE1qdU5LH7ialw+PILv
+         aEDyiNhpkHN3zUsjO72srFHDPdlhvn+RVD/v7uKuSbgcm2WqBMDlxqkBOL8pg27lY8NI
+         zMzNlWheu/Z9u645cPv/ko0ijcQGnQj/59RECE6nd6N1fCmFUKpuJcCac27YiHSs4R2H
+         ue/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686958445; x=1689550445;
+        d=1e100.net; s=20221208; t=1686958463; x=1689550463;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EwPsKY7R0Vwjt6UV+ihATXfK7DdmLjBP90TgwI8Ncyo=;
-        b=MrafAKLWZm7pSvuAY0EqiUuUy7NIOvB4OXwMQs4CfUMnoRdjZMrJfIxSE4z78cUhk4
-         lI+3dZNDegHDyYmEviaP4ow5Pt5DN0MJf5MykvjbMZY/DEzUqeJytOA7k34vn3OpiCCU
-         r5nZKvbFkfIGRnBJezvLWA9JK7D1mAt5QMpUgDCCiWNHZBvH1htwiK3X4GEpGT1MmVfZ
-         14xYKkfh2/eMf3tHtF05/19iVlRsNQLLyI/A6gRFUn5C/DNLdFlkuAXUHuF9TDgSFIPu
-         /oAxFFon+w0V17pUO/va9j8zTS2iBD1S7uMdzspxq6fA9IGIN/dquDDPMyeLiXSrehG9
-         vCwQ==
-X-Gm-Message-State: AC+VfDzvAT1w4PLZC61ZZQNcKb/fv+lXjHPDIEwh6nzUwJuLUhWMh+X0
-        P8ieiQVQ8VR7jUmTZBl3sFQ=
-X-Google-Smtp-Source: ACHHUZ7MSLNJCORT5YjhGsEafGAT/TriB4fp2hB8Y9dIouQywUQTnI6A59VigX39pIkNvfe1A8/sYQ==
-X-Received: by 2002:ac2:504b:0:b0:4f1:3d6c:d89b with SMTP id a11-20020ac2504b000000b004f13d6cd89bmr2785426lfm.42.1686958445093;
-        Fri, 16 Jun 2023 16:34:05 -0700 (PDT)
+        bh=MgZNO4N7Lp3aOL0RIWfyplzy3WbAoT4TzJnAt4E1rDw=;
+        b=e1z7BWUydNWPbo09x06tTnK2oDrCVdQdVHFrrsHXLR/ePBvYXxImyLcG8+WAm/WeGs
+         WeDKZq32JOXdM+4vITohjGaHRCb7G1oy6goZOe7pVmu54GK65P+6Yo5oVW3qQ7UPUfmO
+         NKTG9ltAbWf9N1psKJEiOigw7wRP3WLl/NwkZuB4Wq+kKEg1KPPDD1JXx2jR5e6pivpo
+         fUQ8/mCY/6rcegsXvfetqCeFTshix6zW0tp7xirdEskjP5fh/mt6eha7fZIbvhjQMpF6
+         RTh8Vhik0q0wMm1m2zx6J6nGustBQtxQ8ZfiEgGTbiMXWPLn4rTJm/Xi7HcBECbDR7OW
+         dU0w==
+X-Gm-Message-State: AC+VfDyupHFgKtjJxaNNw+fCTe4+8WHkuV3BOwgbKwU5O/N+oCt0RYsW
+        SrKL8wh1CtEoTsF13pmUyQE=
+X-Google-Smtp-Source: ACHHUZ4MhIzzE5i8/NMwt5obft4nweZ/P0M1g2HR9M3E/Yj8d5CiM2YyG7fLNZn0o+bxHD1c5CrVnQ==
+X-Received: by 2002:a1c:4c09:0:b0:3f8:fb07:b20d with SMTP id z9-20020a1c4c09000000b003f8fb07b20dmr1902956wmf.2.1686958463539;
+        Fri, 16 Jun 2023 16:34:23 -0700 (PDT)
 Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
-        by smtp.gmail.com with ESMTPSA id w19-20020a1cf613000000b003f8c5ceeb77sm3355186wmc.21.2023.06.16.16.34.03
+        by smtp.gmail.com with ESMTPSA id h25-20020a1ccc19000000b003f42158288dsm3367850wmb.20.2023.06.16.16.34.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 16:34:03 -0700 (PDT)
-Subject: [PATCH v2 1/5] rev-parse: fix a leak with --abbrev-ref
+        Fri, 16 Jun 2023 16:34:22 -0700 (PDT)
+Subject: [PATCH v2 2/5] branch: fix a leak in setup_tracking
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Tao Klerks <tao@klerks.biz>
 References: <9eb931e7-dd18-8ce8-4d4a-cf3d85066189@gmail.com>
  <5650c4ed-cec0-d11e-4f68-1661b3638786@gmail.com>
-Message-ID: <e097e997-9de9-85cc-4e20-22eb32e98765@gmail.com>
-Date:   Sat, 17 Jun 2023 01:34:03 +0200
+Message-ID: <7943ec83-8ef3-4397-0d2e-47f47069de16@gmail.com>
+Date:   Sat, 17 Jun 2023 01:34:22 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -68,54 +69,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To handle "--abbrev-ref" we use shorten_unambiguous_ref().  This
-function takes a refname and returns a shortened refname, which is a
-newly allocated string that needs to be freed.
+In bdaf1dfae7 (branch: new autosetupmerge option "simple" for matching
+branches, 2022-04-29) a new exit for setup_tracking() missed the
+clean-up, producing a leak.
 
-Unfortunately, the refname variable is reused to receive the shortened
-one.  Therefore, we lose the original refname, which needs to be freed
-as well, producing a leak.
+   $ git config branch.autoSetupMerge simple
+   $ git remote add local .
+   $ git update-ref refs/remotes/local/foo HEAD
+   $ git branch bar local/foo
 
-This leak can be reviewed with:
-
-   $ for a in {1..10}; do git branch foo_${a}; done
-   $ git rev-parse --abbrev-ref refs/heads/foo_{1..10}
-
-   Direct leak of 171 byte(s) in 10 object(s) allocated from:
-       ... in xstrdup wrapper.c
-       ... in expand_ref refs.c
-       ... in repo_dwim_ref refs.c
-       ... in show_rev builtin/rev-parse.c
-       ... in cmd_rev_parse builtin/rev-parse.c
+   Direct leak of 384 byte(s) in 1 object(s) allocated from:
+       ... in xrealloc wrapper.c
+       ... in string_list_append_nodup string-list.c
+       ... in find_tracked_branch branch.c
+       ... in for_each_remote remote.c
+       ... in setup_tracking branch.c
+       ... in create_branch branch.c
+       ... in cmd_branch builtinbranch.c
        ... in run_builtin git.c
 
-We have this leak since a45d34691e (rev-parse: --abbrev-ref option to
-shorten ref name, 2009-04-13) when "--abbrev-ref" was introduced.
+   Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+       ... in xrealloc wrapper.c
+       ... in strbuf_grow strbuf.c
+       ... in strbuf_add strbuf.c
+       ... in match_name_with_pattern remote.c
+       ... in query_refspecs remote.c
+       ... in remote_find_tracking remote.c
+       ... in find_tracked_branch branch.c
+       ... in for_each_remote remote.c
+       ... in setup_tracking branch.c
+       ... in create_branch branch.c
+       ... in cmd_branch builtinbranch.c
+       ... in run_builtin git.c
 
-Let's fix it.
+The return introduced in bdaf1dfae7 was to avoid setting up the
+tracking, but even in that case it is still necessary to do the
+clean-up.  Let's do it.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/rev-parse.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ branch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 852e49e340..d2eb239a08 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -156,9 +156,12 @@ static void show_rev(int type, const struct object_id *oid, const char *name)
- 				 */
- 				break;
- 			case 1: /* happy */
--				if (abbrev_ref)
-+				if (abbrev_ref) {
-+					char *old = full;
- 					full = shorten_unambiguous_ref(full,
- 						abbrev_ref_strict);
-+					free(old);
-+				}
- 				show_with_type(type, full);
- 				break;
- 			default: /* ambiguous */
+diff --git a/branch.c b/branch.c
+index 427bde896f..d88f50a48a 100644
+--- a/branch.c
++++ b/branch.c
+@@ -333,7 +333,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 		if (!skip_prefix(tracking.srcs->items[0].string,
+ 				 "refs/heads/", &tracked_branch) ||
+ 		    strcmp(tracked_branch, new_ref))
+-			return;
++			goto cleanup;
+ 	}
+ 
+ 	if (tracking.srcs->nr < 1)
 -- 
 2.40.1
