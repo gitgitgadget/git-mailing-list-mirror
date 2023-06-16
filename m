@@ -2,67 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9119EB64D7
-	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 20:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB59BEB64DA
+	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 22:05:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231865AbjFPUMF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jun 2023 16:12:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
+        id S233434AbjFPWF0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jun 2023 18:05:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230122AbjFPUMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2023 16:12:03 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21DD52D79
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 13:12:03 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC8DE24B49;
-        Fri, 16 Jun 2023 16:12:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=W29rZztO305l7fCSuer0a91Ba7yAUJMswBEl5r
-        aU88U=; b=ixMp2B7uV5O0IWktsNPf8zfKcCLUQOPLbGCzb6OdkSFpe/mU0jcVkd
-        Vw4jNU+OqH4bVcSVvD+Gv9EgujZjslBg2OkHeh+Lm78E+FyXw6tV6fdFPxeEOuWR
-        hbgt6UVC+TEmFO4GMgmiDrUx5cCTACwKaQBzrdROuadrxcTKokNos=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A4BE424B48;
-        Fri, 16 Jun 2023 16:12:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8A5F24B45;
-        Fri, 16 Jun 2023 16:11:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     Nadav Goldstein via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nadav Goldstein <nadav.goldstein96@gmail.com>
-Subject: Re: [PATCH] Add 'preserve' subcommand to 'git stash'
-References: <pull.1528.git.git.1686913210137.gitgitgadget@gmail.com>
-        <xmqqjzw3qry6.fsf@gitster.g> <ZIzALOe8GBsNGIhR@ugly>
-Date:   Fri, 16 Jun 2023 13:11:58 -0700
-In-Reply-To: <ZIzALOe8GBsNGIhR@ugly> (Oswald Buddenhagen's message of "Fri, 16
-        Jun 2023 22:03:56 +0200")
-Message-ID: <xmqqv8fnrwtt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0CF4DF00-0C82-11EE-BAA8-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+        with ESMTP id S232180AbjFPWFZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2023 18:05:25 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3642735A6
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 15:05:24 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-51f7638a56fso952270a12.3
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 15:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1686953123; x=1689545123;
+        h=to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=b5OACTTvWptck6fqN3HXf1TCEFKB5mWxrrxWOtUjmdE=;
+        b=2b5Z187F7DbugfZ+sCg76+QIkzhgNuNZw3N3Oze7hw7dD+dxE53Fkl49B17rnT4sqo
+         NZ6pFh8M8BNn6aG7q5Xhi0yqLRLen8GKINoV+GaiOkMExzxjssNn60WauevW2H6OGHsM
+         cOELbhxe+fazg0x/psolPzvjVBmBcItrL1UdhxcM/Gdjp3pZmY8IuePEPlbv7NC428b9
+         u+xTnn5udPOBLDp+ZVgTcYfqx/OBNanOK7a4zrZFbJx74trKUZuWjN9uVSm6TsewCcOy
+         fuwesDz6i7K1EY/8lDjilMpooGUe6c8joDSarGLarFAwGJrm4XD5Auw1wZx2+LZ+1o9I
+         /XQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686953123; x=1689545123;
+        h=to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=b5OACTTvWptck6fqN3HXf1TCEFKB5mWxrrxWOtUjmdE=;
+        b=CfkXluk1e3SM2ajM05KekMV2xcHCoknF4UJfEopdlhpnLd3bT7TWley0e1vkzLTD5G
+         Lk7SG2lnX3fKferhP0OZwa4YxPDtFCCe+nrnQX7vIeJsGwd76+2VnUfQw0RhsFgoo4TA
+         4shLKp2y0giWLtRgPNNbi+pkXM9SHfdGwP+iY4Szx1bS5Hta+3sDWlEtnhKbEMX2Xp8o
+         du36oQcEv7kfJOTs9vjQxvUqtnQ1uPxaYZngDPmqFQ8xJSnjtkc1MMrBaSSkhWsZAvtv
+         /VQlCjm3baRYSQ1vRkDEbLWXdccxb+xBmAPbEaRaz4ioQEXGT+eRbpj8vZEDsVWIXgBo
+         tpOA==
+X-Gm-Message-State: AC+VfDycPLT9k9v/r+eMfZH76l/pQZe/ETcHA1ObcZHlMIFmQCE1zN4K
+        HpN2fWOD3JJfZ000GZ/5sGDkZgoCPPIL2c5IC2jrW+tqGK5+2Q40CxCBwUEldiKtjtbsFbf658u
+        oy58oQxOeeTLwpEMXyNv8g0ld4JyNo9EgyF9Nj6UsM6vF9MTqanUcLcy+fRiqDZY=
+X-Google-Smtp-Source: ACHHUZ4Ppjlkvi2SYnZdL9NXnzmId6+uh8RU0lN856cMd/Q3/r2WPW+65pb2IA2WjAvTZaa7h7VbaBHqF2hcFw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a63:1416:0:b0:540:6f8f:8463 with SMTP id
+ u22-20020a631416000000b005406f8f8463mr47164pgl.5.1686953123554; Fri, 16 Jun
+ 2023 15:05:23 -0700 (PDT)
+Date:   Fri, 16 Jun 2023 15:05:14 -0700
+Mime-Version: 1.0
+Message-ID: <kl6lilbnrrl1.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Is MacOS CI flaky?
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
->>Why a new subcommand, not a new option to "push"?  Adding a new
->>subcommand would mean it would be another unfamiliar thing users
->>need to learn, as opposed to a slight variation of what they are
->>already familiar with.
->>
-> to be fair, there's also `apply` and not `pop --keep`.
+1. https://github.com/chooglen/git/actions/runs/5294136258
 
-I do not care all that much if that is fair, but I do not think it
-is a meaningful comparison.  "stash apply" is merely exposing the
-first half (the other half is "stash drop") of a two step operation
-that is "stash pop".
+is just
+
+2. https://github.com/chooglen/git/actions/runs/5292953535
+
+with a fix for "win build", but 2. also failed for completely unrelated
+reasons on osx-*.
+
+Casually clicking through https://github.com/git/git/actions/ suggests
+that others might be experiencing similar failures too?
+
+- https://github.com/git/git/actions/runs/5293250265
+- https://github.com/git/git/actions/runs/5289074140
