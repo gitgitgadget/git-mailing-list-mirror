@@ -2,136 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFB66EB64D7
-	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 18:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64038EB64D7
+	for <git@archiver.kernel.org>; Fri, 16 Jun 2023 18:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjFPSUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jun 2023 14:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50144 "EHLO
+        id S232997AbjFPShx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jun 2023 14:37:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231350AbjFPSUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2023 14:20:13 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC96235A0
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 11:20:11 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5187aa18410so1258147a12.0
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 11:20:11 -0700 (PDT)
+        with ESMTP id S229538AbjFPShw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2023 14:37:52 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29FF35AD
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 11:37:50 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-987341238aeso6640666b.3
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 11:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686939610; x=1689531610;
+        d=gmail.com; s=20221208; t=1686940669; x=1689532669;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4kDpRp7eE9nLsF0eLSHZo05xdoQs/KD8tGSX3N2A3oc=;
-        b=Vg7/7VjWY5D/dxq4dU7h8xJomCf2DsG8ziM5NNtkDtE3NSkb7wF9TDYx1eGvQt3vwy
-         JUepDi58Sbt/ZQfCS7R23EKQxZlAiQHXpHDlAQsIEUEQx8cR7UmCswAgN24pLTsefJpq
-         mj35vOlYR5ueZRIodOQk/77hhdQVr3PmFl1Flev+/jdK2ptSA8KgivRVe6qhvg2KUp9h
-         OU3Vlqmy5Z8bhSPKyhGR6KneQHvnX/g9WO/5OpcJJYU3fip6yDWtXDXWMcoogytyKHUu
-         Q+2z5eUxSu7gZW3+jmXl+WQ7TibO+ZMIwXNcVVdn07kHCNHQUxtN32k28KomVR1uDJO6
-         aJPw==
+        bh=9Ll9jlK6a1WI/1nc955uHMNW6ZVIT+cZVRZ8aiBvurk=;
+        b=kXrZ7cpSDbjqV0hJ4GaF1CCc5pk4oGR9v/W0daKrNu+wseUR4BbzPmuBGTeQrpbq5T
+         xnYfsKW3bQ4hM9PSncEDtikBb+Q/SL8F14DIMaR/DFZvCrcpEJOpt//3Ww3N/UkuZ5+S
+         hMasOIOC7HNdSPxc6/tsaxxpgKi4aJDGRuUDb7ir0vGJ3xTOY2IV5lufnzWbo48UJlci
+         ajsRX/uWOI0Wth9gIWjmMb0heSOrVJZNR6Aq5CQd9zv/OMh7tW3mMyXi5tI0yiRSlYrC
+         Is4W18n+UEweY6foOr1cXL0cMLjpsgXVtHmtuDagYlWoR0BH6ccWBsT8lBwIkYJM3azF
+         49jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686939610; x=1689531610;
+        d=1e100.net; s=20221208; t=1686940669; x=1689532669;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4kDpRp7eE9nLsF0eLSHZo05xdoQs/KD8tGSX3N2A3oc=;
-        b=bxK6Ae6LDtcy4n/uQGVjeVnLpR2aFyf1pdVmNjuzbEwJdw7o9A4TYNNm+sDpJL/rd7
-         94bB+TSumO6u3K1Bd6TrjxD0xkDAQ/DPyrfSKAa8xTPL3QI8KEr7tJTL48W1Ed/CN2cK
-         KU2PyK+y3aFnjiQsXOk6l27rXcq8SAZ8rdLYPma0ntv80menfsqgJv0cmn5gyr8rSgOs
-         nUbfiVtRiVpNcwCZ5jZuYHoAs1CPDrXP8BduFzwjBXlH9gRdxHssK6FDx1tjgNSEJje8
-         V1A6ybJLQ6K8YcnJ6Z63s6QiiayZ4WijaW5lIqZl+GeC8Py516xjNQE0762qL6aYMKnz
-         Z2/A==
-X-Gm-Message-State: AC+VfDzLJ510vB15vMk3cVIf9eS301H6Aqzj40nv9Egv9O/8gxSO1KYZ
-        T8rsPjRZkRjNoPqNyJkVMJLy/upNGrfNAENtxtg=
-X-Google-Smtp-Source: ACHHUZ4Kq4BAPQICKfUkF9LDkSPdKHgHQ1Z/OZRkSAMysNu1jlBG2WGxyr0TPGzTwCWslRxSJjFzVNFMYCEaqEYBi/8=
-X-Received: by 2002:a05:6402:6cb:b0:51a:1ee6:551f with SMTP id
- n11-20020a05640206cb00b0051a1ee6551fmr2000987edy.38.1686939610149; Fri, 16
- Jun 2023 11:20:10 -0700 (PDT)
+        bh=9Ll9jlK6a1WI/1nc955uHMNW6ZVIT+cZVRZ8aiBvurk=;
+        b=COIUL4zH+YmMDbONaDHot0KDnS4ThKbKtkNpMNVcUpm67SAvMnBKUQ/vwrrOxMMLUe
+         QupRfA43S6Pz0s/FkTWVZIBHU7WaoFZSxx7PGCjZ8jhRuCyUBPvBGPL40mTBslJixw8q
+         Vf9G2NtioVKoX744LjQi28Mf81Z0FZbrTMqVOFYAni6SicDifelg7wWU6olVVEyIo6tS
+         6aRtT2qsCdHp/qygCayl3aACXgA2xlOmZX3NXob94BLeVzQcy4yTyu5Zbw3BERShQgWS
+         iJjQEBQVdEYU3094yEkTj1JXDKlhTO+CpFE4/fQczWeuaXP12LYpOr6eOSqr/KhCLhpw
+         515Q==
+X-Gm-Message-State: AC+VfDzRmp/r5oQ33unKeeT1mk5Hgwc1UlWmWaylQS/hYEDt7nRIA9kb
+        3CyrsJ7VlH1k8PuIX/pwY7/296XV0YcCXhfsyJk=
+X-Google-Smtp-Source: ACHHUZ7WrTSEKUuV/1NIdkHJPVvQfQ1L917grzpJuwmtZXqap4r36ZrbfiaVijYV9kCxn067H+DV32qaSsKvzxDONZk=
+X-Received: by 2002:a17:907:3e0a:b0:974:1ef1:81ad with SMTP id
+ hp10-20020a1709073e0a00b009741ef181admr2896812ejc.4.1686940669080; Fri, 16
+ Jun 2023 11:37:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <PH7PR07MB9467452EBAFAB2C825295C0C8C5BA@PH7PR07MB9467.namprd07.prod.outlook.com>
- <42e4373e-b700-45a6-99cc-db2f8896d5b7@app.fastmail.com> <20230616042407.GA54009@coredump.intra.peff.net>
-In-Reply-To: <20230616042407.GA54009@coredump.intra.peff.net>
+ <42e4373e-b700-45a6-99cc-db2f8896d5b7@app.fastmail.com> <PH7PR07MB9467AD34C96AEE60D5A4369F8C58A@PH7PR07MB9467.namprd07.prod.outlook.com>
+In-Reply-To: <PH7PR07MB9467AD34C96AEE60D5A4369F8C58A@PH7PR07MB9467.namprd07.prod.outlook.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 16 Jun 2023 20:19:58 +0200
-Message-ID: <CAP8UFD2JYAFv=iTDzvn4fzwYpJHt7TBLMXV0GV1-S7tXd7Bp=A@mail.gmail.com>
+Date:   Fri, 16 Jun 2023 20:37:37 +0200
+Message-ID: <CAP8UFD22tPfP37LU8tveHmZPzj7rwUnsEzctzRdqYripv2cyjg@mail.gmail.com>
 Subject: Re: Possible bug regarding trailers
-To:     Jeff King <peff@peff.net>
+To:     "eric.frederich@siemens.com" <eric.frederich@siemens.com>
 Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        "eric.frederich@siemens.com" <eric.frederich@siemens.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 16, 2023 at 6:24=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+On Fri, Jun 16, 2023 at 6:04=E2=80=AFPM eric.frederich@siemens.com
+<eric.frederich@siemens.com> wrote:
 >
-> It's possible that we should be more strict about the separator, but I
-> think the real bug is that we are respecting a separator at all in this
-> example.
+> Thanks for the reply and finding that code.
+> I'm wondering a couple of things.
 >
-> That "---" handling is meant for format-patch/am-style processing, where
-> the commit is embedded in an email. And there it is an unfortunate but
-> accepted limitation that you can't put "---" separators in your commit
-> message, or the parsing will get confused.
+> A)
+> Is it reasonable to expect that a trailer added during commit with `git c=
+ommit --trailer some-key:some-value` always be able to be retrieved regardl=
+ess of the contents of the commit message?
+
+I think the following 3 conditions would be needed:
+
+  - `git commit --trailer ...` should be fixed using a patch like the
+one Peff proposed, and the trailer should be added using this fixed
+command,
+  -  a command that outputs only a commit message, or perhaps commits
+headers and the commit message, like `git cat-file commit rev`, should
+be used to retrieve the commit message that is passed to `git
+interpret-trailers` for retrieving the trailer,
+  - and `git interpret-trailers` should be used with both --parse and
+--no-divider.
+
+> I am migrating source code history from an older SCM to Git and would lik=
+e to preserve the change messages.
+
+Have you looked at existing tools to do that (like maybe reposurgeon)?
+
+> B)
+> Should anything that is retrieved via:
+>     `git cat-file commit $SHA | git interpret-trailers --parse`
+> also be displayed via:
+>    `git log -1 --format=3D"%(trailers:key=3Dsome-key,valueonly,separator=
+=3D%x2c) %H %T" $SHA`
 >
-> But when we run "git commit --trailer", we know that we have a complete
-> commit message, not an email. And so we should not look for "---" at
-> all. But we do, and the commit object we write is broken (the trailer is
-> in the wrong spot):
+> ... why is there a difference?  (Explicit call to interpret-trailers show=
+s the trailer, but the log command does not).
 
-Yeah, I agree with the above analysis.
+I believe Peff explained that.
 
-> On the display side, I think "--format=3D%(trailers)" is doing the right
-> thing here; it is not respecting the "---", because it knows we have a
-> complete commit message from the object, not something we're trying to
-> pull out of the email format (so it finds nothing, because the trailer
-> is not at the end).
+> With some minimal investigation (I added a printf at the top of find_patc=
+h_start), I noticed that find_patch_start is called during call to `git int=
+erpret-trailers` but it is NOT called during call to `git log`.
+> This means the same code paths are not being followed in those two cases =
+dealing w/ trailers.
+> I would expect that it should use the same code paths in both cases.
 
-> Likewise, "cat-file | interpret-trailers" is doing
-> the right thing; by default it respects the divider. These examples
-> probably ought to be doing:
->
->   git cat-file commit HEAD^ |
->   git interpret-trailers --parse --no-divider
-
-I agree that here we know that we will only pipe a commit message into
-git interpret-trailers, so we should use --no-divider. The doc for
-this option says:
-
-"Use this when you know your input contains just the commit message
-itself (and not an email or the output of git format-patch)."
-
-> to tell interpret-trailers that we are feeding it a pure commit message,
-> not an email.
->
-> So I think the only bug is that "commit --trailer" should not respect
-> the divider. And the fix presumably:
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index e67c4be221..9f4448f6b9 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1043,7 +1043,8 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
->                 struct child_process run_trailer =3D CHILD_PROCESS_INIT;
->
->                 strvec_pushl(&run_trailer.args, "interpret-trailers",
-> -                            "--in-place", git_path_commit_editmsg(), NUL=
-L);
-> +                            "--in-place", "--no-divider",
-> +                            git_path_commit_editmsg(), NULL);
->                 strvec_pushv(&run_trailer.args, trailer_args.v);
->                 run_trailer.git_cmd =3D 1;
->                 if (run_command(&run_trailer))
-
-Yeah, that looks like the right fix.
-
-> I cannot think of a reason we wouldn't want to do that (though obviously
-> it would need a test to become a patch). But it's possible I'm missing
-> some use case (e.g., would anybody feed format-patch-ish output to "git
-> commit --trailer ... -F" and expect it to handle the "---" divider? That
-> seems odd to me).
-
-Yeah, I don't think you have missed a use case.
+The log command shows all the content of the commit message as is,
+without any parsing. So yeah it doesn't use interpret-trailers' code
+which is useful for modifying or parsing trailers contained in commit
+messages.
