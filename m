@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EFFEEB64D9
-	for <git@archiver.kernel.org>; Sat, 17 Jun 2023 06:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37F4FEB64D9
+	for <git@archiver.kernel.org>; Sat, 17 Jun 2023 06:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345997AbjFQGmi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jun 2023 02:42:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34054 "EHLO
+        id S1346128AbjFQGm6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jun 2023 02:42:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231982AbjFQGmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jun 2023 02:42:08 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C8D030E4
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 23:41:11 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f8c74af64fso11747135e9.1
-        for <git@vger.kernel.org>; Fri, 16 Jun 2023 23:41:11 -0700 (PDT)
+        with ESMTP id S234191AbjFQGmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jun 2023 02:42:32 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB1F44A7
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 23:41:26 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-311099fac92so1261251f8f.0
+        for <git@vger.kernel.org>; Fri, 16 Jun 2023 23:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686984069; x=1689576069;
+        d=gmail.com; s=20221208; t=1686984084; x=1689576084;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MgZNO4N7Lp3aOL0RIWfyplzy3WbAoT4TzJnAt4E1rDw=;
-        b=HGep0XQcyOKcVRZgxh9zsZOGZGNh6lc3Ru2OiX+sRqHMKSArXP7tJcyL19kPH5jrRv
-         bwp9KLT8Wx+MXDgfeYvUu2hmF9l1FLm82eHgBAqDwOLt44zgvMsuP89PWYQCovpgWj2O
-         Dct9UfuTa52JGT7Kt9Bokv4tutGEXI0PcMxFEPCNEtVSUWm0i2R3D0W9rjB2OORmiRBG
-         dvgMgwTUsyOSuTf7/q8pDbV56mV208Mcs7k0Tjeixt3eTb2Hg+VtQMaCPH8R1sPyVLZ0
-         l1UudLJvRyOoZlSvk8IYtw9solWp6wJb2V8KfD9Y65xYqMnIQHMCLB1QhIvFEhoOFJ/z
-         KcUg==
+        bh=dCuO7aOmHMwsehHwZAAEQvDE9lIDN1cQAtYHsydL2EU=;
+        b=GQchUqOdkCjEl04MtQeHwOqN0M/5u/2NuI+1zn4pHUIf0X7xZdadTd6Uvnqb/AMzoC
+         rkTcycDiUZDhS9OZFWP/9b0QCK91s6vmD2lrH6sjcfc3/r7WLDQ91R31WgXKEBR8d6Ql
+         Zj6lg07CLTQOPrw67kk28pI2I6oqoMkQobSQs9RBio+4dtcDV721mnoJTm6iZjYEivfe
+         K2rb1wcUQ9daJTqSHTq5mYKA8/CcpfUMBLoN1PHyw0do4IW6nDior99SGuJhr1urYcAC
+         o4tgWlfjLdqhSrJbO3iIwWMKIGKB5DMbFO1/ISFhHZjP0cNNHei45+wHKX6WOrSAZijm
+         cXxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686984069; x=1689576069;
+        d=1e100.net; s=20221208; t=1686984084; x=1689576084;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MgZNO4N7Lp3aOL0RIWfyplzy3WbAoT4TzJnAt4E1rDw=;
-        b=VdmX5W3+HxK223vU7PacKTOfQU+eCQBQ0G46foWSOzCnqSr5hFKBkCALtIWDPB6cYu
-         Zo6HRPf+Zr4rpmiz4Prz7ooY/TnCi/TwCRHIoekofhwjnLkl2AqH1tm62h+b9hp+CIwE
-         NV6fzABaA5x/vqfVXkcMgM78D0rZ33LnDKmDR4PnMwgX+oUO1uVtmXILKXh8UijDpPeF
-         e2lJJqikM1nGx4eJmx50Y615YZvdooci8aRrfsCWXntSFRFIkEhA8I/+VMB6RrZNjl+r
-         SqOFltsfevFhVzL/yHeBua6vY7oyBYX/AKQc/6rAxvnDP0JmrABa7KUc9gzng1TsXof7
-         U40g==
-X-Gm-Message-State: AC+VfDy5ODmi5tkjVESp9DLzBIB9OIvwZR1AqEN+AWMEdYLHQYv+qz5S
-        6sWv6J9+jFO0lZtmFCaAkIw=
-X-Google-Smtp-Source: ACHHUZ4OMXGUNpdcI3uK77j9dMkoV7qUSiuMUag4P3uRdT7ppw7KL1/jiPw4qpJx/tNV0XPQHTakwg==
-X-Received: by 2002:a1c:7203:0:b0:3f8:f42a:a2c5 with SMTP id n3-20020a1c7203000000b003f8f42aa2c5mr2268493wmc.36.1686984069242;
-        Fri, 16 Jun 2023 23:41:09 -0700 (PDT)
+        bh=dCuO7aOmHMwsehHwZAAEQvDE9lIDN1cQAtYHsydL2EU=;
+        b=lqpNg7Ee6pAPDbS8ElyXc/uGlHXrucxHks/q8iaIoI8ldn6AaEi0Occr6ClVVPXKMS
+         XPkRKC13kktXAdHuuHGarf3lsR88YTfZmidw2v2jKFHoNnBksiexJJAkwhByZYgWRa4F
+         H/+OQa9E7aUP7HXr/IQ/UA1keMqqtInjUkIcpOf8jt3VaAOgtUr1YZKN1ky7BfDeo3jh
+         mjl5qFTma57BsnXB5ynV3fKknSLr4q0TkqsduPTjk1e4c03bxLWKmPIKJqfwIPej72VW
+         2QnCmkLpAGLJeo812qInqK+GlM5T2YEu9PxbRbHZ1UnHgdOqFGLpZlBAzSXZkvRaVYB2
+         APvg==
+X-Gm-Message-State: AC+VfDxoC65ajb5crE54dC5bA231jczVSqaPYBFupUwDuLfmNa9l77ve
+        K+iCS1SR+3af1KfIiWk09fs=
+X-Google-Smtp-Source: ACHHUZ6w84eKJuL0SYQ0kna1rAytXtjHU5m+jifAdPXeNsMTAbo9kAx2RjQtAxjBwrMM9sukRKn1rw==
+X-Received: by 2002:adf:f18f:0:b0:30f:b9de:ab21 with SMTP id h15-20020adff18f000000b0030fb9deab21mr3118660wro.14.1686984083645;
+        Fri, 16 Jun 2023 23:41:23 -0700 (PDT)
 Received: from [192.168.2.52] (151.red-88-14-53.dynamicip.rima-tde.net. [88.14.53.151])
-        by smtp.gmail.com with ESMTPSA id d6-20020adffd86000000b0030ae87bd3e3sm25417608wrr.18.2023.06.16.23.41.08
+        by smtp.gmail.com with ESMTPSA id k17-20020a5d4291000000b003047ea78b42sm25472867wrq.43.2023.06.16.23.41.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 23:41:08 -0700 (PDT)
-Subject: [PATCH v3 2/5] branch: fix a leak in setup_tracking
+        Fri, 16 Jun 2023 23:41:23 -0700 (PDT)
+Subject: [PATCH v3 3/5] branch: fix a leak in cmd_branch
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 References: <9eb931e7-dd18-8ce8-4d4a-cf3d85066189@gmail.com>
  <5650c4ed-cec0-d11e-4f68-1661b3638786@gmail.com>
  <71b49be1-eeef-2f60-38f1-cfcbe4c8252f@gmail.com>
-Message-ID: <3d33cd59-d4f3-9112-457f-7d1bfdd08714@gmail.com>
-Date:   Sat, 17 Jun 2023 08:41:08 +0200
+Message-ID: <510e9029-c424-2861-ab3c-30046333f715@gmail.com>
+Date:   Sat, 17 Jun 2023 08:41:22 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -69,60 +69,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In bdaf1dfae7 (branch: new autosetupmerge option "simple" for matching
-branches, 2022-04-29) a new exit for setup_tracking() missed the
-clean-up, producing a leak.
+In 98e7ab6d42 (for-each-ref: delay parsing of --sort=<atom> options,
+2021-10-20) a new string_list was introduced to accumulate any
+"branch.sort" setting.
 
-   $ git config branch.autoSetupMerge simple
-   $ git remote add local .
-   $ git update-ref refs/remotes/local/foo HEAD
-   $ git branch bar local/foo
+That string_list is cleared in ref_sorting_options(), which is only
+called when processing the "--list" sub-command.  Therefore, with other
+sub-command, while having any sort option set, a leak is produced, e.g.:
+
+   $ git config branch.sort invalid_sort_option
+   $ git branch --edit-description
 
    Direct leak of 384 byte(s) in 1 object(s) allocated from:
        ... in xrealloc wrapper.c
        ... in string_list_append_nodup string-list.c
-       ... in find_tracked_branch branch.c
-       ... in for_each_remote remote.c
-       ... in setup_tracking branch.c
-       ... in create_branch branch.c
-       ... in cmd_branch builtinbranch.c
+       ... in string_list_append string-list.c
+       ... in git_branch_config builtin/branch.c
+       ... in configset_iter config.c
+       ... in repo_config config.c
+       ... in git_config config.c
+       ... in cmd_branch builtin/branch.c
        ... in run_builtin git.c
 
-   Indirect leak of 24 byte(s) in 1 object(s) allocated from:
-       ... in xrealloc wrapper.c
-       ... in strbuf_grow strbuf.c
-       ... in strbuf_add strbuf.c
-       ... in match_name_with_pattern remote.c
-       ... in query_refspecs remote.c
-       ... in remote_find_tracking remote.c
-       ... in find_tracked_branch branch.c
-       ... in for_each_remote remote.c
-       ... in setup_tracking branch.c
-       ... in create_branch branch.c
-       ... in cmd_branch builtinbranch.c
+   Indirect leak of 20 byte(s) in 1 object(s) allocated from:
+       ... in xstrdup wrapper.c
+       ... in string_list_append string-list.c
+       ... in git_branch_config builtin/branch.c
+       ... in configset_iter config.c
+       ... in repo_config config.c
+       ... in git_config config.c
+       ... in cmd_branch builtin/branch.c
        ... in run_builtin git.c
 
-The return introduced in bdaf1dfae7 was to avoid setting up the
-tracking, but even in that case it is still necessary to do the
-clean-up.  Let's do it.
+We don't have a common clean-up section in cmd_branch().  To avoid
+refactoring, keep the fix simple, and while we find a better solution
+which hopefuly will avoid entirely that string_list, when no sort
+options are needed; let's squelch the leak sanitizer using UNLEAK().
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/branch.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/branch.c b/branch.c
-index 427bde896f..d88f50a48a 100644
---- a/branch.c
-+++ b/branch.c
-@@ -333,7 +333,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 		if (!skip_prefix(tracking.srcs->items[0].string,
- 				 "refs/heads/", &tracked_branch) ||
- 		    strcmp(tracked_branch, new_ref))
--			return;
-+			goto cleanup;
- 	}
+diff --git a/builtin/branch.c b/builtin/branch.c
+index e6c2655af6..075e580d22 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -832,6 +832,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (list)
+ 		setup_auto_pager("branch", 1);
  
- 	if (tracking.srcs->nr < 1)
++	UNLEAK(sorting_options);
++
+ 	if (delete) {
+ 		if (!argc)
+ 			die(_("branch name required"));
 -- 
 2.40.1
