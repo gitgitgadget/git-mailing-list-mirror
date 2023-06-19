@@ -2,75 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7508EB64DA
-	for <git@archiver.kernel.org>; Mon, 19 Jun 2023 14:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 832E8EB64DA
+	for <git@archiver.kernel.org>; Mon, 19 Jun 2023 15:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbjFSOyN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jun 2023 10:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47556 "EHLO
+        id S231449AbjFSPNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jun 2023 11:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjFSOyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2023 10:54:12 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B88E310D0
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 07:54:06 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id ca18e2360f4ac-77e2a18ae50so152796239f.1
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 07:54:06 -0700 (PDT)
+        with ESMTP id S229649AbjFSPNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2023 11:13:44 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB2E8E42
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 08:13:34 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f865f0e16cso2641442e87.3
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 08:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687186445; x=1689778445;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZMEiwNVcjfzemq8elNaF4nQvBY0uV+Z+FkJx1fC326c=;
-        b=O4oH5xfegXK0RGmoXfMk01YBlkmdV7fq2R8F7/IJFTvobmTxwVQB8zqzRvnOUiSM9t
-         2Z1g7pcZEYBsqDxqpX8PGpOGXwG015F78pRNKSE+YnZw6Z8pxfOt0smp+LnbGDfCDeDa
-         WbjV9dD3B6f95V1VqOLIpUOFERd2DpST0LJGbrhzNNdTfKbRC5G0HXLo8hc9DwSTjGJh
-         nEI/eumZeEhtPSlyKdompvc9f+bJMspKwwNo/kqMVEIHPN6/k4aYfsRFliSKLzAtU5qu
-         J8ZLHZomknyPFhRPwxP3Iv6VEuQwrey9wCuvieTN2y/Xi7gd59k2vvZkPVxPM815H4ge
-         QXxw==
+        d=gmail.com; s=20221208; t=1687187613; x=1689779613;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=au9nlderFLJAM9WPTw9zPOI4cfFYGZP4LCMecITuzvU=;
+        b=QhoOXyq9YTn9oyvWESDja98DOU3JQ5yu7foVQWpcsEIYTFYfoX7NaqhQdor4g1FSTI
+         jvlZKW612EjRjREY6cw9YFA4wJoKZK17sJLzN6ZUXcqacKOvgI9nNIKwqoyYrvB5IAA4
+         pYoYfWN4UIOp0rI8XDPoGI1efgxoy5l0EJctKJB9FdbCVScPRIsriKFEOnx0uJJo4fzO
+         c35FSs/+VsGPgf9vNgMPXx2wOzzzDEt+Sl+rUIg/j6nwk5nHAYTvBbSyDPOmSW1kKT3+
+         PGvbrhBr3fqDLxAb3lVJuXACkySRlxW8vkWb9qhovfQcRwFtDF5g6IPaEjyWLeXFCfnh
+         tBYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687186445; x=1689778445;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZMEiwNVcjfzemq8elNaF4nQvBY0uV+Z+FkJx1fC326c=;
-        b=TCFQsPMUYMlkV+Yv9ekzYaOd6excNmSBvuuehxBjAOLyrTTSXILZ2N8iRyDopoVnhm
-         vGKuEuLt7VREbhK1PZNmwsHJT0KA2pXNTy8F1pFF4azZFXgnqGLpznJlkmHWc3BC0EpF
-         VL7uo5qESv50790LuRFWHP3h1zpqXXQEFRauzo1l9YVkbImzKUkQpSgpxLzarYAzB6ny
-         oqFkM36B/rxL2GjnB1Fi1SSEV606tCBWwxh6E+s1oigMGkT5zILN0T/gtvUdd4pkD9tp
-         nRyMaw5hOOvfS4vKZFgzWbqwMB7LimrHQLCEzJTONmgsz/gxHj1h8vKxJVUAwK7WiOcu
-         rcMg==
-X-Gm-Message-State: AC+VfDxN+5TmdR5c2QwPbTw5XcE5+W6PRAA2MhmMtkJh3OCAHKoMNu18
-        CUYRNwrOfbwKodiwClQsRBd7thHCoI5JwA==
-X-Google-Smtp-Source: ACHHUZ78YN2BvVTeEq98TbP0vmzzTYs5F7nK8UQRF+1oylnIRTh2pbuiyFZGnEXJyJdyRay3vngsbQ==
-X-Received: by 2002:a05:6602:2995:b0:76c:4ce7:e37c with SMTP id o21-20020a056602299500b0076c4ce7e37cmr7803882ior.16.1687186445545;
-        Mon, 19 Jun 2023 07:54:05 -0700 (PDT)
-Received: from localhost.localdomain (bras-base-london142cw-grc-13-67-68-60-130.dsl.bell.ca. [67.68.60.130])
-        by smtp.googlemail.com with ESMTPSA id l15-20020a02cd8f000000b004231a0cca08sm28477jap.43.2023.06.19.07.54.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 07:54:05 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com
-Subject: [GSoC] Blog
-Date:   Mon, 19 Jun 2023 10:53:42 -0400
-Message-Id: <20230619145342.5830-1-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
+        d=1e100.net; s=20221208; t=1687187613; x=1689779613;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=au9nlderFLJAM9WPTw9zPOI4cfFYGZP4LCMecITuzvU=;
+        b=DZLP9lpguHgeeaTVuy5/RXE36wQ4NyyFYLT6eoLZHRGqoxuAq+PxmcJhyL4rz/Rp5q
+         qoRK2CjUQz0I1TkHCBLEC5S2I5iGVxjocxWMBLjJKmTNgSgciZgPgdNHc9vX9VxwI/G9
+         OBT49NuGa3jmYmM30qSvPTPmjgm5uQLRU7Yu3Ud/cuWyfewfC6/aGeXu3TaE2k2NTLfh
+         IPl6XtzFEPcoBLelZrtjXfaH6vCff3Pya/sqOtLC/yO8lQXFaKQr39lgvDPui6d7x/0u
+         8tKcopOUxHPmCVAgOUGA+ulVo8reGyNB2S+APJzHGsP9TjQWdgVqEcGHgewzX082xP4y
+         /v1Q==
+X-Gm-Message-State: AC+VfDxyLL9fHn99po39JkB2x+ptelAJNrBRXQlL38BXKkMmUTdXiAJS
+        /rI2DLubYl4gwxBoNXxE69LEPEoHPRJ+te5hRLE=
+X-Google-Smtp-Source: ACHHUZ5OYeap3knPvhTKtnD+SavAXLSvdK/7j3xl8Hr08ChxrUjbJdEKya7wyf/Qg6Dm5bt+THp40VeO1T2eCPLDbgg=
+X-Received: by 2002:a19:f24a:0:b0:4f7:940f:913 with SMTP id
+ d10-20020a19f24a000000b004f7940f0913mr5125765lfk.50.1687187612685; Mon, 19
+ Jun 2023 08:13:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <PH7PR07MB9467452EBAFAB2C825295C0C8C5BA@PH7PR07MB9467.namprd07.prod.outlook.com>
+ <42e4373e-b700-45a6-99cc-db2f8896d5b7@app.fastmail.com> <20230616042407.GA54009@coredump.intra.peff.net>
+ <CAP8UFD2JYAFv=iTDzvn4fzwYpJHt7TBLMXV0GV1-S7tXd7Bp=A@mail.gmail.com> <20230617042624.GA562686@coredump.intra.peff.net>
+In-Reply-To: <20230617042624.GA562686@coredump.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 19 Jun 2023 17:13:21 +0200
+Message-ID: <CAP8UFD1+SVCoRxp2wSrXvKPoNQjL_zCxix726veYPPqs3aA-PQ@mail.gmail.com>
+Subject: Re: [PATCH] commit: pass --no-divider to interpret-trailers
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        "eric.frederich@siemens.com" <eric.frederich@siemens.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git community,
+On Sat, Jun 17, 2023 at 6:26=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 
-Here is Shuqi Liang. I'm this year's GSoC student for the project
-"More Sparse Index Integration". My mentor Victoria and I
-are already in touch for a while on the Discord, and I'm writing
-to let the community know that things are going well.
+> Thanks for confirming. Here it is with a test and commit message.
 
-Week1-2: https://cheskaqiqi.github.io/2023/06/19/Week1-2/
-
-Week3-4: https://cheskaqiqi.github.io/2023/06/19/Week3-4/
-
-You can read them when you are free, and generously give me some
-advice if possible!
+Reviewed and it looks great. Thanks!
