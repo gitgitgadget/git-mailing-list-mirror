@@ -2,190 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8DA2EB64D9
-	for <git@archiver.kernel.org>; Mon, 19 Jun 2023 16:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D05AEB64DA
+	for <git@archiver.kernel.org>; Mon, 19 Jun 2023 18:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbjFSQ5f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jun 2023 12:57:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50734 "EHLO
+        id S231820AbjFSSk2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jun 2023 14:40:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231792AbjFSQ5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2023 12:57:20 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B254E7C
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 09:57:17 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id af79cd13be357-763aba072b9so2715285a.0
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 09:57:17 -0700 (PDT)
+        with ESMTP id S230369AbjFSSk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2023 14:40:27 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40A218D
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 11:40:25 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-518ff822360so4699773a12.1
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 11:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687193836; x=1689785836;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6+G410xd3ubuOzyOLzUs8NUkUJDOILq0NwW0v90JdjA=;
-        b=sphFe6XPYQylxp7GE4KrNtzAPHG4acW0dBj6QlKYEbvhB9GS1oa0OeW3ngCLwoyH4G
-         tr8grTUB6cD3Vmpib/q3q7YwYGgeV4NRSQAN3r2BDGliG0bbyT1DmnyGGyqogYaa0R/M
-         2ozKvPnLcZU7nTq8k9V747X93HJb1AMIjPZ4Erx7VqinJPj8nAnjL0FkXkb8Fc29DGie
-         U028TR/ss3Uyzy0ZftoaY/kI9GvwduYwfbNckVVatzYBJdVUk7UmLrNVlM1hLXPc0DSM
-         YmKi7vx3JIWsIaHI5O4mNEtVMhuMGjQKkJwGq+DTzWDz3pkXcrl+XmBR2O7SJKNZKilS
-         9s1Q==
+        d=gmail.com; s=20221208; t=1687200024; x=1689792024;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4dHvCVyL++KVcE+z+qSj/yKcJKrh9/yfbcRpFCSW3+o=;
+        b=Mk1SV6xJOZUFqoWNke4n7f0d2VIKglKGsQ6xxnr7kR2kc9S3m2qGBjVySTXbFaR+Gk
+         xaoWkVD5w+ckT7TfaBKAm1n0SpRiQ8HTcnfoZ3kwFvMv/QIIQJGBNpC2pFaExTsB/occ
+         64XN2xHYMBoygpadMcQKPMgYUVW23jAq6ATnZB9CKV8RXE9BjYZjIr6Std3uwWdigUYT
+         /QlptD1A8+AvWVG43+KtUoNiSgki59k4TC3Er1aASKYjSLsXLOZ7d0fo0GDj3N74DoZA
+         3Fl1IKlvclX/EasGiTNIYiOLmZrQdGow+5lvQyMkGU22sRnsKoNn4YbUO0faAW/i92We
+         ppqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687193836; x=1689785836;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6+G410xd3ubuOzyOLzUs8NUkUJDOILq0NwW0v90JdjA=;
-        b=any/xB3sWmfOGraSvGX/77YH5Fw+2sOLT7ktikAP7EV/EcB5inzubBznceV2jkAiDK
-         IpGb4GcOaMXCtXuI9VgW09jTdbSDlCTq4bh4fpaAa5HDPnzGhzpCR/D0HkoeuyX7umda
-         9mvXcL+2TCaeekRKD9ouZ3G4SnFsuSuSHBWRARah5ZbVg8/YTew1qJ9xscGN+cBL3JYB
-         OSyajmgPUNyW0k0h09YaYalb0POwbOfmdlbmtTh4ORK8XeZVipWN+q94yLMQVQOpWcHF
-         eUQbnPvvtjr13cBoDpXj9e4vnX80JnEOu69Eg8HMlnQ/YtZETqpatFYoQEhkSJDH7jH8
-         t6oQ==
-X-Gm-Message-State: AC+VfDzrqLj5Pm327jWA1biBfy9a0iS0zOeRt9TCvmPiN7IbQeGq7hJ5
-        V6ZN0vKNFxVopHXp6Q44mkp9eA==
-X-Google-Smtp-Source: ACHHUZ7gQVkuIqejHIaTjjVkw5sOJ/2YN3B/Ib76UVUNxO3hY0ESwQVmn5rQn+mLpBa+OT8lF9sonA==
-X-Received: by 2002:a05:620a:480c:b0:75b:23a1:833d with SMTP id eb12-20020a05620a480c00b0075b23a1833dmr10633650qkb.56.1687193836309;
-        Mon, 19 Jun 2023 09:57:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l64-20020a0dc943000000b0056ffdec590csm49779ywd.41.2023.06.19.09.57.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 09:57:15 -0700 (PDT)
-Date:   Mon, 19 Jun 2023 12:57:12 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2023, #04; Wed, 14)
-Message-ID: <ZJCI6FHtbuOKPlV1@nand.local>
-References: <xmqqedmdwput.fsf@gitster.g>
+        d=1e100.net; s=20221208; t=1687200024; x=1689792024;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4dHvCVyL++KVcE+z+qSj/yKcJKrh9/yfbcRpFCSW3+o=;
+        b=N7uLKM7+ndaq2jck3qRjkh6ThPNS61/bgLC36MdGp9qiEED0zSWv3MZ8/0cqlWeISM
+         PIAKK3N3kMzWDUghIvfuKAaXV/r8HIqSNK0H/2TcR8rpvVfinmlmWXwgCenoamCptp+a
+         mLVVRy5HnD3Py1lhooFTfi/GcQpenG+VENGvxI6VqBN2hcTtFpKaHz/77JNaM/ZL3Zhs
+         HF89NVeiylWGIETW8H/ZuBtawA/JxEyogKXo9gEr9qaHl327IQHZoMEkngXhgUZKKRoa
+         WNR9q9aP+4wy2Nt84kMyZYXIx/Tpw0VEg7eIEQtceoiBUirgrzmVwvJ/doY766pOclzz
+         fcjQ==
+X-Gm-Message-State: AC+VfDw0MamUP2Ni9bNRS279zyOAt0rzQ5z/QTY3tatQ/ZPIpBlQjK85
+        AUQEjvlUiqH55HQjTKlW2nirZ+1UI2GbOWjYl8xEZ7EDaH3Siw==
+X-Google-Smtp-Source: ACHHUZ6twM8Q71xKfW2IJlK1xPTQZNUsrhRD1Ub4r4P9uISa97J0H+8u3P4s+mZv4ol8yhtsZ60+VZRKgv/gWAQTEGY=
+X-Received: by 2002:a17:906:7953:b0:987:52cb:4273 with SMTP id
+ l19-20020a170906795300b0098752cb4273mr6625675ejo.14.1687200024000; Mon, 19
+ Jun 2023 11:40:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqedmdwput.fsf@gitster.g>
+References: <CA+3o5aPQ3BkbAn3u6qSMCkAfNgTcpjT+_ikdqAkkc69NBGybpw@mail.gmail.com>
+ <kl6lzg5iztzw.fsf@chooglen-macbookpro.roam.corp.google.com> <CA+3o5aNgChKi-m6F_sYr4Sc+VXP-K2BCMpTpY8Km+kH5u9tkCQ@mail.gmail.com>
+In-Reply-To: <CA+3o5aNgChKi-m6F_sYr4Sc+VXP-K2BCMpTpY8Km+kH5u9tkCQ@mail.gmail.com>
+From:   Fraser Hanson <fraser.hanson@gmail.com>
+Date:   Mon, 19 Jun 2023 11:40:12 -0700
+Message-ID: <CA+3o5aO8oGnSLwTB52nHPsfCU0tSpkkkDV3dZcZ-8vt=BhoNAA@mail.gmail.com>
+Subject: Re: git fetch recursion problem
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+I figured out what is going on here.
+This problem is caused by the server configuration, but git should
+handle this more gracefully because it is easy to hit this problem and
+the consequence are severe.
 
-I am back from a week off, and wanted to give an update on the status of
-my outstanding topics. I'll be off next week, too, and then back on July
-5th onward.
+The root cause is that the git server is using the git "dumb http" protocol.
+The git server runs apache configured like this:
+    <Directory "/srv/git">
+        Options +Indexes
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+    </Directory>
 
-I plan on getting all of the ones with outstanding review comments
-replied to and/or rerolled tomorrow.
+Apache does not pass requests to git-http-backend.
+The server's /srv/git/ dir contains bare git repositories created with
+`git clone --mirror`.
+The repositories on the server must be prepared before download with
+`git update-server-info`.
 
-On Wed, Jun 14, 2023 at 05:06:50PM -0700, Junio C Hamano wrote:
-> * tb/pack-bitmap-index-seek (2023-03-20) 6 commits
->  - pack-bitmap.c: factor out `bitmap_index_seek_commit()`
->  - pack-bitmap.c: use `bitmap_index_seek()` where possible
->  - pack-bitmap.c: factor out manual `map_pos` manipulation
->  - pack-bitmap.c: drop unnecessary 'inline's
->  - pack-bitmap.c: hide bitmap internals in `read_be32()`
->  - pack-bitmap.c: hide bitmap internals in `read_u8()`
->
->  Clean-up the pack-bitmap codepath.
->
->  Kicked back to 'seen' out of 'next'.
->  There is a BUG() on data errors that needs to be fixed.
->  source: <cover.1679342296.git.me@ttaylorr.com>
+This is how the bug develops.
 
-Let's discard this one for now. It's not super high up on my to-do list
-and it's not worth the burden of carrying in 'seen'.
+### git client requests a partial clone from the server:
+$ git clone --filter=blob:none  http://172.20.208.191/git/kmarius/jsregexp.git
 
-> * tb/collect-pack-filenames-fix (2023-06-12) 1 commit
->  - builtin/repack.c: only collect fully-formed packs
->
->  Avoid breakage of "git pack-objects --cruft" due to inconsistency
->  between the way the code enumerates packfiles in the repository.
->
->  Will merge to 'next'?
->  source: <20230607101617.ges6tnMry4E52lDGld43QgtNUsIS4YQq6w-t71hEfkQ@z>
+### git clone succeeds, but there are no *.promisor files (these
+should exist for a partial clone)
+$ cd jsregexp
+$ find .git -name \*.promisor | wc -l
+0
 
-Yes, this one is ready to go (and has been running at GitHub for a week
-or so, for what that's worth ;-)).
+### the cloned repository is still configured as a partial clone
+$ cat .git/config
+[core]
+    repositoryformatversion = 1
+    filemode = true
+    bare = false
+    logallrefupdates = true
+[remote "origin"]
+    url = http://172.20.208.191/git/kmarius/jsregexp.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+    promisor = true
+    partialclonefilter = blob:none
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
 
-> * tb/open-midx-bitmap-fallback (2023-06-12) 1 commit
->  - pack-bitmap.c: gracefully degrade on failure to load MIDX'd pack
->
->  Gracefully deal with a stale MIDX file that lists a packfile that
->  no longer exists.
->
->  Will merge to 'next'.
->  source: <f123b68cb8a277fbf105b1789a84b9405a499b79.1686178854.git.me@ttaylorr.com>
+### git pull works, as long as there are no new commits added to the
+server's git repo
+$ git pull
+Already up to date.
 
-Thanks. I am somewhat embarrassed to have not caught that when writing
-it, but better late than never.
+### Next, add a commit into the server's git repository.
+### Then update the server's git repository with this:
+server# cd /srv/git/kmarius/jsregexp.git
+server# git update-server-info
 
-> * tb/submodule-null-deref-fix (2023-05-25) 1 commit
->   (merged to 'next' on 2023-06-13 at 5eb6a7948d)
->  + builtin/submodule--helper.c: handle missing submodule URLs
->
->  "git submodule" code trusted the data coming from the config (and
->  the in-tree .gitmodules file) too much without validating, leading
->  to NULL dereference if the user mucks with a repository (e.g.
->  submodule.<name>.url is removed).  This has been corrected.
->
->  Will merge to 'master'.
->  source: <ae6cf3fa461b85e346f034371dae56a2790dfa20.1684957882.git.me@ttaylorr.com>
+### Back on the client side, git pull is now broken:
 
-Thanks for picking this one back up post-release.
+$ GIT_TRACE=1 git fetch 2>&1 | head -20
+14:21:03.574765 git.c:460               trace: built-in: git fetch
+14:21:03.575455 run-command.c:655       trace: run_command:
+GIT_DIR=.git git remote-http origin
+http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.578239 git.c:750               trace: exec: git-remote-http
+origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.578349 run-command.c:655       trace: run_command:
+git-remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.590589 run-command.c:655       trace: run_command: git -c
+fetch.negotiationAlgorithm=noop fetch origin --no-tags
+--no-write-fetch-head --recurse-submodules=no --filter=blob:none
+--stdin
+14:21:03.593654 git.c:460               trace: built-in: git fetch
+origin --no-tags --no-write-fetch-head --recurse-submodules=no
+--filter=blob:none --stdin
+14:21:03.594362 run-command.c:655       trace: run_command: git
+remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.597148 git.c:750               trace: exec: git-remote-http
+origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.597253 run-command.c:655       trace: run_command:
+git-remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.609592 run-command.c:655       trace: run_command: git -c
+fetch.negotiationAlgorithm=noop fetch origin --no-tags
+--no-write-fetch-head --recurse-submodules=no --filter=blob:none
+--stdin
+14:21:03.612749 git.c:460               trace: built-in: git fetch
+origin --no-tags --no-write-fetch-head --recurse-submodules=no
+--filter=blob:none --stdin
+14:21:03.613392 run-command.c:655       trace: run_command: git
+remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.616123 git.c:750               trace: exec: git-remote-http
+origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.616235 run-command.c:655       trace: run_command:
+git-remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.630921 run-command.c:655       trace: run_command: git -c
+fetch.negotiationAlgorithm=noop fetch origin --no-tags
+--no-write-fetch-head --recurse-submodules=no --filter=blob:none
+--stdin
+14:21:03.634074 git.c:460               trace: built-in: git fetch
+origin --no-tags --no-write-fetch-head --recurse-submodules=no
+--filter=blob:none --stdin
+14:21:03.634746 run-command.c:655       trace: run_command: git
+remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.636388 git.c:750               trace: exec: git-remote-http
+origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.636443 run-command.c:655       trace: run_command:
+git-remote-http origin http://172.20.208.191/git/kmarius/jsregexp.git
+14:21:03.649168 run-command.c:655       trace: run_command: git -c
+fetch.negotiationAlgorithm=noop fetch origin --no-tags
+--no-write-fetch-head --recurse-submodules=no --filter=blob:none
+--stdin
+...
 
-> * tb/refs-exclusion-and-packed-refs (2023-06-12) 16 commits
->  - ls-refs.c: avoid enumerating hidden refs where possible
->  - upload-pack.c: avoid enumerating hidden refs where possible
->  - builtin/receive-pack.c: avoid enumerating hidden references
->  - refs.h: let `for_each_namespaced_ref()` take excluded patterns
->  - refs/packed-backend.c: ignore complicated hidden refs rules
->  - revision.h: store hidden refs in a `strvec`
->  - refs/packed-backend.c: add trace2 counters for jump list
->  - refs/packed-backend.c: implement jump lists to avoid excluded pattern(s)
->  - refs/packed-backend.c: refactor `find_reference_location()`
->  - refs: plumb `exclude_patterns` argument throughout
->  - builtin/for-each-ref.c: add `--exclude` option
->  - ref-filter.c: parameterize match functions over patterns
->  - ref-filter: add `ref_filter_clear()`
->  - ref-filter: clear reachable list pointers after freeing
->  - ref-filter.h: provide `REF_FILTER_INIT`
->  - refs.c: rename `ref_filter`
->
->  Enumerating refs in the packed-refs file, while excluding refs that
->  match certain patterns, has been optimized.
->  source: <cover.1686134440.git.me@ttaylorr.com>
+This will repeat forever, repeatedly spawning sub-processes.
 
-Thanks for your review on this one. I am just getting back from a week
-of vacation (and then off again next week, then back in early July). I
-had intended to respond to your review today, but I didn't quite get to
-it today.
+The impact can be severe.  I discovered this while using Neovim's
+lazy.nvim plugin manager within a secure, firewalled environment
+without internet access. The editor is configured to pull packages
+from an intranet mirror site containing bare clones of GitHub
+projects.  The multi-threaded lazy.nvim plugin manager attempts to
+update all 30 or so repositories in my configuration simultaneously.
+All of the repos with fresh commits on our dumb http mirror server hit
+the bug, causes many git processes to spawn very fast.  The system
+locks up in seconds, the OOM killer shows up too late to save it.
 
-On my list for tomorrow, hopefully the rerolled version should be ready
-to pick up.
-
-> * tb/gc-recent-object-hook (2023-06-12) 2 commits
->  - gc: introduce `gc.recentObjectsHook`
->  - reachable.c: extract `obj_is_recent()`
->
->  "git pack-objects" learned to invoke a new hook program that
->  enumerates extra objects to be used as anchoring points to keep
->  otherwise unreachable objects in cruft packs.
->
->  Will merge to 'next'.
->  source: <cover.1686178684.git.me@ttaylorr.com>
-
-Thanks.
-
-> * tb/pack-bitmap-traversal-with-boundary (2023-05-08) 3 commits
->  + pack-bitmap.c: use commit boundary during bitmap traversal
->  + pack-bitmap.c: extract `fill_in_bitmap()`
->  + object: add object_array initializer helper function
->  (this branch is used by ds/disable-replace-refs.)
->
->  The object traversal using reachability bitmap done by
->  "pack-object" has been tweaked to take advantage of the fact that
->  using "boundary" commits as representative of all the uninteresting
->  ones can save quite a lot of object enumeration.
->
->  Will merge to 'next'.
->  source: <cover.1683567065.git.me@ttaylorr.com>
-
-Thanks on this one, too.
-
-Thanks,
-Taylor
+Git should handle this situation better.  The following would be nice:
+* when the http dumb protocol is used for clone or fetch, log an
+info-level message which is visible with GIT_TRACE
+* when a git partial clone is performed over dumb http protocol, log a
+warning-level message explaining that the resulting repo may be broken
+* when a 'git fetch' is done from a broken repository, don't
+repeatedly spawn git-remote-http processes forever
