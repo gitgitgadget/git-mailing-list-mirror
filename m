@@ -2,153 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF24DEB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 12:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BB95EB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 12:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231260AbjFTMPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 08:15:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47752 "EHLO
+        id S231750AbjFTMQ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 08:16:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230449AbjFTMPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 08:15:12 -0400
-Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2953B7
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 05:15:11 -0700 (PDT)
-Received: by mail-ua1-x92f.google.com with SMTP id a1e0cc1a2514c-7918b56b1e1so709164241.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 05:15:11 -0700 (PDT)
+        with ESMTP id S230449AbjFTMQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 08:16:56 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7914CB7
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 05:16:55 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-5701e8f2b79so52008097b3.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 05:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687263311; x=1689855311;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687263414; x=1689855414;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ofItEz0JbN8bjYSxtWhebdbJg9lx+gQ5kQG5f41w2Oc=;
-        b=osW2X5CtahPXutGVntkJOchfUXLyw710NKcTqONmH6cfrw7XzC+U515HhmlKUSKGD2
-         dx6Z68gt+Oesf2X/IRH63O55ph2mL2HTalt6HpVP9qQLc3jQY/hIy8zy2FrBdoHR588/
-         o953bii9Q3pHJ4zj7iilQC4oSjaYB+4L+csrfpmN7rm4nLY9gMFSRFWj3yb5ZkP9pO5I
-         2dapCuwoPNSpCXZ0xadp868ypRr1GcmqIIXUnT/Ud6oswHB47CUmGJpWaq8AyMmq/axq
-         rjoM8jgt1mcXgUuzon4Qo314/WXjoj2mRuvCyPcLj0eEhPn+72iEbUKWb9RB7lV+83CJ
-         j4WQ==
+        bh=7iIYb2WuystWP+qShf5HRUrQVcwjCUuPvFtFAIOdPoI=;
+        b=dW8nLUPvHqYZ8iIL/fRJep5HqwLUvmdah8y3oYeB8RWEgKH+4rY02Q0ONEICa2fPgM
+         zEeJT1OH+OHOA5fg9vlyj0nec9FHsl5dBhNRBQA6bUcxyd2Xmm6fKK5XlQbYw2c1i//Q
+         G3fyuML4nJJf/j4UAR89ED87gM1eu43U0poz6xZcMoj+hApWLPD2gQ6w9PXyUKEhyahK
+         jYynoOnyLbichyo3asvXrmb5nv2MvgNluS38SyFaJwRCqtpE6RxiImK5Fw6vHBCKJRRK
+         T5URn7kXZPNOOVuGol8in2tmjw8zi5kyiUW7loZ6e0xpHl5AK82H8WE5nuXvVuN79akq
+         bCYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687263311; x=1689855311;
+        d=1e100.net; s=20221208; t=1687263414; x=1689855414;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ofItEz0JbN8bjYSxtWhebdbJg9lx+gQ5kQG5f41w2Oc=;
-        b=V9YYli2RSqleqYjmcMrl4pOSKoxiYF+H10QVwVG7dYO8GHGRbEBGTw3RqfyWD+Xdqv
-         CVK+GvagTGkvxkaJfTrSHAgBfUZgGYT4UX6WDoIE1Cx99bAOKZ3vN14EhbO/VSXTMkGp
-         p55FlfVd5MyAD5KguPMjrF2f5iZunaMcZLJzL6uUgMjVcQ16An68zu0YUk10bygzoi+5
-         ddryXhkdv1kc8+2vBbDGW+GHX9L+qRiyD5dXMcICzA3z9lx2DW1Kz1oq1SjClhwMPkgj
-         ICW7xcDn84hHCg5DSaWjM4h3QhlSTsBQ/IlNTTYCyDiESH0GKz06GfLnWGAB3bxZBnO6
-         b5PQ==
-X-Gm-Message-State: AC+VfDwSgtobyIM/m2/XlxiHDVq2Dcr6yvZ+CBCLVcNL3MuA8wN7w5ZX
-        S/7m2uYfbJO5pYdRlwW3Y3V4rw==
-X-Google-Smtp-Source: ACHHUZ4JvvafisBRV501qQChfKn1YLNo3XHei1uDS3wLX+jqDo/asTAfOr7szjbPS5LXjErgybpXVA==
-X-Received: by 2002:a67:e941:0:b0:440:c269:86d8 with SMTP id p1-20020a67e941000000b00440c26986d8mr1173268vso.6.1687263310797;
-        Tue, 20 Jun 2023 05:15:10 -0700 (PDT)
+        bh=7iIYb2WuystWP+qShf5HRUrQVcwjCUuPvFtFAIOdPoI=;
+        b=kVatZZoAL9vuYTI2E+MuloBxOJ5RNjU5KdELlGSMx9VKb33H5sAPl9EnlP60m1R82c
+         Ygmd6sa3OWicSqGm05A8XPVNE8gDWqnYskS6w26E+2HUT+pblZf8eRBL9J7IIVjecmMA
+         6eyTnoeUWcWrWSZJWpjSNS9GtIYhycoA/27APE2UwHNdsSiJoQsSTHXu1XVxKj46P9dc
+         vtWUaJhhRiqpOMQ+/+5TWV1w2v3hSNthn4rcjO6+z8sVe391wNFiqY+ahYBemY1oFvCp
+         vvG7DvsZjpmqkp/HcPId55jqtpG/hCtcxBWjmd3mf54iLJ+cf1thDTA0NADaUWQ+htGX
+         tIow==
+X-Gm-Message-State: AC+VfDxC6cgPyRCQiUpEXlJUzPdzEHXoG3pVpQR2ReNnQLrjCuuut/J5
+        DNEzQflCM52fRuUlTO5cpp6LBA==
+X-Google-Smtp-Source: ACHHUZ5bU68fo+nJKwPSR3XjODvS5jX/M0fIGOE5Eq6lvmvn+EmJBN4f+tGb/vLjJoBZlbFpK2tLEQ==
+X-Received: by 2002:a0d:cc84:0:b0:570:75e3:2eaa with SMTP id o126-20020a0dcc84000000b0057075e32eaamr11985055ywd.25.1687263414697;
+        Tue, 20 Jun 2023 05:16:54 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3-20020a250103000000b00bf4d24fd976sm341462ybb.10.2023.06.20.05.15.10
+        by smtp.gmail.com with ESMTPSA id z192-20020a0dd7c9000000b005702bfb19bfsm454210ywd.130.2023.06.20.05.16.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 05:15:10 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 08:15:07 -0400
+        Tue, 20 Jun 2023 05:16:54 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 08:16:51 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/16] refs/packed-backend.c: implement jump lists to
- avoid excluded pattern(s)
-Message-ID: <ZJGYS7D3fusfcou3@nand.local>
+Subject: Re: [PATCH v2 11/16] revision.h: store hidden refs in a `strvec`
+Message-ID: <ZJGYs4hWjdMTSMm4@nand.local>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1684178576.git.me@ttaylorr.com>
- <8c78f49a8def4148c92cdd7efe4daa63fb47f641.1684178576.git.me@ttaylorr.com>
- <ZH7ZpB8eMBZN8q63@ncase>
+ <f765b50a8405f1653cbc2e79b375c979c4361550.1684178576.git.me@ttaylorr.com>
+ <ZH7ZqjYqyvSOHY8u@ncase>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZH7ZpB8eMBZN8q63@ncase>
+In-Reply-To: <ZH7ZqjYqyvSOHY8u@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 06, 2023 at 09:00:52AM +0200, Patrick Steinhardt wrote:
-> > @@ -785,6 +802,13 @@ struct packed_ref_iterator {
-> >  	/* The end of the part of the buffer that will be iterated over: */
-> >  	const char *eof;
+On Tue, Jun 06, 2023 at 09:00:58AM +0200, Patrick Steinhardt wrote:
+> On Mon, May 15, 2023 at 03:23:39PM -0400, Taylor Blau wrote:
+> > In subsequent commits, it will be convenient to have a 'const char **'
+> > of hidden refs (matching `transfer.hiderefs`, `uploadpack.hideRefs`,
+> > etc.), instead of a `string_list`.
 > >
-> > +	struct jump_list_entry {
-> > +		const char *start;
-> > +		const char *end;
-> > +	} *jump;
-> > +	size_t jump_nr, jump_alloc;
-> > +	size_t jump_pos;
+> > Convert spots throughout the tree that store the list of hidden refs
+> > from a `string_list` to a `strvec`.
 > >
-> Nit: I had some trouble with `jump_pos` given that it sounds so similar
-> to `iter->pos`, and thus you tend to think that they both apply to the
-> position in the packed-refs file. `jump_curr` or `jump_idx` might help
-> to avoid this confusion.
-
-Very fair, thanks for observing. I went with "jump_cur" (as a shorthand
-for "cursor").
-
-> > +	for (pattern = excluded_patterns; *pattern; pattern++) {
-> > +		struct jump_list_entry *e;
-> > +
-> > +		/*
-> > +		 * We can't feed any excludes with globs in them to the
-> > +		 * refs machinery.  It only understands prefix matching.
-> > +		 * We likewise can't even feed the string leading up to
-> > +		 * the first meta-character, as something like "foo[a]"
-> > +		 * should not exclude "foobar" (but the prefix "foo"
-> > +		 * would match that and mark it for exclusion).
-> > +		 */
-> > +		if (has_glob_special(*pattern))
-> > +			continue;
-> > +
-> > +		ALLOC_GROW(iter->jump, iter->jump_nr + 1, iter->jump_alloc);
-> > +
-> > +		e = &iter->jump[iter->jump_nr++];
-> > +		e->start = find_reference_location(snapshot, *pattern, 0);
-> > +		e->end = find_reference_location_end(snapshot, *pattern, 0);
+> > Note that in `parse_hide_refs_config()` there is an ugly const-cast used
+> > to avoid an extra copy of each value before trimming any trailing slash
+> > characters. This could instead be written as:
+> >
+> >     ref = xstrdup(value);
+> >     len = strlen(ref);
+> >     while (len && ref[len - 1] == '/')
+> >             ref[--len] = '\0';
+> >     strvec_push(hide_refs, ref);
+> >     free(ref);
+> >
+> > but the double-copy (once when calling `xstrdup()`, and another via
+> > `strvec_push()`) is wasteful.
 >
-> Nit: we could detect the non-matching case here already, which would
-> allow us to skip an allocation. It's probably pre-mature optimization
-> though, so please feel free to ignore.
+> I guess the proper way to fix this would be to introduce something like
+> a `strvec_push_nodup()` function that takes ownership. And in fact this
+> helper exists already, but it's declared as static. So we could get
+> around the ugly cast with a simple change to expose the helper function.
 
-Probably so, this allocation is so lightweight in comparison to all of
-the other things that for-each-ref does throughout its execution that I
-think it's probably negligible to shave off a few allocations.
-
-> > +	}
-> > +
-> > +	if (!iter->jump_nr) {
-> > +		/*
-> > +		 * Every entry in exclude_patterns has a meta-character,
-> > +		 * nothing to do here.
-> > +		 */
-> > +		return;
-> > +	}
-> > +
-> > +	QSORT(iter->jump, iter->jump_nr, jump_list_entry_cmp);
-> > +
-> > +	/*
-> > +	 * As an optimization, merge adjacent entries in the jump list
-> > +	 * to jump forwards as far as possible when entering a skipped
-> > +	 * region.
-> > +	 *
-> > +	 * For example, if we have two skipped regions:
-> > +	 *
-> > +	 *	[[A, B], [B, C]]
-> > +	 *
-> > +	 * we want to combine that into a single entry jumping from A to
-> > +	 * C.
-> > +	 */
-> > +	last_disjoint = iter->jump;
->
-> Nit: if we initialized `j = 0`, then `last_disjoint` would always be
-> equal to `iter->jump[j]`. We could then declare the variable inside of
-> the loop to make it a bit easier to understand.
-
-Sure, though we would then need to assign `iter->jump_nr = j + 1`, which
-I think adds more confusion than inlining the variable is worth.
+We could, but I'd prefer to explore doing so outside of this series,
+since I think strvec_push_nodup() is a little bit of a footgun unless
+you are thinking carefully about ownership. So making the function
+part of the exposed API may be controversial.
 
 Thanks,
 Taylor
