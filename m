@@ -2,172 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE8ACEB64DB
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6137FEB64D8
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233256AbjFTOWf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 10:22:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38510 "EHLO
+        id S233233AbjFTOWh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 10:22:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233281AbjFTOWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 10:22:13 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34D61716
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:11 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bd61dd9a346so4803428276.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:11 -0700 (PDT)
+        with ESMTP id S233225AbjFTOWT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 10:22:19 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A16172C
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:16 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-57040e313c5so69932427b3.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270931; x=1689862931;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XpcWF2jAHxAHKQccqpTeP8CuLS7UORpMTKc4CxvmPsM=;
-        b=isUgNBVppCqzjHGI1QMCFec4ENDHnhKlI2y4MuOJi2BpC02o7U8eplF6ewTrHHznQ7
-         Vnb12SjOWL2SWUqKwUdFjMBZrTRxqbQdMXrqKM5TeIVYcVcK1RW8DFNYbtMW77X36kSI
-         wEREIpISBexoFP8jFHdSR2iyBP8iWS29pK5HXYHfKr8LL1FTiZ78JyRCSSKaMHKYf7+6
-         Q24vgC/btq27YQTwltwowosmu/qH6t2iizVPVaqT3aQI69moDQ7BvXMvSFLyBcmRZhLZ
-         RqQYJQMdsOeBBMK7TKeLmJzE/cVlq4uOxGzUpROL7AfINo48lpRVneIhz9xrEZQ973mi
-         vECA==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270936; x=1689862936;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3by6/czLgiueqV4iTTYEqyA+ERKqJdZTfoT+yM9FgV4=;
+        b=EaYAX4MRMfAGf/nv5CuypkHEZKjXcwSp8sO4BsX/dbEjbYCDPa/hO9J8qWnjsgm8Gk
+         YoPbqLWwpUW17YY0NPp2Xphvd4ZVm/uZ+BD4LXw7pnmDOA4vn2Vl1XpcC03ZMc3l1QiP
+         ze/57N35dnXge9VHI8Q9GHqdXM9/sHGv7VqEmdElmW4jwNfLXW12k6XKyI+H+6T3rbE+
+         J4BawXuD5QL8D/WaVdMMSa9IFuyiKp6qWd7hywgdGCHqoYIqvjZlx72lcPEdiyk+8jvY
+         b9NKu3gsO42z/eYnpqc0drirGY94fFDUXjFsTszUKwg4Xg0LOezsdGsIkcN0uqaIaj2z
+         f+5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687270931; x=1689862931;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XpcWF2jAHxAHKQccqpTeP8CuLS7UORpMTKc4CxvmPsM=;
-        b=OlOkc1MTX+Rs/CEBs8JTJ+L4NjQbxd86bPIox59njQaDW0sJkAoSZzZlYvA6MHgj5a
-         wYnoFsHoVja96UL4wjbBDCrAgDx0yTqgGbAIlxVTuwRE6tqIumap1HdgSWTcZgH7yOdO
-         FxUpvq62lg9mG+EjwhcJTwUsPJCHqUIYZes+eyADSr5ldAhydx34YrTci4w7APglrKbi
-         L4c7414PkVuZS5BPTyYY6mcwFRYFs5RPy923SEfMl2e+yMn0iqRhTN7+/SphVizFQX30
-         /D//aKst6mTom8Jn6lluxrJhCClGXztLL/8Pht4zZkRaDOh515Wlarlzghdl7XFQwF+P
-         a+RQ==
-X-Gm-Message-State: AC+VfDwrZHaGbzIwxKl+F8OZurRVRjGcL5DzEJrmGc6frYgVOiZk0gG1
-        6pqUss5ty89LwvSQl4e5RFttYDdaJ2Gw5aPh7yE4oXYZ
-X-Google-Smtp-Source: ACHHUZ54gIyEpF75erHmmNwei3NWmX/cwNsxKVV+Rn2bcLQS6GOzXpvqYRpLN2lyMxCbJNF7twlvmQ==
-X-Received: by 2002:a25:b195:0:b0:bc6:cf90:a286 with SMTP id h21-20020a25b195000000b00bc6cf90a286mr9861479ybj.36.1687270931036;
-        Tue, 20 Jun 2023 07:22:11 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687270936; x=1689862936;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3by6/czLgiueqV4iTTYEqyA+ERKqJdZTfoT+yM9FgV4=;
+        b=iQ19s6JSD5ovym5SPNo+1eysPpplFWhpw6eFoSRxCPVi0/kY2bg0EiULdICl/+G1FP
+         UA5Hg4cPnxbCUqc/ynZEZhV3KrFjw0F5whCNec7jygUnkSUpUOiKGi+NpATUhgtT7D2p
+         ksIXcGd3MetnyM3IDAvQ2hll8d5cPtGXwY3FUVnC6YpSt1Ovp8BKFuww7Bp6mhmMRdtH
+         aNf3JrNTMz4s/oMPBTT8RUyj9zPGvY9EhS7SMgB5mVIWSM3R+mHM/B3IGB8x/l3gZU35
+         M4hFXgltmZN29ZD4g2I1jrdk+AWYs17D1HygSUiUz3NGQq/aJJc3bb3RbDK7c1mLjXfu
+         Gmnw==
+X-Gm-Message-State: AC+VfDxpbGyAmcYAItsf4RWjfk41r6YWHxOeWCxxcUIqB0Zp6aMgDSbC
+        Mvf7NETtZMB3Ca3BDnQATH/YMppsvlu4VGF/EO46JPEr
+X-Google-Smtp-Source: ACHHUZ72vdRi9MBIz26rR3YVhTPj5g38o2mni+be48uAMroVjckFu0rer8Hi+R8orkqMhFcPb5dkTQ==
+X-Received: by 2002:a81:a191:0:b0:56d:50a:c0bb with SMTP id y139-20020a81a191000000b0056d050ac0bbmr18720542ywg.25.1687270935950;
+        Tue, 20 Jun 2023 07:22:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u28-20020a25f81c000000b00ba773472647sm391517ybd.19.2023.06.20.07.22.10
+        by smtp.gmail.com with ESMTPSA id u143-20020a818495000000b00569e0490babsm522959ywf.16.2023.06.20.07.22.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 07:22:10 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 10:22:07 -0400
+        Tue, 20 Jun 2023 07:22:15 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 10:22:12 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 13/16] refs.h: let `for_each_namespaced_ref()` take
- excluded patterns
-Message-ID: <8d4d7cc22ee5ae8093ff06c127948356dbe6d501.1687270849.git.me@ttaylorr.com>
+Subject: [PATCH v4 14/16] builtin/receive-pack.c: avoid enumerating hidden
+ references
+Message-ID: <49c665f9f8f889373570ee94f6041e8bd89076cf.1687270849.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1687270849.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1687270849.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A future commit will want to call `for_each_namespaced_ref()` with
-a list of excluded patterns.
+Now that `refs_for_each_fullref_in()` has the ability to avoid
+enumerating references matching certain pattern(s), use that to avoid
+visiting hidden refs when constructing the ref advertisement via
+receive-pack.
 
-We could introduce a variant of that function, say,
-`for_each_namespaced_ref_exclude()` which takes the extra parameter, and
-reimplement the original function in terms of that. But all but one
-caller (in `http-backend.c`) will supply the new parameter, so add the
-new parameter to `for_each_namespaced_ref()` itself instead of
-introducing a new function.
+Note that since this exclusion is best-effort, we still need
+`show_ref_cb()` to check whether or not each reference is hidden or not
+before including it in the advertisement.
 
-For now, supply NULL for the list of excluded patterns at all callers to
-avoid changing behavior, which we will do in a future change.
+As was the case when applying this same optimization to `upload-pack`,
+`receive-pack`'s reference advertisement phase can proceed much quicker
+by avoiding enumerating references that will not be part of the
+advertisement.
+
+(Below, we're still using linux.git with one hidden refs/pull/N ref per
+commit):
+
+    $ hyperfine -L v ,.compile 'git{v} -c transfer.hideRefs=refs/pull receive-pack --advertise-refs .git'
+    Benchmark 1: git -c transfer.hideRefs=refs/pull receive-pack --advertise-refs .git
+      Time (mean ± σ):      89.1 ms ±   1.7 ms    [User: 82.0 ms, System: 7.0 ms]
+      Range (min … max):    87.7 ms …  95.5 ms    31 runs
+
+    Benchmark 2: git.compile -c transfer.hideRefs=refs/pull receive-pack --advertise-refs .git
+      Time (mean ± σ):       4.5 ms ±   0.2 ms    [User: 0.5 ms, System: 3.9 ms]
+      Range (min … max):     4.1 ms …   5.6 ms    508 runs
+
+    Summary
+      'git.compile -c transfer.hideRefs=refs/pull receive-pack --advertise-refs .git' ran
+       20.00 ± 1.05 times faster than 'git -c transfer.hideRefs=refs/pull receive-pack --advertise-refs .git'
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- http-backend.c | 2 +-
- refs.c         | 5 +++--
- refs.h         | 3 ++-
- upload-pack.c  | 6 +++---
- 4 files changed, 9 insertions(+), 7 deletions(-)
+ builtin/receive-pack.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/http-backend.c b/http-backend.c
-index ac146d85c5..ad500683c8 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -559,7 +559,7 @@ static void get_info_refs(struct strbuf *hdr, char *arg UNUSED)
- 
- 	} else {
- 		select_getanyfile(hdr);
--		for_each_namespaced_ref(show_text_ref, &buf);
-+		for_each_namespaced_ref(NULL, show_text_ref, &buf);
- 		send_strbuf(hdr, "text/plain", &buf);
- 	}
- 	strbuf_release(&buf);
-diff --git a/refs.c b/refs.c
-index 1f01fdf9e8..8613184703 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1660,13 +1660,14 @@ int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_dat
- 				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
--int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-+int for_each_namespaced_ref(const char **exclude_patterns,
-+			    each_ref_fn fn, void *cb_data)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 1a8472eddc..bd5bcc375f 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -337,7 +337,8 @@ static void write_head_info(void)
  {
- 	struct strbuf buf = STRBUF_INIT;
- 	int ret;
- 	strbuf_addf(&buf, "%srefs/", get_git_namespace());
- 	ret = do_for_each_ref(get_main_ref_store(the_repository),
--			      buf.buf, NULL, fn, 0, 0, cb_data);
-+			      buf.buf, exclude_patterns, fn, 0, 0, cb_data);
- 	strbuf_release(&buf);
- 	return ret;
- }
-diff --git a/refs.h b/refs.h
-index f091741bfa..27d341d282 100644
---- a/refs.h
-+++ b/refs.h
-@@ -378,7 +378,8 @@ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
+ 	static struct oidset seen = OIDSET_INIT;
  
- int head_ref_namespaced(each_ref_fn fn, void *cb_data);
--int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
-+int for_each_namespaced_ref(const char **exclude_patterns,
-+			    each_ref_fn fn, void *cb_data);
- 
- /* can be used to learn about broken ref and symref */
- int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
-diff --git a/upload-pack.c b/upload-pack.c
-index 1a213ed775..99d216938c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -855,7 +855,7 @@ static void deepen(struct upload_pack_data *data, int depth)
- 		 * marked with OUR_REF.
- 		 */
- 		head_ref_namespaced(check_ref, data);
--		for_each_namespaced_ref(check_ref, data);
-+		for_each_namespaced_ref(NULL, check_ref, data);
- 
- 		get_reachable_list(data, &reachable_shallows);
- 		result = get_shallow_commits(&reachable_shallows,
-@@ -1386,7 +1386,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 		if (advertise_refs)
- 			data.no_done = 1;
- 		head_ref_namespaced(send_ref, &data);
--		for_each_namespaced_ref(send_ref, &data);
-+		for_each_namespaced_ref(NULL, send_ref, &data);
- 		if (!data.sent_capabilities) {
- 			const char *refname = "capabilities^{}";
- 			write_v0_ref(&data, refname, refname, null_oid());
-@@ -1400,7 +1400,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 		packet_flush(1);
- 	} else {
- 		head_ref_namespaced(check_ref, &data);
--		for_each_namespaced_ref(check_ref, &data);
-+		for_each_namespaced_ref(NULL, check_ref, &data);
- 	}
- 
- 	if (!advertise_refs) {
+-	for_each_ref(show_ref_cb, &seen);
++	refs_for_each_fullref_in(get_main_ref_store(the_repository), "",
++				 hidden_refs.v, show_ref_cb, &seen);
+ 	for_each_alternate_ref(show_one_alternate_ref, &seen);
+ 	oidset_clear(&seen);
+ 	if (!sent_capabilities)
 -- 
 2.41.0.44.gf2359540d2
 
