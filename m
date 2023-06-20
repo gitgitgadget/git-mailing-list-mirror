@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0133FEB64DB
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 19:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DB52EB64D8
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 19:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230464AbjFTToD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 15:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35854 "EHLO
+        id S230469AbjFTToF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 15:44:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbjFTToB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 15:44:01 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16EDA1722
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 12:44:00 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f9b1a117caso23080825e9.0
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 12:44:00 -0700 (PDT)
+        with ESMTP id S230032AbjFTToD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 15:44:03 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B81F41710
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 12:44:01 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-31129591288so3356947f8f.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 12:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687290238; x=1689882238;
+        d=gmail.com; s=20221208; t=1687290240; x=1689882240;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kLGWqGGPXVVm2PVCWPgKPnOlSwIUwy91Hvor7uzugUE=;
-        b=cPMLRvtb/vQHFMKtLE8jOkD+JUrBjRh2eYXCLDrwTwJRuoGxFIm8tFcySgygINvFhJ
-         W2UD99jw++ph3xQoR1nDTUoMwc2atf2LaJy/k3u8osviT/9Dh6yeNh3UYVWd4+DXGAdu
-         +tcC2BfYmOOoU2xJyUgb1+X9uJrSEBMwTRo7El6eufojvSrI5Ya2Pr3LJlnCkMwQtCbF
-         u/lRoQ0xrtqvRYzDInMcYEtqDAGj69ZOhjJtdBZsqNmFPsajy2OcAuDV2V9MjxAzbJsR
-         1QcW6QHbVJjdoe2zC7QiZvJu+Gi4BVYwKVmvSq1n8eIFIJuITatjYeNiI1YdPfKcCCUD
-         AhDQ==
+        bh=Kcof/63XTVy+UiL45aVYuVZRvod0drN1/iNd+IyshxE=;
+        b=nxN+Sgyd9EajBqSQhdYY6yuZAB6w4Jrg3huLWq5j6J0GSQ44Ouf3HT6XidBOUixGtx
+         0vO5dOZPk7cNayRarOjVwRI33gHtRi+Nzvn/mhCw75X1cdmscjTd85MRCYA4zzedK5vx
+         luKa9EJOML9M5Rbl5fcj6QxAzEGKTI0B4WtAu+FhXPmjx1Jp3sn2BxGUz6i9RnTS8yb0
+         M8G5utiu+eJlxgK8W/pYyDV0rxFU8jUxsVfEFLJScedLtozX611PTDxPw8kKU4DxA4DH
+         eADWjlsvfHB5H4mUJ4sR+xRz9gEd8C/dAZQJ94ep3JepO7gce9ERsk6ce/Amahfh+eC4
+         anNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687290238; x=1689882238;
+        d=1e100.net; s=20221208; t=1687290240; x=1689882240;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kLGWqGGPXVVm2PVCWPgKPnOlSwIUwy91Hvor7uzugUE=;
-        b=ewuJWlh40tq8eKqOpwQu3g/iuQh0WUoU7SKoj27cB4CYKJBoOaxYsRl2mLbS4+josR
-         k3FPCvCsvvncjOBJQx+2GcCpX/VZfXsTQwupzXs6xsiGKjYdpAGuJGdYba1FdhH4UQ95
-         OSV2yg0+zGiKek9WO9Zv6fYDaJxVHPoPDWrKoi33oW3ln2/MioCHhobbd6GXJh2bmRxx
-         +pH907tesW1+D4sKvc/zCFJ88A0fr5OBScG+qbb0GcBqkSG7CpBFjyphciVdOSxWrMOP
-         LCLAghNww9Dg0exmUiKEoXMA9SEA5KMYOZBOlsqG51xxzt2waXeqJelK2Mifs9jFOo8X
-         k5WA==
-X-Gm-Message-State: AC+VfDwX9BwvpL2rpCMoScIrSweYvgg+4zI8QXrOZVzgfYCErwOFVJ/3
-        hdF2nsqan8wNsxXKCt6kQopxnxHCZmg=
-X-Google-Smtp-Source: ACHHUZ724p5zu+MILT3D5mID2NfmmKCrGJmI3rXVrHUhya3V24GVucOwsYrZuiUYwRNQOmSkt/utmg==
-X-Received: by 2002:a7b:c050:0:b0:3f8:f45f:5c34 with SMTP id u16-20020a7bc050000000b003f8f45f5c34mr8740791wmc.40.1687290238128;
-        Tue, 20 Jun 2023 12:43:58 -0700 (PDT)
+        bh=Kcof/63XTVy+UiL45aVYuVZRvod0drN1/iNd+IyshxE=;
+        b=lfKh+PnUyGNnN7gudiOxVmFZUugRllLHEhucNtxPc8enTxcM/ONXsgZIR4rHW1UZDc
+         ULXZwNej1GIpI8LijW/slfwz1LjuUISt9vmS5OrdQMYctitC9B8741/5RjO0IEuwAbj9
+         gXOmdT6jqaKCOCYkUiC6jU+/4ZA9xElKWc5e5uKpdxnp2xlVao1vAsNbqY2pM/EkTBon
+         48c4rpwH7cSDcMmo24/CZhovE43O/flq53Cl8hf/604ICCnL5oe9NwL4cQhw3KtxeHBP
+         5CbEohd7R9xt7mSeN98+GmAYSgcfEAklpX47PNz5JcRXUgwWfNYECha0yya+oFvftO2v
+         vsuQ==
+X-Gm-Message-State: AC+VfDwIibza4UhALn6OyIEM+S0QFYNL8J7cbc1Qk2CJRzITp1TRHKbM
+        4ah+iREi1+qyIoGlcMvXEVzoQsnkcOM=
+X-Google-Smtp-Source: ACHHUZ7UorvtNtsCI0UvqxmeR33hkFOjC4YJfB5lRC/Tzg74eX+oSnLeRja0LCJPo1lymw06aNXa1Q==
+X-Received: by 2002:a5d:45c6:0:b0:30f:c653:b819 with SMTP id b6-20020a5d45c6000000b0030fc653b819mr9407034wrs.14.1687290239794;
+        Tue, 20 Jun 2023 12:43:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003f7361ca753sm13911225wmq.24.2023.06.20.12.43.57
+        by smtp.gmail.com with ESMTPSA id s6-20020adfea86000000b0030ae3a6be5bsm2634641wrm.78.2023.06.20.12.43.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 12:43:57 -0700 (PDT)
-Message-Id: <26109b65142d2a325201940262a6c0bf183ec4bd.1687290232.git.gitgitgadget@gmail.com>
+        Tue, 20 Jun 2023 12:43:59 -0700 (PDT)
+Message-Id: <c5051ddc10dfa9665fbcbed30875369c4e972d17.1687290233.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1497.v3.git.git.1687290231.gitgitgadget@gmail.com>
 References: <pull.1497.v2.git.git.1685472132.gitgitgadget@gmail.com>
         <pull.1497.v3.git.git.1687290231.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jun 2023 19:43:40 +0000
-Subject: [PATCH v3 01/12] config: inline git_color_default_config
+Date:   Tue, 20 Jun 2023 19:43:43 +0000
+Subject: [PATCH v3 04/12] config.c: pass ctx in configsets
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,140 +73,204 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-git_color_default_config() is a shorthand for calling two other config
-callbacks. There are no other non-static functions that do this and it
-will complicate our refactoring of config_fn_t so inline it instead.
+Pass config_context to config callbacks in configset_iter(), trivially
+setting the .kvi member to the cached key_value_info. Then, in config
+callbacks that are only used with configsets, use the .kvi member to
+replace calls to current_config_*(), and delete current_config_line()
+because it has no remaining callers.
+
+This leaves builtin/config.c and config.c as the only remaining users of
+current_config_*().
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/branch.c      | 5 ++++-
- builtin/clean.c       | 6 ++++--
- builtin/grep.c        | 5 ++++-
- builtin/show-branch.c | 5 ++++-
- builtin/tag.c         | 6 +++++-
- color.c               | 8 --------
- color.h               | 6 +-----
- 7 files changed, 22 insertions(+), 19 deletions(-)
+ builtin/remote.c       | 10 ++++++----
+ config.c               | 35 ++++++++++++++++-------------------
+ config.h               |  2 +-
+ remote.c               |  7 ++++---
+ t/helper/test-config.c | 11 ++++++-----
+ 5 files changed, 33 insertions(+), 32 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e6c2655af68..df99e38847b 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -117,7 +117,10 @@ static int git_branch_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 87de81105e2..d47f9ee21cf 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -646,17 +646,19 @@ struct push_default_info
+ };
  
--	return git_color_default_config(var, value, cb);
-+	if (git_color_config(var, value, cb) < 0)
-+		return -1;
-+
-+	return git_default_config(var, value, cb);
- }
- 
- static const char *branch_get_color(enum color_branch ix)
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 78852d28cec..57e7f7cac64 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -130,8 +130,10 @@ static int git_clean_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
--	/* inspect the color.ui config variable and others */
--	return git_color_default_config(var, value, cb);
-+	if (git_color_config(var, value, cb) < 0)
-+		return -1;
-+
-+	return git_default_config(var, value, cb);
- }
- 
- static const char *clean_get_color(enum color_clean ix)
-diff --git a/builtin/grep.c b/builtin/grep.c
-index b86c754defb..76cf999d310 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -293,7 +293,10 @@ static int wait_all(void)
- static int grep_cmd_config(const char *var, const char *value, void *cb)
+ static int config_read_push_default(const char *key, const char *value,
+-	const struct config_context *ctx UNUSED, void *cb)
++	const struct config_context *ctx, void *cb)
  {
- 	int st = grep_config(var, value, cb);
--	if (git_color_default_config(var, value, NULL) < 0)
++	const struct key_value_info *kvi = ctx->kvi;
 +
-+	if (git_color_config(var, value, cb) < 0)
-+		st = -1;
-+	else if (git_default_config(var, value, cb) < 0)
- 		st = -1;
- 
- 	if (!strcmp(var, "grep.threads")) {
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 7ef4a642c17..a2461270d4b 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -579,7 +579,10 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 	struct push_default_info* info = cb;
+ 	if (strcmp(key, "remote.pushdefault") ||
+ 	    !value || strcmp(value, info->old_name))
  		return 0;
+ 
+-	info->scope = current_config_scope();
++	info->scope = kvi->scope;
+ 	strbuf_reset(&info->origin);
+-	strbuf_addstr(&info->origin, current_config_name());
+-	info->linenr = current_config_line();
++	strbuf_addstr(&info->origin, config_origin_type_name(kvi->origin_type));
++	info->linenr = kvi->linenr;
+ 
+ 	return 0;
+ }
+diff --git a/config.c b/config.c
+index 670d92cd76b..1e146c861b1 100644
+--- a/config.c
++++ b/config.c
+@@ -2309,6 +2309,7 @@ static void configset_iter(struct config_reader *reader, struct config_set *set,
+ 	struct string_list *values;
+ 	struct config_set_element *entry;
+ 	struct configset_list *list = &set->list;
++	struct config_context ctx = CONFIG_CONTEXT_INIT;
+ 
+ 	for (i = 0; i < list->nr; i++) {
+ 		entry = list->items[i].e;
+@@ -2316,12 +2317,11 @@ static void configset_iter(struct config_reader *reader, struct config_set *set,
+ 		values = &entry->value_list;
+ 
+ 		config_reader_set_kvi(reader, values->items[value_index].util);
+-
+-		if (fn(entry->key, values->items[value_index].string, NULL, data) < 0)
++		ctx.kvi = values->items[value_index].util;
++		if (fn(entry->key, values->items[value_index].string, &ctx, data) < 0)
+ 			git_die_config_linenr(entry->key,
+-					      reader->config_kvi->filename,
+-					      reader->config_kvi->linenr);
+-
++					      ctx.kvi->filename,
++					      ctx.kvi->linenr);
+ 		config_reader_set_kvi(reader, NULL);
  	}
- 
--	return git_color_default_config(var, value, cb);
-+	if (git_color_config(var, value, cb) < 0)
-+		return -1;
-+
-+	return git_default_config(var, value, cb);
  }
- 
- static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 49b64c7a288..1acf5f7a59f 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -209,7 +209,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 
- 	if (starts_with(var, "column."))
- 		return git_column_config(var, value, "tag", &colopts);
--	return git_color_default_config(var, value, cb);
-+
-+	if (git_color_config(var, value, cb) < 0)
-+		return -1;
-+
-+	return git_default_config(var, value, cb);
- }
- 
- static void write_tag_body(int fd, const struct object_id *oid)
-diff --git a/color.c b/color.c
-index 83abb11eda0..b24b19566b9 100644
---- a/color.c
-+++ b/color.c
-@@ -430,14 +430,6 @@ int git_color_config(const char *var, const char *value, void *cb UNUSED)
+@@ -3974,13 +3974,8 @@ static int reader_origin_type(struct config_reader *reader,
  	return 0;
  }
  
--int git_color_default_config(const char *var, const char *value, void *cb)
--{
--	if (git_color_config(var, value, cb) < 0)
--		return -1;
+-const char *current_config_origin_type(void)
++const char *config_origin_type_name(enum config_origin_type type)
+ {
+-	enum config_origin_type type = CONFIG_ORIGIN_UNKNOWN;
 -
--	return git_default_config(var, value, cb);
+-	if (reader_origin_type(&the_reader, &type))
+-		BUG("current_config_origin_type called outside config callback");
+-
+ 	switch (type) {
+ 	case CONFIG_ORIGIN_BLOB:
+ 		return "blob";
+@@ -3997,6 +3992,16 @@ const char *current_config_origin_type(void)
+ 	}
+ }
+ 
++const char *current_config_origin_type(void)
++{
++	enum config_origin_type type = CONFIG_ORIGIN_UNKNOWN;
++
++	if (reader_origin_type(&the_reader, &type))
++		BUG("current_config_origin_type called outside config callback");
++
++	return config_origin_type_name(type);
++}
++
+ const char *config_scope_name(enum config_scope scope)
+ {
+ 	switch (scope) {
+@@ -4044,14 +4049,6 @@ enum config_scope current_config_scope(void)
+ 		return the_reader.parsing_scope;
+ }
+ 
+-int current_config_line(void)
+-{
+-	if (the_reader.config_kvi)
+-		return the_reader.config_kvi->linenr;
+-	else
+-		return the_reader.source->linenr;
 -}
 -
- void color_print_strbuf(FILE *fp, const char *color, const struct strbuf *sb)
+ int lookup_config(const char **mapping, int nr_mapping, const char *var)
  {
- 	if (*color)
-diff --git a/color.h b/color.h
-index cfc8f841b23..bb28343be21 100644
---- a/color.h
-+++ b/color.h
-@@ -88,12 +88,8 @@ extern const int column_colors_ansi_max;
-  */
- extern int color_stdout_is_tty;
- 
--/*
-- * Use the first one if you need only color config; the second is a convenience
-- * if you are just going to change to git_default_config, too.
-- */
-+/* Parse color config. */
- int git_color_config(const char *var, const char *value, void *cb);
--int git_color_default_config(const char *var, const char *value, void *cb);
+ 	int i;
+diff --git a/config.h b/config.h
+index bc52ceb72f2..b4236e120a8 100644
+--- a/config.h
++++ b/config.h
+@@ -387,7 +387,7 @@ int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
+ enum config_scope current_config_scope(void);
+ const char *current_config_origin_type(void);
+ const char *current_config_name(void);
+-int current_config_line(void);
++const char *config_origin_type_name(enum config_origin_type type);
  
  /*
-  * Parse a config option, which can be a boolean or one of
+  * Match and parse a config key of the form:
+diff --git a/remote.c b/remote.c
+index dafb1acdc38..37d413e7892 100644
+--- a/remote.c
++++ b/remote.c
+@@ -350,7 +350,7 @@ static void read_branches_file(struct remote_state *remote_state,
+ }
+ 
+ static int handle_config(const char *key, const char *value,
+-			 const struct config_context *ctx UNUSED, void *cb)
++			 const struct config_context *ctx, void *cb)
+ {
+ 	const char *name;
+ 	size_t namelen;
+@@ -358,6 +358,7 @@ static int handle_config(const char *key, const char *value,
+ 	struct remote *remote;
+ 	struct branch *branch;
+ 	struct remote_state *remote_state = cb;
++	const struct key_value_info *kvi = ctx->kvi;
+ 
+ 	if (parse_config_key(key, "branch", &name, &namelen, &subkey) >= 0) {
+ 		/* There is no subsection. */
+@@ -415,8 +416,8 @@ static int handle_config(const char *key, const char *value,
+ 	}
+ 	remote = make_remote(remote_state, name, namelen);
+ 	remote->origin = REMOTE_CONFIG;
+-	if (current_config_scope() == CONFIG_SCOPE_LOCAL ||
+-	    current_config_scope() == CONFIG_SCOPE_WORKTREE)
++	if (kvi->scope == CONFIG_SCOPE_LOCAL ||
++	    kvi->scope == CONFIG_SCOPE_WORKTREE)
+ 		remote->configured_in_repo = 1;
+ 	if (!strcmp(subkey, "mirror"))
+ 		remote->mirror = git_config_bool(key, value);
+diff --git a/t/helper/test-config.c b/t/helper/test-config.c
+index 85ad815358e..3f4c3678318 100644
+--- a/t/helper/test-config.c
++++ b/t/helper/test-config.c
+@@ -43,9 +43,10 @@
+  */
+ 
+ static int iterate_cb(const char *var, const char *value,
+-		      const struct config_context *ctx UNUSED,
++		      const struct config_context *ctx,
+ 		      void *data UNUSED)
+ {
++	const struct key_value_info *kvi = ctx->kvi;
+ 	static int nr;
+ 
+ 	if (nr++)
+@@ -53,10 +54,10 @@ static int iterate_cb(const char *var, const char *value,
+ 
+ 	printf("key=%s\n", var);
+ 	printf("value=%s\n", value ? value : "(null)");
+-	printf("origin=%s\n", current_config_origin_type());
+-	printf("name=%s\n", current_config_name());
+-	printf("lno=%d\n", current_config_line());
+-	printf("scope=%s\n", config_scope_name(current_config_scope()));
++	printf("origin=%s\n", config_origin_type_name(kvi->origin_type));
++	printf("name=%s\n", kvi->filename ? kvi->filename : "");
++	printf("lno=%d\n", kvi->linenr);
++	printf("scope=%s\n", config_scope_name(kvi->scope));
+ 
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
