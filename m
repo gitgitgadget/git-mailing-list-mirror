@@ -2,88 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0396AEB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 11:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFDB9EB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 11:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231246AbjFTL03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 07:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
+        id S231495AbjFTL0p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 07:26:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230295AbjFTL02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 07:26:28 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C34CF
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 04:26:27 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-519608ddbf7so4758288a12.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 04:26:27 -0700 (PDT)
+        with ESMTP id S230295AbjFTL0o (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 07:26:44 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0155810C
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 04:26:42 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-519608ddbf7so4758591a12.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 04:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1687260386; x=1689852386;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hlub4yMYobEJ5HvQNTWQfgUmezHGN+X9jz5IApcQQ2M=;
-        b=fm1f5h5rw3D8AFJxLjbfVkSGh7hAEj/ZBVoNgVjKrQ2SV6HGEj/93tqtiSvAuaW3qD
-         eJWmovKiZlpnk+A1MphnrnJNL5mJOul40jr6eXf1UXEkx/7TWNTLT5bdpZ3oog8Q7Eu7
-         gstmQl4GWcKGw03+qJO8LE2H2r6NgWWU0HHQ4=
+        d=klerks.biz; s=google; t=1687260401; x=1689852401;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IQg96VgGmb0k6aWEan+751nZVlW2051HShsbaTDeCh0=;
+        b=XKy6g6h/6e1s2na0MPVuF3PS/6TXKlJmVrzCi8y4JlufxXK0xDNU/PxS11UoLn6nmg
+         DY5N/3C+8GG7ViIFKOKulUKGavYqPgun2fWaOd35vbLyPbefZ1iZaxKeIEQRZsDXXrPP
+         +Vm7JGxcZWHlS9EHYQHBGjot8b+wrgBOLZkFc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687260386; x=1689852386;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Hlub4yMYobEJ5HvQNTWQfgUmezHGN+X9jz5IApcQQ2M=;
-        b=Zto5GA67I4HIFnsz7hUJrSb4w67ww1r528/MxxkRPmsFSuauAOlkE/9hxmZpff8CsY
-         X1oJpbVOnYlMPlWdlc5vTjDnUyhwXbPVC28mtJyc9hc2v09fV4Fl98fPPUrohTsH17mk
-         xm6xmHmlbi6GDOBMOrzE+gyOUbpH6kFUoLbv/xGvDO5Y6CpSmzL1EQM7HFivVPmr0jnG
-         D641sKEYpcGdAVZrP5xjaNswIrClzIe24BNePhvQ2q1zMiqv4sXw5364JfkMNdWe9RDu
-         4lcZxBfOIzS3HsmaDqUFDDSvvsoozzrJAvZmhiGMFjYYnT+dyEV5+iqxZq5ASZWUIC56
-         0MUA==
-X-Gm-Message-State: AC+VfDwPoa+bUJBEvN98Ss4ABnjPLh0DLtn0d8b6a+SAk6eeg3UOaD0C
-        dnpPv/njvdCXbfi+Dca4oUBk7n6RWcJDqvIt0yftR0tLBsyIM+SDyFUNyQ==
-X-Google-Smtp-Source: ACHHUZ70AUwnK2glLV+Gb9sKTI48TxM/WwKHpw5I4f97Y3Sn2mIoWZ4PizjYl+Hf++J+/M5O7u645eiT0RT5p0aLkeE=
-X-Received: by 2002:a05:6402:759:b0:51a:7bcf:c8f5 with SMTP id
- p25-20020a056402075900b0051a7bcfc8f5mr3089823edy.1.1687260385898; Tue, 20 Jun
- 2023 04:26:25 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687260401; x=1689852401;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IQg96VgGmb0k6aWEan+751nZVlW2051HShsbaTDeCh0=;
+        b=MK7mNiZxWHKwWMT1MM5NQ8ecn8gK2xG0m+n3EvsdZC3qzvKN8DWdjaMWlIESiPzgAH
+         9L2oI7RUunFWUH/bwerwdKHSeUkyJdbHeAhB+NStFDwQ9vDouiHmz7TXEn898GVKKZHJ
+         WESZCVJCgI6JuYJW5fb9AjIh4f9hCyyrMmxsvJqCOYMEtShj0xoLhJyK0hjM9unew5cX
+         ufz9XvhRrFeU6hLD6nxOx9d11yged5dLXntMRTfbYZtzDJYqZKOq2u3u3vK7x4qXT0Gw
+         4WsvWGsdp7V3SHDzVfk14aHDkQ9tjRtzwSjnrUB5k0OEkYt1hSMjSeL7rzaluq8xoonO
+         ohLA==
+X-Gm-Message-State: AC+VfDzyAnTQ07o+XExJMBNmeT6dPXCqJ4PSqj8UWMZolvfb1qSN5bSd
+        HwlFpjtjAKPbNRqswTh0Ae5GD6ZgyEPyZVMCnXu5MX3eYKRiLDw0dBB1HA==
+X-Google-Smtp-Source: ACHHUZ64+hreIe56C0PraY7BXou9qbBIZRyyTcC8SZi3UXFtenijOusStd+tOJrN0/TP+Luh5JaTnAI3h31ALfXT4bM=
+X-Received: by 2002:a05:6402:481:b0:516:af22:bcc6 with SMTP id
+ k1-20020a056402048100b00516af22bcc6mr7022418edv.21.1687260401113; Tue, 20 Jun
+ 2023 04:26:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <m0ttze4qzl.fsf@epic96565.epic.com> <Y/VNiuI7OZ2YiXx8@tapette.crustytoothpaste.net>
- <m0pma14sbx.fsf@epic96565.epic.com>
-In-Reply-To: <m0pma14sbx.fsf@epic96565.epic.com>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 20 Jun 2023 13:26:14 +0200
-Message-ID: <CAPMMpoiC8oca0AVNy1f+zy26L_b-ADyNopY4zO3r+v6v-KEH=A@mail.gmail.com>
-Subject: Re: [BUGREPORT] Why is git-push fetching content?
-To:     Sean Allred <allred.sean@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Sean Allred <sallred@epic.com>,
-        Kyle VandeWalle <kvandewa@epic.com>, git <git@vger.kernel.org>
+Date:   Tue, 20 Jun 2023 13:26:29 +0200
+Message-ID: <CAPMMpohiTzANyhzL-mS-gg2kzbOEOiDktNbdwEXBKy9uL0-JgA@mail.gmail.com>
+Subject: Determining whether you have a commit locally, in a partial clone?
+To:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 4:45=E2=80=AFPM Sean Allred <allred.sean@gmail.com>=
- wrote:
->
->
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> > It's hard to know for certain what's going on here, but it depends on
-> > your history.  You did a partial clone with no trees, so you've likely
-> > received a single commit object and no trees or blobs.
->
-> Yup, this was the intention behind `--depth=3D1 --filter=3Dtree:0`. The
-> server doing this ref update needs to be faster than having the full
-> history would allow.
->
+Hi folks,
 
-FWIW, you're not alone - we do exactly the same thing, for the same
-reasons, and get the same outcome: We want to create a tag in a CI
-job, that particular CI job has no reason to check out the code, all
-we know is we want ref XXXXX to point to commit YYYYY.
+I "discovered" today that when you're in a partial clone, naive tests
+to check for whether you have a commit locally no longer work - they
+fetch the commit on-demand:
 
-The most logical way to achieve that seems to be to do a shallow
-partial no-checkout clone of commit YYYYY, and then push to remote ref
-XXXXX, but the push ends up doing extra seemingly-unnecessary
-jit-fetching work.
+git cat-file -t SOME_HASH_NOT_IN_REFSPEC
+git rev-list SOME_HASH_NOT_IN_REFSPEC
 
-In our case it's still better than any alternative we've found, but
-wastes a few seconds that we'd love to see optimized away.
+I didn't realize this until today: even commits can be "filtered out"
+by partial clone, so any reference to a commit that is not found
+locally must be resolved transparently via jit-fetch.
+
+I'm optimizing some stuff for users, so I need to know whether a given
+commit exists locally or not... but I can't seem to figure out how!
+
+I tried using "git rev-list"'s "--exclude-promisor-objects" option,
+but I guess I don't understand what that's supposed to do. In my case
+it just made a simple check like "git rev-list
+--exclude-promisor-objects SOME_HASH_NOT_IN_REFSPEC" take forever (10
+mins and counting).
+
+I confirmed that removing (commenting out) the
+"remote.origin.promisor" and "remote.origin.partialclonefilter" config
+keys achieves my objective, but I can't figure out how to do it
+safely; "-c remote.origin.promisor=false -c
+remote.origin.partialclonefilter=" does *not* seem to work. The
+existence of a "remote.origin.partialclonefilter" value, even if it is
+empty, appears to override the "remote.origin.promisor=false" setting.
+
+As far as I can tell, config values cannot be unset with "-c" - in
+fact I see that credential.helper was granted special support for
+empty string as a way of signalling "no credential helper" by Jeff
+King in 2016.
+
+So I guess I have two questions:
+* Is there any way to run a single git command in a "don't use
+promisors" context?
+* Is the fact that "-c remote.origin.partialclonefilter=" doesn't work
+for temporarily unsetting the filter a bug/issue to be resolved?
+
+Thanks,
+Tao
