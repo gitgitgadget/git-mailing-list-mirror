@@ -2,110 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10D38EB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 09:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0396AEB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 11:26:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232218AbjFTJWw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 05:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45968 "EHLO
+        id S231246AbjFTL03 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 07:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232033AbjFTJWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 05:22:51 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A658F1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 02:22:50 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-38e04d1b2b4so3112273b6e.3
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 02:22:50 -0700 (PDT)
+        with ESMTP id S230295AbjFTL02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 07:26:28 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C34CF
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 04:26:27 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-519608ddbf7so4758288a12.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 04:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687252969; x=1689844969;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=G5dUaV1dG5H5BAG2sbdqoRuHaKCy/OHkEJdIP3ONmxg=;
-        b=m+GTIVQnIs/KukBCY/c2ZLJ1+YwVnsxbF5fNEQkw5pTLz3Hhz05xRA+IMcwASAMSz8
-         THr/1gzr3je2FNvvTe+7A20b1oVyOxdg+NBfK+lsg192bbL/tjC/3aIHaDxtAMYLZa7V
-         lTsEJ2hCLtmFPrH3vjulslmArkMfl0PoYsA75ZIHnfIVc6C5vafP07bZ2a+tyGGYn8v+
-         Mip/E2L9E2ay0o4XMcYS+pw8B05D5O7nFvSOcqDyAiHGVWxHHveiPPYd+m3ClyFY/Une
-         jyHIYhDd4gl5mieA9h9LQBjdoY4g9MJKRhTU2hURtrH/T84Bh6l42OQsGFEMMu59Sj6m
-         9+hQ==
+        d=klerks.biz; s=google; t=1687260386; x=1689852386;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Hlub4yMYobEJ5HvQNTWQfgUmezHGN+X9jz5IApcQQ2M=;
+        b=fm1f5h5rw3D8AFJxLjbfVkSGh7hAEj/ZBVoNgVjKrQ2SV6HGEj/93tqtiSvAuaW3qD
+         eJWmovKiZlpnk+A1MphnrnJNL5mJOul40jr6eXf1UXEkx/7TWNTLT5bdpZ3oog8Q7Eu7
+         gstmQl4GWcKGw03+qJO8LE2H2r6NgWWU0HHQ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687252969; x=1689844969;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G5dUaV1dG5H5BAG2sbdqoRuHaKCy/OHkEJdIP3ONmxg=;
-        b=GfMu8CEvvT6fp4DEGkZrQOuE6rqLZjKP2tolKRYkgpscCriyNYya6xQlkxEoH1DZ8T
-         4Pvn9IPIYgkBnDJZPUhfFTOT738dqM5+s0eVUwI2FdshkZWNZqYis65Qv7SHUVlW3Ntf
-         mq4O/b7+o9IDmI3057KN7ut7Pqg0HOgdgCjQmbtCGvXzWxIzMljdGgzitXBkTXw5Ji7I
-         Ygyfk8UzeB/NSB54FJDyJmBf+FDlTn9jN3Z0cjRFMGqMkpP/CIjO4FcWDaCw7HoJOe5c
-         CUvbZYuhwDPWUa1VoFNn38ibiBjP6gnhzRSwnkp/shd5vHkt8deocxY8ixqopEwKqGY/
-         MhLQ==
-X-Gm-Message-State: AC+VfDxidWNomf9CUqZSrOoSAl7kRpbOOEqDY1v3dZyyJjV5H42upRvf
-        kyVUP8TvBN/P5qPm7fTRWo8/lRegRGb3vOreCjxiIu9iLhD+VA==
-X-Google-Smtp-Source: ACHHUZ69RJJB2+AppzRICJDzLIIVQAKconKegX5MuakFvD35yWRxK1ePlotA626KMAAp+VJ0MzDcdQvHMBC5gkM0Z1I=
-X-Received: by 2002:a05:6808:3009:b0:396:4977:e148 with SMTP id
- ay9-20020a056808300900b003964977e148mr15318831oib.9.1687252969273; Tue, 20
- Jun 2023 02:22:49 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687260386; x=1689852386;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hlub4yMYobEJ5HvQNTWQfgUmezHGN+X9jz5IApcQQ2M=;
+        b=Zto5GA67I4HIFnsz7hUJrSb4w67ww1r528/MxxkRPmsFSuauAOlkE/9hxmZpff8CsY
+         X1oJpbVOnYlMPlWdlc5vTjDnUyhwXbPVC28mtJyc9hc2v09fV4Fl98fPPUrohTsH17mk
+         xm6xmHmlbi6GDOBMOrzE+gyOUbpH6kFUoLbv/xGvDO5Y6CpSmzL1EQM7HFivVPmr0jnG
+         D641sKEYpcGdAVZrP5xjaNswIrClzIe24BNePhvQ2q1zMiqv4sXw5364JfkMNdWe9RDu
+         4lcZxBfOIzS3HsmaDqUFDDSvvsoozzrJAvZmhiGMFjYYnT+dyEV5+iqxZq5ASZWUIC56
+         0MUA==
+X-Gm-Message-State: AC+VfDwPoa+bUJBEvN98Ss4ABnjPLh0DLtn0d8b6a+SAk6eeg3UOaD0C
+        dnpPv/njvdCXbfi+Dca4oUBk7n6RWcJDqvIt0yftR0tLBsyIM+SDyFUNyQ==
+X-Google-Smtp-Source: ACHHUZ70AUwnK2glLV+Gb9sKTI48TxM/WwKHpw5I4f97Y3Sn2mIoWZ4PizjYl+Hf++J+/M5O7u645eiT0RT5p0aLkeE=
+X-Received: by 2002:a05:6402:759:b0:51a:7bcf:c8f5 with SMTP id
+ p25-20020a056402075900b0051a7bcfc8f5mr3089823edy.1.1687260385898; Tue, 20 Jun
+ 2023 04:26:25 -0700 (PDT)
 MIME-Version: 1.0
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Tue, 20 Jun 2023 11:22:23 +0200
-Message-ID: <CAOLa=ZRumrpfG8FxQQG=Q8tGvxEapMvOx6SZyRPh0GSpn5iuUg@mail.gmail.com>
-Subject: [Bug?] Information around newlines lost in merge
-To:     git@vger.kernel.org
+References: <m0ttze4qzl.fsf@epic96565.epic.com> <Y/VNiuI7OZ2YiXx8@tapette.crustytoothpaste.net>
+ <m0pma14sbx.fsf@epic96565.epic.com>
+In-Reply-To: <m0pma14sbx.fsf@epic96565.epic.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 20 Jun 2023 13:26:14 +0200
+Message-ID: <CAPMMpoiC8oca0AVNy1f+zy26L_b-ADyNopY4zO3r+v6v-KEH=A@mail.gmail.com>
+Subject: Re: [BUGREPORT] Why is git-push fetching content?
+To:     Sean Allred <allred.sean@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Sean Allred <sallred@epic.com>,
+        Kyle VandeWalle <kvandewa@epic.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When merging two files which contain newlines at the end, the blob
-created (with conflicts) is the
-same as two files created without newlines at the end.
+On Wed, Feb 22, 2023 at 4:45=E2=80=AFPM Sean Allred <allred.sean@gmail.com>=
+ wrote:
+>
+>
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > It's hard to know for certain what's going on here, but it depends on
+> > your history.  You did a partial clone with no trees, so you've likely
+> > received a single commit object and no trees or blobs.
+>
+> Yup, this was the intention behind `--depth=3D1 --filter=3Dtree:0`. The
+> server doing this ref update needs to be faster than having the full
+> history would allow.
+>
 
-We can demonstrate the same using this simple script which uses
-`git-merge-tree(1)`. The script
-creates two files in master, newBranch and then merges the tree. The
-created files seem to have
-the same content, eventhough the source files differed by newlines.
+FWIW, you're not alone - we do exactly the same thing, for the same
+reasons, and get the same outcome: We want to create a tag in a CI
+job, that particular CI job has no reason to check out the code, all
+we know is we want ref XXXXX to point to commit YYYYY.
 
-#!/usr/bin/env bash
+The most logical way to achieve that seems to be to do a shallow
+partial no-checkout clone of commit YYYYY, and then push to remote ref
+XXXXX, but the push ends up doing extra seemingly-unnecessary
+jit-fetching work.
 
-git init
-git commit --allow-empty -m "base commit"
-
-git branch newBranch
-
-echo -ne "\nA\n" > newline
-echo -ne "\nA" > half
-git add .
-git commit -m "master commit"
-
-git checkout newBranch
-
-echo -ne "\nB\n" > newline
-echo -ne "\nB" > half
-git add .
-git commit -m "branch commit"
-
-treeOID=$(git merge-tree master newBranch | head -n1)
-halfOID=$(git cat-file -p $treeOID | grep half | awk '{print $3}')
-newlineOID=$(git cat-file -p $treeOID | grep newline | awk '{print $3}')
-
-if [[ $halfOID == $newlineOID ]]; then
-     exit 1
-else
-     exit 0
-fi
-
-Is this expected behavior? Shouldn't the two merged files (newline,
-half) differ? i.e., shouldn't the file (newline) with newlines at the
-end
-contain an extra newline compared to the file without the newline? (half).
-
-If this is expected behavior, what would be the best way to
-differentiate the two? This is not a bug introduced, but rather the
-behavior since,
-the start, which makes me think that I'm missing something (verified
-via git bisect on latest git).
-
-The context of this is that it is hard to programmatically resolve
-conflicts without loosing information, since we don't know if there
-should
-be a newline suffix in the file or not.
+In our case it's still better than any alternative we've found, but
+wastes a few seconds that we'd love to see optimized away.
