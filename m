@@ -2,131 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D626EB64D9
-	for <git@archiver.kernel.org>; Mon, 19 Jun 2023 23:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B40EB64D9
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 00:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbjFSXB6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jun 2023 19:01:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39188 "EHLO
+        id S229838AbjFTADl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jun 2023 20:03:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjFSXB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2023 19:01:57 -0400
-Received: from DM6FTOPR00CU001.outbound.protection.outlook.com (mail-centralusazon11020024.outbound.protection.outlook.com [52.101.61.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A67D8F
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 16:01:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NFRPTsmvvkk4cNwQKfJXLukcz/c5UyX+4h6ljsJRGZqrYciRxYuUdAB+JcAvUbT80BPQzvwEXLBu+/CoaKpK3kL9S86WZCe0JSSIXpj2Bhk8qUj6/rV2f4Qx+tDk49dnivpD+2W/pbwecw0h5TLVoJpmGX0Dm54GR5T+fOyRxjzvYfFVXqPvGHScxAKfU588/KrVxUiGwnayHCk582MxTqE5pQty0ZVr4jl2zij+Re1MtN3KIBtCLHoDgSLmxSCOSUcJvx0xRpWuM9kfaHu0zOwVlaEJDwr+8EmhpFksflKI9hY8SbZX9woq575QFTpCNKaHO0qICwnPfr6MWGZq3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=r+ekFwHSOVVxfg+Tq49q2NIPxY/S8kJOmaEWa0hLs78=;
- b=ltnj7sGmeVm+EZATwQxj0L5JIbYhPpJ56s1K5/mWCw/EnPJjX4O9+pvZ1j6lVGR+Z0GFtHQnyTzaaM0/7AjAd84K8oFiFSST2go20Q09QPRbhJiPgEMkelXRQ28Lumx1YFQ6J/9/mdHSws/vhVLfck4RZ5kcaQWHHxYdjuXOuQ2syawCPP2Z3h21o+3+0E4eDOeBiVQIGVuH1NBYhWHDTJqCtItPsycZp36GakZDTzGEJPewKzrwgeixyI8kAw7QCpqNBB/jzgYztPXqO1tNsTmqDWDCvjNSPPnnCETkmRAhKC6tB5s423LXHTlyB+nbGzzOBLRwoctq6TTBNGVwDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=r+ekFwHSOVVxfg+Tq49q2NIPxY/S8kJOmaEWa0hLs78=;
- b=i8IxPj2FWqcYLYAngNpa00zZFbs/m24O193oA2gNY7gw+xOgbDeBRYVKN1pT7D9n8xUEK1qX40eIeI9oNXWDaXtcpVdF8iqUBTIDoARu72m2sHHSNp1/o88u3vRtA+2aD9jdDZKiXU8wBXdyV+/qFGfVg34fMNFNzyiRBoTgTyY=
-Received: from SA1PR21MB1335.namprd21.prod.outlook.com (2603:10b6:806:1f2::11)
- by CY5PR21MB3543.namprd21.prod.outlook.com (2603:10b6:930:c::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.19; Mon, 19 Jun
- 2023 23:01:52 +0000
-Received: from SA1PR21MB1335.namprd21.prod.outlook.com
- ([fe80::bb03:96fc:3397:6022]) by SA1PR21MB1335.namprd21.prod.outlook.com
- ([fe80::bb03:96fc:3397:6022%4]) with mapi id 15.20.6544.002; Mon, 19 Jun 2023
- 23:01:52 +0000
-From:   Dexuan Cui <decui@microsoft.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-CC:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Subject: RE: [BUG] git-web unable to show this commit properly?
-Thread-Topic: [BUG] git-web unable to show this commit properly?
-Thread-Index: Admi9V5lvlNTbB2MSBabvLMU8FVizwABCdOlAAH1jgA=
-Date:   Mon, 19 Jun 2023 23:01:52 +0000
-Message-ID: <SA1PR21MB1335AACDE23D101DDE3D5568BF5FA@SA1PR21MB1335.namprd21.prod.outlook.com>
-References: <SA1PR21MB1335BD64334ABD240C23C43ABF5FA@SA1PR21MB1335.namprd21.prod.outlook.com>
- <87o7lb5cz1.fsf@igel.home>
-In-Reply-To: <87o7lb5cz1.fsf@igel.home>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=58e5499e-76f2-4a58-a9b1-3f6be790128c;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2023-06-19T22:57:01Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR21MB1335:EE_|CY5PR21MB3543:EE_
-x-ms-office365-filtering-correlation-id: f81c7e5c-fff2-4300-7561-08db71192b82
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: zNiIso0ezn2xI5DS7qIe18VOHPaaMtSvmPhfNaEY7naEpD5BeRjFtZH84MTAZ/KaXwmIYs0+intEqFO0FY+HUzUluyhTooHGy55QPYNkdcHOV9jE4eGcdrlKLfA7lm326fCvqyyu/nzXrqDStXU9ZxbePPK9+Sh4/4rbWZS/bgWv0C7C4htU9/g2FYkCbM0xjYgr64G909shj83CBZ+CCf7kg+bcpH+GB9qkC4DcZGOYZLH4dsctwaSdzNeacK0wnU54U6hljrplNoSSK/NsU66lE6TyL21ZtvR9SXPTHtb3+xnAQ7AihlFe4LjZm9KepG97oX5VBA93H49uLmqPbSNh8TKykEl4dnRwKpNoopHuAkWFRT9A5uELjrSV61ljeFySmamSZmfDwHsAiucJ35pY3mpAb8Kt3QSOUJzbo79wUCEl+VQ88EuZS/k3c6L94CzWfZmK7xyPdnokpt5GEDuQIGC4Jluh1ZvNY942PK5H/mdOmiiWUtIstTYaTAt5Ri060OUEWBH8moce3qzLgFA77EilD30ubvs6MBm1i57DMKs+ft+vrEjvQCW5Bay4hQjxmoOqurCBONMMQfirxRApzn5Spn35UO5u3w3a5rUH12LLLsfgJEa+VjjKPmhFQaQnonJP7FNEQ2tnL+nW6IFMkAj62H/IWIW/vjCB65A=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR21MB1335.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(136003)(346002)(366004)(396003)(39860400002)(451199021)(186003)(478600001)(966005)(7696005)(71200400001)(9686003)(86362001)(53546011)(26005)(6506007)(10290500003)(316002)(38100700002)(82960400001)(82950400001)(66946007)(66556008)(66446008)(64756008)(76116006)(122000001)(66476007)(6916009)(4326008)(8676002)(8936002)(5660300002)(52536014)(4744005)(2906002)(41300700001)(8990500004)(55016003)(33656002)(38070700005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?7VlXQBT5xXt2A8GLRL+eY4U6f8gnUYlWGL/QJlC9JQrjiF+9yX0NwDjvl75m?=
- =?us-ascii?Q?LMbE3Wp7FLFjGbvRImY/p7igv1fbzKB7F6NEWZ6fEmNtu39GDl2cqGVGrR10?=
- =?us-ascii?Q?YFIXR6rVwoQPxiUdlJiqw5iGhgdIz4AMAine2XILtA6m2T9wHPq54V+IKSsL?=
- =?us-ascii?Q?joFYPDkid7cKZ20AZyR9MVMSwBH/ODqket6klOS6iAgW/hGoQULVAQM+B4fw?=
- =?us-ascii?Q?VAx5UTXJX8YTOUm088ySX47VFMQgfGnTi4g6Y0g+qpobY1PsUa6qcmgyHRNS?=
- =?us-ascii?Q?DkMJk6dmBc91UPl8A6TAHk1Yznq5JZzAvk8PRTEeJfCFSZjumdaCHQU+EOAV?=
- =?us-ascii?Q?IRCbjkO6J2cjg1Y1jSULnQosOXwA1NrFeM9qdZcQMp2/7Wb10DMeDt3v3MCt?=
- =?us-ascii?Q?4j8Tg1Rp44BPA+CCmU2kUgurUNjqTF/f3kv0TY+mf3VQ6Tn2XA0ju1vJW58L?=
- =?us-ascii?Q?CLaK9gEGGvjmGAacvdwcakMeyghxAgCWbfc2NVpqUiuPLThVccFLz2ezhkIY?=
- =?us-ascii?Q?sHsXrD12W72Ivotui0y8clq20HpRkBAS/1HrDMz4jcPPjhLZRqU4/JCIYeKP?=
- =?us-ascii?Q?MDRx6vhUH4Hi9SG4AZp9oOv05vNPiGS4mXZs+ypUGdLQqF5nKujopW28nUBq?=
- =?us-ascii?Q?AE/jK+gPC7yZGq+kyC2GE4MjVacZjJR5LAz4EF5D4ZuUo6VjWe/iGF+CyaTq?=
- =?us-ascii?Q?+hpo7TUr1lQgpMt54bJoUEyQeN7iR+5aDk6EPgXhC5fZkrAAxx7TUfxDPy1v?=
- =?us-ascii?Q?P2gSEtM1TM9uV6oVB4X426zUG8xY8Mq9zrDLDnPBb8P+HKb/8xMdSTIWO3L/?=
- =?us-ascii?Q?8yLNun5D6BhsJk23TrMRAwp/sBYnfk0BL/kEip39JNHGt6yZKOgVKe5REpGW?=
- =?us-ascii?Q?HTzwITUJXM9R5WEsElA/+5XQoMPE1hoa31P51rUpEg/3ibaRU0X8ic15CKqu?=
- =?us-ascii?Q?rmHp/p1q7MgUaAvMMeNm3XfBwgjfBGZPDBrdaEFXvq98umSHby9cB65NVZuY?=
- =?us-ascii?Q?jGDcsAiFCQVxmMhGggDEtEWuUNrz42Cs9Di/JIJW6yEcfdDxF4+TopuXFrZv?=
- =?us-ascii?Q?GLE2Q8j7BwwBfsAC7lmHB3WVt9bM8S+qZJiLK4xC5D5N7/i2ata2pt81/du7?=
- =?us-ascii?Q?lMZT+fJ4xuz7GbnqBc9WoT17D1I5LC8zkyI+lFpE3PDdSZNjRZwHCyaZp7JS?=
- =?us-ascii?Q?LVb2azuiOgvmfs7erajPfPkrOx09bTGSv7C1A2JWh8FjQO+QkcRhu2Mmym8W?=
- =?us-ascii?Q?oaXgIeyVwtk1mH5BsnlGv+eM5Twbmjhgxsa/s6I/Pyqe2JWsBw2NKQV3uti5?=
- =?us-ascii?Q?PRrcuCLHLlsMC1JNaBrh/qxt8o+im3bwd0me5tmM918L08syWVXxAphFUbfc?=
- =?us-ascii?Q?kUGNj5az2ZefuZIE0Wbj6+9u90qfwPw6NQ8o53ktCINIy8qeqvrQIO2lsBQ6?=
- =?us-ascii?Q?Q0H9rM25qVReIsgGkZe9av080EOm86yEWfBz39Vc4B0CE2i45xAKSBOAn//A?=
- =?us-ascii?Q?B5agPPAzfswduIiMjDTqyryo4xig4Wl/mPVxEOL5GSEZGFkTMpC/J/fpzVEo?=
- =?us-ascii?Q?3UzerQauZvPKiM3yIWHZIKDx+iib+FdVgXgMIo4w?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229448AbjFTADk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2023 20:03:40 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF351AD
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 17:03:38 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f9b258f3a2so14443975e9.0
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 17:03:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687219417; x=1689811417;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CYuuPYeHpsDwrxVbSEuev0Ic1f/Eo+SC6+1CzC5Bqwc=;
+        b=Zq7sQzbK9eDYDNsUXVONCGfN8fSUUpgUBcNHeK7pt5qXd4HXQggxHF1zHYWQqZZQD/
+         mLm6j6l9UGm+/eFLlzHwgdPwNL7s41T+hgT2YNUax4tFtvKn6K4kvJgn9IGez+8zeVLo
+         kT73BPosucSXYV6VJqmfdZ9uRTscQSdixV5yfD8nYm0ivLt5yBj53ET+PC8/NCV+2vpo
+         qVxMQfLCLxOUHED4jHv+d6Q5H6hg+CQL5GHkpkMajXolQmLmCUAMpXuX5tP7XWu1xJ8Z
+         GSisIVwP31I15qWYGT3h221GtWd67Oj9pzje/R5Ozo2BdZI+M1t29M6Aov4RLPcTu/S3
+         QhTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687219417; x=1689811417;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CYuuPYeHpsDwrxVbSEuev0Ic1f/Eo+SC6+1CzC5Bqwc=;
+        b=lExoForYeoDE7fkvCNlbK4ax+KFL2l8n3htjT54W9p92KSVJOyejzzV65menB/f5sb
+         soTxk4aPJ9Hzxq1DRqzOaBN3dHwPU41sWDGSmgA0rRKUz1hU8BMnJoeq0V4660jW0qYz
+         5MO82wn+sAA5yLqsbDrD3krQm66nqO9XsfWOGhi9d2EX/7o7SVuMGid44P9LnoB+qt3u
+         WCv8zENCxdbJ580hjPfrzOqoPpdz0cfk1fplWia2M+D7BZ1IwXpIXnX0G3o/jjbGnWEm
+         2JoGr9Gazl40KVmYgd9mzdCyGC3mPltimFG5S/3VIVfBLmHNS1z7n0tR3kvljEeu1kN1
+         ltUg==
+X-Gm-Message-State: AC+VfDwirje/opMP//7rTNj0CPfijhpQIfSczqZixiP62Ir3Qigk9VjS
+        byoj9F2texQDZOzjvCbMcFzqCQaw74Y=
+X-Google-Smtp-Source: ACHHUZ6Gxs9+RksJdyOyjykNEGJtN5VOpycn/j5WpNb/bCfWChtEA8dPnIwW0IQ8FnjhzmkoU1/3hw==
+X-Received: by 2002:a1c:721a:0:b0:3f9:c19:dfbb with SMTP id n26-20020a1c721a000000b003f90c19dfbbmr4903778wmc.0.1687219416605;
+        Mon, 19 Jun 2023 17:03:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x23-20020a1c7c17000000b003f72468833esm918142wmc.26.2023.06.19.17.03.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jun 2023 17:03:36 -0700 (PDT)
+Message-Id: <pull.1232.v3.git.1687219414844.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
+References: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
+From:   "Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 20 Jun 2023 00:03:34 +0000
+Subject: [PATCH v3] Introduced force flag to the git stash clear subcommand.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR21MB1335.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f81c7e5c-fff2-4300-7561-08db71192b82
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jun 2023 23:01:52.0864
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OhnwKHXsXqHbUZuzqV667Wrtt7pDa+5LLcpBpJtHygO+wOqo9G84Sh8hFtsr8Hz39anayyOmRo7HYygK1K6/2w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR21MB3543
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Nadav Goldstein <nadav.goldstein96@gmail.com>,
+        Nadav Goldstein <nadav.goldstein96@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Andreas Schwab <schwab@linux-m68k.org>
-> Sent: Monday, June 19, 2023 3:01 PM
-> To: Dexuan Cui <decui@microsoft.com>
-> Cc: 'git@vger.kernel.org' <git@vger.kernel.org>
-> Subject: Re: [BUG] git-web unable to show this commit properly?
->=20
-> [You don't often get email from schwab@linux-m68k.org. Learn why this is
-> important at https://aka.ms/LearnAboutSenderIdentification ]
->=20
-> On Jun 19 2023, Dexuan Cui wrote:
->  ...
-> That URL corresponds to this command:
->=20
-> git show 122333d6bd229af279cdb35d1b874b71b3b9ccfb -- arch/x86/coco
+From: Nadav Goldstein <nadav.goldstein96@gmail.com>
 
-Oh, silly me! :-) I was checking the git-log for the folder from the web in=
-terface
-and forgot I was checking that folder only.
+stash clean subcommand now support the force flag, along
+with the configuration var stash.requireforce, that if
+set to true, will make git stash clear fail unless supplied
+with force flag.
 
-Thanks for pointing this out!
+Signed-off-by: Nadav Goldstein <nadav.goldstein96@gmail.com>
+---
+    stash clear: added safety flag for stash clear subcommand
+    
+    This patch started to solve the issue of easy trigger of git stash
+    clear. I first went with using an interactive (-i) flag to stash clear,
+    but following the conversations I had here I understood that it was a
+    misleading flag and not a good direction for implementation.
+    
+    So in this version of the patch (v3), I went with Junio proposal to
+    introduce force flag to the clean subcommand.
+    
+    Thanks!
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1232%2Fnadav96%2Fclear-stash-prompt-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1232/nadav96/clear-stash-prompt-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1232
+
+Range-diff vs v2:
+
+ 1:  13bc75a2b05 < -:  ----------- add-menu: added add-menu to lib objects
+ 2:  7271a285d18 < -:  ----------- clean: refector to the interactive part of clean
+ -:  ----------- > 1:  6150ec27b5a Introduced force flag to the git stash clear subcommand.
+
+
+ Documentation/git-stash.txt | 12 ++++++++++--
+ builtin/stash.c             | 12 +++++++++++-
+ 2 files changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index f4bb6114d91..e95410d507e 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -20,7 +20,7 @@ SYNOPSIS
+ 	     [--] [<pathspec>...]]
+ 'git stash' save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+ 	     [-u | --include-untracked] [-a | --all] [<message>]
+-'git stash' clear
++'git stash' clear [-f | --force]
+ 'git stash' create [<message>]
+ 'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
+ 
+@@ -130,7 +130,7 @@ the stash entry is applied on top of the commit that was HEAD at the
+ time `git stash` was run, it restores the originally stashed state
+ with no conflicts.
+ 
+-clear::
++clear [-f|--force]::
+ 	Remove all the stash entries. Note that those entries will then
+ 	be subject to pruning, and may be impossible to recover (see
+ 	'Examples' below for a possible strategy).
+@@ -208,6 +208,14 @@ to learn how to operate the `--patch` mode.
+ The `--patch` option implies `--keep-index`.  You can use
+ `--no-keep-index` to override this.
+ 
++-f::
++--force::
++	This option is only valid for `clear` command
+++
++If the Git configuration variable stash.requireForce is set
++to true, 'git stash clear' will refuse to remove all the stash 
++entries unless given -f.
++
+ -S::
+ --staged::
+ 	This option is only valid for `push` and `save` commands.
+diff --git a/builtin/stash.c b/builtin/stash.c
+index a7e17ffe384..d037bc4f69c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -53,7 +53,7 @@
+ #define BUILTIN_STASH_CREATE_USAGE \
+ 	N_("git stash create [<message>]")
+ #define BUILTIN_STASH_CLEAR_USAGE \
+-	"git stash clear"
++	"git stash clear [-f | --force]"
+ 
+ static const char * const git_stash_usage[] = {
+ 	BUILTIN_STASH_LIST_USAGE,
+@@ -122,6 +122,7 @@ static const char * const git_stash_save_usage[] = {
+ 
+ static const char ref_stash[] = "refs/stash";
+ static struct strbuf stash_index_path = STRBUF_INIT;
++static int clear_require_force = 0;
+ 
+ /*
+  * w_commit is set to the commit containing the working tree
+@@ -246,7 +247,9 @@ static int do_clear_stash(void)
+ 
+ static int clear_stash(int argc, const char **argv, const char *prefix)
+ {
++	int force = 0;
+ 	struct option options[] = {
++		OPT__FORCE(&force, N_("force"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_END()
+ 	};
+ 
+@@ -258,6 +261,9 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
+ 		return error(_("git stash clear with arguments is "
+ 			       "unimplemented"));
+ 
++	if (!force && clear_require_force)
++		return error(_("fatal: stash.requireForce set to true and -f was not given; refusing to clear stash"));
++
+ 	return do_clear_stash();
+ }
+ 
+@@ -851,6 +857,10 @@ static int git_stash_config(const char *var, const char *value, void *cb)
+ 		show_include_untracked = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "stash.requireforce")) {
++		clear_require_force = git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_diff_basic_config(var, value, cb);
+ }
+ 
+
+base-commit: d7d8841f67f29e6ecbad85a11805c907d0f00d5d
+-- 
+gitgitgadget
