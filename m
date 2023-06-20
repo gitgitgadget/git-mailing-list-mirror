@@ -2,99 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7D86EB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 18:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EAFCEB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 19:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjFTSte (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 14:49:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40194 "EHLO
+        id S230287AbjFTTBV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 15:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjFTStd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 14:49:33 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCD710FB
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 11:49:32 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 50B4D226AD;
-        Tue, 20 Jun 2023 14:49:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L/YqgptsYODYE9AKP4PZMHWIdnWkG2TBATETce
-        nVi3w=; b=svgVvSAtbPtxSy8bak852EAoRsSpL/AezOvCRsXU2cmq3Cr4pSpfLQ
-        LG+jyQR/5g3fwnDA1KpqjOgUnXrssN4Lpg7ld7iIXCTGugV1V2J7qWYp3TF20OKf
-        ff7S7g9mv75XgmwimkFmRwUqARlT8CZc+D2RUhOY+x1O63N+biw9o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 48DB7226AC;
-        Tue, 20 Jun 2023 14:49:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5F26C226AB;
-        Tue, 20 Jun 2023 14:49:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 09/16] refs/packed-backend.c: implement jump lists to
- avoid excluded pattern(s)
-References: <cover.1683581621.git.me@ttaylorr.com>
-        <cover.1686134440.git.me@ttaylorr.com>
-        <8066858bf59386eeec68f0f1e4247eeebb6482f7.1686134440.git.me@ttaylorr.com>
-        <xmqq352u3n3a.fsf@gitster.g> <ZJGV/bYDN9Dn4V8S@nand.local>
-Date:   Tue, 20 Jun 2023 11:49:25 -0700
-In-Reply-To: <ZJGV/bYDN9Dn4V8S@nand.local> (Taylor Blau's message of "Tue, 20
-        Jun 2023 08:05:17 -0400")
-Message-ID: <xmqqedm6m0ju.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S230206AbjFTTBU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 15:01:20 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F13D10DA
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 12:01:18 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-30fcda210cfso4892603f8f.3
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 12:01:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687287677; x=1689879677;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=cTXSY6EWiI9m5hbzLzVGA7R/IaagVF1d4v1rKZQeVPM=;
+        b=T/MVs+Y0U9m3GKKCk+VTv4VPiPpBXOgcZ+52kYbllwmRcAeq8zJpj5ZJ3Ony8Iy3nx
+         JujQ3XhytpIzRik3q7FXZdiBkutNOzKiQXMTXeQbzGZsqL0YY+G3wro7xgnSR2OzQ4HK
+         cnD3hHMbAmliYZ35ceTO3/Jxd3lty/CoeHYYemaVLBzEZF722LHAFxV8LAKkxL3eHpkc
+         1KzkaQIJV0v+eT0UFFrakQcSJd62BTwicMOpYEFq0vPh0fMgUE572fn9KXRiXk0NIsPp
+         cVA1+8fcWkUuYb9ZMwGOHvvRCJ+MAfa2l44ls9OHllWK3UXYpN9oKQ1hmC7o6SvcUM1w
+         Zk1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687287677; x=1689879677;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cTXSY6EWiI9m5hbzLzVGA7R/IaagVF1d4v1rKZQeVPM=;
+        b=Cj9b2UelIhwM9VZzfoFkVplbA5E3U+s/zwr3sXDT2465NyRwV/Gabb7QV2128XaTxM
+         89VbEQFYz2J2puCV/dOQH7RIDw3UAVmsYi0ZxMwKFKtE4IFyBiOeAJBWZnlufd3BhP3Q
+         sl5Ouz+N1T7IPRF7WPNltW+UGYSQZzcMSaV0lOgsBUAJFXadmqtQ5JYVAkV+5jU3BELm
+         2VY7XHUQk1Z9Y+Zd3qhnEj1hPwxWsZ2uxQcgcEuggtQ/nZKEmQono+jaQ1+9zhpuIhex
+         f4F9cpr9PVwTCIZ4NPj3gOmXBxwuWUXeUq7m56h71wkUvmLG2det9YBzuU1jZbnzM+Gi
+         r/iA==
+X-Gm-Message-State: AC+VfDyPef8ixk8WMj/N4B0p+0gx+cldiFxgRmvAzTbc0fk2XFOwseS0
+        hcxEpzb7Ysgx3X7VfGzrlrWjrAj3wbA=
+X-Google-Smtp-Source: ACHHUZ7plLhGwy6wcOxi0BZpDc+Qb+12W+RP/SayAitRVA67Wma4aaX39D89i9gDcpbHL/hlQgF4JA==
+X-Received: by 2002:a5d:6605:0:b0:30f:d10c:b27a with SMTP id n5-20020a5d6605000000b0030fd10cb27amr9832479wru.34.1687287676443;
+        Tue, 20 Jun 2023 12:01:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o14-20020a5d408e000000b00300aee6c9cesm2601432wrp.20.2023.06.20.12.01.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jun 2023 12:01:16 -0700 (PDT)
+Message-Id: <pull.1547.git.1687287675248.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 20 Jun 2023 19:01:15 +0000
+Subject: [PATCH] packfile: delete .idx files before .pack files
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2E2BE62A-0F9B-11EE-A6C5-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+From: Derrick Stolee <derrickstolee@github.com>
 
->> > +static const char *ptr_max(const char *x, const char *y)
->> > +{
->> > +	if (x > y)
->> > +		return x;
->> > +	return y;
->> > +}
->>
->> Hopefully the compiler would inline the function without being told.
->>
->> These pointers point into the same mmapped region of contiguous
->> memory that holds the contents of the packed-refs file, so
->> comparison between them is always defined.  Good.
->>
->> I wondered if
->>
->> 	return (x > y) ? x : y;
->>
->> is easier to read, simply because it treats both cases more equally
->> (in other words, as written, (x>y) appears more "special"), but that
->> is minor.
->
-> Yeah, I think that any reasonable compiler would almost certainly inline
-> this, especially at higher optimization levels. But I agree with your
-> suggestion nonetheless, thanks.
+When installing a packfile, we place the .pack file before the .idx
+file. The intention is that Git scans for .idx files in the pack
+directory and then loads the .pack files from that list.
 
-Having seen how this is used (only at a single callsite), I actually
-think that special casing (x>y) is the right thing to do, especially
-if you inline it in the caller.  That is,
+However, when we delete packfiles, we do not do this in the reverse
+order as we should. The unlink_pack_path() method deletes the .pack
+followed by the .idx.
 
-	if (last_disjoint->end < ours->end)
-		last_disjoint->end = ours->end;
+This creates a window where the process could be interrupted between
+the .pack deletion and the .idx deletion, leaving the repository in a
+state that looks strange, but isn't actually too problematic if we
+assume the pack was safe to delete. The .idx without a .pack will cause
+some overhead, but will not interrupt other Git processes.
 
-reads much more naturally than
+This ordering was introduced into the 'git repack' builtin by
+a1bbc6c0176 (repack: rewrite the shell script in C, 2013-09-15), though
+we must be careful to track history through the code move in 8434e85d5f9
+(repack: refactor pack deletion for future use, 2019-06-10) to see that.
 
-	last_disjoint->end = (last_disjoint->end > ours->end)
-		? last_disjoint->end : ours_end;
+This became more important after 73320e49add (builtin/repack.c: only
+collect fully-formed packs, 2023-06-07) changed how 'git repack' scanned
+for packfiles for use in the cruft pack process. It previously looked
+for .pack files, but that was problematic due to the order that packs
+are installed: repacks between the creation of a .pack and the creation
+of its .idx would result in hard failures.
 
-as a way to say "if ours is larger, record it as the largest
-position we have seen so far".
+There is an independent proposal about what to do in the case of a .idx
+without a .pack during this 'git repack' scenario, but this change is
+focused on deleting .pack files more safely.
+
+Modify the order to delete the .idx before the .pack. The rest of the
+modifiers on the .pack should still come after the .pack so we know all
+of the presumed properties of the packfile as long as it exists in the
+filesystem, in case we wish to reinstate it by re-indexing the .pack
+file.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+    packfile: delete .idx files before .pack files
+    
+    I'm going to submit an RFC soon [1] that approaches this issue from
+    another angle, but this should be a straightforward fix to avoid the
+    problematic "an .idx exists without its .pack" case that has been seen
+    in the wild.
+    
+    [1] https://github.com/gitgitgadget/git/pull/1546
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1547%2Fderrickstolee%2Fdelete-idx-first-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1547/derrickstolee/delete-idx-first-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1547
+
+ packfile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packfile.c b/packfile.c
+index fd083c86e00..6b591ddcccf 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -381,7 +381,7 @@ void close_object_store(struct raw_object_store *o)
+ 
+ void unlink_pack_path(const char *pack_name, int force_delete)
+ {
+-	static const char *exts[] = {".pack", ".idx", ".rev", ".keep", ".bitmap", ".promisor", ".mtimes"};
++	static const char *exts[] = {".idx", ".pack", ".rev", ".keep", ".bitmap", ".promisor", ".mtimes"};
+ 	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t plen;
+
+base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
+-- 
+gitgitgadget
