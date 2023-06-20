@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C64BAEB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE8ACEB64DB
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233295AbjFTOW0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 10:22:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38282 "EHLO
+        id S233256AbjFTOWf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 10:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233272AbjFTOWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 10:22:07 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C73B3
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:06 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5701810884aso43377297b3.0
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:06 -0700 (PDT)
+        with ESMTP id S233281AbjFTOWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 10:22:13 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34D61716
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:11 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bd61dd9a346so4803428276.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270926; x=1689862926;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270931; x=1689862931;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZcwsGUdDIK9XgqmEi5PIvBVVGHMWuOnSOjV9HefS6o0=;
-        b=vcysne6Hf9FNiwUTpb1ovPfcPh0aGwN0U/f76Fzd+nk2aPPLtJwobi/lP/3UGX6DIg
-         ArBnelRXBnSNJ+b06MH+I8Ul9H81CjUIBOPrvLEj4JYPhFoWL92Gj83/uuy1/jgjYd3q
-         K0QjG+9WNUEmXu9z4UH47TUn4o8HX6gp20FZLMjraAM9HxB1Cesc5noH4teavW9Slgtq
-         7vjRznHWSxXeVzrTwc5sqS63w/kWABFRBX6A6Wy2Dvi3vqG9FbiMVpWfdOT1mDhrQ+Di
-         oVn1q1bxziKcGAt6yZDb1LK0qMHfnBP5uxHyi266nCi+478s8JK52qaUMOk4Ratj5qrP
-         vDRA==
+        bh=XpcWF2jAHxAHKQccqpTeP8CuLS7UORpMTKc4CxvmPsM=;
+        b=isUgNBVppCqzjHGI1QMCFec4ENDHnhKlI2y4MuOJi2BpC02o7U8eplF6ewTrHHznQ7
+         Vnb12SjOWL2SWUqKwUdFjMBZrTRxqbQdMXrqKM5TeIVYcVcK1RW8DFNYbtMW77X36kSI
+         wEREIpISBexoFP8jFHdSR2iyBP8iWS29pK5HXYHfKr8LL1FTiZ78JyRCSSKaMHKYf7+6
+         Q24vgC/btq27YQTwltwowosmu/qH6t2iizVPVaqT3aQI69moDQ7BvXMvSFLyBcmRZhLZ
+         RqQYJQMdsOeBBMK7TKeLmJzE/cVlq4uOxGzUpROL7AfINo48lpRVneIhz9xrEZQ973mi
+         vECA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687270926; x=1689862926;
+        d=1e100.net; s=20221208; t=1687270931; x=1689862931;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZcwsGUdDIK9XgqmEi5PIvBVVGHMWuOnSOjV9HefS6o0=;
-        b=gN2PYy7q2eBVPJUY+aZ4viKWIND2I8trHMMgXgQuxbAQeqelo4RK3K+Q26thWZ4KcN
-         8IWZ7qW0kRkXcHSWf3gTWivYMsEs8u2opjRKAbUKO1n+xclk/WQ0qqs8+KPMBSxRn0kF
-         6X17cPH3cgASJeKWO2HijH5hmpZjaTlElIw/gmraUZEH0J3zF/rXznpxH0kLoY1RSAlJ
-         DrPqaagd1Ie8R+Ci8OH6wRFtdHLtAey88okxZO4hGCUfaroB6Sy6yDoVaXrUURLPlPIB
-         6PktlJrku9BAJUcaoJeJEd3jd4LJ41lZEnT/ns8BMtJJbc1GZhCoIb/kXHoo1/bdlcmN
-         dACw==
-X-Gm-Message-State: AC+VfDzwyrRWXv4UQVhdt2EIagSZBUo1KOa0PlLS1VMVi9+DHHk8XG5T
-        UdeDPqkkYQkUUueWgMvbbP7ThMNjkCitRwB8wzGW4KUH
-X-Google-Smtp-Source: ACHHUZ6j17IzcRp6pi8yB0M04wj7QcFyJBO38M/QPoFn2eiFg3fgYWulg8C6a9CJkAISSlszaiPGoQ==
-X-Received: by 2002:a81:6dc6:0:b0:56d:74a:d0d4 with SMTP id i189-20020a816dc6000000b0056d074ad0d4mr4502011ywc.22.1687270926024;
-        Tue, 20 Jun 2023 07:22:06 -0700 (PDT)
+        bh=XpcWF2jAHxAHKQccqpTeP8CuLS7UORpMTKc4CxvmPsM=;
+        b=OlOkc1MTX+Rs/CEBs8JTJ+L4NjQbxd86bPIox59njQaDW0sJkAoSZzZlYvA6MHgj5a
+         wYnoFsHoVja96UL4wjbBDCrAgDx0yTqgGbAIlxVTuwRE6tqIumap1HdgSWTcZgH7yOdO
+         FxUpvq62lg9mG+EjwhcJTwUsPJCHqUIYZes+eyADSr5ldAhydx34YrTci4w7APglrKbi
+         L4c7414PkVuZS5BPTyYY6mcwFRYFs5RPy923SEfMl2e+yMn0iqRhTN7+/SphVizFQX30
+         /D//aKst6mTom8Jn6lluxrJhCClGXztLL/8Pht4zZkRaDOh515Wlarlzghdl7XFQwF+P
+         a+RQ==
+X-Gm-Message-State: AC+VfDwrZHaGbzIwxKl+F8OZurRVRjGcL5DzEJrmGc6frYgVOiZk0gG1
+        6pqUss5ty89LwvSQl4e5RFttYDdaJ2Gw5aPh7yE4oXYZ
+X-Google-Smtp-Source: ACHHUZ54gIyEpF75erHmmNwei3NWmX/cwNsxKVV+Rn2bcLQS6GOzXpvqYRpLN2lyMxCbJNF7twlvmQ==
+X-Received: by 2002:a25:b195:0:b0:bc6:cf90:a286 with SMTP id h21-20020a25b195000000b00bc6cf90a286mr9861479ybj.36.1687270931036;
+        Tue, 20 Jun 2023 07:22:11 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y65-20020a817d44000000b00545a08184e0sm505147ywc.112.2023.06.20.07.22.05
+        by smtp.gmail.com with ESMTPSA id u28-20020a25f81c000000b00ba773472647sm391517ybd.19.2023.06.20.07.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 07:22:05 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 10:22:02 -0400
+        Tue, 20 Jun 2023 07:22:10 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 10:22:07 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 12/16] refs/packed-backend.c: ignore complicated hidden
- refs rules
-Message-ID: <845904853eeae1741d681a35fdd7816ea16b939a.1687270849.git.me@ttaylorr.com>
+Subject: [PATCH v4 13/16] refs.h: let `for_each_namespaced_ref()` take
+ excluded patterns
+Message-ID: <8d4d7cc22ee5ae8093ff06c127948356dbe6d501.1687270849.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1687270849.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -68,69 +68,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In subsequent commits, we'll teach `receive-pack` and `upload-pack` to
-use the new jump list feature in the packed-refs iterator by ignoring
-references which are mentioned via its respective hideRefs lists.
+A future commit will want to call `for_each_namespaced_ref()` with
+a list of excluded patterns.
 
-However, the packed-ref jump lists cannot handle un-hiding rules (that
-begin with '!'), or namespace comparisons (that begin with '^'). Detect
-and avoid these cases by falling back to the normal enumeration without
-a jump list when such patterns exist.
+We could introduce a variant of that function, say,
+`for_each_namespaced_ref_exclude()` which takes the extra parameter, and
+reimplement the original function in terms of that. But all but one
+caller (in `http-backend.c`) will supply the new parameter, so add the
+new parameter to `for_each_namespaced_ref()` itself instead of
+introducing a new function.
+
+For now, supply NULL for the list of excluded patterns at all callers to
+avoid changing behavior, which we will do in a future change.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- refs/packed-backend.c   | 19 +++++++++++++++++++
- t/t1419-exclude-refs.sh |  9 +++++++++
- 2 files changed, 28 insertions(+)
+ http-backend.c | 2 +-
+ refs.c         | 5 +++--
+ refs.h         | 3 ++-
+ upload-pack.c  | 6 +++---
+ 4 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 80b877e00c..2aeec5c601 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1008,6 +1008,25 @@ static void populate_excluded_jump_list(struct packed_ref_iterator *iter,
- 	if (!excluded_patterns)
- 		return;
+diff --git a/http-backend.c b/http-backend.c
+index ac146d85c5..ad500683c8 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -559,7 +559,7 @@ static void get_info_refs(struct strbuf *hdr, char *arg UNUSED)
  
-+	for (pattern = excluded_patterns; *pattern; pattern++) {
-+		/*
-+		 * We also can't feed any excludes from hidden refs
-+		 * config sections, since later rules may override
-+		 * previous ones. For example, with rules "refs/foo" and
-+		 * "!refs/foo/bar", we should show "refs/foo/bar" (and
-+		 * everything underneath it), but the earlier exclusion
-+		 * would cause us to skip all of "refs/foo". We likewise
-+		 * don't implement the namespace stripping required for
-+		 * '^' rules.
-+		 *
-+		 * Both are possible to do, but complicated, so avoid
-+		 * populating the jump list at all if we see either of
-+		 * these patterns.
-+		 */
-+		if (**pattern == '!' || **pattern == '^')
-+			return;
-+	}
-+
- 	for (pattern = excluded_patterns; *pattern; pattern++) {
- 		struct jump_list_entry *e;
+ 	} else {
+ 		select_getanyfile(hdr);
+-		for_each_namespaced_ref(show_text_ref, &buf);
++		for_each_namespaced_ref(NULL, show_text_ref, &buf);
+ 		send_strbuf(hdr, "text/plain", &buf);
+ 	}
+ 	strbuf_release(&buf);
+diff --git a/refs.c b/refs.c
+index 1f01fdf9e8..8613184703 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1660,13 +1660,14 @@ int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_dat
+ 				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
  
-diff --git a/t/t1419-exclude-refs.sh b/t/t1419-exclude-refs.sh
-index 5d8c86b657..f8abf75ab8 100755
---- a/t/t1419-exclude-refs.sh
-+++ b/t/t1419-exclude-refs.sh
-@@ -119,4 +119,13 @@ test_expect_success 'meta-characters are discarded' '
- 	assert_no_jumps perf
- '
+-int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
++int for_each_namespaced_ref(const char **exclude_patterns,
++			    each_ref_fn fn, void *cb_data)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret;
+ 	strbuf_addf(&buf, "%srefs/", get_git_namespace());
+ 	ret = do_for_each_ref(get_main_ref_store(the_repository),
+-			      buf.buf, NULL, fn, 0, 0, cb_data);
++			      buf.buf, exclude_patterns, fn, 0, 0, cb_data);
+ 	strbuf_release(&buf);
+ 	return ret;
+ }
+diff --git a/refs.h b/refs.h
+index f091741bfa..27d341d282 100644
+--- a/refs.h
++++ b/refs.h
+@@ -378,7 +378,8 @@ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 			 const char *prefix, void *cb_data);
  
-+test_expect_success 'complex hidden ref rules are discarded' '
-+	for_each_ref__exclude refs/heads refs/heads/foo "!refs/heads/foo/1" \
-+		>actual 2>perf &&
-+	for_each_ref >expect &&
-+
-+	test_cmp expect actual &&
-+	assert_no_jumps
-+'
-+
- test_done
+ int head_ref_namespaced(each_ref_fn fn, void *cb_data);
+-int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
++int for_each_namespaced_ref(const char **exclude_patterns,
++			    each_ref_fn fn, void *cb_data);
+ 
+ /* can be used to learn about broken ref and symref */
+ int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
+diff --git a/upload-pack.c b/upload-pack.c
+index 1a213ed775..99d216938c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -855,7 +855,7 @@ static void deepen(struct upload_pack_data *data, int depth)
+ 		 * marked with OUR_REF.
+ 		 */
+ 		head_ref_namespaced(check_ref, data);
+-		for_each_namespaced_ref(check_ref, data);
++		for_each_namespaced_ref(NULL, check_ref, data);
+ 
+ 		get_reachable_list(data, &reachable_shallows);
+ 		result = get_shallow_commits(&reachable_shallows,
+@@ -1386,7 +1386,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 		if (advertise_refs)
+ 			data.no_done = 1;
+ 		head_ref_namespaced(send_ref, &data);
+-		for_each_namespaced_ref(send_ref, &data);
++		for_each_namespaced_ref(NULL, send_ref, &data);
+ 		if (!data.sent_capabilities) {
+ 			const char *refname = "capabilities^{}";
+ 			write_v0_ref(&data, refname, refname, null_oid());
+@@ -1400,7 +1400,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 		packet_flush(1);
+ 	} else {
+ 		head_ref_namespaced(check_ref, &data);
+-		for_each_namespaced_ref(check_ref, &data);
++		for_each_namespaced_ref(NULL, check_ref, &data);
+ 	}
+ 
+ 	if (!advertise_refs) {
 -- 
 2.41.0.44.gf2359540d2
 
