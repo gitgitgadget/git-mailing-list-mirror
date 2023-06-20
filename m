@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A483EB64DB
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D058EB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233281AbjFTOWi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 10:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38286 "EHLO
+        id S233298AbjFTOWv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 10:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233242AbjFTOWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 10:22:24 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51A7B1709
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:22 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-bc40d4145feso4740103276.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:22 -0700 (PDT)
+        with ESMTP id S233308AbjFTOW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 10:22:29 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BF4D173E
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:27 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-bd729434fa0so5039389276.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270941; x=1689862941;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270946; x=1689862946;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=WkOQIzMCGdgvwv7x2DCnO+7Y8aX3ZLdNX2i73moFBH0=;
-        b=dE0Lwz/04SXJ1c/W6w3kgXCZk/yyc5j3JfmHqQZNqHADbNz38h/rWr9LnqOZOpkzGy
-         w8ORFreKTBE1CTSAbQnOX7hmhKWDjx+4ZpmDJ0ebGuzDyCFvA72l/5aG2wRmp18pSuVT
-         GPJGKOtsbszI0AWelg/9KWVFQYiRHXbbjbV5/unAchSpKSIus/hFLZpHEIqu74YkYjdI
-         7GYrqI0zJ3gC7Qco4BrQgr9k6uA+VuGwvQlQbgscNBWZcCG+bySBAcSVuZIEQ5Tcx5kt
-         oHsLOmYtiElka3T3x1b3sSflyH2PCHToFnA7w1XK4D7cR5yRoo+HbCTwF21d8wM0Nh1x
-         G7QQ==
+        bh=rv6iBiPqgdMc4qfRCJscGhQMttGPgpDSS9xYcsIKIJ4=;
+        b=qT3trzW8Z0cIL1ipAfHcMtdOsCtwifhfVVketJF5GLbU1qR5EEjapOu5+eEecOTwck
+         j5TIEdAQygewQJHjhRYYd6RE0pAi1VRgukyKP43tZS9bduYCg9G9TEPjnoNtzuli+wUZ
+         w5uSga5jlPNCpQctFdbQwfPLrMaeDZ/RZyjNHVwFHSDeYwuBhhqXaBgcioiOp02gZ8KV
+         HrUKlqQXZF3CQrxppCsmkUd2+AQQZJA1JLP19rKu07IU3WltTMTQCjgGVv5KHXnSKiqE
+         KQgAW1HVLqMlSZ8/VR3hu9vNd98edDn04YH0HhjQbO7lXlruQ986AX7mBWeINGdqFbNT
+         pUDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687270941; x=1689862941;
+        d=1e100.net; s=20221208; t=1687270946; x=1689862946;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WkOQIzMCGdgvwv7x2DCnO+7Y8aX3ZLdNX2i73moFBH0=;
-        b=FpyBy8TFKAiRuMpCDRqzH6rZfokKndAOybSbItpuAd9qQ1dwwtanslVluDjmQ8bhET
-         y4e8tQe8inKoNvszJdvKmSJFGm/NGJfWBrxvvpK62v0zbbHHKlYSup/mjwsO/q/un8j6
-         YqdfeU0ljr8u2sKHSNKOIIa9kVsSN3XnrM+yesD8ajf0Ly82TLPA7HgkmPX9diu+Jjzg
-         AwBYZmPAzRhfcuBt/TgrDRy3Ly8GvTXnRTIob7Kwmzxg0sjX3eheDjc/h5q+s7eMREiZ
-         yTeqQutTzOcIPFaZt4ku4Uw6o6qTplwztvXrpceV9hex2qHBoiEgJxwgbkHtZlNEhjOR
-         RMPA==
-X-Gm-Message-State: AC+VfDxIErVOAaSbMni8D7MmYy54CRDGn2D50s0RVPtWEWO0ZdsUsSEo
-        L7caA0YnridTK6ycSlAy4B5o9XkXqGpGAlLqS0DJWEwD
-X-Google-Smtp-Source: ACHHUZ5aGkCw8GhLTOKeAMM5l95CAzbdOVvw/gPXLWz77gSfBeNmGOiT0TJzaKkW4b45zld9EI3Htg==
-X-Received: by 2002:a25:8046:0:b0:bc4:5a65:1a4f with SMTP id a6-20020a258046000000b00bc45a651a4fmr10290963ybn.5.1687270941011;
-        Tue, 20 Jun 2023 07:22:21 -0700 (PDT)
+        bh=rv6iBiPqgdMc4qfRCJscGhQMttGPgpDSS9xYcsIKIJ4=;
+        b=EYBhEwy0q6mDigv0eC4mBeyG9xSzILdZcN/YL/Z75hlGF8idNEkrYVlNlh6xB64L/n
+         gnguwlgTyOZ3dNU8zA3FGFhNBL31WXDH0LfuzEH1AbwEcnSiha6MowQq2j46JkPmon/o
+         huM080mGH6sdCKQLGOz2WahU8ncfRNG5bWF+88RwhLJJOqOsTkpJ5kMxMJs3R1006m6V
+         MPoSqM+kPV0Nne2nebiNFeU0TUMUSIZlPtjRBggE280rGlohY0HCnetI2JfdVO21wqxL
+         oH9RVhpwp84KCysEksLZZZRpubN6aNy5u4jUIJ3fFQn4k7wUgVZ2R8Ax+aulh5zGnLcE
+         uYcQ==
+X-Gm-Message-State: AC+VfDwlVDreOmNYu3VU1tN05gFd2UijkidqGg3jRCLXHz9KDRwlZjGU
+        O+TG/WSRX4+JbhdV+FMu5vvzlg4OHnfZilJEaeAhAnDk
+X-Google-Smtp-Source: ACHHUZ4y3P+r5i9KafbECoueCqDNjH7V15MnhuW2NBuqDxRsHFy+EgpQlGoSqEfuBs7k4vLLRa9a5g==
+X-Received: by 2002:a25:ca13:0:b0:bc4:1245:1528 with SMTP id a19-20020a25ca13000000b00bc412451528mr11137540ybg.52.1687270946145;
+        Tue, 20 Jun 2023 07:22:26 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w34-20020a25ac22000000b00bc7c81c3cecsm393338ybi.14.2023.06.20.07.22.20
+        by smtp.gmail.com with ESMTPSA id w187-20020a2530c4000000b00be865f3d4fdsm377576ybw.62.2023.06.20.07.22.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 07:22:20 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 10:22:17 -0400
+        Tue, 20 Jun 2023 07:22:25 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 10:22:22 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 15/16] upload-pack.c: avoid enumerating hidden refs where
+Subject: [PATCH v4 16/16] ls-refs.c: avoid enumerating hidden refs where
  possible
-Message-ID: <19bf4a52d696b4789e6ab9c62f51d0ba955b7b6a.1687270849.git.me@ttaylorr.com>
+Message-ID: <ea6cbaf292f59c96bedc304c74a36fe1c53c1c6d.1687270849.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1687270849.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -70,132 +70,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar fashion as a previous commit, teach `upload-pack` to avoid
+In a similar fashion as in previous commits, teach `ls-refs` to avoid
 enumerating hidden references where possible.
 
-Note, however, that there are certain cases where cannot avoid
-enumerating even hidden references, in particular when either of:
+As before, this is linux.git with one hidden reference per commit.
 
-  - `uploadpack.allowTipSHA1InWant`, or
-  - `uploadpack.allowReachableSHA1InWant`
+    $ hyperfine -L v ,.compile 'git{v} -c protocol.version=2 ls-remote .'
+    Benchmark 1: git -c protocol.version=2 ls-remote .
+      Time (mean ± σ):      89.8 ms ±   0.6 ms    [User: 84.3 ms, System: 5.7 ms]
+      Range (min … max):    88.8 ms …  91.3 ms    32 runs
 
-are set, corresponding to `ALLOW_TIP_SHA1` and `ALLOW_REACHABLE_SHA1`,
-respectively.
-
-When either of these bits are set, upload-pack's `is_our_ref()` function
-needs to consider the `HIDDEN_REF` bit of the referent's object flags.
-So we must visit all references, including the hidden ones, in order to
-mark their referents with the `HIDDEN_REF` bit.
-
-When neither `ALLOW_TIP_SHA1` nor `ALLOW_REACHABLE_SHA1` are set, the
-`is_our_ref()` function considers only the `OUR_REF` bit, and not the
-`HIDDEN_REF` one. `OUR_REF` is applied via `mark_our_ref()`, and only
-to objects at the tips of non-hidden references, so we do not need to
-visit hidden references in this case.
-
-When neither of those bits are set, `upload-pack` can potentially avoid
-enumerating a large number of references. In the same example as a
-previous commit (linux.git with one hidden reference per commit,
-"refs/pull/N"):
-
-    $ printf 0000 >in
-    $ hyperfine --warmup=1 \
-      'git -c transfer.hideRefs=refs/pull upload-pack . <in' \
-      'git.compile -c transfer.hideRefs=refs/pull -c uploadpack.allowTipSHA1InWant upload-pack . <in' \
-      'git.compile -c transfer.hideRefs=refs/pull upload-pack . <in'
-    Benchmark 1: git -c transfer.hideRefs=refs/pull upload-pack . <in
-      Time (mean ± σ):     406.9 ms ±   1.1 ms    [User: 357.3 ms, System: 49.5 ms]
-      Range (min … max):   405.7 ms … 409.2 ms    10 runs
-
-    Benchmark 2: git.compile -c transfer.hideRefs=refs/pull -c uploadpack.allowTipSHA1InWant upload-pack . <in
-      Time (mean ± σ):     406.5 ms ±   1.3 ms    [User: 356.5 ms, System: 49.9 ms]
-      Range (min … max):   404.6 ms … 408.8 ms    10 runs
-
-    Benchmark 3: git.compile -c transfer.hideRefs=refs/pull upload-pack . <in
-      Time (mean ± σ):       4.7 ms ±   0.2 ms    [User: 0.7 ms, System: 3.9 ms]
-      Range (min … max):     4.3 ms …   6.1 ms    472 runs
+    Benchmark 2: git.compile -c protocol.version=2 ls-remote .
+      Time (mean ± σ):       6.5 ms ±   0.1 ms    [User: 2.4 ms, System: 4.3 ms]
+      Range (min … max):     6.2 ms …   8.3 ms    397 runs
 
     Summary
-      'git.compile -c transfer.hideRefs=refs/pull upload-pack . <in' ran
-       86.62 ± 4.33 times faster than 'git.compile -c transfer.hideRefs=refs/pull -c uploadpack.allowTipSHA1InWant upload-pack . <in'
-       86.70 ± 4.33 times faster than 'git -c transfer.hideRefs=refs/pull upload-pack . <in'
-
-As above, we must visit every reference when
-uploadPack.allowTipSHA1InWant is set. But when it is unset, we can visit
-far fewer references.
+      'git.compile -c protocol.version=2 ls-remote .' ran
+       13.85 ± 0.33 times faster than 'git -c protocol.version=2 ls-remote .'
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- upload-pack.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ ls-refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 99d216938c..366a101d8d 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -602,11 +602,32 @@ static int get_common_commits(struct upload_pack_data *data,
- 	}
- }
- 
-+static int allow_hidden_refs(enum allow_uor allow_uor)
-+{
-+	return allow_uor & (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1);
-+}
-+
-+static void for_each_namespaced_ref_1(each_ref_fn fn,
-+				      struct upload_pack_data *data)
-+{
-+	/*
-+	 * If `data->allow_uor` allows fetching hidden refs, we need to
-+	 * mark all references (including hidden ones), to check in
-+	 * `is_our_ref()` below.
-+	 *
-+	 * Otherwise, we only care about whether each reference's object
-+	 * has the OUR_REF bit set or not, so do not need to visit
-+	 * hidden references.
-+	 */
-+	if (allow_hidden_refs(data->allow_uor))
-+		for_each_namespaced_ref(NULL, fn, data);
-+	else
-+		for_each_namespaced_ref(data->hidden_refs.v, fn, data);
-+}
-+
- static int is_our_ref(struct object *o, enum allow_uor allow_uor)
- {
--	int allow_hidden_ref = (allow_uor &
--				(ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
--	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
-+	return o->flags & ((allow_hidden_refs(allow_uor) ? HIDDEN_REF : 0) | OUR_REF);
- }
- 
- /*
-@@ -855,7 +876,7 @@ static void deepen(struct upload_pack_data *data, int depth)
- 		 * marked with OUR_REF.
- 		 */
- 		head_ref_namespaced(check_ref, data);
--		for_each_namespaced_ref(NULL, check_ref, data);
-+		for_each_namespaced_ref_1(check_ref, data);
- 
- 		get_reachable_list(data, &reachable_shallows);
- 		result = get_shallow_commits(&reachable_shallows,
-@@ -1386,7 +1407,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 		if (advertise_refs)
- 			data.no_done = 1;
- 		head_ref_namespaced(send_ref, &data);
--		for_each_namespaced_ref(NULL, send_ref, &data);
-+		for_each_namespaced_ref_1(send_ref, &data);
- 		if (!data.sent_capabilities) {
- 			const char *refname = "capabilities^{}";
- 			write_v0_ref(&data, refname, refname, null_oid());
-@@ -1400,7 +1421,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 		packet_flush(1);
- 	} else {
- 		head_ref_namespaced(check_ref, &data);
--		for_each_namespaced_ref(NULL, check_ref, &data);
-+		for_each_namespaced_ref_1(check_ref, &data);
- 	}
- 
- 	if (!advertise_refs) {
+diff --git a/ls-refs.c b/ls-refs.c
+index 8c3181d051..c9a723ba89 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -193,7 +193,7 @@ int ls_refs(struct repository *r, struct packet_reader *request)
+ 		strvec_push(&data.prefixes, "");
+ 	refs_for_each_fullref_in_prefixes(get_main_ref_store(r),
+ 					  get_git_namespace(), data.prefixes.v,
+-					  NULL, send_ref, &data);
++					  data.hidden_refs.v, send_ref, &data);
+ 	packet_fflush(stdout);
+ 	strvec_clear(&data.prefixes);
+ 	strbuf_release(&data.buf);
 -- 
 2.41.0.44.gf2359540d2
-
