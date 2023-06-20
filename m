@@ -2,83 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87622EB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 21:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91EDBEB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 21:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbjFTVq6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 17:46:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57940 "EHLO
+        id S230121AbjFTV4Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 17:56:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjFTVq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 17:46:56 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6840CE
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 14:46:54 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 44E1D2B93A;
-        Tue, 20 Jun 2023 17:46:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vOwzaRPyOs5PWRjTZiKvRFcWjHW0CTng45Ar+V
-        ohSTI=; b=mfl5Pcbseu7tWOgTjApMhtC6t5lck7pCypcVxlO7GvplkzOcMXHH+w
-        HvsAef09golBhTXEAF9XrlKyxmNkYW88cg5XR7r7lCifLiLnY0WbTBf+KLZEBgYa
-        8VAKFZMpj+BS+e5ol4K5Vbq9TAnNIRheSaNcLJkfR6jph8WJC0GN0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D5012B939;
-        Tue, 20 Jun 2023 17:46:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B9012B938;
-        Tue, 20 Jun 2023 17:46:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 12/12] config: pass source to config_parser_event_fn_t
-References: <pull.1497.v2.git.git.1685472132.gitgitgadget@gmail.com>
-        <pull.1497.v3.git.git.1687290231.gitgitgadget@gmail.com>
-        <484d553cc7da360b134e7cfcc02e587073b1f9fa.1687290233.git.gitgitgadget@gmail.com>
-Date:   Tue, 20 Jun 2023 14:46:50 -0700
-In-Reply-To: <484d553cc7da360b134e7cfcc02e587073b1f9fa.1687290233.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Tue, 20 Jun 2023 19:43:51
-        +0000")
-Message-ID: <xmqqwmzxkdrp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F7144AD8-0FB3-11EE-AD40-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+        with ESMTP id S229482AbjFTV4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 17:56:23 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ECAF1730
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 14:56:22 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-bc615ca6ea6so5253510276.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 14:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1687298182; x=1689890182;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eMvbuFpcOsIRG8bJBC0KzP/gjQ1ogS0gt6ajYtS25mI=;
+        b=kPe4LWSdQU6nqhG+2dZlV5k+wWuXIrmmJmZ4azRCYn4KxbyqBnqgI6d5j41c6ncpcA
+         vfQhdOgicBPaJfs0aotuvXrDua3cxsSyGrB4Qqz2f/iwijzsB8djxYuHiAJ3XmAquR5V
+         drSartf4AE80ub52t32KzrXx02KWr3b/DRvA2ZU55DwAK5T1JiTtgICCxS3NTtrnWo9U
+         FY9Mf32qbqL8A3MEdLCnlcO3vqh/dJh9hz3sbiIVP9t528mRUf8z93u3oU2SXiM0RC1i
+         PfqaRexkiS5pjCHusqOfk5I5/cz5oFEPAL0mzA+nWb7q8hx1kniuLVEIdPJIBgD++wQM
+         +lGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687298182; x=1689890182;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eMvbuFpcOsIRG8bJBC0KzP/gjQ1ogS0gt6ajYtS25mI=;
+        b=J3tJYMJ6+YIxDwh+5yjN03pBWATtvZtZ4BKr0LIRo6HHwatsFQf4dVTs7mXp0l0QqV
+         Ikf817AQtcn8TSoSy6zvWcla8jzHK/vJDENknuUei3FKGdx3tOftGDDWqdrO2LJKVqez
+         fL4TKZK7R5C6Ksc3JRIpRRTNV15N5jEs/PQBorvqfzmI3J/XY62Y8Es+4cEmQnaMQBxI
+         Bqw1hkNKzdBdnv4BIQsH2cV+2NxLpjetxiBpVc2e8vA3ie7xztyaIkv0yN2tw6a9D9Xz
+         u0KwVnKpetzm+nyqcA7fcJXzdgYMqWy1edH+th0RHx8PiPnCnEJhxaBWsCkDGDj+akMX
+         d4RQ==
+X-Gm-Message-State: AC+VfDxloGLu8o5fy7A1SsfkeUi6hNuadS91lHqwaIxKZIPi5vTdjPZW
+        1i0mgWdO9x7gbHYY6+DiRI/X/inqsbw74OBVAa6D
+X-Google-Smtp-Source: ACHHUZ5FTU0nA6XnOeAo2xWBVcVfcAlL85n4iewidQBGMOl9jqDwElj9NhewB5SFN3P7LB0l3Xaguyrl/U+dgp9ckUih
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:825e:43a2:8c93:d4e1])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:ce92:0:b0:ba8:9653:c948 with
+ SMTP id x140-20020a25ce92000000b00ba89653c948mr1452921ybe.3.1687298181887;
+ Tue, 20 Jun 2023 14:56:21 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 14:56:19 -0700
+In-Reply-To: <c7b66d2c-cdc3-1f0f-60a0-a2ee21c277bf@github.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.178.g377b9f9a00-goog
+Message-ID: <20230620215619.1398374-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v4 0/4] Changed path filter hash fix and version bump
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Derrick Stolee <derrickstolee@github.com> writes:
+> When commitGraph.changedPathsVersion is set, it does not allow
+> reading a previous filter version, leaving us in a poor performance
+> state until the commit-graph file can be rewritten.
+> 
+> While I was reviewing, it seemed reasonable to deprecate
+> commitGraph.readChangedPaths, but this use of "also restrict writes
+> to this version" didn't make sense to me at the time. Instead, it
+> would be good to have this clarity between the config options:
+> 
+>  commitGraph.readChangedPaths: should we read and use the filters
+>  that exist on disk? Defaults to 'true'.
+> 
+>  commitGraph.changedPathsVersion: Which version should we _write_
+>  when writing a new commit-graph? Defaults to '1' but will default
+>  to '2' in the next major verion, then '1' will no longer be an
+>  accepted value in the version after that.
+> 
+> The tricky part is that during the commit-graph write, you will
+> need to check the existing filter value to see if it matches. If
+> not, the filters will need to be recomputed from scratch. This
+> will change patch 4 a bit, but it's the right thing to do.
+> 
+> Thanks,
+> -Stolee
 
-> From: Glen Choo <chooglen@google.com>
->
-> ..so that the callback can use a "struct config_source" parameter
-> instead of "config_reader.source". "struct config_source" is internal to
-> config.c, so we are adding a pointer to a struct defined in config.c
-> into a public function signature defined in config.h, but this is okay
-> because this function has only ever been (and probably ever will be)
-> used internally by config.c.
->
-> As a result, the_reader isn't used anywhere, so "struct config_reader"
-> is obsolete (it was only intended to be used with the_reader). Remove
-> them.
->
-> Signed-off-by: Glen Choo <chooglen@google.com>
-> ---
->  config.c | 77 ++++++++++----------------------------------------------
->  config.h |  6 +++++
->  2 files changed, 19 insertions(+), 64 deletions(-)
-
-Together with the removal of current_* functions in earlier steps,
-getting rid of the_reader interface makes the config API more easily
-reused in other contexts, I guess.  Nicely done.
+OK - this sounds reasonable. I'll take a look.
