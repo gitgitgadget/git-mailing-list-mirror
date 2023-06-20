@@ -2,78 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E284EB64D7
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 20:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E07EB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 20:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbjFTUm5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 16:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39722 "EHLO
+        id S229984AbjFTUrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 16:47:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbjFTUmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 16:42:54 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1747210FF
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 13:42:46 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-57059e6f9c7so98579877b3.0
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 13:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687293765; x=1689885765;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VV6YkOHtBqcvWSiBiBDYDvTS1SS3oakQHJsHhLp5eLU=;
-        b=MbG+F6V8fmw+y1GUnMdULzPo0RSN3LVWWbEbBTQA7zkdHf9I6mrOevfGDOOc4nfYzK
-         GILbkDcPaTXUQN671/po3/KeYaxH1bsk/HoDVJ4y5TxZdAxdEKHlNjUIQSy1UzVWXyEo
-         WqqcdShcnZK4G6WYhOfpMIaNpj5mJxIFo/8LAeZYqMOyS+HeC8eFHzcIRgc7YarF0RYC
-         PCCsqtF04du6UgW+BRHlTsDyTtPC1LiyKnAO3cJUSOF4pvP1syxxl1TtXdLOZTCWHUTH
-         R60AEhUipJZ3pgrqekEBxjc+LimnSpain2CtXK+jIOcacIj/3QPkMAZF+5QC3AGi+S6R
-         lMvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687293765; x=1689885765;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VV6YkOHtBqcvWSiBiBDYDvTS1SS3oakQHJsHhLp5eLU=;
-        b=YS44Umv+dXRK6QL4xi4IXqAgeBbN3bhZ+EgdJJ3gPaBJXnpfWZ+EE2OmTeld81AZS2
-         xqqrtmDk4cndXf91dWVwEQ1NK4D6GxHOYJ5uUVChRr1Uu5wAcH1zrfNoEBe0TVeo3h30
-         M2ZtGWvBXLixFF1pnI2ySfo8DQ6Cybx5xx836jgdHxpwf1ePxpO0GgqOlp1Jm0I3RD2I
-         8zYUu2ve73CCguKinMEcg+3BgbvmgxfV5kEfOj/GwLummD5uzPcs9ZYnuSqEOq1dKWH0
-         m3G1E7aTeiY/tiH+Hp54ZcDD7yp9T8UCO1+GvKiqbAms1nrSE+awqdHhxxyVHTSKI1F6
-         e+MQ==
-X-Gm-Message-State: AC+VfDzA3vjY/TAxJQW4o7gunl2sGCLIlj6gogtCccBIW2UQLHymq5bw
-        iH7aVtz4thesZKoZFekmAalxVJXrCVc95xxOcwgQV2UpnPCJD/ft+fXbGGfJd4fyEGeVhmV/2kW
-        6J+Ia6JOEuTR7CAY9W5GVtTBMK5TAOdcssZdIkSoxTEKiW5rCKNjHrtuS6GzIEKI=
-X-Google-Smtp-Source: ACHHUZ5IjSkrf8iIio2u7baBbLS6I+hQthis1/IjJv6NoXN02oZdIt7YSuZjOmyGkcieBb0NU/pcT6wBc9ox+g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:690c:b92:b0:565:8b2e:b324 with SMTP
- id ck18-20020a05690c0b9200b005658b2eb324mr9648525ywb.3.1687293765325; Tue, 20
- Jun 2023 13:42:45 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 13:42:43 -0700
-Mime-Version: 1.0
-Message-ID: <kl6l5y7hsw58.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Join us for Review Club!
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229889AbjFTUrB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 16:47:01 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A56E6E
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 13:46:59 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 764BB18E398;
+        Tue, 20 Jun 2023 16:46:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+cLq7DbPgd9ialB6Hx5tCjv8M/+uQdWth1Mz/B
+        PwAuw=; b=aVuWQ/jM08PkLkNptJpoP4hw9JDOyueC4xO19pDqv3zOu1L7fi9MyO
+        46zjvq+odpSsoSWCl5o4inHzMI0HEcFFgQhjZqqzvc/G1NtT+yjjruigVADzuNcy
+        9uZfttuGGMpAAeh7QjOkgGy32Wyfunjzaw4BYSSThQjdC9H9wHNzU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A38718E397;
+        Tue, 20 Jun 2023 16:46:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.62.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C245318E396;
+        Tue, 20 Jun 2023 16:46:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Nadav Goldstein <nadav.goldstein96@gmail.com>
+Cc:     Nadav Goldstein via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3] Introduced force flag to the git stash clear
+ subcommand.
+References: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
+        <pull.1232.v3.git.1687219414844.gitgitgadget@gmail.com>
+        <xmqqy1keodjj.fsf@gitster.g>
+        <1540e884-08c7-922e-1fd9-65616268c1c9@gmail.com>
+Date:   Tue, 20 Jun 2023 13:46:54 -0700
+In-Reply-To: <1540e884-08c7-922e-1fd9-65616268c1c9@gmail.com> (Nadav
+        Goldstein's message of "Tue, 20 Jun 2023 22:54:53 +0300")
+Message-ID: <xmqqpm5plv41.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 97F2C244-0FAB-11EE-B75E-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Nadav Goldstein <nadav.goldstein96@gmail.com> writes:
 
-Review Club is happening this Wednesday, 21 May, 09:30 Pacific time
-(UTC-8). You can find more info at [1] and on gitcal [2]. We run a
-session every other week. Note the different time! From the feedback
-we've gathered, this time works better for more people, so this will be
-the new time for all Review Club sessions going forward. Also, I
-apologize for the late announcement this week (Monday was a public
-holiday in the USA).
+> I see, but isn't the same argument apply for git clean? if not adding
+> the force flag, the same message as I wrote appear in git clean (I
+> copied it from there), and it will exit without any other information,
+> hence given your argument, running git clean is also not very useful.
 
-This week, we'll be discussing Phillip Wood's fixes to "git rebase" when
-failed picks occur [3]. Let me know if you're interested and would like
-to join (off-list is fine), and I'll send you an invite.
+The thing is that "git clean" by default forces people to choose
+between "-f" and "-n" to force people to understand the issue.  And
+once they understand the issue, they'd learn to run "clean -n"
+first, which lets them see what would be removed, before they run
+"clean -f".  Does your "stash clear" work the same way?  I do not
+think so.
 
-See you there!
+If there is "stash clear --dry-run" that runs "stash list", it might
+be similar, but not similar enough.  I wonder if "stash clear", when
+stashClear.requireForce is set to true and unless "--force" is
+given, should do "stash list" and then error out.  I dunno.
 
-[1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
-[2] http://tinyurl.com/gitcal
-[3] https://lore.kernel.org/git/pull.1492.v2.git.1682089074.gitgitgadget@gmail.com/
