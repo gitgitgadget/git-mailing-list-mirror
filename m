@@ -2,197 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B40EB64D9
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 00:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49C33EB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 06:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbjFTADl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jun 2023 20:03:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57120 "EHLO
+        id S230220AbjFTGZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 02:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjFTADk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2023 20:03:40 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF351AD
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 17:03:38 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f9b258f3a2so14443975e9.0
-        for <git@vger.kernel.org>; Mon, 19 Jun 2023 17:03:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687219417; x=1689811417;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CYuuPYeHpsDwrxVbSEuev0Ic1f/Eo+SC6+1CzC5Bqwc=;
-        b=Zq7sQzbK9eDYDNsUXVONCGfN8fSUUpgUBcNHeK7pt5qXd4HXQggxHF1zHYWQqZZQD/
-         mLm6j6l9UGm+/eFLlzHwgdPwNL7s41T+hgT2YNUax4tFtvKn6K4kvJgn9IGez+8zeVLo
-         kT73BPosucSXYV6VJqmfdZ9uRTscQSdixV5yfD8nYm0ivLt5yBj53ET+PC8/NCV+2vpo
-         qVxMQfLCLxOUHED4jHv+d6Q5H6hg+CQL5GHkpkMajXolQmLmCUAMpXuX5tP7XWu1xJ8Z
-         GSisIVwP31I15qWYGT3h221GtWd67Oj9pzje/R5Ozo2BdZI+M1t29M6Aov4RLPcTu/S3
-         QhTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687219417; x=1689811417;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CYuuPYeHpsDwrxVbSEuev0Ic1f/Eo+SC6+1CzC5Bqwc=;
-        b=lExoForYeoDE7fkvCNlbK4ax+KFL2l8n3htjT54W9p92KSVJOyejzzV65menB/f5sb
-         soTxk4aPJ9Hzxq1DRqzOaBN3dHwPU41sWDGSmgA0rRKUz1hU8BMnJoeq0V4660jW0qYz
-         5MO82wn+sAA5yLqsbDrD3krQm66nqO9XsfWOGhi9d2EX/7o7SVuMGid44P9LnoB+qt3u
-         WCv8zENCxdbJ580hjPfrzOqoPpdz0cfk1fplWia2M+D7BZ1IwXpIXnX0G3o/jjbGnWEm
-         2JoGr9Gazl40KVmYgd9mzdCyGC3mPltimFG5S/3VIVfBLmHNS1z7n0tR3kvljEeu1kN1
-         ltUg==
-X-Gm-Message-State: AC+VfDwirje/opMP//7rTNj0CPfijhpQIfSczqZixiP62Ir3Qigk9VjS
-        byoj9F2texQDZOzjvCbMcFzqCQaw74Y=
-X-Google-Smtp-Source: ACHHUZ6Gxs9+RksJdyOyjykNEGJtN5VOpycn/j5WpNb/bCfWChtEA8dPnIwW0IQ8FnjhzmkoU1/3hw==
-X-Received: by 2002:a1c:721a:0:b0:3f9:c19:dfbb with SMTP id n26-20020a1c721a000000b003f90c19dfbbmr4903778wmc.0.1687219416605;
-        Mon, 19 Jun 2023 17:03:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x23-20020a1c7c17000000b003f72468833esm918142wmc.26.2023.06.19.17.03.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 17:03:36 -0700 (PDT)
-Message-Id: <pull.1232.v3.git.1687219414844.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
-References: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
-From:   "Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jun 2023 00:03:34 +0000
-Subject: [PATCH v3] Introduced force flag to the git stash clear subcommand.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Nadav Goldstein <nadav.goldstein96@gmail.com>,
+        with ESMTP id S230146AbjFTGZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 02:25:55 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB0C1A4
+        for <git@vger.kernel.org>; Mon, 19 Jun 2023 23:25:54 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F21DB19076A;
+        Tue, 20 Jun 2023 02:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=QVn9quUX6OxVrxIWhjm6rfLTjuKD59kEH2Qvvp6bB2I=; b=Kdn2
+        x33tHNNSLrFZBLKgDE8i6t4UN/I0plT1EBdzVGZ/k/DXr3hnBfhbrx7XkZbLCm+E
+        lNZ612qolz+SckqU5OEFDxpc9KfF/zZ5rlayYS8GA5k+Zcwl2CiLyd/QXC0pXRPI
+        oNluKMRdeHw8YE+9dNPLhBVvk/BEdhOhBGE8KZw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DCB2E190766;
+        Tue, 20 Jun 2023 02:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.62.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38114190764;
+        Tue, 20 Jun 2023 02:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Nadav Goldstein <nadav.goldstein96@gmail.com>
+Subject: Re: [PATCH v3] Introduced force flag to the git stash clear
+ subcommand.
+References: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
+        <pull.1232.v3.git.1687219414844.gitgitgadget@gmail.com>
+Date:   Mon, 19 Jun 2023 23:25:52 -0700
+Message-ID: <xmqqy1keodjj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4EA7BCFC-0F33-11EE-ABD5-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nadav Goldstein <nadav.goldstein96@gmail.com>
+"Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-stash clean subcommand now support the force flag, along
-with the configuration var stash.requireforce, that if
-set to true, will make git stash clear fail unless supplied
-with force flag.
+> From: Nadav Goldstein <nadav.goldstein96@gmail.com>
+>
+> stash clean subcommand now support the force flag, along
+> with the configuration var stash.requireforce, that if
+> set to true, will make git stash clear fail unless supplied
+> with force flag.
 
-Signed-off-by: Nadav Goldstein <nadav.goldstein96@gmail.com>
----
-    stash clear: added safety flag for stash clear subcommand
-    
-    This patch started to solve the issue of easy trigger of git stash
-    clear. I first went with using an interactive (-i) flag to stash clear,
-    but following the conversations I had here I understood that it was a
-    misleading flag and not a good direction for implementation.
-    
-    So in this version of the patch (v3), I went with Junio proposal to
-    introduce force flag to the clean subcommand.
-    
-    Thanks!
+Documentation/SubmittingPatches gives many helpful hints on how to
+write log messages for the project.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1232%2Fnadav96%2Fclear-stash-prompt-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1232/nadav96/clear-stash-prompt-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1232
+> @@ -208,6 +208,14 @@ to learn how to operate the `--patch` mode.
+>  The `--patch` option implies `--keep-index`.  You can use
+>  `--no-keep-index` to override this.
+>  
+> +-f::
+> +--force::
+> +	This option is only valid for `clear` command
 
-Range-diff vs v2:
+Missing full-stop?
 
- 1:  13bc75a2b05 < -:  ----------- add-menu: added add-menu to lib objects
- 2:  7271a285d18 < -:  ----------- clean: refector to the interactive part of clean
- -:  ----------- > 1:  6150ec27b5a Introduced force flag to the git stash clear subcommand.
+> ++
+> +If the Git configuration variable stash.requireForce is set
 
+Drop "Git" perhaps?  I haven't seen any other place that says "Git
+configuration variable X" when talking about a single variable (it
+probably is OK to call those defined in a Git configuration file
+collectively as "Git configuration variables", though).
 
- Documentation/git-stash.txt | 12 ++++++++++--
- builtin/stash.c             | 12 +++++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+> +to true, 'git stash clear' will refuse to remove all the stash 
+> +entries unless given -f.
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index f4bb6114d91..e95410d507e 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -20,7 +20,7 @@ SYNOPSIS
- 	     [--] [<pathspec>...]]
- 'git stash' save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
- 	     [-u | --include-untracked] [-a | --all] [<message>]
--'git stash' clear
-+'git stash' clear [-f | --force]
- 'git stash' create [<message>]
- 'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
- 
-@@ -130,7 +130,7 @@ the stash entry is applied on top of the commit that was HEAD at the
- time `git stash` was run, it restores the originally stashed state
- with no conflicts.
- 
--clear::
-+clear [-f|--force]::
- 	Remove all the stash entries. Note that those entries will then
- 	be subject to pruning, and may be impossible to recover (see
- 	'Examples' below for a possible strategy).
-@@ -208,6 +208,14 @@ to learn how to operate the `--patch` mode.
- The `--patch` option implies `--keep-index`.  You can use
- `--no-keep-index` to override this.
- 
-+-f::
-+--force::
-+	This option is only valid for `clear` command
-++
-+If the Git configuration variable stash.requireForce is set
-+to true, 'git stash clear' will refuse to remove all the stash 
-+entries unless given -f.
-+
- -S::
- --staged::
- 	This option is only valid for `push` and `save` commands.
-diff --git a/builtin/stash.c b/builtin/stash.c
-index a7e17ffe384..d037bc4f69c 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -53,7 +53,7 @@
- #define BUILTIN_STASH_CREATE_USAGE \
- 	N_("git stash create [<message>]")
- #define BUILTIN_STASH_CLEAR_USAGE \
--	"git stash clear"
-+	"git stash clear [-f | --force]"
- 
- static const char * const git_stash_usage[] = {
- 	BUILTIN_STASH_LIST_USAGE,
-@@ -122,6 +122,7 @@ static const char * const git_stash_save_usage[] = {
- 
- static const char ref_stash[] = "refs/stash";
- static struct strbuf stash_index_path = STRBUF_INIT;
-+static int clear_require_force = 0;
- 
- /*
-  * w_commit is set to the commit containing the working tree
-@@ -246,7 +247,9 @@ static int do_clear_stash(void)
- 
- static int clear_stash(int argc, const char **argv, const char *prefix)
- {
-+	int force = 0;
- 	struct option options[] = {
-+		OPT__FORCE(&force, N_("force"), PARSE_OPT_NOCOMPLETE),
- 		OPT_END()
- 	};
- 
-@@ -258,6 +261,9 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
- 		return error(_("git stash clear with arguments is "
- 			       "unimplemented"));
- 
-+	if (!force && clear_require_force)
-+		return error(_("fatal: stash.requireForce set to true and -f was not given; refusing to clear stash"));
-+
- 	return do_clear_stash();
- }
- 
-@@ -851,6 +857,10 @@ static int git_stash_config(const char *var, const char *value, void *cb)
- 		show_include_untracked = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "stash.requireforce")) {
-+		clear_require_force = git_config_bool(var, value);
-+		return 0;
-+	}
- 	return git_diff_basic_config(var, value, cb);
- }
- 
+I am not sure how much value users would get by requiring "--force",
+though.  I know this was (partly) modeled after "git clean", but
+over there, when the required "--force" is not given, the user would
+give "--dry-run" (or "-n"), and the user will see what would be
+removed if the user gave "--force".  If missing "--force" made "git
+stash clear" show the stash entries that would be lost, then after
+seeing an error message, it would be easier for the user to decide
+if their next move should be to re-run the command with "--force",
+or there are some precious entries and the user is not ready to do
+"stash clear".
 
-base-commit: d7d8841f67f29e6ecbad85a11805c907d0f00d5d
--- 
-gitgitgadget
+But just refusing to run without giving any other information will
+just train the user to give "git stash clear --force" without
+thinking, because getting "because you did not give the required
+--force option, I am not doing anything" is only annoying without
+giving any useful information.
+
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index a7e17ffe384..d037bc4f69c 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -53,7 +53,7 @@
+>  #define BUILTIN_STASH_CREATE_USAGE \
+>  	N_("git stash create [<message>]")
+>  #define BUILTIN_STASH_CLEAR_USAGE \
+> -	"git stash clear"
+> +	"git stash clear [-f | --force]"
+>  
+>  static const char * const git_stash_usage[] = {
+>  	BUILTIN_STASH_LIST_USAGE,
+> @@ -122,6 +122,7 @@ static const char * const git_stash_save_usage[] = {
+>  
+>  static const char ref_stash[] = "refs/stash";
+>  static struct strbuf stash_index_path = STRBUF_INIT;
+> +static int clear_require_force = 0;
+
+Do not explicitly initialize globals to 0 or NULL; let BSS take care
+of the zero initialization, instead.
+
+> @@ -246,7 +247,9 @@ static int do_clear_stash(void)
+>  
+>  static int clear_stash(int argc, const char **argv, const char *prefix)
+>  {
+> +	int force = 0;
+>  	struct option options[] = {
+> +		OPT__FORCE(&force, N_("force"), PARSE_OPT_NOCOMPLETE),
+>  		OPT_END()
+>  	};
+
+As this topic focuses on "git stash clear", this is OK (and the
+description in the documentation that says that "force" is currently
+supported only by "clear" is also fine), but is "clear" the only
+destructive subcommand and no other subcommand will want to learn
+the "--force" for similar safety in the future?  The answer to this
+question matters because ...
+
+> @@ -258,6 +261,9 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
+>  		return error(_("git stash clear with arguments is "
+>  			       "unimplemented"));
+>  
+> +	if (!force && clear_require_force)
+> +		return error(_("fatal: stash.requireForce set to true and -f was not given; refusing to clear stash"));
+> +
+>  	return do_clear_stash();
+>  }
+>  
+> @@ -851,6 +857,10 @@ static int git_stash_config(const char *var, const char *value, void *cb)
+>  		show_include_untracked = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "stash.requireforce")) {
+
+... the naming of this variable, facing the end users, does not
+limit itself to "clear" at all.  It gives an impression that setting
+this will require "--force" for all other subcommands that would
+support it.  However ...
+
+> +		clear_require_force = git_config_bool(var, value);
+
+... inside the code, the variable is named in such a way that it is
+only about the "clear" subcommand and nothing else.
+
+I suspect that the end-user facing "stash.requireforce" should be
+renamed to make it clear that it is about "stash clear" subcommand,
+and not everywhere in "stash" requires "--force".  Nobody wants to
+keep saying "git stash save --force" ;-)
+
+> +		return 0;
+> +	}
+
+Thanks.
