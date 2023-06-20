@@ -2,61 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 881EFEB64D8
-	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31E31EB64D7
+	for <git@archiver.kernel.org>; Tue, 20 Jun 2023 14:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233204AbjFTOVM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jun 2023 10:21:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37622 "EHLO
+        id S233175AbjFTOVS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jun 2023 10:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233148AbjFTOVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2023 10:21:11 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 342B8E7D
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:21:10 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-570284c7e61so53346007b3.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:21:10 -0700 (PDT)
+        with ESMTP id S233217AbjFTOVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2023 10:21:16 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FA36E6C
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:21:15 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bb2ffa1e235so4749612276.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2023 07:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270869; x=1689862869;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687270874; x=1689862874;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v12ZQZOAJQE43Nj+s0NNW9ZMbLP9eoX23DKAVOWWoGQ=;
-        b=sOXT63ERngHT5UMw//hxAG56j/cKmGm7XnwEgxSt1KuI3icETboFGDWFw7Tz37uZhu
-         s+W37iEWuLG9VyTR3IRJUZH4NmQ6C6NRfb6JcNnCM2kYAGg5s3PMGx4CjsDdiPxGldCK
-         Lm77fZ9Fcd78euNwqXhe2RiGSzfiLbXiHEFsxzi2Rt0wSnE1fQjAXf9ctwhWNX8C+1W6
-         bsq665V3QZysJKeoATsDeL2UFGaZCdDI3f2I9K7Cin4VoOrQ6bvtQ9PPni85mR9KX0UZ
-         HwHAr6VsCA4LoMdDhhf8nq4Mpw6o0aKQbQrpbJiHgjTVKWqbTE1lCTNjfYmQWLsRB6Vh
-         RiGw==
+        bh=Ws0QnKjly1jEjNTRdSJ79n+UxGFeoPe/V/EpPVx/oU0=;
+        b=Ty+tr3ku/aESJ6/PBOfecB4EPSs5msbCd3u1azqpv2BCqkgziVPcr060tl4N2izmKh
+         hO6oXKWyBnfCdPZgyeh9viNUpBGFZVoFW6w2NKpVktKS4dLzCpiwi2lBKM+UcHovZSqn
+         eFjc3Qsul9xSD7zi4RZCrWDl8kl1cTpD8yE6RxDA3UVAJauH/Njxvw80JWK+sGLW7MC/
+         BWgCxffZslPxpL4nVIlfVyHlwOkAURmHZS9txHDbXge4+IdpwRiaO4J+2g/chv4Vyz2n
+         z+iTA8G/T0dIVOZpAp6JMoMvV44QvH1WZpEVfDwjth/4ivJOIV+voOQ+DfGQ7dwJ87S4
+         Whqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687270869; x=1689862869;
+        d=1e100.net; s=20221208; t=1687270874; x=1689862874;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v12ZQZOAJQE43Nj+s0NNW9ZMbLP9eoX23DKAVOWWoGQ=;
-        b=NUw2T3JGnXOBMF3t2llQEyRpJ15POUrsJ3soWK0hyXuwGjcPn/w3tRm36+E4J5NFxM
-         d1m0wgU+tuiWVk98CNmRQfTxt2mhmLe5CYjeG9EOzWVCotEu/KCHTkXyWBaPmk2+Gd2P
-         b9+7nUytDUNk/PHzGsJRin+2Q2C7JNUL6yNtCGynRNtXE4pjh0AOQXgs/s60uyniodCI
-         9QuZScbnrI+0E4Az2qxzBFd7cAqvL8cAS1kfRX7Pr62RTAIgNE2w7ek4n2KRKMu5+V+F
-         cU3sCBswF6mO5HqlHOf213Z/SWtvSHLXM6kaENn16K2SY2tI20Khvoeky9a+CZhkU6N/
-         t6HQ==
-X-Gm-Message-State: AC+VfDyINOB4NOBvOh4asLiMerAuj+GkBoR2HgTjzm57livAFH5geinb
-        kTeNKY4+TCsn8O3RjJb7WGArV8gm9sZ1z3cB+cTEMPmh
-X-Google-Smtp-Source: ACHHUZ5oU9YdUV9TEcKJpoIdcZqcH96FHSwkFBYVQOEaR/+0mVpCo3bNf2Sq8jbMsfPuYIeKdbZCkA==
-X-Received: by 2002:a81:6f54:0:b0:570:8856:5dbc with SMTP id k81-20020a816f54000000b0057088565dbcmr10085059ywc.41.1687270869283;
-        Tue, 20 Jun 2023 07:21:09 -0700 (PDT)
+        bh=Ws0QnKjly1jEjNTRdSJ79n+UxGFeoPe/V/EpPVx/oU0=;
+        b=NY8VjM8/9yN7vmwycC2IIFfw58ofAmveGEE+IvN11H5DgjwxR4sZa1cKQQo/TTOMf8
+         oBzMUt7XzbPsaUnOvXSbWTKBZzLa7n3DCy1JjWGDlQCAU0CMxZVBwKcJuCZ/Rx4jQOd9
+         QSWNrmBdP8zqKoe93N+C+/4DQPz8nXoZJadG555hvsECEQbKarZ5Ap2rQbsaV+xocdtM
+         c9vioSUqATdpxUQqwoHD4a13hK4qkMX0PCIsShiGPc0ggJhvTZ0WkKTBhhE7PjoZ5Ymq
+         knFRHAtDNH2o5mYxI/8ebAaha6Fm8J29Wr88n6z5A/eeP8W8T3woPy5SF1mG6TX81u0l
+         bDFQ==
+X-Gm-Message-State: AC+VfDxGKfQVAe1ZeWMontUAdNnHviNNNTySwnhkor5arkB/bwU3nxxK
+        9yRGNdWHSKE7NBXmN5S00pmsxLzrQw6hENoBqZ2A29rj
+X-Google-Smtp-Source: ACHHUZ7bigrKiB8PZsGDjYViaWPSs4TST5UiVnTLl25ZcegX7DkwIYYLHHJYIMY6kyRaMkKqzTifdQ==
+X-Received: by 2002:a25:9385:0:b0:bea:918f:2f01 with SMTP id a5-20020a259385000000b00bea918f2f01mr8039363ybm.44.1687270874341;
+        Tue, 20 Jun 2023 07:21:14 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j206-20020a816ed7000000b0056d2eb86724sm492888ywc.142.2023.06.20.07.21.08
+        by smtp.gmail.com with ESMTPSA id e63-20020a255042000000b00be674b1b740sm394616ybb.5.2023.06.20.07.21.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 07:21:08 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 10:21:06 -0400
+        Tue, 20 Jun 2023 07:21:13 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 10:21:11 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 02/16] ref-filter.h: provide `REF_FILTER_INIT`
-Message-ID: <7ce82b6a5a451ff183ba8d35fc0f50acccee8972.1687270849.git.me@ttaylorr.com>
+Subject: [PATCH v4 03/16] ref-filter: clear reachable list pointers after
+ freeing
+Message-ID: <7e6bf7766d020914af53e7d6926f5a6c4c4d0668.1687270849.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1687270849.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -69,112 +70,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-Provide a sane initialization value for `struct ref_filter`, which in a
-subsequent patch will be used to initialize a new field.
-
-In the meantime, fix a case in test-reach.c where its `ref_filter` is
-not even zero-initialized.
+In reach_filter(), we pop all commits from the reachable lists, leaving
+them empty. But because we're operating on a list pointer that was
+passed by value, the original filter.reachable_from pointer is left
+dangling.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/branch.c       | 3 +--
- builtin/for-each-ref.c | 3 +--
- builtin/tag.c          | 3 +--
- ref-filter.h           | 3 +++
- t/helper/test-reach.c  | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
+ ref-filter.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e6c2655af6..7891dec361 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -707,7 +707,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	int reflog = 0, quiet = 0, icase = 0, force = 0,
- 	    recurse_submodules_explicit = 0;
- 	enum branch_track track;
--	struct ref_filter filter;
-+	struct ref_filter filter = REF_FILTER_INIT;
- 	static struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	struct ref_format format = REF_FORMAT_INIT;
-@@ -765,7 +765,6 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+diff --git a/ref-filter.c b/ref-filter.c
+index 4991cd4f7a..048d277cbf 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2418,13 +2418,13 @@ void ref_array_clear(struct ref_array *array)
+ #define EXCLUDE_REACHED 0
+ #define INCLUDE_REACHED 1
+ static void reach_filter(struct ref_array *array,
+-			 struct commit_list *check_reachable,
++			 struct commit_list **check_reachable,
+ 			 int include_reached)
+ {
+ 	int i, old_nr;
+ 	struct commit **to_clear;
  
- 	setup_ref_filter_porcelain_msg();
+-	if (!check_reachable)
++	if (!*check_reachable)
+ 		return;
  
--	memset(&filter, 0, sizeof(filter));
- 	filter.kind = FILTER_REFS_BRANCHES;
- 	filter.abbrev = -1;
+ 	CALLOC_ARRAY(to_clear, array->nr);
+@@ -2434,7 +2434,7 @@ static void reach_filter(struct ref_array *array,
+ 	}
  
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 695fc8f4a5..99ccb73518 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -24,7 +24,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	int maxcount = 0, icase = 0, omit_empty = 0;
- 	struct ref_array array;
--	struct ref_filter filter;
-+	struct ref_filter filter = REF_FILTER_INIT;
- 	struct ref_format format = REF_FORMAT_INIT;
- 	struct strbuf output = STRBUF_INIT;
- 	struct strbuf err = STRBUF_INIT;
-@@ -61,7 +61,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	};
+ 	tips_reachable_from_bases(the_repository,
+-				  check_reachable,
++				  *check_reachable,
+ 				  to_clear, array->nr,
+ 				  UNINTERESTING);
  
- 	memset(&array, 0, sizeof(array));
--	memset(&filter, 0, sizeof(filter));
+@@ -2455,8 +2455,8 @@ static void reach_filter(struct ref_array *array,
  
- 	format.format = "%(objectname) %(objecttype)\t%(refname)";
+ 	clear_commit_marks_many(old_nr, to_clear, ALL_REV_FLAGS);
  
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 49b64c7a28..ec778ba860 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -437,7 +437,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct msg_arg msg = { .buf = STRBUF_INIT };
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
--	struct ref_filter filter;
-+	struct ref_filter filter = REF_FILTER_INIT;
- 	struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	struct ref_format format = REF_FORMAT_INIT;
-@@ -496,7 +496,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	git_config(git_tag_config, &sorting_options);
+-	while (check_reachable) {
+-		struct commit *merge_commit = pop_commit(&check_reachable);
++	while (*check_reachable) {
++		struct commit *merge_commit = pop_commit(check_reachable);
+ 		clear_commit_marks(merge_commit, ALL_REV_FLAGS);
+ 	}
  
- 	memset(&opt, 0, sizeof(opt));
--	memset(&filter, 0, sizeof(filter));
- 	filter.lines = -1;
- 	opt.sign = -1;
+@@ -2553,8 +2553,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ 	clear_contains_cache(&ref_cbdata.no_contains_cache);
  
-diff --git a/ref-filter.h b/ref-filter.h
-index 430701cfb7..a920f73b29 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -92,6 +92,9 @@ struct ref_format {
- 	struct string_list bases;
- };
+ 	/*  Filters that need revision walking */
+-	reach_filter(array, filter->reachable_from, INCLUDE_REACHED);
+-	reach_filter(array, filter->unreachable_from, EXCLUDE_REACHED);
++	reach_filter(array, &filter->reachable_from, INCLUDE_REACHED);
++	reach_filter(array, &filter->unreachable_from, EXCLUDE_REACHED);
  
-+#define REF_FILTER_INIT { \
-+	.points_at = OID_ARRAY_INIT, \
-+}
- #define REF_FORMAT_INIT {             \
- 	.use_color = -1,              \
- 	.bases = STRING_LIST_INIT_DUP, \
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 5b6f217441..ef58f10c2d 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -139,7 +139,7 @@ int cmd__reach(int ac, const char **av)
- 
- 		printf("%s(X,_,_,0,0):%d\n", av[1], can_all_from_reach_with_flag(&X_obj, 2, 4, 0, 0));
- 	} else if (!strcmp(av[1], "commit_contains")) {
--		struct ref_filter filter;
-+		struct ref_filter filter = REF_FILTER_INIT;
- 		struct contains_cache cache;
- 		init_contains_cache(&cache);
- 
+ 	save_commit_buffer = save_commit_buffer_orig;
+ 	return ret;
 -- 
 2.41.0.44.gf2359540d2
 
