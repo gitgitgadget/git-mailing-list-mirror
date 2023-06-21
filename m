@@ -2,79 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFEE1EB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 10:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C8ADEB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 10:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbjFUK4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 06:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33390 "EHLO
+        id S231201AbjFUK4m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 06:56:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbjFUKzr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 06:55:47 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88B10199
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:55:46 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5700b37da3fso52947477b3.1
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:55:46 -0700 (PDT)
+        with ESMTP id S230464AbjFUK4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 06:56:40 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7E861992
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:56:39 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b46773e427so63873121fa.3
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687344946; x=1689936946;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/bvakI2unqmQt6SorqFFMZk2xLYE4kloPqHSPDJLMdc=;
-        b=FpHCmDqpT5XqOFp8oMpzpOQasHqnN/BjNqeeag/obTKbxLjiEzQ40Y2nXk+8lTmt2B
-         g6iDLlnobnsE0wp+IRL9ogXMPe0n+WZ25KBUISBVLZoOgIEehP+aF6BlEFSL61jVw+DN
-         geNrfHBUcH7nF2L/JA+V0TeEhavKfOjQXXPlfNHl/AcNvEKFlUzFgmS07u26NBMkhcjy
-         4W5NKaR2vpm0t7iW2D70ZUqH4BbF35wXb3V7M1FWZgEUYzTGB62inKx1gx44ROK9pZLc
-         ABtoADmQPYhkOYaXl08WvzRmFi5DYIroh63Jwt3osdi/3AgVbF/YJX/2zFMj41EXPLT1
-         NG5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687344946; x=1689936946;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1687344998; x=1689936998;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/bvakI2unqmQt6SorqFFMZk2xLYE4kloPqHSPDJLMdc=;
-        b=MfHKqLhfpURR/nw4xw1jNXvPYvOHEPxTk1Jm2LkloFdetxn6X+BXq7gdrfyp9USuTJ
-         TP5/emTMt4XJ/ZqoSgh9SBaQbM/K4H3sWd+Xq+ISfPXXm8eU366OMvn0MR3+3iaxslej
-         UsmasGDRVGfdkMP8mnPxpGAWS0xm8N2uTcCVelrumeJL2L2cP//nfApy7tydRgr2Vocs
-         xgMwbikwfdW+t1nJEcqivPexxX+tgw1vrkG55de2eh/uc48LXI9fjeun6u5pSikzgoeF
-         8W5/r0wOoZ7IIMu6gTTuFG0o/Z+gtBTDS7y3PXGnTImLkCdg84CDJNnXXVxU1cE/n4sA
-         5O8Q==
-X-Gm-Message-State: AC+VfDzOaLUtobhE/OyZ2j3IuZxV2+Mw6vb5c+ynh+rscZED10VBkeej
-        F+V9mnwM+vhVrHWIWCf1JJPiyQ==
-X-Google-Smtp-Source: ACHHUZ5QxzPv0KS1JEeUu7OPL+ZUmgscJGh4qcLcI2i0fsjMQfclOl/90N0Usq73dbyS/Gj9O1SurA==
-X-Received: by 2002:a81:4849:0:b0:56d:4014:dd20 with SMTP id v70-20020a814849000000b0056d4014dd20mr6936269ywa.30.1687344945763;
-        Wed, 21 Jun 2023 03:55:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x81-20020a814a54000000b00573a75cd344sm236924ywa.141.2023.06.21.03.55.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 03:55:45 -0700 (PDT)
-Date:   Wed, 21 Jun 2023 06:55:42 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        bh=8etw+DZph8VFdivgbFppAzwgS4szWOHe0mdRkwu+yOc=;
+        b=MzUD9C/SWbFEDp4oshjRImjezrBcZ4Q5035+4odGh2L9bGosiuWHgio6HI1Sv75sSp
+         y/b+P4L8j6V5VCj9mJwIJYANz3UhGF3NjzuCNn4tSqshUWTzKj9eNbnojedGEkxypxpq
+         qZQ7m2BGsexF7Jutules50NEgBwFTQb1M21Hw9iN5pQ3Q9HgFcPFvSJ+gaH0QpDPfkfa
+         mvokN8AcL28QiA25mhkmvsOw+AjQqo16RIQgqyF9E44tCVL52FWawIVrid/7hl+it1DG
+         KrIxbJfYMDoZZm83ZkC2u0UyDujoN3JtTIMFEgmhxVwZ1yWQa1ZMXmXDPDmR4JMwIKXi
+         880w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687344998; x=1689936998;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8etw+DZph8VFdivgbFppAzwgS4szWOHe0mdRkwu+yOc=;
+        b=dDwp8HRoKRijysG8BcpcYtPHGZtAKPJuogKXnzXq9SkSFmjfhesYW94vxQ7V5v6xtD
+         KZ4+liBEogSMedzv1uQbztH5Lk6aAhahSJ8L62P/Qtschw/zt4KJWhpAwseyMjT1tj7h
+         g24OFcfH5ZzQX36vr7l+6TtS6Aj9ua5+QtN58M1xJ0Iw4/a4Go9Spcd2e7dOScgDqk8H
+         TE/pPr+99pvYZT0LfB5Ah7srgiqB92ZsooY1s774uSTiw4w7rop0ezDvaQbFKrj0IVVZ
+         yDm48NFynE1FiEILoYH7xoA1QoiqEpcPNXrvmkXWLETgdp6GM9UqP6tZwc+hRkHiJ6jl
+         EZHw==
+X-Gm-Message-State: AC+VfDwMq1B3khZubk7Jo4UbtsnrVwlYTt3BuxNhJ5tT2V6GOY15KcSZ
+        NHdqIVswvd+uIxVzz9ZJdKUbym6rxjzoXDgs2WapxeJkSfs=
+X-Google-Smtp-Source: ACHHUZ604osDYQR77nd0HA0cJ/hI/vmMuHGJJAsEs+utjWgi49bkQzO7BX7bnmC35MYEwSjrt385Ta1L5pWoz4Xt8+s=
+X-Received: by 2002:a2e:8057:0:b0:2b5:7a97:d517 with SMTP id
+ p23-20020a2e8057000000b002b57a97d517mr3132975ljg.46.1687344997617; Wed, 21
+ Jun 2023 03:56:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+ <20230614192541.1599256-5-christian.couder@gmail.com> <xmqqttv8thjw.fsf@gitster.g>
+In-Reply-To: <xmqqttv8thjw.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 21 Jun 2023 12:56:25 +0200
+Message-ID: <CAP8UFD1MGX8yZsNuKmax2J1ZmwfxmzfbgJ_pNrbar6X2Dar8+g@mail.gmail.com>
+Subject: Re: [PATCH 4/9] repack: refactor piping an oid to a command
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        John Cai <johncai86@gmail.com>,
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/9] repack: refactor piping an oid to a command
-Message-ID: <ZJLXLgE07bapFs9W@nand.local>
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230614192541.1599256-5-christian.couder@gmail.com>
- <xmqqttv8thjw.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqttv8thjw.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 04:46:43PM -0700, Junio C Hamano wrote:
+On Fri, Jun 16, 2023 at 1:46=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
 > Christian Couder <christian.couder@gmail.com> writes:
 >
-> > Create a new write_oid_hex_cmd() function to send an oid to the standard
+> > Create a new write_oid_hex_cmd() function to send an oid to the standar=
+d
 > > input of a running command. This new function will be used in a
 > > following commit.
 > >
@@ -87,27 +87,45 @@ On Thu, Jun 15, 2023 at 04:46:43PM -0700, Junio C Hamano wrote:
 > > index 0541c3ce15..e591c295cf 100644
 > > --- a/builtin/repack.c
 > > +++ b/builtin/repack.c
-> > @@ -182,6 +182,17 @@ static void prepare_pack_objects(struct child_process *cmd,
-> >  	cmd->out = -1;
+> > @@ -182,6 +182,17 @@ static void prepare_pack_objects(struct child_proc=
+ess *cmd,
+> >       cmd->out =3D -1;
 > >  }
 > >
 > > +static void write_oid_hex_cmd(const char *oid_hex,
-> > +			      struct child_process *cmd,
-> > +			      const char *err_msg)
+> > +                           struct child_process *cmd,
+> > +                           const char *err_msg)
 > > +{
-> > +	if (cmd->in == -1 && start_command(cmd))
-> > +		die("%s", err_msg);
+> > +     if (cmd->in =3D=3D -1 && start_command(cmd))
+> > +             die("%s", err_msg);
 >
 > I am not sure why we would want to conflate the "if we haven't
 > started the command, auto-start it upon our first attempt to write"
 > in these low-level "I am designed to do one thing, which is to feed
 > the object name to the process, and do it well" function.
+>
+> The caller in the original shares the same issue, so we could say
+> that this patch is not creating a new problem, but this somehow
+> feels it is mak ng the existing problem even worse.
 
-I agree, the implementation of `write_oid_hex_cmd()` seems too magical
-to me.
+Ok. I think I will rework this patch from version 2 of this series to
+remove that code. It will perhaps look like there is a bit of
+duplicated code, but I don't think it will be too bad.
 
-Perhaps there was some awkwardness with using the pre-image w.r.t some
-later change? Let's see...
+> And I think the error handling here shows why the API feels wrong.
+> When auto-start fails, we have a message, but when write fails,
+> there is no custom message---it makes as if write_oid_hex_cmd() is
+> primarily about starting, which is so important relative to its
+> other functionalities and deserves a custom error message, but that
+> is not the message you want to be conveying.
 
-Thanks,
-Taylor
+Right.
+
+> > +     xwrite(cmd->in, oid_hex, the_hash_algo->hexsz);
+> > +     xwrite(cmd->in, "\n", 1);
+>
+> I would have expected that the "refactor" at least would reduce the
+> number of system calls by combining these two writes into one using
+> an on-stack local variable char buf[GIT_MAX_HEZSZ+1] or something.
+
+Ok, I will change it to reduce the number of system calls.
