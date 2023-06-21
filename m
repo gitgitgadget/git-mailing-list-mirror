@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8176EB64DC
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 10:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFEE1EB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 10:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbjFUKzQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 06:55:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
+        id S231176AbjFUK4E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 06:56:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232430AbjFUKym (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 06:54:42 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E291737
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:54:29 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-56ce61769b7so61582247b3.3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:54:29 -0700 (PDT)
+        with ESMTP id S230345AbjFUKzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 06:55:47 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88B10199
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:55:46 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5700b37da3fso52947477b3.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687344868; x=1689936868;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687344946; x=1689936946;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ta7vEMPiNFg4Br3MjhG7L+TtBWiDYoJCPiUgJXonQBg=;
-        b=JS33RJt7eIt+dwbUjCO1z652vXdDf+byGjioKpU44oeAC3/Qm7yjfvaFIgeDoMwmWl
-         IKUTGXE9Z9Epa+4ls9E8x/cw7qRfOk46D2+3LsHWwQr/SL1CglVtmgc7AnDtWQpa3ekp
-         jMZAlY4UqWnddXuwTowItN81hh2UWHIPM/Xuhm5cDYIDZeC3cHNfvC0juHtkiyv1HkLp
-         GZfUN37hYIyl41TC8lslKccPb0FsB1fl2wOAZAW1kIIWNGivO5+9oXyArsinvtZ5LJmx
-         wISwiR1TfFC8NzHq19BLV6gfytee0b0Vjgfah5I/+5UiBUEhOAOYTQWOVWKmbml97M8A
-         dXbQ==
+        bh=/bvakI2unqmQt6SorqFFMZk2xLYE4kloPqHSPDJLMdc=;
+        b=FpHCmDqpT5XqOFp8oMpzpOQasHqnN/BjNqeeag/obTKbxLjiEzQ40Y2nXk+8lTmt2B
+         g6iDLlnobnsE0wp+IRL9ogXMPe0n+WZ25KBUISBVLZoOgIEehP+aF6BlEFSL61jVw+DN
+         geNrfHBUcH7nF2L/JA+V0TeEhavKfOjQXXPlfNHl/AcNvEKFlUzFgmS07u26NBMkhcjy
+         4W5NKaR2vpm0t7iW2D70ZUqH4BbF35wXb3V7M1FWZgEUYzTGB62inKx1gx44ROK9pZLc
+         ABtoADmQPYhkOYaXl08WvzRmFi5DYIroh63Jwt3osdi/3AgVbF/YJX/2zFMj41EXPLT1
+         NG5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687344868; x=1689936868;
+        d=1e100.net; s=20221208; t=1687344946; x=1689936946;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ta7vEMPiNFg4Br3MjhG7L+TtBWiDYoJCPiUgJXonQBg=;
-        b=Y+YWnGQaW5zxFSz8t0Ni0oXbnpKVHm4HwRTtwBAwtpYZlSM0oOOOaMvkZLXtKNnZGl
-         EqZEFL/7Wc03ObE8I9xe4fql5Yu5AbV8us38DRZ4bK4erP+VNPm7VNLYyZDPkqt7XNQQ
-         qSqc0Xgpd2RaP3z61N5fUBgRsEyS+B1BN54m/EjxyKu01U2XX6XN2bB7bcBFSbMjrBra
-         gF40JLjNHeI0ujk08H2cTNZYfz1F8HU4ouNKdu23DxfKAwtlyE36ZO7lffyjK2Lh54Hy
-         ggxmZBZUTIiuvoGh1VMYjcMH3YK3/ZStamBOu8PlkvXE60VjvCP/rXua/OQtqGsIaP8D
-         Zs/w==
-X-Gm-Message-State: AC+VfDyJW3rkVal0nak3lahsO6afAAykfVrdTJpP7t9UtJreHu3BS9z9
-        bLHt5yRE/Dy9NhXuXII1IOPXwA==
-X-Google-Smtp-Source: ACHHUZ77eDPRPGBm0pJdA1ckr+V33m5qWDdwWKXVSFMv1EVXvKM76dNZtMqOSyjxLHHth8kcibzhZg==
-X-Received: by 2002:a81:6554:0:b0:573:b24c:a527 with SMTP id z81-20020a816554000000b00573b24ca527mr419634ywb.41.1687344868742;
-        Wed, 21 Jun 2023 03:54:28 -0700 (PDT)
+        bh=/bvakI2unqmQt6SorqFFMZk2xLYE4kloPqHSPDJLMdc=;
+        b=MfHKqLhfpURR/nw4xw1jNXvPYvOHEPxTk1Jm2LkloFdetxn6X+BXq7gdrfyp9USuTJ
+         TP5/emTMt4XJ/ZqoSgh9SBaQbM/K4H3sWd+Xq+ISfPXXm8eU366OMvn0MR3+3iaxslej
+         UsmasGDRVGfdkMP8mnPxpGAWS0xm8N2uTcCVelrumeJL2L2cP//nfApy7tydRgr2Vocs
+         xgMwbikwfdW+t1nJEcqivPexxX+tgw1vrkG55de2eh/uc48LXI9fjeun6u5pSikzgoeF
+         8W5/r0wOoZ7IIMu6gTTuFG0o/Z+gtBTDS7y3PXGnTImLkCdg84CDJNnXXVxU1cE/n4sA
+         5O8Q==
+X-Gm-Message-State: AC+VfDzOaLUtobhE/OyZ2j3IuZxV2+Mw6vb5c+ynh+rscZED10VBkeej
+        F+V9mnwM+vhVrHWIWCf1JJPiyQ==
+X-Google-Smtp-Source: ACHHUZ5QxzPv0KS1JEeUu7OPL+ZUmgscJGh4qcLcI2i0fsjMQfclOl/90N0Usq73dbyS/Gj9O1SurA==
+X-Received: by 2002:a81:4849:0:b0:56d:4014:dd20 with SMTP id v70-20020a814849000000b0056d4014dd20mr6936269ywa.30.1687344945763;
+        Wed, 21 Jun 2023 03:55:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i187-20020a0dc6c4000000b00565d056a74bsm1039765ywd.139.2023.06.21.03.54.28
+        by smtp.gmail.com with ESMTPSA id x81-20020a814a54000000b00573a75cd344sm236924ywa.141.2023.06.21.03.55.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 03:54:28 -0700 (PDT)
-Date:   Wed, 21 Jun 2023 06:54:25 -0400
+        Wed, 21 Jun 2023 03:55:45 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 06:55:42 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
@@ -58,42 +58,56 @@ Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/9] t/helper: add 'find-pack' test-tool
-Message-ID: <ZJLW4TPDpxjkHS4h@nand.local>
+Subject: Re: [PATCH 4/9] repack: refactor piping an oid to a command
+Message-ID: <ZJLXLgE07bapFs9W@nand.local>
 References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230614192541.1599256-4-christian.couder@gmail.com>
- <xmqq1qicuwrw.fsf@gitster.g>
+ <20230614192541.1599256-5-christian.couder@gmail.com>
+ <xmqqttv8thjw.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1qicuwrw.fsf@gitster.g>
+In-Reply-To: <xmqqttv8thjw.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 04:32:35PM -0700, Junio C Hamano wrote:
+On Thu, Jun 15, 2023 at 04:46:43PM -0700, Junio C Hamano wrote:
 > Christian Couder <christian.couder@gmail.com> writes:
 >
-> > In a following commit, we will make it possible to separate objects in
-> > different packfiles depending on a filter.
+> > Create a new write_oid_hex_cmd() function to send an oid to the standard
+> > input of a running command. This new function will be used in a
+> > following commit.
 > >
-> > To make sure that the right objects are in the right packs, let's add a
-> > new test-tool that can display which packfile(s) a given object is in.
+> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> > ---
+> >  builtin/repack.c | 20 +++++++++++++-------
+> >  1 file changed, 13 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index 0541c3ce15..e591c295cf 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -182,6 +182,17 @@ static void prepare_pack_objects(struct child_process *cmd,
+> >  	cmd->out = -1;
+> >  }
+> >
+> > +static void write_oid_hex_cmd(const char *oid_hex,
+> > +			      struct child_process *cmd,
+> > +			      const char *err_msg)
+> > +{
+> > +	if (cmd->in == -1 && start_command(cmd))
+> > +		die("%s", err_msg);
 >
-> This tool would be serviceable if we only are interested in checking
-> just a few objects, but if we were to check many objects, I have to
-> wonder if it would be more efficient to use show-index to dump the
-> list of objects per pack, which should be sorted by object name, so
-> it should be trivial to run "comm" with the list of objects you want
-> to check.
+> I am not sure why we would want to conflate the "if we haven't
+> started the command, auto-start it upon our first attempt to write"
+> in these low-level "I am designed to do one thing, which is to feed
+> the object name to the process, and do it well" function.
 
-I was going to say the exact same thing. Even if we were checking many
-objects, can't we dump the output of show-index to a file, and then grep
-it repeatedly? Presumably these tests are working on repositories with
-tens of objects, so I doubt it matters much either way.
+I agree, the implementation of `write_oid_hex_cmd()` seems too magical
+to me.
 
-If we do end up taking this approach to use the test-helper instead, the
-implementation seems reasonable.
+Perhaps there was some awkwardness with using the pre-image w.r.t some
+later change? Let's see...
 
 Thanks,
 Taylor
