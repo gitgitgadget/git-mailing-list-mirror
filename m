@@ -2,113 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE110EB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 12:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A29EEB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 12:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbjFUMOo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 08:14:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41572 "EHLO
+        id S231609AbjFUMTg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 08:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbjFUMOn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 08:14:43 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBEF4DD
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 05:14:42 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-57040e313c5so85783147b3.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 05:14:42 -0700 (PDT)
+        with ESMTP id S231382AbjFUMTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 08:19:35 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33ECA1FCB
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 05:19:33 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-bfe97b3752bso758988276.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 05:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687349682; x=1689941682;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687349972; x=1689941972;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kdetxocN8zCRJTejWtdfNbJ4D8ap2jeaFV0PVRZb8Ic=;
-        b=5Ngfh/D/htUNvqR/AhUl+kCHxfcNSjlKDa0ar8yBRlW0XWGujIn607mS2w0xl0DqEw
-         wmVqN0qFzA4g+SuYsoHa1ejxTm4BPE9hC8vdarHku6b5oYaZxI5u8xD+fpD4L7mQej3Z
-         ELcwtTkhE4UcNyXhzkw6/UThGvADXFAm7UAHyi5szgcO6dLb+Ej7MQTXeWqoGNDcVBEH
-         vMIFzs71fjf+rfTZuUyGm+jh3jpcvW9+pTz0H3HFRpKDsmFu7YI/mJPVmj10Sb1yInuQ
-         wwA9SEgT9xgBBTJov1IwmeV4ka6fspz24lImOpr7u/7Iz4W5ADQq3ujKYIcLYizO3bqr
-         piQA==
+        bh=iBDaBkOGYfSChC73b3wgmS+AK9REvwqnuz5ukCaW77I=;
+        b=yykSYF249KtWizSDoxh1ZkN8n37Xtusf/V+edtEOKcvZIRhh2aIxddUyL+VRICdT/i
+         VDjIxxrQw+Ysz/xdAd4J7XLz0048YT2162i/wVizmKPruZA5+XviU95RFvIKghJ5nVPt
+         Eu/hogQ0aK9QnRlKzsBYnYbftjy7UPiOhcWBynYEc/zfrwg/BHd90ahJ0P/rN8tyUPXY
+         T4qw63QzWuy9C6qAGkl4M3hWAfYDbAcnIEmIS4PaE0aBGxc7e3sKHT7lPBxBUSIcYsKs
+         4tTnRORiIPMZqOZLb0k8v3Vn/uzn5yFf2E2VcTcNrHJki91EkAOCp1H09HYRX+KLrmsk
+         YdeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687349682; x=1689941682;
+        d=1e100.net; s=20221208; t=1687349972; x=1689941972;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kdetxocN8zCRJTejWtdfNbJ4D8ap2jeaFV0PVRZb8Ic=;
-        b=Q/jHNp/DLJLkXdT/U9lEXWJ9OQliHKho02QgaT0SI3u3Y1r63+cwczJI7JPut7USyM
-         kQDglbzzD+k6cIUk00Eha89NuEa4p7/yF0NXektQOz+FG+NkiYCs48EhzaV+hY/OKQ9C
-         4XF+vDdIgttfV8UAbpFcFCZrcGsRrUDhXpq6R2y5chH6xFQmd9l3AbeRWdTQCPeNmBB1
-         QM0vLfDVD5Ivnpt7LRZelVqWixZuP2jTTRaTKZROiDfia8Um/sdz6+8tKNnKgTuBKU22
-         phYj0JFF8C64hGr6NZNH/1OLy4y/6SYfP8l9AI3HxSImyFNbkahwYoaDl39gKdEU62/b
-         heYw==
-X-Gm-Message-State: AC+VfDyDWZBJHCOzpCCaLmy9s7dPCz6b0WT82oTBwH2DtnVu8ugG7UXe
-        qvpqiHgp6E0eehBdzzWx+9fzNA==
-X-Google-Smtp-Source: ACHHUZ5oZI4vM5klpIvNpSeLam1FpeTIrUd6z4TheZbW83bEoerWLkA49DuR3UHCj0tPWhNUSDEGOw==
-X-Received: by 2002:a0d:e243:0:b0:56d:2e66:bd55 with SMTP id l64-20020a0de243000000b0056d2e66bd55mr17381185ywe.3.1687349682055;
-        Wed, 21 Jun 2023 05:14:42 -0700 (PDT)
+        bh=iBDaBkOGYfSChC73b3wgmS+AK9REvwqnuz5ukCaW77I=;
+        b=dULgP39MS2JWmM2IRcFVZgUGg+TCbs+e5PxK25BDP2+scvGYP8NSNVpFc4I+zfgQgH
+         PyeefsdIF5DD+bj37GoycZ9+mgU8mI5MBcjppmSyf+YAfl6eUyv/l1IsA9/lNIIfYcB3
+         yg8qrEUlA2FfXaGHqBq5crobEu4NGPjsgbeyefYK4e6QlMTL8DHJb9CrBXyvYtS6BnnV
+         BPqrEtG9hOwom2rMviu5tUMExN3umy8LIDkFVAAbSxuwM/kjPSRVrhSnlOi9HAQ6gf6r
+         h2ZAxK9Du/iZD2XETT1CP3eVCkPlgACb+wkbl3Xamv0lTMovKu47VYk7RltHT/JQA1GX
+         vUGg==
+X-Gm-Message-State: AC+VfDzkkoab+rwmAaj0VqrH1BZV/vbWTjZ5YLZ0IVIztPxJ74ygh9OT
+        asOlOb76ENKS0a4QgZeIDlXo6g==
+X-Google-Smtp-Source: ACHHUZ42bLFPgvg9ODEi1uOO33J4Z7TrngLCEFYIxOqbVlzpkeigA3L/oauxpqsJ3lZhMxMFUObjFQ==
+X-Received: by 2002:a25:db85:0:b0:bb3:ab9a:46e2 with SMTP id g127-20020a25db85000000b00bb3ab9a46e2mr11036971ybf.63.1687349972582;
+        Wed, 21 Jun 2023 05:19:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w142-20020a0dd494000000b00568a207aaedsm1059186ywd.68.2023.06.21.05.14.41
+        by smtp.gmail.com with ESMTPSA id d18-20020a5b0c52000000b00bc501a1b062sm876013ybr.42.2023.06.21.05.19.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 05:14:41 -0700 (PDT)
-Date:   Wed, 21 Jun 2023 08:14:38 -0400
+        Wed, 21 Jun 2023 05:19:32 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 08:19:29 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/4] repo-settings: introduce
- commitgraph.changedPathsVersion
-Message-ID: <ZJLprjbzaSvwkNTd@nand.local>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 0/4] Changed path filter hash fix and version bump
+Message-ID: <ZJLq0XE3lSVzQ28k@nand.local>
 References: <cover.1684790529.git.jonathantanmy@google.com>
  <cover.1686677910.git.jonathantanmy@google.com>
- <6adfa53dafc8c34f94a017fdc08460911f53d310.1686677910.git.jonathantanmy@google.com>
+ <xmqq5y7r5fsx.fsf@gitster.g>
+ <c7b66d2c-cdc3-1f0f-60a0-a2ee21c277bf@github.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6adfa53dafc8c34f94a017fdc08460911f53d310.1686677910.git.jonathantanmy@google.com>
+In-Reply-To: <c7b66d2c-cdc3-1f0f-60a0-a2ee21c277bf@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 10:39:57AM -0700, Jonathan Tan wrote:
-> diff --git a/Documentation/config/commitgraph.txt b/Documentation/config/commitgraph.txt
-> index 30604e4a4c..eaa10bf232 100644
-> --- a/Documentation/config/commitgraph.txt
-> +++ b/Documentation/config/commitgraph.txt
-> @@ -9,6 +9,16 @@ commitGraph.maxNewFilters::
->  	commit-graph write` (c.f., linkgit:git-commit-graph[1]).
->
->  commitGraph.readChangedPaths::
-> -	If true, then git will use the changed-path Bloom filters in the
-> -	commit-graph file (if it exists, and they are present). Defaults to
-> -	true. See linkgit:git-commit-graph[1] for more information.
-> +	Deprecated. Equivalent to changedPathsVersion=1 if true, and
-> +	changedPathsVersion=0 if false.
-> +
-> +commitGraph.changedPathsVersion::
-> +	Specifies the version of the changed-path Bloom filters that Git will read and
-> +	write. May be 0 or 1. Any changed-path Bloom filters on disk that do not
-> +	match the version set in this config variable will be ignored.
-> ++
-> +Defaults to 1.
-> ++
-> +If 0, git will write version 1 Bloom filters when instructed to write.
-> ++
-> +See linkgit:git-commit-graph[1] for more information.
+On Tue, Jun 20, 2023 at 09:43:46AM -0400, Derrick Stolee wrote:
+> This version is not ready. The backwards compatibility story is
+> incomplete.
 
-Hmm. I'm a little confused: we should still be able to use the old
-broken filters if (and only if) the paths we're querying don't have any
-bytes with their high-order bit set, no?
+I'm also late to the party, but I agree with Stolee here, having come to
+the same conclusion about needing to support reading older (corrupt) Bloom
+filters when possible (i.e. when paths contain no bytes which have their
+high-order bits set), and assuming the filter contains all paths
+otherwise.
 
-That should be true with the caveat that querying such a path would need
-to result in our querying function returning "maybe" instead of
-"definitely not" to protect against the false-negatives described
-earlier.
+>  commitGraph.changedPathsVersion: Which version should we _write_
+>  when writing a new commit-graph? Defaults to '1' but will default
+>  to '2' in the next major verion, then '1' will no longer be an
+>  accepted value in the version after that.
 
-As I read this, it seems to imply that as soon as this change lands that
-we'll stop reading old Bloom filters altogether. Is that the case?
+I am not sure if there's a situation where we'd ever want to not write
+the newer versions when starting a new commit-graph (or chain) from
+scratch.
 
-If so, I wonder if we can do this with without needing this
-configuration setting at all (by writing the newest version of Bloom
-filters possible, and working around the existing ones with the
-aforementioned workaround).
+I think that follows from what you and I are both suggesting w.r.t
+backwards compatibility. If that's the case, I think that we could in
+theory drop this configuration setting altogether.
+
+Or, at the very least, we should be able to change it change only what
+version we *write*, not read. I think this is what you are suggesting
+above, but I am not 100% sure, so apologies if I'm just repeating what
+you've already suggested.
+
+> The tricky part is that during the commit-graph write, you will
+> need to check the existing filter value to see if it matches. If
+> not, the filters will need to be recomputed from scratch. This
+> will change patch 4 a bit, but it's the right thing to do.
+
+Yup, good suggestion.
 
 Thanks,
 Taylor
