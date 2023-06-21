@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4607DEB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 20:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BDA7EB64D8
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 20:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229976AbjFUUf1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 16:35:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55738 "EHLO
+        id S229866AbjFUUtM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 16:49:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjFUUf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 16:35:26 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 818EE19A2
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:35:25 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-57059e6f9c7so124719347b3.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:35:25 -0700 (PDT)
+        with ESMTP id S229624AbjFUUtK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 16:49:10 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3EC110D2
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:49:09 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-bd5f9d084c9so7326012276.3
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687379724; x=1689971724;
+        d=google.com; s=20221208; t=1687380549; x=1689972549;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ny85Qk+4f9IJpeKs58oY2J/urYzxNx2Wgx8KTlGsUo=;
-        b=zEeXZCawdF1K9bKjdvwaTTGoOMmiB2eUNM0048A2vCgcRd9I+TcJSHmBXLehYEoWO2
-         5wNQNm4y8MHrq6LI2b9op3TV4l0VsOIeeGic9Ee8qkF/H3/e4Cp1ArwY+brcTjgBHMwJ
-         ZktPIWrfeeXMkYlTI6qts3GUH0KrzxoVc7XPAPhzwaEf/kd2roQCE902tg7//0gHeSGB
-         WjLWyfVtO8ElRGIs0jWFSQH4wFTlG7ILr/+ygoC5+ZjKhTzcjaIPEp4Uw0evr+7P1TBL
-         8ZKJLnG5mNBOWoJzzhqpIe+IZachPOxoO1X+aDVf1uB6YeLnIcCtKgp4P7o5NpJ8aNbX
-         UjNA==
+        bh=bXvlgeMXYrKH4aV8hTrtqu/RQbGPT+IFbzbJ3NLA3Mw=;
+        b=g4mp1VsNY1enEjO6ZH545T+9fdtb7sPmKUQmulQU8z9BG0AkB0CIjihiho0RUWO9Aw
+         wxIFPfVnPDc8ep8GLptYrQAW9jTnD4pF40kJdnkKYqtE94H0Do8ida+u/GlC+IeXIxnR
+         daeyqlMVDF9RHv2N5qfLIrs1NfFmyLcXohXv2SXVbJf7ukOPbwqgI+2ZUhCyK1Vs+aOT
+         24rCM6V4jsTvq/rWMS522SwPV29w0ziTiEw7iMMXiKUYf4rs8VkQCMHlVaKKJwC0i5Mr
+         lp5SnTTNosK0inQ3Uud0DPQMCyF8A050zkIKbY1nIm3yceBeDJxK1/p+tPkkQgmf4jHh
+         JSEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687379724; x=1689971724;
+        d=1e100.net; s=20221208; t=1687380549; x=1689972549;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ny85Qk+4f9IJpeKs58oY2J/urYzxNx2Wgx8KTlGsUo=;
-        b=aUg2ivqZNqrpkF9MTauKN52zPE838U+iGdfgbmXBBuV5rzXkeDs3mgi9wZrJbPCSYo
-         Rwrz7fCDP/AcvyQglvh7omXIWaupxax9e7pzdAuEJSlYMAzNu3i5qBEcAaTQ3B2DArGM
-         n0sWqN9tLDSf0pmhAc3qSR4oAGFd6art8FcMi6l2zmlkeoPttzV5q1DIgd/fwlpV1Psn
-         26SCCOBJqFmzz/S2z3RSJESwlfLtTRoZSCE+7MNHWY5Or+lwVOl6Istn/w1xVJ/RpO6r
-         /aS+998zpS5MsErUmxD9EiIs/yrGvH+n9XPRWsnbdxFv+oE7t0K/GDG8GrVz5l5rnm5b
-         bmLg==
-X-Gm-Message-State: AC+VfDzk+Z80UoNwYIHPxw50lGAFeQm0Gu2nQ7Z3zB9v5kdWl1MKbmFt
-        oK2iUIj7ctmVRPvxu0fNz9++Abpn3bi4kQ==
-X-Google-Smtp-Source: ACHHUZ55T0G+yyfZHiC6QD1UynDJqltHnTr9FSCUo2mu9/SYjktPM/DmsQqA1OcCjuNvcqUZGhBF3mycP8GUAw==
+        bh=bXvlgeMXYrKH4aV8hTrtqu/RQbGPT+IFbzbJ3NLA3Mw=;
+        b=eBfA7w+5D7xKQ4U9gReLiZHYn3ckX1HVwsTALDQrGHQjX0wkyuZMtuVxMhTD83QVk9
+         1UZqBIYpbNNZYrMR2QXY6uu6qq3L040qahSI4xtIO10xWl+Ffy/M5q17jUF6knhX5LSD
+         Y9kAif+a0fvAJRLbsGcxlQZLgB9h1yf0u99zhB7CGbMqIwfR7VWwlNJMbhtDKGhwBAR9
+         9KBaPzlVc9ZoxV39ugxE0GdRsg0UEAz5gsBYYRC5YeFZY1FUcVN4BcYwvP6jVdJAxjz7
+         VJtKbP6p4aJD36j0DFb3V7kYV8aUFQ1I7qnm1vAQNkYtzpVwYPoMkIsF67L7xJcFp/uS
+         ObTw==
+X-Gm-Message-State: AC+VfDwbXzclrWa5ZkbzEfnHA9goznuEo519rdIahRSNrL0vCNZQt4Po
+        wKgBElSooQko0EAfRCYdDUusUSU3PRf/DQ==
+X-Google-Smtp-Source: ACHHUZ7dWuPO/lmUGM4dJXj9uoFC0edTVB7+Wp6VPLN8AdP7u6unFWWR8y/6SuR1Tm/fRs2sd3AUPFgQcoNHmg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a81:4313:0:b0:56c:ed45:442c with SMTP id
- q19-20020a814313000000b0056ced45442cmr7610606ywa.5.1687379724808; Wed, 21 Jun
- 2023 13:35:24 -0700 (PDT)
-Date:   Wed, 21 Jun 2023 13:35:23 -0700
-In-Reply-To: <9356d14b09a468d8ef2884cd7d76e59ec5c16691.1682089075.git.gitgitgadget@gmail.com>
+ (user=chooglen job=sendgmr) by 2002:a25:7346:0:b0:bfe:9259:8f1d with SMTP id
+ o67-20020a257346000000b00bfe92598f1dmr1851725ybc.6.1687380549243; Wed, 21 Jun
+ 2023 13:49:09 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 13:49:07 -0700
+In-Reply-To: <f8e64c1b631116367e6e68fcfde711b507a03a94.1682089075.git.gitgitgadget@gmail.com>
 Mime-Version: 1.0
 References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
- <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com> <9356d14b09a468d8ef2884cd7d76e59ec5c16691.1682089075.git.gitgitgadget@gmail.com>
-Message-ID: <kl6lpm5or1tg.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 4/6] rebase --continue: refuse to commit after failed command
+ <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com> <f8e64c1b631116367e6e68fcfde711b507a03a94.1682089075.git.gitgitgadget@gmail.com>
+Message-ID: <kl6lmt0sr16k.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 5/6] rebase: fix rewritten list for failed pick
 From:   Glen Choo <chooglen@google.com>
 To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -67,56 +67,37 @@ X-Mailing-List: git@vger.kernel.org
 
 "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> If a commit cannot be picked because it would overwrite an untracked
-> file then "git rebase --continue" should refuse to commit any staged
-> changes as the commit was not picked. Do this by using the existing
-> check for a missing author script in run_git_commit() which prevents
-> "rebase --continue" from committing staged changes after failed exec
-> commands.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> When rebasing commands are moved from the todo list in "git-rebase-todo"
+> to the "done" file just before they are executed. This means that if a
+> command fails because it would overwrite an untracked file it has to be
+> added back into the todo list before the rebase stops for the user to
+> fix the problem. Unfortunately the way this is done results in the
+> failed pick being recorded as rewritten.
 
-For someone unfamiliar with "git rebase" code, I think it is easy enough
-to gather that "rebase --continue" will refuse to accept staged changes
-if the author script is missing, so we are reusing that mechanism to
-achieve our desired effect. It's not obvious whether this might have
-unintended consequences (Are we reusing something unrelated for an
-unintended purpose?) or what alternatives exist (Is sequencer.c so
-complex that there isn't another way to do this?). It would have been
-helpful for me to see how these considerations factored into your
-decision.
+I could not make the connection from the described problem to the
+proposed solution. In particular, I couldn't tell what about "the way
+this is done" that causes the incorrect behavior (e.g. are we failing to
+clean up something? are we writing the wrong set of metadata?).
 
-> When fast-forwarding it is not necessary to write the author script as
-> we're reusing an existing commit, not creating a new one. If a
-> fast-forwarded commit is modified by an "edit" or "reword" command then
-> the modification is committed with "git commit --amend" which reuses the
-> author of the commit being amended so the author script is not needed.
-> baf8ec8d3a (rebase -r: don't write .git/MERGE_MSG when fast-forwarding,
-> 2021-08-20) changed run_git_commit() to allow a missing author script
-> when rewording a commit. This changes extends that to allow a missing
-> author script whenever the commit is being amended.
+> Fix this by not calling error_with_patch() for failed commands.
 
-As I understand it, the author script can now be missing in other
-circumstances, so we have to adjust the rest of the machinery to handle
-that case? If so, this seems to suggest that there are some unintended
-consequences.
+So unfortunately , I wasn't sure how this solution would fix the
+problem, and I didn't dive too deeply into this patch.
 
 > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index ff0afad63e2..c1fe55dc2c1 100755
+> index c1fe55dc2c1..a657167befd 100755
 > --- a/t/t3404-rebase-interactive.sh
 > +++ b/t/t3404-rebase-interactive.sh
-> @@ -1288,6 +1288,12 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
->  	test_must_fail git rebase --continue &&
+> @@ -1289,6 +1289,10 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
 >  	test_cmp_rev HEAD F &&
 >  	rm file6 &&
-> +	test_path_is_missing .git/rebase-merge/author-script &&
+>  	test_path_is_missing .git/rebase-merge/author-script &&
+> +	test_path_is_missing .git/rebase-merge/patch &&
+> +	test_path_is_missing .git/MERGE_MSG &&
+> +	test_path_is_missing .git/rebase-merge/message &&
+> +	test_path_is_missing .git/rebase-merge/stopped-sha &&
 
-Checking that the path is missing seems like testing implementation
-details. If so, I would prefer to remove this assertion here and
-elsewhere.
-
-> +	echo changed >file1 &&
-> +	git add file1 &&
-> +	test_must_fail git rebase --continue 2>err &&
-> +	grep "error: you have staged changes in your working tree" err &&
-> +	git reset --hard HEAD &&
-
-This seems reasonable.
+This also seems to be testing implementation details, and if so, it
+would be worth removing them.
