@@ -2,84 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A82FFEB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 23:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9090EB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 23:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230189AbjFUXHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 19:07:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53562 "EHLO
+        id S229757AbjFUXp7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 19:45:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjFUXG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 19:06:59 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A740B1988
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 16:06:58 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-53425d37f33so2914695a12.3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 16:06:58 -0700 (PDT)
+        with ESMTP id S229504AbjFUXp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 19:45:58 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317C910C1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 16:45:57 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9896216338cso208353766b.3
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 16:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687388818; x=1689980818;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9wG3L7xxGCptpkYJasB51bek7CIrLFB0gsMrVH9JeFc=;
-        b=uqoZ+OscWCbVwNjdGxZtJZAK62JOQ0ZloT49SL5Kkrf088rXMXdkFgbcZFRej/h0wo
-         E4Bem6p39usVXVbE8nWXmUY9pR0voe4LS46C0NHHsIve2BNAtoILR9qoCe2yz5oWCymG
-         KdmnkpvUNLuCNbU3Ts5scD/S4vrmHe5vaFX0geTT4OlKW1/wjbu1S4NrEcTuVwHBW5Xu
-         SM6YPINDhuQcWW62ty+By8Unh6aefQeHDTF4/sboJhsjbvBI222D6QL+I4GiLIaXZWvh
-         wkr8enKCJHCWL/t2jR7pRNhSczCGyStyBpwkDuUyBBbNwPfShYUJyBROsUf06tgNF5+R
-         P+9A==
+        d=slack-corp.com; s=google; t=1687391155; x=1689983155;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pZ/izSG95CtTP88Awg8ep7GKvaZjV2N8OvycvNP3xCY=;
+        b=EO5uLTmYMCMEVMTg87cAV6XY7zFy/M4EImVi0UhBV+N+oQCyzqp4jHsSF80PLdc++z
+         xOXOepVdIKWpbideKjBrZ3uSvN4BlhYr7mUYrg+v2pq5FOYgx2X6IM8EhpOuRSXl1vui
+         tIziwWbU3KtS14hESgiqvST21ssbdVb64w/98=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687388818; x=1689980818;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9wG3L7xxGCptpkYJasB51bek7CIrLFB0gsMrVH9JeFc=;
-        b=L4A5Vg9nYZ9BtdilYYeg4m2f+qKp15f/reIPp/O5ceyhIRDxoEqek4wBYONEmsZ5nu
-         +SqvXwgnciy6vkh6nOi/qkRto5thxF1kADMzJZZWu1tr/PMRktjt3Co0Ay1u1RZGe4JS
-         yRjucGOgsJHWTYeXpT1s3229m4XITgSPJkCMoHL9U4dxK9T7evm6KG/mturBkzl/Rfgw
-         MhxvITBtKiJ5mueiqE/i/6uKU1cmoXc/FAgo/6aZyjJvIjn4Fg8jR0G/VQVh4vfPkTO3
-         0f2lWzILmC+s+uFH9MQlfY5h8QJe8/goRZ4oiaOhBAmCsczEnFCLJaPoExECd6EICpIv
-         CCxw==
-X-Gm-Message-State: AC+VfDxsZQlDKhHEzEc4qtrmujqMH7xiXkSLlLDPlQWyCmz4DARhar0W
-        Ad2YIUpGXYivfwCA5SbGT2zRcNLj7VvqPg==
-X-Google-Smtp-Source: ACHHUZ4QAnZqgUjWorV/0jzj5xgaMs3gGjK1s+Wucb/Kc7mcTcaw83GH+CmtCVSYf5P1vRtG66ctO/RTgI2Uog==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a63:4b18:0:b0:554:1af0:81e0 with SMTP id
- y24-20020a634b18000000b005541af081e0mr785700pga.7.1687388818091; Wed, 21 Jun
- 2023 16:06:58 -0700 (PDT)
-Date:   Wed, 21 Jun 2023 16:06:43 -0700
-In-Reply-To: <xmqqr0q4fpzb.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1497.v2.git.git.1685472132.gitgitgadget@gmail.com>
- <pull.1497.v3.git.git.1687290231.gitgitgadget@gmail.com> <xmqqr0q4fpzb.fsf@gitster.g>
-Message-ID: <kl6lh6r0qut8.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 00/12] config: remove global state from config iteration
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+        d=1e100.net; s=20221208; t=1687391155; x=1689983155;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pZ/izSG95CtTP88Awg8ep7GKvaZjV2N8OvycvNP3xCY=;
+        b=ig+s6eoXKIt3BJmHUtnV/fS5hy/X6uHvxf6hyfSzHcpwLbvlcEDAcIWvIbB34T6No1
+         vGwSTk3ZqYi3I24fAtZcO/RCwxl22H6rmPnjw57sV7GxpPcT+cmI5ivEYhD1aEYaT350
+         07WWXzYs3eHoxEmt3zB4Cc4BZNjZ+zReHEasHKMI/jSWtFnWu75/6y20QCL32R+UNfyj
+         YYdJT9Y/cNHa00qrZYWl8MzajSr9hXIJ9ljHdob7siTymMn3Mrng6cmlHS0BekjnfM7Y
+         h088ylYGHeTXvPIo7hjzlEXIRKlrBTCG2JrqzWvmFaeOr1MQRWBi5KQ8BOhSQzk3m2uj
+         m73g==
+X-Gm-Message-State: AC+VfDyRihLWREPmq6O1TPMBPv/ITGCavl6VhEnj+EBlN/Px/5TSfY46
+        jN+GsHfvpHR/7mh/5ExUi53KqdLRUvvbJnONw1n0twAb2aDsbONpPbs=
+X-Google-Smtp-Source: ACHHUZ6xGzhPTbA5KaJqdhKPKgVWKJ7EHs15HvnjAK1fpYNtoSKEkTMKh0tFgGUlHJkIepr/4J+j7FIsK32/U0LAhOM=
+X-Received: by 2002:a17:906:6a25:b0:989:40a9:505d with SMTP id
+ qw37-20020a1709066a2500b0098940a9505dmr5741315ejc.0.1687391155368; Wed, 21
+ Jun 2023 16:45:55 -0700 (PDT)
+MIME-Version: 1.0
+Reply-To: jkasky@slack-corp.com
+From:   Jesse Kasky <jkasky@slack-corp.com>
+Date:   Wed, 21 Jun 2023 16:45:44 -0700
+Message-ID: <CAJSLrw6qhHj8Kxrqhp7xN=imTHgg79QB9Fxa9XpdZYFnBKhkvA@mail.gmail.com>
+Subject: BUG: config.c:129: kvi should not be set while parsing a config source
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> I've reviewed them in its current shape, but it seems to cause too
-> many conflicts even when merged to 'next', let alone 'seen', with
-> interactions with topics in flight:
->
->  * ds/add-i-color-configuration-fix (easy)
->  * ps/fetch-cleanups (easy but messy)
->  * vd/worktree-config-is-per-repository (moderately messy)
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Ah, sorry. I ran some trial merges against these before I sent out v3,
-but I forgot as I sent this out. Not queueing this version sounds fine.
+git clone --no-checkout --sparse --filter=blob:none --depth=1 <repo> <dir>
+cd <dir>
+git sparse-checkout add <dir1> <dir2>
+git fetch --depth=1 origin <commit>
 
-> some of which may have graduated to 'master' in the meantime, so it
-> might not be a bad idea to rebase on a more recent 'master' after
-> you collect and adjust for review comments on v3.
+What did you expect to happen? (Expected behavior)
 
-Sounds good. I suppose it would also be worthwhile to base it on
-conflicting topics queued for 'next'.
+Expected the fetch to complete
+
+What happened instead? (Actual behavior)
+
+Received the following error:
+
+BUG: config.c:129: kvi should not be set while parsing a config source
+[1]    5842 abort      /opt/homebrew/bin/git fetch --depth=1 origin
+
+What's different between what you expected and what actually happened?
+
+Did not expect to encounter an abort.
+
+Anything else you want to add:
+
+Two items I came across while trying to troubleshoot:
+https://github.com/git/git/commit/9828453ff00b330c57daa3a8b672cbb5f0cdce34
+https://github.com/Homebrew/homebrew-cask-fonts/issues/7718
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.41.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 22.5.0 Darwin Kernel Version 22.5.0: Mon Apr 24 20:52:24
+PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T6000 arm64
+compiler info: clang: 14.0.3 (clang-1403.0.22.14.1)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
