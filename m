@@ -2,128 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 338E9EB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 17:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01CCCEB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 18:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231712AbjFUR4L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 13:56:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57726 "EHLO
+        id S230393AbjFUSUW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 14:20:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231702AbjFURzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 13:55:54 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854EF1726
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 10:54:59 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-51be42391a3so915678a12.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 10:54:59 -0700 (PDT)
+        with ESMTP id S229692AbjFUSUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 14:20:11 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B5A1FC0
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 11:20:04 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-6686c74183cso3855672b3a.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 11:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687370080; x=1689962080;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=egvMKG++de2nbsLjI3XlqpZ/L/SpYApTlVIrtajiJ08=;
-        b=JYL9r0KNlr8IIoeaOEjzkd1urf0csuvAu0zUfH5jgfqTBmsaWcclNPseL4/Ec7rkY9
-         V3xqfhm9ccvWSFrN4Y6kgJS/tN5cSFltYZCR6p1qB4rkOcYeeegK7DgU79eiOgOTG8Xp
-         Ykr5yh5PHHTeBlrcbEagqtFKOancaoZO6Uicu3P6KVCPZADpt7UAITunpMEbh9AsGOBn
-         0U7wrenTXBD4qqqlcFVOhD38UX8sw23az72NaRCUsX6Xtk0cVB3+BT27fn4ypVFrdpcn
-         spnFhZXKECNH2KiWqHF6C8UDBcMD0VeWMxwwML83hxibG/ezE3gQTo/aejXQLs9oXWAq
-         rZiw==
+        d=gmail.com; s=20221208; t=1687371604; x=1689963604;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9VJVvxv8Oftxk22V9FxNoC3YG/TNjw5WKkmX0EcvW+0=;
+        b=RjBAG8kfmwyntZwOzKa8z7cqrVLJzH/hS5JXvhdz0bj/H7j1j7wL4TN8bXRlVTE/xA
+         PFVNJoVX095ylwKfPtEEoucYIpkgXqdKt16sPYy5FnulD2TzmsvwmaxKsVunaOtvBNqq
+         5s6buqqlYs8XduP1k62X6jA42F7qhd17p0rkV730iyFTY2RkBodNcX20bIp6wb8j0hTv
+         uc1upLiYWukz7lLRDc5n8nMLgZoXJws0miMZ0nfP3uG2dhgde2LOnPT2Hwm/viOrZx3k
+         Y2aURtTpolYYESrVZ/6T6uWzZJDfP0gTqLmfUfx0TlWDXNf6EIZLj3e09gO4/AcdsfBb
+         vYRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687370080; x=1689962080;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=egvMKG++de2nbsLjI3XlqpZ/L/SpYApTlVIrtajiJ08=;
-        b=KjpyyJZNbIQJMT2iH7PGGnvLYdMaPjGG1S4K5g+p6SzYKBhP5flqAzAjWGmu1v05kL
-         TQLws3A/SsQTARQkyXvlpfqpqPeRxvaHCKFSmCLeo17ylBJYE8D0uJS7/8HhLggjcSf5
-         2MU8O0cwNX5LDV/1IbIVQO08hRb1JTOewNod/+TJlR5d25nBFx4gIAm4Q9U7assCmOmu
-         DB21m+scXHxjzjYEzOWyFNumk3DLOO6yTXjrWuryzOuKSTEkf2q8PZSxmzgPEB2S2EPa
-         rzS79vkFDhQYYHoaTykFCOwqcJcCtZcKcwDoy6eDX0LoKwfB5C4IJNs+21pAZnwtjuuP
-         UqDw==
-X-Gm-Message-State: AC+VfDxaSrJSXrXsR+csGHP+NdqLo6L7Dilym3S+kc593+qdv2AlyW9L
-        4C4lxKxS9GqWlzUJaI4o2NzNprf14W/AcTs9TlM=
-X-Google-Smtp-Source: ACHHUZ6BcuJU502jJbHv1Jybwg5ggOt3C/KbDpNjJb60JOqg2GKgyLU/ZDW5zkSgpEl3ypSRsSmk71hi1WLxy8yfnUI=
-X-Received: by 2002:a05:6402:514d:b0:51b:ca99:9fef with SMTP id
- n13-20020a056402514d00b0051bca999fefmr5431097edd.19.1687370079728; Wed, 21
- Jun 2023 10:54:39 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687371604; x=1689963604;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9VJVvxv8Oftxk22V9FxNoC3YG/TNjw5WKkmX0EcvW+0=;
+        b=lB+Z4DgrOH4GdPE549pH6LhN4G++BLsueWymNEU2XmJsy5cvLETb0rSE0ztIk6XV8w
+         ZcthGgCnPju8Nzxyu1LSiS+FFXV/oESd3g0p0CQkii58b2AlFJGwBtggN7TB9qCwD4Dy
+         F5wDfBn6i/4ANpXzTERP25L+ervb1fPmayQMj5w5wxvvv/XIdzdbYu7PNMjMWKw0mir3
+         ftXfqaxYucRrwpMs1iFFFuNfi+5F1T1F/PGM+QjNsGHiCkyAdcUFL2Vik22iiE1FOAK8
+         AggeJd0omQBrTaKLMH6OUGP6B7XXnpvyOj5nDqazKSM/Xs1IJryyJGqNnrdci3iYvUIS
+         Io5w==
+X-Gm-Message-State: AC+VfDz/5QciDmg8CRkfqnJH+jBZG0OaOemPRz5TT0Len/m38kjJr1yz
+        3FxNvrNCEkDHhpbdUtZc6D0TJGGtlMQGCQ==
+X-Google-Smtp-Source: ACHHUZ5xQcznS3xuFEO5Jk6OA33g8Et+HZ50oTCuCqbKAb8QwAaw/kmRXY660DQ5CE2JqUw6v2JDKw==
+X-Received: by 2002:a05:6a00:2292:b0:668:731b:517e with SMTP id f18-20020a056a00229200b00668731b517emr14094054pfe.24.1687371603566;
+        Wed, 21 Jun 2023 11:20:03 -0700 (PDT)
+Received: from five231003 ([49.37.158.127])
+        by smtp.gmail.com with ESMTPSA id j18-20020aa78d12000000b0064f2bbe2d2dsm3200140pfe.24.2023.06.21.11.20.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jun 2023 11:20:03 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 23:49:58 +0530
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [GSoC] Blog
+Message-ID: <ZJM_TjBtJVYVD5P5@five231003>
 MIME-Version: 1.0
-References: <pull.1549.git.1687327684909.gitgitgadget@gmail.com>
- <20230621081754.GA803861@coredump.intra.peff.net> <xmqqzg4siyru.fsf@gitster.g>
-In-Reply-To: <xmqqzg4siyru.fsf@gitster.g>
-From:   =?UTF-8?Q?Guido_Mart=C3=ADnez?= <mtzguido@gmail.com>
-Date:   Wed, 21 Jun 2023 10:54:27 -0700
-Message-ID: <CA++DQUkVzz8Zn0x6BR+sAEo_LXFR67Z+JOgMhcY2JpS5UGi4rw@mail.gmail.com>
-Subject: Re: [PATCH] ls-files: add an --exclude-links option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Guido_Mart=C3=ADnez_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZIdrQybUsjEcxMrb@five231003>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio, thanks for taking a look!
+Hi,
+Week 4 post is here
 
-On Wed, Jun 21, 2023 at 9:08=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Jeff King <peff@peff.net> writes:
->
-> >> This option enables a straightforward implementation of a `git sed`:
-> >>
-> >>     #!/bin/bash
-> >>     git ls-files --exclude-links -z | xargs -0 -P $(nproc) -- sed -i -=
-e "$@"
->
-> Unrelated nit.
->
-> I think -i -e above is iffy, as it does not distribute -e across
-> "$@" and your users may not always want to edit the files.  It is
-> better to leave them to the callers.
->
-> "sed" is also something the caller can easily pass from their
-> command line, for that matter ;-).
+	Week 4: https://five-sh.github.io/2023/06/21/week4
 
-I should have known my one-liner would be torn to shreds :-). But yes, agre=
-ed!
+Feel free to suggest any changes or comment on or off list.
 
-> Passing the entire command
-> part run under xargs from the command line of the wrapper,
->
->     $ git for-all-paths grep -e pattern
->
-> would also work just fine, for example.
->
-> > ... A mild application of perl works, though:
-> >
-> >   git ls-files -s -z |
-> >   perl -0ne 'print if s/^100(644|755).*?\t//' |
-> >   xargs -0 ...
-> >
-> > So I dunno. That is not exactly pretty, but if you were hiding it in a
-> > "git sed" alias or script, it's not so bad.
->
-> Yes, the above would be a perfectly reasonable implementation of
-> "git for-all-paths", especially if you do not hardcode anything in
-> the ... part and instead use something like xargs -0 "$@" there.
->
-> What is somewhat unsatisfactory is that we cannot pass pathspec to
-> the "ls-files" so that the command does not have to be for-all-paths
-> but can be usable as "git do-for-paths -c '<command>' <pathspec>".
-
-Indeed, a command like that would be great, and doing `git
-do-for-paths -c "sed -i 's/old/new/g'"` is still extremely convenient.
-I suppose this command should take options -n and -P to pass to xargs.
-In the case of sed, running in batches is _much_ faster than 1-by-1,
-and it trivially parallelizes.
-
-So would it make sense to
-1- Add the file type filter to ls-files
-2- Use that to implement a proper git-do-for-paths script/binary,
-which can take pathspecs, filetype filters, -n, -P, and maybe more
-?
-
-Thanks again!
-Guido
+Thanks
