@@ -2,177 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A718EB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 07:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 812D4EB64D8
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 08:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231378AbjFUHar (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 03:30:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
+        id S231214AbjFUISf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 04:18:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231183AbjFUHak (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 03:30:40 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CA10172C
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 00:30:28 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f9c532fa45so1237415e9.2
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 00:30:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687332626; x=1689924626;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ww97vxDb5eyBOCbsy0ZIpc+K8AXKXdnYa1caNBwqeYU=;
-        b=e5kN1Z0fnVL3J70VVlj25fy7x+WieHdSTITalAPf9F0YT5ses5xwtMEwGaOvrRS/Ml
-         qbkystgMrJJz/oRSuzbxr9/sCjLtvaQCyOi+M8sCiTw4G7RK5jzrpwhUzg7daRLJ/hY3
-         D4cA2UxmhqMwSxo+ywpCJwVBqLfJ78PHeRjLLOXpMF5+FsXYOr8MobjDYUn78iaIHwF7
-         7eP4T1gCMtMbIuIiiGB1x2mR9+meJuMJ2JISQaAA0cJ5x/gEWL000S0VwIlbgyi3DN8S
-         aqTYxgyzzzaiz9mgTqE6tsohFtgEEkSg4Y1tJ99HyHzrLuozIiteoAfpQAddJV/nUicZ
-         Oi0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687332626; x=1689924626;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ww97vxDb5eyBOCbsy0ZIpc+K8AXKXdnYa1caNBwqeYU=;
-        b=S4eCo5F2riPq2xw+qFYNApkC9FYM0doLLwdJKd5cwaILsfaWRg3IH0S1WCIFCuIUbI
-         XEiTE+dxoBUJKBDwRWFiYuycAPAtQ5c3vdZNvYFsw0USuegcObYDBnNhZ1YcBDv14AHT
-         Dp8pQ8PM93Szl6JeV3z0gkVIBPLaYN+FE9akTzxAKhp8AsDZQXoHzcaJ4MZS3Jl9RV9N
-         WZqviINm2rlJp7y17QKhW/ZUdJlOZrIF+IeVUpx5Dr3HgmCWOCclTgxpQZn6CBEjlz9P
-         OdFPaCCXkORyOyz6RZuoWchzozbw5296/1FUteVPdK4Ybnz1sVLgsDm0qFImMJlH6Wu4
-         kYtw==
-X-Gm-Message-State: AC+VfDx1umPOEChmtbNcXKIqq1TTlLSEauqOIr6Xt2xV203i2R7y1qJ6
-        aL8txJHXWZmiHXgJzkdR9pmrOmMZq8o=
-X-Google-Smtp-Source: ACHHUZ68GRB8H0vdB6a/cm0UYWCqISCyRENsRPsmnlpCUbnCufwzwzVgYrymF52oAyCWY0s+6Dkdcg==
-X-Received: by 2002:a1c:f70a:0:b0:3f7:34dc:ed0d with SMTP id v10-20020a1cf70a000000b003f734dced0dmr10385794wmh.25.1687332625933;
-        Wed, 21 Jun 2023 00:30:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q6-20020adff506000000b00307c8d6b4a0sm3689868wro.26.2023.06.21.00.30.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 00:30:25 -0700 (PDT)
-Message-Id: <pull.1538.v2.git.1687332624780.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1538.git.1685303127237.gitgitgadget@gmail.com>
-References: <pull.1538.git.1685303127237.gitgitgadget@gmail.com>
-From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 21 Jun 2023 07:30:24 +0000
-Subject: [PATCH v2] doc: gitcredentials: link to helper list
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S231759AbjFUIR6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 04:17:58 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BAF122
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 01:17:56 -0700 (PDT)
+Received: (qmail 17644 invoked by uid 109); 21 Jun 2023 08:17:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jun 2023 08:17:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13915 invoked by uid 111); 21 Jun 2023 08:17:59 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jun 2023 04:17:59 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 21 Jun 2023 04:17:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     Guido =?utf-8?B?TWFydMOtbmV6?= via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Guido =?utf-8?B?TWFydMOtbmV6?= <mtzguido@gmail.com>
+Subject: Re: [PATCH] ls-files: add an --exclude-links option
+Message-ID: <20230621081754.GA803861@coredump.intra.peff.net>
+References: <pull.1549.git.1687327684909.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, msuchanek@suse.de, sandals@crustytoothpaste.net,
-        lessleydennington@gmail.com, me@ttaylorr.com,
-        mjcheetham@github.com, M Hickford <mirth.hickford@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1549.git.1687327684909.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: M Hickford <mirth.hickford@gmail.com>
+On Wed, Jun 21, 2023 at 06:08:04AM +0000, Guido Martínez via GitGitGadget wrote:
 
-Link to community list of credential helpers. This is useful information
-for users.
+> From: =?UTF-8?q?Guido=20Mart=C3=ADnez?= <mtzguido@gmail.com>
+> 
+> Add an option to exclude symlinks from the listed files. This is useful
+> in case we are listing the files in order to process the contents,
+> for instance to do some text replacement with `sed -i`. In that case,
+> there is no point in processing the links, and it could even be
+> counterproductive as some tools (like sed) will replace the link with a
+> fresh regular file.
+> 
+> This option enables a straightforward implementation of a `git sed`:
+> 
+>     #!/bin/bash
+>     git ls-files --exclude-links -z | xargs -0 -P $(nproc) -- sed -i -e "$@"
 
-Describe how OAuth credential helpers work. OAuth is a user-friendly
-alternative to personal access tokens and SSH keys. Reduced setup cost
-makes it easier for users to contribute to projects across multiple
-forges.
+This invocation would likewise have a problem with gitlink entries (for
+submodules). I think what you really want is not "exclude symlinks" but
+"show only regular files". There is no option for that, but you can do
+it by grepping modes from "-s", like:
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    gitcredentials: link to list of helpers
-    
-    Add link to list of helpers
+  git ls-files -s | grep '^100[67]' | ...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1538%2Fhickford%2Fhelpers-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1538/hickford/helpers-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1538
+You do unfortunately have to then pull the filename out of the rest of
+the line, and since we didn't use "-z", it will be quoted (and using
+"-z" makes it hard to use tools like grep and sed). A mild application
+of perl works, though:
 
-Range-diff vs v1:
+  git ls-files -s |
+  perl -0ne 'print if s/^100(644|755).*?\t//' |
+  xargs -0 ...
 
- 1:  49e2a6fc9f2 ! 1:  26818290468 doc: gitcredentials: introduce OAuth helpers
-     @@ Metadata
-      Author: M Hickford <mirth.hickford@gmail.com>
-      
-       ## Commit message ##
-     -    doc: gitcredentials: introduce OAuth helpers
-     +    doc: gitcredentials: link to helper list
-      
-     -    OAuth credential helpers are widely useful but work differently to other
-     -    credential helpers, so worth introducing in the docs.
-     +    Link to community list of credential helpers. This is useful information
-     +    for users.
-      
-     -    Link to relevant projects.
-     +    Describe how OAuth credential helpers work. OAuth is a user-friendly
-     +    alternative to personal access tokens and SSH keys. Reduced setup cost
-     +    makes it easier for users to contribute to projects across multiple
-     +    forges.
-      
-          Signed-off-by: M Hickford <mirth.hickford@gmail.com>
-      
-       ## Documentation/gitcredentials.txt ##
-     -@@ Documentation/gitcredentials.txt: $ git config --global credential.helper foo
-     +@@ Documentation/gitcredentials.txt: $ git help credential-foo
-     + $ git config --global credential.helper foo
-       -------------------------------------------
-       
-     - 
-     -+=== OAuth credential helpers
-     -+
-     -+An alternative to entering passwords or personal access tokens is to use an
-     -+OAuth credential helper. Many popular Git hosts support OAuth. The first time
-     -+you authenticate, the helper opens a browser window to the host.
-     -+Subsequent authentication is non interactive.
-     -+
-     -+Two cross-platform open-source OAuth credential helpers are:
-     ++=== Available helpers
-      +
-     -+* https://github.com/git-ecosystem/git-credential-manager[Git Credential Manager]
-     -+* https://github.com/hickford/git-credential-oauth[git-credential-oauth]
-     ++The community maintains a comprehensive
-     ++https://git-scm.com/doc/credential-helpers[list of Git credential helpers]
-     ++available.
-      +
-     ++=== OAuth
-      +
-     ++An alternative to inputting passwords or personal access tokens is to use an
-     ++OAuth credential helper. Initial authentication opens a browser window to the
-     ++host. Subsequent authentication happens in the background. Many popular Git
-     ++hosts support OAuth.
-     + 
-       CREDENTIAL CONTEXTS
-       -------------------
-     - 
+So I dunno. That is not exactly pretty, but if you were hiding it in a
+"git sed" alias or script, it's not so bad.
 
+If we were to add an option to ls-files, it would make more sense to me
+to allow the user to include/exclude by mode or possibly naming the type
+(e.g., "f" for regular files, "l" for symbolic links, etc, which matches
+"find"). And then allow inclusion/exclusion similar to the way that
+git-diff's --diff-filter option works.
 
- Documentation/gitcredentials.txt | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 100f045bb1a..a266870a042 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -104,6 +104,18 @@ $ git help credential-foo
- $ git config --global credential.helper foo
- -------------------------------------------
- 
-+=== Available helpers
-+
-+The community maintains a comprehensive
-+https://git-scm.com/doc/credential-helpers[list of Git credential helpers]
-+available.
-+
-+=== OAuth
-+
-+An alternative to inputting passwords or personal access tokens is to use an
-+OAuth credential helper. Initial authentication opens a browser window to the
-+host. Subsequent authentication happens in the background. Many popular Git
-+hosts support OAuth.
- 
- CREDENTIAL CONTEXTS
- -------------------
-
-base-commit: 79bdd48716a4c455bdc8ffd91d57a18d5cd55baa
--- 
-gitgitgadget
+-Peff
