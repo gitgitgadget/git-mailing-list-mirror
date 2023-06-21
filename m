@@ -2,139 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 808CAEB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 20:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5D11EB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 20:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjFUUCi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 16:02:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44930 "EHLO
+        id S230211AbjFUUH0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 16:07:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjFUUCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 16:02:37 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E1981712
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:02:36 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5149aafef44so7488345a12.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:02:36 -0700 (PDT)
+        with ESMTP id S229647AbjFUUHY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 16:07:24 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DFF6AC
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:07:22 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id d2e1a72fcca58-6686a103a8cso3849347b3a.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 13:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687377755; x=1689969755;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+C6pTk7bC80qxVWh6KsC9DENi8PPTQ4gJlN7ff+LmFU=;
-        b=N96xOuC+X2kZYUaE4mK2iDMmBDdM5kiq29FDDBuYJf7h5KY8jCL5klOLfkiedj4zKs
-         qO8LcrW990TtNmJk6+NCeRcCrKGKS7aX8sBLh9s+Cq8eJHsxhaMoVLfw4WeMbd7CyEaw
-         GyJ7PAXbQjqOZDogBaMN9vG34fld+/8y19Z21GUe0iffwp4Y+uvLQXAAe2VGeVwL63X4
-         sFLjb60+jE2MqAyaHB3nK7NoJZ1LsOqNwer/rJW4NuYAqn26ngK3AvDNeqctutlBNt1Z
-         Z1e8jn5gpvtVcPxFVB4lq5RVt62E3GCEmr1QLLQ+R6K0hbJS2oAMfykxLEm1loR/aIAH
-         hJig==
+        d=google.com; s=20221208; t=1687378042; x=1689970042;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9NChBJyGlCxXTgvhVtexzpj9KWObsxbwH+Sv7qE9dMc=;
+        b=sUniR0Mktb/x9eKPk0vnQEtUO5lntcQdRffjf3Z73Fkzm8BrL7VCPXV3d0QhZlqlXn
+         AAeIbJr/XN7UX0kbYuuFzv+cFtb3gD/V8lm6jsZEpquTR0IWwbFkYmD8xm9Ch1JjxTJy
+         o+NFMOI3rTGwdcztsJHT9HjsPc9uKok209nilPXBNqWxjPeZ5VfwtEyyfbjoYv7mcbiu
+         SNtscTyL6tgQ98y+ZY4c8tGvQx2+gFo4tgS4ViPYvt6C6ppKjE3nkvgTrkKwYdfyB7/H
+         SJYyA6tXMR2mSj4EojWo/3GppKv/T9EzCjrd6h65Had2yvE0fR1gWXUKYDuq7iJYaAm6
+         dY0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687377755; x=1689969755;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+C6pTk7bC80qxVWh6KsC9DENi8PPTQ4gJlN7ff+LmFU=;
-        b=I2bxUZk0HFyvy+GpfggQGmlDsx/a1emCTMzwmXf3TvREfL5M1Fp3MDAcZ65vqDZnGc
-         S9tt/tS0pJ3l98nw7Mb19ery6HGJCc3u1s5/CPdiQSfqdp2u1mpf4s93FqT+YTVvqv4B
-         GPDKQKLIVr8Wonmb14FGvuBBamGBcuEdHpIZ+C671qSSnTgMkqViw5z4/+yM67EdMGAi
-         hljS7MYstWGhSKthCwLtw5I+6KvqaYBwRlecYXQZdrjuFF4UdTauSghyyh9lO0yn9ob3
-         d8kLA2R5OarUnG3fIjAUuxZSYWn0fQ5SLmnzNF6cwPzAJ37FnLn/Usgs9K9Dvn7rFZJd
-         FhvA==
-X-Gm-Message-State: AC+VfDw0SGGjgUurSgfqq+PQ6+LOzdXirZ7zMk8elvLBTSjteQ9YdM6S
-        KG1qzKHe/T/zP3vGyGEcRfkT8LkOENxGNp59ct2RyhmU
-X-Google-Smtp-Source: ACHHUZ5qq1P+om7TnB/MFTYOSMzmy8Y70DDEa/nSzLsY/Rbece+dq6F4kYteNVjnwYk3DSSetaAsyn8Ln/a6ni8GQl4=
-X-Received: by 2002:a50:ef03:0:b0:51a:453b:a49a with SMTP id
- m3-20020a50ef03000000b0051a453ba49amr8257176eds.33.1687377754497; Wed, 21 Jun
- 2023 13:02:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1549.git.1687327684909.gitgitgadget@gmail.com>
- <20230621081754.GA803861@coredump.intra.peff.net> <xmqqzg4siyru.fsf@gitster.g>
- <CA++DQUkVzz8Zn0x6BR+sAEo_LXFR67Z+JOgMhcY2JpS5UGi4rw@mail.gmail.com> <xmqq352kha1l.fsf@gitster.g>
-In-Reply-To: <xmqq352kha1l.fsf@gitster.g>
-From:   =?UTF-8?Q?Guido_Mart=C3=ADnez?= <mtzguido@gmail.com>
-Date:   Wed, 21 Jun 2023 13:02:21 -0700
-Message-ID: <CA++DQU=5fSHcOssVD-qCiX_kpRh-Pa3TeSRMwRggLDWTK0j_XQ@mail.gmail.com>
-Subject: Re: [PATCH] ls-files: add an --exclude-links option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Guido_Mart=C3=ADnez_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
+        d=1e100.net; s=20221208; t=1687378042; x=1689970042;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9NChBJyGlCxXTgvhVtexzpj9KWObsxbwH+Sv7qE9dMc=;
+        b=KMMufwQfBMpT1BaO9YmsRqJQILCSmfK6kfdkRZsvIMoeiPbAKjtMmQSGjw8scT/kQm
+         HpyU2fvtesAD5rGIq/aHYmAV0OKoyon+a87Lb17AHlb7EvU3oHOmkGttugjke7gJzuqX
+         e0t0EAWa2roymCCbzYBlPru4OUzDylexXmuCx8lQYQ13k7uEAsoHMGUHKZkO+IwApfTZ
+         tvBTPtdihRQmSc4EpRwpJrf1Wk2DuPKrKKtiyzplFcOp/Y2nlcVUVG4focrOjUJUWseT
+         usoRmX6jR/TMg0w6npDE5B5ET7D9JytPYtHj6GA3I87fBss4YhtrGShX+gVcMb6Soubj
+         YCKQ==
+X-Gm-Message-State: AC+VfDzdZ1oArkVPr20jxzlNtqtn31bdbYoJghwuJA6P5kkx0DhSAwx3
+        O1//7GyE6/y5B3whqjKhJD/0uWtI3TVwQg==
+X-Google-Smtp-Source: ACHHUZ7eXuP+2sF/ucsCSkYr28BSoz/ab4Ne334EnUBzg4DWGbu1cRDXrDE5DOWR4sgYhVCPGvm9BgGDboxfNg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2d1c:b0:66a:525f:6496 with SMTP
+ id fa28-20020a056a002d1c00b0066a525f6496mr152451pfb.6.1687378042131; Wed, 21
+ Jun 2023 13:07:22 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 13:07:20 -0700
+In-Reply-To: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com> <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+Message-ID: <kl6lv8fgr347.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 0/6] rebase -i: impove handling of failed commands
+From:   Glen Choo <chooglen@google.com>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 12:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Guido Mart=C3=ADnez <mtzguido@gmail.com> writes:
->
-> > So would it make sense to
-> > 1- Add the file type filter to ls-files
->
-> I think it definitely makes sense to extend the filtering criteria
-> supported by ls-files beyond what we currently support (i.e.
-> pathspec).
->
-> I also wonder if "file type filter" could just be implemented as the
-> magic pathspec.  For example, we can already use the magic pathspec
-> 'attr' (read on "pathspec" in "git help glossary") this way:
->
->     $ git ls-files ":(attr:eol=3Dcrlf)"
->
-> to list only those files for which the 'eol' attribute is set to
-> 'crlf' (i.e. they must be checked out for DOS no matter what your
-> platform actually is).  That is even more flexible than the
-> hardcoded "is it a regular file?  is it a symlink?  is it a
-> submodule" file types.  And the magic pathspec is understood not
-> everywhere but by git subcommands other than "ls-files".
->
-> We can either invent a new pathspec magic "filetype" and express
-> them this way,
->
->     $ git ls-files ":(filetype:regular)"        # 100644 and 100755
->     $ git ls-files ":(filetype:symbolic-link)"  # 120000
->     $ git ls-files ":(filetype:submodule)"      # 160000
->
-> or we invent a magic attribute "filetype" that is automatically
-> given to every path, and express the above more like so:
->
->     $ git ls-files ":(attr:filetype=3Dregular)"        # 100644 and 10075=
-5
->     $ git ls-files ":(attr:filetype=3Dsymbolic-link)"  # 120000
->     $ git ls-files ":(attr:filetype=3Dsubmodule)"      # 160000
->
-> may be even better, as there are git subcommands other than ls-files
-> that supports magic pathspec.  For example, it might be even useful
-> to do something like
->
->     $ git diff v1.0 v2.0 -- ":(attr:filetype=3Dexecutable)"
->
-> instead of saying
->
->     $ git diff v1.0 v2.0 -- \*.sh \*.perl \*.py \*.bat
->
-> So, yeah, whether it is done via the magic pathspec or "ls-files"
-> specific option, teaching "ls-files" to support more filtering
-> criteria would make sense.
-Thanks, I was totally unaware of this magic pathspec, I'll see what it
-takes to add attr:filetype.
+Hi Phillip!
 
-> > 2- Use that to implement a proper git-do-for-paths script/binary,
-> > which can take pathspecs, filetype filters, -n, -P, and maybe more
-> > ?
->
-> The primary obstacle was you'd need a custom perl script to filter
-> "ls-files -z" output, but once that need is gone, I actually do not
-> think it buys us a lot to have such a wrapper.  Treat the improved
-> ls-files as what it is, i.e. a plumbing command that can be used as
-> a building block of your workflow, and piping its output to xargs
-> would just be fine.
-Yup, totally fine by me. I'll just keep that script locally then.
+We picked up this series during Review Club. You can browse the notes at
 
-Thanks again,
-Guido
+  https://docs.google.com/document/d/14L8BAumGTpsXpjDY8VzZ4rRtpAjuGrFSRqn3stCuS_w/edit?pli=1
 
+but we'll post any substantial feedback back to the mailing list anyway.
+
+Firstly, I have to acknowledge that this series appears to be geared
+towards to reviewers who are already familiar with the rebase machinery
+and don't require a lot of context on the changes. None of the Review
+Club attendees were familiar with it, so we had trouble following along
+certain patches, but we might not have been the intended audience
+anyway.
+
+I can leave comments from that perspective, i.e. what would have been
+useful from _if_ this were written for folks who weren't already
+familiar with the rebase code, which could be useful if we were trying
+to train people to reviewer sequencer.c. However, I don't think this
+warrants substantial changes if the series is already clear to the
+intended audience.
+
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> This series fixes several bugs in the way we handle a commit cannot be
+> picked because it would overwrite an untracked file.
 >
-> Thanks.
+>  * after a failed pick "git rebase --continue" will happily commit any
+>    staged changes even though no commit was picked.
+
+This sounds like a safer default for most users, but I worry that there
+are seasoned users relying on the old behavior.
+
+>  * the commit of the failed pick is recorded as rewritten even though no
+>    commit was picked.
+
+Sounds like a reasonable fix.
+
+>  * the "done" file used by "git status" to show the recently executed
+>    commands contains an incorrect entry.
+
+This also sounds reasonable, but from Johannes' upthread response, this
+sounds like this isn't universally agreed upon.
+
+Perhaps the underlying issue is that the behavior of "git rebase
+--continue", and the todo/done lists is underspecified (in public and
+internal documentation), so we end up having to reestablish what the
+'correct' behavior is (which will probably end up being just a matter of
+personal taste). This isn't strictly necessary for the series, but it
+would be nice for us to establish what the correct behavior _should be_
+(even if we aren't there yet) and use that to guide future fixes.
