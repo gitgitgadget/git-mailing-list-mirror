@@ -2,159 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7203CEB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 08:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A01FEB64D8
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 09:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231330AbjFUI5v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 04:57:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41784 "EHLO
+        id S229925AbjFUJCO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 05:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjFUI5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 04:57:19 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F7B1FEC
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 01:55:28 -0700 (PDT)
-Received: (qmail 19925 invoked by uid 109); 21 Jun 2023 08:55:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jun 2023 08:55:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14122 invoked by uid 111); 21 Jun 2023 08:55:32 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jun 2023 04:55:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 21 Jun 2023 04:55:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-Subject: bug in en/header-split-cache-h-part-3, was Re: What's cooking in
- git.git (Jun 2023, #05; Tue, 20)
-Message-ID: <20230621085526.GA920315@coredump.intra.peff.net>
-References: <xmqqedm5k7dx.fsf@gitster.g>
+        with ESMTP id S230433AbjFUJB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 05:01:29 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E7E198D
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 02:01:15 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-56fff21c2ebso60620557b3.3
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 02:01:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687338074; x=1689930074;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pAs6QZfI36nfUOHIjZ6IKiv5UWaBv7EPWQh20lYRmM8=;
+        b=gJp6tA3+pQ0sV2CC5wECj8HauvyyIJtdqrN1A2HMDlH0AQL3ilEOhWYiPYpTEh+KK3
+         AxmENAZ2EXBJ3/jbtqeNl5dABn9iueQnPLXgUtf+VgyWOc+mJiIt9z6gMnBSUYeUvagb
+         /Px4jLmGoYkU1xrJHNyKN9btwo7gfwffk2yMCZYWRuzx7mBRq8WNYB/Z/bp/bDAmEpFZ
+         77rvbO/KvLHPkKouPLgNKVrhnIGsacPFugU6C8WzQMakP854taWkeYRSs5c8wQk9BFCi
+         UBf3RB9NzpGHG4zeoGZl3DNkZmPo99yQQc155fbkY6s6VznVjIe1OSCLrfiwJ4pC8r7Z
+         N1YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687338074; x=1689930074;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pAs6QZfI36nfUOHIjZ6IKiv5UWaBv7EPWQh20lYRmM8=;
+        b=U5fOCYTf6CzUUf9ARBkKsaX4ot6E2vgxA96M7WGVAcoNrzIHfIAHLXRlZx6pa91GCn
+         wTo9w50oi00tbJnFzOQjtDwbdHpyLbCaQUJuBZcGoF98Tzt1hwb+0E5GHWO32gRPq8lK
+         Je842pr0mvL/AXIUgg1c6346j29aMCZ3444bvIWXLTazJ7MmD4U/V3ucuSQsv+99R1/d
+         g0blA3rARsX8NqeDwZPwjJyUdPeQ9R8yuCQJLsTI/e2+tarPc3Mwri55oT3F87DUd3t4
+         j2mAG5apfhN/biX5Wiyax8SuEFDjDvd5AFCweZbkzrCrii9HdGrmOiz//eU2dtgfOJrM
+         TsTQ==
+X-Gm-Message-State: AC+VfDwJUJ6OO41DUGk4wbWHDdzJ4uszUA9t+ZqFJBygnlJQ13vMN5d0
+        rdTjPEJtiVjNtqQtegrN62BfWQ==
+X-Google-Smtp-Source: ACHHUZ61peTTJ4QMm+2cBaEdom4ziXeJURerjgxZdTqCOL8byVZFzrFFm/MtyVJK2WMsJtLVX8ENIQ==
+X-Received: by 2002:a5b:c06:0:b0:ba8:4688:fbc with SMTP id f6-20020a5b0c06000000b00ba846880fbcmr10485484ybq.32.1687338074499;
+        Wed, 21 Jun 2023 02:01:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 8-20020a250d08000000b00bd6cdef2eeesm836185ybn.46.2023.06.21.02.01.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jun 2023 02:01:13 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 05:01:10 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] repack: only repack .packs that exist
+Message-ID: <ZJK8VsH27a4bPYgh@nand.local>
+References: <pull.1546.git.1687287782439.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqedm5k7dx.fsf@gitster.g>
+In-Reply-To: <pull.1546.git.1687287782439.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 20, 2023 at 05:04:42PM -0700, Junio C Hamano wrote:
+On Tue, Jun 20, 2023 at 07:03:02PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> In 73320e49add (builtin/repack.c: only collect fully-formed packs,
+> 2023-06-07), we switched the check for which packs to collect by
+> starting at the .idx files and looking for matching .pack files. This
+> avoids trying to repack pack-files that have not had their pack-indexes
+> installed yet.
 
-> * en/header-split-cache-h-part-3 (2023-05-16) 29 commits
->   (merged to 'next' on 2023-06-15 at 76ebce0b7a)
->  + fsmonitor-ll.h: split this header out of fsmonitor.h
->  + hash-ll, hashmap: move oidhash() to hash-ll
->  + object-store-ll.h: split this header out of object-store.h
->  + khash: name the structs that khash declares
->  + merge-ll: rename from ll-merge
->  + git-compat-util.h: remove unneccessary include of wildmatch.h
->  + builtin.h: remove unneccessary includes
->  + list-objects-filter-options.h: remove unneccessary include
->  + diff.h: remove unnecessary include of oidset.h
->  + repository: remove unnecessary include of path.h
->  + log-tree: replace include of revision.h with simple forward declaration
->  + cache.h: remove this no-longer-used header
->  + read-cache*.h: move declarations for read-cache.c functions from cache.h
->  + repository.h: move declaration of the_index from cache.h
->  + merge.h: move declarations for merge.c from cache.h
->  + diff.h: move declaration for global in diff.c from cache.h
->  + preload-index.h: move declarations for preload-index.c from elsewhere
->  + sparse-index.h: move declarations for sparse-index.c from cache.h
->  + name-hash.h: move declarations for name-hash.c from cache.h
->  + run-command.h: move declarations for run-command.c from cache.h
->  + statinfo: move stat_{data,validity} functions from cache/read-cache
->  + read-cache: move shared add/checkout/commit code
->  + add: modify add_files_to_cache() to avoid globals
->  + read-cache: move shared commit and ls-files code
->  + setup: adopt shared init-db & clone code
->  + init-db, clone: change unnecessary global into passed parameter
->  + init-db: remove unnecessary global variable
->  + init-db: document existing bug with core.bare in template config
->  + Merge branch 'en/header-split-cache-h-part-2' into en/header-split-cache-h-part-3
->  (this branch is used by js/cmake-wo-cache-h.)
-> 
->  Originally merged to 'next' on 2023-06-13
-> 
->  Header files cleanup.
-> 
->  Will merge to 'master' together with its fix-up in js/cmake-wo-cache-h
->  source: <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
+Right; the motivation behind this change is based on the principle that
+we consider a packfile (and any corresponding metadata it might have,
+like .keep, .bitmap, .rev, etc.) to be accessible exactly when there is
+an .idx file in place.
 
-I think this series has a bug with finding the correct templates dir. If
-I check out 76ebce0b7a (Merge branch 'en/header-split-cache-h-part-3'
-into next, 2023-06-15) and run:
+So if pack-P.idx exists, we expect to be able to read the contents of
+pack-P.pack (and any other pack-P.* files that happen to be laying
+around). The idea with 73320e49add is to make `collect_pack_filenames()`
+consistent with the same pack existence check that we use everywhere
+else.
 
-  make prefix=/tmp/foo install && /tmp/foo/bin/git init /tmp/bar
+> However, it does cause maintenance to halt if we find the (problematic,
+> but not insurmountable) case of a .idx file without a corresponding
+> .pack file. In an environment where packfile maintenance is a critical
+> function, such a hard stop is costly and requires human intervention to
+> resolve (by deleting the .idx file).
 
-I get:
+Do all cases fall into the "problematic, but not insurmountable"
+category? I'm not entirely sure. One instance that is definitely OK is
+having a partially unstaged pack whose objects were repacked elsewhere,
+but the 'repack' process doing so died between unlink()-ing the ".pack"
+file and the ".idx". This matches the patch that you and I discussed
+yesterday to switch the order and restore git-repack.sh's original
+behavior, which is correct.
 
-  warning: templates not found in /usr/share/git-core/templates
+But what about someone accidentally deleting a ".pack" file and leaving
+around its index? Or copying files from one repository to another and
+only partially copying the contents of $GIT_DIR/objects/pack?
 
-Whereas if I go to 76ebce0b7a^, that warning does not appear (and
-presumably the templates come from /tmp/foo/share, but I didn't check).
+What makes me leery about this kind of change is that there are
+potentially many more cases like the above. And even if the interesting
+cases are somehow limited to the above, continuing on in the face of a
+malformed pack group doesn't seem like the right thing for repack to be
+doing.
 
-Our tests can't notice because they always specify the in-repo template
-dir directly in the bin-wrappers script (and other users might not even
-get the warning if they have another git installed in /usr; it would
-just silently use the wrong template).
+> This was not the case before. We successfully repacked through this
+> scenario until the recent change to scan for .idx files.
 
-  Side note: I'm using the merge along 'next' there because much to my
-  surprise, the tip of en/header-split-cache-h-part-3 does not build by
-  itself! It needs the evil merge result from ccd12a3d6c (Merge branch
-  'en/header-split-cache-h-part-2', 2023-05-09). I wonder if it got
-  applied on the wrong base. It does work when merged to 'next' (and
-  should with 'master' as well), but it hurts bisectability.
+Right, my feeling is that the new behavior post-73320e49add is arguably
+more correct.
 
-After rebasing on 'master' to make it buildable on its own, I bisected
-my make/init command above, which shows the template problem appearing
-in 3f85c72fad (setup: adopt shared init-db & clone code, 2023-05-16).
+> In other cases, Git prepares its list of packfiles by scanning .idx
+> files and then only adds it to the packfile list if the corresponding
+> .pack file exists. It even does so without a warning! (See
+> add_packed_git() in packfile.c for details.)
 
-I guess the problem is the movement of the code from init-db.c to
-setup.c, and we'd want something like this:
+This is by design: we only try to open the pack itself when we call
+`open_packed_git()`. All packs start out initialized with just their
+".idx" as you note.
 
-diff --git a/Makefile b/Makefile
-index e440728c24..b09c8165d0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2742,8 +2742,8 @@ exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
- 	'-DBINDIR="$(bindir_relative_SQ)"' \
- 	'-DFALLBACK_RUNTIME_PREFIX="$(prefix_SQ)"'
- 
--builtin/init-db.sp builtin/init-db.s builtin/init-db.o: GIT-PREFIX
--builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
-+setup.sp setup.s setup.o: GIT-PREFIX
-+setup.sp setup.s setup.o: EXTRA_CPPFLAGS = \
- 	-DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
- 
- config.sp config.s config.o: GIT-PREFIX
+This feels similar to what you are trying to do here, but I do think
+that it's different. While we're performing object reads, there may be
+concurrent writers adding (e.g. from pushes) or removing packs (e.g.
+from repacking) in the repository. So there we have to be resilient
+to thinking that we might have a copy of some object in a given pack,
+but still being able to handle the case where that pack disappears and
+the object is actually found in some other pack.
 
+Repacking feels different to me. There we are modifying the packs
+themselves, so having a incorrectly staged pack group feels like a
+condition that we should stop on, because we can no longer completely
+trust the data that we are operating on.
 
-It does make me wonder if we should also just do this:
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index 08b5ba0c150..e780efe5e0c 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -239,6 +239,10 @@ test_expect_success 'repack --keep-pack' '
+>  			mv "$from" "$to" || return 1
+>  		done &&
+>
+> +		# A .idx file without a .pack should not stop us from
+> +		# repacking what we can.
+> +		touch .git/objects/pack/pack-does-not-exist.idx &&
+> +
+>  		git repack --cruft -d --keep-pack $P1 --keep-pack $P4 &&
+>
+>  		ls .git/objects/pack/*.pack >newer-counts &&
 
-diff --git a/setup.c b/setup.c
-index f8e1296766..6e7282e680 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1718,10 +1718,6 @@ int daemonize(void)
- #endif
- }
- 
--#ifndef DEFAULT_GIT_TEMPLATE_DIR
--#define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
--#endif
--
- #ifdef NO_TRUSTABLE_FILEMODE
- #define TEST_FILEMODE 0
- #else
+If we do end up pursuing this patch, it may be worthwhile to ensure that
+the dangling .idx file remains in place after the repack is complete.
+You test for this implicitly below, but doing so here explicitly feels
+worthwhile to me.
 
-Since the Makefile always provides that value, having a baked-in
-fallback does not make much sense. And in this case it masked a real bug
-which should have been a compilation error, and instead silently used
-the wrong value.
-
-So I think we'd at least want to fix the Makefile before graduating this
-topic any further. But IMHO it would also be worth adjusting the topic's
-start point so that we don't have a big chunk of commits which fail to
-build in the final history.
-
--Peff
+Thanks,
+Taylor
