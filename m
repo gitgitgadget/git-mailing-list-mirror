@@ -2,196 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B7D9EB64DC
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 10:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38558EB64DC
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 10:21:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232223AbjFUKL4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 06:11:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33004 "EHLO
+        id S231937AbjFUKVZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 06:21:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbjFUKLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 06:11:39 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC97A1BD3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:10:46 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-51a426e4f4bso6899655a12.1
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:10:46 -0700 (PDT)
+        with ESMTP id S231894AbjFUKVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 06:21:19 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26CDE10F1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:21:15 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bb3a77abd7bso5717124276.0
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 03:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1687342245; x=1689934245;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DpMKx8CHBn0e4KNMV33ZbRz83YOzMXo7rszcz8/eVJA=;
-        b=PhmbDbG/cfoKDgGrugOluBkQ1LxT76eI5mqO8gPIyXWI+1yRaEWIu4+66Y7tYs5OuP
-         Fn2z3ahiq5WvDm8FaUVRLBzWl7m5G5t9SFnxHbbzgUi2ak5IWcwIt5jiywxhQ0Mjw4C5
-         govepLV/Cgge3SjwBSr+J8xkbLpIncwuHmeIM=
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687342874; x=1689934874;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8treZK1wQrbkGKbJPdJghlW46yrsb5CCDx0rBn6I4Nc=;
+        b=RwcVw/c5/AY4vFeNdrZyxaXJNuZ4EQe6ye/M8nv6oM/ZR5q7DIlFiFSzQC2X5iP9jN
+         6za5PcYBdynyY1LAItbndWKSwgVI2of2dAq5DefIf4YylXK4GmMPamYDdIgg7MTGrqwm
+         iSgV74GVGdvVAxjQpfhS6KKC1p7pUNtR72h99QhRKDpg9z/O/RmqGEt6awSWcydRcOdq
+         zTmRpFITk3GcEGWq3G3lo/QVX/f4PR9XrwhxBUoiS+baJv0AYvMTQkCmeLNBEE2/wvfb
+         cZf7aeHN7qoHcQm4/ZMrTfKq8Mra6c6aUVR+qZRF8oyFz/NTFzqEpgXiWli3q4Ktp7Dm
+         +u6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687342245; x=1689934245;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DpMKx8CHBn0e4KNMV33ZbRz83YOzMXo7rszcz8/eVJA=;
-        b=luvcpgzxp33qAfwrPotmkBo2CMT6SRHCzcz/SkEhfgKV4wA0neOszDxRd9LT7e0Ng4
-         w4DFudSSYbSnRAYK+TSFBDPm47Z9LZHQbaGJa3YdhHZrbqbBA4EGxeGFApX6/z30xhth
-         gMpWpYVzTo8VaCGpuXpQeD7doyld8s8IYMoTCWfrsi2aHgp4VcjqrERbM8XJ+Q/GxZBS
-         V+uqAhdx57hG9EteacM5uq8WRNYWEKq0JwkwpO3F/WzDrEz+TGpmABW7E015asU0iX/9
-         MYp9AU39HKGtiwxriWclqV73gVZJQ01GnzVGENX52DBfpXHXojukmETlG22WdUKV5QGG
-         eRWw==
-X-Gm-Message-State: AC+VfDxBcoBhxPdmqaiwhJvkyEiYQ6WJzT3JS1Dn1/5T/88P1Qh5ApXX
-        ofE3660h/bukQzCAaaFVBEiyYSHJitD0kN/YJmUeUBbDbkYLT79FyClG7g==
-X-Google-Smtp-Source: ACHHUZ4M1cFTeUPPUeXG5gBI65Nsa9SFd3tINfg4XogrHzsCi3gCj6ut5gF+qEk3PDceeYH5qSGagVT8tQjeCg9bzBg=
-X-Received: by 2002:aa7:c307:0:b0:51a:4e14:d573 with SMTP id
- l7-20020aa7c307000000b0051a4e14d573mr7542696edq.11.1687342244891; Wed, 21 Jun
- 2023 03:10:44 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687342874; x=1689934874;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8treZK1wQrbkGKbJPdJghlW46yrsb5CCDx0rBn6I4Nc=;
+        b=AmKf/BcYrF38/P4QaIhtJEBp3vXmSqQvd9YwReqqArqTJwUI/lNbkv8EhdG+wPrhXn
+         kBxY+QtRCbQjDQ1xgCDdT7eFsKDJAVNb+RE5ht2Xa8Ok9yty0JOYhfWojCcxaGQ4UFR7
+         UllznbrhLCNBYe0g9TPCNqrCU3m2kk7aH9+rSKSkgkwbkzKFAylKz5aOYa9v11Xy9O2o
+         d6Gi9FKVEQ592xtxgVc1BI/pFfwo0gEjXpt6Gp/9WmSB14asBDAavB0qTKVvGMJ1hdzu
+         Hk/QYhHsuTXCxr3TE5cSTYZgTkSxbK2E1MZK1Owrp2gCiiaPMFM0mRhGw0/XCoYpHb8i
+         ie/g==
+X-Gm-Message-State: AC+VfDwpshYVeBECYpbUj3JfmMKSPu/ixE6j6TBvVzo9ai3J5C8wS+Od
+        O9rDL+0pY7u9xrANnGX1ypWu2pbgu1xSCBezZEULsaPs
+X-Google-Smtp-Source: ACHHUZ70vlnIDrExje4Njuj51Pvicz/s+I1v1Boq5otZM51eHMDPdgQzlIPmTB3q9f9ZIhbV5rU/CA==
+X-Received: by 2002:a25:688b:0:b0:bec:9efe:100d with SMTP id d133-20020a25688b000000b00bec9efe100dmr9326000ybc.54.1687342874684;
+        Wed, 21 Jun 2023 03:21:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z3-20020a5b0203000000b00bca782fcd6esm832306ybl.55.2023.06.21.03.21.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jun 2023 03:21:14 -0700 (PDT)
+Date:   Wed, 21 Jun 2023 06:21:10 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t7701: make annotated tag unreachable
+Message-ID: <48d3c2c1871c8122d22fbce7c256ca65582fcd67.1687342818.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <CAPMMpohiTzANyhzL-mS-gg2kzbOEOiDktNbdwEXBKy9uL0-JgA@mail.gmail.com>
- <CAPMMpog8Hv_KcjNxbh_wzjwrFYt7TuTvrVy1XEtJMm6RWSKzRg@mail.gmail.com>
- <CAPMMpojUpJD21x2i_hshTB96TBFVd-_WRV54KHT2-4R8DUh8=Q@mail.gmail.com> <20230621064459.GA607974@coredump.intra.peff.net>
-In-Reply-To: <20230621064459.GA607974@coredump.intra.peff.net>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Wed, 21 Jun 2023 12:10:33 +0200
-Message-ID: <CAPMMpoha6rBA-T-7cn3DQT_nbNfknigLTky55x0TEmt4Ay2GRA@mail.gmail.com>
-Subject: Re: Determining whether you have a commit locally, in a partial clone?
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 8:45=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Jun 20, 2023 at 09:12:24PM +0200, Tao Klerks wrote:
->
-> > I'm back to begging for any hints here: Any idea how I can determine
-> > whether a given commit object exists locally, *without causing it to
-> > be fetched by the act of checking for it?*
->
-> This is not very efficient, but:
->
->   git cat-file --batch-check=3D'%(objectname)' --batch-all-objects --unor=
-dered |
->   grep $some_sha1
->
-> will tell you whether we have the object locally.
->
+In 4dc16e2cb0 (gc: introduce `gc.recentObjectsHook`, 2023-06-07), we
+added tests to ensure that prune-able (i.e. unreachable and with mtime
+older than the cutoff) objects which are marked as recent via the new
+`gc.recentObjectsHook` configuration are unpacked as loose with
+`--unpack-unreachable`.
 
-Thanks so much for your help!
+In that test, we also ensure that objects which are reachable from other
+unreachable objects which were *not* pruned are kept as well, regardless
+of their mtimes. For this, we use an annotated tag pointing at a blob
+($obj2) which would otherwise be pruned.
 
-in Windows (msys or git bash) this is still very slow in my repo with
-6,500,000 local objects - around 60s - but in linux on the same repo
-it's quite a lot faster, at 5s. A large proportion of my users are on
-Windows though, so I don't think this will be "good enough" for my
-purposes, when I often need to check for the existence of dozens or
-even hundreds of commits.
+But after pruning, that object is kept around for two reasons. One, the
+tag object's mtime wasn't adjusted to be beyond the 1-hour cutoff, so it
+would be kept as due to its recency regardless. The other reason is
+because the tag itself is reachable.
 
-> I don't work with partial clones often, but it feels like being able to
-> say:
->
->   git --no-partial-fetch cat-file ...
->
-> would be a useful primitive to have.
+Use mktag to write the tag object directly without pointing a reference
+at it, and adjust the mtime of the tag object to be older than the
+cutoff to ensure that our `gc.recentObjectsHook` configuration is
+working as intended.
 
-It feels that way to me, yes!
+Noticed-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+Peff pointed this out to me after the gc.recentObjectsHook stuff was in
+'next', but this should go on top. This patch is based off of the tip of
+"tb/gc-recent-object-hook".
 
-On the other hand, I find very little demand for it when I search "the
-internet" - or I don't know how to search for it.
+ t/t7701-repack-unpack-unreachable.sh | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
+diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
+index ba428c18a8..ceb4e805d2 100755
+--- a/t/t7701-repack-unpack-unreachable.sh
++++ b/t/t7701-repack-unpack-unreachable.sh
+@@ -126,8 +126,19 @@ test_expect_success 'gc.recentObjectsHook' '
+ 	git cat-file -p $obj2 &&
+ 	git cat-file -p $obj3 &&
 
-> The implementation might start
-> something like this:
->
-> diff --git a/object-file.c b/object-file.c
-> index 7c1af5c8db..494cdd7706 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1555,6 +1555,14 @@ void disable_obj_read_lock(void)
->
->  int fetch_if_missing =3D 1;
->
-> +static int allow_lazy_fetch(void)
-> +{
-> +       static int ret =3D -1;
-> +       if (ret < 0)
-> +               ret =3D git_env_bool("GIT_PARTIAL_FETCH", 1);
-> +       return ret;
-> +}
-> +
->  static int do_oid_object_info_extended(struct repository *r,
->                                        const struct object_id *oid,
->                                        struct object_info *oi, unsigned f=
-lags)
-> @@ -1622,6 +1630,7 @@ static int do_oid_object_info_extended(struct repos=
-itory *r,
->
->                 /* Check if it is a missing object */
->                 if (fetch_if_missing && repo_has_promisor_remote(r) &&
-> +                   allow_lazy_fetch() &&
->                     !already_retried &&
->                     !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
->                         promisor_remote_get_direct(r, real, 1);
->
-> and then have git.c populate the environment variable, similar to how we
-> handle --literal-pathspecs, etc.
->
-> That fetch_if_missing kind of does the same thing, but it's mostly
-> controlled by programs themselves which try to handle missing remote
-> objects specially.
++	# make an unreachable annotated tag object to ensure we rescue objects
++	# which are reachable from non-pruned unreachable objects
+ 	git tag -a -m tag obj2-tag $obj2 &&
+-	obj2_tag="$(git rev-parse obj2-tag)" &&
++	obj2_tag="$(git mktag <<-EOF
++	object $obj2
++	type blob
++	tag obj2-tag
++	tagger T A Gger <tagger@example.com> 1234567890 -0000
++	EOF
++	)" &&
++
++	obj2_tag_pack="$(echo $obj2_tag | git pack-objects .git/objects/pack/pack)" &&
++	git prune-packed &&
 
-Thanks, I will play with this if I get the chance. That said, I don't
-control my users' distributions of Git, so on a purely practical basis
-I'm looking for something that will work in git 2.39 to whatever
-future version would introduce such a capability. (before 2.39, the
-"set remote to False" hack works)
+ 	write_script precious-objects <<-EOF &&
+ 	echo $obj2_tag
+@@ -136,6 +147,7 @@ test_expect_success 'gc.recentObjectsHook' '
 
-> It does seem like you might be able to bend it to
-> your will here, though. I think without any patches that:
->
->   git rev-list --objects --exclude-promisor-objects $oid
->
-> will tell you whether we have the object or not (since it turns off
-> fetch_if_missing, and thus will either succeed, printing nothing, or
-> bail if the object can't be found).
+ 	test-tool chmtime =-86400 .git/objects/pack/pack-$pack2.pack &&
+ 	test-tool chmtime =-86400 .git/objects/pack/pack-$pack3.pack &&
++	test-tool chmtime =-86400 .git/objects/pack/pack-$obj2_tag_pack.pack &&
+ 	git repack -A -d --unpack-unreachable=1.hour.ago &&
 
-This behaves in a way that I don't understand:
-
-In the repo that I'm working in, this command runs successfully
-*without fetching*, but it takes a *very* long time - 300+ seconds -
-much longer than even the "inefficient" 'cat-file'-based printing of
-all (6.5M) local object ids that you proposed above. I haven't
-attempted to understand what's going on in there (besides running with
-GIT_TRACE2_PERF, which showed nothing interesting), but the idea that
-git would have to work super-hard to find an object by its ID seems
-counter to everything I know about it. Would there be value in my
-trying to understand & reproduce this in a shareable repo, or is there
-already an explanation as to why this command could/should ever do
-non-trivial work, even in the largest partial repos?
-
-> It feels like --missing=3Derror should
-> function similarly, but it seems to still lazy-fetch (I guess since it's
-> the default, the point is to just find truly unavailable objects). Using
-> --missing=3Dprint disables the lazy-fetch, but it seems to bail
-> immediately if you ask it about a missing object (I didn't dig, but my
-> guess is that --missing is mostly about objects we traverse, not the
-> initial tips).
-
-Woah, "--missing=3Dprint" seems to work!!!
-
-The following gives me the commit hash if I have it locally, and an
-error otherwise - consistently across linux and windows, git versions
-2.41, 2.39, 2.38, and 2.36 - without fetching, and without crazy
-CPU-churning:
-
-git rev-list --missing=3Dprint -1 $oid
-
-Thank you thank you thank you!
-
-I feel like I should try to work something into the doc about this,
-but I'm not sure how to express this: "--missing=3Derror is the default,
-but it doesn't actually error out when you're explicitly asking about
-a missing commit, it fetches it instead - but --missing=3Dprint actually
-*does* error out if you explicitly ask about a missing commit" seems
-like a strange thing to be saying.
-
-Thanks again for finding me an efficient working strategy here!
+ 	git cat-file -p $obj1 &&
+--
+2.40.1.478.g4dc16e2cb0
