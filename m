@@ -2,105 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45F88EB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 11:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53A3CEB64D7
+	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 11:41:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232430AbjFULVR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 07:21:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44376 "EHLO
+        id S229822AbjFULll (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 07:41:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232654AbjFULVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 07:21:04 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2D8170C
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 04:20:40 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-6b58558c824so2489458a34.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 04:20:40 -0700 (PDT)
+        with ESMTP id S229470AbjFULlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 07:41:40 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F01EDC
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 04:41:39 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-1a1fa977667so5798516fac.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 04:41:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687346439; x=1689938439;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=td+C5VL72W32RYhlmvNIdBGe6xKCRAsQL9hfL1nTb58=;
-        b=F73KN0dxSLw++ddsfBSkcZxfiNbLKi1pEMM8jEX9ZLhdVWnOAGG7JI/KG7Iisz7CiM
-         Wj+jnrhWYTPTFEG6EAHX4GR2NYI1cT56R8N24e2XgC8g/id50eZ5ihDMGB8u2Xu0GjEG
-         1x46oUd9mHD07qUyJxbYcQTVcFAzUpR+atUdmSO17H8yibB3S+NXotHVDJKOy1iQOM64
-         aZ1FN4ob7FciQHdjfRYt+3W/SG2DrHHwkMSriiPNzLsRHH3LoTQZEvnax8HYK2+cdjSt
-         kvkiTFAnliGN5SRRkMzJRFhdNs2CpT/bh4Cx/vJvdvvrVn5BtFR+Fl9TYpQjabBAg2qK
-         J0zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687346439; x=1689938439;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1687347699; x=1689939699;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=td+C5VL72W32RYhlmvNIdBGe6xKCRAsQL9hfL1nTb58=;
-        b=GwH/sE4iCZ5zliUuqZnHD7rd2wKqzE4lKqYsyUjkRrJjabQwWgVhGmZMtU0JTBo+oK
-         gPsmzTSRDeCLdwnjnDAgQ3RmdJyP+LfWo4psyI1j3CrZuEBXhrurUls1F00l7N9kNxBh
-         IJTgUmRShC2N1j5i/vYX0HAuwX2Jl+zhuA05MOHJ1mYv/LfxLpIQR5fDwEYW2rea+z60
-         ZHOPTsb9qYg+mHf5/AyoHOcF1yOWFudOdKOlVJTRzEMDYO0+LGQwZYmt0Cm1OoU7L7GH
-         e4u0f1hTW3QbkW1gAOP8Xf6qpVfAKEvXW5dm4nbnt7lCsVIh786+7zNMumzf6zLZwDax
-         UBcg==
-X-Gm-Message-State: AC+VfDzZpCozGNk4u4V5e0035KGeiGDcf6VJSJYKpgH9lupslfAbQAs2
-        b8lqBMj1pNf4YfXtvCDzHtRRMQ==
-X-Google-Smtp-Source: ACHHUZ48qJUtHTRVVQfg2Yuz504nnro4f9RSvftOIDX81dMPP72qts3uqd8aTUwHO7PcMNlQfLNnAQ==
-X-Received: by 2002:a05:6359:2ea4:b0:12f:1567:1502 with SMTP id rp36-20020a0563592ea400b0012f15671502mr11518288rwb.28.1687346439123;
-        Wed, 21 Jun 2023 04:20:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d187-20020a0df4c4000000b0055a07e36659sm1034340ywf.145.2023.06.21.04.20.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 04:20:38 -0700 (PDT)
-Date:   Wed, 21 Jun 2023 07:20:36 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 6/9] repack: add `--filter=<filter-spec>` option
-Message-ID: <ZJLdBHNFPfxHp3C0@nand.local>
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230614192541.1599256-7-christian.couder@gmail.com>
- <xmqqmt10s0cw.fsf@gitster.g>
+        bh=GFiSiTt6eg/840q/avtpusAI5ykrz3numz+RiI/lxWM=;
+        b=qH55yX9MlRSg7YsGfba2Vl5/HX8nKWlr/25jGfTZa9yovDP2RubdMJBn/hwb7q6353
+         2+iezPocO1EITt9ZXaKi6AJGI0fyHSzyD7WKNzPvnoro1nIUOBtxmJuZTJg3hfV2+V3k
+         sjzMgTU46bAU0j61xQScx1SdqibV0azNqc0hd5RbQc2MdyAJdmIbMAb8YDFv0uMGt1/v
+         e3BP4PZy6M+O22P7j5/0SUsC0EU26gzHB7PFy9UkfbF1+VyS99JoAtBb3+I3a17O4n07
+         2rnUr7KsdCwN4vAxr0XNsHMq9N+4WBNpDvcaMOFGDCU1FByV+AlZZkSqHtnV++iX4SiA
+         D9pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687347699; x=1689939699;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GFiSiTt6eg/840q/avtpusAI5ykrz3numz+RiI/lxWM=;
+        b=id+s9mGu788q60I45BJcyktpLjaCjIlq1ZgYQeuBlt5VuapIxAVDt2xM85NrOV1DMd
+         Fd03u9kSx2KhEOSVquDbO9lC4y/5XjbLXQ/S7Ypwu6hrewm/MO4axRQH8kP+T28bibDL
+         uvvooY4VBnVc1qjx5rqptK2PqRCLCrvaFgBRpB+LqAUYrYI7FQ+4IXs0JK1iKClYMwut
+         cKvUzjnDQASj/rj9d7p20kt8qO3PHqj/J20i5du3FLBC6dNMc6Jftl6F/NZHp4Yj9xCN
+         jgSkURDZ3N+PQUD3kM0x1kuzxWOkl5WryVxqV4wqNulAZqX3JNSJqa4DTA9dzcoAstUb
+         1SBA==
+X-Gm-Message-State: AC+VfDyvwQhR/KsfpnNJhCywaIYnLQtt1uRr2uuaDm7JLZno7KgVWg6P
+        jwtqsV646IRrZQjOTykUBnWAFqFyx3Kvw3fC7Ws=
+X-Google-Smtp-Source: ACHHUZ4zFCq8D8QbtR4OTfILTKci0xXvL7JgmzYBfDXxswCP0csmzzLAfvAM+jlV0MJQ7lxiKjsnyv6xbmXTXG9IHKY=
+X-Received: by 2002:a05:6870:e896:b0:19e:ed91:1d42 with SMTP id
+ q22-20020a056870e89600b0019eed911d42mr10343301oan.35.1687347697055; Wed, 21
+ Jun 2023 04:41:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmt10s0cw.fsf@gitster.g>
+References: <CAOLa=ZRumrpfG8FxQQG=Q8tGvxEapMvOx6SZyRPh0GSpn5iuUg@mail.gmail.com>
+ <xmqqh6r2ni4i.fsf@gitster.g>
+In-Reply-To: <xmqqh6r2ni4i.fsf@gitster.g>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Wed, 21 Jun 2023 13:41:10 +0200
+Message-ID: <CAOLa=ZTBkzc78RpAdeQO2yN_itDbmKvkQ91RQjENwD9Y8uwR+w@mail.gmail.com>
+Subject: Re: [Bug?] Information around newlines lost in merge
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 05:43:27PM -0700, Junio C Hamano wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+On Tue, Jun 20, 2023 at 7:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> > After cloning with --filter=<filter-spec>, for example to avoid
-> > getting unneeded large files on a user machine, it's possible
-> > that some of these large files still get fetched for some reasons
-> > (like checking out old branches) over time.
-> >
-> > In this case the repo size could grow too much for no good reason and a
-> > way to filter out some objects would be useful to remove the unneeded
-> > large files.
+>         $ git merge-file -p A O B
+>         <<<<<<< A
+>         with a single line added by side A (without terminating LF).
+>         \No newline at end of file
+>         ||||||| O
+>         =3D=3D=3D=3D=3D=3D=3D
+>         with a single line added by side B (without terminating LF).
+>         \No newline at end of file
+>         >>>>>>> B
 >
-> Makes sense.
+> It has exactly the same problem we already have as these conflict
+> section separator lines in that lines that exactly would look like
+> these extra lines _could_ exist in the payload, so it is not
+> creating a new problem, but people may have built and are happy
+> enough with their incomplete automation that relies on the faulty
+> assumption that the merged payload would never contain lines that
+> are mistaken as conflict section separator lines, and such an
+> augmented output format _will_ be a breaking change to them.
 >
-> If we repack without these objects, when the repository has a
-> promisor remote, we should be able to rely on that remote to supply
-> them on demand, once we need them again, no?
+> So, I dunno.
 
-I think in theory, yes, but this patch series (at least up to this
-point) does not seem to implement that functionality by marking the
-relevant remote(s) as promisors, if they weren't already.
+Thank you for taking the time and responding. I'm wondering if there is mer=
+it
+in modifying the merge algo.
 
-> [...] It does smell somewhat similar to the cruft packs but not
-> really (the choice over there is between exploding to loose and
-> keeping in a pack, and never involves loss of objects).
+Perhaps something where files merged with terminating LF would retain it.
+So merging "A\n" and "B\n" would produce
+"<<<<<<< master\nA=3D=3D=3D=3D=3D=3D=3D\nB\n>>>>>>> newBranch\n\n", whereas
+files being merged without a terminating LF wouldn't, so merging "A"
+and "B" would
+produce "<<<<<<< master\nA=3D=3D=3D=3D=3D=3D=3D\nB\n>>>>>>> newBranch\n". W=
+hich
+would make it easier to parse.
 
-Indeed. `pack-objects`'s `--stdin-packs` and `--cruft` work similarly,
-and I believe that we could use `--stdin-packs` here instead of having
-to store the list of objects which don't meet the filter's spec. IOW, I
-think that this similarity is no coincidence...
-
-Thanks,
-Taylor
+But overall, I get what you're saying. I will drop it here as expected beha=
+vior!
