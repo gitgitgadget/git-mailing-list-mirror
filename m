@@ -2,94 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C8CEB64DC
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87782EB64DA
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:35:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231243AbjFVVaK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 17:30:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38544 "EHLO
+        id S231409AbjFVVf3 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 22 Jun 2023 17:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbjFVVaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 17:30:09 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F871BD8
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:30:08 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 808035A210;
-        Thu, 22 Jun 2023 21:30:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1687469407;
-        bh=uHXAzkUEsiDapvTFAkU85Pbnt6LiRphAeGzb1Ym0Dbw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=HHEh9MgqXStOCPDi1Pew+gdcDY8VovEKZ8dqjllEst0xH+ttPRLsZ2sfUWX8q84Su
-         eSbmvNPLGt/AkuDSkoVlA7HGQQXCOSspFVV1kd+I3TcxlTwKuo6ZUNI3t+6XRI2GWN
-         tcCOAO6sVzsw/tDmtsDLBFkqrM0AZgH8BrnQREk42w3chWx4mykQgg8pmHwrsCyM6q
-         uSiCEeKp9etqbJ4Xv3iSt+6lZZBoStuXZgKsfLjR16q2KIzOc4A3q+dBv1Qtk+zwk5
-         ogMmEjMFzgIsMG2C1qC9D7VmMWGgS+TQEItvBSFsWaV3ybCV5+KwUya9qZTcJulEX3
-         MJGXLtQS6ebO+GaOg3ajP0/oJ4kDvKiL5RGIehFk3XIdPgmvl1XlR52T4XoSRygKxp
-         Zgs+5QOq/iEqSqXLQ979ieGFzQ1r8HoNC3TUCrZhp+/i+U/oT1AWOdYuvz6abPYGZh
-         YPlD71DQVlshb/+mKHlQzHeJfTK6ZsC/wdmu3UXICUxjPsNZ7Sp
-Date:   Thu, 22 Jun 2023 21:30:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        with ESMTP id S231243AbjFVVf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 17:35:28 -0400
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2855D1BFA
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:35:27 -0700 (PDT)
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7625719bac0so57483885a.0
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:35:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687469726; x=1690061726;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PHE+toELkNdBBKaLKsWSD+NxffXU09vIXEsFhKpJgMM=;
+        b=iGYOt2dRMPAjJ5cakKj7mzCLbm66WTM9FR5+zLXv8mnbN28od8s29lTxY2/xGED8AD
+         CGN16sVYdFsDNLIEQcRPksTfYnyQIShh6+qrfGZZv4+n/0r0GZ7a9w2ZEWOLM08eFpi8
+         gkhOFIzXN6aUpueh+A7GfUDeYoAb3++NWpECrNoCWjqxXK92Fx6QgFKpSlATm1N+1xgA
+         OldGBSVTJlpjulL5p3Lm9eQE+XWebbh0RqfkiZ2bJ2rwGHDJerG4jDYXkn8DMKEbdKnA
+         233Yqs4O/CZEyYdzJayyBloUzJsJr++weH8u70GFGaUE5OOlITK/Q5KeWKy4YcK/raio
+         GgUw==
+X-Gm-Message-State: AC+VfDxPzLdiqzcLtOxwe7pyIXXVvFPtFHQY2ZKdND/kp83+gHV7doiU
+        lpC2XzH5uG1OKwHSUrFUym142nTFo9QK80oeM1s=
+X-Google-Smtp-Source: ACHHUZ7CjgzupW0XJa30VX9cAWn/fRiinUV+v08LJbffD9yDFiRZS3flPzWGSuM5rFRfzlHlDQWuEE0Fix12rQANBOw=
+X-Received: by 2002:a05:6214:f29:b0:62d:ec71:129a with SMTP id
+ iw9-20020a0562140f2900b0062dec71129amr23946828qvb.7.1687469726223; Thu, 22
+ Jun 2023 14:35:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230622195059.320593-1-sandals@crustytoothpaste.net> <20230622195059.320593-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20230622195059.320593-4-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 22 Jun 2023 17:35:15 -0400
+Message-ID: <CAPig+cTmqUfzrA14xBo1jQSR9kLufze_DFZSf_PC2aCNnOHFcw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] var: add config file locations
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 2/3] var: add attributes files locations
-Message-ID: <ZJS9XhlIs4jGBjHE@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>, Calvin Wan <calvinwan@google.com>
-References: <20230622195059.320593-1-sandals@crustytoothpaste.net>
- <20230622195059.320593-3-sandals@crustytoothpaste.net>
- <CAPig+cQ=B7M6nPYx-+gqtsJeSuiqKeQhCfiWmyfjiGXsVnFbTw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8ljgS3si8DAs2bcg"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQ=B7M6nPYx-+gqtsJeSuiqKeQhCfiWmyfjiGXsVnFbTw@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jun 22, 2023 at 4:06 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Much like with attributes files, sometimes programs would like to know
+> the location of configuration files at the global or system levels.
+> However, it isn't always clear where these may live, especially for the
+> system file, which may have been hard-coded at compile time or computed
+> dynamically based on the runtime prefix.
+>
+> Since other parties cannot intuitively know how Git was compiled and
+> where it looks for these files, help them by providing variables that
+> can be queried.  Because we have multiple paths for global config
+> values, print them in order from highest to lowest priority, and be sure
+> to split on newlines so that "git var -l" produces two entries for the
+> global value.
+>
+> However, be careful not to split all values on newlines, since our
+> editor values could well contain such characters, and we don't want to
+> split them in such a case.
+>
+> Note in the documentation that some values may contain multiple paths
+> and that callers should be prepared for that fact.  This helps people
+> write code that will continue to work in the event we allow multiple
+> items elsewhere in the future.
+>
+> Signed-off-by: brian m. carlson <bk2204@github.com>
+> ---
+> diff --git a/builtin/var.c b/builtin/var.c
+> @@ -62,21 +62,59 @@ static const char *git_attr_val_global(int flag)
+>  struct git_var {
+>         const char *name;
+>         const char *(*read)(int);
+> +       int multivalued;
+>         int free;
+>  };
+>  static struct git_var git_vars[] = {
+> +       { "GIT_COMMITTER_IDENT", git_committer_info, 0, 0 },
+> +       { "GIT_AUTHOR_IDENT",   git_author_info, 0, 0 },
+> +       { "GIT_EDITOR", editor, 0, 0 },
+> +       { "GIT_SEQUENCE_EDITOR", sequence_editor, 0, 0 },
+> +       { "GIT_PAGER", pager, 0, 0 },
+> +       { "GIT_DEFAULT_BRANCH", default_branch, 0, 9 },
 
---8ljgS3si8DAs2bcg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Why "9"?
 
-On 2023-06-22 at 21:18:46, Eric Sunshine wrote:
-> The reference to $(pwd) is unnecessary, thus potentially confusing. Simpl=
-er:
->=20
->     TRASHDIR=3D"$(test-tool path-utils normalize_path_copy .)" &&
+> +       { "GIT_SHELL_PATH", shell_path, 0, 0 },
+> +       { "GIT_ATTR_SYSTEM", git_attr_val_system, 0, 1 },
+> +       { "GIT_ATTR_GLOBAL", git_attr_val_global, 0, 1 },
+> +       { "GIT_CONFIG_SYSTEM", git_config_val_system, 0, 1 },
+> +       { "GIT_CONFIG_GLOBAL", git_config_val_global, 1, 1 },
+>         { "", NULL },
+>  };
+> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+> @@ -179,6 +179,49 @@ test_expect_success 'GIT_ATTR_GLOBAL points to the correct location' '
+> +test_expect_success 'GIT_CONFIG_SYSTEM points to the correct location' '
+> +       TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
 
-Maybe.  I spent a lot of time fighting with Windows and its path
-handling here (as much as writing the initial series).  If that's
-possible and produces an acceptable result there, I can consider it for
-v2.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Same comment as in [2/3]: $(pwd) is unnecessary. Simpler:
 
---8ljgS3si8DAs2bcg
-Content-Type: application/pgp-signature; name="signature.asc"
+    TRASHDIR="$(test-tool path-utils normalize_path_copy .)" &&
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+> +       test_must_fail env GIT_CONFIG_NOSYSTEM=1 git var GIT_CONFIG_SYSTEM &&
+> +       (
+> +               sane_unset GIT_CONFIG_NOSYSTEM &&
+> +               git var GIT_CONFIG_SYSTEM >path &&
+> +               test "$(cat path)" != "" &&
+> +               GIT_CONFIG_SYSTEM=/dev/null git var GIT_CONFIG_SYSTEM >path &&
+> +               if test_have_prereq MINGW
+> +               then
+> +                       test "$(cat path)" = "nul"
+> +               else
+> +                       test "$(cat path)" = "/dev/null"
+> +               fi &&
+> +               GIT_CONFIG_SYSTEM="$TRASHDIR/gitconfig" git var GIT_CONFIG_SYSTEM >path &&
+> +               test "$(cat path)" = "$TRASHDIR/gitconfig"
+> +       )
+> +'
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZJS9XgAKCRB8DEliiIei
-gSKVAP9heDrEII50mDPdiQVb8M03bzWHumKEjYvuvirsts6X/wEAtBtpVZ10zs3J
-KorbT5LL5fmBbyZ3YJpM/WZaOubEswc=
-=0wbz
------END PGP SIGNATURE-----
+Ditto regarding unnecessary temporary file.
 
---8ljgS3si8DAs2bcg--
+> +test_expect_success 'GIT_CONFIG_GLOBAL points to the correct location' '
+> +       TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
+
+Ditto regarding $(pwd).
+
+> @@ -196,6 +239,29 @@ test_expect_success 'git var -l lists config' '
+> +test_expect_success 'git var -l does not split multiline editors' '
+> +       (
+> +               GIT_EDITOR="!f() {
+> +                       echo Hello!
+> +               }; f" &&
+> +               export GIT_EDITOR &&
+> +               echo "GIT_EDITOR=$GIT_EDITOR" >expected &&
+> +               git var -l >var &&
+> +               cat var &&
+
+Is this `cat` leftover debugging code?
+
+> +               sed -n -e "/^GIT_EDITOR/,\$p" var | head -n 3 >actual &&
+> +               test_cmp expected actual
+> +       )
+> +'
