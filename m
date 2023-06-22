@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8B63EB64DA
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4DEFEB64DA
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 22:26:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbjFVVlI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 17:41:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
+        id S229607AbjFVW0n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 18:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230062AbjFVVlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 17:41:08 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F1F1FED
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:41:07 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C741F30E02;
-        Thu, 22 Jun 2023 17:41:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WaIb9AX3EmSw1D+hYZjgLy/8GVf/pPAPSnn+bL
-        pEw8M=; b=OyTtP0Cu2CcVaY2y2b2rYd/XOV45EyyNz6el+PiluwEw5esZOPWSrM
-        3v97iurP0KWNFxVJfIXRaqZR95/NA2JxOlDieay+MiYdibJE/wk3n75GJq0onxNJ
-        WYhCXfoV3412nc9pVRQaK7VPk1D2hs/P0KfaHu30sRTbTwBUV3LHE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BF9A830E01;
-        Thu, 22 Jun 2023 17:41:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DC68730DFF;
-        Thu, 22 Jun 2023 17:41:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>,
-        Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 1/3] var: add support for listing the shell
-References: <20230622195059.320593-1-sandals@crustytoothpaste.net>
-        <20230622195059.320593-2-sandals@crustytoothpaste.net>
-        <CAPig+cSTR6oHeYjcHZ7m2CKYcFo2eistxz_X-7J2rhd7h+uf3g@mail.gmail.com>
-        <xmqqjzvvdx7g.fsf@gitster.g>
-        <ZJS8Ot+dHDRXZD/t@tapette.crustytoothpaste.net>
-Date:   Thu, 22 Jun 2023 14:41:02 -0700
-In-Reply-To: <ZJS8Ot+dHDRXZD/t@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 22 Jun 2023 21:25:14 +0000")
-Message-ID: <xmqq4jmzdvkh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7CCB47B6-1145-11EE-BC6E-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+        with ESMTP id S231262AbjFVW0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 18:26:41 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B272121
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 15:26:40 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-bb2fae9b286so7777072276.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 15:26:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1687472800; x=1690064800;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gWK3Gi9r2sRJZn9I7lfDvGlX9e/mtZWXNTPp8aAT7X4=;
+        b=YmSimUq/NJvGEIO45SlQh+ZdS1oFbTtTsu4wU/PoFvpaDCbtd+/wytxgZYzpeYNc7/
+         pj0sqTV8IAes4p1f8HzwT8xNUoHScZTxulLALmuLjbyPDnLXVmjq3GK8pFumcMTKIS0b
+         p4TXYy3VXEQLfP4evn1Bihxvp4qcYxOJ7jArASW88wba1HVp7h8dQAa+U8orePp/thyc
+         WJLsYEOPlKcDKh5uqv7W31fyWFA0AvZGfhwuYKdVa0CbwfCk56PK+Z2FLixspdwrceZq
+         yYfV9Whyaw31xhK3NcggiVijDpw8S/NQ6k6PovtVcovk1PyOirLLjHySwzE4ziB6W1Ov
+         2/kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687472800; x=1690064800;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gWK3Gi9r2sRJZn9I7lfDvGlX9e/mtZWXNTPp8aAT7X4=;
+        b=UN40PTS1TltWv6ChD3XaZhSGXZtV+CjTIZM3f0dvCk2FnjgeKCkiynS4GWJ/PsBQHC
+         M7SyjaJRtpegfKNh2/QwV6ORK+i5+Jq+89kBXoaRze83qWEl8yH6C2xleAnxyPqxQZ4m
+         jEPVzR+UadrROmX/iEF08CiqONR1pqN6bju1K0vbZaE3vjRNAeatf7MxOk100b9deidC
+         qWrgh+6pUXai46Ae8ePm2Y1zcW+KRhRjCgZRZOOXp8GzCUtPiBCdIjhi+smIPTPrvKQ7
+         Hy6vlIjavajMiJSX1WQe50rzdpWYjxpVMkKk2gyr+1aFwbIdFxIjpiHlyThDURreD8WA
+         wrWg==
+X-Gm-Message-State: AC+VfDwdztF0k7mT8t3FIV3kGGqWmS1FMf9ASHFVh7OIlV/HZS78/+Kd
+        KRgR1/mjKhVgq+kCaAIge2dmoI4vHvBrQ9ioHhOn
+X-Google-Smtp-Source: ACHHUZ6B2v4aLKCjgQ2dxqcinJE8Xm897HtfU/2QOw+TKzWMvG8GHgRMmyi2OukQfaKuYnTGFmZT5zNw6gRSMIYRT87M
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:b7b:317e:b418:a6e5])
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:bc9:0:b0:bc4:3e2f:7641 with SMTP
+ id c9-20020a5b0bc9000000b00bc43e2f7641mr2569639ybr.4.1687472799788; Thu, 22
+ Jun 2023 15:26:39 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 15:26:37 -0700
+In-Reply-To: <ZJLoSDcETsPMyONL@nand.local>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.178.g377b9f9a00-goog
+Message-ID: <20230622222637.2045705-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v4 1/4] gitformat-commit-graph: describe version 2 of BDAT
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Taylor Blau <me@ttaylorr.com> writes:
+> > I wonder if we want to mention what the undesired misbehaviour the
+> > "bug" causes and what we do to avoid getting affected by the bug
+> > here.  If we can say something like "When querying for a pathname
+> > with a byte with high-bit set, the buggy filter may produce false
+> > negative, making the filter unusable, but asking for a pathname
+> > without such a byte produces no false negatives (even though we may
+> > get false positives).  When Git reads version 1 filter data, it
+> > refrains from using it for processing paths with high-bit set to
+> > avoid triggering the bug", then it would be ideal.
+> 
+> Your description of the bug matches my understanding of the issue, that
+> a corrupt filter would produce false negatives and thus be unusable.
+> 
+> I skimmed through the rest of the series, and couldn't find a spot where
+> we do the latter, i.e. still use v1 filters as long as we don't have any
+> characters in the path with high-order bits set.
+> 
+> I think this would be as simple as modifying the Bloom filter query
+> function to return "maybe" before even trying to hash a path with at
+> least one character with its high-bit set.
+> 
+> Apologies if this functionality is implemented and I just missed it.
+> 
+> Thanks,
+> Taylor
 
-> On 2023-06-22 at 21:05:39, Junio C Hamano wrote:
->> Correct.  I also suspect that we want to add test_path_is_executable
->> helper next to test_path_is_{file,dir,missing} helpers and list it
->> in t/README.  One downside of your approach is that the output from
->> the command is only in $shpath and cannot be observed easily in the
->> $TRASH_DIRECTORY after the test fails, but with such a helper we can
->> report the problematic path when the expectation fails.
->
-> At first glance, I thought that was a good idea, too, but unfortunately
-> there is no way to make that work on Windows.  That's why all of our
-> tests skip those assertions with POSIXPERM, and why my tests
-> specifically look for something different on Windows.
->
-> We could in theory just make it always succeed there, but my concern
-> with writing such a function is that people will think it works
-> generally, when in fact it does not.  That's why, typically throughout
-> the codebase, we specifically use "test -x".
-
-Hmph.  I would have thought that test_path_is_executable that is
-based on "test -x" and gives a diagnosis when "test -x" fails would
-be better than using bare "test -x" and be silent, even on Windows.
+Thanks for the suggestion - yeah, this might work.
