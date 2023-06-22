@@ -2,121 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13792EB64D8
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 18:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1FDEEB64D8
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 19:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbjFVSce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 14:32:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
+        id S230044AbjFVTMz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 15:12:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231191AbjFVSca (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 14:32:30 -0400
+        with ESMTP id S229549AbjFVTMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 15:12:53 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3231FC2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 11:32:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94AEA1BCC
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 12:12:52 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3316B1A64B6;
-        Thu, 22 Jun 2023 14:32:25 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C796C1A68A1;
+        Thu, 22 Jun 2023 15:12:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=N9bwG7z+ZaWAoS0ZmjOdpa1ja0NrLJjPTBsHuu
-        +HuKI=; b=UE5HM8zvCMPTR8Vf1RuB7+XNjTIhRteCUgozcBU2C9ffTwp8bfavlm
-        gfLWPTGWOa+xd+TeO1cFbLX2XwicIO83kmPBNvcBcM957679AjaafVlz6Vnc+3GJ
-        ArmmB/3RhE4rkS1Yib/zgaeCmzd0GLYaSiUXye/EpeH7PUq9ZGWIE=
+        :content-type; s=sasl; bh=tjR2whTH/2yH17F0loWl2JPlst1gWna6Y4yd+h
+        dsOUA=; b=KvKihKHuMoujSKpH3YqPKQf/VdfbwOSkGu3GBDA8x6vJYB/iOasK58
+        4kZIojMYtXKQMM0MMhCLEKxyno6KQLIN5KK8KEyfA6lsvYvQkzZ+91goHwVVjePK
+        aLTetV67ah9/kA+Gutx+4qxqUnphwoXAVw58reaJJkN3AJrLnJVGo=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29C7C1A64B3;
-        Thu, 22 Jun 2023 14:32:25 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFA5A1A68A0;
+        Thu, 22 Jun 2023 15:12:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.62.77])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DB461A64B2;
-        Thu, 22 Jun 2023 14:32:24 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 345431A689F;
+        Thu, 22 Jun 2023 15:12:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 6/9] repack: add `--filter=<filter-spec>` option
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
-        <20230614192541.1599256-7-christian.couder@gmail.com>
-        <xmqqmt10s0cw.fsf@gitster.g>
-        <CAP8UFD3864uUjb0vR+B7xETJTFJoWdEqA5Gdyr42Lg3t8Auk=Q@mail.gmail.com>
-        <xmqqy1kchi3l.fsf@gitster.g>
-        <CAP8UFD30Kx_vYfdV4ipPPXNVr76pKshjTUQGcJfkUvG_+KD3zQ@mail.gmail.com>
-Date:   Thu, 22 Jun 2023 11:32:23 -0700
-In-Reply-To: <CAP8UFD30Kx_vYfdV4ipPPXNVr76pKshjTUQGcJfkUvG_+KD3zQ@mail.gmail.com>
-        (Christian Couder's message of "Thu, 22 Jun 2023 10:39:09 +0200")
-Message-ID: <xmqqa5wrfivc.fsf@gitster.g>
+To:     Joshua Hudson <jhudson@cedaron.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: Design issue in git merge driver interface
+References: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
+Date:   Thu, 22 Jun 2023 12:12:50 -0700
+In-Reply-To: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com> (Joshua
+        Hudson's message of "Thu, 22 Jun 2023 09:50:01 -0700")
+Message-ID: <xmqqttuze2fh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 21F3B0AE-112B-11EE-ABDD-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C85667F2-1130-11EE-9673-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Joshua Hudson <jhudson@cedaron.com> writes:
 
->> I may be missing something, but to me, the above sound more like a
->> tail wagging the dog.
-> ...
-> This might be a good idea, but what if users prefer to send to a
-> promisor remote the objects that should be on that promisor remote as
-> soon as possible, instead of keeping them on the local machine where
-> they take up possibly valuable space for no good reason?
-> ...
-> There are some configurations where users never want to delete any git
-> object. In those cases it doesn't matter if the promisor remote is a
-> "dumping ground".
+> Looking at the merge driver found that some things cannot be handled,
+> such as OOM condition. The fault has to propagate upwards, unwinding
+> as it goes.
 
-When one says "everything" in these sentences, I doubt one
-necessarily means "everything".  A topic one works on will have
-iterations that is never pushed out, a topic one started may not
-even get to the state that is pushable to the central server.  But
-the objects that need to support such a topic (and its historical
-versions in its reflog) would need to be retained until they are
-expired.
+Even though the end-user facing documentation says:
 
-Certainly, by pushing even such objects, you can say "here is a pack
-with filter=blob:none, and because I sent every blob every time I
-create locally to the promisor, I can always refetch what is not in
-them by definition".
+    The merge driver is expected to leave the result of the merge in
+    the file named with `%A` by overwriting it, and exit with zero
+    status if it managed to merge them cleanly, or non-zero if there
+    were conflicts.
 
-But is that a good use of everybody's resources?  The key phrase in
-what I said was "... and still leve the resulting promisor usable".
+the ll-merge.c:ll_ext_merge() function that calls an external merge
+driver does this:
 
-The promisor remote is in the unfortunate and unenviable position
-that it cannot garbage collect anything because there may be
-somebody who is still depending on such an object nobody planned to
-use, but there is no mechanism to let it find out which ones are in
-active use (or if you added some recently that I am forgetting, it
-would change the equation---please remind me if that is the case).
+        static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+                ...
+                status = run_command(&child);
+                ...
+                ret = (status > 0) ? LL_MERGE_CONFLICT : status;
+                return ret;
+        }
 
-So I would imagine that it would be fairly high in the priority list
-of server operators and project leads to make sure their promisor
-remotes do not become a true "dumping ground".
+so a true "failure" from run_command() to run the external merge
+driver will be noticed as a failure by the upper layer of the
+callchain.  merge-ort.c:merge_3way() relays the return value of
+ll-merge.c:ll_merge() and merge-ort.c:handle_content_merge() reacts
+to a negative return as an _("Failed to execute internal merge")
+error, for example.  merge-recursive uses the same logic.
 
-For "trim a bloated lazy clone" problem, I suspect that you would
-need to know what is currently re-fetchable from the promisor and
-drop those objects from your local repository, and the computation
-of what is currently re-fetchable would certainly involve the filter
-specification you had with the promisor.  The remote-tracking
-branches you have for the promisor would serve as the other source
-of input to perform the computation.
+Unfortunately, I see no provision for the merge driver to actively
+signal such a condition.  The return value of run_command() is a
+return value from run-command.c:wait_or_whine() and exit status of
+the process is cleansed with WEXITSTATUS() so we cannot make it
+negative X-<.
 
-For "partition local and complete object store" problem, using
-filter specification to sift the objects into two bins (those that
-match and the rest), as the code changes in the series implements,
-may be a useful mechansim.  I briefly had to wonder if partitioning
-into two (and not arbitrary number N) bins is sufficient, but did
-not think of a scenario where we would benefit from 3 bins more than
-having 2 bins offhand.
+In the worst case, we may retroactively have to reserve one exit
+status so that the external merge driver can actively say "I give
+up" to cause LL_MERGE_ERROR to be returned from the codepath, but I
+wonder if it is safe to abuse "exit due to signal" (which shows up
+as a return value greater than 128) as such a "merge driver went
+away without leaving a useful result"?  Elijah, what do you think?
 
-Thanks.
+Stepping back a bit and even disregarding such a merge driver that
+OOMs, if a long-running merge driver is killed, by definition we
+cannot trust what the driver left on the filesystem, so handling
+"exit due to signal" case differently does sound like a sensible
+thing to do, at least to me, offhand.
+
+And once we have such an enhancement to the ll-ext-merge interface,
+a merge driver that voluntarily "gives up" can send a signal to kill
+itself (or call abort(3)).
+
+With a tentative commit log message (which would need to be updated
+to mention what the triggering topic was that led to this
+enhancement) but without associated documentation update and test,
+here is to summarize and illustrate the above idea.
+
+----- >8 ---------- >8 ---------- >8 -----
+ll-merge: external merge driver died with a signal causes an error
+
+When an external merge driver dies with a signal, we should not
+expect that the result left on the filesystem is in any useful
+state.  However, because the current code uses the return value from
+run_command() and declares any positive value as a sign that the
+driver successfully left conflicts in the result, and because the
+return value from run_command() for a subprocess that died upon a
+signal is positive, we end up treating whatever garbage left on the
+filesystem as the result the merge driver wanted to leave us.
+
+run_command() returns larger than 128 (WTERMSIG(status) + 128, to be
+exact) when it notices that the subprocess died with a signal, so
+detect such a case and return LL_MERGE_ERROR from ll_ext_merge().
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ll-merge.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git c/ll-merge.c w/ll-merge.c
+index 07ec16e8e5..5599f55ffc 100644
+--- c/ll-merge.c
++++ w/ll-merge.c
+@@ -243,7 +243,14 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 		unlink_or_warn(temp[i]);
+ 	strbuf_release(&cmd);
+ 	strbuf_release(&path_sq);
+-	ret = (status > 0) ? LL_MERGE_CONFLICT : status;
++
++	if (!status)
++		ret = LL_MERGE_OK;
++	else if (status <= 128)
++		ret = LL_MERGE_CONFLICT;
++	else
++		/* died due to a signal: WTERMSIG(status) + 128 */
++		ret = LL_MERGE_ERROR;
+ 	return ret;
+ }
+ 
