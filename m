@@ -2,174 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD8EEB64D8
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 08:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C78EB64D8
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 10:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230186AbjFVIj0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 04:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
+        id S230348AbjFVKJG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 06:09:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjFVIjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 04:39:25 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3677410F4
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 01:39:24 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b477e9d396so63303131fa.3
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 01:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687423162; x=1690015162;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jZPh9DQZxWtXG4+us7iu3NOPLdU7SEqICJoH8Y6cI4w=;
-        b=GZnqS24Hm7635+URtvtAN2ryaa+kpzSyT6QkoKMMB8dQotCoUFpMr1hWWpuklgPDYH
-         QeZpp0ZqRYsj5VZyFOSL00Q7m8mZtLv8rWtr61JuOLeD+4dBJ8fuamqg8TdsI8ZBN5RD
-         vtNTyGHPYt/Rn2LqFWTqVIUatRK2Ac02zBVIHPdKYKF/3hDKg9hkJXfyowQL7FciPifO
-         s6FqkF+E5L+LTnl6UqXk6yeqb5Gt/ANMt0K9H42JJZJLAB4a+ddmEqoKx7qtHVsMYjFt
-         tiS6miFEy7GC/4WHn/b8cnHb+lVT7BRaB7+B7rr65vu7CYGbTREpbfyzU67BtrYt3E88
-         bdxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687423162; x=1690015162;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jZPh9DQZxWtXG4+us7iu3NOPLdU7SEqICJoH8Y6cI4w=;
-        b=HGWQbe6UakQh3rjg+GRP1oT67qf7y751lK2tudnoYsrw94H4D7Jtc8wQwPLYmc4jDf
-         x5GfteLMu/MYeKsJHRYqWoXsGYmes4hdormPCUz9Rr8Dx47QtUB95T/i54p9SYg6Pn/I
-         5CyCFnPO6je/LAT8tA1df0irJmUXJOTEzwrcUX54UtYkX6C8JGqL/0j4D8mG5HhLdyZv
-         mTcvHk6swgzFFD3RbNp5r6MQth0TfjCsA2cUY0/qcEeP/GbclsuP2rza8RQ7bzSfWvNG
-         t7YzUkMqfNQ/jtM5YpyOrtG9oVF6axG3e41/EOVMsnAb81aSrBK7Xp8O1QVZRONq10Z7
-         qzIg==
-X-Gm-Message-State: AC+VfDyGN7sdjDAm5w1PMeN1jHuYO4iRZpP/T2WIU/Bjj9buKFpeaRQp
-        83bGBRldGlrVZlQU6jSK8uy7UebuELIrFKuu2A0=
-X-Google-Smtp-Source: ACHHUZ5P898RbjNIMc3jugc8VXuh6nqPb72zq9lnfzEBeaBjC2PBFuHmDNgqP74RH6bSMstXwmBXUSnWmXtaWqUpbkg=
-X-Received: by 2002:a2e:9d4a:0:b0:2b4:65ef:3af5 with SMTP id
- y10-20020a2e9d4a000000b002b465ef3af5mr10359639ljj.30.1687423162080; Thu, 22
- Jun 2023 01:39:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230614192541.1599256-7-christian.couder@gmail.com> <xmqqmt10s0cw.fsf@gitster.g>
- <CAP8UFD3864uUjb0vR+B7xETJTFJoWdEqA5Gdyr42Lg3t8Auk=Q@mail.gmail.com> <xmqqy1kchi3l.fsf@gitster.g>
-In-Reply-To: <xmqqy1kchi3l.fsf@gitster.g>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 22 Jun 2023 10:39:09 +0200
-Message-ID: <CAP8UFD30Kx_vYfdV4ipPPXNVr76pKshjTUQGcJfkUvG_+KD3zQ@mail.gmail.com>
-Subject: Re: [PATCH 6/9] repack: add `--filter=<filter-spec>` option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
+        with ESMTP id S229925AbjFVKJE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 06:09:04 -0400
+X-Greylist: delayed 319 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 22 Jun 2023 03:09:03 PDT
+Received: from out-27.mta0.migadu.com (out-27.mta0.migadu.com [IPv6:2001:41d0:1004:224b::1b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D14BE2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 03:09:02 -0700 (PDT)
+References: <20230509175347.1714141-1-christian.couder@gmail.com>
+ <20230602102533.876905-1-christian.couder@gmail.com>
+ <20230602102533.876905-14-christian.couder@gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+        t=1687428540;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=kSHH9SxRfFoMKakUiNs45rzBi9U97Ynuj/z9kMuzROo=;
+        b=uw7KZfGpRW9wR3A/c2CORYMqB5U+9OMK67fti1RZLAUFxfP2eX+sppaGHqPoD5Sd84OfjK
+        9+t1XpSzZDuKyvceJiV1KhM6D7uo6fHITCrMPHughTVM7kjJfcnKGVDEilSaGGtZpaEWIN
+        N0/CKrFj24WLrWVawdQSh5wZ/IHy63w=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   Toon Claes <toon@iotcl.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 13/15] replay: add --advance or 'cherry-pick' mode
+Date:   Thu, 22 Jun 2023 12:05:03 +0200
+In-reply-to: <20230602102533.876905-14-christian.couder@gmail.com>
+Message-ID: <87h6qzst8u.fsf@iotcl.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 6:53=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > It might indicate that we prefer to be safe, do things in different
-> > steps and not provide an easy way for users to shoot their own foot.
-> > For example it seems pretty safe to do things like this:
-> >
-> >   1) put all the objects we think should be on the promisor remote in
-> > a separate packfile
-> >   2) start checking that each object in that packfile is available on
-> > the promisor remote
-> >   3) if an object in that packfile isn't on the promisor remote, try
-> > to send it there
-> >   4) if we couldn't send the object, error out
-> >   5) if we haven't errored out after checking all the objects in the
-> > packfile, it means all these objects are now available from the
-> > promisor remote and we can safely delete the packfile
->
-> I may be missing something, but to me, the above sound more like a
-> tail wagging the dog.
->
-> Instead of saying "while repacking, we'll create the new pack with
-> the objects that we suspect that we cannot re-fetch from the
-> promisor (allowing false positives for safety), and store the rest
-> in a backup pack (that can immediately be discarded)",
 
-This might be a good idea, but what if users prefer to send to a
-promisor remote the objects that should be on that promisor remote as
-soon as possible, instead of keeping them on the local machine where
-they take up possibly valuable space for no good reason?
+Christian Couder <christian.couder@gmail.com> writes:
 
-My point is that there are a lot of different strategies that people
-operating with a promisor remote could adopt, so it's better to
-iteratively give them building blocks that can help them instead of
-trying to find and implement right away the best solution for a
-special use case or for every use case.
+> +	/*
+> +	 * When the user specifies e.g.
+> +	 *   git replay origin/main..mybranch
+> +	 *   git replay ^origin/next mybranch1 mybranch2
 
-> the above
-> says "while repacking, we'll create the new pack with objects that
-> match the filter, and store the rest to another pack".  But because
-> the object selection criteria used in the latter is not something
-> with practical/useful meaning, in other words, it does not exactly
-> match what we want,
+When I'm trying these, I'm getting the error:
+    error: option --onto or --advance is mandatory
 
-"What we want" depends on the strategy chosen to manage objects on
-promisor remotes and I am not sure that the strategy you mention is
-always better than the example strategy I talked about. For some users
-it might be better for others it might not.
+In what situation can I omit both --onto and --advance?
 
-> we fill the gaps between what we want (i.e. sift
-> the objects into "refetchable" and "other" bins) and what we
-> happened to have implemented (i.e. sift the objects into "match
-> filter" and "other" bints) by sending the objects that we _should_
-> have included in the new pack (i.e. "not refetchable") to the
-> promisor to make them refetchable.
->
-> I do not know what to think about that.  I do not think there is
-> even a way to guarantee that the push done for 3) will always be
-> taken and still leave the resulting promisor usable (e.g.  we can
-> make them connected by coming up with a random new ref to point
-> these "we are sending these only because we failed to include them
-> in the set of objects we should consider local" objects, but then
-> how would we avoid bloating the refs at the promisor remote side
-> (which now has become a "dumping ground", rather than holding the
-> objects needed for histories that project participants care about).
+> +static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+> +				  const char *onto_name,
+> +				  const char **advance_name,
+> +				  struct commit **onto,
 
-There are some configurations where users never want to delete any git
-object. In those cases it doesn't matter if the promisor remote is a
-"dumping ground". Users might just want a promisor remote to keep all
-the large files that have ever been pushed into the repo, to save more
-precious space on the machine hosting the regular repo.
+Would it make sense to call this target?
 
-There are configurations where users can have garanties that the push
-done for 3) will work with a very high probability so that the example
-strategy I talked about can work reliably enough.
+> +				  struct strset **update_refs)
+> +{
+> +	struct ref_info rinfo;
+> +
+> +	get_ref_information(cmd_info, &rinfo);
+> +	if (!rinfo.positive_refexprs)
+> +		die(_("need some commits to replay"));
+> +	if (onto_name && *advance_name)
+> +		die(_("--onto and --advance are incompatible"));
 
-The example strategy I talked about is just one example where having
-repack --filter work like it does in this patch series can be useful
-and safe. I don't pretend that it is always the best strategy and that
-some users might not prefer another better strategy for them. If
-that's the case perhaps they can implement another different option
-that just checks that filtered out objects are indeed available from a
-promisor remote and then just omit these objects from the resulting
-pack. In fact I would have nothing against such an option, and I might
-even implement it myself one day (no promise though).
+Do we actually need to disallow this? I mean from git-replay's point of
+view, there's no technical limitation why can cannot support both modes
+at once. The update-ref commands in the output will update both target
+and source branches, but it's not up to us whether that's desired.
 
-Right now they have nearly no helpful command (except perhaps using
-pack-objects directly), so even if this is not the best possible help
-in all use cases, I am just saying that this can be useful in _some_
-cases.
+> +	else if (onto_name) {
 
-> As an argument to salvage this series as (one of the possible
-> ingredients to) a solution to "slim down a bloated lazy clone"
-> problem, it sounds a bit weak.
+No need to 'else' here IMHO.
 
-I don't quite agree, but anyway I will use this argument less in
-version 2 of this patch series, and I will talk more about the
-argument that `repack --filter=3D...` allows users to put packfiles
-containing some kinds of objects (like large blobs or all the blobs)
-on cheaper disks (when not using a promisor remote).
+> +		*onto = peel_committish(onto_name);
+> +		if (rinfo.positive_refexprs <
+> +		    strset_get_size(&rinfo.positive_refs))
+> +			die(_("all positive revisions given must be references"));
 
-Thanks.
+I tested this locally with the following command:
+
+$ git replay --onto main OID..OID
+
+This command didn't give any errors, neither did it return any
+update-ref lines. I would have expected to hit this die().
+
+> +	} else if (*advance_name) {
+> +		struct object_id oid;
+> +		char *fullname = NULL;
+> +
+> +		*onto = peel_committish(*advance_name);
+> +		if (repo_dwim_ref(the_repository, *advance_name, strlen(*advance_name),
+> +			     &oid, &fullname, 0) == 1) {
+> +			*advance_name = fullname;
+> +		} else {
+> +			die(_("argument to --advance must be a reference"));
+> +		}
+> +		if (rinfo.positive_refexprs > 1)
+> +			die(_("cannot advance target with multiple source branches because ordering would be ill-defined"));
+
+The sources aren't always branches, so I suggest something like:
+
++			die(_("cannot advance target with multiple sources because ordering would be ill-defined"));
+
+> +	determine_replay_mode(&revs.cmdline, onto_name, &advance_name,
+> +			      &onto, &update_refs);
+> +
+> +	if (!onto) /* FIXME: Should handle replaying down to root commit */
+> +		die("Replaying down to root commit is not supported yet!");
+
+When I was testing locally I tried the following:
+
+$ git replay --onto main feature
+
+I was expecting this command to find the common ancestor automatically,
+but instead I got this error. I'm fine if for now the command does not
+determine the common ancestor yet, but I think we should provide a
+better error for this scenario.
+
+> +test_expect_success 'using replay on bare repo to perform basic cherry-pick' '
+> +	git -C bare replay --advance main topic1..topic2 >result-bare &&
+> +	test_cmp expect result-bare
+> +'
+> +
+>  test_done
+
+Shall we add a test case when providing both --onto and --advance? And
+one that omits both?
