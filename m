@@ -2,159 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F8C1EB64D8
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 16:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF0ACEB64D8
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 16:50:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231211AbjFVQj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 12:39:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36426 "EHLO
+        id S231235AbjFVQuN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 12:50:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbjFVQj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 12:39:57 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C141FEA
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 09:39:48 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3112f256941so5311316f8f.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 09:39:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687451987; x=1690043987;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2dUEAsPrZ9nr0nUWuDHsRJ+XE/2jrDaVxStsgavzIrQ=;
-        b=qkyQe37cXc85gGhA/Ekh99V2vkicjXHZ1UCzBS7KrEp4JEEXmAd0YVFl+gdo4gD663
-         xfgAwoRx7U+hDOWK90DuN8jMzl+kl6Q2ukXQ7v7co7BmHfykWRlipVBWV3dGi1XW4Hue
-         v3IuoBP+Rg9dFWmvZBaKeU/oNa7om3xLayGVYaMe5rXO7OJaSRPGsBAQo15JYIcU5Ie7
-         Q2NgzYLdKiSB6JU+sb2EpzIlRqHkoFHrakNtBYbBWtnV6Cjif4H1vANDYnaZXRQyuWMr
-         /k6+XNpcwTAii89xJPD8IlCwsWFI9AdsEgTc+hUpTKlVbUQdLYJ1QRo/kFMChomQAyyc
-         nQxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687451987; x=1690043987;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2dUEAsPrZ9nr0nUWuDHsRJ+XE/2jrDaVxStsgavzIrQ=;
-        b=DrqmyLV/hhrFcLuNIw5Is8wyAmLaFIByhCe69pX83DTGWE82TLTnGgCgxRIq1dDFcq
-         F4LXs0QYPq0vaul5+XdF1rs++y0K3wFINF2eMVzMakAA4E0UDe3xW8j6wdmSsDS6QkmX
-         xv8lfWHcxJoPJV/R2cdMSbB1Ro8f6kfNA1zPnbfIlCy9Zf4ayPs7AZI2FuiQWhK1VcK3
-         fLxJXGg8kbTMp7bzPU9u/0+SXQ8HUNAYf6qRFMpSiWrAsXZAQ614PYItvOzxqjqZXIZq
-         KpT8rgIm7UCDIDTbcw7dF/IC2IbHhCcJN1TUQHjzZrm4ok1TdUiBn9EllMHUaRLTjtpV
-         Xm3g==
-X-Gm-Message-State: AC+VfDwl/lP6G1LY4kxAH8XkckUXRCxVbKDqQoEcfCvGC4kPTeHqTKIP
-        296CtHQvAi88tz1PQTlvtYm4ckWLTw==
-X-Google-Smtp-Source: ACHHUZ42DYFRQ/eC9VRDQctxT4mhPnhcbypgiR9M/338fbYI9HfbTgVW2GS/hakUZ4qCznmQXEsKXQ==
-X-Received: by 2002:adf:cf09:0:b0:307:9db3:432a with SMTP id o9-20020adfcf09000000b003079db3432amr11572835wrj.42.1687451986881;
-        Thu, 22 Jun 2023 09:39:46 -0700 (PDT)
-Received: from pweza (i59F50ED2.versanet.de. [89.245.14.210])
-        by smtp.gmail.com with ESMTPSA id p7-20020a056000018700b003095bd71159sm7479427wrx.7.2023.06.22.09.39.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 09:39:46 -0700 (PDT)
-Date:   Thu, 22 Jun 2023 18:39:36 +0200
-From:   Sergei Golubchik <vuvova@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug: submodule update fails to fetch
-Message-ID: <ZJR5SPDj4Wt_gmRO@pweza>
-References: <ZJQr0_aC-NlLXDgj@pweza>
- <ZJRHlJvE4BMue1/Z@nand.local>
+        with ESMTP id S230129AbjFVQuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 12:50:11 -0400
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20600.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eae::600])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54011D3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 09:50:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KxkBehb6q7X7c2a+X+Rg/WLBeq+b7OviBe59wFlGfe37EbAsBQXMqi+TCVbpm4zJmcrgE2m1webzAlRTSOTC5WkczhgXXUJtOoxw+aAlb2C917VEBDtC7YM5YayD0Cqv0hWNFIvpocXtBPWcvlA/APMt3ivFsaP+yeEFvqnAxrEwSOd+Euj15Dkmv4DZuEWZ5asnQZe3S82WmyZmozQ0LtekG+x0erWaLCpBDxu00X99pSrZ2SfK2PaaVa8V82aNJj3yyLGM5WXMctugXcMbZ3ye87IlVjxYTuYVGmTM/V5CasALCvULXIswFFGwVmlLuIiZOHCOmnEn8bJ7PLrPrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NgHBXQpOccd9rW36GmZGqNzEPFOgDVezOzrP+blyrDA=;
+ b=dpMA5OeUP+TcmVWEJRPepgco9CpHOpE3f85D8Sm4nVVdple7V+HB3u51C81g7ghH1/DqY56WOH/7v5HssH+CqvIkfJr8TtQKJ7s18rK3NvJofwdc4IX4t+/0mLxRxkYubUOa5hxx2wSqapUcK69g6PQSAKQU0DVtgeN333GczrIpse2XwqiamJAjSQWTUhSoK0lXJA/qJKbY24EfkwMAH8y7ixMjC++BmoJzy80n2DPtskzBqTZpSq4yT/RIek/eY0IDTS+YbByTtklo9hAmUclfmHmCTSnmK95CGcctBdjgHuQF7Z2VFqnmCf2uA44DsLD7wGUWqDSlEzYjnnxwNw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cedaron.com; dmarc=pass action=none header.from=cedaron.com;
+ dkim=pass header.d=cedaron.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cedaron.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NgHBXQpOccd9rW36GmZGqNzEPFOgDVezOzrP+blyrDA=;
+ b=JIEXqSASd5VW+PFzzUsgQXXqv7DXcAbzPi90FvYX1qEk1UXFcPA4PjRqebXQkWcAk8FaWV8FNf5p0sNhUyepj0dFKAD+LOaE6nwprcH6svO0cI+o1Vyv7qFH+l5mcoRTHEdxPvvLkDH1spVq6deL68chxGBexd4OiygNevDvfA6Ep5MDFptrJJnxaULRhDAkrqpa3XoMMFBgdqcOAUam+8eqT8NLnr7oJJECxf7LM0TDSGd1LQfJL0wBirvSyPwssgKKQsU4H9R7ATKgLrw+cYAZWyw6yOJXUtYoUUm7CoFscaD/kcNHiwHOdH/yS0YGtsxtOJpMbjEVK/BAKwABnA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cedaron.com;
+Received: from BYAPR20MB2758.namprd20.prod.outlook.com (2603:10b6:a03:fb::15)
+ by DS7PR20MB4646.namprd20.prod.outlook.com (2603:10b6:8:75::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.23; Thu, 22 Jun
+ 2023 16:50:05 +0000
+Received: from BYAPR20MB2758.namprd20.prod.outlook.com
+ ([fe80::90c:ffc6:cad4:993]) by BYAPR20MB2758.namprd20.prod.outlook.com
+ ([fe80::90c:ffc6:cad4:993%7]) with mapi id 15.20.6521.024; Thu, 22 Jun 2023
+ 16:50:04 +0000
+Message-ID: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
+Date:   Thu, 22 Jun 2023 09:50:01 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Content-Language: en-US
+To:     git@vger.kernel.org
+From:   Joshua Hudson <jhudson@cedaron.com>
+Subject: Design issue in git merge driver interface
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR08CA0006.namprd08.prod.outlook.com
+ (2603:10b6:a03:100::19) To BYAPR20MB2758.namprd20.prod.outlook.com
+ (2603:10b6:a03:fb::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZJRHlJvE4BMue1/Z@nand.local>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR20MB2758:EE_|DS7PR20MB4646:EE_
+X-MS-Office365-Filtering-Correlation-Id: 94b5853f-d10f-4720-1afb-08db7340ba69
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Ce6b26xBrXclHS0+aSaNO/VQ9qTxb0XbRCTKrY3PMFhV7koL8x/3yj4IKhXrV4D+SBnroUtlmcqq6X1frzi5B6MEWiUdMMjdRLWoZP4HL0NkIz09OK4J08LUjW0zV3PVwR6ZBDI79GUL0zbiMPVZcjdFqKvKSwRPQrhrVT2UDObBqJrt9t3FFsn1MKRYbWEUI9qjQcvxpof6SPaYfda5V/ev56z5+uFZE/4jBWXZYIikk8PYQ34ZWpWoSTzRMTFAq35o2Fl/NcSG+6k6tCVN6IJtqxUnKSrXnqc7hdbhLPCX29GnjyAs37xREoHwOeG4+rOCFsonH1/uR0/KZcgdrDpYPhvuA0/s2iw/y5/7MJ9hd85J7+drQv6jzg2bs97ZpRe8jinhCD9MEAfsWyRAAoxZTM9JMS4LqHpR7ugTe5iRDPQunQwVuz6SwPsdb45mff6WnzHqQreGPETgUNTiJwXY7zDZrwfVTqYP3OZ7kRTJgjLi5yFDm+v9a63rMiS+AHVKQzi/WXA/btlB/Vv8bxSL2Qjz00oodu0kw6CdXIEr6HUOfVlk/XYZA7yJMhUz0lsfdO9cwbWnu4HIVgOzy2Mv+Ujat809Hpx2pacHhv993vyohZmnbw/QKUnmegIXvzcbCLqh1EF/PGg8WpDTHw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR20MB2758.namprd20.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(376002)(396003)(136003)(366004)(346002)(39830400003)(451199021)(2906002)(4744005)(8676002)(8936002)(316002)(41300700001)(31686004)(5660300002)(66476007)(66946007)(66556008)(6666004)(6486002)(478600001)(36756003)(31696002)(38100700002)(6512007)(6916009)(186003)(2616005)(83380400001)(86362001)(26005)(6506007)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ODgwWERsR3pUc3FTYUZIL0hkMk5uMjBIOUgyT0tNWUVxL01IV2c1d1hQanJN?=
+ =?utf-8?B?Q05ISGVVQmQvb3dRakJLd3ZTUkhsYi8wLzhJdDduY2FZZkJuU1cweWwzd0Jw?=
+ =?utf-8?B?enZyQXVaKzZoU3laRlJkbFJ6WE00d1Zxbno0eXhPVkgvYjlYa1h2RWVmYXhn?=
+ =?utf-8?B?NitWYStqVjhkczBKYkI2WDRDWU5xZnUydVRXREIxMVZFdkRpRUFzZlREdkhk?=
+ =?utf-8?B?bXJpQXgzR0JHRUtRemxzYkNOMDBjS2paeGFqSjVFdTF6RjJkWE5xUFY0SGph?=
+ =?utf-8?B?djN6U0dBeGRUQWdKeUNmSlI2NzhNSzN3ZHZLRWxFWTNKOEwxejJVY0dSY1hq?=
+ =?utf-8?B?NUZBMzlrOE53cld1d0J6ZWVuTlFCbUlMRHgvTTFIRnFzNWVtS0o4TVJ5YUZh?=
+ =?utf-8?B?SG9lbWdBbDZaT2ZyVGl2MWI2enRlNjFFS1VWeTQxMzhEdWV2Tnh0V0JvOEJu?=
+ =?utf-8?B?TWpOMnc3VGliaGtxcGU4cmVBZFFIcVpDS2VCRVd3TDV6Q3JtemNiY1AwUGRV?=
+ =?utf-8?B?UWdQd3RySFdpVTNLY2ZzYlpvY25XSll5MkczZDZQREw1Mmdkb2JqaVVhZms4?=
+ =?utf-8?B?WXhqNUR2ZUVUREVtSjVMRjBmdWc0ajQ2b0tXZkFTc1NMeE5Xd2hValJFZHlR?=
+ =?utf-8?B?OVBQdHZCNDNaM3o5NUlRTWgzSUJxRHhwa1BXVWw3T2YrSGMyRFBjb3pKRVUx?=
+ =?utf-8?B?Y3RDZVRDWkhybG9TN3VGUHFEa05ua0FHU1luTmJ6RG4vTVBlTzBtNmFMMGxt?=
+ =?utf-8?B?eXh1UkJ4M1hseCtMYWd2Sjg0bno4YkZ1aGRTd1I0dU9XUG5GYnVFMXNSRmVC?=
+ =?utf-8?B?bXBUcXFoVTVzbUZEZlV6dU5aajZFaHNIMmVTa3E1VW1ETy85Wk1uYXU2b0pj?=
+ =?utf-8?B?c0tHR0VzM09vYUE1aE5YSkVocDdRaEdhQ05XMWF1VzZLU1M3Y05vUTZxTzlz?=
+ =?utf-8?B?eStiWVpXQUlJMHBzQk85WkN6MXpXZFo5eW5hZlhiUGU4VUtBOTVZNkxScEx5?=
+ =?utf-8?B?aFZ4YjhuRmFGN28vY3VGTE0yRkNYdTJQZ3BFYlVxUnRHWVVFZ2ZkNXRRNW9K?=
+ =?utf-8?B?VWQxYTQ1Znk1cUtZRUVDYTBuZ2htRUZrTjVvdTFIRUo5TmV1YktvUURCdGhK?=
+ =?utf-8?B?VFpzSUR4bzhQNXNLNXJieVRZZVdMQWxIeUNXbmNZS1hNV2RaV2JQOXMwVGhF?=
+ =?utf-8?B?N0p0dFIxeCtNS01idDZGLzZrcXRkUkVnVTIya2ZzNGVDYzY0ZXdYNzZrUXdL?=
+ =?utf-8?B?azhVRzFnUDd1NTkzTUN4SnJ1WE0zZU8zQXZnTEtaUlBjMGQraDlwVktZOTJt?=
+ =?utf-8?B?c1hYSHZkeC9aOWdDalNlVVoxa3JkSktXSXY1Y3NvK09UQ2V5QnpKYUdEK1FW?=
+ =?utf-8?B?ajRxSzZwSVlyTm9xL3ZUTStxOUFUQlExTEp6cjZDR01vdkJvSm5SZVE1SUUz?=
+ =?utf-8?B?S2tObUVsb2FRYW5aY3JVZjZLSUNVWXowRTJjTzJGVjJuTW50MUdJS0FNdkRY?=
+ =?utf-8?B?MEhaZlFmekYvdGhKL3dnQWxNMHMzcFJ0ak4rK2cxK3hyWTJxVXVTTlZpdHVH?=
+ =?utf-8?B?cGFod2wrV1JCSkduSDAvSzh1ZkEzUW9NUjRFcXV1MzZvZ21MaFNPYWU1MkpZ?=
+ =?utf-8?B?aEtjMlZsOWtWc1hkcDZJQkVUS3dGQUFRZFNRdWdaOXZGeWhIbXBkL2RXbU9x?=
+ =?utf-8?B?V0pSTUtYWEV3QytGQWZoTUVaRXcxY29rajlsVHc3aVBOWjgvYWQxeHZ1S2tn?=
+ =?utf-8?B?a0xzbW9rOHhkdCtCS1NrMGxzTzRONUZObGRvanJyZFpFUG0yN2JDQzJzakFY?=
+ =?utf-8?B?dFl1UGxsTU9HSFcvL1Jseit1aGlmeEJ4WTZxWFU4VTlzUFBBNlVQUWdXMk14?=
+ =?utf-8?B?QU9DMGNpaWUvN3VIbWdtK2VOOFAwWEl3b29JYUhiUllWMVRubUpIUklFY3kv?=
+ =?utf-8?B?REpML0dnUHluT1JMYXFQQ2Njd3FadENGWWc3Q1M3U0xFRUh4b3dSOGd1eHVP?=
+ =?utf-8?B?NlFuUERwdE5Ddm1BYkQ4MWowc1hBbSt3MnA2eHgydkhwOHVaVzl4VVRjaUpC?=
+ =?utf-8?B?MXdJaVJLRC9pTmNkbXNRMWdoT2UrL2J4bEtkdXM0OVNFMnQvTzYzVjhYMWI0?=
+ =?utf-8?Q?QsTrMTRH0KUAUIdrwv93LxuhU?=
+X-OriginatorOrg: cedaron.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 94b5853f-d10f-4720-1afb-08db7340ba69
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR20MB2758.namprd20.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2023 16:50:04.7392
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: a1e0d90e-c09b-4bb6-9534-4bb03188f5a0
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yMGsns6AX8kahJepg0Vys8NBJOejzkl6njhmrex1bsXhdKsWy/i3R7exDTir5/wMvVeOD6TG/tTnHNGvf9gABA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR20MB4646
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Taylor,
+We had a major incident here involving bad merges. It was traced to a 
+problem with a custom merge driver.
 
-On Jun 22, Taylor Blau wrote:
-> On Thu, Jun 22, 2023 at 01:09:07PM +0200, Sergei Golubchik wrote:
-> > Hi,
-> >
-> > Sometimes (my local repository has lots of branches) after switching
-> > branches
-> >
-> >   git submodule update --init --recursive
-> >
-> > fails with something like
-> >
-> >   fatal: transport 'file' not allowed
-> >   fatal: Fetched in submodule path 'wsrep-lib', but it did not contain e238c0d240c2557229b0523a4a032f3cf8b41639. Direct fetching of that commit failed.
-> >
-> > the submodule transport is not 'file' (it's https) and the direct
-> > fetching of the commit actually works:
-> >
-> >   cd wsrep-lib
-> >   git fetch origin e238c0d240c2557229b0523a4a032f3cf8b41639
-> >   git checkout e238c0d240c2557229b0523a4a032f3cf8b41639
-> >   cd ..
-> >
-> > after that
-> >
-> >   git submodule update --init --recursive
-> >
-> > succeeds.
-> 
-> It makes sense that after manually fetching the desired tip that the
-> submodule update goes through OK, because there is nothing to do (the
-> checked-out state matches what's in .gitmodules), so we don't have to
-> use any transport mechanism.
+On studying why the merge driver failed, we found it was in an 
+unrunnable state (the logical equivalent of calling abort()) and could 
+not mark files as conflicted. Since the users were using a graphical 
+frontend the error messages disappeared into the bitbucket.
 
-Right. I just used it to show that git thinks the submodule was updated
-correctly and doesn't try to do anything after that.
+I've come to the definite conclusion that treating the file as 
+conflicted was wrong and the merge needed to bail out in the middle as 
+though git merge itself bombed. But there doesn't seem to be any way in 
+the protocol to actually do it.
 
-> I recently changed the submodule update rules to disallow file-based
-> submodules when not directly executed by the user. See a1d4f67c12
-> (transport: make `protocol.file.allow` be "user" by default, 2022-07-29)
-> for more of the details there.
+Looking at the merge driver found that some things cannot be handled, 
+such as OOM condition. The fault has to propagate upwards, unwinding as 
+it goes.
 
-Yes, I've seen it. That submodule shouldn't be affected:
-
-  $ git remote -v
-  origin  https://github.com/codership/wsrep-lib.git (fetch)
-  origin  https://github.com/codership/wsrep-lib.git (push)
-
-so I wouldn't want to circumvent your fix and allow the file transport
-that we aren't using.
-
-> But in the short-term, I am curious why we are complaining about needing
-> to use the file transport when you claim that the submodule actually
-> needs the HTTPS transport.
-> 
-> Are you able to share a copy of your repository, and/or its .gitmodules
-> file, and your repository-local .gitconfig, as well? Do you have some
-> `url.<base>.insteadOf` value configured elsewhere that would be
-> rewriting those paths for you?
-
-No insteadOf. Let me try to...
-Okay, here's the bug. In submodule--helper.c, fetch_in_submodule()
-function, there're lines:
----------------------------
-2211         if (oid) {
-2212                 char *hex = oid_to_hex(oid);
-2213                 char *remote = get_default_remote();
-2214
-2215                 strvec_pushl(&cp.args, remote, hex, NULL);
-2216                 free(remote);
-2217         }
----------------------------
-
-this get_default_remote() appears to be getting the default remote name
-for the main repository and then uses it to fetch from the submodule.
-
-It happens that my default remote isn't "origin" (long story), it's
-"github", but in the submodule it's of course "origin", there's no
-"github" remote there. As a result, `git submodule update` runs the
-command
-
-  git fetch github ${commit_hash}
-
-in the submodule, and that's interpreted as 'file' transport.
-
-To repeat this you need a repository where the default remote isn't
-"origin" and a submodule where the commit cannot be fetched by simply
-`git fetch` and needs a direct fetch.
-
-Hope this helps.
-
-Regards,
-Sergei
