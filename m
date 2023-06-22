@@ -2,132 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF0ACEB64D8
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 16:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13792EB64D8
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 18:32:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbjFVQuN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 12:50:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40420 "EHLO
+        id S231235AbjFVSce (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 14:32:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbjFVQuL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 12:50:11 -0400
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20600.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eae::600])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54011D3
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 09:50:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=KxkBehb6q7X7c2a+X+Rg/WLBeq+b7OviBe59wFlGfe37EbAsBQXMqi+TCVbpm4zJmcrgE2m1webzAlRTSOTC5WkczhgXXUJtOoxw+aAlb2C917VEBDtC7YM5YayD0Cqv0hWNFIvpocXtBPWcvlA/APMt3ivFsaP+yeEFvqnAxrEwSOd+Euj15Dkmv4DZuEWZ5asnQZe3S82WmyZmozQ0LtekG+x0erWaLCpBDxu00X99pSrZ2SfK2PaaVa8V82aNJj3yyLGM5WXMctugXcMbZ3ye87IlVjxYTuYVGmTM/V5CasALCvULXIswFFGwVmlLuIiZOHCOmnEn8bJ7PLrPrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NgHBXQpOccd9rW36GmZGqNzEPFOgDVezOzrP+blyrDA=;
- b=dpMA5OeUP+TcmVWEJRPepgco9CpHOpE3f85D8Sm4nVVdple7V+HB3u51C81g7ghH1/DqY56WOH/7v5HssH+CqvIkfJr8TtQKJ7s18rK3NvJofwdc4IX4t+/0mLxRxkYubUOa5hxx2wSqapUcK69g6PQSAKQU0DVtgeN333GczrIpse2XwqiamJAjSQWTUhSoK0lXJA/qJKbY24EfkwMAH8y7ixMjC++BmoJzy80n2DPtskzBqTZpSq4yT/RIek/eY0IDTS+YbByTtklo9hAmUclfmHmCTSnmK95CGcctBdjgHuQF7Z2VFqnmCf2uA44DsLD7wGUWqDSlEzYjnnxwNw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cedaron.com; dmarc=pass action=none header.from=cedaron.com;
- dkim=pass header.d=cedaron.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cedaron.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NgHBXQpOccd9rW36GmZGqNzEPFOgDVezOzrP+blyrDA=;
- b=JIEXqSASd5VW+PFzzUsgQXXqv7DXcAbzPi90FvYX1qEk1UXFcPA4PjRqebXQkWcAk8FaWV8FNf5p0sNhUyepj0dFKAD+LOaE6nwprcH6svO0cI+o1Vyv7qFH+l5mcoRTHEdxPvvLkDH1spVq6deL68chxGBexd4OiygNevDvfA6Ep5MDFptrJJnxaULRhDAkrqpa3XoMMFBgdqcOAUam+8eqT8NLnr7oJJECxf7LM0TDSGd1LQfJL0wBirvSyPwssgKKQsU4H9R7ATKgLrw+cYAZWyw6yOJXUtYoUUm7CoFscaD/kcNHiwHOdH/yS0YGtsxtOJpMbjEVK/BAKwABnA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cedaron.com;
-Received: from BYAPR20MB2758.namprd20.prod.outlook.com (2603:10b6:a03:fb::15)
- by DS7PR20MB4646.namprd20.prod.outlook.com (2603:10b6:8:75::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.23; Thu, 22 Jun
- 2023 16:50:05 +0000
-Received: from BYAPR20MB2758.namprd20.prod.outlook.com
- ([fe80::90c:ffc6:cad4:993]) by BYAPR20MB2758.namprd20.prod.outlook.com
- ([fe80::90c:ffc6:cad4:993%7]) with mapi id 15.20.6521.024; Thu, 22 Jun 2023
- 16:50:04 +0000
-Message-ID: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
-Date:   Thu, 22 Jun 2023 09:50:01 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Content-Language: en-US
-To:     git@vger.kernel.org
-From:   Joshua Hudson <jhudson@cedaron.com>
-Subject: Design issue in git merge driver interface
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR08CA0006.namprd08.prod.outlook.com
- (2603:10b6:a03:100::19) To BYAPR20MB2758.namprd20.prod.outlook.com
- (2603:10b6:a03:fb::15)
+        with ESMTP id S231191AbjFVSca (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 14:32:30 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3231FC2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 11:32:29 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3316B1A64B6;
+        Thu, 22 Jun 2023 14:32:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=N9bwG7z+ZaWAoS0ZmjOdpa1ja0NrLJjPTBsHuu
+        +HuKI=; b=UE5HM8zvCMPTR8Vf1RuB7+XNjTIhRteCUgozcBU2C9ffTwp8bfavlm
+        gfLWPTGWOa+xd+TeO1cFbLX2XwicIO83kmPBNvcBcM957679AjaafVlz6Vnc+3GJ
+        ArmmB/3RhE4rkS1Yib/zgaeCmzd0GLYaSiUXye/EpeH7PUq9ZGWIE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29C7C1A64B3;
+        Thu, 22 Jun 2023 14:32:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.62.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DB461A64B2;
+        Thu, 22 Jun 2023 14:32:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 6/9] repack: add `--filter=<filter-spec>` option
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+        <20230614192541.1599256-7-christian.couder@gmail.com>
+        <xmqqmt10s0cw.fsf@gitster.g>
+        <CAP8UFD3864uUjb0vR+B7xETJTFJoWdEqA5Gdyr42Lg3t8Auk=Q@mail.gmail.com>
+        <xmqqy1kchi3l.fsf@gitster.g>
+        <CAP8UFD30Kx_vYfdV4ipPPXNVr76pKshjTUQGcJfkUvG_+KD3zQ@mail.gmail.com>
+Date:   Thu, 22 Jun 2023 11:32:23 -0700
+In-Reply-To: <CAP8UFD30Kx_vYfdV4ipPPXNVr76pKshjTUQGcJfkUvG_+KD3zQ@mail.gmail.com>
+        (Christian Couder's message of "Thu, 22 Jun 2023 10:39:09 +0200")
+Message-ID: <xmqqa5wrfivc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR20MB2758:EE_|DS7PR20MB4646:EE_
-X-MS-Office365-Filtering-Correlation-Id: 94b5853f-d10f-4720-1afb-08db7340ba69
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Ce6b26xBrXclHS0+aSaNO/VQ9qTxb0XbRCTKrY3PMFhV7koL8x/3yj4IKhXrV4D+SBnroUtlmcqq6X1frzi5B6MEWiUdMMjdRLWoZP4HL0NkIz09OK4J08LUjW0zV3PVwR6ZBDI79GUL0zbiMPVZcjdFqKvKSwRPQrhrVT2UDObBqJrt9t3FFsn1MKRYbWEUI9qjQcvxpof6SPaYfda5V/ev56z5+uFZE/4jBWXZYIikk8PYQ34ZWpWoSTzRMTFAq35o2Fl/NcSG+6k6tCVN6IJtqxUnKSrXnqc7hdbhLPCX29GnjyAs37xREoHwOeG4+rOCFsonH1/uR0/KZcgdrDpYPhvuA0/s2iw/y5/7MJ9hd85J7+drQv6jzg2bs97ZpRe8jinhCD9MEAfsWyRAAoxZTM9JMS4LqHpR7ugTe5iRDPQunQwVuz6SwPsdb45mff6WnzHqQreGPETgUNTiJwXY7zDZrwfVTqYP3OZ7kRTJgjLi5yFDm+v9a63rMiS+AHVKQzi/WXA/btlB/Vv8bxSL2Qjz00oodu0kw6CdXIEr6HUOfVlk/XYZA7yJMhUz0lsfdO9cwbWnu4HIVgOzy2Mv+Ujat809Hpx2pacHhv993vyohZmnbw/QKUnmegIXvzcbCLqh1EF/PGg8WpDTHw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR20MB2758.namprd20.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(376002)(396003)(136003)(366004)(346002)(39830400003)(451199021)(2906002)(4744005)(8676002)(8936002)(316002)(41300700001)(31686004)(5660300002)(66476007)(66946007)(66556008)(6666004)(6486002)(478600001)(36756003)(31696002)(38100700002)(6512007)(6916009)(186003)(2616005)(83380400001)(86362001)(26005)(6506007)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ODgwWERsR3pUc3FTYUZIL0hkMk5uMjBIOUgyT0tNWUVxL01IV2c1d1hQanJN?=
- =?utf-8?B?Q05ISGVVQmQvb3dRakJLd3ZTUkhsYi8wLzhJdDduY2FZZkJuU1cweWwzd0Jw?=
- =?utf-8?B?enZyQXVaKzZoU3laRlJkbFJ6WE00d1Zxbno0eXhPVkgvYjlYa1h2RWVmYXhn?=
- =?utf-8?B?NitWYStqVjhkczBKYkI2WDRDWU5xZnUydVRXREIxMVZFdkRpRUFzZlREdkhk?=
- =?utf-8?B?bXJpQXgzR0JHRUtRemxzYkNOMDBjS2paeGFqSjVFdTF6RjJkWE5xUFY0SGph?=
- =?utf-8?B?djN6U0dBeGRUQWdKeUNmSlI2NzhNSzN3ZHZLRWxFWTNKOEwxejJVY0dSY1hq?=
- =?utf-8?B?NUZBMzlrOE53cld1d0J6ZWVuTlFCbUlMRHgvTTFIRnFzNWVtS0o4TVJ5YUZh?=
- =?utf-8?B?SG9lbWdBbDZaT2ZyVGl2MWI2enRlNjFFS1VWeTQxMzhEdWV2Tnh0V0JvOEJu?=
- =?utf-8?B?TWpOMnc3VGliaGtxcGU4cmVBZFFIcVpDS2VCRVd3TDV6Q3JtemNiY1AwUGRV?=
- =?utf-8?B?UWdQd3RySFdpVTNLY2ZzYlpvY25XSll5MkczZDZQREw1Mmdkb2JqaVVhZms4?=
- =?utf-8?B?WXhqNUR2ZUVUREVtSjVMRjBmdWc0ajQ2b0tXZkFTc1NMeE5Xd2hValJFZHlR?=
- =?utf-8?B?OVBQdHZCNDNaM3o5NUlRTWgzSUJxRHhwa1BXVWw3T2YrSGMyRFBjb3pKRVUx?=
- =?utf-8?B?Y3RDZVRDWkhybG9TN3VGUHFEa05ua0FHU1luTmJ6RG4vTVBlTzBtNmFMMGxt?=
- =?utf-8?B?eXh1UkJ4M1hseCtMYWd2Sjg0bno4YkZ1aGRTd1I0dU9XUG5GYnVFMXNSRmVC?=
- =?utf-8?B?bXBUcXFoVTVzbUZEZlV6dU5aajZFaHNIMmVTa3E1VW1ETy85Wk1uYXU2b0pj?=
- =?utf-8?B?c0tHR0VzM09vYUE1aE5YSkVocDdRaEdhQ05XMWF1VzZLU1M3Y05vUTZxTzlz?=
- =?utf-8?B?eStiWVpXQUlJMHBzQk85WkN6MXpXZFo5eW5hZlhiUGU4VUtBOTVZNkxScEx5?=
- =?utf-8?B?aFZ4YjhuRmFGN28vY3VGTE0yRkNYdTJQZ3BFYlVxUnRHWVVFZ2ZkNXRRNW9K?=
- =?utf-8?B?VWQxYTQ1Znk1cUtZRUVDYTBuZ2htRUZrTjVvdTFIRUo5TmV1YktvUURCdGhK?=
- =?utf-8?B?VFpzSUR4bzhQNXNLNXJieVRZZVdMQWxIeUNXbmNZS1hNV2RaV2JQOXMwVGhF?=
- =?utf-8?B?N0p0dFIxeCtNS01idDZGLzZrcXRkUkVnVTIya2ZzNGVDYzY0ZXdYNzZrUXdL?=
- =?utf-8?B?azhVRzFnUDd1NTkzTUN4SnJ1WE0zZU8zQXZnTEtaUlBjMGQraDlwVktZOTJt?=
- =?utf-8?B?c1hYSHZkeC9aOWdDalNlVVoxa3JkSktXSXY1Y3NvK09UQ2V5QnpKYUdEK1FW?=
- =?utf-8?B?ajRxSzZwSVlyTm9xL3ZUTStxOUFUQlExTEp6cjZDR01vdkJvSm5SZVE1SUUz?=
- =?utf-8?B?S2tObUVsb2FRYW5aY3JVZjZLSUNVWXowRTJjTzJGVjJuTW50MUdJS0FNdkRY?=
- =?utf-8?B?MEhaZlFmekYvdGhKL3dnQWxNMHMzcFJ0ak4rK2cxK3hyWTJxVXVTTlZpdHVH?=
- =?utf-8?B?cGFod2wrV1JCSkduSDAvSzh1ZkEzUW9NUjRFcXV1MzZvZ21MaFNPYWU1MkpZ?=
- =?utf-8?B?aEtjMlZsOWtWc1hkcDZJQkVUS3dGQUFRZFNRdWdaOXZGeWhIbXBkL2RXbU9x?=
- =?utf-8?B?V0pSTUtYWEV3QytGQWZoTUVaRXcxY29rajlsVHc3aVBOWjgvYWQxeHZ1S2tn?=
- =?utf-8?B?a0xzbW9rOHhkdCtCS1NrMGxzTzRONUZObGRvanJyZFpFUG0yN2JDQzJzakFY?=
- =?utf-8?B?dFl1UGxsTU9HSFcvL1Jseit1aGlmeEJ4WTZxWFU4VTlzUFBBNlVQUWdXMk14?=
- =?utf-8?B?QU9DMGNpaWUvN3VIbWdtK2VOOFAwWEl3b29JYUhiUllWMVRubUpIUklFY3kv?=
- =?utf-8?B?REpML0dnUHluT1JMYXFQQ2Njd3FadENGWWc3Q1M3U0xFRUh4b3dSOGd1eHVP?=
- =?utf-8?B?NlFuUERwdE5Ddm1BYkQ4MWowc1hBbSt3MnA2eHgydkhwOHVaVzl4VVRjaUpC?=
- =?utf-8?B?MXdJaVJLRC9pTmNkbXNRMWdoT2UrL2J4bEtkdXM0OVNFMnQvTzYzVjhYMWI0?=
- =?utf-8?Q?QsTrMTRH0KUAUIdrwv93LxuhU?=
-X-OriginatorOrg: cedaron.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 94b5853f-d10f-4720-1afb-08db7340ba69
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR20MB2758.namprd20.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2023 16:50:04.7392
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: a1e0d90e-c09b-4bb6-9534-4bb03188f5a0
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yMGsns6AX8kahJepg0Vys8NBJOejzkl6njhmrex1bsXhdKsWy/i3R7exDTir5/wMvVeOD6TG/tTnHNGvf9gABA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR20MB4646
+Content-Type: text/plain
+X-Pobox-Relay-ID: 21F3B0AE-112B-11EE-ABDD-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had a major incident here involving bad merges. It was traced to a 
-problem with a custom merge driver.
+Christian Couder <christian.couder@gmail.com> writes:
 
-On studying why the merge driver failed, we found it was in an 
-unrunnable state (the logical equivalent of calling abort()) and could 
-not mark files as conflicted. Since the users were using a graphical 
-frontend the error messages disappeared into the bitbucket.
+>> I may be missing something, but to me, the above sound more like a
+>> tail wagging the dog.
+> ...
+> This might be a good idea, but what if users prefer to send to a
+> promisor remote the objects that should be on that promisor remote as
+> soon as possible, instead of keeping them on the local machine where
+> they take up possibly valuable space for no good reason?
+> ...
+> There are some configurations where users never want to delete any git
+> object. In those cases it doesn't matter if the promisor remote is a
+> "dumping ground".
 
-I've come to the definite conclusion that treating the file as 
-conflicted was wrong and the merge needed to bail out in the middle as 
-though git merge itself bombed. But there doesn't seem to be any way in 
-the protocol to actually do it.
+When one says "everything" in these sentences, I doubt one
+necessarily means "everything".  A topic one works on will have
+iterations that is never pushed out, a topic one started may not
+even get to the state that is pushable to the central server.  But
+the objects that need to support such a topic (and its historical
+versions in its reflog) would need to be retained until they are
+expired.
 
-Looking at the merge driver found that some things cannot be handled, 
-such as OOM condition. The fault has to propagate upwards, unwinding as 
-it goes.
+Certainly, by pushing even such objects, you can say "here is a pack
+with filter=blob:none, and because I sent every blob every time I
+create locally to the promisor, I can always refetch what is not in
+them by definition".
 
+But is that a good use of everybody's resources?  The key phrase in
+what I said was "... and still leve the resulting promisor usable".
+
+The promisor remote is in the unfortunate and unenviable position
+that it cannot garbage collect anything because there may be
+somebody who is still depending on such an object nobody planned to
+use, but there is no mechanism to let it find out which ones are in
+active use (or if you added some recently that I am forgetting, it
+would change the equation---please remind me if that is the case).
+
+So I would imagine that it would be fairly high in the priority list
+of server operators and project leads to make sure their promisor
+remotes do not become a true "dumping ground".
+
+For "trim a bloated lazy clone" problem, I suspect that you would
+need to know what is currently re-fetchable from the promisor and
+drop those objects from your local repository, and the computation
+of what is currently re-fetchable would certainly involve the filter
+specification you had with the promisor.  The remote-tracking
+branches you have for the promisor would serve as the other source
+of input to perform the computation.
+
+For "partition local and complete object store" problem, using
+filter specification to sift the objects into two bins (those that
+match and the rest), as the code changes in the series implements,
+may be a useful mechansim.  I briefly had to wonder if partitioning
+into two (and not arbitrary number N) bins is sufficient, but did
+not think of a scenario where we would benefit from 3 bins more than
+having 2 bins offhand.
+
+Thanks.
