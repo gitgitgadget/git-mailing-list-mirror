@@ -2,106 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9090EB64D7
-	for <git@archiver.kernel.org>; Wed, 21 Jun 2023 23:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80135EB64DC
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 00:46:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbjFUXp7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jun 2023 19:45:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35298 "EHLO
+        id S229544AbjFVAqp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jun 2023 20:46:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjFUXp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2023 19:45:58 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317C910C1
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 16:45:57 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9896216338cso208353766b.3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2023 16:45:57 -0700 (PDT)
+        with ESMTP id S229651AbjFVAqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2023 20:46:38 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8D61992
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 17:46:37 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3113306a595so5479192f8f.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2023 17:46:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=slack-corp.com; s=google; t=1687391155; x=1689983155;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pZ/izSG95CtTP88Awg8ep7GKvaZjV2N8OvycvNP3xCY=;
-        b=EO5uLTmYMCMEVMTg87cAV6XY7zFy/M4EImVi0UhBV+N+oQCyzqp4jHsSF80PLdc++z
-         xOXOepVdIKWpbideKjBrZ3uSvN4BlhYr7mUYrg+v2pq5FOYgx2X6IM8EhpOuRSXl1vui
-         tIziwWbU3KtS14hESgiqvST21ssbdVb64w/98=
+        d=gmail.com; s=20221208; t=1687394796; x=1689986796;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/pXwb3AE2GaGmHxpdFWL3gxzWEXGHvHSE03yXKFBPYM=;
+        b=DzRNqSiCUk0/RNQi9Gbk0V9YCtIspR7BEvFNHof4/lmZSFF5UwBbHD+5BA84r7aHN3
+         fkCSO1i2nF6zZpU5JwIe9K9HO0JzI7MoODKVGKUCD5sZlqghXX3BSX9oQB7tSQURKGRc
+         d1FkNW0CgGiI2EAqTXKMJvFeY/D2VKoOAlH3ulKzu4WFfkFsMzdY5hQ9XYF3E6k96A9d
+         9yCaAFzDak5FUmYWxpAPKozEGfqje069ZMrbyduHwJDM8AVHIqQhqYoNtkUcBJ5jclTz
+         lgF/ovqy6RDTNx28h7gypmXLdChlsPeAEQgZvOp5GBqBqkwN20svAP/2s+VvF9mzvfu8
+         J7dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687391155; x=1689983155;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pZ/izSG95CtTP88Awg8ep7GKvaZjV2N8OvycvNP3xCY=;
-        b=ig+s6eoXKIt3BJmHUtnV/fS5hy/X6uHvxf6hyfSzHcpwLbvlcEDAcIWvIbB34T6No1
-         vGwSTk3ZqYi3I24fAtZcO/RCwxl22H6rmPnjw57sV7GxpPcT+cmI5ivEYhD1aEYaT350
-         07WWXzYs3eHoxEmt3zB4Cc4BZNjZ+zReHEasHKMI/jSWtFnWu75/6y20QCL32R+UNfyj
-         YYdJT9Y/cNHa00qrZYWl8MzajSr9hXIJ9ljHdob7siTymMn3Mrng6cmlHS0BekjnfM7Y
-         h088ylYGHeTXvPIo7hjzlEXIRKlrBTCG2JrqzWvmFaeOr1MQRWBi5KQ8BOhSQzk3m2uj
-         m73g==
-X-Gm-Message-State: AC+VfDyRihLWREPmq6O1TPMBPv/ITGCavl6VhEnj+EBlN/Px/5TSfY46
-        jN+GsHfvpHR/7mh/5ExUi53KqdLRUvvbJnONw1n0twAb2aDsbONpPbs=
-X-Google-Smtp-Source: ACHHUZ6xGzhPTbA5KaJqdhKPKgVWKJ7EHs15HvnjAK1fpYNtoSKEkTMKh0tFgGUlHJkIepr/4J+j7FIsK32/U0LAhOM=
-X-Received: by 2002:a17:906:6a25:b0:989:40a9:505d with SMTP id
- qw37-20020a1709066a2500b0098940a9505dmr5741315ejc.0.1687391155368; Wed, 21
- Jun 2023 16:45:55 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687394796; x=1689986796;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/pXwb3AE2GaGmHxpdFWL3gxzWEXGHvHSE03yXKFBPYM=;
+        b=MPTpI/gYJdgX1IoqRecdjZKdjQb0HmFBz69dmdkTtFKQPCpduTFqq3h2JbXOUq1A/E
+         HyXhz6VnjkjRoODE7Q6WhSqSq1dmN7OtS8PxzfgnhuOkP2cPpk8KPWmCnZR1Qdc76neQ
+         FgKRLlmJezQMKBRpu5NVC7eSWsa2cM2S0i+uNofiWU+fQ/j83zmObucmbflG0MtWAh1B
+         ZCDG3hCu6n5Bt6NknBUAlZhtO7rgNGWvLO3ixz6uHFSnHnlDx7J+SSzgnZ9OfEIjLQz7
+         EV4bVA2mpj6Ul+CciC7Qc2o2uCSDNL7K1RspA8lMqyUGjvzmBjFg0xCRYitYP/MCl0v9
+         9wQw==
+X-Gm-Message-State: AC+VfDyHINoKzvcwW2CfryvhSL6pt/FP7llgKGDP0UeKUifzm3Oheety
+        P5KbkHHWzwuyEjqjAg5SIgXDlveqmkU=
+X-Google-Smtp-Source: ACHHUZ70q6VeDHAFtO+OUesCZqTkjq+wbknULxtRag2Yt6uovftqjWHRAYTi0b1mm8Eoie8Y/cb/1g==
+X-Received: by 2002:adf:f00f:0:b0:311:108f:16d0 with SMTP id j15-20020adff00f000000b00311108f16d0mr17927682wro.4.1687394795880;
+        Wed, 21 Jun 2023 17:46:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e10-20020a5d65ca000000b002f28de9f73bsm5645796wrw.55.2023.06.21.17.46.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jun 2023 17:46:35 -0700 (PDT)
+Message-Id: <pull.1533.git.git.1687394795009.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 22 Jun 2023 00:46:34 +0000
+Subject: [PATCH] docs: add git-hash-object -t option's possible values
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Reply-To: jkasky@slack-corp.com
-From:   Jesse Kasky <jkasky@slack-corp.com>
-Date:   Wed, 21 Jun 2023 16:45:44 -0700
-Message-ID: <CAJSLrw6qhHj8Kxrqhp7xN=imTHgg79QB9Fxa9XpdZYFnBKhkvA@mail.gmail.com>
-Subject: BUG: config.c:129: kvi should not be set while parsing a config source
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+From: John Cai <johncai86@gmail.com>
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+For newer users of Git, the possible values of -t in git-hash-object may
+not be apparent. In fact the current verbiage under NAME could
+lead one to conclude that git-hash-object(1) can only be used to create
+blobs.
 
-git clone --no-checkout --sparse --filter=blob:none --depth=1 <repo> <dir>
-cd <dir>
-git sparse-checkout add <dir1> <dir2>
-git fetch --depth=1 origin <commit>
+Update the verbiage to make it clear the command can be used to write
+objects, not just blobs. Also add the possible values for -t.
 
-What did you expect to happen? (Expected behavior)
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+    docs: add git-hash-object -t option's possible values
+    
+    For newer users of Git, the possible values of -t in git-hash-object may
+    not be apparent. In fact the current verbiage under NAME could lead one
+    to conclude that git-hash-object(1) can only be used to create blobs.
+    
+    Update the verbiage to make it clear the command can be used to write
+    objects, not just blobs. Also add the possible values for -t.
 
-Expected the fetch to complete
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1533%2Fjohn-cai%2Fjc%2Fhash-object-documentation-update-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1533/john-cai/jc/hash-object-documentation-update-v1
+Pull-Request: https://github.com/git/git/pull/1533
 
-What happened instead? (Actual behavior)
+ Documentation/git-hash-object.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Received the following error:
+diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
+index 472b5bb995b..404e339e170 100644
+--- a/Documentation/git-hash-object.txt
++++ b/Documentation/git-hash-object.txt
+@@ -3,7 +3,7 @@ git-hash-object(1)
+ 
+ NAME
+ ----
+-git-hash-object - Compute object ID and optionally creates a blob from a file
++git-hash-object - Compute object ID and optionally creates an object from a file
+ 
+ 
+ SYNOPSIS
+@@ -25,7 +25,8 @@ OPTIONS
+ -------
+ 
+ -t <type>::
+-	Specify the type (default: "blob").
++	Specify the type (default: "blob"). Possible values are `commit`,
++	`tree`, `blob`, and `tag`.
+ 
+ -w::
+ 	Actually write the object into the object database.
 
-BUG: config.c:129: kvi should not be set while parsing a config source
-[1]    5842 abort      /opt/homebrew/bin/git fetch --depth=1 origin
-
-What's different between what you expected and what actually happened?
-
-Did not expect to encounter an abort.
-
-Anything else you want to add:
-
-Two items I came across while trying to troubleshoot:
-https://github.com/git/git/commit/9828453ff00b330c57daa3a8b672cbb5f0cdce34
-https://github.com/Homebrew/homebrew-cask-fonts/issues/7718
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.41.0
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 22.5.0 Darwin Kernel Version 22.5.0: Mon Apr 24 20:52:24
-PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T6000 arm64
-compiler info: clang: 14.0.3 (clang-1403.0.22.14.1)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
+base-commit: 6640c2d06d112675426cf436f0594f0e8c614848
+-- 
+gitgitgadget
