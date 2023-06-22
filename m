@@ -2,153 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87782EB64DA
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A389BEB64DA
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231409AbjFVVf3 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 22 Jun 2023 17:35:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39674 "EHLO
+        id S230444AbjFVVh2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 17:37:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231243AbjFVVf2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 17:35:28 -0400
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2855D1BFA
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:35:27 -0700 (PDT)
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7625719bac0so57483885a.0
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:35:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687469726; x=1690061726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PHE+toELkNdBBKaLKsWSD+NxffXU09vIXEsFhKpJgMM=;
-        b=iGYOt2dRMPAjJ5cakKj7mzCLbm66WTM9FR5+zLXv8mnbN28od8s29lTxY2/xGED8AD
-         CGN16sVYdFsDNLIEQcRPksTfYnyQIShh6+qrfGZZv4+n/0r0GZ7a9w2ZEWOLM08eFpi8
-         gkhOFIzXN6aUpueh+A7GfUDeYoAb3++NWpECrNoCWjqxXK92Fx6QgFKpSlATm1N+1xgA
-         OldGBSVTJlpjulL5p3Lm9eQE+XWebbh0RqfkiZ2bJ2rwGHDJerG4jDYXkn8DMKEbdKnA
-         233Yqs4O/CZEyYdzJayyBloUzJsJr++weH8u70GFGaUE5OOlITK/Q5KeWKy4YcK/raio
-         GgUw==
-X-Gm-Message-State: AC+VfDxPzLdiqzcLtOxwe7pyIXXVvFPtFHQY2ZKdND/kp83+gHV7doiU
-        lpC2XzH5uG1OKwHSUrFUym142nTFo9QK80oeM1s=
-X-Google-Smtp-Source: ACHHUZ7CjgzupW0XJa30VX9cAWn/fRiinUV+v08LJbffD9yDFiRZS3flPzWGSuM5rFRfzlHlDQWuEE0Fix12rQANBOw=
-X-Received: by 2002:a05:6214:f29:b0:62d:ec71:129a with SMTP id
- iw9-20020a0562140f2900b0062dec71129amr23946828qvb.7.1687469726223; Thu, 22
- Jun 2023 14:35:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230622195059.320593-1-sandals@crustytoothpaste.net> <20230622195059.320593-4-sandals@crustytoothpaste.net>
-In-Reply-To: <20230622195059.320593-4-sandals@crustytoothpaste.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Jun 2023 17:35:15 -0400
-Message-ID: <CAPig+cTmqUfzrA14xBo1jQSR9kLufze_DFZSf_PC2aCNnOHFcw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] var: add config file locations
+        with ESMTP id S229643AbjFVVh0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 17:37:26 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60ABC1FED
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:37:25 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D3A4430DDF;
+        Thu, 22 Jun 2023 17:37:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wq8NpTKQPH2PyxPwLY5lziU33qhNVIxu555nWT
+        2iCDM=; b=W+hpcfNg31C8T3Jd8ue4rkjnJo8jQyTnztWpEorooCvtz7ni4MA0M1
+        ZqMfSwV2oFz/Pddd+7/VJZIDri/dDObdcXvjt2n/cLr76knBbW0Y6LjeW5a4sCUD
+        cbU32JCzz69q3uGujV5QLbwwDgtkdPxz+v3slpCt6tBBMOSvHvAqA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CC57830DDE;
+        Thu, 22 Jun 2023 17:37:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.62.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E5B6530DDD;
+        Thu, 22 Jun 2023 17:37:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
         Elijah Newren <newren@gmail.com>,
         Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH 2/3] var: add attributes files locations
+References: <20230622195059.320593-1-sandals@crustytoothpaste.net>
+        <20230622195059.320593-3-sandals@crustytoothpaste.net>
+        <ebdf8a20-9ac7-dcf7-8cc6-b63894b7eb45@github.com>
+        <ZJS6eARkNOuT+Zd/@tapette.crustytoothpaste.net>
+Date:   Thu, 22 Jun 2023 14:37:20 -0700
+In-Reply-To: <ZJS6eARkNOuT+Zd/@tapette.crustytoothpaste.net> (brian
+        m. carlson's message of "Thu, 22 Jun 2023 21:17:44 +0000")
+Message-ID: <xmqq8rcbdvqn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F87EBFD8-1144-11EE-8E50-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2023 at 4:06 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> Much like with attributes files, sometimes programs would like to know
-> the location of configuration files at the global or system levels.
-> However, it isn't always clear where these may live, especially for the
-> system file, which may have been hard-coded at compile time or computed
-> dynamically based on the runtime prefix.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On 2023-06-22 at 20:19:46, Derrick Stolee wrote:
+>> One way to solve for this is to use the more modern style
+>> when initializing the structs:
+>> 
+>> static struct git_var git_vars[] = {
+>> 	{
+>> 		.name = "GIT_COMMITTER_IDENT",
+>> 		.read = git_author_info,
+>> 		.free = 0,
+>> 	},
+>> 	...
+>> }
 >
-> Since other parties cannot intuitively know how Git was compiled and
-> where it looks for these files, help them by providing variables that
-> can be queried.  Because we have multiple paths for global config
-> values, print them in order from highest to lowest priority, and be sure
-> to split on newlines so that "git var -l" produces two entries for the
-> global value.
->
-> However, be careful not to split all values on newlines, since our
-> editor values could well contain such characters, and we don't want to
-> split them in such a case.
->
-> Note in the documentation that some values may contain multiple paths
-> and that callers should be prepared for that fact.  This helps people
-> write code that will continue to work in the event we allow multiple
-> items elsewhere in the future.
->
-> Signed-off-by: brian m. carlson <bk2204@github.com>
-> ---
-> diff --git a/builtin/var.c b/builtin/var.c
-> @@ -62,21 +62,59 @@ static const char *git_attr_val_global(int flag)
->  struct git_var {
->         const char *name;
->         const char *(*read)(int);
-> +       int multivalued;
->         int free;
->  };
->  static struct git_var git_vars[] = {
-> +       { "GIT_COMMITTER_IDENT", git_committer_info, 0, 0 },
-> +       { "GIT_AUTHOR_IDENT",   git_author_info, 0, 0 },
-> +       { "GIT_EDITOR", editor, 0, 0 },
-> +       { "GIT_SEQUENCE_EDITOR", sequence_editor, 0, 0 },
-> +       { "GIT_PAGER", pager, 0, 0 },
-> +       { "GIT_DEFAULT_BRANCH", default_branch, 0, 9 },
+> Good idea, I've got this in for a v2.
 
-Why "9"?
-
-> +       { "GIT_SHELL_PATH", shell_path, 0, 0 },
-> +       { "GIT_ATTR_SYSTEM", git_attr_val_system, 0, 1 },
-> +       { "GIT_ATTR_GLOBAL", git_attr_val_global, 0, 1 },
-> +       { "GIT_CONFIG_SYSTEM", git_config_val_system, 0, 1 },
-> +       { "GIT_CONFIG_GLOBAL", git_config_val_global, 1, 1 },
->         { "", NULL },
->  };
-> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-> @@ -179,6 +179,49 @@ test_expect_success 'GIT_ATTR_GLOBAL points to the correct location' '
-> +test_expect_success 'GIT_CONFIG_SYSTEM points to the correct location' '
-> +       TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
-
-Same comment as in [2/3]: $(pwd) is unnecessary. Simpler:
-
-    TRASHDIR="$(test-tool path-utils normalize_path_copy .)" &&
-
-> +       test_must_fail env GIT_CONFIG_NOSYSTEM=1 git var GIT_CONFIG_SYSTEM &&
-> +       (
-> +               sane_unset GIT_CONFIG_NOSYSTEM &&
-> +               git var GIT_CONFIG_SYSTEM >path &&
-> +               test "$(cat path)" != "" &&
-> +               GIT_CONFIG_SYSTEM=/dev/null git var GIT_CONFIG_SYSTEM >path &&
-> +               if test_have_prereq MINGW
-> +               then
-> +                       test "$(cat path)" = "nul"
-> +               else
-> +                       test "$(cat path)" = "/dev/null"
-> +               fi &&
-> +               GIT_CONFIG_SYSTEM="$TRASHDIR/gitconfig" git var GIT_CONFIG_SYSTEM >path &&
-> +               test "$(cat path)" = "$TRASHDIR/gitconfig"
-> +       )
-> +'
-
-Ditto regarding unnecessary temporary file.
-
-> +test_expect_success 'GIT_CONFIG_GLOBAL points to the correct location' '
-> +       TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
-
-Ditto regarding $(pwd).
-
-> @@ -196,6 +239,29 @@ test_expect_success 'git var -l lists config' '
-> +test_expect_success 'git var -l does not split multiline editors' '
-> +       (
-> +               GIT_EDITOR="!f() {
-> +                       echo Hello!
-> +               }; f" &&
-> +               export GIT_EDITOR &&
-> +               echo "GIT_EDITOR=$GIT_EDITOR" >expected &&
-> +               git var -l >var &&
-> +               cat var &&
-
-Is this `cat` leftover debugging code?
-
-> +               sed -n -e "/^GIT_EDITOR/,\$p" var | head -n 3 >actual &&
-> +               test_cmp expected actual
-> +       )
-> +'
+Yeah, this would make it palatable ;-)
