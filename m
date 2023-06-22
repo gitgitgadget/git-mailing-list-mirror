@@ -2,126 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38717EB64DC
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 20:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 780DAEB64DA
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 20:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230038AbjFVUT4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 16:19:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37838 "EHLO
+        id S230200AbjFVUmp convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 22 Jun 2023 16:42:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbjFVUTy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 16:19:54 -0400
-Received: from mail-vk1-xa2f.google.com (mail-vk1-xa2f.google.com [IPv6:2607:f8b0:4864:20::a2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 843631BFE
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 13:19:53 -0700 (PDT)
-Received: by mail-vk1-xa2f.google.com with SMTP id 71dfb90a1353d-47148f11fe6so3033300e0c.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 13:19:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1687465192; x=1690057192;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0eoluqKgtzp85VZVrIoYKO67vXQHtvCe1a+Orr7oJLU=;
-        b=PKTYJfnM0XBxm3hg9xR9DJbsa3bWGacGBG24tl2ZGM8p4xd34PcTOIXav2VoFyWDkg
-         yiIHMLHYPLvoZNlhfPhhlVWXVd2dyK9Pe3XTEmjjMd5l4UIC5Cmxy1XO9hI+bMZTzv1y
-         K74kvhxxdiYrOhbFHjgAdFYJPbpzmFz8CIdkrQM9BRLtkhoO0/ZWTB2MpwvMhChynUAG
-         6LBOwEgQK0MLpywDT4dxIR2960NX+oBHE6hWO+DsFFRXonlY/wrvJ0YO8wjshC0rm20q
-         TGmGwxOhdTBTaQnNMIuSaqVetn+VMs7+qHNJKwsWzGwMtQCDKh6dyJoJyEcWjuRbLiNV
-         dVqQ==
+        with ESMTP id S229682AbjFVUmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 16:42:44 -0400
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C961987
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 13:42:43 -0700 (PDT)
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7624679c9c4so544185885a.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 13:42:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687465192; x=1690057192;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0eoluqKgtzp85VZVrIoYKO67vXQHtvCe1a+Orr7oJLU=;
-        b=km7M02nB3FWVExhNCKRn/K3MVq84nRjwArU7tyhV7okfjlJZLlBZQ/utctTeJZwoXo
-         WAnLyQ2h6C02cgWwBADRv11iPluIcXV/rGRHfBTQQZ/T/Yp56X47pwWPF4+MTz4dD67z
-         p5eeTTC1TUyGeB4Dy/iPK1OgLmZjVsYjviBs4P44b4+vvbjdyH7R766QTDrYIzeTEx50
-         q0n6jW5EE9G3F/AIlqoHvRvC0CVmBgO4SQkwHc/mCvQ2zZV8h8EnbBq/A92sHM/vDSO2
-         Yheom1g2O4rx59f9Y+rQ6a79O02Zd7uBOW3yDwxOFsMC2wYvSX3Xvd+ERoJxcy7D4VZh
-         8uxw==
-X-Gm-Message-State: AC+VfDzB0qR6Gy2XUnwMyX+re7ttV5hu3QdFlVvDFY+0H/wTQAIFhaNq
-        envKfdFJ1W/TE2g5tvXnazMH
-X-Google-Smtp-Source: ACHHUZ5K3rGd8ytrMG265L79EXx/sp65SmGDPSbjbzw/GxJZbonL7SBbc8DdWt4aVlUGL29j9ea6sw==
-X-Received: by 2002:a1f:bf41:0:b0:453:b080:632d with SMTP id p62-20020a1fbf41000000b00453b080632dmr10537849vkf.0.1687465191138;
-        Thu, 22 Jun 2023 13:19:51 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b14d:d0d8:2007:6c0f? ([2600:1700:e72:80a0:b14d:d0d8:2007:6c0f])
-        by smtp.gmail.com with ESMTPSA id m17-20020a0dca11000000b0056974f3f32bsm2055186ywd.1.2023.06.22.13.19.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jun 2023 13:19:50 -0700 (PDT)
-Message-ID: <ebdf8a20-9ac7-dcf7-8cc6-b63894b7eb45@github.com>
-Date:   Thu, 22 Jun 2023 16:19:46 -0400
+        d=1e100.net; s=20221208; t=1687466562; x=1690058562;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1olp7ES1IuH2tojHsLTM4Sm8Pl8F+tW5c42MEFfce6k=;
+        b=SCNFh9CPmNb2o6rPU/IOqy4kydX3fPAfqJ8RX/LJWpvOzRSytv2UKNJuiwepOs2xlP
+         qqz/a0bwKboRpGS/6fUC+wsQmFUyzOuCe6z+gMxvBWb2TMgynSGS0dl9EsNcX9a7VOkz
+         jiLge2CgzW94/ZNGNKrLLdofye0SkJxh7lZ80RZxjlLJ/mrhgBpQLxyvPW4zDEVJoSFM
+         rq4XcHmas07x09wzgVyNWqQ6Rp0FQd4gMC/8ZuKCTTTiUndQwmdpQRm87MI0l/9Q57eO
+         sLF3hKW3gCid8TL+9J+VGDSFMyVP48Pw3kwlsKpLhT8K8wwRAQ3uA9vmM5tcPBKsu2JM
+         4tPg==
+X-Gm-Message-State: AC+VfDyU04EeWAqPLxhWCte7ecJ1VarKf/jQQb8hRudZayja3Khkmy/j
+        MogfQ3Z/tgVdmrU+w7YEr2zdeAQkIpIHUjQRktk=
+X-Google-Smtp-Source: ACHHUZ6rRNe3ZqXIgkIv3BsTFJKeejFU5SfKG20XxIf0TbsyYYvzBxEh8DZ/V8WtqQBx9mBDAFWxoHNwnkOJ1GPk/qk=
+X-Received: by 2002:a05:6214:2346:b0:62f:f13e:bd73 with SMTP id
+ hu6-20020a056214234600b0062ff13ebd73mr27021181qvb.20.1687466562457; Thu, 22
+ Jun 2023 13:42:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/3] var: add attributes files locations
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+References: <20230622195059.320593-1-sandals@crustytoothpaste.net> <20230622195059.320593-2-sandals@crustytoothpaste.net>
+In-Reply-To: <20230622195059.320593-2-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 22 Jun 2023 16:42:31 -0400
+Message-ID: <CAPig+cSTR6oHeYjcHZ7m2CKYcFo2eistxz_X-7J2rhd7h+uf3g@mail.gmail.com>
+Subject: Re: [PATCH 1/3] var: add support for listing the shell
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Calvin Wan <calvinwan@google.com>
-References: <20230622195059.320593-1-sandals@crustytoothpaste.net>
- <20230622195059.320593-3-sandals@crustytoothpaste.net>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20230622195059.320593-3-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/22/2023 3:50 PM, brian m. carlson wrote:
+On Thu, Jun 22, 2023 at 4:03 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On most Unix systems, finding a suitable shell is easy: one simply uses
+> "sh" with an appropriate PATH value.  However, in many Windows
+> environments, the shell is shipped alongside Git, and it may or may not
+> be in PATH, even if Git is.
+>
+> In such an environment, it can be very helpful to query Git for the
+> shell it's using, since other tools may want to use the same shell as
+> well.  To help them out, let's add a variable, GIT_SHELL_PATH, that
+> points to the location of the shell.
+>
+> On Unix, we know our shell must be executable to be functional, so
+> assume that the distributor has correctly configured their environment,
+> and use that as a basic test.  On Git for Windows, we know that our
+> shell will be one of a few fixed values, all of which end in "sh" (such
+> as "bash").  This seems like it might be a nice test on Unix as well,
+> since it is customary for all shells to end in "sh", but there probably
+> exist such systems that don't have such a configuration, so be careful
+> here not to break them.
+>
+> Signed-off-by: brian m. carlson <bk2204@github.com>
+> ---
+> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+> @@ -147,6 +147,18 @@ test_expect_success 'get GIT_SEQUENCE_EDITOR with configuration and environment
+> +test_expect_success POSIXPERM 'GIT_SHELL_PATH points to a valid executable' '
+> +       git var GIT_SHELL_PATH >shell &&
+> +       test -x "$(cat shell)"
+> +'
 
->  struct git_var {
->  	const char *name;
->  	const char *(*read)(int);
-> +	int free;
->  };
+This can be implemented more simply without a temporary file:
 
-I see you're expanding the git_var struct, and you do it
-more in patch 3. At that point, there will be two
-consecutive 'int' parameters, which can make things
-unclear as to how to proceed.
+    shpath=$(git var GIT_SHELL_PATH) &&
+    test -x "$shpath"
 
->  static struct git_var git_vars[] = {
-> -	{ "GIT_COMMITTER_IDENT", git_committer_info },
-> -	{ "GIT_AUTHOR_IDENT",   git_author_info },
-> -	{ "GIT_EDITOR", editor },
-> -	{ "GIT_SEQUENCE_EDITOR", sequence_editor },
-> -	{ "GIT_PAGER", pager },
-> -	{ "GIT_DEFAULT_BRANCH", default_branch },
-> -	{ "GIT_SHELL_PATH", shell_path },
-> +	{ "GIT_COMMITTER_IDENT", git_committer_info, 0 },
-> +	{ "GIT_AUTHOR_IDENT",   git_author_info, 0 },
+This is safe since the exit code of the Git command is preserved
+across the `shpath=...` assignment.
 
-This also makes for a big diff like this.
+> +# We know in this environment that our shell will be one of a few fixed values
+> +# that all end in "sh".
+> +test_expect_success MINGW 'GIT_SHELL_PATH points to a suitable shell' '
+> +       git var GIT_SHELL_PATH >shell &&
+> +       grep "sh\$" shell
+> +'
 
-One way to solve for this is to use the more modern style
-when initializing the structs:
+Similarly, there is no need for a temporary file or an extra process.
+This can all be done entirely in the shell itself:
 
-static struct git_var git_vars[] = {
-	{
-		.name = "GIT_COMMITTER_IDENT",
-		.read = git_author_info,
-		.free = 0,
-	},
-	...
-}
-
-Bonus points if you do this conversion before modifying
-the struct, as later changes will only add lines to the
-existing initialization...
-
-  static struct git_var git_vars[] = {
-  	{
-  		.name = "GIT_COMMITTER_IDENT",
-  		.read = git_author_info,
-+ 		.multivalued = 0,
-  		.free = 0,
-  	},
-  	...
-  }
-
-Thanks,
--Stolee
+    shpath=$(git var GIT_SHELL_PATH) &&
+    case "$shpath" in
+    *sh) ;;
+    *) return 1
+    esac
