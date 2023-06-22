@@ -2,101 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07972EB64D8
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 12:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E12EB64D8
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 13:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230217AbjFVM6a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 08:58:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53674 "EHLO
+        id S231452AbjFVNHq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 09:07:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbjFVM63 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 08:58:29 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 543C410F6
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 05:58:28 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-570808d8ddeso69675487b3.0
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 05:58:28 -0700 (PDT)
+        with ESMTP id S229851AbjFVNHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 09:07:44 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07A751FF1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 06:07:37 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6b5a1f873c4so2121566a34.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 06:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687438707; x=1690030707;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687439256; x=1690031256;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nQgwoWRE91aggmT1oa7fxwTmOyz41Ycd0EiuthmjojA=;
-        b=meeW3MZJb0lFn8PPQZK+l0WlcsbEOio3SmWVbsH77dj4FTCQeRMdZ6ZTUjDzAC/ZKV
-         jhcJqRiwlskUYC7xYvMrcxgViBgAS8U1/MtotW5/g80eP+C7hN2vr0lAHPATKXDapBaO
-         mBBJetrIz5XzCoseu4Y9R1uUyhpClHof1TvRdoXO9FhaHZ5PusRpMJrP/2CESieKtvwn
-         ld97dDsCVbAuWcp76l1h9UZDL6fe9mbMyVygBzrfLr2UZk94TuGVCZTsvv1vOV/1DY0R
-         QUGvwKgRNc6YZEVJVS/2QtB7ivutmv0vGy/fLn/jbR+K1U054OTgv5d6+T42tdxZ9TmK
-         9xpQ==
+        bh=2IO3i1gUmQoXvT3f532qJgePIAqqLIK+/iTXY64AJio=;
+        b=BwFDzH0FntcVIxHQkf75bK9IfzcfWenBnDRiH7Z0kLRmIEnJVH+6hkk/O7GAXxsKu8
+         e1s53YxGyczVHhZo/K5LoUofqfQyExU5kn0qRS/uB8yFK80TikNZ8PR1CYgXvBmUVT6Q
+         Rx1A5WH1PZ8R5Kh3utv+21VPER8NCfw+/YT8eLvHz2RASHX6xgvlhTTNhRde6G0pkFnl
+         aFN0fJKNmWhPoJEVQbucXaKqTbTw2/B65CTBi81Pk6cy2YdyGJI1LP02Ewg2IeWdKKYe
+         z7aNsybuBzGA5Ztm0ICP5pg/cv6PXFSLjm7sqZlpvbYwBqQKXdGHapNlnMHbhwrFQu26
+         Zx0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687438707; x=1690030707;
+        d=1e100.net; s=20221208; t=1687439256; x=1690031256;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nQgwoWRE91aggmT1oa7fxwTmOyz41Ycd0EiuthmjojA=;
-        b=TM6qvbJ5Ol2C9m00HqtBicJ7Sqj0GoUE1Piea81gxDJCZ8THfTSyQqFlp9VPv3eoQ3
-         EITNYaUz8Vf/hGHnbHB7Qh6+cTGPiYkFUVzavG/d0yZTh1R9nw3Ag37Wn2GFHnScqkck
-         bqD2IfmbUo3b07umIOkeoVglqFuYXK4aKCLUz6OYg8kaS2phwooSM0xDaaOLHqp9Xu9P
-         5m0+eemsLxw8rKd7iUPaoDd4g0UEP5CZI6tUT5Aan7UfVmjyJZQiG3z6sgGd35skM+BN
-         /AjDgL836C5s1vZodH4jwAOnTOmV1+K2+zVWH/S0qBZID5UvdOifhC/BrMEm0pG6kfld
-         jXRQ==
-X-Gm-Message-State: AC+VfDz85U5NLQD4iZjd7TjPLVTkyiGIYssJboWQFygSybG5SIe0gwzI
-        yiovjw605+46KwF1sgMHx4tWricS9AulV/2vvYGHQLrV
-X-Google-Smtp-Source: ACHHUZ68XvYcQFRpve+tjjM7DDQ/S+hzozFYcxBY1ok+iKT84cj7bpHAzEJ9LeE5bTqGg66gkruLRg==
-X-Received: by 2002:a81:9101:0:b0:56d:790:6b2b with SMTP id i1-20020a819101000000b0056d07906b2bmr18021085ywg.46.1687438707513;
-        Thu, 22 Jun 2023 05:58:27 -0700 (PDT)
+        bh=2IO3i1gUmQoXvT3f532qJgePIAqqLIK+/iTXY64AJio=;
+        b=B7T92r6Azfilfp0WIAC93RaC2c25OCWnL8kLV5V2ml88VLRWHpL5QRIGEfVsGyrj6D
+         4UDwP8emAexTJjQRcl4Ee3zJ9WlNr0H1UU5rYvNChmipDtSYyr8YFEYxJSDLaIbll5jq
+         rGBhFwUpv/2j2ulZE0UQUI5EFedUsN9jjobTFVNbOZVDIM4qJv8455zAFBCGanPrrUDP
+         v559NsCmx2ctK3Q9nPP2cw2HRlDyEHofKL7JaxCeAt5rSoCCH1JRf4BUzPFRp89LBjD3
+         JBrleiPCV/lxtxieFw/Vym6s+VVE4u90/AMyQPB5fQeuYN+hJ0RKh55I1Fh3A0Yj2LH3
+         CNXQ==
+X-Gm-Message-State: AC+VfDyzvvsO5fNqtsASXhtXe6ms5Vb9HucPhrX1WGyZdnVA+to93/Tn
+        kbxBrm7QRksRrJH3mXpeaduidg==
+X-Google-Smtp-Source: ACHHUZ6V7LYRGl4aHjLahlXqtenvyFZEAzXpVtF4bd/Fqu1G2bo6r1eMJL79UHGEFKzCIXobD40MIA==
+X-Received: by 2002:a05:6358:e97:b0:12f:2030:1c77 with SMTP id 23-20020a0563580e9700b0012f20301c77mr3684743rwg.31.1687439256147;
+        Thu, 22 Jun 2023 06:07:36 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t132-20020a81468a000000b00565cf40238csm1804138ywa.110.2023.06.22.05.58.27
+        by smtp.gmail.com with ESMTPSA id 130-20020a250888000000b00bcb4ac1fbc6sm1536452ybi.30.2023.06.22.06.07.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 05:58:27 -0700 (PDT)
-Date:   Thu, 22 Jun 2023 08:58:24 -0400
+        Thu, 22 Jun 2023 06:07:35 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 09:07:32 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 0/3] revision: refactor ref_excludes to ref_visibility
-Message-ID: <ZJRFcMR0/f6Olj+Z@nand.local>
-References: <pull.1515.git.git.1687376112.gitgitgadget@gmail.com>
- <ZJRBsDq8NI9EInel@nand.local>
- <ZJRDZ7NhyNpTV8jD@nand.local>
- <ZJREYU0daKlmfjhr@nand.local>
+To:     Sergei Golubchik <vuvova@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: bug: submodule update fails to fetch
+Message-ID: <ZJRHlJvE4BMue1/Z@nand.local>
+References: <ZJQr0_aC-NlLXDgj@pweza>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZJREYU0daKlmfjhr@nand.local>
+In-Reply-To: <ZJQr0_aC-NlLXDgj@pweza>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2023 at 08:53:53AM -0400, Taylor Blau wrote:
-> On Thu, Jun 22, 2023 at 08:49:43AM -0400, Taylor Blau wrote:
-> > I am left wondering: why doesn't the rule pertaining to
-> > refs/heads/foo/baz show up in the included list? Likewise, what happens
-> > with refs/heads/bar/baz/quux? It is a child of an excluded rule, so the
-> > question is which list takes priority.
-> >
-> > Mostly, I am wondering if I am missing something that would explain why
-> > you couldn't modify the above example's excluded list to contain
-> > something like "!refs/heads/bar/baz/quux", eliminating the need for the
-> > include list entirely.
+On Thu, Jun 22, 2023 at 01:09:07PM +0200, Sergei Golubchik wrote:
+> Hi,
 >
-> Another potential quirk that I just now thought of: what are the rules
-> for what can go in the include list? Fully qualified references only? Or
-> can we have patterns (e.g. refs/foo/bar/*). Presumably you'd want to
-> have the namespace-stripping operator ^, but not !, since negating an
-> include rule seems to imply that it should be in the exclude list.
+> Sometimes (my local repository has lots of branches) after switching
+> branches
+>
+>   git submodule update --init --recursive
+>
+> fails with something like
+>
+>   fatal: transport 'file' not allowed
+>   fatal: Fetched in submodule path 'wsrep-lib', but it did not contain e238c0d240c2557229b0523a4a032f3cf8b41639. Direct fetching of that commit failed.
+>
+> the submodule transport is not 'file' (it's https) and the direct
+> fetching of the commit actually works:
+>
+>   cd wsrep-lib
+>   git fetch origin e238c0d240c2557229b0523a4a032f3cf8b41639
+>   git checkout e238c0d240c2557229b0523a4a032f3cf8b41639
+>   cd ..
+>
+> after that
+>
+>   git submodule update --init --recursive
+>
+> succeeds. This happens deterministically, but depends on the old and new
+> commits in the last checkout. As a workaround we've had to change our CI to do
 
-Sorry for the long chain of self-replies. I think one clarifying point
-that I am not sure of yet is whether or not the exclude rules you're
-talking about are interpreted as patterns (as in transfer.hideRefs) or
-wildmatch patterns.
+It makes sense that after manually fetching the desired tip that the
+submodule update goes through OK, because there is nothing to do (the
+checked-out state matches what's in .gitmodules), so we don't have to
+use any transport mechanism.
 
-If they are wildmatch patterns, would it suffice to add the references
-you *do* want to enumerate to the traversal ahead of time? There is also
-the hidden_refs member of that struct, so perhaps adding negated entries
-there would work.
+I recently changed the submodule update rules to disallow file-based
+submodules when not directly executed by the user. See a1d4f67c12
+(transport: make `protocol.file.allow` be "user" by default, 2022-07-29)
+for more of the details there.
 
-Either way, I think emphasizing the difference between ref exclusions as
-it pertains to traversal, and ref exclusions as it pertains to hiding
-would greatly help other reviewers of this series.
+So in the short term, you should able to work around what you're seeing
+by setting `protocol.file.allow` to "always" with something like
+
+    $ git config --global protocol.file.allow always
+
+But in the short-term, I am curious why we are complaining about needing
+to use the file transport when you claim that the submodule actually
+needs the HTTPS transport.
+
+Are you able to share a copy of your repository, and/or its .gitmodules
+file, and your repository-local .gitconfig, as well? Do you have some
+`url.<base>.insteadOf` value configured elsewhere that would be
+rewriting those paths for you?
 
 Thanks,
 Taylor
