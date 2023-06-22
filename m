@@ -2,163 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81C0CEB64DC
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5128EB64DA
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:17:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbjFVVR1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 17:17:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34708 "EHLO
+        id S231175AbjFVVRu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 17:17:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbjFVVR0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 17:17:26 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 787F1F1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:17:25 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE2FE30B7D;
-        Thu, 22 Jun 2023 17:17:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=we+ETGGErCXg5BeUfcwBV/l9rkGvnyRsbBG0vP
-        0fhNw=; b=QirAsAijVBGx73I6Zr2jrFDk1/zagsquvy6J6BksPZtZ6gnd+DG7wj
-        9ttClBkxbheRtMGPCovPlKhZA48xLPgOc5Wsya9oUgmd/tcYKmEQFZgJMMBgc9SO
-        LdeN/2jjQ5l81+qHqWlMXR0f4RGA2EuWcsOIq0CuaDZIcUBNa/5CA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E67A930B7C;
-        Thu, 22 Jun 2023 17:17:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S229721AbjFVVRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 17:17:47 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA65F1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:17:47 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0C00530B7B;
-        Thu, 22 Jun 2023 17:17:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 5B57A5A210;
+        Thu, 22 Jun 2023 21:17:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1687468666;
+        bh=7sC6iVRR8Cjra61oU93aCBCTPLVKxDFuejNCqoYQcX0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=PwvsANFu6lF1RFBqEut1x29972GmlXwotNuuhKmhlOysm1sZzz/EGRhxT7xWCIa4G
+         PAC1oPxHWZNV5VfLmLL1CjgMSyl+Tm2+1RQJ3bTzICZiseLgbfQXc/4o7hVwG6U3gw
+         SzyF1MZeiTLewQvfRCXrVEI8qmf5VuF77LoSYkIBX7OJHALQW6KZcrNYkLDxPV+2LR
+         QlrcZWhxW5/4Kb9C2uLfRTrm/sqG8I0Mz6v/h6j5TOTgVZJaLzxgZSFtCVUk7BQbIQ
+         HL/VgC5cTpIsfRpceyGeKXFTk6VAgvIfRj1NiLyJXJnCCAoaVegiy1GiSG7WEy/rXn
+         +n5FQ/5LIDRJBcyP/mcC+cWbwayWPQAlUAkWggNDVcpoaYdBe/Q3YSTf03TFMWSTgh
+         trCWMSI9M8dsAShDzsK10QJo3RzB5S4Wz9B7X0eyc8eC5Nph5lga6tJx1qpqS/oXob
+         CGk2lhSpDyDBNanu0uvVkBlbK6AJaGXUQ87vz9SOjGd18FPYqYx
+Date:   Thu, 22 Jun 2023 21:17:44 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
         Calvin Wan <calvinwan@google.com>
 Subject: Re: [PATCH 2/3] var: add attributes files locations
+Message-ID: <ZJS6eARkNOuT+Zd/@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>, Calvin Wan <calvinwan@google.com>
 References: <20230622195059.320593-1-sandals@crustytoothpaste.net>
-        <20230622195059.320593-3-sandals@crustytoothpaste.net>
-Date:   Thu, 22 Jun 2023 14:17:20 -0700
-In-Reply-To: <20230622195059.320593-3-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 22 Jun 2023 19:50:58 +0000")
-Message-ID: <xmqqcz1ndwnz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+ <20230622195059.320593-3-sandals@crustytoothpaste.net>
+ <ebdf8a20-9ac7-dcf7-8cc6-b63894b7eb45@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D4DF0E2-1142-11EE-998C-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="C8ecTQ7NbDUf9Pnk"
+Content-Disposition: inline
+In-Reply-To: <ebdf8a20-9ac7-dcf7-8cc6-b63894b7eb45@github.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> -static const char *git_etc_gitattributes(void)
-> +const char *git_etc_gitattributes(void)
->  {
->  	static const char *system_wide;
->  	if (!system_wide)
-> @@ -878,7 +878,7 @@ static const char *git_etc_gitattributes(void)
->  	return system_wide;
->  }
->  
-> -static const char *get_home_gitattributes(void)
-> +const char *get_home_gitattributes(void)
->  {
->  	if (!git_attributes_file)
->  		git_attributes_file = xdg_config_home("attributes");
-> @@ -886,7 +886,7 @@ static const char *get_home_gitattributes(void)
->  	return git_attributes_file;
->  }
+--C8ecTQ7NbDUf9Pnk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-These are sensible, but ...
+On 2023-06-22 at 20:19:46, Derrick Stolee wrote:
+> One way to solve for this is to use the more modern style
+> when initializing the structs:
+>=20
+> static struct git_var git_vars[] =3D {
+> 	{
+> 		.name =3D "GIT_COMMITTER_IDENT",
+> 		.read =3D git_author_info,
+> 		.free =3D 0,
+> 	},
+> 	...
+> }
 
-> -static int git_attr_system(void)
-> +int git_attr_system(void)
->  {
->  	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
->  }
+Good idea, I've got this in for a v2.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-... even though this is not exactly a new problem, but this function
-is misnamed and exposing it outside the file is not exactly nice.
-We would want to rename it to perhaps git_attr_use_system() or
-something?  "allow" would also work as a verb there, but the point
-is without any verb, it is easily confused with what the function
-git_etc_git_attributes() wants to do.
+--C8ecTQ7NbDUf9Pnk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-side note: arguably the "etc-gitattributes" and "home-gitattributes"
-are also suboptimal public names to give these functions, even
-though they are fine as long as they are confined in a subsystem.
-For global functions, it would be better to give name that match
-what the end-users think of them, when possible.  The former would
-be "git_attr_system()" and the latter would be "git_attr_global()".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
 
->  struct git_var {
->  	const char *name;
->  	const char *(*read)(int);
-> +	int free;
->  };
->  static struct git_var git_vars[] = {
-> -	{ "GIT_COMMITTER_IDENT", git_committer_info },
-> -	{ "GIT_AUTHOR_IDENT",   git_author_info },
-> -	{ "GIT_EDITOR", editor },
-> -	{ "GIT_SEQUENCE_EDITOR", sequence_editor },
-> -	{ "GIT_PAGER", pager },
-> -	{ "GIT_DEFAULT_BRANCH", default_branch },
-> -	{ "GIT_SHELL_PATH", shell_path },
-> +	{ "GIT_COMMITTER_IDENT", git_committer_info, 0 },
-> +	{ "GIT_AUTHOR_IDENT",   git_author_info, 0 },
-> +	{ "GIT_EDITOR", editor, 0 },
-> +	{ "GIT_SEQUENCE_EDITOR", sequence_editor, 0 },
-> +	{ "GIT_PAGER", pager, 0 },
-> +	{ "GIT_DEFAULT_BRANCH", default_branch, 0 },
-> +	{ "GIT_SHELL_PATH", shell_path, 0 },
-> +	{ "GIT_ATTR_SYSTEM", git_attr_val_system, 1 },
-> +	{ "GIT_ATTR_GLOBAL", git_attr_val_global, 1 },
->  	{ "", NULL },
->  };
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZJS6eAAKCRB8DEliiIei
+gZ9YAP9xX0d4w2z554iuTaEmflSH/2N9YWe6Bj10IMULjobGrQD/at4lQsFgsxA1
+u8yBsZjfNtjd7CxcHE8Np1xr8q7DFgc=
+=u2eC
+-----END PGP SIGNATURE-----
 
-I am not sure if the "free" (which stands for "allocated") is worth
-adding here for such a single-use-and-then-exit command.  It is a
-maintenance burden for anybody who adds new variables.
-
-Either mark these values with UNLEAK(), or make the ones that do
-not allocate xstrdup() so that they can be free'd blindly, would be
-less unwieldy option, I guess.
-
-> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-> index 270bd4e512..6a2cc94abb 100755
-> --- a/t/t0007-git-var.sh
-> +++ b/t/t0007-git-var.sh
-> @@ -159,6 +159,26 @@ test_expect_success MINGW 'GIT_SHELL_PATH points to a suitable shell' '
->  	grep "sh\$" shell
->  '
->  
-> +test_expect_success 'GIT_ATTR_SYSTEM points to the correct location' '
-
-I found it somewhat funny to claim we are checking that the variable
-points to the "correct" location, while the test is happy as long as
-it points at any path.
-
-> +	test_must_fail env GIT_ATTR_NOSYSTEM=1 git var GIT_ATTR_SYSTEM &&
-> +	(
-> +		sane_unset GIT_ATTR_NOSYSTEM &&
-> +		git var GIT_ATTR_SYSTEM >path &&
-> +		test "$(cat path)" != ""
-> +	)
-> +'
-> +
-> +test_expect_success 'GIT_ATTR_GLOBAL points to the correct location' '
-> +	TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
-> +	XDG_CONFIG_HOME="$TRASHDIR/.config" git var GIT_ATTR_GLOBAL >path &&
-> +	test "$(cat path)" = "$TRASHDIR/.config/git/attributes" &&
-> +	(
-> +		sane_unset XDG_CONFIG_HOME &&
-> +		HOME="$TRASHDIR" git var GIT_ATTR_GLOBAL >path &&
-> +		test "$(cat path)" = "$TRASHDIR/.config/git/attributes"
-> +	)
-> +'
-
-This one is much less funny ;-)  Very nice.
+--C8ecTQ7NbDUf9Pnk--
