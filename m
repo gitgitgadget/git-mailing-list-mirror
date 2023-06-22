@@ -2,105 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22F6EEB64DA
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BED5AEB64DA
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 21:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbjFVVUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 17:20:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35680 "EHLO
+        id S231318AbjFVVVj convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 22 Jun 2023 17:21:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjFVVUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 17:20:42 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3BD81BD0
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:20:41 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 2EEE85A210;
-        Thu, 22 Jun 2023 21:20:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1687468841;
-        bh=VazS2sYPBH8QaXFgykoq13+FvB8mO8X3NYJ+jt9fXIY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=m4Vrs99WI1TToOwGr6fDZSQOSyRT0V6uOQ636rrbH20LOfM4nqMZhFevDVwJl4k46
-         tPERiQVdRz8VgeuufptHlQ0YsPnVzVc7C6WK+BJPGrcgwIJw7bOBrZSc/NTrhR0yqd
-         RSSDP4ZGixHgGfdC7PZqevVkbVVp/KWLbcp0Bf0XUtQ53PEi9iLQZcd/iGvj6qqigr
-         2hk+ytY/LpMW6FwQMUtVTVCWl/an8i2EURHmRGgFBKYA+rsMB6ZEXSVDoRN17IzL/v
-         ulBtoEmezxjuBI7I7DMos5VNPqPbKJfdjKtr5uu7vbjWmUNGa+HHX+M/PrWUmE4fdN
-         vYPqAekkTc8j8sBqW57DbZr20IDw37JhqOymWkvzk6l5AV318Q5U/lsWk4om8EsM9q
-         7Np3WIK0L2d7+yvijf4d9Myps4UwwIrze+YWw/q9IvJ/QDorhap8W7jQo2c4455yn1
-         WyddRkR3nc8lTq18BzeK5bxaDcGxc8WZB4Zbm7o1UkzOyMLTEWP
-Date:   Thu, 22 Jun 2023 21:20:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        with ESMTP id S229721AbjFVVVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 17:21:37 -0400
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F49F1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:21:37 -0700 (PDT)
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-62ffe4cabecso57235066d6.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 14:21:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687468896; x=1690060896;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iXfhmWt99S42adGVCtbmYa1yqDaJ0qw9/4KCP+yClwA=;
+        b=E7EzPHn2atTesO6N/vSjIzz63rnpPygiCpStQ4R/CZLB4KW/1j0miMf7wvHYC3R39Z
+         ZlrtY/YTy7TbZnuWoT6oRvKKlm7Dp9TSmrk10sOVsxaa4126FKcQq+p7796rvE2+X8n2
+         2/SpGMF+TQHSx2hkmSU1rmImYTntKrdnUe3siEJnk8FV+0W4bHCGb1PPGUyLc3JGb+pq
+         GQ7JUp872J4W19T4K9Me0OWMucTXicWU1NYPniEZ1gBBJHv1C4e9QGaawbNT2PJrKYqe
+         it+FQToUyY1ISFDZRr9OfKrVPzkEeCu2f7RZh+3jo7+jmHsImHCpsFGrwqnHq3N94uJl
+         u+Fg==
+X-Gm-Message-State: AC+VfDxnmeSn0GV4K3ZM8RfIsNRY0J/VQR46BNLfKrp1IkRZzARG5Hzc
+        HKsEJfffBOjBl1K1WqjTz2ZDooPIjywATTf2W+I=
+X-Google-Smtp-Source: ACHHUZ71t8l+Xfo71HlZv6I0aLpTHx0unO2gGZV80sCDSNsD3uZB0TQPYUYdfMgxp06gG/W7R9WFM8geRfn0X8KV+gA=
+X-Received: by 2002:a05:6214:29cc:b0:626:37fe:218c with SMTP id
+ gh12-20020a05621429cc00b0062637fe218cmr22183426qvb.24.1687468896098; Thu, 22
+ Jun 2023 14:21:36 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230622195059.320593-1-sandals@crustytoothpaste.net> <20230622195059.320593-3-sandals@crustytoothpaste.net>
+In-Reply-To: <20230622195059.320593-3-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 22 Jun 2023 17:21:25 -0400
+Message-ID: <CAPig+cTq2QfOX71MZbxQo5uLMuekFXtf=eiAk0f_o_Du=v1P_Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] var: add attributes files locations
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 1/3] var: add support for listing the shell
-Message-ID: <ZJS7J/IoHqgZISy6@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>, Calvin Wan <calvinwan@google.com>
-References: <20230622195059.320593-1-sandals@crustytoothpaste.net>
- <20230622195059.320593-2-sandals@crustytoothpaste.net>
- <CAPig+cSTR6oHeYjcHZ7m2CKYcFo2eistxz_X-7J2rhd7h+uf3g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="VwZIFudwltPTknl+"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSTR6oHeYjcHZ7m2CKYcFo2eistxz_X-7J2rhd7h+uf3g@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jun 22, 2023 at 4:06 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Currently, there are some programs which would like to read and parse
+> the gitattributes files at the global or system levels.  However, it's
+> not always obvious where these files live, especially for the system
+> file, which may have been hard-coded at compile time or computed
+> dynamically based on the runtime prefix.
+>
+> It's not reasonable to expect all callers of Git to intuitively know
+> where the Git distributor or user has configured these locations to
+> be, so add some entries to allow us to determine their location.  Honor
+> the GIT_ATTR_NOSYSTEM environment variable if one is specified.  Expose
+> the accessor functions in a way that we can reuse them from within the
+> var code.
+>
+> In order to make our paths consistent on Windows and also use the same
+> form as paths use in "git rev-parse", let's normalize the path before we
+> return it.  This results in Windows-style paths that use slashes, which
+> is convenient for making our tests function in a consistent way across
+> platforms.  Note that this requires that some of our values be freed, so
+> let's add a flag about whether the value needs to be freed and use it
+> accordingly.
+>
+> Signed-off-by: brian m. carlson <bk2204@github.com>
+> ---
+> diff --git a/attr.h b/attr.h
+> @@ -227,4 +227,8 @@ void git_attr_set_direction(enum git_attr_direction new_direction);
+> +const char *git_etc_gitattributes(void);
+> +const char *get_home_gitattributes(void);
+> +int git_attr_system(void);
 
---VwZIFudwltPTknl+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I forgot to mention that it would be appreciated if you document these
+new public declarations. Even a one-sentence comment would be helpful.
+For instance:
 
-On 2023-06-22 at 20:42:31, Eric Sunshine wrote:
-> This can be implemented more simply without a temporary file:
->=20
->     shpath=3D$(git var GIT_SHELL_PATH) &&
->     test -x "$shpath"
->=20
-> This is safe since the exit code of the Git command is preserved
-> across the `shpath=3D...` assignment.
-
-I can do this in v2.
-
-> Similarly, there is no need for a temporary file or an extra process.
-> This can all be done entirely in the shell itself:
->=20
->     shpath=3D$(git var GIT_SHELL_PATH) &&
->     case "$shpath" in
->     *sh) ;;
->     *) return 1
->     esac
-
-That's true, but this is much uglier and harder to read.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---VwZIFudwltPTknl+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZJS7JwAKCRB8DEliiIei
-gbOTAP9Drib005PtRilwTqD/z7kPi4YjyMirTQuPFgKBBCtVkgD+Md2I/lmiet3B
-Rus5CG0RUo7h7LPaGUE2YhczohWqNQg=
-=rgWE
------END PGP SIGNATURE-----
-
---VwZIFudwltPTknl+--
+    /* Return the location of the personal .gitattributes file. */
+    const char *get_home_gitattributes(void);
