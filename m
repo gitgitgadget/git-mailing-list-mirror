@@ -2,109 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D6AFEB64D8
-	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 11:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EED9DEB64D8
+	for <git@archiver.kernel.org>; Thu, 22 Jun 2023 12:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbjFVLJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jun 2023 07:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58556 "EHLO
+        id S230203AbjFVMii (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jun 2023 08:38:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbjFVLJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2023 07:09:20 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A30371BD6
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 04:09:19 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3110ab7110aso7174607f8f.3
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 04:09:19 -0700 (PDT)
+        with ESMTP id S229990AbjFVMig (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2023 08:38:36 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72B7DE
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 05:38:35 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5704fce0f23so73799067b3.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 05:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687432158; x=1690024158;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZSBH5oaPfINT9jJ5oOaDZJvepORup4jCbSq9ycub1yE=;
-        b=WKcpeTJndbhI6EKvPU1B8bpII1sv7E6sFIPRPgUHUclwX+++kuQSCsxwt8cAOSud0m
-         yr5ZlvSKgUlhM5FPEhUmi1AdhtYdRRkN/RqMR4EBDg21Wo0k++8f5nRS4Iims1IvMWvA
-         SiRc1PTjmxaW2gQgLBFnRvNCIxlPeGe/RFnG3lk7YCu/D5VuiaMweKRtEmMOrMQfil6i
-         dgt2g6kQUMPJQINkmHmtLkzlBhQsZ1A/Q2/DhdEwjNBY3ul226NJobLTWVdwF7EI2Okv
-         SFJW9S9wrBTA7TMvXlT6WcvE2S+6ZX6OMrk4eninQ9gYA86nfdbFKgVEZSmtL8UKpjPn
-         Dfpg==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687437515; x=1690029515;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zS0oCmJM7cvi25w6JkKNu8pv2Q0gHVys33nNw+AtO+Y=;
+        b=YsF5oay1HTYmgRZ3RMBPW7hoNARbNXPIxaESJO08cQMtoFSwa+JQdSc39QfaKrWppB
+         FP0nc5elD3p7MKVrfldy9GRhdOHbNL9gfZhrFfZ6Fkiyax7SIpkexKrwPrtO/MrqNTcl
+         cg+NAUBlSlLGyh3bhUNoJJob1uPNUazd1xWKIxw81EBAW4CqOQfBx8yyWCfVs6ADdY8u
+         c5oeW7KXNlagYJUxCelz//Xjce214ua6i2wobV8ANTs24WTJ4IMS8VZofzycr0bHjXSx
+         HI3w29UWpeRxQuJLur7kzOtvMGIuipomzzgUNNCigHDvOmZkNRQxlntu1JaZ/I0YnKCN
+         No5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687432158; x=1690024158;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZSBH5oaPfINT9jJ5oOaDZJvepORup4jCbSq9ycub1yE=;
-        b=KZi1iTD1RZFkfPAGJj4MrhcjX9QHdNPp3M2FXwn4b77FwBCnHaMhYSPo51we7K5UwK
-         B4Icve2ZMwfMUItPp91DUfLhHrD970xr7dHvtlZ45ynijyVfmE89B9g36LRb28FEKnLS
-         WEBYw7fT7D2MeTn0NI0gJnK10jVt3goScI+A8zVO3Lnitu47ceHIL2uawUKPugMJLY+6
-         IGGIEnL4PRG6fV/7D6cHPfNgiI2MXZqQIV9UftgOKlhRDUeveqIVLuN1wV7nm37aBgx1
-         VqPKWc14AE8q6zXe0HapJ6uCEUe1m/Jjzjgt3jJ7YmxAt13Pqkqqu8jbVRkXKBWesORY
-         hnQw==
-X-Gm-Message-State: AC+VfDyPOiJZkRXOdUJ1EaArA8TNHDchzlUr+IyzWbSSNc/bQZtNF7vE
-        DAOp4TC5sllOtbNlBuWn2nos3y7qsw==
-X-Google-Smtp-Source: ACHHUZ7gyT4YSWrtecAUbwhVSsHPz79H3P2wVAl8JqBsx1MMoTYvdFgr5MnP65CaNXx4csCdAKQH9A==
-X-Received: by 2002:adf:f488:0:b0:311:1b0b:2ec8 with SMTP id l8-20020adff488000000b003111b0b2ec8mr16164360wro.52.1687432157903;
-        Thu, 22 Jun 2023 04:09:17 -0700 (PDT)
-Received: from pweza (i59F50ED2.versanet.de. [89.245.14.210])
-        by smtp.gmail.com with ESMTPSA id m13-20020adff38d000000b003113ed02080sm6803830wro.95.2023.06.22.04.09.17
-        for <git@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1687437515; x=1690029515;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zS0oCmJM7cvi25w6JkKNu8pv2Q0gHVys33nNw+AtO+Y=;
+        b=L4nAhEmFqewm6DPR0q5bCICQVmjkB2ts4uz7BCQOtz0pfgMDMp6Awpmxpr50sb6KvQ
+         YUS68tO6K2pVJe2Kx2zr9tQ0zL2ezlY53Wf2ug1VNgCntcUSa2cn+XVi5Zburxu+ba7K
+         R3g2Qqlucs7i9Uqf/MoKCsbajqGJE3VdcQ8Bx6Mxx4s1YkDbxJl6369ZWkOSzTYRMh4O
+         LxN7cMhI1/XVtZ5NuCcXdL4G48bF8iiHZd0hDz5vTo4CBNYR864I7HtnkJvyeJCT2X1V
+         IZvHvclV5buHnQuFds3SCLbk8u3PA4R9t/or4M/8ZZYJV2wZ6LQw/gKhYf6UqetT/1Ec
+         OMNA==
+X-Gm-Message-State: AC+VfDy17yrRDW7H3VE9MP/VYaLbEHd/SDFDvJ+Ek4oRxz43NpB7ogDe
+        PkZp+jk38ajhXMp02HO0fR798A==
+X-Google-Smtp-Source: ACHHUZ6DY15mwF1XT7IyF/+2CkE6RZUmEr1P41Hc1wZWvCSIQlWBJvG6bN9REAmsao6tWiSfyqKMJw==
+X-Received: by 2002:a0d:e2d6:0:b0:55a:3ce9:dc3d with SMTP id l205-20020a0de2d6000000b0055a3ce9dc3dmr18213899ywe.13.1687437514868;
+        Thu, 22 Jun 2023 05:38:34 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a65-20020a0dd844000000b0054f56baf3f2sm1787248ywe.122.2023.06.22.05.38.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 04:09:17 -0700 (PDT)
-Date:   Thu, 22 Jun 2023 13:09:07 +0200
-From:   Sergei Golubchik <vuvova@gmail.com>
-To:     git@vger.kernel.org
-Subject: bug: submodule update fails to fetch
-Message-ID: <ZJQr0_aC-NlLXDgj@pweza>
+        Thu, 22 Jun 2023 05:38:34 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 08:38:28 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] docs: add git-hash-object -t option's possible
+ valuesync-mailbox>
+Message-ID: <ZJRAsU6LfSwFIdbw@nand.local>
+References: <pull.1533.git.git.1687394795009.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <pull.1533.git.git.1687394795009.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Jun 22, 2023 at 12:46:34AM +0000, John Cai via GitGitGadget wrote:
+> From: John Cai <johncai86@gmail.com>
+>
+> For newer users of Git, the possible values of -t in git-hash-object may
+> not be apparent. In fact the current verbiage under NAME could
+> lead one to conclude that git-hash-object(1) can only be used to create
+> blobs.
 
-Sometimes (my local repository has lots of branches) after switching
-branches
+In the above, these days we would say "git hash-object" instead of
+"git-hash-object" (but "git-hash-object(1)" is correct to refer to the
+manual page).
 
-  git submodule update --init --recursive
+Not worth a reroll on its own, of course, but something to keep in mind
+for the future.
 
-fails with something like
+Otherwise, this patch looks good to me.
 
-  fatal: transport 'file' not allowed
-  fatal: Fetched in submodule path 'wsrep-lib', but it did not contain e238c0d240c2557229b0523a4a032f3cf8b41639. Direct fetching of that commit failed.
-
-the submodule transport is not 'file' (it's https) and the direct
-fetching of the commit actually works:
-
-  cd wsrep-lib
-  git fetch origin e238c0d240c2557229b0523a4a032f3cf8b41639
-  git checkout e238c0d240c2557229b0523a4a032f3cf8b41639
-  cd ..
-
-after that
-
-  git submodule update --init --recursive
-
-succeeds. This happens deterministically, but depends on the old and new
-commits in the last checkout. As a workaround we've had to change our CI to do
-
-  git submodule foreach --recursive 'git fetch origin $sha1;git checkout --force FETCH_HEAD'
-
-This is the bit from `git bugreport`:
-
-[System Info]
-git version:
-git version 2.39.3
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.15.88-gentoo #1 SMP Wed Feb 15 16:42:45 CET 2023 x86_64
-compiler info: gnuc: 11.3
-libc info: glibc: 2.36
-$SHELL (typically, interactive shell): /bin/bash
-
-[Enabled Hooks]
-
-Regards,
-Sergei
+Thanks,
+Taylor
