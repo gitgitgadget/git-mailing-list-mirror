@@ -2,183 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA26EB64DD
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 06:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 537FDEB64D7
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 06:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbjFWGZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 02:25:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45600 "EHLO
+        id S230050AbjFWGdn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 02:33:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229921AbjFWGZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 02:25:56 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA1F211C
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 23:25:54 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so246538e87.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 23:25:54 -0700 (PDT)
+        with ESMTP id S229591AbjFWGdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 02:33:41 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165071BCC
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 23:33:39 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f769c37d26so255589e87.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2023 23:33:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687501553; x=1690093553;
+        d=gmail.com; s=20221208; t=1687502017; x=1690094017;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z3u+gF6TYIP5jjEmX6rsIDjh9YHNa6WvIF5d6jz3wsk=;
-        b=XPx2k9henQLgRRPlHYKAb+ylAMpjqvNDQwnhU7mK9w9iXDpdRyljkd+1ZeKI1DHV1+
-         QnjLNGc7pRq/dYm8jP29aMeJfBF4OYvmsQw91sC/jFp811BHDWNBBzylyk4S8IkpkAlQ
-         xaqNq9aE494Ozjh1HxCJXsZt3/X4BXKo1Oh+HIuX+5A9xbqzwF3omfGnqAwJEBeWsVNO
-         /CbOao4ZDgiUehNCMnx2k9cRq5c7ZhfDdvxgd93IwzRtkfhbR/KqRCVKWfAEAbvZCyay
-         /iC6WsVqRp2vSlpIQ3GX3iwq96Zko/HbiymsA9qfDIGoFKkNcywn+Kb/c1/hzO1MtsZI
-         MlhQ==
+        bh=tg/3VibzgyY2X2rg39c/7WHqr0AR3fBydp01daepJtE=;
+        b=I/urlREA3zg604q2/VwjRZbHox9Y/PVtX2z/dyMy2ALdSvg807qWi536DBLo84buv+
+         UWjV5y1NwM7Vj/xQq7Q2d/DFhCDb82qUoCXZnXtN6AHVPkAvqhnXDyGo7Vtq+3BuQGps
+         Viim1j9qX/mP3711fJDJOWAZf9QZ5EYIYZNUyiWM8hfEheGtoVk/T+JnTFkpwYCmDWMP
+         ujTST7lxTu3Bwr1pYpHbZvIdA5zjsnmqMG5Jea4W+qdtesTpAQKEgzyq7Na0+X8eLEhL
+         hM2V6RDYke/XvC5peFWU3uEq+5seRl3b8wkCs4ThkBkrOYNuMiHsvZewJIfgbIxL5Zqd
+         Hjjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687501553; x=1690093553;
+        d=1e100.net; s=20221208; t=1687502017; x=1690094017;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z3u+gF6TYIP5jjEmX6rsIDjh9YHNa6WvIF5d6jz3wsk=;
-        b=e2mczeeJKtXCKIPqzbBTJZWkg2M8fsvVcRoeVkXBjWN6vUu45EGzpUkHhHoCFUFxi2
-         BORA0P+zkKHxTrl3g+x3HzqPVPSDZkG1to5W0vbzTF5dy6bSSV6zNujC/gAIiTFoGNc6
-         Wx1lKJ11mp2z/L0ETraLJAlWAxiMJ9Nk8hRJ+jim6m9MOXPRHzdk3EG4TmOrCvVRYWzY
-         6B+hyeciW5LlevfEYXXRxrjQ8xXXA2M1f1OF03KdRTWl0u/VfqvzL8cUkb7V7wwaV/Fc
-         TDIj8tiuVElMdzerkOFpjLsIK3wuKI6nbofgbEJAKFU/9bH5MDgMx1vVFrXdntrsxqmE
-         gMpw==
-X-Gm-Message-State: AC+VfDwZPVSi3a0x9uSUCNf3WoKwD3nQ05VykRqU48btKUaqEs6mhwkd
-        fGtsIu1FP2nAKx+uHuubPF/H05zkJ+DWBfu/xyOVW/93iPo=
-X-Google-Smtp-Source: ACHHUZ4UoMXkEQE85LHAdqIXbR9+T1AaPPunk/Vw2yHT1k9EmHiPUYzt4iifzzgQU3LRAMoSPvKw8xpz2qRjqg9TQtc=
-X-Received: by 2002:ac2:4d8e:0:b0:4f8:f4d8:c8d1 with SMTP id
- g14-20020ac24d8e000000b004f8f4d8c8d1mr7173562lfe.2.1687501552665; Thu, 22 Jun
- 2023 23:25:52 -0700 (PDT)
+        bh=tg/3VibzgyY2X2rg39c/7WHqr0AR3fBydp01daepJtE=;
+        b=lBkibG/wzuF2XFkkM76p1hWnM/iZcdFFNUpG/1FEDGgfyqi1j9+czOuRbk3mUI6z0t
+         XGrbd9OKZREOKtQEwX6ZeNQQkTfT0d+eVQDjUhC80Dl/HXEHx7Piokjio4qgQoMJOKPn
+         WfH//agDkWyifRfc+hrtfVQm3mXvOrNXa2t2sX3do3xAypr3eYLNBFfjDck9b37Nr3Nc
+         yXmnkPVSD01ZufjDbtQFPHE7yadgqQtTxUCF2Y2d7j9S12HDb8eEzE9En+Rz41m4UM29
+         pJ5wS6oz3bmsr87jHF1vbmJYxDLcPHHmv+ruQGmtSOkhlxx7YT6j7F7EhNjdnRhuwIbT
+         jCIA==
+X-Gm-Message-State: AC+VfDz6wS+baKsZWb1pd+jO7VGc1uSEjNxy1LgHj5rGjZI2hRiYD9x3
+        P8QlvxBgkZqhWZJmjXue2P4wtJKTI/q9Y4zBdpcJWzguoLm8Og==
+X-Google-Smtp-Source: ACHHUZ7OUpf5O4XRaHio5yoZmzPbHQY6NUgBo1Eby0Rfoj3NJLbiVLap3kEGC7/ccam/CTbYT+pcFnu6uuhTGaIhFYU=
+X-Received: by 2002:a05:6512:214c:b0:4f9:61a2:3592 with SMTP id
+ s12-20020a056512214c00b004f961a23592mr2727545lfr.35.1687502016909; Thu, 22
+ Jun 2023 23:33:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
- <xmqqttuze2fh.fsf@gitster.g> <xmqq4jmzc91e.fsf_-_@gitster.g>
-In-Reply-To: <xmqq4jmzc91e.fsf_-_@gitster.g>
+References: <xmqqedm5k7dx.fsf@gitster.g> <20230621085526.GA920315@coredump.intra.peff.net>
+ <xmqqttv0hhjv.fsf@gitster.g> <20230621202642.GA1423@coredump.intra.peff.net> <xmqqjzvwfp6f.fsf@gitster.g>
+In-Reply-To: <xmqqjzvwfp6f.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 22 Jun 2023 23:25:40 -0700
-Message-ID: <CABPp-BG-KDu0fAC=bydz9A56xguSmgwO6SFDdxZ8h=90qR1PUA@mail.gmail.com>
-Subject: Re: [PATCH] ll-merge: killing the external merge driver aborts the merge
+Date:   Thu, 22 Jun 2023 23:33:24 -0700
+Message-ID: <CABPp-BEQ0_UfUbdeFetCsvAnpO_=mvmjQk8JS0trKJtCL=uh1A@mail.gmail.com>
+Subject: Re: bug in en/header-split-cache-h-part-3, was Re: What's cooking in
+ git.git (Jun 2023, #05; Tue, 20)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Joshua Hudson <jhudson@cedaron.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2023 at 5:33=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+On Wed, Jun 21, 2023 at 3:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
-> When an external merge driver dies with a signal, we should not
-> expect that the result left on the filesystem is in any useful
-> state.  However, because the current code uses the return value from
-> run_command() and declares any positive value as a sign that the
-> driver successfully left conflicts in the result, and because the
-> return value from run_command() for a subprocess that died upon a
-> signal is positive, we end up treating whatever garbage left on the
-> filesystem as the result the merge driver wanted to leave us.
-
-Yeah, I think the tradition was exit code =3D=3D number of conflicts for
-some merge processes.  Not particularly useful when the driver died
-from some signal.
-
-> run_command() returns larger than 128 (WTERMSIG(status) + 128, to be
-> exact) when it notices that the subprocess died with a signal, so
-> detect such a case and return LL_MERGE_ERROR from ll_ext_merge().
-
-Makes sense.
-
+> Jeff King <peff@peff.net> writes:
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+> > Yeah. I guess the real build problem is actually in the merge of split-=
+2
+> > (it conflicted with a simultaneous topic, hence the fix coming in the
+> > merge). So another option to address that here would be to amend the
+> > 4bd872e0ed (Merge branch 'en/header-split-cache-h-part-2' into
+> > en/header-split-cache-h-part-3, 2023-05-08) to include that fixup.
+> >
+> > As for the others, I'd consider:
+> >
+> >   1. (optional) Drop the #ifndef at the very start of the series, befor=
+e
+> >      we touch anything, with the rationale that it is not doing anythin=
+g
+> >      and masks errors. I don't _think_ this can ever backfire, because
+> >      we unconditionally set DEFAULT_GIT_TEMPLATE_DIR (unlike some other
+> >      things like DEFAULT_PAGER, where the Makefile might leave it
+> >      unset). But we can also leave this out, or do it as a separate
+> >      topic, if we want to minimize changes / risk of screwing something
+> >      up.
+> >
+> >   2. Squash the Makefile fix into the "adopt shared init-db" patch
+> >      (currently 0d652b238).
+> >
+> > And that would leave the result fully bisectable. But if we prefer to
+> > keep the history closer to reality, I can prepare the Makefile thing as
+> > a patch on top.
 >
->  * This time with an updated title, a minimal documentation, and an
->    additional test.
+> I've done the messiest, I guess ;-)
 >
->  Documentation/gitattributes.txt |  5 ++++-
->  ll-merge.c                      |  9 ++++++++-
->  t/t6406-merge-attr.sh           | 23 +++++++++++++++++++++++
->  3 files changed, 35 insertions(+), 2 deletions(-)
+>  * revert merge of the part-3 topic and Dscho's cmake fix out of 'next'.
 >
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribute=
-s.txt
-> index 02a3ec83e4..6deb89a296 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -1132,7 +1132,10 @@ size (see below).
->  The merge driver is expected to leave the result of the merge in
->  the file named with `%A` by overwriting it, and exit with zero
->  status if it managed to merge them cleanly, or non-zero if there
-> -were conflicts.
-> +were conflicts.  When the driver crashes (e.g. killed by SEGV),
-> +it is expected to exit with non-zero status that are higher than
-> +128, and in such a case, the merge results in a failure (which is
-> +different from producing a conflict).
-
-Looks good.
-
->  The `merge.*.recursive` variable specifies what other merge
->  driver to use when the merge driver is called for an internal
-> diff --git a/ll-merge.c b/ll-merge.c
-> index 07ec16e8e5..ba45aa2f79 100644
-> --- a/ll-merge.c
-> +++ b/ll-merge.c
-> @@ -243,7 +243,14 @@ static enum ll_merge_result ll_ext_merge(const struc=
-t ll_merge_driver *fn,
->                 unlink_or_warn(temp[i]);
->         strbuf_release(&cmd);
->         strbuf_release(&path_sq);
-> -       ret =3D (status > 0) ? LL_MERGE_CONFLICT : status;
-> +
-> +       if (!status)
-> +               ret =3D LL_MERGE_OK;
-> +       else if (status <=3D 128)
-> +               ret =3D LL_MERGE_CONFLICT;
-> +       else
-> +               /* died due to a signal: WTERMSIG(status) + 128 */
-> +               ret =3D LL_MERGE_ERROR;
->         return ret;
->  }
-
-Likewise.
-
-> diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
-> index 5e4e4dd6d9..b50aedbc00 100755
-> --- a/t/t6406-merge-attr.sh
-> +++ b/t/t6406-merge-attr.sh
-> @@ -56,6 +56,12 @@ test_expect_success setup '
->         ) >"$ours+"
->         cat "$ours+" >"$ours"
->         rm -f "$ours+"
-> +
-> +       if test -f ./please-abort
-> +       then
-> +               echo >>./please-abort killing myself
-> +               kill -9 $$
-> +       fi
->         exit "$exit"
->         EOF
->         chmod +x ./custom-merge
-> @@ -162,6 +168,23 @@ test_expect_success 'custom merge backend' '
->         rm -f $o $a $b
->  '
+>  * rebase part-3 on top of the more recent 'master'.
 >
-> +test_expect_success 'custom merge driver that is killed with a signal' '
-> +       test_when_finished "rm -f output please-abort" &&
-> +
-> +       git reset --hard anchor &&
-> +       git config --replace-all \
-> +       merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
-> +       git config --replace-all \
-> +       merge.custom.name "custom merge driver for testing" &&
-> +
-> +       >./please-abort &&
-> +       echo "* merge=3Dcustom" >.gitattributes &&
-> +       test_must_fail git merge main &&
-> +       git ls-files -u >output &&
-> +       git diff --name-only HEAD >>output &&
-> +       test_must_be_empty output
-> +'
-> +
+>  * squash in the two hunks (including setup.c change) from you into
+>    the "setup: adopt shared init-db & clone code" step.
+>
+>  * squash in Dscho's cmake fix into "cache.h: remove this
+>    no-longer-used header" step.
+>
+> The result is not in 'next' yet until I hear something from those
+> who have been involved in the topic, including Elijah and Dscho.
 
-I was about to comment that we needed to clean up the please-abort
-file, then realized I just missed it in my first reading of the
-test_when_finished line.  So, patch looks good.
+I did a range-diff to compare my original series to your newly rebased
+one, and read through all the differences (including Dscho's and
+Peff's suggested changes, as well as the various slight adjustments
+due to rebasing).  I also rebuilt every patch in your rebase of the
+series to ensure they all build, and ran all tests on a couple of the
+patches to verify the pass (I didn't run all tests for each patch,
+because I did that for my original series and the differences in the
+range-diff suggested I only needed to spot check all the tests).
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+Anyway, your rebase of en/header-split-cache-h-part-3, including
+Dscho's and Peff's changes, all look good to me.
+
+Thanks everyone!
