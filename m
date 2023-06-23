@@ -2,78 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B76BFEB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 21:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C100EB64D7
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 22:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232182AbjFWVpo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 17:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38688 "EHLO
+        id S232166AbjFWWHs convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 23 Jun 2023 18:07:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231828AbjFWVpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 17:45:43 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6EB135
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 14:45:42 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-517bad1b8c5so863323a12.0
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 14:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687556742; x=1690148742;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=whmkXk3K4ZyPnZXQHlCS3TjA6OPNIXGWdya06/sScHA=;
-        b=GoT79ahmCOvrR6zWVBqTbk29EO2/NmXcGIm/zvKvtnOz5FcNKcGOSXzzlbr3Yfhk76
-         FYTAYRdeQNhKtkHR0lMRaz3rqDeY+/GLOvsnNvxEXIhfMxWM4ZI8gJlHCb+HbU1kjQwX
-         AEQ9q64W3WkQrQqlX6gO755hG5Q7MoQ/eTHSETHJDFWDVEb8+58IM0Kul50qQXOi7wgR
-         2F/yMnQjYqrcWTSd+4bI80FZRtcqhKoZJdgsKmo7shXSneyq6YKO6MxJxYDNeQA6EqkK
-         jRZce7i7b2cyq4rdgFosQp6YzzKefumcbLFyrTZpw3Qv7Qf1y2LZSfeLH5VdW9bePxO7
-         J+5w==
+        with ESMTP id S232095AbjFWWHp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 18:07:45 -0400
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5342703
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 15:07:34 -0700 (PDT)
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-763bd31d223so94373985a.3
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 15:07:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687556742; x=1690148742;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=whmkXk3K4ZyPnZXQHlCS3TjA6OPNIXGWdya06/sScHA=;
-        b=UPHWlf7z8lbEay2T6rcdZ/zqzbulOiwekoWx+JTeywMKQUeTIpSjACi8UDHkRDZhf4
-         h61Q7Y9k4yCj7BuLXPiKLIflw4Ukin6G9UWPMo9N8NHCxm+3evRaiwcPziQqUlw77Q/p
-         pOhODpJ10fMkSkghDYt2YZQyeiqtk50Cis4rmLPLj7tk5gBbKWeUDxt5vOPVqWTT9gwJ
-         G6UP1L0euFUVW+ROthDqKin9o9aOiaAhj9mu/CFfEPNuEEJykRyTmUv1//AHd4U1cmOD
-         PoFGzvpnCQP/njFIUjn+fGpE3zSAmMPHN0wyBQk5AnAwlxMBhhtBnfGZ4AjnO+OGXjlR
-         hKZQ==
-X-Gm-Message-State: AC+VfDwwsXskqvPFe6U9LycbT8hAQZx1JIw86kgNBhZhgKqXIszLfV4T
-        XLEvVJZDaocgqpCAsRqDUkWEJRR/Sl4wnA==
-X-Google-Smtp-Source: ACHHUZ4xxkUg3LzPmw4Sich5iWA0wFdW25qrUuq7xWdzxRuUZhE/NXmNBURVZLZfUwRMQN/JUv4FP/PLf80rpA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a65:48c3:0:b0:553:3b6c:b3b3 with SMTP id
- o3-20020a6548c3000000b005533b6cb3b3mr2507306pgs.4.1687556741793; Fri, 23 Jun
- 2023 14:45:41 -0700 (PDT)
-Date:   Fri, 23 Jun 2023 14:45:40 -0700
-In-Reply-To: <20230623210217.3259337-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20230623210217.3259337-1-jonathantanmy@google.com>
-Message-ID: <kl6lbkh5svi3.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 00/12] config: remove global state from config iteration
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+        d=1e100.net; s=20221208; t=1687558053; x=1690150053;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=42WeS58ndB6rHEyAMxkk9EvaaR75MQXhZPiEiRfZbtM=;
+        b=G13wXYrlhHHCY7G2OW+KOeRKThnpPCnLw30FiAIqVQ8t3ARkxZvQ3fG6VGyXGZGyur
+         +NIqa2G9snqfhHCiGJ4rwZ45vt8G3ABaCt/2GVrDz7kwTg513wDoB/C4a97AgfuuWyeb
+         engDDOvksXVGO2beGfOaZUD4N0JJptB0yYUmE+LxNCkW+eyf/dxY50NcLx8NW4Q9LDDZ
+         qTW23V8rvnc8Ygx2K5Voro5JtI3xxxbYFyp4kS3V4TlDIiUVzeqLiIyZZ9zk2S2/5gOL
+         ljQp25cian6PC4rXIMGJZrdKqLhAdhFdGDtEXfHCRWCAWXCCzK0wzVctveuCOpwhtRGd
+         mQnw==
+X-Gm-Message-State: AC+VfDwXdLFqeqcLfZ+62pavudRNO7vXaVnhDEwKRIiu8jK/JD3U094z
+        Y7cy4Rj00n97kzO0cuWk0Tk/TKR3xJg4L9JLYjuREKYZ8Zk=
+X-Google-Smtp-Source: ACHHUZ70pKe/H8xAbf9zd0Uv3X+cKjJRL1CbJvu+3pHqDySux2re/xduazMjkR92H84Ljml7mvLg4dcQvih8EbPajnA=
+X-Received: by 2002:ad4:5762:0:b0:62d:feee:2520 with SMTP id
+ r2-20020ad45762000000b0062dfeee2520mr29811691qvx.51.1687558053637; Fri, 23
+ Jun 2023 15:07:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <CWLP265MB3841D32521E79202079DB7F58C22A@CWLP265MB3841.GBRP265.PROD.OUTLOOK.COM>
+In-Reply-To: <CWLP265MB3841D32521E79202079DB7F58C22A@CWLP265MB3841.GBRP265.PROD.OUTLOOK.COM>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 23 Jun 2023 18:07:22 -0400
+Message-ID: <CAPig+cQ1qzO5txhZhki4UrvLBThdgo-aknBmEkNSjFhR9WXLRg@mail.gmail.com>
+Subject: Re: Bug: git add does not process gitignore properly
+To:     David C Black <david.black@doulos.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> Sounds good. I suppose it would also be worthwhile to base it on
->> conflicting topics queued for 'next'.
+On Thu, Jun 22, 2023 at 3:56 PM David C Black <david.black@doulos.com> wrote:
+> Sitting at the rood of my working directory I attempted to add a file to the git repository with:
+> > git add extern/bin/build
 >
-> Glen, if you can, rebase the patches *before* updating them based on my
-> comments so that it's easier for reviewers to see if my comments have
-> been addressed. (My comments are minor, so they should still be relevant
-> even after rebasing.)
+> The repository had the following .gitignore file contents:
+> > /extern/
+> > !/extern/bin/
+> > !/extern/ABOUT.md
+>
+> I received an error message:
+> > The following paths are ignored by one of your .gitignore files:
+> > extern
+> > hint: Use -f if you really want to add them.
+>
+> By negating entries in the /extern/bin/ directory, I did not expect an error
+> message. Of course adding -f made it work, but I think it does not match the
+> described behavior for this tool.
 
-Good idea. Fortunately, I already have that prepared, so there's not
-much extra work for me.
+This appears to be working as documented. From the gitginore(5) man page:
+
+    An optional prefix "!" which negates the pattern; any matching
+    file excluded by a previous pattern will become included again. It
+    is not possible to re-include a file if a parent directory of that
+    file is excluded.
+
+In your .gitignore file, /extern/ is ignored, which means that the
+subsequent "!/extern/.../" lines are ineffectual. So, as far as Git is
+concerned, /extern/bin/build is indeed ignored, thus its refusal
+without --force.
