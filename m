@@ -2,86 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F741EB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 20:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2BE7C001B0
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 20:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230171AbjFWU5e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 16:57:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41726 "EHLO
+        id S231464AbjFWU57 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 16:57:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjFWU5d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 16:57:33 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A128A2114
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 13:57:32 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-56938733c13so13859057b3.1
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 13:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687553852; x=1690145852;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=05OoIW7S0x7UYOA3FoSMWBsE5OAbW60fDyXpQLhdhmc=;
-        b=zwva6wYCkBp57+y1WhfgRyw6/opJWYg4QY7ROjqOaK+PKZgaZcE27zeZYpxcL/kbaR
-         miC58vtsoR/Y7eNKhip5cypluD4uOrcmW1FehxanRaDxQMPGD3wubkpyp9zSe15z8Vxu
-         qlAxaZjh1Lde5zzy0ioHv49jJckMytJqYeR2SDVOqT0AMPx14fyqj0ybQXZx8pCcdJN6
-         S521oDYMx1beukDLG3zgGOQMZQCfqq1K2pzEbK4iqEdBfcFoHtnsQtC+wiVVSso/e2Jg
-         1kYaCjHh3PiDEUVeOb2aR7Rqojgy+9AC3vzlOEMsYGn8dtUSRlb4ayL+fdwnymmS/I86
-         jN/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687553852; x=1690145852;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=05OoIW7S0x7UYOA3FoSMWBsE5OAbW60fDyXpQLhdhmc=;
-        b=gnJf40EGHSWQBytp5dA9mo3MbkzSpXhZ+crqKeA3Bmh+fT+WaM6alrTsZ+Ev0H3Gzt
-         gXULaqbe70fRaCdjFE4aoKKQcGBJ+FFmfcPYOIeagTH01gaMBJ35x/PEUhvRTDeig/Zi
-         LYPZEAkqM8KnX/l8edNA9kQuB/MLwtDCv3vVOKABzUzHx+isDksikHShI30+oW1Us2pr
-         pfrn7mYMQXIRXbHNbizsjlkgfXRatwHiO9La1BZ8/9wTHRzbn7RHw5CUQzxa5NPKG8IX
-         EJwhcMa6C8pr/rVMF/mzWpe2nY81AcyRzB9z0uPQIR8bFCJwVHKtoxiow4tSujEMg0YK
-         2BJA==
-X-Gm-Message-State: AC+VfDzeNYv715b2bCiL+exm1jDfipO4g2+RQVxoCLZq1REQQPQ0Z8S7
-        ZxSEV3HWvYAqhe5n13G/YWTp+7DFo02itAin/+38
-X-Google-Smtp-Source: ACHHUZ6Lju92YL0aUr3WQI3WtNk7n+mfoxIA7zmMuW+cTYw2UITH37XwoATps4rALUbkKwZXNncNdHQMIcPm2T+8JRAv
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:7ab2:ee09:eab1:38cc])
- (user=jonathantanmy job=sendgmr) by 2002:a81:bd05:0:b0:565:e903:6ad9 with
- SMTP id b5-20020a81bd05000000b00565e9036ad9mr9187525ywi.9.1687553851951; Fri,
- 23 Jun 2023 13:57:31 -0700 (PDT)
-Date:   Fri, 23 Jun 2023 13:57:29 -0700
-In-Reply-To: <8ec24b018e9a8a0767b1811aeb604eb97647bb4e.1687290233.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.41.0.178.g377b9f9a00-goog
-Message-ID: <20230623205729.3258822-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v3 10/12] config.c: remove config_reader from configsets
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Emily Shaffer <nasamuffin@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S230168AbjFWU54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 16:57:56 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744102135
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 13:57:55 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 37068191349;
+        Fri, 23 Jun 2023 16:57:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w72bU91mtobgMoZuvZ1udwIinETAkfpV1gC8WD
+        TEI/4=; b=PkybrR+FGU0SeblJB7UE7qQROEGgQlpd72oqXTw8vrHGGpRmNUOMx3
+        1UWSP2a9p94SpkJXSKDsuY59+Rp2f5B1tH4nIw0h7AJGCjqe2mPFsY+6m0cwoxYP
+        Le3A1DqX5TmYWBnqBlliyeqvhOG013qycgfSS2PiipIzpPMODtOQA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 302A3191348;
+        Fri, 23 Jun 2023 16:57:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.62.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9586F191347;
+        Fri, 23 Jun 2023 16:57:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     John Cai <johncai86@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/3] revision: refactor ref_excludes to ref_visibility
+References: <pull.1515.git.git.1687376112.gitgitgadget@gmail.com>
+        <ZJRBsDq8NI9EInel@nand.local> <ZJRDZ7NhyNpTV8jD@nand.local>
+        <941CCF5B-1FE6-46BE-9ED7-77C11E943E2E@gmail.com>
+Date:   Fri, 23 Jun 2023 13:57:50 -0700
+In-Reply-To: <941CCF5B-1FE6-46BE-9ED7-77C11E943E2E@gmail.com> (John Cai's
+        message of "Fri, 23 Jun 2023 15:16:52 -0400")
+Message-ID: <xmqqo7l5aoc1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9E1482D4-1208-11EE-B175-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> @@ -2429,11 +2427,7 @@ static int configset_add_value(const struct key_value_info *kvi_p,
->  	l_item->e = e;
->  	l_item->value_index = e->value_list.nr - 1;
->  
-> -	if (reader->source->name) {
-> -		kvi_from_source(reader->source, kvi_p->scope, kv_info);
-> -	} else {
-> -		kvi_from_param(kv_info);
-> -	}
-> +	memcpy(kv_info, kvi_p, sizeof(struct key_value_info));
->  	si->util = kv_info;
->  
->  	return 0;
+John Cai <johncai86@gmail.com> writes:
 
-Ah, I remember seeing this memcpy from the previous round, but forgot to
-comment on it (I only commented on another instance, [1]).
+>>> After reading this description, I am not sure why you can't "include" a
+>>> reference that would otherwise be excluded by passing the rules:
+>>>
+>>>   - refs/heads/exclude/*
+>>>   - !refs/heads/exclude/but/include/me
+>>>
+>>> (where the '!' prefix in the last rule is what brings back the included
+>>> reference).
+>>>
+>>> But let's read on and see if there is something that I'm missing.
+>>
+>> Having read this series in detail, I am puzzled. I don't think that
+>> there is any limitation of the existing reference hiding rules that
+>> wouldn't permit what you're trying to do by adding the list of
+>> references you want to include at the end of the exclude list, so long
+>> as they are each prefixed with the magic "!" sentinel.
+>
+> To be honest, I had no idea "!" would have this effect--so thanks for bringing
+> it to my attention.
 
-Other than that, up to here looks good.
+FWIW, "--exclude=!" gets zero hits in t/ directory.
 
-[1] https://lore.kernel.org/git/20230601233550.429921-1-jonathantanmy@google.com/
- 
+ref_excluded() merely calls wildmatch() like so:
+
+        int ref_excluded(const struct ref_exclusions *exclusions, const char *path)
+        {
+                const char *stripped_path = strip_namespace(path);
+                struct string_list_item *item;
+
+                for_each_string_list_item(item, &exclusions->excluded_refs) {
+                        if (!wildmatch(item->string, path, 0))
+                                return 1;
+                }
+
+                if (ref_is_hidden(stripped_path, path, &exclusions->hidden_refs))
+                        return 1;
+
+                return 0;
+        }
+
+so I do not know what to think about it.  This is called from inside
+callback of things like "log --exclude=A --exclude=B ... --all" when
+we are trying to add all refs in response to "--all", and it appears
+to me that the first match would already determine the ref's fate
+without even looking at the later patterns (prefixed with bang '!'
+or not).  Taylor, am I looking at a wrong code?
+
+Puzzled...
+
