@@ -2,124 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 537FDEB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 06:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 021A0EB64DD
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 07:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbjFWGdn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 02:33:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47002 "EHLO
+        id S229847AbjFWH1B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 03:27:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjFWGdl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 02:33:41 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165071BCC
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 23:33:39 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f769c37d26so255589e87.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2023 23:33:39 -0700 (PDT)
+        with ESMTP id S229647AbjFWH07 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 03:26:59 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A791E6E
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 00:26:58 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id 006d021491bc7-562fe8dda4fso225780eaf.1
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 00:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687502017; x=1690094017;
+        d=gmail.com; s=20221208; t=1687505217; x=1690097217;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tg/3VibzgyY2X2rg39c/7WHqr0AR3fBydp01daepJtE=;
-        b=I/urlREA3zg604q2/VwjRZbHox9Y/PVtX2z/dyMy2ALdSvg807qWi536DBLo84buv+
-         UWjV5y1NwM7Vj/xQq7Q2d/DFhCDb82qUoCXZnXtN6AHVPkAvqhnXDyGo7Vtq+3BuQGps
-         Viim1j9qX/mP3711fJDJOWAZf9QZ5EYIYZNUyiWM8hfEheGtoVk/T+JnTFkpwYCmDWMP
-         ujTST7lxTu3Bwr1pYpHbZvIdA5zjsnmqMG5Jea4W+qdtesTpAQKEgzyq7Na0+X8eLEhL
-         hM2V6RDYke/XvC5peFWU3uEq+5seRl3b8wkCs4ThkBkrOYNuMiHsvZewJIfgbIxL5Zqd
-         Hjjw==
+        bh=z9CZucAcwUwWWey6fy+NFw+vIpIL98/WY04mrJIF0DY=;
+        b=dL1YpIwerUtRhAFZgCGaKUGcWQRysdiRKQVAFJPJTp33ObCdEu8hekl3rP16320faj
+         JTP/riQ7W/kXkT+7mhQRvP6Nw/hFjqQlxbPhgCWGcfD00g5q+2ptJHlP0e7vrM7IV2nl
+         LfpozKQPthBdjySqdP+Hbini4ncI3UrTQghVZL/6l1sjc7VUshJu+/xxkmFk37xA+WI8
+         WQjahufJCNXSTD4sDJshaJAHJC+VvP47sXmryNADzpLkbBJSPq851dYj0eUNkD5rey3W
+         Qy4NfURBrsmmdYNZiNCcqpPaVNTj5PWMYzvd/HbXtVw5QUrMXuPeQg4ZG1zlE9cL8jIa
+         0ujw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687502017; x=1690094017;
+        d=1e100.net; s=20221208; t=1687505217; x=1690097217;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tg/3VibzgyY2X2rg39c/7WHqr0AR3fBydp01daepJtE=;
-        b=lBkibG/wzuF2XFkkM76p1hWnM/iZcdFFNUpG/1FEDGgfyqi1j9+czOuRbk3mUI6z0t
-         XGrbd9OKZREOKtQEwX6ZeNQQkTfT0d+eVQDjUhC80Dl/HXEHx7Piokjio4qgQoMJOKPn
-         WfH//agDkWyifRfc+hrtfVQm3mXvOrNXa2t2sX3do3xAypr3eYLNBFfjDck9b37Nr3Nc
-         yXmnkPVSD01ZufjDbtQFPHE7yadgqQtTxUCF2Y2d7j9S12HDb8eEzE9En+Rz41m4UM29
-         pJ5wS6oz3bmsr87jHF1vbmJYxDLcPHHmv+ruQGmtSOkhlxx7YT6j7F7EhNjdnRhuwIbT
-         jCIA==
-X-Gm-Message-State: AC+VfDz6wS+baKsZWb1pd+jO7VGc1uSEjNxy1LgHj5rGjZI2hRiYD9x3
-        P8QlvxBgkZqhWZJmjXue2P4wtJKTI/q9Y4zBdpcJWzguoLm8Og==
-X-Google-Smtp-Source: ACHHUZ7OUpf5O4XRaHio5yoZmzPbHQY6NUgBo1Eby0Rfoj3NJLbiVLap3kEGC7/ccam/CTbYT+pcFnu6uuhTGaIhFYU=
-X-Received: by 2002:a05:6512:214c:b0:4f9:61a2:3592 with SMTP id
- s12-20020a056512214c00b004f961a23592mr2727545lfr.35.1687502016909; Thu, 22
- Jun 2023 23:33:36 -0700 (PDT)
+        bh=z9CZucAcwUwWWey6fy+NFw+vIpIL98/WY04mrJIF0DY=;
+        b=OXlnjNEjTnIT9cu3VMMQ2y7Bc7L6vayBjWHDpHkR/84rUQAdOmQ6AN8ExTvDbr+loy
+         hxNl7vEwGkKGBUxmsdMK5xnLZv54HwKMgQNhMkvjiZCwu6lHKHByWp6IMKpmB0+R2uNl
+         cyXKIOsfj0LojHZcrcn6EMld17eX0dsWPLbY8eSQAw9Z2ksa6fZaOXIQy/PmpTRkUFB5
+         5FHmZhjnmJwAX/0x2w6EKgnbdRsdjMIflfcoZI9wqDRU5RqAA37zTNdG3HF2dyIRIbHJ
+         uI/rOyHAIjzgzoLRZgMMDlEZPVdK3aaI9ZFkn9xYUQb7RIaKZLL27OCh6UPzzcv2K2eY
+         JcIA==
+X-Gm-Message-State: AC+VfDxlwx9eQdZLr5tOXfBGZ3dO3BYguuycX5BPQWuJw7pLA26Xf8ZX
+        HQvxZoM9dBswuLJDd7YiwRyQ10toPknvRF/k02SPd1Bg
+X-Google-Smtp-Source: ACHHUZ6+d99GcCKYLk5OhC5zGW+SK3nsbFJOml1WSCoY6E9JaDUH0arXN53CSFmPtEqpuCmyo20ZkftmlVYVDbQKBg4=
+X-Received: by 2002:a05:6820:614:b0:55e:5c65:c6cd with SMTP id
+ e20-20020a056820061400b0055e5c65c6cdmr12941631oow.6.1687505217440; Fri, 23
+ Jun 2023 00:26:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqedm5k7dx.fsf@gitster.g> <20230621085526.GA920315@coredump.intra.peff.net>
- <xmqqttv0hhjv.fsf@gitster.g> <20230621202642.GA1423@coredump.intra.peff.net> <xmqqjzvwfp6f.fsf@gitster.g>
-In-Reply-To: <xmqqjzvwfp6f.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 22 Jun 2023 23:33:24 -0700
-Message-ID: <CABPp-BEQ0_UfUbdeFetCsvAnpO_=mvmjQk8JS0trKJtCL=uh1A@mail.gmail.com>
-Subject: Re: bug in en/header-split-cache-h-part-3, was Re: What's cooking in
- git.git (Jun 2023, #05; Tue, 20)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <ZJQr0_aC-NlLXDgj@pweza> <ZJRHlJvE4BMue1/Z@nand.local> <ZJR5SPDj4Wt_gmRO@pweza>
+In-Reply-To: <ZJR5SPDj4Wt_gmRO@pweza>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 23 Jun 2023 00:26:46 -0700
+Message-ID: <CA+P7+xoj=4tdMtsyB3=8DADkygDV9Tsiv03puSyh4mVR-Nz2ag@mail.gmail.com>
+Subject: Re: bug: submodule update fails to fetch
+To:     Sergei Golubchik <vuvova@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 3:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Thu, Jun 22, 2023 at 9:57=E2=80=AFAM Sergei Golubchik <vuvova@gmail.com>=
+ wrote:
 >
-> Jeff King <peff@peff.net> writes:
+> Hi, Taylor,
 >
-> > Yeah. I guess the real build problem is actually in the merge of split-=
-2
-> > (it conflicted with a simultaneous topic, hence the fix coming in the
-> > merge). So another option to address that here would be to amend the
-> > 4bd872e0ed (Merge branch 'en/header-split-cache-h-part-2' into
-> > en/header-split-cache-h-part-3, 2023-05-08) to include that fixup.
+> On Jun 22, Taylor Blau wrote:
+> > On Thu, Jun 22, 2023 at 01:09:07PM +0200, Sergei Golubchik wrote:
+> > > Hi,
+> > >
+> > > Sometimes (my local repository has lots of branches) after switching
+> > > branches
+> > >
+> > >   git submodule update --init --recursive
+> > >
+> > > fails with something like
+> > >
+> > >   fatal: transport 'file' not allowed
+> > >   fatal: Fetched in submodule path 'wsrep-lib', but it did not contai=
+n e238c0d240c2557229b0523a4a032f3cf8b41639. Direct fetching of that commit =
+failed.
+> > >
+> > > the submodule transport is not 'file' (it's https) and the direct
+> > > fetching of the commit actually works:
+> > >
+> > >   cd wsrep-lib
+> > >   git fetch origin e238c0d240c2557229b0523a4a032f3cf8b41639
+> > >   git checkout e238c0d240c2557229b0523a4a032f3cf8b41639
+> > >   cd ..
+> > >
+> > > after that
+> > >
+> > >   git submodule update --init --recursive
+> > >
+> > > succeeds.
 > >
-> > As for the others, I'd consider:
-> >
-> >   1. (optional) Drop the #ifndef at the very start of the series, befor=
-e
-> >      we touch anything, with the rationale that it is not doing anythin=
+> > It makes sense that after manually fetching the desired tip that the
+> > submodule update goes through OK, because there is nothing to do (the
+> > checked-out state matches what's in .gitmodules), so we don't have to
+> > use any transport mechanism.
+>
+> Right. I just used it to show that git thinks the submodule was updated
+> correctly and doesn't try to do anything after that.
+>
+> > I recently changed the submodule update rules to disallow file-based
+> > submodules when not directly executed by the user. See a1d4f67c12
+> > (transport: make `protocol.file.allow` be "user" by default, 2022-07-29=
+)
+> > for more of the details there.
+>
+> Yes, I've seen it. That submodule shouldn't be affected:
+>
+>   $ git remote -v
+>   origin  https://github.com/codership/wsrep-lib.git (fetch)
+>   origin  https://github.com/codership/wsrep-lib.git (push)
+>
+> so I wouldn't want to circumvent your fix and allow the file transport
+> that we aren't using.
+>
+> > But in the short-term, I am curious why we are complaining about needin=
 g
-> >      and masks errors. I don't _think_ this can ever backfire, because
-> >      we unconditionally set DEFAULT_GIT_TEMPLATE_DIR (unlike some other
-> >      things like DEFAULT_PAGER, where the Makefile might leave it
-> >      unset). But we can also leave this out, or do it as a separate
-> >      topic, if we want to minimize changes / risk of screwing something
-> >      up.
+> > to use the file transport when you claim that the submodule actually
+> > needs the HTTPS transport.
 > >
-> >   2. Squash the Makefile fix into the "adopt shared init-db" patch
-> >      (currently 0d652b238).
-> >
-> > And that would leave the result fully bisectable. But if we prefer to
-> > keep the history closer to reality, I can prepare the Makefile thing as
-> > a patch on top.
+> > Are you able to share a copy of your repository, and/or its .gitmodules
+> > file, and your repository-local .gitconfig, as well? Do you have some
+> > `url.<base>.insteadOf` value configured elsewhere that would be
+> > rewriting those paths for you?
 >
-> I've done the messiest, I guess ;-)
+> No insteadOf. Let me try to...
+> Okay, here's the bug. In submodule--helper.c, fetch_in_submodule()
+> function, there're lines:
+> ---------------------------
+> 2211         if (oid) {
+> 2212                 char *hex =3D oid_to_hex(oid);
+> 2213                 char *remote =3D get_default_remote();
+> 2214
+> 2215                 strvec_pushl(&cp.args, remote, hex, NULL);
+> 2216                 free(remote);
+> 2217         }
+> ---------------------------
 >
->  * revert merge of the part-3 topic and Dscho's cmake fix out of 'next'.
+> this get_default_remote() appears to be getting the default remote name
+> for the main repository and then uses it to fetch from the submodule.
 >
->  * rebase part-3 on top of the more recent 'master'.
+> It happens that my default remote isn't "origin" (long story), it's
+> "github", but in the submodule it's of course "origin", there's no
+> "github" remote there. As a result, `git submodule update` runs the
+> command
 >
->  * squash in the two hunks (including setup.c change) from you into
->    the "setup: adopt shared init-db & clone code" step.
+>   git fetch github ${commit_hash}
 >
->  * squash in Dscho's cmake fix into "cache.h: remove this
->    no-longer-used header" step.
+> in the submodule, and that's interpreted as 'file' transport.
 >
-> The result is not in 'next' yet until I hear something from those
-> who have been involved in the topic, including Elijah and Dscho.
+> To repeat this you need a repository where the default remote isn't
+> "origin" and a submodule where the commit cannot be fetched by simply
+> `git fetch` and needs a direct fetch.
+>
+> Hope this helps.
+>
+> Regards,
+> Sergei
 
-I did a range-diff to compare my original series to your newly rebased
-one, and read through all the differences (including Dscho's and
-Peff's suggested changes, as well as the various slight adjustments
-due to rebasing).  I also rebuilt every patch in your rebase of the
-series to ensure they all build, and ran all tests on a couple of the
-patches to verify the pass (I didn't run all tests for each patch,
-because I did that for my original series and the differences in the
-range-diff suggested I only needed to spot check all the tests).
-
-Anyway, your rebase of en/header-split-cache-h-part-3, including
-Dscho's and Peff's changes, all look good to me.
-
-Thanks everyone!
+I recently experienced something similar when changing the default
+remote name for some of my repositories. I had wondered what causes
+problems because submodule update would sometimes fail but other times
+succeed.
