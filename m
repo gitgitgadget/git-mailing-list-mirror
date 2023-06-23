@@ -2,155 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E667CEB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 19:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4203EB64D7
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 19:23:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231523AbjFWTQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 15:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57930 "EHLO
+        id S229540AbjFWTXJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 15:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjFWTQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 15:16:58 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0422FE5B
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 12:16:54 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-3f828ee8ecdso1324121cf.0
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 12:16:53 -0700 (PDT)
+        with ESMTP id S231504AbjFWTXG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 15:23:06 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2624A271E
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 12:23:03 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1b7d877af61so341615ad.2
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 12:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687547813; x=1690139813;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IBaSdvZ9YQdJTyoliUBImxAjJ1ZNI1DUOAHJ89kT1Cs=;
-        b=q9fy/IU42poNSeBUbCEojRFQyIC5Kd8GWnqtU7eT9UvaWSFZOoI7XjmbgWBRGaaP+4
-         Sl+hpQVU6glcqBJzrkJ22474eCHBtAdoeF4La+peh1ABlylMB0z7uK2zpcaU6Oew8OHU
-         p4X2hdnQAkNN+hTwE/rO1/n7NkzpbCIQtUz6hDOyE6NDv5v23YW4VeMs8P1+NP2DqzWy
-         40aNSmLIs8vorLlIUAJmOwmQtdr+RQtbFz/H+iQSdRIGZL6F10he0YhrLKlrLrs2fPbf
-         lDLElc0lMlOviMj8MxcLpSA3wcuS3563YQ3jU4heaajnabupPR/oxImSnflng9hkMZBx
-         X7hQ==
+        d=google.com; s=20221208; t=1687548182; x=1690140182;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bCfrYYGztoRe1n2SgwyKKcuX9Po2epmAAQSTjZlbsag=;
+        b=f4zO8vidjNcmK4VbjThPV/C6oB5D3sWQQaO/T1t5W2w3kD98h7RQtrV+AKDThkkTiP
+         eiPFpJAgWqHoDldfcZ3c3NHRlwQHvMTxaMNYKKDKegWHUzpoSSrgx24LV+AShMu36uii
+         ixVypVGrQkWNwR3cvlZZRgJ9lCYiBEZCAwXg1yv1y4Rk0Vkt6yM60/TubGXJ4Jz9X6HZ
+         O0B+t+Wb4kxMKmzbG7qGX93g9k9pflkdqJh3kiilppp1i+2RzlCRLeadPmCeMN50yAeH
+         lKpARHVg6tF++XdTk3+CmHCdpCM7BKVzueOCIPYFEVCH/z/MmEVfg3SZfUfTaRxwF8AU
+         OCGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687547813; x=1690139813;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IBaSdvZ9YQdJTyoliUBImxAjJ1ZNI1DUOAHJ89kT1Cs=;
-        b=Y44nBErseOft6T4TfRpaW6OfgJdv62frubcWgrHt14RnIiaIU9Yw37ywdJfdixTCMb
-         aXaEHHRGPPOBy3Y7KWCPIQ6W2mR+v12iGNIuLt5eIqX3FzGRYXacdqlTlQ2pvFZX9COh
-         2K8t2Rj1GeYhyrhRIGdKI3emwy8Wt5FlOPpMg9oyLOm87G+QdqHPTOpLQ5uyo1fsc/zj
-         DjuKjrV9UbtdKXo/gnC7i7Q2UqDvQKtbLzzmn1qI91icTxGPlu7YnsDRBhmNb5ADKiAp
-         HWeeB1H1VnZkuBs0Q/nDaGy3e6FgaD1Zl1D1l4PAAVnN9fj4cO5h5OIm8fkGO7tvSPtJ
-         jyKw==
-X-Gm-Message-State: AC+VfDyHzejDc5skxZl+x6uJJuzkoXKTFT5c7VxW+Cgg1xTrmZTl+GqS
-        TeIRZkL1+y0oMeat6JoFqBjafyHYlKRi5A==
-X-Google-Smtp-Source: ACHHUZ72cYrQn9WP9uGVYnxAIFDLbl++WDnV72yoDI36Z12xYrT2kBBtn91omX1U2Bym27XEyofK4Q==
-X-Received: by 2002:ad4:5de8:0:b0:5ed:c96e:ca4a with SMTP id jn8-20020ad45de8000000b005edc96eca4amr26105393qvb.1.1687547812968;
-        Fri, 23 Jun 2023 12:16:52 -0700 (PDT)
-Received: from [192.168.1.239] (ool-4570b665.dyn.optonline.net. [69.112.182.101])
-        by smtp.gmail.com with ESMTPSA id q5-20020ad45ca5000000b00623950fbe48sm100426qvh.41.2023.06.23.12.16.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Jun 2023 12:16:52 -0700 (PDT)
-From:   John Cai <johncai86@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        d=1e100.net; s=20221208; t=1687548182; x=1690140182;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bCfrYYGztoRe1n2SgwyKKcuX9Po2epmAAQSTjZlbsag=;
+        b=O9e/GTiZB6hGWyEZoWctDy3sla16OCm+NvqK1xOQ162laMtUYPXcrOxFbuQ+04vulT
+         Qo6B+UwUz9/f/C68NTl/YwM4lVGUsUYebD2ifLuWZpE20xAiRgUiYuQBmvQj+pgQZaWx
+         SgtwVZLhtWHsXCoTXGzymZt9Tur+FkM6nuiOUQw1Z/dsC/jForcSs+K0YcICXVHpimRV
+         3P1BO719kYZ2U34TiK0JnhxjuFZTxiDUzw847ZwacAdWvvY721+2MLfXx5b3WAvFo8ih
+         VUkhpd66d7Au4VHzsKEpZ/D/fxwIuEc8UHzO3EESo9CI1OyJZnoG0I6uLxy26U+oz4M9
+         IDtQ==
+X-Gm-Message-State: AC+VfDw9JldyKNJCIX0Uupy/8f7PxeHy0Mt/rvCYtsN/PwrKrAPDyabG
+        SVIKo+zXf60JYtnZr5HhSkKGAsdId+CZtw==
+X-Google-Smtp-Source: ACHHUZ4vXEtyXcRHJ74Oc5lRQeNmFQ6eWkzT0S5retGazK8qISZofO+XnFN6uOqNtXASGiaqaPu5Xgdri0rG9w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:902:b789:b0:1b6:8a70:9c8a with SMTP
+ id e9-20020a170902b78900b001b68a709c8amr1622pls.11.1687548182609; Fri, 23 Jun
+ 2023 12:23:02 -0700 (PDT)
+Date:   Fri, 23 Jun 2023 12:22:53 -0700
+In-Reply-To: <6961779f-9fd8-28cb-6046-cc24b6869cbc@github.com>
+Mime-Version: 1.0
+References: <CAJSLrw6qhHj8Kxrqhp7xN=imTHgg79QB9Fxa9XpdZYFnBKhkvA@mail.gmail.com>
+ <6961779f-9fd8-28cb-6046-cc24b6869cbc@github.com>
+Message-ID: <kl6lh6qyrnjm.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: BUG: config.c:129: kvi should not be set while parsing a config source
+From:   Glen Choo <chooglen@google.com>
+To:     Derrick Stolee <derrickstolee@github.com>, jkasky@slack-corp.com,
         git@vger.kernel.org
-Subject: Re: [PATCH 0/3] revision: refactor ref_excludes to ref_visibility
-Date:   Fri, 23 Jun 2023 15:16:52 -0400
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <941CCF5B-1FE6-46BE-9ED7-77C11E943E2E@gmail.com>
-In-Reply-To: <ZJRDZ7NhyNpTV8jD@nand.local>
-References: <pull.1515.git.git.1687376112.gitgitgadget@gmail.com>
- <ZJRBsDq8NI9EInel@nand.local> <ZJRDZ7NhyNpTV8jD@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
+Thanks Jesse for the bug report, and thanks Stolee for looping me in!
 
-On 22 Jun 2023, at 8:49, Taylor Blau wrote:
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> On Thu, Jun 22, 2023 at 08:42:24AM -0400, Taylor Blau wrote:
->> On Wed, Jun 21, 2023 at 07:35:09PM +0000, John Cai via GitGitGadget wrote:
->>> The ref_excludes API is used to tell which refs should be excluded. However,
->>> there are times when we would want to add refs to explicitly include as
->>> well. 4fe42f326e (pack-refs: teach pack-refs --include option, 2023-05-12)
->>> taught pack-refs how to include certain refs, but did it in a more manual
->>> way by keeping the ref patterns in a separate string list. Instead, we can
->>> easily extend the ref_excludes API to include refs as well, since this use
->>> case fits into the API nicely.
->>
->> After reading this description, I am not sure why you can't "include" a
->> reference that would otherwise be excluded by passing the rules:
->>
->>   - refs/heads/exclude/*
->>   - !refs/heads/exclude/but/include/me
->>
->> (where the '!' prefix in the last rule is what brings back the included
->> reference).
->>
->> But let's read on and see if there is something that I'm missing.
+> On 6/21/2023 7:45 PM, Jesse Kasky wrote:
+>> Thank you for filling out a Git bug report!
+>> Please answer the following questions to help us understand your issue.
+>> 
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>> 
+>> git clone --no-checkout --sparse --filter=blob:none --depth=1 <repo> <dir>
+>> cd <dir>
+>> git sparse-checkout add <dir1> <dir2>
+>> git fetch --depth=1 origin <commit>
+>> Received the following error:
+>> 
+>> BUG: config.c:129: kvi should not be set while parsing a config source
+>> [1]    5842 abort      /opt/homebrew/bin/git fetch --depth=1 origin
+
+It took me some fiddling around to find a reproducing case, because, as
+it turns out, the choice of repo is important. This bug occurs when you
+have submodules + partial clone, _and_ .gitmodules has not been fetched
+yet (e.g. because --no-checkout skipped the fetch).
+
+E.g. you can see this for yourself with:
+
+  rm -fr test-breakage &&
+  git clone --filter=blob:none --no-checkout https://github.com/git/git test-breakage &&
+  cd test-breakage &&
+  git fetch
+
+This BUG() assertion is meant to guard against reading config in an
+unsafe nested way - the information about the config source we are
+reading (i.e. the key_value_info/kvi) is global state in the config
+machinery, and certain kinds of nesting will produce undefined
+behavior if we try to read it.
+
+What happens is that "git fetch" tries to read .gitmodules, which
+triggers a partial clone fetch because .gitmodules is missing. But to do
+this, the partial clone code reads config to figure out where to fetch
+from, leading to a nested config-read-in-a-config-read.
+
+For Git devs: the 'unsafe' thing is reading a config set while reading a
+config file/params/blob/etc. In this case, we are trying to read
+repo_config() (the config set in the_repository->config) while reading
+.gitmodules from a blob. Reading from files while reading files is safe
+(e.g. that's what we do when evaluating includes).
+
+This should go away in my in-flight series:
+
+  https://lore.kernel.org/git/pull.1497.v3.git.git.1687290231.gitgitgadget@gmail.com
+
+because that removes all of the problematic global state. That's a very
+big refactor, so I'm not sure we should wait until that goes in to fix
+this bug. And while I'd like to fix this bug now, I don't see a point in
+making the existing code 'safer' by making small changes in the
+machinery that will just go away anyway.
+
+So I think the best fix is for me to get rid of the BUG() check and go
+back to the 'unsafe' behavior. It won't matter in this specific scenario
+(since we don't actually need the config source information AFAICT), and
+at least it doesn't make _other_ use cases worse off than before.
+
+> I've come across this error while playing around with things in
+> the config space, and the case I figured out was due to nested
+> iterations over config.
 >
-> Having read this series in detail, I am puzzled. I don't think that
-> there is any limitation of the existing reference hiding rules that
-> wouldn't permit what you're trying to do by adding the list of
-> references you want to include at the end of the exclude list, so long
-> as they are each prefixed with the magic "!" sentinel.
+> In my case, I was adding dynamic config loading when certain
+> global variables were used, and some were used during config
+> parsing causing this nesting.
 
-To be honest, I had no idea "!" would have this effect--so thanks for bringing
-it to my attention.
->
-> I think splitting the list of excluded references into individual
-> excluded and non-excluded references creates some awkwardness. For one:
-> excluded references already can cause us to include a reference, so
-> splitting that behavior across two lists seems difficult to reason
-> about.
->
-> For example, if your excluded list contains:
->
->   - refs/heads/foo
->   - refs/heads/bar
->   - !refs/heads/foo/baz
->
-> and your included lists contains:
->
->   - refs/heads/bar/baz/quux
->
-> I am left wondering: why doesn't the rule pertaining to
-> refs/heads/foo/baz show up in the included list? Likewise, what happens
-> with refs/heads/bar/baz/quux? It is a child of an excluded rule, so the
-> question is which list takes priority.
-
-Now knowing the effect of "!", I understand the concerns about having a
-separate list for included references. However, I do think it would be odd if
-there is a ref_included() function to also use ref_excluded() to include a ref.
-
-Also, even with the current API, I think it can be confusing to reason about
-what takes precedence if there is a mix of inclusions and exclusions. For
-example, if the excluded list contains:
-
-- refs/heads/foo/baz
-- !refs/heads/foo
-
-would the inclusion take precedence, or the exclusion?
-
->
-> Mostly, I am wondering if I am missing something that would explain why
-> you couldn't modify the above example's excluded list to contain
-> something like "!refs/heads/bar/baz/quux", eliminating the need for the
-> include list entirely.
-
-I think my one reservation however, is with usability of the current API. It's
-not very intuitive to include references by adding them with
-ref_excluded(&exclusions, "!ref/to/be/included").
-
-I do think it would be easier to reason about if we kept two separate lists, one
-for inclusion and one for exclusion. The existence of the "!" magic sentinel
-does make things much more confusing however. I almost want to remove support
-for the magic sentinel in favor of keeping two distinct lists that cannot be
-mixed. Wondering your thoughts on that approach?
-
->
-> Thanks,
-> Taylor
-
-thanks!
-JOhn
+Presumably this is how you were coming across this bug too: since your
+experiments added config set lookups, maybe some of them were happening
+in the middle of reading a config file.
