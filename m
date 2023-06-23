@@ -2,66 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26314EB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 16:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 513ECEB64DD
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 17:23:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231820AbjFWQiZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 12:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47530 "EHLO
+        id S232576AbjFWRXU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 13:23:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232349AbjFWQiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 12:38:21 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B932968
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 09:38:10 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8676A1A8410;
-        Fri, 23 Jun 2023 12:38:09 -0400 (EDT)
+        with ESMTP id S232560AbjFWRXS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 13:23:18 -0400
+X-Greylist: delayed 99 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 23 Jun 2023 10:23:15 PDT
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACB7E1FC2;
+        Fri, 23 Jun 2023 10:23:15 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2805A18FA40;
+        Fri, 23 Jun 2023 13:21:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YryeRpfDUzhdGyaZRuDXrOwdMvt3uCHAGX8aZX
-        B3LoQ=; b=j83kASeZFJrEbR4B6qQSxfaqligKJOX5Gx2EeBK6V0kPP83khWjBkD
-        ttTggvKgo0l0G/HJT8DpqQ4T/cZnI68d/uB2tZAo0gctC4xgYfVH6BClYwM3tcFI
-        SboJM2quBmXlM1suEy9YdZVXSjZL7miEGAs9mFDoX5Gj+datc6WhY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E0FA1A840F;
-        Fri, 23 Jun 2023 12:38:09 -0400 (EDT)
+        :content-type; s=sasl; bh=zqa+oQst+Yt3IgH3DzEpxq6pgQHFt70qow0xS8
+        qFkv4=; b=pu8jW/xxCVh7aCnzJVqZpF14nnRd+I6QI0/fZthVdh9u3UC2ndAg2j
+        vog9mfVCGEkoQ5B07lQRHTDs2hu8eQQl/rOtv14bCDRA0L+ZWCIoorj22/9IGRWx
+        C7YtFQGoGi81/SEH8LMcPtXAPlMHse85BKwqvMVqWv94SsGFhIhTs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2148518FA3D;
+        Fri, 23 Jun 2023 13:21:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.62.77])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D33E01A840E;
-        Fri, 23 Jun 2023 12:38:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 855E018FA3C;
+        Fri, 23 Jun 2023 13:21:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: bug in en/header-split-cache-h-part-3, was Re: What's cooking
- in git.git (Jun 2023, #05; Tue, 20)
-References: <xmqqedm5k7dx.fsf@gitster.g>
-        <20230621085526.GA920315@coredump.intra.peff.net>
-        <xmqqttv0hhjv.fsf@gitster.g>
-        <20230621202642.GA1423@coredump.intra.peff.net>
-        <xmqqjzvwfp6f.fsf@gitster.g>
-        <CABPp-BEQ0_UfUbdeFetCsvAnpO_=mvmjQk8JS0trKJtCL=uh1A@mail.gmail.com>
-Date:   Fri, 23 Jun 2023 09:38:07 -0700
-In-Reply-To: <CABPp-BEQ0_UfUbdeFetCsvAnpO_=mvmjQk8JS0trKJtCL=uh1A@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 22 Jun 2023 23:33:24 -0700")
-Message-ID: <xmqqr0q2b0cw.fsf@gitster.g>
+To:     Jovial Joe Jayarson <jovial7joe@hotmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, majordomo@vger.kernel.org
+Subject: Re: Feature: Use $HOME instead of /home/username in ~/.gitconfig
+References: <OSZP286MB1968CC1BD59489496919D16B8F23A@OSZP286MB1968.JPNP286.PROD.OUTLOOK.COM>
+Date:   Fri, 23 Jun 2023 10:21:33 -0700
+In-Reply-To: <OSZP286MB1968CC1BD59489496919D16B8F23A@OSZP286MB1968.JPNP286.PROD.OUTLOOK.COM>
+        (Jovial Joe Jayarson's message of "Fri, 23 Jun 2023 13:52:39 +0530")
+Message-ID: <xmqqh6qyayci.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 560A7B52-11E4-11EE-845D-307A8E0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 672554D8-11EA-11EE-A693-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jovial Joe Jayarson <jovial7joe@hotmail.com> writes:
 
-> Anyway, your rebase of en/header-split-cache-h-part-3, including
-> Dscho's and Peff's changes, all look good to me.
+> I'm sharing my `.dotfiles` across systems, so I'd prefer
+> `/home/username` be replaced with `$HOME` or even with `~/`.
 >
-> Thanks everyone!
+> ```ini
+> [maintenance]
+>     repo = $HOME/.znap/repos/asdf
+> ```
 
-Thanks for confirming.  Let's merge it down to 'next' then.
+It probably is closer to our norm to use ~/ or ~username/ in our
+configuration files.  $VAR syntax is unlikely to fly, as it will
+imply allowing arbitrary environment variables, whose security
+implications we would rather not have to worry about.
+
+On the execution side, builtin/for-each-repo.c:run_command_on_repo()
+already knows to call interpolate_path() on the supplied pathname,
+which comes from the configuration variable (internally) specified,
+which is "maintenance.repo", so setting the variable to "~jjj/path"
+should already make it work, I would imagine (note: I am not a user
+of the feature).
+
+The registration side is messier, though.
+
+The path to your current repository is discovered, and then it gets
+canonicalized by going through strbuf_realpath().  This happens all
+inside builtin/gc.c:get_maintpath() and it is why the configuration
+variables store the absolute names.  It also makes duplicate detection
+simpler to store the absolute names (otherwise, you'd need to compare
+each existing key after canonicalizing it with canonicalized new
+candidate repository, in order to avoid duplicates).
+
+Turning "~jjj/hello.git" into "/home/jjj/hello.git" (or further into
+"/mnt/home3/jjj/hello.git", if "/home/jjj" is a symbolic link to
+"/mnt/home3/jjj") is easy, but there is no standard way to reverse
+it from "/mnt/home3/jjj/hello.git", which would be what get_maintpath()
+would be seeing.
+
+If (and I do not know how) you manage to find a way for get_maintpath()
+to turn "/mnt/home3/jjj/hello.git" into "~jjj/hello.git", then there
+are a few changes needed:
+
+ * builtin/gc.c:maintenance_register() has a loop to avoid
+   duplicates; before entering the loop, pass "maintpath" to
+   interpolate_path() and then strbuf_realpath() to canonicalize it
+   (and call it $canon_maintpath).  In the loop, run the same
+   canonicalization for each existing path (in item->string), and
+   compare it with $canon_maintpath, to detect duplicates.  If the
+   repository is not currently registered, use "maintpath" (not
+   $canon_maintpath) to register.
+
+ * builtin/gc.c:maintenance_unregister() has as loop to see if the
+   "maintpath" exists, and then remove all associated values.  This
+   will have to be modified heavily, to account for the directory
+   aliases you are now introducing.  When get_maintpath() says that
+   you are in "~jjj/hello.git" and unregistering the repository, you
+   would need to catch all "maintenance.repo" configuration whose
+   values are one of "~jjj/hello.git", "/home/jjj/hello.git", or
+   "/mnt/home3/jjj/hello.git".
+
+
