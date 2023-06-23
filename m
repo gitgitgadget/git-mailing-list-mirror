@@ -2,189 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE58EB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 12:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E32FEEB64D7
+	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 13:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbjFWMoA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 08:44:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33182 "EHLO
+        id S231228AbjFWNGS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 09:06:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjFWMn6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 08:43:58 -0400
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2119.outbound.protection.outlook.com [40.107.104.119])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CD44273A
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 05:43:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FofESTaNZNPA7GnSFHhsfYd8XQq92ewFoNkwoCNPKN6t0fuqu23eIziwtgLmL6iYXRK40wb3ft/n3iVeu5WSqIYBTnIffm6DGgGYYzswSK/7JVtPo+VFESQIxeP9NNdy3+6PwfHI3YGN5KADbhH+xmr3KJkgA54xkTvPQMsQlj8W7Rum6XJhQdeKxAs5ov5N7nhrcRW2ST1u9rexwahabpI35sM3/yPZwNbFfVwjhQupYf6D/dRoAOUKDwoSd2I1QYEm6wPrwUP4G1r3i5Yob/CcxtKwWz4ANjOTAp8J9Op4zEIiVT6xwB/LqNEav9XgFP3TkzkmdUmJ0ILVVgSuYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K5Mw+z3kfp212kHuWOe5/g/AK2ruOVuRYn+LxMTRXhI=;
- b=i22YPI9Wm35vsaxwaQsGzD+2MQ7KzcCQq7Guk2329vBT1+fxFviJjqpO7XEZKPe49fMINv44b0yM9W0WeATjFZCgyrPTQAwGArn5B8zSecFLWT68MAZoZqW73voXcprAnz5SR6GNxBRRdNH80zvx8KTNLMgUGVJpGFGm0sdiElGJin4cpMjDFS3lNzrSwgHwHQwULPHsJv4So+J/RBxP/9YlZxomVXgy/L/c43k/FtKeBqylTXg3cI4IPMU1kZr3KsANPg12b8vqJ6w7PQn3Yy3Axwt8aIZ6rboncGC5VlzkRpgb5+cpyb3gOHzEi1XAwsUqRCVtrVYRmi5VU3Pi2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K5Mw+z3kfp212kHuWOe5/g/AK2ruOVuRYn+LxMTRXhI=;
- b=ctz664yU9qWvb+IxYVyNVaLafMnyZsXQEJ+YozJ47ZzFniVLUDhnXJybceJX4FSeDa59B6mXb4S7mSSSCEIP5kV45Ixm5ENLxnqGLYUfYUFLzMGtSl33Qv+h+rxf5hBmqgaYoFaJ8gENyiZfJJyTcWhnD75Gsh4EiuLEF8uLMSQ=
-Received: from AM7PR83MB0418.EURPRD83.prod.outlook.com (2603:10a6:20b:1be::11)
- by AM7PR83MB0468.EURPRD83.prod.outlook.com (2603:10a6:20b:1b6::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6544.5; Fri, 23 Jun
- 2023 12:42:34 +0000
-Received: from AM7PR83MB0418.EURPRD83.prod.outlook.com
- ([fe80::37fe:4e6:d28d:fa51]) by AM7PR83MB0418.EURPRD83.prod.outlook.com
- ([fe80::37fe:4e6:d28d:fa51%3]) with mapi id 15.20.6544.006; Fri, 23 Jun 2023
- 12:42:33 +0000
-From:   Premek Vysoky <Premek.Vysoky@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git apply fails with 'error: git apply: failed to read: No such file
- or directory'
-Thread-Topic: git apply fails with 'error: git apply: failed to read: No such
- file or directory'
-Thread-Index: Adml0C0BoV7g9ueIRD6rtF+KvPKsBA==
-Date:   Fri, 23 Jun 2023 12:42:33 +0000
-Message-ID: <AM7PR83MB04183860D4E70F935319E9B9EA23A@AM7PR83MB0418.EURPRD83.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=65964f8d-8a1b-4cc7-a665-86ee90347e85;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2023-06-23T12:39:35Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM7PR83MB0418:EE_|AM7PR83MB0468:EE_
-x-ms-office365-filtering-correlation-id: e2e81495-dc90-41b8-29d9-08db73e7511c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EwPlqLvPi3TSWtdvcZFerBQWn7WUbKEETMvH50z0Dz1Y3sbOTBPPfzCTkaaIqrJu91h2KQRgCyEffCPMNFVwPflEs8aWb8AJvoq3GJH6CgsbTFNS6OQzAsssGspPxi1pFatGBOrCNbBNu/HB39wAeCUe3I+qpU/MK40GZ0ORh6Xn5CDmsLapNRfsAnyUUel0lS7LArBoo6gLMa484ykvhyUxXaa2hcnMkyqAJSo2mnQVA6hg2o8pPGPlulvRyC2CaEVdfq4ISGg9dF4A88ZkNLGLP2hMgauamp4YSf92S39KjH91IRcH04bKZH7z8no4Ay8Wx09k1jWSUU4sqpFvAKF3a6IFkOBb2x/96cMS7L5kBXw31zYreQa1Kg/rTpsZaaaVL8I0nCokcwuVuR5yZdhozYcdwVgKQhVGQF5AVhN/bqAXBx017e8MofPDNhXkt3FPR9fOBdj6qabREK8X/uOcq1oHT9OQCvac+TiL04mP1hyX4gLCZ1sn1Xjg/3uhkKi1Ndb6de/NQVTm+wUEYcxMc+95zGEJP4djvOvbPmJWK2B6gLU2TEQvv0+6733LLdd1zL8oUqmc1wVQnakDSCzkDq2++FRKgoc/WqDnjiYyie9odCDjIxoH8DF/7jqTOcvPEAVu2V6z+7/hRfAkKJHF8uOXSiSgq2Uhg1yEKVDzSjH71wuFITPYH0xM6qG3
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR83MB0418.EURPRD83.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(346002)(396003)(136003)(39860400002)(376002)(451199021)(186003)(966005)(71200400001)(7696005)(9686003)(86362001)(6506007)(10290500003)(478600001)(38100700002)(82960400001)(122000001)(316002)(83380400001)(82950400001)(66946007)(66476007)(6916009)(76116006)(66556008)(64756008)(66446008)(41300700001)(5660300002)(38070700005)(2906002)(8990500004)(55016003)(52536014)(8936002)(8676002)(33656002)(460985005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?fgxA2zDSR7DUM5C0onDKFooSZwNmkdwOapbinrselrHHCj3ps8X57SQUoXFW?=
- =?us-ascii?Q?8CuUZBLp7LP53VyxkBR7pAozRNL7e1R/YT0EGkZxpquPWZv7IbTGg+d7IaSg?=
- =?us-ascii?Q?JzrX2sBARPAS+UkLQXlFf6u8aRhzuNy8hQB+gM9VFJAiMVYs5+0cosNblCuH?=
- =?us-ascii?Q?pS4SJcRomG4re6JRLSN1Do6itX7ddzusB26KfKwlinRGaZmXQCeVrEA3F40Q?=
- =?us-ascii?Q?myozG2FCh++PNF7bqw2lUCZo7aHNBNpBpLeet+ko0jGKipYD9EjZgvMNn9oz?=
- =?us-ascii?Q?51n37NeMXixDdWInklHUG3ry+/TfpffL4YhsAnHJM3ni8s26JQ3qrIz6onfm?=
- =?us-ascii?Q?6sYgLc34NnXem3+M+Pja4zPNApq4jT9PI2Iv+xethZCcvu68hbxxOmBH7xmK?=
- =?us-ascii?Q?CVSKSbnceZC0kwyDgFO4lL7dO4SgsKqMRsRjrAxL2pHFp7c8S0/he6Dfzyri?=
- =?us-ascii?Q?WR9gD5xhd+lw7eQ7+ZeZU7KAjluaXavdh46/xmysCsIAhygOFgxvB9K1RZ02?=
- =?us-ascii?Q?/YXlOaR4TdEgu2cgnaTQDOwl2U0AuAxIZF+qA64VEKiRf3aJF4ZRft8/JIIQ?=
- =?us-ascii?Q?jIvH6dJ4vqgd/WmCNWwDHQSvUOMhoNfoTT/D6e4tKQXUbX99IaVVDIoD8i7x?=
- =?us-ascii?Q?bhDVhf0c2x1uyhIS6epllju4cP12Q5aOqxbJc3spT9eb/+BPCYDZ+iEUwSns?=
- =?us-ascii?Q?/cR7M3mKYyGc5QEcmRMgUcw0pvVE7ygHk091G696SWIavlkDsA4pEyWfYheI?=
- =?us-ascii?Q?iWv6q3H+5cYUxpXSyo3KmstDCPKh0PopX5rA+nFcW+TH+iPalk604Znt8XVC?=
- =?us-ascii?Q?+VZEo9kRhXwZNlraYFHKXRyPjXg2OhokYHBHig5Ki0pnmJ7diVNXDCH77xXV?=
- =?us-ascii?Q?MvpL7jST15huNMrCKuQQcZDRKsy1bVJbPPOjcfKq/ACgc50lgA5x+c7W+ibV?=
- =?us-ascii?Q?Y25mlOyDcutjOIIpxgDHoxYYR9NyYJwjTYQCZP/DgZSuFpcuDXgvtuVTNBqQ?=
- =?us-ascii?Q?V2AxQU5aeRelnoesKXenSfpgQ8hxgjgq3hsCzQy6gdjCKx27e2kstVXIOBRM?=
- =?us-ascii?Q?pWgcyb0iBmBimmW0jZm+MlkyHiUc+zbnvnQMqFueo08YyJrHwOY9tiwE70B4?=
- =?us-ascii?Q?h2fP3ADc+laNe3ysIme1LCRgEjhHw/SZSxqu4v2HdmysyRPIyWMpromjR9Ao?=
- =?us-ascii?Q?jay8eNzluieulCWTULVkmXLipSja4gMelzmvWV8PRaBhV+QWe2cgcbJ2cR3C?=
- =?us-ascii?Q?BEaz5r37QRDeB+Z3+K666IfmYBbjq6XX3RAtH+RhHTQ1HRYb/cwnyv7gyW5J?=
- =?us-ascii?Q?zo+VR9xB8chIIl05eArdJ6GH8R3HVWvdj63gDXG2fND/jZQb6jNYri/KPcBe?=
- =?us-ascii?Q?Gh95Z35kLP6aRhB6GmP1nkIlMYgrX1YHr9lGUt5TnvIEcvXzUwLIAAmEExrO?=
- =?us-ascii?Q?O3bWrX/G/rs0zIDG3PvE8c0LXzu97fqJMhRkHq5+2W+PZqaADuFBCp+TdUVF?=
- =?us-ascii?Q?SSPppyIg9m3gj2j8sDJH8uwWzJTPd3/Uw5zBuK+B8EjxNPa+mHLwHiMnEgOw?=
- =?us-ascii?Q?JxzIOveE+VqdsR8t4mTdixytUishTZmi12zVsMuRL8yGoMHwG4QDHE0H+wUS?=
- =?us-ascii?Q?v6JIF+SOl+/evcm/9ZC64tnaoXRwm+8nYnpYPAFNv7dB?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S231249AbjFWNFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 09:05:54 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A572133
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 06:05:53 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id 46e09a7af769-6b46e61638eso555580a34.0
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 06:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1687525553; x=1690117553;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jtUMZ+zsmYuqhoYRQjI1HCi2X/06Wjg5IgH9zoQ5hjg=;
+        b=dVgIi0AkLDQ/hEmH+7ZNmkG/j614nrwSclPa+duQIUMkvm97UxoVDlB/knHIsLFrfG
+         wEuiNjN/Xsv8pIJ2UbT+B/GvxqtWe/soefzxVFoTxgMyZ5FTFgkqPMAjwsFBOEE4LgPG
+         4jhPK+TWwD16eZWS4S9OKa+kfmNx5B006WM1By3dzz0p+8OMPlpAHGlkJsI+kMWar4j2
+         cbE4D/Dddhb0KyNoGV07CygWOOAtq+pHv9SV7f9Gb2I3yXtPRLBC8Vlk+1bPCCqjNi6I
+         tNhsMrrwFsPXeGFMdlbX6N3JYDbrJh2TvSOaCVvHgETneRVQGuZ6pJNGRuuNphzLHjJu
+         ioZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687525553; x=1690117553;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jtUMZ+zsmYuqhoYRQjI1HCi2X/06Wjg5IgH9zoQ5hjg=;
+        b=kODBEV+PPHa1hO1BS/AbeTNiAne8USoEKucN508ZeLOSLjmyoJAVwiBn0nvLy38aG7
+         fn10+WJR57iyt9PaXOAutRwHg8niSKPtNBakAO//6sWIqsJoYLBGR+OOtxImg553EE77
+         FQWasKtoT8SoTBE8lIukxMraCXgbX4UvAXoBUbHg7/sLqmfruKYH9Rkv0kgLyiv++BFV
+         k7qhwFTrR4kAaAPegrKOk2Be4m8Rx9Khgdrc5RNLL1A8S7iFg/Dh56K31VwQWNpMJQqz
+         TG8hdx4uRLa4abHIX63ILckItNTqKoEYpQQ90qIkyNDLXKRmTcuaF2/uQ9ky2oItNp5D
+         6VRg==
+X-Gm-Message-State: AC+VfDzsb4IEY/gqOUIvw/RMRqQTUbWjiQWoKn9074mzlqpXaIKa0uP9
+        RCw9MgGAx+NXTwZc3wa/wR8ysANj3KHHD3YzNw==
+X-Google-Smtp-Source: ACHHUZ6zNfWrSy195SVdaC9nS9HEUoMxsgv2cLoeBM5qS09S48JzeoTUkrbePHQWsX8H0IR+2SmBow==
+X-Received: by 2002:a05:6359:5a4:b0:130:e721:f4d6 with SMTP id ee36-20020a05635905a400b00130e721f4d6mr12548345rwb.16.1687525552821;
+        Fri, 23 Jun 2023 06:05:52 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:ed06:4a41:daac:5b11? ([2600:1700:e72:80a0:ed06:4a41:daac:5b11])
+        by smtp.gmail.com with ESMTPSA id k124-20020a0dc882000000b0056d4649670fsm2449202ywd.133.2023.06.23.06.05.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Jun 2023 06:05:52 -0700 (PDT)
+Message-ID: <e57b2272-b269-b705-3d42-d32e0b410f03@github.com>
+Date:   Fri, 23 Jun 2023 09:05:51 -0400
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM7PR83MB0418.EURPRD83.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e2e81495-dc90-41b8-29d9-08db73e7511c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jun 2023 12:42:33.7955
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0RJxfUYasHBaCgqJirWmunAG/E0ioc4Q3QMk9lRUOfuv1bmsOB/0ZJ1oP6TNRIqPzGT44T26c9DYTm0gxy5UAg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR83MB0468
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v4 1/4] gitformat-commit-graph: describe version 2 of BDAT
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <20230622222637.2045705-1-jonathantanmy@google.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20230622222637.2045705-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-git clone https://github.com/dotnet/llvm-project
-git -C llvm-project diff --patch --binary --output ../llvm.patch 4b825dc642=
-cb6eb9a060e54bf8d69288fbee4904..30e9e6bc2e9f04e0a75daf4b8088ee91f66069da --=
- ':(glob)**/*' ':(exclude,glob)**/*.dll' ':(exclude,glob)**/*.Dll' ':(exclu=
-de,glob)**/*.exe' ':(exclude,glob)**/*.pdb' ':(exclude,glob)**/*.mdb' ':(ex=
-clude,glob)**/*.zip' ':(exclude,glob)**/*.nupkg'
-mkdir foo
-git -C foo init
-git -C foo apply --cached --ignore-space-change ../llvm.patch
+On 6/22/2023 6:26 PM, Jonathan Tan wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>>> I wonder if we want to mention what the undesired misbehaviour the
+>>> "bug" causes and what we do to avoid getting affected by the bug
+>>> here.  If we can say something like "When querying for a pathname
+>>> with a byte with high-bit set, the buggy filter may produce false
+>>> negative, making the filter unusable, but asking for a pathname
+>>> without such a byte produces no false negatives (even though we may
+>>> get false positives).  When Git reads version 1 filter data, it
+>>> refrains from using it for processing paths with high-bit set to
+>>> avoid triggering the bug", then it would be ideal.
+>>
+>> Your description of the bug matches my understanding of the issue, that
+>> a corrupt filter would produce false negatives and thus be unusable.
+>>
+>> I skimmed through the rest of the series, and couldn't find a spot where
+>> we do the latter, i.e. still use v1 filters as long as we don't have any
+>> characters in the path with high-order bits set.
+>>
+>> I think this would be as simple as modifying the Bloom filter query
+>> function to return "maybe" before even trying to hash a path with at
+>> least one character with its high-bit set.
+>>
+>> Apologies if this functionality is implemented and I just missed it.
+>>
+>> Thanks,
+>> Taylor
+> 
+> Thanks for the suggestion - yeah, this might work.
 
-What did you expect to happen? (Expected behavior)
-Patch should be created and applied to another folder
+If I understand the situation correctly, the high bits can make the
+hashes "not very random" but they are still effective at identifying
+the "maybe" case consistently for the inputs it is given (it would not
+present a "no" when it should not, but it might say "maybe" more often
+than it should). The behavior is only incorrect if the same commit-graph
+file is used with two different Git versions that were compiled with
+different signed-ness.
 
-What happened instead? (Actual behavior)
-git apply fails with 'error: git apply: failed to read: No such file or dir=
-ectory'
-(and returns 128)
+If that is the case, then ignoring the Bloom filters when you see a
+high bit would change the performance implication from "probably
+slower" to "definitely slower" but not affect the correctness in a
+system that doesn't have competing Git versions with different
+compiler semantics.
 
-What's different between what you expected and what actually happened?
-There is no error. I tried -v, --reject etc but wasn't able to get any deta=
-ils.
+That is to say, doing this extra work doesn't seem to be critical to
+making this change. The ROI seems too low.
 
-Anything else you want to add:
-This happens in both Windows and Linux environments.
-
-I tried analyzing file handlers via procmon.exe and could not see anything.=
- git reads the whole patch and then shuts down. No indication of a file it =
-is trying to open.
-
-I tried excluding more files from the patch and then I was able to create/a=
-pply the patch, like so:
-
-git -C llvm-project diff --patch --binary --output ../llvm.patch 4b825dc642=
-cb6eb9a060e54bf8d69288fbee4904..30e9e6bc2e9f04e0a75daf4b8088ee91f66069da --=
- ':(glob)**/*' ':(exclude,glob)**/*.dll' ':(exclude,glob)**/*.Dll' ':(exclu=
-de,glob)**/*.exe' ':(exclude,glob)**/*.pdb' ':(exclude,glob)**/*.mdb' ':(ex=
-clude,glob)**/*.zip' ':(exclude,glob)**/*.nupkg' ':(exclude,glob)bolt' ':(e=
-xclude,glob)clang/docs' ':(exclude,glob)clang/www' ':(exclude,glob)flang' '=
-:(exclude,glob)libclc' ':(exclude,glob)lldb' ':(exclude,glob)llvm/docs' ':(=
-exclude,glob)mlir' ':(exclude,glob)openmp' ':(exclude,glob)polly' ':(exclud=
-e,glob)pstl' ':(exclude,glob)third-party' ':(exclude,glob)**/tests/**'
-
-But if I do the opposite and create a patch with only the previously exclud=
-ed files, I'd expect that it breaks. But this works as well!
-
-git -C llvm-project diff --patch --binary --output ../llvm.patch 4b825dc642=
-cb6eb9a060e54bf8d69288fbee4904..30e9e6bc2e9f04e0a75daf4b8088ee91f66069da --=
- ':(glob)bolt' ':(glob)clang/docs' ':(glob)clang/www' ':(glob)flang' ':(glo=
-b)libclc' ':(glob)lldb' ':(glob)llvm/docs' ':(glob)mlir' ':(glob)openmp' ':=
-(glob)polly' ':(glob)pstl' ':(glob)third-party' ':(glob)**/tests/**' ':(exc=
-lude,glob)**/*.dll' ':(exclude,glob)**/*.Dll' ':(exclude,glob)**/*.exe' ':(=
-exclude,glob)**/*.pdb' ':(exclude,glob)**/*.mdb' ':(exclude,glob)**/*.zip' =
-':(exclude,glob)**/*.nupkg'
-
-Only when they are together, git fails. Size of the patch is 1GB but I've h=
-ad 3GB patches apply successfully before.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.41.0.windows.1
-cpu: x86_64
-built from commit: ff94e79c4724635915dbb3d4ba38f6bb91528260
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 22621=20
-compiler info: gnuc: 13.1
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Thanks,
+-Stolee
