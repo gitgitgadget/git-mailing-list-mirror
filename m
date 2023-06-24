@@ -2,79 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B35EB64D7
-	for <git@archiver.kernel.org>; Fri, 23 Jun 2023 23:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C66C4EB64D7
+	for <git@archiver.kernel.org>; Sat, 24 Jun 2023 01:12:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230010AbjFWXbV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jun 2023 19:31:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53426 "EHLO
+        id S230118AbjFXBMt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jun 2023 21:12:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjFWXbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2023 19:31:20 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FFB3D3
-        for <git@vger.kernel.org>; Fri, 23 Jun 2023 16:31:19 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 083B919F31;
-        Fri, 23 Jun 2023 19:31:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OHRCswOWgK0QjiMNEHdihqJmLqDXqUvy3BeraD
-        df7qg=; b=ag7FB7t/hNegukDg5nO2wk9KgSU1/JKuwliefqJog/F+/9+deDcAja
-        obRnR+JtWuI+0PzEO5UsPkKrwmAATsO1rBxx3oPZhjI75hhlQGnfuVqdVXy8KFDy
-        VfgIPEZFeK/MwcI/1KSsCIaYcjytbl4BHC2Aj3SR80IrUlodDsvr4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0180D19F30;
-        Fri, 23 Jun 2023 19:31:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 216C419F2F;
-        Fri, 23 Jun 2023 19:31:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Joshua Hudson <jhudson@cedaron.com>
-Subject: Re: [PATCH] ll-merge: killing the external merge driver aborts the
- merge
-References: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
-        <xmqqttuze2fh.fsf@gitster.g> <xmqq4jmzc91e.fsf_-_@gitster.g>
-        <CABPp-BG-KDu0fAC=bydz9A56xguSmgwO6SFDdxZ8h=90qR1PUA@mail.gmail.com>
-        <xmqqv8feb0vo.fsf@gitster.g>
-Date:   Fri, 23 Jun 2023 16:31:15 -0700
-In-Reply-To: <xmqqv8feb0vo.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        23 Jun 2023 09:26:51 -0700")
-Message-ID: <xmqqjzvt92nw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229487AbjFXBMo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2023 21:12:44 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9683426BD
+        for <git@vger.kernel.org>; Fri, 23 Jun 2023 18:12:42 -0700 (PDT)
+Received: (qmail 12800 invoked by uid 109); 24 Jun 2023 01:12:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 24 Jun 2023 01:12:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8525 invoked by uid 111); 24 Jun 2023 01:12:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jun 2023 21:12:38 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 23 Jun 2023 21:12:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Sebastian Schuberth <sschuberth@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Clean up stale .gitignore and .gitattribute patterns
+Message-ID: <20230624011234.GA95358@coredump.intra.peff.net>
+References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0C67C8BC-121E-11EE-9835-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jun 23, 2023 at 05:29:42PM +0200, Sebastian Schuberth wrote:
 
-> Elijah Newren <newren@gmail.com> writes:
->
->> Reviewed-by: Elijah Newren <newren@gmail.com>
->
->
-> Thanks for a quick review.
+> is there a command to easily check patterns in .gitignore and
+> .gitattributes to still match something? I'd like to remove / correct
+> patterns that don't match anything anymore due to (re)moved files.
 
-Unfortunately Windows does not seem to correctly detect the aborting
-merge driver.  Does run_command() there report process death due to
-signals differently, I wonder?
+I don't think there's a solution that matches "easily", but you can do a
+bit with some scripting. See below.
 
-https://github.com/git/git/actions/runs/5360400800/jobs/9725341775#step:6:285
+For checking .gitignore, I don't think you can ever say (at the git
+level) that a certain pattern is useless, because it is inherently about
+matching things that not tracked, and hence generated elsewhere. So if
+you have a "*.foo" pattern, you can check if it matches anything
+_currently_ in your working tree, but if it doesn't that may mean that
+you simply did not trigger the build rule that makes the garbage ".foo"
+file.
 
-shows that on Windows, aborted external merge driver is not noticed
-and we happily take the auto-merged result, ouch.
+So with that caveat, we can ask Git which rules _do_ have a match, and
+then eliminate them as "definitely useful", and print the others. The
+logic is sufficiently tricky that I turned to perl:
 
-I am tempted to protect this step of the test with a prerequisite to
-skip it on Windows for now.  Anybody with better idea?
+-- >8 show-unmatched-ignore.pl 8< --
+#!/usr/bin/perl
 
-Thanks.
+# The general idea here is to read "filename:linenr ..." output from
+# "check-ignore -v". For each filename we learn about, we'll load the
+# complete set of lines into an array and then "cross them off" as
+# check-ignore tells us they were used.
+#
+# Note that we'd fail to mention an ignore file which matches nothing.
+# Probably the list of filenames could be generated independently. I'll
+# that as an exercise for the reader.
+while (<>) {
+  /^(.*?):(\d+):/
+    or die "puzzling input: $_";
+  if (!defined $files{$1}) {
+    $files{$1} = do {
+      open(my $fh, '<', $1)
+        or die "unable to open $1: $!";
+      [<$fh>]
+    };
+  }
+  $files{$1}->[$2] = undef;
+}
+
+# With that done, whatever is left is unmatched. Print them.
+for my $fn (sort keys(%files)) {
+  my $lines = $files{$fn};
+  for my $nr (1..@$lines) {
+    my $line = $lines->[$nr-1];
+    print "$fn:$nr $line" if defined $line;
+  }
+}
+-- >8 --
+
+And you'd use it something like:
+
+  git ls-files -o |
+  git check-ignore --stdin -v |
+  perl show-unmatched-ignore.pl
+
+Pretty clunky, but it works OK in git.git (and shows that there are many
+"not matched but probably still useful" entries; e.g., "*.dll" will
+never match for me on Linux, but is probably something we still want to
+keep). So I wouldn't use it as an automated tool, but it might give a
+starting point for a human looking to clean things up manually.
+
+For attributes, I think the situation is better; we only need them to
+match tracked files (though technically speaking, you may want to keep
+attributes around for historical files as we use the checked-out
+attributes during "git log", etc). Unfortunately we don't have an
+equivalent of "-v" for check-attr. It might be possible to add that ,but
+in the meantime, the best I could come up with is to munge each pattern
+to add a sentinel attribute, and see if it matches anything.
+
+Something like:
+
+  # Maybe also pipe in .git/info/attributes and core.attributesFile
+  # if you want to check those.
+  git ls-files '.gitattributes' '**/.gitattributes' |
+  while read fn; do
+  	lines=$(wc -l <"$fn")
+  	mv "$fn" "$fn.orig"
+  	nr=1
+  	while test $nr -le $lines; do
+  		sed "${nr}s/$/ is-matched/" <"$fn.orig" >"$fn"
+  		git ls-files | git check-attr --stdin is-matched |
+  		grep -q "is-matched: set" ||
+  		echo "$fn:$nr $(sed -n ${nr}p "$fn.orig")"
+  		nr=$((nr+1))
+  	done
+  	mv "$fn.orig" "$fn"
+  done
+
+It produces no output in git.git (we are using all of our attributes),
+but you can add a useless one like:
+
+  echo '*.c -diff' >>Documentation/.gitattributes
+
+and then the loop yields:
+
+  Documentation/.gitattributes:2 *.c -diff
+
+So I definitely wouldn't call any of that "easy", but it may help you.
+
+-Peff
