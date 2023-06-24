@@ -2,145 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 425F6EB64DA
-	for <git@archiver.kernel.org>; Sat, 24 Jun 2023 14:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83ACFEB64DA
+	for <git@archiver.kernel.org>; Sat, 24 Jun 2023 15:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjFXOdy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Jun 2023 10:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39772 "EHLO
+        id S233058AbjFXPUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Jun 2023 11:20:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjFXOdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2023 10:33:53 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9271BE7
-        for <git@vger.kernel.org>; Sat, 24 Jun 2023 07:33:51 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5769e6a6818so3484467b3.1
-        for <git@vger.kernel.org>; Sat, 24 Jun 2023 07:33:51 -0700 (PDT)
+        with ESMTP id S233036AbjFXPUH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jun 2023 11:20:07 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC4C81FD7
+        for <git@vger.kernel.org>; Sat, 24 Jun 2023 08:20:04 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-3113306a595so1976912f8f.1
+        for <git@vger.kernel.org>; Sat, 24 Jun 2023 08:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1687617231; x=1690209231;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UXECYpfMolZSe6qVp8uerzvs0QTSuxcIcMDV6U1l1Zk=;
-        b=MCxmbBMspPWvaodKG0Z4RUQ6kZ18xqw5hIUWDh0bVzmqofYDPiAaiO+DWEWGWiBXW5
-         J96otFeixhEcjDzZZPGByk6RsNEn7Kb5ndJkgPwcNqjmlhcVX3i1PRF8fiTWX36ymMCv
-         HBsM+Jc61TeHVRZmRhzjqZ/UyNZ2rKy1y39lu+855DyjENrTjtOxKVLbaJKvQ6+spxJ/
-         wxiXiHtcCHRQ4vfxltDaKBMK9nMruwV+ONzGeK29n2mzh8gM6dQmwoqo/U3DNBKqF6cF
-         FAgWwOYBGREDsKmK4aUjw8CnnnY1SU+Enjn1mz6rIf/dp07fE9Pl8hLvIRKxBvaZF3TU
-         xFrw==
+        d=gmail.com; s=20221208; t=1687620003; x=1690212003;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bM+PjcTkAEZly0IIaURZuhG+q5W0aHubOFKbqp7ZPqc=;
+        b=GJ03O+M9wez4MfoQH1zMPCT2r4FTlD4+R6mHuLPMLg7haw7qeXwdSVVsuF5pAknLS/
+         0I0RjMcIXPbJKHvAJaTLNEhj0aShSlZtkl7MzdvHGPcjD9RpwfA4fdwUT3SxMfHeYm0o
+         SZbDb5sre4A8is0pAsCXGa2B4Bl5FKod8DYdvVv8T34j9Pdv132DFyIH2T1M5w1R1NZe
+         0ufjPgW82loQ0UKHGjQqLGhx1rmn6wn185vds24jwynT0BQHiOfkIXB5s5KKY1YSbsPn
+         54ikhp8c9pYkYvbZFUEDgcQQi66mKMIn/Y8OA8xauHC82SaAjMw3GhpC87fdB0SSUOXD
+         kqCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687617231; x=1690209231;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UXECYpfMolZSe6qVp8uerzvs0QTSuxcIcMDV6U1l1Zk=;
-        b=T67pegoPO6tbLSh9ssSzHyDLMMpp06MGMwrLKBkgRrhMtOeoW5BHADlC+4JngapcEQ
-         eXILBYg1qQ51lgzGCjIAVsQ3kycXiGhC9+3hRm2x+NaVk+qYsqy5T78MJ+vTLaejTIS9
-         TIXV3sGE+SHGCYXdf1IsbGJW3gpz6ely79f0fW1it5zM3Tt7gYfRc5gtWHFo3fn9w8wg
-         zfuChGlqjDWtpuB8lNYpL/WRezwBbhEmHdujsnJ/8Hg2eqkUTJ3wc6o+KWr4gJ5YopLg
-         paKE1QvgtnzrFeRyZmT8CD7cUEt8WkOu1js4UaAx7ID6Mrp9C3NMNT1+6y1w/HBm+tH/
-         elgQ==
-X-Gm-Message-State: AC+VfDx7IKyhtLwKttU3vqD85NwnmV6D3RfZyUnPIIWmzWpRX7UbGQCs
-        vuynwrE9Xoycj5+zbPygJ2YltxLmbfrvvv9HYprj11eO
-X-Google-Smtp-Source: ACHHUZ6hOX2xTQmXNjEMQhjwjiwbu7Vv1TCfm7FTPRXFqnYfOOq5ahEzPxZfgKh2FGrIrIBlU8C9CA==
-X-Received: by 2002:a81:72c3:0:b0:56d:7c4:8be8 with SMTP id n186-20020a8172c3000000b0056d07c48be8mr23103546ywc.16.1687617230910;
-        Sat, 24 Jun 2023 07:33:50 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q126-20020a0dce84000000b005702bfb19bfsm344837ywd.130.2023.06.24.07.33.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jun 2023 07:33:50 -0700 (PDT)
-Date:   Sat, 24 Jun 2023 10:33:47 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] t7701: make annotated tag unreachable
-Message-ID: <259b1b559114ab1a9a0bd7f1ad29a4cba2612ae0.1687617197.git.me@ttaylorr.com>
-References: <20230624043826.GA104835@coredump.intra.peff.net>
+        d=1e100.net; s=20221208; t=1687620003; x=1690212003;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bM+PjcTkAEZly0IIaURZuhG+q5W0aHubOFKbqp7ZPqc=;
+        b=bFoe4r/0ItfW91INwHl1FOkLBkabQ+Gedtl6/gufnXl1c+Ty4eyudJ71Vy1MshPmcC
+         ZbUUn+yiqXWD6iXOGOKuao8PmEehhlJz1sk1dg+ketpJnSyD4bY39QwD+OALQ+UyZ6FW
+         pBqxjeL/QslpyRibGGMhk9hqm8ChpJa3DUFJSM/CGN0P+EDCjuRaljASsqq87syQoiao
+         GKGiyRTqgo0C+QSmL5Powaa85s1WYAb2mvcCs4wmBmz8eBiKdlSwFElQ3EUy3RZyd7MS
+         MTx+vQJPDtGi2CJ/c7AkKNdeWUkmmfehSKXTp3qQN0xIKXhWhTl2K2tIikN8JeXSAec6
+         Cg5Q==
+X-Gm-Message-State: AC+VfDxr+CtiZGi/OosdcvxAAL9/DACH/5VM/XrPTYVoXPJ2SWIquyY9
+        E1DRiM8S0OSQUhznxixn+co=
+X-Google-Smtp-Source: ACHHUZ72D8je6KZ4ht1mcg6PabvHdcVscpJoHKOXyIPVXOKDc7NxqR2ElWebb1Wv8xj3aWpzBEOBsA==
+X-Received: by 2002:a5d:464e:0:b0:30f:c801:aa7c with SMTP id j14-20020a5d464e000000b0030fc801aa7cmr23846501wrs.43.1687620002803;
+        Sat, 24 Jun 2023 08:20:02 -0700 (PDT)
+Received: from [192.168.1.212] ([90.255.142.254])
+        by smtp.gmail.com with ESMTPSA id h15-20020a05600004cf00b0030e52d4c1bcsm2358183wri.71.2023.06.24.08.20.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jun 2023 08:20:02 -0700 (PDT)
+Message-ID: <03ea5630-2373-2f53-7dbc-406e10ca281c@gmail.com>
+Date:   Sat, 24 Jun 2023 16:19:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230624043826.GA104835@coredump.intra.peff.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [EXTERNAL] Re: git apply fails with 'error: git apply: failed to
+ read: No such file or directory'
+Content-Language: en-US
+To:     Premek Vysoky <Premek.Vysoky@microsoft.com>,
+        "phillip.wood@dunelm.org.uk" <phillip.wood@dunelm.org.uk>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <AM7PR83MB04183860D4E70F935319E9B9EA23A@AM7PR83MB0418.EURPRD83.prod.outlook.com>
+ <fff79e55-cf35-b5ca-6208-dfa7234be33d@gmail.com>
+ <AM7PR83MB041804AFB4F0F8E850C51039EA20A@AM7PR83MB0418.EURPRD83.prod.outlook.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+In-Reply-To: <AM7PR83MB041804AFB4F0F8E850C51039EA20A@AM7PR83MB0418.EURPRD83.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 4dc16e2cb0 (gc: introduce `gc.recentObjectsHook`, 2023-06-07), we
-added tests to ensure that prune-able (i.e. unreachable and with mtime
-older than the cutoff) objects which are marked as recent via the new
-`gc.recentObjectsHook` configuration are unpacked as loose with
-`--unpack-unreachable`.
+Hi Premek
 
-In that test, we also ensure that objects which are reachable from other
-unreachable objects which were *not* pruned are kept as well, regardless
-of their mtimes. For this, we use an annotated tag pointing at a blob
-($obj2) which would otherwise be pruned.
+On 24/06/2023 11:28, Premek Vysoky wrote:
+> Hi Phillip,
+> 
+> Thanks for the fast response! And thanks for the improvement if you decide to make this more obvious.
+> I must have used an older git version earlier as I was able to process even 3GB patches easily.
+> 
+> Too bad there is no override for this..
 
-But after pruning, that object is kept around for two reasons. One, the
-tag object's mtime wasn't adjusted to be beyond the 1-hour cutoff, so it
-would be kept as due to its recency regardless. The other reason is
-because the tag itself is reachable.
+The limit was added because of concerns about integer overflows with 
+larger patches (I've reproduced the commit message below). In principle 
+the code could be updated to use size_t rather than int/long to 
+accommodate larger patches though I haven't looked how difficult that 
+would be and we'd still need to restrict the size of the diff for each 
+file as the object store uses long rather than size_t which causes 
+problems on LLP64 platforms like windows.
 
-Use mktag to write the tag object directly without pointing a reference
-at it, and adjust the mtime of the tag object to be older than the
-cutoff to ensure that our `gc.recentObjectsHook` configuration is
-working as intended.
+If you want to export a subset of files from a repository then 
+git-filter-repo[1] might be a better bet. It uses fast-export and 
+fast-import which should be more efficient than generating patches and 
+applying them.
 
-Noticed-by: Jeff King <peff@peff.net>
+Best Wishes
+
+Phillip
+
+[1] https://github.com/newren/git-filter-repo
+
+Here is the commit message from the commit that introduced the limit on 
+patch sizes
+
+apply: reject patches larger than ~1 GiB
+
+The apply code is not prepared to handle extremely large files. It uses
+"int" in some places, and "unsigned long" in others.
+
+This combination leads to unfortunate problems when switching between
+the two types. Using "int" prevents us from handling large files, since
+large offsets will wrap around and spill into small negative values,
+which can result in wrong behavior (like accessing the patch buffer with
+a negative offset).
+
+Converting from "unsigned long" to "int" also has truncation problems
+even on LLP64 platforms where "long" is the same size as "int", since
+the former is unsigned but the latter is not.
+
+To avoid potential overflow and truncation issues in `git apply`, apply
+similar treatment as in dcd1742e56 (xdiff: reject files larger than
+~1GB, 2015-09-24), where the xdiff code was taught to reject large
+files for similar reasons.
+
+The maximum size was chosen somewhat arbitrarily, but picking a value
+just shy of a gigabyte allows us to double it without overflowing 2^31-1
+(after which point our value would wrap around to a negative number).
+To give ourselves a bit of extra margin, the maximum patch size is a MiB
+smaller than a full GiB, which gives us some slop in case we allocate
+"(records + 1) * sizeof(int)" or similar.
+
+Luckily, the security implications of these conversion issues are
+relatively uninteresting, because a victim needs to be convinced to
+apply a malicious patch.
+
+Reported-by: 정재우 <thebound7@gmail.com>
+Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-Fixes a trivial oversight from an earlier version of this patch noticed
-by Peff.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Range-diff against v1:
-1:  48d3c2c187 ! 1:  259b1b5591 t7701: make annotated tag unreachable
-    @@ t/t7701-repack-unpack-unreachable.sh: test_expect_success 'gc.recentObjectsHook'
-      	git cat-file -p $obj2 &&
-      	git cat-file -p $obj3 &&
 
-    +-	git tag -a -m tag obj2-tag $obj2 &&
-    +-	obj2_tag="$(git rev-parse obj2-tag)" &&
-     +	# make an unreachable annotated tag object to ensure we rescue objects
-     +	# which are reachable from non-pruned unreachable objects
-    - 	git tag -a -m tag obj2-tag $obj2 &&
-    --	obj2_tag="$(git rev-parse obj2-tag)" &&
-     +	obj2_tag="$(git mktag <<-EOF
-     +	object $obj2
-     +	type blob
-
- t/t7701-repack-unpack-unreachable.sh | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
-index ba428c18a8..fe6c3e77a3 100755
---- a/t/t7701-repack-unpack-unreachable.sh
-+++ b/t/t7701-repack-unpack-unreachable.sh
-@@ -126,8 +126,18 @@ test_expect_success 'gc.recentObjectsHook' '
- 	git cat-file -p $obj2 &&
- 	git cat-file -p $obj3 &&
-
--	git tag -a -m tag obj2-tag $obj2 &&
--	obj2_tag="$(git rev-parse obj2-tag)" &&
-+	# make an unreachable annotated tag object to ensure we rescue objects
-+	# which are reachable from non-pruned unreachable objects
-+	obj2_tag="$(git mktag <<-EOF
-+	object $obj2
-+	type blob
-+	tag obj2-tag
-+	tagger T A Gger <tagger@example.com> 1234567890 -0000
-+	EOF
-+	)" &&
-+
-+	obj2_tag_pack="$(echo $obj2_tag | git pack-objects .git/objects/pack/pack)" &&
-+	git prune-packed &&
-
- 	write_script precious-objects <<-EOF &&
- 	echo $obj2_tag
-@@ -136,6 +146,7 @@ test_expect_success 'gc.recentObjectsHook' '
-
- 	test-tool chmtime =-86400 .git/objects/pack/pack-$pack2.pack &&
- 	test-tool chmtime =-86400 .git/objects/pack/pack-$pack3.pack &&
-+	test-tool chmtime =-86400 .git/objects/pack/pack-$obj2_tag_pack.pack &&
- 	git repack -A -d --unpack-unreachable=1.hour.ago &&
-
- 	git cat-file -p $obj1 &&
---
-2.40.1.479.g48d3c2c187.dirty
+> (we're working on a .NET monorepo - https://github.com/dotnet/dotnet - so one of a kind, and we hit these limits at times)
+> 
+> Cheers,
+> Premek
+> 
+> 
+> -----Original Message-----
+> From: Phillip Wood <phillip.wood123@gmail.com>
+> Sent: Saturday, June 24, 2023 12:09 PM
+> To: Premek Vysoky <Premek.Vysoky@microsoft.com>; git@vger.kernel.org
+> Subject: [EXTERNAL] Re: git apply fails with 'error: git apply: failed to read: No such file or directory'
+> 
+> Hi Premek
+> 
+> Thanks for taking the time to report this issue
+> 
+> On 23/06/2023 13:42, Premek Vysoky wrote:
+>> What did you do before the bug happened? (Steps to reproduce your
+>> issue) git clone
+>> https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgith
+>> ub.com%2Fdotnet%2Fllvm-project&data=05%7C01%7CPremek.Vysoky%40microsof
+>> t.com%7Ca9684566250842b65be608db749b030b%7C72f988bf86f141af91ab2d7cd01
+>> 1db47%7C1%7C0%7C638231981398613951%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4
+>> wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7
+>> C&sdata=prrT8WKHGtvll2XG%2FKSrxSOplev6eLjjeBGu%2FRQzOMg%3D&reserved=0
+>> git -C llvm-project diff --patch --binary --output ../llvm.patch 4b825dc642cb6eb9a060e54bf8d69288fbee4904..30e9e6bc2e9f04e0a75daf4b8088ee91f66069da -- ':(glob)**/*' ':(exclude,glob)**/*.dll' ':(exclude,glob)**/*.Dll' ':(exclude,glob)**/*.exe' ':(exclude,glob)**/*.pdb' ':(exclude,glob)**/*.mdb' ':(exclude,glob)**/*.zip' ':(exclude,glob)**/*.nupkg'
+>> mkdir foo
+>> git -C foo init
+>> git -C foo apply --cached --ignore-space-change ../llvm.patch
+>>
+>> What did you expect to happen? (Expected behavior) Patch should be
+>> created and applied to another folder
+>>
+>> What happened instead? (Actual behavior) git apply fails with 'error:
+>> git apply: failed to read: No such file or directory'
+>> (and returns 128)
+> 
+> This stems from commit f1c0e3946e (apply: reject patches larger than ~1 GiB, 2022-10-25). Unfortunately it does not provide a very helpful error message. I'll submit a patch later to fix that in the next few days.
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+>> What's different between what you expected and what actually happened?
+>> There is no error. I tried -v, --reject etc but wasn't able to get any details.
+>>
+>> Anything else you want to add:
+>> This happens in both Windows and Linux environments.
+>>
+>> I tried analyzing file handlers via procmon.exe and could not see anything. git reads the whole patch and then shuts down. No indication of a file it is trying to open.
+>>
+>> I tried excluding more files from the patch and then I was able to create/apply the patch, like so:
+>>
+>> git -C llvm-project diff --patch --binary --output ../llvm.patch 4b825dc642cb6eb9a060e54bf8d69288fbee4904..30e9e6bc2e9f04e0a75daf4b8088ee91f66069da -- ':(glob)**/*' ':(exclude,glob)**/*.dll' ':(exclude,glob)**/*.Dll' ':(exclude,glob)**/*.exe' ':(exclude,glob)**/*.pdb' ':(exclude,glob)**/*.mdb' ':(exclude,glob)**/*.zip' ':(exclude,glob)**/*.nupkg' ':(exclude,glob)bolt' ':(exclude,glob)clang/docs' ':(exclude,glob)clang/www' ':(exclude,glob)flang' ':(exclude,glob)libclc' ':(exclude,glob)lldb' ':(exclude,glob)llvm/docs' ':(exclude,glob)mlir' ':(exclude,glob)openmp' ':(exclude,glob)polly' ':(exclude,glob)pstl' ':(exclude,glob)third-party' ':(exclude,glob)**/tests/**'
+>>
+>> But if I do the opposite and create a patch with only the previously excluded files, I'd expect that it breaks. But this works as well!
+>>
+>> git -C llvm-project diff --patch --binary --output ../llvm.patch 4b825dc642cb6eb9a060e54bf8d69288fbee4904..30e9e6bc2e9f04e0a75daf4b8088ee91f66069da -- ':(glob)bolt' ':(glob)clang/docs' ':(glob)clang/www' ':(glob)flang' ':(glob)libclc' ':(glob)lldb' ':(glob)llvm/docs' ':(glob)mlir' ':(glob)openmp' ':(glob)polly' ':(glob)pstl' ':(glob)third-party' ':(glob)**/tests/**' ':(exclude,glob)**/*.dll' ':(exclude,glob)**/*.Dll' ':(exclude,glob)**/*.exe' ':(exclude,glob)**/*.pdb' ':(exclude,glob)**/*.mdb' ':(exclude,glob)**/*.zip' ':(exclude,glob)**/*.nupkg'
+>>
+>> Only when they are together, git fails. Size of the patch is 1GB but I've had 3GB patches apply successfully before.
+>>
+>> Please review the rest of the bug report below.
+>> You can delete any lines you don't wish to share.
+>>
+>>
+>> [System Info]
+>> git version:
+>> git version 2.41.0.windows.1
+>> cpu: x86_64
+>> built from commit: ff94e79c4724635915dbb3d4ba38f6bb91528260
+>> sizeof-long: 4
+>> sizeof-size_t: 8
+>> shell-path: /bin/sh
+>> feature: fsmonitor--daemon
+>> uname: Windows 10.0 22621
+>> compiler info: gnuc: 13.1
+>> libc info: no libc information available $SHELL (typically,
+>> interactive shell): <unset>
+>>
+>>
+>> [Enabled Hooks]
+>> not run from a git repository - no hooks to show
