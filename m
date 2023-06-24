@@ -2,164 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F76FC0015E
-	for <git@archiver.kernel.org>; Sat, 24 Jun 2023 21:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBD1CEB64DA
+	for <git@archiver.kernel.org>; Sat, 24 Jun 2023 22:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbjFXVX7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Jun 2023 17:23:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37818 "EHLO
+        id S229532AbjFXWT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Jun 2023 18:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbjFXVXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2023 17:23:53 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9CB1728
-        for <git@vger.kernel.org>; Sat, 24 Jun 2023 14:23:52 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id d75a77b69052e-3ff274778feso17310161cf.1
-        for <git@vger.kernel.org>; Sat, 24 Jun 2023 14:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687641831; x=1690233831;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vLoTKRHvRu/cqozWc4zHiX93G9XPhpyZWEI7EE21eUs=;
-        b=YXdS7ioFLiqZ/jijp4JyzQoCXhOC2y9vZRvN7fza4wVOE7hI6Ua4HWPPHtaPX5i2Hf
-         fmrsUsBabBNym85BrHAMdYTAzjU2d0jSY2ohro0EPPAebVHXxoeLYfhzaV8VgPE6amal
-         mx/49TEJ5rEssUw0E3tYiSt6A4Lk1xO1N7BoPAQbTbG/8ub/2M7j9b2hAkjyIZaO33Sh
-         JMyNAQb9rK0AT2EhTFHJEIU71/nL27wteDm4/HuPdd1HvNsmAzWgx0lR8e+f2fd861G2
-         Anj6EQde0CekLqHrbYPpzzSv3PXEo9KqJPpbQjjmlEU/PHqQGPSWTgg069jS9oYAI/uG
-         YqOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687641831; x=1690233831;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vLoTKRHvRu/cqozWc4zHiX93G9XPhpyZWEI7EE21eUs=;
-        b=i5g9QjOKFv74RoPgVFVe09c98uZl5LiDr2WRiMxwr+fVgsYvuIZw7ZuLualdB6c/fj
-         KQ9BnZMv3sHjUWva0kRoe202nnCSQlS9qfvfhbZhjWOoDcjG7Wb+cvDlBEf8DTN6OyUD
-         ZWMydMcQTQ2mQGzs7zPRm2c4HWQQKJWDPHN182TLnIL2miHkRy+CUg71WiDUbLD7hn4w
-         8geKIcFt2a85QEQV/J858qBCF8jSv2G5PlOqdtmyvgbsXCnWSTYtHvcqT7fPxU6ZFIl+
-         KOVPlP83YklQed8XHuON1Xx7FkcAP90cSXlcHkFRWmRLnK68QO4S15TBFRlFlmKVyVvn
-         fTEg==
-X-Gm-Message-State: AC+VfDwJbyX08q0D9rZLmb5LyzHQS2s7XVpnXBeP+tg3mWPdyckoe87G
-        r6HL/+iiA8uOwckhSFT0LqVfBEiI2SMYmA==
-X-Google-Smtp-Source: ACHHUZ4URpJIDpp/5Hyt8f81cHXphvwdlkvfA5QqFGIdsWFqfgNSnOktPB7ZNIajYVMUGwB/jaug9Q==
-X-Received: by 2002:ac8:4e96:0:b0:400:8580:101a with SMTP id 22-20020ac84e96000000b004008580101amr6825693qtp.15.1687641831477;
-        Sat, 24 Jun 2023 14:23:51 -0700 (PDT)
-Received: from markl5i.lan ([2600:4040:266e:4d00::387])
-        by smtp.gmail.com with ESMTPSA id x15-20020ac87ecf000000b003fdd34c6babsm1118182qtj.76.2023.06.24.14.23.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jun 2023 14:23:51 -0700 (PDT)
-From:   Mark Levedahl <mlevedahl@gmail.com>
-To:     git@vger.kernel.org
-Cc:     adam@dinwoodie.org, me@yadavpratyush.com,
-        johannes.schindelin@gmx.de, Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v0 4/4] git-gui - use mkshortcut on Cygwin
-Date:   Sat, 24 Jun 2023 17:23:47 -0400
-Message-ID: <20230624212347.179656-5-mlevedahl@gmail.com>
-X-Mailer: git-send-email 2.41.0.99.19
-In-Reply-To: <20230624212347.179656-1-mlevedahl@gmail.com>
-References: <20230624212347.179656-1-mlevedahl@gmail.com>
+        with ESMTP id S229481AbjFXWT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jun 2023 18:19:27 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BCA10D3
+        for <git@vger.kernel.org>; Sat, 24 Jun 2023 15:19:25 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 847F221586;
+        Sat, 24 Jun 2023 18:19:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=0MTbn3sn5k1u5tE+uin8MgKnm0Yi1VPAIMim5yV9734=; b=KL6z
+        slmRdeK/ZhchJ4lXvSJrZ/C4iOPGdUG9wdY8xEcR7WVk6Yd0Uv51PROzp1uSAaTe
+        yrKNei5OtFnAF0cQAJrjQW4zu9Blz56MhkaT1UzAiMxfz+G4w40UwW2UrHflBid5
+        VG2BPF/5kSrSRutqn4EphEJsWkn1w3lPJZGfCOs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 680F421585;
+        Sat, 24 Jun 2023 18:19:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.62.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7D88221580;
+        Sat, 24 Jun 2023 18:19:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        David C Black <david.black@doulos.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug: git add does not process gitignore properly
+References: <CWLP265MB3841D32521E79202079DB7F58C22A@CWLP265MB3841.GBRP265.PROD.OUTLOOK.COM>
+        <CAPig+cQ1qzO5txhZhki4UrvLBThdgo-aknBmEkNSjFhR9WXLRg@mail.gmail.com>
+        <d748b4bb-6be2-4936-04d0-f0edcf228dfb@gmail.com>
+Date:   Sat, 24 Jun 2023 15:19:20 -0700
+Message-ID: <xmqqjzvs7bbr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B1AB822-12DD-11EE-88F1-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prior to 2012, git-gui enabled the "Repository->Create Desktop Icon"
-item on Cygwin, offering to create a shortcut that starts git-gui on a
-particular repository. The original code for this in lib/win32.tcl,
-shared with Git for Windows support, requires Windows pathnames, while
-git-gui must use unix pathnames with the unix/X11 Tcl/Tk since 2012. The
-ability to use this from Cygwin was removed in a previous patch.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Cygwin's default installation provides /bin/mkshortcut for creating
-desktop shortuts, this is compatible with exec under tcl, and understands
-Cygwin's unix pathnames. So, teach git-gui to use mkshortcut on Cygwin,
-leaving lib/win32.tcl as Git for Windows specific support.
+> I think the usual way around this is to use patterns like
+>
+> 	/extern/*
+> 	!/extern/bin/
+> 	!/extern/ABOUT.md
+>
+> see the example on the gitignore man page.
 
-Notes: "CHERE_INVOKING=1" is recognized by Cygwin's /etc/profile and
-prevents a "chdir $HOME", leaving the shell in the working directory
-specified by the shortcut. That directory is written directly by
-mkshortcut eliminating any problems with shell escapes and quoting.
+Thanks for a very good suggestion.
 
-The pre-2012 code includes the full pathname of the git-gui creating the
-shortcut (rather than using the system git-gui), but that git-gui might
-not be compatible with the git found after /etc/profile sets the path,
-and might have a pathname that defies encoding using shell escapes that
-can survive the multiple incompatible interpreters involved in this
-chain. Instead, use "git gui", thus defaulting to the system git and
-avoiding both issues.
+The behaviour may be somewhat counter-intuitive, especially when you
+have "/extern/" followed by "!/extern/blah" in the same file.  The
+original rationale for this was because the behaviour becomes
+consistent between the cases where
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- git-gui.sh       |  4 ++++
- lib/shortcut.tcl | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
+ (1) these two patterns appear in the same top-level .gitignore
+     file, and
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 523770a..5c13521 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2836,6 +2836,10 @@ if {[is_enabled multicommit]} {
- 		.mbar.repository add command \
- 			-label [mc "Create Desktop Icon"] \
- 			-command do_windows_shortcut
-+	} elseif {[is_Cygwin]} {
-+		.mbar.repository add command \
-+			-label [mc "Create Desktop Icon"] \
-+			-command do_cygwin_shortcut
- 	} elseif {[is_MacOSX]} {
- 		.mbar.repository add command \
- 			-label [mc "Create Desktop Icon"] \
-diff --git a/lib/shortcut.tcl b/lib/shortcut.tcl
-index 1d8374b..6c2a99e 100644
---- a/lib/shortcut.tcl
-+++ b/lib/shortcut.tcl
-@@ -26,6 +26,44 @@ proc do_windows_shortcut {} {
- 	}
- }
- 
-+proc do_cygwin_shortcut {} {
-+	global argv0 _gitworktree oguilib
-+
-+	if {[catch {
-+		set desktop [exec cygpath \
-+			--desktop]
-+		}]} {
-+			set desktop .
-+	}
-+	set fn [tk_getSaveFile \
-+		-parent . \
-+		-title [mc "%s (%s): Create Desktop Icon" [appname] [reponame]] \
-+		-initialdir $desktop \
-+		-initialfile "Git [reponame].lnk"]
-+	if {$fn != {}} {
-+		if {[file extension $fn] ne {.lnk}} {
-+			set fn ${fn}.lnk
-+		}
-+		if {[catch {
-+				set repodir [file normalize $_gitworktree]
-+				set shargs {-c \
-+					"CHERE_INVOKING=1 \
-+					source /etc/profile; \
-+					git gui"}
-+				exec /bin/mkshortcut.exe \
-+					-a $shargs \
-+					-d "git-gui on $repodir" \
-+					-i $oguilib/git-gui.ico \
-+					-n $fn \
-+					-s min \
-+					-w $repodir \
-+					/bin/sh.exe
-+			} err]} {
-+			error_popup [strcat [mc "Cannot write shortcut:"] "\n\n$err"]
-+		}
-+	}
-+}
-+
- proc do_macosx_app {} {
- 	global argv0 env
- 
--- 
-2.41.0.99.19
+ (2) "/extern/" is in the top-level .gitignore file and "!/bin/" is
+     in ".gitignore" file in the "extern/" directory
 
+which ought to be the moral equivalents.
+
+There have been at least two attempts to change this, but without
+much success.
+
+ - 57534ee7 (dir.c: don't exclude whole dir prematurely if neg
+   pattern may match, 2015-09-21) tried but it caused breakages
+   reported on the list [*1*, *2*] and got reverted at 8c722360
+   (Revert "dir.c: don't exclude whole dir prematurely if neg
+   pattern may match", 2016-01-08).
+
+ - 5e57f9c3 (Merge branch 'nd/exclusion-regression-fix', 2016-02-24)
+   was a merge of another attempt, which again had to be reverted at
+   5cee3493 (Revert "Merge branch 'nd/exclusion-regression-fix'",
+   2016-03-18).
+
+It is dubious if it is worth making another attempt to change it.
+"Fixing" this and still keeping consistency between the two ways to
+spell the same pair of rules would mean that even "/extern/" in the
+".gitignore" file in a higher level tells us not to bother with the
+"extern" directory, we would have to look for "extern/.gitignore"
+just in case it unignores something, which would probably make it
+unacceptably costly.  It would be quite a backward incompatible
+change, too.
+
+
+[References]
+*1* Git 2.7.0 gitignore behaviour regression:
+https://lore.kernel.org/git/20160107234455.GB265296@vauxhall.crustytoothpaste.net/
+
+*2* Behavior change in 2.7.0: With core.sparseCheckout some files have
+    the skip-worktree bit set after a checkout.:
+https://lore.kernel.org/git/trinity-5caa2985-5cf1-453b-9a9e-bcce057f8615-1452249323061@3capp-gmx-bs51/
