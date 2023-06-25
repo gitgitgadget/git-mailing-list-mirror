@@ -2,137 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95B9BEB64DC
-	for <git@archiver.kernel.org>; Sun, 25 Jun 2023 15:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B807BEB64DC
+	for <git@archiver.kernel.org>; Sun, 25 Jun 2023 17:01:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbjFYPqd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jun 2023 11:46:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44170 "EHLO
+        id S229662AbjFYRBS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jun 2023 13:01:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjFYPqc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jun 2023 11:46:32 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99CD210E
-        for <git@vger.kernel.org>; Sun, 25 Jun 2023 08:46:31 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0BA742716B;
-        Sun, 25 Jun 2023 11:46:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RUG0T1aiPBC+REBjcUysxWtKUs4OXMyqXsxrLs
-        Zhth4=; b=RvpH+P0reW+VmlXLpzJaBgfuyu/cUym/Av1ILyWrjSsEnvlpRUGBI3
-        L8iY2ELKQeysbT0cSjgUjtqsnUfdsosRsx40DzRXMtbJvkNs4MNcHM2LDiU34CrZ
-        dfJxOe0eCY4KP3PHLCw6Qu8qka5vTDn/3esULAQz5hW2o43HSppUU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 024DE2716A;
-        Sun, 25 Jun 2023 11:46:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0870E27169;
-        Sun, 25 Jun 2023 11:46:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mark Levedahl <mlevedahl@gmail.com>
+        with ESMTP id S229471AbjFYRBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Jun 2023 13:01:16 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF8B100
+        for <git@vger.kernel.org>; Sun, 25 Jun 2023 10:01:15 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id 6a1803df08f44-6237faa8677so16700876d6.1
+        for <git@vger.kernel.org>; Sun, 25 Jun 2023 10:01:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687712475; x=1690304475;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7DbUPLWkrCVrgnGQVRKYoW/eaw+J/yf2FBfnAYNsAEE=;
+        b=oR7aJPSaw604UXQxUZw43tP80szbR7ouV3ez1v67y/LFfs6g6f4aQXHLII9RYYlr/v
+         KNWWqfmueJdsiOyFtaqpQO3lA6M5oRhw4YG7QnhocIrS44iH7SbLZMScwW2hZdyV8BB8
+         aEJI8x2uxY3l9Bhh0IYZhpv/82freUwfMpjMr31RkjP7IxeosJX2T7C7DLkc+ugH47LR
+         wVdoOHy1o0UghrF9/dOZKn9Ons2P9fQR43qm2MxVFEDjA79tHplJUV//OJ01vJXi+7R7
+         trlQ/ViUhr8zKJmQ94scfp/8eJEd3H4w1Cv5TGaalSrikRWoPCzVpDd/xK2B1rgIQ452
+         wHmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687712475; x=1690304475;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7DbUPLWkrCVrgnGQVRKYoW/eaw+J/yf2FBfnAYNsAEE=;
+        b=Li7fNcsrTcYQ7pkYdtMaQiivVOngZM4VMTbBtC8ngi3Tybls63opTwT/Wk1rlZIk35
+         oVXKAbr+MQxYAszSNb+NshtavAWaWNOmeeNQ9Us6g7vWSvI5buyOBAT7wIRA6+eAYZ8s
+         nLGCoT7Nl3KQlQYgyAvdKeE0KnYkYvdFHDbnIc9Zy6upjOYBn/EFfChOOHSR1nD63NUY
+         TEf4us0n/8yoTqFG4D7SHtcxTDoj9UxB+MaZ4XAm0EvbV+JY038gRvNl3yFH6s984m0l
+         wheCKaDJrvhpPUPpKthRki7XnCsjWufobtUWVFrD0KY8fFi9qnngtB8mCcxBpP4WB15H
+         DnPA==
+X-Gm-Message-State: AC+VfDwaYMUu/0oA70vyVDDLVsGUm+hpEMEUDoKeCD0o8Lw9O35llUzA
+        taCPv9mUhRVMCtL2TN7kocfALMW2hTWmpQ==
+X-Google-Smtp-Source: ACHHUZ5hidNUbMAesul4Q3e6qM0An834t9CeH+qdPEln0erBNNoiTixvIqZk6R52TJeSbf8jn0ratA==
+X-Received: by 2002:ad4:4ea4:0:b0:62f:ebc4:89b8 with SMTP id ed4-20020ad44ea4000000b0062febc489b8mr27703825qvb.26.1687712474950;
+        Sun, 25 Jun 2023 10:01:14 -0700 (PDT)
+Received: from ?IPV6:2600:4040:266e:4d00::387? ([2600:4040:266e:4d00::387])
+        by smtp.gmail.com with ESMTPSA id a17-20020a0ccdd1000000b005dd8b9345b9sm2231630qvn.81.2023.06.25.10.01.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Jun 2023 10:01:14 -0700 (PDT)
+Message-ID: <b7181a2d-ba97-eae8-6bf4-4fc4b0db64c2@gmail.com>
+Date:   Sun, 25 Jun 2023 13:01:13 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v0 0/4] Remove obsolete Cygwin support from git-gui
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, adam@dinwoodie.org, me@yadavpratyush.com,
         johannes.schindelin@gmx.de
-Subject: Re: [PATCH v0 0/4] Remove obsolete Cygwin support from git-gui
 References: <20230624212347.179656-1-mlevedahl@gmail.com>
-        <xmqq8rc8781p.fsf@gitster.g>
-        <e04e28e2-2308-1db8-9462-5f81aeff1155@gmail.com>
-Date:   Sun, 25 Jun 2023 08:46:26 -0700
-In-Reply-To: <e04e28e2-2308-1db8-9462-5f81aeff1155@gmail.com> (Mark Levedahl's
-        message of "Sun, 25 Jun 2023 07:26:11 -0400")
-Message-ID: <xmqqwmzr5yul.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 72A106BE-136F-11EE-B4EA-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+ <xmqq8rc8781p.fsf@gitster.g> <e04e28e2-2308-1db8-9462-5f81aeff1155@gmail.com>
+ <xmqqwmzr5yul.fsf@gitster.g>
+Content-Language: en-US
+From:   Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <xmqqwmzr5yul.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
 
-> So, the code under the is_Windows and is_Cygwin branches of the
-> if/else trees are now completely independent, and the is_Windows
-> branch is never entered on Cygwin.
+On 6/25/23 11:46, Junio C Hamano wrote:
+> Mark Levedahl <mlevedahl@gmail.com> writes:
+>
+>> So, the code under the is_Windows and is_Cygwin branches of the
+>> if/else trees are now completely independent, and the is_Windows
+>> branch is never entered on Cygwin.
 
-I missed this hunk in your updated get_explorer in [2/4]
+>
+> So, earlier I said [2/4] made sense and obviously good.  But not
+> anymore.  It does a bit too many things and then have later steps
+> compensate for it, which made reviewing the series harder than
+> necessary.  It needs to be cleaned up a bit, I think.
+>
+> Thanks.
+>
 
- proc get_explorer {} {
--	if {[is_Cygwin] || [is_Windows]} {
-+	if {[is_Windows]} {
- 		set explorer "explorer.exe"
- 	} elseif {[is_MacOSX]} {
- 		set explorer "open"
+I had originally organized as you suggest, no problem doing so again. 
+What gave me pause was this paragraph I originally wrote for the cover 
+letter:
 
-and saw only this in [3/4]
 
- proc get_explorer {} {
- 	if {[is_Windows]} {
- 		set explorer "explorer.exe"
-+	} elseif {[is_Cygwin]} {
-+		set explorer "/bin/cygstart.exe --explore"
- 	} elseif {[is_MacOSX]} {
- 		set explorer "open"
- 	} else {
+Patches 1/2 cause git-gui to function as it has for the last decade on
+Cygwin, but with Cygwin being detected. However, the browsing and
+shortcut creation menu items, removed in 2012 then re-added when is_Cygwin
+was fixed, do not work, and shortcut creation will crash git-gui if used.
+These are fixed in patches 3 / 4.
 
-As I missed the earlier change, the latter one alone looked to me
-that for get_explorer to be share with GfW, the only explanation was
-that is_Windows yields true on Cygwin, in which case the new elseif
-did not make sense.
 
-I think the hunk in [2/4] should be removed; it is confusing, it
-does not have anything to do with the theme of [2/4], which is to
-"remove obsolete Cygwin specific code".  And instead [3/4] should
-be updated to do
+So, I'm just checking that the above situation is ok. I agree, this 
+makes the changes easier to follow.
 
-+	if {[is_Cygwin] || [is_Windows]} {
--	if {[is_Windows]} {
-		... do windows thing ...
-+	} elseif {[is_Cygwin]} {
-+		... do Cygwin thing ...
-	} elseif {[is_MacOSX]} {
-		... do macOS thing ...
 
-The earlier explanation in the cover letter says this:
-
-    The existing code for file browsing and creating a desktop icon is
-    shared with Git For Windows support, and uses Windows pathnames. This
-    code does not work on Cygwin, and needs replacement.  These functions
-    have not worked since 2012.
-
-If the change for get_explorer is updated to read like so, then "was
-shared with GfW, now we have one that is for Cygwin" starts making
-sense for the file browsing.
-
-But I still do not understand the issue with desktop icon, though.
-do_windows_shortcut and do_cygwin_shortcut were separate proc before
-this series---while I fully believe that do_cygwin_shortcut did not
-work on modern Cygwin if you say so, and "uses Windows pathnames"
-may be what makes the original implementation not work on modern
-Cygwin, I do not see how the existing code for the desktop icon "is
-shared with GfW".
-
-Ah, this is again due to the suboptimal splitting of the patches.
-
-The original does have do_cygwin_shortcut, but you remove it in step
-[2/4], together with its caller.  The code before your series did
-have its own do_cygwin_shortcut, but after [2/4] it and its caller
-are removed. The code may not have worked before step [2/4], so it
-is probably alright in the end, but it does make step [4/4] very
-confusing.  Since [4/4] does need to add Cygwin specific code,
-perhaps you should exclude the shortcut related change from [2/4]
-and keep it focused on removing Cygwin specific code that will not
-be used in the end (instead of getting fixed to keep it alive).
-
-So, earlier I said [2/4] made sense and obviously good.  But not
-anymore.  It does a bit too many things and then have later steps
-compensate for it, which made reviewing the series harder than
-necessary.  It needs to be cleaned up a bit, I think.
-
-Thanks.
+Mark
 
