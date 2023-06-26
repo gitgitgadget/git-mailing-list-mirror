@@ -2,83 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8B29EB64D7
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41B92EB64D7
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:53:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbjFZQmd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 12:42:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37536 "EHLO
+        id S229799AbjFZQxL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 12:53:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbjFZQmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:42:32 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072C083
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:42:30 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f95c975995so608279e87.0
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:42:30 -0700 (PDT)
+        with ESMTP id S229523AbjFZQxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 12:53:10 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019FC18E
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-763cb17f208so339464185a.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687797749; x=1690389749;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1687798388; x=1690390388;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hp/4ggvsQOUg+Onto98aMZT4Nwg4b4d9RxduEjqjr8s=;
-        b=SMS2oBHJV01ygBMYitd0P9AffiOuQqS4P4Q/C6dX2Jja8Lm4X2xkx5AkoKhQYYhTiD
-         tKujoKzsswomzowOdyRda4ucWcFpqE4EAYYqykcaGAzExenZwFy+ElsVyHlYpco/ISfY
-         xD025UXS+sAMT3qhRYNw/5YnSqMvQVODzMOEV3o+TNlJpHWaxzSiW1+AqMxvzvBgy/Vs
-         C2hAAOYtLXtbk9UrFkhbcPRH2wunGNaoeoRZWD678WceeUuIQQq8Vlgf7Ch0rVeQKHoA
-         JFM9F2H+Nf29/1HZyk95uI+ZUWiZrrIt2RASs8giXhbyLjEuynqSRZRKYLIuyQHyftss
-         v8KQ==
+        bh=c1n404nJ89+I1vaFYRyRx2046owf9mRYSjau3u9bc+A=;
+        b=o9020nd5g03l0qQxEiJWwDZDLYN9qq512afpp2tVpLBB6sST6pnwFmczg/R/mPR3p1
+         0rgTjaDbITl1WNv5+qkBvoANWZ6bLisHJKp6nPrgfPoTf7L6HhxNEuvEZwDgZNK2OX2T
+         ctz5Mk0Iec+gAjF+JakxAVKeQ+7LDqiLnzXfdP0ZRCXZ1Q3FFQkXq/W9MNVrYHYf4lMW
+         SRQZS3enfnCaJ4yNPFviRLZ4oSlYur7n3KBJ5zOU760En7/E+s5fSRrBqFQQ+44kEDHj
+         d+sdHOVRz9q46/IoB0yTCGdbyJkksERGt59a+kesXH9b/+h21fW/MqeGPUvLLM78+8HC
+         SjnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687797749; x=1690389749;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1687798388; x=1690390388;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hp/4ggvsQOUg+Onto98aMZT4Nwg4b4d9RxduEjqjr8s=;
-        b=PO5qCWNloitzgOt3NapK6jM+3ZQvlqrrrGsIutVhapvUmL4DjTO3LbJUM4g8Di7yck
-         lVHLH7gO8zwBzqQ1AZnH2bvubEBzy6PfgyLzIKW8qsk6H8ZU/3sZl9VA5K0ueR0gGjSn
-         hzDKXOi0d0LidVJj9iXfKAxQoH3xVf5BUrNSQNs2wmJad8+NtWstRRM62+lVKAPp1Xra
-         rQAnmPok/DS5fy8w5fwPjN5M/l+VqiSW41SvjQNDuwOZw7gzjdsvikx5xeBUp3tqBa3M
-         OXVbp55i1zO5Pb1CnEATMDpTtLWkLA4/WCqBte3OVG7iCGi4QB4b4PqxJJTOIUFglHaD
-         gwmg==
-X-Gm-Message-State: AC+VfDw5RNQzSXnkTytSCtPpBY5g1ghJ71H8/j8rETWgXmn3wLhafVBe
-        /QuUpx7z/vSS3iECid6I2crU9nbWzcKSQm7IWK8=
-X-Google-Smtp-Source: ACHHUZ5aqJuJGhWJ051NEPk1clGHO54pThev6yz5bfG49q80k4eG26gjyaR+QHA8tKAOkDCTzg2d0+JmoWmzV1/wjTc=
-X-Received: by 2002:a19:7410:0:b0:4f8:6ab4:aac6 with SMTP id
- v16-20020a197410000000b004f86ab4aac6mr11459974lfe.1.1687797748727; Mon, 26
- Jun 2023 09:42:28 -0700 (PDT)
+        bh=c1n404nJ89+I1vaFYRyRx2046owf9mRYSjau3u9bc+A=;
+        b=CNtAn79yynTNSoLr7E23kDlb4ODO6lRdHkT/9F2ljzgP+WgUcJDM/xhT8gSIj6wfMw
+         tLHllYxp7S9T2edAdUz3lpAF6MFUYDbg933uKtBC/dS+gGqgfcGIohjdNpvPAYI+4uhy
+         ywu6n6HDEZqIlhqclY1SWF10T5I9c9ThxwAZOYFSeV/qkpcls6di118qoA2NBs05dwF5
+         r3fAlOT8bbRtbRsC4ANxvA8fptzFSkFPEXirD59ePIY+aqRFlNstuUEAUEfAsU5jn3hy
+         MAnYGSI5Q7pVup9p8GK2sD/xmiMusrDFaqsD+4xHFlEJjRMrN9dhmegsy98Vuwjc0Rwb
+         0QBA==
+X-Gm-Message-State: AC+VfDz3ddBR5qHhZZSKd7oQyIU76/+G6UVPxTgBmyAGD1afQZjXhkne
+        4/1RkiU9yyfTXax41kgCoAo=
+X-Google-Smtp-Source: ACHHUZ4S/eqS/Rsn3/rKOMhFOQVnKXddL4RaNWhZB6o25855SvUQmgBd64S7zKeFrcPwf3HqgOfLJg==
+X-Received: by 2002:a05:620a:298c:b0:765:5ed4:5170 with SMTP id r12-20020a05620a298c00b007655ed45170mr9305206qkp.39.1687798388094;
+        Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
+Received: from markl5i.lan ([2600:4040:266e:4d00::387])
+        by smtp.gmail.com with ESMTPSA id p5-20020a05620a112500b00765acdc4f56sm922819qkk.60.2023.06.26.09.53.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jun 2023 09:53:07 -0700 (PDT)
+From:   Mark Levedahl <mlevedahl@gmail.com>
+To:     mdl123@verizon.net, git@vger.kernel.org
+Cc:     adam@dinwoodie.org, me@yadavpratyush.com,
+        johannes.schindelin@gmx.de, gitster@pobox.com,
+        sunshine@sunshineco.com, Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH v1 1/4] git gui Makefile - remove Cygwin modifications
+Date:   Mon, 26 Jun 2023 12:53:02 -0400
+Message-ID: <20230626165305.37488-2-mlevedahl@gmail.com>
+X-Mailer: git-send-email 2.41.0.99.19
+In-Reply-To: <20230626165305.37488-1-mlevedahl@gmail.com>
+References: <20230624212347.179656-1-mlevedahl@gmail.com>
+ <20230626165305.37488-1-mlevedahl@gmail.com>
 MIME-Version: 1.0
-References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
- <20230624011234.GA95358@coredump.intra.peff.net> <CAHGBnuPO63Hi8mfA+MkAGES-gs0eNCDPG2FcPZT=YsnVzKd30A@mail.gmail.com>
- <xmqqo7l25ibw.fsf@gitster.g>
-In-Reply-To: <xmqqo7l25ibw.fsf@gitster.g>
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-Date:   Mon, 26 Jun 2023 18:42:17 +0200
-Message-ID: <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
-Subject: Re: Clean up stale .gitignore and .gitattribute patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 26, 2023 at 5:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+git-gui's Makefile hardcodes the absolute Windows path of git-gui's libraries
+into git-gui, destroying the ability to package git-gui on one machine and
+distribute to others. The intent is to do this only if a non-Cygwin Tcl/Tk is
+installed, but the test for this is wrong with the unix/X11 Tcl/Tk shipped
+since 2012. Also, Cygwin does not support a non-Cygwin Tcl/Tk.
 
-> > PS: As a future idea, it might be good if "git mv" gives a hint about
-> > updating .gitattributes if files matching .gitattributes pattern are
-> > moved.
->
-> Interesting.  "git mv hello.jpg hello.jpeg" would suggest updating
-> a "*.jpg <list of attribute definitions>" line in the .gitattributes
-> to begin with "*.jpeg"?
+The Cygwin git maintainer disables this code, so this code is definitely
+not in use in the Cygwin distribution.
 
-Yes, right. Or as a simpler variant to start with (as patterns might
-match files in different directories, and not all of the matching
-files might be moved), just say that a specific .gitattributes line
-needs updating (or needs to be duplicated / generalized in case files
-in both the old and new location match).
+The simplest fix is to just delete the Cygwin specific code,
+allowing the Makefile to work out of the box on Cygwin. Do so.
 
---=20
-Sebastian Schuberth
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ Makefile | 21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index a0d5a4b..3f80435 100644
+--- a/Makefile
++++ b/Makefile
+@@ -138,25 +138,10 @@ GITGUI_SCRIPT   := $$0
+ GITGUI_RELATIVE :=
+ GITGUI_MACOSXAPP :=
+ 
+-ifeq ($(uname_O),Cygwin)
+-	GITGUI_SCRIPT := `cygpath --windows --absolute "$(GITGUI_SCRIPT)"`
+-
+-	# Is this a Cygwin Tcl/Tk binary?  If so it knows how to do
+-	# POSIX path translation just like cygpath does and we must
+-	# keep libdir in POSIX format so Cygwin packages of git-gui
+-	# work no matter where the user installs them.
+-	#
+-	ifeq ($(shell echo 'puts [file normalize /]' | '$(TCL_PATH_SQ)'),$(shell cygpath --mixed --absolute /))
+-		gg_libdir_sed_in := $(gg_libdir)
+-	else
+-		gg_libdir_sed_in := $(shell cygpath --windows --absolute "$(gg_libdir)")
+-	endif
+-else
+-	ifeq ($(exedir),$(gg_libdir))
+-		GITGUI_RELATIVE := 1
+-	endif
+-	gg_libdir_sed_in := $(gg_libdir)
++ifeq ($(exedir),$(gg_libdir))
++	GITGUI_RELATIVE := 1
+ endif
++gg_libdir_sed_in := $(gg_libdir)
+ ifeq ($(uname_S),Darwin)
+ 	ifeq ($(shell test -d $(TKFRAMEWORK) && echo y),y)
+ 		GITGUI_MACOSXAPP := YesPlease
+-- 
+2.41.0.99.19
+
