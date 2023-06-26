@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F0F3EB64D9
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 18:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6391EB64DC
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 18:11:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbjFZSLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 14:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56150 "EHLO
+        id S231452AbjFZSLu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 14:11:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231192AbjFZSLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 14:11:35 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F929F
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 11:11:33 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-313f59cd193so943017f8f.2
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 11:11:33 -0700 (PDT)
+        with ESMTP id S231271AbjFZSLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 14:11:36 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E4E106
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 11:11:35 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fa99742bd1so10887435e9.3
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 11:11:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687803092; x=1690395092;
+        d=gmail.com; s=20221208; t=1687803093; x=1690395093;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HoUNGFp0HiayMWP2wM+yeSmJO3gqaXxhgJPNmDBa7hU=;
-        b=OJ23KNPb+M+UIOurmkHlPPIn43FlyWmH5ygU5l24muJATt7DEI0smlHEvrrykQca9N
-         0eegnuQKMeq3qXjXFYDTrjqprYH72/D162MtQ8uab0vZCsA8nlh01+Zfz32Nfe52i5In
-         1kmNJCmU8TKPTL51kL6Cy5t1EseSGS65lfxJEhADtcvWv29TmMu2/npdpoklBM8wBSUO
-         pn8BKplH7tii8+y5NbIc8gMCDkFWsCPbMF05AD6NRfDvZwqeMLzPMNRU0dmYscWMAb6I
-         sjoOnm7h6OkSOFCUybVYxVk31T6ouYKQV/+Rw/FAVc2AoA7G/d0C6kyofxqRsDflm65I
-         wmPA==
+        bh=H/foe2oVRIyiL/lIaRDpUiJaoYdVMLKS0FrCK0uujDg=;
+        b=c0OpnTWfS1rU/2tV+z44NbLIaLX6452kCn9uRCZ/gzvfAHuCw5ZIv/wTjZ5X+buCX/
+         UPYWJecIwnz8zdlK9yBHxeZAibXOsB5nO519CYAtfUt6t6GYyT8pfqvplHis1veJiMfK
+         /NHoDCYayrgaBs4sLE0rzSeec7fI7UG7xUEleWdvCUnFVx3/uNWyWKGFi40pLbJrO+5L
+         H9hs0q5iCh0BaW8zD81pfG5cxKTJrxH/RgxxfBUHKc3QeQ6Ofa7sKGLHj52pE9+8PGlp
+         B1kjjPsi5U8ltMhA4nPVlHABorY+AsGixuzNaAltZ+mjGB9DqC9c184/Imftp6Li8UCB
+         7Ulw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687803092; x=1690395092;
+        d=1e100.net; s=20221208; t=1687803093; x=1690395093;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HoUNGFp0HiayMWP2wM+yeSmJO3gqaXxhgJPNmDBa7hU=;
-        b=d5qoFwwGH8JYyfUAlv+fgXPqn2VomVmUjCQ1bWikxs6Z/Zf8aWU31vJsbDP59rYCZ1
-         Ez7N7//y0XPpKW0EkdnsqMrBtI4vngzEEQ4PQnZus+RHzywe6I+76T/Vu5qGYuS73b0i
-         FrBBRMO35t9q3ClSc6t74wgOjjmEHxDt9BHa3s59aNNoRodtZtK2RB8F8mP9ZBOivqDh
-         4BJ8iXLLEzsd1oALfQ6AVyxd5quYNdz447Nxqd482D4kPDgxtJdtDZXg0zXHGVmc98Am
-         CpxXSvsvAJ/gN1CIFLPcEGMpa8l6/nxkLisKmNjNH4jnsHeIzUVUzx6tYBoMmgfL8uf/
-         0lOw==
-X-Gm-Message-State: AC+VfDy8spzRgMEFzFarJ9weUvWlCrEY7gsQ/NWszLWl0TzbSb/1US/Z
-        QSK4Siv4QHDi2h8jj4D2s5bTB0Sjv7s=
-X-Google-Smtp-Source: ACHHUZ6CHhCQl+SOyoH3INklAX8VEbXyRd+b4iK1nuVhI27/mzlEG9E4rMJLLzZWue8tSxAI3FVd9A==
-X-Received: by 2002:adf:f607:0:b0:30e:5fe4:9cc1 with SMTP id t7-20020adff607000000b0030e5fe49cc1mr25419386wrp.29.1687803091901;
-        Mon, 26 Jun 2023 11:11:31 -0700 (PDT)
+        bh=H/foe2oVRIyiL/lIaRDpUiJaoYdVMLKS0FrCK0uujDg=;
+        b=PGoc81HjNjePF186AnUbwJR2mzDK/z8oJ7GHUerkEAorjDQfYjXs2kRNiLELRovu6Y
+         oYJdoHyDkigaZY0zLpxWhElc8IH1vWHL7ltFFzzmQjubAJJQtGcEyic9uVqNMfcEST6R
+         G8Mg9NNHdYjtI9axAzPk7gt7Uvst8VhOpdZCq6D11UxjmAgde5+HiJK6WbQmudaapy2I
+         sQS0sVV/KoVYenGZMeqYZpwacOWm/I6urBdkKwUVnpNirjlHDplljTqD/1UElsNMGZEl
+         nucyyP/MiyIP/GNYgU2sI6n/2Wy15gNn2hxrsv2WMB6DbeCKdasqXaMECMgJzE/bLMh4
+         YZyw==
+X-Gm-Message-State: AC+VfDxx0ptbIwaDxyHJXiM/ORvCzE4IQvktuTL4eQiYNgSjajj/Pg4K
+        iUkjE1fHzt/WsfIiTHEeiTCzwBByChI=
+X-Google-Smtp-Source: ACHHUZ7w1c0xErOkrTfr86kAGyNKOiYw5MeT1nYG3KkdfCzSJys4yppLYYKhGYTGQZhUUAOXB5KYXA==
+X-Received: by 2002:a7b:c409:0:b0:3fa:934c:8350 with SMTP id k9-20020a7bc409000000b003fa934c8350mr3017159wmi.27.1687803093134;
+        Mon, 26 Jun 2023 11:11:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v1-20020adfe281000000b00311299df211sm8074780wri.77.2023.06.26.11.11.31
+        by smtp.gmail.com with ESMTPSA id z10-20020a7bc7ca000000b003f8f8fc3c32sm8436512wmk.31.2023.06.26.11.11.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 11:11:31 -0700 (PDT)
-Message-Id: <39b2e291f8669e1d77725619d6b3c2b34b2acecc.1687803085.git.gitgitgadget@gmail.com>
+        Mon, 26 Jun 2023 11:11:32 -0700 (PDT)
+Message-Id: <897bdc759b5a59ff65cf2d555f6007671be22f64.1687803085.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1497.v4.git.git.1687803083.gitgitgadget@gmail.com>
 References: <pull.1497.v3.git.git.1687290231.gitgitgadget@gmail.com>
         <pull.1497.v4.git.git.1687803083.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Jun 2023 18:11:15 +0000
-Subject: [PATCH v4 04/12] config.c: pass ctx in configsets
+Date:   Mon, 26 Jun 2023 18:11:17 +0000
+Subject: [PATCH v4 06/12] builtin/config.c: test misuse of format_config()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,204 +73,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-Pass config_context to config callbacks in configset_iter(), trivially
-setting the .kvi member to the cached key_value_info. Then, in config
-callbacks that are only used with configsets, use the .kvi member to
-replace calls to current_config_*(), and delete current_config_line()
-because it has no remaining callers.
+current_config_*() functions aren't meant to be called outside of
+config callbacks because they read state that is only set when iterating
+through config. However, several sites in builtin/config.c are
+indirectly calling these functions outside of config callbacks thanks to
+the format_config() helper. Show the current, bad behavior via tests
+so that the fixes in a subsequent commit will be clearer.
 
-This leaves builtin/config.c and config.c as the only remaining users of
-current_config_*().
+The misbehaving cases are:
+
+* "git config --get-urlmatch --show-scope" results in an "unknown"
+   scope, where it arguably should show the config file's scope. It's
+   clear that this wasn't intended, though: we knew that
+   "--get-urlmatch" couldn't show config source metadata, which is why
+   "--show-origin" was marked incompatible with "--get-urlmatch" when
+   it was introduced [1]. It was most likely a mistake that we allowed
+   "--show-scope" to sneak through.
+
+* Similarly, "git config --default" doesn't set config source metadata ,
+  so "--show-scope" also results in "unknown", and "--show-origin"
+  results in a BUG().
+
+[1] https://lore.kernel.org/git/20160205112001.GA13397@sigill.intra.peff.net/
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/remote.c       | 10 ++++++----
- config.c               | 35 ++++++++++++++++-------------------
- config.h               |  2 +-
- remote.c               |  7 ++++---
- t/helper/test-config.c | 11 ++++++-----
- 5 files changed, 33 insertions(+), 32 deletions(-)
+ t/t1300-config.sh | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 87de81105e2..d47f9ee21cf 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -646,17 +646,19 @@ struct push_default_info
- };
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 86bfbc2b364..fa6a8df2521 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1668,6 +1668,21 @@ test_expect_success 'urlmatch' '
+ 	test_cmp expect actual
+ '
  
- static int config_read_push_default(const char *key, const char *value,
--	const struct config_context *ctx UNUSED, void *cb)
-+	const struct config_context *ctx, void *cb)
- {
-+	const struct key_value_info *kvi = ctx->kvi;
++test_expect_success 'urlmatch with --show-scope' '
++	cat >.git/config <<-\EOF &&
++	[http "https://weak.example.com"]
++		sslVerify = false
++		cookieFile = /tmp/cookie.txt
++	EOF
 +
- 	struct push_default_info* info = cb;
- 	if (strcmp(key, "remote.pushdefault") ||
- 	    !value || strcmp(value, info->old_name))
- 		return 0;
- 
--	info->scope = current_config_scope();
-+	info->scope = kvi->scope;
- 	strbuf_reset(&info->origin);
--	strbuf_addstr(&info->origin, current_config_name());
--	info->linenr = current_config_line();
-+	strbuf_addstr(&info->origin, config_origin_type_name(kvi->origin_type));
-+	info->linenr = kvi->linenr;
- 
- 	return 0;
- }
-diff --git a/config.c b/config.c
-index 850e432e301..662d406ac1e 100644
---- a/config.c
-+++ b/config.c
-@@ -2317,6 +2317,7 @@ static void configset_iter(struct config_reader *reader, struct config_set *set,
- 	struct string_list *values;
- 	struct config_set_element *entry;
- 	struct configset_list *list = &set->list;
-+	struct config_context ctx = CONFIG_CONTEXT_INIT;
- 
- 	for (i = 0; i < list->nr; i++) {
- 		entry = list->items[i].e;
-@@ -2324,12 +2325,11 @@ static void configset_iter(struct config_reader *reader, struct config_set *set,
- 		values = &entry->value_list;
- 
- 		config_reader_set_kvi(reader, values->items[value_index].util);
--
--		if (fn(entry->key, values->items[value_index].string, NULL, data) < 0)
-+		ctx.kvi = values->items[value_index].util;
-+		if (fn(entry->key, values->items[value_index].string, &ctx, data) < 0)
- 			git_die_config_linenr(entry->key,
--					      reader->config_kvi->filename,
--					      reader->config_kvi->linenr);
--
-+					      ctx.kvi->filename,
-+					      ctx.kvi->linenr);
- 		config_reader_set_kvi(reader, NULL);
- 	}
- }
-@@ -3984,13 +3984,8 @@ static int reader_origin_type(struct config_reader *reader,
- 	return 0;
- }
- 
--const char *current_config_origin_type(void)
-+const char *config_origin_type_name(enum config_origin_type type)
- {
--	enum config_origin_type type = CONFIG_ORIGIN_UNKNOWN;
--
--	if (reader_origin_type(&the_reader, &type))
--		BUG("current_config_origin_type called outside config callback");
--
- 	switch (type) {
- 	case CONFIG_ORIGIN_BLOB:
- 		return "blob";
-@@ -4007,6 +4002,16 @@ const char *current_config_origin_type(void)
- 	}
- }
- 
-+const char *current_config_origin_type(void)
-+{
-+	enum config_origin_type type = CONFIG_ORIGIN_UNKNOWN;
++	cat >expect <<-EOF &&
++	unknown	http.cookiefile /tmp/cookie.txt
++	unknown	http.sslverify false
++	EOF
++	git config --get-urlmatch --show-scope HTTP https://weak.example.com >actual &&
++	test_cmp expect actual
++'
 +
-+	if (reader_origin_type(&the_reader, &type))
-+		BUG("current_config_origin_type called outside config callback");
+ test_expect_success 'urlmatch favors more specific URLs' '
+ 	cat >.git/config <<-\EOF &&
+ 	[http "https://example.com/"]
+@@ -2055,6 +2070,10 @@ test_expect_success '--show-origin blob ref' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success '--show-origin with --default' '
++	test_must_fail git config --show-origin --default foo some.key
++'
 +
-+	return config_origin_type_name(type);
-+}
+ test_expect_success '--show-scope with --list' '
+ 	cat >expect <<-EOF &&
+ 	global	user.global=true
+@@ -2123,6 +2142,12 @@ test_expect_success '--show-scope with --show-origin' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success '--show-scope with --default' '
++	git config --show-scope --default foo some.key >actual &&
++	echo "unknown	foo" >expect &&
++	test_cmp expect actual
++'
 +
- const char *config_scope_name(enum config_scope scope)
- {
- 	switch (scope) {
-@@ -4054,14 +4059,6 @@ enum config_scope current_config_scope(void)
- 		return the_reader.parsing_scope;
- }
- 
--int current_config_line(void)
--{
--	if (the_reader.config_kvi)
--		return the_reader.config_kvi->linenr;
--	else
--		return the_reader.source->linenr;
--}
--
- int lookup_config(const char **mapping, int nr_mapping, const char *var)
- {
- 	int i;
-diff --git a/config.h b/config.h
-index cd30125a8a4..ddf147bb2d1 100644
---- a/config.h
-+++ b/config.h
-@@ -387,7 +387,7 @@ int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
- enum config_scope current_config_scope(void);
- const char *current_config_origin_type(void);
- const char *current_config_name(void);
--int current_config_line(void);
-+const char *config_origin_type_name(enum config_origin_type type);
- 
- /*
-  * Match and parse a config key of the form:
-diff --git a/remote.c b/remote.c
-index 241999c2842..1dab860141b 100644
---- a/remote.c
-+++ b/remote.c
-@@ -350,7 +350,7 @@ static void read_branches_file(struct remote_state *remote_state,
- }
- 
- static int handle_config(const char *key, const char *value,
--			 const struct config_context *ctx UNUSED, void *cb)
-+			 const struct config_context *ctx, void *cb)
- {
- 	const char *name;
- 	size_t namelen;
-@@ -358,6 +358,7 @@ static int handle_config(const char *key, const char *value,
- 	struct remote *remote;
- 	struct branch *branch;
- 	struct remote_state *remote_state = cb;
-+	const struct key_value_info *kvi = ctx->kvi;
- 
- 	if (parse_config_key(key, "branch", &name, &namelen, &subkey) >= 0) {
- 		/* There is no subsection. */
-@@ -415,8 +416,8 @@ static int handle_config(const char *key, const char *value,
- 	}
- 	remote = make_remote(remote_state, name, namelen);
- 	remote->origin = REMOTE_CONFIG;
--	if (current_config_scope() == CONFIG_SCOPE_LOCAL ||
--	    current_config_scope() == CONFIG_SCOPE_WORKTREE)
-+	if (kvi->scope == CONFIG_SCOPE_LOCAL ||
-+	    kvi->scope == CONFIG_SCOPE_WORKTREE)
- 		remote->configured_in_repo = 1;
- 	if (!strcmp(subkey, "mirror"))
- 		remote->mirror = git_config_bool(key, value);
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 85ad815358e..3f4c3678318 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -43,9 +43,10 @@
-  */
- 
- static int iterate_cb(const char *var, const char *value,
--		      const struct config_context *ctx UNUSED,
-+		      const struct config_context *ctx,
- 		      void *data UNUSED)
- {
-+	const struct key_value_info *kvi = ctx->kvi;
- 	static int nr;
- 
- 	if (nr++)
-@@ -53,10 +54,10 @@ static int iterate_cb(const char *var, const char *value,
- 
- 	printf("key=%s\n", var);
- 	printf("value=%s\n", value ? value : "(null)");
--	printf("origin=%s\n", current_config_origin_type());
--	printf("name=%s\n", current_config_name());
--	printf("lno=%d\n", current_config_line());
--	printf("scope=%s\n", config_scope_name(current_config_scope()));
-+	printf("origin=%s\n", config_origin_type_name(kvi->origin_type));
-+	printf("name=%s\n", kvi->filename ? kvi->filename : "");
-+	printf("lno=%d\n", kvi->linenr);
-+	printf("scope=%s\n", config_scope_name(kvi->scope));
- 
- 	return 0;
- }
+ test_expect_success 'override global and system config' '
+ 	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
+ 	cat >"$HOME"/.gitconfig <<-EOF &&
 -- 
 gitgitgadget
 
