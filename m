@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C3CCEB64DC
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB2DEB64D7
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230385AbjFZQ0O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 12:26:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55856 "EHLO
+        id S230493AbjFZQ0P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 12:26:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232169AbjFZQZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:25:12 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5227810A
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:10 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fa99742af9so9816335e9.2
+        with ESMTP id S232174AbjFZQZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 12:25:13 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180361707
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:11 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3fa8692a006so26957355e9.3
         for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687796708; x=1690388708;
+        d=gmail.com; s=20221208; t=1687796709; x=1690388709;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dKu0gew+L0cr2subSDlfRN9FFp2QTYIXuB6vWqdWXfc=;
-        b=RVFuNABophH+G7Oey1iAseGGbBmhIxT2YSV9a+IveVbQlJd5IHX/bcbn0+SCC4VSp8
-         nimoTqXCSiWtJLh1lIcMYJkkZKu0DwmWOJqKqsCK6wVqBTFW2yPrqe4muf20kl9ts4dh
-         dkFgj6T5BeVM4UHHJZL7EuoF9Q1jWGmFwGVPKRJgfpY0FSasGsZxQLe8lDCcogv9G+lx
-         GTi+JJtpJ76z4nU4DSLbEfvoCGdtyU4bb+bEVl/1n3VSiSD03T8KtdGN8sVZfH4XH17n
-         lL9ixYdaXMX9xjmHMDvGompBzFdUDAdAIXpKIY62eSxTrHih0qphhkwTftKNordDVpzk
-         KtlQ==
+        bh=c24uSQ9nKgDHUqXbXwvgV+/kOTkn9VdgClatDZCr/fs=;
+        b=GJw0309GGW+TWHYQ6cLbkE8RS29X1rJjS2d50RJkNUukbQp4Jprvj5orvuEq3g+tue
+         d8uHFhUsH4Bd/LgfFscAvw9t4J2XKZPhXBiLPvELEYSkHnkk5Xnwg2eeBE/vPI1RQoqb
+         l9WBMJUSZ8tD7+sxujJcYU0KuvMWXD4igd4sBvJEm4btVblEqS8AWg/OTvmx+HYd2r4q
+         lvg5eWiwsbLqxcq4Jx+W7sY4cNiENR690gHszJ0VmX8XMTn0XsQikDSxQpvGT+/pbnkf
+         UFjfFTtNyeXgHhJaeit4V+PW5PFQSl78XsKDQLLxOFSBGqDWBhmdwQssPMgHyJLo6pxy
+         MYWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687796708; x=1690388708;
+        d=1e100.net; s=20221208; t=1687796709; x=1690388709;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dKu0gew+L0cr2subSDlfRN9FFp2QTYIXuB6vWqdWXfc=;
-        b=Gb/oT2RtKoC8/gMSbRW+PZIGkbp7a6D1/p9wykxU/f7g4TcPxQcblcDLtRKXICv9Dt
-         8rsBb/kUpBK9SV3LltaXeyqJUaiHv2hCC7tYxmHyShFxCyvNxNSUFqeXiojyuGEhlC79
-         qYOQaD4Lk/KSntO+h1QlE6k9cJSyrcY7/wFyaQlUZL31VckWgcN/iLBRO6uK6N9xuRL8
-         BV2/0e0fGPaBMbIgADCV9nf4kQwAlbLPvOnxEjawE/m/lwoWCdgBk9bvdXhnEx1GE3su
-         WBlnOuDgWRglGrwiDuxm8MSuRqGgBm5gIcmdw2spByAXNSVzfHDKEsdH4dsuMUg1/dZ2
-         NQdQ==
-X-Gm-Message-State: AC+VfDzFz1B4dxGfp9XJ7jHYGt/ePdxqv7DSgB9e50zg2974/nUnTMd/
-        QKL09hSk2Yrq38MgpGo72aAW3CCYu0o=
-X-Google-Smtp-Source: ACHHUZ6iHjQfoI6bmUN7jo6BjY8jYIHAZZsy0E+iuARKSSSw4t3n5gZpqnBoAWGWCzs7seySeYVQJg==
-X-Received: by 2002:a5d:4148:0:b0:313:f54a:a848 with SMTP id c8-20020a5d4148000000b00313f54aa848mr1475125wrq.61.1687796708539;
-        Mon, 26 Jun 2023 09:25:08 -0700 (PDT)
+        bh=c24uSQ9nKgDHUqXbXwvgV+/kOTkn9VdgClatDZCr/fs=;
+        b=Avy4MuiznuDw2vbKl6hVruNfQJxrd3r86ZW4n4SKcv8gHXV6vc5FuBB79Jq8osLkpO
+         ai+alUBwLSO0yRUt7hhdGKwjxRgcn4HgEcUA4v/T9V1qGNTwtHyaThsOxsXAyGNyOqHc
+         gTfSqNj5icd9E3KuXCME0m/QZMrqC/5lj2SxL3TFhTg0Wq6Jb8FibNkYtn12hDpzqbBG
+         8Ubm6y5zXDnqu/VYFsZuemmzDF1vPzmzLtWQiYTlgIcEUc+pB+LaAX0AB24cviH5HSYO
+         Bh1R/p8oRT+oR97RgcN/7gg2QoNJ4P3+ATzIJlylLi+/AQqWwHSYdPsG3+qYhY4pfsxk
+         a9lw==
+X-Gm-Message-State: AC+VfDw550upHwnbd3XL53qgO5bDVXo+vF3jkXgO/jGK+/h8rdCgswni
+        x8+/xXj5v0pedlJ786z33z5zDaVDJWc=
+X-Google-Smtp-Source: ACHHUZ7gsAe51THuE19LZKVlRL0wj7ZSugG/BQNROjItWx2WT6yRRDApfQA4KpNVnd8xMMyFIXqpYg==
+X-Received: by 2002:a1c:ed0b:0:b0:3f7:948f:ad1c with SMTP id l11-20020a1ced0b000000b003f7948fad1cmr23990771wmh.6.1687796709223;
+        Mon, 26 Jun 2023 09:25:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11-20020adfdd8b000000b00313ecd3714csm4932428wrl.19.2023.06.26.09.25.08
+        by smtp.gmail.com with ESMTPSA id k26-20020a7bc41a000000b003f080b2f9f4sm11102999wmi.27.2023.06.26.09.25.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 26 Jun 2023 09:25:08 -0700 (PDT)
-Message-Id: <eb9a6a069147b5664a636095f398e3aac2e90dbf.1687796689.git.gitgitgadget@gmail.com>
+Message-Id: <47e81c2add6bad8ca5adf40fb13935bb1e5fd533.1687796689.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
 References: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
         <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Jun 2023 16:24:47 +0000
-Subject: [PATCH v3 23/24] completion: complete --remerge-diff
+Date:   Mon, 26 Jun 2023 16:24:48 +0000
+Subject: [PATCH v3 24/24] diff.c: mention completion above add_diff_options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,28 +70,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
---remerge-diff only makes sense for 'git log' and 'git show', so add it
-to __git_log_show_options which is referenced in the completion for
-these two commands.
+Add a comment on top of add_diff_options, where common diff options are
+listed, mentioning __git_diff_common_options in the completion script,
+in the hope that contributors update it when they add new diff flags.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ diff.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8688f7c433c..11f2edf47be 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2042,7 +2042,7 @@ __git_log_shortlog_options="
- "
- # Options accepted by log and show
- __git_log_show_options="
--	--diff-merges --diff-merges= --no-diff-merges
-+	--diff-merges --diff-merges= --no-diff-merges --remerge-diff
- "
+diff --git a/diff.c b/diff.c
+index 3c88c37908d..64c93c0f0e2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5491,6 +5491,10 @@ static int diff_opt_rotate_to(const struct option *opt, const char *arg, int uns
+ 	return 0;
+ }
  
- __git_diff_merges_opts="off none on first-parent 1 separate m combined c dense-combined cc remerge r"
++/*
++ * Consider adding new flags to __git_diff_common_options
++ * in contrib/completion/git-completion.bash
++ */
+ struct option *add_diff_options(const struct option *opts,
+ 				struct diff_options *options)
+ {
 -- 
 gitgitgadget
-
