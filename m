@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABBC4EB64DD
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C4C0EB64D7
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:25:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjFZQZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 12:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55542 "EHLO
+        id S230325AbjFZQZb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 12:25:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232118AbjFZQZH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232125AbjFZQZH (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Jun 2023 12:25:07 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFA08173E
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:02 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fa94ea1caaso11748535e9.1
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:02 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF5110FA
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:04 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3113da5260dso3017260f8f.2
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687796701; x=1690388701;
+        d=gmail.com; s=20221208; t=1687796702; x=1690388702;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l05uboNt/LUqosn2wfX53a4vdlSfAxNCZIFmlfGziwE=;
-        b=sM/Z7jN6wkznc+YHF0F9A/A4JGdclC8xaWVIGTqlNRqaiTS+oAyEplwAmfHYD9zz3j
-         tVdVc+9Qtx7tEu20UmPBTd0bq+X26N7fN7jmW35wDU2Qom6nYFu9eSbBdJigOExRNy/g
-         VzaK4tg4FBiQZIaY8k534Tg3aFr5S2qdbzSyHQTpDjTbycmXEyaKB4VaEo6xGTRqhSWI
-         2+ooUdTAZNkgAryHxddoaWKAgDdQfILIxcioR/825UfDaFfmu3v1uu6zcA8LHGuxA6y2
-         gMNKTJ9Mk1guUMKs0up6xJYBNvhwKaUQmzbrZHNRpfyuCt+ZzftU60Bj8OaMTqCLtJ31
-         8l7g==
+        bh=Vt8z2AJxzEwQlYNmo0GCQyhARur9AC9HnVyQAJFP+Ho=;
+        b=JRFhAZOdfMrlI9TUErATDbSPYL/rwg77i+hhNRyD2tHmyme/+LgrchjvXAH8hwm8n1
+         1q6mJBz4AdX+Hf0hsPcpAAaV3ty+JhbqgvYmBV6FYYiFsAYIp4UV00rz3BBqmznufIgM
+         DzPOhN2NaJUppxc0slSp94d+iSpec8Et7/j+tCBatwBARWCvGdzIuQ27PxoHaY9OojYj
+         uOmdZk02Fp6KIK5oBmVobI6YBm+4rRFaTyodD0cyu5pYsaW/mkMNsoKrY4aXhXcvzdwm
+         2riWx8/Bc8RFR0tcEHwm1jDhdGyoJWpGz9VOP8dYgL52dD7hkB4PSyXs4QBAR8eP5Hxk
+         7VxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687796701; x=1690388701;
+        d=1e100.net; s=20221208; t=1687796702; x=1690388702;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=l05uboNt/LUqosn2wfX53a4vdlSfAxNCZIFmlfGziwE=;
-        b=Cv5hUobTbkXK47c08PRN8cf0EeT7Xe+i53NAsCFy/aAr3kc72qKamkaBdyGy+7QIMQ
-         kgsFHsJGOhXQD/H3ly0h0EYGOXfDz3ngRl4YLlEXwlUCtCDvoICm0J+K1nl/O6cm2p/c
-         a6K1UU1chu8t6i3wQyqo/le9PcqyeVbCTtUtfxcQo5RLZ7q7I8Afel723qhPUbEH2qFL
-         6i3ZdlIku4EU7CaCx6O3U8uGtQZlbjlE4Ghpi4BmSJNQyrB0gBz72JNYV5JZqa/jmKZd
-         xQmJ1xjVCpjdyV0UjHBTCjZ5F6O5QukVYYAXU7k0912WFPNJg0aDPOj/DvKCx54YDEaF
-         O+NA==
-X-Gm-Message-State: AC+VfDyD6UUOA/iAO4zL72qal/d22EL0C7NwNRpeHnIBJdc5UP1RCHx7
-        UdOIA3KcN8gWpXheko4U+fDl/t/w7K0=
-X-Google-Smtp-Source: ACHHUZ6KPqaYJT9HLtunl2ua97mSRuYoYn+Y2kJS6RGmOWCi3orzmDVjzJdvTWTrkQTbt+rqV97SVQ==
-X-Received: by 2002:a05:600c:4309:b0:3fa:8522:283 with SMTP id p9-20020a05600c430900b003fa85220283mr6359552wme.13.1687796700751;
-        Mon, 26 Jun 2023 09:25:00 -0700 (PDT)
+        bh=Vt8z2AJxzEwQlYNmo0GCQyhARur9AC9HnVyQAJFP+Ho=;
+        b=OwmkPYUqDaKzbx/VVchDvORS9VQ5oJpE2pBJ4v1A/lBW5LSq8gFCFbQAPj3wSnjQOE
+         Dz+PcerPJfJ0MhQrHm9R5ahRvs+aV6YVoN8O11Q4AyVlXqI+PvCDWx2ck5XDAk6W1Ec7
+         rBbvvPhZ3heMnFkLEBjwpQiGTU45ph9mP+Je5mj3/AoXXk9ePp1G5EYrlDqQJA3oI1rB
+         ZZjTk04IOaW0BYKEFPzfJhWZ5KgMJp8tXdNPUSavzb8RnremC96G0l2k4V+xBdMEB8yj
+         3wfppTnjmcjDu+zH+rHq7XW4Ai9Gk1vgTcD0q5HwgVtFDqXotYmEiBHjFevaJ9RKvsux
+         H03A==
+X-Gm-Message-State: AC+VfDwniGf79aO1oguUlFvcR78aXiAa8od8fg7c2U+7Y7qJH7lbmfl4
+        jZHLNIGmYvb1w0AUJN1iAzLK8pjiBkc=
+X-Google-Smtp-Source: ACHHUZ7eBTfH4dV7RVs4WC+T8+ZR3SOllOnRqvIB6h8NsFM8M92E/QFu3dYGD5cudxv8BoM0A1JJWQ==
+X-Received: by 2002:a5d:5707:0:b0:30f:bafb:2468 with SMTP id a7-20020a5d5707000000b0030fbafb2468mr9062146wrv.40.1687796702297;
+        Mon, 26 Jun 2023 09:25:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b3-20020adfe303000000b0030fd03e3d25sm7854611wrj.75.2023.06.26.09.25.00
+        by smtp.gmail.com with ESMTPSA id b3-20020adfe303000000b0030fd03e3d25sm7854671wrj.75.2023.06.26.09.25.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 09:25:00 -0700 (PDT)
-Message-Id: <fd94e9ae7830e98397c0f79cd3e0a519dc1fcd5f.1687796689.git.gitgitgadget@gmail.com>
+        Mon, 26 Jun 2023 09:25:01 -0700 (PDT)
+Message-Id: <d3242e1f949815e6c2c036146da2f5faff92d94f.1687796689.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
 References: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
         <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Jun 2023 16:24:37 +0000
-Subject: [PATCH v3 13/24] completion: complete --ita-invisible-in-index and
- --ita-visible-in-index
+Date:   Mon, 26 Jun 2023 16:24:39 +0000
+Subject: [PATCH v3 15/24] completion: complete --no-relative
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,30 +70,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The options --ita-invisible-in-index and --ita-visible-in-index are
-listed in diff-options.txt and so are included in the documentation of
-commands which include this file (diff, diff-*, log, show, format-patch)
-but they only make sense for diffs relating to the index. As such, add
-them to '__git_diff_difftool_options' instead of
-'__git_diff_common_options' since it makes more sense to add them there.
+Add --no-relative to __git_diff_common_options in the completion script,
+and move --relative from __git_diff_difftool_options to
+__git_diff_common_options since it applies to more than just diff and
+difftool.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+ contrib/completion/git-completion.bash | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e74636ebe86..7246ced14ad 100644
+index 13d6730f33d..f4e773cb997 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1763,6 +1763,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+@@ -1741,6 +1741,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--color-moved-ws= --no-color-moved-ws
+ 			--full-index --binary --abbrev --diff-filter=
+ 			--find-copies --find-object --find-renames
++			--no-relative --relative
+ 			--find-copies-harder --ignore-cr-at-eol
+ 			--text --ignore-space-at-eol --ignore-space-change
+ 			--ignore-all-space --ignore-blank-lines --exit-code
+@@ -1762,7 +1763,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 
  # Options for diff/difftool
  __git_diff_difftool_options="--cached --staged --pickaxe-all --pickaxe-regex
- 			--base --ours --theirs --no-index --relative --merge-base
-+			--ita-invisible-in-index --ita-visible-in-index
+-			--base --ours --theirs --no-index --relative --merge-base
++			--base --ours --theirs --no-index --merge-base
+ 			--ita-invisible-in-index --ita-visible-in-index
  			$__git_diff_common_options"
  
- _git_diff ()
 -- 
 gitgitgadget
 
