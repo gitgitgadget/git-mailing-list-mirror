@@ -2,156 +2,345 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1DF3EB64DA
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34264EB64D7
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbjFZQxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 12:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
+        id S230194AbjFZQxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 12:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjFZQxK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:53:10 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A94A10C
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id af79cd13be357-765ae938b1bso82868185a.0
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
+        with ESMTP id S229823AbjFZQxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 12:53:11 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D3DC4
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:53:09 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id af79cd13be357-763c997ee0aso383320985a.3
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687798387; x=1690390387;
+        d=gmail.com; s=20221208; t=1687798389; x=1690390389;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=809IOvmVKRYXbNvuQJLTlV4PWoTTWrzzQku32/aaKJk=;
-        b=sPdFMxT5wGBgVstJDPbsWXpiGf9Se+3YV0dGxxjxkYmDvOWIiwCp6v278UB/UjXMFg
-         rTXxMZgxPoFpMg7XwWfyjbWh8H67snkI2gOGLzZlVUGBcpT3gN6bEbOvZPcMo/Q1kmEi
-         gMyv9jtuMJ7oUFpb4VmV0duFvBdwUx8Wx62vw0BQZSf3f10g6MddmDDpLGkr+xSAEhuG
-         /XzidyY5BsEQqSRfNPUtk6p0A2THzqVrUTw/mnyz3Uv8xMbeVVUWtAw6GwMB006sLPyx
-         vZMd0FnW4UjMiO1Xc89gz3/9tsaZUJDaTNa8sgNvg9XDLhSBnPKzm4pciTEpO2KKVgZW
-         ioeA==
+        bh=u9Kh4I1NU5g5ULkpi9FnJmSp9iSzEe8O2I6MGzyclcM=;
+        b=Wqe/eyT452HY76YFfs5I93VmpaVuItW1PKmFR4RktEkCmTQG7SLH1ja1p8qnGONPja
+         SFxhhwio0D9FhJHTh/qpUtfyWAi0JAGZbP+xfbjrAIsy1cYnCfBcIEO8Z/WhDfubYxtc
+         eNAcDetTmImJ4l/GFhqFhTj4/xaXXQx/KR9LyTnmEakfa2CzmhEj33xSjvyE8miwf05Y
+         vM+ai9EFWKGwomRCgKGZqNycH2wvYlG2wNP6GM7q46VJTNVAt/KUJMRht2k7lvhUsTRW
+         fCYVCE8wecYv+clDt8Sa9sc2S6jgWeuLtxnZOaL8RaJHoRrUcc0Y07KMf47+U1cOZepm
+         oCnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687798387; x=1690390387;
+        d=1e100.net; s=20221208; t=1687798389; x=1690390389;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=809IOvmVKRYXbNvuQJLTlV4PWoTTWrzzQku32/aaKJk=;
-        b=NDx32ITBBEXfWY7D7NHd5zFLTJp1sEqSMrlNkO+9pW+x2lvABRNNpAjn8sNQzJpjze
-         vY2ABogssFc1Q1J6+9Hhv3p16HylbMBdJpVPySo85WSXyUgN7362w0QoKpob6db3+VhQ
-         UI8fScky5y0r63WwFWnN0AHBFcSWN94AmolENhKzA+FwibcqAMbhILqM5jVfJdXmkz+k
-         FPMFRwsAMNtsfnTJYR88rSj4XHFgPIdymKVWYLi7/YCN/zxS+MojlsiAIA0cvy8AR1TH
-         Kyxaf+2HV/463m5bUOkNTuJXnNymbDdz52TIzDN7xBcsZRMuoQKXttnKk8ffOGL2QNyq
-         wCgQ==
-X-Gm-Message-State: AC+VfDwS0J75S9uaLMxL1b46gobJuM1CD6v+4HFgHvAGUfbE/C+nlffC
-        P8sdp32m++FVc9JsGCdhjNs=
-X-Google-Smtp-Source: ACHHUZ5OdUGV0HnYqJ+oljaL6cI90CkzSKZgumXK/OSz8s1/qjmmftHXtRjFFANkh8T0vM7ubbQlDg==
-X-Received: by 2002:a05:620a:372b:b0:765:49c4:f2c3 with SMTP id de43-20020a05620a372b00b0076549c4f2c3mr11283741qkb.10.1687798387264;
-        Mon, 26 Jun 2023 09:53:07 -0700 (PDT)
+        bh=u9Kh4I1NU5g5ULkpi9FnJmSp9iSzEe8O2I6MGzyclcM=;
+        b=bw6eCbdqkH/tpzUfYHqbjIToc11ArcDaCfVmQRAievL0xA7E0mXQ2ZN5FheepatR4M
+         lAfPgEWsscwOmWBiravGfaChIatVR9b4s7NDHAItFlnc4whxXHMbW1lEEzgCb9VmvJE1
+         ineuyIwtAOhFs1yFhohJu42t7DtDumgxoKOhEeJKAwtqQ16ObHLT/pwOfhPvusRI7ISb
+         oGMlWYlLaVJHo0H4coJr7GEED8j8gXgMNXZpqz60Vn0dqWG3ZAVMlmC+YhhLzghmZx02
+         xDIBT8gPGInzwgdImgtHqfxnycTdrn+AwbIYfKf7qAIK2rRuvAWbftqn7RRHomhrbbkx
+         cm0A==
+X-Gm-Message-State: AC+VfDyys+SA5R15NoscAvxOO/+iXzwKvHaA8Mt2M8gAm8eC3iMOpffK
+        oGQaWMvEGjpeh5DFB0Naplk=
+X-Google-Smtp-Source: ACHHUZ7y53xkpsRyAh0VEQxyelUjnr2zkiuDrfw+rdrTUPEnC04QNRdMwO23bILR2lvn8kRoUiuS3w==
+X-Received: by 2002:a05:620a:2891:b0:765:8063:c369 with SMTP id j17-20020a05620a289100b007658063c369mr4894738qkp.74.1687798388830;
+        Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
 Received: from markl5i.lan ([2600:4040:266e:4d00::387])
-        by smtp.gmail.com with ESMTPSA id p5-20020a05620a112500b00765acdc4f56sm922819qkk.60.2023.06.26.09.53.06
+        by smtp.gmail.com with ESMTPSA id p5-20020a05620a112500b00765acdc4f56sm922819qkk.60.2023.06.26.09.53.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 09:53:06 -0700 (PDT)
+        Mon, 26 Jun 2023 09:53:08 -0700 (PDT)
 From:   Mark Levedahl <mlevedahl@gmail.com>
 To:     mdl123@verizon.net, git@vger.kernel.org
 Cc:     adam@dinwoodie.org, me@yadavpratyush.com,
         johannes.schindelin@gmx.de, gitster@pobox.com,
         sunshine@sunshineco.com, Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v1 0/4] Remove obsolete Cygwin support from git-gui
-Date:   Mon, 26 Jun 2023 12:53:01 -0400
-Message-ID: <20230626165305.37488-1-mlevedahl@gmail.com>
+Subject: [PATCH v1 2/4] git-gui - remove obsolete Cygwin specific code
+Date:   Mon, 26 Jun 2023 12:53:03 -0400
+Message-ID: <20230626165305.37488-3-mlevedahl@gmail.com>
 X-Mailer: git-send-email 2.41.0.99.19
-In-Reply-To: <20230624212347.179656-1-mlevedahl@gmail.com>
+In-Reply-To: <20230626165305.37488-1-mlevedahl@gmail.com>
 References: <20230624212347.179656-1-mlevedahl@gmail.com>
+ <20230626165305.37488-1-mlevedahl@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=== This is an update, incorporating responses to Junio's and Eric's
-comments:
-  -- clarified what the "upstream" git-gui branch is
-  -- Removed some changes from patch 2 as requested by Junio, reducing
-     changes in patch 3 and patch 4
-       All code is fixed only after applying patch 4
-       Differences in patch 3 and 4 are minimimized
-   -- updated comments to clarify G4w dedicated code.
-   -- updated all comments to (hopefully) clarify points of confusion
-===
+In the current git release, git-gui runs on Cygwin without enabling any
+of git-gui's Cygwin specific code.  This happens as the Cygwin specific
+code in git-gui was (mostly) written in 2007-2008 to work with Cygwin's
+then supplied Tcl/Tk which was an incompletely ported variant of the
+8.4.1 Windows Tcl/Tk code.  In March, 2012, that 8.4.1 package was
+replaced with a full port based upon the upstream unix/X11 code,
+since maintained up to date. The two Tcl/Tk packages are completely
+incompatible, and have different signatures.
 
-git-gui has many snippets of code guarded by an is_Cygwin test, all of
-which target a problematic hybrid Cygwin/Windows 8.4.1 Tcl/Tk removed
-from the Cygwin project in March 2012. That is when Cygwin switched to a
-well-supported unix/X11 Tcl/Tk package.  64-bit Cygwin was released
-later so has always had the unix/X11 package.  git-gui runs as-is on
-more recent Cygwin, treating it as a Linux variant, though two functions
-are disabled.
+When Cygwin's Tcl/Tk signature changed in 2012, git-gui no longer
+detected Cygwin, so did not enable Cygwin specific code, and the POSIX
+environment provided by Cygwin since 2012 supported git-gui as a generic
+unix. Thus, no-one apparently noticed the existence of incompatible
+Cygwin specific code.
 
-The old Tcl/Tk understands Windows pathnames but has incomplete support
-for unix pathnames (for instance, all pathnames output by that Tcl are
-Windows, not unix). The Cygwin git executables all use unix pathnames
-(though like all Cygwin executables have some capability to accept
-Windows pathnames). git-gui's Cygwin specific code causes git-gui to use
-Windows pathnames everywhere.  The unix/X11 Tcl/Tk requires use of unix
-pathname, so none of the Cygwin specific code is compatible.
+However, since commit c5766eae6f in the git-gui source tree
+(https://github.com/prati0100/git-gui, master at a5005ded), and not yet
+pulled into the git repository, the is_Cygwin function does detect
+Cygwin using the unix/X11 Tcl/Tk.  The Cygwin specific code is enabled,
+causing use of Windows rather than unix pathnames, and enabling
+incorrect warnings about environment variables that were relevant only
+to the old Tcl/Tk.  The end result is that (upstream) git-gui is now
+incompatible with Cygwin.
 
-git-gui is maintained at https://github.com/prati0100/git-gui. The
-git-gui in Junio's tree corresponds to commit c0698df057, behind the
-current git-gui master which is a5005ded.
+So, delete Cygwin specific code (code protected by "if is_Cygwin") that
+is not needed in any form to work with the unix/X11 Tcl/Tk.
 
-Fortunately, the git-gui/is_Cygwin function in Junio's tree relies upon
-the old Tcl/Tk that outputs Windows pathnames.  As this fails to detect
-Cygwin, git-gui treats Cygwin as a unix variant with no platform
-specific code enabled and git-gui currently runs on Cygwin.
+Cygwin specific code required to enable file browsing and shortcut
+creation is not addressed in this patch, does not currently work, and
+invocation of those items may leave git-gui in a confused state.
 
-But, commit c5766eae6f on the git-gui master branch fixes is_Cygwin to
-work with the new Tcl/Tk's signature (which is not that of a Windows
-Tcl/Tk). Thus, Cygwin is detected, the incompatible Cygwin code is
-enabled, and git-gui no longer runs on Cygwin.
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+changes since v0
+ -- do not touch any code fixed in patches 3/4, meaning the browsing
+    and shortcut creating menu items do not work.
 
-Also, there is Cygwin specific code in the Makefile, intended to allow a
-completely unsupported configuration with a Windows Tcl/Tk.  However,
-the Makefile code mis-identifies the unix/X11 Tcl/Tk as Windows,
-triggering insertion of a hardcoded Windows path to the library
-directory into git-gui making it non-portable. The Cygwin git maintainer
-comments this code out, but the code should be removed as it is
-demonstrated to be incompatible with Cygwin and targets a configuration
-Cygwin does not support.
-
-The existing code for file browsing and creating a desktop icon is
-shared with Git For Windows support, and supports only Windows
-pathnames. This code does not work on Cygwin and needs replacement or
-update.  The menu items for these functions are enabled by is_Cygwin, so
-appear only after is_Cygwin is fixed as discussed above.
-
-patch 1 removes the obsolete Makefile code
-patch 2 removes obsolete git-gui.sh code, wrapped in is_Cygwin
-     except for code fixed in patches 3 and 4
-patch 3 implements Cygwin specific file browsing support
-patch 4 implements Cygwin specific desktop icon support
-
-The end result is that git-gui on Cygwin is restored to the full
-capabilities existing prior to the Tcl/Tk switch in 2012. Also, the
-remaining Cygwin specific code, updated in patches 3 and 4, no longer
-overlaps with Git For Windows support.
-
-Any argument for keeping the old Cygwin code must address who is going
-to test and maintain that code, on what platform, and who the target
-audience is. The old Tcl/Tk was only on 32-bit Cygwin and only supported
-for the Insight debugger, 32-bit Cygwin is no longer supported, git-gui
-is not supported on 8.4.1 Tcl/Tk, and the Windows versions targeted by
-2012'ish 32-bit Cygwin are no longer supported.
-
-Mark Levedahl (4):
-  git gui Makefile - remove Cygwin modifications
-  git-gui - remove obsolete Cygwin specific code
-  git-gui - use cygstart to browse on Cygwin
-  git-gui - use mkshortcut on Cygwin
-
- Makefile                  |  21 +------
- git-gui.sh                | 118 +++-----------------------------------
+ git-gui.sh                | 114 ++------------------------------------
  lib/choose_repository.tcl |  27 +--------
- lib/shortcut.tcl          |  31 +++++-----
- 4 files changed, 27 insertions(+), 170 deletions(-)
+ 2 files changed, 7 insertions(+), 134 deletions(-)
 
+diff --git a/git-gui.sh b/git-gui.sh
+index cb92bba..3f7c31e 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -84,14 +84,7 @@ proc _which {what args} {
+ 	global env _search_exe _search_path
+ 
+ 	if {$_search_path eq {}} {
+-		if {[is_Cygwin] && [regexp {^(/|\.:)} $env(PATH)]} {
+-			set _search_path [split [exec cygpath \
+-				--windows \
+-				--path \
+-				--absolute \
+-				$env(PATH)] {;}]
+-			set _search_exe .exe
+-		} elseif {[is_Windows]} {
++		if {[is_Windows]} {
+ 			set gitguidir [file dirname [info script]]
+ 			regsub -all ";" $gitguidir "\\;" gitguidir
+ 			set env(PATH) "$gitguidir;$env(PATH)"
+@@ -342,14 +335,7 @@ proc gitexec {args} {
+ 		if {[catch {set _gitexec [git --exec-path]} err]} {
+ 			error "Git not installed?\n\n$err"
+ 		}
+-		if {[is_Cygwin]} {
+-			set _gitexec [exec cygpath \
+-				--windows \
+-				--absolute \
+-				$_gitexec]
+-		} else {
+-			set _gitexec [file normalize $_gitexec]
+-		}
++		set _gitexec [file normalize $_gitexec]
+ 	}
+ 	if {$args eq {}} {
+ 		return $_gitexec
+@@ -364,14 +350,7 @@ proc githtmldir {args} {
+ 			# Git not installed or option not yet supported
+ 			return {}
+ 		}
+-		if {[is_Cygwin]} {
+-			set _githtmldir [exec cygpath \
+-				--windows \
+-				--absolute \
+-				$_githtmldir]
+-		} else {
+-			set _githtmldir [file normalize $_githtmldir]
+-		}
++		set _githtmldir [file normalize $_githtmldir]
+ 	}
+ 	if {$args eq {}} {
+ 		return $_githtmldir
+@@ -1318,9 +1297,6 @@ if {$_gitdir eq "."} {
+ 	set _gitdir [pwd]
+ }
+ 
+-if {![file isdirectory $_gitdir] && [is_Cygwin]} {
+-	catch {set _gitdir [exec cygpath --windows $_gitdir]}
+-}
+ if {![file isdirectory $_gitdir]} {
+ 	catch {wm withdraw .}
+ 	error_popup [strcat [mc "Git directory not found:"] "\n\n$_gitdir"]
+@@ -1332,11 +1308,7 @@ apply_config
+ 
+ # v1.7.0 introduced --show-toplevel to return the canonical work-tree
+ if {[package vcompare $_git_version 1.7.0] >= 0} {
+-	if { [is_Cygwin] } {
+-		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
+-	} else {
+-		set _gitworktree [git rev-parse --show-toplevel]
+-	}
++	set _gitworktree [git rev-parse --show-toplevel]
+ } else {
+ 	# try to set work tree from environment, core.worktree or use
+ 	# cdup to obtain a relative path to the top of the worktree. If
+@@ -1561,24 +1533,8 @@ proc rescan {after {honor_trustmtime 1}} {
+ 	}
+ }
+ 
+-if {[is_Cygwin]} {
+-	set is_git_info_exclude {}
+-	proc have_info_exclude {} {
+-		global is_git_info_exclude
+-
+-		if {$is_git_info_exclude eq {}} {
+-			if {[catch {exec test -f [gitdir info exclude]}]} {
+-				set is_git_info_exclude 0
+-			} else {
+-				set is_git_info_exclude 1
+-			}
+-		}
+-		return $is_git_info_exclude
+-	}
+-} else {
+-	proc have_info_exclude {} {
+-		return [file readable [gitdir info exclude]]
+-	}
++proc have_info_exclude {} {
++	return [file readable [gitdir info exclude]]
+ }
+ 
+ proc rescan_stage2 {fd after} {
+@@ -3112,10 +3068,6 @@ if {[is_MacOSX]} {
+ set doc_path [githtmldir]
+ if {$doc_path ne {}} {
+ 	set doc_path [file join $doc_path index.html]
+-
+-	if {[is_Cygwin]} {
+-		set doc_path [exec cygpath --mixed $doc_path]
+-	}
+ }
+ 
+ if {[file isfile $doc_path]} {
+@@ -4087,60 +4039,6 @@ set file_lists($ui_workdir) [list]
+ wm title . "[appname] ([reponame]) [file normalize $_gitworktree]"
+ focus -force $ui_comm
+ 
+-# -- Warn the user about environmental problems.  Cygwin's Tcl
+-#    does *not* pass its env array onto any processes it spawns.
+-#    This means that git processes get none of our environment.
+-#
+-if {[is_Cygwin]} {
+-	set ignored_env 0
+-	set suggest_user {}
+-	set msg [mc "Possible environment issues exist.
+-
+-The following environment variables are probably
+-going to be ignored by any Git subprocess run
+-by %s:
+-
+-" [appname]]
+-	foreach name [array names env] {
+-		switch -regexp -- $name {
+-		{^GIT_INDEX_FILE$} -
+-		{^GIT_OBJECT_DIRECTORY$} -
+-		{^GIT_ALTERNATE_OBJECT_DIRECTORIES$} -
+-		{^GIT_DIFF_OPTS$} -
+-		{^GIT_EXTERNAL_DIFF$} -
+-		{^GIT_PAGER$} -
+-		{^GIT_TRACE$} -
+-		{^GIT_CONFIG$} -
+-		{^GIT_(AUTHOR|COMMITTER)_DATE$} {
+-			append msg " - $name\n"
+-			incr ignored_env
+-		}
+-		{^GIT_(AUTHOR|COMMITTER)_(NAME|EMAIL)$} {
+-			append msg " - $name\n"
+-			incr ignored_env
+-			set suggest_user $name
+-		}
+-		}
+-	}
+-	if {$ignored_env > 0} {
+-		append msg [mc "
+-This is due to a known issue with the
+-Tcl binary distributed by Cygwin."]
+-
+-		if {$suggest_user ne {}} {
+-			append msg [mc "
+-
+-A good replacement for %s
+-is placing values for the user.name and
+-user.email settings into your personal
+-~/.gitconfig file.
+-" $suggest_user]
+-		}
+-		warn_popup $msg
+-	}
+-	unset ignored_env msg suggest_user name
+-}
+-
+ # -- Only initialize complex UI if we are going to stay running.
+ #
+ if {[is_enabled transport]} {
+diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
+index af1fee7..d23abed 100644
+--- a/lib/choose_repository.tcl
++++ b/lib/choose_repository.tcl
+@@ -174,9 +174,6 @@ constructor pick {} {
+ 			-foreground blue \
+ 			-underline 1
+ 		set home $::env(HOME)
+-		if {[is_Cygwin]} {
+-			set home [exec cygpath --windows --absolute $home]
+-		}
+ 		set home "[file normalize $home]/"
+ 		set hlen [string length $home]
+ 		foreach p $sorted_recent {
+@@ -374,18 +371,6 @@ proc _objdir {path} {
+ 		return $objdir
+ 	}
+ 
+-	if {[is_Cygwin]} {
+-		set objdir [file join $path .git objects.lnk]
+-		if {[file isfile $objdir]} {
+-			return [win32_read_lnk $objdir]
+-		}
+-
+-		set objdir [file join $path objects.lnk]
+-		if {[file isfile $objdir]} {
+-			return [win32_read_lnk $objdir]
+-		}
+-	}
+-
+ 	return {}
+ }
+ 
+@@ -623,12 +608,6 @@ method _do_clone2 {} {
+ 	}
+ 
+ 	set giturl $origin_url
+-	if {[is_Cygwin] && [file isdirectory $giturl]} {
+-		set giturl [exec cygpath --unix --absolute $giturl]
+-		if {$clone_type eq {shared}} {
+-			set objdir [exec cygpath --unix --absolute $objdir]
+-		}
+-	}
+ 
+ 	if {[file exists $local_path]} {
+ 		error_popup [mc "Location %s already exists." $local_path]
+@@ -668,11 +647,7 @@ method _do_clone2 {} {
+ 				fconfigure $f_cp -translation binary -encoding binary
+ 				cd $objdir
+ 				while {[gets $f_in line] >= 0} {
+-					if {[is_Cygwin]} {
+-						puts $f_cp [exec cygpath --unix --absolute $line]
+-					} else {
+-						puts $f_cp [file normalize $line]
+-					}
++					puts $f_cp [file normalize $line]
+ 				}
+ 				close $f_in
+ 				close $f_cp
 -- 
 2.41.0.99.19
 
