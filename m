@@ -2,171 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B9D9EB64D7
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 495C8EB64DC
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbjFZQZs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 12:25:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
+        id S231941AbjFZQZv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 12:25:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232066AbjFZQZB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:25:01 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72FB3C4
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:24:53 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f86fbe5e4fso4410128e87.2
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:24:53 -0700 (PDT)
+        with ESMTP id S232110AbjFZQZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 12:25:05 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5EE31736
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:00 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-313e34ab99fso2725968f8f.1
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687796691; x=1690388691;
+        d=gmail.com; s=20221208; t=1687796699; x=1690388699;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hBCuoH9QrAxZIrEuPTA6KdriIW0tJWJRzRjlM5TyN4Q=;
-        b=Ql86V9lKuJ1FcJzhAMWOeNVQ7Z4VFMkkkW+oLEFIfvLN3Dw/Wb2kwmBkv3St/o94zK
-         tapbG8l6unKFw44aowCikvcNjNy1oRllIEkfmU1V6AlbLSV9WDx8gokJbakxdn9kycVi
-         +Jn6rxC1BAPJ4toUl9ZKl1VagfiSWptvah3HkFBq9NCnt++ZF3XIKz5z07TfWRjuDtcX
-         atVmYogFaMII+61Qr6NT4clSJxX9xps3/MjoxHnjqDaBNci52n/lcH0gbKzXCWi7HnKo
-         TfvYisPc5QcO6sUurWw7fe5M5T//OM4HQTf2HeRPloUHD1UvZQtUxLP0sTjFIbiZFCac
-         CNTw==
+        bh=RknSMSJ6jkl1S2ky9jZa5xqSyZHqjLkO+0dQYVSmL5w=;
+        b=h7iyD7h5Yniz9isC2jYFg5Aum28opPk2Tnckk0f42ri9bss/NIUZOrwQEgA527fUSw
+         6H7jPNoCTOTU1M40yf3LFuCOAs203i93KQd6WbTE1g8KA5XEwXGxDOj98+qrL/V7mRMA
+         9NfdY3kDVmFu8ItgOBGp9XNDAU0ZkRmWHzYC/Q2NNQsVLVougrqWiRsnzrtrpltwev6a
+         vK1guXFTadwlZffK9/LFeVM4GOiei2GuVtnT/jhcBk0edTToQalrPVlMzhJrDyATK5cn
+         oGu+s+Ri3jMD61zyMSIK0Q3Hup7VOrylvGZQBF4aII3XEa5KH/tRjKNi91eEsEpkEQl4
+         dEng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687796691; x=1690388691;
+        d=1e100.net; s=20221208; t=1687796699; x=1690388699;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hBCuoH9QrAxZIrEuPTA6KdriIW0tJWJRzRjlM5TyN4Q=;
-        b=HKdFlzxcbJNeYsduxZQrkqjQJzEB0RGrb5yeSlBGUNfYG5gHXTGI+w5iJNbrqvulVu
-         JG7gTmSqJNM642mYU3rkpzUNuboDqR4nsIvPpIS//sr00qkNo3W8qntAZuWLbcbrW7Mc
-         7MmWOpula1OlVOaMxmEtoB8ZlQYFaDfNSmwpJH7urrZ/KyfLHKA/MjkGUB3GFdfgdzcV
-         Di/7jc8bovUPHFUJU82hzJlwyzS9PTPgV3/xooBN1q3p8ghnqJKN3kK07iSU7A7m1skt
-         or9M4xnaBdehKuyU1aasufMYxxNkg9gtX+DHkizTXFSZr/d8CjaQRSjWitC7k4L2oh5w
-         joxQ==
-X-Gm-Message-State: AC+VfDwluCulFfdKDJ/JsRG1EiVvvf3yT83sSm8TMsZa22mQLw+XImkl
-        jZ3X4WUM4kPIg9+gRQSqlUf2BitMiQc=
-X-Google-Smtp-Source: ACHHUZ7AW/POxT9olYAOnHfWscj6x/7/Q3BTuUi6lm8g/VG1Xz5YG1dPLDsL7Vb0IqCU6F9lJ4KPuQ==
-X-Received: by 2002:a05:6512:1028:b0:4f7:6017:8fb with SMTP id r8-20020a056512102800b004f7601708fbmr17030023lfr.26.1687796691029;
-        Mon, 26 Jun 2023 09:24:51 -0700 (PDT)
+        bh=RknSMSJ6jkl1S2ky9jZa5xqSyZHqjLkO+0dQYVSmL5w=;
+        b=He3NuZmio6ob2p5V03xfN/wcdQ4CPaTj4LIUpsXdmPGHYk9VIgXErYiWLY1KfkzOp2
+         wna2s1H75Q5yyF/deCZ2hfFUENxKkRLIZhftulUnvctjMK+O77rOSJhHteapcnlkhohY
+         dM++L8hgNy86etkkWQBe9Uk3RR5I007jIbND5xcjd+IsUNTiGYCda7HEQuTUUSdHi/ja
+         0CZ2L+QgqrZImfSVjJtXP/hLPQWh9xNk4gf0AxFENpWLCzZFBIaVwbtC8PetFhSvSMt2
+         eecGlaZ17obQyXlwQdgq8c9afm5RZUfvFC6ump5hByQHoMNZQDaLJN/YVsuDZwremqc/
+         gSfg==
+X-Gm-Message-State: AC+VfDwB9vN4DjzbFdxvJIphdwBxIUABeFO60x64BaCb5UuAtTZx6znn
+        G656kk/f8T69RAkFFg0vMbVGSBmLCyA=
+X-Google-Smtp-Source: ACHHUZ6Js2IK7s/mvJ4mOw+xZB7paHvgaiSoCVdxAgQ36YTQVZ4nbqAVZtARYzstx/ORjej12Vyz2g==
+X-Received: by 2002:a5d:4f07:0:b0:313:e036:882a with SMTP id c7-20020a5d4f07000000b00313e036882amr6447762wru.10.1687796698811;
+        Mon, 26 Jun 2023 09:24:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s25-20020a7bc399000000b003fa96fe2bebsm3243745wmj.41.2023.06.26.09.24.50
+        by smtp.gmail.com with ESMTPSA id r11-20020adfce8b000000b00313f3c11512sm2372817wrn.89.2023.06.26.09.24.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 09:24:50 -0700 (PDT)
-Message-Id: <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
+        Mon, 26 Jun 2023 09:24:58 -0700 (PDT)
+Message-Id: <2503d990e5c7d1fb5bbf06493951204e7c00ea09.1687796689.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
 References: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
+        <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Jun 2023 16:24:24 +0000
-Subject: [PATCH v3 00/24] completion: add missing diff options
+Date:   Mon, 26 Jun 2023 16:24:34 +0000
+Subject: [PATCH v3 10/24] completion: complete --function-context
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v2:
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
- * removed --patch-with-raw on Junio's suggestion, '-p --raw' does the exact
-   same thing.
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes since v1:
-
- * correted authorship in 21/25
- * fixed typos pointed out by Eric
-
-v1: This series adds missing diff options to the Bash completion script.
-Completion often serves as a discovery mechanism for options, so it is
-beneficial to users if all options are offered by the completion script.
-
-The list of missing options was generated by:
-
- 1. Extracting all diff options from the documentation:
-    
-    git grep -h --no-column --only-match -e ^--[a-z][a-z-]*
-    Documentation/diff-options.txt
-    | sort -u > diff-options.txt
-
- 2. Searching for each option in the completion script and visually checking
-    which one was missing:
-    
-    while read p; do echo --- $p ---; echo; git grep --color -p -e $p
-    upstream/master contrib/completion/git-completion.bash done <
-    diff-options.txt
-
-The only options I left out are --skip-to and --rotate-to, since I agree
-with their documentation: they are probably not very useful outside of their
-use in 'git difftool'.
-
-Cheers,
-
-Philippe.
-
-Philippe Blain (24):
-  completion: add comments describing __git_diff_* globals
-  completion: complete --break-rewrites
-  completion: complete --cc
-  completion: complete --combined-all-paths
-  completion: complete --compact-summary
-  completion: complete --default-prefix
-  completion: complete --find-copies
-  completion: complete --find-object
-  completion: complete --find-renames
-  completion: complete --function-context
-  completion: complete --ignore-matching-lines
-  completion: complete --irreversible-delete
-  completion: complete --ita-invisible-in-index and
-    --ita-visible-in-index
-  completion: complete --line-prefix
-  completion: complete --no-relative
-  completion: complete --no-stat
-  completion: complete --output
-  completion: complete --output-indicator-{context,new,old}
-  completion: complete --unified
-  completion: complete --ws-error-highlight
-  completion: move --pickaxe-{all,regex} to __git_diff_common_options
-  completion: complete --diff-merges, its options and --no-diff-merges
-  completion: complete --remerge-diff
-  diff.c: mention completion above add_diff_options
-
- contrib/completion/git-completion.bash | 57 ++++++++++++++++++++++----
- diff.c                                 |  4 ++
- 2 files changed, 52 insertions(+), 9 deletions(-)
-
-
-base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1543%2Fphil-blain%2Fcompletion-common-diff-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1543/phil-blain/completion-common-diff-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1543
-
-Range-diff vs v2:
-
-  1:  4edabc7f15c =  1:  4edabc7f15c completion: add comments describing __git_diff_* globals
-  2:  1f3c9e8d417 =  2:  1f3c9e8d417 completion: complete --break-rewrites
-  3:  d38823dd116 =  3:  d38823dd116 completion: complete --cc
-  4:  51024ee2f2c =  4:  51024ee2f2c completion: complete --combined-all-paths
-  5:  63d70d645e2 =  5:  63d70d645e2 completion: complete --compact-summary
-  6:  7296a3a8c9d =  6:  7296a3a8c9d completion: complete --default-prefix
-  7:  1f9b213cee5 =  7:  1f9b213cee5 completion: complete --find-copies
-  8:  53b1c348f82 =  8:  53b1c348f82 completion: complete --find-object
-  9:  053f9e8620a =  9:  053f9e8620a completion: complete --find-renames
- 10:  2503d990e5c = 10:  2503d990e5c completion: complete --function-context
- 11:  8bd72945a2f = 11:  8bd72945a2f completion: complete --ignore-matching-lines
- 12:  5d32e972a0c = 12:  5d32e972a0c completion: complete --irreversible-delete
- 13:  fd94e9ae783 = 13:  fd94e9ae783 completion: complete --ita-invisible-in-index and --ita-visible-in-index
- 14:  560ad1cd017 = 14:  560ad1cd017 completion: complete --line-prefix
- 15:  d3242e1f949 = 15:  d3242e1f949 completion: complete --no-relative
- 16:  0f16a466fd9 = 16:  0f16a466fd9 completion: complete --no-stat
- 17:  761c75d4aec = 17:  761c75d4aec completion: complete --output
- 18:  f8d430639bc = 18:  f8d430639bc completion: complete --output-indicator-{context,new,old}
- 19:  807b8201d14 <  -:  ----------- completion: complete --patch-with-raw
- 20:  19507b1a210 = 19:  cbf2e59cbea completion: complete --unified
- 21:  c78650f215e = 20:  4750951f120 completion: complete --ws-error-highlight
- 22:  040248a3868 = 21:  eda4d407ded completion: move --pickaxe-{all,regex} to __git_diff_common_options
- 23:  808e7db20cf = 22:  fb23869dfbb completion: complete --diff-merges, its options and --no-diff-merges
- 24:  d5fc5b04b00 = 23:  eb9a6a06914 completion: complete --remerge-diff
- 25:  da2cc42cbd4 = 24:  47e81c2add6 diff.c: mention completion above add_diff_options
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0fa86dcde6f..2610a55487b 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1746,7 +1746,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--ignore-all-space --ignore-blank-lines --exit-code
+ 			--quiet --ext-diff --no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+-			--inter-hunk-context=
++			--inter-hunk-context= --function-context
+ 			--patience --histogram --minimal
+ 			--raw --word-diff --word-diff-regex=
+ 			--dirstat --dirstat= --dirstat-by-file
 -- 
 gitgitgadget
+
