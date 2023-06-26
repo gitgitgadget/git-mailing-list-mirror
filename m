@@ -2,184 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4586EB64DA
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 07:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96669EB64D7
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 09:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbjFZHvn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 03:51:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
+        id S229899AbjFZJhk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 05:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjFZHvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 03:51:42 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD507128
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 00:51:40 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f14e14dc00so725285e87.1
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 00:51:40 -0700 (PDT)
+        with ESMTP id S229786AbjFZJhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 05:37:38 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 682C7AF
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 02:37:37 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b69923a715so19542121fa.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 02:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687765899; x=1690357899;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1gGGP2HQs/jF3oxsapR/n9QTh0dxibjVebsqS9qg4/4=;
-        b=pzqdyGmjsiQqcvXFGk2eOrAEfY1hB0BtGxHyfDyLMWH0SPU589JRdRbKuSgtdIHhB6
-         WNhWjtIzf6Hq5or8l/U1xpEdQFtcgIOiEYacuW9jGhLTHiPo5V71PeFHQPJ3Sj7Ae0+P
-         k+r0MTHuj1YsG+PiXgqC67aP53yyqbI5FtEv4ZKyjeCmTsB7E+cVkkmP4YSkbqKLAakf
-         DCc5WfeBXL10ycDdG7kNtfY9mCpmaYkTiVum+S2LCNhevAnkfZZy4Cjq175vKsKPOppO
-         65Kw9WSJmP61pyB2oy86CpdCspcJ8Wu2n3vtwELVOGe14i8gl2oSZiIlc4tErXWnRFAS
-         VA3A==
+        d=gmail.com; s=20221208; t=1687772255; x=1690364255;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hJ0mPVoTX6Qqq/IjJHcPNCQ4oYf5zosyhIVUsuSENpI=;
+        b=DlVSribRak89qWPEUO3svZaCkz4nNm1Wwy17Ivrg7OcUAGEe2JN2etwhkk3mdcUNBW
+         ticiSruPafwNlRDC0qS6hfK8JIVzGVfQD14iTnT9AWR8zVnQtSt7HZJ8FaG41pBTD2Y9
+         nPfPUaIck0azUboabAORfec9mPLWmIRuQ2tIEKNiIFh8n+VlGTRidxE7I8puwNlLhnmv
+         JqKLWQYwAfhHyNaMCjbC/yHFtUar9cze8X3qu7y1h1TO/TO5vXNeTeISVy9uCii8nLj3
+         puf/4O5LZd/Y20BmVnlwvnNWwBgCwiBa/YgwCJ/a3rT/D2eoDA+JRdkhnXj0RNqElAg4
+         XY9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687765899; x=1690357899;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1gGGP2HQs/jF3oxsapR/n9QTh0dxibjVebsqS9qg4/4=;
-        b=DM4xxnXC0gWLVqAVSSNHWyqK0bSf+kLTW51ZNdx0hB5NigPxmBt84KqnGGmoUWOlF9
-         Hx4ZtW+GFv4TxG4aGaZyUYBF0Rq7K4mXytB+1t6PZOLx/CF/vryNpcIW5i8FibHWiGTJ
-         DCPHZLteYId1DPUKEL6txi7FSMef1jrIFD6Im+IzPQsZiyxvJCEJmxImnWzC/IB5BcVu
-         a/KRGfcU4T8IaAy7AISRzq/cNfgG5EVRO00jdHfvrdrzoVhzSleM0Be/Nukzo4xIUv67
-         klDveKAwasPEEinJu4BhIl/Asl7gtYf07LOOs+/lwcanruZDWrxRBhvQDL46snK5pKNo
-         1dBw==
-X-Gm-Message-State: AC+VfDzaLdjzFhxlrEgZr7dBho0Vf2+WG2k8Uaeo15CpIwtbDRzwcYwL
-        qM0ITrgm8Amax4I5gWmZ9Pf9OQ9nGLPOuWIuTurrphGQt4M=
-X-Google-Smtp-Source: ACHHUZ6IsO29hekBXBT1avSRoqyCjsSlMQKTHE+UXpvtPKDj+M63qBr7pD1StmHosRK7sW0nGqcz3dIB/XkDfHS0gqo=
-X-Received: by 2002:a2e:b4ab:0:b0:2b4:750c:4d2 with SMTP id
- q11-20020a2eb4ab000000b002b4750c04d2mr10963576ljm.0.1687765898545; Mon, 26
- Jun 2023 00:51:38 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687772255; x=1690364255;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hJ0mPVoTX6Qqq/IjJHcPNCQ4oYf5zosyhIVUsuSENpI=;
+        b=T7LWkLrSZeywAm+0Lpslmuv4tknDSHGhW7jcsNXvVefOK1+hVEsRTH2HTAsa3aIFJM
+         fCbKUM0SRILun4H0gtk5U1WFpoCYcgYmAFgxlKcGPlkChZLSP7KfUoHRJkG1qB2fh4bP
+         tpRNebkDlxAQ4sEOZlyS9JEvJvIbMW7abBHm7DFZbfB8jEXqYTOD5zIuJkQ4noIzuZDO
+         +xOYquq03R5q/xUn2gmmXPB3eHmNuEvrC2gz7L0A20bcY2vOhI3KUjtcfOveYw3FRKt3
+         rKr60vH+rgQ6pojVHn4p3nDcM/tSVjtF1FJLILytvv3t6vU5PmkvI9aR9x1HQswaooBy
+         3XEw==
+X-Gm-Message-State: AC+VfDwl0d53yS7ES7/gXKezt5VSURwXCdy1/Eg7VtxL85MPybxf8pWb
+        CbzYuq1mIwxzPGLf41Bw+F8cr65If7I=
+X-Google-Smtp-Source: ACHHUZ5deLIraXsyUv2cCsyPGcESo+6o/W5wiSFhjZ1qjg37ALKu9mPxCZEtesSMVv7KTlRoctkAKQ==
+X-Received: by 2002:a05:6512:2249:b0:4fb:751a:98db with SMTP id i9-20020a056512224900b004fb751a98dbmr1471400lfu.63.1687772255090;
+        Mon, 26 Jun 2023 02:37:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g8-20020a5d46c8000000b00300aee6c9cesm6827006wrs.20.2023.06.26.02.37.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jun 2023 02:37:34 -0700 (PDT)
+Message-Id: <pull.1552.git.1687772253869.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 26 Jun 2023 09:37:33 +0000
+Subject: [PATCH] apply: improve error messages when reading patch
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
- <20230624011234.GA95358@coredump.intra.peff.net>
-In-Reply-To: <20230624011234.GA95358@coredump.intra.peff.net>
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-Date:   Mon, 26 Jun 2023 09:51:27 +0200
-Message-ID: <CAHGBnuPO63Hi8mfA+MkAGES-gs0eNCDPG2FcPZT=YsnVzKd30A@mail.gmail.com>
-Subject: Re: Clean up stale .gitignore and .gitattribute patterns
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Peff for the suggestion. I ended up scripting something via
-JGit [1], as we're anyway using it as part of our Gradle build system.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-PS: As a future idea, it might be good if "git mv" gives a hint about
-updating .gitattributes if files matching .gitattributes pattern are
-moved.
+Commit f1c0e3946e (apply: reject patches larger than ~1 GiB, 2022-10-25)
+added a limit on the size of patch that apply will process to avoid
+integer overflows. The implementation re-used the existing error message
+for when we are unable to read the patch. This is unfortunate because (a) it
+does not signal to the user that the patch is being rejected because it
+is too large and (b) it uses error_errno() without setting errno.
 
-[1]: https://github.com/oss-review-toolkit/ort/pull/7195/commits/e01945d410=
-12db2d0bc2e53d7be4abd513888ba6
+This patch adds a specific error message for the case when a patch is
+too large. It also updates the existing message to make it clearer that
+it is the patch that cannot be read rather than any other file and marks
+both messages for translation. The "git apply" prefix is also dropped to
+match most of the rest of the error messages in apply.c (there are still
+a few error messages that prefixed with "git apply" and are not marked
+for translation after this patch). The test added in f1c0e3946e is
+updated accordingly.
 
---=20
-Sebastian Schuberth
+Reported-by: Premek Vysoky <Premek.Vysoky@microsoft.com>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    apply: improve error messages when reading patch
+    
+    I haven't changed it but I found the test a bit confusing as it
+    superficially looks like it is generating a valid patch that is too
+    large, but it isn't actually a valid patch because the changed line is
+    lacking a leading '+' and a trailing '\n'. As we are checking for the
+    error message that does not matter but it might be clearer to just do
+    
+    sz=$((1024 * 1024 * 1023)) &&
+    test-tool genzeros $sz | test_must_fail git apply &&
+    grep "patch too large" err
+    
+    
+    if we don't care about the patch being valid. Alternatively we could
+    create a valid patch with
+    
+    sz=$((1024 * 1024 * 1023)) &&
+    {
+        cat <<-\EOF &&
+        diff --git a/file b/file
+        new file mode 100644
+        --- /dev/null
+        +++ b/file
+        @@ -0,0 +1 @@
+        EOF
+        printf "+%${sz}s\n" x
+    } | test_must_fail git apply 2>err &&
+    grep "patch too large" err
+    
 
-On Sat, Jun 24, 2023 at 3:12=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Jun 23, 2023 at 05:29:42PM +0200, Sebastian Schuberth wrote:
->
-> > is there a command to easily check patterns in .gitignore and
-> > .gitattributes to still match something? I'd like to remove / correct
-> > patterns that don't match anything anymore due to (re)moved files.
->
-> I don't think there's a solution that matches "easily", but you can do a
-> bit with some scripting. See below.
->
-> For checking .gitignore, I don't think you can ever say (at the git
-> level) that a certain pattern is useless, because it is inherently about
-> matching things that not tracked, and hence generated elsewhere. So if
-> you have a "*.foo" pattern, you can check if it matches anything
-> _currently_ in your working tree, but if it doesn't that may mean that
-> you simply did not trigger the build rule that makes the garbage ".foo"
-> file.
->
-> So with that caveat, we can ask Git which rules _do_ have a match, and
-> then eliminate them as "definitely useful", and print the others. The
-> logic is sufficiently tricky that I turned to perl:
->
-> -- >8 show-unmatched-ignore.pl 8< --
-> #!/usr/bin/perl
->
-> # The general idea here is to read "filename:linenr ..." output from
-> # "check-ignore -v". For each filename we learn about, we'll load the
-> # complete set of lines into an array and then "cross them off" as
-> # check-ignore tells us they were used.
-> #
-> # Note that we'd fail to mention an ignore file which matches nothing.
-> # Probably the list of filenames could be generated independently. I'll
-> # that as an exercise for the reader.
-> while (<>) {
->   /^(.*?):(\d+):/
->     or die "puzzling input: $_";
->   if (!defined $files{$1}) {
->     $files{$1} =3D do {
->       open(my $fh, '<', $1)
->         or die "unable to open $1: $!";
->       [<$fh>]
->     };
->   }
->   $files{$1}->[$2] =3D undef;
-> }
->
-> # With that done, whatever is left is unmatched. Print them.
-> for my $fn (sort keys(%files)) {
->   my $lines =3D $files{$fn};
->   for my $nr (1..@$lines) {
->     my $line =3D $lines->[$nr-1];
->     print "$fn:$nr $line" if defined $line;
->   }
-> }
-> -- >8 --
->
-> And you'd use it something like:
->
->   git ls-files -o |
->   git check-ignore --stdin -v |
->   perl show-unmatched-ignore.pl
->
-> Pretty clunky, but it works OK in git.git (and shows that there are many
-> "not matched but probably still useful" entries; e.g., "*.dll" will
-> never match for me on Linux, but is probably something we still want to
-> keep). So I wouldn't use it as an automated tool, but it might give a
-> starting point for a human looking to clean things up manually.
->
-> For attributes, I think the situation is better; we only need them to
-> match tracked files (though technically speaking, you may want to keep
-> attributes around for historical files as we use the checked-out
-> attributes during "git log", etc). Unfortunately we don't have an
-> equivalent of "-v" for check-attr. It might be possible to add that ,but
-> in the meantime, the best I could come up with is to munge each pattern
-> to add a sentinel attribute, and see if it matches anything.
->
-> Something like:
->
->   # Maybe also pipe in .git/info/attributes and core.attributesFile
->   # if you want to check those.
->   git ls-files '.gitattributes' '**/.gitattributes' |
->   while read fn; do
->         lines=3D$(wc -l <"$fn")
->         mv "$fn" "$fn.orig"
->         nr=3D1
->         while test $nr -le $lines; do
->                 sed "${nr}s/$/ is-matched/" <"$fn.orig" >"$fn"
->                 git ls-files | git check-attr --stdin is-matched |
->                 grep -q "is-matched: set" ||
->                 echo "$fn:$nr $(sed -n ${nr}p "$fn.orig")"
->                 nr=3D$((nr+1))
->         done
->         mv "$fn.orig" "$fn"
->   done
->
-> It produces no output in git.git (we are using all of our attributes),
-> but you can add a useless one like:
->
->   echo '*.c -diff' >>Documentation/.gitattributes
->
-> and then the loop yields:
->
->   Documentation/.gitattributes:2 *.c -diff
->
-> So I definitely wouldn't call any of that "easy", but it may help you.
->
-> -Peff
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1552%2Fphillipwood%2Fapply-error-message-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1552/phillipwood/apply-error-message-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1552
+
+ apply.c                    | 7 ++++---
+ t/t4141-apply-too-large.sh | 2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/apply.c b/apply.c
+index 6212ab3a1b3..21c7f92ada8 100644
+--- a/apply.c
++++ b/apply.c
+@@ -410,9 +410,10 @@ static void say_patch_name(FILE *output, const char *fmt, struct patch *patch)
+ 
+ static int read_patch_file(struct strbuf *sb, int fd)
+ {
+-	if (strbuf_read(sb, fd, 0) < 0 || sb->len >= MAX_APPLY_SIZE)
+-		return error_errno("git apply: failed to read");
+-
++	if (strbuf_read(sb, fd, 0) < 0)
++		return error_errno(_("failed to read patch"));
++	else if (sb->len >= MAX_APPLY_SIZE)
++		return error(_("patch too large"));
+ 	/*
+ 	 * Make sure that we have some slop in the buffer
+ 	 * so that we can do speculative "memcmp" etc, and
+diff --git a/t/t4141-apply-too-large.sh b/t/t4141-apply-too-large.sh
+index 58742d4fc5d..20cc1209f62 100755
+--- a/t/t4141-apply-too-large.sh
++++ b/t/t4141-apply-too-large.sh
+@@ -17,7 +17,7 @@ test_expect_success EXPENSIVE 'git apply rejects patches that are too large' '
+ 		EOF
+ 		test-tool genzeros
+ 	} | test_copy_bytes $sz | test_must_fail git apply 2>err &&
+-	grep "git apply: failed to read" err
++	grep "patch too large" err
+ '
+ 
+ test_done
+
+base-commit: fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
+-- 
+gitgitgadget
