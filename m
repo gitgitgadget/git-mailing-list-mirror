@@ -2,91 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42D51EB64DA
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8B29EB64D7
+	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 16:42:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbjFZQ0u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 12:26:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52960 "EHLO
+        id S229892AbjFZQmd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jun 2023 12:42:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232136AbjFZQZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:25:08 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991C51987
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:05 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-311367a3e12so4778420f8f.2
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:25:05 -0700 (PDT)
+        with ESMTP id S229763AbjFZQmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2023 12:42:32 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072C083
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:42:30 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f95c975995so608279e87.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 09:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687796704; x=1690388704;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1687797749; x=1690389749;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sE7FKCR7Q34boOA4FM3Fk6A0qBBnNg8uNK4v55FkdHs=;
-        b=J25xhZSHW8hFzApDT7xt8Dt/Zy0J6uOlxgmlCZpOa0mczehUrP4TxgAI/I0FsOzd4J
-         rngwGLOnXE5Wd4K+p0EFJOhNFQKA91PCqONwSVMmZA+Lsjmr9ShJeh37mPtlTrqMCzoG
-         zrTNOND/jC6ohaWeDVLz0eRByrdKqK53VSMiRVURhZ+0zZB7SR2POgo33Mxy2WcgeFHb
-         9d3qHk04r0ZAamkZsBXaajCJLKBS57jVA93N49QUPkVcNb5O+m0NkoVgJJuF0VAor+xK
-         zhwloTJ1zpG0ML+BDW1kk4NOFOg9+xEupP6lwMid+3UmDQaN/wiUSmbeje4js9XlaXXx
-         rtYA==
+        bh=hp/4ggvsQOUg+Onto98aMZT4Nwg4b4d9RxduEjqjr8s=;
+        b=SMS2oBHJV01ygBMYitd0P9AffiOuQqS4P4Q/C6dX2Jja8Lm4X2xkx5AkoKhQYYhTiD
+         tKujoKzsswomzowOdyRda4ucWcFpqE4EAYYqykcaGAzExenZwFy+ElsVyHlYpco/ISfY
+         xD025UXS+sAMT3qhRYNw/5YnSqMvQVODzMOEV3o+TNlJpHWaxzSiW1+AqMxvzvBgy/Vs
+         C2hAAOYtLXtbk9UrFkhbcPRH2wunGNaoeoRZWD678WceeUuIQQq8Vlgf7Ch0rVeQKHoA
+         JFM9F2H+Nf29/1HZyk95uI+ZUWiZrrIt2RASs8giXhbyLjEuynqSRZRKYLIuyQHyftss
+         v8KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687796704; x=1690388704;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1687797749; x=1690389749;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sE7FKCR7Q34boOA4FM3Fk6A0qBBnNg8uNK4v55FkdHs=;
-        b=SbZE3a+N7P/NtkY3MFvYLJ1+JyDX+tF0zwPz3hu01UG/ybichegdOMxxxUM9YSZHuN
-         21ccLa4thRL6871xfJNoI/sjg+bFfxLkGA/TslyW9Ykg1vNca4xde/ZPsy3R47R/+Nmh
-         OqGiVN6hCH36x2erNPCAgJXPW1mHe7QHsNGcy6jVdmJ2HhtqBrJlvy6/GcNwKxYF49Qc
-         BhU7HoBg9AxWiMF+hzyffI5RJUnG1ENmnywzZuH7XOmqLj6Lz5yOEwBsNQCOSu52iqFH
-         ZDAGZMcHajyUybDfyhwXpYi/onVlP9cQDYpyS+KtmnFUtNM+R1Iu5ISEPrFRX3VgtyOM
-         5aKg==
-X-Gm-Message-State: AC+VfDykQKkMTpZI4Ccp4zWYQn0tc9nr0m/YK5Cslyz7Z1yZNxskT3wr
-        xinaRqdlb0czq3alJLuKp9N9kiR2DJA=
-X-Google-Smtp-Source: ACHHUZ5ik/mHq7O9IfLYMchakoVgrryFMP1/Hy6d8iQR8Kv++BL6XKQMcFb/rGWNZlFuo8s+ovBbTg==
-X-Received: by 2002:a5d:56cf:0:b0:313:f9a0:c530 with SMTP id m15-20020a5d56cf000000b00313f9a0c530mr199694wrw.52.1687796703850;
-        Mon, 26 Jun 2023 09:25:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t5-20020a05600001c500b00313f7b077fesm1184640wrx.59.2023.06.26.09.25.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 09:25:03 -0700 (PDT)
-Message-Id: <761c75d4aec988609a105db0f039ad9f15d2337e.1687796689.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
-References: <pull.1543.v2.git.1686574374.gitgitgadget@gmail.com>
-        <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Jun 2023 16:24:41 +0000
-Subject: [PATCH v3 17/24] completion: complete --output
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=hp/4ggvsQOUg+Onto98aMZT4Nwg4b4d9RxduEjqjr8s=;
+        b=PO5qCWNloitzgOt3NapK6jM+3ZQvlqrrrGsIutVhapvUmL4DjTO3LbJUM4g8Di7yck
+         lVHLH7gO8zwBzqQ1AZnH2bvubEBzy6PfgyLzIKW8qsk6H8ZU/3sZl9VA5K0ueR0gGjSn
+         hzDKXOi0d0LidVJj9iXfKAxQoH3xVf5BUrNSQNs2wmJad8+NtWstRRM62+lVKAPp1Xra
+         rQAnmPok/DS5fy8w5fwPjN5M/l+VqiSW41SvjQNDuwOZw7gzjdsvikx5xeBUp3tqBa3M
+         OXVbp55i1zO5Pb1CnEATMDpTtLWkLA4/WCqBte3OVG7iCGi4QB4b4PqxJJTOIUFglHaD
+         gwmg==
+X-Gm-Message-State: AC+VfDw5RNQzSXnkTytSCtPpBY5g1ghJ71H8/j8rETWgXmn3wLhafVBe
+        /QuUpx7z/vSS3iECid6I2crU9nbWzcKSQm7IWK8=
+X-Google-Smtp-Source: ACHHUZ5aqJuJGhWJ051NEPk1clGHO54pThev6yz5bfG49q80k4eG26gjyaR+QHA8tKAOkDCTzg2d0+JmoWmzV1/wjTc=
+X-Received: by 2002:a19:7410:0:b0:4f8:6ab4:aac6 with SMTP id
+ v16-20020a197410000000b004f86ab4aac6mr11459974lfe.1.1687797748727; Mon, 26
+ Jun 2023 09:42:28 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
+ <20230624011234.GA95358@coredump.intra.peff.net> <CAHGBnuPO63Hi8mfA+MkAGES-gs0eNCDPG2FcPZT=YsnVzKd30A@mail.gmail.com>
+ <xmqqo7l25ibw.fsf@gitster.g>
+In-Reply-To: <xmqqo7l25ibw.fsf@gitster.g>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Mon, 26 Jun 2023 18:42:17 +0200
+Message-ID: <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
+Subject: Re: Clean up stale .gitignore and .gitattribute patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Mon, Jun 26, 2023 at 5:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+> > PS: As a future idea, it might be good if "git mv" gives a hint about
+> > updating .gitattributes if files matching .gitattributes pattern are
+> > moved.
+>
+> Interesting.  "git mv hello.jpg hello.jpeg" would suggest updating
+> a "*.jpg <list of attribute definitions>" line in the .gitattributes
+> to begin with "*.jpeg"?
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ec2e4c9e711..a34432796bf 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1759,6 +1759,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--patch --no-patch --cc --combined-all-paths
- 			--anchored= --compact-summary --ignore-matching-lines=
- 			--irreversible-delete --line-prefix --no-stat
-+			--output=
- "
- 
- # Options for diff/difftool
--- 
-gitgitgadget
+Yes, right. Or as a simpler variant to start with (as patterns might
+match files in different directories, and not all of the matching
+files might be moved), just say that a specific .gitattributes line
+needs updating (or needs to be duplicated / generalized in case files
+in both the old and new location match).
 
+--=20
+Sebastian Schuberth
