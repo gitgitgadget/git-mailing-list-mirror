@@ -2,353 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFE6CEB64D9
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 13:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BC27EB64DC
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 13:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbjF0NV1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 09:21:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60868 "EHLO
+        id S230399AbjF0Nns (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 09:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbjF0NVR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 09:21:17 -0400
-Received: from mail-ed1-x549.google.com (mail-ed1-x549.google.com [IPv6:2a00:1450:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26361708
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 06:21:14 -0700 (PDT)
-Received: by mail-ed1-x549.google.com with SMTP id 4fb4d7f45d1cf-51bef8bb689so5530893a12.1
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 06:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687872073; x=1690464073;
-        h=content-transfer-encoding:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nELtkyR4SxcpeIG/ZpulalHMC/vYFLPf76LqC5f0ItQ=;
-        b=UnyxE1G48QDB72sYzRWIUzhONK8vpXKBBVqwGNzO6jH8zg+dcW+yLaFzbbP1ZFAto0
-         uLZUixETzS5XH1hRgNStzzFRBV0PJ59nKv/itXBRkpWHYzHH65Yy4y1R2NVE/xLqlHwJ
-         DKXwB0pASltkiZEe3/M3NbgYh/yD4ABtL604RIqBn1i/w0POW0/9ikl3zfIDYXY3HjLs
-         JtoqhjFlBrG+sEGchW8c2BaiEQtSoyauJmdAfVeBynaYQd9UKg+xfl2XU5tO9KXKyh5V
-         0SmwpUMQa+AkiLUJJWzLy/qu/uVKALHvbqFQrXUGZVpc8ggp+/x4KmvxiBN09OcDXurb
-         3q1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687872073; x=1690464073;
-        h=content-transfer-encoding:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nELtkyR4SxcpeIG/ZpulalHMC/vYFLPf76LqC5f0ItQ=;
-        b=g9x9VXxVuFgA263nDdlipeqy6WVderUkTTVuqEtiHvFG/hSgHuxoehN5HFJaxMDXjH
-         bMPaKvuAjp8u5VdcrXqmJK/P2MmFWFVlMQuFNLBnC2q0yD1cIMRX4HaWV8idx/G+1xxe
-         mCNsqzq0B4awWe7yuRLjGtJHu5HM6NAov2KXcULO05ZTU6eDnPD4Ves7c4tpvDJNyAlX
-         JOFZ1HPz6cOWKSbj0FdB8rxck9BEQkLUKoWUsyJYgN3n9Imfjy75xfEk02wrP5UucJod
-         olWdPyvAPAoY5llmZX170A4nybUQixB0u6SwmKFhv8rbSfkCq4S19HotK7c1OqRQV6aR
-         Xe4w==
-X-Gm-Message-State: AC+VfDyBvokOXJC8WiXOy8jeqMxJt5D0Fv3zJvMQEj+IYmyqxeJWruLH
-        YYy1lgwNoypTQUm8HDrfqc28n4HCITp/U7n83yHefk3NosjAoroiKzH+qe2xrJ0KydZRyoha5ak
-        QoEZzKW6jo3nnj3E2O04qWD8jqfygT9ER6KsMyDGqSLefFmoVEbuKpEMqITo7qMSo6hYY
-X-Google-Smtp-Source: ACHHUZ6vWrTa7IXL5t3efK4uonjyKBnR3LIkaIZLaIbx2wQuBXTSiS7UUkpwgohMiuFdrDoh4jIGoUEfqYnxtQsY
-X-Received: from siddhu.muc.corp.google.com ([2a00:79e0:9c:0:6d2b:295:c609:e08e])
- (user=siddhartth job=sendgmr) by 2002:a50:c304:0:b0:51b:ec37:818f with SMTP
- id a4-20020a50c304000000b0051bec37818fmr2649957edb.1.1687872073410; Tue, 27
- Jun 2023 06:21:13 -0700 (PDT)
-Date:   Tue, 27 Jun 2023 15:20:26 +0200
-In-Reply-To: <20230531155142.3359886-1-siddhartth@google.com>
-Mime-Version: 1.0
-References: <20230531155142.3359886-1-siddhartth@google.com>
-X-Mailer: git-send-email 2.40.GIT
-Message-ID: <20230627132026.3204186-1-siddhartth@google.com>
-Subject: [RFC PATCH v2] khash_test.c : add unit tests
-From:   Siddharth Singh <siddhartth@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S230336AbjF0Nnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 09:43:46 -0400
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2068.outbound.protection.outlook.com [40.107.237.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83EE1211C
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 06:43:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=F6ZHtPotbMUew4OuHd5ocGx08jhTvjkgZr7YwZtX8iO1w8C42YOxYJqnwGtQXWXEUruLLhxsp63Y+aHXvkD+8SkdF+qubzhrneiRGkUjUf1d4LMmdyADO5j0rc6RHGeV+Jv1t99pV/iv4SJ85tTbcumosgid6FFGkBdM3G1Nq6ke3daHLZM3f7Kr4tkruh/QsMVXyOa7m1y1Ftr4C/34WR1AD4EY41jWSdocwt+HQhSikqLzv9S50n7wrmQykzf/tGiWlYaIiepDhao7vrJD+EPa/acDR42GF0hJ+Hmw1KHQaOJ+ibqd8amZbgLGrhWqjwHoByDmJ74KrCz7LL9udQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HVCP38kPvKMZSaAf4fl11KB52fjn59u5+e+qb0xcgUA=;
+ b=iaNi1rvPxB549OPhR3eFyXRps+kFb5xSXhGKHV7XuaV0cpu/ul+avNN+ev2TOpvOTIfWGboJVsDx2w4ITpYWjsV4QwB3zMCry7GL7XvhlKpQhj/Yl6U8qfQ5S+jqXJaTuCXVQJUKCpwkD/x3/CdQp+mXqW0qerHhJE1Zo2kKCB/WVpBRseeHpy6vIepomp3Udgvfd2DFyZOJhs5ITVza+yYtVrbwLRDvsMkyl1MkhIX2dx5Jv7Xhq73mRrVl1Ckfd8NSEESke8H4y8dIW2/IW75D69R5EU6Kpz09z86U+MhSVE3/MEPgE/85hZE+nV7cQm0dSpPw3Z/orn2qvabkbw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cedaron.com; dmarc=pass action=none header.from=cedaron.com;
+ dkim=pass header.d=cedaron.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cedaron.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HVCP38kPvKMZSaAf4fl11KB52fjn59u5+e+qb0xcgUA=;
+ b=B4UZJgeeUk4JCndbdREJYQBEB6FURu1YaR/1FdqjrhA/7Vlc06CoCIsJz3u1TEmtkTpu6VShaVL6S5M2SCE4DBCUV68S35CS9zgZgcwAogrF1FIvvoAeLu6xt/04I0ghicWo5vKiKvKnOcZvbN/VLPmweGAefU/LhEhTztTp2XivQWBQyxYL6pUh/8dsMkxiHOWfwizporVKKWkBsDBEQqu9aK75jJBEG1+7wZ8pyzfB3uDYdIvssH7FHMS3i9+vdN/FlE9pjPpOJT8AuwHx9nP7xxVJlBd/TaOVREiEZDXlr/3iQZnz+xDpRRBatCNcfFcIWPlI2zN9WAlza61Bbw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cedaron.com;
+Received: from BYAPR20MB2758.namprd20.prod.outlook.com (2603:10b6:a03:fb::15)
+ by SA0PR20MB3293.namprd20.prod.outlook.com (2603:10b6:806:92::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.24; Tue, 27 Jun
+ 2023 13:43:41 +0000
+Received: from BYAPR20MB2758.namprd20.prod.outlook.com
+ ([fe80::90c:ffc6:cad4:993]) by BYAPR20MB2758.namprd20.prod.outlook.com
+ ([fe80::90c:ffc6:cad4:993%7]) with mapi id 15.20.6521.024; Tue, 27 Jun 2023
+ 13:43:41 +0000
+Message-ID: <45ca0983-a0b6-1372-b548-2e0351988587@cedaron.com>
+Date:   Tue, 27 Jun 2023 06:43:38 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] ll-merge: killing the external merge driver aborts the
+ merge
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
+ <xmqqttuze2fh.fsf@gitster.g> <xmqq4jmzc91e.fsf_-_@gitster.g>
+ <CABPp-BG-KDu0fAC=bydz9A56xguSmgwO6SFDdxZ8h=90qR1PUA@mail.gmail.com>
+ <xmqqv8feb0vo.fsf@gitster.g> <xmqqjzvt92nw.fsf@gitster.g>
+ <59b7a582-be68-3f7b-a06f-3bd662582a1d@gmx.de>
+From:   Joshua Hudson <jhudson@cedaron.com>
+In-Reply-To: <59b7a582-be68-3f7b-a06f-3bd662582a1d@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR05CA0021.namprd05.prod.outlook.com
+ (2603:10b6:a03:33b::26) To BYAPR20MB2758.namprd20.prod.outlook.com
+ (2603:10b6:a03:fb::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR20MB2758:EE_|SA0PR20MB3293:EE_
+X-MS-Office365-Filtering-Correlation-Id: 940b0b91-f3c1-43bf-4a2e-08db77148437
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: vMoC9mhU4rT0a2agT2iLdBbt4wFGBy2ktjZeAgVHLiW9VHLsKoMv8jaeNnZzxXxrbaPv3hbac4OamRptJ2zHIqTArdBr3bQWU3we18pyJ00XkNHYo1yHy/opBlTflupKc7flBIyv8O/g3iTnZOMeoyoi9uEo+SrNJIskpHu/C6aLQudSPpSjL6kWlRfeUIaNOLisBJqDhrGctY70Lq+DP8lJ1cIUXdKpwXj5ePtXJUyhBlXpSP+P6BzIt7zrDLn4vfZa6xG/zFvWLat+4ciEceHa+zR2cWUjz+CglXq/jFwKOW75rTJzvNjq6DOW7gUDxqwvviCl/3AsaINHRlh9OwNkONWeTB32mhDyfDIJutTGplYY44fNqtDlbNT2yM5W6IJVG7Ma3dNIfG8OmeH8iCckXe0nCzWvFsA28DszBLBxcHggDt0XZmF+c4wLtIp82EXPu145izIFj/GAvCd3jPVXAwMoz8D0YaT/zunY07/A0aQURDcTGk20ioS2pvr2APaiSYTMDwZpG8HVXM9FgyqlAdZXQZ6UVGgm98JMEE0D9pFlBKNt9EIxPhP/rP6nkhtpetRYvm23YZac4NvKnzqD2DUI248oe2cv1ci8/6oSwQFPqEJQtxrjVFbns9XJjZRaSMtyqI9mhEu/aqhjLED10b5nRjG6yYuogNOw0D4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR20MB2758.namprd20.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(396003)(376002)(39840400004)(346002)(136003)(366004)(451199021)(66476007)(5660300002)(2906002)(186003)(26005)(2616005)(38100700002)(83380400001)(6512007)(6506007)(53546011)(41300700001)(66946007)(66556008)(8936002)(8676002)(36756003)(6666004)(966005)(6486002)(31696002)(4326008)(478600001)(110136005)(86362001)(316002)(31686004)(43740500002)(45980500001)(460985005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NkVXWll1MDhsbjJEUUxXR1UwdGhGZUo1dmFvRG1NQ1B5S0ZpMncyMnhnL3U1?=
+ =?utf-8?B?c3IxQUVJbmg1NDRYVDFTRG1xTjI3SnVGYmpmb056VXhWU3kyUkNjbzh5eHVV?=
+ =?utf-8?B?QVNYWjUweStLdUdzZndGUlc3M01TRXhmUWlNVk5SZy9qN3FWMjdjeCtQVHYz?=
+ =?utf-8?B?OHhRMzdpZjhwS0M4N1ZQNXVhQXpoVGdXcWwyMnZmNjN0TmZkOG8wN1ZXVzNZ?=
+ =?utf-8?B?bHQ2dG9SUXFGMGdzbHRSVmlmY2NPYkt4bnZHWk1scElQRGtkaTB4ZFpSdS9H?=
+ =?utf-8?B?d0RhMW1TSkZ2WVhXV3B0Q3hJeldocVV5Nlc1Z0k1UkFEV1hBOWJZZHNDQk13?=
+ =?utf-8?B?N0sxV0hJUU8vTktWbkxNbHplRGNzYWFjd2xSdGNKWkNudnZqZXFDZHhZcGNi?=
+ =?utf-8?B?N1hLeWk5QS8xb1JvQ3hzajBOTzVLNDFIVjl3bEM5QzNMdkM4OXJPSlFKSFBT?=
+ =?utf-8?B?bW9zK01ldFZLdll2OEVReXc0bmFHU0laSFIxcEcxVEdKb0h3eWlKcmh1VWI1?=
+ =?utf-8?B?NDV3VXZPSnNQN1JIejg2WC9nUHdNd0JPYjJYbjNJL3dTakdkeG50WVpaV3hY?=
+ =?utf-8?B?SlZUc2JkMnZ6TXhUZHA4TjFvcnFqQkdmRk5pS2NSbnptUDVRbW5sSHJyaEZO?=
+ =?utf-8?B?djJ2MEpQeEJwRHJ5eTB5V3BkYzViWEx2SmZVMUcrMU1xSUwyNkRiN1ZTVWs4?=
+ =?utf-8?B?Y25BeEl1T0pmZnhLdGFiMUNuTVFsRDkyTG5HSFdZMm5lTjloWnVXVFdwZUk1?=
+ =?utf-8?B?QlR0VGVyQkM5QXZWbklaWVA2OG44dkVxeGtkeitTL0VRdlNVODVOajA0RWhL?=
+ =?utf-8?B?UlF1aGdQYVkxdklpTXAzME1zU1pTekpxODIrVkpKTllQUnpSYUpSTXY3MUdI?=
+ =?utf-8?B?ZlJBMUdiRUYrVFB3cllzNnpaa2NWUjQyVkpVL01UUHhPZnRySmNBV2xWVnFs?=
+ =?utf-8?B?NDc0Z25zZVI4clVrNG92R2NHYm1mMXhkbThORERNMUJZVTE3dld4TXdlcHdq?=
+ =?utf-8?B?aEtFR2QrbnF5enBrQ1Q1WC9RK0JHMDZuc05jUVBFNDZJR2xRWE4yOXhJYmho?=
+ =?utf-8?B?T2pZcFEwaXNNOVJBQUowUHNXZHBnVUp6VVZpTWNaM21ZUi9wdlozZm9BSjdq?=
+ =?utf-8?B?eW95dHJyQi83MjBXc1NRQm1aVGx3YWFYdVU3R1BUNnJmZ0pTQUZwSHJ3ZlBD?=
+ =?utf-8?B?anBUVHFtRlJBNWNJZ1htaGU1YndGQ1VYdjAySjRxSGlFZmxJbjdUM3QzNXNY?=
+ =?utf-8?B?dlBrL2dZZSt0dWNzLzhTSVRvZ2VZSUVKcmtrcVkzUDF5c3RlbzU1c2Y0eXV3?=
+ =?utf-8?B?MGtMdkdxS3RwSmY3ZFZOS1pLOWZ5N0p5ZzBmNXVmT0hVemZUbGNhZzNUR1pv?=
+ =?utf-8?B?Z2JERkUzLy9DSFM3VEZvazdTSkwxc0xEMFVJd3VUNzM4M0g1VEFxd1h4QzJz?=
+ =?utf-8?B?ZGgyRFEwNVc4NmdyYjlJWSszOWFCWU5qVXdrU1J4ZVM4WWtGWDlUNFZ1NVFW?=
+ =?utf-8?B?cFhJTXFOUE1nVlJEWjRxMkhPRk1TdVc0MDZWTGhaRlR3NlJJeDF3OGpMYkJs?=
+ =?utf-8?B?SitMajcyRWxoTzNuSU9JYWh5U2cwVGNhU0VQS2tKbll4cVpXT2ppN1U4NnR1?=
+ =?utf-8?B?ZUU0d09kWWZtTjVZbEtvSkdNL3Z5YlFrN0tQeFVYaGVYQndCV0F0L1dWR0E5?=
+ =?utf-8?B?VEZyd29nRUt6QUxhUmpuRmloTkhyMFJPeHJYa1BWUlRESm13YlRoaFY0OVRu?=
+ =?utf-8?B?ZFFNRnZpY01VVUhRRDcwSGN5MDBGUGZkSHRFY252ejErOVlLLzZsYkJyZ0E4?=
+ =?utf-8?B?ZFRIVU5YZlNWRHpHQ2JjbnRrYzhnQ1FQaDA1Z2dhbWRmc2hEb2Ria3FsT0ZX?=
+ =?utf-8?B?eklpWFcyUzAzdlprVS96KzV0WGlQM1lnZTFkZHN5Wk5lY2h3Mjhpa094cEhl?=
+ =?utf-8?B?MUNPVVZ5NDFjbkVNRjlNV0ZxKzBINjFCNlRKZExJWXNpeDFTQmhaZWxDVEEy?=
+ =?utf-8?B?K1Q5MkNPaGxEUHNzdzJIUWFxa2k1VVVqNGF2VlJxRi9HbjVZdjhabmVGQVhm?=
+ =?utf-8?B?akFxVEJoL2lRR2NhclAxdXYwSU9qWWFPYzdpV2ZFVEp6VHFCTkdiRVk3OHpU?=
+ =?utf-8?Q?11dDXrdbzotS58eUc4UAsmqNy?=
+X-OriginatorOrg: cedaron.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 940b0b91-f3c1-43bf-4a2e-08db77148437
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR20MB2758.namprd20.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jun 2023 13:43:40.5835
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: a1e0d90e-c09b-4bb6-9534-4bb03188f5a0
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Wy+FHJbFJD79Y8AjaMZCnzOnnPxALZh3oq3YGAV71XGubVB8x+Y0+MYjChs+b7iEpuzVuySUBMaUb8IT5b4Rfg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR20MB3293
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Siddharth Singh <siddhartth@google.com>
----
-Since v1
-- rewrote the code keeping coding style guidelines in mind.
-- refactored tests to improve their implementation..
-- added a few more tests that cause collisions in the hashmap.
-In the v1 patch, there were concerns that new tests were unnecessary becaus=
-e of upstream tests. However, I believe it would be beneficial to have test=
-s based on the khash implementation in the git codebase because the existin=
-g tests[1] for khash do not use the same code for khash as the git codebase=
-.=20
-E.g. in khash.h file of =E2=80=9Cattractivechaos/klib/khash.h=E2=80=9D [2].=
- There's an implementation for `KHASH_MAP_INIT_INT64` which isn=E2=80=99t d=
-efined in =E2=80=9Cgit/git/khash.h=E2=80=9D[3]. So, there=E2=80=99s a possi=
-bility that the khash.h in a different repository might move forward and en=
-d up being different from out implementation, so writing tests for =E2=80=
-=9Cgit/git/khash.h=E2=80=9D would ensure that our tests are relevant to the=
- actual usage of the library.
-While my colleagues are currently investigating whether C Tap harness is th=
-e best way to test libified code, this RFC is intended to discuss the conte=
-nt of unit tests and what other tests would be useful for khash.h. I am uns=
-ure of what tests will be valuable in the future, so I would appreciate you=
-r thoughts on the matter. Many test cases are easier to construct in C TAP =
-harness than in test-tool. For example, In C TAP harness, non-string values=
- can be used directly in hash maps. However, in test-tool, non-string value=
-s must be passed as an argument to a shell executable, parsed into the corr=
-ect type, and then operated on.
-I'm also very new to writing unit tests in C and git codebase in general, s=
-o I'll appreciate constructive feedback and discussion..
-With this RFC, I hope you can help me answer these questions.
-What are the unit test cases to include in khash.h?
-What are the other types of tests that would be useful for khash.h?
-[1] https://github.com/attractivechaos/klib/blob/master/test/khash_test.c
-[2] https://github.com/attractivechaos/klib/blob/master/khash.h
-[3] https://github.com/git/git/blob/master/khash.h
 
- Makefile       |   2 +
- t/khash_test.c | 214 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 216 insertions(+)
- create mode 100644 t/khash_test.c
+On 6/27/2023 5:02 AM, Johannes Schindelin wrote:
+> Hi,
+>
+>
+> On Fri, 23 Jun 2023, Junio C Hamano wrote:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Elijah Newren <newren@gmail.com> writes:
+>>>
+>>>> Reviewed-by: Elijah Newren <newren@gmail.com>
+>>>
+>>> Thanks for a quick review.
+>> Unfortunately Windows does not seem to correctly detect the aborting
+>> merge driver.  Does run_command() there report process death due to
+>> signals differently, I wonder?
+>>
+>> https://github.com/git/git/actions/runs/5360400800/jobs/9725341775#step:6:285
+>>
+>> shows that on Windows, aborted external merge driver is not noticed
+>> and we happily take the auto-merged result, ouch.
+> Hmm. I tried to verify this, but failed. With this patch:
+>
+> ```diff
+> diff --git a/git.c b/git.c
+> index 2f42da20f4e0..3c513e3f2cb1 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -330,6 +330,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+>   			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, cmd, 1);
+>   			if (envchanged)
+>   				*envchanged = 1;
+> +		} else if (!strcmp(cmd, "--abort")) {
+> +			abort();
+>   		} else {
+>   			fprintf(stderr, _("unknown option: %s\n"), cmd);
+>   			usage(git_usage_string);
+> ```
+>
+> I get this:
+>
+>
+> ```console
+> $ ./git.exe --abort
+>
+> $ echo $?
+> 3
+> ```
+>
+> For that reason, I am somehow doubtful that the `abort()` is actually
+> called?!?
+>
+> Ciao,
+> Johannes
 
-diff --git a/Makefile b/Makefile
-index 660c72d72e..d3ad2fa23c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3847,11 +3847,13 @@ $(UNIT_TEST_RUNNER): t/runtests.c
-=20
- UNIT_TEST_PROGS +=3D t/unit-tests/unit-test-t
- UNIT_TEST_PROGS +=3D t/unit-tests/strbuf-t
-+UNIT_TEST_PROGS +=3D t/unit-tests/khash-t
-=20
- $(UNIT_TEST_PROGS): $(CTAP_OBJS) $(LIBS)
- 	$(QUIET)mkdir -p t/unit-tests
- 	$(QUIET_CC)$(CC) -It -o t/unit-tests/unit-test-t t/unit-test.c $(CTAP_OBJ=
-S)
- 	$(QUIET_CC)$(CC) -It -o t/unit-tests/strbuf-t t/strbuf-test.c -DSKIP_COMM=
-ON_MAIN common-main.c $(CTAP_OBJS) $(LIBS)
-+	$(QUIET_CC)$(CC) -It -o t/unit-tests/khash-t t/khash_test.c -DSKIP_COMMON=
-_MAIN common-main.c $(CTAP_OBJS) $(LIBS)
-=20
- .PHONY: unit-tests
- unit-tests: $(UNIT_TEST_PROGS) $(UNIT_TEST_RUNNER)
-diff --git a/t/khash_test.c b/t/khash_test.c
-new file mode 100644
-index 0000000000..d1a43add13
---- /dev/null
-+++ b/t/khash_test.c
-@@ -0,0 +1,214 @@
-+#include "../git-compat-util.h"
-+#include "../khash.h"
-+#include <tap/basic.h>
-+
-+/*
-+  These tests are for base assumptions; if they fails, library is broken
-+*/
-+int hash_string_succeeds() {
-+  const char *str =3D "test_string";
-+  khint_t value =3D __ac_X31_hash_string(str);
-+  return value =3D=3D 0xf1a6305e;
-+}
-+
-+int hash_string_with_non_alphabets_succeeds() {
-+  const char *str =3D "test_string #2";
-+  khint_t value =3D __ac_X31_hash_string(str);
-+  return value =3D=3D 0xfa970771;
-+}
-+
-+KHASH_INIT(str, const char *, int *, 1, kh_str_hash_func, kh_str_hash_equa=
-l);
-+
-+int initialized_hashmap_pointer_not_null() {
-+  kh_str_t *hashmap =3D kh_init_str();
-+
-+  if(hashmap !=3D NULL){
-+    free(hashmap);
-+    return 1;
-+  }
-+  return 0;
-+}
-+
-+int put_key_into_hashmap_once_succeeds() {
-+  int ret, value;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &ret);
-+  if(!ret)
-+    return 0;
-+  return pos !=3D 0;
-+}
-+
-+int put_same_key_into_hashmap_twice_fails() {
-+  int first_return_value, second_return_value, value;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  kh_put_str(hashmap, "test_key", &first_return_value);
-+  kh_put_str(hashmap, "test_key", &second_return_value);
-+  return !second_return_value;
-+}
-+
-+int put_value_into_hashmap_once_succeeds() {
-+  int ret, value =3D 14;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos) =3D &value;
-+  return *kh_value(hashmap, pos) =3D=3D value;
-+}
-+
-+int put_same_value_into_hashmap_twice_fails() {
-+  int first_return_value, second_return_value, value =3D 14;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &first_return_value);
-+  if (!first_return_value)
-+    return 0;
-+  kh_key(hashmap, pos) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos) =3D &value;
-+  kh_put_str(hashmap, "test_key", &second_return_value);
-+  return !second_return_value;
-+}
-+
-+int get_existing_kv_from_hashmap_succeeds() {
-+  int ret, value =3D14;
-+  int expected =3D value;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos) =3D &value;
-+  return *kh_value(hashmap, kh_get_str(hashmap, "test_key")) =3D=3D expect=
-ed;
-+}
-+
-+int get_nonexisting_kv_from_hashmap_fails() {
-+  int value =3D 14;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  return !kh_get_str(hashmap, "test_key");
-+}
-+
-+int deletion_from_hashmap_sets_flag() {
-+  int ret, value =3D 14;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  if(!kh_exist(hashmap, pos))
-+    return 0;
-+  kh_key(hashmap, pos) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos) =3D &value;
-+  kh_del_str(hashmap, pos);
-+  return !kh_exist(hashmap, pos);
-+}
-+
-+int deletion_from_hashmap_updates_size() {
-+  int ret, value =3D 14, current_size;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos) =3D &value;
-+  current_size =3D hashmap->size;
-+  kh_del_str(hashmap, pos);
-+  return hashmap->size + 1 =3D=3D current_size;
-+}
-+
-+int deletion_from_hashmap_does_not_update_kv() {
-+  int ret, value =3D 14, current_size;
-+  khint_t pos;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos) =3D &value;
-+  kh_del_str(hashmap, pos);
-+  return !strcmp(kh_key(hashmap, pos),"test_key");
-+}
-+
-+int update_value_after_deletion_succeeds() {
-+  int ret, value1 =3D 14, value2 =3D 15;
-+  khint_t pos1, pos2;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  // adding the kv to the hashmap
-+  pos1 =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos1) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos1) =3D &value1;
-+  // delete the kv from the hashmap
-+  kh_del_str(hashmap, pos1);
-+  // adding the same key with different value
-+  pos2 =3D kh_put_str(hashmap, "test_key", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos2) =3D xstrdup("test_key");
-+  kh_value(hashmap, pos2) =3D &value2;
-+  // check if the value is different
-+  return *kh_value(hashmap, kh_get_str(hashmap, "test_key")) =3D=3D value2=
-;
-+}
-+
-+int hashmap_size_matches_number_of_added_elements() {
-+  int ret, value1 =3D 14, value2 =3D 15, value3 =3D 16;
-+  khint_t pos1, pos2, pos3;
-+  kh_str_t *hashmap =3D kh_init_str();
-+  pos1 =3D kh_put_str(hashmap, "test_key1", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos1) =3D xstrdup("test_key1");
-+  kh_value(hashmap, pos1) =3D &value1;
-+  pos2 =3D kh_put_str(hashmap, "test_key2", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos2) =3D xstrdup("test_key2");
-+  kh_value(hashmap, pos2) =3D &value2;
-+  pos3 =3D kh_put_str(hashmap, "test_key3", &ret);
-+  if (!ret)
-+    return 0;
-+  kh_key(hashmap, pos3) =3D xstrdup("test_key3");
-+  kh_value(hashmap, pos3) =3D &value3;
-+  return kh_size(hashmap) =3D=3D 3;
-+}
-+
-+int main(void) {
-+  plan(14);
-+
-+  ok(hash_string_succeeds(), "X31 hash value of a string is correct");
-+  ok(hash_string_with_non_alphabets_succeeds(),
-+     "Get X31 hash value for a string with non-alphabets in it.");
-+  ok(initialized_hashmap_pointer_not_null(),
-+     "Successfully initialize a hashmap and it's not NULL");
-+  ok(put_key_into_hashmap_once_succeeds(),
-+     "Put a key into hashmap that doesn't exist.");
-+  ok(put_same_key_into_hashmap_twice_fails(),
-+     "Put a key into hashmap twice that causes collision.");
-+  ok(put_value_into_hashmap_once_succeeds(),
-+     "Put a unique key-value pair into hashmap.");
-+  ok(put_same_value_into_hashmap_twice_fails(),
-+     "Put a key-value pair into hashmap twice that causes collision.");
-+  ok(get_existing_kv_from_hashmap_succeeds(),
-+     "Get the value from a key that exists in hashmap");
-+  ok(get_nonexisting_kv_from_hashmap_fails(),
-+     "Get the value from a key that doesn't exist in hashmap");
-+  ok(deletion_from_hashmap_sets_flag(),
-+     "Delete the key-value from hashmap and the flag is set to false");
-+  ok(deletion_from_hashmap_updates_size(),
-+     "Delete the key-value from hashmap and the size changes");
-+  ok(deletion_from_hashmap_does_not_update_kv(),
-+     "Delete the key-value from hashmap but it can be fetched using iterat=
-or");
-+  ok(update_value_after_deletion_succeeds(),
-+     "Updates the value of a key after deleting it");
-+  ok(hashmap_size_matches_number_of_added_elements(),
-+     "size of hashmap is correct after adding 3 elements");
-+
-+  return 0;
-+}
---=20
-2.40.GIT
+abort(); does _exit(3); on Windows because there are no signals. This is 
+easily changed by providing abort like so:
+
+void abort() { _exit(131 /* or whatever else you think goes here */); }
 
