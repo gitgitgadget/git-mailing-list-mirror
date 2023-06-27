@@ -2,80 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4191EB64D7
-	for <git@archiver.kernel.org>; Mon, 26 Jun 2023 23:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1422BEB64D9
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 06:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbjFZXGR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jun 2023 19:06:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54630 "EHLO
+        id S229655AbjF0GvS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 02:51:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbjFZXGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2023 19:06:07 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FECA10DB
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 16:06:02 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BE4D1ABEB8;
-        Mon, 26 Jun 2023 19:06:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zB86Ii1H2jaHOHrojzcZPvF2KXnkgfFRPF9Dtl
-        0nBvg=; b=Bm6ynYmG8vippKbxjh19U6nLxcn7rkKeSk1xL7qxxvCHAfJtiv6YED
-        dXIbvGplJ5QAHuTFfvh8SGM7xEN+gmih9I70Rw3M9fUDETZkeY3fYV2DuZdapFzl
-        uZejnLpgfVyUN7xDyEt6uYO0jqD6Zvm2unfA/jhksF9y3CNtzKus8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D0B21ABEB7;
-        Mon, 26 Jun 2023 19:06:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.62.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B3881ABEB6;
-        Mon, 26 Jun 2023 19:05:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jesse Kasky <jkasky@slack-corp.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] config: don't BUG when both kvi and source are set
-References: <pull.1535.git.git.1687801297404.gitgitgadget@gmail.com>
-        <xmqq352e59h9.fsf@gitster.g>
-        <kl6l7crpsuhs.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Mon, 26 Jun 2023 16:05:58 -0700
-In-Reply-To: <kl6l7crpsuhs.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Mon, 26 Jun 2023 15:56:31 -0700")
-Message-ID: <xmqqh6qt4yeh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229629AbjF0GvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 02:51:16 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 174A49F
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 23:51:14 -0700 (PDT)
+Received: (qmail 27838 invoked by uid 109); 27 Jun 2023 06:51:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Jun 2023 06:51:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14353 invoked by uid 111); 27 Jun 2023 06:51:08 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Jun 2023 02:51:08 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Jun 2023 02:51:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Sebastian Schuberth <sschuberth@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Clean up stale .gitignore and .gitattribute patterns
+Message-ID: <20230627065103.GA1226768@coredump.intra.peff.net>
+References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
+ <20230624011234.GA95358@coredump.intra.peff.net>
+ <CAHGBnuPO63Hi8mfA+MkAGES-gs0eNCDPG2FcPZT=YsnVzKd30A@mail.gmail.com>
+ <xmqqo7l25ibw.fsf@gitster.g>
+ <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 03FBFB3A-1476-11EE-B086-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+On Mon, Jun 26, 2023 at 06:42:17PM +0200, Sebastian Schuberth wrote:
 
-> Ah, I meant that this bug occurred because most users of config use
-> git_config()/repo_config() (a wrapper around config sets), so it's very
-> easy to accidentally read repo config, e.g. in the middle of parsing
-> config (config file -> config set). I'd imagine it might also be quite
-> easy to read repo config while reading repo config (config set -> config
-> set), which would make current_config_* return the wrong thing, but at
-> least it doesn't BUG().
+> On Mon, Jun 26, 2023 at 5:55 PM Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> > > PS: As a future idea, it might be good if "git mv" gives a hint about
+> > > updating .gitattributes if files matching .gitattributes pattern are
+> > > moved.
+> >
+> > Interesting.  "git mv hello.jpg hello.jpeg" would suggest updating
+> > a "*.jpg <list of attribute definitions>" line in the .gitattributes
+> > to begin with "*.jpeg"?
+> 
+> Yes, right. Or as a simpler variant to start with (as patterns might
+> match files in different directories, and not all of the matching
+> files might be moved), just say that a specific .gitattributes line
+> needs updating (or needs to be duplicated / generalized in case files
+> in both the old and new location match).
 
-I think BUG() is better than silently computing a wrong result, but
-it would probably be much rare than the problem at hand, and with
-the getting rid of global dependencies, it won't be an issue anymore,
-hopefull?  So it is good.
+Yeah, I don't think we could ever do anything automated here; a human
+needs to judge the intent and how the patterns should be adapted.
 
-> The "reverse" case (config set -> config file) is very _unlikely_
-> because very few places need to know about config files, so it's
-> unlikely that we'd have an explicit call to parse a config file,
-> especially in the middle of reading repo config.
+But perhaps something like:
 
-As long as existing codepaths do not do that, it would be OK ;-)
+  1. When git-commit makes a new commit that removes paths (whether they
+     were totally removed, or renamed), find all gitattribute lines
+     whose patterns match those paths.
 
-Thanks.
+  2. For each such pattern, see if it still matches anything in the
+     resulting tree.
+
+  3. If not, print advise() lines showing the file/line of the pattern
+     which is no longer used.
+
+Doing so naively (by checking matches for each file in the tree) would
+be a little expensive, but maybe OK in practice. It could perhaps be
+done more efficiently with specialized code, but it might be tricky to
+right (and you still end up O(size of tree) in the worst case, because
+something like "*.jpg" needs to be compared against every entry).
+
+Of course on the way there you should end up with a decent tool for
+"which patterns are not currently used?". And you could just
+periodically run that manually if you want to clean up (or even from a
+post-commit hook).
+
+
+Re-reading your email, though, I wonder if you meant something a little
+simpler, like:
+
+  1. When a path is moved via git-mv, see if the attributes before/after
+     are the same.
+
+  2. If not, then mention which ones matched the old path via advise().
+
+That is probably easier to write, though it does not help the "git rm"
+case (where attributes may become obsolete).
+
+-Peff
