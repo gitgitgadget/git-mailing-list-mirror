@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFD52EB64D9
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 19:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B8D6C001B0
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 19:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230474AbjF0Tx3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 15:53:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56024 "EHLO
+        id S230488AbjF0Txd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 15:53:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbjF0TxU (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230415AbjF0TxU (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Jun 2023 15:53:20 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0647D10F5
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 12:53:19 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-55ac8fffd76so2572367a12.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 12:53:19 -0700 (PDT)
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B059295B
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 12:53:17 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 98e67ed59e1d1-2630c837b85so870087a91.2
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 12:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687895598; x=1690487598;
+        d=google.com; s=20221208; t=1687895597; x=1690487597;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Id5qH++otR8DcNfddDdY5YXdM3OYIMoGcTKZICpQL0=;
-        b=EU1x4V9NVtPxIUgk650J4V+dESu7aRiKD0i4WFKnEosniKDZq0E6oo3zXdgDXk9yIM
-         9sWXE4iwmz3TT32EXpwLxnoskegTwyJQQksH20Dg9kTz9obX345m0NHTnebx6nl3P9rB
-         79A65yfBdoZZdEklpWRbfFN4Ui2Llyt3gJfp9u/fs+h0RIJHeefgUtcdN5eJpfF8Ykei
-         KRoLnwpnLr/jFd40z9W6CF1KnOu+6QzjM7VSezwjilXuMRR+rB0mzRVkJgSj0KYBoNDJ
-         ITxKw3HqZzd3VqvBktqIqJd+Jthc3RpYPry9z1v31LTsls0JM2Ph7i8IC+7eDUoE/A9I
-         QsVw==
+        bh=LlVT+KPD+T9RWFovvrmKT61e3O814ep9SnoSsrWKRBw=;
+        b=H9Sm9yUsk6D2UanQjTmFEUkNW2oC1bAWAk9kqQ0MmmkzoutYoY4+MSUQSLogXorXk4
+         3+mD3dL83811C3+Dr0wSeM1JfB0/6LhxQvrcoRePtDr+oa/I7yZV+P8BeZkNkhNQL3Dm
+         R7InzHPu5kMHb0fj/OpyaPZbG7mqiMaGvyfjZqpgeO0kB63+ygSdRmwFgnZEfk45/+Ut
+         iTANnNq1ba8Jkcn3xS+6Our5JmTVgEC6WeYtWz/3uiAqhx/qscW0X6oQYw4US9Ika/wN
+         NZyiQztec9uYsx3yu0bzFPQrX+a1xzjDvY365qQdl8OvrhREv1EcpQ1I4d+aStwrQQNx
+         6mUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687895598; x=1690487598;
+        d=1e100.net; s=20221208; t=1687895597; x=1690487597;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Id5qH++otR8DcNfddDdY5YXdM3OYIMoGcTKZICpQL0=;
-        b=JyLdonR7Uo7bIgKCLt0uKxeGPSS1OHaAFQ7BJo9spdYE3HUSHkF2FcFwFK7UHj1+p4
-         bSiH/EdU++6reCp4+684hMPxCN8HQo5cHldidVWNhS6JUMSD7U4J67PiPYY31XU8wnPX
-         LmZRKBSWeCm/pcXBkpGAbo0aO9uSsCYDLntb2exIYEm0+gfn3VUocjIdS64NuQe8zcKR
-         WSPOnWu0o8KG02fegUBiqYeET9J4zHk08tafPL79Hdn4FmaTiXphuL9ABLaJEuXTsnEl
-         ub/Dwzrbv/CE4+Hxpz/BwSFmrN0ZlJG5L9vYQpUpyMXplw0DVN9XMbUZEDOSGHBM2VnZ
-         scGA==
-X-Gm-Message-State: AC+VfDz+xotJOzHW++FMNNUroxgevZXMFQm949OnlcQQwI5484RyZ1/C
-        zGmytMG2AZnToX3+pXbqGtOu5JualoxAQEbqAqbordbJYC+XkDfD+bGm0XLRLvZCgEaxyNnXGn8
-        HYzb4Q1PFPIFPIiwSjWJHlu+1pgoc/QiiTG5xLv9c0SP2+y8N0zgBRZ2MRV5UfBp1BA==
-X-Google-Smtp-Source: ACHHUZ62v9qWA5hRdqqjTFt2DjR84RiGSZDxZki9Txo30xK0tt/L0ETQmEKOnN1M6jKzwMSB7texF/Dl5YORFGs=
+        bh=LlVT+KPD+T9RWFovvrmKT61e3O814ep9SnoSsrWKRBw=;
+        b=YPghHqlOxDk926W8yZKzhXWSCBT11+tew3I1wOhf1eFjiafy7DyJF4RU4rXTfiL4oK
+         cUjF9z6ZcZ+2sySxnxaU7ld2ok8kL9bmhoo3SM8Y2LW2dA5/cO5+bF5076gLFCGTU7Zx
+         dDzI51W7ARSWpuJZUzBc8GsZ9XE8+S6D0MNukoHKFHOYJg6CK6uQp+VrWO9AbhSYE02S
+         B2WqFYdts6voqmIwGoWZKOPfJzXnZJrdX9lpnTVIDVlWNJWClRaX1+t8cHXBOl1aq5Je
+         I1wRGM8q+JjpOEcbx4+cF4HpIoBSrcDgCxQ16nYq0+I6oius1FfGRjwnzgkedbgr/DE7
+         ihPQ==
+X-Gm-Message-State: AC+VfDxrLySXa0Y3GdwqOij/EqPyG955Z09/TgC1M4XADSbECB0DvzKA
+        nRnDvkik3oMQAqVFL10TmXKTHd+IBNQgUs3QBYkFnO2ye/6/8lrATXLY1cwTzvC8jCj12h4kLxf
+        YL4XnmCBS20spIKCsjiCrdEz1i2blCMizsFjXPxMwfJngTuZkVZ0T0eUJZ/PN7ochcA==
+X-Google-Smtp-Source: ACHHUZ4FN2f++xtAjopizAA/F16dJer2fmB4+GxuP2OCE8dV/K44dmOhayR7YcS7RZm5EFK8GJVgRdra7CR1PEE=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a17:902:f111:b0:1b7:f077:c8e7 with SMTP
- id e17-20020a170902f11100b001b7f077c8e7mr1528975plb.11.1687895598473; Tue, 27
- Jun 2023 12:53:18 -0700 (PDT)
-Date:   Tue, 27 Jun 2023 19:52:51 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:90a:f013:b0:262:e6b6:e0b1 with SMTP
+ id bt19-20020a17090af01300b00262e6b6e0b1mr1099268pjb.4.1687895596983; Tue, 27
+ Jun 2023 12:53:16 -0700 (PDT)
+Date:   Tue, 27 Jun 2023 19:52:50 +0000
 In-Reply-To: <20230627195251.1973421-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230627195251.1973421-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
-Message-ID: <20230627195251.1973421-9-calvinwan@google.com>
-Subject: [RFC PATCH 8/8] git-std-lib: add test file to call git-std-lib.a functions
+Message-ID: <20230627195251.1973421-8-calvinwan@google.com>
+Subject: [RFC PATCH 7/8] git-std-lib: introduce git standard library
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, nasamuffin@google.com,
@@ -62,279 +62,344 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add test file that directly or indirectly calls all functions defined in
-git-std-lib.a object files to showcase that they do not reference
-missing objects and that git-std-lib.a can stand on its own.
+The Git Standard Library intends to serve as the foundational library
+and root dependency that other libraries in Git will be built off of.
+That is to say, suppose we have libraries X and Y; a user that wants to
+use X and Y would need to include X, Y, and this Git Standard Library.
 
-Certain functions that cause the program to exit or are already called
-by other functions are commented out.
+Add Documentation/technical/git-std-lib.txt to further explain the
+design and rationale.
 
-TODO: replace with unit tests
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- t/Makefile      |   4 +
- t/stdlib-test.c | 239 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 243 insertions(+)
- create mode 100644 t/stdlib-test.c
+ Documentation/technical/git-std-lib.txt | 182 ++++++++++++++++++++++++
+ Makefile                                |  28 +++-
+ git-compat-util.h                       |   7 +-
+ symlinks.c                              |   2 +
+ usage.c                                 |   8 ++
+ 5 files changed, 225 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/technical/git-std-lib.txt
 
-diff --git a/t/Makefile b/t/Makefile
-index 3e00cdd801..b6d0bc9daa 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -150,3 +150,7 @@ perf:
- 
- .PHONY: pre-clean $(T) aggregate-results clean valgrind perf \
- 	check-chainlint clean-chainlint test-chainlint
-+
-+test-git-std-lib:
-+	cc -It -o stdlib-test stdlib-test.c -L. -l:../git-std-lib.a
-+	./stdlib-test
-diff --git a/t/stdlib-test.c b/t/stdlib-test.c
+diff --git a/Documentation/technical/git-std-lib.txt b/Documentation/technical/git-std-lib.txt
 new file mode 100644
-index 0000000000..0e4f6d5807
+index 0000000000..3dce36c9f9
 --- /dev/null
-+++ b/t/stdlib-test.c
-@@ -0,0 +1,239 @@
-+#include "../git-compat-util.h"
-+#include "../abspath.h"
-+#include "../hex-ll.h"
-+#include "../parse.h"
-+#include "../strbuf.h"
-+#include "../string-list.h"
++++ b/Documentation/technical/git-std-lib.txt
+@@ -0,0 +1,182 @@
++Git Standard Library
++================
 +
-+/*
-+ * Calls all functions from git-std-lib
-+ * Some inline/trivial functions are skipped
-+ */
++The Git Standard Library intends to serve as the foundational library
++and root dependency that other libraries in Git will be built off of.
++That is to say, suppose we have libraries X and Y; a user that wants to
++use X and Y would need to include X, Y, and this Git Standard Library.
++This does not mean that the Git Standard Library will be the only
++possible root dependency in the future, but rather the most significant
++and widely used one.
 +
-+void abspath_funcs(void) {
-+	struct strbuf sb = STRBUF_INIT;
++Dependency graph in libified Git
++================
 +
-+	fprintf(stderr, "calling abspath functions\n");
-+	is_directory("foo");
-+	strbuf_realpath(&sb, "foo", 0);
-+	strbuf_realpath_forgiving(&sb, "foo", 0);
-+	real_pathdup("foo", 0);
-+	absolute_path("foo");
-+	absolute_pathdup("foo");
-+	prefix_filename("foo/", "bar");
-+	prefix_filename_except_for_dash("foo/", "bar");
-+	is_absolute_path("foo");
-+	strbuf_add_absolute_path(&sb, "foo");
-+	strbuf_add_real_path(&sb, "foo");
-+}
++If you look in the Git Makefile, all of the objects defined in the Git
++library are compiled and archived into a singular file, libgit.a, which
++is linked against by common-main.o with other external dependencies and
++turned into the Git executable. In other words, the Git executable has
++dependencies on libgit.a and a couple of external libraries. The
++libfication of Git will not affect this current build flow, but instead
++will provide an alternate method for building Git.
 +
-+void hex_ll_funcs(void) {
-+	unsigned char c;
++With our current method of building Git, we can imagine the dependency
++graph as such:
 +
-+	fprintf(stderr, "calling hex-ll functions\n");
++        Git
++         /\
++        /  \
++       /    \
++  libgit.a   ext deps
 +
-+	hexval('c');
-+	hex2chr("A1");
-+	hex_to_bytes(&c, "A1", 2);
-+}
++In libifying parts of Git, we want to shrink the dependency graph to
++only the minimal set of dependencies, so libraries should not use
++libgit.a. Instead, it would look like:
 +
-+void parse_funcs(void) {
-+	intmax_t foo;
-+	ssize_t foo1 = -1;
-+	unsigned long foo2;
-+	int foo3;
-+	int64_t foo4;
++                Git
++                /\
++               /  \
++              /    \
++          libgit.a  ext deps
++             /\
++            /  \
++           /    \
++object-store.a  (other lib)
++      |        /
++      |       /
++      |      /
++ config.a   / 
++      |    /
++      |   /
++      |  /
++git-std-lib.a
 +
-+	fprintf(stderr, "calling parse functions\n");
++Instead of containing all of the objects in Git, libgit.a would contain
++objects that are not built by libraries it links against. Consequently,
++if someone wanted their own custom build of Git with their own custom
++implementation of the object store, they would only have to swap out
++object-store.a rather than do a hard fork of Git.
 +
-+	git_parse_signed("42", &foo, maximum_signed_value_of_type(int));
-+	git_parse_ssize_t("42", &foo1);
-+	git_parse_ulong("42", &foo2);
-+	git_parse_int("42", &foo3);
-+	git_parse_int64("42", &foo4);
-+	git_parse_maybe_bool("foo");
-+	git_parse_maybe_bool_text("foo");
-+	git_env_bool("foo", 1);
-+	git_env_ulong("foo", 1);
-+}
++Rationale behind Git Standard Library
++================
 +
-+static int allow_unencoded_fn(char ch) {
-+	return 0;
-+}
++The rationale behind Git Standard Library essentially is the result of
++two observations within the Git codebase: every file includes
++git-compat-util.h which defines functions in a couple of different
++files, and wrapper.c + usage.c have difficult-to-separate circular
++dependencies with each other and other files.
 +
-+void strbuf_funcs(void) {
-+	struct strbuf *sb = xmalloc(sizeof(void*));
-+	struct strbuf *sb2 = xmalloc(sizeof(void*));
-+	struct strbuf sb3 = STRBUF_INIT;
-+	struct string_list list = STRING_LIST_INIT_NODUP;
-+	char *buf = "foo";
-+	struct strbuf_expand_dict_entry dict[] = {
-+		{ "foo", NULL, },
-+		{ "bar", NULL, },
-+	};
-+	int fd = open("/dev/null", O_RDONLY);
++Ubiquity of git-compat-util.h and circular dependencies
++========
 +
-+	fprintf(stderr, "calling strbuf functions\n");
++Every file in the Git codebase includes git-compat-util.h. It serves as
++"a compatibility aid that isolates the knowledge of platform specific
++inclusion order and what feature macros to define before including which
++system header" (Junio[1]). Since every file includes git-compat-util.h, and
++git-compat-util.h includes wrapper.h and usage.h, it would make sense
++for wrapper.c and usage.c to be a part of the root library. They have
++difficult to separate circular dependencies with each other so they
++can't be independent libraries. Wrapper.c has dependencies on parse.c,
++abspath.c, strbuf.c, which in turn also have dependencies on usage.c and
++wrapper.c -- more circular dependencies. 
 +
-+	starts_with("foo", "bar");
-+	istarts_with("foo", "bar");
-+	// skip_to_optional_arg_default(const char *str, const char *prefix,
-+	// 			 const char **arg, const char *def)
-+	strbuf_init(sb, 0);
-+	strbuf_init(sb2, 0);
-+	strbuf_release(sb);
-+	strbuf_attach(sb, strbuf_detach(sb, NULL), 0, 0); // calls strbuf_grow
-+	strbuf_swap(sb, sb2);
-+	strbuf_setlen(sb, 0);
-+	strbuf_trim(sb); // calls strbuf_rtrim, strbuf_ltrim
-+	// strbuf_rtrim() called by strbuf_trim()
-+	// strbuf_ltrim() called by strbuf_trim()
-+	strbuf_trim_trailing_dir_sep(sb);
-+	strbuf_trim_trailing_newline(sb);
-+	strbuf_reencode(sb, "foo", "bar");
-+	strbuf_tolower(sb);
-+	strbuf_add_separated_string_list(sb, " ", &list);
-+	strbuf_list_free(strbuf_split_buf("foo bar", 8, ' ', -1));
-+	strbuf_cmp(sb, sb2);
-+	strbuf_addch(sb, 1);
-+	strbuf_splice(sb, 0, 1, "foo", 3);
-+	strbuf_insert(sb, 0, "foo", 3);
-+	// strbuf_vinsertf() called by strbuf_insertf
-+	strbuf_insertf(sb, 0, "%s", "foo"); 
-+	strbuf_remove(sb, 0, 1);
-+	strbuf_add(sb, "foo", 3);
-+	strbuf_addbuf(sb, sb2);
-+	strbuf_join_argv(sb, 0, NULL, ' ');
-+	strbuf_addchars(sb, 1, 1);
-+	strbuf_addf(sb, "%s", "foo");
-+	strbuf_add_commented_lines(sb, "foo", 3, '#');
-+	strbuf_commented_addf(sb, '#', "%s", "foo");
-+	// strbuf_vaddf() called by strbuf_addf()
-+	strbuf_expand(sb, "%s", strbuf_expand_literal_cb, NULL);
-+	strbuf_expand(sb, "%s", strbuf_expand_dict_cb, &dict);
-+	// strbuf_expand_literal_cb() called by strbuf_expand()
-+	// strbuf_expand_dict_cb() called by strbuf_expand()
-+	strbuf_addbuf_percentquote(sb, &sb3);
-+	strbuf_add_percentencode(sb, "foo", STRBUF_ENCODE_SLASH);
-+	strbuf_fread(sb, 0, stdin);
-+	strbuf_read(sb, fd, 0);
-+	strbuf_read_once(sb, fd, 0);
-+	strbuf_write(sb, stderr);
-+	strbuf_readlink(sb, "/dev/null", 0);
-+	strbuf_getcwd(sb);
-+	strbuf_getwholeline(sb, stderr, '\n');
-+	strbuf_appendwholeline(sb, stderr, '\n');
-+	strbuf_getline(sb, stderr);
-+	strbuf_getline_lf(sb, stderr);
-+	strbuf_getline_nul(sb, stderr);
-+	strbuf_getwholeline_fd(sb, fd, '\n');
-+	strbuf_read_file(sb, "/dev/null", 0);
-+	strbuf_add_lines(sb, "foo", "bar", 0);
-+	strbuf_addstr_xml_quoted(sb, "foo");
-+	strbuf_addstr_urlencode(sb, "foo", allow_unencoded_fn);
-+	strbuf_humanise_bytes(sb, 42);
-+	strbuf_humanise_rate(sb, 42);
-+	printf_ln("%s", sb);
-+	fprintf_ln(stderr, "%s", sb);
-+	xstrdup_tolower("foo");
-+	xstrdup_toupper("foo");
-+	// xstrvfmt() called by xstrfmt()
-+	xstrfmt("%s", "foo");
-+	// strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
-+	// 	     int tz_offset, int suppress_tz_name)
-+	// strbuf_stripspace(struct strbuf *sb, char comment_line_char)
-+	// strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
-+	// strbuf_strip_file_from_path(struct strbuf *sb)
-+}
++Tradeoff between swappability and refactoring
++========
 +
-+static void error_builtin(const char *err, va_list params) {}
-+static void warn_builtin(const char *err, va_list params) {}
++From the above dependency graph, we can see that git-std-lib.a could be
++many smaller libraries rather than a singular library. So why choose a
++singular library when multiple libraries can be individually easier to
++swap and are more modular? A singular library requires less work to
++separate out circular dependencies within itself so it becomes a
++tradeoff question between work and reward. While there may be a point in
++the future where a file like usage.c would want its own library so that
++someone can have custom die() or error(), the work required to refactor
++out the circular dependencies in some files would be enormous due to
++their ubiquity so therefore I believe it is not worth the tradeoff
++currently. Additionally, we can in the future choose to do this refactor
++and change the API for the library if there becomes enough of a reason
++to do so (remember we are avoiding promising stability of the interfaces
++of those libraries).
 +
-+static report_fn error_routine = error_builtin;
-+static report_fn warn_routine = warn_builtin;
++Reuse of compatibility functions in git-compat-util.h
++========
 +
-+void usage_funcs(void) {
-+	fprintf(stderr, "calling usage functions\n");
-+	// Functions that call exit() are commented out
++Most functions defined in git-compat-util.h are implemented in compat/
++and have dependencies limited to strbuf.h and wrapper.h so they can be
++easily included in git-std-lib.a, which as a root dependency means that
++higher level libraries do not have to worry about compatibility files in
++compat/. The rest of the functions defined in git-compat-util.h are
++implemented in top level files and, in this patch set, are hidden behind
++an #ifdef if their implementation is not in git-std-lib.a.
 +
-+	// usage()
-+	// usagef()
-+	// die()
-+	// die_errno();
-+	error("foo");
-+	error_errno("foo");
-+	die_message("foo");
-+	die_message_errno("foo");
-+	warning("foo");
-+	warning_errno("foo");
++Rationale summary
++========
 +
-+	// set_die_routine();
-+	get_die_message_routine();
-+	set_error_routine(error_builtin);
-+	get_error_routine();
-+	set_warn_routine(warn_builtin);
-+	get_warn_routine();
-+	// set_die_is_recursing_routine();
-+}
++The Git Standard Library allows us to get the libification ball rolling
++with other libraries in Git. By not spending many
++more months attempting to refactor difficult circular dependencies and
++instead spending that time getting to a state where we can test out
++swapping a library out such as config or object store, we can prove the
++viability of Git libification on a much faster time scale. Additionally
++the code cleanups that have happened so far have been minor and
++beneficial for the codebase. It is probable that making large movements
++would negatively affect code clarity.
 +
-+void wrapper_funcs(void) {
-+	void *ptr = xmalloc(1);
-+	int fd = open("/dev/null", O_RDONLY);
-+	struct strbuf sb = STRBUF_INIT;
-+	int mode = 0444;
-+	char host[PATH_MAX], path[PATH_MAX], path1[PATH_MAX];
-+	xsnprintf(path, sizeof(path), "out-XXXXXX");
-+	xsnprintf(path1, sizeof(path1), "out-XXXXXX");
-+	int tmp;
++Git Standard Library boundary
++================
 +
-+	fprintf(stderr, "calling wrapper functions\n");
++While I have described above some useful heuristics for identifying
++potential candidates for git-std-lib.a, a standard library should not
++have a shaky definition for what belongs in it.
 +
-+	xstrdup("foo");
-+	xmalloc(1);
-+	xmallocz(1);
-+	xmallocz_gently(1);
-+	xmemdupz("foo", 3);
-+	xstrndup("foo", 3);
-+	xrealloc(ptr, 2);
-+	xcalloc(1, 1);
-+	xsetenv("foo", "bar", 0);
-+	xopen("/dev/null", O_RDONLY);
-+	xread(fd, &sb, 1);
-+	xwrite(fd, &sb, 1);
-+	xpread(fd, &sb, 1, 0);
-+	xdup(fd);
-+	xfopen("/dev/null", "r");
-+	xfdopen(fd, "r");
-+	tmp = xmkstemp(path);
-+	close(tmp);
-+	unlink(path);
-+	tmp = xmkstemp_mode(path1, mode);
-+	close(tmp);
-+	unlink(path1);
-+	xgetcwd();
-+	fopen_for_writing(path);
-+	fopen_or_warn(path, "r");
-+	xstrncmpz("foo", "bar", 3);
-+	// xsnprintf() called above
-+	xgethostname(host, 3);
-+	tmp = git_mkstemps_mode(path, 1, mode);
-+	close(tmp);
-+	unlink(path);
-+	tmp = git_mkstemp_mode(path, mode);
-+	close(tmp);
-+	unlink(path);
-+	read_in_full(fd, &sb, 1);
-+	write_in_full(fd, &sb, 1);
-+	pread_in_full(fd, &sb, 1, 0);	
-+}
++ - Low-level files (aka operates only on other primitive types) that are
++   used everywhere within the codebase (wrapper.c, usage.c, strbuf.c)
++   - Dependencies that are low-level and widely used
++     (abspath.c, date.c, hex-ll.c, parse.c, utf8.c)
++ - low-level git/* files with functions defined in git-compat-util.h
++   (ctype.c)
++ - compat/*
 +
-+int main() {
-+	abspath_funcs();
-+	hex_ll_funcs();
-+	parse_funcs();
-+	strbuf_funcs();
-+	usage_funcs();
-+	wrapper_funcs();
-+	fprintf(stderr, "all git-std-lib functions finished calling\n");
-+	return 0;
-+}
++There are other files that might fit this definition, but that does not
++mean it should belong in git-std-lib.a. Those files should start as
++their own separate library since any file added to git-std-lib.a loses
++its flexibility of being easily swappable.
++
++Files inside of Git Standard Library
++================
++
++The initial set of files in git-std-lib.a are:
++abspath.c
++ctype.c
++date.c
++hex-ll.c
++parse.c
++strbuf.c
++usage.c
++utf8.c
++wrapper.c
++relevant compat/ files
++
++Pitfalls
++================
++
++In patch 7, I use #ifdef GIT_STD_LIB to both stub out code and hide
++certain function headers. As other parts of Git are libified, if we
++have to use more ifdefs for each different library, then the codebase
++will become uglier and harder to understand. 
++
++There are a small amount of files under compat/* that have dependencies
++not inside of git-std-lib.a. While those functions are not called on
++Linux, other OSes might call those problematic functions. I don't see
++this as a major problem, just moreso an observation that libification in
++general may also require some minor compatibility work in the future.
++
++Testing
++================
++
++Unit tests should catch any breakages caused by changes to files in
++git-std-lib.a (i.e. introduction of a out of scope dependency) and new
++functions introduced to git-std-lib.a will require unit tests written
++for them.
++
++[1] https://lore.kernel.org/git/xmqqwn17sydw.fsf@gitster.g/
 \ No newline at end of file
+diff --git a/Makefile b/Makefile
+index e9ad9f9ef1..255bd10b82 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2162,6 +2162,11 @@ ifdef FSMONITOR_OS_SETTINGS
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
+ endif
+ 
++ifdef GIT_STD_LIB
++	BASIC_CFLAGS += -DGIT_STD_LIB
++	BASIC_CFLAGS += -DNO_GETTEXT
++endif
++
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK = NoThanks
+ endif
+@@ -3654,7 +3659,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) po/git.pot po/git-core.pot
+ 	$(RM) git.res
+ 	$(RM) $(OBJECTS)
+-	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
++	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB) $(STD_LIB_FILE)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+@@ -3834,3 +3839,24 @@ $(FUZZ_PROGRAMS): all
+ 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+ 
+ fuzz-all: $(FUZZ_PROGRAMS)
++
++### Libified Git rules
++
++# git-std-lib
++# `make git-std-lib GIT_STD_LIB=YesPlease`
++STD_LIB = git-std-lib.a
++
++GIT_STD_LIB_OBJS += abspath.o
++GIT_STD_LIB_OBJS += ctype.o
++GIT_STD_LIB_OBJS += date.o
++GIT_STD_LIB_OBJS += hex-ll.o
++GIT_STD_LIB_OBJS += parse.o
++GIT_STD_LIB_OBJS += strbuf.o
++GIT_STD_LIB_OBJS += usage.o
++GIT_STD_LIB_OBJS += utf8.o
++GIT_STD_LIB_OBJS += wrapper.o
++
++$(STD_LIB): $(GIT_STD_LIB_OBJS) $(COMPAT_OBJS)
++	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
++
++git-std-lib: $(STD_LIB)
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 481dac22b0..75aa9b263e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -396,8 +396,8 @@ static inline int noop_core_config(const char *var UNUSED,
+ #define platform_core_config noop_core_config
+ #endif
+ 
++#if !defined(__MINGW32__) && !defined(_MSC_VER) && !defined(GIT_STD_LIB)
+ int lstat_cache_aware_rmdir(const char *path);
+-#if !defined(__MINGW32__) && !defined(_MSC_VER)
+ #define rmdir lstat_cache_aware_rmdir
+ #endif
+ 
+@@ -787,9 +787,11 @@ const char *inet_ntop(int af, const void *src, char *dst, size_t size);
+ #endif
+ 
+ #ifdef NO_PTHREADS
++#ifdef GIT_STD_LIB
+ #define atexit git_atexit
+ int git_atexit(void (*handler)(void));
+ #endif
++#endif
+ 
+ /*
+  * Limit size of IO chunks, because huge chunks only cause pain.  OS X
+@@ -951,14 +953,17 @@ int git_access(const char *path, int mode);
+ # endif
+ #endif
+ 
++#ifndef GIT_STD_LIB
+ int cmd_main(int, const char **);
+ 
+ /*
+  * Intercept all calls to exit() and route them to trace2 to
+  * optionally emit a message before calling the real exit().
+  */
++
+ int common_exit(const char *file, int line, int code);
+ #define exit(code) exit(common_exit(__FILE__, __LINE__, (code)))
++#endif
+ 
+ /*
+  * You can mark a stack variable with UNLEAK(var) to avoid it being
+diff --git a/symlinks.c b/symlinks.c
+index b29e340c2d..bced721a0c 100644
+--- a/symlinks.c
++++ b/symlinks.c
+@@ -337,6 +337,7 @@ void invalidate_lstat_cache(void)
+ 	reset_lstat_cache(&default_cache);
+ }
+ 
++#if !defined(__MINGW32__) && !defined(_MSC_VER) && !defined(GIT_STD_LIB)
+ #undef rmdir
+ int lstat_cache_aware_rmdir(const char *path)
+ {
+@@ -348,3 +349,4 @@ int lstat_cache_aware_rmdir(const char *path)
+ 
+ 	return ret;
+ }
++#endif
+diff --git a/usage.c b/usage.c
+index 09f0ed509b..58994e0d5c 100644
+--- a/usage.c
++++ b/usage.c
+@@ -5,7 +5,15 @@
+  */
+ #include "git-compat-util.h"
+ #include "gettext.h"
++
++#ifdef GIT_STD_LIB
++#undef trace2_cmd_name
++#undef trace2_cmd_error_va
++#define trace2_cmd_name(x) 
++#define trace2_cmd_error_va(x, y)
++#else
+ #include "trace2.h"
++#endif
+ 
+ static void vreportf(const char *prefix, const char *err, va_list params)
+ {
 -- 
 2.41.0.162.gfafddb0af9-goog
 
