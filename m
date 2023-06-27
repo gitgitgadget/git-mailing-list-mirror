@@ -2,123 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61AF2EB64D9
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 12:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73BBEEB64D9
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 13:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjF0MC0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 08:02:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60656 "EHLO
+        id S229567AbjF0NOI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 09:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231819AbjF0MCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 08:02:19 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5599719B0
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 05:02:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1687867324; x=1688472124; i=johannes.schindelin@gmx.de;
- bh=GXEWYMb46OZQ36y7WkP7hZyAm7SK5zkCijp56+ACmxY=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=L/UOupTz5rgLKvztConeHUCcref3Z7ypTBOKfZhMQ4a5QdkA9kSes3dz+0tTZUYYbb5qgiX
- u5zLVNtHaQxnquHdjTy82Js7F+zKhsFkl2bna64fa74/XcHjXjdElizKZO0ayPWeOKpZFUkq9
- 3/Bwc6q8A/o+KvGPgYyJrqobIOJuxjH3cl1I6Ei2M635toU7tXYSRiwirxLrQf051fUpS7IrK
- XO6LndCY49SCMF9IZMg9DdGogmzPDf6b+2py/N/e/PmiZpHiQwHijO4xrJW7BkzYWaRusRRTQ
- DBIpRtA2SKZPVGv1K7P2LmwS64J9krH7hVYjXbK6XIm7p51R7/1A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.221]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3DO3-1qDHNZ12fV-003fA0; Tue, 27
- Jun 2023 14:02:04 +0200
-Date:   Tue, 27 Jun 2023 14:02:02 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Joshua Hudson <jhudson@cedaron.com>
-Subject: Re: [PATCH] ll-merge: killing the external merge driver aborts the
- merge
-In-Reply-To: <xmqqjzvt92nw.fsf@gitster.g>
-Message-ID: <59b7a582-be68-3f7b-a06f-3bd662582a1d@gmx.de>
-References: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>        <xmqqttuze2fh.fsf@gitster.g> <xmqq4jmzc91e.fsf_-_@gitster.g>        <CABPp-BG-KDu0fAC=bydz9A56xguSmgwO6SFDdxZ8h=90qR1PUA@mail.gmail.com>        <xmqqv8feb0vo.fsf@gitster.g>
- <xmqqjzvt92nw.fsf@gitster.g>
+        with ESMTP id S229562AbjF0NOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 09:14:05 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35DDF2D6A
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 06:13:41 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f8775126d3so6207647e87.1
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 06:13:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687871618; x=1690463618;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q6IEjss20wL554bR5oXYFukejVv5/6q7pY2OxKYBvtQ=;
+        b=rNmd+Tw+2VmVq2ZA8VrzsD4xtZgEkJQl8nsn0UU4mMHQX4z9T7kOGeVX9b+XKmjZOF
+         X6qTaJ7N/yDFXmcMEuhwvuQGkN72gGLsMnfwnIuVoX5CLneMrAFuEnLa5fle92vHsRIx
+         ysULRnJW1g0XLkVCIuX+n5KlmEwABvp4LtAJ8vfU4YUdrsulhXx+BNPUOg7U7rMVLcQt
+         MQgRDhqJPHO3sggXB7EFJYL/kR5O4INVBOhIcDq5TXOTpXJSOKsFWbXFeGR+qcKdqIOY
+         vJnZr2TUTzLQyZKzyO6FUQp9AZYrqmsTyTOwVfPcvcnB5zNejyeiP3OCo/1svm42U6JX
+         0Ghw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687871618; x=1690463618;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q6IEjss20wL554bR5oXYFukejVv5/6q7pY2OxKYBvtQ=;
+        b=WEefrrOG5bl7TmBYjNPRv6YT5aFvU7iUeCUeqFPfH3wfyDUeomp8F6oOjLIvua9ABF
+         cddEWrjlr7RimpdInhzncSiiwKHg2rmQEgz51wF6z4+WMCxsdiHWuGk/JuyHvmLGRD+k
+         pWbQbz8weGAIAJ7xS78mfXNs17YnDhs00ImLsFjHb/M4DmI8mroQosYosa+8JPHcVI+f
+         QehRSPocmhsCtfXg8DCtE7jzgcFwxf7h66ckK5undcWhJ/h9NuUjtBUX8lw36DBM61I3
+         oWhsuLsjzHy8SRuTnP9PVOYEkyQkW+vDlB3/crXFMpwLPRQ2/bi3Nsev3tvu28dbnt1D
+         IUGg==
+X-Gm-Message-State: AC+VfDyV0nZpllN56kW38i8xmFvjFGkYw6xidQ1Yh7pv80P5Rnpbn/fa
+        T5PGYqHhljyjQ1a8kmGwz/M=
+X-Google-Smtp-Source: ACHHUZ5DFgT3cHC0NC8EXWWgXTUr/JqH9zK5qSp3uvXKN6LzCRqCupWTOFjd5Xwo7zAUEvnYa2qg9w==
+X-Received: by 2002:ac2:4f13:0:b0:4f9:6b06:129e with SMTP id k19-20020ac24f13000000b004f96b06129emr10154637lfr.65.1687871618233;
+        Tue, 27 Jun 2023 06:13:38 -0700 (PDT)
+Received: from [192.168.1.195] ([90.242.235.211])
+        by smtp.googlemail.com with ESMTPSA id p9-20020a05600c204900b003f93c450657sm10720188wmg.38.2023.06.27.06.13.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jun 2023 06:13:37 -0700 (PDT)
+Message-ID: <adbeb217-a30b-8193-4dad-b3efa0b4da05@gmail.com>
+Date:   Tue, 27 Jun 2023 14:13:36 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M7BTeSG2H+i5J274dysvdBiSd3RHa1z9r43C+KT0qW2Tt8LGM4Q
- o1cGn/ted/RbmLpatxprArjXY1RUwp4e7GlrN32dyi+7uGhR/bS86hiAok0zvxQ8qHPEces
- jZpLQt/iK4HNiSNt+e7hoa7ADCoNI0DvSsZ8YRwrns5Un+WJ41H8qdfa8lZ69z6EpsGHz2M
- aDQNMHNJ/VzTOxkUPhhOA==
-UI-OutboundReport: notjunk:1;M01:P0:fkZrvsmy8rU=;f1qLYLu0mgYFIlpn7cDtLxoAjGN
- OmmouKpiWaecXnbYQzMrQhh9N79U3RXrKlFJ6VIZrjJrj2XdqZitWu87gOS9UxK+049xRhF6b
- mNRADoxo0vdbW+n9ObH4ohEsaKjDT094IEMVXAkoco9F/UKs+8OSOJ+5Ux4YH5euvs7119+/h
- ypa0GNF0V3MFdEGnU6hsnF2M55loa5cDXePG6VM2dE3NcBUfuYFkpLkQ3BO1JTrji2GZZUBvV
- LVTetI7pYMmS3QR2/5WzZ5O6EZNpAI7zBAW9TBVWddD9kjkrTQ3d0Hb7ZrR9n7lie+QKRjnVv
- KuuIHAt7QMXLFaMX9Vd2jUK4Q9y7Py/EaVIa2C3m1rJ37YM/ntMKhEmjRwaK89NTZem7py7de
- KoyxsvM4GZVpoNLypN2lSV99h6AMnoob9/aw1YCySqONclKLvhzZXkHRx2QQoSgznzadfuAZQ
- 1Da0QwZ6dEcVWWn8LHdJtiyQBeeRyWeutvNW17U++QZ+ZxRvRx4WJhJ7WnBBeRuXKkGsLXw9Z
- 3p2ysULaRX/AQ2bp6+y/jeUctCvYi9rprPAVs2KQIKzizOMqBj4RH8AnTuf+V0dgCyktyRRwR
- Md6thRFv4eT1q3cXRRavZ7O8xYTB3cKZGc43w/elnwMuPOiXaksOJ+lKsd4GYU2gsNxUSX5ER
- LG5TRmEpURtR5yhG04DQVbDD3z0V5drCq0nYTGcbA6ldl/8UZXn8iv7aKyOynTcoG0MSf0W2Q
- XYJoITM3yjHbwcdxdrbsbP2t4Heuw9gm2k2e6D1+o9KJl3Ua5RmuMvlQa+EpdMYlGWp12RdjT
- UGY8479kDL4dgWBbiTDNiLzniPxxVhKjrM/iGZ2cHfrGiUH87I/iEobwiMduENP7VyNjht8Az
- zvMcF92qLF4Y5jAbo3Sm/xVh5Lswt90vZceYygTybLaS3oZlcmhVQqK9bLCLi3YbDpmtMcr99
- e2ZusacS4V6WC0jQs446iiR0iAo=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] fix cherry-pick/revert status when doing multiple commits
+Content-Language: en-US
+To:     Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+References: <20230621220754.126704-1-jacob.e.keller@intel.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230621220754.126704-1-jacob.e.keller@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Jacob
 
+On 21/06/2023 23:07, Jacob Keller wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+> 
+> The status report for an in-progress cherry-pick does not show the
+> current commit if the cherry-pick happens as part of a series of
+> multiple commits:
+> 
+>   $ git cherry-pick <commit1> <commit2>
+>   < one of the cherry-picks fails to merge clean >
+>   Cherry-pick currently in progress.
+>    (run "git cherry-pick --continue" to continue)
+>    (use "git cherry-pick --skip" to skip this patch)
+>    (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+> 
+>   $ git status
+>   On branch <branch>
+>   Your branch is ahead of '<upstream>' by 1 commit.
+>     (use "git push" to publish your local commits)
+> 
+>   Cherry-pick currently in progress.
+>     (run "git cherry-pick --continue" to continue)
+>     (use "git cherry-pick --skip" to skip this patch)
+>     (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+> 
+> The show_cherry_pick_in_progress() function prints "Cherry-pick
+> currently in progress". That function does have a more verbose print
+> based on whether the cherry_pick_head_oid is null or not. If it is not
+> null, then a more helpful message including which commit is actually
+> being picked is displayed.
+> 
+> The introduction of the "Cherry-pick currently in progress" message
+> comes from 4a72486de97b ("fix cherry-pick/revert status after commit",
+> 2019-04-17). This commit modified wt_status_get_state() in order to
+> detect that a cherry-pick was in progress even if the user has used `git
+> commit` in the middle of the sequence.
+> 
+> The check used to detect this is the call to sequencer_get_last_command.
+> If the sequencer indicates that the lass command was a REPLAY_PICK, then
+> the state->cherry_pick_in_progress is set to 1 and the
+> cherry_pick_head_oid is initialized to the null_oid. Similar behavior is
+> done for the case of REPLAY_REVERT.
+> 
+> It happens that this call of sequencer_get_last_command will always
+> report the action even if the user hasn't interrupted anything. Thus,
+> during a range of cherry-picks or reverts, the cherry_pick_head_oid and
+> revert_head_oid will always be overwritten and initialized to the null
+> oid.
+> 
+> This results in status always displaying the terse message which does
+> not include commit information.
+> 
+> Fix this by adding an additional check so that we do not re-initialize
+> the cherry_pick_head_oid or revert_head_oid if we have already set the
+> cherry_pick_in_progress or revert_in_progress bits. This ensures that
+> git status will display the more helpful information when its available.
+> Add a test case covering this behavior.
 
-On Fri, 23 Jun 2023, Junio C Hamano wrote:
+Thanks for the detailed explanation, I agree with your diagnosis and 
+fix. The test case you mention seems to be missing though. I've left one 
+small comment below
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> >> Reviewed-by: Elijah Newren <newren@gmail.com>
-> >
-> >
-> > Thanks for a quick review.
->
-> Unfortunately Windows does not seem to correctly detect the aborting
-> merge driver.  Does run_command() there report process death due to
-> signals differently, I wonder?
->
-> https://github.com/git/git/actions/runs/5360400800/jobs/9725341775#step:=
-6:285
->
-> shows that on Windows, aborted external merge driver is not noticed
-> and we happily take the auto-merged result, ouch.
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>   wt-status.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/wt-status.c b/wt-status.c
+> index 068b76ef6d96..1e2daca73024 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1790,10 +1790,11 @@ void wt_status_get_state(struct repository *r,
+>   		oidcpy(&state->revert_head_oid, &oid);
+>   	}
+>   	if (!sequencer_get_last_command(r, &action)) {
+> -		if (action == REPLAY_PICK) {
+> +		if (action == REPLAY_PICK && !state->cherry_pick_in_progress) {
+>   			state->cherry_pick_in_progress = 1;
+>   			oidcpy(&state->cherry_pick_head_oid, null_oid());
+> -		} else {
+> +		}
+> +		if (action == REPLAY_REVERT && !state->revert_in_progress) {
 
-Hmm. I tried to verify this, but failed. With this patch:
+I think this would be clearer as
 
-```diff
-diff --git a/git.c b/git.c
-index 2f42da20f4e0..3c513e3f2cb1 100644
-=2D-- a/git.c
-+++ b/git.c
-@@ -330,6 +330,8 @@ static int handle_options(const char ***argv, int *arg=
-c, int *envchanged)
- 			setenv(GIT_ATTR_SOURCE_ENVIRONMENT, cmd, 1);
- 			if (envchanged)
- 				*envchanged =3D 1;
-+		} else if (!strcmp(cmd, "--abort")) {
-+			abort();
- 		} else {
- 			fprintf(stderr, _("unknown option: %s\n"), cmd);
- 			usage(git_usage_string);
-```
+-		} else {
++		} else if ((action == REPLAY_PICK && !state->cherry_pick_in_progress) {
 
-I get this:
+not worth a re-roll on its own, but I think it is worth considering when 
+you re-roll with the missing test.
 
+Thanks for working on this,
 
-```console
-$ ./git.exe --abort
+Phillip
 
-$ echo $?
-3
-```
+>   			state->revert_in_progress = 1;
+>   			oidcpy(&state->revert_head_oid, null_oid());
+>   		}
 
-For that reason, I am somehow doubtful that the `abort()` is actually
-called?!?
-
-Ciao,
-Johannes
