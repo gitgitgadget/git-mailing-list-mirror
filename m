@@ -2,95 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C98EB64D9
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 16:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C59C3EB64DC
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 16:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231848AbjF0QYY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 12:24:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46034 "EHLO
+        id S232598AbjF0Qct (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 12:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231200AbjF0QYW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 12:24:22 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9B4358E
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 09:24:17 -0700 (PDT)
+        with ESMTP id S232470AbjF0QcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 12:32:14 -0400
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CD8E2D42
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 09:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1687883053; x=1688487853; i=l.s.r@web.de;
- bh=g1SgrQxgRiytuW7PmE2J6onWdqOKMWIjj7tLwcvdvJM=;
+ s=s29768273; t=1687883516; x=1688488316; i=l.s.r@web.de;
+ bh=Cj0DR2BcF8RX3qFUOIdikj0USHn+5Pb/kp2b8uAGgtg=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=J58mdABCpvGalgc5gDZrXjtqqIsLFWZ/q1NTUeo9GlJnxjEhJoNPVYJgjL++5Bhj1iAVFg4
- 1NrdmGYszNIQrxRYGV2a21QSEeiWcfS1GKAIvz9ZUc+vCVzIvQW/JEzuyDTu5ZJY48R9VV1W/
- QXOeoLAL2VqjiQlH11tYgZtT65mSk8+DBQnaXaG/w7483sENdNyuYSZm6DNsk6i1lypajt3Lt
- I3AdaBva2XulnOxd1HPYZZ6m+WkLmpAbtWzm7dRllJAB0E0PvKgIDrVuMpqfiMAVFf/PJHhpK
- G9qc2T2T5g2kEmQjuhnilmRCihEyz7tVxB6x6ViPrJzWezHUX9hg==
+ b=KsyVGhI0WFy3XGChcVuBV3syqjO4sqpWfoZF/V6U7dAJJZeF7X/CPqadmN9fI+3rhdlpuP5
+ IqoLC92cKZyZcctEm0RiSmdpPpYllj8SvwHWqNMGE1XhRqNwggHQOuqjh3qhPi5oeuEFhfDu+
+ 7KTAIkdFF6oYLu69cNh0ezxol06zViTbIzb7zkNUll9ojS7zin4dW3deKelzPrt+UrEVrCo9D
+ TOHt6WI/BclwnnlQIgbu0vpChbfAZKlt3b+kQ+0m8CT2S5rtZOvap3tUA1H1noiMwzS4SVwOr
+ 3/3AGPjDdT8HKDZJtYPdatBGR2j34sfYuJUbWv7SZcopB+Zx1lWQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.22.106]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MZSBQ-1qaqpm40Ag-00WyKm; Tue, 27
- Jun 2023 18:24:13 +0200
-Message-ID: <68593128-21e8-a728-719c-632fccf740d6@web.de>
-Date:   Tue, 27 Jun 2023 18:24:12 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1My6pZ-1pqTHX1E2p-00z7Gq; Tue, 27
+ Jun 2023 18:31:56 +0200
+Message-ID: <8d2223b8-ab33-be5a-20ea-ad60f6cbcc75@web.de>
+Date:   Tue, 27 Jun 2023 18:31:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH 3/5] replace strbuf_expand_dict_cb() with
- strbuf_expand_step()
+Subject: Re: [PATCH 4/5] replace strbuf_expand() with strbuf_expand_step()
 Content-Language: en-US
 To:     Jeff King <peff@peff.net>
 Cc:     Git List <git@vger.kernel.org>
 References: <767baa64-20a6-daf2-d34b-d81f72363749@web.de>
- <5ce9513b-d463-6f62-db4e-f9f60a7c3e9f@web.de>
- <20230627082902.GI1226768@coredump.intra.peff.net>
- <20230627083526.GA1273865@coredump.intra.peff.net>
+ <150df0b0-0548-f291-2b68-960841dd1c97@web.de>
+ <20230627085422.GJ1226768@coredump.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230627083526.GA1273865@coredump.intra.peff.net>
+In-Reply-To: <20230627085422.GJ1226768@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YVjlco+ROkOUdyT+GmjGmc1RYlSFV3Ni0CL2Fgo3Tmom2zyQfrw
- 0io6lwjUe4RCLqBl5u3MNzncBV6zVyNjzvsXy1om4YtHgraGK8WfDOF8fCO8BzWDk208TgE
- yGA8YP5tCMh8piu2D4wsqjut0jlU1ph1acWJKXIaCh4NEEMdaa3UaK1+dL1axw6mHIVJtao
- q5Wkn1QNhr4Y1+fHFtF9A==
-UI-OutboundReport: notjunk:1;M01:P0:hG+kAntcs1o=;/O9uizirJUlI4rr0xXgGrtrRJm6
- 6LLmJ+Au3DIfn4OE5f3Kk3zkHi/R5LeB+VMQI2bj46nkvDJJ6eRGVIMlwhNhnZal4pHrn+Cng
- vacCgqK1C33Sed3Rre0H82Y7eKIbRPxbHCFR12ARvaUYN4cvMPgNoeIXcgNwuWZSfk+nlsYn3
- KtXtzZwV4LxH4fX8VRckJlA2Bek6TSOJVlln1ltVd4zcK07GxNkEYI5NJJ9PWyX49S5lO8MMQ
- iLo1U5hH7h8acxvAuD3ipjzRJygNFhWSa4O4mzr5eT5WctNUXf2vMAV0ExBp7Dc03X7gVI4C1
- nQlwDzrhYg5mkBg7MA+mi2QlGzXzm8KYQPT8kKVKuzL1LAXp+mkRfbHU8dJ8ZFpZM2Vxq860T
- QOA1bPOvgAWS/LcLdwTzG3T+cIhBZ4x+M6KIiAL4TY5IAOupkMN0E75L4PLPiSWLR3g89d3v+
- cGJfWCdQJlX2Ds+1RbpBBF/+OGJCPrnq9Sct0b42zJjvCwM0QVbL6GDADtpEnCq0qsI95EvbK
- vUuXIKtBCU1gwFsPZtbYl3oRL6OmaVITLBg6FRydwfp5LcLP+tcpF4mupWHcXBqt+qq7L1kiM
- 18CCkyYHRNDkjEaB73oBfJ+Ppkffz8OR5ovQxz33+oaAMJ92TvFCLZSA4+9ZnLVHfqsGeXqp4
- TgKcGY0mMZ6XNHuD+T3+jhy6xh/lNWPxl0rrnyF5jWD4pzH9WbdzFGNGKyff1Vei6MpdO52SE
- L4opr12ei5GUe5rP17xoD5XnNfiIK9yvyWYLZvjQiQMiR4vKwEz7oikOtB/kVVwp30duz7AWA
- vtGb2SqeX6BXmHL4ptd/5vc5/3X5jGeUKywmrfm0sLoPtW2OjOcsOFC9P2fVmFSIO2bOVuBjc
- 8Xq95bQ4djYr7nBAHW1B8KK4q9i2n8NIFwxzzqbrFj3US0MKCQfCTpehPCDtABNKhBxRPArzP
- tTSFbesnG+FJQdUzcbEfmyQ2LDE=
+X-Provags-ID: V03:K1:dzpgNUQ1FVVQ1VRlOVrikcqBHc+YqUe3QyjTYe68jRvZcvOxJUr
+ Y6LWKWYEdltl0sTGDXRM31SgVUnB4QuOsbujiSLMKE5e/jHdyhpgkt8rBbX0EXZCrq7uqhl
+ 9A9QOkNNMpTKdXG0K01ECGmtAjoWY8VH2utNCSDP+2XAvXmvrmdflqSzypjxh6f7nR2u+pW
+ aeq45d5Ul158tmNd2QUug==
+UI-OutboundReport: notjunk:1;M01:P0:WkHOOnT8+z0=;2NdNHlei822+wA+eomjcFmaQier
+ 9moxDYZVe8NzCkUjDSkMS05zqYoeGpu/njWykVzuK8ejgDaWdkLi6M3pwOeyHvX7ecfWQPlkp
+ 6pS8mfnktiQxiZddBxfSJkDFWWrGoaUhO8IufJ/CflqsVkNIXmL0nm02oRHjOQPlUCKVq0ULl
+ L1oeY3ruA7s5f8uneID/Z4ZrsIweMG2xuDNjFQjRrnZ86qD34fYe0NHsBCK1r77xSRw0inrH5
+ oGdFaB/5fVTzVnjyL/le91UaX1Bi8975QEATOOgbBSpu6Dml0q/iwwwKsAcVniLkkqoNFt31H
+ C4xtJrSO3OPNk6LSXdQqDhbYNCNhh4sR8rrTrNvmEP9/Rdy/Kq6P3nh6YBGh5vrU81WIgY8xp
+ FiWynVpAg+kShMjjWq8GhnY3/BuhwXi7jL2yXzeFC9136N1PNNtZiBV8Ms9WGeVv/YxnhXQUM
+ Zd79ZpyRD8tI+XXU7G/P2EE0CfuYsVd6KopU60IRtr5P8vO2/R1DHlHjVpmZ6UzkB0FSokfiY
+ 47hxSRHpp2WICTv50Lg87BQOmMlnETUByIwuX2JUPgPCPt4CjccUAwr6zHapkwv/2gJQbYPKm
+ Wba1qQk3qQsU0dpUYkpeYz5Pr0nujtKKYmlrIKbjcMNJoYXJPp+T5S/8ppxds2EGCPLEnWIBA
+ lYjJHCHpRSBrnQPwL1Pb6E2j0HZXtg3UbwulqRwYjh/k5sEyDXOMOmUkY2YZrIIgWJHzqVJPK
+ xOec8xclnVsCkMIx90Q5HPqmZzt7fjgkzUtna26e7o9rgSaJt8nzQ9CVO4CZZplnR54BkcQsH
+ L4MK2dORsFDS7tXNXR85SxNEe6KZfZD/vYEceiYyngeiS+fo/+WW43gQoB1vEHEStyUmJ6+Z4
+ HiUSxMiMcgudjz97vQlH8fQii9XfR5W5vB2Ehqgl4iEk65cOCwPoAmQ/knoE4C3rBSYPnqlwB
+ Kc2OudzMkKz8WTrvDB9TgcnCTZ4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.06.23 um 10:35 schrieb Jeff King:
-> On Tue, Jun 27, 2023 at 04:29:02AM -0400, Jeff King wrote:
+Am 27.06.23 um 10:54 schrieb Jeff King:
+> On Sat, Jun 17, 2023 at 10:43:17PM +0200, Ren=C3=A9 Scharfe wrote:
 >
->> Your comment above does make me wonder if strbuf_expand_step() should b=
-e
->> quietly handling "%%" itself. But I guess strbuf_expand() doesn't, and
->> your branch.c quote-literal example probably would not want that
->> behavior.
+>> Avoid the overhead of passing context to a callback function of
+>> strbuf_expand() by using strbuf_expand_step() in a loop instead.  It
+>> requires explicit handling of %% and unrecognized placeholders, but is
+>> simpler, more direct and avoids void pointers.
 >
-> Er, nope, strbuf_expand() does handle "%%" itself. It really feels like
-> we'd want strbuf_expand_step() to do so, too, then. Even if we had two
-> variants (a "raw" one which doesn't handle "%%" so that branch.c could
-> use it, and then another that wrapped it to handle "%%").
+> I like this. I don't care that much about the runtime overhead of
+> passing the context around, but if you meant by "overhead" the
+> programmer time and confusion in stuffing everything into context
+> structs, then I agree this is much better. :)
 
-strbuf_expand() handles %% and unrecognized placeholders.
+Indeed, I meant the burden of being forced to define a struct and
+filling in all necessary context.  Bureaucratic overhead.
 
-We could do that, or move the %% handling to strbuf_expand_literal or
-something else.  E.g. initially I had a strbuf_expand_default that
-handled %% and unrecognized placeholders.
+> It does still feel like we should be handling "%%" on behalf of the
+> callers.
 
-I think it's a good idea to first get used to the loop paradigm by
-eschewing the sugary automatic handling and having everything spelled
-out explicitly.  It's just one more branch.  Then we can come up with
-a better factoring after a while.
+I feel the same, but restrained myself from doing that, so that we
+can see all the pieces for now.  It allows us to recombine them in
+better ways than before.
+
+>>  builtin/cat-file.c |  35 +++++++--------
+>>  builtin/ls-files.c | 109 +++++++++++++++++++--------------------------
+>>  builtin/ls-tree.c  | 107 +++++++++++++++++---------------------------
+>>  daemon.c           |  61 ++++++++-----------------
+>>  pretty.c           |  72 ++++++++++++++++++------------
+>>  strbuf.c           |  20 ---------
+>>  strbuf.h           |  37 ++-------------
+>>  7 files changed, 169 insertions(+), 272 deletions(-)
+>
+> The changes mostly looked OK to me (and the diffstat is certainly
+> pleasing). The old callbacks returned a "consumed" length, and we need
+> each "step" caller to now do "format +=3D consumed" themselves. At first
+> glance I thought there were cases where you didn't, but then I realized
+> that you are relying on skip_prefix() to do that incrementing. Which
+> makes sense and the resulting code looks nice, but it took me a minute
+> to realize what was going on.
+
+*nod*  The "returns consumed length" style is still used by
+strbuf_expand_literal, though, so we have a bit of a mix.  Which
+works, but a uniform convention might be better.
+
+>> @@ -1894,7 +1880,26 @@ void userformat_find_requirements(const char *fm=
+t, struct userformat_want *w)
+>>  			return;
+>>  		fmt =3D user_format;
+>>  	}
+>> -	strbuf_expand(&dummy, fmt, userformat_want_item, w);
+>> +	while (strbuf_expand_step(&dummy, &fmt)) {
+>> +		if (skip_prefix(fmt, "%", &fmt))
+>> +			continue;
+>> +
+>> +		if (*fmt =3D=3D '+' || *fmt =3D=3D '-' || *fmt =3D=3D ' ')
+>> +			fmt++;
+>> +
+>> +		switch (*fmt) {
+>> +		case 'N':
+>> +			w->notes =3D 1;
+>> +			break;
+>> +		case 'S':
+>> +			w->source =3D 1;
+>> +			break;
+>> +		case 'd':
+>> +		case 'D':
+>> +			w->decorate =3D 1;
+>> +			break;
+>> +		}
+>> +	}
+>>  	strbuf_release(&dummy);
+>>  }
+>
+> This one actually doesn't increment the format (so we restart the
+> expansion on "N" or whatever). But neither did the original! It always
+> returned 0:
+>
+>> -static size_t userformat_want_item(struct strbuf *sb UNUSED,
+>> -				   const char *placeholder,
+>> -				   void *context)
+>> -{
+>> -	struct userformat_want *w =3D context;
+>> -
+>> -	if (*placeholder =3D=3D '+' || *placeholder =3D=3D '-' || *placeholde=
+r =3D=3D ' ')
+>> -		placeholder++;
+>> -
+>> -	switch (*placeholder) {
+>> -	case 'N':
+>> -		w->notes =3D 1;
+>> -		break;
+>> -	case 'S':
+>> -		w->source =3D 1;
+>> -		break;
+>> -	case 'd':
+>> -	case 'D':
+>> -		w->decorate =3D 1;
+>> -		break;
+>> -	}
+>> -	return 0;
+>> -}
+>
+> So probably OK, though a little funny.
+>
+> It also feels like this whole function would be just as happy using
+> "strchr()", since it throws away the expanded result anyway. But that
+> can be for another time. :)
+
+Good idea!  And the conversion to a loop brings us halfway there.
+
+>
+>> @@ -1912,7 +1917,16 @@ void repo_format_commit_message(struct repositor=
+y *r,
+>>  	const char *output_enc =3D pretty_ctx->output_encoding;
+>>  	const char *utf8 =3D "UTF-8";
+>>
+>> -	strbuf_expand(sb, format, format_commit_item, &context);
+>> +	while (strbuf_expand_step(sb, &format)) {
+>> +		size_t len;
+>> +
+>> +		if (skip_prefix(format, "%", &format))
+>> +			strbuf_addch(sb, '%');
+>> +		else if ((len =3D format_commit_item(sb, format, &context)))
+>> +			format +=3D len;
+>> +		else
+>> +			strbuf_addch(sb, '%');
+>> +	}
+>
+> This one doesn't advance the format for a not-understood placeholder.
+> But that's OK, because we know it isn't "%", so starting the search from
+> there again is correct.
+
+Right.  This is copied from strbuf_expand.
+
+>
+>> @@ -1842,7 +1852,7 @@ static size_t format_commit_item(struct strbuf *s=
+b, /* in UTF-8 */
+>>  	}
+>>
+>>  	orig_len =3D sb->len;
+>> -	if (((struct format_commit_context *)context)->flush_type !=3D no_flu=
+sh)
+>> +	if ((context)->flush_type !=3D no_flush)
+>>  		consumed =3D format_and_pad_commit(sb, placeholder, context);
+>>  	else
+>>  		consumed =3D format_commit_one(sb, placeholder, context);
+>
+> Since we're no longer casting, the extra parentheses seem redundant now.
+> I.e., this can just be context->flush_type.
+
+Indeed.
 
 Ren=C3=A9
