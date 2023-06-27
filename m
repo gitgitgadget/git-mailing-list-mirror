@@ -2,147 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00F65C0015E
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 19:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBDAEB64D9
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 19:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230085AbjF0TKu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 15:10:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44180 "EHLO
+        id S230158AbjF0Toi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 15:44:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjF0TKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 15:10:48 -0400
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2047.outbound.protection.outlook.com [40.107.223.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89788FD
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 12:10:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=k+x76BsrW/Xxxq7RUJqIf2cyajXiUwGKaOVVJQjvXLEwv/SierKUfL+fSBpfBQXchZsbj62GZrF/bcHCYkDJIMj+dSEkHWq58iXP67rBGln57LwE2PvGFTe7Wu8pIJoVthk9f8uJ3F2iPPuSpapIIKfSufBntrh8Egu6zmqgzcLw6LeZy82TbB0Y08hdGyyptWHTrEV/A2Ei6up4do8k3E0Z8veOWNki+f89s2WcXGTBVATmUYdfeAXA4rvgLNzfHNDe9xUcCOesReZRc/8U37iO2E4HcdoK1pvvgvgzn/1IPN9ZTakGhYRjKR+8obkKqq5PrOpFsZpSUEjRRuXXfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t/oA9y5yKoMlWVesHCAVKiv6YBhPj+0SOqFRiT6VUgs=;
- b=dag+SazH5/Brseb7cCcUI99d/JgcvJF07ckTFnIVbuukYofLk2ubuT8dktSwwoxM96dolcBGP71lQwb3p0QRkpPy4jxRLzGB2zVbabDO+7EUyVgAXcztWuZgl2/29P5daq55zTAsBtiRPWEO4GRg8nN0rb24TNaAu2TfbnB1XZJLizLjstX27qnAIJ7Q/mghfEml/KfZeGbQYSMQSVvUe+azfv2utNVUQexxDIFP/0wLu/xi3O3g2R98eHtA49W78m2h3d5XkHosRLalD1qaDNPYkGlOvJ1GfJKPuVCq401DewfDY3PemRy1kiqmf3DhtWasU9o2u6GzDDVmfxrb6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cedaron.com; dmarc=pass action=none header.from=cedaron.com;
- dkim=pass header.d=cedaron.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cedaron.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t/oA9y5yKoMlWVesHCAVKiv6YBhPj+0SOqFRiT6VUgs=;
- b=nfSeGD71Qph+nyi3OqDjlHZNFlqhTueqGIUElN2WStWNtEDbx7aQ++pXWeB2HeeNz/kAs3o8c9dISJCgJFDgjyg3b59K+TPbE0OydNL1oCO9EORQQRhrIsJBDhodNwIpksLCx6uOTtRenEQLY0mP2Kh7sGwNiBTrV3ptO7m8E/FaFWaVFzaHtRvMbU6vB4GciTJ/hxBUS0wqUqj5/LATMWPy1boVl38f+R/jvfbkdgriyBVNVolmpmW4xVagjRDyb7gk5FWMOveFIiDBjWU9djJwg5oNsRbK5EADEveHSD7xmKnMKj+6cvQjel5kvMNEeIGqoAd26P69WhURLaNkIQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cedaron.com;
-Received: from BYAPR20MB2758.namprd20.prod.outlook.com (2603:10b6:a03:fb::15)
- by IA0PR20MB5729.namprd20.prod.outlook.com (2603:10b6:208:437::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.23; Tue, 27 Jun
- 2023 19:10:38 +0000
-Received: from BYAPR20MB2758.namprd20.prod.outlook.com
- ([fe80::90c:ffc6:cad4:993]) by BYAPR20MB2758.namprd20.prod.outlook.com
- ([fe80::90c:ffc6:cad4:993%7]) with mapi id 15.20.6521.024; Tue, 27 Jun 2023
- 19:10:38 +0000
-Message-ID: <4f28a9c4-b422-69b7-ccc1-2661d756d876@cedaron.com>
-Date:   Tue, 27 Jun 2023 12:10:36 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] ll-merge: killing the external merge driver aborts the
- merge
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-References: <6e1b9ce4-e86d-fe30-e5de-27a3be57eefd@cedaron.com>
- <xmqqttuze2fh.fsf@gitster.g> <xmqq4jmzc91e.fsf_-_@gitster.g>
- <CABPp-BG-KDu0fAC=bydz9A56xguSmgwO6SFDdxZ8h=90qR1PUA@mail.gmail.com>
- <xmqqv8feb0vo.fsf@gitster.g> <xmqqjzvt92nw.fsf@gitster.g>
- <59b7a582-be68-3f7b-a06f-3bd662582a1d@gmx.de> <xmqqedlwhgf9.fsf@gitster.g>
-From:   Joshua Hudson <jhudson@cedaron.com>
-In-Reply-To: <xmqqedlwhgf9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ2PR07CA0001.namprd07.prod.outlook.com
- (2603:10b6:a03:505::11) To BYAPR20MB2758.namprd20.prod.outlook.com
- (2603:10b6:a03:fb::15)
+        with ESMTP id S229501AbjF0Toh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 15:44:37 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15391B3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 12:44:35 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A1001D898;
+        Tue, 27 Jun 2023 15:44:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aJh2s5ix7s5utbhIWjqT7L5ArtRanhusGEtOav
+        8In/g=; b=VguHUkvxigddstCnfFIGRcNAfJC4URbTmyiAf/40NKucWjFaW46CTM
+        eV0LbgpEQlCkEXhm+udkmc4BujoDDnqNqiUWLAlvTQSp5gb680ikBYTMvzYNwgf8
+        cxgdc0/V3JEXX+t34GULA9RBVHf487FA2aScuYFJWgAZ5GMu6MzsY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5119D1D897;
+        Tue, 27 Jun 2023 15:44:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5BB631D896;
+        Tue, 27 Jun 2023 15:44:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Thomas Guyot-Sionnest <tguyot@gmail.com>
+Subject: Re: [PATCH 3/3] diff --no-index: support reading from named pipes
+References: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
+        <990e71882bfdc697285c5b04b92c290679ca22ab.1687874975.git.phillip.wood@dunelm.org.uk>
+Date:   Tue, 27 Jun 2023 12:44:31 -0700
+In-Reply-To: <990e71882bfdc697285c5b04b92c290679ca22ab.1687874975.git.phillip.wood@dunelm.org.uk>
+        (Phillip Wood's message of "Tue, 27 Jun 2023 15:10:16 +0100")
+Message-ID: <xmqqy1k4g068.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR20MB2758:EE_|IA0PR20MB5729:EE_
-X-MS-Office365-Filtering-Correlation-Id: 34753bf7-a974-45aa-788c-08db77423103
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 2Kd414qBSkyqrcmApBfqKea1/UqUhDKaDDmvvgwYAAhnR6ZB/3jHUy7kJWTtlVu11jNz+9ScTYAhlmmMm3PiYZo4u2uAX2Di/UlO2xcRMoPs7i3Oi2cZSsTPQ4FCUqvp6yhOl7htL2Qg+nlzCwVBcqBxAomi05ryWDD8JgXpfDVFpjSseKFM+Qy1vbbh+mWguprHs3/zmhGbkj9udN0VrJXR3+LhYO/a88r1r9HeP6sTP5R8iL4TYeoiRoIMoNDyWLz9Z+2McwbJhphR4VfkTv8YRkCCLSqFLOWal+kId9D0RXrdqv4zXOxJ9GTfsvgbuqOMewwibAhH4pEnFbQXCIynArI1s6fVdsu1Z2IOAqW9yE/O31ZD/IP+rNhXOP0xzz85rz1Oi4ypnBYSjCNv4avB19JS/IZMA37D2Y20HVKvSjAMER/SgOc3+hweKZJrF8W395md4vnrpCZ+1am+L2dxgvXT8dUDCDUpEJm7tf0Bf/FemX3e1RSDUSIwrMtAp2MQ+AqTRTVrRDsl8uMIviWnVmZB2Mazt/27FPWlKRKyEMxxublOJv7Ss1Iv4KfNDdf8PSYGHOzBZ4JUSFYryZVPFuza0y+rrhCv3rwVlTWHBunLwthfRXjtVWOZyHzkKFK8a2YwDVwOjInrV13mLg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR20MB2758.namprd20.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(39840400004)(366004)(136003)(396003)(376002)(346002)(451199021)(8676002)(66946007)(4326008)(66476007)(66556008)(41300700001)(8936002)(316002)(6506007)(6512007)(186003)(26005)(53546011)(4744005)(110136005)(478600001)(6486002)(2616005)(5660300002)(2906002)(38100700002)(31696002)(36756003)(31686004)(86362001)(83380400001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NU1qdGlLZzRzdjJtajREY2h6NzJqODRnZFVETFQ5NUV5cmJOQk9iWG1OcWkw?=
- =?utf-8?B?NWlNWWMvbEw4NFRHdU1uNUF3M3hnTGszU2tUYm9oU0N4K1h2S01EUWhQU3pi?=
- =?utf-8?B?Wm5RdkFhOEd5S2p6eUVwV3htN2JoNUZlWXA0RUp3SVFzOFA4TGJ2SWJUL09W?=
- =?utf-8?B?NjRvWEF2VHViU0g5WlRia1lmRXUwVzRUanJ4VlRxSXNTdmJXQ1hsTDYyM3Ni?=
- =?utf-8?B?VE84WVlBSXFsRDRUVldxZW9ZS0F4NEJVbjhMQUV5WjNxNDFGOUwxeHl5V3lk?=
- =?utf-8?B?RFF2Q0N5M0V1bXhHanZ0L0g5b0xLemRId2dBRURyc1BLL1d5UWVkRjUzVFpD?=
- =?utf-8?B?WjV6eFpPMFR3TXArbzJSR0FQYmdyRFYrT3Y3cUtLZTZ0cjl6bERhTHJMNHgz?=
- =?utf-8?B?UTNKMmkxOHZxMGFYZ0VrTFByV0djWjdoSGJwL1RQTm5nLzN3endmaWZnbTBP?=
- =?utf-8?B?SGszbUdMekhCRHFaTDRabGQyaDhQZ040bzd1Nkt5UlJYaWdVM1ZkeFQ2d0xo?=
- =?utf-8?B?TFhrZUdMT2d5ODBQcVVjb21TYTRVZnZvTklBYmdXVHJKdmJ4b1F2czhJSzN0?=
- =?utf-8?B?d3hOSE1yakRMNGpUM1ZNQTVYUnZsOEpWYmYvQm1SaGFLa0tFVHBDdEhUaDFj?=
- =?utf-8?B?eHkybWZNUWpybGl4eFhrY0drQ0JZS1RWcEhrWHBCODlmUmk4MHd6eTJiSTNX?=
- =?utf-8?B?RklYakU1UUNSaDJTZWROQldkRFoxcHQ1WkU3TER2VG5oV1pCVGxuRnBwODlI?=
- =?utf-8?B?Y1hSNWxSdmVtcHpLYlpFWFVDb3FxckgwcnBnR3ZZelBrdTMrckhheTRmSjR0?=
- =?utf-8?B?cDQvZG1ueWgwVEwzazV2NlNnQ2ZoWWx1ZFhGcGxnamJ2RFM2R29lQ0JDYVNu?=
- =?utf-8?B?REo2OVRWN2FDbjhleENzZy85RlA4VDl0SHY1Mm1obC9lYlRrb1lxU2xka1dp?=
- =?utf-8?B?WFBPeGV0M1VBek8wUnJkckd0d3dYTElhbTF2Q3NFREZZaFluUkpaamxSMXJx?=
- =?utf-8?B?K2xZVHJpeHM0RVlId09kcURpK1kyY0VvZ3pueUhWekREcndHUGFnaFJybHdn?=
- =?utf-8?B?NytYaUcrSjNzOXFXZHFSNS9Pc0NZK2VETFE1NW4waU41UnJ1bmo2SGg0VEtF?=
- =?utf-8?B?RCtEWnJvOEZYRUVVOVFxWWIxdkw1UlBxNUI4aldlUWUyUU9ZTTRPcHJWTzNY?=
- =?utf-8?B?WkQyNnJFbVI4UmNIYTBZQUhSZlpJVmo1ZUNsbW50YlYyNHNxVHpXM3Rza3k4?=
- =?utf-8?B?aWhXUUFxd0wreHRheGFHcGEyd2I2U1dTbWFMTGx6VjBNN0ZTRW01cWJNU3Zz?=
- =?utf-8?B?cHNvRVE2RS9lYTU5alNsT3QxdG02dTdTUzl6RXRzVVJkaUlha3ZNdTRSc2Fw?=
- =?utf-8?B?VjVqM2NsbW95bHV0NnNxV2dudlhFR2VtN3VuWTVGelF2NkpjN3Y3Uks2Mitx?=
- =?utf-8?B?ajdtRStjUmNCUDVxUnNzb2xkTTFYWnZFUXRrT0Y4cTlsRThkSTEzdTV5dENI?=
- =?utf-8?B?T1FtdU43Z2J2Q0hpT1N1Q0poZmo0VWo2UTVpOVUzV1UrOWpYOWxmNnRBTmxP?=
- =?utf-8?B?SUtlOGZBVUMrRk9MeWsxcXBFRDhrY0J3QW1qZnBOek1SSTNVV3JaWk5BTkEy?=
- =?utf-8?B?a0hYeVpXWkJYaHdLVjhzQjZsT1VqekdTd1dMRHNhVjdCMmFheU9rSXN4Y0R5?=
- =?utf-8?B?L215S3NEVTJmSmRhYkNEd3ZIQ2xkNlNXd1lmUVhCNW5VWHJkb3lQNFJrMTNH?=
- =?utf-8?B?MmpJdFZsVWpCcUtZMDY2b3NTa2YzQndoUUVGK284eDFVZi9MakJaL3hYUHMx?=
- =?utf-8?B?VjdmNjVwZWd3azNBM0pRVmMwdzNiT2ppM0h1UFlmdyt6SWQrTCsxQ1F3K0U2?=
- =?utf-8?B?VDdFRWc3SEd1QzR1YmVFSWVHWlloNGZGd1JmOGNJQnlZMytOMlJmOUhaL1pj?=
- =?utf-8?B?azRQVDd2d1NxdFRNSVNjK3NYM1Z5cDZqVGladEZFUXdET2xvUEZmaW5XSW8w?=
- =?utf-8?B?VmZZQU9TRWpkZTZUV2pSVEg5M2g2VUdxSDRSWG01SkZqVnVxRHcvWkpQMzVv?=
- =?utf-8?B?QlFXcTVwMzF4d0lSV012WXQ0YkZKZ29vRTFabnNLb2haRm5CcERWL0JsK29X?=
- =?utf-8?Q?ywKttrwizvWxt8A+mdCneTB7m?=
-X-OriginatorOrg: cedaron.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 34753bf7-a974-45aa-788c-08db77423103
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR20MB2758.namprd20.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jun 2023 19:10:37.8659
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: a1e0d90e-c09b-4bb6-9534-4bb03188f5a0
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: shSDKIohA7KnMyjLWkBrhLgoRe0XSLoVB3WcbpQM2eBMYKYd9a9UgVeOhPVMN2w9Yokv7BiNc2I5kxGaoIsvRw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR20MB5729
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0995C19A-1523-11EE-8694-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-On 6/27/2023 12:08 PM, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
->> On Fri, 23 Jun 2023, Junio C Hamano wrote:
->>
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> Elijah Newren <newren@gmail.com> writes:
->>>>
->>>>> Reviewed-by: Elijah Newren <newren@gmail.com>
->>>>
->>>> Thanks for a quick review.
->>> Unfortunately Windows does not seem to correctly detect the aborting
-> Sorry, I did not mean "abort(3)" literally.  What I meant was that
-> an external merge driver that gets spawned via the run_command()
-> interface may not die by calling exit()---like "killed by signal"
-> (including "segfaulting").  The new test script piece added in the
-> patch did "kill -9 $$" to kill the external merge driver itself,
-> which gets reported as "killed by signal" from run_command() by
-> returning the signal number + 128, but that did not pass Windows CI.
+> In some shells, such as bash and zsh, it's possible to use a command
+> substitution to provide the output of a command as a file argument to
+> another process, like so:
 >
-Do you need me to provide a windows test harness?
+>   diff -u <(printf "a\nb\n") <(printf "a\nc\n")
+>
+> However, this syntax does not produce useful results with "git diff
+> --no-index". On macOS, the arguments to the command are named pipes
+> under /dev/fd, and git diff doesn't know how to handle a named pipe. On
+> Linux, the arguments are symlinks to pipes, so git diff "helpfully"
+> diffs these symlinks, comparing their targets like "pipe:[1234]" and
+> "pipe:[5678]".
+>
+> To address this "diff --no-index" is changed so that if a path given on
+> the commandline is a named pipe or a symbolic link that resolves to a
+> named pipe then we read the data to diff from that pipe. This is
+> implemented by generalizing the code that already exists to handle
+> reading from stdin when the user passes the path "-".
+>
+> As process substitution is not support by POSIX this change is tested by
+> using a pipe and a symbolic link to a pipe.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  diff-no-index.c          | 80 ++++++++++++++++++++++++----------------
+>  t/t4053-diff-no-index.sh | 25 +++++++++++++
+>  2 files changed, 73 insertions(+), 32 deletions(-)
+
+This looks good, if a bit invasive, to a cursory read, at least to
+me.  It is very focused to the real problem at hand, and shows that
+the way we split the "no-index" mode out to its own implementation
+of filespec population code does make sense.
+
+> -static void populate_from_stdin(struct diff_filespec *s)
+> +static void populate_from_pipe(struct diff_filespec *s, int is_stdin)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+>  	size_t size = 0;
+> +	int fd = 0;
+>  
+> -	if (strbuf_read(&buf, 0, 0) < 0)
+> +	if (!is_stdin)
+> +		fd = xopen(s->path, O_RDONLY);
+> +	if (strbuf_read(&buf, fd, 0) < 0)
+>  		die_errno("error while reading from stdin");
+> +	if (!is_stdin)
+> +		close(fd);
+
+Given that the error message explicitly says "stdin", and there are
+many "if ([!]is_stdin)" sprinkled in the code, I actually suspect
+that there should be two separate helpers, one for stdin and one for
+non-stdin pipe.  It is especially true since there is only one
+caller that does this:
+
+> +	if (is_pipe)
+> +		populate_from_pipe(s, name == file_from_standard_input);
+
+which can be
+
+	if (is_pipe) {
+		if (name == file_from_standard_input)
+			populate_from_stdin(s);
+		else
+			populate_from_pipe(s);
+	}
+
+without losing clarity.  The code that you are sharing by forcing
+them to be a single helper to wrap up a handful of members in the s
+structure can become its own helper that is called from these two
+helper functions.
+
+>  static int queue_diff(struct diff_options *o,
+> -		      const char *name1, const char *name2)
+> +		      const char *name1, int is_pipe1,
+> +		      const char *name2, int is_pipe2)
+>  {
+>  	int mode1 = 0, mode2 = 0;
+>  
+> -	if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
+> +	if (get_mode(name1, is_pipe1, &mode1) ||
+> +	    get_mode(name2, is_pipe2, &mode2))
+>  		return -1;
+
+Makes me wonder why the caller of queue_diff() even needs to know if
+these two names are pipes; we are calling get_mode() which would run
+stat(2) anyway, and the result from stat(2) is what you use (in the
+caller) to determine the values of is_pipeN.  Wouldn't it be more
+appropriate to leave the caller oblivious of special casing of the
+pipes and let get_mode() handle this?  After all, that is how the
+existing code special cases the standard input so there is a strong
+precedence.
+
+If we go that route, it may make sense to further isolate the
+"address comparison" trick used for the standard input mode.
+Perhaps we can and do something like
+
+    static int get_mode(const char *path, int *mode, int *special)
+    {
+	struct stat st;
+
++	*special = 0; /* default - nothing special */
+	...
+	else if (path == file_from_standard_input) {
+		*mode = create_ce_mode(0666);
++		*pipe_kind = 1; /* STDIN */
++	} else if (stat(path, &st)) {
++		... error ...
++	} else if (S_ISFIFO(st.st_mode)) {
++		*mode = create_ce_mode(0666);
++		*pipe_kind = 2; /* FIFO */
+	} else if (lstat(path, &st)) {
+		... error ...
+	} else {
+		*mode = st.st_mode;
+	}
+
+and have the caller act on "special" to choose among calling
+populate_from_stdin(), populate_from_pipe(), or do nothing for
+the regular files?
+
+    Side note: this has an added benefit of highlighting that we do
+    stat() and lstat() because of dereferencing.  What I suspect is
+    that "git diff --no-index" mode was primarily to give Git
+    niceties like rename detection and diff algorithms to those who
+    wanted to use in contexts (i.e. contents not tracked by Git)
+    they use "diff" by other people like GNU, without bothering to
+    update "diff" by other people.  I further suspect that "compare
+    the readlink contents", which is very much necessary within the
+    Git context, may not fall into the "Git niceties" when they
+    invoke "--no-index" mode.  Which leads me to imagine a future
+    direction where we only use stat() and not lstat() in the
+    "--no-index" codepath.  Having everything including these
+    lstat() and stat() calls inside get_mode() will allow such a
+    future transition hopefully simpler.
+
+I do not quite see why you decided to move the "is_dir" processing
+up and made the caller responsible.  Specifically,
+
+> -	fixup_paths(paths, &replacement);
+> +	if (!is_pipe[0] && !is_pipe[1])
+> +		fixup_paths(paths, is_dir, &replacement);
+
+this seems fishy when one side is pipe and the other one is not.
+When the user says
+
+    $ git diff --no-index <(command) path
+
+fixup_paths() are bypassed because one of them is pipe.  It makes me
+suspect that it should be an error if "path" is a directory.  I do
+not know if fixup_paths() is the best place for doing such checking,
+but somebody should be doing that, no?
+
+
