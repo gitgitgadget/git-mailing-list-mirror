@@ -2,172 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 592C2EB64D9
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 22:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA246EB64D9
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 22:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbjF0Wmj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 18:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
+        id S230040AbjF0W6V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 18:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjF0Wmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 18:42:38 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ECD01FD5
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 15:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687905757; x=1719441757;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=a2n7UonGv71TtwIgNypoX3dt7Nw/EpLmBfm3wFTyiFg=;
-  b=O8tLvieIjf44xVzQ4xWeThs/0NDhXuxhYRCpfIay8wh+hxrmHTB/7CAv
-   FAcOaaV3lVaCWX0SeGOxSW/7I9ZywC9JuApzTEJFUNMJNi9SYxQE8YvsG
-   oCvoioaX9y2TeRvda+u4S4msbPyOh/O9hm4fbB66jCE7RSPQ87reiQvfh
-   lA57sGueZniBBk+stllq03zOc++jEqRYXE37dts/AU2Ge6Bt9CuHVbRsY
-   5MQN1TIXFV6qQogJOuVDfb0/OKshqWB2l8LdbQNdV0ck2leKFveqZVaCe
-   J1pPWLyfHYY+na1wiHMxOLC0Z43taQWBrkOr7+E+YjvL7CDHJWmX+icZp
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10754"; a="448082650"
-X-IronPort-AV: E=Sophos;i="6.01,163,1684825200"; 
-   d="scan'208";a="448082650"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2023 15:42:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10754"; a="840847652"
-X-IronPort-AV: E=Sophos;i="6.01,163,1684825200"; 
-   d="scan'208";a="840847652"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.241.1])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2023 15:42:36 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2] fix cherry-pick/revert status when doing multiple commits
-Date:   Tue, 27 Jun 2023 15:41:50 -0700
-Message-ID: <20230627224230.1951135-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.41.0.1.g9857a21e0017.dirty
+        with ESMTP id S229454AbjF0W6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 18:58:20 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F97626B6
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 15:58:20 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0C5F1ED10;
+        Tue, 27 Jun 2023 18:58:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GNfAPnPQMEf0lS8NB3gbd7cPiFhR+RROCU1eA0
+        Lywj0=; b=hGrD16GJ16Cc+w/0dRkVONNVb3k3jwD9QjB1VdNE/2qmp3XEWEGkuB
+        8FBlvewhQmLC92sIw6OgUXra2pz8/X/mlzsS16mGNTp2xYYIY2vi8KZ0zEpOL86r
+        ql0XmZXDUIFRDvH0aITQZMnm9WWyN+N1+/36L8Tp7irjmAjT/kxMs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8C3CC1ED0F;
+        Tue, 27 Jun 2023 18:58:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B9051ED0E;
+        Tue, 27 Jun 2023 18:58:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, nasamuffin@google.com, chooglen@google.com,
+        johnathantanmy@google.com
+Subject: Re: [RFC PATCH 5/8] parse: create new library for parsing strings
+ and env values
+References: <20230627195251.1973421-1-calvinwan@google.com>
+        <20230627195251.1973421-6-calvinwan@google.com>
+Date:   Tue, 27 Jun 2023 15:58:15 -0700
+In-Reply-To: <20230627195251.1973421-6-calvinwan@google.com> (Calvin Wan's
+        message of "Tue, 27 Jun 2023 19:52:48 +0000")
+Message-ID: <xmqq5y78fr7c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1A2F40D8-153E-11EE-B06C-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Calvin Wan <calvinwan@google.com> writes:
 
-The status report for an in-progress cherry-pick does not show the
-current commit if the cherry-pick happens as part of a series of
-multiple commits:
+> While string and environment value parsing is mainly consumed by
+> config.c, there are other files that only need parsing functionality and
+> not config functionality. By separating out string and environment value
+> parsing from config, those files can instead be dependent on parse,
+> which has a much smaller dependency chain than config.
+>
+> Move general string and env parsing functions from config.[ch] to
+> parse.[ch].
 
- $ git cherry-pick <commit1> <commit2>
- < one of the cherry-picks fails to merge clean >
- Cherry-pick currently in progress.
-  (run "git cherry-pick --continue" to continue)
-  (use "git cherry-pick --skip" to skip this patch)
-  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+Quite sensible and ...
 
- $ git status
- On branch <branch>
- Your branch is ahead of '<upstream>' by 1 commit.
-   (use "git push" to publish your local commits)
+>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> ---
+>  Makefile                   |   1 +
+>  attr.c                     |   2 +-
+>  config.c                   | 180 +-----------------------------------
 
- Cherry-pick currently in progress.
-   (run "git cherry-pick --continue" to continue)
-   (use "git cherry-pick --skip" to skip this patch)
-   (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+... long overdue to have this.
 
-The show_cherry_pick_in_progress() function prints "Cherry-pick
-currently in progress". That function does have a more verbose print
-based on whether the cherry_pick_head_oid is null or not. If it is not
-null, then a more helpful message including which commit is actually
-being picked is displayed.
+>  config.h                   |  14 +--
+>  pack-objects.c             |   2 +-
+>  pack-revindex.c            |   2 +-
+>  parse-options.c            |   3 +-
+>  parse.c                    | 182 +++++++++++++++++++++++++++++++++++++
+>  parse.h                    |  20 ++++
+>  pathspec.c                 |   2 +-
+>  preload-index.c            |   2 +-
+>  progress.c                 |   2 +-
+>  prompt.c                   |   2 +-
+>  rebase.c                   |   2 +-
+>  t/helper/test-env-helper.c |   2 +-
+>  unpack-trees.c             |   2 +-
+>  wrapper.c                  |   2 +-
+>  write-or-die.c             |   2 +-
+>  18 files changed, 219 insertions(+), 205 deletions(-)
+>  create mode 100644 parse.c
+>  create mode 100644 parse.h
 
-The introduction of the "Cherry-pick currently in progress" message
-comes from 4a72486de97b ("fix cherry-pick/revert status after commit",
-2019-04-17). This commit modified wt_status_get_state() in order to
-detect that a cherry-pick was in progress even if the user has used `git
-commit` in the middle of the sequence.
-
-The check used to detect this is the call to sequencer_get_last_command.
-If the sequencer indicates that the lass command was a REPLAY_PICK, then
-the state->cherry_pick_in_progress is set to 1 and the
-cherry_pick_head_oid is initialized to the null_oid. Similar behavior is
-done for the case of REPLAY_REVERT.
-
-It happens that this call of sequencer_get_last_command will always
-report the action even if the user hasn't interrupted anything. Thus,
-during a range of cherry-picks or reverts, the cherry_pick_head_oid and
-revert_head_oid will always be overwritten and initialized to the null
-oid.
-
-This results in status always displaying the terse message which does
-not include commit information.
-
-Fix this by adding an additional check so that we do not re-initialize
-the cherry_pick_head_oid or revert_head_oid if we have already set the
-cherry_pick_in_progress or revert_in_progress bits. This ensures that
-git status will display the more helpful information when its available.
-Add a test case covering this behavior.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-
-Changes since v1:
-* add the missing test case that I had locally but forgot to squash in
-* use else if as suggested by Phillip
-
- t/t7512-status-help.sh | 22 ++++++++++++++++++++++
- wt-status.c            |  4 ++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 2f16d5787edf..c2ab8a444a83 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -774,6 +774,28 @@ EOF
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'status when cherry-picking multiple commits' '
-+	git reset --hard cherry_branch &&
-+	test_when_finished "git cherry-pick --abort" &&
-+	test_must_fail git cherry-pick cherry_branch_second one_cherry &&
-+	TO_CHERRY_PICK=$(git rev-parse --short CHERRY_PICK_HEAD) &&
-+	cat >expected <<EOF &&
-+On branch cherry_branch
-+You are currently cherry-picking commit $TO_CHERRY_PICK.
-+  (fix conflicts and run "git cherry-pick --continue")
-+  (use "git cherry-pick --skip" to skip this patch)
-+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
-+
-+Unmerged paths:
-+  (use "git add <file>..." to mark resolution)
-+	both modified:   main.txt
-+
-+no changes added to commit (use "git add" and/or "git commit -a")
-+EOF
-+	git status --untracked-files=no >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'status when cherry-picking after committing conflict resolution' '
- 	git reset --hard cherry_branch &&
- 	test_when_finished "git cherry-pick --abort" &&
-diff --git a/wt-status.c b/wt-status.c
-index 068b76ef6d96..8d23ff8ced23 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1790,10 +1790,10 @@ void wt_status_get_state(struct repository *r,
- 		oidcpy(&state->revert_head_oid, &oid);
- 	}
- 	if (!sequencer_get_last_command(r, &action)) {
--		if (action == REPLAY_PICK) {
-+		if (action == REPLAY_PICK && !state->cherry_pick_in_progress) {
- 			state->cherry_pick_in_progress = 1;
- 			oidcpy(&state->cherry_pick_head_oid, null_oid());
--		} else {
-+		} else if (action == REPLAY_REVERT && !state->revert_in_progress) {
- 			state->revert_in_progress = 1;
- 			oidcpy(&state->revert_head_oid, null_oid());
- 		}
--- 
-2.41.0.1.g9857a21e0017.dirty
+It is somewhat surprising and very pleasing to see so many *.c files
+had and now can lose dependency on <config.h>.  Very nice.
 
