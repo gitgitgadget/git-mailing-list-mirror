@@ -2,65 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36299EB64DC
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 14:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E223EB64DC
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 14:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbjF0OLP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 10:11:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54318 "EHLO
+        id S230037AbjF0OLR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 10:11:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230364AbjF0OLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 10:11:14 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3364B296C
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 07:11:11 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fb4146e8fcso13838155e9.0
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 07:11:11 -0700 (PDT)
+        with ESMTP id S230040AbjF0OLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 10:11:15 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C03052129
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 07:11:14 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fb7b2e3dacso2798805e87.0
+        for <git@vger.kernel.org>; Tue, 27 Jun 2023 07:11:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687875069; x=1690467069;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z81ROu9diBYpnrjP42S4ac+RDmv+rS+ZsarhBK6KogA=;
-        b=IJ9sMq2VofDSDQb0UKPSLSnyG6A9cKPpUAhzIo5pvnRWBgwBvTZDzr2HXIjMlmMB7+
-         /ukb20sQlldq3sGWx0gGxVUTe7nDX0tTZiertivVdZyfoEMze7IqHuAsSOSWAforIxmv
-         kdUqgOFS50RgaylpsT76fYR4C461kK2IDl6wZeRr1lp7N0Sg/QClHp9tMHU0W4DdQbaz
-         mecZWOX9UNbCVQ432gWAywMC4J5jdbxlXaUJGJMoW2YBCh/hYNlvoetxgcatMQ2+bMzq
-         yV8Vbii3uahj+1N06iHjoZqa1VVQrD75dLY2aTQMl0cX9v/9x/kl2+ndFb7rech/j7fa
-         7DuA==
+        d=gmail.com; s=20221208; t=1687875073; x=1690467073;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=h5YZEnuaAb8g3hVOu9nxfnOonXQsmvQY5+L/jSkb4yY=;
+        b=r3TUdwMiOhVw0m/4HcUKx71yt+PPZcSIZr8mO0FPZqFhkDgVjaKwXX+19+4KAKjq4C
+         X0rN5uRjp+QU/ph3HYXotVtR/6XIpKRu156JeXZbPOOh517pcwsVX0Kqrd/fsqh0LgLM
+         bAFbALA+DUpQ9WOy3nXMTVNYrHmzhJrbXHjbjzrpEl9Ap3FTeCH4vsqqh+fbS+D9JPpa
+         0gHvgECjy8fZrJ+UFlUZ7gcfcNChcssiEYSSxJO88orceDVDhzvsZ26BCmD5rD6re8rS
+         8Z3CDjoNceRGuKD5K56oAU6Ooz3v83letQLT3QdSQJxWM+xxFAyj2uARAF9yCgGAB63i
+         3QTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687875069; x=1690467069;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z81ROu9diBYpnrjP42S4ac+RDmv+rS+ZsarhBK6KogA=;
-        b=ei8lQAHa/qvofWN0IlCAqGa+zwa8A3iVy+9qcC8GWuL31Nv+7Li7Ld0+GRiNMlsQvO
-         s4qtdPj+NT4fVQOAy6oWhzHUvK0IgrzM5RsHhDVSM5hNekvUMs1n0tEeoYjp8Y3YzOjD
-         IchczbaOY827bWmXsS5S74z2lNY38NNUaOVHyMBWfltiOLHNZ7jTCni1HcB/QfC+XELR
-         sJzgzD/2J/1n/CGIxkkGxest+AUSC3/+DsLh6emdwBEXRz0t1rVh2i7lgOEBc2h6h9R/
-         dC44se1d77OWWMqKSls5UcZeUa11wZcRIOgIEn9Gmq4bJ1wwNe9jyUMUGELcp80fNRvE
-         MgUQ==
-X-Gm-Message-State: AC+VfDyJZpkq5X1NYf0SbgyD0OMdaHHJ6TeiJ1mtuo0tSwShtntY/S0U
-        gshOrdF0p3AVCK1itBT9B0s6VFzyM/o=
-X-Google-Smtp-Source: ACHHUZ7QPYB91Q9fBhrMvcxcqxzlOP1T4xYOqwIXC2cUjFwt3C6fFz6kpUVhSgNZxK9iNJTOJVPGZA==
-X-Received: by 2002:a05:600c:3d91:b0:3f9:b867:4bb with SMTP id bi17-20020a05600c3d9100b003f9b86704bbmr20342030wmb.2.1687875069377;
-        Tue, 27 Jun 2023 07:11:09 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687875073; x=1690467073;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h5YZEnuaAb8g3hVOu9nxfnOonXQsmvQY5+L/jSkb4yY=;
+        b=KBAfSp5+l/QLbLhZ7ETNPd9cjullve/aIpx9mirWHBOitGPnACE/gn3B/fzOxLMKqg
+         YGjoZbMbFshc0Vl9+9z+Ei0iPXydgzDX9jmgMri8XiphqmBe5S96To3nXdGHHW53GZeb
+         MljK+xeOoCuL/eKVKfCJzUUwSQQ9j6BHWzbSmQkyUyR6K1ogyVz8eYPaR3rvAF+cGLbn
+         oecellA2RXi23s1WDW/iOuLr9psjQ5Y24zYNWwZfvX9h2qSQdToT0kRxMCZOO82WW5cC
+         goUAktJHXbysjiQzGmIwQ0YffqNoXS2tnJp7OU+BQ9rfKnN62Skh4RvbY+GltZHSqw02
+         y1iA==
+X-Gm-Message-State: AC+VfDyOaolu37h4hX3lh4irMQmDdP/j2A/24all9arRaG/ktirGCVJ9
+        SghSofP4FkRSnU3EiEfrRBUsGQcZgsM=
+X-Google-Smtp-Source: ACHHUZ6tsoltyer8rZSPzm7ukqSEx+96ZFgmlaa/fXIM5glf7JbeLVvVsvNhp25Z8WXlbw+i9SJE3w==
+X-Received: by 2002:a19:9158:0:b0:4fb:8a0a:31f2 with SMTP id y24-20020a199158000000b004fb8a0a31f2mr575286lfj.69.1687875072621;
+        Tue, 27 Jun 2023 07:11:12 -0700 (PDT)
 Received: from localhost.localdomain ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id s24-20020a7bc398000000b003fb9ebb6b88sm2581935wmj.39.2023.06.27.07.11.07
+        by smtp.gmail.com with ESMTPSA id s24-20020a7bc398000000b003fb9ebb6b88sm2581935wmj.39.2023.06.27.07.11.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jun 2023 07:11:08 -0700 (PDT)
+        Tue, 27 Jun 2023 07:11:12 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Thomas Guyot-Sionnest <tguyot@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/3] diff --no-index: support reading from named pipes
-Date:   Tue, 27 Jun 2023 15:10:13 +0100
-Message-ID: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH 1/3] diff --no-index: die on error reading stdin
+Date:   Tue, 27 Jun 2023 15:10:14 +0100
+Message-ID: <5dad728f3b654f0cee59903cb7563298b2d743e9.1687874975.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.40.1.852.g22d29fd9ba
+In-Reply-To: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
+References: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,60 +71,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-In some shells, such as bash and zsh, it's possible to use a command
-substitution to provide the output of a command as a file argument to
-another process, like so:
+If there is an error when reading from stdin then "diff --no-index"
+prints an error message but continues to try and diff a file named "-"
+resulting in an error message that looks like
 
-  diff -u <(printf "a\nb\n") <(printf "a\nc\n")
+    error: error while reading from stdin: Invalid argument
+    fatal: stat '-': No such file or directory
 
-However, this syntax does not produce useful results with git diff
---no-index. On macOS, the arguments to the command are named pipes
-under /dev/fd, and git diff doesn't know how to handle a named
-pipe. On Linux, the arguments are symlinks to pipes, so git diff
-"helpfully" diffs these symlinks, comparing their targets like
-"pipe:[1234]" and "pipe:[5678]".
+assuming that no file named "-" exists. If such a file exists it prints
+the first error message and generates the diff from that file which is
+not what the user wanted. Instead just die() straight away if we cannot
+read from stdin.
 
-There have been at least three previous attempts [1-3] to address this
-issue. They all seem to have received broad support for the aim of
-supporting process substitutions but have foundered on details of the
-implementation. In an effort to avoid the same fate this series is
-narrowly focussed on making command substitutions work with "diff
---no-index" and does not attempt to add a general facility for
-de-referencing symbolic links or reading from pipes to the diff
-machinery.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ diff-no-index.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-The only functional change is that if a path given on the commandline
-is a named pipe or a symbolic link that resolves to a named pipe then
-we read the data to diff from that pipe. The first two patches improve
-the error handling when reading from stdin and add a test. The third
-patch implements support for reading from pipes.
-
-This cover letter and the commit message for the third patch are
-largely copied from brian’s patch[2] - do we have a standard commit
-trailer for "I stole the commit message from someone else's patch"?
-
-I've cc’d the participants of the discussion of the last attempt[1] to
-fix this.
-
-[1] https://lore.kernel.org/git/20200918113256.8699-3-tguyot@gmail.com/
-[2] https://lore.kernel.org/git/20181220002610.43832-1-sandals@crustytoothpaste.net/
-[3] https://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
-
-
-Base-Commit: 94486b6763c29144c60932829a65fec0597e17b3
-Published-As: https://github.com/phillipwood/git/releases/tag/diff-no-index-pipes%2Fv1
-View-Changes-At: https://github.com/phillipwood/git/compare/94486b676...990e71882
-Fetch-It-Via: git fetch https://github.com/phillipwood/git diff-no-index-pipes/v1
-
-Phillip Wood (3):
-  diff --no-index: die on error reading stdin
-  t4054: test diff --no-index with stdin
-  diff --no-index: support reading from named pipes
-
- diff-no-index.c          | 83 ++++++++++++++++++++++++----------------
- t/t4053-diff-no-index.sh | 43 +++++++++++++++++++++
- 2 files changed, 92 insertions(+), 34 deletions(-)
-
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 4296940f90..7b9327f8f3 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -60,20 +60,19 @@ static int get_mode(const char *path, int *mode)
+ 	return 0;
+ }
+ 
+-static int populate_from_stdin(struct diff_filespec *s)
++static void populate_from_stdin(struct diff_filespec *s)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t size = 0;
+ 
+ 	if (strbuf_read(&buf, 0, 0) < 0)
+-		return error_errno("error while reading from stdin");
++		die_errno("error while reading from stdin");
+ 
+ 	s->should_munmap = 0;
+ 	s->data = strbuf_detach(&buf, &size);
+ 	s->size = size;
+ 	s->should_free = 1;
+ 	s->is_stdin = 1;
+-	return 0;
+ }
+ 
+ static struct diff_filespec *noindex_filespec(const char *name, int mode)
 -- 
 2.40.1.852.g22d29fd9ba
 
