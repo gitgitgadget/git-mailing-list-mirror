@@ -2,101 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1422BEB64D9
-	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 06:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D80DEB64D9
+	for <git@archiver.kernel.org>; Tue, 27 Jun 2023 06:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbjF0GvS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 02:51:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46136 "EHLO
+        id S230471AbjF0G4R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jun 2023 02:56:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbjF0GvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 02:51:16 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 174A49F
-        for <git@vger.kernel.org>; Mon, 26 Jun 2023 23:51:14 -0700 (PDT)
-Received: (qmail 27838 invoked by uid 109); 27 Jun 2023 06:51:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Jun 2023 06:51:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14353 invoked by uid 111); 27 Jun 2023 06:51:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Jun 2023 02:51:08 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 27 Jun 2023 02:51:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Sebastian Schuberth <sschuberth@gmail.com>
+        with ESMTP id S229823AbjF0G4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2023 02:56:08 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FB491FF0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 23:56:07 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-98502b12fd4so100694466b.1
+        for <git@vger.kernel.org>; Mon, 26 Jun 2023 23:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687848966; x=1690440966;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pUd5ypSCPK34CF8NBm5j7kt5aqe53DW3FrIOfkWfENo=;
+        b=UKG8SIIgPn+BEC7TMBs9ekLyoEl23n2INKBMi/1bzooo0Z+H0TfYwcEnECAvxFEm0o
+         nSk0kIoNildSR9gEjKoTnAB5HQyZb9gm9K54igv3Bf5dzJYPJGIfTBZ0+PxMSK2SMZif
+         KiRj9KaCRN9RxIk6iPnXYQ6m4k/6r9kTKvxdXl2XXwfzLpXWanmsC/3e9QR0WllhGc4o
+         4I0iDK9zps8VAj5st9rD5OdS3STQ1rq2GYuMiFRirUHKA3p5dud5cLTDslcCWat20gtO
+         Ef8kj+cRq4VArveSJ3Vlm9RIl0KGiM4pZGdyYJmbJcjGEWnl7J8DTJatWuAFVIMu8lkw
+         abQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687848966; x=1690440966;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pUd5ypSCPK34CF8NBm5j7kt5aqe53DW3FrIOfkWfENo=;
+        b=NkeqUXuALOPjuNriDrCRTOBNCArDvpBWO9ggI1jYn2vXsDUCuhzjBCsbEix0trWuN4
+         0RpFEbA7huPl4Q0SV3onDZ2/eB/XtMxLWAVpI76m1wgbdtKYjCJ43dUfT3rInOw1JLzC
+         F5fltm8YHiNdJQVaC/9ptt3Ly9/604xYjJJoHa2ky2VohYGu2+Ta5yoqVBwKUvDjrDci
+         x8N6n6ZUr3bVZDMnOb1540La1O7fLtkJsic6nvXPnF2/DYNN83zVBCLv2Gs7orAIFfUv
+         UZaSEhCHEohKEKSKqeoL8oh4L85mnbJGs5GtlxDmShGWAiVdP9+JsfvX6LEiE+Jxj0Hf
+         Q7iw==
+X-Gm-Message-State: AC+VfDx9Z50Dy5DjJLRIWnsDXW5sYfBjvqIE+JVldM6Jh3FWOn95f+9q
+        iB+gyNGBDxmsMkXTqLzEaW6DihZHzgW7Higd9Jv70Bfm
+X-Google-Smtp-Source: ACHHUZ5sBG69/e/YCF9uQTiibUD9JQ5Sr+NYR7uO1SEpSM80+g5YV4M5NOaKqk6djAJLniTEdOCEWZL32k8cakSw+rg=
+X-Received: by 2002:a05:6402:26c6:b0:516:39bf:1223 with SMTP id
+ x6-20020a05640226c600b0051639bf1223mr987415edd.2.1687848965585; Mon, 26 Jun
+ 2023 23:56:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
+ <20230624011234.GA95358@coredump.intra.peff.net> <CAHGBnuPO63Hi8mfA+MkAGES-gs0eNCDPG2FcPZT=YsnVzKd30A@mail.gmail.com>
+ <xmqqo7l25ibw.fsf@gitster.g> <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
+ <20230627065103.GA1226768@coredump.intra.peff.net>
+In-Reply-To: <20230627065103.GA1226768@coredump.intra.peff.net>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Tue, 27 Jun 2023 08:55:54 +0200
+Message-ID: <CAHGBnuMKDE6nngaoajGfpViXy78toU4WCV_QNGvy-jqXuEaAZA@mail.gmail.com>
+Subject: Re: Clean up stale .gitignore and .gitattribute patterns
+To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: Clean up stale .gitignore and .gitattribute patterns
-Message-ID: <20230627065103.GA1226768@coredump.intra.peff.net>
-References: <CAHGBnuOR+MU50jhNBHw8buWS_Yr9D92mErvgoi=cK16a=4_YUA@mail.gmail.com>
- <20230624011234.GA95358@coredump.intra.peff.net>
- <CAHGBnuPO63Hi8mfA+MkAGES-gs0eNCDPG2FcPZT=YsnVzKd30A@mail.gmail.com>
- <xmqqo7l25ibw.fsf@gitster.g>
- <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHGBnuMjCsMetCJfhfDXb7aYttgUOc0WY+wJ_Q-tmoV4WES-pQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 26, 2023 at 06:42:17PM +0200, Sebastian Schuberth wrote:
+On Tue, Jun 27, 2023 at 8:51=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 
-> On Mon, Jun 26, 2023 at 5:55 PM Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> > > PS: As a future idea, it might be good if "git mv" gives a hint about
-> > > updating .gitattributes if files matching .gitattributes pattern are
-> > > moved.
-> >
-> > Interesting.  "git mv hello.jpg hello.jpeg" would suggest updating
-> > a "*.jpg <list of attribute definitions>" line in the .gitattributes
-> > to begin with "*.jpeg"?
-> 
-> Yes, right. Or as a simpler variant to start with (as patterns might
-> match files in different directories, and not all of the matching
-> files might be moved), just say that a specific .gitattributes line
-> needs updating (or needs to be duplicated / generalized in case files
-> in both the old and new location match).
+> Re-reading your email, though, I wonder if you meant something a little
+> simpler, like:
 
-Yeah, I don't think we could ever do anything automated here; a human
-needs to judge the intent and how the patterns should be adapted.
+Indeed, I was only having the "git mv" case in mind and to advise() at
+the time of that command being run, instead of advise()'ing at "git
+commit" time.
 
-But perhaps something like:
-
-  1. When git-commit makes a new commit that removes paths (whether they
-     were totally removed, or renamed), find all gitattribute lines
-     whose patterns match those paths.
-
-  2. For each such pattern, see if it still matches anything in the
-     resulting tree.
-
-  3. If not, print advise() lines showing the file/line of the pattern
-     which is no longer used.
-
-Doing so naively (by checking matches for each file in the tree) would
-be a little expensive, but maybe OK in practice. It could perhaps be
-done more efficiently with specialized code, but it might be tricky to
-right (and you still end up O(size of tree) in the worst case, because
-something like "*.jpg" needs to be compared against every entry).
-
-Of course on the way there you should end up with a decent tool for
-"which patterns are not currently used?". And you could just
-periodically run that manually if you want to clean up (or even from a
-post-commit hook).
-
-
-Re-reading your email, though, I wonder if you meant something a little
-simpler, like:
-
-  1. When a path is moved via git-mv, see if the attributes before/after
-     are the same.
-
-  2. If not, then mention which ones matched the old path via advise().
-
-That is probably easier to write, though it does not help the "git rm"
-case (where attributes may become obsolete).
-
--Peff
+--=20
+Sebastian Schuberth
