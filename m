@@ -2,295 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE13AEB64D7
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 10:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E7EAEB64DA
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 11:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231742AbjF1KMJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 06:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
+        id S230286AbjF1LLN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 07:11:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231537AbjF1KGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 06:06:30 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916CA2972
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 03:05:49 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-31409e8c145so672483f8f.2
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 03:05:49 -0700 (PDT)
+        with ESMTP id S229623AbjF1LLK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 07:11:10 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09EE41FF0
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 04:11:09 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-313f3a6db22so3208038f8f.3
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 04:11:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687946748; x=1690538748;
+        d=gmail.com; s=20221208; t=1687950667; x=1690542667;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DCQgLXOwbOYCCKlPnx05ab5wLRFpbHqxEyp+2voS6zk=;
-        b=UxP+nWtYebPz0rXkMvx+QEYy+SNNzGhJtS82r2v9dqttlFAPJpTe5r6F1v2++0thWX
-         qaTPcL/XAomG4i+Yh/ddQjfHL4GzKCnQcYGnXiwOaE+ByhVSm1EuV3qoxO0/BZZaZgvg
-         GlKeaQurCyp/0m4LpCbnYBRTBpF8ntkwik9ToZRE0Mhvez3tMnriEG02uiCfx5Y4UfUA
-         faeE4nu5X0GJPB0eNYS0Z5EX1qaaMUpGYjHBi8BpnEY3VPFAqlXuTBOovZWwSMWjIv/a
-         bxg6yHlEONE9tqLDskMeCpDK8xGtpTH6s4dPMyHwFR6oRL4+ukhW8Xj5TvVBmwNDthZR
-         vv5w==
+        bh=T+Jbghx0NapUU1kOhJfMV9xrNgxahymTvlPbPR+TQ3Q=;
+        b=qUSjAvOKoB8GAyYvCiFct8ox4H5/fxDkw9mC2+WrCZtugWLLxHCsMg0mraxEPDTxHY
+         TWUemqwNZNBBoP1J+3I2TBjtz1EV3blKkDCcZ7EXO/QbhyKSFlQk1eJRM93Osem961ES
+         W7NtiXCbIacb0a2HFbhHwYnUam7MZ8taYEkKUJsfcqCaAI+PBPXebukt10rcBNGP1X0J
+         AVWCfIHwb3svLdcmbVlTU29DKzS3XVsJT+2smnpwOQ0d72L4jRc06h3/sCstPIrS3q/1
+         EU8fqExQirCn5nvfEbYL4DjGHQoUd8GkRLSvGuMjFSwHhWPxy/FnQsP1T6QmzwdmFYzk
+         Qd3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687946748; x=1690538748;
+        d=1e100.net; s=20221208; t=1687950667; x=1690542667;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DCQgLXOwbOYCCKlPnx05ab5wLRFpbHqxEyp+2voS6zk=;
-        b=cfJ8PKhlS6JDl8Sgiaf12Du4ARHeFOvihs2QAfMhhVxtEe6BzPWGgvdMlzDQS5JDKa
-         qB92tlNWbHivzc9A44JhT+XpynOkivmcgeS6zo4Ndd1YXLenml5mqvFaTnNXAjg4+1gD
-         d3IBD9O17bm4Qd/yzuxOlqNG6CR6d6FjHzEYpEFvwmdA3bJymZYVivKVrK9IqREO9MVF
-         dYT2hMI4vm0gkQei0P0CpuxKCDKvP0W0AWYDgc37DTeVSbMoUNqK/PHzBi0AW5+RwZOf
-         9srA/wFTLizV6rbsgH0WpSzQNIl1bsPXTlRBcfEtCh4kAcP1jIAJj4AQ6AQif1fdMTSH
-         VoHw==
-X-Gm-Message-State: AC+VfDxaEwxg3QuTlhl4J92479wV/Lh8GCx0TrdT/FqSP3tHvkceQiC5
-        3mOYRekaYtjYhTaJzjwhzSmYbqQC1Rk=
-X-Google-Smtp-Source: ACHHUZ47I74aYtAHhXYqMTNpMwLpZGG7y/m07Z+7vB8eBSf4ONpgPWQ9IX2nHCa7/ifZ6r5S2IGxXg==
-X-Received: by 2002:a5d:5612:0:b0:313:f505:8211 with SMTP id l18-20020a5d5612000000b00313f5058211mr5789798wrv.46.1687946747594;
-        Wed, 28 Jun 2023 03:05:47 -0700 (PDT)
+        bh=T+Jbghx0NapUU1kOhJfMV9xrNgxahymTvlPbPR+TQ3Q=;
+        b=C7R/yPVq5WlGV3RVMyS7rtWtOuMFsazu+N+wAOay1lTlCb7o/Mo+I3iQzeu9Vr5Uc5
+         qOFqAEti8aUKDq7Whg4DIXztHY50CpN700nluXw6pfVlT7S+Zp/9Y4+qd9UCcwutEnaw
+         dmleBPSZpavdzSmer0KRyCtgAS9CTwd7sAdpdAltem9WyQnf6Xj9HBhLL881GN+ut50c
+         s9XTVXpwte1ij/lpkMoM3pnn9Fwj1ttEXRMQyjx53AbOCa77L8ou2EU4hywZ5jYGmoI1
+         nz5zAlsvedkJXgZWeZzkVs1gEr4myhE7WmtaFkwc5aSRB1zSLMwgayr9NFZ3WdW9PeQ2
+         rNeA==
+X-Gm-Message-State: AC+VfDxMiMzJ7BPn/ix7K9VkNB6g4Lh5XZEFyBQNDnMCtdTK+N0rob0t
+        74zPnHmC7J8o88AWyrXYoY9Nf/HAmes=
+X-Google-Smtp-Source: ACHHUZ7aSwrsTij7FbTKJyMZnet34AZrLHHJ/kCLMBsQoIEya/e/ax0+GLTmeTlZBu/d4KXWFbqZjw==
+X-Received: by 2002:adf:d092:0:b0:30e:3da5:46e5 with SMTP id y18-20020adfd092000000b0030e3da546e5mr26063795wrh.59.1687950667252;
+        Wed, 28 Jun 2023 04:11:07 -0700 (PDT)
 Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id g9-20020a5d5549000000b00307acec258esm13043762wrw.3.2023.06.28.03.05.46
+        by smtp.gmail.com with ESMTPSA id d13-20020a5d4f8d000000b003063db8f45bsm13032577wru.23.2023.06.28.04.11.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 03:05:47 -0700 (PDT)
-Message-ID: <457ff920-865e-f018-1d79-f3cb1121d199@gmail.com>
-Date:   Wed, 28 Jun 2023 11:05:46 +0100
+        Wed, 28 Jun 2023 04:11:06 -0700 (PDT)
+Message-ID: <743b17ee-2c5b-be7e-70f3-76d0f9d0ff5e@gmail.com>
+Date:   Wed, 28 Jun 2023 12:11:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] diff --no-index: support reading from named pipes
+Subject: Re: [PATCH v2] fix cherry-pick/revert status when doing multiple
+ commits
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>
-References: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
- <990e71882bfdc697285c5b04b92c290679ca22ab.1687874975.git.phillip.wood@dunelm.org.uk>
- <xmqqy1k4g068.fsf@gitster.g>
+To:     Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+References: <20230627224230.1951135-1-jacob.e.keller@intel.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqy1k4g068.fsf@gitster.g>
+In-Reply-To: <20230627224230.1951135-1-jacob.e.keller@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi Jacob
 
-On 27/06/2023 20:44, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> In some shells, such as bash and zsh, it's possible to use a command
->> substitution to provide the output of a command as a file argument to
->> another process, like so:
->>
->>    diff -u <(printf "a\nb\n") <(printf "a\nc\n")
->>
->> However, this syntax does not produce useful results with "git diff
->> --no-index". On macOS, the arguments to the command are named pipes
->> under /dev/fd, and git diff doesn't know how to handle a named pipe. On
->> Linux, the arguments are symlinks to pipes, so git diff "helpfully"
->> diffs these symlinks, comparing their targets like "pipe:[1234]" and
->> "pipe:[5678]".
->>
->> To address this "diff --no-index" is changed so that if a path given on
->> the commandline is a named pipe or a symbolic link that resolves to a
->> named pipe then we read the data to diff from that pipe. This is
->> implemented by generalizing the code that already exists to handle
->> reading from stdin when the user passes the path "-".
->>
->> As process substitution is not support by POSIX this change is tested by
->> using a pipe and a symbolic link to a pipe.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   diff-no-index.c          | 80 ++++++++++++++++++++++++----------------
->>   t/t4053-diff-no-index.sh | 25 +++++++++++++
->>   2 files changed, 73 insertions(+), 32 deletions(-)
-> 
-> This looks good, if a bit invasive, to a cursory read, at least to
-> me.  It is very focused to the real problem at hand, and shows that
-> the way we split the "no-index" mode out to its own implementation
-> of filespec population code does make sense.
+This version looks good to me
 
-Yes, it is more invasive than I'd like but I think that stems from 
-needing to treat paths given on the commandline differently to the paths 
-we find when recursing directories.
-
->> -static void populate_from_stdin(struct diff_filespec *s)
->> +static void populate_from_pipe(struct diff_filespec *s, int is_stdin)
->>   {
->>   	struct strbuf buf = STRBUF_INIT;
->>   	size_t size = 0;
->> +	int fd = 0;
->>   
->> -	if (strbuf_read(&buf, 0, 0) < 0)
->> +	if (!is_stdin)
->> +		fd = xopen(s->path, O_RDONLY);
->> +	if (strbuf_read(&buf, fd, 0) < 0)
->>   		die_errno("error while reading from stdin");
->> +	if (!is_stdin)
->> +		close(fd);
-> 
-> Given that the error message explicitly says "stdin", and there are
-> many "if ([!]is_stdin)" sprinkled in the code, I actually suspect
-> that there should be two separate helpers, one for stdin and one for
-> non-stdin pipe.  It is especially true since there is only one
-> caller that does this:
-> 
->> +	if (is_pipe)
->> +		populate_from_pipe(s, name == file_from_standard_input);
-> 
-> which can be
-> 
-> 	if (is_pipe) {
-> 		if (name == file_from_standard_input)
-> 			populate_from_stdin(s);
-> 		else
-> 			populate_from_pipe(s);
-> 	}
-> 
-> without losing clarity.  The code that you are sharing by forcing
-> them to be a single helper to wrap up a handful of members in the s
-> structure can become its own helper that is called from these two
-> helper functions.
-
-Sure, and thanks for pointing out the error message, I'd overlooked that.
-
->>   static int queue_diff(struct diff_options *o,
->> -		      const char *name1, const char *name2)
->> +		      const char *name1, int is_pipe1,
->> +		      const char *name2, int is_pipe2)
->>   {
->>   	int mode1 = 0, mode2 = 0;
->>   
->> -	if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
->> +	if (get_mode(name1, is_pipe1, &mode1) ||
->> +	    get_mode(name2, is_pipe2, &mode2))
->>   		return -1;
-> 
-> Makes me wonder why the caller of queue_diff() even needs to know if
-> these two names are pipes; we are calling get_mode() which would run
-> stat(2) anyway, and the result from stat(2) is what you use (in the
-> caller) to determine the values of is_pipeN.  Wouldn't it be more
-> appropriate to leave the caller oblivious of special casing of the
-> pipes and let get_mode() handle this?  After all, that is how the
-> existing code special cases the standard input so there is a strong
-> precedence.
-
-Maybe is_pipeN should be called force_pipeN. We only want to 
-de-reference symbolic links to pipes for paths that are given on the 
-command line, not when the the user asked to compare two directories. 
-That means we need to pass some kind of flag around to say whether we're 
-recursing or not. An earlier draft of this series had a recursing flag 
-rather than is_pipeN like this
-
--static int get_mode(const char *path, int *mode)
-+static int get_mode(const char *path, int *mode, int recursing)
-  {
-          struct stat st;
-
-          if (!path || !strcmp(path, "/dev/null"))
-                  *mode = 0;
-  #ifdef GIT_WINDOWS_NATIVE
-          else if (!strcasecmp(path, "nul"))
-                  *mode = 0;
-  #endif
-          else if (path == file_from_standard_input)
-                  *mode = create_ce_mode(0666);
-          else if (lstat(path, &st))
-                  return error("Could not access '%s'", path);
-          else
-                  *mode = st.st_mode;
-+
-+        /*
-+	  * For paths given on the command line de-reference symbolic
-+	  * links that resolve to a fifo.
-+	  */
-+        if (!recursing &&
-+            S_ISLNK(*mode) && !stat(path, &st) && S_ISFIFO(st.st_mode))
-+                *mode = st.st_mode;
-+
-          return 0;
-  }
-
-I dropped it in favor of is_pipeN after I realized we need to check if 
-the paths on the command line are pipes before calling fixup_paths(). I 
-think we could use the "special" parameter you suggest below as a 
-recursion indicator by setting it to NULL when recursing.
-
-> If we go that route, it may make sense to further isolate the
-> "address comparison" trick used for the standard input mode.
-> Perhaps we can and do something like
-> 
->      static int get_mode(const char *path, int *mode, int *special)
->      {
-> 	struct stat st;
-> 
-> +	*special = 0; /* default - nothing special */
-> 	...
-> 	else if (path == file_from_standard_input) {
-> 		*mode = create_ce_mode(0666);
-> +		*pipe_kind = 1; /* STDIN */
-> +	} else if (stat(path, &st)) {
-> +		... error ...
-> +	} else if (S_ISFIFO(st.st_mode)) {
-> +		*mode = create_ce_mode(0666);
-> +		*pipe_kind = 2; /* FIFO */
-> 	} else if (lstat(path, &st)) {
-> 		... error ...
-> 	} else {
-> 		*mode = st.st_mode;
-> 	}
-> 
-> and have the caller act on "special" to choose among calling
-> populate_from_stdin(), populate_from_pipe(), or do nothing for
-> the regular files?
-> 
->      Side note: this has an added benefit of highlighting that we do
->      stat() and lstat() because of dereferencing.  What I suspect is
->      that "git diff --no-index" mode was primarily to give Git
->      niceties like rename detection and diff algorithms to those who
->      wanted to use in contexts (i.e. contents not tracked by Git)
->      they use "diff" by other people like GNU, without bothering to
->      update "diff" by other people.  I further suspect that "compare
->      the readlink contents", which is very much necessary within the
->      Git context, may not fall into the "Git niceties" when they
->      invoke "--no-index" mode.  Which leads me to imagine a future
->      direction where we only use stat() and not lstat() in the
->      "--no-index" codepath.  Having everything including these
->      lstat() and stat() calls inside get_mode() will allow such a
->      future transition hopefully simpler.
-> 
-> I do not quite see why you decided to move the "is_dir" processing
-> up and made the caller responsible.
-
-To avoid a second stat() call in is_directory() after we've already 
-called stat() to see if the path is a pipe.
-
->  Specifically,
-> 
->> -	fixup_paths(paths, &replacement);
->> +	if (!is_pipe[0] && !is_pipe[1])
->> +		fixup_paths(paths, is_dir, &replacement);
-> 
-> this seems fishy when one side is pipe and the other one is not.
-> When the user says
-> 
->      $ git diff --no-index <(command) path
-> 
-> fixup_paths() are bypassed because one of them is pipe.  It makes me
-> suspect that it should be an error if "path" is a directory.  I do
-> not know if fixup_paths() is the best place for doing such checking,
-> but somebody should be doing that, no?
-
-I  wasn't sure what was best to do in that case. In the end I went with 
-making the behavior the same as "git diff --no-index -- - directory". 
-I'm happy to make both an error.
-
-Thanks for your comments, I'll leave it a couple of days to see if there 
-are any more comments and then re-roll.
+Thanks for re-rolling
 
 Phillip
 
+On 27/06/2023 23:41, Jacob Keller wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+> 
+> The status report for an in-progress cherry-pick does not show the
+> current commit if the cherry-pick happens as part of a series of
+> multiple commits:
+> 
+>   $ git cherry-pick <commit1> <commit2>
+>   < one of the cherry-picks fails to merge clean >
+>   Cherry-pick currently in progress.
+>    (run "git cherry-pick --continue" to continue)
+>    (use "git cherry-pick --skip" to skip this patch)
+>    (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+> 
+>   $ git status
+>   On branch <branch>
+>   Your branch is ahead of '<upstream>' by 1 commit.
+>     (use "git push" to publish your local commits)
+> 
+>   Cherry-pick currently in progress.
+>     (run "git cherry-pick --continue" to continue)
+>     (use "git cherry-pick --skip" to skip this patch)
+>     (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+> 
+> The show_cherry_pick_in_progress() function prints "Cherry-pick
+> currently in progress". That function does have a more verbose print
+> based on whether the cherry_pick_head_oid is null or not. If it is not
+> null, then a more helpful message including which commit is actually
+> being picked is displayed.
+> 
+> The introduction of the "Cherry-pick currently in progress" message
+> comes from 4a72486de97b ("fix cherry-pick/revert status after commit",
+> 2019-04-17). This commit modified wt_status_get_state() in order to
+> detect that a cherry-pick was in progress even if the user has used `git
+> commit` in the middle of the sequence.
+> 
+> The check used to detect this is the call to sequencer_get_last_command.
+> If the sequencer indicates that the lass command was a REPLAY_PICK, then
+> the state->cherry_pick_in_progress is set to 1 and the
+> cherry_pick_head_oid is initialized to the null_oid. Similar behavior is
+> done for the case of REPLAY_REVERT.
+> 
+> It happens that this call of sequencer_get_last_command will always
+> report the action even if the user hasn't interrupted anything. Thus,
+> during a range of cherry-picks or reverts, the cherry_pick_head_oid and
+> revert_head_oid will always be overwritten and initialized to the null
+> oid.
+> 
+> This results in status always displaying the terse message which does
+> not include commit information.
+> 
+> Fix this by adding an additional check so that we do not re-initialize
+> the cherry_pick_head_oid or revert_head_oid if we have already set the
+> cherry_pick_in_progress or revert_in_progress bits. This ensures that
+> git status will display the more helpful information when its available.
+> Add a test case covering this behavior.
+> 
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> 
+> Changes since v1:
+> * add the missing test case that I had locally but forgot to squash in
+> * use else if as suggested by Phillip
+> 
+>   t/t7512-status-help.sh | 22 ++++++++++++++++++++++
+>   wt-status.c            |  4 ++--
+>   2 files changed, 24 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+> index 2f16d5787edf..c2ab8a444a83 100755
+> --- a/t/t7512-status-help.sh
+> +++ b/t/t7512-status-help.sh
+> @@ -774,6 +774,28 @@ EOF
+>   	test_cmp expected actual
+>   '
+>   
+> +test_expect_success 'status when cherry-picking multiple commits' '
+> +	git reset --hard cherry_branch &&
+> +	test_when_finished "git cherry-pick --abort" &&
+> +	test_must_fail git cherry-pick cherry_branch_second one_cherry &&
+> +	TO_CHERRY_PICK=$(git rev-parse --short CHERRY_PICK_HEAD) &&
+> +	cat >expected <<EOF &&
+> +On branch cherry_branch
+> +You are currently cherry-picking commit $TO_CHERRY_PICK.
+> +  (fix conflicts and run "git cherry-pick --continue")
+> +  (use "git cherry-pick --skip" to skip this patch)
+> +  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+> +
+> +Unmerged paths:
+> +  (use "git add <file>..." to mark resolution)
+> +	both modified:   main.txt
+> +
+> +no changes added to commit (use "git add" and/or "git commit -a")
+> +EOF
+> +	git status --untracked-files=no >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>   test_expect_success 'status when cherry-picking after committing conflict resolution' '
+>   	git reset --hard cherry_branch &&
+>   	test_when_finished "git cherry-pick --abort" &&
+> diff --git a/wt-status.c b/wt-status.c
+> index 068b76ef6d96..8d23ff8ced23 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1790,10 +1790,10 @@ void wt_status_get_state(struct repository *r,
+>   		oidcpy(&state->revert_head_oid, &oid);
+>   	}
+>   	if (!sequencer_get_last_command(r, &action)) {
+> -		if (action == REPLAY_PICK) {
+> +		if (action == REPLAY_PICK && !state->cherry_pick_in_progress) {
+>   			state->cherry_pick_in_progress = 1;
+>   			oidcpy(&state->cherry_pick_head_oid, null_oid());
+> -		} else {
+> +		} else if (action == REPLAY_REVERT && !state->revert_in_progress) {
+>   			state->revert_in_progress = 1;
+>   			oidcpy(&state->revert_head_oid, null_oid());
+>   		}
