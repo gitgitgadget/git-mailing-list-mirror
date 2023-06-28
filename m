@@ -2,83 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 379D4EB64D7
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 21:23:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13C50EB64D7
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 21:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbjF1VXo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 17:23:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58068 "EHLO
+        id S231176AbjF1Va2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 17:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232192AbjF1VWs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 17:22:48 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB4203C3A
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 14:18:49 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-c108dd0d9deso147900276.3
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 14:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687987129; x=1690579129;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0RXSqmqBB92ebJn9sji4cGNLz/0cga7JPbs+xleP+J0=;
-        b=JMD4wK2zovwU99AkTAW8Wn7ZlJvACXiZ6mm32/WbBdrb98tCgLF+O9Y5XwFAtEVxIr
-         Trs7P7Wf/rnVSf7ApqONFjtcXdxgD/r0SwYjAqLB78eZmJnY5F8Cb7HaAZgFVGlZY38j
-         cbxnf0l2S9GUR54ECnpGdAUvRW+xatKSGNKT1pvyPMKCGMkden4op6a1gxvcm3gqfNpq
-         ZM6i5wJ/LdffaIobf8b3cvGDAVcrTGw6THDeZGLvzW3KYk3K26YmRGtr8BCaOBpSScGX
-         zfOEKSbbzaYJlHZYNI31gIW029iH7rpPbSbVUliYAVUlcMtC2oEw233jekszITYWKdWU
-         C8tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687987129; x=1690579129;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0RXSqmqBB92ebJn9sji4cGNLz/0cga7JPbs+xleP+J0=;
-        b=FAumpY3KHPl6/SHP7MmDAUzP7VHg+7u06FwBcTG/A/78PIIyN887SiWV7JvKx7ZLUB
-         Ip+KaPyHdWrDka48mRDu9OMaJUPNIMRiwLlmNVx9nZob2e2uieRMxYtascKdHHgZtpn/
-         kn6ZQN0xjSMlpFAlETlwTDj/DyXkArN1iHJg1SXPrwOuQyFOxe6RrtPNamcq9/mPVmBh
-         zgcgliGspsgzsNDAd1jHvBIhxUyO2niMWn7tG3hxUbQOGH2Gfo12+rFjouuTP5rhsU4I
-         3O16GRZPnftRzMiBlW5ISXR2XE5/DpcMVupmIEpLldMre+f5DCZJhXWFr0WhxcqzPkLT
-         jOPA==
-X-Gm-Message-State: AC+VfDyX55Cjk68fqyHbMtDAjur86RHN6sOpSR1ZYl0I7l7gBR97iGuc
-        MLrmz+D/ETAt73PfW5fHQGDRHmOFTHp6yQ==
-X-Google-Smtp-Source: ACHHUZ4rjVsobiHU6fUDIuP5axqONt9Ejrfpka0OVgqHA8zm/loAiKB46ne5Pz18IlKHHTsaW17sakwa6vd8rw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a25:d605:0:b0:bc8:c749:eede with SMTP id
- n5-20020a25d605000000b00bc8c749eedemr15539494ybg.7.1687987129218; Wed, 28 Jun
- 2023 14:18:49 -0700 (PDT)
-Date:   Wed, 28 Jun 2023 14:18:47 -0700
-In-Reply-To: <xmqqbkgzcnao.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqcz1gftdn.fsf@gitster.g> <kl6lh6qrqtbj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqbkgzcnao.fsf@gitster.g>
-Message-ID: <kl6ledlvqo94.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: cw/header-compat-util-shuffle (was Re: What's cooking in git.git
- (Jun 2023, #07; Tue, 27))
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S230413AbjF1VaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 17:30:24 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 691731FDC
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 14:30:23 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B6B019240F;
+        Wed, 28 Jun 2023 17:30:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IKL8dQkNTsCMmT3DmkGIt6ksMGgra5iKUGqkw9
+        Slrhg=; b=I9Mka5RnnZwW5Qbgbj1H9/VbtbdyEPAgPPErNwOMYneCXiGJp+NfsT
+        7Ug6RDbO4MA2HCd7zsTb6PgrBnpwCqAaNB6FQWHoc80J4gP5th4dDQabHZr1n3fN
+        bE3sXiuvf5zyMXRMa9as92uwqbtpG8EB4C6mOtws6YuUrtojtas40=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 031EB19240E;
+        Wed, 28 Jun 2023 17:30:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 64F5F19240D;
+        Wed, 28 Jun 2023 17:30:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kousik Sanagavarapu <five231003@gmail.com>
+Cc:     git@vger.kernel.org, Eli Schwartz <eschwartz@archlinux.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH] t4205: correctly test %(describe:abbrev=...)
+References: <20230628181753.10384-1-five231003@gmail.com>
+Date:   Wed, 28 Jun 2023 14:30:18 -0700
+In-Reply-To: <20230628181753.10384-1-five231003@gmail.com> (Kousik
+        Sanagavarapu's message of "Wed, 28 Jun 2023 23:46:59 +0530")
+Message-ID: <xmqqv8f7b7h1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: FB20C208-15FA-11EE-84F1-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Kousik Sanagavarapu <five231003@gmail.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
->
->> I notice that
->>
->>   https://lore.kernel.org/git/20230606170711.912972-1-calvinwan@google.com/
->>
->> is available as cw/header-compat-util-shuffle, but AFAICT that's not in
->> this announcement or 'seen'.
->
-> Yes, I have found that it had too many bad interactions with topics
-> in flight and, keeping it out of 'seen' was very much deliberate.
+> The pretty format %(describe:abbrev=<number>) tells describe to use only
+> <number> characters of the oid to generate the human-readable format of
+> the commit-ish.
 
-Thanks, that makes sense.
+Is that *only* correct?  I thought it was "at least <number> hexdigits"
+to allow for future growth of the project.
 
-Perhaps it should still get a call out in What's Cooking? When Calvin
-referenced that series, I went digging in What's Cooking for the topic
-name, and when I couldn't find it, I manually listed the topic branches
-starting with "cw/"; fortunately, Calvin's contribution history is short
-enough to make that tenable ;)
+> This is not apparent in the test for %(describe:abbrev=...) because we
+> directly tag HEAD and use that, in which case the human-readable format
+> is just the tag name. So, create a new commit and use that instead.
+
+Nice.  How was this found, I have to wonder, and more importantly,
+how would we have written this test in the first place to avoid
+testing "the wrong thing", to learn from this experience?
+
+>  test_expect_success '%(describe:abbrev=...) vs git describe --abbrev=...' '
+> -	test_when_finished "git tag -d tagname" &&
+> -	git tag -a -m tagged tagname &&
+> +	test_commit --no-tag file &&
+>  	git describe --abbrev=15 >expect &&
+>  	git log -1 --format="%(describe:abbrev=15)" >actual &&
+>  	test_cmp expect actual
+
+The current test checks that the output in the case where the number
+of commits since the tag is 0, and "describe --abbrev=15" and "log
+--format='%(describe:abbrev=15)'" give exactly the same result.
+Which is a good thing to test.
+
+But we *also* want to test a more typical case where there are
+commits between HEAD and the tag that is used to describe it.  
+
+And we *also* want to make sure that the hexadecimal object name
+suffix used in the description is at least 15 hexdigits long, if not
+more.
+
+The updated test drops test #1 (which is questionable), adds test #2
+(which is good), and still omits test #3 (which is not so good).  
+
+So, perhaps
+
+    test_when_finished "git tag -d tagname" &&
+-   git tag -a -m tagged tagname &&
+    test_commit --no-tag file &&
+    git describe --abbrev=15 >expect &&
+    git log -1 --format="%(describe:abbrev=15)" >actual &&
+    test_cmp expect actual &&
++   sed -e "s/^.*-g\([0-9a-f]*\)$/\1/" <actual >hexpart &&
++   test 16 -le $(wc -c <hexpart) &&
++
++   git tag -a -m tagged tagname &&
++   git describe --abbrev=15 >expect &&
++   git log -1 --format="%(describe:abbrev=15)" >actual &&
++   test_cmp expect actual &&
++   test tagname = $(cat actual)
+
+or something along the line?  First we test with a commit that is
+not tagged at all to have some commits between the tag and HEAD with
+the original comparison (this is for #2), then we make sure the
+length of the hexpart (new---this is for #3), and then we add the
+tag to see the "exact" case also works (this is for #1).
+
+Thanks.
