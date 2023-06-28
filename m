@@ -2,65 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78205EB64D7
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 16:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB0DEB64DA
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 16:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231466AbjF1Q0X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 12:26:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60190 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbjF1Q0V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 12:26:21 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C534918FEE0;
-        Wed, 28 Jun 2023 12:26:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z8TNxo6EdXg1pkVC6tRQlS3/By4+k26mZYBkrk
-        hWy+U=; b=JcYkiDDv7f4IQtLj15Y4aEiOcGxG16aNfbYkTRQQ8PikgehF3V5v7A
-        JU/VkDRMzJsnv2Ezucs2XJnmlY5UJLuzBv3JJYHW95mQF6Ycagy2lO5VDhAewqUN
-        B4eNyZOHVl8AjYs5muMkc1DWZRMaXOjekJxiD4m6BFO3vcj9DeSPc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB65618FEDF;
-        Wed, 28 Jun 2023 12:26:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.233.135.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0E57818FEDE;
-        Wed, 28 Jun 2023 12:26:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2] fix cherry-pick/revert status when doing multiple
- commits
-References: <20230627224230.1951135-1-jacob.e.keller@intel.com>
-        <743b17ee-2c5b-be7e-70f3-76d0f9d0ff5e@gmail.com>
-Date:   Wed, 28 Jun 2023 09:26:19 -0700
-In-Reply-To: <743b17ee-2c5b-be7e-70f3-76d0f9d0ff5e@gmail.com> (Phillip Wood's
-        message of "Wed, 28 Jun 2023 12:11:03 +0100")
-Message-ID: <xmqqfs6beeok.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        id S231221AbjF1Q2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 12:28:54 -0400
+Received: from c2.zombino.com ([65.108.93.176]:37660 "EHLO mail.zombino.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231910AbjF1Q2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 12:28:30 -0400
+Received: from [192.168.1.232] (port-92-195-193-117.dynamic.as20676.net [92.195.193.117])
+        by mail.zombino.com (Postfix) with ESMTPS id A2CBB3E98D
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 16:28:28 +0000 (UTC)
+Content-Type: multipart/mixed; boundary="------------RDYfaGTBzRrQQij3UkVyiYZN"
+Message-ID: <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>
+Date:   Wed, 28 Jun 2023 18:28:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 83A0CFFE-15D0-11EE-8AC5-307A8E0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+From:   Adam Majer <adamm@zombino.com>
+Subject: SHA256 support not experimental, or?
+To:     git@vger.kernel.org
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------RDYfaGTBzRrQQij3UkVyiYZN
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> Hi Jacob
->
-> This version looks good to me
->
-> Thanks for re-rolling
->
-> Phillip
+Hi all,
 
-Thanks Jacob for writing and Phillip for reviewing.  Queued.
+Is sha256 still considered experimental or can it be assumed to be stable?
 
+The usecase here is we are planning on moving to sha256 repositories 
+mostly due to integrity guarantees, hypothetical or otherwise. What is 
+important is not the initial interop challenges with sha1 repos, but 
+whether the on-disk format will remain compatible with future versions 
+of git. At minimum, the on-disk format would be converted by some future 
+version(s) of git into another one and not be an end-of-the-road because 
+it was "experimental" where dataloss is an implied risk.
+
+Attached is a patch that removes the scary text, if indeed sha256 should 
+be viewed as stable.
+
+Cheers,
+- Adam
+--------------RDYfaGTBzRrQQij3UkVyiYZN
+Content-Type: text/x-patch; charset=UTF-8;
+ name="0001-doc-sha256-is-no-longer-experimantal.patch"
+Content-Disposition: attachment;
+ filename="0001-doc-sha256-is-no-longer-experimantal.patch"
+Content-Transfer-Encoding: base64
+
+LS0tCiBEb2N1bWVudGF0aW9uL2dpdC50eHQgICAgICAgICAgICAgICAgICAgICAgfCA0ICsr
+LS0KIERvY3VtZW50YXRpb24vb2JqZWN0LWZvcm1hdC1kaXNjbGFpbWVyLnR4dCB8IDggKyst
+LS0tLS0KIDIgZmlsZXMgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygt
+KQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LnR4dCBiL0RvY3VtZW50YXRpb24v
+Z2l0LnR4dAppbmRleCBmMGNhZmEyMjkwLi43YzE1MGE0NzNjIDEwMDY0NAotLS0gYS9Eb2N1
+bWVudGF0aW9uL2dpdC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9naXQudHh0CkBAIC01NTMs
+OCArNTUzLDggQEAgZG91YmxlLXF1b3RlcyBhbmQgcmVzcGVjdGluZyBiYWNrc2xhc2ggZXNj
+YXBlcy4gRS5nLiwgdGhlIHZhbHVlCiAJSWYgdGhpcyB2YXJpYWJsZSBpcyBzZXQsIHRoZSBk
+ZWZhdWx0IGhhc2ggYWxnb3JpdGhtIGZvciBuZXcKIAlyZXBvc2l0b3JpZXMgd2lsbCBiZSBz
+ZXQgdG8gdGhpcyB2YWx1ZS4gVGhpcyB2YWx1ZSBpcwogCWlnbm9yZWQgd2hlbiBjbG9uaW5n
+IGFuZCB0aGUgc2V0dGluZyBvZiB0aGUgcmVtb3RlIHJlcG9zaXRvcnkKLQlpcyBhbHdheXMg
+dXNlZC4gVGhlIGRlZmF1bHQgaXMgInNoYTEiLiBUSElTIFZBUklBQkxFIElTCi0JRVhQRVJJ
+TUVOVEFMISBTZWUgYC0tb2JqZWN0LWZvcm1hdGAgaW4gbGlua2dpdDpnaXQtaW5pdFsxXS4K
+KwlpcyBhbHdheXMgdXNlZC4gVGhlIGRlZmF1bHQgaXMgInNoYTEiLgorICAgIFNlZSBgLS1v
+YmplY3QtZm9ybWF0YCBpbiBsaW5rZ2l0OmdpdC1pbml0WzFdLgogCiBHaXQgQ29tbWl0cwog
+fn5+fn5+fn5+fn4KZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vb2JqZWN0LWZvcm1hdC1k
+aXNjbGFpbWVyLnR4dCBiL0RvY3VtZW50YXRpb24vb2JqZWN0LWZvcm1hdC1kaXNjbGFpbWVy
+LnR4dAppbmRleCA0Y2IxMDZmMGQxLi5kY2NlZTljNDAwIDEwMDY0NAotLS0gYS9Eb2N1bWVu
+dGF0aW9uL29iamVjdC1mb3JtYXQtZGlzY2xhaW1lci50eHQKKysrIGIvRG9jdW1lbnRhdGlv
+bi9vYmplY3QtZm9ybWF0LWRpc2NsYWltZXIudHh0CkBAIC0xLDYgKzEsMiBAQAotVEhJUyBP
+UFRJT04gSVMgRVhQRVJJTUVOVEFMISBTSEEtMjU2IHN1cHBvcnQgaXMgZXhwZXJpbWVudGFs
+IGFuZCBzdGlsbAotaW4gYW4gZWFybHkgc3RhZ2UuICBBIFNIQS0yNTYgcmVwb3NpdG9yeSB3
+aWxsIGluIGdlbmVyYWwgbm90IGJlIGFibGUgdG8KLXNoYXJlIHdvcmsgd2l0aCAicmVndWxh
+ciIgU0hBLTEgcmVwb3NpdG9yaWVzLiAgSXQgc2hvdWxkIGJlIGFzc3VtZWQKLXRoYXQsIGUu
+Zy4sIEdpdCBpbnRlcm5hbCBmaWxlIGZvcm1hdHMgaW4gcmVsYXRpb24gdG8gU0hBLTI1Ngot
+cmVwb3NpdG9yaWVzIG1heSBjaGFuZ2UgaW4gYmFja3dhcmRzLWluY29tcGF0aWJsZSB3YXlz
+LiAgT25seSB1c2UKLWAtLW9iamVjdC1mb3JtYXQ9c2hhMjU2YCBmb3IgdGVzdGluZyBwdXJw
+b3Nlcy4KK05vdGU6IFNIQS0yNTYgcmVwb3NpdG9yeSB3aWxsIGluIGdlbmVyYWwgbm90IGJl
+IGFibGUgdG8KK3NoYXJlIHdvcmsgd2l0aCAicmVndWxhciIgU0hBLTEgcmVwb3NpdG9yaWVz
+LgotLSAKMi40MS4wCgo=
+
+--------------RDYfaGTBzRrQQij3UkVyiYZN--
