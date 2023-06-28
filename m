@@ -2,121 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2424EB64D9
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 02:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1C6AEB64D7
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 08:34:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230327AbjF1CFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jun 2023 22:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59044 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbjF1CFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2023 22:05:53 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F181FE5
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 19:05:50 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-6687446eaccso4818216b3a.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2023 19:05:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1687917950; x=1690509950;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GMNKxMHSf1TOdF/kAzIbqtk8RvnuE0ocJuXmoxq/ROg=;
-        b=IH8LLX7pGT4NwbC3lVeg2x/MoBQrqL27VzyIIJ839JUAdA0bnixKChKp1tx4kogEWo
-         /p1/V1JNq3Ns6ezhyYfWRId2nRG1tR7mB5PwBSMq0zAU+0Ji7yy0TMgU/+P1C/2m0RNF
-         mbh5HR2t72rBlhpfdVbFnx7Xezq9MejV9VfLfu3pnlMdHjazdcKg/mBr3VAX4s4RPL1x
-         vbIRkG8kJQE+tsk6SUzrA3GUgsu8NHwLeGRskV6uNz0yZZTjK66xiPfCfl7D2RDwYI94
-         CTykOeLeK6yQn5NMtwY1gDxcCESf1LL15f9GFvGQ5lgyhm1CBpaaqAkow5vYV9u2ntOE
-         Nq0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687917950; x=1690509950;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GMNKxMHSf1TOdF/kAzIbqtk8RvnuE0ocJuXmoxq/ROg=;
-        b=dHwKDcu4aDo5YZISj6Led25aKMvTzr7zG0Azp1lHCU+q0NQBDBL23fyr0tsGFZSNWP
-         gnpVEfxZdrytO2Kr2Ba2yKBfpmMV7oEsU2668gLxI4z7LKZ6PYsh7GwUym5gOFqSO4lA
-         MdJIViQeTEM4DG6DE7iWP8v6s34KFEPlUoSvUsIUtj2Ofz8eued6FT82RFeYnRlYXRxo
-         SM8EQpodW887GFX97Y2dY80js0PfV3P68aeEvUGYkAQV6Kc2veoBxmdIn9fc/lc8j+5u
-         Vwz0B6Eb4vTIzwKZZMA4mOOJ8zOww30yU0edArLMQURHTmCyISl7lOP4s291YEOBtEVN
-         hvWg==
-X-Gm-Message-State: AC+VfDx4N+PgF08C0O6O0Xx5NVBLKz9yX532kJ6XGEMKiyAXf37w1BAk
-        vX663PNHkpMvY8/mEjfROiet
-X-Google-Smtp-Source: ACHHUZ77HN1adAAJJVOxPnNDss9+B894FXX6YuJ3aMViW4RwQEcYhDYZ6XA9rvz/1JIJWeXl7BPajQ==
-X-Received: by 2002:a05:6a20:3d02:b0:121:f863:67f9 with SMTP id y2-20020a056a203d0200b00121f86367f9mr34564574pzi.18.1687917950345;
-        Tue, 27 Jun 2023 19:05:50 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id iy15-20020a170903130f00b001a69dfd918dsm1270888plb.187.2023.06.27.19.05.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 19:05:49 -0700 (PDT)
-Message-ID: <05df2971-0f26-6da3-093b-7de5d7a5dbca@github.com>
-Date:   Tue, 27 Jun 2023 19:05:47 -0700
+        id S234930AbjF1IeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 04:34:15 -0400
+Received: from giraff.fripost.org ([193.234.15.44]:58560 "EHLO
+        outgoing.fripost.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235530AbjF1Ib7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 04:31:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by outgoing.fripost.org (Postfix) with ESMTP id 216F32AB23FA;
+        Wed, 28 Jun 2023 09:12:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x.fripost.org; h=
+        content-transfer-encoding:content-type:content-type:message-id
+        :user-agent:references:in-reply-to:subject:subject:from:from
+        :date:date:mime-version; s=9df9cdc7e101629b5003b587945afa70; t=
+        1687936371; x=1689750772; bh=r+/jPn1PUadqyNa8nt4uNiyPxodwj1YFbVm
+        lukQ87qY=; b=M647j2YPLTqloDbazRX8Fr4UrUHpr3vZ1eUvSS8tEn9mJx465tl
+        Za+7cSlWj/I5PyYR+V+jRxGJCnVLI3UNRS/AfT5R452xJxYEAs2g/4dp86oYMwju
+        vGG2NIyaoo+qBgzWY4+QzaVftWYyT7mzUaq4x2u9MJc9cAc1+RkiAweg0DjzNrLn
+        391URrrIX1+06Tq1vioc+ySjVE8qojSbGXl2S4EzMHGphEh9U5FUFNiBi0iaaS4L
+        g89POTOMIuOwD7QoQLMT8hQAe7gpAfHnhcygc+pQmK0BPPyCt/L8FeczSk3b/gOE
+        ZI1Qw8xp1u6VrymUVcbQCuPUK6QGgEOPxXg==
+X-Virus-Scanned: Debian amavisd-new at fripost.org
+Received: from outgoing.fripost.org ([127.0.0.1])
+        by localhost (giraff.fripost.org [127.0.0.1]) (amavisd-new, port 10040)
+        with LMTP id n8Bmqzw5I7Ly; Wed, 28 Jun 2023 09:12:51 +0200 (CEST)
+Received: from smtp.fripost.org (unknown [172.16.0.6])
+        by outgoing.fripost.org (Postfix) with ESMTP id F06AB2AB23F5;
+        Wed, 28 Jun 2023 09:12:50 +0200 (CEST)
+Received: from mail.fripost.org (unknown [172.16.0.4])
+        by smtp.fripost.org (Postfix) with ESMTPA id D81B896129E1;
+        Wed, 28 Jun 2023 09:12:50 +0200 (CEST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [RFC PATCH 1/8] trace2: log fsync stats in trace2 rather than
- wrapper
-To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Cc:     nasamuffin@google.com, chooglen@google.com,
-        johnathantanmy@google.com
-References: <20230627195251.1973421-1-calvinwan@google.com>
- <20230627195251.1973421-2-calvinwan@google.com>
-Content-Language: en-US
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230627195251.1973421-2-calvinwan@google.com>
-Content-Type: text/plain; charset=UTF-8
+Date:   Wed, 28 Jun 2023 09:12:50 +0200
+From:   =?UTF-8?Q?Jens_Lidestr=C3=B6m?= <jens@lidestrom.se>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org
+Subject: Re: [PATCH 6/9] gitk: add keyboard bind for create and remove branch
+In-Reply-To: <7c73cc47-302d-8706-dd7f-fd034ef8d945@kdbg.org>
+References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
+ <661f098d882e64391ff76647e3764d58c6cbb50a.1687876885.git.gitgitgadget@gmail.com>
+ <7c73cc47-302d-8706-dd7f-fd034ef8d945@kdbg.org>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <36b3ce90d4ecc9eb9fa5174aba0cf9d4@lidestrom.se>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan wrote:
-> As a library boundary, wrapper.c should not directly log trace2
-> statistics, but instead provide those statistics upon
-> request. Therefore, move the trace2 logging code to trace2.[ch.]. This
-> also allows wrapper.c to not be dependent on trace2.h and repository.h.
+>> +[mc "<%s-C>		Create branch on selected commit" $M1T]
 > 
+> ... "C"? Which one is it?
 
-...
+"C" is a mistake. Good catch, thanks!
 
-> diff --git a/trace2.h b/trace2.h
-> index 4ced30c0db..689e9a4027 100644
-> --- a/trace2.h
-> +++ b/trace2.h
-> @@ -581,4 +581,9 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason);
->  
->  const char *trace2_session_id(void);
->  
-> +/*
-> + * Writes out trace statistics for fsync
-> + */
-> +void trace_git_fsync_stats(void);
-> +
+I choose Ctrl-B to avoid a conflict with Ctrl-C for copying text.
 
-This function does not belong in 'trace2.h', IMO. The purpose of that file
-is to contain the generic API for Trace2 (e.g., 'trace2_printf()',
-'trace2_region_(enter|exit)'), whereas this function is effectively a
-wrapper around a specific invocation of that API. 
+> The key binding to remove a branch does not make sense to me. It does
+> happen that I have more than one branch on a commit, but there is no 
+> way
+> to select which one to remove via the keyboard. I have to use the
+> context menu. This needs more thought IMHO.
 
-You note in the commit message that "wrapper.c should not directly log
-trace2 statistics" with the reasoning of "[it's] a library boundary," but I
-suspect the unstated underlying reason is "because it tracks 'count_fsync_*'
-in static variables." This case would be better handled, then, by replacing
-the usage in 'wrapper.c' with a new Trace2 counter (API introduced in [1]).
-That keeps this usage consistent with the API already established for
-Trace2, rather than starting an unsustainable trend of creating ad-hoc,
-per-metric wrappers in 'trace2.[c|h]'.
+My intention is to always remove the first branch head that is displayed 
+for a single commit in the GUI. This caters to the common use case, with 
+only one branch for a single commit. If there are multiple branch heads 
+on a commit and the users don't want to remove the first one then they 
+need to use the mouse context menu to choose which one to delete.
 
-An added note re: the commit message - it's extremely important that
-functions _anywhere in Git_ are able to use the Trace2 API directly. A
-developer could reasonably want to measure performance, keep track of an
-interesting metric, log when a region is entered in the larger trace,
-capture error information, etc. for any function, regardless of where in
-falls in the internal library organization. To that end, I think either the
-commit message should be rephrased to remove that statement (if the issue is
-really "we're using a static variable and we want to avoid that"), or the
-libification effort should be updated to accommodate use of Trace2 anywhere
-in Git. 
+I could change the implementation to display a dialog that lets the user 
+choose in case of multiple branch heads.
 
-[1] https://lore.kernel.org/git/pull.1373.v4.git.1666618868.gitgitgadget@gmail.com/
+In that case, should I do that as part of this PR, or as a follow up? I 
+would prefer to finish this one first.
 
+> At a minimum, separate it out into its own commit.
+
+I'll do so.
+
+/Jens
+
+On 2023-06-28 07:59, Johannes Sixt wrote:
+> Am 27.06.23 um 16:41 schrieb Jens Lidestrom via GitGitGadget:
+>> From: Jens Lidestrom <jens@lidestrom.se>
+>> 
+>> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
+>> ---
+>>  gitk-git/gitk | 25 ++++++++++++++++---------
+>>  1 file changed, 16 insertions(+), 9 deletions(-)
+>> 
+>> diff --git a/gitk-git/gitk b/gitk-git/gitk
+>> index 596977abe89..0d83a72a424 100755
+>> --- a/gitk-git/gitk
+>> +++ b/gitk-git/gitk
+>> @@ -2692,6 +2692,8 @@ proc makewindow {} {
+>>      bind $ctext <<Selection>> rehighlight_search_results
+>>      bind . <$M1B-t> {resethead [selected_line_id]}
+>>      bind . <$M1B-o> {checkout [selected_line_head] 
+>> [selected_line_id]}
+>> +    bind . <$M1B-m> {rmbranch [selected_line_head] [selected_line_id] 
+>> 1}
+>> +    bind . <$M1B-b> {mkbranch [selected_line_id]}
+> 
+> "b" vs...
+> 
+>>      for {set i 1} {$i < 10} {incr i} {
+>>          bind . <$M1B-Key-$i> [list go_to_parent $i]
+>>      }
+>> @@ -2735,7 +2737,7 @@ proc makewindow {} {
+>>      makemenu $headctxmenu {
+>>          {mc "Check out this branch" command {checkout $headmenuhead 
+>> $headmenuid}}
+>>          {mc "Rename this branch" command mvbranch}
+>> -        {mc "Remove this branch" command rmbranch}
+>> +        {mc "Remove this branch" command {rmbranch $headmenuhead 
+>> $headmenuid 0}}
+>>          {mc "Copy branch name" command {clipboard clear; clipboard 
+>> append $headmenuhead}}
+>>      }
+>>      $headctxmenu configure -tearoff 0
+>> @@ -3185,6 +3187,8 @@ proc keys {} {
+>>  [mc "<F5>		Update"]
+>>  [mc "<%s-T>		Reset current branch to selected commit" $M1T]
+>>  [mc "<%s-O>		Check out selected commit" $M1T]
+>> +[mc "<%s-C>		Create branch on selected commit" $M1T]
+> 
+> ... "C"? Which one is it?
+> 
+>> +[mc "<%s-M>		Remove selected branch" $M1T]
+>>  " \
+>>              -justify left -bg $bgcolor -border 2 -relief groove
+>>      pack $w.m -side top -fill both -padx 2 -pady 2
+>> @@ -9576,13 +9580,13 @@ proc wrcomcan {} {
+>>      unset wrcomtop
+>>  }
+>> 
+>> -proc mkbranch {} {
+>> -    global NS rowmenuid
+>> +proc mkbranch {id} {
+>> +    global NS
+>> 
+>>      set top .branchdialog
+>> 
+>>      set val(name) ""
+>> -    set val(id) $rowmenuid
+>> +    set val(id) $id
+>>      set val(command) [list mkbrgo $top]
+>> 
+>>      set ui(title) [mc "Create branch"]
+>> @@ -10054,13 +10058,14 @@ proc readcheckoutstat {fd newhead newheadref 
+>> newheadid} {
+>>      }
+>>  }
+>> 
+>> -proc rmbranch {} {
+>> -    global headmenuid headmenuhead mainhead
+>> +proc rmbranch {head id shouldComfirm} {
+>> +    global mainhead
+>>      global idheads
+>> -
+>> -    set head $headmenuhead
+>> -    set id $headmenuid
+>>      # this check shouldn't be needed any more...
+>> +    if {$head eq ""} {
+>> +        error_popup [mc "Cannot delete a detached head"]
+>> +        return
+>> +    }
+>>      if {$head eq $mainhead} {
+>>          error_popup [mc "Cannot delete the currently checked-out 
+>> branch"]
+>>          return
+>> @@ -10070,6 +10075,8 @@ proc rmbranch {} {
+>>          # the stuff on this branch isn't on any other branch
+>>          if {![confirm_popup [mc "The commits on branch %s aren't on 
+>> any other\
+>>                          branch.\nReally delete branch %s?" $head 
+>> $head]]} return
+>> +    } elseif {$shouldComfirm} {
+>> +        if {![confirm_popup [mc "Really delete branch %s?" $head]]} 
+>> return
+>>      }
+>>      nowbusy rmbranch
+>>      update
+> 
+> The key binding to remove a branch does not make sense to me. It does
+> happen that I have more than one branch on a commit, but there is no 
+> way
+> to select which one to remove via the keyboard. I have to use the
+> context menu. This needs more thought IMHO. At a minimum, separate it
+> out into its own commit.
+> 
+> -- Hannes
