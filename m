@@ -2,83 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3122EB64DA
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 08:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 895DBEB64D7
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 08:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234059AbjF1Ixe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 04:53:34 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:51544 "EHLO bsmtp5.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236321AbjF1IqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 04:46:11 -0400
-Received: from bsmtp2.bon.at (unknown [192.168.181.105])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 4QrVvq4tsKz5trV
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 07:47:03 +0200 (CEST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4QrVvD2HCrz5tlG;
-        Wed, 28 Jun 2023 07:46:32 +0200 (CEST)
-Message-ID: <e74cc1b3-8459-101f-4613-17df0f5d69e3@kdbg.org>
-Date:   Wed, 28 Jun 2023 07:46:32 +0200
+        id S234158AbjF1Ixr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 04:53:47 -0400
+Received: from giraff.fripost.org ([193.234.15.44]:38258 "EHLO
+        outgoing.fripost.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235358AbjF1Il4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 04:41:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by outgoing.fripost.org (Postfix) with ESMTP id 1F31D2AB23BE;
+        Wed, 28 Jun 2023 09:02:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x.fripost.org; h=
+        content-transfer-encoding:content-type:content-type:message-id
+        :user-agent:references:in-reply-to:subject:subject:from:from
+        :date:date:mime-version; s=9df9cdc7e101629b5003b587945afa70; t=
+        1687935724; x=1689750125; bh=q6zfaWDNvayL/TlnnZUu81qmhuY3W4ZuS8p
+        /JRDkVsc=; b=NQ2xixWDBFKBLryK2eZ9D+TPUl0X17TGKNdKlEFXbdQV7dFYJx9
+        CSOkWxQqHsh0elI6mK02zKLzrzAR0SqEocxhQM7aFkmIKQeHEKTmqosgvuTA35HA
+        ByiuncfdtAK/9CRvAPziPNQXL3e4xOD5VQtavOMmbAEncJDUwA8NnzXv5AXO2ghK
+        flXbHDqz6VfucAH+E5rAzOC4dS7LkND7CxzNkHPxhutSIcRA14859RJr4brbd1vk
+        TvXhw4jHm95dRMLXugrJ+DzRXLkpCoKq9h0AFbg0ARAbVXIbgYilrskqCOeYhEKZ
+        I1pn1Rmkpxp7tIylNw+qW6PB7WKF62RkVnw==
+X-Virus-Scanned: Debian amavisd-new at fripost.org
+Received: from outgoing.fripost.org ([127.0.0.1])
+        by localhost (giraff.fripost.org [127.0.0.1]) (amavisd-new, port 10040)
+        with LMTP id zw-9K7jCHifV; Wed, 28 Jun 2023 09:02:04 +0200 (CEST)
+Received: from smtp.fripost.org (unknown [172.16.0.6])
+        by outgoing.fripost.org (Postfix) with ESMTP id D4C232AB239F;
+        Wed, 28 Jun 2023 09:02:03 +0200 (CEST)
+Received: from mail.fripost.org (unknown [172.16.0.4])
+        by smtp.fripost.org (Postfix) with ESMTPA id BB0EB961286D;
+        Wed, 28 Jun 2023 09:01:48 +0200 (CEST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 9/9] gitk: default select reset hard in dialog
-To:     Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>,
-        Jens Lidestrom <jens@lidestrom.se>, git@vger.kernel.org
+Date:   Wed, 28 Jun 2023 09:01:48 +0200
+From:   =?UTF-8?Q?Jens_Lidestr=C3=B6m?= <jens@lidestrom.se>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org
+Subject: Re: [PATCH 0/9] gitk: improve keyboard support
+In-Reply-To: <0cb94aa5-726f-a57f-858c-b29764c63ce7@kdbg.org>
 References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
- <97857c3509fb4b45e1bc2d29588374a2631a7c2d.1687876885.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <97857c3509fb4b45e1bc2d29588374a2631a7c2d.1687876885.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+ <0cb94aa5-726f-a57f-858c-b29764c63ce7@kdbg.org>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <fc619da9241e4f1dac0514fb2f7e5e62@lidestrom.se>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.06.23 um 16:41 schrieb Jens Lidestrom via GitGitGadget:
-> From: Jens Lidestrom <jens@lidestrom.se>
+Thanks for your comments, Hannes!
+
+> Please note that gitk-git directory is in its own repository that is
+> only subtree-merged into the Git repository. You should generate 
+> patches
+> against git://git.ozlabs.org/~paulus/gitk (I don't know how difficult 
+> it
+> would be for Paul to integrate patches that were generated by 
+> gitgitgadget).
+
+I'll try to figure out how to do that.
+
+I looked briefly at Pauls repo but got the impression that it was out of 
+date. I'll have a second look.
+
+/Jens
+
+On 2023-06-28 08:09, Johannes Sixt wrote:
+> Am 27.06.23 um 16:41 schrieb Jens Lidestrom via GitGitGadget:
+>> It is often convenient to use the keyboard to navigate the gitk GUI 
+>> and
+>> there are keyboard shortcut bindings for many operations such as 
+>> searching
+>> and scrolling. There is however no keyboard binding for the most 
+>> common
+>> operations on branches and commits: Check out, reset, cherry-pick, 
+>> create
+>> and delete branches.
+>> 
+>> This PR adds keyboard bindings for these 5 commands. It also adjusts 
+>> some
+>> GUI focus defaults to simplify keyboard navigation.
+>> 
+>> Some refactoring of the command implementation has been necessary.
+>> Originally the commands was using the mouse context menu to get info 
+>> about
+>> the head and commit to act on. When using keyboard binds this 
+>> information
+>> isn't available so instead the row that is selected in the GUI is 
+>> used. By
+>> adding procedures for doing this the PR lays the groundwork for more 
+>> similar
+>> keyboard binds in the future.
 > 
-> Reset hard is dangerous but also the most common reset type, and not
-> having it pre-selected in the dialog is annoying to users.
-
-I agree that the operation of the Reset dialog is clumsy before this
-series. However, this patch together with the previous patch turns it
-into a foot gun. It becomes far too easy to destroy uncommitted work.
-
-I would prefer to keep the default at "mixed" mode, set the focus on the
-radio button to make it easy to switch to "hard" mode by hitting the
-Down arrow key, and then make it so that Enter triggers the OK button.
-
-> It is also less dangerous in the GUI where there is a confirmation
-> dialog. Also, dangling commits remain in the GUI and can be recovered.
-
-The problem with "hard" mode are not the commits. The real danger is
-that it blows away uncommitted changes. Besides of that, I do not
-consider this UI a confirmation dialog.
-
--- Hannes
-
+> I like it when an application can be navigated with the keyboard. These
+> changes are very much appreciated.
 > 
-> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
-> ---
->  gitk-git/gitk | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> I've left some comments on individual commits. The important one is 
+> that
+> I think it makes the Reset dialog way too easy to destroy uncommitted 
+> work.
 > 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 9d93053e360..5b0a0ea46be 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -9906,7 +9906,9 @@ proc resethead {reset_target_id} {
->          [mc "Reset branch %s to %s?" $mainhead [commit_name $reset_target_id 1]]
->      pack $w.m -side top -fill x -padx 20 -pady 20
->      ${NS}::labelframe $w.f -text [mc "Reset type:"]
-> -    set resettype mixed
-> +    # Reset hard is dangerous but also the most common reset type, and not
-> +    # having it pre-selected in the dialog is annoying to users.
-> +    set resettype hard
->      ${NS}::radiobutton $w.f.soft -value soft -variable resettype \
->          -text [mc "Soft: Leave working tree and index untouched"]
->      grid $w.f.soft -sticky w
-
+> Please note that gitk-git directory is in its own repository that is
+> only subtree-merged into the Git repository. You should generate 
+> patches
+> against git://git.ozlabs.org/~paulus/gitk (I don't know how difficult 
+> it
+> would be for Paul to integrate patches that were generated by 
+> gitgitgadget).
+> 
+> -- Hannes
+> 
+>> 
+>> I'm including Paul Mackerras because he seems to be the maintainer of 
+>> gitk.
+>> Can you review, Paul?
+>> 
+>> Jens Lidestrom (9):
+>>   gitk: add procedures to get commit info from selected row
+>>   gitk: use term "current branch" in gui
+>>   gitk: add keyboard bind for reset
+>>   gitk: show branch name in reset dialog
+>>   gitk: add keyboard bind for checkout
+>>   gitk: add keyboard bind for create and remove branch
+>>   gitk: add keyboard bind to cherry-pick
+>>   gitk: focus ok button in reset dialog
+>>   gitk: default select reset hard in dialog
+>> 
+>>  gitk-git/gitk | 132 
+>> ++++++++++++++++++++++++++++++++++++--------------
+>>  1 file changed, 96 insertions(+), 36 deletions(-)
+>> 
+>> 
+>> base-commit: 94486b6763c29144c60932829a65fec0597e17b3
+>> Published-As: 
+>> https://github.com/gitgitgadget/git/releases/tag/pr-1551%2Fjensli%2Fkeyboard-for-gitk-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
+>> pr-1551/jensli/keyboard-for-gitk-v1
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/1551
