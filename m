@@ -2,70 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E9A4EB64D7
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 16:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C384DEB64D7
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 16:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbjF1Qhy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 12:37:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39552 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjF1Qhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 12:37:53 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0050510D7
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 09:37:50 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-55b10f171e0so1264873a12.2
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 09:37:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687970270; x=1690562270;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E5KYC/HVt1lS1CKHHh5DhJz55My+/t7O1aDe7pHOo74=;
-        b=PTeEzFON1Sg/eft88fKXnU6QMGYnA5jFwGNPN8KsaDknsNXQlSwOTd1rt856x6qSxO
-         uqCSMYecitrfmBc7iFXw4bHAmpPU0c7xEOUTHzEY1ERNlV+6nYDoSMjSb4tOXo4Cf1yV
-         RjKH2jvCH9+Y1BVw1SJknTAessGIMS6t6ZxfQ28GHxpgrW7fuJi+ektZU1YCVyoplhrg
-         8878HyIs34Rw84O09AKM13GhiKu143QQi/YuYRrsCt4gQLUYMb3yqMEiIe27jFvzaOlz
-         HgcBNR4DM3wf2YS6FoKmbrXViZ3dnqLXWQPp8gfZ4tt561nE/Kzj3Yk8pObNWEdbn6kz
-         awlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687970270; x=1690562270;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E5KYC/HVt1lS1CKHHh5DhJz55My+/t7O1aDe7pHOo74=;
-        b=kHONud2ZXJI0PUY001y3NIQsEw+M6LBWD75kWq+SKkokFI4Dulf5bEaFZGr8NwEbsg
-         D+CAWXSU7G3Fn+kTHTs3vx1uiXjPa7ZrNcdW7k91GfmI3KS1Fmi765KzwYJ5wnCLcJIO
-         3mBG8wI6yKmKujgWT7sqbkdHOHo+RXa+dbACUursHeIhgWRC0Wq+NliyRjkse8i/x14O
-         q/TvICMmWjCoW99i+ZJdWsxgxhG08vkXg45wUJybT1fv1ZrQywjnX8fzyBxMuTodNMW7
-         Oj8DvAJEDUzNPbTwo9l2mXz7QhUWMQXsViAUtw55djbdInziRHFZf+YUBn8QBEUH59JI
-         vAVw==
-X-Gm-Message-State: AC+VfDxsUq2BhvphPYbpGYk6m85cLKOMPh48RUB3Pr9YHtu5XNIpHMQl
-        ta54xoxlZForO6ywOF60uD4T476x+B6gOA==
-X-Google-Smtp-Source: ACHHUZ7/3DdlEJdFI20jaMXgBCgmR4yjVfLRD8Oqw0t1QyEfUQDheeJ0tT85/MMO01Lg/yBlq18K72OQV7mwWg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a65:644d:0:b0:557:9c72:7138 with SMTP id
- s13-20020a65644d000000b005579c727138mr1061347pgv.12.1687970270430; Wed, 28
- Jun 2023 09:37:50 -0700 (PDT)
-Date:   Wed, 28 Jun 2023 09:37:48 -0700
-In-Reply-To: <kl6lv8f8qvhd.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20230627195251.1973421-1-calvinwan@google.com>
- <20230627195251.1973421-7-calvinwan@google.com> <xmqq1qhwfr46.fsf@gitster.g> <kl6lv8f8qvhd.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <kl6lpm5fr19f.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH 6/8] pager: remove pager_in_use()
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, nasamuffin@google.com,
-        johnathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        id S231200AbjF1Qju (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 12:39:50 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63791 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230113AbjF1Qjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 12:39:48 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3370618D644;
+        Wed, 28 Jun 2023 12:39:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JG/cGBNbz0+Ivd0fOZYCO3BDy0KtLdoUDcpV1H
+        x2mmY=; b=aA1TR0Xp9WR/UiPPuo+sfsTKUuFCAkytM60rAXcQbIj4jyiN66tl0i
+        zEGRKXIQthOLB+vfitSqTp+pNAj83XCFSymIy+tG4EPJl+j9gcOGNVuW5rGQg4IM
+        Oaqfm08LABwyevcDGY/dH7/kmTIDGQJDUBtvg/kytw1ZQLptuCRJo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CCB718D643;
+        Wed, 28 Jun 2023 12:39:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8FC3018D642;
+        Wed, 28 Jun 2023 12:39:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Namikaze Minato <LLoydsensei+git@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git-switch history and checkout compatibility
+References: <CACmJb3yoHagaU1wb4qRT-nZV4Wptao8boaUXCAYrFxfrxcmUYg@mail.gmail.com>
+        <CACmJb3xWh+0BR_V6sxfMK7iMSdWfvY9d2rjt1hnZhFw70zWweA@mail.gmail.com>
+Date:   Wed, 28 Jun 2023 09:39:46 -0700
+In-Reply-To: <CACmJb3xWh+0BR_V6sxfMK7iMSdWfvY9d2rjt1hnZhFw70zWweA@mail.gmail.com>
+        (Namikaze Minato's message of "Wed, 28 Jun 2023 15:03:22 +0200")
+Message-ID: <xmqqa5wjee25.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 64F2ABCA-15D2-11EE-964D-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Namikaze Minato <LLoydsensei+git@gmail.com> writes:
 
->                      Could we add a is_pager/pager_in_use to that
-> function and push the pager.h dependency upwards?
+> I have trouble with getting used to git-switch instead of
+> git-checkout, but have even more trouble to get people to adopt
+> it.
+>
+> Please consider the two following git-switch statements:
+>
+> git switch remote/branch # fatal: a branch is expected, got remote
+> branch 'remote/branch'
+> #and
+> git switch -d remote/branch
+> git switch master
+> git switch - # fatal: a branch is expected, got commit 'commit_id_here'
+>
+> Both as retro-compatibility with checkout and for user-friendliness, I
+> would expect both to work.
 
-Bleh, I meant "Could we add a new is_pager/pager_in_use parameter to
-that function?"
+I wasn't among the primary advocates to add "switch/restore" pair
+for those people who felt "checkout" was overloaded, and I may be
+misremembering why they decided to deviate from what "checkout"
+(one that checks out a branch, not the one that checks out paths)
+did in these two cases.  Having said that ...
+
+ * I suspect that requiring an explicit "--detach" is deliberate, as
+   they were trying to make "newbie friendlier" version of checkout.
+
+ * I am on the fence about the latter one.  While I think it is a
+   bug if "switch -" and "switch @{-1}" did not work exactly like
+   "checkout @{-1}", combined with the previous point of requiring
+   to be explicit when detaching HEAD, "switch -" that tries to go
+   back to a detached state may be justifiable---it stops you in
+   order to avoid accidental detaching of HEAD.
+
+> Maybe a setting checkout.autoDetach could control such behavior if the
+> current implementation should be kept?
+>
+> What do you think?
+
+Personally, I think those who are familiar with and expert enough on
+Git and do not feel uneasy working on detached HEAD can and should
+just use "checkout" not "switch/restore", but that may be just me.
+
+Thanks.
