@@ -2,90 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB0DEB64DA
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 16:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3597EB64D7
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 16:31:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbjF1Q2y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 12:28:54 -0400
-Received: from c2.zombino.com ([65.108.93.176]:37660 "EHLO mail.zombino.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231910AbjF1Q2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 12:28:30 -0400
-Received: from [192.168.1.232] (port-92-195-193-117.dynamic.as20676.net [92.195.193.117])
-        by mail.zombino.com (Postfix) with ESMTPS id A2CBB3E98D
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 16:28:28 +0000 (UTC)
-Content-Type: multipart/mixed; boundary="------------RDYfaGTBzRrQQij3UkVyiYZN"
-Message-ID: <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>
-Date:   Wed, 28 Jun 2023 18:28:28 +0200
+        id S232029AbjF1Qbe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 12:31:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230463AbjF1Qam (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 12:30:42 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD73B2694
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 09:30:41 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id d75a77b69052e-40079620a83so1281cf.0
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 09:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1687969841; x=1690561841;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TtMVHsa6kVZFjjAIuuPgtpk80p8hx93Ma+7EQOROnF0=;
+        b=FJnidI4fXeP1q2lWw67hEzuM2oN3WIQCafRLlzmABPyS+dWtkd7p94VyIjYXn772j5
+         0fPUYOkD5JnpM5ESnNrZjqEnK6NwlDr4XUZU1C1M+VbtqEpVHPGqpEZgZdsDtDYxfSNX
+         DiKoUpYJcGRBRzFFkV10Up96m1LuYdtWwbcfXpgo2OI5O5tYzbiHo1o2RAg3kZJIevOh
+         LfB3+xm+trJ3COIl3NIB8buO6hPj4Nlu04x/LYvATf+GJWA4hyVqbZsN3280Sug129Hb
+         9ApuZR5lokAIOlhY7kDPdFjDVVng0K4sfbbBP8yv5t6RHi/orBV8Rfvf1hdoYLvXcXOB
+         nYrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687969841; x=1690561841;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TtMVHsa6kVZFjjAIuuPgtpk80p8hx93Ma+7EQOROnF0=;
+        b=XmIr3OiC5laDwrHgXkV0GEc7sXF9hUrnD7YxSJVoXGzcWphIWmpc4P2sVEPb9qs81t
+         efJYCZsYrSSYLSby2Frvp16N5cp/zSjBUyqjl74oz+FwWQwltLJGvRxcdl9nkx2CCN3l
+         rNLJFmjWAO4o9suOAhaSlIGDvXjG+4+7X/HmbNfsXHySDINU3CBuPT2rUEU3YVS9++5/
+         M2WrPTtrGuvzixiAdrEeloHPwjhpD0IZXnkkFyntbVdhTrmUdtcpd9HP90K3ymS8gVw8
+         Xy7Wa8/hEJg+maufYuTAao577h3vLQN0GH5VPhxoziCCoXmpHam18csW/H4ZT/ccvi9k
+         sXRA==
+X-Gm-Message-State: AC+VfDwUti7P66xXoccfgUhYU0vMGPFA6260oOL9sX6ocFx0JJmAG8te
+        5UFTEGOO73fHQiaVex2iyXrFLjDSH9fgu5YKD7zcHw==
+X-Google-Smtp-Source: ACHHUZ5nIWsUlhy/NGM7DaCup3X9QfrU3CYMVOdPWktMMNhgtizus7wLCI28LuQVGWSPZJBTdWvNn09b7FYCLyPRVic=
+X-Received: by 2002:a05:622a:185:b0:3f8:8c06:c53b with SMTP id
+ s5-20020a05622a018500b003f88c06c53bmr296673qtw.0.1687969840734; Wed, 28 Jun
+ 2023 09:30:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-From:   Adam Majer <adamm@zombino.com>
-Subject: SHA256 support not experimental, or?
-To:     git@vger.kernel.org
-Content-Language: en-US
+References: <20230627195251.1973421-1-calvinwan@google.com> <kl6lzg4kqw7v.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lzg4kqw7v.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 28 Jun 2023 09:30:05 -0700
+Message-ID: <CAFySSZDkc5xN5cNz0UyKyKpS8Eq2y_517hrLe8HixzAwQ+E4Dg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/8] Introduce Git Standard Library
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, nasamuffin@google.com,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------RDYfaGTBzRrQQij3UkVyiYZN
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Hi all,
-
-Is sha256 still considered experimental or can it be assumed to be stable?
-
-The usecase here is we are planning on moving to sha256 repositories 
-mostly due to integrity guarantees, hypothetical or otherwise. What is 
-important is not the initial interop challenges with sha1 repos, but 
-whether the on-disk format will remain compatible with future versions 
-of git. At minimum, the on-disk format would be converted by some future 
-version(s) of git into another one and not be an end-of-the-road because 
-it was "experimental" where dataloss is an implied risk.
-
-Attached is a patch that removes the scary text, if indeed sha256 should 
-be viewed as stable.
-
-Cheers,
-- Adam
---------------RDYfaGTBzRrQQij3UkVyiYZN
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-doc-sha256-is-no-longer-experimantal.patch"
-Content-Disposition: attachment;
- filename="0001-doc-sha256-is-no-longer-experimantal.patch"
-Content-Transfer-Encoding: base64
-
-LS0tCiBEb2N1bWVudGF0aW9uL2dpdC50eHQgICAgICAgICAgICAgICAgICAgICAgfCA0ICsr
-LS0KIERvY3VtZW50YXRpb24vb2JqZWN0LWZvcm1hdC1kaXNjbGFpbWVyLnR4dCB8IDggKyst
-LS0tLS0KIDIgZmlsZXMgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygt
-KQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LnR4dCBiL0RvY3VtZW50YXRpb24v
-Z2l0LnR4dAppbmRleCBmMGNhZmEyMjkwLi43YzE1MGE0NzNjIDEwMDY0NAotLS0gYS9Eb2N1
-bWVudGF0aW9uL2dpdC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9naXQudHh0CkBAIC01NTMs
-OCArNTUzLDggQEAgZG91YmxlLXF1b3RlcyBhbmQgcmVzcGVjdGluZyBiYWNrc2xhc2ggZXNj
-YXBlcy4gRS5nLiwgdGhlIHZhbHVlCiAJSWYgdGhpcyB2YXJpYWJsZSBpcyBzZXQsIHRoZSBk
-ZWZhdWx0IGhhc2ggYWxnb3JpdGhtIGZvciBuZXcKIAlyZXBvc2l0b3JpZXMgd2lsbCBiZSBz
-ZXQgdG8gdGhpcyB2YWx1ZS4gVGhpcyB2YWx1ZSBpcwogCWlnbm9yZWQgd2hlbiBjbG9uaW5n
-IGFuZCB0aGUgc2V0dGluZyBvZiB0aGUgcmVtb3RlIHJlcG9zaXRvcnkKLQlpcyBhbHdheXMg
-dXNlZC4gVGhlIGRlZmF1bHQgaXMgInNoYTEiLiBUSElTIFZBUklBQkxFIElTCi0JRVhQRVJJ
-TUVOVEFMISBTZWUgYC0tb2JqZWN0LWZvcm1hdGAgaW4gbGlua2dpdDpnaXQtaW5pdFsxXS4K
-KwlpcyBhbHdheXMgdXNlZC4gVGhlIGRlZmF1bHQgaXMgInNoYTEiLgorICAgIFNlZSBgLS1v
-YmplY3QtZm9ybWF0YCBpbiBsaW5rZ2l0OmdpdC1pbml0WzFdLgogCiBHaXQgQ29tbWl0cwog
-fn5+fn5+fn5+fn4KZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vb2JqZWN0LWZvcm1hdC1k
-aXNjbGFpbWVyLnR4dCBiL0RvY3VtZW50YXRpb24vb2JqZWN0LWZvcm1hdC1kaXNjbGFpbWVy
-LnR4dAppbmRleCA0Y2IxMDZmMGQxLi5kY2NlZTljNDAwIDEwMDY0NAotLS0gYS9Eb2N1bWVu
-dGF0aW9uL29iamVjdC1mb3JtYXQtZGlzY2xhaW1lci50eHQKKysrIGIvRG9jdW1lbnRhdGlv
-bi9vYmplY3QtZm9ybWF0LWRpc2NsYWltZXIudHh0CkBAIC0xLDYgKzEsMiBAQAotVEhJUyBP
-UFRJT04gSVMgRVhQRVJJTUVOVEFMISBTSEEtMjU2IHN1cHBvcnQgaXMgZXhwZXJpbWVudGFs
-IGFuZCBzdGlsbAotaW4gYW4gZWFybHkgc3RhZ2UuICBBIFNIQS0yNTYgcmVwb3NpdG9yeSB3
-aWxsIGluIGdlbmVyYWwgbm90IGJlIGFibGUgdG8KLXNoYXJlIHdvcmsgd2l0aCAicmVndWxh
-ciIgU0hBLTEgcmVwb3NpdG9yaWVzLiAgSXQgc2hvdWxkIGJlIGFzc3VtZWQKLXRoYXQsIGUu
-Zy4sIEdpdCBpbnRlcm5hbCBmaWxlIGZvcm1hdHMgaW4gcmVsYXRpb24gdG8gU0hBLTI1Ngot
-cmVwb3NpdG9yaWVzIG1heSBjaGFuZ2UgaW4gYmFja3dhcmRzLWluY29tcGF0aWJsZSB3YXlz
-LiAgT25seSB1c2UKLWAtLW9iamVjdC1mb3JtYXQ9c2hhMjU2YCBmb3IgdGVzdGluZyBwdXJw
-b3Nlcy4KK05vdGU6IFNIQS0yNTYgcmVwb3NpdG9yeSB3aWxsIGluIGdlbmVyYWwgbm90IGJl
-IGFibGUgdG8KK3NoYXJlIHdvcmsgd2l0aCAicmVndWxhciIgU0hBLTEgcmVwb3NpdG9yaWVz
-LgotLSAKMi40MS4wCgo=
-
---------------RDYfaGTBzRrQQij3UkVyiYZN--
+Ah I failed to mention that this is built on top of 2.41. You can also
+get this series with the correctly applied patches from:
+https://github.com/calvin-wan-google/git/tree/git-std-lib-rfc
