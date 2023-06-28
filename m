@@ -2,137 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29AE6EB64D7
-	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 09:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A49C001B3
+	for <git@archiver.kernel.org>; Wed, 28 Jun 2023 10:06:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230239AbjF1Jm4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jun 2023 05:42:56 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:46264 "EHLO bsmtp5.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231614AbjF1H4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2023 03:56:08 -0400
-Received: from bsmtp3.bon.at (unknown [192.168.181.108])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 4QrWBT3N2Nz5tnC
-        for <git@vger.kernel.org>; Wed, 28 Jun 2023 07:59:45 +0200 (CEST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4QrW9t5FhXz5tlC;
-        Wed, 28 Jun 2023 07:59:14 +0200 (CEST)
-Message-ID: <7c73cc47-302d-8706-dd7f-fd034ef8d945@kdbg.org>
-Date:   Wed, 28 Jun 2023 07:59:14 +0200
+        id S231625AbjF1KGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jun 2023 06:06:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235320AbjF1KC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2023 06:02:26 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8892947
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 02:54:27 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-668704a5b5bso5112357b3a.0
+        for <git@vger.kernel.org>; Wed, 28 Jun 2023 02:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687946067; x=1690538067;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nKwGGUhxGPvsEpgfNVZgpUDK06V9bjYDdKt/hkMRtHY=;
+        b=qNdmtnD7swku0KfESDbKMyTDa6Os6l3bVPl06p9Il540jzN1qtw29dhbVFhFgJDsAf
+         Ru2ITK8mvfIHjsyfilvLildYS93VKALmnjlayEoju9AZzYxXf0uObF++i4FfxiLHENI2
+         UtRuWs4CKvGfdc7/2FKFY3fybVACgC9yUWLGhmdpg8XxRBvoHrZn+WiDEVjh1Ts5gLny
+         VsRQtYRqjkOVNBpZRmm3Z1hMCOeokEqXuZamqGEIRn6zbHwVTjkIqTb8RK28MDJ3kU3S
+         /8p/IqqdctuQf0UrAHtuFUwuPTJr/p+uhYFn/VSopVnMW55EewJlA6CfoE3kcXsCjpb1
+         SeiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687946067; x=1690538067;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nKwGGUhxGPvsEpgfNVZgpUDK06V9bjYDdKt/hkMRtHY=;
+        b=irZ8PUAhhU7lYQLiC1Dai+Am+oYhVnGYz7f0vyE0qDp9k42x6lrAghuaPej2kpQHgI
+         VsgRWpjuWwxU5axKhFffaHB2t1BdLSRAp+kkhWZPD0fRtpaTQOkTl3CQVDlHseE25yc5
+         AXBWd9tn6XvRH8ULD4lIk1dsQS+kC8pmXREXgHLVtMyw8OHHLx4OiytPrbLxTy0FuL7H
+         ZTGzPXRM0g59U829YqKf6XJLYdKDT/K6nwl4YLDwdfcweJ+VJh91h7OfFuH3/zJYVZ3Q
+         M4MNAnJYRUndIONa/JnTvDe4oZ9dwz5a4SSO+Nc7C4QbrRG0HJ+aNIUe+3otH1QBIaW7
+         dKHA==
+X-Gm-Message-State: AC+VfDytXif2GfUZEWAtKpFIQHbOXZrxUvwHfH+FBQ3GQEM6adfPY5AM
+        rGkO2MsqFe/RtiKD4O4IJQuUUnnQ0UDluQ==
+X-Google-Smtp-Source: ACHHUZ7iiT5rlDIhwUpFM6vf8ThvgSNn76tt3MGg0m9X5ytbGggdad2PqmR5DO36wk9T3DvtCArMag==
+X-Received: by 2002:a05:6a00:2351:b0:668:6445:8931 with SMTP id j17-20020a056a00235100b0066864458931mr42538567pfj.29.1687946067232;
+        Wed, 28 Jun 2023 02:54:27 -0700 (PDT)
+Received: from localhost.localdomain ([47.246.101.59])
+        by smtp.gmail.com with ESMTPSA id c3-20020aa78803000000b00678afd4824asm4427040pfo.175.2023.06.28.02.54.25
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Jun 2023 02:54:26 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: What's cooking in git.git (Jun 2023, #07; Tue, 27)
+Date:   Wed, 28 Jun 2023 17:54:21 +0800
+Message-ID: <20230628095421.7249-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.41.0.194.g94486b67
+In-Reply-To: <xmqqcz1gftdn.fsf@gitster.g>
+References: <xmqqcz1gftdn.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 6/9] gitk: add keyboard bind for create and remove branch
-Content-Language: en-US
-To:     Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>,
-        Jens Lidestrom <jens@lidestrom.se>, git@vger.kernel.org
-References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
- <661f098d882e64391ff76647e3764d58c6cbb50a.1687876885.git.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <661f098d882e64391ff76647e3764d58c6cbb50a.1687876885.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.06.23 um 16:41 schrieb Jens Lidestrom via GitGitGadget:
-> From: Jens Lidestrom <jens@lidestrom.se>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> * tl/notes-separator (2023-06-21) 7 commits
+>  - notes: introduce "--no-separator" option
+>  - notes.c: introduce "--[no-]stripspace" option
+>  - notes.c: append separator instead of insert by pos
+>  - notes.c: introduce '--separator=<paragraph-break>' option
+>  - t3321: add test cases about the notes stripspace behavior
+>  - notes.c: use designated initializers for clarity
+>  - notes.c: cleanup 'strbuf_grow' call in 'append_edit'
 > 
-> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
-> ---
->  gitk-git/gitk | 25 ++++++++++++++++---------
->  1 file changed, 16 insertions(+), 9 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 596977abe89..0d83a72a424 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2692,6 +2692,8 @@ proc makewindow {} {
->      bind $ctext <<Selection>> rehighlight_search_results
->      bind . <$M1B-t> {resethead [selected_line_id]}
->      bind . <$M1B-o> {checkout [selected_line_head] [selected_line_id]}
-> +    bind . <$M1B-m> {rmbranch [selected_line_head] [selected_line_id] 1}
-> +    bind . <$M1B-b> {mkbranch [selected_line_id]}
+>  'git notes append' was taught '--separator' to specify string to insert
+>  between paragraphs.
+>  source: <cover.1685174011.git.dyroneteng@gmail.com>
 
-"b" vs...
+There are no pending issues I think ;-)
 
->      for {set i 1} {$i < 10} {incr i} {
->          bind . <$M1B-Key-$i> [list go_to_parent $i]
->      }
-> @@ -2735,7 +2737,7 @@ proc makewindow {} {
->      makemenu $headctxmenu {
->          {mc "Check out this branch" command {checkout $headmenuhead $headmenuid}}
->          {mc "Rename this branch" command mvbranch}
-> -        {mc "Remove this branch" command rmbranch}
-> +        {mc "Remove this branch" command {rmbranch $headmenuhead $headmenuid 0}}
->          {mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
->      }
->      $headctxmenu configure -tearoff 0
-> @@ -3185,6 +3187,8 @@ proc keys {} {
->  [mc "<F5>		Update"]
->  [mc "<%s-T>		Reset current branch to selected commit" $M1T]
->  [mc "<%s-O>		Check out selected commit" $M1T]
-> +[mc "<%s-C>		Create branch on selected commit" $M1T]
+Please let me know if there are some obstables to merge.
 
-... "C"? Which one is it?
-
-> +[mc "<%s-M>		Remove selected branch" $M1T]
->  " \
->              -justify left -bg $bgcolor -border 2 -relief groove
->      pack $w.m -side top -fill both -padx 2 -pady 2
-> @@ -9576,13 +9580,13 @@ proc wrcomcan {} {
->      unset wrcomtop
->  }
->  
-> -proc mkbranch {} {
-> -    global NS rowmenuid
-> +proc mkbranch {id} {
-> +    global NS
->  
->      set top .branchdialog
->  
->      set val(name) ""
-> -    set val(id) $rowmenuid
-> +    set val(id) $id
->      set val(command) [list mkbrgo $top]
->  
->      set ui(title) [mc "Create branch"]
-> @@ -10054,13 +10058,14 @@ proc readcheckoutstat {fd newhead newheadref newheadid} {
->      }
->  }
->  
-> -proc rmbranch {} {
-> -    global headmenuid headmenuhead mainhead
-> +proc rmbranch {head id shouldComfirm} {
-> +    global mainhead
->      global idheads
-> -
-> -    set head $headmenuhead
-> -    set id $headmenuid
->      # this check shouldn't be needed any more...
-> +    if {$head eq ""} {
-> +        error_popup [mc "Cannot delete a detached head"]
-> +        return
-> +    }
->      if {$head eq $mainhead} {
->          error_popup [mc "Cannot delete the currently checked-out branch"]
->          return
-> @@ -10070,6 +10075,8 @@ proc rmbranch {} {
->          # the stuff on this branch isn't on any other branch
->          if {![confirm_popup [mc "The commits on branch %s aren't on any other\
->                          branch.\nReally delete branch %s?" $head $head]]} return
-> +    } elseif {$shouldComfirm} {
-> +        if {![confirm_popup [mc "Really delete branch %s?" $head]]} return
->      }
->      nowbusy rmbranch
->      update
-
-The key binding to remove a branch does not make sense to me. It does
-happen that I have more than one branch on a commit, but there is no way
-to select which one to remove via the keyboard. I have to use the
-context menu. This needs more thought IMHO. At a minimum, separate it
-out into its own commit.
-
--- Hannes
+Thanks.
