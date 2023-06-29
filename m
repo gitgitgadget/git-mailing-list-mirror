@@ -2,123 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD8B7EB64D9
-	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 21:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3763DEB64DD
+	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 21:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230308AbjF2VNW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jun 2023 17:13:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52142 "EHLO
+        id S231933AbjF2VRi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jun 2023 17:17:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbjF2VNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2023 17:13:21 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C6530F6
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 14:13:19 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E9AE19964A;
-        Thu, 29 Jun 2023 17:13:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KMj5aQlEVI/xJu3A6TsBwiflbeGyvb1kZMKF13
-        n+OAk=; b=ajeJiI5unhPJVfD78pA74kpcRBUx2bX1vw6XARmcjLTbeSVaMmcFN8
-        /oOB+/UaRY2kF5UTZsVeEvLIalHamKEd2QSyAHhk0G99kZ1CBdUojVOBUhjJqvTN
-        FmWepUkls1n5VJ+3bl5I1h/ZDF3xaIeI+mxG3Yflm85bBEyW24tuE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46B75199649;
-        Thu, 29 Jun 2023 17:13:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.233.135.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S232022AbjF2VRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2023 17:17:32 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A13D35BF
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 14:17:20 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FE5F199648;
-        Thu, 29 Jun 2023 17:13:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vinayak Dev <vinayakdev.sci@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     nasamuffin@google.com, git@vger.kernel.org
-Subject: Re: [PATCH] docs: include "trace.h" in MyFirstObjectWalk.txt
-References: <20230629185238.58961-1-vinayakdev.sci@gmail.com>
-Date:   Thu, 29 Jun 2023 14:13:12 -0700
-In-Reply-To: <20230629185238.58961-1-vinayakdev.sci@gmail.com> (Vinayak Dev's
-        message of "Fri, 30 Jun 2023 00:22:38 +0530")
-Message-ID: <xmqqjzvm7z13.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 9448B5A210;
+        Thu, 29 Jun 2023 21:17:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1688073439;
+        bh=c7VdcChFLZ0lsAIcZ38tMFQDU9KfYYSslaxHai3bXuU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=qgTuVhjapkUuoiTJQkv+ce2b30UGgl3D3GlWuBsV8+H2qMBdYKEkRl8bk29dLySjO
+         rLXd+dZasn+PSRu5j6rlqlWhLw/sTdevmCxmpb9mJ9v4m5Qeb2M/sh9dmebCygHGW8
+         zzgHF54tAygIpYITPJJmStW+9u5l214d0vCVG0iRn1In0FoGzE5uBhtRFMAEiI5okY
+         pvOGKU3zh7sqFZOXOc0StKohymFndYk/CIGkjMFFFaXTnVCjFYHjVwe3GNZ9NRlQCU
+         HuBZHasvCjzBiFbF9XCwxtwvg/P5tolKd4nKlXN9ULHO63/ha5qO7a+uZHutTFntFz
+         7y0SGkK0dx/7UlpXhZG/c7SH9Su/OsHPlNaRRUkwpZFKxypc0Gy8++JFp5KOGBBfZb
+         WWxLdp4CE99TarrN6hJQWzCWE0L8bENfsVHEFCikrSnknSg4uJp8kmhad3d9LraI5x
+         rIIE7axrd2nYi1/9YGPufsIQCxKwX45+o+qfMQoqm8zOpfIgfHX
+Date:   Thu, 29 Jun 2023 21:17:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+Subject: Re: SHA256 support not experimental, or?
+Message-ID: <ZJ303bm+VAvp5nyV@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, Adam Majer <adamm@zombino.com>,
+        git@vger.kernel.org
+References: <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>
+ <xmqqmt0iajww.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C51EE780-16C1-11EE-B2F9-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XnaUrSmtPnmH9+BY"
+Content-Disposition: inline
+In-Reply-To: <xmqqmt0iajww.fsf@gitster.g>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vinayak Dev <vinayakdev.sci@gmail.com> writes:
 
-[jc: including Elijah, who owns a few topics of the recent past that
-shuffled header files, to recipients].
+--XnaUrSmtPnmH9+BY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> In Documentation/MyFirstObjectWalk.txt, the function
-> trace_printf() is used to enable trace output.
-> However, the file "trace.h" is not included, which
-> produces an error when the code from the tutorial is
-> compiled, with the compiler complaining that the 
-> function is not defined before usage. Therefore, add
-> an include for "trace.h" in the tutorial.
->
-> Signed-off-by: Vinayak Dev <vinayakdev.sci@gmail.com>
-> ---
->  Documentation/MyFirstObjectWalk.txt | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-> index eee513e86f..c3a23eb100 100644
-> --- a/Documentation/MyFirstObjectWalk.txt
-> +++ b/Documentation/MyFirstObjectWalk.txt
-> @@ -41,6 +41,7 @@ Open up a new file `builtin/walken.c` and set up the command handler:
->   */
->  
->  #include "builtin.h"
-> +#include "trace.h"
->  
->  int cmd_walken(int argc, const char **argv, const char *prefix)
->  {
+On 2023-06-29 at 05:59:11, Junio C Hamano wrote:
+> Adam Majer <adamm@zombino.com> writes:
+>=20
+> > Is sha256 still considered experimental or can it be assumed to be stab=
+le?
+>=20
+> I do not think we would officially label SHA-256 support as "stable"
+> until we have good interoperability with SHA-1 repositories, but the
+> expectation is that we will make reasonable effort to keep migration
+> path for the current SHA-256 repositories, even if it turns out that
+> its on-disk format need to be updated, to keep the end-user data safe.
 
-OK.
+I don't think that's a good position to have.  I'm not working on
+interop more than incidentally at the moment, and to my knowledge,
+nobody else is, either.  Absent me having substantially more free time
+or having my employer pay me to work on it, it is probably not
+happening.
 
-> @@ -49,12 +50,13 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
->  }
->  ----
->  
-> -NOTE: `trace_printf()` differs from `printf()` in that it can be turned on or
-> -off at runtime. For the purposes of this tutorial, we will write `walken` as
-> -though it is intended for use as a "plumbing" command: that is, a command which
-> -is used primarily in scripts, rather than interactively by humans (a "porcelain"
-> -command). So we will send our debug output to `trace_printf()` instead. When
-> -running, enable trace output by setting the environment variable `GIT_TRACE`.
-> +NOTE: `trace_printf()`, defined in `trace.h`, differs from `printf()` in
-> +that it can be turned on or off at runtime. For the purposes of this
-> +tutorial, we will write `walken` as though it is intended for use as
-> +a "plumbing" command: that is, a command which is used primarily in
-> +scripts, rather than interactively by humans (a "porcelain" command).
-> +So we will send our debug output to `trace_printf()` instead.
-> +When running, enable trace output by setting the environment variable `GIT_TRACE`.
+We desperately do want people to move away from SHA-1 to SHA-256, and as
+soon as there's tooling and forges to do so, we should encourage them to
+do so.  Just because people can't interop existing SHA-1 repositories
+doesn't mean people can't or shouldn't build new SHA-256 repositories.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-All of the above may be good currently, but as soon as somebody does
-another round of header shuffling, we risk a very similar breakage.
-It is a good time to think about ways to avoid that, while the pain
-is fresh in our mind.
+--XnaUrSmtPnmH9+BY
+Content-Type: application/pgp-signature; name="signature.asc"
 
-One "cop out" thing we can do to limit the damage may be to loosen
-the text in the "NOTE:", so that it does *NOT* mention exact header
-files the API functions appear and let the readers learn from the
-source themselves, with "git grep" helping their way.  Or tone down
-"defined in X" somehow to hint that these details may change.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
 
-More effective things that would involve higher implementation cost
-(but will reduce maintenance cost) would be to actually make sure
-that those who update the API will notice that they are breaking
-these samples when they develop their series.  
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZJ303QAKCRB8DEliiIei
+gdEuAQDVYx9/t6Nui0mLPfkXRBApfAR1lruECJHuYBD9K8sZqQD8DVo9WAUqbitS
+bhxE7Rk3dF7MrATfNziboJsRGLNyCgk=
+=dUWw
+-----END PGP SIGNATURE-----
 
-In https://lore.kernel.org/git/xmqq1qhu9ifp.fsf@gitster.g/, I've
-floated some strawman ideas but people may be able to invent better
-ways.
+--XnaUrSmtPnmH9+BY--
