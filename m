@@ -2,85 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DFEFEB64D9
-	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 13:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED45EB64DC
+	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 13:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbjF2NXR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jun 2023 09:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41638 "EHLO
+        id S231269AbjF2NXS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jun 2023 09:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjF2NXP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2023 09:23:15 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF0D2707
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 06:23:14 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fb96e2b573so1062246e87.3
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 06:23:14 -0700 (PDT)
+        with ESMTP id S229539AbjF2NXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2023 09:23:16 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1B22D4A
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 06:23:15 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3fa9850bfd9so6447795e9.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 06:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688044993; x=1690636993;
+        d=gmail.com; s=20221208; t=1688044994; x=1690636994;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xGhogLxfLYaVXWv2DBCj5Ddl6wx+xSwzlJkYxwXt59E=;
-        b=BY497Y8L1LYsRvZcOIybZSG3CAnJge/o0J5MxRB6Cwu+S8jgBtou/namj4QvNKrCUi
-         /xMaYXswSHQINVldnbkDLsAhKvOnW+E17HlOo7IrdUc189mnNNrKqGxzeP8+VbOJJcRD
-         9l1GqGXbn1Y+XWE2fjnBgjD75mEx/Mpr6QLg8gtXUWceyfv48w4l8vwcpbvMp52Xz/UN
-         2T2xCiHYkNjj4+zpLr4OALGOnbROkdvxq2xK+0jPZteoOW3o7nnYx/uwGmOZ59vOO8eU
-         7rYDqWNmPceYKiWhtGC8vaG+IEwqWffj5wW9EMm9mjtliIMFb4kg+ypy70bvI2kuZalr
-         bbxQ==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ukGnqwfJ5b0sPRfTSAYeT2O8AO2g/cJIDl1GDExy4HI=;
+        b=AUVRIL3lKmaCJnGOBLCpWUIdRUBflLHnKL5HcZ6B2UQGj0t+m3I6qaiI6qCD2UOwAk
+         qxUddG0oSNB257wCO9Xq+pA7MGxhh0KlD/4OWIvDZSAtTONZd4eIA+YNfltgB1oJdSaH
+         Rk4FnVeKM8ZApK4R1DccY6dYzNj2RKB4oiho3Ln+GTRkZP4IEd15m1ea9NDjt+cCewdH
+         i1Nob/QvWpGR5RbKlImQvvTeaqhCqo6Pge2P31xQZkj+2fa+UV8C6VgIcqkCoMq3pN+/
+         EFoVoDvVlNcYswsbrK1GZw7GYU1+y5jqcf7Ein9IxIFvJL11uTunGeviGln0aVlx1N59
+         Se5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688044993; x=1690636993;
+        d=1e100.net; s=20221208; t=1688044994; x=1690636994;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xGhogLxfLYaVXWv2DBCj5Ddl6wx+xSwzlJkYxwXt59E=;
-        b=M8s2ASDQBxVvw2KyZf15V9kV1NGAWlcsrbmWtEWmpYQlFPgtJ/MJsoqIMKC2j8RIHp
-         N16o9RSljZF8XRyscOhs60Piy4zntwK0nKtMp4l32yIW31Ib7OsGMzkWL3F3WNqp8upB
-         OkCCcJ0kFlBJ5lTsMR94LwylRFhCGsmenLDHJkOLexYtkPTG1mmBTKBPugAIdJ9Bi6im
-         AeCN9GXBZkQaToL5dHvMWX8iDBsOXHOe+Tvumxxx+OsMY19czR50aRZrT9FjC7eC2xmy
-         7fMCBE0S/fBmiA+PDj5uLDm8jic6czfEn21EthVR3jVAGsq4hIw8JQwFclFHcah8kHSN
-         5qjw==
-X-Gm-Message-State: AC+VfDywYiK+iKIOfiHinHvEV79nD4Wa4GzA2wlY+CjYg5667Q/VoiAm
-        pgQzO79CVOtR241PBYH8vxKtQlSFmhY=
-X-Google-Smtp-Source: ACHHUZ4Khkh4NDgxDIU3iuy91eMkFixoWTbaYdCOHGiRGwf96h31wbRzMdZ8vFpxUxezUDH74ge8jg==
-X-Received: by 2002:a05:6512:250b:b0:4f9:a542:91c with SMTP id be11-20020a056512250b00b004f9a542091cmr10133012lfb.3.1688044992374;
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ukGnqwfJ5b0sPRfTSAYeT2O8AO2g/cJIDl1GDExy4HI=;
+        b=hWhCsz00S8iBqktV85WiP8aYed1O6B4QaucGdGBP0cM2AzkC0Ni/XcN29Bqxt5hFF3
+         LwLAKo46EQ9rzKwMuOjrHQEiIWQpcHC6lNtNT5Xa/tCZuUNyoySb4UPrxtgPZ4L1O0sf
+         KylJ4RiVRnXHixv7WQSImIvU1Wv4qv8QUxIk6P7jSfxmlysDZfUKcgFzjfp1UFM0EX7J
+         fFYkCVZLzBpul3Ci1+gHOhl4UZ//SzqH9Fy1fkqvGIFTpWzr0PHP/Sui9MnlYSo+GZEL
+         J97UBYyU9IqM8wz8OhnuYkgG0GPzY30qdtE5N2MOpRKap29+GCCM+Kz/gq2Ok6+a5O+o
+         75Tw==
+X-Gm-Message-State: AC+VfDyqfHvwj1S6wTi/p40bXX7XMrI7Ds59RNHCODvwgsZBBv9sd3zS
+        ZnAQ0bdVm62b3WMnSaGE5Pd2ScWk4+8=
+X-Google-Smtp-Source: ACHHUZ6hb1g6EsFt0E8r5cQ32nX0/Uo+c5niW0R0EgQ3a98IAvuP1qAZ1O3RYEjGBmtEf2A6Nj3eAA==
+X-Received: by 2002:a05:600c:2942:b0:3f7:5d:4a06 with SMTP id n2-20020a05600c294200b003f7005d4a06mr15929636wmd.1.1688044992966;
         Thu, 29 Jun 2023 06:23:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z26-20020a1c4c1a000000b003f91e32b1ebsm7043824wmf.17.2023.06.29.06.23.11
+        by smtp.gmail.com with ESMTPSA id t15-20020a0560001a4f00b00313f676832bsm9638313wry.93.2023.06.29.06.23.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 29 Jun 2023 06:23:12 -0700 (PDT)
-Message-Id: <pull.1554.git.1688044991.gitgitgadget@gmail.com>
+Message-Id: <7ecfae7d6f63d235e6efe85b1b1d7c8f3fc08c29.1688044991.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1554.git.1688044991.gitgitgadget@gmail.com>
+References: <pull.1554.git.1688044991.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 29 Jun 2023 13:23:07 +0000
-Subject: [PATCH 0/3] commit -a -m: allow the top-level tree to become empty again
+Date:   Thu, 29 Jun 2023 13:23:08 +0000
+Subject: [PATCH 1/3] do_read_index(): always mark index as initialized unless
+ erroring out
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series is in response to the bug report in
-https://github.com/git-for-windows/git/issues/4462 that demonstrates that
-git commit -a -m <msg> would no longer always stage all updates to tracked
-files. The bug has been introduced in Git v2.40.0.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (3):
-  do_read_index(): always mark index as initialized unless erroring out
-  split-index: accept that a base index can be empty
-  commit -a -m: allow the top-level tree to become empty again
+In 913e0e99b6a (unpack_trees(): protect the handcrafted in-core index
+from read_cache(), 2008-08-23) a flag was introduced into the
+`index_state` structure to indicate whether it had been initialized (or
+more correctly: read and parsed).
 
- builtin/commit.c      |  7 ++-----
- read-cache.c          | 15 +++++++++------
- t/t2200-add-update.sh | 11 +++++++++++
- 3 files changed, 22 insertions(+), 11 deletions(-)
+There was one code path that was not handled, though: when the index
+file does not yet exist (but the `must_exist` parameter is set to 0 to
+indicate that that's okay). In this instance, Git wants to go forward
+with a new, pristine Git index, almost as if the file had existed and
+contained no index entries or extensions.
 
+Since Git wants to handle this situation the same as if an "empty" Git
+index file existed, let's set the `initialized` flag also in that case.
 
-base-commit: a9e066fa63149291a55f383cfa113d8bdbdaa6b3
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1554%2Fdscho%2Ffix-git-commit-a-m-when-tree-becomes-empty-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1554/dscho/fix-git-commit-a-m-when-tree-becomes-empty-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1554
+This is necessary to prepare for fixing the bug where the condition
+`cache_nr == 0` is incorrectly used as an indicator that the index was
+already read, and the condition `initialized != 0` needs to be used
+instead.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ read-cache.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/read-cache.c b/read-cache.c
+index f4c31a68c85..b10caa9831c 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2285,6 +2285,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	if (fd < 0) {
+ 		if (!must_exist && errno == ENOENT) {
+ 			set_new_index_sparsity(istate);
++			istate->initialized = 1;
+ 			return 0;
+ 		}
+ 		die_errno(_("%s: index file open failed"), path);
 -- 
 gitgitgadget
+
