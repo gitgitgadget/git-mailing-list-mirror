@@ -2,83 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7502FEB64D9
-	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 22:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E169EB64D9
+	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 23:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229972AbjF2WW7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jun 2023 18:22:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39866 "EHLO
+        id S230104AbjF2XGc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jun 2023 19:06:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjF2WW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2023 18:22:58 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D722D62
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 15:22:57 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 764EE21B1D;
-        Thu, 29 Jun 2023 18:22:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fGnFlY3fzg27OWVqofWilNs62Q+QyP1mm1lH2q
-        auUoU=; b=jElNbxsizp/uZZHLisZwfVBr/alX8q9ga6t0j+J8uvL5rkgBolpg4l
-        nF6Qfh3sFjm+wp+kvBMZln5wTtvT1mQJXJBVgDtwKkiBgWaOdf/eDSIdV/IbXrP7
-        spQIsyzVcd8tZEJ2H05UPrmSH4gyoH+tOmjZQ5v/T/m3PFk4e5H9Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E01921B1C;
-        Thu, 29 Jun 2023 18:22:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.233.135.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7C10721B1B;
-        Thu, 29 Jun 2023 18:22:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Adam Majer <adamm@zombino.com>, git@vger.kernel.org
-Subject: Re: SHA256 support not experimental, or?
-References: <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>
-        <xmqqmt0iajww.fsf@gitster.g>
-        <ZJ303bm+VAvp5nyV@tapette.crustytoothpaste.net>
-Date:   Thu, 29 Jun 2023 15:22:51 -0700
-In-Reply-To: <ZJ303bm+VAvp5nyV@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 29 Jun 2023 21:17:17 +0000")
-Message-ID: <xmqqa5wh9adg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229459AbjF2XGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2023 19:06:31 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE2FD2D7F
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 16:06:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-516500163b2so1726a12.1
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 16:06:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1688079988; x=1690671988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wRKs14QUFbSkE6wyrlnc9/9NKAkSUxAMttdim8zMpxw=;
+        b=SA+jaxP1LILK0yyI+9k5vzpnQXJBQHu3MNVAFP3AQgVrF/ydOtcAaA+1G9Zgb4x7Zx
+         3SyisBYAArmsLYYoOfFzmu9y5cGV6qV86+gVZpPK15vk7GKJLaEsjovSPuUWUrD7dLHg
+         jJdxjTwaE9Vx5mtJ3ekk7i6vdgrTF62WJwwrtGMKqbQeepLGS8eCNrE+9OHGGiDJTQAn
+         iUieAe1GnMBpwEWxex+dHateU7zU/68Z2/OmrsLaIxFKyG1Nv6lXH1Q2TITzPJIN4gji
+         rkdGVPnCQ/n/UyNy5OGmXUX865ZSJ7aw4OAS0Irh62TtlRp9/UTgdjRH1ZWcgXdKka3q
+         DvPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688079988; x=1690671988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wRKs14QUFbSkE6wyrlnc9/9NKAkSUxAMttdim8zMpxw=;
+        b=cGBhtwA0tRCaPkO6OyXIxP3mCIH7KosYgUlWFwe0pmUtJNcehvX6oEbKT9jbTaYfxY
+         tyD/PBjRziPiUHcg10l91HxhEze9+NJmDyP/drCVMusD/rsq1e9UkmBwqvEyRPuZQXxz
+         FOapdYlrkqlPrg5g0X6jFem5nZhDwCl/unRxWL4g/huOVRe8thlDrkSLgGtCOMmI7hPj
+         8QalqO/87/2LzZH43u2Dj0hNfHsUusNIHecEtDCld8dIald+tG/9SNt26ZhqRpQtr808
+         bDGTTavHhM5zuAOUwLYTxzh1IfzNqD/YivhIv9KCGr9cvlpwQJWa+STPKF3Bmi0/h9U3
+         VHmA==
+X-Gm-Message-State: AC+VfDyhO625H9Rtvamm0AzrpSzvo/ldjDs/RocYueF+aYJpfGOB0cvu
+        NhI4k1zCjJqGnqjcF8IgVBfV3g82/aonaB95BOkefA==
+X-Google-Smtp-Source: ACHHUZ74qCLeTwbWu9gcS9fVC6v4SCSb4UHfbpq1dXBWKcDCzWYW1HE5LyxrHQ4o+A3g9Jv4jThw8fWWp2kEgfVsT34=
+X-Received: by 2002:a50:d4d1:0:b0:514:92e4:ab9f with SMTP id
+ e17-20020a50d4d1000000b0051492e4ab9fmr214764edj.7.1688079988246; Thu, 29 Jun
+ 2023 16:06:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7D86E238-16CB-11EE-AB2A-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+References: <CADE8Naq5W3Bn=gwV7W-xMvYOMMRO=ZY9Ly6im4Rb_qFjMWTbTg@mail.gmail.com>
+ <CAJoAoZ=OEfsgkqsag926tH4GEuafX26A09SGZ1vR1uLh2W_4TA@mail.gmail.com> <xmqq1qhu9ifp.fsf@gitster.g>
+In-Reply-To: <xmqq1qhu9ifp.fsf@gitster.g>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Thu, 29 Jun 2023 16:06:17 -0700
+Message-ID: <CAJoAoZnaU7WsCpnZY0Pvjg4_GJMZADF0FNC9fNZK56ShX2JO+g@mail.gmail.com>
+Subject: Re: Documentation/MyFirstObjectWalk: add #include "trace.h" to use trace_printf()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Vinayak Dev <vinayakdev.sci@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> On 2023-06-29 at 05:59:11, Junio C Hamano wrote:
->> Adam Majer <adamm@zombino.com> writes:
->> 
->> > Is sha256 still considered experimental or can it be assumed to be stable?
->> 
->> I do not think we would officially label SHA-256 support as "stable"
->> until we have good interoperability with SHA-1 repositories, but the
->> expectation is that we will make reasonable effort to keep migration
->> path for the current SHA-256 repositories, even if it turns out that
->> its on-disk format need to be updated, to keep the end-user data safe.
+On Thu, Jun 29, 2023 at 12:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> I don't think that's a good position to have.
-> We desperately do want people to move away from SHA-1 to SHA-256, and as
-> soon as there's tooling and forges to do so, we should encourage them to
-> do so.
+> Emily Shaffer <nasamuffin@google.com> writes:
+>
+> > Yeah, it's almost certainly stale in MyFirstObjectWalk - there was
+> > very recently a patch to clean up some headers which probably were
+> > implicitly including trace.h when I wrote this walkthrough.
+>
+> We are lucky that we have folks like Vinayak who tried out the
+> examples and then bothered to spend time reporting the failure
+> discovered.  What does it take, however, for us to have a bit more
+> automated way to prevent such a breakage that comes from API
+> changes?  Is it feasible, for example, to add a test that extracts
+> code snippets from the MyFirstObjectWalk document and try to build
+> the result?  Alternatively, we can ship such a set of sample source
+> files somewhere in our tree (e.g. contrib/examples?) and have such
+> a test try to build using the current set of source files, but then
+> we need a mechansim to ensure that the sample source files will not
+> go out of sync with the document.
 
-I agree that it is good to ensure that SHA-256 support is good
-enough to start new projects with.
+Yeah, I remember we talked about this when MyFirstContribution and
+MyFirstObjectWalk went in, but never made much headway. I do very much
+like the idea of keeping the reference source in contrib/ as a set of
+patches, maybe along with a script to apply them (or a readme with the
+right `git am` invocation), and then checking that they still build.
+Checking that against the contents of the document is trickier,
+though, like you mentioned. Hm.
 
-> Just because people can't interop existing SHA-1 repositories
-> doesn't mean people can't or shouldn't build new SHA-256 repositories.
+I'm interested in figuring out how to do this, but not likely to have
+a lot of development time available to do it. Maybe I can take a day
+here or there to poke at it, but if someone else is interested and
+beats me to it, I will not be disappointed. :)
 
-True, and our messaging should avoid scaring them away from doing
-so.  But isn't the lack of interoperability one of the reasons why
-GitHub and Gitlab do not yet offer choice of the hash?  There
-certainly is a chicken-and-egg problem here.
-
+>
+> Thoughts?
+>
+> Thanks.
+>
