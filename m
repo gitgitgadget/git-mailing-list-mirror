@@ -2,87 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9FEEEB64D9
-	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 18:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B9B5EB64D9
+	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 18:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232509AbjF2SqC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jun 2023 14:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58842 "EHLO
+        id S232552AbjF2Sw6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jun 2023 14:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232446AbjF2SqA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2023 14:46:00 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AB52693
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:45:59 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b69e6d324aso16534851fa.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:45:59 -0700 (PDT)
+        with ESMTP id S232511AbjF2Sw5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2023 14:52:57 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7708FA2
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:52:56 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-262e81f6154so609017a91.2
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688064357; x=1690656357;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=giOyR0PNHrP245jO2SVWr7pHC0s8q3sAD0VPNjxLN1c=;
-        b=L/s8BplG8bAJPOtWWDwz3xgmGfBRcp8N3Xa1BGBv2c42ACgSqTdN95hHYsqNLGcHBI
-         h5c3RNXZZyJgfqztnALghAX773LdRY7Is6IWeXHQcbsP2JOtf0vbnHuGT2HvjuAJEU4j
-         aaaSJ3T125rMA3/KxMp1VK1PGwi5JSzthuQYBhEdCxhQCYmwKKyXY4aFOFbmyusptlDH
-         c1ex+8HHWFJthHhP4Xzn0b/QWdfzsxDngdprlAilm2EZajKa5q9gF3JW5rATsOwrm+4S
-         Leu9CZpKAx18zIzm1SqH5yGH1mUbEF4T24+ZbKsrZyl9hdKWRxZ4k/+884Z9KR81lUda
-         vhbg==
+        d=gmail.com; s=20221208; t=1688064776; x=1690656776;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VhegxwUN7qXtnxOjXyHOpbbKh1srwoiVKyYGpNoeKh4=;
+        b=VAZON0Oi6yAJDynknR6Zxpf60VG3QcVxCIrT+v6esGDC3PWbAckyoqfITSsHRG76hx
+         d+rtNQTd3ziRTHalOq3Q0yQCyESm1XCLAOrrXAds7+sjis56x5+gtOLtLEA2YpbEcUXz
+         qXT096QAmv643LdaDB81XRI9uaBKd5Q3xUvBWaO6WFHhdyKbTtN+I1fnDydOmMrwoYIr
+         IWDOTbr2U2SYEiiCutcQlAjqAzcrfuo1y+FJd+gFmACr8yFVjKdq2tE+/taZD3o+QOwn
+         MTe9Q46B/iBbLHbrgVzOsbO8xkrlbrPPeBKR2GzFPo3YmvWKGKeF/+eajlwgmaN0ttSP
+         iJjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688064357; x=1690656357;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=giOyR0PNHrP245jO2SVWr7pHC0s8q3sAD0VPNjxLN1c=;
-        b=X83UE0aqaYrGSHHBVT80WbDnKJQXeTTYDh4ZaNj6PHe7p178n8ZRRJ/do9VKJzpUMw
-         DY/lH7iEINFwT/GImfwljQD9AcnynJdrPWl3Hp1+tTkJ1AErAPrFADvmouDoJmXSgM/A
-         blMQi3jCfdnarWMSNiNnTJqDweXpM7yPihEs8xekZlqrwjyK9UEZvnwd3gHy8IcBc1xx
-         guN3heuO12oWMAFapm1s6vTS5kPxBwPpX/8R4Q7MVp/7izHSWg6Bi4ovkP1JufZpgd/T
-         14tuG8bjo4b6dpjBVZW8aF2wKC7WN4fK4kJ/fhVzD9yj+4t4Lz96+DW6yaIvuRaUpC4D
-         b3tA==
-X-Gm-Message-State: ABy/qLaWy94Eyb7EtZLOHp0NP4WJGS8Ne4gxIzwvbWfNUGWSGwVMN2sy
-        lX0J+/YI3ynsrt8Im0Ms0vKLLEMuLJd85zeZVvxFx2qY
-X-Google-Smtp-Source: APBJJlEo+j4ojQc211zh3NcP/v+mqpwTn4reHlInhG2wCX/WAaPF9fteRx2TNQ9Kz1jOgFESh8MwUt1P2vAeEFYygh8=
-X-Received: by 2002:a2e:80d0:0:b0:2b6:9f4a:fce2 with SMTP id
- r16-20020a2e80d0000000b002b69f4afce2mr443096ljg.7.1688064356555; Thu, 29 Jun
- 2023 11:45:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <CADE8Naq5W3Bn=gwV7W-xMvYOMMRO=ZY9Ly6im4Rb_qFjMWTbTg@mail.gmail.com>
- <CAJoAoZ=OEfsgkqsag926tH4GEuafX26A09SGZ1vR1uLh2W_4TA@mail.gmail.com> <CAJoAoZnVAe3kvUdPZmanbKffG7cx3Tc-==H4+FH=L5qQP2smEg@mail.gmail.com>
-In-Reply-To: <CAJoAoZnVAe3kvUdPZmanbKffG7cx3Tc-==H4+FH=L5qQP2smEg@mail.gmail.com>
+        d=1e100.net; s=20221208; t=1688064776; x=1690656776;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VhegxwUN7qXtnxOjXyHOpbbKh1srwoiVKyYGpNoeKh4=;
+        b=MQZD2rbrLE1J/AOD79z9C0zVfRZbx//x+O22b1YuUTGcrBwQtYW3/JcCRaW8k5qhdq
+         7cjv3sgzT8R9WE0FyXyS21Br+ff9uGzULMOXUceFVXHG5loFBsHDTxdFrBgAVPyMOrK2
+         a2Bh7Rm+HCXtXHMkWZkkz+OS2S4HKxGuYfzH5vCkSpwLZvd4YQoUon5c4/oEwTX5DCIS
+         UYRuGv1MMRSYXdbkXeG56i44VAdij7JCukDTRij8wHq7Nt+ECwvqq1+WpQBu2S+OViwg
+         X+ZmIM2eV6cEmnIphPbiDzRmRQkSoVv0JX0/EfEfVTqJGIUCBSWFQApPCJbcEO4f4el0
+         Exsg==
+X-Gm-Message-State: ABy/qLay1TuKDzEEm3wnYsfg3XjjCZqBQE9Fv8MqlvQ0v6UCFARFPGHh
+        s8uYjk5Sy6a2uHMmpP9fTmE=
+X-Google-Smtp-Source: APBJJlHWrAwMfIqLmYAh+97VxIzn8QZt6L2iCfwpGkNaInbj/LUwwhvXakK2keOMrtQLyj/E1y8eKQ==
+X-Received: by 2002:a17:90a:d484:b0:263:5333:ca26 with SMTP id s4-20020a17090ad48400b002635333ca26mr227349pju.29.1688064775772;
+        Thu, 29 Jun 2023 11:52:55 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:6805:29d5:fcf4:4571:4cad:a8ff])
+        by smtp.gmail.com with ESMTPSA id 19-20020a17090a1a1300b0023fcece8067sm10257366pjk.2.2023.06.29.11.52.53
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 29 Jun 2023 11:52:55 -0700 (PDT)
 From:   Vinayak Dev <vinayakdev.sci@gmail.com>
-Date:   Fri, 30 Jun 2023 00:15:45 +0530
-Message-ID: <CADE8Naonm+bW_jVvJKmnfZWQyX=0-QVSHxpSaHs1qo+5DsCiPQ@mail.gmail.com>
-Subject: Re: Documentation/MyFirstObjectWalk: add #include "trace.h" to use trace_printf()
-To:     Emily Shaffer <nasamuffin@google.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     nasamuffin@google.com
+Cc:     git@vger.kernel.org, Vinayak Dev <vinayakdev.sci@gmail.com>
+Subject: [PATCH] docs: include "trace.h" in MyFirstObjectWalk.txt
+Date:   Fri, 30 Jun 2023 00:22:38 +0530
+Message-ID: <20230629185238.58961-1-vinayakdev.sci@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Thu, Jun 29, 2023 at 9:33=E2=80=AFAM Emily Shaffer <nasamuffin@google.=
-com> wrote:
+In Documentation/MyFirstObjectWalk.txt, the function
+trace_printf() is used to enable trace output.
+However, the file "trace.h" is not included, which
+produces an error when the code from the tutorial is
+compiled, with the compiler complaining that the 
+function is not defined before usage. Therefore, add
+an include for "trace.h" in the tutorial.
 
-Hi, thanks for replying!
+Signed-off-by: Vinayak Dev <vinayakdev.sci@gmail.com>
+---
+ Documentation/MyFirstObjectWalk.txt | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-> > Yeah, it's almost certainly stale in MyFirstObjectWalk - there was
-> > very recently a patch to clean up some headers which probably were
-> > implicitly including trace.h when I wrote this walkthrough. Patches
-> > totally welcome - and if you were working from the reference code in
-> > https://github.com/nasamuffin/git/tree/myfirstrevwalk
->
-> bah, wrong link, the tutorial points to branch `revwalk` instead of
-> `myfirstrevwalk`, but the offer stands :)
->
-> > and it's on your
-> > way to rebase and fix that too, I'm happy to update my branch
-> > accordingly too. (If you weren't, don't worry about doing the extra
-> > work, though.)
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index eee513e86f..c3a23eb100 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -41,6 +41,7 @@ Open up a new file `builtin/walken.c` and set up the command handler:
+  */
+ 
+ #include "builtin.h"
++#include "trace.h"
+ 
+ int cmd_walken(int argc, const char **argv, const char *prefix)
+ {
+@@ -49,12 +50,13 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
+ }
+ ----
+ 
+-NOTE: `trace_printf()` differs from `printf()` in that it can be turned on or
+-off at runtime. For the purposes of this tutorial, we will write `walken` as
+-though it is intended for use as a "plumbing" command: that is, a command which
+-is used primarily in scripts, rather than interactively by humans (a "porcelain"
+-command). So we will send our debug output to `trace_printf()` instead. When
+-running, enable trace output by setting the environment variable `GIT_TRACE`.
++NOTE: `trace_printf()`, defined in `trace.h`, differs from `printf()` in
++that it can be turned on or off at runtime. For the purposes of this
++tutorial, we will write `walken` as though it is intended for use as
++a "plumbing" command: that is, a command which is used primarily in
++scripts, rather than interactively by humans (a "porcelain" command).
++So we will send our debug output to `trace_printf()` instead.
++When running, enable trace output by setting the environment variable `GIT_TRACE`.
+ 
+ Add usage text and `-h` handling, like all subcommands should consistently do
+ (our test suite will notice and complain if you fail to do so).
 
-Sure will! But do you mean open a PR on your fork? I have the patch ready,
-and would be very happy to do so, if it is accepted!
+base-commit: a9e066fa63149291a55f383cfa113d8bdbdaa6b3
+-- 
+2.41.0
 
-Thanks a lot!
-Vinayak
