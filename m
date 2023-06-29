@@ -2,114 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A15BEB64D9
-	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 18:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F705EB64D9
+	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 18:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232037AbjF2SQJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jun 2023 14:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40712 "EHLO
+        id S231638AbjF2SVz convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 29 Jun 2023 14:21:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbjF2SQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2023 14:16:06 -0400
-X-Greylist: delayed 91 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 29 Jun 2023 11:16:03 PDT
-Received: from impout009.msg.chrl.nc.charter.net (impout009aa.msg.chrl.nc.charter.net [47.43.20.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB8E42D4E
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:16:03 -0700 (PDT)
-Received: from localhost.localdomain ([97.71.114.58])
-        by cmsmtp with ESMTPA
-        id EwA1qYU7YmtNMEwA3qPlhe; Thu, 29 Jun 2023 18:14:31 +0000
-Authentication-Results: charter.net; auth=pass (LOGIN)
- smtp.auth=ericsunshine@charter.net
-X-Authority-Analysis: v=2.4 cv=CJI54DnD c=1 sm=1 tr=0 ts=649dca08
- a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
- a=VwQbUJbxAAAA:8 a=Ik-n2YkxXVU78WynldAA:9 a=jYKBPJSq9nmHKCndOPe9:22
- a=AjGcO6oz07-iQ99wixmX:22
-From:   Eric Sunshine <ericsunshine@charter.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] fsck: avoid misleading variable name
-Date:   Thu, 29 Jun 2023 14:13:33 -0400
-Message-ID: <20230629181333.87465-1-ericsunshine@charter.net>
-X-Mailer: git-send-email 2.41.0.362.gccff93557d
+        with ESMTP id S232166AbjF2SVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2023 14:21:45 -0400
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6CBD30C5
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:21:43 -0700 (PDT)
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-635e372679bso7647376d6.2
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 11:21:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688062903; x=1690654903;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=la5MA1rhs2Eg5n0eMFuwmJXbotfo7fU09sDjPlKOMtg=;
+        b=Pm/++CwMdvR/NFWAU2oagQVBGVEAXw+wxfDvVa3zaKEwTbUq3wx83UQlLgCfvsgRRh
+         S10ol028Tr2/tcfzsN3TwtEqLhhwrSnVvC/le9GBZ9rI1gDyP6IO5El75gHuXxjy5WJW
+         51cHVn0wWzsAFzjWpcH2zrFeLXLtBnqDmubXXjiCpFfGI6zAFvFEvLQ85LizysZf2AJu
+         Z4VbKhWYzTifnjH8dT49llyUcDYMtMGCTstqQfQtkZAAM0NV84H+bfI60cV6Fso9hmyr
+         vdhyw5axZqhOib8idHGt/ykL+g+rbFAi6Gi6EItxtFVWuP6d2EPAzFB/DBjwit3Ww3Rg
+         jwFw==
+X-Gm-Message-State: ABy/qLYJ43ahP/4Q+Q81+g9l5XDGbxcoaaNTxrOFpwxG9YjXmOtGFT5a
+        yk9UFh8qZ8/+4Yrw7PiKGNfbjQyA5imE4LkExRvQfFqmVZU=
+X-Google-Smtp-Source: APBJJlGva2M21Iw5tc5NZLIaGC8zpgNuGrb2S1aevLYLZBKIXhiYzbdy/JW3/AJRCblRpLdxpjvlsyk7Un6ryJXO/9U=
+X-Received: by 2002:a0c:efc8:0:b0:632:15e6:a75e with SMTP id
+ a8-20020a0cefc8000000b0063215e6a75emr346327qvt.46.1688062902724; Thu, 29 Jun
+ 2023 11:21:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfFgvVo6yVkmCKnzKTGwaxZH0I5aZYG25J3NLzusJ/V2KIxlQiApkWHMuDYgpncXHntxdJpqHLMqENTfOxnt5TMiCc9pGyBsDBIokixlr63cJCOW1U21F
- 1IWkttAo8Zg1Ud7+2zMxxO+/u1NglQDG6wN7k6WApZ7HXh2zLMqNz1iGjU/P/foXykmSWekVouhzVVvSmylL8qgZmF9N0KXxA+D6+neCwiyFJx6679idigJK
- JMnrDf7gpmhSgoHWd032KtAKwHzQnDvfzlQYoottfWE=
+References: <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net> <Y/hxW9i9GyKblNV4@coredump.intra.peff.net>
+ <305ccc55-25e3-6b01-cd86-9a9035839d06@sunshineco.com> <20230511161757.GA1973344@coredump.intra.peff.net>
+ <CAPig+cQP736+944k40wgE8Vybk=ajD-kLTDHM6Y92dKEeWMB8g@mail.gmail.com> <20230511170133.GA1977634@coredump.intra.peff.net>
+In-Reply-To: <20230511170133.GA1977634@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 29 Jun 2023 14:21:31 -0400
+Message-ID: <CAPig+cSeQKr-MNN7_44wuGBCYDMm8H+1mi+X6dd-0p2DkFY2sg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] fsck: mention file path for index errors
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+On Thu, May 11, 2023 at 1:01 PM Jeff King <peff@peff.net> wrote:
+> On Thu, May 11, 2023 at 12:28:45PM -0400, Eric Sunshine wrote:
+> > Yes, s/main/current/ probably would be helpful for future readers of
+> > the code. It's unfortunate that the term "current" can ambiguously
+> > also be read as meaning "the up-to-date index" or "the present-time
+> > index" as opposed to "the index in this directory/worktree", which is
+> > the intention here. But "current" is consistent with the existing
+> > `struct worktree.is_current`, so hopefully should not be too
+> > confusing.
+>
+> I think in this context it should be pretty clear. Do you want to
+> prepare a patch?
 
-When reporting a problem, `git fsck` emits a message such as:
+Done. As usual, I forgot to use --in-reply-to=<this-thread> when
+sending the patch despite having gone through the effort of looking up
+the relevant message-ID of this thread. Oh well. The patch is here[1].
 
-    missing blob 1234abcd (:file)
-
-However, this can be ambiguous when the problem is detected in the index
-of a worktree other than the one in which `git fsck` was invoked. To
-address this shortcoming, 592ec63b38 (fsck: mention file path for index
-errors, 2023-02-24) enhanced the output to mention the path of the index
-when the problem is detected in some other worktree:
-
-    missing blob 1234abcd (.git/worktrees/wt/index:file)
-
-Unfortunately, the variable in fsck_index() which controls whether the
-index path should be shown is misleadingly named "is_main_index" which
-can be misunderstood as referring to the main worktree (i.e. the one
-housing the .git/ repository) rather than to the current worktree (i.e.
-the one in which `git fsck` was invoked). Avoid such potential confusion
-by choosing a name more reflective of its actual purpose.
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
-
-The associated discussion which led to this patch begins at [1].
-
-[1]: https://lore.kernel.org/git/305ccc55-25e3-6b01-cd86-9a9035839d06@sunshineco.com/
-
- builtin/fsck.c  | 4 ++--
- t/t1450-fsck.sh | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index d9aa4db828..0c00920703 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -808,7 +808,7 @@ static int fsck_resolve_undo(struct index_state *istate,
- }
- 
- static void fsck_index(struct index_state *istate, const char *index_path,
--		       int is_main_index)
-+		       int is_current_worktree)
- {
- 	unsigned int i;
- 
-@@ -830,7 +830,7 @@ static void fsck_index(struct index_state *istate, const char *index_path,
- 		obj->flags |= USED;
- 		fsck_put_object_name(&fsck_walk_options, &obj->oid,
- 				     "%s:%s",
--				     is_main_index ? "" : index_path,
-+				     is_current_worktree ? "" : index_path,
- 				     istate->cache[i]->name);
- 		mark_object_reachable(obj);
- 	}
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 8c442adb1a..5805d47eb9 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -1036,9 +1036,9 @@ test_expect_success 'fsck detects problems in worktree index' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'fsck reports problems in main index without filename' '
-+test_expect_success 'fsck reports problems in current worktree index without filename' '
- 	test_when_finished "rm -f .git/index && git read-tree HEAD" &&
--	echo "this object will be removed to break the main index" >file &&
-+	echo "this object will be removed to break current worktree index" >file &&
- 	git add file &&
- 	blob=$(git rev-parse :file) &&
- 	remove_object $blob &&
--- 
-2.41.0.362.gccff93557d
-
+[1]: https://lore.kernel.org/git/20230629181333.87465-1-ericsunshine@charter.net/
