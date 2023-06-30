@@ -2,125 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F87EB64D7
-	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 09:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 545D3EB64D7
+	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 10:01:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232927AbjF3JtB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jun 2023 05:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45538 "EHLO
+        id S232995AbjF3KBO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jun 2023 06:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232920AbjF3Js6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2023 05:48:58 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626961AE
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 02:48:54 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-98d34f1e54fso182648466b.2
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 02:48:54 -0700 (PDT)
+        with ESMTP id S232982AbjF3KA6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2023 06:00:58 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B972F35A5
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 03:00:55 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-977e0fbd742so196149566b.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 03:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688118533; x=1690710533;
+        d=gmail.com; s=20221208; t=1688119254; x=1690711254;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NkMjsR0k97abyCxVBAfMApz9d8Qj02WQczeCKGnIp3w=;
-        b=nnBRZ+jeX5nZ1+RLwSyCc4kwhhXa0v8cj5DcmEs/3Cn8hP57alAziKdNjeviKU+eeo
-         BtPZrUONI5MycCasGSGO8ZOkAFMucFtEFh67CSRRyR57uUVHpDq47J2u7dUfMHqq4x0v
-         4s0ByZ8HbZCW9ly7iC5wZNXxt7qjVf1LGaRio8Y5LUDmyEyivMqA06pFQrmLQpJxdEic
-         puDNKXdghJVSQ6mJS+tBTlhNF3jN9CyX7OZHC1AhpPrdnRq8mkoK3cTSX0r3dNcnFeF9
-         HLxcn95u2mM1enRqXNhfkB5sAEYD44HniPFlT6qZ+P8x9j1Wwp8Bdw61U12PAh6kDTca
-         6ViA==
+        bh=UXtFqOYsEshefWxNQTr3ZZS+Z2anRyuIUAP/n0cTPHQ=;
+        b=alpXvIm43dcOO0Hl8tFhp03cm07eTvW5f34Rvgoa7rQvm+PqLi+9HtDA1A6ar/0y2f
+         F20C5Fm8Hmk3riDYySDdGKPKucEZCetM2BoRpj2x1dIl1sXEO6Q8s1/42Sh5670w+HoD
+         9Ar2BtG+a+jZOoGhhC3VG2hIbe/jgWQitbNI3ceOPwxoWwWxcVG6jDF+j+80fBmIGIv9
+         A97E91ZV2PV45xJ0+mLnTNCQsIcjfteuDA/BGg4YIxTRUqpeqgL71pDvJnFshyDCJes6
+         zHstgf4YK4GVFK0sJpUL8Fb2Sav6/NL8Afv85HGbo1qnmkH+Si8G4ijk7f/lXoygQLkS
+         6kfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688118533; x=1690710533;
+        d=1e100.net; s=20221208; t=1688119254; x=1690711254;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NkMjsR0k97abyCxVBAfMApz9d8Qj02WQczeCKGnIp3w=;
-        b=PQUpp57aUVAZbMrPsEqfKKil9MBLZJE0bqi3GfkOWOGc2gw/gV9eWuP30mBU6qyf2g
-         WiWv8Nc6oPhP16eySY+GphPeq177yDrCwHqTG8b86ZHyw1TLagMyqBykCHQ0lW/uXV7r
-         EqoCSa0Gyi8FyyORfbVa2ehNQU5MFHtvRJZ8mII/E2DsdRI2HmWJTKiwGsNfgMCoyxsA
-         4El0vJ3cROJ6isl9xMXQkFAIX14mvZKTZul1uc1JBffWocz/+0bqkiI/OxJxeHjSJZtF
-         WHke0NeF9MVJVjKuaREVPb2UJQhv+h5QhRtx8HC2NlaUjfk4HBsKfyO4xlkLiR90yOFp
-         FNtg==
-X-Gm-Message-State: ABy/qLZ7yNnditHVIg5b71xskAFWcxkZTqaiNfKZ/vxtPT/xBATJnMg5
-        Po6r/mG2/jBpgzJ4CfSc71E=
-X-Google-Smtp-Source: APBJJlG1hoevwlKMlDAoyPOfNPzZtkv4o//u/ghiehXH0bkVSufGEeubSswWiYuXQ4QwD2JyqXvNwQ==
-X-Received: by 2002:a17:906:81d8:b0:98d:ffdf:29cb with SMTP id e24-20020a17090681d800b0098dffdf29cbmr1291120ejx.2.1688118532491;
-        Fri, 30 Jun 2023 02:48:52 -0700 (PDT)
+        bh=UXtFqOYsEshefWxNQTr3ZZS+Z2anRyuIUAP/n0cTPHQ=;
+        b=FHWpjijdFoUmoZnP7jz0iObQtZARMYV6PIaOIkOAw/UiGfRk6x8FNhrG0mgxWhoPxK
+         jwIQxEcLSTWu4gwqS4A/L0Uqxh/OGejsgozdgyF7oFnxzkFXfO/DgyCzjfp93Fox1nAk
+         sD9kMRNsmhyQhuMJpjOH1S72zzMYbI5KC+8bX1qBMGTSLbfqHwoRaWv3gVSv8/zkw51J
+         VTGeskE2d0koHH/AjWAdl8B0yp2Nbf6SkHcIdVPDCdwJlv+kUdQ3ToGBI0ZMPaTCmJ+B
+         PVp3eMmPxfTwKaWha9KX+Dfo1Mr+YiOC2yP4MWK5LqUWiNtkm8tiwfQlbjeGVHsLDlue
+         odzw==
+X-Gm-Message-State: ABy/qLYo/wFLdKxs5mJ0MRrT1VilC/7HeT0CWNRmGdqpTbX8nsS+RTYX
+        uVSsPBOdFckUcohJhMR22+k=
+X-Google-Smtp-Source: ACHHUZ5vdDC1VZzuvJryzAnR5hGsbD6T7EpGamP1AMf1lUjxMglegugKFZ3RTvSDeIe9L9RT8qVVZw==
+X-Received: by 2002:a17:906:3955:b0:992:3ac7:a2da with SMTP id g21-20020a170906395500b009923ac7a2damr1465337eje.30.1688119253906;
+        Fri, 30 Jun 2023 03:00:53 -0700 (PDT)
 Received: from [192.168.1.195] ([90.242.235.211])
-        by smtp.googlemail.com with ESMTPSA id jt24-20020a170906dfd800b009788554ad10sm7799170ejc.138.2023.06.30.02.48.51
+        by smtp.googlemail.com with ESMTPSA id s2-20020a170906960200b0098d2261d189sm7977023ejx.19.2023.06.30.03.00.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Jun 2023 02:48:51 -0700 (PDT)
-Message-ID: <7a375796-aadd-a982-430c-a78b27bac59b@gmail.com>
-Date:   Fri, 30 Jun 2023 10:48:50 +0100
+        Fri, 30 Jun 2023 03:00:53 -0700 (PDT)
+Message-ID: <3029e4c8-5b42-5193-f9ce-7f4bb22fccab@gmail.com>
+Date:   Fri, 30 Jun 2023 11:00:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 1/2] Add C TAP harness
+Subject: Re: [RFC PATCH 7/8] git-std-lib: introduce git standard library
 Content-Language: en-US
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Linus Arver <linusa@google.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Calvin Wan <calvinwan@google.com>
-References: <20230427175007.902278-1-calvinwan@google.com>
- <20230427175007.902278-2-calvinwan@google.com>
- <afd3e80f-99d9-7472-36e7-335f86263d09@gmail.com>
- <CAFySSZCQfeGnrMPKHwsrT+UvaH_+t=nGhUPUtdVuijOmrrWejA@mail.gmail.com>
- <c902a166-98ce-afba-93f2-ea6027557176@gmail.com>
- <owly8rcc3j1u.fsf@fine.c.googlers.com>
- <a6dff108-6946-71e7-99dc-ac3b70f7d7fa@gmail.com> <ZJ0cIKrSVmwMy6F4@ugly>
+To:     Calvin Wan <calvinwan@google.com>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, nasamuffin@google.com, chooglen@google.com,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20230627195251.1973421-1-calvinwan@google.com>
+ <20230627195251.1973421-8-calvinwan@google.com>
+ <d77f99df-f50a-39fa-a7c5-1bb958f196fb@gmail.com>
+ <CAFySSZBMng9nEdCkuT5+fc6rfFgaFfU2E0NP3=jUQC1yRcUE6Q@mail.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ZJ0cIKrSVmwMy6F4@ugly>
+In-Reply-To: <CAFySSZBMng9nEdCkuT5+fc6rfFgaFfU2E0NP3=jUQC1yRcUE6Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/06/2023 06:52, Oswald Buddenhagen wrote:
-> On Mon, Jun 26, 2023 at 02:15:39PM +0100, Phillip Wood wrote:
->> On 21/06/2023 16:57, Linus Arver wrote:
->>> - Make the 'TEST' macro accept the test description first. Or, keep the
->>>    'TEST' macro but also name a new macro 'IT' that accepts the
->>>    description first, to encourage usage that reads in a
->>>    behavior-driven-development (BDD) style, like 'IT("should accept 
->>> foo",
->>>    t_bar(...))'. I find some test descriptions easier to write this way.
+Hi Calvin
+
+On 28/06/2023 22:15, Calvin Wan wrote:
+>> On 27/06/2023 20:52, Calvin Wan wrote:
+>>> The Git Standard Library intends to serve as the foundational library
+>>> and root dependency that other libraries in Git will be built off of.
+>>> That is to say, suppose we have libraries X and Y; a user that wants to
+>>> use X and Y would need to include X, Y, and this Git Standard Library.
 >>
->> The test description is a printf style format string followed by 
->> arguments. This allows parameterized tests to include the parameter 
->> values in the description to aid debugging but it means the test 
->> function must be the first parameter. We could have IT("should accept 
->> %d", t(), i) but that would be a bit weird.
+>> I think having a library of commonly used functions and structures is a
+>> good idea. While I appreciate that we don't want to include everything
+>> I'm surprised to see it does not include things like "hashmap.c" and
+>> "string-list.c" that will be required by the config library as well as
+>> other code in "libgit.a". I don't think we want "libgitconfig.a" and
+>> "libgit.a" to both contain a copy of "hashmap.o" and "string-list.o"
+> 
+> I chose not to include hashmap and string-list in git-std-lib.a in the
+> first pass since they can exist as libraries built on top of
+> git-std-lib.a. There is no harm starting off with more libraries than
+> fewer besides having something like the config library be dependent on
+> lib-hashmap.a, lib-string-list.a, and git-std-lib.a rather than only
+> git-std-lib.a. They can always be added into git-std-lib.a in the
+> future. That being said, I do find it extremely unlikely that someone
+> would want to swap out the implementation for hashmap or string-list
+> so it is also very reasonable to include them into git-std-lib.a
+
+Finding the right boundary for git-std-lib is a bit of a judgement call. 
+We certainly could have separate libraries for things like hashmap, 
+string-list, strvec, strmap and wildmatch but there is some overhead 
+adding each one to the Makefile. I think their use is common enough that 
+it would be continent to have them in git-std-lib but we can always add 
+them later.
+
+>>> diff --git a/Makefile b/Makefile
+>>> index e9ad9f9ef1..255bd10b82 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -2162,6 +2162,11 @@ ifdef FSMONITOR_OS_SETTINGS
+>>>        COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
+>>>    endif
+>>>
+>>> +ifdef GIT_STD_LIB
+>>> +     BASIC_CFLAGS += -DGIT_STD_LIB
+>>> +     BASIC_CFLAGS += -DNO_GETTEXT
 >>
-> with some minor preprocessor magic [1], you could make that
+>> I can see other projects may want to build git-std-lib without gettext
+>> support but if we're going to use git-std-lib within git it needs to be
+>> able to be built with that support. The same goes for the trace
+>> functions that you are redefining in usage.h
 > 
->    IT(("should accept %d", i), t(i))
-> 
-> which would be somewhat more noisy, but arguably even somewhat clearer.
-> notably,
-> 
->    IT("should accept foo", t())
-> 
-> would still work with the same macro.
-> 
-> [1] https://stackoverflow.com/a/62984543/3685191
+> Taking a closer look at gettext.[ch], I believe I can also include it
+> into git-std-lib.a with a couple of minor changes.
 
-Thanks, I'd not come across that trick before. As you say it is a it 
-noisy though.
+That's great
 
-> somewhat on a tangent: it's also possible to overload macros on argument 
-> count [2], which may also come in handy.
-> 
-> [2] https://stackoverflow.com/a/24028231/3685191
+> I'm currently
+> thinking about how the trace functions should interact with
+> git-std-lib.a since Victoria had similar comments on patch 1. I'll
+> reply to that thread when I come up with an answer.
 
-When I was writing my original reply to Linus I did wonder if we could 
-count the arguments. I didn't pursue it as I don't really want to create 
-a dozen different macros for different argument counts. I think TEST() 
-is understandable by anyone reading the code whereas IT() seems a bit 
-odd unless one is used to BDD.
+One thought I had was to have a compile time flag so someone building 
+git-std-lib for an external project could build it with
+
+	make git-std-lib NO_TRACE2=YesPlease
+
+and then we'd either compile against a stub version of trace2 that does 
+nothing or use some #define magic to get rid of the calls if that is not 
+too invasive.
 
 Best Wishes
 
