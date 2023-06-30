@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 135D2EB64DA
-	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 20:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22323EB64DA
+	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 20:24:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232532AbjF3UYB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jun 2023 16:24:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46072 "EHLO
+        id S232498AbjF3UYG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jun 2023 16:24:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232478AbjF3UX4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2023 16:23:56 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DEA0421E
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:23:53 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id 98e67ed59e1d1-262bf824505so1968588a91.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:23:53 -0700 (PDT)
+        with ESMTP id S232511AbjF3UYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2023 16:24:00 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F7E4487
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:23:54 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-573d70da2dcso22229047b3.1
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:23:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688156632; x=1690748632;
+        d=google.com; s=20221208; t=1688156634; x=1690748634;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ob14upf4D0bnNrCWxY7Ep2D9/LxzmK9pYe8MU7ky6Ts=;
-        b=EAiUvkA2/1p3e8R7Q/PAmf3VX5tcBtF9fq5qtioLlTA7ZsLi7kskFqyXtaWCodPe5I
-         IcR4bHoTtkT0oze8fGMnTU2kir1teBI93KanCkB1fKj+w+cx5ONogWrmg8G5JZiojL1f
-         LxVptUANwpEPYVDuK7sI4mKobf1Yl+djXFFG4PrSxYUb4TiSydTUG5XLX6PgQJo7Re6s
-         rusgPP84z+zzoLdpIvTQ8S5aiJPwSUBMyTaYZqIBXzC1fLWmiEtJmJFb9RmkcC/Suj6E
-         GkLV5+PtFMzfw0Vc0KITJW6jEvLYObUVSrdnj11BRsoMf7jsADUOQSZSFSOXAawkkSfB
-         Fe+w==
+        bh=TPW0S1pVZ7gd/csz0VOSB2FkfCYxgxeMOYElZW3D0FI=;
+        b=wWR2mdEheh/qV2pOMPa68F/bHIbTzNAbeNpmXSeSU+pTxHWmm/3S2LXL/uDKQ8XtD2
+         0m95KpbHhaa6eH7i6gqbz+B0tKw+8z6QYpHUC24R7BpBBYWwuwBxpu/0akkk0Pzyeh4/
+         i6tYTAxRacbyhKU1bSBBiftGqz+7D3HFIRbrDnObDWQsB3R3pWUwz5HyJmh9E9un37+c
+         UbTMbKW57bFHe9qOA9sok3HgOraYRZUNG7snp0Qll+oGdzkJwnkmLQVdQFhyPwyAHPkx
+         4854dQ3SYZogl9S6g7hoJbhdDhASvEwFRAYPOV89zqkLH7awGvHdoKTFtB6F9WETZNUH
+         S/aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688156632; x=1690748632;
+        d=1e100.net; s=20221208; t=1688156634; x=1690748634;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ob14upf4D0bnNrCWxY7Ep2D9/LxzmK9pYe8MU7ky6Ts=;
-        b=NsMOb6TF5T4ROxUwRMCGbkGSHRwkkfkoaasf4WzEv/fxcgpc0X2/mqHEgq9if+0mj/
-         R9bMPcwslHSZx6AxHWtjfSfjzffKkBxQpuQ4b+/F5nFX9I9n8aPZVfh4UAgwyA/SKV+a
-         XPOirnKQ1GgMMMVsr4VIHWqn70cqRa6w41vjRzgCl0J4uIo3t8SDU+Yt2ZnbxrKZufHa
-         xHCTLsfFJix8Ejs7jmdg0Jlob+ibji3pN0fqXylN2E6pQf9TJX4fJ+ZO7uwvNm/2Vo8N
-         ofOzBMNdeyUm/xF9SEtt5hvaCIpHN6EMR0dr1QUPHa8N+SMk0n6ABpKNgJK6LEJMcd1L
-         q/Ig==
-X-Gm-Message-State: ABy/qLYNbVoLMH/wgqB2ZUlrAE0xFnXt0Lr4V7oKPZEkwiKxoFo7r4Yv
-        NAIZ6mSRIygf3xzDd1v3S0a6+0TPj3PVNghopRsEj21oz2Tm13vuKmS3JBOC2NsFBBc1V99ecVZ
-        DT08iKg9IBhrhNACFX1pdekHRJ9020D1QQvomFJJCDGkU5U+Kz7VYmq2r/OMr6kf1sA==
-X-Google-Smtp-Source: APBJJlFNReK/SD/U9cBpTgxpkiMECdsTjQo0UfCyZ5MLp9S62S6KYjR9iTPFekKzwPjYb9kFrIYFJA0XDbXJY4k=
+        bh=TPW0S1pVZ7gd/csz0VOSB2FkfCYxgxeMOYElZW3D0FI=;
+        b=MVLDa01zDMg74PPXU9mn47PM9ALVCYdoN0fghKANM+phBFM8dPMgevQ7UJiA+UKmP5
+         nGHTKqgH8uZWfQVcKKfWo9TsxNpupi1vq0xKw5WjX4i8KuXGnvoPUv6xpKM8DI1s5L1i
+         wyjyQ0EKSyIG1tn49W5yhFU2Fy46gC+IIKow01yijtJDBr7zWKgEF0PFewEby9ZVlo5a
+         17koSXJqVrRVFunamSDwKbkz4zaS4HgEWqDGSU6aa5dOEbFoerJ8pRBZXFKlCYgqAzYX
+         Q1RP3R/y7ONLseKcrfO/a0HZuzw94UUkCfFfaGuBmdHNEMpnXuXgTA70nGz6+dnddKjo
+         /cVw==
+X-Gm-Message-State: ABy/qLYmpVX+uyROraZMzI+u6m1+OLrYAqaaOCFOqKCtVZcms+nCCH1a
+        +mTbzuImZcLIS9I+uW3+/5GOC23oq70HuAQ5CuZ8aNXzzt8HDnDjKE+iKK9CyC5bj5n+H/njV8D
+        ZAqnxHCAkkgwfKqI0gtC85Q8+R/Pw+hdc5lt5y81EGy5gLBs9kk0I6mL7oBCZohO58w==
+X-Google-Smtp-Source: APBJJlGFa3t42CzgLEriFWq431PR927Zciilgedmj7DYOV/lbcUuqGpwjCJGjD1taJF9DgOg2fmQjNUTE/s7i68=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a17:90a:f011:b0:262:d6ac:126 with SMTP
- id bt17-20020a17090af01100b00262d6ac0126mr2154348pjb.0.1688156632281; Fri, 30
- Jun 2023 13:23:52 -0700 (PDT)
-Date:   Fri, 30 Jun 2023 20:23:41 +0000
+ (user=calvinwan job=sendgmr) by 2002:a0d:dd85:0:b0:570:75a8:7867 with SMTP id
+ g127-20020a0ddd85000000b0057075a87867mr28260ywe.4.1688156634046; Fri, 30 Jun
+ 2023 13:23:54 -0700 (PDT)
+Date:   Fri, 30 Jun 2023 20:23:42 +0000
 In-Reply-To: <20230630202237.3069327-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230630202237.3069327-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230630202346.3069950-1-calvinwan@google.com>
-Subject: [PATCH v4 1/6] git-compat-util: move strbuf.c funcs to its header
+Message-ID: <20230630202346.3069950-2-calvinwan@google.com>
+Subject: [PATCH v4 2/6] git-compat-util: move wrapper.c funcs to its header
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
@@ -62,152 +62,296 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While functions like starts_with() probably should not belong in the
-boundaries of the strbuf library, this commit focuses on first splitting
-out headers from git-compat-util.h.
+Since the functions in wrapper.c are widely used across the codebase,
+include it by default in git-compat-util.h. A future patch will remove
+now unnecessary inclusions of wrapper.h from other files.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- builtin/symbolic-ref.c   |  1 +
- builtin/unpack-objects.c |  1 +
- git-compat-util.h        | 32 --------------------------------
- strbuf.h                 | 32 ++++++++++++++++++++++++++++++++
- versioncmp.c             |  1 +
- 5 files changed, 35 insertions(+), 32 deletions(-)
+ git-compat-util.h | 112 +---------------------------------------------
+ wrapper.h         | 111 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 112 insertions(+), 111 deletions(-)
 
-diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
-index a61fa3c0f8..c9defe4d2e 100644
---- a/builtin/symbolic-ref.c
-+++ b/builtin/symbolic-ref.c
-@@ -3,6 +3,7 @@
- #include "gettext.h"
- #include "refs.h"
- #include "parse-options.h"
-+#include "strbuf.h"
- 
- static const char * const git_symbolic_ref_usage[] = {
- 	N_("git symbolic-ref [-m <reason>] <name> <ref>"),
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 1979532a9d..84b68304ed 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -12,6 +12,7 @@
- #include "blob.h"
- #include "commit.h"
- #include "replace-object.h"
-+#include "strbuf.h"
- #include "tag.h"
- #include "tree.h"
- #include "tree-walk.h"
 diff --git a/git-compat-util.h b/git-compat-util.h
-index ae88291976..78a993c604 100644
+index 78a993c604..9140f43bbf 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -679,9 +679,6 @@ void set_warn_routine(report_fn routine);
- report_fn get_warn_routine(void);
- void set_die_is_recursing_routine(int (*routine)(void));
+@@ -627,7 +627,7 @@ static inline int git_has_dir_sep(const char *path)
  
--int starts_with(const char *str, const char *prefix);
--int istarts_with(const char *str, const char *prefix);
+ #include "compat/bswap.h"
+ 
+-struct strbuf;
++#include "wrapper.h"
+ 
+ /* General helper functions */
+ NORETURN void usage(const char *err);
+@@ -1047,36 +1047,6 @@ static inline int cast_size_t_to_int(size_t a)
+ # define xalloca(size)      (xmalloc(size))
+ # define xalloca_free(p)    (free(p))
+ #endif
+-char *xstrdup(const char *str);
+-void *xmalloc(size_t size);
+-void *xmallocz(size_t size);
+-void *xmallocz_gently(size_t size);
+-void *xmemdupz(const void *data, size_t len);
+-char *xstrndup(const char *str, size_t len);
+-void *xrealloc(void *ptr, size_t size);
+-void *xcalloc(size_t nmemb, size_t size);
+-void xsetenv(const char *name, const char *value, int overwrite);
+-void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+-const char *mmap_os_err(void);
+-void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+-int xopen(const char *path, int flags, ...);
+-ssize_t xread(int fd, void *buf, size_t len);
+-ssize_t xwrite(int fd, const void *buf, size_t len);
+-ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+-int xdup(int fd);
+-FILE *xfopen(const char *path, const char *mode);
+-FILE *xfdopen(int fd, const char *mode);
+-int xmkstemp(char *temp_filename);
+-int xmkstemp_mode(char *temp_filename, int mode);
+-char *xgetcwd(void);
+-FILE *fopen_for_writing(const char *path);
+-FILE *fopen_or_warn(const char *path, const char *mode);
 -
- /*
-  * If the string "str" begins with the string found in "prefix", return 1.
-  * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
-@@ -710,29 +707,6 @@ static inline int skip_prefix(const char *str, const char *prefix,
- 	return 0;
- }
- 
 -/*
-- * If the string "str" is the same as the string in "prefix", then the "arg"
-- * parameter is set to the "def" parameter and 1 is returned.
-- * If the string "str" begins with the string found in "prefix" and then a
-- * "=" sign, then the "arg" parameter is set to "str + strlen(prefix) + 1"
-- * (i.e., to the point in the string right after the prefix and the "=" sign),
-- * and 1 is returned.
-- *
-- * Otherwise, return 0 and leave "arg" untouched.
-- *
-- * When we accept both a "--key" and a "--key=<val>" option, this function
-- * can be used instead of !strcmp(arg, "--key") and then
-- * skip_prefix(arg, "--key=", &arg) to parse such an option.
+- * Like strncmp, but only return zero if s is NUL-terminated and exactly len
+- * characters long.  If it is not, consider it greater than t.
 - */
--int skip_to_optional_arg_default(const char *str, const char *prefix,
--				 const char **arg, const char *def);
--
--static inline int skip_to_optional_arg(const char *str, const char *prefix,
--				       const char **arg)
--{
--	return skip_to_optional_arg_default(str, prefix, arg, "");
--}
--
+-int xstrncmpz(const char *s, const char *t, size_t len);
+ 
  /*
-  * Like skip_prefix, but promises never to read past "len" bytes of the input
-  * buffer, and returns the remaining number of bytes in "out" via "outlen".
-@@ -777,12 +751,6 @@ static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
- 	return strip_suffix_mem(str, len, suffix);
+  * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
+@@ -1178,15 +1148,10 @@ static inline size_t xsize_t(off_t len)
+ 	return (size_t) len;
  }
  
--static inline int ends_with(const char *str, const char *suffix)
--{
--	size_t len;
--	return strip_suffix(str, suffix, &len);
--}
+-__attribute__((format (printf, 3, 4)))
+-int xsnprintf(char *dst, size_t max, const char *fmt, ...);
 -
- #define SWAP(a, b) do {						\
- 	void *_swap_a_ptr = &(a);				\
- 	void *_swap_b_ptr = &(b);				\
-diff --git a/strbuf.h b/strbuf.h
-index 0528ab5010..fd43c46433 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -671,4 +671,36 @@ char *xstrvfmt(const char *fmt, va_list ap);
- __attribute__((format (printf, 1, 2)))
- char *xstrfmt(const char *fmt, ...);
+ #ifndef HOST_NAME_MAX
+ #define HOST_NAME_MAX 256
+ #endif
  
-+int starts_with(const char *str, const char *prefix);
-+int istarts_with(const char *str, const char *prefix);
+-int xgethostname(char *buf, size_t len);
+-
+ /* in ctype.c, for kwset users */
+ extern const unsigned char tolower_trans_tbl[256];
+ 
+@@ -1427,72 +1392,6 @@ void bug_fl(const char *file, int line, const char *fmt, ...);
+ #endif
+ #endif
+ 
+-enum fsync_action {
+-	FSYNC_WRITEOUT_ONLY,
+-	FSYNC_HARDWARE_FLUSH
+-};
+-
+-/*
+- * Issues an fsync against the specified file according to the specified mode.
+- *
+- * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
+- * systems to flush the OS cache without issuing a flush command to the storage
+- * controller. If those interfaces are unavailable, the function fails with
+- * ENOSYS.
+- *
+- * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
+- * changes are durable. It is not expected to fail.
+- */
+-int git_fsync(int fd, enum fsync_action action);
+-
+-/*
+- * Writes out trace statistics for fsync using the trace2 API.
+- */
+-void trace_git_fsync_stats(void);
+-
+-/*
+- * Preserves errno, prints a message, but gives no warning for ENOENT.
+- * Returns 0 on success, which includes trying to unlink an object that does
+- * not exist.
+- */
+-int unlink_or_warn(const char *path);
+- /*
+-  * Tries to unlink file.  Returns 0 if unlink succeeded
+-  * or the file already didn't exist.  Returns -1 and
+-  * appends a message to err suitable for
+-  * 'error("%s", err->buf)' on error.
+-  */
+-int unlink_or_msg(const char *file, struct strbuf *err);
+-/*
+- * Preserves errno, prints a message, but gives no warning for ENOENT.
+- * Returns 0 on success, which includes trying to remove a directory that does
+- * not exist.
+- */
+-int rmdir_or_warn(const char *path);
+-/*
+- * Calls the correct function out of {unlink,rmdir}_or_warn based on
+- * the supplied file mode.
+- */
+-int remove_or_warn(unsigned int mode, const char *path);
+-
+-/*
+- * Call access(2), but warn for any error except "missing file"
+- * (ENOENT or ENOTDIR).
+- */
+-#define ACCESS_EACCES_OK (1U << 0)
+-int access_or_warn(const char *path, int mode, unsigned flag);
+-int access_or_die(const char *path, int mode, unsigned flag);
+-
+-/* Warn on an inaccessible file if errno indicates this is an error */
+-int warn_on_fopen_errors(const char *path);
+-
+-/*
+- * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
+- * may be racy. Do not use this as protection against an attacker who can
+- * simultaneously create paths.
+- */
+-int open_nofollow(const char *path, int flags);
+-
+ #ifndef SHELL_PATH
+ # define SHELL_PATH "/bin/sh"
+ #endif
+@@ -1632,13 +1531,4 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
+ 	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+ #endif /* !__GNUC__ */
+ 
+-void sleep_millisec(int millisec);
+-
+-/*
+- * Generate len bytes from the system cryptographically secure PRNG.
+- * Returns 0 on success and -1 on error, setting errno.  The inability to
+- * satisfy the full request is an error.
+- */
+-int csprng_bytes(void *buf, size_t len);
+-
+ #endif
+diff --git a/wrapper.h b/wrapper.h
+index f0c7d0616d..c85b1328d1 100644
+--- a/wrapper.h
++++ b/wrapper.h
+@@ -1,6 +1,42 @@
+ #ifndef WRAPPER_H
+ #define WRAPPER_H
+ 
++char *xstrdup(const char *str);
++void *xmalloc(size_t size);
++void *xmallocz(size_t size);
++void *xmallocz_gently(size_t size);
++void *xmemdupz(const void *data, size_t len);
++char *xstrndup(const char *str, size_t len);
++void *xrealloc(void *ptr, size_t size);
++void *xcalloc(size_t nmemb, size_t size);
++void xsetenv(const char *name, const char *value, int overwrite);
++void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
++const char *mmap_os_err(void);
++void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
++int xopen(const char *path, int flags, ...);
++ssize_t xread(int fd, void *buf, size_t len);
++ssize_t xwrite(int fd, const void *buf, size_t len);
++ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
++int xdup(int fd);
++FILE *xfopen(const char *path, const char *mode);
++FILE *xfdopen(int fd, const char *mode);
++int xmkstemp(char *temp_filename);
++int xmkstemp_mode(char *temp_filename, int mode);
++char *xgetcwd(void);
++FILE *fopen_for_writing(const char *path);
++FILE *fopen_or_warn(const char *path, const char *mode);
 +
 +/*
-+ * If the string "str" is the same as the string in "prefix", then the "arg"
-+ * parameter is set to the "def" parameter and 1 is returned.
-+ * If the string "str" begins with the string found in "prefix" and then a
-+ * "=" sign, then the "arg" parameter is set to "str + strlen(prefix) + 1"
-+ * (i.e., to the point in the string right after the prefix and the "=" sign),
-+ * and 1 is returned.
-+ *
-+ * Otherwise, return 0 and leave "arg" untouched.
-+ *
-+ * When we accept both a "--key" and a "--key=<val>" option, this function
-+ * can be used instead of !strcmp(arg, "--key") and then
-+ * skip_prefix(arg, "--key=", &arg) to parse such an option.
++ * Like strncmp, but only return zero if s is NUL-terminated and exactly len
++ * characters long.  If it is not, consider it greater than t.
 + */
-+int skip_to_optional_arg_default(const char *str, const char *prefix,
-+				 const char **arg, const char *def);
++int xstrncmpz(const char *s, const char *t, size_t len);
 +
-+static inline int skip_to_optional_arg(const char *str, const char *prefix,
-+				       const char **arg)
-+{
-+	return skip_to_optional_arg_default(str, prefix, arg, "");
-+}
++__attribute__((format (printf, 3, 4)))
++int xsnprintf(char *dst, size_t max, const char *fmt, ...);
 +
-+static inline int ends_with(const char *str, const char *suffix)
-+{
-+	size_t len;
-+	return strip_suffix(str, suffix, &len);
-+}
++int xgethostname(char *buf, size_t len);
 +
- #endif /* STRBUF_H */
-diff --git a/versioncmp.c b/versioncmp.c
-index 74cc7c43f0..45e676cbca 100644
---- a/versioncmp.c
-+++ b/versioncmp.c
-@@ -1,5 +1,6 @@
- #include "git-compat-util.h"
- #include "config.h"
-+#include "strbuf.h"
- #include "string-list.h"
- #include "versioncmp.h"
+ /* set default permissions by passing mode arguments to open(2) */
+ int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
+ int git_mkstemp_mode(char *pattern, int mode);
+@@ -33,4 +69,79 @@ void write_file(const char *path, const char *fmt, ...);
+ /* Return 1 if the file is empty or does not exists, 0 otherwise. */
+ int is_empty_or_missing_file(const char *filename);
  
++enum fsync_action {
++	FSYNC_WRITEOUT_ONLY,
++	FSYNC_HARDWARE_FLUSH
++};
++
++/*
++ * Issues an fsync against the specified file according to the specified mode.
++ *
++ * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
++ * systems to flush the OS cache without issuing a flush command to the storage
++ * controller. If those interfaces are unavailable, the function fails with
++ * ENOSYS.
++ *
++ * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
++ * changes are durable. It is not expected to fail.
++ */
++int git_fsync(int fd, enum fsync_action action);
++
++/*
++ * Writes out trace statistics for fsync using the trace2 API.
++ */
++void trace_git_fsync_stats(void);
++
++/*
++ * Preserves errno, prints a message, but gives no warning for ENOENT.
++ * Returns 0 on success, which includes trying to unlink an object that does
++ * not exist.
++ */
++int unlink_or_warn(const char *path);
++ /*
++  * Tries to unlink file.  Returns 0 if unlink succeeded
++  * or the file already didn't exist.  Returns -1 and
++  * appends a message to err suitable for
++  * 'error("%s", err->buf)' on error.
++  */
++int unlink_or_msg(const char *file, struct strbuf *err);
++/*
++ * Preserves errno, prints a message, but gives no warning for ENOENT.
++ * Returns 0 on success, which includes trying to remove a directory that does
++ * not exist.
++ */
++int rmdir_or_warn(const char *path);
++/*
++ * Calls the correct function out of {unlink,rmdir}_or_warn based on
++ * the supplied file mode.
++ */
++int remove_or_warn(unsigned int mode, const char *path);
++
++/*
++ * Call access(2), but warn for any error except "missing file"
++ * (ENOENT or ENOTDIR).
++ */
++#define ACCESS_EACCES_OK (1U << 0)
++int access_or_warn(const char *path, int mode, unsigned flag);
++int access_or_die(const char *path, int mode, unsigned flag);
++
++/* Warn on an inaccessible file if errno indicates this is an error */
++int warn_on_fopen_errors(const char *path);
++
++/*
++ * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
++ * may be racy. Do not use this as protection against an attacker who can
++ * simultaneously create paths.
++ */
++int open_nofollow(const char *path, int flags);
++
++void sleep_millisec(int millisec);
++
++/*
++ * Generate len bytes from the system cryptographically secure PRNG.
++ * Returns 0 on success and -1 on error, setting errno.  The inability to
++ * satisfy the full request is an error.
++ */
++int csprng_bytes(void *buf, size_t len);
++
+ #endif /* WRAPPER_H */
 -- 
 2.41.0.255.g8b1d071c50-goog
 
