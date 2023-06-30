@@ -2,108 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECBF7EB64D9
-	for <git@archiver.kernel.org>; Thu, 29 Jun 2023 23:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5BCBEB64D9
+	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 00:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbjF2XJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jun 2023 19:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56064 "EHLO
+        id S232103AbjF3ALq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jun 2023 20:11:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjF2XJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2023 19:09:26 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE4330E6
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 16:09:24 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-51d9372f027so4236a12.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2023 16:09:24 -0700 (PDT)
+        with ESMTP id S231953AbjF3ALo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2023 20:11:44 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB4D2D52
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 17:11:43 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-57059e6f9c7so19352057b3.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2023 17:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688080163; x=1690672163;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XserO4qOkaW26RWfCSsIMDF/Q/YuaP7+GVnASgddcdI=;
-        b=fgV0Zz63DbXEOTovcY/2NecLhGh2E7q7WdHpabB9VXwBY8C4Zcq0ZQV0VgZtCVYib4
-         13BPFfuMPWesLxZiZOZ3+RLrJIR3Ec9dd8Yhdm5DrUAHWrh+jcbbbN760C+jgfZF2tJ2
-         dXp/tpx8FNHXjgAoZ3PGEC7u3PmTLdLwGxyA0V6UVZUx2bxUGproyWuVnfvm4cp8+2QO
-         CuHy8euWE4xV7xy6EjMBExy2DmOFiAxQrfgykJS8rfuZA1yVxyIPq8MzPRfX8MLwrc7t
-         sb+rXellUfqTRpM2USAuqFJKue+zL6FWKwYwOVTJMOQp253mLOH7RcfvuTVzwFQekrCE
-         xqBg==
+        d=google.com; s=20221208; t=1688083902; x=1690675902;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mDqYblaVVkRCwhgOKiWYX1KeC9xEQJkrFGtjmIuqN/U=;
+        b=sDNhLmXNWMCc8sXywR6tn/iILBDIC7x0WezLco3T0iOFw0Ra5G3Ks/o+CoHObbXQeT
+         NQ1FVt0aQa5yrRWtwbxXlfFIZjolAY9AuWoKP9R+dzSBiOTg6bc9k9q4dnPiOyIcYPHr
+         JzAF3C+IH3k20TemEchDZznSR4NhvcSi7eKgjwJUJYY8eY8YDwjc+AITVf47yPJLAZ9d
+         ODbFKgpa2NTFRAFhnRZGbhSEPWS5+neNgMH5FbcGn2Gh7GFr5OrcG55L+8q0Vq8wnBgN
+         ZtrmupgFuQKa0NIZlHqS2G7eGxzp4HnrPJfSnKChMTGZflNMbD/FJmFMFI9s7TYyREdR
+         XduA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688080163; x=1690672163;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XserO4qOkaW26RWfCSsIMDF/Q/YuaP7+GVnASgddcdI=;
-        b=FhcpPI/4CcHlvVzBdy1F5RnbQ5Z6e1Ai6KJ4hZ7efgRFWMxsdnJCqxvgg5HzVHDeZ9
-         iRvSKyVbi9RqFOIOGJAhZedq93IulM4qCNlvkbxRHnekAs2JdGpc4DGSsq2u59jrZWz2
-         FUE0uN+BQoVmCyU20I8qX1X6gEZqj/60+zKk3CW8o5VnCVc2MSi5BZy0w2z5rhYbPnkJ
-         ktG4HLEE62wbEysq3Blc8ZFxJ1nl9OP7ptAzGQmHqaUBRML14bpFTT7Z1OG6GT9BEC0C
-         k2L6lQRqgazn+oKg9/wwfZPQRjmKu73jtJkS1X/OBJqFukxHbcdyS2T9QACrWAUTwPFG
-         DUQA==
-X-Gm-Message-State: AC+VfDyidF0r/fSO59RI+l7iROl4ZUNlaRwYndFy78AxbAZV7+4SJC0E
-        l8KneYnj/r8NfHVI7VccNQyUgOj62/b7/3O86HQKtw==
-X-Google-Smtp-Source: ACHHUZ5u21XIkN8yJLGtB3vOHpsbzBADIpHF5ygZMWX3pIPbPM0AI/irL3vHo6z2RRjPvcgD55ezuNcPRJ8GPxGJ74o=
-X-Received: by 2002:a50:934f:0:b0:518:7076:74bc with SMTP id
- n15-20020a50934f000000b00518707674bcmr207496eda.1.1688080162745; Thu, 29 Jun
- 2023 16:09:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <CADE8Naq5W3Bn=gwV7W-xMvYOMMRO=ZY9Ly6im4Rb_qFjMWTbTg@mail.gmail.com>
- <CAJoAoZ=OEfsgkqsag926tH4GEuafX26A09SGZ1vR1uLh2W_4TA@mail.gmail.com>
- <CAJoAoZnVAe3kvUdPZmanbKffG7cx3Tc-==H4+FH=L5qQP2smEg@mail.gmail.com> <CADE8Naonm+bW_jVvJKmnfZWQyX=0-QVSHxpSaHs1qo+5DsCiPQ@mail.gmail.com>
-In-Reply-To: <CADE8Naonm+bW_jVvJKmnfZWQyX=0-QVSHxpSaHs1qo+5DsCiPQ@mail.gmail.com>
-From:   Emily Shaffer <nasamuffin@google.com>
-Date:   Thu, 29 Jun 2023 16:09:11 -0700
-Message-ID: <CAJoAoZ=X9hwZZ9eN2X=g04k2E6=wZsY1WEKFydMreNJKM3Mzng@mail.gmail.com>
-Subject: Re: Documentation/MyFirstObjectWalk: add #include "trace.h" to use trace_printf()
-To:     Vinayak Dev <vinayakdev.sci@gmail.com>
-Cc:     git@vger.kernel.org
+        d=1e100.net; s=20221208; t=1688083902; x=1690675902;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mDqYblaVVkRCwhgOKiWYX1KeC9xEQJkrFGtjmIuqN/U=;
+        b=MeHRJt5xfCo/3nuoxxxkx+Tok/z6CNhROcPC4OETXTkaLVRWnBqBWdSE5x5SMwtsIn
+         f1GZdbE7zaBp67LdsQ7UWJ7ZYtv7xFK5xqvT3IRSCfSM97SYo7k1YhiLV97hQPKKaieE
+         17c5mSaFKX/ErTvPilpVX66ZLjPo5TQuuPPeokOoS9QRos3h7eoGGFEoHKjzqoTWfxKX
+         I/SjlO5DIEnt0Y826qkJn+yGisjmYNXuzHJbAQDdMCH2sfVvb1AaSkiv5eTd01Wm1iDm
+         MmTq/r01sg3ot1IEfnKbcjeYo3vVlAoqrqP+2fSVRf21ujNKt4OUxflWKehl3fj9I1RQ
+         8S9Q==
+X-Gm-Message-State: ABy/qLaoAMDoclK54x3Gdqb/ieULRwdDmBxhfgFOLAbSNUBou+/Mj/3g
+        eVvfdAsTZOOHjtizVSMmieVST6HLZ9o=
+X-Google-Smtp-Source: APBJJlEDB0t5SWQ1bTkBOF1Wacq/77vQgXxStgG9RicpNasBMmQ/1qpjBEIT6B3xLiPpLRv/6CXM2KjLmcg=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:690c:d81:b0:577:1689:d784 with SMTP id
+ da1-20020a05690c0d8100b005771689d784mr83334ywb.4.1688083902577; Thu, 29 Jun
+ 2023 17:11:42 -0700 (PDT)
+Date:   Thu, 29 Jun 2023 17:11:40 -0700
+In-Reply-To: <xmqqedlu7yn2.fsf@gitster.g>
+Mime-Version: 1.0
+References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
+ <8afdb215d7e10ca16a2ce8226b4127b3d8a2d971.1686352386.git.steadmon@google.com>
+ <owlybkgy837j.fsf@fine.c.googlers.com> <xmqqedlu7yn2.fsf@gitster.g>
+Message-ID: <owly7crl95c3.fsf@fine.c.googlers.com>
+Subject: Re: [RFC PATCH v3 1/1] unit tests: Add a project plan document
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        calvinwan@gmail.com, szeder.dev@gmail.com,
+        phillip.wood123@gmail.com, chooglen@google.com, avarab@gmail.com,
+        sandals@crustytoothpaste.net
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 29, 2023 at 11:45=E2=80=AFAM Vinayak Dev <vinayakdev.sci@gmail.=
-com> wrote:
->
-> > On Thu, Jun 29, 2023 at 9:33=E2=80=AFAM Emily Shaffer <nasamuffin@googl=
-e.com> wrote:
->
-> Hi, thanks for replying!
->
-> > > Yeah, it's almost certainly stale in MyFirstObjectWalk - there was
-> > > very recently a patch to clean up some headers which probably were
-> > > implicitly including trace.h when I wrote this walkthrough. Patches
-> > > totally welcome - and if you were working from the reference code in
-> > > https://github.com/nasamuffin/git/tree/myfirstrevwalk
-> >
-> > bah, wrong link, the tutorial points to branch `revwalk` instead of
-> > `myfirstrevwalk`, but the offer stands :)
-> >
-> > > and it's on your
-> > > way to rebase and fix that too, I'm happy to update my branch
-> > > accordingly too. (If you weren't, don't worry about doing the extra
-> > > work, though.)
->
-> Sure will! But do you mean open a PR on your fork? I have the patch ready=
-,
-> and would be very happy to do so, if it is accepted!
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah, I think there are two things to fix:
-
-First, a patch to Documentation/technical/MyFirstObjectWalk.txt fixing
-the snippets there. (I thought that was what you were offering to
-patch in your original mail, I may have been mistaken.)
-
-Second, optionally, a rebased-and-fixed-and-your-attribution-added
-branch of the reference impl that I can force-push to nasamuffin/git.
-The more I think on it, I don't think the PR will help, since I will
-want to just force-push that whole branch so the commit order still
-functions as a learning tool. So if you have it even in a branch on
-your GitHub or GitLab fork, or a series of patches you'd want to mail
-to me, any of those are fine and I'll go ahead and rewrite my branch.
-
-
+>> I can think of some other metrics to add to the comparison, namely:
+>>
+>>     1. Age (how old is the framework)
+>>     2. Size in KLOC (thousands of lines of code)
+>>     3. Adoption rate (which notable C projects already use this framework?)
+>>     4. Project health (how active are its developers?)
+>>
+>> I think for 3 and 4, we could probably mine some data out of GitHub
+>> itself.
 >
-> Thanks a lot!
-> Vinayak
+> Great additions (if we are mere users do we care much about #2,
+> though?).
+
+Sorry, I forgot to add why I think these metrics are useful: I think
+they give some signal about how much influence/respect the framework has
+in our industry, with the assumption that the influence/respect
+positively correlates with how "good" (sound architecture, well-written,
+easy to use, simple to understand, etc) the framework is. For the
+frameworks hosted in GitHub, perhaps the number of GitHub Stars is a
+better estimate for measuring influence/respect.
+
+That said, I think #2 (measuring KLOC) would still be useful to know
+(and is easy enough with tools like tokei [1]), mainly for the scenario
+where the framework becomes abandonware. Certainly, a framework with a
+lower KLOC count would have a lower maintenance burden if we ever need
+to step in to help maintain the framework ourselves. To me this is one
+reason why I like the idea of using Phillip Wood's framework [2]
+(granted, it is currently only a proof of concept).
+
+[1] https://github.com/XAMPPRocky/tokei
+[2] https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/
