@@ -2,1261 +2,697 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14EDBEB64DA
-	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 20:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC84EB64DA
+	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 20:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232535AbjF3UYg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jun 2023 16:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46644 "EHLO
+        id S229560AbjF3U17 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jun 2023 16:27:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232538AbjF3UYY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2023 16:24:24 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71CE1422F
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:24:02 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-53ba38cf091so1757451a12.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:24:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688156641; x=1690748641;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fgMd4c28E13Ie258FSSXBn/hA+1LtxVIEQsiHL/PBEc=;
-        b=kTvHHLAIac6cVGCGIYUKZ/cVmwpVJXwQeqOMOsQ+TNeHsTFC5YT7jIH8h8ewo0Xy35
-         DZy6Px/gcbPF5wZgnuRuEQB3Piv45Z8iJuSqAc1GiH5EXh3UhX7e8kFE6+KDNaV9iufC
-         RhpsYqqBG2wXm2GA3Py2AIOt0YJmjCEaqZg+liJ2AGh4hicNNNU9INRJZH53z9KZ59s1
-         oHMqNHby/E7VKhMV+6mtf1KgpJpkdJ/Dpou1MV4bSgaPPq7A7OYJqPmSaaxMlMBl8s7e
-         K400FfMvQ0UxxxxUhMrTwIPXHrCcRwq98kEcj7mTXOgr+mhaod+M/02YJvAwmwhQdJCa
-         x+Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688156641; x=1690748641;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fgMd4c28E13Ie258FSSXBn/hA+1LtxVIEQsiHL/PBEc=;
-        b=WJQDLc57i0ZRSMqgZ6AcqtiQuWUoJ9WaxQIJ7hT21nhgqQv9hcqmKRl0dbqLIfbend
-         8zkxM0XQiokZ2FCOSr03OwqCVJu1tVOtVWMCOk4v3tUWE/CbKaaSl8SH72pcyVp+S/rF
-         YaOnnu7wbnj/cRot0ntojKNtNkGPHXDggEfQvS3CKrobp1lAg6R83n0ezM0uaw3YaPqr
-         weuTuLrof7iMkQyslGkfSlg9j0Lgb1Lik4ghZ/MulfugzpycuOwGImRy4zMhT5HUdIdd
-         CFEEv1BS8xZeU9lQLF2d0Q6ILh+KEClof+5y7V3RYO1ZKnyQFsC1Br/icQDbXsRgdgF9
-         ZGtQ==
-X-Gm-Message-State: ABy/qLY6PL6aQLPM6388Zeopi6RLkiIcrCAe/r2c2Yq0/IfuR4Wn44cx
-        yELxw5PZvXAE0KzJjJKEfCzsYYQC4RvtufPlBFgbluYILekPFGYfcaotK0tH2Ju+HgjfOR+78Fj
-        92R3Lu8QMptCO1tMMWLsVCdZ0rx0P2lrAJGPN689PCQ+2QK9TJ/0eGSWdZmLF9rQEXA==
-X-Google-Smtp-Source: APBJJlEiTIC/lU7DeoXTUKgSNa6ZPE06/mwST6AXnCo08nH6NCFjqOxGLEVCkpRFaKkgNUYWNz64mS3rnGoDnCs=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a63:f34d:0:b0:55a:e987:9afe with SMTP id
- t13-20020a63f34d000000b0055ae9879afemr2019459pgj.5.1688156641295; Fri, 30 Jun
- 2023 13:24:01 -0700 (PDT)
-Date:   Fri, 30 Jun 2023 20:23:46 +0000
-In-Reply-To: <20230630202237.3069327-1-calvinwan@google.com>
-Mime-Version: 1.0
-References: <20230630202237.3069327-1-calvinwan@google.com>
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230630202346.3069950-6-calvinwan@google.com>
-Subject: [PATCH v4 6/6] common: move alloc macros to common.h
-From:   Calvin Wan <calvinwan@google.com>
+        with ESMTP id S229485AbjF3U15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2023 16:27:57 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400E23AAD
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 13:27:54 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF62E36F56;
+        Fri, 30 Jun 2023 16:27:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=4
+        YzZrXVRZZXXnlxBAPtMRb5Qmrew1bYjaeDJiu6WKpc=; b=YS/foYSLhQmoDT3jp
+        YA/Viyu2c0+02JMWvwk2/tFf+fl7LZ1RnqqwsR3vMUzB8cZm9zj0KGwnMv7cAFOw
+        HhG+mVT4mo6h00Jy4B41iTScUfRuQeqnArLH3a0twVoraDHNX/l5CKQly4T/FOak
+        zxfjUo7gqQc5nOjiGeZ4Fojp8k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7A4936F55;
+        Fri, 30 Jun 2023 16:27:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 45CF036F54;
+        Fri, 30 Jun 2023 16:27:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
-        jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: What's cooking in git.git (Jun 2023, #08; Fri, 30)
+X-master-at: 9748a6820043d5815bee770ffa51647e0adc2cf0
+X-next-at: 5b50783d6bcd27d89ccdda9a4ecfff0d938a98eb
+Date:   Fri, 30 Jun 2023 13:27:49 -0700
+Message-ID: <xmqq5y747l16.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 954C3A8A-1784-11EE-95AE-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-alloc_nr, ALLOC_GROW, and ALLOC_GROW_BY are commonly used macros for
-dynamic array allocation. Moving these macros to git-compat-util.h with
-the other alloc macros focuses alloc.[ch] to allocation for Git objects
-and additionally allows us to remove inclusions to alloc.h from files
-that solely used the above macros.
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-Signed-off-by: Calvin Wan <calvinwan@google.com>
----
- add-patch.c                        |  1 -
- alias.c                            |  1 -
- alloc.h                            | 75 ------------------------------
- apply.c                            |  1 -
- archive-tar.c                      |  1 -
- archive.c                          |  1 -
- attr.c                             |  1 -
- builtin/blame.c                    |  1 -
- builtin/cat-file.c                 |  1 -
- builtin/checkout--worker.c         |  1 -
- builtin/config.c                   |  1 -
- builtin/credential-cache--daemon.c |  1 -
- builtin/fetch-pack.c               |  1 -
- builtin/fsmonitor--daemon.c        |  1 -
- builtin/grep.c                     |  1 -
- builtin/index-pack.c               |  1 -
- builtin/log.c                      |  1 -
- builtin/merge.c                    |  1 -
- builtin/mktree.c                   |  1 -
- builtin/mv.c                       |  1 -
- builtin/name-rev.c                 |  1 -
- builtin/pack-objects.c             |  1 -
- builtin/repack.c                   |  1 -
- builtin/rev-parse.c                |  1 -
- builtin/revert.c                   |  1 -
- builtin/rm.c                       |  1 -
- builtin/submodule--helper.c        |  1 -
- bulk-checkin.c                     |  1 -
- cache-tree.c                       |  1 -
- chunk-format.c                     |  1 -
- commit-reach.c                     |  1 -
- config.c                           |  1 -
- daemon.c                           |  1 -
- delta-islands.c                    |  1 -
- diff.c                             |  1 -
- diffcore-rename.c                  |  1 -
- dir-iterator.c                     |  1 -
- dir.c                              |  1 -
- ewah/bitmap.c                      |  1 -
- ewah/ewah_bitmap.c                 |  1 -
- fetch-pack.c                       |  1 -
- fmt-merge-msg.c                    |  1 -
- fsck.c                             |  1 -
- git-compat-util.h                  | 75 ++++++++++++++++++++++++++++++
- help.c                             |  1 -
- http-backend.c                     |  1 -
- line-log.c                         |  1 -
- list-objects-filter-options.c      |  1 -
- list-objects-filter.c              |  1 -
- midx.c                             |  1 -
- object-file.c                      |  1 -
- oid-array.c                        |  1 -
- oidtree.c                          |  1 -
- pack-bitmap-write.c                |  1 -
- pack-bitmap.c                      |  1 -
- pack-objects.c                     |  1 -
- packfile.c                         |  1 -
- parallel-checkout.c                |  1 -
- pretty.c                           |  1 -
- prio-queue.c                       |  1 -
- quote.c                            |  1 -
- read-cache.c                       |  1 -
- ref-filter.c                       |  1 -
- reflog-walk.c                      |  1 -
- refs.c                             |  1 -
- refspec.c                          |  1 -
- remote-curl.c                      |  1 -
- remote.c                           |  1 -
- rerere.c                           |  1 -
- revision.c                         |  1 -
- sequencer.c                        |  1 -
- server-info.c                      |  1 -
- shallow.c                          |  1 -
- sigchain.c                         |  1 -
- sparse-index.c                     |  1 -
- split-index.c                      |  1 -
- strbuf.c                           |  1 -
- string-list.c                      |  1 -
- strvec.c                           |  1 -
- submodule-config.c                 |  1 -
- submodule.c                        |  1 -
- t/helper/test-reach.c              |  1 -
- trace2/tr2_tls.c                   |  1 -
- trailer.c                          |  1 -
- transport.c                        |  1 -
- tree-walk.c                        |  1 -
- userdiff.c                         |  1 -
- worktree.c                         |  1 -
- 88 files changed, 75 insertions(+), 161 deletions(-)
+The northern hemisphere being in Summer vacation season, the list
+traffic in the coming week is expected to be lighter.  Have fun and
+be safe, everybody.
 
-diff --git a/add-patch.c b/add-patch.c
-index ba629add62..bfe19876cd 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1,7 +1,6 @@
- #include "git-compat-util.h"
- #include "add-interactive.h"
- #include "advice.h"
--#include "alloc.h"
- #include "editor.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/alias.c b/alias.c
-index 910dd252a0..5a238f2e30 100644
---- a/alias.c
-+++ b/alias.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "alias.h"
--#include "alloc.h"
- #include "config.h"
- #include "gettext.h"
- #include "strbuf.h"
-diff --git a/alloc.h b/alloc.h
-index 4312db4bd0..3f4a0ad310 100644
---- a/alloc.h
-+++ b/alloc.h
-@@ -17,79 +17,4 @@ void *alloc_object_node(struct repository *r);
- struct alloc_state *allocate_alloc_state(void);
- void clear_alloc_state(struct alloc_state *s);
- 
--#define alloc_nr(x) (((x)+16)*3/2)
--
--/**
-- * Dynamically growing an array using realloc() is error prone and boring.
-- *
-- * Define your array with:
-- *
-- * - a pointer (`item`) that points at the array, initialized to `NULL`
-- *   (although please name the variable based on its contents, not on its
-- *   type);
-- *
-- * - an integer variable (`alloc`) that keeps track of how big the current
-- *   allocation is, initialized to `0`;
-- *
-- * - another integer variable (`nr`) to keep track of how many elements the
-- *   array currently has, initialized to `0`.
-- *
-- * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
-- * alloc)`.  This ensures that the array can hold at least `n` elements by
-- * calling `realloc(3)` and adjusting `alloc` variable.
-- *
-- * ------------
-- * sometype *item;
-- * size_t nr;
-- * size_t alloc
-- *
-- * for (i = 0; i < nr; i++)
-- * 	if (we like item[i] already)
-- * 		return;
-- *
-- * // we did not like any existing one, so add one
-- * ALLOC_GROW(item, nr + 1, alloc);
-- * item[nr++] = value you like;
-- * ------------
-- *
-- * You are responsible for updating the `nr` variable.
-- *
-- * If you need to specify the number of elements to allocate explicitly
-- * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
-- *
-- * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
-- * added niceties.
-- *
-- * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
-- */
--#define ALLOC_GROW(x, nr, alloc) \
--	do { \
--		if ((nr) > alloc) { \
--			if (alloc_nr(alloc) < (nr)) \
--				alloc = (nr); \
--			else \
--				alloc = alloc_nr(alloc); \
--			REALLOC_ARRAY(x, alloc); \
--		} \
--	} while (0)
--
--/*
-- * Similar to ALLOC_GROW but handles updating of the nr value and
-- * zeroing the bytes of the newly-grown array elements.
-- *
-- * DO NOT USE any expression with side-effect for any of the
-- * arguments.
-- */
--#define ALLOC_GROW_BY(x, nr, increase, alloc) \
--	do { \
--		if (increase) { \
--			size_t new_nr = nr + (increase); \
--			if (new_nr < nr) \
--				BUG("negative growth in ALLOC_GROW_BY"); \
--			ALLOC_GROW(x, new_nr, alloc); \
--			memset((x) + nr, 0, sizeof(*(x)) * (increase)); \
--			nr = new_nr; \
--		} \
--	} while (0)
--
- #endif
-diff --git a/apply.c b/apply.c
-index dde124066b..3d69fec836 100644
---- a/apply.c
-+++ b/apply.c
-@@ -9,7 +9,6 @@
- 
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "base85.h"
- #include "config.h"
- #include "object-store-ll.h"
-diff --git a/archive-tar.c b/archive-tar.c
-index 218c901ec7..0726996839 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -2,7 +2,6 @@
-  * Copyright (c) 2005, 2006 Rene Scharfe
-  */
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "gettext.h"
- #include "git-zlib.h"
-diff --git a/archive.c b/archive.c
-index 1817cca9f4..ca11db185b 100644
---- a/archive.c
-+++ b/archive.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "convert.h"
- #include "environment.h"
-diff --git a/attr.c b/attr.c
-index e5785c55db..ff0a3e7b61 100644
---- a/attr.c
-+++ b/attr.c
-@@ -7,7 +7,6 @@
-  */
- 
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "exec-cmd.h"
-diff --git a/builtin/blame.c b/builtin/blame.c
-index f9d316a7bf..9c987d6567 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -6,7 +6,6 @@
-  */
- 
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "color.h"
- #include "builtin.h"
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index c9c93b80fc..694c8538df 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -5,7 +5,6 @@
-  */
- #define USE_THE_INDEX_VARIABLE
- #include "builtin.h"
--#include "alloc.h"
- #include "config.h"
- #include "convert.h"
- #include "diff.h"
-diff --git a/builtin/checkout--worker.c b/builtin/checkout--worker.c
-index c655dc4b13..6b62b5375b 100644
---- a/builtin/checkout--worker.c
-+++ b/builtin/checkout--worker.c
-@@ -1,5 +1,4 @@
- #include "builtin.h"
--#include "alloc.h"
- #include "config.h"
- #include "entry.h"
- #include "gettext.h"
-diff --git a/builtin/config.c b/builtin/config.c
-index 787d85edac..11a4d4ef14 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -1,6 +1,5 @@
- #include "builtin.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "color.h"
- #include "editor.h"
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index dc1cf2d25f..3a6a750a8e 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -1,6 +1,5 @@
- #include "builtin.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "object-file.h"
- #include "parse-options.h"
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 3ba0fe5a39..44c05ee86c 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -1,5 +1,4 @@
- #include "builtin.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "hex.h"
- #include "object-file.h"
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index b5796b4a4a..7e99c4d61b 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1,6 +1,5 @@
- #include "builtin.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 22645c6244..ce866523e2 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -4,7 +4,6 @@
-  * Copyright (c) 2006 Junio C Hamano
-  */
- #include "builtin.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "hex.h"
- #include "repository.h"
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 66202b304d..3da879d138 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1,5 +1,4 @@
- #include "builtin.h"
--#include "alloc.h"
- #include "config.h"
- #include "delta.h"
- #include "environment.h"
-diff --git a/builtin/log.c b/builtin/log.c
-index 1aca560ec3..1b119eaf0b 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -6,7 +6,6 @@
-  */
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 404700a35c..de68910177 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -10,7 +10,6 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "advice.h"
--#include "alloc.h"
- #include "config.h"
- #include "editor.h"
- #include "environment.h"
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 0eea810c7e..9a22d4e277 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -4,7 +4,6 @@
-  * Copyright (c) Junio C Hamano, 2006, 2009
-  */
- #include "builtin.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "hex.h"
- #include "quote.h"
-diff --git a/builtin/mv.c b/builtin/mv.c
-index ae462bd7d4..fa84fcb20d 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -7,7 +7,6 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "advice.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index c3b722b36f..c706fa3720 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -1,5 +1,4 @@
- #include "builtin.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8251961042..06b33d49e9 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1,5 +1,4 @@
- #include "builtin.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 51698e3c68..f913e9a8a2 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1,5 +1,4 @@
- #include "builtin.h"
--#include "alloc.h"
- #include "config.h"
- #include "dir.h"
- #include "environment.h"
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 3e2ee44177..434646b074 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -6,7 +6,6 @@
- #define USE_THE_INDEX_VARIABLE
- #include "builtin.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "commit.h"
- #include "environment.h"
-diff --git a/builtin/revert.c b/builtin/revert.c
-index f6f07d9b53..e6f9a1ad26 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "builtin.h"
- #include "parse-options.h"
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 463eeabcea..dff819ae50 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -5,7 +5,6 @@
-  */
- #define USE_THE_INDEX_VARIABLE
- #include "builtin.h"
--#include "alloc.h"
- #include "advice.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 42706150cf..f6871efd95 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1,7 +1,6 @@
- #define USE_THE_INDEX_VARIABLE
- #include "builtin.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index fec6816259..73bff3a23d 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -2,7 +2,6 @@
-  * Copyright (c) 2011, Google Inc.
-  */
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "bulk-checkin.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/cache-tree.c b/cache-tree.c
-index 84d7491420..641427ed41 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "environment.h"
- #include "hex.h"
- #include "lockfile.h"
-diff --git a/chunk-format.c b/chunk-format.c
-index e7d613c907..140dfa0dcc 100644
---- a/chunk-format.c
-+++ b/chunk-format.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "chunk-format.h"
- #include "csum-file.h"
- #include "gettext.h"
-diff --git a/commit-reach.c b/commit-reach.c
-index f15d84566b..4b7c233fd4 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "commit.h"
- #include "commit-graph.h"
- #include "decorate.h"
-diff --git a/config.c b/config.c
-index 59fad84eb7..3846a37be9 100644
---- a/config.c
-+++ b/config.c
-@@ -8,7 +8,6 @@
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "advice.h"
--#include "alloc.h"
- #include "date.h"
- #include "branch.h"
- #include "config.h"
-diff --git a/daemon.c b/daemon.c
-index a7fe89cd2d..f5e597114b 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "path.h"
-diff --git a/delta-islands.c b/delta-islands.c
-index 5fc6ea6ff5..5de5759f3f 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "attr.h"
- #include "object.h"
- #include "blob.h"
-diff --git a/diff.c b/diff.c
-index 9e4d87a8db..ee3eb629e3 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3,7 +3,6 @@
-  */
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "base85.h"
- #include "config.h"
- #include "convert.h"
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 926b554bd5..5a6e2bcac7 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -3,7 +3,6 @@
-  * Copyright (C) 2005 Junio C Hamano
-  */
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "diff.h"
- #include "diffcore.h"
- #include "object-store-ll.h"
-diff --git a/dir-iterator.c b/dir-iterator.c
-index fb7c47f0e8..278b04243a 100644
---- a/dir-iterator.c
-+++ b/dir-iterator.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "dir.h"
- #include "iterator.h"
- #include "dir-iterator.h"
-diff --git a/dir.c b/dir.c
-index d270a1be36..c9dc69fc24 100644
---- a/dir.c
-+++ b/dir.c
-@@ -7,7 +7,6 @@
-  */
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "convert.h"
- #include "dir.h"
-diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-index 12d6aa398e..7b525b1ecd 100644
---- a/ewah/bitmap.c
-+++ b/ewah/bitmap.c
-@@ -17,7 +17,6 @@
-  * along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "ewok.h"
- 
- #define EWAH_MASK(x) ((eword_t)1 << (x % BITS_IN_EWORD))
-diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-index c6d4ffc87c..8785cbc54a 100644
---- a/ewah/ewah_bitmap.c
-+++ b/ewah/ewah_bitmap.c
-@@ -17,7 +17,6 @@
-  * along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "ewok.h"
- #include "ewok_rlw.h"
- 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index bb288d47f3..65c1ff4bb4 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "repository.h"
- #include "config.h"
- #include "date.h"
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 4239594ad8..66e47449a0 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "refs.h"
-diff --git a/fsck.c b/fsck.c
-index 3be86616c5..b160b6f9d0 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "date.h"
- #include "dir.h"
- #include "hex.h"
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 1832444fa2..d32aa754ae 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1136,6 +1136,81 @@ static inline void move_array(void *dst, const void *src, size_t n, size_t size)
- #define FLEXPTR_ALLOC_STR(x, ptrname, str) \
- 	FLEXPTR_ALLOC_MEM((x), ptrname, (str), strlen(str))
- 
-+#define alloc_nr(x) (((x)+16)*3/2)
-+
-+/**
-+ * Dynamically growing an array using realloc() is error prone and boring.
-+ *
-+ * Define your array with:
-+ *
-+ * - a pointer (`item`) that points at the array, initialized to `NULL`
-+ *   (although please name the variable based on its contents, not on its
-+ *   type);
-+ *
-+ * - an integer variable (`alloc`) that keeps track of how big the current
-+ *   allocation is, initialized to `0`;
-+ *
-+ * - another integer variable (`nr`) to keep track of how many elements the
-+ *   array currently has, initialized to `0`.
-+ *
-+ * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
-+ * alloc)`.  This ensures that the array can hold at least `n` elements by
-+ * calling `realloc(3)` and adjusting `alloc` variable.
-+ *
-+ * ------------
-+ * sometype *item;
-+ * size_t nr;
-+ * size_t alloc
-+ *
-+ * for (i = 0; i < nr; i++)
-+ * 	if (we like item[i] already)
-+ * 		return;
-+ *
-+ * // we did not like any existing one, so add one
-+ * ALLOC_GROW(item, nr + 1, alloc);
-+ * item[nr++] = value you like;
-+ * ------------
-+ *
-+ * You are responsible for updating the `nr` variable.
-+ *
-+ * If you need to specify the number of elements to allocate explicitly
-+ * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
-+ *
-+ * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
-+ * added niceties.
-+ *
-+ * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
-+ */
-+#define ALLOC_GROW(x, nr, alloc) \
-+	do { \
-+		if ((nr) > alloc) { \
-+			if (alloc_nr(alloc) < (nr)) \
-+				alloc = (nr); \
-+			else \
-+				alloc = alloc_nr(alloc); \
-+			REALLOC_ARRAY(x, alloc); \
-+		} \
-+	} while (0)
-+
-+/*
-+ * Similar to ALLOC_GROW but handles updating of the nr value and
-+ * zeroing the bytes of the newly-grown array elements.
-+ *
-+ * DO NOT USE any expression with side-effect for any of the
-+ * arguments.
-+ */
-+#define ALLOC_GROW_BY(x, nr, increase, alloc) \
-+	do { \
-+		if (increase) { \
-+			size_t new_nr = nr + (increase); \
-+			if (new_nr < nr) \
-+				BUG("negative growth in ALLOC_GROW_BY"); \
-+			ALLOC_GROW(x, new_nr, alloc); \
-+			memset((x) + nr, 0, sizeof(*(x)) * (increase)); \
-+			nr = new_nr; \
-+		} \
-+	} while (0)
-+
- static inline char *xstrdup_or_null(const char *str)
- {
- 	return str ? xstrdup(str) : NULL;
-diff --git a/help.c b/help.c
-index 389382b148..6d2ebfbd2a 100644
---- a/help.c
-+++ b/help.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "builtin.h"
- #include "exec-cmd.h"
-diff --git a/http-backend.c b/http-backend.c
-index 25a19c21b9..e24399ed10 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "git-zlib.h"
-diff --git a/line-log.c b/line-log.c
-index 2eff914bf3..790ab73212 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "line-range.h"
- #include "hex.h"
- #include "tag.h"
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 2a3b7881af..8a08b7af49 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "commit.h"
- #include "config.h"
- #include "gettext.h"
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index e075a66c99..9327ccd505 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "dir.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/midx.c b/midx.c
-index db459e448b..3a16acabbc 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "csum-file.h"
- #include "dir.h"
-diff --git a/object-file.c b/object-file.c
-index 527b740018..5ebe1b00c5 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -8,7 +8,6 @@
-  */
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "convert.h"
- #include "environment.h"
-diff --git a/oid-array.c b/oid-array.c
-index e8228c777b..8e4717746c 100644
---- a/oid-array.c
-+++ b/oid-array.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "oid-array.h"
- #include "hash-lookup.h"
- 
-diff --git a/oidtree.c b/oidtree.c
-index 7d57b7b19e..daef175dc7 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -4,7 +4,6 @@
-  */
- #include "git-compat-util.h"
- #include "oidtree.h"
--#include "alloc.h"
- #include "hash.h"
- 
- struct oidtree_iter_data {
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index d86f4e739a..f6757c3cbf 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 7367f62bb6..01fbc0a657 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "commit.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/pack-objects.c b/pack-objects.c
-index ccab09fe65..1b8052bece 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "object.h"
- #include "pack.h"
- #include "pack-objects.h"
-diff --git a/packfile.c b/packfile.c
-index 9126274b37..030b7ec7a8 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 8637723461..b5a714c711 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "entry.h"
- #include "gettext.h"
-diff --git a/pretty.c b/pretty.c
-index 7862be105d..4df716686f 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "commit.h"
- #include "environment.h"
-diff --git a/prio-queue.c b/prio-queue.c
-index dc2476be53..450775a374 100644
---- a/prio-queue.c
-+++ b/prio-queue.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "prio-queue.h"
- 
- static inline int compare(struct prio_queue *queue, int i, int j)
-diff --git a/quote.c b/quote.c
-index 43c739671e..3c05194496 100644
---- a/quote.c
-+++ b/quote.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "path.h"
- #include "quote.h"
- #include "strbuf.h"
-diff --git a/read-cache.c b/read-cache.c
-index 140b4f96a0..53d71134e2 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -4,7 +4,6 @@
-  * Copyright (C) Linus Torvalds, 2005
-  */
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "bulk-checkin.h"
- #include "config.h"
- #include "date.h"
-diff --git a/ref-filter.c b/ref-filter.c
-index e0d03a9f8e..2ed0ecf260 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "gpg-interface.h"
-diff --git a/reflog-walk.c b/reflog-walk.c
-index d337e64431..d216f6f966 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "commit.h"
- #include "refs.h"
- #include "diff.h"
-diff --git a/refs.c b/refs.c
-index d5e0184ca5..c1b3d1f13f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4,7 +4,6 @@
- 
- #include "git-compat-util.h"
- #include "advice.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "hashmap.h"
-diff --git a/refspec.c b/refspec.c
-index 57f6c2aaf9..d60932f4de 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "hash.h"
- #include "hex.h"
-diff --git a/remote-curl.c b/remote-curl.c
-index acf7b2bb40..8a976a0253 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/remote.c b/remote.c
-index 6e13993bdc..55e7d22a00 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/rerere.c b/rerere.c
-index 4227c9612a..7070f75014 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "config.h"
- #include "copy.h"
- #include "gettext.h"
-diff --git a/revision.c b/revision.c
-index d66857ecc0..0976d41404 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/sequencer.c b/sequencer.c
-index 993dd8efbc..cc9821ece2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1,7 +1,6 @@
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "advice.h"
--#include "alloc.h"
- #include "config.h"
- #include "copy.h"
- #include "environment.h"
-diff --git a/server-info.c b/server-info.c
-index f350713ecf..e2fe0f9143 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "dir.h"
- #include "environment.h"
- #include "hex.h"
-diff --git a/shallow.c b/shallow.c
-index 2fad3504b7..5413719fd4 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "hex.h"
- #include "repository.h"
- #include "tempfile.h"
-diff --git a/sigchain.c b/sigchain.c
-index ee778c0580..66123bdbab 100644
---- a/sigchain.c
-+++ b/sigchain.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "sigchain.h"
- 
- #define SIGCHAIN_MAX_SIGNALS 32
-diff --git a/sparse-index.c b/sparse-index.c
-index 90d0462256..1fdb07a9e6 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "name-hash.h"
-diff --git a/split-index.c b/split-index.c
-index 0ee3865a55..8c38687c04 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "hash.h"
- #include "mem-pool.h"
-diff --git a/strbuf.c b/strbuf.c
-index ab8e52e9b4..f65d7bee4c 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "gettext.h"
- #include "hex.h"
- #include "strbuf.h"
-diff --git a/string-list.c b/string-list.c
-index 0f8ac117fd..954569f381 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "string-list.h"
--#include "alloc.h"
- 
- void string_list_init_nodup(struct string_list *list)
- {
-diff --git a/strvec.c b/strvec.c
-index 17d54b6c3b..89dc9e7e75 100644
---- a/strvec.c
-+++ b/strvec.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "strvec.h"
--#include "alloc.h"
- #include "hex.h"
- #include "strbuf.h"
- 
-diff --git a/submodule-config.c b/submodule-config.c
-index b6908e295f..6a48fd12f6 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "dir.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/submodule.c b/submodule.c
-index f0f8788d2e..e603a19a87 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "repository.h"
- #include "config.h"
- #include "submodule-config.h"
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 5b6f217441..119f4908cf 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "alloc.h"
- #include "commit.h"
- #include "commit-reach.h"
- #include "config.h"
-diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 9f46ae12f5..601c9e5036 100644
---- a/trace2/tr2_tls.c
-+++ b/trace2/tr2_tls.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "thread-utils.h"
- #include "trace.h"
- #include "trace2/tr2_tls.h"
-diff --git a/trailer.c b/trailer.c
-index 06dc0b7f68..f408f9b058 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/transport.c b/transport.c
-index 0a5794a944..219af8fd50 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "advice.h"
--#include "alloc.h"
- #include "config.h"
- #include "environment.h"
- #include "hex.h"
-diff --git a/tree-walk.c b/tree-walk.c
-index 42ed86ef58..6c07913f3f 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "tree-walk.h"
--#include "alloc.h"
- #include "dir.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/userdiff.c b/userdiff.c
-index 664c7c1402..e399543823 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -1,5 +1,4 @@
- #include "git-compat-util.h"
--#include "alloc.h"
- #include "config.h"
- #include "userdiff.h"
- #include "attr.h"
-diff --git a/worktree.c b/worktree.c
-index 2ea5d45e1e..b8cf29e6a1 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "abspath.h"
--#include "alloc.h"
- #include "environment.h"
- #include "gettext.h"
- #include "path.h"
--- 
-2.41.0.255.g8b1d071c50-goog
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
+With maint, master, next, seen, todo:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* ds/remove-idx-before-pack (2023-06-20) 1 commit
+  (merged to 'next' on 2023-06-23 at fa97bf0e41)
+ + packfile: delete .idx files before .pack files
+
+ We create .pack and then .idx, we consider only packfiles that have
+ .idx usable (those with only .pack are not ready yet), so we should
+ remove .idx before removing .pack for consistency.
+ source: <pull.1547.git.1687287675248.gitgitgadget@gmail.com>
+
+
+* en/header-split-cache-h-part-3 (2023-06-21) 28 commits
+  (merged to 'next' on 2023-06-23 at 84ad22bf36)
+ + fsmonitor-ll.h: split this header out of fsmonitor.h
+ + hash-ll, hashmap: move oidhash() to hash-ll
+ + object-store-ll.h: split this header out of object-store.h
+ + khash: name the structs that khash declares
+ + merge-ll: rename from ll-merge
+ + git-compat-util.h: remove unneccessary include of wildmatch.h
+ + builtin.h: remove unneccessary includes
+ + list-objects-filter-options.h: remove unneccessary include
+ + diff.h: remove unnecessary include of oidset.h
+ + repository: remove unnecessary include of path.h
+ + log-tree: replace include of revision.h with simple forward declaration
+ + cache.h: remove this no-longer-used header
+ + read-cache*.h: move declarations for read-cache.c functions from cache.h
+ + repository.h: move declaration of the_index from cache.h
+ + merge.h: move declarations for merge.c from cache.h
+ + diff.h: move declaration for global in diff.c from cache.h
+ + preload-index.h: move declarations for preload-index.c from elsewhere
+ + sparse-index.h: move declarations for sparse-index.c from cache.h
+ + name-hash.h: move declarations for name-hash.c from cache.h
+ + run-command.h: move declarations for run-command.c from cache.h
+ + statinfo: move stat_{data,validity} functions from cache/read-cache
+ + read-cache: move shared add/checkout/commit code
+ + add: modify add_files_to_cache() to avoid globals
+ + read-cache: move shared commit and ls-files code
+ + setup: adopt shared init-db & clone code
+ + init-db, clone: change unnecessary global into passed parameter
+ + init-db: remove unnecessary global variable
+ + init-db: document existing bug with core.bare in template config
+
+ Header files cleanup.
+ source: <pull.1525.v3.git.1684218848.gitgitgadget@gmail.com>
+
+
+* jc/abort-ll-merge-with-a-signal (2023-06-23) 2 commits
+  (merged to 'next' on 2023-06-24 at 685eb5d25c)
+ + t6406: skip "external merge driver getting killed by a signal" test on Windows
+  (merged to 'next' on 2023-06-23 at 9c9c37e95e)
+ + ll-merge: killing the external merge driver aborts the merge
+
+ When the external merge driver is killed by a signal, its output
+ should not be trusted as a resolution with conflicts that is
+ proposed by the driver, but the code did.
+ source: <xmqq4jmzc91e.fsf_-_@gitster.g>
+
+
+* tb/gc-recent-object-hook (2023-06-24) 1 commit
+  (merged to 'next' on 2023-06-24 at e8c295841b)
+ + t7701: make annotated tag unreachable
+
+ Test update.
+ source: <259b1b559114ab1a9a0bd7f1ad29a4cba2612ae0.1687617197.git.me@ttaylorr.com>
+
+--------------------------------------------------
+[New Topics]
+
+* jk/cherry-pick-revert-status (2023-06-27) 1 commit
+  (merged to 'next' on 2023-06-28 at 4a0d88ef7a)
+ + fix cherry-pick/revert status when doing multiple commits
+
+ During a cherry-pick or revert session that works on multiple
+ commits, "git status" did not give correct information, which has
+ been corrected.
+
+ Will merge to 'master'.
+ source: <20230627224230.1951135-1-jacob.e.keller@intel.com>
+
+
+* ks/t4205-test-describe-with-abbrev-fix (2023-06-29) 1 commit
+  (merged to 'next' on 2023-06-29 at 5fc309dc75)
+ + t4205: correctly test %(describe:abbrev=...)
+
+ Test update.
+
+ Will merge to 'master'.
+ source: <20230629133841.18784-2-five231003@gmail.com>
+
+
+* jk/fsck-indices-in-worktrees (2023-06-29) 1 commit
+  (merged to 'next' on 2023-06-29 at 9d245b3681)
+ + fsck: avoid misleading variable name
+
+ Code clarification.
+
+ Will merge to 'master'.
+ source: <20230629181333.87465-1-ericsunshine@charter.net>
+
+
+* js/empty-index-fixes (2023-06-29) 3 commits
+  (merged to 'next' on 2023-06-29 at cdfd131900)
+ + commit -a -m: allow the top-level tree to become empty again
+ + split-index: accept that a base index can be empty
+ + do_read_index(): always mark index as initialized unless erroring out
+
+ A few places failed to differenciate the case where the index is
+ truly empty (nothing added) and we haven't yet read from the
+ on-disk index file, which have been corrected.
+
+ Will merge to 'master'.
+ source: <pull.1554.git.1688044991.gitgitgadget@gmail.com>
+
+
+* vd/adjust-mfow-doc-to-updated-headers (2023-06-29) 1 commit
+ - docs: include "trace.h" in MyFirstObjectWalk.txt
+
+ Code snippets in a tutorial document no longer compiled after
+ recent header shuffling, which have been corrected.
+
+ Will merge to 'next'?
+ source: <20230629185238.58961-1-vinayakdev.sci@gmail.com>
+
+--------------------------------------------------
+[Stalled]
+
+* ed/fsmonitor-windows-named-pipe (2023-03-24) 1 commit
+ - fsmonitor: handle differences between Windows named pipe functions
+
+ Fix fsmonitor on Windows when the filesystem path contains certain
+ characters.
+
+ Expecting a reroll.
+ cf. <b9cf67e4-22a7-2ff0-8310-9223bea10d6d@jeffhostetler.com>
+ source: <pull.1503.git.1679678090412.gitgitgadget@gmail.com>
+
+
+* rn/sparse-diff-index (2023-04-10) 1 commit
+ - diff-index: enable sparse index
+
+ "git diff-index" command has been taught to work better with the
+ sparse index.
+
+ Expecting a reroll.
+ cf. <62821012-4fc3-5ad8-695c-70f7ab14a8c9@github.com>
+ source: <20230408112342.404318-1-nanth.raghul@gmail.com>
+
+
+* es/recurse-submodules-option-is-a-bool (2023-04-10) 1 commit
+ - usage: clarify --recurse-submodules as a boolean
+
+ The "--[no-]recurse-submodules" option of "git checkout" and others
+ supported an undocumented syntax --recurse-submodules=<value> where
+ the value can spell a Boolean in various ways.  The support for the
+ syntax is being dropped.
+
+ Expecting a reroll.
+ cf. <ZDSTFwMFO7vbj/du@google.com>
+ source: <ZDSTFwMFO7vbj/du@google.com>
+
+
+* cb/checkout-same-branch-twice (2023-03-22) 2 commits
+ - SQUASH??? the test marked to expect failure passes from day one
+ - checkout/switch: disallow checking out same branch in multiple worktrees
+
+ "git checkout -B $branch" failed to protect against checking out
+ a branch that is checked out elsewhere, unlike "git branch -f" did.
+
+ Expecting a hopefully minor and final reroll.
+ cf. <CAPUEspj_Bh+LgYLnWfeBdcq_uV5Cbou-7H51GLFjzSa5Qzby9w@mail.gmail.com>
+ source: <20230120113553.24655-1-carenas@gmail.com>
+
+
+* tk/pull-conflict-suggest-rebase-merge-not-rebase-true (2023-02-13) 1 commit
+ - pull: conflict hint pull.rebase suggestion should offer "merges" vs "true"
+
+ In an advice message after failed non-ff pull, we used to suggest
+ setting pull.rebase=true, but these days pull.rebase=merges may be
+ more inline with the original spirit of "rebuild your side on top
+ of theirs".
+
+ May want to discard.
+ This is too much of a departure from the existing practice.
+ cf. <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
+ cf. <CABPp-BGqAxKnxDRVN4cYMteLp33hvto07R3=TJBT5WubJT4+Og@mail.gmail.com>
+ source: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
+
+
+* ab/tag-object-type-errors (2023-05-10) 4 commits
+ - tag: don't emit potentially incorrect "object is a X, not a Y"
+ - tag: don't misreport type of tagged objects in errors
+ - object tests: add test for unexpected objects in tags
+ - Merge branch 'jk/parse-object-type-mismatch' into ab/tag-object-type-errors
+
+ Hardening checks around mismatched object types when one of those
+ objects is a tag.
+ source: <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
+
+
+* ad/test-record-count-when-harness-is-in-use (2022-12-25) 1 commit
+ - test-lib: allow storing counts with test harnesses
+
+ Allow summary results from tests to be written to t/test-results
+ directory even when a test harness like 'prove' is in use.
+
+ Expecting a reroll.
+ cf. <CABPp-BGoPuGCZw+9wCgdYyRR4Zf4y9Kun27GrQhtMdYWpOUsYQ@mail.gmail.com>
+ source: <20221224225200.1027806-1-adam@dinwoodie.org>
+
+
+* so/diff-merges-more (2022-12-18) 5 commits
+ - diff-merges: improve --diff-merges documentation
+ - diff-merges: issue warning on lone '-m' option
+ - diff-merges: support list of values for --diff-merges
+ - diff-merges: implement log.diffMerges-m-imply-p config
+ - diff-merges: implement [no-]hide option and log.diffMergesHide config
+
+ Assorted updates to "--diff-merges=X" option.
+
+ May want to discard.
+ Breaking compatibility does not seem worth it.
+ source: <20221217132955.108542-1-sorganov@gmail.com>
+
+
+* ab/imap-send-requires-curl (2023-02-02) 6 commits
+ - imap-send: correctly report "host" when using "tunnel"
+ - imap-send: remove old --no-curl codepath
+ - imap-send: make --curl no-optional
+ - imap-send: replace auto-probe libcurl with hard dependency
+ - imap-send doc: the imap.sslVerify is used with imap.tunnel
+ - imap-send: note "auth_method", not "host" on auth method failure
+
+ Give a hard dependency on cURL library to build "git imap-send",
+ and remove the code to interact with IMAP server without using cURL.
+
+ Expecting a reroll.
+ The 'tunnel' part is still iffy.
+ cf. <230203.86bkmabfjr.gmgdl@evledraar.gmail.com>
+ source: <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
+
+
+* cw/submodule-status-in-parallel (2023-03-02) 6 commits
+ - diff-lib: parallelize run_diff_files for submodules
+ - diff-lib: refactor out diff_change logic
+ - submodule: refactor is_submodule_modified()
+ - submodule: move status parsing into function
+ - submodule: rename strbuf variable
+ - run-command: add on_stderr_output_fn to run_processes_parallel_opts
+
+ "git submodule status" learned to run the comparison in submodule
+ repositories in parallel.
+
+ Expecting a reroll.
+ cf. <CAFySSZDk05m6gU5-V1R+y3YnQ5PPduVW54+_gjBwD0rmacsLsw@mail.gmail.com>
+ cf. <230307.865ybc273g.gmgdl@evledraar.gmail.com>
+ source: <20230302215237.1473444-1-calvinwan@google.com>
+
+--------------------------------------------------
+[Cooking]
+
+* mh/credential-erase-improvements-more (2023-06-24) 2 commits
+ - credential/wincred: erase matching creds only
+ - credential/libsecret: erase matching creds only
+
+ Needs review.
+ source: <pull.1529.git.git.1687596777147.gitgitgadget@gmail.com>
+
+
+* gc/config-context (2023-06-28) 11 commits
+  (merged to 'next' on 2023-06-28 at 38632f3daf)
+ + config: pass source to config_parser_event_fn_t
+ + config: add kvi.path, use it to evaluate includes
+ + config.c: remove config_reader from configsets
+ + config: pass kvi to die_bad_number()
+ + trace2: plumb config kvi
+ + config.c: pass ctx with CLI config
+ + config: pass ctx with config files
+ + config.c: pass ctx in configsets
+ + config: add ctx arg to config_fn_t
+ + urlmatch.h: use config_fn_t type
+ + config: inline git_color_default_config
+
+ Reduce reliance on a global state in the config reading API.
+
+ Will merge to 'master'.
+ source: <pull.1497.v5.git.git.1687980390.gitgitgadget@gmail.com>
+
+
+* gc/config-partial-submodule-kvi-fix (2023-06-26) 1 commit
+  (merged to 'next' on 2023-06-28 at 1fb30a34e3)
+ + config: don't BUG when both kvi and source are set
+
+ Partially revert a sanity check that the rest of the config code
+ was not ready, to avoid triggering it in a corner case.
+
+ Will merge to 'master'.
+ source: <pull.1535.git.git.1687801297404.gitgitgadget@gmail.com>
+
+
+* pw/apply-too-large (2023-06-26) 1 commit
+  (merged to 'next' on 2023-06-28 at c0460d682c)
+ + apply: improve error messages when reading patch
+
+ "git apply" punts when it is fed too large a patch input; the error
+ message it gives when it happens has been clarified.
+
+ Will merge to 'master'.
+ source: <pull.1552.git.1687772253869.gitgitgadget@gmail.com>
+
+
+* pw/diff-no-index-from-named-pipes (2023-06-27) 3 commits
+ - diff --no-index: support reading from named pipes
+ - t4054: test diff --no-index with stdin
+ - diff --no-index: die on error reading stdin
+
+ "git diff --no-index" learned to read from named pipes as if they
+ were regular files, to allow "git diff <(process) <(substitution)"
+ some shells support.
+
+ Expecting a reroll.
+ cf. <457ff920-865e-f018-1d79-f3cb1121d199@gmail.com>
+ source: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
+
+
+* bc/more-git-var (2023-06-27) 8 commits
+  (merged to 'next' on 2023-06-27 at ea14687e91)
+ + var: add config file locations
+ + var: add attributes files locations
+ + attr: expose and rename accessor functions
+ + var: adjust memory allocation for strings
+ + var: format variable structure with C99 initializers
+ + var: add support for listing the shell
+ + t: add a function to check executable bit
+ + var: mark unused parameters in git_var callbacks
+
+ Add more "git var" for toolsmiths to learn various locations Git is
+ configured with either via the configuration or hardcoded defaults.
+
+ Will merge to 'master'.
+ source: <20230627161902.754472-1-sandals@crustytoothpaste.net>
+
+
+* jc/doc-hash-object-types (2023-06-28) 1 commit
+  (merged to 'next' on 2023-06-28 at adff1700c2)
+ + docs: add git hash-object -t option's possible values
+
+ Doc update.
+
+ Will merge to 'master'.
+ source: <pull.1533.v3.git.git.1688004473941.gitgitgadget@gmail.com>
+
+
+* cc/repack-sift-filtered-objects-to-separate-pack (2023-06-14) 9 commits
+ - gc: add `gc.repackFilterTo` config option
+ - repack: implement `--filter-to` for storing filtered out objects
+ - gc: add `gc.repackFilter` config option
+ - repack: add `--filter=<filter-spec>` option
+ - repack: refactor finishing pack-objects command
+ - repack: refactor piping an oid to a command
+ - t/helper: add 'find-pack' test-tool
+ - pack-objects: add `--print-filtered` to print omitted objects
+ - pack-objects: allow `--filter` without `--stdout`
+
+ "git repack" machinery learns to pay attention to the "--filter="
+ option.
+
+ Needs review.
+ source: <20230614192541.1599256-1-christian.couder@gmail.com>
+
+
+* ps/revision-stdin-with-options (2023-06-15) 3 commits
+  (merged to 'next' on 2023-06-26 at eda3e4d0b5)
+ + revision: handle pseudo-opts in `--stdin` mode
+ + revision: small readability improvement for reading from stdin
+ + revision: reorder `read_revisions_from_stdin()`
+
+ The set-up code for the get_revision() API now allows feeding
+ options like --all and --not in the --stdin mode.
+
+ Will merge to 'master'.
+ source: <cover.1686839572.git.ps@pks.im>
+
+
+* rs/strbuf-expand-step (2023-06-18) 5 commits
+  (merged to 'next' on 2023-06-28 at 1918915b71)
+ + strbuf: simplify strbuf_expand_literal_cb()
+ + replace strbuf_expand() with strbuf_expand_step()
+ + replace strbuf_expand_dict_cb() with strbuf_expand_step()
+ + strbuf: factor out strbuf_expand_step()
+ + pretty: factor out expand_separator()
+
+ Code clean-up around strbuf_expand() API.
+
+ Will merge to 'master'.
+ source: <767baa64-20a6-daf2-d34b-d81f72363749@web.de>
+
+
+* js/doc-unit-tests (2023-06-13) 1 commit
+ - unit tests: Add a project plan document
+
+ Process to add some form of low-level unit tests has started.
+
+ Comments?  Filling in blanks?
+ source: <8afdb215d7e10ca16a2ce8226b4127b3d8a2d971.1686352386.git.steadmon@google.com>
+
+
+* mh/mingw-case-sensitive-build (2023-06-12) 1 commit
+ - mingw: use lowercase includes for some Windows headers
+
+ Names of MinGW header files are spelled in mixed case in some
+ source files, but the build host can be using case sensitive
+ filesystem with header files with their name spelled in all
+ lowercase.
+
+ Needs review.
+ source: <20230604211934.1365289-1-mh@glandium.org>
+
+
+* pb/complete-diff-options (2023-06-26) 24 commits
+  (merged to 'next' on 2023-06-28 at ccff93557d)
+ + diff.c: mention completion above add_diff_options
+ + completion: complete --remerge-diff
+ + completion: complete --diff-merges, its options and --no-diff-merges
+ + completion: move --pickaxe-{all,regex} to __git_diff_common_options
+ + completion: complete --ws-error-highlight
+ + completion: complete --unified
+ + completion: complete --output-indicator-{context,new,old}
+ + completion: complete --output
+ + completion: complete --no-stat
+ + completion: complete --no-relative
+ + completion: complete --line-prefix
+ + completion: complete --ita-invisible-in-index and --ita-visible-in-index
+ + completion: complete --irreversible-delete
+ + completion: complete --ignore-matching-lines
+ + completion: complete --function-context
+ + completion: complete --find-renames
+ + completion: complete --find-object
+ + completion: complete --find-copies
+ + completion: complete --default-prefix
+ + completion: complete --compact-summary
+ + completion: complete --combined-all-paths
+ + completion: complete --cc
+ + completion: complete --break-rewrites
+ + completion: add comments describing __git_diff_* globals
+
+ Completion updates.
+
+ Will merge to 'master'.
+ source: <pull.1543.v3.git.1687796688.gitgitgadget@gmail.com>
+
+
+* ks/ref-filter-signature (2023-06-06) 2 commits
+ - ref-filter: add new "signature" atom
+ - t/lib-gpg: introduce new prereq GPG2
+
+ The "git for-each-ref" family of commands learned placeholders
+ related to GPG signature verification.
+
+ Needs review.
+ source: <20230604185815.15761-1-five231003@gmail.com>
+
+
+* jt/path-filter-fix (2023-06-13) 4 commits
+ - commit-graph: new filter ver. that fixes murmur3
+ - repo-settings: introduce commitgraph.changedPathsVersion
+ - t4216: test changed path filters with high bit paths
+ - gitformat-commit-graph: describe version 2 of BDAT
+
+ The Bloom filter used for path limited history traversal was broken
+ on systems whose "char" is unsigned; update the implementation and
+ bump the format version to 2.
+
+ Expecting a reroll.
+ cf. <c7b66d2c-cdc3-1f0f-60a0-a2ee21c277bf@github.com>
+ source: <cover.1686677910.git.jonathantanmy@google.com>
+
+
+* tk/cherry-pick-sequence-requires-clean-worktree (2023-06-01) 1 commit
+ - cherry-pick: refuse cherry-pick sequence if index is dirty
+
+ "git cherry-pick A" that replays a single commit stopped before
+ clobbering local modification, but "git cherry-pick A..B" did not,
+ which has been corrected.
+
+ Expecting a reroll.
+ cf. <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
+ source: <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com>
+
+
+* mh/credential-libsecret-attrs (2023-06-16) 1 commit
+ - credential/libsecret: store new attributes
+
+ The way authentication related data other than passwords (e.g.
+ oath token and password expiration data) are stored in libsecret
+ keyrings has been rethought.
+
+ Needs review.
+ source: <pull.1469.v5.git.git.1686945306242.gitgitgadget@gmail.com>
+
+
+* tb/refs-exclusion-and-packed-refs (2023-06-20) 16 commits
+ - ls-refs.c: avoid enumerating hidden refs where possible
+ - upload-pack.c: avoid enumerating hidden refs where possible
+ - builtin/receive-pack.c: avoid enumerating hidden references
+ - refs.h: let `for_each_namespaced_ref()` take excluded patterns
+ - refs/packed-backend.c: ignore complicated hidden refs rules
+ - revision.h: store hidden refs in a `strvec`
+ - refs/packed-backend.c: add trace2 counters for jump list
+ - refs/packed-backend.c: implement jump lists to avoid excluded pattern(s)
+ - refs/packed-backend.c: refactor `find_reference_location()`
+ - refs: plumb `exclude_patterns` argument throughout
+ - builtin/for-each-ref.c: add `--exclude` option
+ - ref-filter.c: parameterize match functions over patterns
+ - ref-filter: add `ref_filter_clear()`
+ - ref-filter: clear reachable list pointers after freeing
+ - ref-filter.h: provide `REF_FILTER_INIT`
+ - refs.c: rename `ref_filter`
+
+ Enumerating refs in the packed-refs file, while excluding refs that
+ match certain patterns, has been optimized.
+ source: <cover.1687270849.git.me@ttaylorr.com>
+
+
+* cc/git-replay (2023-06-03) 15 commits
+ - replay: stop assuming replayed branches do not diverge
+ - replay: add --contained to rebase contained branches
+ - replay: add --advance or 'cherry-pick' mode
+ - replay: disallow revision specific options and pathspecs
+ - replay: use standard revision ranges
+ - replay: make it a minimal server side command
+ - replay: remove HEAD related sanity check
+ - replay: remove progress and info output
+ - replay: add an important FIXME comment about gpg signing
+ - replay: don't simplify history
+ - replay: introduce pick_regular_commit()
+ - replay: die() instead of failing assert()
+ - replay: start using parse_options API
+ - replay: introduce new builtin
+ - t6429: remove switching aspects of fast-rebase
+
+ source: <20230602102533.876905-1-christian.couder@gmail.com>
+
+
+* ob/revert-of-revert (2023-05-05) 1 commit
+ - sequencer: beautify subject of reverts of reverts
+
+ Instead of "Revert "Revert "original"", give "Reapply "original""
+ as the title for a revert of a revert.
+
+ Expecting a hopefully final reroll.
+ Looking much better, except for minor cosmetic issues.
+ source: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
+
+
+* cw/strbuf-cleanup (2023-06-12) 7 commits
+  (merged to 'next' on 2023-06-28 at c158b004a8)
+ + strbuf: remove global variable
+ + path: move related function to path
+ + object-name: move related functions to object-name
+ + credential-store: move related functions to credential-store file
+ + abspath: move related functions to abspath
+ + strbuf: clarify dependency
+ + strbuf: clarify API boundary
+
+ Move functions that are not about pure string manipulation out of
+ strbuf.[ch]
+
+ Will merge to 'master'.
+ source: <20230606194720.2053551-1-calvinwan@google.com>
+
+
+* tl/notes-separator (2023-06-21) 7 commits
+  (merged to 'next' on 2023-06-28 at 74fa459f4d)
+ + notes: introduce "--no-separator" option
+ + notes.c: introduce "--[no-]stripspace" option
+ + notes.c: append separator instead of insert by pos
+ + notes.c: introduce '--separator=<paragraph-break>' option
+ + t3321: add test cases about the notes stripspace behavior
+ + notes.c: use designated initializers for clarity
+ + notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+
+ 'git notes append' was taught '--separator' to specify string to insert
+ between paragraphs.
+
+ Will merge to 'master'.
+ source: <cover.1685174011.git.dyroneteng@gmail.com>
+
+
+* pw/rebase-i-after-failure (2023-04-21) 6 commits
+ - rebase -i: fix adding failed command to the todo list
+ - rebase: fix rewritten list for failed pick
+ - rebase --continue: refuse to commit after failed command
+ - sequencer: factor out part of pick_commits()
+ - rebase -i: remove patch file after conflict resolution
+ - rebase -i: move unlink() calls
+
+ Various fixes to the behaviour of "rebase -i" when the command got
+ interrupted by conflicting changes.
+
+ Expecting a reroll.
+ cf. <xmqqsfcthrpb.fsf@gitster.g>
+ cf. <1fd54422-b66a-c2e4-7cd7-934ea01190ad@gmail.com>
+ source: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
