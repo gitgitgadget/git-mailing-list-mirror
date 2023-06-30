@@ -2,195 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBFE1EB64D7
-	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 14:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC0CEB64D7
+	for <git@archiver.kernel.org>; Fri, 30 Jun 2023 14:17:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232367AbjF3OIL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jun 2023 10:08:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33086 "EHLO
+        id S232168AbjF3ORh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jun 2023 10:17:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232097AbjF3OIG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2023 10:08:06 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F01D2D5B
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 07:08:04 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-98e39784a85so332547766b.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 07:08:04 -0700 (PDT)
+        with ESMTP id S229578AbjF3ORg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2023 10:17:36 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0AE2D78
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 07:17:35 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5776312eaddso4202397b3.3
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 07:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688134083; x=1690726083;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=usYaPbW/PQ4/zQzoXXvQ6ice2LR5voRVA9h5NCJ94Fs=;
-        b=ivcoIQ758LXIRNyhHtDpX7BHL3NXPV2RP0XabYiHhmCXiPDP7Bo0wMyqxuidpNHDAk
-         4h1NCEyTDwTTMLuwbQfdC/03H3DkMs9ZdlcjG2mn4cWxKXcE8TIgvNnbJ1ZHB8ytgFwd
-         aK25NU+pKlOcuVJq0f41HoIpBBNjYiUVADc27uS2u1e7J1uvEVMxF8NhxKvvKLALn/Jf
-         KDe3+VQCoeWU7nTJJXMzvjmoK/Tx24lwt3ldSA/76QxNnUzPc6KLAREyMaCptcRDhTyh
-         Cgah941IHma+V8KPZ6fy6CuT9AB7pXxxwaIihuOkPd/cFejxRzDsB1q7lSBglhUD1KzL
-         JCcw==
+        d=linuxfoundation.org; s=google; t=1688134654; x=1690726654;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=APChx2IzQ18E8XfEVjiqbqMYNh2lK+UK3L7tgq+V/aE=;
+        b=LL4NaEl6xHh0cmop5BYEQOZvExypV1xrCq0lgjfl5FpHBtmrM405y/dRdc/Gjm6I0C
+         X/Sveen8rSsYMD4qNkuFjH1ECAIBZ2a1qkBr3PQ28qiOUxfTCofFVfWBKwJEvFZ3j0Nq
+         tlBocS2pF3QkmpBvrjNxMtuvBtwyOkTTzt+Bw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688134083; x=1690726083;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1688134654; x=1690726654;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=usYaPbW/PQ4/zQzoXXvQ6ice2LR5voRVA9h5NCJ94Fs=;
-        b=itlkdWelUYEyqKYkHTFnEdRS2FfFcG5rDr3jn2guBMe54mDwFpInYRI+jYZL+PIVUC
-         NeXd3fXg3ZlQV5BbuH3i69lXDA9lnk7Z1Hu0GS2CH8u2DfHgw9L+JFqpkbhXKMwz15gy
-         SYXM1fz2MMvLd00Gs4R69NyrMG2nFJSfuhzED8Rmz6hC3DHcL9+FyJef7A6GtkCorRyv
-         ho1kKYT9Y2SuqiRclksBkdVOFcuLt+2KMV9ETumwZtxDRIETnUqfIL1QVYNnVeJhozkm
-         EVdZNVU6Q5jUHGc05TU8WZhW2O/fu4617UTxXPwWoFf/2k5NhHFLfdsw3fAG6rWuyWQK
-         SuCQ==
-X-Gm-Message-State: AC+VfDw47gAgIuGlP8f8wm1apyxkX3uIXgY07y3Wc2RuW0EmGH6d2xtf
-        6OVQIBUiqg0pKTaxxHhwoDo=
-X-Google-Smtp-Source: ACHHUZ5bORvRgpb++M60bnOYxwXeBYD1qeXdwq86SmE7Y9lg496FlqmSbW5BXFfOfzc1TAlAkSOwaA==
-X-Received: by 2002:a17:906:478a:b0:966:1bf2:2af5 with SMTP id cw10-20020a170906478a00b009661bf22af5mr6831790ejc.22.1688134082463;
-        Fri, 30 Jun 2023 07:08:02 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id i10-20020a170906250a00b0096a6be0b66dsm8070272ejb.208.2023.06.30.07.08.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Jun 2023 07:08:01 -0700 (PDT)
-Message-ID: <a99a5134-3bac-64d4-b4e7-f02e8578090a@gmail.com>
-Date:   Fri, 30 Jun 2023 15:07:58 +0100
+        bh=APChx2IzQ18E8XfEVjiqbqMYNh2lK+UK3L7tgq+V/aE=;
+        b=gjKBWfp/OXwTIVh8hmfA86rZ8cFfycR0BiAaHYXB35hjLMo8zRm0aOgQkKJRt6XNPp
+         nxuLDCz7kkvXuNwbsMPg2gzaOi4B9/Q5Eb7RXRHiu8CHx0vKK0mL8r6njmE6hv9dkzLs
+         B/fkV/uPAUl/VytXXZBeBtn8A9h627VP29QPsjjd4gagnrzTEIwVYFI/rxvSJXKFK6cV
+         oSBL/aQPB84vcUd8GZ3dvyBMqXVs+Y9dgsSFUc+Fp11wdX8R1tCt9UGiq/fA+0Fkso0R
+         E7KBtLfT2iWn0glZcNutqOQVB0DwSLMeTH2XvCErsyJRlc+umqN+HkpQXPKGTRp5eLDA
+         dHwA==
+X-Gm-Message-State: ABy/qLbl6p6VNVYvYQM65zxj+3OttoNdg3A+XlodxV3alxwd5ZnZloo0
+        W/0JQh8eYu4y8BibR10WpCR/fg==
+X-Google-Smtp-Source: APBJJlF5RocGMKq1yj/NKsTy/qpPk4L5Hk00s12Qyiw44wO8d5Obsf6N9jMlW4eT0wSTZ9Up1+yI7A==
+X-Received: by 2002:a0d:e385:0:b0:576:b999:3d75 with SMTP id m127-20020a0de385000000b00576b9993d75mr3073719ywe.14.1688134653991;
+        Fri, 30 Jun 2023 07:17:33 -0700 (PDT)
+Received: from nitro.local ([209.226.106.132])
+        by smtp.gmail.com with ESMTPSA id w29-20020ac84d1d000000b004032d9209a0sm2143404qtv.50.2023.06.30.07.17.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jun 2023 07:17:33 -0700 (PDT)
+Date:   Fri, 30 Jun 2023 10:17:24 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Ruben Ticehurst-James <rs_ticehurstjames@apple.com>
+Cc:     git@vger.kernel.org, git-security@googlegroups.com
+Subject: Re: "git commit -m" bug
+Message-ID: <20230630-staid-welcome-howl-da79f0@meerkat>
+References: <5C7CF0D9-4C6F-4207-BA4B-8AC9B472BD75@apple.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [RFC PATCH v3 1/1] unit tests: Add a project plan document
-Reply-To: phillip.wood@dunelm.org.uk
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Cc:     calvinwan@gmail.com, szeder.dev@gmail.com, chooglen@google.com,
-        avarab@gmail.com, gitster@pobox.com, sandals@crustytoothpaste.net
-References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
- <8afdb215d7e10ca16a2ce8226b4127b3d8a2d971.1686352386.git.steadmon@google.com>
-Content-Language: en-US
-In-Reply-To: <8afdb215d7e10ca16a2ce8226b4127b3d8a2d971.1686352386.git.steadmon@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <5C7CF0D9-4C6F-4207-BA4B-8AC9B472BD75@apple.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Josh
+On Fri, Jun 30, 2023 at 02:30:55PM +0100, 'Ruben Ticehurst-James' via Git Security wrote:
+> Hello I am reporting a (potential) bug in git: 
+> 
+> when I use triple exclamation marks in a commit message (for an example):
+> 
+> git commit -m “WORKING!!! WOOOO” (command above was git add .)
+> 
+> or 
+> 
+> git commit -m "Checking !!! Git” (command above was ls)
+> 
+> It will instead copy over the last command I used. The two above commands produce this output: 
 
-Thanks for putting this together, I think it is really helpful to have a 
-comparison of the various options. Sorry for the slow reply, I was off 
-the list for a couple of weeks.
+This is done by your shell (bash). For example, try this:
 
-On 10/06/2023 00:25, Josh Steadmon wrote:
-> diff --git a/Documentation/technical/unit-tests.txt b/Documentation/technical/unit-tests.txt
-> new file mode 100644
-> index 0000000000..dac8062a43
-> --- /dev/null
-> +++ b/Documentation/technical/unit-tests.txt
-> @@ -0,0 +1,141 @@
-> += Unit Testing
+echo "hello"
+echo "hello!!"
 
-I've deleted the sections I agree with to avoid quoting parts that are 
-not relevant to my comments.
-
-> +== Definitions
-> +
-> +For the purposes of this document, we'll use *test framework* to refer to
-> +projects that support writing test cases and running tests within the context
-> +of a single executable. *Test harness* will refer to projects that manage
-> +running multiple executables (each of which may contain multiple test cases) and
-> +aggregating their results.
-
-Thanks for adding this, it is really helpful to have definitions for 
-what we mean by "test framework" and "test harness" within the git 
-project. It might be worth mentioning somewhere that we already use 
-prove as a test harness when running our integration tests.
-
-> +In reality, these terms are not strictly defined, and many of the projects
-> +discussed below contain features from both categories.
-
-> +
-> +== Choosing a framework & harness
-> +
-> +=== Desired features
-> +
-> [...]
-> +==== Parallel execution
-> +
-> +Ideally, we will build up a significant collection of unit tests cases, most
-> +likely split across multiple executables. It will be necessary to run these
-> +tests in parallel to enable fast develop-test-debug cycles.
-
-This is a good point, though I think it is really a property of the 
-harness rather than the framework so we might want to indicate in the 
-table whether a framework provides parallelism itself or relies on the 
-harness providing it.
-
- > [...]
-> +==== Major platform support
-> +
-> +At a bare minimum, unit-testing must work on Linux, MacOS, and Windows.
-
-I think we'd want to be able to run unit tests on *BSD and NonStop as 
-well, especially as I think some of the platform dependent code probably 
-lends itself to being unit tested. I suspect a framework that covers 
-Linux and MacOS would probably run on those platforms as well (I don't 
-think NonStop has complete POSIX support but it is hard to imagine a 
-test framework doing anything very exotic)
-
-> [...]
-> +==== Mock support
-> +
-> +Unit test authors may wish to test code that interacts with objects that may be
-> +inconvenient to handle in a test (e.g. interacting with a network service).
-> +Mocking allows test authors to provide a fake implementation of these objects
-> +for more convenient tests.
-
-Do we have any idea what sort of thing we're likely to want to mock and 
-what we want that support to look like?
-
-> +==== Signal & exception handling
-> +
-> +The test framework must fail gracefully when test cases are themselves buggy or
-> +when they are interrupted by signals during runtime.
-
-I had assumed that it would be enough for the test harness to detect if 
-a test executable was killed by a signal or exited early due to a bug in 
-the test script. That requires the framework to have robust support for 
-lazy test plans but I'm not sure that we need it to catch and recover 
-from things like SIGSEGV.
-
-> +==== Coverage reports
-> +
-> +It may be convenient to generate coverage reports when running unit tests
-> +(although it may be possible to accomplish this regardless of test framework /
-> +harness support).
-
-I agree this would be useful, though perhaps we should build it on our 
-existing gcov usage.
-
-Related to this do we want timing reports from the harness or the framework?
-
-> +
-> +=== Comparison
-> +
-> +[format="csv",options="header",width="75%"]
-> +|=====
-> +Framework,"TAP support","Diagnostic output","Parallel execution","Vendorable / ubiquitous","Maintainable / extensible","Major platform support","Lazy test planning","Runtime- skippable tests","Scheduling / re-running",Mocks,"Signal & exception handling","Coverage reports"
-> +https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/[Custom Git impl.],[lime-background]#True#,[lime-background]#True#,?,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,?,?,[red-background]#False#,?,?
-> +https://cmocka.org/[cmocka],[lime-background]#True#,[lime-background]#True#,?,[red-background]#False#,[yellow-background]#Partial#,[yellow-background]#Partial#,[yellow-background]#Partial#,?,?,[lime-background]#True#,?,?
-> +https://libcheck.github.io/check/[Check],[lime-background]#True#,[lime-background]#True#,?,[red-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[yellow-background]#Partial#,?,?,[red-background]#False#,?,?
-> +https://github.com/rra/c-tap-harness/[C TAP],[lime-background]#True#,[red-background]#False#,?,[lime-background]#True#,[yellow-background]#Partial#,[yellow-background]#Partial#,[yellow-background]#Partial#,?,?,[red-background]#False#,?,?
-> +https://github.com/silentbicycle/greatest[Greatest],[yellow-background]#Partial#,?,?,[lime-background]#True#,[yellow-background]#Partial#,?,[yellow-background]#Partial#,?,?,[red-background]#False#,?,?
-> +https://github.com/Snaipe/Criterion[Criterion],[lime-background]#True#,?,?,[red-background]#False#,?,[lime-background]#True#,?,?,?,[red-background]#False#,?,?
-> +https://github.com/zorgnax/libtap[libtap],[lime-background]#True#,?,?,?,?,?,?,?,?,?,?,?
-> +https://nemequ.github.io/munit/[µnit],?,?,?,?,?,?,?,?,?,?,?,?
-> +https://github.com/google/cmockery[cmockery],?,?,?,?,?,?,?,?,?,[lime-background]#True#,?,?
-> +https://github.com/lpabon/cmockery2[cmockery2],?,?,?,?,?,?,?,?,?,[lime-background]#True#,?,?
-> +https://github.com/ThrowTheSwitch/Unity[Unity],?,?,?,?,?,?,?,?,?,?,?,?
-> +https://github.com/siu/minunit[minunit],?,?,?,?,?,?,?,?,?,?,?,?
-> +https://cunit.sourceforge.net/[CUnit],?,?,?,?,?,?,?,?,?,?,?,?
-> +https://www.kindahl.net/mytap/doc/index.html[MyTAP],[lime-background]#True#,?,?,?,?,?,?,?,?,?,?,?
-> +|=====
-
-Thanks for going through these projects, hopefully we can use this 
-information to make a decision on a framework soon.
-
-Best Wishes
-
-Phillip
+-K
