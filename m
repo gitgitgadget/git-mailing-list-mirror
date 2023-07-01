@@ -2,83 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9955AEB64DA
-	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 01:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88670EB64DC
+	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 06:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229585AbjGABD1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jun 2023 21:03:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58040 "EHLO
+        id S231411AbjGAGzp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jul 2023 02:55:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjGABDW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2023 21:03:22 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619C72D52
-        for <git@vger.kernel.org>; Fri, 30 Jun 2023 18:03:21 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C91D1A3C3C;
-        Fri, 30 Jun 2023 21:03:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DaEoRTNGaickOSohT6EWmCuxO3kzs7w3xJvQj+
-        3d3Ew=; b=WGVc8S4gkUZzBZltxnYJ/tUdTLs82je3lWOlLAYgg+dGKIyb3fln/6
-        uGPQJD3QHdnGnLP3FqkBuTyzLU9raRI2ajA+ixeiAJdEjuz/ZXb2oOm/J3RJglSV
-        5Oxgk3lkQpEzEX140alIOxdNPuCmWNz9Nx/tJhvlliBHS+6sHzVss=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 735EC1A3C3B;
-        Fri, 30 Jun 2023 21:03:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.233.135.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7C881A3C3A;
-        Fri, 30 Jun 2023 21:03:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
-        phillip.wood123@gmail.com, chooglen@google.com, avarab@gmail.com,
-        sandals@crustytoothpaste.net, calvinwan@google.com
-Subject: Re: [PATCH v4] unit tests: Add a project plan document
-References: <20230517-unit-tests-v2-v2-0-8c1b50f75811@google.com>
-        <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
-Date:   Fri, 30 Jun 2023 18:03:18 -0700
-In-Reply-To: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
-        (Josh Steadmon's message of "Fri, 30 Jun 2023 15:51:19 -0700")
-Message-ID: <xmqq4jmo5tpl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229886AbjGAGzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2023 02:55:06 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE03844A4
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 23:48:56 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-402318ef92fso16720431cf.3
+        for <git@vger.kernel.org>; Fri, 30 Jun 2023 23:48:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688194135; x=1690786135;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WnqeonDBv85j4uiye7iK0vpEbQk1Ksj4ialqmGuvttQ=;
+        b=LXGlkFZOHKraH6oOPkR5+w497yZMCH/PXaqRp9Ht+279aU5pZRndgMCrZhM/UsastZ
+         n66emcY9YQytvrTTmOXjsOoYJmOyZPB4vyU4mWXdGKZHTnLDNEfTaZ3WEkxWL3XgLy4Y
+         RmPJqTmI0m9Tfp8wCxSo9xApbbhqPnAVGNIex/QLTMoNuxf07GJPotdWsFKCbrGL6L1l
+         t7xb8YUQKs1JEwiCPvmFIeAZCEq2PvoSzaR60Zs5iY6080RDCRaETekbledHs66bX69q
+         uVelnV44l4HjNYdva8dwMAt855F3b42HCt1K+ZTXVgP5PLkKrG9XcthLRSmHIKYn+ASS
+         bAfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688194135; x=1690786135;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WnqeonDBv85j4uiye7iK0vpEbQk1Ksj4ialqmGuvttQ=;
+        b=kMHzWGkrPtOjjTxDfT6qCR7Yc9fkwEgyK7dR86iVAMQXydByP0VsHrIZKjEnvkZljZ
+         rGqORiuQPIvnU5nzy9NJDwjU2fgjawc1IjyHNuYA2T5WDP0JV4U82s8SA7m0hMNisJFx
+         mhOKIfCJNBfpw4aRpzEQ9gUnGu0hD88cDE4b82M1zb7zlKRsLIxIZQsXwpMd1lu/1MYR
+         tj0t1e27GV6foZIOEyYIbIFjhyKryfOrUXrP9WBURa7ETE5UPT1G0TTv/W3T0W050win
+         waDzYxk6nnonn7KSkBzD07mptEt2gEOWMZpFXI0JxkTgIklAzEproJgSkLa6ZhHFOPAq
+         nkrg==
+X-Gm-Message-State: AC+VfDxa0pq0S6KaOewkJDRSY86CBeRxQ/NblFqRGACMGPffFxg/52kF
+        gF/2/th1c0kG+ftHvIww98SN6PdutbomuA==
+X-Google-Smtp-Source: ACHHUZ7Z+fDR7mozEBOdiEHYSVP7GTH/RwwtvgFeWbFP8O5WoRdzaFYSlrMrfE32RavtLwHjV0yIrA==
+X-Received: by 2002:ac8:5d8a:0:b0:403:36a0:bdd with SMTP id d10-20020ac85d8a000000b0040336a00bddmr5441948qtx.23.1688194135356;
+        Fri, 30 Jun 2023 23:48:55 -0700 (PDT)
+Received: from localhost.localdomain (bras-base-london142cw-grc-18-69-158-189-182.dsl.bell.ca. [69.158.189.182])
+        by smtp.googlemail.com with ESMTPSA id a26-20020ac8435a000000b003e69c51cf53sm2269720qtn.72.2023.06.30.23.48.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jun 2023 23:48:54 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com
+Subject: [PATCH v1 0/3] check-attr: integrate with sparse-index
+Date:   Sat,  1 Jul 2023 02:48:40 -0400
+Message-Id: <20230701064843.147496-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 11B52598-17AB-11EE-A238-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Turn on sparse-index feature within `git check-attr` command.
+Add necessary modifications and test them.
 
-> In our current testing environment, we spend a significant amount of
-> effort crafting end-to-end tests for error conditions that could easily
-> be captured by unit tests (or we simply forgo some hard-to-setup and
-> rare error conditions). Describe what we hope to accomplish by
-> implementing unit tests, and explain some open questions and milestones.
-> Discuss desired features for test frameworks/harnesses, and provide a
-> preliminary comparison of several different frameworks.
->
-> Coauthored-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
+Shuqi Liang (3):
+  attr.c: read attributes in a sparse directory
+  t1092: add tests for `git check-attr`
+  check-attr: integrate with sparse-index
 
-> TODOs remaining:
-> - List rough priorities across comparison dimensions
-> - Group dimensions into sensible categories
-> - Discuss pre-existing harnesses for the current test suite
-> - Discuss harness vs. framework features, particularly for parallelism
-> - Figure out how to evaluate frameworks on additional OSes such as *BSD
->   and NonStop
-> - Add more discussion about desired features (particularly mocking)
-> - Add dimension for test timing
-> - Evaluate remaining missing comparison table entries
+ attr.c                                   | 64 ++++++++++++++++--------
+ builtin/check-attr.c                     |  3 ++
+ t/t1092-sparse-checkout-compatibility.sh | 40 +++++++++++++++
+ 3 files changed, 86 insertions(+), 21 deletions(-)
 
-Listing these explicitly here is very much appreciated.  Thanks.
+
+base-commit: 9748a6820043d5815bee770ffa51647e0adc2cf0
+-- 
+2.39.0
 
