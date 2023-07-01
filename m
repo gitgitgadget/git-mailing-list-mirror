@@ -2,65 +2,41 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B4AEB64DD
-	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 19:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79251EB64DC
+	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 21:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbjGAT1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jul 2023 15:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
+        id S229731AbjGAVHN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jul 2023 17:07:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjGAT1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2023 15:27:09 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA72171D
-        for <git@vger.kernel.org>; Sat,  1 Jul 2023 12:27:08 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fb77f21c63so4907925e87.2
-        for <git@vger.kernel.org>; Sat, 01 Jul 2023 12:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688239626; x=1690831626;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vnjfnG4RjfkFmX0zSLJb0asWaKncjq9Tm6XBrhUnlYk=;
-        b=SHJfyHmRZ3hu+CjrYm8euTIdRHPyBoJGL2MF+aB0OOlOCi19/qOKXJQVpzw41EFuTR
-         no6s/GzPy4sWKR7wz8U/jQrERD265w9cVvi4duKMK68z7olSl5MuMK5NzDLu5ljE9kDh
-         c25yKLOQGOl5MQ5KBKxFk/qq7uZ4Mz0l5tgvSz5P+seHLQjf5nyDw3fkXMIUSZrYEY3L
-         UzLwbY+GIXDoossW53gC7T/me8/aOTEMhgdPoOGdGVjjO4yJfNkQ/YvKPlOXY29YnITW
-         BzWVFcfulKHwTIOL8HvEL/p4iQwD1A7wwOWYW/zZ7maofdpZiFmnmJdhGXNDjMtP+ByL
-         urog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688239626; x=1690831626;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vnjfnG4RjfkFmX0zSLJb0asWaKncjq9Tm6XBrhUnlYk=;
-        b=Bp4KWtZFabC7FsOdAWyoGNcqT4lPvN/P1n/folHfALrfyRWcP1FurhWCW7w7o/mcCc
-         KzcR82b9r2VJQt63jUWwQsmWLGQZZ7YJyN6w38t41KvQbWHaUX2wkBQqSZs5+DW1Ewv+
-         pdb3U90wF1dr4JmbuV1KZwjG8O9K4KvaxHFMQrWZdB+8nI68dEFJ9QG/PV/ZdRX39wiJ
-         ixojMVZ4voMY7q7Nu/oQdGorcbodDMka0WY+HyByBfiRBlFlmbCTSIQHA6xaU+QUrcc4
-         M9DzII2mQ4q5kORDwOQgDrs7FsxeCaLoLS3+O4l/aaV7SUVnurakQnLgSDirqe7m7w6X
-         00CA==
-X-Gm-Message-State: ABy/qLa5vXOnbevqvNQ6AWjMvrXuPv9kREArjQXCUpOfJ7KM+lEm0vRT
-        u/eml5uRxuyvlx+Jh46iH5uspo0lVl/csQ==
-X-Google-Smtp-Source: APBJJlFs7dt6nD7iG/Pw8gV95cAtzmlbDYwxSFvbY82MMAISP28AedbiwaDTAbpbSM6TqzEkjrBjiQ==
-X-Received: by 2002:a05:6512:31d4:b0:4f8:5f32:b1da with SMTP id j20-20020a05651231d400b004f85f32b1damr5376044lfe.24.1688239625618;
-        Sat, 01 Jul 2023 12:27:05 -0700 (PDT)
-Received: from localhost.localdomain (2-248-185-180-no600.tbcn.telia.com. [2.248.185.180])
-        by smtp.gmail.com with ESMTPSA id u15-20020a056512040f00b004faa2de9877sm3312869lfk.286.2023.07.01.12.27.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Jul 2023 12:27:04 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+        with ESMTP id S229535AbjGAVHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2023 17:07:13 -0400
+X-Greylist: delayed 571 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 01 Jul 2023 14:07:08 PDT
+Received: from haze.kloetzke.net (haze.kloetzke.net [IPv6:2a03:4000:13:91f:34ea:99ff:fed2:e113])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84CE5127
+        for <git@vger.kernel.org>; Sat,  1 Jul 2023 14:07:08 -0700 (PDT)
+Received: from localhost (p5dd489b2.dip0.t-ipconnect.de [93.212.137.178])
+        by haze.kloetzke.net (Postfix) with ESMTPSA id E7BED80006;
+        Sat,  1 Jul 2023 22:57:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=kloetzke.net; s=2020;
+        t=1688245053; bh=xbG5ZXN1l4jUHRwwwxOUk1YbKac5/QqD35npRtIKi+Y=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Qki2aTX/11/LaEXuJp78XGIJUjtbbPuV0T408onm4QAkeTVRJxgCQ5nJC3quedM3L
+         nXtkw3d4QHEUagrYg6mnBwntEjYy6UfMpgPzdbbbEzUQtNOO6hxi2CICZvvjLRYE85
+         j4Il1Ejyzvk0a3N8qC5F4p8ZWc192OQ8Boc/RYktjZ3NCchR7rawxK/zGUHiXJ+fUG
+         1EXk7B+ALk8vX1r01J9LKGTweYGK6vyrIA7iUqHrgKYbSBT590VTcEJiKEenErCnIW
+         coJeMi0h0xrxYUR4jCl5Xw+4L8DTzKLjvoTpfbgq0lH87w0+Jc3qB1lYAEpI7zKGL9
+         OHzYTznDTrHdQ==
+From:   =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan@kloetzke.net>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2] t0091-bugreport.sh: actually verify some content of report
-Date:   Sat,  1 Jul 2023 21:26:40 +0200
-Message-ID: <20230701192642.647167-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.41.0.404.g5b50783d6b
-In-Reply-To: <YHYZTLl90rkWWVOr@google.com>
-References: <YHYZTLl90rkWWVOr@google.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Steve Kemp <steve@steve.org.uk>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH] ref-filter: handle nested tags in --points-at option
+Date:   Sat,  1 Jul 2023 22:57:02 +0200
+Message-Id: <20230701205703.1172505-1-jan@kloetzke.net>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,141 +44,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the first test in this script, 'creates a report with content in the
-right places', we generate a report and pipe it into our helper
-`check_all_headers_populated()`. The idea of the helper is to find all
-lines that look like headers ("[Some Header Here]") and to check that
-the next line is non-empty. This is supposed to catch erroneous outputs
-such as the following:
+Tags are dereferenced until reaching a different object type to handle
+nested tags, e.g. on checkout. In contrast, "git tag --points-at=..."
+fails to list such nested tags because only one level of indirection is
+obtained in filter_refs(). Implement the recursive dereferencing for the
+"--points-at" option when filtering refs to unify the behaviour.
 
-  [A Header]
-  something
-  more here
-
-  [Another Header]
-
-  [Too Early Header]
-  contents
-
-However, we provide the lines of the bug report as filenames to grep,
-meaning we mostly end up spewing errors:
-
-  grep: : No such file or directory
-  grep: [System Info]: No such file or directory
-  grep: git version:: No such file or directory
-  grep: git version 2.41.0.2.gfb7d80edca: No such file or directory
-
-This doesn't disturb the test, which tugs along and reports success, not
-really having verified the contents of the report at all.
-
-Note that after 788a776069 ("bugreport: collect list of populated
-hooks", 2020-05-07), the bug report, which is created in our hook-less
-test repo, contains an empty section with the enabled hooks. Thus, even
-the intention of our helper is a bit misguided: there is nothing
-inherently wrong with having an empty section in the bug report.
-
-Let's instead split this test into three: first verify that we generate
-a report at all, then check that the introductory blurb looks the way it
-should, then verify that the "[System Info]" seems to contain the right
-things. (The "[Enabled Hooks]" section is tested later in the script.)
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Jan Klötzke <jan@kloetzke.net>
 ---
- This is a much belated follow-up to v1 [1]. Feedback on that patch
- ranged from not bothering checking the generated report at all to
- implementing `--no-system-info` and `--no-hooks-info` so that we could
- easily test the introductory blurb verbatim.
+ ref-filter.c                   | 16 +++++++---------
+ t/t6302-for-each-ref-filter.sh |  2 ++
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
- I hope I'm hitting a reasonable middle ground here. Verifying the
- contents at least somewhat is in line with the original intention of
- the test. Those `--no-...-info` could probably be useful to bug
- reporters, but it feels wrong to me to implement them just to be able
- to use them in the tests.
-
- [1] https://lore.kernel.org/git/20210411143354.25134-1-martin.agren@gmail.com/
-
- t/t0091-bugreport.sh | 67 +++++++++++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 23 deletions(-)
-
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index b6d2f591ac..9390631b17 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -5,29 +5,50 @@ test_description='git bugreport'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+diff --git a/ref-filter.c b/ref-filter.c
+index e0d03a9f8e..ad7f244414 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2211,10 +2211,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+  * of oids. If the given ref is a tag, check if the given tag points
+  * at one of the oids in the given oid array.
+  * NEEDSWORK:
+- * 1. Only a single level of indirection is obtained, we might want to
+- * change this to account for multiple levels (e.g. annotated tags
+- * pointing to annotated tags pointing to a commit.)
+- * 2. As the refs are cached we might know what refname peels to without
++ * As the refs are cached we might know what refname peels to without
+  * the need to parse the object via parse_object(). peel_ref() might be a
+  * more efficient alternative to obtain the pointee.
+  */
+@@ -2222,18 +2219,19 @@ static const struct object_id *match_points_at(struct oid_array *points_at,
+ 					       const struct object_id *oid,
+ 					       const char *refname)
+ {
+-	const struct object_id *tagged_oid = NULL;
+ 	struct object *obj;
  
--# Headers "[System Info]" will be followed by a non-empty line if we put some
--# information there; we can make sure all our headers were followed by some
--# information to check if the command was successful.
--HEADER_PATTERN="^\[.*\]$"
--
--check_all_headers_populated () {
--	while read -r line
--	do
--		if test "$(grep "$HEADER_PATTERN" "$line")"
--		then
--			echo "$line"
--			read -r nextline
--			if test -z "$nextline"; then
--				return 1;
--			fi
--		fi
--	done
--}
--
--test_expect_success 'creates a report with content in the right places' '
--	test_when_finished rm git-bugreport-check-headers.txt &&
--	git bugreport -s check-headers &&
--	check_all_headers_populated <git-bugreport-check-headers.txt
-+test_expect_success 'create a report' '
-+	git bugreport -s format &&
-+	test_file_not_empty git-bugreport-format.txt
-+'
-+
-+test_expect_success 'report contains wanted template (before first section)' '
-+	awk "/^\[/ { exit } { print }" git-bugreport-format.txt >actual &&
-+	cat >expect <<-\EOF &&
-+	Thank you for filling out a Git bug report!
-+	Please answer the following questions to help us understand your issue.
-+
-+	What did you do before the bug happened? (Steps to reproduce your issue)
-+
-+	What did you expect to happen? (Expected behavior)
-+
-+	What happened instead? (Actual behavior)
-+
-+	What'\''s different between what you expected and what actually happened?
-+
-+	Anything else you want to add:
-+
-+	Please review the rest of the bug report below.
-+	You can delete any lines you don'\''t wish to share.
-+
-+
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'sanity check "System Info" section' '
-+	test_when_finished rm -f git-bugreport-format.txt &&
-+
-+	sed -ne "/^\[System Info\]$/,/^$/p" <git-bugreport-format.txt >system &&
-+
-+	# The beginning should match "git version --build-info" verbatim,
-+	# but rather than checking bit-for-bit equality, just test some basics.
-+	grep "git version [0-9]." system &&
-+	grep "shell-path: ." system &&
-+
-+	# After the version, there should be some more info.
-+	# This is bound to differ from environment to environment,
-+	# so we just do some rather high-level checks.
-+	grep "uname: ." system &&
-+	grep "compiler info: ." system
- '
+ 	if (oid_array_lookup(points_at, oid) >= 0)
+ 		return oid;
+ 	obj = parse_object(the_repository, oid);
++	while (obj && obj->type == OBJ_TAG) {
++		oid = get_tagged_oid((struct tag *)obj);
++		if (oid_array_lookup(points_at, oid) >= 0)
++			return oid;
++		obj = parse_object(the_repository, oid);
++	}
+ 	if (!obj)
+ 		die(_("malformed object at '%s'"), refname);
+-	if (obj->type == OBJ_TAG)
+-		tagged_oid = get_tagged_oid((struct tag *)obj);
+-	if (tagged_oid && oid_array_lookup(points_at, tagged_oid) >= 0)
+-		return tagged_oid;
+ 	return NULL;
+ }
  
- test_expect_success 'dies if file with same name as report already exists' '
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 1ce5f490e9..af223e44d6 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -45,6 +45,8 @@ test_expect_success 'check signed tags with --points-at' '
+ 	sed -e "s/Z$//" >expect <<-\EOF &&
+ 	refs/heads/side Z
+ 	refs/tags/annotated-tag four
++	refs/tags/doubly-annotated-tag An annotated tag
++	refs/tags/doubly-signed-tag A signed tag
+ 	refs/tags/four Z
+ 	refs/tags/signed-tag four
+ 	EOF
 -- 
-2.41.0.404.g5b50783d6b
+2.39.2
 
