@@ -2,125 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D46DEB64DC
-	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 08:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B4AEB64DD
+	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 19:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjGAI2z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jul 2023 04:28:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40808 "EHLO
+        id S229636AbjGAT1K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jul 2023 15:27:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjGAI2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2023 04:28:52 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1BB9BC
-        for <git@vger.kernel.org>; Sat,  1 Jul 2023 01:28:49 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6b7474b0501so2423234a34.1
-        for <git@vger.kernel.org>; Sat, 01 Jul 2023 01:28:49 -0700 (PDT)
+        with ESMTP id S229472AbjGAT1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2023 15:27:09 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA72171D
+        for <git@vger.kernel.org>; Sat,  1 Jul 2023 12:27:08 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fb77f21c63so4907925e87.2
+        for <git@vger.kernel.org>; Sat, 01 Jul 2023 12:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688200129; x=1690792129;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tfeYYkA79GV3bILXAddK22UdVveJGbWmnB22T2jismQ=;
-        b=ULt9mnyfiXU5q3ptPBVeMVfVnlrvPX36FrRXHj1qt0ptj7HFRFwtkCbPcAxokmnVz+
-         u7RQ6awVmzqWGcUzESWNYcOb5IsgU8PymDWhMTO0AamTVR55jEEAyYWlJCIOjfqW1ZhE
-         BsYQG0KmZO+lwC4/lbPLfFE49zj9oe+BVQC4TYdCrwnhgi3liurQpEa+doyvyvHSedS9
-         urjOOs17Unspjoxc3Cwm0B4oU3K960/fOZSbrvNJ1V7GflnKcAEu0AnprQ5XLFfvfxOd
-         eu4qYOm+L6kQyIkmBrYYQDUUtOn8zcgUbJnLKrnrBeg/KCEYSuAMbT+9qwPjECR+KWRp
-         nyWQ==
+        d=gmail.com; s=20221208; t=1688239626; x=1690831626;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vnjfnG4RjfkFmX0zSLJb0asWaKncjq9Tm6XBrhUnlYk=;
+        b=SHJfyHmRZ3hu+CjrYm8euTIdRHPyBoJGL2MF+aB0OOlOCi19/qOKXJQVpzw41EFuTR
+         no6s/GzPy4sWKR7wz8U/jQrERD265w9cVvi4duKMK68z7olSl5MuMK5NzDLu5ljE9kDh
+         c25yKLOQGOl5MQ5KBKxFk/qq7uZ4Mz0l5tgvSz5P+seHLQjf5nyDw3fkXMIUSZrYEY3L
+         UzLwbY+GIXDoossW53gC7T/me8/aOTEMhgdPoOGdGVjjO4yJfNkQ/YvKPlOXY29YnITW
+         BzWVFcfulKHwTIOL8HvEL/p4iQwD1A7wwOWYW/zZ7maofdpZiFmnmJdhGXNDjMtP+ByL
+         urog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688200129; x=1690792129;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tfeYYkA79GV3bILXAddK22UdVveJGbWmnB22T2jismQ=;
-        b=Ck51JcuhXD64Noh44HqkgfuStZ+Tj5+hfdQpa5DrjmtWkH6uCdZm0zi0JSyOVew825
-         aaiVIp3W8A8VRwKLvzWObtSJOLPcRBnHaZwaM/dxyAqYmwswj3isoTryuCcqANeLKb6o
-         coT9wsKMZ+j7f69XgFA98RyrBJJ16ekwaRKyR6XYDW1G4j9CoEQz1XOUQ6VuULflPTZM
-         DpIV++evKip/VqPMoM81YzPS24bzdUmMWzDmq9cSdAMZRgsyDvi6ahJBqtIrxvyvINmH
-         sNrNcA3KpzZAOZuHI1zITe9MfkKW5iyPSNZox2kV2u9GIW9kbQfVLHLp+NapdsRB5COq
-         t2lw==
-X-Gm-Message-State: AC+VfDyeZBvmFAPNJ3DRiw3cytRiJE71ztWuzzTJam5NnFEQjpA4Bk2M
-        3Fu8MUKfljonK/9+revwYNwbQCLZZv4=
-X-Google-Smtp-Source: ACHHUZ4sPxH1FOPeJrrULokObTpFN1Hwf/m42LTPpL0gXDirSpSP3ox5ak88OR8iVRGyR1nf0r+49Q==
-X-Received: by 2002:a9d:76c2:0:b0:6b7:54cd:2115 with SMTP id p2-20020a9d76c2000000b006b754cd2115mr5644079otl.3.1688200129069;
-        Sat, 01 Jul 2023 01:28:49 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:6805:20a6:df5:5399:e289:d945])
-        by smtp.gmail.com with ESMTPSA id f12-20020a170902860c00b001b80760fd04sm9290304plo.112.2023.07.01.01.28.46
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 01 Jul 2023 01:28:48 -0700 (PDT)
-From:   Vinayak Dev <vinayakdev.sci@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Vinayak Dev <vinayakdev.sci@gmail.com>
-Subject: [PATCH] MyFirstObjectWalk: include necessary header files
-Date:   Sat,  1 Jul 2023 13:58:42 +0530
-Message-ID: <20230701082842.7952-1-vinayakdev.sci@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        d=1e100.net; s=20221208; t=1688239626; x=1690831626;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vnjfnG4RjfkFmX0zSLJb0asWaKncjq9Tm6XBrhUnlYk=;
+        b=Bp4KWtZFabC7FsOdAWyoGNcqT4lPvN/P1n/folHfALrfyRWcP1FurhWCW7w7o/mcCc
+         KzcR82b9r2VJQt63jUWwQsmWLGQZZ7YJyN6w38t41KvQbWHaUX2wkBQqSZs5+DW1Ewv+
+         pdb3U90wF1dr4JmbuV1KZwjG8O9K4KvaxHFMQrWZdB+8nI68dEFJ9QG/PV/ZdRX39wiJ
+         ixojMVZ4voMY7q7Nu/oQdGorcbodDMka0WY+HyByBfiRBlFlmbCTSIQHA6xaU+QUrcc4
+         M9DzII2mQ4q5kORDwOQgDrs7FsxeCaLoLS3+O4l/aaV7SUVnurakQnLgSDirqe7m7w6X
+         00CA==
+X-Gm-Message-State: ABy/qLa5vXOnbevqvNQ6AWjMvrXuPv9kREArjQXCUpOfJ7KM+lEm0vRT
+        u/eml5uRxuyvlx+Jh46iH5uspo0lVl/csQ==
+X-Google-Smtp-Source: APBJJlFs7dt6nD7iG/Pw8gV95cAtzmlbDYwxSFvbY82MMAISP28AedbiwaDTAbpbSM6TqzEkjrBjiQ==
+X-Received: by 2002:a05:6512:31d4:b0:4f8:5f32:b1da with SMTP id j20-20020a05651231d400b004f85f32b1damr5376044lfe.24.1688239625618;
+        Sat, 01 Jul 2023 12:27:05 -0700 (PDT)
+Received: from localhost.localdomain (2-248-185-180-no600.tbcn.telia.com. [2.248.185.180])
+        by smtp.gmail.com with ESMTPSA id u15-20020a056512040f00b004faa2de9877sm3312869lfk.286.2023.07.01.12.27.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Jul 2023 12:27:04 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2] t0091-bugreport.sh: actually verify some content of report
+Date:   Sat,  1 Jul 2023 21:26:40 +0200
+Message-ID: <20230701192642.647167-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.41.0.404.g5b50783d6b
+In-Reply-To: <YHYZTLl90rkWWVOr@google.com>
+References: <YHYZTLl90rkWWVOr@google.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In the first test in this script, 'creates a report with content in the
+right places', we generate a report and pipe it into our helper
+`check_all_headers_populated()`. The idea of the helper is to find all
+lines that look like headers ("[Some Header Here]") and to check that
+the next line is non-empty. This is supposed to catch erroneous outputs
+such as the following:
 
-In Documentation/MyFirstObjectWalk.txt, the functions
-trace_printf() and oid_to_hex() are used to enable trace
-output and get object ids as strings respectively. However,
-the files "trace.h" and "hex.h" are not included, which
-produces an error when the code from the tutorial is compiled,
-with the compiler complaining that the functions are not defined
-before usage. Therefore, add includes for "trace.h" and "hex.h"
-in the tutorial.
+  [A Header]
+  something
+  more here
 
-Signed-off-by: Vinayak Dev <vinayakdev.sci@gmail.com>
+  [Another Header]
+
+  [Too Early Header]
+  contents
+
+However, we provide the lines of the bug report as filenames to grep,
+meaning we mostly end up spewing errors:
+
+  grep: : No such file or directory
+  grep: [System Info]: No such file or directory
+  grep: git version:: No such file or directory
+  grep: git version 2.41.0.2.gfb7d80edca: No such file or directory
+
+This doesn't disturb the test, which tugs along and reports success, not
+really having verified the contents of the report at all.
+
+Note that after 788a776069 ("bugreport: collect list of populated
+hooks", 2020-05-07), the bug report, which is created in our hook-less
+test repo, contains an empty section with the enabled hooks. Thus, even
+the intention of our helper is a bit misguided: there is nothing
+inherently wrong with having an empty section in the bug report.
+
+Let's instead split this test into three: first verify that we generate
+a report at all, then check that the introductory blurb looks the way it
+should, then verify that the "[System Info]" seems to contain the right
+things. (The "[Enabled Hooks]" section is tested later in the script.)
+
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/MyFirstObjectWalk.txt | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ This is a much belated follow-up to v1 [1]. Feedback on that patch
+ ranged from not bothering checking the generated report at all to
+ implementing `--no-system-info` and `--no-hooks-info` so that we could
+ easily test the introductory blurb verbatim.
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index eee513e86f..bb99e2bb6e 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -41,6 +41,7 @@ Open up a new file `builtin/walken.c` and set up the command handler:
-  */
- 
- #include "builtin.h"
-+#include "trace.h"
- 
- int cmd_walken(int argc, const char **argv, const char *prefix)
- {
-@@ -49,12 +50,13 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
- }
- ----
- 
--NOTE: `trace_printf()` differs from `printf()` in that it can be turned on or
--off at runtime. For the purposes of this tutorial, we will write `walken` as
--though it is intended for use as a "plumbing" command: that is, a command which
--is used primarily in scripts, rather than interactively by humans (a "porcelain"
--command). So we will send our debug output to `trace_printf()` instead. When
--running, enable trace output by setting the environment variable `GIT_TRACE`.
-+NOTE: `trace_printf()`, defined in `trace.h`, differs from `printf()` in
-+that it can be turned on or off at runtime. For the purposes of this
-+tutorial, we will write `walken` as though it is intended for use as
-+a "plumbing" command: that is, a command which is used primarily in
-+scripts, rather than interactively by humans (a "porcelain" command).
-+So we will send our debug output to `trace_printf()` instead.
-+When running, enable trace output by setting the environment variable `GIT_TRACE`.
- 
- Add usage text and `-h` handling, like all subcommands should consistently do
- (our test suite will notice and complain if you fail to do so).
-@@ -805,6 +807,10 @@ just walks of commits. First, we'll make our handlers chattier - modify
- go:
- 
- ----
-+#include "hex.h"
-+
-+...
-+
- static void walken_show_commit(struct commit *cmt, void *buf)
- {
- 	trace_printf("commit: %s\n", oid_to_hex(&cmt->object.oid));
+ I hope I'm hitting a reasonable middle ground here. Verifying the
+ contents at least somewhat is in line with the original intention of
+ the test. Those `--no-...-info` could probably be useful to bug
+ reporters, but it feels wrong to me to implement them just to be able
+ to use them in the tests.
 
-base-commit: a9e066fa63149291a55f383cfa113d8bdbdaa6b3
+ [1] https://lore.kernel.org/git/20210411143354.25134-1-martin.agren@gmail.com/
+
+ t/t0091-bugreport.sh | 67 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 23 deletions(-)
+
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+index b6d2f591ac..9390631b17 100755
+--- a/t/t0091-bugreport.sh
++++ b/t/t0091-bugreport.sh
+@@ -5,29 +5,50 @@ test_description='git bugreport'
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-# Headers "[System Info]" will be followed by a non-empty line if we put some
+-# information there; we can make sure all our headers were followed by some
+-# information to check if the command was successful.
+-HEADER_PATTERN="^\[.*\]$"
+-
+-check_all_headers_populated () {
+-	while read -r line
+-	do
+-		if test "$(grep "$HEADER_PATTERN" "$line")"
+-		then
+-			echo "$line"
+-			read -r nextline
+-			if test -z "$nextline"; then
+-				return 1;
+-			fi
+-		fi
+-	done
+-}
+-
+-test_expect_success 'creates a report with content in the right places' '
+-	test_when_finished rm git-bugreport-check-headers.txt &&
+-	git bugreport -s check-headers &&
+-	check_all_headers_populated <git-bugreport-check-headers.txt
++test_expect_success 'create a report' '
++	git bugreport -s format &&
++	test_file_not_empty git-bugreport-format.txt
++'
++
++test_expect_success 'report contains wanted template (before first section)' '
++	awk "/^\[/ { exit } { print }" git-bugreport-format.txt >actual &&
++	cat >expect <<-\EOF &&
++	Thank you for filling out a Git bug report!
++	Please answer the following questions to help us understand your issue.
++
++	What did you do before the bug happened? (Steps to reproduce your issue)
++
++	What did you expect to happen? (Expected behavior)
++
++	What happened instead? (Actual behavior)
++
++	What'\''s different between what you expected and what actually happened?
++
++	Anything else you want to add:
++
++	Please review the rest of the bug report below.
++	You can delete any lines you don'\''t wish to share.
++
++
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'sanity check "System Info" section' '
++	test_when_finished rm -f git-bugreport-format.txt &&
++
++	sed -ne "/^\[System Info\]$/,/^$/p" <git-bugreport-format.txt >system &&
++
++	# The beginning should match "git version --build-info" verbatim,
++	# but rather than checking bit-for-bit equality, just test some basics.
++	grep "git version [0-9]." system &&
++	grep "shell-path: ." system &&
++
++	# After the version, there should be some more info.
++	# This is bound to differ from environment to environment,
++	# so we just do some rather high-level checks.
++	grep "uname: ." system &&
++	grep "compiler info: ." system
+ '
+ 
+ test_expect_success 'dies if file with same name as report already exists' '
 -- 
-2.41.0
+2.41.0.404.g5b50783d6b
 
