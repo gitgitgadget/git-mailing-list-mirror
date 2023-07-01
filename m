@@ -2,96 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C39F2EB64DC
-	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 07:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E042FC001B3
+	for <git@archiver.kernel.org>; Sat,  1 Jul 2023 08:14:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229556AbjGAHLu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jul 2023 03:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55930 "EHLO
+        id S229940AbjGAIOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jul 2023 04:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjGAHLQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2023 03:11:16 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6771BD0
-        for <git@vger.kernel.org>; Sat,  1 Jul 2023 00:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1688195115; x=1688799915; i=l.s.r@web.de;
- bh=0BgHthwvMKeZVkPEdOlVrMF1H6sBF3YZQY+szk0PRIk=;
- h=X-UI-Sender-Class:Date:To:From:Subject;
- b=VBdYRZ4sULbjKDDYO5XpF2jlxvKLD52ItctvL5Wo9GfmHsJWGsOCLq13iIEKp1k9wbrSWmZ
- HdWBZC6gpJyrkVFzCQJ1TMRQEcoptcDZZ0n9/ylQ8lsOH7schpBm3eD4OWCtAq3nkcLf9yS+t
- Ff+XRca5mVgK4Zbb6FJYFxrLaS9fb1EokHzsI/RJG0jQ8QZlE9Z7PT0rwDSqJjxt6hjP1y1Qr
- xZnOex4VOypiAh2wPXo7gzThPGYVKZxRzZi4CVXE3BokHjoPbUwBuCBBrHBH2YiWKgXD8hSjE
- bHJVzQHpEqdUbYLDo89Nq+Ya3kJ2ufRyC8Jm0sd5ST6mnf3MPdHQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.31.43]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MiMAE-1pa6BB30Vi-00fV3r for
- <git@vger.kernel.org>; Sat, 01 Jul 2023 09:05:15 +0200
-Message-ID: <89d58db7-6a01-b3fa-54f0-19d5a3819eb3@web.de>
-Date:   Sat, 1 Jul 2023 09:05:15 +0200
+        with ESMTP id S229747AbjGAIO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2023 04:14:28 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC13BC
+        for <git@vger.kernel.org>; Sat,  1 Jul 2023 01:14:27 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fba1288bbdso3134790e87.1
+        for <git@vger.kernel.org>; Sat, 01 Jul 2023 01:14:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688199266; x=1690791266;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EfSCm4E3fYardgt87DUse1LdFjs/9GjMleeDToEUYUY=;
+        b=Ozv7SsC7cRCc5nHaObHGhAdTq6f866ppSu+bnnszL5eMmOHDGnIP1gZgIKkoVT0KC7
+         nVPKMl3sR4PN5O520T+gvXoU6TECZGFvUhVr3OoyhKVMmpV/Y39y8roQj+wBkj1SLiiw
+         RCJW5hNMnoPm/xm2nlcIbtF0TDsLDleTYn+Cyl0mjlMUW7LX9bOe3qS4sIXCI0FaZVL+
+         EYJMDNgAzPD9HU9jsl0pE5mOUV7MOffNZLfGiWjwtQpO1A5qp8/+tFf5JXC9JaxINGiL
+         zObH4hFae57OqeWxQSarZW0G9NIH2u2OQIE2AoLnEaMBigEoqjbNOkh35oYkwR1c17Ay
+         HISg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688199266; x=1690791266;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EfSCm4E3fYardgt87DUse1LdFjs/9GjMleeDToEUYUY=;
+        b=JKJWQsjGswbBT/wFv/AWscI7eGAd/4Z4a8TGEAyokZmQeekNFzX823VPB+QnbkXk0F
+         RG/0ZqsXJdgGr7rRtKcdofjol9vCUZZIcxIGaG5lgHF3zlt+Ct8DSmLYoMeV7gkagPv9
+         UFQjqewnJOKn0i43rOHD43vNCnhIihX9mYmYcMTRk+l2waie4MFZzQ2gl6WVEgQ+9HeR
+         ohI/Gu2kZGuHNhQuPYbN4kghTGW3GUuYFYkDgvxO8ZisMkKPfU3ZeiW8S0+976NyBZNa
+         GtFHW18Dn92ypsSRNSUgcmQXc+GqcGhgiusuFKyaxG5k+cc9rKJnQziDU9YMaV5PxIYt
+         lHog==
+X-Gm-Message-State: ABy/qLaOlZE3pjsC5ltRaU7QPFyDB7rf3AeG+z5fVpADUqdmOLKWuh8k
+        R9bcdpgE4gC42VZ7ylvO43yT9ThuzeIQPrQuo/hTYv0qSH4=
+X-Google-Smtp-Source: APBJJlFc+wkn1m8WFGs0GX3MmtVD43gWP0WEv6RUITlmK4Fv9uMUQUZKWZdOuDFUUQaFAxM5x327ncrxWMdz1y9siH8=
+X-Received: by 2002:a19:6914:0:b0:4f8:5713:7dd5 with SMTP id
+ e20-20020a196914000000b004f857137dd5mr3889073lfc.10.1688199265387; Sat, 01
+ Jul 2023 01:14:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Content-Language: en-US
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] pkt-line: don't check string length in packet_length()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:pkrEUSxrDuOGil+FziYpQzkgLjUEX9j3ALW5IqW4JW24v6GXt6C
- gfzDOachxPTG2cED1XYUPGmk64vOGCyZjZvoGSAMUNfNCFq21vZEbZ3jvFS0uHAs2/+Jv5D
- QIXVjPLB3AmVcX229aHzziJMbhAjNaWq1PWQs5w9lN9hY180iGSIp/wBXpvyQbOnZpkd/Xo
- XLP8jzjBLxU+5fwHw41gA==
-UI-OutboundReport: notjunk:1;M01:P0:g14nFcYtYIs=;jnC82Ez8phwHOsrSCoFRvBYBdWU
- uYQvYUrZsp4S/tY2Lu+rlofy7oqKRTOkK7friGN+fGZwtK/whdngCYVLk9fty1mt1xuaeZDy8
- va1tuOfJbvT4WnD5Fn8vGDu9BVwcqucqvAMCkvGvZwX1U4Iz6w6ycwQMNz9CuutPP+s1OzzNz
- 74xxaCSr4HoogZRfWbc4QV+Ik9e2SGU9TVaT55cO23udJcq5JCM4NR8fAxhDUNASr5s2gFk/B
- eJqVLpDXq1MPv0201VgQH6X6KzIns/pB/7h+gx8kjsrk1ky3IOd8ZedFgAGwJbgAiDqmB6aiz
- G0k0U3B4h9G8xpyh67OTm/3112SjKszMWD1hZLDbADoADQk1mD/eH5q4IniFrabUzw+NpezRH
- rVLMjsmn3Gk+shyvp87sPtxxtcM5KChCsqo07LtQnZoeymAIcT6lkWZCiiHRDenyz263Fhd/O
- LG/gWhTJ+uwQUZyiHVFcH2cGa1e0Tm5qGVgkSIl24yIU3bADfonwVcfE2Zk/ToEWrNImyv06G
- gIcGZqfq0QSms1b1YbXAb9S4GQO8ZG0CNGo0Bvx03xeboKeQIY0pBI9VR2Mak2hShuSW7Lz3c
- kaUUIwBh04W2Wz4mfqKdJMXlbOMvTcievCB4HsktKxPf5nRhAKR3ues9roPkG+6q8UEfMlbAX
- RZAYGAQdoCPFN8+BW30JKuwKvjUOOQc7kwfujQTpiyRWTXhTdorEqWubzAouw81UDg2KEW/6M
- zP8k56TOnb6pLp6jipZ/6wx3BeX+Sa90Q+l6KLyQEW6elbGxVqq8AS6LeT5k2Vgdy2VJOKhpe
- HyNrejMnMfJwCuqcwgXGhrDCscK5A2b/be9/J2JrsSjxP6Gd+RHwucwC9dSEkLsgCfLF0pa7A
- 4Cv1ZPy9AmA70lq5QaTvBedLgoa392E89KQ4k8JG7NA0LiFFx3vZyq5EH2aiSOpTpRZyjZAlR
- JbUqGA==
+References: <xmqq5y747l16.fsf@gitster.g>
+In-Reply-To: <xmqq5y747l16.fsf@gitster.g>
+From:   Vinayak Dev <vinayakdev.sci@gmail.com>
+Date:   Sat, 1 Jul 2023 13:44:13 +0530
+Message-ID: <CADE8NarZ7B8VC2cnh4Vt8o0YyNswguXDeJtfEk=9_isHzv4SNg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2023, #08; Fri, 30)
+To:     Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <nasamuffin@google.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hex2chr() takes care not to run over the end of a short string.
-101736a14c (pkt-line: extern packet_length(), 2020-05-19) turned the
-input parameter of packet_length() from a string pointer into an array
-of known length, making string length checks unnecessary.  Get rid of
-them by using hexval() directly.
+On Sat, 1 Jul 2023 at 02:24, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a
+> future release).  Commits prefixed with '-' are only in 'seen', and
+> aren't considered "accepted" at all and may be annotated with an URL
+> to a message that raises issues but they are no means exhaustive.  A
+> topic without enough support may be discarded after a long period of
+> no activity (of course they can be resubmit when new interests
+> arise).
 
-The resulting branchless code is simpler and it becomes easier to see
-that the function mirrors set_packet_header().
+> * vd/adjust-mfow-doc-to-updated-headers (2023-06-29) 1 commit
+>  - docs: include "trace.h" in MyFirstObjectWalk.txt
+>
+>  Code snippets in a tutorial document no longer compiled after
+>  recent header shuffling, which have been corrected.
+>
+>  Will merge to 'next'?
+>  source: <20230629185238.58961-1-vinayakdev.sci@gmail.com>
+>
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- pkt-line.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I found an error in this patch while fixing Emily's branch to which the tutorial
+points, which I linked in a prior mail[1]. This would also require "hex.h" to be
+added down in the tutorial where the function oid_to_hex() has been called.
+Accordingly, I have fixed this mistake and rebased, and will send it
+as a resubmission.
+That should allow the code to compile properly.
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 62b4208b66..6e022029ca 100644
-=2D-- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -375,8 +375,10 @@ static int get_packet_data(int fd, char **src_buf, si=
-ze_t *src_size,
+[1]: https://lore.kernel.org/git/CADE8NapQK2ouy4YDQA+3NNkUn_EegkSBQCtDfcSCVGmZvVufXg@mail.gmail.com/
 
- int packet_length(const char lenbuf_hex[4])
- {
--	int val =3D hex2chr(lenbuf_hex);
--	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
-+	return	hexval(lenbuf_hex[0]) << 12 |
-+		hexval(lenbuf_hex[1]) <<  8 |
-+		hexval(lenbuf_hex[2]) <<  4 |
-+		hexval(lenbuf_hex[3]);
- }
-
- static char *find_packfile_uri_path(const char *buffer)
-=2D-
-2.41.0
+Thanks a lot!
+Vinayak
