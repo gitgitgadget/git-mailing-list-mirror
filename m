@@ -2,135 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D8FEB64D9
-	for <git@archiver.kernel.org>; Sun,  2 Jul 2023 12:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D33F5EB64D9
+	for <git@archiver.kernel.org>; Sun,  2 Jul 2023 12:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbjGBM2n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Jul 2023 08:28:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34134 "EHLO
+        id S229709AbjGBM4U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Jul 2023 08:56:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjGBM2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jul 2023 08:28:42 -0400
-Received: from outgoing.fripost.org (giraff.fripost.org [193.234.15.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2E5127
-        for <git@vger.kernel.org>; Sun,  2 Jul 2023 05:28:41 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by outgoing.fripost.org (Postfix) with ESMTP id E659B2ABCF3E;
-        Sun,  2 Jul 2023 14:28:39 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x.fripost.org; h=
-        content-transfer-encoding:content-type:content-type:in-reply-to
-        :from:from:references:content-language:subject:subject
-        :user-agent:mime-version:date:date:message-id; s=
-        9df9cdc7e101629b5003b587945afa70; t=1688300919; x=1690115320;
-         bh=vLlglB0WlCpCuUkypTQRQn6ju82vd/ZwkiA7TvYgQp0=; b=u4u+vPi6DWPu
-        uX5+KcYecaPYqDG8gMs40obNJVRfHPp1qq2J9p2dQ3soe9HoepJaWnU+OBPBgS4L
-        4RT09C51QkHEt2sn11qzCBgNlRsNKtfSdob4AK/czGhH9ZRRPaTRszl60H/O8xK2
-        iNL9PaLxSgW0dDDeMy0jr+JbkPIWMncL091an/h6RjeadYRL9jmeoQumHE6hz051
-        NYJf452hVlwKBEQq9AnKBwe/Su592af5Olfe4IELlGtU1u3mC3FhHJI2uqHNT/E1
-        qAROgdY6nEpCgiKarBKJxvGJaYYc941X1rEMWPjhx7ryMUtyJTbpfxQFxAI7nSQj
-        xrLUNPTIHg==
-X-Virus-Scanned: Debian amavisd-new at fripost.org
-Received: from outgoing.fripost.org ([127.0.0.1])
-        by localhost (giraff.fripost.org [127.0.0.1]) (amavisd-new, port 10040)
-        with LMTP id ED5I3-zJHD6H; Sun,  2 Jul 2023 14:28:39 +0200 (CEST)
-Received: from smtp.fripost.org (unknown [172.16.0.6])
-        by outgoing.fripost.org (Postfix) with ESMTP id BE1402ABCF39;
-        Sun,  2 Jul 2023 14:28:39 +0200 (CEST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        by smtp.fripost.org (Postfix) with ESMTPSA id 8F8EB963BF98;
-        Sun,  2 Jul 2023 14:28:39 +0200 (CEST)
-Message-ID: <b1a6e507-ff96-9d98-1c65-a9518476f704@lidestrom.se>
-Date:   Sun, 2 Jul 2023 14:28:39 +0200
+        with ESMTP id S229604AbjGBM4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jul 2023 08:56:19 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B4C1AC
+        for <git@vger.kernel.org>; Sun,  2 Jul 2023 05:56:17 -0700 (PDT)
+Received: (qmail 11342 invoked by uid 109); 2 Jul 2023 12:56:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 02 Jul 2023 12:56:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12176 invoked by uid 111); 2 Jul 2023 12:56:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 02 Jul 2023 08:56:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 2 Jul 2023 08:56:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jan =?utf-8?Q?Kl=C3=B6tzke?= <jan@kloetzke.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Steve Kemp <steve@steve.org.uk>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] ref-filter: handle nested tags in --points-at option
+Message-ID: <20230702125611.GA1036686@coredump.intra.peff.net>
+References: <20230701205703.1172505-1-jan@kloetzke.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 0/9] gitk: improve keyboard support
-Content-Language: en-GB
-To:     Johannes Sixt <j6t@kdbg.org>,
-        Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org
-References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
- <0cb94aa5-726f-a57f-858c-b29764c63ce7@kdbg.org>
-From:   =?UTF-8?Q?Jens_Lidestr=c3=b6m?= <jens@lidestrom.se>
-In-Reply-To: <0cb94aa5-726f-a57f-858c-b29764c63ce7@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230701205703.1172505-1-jan@kloetzke.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have updated the PR after suggestions from Hannes. Mainly these changes have been made:
+On Sat, Jul 01, 2023 at 10:57:02PM +0200, Jan Klötzke wrote:
 
-* The reset command dialog uses "mixed" as the default, but is more convenient to navigate with the keyboard.
-* Remove and checkout branch commands now have branch selection dialogs if there is more than one branch head on the selected commit.
-* Remove and checkout branch command patches handles a few more cases regarding remote branches and detached heads that I didn't think about originally. This has made them larger.
-* I have split one commit, added another and moved some functionality around. Because of this the original patch number are no longer in sync with GitHub. How should I handle that?
+> Tags are dereferenced until reaching a different object type to handle
+> nested tags, e.g. on checkout. In contrast, "git tag --points-at=..."
+> fails to list such nested tags because only one level of indirection is
+> obtained in filter_refs(). Implement the recursive dereferencing for the
+> "--points-at" option when filtering refs to unify the behaviour.
 
-On 2023-06-28 08:09, Johannes Sixt wrote:
-> Please note that gitk-git directory is in its own repository that is
-> only subtree-merged into the Git repository. You should generate patches
-> against git://git.ozlabs.org/~paulus/gitk (I don't know how difficult it
-> would be for Paul to integrate patches that were generated by gitgitgadget).
+That seems reasonable to me. It is changing the definition of
+--points-at slightly, but I think in a way that should be less
+surprising to users (i.e., we can consider the old behavior a bug).  The
+existing documentation is sufficiently vague about "points" that I don't
+think it needs to be updated (though arguably we could improve that
+here, too).
 
-@Paul Mackerras: Paul, can you have a look at this? Can you accept a PR through GitGitGadget if I rebase it onto master for git.ozlabs.org/~paulus/gitk? Or do you have some other preferred way to receive patches?
+Note that most other tag-peeling in Git (like the peeled values returned
+by upload-pack) errs in the opposite direction: they peel completely,
+and don't show the intermediate values. We _could_ switch to that here,
+but I think it would be a behavior regression (but see below on why we
+might entertain the thought).
 
-Best regards,
-Jens Lideström
+My biggest question would be whether this introduces any performance
+penalty for the more common cases (lightweight tags and single-level
+annotated tags). The answer is "no", I think; we are already paying the
+cost to parse every object to find out if it's a tag, and your new loop
+only does an extra parse if we see a tag-of-tag. Good.
 
-On 2023-06-28 08:09, Johannes Sixt wrote:
-> Am 27.06.23 um 16:41 schrieb Jens Lidestrom via GitGitGadget:
->> It is often convenient to use the keyboard to navigate the gitk GUI and
->> there are keyboard shortcut bindings for many operations such as searching
->> and scrolling. There is however no keyboard binding for the most common
->> operations on branches and commits: Check out, reset, cherry-pick, create
->> and delete branches.
->>
->> This PR adds keyboard bindings for these 5 commands. It also adjusts some
->> GUI focus defaults to simplify keyboard navigation.
->>
->> Some refactoring of the command implementation has been necessary.
->> Originally the commands was using the mouse context menu to get info about
->> the head and commit to act on. When using keyboard binds this information
->> isn't available so instead the row that is selected in the GUI is used. By
->> adding procedures for doing this the PR lays the groundwork for more similar
->> keyboard binds in the future.
-> 
-> I like it when an application can be navigated with the keyboard. These
-> changes are very much appreciated.
-> 
-> I've left some comments on individual commits. The important one is that
-> I think it makes the Reset dialog way too easy to destroy uncommitted work.
-> 
-> Please note that gitk-git directory is in its own repository that is
-> only subtree-merged into the Git repository. You should generate patches
-> against git://git.ozlabs.org/~paulus/gitk (I don't know how difficult it
-> would be for Paul to integrate patches that were generated by gitgitgadget).
-> 
-> -- Hannes
-> 
->>
->> I'm including Paul Mackerras because he seems to be the maintainer of gitk.
->> Can you review, Paul?
->>
->> Jens Lidestrom (9):
->>   gitk: add procedures to get commit info from selected row
->>   gitk: use term "current branch" in gui
->>   gitk: add keyboard bind for reset
->>   gitk: show branch name in reset dialog
->>   gitk: add keyboard bind for checkout
->>   gitk: add keyboard bind for create and remove branch
->>   gitk: add keyboard bind to cherry-pick
->>   gitk: focus ok button in reset dialog
->>   gitk: default select reset hard in dialog
->>
->>  gitk-git/gitk | 132 ++++++++++++++++++++++++++++++++++++--------------
->>  1 file changed, 96 insertions(+), 36 deletions(-)
->>
->>
->> base-commit: 94486b6763c29144c60932829a65fec0597e17b3
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1551%2Fjensli%2Fkeyboard-for-gitk-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1551/jensli/keyboard-for-gitk-v1
->> Pull-Request: https://github.com/gitgitgadget/git/pull/1551
-> 
+  Let me go off on a tangent here, since I'm looking at the performance
+  of this function. The current code is already rather pessimal here, as
+  we could probably avoid parsing non-tags entirely. Some strategies
+  there are:
+
+    1. We could check the object type via oid_object_info() before
+       parsing. This carries a small penalty (two lookups) for tags but
+       a big win (avoiding loading the object contents) for non-tags.
+
+       An easy way to do this is to replace the parse_object() with
+       parse_object_with_flags(PARSE_OBJECT_SKIP_HASH_CHECK), which
+       tries to avoid loading object contents (especially using the
+       commit-graph for commits, which presumably covers most non-tag
+       refs).
+
+    2. We could be using the peel_iterated_oid() interface (this is the
+       peel_ref() thing mentioned in the comment you touched, but it has
+       since been renamed). But it does the "peel all the way" thing
+       mentioned above (both because of its interface, but also because
+       that's what the packed-refs peel lines store).
+
+       So to do that we'd either have to enhance the packed-refs store
+       (which would not be too hard to do in a backwards-compatible
+       way), or switch --points-at to only match either the direct ref
+       value or the fully-peeled value.
+
+  I don't think either of those is something your patch needs to deal
+  with. It is not making these kinds of optimizations any harder (it is
+  the existing "peel only once" behavior that does so). I mostly wanted
+  to get it written down while we are all looking at this function.
+
+> diff --git a/ref-filter.c b/ref-filter.c
+> index e0d03a9f8e..ad7f244414 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2211,10 +2211,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+>   * of oids. If the given ref is a tag, check if the given tag points
+>   * at one of the oids in the given oid array.
+>   * NEEDSWORK:
+> - * 1. Only a single level of indirection is obtained, we might want to
+> - * change this to account for multiple levels (e.g. annotated tags
+> - * pointing to annotated tags pointing to a commit.)
+> - * 2. As the refs are cached we might know what refname peels to without
+> + * As the refs are cached we might know what refname peels to without
+>   * the need to parse the object via parse_object(). peel_ref() might be a
+>   * more efficient alternative to obtain the pointee.
+>   */
+
+Great, thanks for cleaning up this comment.
+
+> @@ -2222,18 +2219,19 @@ static const struct object_id *match_points_at(struct oid_array *points_at,
+>  					       const struct object_id *oid,
+>  					       const char *refname)
+>  {
+> -	const struct object_id *tagged_oid = NULL;
+>  	struct object *obj;
+>  
+>  	if (oid_array_lookup(points_at, oid) >= 0)
+>  		return oid;
+>  	obj = parse_object(the_repository, oid);
+> +	while (obj && obj->type == OBJ_TAG) {
+> +		oid = get_tagged_oid((struct tag *)obj);
+> +		if (oid_array_lookup(points_at, oid) >= 0)
+> +			return oid;
+> +		obj = parse_object(the_repository, oid);
+> +	}
+
+OK, so we are doing the usual peeling loop here. I wondered if we might
+be able to use peel_object(), but it again suffers from the "peel all
+the way" syndrome. So we have to loop ourselves so that we can check at
+each level. Good.
+
+>  	if (!obj)
+>  		die(_("malformed object at '%s'"), refname);
+
+This will now trigger if refname points to a broken object, or if its
+tag does. I think the resulting message is OK in either case (and
+presumably lower level code would produce extra error messages, too).
+
+> -	if (obj->type == OBJ_TAG)
+> -		tagged_oid = get_tagged_oid((struct tag *)obj);
+> -	if (tagged_oid && oid_array_lookup(points_at, tagged_oid) >= 0)
+> -		return tagged_oid;
+
+This code is moved into the loop body, but your version there drops the
+"if (tagged_oid)" check. I think that is OK (and even preferable),
+though. In get_tagged_oid() we will die() if the tagged object is NULL
+(though even before switching to that function this check was
+questionable, because it is "tag->tagged" that may be NULL, and we were
+dereferencing that unconditionally).
+
+So the code looks good.
+
+> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+> index 1ce5f490e9..af223e44d6 100755
+> --- a/t/t6302-for-each-ref-filter.sh
+> +++ b/t/t6302-for-each-ref-filter.sh
+> @@ -45,6 +45,8 @@ test_expect_success 'check signed tags with --points-at' '
+>  	sed -e "s/Z$//" >expect <<-\EOF &&
+>  	refs/heads/side Z
+>  	refs/tags/annotated-tag four
+> +	refs/tags/doubly-annotated-tag An annotated tag
+> +	refs/tags/doubly-signed-tag A signed tag
+>  	refs/tags/four Z
+>  	refs/tags/signed-tag four
+>  	EOF
+
+And the test looks good, too. It is nice that we can rely on the
+existing setup for the doubly-* tags.
+
+Thanks for an easy-to-review patch. :)
+
+-Peff
