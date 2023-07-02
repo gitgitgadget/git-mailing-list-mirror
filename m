@@ -2,128 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC698EB64D9
-	for <git@archiver.kernel.org>; Sun,  2 Jul 2023 12:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14FCAEB64D9
+	for <git@archiver.kernel.org>; Sun,  2 Jul 2023 12:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbjGBMJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Jul 2023 08:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58710 "EHLO
+        id S229772AbjGBMKe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Jul 2023 08:10:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbjGBMJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jul 2023 08:09:10 -0400
-X-Greylist: delayed 1107 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 02 Jul 2023 05:09:09 PDT
-Received: from outgoing.fripost.org (giraff.fripost.org [193.234.15.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54392120
-        for <git@vger.kernel.org>; Sun,  2 Jul 2023 05:09:09 -0700 (PDT)
+        with ESMTP id S229533AbjGBMKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jul 2023 08:10:34 -0400
+Received: from outgoing.fripost.org (giraff.fripost.org [IPv6:2a00:1c20:4089:126c:300f:e2a1:9840:5351])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0917F120
+        for <git@vger.kernel.org>; Sun,  2 Jul 2023 05:10:32 -0700 (PDT)
 Received: from localhost (localhost [127.0.0.1])
-        by outgoing.fripost.org (Postfix) with ESMTP id EDE832ABCF11;
-        Sun,  2 Jul 2023 14:09:07 +0200 (CEST)
+        by outgoing.fripost.org (Postfix) with ESMTP id B806F2ABCF18;
+        Sun,  2 Jul 2023 14:10:31 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x.fripost.org; h=
         content-transfer-encoding:content-type:content-type:in-reply-to
-        :references:from:from:content-language:subject:subject
+        :from:from:references:content-language:subject:subject
         :user-agent:mime-version:date:date:message-id; s=
-        9df9cdc7e101629b5003b587945afa70; t=1688299747; x=1690114148;
-         bh=WhB3Pl1DsQIDioaqFYzPi69HEIw3yY4D6wSIG0ETFQ0=; b=n0OIBobZxBVV
-        XE9T5k+C8bCbVK1GHZ4AYDEJHB86OCg3+Sam66tcBN6G2w9zqELT6trPNZf61nds
-        WlQZ79By9liHR3nB2EZjRKM3/yDfTgMMqaCo1UecZD0ZYDvcERuMB4yu8EmIYZ5t
-        TYGnteBl8FcnloZnqWxAavsFaFLirq5Z28sCQwF0NCiDLHVghsivQaTLqbwcV1vU
-        Wy7AVGKw8DdnEBP0OO/hH4PQsNj78opx0PJ72ZB373hzY/G75w3B40OrFoIgTUSm
-        SB0OXefsI09sM3NPKqWI3C4dIXgqLoGPaWTHsWoJc/ddWppN9CebSdb9QwHhMYNT
-        YfS1/hXfuQ==
+        9df9cdc7e101629b5003b587945afa70; t=1688299831; x=1690114232;
+         bh=dlXn0zVBmR7AnFanSDBCam9iOj7qxMpua7JxNurQIq4=; b=p5ZNluQfiG/S
+        1aYxHr5G/Nm7y3WQ4NJzCvXWlFcwDbr2BkO3KqpI2b+CSEVXatqKNqKRzUXarQpc
+        HeDxhW/ZTN6UzuMQ4zHIINj3M0cky6vnxeoyG+PqMc8xn7zchWhgZLIsNx5qqjxw
+        DrKIzGae2ZSUDFyD6me/3UqOXTPy2/4zyFS8SVJmd5bB6H3UlCq9lyqkSoUQUIJa
+        tUimThUu68xNy5mfi08V9qAGbcqdPfJXSbmxrkp9mTdN3alv4YyR0iDR7dUfr9yv
+        jnw6geJgo4ONKx5Svr2L28GtjABFoRwNpP1iOS9xOmYzHsYpoj4BlwLdZBQdVOL2
+        QyTpQrodMg==
 X-Virus-Scanned: Debian amavisd-new at fripost.org
 Received: from outgoing.fripost.org ([127.0.0.1])
         by localhost (giraff.fripost.org [127.0.0.1]) (amavisd-new, port 10040)
-        with LMTP id hSxb8bmOt8Rh; Sun,  2 Jul 2023 14:09:07 +0200 (CEST)
+        with LMTP id h39sNtdxDWgB; Sun,  2 Jul 2023 14:10:31 +0200 (CEST)
 Received: from smtp.fripost.org (unknown [172.16.0.6])
-        by outgoing.fripost.org (Postfix) with ESMTP id C89F52ABCF0C;
-        Sun,  2 Jul 2023 14:09:07 +0200 (CEST)
+        by outgoing.fripost.org (Postfix) with ESMTP id 99C0A2ABCF13;
+        Sun,  2 Jul 2023 14:10:31 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        by smtp.fripost.org (Postfix) with ESMTPSA id 99A55963BF4D;
-        Sun,  2 Jul 2023 14:09:07 +0200 (CEST)
-Message-ID: <0a90e79c-9850-6b46-6234-962bb8731a30@lidestrom.se>
-Date:   Sun, 2 Jul 2023 14:09:07 +0200
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        by smtp.fripost.org (Postfix) with ESMTPSA id 7EE3D963BF55;
+        Sun,  2 Jul 2023 14:10:31 +0200 (CEST)
+Message-ID: <2fc7cef7-fa7d-5ee6-f2a0-6859ed06b716@lidestrom.se>
+Date:   Sun, 2 Jul 2023 14:10:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 9/9] gitk: default select reset hard in dialog
+Subject: Re: [PATCH 5/9] gitk: add keyboard bind for checkout
 Content-Language: en-GB
-From:   =?UTF-8?Q?Jens_Lidestr=c3=b6m?= <jens@lidestrom.se>
-Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org
+To:     Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>
 References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
- <97857c3509fb4b45e1bc2d29588374a2631a7c2d.1687876885.git.gitgitgadget@gmail.com>
- <e74cc1b3-8459-101f-4613-17df0f5d69e3@kdbg.org>
- <b2e0d8fa1b54d9dbc6a0831d53acb85f@lidestrom.se>
-To:     Johannes Sixt <j6t@kdbg.org>,
-        Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
-In-Reply-To: <b2e0d8fa1b54d9dbc6a0831d53acb85f@lidestrom.se>
+ <53e5a2e40abbf81e5577b2f79588bd8b0be6e923.1687876885.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Jens_Lidestr=c3=b6m?= <jens@lidestrom.se>
+In-Reply-To: <53e5a2e40abbf81e5577b2f79588bd8b0be6e923.1687876885.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I updated the implementation to use "mixed" as the default, but allow switching selected item with up and down keys, and accept with enter. It works fine! :)
+I added a branch selection dialog to be be able to check out any branch on a selected commit, in the same way as for the remove branch command.
 
 /Jens
 
-On 2023-06-28 09:16, Jens Lideström wrote:
->> I would prefer to keep the default at "mixed" mode, set the focus on the
->> radio button to make it easy to switch to "hard" mode by hitting the
->> Down arrow key, and then make it so that Enter triggers the OK button.
+On 2023-06-27 16:41, Jens Lidestrom via GitGitGadget wrote:
+> From: Jens Lidestrom <jens@lidestrom.se>
 > 
-> That indeed sounds better! Safer but still convenient. I'll change the solution
-> to this.
+> This also introduces the ability to check out detatched heads. This
+> shouldn't result any problems, because gitk already works with
+> detatched heads if they are checked out using the terminal.
 > 
-> I noticed that some dialogues have a key bind to close with success using Enter.
+> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
+> ---
+>  gitk-git/gitk | 28 ++++++++++++++++------------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
 > 
-> /Jens
-> 
-> 
-> On 2023-06-28 07:46, Johannes Sixt wrote:
->> Am 27.06.23 um 16:41 schrieb Jens Lidestrom via GitGitGadget:
->>> From: Jens Lidestrom <jens@lidestrom.se>
->>>
->>> Reset hard is dangerous but also the most common reset type, and not
->>> having it pre-selected in the dialog is annoying to users.
->>
->> I agree that the operation of the Reset dialog is clumsy before this
->> series. However, this patch together with the previous patch turns it
->> into a foot gun. It becomes far too easy to destroy uncommitted work.
->>
->> I would prefer to keep the default at "mixed" mode, set the focus on the
->> radio button to make it easy to switch to "hard" mode by hitting the
->> Down arrow key, and then make it so that Enter triggers the OK button.
->>
->>> It is also less dangerous in the GUI where there is a confirmation
->>> dialog. Also, dangling commits remain in the GUI and can be recovered.
->>
->> The problem with "hard" mode are not the commits. The real danger is
->> that it blows away uncommitted changes. Besides of that, I do not
->> consider this UI a confirmation dialog.
->>
->> -- Hannes
->>
->>>
->>> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
->>> ---
->>>  gitk-git/gitk | 4 +++-
->>>  1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/gitk-git/gitk b/gitk-git/gitk
->>> index 9d93053e360..5b0a0ea46be 100755
->>> --- a/gitk-git/gitk
->>> +++ b/gitk-git/gitk
->>> @@ -9906,7 +9906,9 @@ proc resethead {reset_target_id} {
->>>          [mc "Reset branch %s to %s?" $mainhead [commit_name $reset_target_id
->>> 1]]
->>>      pack $w.m -side top -fill x -padx 20 -pady 20
->>>      ${NS}::labelframe $w.f -text [mc "Reset type:"]
->>> -    set resettype mixed
->>> +    # Reset hard is dangerous but also the most common reset type, and not
->>> +    # having it pre-selected in the dialog is annoying to users.
->>> +    set resettype hard
->>>      ${NS}::radiobutton $w.f.soft -value soft -variable resettype \
->>>          -text [mc "Soft: Leave working tree and index untouched"]
->>>      grid $w.f.soft -sticky w
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index bfe912983f4..596977abe89 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -2691,6 +2691,7 @@ proc makewindow {} {
+>      bind $ctext <Button-1> {focus %W}
+>      bind $ctext <<Selection>> rehighlight_search_results
+>      bind . <$M1B-t> {resethead [selected_line_id]}
+> +    bind . <$M1B-o> {checkout [selected_line_head] [selected_line_id]}
+>      for {set i 1} {$i < 10} {incr i} {
+>          bind . <$M1B-Key-$i> [list go_to_parent $i]
+>      }
+> @@ -2707,7 +2708,7 @@ proc makewindow {} {
+>          {mc "Create tag" command mktag}
+>          {mc "Copy commit reference" command copyreference}
+>          {mc "Write commit to file" command writecommit}
+> -        {mc "Create new branch" command mkbranch}
+> +        {mc "Create new branch" command {mkbranch $rowmenuid}}
+>          {mc "Cherry-pick this commit" command cherrypick}
+>          {mc "Reset current branch to here" command {resethead $rowmenuid}}
+>          {mc "Mark this commit" command markhere}
+> @@ -2732,7 +2733,7 @@ proc makewindow {} {
+>  
+>      set headctxmenu .headctxmenu
+>      makemenu $headctxmenu {
+> -        {mc "Check out this branch" command cobranch}
+> +        {mc "Check out this branch" command {checkout $headmenuhead $headmenuid}}
+>          {mc "Rename this branch" command mvbranch}
+>          {mc "Remove this branch" command rmbranch}
+>          {mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
+> @@ -3183,6 +3184,7 @@ proc keys {} {
+>  [mc "<%s-minus>	Decrease font size" $M1T]
+>  [mc "<F5>		Update"]
+>  [mc "<%s-T>		Reset current branch to selected commit" $M1T]
+> +[mc "<%s-O>		Check out selected commit" $M1T]
+>  " \
+>              -justify left -bg $bgcolor -border 2 -relief groove
+>      pack $w.m -side top -fill both -padx 2 -pady 2
+> @@ -9978,25 +9980,26 @@ proc headmenu {x y id head} {
+>      tk_popup $headctxmenu $x $y
+>  }
+>  
+> -proc cobranch {} {
+> -    global headmenuid headmenuhead headids
+> +proc checkout {newhead newheadid} {
+> +    global headids
+>      global showlocalchanges
+>  
+>      # check the tree is clean first??
+> -    set newhead $headmenuhead
+> +
+> +    # The ref is either the head, if it exists, or the ID
+> +    set newheadref [expr {$newhead ne "" ? $newhead : $newheadid}]
+> +
+>      set command [list | git checkout]
+>      if {[string match "remotes/*" $newhead]} {
+>          set remote $newhead
+>          set newhead [string range $newhead [expr [string last / $newhead] + 1] end]
+> -        # The following check is redundant - the menu option should
+> -        # be disabled to begin with...
+>          if {[info exists headids($newhead)]} {
+>              error_popup [mc "A local branch named %s exists already" $newhead]
+>              return
+>          }
+>          lappend command -b $newhead --track $remote
+>      } else {
+> -        lappend command $newhead
+> +        lappend command $newheadref
+>      }
+>      lappend command 2>@1
+>      nowbusy checkout [mc "Checking out"]
+> @@ -10011,11 +10014,11 @@ proc cobranch {} {
+>              dodiffindex
+>          }
+>      } else {
+> -        filerun $fd [list readcheckoutstat $fd $newhead $headmenuid]
+> +        filerun $fd [list readcheckoutstat $fd $newhead $newheadref $newheadid]
+>      }
+>  }
+>  
+> -proc readcheckoutstat {fd newhead newheadid} {
+> +proc readcheckoutstat {fd newhead newheadref newheadid} {
+>      global mainhead mainheadid headids idheads showlocalchanges progresscoords
+>      global viewmainheadid curview
+>  
+> @@ -10034,12 +10037,13 @@ proc readcheckoutstat {fd newhead newheadid} {
+>          return
+>      }
+>      set oldmainid $mainheadid
+> -    if {! [info exists headids($newhead)]} {
+> +
+> +    if {$newhead ne "" && ! [info exists headids($newhead)]} {
+>          set headids($newhead) $newheadid
+>          lappend idheads($newheadid) $newhead
+>          addedhead $newheadid $newhead
+>      }
+> -    set mainhead $newhead
+> +    set mainhead $newheadref
+>      set mainheadid $newheadid
+>      set viewmainheadid($curview) $newheadid
+>      redrawtags $oldmainid
