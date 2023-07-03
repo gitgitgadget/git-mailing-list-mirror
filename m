@@ -2,135 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE031EB64DC
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 15:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1844EB64DC
+	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 16:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbjGCPr6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 11:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36370 "EHLO
+        id S231281AbjGCQ1C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jul 2023 12:27:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjGCPr5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 11:47:57 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E319C2
-        for <git@vger.kernel.org>; Mon,  3 Jul 2023 08:47:56 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51d89664272so5389959a12.1
-        for <git@vger.kernel.org>; Mon, 03 Jul 2023 08:47:56 -0700 (PDT)
+        with ESMTP id S230303AbjGCQ1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2023 12:27:01 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A64590
+        for <git@vger.kernel.org>; Mon,  3 Jul 2023 09:27:00 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-1b09276ed49so4364190fac.1
+        for <git@vger.kernel.org>; Mon, 03 Jul 2023 09:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688399275; x=1690991275;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ycLalNEZy+7gTQznnQqiqh3NViAb9Y8HPrIG5ntpB0E=;
-        b=dTnpyRPH+QrBsflTAyMnKq1+G0tSE8annD82XUF4gQGd12vUlXfsw9XVVyn3DM6+Jx
-         u1g5JKVZLba0PccRG3yJNvqcOq/D55Ol9ZHWyayvh9VqVphJNzke2AqGfFKlJlM3XQGg
-         1OK861Il9uM5M9w+aYtjiP2Koe9SIk7E7FmzZpgpOFNjB4/MiD4sOjlBrZy8mQ2dhgvU
-         MhJS8xOPVmiEIdzPhaCknGH4Mn4Q2t0c/8DAMiiRuFcywHZOaszAlPi91N+TrqqG+Gb3
-         OYRgMJjfBRclq9XP+Zxx6rnWxeGlyTFDZLodMAx8kKmXlOPiBrfTmQBwL91+CQAXWxGQ
-         fLTQ==
+        d=gmail.com; s=20221208; t=1688401619; x=1690993619;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lrLs7REPFu6c15CQ4xY0LuOOik8deaTt8AMEge+Wzns=;
+        b=OODxqTi3b6aLDxWJCtv6tHxUbQt5dX5b17fzYInT6BHyN1GcEPEQJzocFW+BWDZi6z
+         urDsJzDX//r4wlz9RRNeCv0fG4v2w4aa9kqxxfLi6lubA9vBUIJuevzP2DIi0RpZhBty
+         1nJaEqzwE3n00BMgvDOc0AXr8BmStKKcpOcXSZPQwyFLMYUc0ptY8SI8ekJaKVQkl/GZ
+         Es+HLQtnpn7S7gzlzLoLrGhopIATSSSxSfLmkjnAzx/LCNo3z5dtH9/WMBuiU/tjFuEv
+         u+0lByg/tYPGjJz000S6PudFhZXyogxSWN89J6HjF6XxDXYKeR5mMA173QjXl4SY5m/X
+         1+/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688399275; x=1690991275;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ycLalNEZy+7gTQznnQqiqh3NViAb9Y8HPrIG5ntpB0E=;
-        b=bfDCdS7Qtdkk1hrmzWGs2EDUcWZheFEb5Ut7cmPUoY23fGFYA9naLvFKbEEVCDgF4u
-         hWnvnLhB9Qda4NuZxulLcRP6BJ2gUzfWgby5j81BnCpA4wI9oEyntwX5TIihyqlfotoZ
-         9sI88Xhh0yOw3OMPf4HH0rRfc6dkvbuG4P7yGU1VphyYuEgTD418owF9kU+hyxUH2i4j
-         4gkP+GPlOEqqYoXmV9nbCVZQAwKX6nnEawXtnnnPc7tWBP32yMiUUvhc3OsZGYaRYtsZ
-         cqF8cOF3e+tWgNd2nzfRdgYxbl6jc4aIxjS79vtaFDsBrDmaXfcETEFm6wEKL3IRuB/C
-         v9mQ==
-X-Gm-Message-State: ABy/qLafyPNO0nOE2CcDf2r1VWhv/V3+g7H7pWMpf8xeTqiIIXPXdh6v
-        48DWiuJoQ77zFFXl7hAE5oI=
-X-Google-Smtp-Source: APBJJlHaO7LObMNVI37bgptB1ikxIbojMsPGMlQR7POM3EmciC48NmcZaNqCc5yOeuSZCz/bIq7eMQ==
-X-Received: by 2002:a05:6402:1607:b0:51e:1690:1b97 with SMTP id f7-20020a056402160700b0051e16901b97mr1362710edv.19.1688399274572;
-        Mon, 03 Jul 2023 08:47:54 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id j18-20020a50ed12000000b0051dada80305sm7077937eds.63.2023.07.03.08.47.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 08:47:54 -0700 (PDT)
-Message-ID: <2f516828-deee-5c78-a08d-7a64e457f91a@gmail.com>
-Date:   Mon, 3 Jul 2023 16:47:53 +0100
+        d=1e100.net; s=20221208; t=1688401619; x=1690993619;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lrLs7REPFu6c15CQ4xY0LuOOik8deaTt8AMEge+Wzns=;
+        b=IuIi/WP9/+o55idoRXd3DZNBOKru3BAHQ4rZKn3fPMGKymyckJkwwUpQGwlwrsKOP5
+         xHZ/NjmnwIuA8iX+kq5F7OkuQ4hq6TQUzu8S2x8G2epPvnePh1iP2+EjkXh7jOLVVhjo
+         VZEh6TV4sjp/ZPDP6iU1n2dPCu98xVryzUlmD7FDx29M16+WAb10TjEs4IddIloh4IuN
+         Ia4z2PagzqiVL/bMGQYW816MJ1j6XW9+rF9ZAyeG1iHDgceTI6dIkPV+rTV5S4vksGia
+         3uvVtsHMWffiZa1M6IwVUZESwqgqAQ0p7ZuCSyI6uCjyUhPIMHh5crKvpQPkgvkmR8+0
+         RRrQ==
+X-Gm-Message-State: AC+VfDyz1DA6a//qviCObbhDQD+kVUdZ1f/erp8ZNJRw7xcSzWX0v9HA
+        ejeGaHQmTmywTWJoBjiYMW9uk9K8Wsoor+iRkas=
+X-Google-Smtp-Source: ACHHUZ7NCtK9KGeqafU+E1fGpJawjonjsxCcmp8ZdVeK9otj2TSa1QcrIwJ6IuKS4MFqxvKGGheozwvIweFcW2hTyEU=
+X-Received: by 2002:a05:6870:42ce:b0:1aa:1c3f:808 with SMTP id
+ z14-20020a05687042ce00b001aa1c3f0808mr11877977oah.55.1688401619547; Mon, 03
+ Jul 2023 09:26:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] t0091-bugreport.sh: actually verify some content of
- report
-Content-Language: en-US
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <YHYZTLl90rkWWVOr@google.com>
- <20230701192642.647167-1-martin.agren@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230701192642.647167-1-martin.agren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20230702200818.1038494-1-alexhenrie24@gmail.com> <c3c36f93-3fc5-7f7d-1c24-e6925729cc96@gmail.com>
+In-Reply-To: <c3c36f93-3fc5-7f7d-1c24-e6925729cc96@gmail.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Mon, 3 Jul 2023 10:26:23 -0600
+Message-ID: <CAMMLpeTDqABQij5=h5aaJT4auCoKzhX7LEX02bxRFn=YtCPZfw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] advise about force-pushing as an alternative to reconciliation
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, git@matthieu-moy.fr, christiwald@gmail.com,
+        john@keeping.me.uk, philipoakley@iee.email, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin
+On Mon, Jul 3, 2023 at 9:33=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
 
-On 01/07/2023 20:26, Martin Ågren wrote:
-> In the first test in this script, 'creates a report with content in the
-> right places', we generate a report and pipe it into our helper
-> `check_all_headers_populated()`. The idea of the helper is to find all
-> lines that look like headers ("[Some Header Here]") and to check that
-> the next line is non-empty. This is supposed to catch erroneous outputs
-> such as the following:
-> 
->    [A Header]
->    something
->    more here
-> 
->    [Another Header]
-> 
->    [Too Early Header]
->    contents
-> 
-> However, we provide the lines of the bug report as filenames to grep,
-> meaning we mostly end up spewing errors:
-> 
->    grep: : No such file or directory
->    grep: [System Info]: No such file or directory
->    grep: git version:: No such file or directory
->    grep: git version 2.41.0.2.gfb7d80edca: No such file or directory
-> 
-> This doesn't disturb the test, which tugs along and reports success, not
-> really having verified the contents of the report at all.
+> On 02/07/2023 21:08, Alex Henrie wrote:
+> > Many times now, I have seen novices do the following:
+> >
+> > 1. Start work on their own personal topic branch
+> > 2. Push the branch to origin
+> > 3. Rebase the branch onto origin/master
+> > 4. Try to push again, but Git says they need to pull
+> > 5. Pull and make a mess trying to reconcile the older topic branch with
+> >     the rebased topic branch
+> >
+> > Help avoid this mistake by giving advice that mentions force-pushing,
+> > rather than assuming that the user always wants to do reconciliation.
+>
+> I don't think we want to be advising users to force push. For the case
+> you mention above I think it would be much safer to advise them to use
+>
+>         git push --force-if-includes
+>
+> In the absence of background fetches even
+>
+>         git push --force-with-lease
+>
+> is still safer than
+>
+>         git push --force
 
-Thanks for the clear description of the problem and for fixing it
+Hi Phillip, thanks for the feedback. --force-with-lease would be fine.
+I'll make that change in v2.
 
-> Note that after 788a776069 ("bugreport: collect list of populated
-> hooks", 2020-05-07), the bug report, which is created in our hook-less
-> test repo, contains an empty section with the enabled hooks. Thus, even
-> the intention of our helper is a bit misguided: there is nothing
-> inherently wrong with having an empty section in the bug report.
-> 
-> Let's instead split this test into three: first verify that we generate
-> a report at all, then check that the introductory blurb looks the way it
-> should, then verify that the "[System Info]" seems to contain the right
-> things. (The "[Enabled Hooks]" section is tested later in the script.)
+Regarding your other suggestion, --force-if-includes doesn't do
+anything unless --force-with-lease is also specified, and I think
+recommending that users always type --force-with-lease
+--force-if-includes is a bit much to ask of them. It also could lead
+to confusion if the user has decided to delete the local branch and
+start over, and is now trying to push the new local branch over the
+old one on the remote.
 
-That sounds like a good plan
-
-> +test_expect_success 'report contains wanted template (before first section)' '
-> +	awk "/^\[/ { exit } { print }" git-bugreport-format.txt >actual &&
-
-Personally I'd find
-
-	sed -n -e '/^\[/q;p' git-bugreport-format.txt >actual
-
-easier to understand but that's probably because I don't use awk very 
-much. I'm not sure it is worth a re-roll though as I see we do use awk 
-in a few of the other test scripts.
-
-Best Wishes
-
-Phillip
+-Alex
