@@ -2,217 +2,260 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AC43C001B3
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 17:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB63DC3063F
+	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 17:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbjGCRiR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 13:38:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50974 "EHLO
+        id S230331AbjGCR7f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jul 2023 13:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230258AbjGCRiQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 13:38:16 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E2EE5D
-        for <git@vger.kernel.org>; Mon,  3 Jul 2023 10:38:15 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5768a7e3adbso67673727b3.0
-        for <git@vger.kernel.org>; Mon, 03 Jul 2023 10:38:15 -0700 (PDT)
+        with ESMTP id S229947AbjGCR7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2023 13:59:34 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43231E7E
+        for <git@vger.kernel.org>; Mon,  3 Jul 2023 10:59:22 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6686708c986so3895305b3a.0
+        for <git@vger.kernel.org>; Mon, 03 Jul 2023 10:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688405894; x=1690997894;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z+PAVwdRpCyCaojhb56Iz7LDqfUDQcSZIU3tcMBSmAw=;
-        b=0zWoiTYKDeNZ+fovixamwcB6PzaCTgWlc9d8zoWBXm7dBbJwIy33qyCqb8rih3tA5a
-         7RbWpdKLsQHQGd0JvblIVobSHA8hdA2PtYd7icjBnK9WkWFreM55x5oRwmZ9Rw7YC98U
-         5EWxJ2RgAj9UpFaVQp5OuXkXq5dkqoygTMLYiX3s8mWIGqmBxSQzVbzcFZwySil2kxqP
-         h4y7DpOPPS3aSeg2FtbuW51JBXKxf96pJBF3zc4CxvCOCm7v7qiixM0Ath7uIvVYnhT7
-         80+hpmtF5SxesmoLP2tiKIWsSFy7BPMlAZXpCJYpMyUGYiZgK+nAnuy4Sezi/c0eG5mE
-         gLuw==
+        d=github.com; s=google; t=1688407162; x=1690999162;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rY8I03D8gk2UxOvAJSbZDxkrnMNwXQMed5QMcdlm9oE=;
+        b=HRH0MNT0V6ugifRLjs3j14qs67W1Z/Sa2AQCXZJIzg1pkU3vK2wQs+vlY0Xuo+5hv8
+         90dn/Opeba6RHdWTfUL3BtZ+LldIQJLzJoMbjbN8r+asoJPbPyYJlOIpZ4Jt2BkUXeQV
+         Bo5MfG1u/PYHm38upF28h0Mf+wp6xVDODTIdlleOtWAKfuFX1j8jHrXhklfU4eFSSebo
+         SP+2Vp7yFs5657TA2i/gAxfjPSMYe39nQZ9TH+vU7dAqVaCEP1DBKXmgXMK1rj2F3wQl
+         2jmPJkui8Aajk13/4tOApfWG2ASfYZ1rUrlUpDhZ5LRU+bbOR8WuGGXRQblkcZlxl6jk
+         kCig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688405894; x=1690997894;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1688407162; x=1690999162;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+PAVwdRpCyCaojhb56Iz7LDqfUDQcSZIU3tcMBSmAw=;
-        b=IsBVLrj9BKVRqQYF5928SFdqk5LuSy6NNWpmCNrl9kWYBPnaTkzyUUGjWKAi3H5FVf
-         0s0gu52PfWSqT4gF20KU8/hG0/tmHt+6WVXtUSuvwZOU/5euEVCrSa3MpBcsNSexF2dC
-         BWjrVn23VnILwxx0cVUQcDBv9UhUARfSNCCUFsWOdwnGIBA4aIWfMhy2XkAecQyWh+rr
-         1SwTkLVWR27quSi4phjvMtHmZEgNXY8qWj59XesNstWWZAjjTBQKYzyMVej10cezkHdh
-         cTOBMaahWw0vbi8wMBuFLabD6NmhZNo7uXM3XsK75iNPhNFFE9Paf38CllSxlS6Ter40
-         G0zw==
-X-Gm-Message-State: ABy/qLZzZOmSayLBb8uMZnayD05sagvMNvsvBMd5cR0cNR0t3jsSdVLU
-        oiCVsUICYvpndDFaKB8OVbd74LL/un5Ab69zan1vhQ==
-X-Google-Smtp-Source: APBJJlFg9nK0dvh1lrXDklyb6wvzC3O4DfSkH39gOq0519XaYtkBpF6ngSya/LTKLhpBO9zjv+b0rA==
-X-Received: by 2002:a0d:d510:0:b0:56d:18fb:62a1 with SMTP id x16-20020a0dd510000000b0056d18fb62a1mr9355981ywd.15.1688405894406;
-        Mon, 03 Jul 2023 10:38:14 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l189-20020a0dfbc6000000b0055a931afe48sm5169842ywf.8.2023.07.03.10.38.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 10:38:13 -0700 (PDT)
-Date:   Mon, 3 Jul 2023 13:38:13 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 09/16] refs/packed-backend.c: implement jump lists to
- avoid excluded pattern(s)
-Message-ID: <ZKMHhUVQ3EckJFIE@nand.local>
-References: <cover.1683581621.git.me@ttaylorr.com>
- <cover.1687270849.git.me@ttaylorr.com>
- <386ed468fa7157e90f2f7324199a68974a7860cc.1687270849.git.me@ttaylorr.com>
- <20230703055627.GF3502534@coredump.intra.peff.net>
+        bh=rY8I03D8gk2UxOvAJSbZDxkrnMNwXQMed5QMcdlm9oE=;
+        b=EtJrjyTvI6/QbI+9xTV+bRBpRu4h77ZJNLujJvDmnlMfMUNi4jjo4CbGSHRxgt37Hw
+         0XoBy/a1KJ6DsFEVbxK0sqAVyoRv0d9FTvVlBxLCGWBx2SUP8JK2/0Iez2wgUiyh2+66
+         LKA1BQ4EOYBuiq2abI72fRYzP8C+xRNNr1gwctcpnRNF48amR1u5LAC8quvtcAdl6L71
+         dWr318Kojf48k/0n/drGGdEBXXrC0tJ//E2PInTklMyVUTXSKrPcN0fSehjfNsAQuqys
+         EhhnCXRC2fvixdco+fKB0ituPjVX2mKOnGJ69+wvJIRIKBBOudphcK2w6ACGRfAMwFL5
+         CWog==
+X-Gm-Message-State: ABy/qLZfdYmjMpwqRChN2tx07DU2o0FC/wueddMJODUMfrd3ICTHvLVC
+        pd+EaOfFgW+JX7Tgi1T2QSuCcuq4PGatnShodw==
+X-Google-Smtp-Source: APBJJlEc9+cQuNwHD51su2XMde0Cklrwm8UOi9qpK5G3P6LUF/7m+I3lSHMe4Zd9qKxoLQKVx4S9kA==
+X-Received: by 2002:a05:6a00:2389:b0:67e:6269:6ea8 with SMTP id f9-20020a056a00238900b0067e62696ea8mr17296632pfc.22.1688407161659;
+        Mon, 03 Jul 2023 10:59:21 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id r2-20020a62e402000000b00672401787c6sm13056260pfh.109.2023.07.03.10.59.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jul 2023 10:59:21 -0700 (PDT)
+Message-ID: <d1e8af2e-f03c-9fad-7a6f-256545f56f9a@github.com>
+Date:   Mon, 3 Jul 2023 10:59:19 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230703055627.GF3502534@coredump.intra.peff.net>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: Re: [PATCH v1 1/3] attr.c: read attributes in a sparse directory
+To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <20230701064843.147496-1-cheskaqiqi@gmail.com>
+ <20230701064843.147496-2-cheskaqiqi@gmail.com>
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20230701064843.147496-2-cheskaqiqi@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 03, 2023 at 01:56:27AM -0400, Jeff King wrote:
-> On Tue, Jun 20, 2023 at 10:21:42AM -0400, Taylor Blau wrote:
->
-> > Second, note that the jump list is best-effort, since we do not handle
-> > loose references, and because of the meta-character issue above. The
-> > jump list may not skip past all references which won't appear in the
-> > results, but will never skip over a reference which does appear in the
-> > result set.
->
-> I wonder if we should be advertising this in a docstring comment above
-> the relevant function. The problem may be that there are several such
-> functions. I just think that it's a gotcha that may affect somebody who
-> wants to call the function, and they're not going to think to dig up
-> this commit message.
+Shuqi Liang wrote:
+> Before this patch,`git check-attr` can't find the attributes of a file
+> within a sparse directory. In order to read attributes from
+> '.gitattributes' files that may be in a sparse directory:
+> 
+> When path is in cone mode of sparse checkout:
+> 
+> 1.If path is a sparse directory, read the tree OIDs from the sparse
 
-Good idea, thanks.
+s/path is a sparse directory/path is in a sparse directory(?)
 
-> >     $ hyperfine \
-> >       'git for-each-ref --format="%(objectname) %(refname)" | grep -vE "^[0-9a-f]{40} refs/pull/"' \
-> >       'git.compile for-each-ref --format="%(objectname) %(refname)" --exclude="refs/pull"'
-> >     Benchmark 1: git for-each-ref --format="%(objectname) %(refname)" | grep -vE "^[0-9a-f]{40} refs/pull/"
-> >       Time (mean ± σ):     802.7 ms ±   2.1 ms    [User: 691.6 ms, System: 147.0 ms]
-> >       Range (min … max):   800.0 ms … 807.7 ms    10 runs
-> >
-> >     Benchmark 2: git.compile for-each-ref --format="%(objectname) %(refname)" --exclude="refs/pull"
-> >       Time (mean ± σ):       4.7 ms ±   0.3 ms    [User: 0.7 ms, System: 4.0 ms]
-> >       Range (min … max):     4.3 ms …   6.7 ms    422 runs
-> >
-> >     Summary
-> >       'git.compile for-each-ref --format="%(objectname) %(refname)" --exclude="refs/pull"' ran
-> >       172.03 ± 9.60 times faster than 'git for-each-ref --format="%(objectname) %(refname)" | grep -vE "^[0-9a-f]{40} refs/pull/"'
->
-> This measurement is cheating a little, I think, because the earlier
-> patch to implement --exclude sped that up from ~800ms to ~100ms (because
-> we avoid writing and all of the ref-filter malloc slowness for the
-> excluded entries). So the better comparison is between two invocations
-> with "--exclude", but before/after this patch. You should still see a
-> 20x speedup (100ms down to 5).
+> directory.
+> 
+> 2.If path is a regular files, read the attributes directly from the blob
 
-I agree. I included a build from the previous commit in this benchmark.
-As expected, it's around ~100ms, but at least it gives readers a clearer
-picture of how performance changes as a result of this patch.
-(
+s/files/file
 
-> > @@ -802,14 +826,34 @@ struct packed_ref_iterator {
-> >   */
-> >  static int next_record(struct packed_ref_iterator *iter)
-> >  {
-> > -	const char *p = iter->pos, *eol;
-> > +	const char *p, *eol;
-> >
-> >  	strbuf_reset(&iter->refname_buf);
-> >
-> > +	/*
-> > +	 * If iter->pos is contained within a skipped region, jump past
-> > +	 * it.
-> > +	 *
-> > +	 * Note that each skipped region is considered at most once,
-> > +	 * since they are ordered based on their starting position.
-> > +	 */
-> > +	while (iter->jump_cur < iter->jump_nr) {
-> > +		struct jump_list_entry *curr = &iter->jump[iter->jump_cur];
-> > +		if (iter->pos < curr->start)
-> > +			break; /* not to the next jump yet */
-> > +
-> > +		iter->jump_cur++;
-> > +		if (iter->pos < curr->end) {
-> > +			iter->pos = curr->end;
-> > +			break;
-> > +		}
-> > +	}
->
-> It took me a minute to convince myself that this second "break" was
-> right. If we get to it, we know that iter->pos (the current record we
-> are looking at) is in the current jump region. So it makes sense to
-> advance to curr->end. But might we hit another jump region immediately?
->
-> I guess not, because earlier we would have coalesced the jump regions.
-> So either there is a non-excluded entry there _or_ we would have
-> coalesced the later region into a single larger region. So breaking is
-> the right thing to do.
+> data stored in the cache.
+> 
+> Helped-by: Victoria Dye <vdye@github.com>
+> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+> ---
+>  attr.c | 64 +++++++++++++++++++++++++++++++++++++++-------------------
+>  1 file changed, 43 insertions(+), 21 deletions(-)
+> 
+> diff --git a/attr.c b/attr.c
+> index 7d39ac4a29..b0d26da102 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -808,35 +808,57 @@ static struct attr_stack *read_attr_from_blob(struct index_state *istate,
+>  static struct attr_stack *read_attr_from_index(struct index_state *istate,
+>  					       const char *path, unsigned flags)
+>  {
 
-Exactly. I added a short comment to this effect to hopefully avoid any
-confusion here.
+nit: there are a few instances below of spacing inconsistent with project
+styling: 'if(' instead of 'if (', 'x&&y' instead of 'x && y', etc. Please
+adjust your  to match in your next re-roll (using CodingGuidelines and/or
+surrounding code for reference).
 
-> > +	for (pattern = excluded_patterns; *pattern; pattern++) {
-> > +		struct jump_list_entry *e;
-> > +
-> > +		/*
-> > +		 * We can't feed any excludes with globs in them to the
-> > +		 * refs machinery.  It only understands prefix matching.
-> > +		 * We likewise can't even feed the string leading up to
-> > +		 * the first meta-character, as something like "foo[a]"
-> > +		 * should not exclude "foobar" (but the prefix "foo"
-> > +		 * would match that and mark it for exclusion).
-> > +		 */
-> > +		if (has_glob_special(*pattern))
-> > +			continue;
->
-> OK, and here's where we could split "foo[ac]" into "fooa" and "foob" if
-> we wanted. But I think it is a very good idea to leave that out of this
-> initial patch. :)
+> +	struct attr_stack *stack = NULL;
+> +	int i;
+> +	struct strbuf path1 = STRBUF_INIT;
+> +	struct strbuf path2 = STRBUF_INIT;
+> +	char *first_slash = NULL;
+>  	char *buf;
+>  	unsigned long size;
+>  
+>  	if (!istate)
+>  		return NULL;
+>  
+> -	/*
+> -	 * The .gitattributes file only applies to files within its
+> -	 * parent directory. In the case of cone-mode sparse-checkout,
+> -	 * the .gitattributes file is sparse if and only if all paths
+> -	 * within that directory are also sparse. Thus, don't load the
+> -	 * .gitattributes file since it will not matter.
+> -	 *
+> -	 * In the case of a sparse index, it is critical that we don't go
+> -	 * looking for a .gitattributes file, as doing so would cause the
+> -	 * index to expand.
+> -	 */
+> -	if (!path_in_cone_mode_sparse_checkout(path, istate))
+> -		return NULL;
 
-Oh, definitely ;-).
+Could you add some details to your commit message explaining why the
+reasoning in this comment no longer applies? I agree with your approach, but
+the extra context will make it easier for reviewers and future readers to
+evaluate whether _they_ agree with it, as well as determine whether your
+implementation aligns with your stated goal.
 
-> > +	/*
-> > +	 * As an optimization, merge adjacent entries in the jump list
-> > +	 * to jump forwards as far as possible when entering a skipped
-> > +	 * region.
-> > +	 *
-> > +	 * For example, if we have two skipped regions:
-> > +	 *
-> > +	 *	[[A, B], [B, C]]
-> > +	 *
-> > +	 * we want to combine that into a single entry jumping from A to
-> > +	 * C.
-> > +	 */
-> > +	last_disjoint = iter->jump;
-> > +
-> > +	for (i = 1, j = 1; i < iter->jump_nr; i++) {
-> > +		struct jump_list_entry *ours = &iter->jump[i];
-> > +
-> > +		if (ours->start == ours->end) {
-> > +			/* ignore empty regions (no matching entries) */
-> > +			continue;
->
-> Dropping empty regions makes sense, but our iteration starts at "1"
-> (because the rest of the checks are inherently looking at last_disjoint
-> before deciding if each region is worth keeping). So we'd fail to throw
-> away iter->jump[0] if it is empty, I think.
->
-> That could be fixed here by iterating from 0 and checking for a NULL
-> last_disjoint, but maybe it would be easier to avoid allocating at all
-> in the earlier loop, when we find that start == end?
+As for this review, I'll assume that we now _always_ want to read
+.gitattributes, regardless of 'SKIP_WORKTREE' or whether .gitattributes is
+contained within a sparse directory. Please correct me if that
+interpretation is incorrect!
 
-Yeah, I agree with this. I think Patrick made a similar suggestion in an
-earlier response, and I decided not to take it since it makes the patch
-more verbose.
+> -
+> -	buf = read_blob_data_from_index(istate, path, &size);
+> -	if (!buf)
+> -		return NULL;
+> -	if (size >= ATTR_MAX_FILE_SIZE) {
+> -		warning(_("ignoring overly large gitattributes blob '%s'"), path);
+> -		return NULL;
+> +	first_slash = strchr(path, '/');
+> +	if (first_slash) {
+> +		strbuf_add(&path1, path, first_slash - path + 1);
+> +		strbuf_addstr(&path2, first_slash + 1);
+>  	}
 
-But I think that avoiding the empty region special case is worth it.
-Thanks, both :-).
+At this point, 'path1' is the first component of a given path, and 'path2'
+is "everything else". If 'path' is 'path/to/my/.gitattributes', 'path1' is
+"path" and 'path2' is "to/my/.gitattributes". Looks good.
 
-Thanks,
-Taylor
+>  
+> -	return read_attr_from_buf(buf, path, flags);
+> +	if(!path_in_cone_mode_sparse_checkout(path, istate)){> +		for (i = 0; i < istate->cache_nr; i++) {
+> +			struct cache_entry *ce = istate->cache[i];
+> +			if ( !strcmp(istate->cache[i]->name, path1.buf)&&S_ISSPARSEDIR(ce->ce_mode)) {
+> +				stack = read_attr_from_blob(istate, &ce->oid, path2.buf, flags);
+
+Here, you use 'read_attr_from_blob()' to read from the sparse directory's
+tree directly _without_ needing to expand the index. Nice!
+
+> +			}else if(S_ISREG(ce->ce_mode) && !strcmp(istate->cache[i]->name, path)){
+> +				unsigned long sz;
+> +				enum object_type type;
+> +				void *data;
+> +
+> +				data = repo_read_object_file(the_repository, &istate->cache[i]->oid,
+> +							&type, &sz);
+> +				if (!data || type != OBJ_BLOB) {
+> +					free(data);
+> +					strbuf_release(&path1);
+> +					strbuf_release(&path2);
+> +					return NULL;
+> +				}
+> +				stack = read_attr_from_buf(data, path, flags);
+> +			}
+> +		}
+
+
+On the whole, this patch updates the the treatment of a 'path' outside the
+sparse-checkout patterns to first iterate through the index and at each
+entry:
+
+1. If the entry is a sparse directory _and_ the first component of 'path'
+   matches the sparse directory name, read the .gitattributes with
+   'read_attr_from_blob()'. 'read_attr_from_blob()' reads from the tree
+   pointed to by the sparse directory using only the part of 'path' that is
+   inside that sparse directory.
+2. If the entry is _not_ a sparse directory _and_ its name matches the full
+   'path', we read the blob by OID into a buffer, then
+   'read_attr_from_buffer()'.
+
+The general idea behind this makes sense (if .gitattributes is in a sparse
+directory, read from the sparse directory tree; if not, directly read the
+index), but the implementation as it is now has a few gaps/inefficiencies:
+
+- If the sparse directory is not top-level (e.g., a sparse directory at
+  'folder1/foo/'), the .gitattributes will be ignored completely.
+- The iteration through the index continues even after we've read from the
+  correct .gitattributes entry.
+- The "else if" case above shouldn't functionally be any different from the
+  "else" case below (both read the .gitattributes blob directly from the
+  index) but their implementations are different.
+
+To avoid those issues, you could adjust the structure of the code to more
+explicitly match what you described in your commit message:
+
+	if (*path is inside sparse directory*)
+		stack = read_attr_from_blob(istate, 
+					    *sparse directory containing path*, 
+					    *path relative to sparse directory*, 
+					    flags);
+	else
+		stack = *read .gitattributes from index blob*
+
+Then fill in the pseudocode bits with concrete details:
+
+- "read .gitattributes from index blob" is the most straightforward; it's
+  what you have in the "else" block below.
+- "path is inside sparse directory" can be determined using a combination of
+  'path_in_cone_mode_sparse_checkout()' & 'index_name_pos_sparse()'. An
+  example of similar logic can be found in 'entry_is_new_sparse_dir()' in
+  'unpack-trees.c'.
+- "sparse directory containing path" and "path relative to sparse directory"
+  can be determined from the results of 'index_name_pos_sparse()'.
+
+> +	}else{
+> +		buf = read_blob_data_from_index(istate, path, &size);
+> +		if (!buf)
+> +			return NULL;
+> +		if (size >= ATTR_MAX_FILE_SIZE) {
+> +			warning(_("ignoring overly large gitattributes blob '%s'"), path);
+> +			return NULL;
+> +		}
+> +		 stack = read_attr_from_buf(buf, path, flags);
+> +	}
+> +	strbuf_release(&path1);
+> +	strbuf_release(&path2);
+> +	return stack;
+
+These changes should affect the behavior sparse index-integrated commands
+that read attributes (e.g. 'git merge'). Would it be possible to test that?
+E.g. take the 't1092' test 'merge with conflict outside cone', but add
+smudge/clean filters in .gitattributes files inside the affected sparse
+directories.
+
+>  }
+>  
+>  static struct attr_stack *read_attr(struct index_state *istate,
+
