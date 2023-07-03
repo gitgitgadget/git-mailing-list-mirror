@@ -2,81 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F11EB64DC
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 06:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC3EDEB64DC
+	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 06:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbjGCGed (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 02:34:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43324 "EHLO
+        id S230197AbjGCGnv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jul 2023 02:43:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230171AbjGCGeb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 02:34:31 -0400
+        with ESMTP id S230138AbjGCGnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2023 02:43:49 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1E8C6
-        for <git@vger.kernel.org>; Sun,  2 Jul 2023 23:34:29 -0700 (PDT)
-Received: (qmail 12998 invoked by uid 109); 3 Jul 2023 06:34:30 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 802E0CC
+        for <git@vger.kernel.org>; Sun,  2 Jul 2023 23:43:48 -0700 (PDT)
+Received: (qmail 13985 invoked by uid 109); 3 Jul 2023 06:43:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Jul 2023 06:34:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Jul 2023 06:43:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2546 invoked by uid 111); 3 Jul 2023 06:34:32 -0000
+Received: (qmail 2598 invoked by uid 111); 3 Jul 2023 06:43:51 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Jul 2023 02:34:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Jul 2023 02:43:51 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 Jul 2023 02:34:28 -0400
+Date:   Mon, 3 Jul 2023 02:43:47 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 3/3] imap-send: drop unused fields from imap_cmd_cb
-Message-ID: <20230703063428.GC3524421@coredump.intra.peff.net>
-References: <20230703063247.GA3524302@coredump.intra.peff.net>
+Subject: [PATCH 0/14] more -Wunused-parameter annotations
+Message-ID: <20230703064347.GA3524892@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230703063247.GA3524302@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The imap_cmd_cb struct has several fields which are totally unused.
-Presumably they did useful things in the upstream isync code from which
-this is derived, but they don't in our more limited program. This is
-particularly confusing for the "done" callback, which (as of the
-previous patch) no longer matches the signature of the adjacent "cont"
-callback.
+Here's another set of patches to silence -Wunused-parameter warnings.
+With the exception of the first patch, these are all just adding
+annotations (though I tried to document in each one any digging I did on
+"this isn't a bug that we're not using it, right?").
 
-Since we're unlikely to share code with isync going forward, we should
-feel free to simplify the code here. Note that "done" is examined but
-never set, so we can also drop a little bit of code outside of the
-struct definition.
+So I don't think these should be controversial. But I wanted to mention
+that I'll be offline for a month starting July 5th. So if there is any
+substantive review after that, I'll be rather slow to respond. :)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- imap-send.c | 4 ----
- 1 file changed, 4 deletions(-)
+  [01/14]: test-ref-store: drop unimplemented reflog-expire command
+  [02/14]: do_for_each_ref_helper(): mark unused repository parameter
+  [03/14]: http: mark unused parameters in curl callbacks
+  [04/14]: http-push: mark unused parameter in xml callback
+  [05/14]: am: mark unused keep_cr parameters
+  [06/14]: count-objects: mark unused parameter in alternates callback
+  [07/14]: revisions: drop unused "opt" parameter in "tweak" callbacks
+  [08/14]: fsck: mark unused parameters in various fsck callbacks
+  [09/14]: merge-tree: mark unused parameter in traverse callback
+  [10/14]: replace: mark unused parameter in ref callback
+  [11/14]: replace: mark unused parameter in each_mergetag_fn callback
+  [12/14]: rev-parse: mark unused parameter in for_each_abbrev callback
+  [13/14]: tag: mark unused parameters in each_tag_name_fn callbacks
+  [14/14]: t/helper: mark unused callback void data parameters
 
-diff --git a/imap-send.c b/imap-send.c
-index 81a87f434b..c1952d99e8 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -138,11 +138,9 @@ struct imap_store {
- 
- struct imap_cmd_cb {
- 	int (*cont)(struct imap_store *ctx, const char *prompt);
--	void (*done)(struct imap_store *ctx, struct imap_cmd *cmd, int response);
- 	void *ctx;
- 	char *data;
- 	int dlen;
--	int uid;
- };
- 
- struct imap_cmd {
-@@ -828,8 +826,6 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			}
- 			if ((resp2 = parse_response_code(ctx, &cmdp->cb, cmd)) > resp)
- 				resp = resp2;
--			if (cmdp->cb.done)
--				cmdp->cb.done(ctx, cmdp, resp);
- 			free(cmdp->cb.data);
- 			free(cmdp->cmd);
- 			free(cmdp);
--- 
-2.41.0.586.g3c0cc15bc7
+ builtin/am.c                     |  4 ++--
+ builtin/count-objects.c          |  2 +-
+ builtin/diff-tree.c              |  2 +-
+ builtin/fsck.c                   | 10 +++++-----
+ builtin/index-pack.c             |  3 ++-
+ builtin/log.c                    |  6 ++----
+ builtin/merge-tree.c             |  4 +++-
+ builtin/mktag.c                  |  8 ++++----
+ builtin/replace.c                |  4 ++--
+ builtin/rev-parse.c              |  2 +-
+ builtin/tag.c                    |  4 ++--
+ builtin/unpack-objects.c         |  3 ++-
+ fsck.c                           |  4 ++--
+ http-push.c                      |  2 +-
+ http.c                           |  9 ++++++---
+ object-file.c                    | 10 +++++-----
+ refs.c                           |  2 +-
+ revision.c                       |  2 +-
+ revision.h                       |  2 +-
+ t/helper/test-dump-split-index.c |  2 +-
+ t/helper/test-oid-array.c        |  2 +-
+ t/helper/test-ref-store.c        |  6 ------
+ 22 files changed, 46 insertions(+), 47 deletions(-)
+
+-Peff
