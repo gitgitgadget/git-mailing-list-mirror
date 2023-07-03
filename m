@@ -2,92 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51ADBC001B0
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 17:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 804AFC001B0
+	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 17:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230323AbjGCRNu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 13:13:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40284 "EHLO
+        id S230355AbjGCRSO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jul 2023 13:18:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjGCRNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 13:13:49 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3CCBE74
-        for <git@vger.kernel.org>; Mon,  3 Jul 2023 10:13:45 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5704ddda6dfso56905187b3.1
-        for <git@vger.kernel.org>; Mon, 03 Jul 2023 10:13:45 -0700 (PDT)
+        with ESMTP id S230052AbjGCRSN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2023 13:18:13 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3FB3137
+        for <git@vger.kernel.org>; Mon,  3 Jul 2023 10:18:08 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-bd0a359ca35so4275404276.3
+        for <git@vger.kernel.org>; Mon, 03 Jul 2023 10:18:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688404424; x=1690996424;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688404688; x=1690996688;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z9jx4K11McFJ2RR8RPjGAtjB5/2saSQa4u64EE4KJFQ=;
-        b=KYCVGjGilo2IAU3XzZhmcLmVQoM0Iuq/7ZM8QQK8KO2yF+d8hzNE+cgI/vHk5XpePF
-         pbtPglD6uLnRQyj/PXX0b54IRjX3Qn2vGN/Z4x7HtqeRqHJ8yQP1rTKq2MiUzO5nWvL8
-         EA7/NP2QTlo8QlYO6GQP3M2W6xJxmSNXJjyanRy/sZXcA9hepKuT/3TFj8Uyk6DM90q2
-         3p1hEXLwBSdSKcM7HdFfzhvMpLf5LiyqskLIP0yZYa/w6c991nT4rpbOn2+z9n88AylE
-         57u0cgrwMiReu7ZwDoX6+oLJvQ5p8/olM/HuY3savajyeG8g2wiVZLHtm0ciTOxNSyY5
-         lsew==
+        bh=tAjwmU9/uSuVe1GCPKqAhqeG+bQt3BW34KLBZc+5F80=;
+        b=nhdiS8yuks1su1i627OFmflBCB37CAnafebcHOGIobpQ9GcgxQH6WRPddSMNPc1YgG
+         MHbVmKw87yiV1eCmwbqvy/WBhi0rHICopk/vkWEvqq0o7QocsYftb9TbKEXaiLqboAuJ
+         Pc95CeIxE2QCbW1EKIYp4YmKLeBkP5TxLc9AF7cbJkEaDFZxEJpAi5IFoJLNSrmMDYJ+
+         mRFPb6ylsoTOUh7kgT/gqS6en/uYYC0yDdnNy3tmf+nedBoQ57QSUwniH0Pqc///suvS
+         VycEtCXPM3/gLXJjXkAX/K97yXiLWC+vQTO1gS6VO2FyYn0aznEb0YTy4ToH9zKr+K2W
+         JT/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688404424; x=1690996424;
+        d=1e100.net; s=20221208; t=1688404688; x=1690996688;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Z9jx4K11McFJ2RR8RPjGAtjB5/2saSQa4u64EE4KJFQ=;
-        b=emCKGhh5nsibZAv19dnhIIPwkrgfSDsIOncR2tM6d+wjADxQ7Zh5VQEIC+Pl10g4uO
-         8kT1N3YemeWNw9OcpbUGKKX0EbIVPtZQeDQpFYTQWsZKlbgOvPIgwZSBWVAsUwBZLJ9k
-         OKm1OSYPk3PpRIRr8vNB34cKXestDTclcvfyQLbv8oLuX8KpFe40sl/bGBHeehvalpLz
-         dxxwEv+uEAWRgXt+Hd70jglgq3U+y/jWtAJHZPOtcymWUo5iQsKIsugDU1U2tjmxINWC
-         kuTSWH1LNq+p3+lomS0IMifidxWbQ6Vmop38jWmY2jwR8mG5J6PeCzLmkob0BJUQH6sq
-         sITQ==
-X-Gm-Message-State: ABy/qLbRWOD/56rC4ERHmUa+1f8cTs1IqwKqb0OmQsxNQi9Dr7A0H/Os
-        wfmaIBph0DkTgya9YiYBeaxCtQ==
-X-Google-Smtp-Source: APBJJlGHv5aOGqwwbsqueoVjcYRponD5cjke3jqNr1kGJQFIJePGQNOzHmL6gDSi4vCnaWjv6vSn5w==
-X-Received: by 2002:a81:6dcc:0:b0:573:ad40:682 with SMTP id i195-20020a816dcc000000b00573ad400682mr11323618ywc.6.1688404424706;
-        Mon, 03 Jul 2023 10:13:44 -0700 (PDT)
+        bh=tAjwmU9/uSuVe1GCPKqAhqeG+bQt3BW34KLBZc+5F80=;
+        b=JNemVLv1+EUhseLlKrYi9Gwbn+D1Fe94DUITvBGZHtjyeLzmfEJDV+W+FFft2S1Wm4
+         7wQHLJLG8uA0PkN690wPmL/9jrzp6R2g/rRLAKzSmJXkCBiF1QgbIXBMAMozZBUTwR5g
+         E4wRRFc6r9tCHWWoi6A6vjoBLjS1G/wV+Kq1A9nUXO+oK9DZhTL9hWcTsBMD5TmmFtVq
+         gu4f1V7OytCfpk1+WJplrbIcfKD541xY055WFPVOCKcuM5JEsXRSxC/W1lAI7o4E2fQT
+         +DSD68TN3DFZIte13Ld2y3MiccfzqM/6fg2ZUdvFSDienrjnCIUelON5j8qYOWCnTbfr
+         fGbw==
+X-Gm-Message-State: ABy/qLY/SBy8wMadVZQoS0Ln0cZcI0bVt0NjiyVcvcW+CiW64+3NVvnX
+        lODMxmK+68rRjuceXt/RkhXSBw/oOZW3FEwe/hKkfQ==
+X-Google-Smtp-Source: APBJJlEy+bvjCI3vO3a/39QdtxCPiu8lzD35xC41WWOTZEX7zgmhJFcM1HaSQNkVawVKEFiLff9E6g==
+X-Received: by 2002:a5b:4c3:0:b0:c1c:df23:44ef with SMTP id u3-20020a5b04c3000000b00c1cdf2344efmr9571518ybp.41.1688404688113;
+        Mon, 03 Jul 2023 10:18:08 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o128-20020a815a86000000b005794a9576f0sm1612823ywb.9.2023.07.03.10.13.43
+        by smtp.gmail.com with ESMTPSA id g64-20020a25a4c6000000b00ba73c26f0d6sm4529008ybi.15.2023.07.03.10.18.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 10:13:43 -0700 (PDT)
-Date:   Mon, 3 Jul 2023 13:13:42 -0400
+        Mon, 03 Jul 2023 10:18:07 -0700 (PDT)
+Date:   Mon, 3 Jul 2023 13:18:06 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 04/16] ref-filter: add `ref_filter_clear()`
-Message-ID: <ZKMBxnQo1MyB7s9e@nand.local>
+Subject: Re: [PATCH v4 05/16] ref-filter.c: parameterize match functions over
+ patterns
+Message-ID: <ZKMCzow9EH2BJIfp@nand.local>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1687270849.git.me@ttaylorr.com>
- <777e71004d68dc9bb9c4cad2b896acff2c615cbf.1687270849.git.me@ttaylorr.com>
- <20230703051946.GD3502534@coredump.intra.peff.net>
+ <39e9b0f50d07cc75219325e7c7e72a801ca0cf16.1687270849.git.me@ttaylorr.com>
+ <20230703052724.GE3502534@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230703051946.GD3502534@coredump.intra.peff.net>
+In-Reply-To: <20230703052724.GE3502534@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 03, 2023 at 01:19:46AM -0400, Jeff King wrote:
-> > +void ref_filter_init(struct ref_filter *filter)
-> > +{
-> > +	struct ref_filter blank = REF_FILTER_INIT;
-> > +	memcpy(filter, &blank, sizeof(blank));
-> > +}
+On Mon, Jul 03, 2023 at 01:27:24AM -0400, Jeff King wrote:
+> On Tue, Jun 20, 2023 at 10:21:21AM -0400, Taylor Blau wrote:
 >
-> I was a little surprised by adding init() here, but we need it at the
-> end of clear(). So this is an OK place for it (the other option would be
-> in the earlier INIT patch, but it would be unused until now).
+> > Once we start passing either in, `match_pattern()` will have little to
+> > do with a particular `struct ref_filter *` instance. To clarify this,
+> > drop it from the argument list, and replace it with the only bit of the
+> > `ref_filter` that we care about (`filter->ignore_case`).
+>
+> Makes sense, but...
+>
+> > @@ -2134,9 +2134,10 @@ static int match_pattern(const struct ref_filter *filter, const char *refname)
+> >   * matches a pattern "refs/heads/" but not "refs/heads/m") or a
+> >   * wildcard (e.g. the same ref matches "refs/heads/m*", too).
+> >   */
+> > -static int match_name_as_path(const struct ref_filter *filter, const char *refname)
+> > +static int match_name_as_path(const struct ref_filter *filter,
+> > +			      const char **pattern,
+> > +			      const char *refname)
+>
+> ...wouldn't we then want to do the same for match_name_as_path()?
 
-I used to write more patches in this style where I would add as much of
-a new API as possible as early as possible in the series. But I think
-reviewers seem to have an easier time reviewing API additions in the
-same patch that adds their caller.
+Yes, definitely :-). I'm not sure how I missed this, since the patch
+message even says that `match_name_as_path()` gets the same treatment as
+the other function.
 
-So I tend to agree that this patch is probably a good spot to introduce
-`ref_filter_init()`. But if you feel strongly, I'm happy to drag it
-around.
+But in any case, I obviously agree (and the diff below makes sense to
+me). Applied.
+
+> Also, I noticed that you declared it as "const int ignore_case" in
+> match_pattern(). That's not wrong, but we usually do not bother (it is
+> passed by value, so const-ness is irrelevant to the caller, and the
+> compiler can see inside the function that the value is not changed and
+> optimize appropriately).
+
+Indeed :-).
 
 Thanks,
 Taylor
