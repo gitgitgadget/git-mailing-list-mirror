@@ -2,158 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AAE6C001B0
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 18:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D035C001B3
+	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 18:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230211AbjGCSVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 14:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44594 "EHLO
+        id S230459AbjGCSqI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jul 2023 14:46:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230493AbjGCSVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 14:21:45 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A553EE67
-        for <git@vger.kernel.org>; Mon,  3 Jul 2023 11:21:19 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-53482b44007so2349465a12.2
-        for <git@vger.kernel.org>; Mon, 03 Jul 2023 11:21:19 -0700 (PDT)
+        with ESMTP id S229450AbjGCSqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2023 14:46:06 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7905AE72
+        for <git@vger.kernel.org>; Mon,  3 Jul 2023 11:46:04 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3112f5ab0b1so5334643f8f.0
+        for <git@vger.kernel.org>; Mon, 03 Jul 2023 11:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1688408478; x=1691000478;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MvTN58wLh42T+V6pb5oZXQP6JtrFi0ro7wrhU/Fh/+M=;
-        b=N7pOgzPBim2JG1pVwwNz82Jqh3s+hZkCUtJgumPdjMUZQcvK/rZjvzCIs2fXTIKdwo
-         tr3qrAqntW26+lGVxUAgScqG+IzpNVN33SM7eW2LhebobG0Sye5ExOBTesTnmg0ju+I1
-         wumDvGlDfMsrC99Cesd73ETqK4CDZCCie32csKFHQDx1hN5UGSbIXGaE/D4TciLc6l6J
-         lylmeZe2BvpBgh5CSZI+ZY8bAxJspoEMUsLYCqzbYrWnH14o1RlkLMTmt2ypwNY53EQJ
-         6wuh7rKGKRevml+5g8hTFl1zLzMxxv+RbBaTVyGmMXOwa97gOnNx4Pzmc9wLrkPstr9O
-         d0gQ==
+        d=gmail.com; s=20221208; t=1688409962; x=1691001962;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9LkUWRdj/6sf9x2AxsQFKLzsxSTfwf2GtlqlLHq4dWU=;
+        b=hO+nfmHjdwJA/uZsU0CTFoOUmskAyEaPoKoPaPI9LX32eakuY/HmhnLPnIUF4G9JcQ
+         gNWp4kLx900AFW/X+NPigLf0BCmuZuvzm7dT6IR5YQXWD6QAeNxoXHQ8zIEo2xbpISkG
+         7CQu7b52OgqbKOxxtjvkGwAvhqFB4wc7Frtxb49GHO32WQ0Ip7wp65nAudyioOHRejH5
+         YAYRrOtHqnsrKctyy4PWNV9u8dOLiWEgXUTocyxGqaidJ9uCjVLyk1w7HL/52chcwYXo
+         2q1U+EhjPjvYiq/pmXHh+AZXplfFjBphzNbBzlC+QptF6FDVr7M22XLzmNCrebKC6tvj
+         Ub6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688408478; x=1691000478;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MvTN58wLh42T+V6pb5oZXQP6JtrFi0ro7wrhU/Fh/+M=;
-        b=J7fsaQrNgF1vX2HD0MAn9IqpPKAX1F9acgJvRqic8gRKH8imzrq76lnpcqj+2FtPay
-         X11he9s3ciScchpsSwiNuTgki7Wcdy0OEJ4hBKxShOISadX2RX9WASZsxbXxwJOvIvJ6
-         SyOWQTlK7grlER14XWeS67Ve7jHCpB8SidbQ4VLg8DpF1XkyQFl8FyurHVVoPIvCjPbs
-         wP4XA2PQDNlR2WMVQsg1reMkUA1zR8nxQpbv4sq1tdVo+tsHNMr7sWuG5PKqFUOBQC9S
-         /z+6JgSQbsY6UjG3K0LBjh8Q6alp3kH1t2bhqjRa5RfRRC3kExx5+EgCB5rPEiKL5x8z
-         mJZA==
-X-Gm-Message-State: ABy/qLZQa+ZciDMVLTfO8ZSDuLFqvr7DjEKDeW7H0Y/gqWLTNYQ9eVz0
-        OFDkJhQAWiixhbYvq7v1tNVnRHP6QpN3G4VkJA==
-X-Google-Smtp-Source: APBJJlH3rqvhwJ2x9RJZdj+xW25Cqb1JzGzEEwLBOg06cE4/HIhpOmQf2J049X08B0nCp4fdYNuyzw==
-X-Received: by 2002:a17:90a:558f:b0:263:129e:80ac with SMTP id c15-20020a17090a558f00b00263129e80acmr9204258pji.38.1688408478597;
-        Mon, 03 Jul 2023 11:21:18 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id q68-20020a17090a1b4a00b002635341a7e8sm8940674pjq.3.2023.07.03.11.21.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 11:21:18 -0700 (PDT)
-Message-ID: <fb4bad5b-6e49-dbad-d9ae-94ec7db9f93c@github.com>
-Date:   Mon, 3 Jul 2023 11:21:16 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v1 3/3] check-attr: integrate with sparse-index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com
-References: <20230701064843.147496-1-cheskaqiqi@gmail.com>
- <20230701064843.147496-4-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230701064843.147496-4-cheskaqiqi@gmail.com>
+        d=1e100.net; s=20221208; t=1688409963; x=1691001963;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9LkUWRdj/6sf9x2AxsQFKLzsxSTfwf2GtlqlLHq4dWU=;
+        b=KYu4yFTU3TdkgThUxR4zek+5HYfgn5mV29II2QE+SIXhKHXx/b26SSGNxbqeCy2a+u
+         PHsfKsAS+iz/rKwviu24M0dcpbC3jom0yC1+zDZ4Fa878MuNtR9GDTuXFHKNFrFgCnV0
+         8PNHDVnInRWk+rNb6ia/Q4o26diig9KFVgRxZroi6990/WcDbB7dBLqJNpovUpP50vD+
+         KAmwYUWb5klg439mYjMnPeZ0M7+HxXVdY0r0GRcaBhLNpEA6sq5bQFmnQK9oNXprQoCi
+         jYxxAo6xeYwsbND7VMji0BqWh1kLS1u0KG+AkeRCstwgYghJRSffuTn+KQP/1nH2iP47
+         YPWQ==
+X-Gm-Message-State: AC+VfDyM0q2w0BXY2Q78aldXod7SmX85bvgRuyIJXsVZJjza3VHfcqpd
+        DxhCphjpR65rqVZNrj+Ctm3FoLEbgmM=
+X-Google-Smtp-Source: ACHHUZ47tlj4gWOmgDtD+vZOKmH//mRADSayddWxo4MzjqtHj2A17BULr/x7Bx9cZJCnnyCAi8WRhA==
+X-Received: by 2002:a1c:7c1a:0:b0:3f9:b297:1804 with SMTP id x26-20020a1c7c1a000000b003f9b2971804mr8055940wmc.17.1688409962513;
+        Mon, 03 Jul 2023 11:46:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v14-20020a05600c214e00b003f605566610sm15069961wml.13.2023.07.03.11.46.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jul 2023 11:46:02 -0700 (PDT)
+Message-Id: <063b5652c0eed158a4c8a96f2623d42d86a78286.1688409958.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1551.v2.git.1688409958.gitgitgadget@gmail.com>
+References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
+        <pull.1551.v2.git.1688409958.gitgitgadget@gmail.com>
+From:   "Jens Lidestrom via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 03 Jul 2023 18:45:49 +0000
+Subject: [PATCH v2 01/10] gitk: add procedures to get commit info from
+ selected row
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jens Lidestrom <jens@lidestrom.se>,
+        Jens Lidestrom <jens@lidestrom.se>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> Set the requires-full-index to false for "diff-tree".
-> 
-> Add test to ensure the index is not expanded when the
-> sparse index is enabled.
-> 
-> The `p2000` tests demonstrate a ~63% execution time reduction for
-> 'git check-attr' using a sparse index.
-> 
-> Test                                            before  after
-> -----------------------------------------------------------------------
-> 2000.106: git check-attr -a f2/f4/a (full-v3)    0.05   0.05 +0.0%
-> 2000.107: git check-attr -a f2/f4/a (full-v4)    0.05   0.05 +0.0%
-> 2000.108: git check-attr -a f2/f4/a (sparse-v3)  0.04   0.02 -50.0%
-> 2000.109: git check-attr -a f2/f4/a (sparse-v4)  0.04   0.01 -75.0%
+From: Jens Lidestrom <jens@lidestrom.se>
 
-Great results as usual!
+These procedures are useful for implementing keyboard commands. Keyboard
+commands don't have access to commits that are selected by the mouse and
+hence must get info from the selected row.
 
-> 
-> Helped-by: Victoria Dye <vdye@github.com>
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
->  builtin/check-attr.c                     |  3 +++
->  t/t1092-sparse-checkout-compatibility.sh | 11 +++++++++++
+Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
+---
+ gitk-git/gitk | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-Did you forget to add the perf test to this patch? 
-
->  2 files changed, 14 insertions(+)
-> 
-> diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-> index b22ff748c3..02267f9bc1 100644
-> --- a/builtin/check-attr.c
-> +++ b/builtin/check-attr.c
-> @@ -122,6 +122,9 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
->  	argc = parse_options(argc, argv, prefix, check_attr_options,
->  			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
->  
-> +	prepare_repo_settings(the_repository);
-> +	the_repository->settings.command_requires_full_index = 0;
-
-Given that you updated 'read_attr_from_index()' to handle sparse directories
-in [1], it makes sense that disabling 'command_requires_full_index' is all
-that's needed to enable the sparse index here.
-
-[1] https://lore.kernel.org/git/20230701064843.147496-2-cheskaqiqi@gmail.com/
-
-> +	
->  	if (repo_read_index(the_repository) < 0) {
->  		die("invalid cache");
->  	}
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 4edfa3c168..317ccc8ec5 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -2288,4 +2288,15 @@ test_expect_success 'check-attr with pathspec outside sparse definition' '
->  	test_all_match git check-attr  -a --cached -- folder1/a
->  '
->  
-> +test_expect_success 'sparse-index is not expanded: check-attr' '
-> +	init_repos &&
-> +
-> +	echo "a -crlf myAttr" >>.gitattributes &&
-> +	run_on_all cp ../.gitattributes ./deep &&
-
-nit: we're only verifying behavior in 'sparse-index', so this should
-probably be
-
-	cp .gitattributes ./sparse-index/deep &&
-
-> +
-> +	ensure_not_expanded check-attr -a -- deep/a &&
-> +	run_on_all git add deep/.gitattributes &&
-
-Similar to above, this should probably be:
-
-	git -C sparse-index add deep/.gitattributes &&
-
-> +	ensure_not_expanded check-attr -a --cached -- deep/a
-It'd be nice to show that the index is also not expanded files outside of
-the sparse-checkout cone, e.g. 'folder1/.gitattributes' or
-'folder1/0/.gitattributes' (similar to what you did for the correctness
-tests in [2]).
-
-[2] https://lore.kernel.org/git/20230701064843.147496-3-cheskaqiqi@gmail.com/
-
-> +'
-> +
->  test_done
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index df3ba2ea99b..6d12e04ca64 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -1333,6 +1333,24 @@ proc commitonrow {row} {
+     return $id
+ }
+ 
++# Get commits ID of the row that is selected in the GUI
++proc selected_line_id {} {
++    global selectedline
++    return [commitonrow $selectedline]
++}
++
++# Gets all branche names on the commit that is selected in the GUI, or the
++# empty list if there is no branches on that commit.
++proc selected_line_heads {} {
++    global idheads
++    set id [selected_line_id]
++    if {[info exists idheads($id)]} {
++        return $idheads($id)
++    } else {
++        return {}
++    }
++}
++
+ proc closevarcs {v} {
+     global varctok varccommits varcid parents children
+     global cmitlisted commitidx vtokmod curview numcommits
+-- 
+gitgitgadget
 
