@@ -2,141 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C55C001B0
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 18:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14BA7C001B0
+	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 18:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230457AbjGCSLs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 14:11:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37686 "EHLO
+        id S230256AbjGCSTw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jul 2023 14:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbjGCSLq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 14:11:46 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54EAE69
-        for <git@vger.kernel.org>; Mon,  3 Jul 2023 11:11:40 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1b7ef3e74edso23740975ad.0
-        for <git@vger.kernel.org>; Mon, 03 Jul 2023 11:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1688407900; x=1690999900;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4949p4p74u7nB5BaVinuv9ra5F4OWecCiQO0PKPGUIA=;
-        b=U3zE9jRHmULvaV5wtOAc/ZoZnpH0u9ANQ62tiJoOJI9UK3+Fr+RLSia5UD3UrliMHL
-         sVJ0UPtPdhGr2V9YSZkWgrY3FT3Q6kozqdHFfIp7USQ7aUtjuvxh1Wl0o36SE5aIU9Id
-         cZzSd6QYA3i38LxeYe7Y5bXqOpdStzNxG6AH3gB1kZoMhLV7FB0rL0Pdkk9SdU31/f5i
-         j3XJU/Z3dwmb+JaV1Sq7Sb7ZCB8SUMs9lvqHJsyD2pqREWX2yNC56s9VFG1jYw49iD6B
-         VQDH9CTRwQhRYPGksBba0oOdW52iEHNO/v4NiZQZwlYAEwQp7IOpHrZHTMI3W8aRmdob
-         6OSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688407900; x=1690999900;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4949p4p74u7nB5BaVinuv9ra5F4OWecCiQO0PKPGUIA=;
-        b=GU7YNv9lmrKkCy9UQ97JKFAcsN3c8Twwj9vYgOh5RAqD7gX55UgGpuqSUZDKgvsBsD
-         Bl7mhjJgt+5TA907a3D5eAxsu+5dAOHV1yI1YtnpxoxinrmJCuDnV5LOWcND4eWdf9La
-         P5tJl+h4FafLBCLGvZtLK+2QLkR4p89ZWv7UMly/pmzw2j0iglnfvjBlnX8p1UtpzXP/
-         HGaPX31/ys1yED7cdXDNeajBrPevA1Mae1/FdPCx1XsXfXCIJNeYyZc6WOZXYXAnXDjh
-         sew5pJ965Xs/oDWlsM/2m1DKrmsB8Aa9xAB2IyenBwwKjBluFHBinQsSkC/2mmsug5Mx
-         SlQA==
-X-Gm-Message-State: ABy/qLb/0aMUtuA9O/eg9tiDVjTCD5AnakTUkXF3p54Zvpw9cOB9Vww7
-        y1hzcCEdA76TNQ7fgzUcLsyFxafTW9xqRz1H8Q==
-X-Google-Smtp-Source: APBJJlF66whEh2hIbOyoIPujqSDagpTHuSPUpazasJskJ5SJGUpSeNK7wA84/yNvBSZxI+lKTfghag==
-X-Received: by 2002:a17:902:d4c7:b0:1b8:2ba0:c9c0 with SMTP id o7-20020a170902d4c700b001b82ba0c9c0mr10368500plg.59.1688407899687;
-        Mon, 03 Jul 2023 11:11:39 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id b21-20020a170902d31500b001b850c9af71sm7708968plc.285.2023.07.03.11.11.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 11:11:39 -0700 (PDT)
-Message-ID: <52174e5c-421a-256a-f052-85ccaaafca21@github.com>
-Date:   Mon, 3 Jul 2023 11:11:38 -0700
+        with ESMTP id S230167AbjGCSTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2023 14:19:49 -0400
+X-Greylist: delayed 63 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 03 Jul 2023 11:19:47 PDT
+Received: from infplacm016.services.comms.unsw.edu.au (smtp.unsw.edu.au [149.171.193.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC904DD
+        for <git@vger.kernel.org>; Mon,  3 Jul 2023 11:19:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=unsw.edu.au; i=@unsw.edu.au; q=dns/txt;
+  s=outboundall; t=1688408388; x=1719944388;
+  h=date:from:to:subject:message-id:mime-version;
+  bh=XS9NzCrZW9aSAoY3Ck9whjCbtvLQyRXUXXIcbhdxjcs=;
+  b=rulRngF++GX/sUqhpwlPWSqBGRICznXauluWg5+Yzk4eefJffsDaELsI
+   lXEknYZ20r4F0ljEpgkE6K7AAaEO/UBzV10CD0Z4Xzcslx0yYL470LWT8
+   ua1nk+uDzwenWDKr2TjaGRPLOPdalS70jg7GSx+AdZZ3njET16HfjVJns
+   eJh6GzbJG4wMU6XD1A2Qnvyg9i+Pg7P9q2n5ox0j/Ys3hmEdC19gfTg2j
+   TPG4xHIMQwcn42s4ov2RVjh7x8lmxH2v5LD+kV90GoE18Hv7paYB58FNz
+   U4oEo5kXUjbm7DyuNdy/tVYbUx85UG2dkVgzWMUaG1+po+JzNAUu52PhI
+   w==;
+X-IPAS-Result: =?us-ascii?q?A2E2CQAbEKNk/2QgFKxagQmBT5sQg0eZIYEsggQJAQEBA?=
+ =?us-ascii?q?QEBAQEBCAFEBAEBixQmNAkOAQIEAQEBAQMCAwEBAQEBAQMBAQEFAQEBAQEBB?=
+ =?us-ascii?q?gQCAoEZhS86DIZPOlUBIBwxhW6rOYE0gQGzEQkNgWgJAYE4jTeEeYFJRIkJh?=
+ =?us-ascii?q?nsEjh6FXweMJ2WBJ29NUYEeL0sCCQIRZ4EICF6Bbz4CDVULC2OBHIJOAgIRO?=
+ =?us-ascii?q?hRTeBsDBwNKOxAvBwQvJgYJGC8lBlEHLSQJExVBBINYCoENPxUOEYJXIgI9P?=
+ =?us-ascii?q?BtOgmoJFw44U4E7A0QdQAMLcD01FBuCSYFvCkilN4EOgikOxQ2EE4Fdnz4zh?=
+ =?us-ascii?q?AGlV5giIIIvpUYCBAIEBQIWgWOCFmwZgyNRGQ+iH4EeAgcLAQEDCYhugXxeA?=
+ =?us-ascii?q?QE?=
+IronPort-Data: A9a23:AwaEZapM3cJRAnvfRInN50Kdm0ReBmJUZBIvgKrLsJaIsI4StFCzt
+ garIBmPOarbZzb9edFyPYnnpxwCu5+Gx982TFFoqC8yEioQo5acVYWSI27OZC7DdceroGCLT
+ Sk9QoKZcJ1rFC+0SjOFaOWJQaxUjPnQLlbEILeYfHo3HWeIcQ954Tp7gek1n4V0ttawBgKJq
+ LvartbWULOf82cc3lk8teTb8XuDgNyo4GlD5gNmPqgS1LPjvyB94Kw3dPnZw0TQH9E88t6SH
+ 47r0Ly/92XFyBYhYvvNfmHTKxBirhb6ZGBiu1IOM0SQqkEqSh8aiM7XAMEhhXJ/0F1lqTzTJ
+ OJl7vRcQS9xVkHFsL5AAkMAS3kW0aduoNcrKlDn2SCfItGvn9IBDJyCAWlvVbD09NqbDklK0
+ dhBch8ENiuznsL1mpuSTvMznvo8eZyD0IM34hmMzBn4K9gefr3zGv2So9ZUmio2nd8IEPrDI
+ cMEAdZtRE2fOVsVYhFMUtRnxL/AanrXKlW0rHqH+PNuvjaOnCR6y7WrLdzOZZqHSdgTl1vwS
+ mfurj2nXUBBbID3JTyt90Kni7TfhgzHR70PSLezzftO3hqByTlGYPERfR7hyRWjsWaxWs53N
+ UMZ4GwtoLI0+UjtScPyNyBUu1aFuBAERNdASrVirgiBjLfS+BnfC2QZCDdcADA7iPILqfUR/
+ gfht7vU6fZH6tV5lVr1Gm+okA6P
+IronPort-HdrOrdr: A9a23:kCM5EakDEFAMGMFvLoyIb8jLByLpDfI/3DAbv31ZSRFFG/Fws/
+ re+8jztCWE7Ar5N0tPpTntAsi9qBDnhPtICOsqTNWftWDd0QPCRuwPgrcKqweQfREWndQttp
+ uIHZIfNOHN
+X-Talos-CUID: =?us-ascii?q?9a23=3AAwEibmtU7nLQVCT/WPO+fNtt6IshVlmElljZe3S?=
+ =?us-ascii?q?IEEYqEpS8TUXP4J17xp8=3D?=
+X-Talos-MUID: 9a23:shrifgsRTHpqWTjYU82ngQFpOZx4+IuSF38QzZ8NgMyga2tiNGLI
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.01,178,1684764000"; 
+   d="scan'208";a="91679304"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from infpwex100.ad.unsw.edu.au ([172.20.32.100])
+  by infplacm016.services.comms.unsw.edu.au with ESMTP/TLS/AES256-GCM-SHA384; 04 Jul 2023 04:18:43 +1000
+Received: from INFPWEX101.ad.unsw.edu.au (172.20.32.101) by
+ INFPWEX100.ad.unsw.edu.au (172.20.32.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Tue, 4 Jul 2023 04:18:42 +1000
+Received: from maillard.cse.unsw.edu.au (129.94.242.31) by
+ INFPWEX101.ad.unsw.edu.au (172.20.32.101) with Microsoft SMTP Server id
+ 15.1.2507.27 via Frontend Transport; Tue, 4 Jul 2023 04:18:42 +1000
+Received: by maillard.cse.unsw.edu.au (Postfix, from userid 219)
+        id 658A56EC3D; Tue,  4 Jul 2023 04:18:42 +1000 (AEST)
+Received: from vx12.cse.unsw.edu.au (vx12.orchestra.cse.unsw.EDU.AU [129.94.242.94])
+        by maillard.cse.unsw.edu.au (Postfix) with ESMTP id 5A9146EC3A
+        for <git@vger.kernel.org>; Tue,  4 Jul 2023 04:18:42 +1000 (AEST)
+Received: by vx12.cse.unsw.edu.au (Postfix, from userid 35317)
+        id 581AB11C78D2; Tue,  4 Jul 2023 04:18:42 +1000 (AEST)
+Date:   Tue, 4 Jul 2023 04:18:42 +1000
+From:   Dylan Brotherston <dylanb@cse.unsw.edu.au>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Possible Bug with `git commit -a` in v2.41.0
+Message-ID: <ZKMRAkH1r2mQ85Ff@vx12.orchestra.cse.unsw.EDU.AU>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v1 2/3] t1092: add tests for `git check-attr`
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com
-References: <20230701064843.147496-1-cheskaqiqi@gmail.com>
- <20230701064843.147496-3-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230701064843.147496-3-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> Add tests for `git check-attr`, make sure it behaves as expected when
-> path is both inside or outside of sparse-checkout definition.
-> 
-> Helped-by: Victoria Dye <vdye@github.com>
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 29 ++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
-> 
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 8a95adf4b5..4edfa3c168 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -2259,4 +2259,33 @@ test_expect_success 'worktree is not expanded' '
->  	ensure_not_expanded worktree remove .worktrees/hotfix
->  '
->  
-> +test_expect_success 'check-attr with pathspec inside sparse definition' '
-> +	init_repos &&
-> +
-> +	echo "a -crlf myAttr" >>.gitattributes &&
-> +	run_on_all cp ../.gitattributes ./deep &&
-> +
-> +	test_all_match git check-attr -a -- deep/a &&
+`git commit -a` is unable to remove the last file in the index in v2.41.0
 
-First, ensure 'check-attr' reads the attributes in the untracked
-.gitattributes...
+ 
 
-> +
-> +	test_all_match git add deep/.gitattributes &&
-> +	test_all_match git check-attr -a --cached -- deep/a
+comparing git version 2.30.2 to 2.41.0
 
-Then, once .gitattributes is in the index, 'check-attr --cached' reads the
-attributes from the index. Makes sense.
+ 
 
-> +'
-> +
-> +test_expect_success 'check-attr with pathspec outside sparse definition' '
-> +	init_repos &&
-> +
-> +	echo "a -crlf myAttr" >>.gitattributes &&
-> +	run_on_sparse mkdir folder1 &&
-> +	run_on_all cp ../.gitattributes ./folder1 &&
-> +	run_on_all cp a folder1/a &&
-> +
-> +	test_all_match git check-attr -a -- folder1/a &&
+```
 
-This test starts the same way as the last, ensuring a .gitattributes file on
-disk is read. The difference is, this one is outside the sparse cone;
-without the previous patch [1], this would not work correctly. Good!
+$ git --version
 
-[1] https://lore.kernel.org/git/20230701064843.147496-2-cheskaqiqi@gmail.com/
+git version 2.30.2
 
-> +
-> +	git -C full-checkout add folder1/.gitattributes &&
-> +	run_on_sparse git add --sparse folder1/.gitattributes &&
-> +	run_on_all git commit -m "add .gitattributes" &&
-> +	test_sparse_match git sparse-checkout reapply &&
-> +	test_all_match git check-attr  -a --cached -- folder1/a
+$ git init
 
-Now, add the file to the index and reapply the sparse-checkout patterns. In
-both 'sparse-checkout' and 'sparse-index', the file is removed from disk; in
-'sparse-index', the file is now contained in a sparse directory. Despite
-this, the attributes are still read correctly by 'check-attr --cached'. 
+Initialized empty Git repository in /tmp/tmp.vXqq6iVaqq/.git/
 
-These tests look great to me! 
+$ echo "foo" > a
 
-> +'
-> +
->  test_done
+$ git add a
 
+$ git commit -m "C1"
+
+[master (root-commit) b3abdc4] C1
+
+ 1 file changed, 1 insertion(+)
+
+ create mode 100644 a
+
+$ rm a
+
+$ git commit -a -m "C2"
+
+[master c3d4c44] C2
+
+ 1 file changed, 1 deletion(-)
+
+ delete mode 100644 a
+
+```
+
+ 
+
+```
+
+$ git --version
+
+git version 2.41.0
+
+$ git init
+
+Initialized empty Git repository in /tmp/tmp.vXqq6iVaqq/.git/
+
+$ echo "foo" > a
+
+$ git add a
+
+$ git commit -m "C1"
+
+[master (root-commit) af7c07d] C1
+
+ 1 file changed, 1 insertion(+)
+
+ create mode 100644 a
+
+$ rm a
+
+$ git commit -a -m "C2"
+
+On branch master
+
+Changes not staged for commit:
+
+  (use "git add/rm <file>..." to update what will be committed)
+
+  (use "git restore <file>..." to discard changes in working directory)
+
+        deleted:    a
+
+ 
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+```
+
+ 
+
+- Dylan Brotherston
