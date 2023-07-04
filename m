@@ -2,233 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 435E4EB64D9
-	for <git@archiver.kernel.org>; Tue,  4 Jul 2023 17:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7505EB64D9
+	for <git@archiver.kernel.org>; Tue,  4 Jul 2023 18:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231341AbjGDRkD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jul 2023 13:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45378 "EHLO
+        id S231472AbjGDSWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jul 2023 14:22:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjGDRkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jul 2023 13:40:02 -0400
-Received: from spamfilter1.renyi.hu (spamfilter1.renyi.hu [193.224.79.16])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D090E6D
-        for <git@vger.kernel.org>; Tue,  4 Jul 2023 10:39:59 -0700 (PDT)
-Received-SPF: pass (spamfilter1.renyi.hu: domain of gilyen.andras@renyi.hu designates 193.224.79.19 as permitted sender) receiver=spamfilter1.renyi.hu; client-ip=193.224.79.19; helo=smtp.renyi.hu; envelope-from=gilyen.andras@renyi.hu; x-software=spfmilter 2.001 http://www.acme.com/software/spfmilter/ with libspf2-1.2.10;
-Received: from smtp.renyi.hu (smtp.renyi.hu [193.224.79.19])
-        by spamfilter1.renyi.hu (8.15.2/8.15.2/Debian-8) with ESMTPS id 364HdbHp014072
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 4 Jul 2023 19:39:37 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=renyi.mta.hu; s=dkim; h=Content-Transfer-Encoding:Content-Type:Subject:From
-        :Cc:To:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Sdv1NQ6CsSWyOkd54YYykOkeFTbR2Bhby1Z7KcYA6rQ=; b=g8kQ2soa0ZNeVZSXT8k4THH7DC
-        4/pkBz5QrN+AxLuSd9JmIxzO1tZXdsY1v36vDD6vR0F0ugCuJgXX782jFwb7VNDk+eywT/Wl8m49J
-        /1QOUwh3JUL9g33lOvUSw5GpPQSxFbsc/UYskyMcvNknFzPlM3PgR1kqNyr8EeGNbNrc=;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=renyi.hu;
-         s=dkim; h=Content-Transfer-Encoding:Content-Type:Subject:From:Cc:To:
-        MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=Sdv1NQ6CsSWyOkd54YYykOkeFTbR2Bhby1Z7KcYA6rQ=; b=EpAa4Ofmq4P2XSXqPhWh797vVr
-        wSh1kCKQH/WBTzBFrCcpII3qNZQPCRS2WvksJ8bigCDYy8zrf65vwVo8Tx3LSaFltbVMzOwNXEPqB
-        JfQgNQn+sZCi6CcU0y38P21kgbej4wzKOx7tJcVSWwKA+flrhsaKk7FSFsptqGWP+HKE=;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mta.renyi.hu; s=dkim; h=Content-Transfer-Encoding:Content-Type:Subject:From
-        :Cc:To:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Sdv1NQ6CsSWyOkd54YYykOkeFTbR2Bhby1Z7KcYA6rQ=; b=lUMfrFFcwC0xe4I5Z4oRDszxSa
-        /kIp/hdo1MyQOg4vHVvcuUQq8VPKVHRrNMIjPXa80+ibZs/WCLFzVic6Idcq3Siy/xNGmahTowejv
-        brrEiaCU4Sick0YiL+pfPIUKE30soT5v+Kgb6JfHxlvQhF6jdLG7l+6JfUyOOOda9TBU=;
-Received: (Authenticated sender: gilyen)
-        by smtp.renyi.hu with esmtpsa(TLSv1.3:TLS_AES_128_GCM_SHA256:128) (Exim)
-        from <gilyen.andras@renyi.hu>id 1qGk01-0003bT-Tc; Tue, 04 Jul 2023 19:39:37 +0200
-Message-ID: <909d2af2-9395-5b13-7049-097237826032@renyi.hu>
-Date:   Tue, 4 Jul 2023 19:39:37 +0200
+        with ESMTP id S229645AbjGDSWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2023 14:22:14 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EFB5E72
+        for <git@vger.kernel.org>; Tue,  4 Jul 2023 11:22:13 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-57a1f51d7a7so12241337b3.1
+        for <git@vger.kernel.org>; Tue, 04 Jul 2023 11:22:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688494933; x=1691086933;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=s1Sbg+w0IPvt3TA04Q51nNs+n/NNRkE/eCvee7k4qgY=;
+        b=dLV5C9h+ffNmN8jKdIHskkanXQ6tfpnLfaCWiddSlMLdOLbjdTPdA+H7Xt0CyV1ETV
+         +pJudrmqyftO1HcerjfH0Ck5K18R1f6o4PE/N2YOMbGyK773J5WlK3n4r2mhNduG/dKa
+         +g2hUM/7F6PH3nWTi6aHpsckBWoPTYGhDXOEXQYV/Czcc8lb1VRdiVnqNSbCDhCb1v7p
+         NOH6nAUNMCBm/sqcnl4wyS8FustEzqyF1f5rJ1j3aRRZaXC8zbck8/ZswWGqUkni3WVg
+         0awqDB1qFrOsWCxHXXpE81rOYtHw4KlHpWQkv9NM1DI5avOfs6ZAYlsciBcZBsogJqKO
+         hmpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688494933; x=1691086933;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s1Sbg+w0IPvt3TA04Q51nNs+n/NNRkE/eCvee7k4qgY=;
+        b=On9C6zGfJg2O3v/49UfIxs+/V5KcqEdkxO83VvZd+HVfutgp1Qqb6eBkYC4f2MS43f
+         I4dzL2y3aTXwRoRNEO8o4rU4pYhcq0VXpSFGlEgBBJ+y2EFNgLrOfnElOe+VHWhwjpOH
+         pdpb1docHYuxkXxu40s+uX9OkWlwBhFSFxnkB5tFSERC7kexFiYoaPf7wBnclmziJVS9
+         wELTx7p+BE7BWSqTbIeYGBqyxhVsiZYhm86yp+N58olugJl6EJIGu7//EFAYmHy5ARvs
+         EBYoyalSw+cuEGBWTVeyMeSxTYDnbVOK7BTR46axLw3It0G3aSCv9lzkI2JoZNQNuDe8
+         kzWw==
+X-Gm-Message-State: ABy/qLbMal5y1572qIUowBoMzD/unvWR+qPg4U/3hrUC9NtUg/f9uxU4
+        CjHr2vlLetK4K8lHWs1mnPJQ8Q==
+X-Google-Smtp-Source: APBJJlHP+xJRHFMXiDUKsmAMlWob7qxfwliybPJfVt8hw4Ui3pKfJP0W8QCjY+9QSWjttClNl8ScKQ==
+X-Received: by 2002:a81:ab52:0:b0:561:cb45:d7de with SMTP id d18-20020a81ab52000000b00561cb45d7demr15888936ywk.31.1688494932773;
+        Tue, 04 Jul 2023 11:22:12 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y196-20020a81a1cd000000b005772b76cb18sm3086342ywg.4.2023.07.04.11.22.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jul 2023 11:22:11 -0700 (PDT)
+Date:   Tue, 4 Jul 2023 14:22:10 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 12/16] refs/packed-backend.c: ignore complicated
+ hidden refs rules
+Message-ID: <ZKRjUkN/ggLBeIUu@nand.local>
+References: <cover.1683581621.git.me@ttaylorr.com>
+ <cover.1687270849.git.me@ttaylorr.com>
+ <845904853eeae1741d681a35fdd7816ea16b939a.1687270849.git.me@ttaylorr.com>
+ <20230703061839.GH3502534@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Content-Language: en-US
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        Sergey Vlasov <vsu@altlinux.ru>,
-        =?UTF-8?B?QW5kcsOhcyBHaWx5w6lu?= <gilyen.andras@renyi.hu>
-From:   =?UTF-8?B?QW5kcsOhcyBHaWx5w6lu?= <gilyen.andras@renyi.hu>
-Subject: Re: [PATCH] gitk: new config options for wrapping and diff modes
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.100.2 at spamfilter1
-X-Virus-Status: Clean
-X-Scanned-By: MIMEDefang 2.79 on 10.0.2.87
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230703061839.GH3502534@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using gitk for tracking changes in large text files,
-which often have very long lines consisting of, e.g.,
-a paragarph of an article, it is highly desirable to
-wrap the lines in the diff view and also to set the
-default diff mode to "Markup words" or "Color lines".
+On Mon, Jul 03, 2023 at 02:18:39AM -0400, Jeff King wrote:
+> On Tue, Jun 20, 2023 at 10:22:02AM -0400, Taylor Blau wrote:
+>
+> > In subsequent commits, we'll teach `receive-pack` and `upload-pack` to
+> > use the new jump list feature in the packed-refs iterator by ignoring
+> > references which are mentioned via its respective hideRefs lists.
+> >
+> > However, the packed-ref jump lists cannot handle un-hiding rules (that
+> > begin with '!'), or namespace comparisons (that begin with '^'). Detect
+> > and avoid these cases by falling back to the normal enumeration without
+> > a jump list when such patterns exist.
+>
+> I'm a fan of punting on such cases to keep things simple and
+> incremental. But the location here seems weird to me:
+>
+> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> > index 80b877e00c..2aeec5c601 100644
+> > --- a/refs/packed-backend.c
+> > +++ b/refs/packed-backend.c
+> > @@ -1008,6 +1008,25 @@ static void populate_excluded_jump_list(struct packed_ref_iterator *iter,
+> >  	if (!excluded_patterns)
+> >  		return;
+> >
+> > +	for (pattern = excluded_patterns; *pattern; pattern++) {
+> > +		/*
+> > +		 * We also can't feed any excludes from hidden refs
+> > +		 * config sections, since later rules may override
+> > +		 * previous ones. For example, with rules "refs/foo" and
+> > +		 * "!refs/foo/bar", we should show "refs/foo/bar" (and
+> > +		 * everything underneath it), but the earlier exclusion
+> > +		 * would cause us to skip all of "refs/foo". We likewise
+> > +		 * don't implement the namespace stripping required for
+> > +		 * '^' rules.
+> > +		 *
+> > +		 * Both are possible to do, but complicated, so avoid
+> > +		 * populating the jump list at all if we see either of
+> > +		 * these patterns.
+> > +		 */
+> > +		if (**pattern == '!' || **pattern == '^')
+> > +			return;
+> > +	}
+> > +
+>
+> This is deep in the packed-refs code, but the magic of "!" and "^" are
+> specific to ref_is_hidden().
+>
+> So if I did:
+>
+>   git for-each-ref --exclude='!refs/heads/foo'
+>
+> my understanding is that "!" would _not_ have an affect normally, but
+> now it is turning off this optimization.
 
-There is a configurable option "wrapcomment" to make the
-comments wrap in gitk, and now an additional "wraplines"
-option is introduced for warpping lines in the source files.
-Similarly, an option "worddiffdefault" is introduced which
-sets the default diff view mode to "Markup words" or
-"Color lines". These options can be set by editing gitk's
-configuration file. The default behaviours are unchanged.
+Yeah, that makes sense -- I agree that it is silly to have a reference
+with "!" at the beginning, but since it's allowed we should absolutely
+support it.
 
-The new options are documented in Documentation/gitk,
-where the formerly undocumented feature "wrapcomment"
-also got explained, which was introduced by Commit f1b8629453
-([PATCH] gitk: Display commit messages with word wrap, 2006-05-15).
+> Something along the lines of (you'd want a similar tweak for
+> upload-pack):
 
-Suggested-by: Ailin Nemui <ailin.nemui@xxxxxxxxx>
-(https://www.spinics.net/lists/git/msg274761.html )
-Signed-off-by: András Gilyén <gilyen@renyi.hu>
----
-I apologize, the previous e-mail had some wrapping issues.
-The following diff should now be sent without MUA induced
-wrapping issues:
+Yep. Here's the extra tweak for upload-pack:
 
-  Documentation/gitk.txt | 26 ++++++++++++++++++++++++--
-  gitk-git/gitk          | 36 ++++++++++++++++++++++--------------
-  2 files changed, 46 insertions(+), 16 deletions(-)
+--- 8< ---
+commit 5a8902731b91a8fc6900586968a79ebc6272e502
+Author: Taylor Blau <me@ttaylorr.com>
+Date:   Tue Jul 4 14:21:22 2023 -0400
 
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index d50e9ed10e..e0650db6da 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -161,10 +161,32 @@ If neither of the above exist then `$XDG_CONFIG_HOME/git/gitk` is created and
-  used by default. If '$XDG_CONFIG_HOME' is not set it defaults to
-  `$HOME/.config` in all cases.
-  
-+The following are some options that are configurable by updating the contents
-+of the above configuration file. To set an option to a specific value add a
-+line containing "set <option> <value>".
+    fixup! upload-pack.c: avoid enumerating hidden refs where possible
+
+diff --git a/upload-pack.c b/upload-pack.c
+index 3a176a7209..ef2ca36feb 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -610,6 +610,7 @@ static int allow_hidden_refs(enum allow_uor allow_uor)
+ static void for_each_namespaced_ref_1(each_ref_fn fn,
+ 				      struct upload_pack_data *data)
+ {
++	const char **excludes = NULL;
+ 	/*
+ 	 * If `data->allow_uor` allows fetching hidden refs, we need to
+ 	 * mark all references (including hidden ones), to check in
+@@ -619,12 +620,13 @@ static void for_each_namespaced_ref_1(each_ref_fn fn,
+ 	 * has the OUR_REF bit set or not, so do not need to visit
+ 	 * hidden references.
+ 	 */
+-	if (allow_hidden_refs(data->allow_uor))
+-		for_each_namespaced_ref(NULL, fn, data);
+-	else
+-		for_each_namespaced_ref(data->hidden_refs.v, fn, data);
++	if (!allow_hidden_refs(data->allow_uor))
++		excludes = hidden_refs_to_excludes(&data->hidden_refs);
 +
-+wrapcomment::
++	for_each_namespaced_ref(excludes, fn, data);
+ }
+
 +
-+	Describes whether the comment section of a commit should be displayed
-+	with (word) wrapded lines or without any wrapping of the lines.
-+	Vaild options are none (default setting) and word.
-+
-+wraplines::
-+
-+	Describes whether the source section in the gitk viewer should be displayed
-+	with (word) wrapded lines or should be scrollaple with unwrapped lines.
-+	Vaild options are none (default setting) and word.
-+
-+worddiffdefault::
-+
-+	Sets the default diff view mode for gitk. Valid options are:
-+	lines -- for "Line diff" (default setting)
-+	markup -- for "Markup words"
-+	color -- for "Color words"
-+
-  History
-  -------
--Gitk was the first graphical repository browser. It's written in
--tcl/tk.
-+Gitk was the first graphical repository browser. It's written in tcl/tk.
-  
-  'gitk' is actually maintained as an independent project, but stable
-  versions are distributed as part of the Git suite for the convenience
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index df3ba2ea99..91dea9df73 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2089,7 +2089,7 @@ proc makewindow {} {
-      global diffcontextstring diffcontext
-      global ignorespace
-      global maincursor textcursor curtextcursor
--    global rowctxmenu fakerowmenu mergemax wrapcomment
-+    global rowctxmenu fakerowmenu mergemax wrapcomment wraplines
-      global highlight_files gdttype
-      global searchstring sstring
-      global bgcolor fgcolor bglist fglist diffcolors diffbgcolors selectbgcolor
-@@ -2101,7 +2101,7 @@ proc makewindow {} {
-      global rprogitem rprogcoord rownumsel numcommits
-      global have_tk85 use_ttk NS
-      global git_version
--    global worddiff
-+    global worddiff worddiffdefault
-  
-      # The "mc" arguments here are purely so that xgettext
-      # sees the following string as needing to be translated
-@@ -2420,7 +2420,13 @@ proc makewindow {} {
-          -command changeignorespace -variable ignorespace
-      pack .bleft.mid.ignspace -side left -padx 5
-  
--    set worddiff [mc "Line diff"]
-+    if {$worddiffdefault == "color" && [package vcompare $git_version "1.7.2"] >= 0} {
-+        set worddiff [mc "Color words"]
-+    } elseif {$worddiffdefault == "markup" && [package vcompare $git_version "1.7.2"] >= 0} {
-+        set worddiff [mc "Markup words"]
-+    } else {
-+        set worddiff [mc "Line diff"]
-+    }
-      if {[package vcompare $git_version "1.7.2"] >= 0} {
-          makedroplist .bleft.mid.worddiff worddiff [mc "Line diff"] \
-              [mc "Markup words"] [mc "Color words"]
-@@ -2431,7 +2437,7 @@ proc makewindow {} {
-      set ctext .bleft.bottom.ctext
-      text $ctext -background $bgcolor -foreground $fgcolor \
-          -state disabled -undo 0 -font textfont \
--        -yscrollcommand scrolltext -wrap none \
-+        -yscrollcommand scrolltext -wrap $wraplines \
-          -xscrollcommand ".bleft.bottom.sbhorizontal set"
-      if {$have_tk85} {
-          $ctext conf -tabstyle wordprocessor
-@@ -12392,6 +12398,7 @@ set downarrowlen 5
-  set mingaplen 100
-  set cmitmode "patch"
-  set wrapcomment "none"
-+set wraplines "none"
-  set showneartags 1
-  set hideremotes 0
-  set maxrefs 20
-@@ -12438,6 +12445,7 @@ set diffbgcolors {"#fff3f3" "#f0fff0"}
-  set diffcontext 3
-  set mergecolors {red blue "#00ff00" purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
-  set ignorespace 0
-+set worddiffdefault "line"
-  set worddiff ""
-  set markbgcolor "#e0e0ff"
-  
-@@ -12497,16 +12505,16 @@ config_check_tmp_exists 50
-  
-  set config_variables {
-      mainfont textfont uifont tabstop findmergefiles maxgraphpct maxwidth
--    cmitmode wrapcomment autoselect autosellen showneartags maxrefs visiblerefs
--    hideremotes showlocalchanges datetimeformat limitdiffs uicolor want_ttk
--    bgcolor fgcolor uifgcolor uifgdisabledcolor colors diffcolors mergecolors
--    markbgcolor diffcontext selectbgcolor foundbgcolor currentsearchhitbgcolor
--    extdifftool perfile_attrs headbgcolor headfgcolor headoutlinecolor
--    remotebgcolor tagbgcolor tagfgcolor tagoutlinecolor reflinecolor
--    filesepbgcolor filesepfgcolor linehoverbgcolor linehoverfgcolor
--    linehoveroutlinecolor mainheadcirclecolor workingfilescirclecolor
--    indexcirclecolor circlecolors linkfgcolor circleoutlinecolor diffbgcolors
--    web_browser
-+    cmitmode wrapcomment wraplines worddiffdefault autoselect autosellen
-+    showneartags maxrefs visiblerefs hideremotes showlocalchanges datetimeformat
-+    limitdiffs uicolor want_ttk bgcolor fgcolor uifgcolor uifgdisabledcolor
-+    colors diffcolors mergecolors markbgcolor diffcontext selectbgcolor
-+    foundbgcolor currentsearchhitbgcolor extdifftool perfile_attrs
-+    headbgcolor headfgcolor headoutlinecolor remotebgcolor tagbgcolor
-+    tagfgcolor tagoutlinecolor reflinecolor filesepbgcolor filesepfgcolor
-+    linehoverbgcolor linehoverfgcolor linehoveroutlinecolor mainheadcirclecolor
-+    workingfilescirclecolor indexcirclecolor circlecolors linkfgcolor
-+    circleoutlinecolor diffbgcolors web_browser
-  }
-  foreach var $config_variables {
-      config_init_trace $var
--- 
-2.34.1
+ static int is_our_ref(struct object *o, enum allow_uor allow_uor)
+ {
+ 	return o->flags & ((allow_hidden_refs(allow_uor) ? HIDDEN_REF : 0) | OUR_REF);
+--- >8 ---
+
+Thanks,
+Taylor
