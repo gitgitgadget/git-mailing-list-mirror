@@ -2,84 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05585C001B0
-	for <git@archiver.kernel.org>; Mon,  3 Jul 2023 20:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AC16EB64DA
+	for <git@archiver.kernel.org>; Tue,  4 Jul 2023 09:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230010AbjGCUZL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jul 2023 16:25:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37750 "EHLO
+        id S231134AbjGDJhI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jul 2023 05:37:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjGCUZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2023 16:25:10 -0400
-Received: from haze.kloetzke.net (haze.kloetzke.net [IPv6:2a03:4000:13:91f:34ea:99ff:fed2:e113])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04688E4E
-        for <git@vger.kernel.org>; Mon,  3 Jul 2023 13:25:07 -0700 (PDT)
-Received: from localhost (p578ec94b.dip0.t-ipconnect.de [87.142.201.75])
-        by haze.kloetzke.net (Postfix) with ESMTPSA id 279B5800B7;
-        Mon,  3 Jul 2023 22:25:05 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=kloetzke.net; s=2020;
-        t=1688415905; bh=Aa3XHLRPtuL547A0Ys4goFWhLjq7lolNf8tqIydznEE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qkDPhG346ehWrY+DKNMW9qzCk1YJ/QLN2QyqakkoG1E8OKh1BUIgZp5vqBlVunlsY
-         teugNJJabAl8wZnH7tDxxDC1GmLQbjOqhdj+VlS6ZijXDmwA47I3sp5FuX+xBEt1dA
-         uwq8NyZF3taw8t6wFqf99YMmWj+oerUr/XM3l4RqyTohiDVBRjRJPAMxjn+4WKCf9s
-         nN6j+9CWrO3NPhfROxbV08TsobrIBj5N6wwwopA+QXjPh2/0vUZpjZZXnjkwef1mYI
-         4v6avjyn5Ojfq3W6KlTkX88tYvCXIha3gtzplXLDxQdJsek+MDxDQcgshbEk4WbY6j
-         oGR8Dpii6MqgA==
-Date:   Mon, 3 Jul 2023 22:25:03 +0200
-From:   Jan =?iso-8859-1?Q?Kl=F6tzke?= <jan@kloetzke.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Steve Kemp <steve@steve.org.uk>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH] ref-filter: handle nested tags in --points-at option
-Message-ID: <ZKMun/sl9rS/2gQC@thinkpad.fritz.box>
-References: <20230701205703.1172505-1-jan@kloetzke.net>
- <20230702125611.GA1036686@coredump.intra.peff.net>
- <20230702220243.GA1534980@coredump.intra.peff.net>
+        with ESMTP id S231674AbjGDJgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2023 05:36:47 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B73881998
+        for <git@vger.kernel.org>; Tue,  4 Jul 2023 02:34:37 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb863edcb6so8735761e87.0
+        for <git@vger.kernel.org>; Tue, 04 Jul 2023 02:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688463255; x=1691055255;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=E9e6YatVHwk6JIj1pVongrzhZtlyd8ZyeN2ktv9eju0=;
+        b=LldobfCabypOhuDNeD6DAD6h6tYxgpNMGqTEA7gHMNjikOYbJogRniqtPoCtR9fvcr
+         ZNYxiKWAsEQiWlBgWHcU37K7Nf2RHVzh8fctHxgtVGp7VgV20eay0Xnrt+qPildtV3wl
+         Pem/j9H/5WL/DwKzu7IMrLY/GfWko/xWUroXhBFARdplTijvx/CEfj2n+G88vifrri3y
+         oUDFuju2Xu2SqfwMCQmPzjvukuFDf2jwi7hmtMczR/r6k12ADSthzuAFAhNzNgju2JfA
+         eI85eEXZLvYGXnJESmqxXXt7k1bttKXN03tygtgyB1NA11PK3OTZ+S0D8n/VJjXQSQK7
+         j94A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688463255; x=1691055255;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E9e6YatVHwk6JIj1pVongrzhZtlyd8ZyeN2ktv9eju0=;
+        b=JU32VIBqfATnKjeboM2bZCiWb2MENKMcXT5XpfU8dZyNJE4nuHCxF1vMmDxDXAfMxP
+         PfnKv2jNna/1GTgdjg5z563PUoV9IMBgguGK8X3eyNYYFdmgSwkX7Ia9SqZ7yQHIWzz4
+         eswZ4BqbIw0+xwRUd8g/PQB17uXLqmiJvxi7Opy+jp4EWKvgZ0T7HX1HyY531GqcrvvF
+         JsJaj9vw6ks8SBAn1qolYPRhEsNxgy6GQos2Y/s+kqv+OCTQwS/v3eQpZ+h7Jq+g8HeB
+         Hk++WHajpI7fNI7BCMwVlNshZHcfR2rcSyN2/HP/djunJx17LhG7wbqVzMndfUk0c3uw
+         OMmQ==
+X-Gm-Message-State: ABy/qLaYH960yG+0xKNdZblJ+mI7wrFWUMg3XD1t/frdC4qlCUywFX0F
+        Q83HrOU2zz76pjHn3T9XknqaW5y0ZnqBfckcbVDvkHAWQOM=
+X-Google-Smtp-Source: APBJJlGBAhuK54y2Qkz6p32swdwL9J6b8bxMhAWRdSJP+gO++kzh4ufCTqRNjCvjiGkm74DqjKO350LZCltfISpFHZk=
+X-Received: by 2002:a19:8c4d:0:b0:4fb:7c40:9f95 with SMTP id
+ i13-20020a198c4d000000b004fb7c409f95mr8368549lfj.47.1688463254450; Tue, 04
+ Jul 2023 02:34:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230702220243.GA1534980@coredump.intra.peff.net>
+References: <xmqq5y747l16.fsf@gitster.g>
+In-Reply-To: <xmqq5y747l16.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 4 Jul 2023 11:34:02 +0200
+Message-ID: <CAP8UFD1CfUm+9PTXO0wBBdBs0U=YVte+EiPbDyUyg7T152aw2g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2023, #08; Fri, 30)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Sun, Jul 02, 2023 at 06:02:43PM -0400 schrieb Jeff King:
-> On Sun, Jul 02, 2023 at 08:56:11AM -0400, Jeff King wrote:
-> 
-> > My biggest question would be whether this introduces any performance
-> > penalty for the more common cases (lightweight tags and single-level
-> > annotated tags). The answer is "no", I think; we are already paying the
-> > cost to parse every object to find out if it's a tag, and your new loop
-> > only does an extra parse if we see a tag-of-tag. Good.
-> 
-> Reading more carefully, I think this does actually change the
-> performance a bit, because we end up parsing the pointed-to commits, as
-> well. So here's before and after your patch running "git for-each-ref
-> --points-at=HEAD" on linux.git (785 refs, all but 3 are tags):
-> 
->   Benchmark 1: ./git.old for-each-ref --points-at=HEAD
->     Time (mean ± σ):      11.4 ms ±   0.2 ms    [User: 6.5 ms, System: 4.9 ms]
->     Range (min … max):    11.0 ms …  12.3 ms    239 runs
->   
->   Benchmark 2: ./git.new for-each-ref --points-at=HEAD
->     Time (mean ± σ):      20.6 ms ±   0.5 ms    [User: 10.4 ms, System: 10.2 ms]
->     Range (min … max):    19.8 ms …  22.7 ms    133 runs
->   
->   Summary
->     './git.old for-each-ref --points-at=HEAD' ran
->       1.80 ± 0.06 times faster than './git.new for-each-ref --points-at=HEAD'
-> 
-> The absolute numbers are pretty small, but the percent change isn't
-> great. I'll send some patches in a minute that can be applied on top to
-> improve this case, as well as fix the other issues I pointed out in the
-> existing code.
+> * ks/ref-filter-signature (2023-06-06) 2 commits
+>  - ref-filter: add new "signature" atom
+>  - t/lib-gpg: introduce new prereq GPG2
+>
+>  The "git for-each-ref" family of commands learned placeholders
+>  related to GPG signature verification.
+>
+>  Needs review.
+>  source: <20230604185815.15761-1-five231003@gmail.com>
 
-I have to admit I was not entirely sure about the performance
-implications. The relative performance drop is indeed substantial.
-Thanks for the thorough review and swiftly taking care of these!
+I took another look at the v3 at:
 
--- Jan
+https://lore.kernel.org/git/20230604185815.15761-1-five231003@gmail.com/
+
+which properly addresses the comments made by Eric and Oswald on the
+v2 and looks great to me.
+
+The v1 and v2 were not the first times it was commented on as this
+comes from the work of Nsengiyumva Wilberforce, Jaydeep Das and Hariom
+Verma before Kousik took over.
+
+Nsengiyumva Wilberforce in particular had sent 5 versions of it
+previously to the mailing list:
+
+https://lore.kernel.org/git/20230311210607.64927-2-nsengiyumvawilberforce@gmail.com/
