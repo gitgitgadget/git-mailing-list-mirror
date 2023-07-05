@@ -2,72 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53323EB64DA
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 20:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33034EB64DA
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 20:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232797AbjGEUCA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 16:02:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34104 "EHLO
+        id S231613AbjGEUCs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 16:02:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232111AbjGEUBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 16:01:33 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963A4A9
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 13:01:32 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 41be03b00d2f7-5577905ef38so3917a12.0
-        for <git@vger.kernel.org>; Wed, 05 Jul 2023 13:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688587292; x=1691179292;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XQk/gNrrhJbg6z/h8WoPJBApbIlZQlViHHL1KjcLuuE=;
-        b=JgcJipiQepajgrPt5CSdnI5b9sa1gdQFKo15nj4LulrbCU4gHls/jge2shLA0kOGvU
-         JSdznR3t9p2kEujYqOoiLF59amNcPKuGDqc6GMJQVopxHalFO3Hgl4qfAybLpNjpxF2x
-         0xy34xEhYpbyuP2+fsG8BPRkqQWCVPtKsV1CZUnvJqsa2c3m1PgZH9U+mm0o0xyTtTE3
-         WR3N53WbZnucCJaYkFBtcNL3hducRCwzrArj1dZEpFXfKMLxNKiZr0r5JnllmSEug75A
-         18AO9sgLPPELTqVLNLZ7JtWuZKoGz2jBkslFmKj20ZIHhBoP7pBx6J+UY1BWCFYPz2v1
-         5M2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688587292; x=1691179292;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XQk/gNrrhJbg6z/h8WoPJBApbIlZQlViHHL1KjcLuuE=;
-        b=VLACT/orb0u25fc2qZ3e263EtclihrQx6KQtMy8NytaOQO0tg7HSU1vksLghRZFLr1
-         HPdH9bUwytY/XjN//0vKDXB1EBneN13e6qiWK4pKn5uB8L2m4wYGjaPmThhx6jbla/Ok
-         ESSSg4OSW3hl19YfEA9DSONfa3WzUlfql/qqpbVmo2jDiQ2rjKOFv4k7uFLqY0x/hXIV
-         DpIEN0+OSZwKZPLtWYh+r6HB94m1cA2Rt8LAc82HW9I/4hZ1eOk04Dy0imR0c2oCF6e+
-         BIuXj2Mr0t9bjW3F32TbPXXUG56yYq6r4wMzrKfyhkt2dmBtp96KR2rTec9YWCncQ5NL
-         Oo7Q==
-X-Gm-Message-State: AC+VfDzeVJz/0qZ6XF4ADPbVgEbbJ4D0dVLQMjBtnLLwTk+tiZothx+/
-        WDOPio5a5P/tgyIZcJ/R7M885YauXLc=
-X-Google-Smtp-Source: ACHHUZ6oPlgTe/dnYSLszGSOBAB/r5EfxRBPJfpgE4O0X5E0A3KGIYrcYlfqVZKun6gXzn3XiACLqg==
-X-Received: by 2002:a05:6a20:9494:b0:125:7a4e:ade6 with SMTP id hs20-20020a056a20949400b001257a4eade6mr14748537pzb.17.1688587291690;
-        Wed, 05 Jul 2023 13:01:31 -0700 (PDT)
-Received: from five231003 ([49.37.156.238])
-        by smtp.gmail.com with ESMTPSA id u10-20020a63140a000000b0055bc3b97f34sm2978794pgl.19.2023.07.05.13.01.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jul 2023 13:01:31 -0700 (PDT)
-Date:   Thu, 6 Jul 2023 01:31:16 +0530
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [GSoC] Blog
-Message-ID: <ZKXMDNfVSOEMrot3@five231003>
+        with ESMTP id S229645AbjGEUCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 16:02:38 -0400
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7BA612A
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 13:02:37 -0700 (PDT)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4Qx9Yl6WcFz5tlB;
+        Wed,  5 Jul 2023 22:02:35 +0200 (CEST)
+Message-ID: <87390f51-aa8d-4a25-4d73-0fee04a58f7a@kdbg.org>
+Date:   Wed, 5 Jul 2023 22:02:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZIdrQybUsjEcxMrb@five231003>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 08/10] gitk: add keyboard bind for create branch
+ command
+Content-Language: en-US
+To:     Jens Lidestrom <jens@lidestrom.se>
+Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org,
+        Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
+ <pull.1551.v2.git.1688409958.gitgitgadget@gmail.com>
+ <bd498f5b3267a1c61e436447a1d81f693c9abc9d.1688409958.git.gitgitgadget@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <bd498f5b3267a1c61e436447a1d81f693c9abc9d.1688409958.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-Week 6 post is here
+Am 03.07.23 um 20:45 schrieb Jens Lidestrom via GitGitGadget:
+> From: Jens Lidestrom <jens@lidestrom.se>
+> 
+> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
+> ---
+>  gitk-git/gitk | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 351b88f10c0..f559e279b7a 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -9582,13 +9582,13 @@ proc wrcomcan {} {
+>      unset wrcomtop
+>  }
+>  
+> -proc mkbranch {} {
+> -    global NS rowmenuid
+> +proc mkbranch {id} {
+> +    global NS
+>  
+>      set top .branchdialog
+>  
+>      set val(name) ""
+> -    set val(id) $rowmenuid
+> +    set val(id) $id
+>      set val(command) [list mkbrgo $top]
+>  
+>      set ui(title) [mc "Create branch"]
 
-	Week 6: https://five-sh.github.io/2023/07/05/week6
+Clearly, the lines from the 'remove branch' commit belong here.
 
-Feel free to suggest any changes or comment on or off list.
-
-Thanks
