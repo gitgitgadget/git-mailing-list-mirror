@@ -2,109 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDD2AEB64DA
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 17:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6261DEB64DA
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 17:57:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233033AbjGERx7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 13:53:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34292 "EHLO
+        id S233283AbjGER5X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 13:57:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230513AbjGERx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 13:53:58 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D1DF7
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 10:53:57 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6B0AC3671C;
-        Wed,  5 Jul 2023 13:53:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TSweX4kS2YzdxzTglN6FmhjgB4Vd2CByaMSQ6P
-        LribQ=; b=Pv4nTvhScfvCk1TIgtesyGs9jXZV8dj5vOwZ+3zazCGyZyKcJvaer1
-        a6pS02mnsNltN5MbNSrbUdZQF/ijVRECvfyYN7sepBpb31Trh3hMY1EPBZcK+sR4
-        AJzI2flRZiQDArJOjBeM3a39fTzhRVw850UwabaRwjy8JsVyBVkBQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 63C823671B;
-        Wed,  5 Jul 2023 13:53:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.233.135.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 036B63671A;
-        Wed,  5 Jul 2023 13:53:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 5/8] repack: add `--filter=<filter-spec>` option
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
-        <20230705060812.2865188-1-christian.couder@gmail.com>
-        <20230705060812.2865188-6-christian.couder@gmail.com>
-Date:   Wed, 05 Jul 2023 10:53:52 -0700
-In-Reply-To: <20230705060812.2865188-6-christian.couder@gmail.com> (Christian
-        Couder's message of "Wed, 5 Jul 2023 08:08:09 +0200")
-Message-ID: <xmqqh6qi1byn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S233247AbjGER5W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 13:57:22 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA261985
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 10:57:20 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-401d1d967beso32481cf.0
+        for <git@vger.kernel.org>; Wed, 05 Jul 2023 10:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1688579840; x=1691171840;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=azLwAOJ678kvuoEdIbL0IsyaadjxewEX61S/kzuA/2s=;
+        b=qYbs2cpfkiRCF6WqczndLIdzLdZ/00+lNx5dKITku0pdAvZWkE3WrmfPZVwoStVMPd
+         ACPGWhgu6sASVGCV4HUlAhXEt2Rnfl/x8CULWss6OF+mfIKBVBNY6Kxcy/fDDjXiIHck
+         ii9RJp1sscyjTEXr3LatbBZN1Mpwp207273R7O3LOXM7aZBL/XKzg1cCiFiP4sVbwuR0
+         zsY7F5qREBKBpIDR9DBKHdeTnM/6EaH+Enrfygp9fOFz8koG5xoq1xReSgnBlfI1bSla
+         Kkq9hhCmRQF65b0cN9cgp0sAa0g56aLPL0Uu8KXPAN4LKnw/QglP5hlebY7bpDdSYw9F
+         quzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688579840; x=1691171840;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=azLwAOJ678kvuoEdIbL0IsyaadjxewEX61S/kzuA/2s=;
+        b=ktTUBbfFVKjk1THI7NYiyYHGEdAVZ/5I46xgfSWOAWXB0xNbO7Ux92Um5NGPq3Q3Gd
+         BbdjS7ytIZiUXoxs9X+1gPstzpYZj2IT7MyprpR9sR/b2AIvS9qIjw2Zf1yFKarGB6x5
+         Bs/8sXvauhC3U8HPccCGK2CPDHjLOFv9huktAn8AM2h+YRQ97GVVzsuTwl/0qxAGEzTi
+         F+oqhtyGsjK7NnYi7HbbqrZQZHHoim4L+dwauNPvkbsV64XJ4faL1V28mbJgbk23f758
+         I+hKgpi0DXTf42bIMAdxDHNKvfv8QxMaAoVNTD0Y/I1MrfDOyCm9W7QS/sjrOKJTKi1b
+         uxUw==
+X-Gm-Message-State: ABy/qLY+VkMj27HFAYuUTVLuTFPnR1stRbhpc/b7IGryC8pA1eRhANeG
+        UuZUIz6gu1RjQ+pacCntIbppqDu7VJinoMhjKtENyg==
+X-Google-Smtp-Source: APBJJlG+QK9WmjYJGehGmsWAZuNmSZtfqE0I5vyO6FnOKxKqmqJRDkC7/V+0AIQKNRcGIcJnx81ZavxsijqjzSDYOZI=
+X-Received: by 2002:a05:622a:199a:b0:3f8:6685:c944 with SMTP id
+ u26-20020a05622a199a00b003f86685c944mr18034qtc.14.1688579839740; Wed, 05 Jul
+ 2023 10:57:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E81E2BD4-1B5C-11EE-B4C0-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+References: <20230627195251.1973421-1-calvinwan@google.com>
+ <20230627195251.1973421-2-calvinwan@google.com> <05df2971-0f26-6da3-093b-7de5d7a5dbca@github.com>
+In-Reply-To: <05df2971-0f26-6da3-093b-7de5d7a5dbca@github.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 5 Jul 2023 10:57:08 -0700
+Message-ID: <CAFySSZCYpxNcK6Tfagk1ZBs6cOT9XvWm2b3DJhN0fSPsQCWR1g@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/8] trace2: log fsync stats in trace2 rather than wrapper
+To:     Victoria Dye <vdye@github.com>
+Cc:     git@vger.kernel.org, nasamuffin@google.com, chooglen@google.com,
+        johnathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> This could be useful if, for example, some large blobs take a lot of
-> precious space on fast storage while they are rarely accessed. It could
-> make sense to move them into a separate cheaper, though slower, storage.
+> This function does not belong in 'trace2.h', IMO. The purpose of that file
+> is to contain the generic API for Trace2 (e.g., 'trace2_printf()',
+> 'trace2_region_(enter|exit)'), whereas this function is effectively a
+> wrapper around a specific invocation of that API.
 >
-> In other use cases it might make sense to put all the blobs into
-> separate storage.
+> You note in the commit message that "wrapper.c should not directly log
+> trace2 statistics" with the reasoning of "[it's] a library boundary," but I
+> suspect the unstated underlying reason is "because it tracks 'count_fsync_*'
+> in static variables." This case would be better handled, then, by replacing
+> the usage in 'wrapper.c' with a new Trace2 counter (API introduced in [1]).
+> That keeps this usage consistent with the API already established for
+> Trace2, rather than starting an unsustainable trend of creating ad-hoc,
+> per-metric wrappers in 'trace2.[c|h]'.
 
-Minor nit.  Aren't the above two the same use case?
+The underlying reason is for removing the trace2 dependency from
+wrapper.c so that when git-std-lib is compiled, there isn't a missing
+object for  trace_git_fsync_stats(), resulting in a compilation error.
+However I do agree that the method I chose to do so by creating an
+ad-hoc wrapper is unsustainable and I will come up with a better
+method for doing so.
 
-> This is done by running two `git pack-objects` commands. The first one
-> is run with `--filter=<filter-spec>`, using the specified filter. It
-> packs objects while omitting the objects specified by the filter.
-> Then another `git pack-objects` command is launched using
-> `--stdin-packs`. We pass it all the previously existing packs into its
-> stdin, so that it will pack all the objects in the previously existing
-> packs. But we also pass into its stdin, the pack created by the previous
-> `git pack-objects --filter=<filter-spec>` command as well as the kept
-> packs, all prefixed with '^', so that the objects in these packs will be
-> omitted from the resulting pack.
+>
+> An added note re: the commit message - it's extremely important that
+> functions _anywhere in Git_ are able to use the Trace2 API directly. A
+> developer could reasonably want to measure performance, keep track of an
+> interesting metric, log when a region is entered in the larger trace,
+> capture error information, etc. for any function, regardless of where in
+> falls in the internal library organization.
 
-When I started reading the paragraph, the first question that came
-to my mind was if these two pack-objects processes can and should be
-run in parallel, which is answered in the part near the end of the
-paragraph.  It may be a good idea to start the paragraph with "by
-running `git pack-objects` command twice in a row" or something to
-make it clear that one should (and cannot be) run before the other
-completes.
+I don't quite agree that functions _anywhere in Git_ are able to use
+the Trace2 API directly for the same reason that we don't have the
+ability to log functions in external libraries -- logging common,
+low-level functionality creates an unnecessary amount of log churn and
+those logs generally contain practically useless information. However,
+that does not mean that all of the functions in git-std-lib fall into
+that category (usage has certain functions definitely worth logging).
+This means that files like usage.c could instead be separated into its
+own library and git-std-lib would only contain files that we deem
+"should never be logged".
 
-In fact, isn't the call site of write_filtered_pack() in this patch
-a bit too early?  The subprocess that runs with "--stdin-packs" is
-started and told about the names of the pack we are going to create,
-and it does not start processing until it reads everything (i.e. we
-run fclose(in) in the write_filtered_pack() function), but the loop
-over "names" string list in the caller that moves the tempfiles to
-their final filenames comes after the call to close_object_store()
-we see in the post context of the call to write_filtered_pack() that
-is new in this patch.
+> To that end, I think either the
+> commit message should be rephrased to remove that statement (if the issue is
+> really "we're using a static variable and we want to avoid that"), or the
+> libification effort should be updated to accommodate use of Trace2 anywhere
+> in Git.
 
-The "--stdin-packs" one is told to exclude objects that appear in
-these packs, so if the main process is a bit slow to finalize the
-packfiles it created (and told the "--stdin-packs" process about),
-it will not lead to repository corruption---just some objects are
-included in the packfiles "--stdin-packs" one creates even though
-they do not have to.  So it does not sound like a huge problem to
-me, but still it somehow looks wrong.  Am I misreading the code?
-
-Thanks.
+Besides potentially redrawing the boundaries of git-std-lib to
+accommodate Trace2, we're also looking into the possibility of
+stubbing out tracing in git-std-lib so that it and other libraries can
+be built and tested, and then when Trace2 is turned into a library,
+it's full functionality can be linked to.
