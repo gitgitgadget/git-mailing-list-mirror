@@ -2,238 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A008C001B3
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 06:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30C14EB64DD
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 06:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbjGEGJE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 02:09:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34554 "EHLO
+        id S231436AbjGEGKx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 02:10:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231422AbjGEGIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 02:08:43 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B71A10C8
-        for <git@vger.kernel.org>; Tue,  4 Jul 2023 23:08:42 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fafe87c6fbso9794769e87.3
-        for <git@vger.kernel.org>; Tue, 04 Jul 2023 23:08:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688537320; x=1691129320;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rtt/W9X/PYzk7qi7rcYewaNiWJiEssDMzazzYdPc7vg=;
-        b=Mkd1UJ9mgjF0ac1Utj8fH0PFEV3BDmVBG8OQ8X/uST5J/rFx1rkdQe+VLR+zEmQ052
-         WxvN9YtTXosMMxPmIqh+ZyGwoM1KJzTTSX0x5MP6NIKuZx45WbnjiG//sY3TYhLdayIP
-         +C1Gh8enMAQyW2Sdje5ouxfkG6QPwoJBhpCW92+c7kGxSrnl735lFJ3kUvP4uOKkDTvW
-         bTQtCbpick29mTeo/098soQplOhqpHzXllZZiLYJju/9jvAjkFIxCM01dEKsTVUoVwqX
-         v8mZJsRKouCN0mYTgu6spD4lmb4G8jmCvRdtOxbg9qBhkveHVxXonA/pYhyPn2CjcvjL
-         UMBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688537320; x=1691129320;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Rtt/W9X/PYzk7qi7rcYewaNiWJiEssDMzazzYdPc7vg=;
-        b=BpdMihcWA82O91yBY+RV8qpNa0yjLaMGh8LQueGFMGnoMz04h0M1nHBOT0b4Os0R/9
-         PHlXFfGw+oax/9ISgFgvHLB6s+yY29LK4jiN60wm6cnSZRI55kH+8wnvGlg+s23BanWw
-         6uKd7aOCyC1ovcmXNcOc+qEZemPzSY6MbyasGmtsiuvZUkE0VVJJJ9o7Yp2CUY5VVX31
-         X12PDfUDGcFRmrumnErdyvAXlSZnY1LZ8U8jRlCPTgM/rNc6PTm4AAfTf8q9ujDbTPhQ
-         Kq3NBg3/OtAllG59rYCB09dUbFeQ72M5aqXZZWlzs3HCB2ekGK8TT36/zXmHy2rz2FQa
-         sZjg==
-X-Gm-Message-State: ABy/qLZTUku478tnNT45eioGRqRa7T1MFtP8a8MOvS7tbqCOIBmU4NQK
-        46/6FnOaPx7NrtY45kk2e72t+/FGx7Y=
-X-Google-Smtp-Source: APBJJlGEeQuTgQPtdnX9o1n2i+1PwdkOjcDqKKNgqErBE1J/mU1EwehtER6S1OV8M+Zwq1Sr57MG7Q==
-X-Received: by 2002:a19:e010:0:b0:4fb:89b3:3374 with SMTP id x16-20020a19e010000000b004fb89b33374mr9091805lfg.54.1688537319548;
-        Tue, 04 Jul 2023 23:08:39 -0700 (PDT)
-Received: from christian-Precision-5550.lan ([2001:861:3f04:7ca0:f6a2:3135:7895:378b])
-        by smtp.gmail.com with ESMTPSA id k15-20020a7bc40f000000b003fbaf9abf2fsm1087762wmi.23.2023.07.04.23.08.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jul 2023 23:08:38 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 7/8] repack: implement `--filter-to` for storing filtered out objects
-Date:   Wed,  5 Jul 2023 08:08:11 +0200
-Message-ID: <20230705060812.2865188-8-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.41.0.244.g8cb3faa74c
-In-Reply-To: <20230705060812.2865188-1-christian.couder@gmail.com>
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230705060812.2865188-1-christian.couder@gmail.com>
+        with ESMTP id S229998AbjGEGKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 02:10:51 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8727210C3
+        for <git@vger.kernel.org>; Tue,  4 Jul 2023 23:10:50 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B0B8183C4D;
+        Wed,  5 Jul 2023 02:10:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yGv65o9XYMUiI0D/jfv+G3KyJ0eVu2YZ76kiAb
+        ET/xc=; b=Tr9NiF96GI4JISuZGqLrJo/kdl2mHZirx3IwlQGb5TCsrTlNEBzfxC
+        8O/j0Kvke/D8944zbhzQ/lQtD1xTO2uOIUbH0uxqppA0J5p2DzZ8nho3X8bz2dgE
+        k6yqzxOkFth6VE1wG3Lo5MUnsT/wh/0NAtfPSnqEH9c9cWa0JCXjQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71F7C183C4C;
+        Wed,  5 Jul 2023 02:10:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCF50183C4B;
+        Wed,  5 Jul 2023 02:10:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jan =?utf-8?Q?Kl=C3=B6tzke?= <jan@kloetzke.net>,
+        git@vger.kernel.org, Steve Kemp <steve@steve.org.uk>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] ref-filter: handle nested tags in --points-at option
+References: <20230701205703.1172505-1-jan@kloetzke.net>
+        <20230702125611.GA1036686@coredump.intra.peff.net>
+Date:   Tue, 04 Jul 2023 23:10:47 -0700
+In-Reply-To: <20230702125611.GA1036686@coredump.intra.peff.net> (Jeff King's
+        message of "Sun, 2 Jul 2023 08:56:11 -0400")
+Message-ID: <xmqqmt0a3n2w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: AFCB4E68-1AFA-11EE-BF9F-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A previous commit has implemented `git repack --filter=<filter-spec>` to
-allow users to filter out some objects from the main pack and move them
-into a new different pack.
+Jeff King <peff@peff.net> writes:
 
-It would be nice if this new different pack could be created in a
-different directory than the regular pack. This would make it possible
-to move large blobs into a pack on a different kind of storage, for
-example cheaper storage. Even in a different directory this pack can be
-accessible if, for example, the Git alternates mechanism is used to
-point to it.
+> That seems reasonable to me. It is changing the definition of
+> --points-at slightly, but I think in a way that should be less
+> surprising to users (i.e., we can consider the old behavior a bug).
 
-While at it, as an example to show that `--filter` and `--filter-to`
-work well with other options, let's also add a test to check that these
-options work well with `--max-pack-size`.
+OK.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> The
+> existing documentation is sufficiently vague about "points" that I don't
+> think it needs to be updated (though arguably we could improve that
+> here, too).
 
-repack: add test with --max-pack-size
----
- Documentation/git-repack.txt |  6 ++++
- builtin/repack.c             | 11 +++++-
- t/t7700-repack.sh            | 66 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 82 insertions(+), 1 deletion(-)
+True, too.
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index d702553033..396a91b9ac 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -152,6 +152,12 @@ depth is 4095.
- 	this option.  See linkgit:git-rev-list[1] for valid
- 	`<filter-spec>` forms.
- 
-+--filter-to=<dir>::
-+	Write the pack containing filtered out objects to the
-+	directory `<dir>`. This can be used for putting the pack on a
-+	separate object directory that is accessed through the Git
-+	alternates mechanism. Only useful with `--filter`.
-+
- -b::
- --write-bitmap-index::
- 	Write a reachability bitmap index as part of the repack. This
-diff --git a/builtin/repack.c b/builtin/repack.c
-index e2661b956c..5695f9734d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -879,6 +879,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	int write_midx = 0;
- 	const char *cruft_expiration = NULL;
- 	const char *expire_to = NULL;
-+	const char *filter_to = NULL;
- 
- 	struct option builtin_repack_options[] = {
- 		OPT_BIT('a', NULL, &pack_everything,
-@@ -932,6 +933,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			   N_("write a multi-pack index of the resulting packs")),
- 		OPT_STRING(0, "expire-to", &expire_to, N_("dir"),
- 			   N_("pack prefix to store a pack containing pruned objects")),
-+		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
-+			   N_("pack prefix to store a pack containing filtered out objects")),
- 		OPT_END()
- 	};
- 
-@@ -1075,6 +1078,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		strvec_push(&cmd.args, "--incremental");
- 	}
- 
-+	if (filter_to && !po_args.filter)
-+		die(_("option '%s' can only be used along with '%s'"), "--filter-to", "--filter");
-+
- 	if (geometry)
- 		cmd.in = -1;
- 	else
-@@ -1162,8 +1168,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (po_args.filter) {
-+		if (!filter_to)
-+			filter_to = packtmp;
-+
- 		ret = write_filtered_pack(&po_args,
--					  packtmp,
-+					  filter_to,
- 					  find_pack_prefix(),
- 					  &names,
- 					  &existing_nonkept_packs,
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 66589e4217..a96c1635b2 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -309,6 +309,72 @@ test_expect_success 'repacking with a filter works' '
- 	test "$blob_pack2" = "$blob_pack"
- '
- 
-+test_expect_success '--filter-to stores filtered out objects' '
-+	git -C bare.git repack -a -d &&
-+	test_stdout_line_count = 1 ls bare.git/objects/pack/*.pack &&
-+
-+	git init --bare filtered.git &&
-+	git -C bare.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:none \
-+		--filter-to=../filtered.git/objects/pack/pack &&
-+	test_stdout_line_count = 1 ls bare.git/objects/pack/pack-*.pack &&
-+	test_stdout_line_count = 1 ls filtered.git/objects/pack/pack-*.pack &&
-+
-+	commit_pack=$(test-tool -C bare.git find-pack HEAD) &&
-+	test -n "$commit_pack" &&
-+	blob_pack=$(test-tool -C bare.git find-pack HEAD:file1) &&
-+	test -z "$blob_pack" &&
-+	blob_hash=$(git -C bare.git rev-parse HEAD:file1) &&
-+	test -n "$blob_hash" &&
-+	blob_pack=$(test-tool -C filtered.git find-pack $blob_hash) &&
-+	test -n "$blob_pack" &&
-+
-+	echo $(pwd)/filtered.git/objects >bare.git/objects/info/alternates &&
-+	blob_pack=$(test-tool -C bare.git find-pack HEAD:file1) &&
-+	test -n "$blob_pack" &&
-+	blob_content=$(git -C bare.git show $blob_hash) &&
-+	test "$blob_content" = "content1"
-+'
-+
-+test_expect_success '--filter works with --max-pack-size' '
-+	rm -rf filtered.git &&
-+	git init --bare filtered.git &&
-+	git init max-pack-size &&
-+	(
-+		cd max-pack-size &&
-+		test_commit base &&
-+		# two blobs which exceed the maximum pack size
-+		test-tool genrandom foo 1048576 >foo &&
-+		git hash-object -w foo &&
-+		test-tool genrandom bar 1048576 >bar &&
-+		git hash-object -w bar &&
-+		git add foo bar &&
-+		git commit -m "adding foo and bar"
-+	) &&
-+	git clone --no-local --bare max-pack-size max-pack-size.git &&
-+	(
-+		cd max-pack-size.git &&
-+		git -c repack.writebitmaps=false repack -a -d --filter=blob:none \
-+			--max-pack-size=1M \
-+			--filter-to=../filtered.git/objects/pack/pack &&
-+		echo $(cd .. && pwd)/filtered.git/objects >objects/info/alternates &&
-+
-+		# Check that the 3 blobs are in different packfiles in filtered.git
-+		test_stdout_line_count = 3 ls ../filtered.git/objects/pack/pack-*.pack &&
-+		test_stdout_line_count = 1 ls objects/pack/pack-*.pack &&
-+		foo_pack=$(test-tool find-pack HEAD:foo) &&
-+		bar_pack=$(test-tool find-pack HEAD:bar) &&
-+		base_pack=$(test-tool find-pack HEAD:base.t) &&
-+		test "$foo_pack" != "$bar_pack" &&
-+		test "$foo_pack" != "$base_pack" &&
-+		test "$bar_pack" != "$base_pack" &&
-+		for pack in "$foo_pack" "$bar_pack" "$base_pack"
-+		do
-+			case "$foo_pack" in */filtered.git/objects/pack/*) true ;; *) return 1 ;; esac
-+		done
-+	)
-+'
-+
- objdir=.git/objects
- midx=$objdir/pack/multi-pack-index
- 
--- 
-2.41.0.244.g8cb3faa74c
+Having said that, as we lack a primitive exposed to the user script
+to only peel one level of a tag, it makes me wonder how much of this
+is a practical issue.  Is a tag that points at another tag mere
+curiosity and subject of mental gymnastics, or is it a useful
+construct with real world use case?  If the latter, isn't it more
+like "a tag to a tag _could_ be made useful if we also supported X
+and Y and Z" where X could be "There should be a syntax like
+A^{commit} that lets us peel only one level of tag"?
 
+> Note that most other tag-peeling in Git (like the peeled values returned
+> by upload-pack) errs in the opposite direction: they peel completely,
+> and don't show the intermediate values.
+
+Exactly.  While allowing to feed the intermediate level as the
+argument to "points at" does sound like a good idea on surface, I am
+skeptical about the practical value it brings---if we cannot do this
+without any additional overhead (of course if there are tags to tags
+in the repository, I am perfectly fine to pay the cost of
+dereferencing the chain, but I am more worried about regressing the
+performance in repositories without tags to tags), I am not sure if
+it is worth it.
+
+> My biggest question would be whether this introduces any performance
+> penalty for the more common cases (lightweight tags and single-level
+> annotated tags). The answer is "no", I think; we are already paying the
+> cost to parse every object to find out if it's a tag, and your new loop
+> only does an extra parse if we see a tag-of-tag. Good.
+
+OK.
+
+>   Let me go off on a tangent here, since I'm looking at the performance
+>   of this function. The current code is already rather pessimal here, as
+>   we could probably avoid parsing non-tags entirely. Some strategies
+>   there are:
+>
+>     1. We could check the object type via oid_object_info() before
+>        parsing. This carries a small penalty (two lookups) for tags but
+>        a big win (avoiding loading the object contents) for non-tags.
+>
+>        An easy way to do this is to replace the parse_object() with
+>        parse_object_with_flags(PARSE_OBJECT_SKIP_HASH_CHECK), which
+>        tries to avoid loading object contents (especially using the
+>        commit-graph for commits, which presumably covers most non-tag
+>        refs).
+>
+>     2. We could be using the peel_iterated_oid() interface (this is the
+>        peel_ref() thing mentioned in the comment you touched, but it has
+>        since been renamed). But it does the "peel all the way" thing
+>        mentioned above (both because of its interface, but also because
+>        that's what the packed-refs peel lines store).
+>
+>        So to do that we'd either have to enhance the packed-refs store
+>        (which would not be too hard to do in a backwards-compatible
+>        way), or switch --points-at to only match either the direct ref
+>        value or the fully-peeled value.
+>
+>   I don't think either of those is something your patch needs to deal
+>   with. It is not making these kinds of optimizations any harder (it is
+>   the existing "peel only once" behavior that does so). I mostly wanted
+>   to get it written down while we are all looking at this function.
+
+My preference would be to see these optimization done first and then
+add this new loop on top of it.  That way, we can measure more
+easily what kind of additional overhead, if any, we are paying by
+adding the loop.
+
+Thanks.
