@@ -2,95 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BCF0EB64DD
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 05:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8E2DEB64DD
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 06:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbjGEF4j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 01:56:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60062 "EHLO
+        id S231346AbjGEGIl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 02:08:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229801AbjGEF4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 01:56:38 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D17210C3
-        for <git@vger.kernel.org>; Tue,  4 Jul 2023 22:56:37 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DBEDE2DDB3;
-        Wed,  5 Jul 2023 01:56:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=KGFrnUmQVmzU
-        2R8Nswe4EPaBv3jTIkJvf2iv6SSyxzc=; b=i774SX5sre0NaI+SUTPZZZMqnDwX
-        0NzCSGhId8ci+6/1ItdufHFpblnxfNuAUw+RzI8w+yJ4HfVbYGiHzGcLHiqhOLNZ
-        BX/SDtJZPvAj7L7A3jaGbf5Fczy2Fl50kvZc6N4FbLjaL5IY6fxmZG3f843WvKOt
-        3NFvU5Q5Va+uXe0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C84F02DDB2;
-        Wed,  5 Jul 2023 01:56:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.233.135.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3DC2F2DDB1;
-        Wed,  5 Jul 2023 01:56:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] pkt-line: don't check string length in packet_length()
-References: <89d58db7-6a01-b3fa-54f0-19d5a3819eb3@web.de>
-Date:   Tue, 04 Jul 2023 22:56:32 -0700
-In-Reply-To: <89d58db7-6a01-b3fa-54f0-19d5a3819eb3@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 1 Jul 2023 09:05:15 +0200")
-Message-ID: <xmqqttui3nqn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229635AbjGEGIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 02:08:37 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F6D10C3
+        for <git@vger.kernel.org>; Tue,  4 Jul 2023 23:08:35 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fbca8935bfso50124345e9.3
+        for <git@vger.kernel.org>; Tue, 04 Jul 2023 23:08:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688537313; x=1691129313;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i1pPBDeU9PFJ+cpOuqfIS73mPIlEz/tCTAD1Q12GMpw=;
+        b=GCjOBCrNRPy6lTOIOXHvuU4oymV2T3GWFLqIjHrrWWpiv4HBMaGOXLXLh8pf/Gtk/C
+         nmivvi9IDAtiaYhRGcxpy5+uYIcshQJd5cdOJ4rl8SaP7CDhX1Mu5gzyWqZYMT6J87sc
+         gdxir64/CV8vHziUzf+rborLrh+9mYPR3KIuFEHt7AoG6jerJ+tLiSEYIUkFkSfVFYhL
+         tLj3+sV76nIAvSelruiNzjVzn+xLCSW8quyAFsYVoxTa+hNz/B7GDfSIBwskw+waj60L
+         HG5nOwe+jTdOz5MmDrZR+vZEK/Fx3JNcjeNkDDppmimD73KX5uvQFWO1d1MYMgM5Vsg/
+         Zlpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688537313; x=1691129313;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=i1pPBDeU9PFJ+cpOuqfIS73mPIlEz/tCTAD1Q12GMpw=;
+        b=U91L1npzHIuULiZ2PQoDOXQUR7fX2pQFSEINva/BKpZ3JgbdpvDonpw4+x0qeaR7Sm
+         jbOBRsInOmQ0kSQM1WNioPX6lFjgV6GPq0+yC5Z55Ix+MeNF5XIhnSWvKjIvdoH8Iv37
+         y2khmaiKPOT66Q/HCfb7PG56/M3KA3OdPRUlmCWpXpAnMmqIpvQfhwlxMzbWD46ChY0u
+         yrfrHnQ82adQ2MCRzIy0XWdEZOGZ+qoTNlAtPZfN3jzlwQkyRXOyF+LGx0ukpDSDBOpj
+         JIsB41Upt9Exvtjk0pknteok5wOvu/7JSuGP/FrCYTW1ktUxMvo/dpgWtfvrK+wX68xe
+         EIng==
+X-Gm-Message-State: AC+VfDw7wgNOrxxXm49+waPAH3BlPLX4NqbJfx2MPMBnVFUqwweCPZt5
+        m/fQpn79uHU0RJWc9o4UiZn/jP+OWg8=
+X-Google-Smtp-Source: ACHHUZ4mGm21H4tyuhsczuLB9pDMogiPIWvicKv2ygkPXfZOTbTLv1B25T/YLsT4URK+GtcO9tFxmg==
+X-Received: by 2002:a05:600c:2253:b0:3fb:a5b3:4f02 with SMTP id a19-20020a05600c225300b003fba5b34f02mr12104909wmm.36.1688537313055;
+        Tue, 04 Jul 2023 23:08:33 -0700 (PDT)
+Received: from christian-Precision-5550.lan ([2001:861:3f04:7ca0:f6a2:3135:7895:378b])
+        by smtp.gmail.com with ESMTPSA id k15-20020a7bc40f000000b003fbaf9abf2fsm1087762wmi.23.2023.07.04.23.08.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jul 2023 23:08:32 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/8] pack-objects: allow `--filter` without `--stdout`
+Date:   Wed,  5 Jul 2023 08:08:05 +0200
+Message-ID: <20230705060812.2865188-2-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.41.0.244.g8cb3faa74c
+In-Reply-To: <20230705060812.2865188-1-christian.couder@gmail.com>
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+ <20230705060812.2865188-1-christian.couder@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B1D32AF2-1AF8-11EE-8633-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+9535ce7337 (pack-objects: add list-objects filtering, 2017-11-21)
+taught `git pack-objects` to use `--filter`, but required the use of
+`--stdout` since a partial clone mechanism was not yet in place to
+handle missing objects. Since then, changes like 9e27beaa23
+(promisor-remote: implement promisor_remote_get_direct(), 2019-06-25)
+and others added support to dynamically fetch objects that were missing.
 
-> hex2chr() takes care not to run over the end of a short string.
-> 101736a14c (pkt-line: extern packet_length(), 2020-05-19) turned the
-> input parameter of packet_length() from a string pointer into an array
-> of known length, making string length checks unnecessary.  Get rid of
-> them by using hexval() directly.
+Even without a promisor remote, filtering out objects can also be useful
+if we can put the filtered out objects in a separate pack, and in this
+case it also makes sense for pack-objects to write the packfile directly
+to an actual file rather than on stdout.
 
-I am puzzled about the part of the above description on "making
-string length checks unnecessary".  The two callers we currently
-have both do pass char[4], but the compiler would not stop us from
-passing a pointer to a memory region of an unknown size; if we
-butcher one of the current callers
+Remove the `--stdout` requirement when using `--filter`, so that in a
+follow-up commit, repack can pass `--filter` to pack-objects to omit
+certain objects from the resulting packfile.
 
-diff --git c/pkt-line.c w/pkt-line.c
-index 6e022029ca..e1c49baefd 100644
---- c/pkt-line.c
-+++ w/pkt-line.c
-@@ -421,7 +421,7 @@ enum packet_read_status packet_read_with_status(int f=
-d, char **src_buffer,
- 		return PACKET_READ_EOF;
- 	}
-=20
--	len =3D packet_length(linelen);
-+	len =3D packet_length(buffer);
-=20
- 	if (len < 0) {
- 		if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
+Signed-off-by: John Cai <johncai86@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-pack-objects.txt     | 4 ++--
+ builtin/pack-objects.c                 | 8 ++------
+ t/t5317-pack-objects-filter-objects.sh | 8 ++++++++
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-where "buffer" is just a random piece of memory passed to the caller
-and there is no such guarantee like "it at least is 4 bytes long",
-we would just slurp garbage and run past the end of the buffer.
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index a9995a932c..583270a85f 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -298,8 +298,8 @@ So does `git bundle` (see linkgit:git-bundle[1]) when it creates a bundle.
+ 	nevertheless.
+ 
+ --filter=<filter-spec>::
+-	Requires `--stdout`.  Omits certain objects (usually blobs) from
+-	the resulting packfile.  See linkgit:git-rev-list[1] for valid
++	Omits certain objects (usually blobs) from the resulting
++	packfile.  See linkgit:git-rev-list[1] for valid
+ 	`<filter-spec>` forms.
+ 
+ --no-filter::
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3c4db66478..614721684a 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4388,12 +4388,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+ 		unpack_unreachable_expiration = 0;
+ 
+-	if (filter_options.choice) {
+-		if (!pack_to_stdout)
+-			die(_("cannot use --filter without --stdout"));
+-		if (stdin_packs)
+-			die(_("cannot use --filter with --stdin-packs"));
+-	}
++	if (stdin_packs && filter_options.choice)
++		die(_("cannot use --filter with --stdin-packs"));
+ 
+ 	if (stdin_packs && use_internal_rev_list)
+ 		die(_("cannot use internal rev list with --stdin-packs"));
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index b26d476c64..2ff3eef9a3 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -53,6 +53,14 @@ test_expect_success 'verify blob:none packfile has no blobs' '
+ 	! grep blob verify_result
+ '
+ 
++test_expect_success 'verify blob:none packfile without --stdout' '
++	git -C r1 pack-objects --revs --filter=blob:none mypackname >packhash <<-EOF &&
++	HEAD
++	EOF
++	git -C r1 verify-pack -v "mypackname-$(cat packhash).pack" >verify_result &&
++	! grep blob verify_result
++'
++
+ test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
+ 	git -C r1 verify-pack -v ../all.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-- 
+2.41.0.244.g8cb3faa74c
 
-> The resulting branchless code is simpler and it becomes easier to see
-> that the function mirrors set_packet_header().
-
-I do like the resulting code, but I feel a bit uneasy to sell this
-change as "the code becomes more streamlined without losing safety".
-It looks more like "this change is safe for our two callers; those
-adding more callers in the future are better be very careful", no?
