@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D2B2EB64DA
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 17:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAD85EB64DD
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 17:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231286AbjGERJu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 13:09:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37516 "EHLO
+        id S232136AbjGERJx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 13:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231422AbjGERJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 13:09:46 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177021996
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 10:09:43 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-573cacf4804so67995897b3.1
-        for <git@vger.kernel.org>; Wed, 05 Jul 2023 10:09:43 -0700 (PDT)
+        with ESMTP id S231753AbjGERJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 13:09:48 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 621F1199F
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 10:09:44 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id 41be03b00d2f7-553d42a7069so9019819a12.1
+        for <git@vger.kernel.org>; Wed, 05 Jul 2023 10:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688576982; x=1691168982;
+        d=google.com; s=20221208; t=1688576984; x=1691168984;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TPW0S1pVZ7gd/csz0VOSB2FkfCYxgxeMOYElZW3D0FI=;
-        b=2qubk2v4YCwYdvurNVUCWYTNmlI10hRWW6Q0lLkVhoomlBk9vfLeAssT/Mu9h1Re8g
-         Oml+4OBLsJEMNUVENMN71OMYNEAsgr7DijbqsBmNjaUQiU8rB+otH6b/KZxb/iWqWhA5
-         NbtE1Q1GFW7UHvfDuvh8JAHwtrm7Ruq6+IfWjxuylFMT7A/dsGfN4aF1hgF1eYzPQxSw
-         2ld1SOr8f7HN9ST2Buoj+87UBvGCG9O4gwdEZNGpo5Z9Q4p5HFF714IKLoetgTbA/7A3
-         3UkcHex3n1g/CUo9uSvXWzWP0WaVaJifG4Bk9jmIPNJuWVml3LDd82blCEuH5DxYwbpE
-         1sOA==
+        bh=GG/ynIDIqdr5TiH5TSrgB3HMRA6tV2Zf6m3YMF8JHQM=;
+        b=DgEwYbHdCTRQcV+KhqYdr4ejEF1csgJDhUKOmaoBwdb2iIfXcOuGYeHCp1uR33FQFW
+         S3Jd4x0CReJYkiU+mNlV9Nw9XYyIaPduqN/b6Ru9hIkwscSPaWCZKzMeAhF1Hf1POciU
+         vlpmJgziqhYKjYNMF65W9IhrfVP1lzxSiS4rk0WRyLG3CdrlmaP8qo+8xLE0w56O+k7n
+         MV/MtlAvsgitZ9QzbeEePSu8Wr0UObMMN+9X8aHFN6pg8R0fTdY8LkHPg+PxlXuzo5Xs
+         oIMLhBLWexSs1unW32Y7TbNm12ax37ftAmW0k/9ef/Ow6qqayQ3jjjkUy/BO3vnbE83R
+         1ZbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688576982; x=1691168982;
+        d=1e100.net; s=20221208; t=1688576984; x=1691168984;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TPW0S1pVZ7gd/csz0VOSB2FkfCYxgxeMOYElZW3D0FI=;
-        b=ermw7kGM/hgAUekOU1/vZFJ/kyRKgAqGRNeJBY2PcC/Q4Lspmd8ntopvkFkAJfkhIO
-         wTtAMGNL998TbS7ZlQ8pb1wHU56y9vzrxDBQYcO/Xt4ugKTEV1Vw9cvzAZgGNBHLlePD
-         LqiKeIF35qjwwNVk6WZv01nYGzXyfgXcycykLvVhKQG4T+PjkxxGmTq5MTctf3qwsDFo
-         3FTkoVG94YCjrjkcUOkygnpphA1rYX5ajZR2RMq/BYlcxklYs5Sn+MUQLR5WhQ9KbLMi
-         9a/OF2MTYnkNB2K5xA/8Zb9dn5RxwnIWFXfuKN25bZpgp78vVdZ7HT55hLtqW4//g4YM
-         Wjgg==
-X-Gm-Message-State: ABy/qLYImi50zUibIA6o3+QDDyRjb+9TQhwAl7yA7sCnyhliCeV7b4DM
-        zEGrF4CR2GncBePr8sl1DEhUfYOF/bpWjR6/yZgz5HpRKDqKBYUPV6Oh+jQdorM3dTtWELxAfX8
-        q6xC8jbaV6TfEVNt+LGDHXP+RbKf2fYR59uXxYIIqKch5WHYkjfK4+i05HWNDG4duCw==
-X-Google-Smtp-Source: APBJJlEHEE4y8U1u/bWMcej0Rb66UP8/3JDb7NnTKQhMHuaj709BxlnRB1rzOxXCweuCjOW7cRWE0/dSyXtF5s8=
+        bh=GG/ynIDIqdr5TiH5TSrgB3HMRA6tV2Zf6m3YMF8JHQM=;
+        b=CmcVMuyD4n+dZt+r/m9SoQYfekDOEJkGUPgu0iY/35J70Fg3pHCWf9anPwhCMh1Ewm
+         iy9si6T2Tq7MIcWkzt6xqqnrlJnbO31msI3nNzrzMJEfzvMpWecF0qcEAugINwXk3p9c
+         VUEgBsacjnH64gApYTK9ET7MRsw1UfOB3CMv09YvjpRvebld4l1MmjYEqms7vBQUrCfh
+         ZHWbV99IavMapX/Xxkw2TBedIpiDuf3KaTsFkHKNKascJfti9LFA/nH7sEQxeyyZQfjE
+         fKzxuCrUEooCsvKZnlLAzMpFci2E4cVLJt7ML6n6RzeecBny8y5JM92RM0/bLJpHUpRt
+         kz0w==
+X-Gm-Message-State: ABy/qLYcPCaiVrwC/5NlLYBZLeHzujDC8y50b0ZVG8MDSGQ7ad+UdAZX
+        arKuF+fqBNdkoSbK0CoyoegOUV2kQNrfwXQEgQwcotlqwR58euUX9P4Z834vdbhrzL7+FBjZ9YM
+        i8/RkLGQHTip38EK8Uj0+piEjIWhi3X4CyI6Bl8P52psPiq0RM9OdDyzsfW38y9nWEA==
+X-Google-Smtp-Source: APBJJlF/mlT+KV1uE8WfWLt9507NENhpkhpJqv8kUhI8oHMmqRu88Xxo8t7xZkaR2MNuYez3jzQ658yeLUSc1YQ=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a25:b321:0:b0:c65:8983:ac2 with SMTP id
- l33-20020a25b321000000b00c6589830ac2mr5848ybj.5.1688576982272; Wed, 05 Jul
- 2023 10:09:42 -0700 (PDT)
-Date:   Wed,  5 Jul 2023 17:09:20 +0000
+ (user=calvinwan job=sendgmr) by 2002:a63:5c17:0:b0:55b:49a8:49bd with SMTP id
+ q23-20020a635c17000000b0055b49a849bdmr9947400pgb.2.1688576983796; Wed, 05 Jul
+ 2023 10:09:43 -0700 (PDT)
+Date:   Wed,  5 Jul 2023 17:09:21 +0000
 In-Reply-To: <20230705170812.3833103-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230705170812.3833103-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230705170924.3833828-2-calvinwan@google.com>
-Subject: [PATCH v5 2/6] git-compat-util: move wrapper.c funcs to its header
+Message-ID: <20230705170924.3833828-3-calvinwan@google.com>
+Subject: [PATCH v5 3/6] sane-ctype.h: create header for sane-ctype macros
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
@@ -62,296 +62,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the functions in wrapper.c are widely used across the codebase,
-include it by default in git-compat-util.h. A future patch will remove
-now unnecessary inclusions of wrapper.h from other files.
+Splitting these macros from git-compat-util.h cleans up the file and
+allows future third-party sources to not use these overrides if they do
+not wish to.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- git-compat-util.h | 112 +---------------------------------------------
- wrapper.h         | 111 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 112 insertions(+), 111 deletions(-)
+ git-compat-util.h | 62 +-------------------------------------------
+ sane-ctype.h      | 66 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+), 61 deletions(-)
+ create mode 100644 sane-ctype.h
 
 diff --git a/git-compat-util.h b/git-compat-util.h
-index 78a993c604..9140f43bbf 100644
+index 9140f43bbf..5f916e1094 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -627,7 +627,7 @@ static inline int git_has_dir_sep(const char *path)
- 
- #include "compat/bswap.h"
- 
--struct strbuf;
-+#include "wrapper.h"
- 
- /* General helper functions */
- NORETURN void usage(const char *err);
-@@ -1047,36 +1047,6 @@ static inline int cast_size_t_to_int(size_t a)
- # define xalloca(size)      (xmalloc(size))
- # define xalloca_free(p)    (free(p))
- #endif
--char *xstrdup(const char *str);
--void *xmalloc(size_t size);
--void *xmallocz(size_t size);
--void *xmallocz_gently(size_t size);
--void *xmemdupz(const void *data, size_t len);
--char *xstrndup(const char *str, size_t len);
--void *xrealloc(void *ptr, size_t size);
--void *xcalloc(size_t nmemb, size_t size);
--void xsetenv(const char *name, const char *value, int overwrite);
--void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
--const char *mmap_os_err(void);
--void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
--int xopen(const char *path, int flags, ...);
--ssize_t xread(int fd, void *buf, size_t len);
--ssize_t xwrite(int fd, const void *buf, size_t len);
--ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
--int xdup(int fd);
--FILE *xfopen(const char *path, const char *mode);
--FILE *xfdopen(int fd, const char *mode);
--int xmkstemp(char *temp_filename);
--int xmkstemp_mode(char *temp_filename, int mode);
--char *xgetcwd(void);
--FILE *fopen_for_writing(const char *path);
--FILE *fopen_or_warn(const char *path, const char *mode);
--
--/*
-- * Like strncmp, but only return zero if s is NUL-terminated and exactly len
-- * characters long.  If it is not, consider it greater than t.
-- */
--int xstrncmpz(const char *s, const char *t, size_t len);
- 
- /*
-  * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
-@@ -1178,15 +1148,10 @@ static inline size_t xsize_t(off_t len)
- 	return (size_t) len;
- }
- 
--__attribute__((format (printf, 3, 4)))
--int xsnprintf(char *dst, size_t max, const char *fmt, ...);
--
- #ifndef HOST_NAME_MAX
- #define HOST_NAME_MAX 256
- #endif
- 
--int xgethostname(char *buf, size_t len);
--
+@@ -1155,67 +1155,7 @@ static inline size_t xsize_t(off_t len)
  /* in ctype.c, for kwset users */
  extern const unsigned char tolower_trans_tbl[256];
  
-@@ -1427,72 +1392,6 @@ void bug_fl(const char *file, int line, const char *fmt, ...);
- #endif
- #endif
+-/* Sane ctype - no locale, and works with signed chars */
+-#undef isascii
+-#undef isspace
+-#undef isdigit
+-#undef isalpha
+-#undef isalnum
+-#undef isprint
+-#undef islower
+-#undef isupper
+-#undef tolower
+-#undef toupper
+-#undef iscntrl
+-#undef ispunct
+-#undef isxdigit
+-
+-extern const unsigned char sane_ctype[256];
+-extern const signed char hexval_table[256];
+-#define GIT_SPACE 0x01
+-#define GIT_DIGIT 0x02
+-#define GIT_ALPHA 0x04
+-#define GIT_GLOB_SPECIAL 0x08
+-#define GIT_REGEX_SPECIAL 0x10
+-#define GIT_PATHSPEC_MAGIC 0x20
+-#define GIT_CNTRL 0x40
+-#define GIT_PUNCT 0x80
+-#define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
+-#define isascii(x) (((x) & ~0x7f) == 0)
+-#define isspace(x) sane_istest(x,GIT_SPACE)
+-#define isdigit(x) sane_istest(x,GIT_DIGIT)
+-#define isalpha(x) sane_istest(x,GIT_ALPHA)
+-#define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
+-#define isprint(x) ((x) >= 0x20 && (x) <= 0x7e)
+-#define islower(x) sane_iscase(x, 1)
+-#define isupper(x) sane_iscase(x, 0)
+-#define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
+-#define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX_SPECIAL)
+-#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
+-#define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
+-		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
+-#define isxdigit(x) (hexval_table[(unsigned char)(x)] != -1)
+-#define tolower(x) sane_case((unsigned char)(x), 0x20)
+-#define toupper(x) sane_case((unsigned char)(x), 0)
+-#define is_pathspec_magic(x) sane_istest(x,GIT_PATHSPEC_MAGIC)
+-
+-static inline int sane_case(int x, int high)
+-{
+-	if (sane_istest(x, GIT_ALPHA))
+-		x = (x & ~0x20) | high;
+-	return x;
+-}
+-
+-static inline int sane_iscase(int x, int is_lower)
+-{
+-	if (!sane_istest(x, GIT_ALPHA))
+-		return 0;
+-
+-	if (is_lower)
+-		return (x & 0x20) != 0;
+-	else
+-		return (x & 0x20) == 0;
+-}
++#include "sane-ctype.h"
  
--enum fsync_action {
--	FSYNC_WRITEOUT_ONLY,
--	FSYNC_HARDWARE_FLUSH
--};
--
--/*
-- * Issues an fsync against the specified file according to the specified mode.
-- *
-- * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
-- * systems to flush the OS cache without issuing a flush command to the storage
-- * controller. If those interfaces are unavailable, the function fails with
-- * ENOSYS.
-- *
-- * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
-- * changes are durable. It is not expected to fail.
-- */
--int git_fsync(int fd, enum fsync_action action);
--
--/*
-- * Writes out trace statistics for fsync using the trace2 API.
-- */
--void trace_git_fsync_stats(void);
--
--/*
-- * Preserves errno, prints a message, but gives no warning for ENOENT.
-- * Returns 0 on success, which includes trying to unlink an object that does
-- * not exist.
-- */
--int unlink_or_warn(const char *path);
-- /*
--  * Tries to unlink file.  Returns 0 if unlink succeeded
--  * or the file already didn't exist.  Returns -1 and
--  * appends a message to err suitable for
--  * 'error("%s", err->buf)' on error.
--  */
--int unlink_or_msg(const char *file, struct strbuf *err);
--/*
-- * Preserves errno, prints a message, but gives no warning for ENOENT.
-- * Returns 0 on success, which includes trying to remove a directory that does
-- * not exist.
-- */
--int rmdir_or_warn(const char *path);
--/*
-- * Calls the correct function out of {unlink,rmdir}_or_warn based on
-- * the supplied file mode.
-- */
--int remove_or_warn(unsigned int mode, const char *path);
--
--/*
-- * Call access(2), but warn for any error except "missing file"
-- * (ENOENT or ENOTDIR).
-- */
--#define ACCESS_EACCES_OK (1U << 0)
--int access_or_warn(const char *path, int mode, unsigned flag);
--int access_or_die(const char *path, int mode, unsigned flag);
--
--/* Warn on an inaccessible file if errno indicates this is an error */
--int warn_on_fopen_errors(const char *path);
--
--/*
-- * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
-- * may be racy. Do not use this as protection against an attacker who can
-- * simultaneously create paths.
-- */
--int open_nofollow(const char *path, int flags);
--
- #ifndef SHELL_PATH
- # define SHELL_PATH "/bin/sh"
- #endif
-@@ -1632,13 +1531,4 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
- 	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
- #endif /* !__GNUC__ */
- 
--void sleep_millisec(int millisec);
--
--/*
-- * Generate len bytes from the system cryptographically secure PRNG.
-- * Returns 0 on success and -1 on error, setting errno.  The inability to
-- * satisfy the full request is an error.
-- */
--int csprng_bytes(void *buf, size_t len);
--
- #endif
-diff --git a/wrapper.h b/wrapper.h
-index f0c7d0616d..c85b1328d1 100644
---- a/wrapper.h
-+++ b/wrapper.h
-@@ -1,6 +1,42 @@
- #ifndef WRAPPER_H
- #define WRAPPER_H
- 
-+char *xstrdup(const char *str);
-+void *xmalloc(size_t size);
-+void *xmallocz(size_t size);
-+void *xmallocz_gently(size_t size);
-+void *xmemdupz(const void *data, size_t len);
-+char *xstrndup(const char *str, size_t len);
-+void *xrealloc(void *ptr, size_t size);
-+void *xcalloc(size_t nmemb, size_t size);
-+void xsetenv(const char *name, const char *value, int overwrite);
-+void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
-+const char *mmap_os_err(void);
-+void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
-+int xopen(const char *path, int flags, ...);
-+ssize_t xread(int fd, void *buf, size_t len);
-+ssize_t xwrite(int fd, const void *buf, size_t len);
-+ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
-+int xdup(int fd);
-+FILE *xfopen(const char *path, const char *mode);
-+FILE *xfdopen(int fd, const char *mode);
-+int xmkstemp(char *temp_filename);
-+int xmkstemp_mode(char *temp_filename, int mode);
-+char *xgetcwd(void);
-+FILE *fopen_for_writing(const char *path);
-+FILE *fopen_or_warn(const char *path, const char *mode);
+ /*
+  * Like skip_prefix, but compare case-insensitively. Note that the comparison
+diff --git a/sane-ctype.h b/sane-ctype.h
+new file mode 100644
+index 0000000000..cbea1b299b
+--- /dev/null
++++ b/sane-ctype.h
+@@ -0,0 +1,66 @@
++#ifndef SANE_CTYPE_H
++#define SANE_CTYPE_H
 +
-+/*
-+ * Like strncmp, but only return zero if s is NUL-terminated and exactly len
-+ * characters long.  If it is not, consider it greater than t.
-+ */
-+int xstrncmpz(const char *s, const char *t, size_t len);
++/* Sane ctype - no locale, and works with signed chars */
++#undef isascii
++#undef isspace
++#undef isdigit
++#undef isalpha
++#undef isalnum
++#undef isprint
++#undef islower
++#undef isupper
++#undef tolower
++#undef toupper
++#undef iscntrl
++#undef ispunct
++#undef isxdigit
 +
-+__attribute__((format (printf, 3, 4)))
-+int xsnprintf(char *dst, size_t max, const char *fmt, ...);
++extern const unsigned char sane_ctype[256];
++extern const signed char hexval_table[256];
++#define GIT_SPACE 0x01
++#define GIT_DIGIT 0x02
++#define GIT_ALPHA 0x04
++#define GIT_GLOB_SPECIAL 0x08
++#define GIT_REGEX_SPECIAL 0x10
++#define GIT_PATHSPEC_MAGIC 0x20
++#define GIT_CNTRL 0x40
++#define GIT_PUNCT 0x80
++#define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
++#define isascii(x) (((x) & ~0x7f) == 0)
++#define isspace(x) sane_istest(x,GIT_SPACE)
++#define isdigit(x) sane_istest(x,GIT_DIGIT)
++#define isalpha(x) sane_istest(x,GIT_ALPHA)
++#define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
++#define isprint(x) ((x) >= 0x20 && (x) <= 0x7e)
++#define islower(x) sane_iscase(x, 1)
++#define isupper(x) sane_iscase(x, 0)
++#define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
++#define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX_SPECIAL)
++#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
++#define ispunct(x) sane_istest(x, GIT_PUNCT | GIT_REGEX_SPECIAL | \
++		GIT_GLOB_SPECIAL | GIT_PATHSPEC_MAGIC)
++#define isxdigit(x) (hexval_table[(unsigned char)(x)] != -1)
++#define tolower(x) sane_case((unsigned char)(x), 0x20)
++#define toupper(x) sane_case((unsigned char)(x), 0)
++#define is_pathspec_magic(x) sane_istest(x,GIT_PATHSPEC_MAGIC)
 +
-+int xgethostname(char *buf, size_t len);
++static inline int sane_case(int x, int high)
++{
++	if (sane_istest(x, GIT_ALPHA))
++		x = (x & ~0x20) | high;
++	return x;
++}
 +
- /* set default permissions by passing mode arguments to open(2) */
- int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
- int git_mkstemp_mode(char *pattern, int mode);
-@@ -33,4 +69,79 @@ void write_file(const char *path, const char *fmt, ...);
- /* Return 1 if the file is empty or does not exists, 0 otherwise. */
- int is_empty_or_missing_file(const char *filename);
- 
-+enum fsync_action {
-+	FSYNC_WRITEOUT_ONLY,
-+	FSYNC_HARDWARE_FLUSH
-+};
++static inline int sane_iscase(int x, int is_lower)
++{
++	if (!sane_istest(x, GIT_ALPHA))
++		return 0;
 +
-+/*
-+ * Issues an fsync against the specified file according to the specified mode.
-+ *
-+ * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
-+ * systems to flush the OS cache without issuing a flush command to the storage
-+ * controller. If those interfaces are unavailable, the function fails with
-+ * ENOSYS.
-+ *
-+ * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
-+ * changes are durable. It is not expected to fail.
-+ */
-+int git_fsync(int fd, enum fsync_action action);
++	if (is_lower)
++		return (x & 0x20) != 0;
++	else
++		return (x & 0x20) == 0;
++}
 +
-+/*
-+ * Writes out trace statistics for fsync using the trace2 API.
-+ */
-+void trace_git_fsync_stats(void);
-+
-+/*
-+ * Preserves errno, prints a message, but gives no warning for ENOENT.
-+ * Returns 0 on success, which includes trying to unlink an object that does
-+ * not exist.
-+ */
-+int unlink_or_warn(const char *path);
-+ /*
-+  * Tries to unlink file.  Returns 0 if unlink succeeded
-+  * or the file already didn't exist.  Returns -1 and
-+  * appends a message to err suitable for
-+  * 'error("%s", err->buf)' on error.
-+  */
-+int unlink_or_msg(const char *file, struct strbuf *err);
-+/*
-+ * Preserves errno, prints a message, but gives no warning for ENOENT.
-+ * Returns 0 on success, which includes trying to remove a directory that does
-+ * not exist.
-+ */
-+int rmdir_or_warn(const char *path);
-+/*
-+ * Calls the correct function out of {unlink,rmdir}_or_warn based on
-+ * the supplied file mode.
-+ */
-+int remove_or_warn(unsigned int mode, const char *path);
-+
-+/*
-+ * Call access(2), but warn for any error except "missing file"
-+ * (ENOENT or ENOTDIR).
-+ */
-+#define ACCESS_EACCES_OK (1U << 0)
-+int access_or_warn(const char *path, int mode, unsigned flag);
-+int access_or_die(const char *path, int mode, unsigned flag);
-+
-+/* Warn on an inaccessible file if errno indicates this is an error */
-+int warn_on_fopen_errors(const char *path);
-+
-+/*
-+ * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
-+ * may be racy. Do not use this as protection against an attacker who can
-+ * simultaneously create paths.
-+ */
-+int open_nofollow(const char *path, int flags);
-+
-+void sleep_millisec(int millisec);
-+
-+/*
-+ * Generate len bytes from the system cryptographically secure PRNG.
-+ * Returns 0 on success and -1 on error, setting errno.  The inability to
-+ * satisfy the full request is an error.
-+ */
-+int csprng_bytes(void *buf, size_t len);
-+
- #endif /* WRAPPER_H */
++#endif
 -- 
 2.41.0.255.g8b1d071c50-goog
 
