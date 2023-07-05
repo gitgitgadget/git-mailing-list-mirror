@@ -2,208 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08480EB64DA
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 19:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD232EB64DD
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 19:50:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233278AbjGETqt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 15:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51324 "EHLO
+        id S234029AbjGETuK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 15:50:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231750AbjGETqs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 15:46:48 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E858E9F
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 12:46:46 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-99357737980so471037166b.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2023 12:46:46 -0700 (PDT)
+        with ESMTP id S233637AbjGETuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 15:50:08 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374A1121
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 12:50:07 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-991fe70f21bso831344866b.3
+        for <git@vger.kernel.org>; Wed, 05 Jul 2023 12:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688586405; x=1691178405;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5oCvUVvsNAHCFzeFxaOo6HDveJTYZ9k3uQ6V/xseqHg=;
-        b=QaIyxYfM8VpCd/o8NlG8I1W2GNn+pGQq2yVxKNdkr9d2nvoygoFDMRrBdR0nH+auYt
-         vaLEqWlStAiiXSIbc0L+il61FkvFkmq64PM1QdoMKo9b/K3MKST31j13ZWmrP6plZJLJ
-         MP0S6JuKDRWvnP6ph+IrrbmDMdks68aLJ5jOp9nHqx8ZBfI2MVCf3+ZGYTBHvt+nKnTC
-         CD6SrIvEIxcByL0RpI+iPV9x1oDt0UuZsSJ9XrZyCCkLF64bnrDGQay5GcykDhTmDMzy
-         v4qA/EAuJftheRxz0ppeqB/zp0P2lof56T+O919PoLb6vbA+sXiiLmeNtb6Wd2MnjMhS
-         KCug==
+        d=gmail.com; s=20221208; t=1688586605; x=1691178605;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DEsKDKvF3BrBf4y5KFQ6uXmwaQVIg6NOMzug5R5c5SU=;
+        b=sw61rqInVn6O12pbtwqSl2NcTjk7JIhajnO0nWouY4fJiacm3QU3X5jntEQgltKefQ
+         m7/hn8UMA5B2VTpjwypcYAp8aPa846vSRtDeL94jat5fNqB6b17M8TjYfwZFI23R+B7s
+         0RfuzEx+suSCpbDU83f1zpya5tBU5IaI/WA4FYmbZ2p4xhdmkENOGyYJ/G2sr3bT9Afl
+         RYmoe7PsaKgEzML6ynyf2fubzFFrCJIwwfVIcEJkXETU96xtuCRvGw8m5O7NveYPLppB
+         0Ft+B1a8/TSqWZ9s6/NWCtNre8mTiNrmAKqMieGfJEpDDPgHOBUlebz0NQ/nsG3dt3Oj
+         0SLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688586405; x=1691178405;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5oCvUVvsNAHCFzeFxaOo6HDveJTYZ9k3uQ6V/xseqHg=;
-        b=J43P93EPBKOZAt30PBkpnFMzW2zKNvo+QaQPu6zM5RS02Qpk5mlD5y1jPo/wTaWQK/
-         zgmXWTztAf52Wdp49PDEB6M6rRiUHuiLobbP7MuzDKeW4tVHu5vpL/lasYMBgKZZdBua
-         GFIATP9P0hm4z7KyLSB7dw7fYPK83DqaTvXyjvd8yk0QS9KY4G+BujHhvN3fLzMsgcXU
-         03KZLL16vodT2+41C16hG4M8oMA1Nzw5hug6XsugV9zG+jaIspm+ouVf6qjcHVY2S7IV
-         GVKekDD8k2EK9iopwcueuUaSAnP7Yrl+6VaP9T3kEMSVBgaY56h5L6Fn6qrvE1s2jvUn
-         9jGw==
-X-Gm-Message-State: ABy/qLbhHu688PEBTyCzpOjeBfb62LpMi64aZ2FUB5+UWiBolxT78WVs
-        pLYgBwLPla5Wh7keQC4mHK8=
-X-Google-Smtp-Source: APBJJlEoOhaspHdlp7Jd/3kV1aj6aR/sN5WaWwgtgn7DlNPr+HXVybNwCY2OEV1jgl9B7wZ1OicKKw==
-X-Received: by 2002:a17:906:dfeb:b0:988:6491:98e3 with SMTP id lc11-20020a170906dfeb00b00988649198e3mr14565882ejc.68.1688586405103;
-        Wed, 05 Jul 2023 12:46:45 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id mh4-20020a170906eb8400b0098951bb4dc3sm3618731ejb.184.2023.07.05.12.46.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 12:46:44 -0700 (PDT)
-Message-ID: <161932f5-ae8f-cfaa-a6b0-ab140d0f002e@gmail.com>
-Date:   Wed, 5 Jul 2023 20:46:43 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] t0091-bugreport.sh: actually verify some content of
- report
-Content-Language: en-US
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <CAN0heSrMCnygWUC5Sh1UA9v2JGtjcxYDKPFE0xUPddGEW29c3w@mail.gmail.com>
- <20230705184058.3057709-1-martin.agren@gmail.com>
+        d=1e100.net; s=20221208; t=1688586605; x=1691178605;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DEsKDKvF3BrBf4y5KFQ6uXmwaQVIg6NOMzug5R5c5SU=;
+        b=HJWdto8M2dCUKnqGze1RYnjlHllsHwy/twV0WFu8toAzwezbFzHQHE3e5Ok6T8VqBe
+         BmY6G1HfdCatL/Bltnb3lQha4FtN0y5zst9GCgbfSLfcX4Q/iThVyeNr9kVgknDxjBmq
+         wEoBfaDoKVRTzyZgYfO3snyL2xnMpMc3iKAS+fCT4jHurqksJQuv9RPHknChLdaIsoXq
+         ofTNH/C8HREft59c3oehuP4+bZ+3fd/julzS1SsSXddRFvMp3u45L+BwVdjSnofD39Ds
+         SGpU6qSNwS9/LLLP3D9Fxd9K5juex0QphNeaIcfvRF9c4vdyCvIvBA3BDwqNb/F6vdux
+         6eHA==
+X-Gm-Message-State: ABy/qLZCx25ZkY5v2xGDLfgUTClvM5gNJG3JlZTrzi4FE8rLYgTQsRnb
+        ZORmwHS9pntUeixZ9ZASMO9NHiOsww4=
+X-Google-Smtp-Source: ACHHUZ7kNm2NIdxvEUSR06tg7ZM/kFvTkfeWDUUJ4erCCD3UZyC47vdS2zl0ucGaophTia/hIjBBAA==
+X-Received: by 2002:a17:907:100c:b0:96f:678:d2fc with SMTP id ox12-20020a170907100c00b0096f0678d2fcmr12115667ejb.22.1688586605406;
+        Wed, 05 Jul 2023 12:50:05 -0700 (PDT)
+Received: from localhost.localdomain ([90.242.235.211])
+        by smtp.gmail.com with ESMTPSA id bx1-20020a170906a1c100b00992665694f7sm10078341ejb.107.2023.07.05.12.50.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jul 2023 12:50:04 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230705184058.3057709-1-martin.agren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Thomas Guyot-Sionnest <tguyot@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/4] diff --no-index: support reading from named pipes
+Date:   Wed,  5 Jul 2023 20:49:26 +0100
+Message-ID: <cover.1688586536.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.40.1.852.g0a1e0755a6
+In-Reply-To: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
+References: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This version looks good to me, thanks for re-rolling
+In some shells, such as bash and zsh, it's possible to use a command
+substitution to provide the output of a command as a file argument to
+another process, like so:
 
-Phillip
+  diff -u <(printf "a\nb\n") <(printf "a\nc\n")
 
-On 05/07/2023 19:40, Martin Ågren wrote:
-> In the first test in this script, 'creates a report with content in the
-> right places', we generate a report and pipe it into our helper
-> `check_all_headers_populated()`. The idea of the helper is to find all
-> lines that look like headers ("[Some Header Here]") and to check that
-> the next line is non-empty. This is supposed to catch erroneous outputs
-> such as the following:
-> 
->    [A Header]
->    something
->    more here
-> 
->    [Another Header]
-> 
->    [Too Early Header]
->    contents
-> 
-> However, we provide the lines of the bug report as filenames to grep,
-> meaning we mostly end up spewing errors:
-> 
->    grep: : No such file or directory
->    grep: [System Info]: No such file or directory
->    grep: git version:: No such file or directory
->    grep: git version 2.41.0.2.gfb7d80edca: No such file or directory
-> 
-> This doesn't disturb the test, which tugs along and reports success, not
-> really having verified the contents of the report at all.
-> 
-> Note that after 788a776069 ("bugreport: collect list of populated
-> hooks", 2020-05-07), the bug report, which is created in our hook-less
-> test repo, contains an empty section with the enabled hooks. Thus, even
-> the intention of our helper is a bit misguided: there is nothing
-> inherently wrong with having an empty section in the bug report.
-> 
-> Let's instead split this test into three: first verify that we generate
-> a report at all, then check that the introductory blurb looks the way it
-> should, then verify that the "[System Info]" seems to contain the right
-> things. (The "[Enabled Hooks]" section is tested later in the script.)
-> 
-> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
->   (Resend of v3, now with correct In-Reply-To.)
-> 
->   t/t0091-bugreport.sh | 67 +++++++++++++++++++++++++++++---------------
->   1 file changed, 44 insertions(+), 23 deletions(-)
-> 
-> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-> index b6d2f591ac..f6998269be 100755
-> --- a/t/t0091-bugreport.sh
-> +++ b/t/t0091-bugreport.sh
-> @@ -5,29 +5,50 @@ test_description='git bugreport'
->   TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
-> -# Headers "[System Info]" will be followed by a non-empty line if we put some
-> -# information there; we can make sure all our headers were followed by some
-> -# information to check if the command was successful.
-> -HEADER_PATTERN="^\[.*\]$"
-> -
-> -check_all_headers_populated () {
-> -	while read -r line
-> -	do
-> -		if test "$(grep "$HEADER_PATTERN" "$line")"
-> -		then
-> -			echo "$line"
-> -			read -r nextline
-> -			if test -z "$nextline"; then
-> -				return 1;
-> -			fi
-> -		fi
-> -	done
-> -}
-> -
-> -test_expect_success 'creates a report with content in the right places' '
-> -	test_when_finished rm git-bugreport-check-headers.txt &&
-> -	git bugreport -s check-headers &&
-> -	check_all_headers_populated <git-bugreport-check-headers.txt
-> +test_expect_success 'create a report' '
-> +	git bugreport -s format &&
-> +	test_file_not_empty git-bugreport-format.txt
-> +'
-> +
-> +test_expect_success 'report contains wanted template (before first section)' '
-> +	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
-> +	cat >expect <<-\EOF &&
-> +	Thank you for filling out a Git bug report!
-> +	Please answer the following questions to help us understand your issue.
-> +
-> +	What did you do before the bug happened? (Steps to reproduce your issue)
-> +
-> +	What did you expect to happen? (Expected behavior)
-> +
-> +	What happened instead? (Actual behavior)
-> +
-> +	What'\''s different between what you expected and what actually happened?
-> +
-> +	Anything else you want to add:
-> +
-> +	Please review the rest of the bug report below.
-> +	You can delete any lines you don'\''t wish to share.
-> +
-> +
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'sanity check "System Info" section' '
-> +	test_when_finished rm -f git-bugreport-format.txt &&
-> +
-> +	sed -ne "/^\[System Info\]$/,/^$/p" <git-bugreport-format.txt >system &&
-> +
-> +	# The beginning should match "git version --build-info" verbatim,
-> +	# but rather than checking bit-for-bit equality, just test some basics.
-> +	grep "git version [0-9]." system &&
-> +	grep "shell-path: ." system &&
-> +
-> +	# After the version, there should be some more info.
-> +	# This is bound to differ from environment to environment,
-> +	# so we just do some rather high-level checks.
-> +	grep "uname: ." system &&
-> +	grep "compiler info: ." system
->   '
->   
->   test_expect_success 'dies if file with same name as report already exists' '
+However, this syntax does not produce useful results with git diff
+--no-index. On macOS, the arguments to the command are named pipes
+under /dev/fd, and git diff doesn't know how to handle a named
+pipe. On Linux, the arguments are symlinks to pipes, so git diff
+"helpfully" diffs these symlinks, comparing their targets like
+"pipe:[1234]" and "pipe:[5678]".
+
+There have been at least three previous attempts [1-3] to address this
+issue. They all seem to have received broad support for the aim of
+supporting process substitutions but have foundered on details of the
+implementation. In an effort to avoid the same fate this series is
+narrowly focussed on making command substitutions work with "diff
+--no-index" and does not attempt to add a general facility for
+de-referencing symbolic links or reading from pipes to the diff
+machinery.
+
+The only functional change is that if a path given on the commandline
+is a named pipe or a symbolic link that resolves to a named pipe then
+we read the data to diff from that pipe. The first two patches improve
+the error handling when reading from stdin and add a test. The third
+patch implements support for reading from pipes.
+
+This cover letter and the commit message for the third patch are
+largely copied from brian’s patch[2] - do we have a standard commit
+trailer for "I stole the commit message from someone else's patch"?
+
+I've cc’d the participants of the discussion of the last attempt[1] to
+fix this.
+
+Thanks to Junio for his comments, the changes since v1 are:
+
+* Patch 1: - This is new and changes the code to error out if the user
+	     tries to compare stdin to a directory.
+
+* Patch 4: - Changed the implementation of get_mode() to treat stdin and
+	     named pipes as special. (suggested by Junio)
+	   - Added separate functions to populate a diff_filespec from
+	     a stdin or a named pipe. (suggested by Junio)
+	   - It now dies if the user tries to compare a named pipe to a
+	     directory and added a test for this. (suggested by Junio)
+	   - The test for comparing named pipes now cleans up the
+	     background processes if it fails.
+
+[1] https://lore.kernel.org/git/20200918113256.8699-3-tguyot@gmail.com/
+[2] https://lore.kernel.org/git/20181220002610.43832-1-sandals@crustytoothpaste.net/
+[3] https://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
+
+
+base-commit: 94486b6763c29144c60932829a65fec0597e17b3
+Published-As: https://github.com/phillipwood/git/releases/tag/diff-no-index-pipes%2Fv2
+View-Changes-At: https://github.com/phillipwood/git/compare/94486b676...4e05a0be5
+Fetch-It-Via: git fetch https://github.com/phillipwood/git diff-no-index-pipes/v2
+
+Phillip Wood (4):
+  diff --no-index: refuse to compare stdin to a directory
+  diff --no-index: die on error reading stdin
+  t4054: test diff --no-index with stdin
+  diff --no-index: support reading from named pipes
+
+ diff-no-index.c          | 126 ++++++++++++++++++++++++++++-----------
+ t/t4053-diff-no-index.sh |  64 ++++++++++++++++++++
+ 2 files changed, 156 insertions(+), 34 deletions(-)
+
+Range-diff against v1:
+-:  ---------- > 1:  5e65a15223 diff --no-index: refuse to compare stdin to a directory
+1:  5dad728f3b = 2:  be1d666769 diff --no-index: die on error reading stdin
+2:  b94d59034f ! 3:  1c7db4dbe2 t4054: test diff --no-index with stdin
+    @@ t/t4053-diff-no-index.sh: test_expect_success POSIXPERM,SYMLINKS 'diff --no-inde
+     +	test_write_lines 1 | git diff --no-index -- a/1 - >actual &&
+     +	test_must_be_empty actual
+     +'
+    - test_done
+    ++
+    + test_expect_success 'diff --no-index refuses to diff stdin and a directory' '
+    + 	test_must_fail git diff --no-index -- - a </dev/null 2>err &&
+    + 	grep "fatal: cannot compare stdin to a directory" err
+3:  990e71882b < -:  ---------- diff --no-index: support reading from named pipes
+-:  ---------- > 4:  4e05a0be54 diff --no-index: support reading from named pipes
+
+base-commit: 94486b6763c29144c60932829a65fec0597e17b3
+-- 
+2.40.1.852.g0a1e0755a6
+
