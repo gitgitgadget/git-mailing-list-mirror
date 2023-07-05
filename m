@@ -2,126 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1D1DEB64DA
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 18:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08480EB64DA
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 19:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232530AbjGESub (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 14:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37194 "EHLO
+        id S233278AbjGETqt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 15:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229700AbjGESua (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 14:50:30 -0400
-Received: from haze.kloetzke.net (haze.kloetzke.net [IPv6:2a03:4000:13:91f:34ea:99ff:fed2:e113])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27391723
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 11:50:27 -0700 (PDT)
-Received: from localhost (p5dd48849.dip0.t-ipconnect.de [93.212.136.73])
-        by haze.kloetzke.net (Postfix) with ESMTPSA id D1BFF800B7;
-        Wed,  5 Jul 2023 20:50:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=kloetzke.net; s=2020;
-        t=1688583024; bh=jqxdKBm+bRzlx9SjVb35oQiGY9SFZrAzs8Gly4mFndM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kMqYLOPcoDKhJNsJuURI+AkdRYq+j/bw/5gXRQF4ULDMlB0HXeN+M1vaUdSDH4IyW
-         44g0uwwTKbJXWwWWGQWQV6WR+pFYKL6LvRlRaii8GYvtlwfisZdcnTOCqRcYDc2eDL
-         B5+coTouoRqIcxw4HHXb8zij1sQKeUwuZiHyMl5C5BIdnQefwxyMtI502rW66YMCo7
-         6X41XQrpZ56d3cBR6LjKRUhM1KmCbQL4CAw8caWay7r4aBSf6wySYTuiX3uapG606k
-         kmP6gjXC0AIFYMU/SCLzVVJ3AhzpgO6OqbmrnBA5bLDX7W5l9Dc9YmB3ZZuPKKM1ml
-         I/1GHeA5eCAoA==
-Date:   Wed, 5 Jul 2023 20:50:22 +0200
-From:   Jan =?iso-8859-1?Q?Kl=F6tzke?= <jan@kloetzke.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Steve Kemp <steve@steve.org.uk>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH] ref-filter: handle nested tags in --points-at option
-Message-ID: <ZKW7bjVHeEOnza62@thinkpad.fritz.box>
-References: <20230701205703.1172505-1-jan@kloetzke.net>
- <20230702125611.GA1036686@coredump.intra.peff.net>
- <xmqqmt0a3n2w.fsf@gitster.g>
- <20230705124107.GA3932508@coredump.intra.peff.net>
- <xmqqedlm2s9q.fsf@gitster.g>
+        with ESMTP id S231750AbjGETqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 15:46:48 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E858E9F
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 12:46:46 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-99357737980so471037166b.2
+        for <git@vger.kernel.org>; Wed, 05 Jul 2023 12:46:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688586405; x=1691178405;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5oCvUVvsNAHCFzeFxaOo6HDveJTYZ9k3uQ6V/xseqHg=;
+        b=QaIyxYfM8VpCd/o8NlG8I1W2GNn+pGQq2yVxKNdkr9d2nvoygoFDMRrBdR0nH+auYt
+         vaLEqWlStAiiXSIbc0L+il61FkvFkmq64PM1QdoMKo9b/K3MKST31j13ZWmrP6plZJLJ
+         MP0S6JuKDRWvnP6ph+IrrbmDMdks68aLJ5jOp9nHqx8ZBfI2MVCf3+ZGYTBHvt+nKnTC
+         CD6SrIvEIxcByL0RpI+iPV9x1oDt0UuZsSJ9XrZyCCkLF64bnrDGQay5GcykDhTmDMzy
+         v4qA/EAuJftheRxz0ppeqB/zp0P2lof56T+O919PoLb6vbA+sXiiLmeNtb6Wd2MnjMhS
+         KCug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688586405; x=1691178405;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5oCvUVvsNAHCFzeFxaOo6HDveJTYZ9k3uQ6V/xseqHg=;
+        b=J43P93EPBKOZAt30PBkpnFMzW2zKNvo+QaQPu6zM5RS02Qpk5mlD5y1jPo/wTaWQK/
+         zgmXWTztAf52Wdp49PDEB6M6rRiUHuiLobbP7MuzDKeW4tVHu5vpL/lasYMBgKZZdBua
+         GFIATP9P0hm4z7KyLSB7dw7fYPK83DqaTvXyjvd8yk0QS9KY4G+BujHhvN3fLzMsgcXU
+         03KZLL16vodT2+41C16hG4M8oMA1Nzw5hug6XsugV9zG+jaIspm+ouVf6qjcHVY2S7IV
+         GVKekDD8k2EK9iopwcueuUaSAnP7Yrl+6VaP9T3kEMSVBgaY56h5L6Fn6qrvE1s2jvUn
+         9jGw==
+X-Gm-Message-State: ABy/qLbhHu688PEBTyCzpOjeBfb62LpMi64aZ2FUB5+UWiBolxT78WVs
+        pLYgBwLPla5Wh7keQC4mHK8=
+X-Google-Smtp-Source: APBJJlEoOhaspHdlp7Jd/3kV1aj6aR/sN5WaWwgtgn7DlNPr+HXVybNwCY2OEV1jgl9B7wZ1OicKKw==
+X-Received: by 2002:a17:906:dfeb:b0:988:6491:98e3 with SMTP id lc11-20020a170906dfeb00b00988649198e3mr14565882ejc.68.1688586405103;
+        Wed, 05 Jul 2023 12:46:45 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.235.211])
+        by smtp.gmail.com with ESMTPSA id mh4-20020a170906eb8400b0098951bb4dc3sm3618731ejb.184.2023.07.05.12.46.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jul 2023 12:46:44 -0700 (PDT)
+Message-ID: <161932f5-ae8f-cfaa-a6b0-ab140d0f002e@gmail.com>
+Date:   Wed, 5 Jul 2023 20:46:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqedlm2s9q.fsf@gitster.g>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3] t0091-bugreport.sh: actually verify some content of
+ report
+Content-Language: en-US
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <CAN0heSrMCnygWUC5Sh1UA9v2JGtjcxYDKPFE0xUPddGEW29c3w@mail.gmail.com>
+ <20230705184058.3057709-1-martin.agren@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230705184058.3057709-1-martin.agren@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Wed, Jul 05, 2023 at 10:16:17AM -0700 schrieb Junio C Hamano:
-> > The one thing that would actually make us a lot faster (by using the
-> > packed-refs peels) is to make full peels the only option, and do not
-> > bother letting --points-at match "B" in an A->B->C peel. But that would
-> > be removing something that is currently matched (even before the patch
-> > in this thread), so I stopped short of it in my optimizations.
+Hi Martin
+
+This version looks good to me, thanks for re-rolling
+
+Phillip
+
+On 05/07/2023 19:40, Martin Ågren wrote:
+> In the first test in this script, 'creates a report with content in the
+> right places', we generate a report and pipe it into our helper
+> `check_all_headers_populated()`. The idea of the helper is to find all
+> lines that look like headers ("[Some Header Here]") and to check that
+> the next line is non-empty. This is supposed to catch erroneous outputs
+> such as the following:
 > 
-> Interesting.  Right now, if I create a 'direct' tag that points
-> directly at HEAD, and then create an 'indirect' tag that points at
-> 'direct', i.e.
+>    [A Header]
+>    something
+>    more here
 > 
->     $ git tag -a -m 'a direct tag to HEAD' direct HEAD
->     $ git tag -a -m 'an indirect tag' indirect direct
+>    [Another Header]
 > 
-> I would get a piece of advice message that encourages to correct the
-> mistake with "git tag -f indirect direct^{}".  Then I ask for tags
-> that point at HEAD, I see only 'direct' and not 'indirect'.  Your
-> optimization would start showing both 'direct' and 'indirect' if
-> they are packed.  But you are correct to worry about the opposite
-> case.  If I ask for tags that point at 'direct', I currently see
-> 'indirect', but of course 'indirect' will not appear as the peeled
-> value of any ref, and the optimized version will stop saying that
-> 'indirect' is a ref that points at 'direct'.  That sounds like a
-> regression.
-
-I agree. I purposely let the loop run through all the tags in the chain
-in my inital patch to keep the existing behaviour. Unless there is a
-compelling reason I would suggest do keep it this way. I wouldn't rule
-out that someone relies on being able to query for indirect tags by
-supplying a tag to the --points-at option.
-
-> > But even
-> > if we decide to do that, Jan's patch is not making anything worse there
-> > (in fact, it is making it better, because it is matching "C" which we do
-> > not currently match).
-> > ...
-> > So I'd be inclined to proceed with the patches I sent earlier, and then
-> > if we choose to later refactor again to drop "B", we can.
+>    [Too Early Header]
+>    contents
 > 
-> We generally avoid taking away anything once we give it to users;
-> once the patch under discussion goes in, there is no taking it back,
-> i.e. the new _behaviour_ closes the door to certain optimizations.
+> However, we provide the lines of the bug report as filenames to grep,
+> meaning we mostly end up spewing errors:
 > 
-> I do not at all mind to see us decide and declare that it is a good
-> thing to say that not just 'direct' but also 'indirect' points at
-> HEAD, and that 'indirect' points at 'direct' and the patch under
-> discussion makes the world a etter place, and we will not regret
-> that decision.  But the time to make such a decision is now, before
-> we give a go-ahead to the patch.
-
-The reasoning why I came up with the patch in the first place was an odd
-behaviour that was reported to me in [1]. The user had a recipe that
-checked out a nested tag for a package but the Bob Build Tool thought
-the user messed with the working copy. Behind the scenes Bob checked out
-the indirect tag (foobar-3.13.1) successfully. But when the user
-examined the project state ("bob status"), Bob ran
-
-  git tag --points-at HEAD
-
-in the working copy to get the list of tags for the current HEAD. That
-did not return the expected tag in the list, so the workspace state was
-flagged. OTOH, the tag _is_ visible when manually executing "git log" in
-the workspace. Clearly this is confusing and so was I when I tried to
-find the root cause. To sum up:
-
- $ git checkout nested-tag   --> works
- $ git log                   --> shows nested tag in decoration
- $ git tag --points-at HEAD  --> does *not* show nested tag
-
-AFAICT the nested tag in the mentioned bug report was not created on
-purpose. I haven't come across any sensible use case for them either.
-But as most git commands can handle nested tags they should better be
-supported consistently IMHO.
-
--- Jan
-
-[1] https://github.com/BobBuildTool/bob/issues/520
+>    grep: : No such file or directory
+>    grep: [System Info]: No such file or directory
+>    grep: git version:: No such file or directory
+>    grep: git version 2.41.0.2.gfb7d80edca: No such file or directory
+> 
+> This doesn't disturb the test, which tugs along and reports success, not
+> really having verified the contents of the report at all.
+> 
+> Note that after 788a776069 ("bugreport: collect list of populated
+> hooks", 2020-05-07), the bug report, which is created in our hook-less
+> test repo, contains an empty section with the enabled hooks. Thus, even
+> the intention of our helper is a bit misguided: there is nothing
+> inherently wrong with having an empty section in the bug report.
+> 
+> Let's instead split this test into three: first verify that we generate
+> a report at all, then check that the introductory blurb looks the way it
+> should, then verify that the "[System Info]" seems to contain the right
+> things. (The "[Enabled Hooks]" section is tested later in the script.)
+> 
+> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+>   (Resend of v3, now with correct In-Reply-To.)
+> 
+>   t/t0091-bugreport.sh | 67 +++++++++++++++++++++++++++++---------------
+>   1 file changed, 44 insertions(+), 23 deletions(-)
+> 
+> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+> index b6d2f591ac..f6998269be 100755
+> --- a/t/t0091-bugreport.sh
+> +++ b/t/t0091-bugreport.sh
+> @@ -5,29 +5,50 @@ test_description='git bugreport'
+>   TEST_PASSES_SANITIZE_LEAK=true
+>   . ./test-lib.sh
+>   
+> -# Headers "[System Info]" will be followed by a non-empty line if we put some
+> -# information there; we can make sure all our headers were followed by some
+> -# information to check if the command was successful.
+> -HEADER_PATTERN="^\[.*\]$"
+> -
+> -check_all_headers_populated () {
+> -	while read -r line
+> -	do
+> -		if test "$(grep "$HEADER_PATTERN" "$line")"
+> -		then
+> -			echo "$line"
+> -			read -r nextline
+> -			if test -z "$nextline"; then
+> -				return 1;
+> -			fi
+> -		fi
+> -	done
+> -}
+> -
+> -test_expect_success 'creates a report with content in the right places' '
+> -	test_when_finished rm git-bugreport-check-headers.txt &&
+> -	git bugreport -s check-headers &&
+> -	check_all_headers_populated <git-bugreport-check-headers.txt
+> +test_expect_success 'create a report' '
+> +	git bugreport -s format &&
+> +	test_file_not_empty git-bugreport-format.txt
+> +'
+> +
+> +test_expect_success 'report contains wanted template (before first section)' '
+> +	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
+> +	cat >expect <<-\EOF &&
+> +	Thank you for filling out a Git bug report!
+> +	Please answer the following questions to help us understand your issue.
+> +
+> +	What did you do before the bug happened? (Steps to reproduce your issue)
+> +
+> +	What did you expect to happen? (Expected behavior)
+> +
+> +	What happened instead? (Actual behavior)
+> +
+> +	What'\''s different between what you expected and what actually happened?
+> +
+> +	Anything else you want to add:
+> +
+> +	Please review the rest of the bug report below.
+> +	You can delete any lines you don'\''t wish to share.
+> +
+> +
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'sanity check "System Info" section' '
+> +	test_when_finished rm -f git-bugreport-format.txt &&
+> +
+> +	sed -ne "/^\[System Info\]$/,/^$/p" <git-bugreport-format.txt >system &&
+> +
+> +	# The beginning should match "git version --build-info" verbatim,
+> +	# but rather than checking bit-for-bit equality, just test some basics.
+> +	grep "git version [0-9]." system &&
+> +	grep "shell-path: ." system &&
+> +
+> +	# After the version, there should be some more info.
+> +	# This is bound to differ from environment to environment,
+> +	# so we just do some rather high-level checks.
+> +	grep "uname: ." system &&
+> +	grep "compiler info: ." system
+>   '
+>   
+>   test_expect_success 'dies if file with same name as report already exists' '
