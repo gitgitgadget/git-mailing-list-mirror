@@ -2,130 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DE10EB64DA
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 20:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 169BDEB64DA
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 20:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232939AbjGEUHV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 16:07:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35976 "EHLO
+        id S233240AbjGEUPm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 16:15:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232200AbjGEUHV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 16:07:21 -0400
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF8CB1723
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 13:07:19 -0700 (PDT)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4Qx9gB2PMfz5tlB;
-        Wed,  5 Jul 2023 22:07:18 +0200 (CEST)
-Message-ID: <3d3dd74a-aed3-b2cf-1be3-8a14129e3f4a@kdbg.org>
-Date:   Wed, 5 Jul 2023 22:07:17 +0200
+        with ESMTP id S231562AbjGEUPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 16:15:41 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BCA8173B
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 13:15:40 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 01EBE332B4;
+        Wed,  5 Jul 2023 16:15:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tJM0D8pCl6H6
+        I0p1PfGp/Sg6Pp3OZxqNiWA5XuQMnEQ=; b=AzDvPSVUiJ1Y+KqVh1UGH2s44un+
+        o1JZ6w0+o0pe+9IdfTM+d/4+WkUPRsC4DCV+NG8897dqnaBRti+DuZw+LmbaLj2E
+        PepDY2ybt/tKJ8m+yvgToULSIv8WXVKzLqi9ydlsy5ndvJdvGC1kEjuva+uIMSTk
+        oN4o3CFXuMgtHfo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEAE9332AB;
+        Wed,  5 Jul 2023 16:15:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7F38B332A7;
+        Wed,  5 Jul 2023 16:15:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jan =?utf-8?Q?Kl=C3=B6tzke?= <jan@kloetzke.net>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Steve Kemp <steve@steve.org.uk>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] ref-filter: handle nested tags in --points-at option
+References: <20230701205703.1172505-1-jan@kloetzke.net>
+        <20230702125611.GA1036686@coredump.intra.peff.net>
+        <xmqqmt0a3n2w.fsf@gitster.g>
+        <20230705124107.GA3932508@coredump.intra.peff.net>
+        <xmqqedlm2s9q.fsf@gitster.g> <ZKW7bjVHeEOnza62@thinkpad.fritz.box>
+Date:   Wed, 05 Jul 2023 13:15:35 -0700
+In-Reply-To: <ZKW7bjVHeEOnza62@thinkpad.fritz.box> ("Jan =?utf-8?Q?Kl?=
+ =?utf-8?Q?=C3=B6tzke=22's?= message of
+        "Wed, 5 Jul 2023 20:50:22 +0200")
+Message-ID: <xmqq8rbuyv14.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 07/10] gitk: add keyboard bind for cherry-pick command
-Content-Language: en-US
-To:     Jens Lidestrom <jens@lidestrom.se>
-Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org,
-        Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
- <pull.1551.v2.git.1688409958.gitgitgadget@gmail.com>
- <54afa8fe9e831f5381d045bc24464ff2d6246118.1688409958.git.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <54afa8fe9e831f5381d045bc24464ff2d6246118.1688409958.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B4021888-1B70-11EE-BCD7-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.07.23 um 20:45 schrieb Jens Lidestrom via GitGitGadget:
-> From: Jens Lidestrom <jens@lidestrom.se>
-> 
-> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
-> ---
->  gitk-git/gitk | 23 +++++++++++++++--------
->  1 file changed, 15 insertions(+), 8 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 65ca11becca..351b88f10c0 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2690,6 +2690,7 @@ proc makewindow {} {
->      bind $ctext $ctxbut {pop_diff_menu %W %X %Y %x %y}
->      bind $ctext <Button-1> {focus %W}
->      bind $ctext <<Selection>> rehighlight_search_results
-> +    bind . <$M1B-p> {cherrypick [selected_line_id]}
->      bind . <$M1B-t> {resethead [selected_line_id]}
->      bind . <$M1B-o> {checkout [selected_line_heads] [selected_line_id]}
->      bind . <$M1B-m> {rmbranch [selected_line_heads] [selected_line_id] 1}
-> @@ -2710,8 +2711,8 @@ proc makewindow {} {
->          {mc "Create tag" command mktag}
->          {mc "Copy commit reference" command copyreference}
->          {mc "Write commit to file" command writecommit}
-> -        {mc "Create new branch" command mkbranch}
-> -        {mc "Cherry-pick this commit" command cherrypick}
-> +        {mc "Create new branch" command {mkbranch $rowmenuid}}
-> +        {mc "Cherry-pick this commit" command {cherrypick $rowmenuid}}
+Jan Kl=C3=B6tzke <jan@kloetzke.net> writes:
 
-The change regarding Create new branch is not related to this commit's
-topic and should be elsewhere.
+> Am Wed, Jul 05, 2023 at 10:16:17AM -0700 schrieb Junio C Hamano:
+>> Interesting.  Right now, if I create a 'direct' tag that points
+>> directly at HEAD, and then create an 'indirect' tag that points at
+>> 'direct', i.e.
+>>=20
+>>     $ git tag -a -m 'a direct tag to HEAD' direct HEAD
+>>     $ git tag -a -m 'an indirect tag' indirect direct
+>>=20
+>> I would get a piece of advice message that encourages to correct the
+>> mistake with "git tag -f indirect direct^{}".
+> ...
+> But as most git commands can handle nested tags they should better be
+> supported consistently IMHO.
 
->          {mc "Reset current branch to here" command {resethead $rowmenuid}}
->          {mc "Mark this commit" command markhere}
->          {mc "Return to mark" command gotomark}
-> @@ -3186,6 +3187,7 @@ proc keys {} {
->  [mc "<%s-minus>	Decrease font size" $M1T]
->  [mc "<F5>		Update"]
->  [mc "<%s-T>		Reset current branch to selected commit" $M1T]
-> +[mc "<%s-P>		Cherry-pick selected commit to current branch" $M1T]
->  [mc "<%s-O>		Check out selected commit" $M1T]
->  [mc "<%s-B>		Create branch on selected commit" $M1T]
->  [mc "<%s-M>		Remove selected branch" $M1T]
-> @@ -9758,24 +9760,29 @@ proc exec_citool {tool_args {baseid {}}} {
->      array set env $save_env
->  }
->  
-> -proc cherrypick {} {
-> -    global rowmenuid curview
-> +proc cherrypick {id} {
-> +    global curview headids
->      global mainhead mainheadid
->      global gitdir
->  
-> +    if {! [info exists headids($mainhead)]} {
-> +        error_popup [mc "Cannot cherry-pick to a detached head"]
-> +        return
-> +    }
+Do they?  Most git commands handle nested tags in only one way: by
+fully peeling.  "git checkout --detach indirect" in the above
+scenario would handle nested tag "indirect" well, but it is done by
+making "direct" tag inaccessible when the only thing you have is the
+"indirect" tag.  For example, you cannot create another "indirect"
+tag that points at "direct" tag with "git tag", with
 
-Why is it necessary to forbid this now? It was not forbidden before.
+    $ git tag -a -m 'another indirect' indirect-2 indirect^{}
 
-> +
->      set oldhead [exec git rev-parse HEAD]
-> -    set dheads [descheads $rowmenuid]
-> +    set dheads [descheads $id]
->      if {$dheads ne {} && [lsearch -exact $dheads $oldhead] >= 0} {
->          set ok [confirm_popup [mc "Commit %s is already\
->                  included in branch %s -- really re-apply it?" \
-> -                                   [string range $rowmenuid 0 7] $mainhead]]
-> +                                   [string range $id 0 7] $mainhead]]
->          if {!$ok} return
->      }
->      nowbusy cherrypick [mc "Cherry-picking"]
->      update
->      # Unfortunately git-cherry-pick writes stuff to stderr even when
->      # no error occurs, and exec takes that as an indication of error...
-> -    if {[catch {exec sh -c "git cherry-pick -r $rowmenuid 2>&1"} err]} {
-> +    if {[catch {exec sh -c "git cherry-pick -r $id 2>&1"} err]} {
->          notbusy cherrypick
->          if {[regexp -line \
->                   {Entry '(.*)' (would be overwritten by merge|not uptodate)} \
-> @@ -9791,7 +9798,7 @@ proc cherrypick {} {
->                          resolve it?"]]} {
->                  # Force citool to read MERGE_MSG
->                  file delete [file join $gitdir "GITGUI_MSG"]
-> -                exec_citool {} $rowmenuid
-> +                exec_citool {} $id
->              }
->          } else {
->              error_popup $err
+The resulting tag will be another direct tag to the underlying
+commit, and not a tag of the "direct" tag.
+
+In that sense, --points-at we currently have that only peels once is
+inconsistent with the others, but --points-at that peels repeatedly
+and allows the intermediate steps to match is also behaving
+inconsistently relative to most git commands.
+
+Combined with the fact that we seem to discourage such an indirect
+tag, we should either:
+
+ (1) declare that indirect tags are not useful, turn the warning
+     advice.nestedTag into a stronger error, devise appropriate
+     transition plan to get rid of nested tag (e.g. eventually
+     making it impossible to use "git tag" to create such a tag and
+     let "git fsck" complain about them), and perhaps change
+     "--points-at" to take only the fully peeled object into account
+     so that optimization based on packed-refs becomes possible.  Or
+
+ (2) declare that indirect tags are useful thing to support, tone
+     down the advice.nestedTag message, and enhance the support of
+     indirect tags, starting with this "--points-at" enhancement.
+
+I am inclined to support (2), but then a consistent support would
+need to eventually include a "peel only a single level" primitive as
+well.  That would be the first step to allow "most git commands" to
+support nested tags well, as they currently do not.
+
+Thanks for working on this.  Let's queue it, together will Peff's
+patches (which I haven't studied fully yet).
 
