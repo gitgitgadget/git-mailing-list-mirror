@@ -2,105 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F15DEB64DD
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 19:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73368EB64DA
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 19:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234271AbjGETwz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 15:52:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55994 "EHLO
+        id S233506AbjGETxZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 15:53:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234362AbjGETwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 15:52:53 -0400
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82091FC8
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 12:52:23 -0700 (PDT)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Qx9Kt1mZCz5tl9;
-        Wed,  5 Jul 2023 21:52:17 +0200 (CEST)
-Message-ID: <f3fd8ad1-fad7-575a-9057-ebe18d4a4fdb@kdbg.org>
-Date:   Wed, 5 Jul 2023 21:52:17 +0200
+        with ESMTP id S233558AbjGETxU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 15:53:20 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019141989
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 12:53:16 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7FB7233009;
+        Wed,  5 Jul 2023 15:53:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=RRLaB6rhPyTG
+        EmBCWMw9LWIHrgnE6GNtNZJykPoMQ8g=; b=BC8m5IzQExc1HJkrASxyzlVIwoSJ
+        IvWsFD1xuSgcq0VwUh6NHtiDMMF7Mz0EzV3CRlF26wjAjijq2YoHp+D2jYyg6mS7
+        rMh9kBG7ae0khNbcer55IrSMTHheyclR7k4myShMZOQbthTUhUgI40rFRdcJVVzu
+        x0xlTf/NFkhc6fs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 77B0633008;
+        Wed,  5 Jul 2023 15:53:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.233.135.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E9D8433007;
+        Wed,  5 Jul 2023 15:53:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3] t0091-bugreport.sh: actually verify some content of
+ report
+References: <AN0heSrMCnygWUC5Sh1UA9v2JGtjcxYDKPFE0xUPddGEW29c3w@mail.gmail.com>
+        <20230705183532.3057433-1-martin.agren@gmail.com>
+Date:   Wed, 05 Jul 2023 12:53:11 -0700
+In-Reply-To: <20230705183532.3057433-1-martin.agren@gmail.com> ("Martin
+        =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 5 Jul 2023 20:35:27 +0200")
+Message-ID: <xmqqv8eyyw2g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 09/10] gitk: improve keyboard convenience in reset
- dialog
-Content-Language: en-US
-To:     Jens Lidestrom <jens@lidestrom.se>
-Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>,
-        Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
- <pull.1551.v2.git.1688409958.gitgitgadget@gmail.com>
- <a37a677036df9fd515201174897af4c16c69f45f.1688409958.git.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <a37a677036df9fd515201174897af4c16c69f45f.1688409958.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 932E8D4C-1B6D-11EE-B928-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.07.23 um 20:45 schrieb Jens Lidestrom via GitGitGadget:
-> From: Jens Lidestrom <jens@lidestrom.se>
-> 
-> Make it more convenient to use the reset dialog using keyboard.
-> 
-> * Set focus to the combo box.
-> * Accept with Return key.
-> * Auto-select combo items when navigating in menu with up/down keys.
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-I like it!
+> +test_expect_success 'create a report' '
+> +	git bugreport -s format &&
+> +	test_file_not_empty git-bugreport-format.txt
+> +'
 
-> 
-> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
-> ---
->  gitk-git/gitk | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index f559e279b7a..fafff2b1a5b 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -9902,27 +9902,40 @@ proc resethead {reset_target_id} {
->      ttk_toplevel $w
->      make_transient $w .
->      wm title $w [mc "Confirm reset"]
-> +
->      ${NS}::label $w.m -text \
->          [mc "Reset branch %s to %s?" $mainhead [commit_name $reset_target_id 1]]
->      pack $w.m -side top -fill x -padx 20 -pady 20
->      ${NS}::labelframe $w.f -text [mc "Reset type:"]
-> +
->      set resettype mixed
-> +
->      ${NS}::radiobutton $w.f.soft -value soft -variable resettype \
->          -text [mc "Soft: Leave working tree and index untouched"]
-> +    bind $w.f.soft <Key-Up> "set resettype hard"
-> +    bind $w.f.soft <Key-Down> "set resettype mixed"
->      grid $w.f.soft -sticky w
-> +
->      ${NS}::radiobutton $w.f.mixed -value mixed -variable resettype \
->          -text [mc "Mixed: Leave working tree untouched, reset index"]
-> +    bind $w.f.mixed <Key-Up> "set resettype soft"
-> +    bind $w.f.mixed <Key-Down> "set resettype hard"
->      grid $w.f.mixed -sticky w
-> +
->      ${NS}::radiobutton $w.f.hard -value hard -variable resettype \
->          -text [mc "Hard: Reset working tree and index\n(discard ALL local changes)"]
-> +    bind $w.f.hard <Key-Up> "set resettype mixed"
-> +    bind $w.f.hard <Key-Down> "set resettype soft"
->      grid $w.f.hard -sticky w
->      pack $w.f -side top -fill x -padx 4
-> +
->      ${NS}::button $w.ok -text [mc OK] -command "set confirm_ok 1; destroy $w"
-> +    bind $w <Key-Return> "set confirm_ok 1; destroy $w"
->      pack $w.ok -side left -fill x -padx 20 -pady 20
->      ${NS}::button $w.cancel -text [mc Cancel] -command "destroy $w"
->      bind $w <Key-Escape> [list destroy $w]
->      pack $w.cancel -side right -fill x -padx 20 -pady 20
-> -    bind $w <Visibility> "grab $w; focus $w"
-> +    bind $w <Visibility> "grab $w; focus $w.f.mixed"
->      tkwait window $w
->      if {!$confirm_ok} return
->      if {[catch {set fd [open \
+OK.
 
+> +test_expect_success 'report contains wanted template (before first sec=
+tion)' '
+> +	sed -ne "/^\[/q;p" git-bugreport-format.txt >actual &&
+> +	cat >expect <<-\EOF &&
+> +	Thank you for filling out a Git bug report!
+> +	Please answer the following questions to help us understand your issu=
+e.
+> +
+> +	What did you do before the bug happened? (Steps to reproduce your iss=
+ue)
+> +
+> +	What did you expect to happen? (Expected behavior)
+> +
+> +	What happened instead? (Actual behavior)
+> +
+> +	What'\''s different between what you expected and what actually happe=
+ned?
+> +
+> +	Anything else you want to add:
+> +
+> +	Please review the rest of the bug report below.
+> +	You can delete any lines you don'\''t wish to share.
+> +
+> +
+> +	EOF
+> +	test_cmp expect actual
+> +'
+
+I am not sure about the value of the bit-for-bit test here, but OK.
+It is not like we will be changing this piece of text every week.
+
+> +test_expect_success 'sanity check "System Info" section' '
+> +	test_when_finished rm -f git-bugreport-format.txt &&
+> +
+> +	sed -ne "/^\[System Info\]$/,/^$/p" <git-bugreport-format.txt >system=
+ &&
+> +
+> +	# The beginning should match "git version --build-info" verbatim,
+> +	# but rather than checking bit-for-bit equality, just test some basic=
+s.
+> +	grep "git version [0-9]." system &&
+> +	grep "shell-path: ." system &&
+> +
+> +	# After the version, there should be some more info.
+
+Do you want to assert the "after" part?  "grep" alone does not do
+anything of that sort.
+
+> +	# This is bound to differ from environment to environment,
+> +	# so we just do some rather high-level checks.
+> +	grep "uname: ." system &&
+> +	grep "compiler info: ." system
+>  '
+
+Don't we at least want to anchor all these patterns with "^" or
+something?
+
+Alternatively, since we do not expect the values of the fields are useful
+at all, perhaps doing something like this
+
+    sed -n -e '/^\[System Info\]/,/\[Enabled Hooks]/s/^\([^:]*):.*/\1/p' =
+>names
+
+to ensure that we have the fields we expect in the output makes more sens=
+e?
+
+I notice that "git version:" does not have its value on its line.
+Isn't it a bug we would rather fix before writing this "sanity check"
+test, I have to wonder.
+
+Thanks.
