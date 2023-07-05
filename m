@@ -2,78 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B1BEB64DD
-	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 16:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBAD6EB64DA
+	for <git@archiver.kernel.org>; Wed,  5 Jul 2023 17:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232611AbjGEQ0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jul 2023 12:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50578 "EHLO
+        id S231580AbjGERJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jul 2023 13:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232580AbjGEQ0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2023 12:26:10 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC6A61703
-        for <git@vger.kernel.org>; Wed,  5 Jul 2023 09:26:09 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-401d1d967beso1002021cf.0
-        for <git@vger.kernel.org>; Wed, 05 Jul 2023 09:26:09 -0700 (PDT)
+        with ESMTP id S231286AbjGERJm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2023 13:09:42 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38AFD198A
+        for <git@vger.kernel.org>; Wed,  5 Jul 2023 10:09:41 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 98e67ed59e1d1-262ecb0c44fso9530747a91.1
+        for <git@vger.kernel.org>; Wed, 05 Jul 2023 10:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688574369; x=1691166369;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EaROCZE2vgtR6i5q4vyT1oHF2a+nyDECDW6gJyzBgeY=;
-        b=RsqNhh94eViUAIPNJCKHdqyVj43QOXmvTRbiB0nZFkwyC/ypUiIQUQFIZSz8TZDzQ/
-         rIX2IT8c5TTrfSOvD3t8ZMju7mPfBekImLzCgoN7q3AXi5epUUpgC4OfHccZ4pkjP9QZ
-         XVEbaaMVuKxFQj+rx30pxgpcH+Xt86IMrwb0SSoTtkOulxlQMxyryIdB1hYYB1FY3swQ
-         jorHG+QbVBTBUzx8qI3to4/ZmYw0w6y3mp09kvUIPfK8fPjRN7dyMhUZYQ27gzEXzP9Z
-         FnpnxfD0u23n8TYNtiFDbRdNi1fpSP3+RrRlYL7nfwPsebZ6j71KlUjKm7NvOnDRSGb8
-         vrUw==
+        d=google.com; s=20221208; t=1688576980; x=1691168980;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ob14upf4D0bnNrCWxY7Ep2D9/LxzmK9pYe8MU7ky6Ts=;
+        b=vzBYrTIssH3rsLMB7XHt/GWul3+qqafbd2JO6VSlVJX+T5hvcSXzYY2822m511lJL3
+         pwAzHY2itjR7PeXTk1tEOr6TGavLU+90HE7D+HN1x9yf5s5B2EfHYMrl81OkeYTkfQZL
+         7t9ux1SWH1baZcQI0S1oIDmZ/QyFfGZlq584qi3vfvzmIdWwpdEhWAGw4vEArT2t22YZ
+         1FgDOZ5w/ONZhD3icriTin0pxhuflehrzSwy87QisTtFO8/sfc4q37I/1p2gAG4zXnld
+         xkXflXKWJOp4AmtYiEN22jN450b5qjwj9TSkRs6UYDhEhWwHxWV9H66d6Dn97FT9f3AR
+         8BuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688574369; x=1691166369;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EaROCZE2vgtR6i5q4vyT1oHF2a+nyDECDW6gJyzBgeY=;
-        b=iSEx2jUzodTnK0Xvu4CawNLmgkbAJwkMZFwZYLIQ5Lt+yJx3WxLjExeFt7r1ANYYH0
-         pRJyPPgqTl3ADVr8cEprPW1lg+C2AYReonRezuUTaTRsD5t7IL3NNPy4eAsA7irzlorl
-         esylUkqB6mvl0af1I57J6+8+SAepy0TaQ4FF/N/lFtYLie3O+nKA0ADhFms2xRk0tkdG
-         3rcqEoWe3lSoCAOs3HB1H+VXb47GBsXDZvD4/U+Jw9ZhaL1wgVs/4d3SI51E6spTJvJE
-         cDm9jJZPrCTIoefMk42dtpTP0HTddry2PjZXaxvQeQ/2+3TjYHK1hBj2P6r7Xp5SWGEY
-         RZSQ==
-X-Gm-Message-State: ABy/qLaJKdn7kXioBhEPpzy4HLzZS/PGcgbRUt1u8mF0xO6rrblInFDK
-        ZWkJvf1IzcNTjllbzDkj9SYLB5849iNlh2rf8Kx7Pw==
-X-Google-Smtp-Source: APBJJlEX7R4TJIHdpWB2hCDkPFiZvsa9al+NMfFRN0Q5Q9jGgfn3rTWheJn4mYQ0NBI1YP8reK3E4j3ya4g5B1XXKTM=
-X-Received: by 2002:a05:622a:199c:b0:3f8:99c1:52a1 with SMTP id
- u28-20020a05622a199c00b003f899c152a1mr176340qtc.10.1688574368981; Wed, 05 Jul
- 2023 09:26:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230630202237.3069327-1-calvinwan@google.com>
- <20230630202346.3069950-6-calvinwan@google.com> <xmqqfs685zw1.fsf@gitster.g>
-In-Reply-To: <xmqqfs685zw1.fsf@gitster.g>
+        d=1e100.net; s=20221208; t=1688576980; x=1691168980;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ob14upf4D0bnNrCWxY7Ep2D9/LxzmK9pYe8MU7ky6Ts=;
+        b=YXS7cuuphYAKQ4ilDa3LAO+2rietqp2kvWQH6gZyWEjH/jjKameAKcMYrUy+aJNnWK
+         gwQqeqqLECWTCOCsWPyQdz6WyU9rBO3sfps6jbYCfuQkz88ZqiyHCdyB47XDyjIuWRkv
+         jKs8li+cYJmOR8saPcrisAsJy8eo/5Buajk4Fl2e6krwufnsBgae4Ezia+FloKYuPwzg
+         MXjjf6tyartSyig/aaE4F/hs/XJKP1DqsVoz0dgrNP5quhU8qtdPXSh4kZtq0W9zYH/A
+         zYPFI6dCaFgbUc2a1WiLSopluFC3Qcve1pyfd8aJpbBG7yjoFCHRHXdmnFWHT5kkdMJ/
+         zeCg==
+X-Gm-Message-State: ABy/qLaI5lYA0EsldcKfXl8v9VxRKv8XdtRR4G6pFHutP8cYSusDR6Xx
+        HubsMX3PHmeO+k/f2AIXH0tzubTTjwVqFlVzkkoLp1X+pyy25ixHpcfzL0f1AWBxLJSJai82Sby
+        fsxPIcncgz8g6DgxD5ny03vRxHT6jfP1O7hqxu79EQ9m/tcowIuSn1SwfrY3x32uw2Q==
+X-Google-Smtp-Source: APBJJlHzGGeevQjqMCsDacTqSKjlj5nMFsMOvzemDZyXktaFMVt8LIciEpNUM6AzSHcMJ9NrcvD3VklZ9IebWGM=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:90a:a60c:b0:263:95f5:e163 with SMTP
+ id c12-20020a17090aa60c00b0026395f5e163mr11309413pjq.2.1688576980615; Wed, 05
+ Jul 2023 10:09:40 -0700 (PDT)
+Date:   Wed,  5 Jul 2023 17:09:19 +0000
+In-Reply-To: <20230705170812.3833103-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230705170812.3833103-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
+Message-ID: <20230705170924.3833828-1-calvinwan@google.com>
+Subject: [PATCH v5 1/6] git-compat-util: move strbuf.c funcs to its header
 From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 5 Jul 2023 09:25:57 -0700
-Message-ID: <CAFySSZBDur-1+XG2AetS6jZ=mkv0esFFT5HgQnQ-SVsrpgKXew@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] common: move alloc macros to common.h
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+To:     git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
         jonathantanmy@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Is this step mistitled?  There is no "common.h" in this round.
+While functions like starts_with() probably should not belong in the
+boundaries of the strbuf library, this commit focuses on first splitting
+out headers from git-compat-util.h.
 
-Ahhhh my pre-vacation brain managed to correctly edit the commit
-message, but not the header
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+---
+ builtin/symbolic-ref.c   |  1 +
+ builtin/unpack-objects.c |  1 +
+ git-compat-util.h        | 32 --------------------------------
+ strbuf.h                 | 32 ++++++++++++++++++++++++++++++++
+ versioncmp.c             |  1 +
+ 5 files changed, 35 insertions(+), 32 deletions(-)
 
-> For that matter, when the series makes a big change like this round,
-> please update the cover letter so that those who are reading it
-> without having seen the prior rounds can understand what the series
-> is about.  It will equally help those who have seen prior rounds,
-> too. what is going on.  E.g. The cover letter of v1 emphasized why
-> moving many things to common.h was a great thing (and promised to
-> talk about it more in patch 3), but that focus certainly has shifted
-> in this iteration that no longer even creates "common.h", right?
+diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
+index a61fa3c0f8..c9defe4d2e 100644
+--- a/builtin/symbolic-ref.c
++++ b/builtin/symbolic-ref.c
+@@ -3,6 +3,7 @@
+ #include "gettext.h"
+ #include "refs.h"
+ #include "parse-options.h"
++#include "strbuf.h"
+ 
+ static const char * const git_symbolic_ref_usage[] = {
+ 	N_("git symbolic-ref [-m <reason>] <name> <ref>"),
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 1979532a9d..84b68304ed 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -12,6 +12,7 @@
+ #include "blob.h"
+ #include "commit.h"
+ #include "replace-object.h"
++#include "strbuf.h"
+ #include "tag.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+diff --git a/git-compat-util.h b/git-compat-util.h
+index ae88291976..78a993c604 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -679,9 +679,6 @@ void set_warn_routine(report_fn routine);
+ report_fn get_warn_routine(void);
+ void set_die_is_recursing_routine(int (*routine)(void));
+ 
+-int starts_with(const char *str, const char *prefix);
+-int istarts_with(const char *str, const char *prefix);
+-
+ /*
+  * If the string "str" begins with the string found in "prefix", return 1.
+  * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
+@@ -710,29 +707,6 @@ static inline int skip_prefix(const char *str, const char *prefix,
+ 	return 0;
+ }
+ 
+-/*
+- * If the string "str" is the same as the string in "prefix", then the "arg"
+- * parameter is set to the "def" parameter and 1 is returned.
+- * If the string "str" begins with the string found in "prefix" and then a
+- * "=" sign, then the "arg" parameter is set to "str + strlen(prefix) + 1"
+- * (i.e., to the point in the string right after the prefix and the "=" sign),
+- * and 1 is returned.
+- *
+- * Otherwise, return 0 and leave "arg" untouched.
+- *
+- * When we accept both a "--key" and a "--key=<val>" option, this function
+- * can be used instead of !strcmp(arg, "--key") and then
+- * skip_prefix(arg, "--key=", &arg) to parse such an option.
+- */
+-int skip_to_optional_arg_default(const char *str, const char *prefix,
+-				 const char **arg, const char *def);
+-
+-static inline int skip_to_optional_arg(const char *str, const char *prefix,
+-				       const char **arg)
+-{
+-	return skip_to_optional_arg_default(str, prefix, arg, "");
+-}
+-
+ /*
+  * Like skip_prefix, but promises never to read past "len" bytes of the input
+  * buffer, and returns the remaining number of bytes in "out" via "outlen".
+@@ -777,12 +751,6 @@ static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
+ 	return strip_suffix_mem(str, len, suffix);
+ }
+ 
+-static inline int ends_with(const char *str, const char *suffix)
+-{
+-	size_t len;
+-	return strip_suffix(str, suffix, &len);
+-}
+-
+ #define SWAP(a, b) do {						\
+ 	void *_swap_a_ptr = &(a);				\
+ 	void *_swap_b_ptr = &(b);				\
+diff --git a/strbuf.h b/strbuf.h
+index 0528ab5010..fd43c46433 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -671,4 +671,36 @@ char *xstrvfmt(const char *fmt, va_list ap);
+ __attribute__((format (printf, 1, 2)))
+ char *xstrfmt(const char *fmt, ...);
+ 
++int starts_with(const char *str, const char *prefix);
++int istarts_with(const char *str, const char *prefix);
++
++/*
++ * If the string "str" is the same as the string in "prefix", then the "arg"
++ * parameter is set to the "def" parameter and 1 is returned.
++ * If the string "str" begins with the string found in "prefix" and then a
++ * "=" sign, then the "arg" parameter is set to "str + strlen(prefix) + 1"
++ * (i.e., to the point in the string right after the prefix and the "=" sign),
++ * and 1 is returned.
++ *
++ * Otherwise, return 0 and leave "arg" untouched.
++ *
++ * When we accept both a "--key" and a "--key=<val>" option, this function
++ * can be used instead of !strcmp(arg, "--key") and then
++ * skip_prefix(arg, "--key=", &arg) to parse such an option.
++ */
++int skip_to_optional_arg_default(const char *str, const char *prefix,
++				 const char **arg, const char *def);
++
++static inline int skip_to_optional_arg(const char *str, const char *prefix,
++				       const char **arg)
++{
++	return skip_to_optional_arg_default(str, prefix, arg, "");
++}
++
++static inline int ends_with(const char *str, const char *suffix)
++{
++	size_t len;
++	return strip_suffix(str, suffix, &len);
++}
++
+ #endif /* STRBUF_H */
+diff --git a/versioncmp.c b/versioncmp.c
+index 74cc7c43f0..45e676cbca 100644
+--- a/versioncmp.c
++++ b/versioncmp.c
+@@ -1,5 +1,6 @@
+ #include "git-compat-util.h"
+ #include "config.h"
++#include "strbuf.h"
+ #include "string-list.h"
+ #include "versioncmp.h"
+ 
+-- 
+2.41.0.255.g8b1d071c50-goog
 
-That's correct. I'll reroll this series with an updated cover letter
-and fixed commit header.
