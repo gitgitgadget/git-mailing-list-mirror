@@ -2,104 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F88FEB64D9
-	for <git@archiver.kernel.org>; Thu,  6 Jul 2023 22:48:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C933EB64D9
+	for <git@archiver.kernel.org>; Thu,  6 Jul 2023 23:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231576AbjGFWsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jul 2023 18:48:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55930 "EHLO
+        id S231867AbjGFXYW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jul 2023 19:24:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjGFWsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2023 18:48:22 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5610DFF
-        for <git@vger.kernel.org>; Thu,  6 Jul 2023 15:48:21 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-666e87eff0eso1958037b3a.3
-        for <git@vger.kernel.org>; Thu, 06 Jul 2023 15:48:21 -0700 (PDT)
+        with ESMTP id S229807AbjGFXYV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2023 19:24:21 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6A71BCA
+        for <git@vger.kernel.org>; Thu,  6 Jul 2023 16:24:19 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id 006d021491bc7-558a79941c6so899484eaf.3
+        for <git@vger.kernel.org>; Thu, 06 Jul 2023 16:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688683701; x=1691275701;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ty8ley0CDMJbBZOM+lwKycn9rm88RYfRKIa3AzPoHf8=;
-        b=fLBbBn1HNe7mQZ5sYH7uBNrrioCJVOoY3AlL6DkxHj0Zk4Ms1CuIz0VEBc58yfq1vG
-         b6PrbeckJyByOiaTZvs6d2cZVRcFyg92pSQLyS8CZXWk1YcpybPtt5uh1L+Yxgc/xPjH
-         4+1/Wy+gvLJPzsbfuZo9bf9Hlv+EQb/uF73zR8lNJYI7IyIkPeQ03NGbGejTe/4r2Vgu
-         yq605bl669PbZlb18wVxQaGfTMlkr2NEw5DuzXeEqHtcp2HTtMkpVQm9nIWvdy10L85C
-         NQa7M/qClMTNU70Ct7PJFIFSr6AFJ7OXOLYqqjW8rz9UbyM9rY5leItORxx/G2HvwHVh
-         IrwQ==
+        d=gmail.com; s=20221208; t=1688685859; x=1691277859;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=94+xAHb1jkEhSijTjMrVYSSzuXLLWO+7BU6NhlTlePk=;
+        b=L6Bd+xXKtoVaxPaC7SMh/SKJTPRRHuzlumw2GTzpGWSBamkwgKn18dSxLLZlRui0p1
+         WG6Vs9qSs9dnn66qq8qHy8sxRUUAyQ5j0OslU8RPrO/gh8YmIhpjPgXhqM7FN9pv7pkL
+         Fwi2CAUWKU1zMs0JnRjrsjWV+B0dEECJ9TENxhQJgZgwvoyRRcvgzJUbn0tPtTxpUJT/
+         3/X87QJqRkCZKYv8JlYKPox/tN/v9MAwCQ4Yzigt3PfJLvaz8My5C/r4U/QBcLGfCcLp
+         I7dgEJa27fdq6vAI/CeCVEqg1dHEfFzUlk731agcseX2eOSvrUGFNzcFJ4D3vxl603Fz
+         oOgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688683701; x=1691275701;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ty8ley0CDMJbBZOM+lwKycn9rm88RYfRKIa3AzPoHf8=;
-        b=i2FmlAfq0mz/INmLWW/ynK3V4HRvaIsZp2nAMcNUDiZPHolw9pfH+tq4accDKddZeP
-         kTQ6dvdQdWTkvQxFRW5eGd5/AM6A+Q9y81x99s6hBx/phVV+kPuvz/FCGJMOugxb4AIY
-         PA8JQazs2gg8zWJHYRG3VvbBbss6dw2vyMm1AxGRFIJIMOLWHCGjTMHNYPRouHcOQ10z
-         lmwZNdIAnPIQ4J4zH8CkZCTgQR49unEsKc1KE8kTwLqL0IEFfW090T5rGn8qv7wTd81t
-         RaWS6o/+aq6HqW6AQDbjZk8BTeDm/PZ7ksEQu2WxGZJ67t+V/XgJi+SXtx5lrBHtujzf
-         U3Og==
-X-Gm-Message-State: ABy/qLauMxvDYFHO8CzBZKt+1axUv5YzGHblx49JKIT8IpkJg4YI4Vk+
-        NzDAuynugDywRJE1q/e5t5S6l5bthJh79A==
-X-Google-Smtp-Source: APBJJlFd8ztIBRXmSiq9Yg2ZmgOLrMM5QyoOMkJ8RoA09IBSjf8pmTpGZx8o2UM+8HrL0TquNIQGUXyEu4tmZg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:b51:b0:66e:4df5:6c15 with SMTP
- id p17-20020a056a000b5100b0066e4df56c15mr4476166pfo.4.1688683700792; Thu, 06
- Jul 2023 15:48:20 -0700 (PDT)
-Date:   Thu, 06 Jul 2023 15:48:11 -0700
-In-Reply-To: <xmqqzg48dfsq.fsf@gitster.g>
-Mime-Version: 1.0
-References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
- <8afdb215d7e10ca16a2ce8226b4127b3d8a2d971.1686352386.git.steadmon@google.com>
- <owlybkgy837j.fsf@fine.c.googlers.com> <ZJ3uGBEEvYmbPnoQ@google.com>
- <owlywmzk7nnb.fsf@fine.c.googlers.com> <kl6l1qhkrj83.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqzg48dfsq.fsf@gitster.g>
-Message-ID: <kl6ly1jspsgk.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH v3 1/1] unit tests: Add a project plan document
-From:   Glen Choo <chooglen@google.com>
+        d=1e100.net; s=20221208; t=1688685859; x=1691277859;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=94+xAHb1jkEhSijTjMrVYSSzuXLLWO+7BU6NhlTlePk=;
+        b=FYrZjAp02+LTV61+4T29SPkxV0gOElJ3nQP7BNyjWFQ8dkucgGdN13ECKRka00iUF1
+         eY8DB5hYirQzLctrgS+9cKGbqV/j7KKpdOe04ym/llDLbaTfVrBca5tQsbn87qKtSws9
+         2JouLAnJKTyOYKqhyV3umln0T9XvjYlu2V2JwFl1jwjJlpnxmffT1JIwbDvF1IaaBU2c
+         ITWFxIfHj3/kRlJIjnkm0nhGTrG/vZVXr/oCJ3tLrbv+Qd7HTJ84t2tyJ4Q/CZbBViv+
+         5izkGFjgtKtkVFpmE1O+jgXcuxcTITmRmgTpdgf4K6SYz9pkaQGhg4a6ZxGLxFZOqspb
+         toiQ==
+X-Gm-Message-State: ABy/qLZFLCcNpdNsBU5DYYYAHSBij0xlgnCNXQzM/xK14TFBCt8JMR8T
+        HHf2Lp9lo7O/uTSWubJIGmHxTvgkNSyLXSPEAi4qsma2KfM=
+X-Google-Smtp-Source: APBJJlF19aG6pWQ27OR0F6LlD+V9sP4cVNyPoStTiJosWe+6XRzrgaQ7+kYlftA6DGUUyeGuMD951nyAjF2Dwkvrpgs=
+X-Received: by 2002:a4a:3748:0:b0:563:69ba:5919 with SMTP id
+ r69-20020a4a3748000000b0056369ba5919mr2483144oor.4.1688685858802; Thu, 06 Jul
+ 2023 16:24:18 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230704194756.166111-1-alexhenrie24@gmail.com>
+ <20230706040111.81110-1-alexhenrie24@gmail.com> <20230706040111.81110-2-alexhenrie24@gmail.com>
+ <xmqqttugbxds.fsf@gitster.g> <xmqqo7kobwpj.fsf@gitster.g>
+In-Reply-To: <xmqqo7kobwpj.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Thu, 6 Jul 2023 17:23:42 -0600
+Message-ID: <CAMMLpeS9_P=XXMoOdTAM3jZbaxfLEJNwYArS6p9pMXisT3TRtw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] remote: advise about force-pushing as an
+ alternative to reconciliation
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Arver <linusa@google.com>,
-        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        calvinwan@gmail.com, szeder.dev@gmail.com,
-        phillip.wood123@gmail.com, avarab@gmail.com,
-        sandals@crustytoothpaste.net
+Cc:     git@vger.kernel.org, git@matthieu-moy.fr, christiwald@gmail.com,
+        john@keeping.me.uk, philipoakley@iee.email,
+        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Glen Choo <chooglen@google.com> writes:
+On Thu, Jul 6, 2023 at 2:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
->> - Inline tests are, by nature, non-production 'noise' in the source
->>   file, and can hamper readability of the file. This will probably be
->>   exaggerated in Git because our interfaces weren't designed with unit
->>   tests in mind, so tests may be extremley noisy to set up.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> I do agree with the first sentence, but I am not sure what you mean
-> by "our interfaces weren't designed with unit tests in mind".
+> >> diff --git a/remote.c b/remote.c
+> >> index a81f2e2f17..1fe86f8b23 100644
+> >> --- a/remote.c
+> >> +++ b/remote.c
+> >> @@ -2323,7 +2323,10 @@ int format_tracking_info(struct branch *branch,=
+ struct strbuf *sb,
+> >>                      base, ours, theirs);
+> >>              if (advice_enabled(ADVICE_STATUS_HINTS))
+> >>                      strbuf_addstr(sb,
+> >> -                            _("  (use \"git pull\" to merge the remot=
+e branch into yours)\n"));
+> >> +                            _("  (To reconcile your local changes wit=
+h the work at the remote, you can\n"
+> >> +                              "  use 'git pull' and then 'git push'. =
+To discard the work at the remote\n"
+> >> +                              "  and replace it with what you did (al=
+one), you can use\n"
+> >> +                              "  'git push --force'.)\n"));
+> >>      }
+> >
+> > Since wt-status.c:wt_longstatus_print_tracking() calls this
+> > function, I would expect that this change would manifest as test
+> > breakage in "git status" (or "git commit" whose commit log edit
+> > buffer is examined) tests.  Are we lacking test coverage?
 
-[...]
+Because I was only changing advice messages and not any functionality,
+I didn't think to run the tests. They are indeed failing, sorry. I
+will fix that in v4.
 
-> Do
-> you mean that in the longer term it would be good to tweak the
-> interfaces with "unit tests in mind" (and add new interfaces that
-> way?
+> The other callsite of format_tracking_info() is "git checkout".
+> When you start working on your own topic forked from upstream by
+> switching to it, if Git notices that your topic's base has become
+> behind (so that you would later need to merge or rebase to avoid
+> losing others' work), the "git pull" message is given to tell you
+> that it is OK if you want to catch up first before working on it.
+>
+> But the new message does not fit well in the workflow.  It is
+> primarily targetted for the users who are about to push out.  They
+> are at the point where they are way before being ready to "discard
+> the work at the remote".
 
-Ah. I agree, but this isn't what I meant.
+If the branch is merely behind, format_tracking_info prints "(use "git
+pull" to update your local branch)", which is perfectly reasonable.
+The problem is only with the message that appears when the branches
+are divergent, "(use "git pull" to merge the remote branch into
+yours)", which is bad advice for the common GitHub/GitLab workflow
+that expects force-pushing.
 
-> Or do you mean interfaces that are written with "unit tests
-> in mind" inherently becomes noisy when inline non-production tests
-> are mixed in?
+> I guess the updated message in the context of "git status" has
+> exactly the same issue.  The user is about to make a commit, which
+> will later be pushed out.
+>
+> So, while I agree that new users may need to be made aware of
+> situations where they should not afraid of overwriting the remote
+> repository by forcing a non-ff push, I am not sure if this is a good
+> advice message to convey it.
 
-I meant the opposite of this actually. Interfaces with "unit tests" in
-mind result in simpler tests, so they will be less complicated to setup
-and thus be less noisy. Testing the existing, pre-unit test interfaces
-will be very noisy, so I don't think they will lend themselves well to
-inline tests.
+For more context, the coworker who most recently had this problem
+tried to pull because he looked at `git status` _after_ committing.
+Git can't assume that certain commands go with certain workflows (at
+least, not when it comes to divergent branches). Even if the user
+switches to a different branch and switches back, the first branch
+might be divergent simply because the user forgot to force-push before
+switching off of it. So, let's please give the user all of the
+information (two ways forward: reconcile or delete) and encourage them
+to make the most appropriate decision for their particular workflow.
 
-But of course, (per the prior point) we are trying to make the
-interfaces cleaner, which should naturally make them more unit
-test-friendly, so this will become less important over time. I think the
-other objection - that we want unit tests to enforce cleanliness of our
-build dependencies - is the more important one.
+-Alex
