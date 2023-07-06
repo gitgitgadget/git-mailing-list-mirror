@@ -2,37 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 341F9EB64D9
-	for <git@archiver.kernel.org>; Thu,  6 Jul 2023 20:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A3BEB64D9
+	for <git@archiver.kernel.org>; Thu,  6 Jul 2023 20:40:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232341AbjGFUZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jul 2023 16:25:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60410 "EHLO
+        id S231768AbjGFUkQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jul 2023 16:40:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjGFUZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2023 16:25:42 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C01DB
-        for <git@vger.kernel.org>; Thu,  6 Jul 2023 13:25:40 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C9092073C;
-        Thu,  6 Jul 2023 16:25:40 -0400 (EDT)
+        with ESMTP id S229694AbjGFUkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2023 16:40:14 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73079113
+        for <git@vger.kernel.org>; Thu,  6 Jul 2023 13:40:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1041D1C832;
+        Thu,  6 Jul 2023 16:40:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iKN/dmZPaDQmv5a/sYQ99be+dyfXXj1AWOgnA2
-        abR7s=; b=WlwP/cfGghNywDHwqaTLaMLmsi3UUKHeIlcSnP5umRiWmmhjkPT9E+
-        Yk5ltYyTECkkZZBPnFyw4Kki1Uc3yZzDQbX1EaUsJeA6ddzYSn7Alj4CXtITGMif
-        gPPtMs98bjNTMXvu+Z7r6RgZ6z/+TC0LaUH9X8eEAMJNc74HNsrFI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 448E42073B;
-        Thu,  6 Jul 2023 16:25:40 -0400 (EDT)
+        :content-type; s=sasl; bh=5B1xIn+wDvix3laSv1VgvP6LPWoA8IJi/g+rM4
+        uM8X0=; b=vH11xvUd1K6/B4j8OxP09EPwqcFTEKvFwQbqTBTXdcLAznYU21Rqia
+        AueD/LxL++hAHpp023uc0Z7TwpLSWqx67T3gg28GdhIXlaC2yf3icq5P8i0rODF8
+        Gmt/wW30q+d2s+RopM1GMsJkD3lCldetHxBTwIKVbW0/TPFolVfWk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 095CF1C831;
+        Thu,  6 Jul 2023 16:40:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.127.75.226])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C84682073A;
-        Thu,  6 Jul 2023 16:25:36 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 99DDE1C82E;
+        Thu,  6 Jul 2023 16:40:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Alex Henrie <alexhenrie24@gmail.com>
@@ -44,53 +44,59 @@ Subject: Re: [PATCH v3 1/2] remote: advise about force-pushing as an
 References: <20230704194756.166111-1-alexhenrie24@gmail.com>
         <20230706040111.81110-1-alexhenrie24@gmail.com>
         <20230706040111.81110-2-alexhenrie24@gmail.com>
-Date:   Thu, 06 Jul 2023 13:25:35 -0700
-In-Reply-To: <20230706040111.81110-2-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Wed, 5 Jul 2023 22:01:02 -0600")
-Message-ID: <xmqqttugbxds.fsf@gitster.g>
+        <xmqqttugbxds.fsf@gitster.g>
+Date:   Thu, 06 Jul 2023 13:40:08 -0700
+In-Reply-To: <xmqqttugbxds.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        06 Jul 2023 13:25:35 -0700")
+Message-ID: <xmqqo7kobwpj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 443A9C66-1C3B-11EE-979E-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4C75E582-1C3D-11EE-9658-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Also, don't imply that `git pull` is only for merging.
+>> diff --git a/remote.c b/remote.c
+>> index a81f2e2f17..1fe86f8b23 100644
+>> --- a/remote.c
+>> +++ b/remote.c
+>> @@ -2323,7 +2323,10 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+>>  			base, ours, theirs);
+>>  		if (advice_enabled(ADVICE_STATUS_HINTS))
+>>  			strbuf_addstr(sb,
+>> -				_("  (use \"git pull\" to merge the remote branch into yours)\n"));
+>> +				_("  (To reconcile your local changes with the work at the remote, you can\n"
+>> +				  "  use 'git pull' and then 'git push'. To discard the work at the remote\n"
+>> +				  "  and replace it with what you did (alone), you can use\n"
+>> +				  "  'git push --force'.)\n"));
+>>  	}
 >
-> Co-authored-by: Junio C Hamano <gitster@pobox.com>
+> Since wt-status.c:wt_longstatus_print_tracking() calls this
+> function, I would expect that this change would manifest as test
+> breakage in "git status" (or "git commit" whose commit log edit
+> buffer is examined) tests.  Are we lacking test coverage?
 
-I appreciate, but do not need, the credit; in any way, I didn't
-co-author this one.
+The other callsite of format_tracking_info() is "git checkout".
+When you start working on your own topic forked from upstream by
+switching to it, if Git notices that your topic's base has become
+behind (so that you would later need to merge or rebase to avoid
+losing others' work), the "git pull" message is given to tell you
+that it is OK if you want to catch up first before working on it.
 
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  remote.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index a81f2e2f17..1fe86f8b23 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2323,7 +2323,10 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
->  			base, ours, theirs);
->  		if (advice_enabled(ADVICE_STATUS_HINTS))
->  			strbuf_addstr(sb,
-> -				_("  (use \"git pull\" to merge the remote branch into yours)\n"));
-> +				_("  (To reconcile your local changes with the work at the remote, you can\n"
-> +				  "  use 'git pull' and then 'git push'. To discard the work at the remote\n"
-> +				  "  and replace it with what you did (alone), you can use\n"
-> +				  "  'git push --force'.)\n"));
->  	}
+But the new message does not fit well in the workflow.  It is
+primarily targetted for the users who are about to push out.  They
+are at the point where they are way before being ready to "discard
+the work at the remote".
 
-Since wt-status.c:wt_longstatus_print_tracking() calls this
-function, I would expect that this change would manifest as test
-breakage in "git status" (or "git commit" whose commit log edit
-buffer is examined) tests.  Are we lacking test coverage?
+I guess the updated message in the context of "git status" has
+exactly the same issue.  The user is about to make a commit, which
+will later be pushed out.
 
-Thanks.
-
-
+So, while I agree that new users may need to be made aware of
+situations where they should not afraid of overwriting the remote
+repository by forcing a non-ff push, I am not sure if this is a good
+advice message to convey it.
 
