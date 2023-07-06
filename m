@@ -2,101 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93366EB64D9
-	for <git@archiver.kernel.org>; Thu,  6 Jul 2023 20:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19389EB64D9
+	for <git@archiver.kernel.org>; Thu,  6 Jul 2023 21:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232694AbjGFUyn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jul 2023 16:54:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42432 "EHLO
+        id S229694AbjGFVAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jul 2023 17:00:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232514AbjGFUym (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2023 16:54:42 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECBA11FCE
-        for <git@vger.kernel.org>; Thu,  6 Jul 2023 13:54:37 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3faf39c8ad1so2959545e9.1
-        for <git@vger.kernel.org>; Thu, 06 Jul 2023 13:54:37 -0700 (PDT)
+        with ESMTP id S229510AbjGFVAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2023 17:00:15 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839551999
+        for <git@vger.kernel.org>; Thu,  6 Jul 2023 14:00:13 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-313f0ca48c7so293428f8f.0
+        for <git@vger.kernel.org>; Thu, 06 Jul 2023 14:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uw.co.uk; s=google; t=1688676876; x=1691268876;
+        d=uw.co.uk; s=google; t=1688677212; x=1691269212;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=B53BpIF9KxPDTeBZtZu7SsqBQ1lRldhAXXaLi+tguko=;
-        b=eWNuuCH2T+TBjjOFtBAM2PyFuN9aI5FnMSS4Dncj40XKYhfBmLH8KhTsVOhsj0gjPZ
-         3RvWwNMHFHNxsIhd+Ce/SlM53A2l9cqyqAMLpcvhxl/2AJg0iY/k5xUuJcP1YvatgzY1
-         2Cl+n6AiQQtDFYn+1uvV6luy/v9D2NkoHbhGFzFvIztaWpqvCdMuat+o74toqQAb3AIN
-         DJP4eesamBIOxrobKEQER8JMc6wHFpXTrThiC/ahOJL8CHwUjC+kG9wrnQgfgmVr8akz
-         OGtKilqXNs892b/7X28ZXi/a+SSawoZfz8TsYZomEgadGFO1fa1mCmZyR1y/3EmOdYi4
-         QxCw==
+        bh=QG7sYqv+sG8UqYRkfVSJBi055y0fo2zJgjRbp+HhRA4=;
+        b=BynrbuGvtdqUM++P1qd3ZRQhw4o8XJAtXlN23hUg/faVP760VxrwxXKOkyUzGHO+Uu
+         M+Igm4aS6yTbHfAU97Js26tRsHDEbQSSHAWmW0CZRK4CjCNvhgfODiUcvVte4XiRdKiY
+         e2+UNhHvBgQ5gQjkXJ3x6HVCCwXB0k928CsR4AEy/qSlJuM7ZakCH7QLAxSzu9JI1mU6
+         lT23b3KALxFTZsWQPeqEHlknKl4dUIzFFacSMP9f4Bbe6jDBpxITbzxcTlBxYhtYXkZJ
+         ACbMqMEqBYS/+3sA6g41hRYeL+xHKv+lV2mps1Hww6tJpa8u7G4OyBMqfgz5n3Pp/Tto
+         hGvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688676876; x=1691268876;
+        d=1e100.net; s=20221208; t=1688677212; x=1691269212;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=B53BpIF9KxPDTeBZtZu7SsqBQ1lRldhAXXaLi+tguko=;
-        b=fAkfERYdzsEF/v9QBcaAFWa9Qj1r1P6W4vfCkt9NFyO+PcAZip78KODJU/FF/96Z2D
-         AZ6w8+/xapHbZRspJLR4Cf38/Is65rO47FtTqEH/QlLfFD9rNgagybec/heFgkza6Nvd
-         6WFWvgijstdaZTCI8+ZtNSNmYTKVMD1WKq7YwYGYNueL/q8yTxbHG/DGI8h+V8L+xlyE
-         GVVWygEupY7mT/B4QQQL2DCKlHvskFKoOvs8GKs3wnmrL0fti6MHUQr1W8kj6+EXaIXG
-         dFuWK+WUQ6lQvLXm5KXHSypgUXTnzDIuBFvf9MzJAP4P0UJsKu8qgk8UE580J7RpiPaj
-         OC+w==
-X-Gm-Message-State: ABy/qLacSEULiT9o6+AKlp8nSeLR0SbEgGffnte1Tl+Secoj05s/UoPD
-        ALy/0X1j1k3Ul/UdBPsvjqOL2Zn3hSOek1SBoULFeU6Xpi1M8WzHcN8=
-X-Google-Smtp-Source: APBJJlH6YfdVs/4G2Bt8YG9AFUe6DmEm+J1wal/j3vFX7zWqiO4O4I4Qv4jwcoj/BcRIFOeE0SvQxylUtDWlxDzd8Xg=
-X-Received: by 2002:a05:600c:82c6:b0:3f7:fb5d:6e7a with SMTP id
- eo6-20020a05600c82c600b003f7fb5d6e7amr2491669wmb.0.1688676876335; Thu, 06 Jul
- 2023 13:54:36 -0700 (PDT)
+        bh=QG7sYqv+sG8UqYRkfVSJBi055y0fo2zJgjRbp+HhRA4=;
+        b=da79wZIB5FlPWm5rL1Z2uFhrHNTMhbcI/Ilw65WUZ8OFk4R/RX49TglwDbNaPRHAM/
+         ZHSxR2gml/zbWvQ1dmTdJpNLHfPfSCVwjW3q1pBbjk53pIkeOS+ekLFO1X1u41aclQ76
+         3YOv7P5+FzaVBF3sDaCaBJRe27GZz8GMsDySCPFUWD9w6DjZm4Uzukya6NRAYEwkaZqY
+         fEID+KqV/ZqR8XnGfWqdbaZf2Rsd1wtdQFIBKdnBYL5tN1XUWmWb6F10l+fQWzcvEZRV
+         9PvEFP9f4I1GrZjgND+t4tN1x5GIMJDDxYUXXM3PvElajay799LQVz2YoZl4cr4nzCm1
+         d1JQ==
+X-Gm-Message-State: ABy/qLbhICHTXI3nPOU1I7j3w7JzN0TCj4RRNtMvL9eWNyLhmW6BSyyh
+        /2k72CfxtrdJ5dRBZB7PJ6W1E8JT3FTDpstQyXA0X7fy0jrcmUhm
+X-Google-Smtp-Source: APBJJlHWvp5z20QGpoMsqswZksElQ3318C1gxnnLDwN//EXr2Y+/ytfDnySRJNWKaE9m9ejUyEX0kF4MXtpEzf/TeoE=
+X-Received: by 2002:a5d:5290:0:b0:313:e9da:772c with SMTP id
+ c16-20020a5d5290000000b00313e9da772cmr2344995wrv.5.1688677211837; Thu, 06 Jul
+ 2023 14:00:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAEzX-aD1wfgp8AvNNfCXVM3jAaAjK+uFTqS2XP4CJbVvFr2BtQ@mail.gmail.com>
- <xmqq7crddjtq.fsf@gitster.g>
-In-Reply-To: <xmqq7crddjtq.fsf@gitster.g>
+ <xmqq7crddjtq.fsf@gitster.g> <CAEzX-aC=UDkf6nevLbN0bNyGXujZVDuqtCp3YcYhAPD6zvYZiQ@mail.gmail.com>
+In-Reply-To: <CAEzX-aC=UDkf6nevLbN0bNyGXujZVDuqtCp3YcYhAPD6zvYZiQ@mail.gmail.com>
 From:   Matthew Hughes <mhughes@uw.co.uk>
-Date:   Thu, 6 Jul 2023 21:54:10 +0100
-Message-ID: <CAEzX-aC=UDkf6nevLbN0bNyGXujZVDuqtCp3YcYhAPD6zvYZiQ@mail.gmail.com>
+Date:   Thu, 6 Jul 2023 22:00:01 +0100
+Message-ID: <CAEzX-aBUyKivBYTFaLh0_irEH5ToVTVBUsSSU03-3ZMdPbjOow@mail.gmail.com>
 Subject: Re: Expected behaviour for pathspecs matching attributes in subdirectories
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="0000000000005ab63a05ffd7cd3a"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 6 Jul 2023 at 18:35, Junio C Hamano <gitster@pobox.com> wrote:
+--0000000000005ab63a05ffd7cd3a
+Content-Type: text/plain; charset="UTF-8"
 
-> I wonder if this serves a good addition to the tests?
+Apologies, re-sending the patch as an attachment instead, since Gmail
+decided to strip the tab characters
 
-Good idea, that would help clear up what's expected.
+--0000000000005ab63a05ffd7cd3a
+Content-Type: text/x-patch; charset="US-ASCII"; name="attributes_test.patch"
+Content-Disposition: attachment; filename="attributes_test.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_ljrmrn2o0>
+X-Attachment-Id: f_ljrmrn2o0
 
-What about some tests for the case of attributes defined in a subdirectory? I'm
-still trying to understand what's expected in that case, specifically the
-test_must_be_empty case (the 'rm' at the end is just to avoid polluting any
-other tests with extra attributes, not sure if there's a more standard way of
-doing this):
-
-diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
-index 457cc167c7..7a7502a6eb 100755
---- a/t/t6135-pathspec-with-attrs.sh
-+++ b/t/t6135-pathspec-with-attrs.sh
-@@ -87,6 +87,23 @@ test_expect_success 'check specific set attr (2)' '
-     test_cmp expect actual
- '
-
-+test_expect_success 'check specific set attr nested .gitattributes' '
-+    cat <<-\EOF >sub/.gitattributes &&
-+    fileSetLabel otherLabel
-+    EOF
-+    test_write_lines sub/fileSetLabel >expect &&
-+    git ls-files ":(attr:otherLabel)" >actual &&
-+    test_cmp expect actual &&
-+
-+    git ls-files ":(attr:otherLabel)sub" >actual &&
-+    test_cmp expect actual &&
-+
-+    git ls-files ":(attr:otherLabel)sub/" >actual &&
-+    test_must_be_empty actual &&
-+
-+    rm sub/.gitattributes
-+'
-+
- test_expect_success 'check specific unset attr' '
-     cat <<-\EOF >expect &&
-     fileUnsetLabel
+ZGlmZiAtLWdpdCBhL3QvdDYxMzUtcGF0aHNwZWMtd2l0aC1hdHRycy5zaCBiL3QvdDYxMzUtcGF0
+aHNwZWMtd2l0aC1hdHRycy5zaAppbmRleCA0NTdjYzE2N2M3Li43YTc1MDJhNmViIDEwMDc1NQot
+LS0gYS90L3Q2MTM1LXBhdGhzcGVjLXdpdGgtYXR0cnMuc2gKKysrIGIvdC90NjEzNS1wYXRoc3Bl
+Yy13aXRoLWF0dHJzLnNoCkBAIC04Nyw2ICs4NywyMyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdj
+aGVjayBzcGVjaWZpYyBzZXQgYXR0ciAoMiknICcKIAl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsCiAn
+CiAKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2NoZWNrIHNwZWNpZmljIHNldCBhdHRyIG5lc3RlZCAu
+Z2l0YXR0cmlidXRlcycgJworCWNhdCA8PC1cRU9GID5zdWIvLmdpdGF0dHJpYnV0ZXMgJiYKKwlm
+aWxlU2V0TGFiZWwgb3RoZXJMYWJlbAorCUVPRgorCXRlc3Rfd3JpdGVfbGluZXMgc3ViL2ZpbGVT
+ZXRMYWJlbCA+ZXhwZWN0ICYmCisJZ2l0IGxzLWZpbGVzICI6KGF0dHI6b3RoZXJMYWJlbCkiID5h
+Y3R1YWwgJiYKKwl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsICYmCisKKwlnaXQgbHMtZmlsZXMgIjoo
+YXR0cjpvdGhlckxhYmVsKXN1YiIgPmFjdHVhbCAmJgorCXRlc3RfY21wIGV4cGVjdCBhY3R1YWwg
+JiYKKworCWdpdCBscy1maWxlcyAiOihhdHRyOm90aGVyTGFiZWwpc3ViLyIgPmFjdHVhbCAmJgor
+CXRlc3RfbXVzdF9iZV9lbXB0eSBhY3R1YWwgJiYKKworCXJtIHN1Yi8uZ2l0YXR0cmlidXRlcwor
+JworCiB0ZXN0X2V4cGVjdF9zdWNjZXNzICdjaGVjayBzcGVjaWZpYyB1bnNldCBhdHRyJyAnCiAJ
+Y2F0IDw8LVxFT0YgPmV4cGVjdCAmJgogCWZpbGVVbnNldExhYmVsCg==
+--0000000000005ab63a05ffd7cd3a--
