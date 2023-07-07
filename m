@@ -2,143 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CD5CEB64D9
-	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 15:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09853EB64D9
+	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 17:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233027AbjGGPTM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 11:19:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55364 "EHLO
+        id S229757AbjGGROC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 13:14:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233368AbjGGPTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 11:19:06 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5FC2268A
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 08:19:03 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-40320e38b64so16466211cf.2
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 08:19:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688743142; x=1691335142;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i587RNCUvdX8WA7bNKetV3Xxs2OD/ioIn1qkvZ84bbQ=;
-        b=VjYJUjn26EkBwOtKuiiy2k5rH7imS038PjjOOaOj39qeCcFfOTLGsEG2Qr3BdM7W6k
-         1jOgRK7NmOdEeJOSasdSWh1oThGZA0EIpBSAIcDFLAhPwaiFp+7KoUcmoxmqa2edo8uI
-         ud9rJ0RQRtxQks8m2fx7FUVXkqKVPIamNr2QMYdsybdPLOb457urbShjmPrUx4+OCE0K
-         vctWwidpR1HbIiCYiFz19iHnfx+pO8/8yRinGcbyHZ/a4LPDVgVHXa3Ezqf13q9Z1/rm
-         fI+iPt+S+qmRCu+8BkGLg4snLbWtaIzITyw1lSQVH8EFd08h9/CD/1xW139BLIUr4dJo
-         cGHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688743142; x=1691335142;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i587RNCUvdX8WA7bNKetV3Xxs2OD/ioIn1qkvZ84bbQ=;
-        b=ROj8DX73D8FNghl+qTMeF+DWisrwu9WF0ratIHRKq2i15KcYLnalz8svw1nRxSuuig
-         vTIrWwfQ89rYFgRoWnUOjVF1zSGi9wwG3zBMTFyP0G5NU9ozYJ99mCm0FTulJ7A5NYBy
-         kOyGf5WUDNAUWfNAJbXxgdMYDTdQRbneU2gMHgirsO64mGnbEz5UZZWQOgmFIWbdsSX2
-         1ML8HZ8y7A/RThMJT33GNz9Zcp4tnmKUn8KSkIMoOgneVEeic3nCjnQQrNxaI/Rb7xDv
-         Or6rfeaB/W65UkiOFY6X1fKC0DSsym7CbC4mLhy8YJb3Ztz9jxtJycAtC8h99wQhzVpz
-         CH4Q==
-X-Gm-Message-State: ABy/qLaQx5VnKYjHZn9QYFhvPLkcKk3oPgsUNVOqCfoY2o12fOQFOK1f
-        ow8Iywr4vYnkddfSYV3foK58e74xQj4=
-X-Google-Smtp-Source: APBJJlFk7udyXFVXhuoo1gyiIkKaNNAYZ5Pb3M/ux/VDfvZb0LI1WeM8D8s0yAl75dW81P/A+0CeZQ==
-X-Received: by 2002:a05:622a:1492:b0:400:9666:4349 with SMTP id t18-20020a05622a149200b0040096664349mr7285771qtx.46.1688743142602;
-        Fri, 07 Jul 2023 08:19:02 -0700 (PDT)
-Received: from localhost.localdomain ([69.158.190.118])
-        by smtp.googlemail.com with ESMTPSA id a14-20020aed278e000000b004039e9199cesm338698qtd.60.2023.07.07.08.19.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 08:19:02 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
-        gitster@pobox.com
-Subject: [PATCH v2 3/3] check-attr: integrate with sparse-index
-Date:   Fri,  7 Jul 2023 11:18:39 -0400
-Message-Id: <20230707151839.504494-4-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230707151839.504494-1-cheskaqiqi@gmail.com>
-References: <20230701064843.147496-1-cheskaqiqi@gmail.com>
- <20230707151839.504494-1-cheskaqiqi@gmail.com>
+        with ESMTP id S229556AbjGGROA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 13:14:00 -0400
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2079.outbound.protection.outlook.com [40.92.90.79])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B621FEC
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 10:13:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mEKL/p2yQtM/odqUUIBvZ1aUtX/Ke6625fieqf7rjd121XcVuI8/3ORZXN0bgaUKWYh0z4QUYq5uZNsiojEqWxsXkk0w7wpXVbYqndMsWt9LJY3xhbkrqqEo8yTkHHDx+4rxVpRyckuY3uMdHsKabsitCyiO2A6loyEqBPb2n880ms/ZakdJytvJox/XiqWhOoLvgC2ZoPzBO9RjgNVf3BcGwcE2cjxLjS3EX+6w6UbokfINjtQg4Yvr1qMbdLu3BMtnJ/KUMFWmY2plqMIcO2kRWWspYfjkwnnY9XuJpvw4q4Gi3n23dfB9He5g+AaIjF/9+tjgPeuHJYM4bnZdMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GC/VTTSLyiP1TqJ3kCwj6C84407apeoVX4lrRpIS4WA=;
+ b=gYkkUwKIOW3CRmVESvlG8w0WH1bEOSipJyGQNlaJ2GZMfmHQxdc+miwUoQy+TrImTQAyiKSEAl398k7Jb4vy/aoeWsor8LQbJtiL9PrytW5y1dlFiljMoZWCXalB2kBpatBocZlaoD6VLatyV1tpzMjH8R1KHOAI1zlvhFX+Gpe9U+Lkk/vqu9Q2tVrQawApZQjcyH4EmvsViD6VEmtQvEs2gpMr3rp0gX2QQ91+oJXkxYKTEeXhNBozvYHlhwKCO7ohNMdrvs/Yaru9YhATWDnKmOEgeuIhAkPQltU0EPu+X17kWyUNqYYEokh2NkXtCjQ7dVOJb5Ag9hj9L9Ujfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GC/VTTSLyiP1TqJ3kCwj6C84407apeoVX4lrRpIS4WA=;
+ b=bPLRy3/eCBZICvkdFIGRRW2tpVTsw3SxSgYFbKrnNEr0+pmMKPp2PYvfrthMA/u2s8qRHYF26MRW38B4lOhBDiHPtTRlUYngys2n4IVFytOO7YK9Tb7mok6UPXk3Ptf0jmFsWeWl+cZY/oqSg8a6QZJLflxQ6x8VZWSOd3yQpVsYhdAjaeCl4O9/8lC2anCTFJO2T7Daf/pn3B01RaNXgsgKtAOVYrAwucfAwshZxkgGeyTS4bNHTt8Zbx10sWy2Up/bHdredukeyQw+r6tuveHr8XrYcNoiWwVRMpX+E7PHS5w3tkZbTuS9bbfFXe+P8iXJTGUxnoyu4o1XZR0hdA==
+Received: from DB9PR08MB7211.eurprd08.prod.outlook.com (2603:10a6:10:2ce::23)
+ by AS4PR08MB7630.eurprd08.prod.outlook.com (2603:10a6:20b:4cd::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.25; Fri, 7 Jul
+ 2023 17:13:57 +0000
+Received: from DB9PR08MB7211.eurprd08.prod.outlook.com
+ ([fe80::a06a:3cbc:9d5:db93]) by DB9PR08MB7211.eurprd08.prod.outlook.com
+ ([fe80::a06a:3cbc:9d5:db93%3]) with mapi id 15.20.6565.016; Fri, 7 Jul 2023
+ 17:13:57 +0000
+From:   Mico Hasselstr?m <micohasselstroem@hotmail.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: https://github.com/gitgitgadget/git
+Thread-Topic: https://github.com/gitgitgadget/git
+Thread-Index: AQHZsPZqqELWlwpe70qjDtR9hCayGg==
+Date:   Fri, 7 Jul 2023 17:13:57 +0000
+Message-ID: <DB9PR08MB7211C55747D509AEF40652A1D52DA@DB9PR08MB7211.eurprd08.prod.outlook.com>
+Accept-Language: da-DK, en-US
+Content-Language: da-DK
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-tmn:  [UtgBfMZrtVzzxOsCK8OiFRjQknwGT8pL7Ix1LKai6kpUJrZxf+egLx1vI4aDsEk7]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB9PR08MB7211:EE_|AS4PR08MB7630:EE_
+x-ms-office365-filtering-correlation-id: 101f9d54-5caf-42c9-5c29-08db7f0d8c9c
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 3D0VVeV1HnJoQcN4HQeKbQIA345t2/qiDuqQnjHw2gnMF9DxSRxr6w9KmlGyWQfsPY/hDb0NGHnFVPyzfTn+UzECWNTJR2F0AAaDloYEo+TGFuNFz0ns1XRbilLW8XGIP4ev72QZo0eKTEVepzukyU0ZATFFMQWFAVyIRGuHYGWV/ySetR/DpqvJs0MJB0gAgjlSV/13qEVpnCmcBUmN8Ow4RLRAHJusvZYS6zAiaYi2D1Oku574zgn4uDsjOVKJVR3ythCHkLrdLnbXUso3ltBrqWoyfVcTXgBiaf966x6XGbKrQ85gHk6A7aowTGSiM5rRxlBYzUu9HUDtBMFTZHW7tdLHFyDQJQqGavm4io3sYjJMeQ3ee2WgQqOW8q25MkJXgFbyE/VNkPxb3MYdLY46sYqI+pwCuG9X4l7VMurE7grbWXGd2+3mQF9vDdiL4WajBzZZytujnZGAItba0GgEVDF8wNqFnP9G9z0aUCS+r4AbCQtvnICtfOKEmeoMbYw9xcnz/kIJWCLvqdXjzberOhrwQBuqA0JkmYjWzxGj352ntJrCJI0Pi9vCQTFn
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?+3iFIkDIE6EcZ0j5180Xwvj92PPr93zGaz8R6HQTrgfAO+yMJfjraIxe3RKO?=
+ =?us-ascii?Q?I3A0ZPG2JATxBbddHusLz+SPkJYZoto+39Nm63M81JVRqrl/P4bPn5Y22Pxd?=
+ =?us-ascii?Q?64CgCxad40YD7OSb3Yp+E8cnuObUMuj3Dd6sNHILkFUeA02UfN3DVGknDigC?=
+ =?us-ascii?Q?SEEvcLAL2yIRvo3i3Im/PZSUj5gocNxNu4dh6v+9bdurzKJdAPgGVwbjq36O?=
+ =?us-ascii?Q?Uxj8c1AuhKxTQAZV0wf9azq7u6LUUteoMYhWayXK0g4pvh/VmlJgQQvG0eYA?=
+ =?us-ascii?Q?l+I4+Ht6OdsSR7OoQXaRgcwe1fj4sLppa8kr5/+gG7h5aD3thEgRF8K5gI7z?=
+ =?us-ascii?Q?UVseHv9XhbmLEohy9ItTyilk2xwTEIewscfjH26UJisistjGvE21Rp4MvJAL?=
+ =?us-ascii?Q?J1gaUjSy9oxPOwPLhXqlpT5PO1j7gY7Zx5s+acGp47UEiJO/3hKVtNqOPSMF?=
+ =?us-ascii?Q?tY0L8mcbtzdZ6LxCznnPSzvbpD7JmwU9C0xWUQsQF15n3ZsaTNvdyGUvEe80?=
+ =?us-ascii?Q?ZeTHx9jT78TZq108y4jW/SMf/8WMLv1e/gE3egzA8tHY1TAuaybo9/t6M/za?=
+ =?us-ascii?Q?7L5RQYLa8eSWX7FVWkgIrMwKEfsRAtVt/EkOmTSnwWjoc1Lb3sNVOMKLR9dO?=
+ =?us-ascii?Q?eTlA8BZyB5O9im8j3o+LUSZcV6JvHSqv0F/A/9oSWyBoB0Ptqcx/RdmjZ1oq?=
+ =?us-ascii?Q?Cg/sfX88icORBs0yFxCbZAZ3XYY+yN9CYZrdORxjnDhlWMVuej8VqE5odnj1?=
+ =?us-ascii?Q?tkEjMLDdKMNqxtHYG03VHDgeUatOSqDkPj1Ugy9u89XvIAlQX5GR2fRbbB/a?=
+ =?us-ascii?Q?Q27PC1/kviRQ0clY9c/CdTwtKgXT5VXfQ/utEetfIrYbzTVYuZ7OmrkpzEjx?=
+ =?us-ascii?Q?mH0gba9smbvDUvHafUwUtKI5zkzuq8IdaUL4ef4KyG0iWHPEBgKm1dUhnINJ?=
+ =?us-ascii?Q?uybzdoosEI695KvAvWOcnOwxNrGBpAC3JZXqu6LaqDTt6MSlvMOejzcket3P?=
+ =?us-ascii?Q?LByK7zkUuq/7Wpst6cD6ejp8lMtbC36CzEZxN1jGgY0cueznfv/mlUH+n0lg?=
+ =?us-ascii?Q?uPLn6/f8AkUwLeZ6g1H8gUSOutf+9KUzA1lGUIOjUSZhgfeYBpqdPlH1hul7?=
+ =?us-ascii?Q?24vNwIv5wwVvFtmnxwRoa2o5l1g0GeYfsTRH3TZYBYQMeWDaySnajydGz26D?=
+ =?us-ascii?Q?vkSKKRUIhZAeeN16qvJ9n/TgkHK0jNEd4L6OtLIWwHTjRvC8uj14sYFvRBT9?=
+ =?us-ascii?Q?AKfWpZ33Q9lprUCEko/84Te+JadFIgjxOStvNrDMepYy2UP7BlQfdP2dqfF2?=
+ =?us-ascii?Q?3Vo=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <C28D609B31CBDD47A8FA5E9A9B9C02FB@sct-15-20-4755-11-msonline-outlook-83b42.templateTenant>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-37dd7.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR08MB7211.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 101f9d54-5caf-42c9-5c29-08db7f0d8c9c
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jul 2023 17:13:57.3015
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7630
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Set the requires-full-index to false for "diff-tree".
 
-Add a test to ensure that the index is not expanded whether the files
-are outside or inside the sparse-checkout cone when the sparse index is
-enabled.
 
-The `p2000` tests demonstrate a ~63% execution time reduction for
-'git check-attr' using a sparse index.
-
-Test                                            before  after
------------------------------------------------------------------------
-2000.106: git check-attr -a f2/f4/a (full-v3)    0.05   0.05 +0.0%
-2000.107: git check-attr -a f2/f4/a (full-v4)    0.05   0.05 +0.0%
-2000.108: git check-attr -a f2/f4/a (sparse-v3)  0.04   0.02 -50.0%
-2000.109: git check-attr -a f2/f4/a (sparse-v4)  0.04   0.01 -75.0%
-
-Helped-by: Victoria Dye <vdye@github.com>
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
- builtin/check-attr.c                     |  3 +++
- t/perf/p2000-sparse-operations.sh        |  1 +
- t/t1092-sparse-checkout-compatibility.sh | 15 +++++++++++++++
- 3 files changed, 19 insertions(+)
-
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index b22ff748c3..c1da1d184e 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -122,6 +122,9 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, check_attr_options,
- 			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+
- 	if (repo_read_index(the_repository) < 0) {
- 		die("invalid cache");
- 	}
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 96ed3e1d69..39e92b0841 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -134,5 +134,6 @@ test_perf_on_all git diff-files -- $SPARSE_CONE/a
- test_perf_on_all git diff-tree HEAD
- test_perf_on_all git diff-tree HEAD -- $SPARSE_CONE/a
- test_perf_on_all "git worktree add ../temp && git worktree remove ../temp"
-+test_perf_on_all git check-attr -a -- $SPARSE_CONE/a
- 
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 839e08d8dd..db2c38ab70 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2299,4 +2299,19 @@ test_expect_success 'check-attr with pathspec outside sparse definition' '
- 	test_all_match git check-attr  -a --cached -- folder1/a
- '
- 
-+test_expect_success 'sparse-index is not expanded: check-attr' '
-+	init_repos &&
-+
-+	echo "a -crlf myAttr" >>.gitattributes &&
-+	mkdir ./sparse-index/folder1 &&
-+	cp ./sparse-index/a ./sparse-index/folder1/a &&
-+	cp .gitattributes ./sparse-index/deep &&
-+	cp .gitattributes ./sparse-index/folder1 &&
-+
-+	git -C sparse-index add deep/.gitattributes &&
-+	git -C sparse-index add --sparse  folder1/.gitattributes &&
-+	ensure_not_expanded check-attr -a --cached -- deep/a &&
-+	ensure_not_expanded check-attr -a --cached -- folder1/a
-+'
-+
- test_done
--- 
-2.39.0
-
+Sendt fra min iPhone
