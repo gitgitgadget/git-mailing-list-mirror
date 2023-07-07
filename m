@@ -2,132 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8914EB64D9
-	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 05:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49790EB64DA
+	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 08:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232225AbjGGFnc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 01:43:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51506 "EHLO
+        id S230362AbjGGIpS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 04:45:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232149AbjGGFn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 01:43:29 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EDE1BE8
-        for <git@vger.kernel.org>; Thu,  6 Jul 2023 22:43:28 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id af79cd13be357-7658430eb5dso156821285a.2
-        for <git@vger.kernel.org>; Thu, 06 Jul 2023 22:43:28 -0700 (PDT)
+        with ESMTP id S229636AbjGGIpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 04:45:16 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B14BC1FC4
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 01:45:15 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3faf39c8ad1so4016225e9.1
+        for <git@vger.kernel.org>; Fri, 07 Jul 2023 01:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688708607; x=1691300607;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+AeJM2MW61pCLyMZ1lrX8eQ/79HFymObe4v3IQn3/QQ=;
-        b=a9a1Gc2ZeMG4s5LmYpOmrVULqcng7kECqsZxFnF+rXLmzyXja9ioRAixSRSjxc9WCM
-         GKNUbYhEkWaoeitxCEaZVWQNefLnpY84eML161WxF03Ww1ulKz/YO/UY8pgngrmXZdX/
-         KcLk0VRtSihjWV8E952pmcGxm18RJXJqyCFyUfbad506xKkb7rX/YYfHkzVq+dCsVAGN
-         Iu/ULor9fOfRSRyiPngDeXAWX0tEFfQsbAyqWkITXmWr0wyIctyBFBmxBQf8PteS77mH
-         tKUIXe7enODwXF2RyTOdkqYVUm7IuQeVYQZnUhl//IIiqFx78pALFzakopvrZh39GiVi
-         ywhw==
+        d=uw.co.uk; s=google; t=1688719514; x=1691311514;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=e6R+GYvgr3n6wodhyS48rSa95hcYfwF16pS7iYb+EL0=;
+        b=LzdY6/xpS4xhAThC0aUPsPlBwkpYEp61e4dF7cwvm5T8NEO79XEF7CNT0PZuHb+wh0
+         LZXzUMespucVJJD2Aj/Bk0i1ceZQgP5aea9HKkxr4UzJ3Ki6LrFXDBKl0lqOVbfxgU90
+         2QIje5DD9+krcEqJ9hvazs3pxEpQtGX7dkf40H9lD3rNet3BBb/b5hn4L3APh9zFQNrY
+         2xIIfOZ5rYYj0SuSsBjcZVTTnRM87I96zHSsEE+X7e6jDhVa1ix64K5C84RqX7noGk3T
+         bebaPqE+89plXntzNl8jZ0sRpjrX1jGBdijxEQ6qdoR8x7pxuWPhFZP+CYfHRUYm7Ysh
+         gCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688708607; x=1691300607;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+AeJM2MW61pCLyMZ1lrX8eQ/79HFymObe4v3IQn3/QQ=;
-        b=kTdbVYM41BqxkbKiTOoduZ8sDwsUZW/4cnsqvlaub90prv+jVXd2YFPuXC7W/D5ojp
-         FzyQ7PalWAV4SJ3tmXff05VxRUagz74e4S2+00gwcriMGMeR3sSy6+IhN2yYao+csuvs
-         6+aVMf7g8FzHapl3Xxqr/poUWu26eqSCaQxqnwbx97OEGSElhqkzKiAUGVNnNgjN8V96
-         6iB2qphYy+03x0ZbRdyIXyKs3DDCyGRKTI5ZHOAFCs7RhPgl1r39wbIATC/+Rk1TzZoC
-         LT38aBXWNO8HIt86sqlJuqrN1NSvmIIOchjXKdRzKbRbbB7XgZRbPWN3RrrNErZZd4ub
-         9wEA==
-X-Gm-Message-State: ABy/qLaAZeZX6ILXheN3kHl0VUW1omG/5Nk0JQEty4Xqd/Ijizjj0MH7
-        VAAyJCyUo2sSEYjC17e16Nq1a3Jambg=
-X-Google-Smtp-Source: APBJJlGG5icrT7xueCm5yITfeeLn7647HLf6vFWqyetfsxzSHrtfb75pzs5e9ap66tXQVkrraKUdZA==
-X-Received: by 2002:a05:620a:c4c:b0:767:6854:e92d with SMTP id u12-20020a05620a0c4c00b007676854e92dmr5238291qki.44.1688708607012;
-        Thu, 06 Jul 2023 22:43:27 -0700 (PDT)
-Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
-        by smtp.gmail.com with ESMTPSA id r8-20020a635d08000000b00553dcfc2179sm2132568pgb.52.2023.07.06.22.43.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jul 2023 22:43:26 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, git@matthieu-moy.fr, christiwald@gmail.com,
-        john@keeping.me.uk, philipoakley@iee.email, gitster@pobox.com,
-        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v4 2/2] push: advise about force-pushing as an alternative to reconciliation
-Date:   Thu,  6 Jul 2023 23:42:48 -0600
-Message-ID: <20230707054257.3366355-3-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230707054257.3366355-1-alexhenrie24@gmail.com>
-References: <20230706040111.81110-1-alexhenrie24@gmail.com>
- <20230707054257.3366355-1-alexhenrie24@gmail.com>
+        d=1e100.net; s=20221208; t=1688719514; x=1691311514;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e6R+GYvgr3n6wodhyS48rSa95hcYfwF16pS7iYb+EL0=;
+        b=Dxvl9Y04CqzuhRxt4O+gBMc/hKETFLli7ImhVy5Rk0cUZlWixoYk573xrpqRinDTLS
+         pFN/+KX93Nbg9rHNBJkqn/Bc0wb/0Aa1bwD/dpr+y75YQHJoUWV2KfDlIPIlznA2QrCc
+         PR9lUSGCLjBlMoEBlrm9FbSpjgK94Fzo9AHs/XjQQK690yRtLHDHfFDZ1wJ5GdUxcYLC
+         6IBrnrJ3819IEOgl3LcS/1pR7Cc2N5ETqMjpk79xVD0caQWM0xaJKZ8WdFVWEDtX3/Rn
+         FSRwrDSi1ChqXrFUnzNHXGmlTSHR24pLGtVMA4RAntNnpl7g9ulehPP00YW0meRnYod+
+         W+SA==
+X-Gm-Message-State: ABy/qLZGAk5Quy+JxUnf3wXWmsfeR0ccPU1zzSUCLRyoHznzkQy3NYDm
+        7O7ZlIfyeE8NdblEAbGFb3Eda/zGHzgeUEqJ/by8nhL6R1BOKbKOMJQ=
+X-Google-Smtp-Source: APBJJlFCOO65PHLJWSR4fITARkCBk7GuyQAct4/2cVOGgPek57CT8YT4br1oPUf0gt/GUdmfTq5sIL1NJEKmuG3Ajoo=
+X-Received: by 2002:a05:600c:5115:b0:3fb:aadc:41dc with SMTP id
+ o21-20020a05600c511500b003fbaadc41dcmr3675257wms.4.1688719514187; Fri, 07 Jul
+ 2023 01:45:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAEzX-aD1wfgp8AvNNfCXVM3jAaAjK+uFTqS2XP4CJbVvFr2BtQ@mail.gmail.com>
+ <xmqq7crddjtq.fsf@gitster.g> <CAEzX-aC=UDkf6nevLbN0bNyGXujZVDuqtCp3YcYhAPD6zvYZiQ@mail.gmail.com>
+ <xmqqjzvcbvqd.fsf@gitster.g>
+In-Reply-To: <xmqqjzvcbvqd.fsf@gitster.g>
+From:   Matthew Hughes <mhughes@uw.co.uk>
+Date:   Fri, 7 Jul 2023 09:45:03 +0100
+Message-ID: <CAEzX-aCnp0avSbMdyFQz=3s4-hjdeVwnndR5b7UeZo4oNMnv7A@mail.gmail.com>
+Subject: Re: Expected behaviour for pathspecs matching attributes in subdirectories
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Also, don't put `git pull` in an awkward parenthetical, because
-`git pull` can always be used to reconcile branches and is the normal
-way to do so.
+On Thu, 6 Jul 2023 at 22:01, Junio C Hamano <gitster@pobox.com> wrote:
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- builtin/push.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+> Study the use of test_when_finished in other tests, perhaps?
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 6f8a8dc711..b2f0a64e7c 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -301,21 +301,24 @@ static void setup_default_push_refspecs(int *flags, struct remote *remote)
- 
- static const char message_advice_pull_before_push[] =
- 	N_("Updates were rejected because the tip of your current branch is behind\n"
--	   "its remote counterpart. Integrate the remote changes (e.g.\n"
--	   "'git pull ...') before pushing again.\n"
-+	   "its remote counterpart. Use 'git pull' to integrate the remote changes\n"
-+	   "before pushing again, or use 'git push --force' to delete the remote\n"
-+	   "changes and replace them with your own.\n"
- 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
- 
- static const char message_advice_checkout_pull_push[] =
- 	N_("Updates were rejected because a pushed branch tip is behind its remote\n"
--	   "counterpart. Check out this branch and integrate the remote changes\n"
--	   "(e.g. 'git pull ...') before pushing again.\n"
-+	   "counterpart. Check out this branch and use 'git pull' to integrate the\n"
-+	   "remote changes before pushing again, or use 'git push --force' to delete\n"
-+	   "the remote changes and replace them with your own.\n"
- 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
- 
- static const char message_advice_ref_fetch_first[] =
--	N_("Updates were rejected because the remote contains work that you do\n"
--	   "not have locally. This is usually caused by another repository pushing\n"
--	   "to the same ref. You may want to first integrate the remote changes\n"
--	   "(e.g., 'git pull ...') before pushing again.\n"
-+	N_("Updates were rejected because the remote contains work that you do not\n"
-+	   "have locally. This is usually caused by another repository pushing to\n"
-+	   "the same ref. Use 'git pull' to integrate the remote changes before\n"
-+	   "pushing again, or use 'git push --force' to delete the remote changes\n"
-+	   "and replace them with your own.\n"
- 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
- 
- static const char message_advice_ref_already_exists[] =
-@@ -327,10 +330,10 @@ static const char message_advice_ref_needs_force[] =
- 	   "without using the '--force' option.\n");
- 
- static const char message_advice_ref_needs_update[] =
--	N_("Updates were rejected because the tip of the remote-tracking\n"
--	   "branch has been updated since the last checkout. You may want\n"
--	   "to integrate those changes locally (e.g., 'git pull ...')\n"
--	   "before forcing an update.\n");
-+	N_("Updates were rejected because the tip of the remote-tracking branch has\n"
-+	   "been updated since the last checkout. Use 'git pull' to integrate the\n"
-+	   "remote changes before pushing again, or use 'git push --force' to delete\n"
-+	   "the remote changes and replace them with your own.\n");
- 
- static void advise_pull_before_push(void)
- {
--- 
-2.41.0
+Thanks for the suggestion, that appears to be what I was looking for. It's my
+first time looking around Git's test framework, so I had a scan of the docs but
+managed to miss that one.
 
+I'd be happy to submit a patch adding those tests if you'd like. Though I would
+like to just confirm that in the patch I shared it is not a bug that:
+
+    git ls-files ":(attr:otherLabel)sub/" >actual &&
+    test_must_be_empty actual
+
+I.e. that no files are listed here even tough `sub/fileSetLabel` has the
+attribute `otherLabel`?
