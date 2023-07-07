@@ -2,174 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2137C001B0
-	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 21:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 036E7EB64D9
+	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 21:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232712AbjGGVNT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 17:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34966 "EHLO
+        id S232464AbjGGVsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 17:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232079AbjGGVNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 17:13:16 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC70926BA
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 14:12:57 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id d2e1a72fcca58-666e3dad70aso3719022b3a.0
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 14:12:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1688764377; x=1691356377;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mk2/J4usnW46vkdZhnEI99wj+gCXEVbXenxK3SmDqX0=;
-        b=ZZkeRPj7sm4wjZ11YjLQaPhDPU5S6tmnusvGl7wreQvTRd5ZhhDmHk4oniN1+VK81g
-         x9v0r7HQEkZddudDvW/4EWuqobsI+eA14SaNlHr0ESakPTsRntlIM9GF8RSpQ3fC60p+
-         F1QL7PI8M5YJ7Ay2xAjxxLbPc8doX2TT8/1m0uKuadByyXsU5MiLN0Paa8ZaCAnfea9G
-         u43A8klHrFXEbdUx8+p6eH3jlEIrZmytwVW9fOcK673UYddTr3LXKgXK3hRDN3FTJqx3
-         Bk7gEltFuZ/l28ulYmJRK/LujjTFUYhkLAP5l8FL5PT+bL5xhltTgrMgUDV+xylXbgpT
-         WsSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688764377; x=1691356377;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mk2/J4usnW46vkdZhnEI99wj+gCXEVbXenxK3SmDqX0=;
-        b=VWIAH0oNwNd/GHW9QhEeIugNAGKDbpg/c2/xG2j3NBNlgNnJEjFwUWI6xXIVYo43LG
-         b1oftGRELK10Tl96htts8G47P+VYodIqoVncB5nMdMxtOhKKzPA2+bztemv2JBYUQMuu
-         FJdeaoqs/6p4T90ykOq/1kepHCEdyWpzJLGi42rKkDfEmy6Q/nQNPAY6Sez+l2TiYWF2
-         ONtkXN+pMld4enSMMbvQHkx4DZtXnVhmmksz6cbLshDL62Y8fAYpITmyHLOmZEjqkH5C
-         y5iSGlzugmN+RzRN1bkfNoI2CvgHbHiFOOrQ5MkeKQrgw5VfRCoVYxHE3dJtT4GvhKn9
-         yqIA==
-X-Gm-Message-State: ABy/qLbCMbJGZsGlK8xOsezP7kSChjwSrtYunH7alOVAPSZEkXGg6XSm
-        /CvBJIyvfWCm9P8oSADPFmqm1ZRVKnMxmA==
-X-Google-Smtp-Source: APBJJlGfOWP9hIwAgPrYzvRNMYpv9+eUYccDMvyxq0Ko1wUpb5lXcOTQUdE28ECs/Iqg9HAV3xfwffqfEYakeg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:13a3:b0:668:68ac:489b with SMTP
- id t35-20020a056a0013a300b0066868ac489bmr8078610pfg.2.1688764377153; Fri, 07
- Jul 2023 14:12:57 -0700 (PDT)
-Date:   Fri, 07 Jul 2023 14:12:47 -0700
-In-Reply-To: <ZKgpgnU7WrMCTp/C@google.com>
-Mime-Version: 1.0
-References: <20230531155142.3359886-1-siddhartth@google.com>
- <20230627132026.3204186-1-siddhartth@google.com> <kl6l8rc1rcsj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <ZKgpgnU7WrMCTp/C@google.com>
-Message-ID: <kl6lv8evpgs0.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH v2] khash_test.c : add unit tests
-From:   Glen Choo <chooglen@google.com>
-To:     Siddharth Singh <siddhartth@google.com>
-Cc:     git@vger.kernel.org, nasamuffin@google.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S232406AbjGGVsG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 17:48:06 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EEBA12A
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 14:48:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1688766476; x=1689371276; i=l.s.r@web.de;
+ bh=Ytc20SmxsekVWoE4f94HJUMf5XAeHs2JxDeOloGoUBU=;
+ h=X-UI-Sender-Class:Date:Subject:From:To:References:Cc:In-Reply-To;
+ b=Cy/3cGdscE11dlxRCXfiaDk24pFtRX9O8rHtynG0IKfRjBXFScYr51PDYo7XYhgUYAUku5V
+ ErcavgWTYJ1H7k9xfzFzVvufAj1WCSd7SyT9bg4NQM2qsMuXoX0f2l8CDkaSKvlem2bykc2tk
+ pGQOn8yc7qoMtTV/aS9DKUa2TQZdhsnWjQtD+IrsaPUy53ADtH5s+V9DRNrhgwlgnL5yY4Et+
+ gVbZvq5viE72ROgos0wgvLMLrBX2CYI7kpEiRH+HrQrBa0rzRYO1BQBfoNIfF1IdcFqQBFbjU
+ ZPzltUtZd4bHENJVApxJSh9pl/KlF7m8h22jhrFVq/9qncV8xTwA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.158.134]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mav6t-1phAyV1IDb-00cC8g; Fri, 07
+ Jul 2023 23:47:56 +0200
+Message-ID: <4d2bb49b-9c3c-ea58-274b-d9e9586620c1@web.de>
+Date:   Fri, 7 Jul 2023 23:47:55 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: [PATCH v2] pkt-line: add size parameter to packet_length()
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+References: <89d58db7-6a01-b3fa-54f0-19d5a3819eb3@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <89d58db7-6a01-b3fa-54f0-19d5a3819eb3@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:sDp2w7t4ihgaGBvXgQ9xf/DUjZVuHgF32GMdGX59F0Y0dkNN0P2
+ 7roWjw4yQd50IZZly9XXU8juaGlWBEcvNWhWl+ZcV/gIoNHk8UaRSTYN89ZBGimrnuv0fKC
+ 7hWm8mzuueegBvCYpFYPzw7YbCCQSSMUpQhksYbWB4SshJgXXsRm3ZMC4rJTOjHytCcN/f6
+ iOSYlzDiwJqwR0ht5eciQ==
+UI-OutboundReport: notjunk:1;M01:P0:ymz6hl1ZFSc=;eG5OG9HFcYCYQva5TECQHshxHH4
+ uFNzLJZ7ZdG6O/V9C1aW5EsyrCBAu3yoOO8ulrGTEL0P9zSe9QKRW7vrKmyQM+QA0m2uprXBD
+ VYsDBWoUkkyKjOqjEn/ZdKPvdfLAEQxbH31YX9yzFh3D4AGKBGV7hm0DIIwAqiz1h0W2GJsw3
+ pT+Ne2wOJ5RXW6v6PUAYZgJCy0g9ib/ZSj6QUK9P6R6CJKXL44R9b4gzT7QHp5NBPwSzmn8bu
+ N6kVP1+AkmlzkAhVWxVMuQR+DtcI9+K9WZCdHNeU1nYm3Ou/WSAQb4GM6fsNWllOH4ucvQB4Z
+ LCIv8DEmX7oKRpDaYEm3WZfkDMTimqaIlssHRCSMVhwpzNlx/4IjlSUD2ySg57no+PTO5P5Hc
+ NUMo2EAF0LHuBrkoTYuKsigpzGt1V8fKz0myINni0uwgvi+q6JTR1mTN7K/GQmC1ff9QxvdvD
+ UNp6BzX/K5gc2f9/wg7us2b5P1ESHwwXy0Lut10Kycze58IETyDPTwkujr4qgSL8mj5j4A56q
+ 66WQie9DTwuvNK++goeuxvZCW2TD2mfxZqrX/j+Vv55z0c7O+845txND53eaNwXv6OQJGY0KD
+ 4GE9UFteuTVXtmBfB5U4pns+i6YwXTKhWiqSDw2QgoZhEifHRv+x4cJ/lkxhyVdME5VSPtqRV
+ 0MS8Fv+X1LrxDRaju184hlJ7/TiTDH2vMqXSXggji9kyHfYqvrygZk9PlXIQ2qw/NlLS7Jndr
+ KEDUtwNrxUmRjCkXBWj6q+GoncV4G9SdvtQUfMKuBzcUZk+3HrvPUQxJkDEVkiXRWc/tPKZf+
+ UoD2t9sai5k7Hr1jyAKtqfo4C/IeDqoV/X5fZxYPeY4w08776bSLA4+cZPVBjPb1JMh5a/D3A
+ SnpRXtF6dbs1WH7nC7KOxO14FOyh+N7n+WlnYBmbY6aRXdLMvmYYpiZv0I+X6ajoFKFCPb7T2
+ Zp1GsQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Siddharth Singh <siddhartth@google.com> writes:
+hex2chr() takes care not to run over the end of a NUL-terminated string.
+It's used in packet_length(), but both callers of that function pass a
+four-byte buffer, making NUL-checks unnecessary.  packet_length() could
+accidentally be used with a pointer to a buffer of unknown size at new
+call-sites, though, and the compiler wouldn't complain.
 
->> > +int initialized_hashmap_pointer_not_null() {
->> > +  kh_str_t *hashmap = kh_init_str();
->> > +
->> > +  if(hashmap != NULL){
->> > +    free(hashmap);
->> > +    return 1;
->> > +  }
->> > +  return 0;
->> > +}
->> 
->> I don't think this is a useful test. It would be extremely weird for the
->> return value to be NULL in regular usage.
->
-> While it is indeed uncommon for the return value of kh_init_str() to be null in
-> regular usage, there could be certain cases where the hashmap pointer might be
-> null. One possible scenario is if there is an error during memory allocation for
-> the hashmap. This can happen if the system runs out of memory or if there are
-> other memory-related issues. In such cases, the kh_init_str() function might
-> return a null pointer to indicate the failure to allocate memory for the hashmap.
+Add a size parameter plus check, and remove the NUL-checks by calling
+hexval() directly.  This trades three NUL checks against one size check
+and the ability to report the use of a short buffer at runtime.
 
-Ah, yes, that is what I expected. By "regular usage", I meant the case
-where the allocation succeeds. Nevertheless, I don't think this test
-demonstrates or asserts anything that isn't easily observed in other
-tests, though I am open to be proven wrong.
+If any of the four bytes is NUL or -- more generally -- not a
+hexadecimal digit, then packet_length() still returns a negative value.
 
->> > +int put_value_into_hashmap_once_succeeds() {
->> > +  int ret, value = 14;
->> > +  khint_t pos;
->> > +  kh_str_t *hashmap = kh_init_str();
->> > +  pos = kh_put_str(hashmap, "test_key", &ret);
->> > +  if (!ret)
->> > +    return 0;
->> > +  kh_key(hashmap, pos) = xstrdup("test_key");
->> > +  kh_value(hashmap, pos) = &value;
->> > +  return *kh_value(hashmap, pos) == value;
->> > +}
->> Also, do we have to kh_put_str("some_key") and then immediately set it
->> again with kh_key(pos)? That seems odd, and I don't see other callers
->> doing that all the time.
->
-> Regarding the usage of kh_value(), I saw this part of code[1] This suggests
-> that it may be the recommended approach in this context.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ pkt-line.c    | 12 ++++++++----
+ pkt-line.h    |  2 +-
+ remote-curl.c |  3 ++-
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
-What 'context' were you thinking of when you say "recommended approach
-in this context"? (Did you mean kh_put_str() vs kh_put_oid_*()?) I
-didn't see such an approach in most kh_put_*() call sites. I couldn't
-find the link you're referencing, but I assume it is the following lines
-in delta-islands.c:
+diff --git a/pkt-line.c b/pkt-line.c
+index 62b4208b66..fcfa357ccd 100644
+=2D-- a/pkt-line.c
++++ b/pkt-line.c
+@@ -373,10 +373,14 @@ static int get_packet_data(int fd, char **src_buf, s=
+ize_t *src_size,
+ 	return ret;
+ }
 
-	int hash_ret;
-	khiter_t pos = kh_put_str(remote_islands, island_name, &hash_ret);
+-int packet_length(const char lenbuf_hex[4])
++int packet_length(const char lenbuf_hex[4], size_t size)
+ {
+-	int val =3D hex2chr(lenbuf_hex);
+-	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
++	if (size < 4)
++		BUG("buffer too small");
++	return	hexval(lenbuf_hex[0]) << 12 |
++		hexval(lenbuf_hex[1]) <<  8 |
++		hexval(lenbuf_hex[2]) <<  4 |
++		hexval(lenbuf_hex[3]);
+ }
 
-	if (hash_ret) {
-		kh_key(remote_islands, pos) = xstrdup(island_name);
-		kh_value(remote_islands, pos) = xcalloc(1, sizeof(struct remote_island));
-	}
+ static char *find_packfile_uri_path(const char *buffer)
+@@ -419,7 +423,7 @@ enum packet_read_status packet_read_with_status(int fd=
+, char **src_buffer,
+ 		return PACKET_READ_EOF;
+ 	}
 
-In which case, the use case (as I understand it at least) seems quite
-different:
+-	len =3D packet_length(linelen);
++	len =3D packet_length(linelen, sizeof(linelen));
 
-- When kh_put_str() 'returns' hash_ret = 0, it means there's already a
-  matching entry and we should do nothing.
+ 	if (len < 0) {
+ 		if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
+diff --git a/pkt-line.h b/pkt-line.h
+index 7c23a4bfaf..954eec8719 100644
+=2D-- a/pkt-line.h
++++ b/pkt-line.h
+@@ -94,7 +94,7 @@ int packet_read(int fd, char *buffer, unsigned size, int=
+ options);
+  * If lenbuf_hex contains non-hex characters, return -1. Otherwise, retur=
+n the
+  * numeric value of the length header.
+  */
+-int packet_length(const char lenbuf_hex[4]);
++int packet_length(const char lenbuf_hex[4], size_t size);
 
-- Otherwise, kh_put_str() actually creates a new matching entry, and now
-  we want to allocate memory to store the entry, so we overwrite the key
-  with "kh_key() = xstrdup()". We could have avoided this by doing
-  something like:
+ /*
+  * Read a packetized line into a buffer like the 'packet_read()' function=
+ but
+diff --git a/remote-curl.c b/remote-curl.c
+index acf7b2bb40..143318658e 100644
+=2D-- a/remote-curl.c
++++ b/remote-curl.c
+@@ -763,7 +763,8 @@ static void check_pktline(struct check_pktline_state *=
+state, const char *ptr, si
+ 			size -=3D digits_remaining;
 
-    char *key = xstrdup(island_name)
-    khiter_t pos = kh_put_str(remote_islands, key, &hash_ret);
-
-    if (hash_ret) {
-      kh_value(remote_islands, pos) = xcalloc(1, sizeof(struct remote_island));
-    } else {
-      free(key);
-    }
-
-  but allocations are expensive, so we should avoid allocating before we
-  know it's needed.
-
->> > +int put_same_value_into_hashmap_twice_fails() {
->> > +  int first_return_value, second_return_value, value = 14;
->> > +  khint_t pos;
->> > +  kh_str_t *hashmap = kh_init_str();
->> > +  pos = kh_put_str(hashmap, "test_key", &first_return_value);
->> > +  if (!first_return_value)
->> > +    return 0;
->> > +  kh_key(hashmap, pos) = xstrdup("test_key");
->> > +  kh_value(hashmap, pos) = &value;
->> > +  kh_put_str(hashmap, "test_key", &second_return_value);
->> > +  return !second_return_value;
->> > +}
->> 
->> I don't see how this is different from the previous test that tested for
->> collisions.
->
-> I also attempt to assign a value to the hashmap here, but this will not be
-> successful due to a collision. The intent of this test was different, however
-
-Hm, what was the different intent? Is it to test this slightly different
-case where the value is assigned?
-
-My reasoning is:
-
-- Would assigning a value result in different behavior?
-- Would a reasonable user expect that it would result in different
-  behavior?
-
-If the answer to both of those is 'no' (which I believe it is), then it
-is not worth testing.
+ 			if (state->len_filled =3D=3D 4) {
+-				state->remaining =3D packet_length(state->len_buf);
++				state->remaining =3D packet_length(state->len_buf,
++								 sizeof(state->len_buf));
+ 				if (state->remaining < 0) {
+ 					die(_("remote-curl: bad line length character: %.4s"), state->len_bu=
+f);
+ 				} else if (state->remaining =3D=3D 2) {
+=2D-
+2.41.0
