@@ -2,116 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 220FBEB64D9
-	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 10:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 404DDEB64D9
+	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 12:26:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232493AbjGGKuc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 06:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50938 "EHLO
+        id S232507AbjGGM0s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 08:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjGGKua (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 06:50:30 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF601725
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 03:50:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1688727026; x=1689331826; i=johannes.schindelin@gmx.de;
- bh=JPtuF3e3MqtfDAaXBtqZjFqGj3KiaJlfL1+IMc8sUSI=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=N3T3Sk1iPkgrl+EcAla48B/jeJxaD4qe1/VoOx0SR2jAIQHrMYXqvD9MSBHiHpDU3Tba29s
- 2lrJE4g66MBvNNGRHseUKyfOhCK2c61OSrb6GKoTS5h0ejP1G/Jko65ik/dYWcL3wkk38Ka8j
- NF1dXrXjvdZfpgR1x186TeXx/lR9Rh08iM6aJ6CI8iR0QBhCEYLL88wxYA0+B4R4mMfnSy8Ks
- ehceDNg1+72bf9M/Ivyd0ymhcmx3LygCU4s4eM1Jg98fPBmvx3F/afg7pzP0mes22J0/TUZ2y
- zPR3RmRC6clJgYqMV/7EVR/g3UL8AnELm5YmtgUfOpQWFzOSa60w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az567-299.lj1xk2mgdexu3igr4w2lmfxu3c.gx.internal.cloudapp.net
- ([40.77.93.32]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MCbIn-1q84G22mUl-009kvL; Fri, 07 Jul 2023 12:50:26 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.41.0(2)
-Date:   Fri,  7 Jul 2023 10:50:22 +0000
-Message-ID: <20230707105023.4092-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.41.0
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S232010AbjGGM0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 08:26:46 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9EA11FEA
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 05:26:45 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-2632336f75fso1317524a91.3
+        for <git@vger.kernel.org>; Fri, 07 Jul 2023 05:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688732805; x=1691324805;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tr1fA1ST3mVFDCuZEiI26aFGPz+svqLRigQmldDx/hg=;
+        b=s2cDysZORuI6TKM0nXnv6iBNmubE5gA48p+09ytzy/8nLPu3GPanj8yB/MoQZk99Qi
+         pdBG1rHwK1QQZ+fAcYYCyw3JfjTUkK+6u+3Yjxl/EbwPEd87E3FVvUQQHSwTYY3nhx/m
+         4RVle6laHMwZqICGgi6Tl3S1EOkUVCIV+Anzww/JNBPiXbvPxazFbvyIR0XRoq5Lo0aD
+         MJQgNcL38Eap2O6M5IO4RKr5aJdM896l1owH9kf56fDBAOIbeNoRDsgRr4N24IfCHNfz
+         aARqC8eCbfSNMKN5xLzoweca5ymZNR31OacmJMVYCy+TkPrd+AYBWQJgxv9IYUosdMLU
+         t7LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688732805; x=1691324805;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tr1fA1ST3mVFDCuZEiI26aFGPz+svqLRigQmldDx/hg=;
+        b=cuZcu/W53zsRqZEGvBzsXIeO4BqulbOcrCCkmCFxPwHjE0Y1dOD/6//vvHPMjHjoIM
+         kgynqIZGcPB3PMA0WRxNMluWE+mUgZohZCr8K7lut8PgIInt87Qd08CEl3C3IRVIAik3
+         +ULfmGbBcFMKypS2PTvmNkbH7ea9JCSvNnCQ8aUTWMmXputF6ZOUsEoFin15a7sDVd+I
+         9j8Xi9vSi7zAWNu1q4QInY7lxTD5M4/U0Q2iDbExijXvXc3KP5fWwMf/M7vBQcr2lzMj
+         03V+NwsWBsAibu6zvNJ3XryDTpPagqU2HVWXzCi/2FMBW0mQI0yAxGt0z3fkHUsbVLz3
+         J6KA==
+X-Gm-Message-State: ABy/qLYs+VIotrJa/1PIpxM4VZG7gy4xQfXi61CZ0JgF6csMus/ODbaL
+        UwEYNDa8rabIMjKEDyiaoH/ldGlmfKdstRinGOQ=
+X-Google-Smtp-Source: APBJJlFt5+stDOK7N32hpohnhyRWcf/Mxej2OlFdWX/Rl6WDP4xUZ2CQfufIR2WV8Wzwew/SHdNcq2FCAE0PJhTJ86c=
+X-Received: by 2002:a17:90a:9b0b:b0:263:479:3dc with SMTP id
+ f11-20020a17090a9b0b00b00263047903dcmr4519162pjp.19.1688732805059; Fri, 07
+ Jul 2023 05:26:45 -0700 (PDT)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:KRa+X5CqUWeOfqUlF6QnfWhFrS0dtGXXyPiYryXDqYOdtcQNq/N
- tScoO+TjUv7fQZucgF3Wt0dhsaSHbOCbRf1s6rWzPxODxBqP++Xf1l5/QGPP74x0BOx6YVL
- jw++X66+A8winb6x9OT0VLoT5OBUrCQewbUk2whxEZvC5np+dnr/uXTP4b2ND+85w252Dn9
- dqZBrYwLtAbMIle7OvbeA==
-UI-OutboundReport: notjunk:1;M01:P0:icJMnM3AtGU=;aVXxA+KbaNy3kqzjFqq1/mCWx4G
- WvQXEGYCo49U+tVDlbtPbItJ5IkucL8ILqSkZ8ypST9sNLHLS1kR5X4x50HpSYME9r5cgriIS
- N1z03ioloCmDfAwzbDkQcb/Bk3rJOU4QQORFjFJ+TxxQImPqgGZEbDn3ElyNcghaAf7ia2gzu
- d3wUkcZKydXX5YpY7XPpWGvSvKMBoDZSvPAGmlDj9YJfRuqvRdzrq8MOdjNXpmTGi9ODNLLuu
- CajB0SX5+L3jfsxCnrFgRurcScZ4f0nz0VrIYSPaS3bePRhfxkrg7COwjuGNTW3SNdGZWtcIP
- LVccusNk24wiRGSjI9FiUPakO2aa8jc2A+1iDCeNy7ICodSIamNJWW7lfMRvrhzH/WdoJVm6b
- SmTAZPbAxyVhmK+Cr/UWlN64ydKUwnWKcfVulvQjUh3AyVaM3b+VXy5/h8b1HQ8NuFRrXE2+6
- yycqFkLvi9AYziAk0a48036ep7X3/JP768bwjf1WSFj5bqzTdVbyWDVZpY3BLOZT3C+xFKoHK
- nZk37Mwt9OEl+AMmBZcqODjBtxEPAJmd6sGMY7W3jq3KQaiF7Kj+GX54BQsQA/Co4iPaGscFi
- eRdX+m3lPr1+tGzUaSXMgzDEr+cRzTBr1dcZTTUCSBYrjlX7DHXoCB0jKx2QjLI8BmROfLcE3
- ptec2XNWBWZCPpTPm6+N+zUvU12SQ9pkDwaybzpoX1MfRs+cevugz8PR/TVctQHr7YioTVk8B
- RvNyw81uZCxSns3h9jLJg8vLJuNFCaagxyBoye3LiOy0heHsIWdu7WNfNjWbQ9F2KM+Q+n+ri
- nUkKcZpZcKAqURziv1vb0YevtiwzoWeqEK+dOLlKqwZaQ4KcpCqWONsk4JaWUznfiWpdptIXO
- Kp6YA+r3c3MbVKhEdWJI14odEnOY1XmlVZeLXut/qIew6E7wq3zbRyney+pK6HsbRwq5QWbzA
- +ysG+g==
+References: <AN0heSrMCnygWUC5Sh1UA9v2JGtjcxYDKPFE0xUPddGEW29c3w@mail.gmail.com>
+ <20230705183532.3057433-1-martin.agren@gmail.com> <xmqqv8eyyw2g.fsf@gitster.g>
+In-Reply-To: <xmqqv8eyyw2g.fsf@gitster.g>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 7 Jul 2023 14:26:33 +0200
+Message-ID: <CAN0heSpY-vYVFznq9YLtjj0Enmf957ASCLdN_Eyz0ZLKd82FWg@mail.gmail.com>
+Subject: Re: [PATCH v3] t0091-bugreport.sh: actually verify some content of report
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Wed, 5 Jul 2023 at 21:53, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> > +test_expect_success 'sanity check "System Info" section' '
+> > +     test_when_finished rm -f git-bugreport-format.txt &&
+> > +
+> > +     sed -ne "/^\[System Info\]$/,/^$/p" <git-bugreport-format.txt >sy=
+stem &&
+> > +
+> > +     # The beginning should match "git version --build-info" verbatim,
+> > +     # but rather than checking bit-for-bit equality, just test some b=
+asics.
+> > +     grep "git version [0-9]." system &&
+> > +     grep "shell-path: ." system &&
+> > +
+> > +     # After the version, there should be some more info.
+>
+> Do you want to assert the "after" part?  "grep" alone does not do
+> anything of that sort.
 
-I hereby announce that Git for Windows 2.41.0(2) is available from:
+Right, I remember thinking this 'after' could be useful to a human being
+reading along, but that the test isn't enforcing it, as you point out.
+If it's just misleading though, maybe we're better off either dropping
+the "After" or enforcing it.
 
-    https://gitforwindows.org/
+> > +     # This is bound to differ from environment to environment,
+> > +     # so we just do some rather high-level checks.
+> > +     grep "uname: ." system &&
+> > +     grep "compiler info: ." system
+> >  '
+>
+> Don't we at least want to anchor all these patterns with "^" or
+> something?
+>
+> Alternatively, since we do not expect the values of the fields are useful
+> at all, perhaps doing something like this
+>
+>     sed -n -e '/^\[System Info\]/,/\[Enabled Hooks]/s/^\([^:]*):.*/\1/p' =
+>names
+>
+> to ensure that we have the fields we expect in the output makes more sens=
+e?
 
-Changes since Git for Windows v2.41.0 (June 1st 2023)
+The latter would make sense, yes. I could amend the patch to do
+something like that, but I see you've already merged it to next. I'll
+look into doing it as a patch on top during the weekend.
 
-As announced previously, Git for Windows will drop support for Windows
-7 and for Windows 8 in one of the next versions, following Cygwin's and
-MSYS2's lead (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+> I notice that "git version:" does not have its value on its line.
+> Isn't it a bug we would rather fix before writing this "sanity check"
+> test, I have to wonder.
 
-Following the footsteps of the MSYS2 and Cygwin projects on which Git
-for Windows depends, the 32-bit variant of Git for Windows is being
-phased out. As of Git for Windows v2.41.0, the 32-bit variant of the
-POSIX emulation layer (known as "MSYS2 runtime", powering Git Bash
-among other components shipped with Git for Windows) is in maintenance
-mode and will only see security bug fixes (if any). Users relying on
-32-bit Git for Windows are highly encouraged to switch to the 64-bit
-version whenever possible.
+Yeah, I noticed this. In my case, there's this:
 
-New Features
+ git version:
+ git version 2.41.0.428.gbd0ef4c9fd
+ cpu: x86_64
+ built from commit: bd0ef4c9fd591e9c2ea1310dae92fe07a51438c7
+ sizeof-long: 8
+ sizeof-size_t: 8
+ shell-path: /bin/sh
+ uname: [...]
+ [...]
 
-  * Comes with MSYS2 runtime v3.4.7.
-  * Comes with OpenSSL v3.1.1, a major version upgrade (previously Git
-    for Windows distributed OpenSSL v1.1.*).
-  * To support interoperability with Windows Subsystem for Linux (WSL)
-    better, it is now possible to let Git set e.g. the executable bits
-    of files (this needs core.WSLCompat to be set, and the NTFS volume
-    needs to be mounted in WSL using the appropriate options).
+IMHO, "git version: git version 2.41.0.428.gbd0ef4c9fd" would look sort
+of weird. I tend to think "git version:" is more of a header for the
+first several lines. It could perhaps be something like this, after
+adding "--build-options" and indenting its output:
 
-Bug Fixes
+ git version --build-options:
+   git version 2.41.0.428.gbd0ef4c9fd
+   cpu: x86_64
+   built from commit: bd0ef4c9fd591e9c2ea1310dae92fe07a51438c7
+   sizeof-long: 8
+   sizeof-size_t: 8
+   shell-path: /bin/sh
+ uname: [...]
+ [...]
 
-  * Portable Git: The Windows version is now parsed more robustly in
-    the post-install script.
-  * The labels of the File Explorer menu items installed by the Git for
-    Windows installer have been aligned with what is customary ("Open
-    Git Bash Here" instead of "Git Bash Here").
+That's how I think of the contents. Actually changing the format would
+be out-of-scope for the test updates, of course. I also wonder if there
+are scripts out there trying to parse these reports and how they would
+cope with such a tweak to the format.
 
-Git-2.41.0.2-64-bit.exe | 23599b8a8e2c4e87a94a524b5ce9147b8e3fe1780384e2d8642517d022993190
-Git-2.41.0.2-32-bit.exe | b9eaf785633fa7e68adffd1b454ce70f963adbe6aa530b8ce4ef0ffa8ed49873
-PortableGit-2.41.0.2-64-bit.7z.exe | 8960ed027f94be7487e0e56c28e0fdaaf7a2dd887c35f84a89179a320a81e830
-PortableGit-2.41.0.2-32-bit.7z.exe | b8411ac95f84cf5cff23f44789a9ee313fc7136a224d06cb7abf94561bb3f68c
-MinGit-2.41.0.2-64-bit.zip | 06d71967e8f47f82fc2ebf9911d2cf8102221e4e22becb825e2dbec85cc1047e
-MinGit-2.41.0.2-32-bit.zip | 890d7810725a2698729446143072a3191915638e0925259a2060a96383d06ee2
-MinGit-2.41.0.2-busybox-64-bit.zip | 8ab102ceba7a62cef25c55564a1b519039885e3de9c57ec9b2ec8d99918ad297
-MinGit-2.41.0.2-busybox-32-bit.zip | 508a6478dcbaa2bd90347d75d87c9a621fd7baf200762a2a82e77bf5872c7991
-Git-2.41.0.2-64-bit.tar.bz2 | e4aaddc71f01321f8f4644944760d41158a0214585d56a0ad8395a006a3e5146
-Git-2.41.0.2-32-bit.tar.bz2 | 794329f00c93a41918211933b6231cbcd4798484566de3a120427e403092c7dd
-
-Ciao,
-Johannes
+Martin
