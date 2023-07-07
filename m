@@ -2,175 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39902EB64D9
-	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 08:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 220FBEB64D9
+	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 10:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbjGGIt2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 04:49:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36780 "EHLO
+        id S232493AbjGGKuc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 06:50:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbjGGIt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 04:49:27 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3200B1FE4
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 01:49:26 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so4619870a12.1
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 01:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688719764; x=1691311764;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yS3IOWWnyq2XqKGKM6HM2/Z5EJxw3B5kQr7p6abvsCI=;
-        b=YxglRh6DJAVxd8B6aIR/7noyjQCeZ2I6vHtK+JxrbwLdQqa2ZpjzWLBurbU1ehfAbM
-         Zr31fYl5Ele6+Pv+wtK6uu+qgvcmK7mwazQjRN/4O2aDxIZcrg22lVEB6t96SledITbL
-         WLYhDdFr/9LvxFO17YB2juHHGnysM/JdKLClZLFXddguhf1l8yutpIKEsmQXDFJkl09k
-         X0MNKkVIhZZ+yOcwPY/JlndL9lblCK1FIrzlKFoVtNfOI61iGdChoJvTCnpWuH/v6vr5
-         Oo54kIUqmvuWOybascA/Cj9z83gXkaySf22PNv6b4wBGf09KcdbypBYnowYXCHRwj9kh
-         6zqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688719764; x=1691311764;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yS3IOWWnyq2XqKGKM6HM2/Z5EJxw3B5kQr7p6abvsCI=;
-        b=P/Ybhwzqddas/kLMUqUflJRj96tnJRuu0SVW8LrchQBrzIYYMUtFXWG6CW+/RL8Dpt
-         za+ryjkzscfo03W3yzCnUDm2V5sk2Ry6hSd6RsDRx9a3l7PJ2CdtUBBc/CHvOqw0FUz5
-         ThhDP0EB8yKfgVW6O0WnQctv8ctuFUFLhBaXwvjMSF4MxCrwKSgRThSkqNDyUeFq92Sa
-         aNv9PFDcWrZUMZ3KZhW+HpRR4SuZi+7lyNMVRxXn0GUA+ZWatNbvJJVJ5/qH+0gRg64y
-         UA1HoIk5+B3nsi5VuLLVf7x332II+Eo9P90InD4BNL99ASbBCpueHPT2Hb8Gs7t88ue4
-         okpg==
-X-Gm-Message-State: ABy/qLZDj3pcp/ElbfAwA992T63ERlOTWjaD/5EeFe0wlJJnugRUDyNE
-        VPhUwl5UcU1Lrg/r3O5YVX1Uz39WcDw=
-X-Google-Smtp-Source: APBJJlF/jlGVSPM/vkPARJ9jqrO+kIx/G+YyR+7kBPoZwVQ2WP2W1KnO9UARcpPVdhgKp04fa1j5gA==
-X-Received: by 2002:a17:907:97d6:b0:978:8979:c66c with SMTP id js22-20020a17090797d600b009788979c66cmr7953915ejc.18.1688719764357;
-        Fri, 07 Jul 2023 01:49:24 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id u23-20020a1709063b9700b009928b4e3b9fsm1897045ejf.114.2023.07.07.01.49.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jul 2023 01:49:24 -0700 (PDT)
-Message-ID: <82255166-49ac-3c10-1744-27d6d436822e@gmail.com>
-Date:   Fri, 7 Jul 2023 09:49:22 +0100
+        with ESMTP id S229775AbjGGKua (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 06:50:30 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF601725
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 03:50:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1688727026; x=1689331826; i=johannes.schindelin@gmx.de;
+ bh=JPtuF3e3MqtfDAaXBtqZjFqGj3KiaJlfL1+IMc8sUSI=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=N3T3Sk1iPkgrl+EcAla48B/jeJxaD4qe1/VoOx0SR2jAIQHrMYXqvD9MSBHiHpDU3Tba29s
+ 2lrJE4g66MBvNNGRHseUKyfOhCK2c61OSrb6GKoTS5h0ejP1G/Jko65ik/dYWcL3wkk38Ka8j
+ NF1dXrXjvdZfpgR1x186TeXx/lR9Rh08iM6aJ6CI8iR0QBhCEYLL88wxYA0+B4R4mMfnSy8Ks
+ ehceDNg1+72bf9M/Ivyd0ymhcmx3LygCU4s4eM1Jg98fPBmvx3F/afg7pzP0mes22J0/TUZ2y
+ zPR3RmRC6clJgYqMV/7EVR/g3UL8AnELm5YmtgUfOpQWFzOSa60w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az567-299.lj1xk2mgdexu3igr4w2lmfxu3c.gx.internal.cloudapp.net
+ ([40.77.93.32]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MCbIn-1q84G22mUl-009kvL; Fri, 07 Jul 2023 12:50:26 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.41.0(2)
+Date:   Fri,  7 Jul 2023 10:50:22 +0000
+Message-ID: <20230707105023.4092-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.41.0
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/2] push: advise about force-pushing as an alternative
- to reconciliation
-Content-Language: en-US
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        git@matthieu-moy.fr, christiwald@gmail.com, john@keeping.me.uk,
-        philipoakley@iee.email, gitster@pobox.com,
-        phillip.wood@dunelm.org.uk
-References: <20230704194756.166111-1-alexhenrie24@gmail.com>
- <20230706040111.81110-1-alexhenrie24@gmail.com>
- <20230706040111.81110-3-alexhenrie24@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230706040111.81110-3-alexhenrie24@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Fcc:    Sent
+X-Provags-ID: V03:K1:KRa+X5CqUWeOfqUlF6QnfWhFrS0dtGXXyPiYryXDqYOdtcQNq/N
+ tScoO+TjUv7fQZucgF3Wt0dhsaSHbOCbRf1s6rWzPxODxBqP++Xf1l5/QGPP74x0BOx6YVL
+ jw++X66+A8winb6x9OT0VLoT5OBUrCQewbUk2whxEZvC5np+dnr/uXTP4b2ND+85w252Dn9
+ dqZBrYwLtAbMIle7OvbeA==
+UI-OutboundReport: notjunk:1;M01:P0:icJMnM3AtGU=;aVXxA+KbaNy3kqzjFqq1/mCWx4G
+ WvQXEGYCo49U+tVDlbtPbItJ5IkucL8ILqSkZ8ypST9sNLHLS1kR5X4x50HpSYME9r5cgriIS
+ N1z03ioloCmDfAwzbDkQcb/Bk3rJOU4QQORFjFJ+TxxQImPqgGZEbDn3ElyNcghaAf7ia2gzu
+ d3wUkcZKydXX5YpY7XPpWGvSvKMBoDZSvPAGmlDj9YJfRuqvRdzrq8MOdjNXpmTGi9ODNLLuu
+ CajB0SX5+L3jfsxCnrFgRurcScZ4f0nz0VrIYSPaS3bePRhfxkrg7COwjuGNTW3SNdGZWtcIP
+ LVccusNk24wiRGSjI9FiUPakO2aa8jc2A+1iDCeNy7ICodSIamNJWW7lfMRvrhzH/WdoJVm6b
+ SmTAZPbAxyVhmK+Cr/UWlN64ydKUwnWKcfVulvQjUh3AyVaM3b+VXy5/h8b1HQ8NuFRrXE2+6
+ yycqFkLvi9AYziAk0a48036ep7X3/JP768bwjf1WSFj5bqzTdVbyWDVZpY3BLOZT3C+xFKoHK
+ nZk37Mwt9OEl+AMmBZcqODjBtxEPAJmd6sGMY7W3jq3KQaiF7Kj+GX54BQsQA/Co4iPaGscFi
+ eRdX+m3lPr1+tGzUaSXMgzDEr+cRzTBr1dcZTTUCSBYrjlX7DHXoCB0jKx2QjLI8BmROfLcE3
+ ptec2XNWBWZCPpTPm6+N+zUvU12SQ9pkDwaybzpoX1MfRs+cevugz8PR/TVctQHr7YioTVk8B
+ RvNyw81uZCxSns3h9jLJg8vLJuNFCaagxyBoye3LiOy0heHsIWdu7WNfNjWbQ9F2KM+Q+n+ri
+ nUkKcZpZcKAqURziv1vb0YevtiwzoWeqEK+dOLlKqwZaQ4KcpCqWONsk4JaWUznfiWpdptIXO
+ Kp6YA+r3c3MbVKhEdWJI14odEnOY1XmlVZeLXut/qIew6E7wq3zbRyney+pK6HsbRwq5QWbzA
+ +ysG+g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+Dear Git users,
 
-On 06/07/2023 05:01, Alex Henrie wrote:
-> Also, don't put `git pull` in an awkward parenthetical, because
-> `git pull` can always be used to reconcile branches and is the normal
-> way to do so.
+I hereby announce that Git for Windows 2.41.0(2) is available from:
 
-This message would also benefit from adding explanation as to why this 
-change is desirable.
+    https://gitforwindows.org/
 
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->   builtin/push.c | 27 +++++++++++++++------------
->   1 file changed, 15 insertions(+), 12 deletions(-)
-> 
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 6f8a8dc711..b2f0a64e7c 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -301,21 +301,24 @@ static void setup_default_push_refspecs(int *flags, struct remote *remote)
->   
->   static const char message_advice_pull_before_push[] =
->   	N_("Updates were rejected because the tip of your current branch is behind\n"
-> -	   "its remote counterpart. Integrate the remote changes (e.g.\n"
-> -	   "'git pull ...') before pushing again.\n"
-> +	   "its remote counterpart. Use 'git pull' to integrate the remote changes\n"
+Changes since Git for Windows v2.41.0 (June 1st 2023)
 
-This is much clearer than "(e.g. 'git pull ...')"
+As announced previously, Git for Windows will drop support for Windows
+7 and for Windows 8 in one of the next versions, following Cygwin's and
+MSYS2's lead (Git for Windows relies on MSYS2 for components such as
+Bash and Perl).
 
-> +	   "before pushing again, or use 'git push --force' to delete the remote\n"
-> +	   "changes and replace them with your own.\n"
+Following the footsteps of the MSYS2 and Cygwin projects on which Git
+for Windows depends, the 32-bit variant of Git for Windows is being
+phased out. As of Git for Windows v2.41.0, the 32-bit variant of the
+POSIX emulation layer (known as "MSYS2 runtime", powering Git Bash
+among other components shipped with Git for Windows) is in maintenance
+mode and will only see security bug fixes (if any). Users relying on
+32-bit Git for Windows are highly encouraged to switch to the 64-bit
+version whenever possible.
 
-I think it would be good to give a bit more context here as to when 
-force pushing is a good idea. For example something like
+New Features
 
-     If you have rebased the branch since you last integrated remote
-     changes then you can use
-     'git push --force-with-lease=<branch-ref> --force-if-includes' to
-     safely replace the remote branch.
+  * Comes with MSYS2 runtime v3.4.7.
+  * Comes with OpenSSL v3.1.1, a major version upgrade (previously Git
+    for Windows distributed OpenSSL v1.1.*).
+  * To support interoperability with Windows Subsystem for Linux (WSL)
+    better, it is now possible to let Git set e.g. the executable bits
+    of files (this needs core.WSLCompat to be set, and the NTFS volume
+    needs to be mounted in WSL using the appropriate options).
 
-     If you have deleted and then recreated the branch since you last
-     integrated remote changes then you can use 'git push +<branch>' to
-     replace the remote. Note that if anyone else has pushed work to
-     this branch it will be deleted.
+Bug Fixes
 
-It makes the advice longer  but the user get a specific suggestion for 
-their current situation rather than a generic suggestion to delete the 
-remote changes without discussing the implications. In this case we know 
-that it was the current branch that was rejected and so should fill in 
-the branch name in the advice as well.
+  * Portable Git: The Windows version is now parsed more robustly in
+    the post-install script.
+  * The labels of the File Explorer menu items installed by the Git for
+    Windows installer have been aligned with what is customary ("Open
+    Git Bash Here" instead of "Git Bash Here").
 
-My main issue with the changes in this series is that they seem to 
-assume the user is (a) pushing a single branch and (b) they are the only 
-person who works on that branch. That is a common but narrow case where 
-force pushing is perfectly sensible but there are many other scenarios 
-where suggesting "push --force" would not be a good idea.
+Git-2.41.0.2-64-bit.exe | 23599b8a8e2c4e87a94a524b5ce9147b8e3fe1780384e2d8642517d022993190
+Git-2.41.0.2-32-bit.exe | b9eaf785633fa7e68adffd1b454ce70f963adbe6aa530b8ce4ef0ffa8ed49873
+PortableGit-2.41.0.2-64-bit.7z.exe | 8960ed027f94be7487e0e56c28e0fdaaf7a2dd887c35f84a89179a320a81e830
+PortableGit-2.41.0.2-32-bit.7z.exe | b8411ac95f84cf5cff23f44789a9ee313fc7136a224d06cb7abf94561bb3f68c
+MinGit-2.41.0.2-64-bit.zip | 06d71967e8f47f82fc2ebf9911d2cf8102221e4e22becb825e2dbec85cc1047e
+MinGit-2.41.0.2-32-bit.zip | 890d7810725a2698729446143072a3191915638e0925259a2060a96383d06ee2
+MinGit-2.41.0.2-busybox-64-bit.zip | 8ab102ceba7a62cef25c55564a1b519039885e3de9c57ec9b2ec8d99918ad297
+MinGit-2.41.0.2-busybox-32-bit.zip | 508a6478dcbaa2bd90347d75d87c9a621fd7baf200762a2a82e77bf5872c7991
+Git-2.41.0.2-64-bit.tar.bz2 | e4aaddc71f01321f8f4644944760d41158a0214585d56a0ad8395a006a3e5146
+Git-2.41.0.2-32-bit.tar.bz2 | 794329f00c93a41918211933b6231cbcd4798484566de3a120427e403092c7dd
 
-Best Wishes
-
-Phillip
-
->   	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->   
->   static const char message_advice_checkout_pull_push[] =
->   	N_("Updates were rejected because a pushed branch tip is behind its remote\n"
-> -	   "counterpart. Check out this branch and integrate the remote changes\n"
-> -	   "(e.g. 'git pull ...') before pushing again.\n"
-> +	   "counterpart. Check out this branch and use 'git pull' to integrate the\n"
-> +	   "remote changes before pushing again, or use 'git push --force' to delete\n"
-> +	   "the remote changes and replace them with your own.\n"
->   	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->   
->   static const char message_advice_ref_fetch_first[] =
-> -	N_("Updates were rejected because the remote contains work that you do\n"
-> -	   "not have locally. This is usually caused by another repository pushing\n"
-> -	   "to the same ref. You may want to first integrate the remote changes\n"
-> -	   "(e.g., 'git pull ...') before pushing again.\n"
-> +	N_("Updates were rejected because the remote contains work that you do not\n"
-> +	   "have locally. This is usually caused by another repository pushing to\n"
-> +	   "the same ref. Use 'git pull' to integrate the remote changes before\n"
-> +	   "pushing again, or use 'git push --force' to delete the remote changes\n"
-> +	   "and replace them with your own.\n"
->   	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->   
->   static const char message_advice_ref_already_exists[] =
-> @@ -327,10 +330,10 @@ static const char message_advice_ref_needs_force[] =
->   	   "without using the '--force' option.\n");
->   
->   static const char message_advice_ref_needs_update[] =
-> -	N_("Updates were rejected because the tip of the remote-tracking\n"
-> -	   "branch has been updated since the last checkout. You may want\n"
-> -	   "to integrate those changes locally (e.g., 'git pull ...')\n"
-> -	   "before forcing an update.\n");
-> +	N_("Updates were rejected because the tip of the remote-tracking branch has\n"
-> +	   "been updated since the last checkout. Use 'git pull' to integrate the\n"
-> +	   "remote changes before pushing again, or use 'git push --force' to delete\n"
-> +	   "the remote changes and replace them with your own.\n");
->   
->   static void advise_pull_before_push(void)
->   {
+Ciao,
+Johannes
