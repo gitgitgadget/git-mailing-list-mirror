@@ -2,85 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 684DBEB64D9
-	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 23:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD92DEB64D9
+	for <git@archiver.kernel.org>; Fri,  7 Jul 2023 23:45:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbjGGXPL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 19:15:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39582 "EHLO
+        id S229881AbjGGXpj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 19:45:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbjGGXPJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 19:15:09 -0400
+        with ESMTP id S229458AbjGGXpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 19:45:39 -0400
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938FE2125
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 16:15:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E632108
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 16:45:37 -0700 (PDT)
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EEBEC2A55E;
-        Fri,  7 Jul 2023 19:15:07 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 55B7C2A81A;
+        Fri,  7 Jul 2023 19:45:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+FSFfs/ZymPeyj7g5zgI4olMK24c9a16S6wb15
-        bt98A=; b=B4srpAJ/eYUOvpD/KZ6cv1DI+TU1RVJXLCvPSye7Mi/zhB9WzAQL/s
-        pPdEvRRqKcmaclTLRS7wrfVyG6p5cl4a9UW9fxN8JREQiwpJKbf/53j/N8qBzwRZ
-        uoVis0bMhqJuYcZr2mVM7TJe5RxO3BmQmRIPFvx+l0InFAmWS2FF4=
+        :content-type; s=sasl; bh=0Kg0ik8Fco8JKAal0Vyu6YnlET15l8YlRWQP7w
+        gHxEo=; b=pWpp8O+XwAUyT5wI5nneyVK5XG7Raz5/rJMVDqtkUxY6CFcElaAoK5
+        x5D63SWvJUTT2kDMcd3yOASnN+Dawx5OjX9qpP7mt259vmcFMbBtxebfvqtPcvKE
+        ssbLHDDolTsUUmNg9HpwpWdgEGBx4fNKIKo1DW168klCpv7Guaapc=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E86A42A55D;
-        Fri,  7 Jul 2023 19:15:07 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4EA372A819;
+        Fri,  7 Jul 2023 19:45:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.127.75.226])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6F1AA2A55C;
-        Fri,  7 Jul 2023 19:15:04 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E15732A818;
+        Fri,  7 Jul 2023 19:45:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com
-Subject: Re: [PATCH v2 1/3] Enable gitattributes read from sparse directories
-References: <20230701064843.147496-1-cheskaqiqi@gmail.com>
-        <20230707151839.504494-1-cheskaqiqi@gmail.com>
-        <20230707151839.504494-2-cheskaqiqi@gmail.com>
-Date:   Fri, 07 Jul 2023 16:15:03 -0700
-In-Reply-To: <20230707151839.504494-2-cheskaqiqi@gmail.com> (Shuqi Liang's
-        message of "Fri, 7 Jul 2023 11:18:37 -0400")
-Message-ID: <xmqqzg4771qg.fsf@gitster.g>
+To:     git@vger.kernel.org
+Subject: [PATCH 2/2alt] dir: do not feed path suffix to pathspec match
+References: <20230707220457.3655121-1-gitster@pobox.com>
+        <20230707220457.3655121-3-gitster@pobox.com>
+Date:   Fri, 07 Jul 2023 16:45:32 -0700
+In-Reply-To: <20230707220457.3655121-3-gitster@pobox.com> (Junio C. Hamano's
+        message of "Fri, 7 Jul 2023 15:04:57 -0700")
+Message-ID: <xmqqttuf70bn.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1B056FA6-1D1C-11EE-ACF4-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 5D78166E-1D20-11EE-83D4-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +	pos = index_name_pos_sparse(istate, path, strlen(path));
-> +	pos = -pos-2;
+> ...
+>  * do_match_pathspec() calls match_pathspec_item() _after_ stripping
+>    the common prefix "sub/" from the path, giving it "file", plus
+>    the length of the common prefix (4-bytes), so that the pathspec
+>    element "(attr:label)sub/" can be treated as if it were "(attr:label)".
+>
+> The last one is what breaks the match, as the pathspec subsystem
+> ends up asking the attribute subsystem to find the attribute
+> attached to the path "file".
+> ...
+> Update do_match_pathspec() so that it does not strip the prefix from
+> the path, and always feeding the full pathname to match_pathspec_item().
 
-With SP at appropriate places, i.e. "pos = -pos - 2".
+Here is an alternative approach with a lot smaller code footprint.
+Instead of teaching do_match_pathspec() not to strip the common
+prefix from the pathname, we teach match_pathspec_item() how to
+recover the original pathname before stripping, and use that when
+calling match_pathspec_attrs() function.  The same trick is already
+used in an earlier part of the same function, so even though it
+looks somewhat dirty, it is unlikely that it would introduce
+more breakage.
 
-But more importantly, where does the -2 come from?  For a missing
-entry, we get a negative number, and the location that the cache
-entry with the given path would be inserted can be recovered by
-computing -pos - 1, and that is why 
+As the test part is the same, I'll just show the code change
+relative to the 'master' branch.
 
-	if (0 <= pos) {
-		... handle existing ce at pos ...
-	} else if (pos < 0) {
-		pos = -pos - 1;
-		... if such a path were in the index, it would have
-		... been at pos
-	}
+I am undecided which one is better.
 
-looks fairly familiar to those who have read our code.  Even in such
-a case, we do not blindly compute "-pos - 1", though.
+ dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In any case, this magic "adjustment" of the returned value needs to
-be explained, perhaps in in-code comment around there.
-
-> +	if (!path_in_cone_mode_sparse_checkout(path, istate) && pos>=0) {
-
-With SP at appropriate places, i.e. " && 0 <= pos".
-
-Thanks.
+diff --git c/dir.c w/dir.c
+index a7469df3ac..635d1b058c 100644
+--- c/dir.c
++++ w/dir.c
+@@ -374,7 +374,7 @@ static int match_pathspec_item(struct index_state *istate,
+ 		return 0;
+ 
+ 	if (item->attr_match_nr &&
+-	    !match_pathspec_attrs(istate, name, namelen, item))
++	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
+ 		return 0;
+ 
+ 	/* If the match was just the prefix, we matched */
