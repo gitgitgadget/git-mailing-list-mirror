@@ -2,106 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA81EB64DA
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 05:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE100EB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 07:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231216AbjGHFss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jul 2023 01:48:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48250 "EHLO
+        id S229817AbjGHHQZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jul 2023 03:16:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbjGHFsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2023 01:48:43 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A553C1BEE
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 22:48:41 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF65419C3C7;
-        Sat,  8 Jul 2023 01:48:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LqlekdtAEDv8MMK47M74M0wjSoz/VFI+CdTzT9
-        y0mSg=; b=kLxTnEV+HkRXd3wEgfil0pN5DbY4sb5M+uYN/EtMlLca+ASup2hm7t
-        dwXXUFxOe8kXtXRpisCqHvWY+zHXqjHTNYaWIGingMg3sbxQvR3R/Q+C1XtbvF7e
-        Q59fkzlGnqdemYTPxLo+5FTrN5sTw91cnt4GgxMAvNQfbzaxhBxTE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D6A1A19C3C6;
-        Sat,  8 Jul 2023 01:48:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3CCC519C3C5;
-        Sat,  8 Jul 2023 01:48:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 4/5] SubmittingPatches: remove confusing guidance about
- base branches
-References: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
-        <55bed55cb8859ac7b5b4f464232258f410b4d202.1688778359.git.gitgitgadget@gmail.com>
-Date:   Fri, 07 Jul 2023 22:48:39 -0700
-In-Reply-To: <55bed55cb8859ac7b5b4f464232258f410b4d202.1688778359.git.gitgitgadget@gmail.com>
-        (Linus Arver via GitGitGadget's message of "Sat, 08 Jul 2023 01:05:58
-        +0000")
-Message-ID: <xmqqa5w76jig.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229458AbjGHHQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2023 03:16:24 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DC31FF6
+        for <git@vger.kernel.org>; Sat,  8 Jul 2023 00:16:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1688800575; x=1689405375; i=l.s.r@web.de;
+ bh=eLZs3Ac5QZsRLq2NHIDVMw3gy4nOEf9LlVxzqlMCojE=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=oBL7dWgCsuKYX5vCE/JBMj3X8n62IzLvf4/ySSUIEw6kMvK7T09tYQZ67rInCnok/UQOj+c
+ hnuMSNJDPbgGY7fWfKPDA4FloEwTN0/XORlThnjta6c+eZKi9PjU7PZi6uccnmLT7eZmsmyyl
+ JddLIWzMtMq27LwVIf+dfouvJKKYGQgHJwWEuh+JPWmHXESRKgeAaAXG8CpoL/+LnW9GAuO6e
+ kqj65UJN73JmoVm0nOhd600FjcUY+vOxMbZ00/GrOg1ZZGuCd4mJIigVyq2N0d+hvWKwzwDpO
+ XLfzJJVhogNZuiF8NVSfPWuafpMadVWmroOFL+FXTNFN+0Lg9V+Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.158.134]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MbTGt-1pgUQp44lt-00bhsd; Sat, 08
+ Jul 2023 09:16:15 +0200
+Message-ID: <f592e7c9-2a73-41f3-02a5-d77b7be574f1@web.de>
+Date:   Sat, 8 Jul 2023 09:16:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 17225A70-1D53-11EE-A4E2-307A8E0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: Re: [PATCH 2/2] dir: do not feed path suffix to pathspec match
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Matthew Hughes <mhughes@uw.co.uk>
+References: <20230707220457.3655121-1-gitster@pobox.com>
+ <20230707220457.3655121-3-gitster@pobox.com>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20230707220457.3655121-3-gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:O/zw3kVO+xWRjylbsxa5qJLbsPQPuSZ3wWwKJ2rtNohxZcnWlx5
+ kFyVbIwV4wQQbBNnKZNmRaXVJevd/NBDd5I4hpHMUwTG9iAymJKhDwAb66W5nEcHrIYn7/f
+ cDestUIxR56iEZkcyuDdr414XJpZ+aK83/xiaoAwHI/sxMEBY1EDizuigzEVhwhF5wyJu1v
+ U0H5Ln4fHn3tuywg+xuYA==
+UI-OutboundReport: notjunk:1;M01:P0:HSw8XMvYTEw=;pa+RqS6uFoYJS/e6t2h5QQVjFRZ
+ 8S14XPr5SVel76tkOdOojAj6r0sy84fXZiGDEoEGTycXznSYypQkxwV0fGTg5ibtdh5yyarVS
+ decs8AfMVDfJB1yYaXsTlzl1FjosnY+/ZZJ7jrNF7wllwcLXYcXxm0euzxdCTHSdEhyfL6zEX
+ VLRvnR1E0rPdWqLomDZLB3P8vY43FeUo4/MLRhszoXPNPR3NTshCI9hzkAImY9h4e0qWQCL66
+ 7pY3to19CAL32BYqFnpvPNWSdE0uxRgIpaBOO13M+41IcbVXw0OcZeYswSRfbJRyvUtCAPYEf
+ sobH07dR2tYIV2H031crZ2usYwxgap7ZvATsVj6CsT/vCkfSUFlojxWgWGgsGeQvAVY3T1oTt
+ vFp+NoB7rjBH28ADFf315Y0Y5jwovvCvNCKnj3BiTh6DyBsLCOKOFTOP0OulLGb+6AvJlDheT
+ cZgeUA9XE0iVH5m8cDVAY+P4HI78Ui7xYxA+ATiGAvAD51n+BEATj4e4D4QWg+ZxjCaKY+2JP
+ b0QBQdNdcvunJC8EdIoVEYegqlWK9WaWZcCjUdvApxXK1/4E4QOKzL/OUh5tEh1LxH01mPInm
+ E7ud7CvnBEXovsI2eI2X/wxLnPdO9yi8LgV3wMF6Sg4j5XAzenuWNtJmFFYtsKvSoG/zUa/6u
+ XLRH3CxUbGkimFZ0edtMl271Y3hM1cROvJ9qfadRPKl1dzrOKcMCPEn7JXjzYcErfLvTtqo6l
+ g50+4xzdC0MZpWVWV02KOVSijVdKi8QrhVAbFe0Gu8G7awyKUiIXbXQ1DWq6sTiUcGF7o8ICc
+ 9PXzPCILxSYeqEKs0TWoM0/NjfwoDWggtKksjWbFAfij+YZSqto53PHquz8ACZoYXpvJC+PJA
+ G6hMuG/TdwJV7GpLWtSVqSjgjkkJEnTuu3dpidyGipj15Va5YNjMHYjhrVFOPt3ZX+NuBg/v1
+ 8VLA8g+fddvfYRqxha/9PGBefIA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Am 08.07.23 um 00:04 schrieb Junio C Hamano:
+> diff --git a/dir.c b/dir.c
+> index 3acac7beb1..6116022ae6 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -488,9 +476,6 @@ static int do_match_pathspec(struct index_state *ist=
+ate,
+>  			return 0;
+>  	}
+>
+> -	name +=3D prefix;
+> -	namelen -=3D prefix;
+> -
+>  	for (i =3D ps->nr - 1; i >=3D 0; i--) {
+>  		int how;
+>
+> @@ -506,8 +491,8 @@ static int do_match_pathspec(struct index_state *ist=
+ate,
+>  		 */
+>  		if (seen && ps->items[i].magic & PATHSPEC_EXCLUDE)
+>  			seen[i] =3D MATCHED_FNMATCH;
+> -		how =3D match_pathspec_item(istate, ps->items+i, prefix, name,
+> -					  namelen, flags);
+> +		how =3D match_pathspec_item(istate, ps->items+i,
+> +					  name, namelen, flags);
 
-> For these reasons, remove the guidance _without_ preserving the meaning
-> of the underlying principle, and instead add an overview of the four
-> named branches.
+With that, the parameter "prefix" of do_match_pathspec() becomes unused
+and can be removed.  This cascades to match_pathspec_with_flags(),
+match_pathspec(), dir_path_match() and builtin/add.c::prune_directory(),
+and fill_directory() can lose its return value.
 
-Meaning that this rewrites the guidance and changes the meaning of
-the underlying principle?
+The code continues here like this, though:
 
-> -In general, always base your work on the oldest branch that your
-> -change is relevant to.
-> +The following branches are the typical starting points for new work:
-> +
-> +* maint
-> +* master
-> +* next
-> +* seen
-> +
-> +These branches are explained in detail in linkgit:gitworkflows[7].
-> +Choose the appropriate branch depending on the following scenarios:
+                if (ps->recursive &&
+                    (ps->magic & PATHSPEC_MAXDEPTH) &&
+                    ps->max_depth !=3D -1 &&
+                    how && how !=3D MATCHED_FNMATCH) {
+                        int len =3D ps->items[i].len;
+                        if (name[len] =3D=3D '/')
+                                len++;
+                        if (within_depth(name+len, namelen-len, 0, ps->max=
+_depth))
+                                how =3D MATCHED_EXACTLY;
+                        else
+                                how =3D 0;
+                }
 
-Please never suggest to build anything on 'next' or 'seen'.  They
-are inappropriate to base your work on, if your topic wants to have
-a realistic chance to graduate to 'master'.
+And "name" here would be affected by "prefix" no longer being added.
+Does it fix or break --max-depth?  I think neither: builtin/grep.c --
+the only user of PATHSPEC_MAXDEPTH AFAICS -- passes a prefix of 0.
 
-If you are making tree-wide changes, while somebody else is also
-making another tree-wide changes, your topic may have severe overlap
-with the other person's topic.  In which case, you may be tempted to
-build on 'next' that has the other person's topic, but doing so would
-mean you'll not just depend on the other topic, but with all the
-other topics that are already in 'next'.
+Ren=C3=A9
 
-That would make the basic choices simpler.
-
- * If you are fixing bugs in the released version, build on 'maint'
-   (which may mean you have to fix things without using new API
-   features on the cutting edge that recently appeared in 'master'
-   but were not available in the released version).
-
- * If you are adding new features, build on 'master'.
-
-Under exceptional circumstances that you need to depend on a
-selected few topics that are already in 'next' but not in 'master',
-you may want to fork your base-branch from 'master', merge these
-selected few topics to it, and call that your base-branch (which
-nobody else has).  And then you build on top of it.  When sending
-patches out, because your synthetic base-branch is something only
-you have, you'd need to communicate how you created it in your cover
-letter to allow others to recreate it.
-
-Thanks.
