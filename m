@@ -2,179 +2,328 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F06ECEB64DA
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 12:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14AEBEB64DC
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 12:09:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbjGHMJp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jul 2023 08:09:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60970 "EHLO
+        id S230027AbjGHMJh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jul 2023 08:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbjGHMJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2023 08:09:44 -0400
-Received: from outgoing.fripost.org (giraff.fripost.org [193.234.15.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1509E1BD2
-        for <git@vger.kernel.org>; Sat,  8 Jul 2023 05:09:41 -0700 (PDT)
+        with ESMTP id S229483AbjGHMJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2023 08:09:36 -0400
+Received: from outgoing.fripost.org (giraff.fripost.org [IPv6:2a00:1c20:4089:126c:300f:e2a1:9840:5351])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98CA8C5
+        for <git@vger.kernel.org>; Sat,  8 Jul 2023 05:09:33 -0700 (PDT)
 Received: from localhost (localhost [127.0.0.1])
-        by outgoing.fripost.org (Postfix) with ESMTP id 7E6252ACD886;
-        Sat,  8 Jul 2023 14:09:39 +0200 (CEST)
+        by outgoing.fripost.org (Postfix) with ESMTP id D05962ACD880;
+        Sat,  8 Jul 2023 14:09:31 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x.fripost.org; h=
         content-transfer-encoding:content-type:content-type:in-reply-to
         :content-language:references:subject:subject:from:from
         :user-agent:mime-version:date:date:message-id; s=
-        9df9cdc7e101629b5003b587945afa70; t=1688818179; x=1690632580;
-         bh=sqqbQtR+1uQ0GfO0cCJ/2Pf0ygUU15bgB7kmxzVvhmU=; b=XoX7Kx31e0qN
-        ogpmu2xj15e8m8wX8qgprU/6pgl/cabLQtlH03g3Acw7/lbiS1l8VLDlWlezQF8f
-        Rpe+yCCldhwuktErm3v6on76BXPOZqOSCT2hwFRtdFKH61tV3Why+EA3v3TX7e+G
-        Vrwswr4km1HTWz2AjT3bV5lwCdGkfJDfHt0ddfqRkVlGnZbJTJNImctSCAlCVF3X
-        Gmd6+vOWu/7vx3HIjoMtQt5RPGplwFGkO8qqKHddL3+r7gOv3CjMu+Fa6bcZmPBm
-        CUKRQvoD1npv7m7ph9/tik3y2wI/0PsKp6/ngSCrJi+0MpIoyqBFxDEBuAuSFnCs
-        xMZA8OOLcw==
+        9df9cdc7e101629b5003b587945afa70; t=1688818171; x=1690632572;
+         bh=60bvLQvtJlz5ibbUMfnuXP2RUAY2pNVVWrE79ZKr7T8=; b=uZyQb5PI2XdN
+        nLjhGz0s/OY5mEs6h67oZYKS0SsAYJqLrhhMvnCjOU1UhMBnl6oTvuMHcOJgpalE
+        uIYax0tLlm2kOKoe03vT3jqqHIKiLDMAi/3+Wa8BOOqVgYrWJcpzZr8vH5vsWXnF
+        fIwE016KqI6VyhoGcdAdHJi2VxmteN9PTS5jygZUQTjRqsZqaOlqAYnQ6jZwMD9w
+        b3mIGVHVQvPnMamWIYsHuYQfz3a/w7jGhlPOyUeOwJcdPQhIATzHUtvU1a/EYlSe
+        PuXE58Dm+4zXDKfHZkUWtUk15CJ6TCH49C4Zmw0JvzErf2Nr+DUuhod6wXEA0ovH
+        s8c1iyo/Sw==
 X-Virus-Scanned: Debian amavisd-new at fripost.org
 Received: from outgoing.fripost.org ([127.0.0.1])
         by localhost (giraff.fripost.org [127.0.0.1]) (amavisd-new, port 10040)
-        with LMTP id BmF4mOgbiehn; Sat,  8 Jul 2023 14:09:39 +0200 (CEST)
+        with LMTP id BqK4msfU5PIE; Sat,  8 Jul 2023 14:09:31 +0200 (CEST)
 Received: from smtp.fripost.org (unknown [172.16.0.6])
-        by outgoing.fripost.org (Postfix) with ESMTP id 5F9DA2ACD881;
-        Sat,  8 Jul 2023 14:09:39 +0200 (CEST)
+        by outgoing.fripost.org (Postfix) with ESMTP id A907C2ACD87B;
+        Sat,  8 Jul 2023 14:09:31 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        by smtp.fripost.org (Postfix) with ESMTPSA id 3DC5D965C261;
-        Sat,  8 Jul 2023 14:09:39 +0200 (CEST)
-Message-ID: <b70d1804-7f6a-d688-028b-abd8f9307240@lidestrom.se>
-Date:   Sat, 8 Jul 2023 14:09:39 +0200
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        by smtp.fripost.org (Postfix) with ESMTPSA id 2B840965C25D;
+        Sat,  8 Jul 2023 14:09:30 +0200 (CEST)
+Message-ID: <a56a2c80-e28c-1445-c863-039d3ad82da8@lidestrom.se>
+Date:   Sat, 8 Jul 2023 14:09:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
 From:   =?UTF-8?Q?Jens_Lidestr=c3=b6m?= <jens@lidestrom.se>
-Subject: Re: [PATCH v2 07/10] gitk: add keyboard bind for cherry-pick command
+Subject: Re: [PATCH v2 05/10] gitk: add keyboard bind for checkout command
 To:     Johannes Sixt <j6t@kdbg.org>
 Cc:     "Paul Mackerras [ ]" <paulus@ozlabs.org>, git@vger.kernel.org,
         Jens Lidestrom via GitGitGadget <gitgitgadget@gmail.com>
 References: <pull.1551.git.1687876884.gitgitgadget@gmail.com>
  <pull.1551.v2.git.1688409958.gitgitgadget@gmail.com>
- <54afa8fe9e831f5381d045bc24464ff2d6246118.1688409958.git.gitgitgadget@gmail.com>
- <3d3dd74a-aed3-b2cf-1be3-8a14129e3f4a@kdbg.org>
+ <aaca07db597d9eb870f3253887d30b3b38a9ea0c.1688409958.git.gitgitgadget@gmail.com>
+ <dc76bbf3-cf35-4e7b-bed5-2de9c13eee37@kdbg.org>
 Content-Language: en-GB
-In-Reply-To: <3d3dd74a-aed3-b2cf-1be3-8a14129e3f4a@kdbg.org>
+In-Reply-To: <dc76bbf3-cf35-4e7b-bed5-2de9c13eee37@kdbg.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> +        {mc "Create new branch" command {mkbranch $rowmenuid}}
->> +        {mc "Cherry-pick this commit" command {cherrypick $rowmenuid}}
+> There is already a branch selection dialog (hit F2 to bring it up).
+> Could you please have a look whether it can be reused here? Because...
+
+Ah, I didn't consider that! I'll investigate using something similar.
+
+> At a minimum, there should be a confirmation when a
+> transition from a branch to a detached head happens
+
+That sounds like a good idea to me too, will fix.
+
+> I find it irritating that it is possible to check out a detached head
+> with Ctrl-O, but not via the context menu.
 > 
-> The change regarding Create new branch is not related to this commit's
-> topic and should be elsewhere.
+> ...
+>
+> I propose that you do not include the ability to check out a detached
+> head in this commit, but make it a new feature once this series has settled.
 
-Sorry, sloppy mistake, will fix, thanks.
+I agree that the asymmetry between the keyboard bind and the context menu is somewhat unfortunate. But I also think that there is a pretty good justification it, and because of this I'd like to keep the feature in this PR.
 
->> +    if {! [info exists headids($mainhead)]} {
->> +        error_popup [mc "Cannot cherry-pick to a detached head"]
->> +        return
->> +    }
+The row context menu has a bit too many entries already, to the point where it is a bit hard to use. We really only what to put the most important or commonly used commands here. This is an inherit limitation for GUI menus: the screen real estate is limited. So there is a valid reason not to include the Checkout command.
+
+For keyboard binds however these is no such screen real-estate issue. On the contrary: For keyboard binds it is an artificial asymmetry without any technical justification to NOT be able to checkout the commit of a selected row.
+
+Apart from this it will unfortunately be hard for me to take the time to create a separate PR.
+
+Do you accept this motivation for having the "checkout detached head" feature stay in this PR?
+
+> I find it irritating that it is possible to check out a detached head
+> with Ctrl-O, but not via the context menu.
 > 
-> Why is it necessary to forbid this now? It was not forbidden before.
+> Playing around a bit with this feature, it may be a bit too easy to
+> check out a different commit with a simple key press and without
+> confirmation. At a minimum, there should be a confirmation when a
+> transition from a branch to a detached head happens, because otherwise
+> inexperienced users end up in inconvenient territories.
+> 
+> I propose that you do not include the ability to check out a detached
+> head in this commit, but make it a new feature once this series has settled.
 
-Oh, I had no idea you can actually cherry-pick to a detached head! When a added this check I though I fixed an existing bug, which only manifested if the user had checked out a detached head using the terminal and then used cherry-pick in gitk. I now see that it is not an error.
 
-I have mixed feelings about allowing this, but it's probably best to not invent artificial limitations in gitk, so I'll remove the check.
-
-/Jens
-
-On 2023-07-05 22:07, Johannes Sixt wrote:
+On 2023-07-05 19:29, Johannes Sixt wrote:
 > Am 03.07.23 um 20:45 schrieb Jens Lidestrom via GitGitGadget:
 >> From: Jens Lidestrom <jens@lidestrom.se>
 >>
+>> This also introduces the ability to check out detatched heads. This
+>> shouldn't result any problems, because gitk already works with
+>> detatched heads if they are checked out using the terminal.
+> 
+> I find it irritating that it is possible to check out a detached head
+> with Ctrl-O, but not via the context menu.
+> 
+> Playing around a bit with this feature, it may be a bit too easy to
+> check out a different commit with a simple key press and without
+> confirmation. At a minimum, there should be a confirmation when a
+> transition from a branch to a detached head happens, because otherwise
+> inexperienced users end up in inconvenient territories.
+> 
+> I propose that you do not include the ability to check out a detached
+> head in this commit, but make it a new feature once this series has settled.
+> 
+>>
 >> Signed-off-by: Jens Lidestrom <jens@lidestrom.se>
 >> ---
->>  gitk-git/gitk | 23 +++++++++++++++--------
->>  1 file changed, 15 insertions(+), 8 deletions(-)
+>>  gitk-git/gitk | 125 +++++++++++++++++++++++++++++++++++++++-----------
+>>  1 file changed, 98 insertions(+), 27 deletions(-)
 >>
 >> diff --git a/gitk-git/gitk b/gitk-git/gitk
->> index 65ca11becca..351b88f10c0 100755
+>> index 642cd7f652a..8364033ad58 100755
 >> --- a/gitk-git/gitk
 >> +++ b/gitk-git/gitk
->> @@ -2690,6 +2690,7 @@ proc makewindow {} {
->>      bind $ctext $ctxbut {pop_diff_menu %W %X %Y %x %y}
+>> @@ -2691,6 +2691,7 @@ proc makewindow {} {
 >>      bind $ctext <Button-1> {focus %W}
 >>      bind $ctext <<Selection>> rehighlight_search_results
->> +    bind . <$M1B-p> {cherrypick [selected_line_id]}
 >>      bind . <$M1B-t> {resethead [selected_line_id]}
->>      bind . <$M1B-o> {checkout [selected_line_heads] [selected_line_id]}
->>      bind . <$M1B-m> {rmbranch [selected_line_heads] [selected_line_id] 1}
->> @@ -2710,8 +2711,8 @@ proc makewindow {} {
->>          {mc "Create tag" command mktag}
->>          {mc "Copy commit reference" command copyreference}
->>          {mc "Write commit to file" command writecommit}
->> -        {mc "Create new branch" command mkbranch}
->> -        {mc "Cherry-pick this commit" command cherrypick}
->> +        {mc "Create new branch" command {mkbranch $rowmenuid}}
->> +        {mc "Cherry-pick this commit" command {cherrypick $rowmenuid}}
-> 
-> The change regarding Create new branch is not related to this commit's
-> topic and should be elsewhere.
-> 
->>          {mc "Reset current branch to here" command {resethead $rowmenuid}}
->>          {mc "Mark this commit" command markhere}
->>          {mc "Return to mark" command gotomark}
->> @@ -3186,6 +3187,7 @@ proc keys {} {
+>> +    bind . <$M1B-o> {checkout [selected_line_heads] [selected_line_id]}
+>>      for {set i 1} {$i < 10} {incr i} {
+>>          bind . <$M1B-Key-$i> [list go_to_parent $i]
+>>      }
+>> @@ -2732,7 +2733,7 @@ proc makewindow {} {
+>>  
+>>      set headctxmenu .headctxmenu
+>>      makemenu $headctxmenu {
+>> -        {mc "Check out this branch" command cobranch}
+>> +        {mc "Check out this branch" command {checkout [list $headmenuhead] $headmenuid}}
+>>          {mc "Rename this branch" command mvbranch}
+>>          {mc "Remove this branch" command rmbranch}
+>>          {mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
+>> @@ -3183,6 +3184,7 @@ proc keys {} {
 >>  [mc "<%s-minus>	Decrease font size" $M1T]
 >>  [mc "<F5>		Update"]
 >>  [mc "<%s-T>		Reset current branch to selected commit" $M1T]
->> +[mc "<%s-P>		Cherry-pick selected commit to current branch" $M1T]
->>  [mc "<%s-O>		Check out selected commit" $M1T]
->>  [mc "<%s-B>		Create branch on selected commit" $M1T]
->>  [mc "<%s-M>		Remove selected branch" $M1T]
->> @@ -9758,24 +9760,29 @@ proc exec_citool {tool_args {baseid {}}} {
->>      array set env $save_env
+>> +[mc "<%s-O>		Check out selected commit" $M1T]
+>>  " \
+>>              -justify left -bg $bgcolor -border 2 -relief groove
+>>      pack $w.m -side top -fill both -padx 2 -pady 2
+>> @@ -9978,25 +9980,93 @@ proc headmenu {x y id head} {
+>>      tk_popup $headctxmenu $x $y
 >>  }
 >>  
->> -proc cherrypick {} {
->> -    global rowmenuid curview
->> +proc cherrypick {id} {
->> +    global curview headids
->>      global mainhead mainheadid
->>      global gitdir
+>> -proc cobranch {} {
+>> -    global headmenuid headmenuhead headids
+>> +proc checkout {heads_on_commit id_to_checkout} {
+>> +    global headids mainhead
+>>      global showlocalchanges
+>> +    global sel_ix confirm_ok NS
 >>  
->> +    if {! [info exists headids($mainhead)]} {
->> +        error_popup [mc "Cannot cherry-pick to a detached head"]
+>>      # check the tree is clean first??
+>> -    set newhead $headmenuhead
+>> +
+>> +    # Filter out remote branches if local branch is also present
+>> +    foreach remote_ix [lsearch -all $heads_on_commit "remotes/*"] {
+>> +        set remote_head [lindex $heads_on_commit $remote_ix]
+>> +        set local_head [string range $remote_head [expr [string last / $remote_head] + 1] end]
+>> +        if {$local_head in $heads_on_commit} {
+>> +            set heads_on_commit [lreplace $heads_on_commit $remote_ix $remote_ix]
+>> +        }
+>> +    }
+>> +
+>> +    if {[llength $heads_on_commit] == 1 && [lindex $heads_on_commit 0] eq $mainhead} {
+>> +        # Only the currently active branch
 >> +        return
 >> +    }
-> 
-> Why is it necessary to forbid this now? It was not forbidden before.
-> 
 >> +
->>      set oldhead [exec git rev-parse HEAD]
->> -    set dheads [descheads $rowmenuid]
->> +    set dheads [descheads $id]
->>      if {$dheads ne {} && [lsearch -exact $dheads $oldhead] >= 0} {
->>          set ok [confirm_popup [mc "Commit %s is already\
->>                  included in branch %s -- really re-apply it?" \
->> -                                   [string range $rowmenuid 0 7] $mainhead]]
->> +                                   [string range $id 0 7] $mainhead]]
->>          if {!$ok} return
->>      }
->>      nowbusy cherrypick [mc "Cherry-picking"]
->>      update
->>      # Unfortunately git-cherry-pick writes stuff to stderr even when
->>      # no error occurs, and exec takes that as an indication of error...
->> -    if {[catch {exec sh -c "git cherry-pick -r $rowmenuid 2>&1"} err]} {
->> +    if {[catch {exec sh -c "git cherry-pick -r $id 2>&1"} err]} {
->>          notbusy cherrypick
->>          if {[regexp -line \
->>                   {Entry '(.*)' (would be overwritten by merge|not uptodate)} \
->> @@ -9791,7 +9798,7 @@ proc cherrypick {} {
->>                          resolve it?"]]} {
->>                  # Force citool to read MERGE_MSG
->>                  file delete [file join $gitdir "GITGUI_MSG"]
->> -                exec_citool {} $rowmenuid
->> +                exec_citool {} $id
->>              }
->>          } else {
->>              error_popup $err
+>> +    # Filter out mainhead
+>> +    set mainhead_ix [lsearch $heads_on_commit $mainhead]
+>> +    if {$mainhead_ix != -1} {
+>> +        set heads_on_commit [lreplace $heads_on_commit $mainhead_ix $mainhead_ix]
+>> +    }
+>> +    set nr_heads_on_commit [llength $heads_on_commit]
+>> +
+>> +    # The number of heads on the commit determines how to select what to checkout
+>> +    if {$nr_heads_on_commit == 0} {
+>> +        set head_to_checkout ""
+>> +        set ref_to_checkout $id_to_checkout
+>> +    } elseif {$nr_heads_on_commit == 1} {
+>> +        set head_to_checkout [lindex $heads_on_commit 0]
+>> +        set ref_to_checkout $head_to_checkout
+>> +    } else {
+>> +        # Branch selection dialog
+>> +
+>> +        set confirm_ok 0
+>> +
+>> +        set w ".selectbranch"
+>> +        ttk_toplevel $w
+>> +        make_transient $w .
+>> +        wm title $w [mc "Check out branch"]
 > 
+> There is already a branch selection dialog (hit F2 to bring it up).
+> Could you please have a look whether it can be reused here? Because...
+> 
+>> +        ${NS}::label $w.m -text [mc "Check out which branch?"]
+>> +        pack $w.m -side top -fill x -padx 20 -pady 20
+>> +        ${NS}::frame $w.f
+>> +
+>> +        set sel_ix 0
+>> +        for {set i 0} {$i < $nr_heads_on_commit} {incr i} {
+>> +            ${NS}::radiobutton $w.f.id_$i -value $i -variable sel_ix \
+>> +                -text [lindex $heads_on_commit $i]
+> 
+> ... presenting a list of items in the form of radio buttons is a very
+> non-standard user-interface, IMO. I would have expected a list widget in
+> which an entry is highlighted. Also, if the list is long, a list would
+> have a scroll bar, but a radio button group is limited to the available
+> screen height.
+> 
+>> +            bind $w.f.id_$i <Key-Up> "set sel_ix [expr ($i - 1) % $nr_heads_on_commit]"
+>> +            bind $w.f.id_$i <Key-Down> "set sel_ix [expr ($i + 1) % $nr_heads_on_commit]"
+>> +            grid $w.f.id_$i -sticky w -padx 20
+>> +        }
+>> +
+>> +        pack $w.f -side top -fill x -padx 4
+>> +        ${NS}::button $w.ok -text [mc OK] -command "set confirm_ok 1; destroy $w"
+>> +        bind $w <Key-Return> "set confirm_ok 1; destroy $w"
+>> +        pack $w.ok -side left -fill x -padx 20 -pady 20
+>> +        ${NS}::button $w.cancel -text [mc Cancel] -command "destroy $w"
+>> +        bind $w <Key-Escape> [list destroy $w]
+>> +        pack $w.cancel -side right -fill x -padx 20 -pady 20
+>> +        bind $w <Visibility> "grab $w; focus $w.f.id_$sel_ix"
+>> +
+>> +        tkwait window $w
+>> +
+>> +        if {!$confirm_ok} return
+>> +
+>> +        set head_to_checkout [lindex $heads_on_commit $sel_ix]
+>> +        set ref_to_checkout $head_to_checkout
+>> +    }
+>> +
+>> +    # Handle remote branches
+>>      set command [list | git checkout]
+>> -    if {[string match "remotes/*" $newhead]} {
+>> -        set remote $newhead
+>> -        set newhead [string range $newhead [expr [string last / $newhead] + 1] end]
+>> -        # The following check is redundant - the menu option should
+>> -        # be disabled to begin with...
+>> -        if {[info exists headids($newhead)]} {
+>> -            error_popup [mc "A local branch named %s exists already" $newhead]
+>> +    if {[string match "remotes/*" $head_to_checkout]} {
+>> +        set remote $head_to_checkout
+>> +        set head_to_checkout [string range $head_to_checkout [expr [string last / $head_to_checkout] + 1] end]
+>> +        set ref_to_checkout $head_to_checkout
+>> +        if {[info exists headids($head_to_checkout)]} {
+>> +            error_popup [mc "A local branch named %s exists already" $head_to_checkout]
+>>              return
+>>          }
+>> -        lappend command -b $newhead --track $remote
+>> +        lappend command -b $head_to_checkout --track $remote
+>>      } else {
+>> -        lappend command $newhead
+>> +        lappend command $ref_to_checkout
+>>      }
+>>      lappend command 2>@1
+>>      nowbusy checkout [mc "Checking out"]
+>> @@ -10011,11 +10081,11 @@ proc cobranch {} {
+>>              dodiffindex
+>>          }
+>>      } else {
+>> -        filerun $fd [list readcheckoutstat $fd $newhead $headmenuid]
+>> +        filerun $fd [list readcheckoutstat $fd $head_to_checkout $ref_to_checkout $id_to_checkout]
+>>      }
+>>  }
+>>  
+>> -proc readcheckoutstat {fd newhead newheadid} {
+>> +proc readcheckoutstat {fd head_to_checkout ref_to_checkout id_to_checkout} {
+>>      global mainhead mainheadid headids idheads showlocalchanges progresscoords
+>>      global viewmainheadid curview
+>>  
+>> @@ -10033,18 +10103,19 @@ proc readcheckoutstat {fd newhead newheadid} {
+>>          error_popup $err
+>>          return
+>>      }
+>> -    set oldmainid $mainheadid
+>> -    if {! [info exists headids($newhead)]} {
+>> -        set headids($newhead) $newheadid
+>> -        lappend idheads($newheadid) $newhead
+>> -        addedhead $newheadid $newhead
+>> -    }
+>> -    set mainhead $newhead
+>> -    set mainheadid $newheadid
+>> -    set viewmainheadid($curview) $newheadid
+>> -    redrawtags $oldmainid
+>> -    redrawtags $newheadid
+>> -    selbyid $newheadid
+>> +    set old_main_id $mainheadid
+>> +
+>> +    if {$head_to_checkout ne "" && ! [info exists headids($head_to_checkout)]} {
+>> +        set headids($head_to_checkout) $id_to_checkout
+>> +        lappend idheads($id_to_checkout) $head_to_checkout
+>> +        addedhead $id_to_checkout $head_to_checkout
+>> +    }
+>> +    set mainhead $ref_to_checkout
+>> +    set mainheadid $id_to_checkout
+>> +    set viewmainheadid($curview) $id_to_checkout
+>> +    redrawtags $old_main_id
+>> +    redrawtags $id_to_checkout
+>> +    selbyid $id_to_checkout
+>>      if {$showlocalchanges} {
+>>          dodiffindex
+>>      }
+> 
+
+
 
 
