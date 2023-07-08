@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C4BC001B0
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 01:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F83CEB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 01:06:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232889AbjGHBGR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 21:06:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58666 "EHLO
+        id S232934AbjGHBGS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 21:06:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232785AbjGHBGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:06:08 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67242211F
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 18:06:07 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-313f1085ac2so2505974f8f.1
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 18:06:07 -0700 (PDT)
+        with ESMTP id S232878AbjGHBGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 21:06:09 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F3F212D
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 18:06:08 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fbc1218262so27960145e9.3
+        for <git@vger.kernel.org>; Fri, 07 Jul 2023 18:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688778365; x=1691370365;
+        d=gmail.com; s=20221208; t=1688778366; x=1691370366;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t3tcYGWRrZtBYKlxazEkyD18OsVucbvfLwSwQMVbCPs=;
-        b=A/tKLlMVuSen5XKghydLrgH5YOYjxpfOnmJM/VXlbbmY86kT9VwTDHIS1oRvNEDH7O
-         v7kB2yB2ba+xmko6qfqdi0ffkoATb3NElnxpi7i/khNV2UYxQOe9kmT3iMtLQC9GEPFR
-         3Jj45sYWjCfNYY8y3eCWG+u+IqgmiHdwqKlod8jRRWIpPH9tKVMUygi2NAB25RHZ1Ez3
-         xOOE0SlYzGTnmnWOUDa4BjcSWVc8C/DAdVrPzNt1IpXlp3xDu6uKY+sLSMpurecic8Zr
-         SYi5Gob7jG2TCyT+rZ47UPEC2/szeHp0yrOQDfbhMXtyedLWGVaazpR+G1QfAsLPrbFM
-         Ov+w==
+        bh=8kAShDloEwZOOctxV4C0zs/HnE4QRhndj0mHCwQnrCM=;
+        b=dVGv8zG7eQoThM98sfmIsLrTLaZnWdyfMjAV6TkJ1jEsabnsTTHcCJixhRpWZ6txC+
+         hdt6Kx4NJ7M52tQyC8PlYhOd3GJDou1a8HYqGwfuz3a18ZnFDnbI2ghl2aucd+DKMTjw
+         mns8pZi133Ih6EfiSp08Wt94BQwThT0bJPx6325jHq0bcDFbbowv91xV6HPYJkK+4G+l
+         L9xwpIo32tZds8KKAj1EbnRiEXfvbbVn6I/mpYbJw2X7ICaj0aMbRmWfUdZqB4Vr+NZ8
+         JOBWSTdjBKxbw4QYqMkgHGt0bdrtxl7hzyFedAqdODexssxoUVcYxJrRUAlGxWb2x1bJ
+         JPTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688778365; x=1691370365;
+        d=1e100.net; s=20221208; t=1688778366; x=1691370366;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=t3tcYGWRrZtBYKlxazEkyD18OsVucbvfLwSwQMVbCPs=;
-        b=JBKrS2YmKhQAZ9wrMgEFBPg0+/UPFDUe4kFUQUCEAEEQBPayzQk7yHUWRTLr545Ivl
-         uMZdMihjGO9ojO0OXoCizJ4939T6bqS4Y7UJFfGgBLNKKOHfkpBrADUCOwnn06hmGrP8
-         bMlh8BYTjCbKj2ttnWdcJ+kdgVHlzMpqnExNNx0A6mk03VdCWGqxg2YGCxnRKtCkdgTM
-         Un0KgeIslRI0boNeX1+WwugjFMczZhVALyoqTVeQ4LQ70e273dQ8O2PvFFRCqq8I4mYA
-         3EwQrZRkfZxb7a69hfRN9pyIytNGsYXmdubNcRBjSlNnxdUJK0prs0SvXwhwFvYmLnb1
-         r4Gw==
-X-Gm-Message-State: ABy/qLalmxrJ6hbGip6FaRGMgG0XoJlF+M1bw/I4/1poK37sgecEp0xZ
-        YHb67HyDiDwFJ0JsJapnEGOmLD43mRw=
-X-Google-Smtp-Source: APBJJlGflnYYJuNy6tHhtA9QssZsMwFRuUWtmKCpQwnnTiL0qwIHlP3uHH0g1zK3ZTmA/YkF7MZr6A==
-X-Received: by 2002:a5d:54d2:0:b0:313:f5f8:a331 with SMTP id x18-20020a5d54d2000000b00313f5f8a331mr4714529wrv.34.1688778365612;
-        Fri, 07 Jul 2023 18:06:05 -0700 (PDT)
+        bh=8kAShDloEwZOOctxV4C0zs/HnE4QRhndj0mHCwQnrCM=;
+        b=hWLfmzz/doaeV7K9MDn/aUVp35+TEJIGlf48BiNjzO7JIrPCQPF+XDi1UKc8vPsKAs
+         rXrCdc6+I8uDt4aEwRf/NUrZ7uQf8rwsy1eIm02kZ89YFcE8gVaPknl1JdW/H+fCTaRU
+         ghM1IdOEnwWEodduAckDj0tfB5NZpY9QlO447NTW1pkG2khxAibyeQQFeuNTTgt8xCND
+         8u0fFmNwX1B2jhH7QWjbsFgx+H17JFSdjCnYokOgXra2PxQLloT2vrSv+Ds1PFaxpCKG
+         e9JMvOmBcXNZEVzzzBm5mHhQMpECcJ64LGR657RxCEV7JVi9O/bJk0urr0FVeTx3sDbT
+         0LRw==
+X-Gm-Message-State: ABy/qLYSu2C2ql3CgTtLFasfuhAhDD9DaCiDTaFt0jFTcJSaxp9KgSs5
+        L63q8LUqdMU+HAU0jddntswx2iHi3Tg=
+X-Google-Smtp-Source: APBJJlEj77ysWd+ccbXeafRarCFvuiWgFl1Sc1A7QjSWo+75KniGksvuyBZysfvH/0peHZVPYHpyWQ==
+X-Received: by 2002:a7b:c389:0:b0:3fc:9f:e75c with SMTP id s9-20020a7bc389000000b003fc009fe75cmr2120035wmj.11.1688778366434;
+        Fri, 07 Jul 2023 18:06:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b18-20020adfe312000000b0031455482d1fsm4459156wrj.47.2023.07.07.18.06.04
+        by smtp.gmail.com with ESMTPSA id n20-20020a7bc5d4000000b003fa8dbb7b5dsm3773464wmk.25.2023.07.07.18.06.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:06:05 -0700 (PDT)
-Message-Id: <55bed55cb8859ac7b5b4f464232258f410b4d202.1688778359.git.gitgitgadget@gmail.com>
+        Fri, 07 Jul 2023 18:06:06 -0700 (PDT)
+Message-Id: <1db7a1be27fa51113dcb54013297cda7b6b441d7.1688778359.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
 References: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 Jul 2023 01:05:58 +0000
-Subject: [PATCH 4/5] SubmittingPatches: remove confusing guidance about base
- branches
+Date:   Sat, 08 Jul 2023 01:05:59 +0000
+Subject: [PATCH 5/5] SubmittingPatches: define topic branches
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,58 +67,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-The guidance to "base your work on the oldest branch that your change is
-relevant to" was added in d0c26f0f56 (SubmittingPatches: Add new section
-about what to base work on, 2010-04-19). That commit also added the
-bullet points which describe the scenarios where one would use one of
-"maint", "master", "next", and "seen" ("pu" in the original as that was
-the name of this branch before it was renamed, per 828197de8f (docs:
-adjust for the recent rename of `pu` to `seen`, 2020-06-25)).
-
-The underlying principle of this guidance was probably something like
-"base your work on the earlier-in-history branch so your change can be
-merged forward". However, this principle is already concretely explained
-in the accompanying bullet points. This principle should only come into
-play if none of the scenarios described in the bullet points apply ---
-and such a situation would be exceedingly rare.
-
-Also, the guidance's wording of using the "oldest" branch is confusing
-when read together with the rest of this section, because three of the
-four named branches discussed ("master", "next", and "seen") move
-frequently enough to not be considered "old" at all.
-
-For these reasons, remove the guidance _without_ preserving the meaning
-of the underlying principle, and instead add an overview of the four
-named branches.
-
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/SubmittingPatches | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 48918181f49..ef39808f568 100644
+index ef39808f568..6fb96e6537f 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -10,8 +10,15 @@ available which covers many of these same guidelines.
- [[base-branch]]
- === Decide which branch to base your work on.
+@@ -17,7 +17,12 @@ The following branches are the typical starting points for new work:
+ * next
+ * seen
  
--In general, always base your work on the oldest branch that your
--change is relevant to.
-+The following branches are the typical starting points for new work:
+-These branches are explained in detail in linkgit:gitworkflows[7].
++These branches are explained in detail in linkgit:gitworkflows[7]. There are
++also "topic" branches, which contain work from other contributors.  Topic
++branches are created by the Git maintainer (in their fork) to organize the
++current set of incoming contributions from the mailing list, and are enumerated
++in the regular "What's cooking in git.git" announcements.
 +
-+* maint
-+* master
-+* next
-+* seen
-+
-+These branches are explained in detail in linkgit:gitworkflows[7].
-+Choose the appropriate branch depending on the following scenarios:
+ Choose the appropriate branch depending on the following scenarios:
  
  * A bugfix should be based on `maint` in general. If the bug is not
-   present in `maint`, base it on `master`. For a bug that's not yet
 -- 
 gitgitgadget
-
