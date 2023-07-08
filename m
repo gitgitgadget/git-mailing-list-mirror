@@ -2,137 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D8D8EB64DA
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 08:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D021EB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 10:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229908AbjGHIvn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jul 2023 04:51:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40414 "EHLO
+        id S229913AbjGHK4Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jul 2023 06:56:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbjGHIvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2023 04:51:42 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81ACF123
-        for <git@vger.kernel.org>; Sat,  8 Jul 2023 01:51:41 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-570540d9777so2840587b3.1
-        for <git@vger.kernel.org>; Sat, 08 Jul 2023 01:51:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688806300; x=1691398300;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=GAGKkV3PdAJL83q6SWTDajpfI17piqy+dPgD6lNuEfQ=;
-        b=e90aKa7HxkHP7/TzH46Xdil1yzVbiT4WgtVMiX8GW8NweGJNO+3xIun/6KvJsLR6Kt
-         VzWWUdcBFSwnfeurwVTc6AWeqV7qIDQiyCkQZ0whFEIpPsa8P5hMUES7DxzdSZRJ0qio
-         vm7RmdcjxMqtGXpSTet9vo+kph6WwZjiEvlEosiFCOPh4mXmGnGFbBuBInfGDp0IcJeW
-         zrZfJcO0SXvqaIEpQuElIt/ZPr9skV4+HMnGokDp9BuSN4pEXtDoqAEy+Rt4dYQh13bS
-         h75wBo/0PDAGg8ZDe+CPPLo1VJGJDa+x178zxR8jG0/qJZLDhwNE8l7U6smVOFrVL5aH
-         Yhew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688806300; x=1691398300;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GAGKkV3PdAJL83q6SWTDajpfI17piqy+dPgD6lNuEfQ=;
-        b=NIci7xTXcf//HYbS/LSSHVl5mfu4WKZ8EasbUeWCCOwpIhvrFyqcrkYjDXJcWyOpqK
-         FQa+0kK9w9WehvdXli1D8ZfntSd9MK2soZEm6IQatC3KZLTu2cFHxJ6hb9G633ZJPOJX
-         p+IqdTab6jgfBGW172w3aFdXdSOlk60KUqtsmvB/G+MghFhCbc4cArr4YbTB54QrPFYb
-         dlmpgishK99onkJBRQp+XqP78rIiJlrpl1gvpGA+7bcFmRMFuxeA/9D1orJeoWN1GhEz
-         b7ZZGGhBk6ZBeOTWq0xnHmMykiWlijbuQAmulPP0Lj8IkSzlz/bP+BQ8pze5SxzUYEXp
-         po8A==
-X-Gm-Message-State: ABy/qLaNCRL3/N+sOvLPmDwZumS6QgPM+nqJ8Jo/AHfoj7DUkmLmQUaa
-        FjaIDSXysfu9aTE8igjCdG3vS0W3cvY=
-X-Google-Smtp-Source: APBJJlGZ7LC8zSyCC5LL+tntMNdfiXKmnDly5AexS2Bl2foBl1m2/d0mFDsEpcV0JlX0bO3Pvog8DQ==
-X-Received: by 2002:a25:fa12:0:b0:c4d:7a05:8db5 with SMTP id b18-20020a25fa12000000b00c4d7a058db5mr3103770ybe.5.1688806300374;
-        Sat, 08 Jul 2023 01:51:40 -0700 (PDT)
-Received: from epic96565.epic.com ([2620:72:0:6480::12])
-        by smtp.gmail.com with ESMTPSA id f3-20020a25b083000000b00c6051b16f8bsm1496834ybj.8.2023.07.08.01.51.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Jul 2023 01:51:40 -0700 (PDT)
-References: <m0ttze4qzl.fsf@epic96565.epic.com>
- <Y/VNiuI7OZ2YiXx8@tapette.crustytoothpaste.net>
- <m0pma14sbx.fsf@epic96565.epic.com>
- <CAPMMpoiC8oca0AVNy1f+zy26L_b-ADyNopY4zO3r+v6v-KEH=A@mail.gmail.com>
- <m0zg46eueb.fsf@epic96565.epic.com>
-User-agent: mu4e 1.11.1; emacs 29.0.91
-From:   Sean Allred <allred.sean@gmail.com>
-To:     Sean Allred <allred.sean@gmail.com>
-Cc:     Tao Klerks <tao@klerks.biz>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Sean Allred <sallred@epic.com>,
-        Kyle VandeWalle <kvandewa@epic.com>, git <git@vger.kernel.org>
-Subject: Re: [BUGREPORT] Why is git-push fetching content?
-Date:   Sat, 08 Jul 2023 03:39:19 -0500
-In-reply-to: <m0zg46eueb.fsf@epic96565.epic.com>
-Message-ID: <m0pm52eqg5.fsf@epic96565.epic.com>
+        with ESMTP id S229458AbjGHK4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2023 06:56:22 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB18B12C
+        for <git@vger.kernel.org>; Sat,  8 Jul 2023 03:56:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=s31663417; t=1688813778; x=1689418578; i=georgmueller@gmx.net;
+ bh=hIwDE2olxhhy9bDpYNuP1Rj32Bg0loiJKaXpNlAUDIQ=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=JLgKDn5QAjQSn/pHHh2IFgGqhGIvBjJD4UdYnBEVSyD+SrDlD/E5fCGcu7hR/fVuztgkKBS
+ dos8PUNeuCB3dU/2WppMImDQ8y3XPDYvGFjGABskWGxPNQg17jZLKD/NgQJ6YG3lc4BkS63uK
+ l5OVav5RSl0rIyUj0QCjs2/MSBmqk48l564lFD0H3m4ExMoDQoBdsr8NwFkBA5OmgHVNyDsDP
+ 5hqmm2+O00UsRbnqDSXc6eSVPhKMUXECqEPNOFvIPkkx6wmF8sEYjB6SH68469nlF+DkZ0/nW
+ rCEsGi2jYW8SQb8q2N6He31/PXALRt+M5luKgHH5GSE9ACikT4gw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from nb-georg.home ([109.104.37.175]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N49lD-1prWHj2p0b-0104Z1; Sat, 08
+ Jul 2023 12:56:18 +0200
+From:   =?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>
+Subject: [PATCH 0/2] fix resize issues on large screens
+Date:   Sat,  8 Jul 2023 12:55:42 +0200
+Message-ID: <20230708105546.2945446-2-georgmueller@gmx.net>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:NVCn00D2+6+x5a/XReux0UFlS4rRnNfKTNnZzEVeosXabr2150O
+ D8mVh524V98Di3EBML6/7vUHRptyWX1WwZWucFjphELZteDGVDixH/CN0c3kYvlRDcESv5Q
+ FJkUynU7e44OdiUEl3R79kxZ1g6vE7Q4z52Sp2Zku6LszNNtVEbhUsIqJxOFI/2lAadGjom
+ RXm+0iYMrXmc0WUOnWeVA==
+UI-OutboundReport: notjunk:1;M01:P0:5Y1Qo8pthfk=;Sfiwlsznh+7xyS3fXD7KfwrZqJ4
+ bvimsCVbg7wQcDpXZy1pE1LRMPDkCdIS5mDCROIkYNmC/wStne7n5egIF2xI6/xk4N6/lx66Q
+ mvuxb/KRywFDz3ntx8ime09Ge2yO0qiFOneufuYOU08ihMQihp28JwEqDSawzPL0MAfK6Jhz4
+ ujlqr/DhvV4W4QHGDJQ1PH7NQvuFVbfnCmf6TUf01clxHSlshIBiQqfDMcp1stnAPkuMlEz5B
+ qrzpU8zqJ8QqQ7D/Fp/zhu3g7KjV0UlslKoEK+i+jax97GxcrHN2XyuFe04o760bQ/sDnQzWe
+ V4n8ft0a9+clUZrSK75UjKX7/KQr+2qG6EJg/nm9IE4UGVvgX+n7ytatQMQu3s5AjDqhxY2A1
+ tPLKrs7/v6oiRSJXmc6VDv1CAO30oWUMVzi1suebha4uc0vzMxSOHmnOpsiywCZWhaMRcVl9s
+ F5rta+oQsKDMfdXQHTw8RdGfLK/KunnKkXzrrfsLV5A1/ki9LuXxq/hMStwR5DfFGFIlWhIr1
+ W2Pm0YBIuc2/r2lAH53I7g4ldA2pt6T3TF4vRdZoYEqlEJdyquzOZ3XPvHZEV4dBX01PPF78M
+ /brFWWH7p9MjT9yPV9ZQ+4qYDKIKMNtFUhYI0rAKtfnpttcJXQN0pr9riU9Qg9f0FjQn9E/Jn
+ OPd0UW0nh2wltFo+q9UKtvrW1dyRKFm4dPjiSnw+zcGgmXYyD+SUTTZIZgYP0I/lhJPnoLz1z
+ Pig5d0uHzT4RePmuRKC5pv8kHIJY10NzdbpSmzF0MvmvewBUR0/LWBEMtSt5xB6fuUCAjommi
+ qJAp4C2Jsem1Oa70CElw7ZT5S4i+yqM7t93jdSSYoEq5pO7LjQM7ZNJNgsk2Ytqnc6S5KY+se
+ 4RjYX/C17Th1CnTxeTc87WwsxcSAfrUVho3fwVx/sFvhIZJABP/2+V55lNs/0dE9Q8jCRbduf
+ o0vatg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When opening gitk in a multi-monitor setup with different resolutions,
+the resize factor causes the first columns of the layout get bigger and
+bigger while the other columns (author, date in upper pane, file list in
+lower pane) shrink to a minimum size.
 
-Following up with the results of my bisect (more discussion below). I'm
-forced to conclude this may somehow have never worked as I'm expecting
-(even though I do recall it working well in a long-gone environment),
-but I'm very much hoping I just did the bisect incorrectly. (It's not a
-feature I need to use much.)
+The following setup triggers the problem on Fedora 38/Gnome 44:
+* primary screen 1 has a FHD resolution (1920x1080)
+* secondary screen 2 has a QHD resolution (2560x1440)
 
-So, is this a bug or is this working as intended for a good reason?
+Every time gitk opens at screen 2, the resize is triggered and the columns
+are shifted 1.33x to the right (2560/1920 =3D 1.33).
+After multiple rounds of closing/opening gitk, the columns are at their
+minimum size and the contents are not visible or only a minimum is
+visible.
 
-Sean Allred <allred.sean@gmail.com> writes:
-> Thanks for the replies. I'd like to bump this up again. This has come up
-> in a new context and I don't see a viable workaround for us that doesn't
-> involve a rewrite of the process and an excessive amount of new
-> infrastructure.
->
-> I have a feeling this is somehow a general issue with promisor remotes,
-> though I don't know enough about how they work to know where to start
-> investigation. I've got what I believe to be minimal reproduction steps
-> below.
->
-> [...]
->
-> I believe the following can be used with git-bisect to determine if this
-> truly ever worked or is a regression:
->
->     setup:
->         #!/bin/bash
->
->         repo="https://github.com/vermiculus/testibus.git"
->         repo_dir="~/path/to/repo"
->
->         git clone --no-checkout --depth=1 --no-tags --filter=tree:0 "$repo" "$repo_dir"
->         git -C "$repo_dir" remote set-url origin unreachable
->
->     bisect script:
->         git -C "$repo_dir" rev-list --objects --all
->
->         (obviously using the just-built git)
->
-> I'm going to start running this bisect, but I suspect it will take a
-> while, so I wanted to get this out there.
+The following patches are two approaches to fix the problem. Maybe the
+hard-coded values could be variables, this is a first shot to solve the
+problem.
 
-I ended up using a bisect script that looks like this
+Georg M=C3=BCller (2):
+  gitk: limit factor scaling on resize to widths below 1900px
+  gitk: keep author and date colums to a minimal width on resize
 
-    #!/bin/bash
-    make clean
-    NO_GETTEXT=1 make -j8 || exit 125
-    ./bin-wrappers/git -C "$1" rev-list --objects --all || exit 1
-    git rev-parse HEAD >> ../good-commits
+ gitk-git/gitk | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-and running
+=2D-
+2.41.0
 
-    git bisect start main 637fc4467e57872008171958eda0428818a7ee03
-    git bisect run ../bisect-script.sh ~/tmp/testibus/
-
-It took less time than I thought, but unfortunately I was never able to
-actually find a 'good' commit. I arbitrarily chose "partial-clone:
-design doc" (Jeff Hostetler, Dec 14 2017) as the first commit to the
-partial-clone design document (under the assumption that it worked at
-some point). If potentially lying to git-bisect in this way is
-especially liable to bust it, I can start the exponentially-more-
-expensive process of testing every commit along --first-parent, but I
-suspect this may have never worked as I'm expecting.
-
---
-Sean Allred
