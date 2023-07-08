@@ -2,93 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F83CEB64DA
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 01:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2026BEB64DC
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 05:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232934AbjGHBGS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 21:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58672 "EHLO
+        id S232920AbjGHFhP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jul 2023 01:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232878AbjGHBGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:06:09 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F3F212D
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 18:06:08 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fbc1218262so27960145e9.3
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 18:06:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688778366; x=1691370366;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8kAShDloEwZOOctxV4C0zs/HnE4QRhndj0mHCwQnrCM=;
-        b=dVGv8zG7eQoThM98sfmIsLrTLaZnWdyfMjAV6TkJ1jEsabnsTTHcCJixhRpWZ6txC+
-         hdt6Kx4NJ7M52tQyC8PlYhOd3GJDou1a8HYqGwfuz3a18ZnFDnbI2ghl2aucd+DKMTjw
-         mns8pZi133Ih6EfiSp08Wt94BQwThT0bJPx6325jHq0bcDFbbowv91xV6HPYJkK+4G+l
-         L9xwpIo32tZds8KKAj1EbnRiEXfvbbVn6I/mpYbJw2X7ICaj0aMbRmWfUdZqB4Vr+NZ8
-         JOBWSTdjBKxbw4QYqMkgHGt0bdrtxl7hzyFedAqdODexssxoUVcYxJrRUAlGxWb2x1bJ
-         JPTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688778366; x=1691370366;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8kAShDloEwZOOctxV4C0zs/HnE4QRhndj0mHCwQnrCM=;
-        b=hWLfmzz/doaeV7K9MDn/aUVp35+TEJIGlf48BiNjzO7JIrPCQPF+XDi1UKc8vPsKAs
-         rXrCdc6+I8uDt4aEwRf/NUrZ7uQf8rwsy1eIm02kZ89YFcE8gVaPknl1JdW/H+fCTaRU
-         ghM1IdOEnwWEodduAckDj0tfB5NZpY9QlO447NTW1pkG2khxAibyeQQFeuNTTgt8xCND
-         8u0fFmNwX1B2jhH7QWjbsFgx+H17JFSdjCnYokOgXra2PxQLloT2vrSv+Ds1PFaxpCKG
-         e9JMvOmBcXNZEVzzzBm5mHhQMpECcJ64LGR657RxCEV7JVi9O/bJk0urr0FVeTx3sDbT
-         0LRw==
-X-Gm-Message-State: ABy/qLYSu2C2ql3CgTtLFasfuhAhDD9DaCiDTaFt0jFTcJSaxp9KgSs5
-        L63q8LUqdMU+HAU0jddntswx2iHi3Tg=
-X-Google-Smtp-Source: APBJJlEj77ysWd+ccbXeafRarCFvuiWgFl1Sc1A7QjSWo+75KniGksvuyBZysfvH/0peHZVPYHpyWQ==
-X-Received: by 2002:a7b:c389:0:b0:3fc:9f:e75c with SMTP id s9-20020a7bc389000000b003fc009fe75cmr2120035wmj.11.1688778366434;
-        Fri, 07 Jul 2023 18:06:06 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n20-20020a7bc5d4000000b003fa8dbb7b5dsm3773464wmk.25.2023.07.07.18.06.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:06:06 -0700 (PDT)
-Message-Id: <1db7a1be27fa51113dcb54013297cda7b6b441d7.1688778359.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
+        with ESMTP id S232919AbjGHFhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2023 01:37:01 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C232128
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 22:36:57 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85E3B19C362;
+        Sat,  8 Jul 2023 01:36:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3SZIwT1Ygub+lS/2OAEftfdhSycsHYR99nwHLm
+        VBkdQ=; b=spf4uI1ijx4IE8eMPNcOKc1e8ReBcS0GfYoUrYIny9icgd/qXv2diJ
+        MI80HEegp1iQsCwmvuz7PCx1YPFvilcf1NJEjyUmeTUB80QlMTIs0svyM2j0GE+z
+        YgwTM3U0Jb64HqIY+omcLYMrCgV5Xoa/FW9kHFX20WfJUXcK70Q/U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B20519C360;
+        Sat,  8 Jul 2023 01:36:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DCFBE19C35F;
+        Sat,  8 Jul 2023 01:36:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>
+Subject: Re: [PATCH 2/5] SubmittingPatches: be more explicit
 References: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
-From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 Jul 2023 01:05:59 +0000
-Subject: [PATCH 5/5] SubmittingPatches: define topic branches
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        <203ed19dd1b72a8085af05359d5a226b94fe2c7f.1688778359.git.gitgitgadget@gmail.com>
+Date:   Fri, 07 Jul 2023 22:36:54 -0700
+In-Reply-To: <203ed19dd1b72a8085af05359d5a226b94fe2c7f.1688778359.git.gitgitgadget@gmail.com>
+        (Linus Arver via GitGitGadget's message of "Sat, 08 Jul 2023 01:05:56
+        +0000")
+Message-ID: <xmqqo7kn6k21.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Linus Arver <linusa@google.com>, Linus Arver <linusa@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 734F77BC-1D51-11EE-B494-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Linus Arver <linusa@google.com>
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Linus Arver <linusa@google.com>
----
- Documentation/SubmittingPatches | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+> From: Linus Arver <linusa@google.com>
+>
+> Signed-off-by: Linus Arver <linusa@google.com>
+> ---
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index ef39808f568..6fb96e6537f 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -17,7 +17,12 @@ The following branches are the typical starting points for new work:
- * next
- * seen
- 
--These branches are explained in detail in linkgit:gitworkflows[7].
-+These branches are explained in detail in linkgit:gitworkflows[7]. There are
-+also "topic" branches, which contain work from other contributors.  Topic
-+branches are created by the Git maintainer (in their fork) to organize the
-+current set of incoming contributions from the mailing list, and are enumerated
-+in the regular "What's cooking in git.git" announcements.
-+
- Choose the appropriate branch depending on the following scenarios:
- 
- * A bugfix should be based on `maint` in general. If the bug is not
--- 
-gitgitgadget
+If you leave the body of the commit log message empty, can we
+at least have a bit more helpful title so that it is clear what we
+are being more explicit about?
+
+>  [[base-branch]]
+> -=== Decide what to base your work on.
+> +=== Decide which branch to base your work on.
+
+Technically speaking, what the user needs to decide here is on top
+of what commit to base their work on.  There may not be a suitable
+branch anywhere.
+
+But this series will be updating the section even more in the later
+steps, so let's read on.
+
+
+
+> @@ -317,8 +317,8 @@ Please make sure your patch does not add commented out debugging code,
+>  or include any extra files which do not relate to what your patch
+>  is trying to achieve. Make sure to review
+>  your patch after generating it, to ensure accuracy.  Before
+> -sending out, please make sure it cleanly applies to the base you
+> -have chosen in the "Decide what to base your work on" section,
+> +sending out, please make sure it cleanly applies to the branch you
+> +have chosen in the "Decide which branch to base your work on" section,
+>  and unless it targets the `master` branch (which is the default),
+>  mark your patches as such.
