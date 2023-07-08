@@ -2,103 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D7CEEB64D9
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 00:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B35EB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 00:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232801AbjGHAbd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 20:31:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54854 "EHLO
+        id S232820AbjGHAbi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 20:31:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbjGHAbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 20:31:32 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF98E1FD8
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 17:31:30 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-c6833e6e326so2783216276.1
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 17:31:30 -0700 (PDT)
+        with ESMTP id S229643AbjGHAbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 20:31:34 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891A81991
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 17:31:33 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-bff89873d34so2567721276.2
+        for <git@vger.kernel.org>; Fri, 07 Jul 2023 17:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688776290; x=1691368290;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GpoLQpfYfYNs5c47bh8N/29ITgrOvxeMzmQfi23R03c=;
-        b=QAbUkJs/62j9bN0j/pyIzpTcf3zqG2+kHbru9sIVsOuc2acVsiISh2Kp2EoaZr10jt
-         0HXYzQod/WHRKJkQcSPWumW68kZBCcy1nYBN+hNkaolMXp0lAs7Y/WBlUsWs7WeolRGB
-         jBPDTgI7x4TQpbdEcJpFgsnJhcC27xb6GVQQ0wxBdqjxW0Q7YGOpIcUvOeWWWaTnXfOR
-         EbAB1cFgv+FfuXpCH1jAQAEvh3o5TSRUiMATtARiuT9JA3ARjjXmwE8tmrNFSGNul5mx
-         7VyVFWqBucYznL0H0j+72tJdHplNref2wH26YZyXek2Wri0VpNp3quppy6K7aJ6vWFYe
-         re5Q==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688776292; x=1691368292;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WVORtbrYg2YCHdaldyjZL5dqJmkpM6uxkWUFx2drBS0=;
+        b=jNJFGqUTq6LB6tC768qmwjSgGuDEStwQFgnnPW74MzedG4ZLOkg31wn1QVTPbb3+Uh
+         wJX672yPrhnHX2OEDxuyRGTwm1+2yZ7fnhTbK3dLwZtg7LOcfedbP23JT0kMQaFHTULZ
+         yWvJ0s2agwhrFk5ijfc+kpv0Frjag/7JIkOxFacnT4GUSi8QTbm2VhemFr6tis7dN0LN
+         cbso23Mlj9SmB+muUkicCE5ZiLxjcdcOcUxQTT8TUPPhQ/BpQDcnM5AEj3MgBMYzNKWr
+         ondukCYbwyuMJy9g+HYC4kMtdU9qbdY+QbJYZo7/giL2dOSO/gQiRWdPByWbNU58TEAL
+         H10g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688776290; x=1691368290;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GpoLQpfYfYNs5c47bh8N/29ITgrOvxeMzmQfi23R03c=;
-        b=hFNiyaCS8fjmbP0yGnBSW0bJVjf9FdZ/eEdIi0P4or5qYbJpts0OABy5XsUPB+NRvi
-         weORDyTxySZupvCKYQl2TEsja3bgzCkbuVqb0fuLBCRfdvM0nMnKQYhuChxg+ZRII+Q3
-         s+QruUELRZdls50BcSOTPcsejyVuwUuHjqekkYy4BexKS43uxQo7F0OzhIte10uPcBkJ
-         5y6OvhN+EFlqJ5xrPK3YTflA/2ESSa6BS+5Qg6bgQIL13c1XwSvUp9iX2NW8vqKgoBxJ
-         F97qmokwCXNvqZagIEiZD9V/KB7TaaqC7dY6dNMh4cyJOHRmqTdtOgBTrnYY4NurTyH7
-         Gu9A==
-X-Gm-Message-State: ABy/qLbrWvIFJj4b3YuwoCl8Ps6MqjvTCW9ni/boSgJQ0QSqaBmP/rzZ
-        GyFLXrZaN6WVWT13IsU3cvUIoOetF4YIinjhytQ0WQ==
-X-Google-Smtp-Source: APBJJlEVeONv3Lp/4+CFwO4S+Lq3DevpmnC22eqjKpv2z7br90rUoDsbAyvi749v3vngHBLWs+k0Rg==
-X-Received: by 2002:a5b:44a:0:b0:c0b:7483:5cf0 with SMTP id s10-20020a5b044a000000b00c0b74835cf0mr5155768ybp.65.1688776289865;
-        Fri, 07 Jul 2023 17:31:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688776292; x=1691368292;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WVORtbrYg2YCHdaldyjZL5dqJmkpM6uxkWUFx2drBS0=;
+        b=fRsyjgNSRRPwLk6k2gweju5t3SAslb9nvKJujwD+f98BkMF7r9I+kSE/JqG6Fd655t
+         R2cQ9V6p2KMnDtoyQDMseS6D/JLBddLHSFgICLqZBnHn4/iSkbHU1GUPi0dLPUwTc62t
+         TsU6L0af1ivuM3dkXFTYrrSyBHkv+SqBNcGOm0aodZNGNmtBIVzf8Tey0g36tAzk0Y/5
+         djy6KIekumFWMFKHWJSEicfwRbOFNo3OuqPuysmCAvGr0Y74JC5AtYrbgD/6Vvc2aKtg
+         Y5lZ8LYpJ8zvGRLakJUs6U7213EyNl/AXCbunxtOsAV4H9PgH4TsHtlgiGzAFmG7G/YC
+         1k5Q==
+X-Gm-Message-State: ABy/qLYueVPulzwFmWDGyb3iH6ZdAjl6x66yLvQYQnUZjKfah5xk7n+D
+        TlL3y7dvkOzl91xKPeYoB0SWVS6zxXIBeG0DnGZ7Cg==
+X-Google-Smtp-Source: APBJJlGuRUi+C6K4ldHTxdqFBQwDANklpARvEiMMpKXrZzPIMkII1I5XHPTYyxjP/oJYtAjJy1Pqdw==
+X-Received: by 2002:a25:5086:0:b0:c20:da9b:e6b3 with SMTP id e128-20020a255086000000b00c20da9be6b3mr5563129ybb.63.1688776292616;
+        Fri, 07 Jul 2023 17:31:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x26-20020a25acda000000b00c4ec3a3f695sm1266192ybd.46.2023.07.07.17.31.29
+        by smtp.gmail.com with ESMTPSA id j184-20020a25d2c1000000b00c4f175716fcsm1271543ybg.20.2023.07.07.17.31.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 17:31:29 -0700 (PDT)
-Date:   Fri, 7 Jul 2023 20:31:28 -0400
+        Fri, 07 Jul 2023 17:31:32 -0700 (PDT)
+Date:   Fri, 7 Jul 2023 20:31:31 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH 0/6] fsck: squelch progress output with `--no-progress`
-Message-ID: <cover.1688776280.git.me@ttaylorr.com>
+Subject: [PATCH 1/6] fsck: suppress commit-graph output with `--no-progress`
+Message-ID: <b88140d3e4221ca314ac7627f3cb6370f0101cef.1688776280.git.me@ttaylorr.com>
+References: <cover.1688776280.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1688776280.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This short series addresses a pair of issues where the `commit-graph
-verify` and `multi-pack-index verify` steps of `git fsck` produce output
-regardless of whether or not `fsck` was invoked with the
-`--no-progress` option or not.
+Since e0fd51e1d7 (fsck: verify commit-graph, 2018-06-27), `fsck` runs
+`git commit-graph verify` to check the integrity of any commit-graph(s).
 
-The first two patches address the commit-graph and MIDX issues
-respectively. The final four patches further clean up the output of
-`git commit-graph verify --progress` when verifying multi-layer graphs
-to produce a single progress meter instead of one per graph layer.
+Originally, the `git commit-graph verify` step would always print to
+stdout/stderr, regardless of whether or not `fsck` was invoked with
+`--[no-]progress` or not. But in 7371612255 (commit-graph: add
+--[no-]progress to write and verify, 2019-08-26), the commit-graph
+machinery learned the `--[no-]progress` option, though `fsck` was not
+updated to pass this new flag (or not).
 
-Before, the output of `git commit-graph verify` on a repository with a
-commit-graph chain with two layers looked like:
+This led to seeing output from running `git fsck`, even with
+`--no-progress` on repositories that have a commit-graph:
 
-    $ git.compile commit-graph verify
+    $ git.compile fsck --connectivity-only --no-progress --no-dangling
     Verifying commits in commit graph: 100% (4356/4356), done.
     Verifying commits in commit graph: 100% (131912/131912), done.
 
-After this patch series, the output instead looks as follows:
+Ensure that `fsck` passes `--[no-]progress` as appropriate when calling
+`git commit-graph verify`.
 
-    $ git.compile commit-graph verify
-    Verifying commits in commit graph: 100% (136268/136268), done.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/fsck.c          |  4 ++++
+ t/t5318-commit-graph.sh | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-Thanks in advance for your review.
-
-Taylor Blau (6):
-  fsck: suppress commit-graph output with `--no-progress`
-  fsck: suppress MIDX output with `--no-progress`
-  commit-graph.c: extract `verify_one_commit_graph()`
-  commit-graph.c: iteratively verify commit-graph chains
-  commit-graph.c: pass progress to `verify_one_commit_graph()`
-  commit-graph.c: avoid duplicated progress output during `verify`
-
- builtin/fsck.c                |  8 ++++++
- commit-graph.c                | 53 +++++++++++++++++++++++------------
- t/t5318-commit-graph.sh       | 10 +++++++
- t/t5319-multi-pack-index.sh   | 12 ++++++++
- t/t5324-split-commit-graph.sh |  3 +-
- 5 files changed, 67 insertions(+), 19 deletions(-)
-
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index fa26462337a..e6473ecabc7 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -1074,6 +1074,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 			commit_graph_verify.git_cmd = 1;
+ 			strvec_pushl(&commit_graph_verify.args, "commit-graph",
+ 				     "verify", "--object-dir", odb->path, NULL);
++			if (show_progress)
++				strvec_push(&commit_graph_verify.args, "--progress");
++			else
++				strvec_push(&commit_graph_verify.args, "--no-progress");
+ 			if (run_command(&commit_graph_verify))
+ 				errors_found |= ERROR_COMMIT_GRAPH;
+ 		}
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index b6e12115786..bf8a92317b3 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -684,6 +684,16 @@ test_expect_success 'git fsck (checks commit-graph when config unset)' '
+ 	test_must_fail git fsck
+ '
+ 
++test_expect_success 'git fsck shows commit-graph output with --progress' '
++	git -C "$TRASH_DIRECTORY/full" fsck --progress 2>err &&
++	grep "Verifying commits in commit graph" err
++'
++
++test_expect_success 'git fsck suppresses commit-graph output with --no-progress' '
++	git -C "$TRASH_DIRECTORY/full" fsck --no-progress 2>err &&
++	! grep "Verifying commits in commit graph" err
++'
++
+ test_expect_success 'setup non-the_repository tests' '
+ 	rm -rf repo &&
+ 	git init repo &&
 -- 
 2.41.0.242.g6eec849fa5a
+
