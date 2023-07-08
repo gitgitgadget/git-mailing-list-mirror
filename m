@@ -2,135 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9914EB64DA
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 20:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16C55EB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 21:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbjGHUg7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jul 2023 16:36:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36890 "EHLO
+        id S229874AbjGHVfm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jul 2023 17:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjGHUg6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2023 16:36:58 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9B8E4C
-        for <git@vger.kernel.org>; Sat,  8 Jul 2023 13:36:57 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-313e742a787so2488768f8f.1
-        for <git@vger.kernel.org>; Sat, 08 Jul 2023 13:36:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688848616; x=1691440616;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Oo/o4V95FsAz/ewDJ96zduBYarymR6YuKq+hrbNmkD4=;
-        b=K6AtzquLAtiv+DEay/hEVZDHWKhTts75qdZUZ/HG/owhG7S66nbch21ds9GmGWlzH8
-         sEtvlKuO5cAJ1TeEeo0GB1eAJb1flduZECU2i1Vbco8g6TPLM6iOPJx+n6tYuDCdxAv7
-         pk6/TOuPTMKtwVS6NCk2b/rbEoJQXFFsyGoc8z8S++XaxBRLEuAop1Z/6GPUe5Q+/M3F
-         s9bEnBeLNvw3jU2quoUXxz9gEFzMGMMBWYffirsP/1kC+VQfWGwPVxJth4mwQ23jFQgi
-         tSSJ5vTDAkzPsmMfhxYG5Kds4p/0Xny1hs+DPYn1p0z5D+F65nUslGZvfUP4LL/TC331
-         UTSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688848616; x=1691440616;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Oo/o4V95FsAz/ewDJ96zduBYarymR6YuKq+hrbNmkD4=;
-        b=OecSp18ahO4cGVNciOrRjJVHfG728kvDTuZVTPnxvF+4TZCpZn3bUi0LTZ4OPRLZf7
-         ljpJ2MBh6ycudldPKKZpujr5KQ3CRFj+USTVQcaUmDYFzL1Y2MkRQbDTZXHAWzUXgjTf
-         ZDRfYEyN5OtVI9uOlL8qiU1BFeT/4mLND0HyNrNZWOj8Su0nMbJJTS4XjgelU/Y61IF3
-         6g31lnqwwdogREEZBBBTOQtbY03QMBGFMO2tcVp8OKH96SlKFgeSwsJ/pzK0yI9+PGhc
-         7aNHTc9+L4g1adkMupW9wQnnaRFnZXpQw1kSRfLLgyZxqdNzq91FwIuk0rpagBXnh5qU
-         QqZA==
-X-Gm-Message-State: ABy/qLYJhxT2vB1WvqWz9ygIrHLXS0CnhpmQi2f674nOtFWx5Hx4acqn
-        i9CKxyw2CE645oAzAX5TfQDGcmU1ymA=
-X-Google-Smtp-Source: APBJJlFr1Lw/hqlbr8B1eGqKTEywpR7vJkstG7Exse1/chFBCDSm4ERu5L01kntG+YmRIEjclMii2g==
-X-Received: by 2002:adf:fe8d:0:b0:314:1228:c4c1 with SMTP id l13-20020adffe8d000000b003141228c4c1mr3865023wrr.23.1688848615543;
-        Sat, 08 Jul 2023 13:36:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k6-20020adfd846000000b00314315071bbsm7674472wrl.38.2023.07.08.13.36.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Jul 2023 13:36:55 -0700 (PDT)
-Message-Id: <pull.1538.v3.git.1688848614262.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1538.v2.git.1687332624780.gitgitgadget@gmail.com>
-References: <pull.1538.v2.git.1687332624780.gitgitgadget@gmail.com>
-From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 Jul 2023 20:36:54 +0000
-Subject: [PATCH v3] doc: gitcredentials: link to helper list
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S229436AbjGHVfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2023 17:35:41 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04543E46
+        for <git@vger.kernel.org>; Sat,  8 Jul 2023 14:35:39 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CDF242E858;
+        Sat,  8 Jul 2023 17:35:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=TT339pRUhYE7g5tUYcgmMhlhX
+        +n993D3f8n+AnE0tBg=; b=LJIOzm0/pYUIUqgnfhyUrPHVtLzBLNd0uTIasN5ig
+        R8vxDohk4MxnkGqXIuKxbANKq1VoEjX/+UJvvo4Zf9JiewKjLOfYA7tNSYtSOJoM
+        7hmWAaQcZS23ZmykbFKTWtyR27TlmiN8TdCDmoS3pt9+jClOxaXTgwH5vVp9z2B6
+        DM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7B4A2E857;
+        Sat,  8 Jul 2023 17:35:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5EC472E856;
+        Sat,  8 Jul 2023 17:35:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, msuchanek@suse.de, sandals@crustytoothpaste.net,
-        lessleydennington@gmail.com, me@ttaylorr.com,
-        mjcheetham@github.com, M Hickford <mirth.hickford@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: [PATCH 2alt/2] dir: match "attr" pathspec magic with correct paths
+References: <20230707220457.3655121-1-gitster@pobox.com>
+        <20230707220457.3655121-3-gitster@pobox.com>
+        <xmqqttuf70bn.fsf_-_@gitster.g>
+        <26f81ed0-8d1f-e0be-9696-25ce3938ae09@web.de>
+Date:   Sat, 08 Jul 2023 14:35:33 -0700
+Message-ID: <xmqqh6qe5boa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5EFF6E76-1DD7-11EE-A5DA-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: M Hickford <mirth.hickford@gmail.com>
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Link to community list of credential helpers. This is useful information
-for users.
+>>  	if (item->attr_match_nr &&
+>> -	    !match_pathspec_attrs(istate, name, namelen, item))
+>> +	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, i=
+tem))
+>
+> match_pathspec_item() has only one caller, and it did the opposite, so
+> this is safe.  And a minimal fix like that is less likely to have side
+> effects.  Removing the trick will surely improve the code, though.  If
+> match_pathspec_item() needs the full name then we should pass it on,
+> and if the "prefix" offset needs to be added then it can happen right
+> there in that function.
 
-Describe how OAuth credential helpers work. OAuth is a user-friendly
-alternative to personal access tokens and SSH keys. Reduced setup cost
-makes it easier for users to contribute to projects across multiple
-forges.
+Yup.  I am inclined to take this version and then update the
+proposed log message to put less blame on the "common prefix"
+optimization in general.
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+Thanks.
+
+Just for completeness, this is with an updated log message.
+
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+The match_pathspec_item() function takes "prefix" value, allowing a
+caller to chop off the common leading prefix of pathspec pattern
+strings from the path and only use the remainder of the path to
+match the pathspec patterns (after chopping the same leading prefix
+of them, of course).
+
+This "common leading prefix" optimization has two main features:
+
+ * discard the entries in the in-core index that are outside of the
+   common leading prefix; if you are doing "ls-files one/a one/b",
+   we know all matches must be from "one/", so first the code
+   discards all entries outside the "one/" directory from the
+   in-core index.  This allows us to work on a smaller dataset.
+
+ * allow skipping the comparison of the leading bytes when matching
+   pathspec with path.  When "ls-files" finds the path "one/a/1" in
+   the in-core index given "one/a" and "one/b" as the pathspec,
+   knowing that common leading prefix "one/" was found lets the
+   pathspec matchinery not to bother comparing "one/" part, and
+   allows it to feed "a/1" down, as long as the pathspec element
+   "one/a" gets corresponding adjustment to "a".
+
+When the "attr" pathspec magic is in effect, however, the current
+code breaks down.
+
+The attributes, other than the ones that are built-in and the ones
+that come from the $GIT_DIR/info/attributes file and the top-level
+.gitattributes file, are lazily read from the filesystem on-demand,
+as we encounter each path and ask if it matches the pathspec.  For
+example, if you say "git ls-files "(attr:label)sub/" in a repository
+with a file "sub/file" that is given the 'label' attribute in
+"sub/.gitattributes":
+
+ * The common prefix optimization finds that "sub/" is the common
+   prefix and prunes the in-core index so that it has only entries
+   inside that directory.  This is desirable.
+
+ * The code then walks the in-core index, finds "sub/file", and
+   eventually asks do_match_pathspec() if it matches the given
+   pathspec.
+
+ * do_match_pathspec() calls match_pathspec_item() _after_ stripping
+   the common prefix "sub/" from the path, giving it "file", plus
+   the length of the common prefix (4-bytes), so that the pathspec
+   element "(attr:label)sub/" can be treated as if it were "(attr:label)"=
+.
+
+The last one is what breaks the match in the current code, as the
+pathspec subsystem ends up asking the attribute subsystem to find
+the attribute attached to the path "file".  We need to ask about the
+attributes on "sub/file" when calling match_pathspec_attrs(); this
+can be done by looking at "prefix" bytes before the beginning of
+"name", which is the same trick already used by another piece of the
+code in the same match_pathspec_item() function.
+
+Unfortunately this was not discovered so far because the code works
+with slightly different arguments, e.g.
+
+ $ git ls-files "(attr:label)sub"
+ $ git ls-files "(attr:label)sub/" "no/such/dir/"
+
+would have reported "sub/file" as a path with the 'label' attribute
+just fine, because neither would trigger the common prefix
+optimization.
+
+Reported-by: Matthew Hughes <mhughes@uw.co.uk>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-    gitcredentials: link to list of helpers
-    
-    Add link to list of helpers
+ dir.c                          |  2 +-
+ t/t6135-pathspec-with-attrs.sh | 24 +++++++++++++++++++++++-
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1538%2Fhickford%2Fhelpers-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1538/hickford/helpers-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1538
-
-Range-diff vs v2:
-
- 1:  26818290468 ! 1:  a6265156eed doc: gitcredentials: link to helper list
-     @@ Documentation/gitcredentials.txt: $ git help credential-foo
-       
-      +=== Available helpers
-      +
-     -+The community maintains a comprehensive
-     -+https://git-scm.com/doc/credential-helpers[list of Git credential helpers]
-     -+available.
-     ++The community maintains a comprehensive list of Git credential helpers at
-     ++https://git-scm.com/doc/credential-helpers.
-      +
-      +=== OAuth
-      +
-
-
- Documentation/gitcredentials.txt | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 65d652dc40e..71dd19731af 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -104,6 +104,17 @@ $ git help credential-foo
- $ git config --global credential.helper foo
- -------------------------------------------
- 
-+=== Available helpers
+diff --git a/dir.c b/dir.c
+index a7469df3ac..635d1b058c 100644
+--- a/dir.c
++++ b/dir.c
+@@ -374,7 +374,7 @@ static int match_pathspec_item(struct index_state *is=
+tate,
+ 		return 0;
+=20
+ 	if (item->attr_match_nr &&
+-	    !match_pathspec_attrs(istate, name, namelen, item))
++	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, item=
+))
+ 		return 0;
+=20
+ 	/* If the match was just the prefix, we matched */
+diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs=
+.sh
+index f63774094f..f70c395e75 100755
+--- a/t/t6135-pathspec-with-attrs.sh
++++ b/t/t6135-pathspec-with-attrs.sh
+@@ -65,7 +65,8 @@ test_expect_success 'setup .gitattributes' '
+ 	fileValue label=3Dfoo
+ 	fileWrongLabel label=E2=98=BA
+ 	EOF
+-	git add .gitattributes &&
++	echo fileSetLabel label1 >sub/.gitattributes &&
++	git add .gitattributes sub/.gitattributes &&
+ 	git commit -m "add attributes"
+ '
+=20
+@@ -157,6 +158,7 @@ test_expect_success 'check unspecified attr' '
+ 	fileC
+ 	fileNoLabel
+ 	fileWrongLabel
++	sub/.gitattributes
+ 	sub/fileA
+ 	sub/fileAB
+ 	sub/fileAC
+@@ -181,6 +183,7 @@ test_expect_success 'check unspecified attr (2)' '
+ 	HEAD:fileC
+ 	HEAD:fileNoLabel
+ 	HEAD:fileWrongLabel
++	HEAD:sub/.gitattributes
+ 	HEAD:sub/fileA
+ 	HEAD:sub/fileAB
+ 	HEAD:sub/fileAC
+@@ -200,6 +203,7 @@ test_expect_success 'check multiple unspecified attr'=
+ '
+ 	fileC
+ 	fileNoLabel
+ 	fileWrongLabel
++	sub/.gitattributes
+ 	sub/fileC
+ 	sub/fileNoLabel
+ 	sub/fileWrongLabel
+@@ -273,4 +277,22 @@ test_expect_success 'backslash cannot be used as a v=
+alue' '
+ 	test_i18ngrep "for value matching" actual
+ '
+=20
++test_expect_success 'reading from .gitattributes in a subdirectory (1)' =
+'
++	git ls-files ":(attr:label1)" >actual &&
++	test_write_lines "sub/fileSetLabel" >expect &&
++	test_cmp expect actual
++'
 +
-+The community maintains a comprehensive list of Git credential helpers at
-+https://git-scm.com/doc/credential-helpers.
++test_expect_success 'reading from .gitattributes in a subdirectory (2)' =
+'
++	git ls-files ":(attr:label1)sub" >actual &&
++	test_write_lines "sub/fileSetLabel" >expect &&
++	test_cmp expect actual
++'
 +
-+=== OAuth
++test_expect_success 'reading from .gitattributes in a subdirectory (3)' =
+'
++	git ls-files ":(attr:label1)sub/" >actual &&
++	test_write_lines "sub/fileSetLabel" >expect &&
++	test_cmp expect actual
++'
 +
-+An alternative to inputting passwords or personal access tokens is to use an
-+OAuth credential helper. Initial authentication opens a browser window to the
-+host. Subsequent authentication happens in the background. Many popular Git
-+hosts support OAuth.
- 
- CREDENTIAL CONTEXTS
- -------------------
+ test_done
+--=20
+2.41.0-327-gaa9166bcc0
 
-base-commit: 061c58647eb4b3f0e2c898333577d4b2af115b1d
--- 
-gitgitgadget
+
