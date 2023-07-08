@@ -2,124 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49212EB64DA
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 07:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0216EB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 07:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230251AbjGHHQa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jul 2023 03:16:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
+        id S230109AbjGHH00 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jul 2023 03:26:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjGHHQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2023 03:16:26 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E9891FF6
-        for <git@vger.kernel.org>; Sat,  8 Jul 2023 00:16:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1688800578; x=1689405378; i=l.s.r@web.de;
- bh=NcZd7TAz84oLV43c9PYIGFcYnH2qojwMAu72GctPu64=;
- h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
- b=lgebuQkOegC/a/HRlwNG01dXS0DOpttKez08cnNXu4fb/ptmnevYap8PTmxFWE6JMcgkxlL
- OzyCmzz+AbH7Xs8OdWTXsmYZ5/pl6rQA9qR6UJOgFJ1RNCGjrWZeAE04YL41NYVJ9GDwmjgb3
- BYpxYiAtRmcO4NOO4+z6UFNsK8qM3QHWVe0IedzXeOb2rlc8ikvBMTuJPQgK/pmscDrkoXIzn
- WErf8z+brfViLe/dnk3dzpz5xbYjVbAKDHfLyL2XbzYCFB1n0FjVO0elHwxFa9FyzkNh+49U4
- yBxQ+b2e0hB0pnd8B8MnuhBEvFubqA+94te2MjVxBSC0mHEhwZog==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.158.134]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N5CQh-1pshEt02ab-01135C; Sat, 08
- Jul 2023 09:16:18 +0200
-Message-ID: <26f81ed0-8d1f-e0be-9696-25ce3938ae09@web.de>
-Date:   Sat, 8 Jul 2023 09:16:17 +0200
+        with ESMTP id S229458AbjGHH0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2023 03:26:24 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F41510CE
+        for <git@vger.kernel.org>; Sat,  8 Jul 2023 00:26:23 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id d75a77b69052e-403303dc14eso6860971cf.0
+        for <git@vger.kernel.org>; Sat, 08 Jul 2023 00:26:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688801182; x=1691393182;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H0QrSho9VCChOdpj7ZeffsLSBA+h6Tmb+KEfvfG1Lk4=;
+        b=T2fF66PEqnTR82Zpcip23lecOXqg1HFRHP5gpBRy2uCs5qESSH/+G/3C4evxLA+6ai
+         /4Gis/aJ2I28KoGgGx94ja4uNb3Xy6JyTLRWIaoigdj3qGXpJesTfxMcpctPJaLGyKHe
+         mjYJs43qRIfxLZGuXmIp6u+/KBlaBBBf7cBZh6cnvcwYkiW6Xbau0/OFe4MQcwxqrOhM
+         paLZAkU5Us5Whtm+gi5VWhZlExdNQ90GNjEe/jXiWUGZxGwmHMmCI0SeEvk0m0FiWaQL
+         QCRj8xTISkTFMKrwr6pYjDkweTVMEzzRep6NHkdkDOJGUnGeS5TW9Gt2Q9qs7nsE6y+H
+         SifA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688801182; x=1691393182;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=H0QrSho9VCChOdpj7ZeffsLSBA+h6Tmb+KEfvfG1Lk4=;
+        b=bcRnsJ490AylWUlZwFhy/K40z2vaQfSbpT1w/Nq0EO9JdaCfQVuf6n6p+86+20i1an
+         vXeP9i5hKh+vFkBwr3XOqu9ULETlBPrCWJEglkneoPcFG9Nybcv6h97Cptevv1WCUCIt
+         Csj3pcqZ4D3Kznn/COareE/TRWtWZ5BkGZehgkCeAoIjHxyRn7wMrIWJYPrgiX2ZjF5c
+         NWROSSGvW2xwrH6/Kjqo1IwiK0m4T8UsjooHqAQdfgyihgE2oKIMjNN+ec14Mkv7n4pw
+         /tvRYRQb2rInz1YaAakXg8W8j8vgc6ilVYzae+6ioOaGQX6OHNMd/IUjmoxYu0PFNjFX
+         dFYw==
+X-Gm-Message-State: ABy/qLYIb63ItlTw7uA+4bo9SwXl5e/W0+kxW8K9ta/qknrVLFLzRo4P
+        SA1kZUGhpPOz5SdGGaHrEJs7MPu2lS8=
+X-Google-Smtp-Source: APBJJlEmI4jAI00mBn8qao1DRQD1zPxYcwfJ+qpKpiUD64c7MP12Quys/mRD/NeeIB9Q+MZW/lR0gw==
+X-Received: by 2002:a05:622a:1899:b0:400:aaa0:a4ef with SMTP id v25-20020a05622a189900b00400aaa0a4efmr9478477qtc.6.1688801182439;
+        Sat, 08 Jul 2023 00:26:22 -0700 (PDT)
+Received: from epic96565.epic.com ([2620:72:0:6480::12])
+        by smtp.gmail.com with ESMTPSA id d62-20020a0df441000000b00577409a2958sm1599125ywf.138.2023.07.08.00.26.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Jul 2023 00:26:21 -0700 (PDT)
+References: <m0ttze4qzl.fsf@epic96565.epic.com>
+ <Y/VNiuI7OZ2YiXx8@tapette.crustytoothpaste.net>
+ <m0pma14sbx.fsf@epic96565.epic.com>
+ <CAPMMpoiC8oca0AVNy1f+zy26L_b-ADyNopY4zO3r+v6v-KEH=A@mail.gmail.com>
+User-agent: mu4e 1.11.1; emacs 29.0.91
+From:   Sean Allred <allred.sean@gmail.com>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Sean Allred <allred.sean@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Sean Allred <sallred@epic.com>,
+        Kyle VandeWalle <kvandewa@epic.com>, git <git@vger.kernel.org>
+Subject: Re: [BUGREPORT] Why is git-push fetching content?
+Date:   Sat, 08 Jul 2023 01:27:54 -0500
+In-reply-to: <CAPMMpoiC8oca0AVNy1f+zy26L_b-ADyNopY4zO3r+v6v-KEH=A@mail.gmail.com>
+Message-ID: <m0zg46eueb.fsf@epic96565.epic.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH 2/2alt] dir: do not feed path suffix to pathspec match
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20230707220457.3655121-1-gitster@pobox.com>
- <20230707220457.3655121-3-gitster@pobox.com> <xmqqttuf70bn.fsf_-_@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqttuf70bn.fsf_-_@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:wWdVkRMLdk6g9XmbVIPfyqRUI89Oz9p2+2Ts5cNuza5TP9xJPdc
- BAMtYlYiz2NGkFXok4Aaiuh6YOG1Uv2arkEx0hk5GxcufG4JTpWs13T3BhQqQhDSGNiOTfZ
- /RG+XktWLVmoWP0bZfKpdLFFrfIdEJcmGLFyGsARVY1UF7WsJd6dg6C7reK+jOSTvNVwSSm
- qzjcWV7rrSqmuIeiZViJA==
-UI-OutboundReport: notjunk:1;M01:P0:3/B+b32keGk=;AzJsBRS6bfEHiCaw8Th8VdmE/Sa
- lMrrbld9EU3Ok2o+zIMlGZAOY6V8Dc/Xztjm8a1aFt74407/Ks866Jf9yj61mfeBD64LABmu8
- YZ1NN+xfyxKIIyvxmKN6aXCeRzii3JDG7IXgggW16Iz8FEcwtusR3+rNSiSNCiGx8+FgFlA27
- dCziWyhnfg5+nc1N7Q4ZreGhVmM3e3nOiKP83fAerSBa41jRtbNHYFtOTDfxPolpVCShegvWV
- HiJbkzf7OghFMIv9svw1xXvmXVmYqkTrX+j7W8bOOVeq4jb2/34Pp6GHSpovQhFF2UrzgBKcy
- uokDTUTXeHVUFN4sb7AUoGRfUYAGnSsZKdU5xiUFhMeToR5VFfGAo+7nMtyAN7AhUvsGP6DCl
- s7/CfSwhKS3btiaqbISvBdHjFVtD90kuUMnTaQb7ndgcFA0SIPS+E72gUjpS4OjTgPD4RktNV
- IA0zN/QZzPlrmFQuh1EiQofzChuKg/k1CmgWj1qcV+9JEbK7eQJz4x2zvG0nKnQK0uMoU4n5D
- XXuwClzdOLTHp7aDT17MLOhWWvHr2VmJvkqQdTiYoSJ+5+bqebdHdm5oFSDlNChH8gQL4s5kr
- wZIsN+XdFU6Ah99pkB7+pocP5yFQ9kNWUIvZw6SmkQpbMcoVHTXDjdwoDFjy2B3GBiwP747xR
- 0OqeRffn1CCb3gQ3PNsgHuRe2UTrN8gjUre7QOtC9+KsXc9YV63nRwn+vzI+Vn+ARQL/YaYP/
- TJqu54TpEAcPLSUbSagdH9VizFc834Lz+EhHI9WwgA/DnnBKYn3CoieZ03HMAALDS1CcAkErY
- ItZyXF+PgkASinttzRvs5nltQBOYUQZ+RxGzN02AUwlp1OM+RziurUXh1yp9CcRBc8XyeDNAu
- hsKso6ZAmErk2zY5VjsK/6oN3VlcqP3ncQOSRvBeS8nXySSqPX3vsmyFuDIhdZIM9Oxua7cFQ
- srr0sA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.07.23 um 01:45 schrieb Junio C Hamano:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> ...
->>  * do_match_pathspec() calls match_pathspec_item() _after_ stripping
->>    the common prefix "sub/" from the path, giving it "file", plus
->>    the length of the common prefix (4-bytes), so that the pathspec
->>    element "(attr:label)sub/" can be treated as if it were "(attr:label=
-)".
+
+Thanks for the replies. I'd like to bump this up again. This has come up
+in a new context and I don't see a viable workaround for us that doesn't
+involve a rewrite of the process and an excessive amount of new
+infrastructure.
+
+I have a feeling this is somehow a general issue with promisor remotes,
+though I don't know enough about how they work to know where to start
+investigation. I've got what I believe to be minimal reproduction steps
+below.
+
+Tao Klerks <tao@klerks.biz> writes:
+> On Wed, Feb 22, 2023 at 4:45=E2=80=AFPM Sean Allred <allred.sean@gmail.co=
+m> wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>> > It's hard to know for certain what's going on here, but it depends on
+>> > your history.  You did a partial clone with no trees, so you've likely
+>> > received a single commit object and no trees or blobs.
 >>
->> The last one is what breaks the match, as the pathspec subsystem
->> ends up asking the attribute subsystem to find the attribute
->> attached to the path "file".
->> ...
->> Update do_match_pathspec() so that it does not strip the prefix from
->> the path, and always feeding the full pathname to match_pathspec_item()=
-.
+>> Yup, this was the intention behind `--depth=3D1 --filter=3Dtree:0`. The
+>> server doing this ref update needs to be faster than having the full
+>> history would allow.
+>>
 >
-> Here is an alternative approach with a lot smaller code footprint.
-> Instead of teaching do_match_pathspec() not to strip the common
-> prefix from the pathname, we teach match_pathspec_item() how to
-> recover the original pathname before stripping, and use that when
-> calling match_pathspec_attrs() function.  The same trick is already
-> used in an earlier part of the same function, so even though it
-> looks somewhat dirty, it is unlikely that it would introduce
-> more breakage.
+> FWIW, you're not alone - we do exactly the same thing, for the same
+> reasons, and get the same outcome: We want to create a tag in a CI
+> job, that particular CI job has no reason to check out the code, all
+> we know is we want ref XXXXX to point to commit YYYYY.
 >
-> As the test part is the same, I'll just show the code change
-> relative to the 'master' branch.
+> [...]
 >
-> I am undecided which one is better.
->
->  dir.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git c/dir.c w/dir.c
-> index a7469df3ac..635d1b058c 100644
-> --- c/dir.c
-> +++ w/dir.c
-> @@ -374,7 +374,7 @@ static int match_pathspec_item(struct index_state *i=
-state,
->  		return 0;
->
->  	if (item->attr_match_nr &&
-> -	    !match_pathspec_attrs(istate, name, namelen, item))
-> +	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, ite=
-m))
+> In our case it's still better than any alternative we've found, but
+> wastes a few seconds that we'd love to see optimized away.
 
-match_pathspec_item() has only one caller, and it did the opposite, so
-this is safe.  And a minimal fix like that is less likely to have side
-effects.  Removing the trick will surely improve the code, though.  If
-match_pathspec_item() needs the full name then we should pass it on,
-and if the "prefix" offset needs to be added then it can happen right
-there in that function.
+Unfortunately in our case, 'a few seconds' is tens of minutes (I'm
+working with a repository of several million commits) and is timing out
+the remote host.
 
->  		return 0;
->
->  	/* If the match was just the prefix, we matched */
+----
 
+I devised some minimal steps to reproduce what I believe to be a related
+issue: rev-list fetching content. I've prepared a public repository on
+github.com to demonstrate, but you should be able to recreate this
+repository if needed by just making a handful of commits to a couple
+arbitrary files.
+
+    (cwd:tmp)
+    $ git clone --no-checkout --depth=3D1 --no-tags --filter=3Dtree:0 https=
+://github.com/vermiculus/testibus.git
+    Cloning into 'testibus'...
+    remote: Enumerating objects: 1, done.
+    remote: Counting objects: 100% (1/1), done.
+    remote: Total 1 (delta 0), reused 1 (delta 0), pack-reused 0
+    Receiving objects: 100% (1/1), done.
+
+Sweet, I've only received one object from the remote. This makes sense
+per what I want: a treeless, blobless, fetch of a single commit. Let's
+double-check.
+
+    (cwd:testibus)
+    $ git fsck
+    Checking object directories: 100% (256/256), done.
+    Checking objects: 100% (2/2), done.
+
+I have two objects? How'd that second one get in there? What is it?
+Let's try to find out...
+
+    (cwd:testibus)
+    $ git rev-list --objects --all
+    d86642e7ae089b69e8a0b20a3e39337435833f92
+
+Alright, I've got the commit object. That makes sense.
+
+    c0fa909c5f67047abc027d9b06e1352954ee33f7
+
+Weird, I also got the tree on the commit, even though I specified that
+this should be a treeless clone.
+
+    remote: Enumerating objects: 1, done.
+    remote: Counting objects: 100% (1/1), done.
+    remote: Total 1 (delta 0), reused 1 (delta 0), pack-reused 0
+    Receiving objects: 100% (1/1), 54 bytes | 54.00 KiB/s, done.
+    94b334d80405218e281a6f5b48d31f73cd3af4be file
+
+Woah woah! All I did was rev-list; why are we fetching content?
+
+This is why I believe this is related to the push issue I'm ultimately
+facing -- I'm not familiar with the specifics, but it stands to reason
+that git-push needs to (somehow) iterate through objects in order to
+negotiate a packfile with the remote. I suspect these two issues have
+the same root cause.
+
+I believe the following can be used with git-bisect to determine if this
+truly ever worked or is a regression:
+
+    setup:
+        #!/bin/bash
+
+        repo=3D"https://github.com/vermiculus/testibus.git"
+        repo_dir=3D"~/path/to/repo"
+
+        git clone --no-checkout --depth=3D1 --no-tags --filter=3Dtree:0 "$r=
+epo" "$repo_dir"
+        git -C "$repo_dir" remote set-url origin unreachable
+
+    bisect script:
+        git -C "$repo_dir" rev-list --objects --all
+
+        (obviously using the just-built git)
+
+I'm going to start running this bisect, but I suspect it will take a
+while, so I wanted to get this out there.
+
+--
+Sean Allred
