@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E344EB64D9
-	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 00:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89AA6EB64DA
+	for <git@archiver.kernel.org>; Sat,  8 Jul 2023 00:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232827AbjGHAbj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jul 2023 20:31:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54870 "EHLO
+        id S232828AbjGHAbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jul 2023 20:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231617AbjGHAbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2023 20:31:37 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B3E1FC7
-        for <git@vger.kernel.org>; Fri,  7 Jul 2023 17:31:36 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-c5e76dfcc36so2789580276.2
-        for <git@vger.kernel.org>; Fri, 07 Jul 2023 17:31:36 -0700 (PDT)
+        with ESMTP id S229643AbjGHAbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2023 20:31:40 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDEEF1FEA
+        for <git@vger.kernel.org>; Fri,  7 Jul 2023 17:31:38 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bff27026cb0so2778425276.1
+        for <git@vger.kernel.org>; Fri, 07 Jul 2023 17:31:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688776295; x=1691368295;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1688776298; x=1691368298;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wpNqXGtWosTJRHx//ty9/vbv2/HxZAXF5sfv6OZG4QM=;
-        b=K88WMLb0qOsVhFUC0s3+or1El5lZrWN3LqWPnLQzfMaQKB3ARNNLgle9gxhX34Ta7G
-         gy3cVU28mRsLIkqmg0MdhXLpaIeyV2KAIaJfroHUpZeGMBF33Eojq46GG3OIltA/r1G1
-         cNOKOB0c7x8nJ8bFbLRw6dbLmmBYVzwOv0sRHGk7j4AjOuaDrLKcXH+8/e8IV5U8ITo6
-         lESCIHUtJCgWqYX0gkG8oi4y76Jod/qOAAIKEFGmRxeCf814CWEk2lZtP0DKl5ZxZTLk
-         0X2CYV4EvtNmCMnm/TgnNZfmBjL8bYOWNcswll2CtTemG7U/eKLXZwoaOHKiQ+jpvj9J
-         zfhw==
+        bh=zH2yvQSzxwyyFNjBPhsGMWv6DNRIiMtluAGBG5t/Zzc=;
+        b=sGk6vQEO+8NWST0YvPmiZRu3pf7GXZool1QuNrP/xh5SlRXC/HivrI919TrQRRNzN+
+         BYfgpEfRJZpBunYeUiVeI1XkFjXO1Lmabvunc8N+wC64Kfane9SVZdjWJnZDRdKf9/0h
+         baNT6mqQp83Ozb0rrRrvNcmuebM9LClrDC58uiM3sGFSeq5377dnpgbN1Wpj902+0I7U
+         WUigbq93GNT7WDTk1nuUMxbS4/h+g8snvlnBzkuUeuKOaPL/3oXlST1hyqpXy5vS88o+
+         nWce2mJhWV/Jq5zYS/L5L9pHULWx1gszWGMaFd7baoVguZRzQO0ez2w/ek+HbIWvXZGh
+         Q9qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688776295; x=1691368295;
+        d=1e100.net; s=20221208; t=1688776298; x=1691368298;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wpNqXGtWosTJRHx//ty9/vbv2/HxZAXF5sfv6OZG4QM=;
-        b=RpJdATSQU/+zOX5gqUTbK+tRFQnPdVOFNo749P6Xsee2VNSSroMBXpy3sRkMKE2tpu
-         J3Dop2SEgiV0PORc+YZbWOhLCpZag5U/LxAu4YU2VlWdXNd6ScN8KB3TiGrXdG0bGlBJ
-         lcnZjRw4tS2Xkwgm/kdn2OFqWlIQP0lgBHGu14JJJ7gAbAL7a3PSlcUKAntFu2YcY5i1
-         LHzInQC5TxyAaZecrh0vXrHQsLH9wpz4UZ3Zu7Z5v6u4lRBse7jWX/nSVTgfoYmXf5Ce
-         TJHqsbgxK+O2rpoFBqmyNSemsoceqYq+uzGAj5LjdereqNLHlaysxzUoS/7WvpDsJNT6
-         8oIA==
-X-Gm-Message-State: ABy/qLaeSOiA58cPci1F0dKAjlD6oeXcSMXAwQMXJqktSx9YtUPEROoD
-        sIvrmDP0fn+CVBfgs5RYjKUbkHXkxUFdjFUWKaXClA==
-X-Google-Smtp-Source: APBJJlG7d0UV1ci/ZOprUWU0ozoFJIFzLKXPVe4kK/fppU+GOF3ocktD12pNDSv6xifsN92S4KNZ9Q==
-X-Received: by 2002:a0d:e241:0:b0:573:d710:6f88 with SMTP id l62-20020a0de241000000b00573d7106f88mr5895569ywe.36.1688776295344;
-        Fri, 07 Jul 2023 17:31:35 -0700 (PDT)
+        bh=zH2yvQSzxwyyFNjBPhsGMWv6DNRIiMtluAGBG5t/Zzc=;
+        b=cw0/H4hdKuXFkvC6m4qAWXIUwIbb/zCg7A3e0fSIsTq2vPDLXHCDI3DOV8+3E9pASe
+         /86M2BrVsYnVI5Ab3CCrN+LiiSr4N+y8SmfDRAIyyZul2IgeWqkoIVhJO2aadXMlT1Ph
+         2OOOmbaeHOUW9p2/FekoK4B3w2Y7e7LqjdEIbEAFxDtqpN7e0GhhUSxBPjO0KLHebIIC
+         498irxvneGhNDwqsDdCBMXaQBb62z5ZCTT4xZRLnh40rN3gF1DL3T7lmd4NolSIHN71m
+         n+ug3OY1b/73XPjNHLz/REnEJ/pgzBmZ0LE08XF4qi47sL3wgsAS+E8Btx2TSvu4uDxi
+         PrBg==
+X-Gm-Message-State: ABy/qLYnbn+tNfmQMsD0q851kYYec7aU6DV1PGvChu83//fn341o+fHw
+        kFNpE4Y9G8bRrjw1IAqJbQaOq0NieTFNUp2kdJpPSA==
+X-Google-Smtp-Source: APBJJlHfI86Y51jLLhBMvZWac7QKXYjzcxzBgewm2GkdGPkh0d6NjvJ9zjlGoqSdMZSl9GUXuEYhng==
+X-Received: by 2002:a25:a245:0:b0:c5c:2fa:5e14 with SMTP id b63-20020a25a245000000b00c5c02fa5e14mr5816631ybi.8.1688776298022;
+        Fri, 07 Jul 2023 17:31:38 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u63-20020a816042000000b0054c0f3fd3ddsm1414452ywb.30.2023.07.07.17.31.35
+        by smtp.gmail.com with ESMTPSA id d23-20020a25e617000000b00bceb538a275sm1261785ybh.21.2023.07.07.17.31.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 17:31:35 -0700 (PDT)
-Date:   Fri, 7 Jul 2023 20:31:34 -0400
+        Fri, 07 Jul 2023 17:31:37 -0700 (PDT)
+Date:   Fri, 7 Jul 2023 20:31:36 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH 2/6] fsck: suppress MIDX output with `--no-progress`
-Message-ID: <779466732ccf24ce982cf61a57aeb05a23cefba2.1688776280.git.me@ttaylorr.com>
+Subject: [PATCH 3/6] commit-graph.c: extract `verify_one_commit_graph()`
+Message-ID: <8fa8871063018946e47515898c57377825ec95a8.1688776280.git.me@ttaylorr.com>
 References: <cover.1688776280.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -64,75 +64,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar spirit as the previous commit, address a bug where `git
-fsck` produces output when calling `git multi-pack-index verify` even
-when invoked with `--no-progress`.
+When the `verify_commit_graph()` function was extended to support
+commit-graph chains via 3da4b609bb1 (commit-graph: verify chains with
+--shallow mode, 2019-06-18), it did so by recursively calling itself on
+each layer of the commit-graph chain.
 
-    $ git.compile fsck --connectivity-only --no-progress --no-dangling
-    Verifying OID order in multi-pack-index: 100% (605677/605677), done.
-    Sorting objects by packfile: 100% (605678/605678), done.
-    Verifying object offsets: 100% (605678/605678), done.
+In practice this poses no issues, since commit-graph chains do not loop,
+and there are few enough of them that adding additional frames to the
+stack is not a problem.
 
-The three lines produced by `git fsck` come from `git multi-pack-index
-verify`, but should be squelched due to `--no-progress`.
+A future commit will consolidate the progress output from `git
+commit-graph verify` when verifying chained commit-graphs to print a
+single line instead of one progress meter per commit-graph layer.
+Prepare for this by extracting a routine to verify a single layer of a
+commit-graph.
 
-The MIDX machinery learned to generate these progress messages as early
-as 430efb8a74b (midx: add progress indicators in multi-pack-index
-verify, 2019-03-21), but did not respect `--progress` or `--no-progress`
-until ad60096d1c8 (midx: honor the MIDX_PROGRESS flag in
-verify_midx_file, 2019-10-21).
-
-But the `git multi-pack-index verify` step was added to fsck in
-66ec0390e75 (fsck: verify multi-pack-index, 2018-09-13), pre-dating any
-of the above patches.
-
-Pass `--[no-]progress` as appropriate to ensure that we don't produce
-output when told not to.
+Note that `verify_commit_graph()` is still recursive after this patch,
+but this will change in the subsequent patch.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/fsck.c              |  4 ++++
- t/t5319-multi-pack-index.sh | 12 ++++++++++++
- 2 files changed, 16 insertions(+)
+ commit-graph.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index e6473ecabc7..8959b3c7b87 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -1092,6 +1092,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 			midx_verify.git_cmd = 1;
- 			strvec_pushl(&midx_verify.args, "multi-pack-index",
- 				     "verify", "--object-dir", odb->path, NULL);
-+			if (show_progress)
-+				strvec_push(&midx_verify.args, "--progress");
-+			else
-+				strvec_push(&midx_verify.args, "--no-progress");
- 			if (run_command(&midx_verify))
- 				errors_found |= ERROR_MULTI_PACK_INDEX;
- 		}
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 0883c7c6bd9..1bcc02004d7 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -485,6 +485,18 @@ test_expect_success 'git-fsck incorrect offset' '
- 	git -c core.multiPackIndex=false fsck
- '
+diff --git a/commit-graph.c b/commit-graph.c
+index f70afccada4..3d7cc11927d 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2542,18 +2542,14 @@ static int commit_graph_checksum_valid(struct commit_graph *g)
+ 	return hashfile_checksum_valid(g->data, g->data_len);
+ }
  
-+test_expect_success 'git fsck shows MIDX output with --progress' '
-+	git fsck --progress 2>err &&
-+	grep "Verifying OID order in multi-pack-index" err &&
-+	grep "Verifying object offsets" err
-+'
+-int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
++static int verify_one_commit_graph(struct repository *r,
++				   struct commit_graph *g,
++				   int flags)
+ {
+ 	uint32_t i, cur_fanout_pos = 0;
+ 	struct object_id prev_oid, cur_oid;
+ 	int generation_zero = 0;
+ 	struct progress *progress = NULL;
+-	int local_error = 0;
+-
+-	if (!g) {
+-		graph_report("no commit-graph file loaded");
+-		return 1;
+-	}
+ 
+ 	verify_commit_graph_error = verify_commit_graph_lite(g);
+ 	if (verify_commit_graph_error)
+@@ -2699,7 +2695,19 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+ 	}
+ 	stop_progress(&progress);
+ 
+-	local_error = verify_commit_graph_error;
++	return verify_commit_graph_error;
++}
 +
-+test_expect_success 'git fsck suppresses MIDX output with --no-progress' '
-+	git fsck --no-progress 2>err &&
-+	! grep "Verifying OID order in multi-pack-index" err &&
-+	! grep "Verifying object offsets" err
-+'
++int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
++{
++	int local_error = 0;
 +
- test_expect_success 'corrupt MIDX is not reused' '
- 	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\377" $objdir \
- 		"incorrect object offset" &&
++	if (!g) {
++		graph_report("no commit-graph file loaded");
++		return 1;
++	}
++
++	local_error = verify_one_commit_graph(r, g, flags);
+ 
+ 	if (!(flags & COMMIT_GRAPH_VERIFY_SHALLOW) && g->base_graph)
+ 		local_error |= verify_commit_graph(r, g->base_graph, flags);
 -- 
 2.41.0.242.g6eec849fa5a
 
