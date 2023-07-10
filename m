@@ -2,288 +2,384 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E7A3EB64DA
-	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 21:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 521AEEB64D9
+	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 21:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231477AbjGJVMk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jul 2023 17:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37232 "EHLO
+        id S231207AbjGJVMl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jul 2023 17:12:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231639AbjGJVM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2023 17:12:28 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F32F81BB
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:21 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-c4dd86f5d78so7239292276.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:21 -0700 (PDT)
+        with ESMTP id S231908AbjGJVM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2023 17:12:29 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D9A3E6D
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:25 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-576a9507a9bso89210367b3.1
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689023541; x=1691615541;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=O8CaQjEoLZ5MtfgNHHaoNqgpBmPZyLa4AGXk38fo4rE=;
-        b=CA9X5TdjQKok22piDpSj2zocC61rZ6iAtbYXv/lH9u57rsMU+688UWJ4XobGl2U0bT
-         WjQ85Y1VWvZXg8IHSbVBa/PzdeS56WYkdXbyQvhq4pKS1v6wigNBUbhPj4dnW9L1RNNT
-         yeuNdqVVjgGC9FefrU/jFNLRHIMjkSrxtfCEowoIaO4vw4n/NM9lQd4NPY0tc6kFpbgb
-         D5EZsIoPBZ1ScXFk8etPkG0z5L5Ivfp6IVoWGEFZ/t5rqPDz+KEBxyZF7Ti4t4HuxJX0
-         g3MYDQFugiPdgRgmtKtR5HE/vdNYb+H6s2AddUVKvzkSDNGd4mxB7jT4x/yl3xW4rH3Y
-         Ky3A==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689023544; x=1691615544;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yjrkiGfUCzQPf2L9v0euYLFsTSJJ7KAZPw4ucV5ZStE=;
+        b=CIOEWLykKiZMq4hfVTuW9DF04DpgbKXtwo7e2CXSCi1HPeQrDaXz7n608KnFfZLNIc
+         g0EiouJCEKN4FuS80vpW9zCudatd64mujqrIHDdX07d79ZcwPOFQG38h4cnOFK4XgJsP
+         0TFHQRCd+dvfn8vTaY7CnvMAqd0YPzCQgSJLh7YCx+1UGagvzvBLKNzN5gVaWAwD3c2P
+         KAsZm0HAft544bvwo8W8vua/L5+t1AcNilk6iTIdlkeUN9HPeluxYPNYbgYGQw7WOfVN
+         MEKp6rcDr8GUkMBIKqV9+4khzT4UHE2NlSy0Qwh8YWWfC+WFKBCpFQCrQTvFunofa5lC
+         Zrbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689023541; x=1691615541;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O8CaQjEoLZ5MtfgNHHaoNqgpBmPZyLa4AGXk38fo4rE=;
-        b=goLAb2tKNPmhoiJFs+nfqa9V7bMYk3Jgz+0HaiCxkMGplyeekPYPSqNFKrzwYUcvXs
-         G+WPhlRH12mUF/KLJXI9bEjCPdeXULktZTjTdVzZY+0JIPA/zW8RkwMyKxJ5PrYAQrd1
-         kaW0JxVSecp+EWiIaGDFZXCGbL8xz1CZOc9audYYwwdgForMCiNAYQG8JsDGz1Eyzfox
-         c9OpxL1Ha88BNm57dnek/lLhghLiCKXYWjIdSIN+yKOR7hDD8T50Vof1gOlBs9LmL0ro
-         5s7ipQe6XtdiawmTwt1XOuiH8bMSGqnaWZHeGQ5uaXNQlAFEl/UbS5LYVK5NKKC3jqi1
-         aOlA==
-X-Gm-Message-State: ABy/qLbnHKmncyp56fOVTn32ipNeRtJW75/WyN+jq5jdAEQoDJY52zB6
-        gEbpHSs1qqzx7Eq7bGNzalXfewsgZ/g5Lo08/zwI1Q==
-X-Google-Smtp-Source: APBJJlFV0n95DXDQwxqmJdXH2MPxAOMyMlaxmkkTBI/+SqHkZTwUf2+71H9ekaPlfopOqd8GSWQMsw==
-X-Received: by 2002:a25:ce85:0:b0:c1b:6de8:5395 with SMTP id x127-20020a25ce85000000b00c1b6de85395mr14761758ybe.16.1689023540991;
-        Mon, 10 Jul 2023 14:12:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689023544; x=1691615544;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yjrkiGfUCzQPf2L9v0euYLFsTSJJ7KAZPw4ucV5ZStE=;
+        b=fpfXU5lvk7QaPkPR+LrwO6/cGRiHTIw02/oJK7Xu4ejPlvennTGs+1ZF4GoEOotS/y
+         OojgaGJnV1DwQdM3WnO0r5XsFK3I+PW7DokWdrNpj86oAey0I+2jrcR6trjoE8cVjr5l
+         kOYax9At4eHqlb7ROz/MCcen/wXoYXLg8inknlh621ki+9O2XnKLpYv5NSBTFkfakGLQ
+         x+kr6BQzIvrckUjzeXl+6RIQ6qlDiuH8YPDClCrOJGbElaLd7Z44IaevGwE6rvO5V9UY
+         Nu3hZvZtZMWElt1tBvhLTWxg5X8jWIXOkAeHlmYtur8GuZZl1VuRTdmq9s5skY4MRrHJ
+         00bA==
+X-Gm-Message-State: ABy/qLY56iLdWNm2I+4VULkejmLjim66ppNYXvJ6j128xVP+OyxruNx1
+        dFCS9A4189qGZjHAIZg28PMS1+JfCspcteN5WCUI1g==
+X-Google-Smtp-Source: APBJJlFDNStRVntz5xj4Xa4JTqZiTy+AaBHEo0rm7uRFHh4lkjF0UMITtgmDeuBkvXN/CF7GczyhWg==
+X-Received: by 2002:a0d:d855:0:b0:56c:f547:e058 with SMTP id a82-20020a0dd855000000b0056cf547e058mr13155252ywe.18.1689023543839;
+        Mon, 10 Jul 2023 14:12:23 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e199-20020a2550d0000000b00bf44703efd3sm150014ybb.6.2023.07.10.14.12.20
+        by smtp.gmail.com with ESMTPSA id b126-20020a0dc084000000b0056d443372f0sm181692ywd.119.2023.07.10.14.12.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jul 2023 14:12:20 -0700 (PDT)
-Date:   Mon, 10 Jul 2023 17:12:19 -0400
+        Mon, 10 Jul 2023 14:12:23 -0700 (PDT)
+Date:   Mon, 10 Jul 2023 17:12:22 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 06/16] builtin/for-each-ref.c: add `--exclude` option
-Message-ID: <aa881ca06faf1a13004b53c467704c9d338c3819.1689023520.git.me@ttaylorr.com>
+Subject: [PATCH v5 07/16] refs: plumb `exclude_patterns` argument throughout
+Message-ID: <81e223de0c82dfc213ea7d7041e66c9505c1599d.1689023520.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1689023520.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1689023520.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using `for-each-ref`, it is sometimes convenient for the caller to
-be able to exclude certain parts of the references.
+The subsequent patch will want to access an optional `excluded_patterns`
+array within `refs/packed-backend.c` that will cull out certain
+references matching any of the given patterns on a best-effort basis.
 
-For example, if there are many `refs/__hidden__/*` references, the
-caller may want to emit all references *except* the hidden ones.
-Currently, the only way to do this is to post-process the output, like:
+To do so, the refs subsystem needs to be updated to pass this value
+across a number of different locations.
 
-    $ git for-each-ref --format='%(refname)' | grep -v '^refs/hidden/'
+Prepare for a future patch by introducing this plumbing now, passing
+NULLs at top-level APIs in order to make that patch less noisy and more
+easily readable.
 
-Which is do-able, but requires processing a potentially large quantity
-of references.
-
-Teach `git for-each-ref` a new `--exclude=<pattern>` option, which
-excludes references from the results if they match one or more excluded
-patterns.
-
-This patch provides a naive implementation where the `ref_filter` still
-sees all references (including ones that it will discard) and is left to
-check whether each reference matches any excluded pattern(s) before
-emitting them.
-
-By culling out references we know the caller doesn't care about, we can
-avoid allocating memory for their storage, as well as spending time
-sorting the output (among other things). Even the naive implementation
-provides a significant speed-up on a modified copy of linux.git (that
-has a hidden ref pointing at each commit):
-
-    $ hyperfine \
-      'git.compile for-each-ref --format="%(objectname) %(refname)" | grep -vE "[0-9a-f]{40} refs/pull/"' \
-      'git.compile for-each-ref --format="%(objectname) %(refname)" --exclude refs/pull/'
-    Benchmark 1: git.compile for-each-ref --format="%(objectname) %(refname)" | grep -vE "[0-9a-f]{40} refs/pull/"
-      Time (mean ± σ):     820.1 ms ±   2.0 ms    [User: 703.7 ms, System: 152.0 ms]
-      Range (min … max):   817.7 ms … 823.3 ms    10 runs
-
-    Benchmark 2: git.compile for-each-ref --format="%(objectname) %(refname)" --exclude refs/pull/
-      Time (mean ± σ):     106.6 ms ±   1.1 ms    [User: 99.4 ms, System: 7.1 ms]
-      Range (min … max):   104.7 ms … 109.1 ms    27 runs
-
-    Summary
-      'git.compile for-each-ref --format="%(objectname) %(refname)" --exclude refs/pull/' ran
-        7.69 ± 0.08 times faster than 'git.compile for-each-ref --format="%(objectname) %(refname)" | grep -vE "[0-9a-f]{40} refs/pull/"'
-
-Subsequent patches will improve on this by avoiding visiting excluded
-sections of the `packed-refs` file in certain cases.
-
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.co>
 ---
- Documentation/git-for-each-ref.txt |  6 +++++
- builtin/for-each-ref.c             |  1 +
- ref-filter.c                       | 14 ++++++++++++
- ref-filter.h                       |  6 +++++
- t/t6300-for-each-ref.sh            | 35 ++++++++++++++++++++++++++++++
- 5 files changed, 62 insertions(+)
+ ls-refs.c             |  2 +-
+ ref-filter.c          |  2 +-
+ refs.c                | 32 +++++++++++++++++++-------------
+ refs.h                |  8 +++++++-
+ refs/debug.c          |  5 +++--
+ refs/files-backend.c  |  5 +++--
+ refs/packed-backend.c |  5 +++--
+ refs/refs-internal.h  |  7 ++++---
+ revision.c            |  2 +-
+ 9 files changed, 42 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 1e215d4e734..5743eb5def4 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 		   [--points-at=<object>]
- 		   [--merged[=<object>]] [--no-merged[=<object>]]
- 		   [--contains[=<object>]] [--no-contains[=<object>]]
-+		   [--exclude=<pattern> ...]
- 
- DESCRIPTION
- -----------
-@@ -102,6 +103,11 @@ OPTIONS
- 	Do not print a newline after formatted refs where the format expands
- 	to the empty string.
- 
-+--exclude=<pattern>::
-+	If one or more patterns are given, only refs which do not match
-+	any excluded pattern(s) are shown. Matching is done using the
-+	same rules as `<pattern>` above.
-+
- FIELD NAMES
- -----------
- 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index ccceba54aa1..350bfa6e811 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -47,6 +47,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
- 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
- 		OPT__COLOR(&format.use_color, N_("respect format colors")),
-+		OPT_REF_FILTER_EXCLUDE(&filter),
- 		OPT_REF_SORT(&sorting_options),
- 		OPT_CALLBACK(0, "points-at", &filter.points_at,
- 			     N_("object"), N_("print only refs which points at the given object"),
+diff --git a/ls-refs.c b/ls-refs.c
+index a29c2364a59..65d1fa9029e 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -194,7 +194,7 @@ int ls_refs(struct repository *r, struct packet_reader *request)
+ 		strvec_push(&data.prefixes, "");
+ 	refs_for_each_fullref_in_prefixes(get_main_ref_store(r),
+ 					  get_git_namespace(), data.prefixes.v,
+-					  send_ref, &data);
++					  NULL, send_ref, &data);
+ 	packet_fflush(stdout);
+ 	strvec_clear(&data.prefixes);
+ 	strbuf_release(&data.buf);
 diff --git a/ref-filter.c b/ref-filter.c
-index c70a430adf3..845173a904a 100644
+index 845173a904a..925d77b7b79 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2171,6 +2171,16 @@ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
- 			     filter->ignore_case);
+@@ -2215,7 +2215,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+ 
+ 	return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_repository),
+ 						 NULL, filter->name_patterns,
+-						 cb, cb_data);
++						 NULL, cb, cb_data);
  }
  
-+static int filter_exclude_match(struct ref_filter *filter, const char *refname)
-+{
-+	if (!filter->exclude.nr)
-+		return 0;
-+	if (filter->match_as_path)
-+		return match_name_as_path(filter->exclude.v, refname,
-+					  filter->ignore_case);
-+	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
-+}
-+
  /*
-  * This is the same as for_each_fullref_in(), but it tries to iterate
-  * only over the patterns we'll care about. Note that it _doesn't_ do a full
-@@ -2338,6 +2348,9 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 	if (!filter_pattern_match(filter, refname))
- 		return 0;
+diff --git a/refs.c b/refs.c
+index 876df4931f6..7e5cd84bf28 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1528,7 +1528,9 @@ int head_ref(each_ref_fn fn, void *cb_data)
  
-+	if (filter_exclude_match(filter, refname))
-+		return 0;
-+
- 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid, refname))
- 		return 0;
- 
-@@ -2877,6 +2890,7 @@ void ref_filter_init(struct ref_filter *filter)
- 
- void ref_filter_clear(struct ref_filter *filter)
+ struct ref_iterator *refs_ref_iterator_begin(
+ 		struct ref_store *refs,
+-		const char *prefix, int trim,
++		const char *prefix,
++		const char **exclude_patterns,
++		int trim,
+ 		enum do_for_each_ref_flags flags)
  {
-+	strvec_clear(&filter->exclude);
- 	oid_array_clear(&filter->points_at);
- 	free_commit_list(filter->with_commit);
- 	free_commit_list(filter->no_commit);
-diff --git a/ref-filter.h b/ref-filter.h
-index 160b8072245..1524bc463a5 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -6,6 +6,7 @@
- #include "refs.h"
- #include "commit.h"
- #include "string-list.h"
-+#include "strvec.h"
+ 	struct ref_iterator *iter;
+@@ -1544,8 +1546,7 @@ struct ref_iterator *refs_ref_iterator_begin(
+ 		}
+ 	}
  
- /* Quoting styles */
- #define QUOTE_NONE 0
-@@ -59,6 +60,7 @@ struct ref_array {
+-	iter = refs->be->iterator_begin(refs, prefix, flags);
+-
++	iter = refs->be->iterator_begin(refs, prefix, exclude_patterns, flags);
+ 	/*
+ 	 * `iterator_begin()` already takes care of prefix, but we
+ 	 * might need to do some trimming:
+@@ -1579,7 +1580,7 @@ static int do_for_each_repo_ref(struct repository *r, const char *prefix,
+ 	if (!refs)
+ 		return 0;
  
- struct ref_filter {
- 	const char **name_patterns;
-+	struct strvec exclude;
- 	struct oid_array points_at;
- 	struct commit_list *with_commit;
- 	struct commit_list *no_commit;
-@@ -94,6 +96,7 @@ struct ref_format {
+-	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
++	iter = refs_ref_iterator_begin(refs, prefix, NULL, trim, flags);
  
- #define REF_FILTER_INIT { \
- 	.points_at = OID_ARRAY_INIT, \
-+	.exclude = STRVEC_INIT, \
+ 	return do_for_each_repo_ref_iterator(r, iter, fn, cb_data);
  }
- #define REF_FORMAT_INIT {             \
- 	.use_color = -1,              \
-@@ -112,6 +115,9 @@ struct ref_format {
- #define OPT_REF_SORT(var) \
- 	OPT_STRING_LIST(0, "sort", (var), \
- 			N_("key"), N_("field name to sort on"))
-+#define OPT_REF_FILTER_EXCLUDE(var) \
-+	OPT_STRVEC(0, "exclude", &(var)->exclude, \
-+		   N_("pattern"), N_("exclude refs which match pattern"))
+@@ -1601,6 +1602,7 @@ static int do_for_each_ref_helper(struct repository *r,
+ }
+ 
+ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
++			   const char **exclude_patterns,
+ 			   each_ref_fn fn, int trim,
+ 			   enum do_for_each_ref_flags flags, void *cb_data)
+ {
+@@ -1610,7 +1612,8 @@ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 	if (!refs)
+ 		return 0;
+ 
+-	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
++	iter = refs_ref_iterator_begin(refs, prefix, exclude_patterns, trim,
++				       flags);
+ 
+ 	return do_for_each_repo_ref_iterator(the_repository, iter,
+ 					do_for_each_ref_helper, &hp);
+@@ -1618,7 +1621,7 @@ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 
+ int refs_for_each_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(refs, "", fn, 0, 0, cb_data);
++	return do_for_each_ref(refs, "", NULL, fn, 0, 0, cb_data);
+ }
+ 
+ int for_each_ref(each_ref_fn fn, void *cb_data)
+@@ -1629,7 +1632,7 @@ int for_each_ref(each_ref_fn fn, void *cb_data)
+ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
+ 			 each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(refs, prefix, fn, strlen(prefix), 0, cb_data);
++	return do_for_each_ref(refs, prefix, NULL, fn, strlen(prefix), 0, cb_data);
+ }
+ 
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+@@ -1640,13 +1643,14 @@ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_ref(get_main_ref_store(the_repository),
+-			       prefix, fn, 0, 0, cb_data);
++			       prefix, NULL, fn, 0, 0, cb_data);
+ }
+ 
+ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
++			     const char **exclude_patterns,
+ 			     each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(refs, prefix, fn, 0, 0, cb_data);
++	return do_for_each_ref(refs, prefix, exclude_patterns, fn, 0, 0, cb_data);
+ }
+ 
+ int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data)
+@@ -1663,14 +1667,14 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
+ 	int ret;
+ 	strbuf_addf(&buf, "%srefs/", get_git_namespace());
+ 	ret = do_for_each_ref(get_main_ref_store(the_repository),
+-			      buf.buf, fn, 0, 0, cb_data);
++			      buf.buf, NULL, fn, 0, 0, cb_data);
+ 	strbuf_release(&buf);
+ 	return ret;
+ }
+ 
+ int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(refs, "", fn, 0,
++	return do_for_each_ref(refs, "", NULL, fn, 0,
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
+ 
+@@ -1740,6 +1744,7 @@ static void find_longest_prefixes(struct string_list *out,
+ int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
+ 				      const char *namespace,
+ 				      const char **patterns,
++				      const char **exclude_patterns,
+ 				      each_ref_fn fn, void *cb_data)
+ {
+ 	struct string_list prefixes = STRING_LIST_INIT_DUP;
+@@ -1755,7 +1760,8 @@ int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
+ 
+ 	for_each_string_list_item(prefix, &prefixes) {
+ 		strbuf_addstr(&buf, prefix->string);
+-		ret = refs_for_each_fullref_in(ref_store, buf.buf, fn, cb_data);
++		ret = refs_for_each_fullref_in(ref_store, buf.buf,
++					       exclude_patterns, fn, cb_data);
+ 		if (ret)
+ 			break;
+ 		strbuf_setlen(&buf, namespace_len);
+@@ -2410,7 +2416,7 @@ int refs_verify_refname_available(struct ref_store *refs,
+ 	strbuf_addstr(&dirname, refname + dirname.len);
+ 	strbuf_addch(&dirname, '/');
+ 
+-	iter = refs_ref_iterator_begin(refs, dirname.buf, 0,
++	iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
+ 				       DO_FOR_EACH_INCLUDE_BROKEN);
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+ 		if (skip &&
+diff --git a/refs.h b/refs.h
+index 933fdebe584..3c03b035a3f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -344,6 +344,7 @@ int for_each_ref(each_ref_fn fn, void *cb_data);
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+ 
+ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
++			     const char **exclude_patterns,
+ 			     each_ref_fn fn, void *cb_data);
+ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+ 
+@@ -351,10 +352,15 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+  * iterate all refs in "patterns" by partitioning patterns into disjoint sets
+  * and iterating the longest-common prefix of each set.
+  *
++ * references matching any pattern in "exclude_patterns" are omitted from the
++ * result set on a best-effort basis.
++ *
+  * callers should be prepared to ignore references that they did not ask for.
+  */
+ int refs_for_each_fullref_in_prefixes(struct ref_store *refs,
+-				      const char *namespace, const char **patterns,
++				      const char *namespace,
++				      const char **patterns,
++				      const char **exclude_patterns,
+ 				      each_ref_fn fn, void *cb_data);
+ 
+ /**
+diff --git a/refs/debug.c b/refs/debug.c
+index c0fa707a1da..b7ffc4ce67e 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -229,11 +229,12 @@ static struct ref_iterator_vtable debug_ref_iterator_vtable = {
+ 
+ static struct ref_iterator *
+ debug_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
+-			 unsigned int flags)
++			 const char **exclude_patterns, unsigned int flags)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+ 	struct ref_iterator *res =
+-		drefs->refs->be->iterator_begin(drefs->refs, prefix, flags);
++		drefs->refs->be->iterator_begin(drefs->refs, prefix,
++						exclude_patterns, flags);
+ 	struct debug_ref_iterator *diter = xcalloc(1, sizeof(*diter));
+ 	base_ref_iterator_init(&diter->base, &debug_ref_iterator_vtable, 1);
+ 	diter->iter = res;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 09b4954f21c..341354182bb 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -832,7 +832,8 @@ static struct ref_iterator_vtable files_ref_iterator_vtable = {
+ 
+ static struct ref_iterator *files_ref_iterator_begin(
+ 		struct ref_store *ref_store,
+-		const char *prefix, unsigned int flags)
++		const char *prefix, const char **exclude_patterns,
++		unsigned int flags)
+ {
+ 	struct files_ref_store *refs;
+ 	struct ref_iterator *loose_iter, *packed_iter, *overlay_iter;
+@@ -877,7 +878,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	 * the packed and loose references.
+ 	 */
+ 	packed_iter = refs_ref_iterator_begin(
+-			refs->packed_ref_store, prefix, 0,
++			refs->packed_ref_store, prefix, exclude_patterns, 0,
+ 			DO_FOR_EACH_INCLUDE_BROKEN);
+ 
+ 	overlay_iter = overlay_ref_iterator_begin(loose_iter, packed_iter);
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 27bd6339ff3..dec15dee31e 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -925,7 +925,8 @@ static struct ref_iterator_vtable packed_ref_iterator_vtable = {
+ 
+ static struct ref_iterator *packed_ref_iterator_begin(
+ 		struct ref_store *ref_store,
+-		const char *prefix, unsigned int flags)
++		const char *prefix, const char **exclude_patterns,
++		unsigned int flags)
+ {
+ 	struct packed_ref_store *refs;
+ 	struct snapshot *snapshot;
+@@ -1150,7 +1151,7 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 	 * list of refs is exhausted, set iter to NULL. When the list
+ 	 * of updates is exhausted, leave i set to updates->nr.
+ 	 */
+-	iter = packed_ref_iterator_begin(&refs->base, "",
++	iter = packed_ref_iterator_begin(&refs->base, "", NULL,
+ 					 DO_FOR_EACH_INCLUDE_BROKEN);
+ 	if ((ok = ref_iterator_advance(iter)) != ITER_OK)
+ 		iter = NULL;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index f72b7be8941..9db8aec4da8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -367,8 +367,8 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
+  */
+ struct ref_iterator *refs_ref_iterator_begin(
+ 		struct ref_store *refs,
+-		const char *prefix, int trim,
+-		enum do_for_each_ref_flags flags);
++		const char *prefix, const char **exclude_patterns,
++		int trim, enum do_for_each_ref_flags flags);
  
  /*
-  * API for filtering a set of refs. Based on the type of refs the user
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 5c00607608a..7e8d5785223 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -447,6 +447,41 @@ test_expect_success 'exercise glob patterns with prefixes' '
- 	test_cmp expected actual
- '
+  * A callback function used to instruct merge_ref_iterator how to
+@@ -571,7 +571,8 @@ typedef int copy_ref_fn(struct ref_store *ref_store,
+  */
+ typedef struct ref_iterator *ref_iterator_begin_fn(
+ 		struct ref_store *ref_store,
+-		const char *prefix, unsigned int flags);
++		const char *prefix, const char **exclude_patterns,
++		unsigned int flags);
  
-+cat >expected <<\EOF
-+refs/tags/bar
-+refs/tags/baz
-+refs/tags/testtag
-+EOF
-+
-+test_expect_success 'exercise patterns with prefix exclusions' '
-+	for tag in foo/one foo/two foo/three bar baz
-+	do
-+		git tag "$tag" || return 1
-+	done &&
-+	test_when_finished "git tag -d foo/one foo/two foo/three bar baz" &&
-+	git for-each-ref --format="%(refname)" \
-+		refs/tags/ --exclude=refs/tags/foo >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<\EOF
-+refs/tags/bar
-+refs/tags/baz
-+refs/tags/foo/one
-+refs/tags/testtag
-+EOF
-+
-+test_expect_success 'exercise patterns with pattern exclusions' '
-+	for tag in foo/one foo/two foo/three bar baz
-+	do
-+		git tag "$tag" || return 1
-+	done &&
-+	test_when_finished "git tag -d foo/one foo/two foo/three bar baz" &&
-+	git for-each-ref --format="%(refname)" \
-+		refs/tags/ --exclude="refs/tags/foo/t*" >actual &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<\EOF
- 'refs/heads/main'
- 'refs/remotes/origin/main'
+ /* reflog functions */
+ 
+diff --git a/revision.c b/revision.c
+index d66857ecc09..af11d599d35 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2642,7 +2642,7 @@ static int for_each_bisect_ref(struct ref_store *refs, each_ref_fn fn,
+ 	struct strbuf bisect_refs = STRBUF_INIT;
+ 	int status;
+ 	strbuf_addf(&bisect_refs, "refs/bisect/%s", term);
+-	status = refs_for_each_fullref_in(refs, bisect_refs.buf, fn, cb_data);
++	status = refs_for_each_fullref_in(refs, bisect_refs.buf, NULL, fn, cb_data);
+ 	strbuf_release(&bisect_refs);
+ 	return status;
+ }
 -- 
 2.41.0.343.gdff068c469f
 
