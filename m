@@ -2,92 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1CA6EB64D9
-	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 04:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01268EB64D9
+	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 15:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbjGJEpB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jul 2023 00:45:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
+        id S233687AbjGJP4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jul 2023 11:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbjGJEpA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2023 00:45:00 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F298118
-        for <git@vger.kernel.org>; Sun,  9 Jul 2023 21:44:59 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-1b3ca17f2a6so3284147fac.0
-        for <git@vger.kernel.org>; Sun, 09 Jul 2023 21:44:59 -0700 (PDT)
+        with ESMTP id S233656AbjGJPzy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2023 11:55:54 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B353E5A
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 08:55:34 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id e9e14a558f8ab-34574eb05f4so17428785ab.0
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 08:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688964299; x=1691556299;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UT97KtsBhrtqhNaqQ7wsNdcJsXMgYGZOp9o2ewXwSa4=;
-        b=cXuj51tQBfDq6iqzgc+oVvai2FKUxwD7s9sZdXmdbMHMqqUWoxdxhQWvmq3yWZGPCu
-         2o+Ak9UVYwTZ+qaFP53gU8sfNqwabJpbUJEXbxsBv8UOiw2YPqrDGWunq7iIcg3mY2Lv
-         M30KQhUXsBEPM+ThsM1Jomae+jC78i0i5/Kk60cyMqhyhFd8dJcBjL8s4+B+U55Q8wNS
-         Np0VusN6Vavy4NSVoCBfqglzHgmpm9/7ri5U5bBHSISGDtaQT8vqKIf73lp340g84j3n
-         FFkYE4S+V8jV0Ac7CcScOy/q4OD2XfP+wYWsBDqQULRz2vcIz1frCyqOWdgig6VN749v
-         D2pg==
+        d=github.com; s=google; t=1689004529; x=1691596529;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vjtr21x3NY2AD1A+4HRPLrCSKIyP31CQkWAqLogoPCo=;
+        b=KgUNiiN8AQFYWNyopjnG2hyk9yissB8uKFsgxFH2bGsz1glH4CDNJ54Uf2UHRyDCaf
+         wXI74ammVONlLjGjLtI3iL77A4OAaCvMWuDHnP6mLVcG/OqTax1+EZBZETBu1KAhZSk+
+         OVhd2sKlKktnaV0EYux2JvPBbQ4RFNnqKE0yTYXaUuhEI+ZpurXsfWKmSNGpQq2yow4x
+         DqIEE4FW/zkSwWjaVfoeQyBRhmAnc9YXBHM+2yDPEEwFVeya8sIw/0g/wHU1eIFCwBtb
+         ui7CrQRGz+EvEE3kHiiG9RADCNnwhOIp6HnkuTpJGD77dc1PNHGZ5H/JWLSZ2TN9X6J1
+         stHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688964299; x=1691556299;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UT97KtsBhrtqhNaqQ7wsNdcJsXMgYGZOp9o2ewXwSa4=;
-        b=Vk36a78PaibIPvPeSHeD5DfIcp4iQxEmI4iQtEPS906lgh39e9dqHR8ou630vaY81F
-         G9bq8q0sSGwyx/Kuiw3+avpIL4CZyvoHnHzeZRcR5XnKqfbQHigW3z2nb5n/t5UjeVW5
-         nYuDe9AnaJsKe7xrrfvnJQTACn3JxzlwECcaYgrD7OLbBS6AqBGGpltN0l3VKrxnL6JF
-         UiQRXMR28KE9ymD9BIFW9qRG8MBhBpS/CzxG7KCZz2ok+Zc6jAjlKkt8BC+3WFtaWsG1
-         Fzf2kID7sez1XagHgMawEuhElFZAsCC4UbJtiVrddZtaPt/d8cSN3oOdGf/66c+Vck2K
-         OxPA==
-X-Gm-Message-State: ABy/qLYIpUsb4wP0wBtdyJMs9z24PzSmBP1QXnsJ91eZtrgKPhBXGvU/
-        qhxUsbrtp4QHBV2zVi21LO39IYfKPaJIHgPacG4=
-X-Google-Smtp-Source: APBJJlFxAxvdk55FdSMGDNZlTIrL5JMiRBe5bY/2Vb9MNarbb2cOTYAztETH+5HwGemkAPnnR3g500b9n++u7wVNMfo=
-X-Received: by 2002:a05:6870:c20e:b0:1b0:b13:c18 with SMTP id
- z14-20020a056870c20e00b001b00b130c18mr12877960oae.3.1688964298776; Sun, 09
- Jul 2023 21:44:58 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689004529; x=1691596529;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vjtr21x3NY2AD1A+4HRPLrCSKIyP31CQkWAqLogoPCo=;
+        b=BdWvtxrnnrDansflloD954A9WFd+4OL6OSXJoDwz4D1opmgE9dWsgoihuj9qoUAlK1
+         gbzwS1aq/DkWoHktuoNU+M3hM6a0i4ijh5pVAl2slv1UPavpcW8DP72NArqByBni7PQI
+         zGevZLcD2S3RPsJciZs5LYdEkMmnQj4O4kTh0B7GgCJGBJpKdcD8cw3zp6QFVIRAfCO6
+         /enFCraF3Nb5aXx33iy37/YuSRPQFH+/5SXKYAYBv4xQmR5mrgNZMDcxdTq9Ku92dNaM
+         O8izqPg9TdGYcfm+0rLFdtEAMdjmVxnSMP7LFRua9NWyD/em258ljBgAkZknYImdBx/7
+         2HYg==
+X-Gm-Message-State: ABy/qLZSgc5N4PVnFqQHJQAf12VrdnsS40cbvNFYJn2t2FcE7jZRPUHt
+        qmtEN5d/86mq6sii3+Aj6RE8
+X-Google-Smtp-Source: APBJJlF0Xx3Xvv7mfgKceTUIsMIGJd9sRFnkkzQTj8GI6KIQSjczWW9S31yw32rIr9dI9KQR9gs3Ow==
+X-Received: by 2002:a92:dc44:0:b0:345:a201:82b7 with SMTP id x4-20020a92dc44000000b00345a20182b7mr11308720ilq.26.1689004529484;
+        Mon, 10 Jul 2023 08:55:29 -0700 (PDT)
+Received: from [10.0.0.16] (75-166-6-41.hlrn.qwest.net. [75.166.6.41])
+        by smtp.gmail.com with ESMTPSA id s2-20020a92cbc2000000b00345d3f2bb6asm3564990ilq.56.2023.07.10.08.55.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jul 2023 08:55:29 -0700 (PDT)
+Message-ID: <21f0945a-c51d-304e-82ec-9f6253818668@github.com>
+Date:   Mon, 10 Jul 2023 09:55:26 -0600
 MIME-Version: 1.0
-References: <20230704194756.166111-1-alexhenrie24@gmail.com>
- <20230706040111.81110-1-alexhenrie24@gmail.com> <20230706040111.81110-2-alexhenrie24@gmail.com>
- <xmqqttugbxds.fsf@gitster.g> <xmqqo7kobwpj.fsf@gitster.g> <CAMMLpeS9_P=XXMoOdTAM3jZbaxfLEJNwYArS6p9pMXisT3TRtw@mail.gmail.com>
- <xmqq8rbra9ti.fsf@gitster.g> <CAMMLpeQ2P+qQxo17dEdWhMHcmAfTiBoEifp2wUjWVrP+oGSzxQ@mail.gmail.com>
- <xmqqbkgl6f04.fsf@gitster.g>
-In-Reply-To: <xmqqbkgl6f04.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Sun, 9 Jul 2023 22:44:21 -0600
-Message-ID: <CAMMLpeSwadTcd+z0-J1t=vUgz0wFiVaE5KaT-Wy1cckT3=fFGQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] remote: advise about force-pushing as an
- alternative to reconciliation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, git@matthieu-moy.fr, christiwald@gmail.com,
-        john@keeping.me.uk, philipoakley@iee.email,
-        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 0/6] fsck: squelch progress output with `--no-progress`
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1688776280.git.me@ttaylorr.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <cover.1688776280.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 8, 2023 at 7:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+On 7/7/2023 6:31 PM, Taylor Blau wrote:
+>This short series addresses a pair of issues where the `commit-graph
+>verify` and `multi-pack-index verify` steps of `git fsck` produce output
+>regardless of whether or not `fsck`was invoked with the
+>`--no-progress`option or not.
 >
-> Alex Henrie <alexhenrie24@gmail.com> writes:
+>The first two patches address the commit-graph and MIDX issues
+>respectively. The final four patches further clean up the output of
+>`git commit-graph verify --progress`when verifying multi-layer graphs
+>to produce a single progress meter instead of one per graph layer.
 >
-> > I agree, showing this message in the middle of `git commit` is not
-> > ideal. However, that's a separate issue that can be fixed later; it's
-> > not part of the problem I'm trying to solve in this series.
+>Before, the output of `git commit-graph verify`on a repository with a
+>commit-graph chain with two layers looked like:
 >
-> That is debatable.  Even "by the way you can pull and reconcile
-> early before you have fully finished working on the topic and are
-> ready to push back" is irrelevant during `git commit`.  "Reconciling
-> the differences is not the only way to deal with divergence; you may
-> decide to simply discard what they have with push --force" is even
-> less relevant at that time.  So it seems to be very much an integral
-> part of the problem you are tackling, at least to me.
-
-I thought we just agreed that we don't need to mention force-pushing
-in this particular message? I guess you're saying that we'd still be
-over-encouraging `git pull` if we don't remove this message from `git
-commit` altogether?
-
--Alex
+>    $ git.compile commit-graph verify
+>    Verifying commits in commit graph: 100% (4356/4356), done.
+>    Verifying commits in commit graph: 100% (131912/131912), done.
+>
+>After this patch series, the output instead looks as follows:
+>
+>    $ git.compile commit-graph verify
+>    Verifying commits in commit graph: 100% (136268/136268), done.
+Thanks for noticing and fixing these issues. The patches are structured
+well and make the refactoring easy to follow. This is especially tricky
+when swapping from recursive to iterative, but the patches break this
+down nicely.
+v1 LGTM.
+Thanks,
+-Stolee
