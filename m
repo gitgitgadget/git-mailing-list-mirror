@@ -2,140 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4FC3EB64DA
-	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 21:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 013FDEB64D9
+	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 21:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232032AbjGJVNK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jul 2023 17:13:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
+        id S232855AbjGJVNV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jul 2023 17:13:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231908AbjGJVMo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2023 17:12:44 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAA7FB
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:41 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-c4dd86f5d78so7239786276.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:41 -0700 (PDT)
+        with ESMTP id S232302AbjGJVMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2023 17:12:49 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 291B7E6B
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:47 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 46e09a7af769-6b71cdb47e1so4454991a34.2
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689023561; x=1691615561;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=x4fGxHFlcIAZYT2CBLKurvB6zt4YEHFgrdipdCyPcek=;
-        b=rJ6onLwZ/2JUV5gx5iNqNhIOI+rzcu2pAp473mWkQusJ82/w3/TjvhQDowMJeA+Oc9
-         4e+WzchDCEUswkTN5aSK3Iwf5ZGMcigB6uRRPOX/n2yzqyPsFwGMfmTnGEqDDa5NuaJh
-         Z2B2N+v7DHjOJOfv2EE+vsu8w5DvDWg9ro5Y7Y7QpzfOKtwHNj+VAD5jNxLtuVPevSAk
-         BabZphffY4P2qerSZy/xSTW9GosDRuzALZT3dPdMebnMn6B5k7I57mkmX96LbDN+YWxo
-         lJKGn4XJopgi+4lGL983sTFtDowfKpoqECs1kQeugN2D+hrRjeqBL4SjarwiGNtWZjE7
-         jHPQ==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689023566; x=1691615566;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QRhKRU6IaQRy/A9sdRYUIiKuR+/G44O9TxNQUPacLsQ=;
+        b=3iuDb4WPfvZ877/54aVBTPnZiWk3pub9Khfo4wE786mK2PxXB2R1rblULiqTba0qGs
+         CJ7CXp2GmHp8l3w/LN7k12vtgUf0PXb9jS4/No3/N5XwPjAfyRSsOw1Gml/jewHX6zQI
+         vc+iP+qw2MoBLvZwEOE09OjeI+vyBUIbs3JcoUu5urv0e1bgr1/1QzwndkAnxYnhh79C
+         Makm8GpyqU6TdgdFbgjVysE73s2BlOQeURqDx5UHRmCKMAHd1KjcI9M3is/YD+FKLS+j
+         XqpUGKGWNq+4xSvZmQUrCxvHECPTcnAHtbMJMa7SPYB8/iogz9OYkPQcCC3v9xezkIM5
+         x9aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689023561; x=1691615561;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x4fGxHFlcIAZYT2CBLKurvB6zt4YEHFgrdipdCyPcek=;
-        b=j/kbsa6WnfsZr/b1QNbI0suBXl9Uiev/WS4JIfOrClX15epDVx35IJU6GnSYJXt0A5
-         57AJBYf/81/8R4vNKsX1xjAFmv+HguRJKTM0HKtMorzecAdQUdb+UetjrkwoqBcL7zhu
-         AgVqBQky856Bg0fiBEo6LHeQAKBs0qd71L5CsO2vQWz9a6qkFlmE2c/L+/KlVXgy0LB5
-         SfyJcgMufQttYlaFbukFQivjcerojjJ5cyOjZ0LixuQtGwOVBfSAlROamT3WO7hkOJUD
-         6ZYmLNHfuKelxKlM4TpL4y7TdjUTG1/DYZj24aABO8UHPDNUk2XoPsrbxE1F2znKOaPh
-         znMQ==
-X-Gm-Message-State: ABy/qLbeFlmoP2uV1g+bp2wj5QRyihUnZtEiz2zH8rAUR/ZQ6pWFmSsM
-        u+uJO7xuFSUlaTgNNitFCyHd47159aacQUv2xWSJYQ==
-X-Google-Smtp-Source: APBJJlGrAQeDcwwWTzUmTymCBj9yIyOEiRYugYpP5zlwAQ3qD3EAq1QDjCh5o7Djw2cv0oJn18pkmA==
-X-Received: by 2002:a25:b30d:0:b0:c47:3430:bcb0 with SMTP id l13-20020a25b30d000000b00c473430bcb0mr13448058ybj.26.1689023560961;
-        Mon, 10 Jul 2023 14:12:40 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689023566; x=1691615566;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QRhKRU6IaQRy/A9sdRYUIiKuR+/G44O9TxNQUPacLsQ=;
+        b=dVOnvDviErJenYgiW4D0DNlm1iG7Xtjf7r+mxXYq4i3TcJvJQuvL7jA2RWt5+DeSsl
+         Lr82b8er7mMzCiEKDltJI/1ktCRgBW7recnk5x0h/Xe3bkq0JtEYHLQNVCyDSt8BeCYe
+         gSn0Xa+2Lht1sWegQuOraCI0xl7kxW56PsY5ILNmomE5HiGPVcWXQZvLK4kmCpfqFpMw
+         +poVwYMBQMmYcENPP8vdmq46wHROdCxlhdenXR/8G8R7h/H6oy8f3MIm5wsZxlpHOsFl
+         l/JS/7QBf75geHOgPMV+yKPZIHWnK0jKfdFlVSp3CDq9B2JVGOq16X2nseko9/Jh2yMf
+         W6hg==
+X-Gm-Message-State: ABy/qLYt9QNBIKNdeH2Crf/LRdBdnl21ZnRt50tk3mfdblLq1tTXhCc0
+        ii4lJ5GamXY0Q7cIvkg/hZyJXeuvo87G52vz84r5+w==
+X-Google-Smtp-Source: APBJJlHzf/pgZYQtA0eWNVFHi+PBPmC3yja98GecB7tthvyDZwMnaMgEwL+VZ8fJmqkKp6ocixU1/Q==
+X-Received: by 2002:a9d:6d82:0:b0:6b2:dc79:5870 with SMTP id x2-20020a9d6d82000000b006b2dc795870mr13765525otp.36.1689023566355;
+        Mon, 10 Jul 2023 14:12:46 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z1-20020a25ad81000000b00c581e8d0ae4sm136541ybi.56.2023.07.10.14.12.40
+        by smtp.gmail.com with ESMTPSA id w8-20020a253008000000b00be4f34d419asm141058ybw.37.2023.07.10.14.12.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jul 2023 14:12:40 -0700 (PDT)
-Date:   Mon, 10 Jul 2023 17:12:39 -0400
+        Mon, 10 Jul 2023 14:12:46 -0700 (PDT)
+Date:   Mon, 10 Jul 2023 17:12:45 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 13/16] refs.h: implement `hidden_refs_to_excludes()`
-Message-ID: <f99d89d53b9640db656109de06dd5e084754cc0e.1689023520.git.me@ttaylorr.com>
+Subject: [PATCH v5 15/16] upload-pack.c: avoid enumerating hidden refs where
+ possible
+Message-ID: <8544a647798de68eb46f9f5c5b269d03ed3500a5.1689023520.git.me@ttaylorr.com>
 References: <cover.1683581621.git.me@ttaylorr.com>
  <cover.1689023520.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1689023520.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In subsequent commits, we'll teach `receive-pack` and `upload-pack` to
-use the new jump list feature in the packed-refs iterator by ignoring
-references which are mentioned via its respective hideRefs lists.
+In a similar fashion as a previous commit, teach `upload-pack` to avoid
+enumerating hidden references where possible.
 
-However, the packed-ref jump lists cannot handle un-hiding rules (that
-begin with '!'), or namespace comparisons (that begin with '^'). Add a
-convenience function to the refs.h API to detect when either of these
-conditions are met, and returns an appropriate value to pass as excluded
-patterns.
+Note, however, that there are certain cases where cannot avoid
+enumerating even hidden references, in particular when either of:
 
-Suggested-by: Jeff King <peff@peff.net>
+  - `uploadpack.allowTipSHA1InWant`, or
+  - `uploadpack.allowReachableSHA1InWant`
+
+are set, corresponding to `ALLOW_TIP_SHA1` and `ALLOW_REACHABLE_SHA1`,
+respectively.
+
+When either of these bits are set, upload-pack's `is_our_ref()` function
+needs to consider the `HIDDEN_REF` bit of the referent's object flags.
+So we must visit all references, including the hidden ones, in order to
+mark their referents with the `HIDDEN_REF` bit.
+
+When neither `ALLOW_TIP_SHA1` nor `ALLOW_REACHABLE_SHA1` are set, the
+`is_our_ref()` function considers only the `OUR_REF` bit, and not the
+`HIDDEN_REF` one. `OUR_REF` is applied via `mark_our_ref()`, and only
+to objects at the tips of non-hidden references, so we do not need to
+visit hidden references in this case.
+
+When neither of those bits are set, `upload-pack` can potentially avoid
+enumerating a large number of references. In the same example as a
+previous commit (linux.git with one hidden reference per commit,
+"refs/pull/N"):
+
+    $ printf 0000 >in
+    $ hyperfine --warmup=1 \
+      'git -c transfer.hideRefs=refs/pull upload-pack . <in' \
+      'git.compile -c transfer.hideRefs=refs/pull -c uploadpack.allowTipSHA1InWant upload-pack . <in' \
+      'git.compile -c transfer.hideRefs=refs/pull upload-pack . <in'
+    Benchmark 1: git -c transfer.hideRefs=refs/pull upload-pack . <in
+      Time (mean ± σ):     406.9 ms ±   1.1 ms    [User: 357.3 ms, System: 49.5 ms]
+      Range (min … max):   405.7 ms … 409.2 ms    10 runs
+
+    Benchmark 2: git.compile -c transfer.hideRefs=refs/pull -c uploadpack.allowTipSHA1InWant upload-pack . <in
+      Time (mean ± σ):     406.5 ms ±   1.3 ms    [User: 356.5 ms, System: 49.9 ms]
+      Range (min … max):   404.6 ms … 408.8 ms    10 runs
+
+    Benchmark 3: git.compile -c transfer.hideRefs=refs/pull upload-pack . <in
+      Time (mean ± σ):       4.7 ms ±   0.2 ms    [User: 0.7 ms, System: 3.9 ms]
+      Range (min … max):     4.3 ms …   6.1 ms    472 runs
+
+    Summary
+      'git.compile -c transfer.hideRefs=refs/pull upload-pack . <in' ran
+       86.62 ± 4.33 times faster than 'git.compile -c transfer.hideRefs=refs/pull -c uploadpack.allowTipSHA1InWant upload-pack . <in'
+       86.70 ± 4.33 times faster than 'git -c transfer.hideRefs=refs/pull upload-pack . <in'
+
+As above, we must visit every reference when
+uploadPack.allowTipSHA1InWant is set. But when it is unset, we can visit
+far fewer references.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- refs.c | 24 ++++++++++++++++++++++++
- refs.h |  6 ++++++
- 2 files changed, 30 insertions(+)
+ upload-pack.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 3065e514fd0..0916a6ba582 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1482,6 +1482,30 @@ int ref_is_hidden(const char *refname, const char *refname_full,
- 	return 0;
+diff --git a/upload-pack.c b/upload-pack.c
+index da4f17f64ac..db4709adb77 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -602,11 +602,36 @@ static int get_common_commits(struct upload_pack_data *data,
+ 	}
  }
  
-+const char **hidden_refs_to_excludes(const struct strvec *hide_refs)
++static int allow_hidden_refs(enum allow_uor allow_uor)
 +{
-+	const char **pattern;
-+	for (pattern = hide_refs->v; *pattern; pattern++) {
-+		/*
-+		 * We can't feed any excludes from hidden refs config
-+		 * sections, since later rules may override previous
-+		 * ones. For example, with rules "refs/foo" and
-+		 * "!refs/foo/bar", we should show "refs/foo/bar" (and
-+		 * everything underneath it), but the earlier exclusion
-+		 * would cause us to skip all of "refs/foo".  We
-+		 * likewise don't implement the namespace stripping
-+		 * required for '^' rules.
-+		 *
-+		 * Both are possible to do, but complicated, so avoid
-+		 * populating the jump list at all if we see either of
-+		 * these patterns.
-+		 */
-+		if (**pattern == '!' || **pattern == '^')
-+			return NULL;
-+	}
-+	return hide_refs->v;
++	if ((allow_uor & ALLOW_ANY_SHA1) == ALLOW_ANY_SHA1)
++		return 1;
++	return !(allow_uor & (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
 +}
 +
- const char *find_descendant_ref(const char *dirname,
- 				const struct string_list *extras,
- 				const struct string_list *skip)
-diff --git a/refs.h b/refs.h
-index 7871faed632..23211a5ea1c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -837,6 +837,12 @@ int parse_hide_refs_config(const char *var, const char *value, const char *,
-  */
- int ref_is_hidden(const char *, const char *, const struct strvec *);
- 
-+/*
-+ * Returns an array of patterns to use as excluded_patterns, if none of the
-+ * hidden references use the token '!' or '^'.
-+ */
-+const char **hidden_refs_to_excludes(const struct strvec *hide_refs);
++static void for_each_namespaced_ref_1(each_ref_fn fn,
++				      struct upload_pack_data *data)
++{
++	const char **excludes = NULL;
++	/*
++	 * If `data->allow_uor` allows fetching hidden refs, we need to
++	 * mark all references (including hidden ones), to check in
++	 * `is_our_ref()` below.
++	 *
++	 * Otherwise, we only care about whether each reference's object
++	 * has the OUR_REF bit set or not, so do not need to visit
++	 * hidden references.
++	 */
++	if (allow_hidden_refs(data->allow_uor))
++		excludes = hidden_refs_to_excludes(&data->hidden_refs);
 +
- /* Is this a per-worktree ref living in the refs/ namespace? */
- int is_per_worktree_ref(const char *refname);
++	for_each_namespaced_ref(excludes, fn, data);
++}
++
++
+ static int is_our_ref(struct object *o, enum allow_uor allow_uor)
+ {
+-	int allow_hidden_ref = (allow_uor &
+-				(ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
+-	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
++	return o->flags & ((allow_hidden_refs(allow_uor) ? 0 : HIDDEN_REF) | OUR_REF);
+ }
  
+ /*
+@@ -855,7 +880,7 @@ static void deepen(struct upload_pack_data *data, int depth)
+ 		 * marked with OUR_REF.
+ 		 */
+ 		head_ref_namespaced(check_ref, data);
+-		for_each_namespaced_ref(NULL, check_ref, data);
++		for_each_namespaced_ref_1(check_ref, data);
+ 
+ 		get_reachable_list(data, &reachable_shallows);
+ 		result = get_shallow_commits(&reachable_shallows,
+@@ -1392,7 +1417,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 		if (advertise_refs)
+ 			data.no_done = 1;
+ 		head_ref_namespaced(send_ref, &data);
+-		for_each_namespaced_ref(NULL, send_ref, &data);
++		for_each_namespaced_ref_1(send_ref, &data);
+ 		if (!data.sent_capabilities) {
+ 			const char *refname = "capabilities^{}";
+ 			write_v0_ref(&data, refname, refname, null_oid());
+@@ -1406,7 +1431,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 		packet_flush(1);
+ 	} else {
+ 		head_ref_namespaced(check_ref, &data);
+-		for_each_namespaced_ref(NULL, check_ref, &data);
++		for_each_namespaced_ref_1(check_ref, &data);
+ 	}
+ 
+ 	if (!advertise_refs) {
 -- 
 2.41.0.343.gdff068c469f
 
