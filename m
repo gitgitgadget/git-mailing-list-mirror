@@ -2,103 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E2A3EB64D9
-	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 16:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE829EB64DA
+	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 19:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbjGJQvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jul 2023 12:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48862 "EHLO
+        id S230269AbjGJThS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jul 2023 15:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbjGJQv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2023 12:51:29 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F758E3
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 09:51:29 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id ca18e2360f4ac-783544a1c90so237732839f.1
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 09:51:29 -0700 (PDT)
+        with ESMTP id S229469AbjGJThR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2023 15:37:17 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4828D9E
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 12:37:15 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-579ed2829a8so53231747b3.1
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 12:37:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1689007888; x=1691599888;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689017834; x=1691609834;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kI/soLAloMslPVDu7tWj5UG3z+bb//Q6u4wE/wGhU4Y=;
-        b=enABn9y+2b33a2WV4Z9vGsEfyPXRhgWzvQnSa0GX5wJFQxjVqosTv46wXJ2HYZbHzd
-         PiajwcvQ50JZ7EB0sLaHwDFJpzq+WbxdDQseM7kYzYoLTd5ty0N8wyOku2wJcMLyLqBN
-         RT+IC2rRS2It7Zk6sb43MFuXwf0zNs4mZp6v8guw1JPs1YhDDHxST1rehms/q0n88p3c
-         dDLhxu6VUMWChWHS14MZdvyYOdS1iFhxpNScbbl4CCOQHCvFEdaaxBesxYT7DjnArKoY
-         sgaqqfUYvZPt45JQuexPsknceoX8Qhv8YKStEWlY9bZoV5Kofr7dszADk+rSKCRYjvA2
-         S6TA==
+        bh=zL63m3CR83xiB16SjaqjOZKtkj1pEqWHjXM7LXVdGgg=;
+        b=ISRfqyxcaTmS8ICjwrev7DW81q4sWQ1x8CJXm7JDT74H8SGCrb6j7FrWZ8caUCRpil
+         qV6zJMP5trKL7Xto+NECv2dOiXcyxbOHbyEh+FurF8YOFU0jf7Txesq4TMqpJr15z7PW
+         gWTPmMAFFzbExXwQuy3qFORkxwBhxSk6KCiXPel8BA5vtnuBdTvR+96iXbNfLcsKpICq
+         t4vxzMcRnUDd5ffB05vRD0cxAcx/npcBFcQm6h7brC1xYM0NjtKSEf2nsQ67b5m6YuuK
+         OMPowRQmEbtQC6nYRyvPctO9n3N/uedMfRGBQhUeQgpaBuRYYyzRJ7icZkXNLkzYn2ZU
+         VQ3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689007888; x=1691599888;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1689017834; x=1691609834;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kI/soLAloMslPVDu7tWj5UG3z+bb//Q6u4wE/wGhU4Y=;
-        b=MHc0168dRS/kcYVZ+ltB/Ak1DjfuiaRctl51TEe807oYENDXYcRkbsqN/TqoozoPdu
-         GbFoobvaLWmX1B3Ats0Y6gJmWxZljwmmA4Mu1Ag9DKwa5LK655AJplZmV4pptGetIozL
-         IgWSnswX86J4aI9JnjLos976WXYnAwRC90goP0wRP8V0l5tE7CtbEIZ79AfWgr+eupdA
-         nYZKhgYdua45j0RnBMoDOCYFM67ecMshHy/HVVhtDhc+u+dRqdeNLkzn566Sbb61fviY
-         X4Qsl9a6AcBNrKmhoslNqU4NNm42JDIcjnpXNis/X0PK3dLabTmFw5l04x9tyx8HUAnZ
-         mZxQ==
-X-Gm-Message-State: ABy/qLaOn1kfsQatxOjxZTqn1io2iD717Ds4R8Pd6PnEKAYDfPuvLRrh
-        5R4IxORgqCVHTtdGEg3QUKdexGQQHs3XMoE00g==
-X-Google-Smtp-Source: APBJJlH9mXLPRU318zxQ6woHuyEVf5aBa9aSYEykuvzTFerZGbAULJzMC4iwDpeQ/dI4OzQzeHjq4Q==
-X-Received: by 2002:a5e:c705:0:b0:786:8523:7578 with SMTP id f5-20020a5ec705000000b0078685237578mr15703234iop.15.1689007888487;
-        Mon, 10 Jul 2023 09:51:28 -0700 (PDT)
-Received: from [10.0.0.16] (75-166-6-41.hlrn.qwest.net. [75.166.6.41])
-        by smtp.gmail.com with ESMTPSA id ee17-20020a056638293100b0042b37080b23sm3267265jab.73.2023.07.10.09.51.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jul 2023 09:51:28 -0700 (PDT)
-Message-ID: <4715a469-8c68-8dcc-0254-9b7b857c3722@github.com>
-Date:   Mon, 10 Jul 2023 10:51:25 -0600
+        bh=zL63m3CR83xiB16SjaqjOZKtkj1pEqWHjXM7LXVdGgg=;
+        b=gWhcooSgDyn6KQ1v60Im5jLzyuCTsrTKBsI30jJU3enR/9/SgwERJ3OiVzzXqS6ZcL
+         nPZQR+sE1kP6YC3Q4WTtwZ4+sLEQALskocACSoGSnve1L68p47MGscAv9MMXz/lqn+h7
+         MMDCVWMjuRltUbpP4OkK32KOUeWbyN2K1zIrnwI2O5ZHELj3cdGVvvItXjED+GGl4ZVu
+         KPpT7R3uunk2ut0ohqbFp+mAry0EHGXgTf1Re91mHi7Sp1H9+8NrW81SimCcQywYUDDR
+         fC8ZT61Wvqa4HbGsY7qxp6G023GsVu3v/f4d4IISIQL5fBjnofc+h5RQdl+ujz6qDKPg
+         vsuw==
+X-Gm-Message-State: ABy/qLaaibUTPQR4TtdWc0tCfLIoULJNyDx7P0v63/ct7/4sV8pD1lQ4
+        X2SvSfSH8wtzSerlQ2rAUX+ZfY+1fEydi6lVQX+6pQ==
+X-Google-Smtp-Source: APBJJlHdOyE7LK7zsFQRp7i7JXNLR52lJUpFELqwO/TpLL9zkoRp1YuL1ykAjXxJ8VAHNSfaxbGkFQ==
+X-Received: by 2002:a81:91ca:0:b0:576:97b7:9335 with SMTP id i193-20020a8191ca000000b0057697b79335mr11620767ywg.52.1689017834370;
+        Mon, 10 Jul 2023 12:37:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v4-20020a816104000000b0056f3779557esm135526ywb.113.2023.07.10.12.37.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jul 2023 12:37:13 -0700 (PDT)
+Date:   Mon, 10 Jul 2023 15:37:12 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>
+Subject: [PATCH 0/2] repack: make `collect_pack_filenames()` consistent
+Message-ID: <cover.1689017830.git.me@ttaylorr.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/2] for-each-ref: add --count-matches option
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        vdye@github.com, me@ttaylorr.com, mjcheetham@outlook.com
-References: <pull.1548.git.1687792197.gitgitgadget@gmail.com>
- <9121e027fb9f157878a9624ce6c834b69cd38472.1687792197.git.gitgitgadget@gmail.com>
- <20230627073007.GD1226768@coredump.intra.peff.net>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20230627073007.GD1226768@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/27/2023 1:30 AM, Jeff King wrote:
->On Mon, Jun 26, 2023 at 03:09:57PM +0000, Derrick Stolee via GitGitGadget wrote:
->
->>+for pattern in "refs/heads/" "refs/tags/" "refs/remotes"
->>+do
->>+   test_perf "count $pattern: git for-each-ref | wc -l" "
->>+       git for-each-ref $pattern | wc -l
->>+   "
->>+
->>+   test_perf "count $pattern: git for-each-ref --count-match" "
->>+       git for-each-ref --count-matches $pattern
->>+   "
->>+done
->
->I don't think this is a very realistic perf test, because for-each-ref
->is doing a bunch of work to generate its default format, only to have
->"wc" throw most of it away. Doing:
->
->  git for-each-ref --format='%(refname)' | wc -l
->
->is much better (obviously you have to remember to do that if you care
->about optimizing your command, but that's true of --count-matches, too).
-Thank you for pointing this out! I'll be sure to modify the test and the
-analysis about it.
-The other check I need to compare is when multiple refspecs are provided
-at the same time, which I do believe still is a valuable thing to combine
-into a single process instead of multiple pipes to 'wc'.
-Did you have any thoughts on whether or not this works as an option in
-'git for-each-ref' or would be better broken into a new builtin?
-Thanks,
--Stolee
+This series combines a patch that Stolee wrote[1] as an RFC, along with
+one that I added as a follow-up on top[2].
+
+The details are spelled out in the commit messages, but the gist is that
+the first patch restores behavior from prior to 73320e49ad
+(builtin/repack.c: only collect fully-formed packs, 2023-06-07).
+
+The second patch does not change any behavior, but reimplements
+`collect_pack_filenames()` in terms of `get_all_packs()`, to make `git
+repack`'s notion of which packs exist in a usable state in the
+repository is consistent with `add_packed_git()`,
+`install_packed_git()`, etc.
+
+[1]: https://lore.kernel.org/git/pull.1546.git.1687287782439.gitgitgadget@gmail.com/
+[2]: https://lore.kernel.org/git/ZJ1N2I6sDfxhrJo8@nand.local/
+
+Derrick Stolee (1):
+  builtin/repack.c: only repack `.pack`s that exist
+
+Taylor Blau (1):
+  builtin/repack.c: avoid dir traversal in `collect_pack_filenames()`
+
+ builtin/repack.c  | 38 +++++++++++++++-----------------------
+ t/t7700-repack.sh | 47 ++++++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 57 insertions(+), 28 deletions(-)
+
+-- 
+2.41.0.320.gb3d0d9308ef
