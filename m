@@ -2,165 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0ED5EB64DA
-	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 20:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5C58EB64D9
+	for <git@archiver.kernel.org>; Mon, 10 Jul 2023 21:04:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231991AbjGJUJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jul 2023 16:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33802 "EHLO
+        id S231851AbjGJVEJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jul 2023 17:04:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231983AbjGJUJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2023 16:09:56 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89A7B13E
-        for <git@vger.kernel.org>; Mon, 10 Jul 2023 13:09:55 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1FC2918CC90;
-        Mon, 10 Jul 2023 16:09:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OEZAhagxIp2gIu3MrKp2Dgo2HzBFSiCCOKEuX5
-        C1atI=; b=PagirkKMPwVUM5uHoBZki9kQ0TDnx2Vqq1Q7d8SWyu8YLVLSBv3QGb
-        a92nDOWsaLMnkwB5WzdwJ8cF+vOnRMQ9Hw8hRovRXMuplAI4UirAs0dBgPwV4Lna
-        DxsWdZxshTz2Ft4v92bsSv6YNcJOsSSt8sOAlmDr90YDQ6J8K0qLI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1756918CC8F;
-        Mon, 10 Jul 2023 16:09:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7611F18CC8E;
-        Mon, 10 Jul 2023 16:09:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 1/2] builtin/repack.c: only repack `.pack`s that exist
-References: <cover.1689017830.git.me@ttaylorr.com>
-        <f14a88f1075093c870cd1d53b4e0cea10d5ab67d.1689017830.git.me@ttaylorr.com>
-Date:   Mon, 10 Jul 2023 13:09:50 -0700
-In-Reply-To: <f14a88f1075093c870cd1d53b4e0cea10d5ab67d.1689017830.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Mon, 10 Jul 2023 15:37:15 -0400")
-Message-ID: <xmqqedlf4jg1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229863AbjGJVEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2023 17:04:08 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AECCA1
+        for <git@vger.kernel.org>; Mon, 10 Jul 2023 14:04:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=s31663417; t=1689023045; x=1689627845; i=georgmueller@gmx.net;
+ bh=Ph9S6D6REhh6dKgVdYXZWVWH+Bt4elf++uPV5l6isx8=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=qwng+iOci6FTkHKBuinCV3uP0tpzjHTjvBOuDj3C0Yo2NozTN8/+u8n1E3vh/RvN7mQLn/l
+ +vKcEPBIfKYetht7rQ2ZQ2XQsKCDdSZ9c2s1ablGtJMs9PRekr/FGUp392Zprm8AQkpZiPqdK
+ 4GtzNRWEpv1m2xKCauP06KIAHfUvmwDsXI4gGNAyHlG05gEJ/8fI5Knbgv3EiyYHT2pb5HepU
+ 1MzH7xnL1xhKWUX3QH48HN5uHTyn1Nxjsji06YLnfPn/iQrbHqfC3z8oO3C2KZj3d0SBDAMLO
+ wOT0UXuR2w58+K1L5BPMYYS19xwDEmh+xfV5eZ3y/uFJFExuI7lw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.15.55] ([109.104.37.175]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWici-1qTr4v0kW0-00X1uU; Mon, 10
+ Jul 2023 23:04:05 +0200
+Message-ID: <2621e32f-128b-2254-3215-7a6fc69c9064@gmx.net>
+Date:   Mon, 10 Jul 2023 23:04:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BA6A968C-1F5D-11EE-851A-307A8E0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 0/2] fix resize issues on large screens
+Content-Language: en-US
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20230708105546.2945446-2-georgmueller@gmx.net>
+ <9a498c81-82b4-d441-6b5d-78ba3043b5a9@kdbg.org>
+From:   =?UTF-8?Q?Georg_M=c3=bcller?= <georgmueller@gmx.net>
+In-Reply-To: <9a498c81-82b4-d441-6b5d-78ba3043b5a9@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:B2+BwJL1VApbjseT9Vj9jO+KB78sM83XzdPvZOYdheZbDkKWJRi
+ PnEL9hNxjL4OuOwyQ/SYHwSup9gWJIs9Ru7HVEDA0o8D492Ims23dDLqmwnI0voF8ExLN1X
+ 1vc373QpFZJHuCGruVZmtfhxBaSgW3SUSP84Kb03lW+PHZDgzHIRivxNM8uJhdQrPSmkgEj
+ 9CBnuLMP0zpom3153PeEA==
+UI-OutboundReport: notjunk:1;M01:P0:+biZrHS36r4=;Om8WKI85RHD0+eBg2v1H3Mor2W7
+ piz9XQd1lw1McIZcec5fOByJryhFojRAh+m4sgtg3PgcsNrlQZJqbCsDccTm2EvBa7tcJvSWl
+ Y8QEyQxVOu5OVBHzrQArqfvY5DZpX3S3Nd/2JbltokBvQmSRyxWLXC7lm289WxcrjJYj5FTgE
+ J6I/PIyphme9SudJMFS4/FQqrg5wR0ecDUGoyFUReM1gtsvxNXiZ4Tx+BD/cWZotXSD2CyE3K
+ HeXMtItixBuwRWKHgsvRxTwj0zpeOA3FNzEz1vFcy8Dhd5igqowCPO86aGzVBXBpD3qbYcR7P
+ zXe3CC6AvdXesl9Jq9WxfubhPDCFYLqoqMgvm6eUPV2NL9cU/0c8Sammas+HUNZaB2GAvZqRn
+ j5glrTHpeBVj/qnJosVbUwDzMGAhQHxfd1EQf2gkk3xoFgGwm1DEKcYZYa74Uz3VQIDTLIvKX
+ G3LtAIwZ6esf6ZpnC5nJTL/a/02EXzUjpx6jSNrfcAVufgtndTFEqQj7KbphwD2toAspFye5z
+ IEltFKRzHWCzs0MykTtD27uUzzXB66UHvM+URulf5jsMxhyud/F18WotFAR9T9xdW4v58+jo5
+ qliFd9vqQ6Q21hwBcJumShxi7EqmL2QkwMUS3MBrmhq15W+tJ6NTwIZyeBq3EQM8NYMMrux4C
+ Lp/TP7bs6hPai1TNQN4szaHspz1hlIwnX1EBT1pcsEhRLLwQNmgDqISsbjKJutM9j1fn7eL50
+ YEn5K9O4ePjZTAeGzkF5v4BCmrpcszsnGRi/VuwvbQU+IBU6EwZWQxOnGT8ldEIrPC4ORZDYD
+ y6WimxFqHZGj3M66dZBzcBag39c/z8yqjgYoMElvci+L6N/P53zVRPzT9LDuvKUYNkSb+lnBC
+ CYVlTYv25SjaKz1fA+vOswVa7+gTk2g4yzp1j9drRs0en2PIGkJo8COx3Yy2TzUgYdAgXnn3S
+ XOjSSsOeZRLo1j6eNrC4T0uz+ZA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> Add a check to see if the .pack file exists before adding it to the list
-> for repacking. This will stop a number of maintenance failures seen in
-> production but fixed by deleting the .idx files.
+Am 10.07.23 um 18:37 schrieb Johannes Sixt:
+> Am 08.07.23 um 12:55 schrieb Georg M=C3=BCller:
+>> When opening gitk in a multi-monitor setup with different resolutions,
+>> the resize factor causes the first columns of the layout get bigger and
+>> bigger while the other columns (author, date in upper pane, file list i=
+n
+>> lower pane) shrink to a minimum size.
+>>
+>> The following setup triggers the problem on Fedora 38/Gnome 44:
+>> * primary screen 1 has a FHD resolution (1920x1080)
+>> * secondary screen 2 has a QHD resolution (2560x1440)
+>>
+>> Every time gitk opens at screen 2, the resize is triggered and the colu=
+mns
+>> are shifted 1.33x to the right (2560/1920 =3D 1.33).
+>> After multiple rounds of closing/opening gitk, the columns are at their
+>> minimum size and the contents are not visible or only a minimum is
+>> visible.
+>>
+>> The following patches are two approaches to fix the problem. Maybe the
+>> hard-coded values could be variables, this is a first shot to solve the
+>> problem.
+>
+> Since you haven't stated it explicitly, I assume that with "the problem
+> solved" the resizing does not happen anymore. That's fine, but could be
+> stated explicitly.
+>
+> When you say "two approaches", do you mean that the patches are
+> independent and either one solves the problem? And only one of them
+> should be taken?
+>
+> I've not read the code changes (because I don't know a lot of Tcl/Tk).
+> But I've seen the commit messages of the patches. They are mostly empty.
+> This cover letter has a pretty good explanation of the problem. Please
+> copy everything that is relevant for each commit to the commit message,
+> because the cover letter won't be available in the commit history.
+>
+> Thanks,
+> -- Hannes
 
-When we are adding we'd eventually add both and something that lack
-one of them will eventually become complete and will be part of the
-repacking once that happens.  When we are removing (because another
-repack has about to finish), removing either one of them will make
-the pack ineligible, which is OK.  If somebody crashed while adding
-or removing and ended up leaving only one, not both, on the
-filesystem, ignoring such a leftover stuff would be the least
-disruptive for automation.  Makes sense.
+Thank you for your suggestions. I will rephrase the commit messages and
+will resend the commits.
 
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index af79266c58..284954791d 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -213,16 +213,16 @@ test_expect_success 'repack --keep-pack' '
->  	test_create_repo keep-pack &&
->  	(
->  		cd keep-pack &&
-> -		# avoid producing difference packs to delta/base choices
-> +		# avoid producing different packs due to delta/base choices
+In general, the patches are independent and both solve it for me, but
+both of them make sense since scaling author and date columns above a
+certain resolution does not make sense anymore and having a sane minimum
+width if there is enough space for the first column also makes sense.
 
-OK.
-
->  		git config pack.window 0 &&
->  		P1=$(commit_and_pack 1) &&
->  		P2=$(commit_and_pack 2) &&
->  		P3=$(commit_and_pack 3) &&
->  		P4=$(commit_and_pack 4) &&
-> -		ls .git/objects/pack/*.pack >old-counts &&
-> +		find .git/objects/pack -name "*.pack" -type f | sort >old-counts &&
->  		test_line_count = 4 old-counts &&
->  		git repack -a -d --keep-pack $P1 --keep-pack $P4 &&
-> -		ls .git/objects/pack/*.pack >new-counts &&
-> +		find .git/objects/pack -name "*.pack" -type f | sort >new-counts &&
->  		grep -q $P1 new-counts &&
->  		grep -q $P4 new-counts &&
->  		test_line_count = 3 new-counts &&
-
-I do not think "sort" in both of these added lines is doing anything
-useful.  Does the test break without this hunk and if so how?
-
-> @@ -239,14 +239,51 @@ test_expect_success 'repack --keep-pack' '
->  			mv "$from" "$to" || return 1
->  		done &&
->  
-> +		# A .idx file without a .pack should not stop us from
-> +		# repacking what we can.
-> +		touch .git/objects/pack/pack-does-not-exist.idx &&
-
-	>.git/objects/pack/pack-does-not-exist.idx &&
-
-> +		find .git/objects/pack -name "*.pack" -type f | sort >packs.before &&
->  		git repack --cruft -d --keep-pack $P1 --keep-pack $P4 &&
-> +		find .git/objects/pack -name "*.pack" -type f | sort >packs.after &&
->  
-> -		ls .git/objects/pack/*.pack >newer-counts &&
-> -		test_cmp new-counts newer-counts &&
-> +		test_cmp packs.before packs.after &&
+Best regards,
+Georg
 
 
-I'd say the changes from "ls" to "find" in the earlier hunk is
-excusable in the name of consistency with this updated on, if the
-use of "sort" matters in this hunk, but as "ls" gives a consistent
-output unless you say "ls (-U|--sort=none)", I am not sure if we
-need "sort" in this hunk, either.  So, I dunno.
-
-"before vs after" does look like an improvement over "new vs newer".
-
-> +test_expect_success 'repacking fails when missing .pack actually means missing objects' '
-> +	test_create_repo idx-without-pack &&
-> +	(
-> +		cd idx-without-pack &&
-> +
-> +		# Avoid producing different packs due to delta/base choices
-> +		git config pack.window 0 &&
-> +		P1=$(commit_and_pack 1) &&
-> +		P2=$(commit_and_pack 2) &&
-> +		P3=$(commit_and_pack 3) &&
-> +		P4=$(commit_and_pack 4) &&
-> +		find .git/objects/pack -name "*.pack" -type f | sort >old-counts &&
-> +		test_line_count = 4 old-counts &&
-> +
-> +		# Remove one .pack file
-> +		rm .git/objects/pack/$P2 &&
-> +
-> +		find .git/objects/pack -name "*.pack" -type f |
-> +			sort >before-pack-dir &&
-> +
-> +		test_must_fail git fsck &&
-> +		test_must_fail git repack --cruft -d 2>err &&
-> +		grep "bad object" err &&
-> +
-> +		# Before failing, the repack did not modify the
-> +		# pack directory.
-> +		find .git/objects/pack -name "*.pack" -type f |
-> +			sort >after-pack-dir &&
-> +		test_cmp before-pack-dir after-pack-dir
-> +	)
-> +'
-
-Ditto for the use of "find | sort" vs "ls", but otherwise it looks
-like it is testing the right thing.
-
-Thanks.
+>>
+>> Georg M=C3=BCller (2):
+>>    gitk: limit factor scaling on resize to widths below 1900px
+>>    gitk: keep author and date colums to a minimal width on resize
+>>
+>>   gitk-git/gitk | 24 ++++++++++++++++++++++--
+>>   1 file changed, 22 insertions(+), 2 deletions(-)
+>>
+>> --
+>> 2.41.0
+>>
+>>
+>
