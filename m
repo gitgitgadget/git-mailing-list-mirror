@@ -2,223 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2ABEB64DC
-	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 08:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 589F8EB64DC
+	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 09:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbjGKIZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jul 2023 04:25:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43526 "EHLO
+        id S229924AbjGKJim (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jul 2023 05:38:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbjGKIY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2023 04:24:59 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADC0E6B
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 01:24:57 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-977e0fbd742so682812566b.2
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 01:24:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=akorzy-net.20221208.gappssmtp.com; s=20221208; t=1689063895; x=1691655895;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o4Nc/xS4u3ocXm2/gZbZZRnlYWGvvhLbgAupbE3QKnM=;
-        b=JICWIvE8wUkmulc2w2lwXwUu2Fd0cexxXmp6XmQ2OKDB6QKbpzJ/HovAaQ0h6/YJI4
-         aKsAXeM5mtt2JjzxKFOZ1dmccqGf3r9NaFu81g5PTetvxs1NYRfO/ZHbSSWTzUEFZ254
-         Vu4t9EImyWZaQzaZtvsVXnjgWnOMt27OWBxpVdq15pdsEilbHOXlAw4kthuSKaH/a73L
-         ysY4lhl83LyueiQDrk1lfc+xFHBc32IQav7U+pJYoDjbJXSLDylJEqeHarjThB0HQeiS
-         1lyKPTJo2ztm3XFBECU60OmhN5ECEDccpTV9jQdMhpASJi0NTKmaE0fzxi8vQeqPWmkZ
-         9GbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689063895; x=1691655895;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o4Nc/xS4u3ocXm2/gZbZZRnlYWGvvhLbgAupbE3QKnM=;
-        b=jVMg7FDryVKrJcAAPal9vTJV3Q1y47kkqRHkyoD/3HvEpDmO3Mgr7isp22fM5i8r1z
-         bjqx1aMZjrH1IGheqXLgpzpn+dcX8mwgEUnfijiwWUvBRzxZIbxlkg5hNq4YuTGlzB6w
-         i59QxskFbwqOJKS89N4AsCKJ0zsKvwzFbxKpUKO9LPrmVaPLPw8RKLQHXLCp4qmQaPV0
-         bLN0SPnURJCyi58ZK/xFnAJj/p/khTtNbNy0D2K9ZonjGOWgzOMyLWmboGDnrL0hi0+F
-         SB8/gMsZjKG38HbBXreouaa58jLGb0HHvqBfgmAt+dq0bfSY4NmaqDacv2MVCqqlz7uI
-         +VQw==
-X-Gm-Message-State: ABy/qLbLW8/tft9BU8F+OP1Hgt6oWPynXS8vVLrL8TSC/aeqni9CLbYv
-        rgIA5FsYdhOWaF55pGPtpMyiRS2/w+TrEcilKzfx9Q==
-X-Google-Smtp-Source: APBJJlGWJlKkxZc89Gm/y0Brq5Dus/EATH6lmOF0rGfT0FY8aP1AofZG0MuLMApXLZ7L6eJFO7qKcw==
-X-Received: by 2002:a17:906:1096:b0:993:f8b2:d6fa with SMTP id u22-20020a170906109600b00993f8b2d6famr9707605eju.21.1689063895020;
-        Tue, 11 Jul 2023 01:24:55 -0700 (PDT)
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com. [209.85.218.52])
-        by smtp.gmail.com with ESMTPSA id o16-20020a1709062e9000b00992ea405a79sm809830eji.166.2023.07.11.01.24.54
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 01:24:54 -0700 (PDT)
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-991fe70f21bso682333066b.3
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 01:24:54 -0700 (PDT)
-X-Received: by 2002:a17:906:1859:b0:98e:2c13:c44d with SMTP id
- w25-20020a170906185900b0098e2c13c44dmr11671021eje.68.1689063893865; Tue, 11
- Jul 2023 01:24:53 -0700 (PDT)
+        with ESMTP id S231217AbjGKJi2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2023 05:38:28 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601BE172C
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 02:38:06 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 50C7C5C0121;
+        Tue, 11 Jul 2023 05:38:02 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 11 Jul 2023 05:38:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1689068282; x=1689154682; bh=1U
+        bOIE5rKExQgLLOwxjTThe0loPWYEx3Z7IP3/KB0mE=; b=F21j/jrJbGc7Mcx6ue
+        IoZFBRbtC8Jh/CTKbMM44pKfoyelSZbDTwxX63yzJFbnqK7VgiR4Gmxc13k3XivY
+        ao9tP5JUQvZCxOyqyjOVMbZpAXfxhDhKrdOgZUXVqUAdndZHkqrlGXEcV0ivCu8X
+        ayuBeBOhJc1SJOMFt+E6vJB4i1y1pJa80yzIQWgOSBYM68xnpNtlsp/0D6MSrP2l
+        RLDy0FKdY5MnfNiWsqKOEfa5SBFp4k5tqMKRlK/6Tb2ST8SKWEiqdYvhEI7rA2Ow
+        /m/1jS+XKDMSqYA1YmI+V6o8pLNc/2/xrHUJEyrZ8NjST8HUXaeHiGmjxsUI3n9L
+        av7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1689068282; x=1689154682; bh=1UbOIE5rKExQg
+        LLOwxjTThe0loPWYEx3Z7IP3/KB0mE=; b=kGYiFkoy5YX2s5dHnSNq/6Woyh5pO
+        T1ZxN3vkAG8/Kr1UBiinVl8YxBt7NYqFhOlnp0bHSwUmwoxnOy6keYkDlTwbmXlk
+        GmOIqjIcDKH8tkQ7xstR4CwP5AkqKbK6yrgAe0HJKcrTx8HDIB5jgyZuqNm/C6j3
+        8J/8xP2fQvDAhMOHnpHKszVE+jfbOzZ9+DNGL7287qWa+wsysKpiXkc4m3jselmU
+        BposqHuAacMF5ef3CZ2QWNa/3RM6pU1vfZYaK85p1CAnsCQKNEEk8vbz67VkUl7z
+        mLwY8dDWx5RTpVYdSYrb6xW4qUrApSAhoTfydRSm7irWz0So5qLlPgNiw==
+X-ME-Sender: <xms:-iKtZN6EndaNkJF0QvAtlRp7AUhHt5LcmbIG02IpJCbiZDBqkDNOMg>
+    <xme:-iKtZK4iDy9G_JjNXEW56BeSEcWW-3c2awZ24hGPtKE8XHUxLzkIMAXXo_1xRDFnp
+    hIY_YNpUWwrOiGe6Q>
+X-ME-Received: <xmr:-iKtZEdwYnafRb-1r9PpVY348EP7btwwOkZVDnQykagA3lUXzs6v8OQZmyNn0x8BPrywXOkK9UUulvuNjXQ5qnOPjzCMYbWKXd8UhUl5Dc3N7w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrfedtgddukecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtdfsredttddunecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehfeehhfejheeftdetgfefjeeuueefgeefledtkefgiedtueejheefgfelleekheen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:-iKtZGIEITFaPltsKq2rlTj-VvG8s6ohmUYB0iljql1cxS2p1AzFDQ>
+    <xmx:-iKtZBKumtfqS3uBtEpHe3gShXy1cNzrT3RJja09r7FOmo5UHImBhw>
+    <xmx:-iKtZPzlvlq2enXIULoAvW-7ZmC_bgADKJGF4o4KCEr7AweGatpyGg>
+    <xmx:-iKtZOGcm5OoSCOlv95Gw_kD4YfAPNPkdSKOwgzBRbMXBRLPthdcdA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Jul 2023 05:38:01 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 1a2f9998 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 11 Jul 2023 09:36:59 +0000 (UTC)
+Date:   Tue, 11 Jul 2023 11:37:56 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 00/16] refs: implement jump lists for packed backend
+Message-ID: <eddehgbfqnmkhvhkacbvnqiiripbn6jvjawpy76ysfnpohsygt@a43fbutqg64z>
+References: <cover.1683581621.git.me@ttaylorr.com>
+ <cover.1689023520.git.me@ttaylorr.com>
+ <xmqq5y6r4con.fsf@gitster.g>
 MIME-Version: 1.0
-Reply-To: ak@akorzy.net
-From:   =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
-Date:   Tue, 11 Jul 2023 10:24:42 +0200
-X-Gmail-Original-Message-ID: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
-Message-ID: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
-Subject: Beyond Merge and Rebase: The Upstream Import Approach in Git
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="llxfqxn25yahlmlg"
+Content-Disposition: inline
+In-Reply-To: <xmqq5y6r4con.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-Git users often have to make a choice: to merge or rebase. I'm going
-to describe a third way that has the characteristics of both and is
-very well suited for tracking an open-source project or any other
-upstream branch. I'm looking for feedback on the approach.
+--llxfqxn25yahlmlg
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-MERGE OR REBASE?
+On Mon, Jul 10, 2023 at 03:35:52PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>=20
+> > Here is another reroll of my series to implement jump (n=E9e skip) lists
+> > for the packed refs backend, based on top of the current 'master'.
+>=20
+> I've skimmed the whole set again and nothing jumped at me as an
+> unexpected change.  Let's wait for a few days to see if we have
+> others comment on the patches and then merge it down to 'next'
+> unless there is something spotted in there.
+>=20
+> Thanks.
 
-Let's assume that you have forked an upstream open-source repository
-and keep the fork in your own repo. The default branch of the upstream
-repository is called "main" and is called the same in your own fork.
-You have made a few changes to the source code and committed them to
-the "main" branch of your fork. In the meantime, new changes have been
-committed to the upstream "main" branch of the project. How do you
-import the upstream changes to your fork?
+The patch series looks good to me, too, so please feel free to add my
+Reviewed-by. Thanks for these exciting changes!
 
-Let's assume that your local fork also contains a branch called
-"upstream/main", which reflects the state of the upstream's "main"
-branch. So the "main" branch contains your own changes and the
-"upstream/main" branch contains the community's changes:
+Patrick
 
-  time -->
+--llxfqxn25yahlmlg
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  o---o---o---o---o  upstream/main
-       \
-        o---o---o  main
+-----BEGIN PGP SIGNATURE-----
 
-So a different way to ask the question is: how do you bring
-upstream/main's changes into main?
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmStIu4ACgkQVbJhu7ck
+PpSLAhAAo54lQgnRsoKoRvF8Vekq/7L4FBgp94D7Xzdc4UwXu2RCqCRmpBlF/8pg
+LPi9dEq93DQAE4XulmaR+rOCd8OmCy6LOQ13AhK3RFTDmivAm+R1Yo2IVrRrZKus
+gUIj6JKQKA0MhNNQmZl3DZC3ShmRgqrd5k1o6eKZn/cFsABn9rIrcNpOZjvAl+70
+c3Dsdu65Tt00gyJFYxXG09riL/rOY2EWW9zNCxaNnaLfGc9Bituenjb72EquVG3O
+MowqmEirlYa6ijCoOBt7JJl3G9v7KLmy5XNPuwpj6M2FljzsDn5JhZQebQ50P78w
+1pQYzr496SEyXSz7CB4lI2eU9FxsoebNkASEQfUC3Rt4duz2lmQ4DS1glTYDbMV4
+Fm1DOLtQYBeIwUWLkyCszr67MEbIwn9+q7elqvjuX9R9L6XhzK9XH0DH9xGywi78
+5CmOTmT948o9cVoOzM4xD1gN2ek/4+CIC9t1uz1zCCqm5xrocbzqRphPv9gOrBNM
+tUiT+xfFFm7SyWblVRLPWMXsT2GKJADcA3SDzeNb3oL9LVQ2aNIeUfaV3AOxY+WU
+JuwL4OrECcDKXN4WO1aAVylwAmtsfshhgfolvVuDlLYb30RzL5Nq9R8VuD1iAlU1
+6ViSZTeJUxknYAvWYrmkOD+n/kIE0RQkoY+knoGBIKgXNx9urIk=
+=EsSc
+-----END PGP SIGNATURE-----
 
-One solution is to merge "upstream/main" into "main":
-
-  o---o---o---o---o  upstream/main
-       \           \
-        o---o---o---M  main
-
-The merge above would certainly work, but it becomes problematic as
-time passes and you get a lot of these merges in your "main" branch.
-You then no longer have visibility into the differences between
-"upstream/main" and "main", because your commits get lost deep in the
-history of the branch, as illustrated below:
-
-  o---o---o---o---o---o---o---o---o---o---o  upstream/main
-       \           \       \       \       \
-        o---o---o---M---o---M---o---M---o---M  main
-
-So the alternative solution is to rebase your "main" branch on top of
-"upstream/main":
-
-  o---o---o---o---o  upstream/main
-                   \
-                    o'---o'---o'  main
-
-You now have the advantage of having greater visibility into the
-differences between "upstream/main" and "main". However, a rebase
-comes with a different problem: if any user of your fork had the
-"main" branch checked out in their local repository and they run "git
-pull", they are going to get an error stating that the local and
-upstream branches have diverged. They will have to take special steps
-to recover from the rebase of the "main" branch.
-
-So how to solve that problem?
-
-THE THIRD WAY - UPSTREAM IMPORT
-
-The proposed third way is a special operation that (in the described
-use case) has the advantages of both a merge and a rebase, without the
-disadvantages. The approach is illustrated below:
-
-  o---o---o---o---o  upstream/main
-       \           \
-        \           o'---o'---o'
-         \                     \
-          o---o---o-------------S  main
-
-First, the divergent commits from "main" are rebased on top of
-"upstream/main", but then they are combined back with "main" using a
-special merge commit, which has a custom strategy: it replaces the old
-content of "main" with the new rebased content. This last commit is
-the secret sauce of this solution: the commit has two parents, like an
-ordinary merge, but has the semantics of a rebase.
-
-The structure above has the advantages of both a merge and a rebase.
-On the one hand, just like with an ordinary merge, a user who runs
-"git pull" on their local copy of "main" is not going to see the error
-about divergent branches. On the other hand, just like with an
-ordinary rebase, there is visibility into the last imported commit
-from "upstream/main" and the differences between that commit and the
-tip of "main".
-
-DROPPING PATCHES
-
-What is supposed to happen if one of the commits from "main" is ported
-to "upstream/main", as illustrated below?
-
-  o---o---o---A'---o  upstream/main
-       \
-        \
-         \
-          A---B---C  main
-
-In that case, the upstream importing operation should drop that patch,
-as illustrated below:
-
-  o---o---o---A'---o  upstream/main
-       \            \
-        \            B'---C'
-         \                 \
-          A---B---C---------S  main
-
-
-But how would the upstream importing operation know which patches to
-drop? There are one of two ways.
-
-Firstly, it can look at the git's patch-id, which is the SHA of the
-file changes with line numbers ignored. This is the same strategy that
-rebase uses to drop duplicate commits.
-
-Secondly, it can use an arbitrary change-id associated with a commit
-(for example, for projects that use Gerrit, it can be the Gerrit's
-Change-Id, which is saved in the commit message). This is useful when
-a given patch lands upstream in a slightly changed form, but is meant
-to replace the version in "main".
-
-IMPLEMENTATION
-
-The solution above has already been implemented in an open-source
-Python script called git-upstream[1], published 10 years ago. It was
-originally implemented for the OpenStack project, but the solution is
-generic and applicable to any open-source project. It is going to be
-easier for users to benefit from the ideas behind git-upstream if the
-functionality is integrated directly into git.
-
-Would you like to see the above functionality integrated directly into git?
-
-Best regards,
-Aleksander Korzynski
-
-www.linkedin.com/in/akorzy
-www.devopsera.com/blog
-
-P.S.
-
-For completeness, I'm providing links to alternative solutions for
-tracking patches:
-
-* git-upstream[1] uses the strategy described above
-* quilt[2] uses patch files saved in a source code repository
-* StGit[3] is inspired by quilt and uses git commits to store patches
-* MQ[4] is also inspired by quilt and implements a patch queue in Mercurial
-
-[1] https://opendev.org/x/git-upstream
-[2] https://savannah.nongnu.org/projects/quilt
-[3] https://stacked-git.github.io
-[4] https://wiki.mercurial-scm.org/MqExtension
+--llxfqxn25yahlmlg--
