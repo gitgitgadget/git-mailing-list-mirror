@@ -2,73 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87F69EB64DC
-	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 13:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2553EB64DC
+	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 14:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231515AbjGKNwe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jul 2023 09:52:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35188 "EHLO
+        id S232851AbjGKOtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jul 2023 10:49:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbjGKNwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2023 09:52:33 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C4E94
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 06:52:31 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id 6a1803df08f44-635decc135eso31771106d6.0
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 06:52:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689083550; x=1691675550;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HLCkt1myFgRpSSSv23nzdSPJiFt1nFMfQcyrg43Hwik=;
-        b=a/kCVpF10yx2Oqdg3FjuLGQMxPkIc71WY8Zn1tzzeMnS2Klqj+dEKKqWJWbV63CNZO
-         BrTssRZGQM5d7lv13Za3nCiwBJ27xNuM63cK8Jk8VANpVx+0PDjGKXCRUNN6IovaSnK7
-         /GdnxAmD7f/46o9XAKNLI8/mopHxM6q6CtaiVTUUL9DuETeRFOjJsVE+icV8K3tbzMqd
-         c2NycJi+2LhoIIFjor9Acvx1NaS7wZKhZ8wLpnAxFR5SgSiEV4WIuLzQugDV/X+kO2OU
-         azA7ToGZsCKA1mfVJ/sedw4j5qEcQMyK+cA9Wx1bN8dw1Ok6vfXF6ckSCPpfu4aWS59B
-         EnNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689083550; x=1691675550;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HLCkt1myFgRpSSSv23nzdSPJiFt1nFMfQcyrg43Hwik=;
-        b=jeEoh9zWGJ/DlDwas/OhdAwNELmPagajQAXCqbFQPZZTzHGMjKO2rtGwoW5kaBbPjo
-         9J9v7N3UeWUcV+iu4blSGbSSlWaROTzb13VtI9b0Jf5NugZvRzS0Zhz9XBk4adLVvGMP
-         xga5eqcsNGyXI1ewmQzFVgiw9sBwcnFnVe+Mb0RBWERhFsd6ZVVe4ZnkTLMZP7fq47VK
-         lHN/l2g7nT8gV9D+Bkk2UpSCTcUJBKuEw7Bvms1otUGBri6YFIuS71ccOerc/aTjRaMd
-         l9U2MQyuOyYFuZWit8KhIg5pwY83iUIIJdqRozPuaz21VMjJ+JVkwinF220PhvvdgRet
-         THgw==
-X-Gm-Message-State: ABy/qLZtB4UZ6ogSm0W4tdDWMGMNlRdPGSGNevtQ9oSl+K9p9o4Gzf/g
-        f4iddZRvbO4pSlvy1zLktZeGoM6qVVgeGw==
-X-Google-Smtp-Source: APBJJlFOOsoMuKztchcaEhIRvXwJkBJqAsxxwNEHTI3swBlbSWZ3+O8ITqa0pM8N+lk7TsFOoWjNig==
-X-Received: by 2002:a05:6214:ca5:b0:637:9da3:9193 with SMTP id s5-20020a0562140ca500b006379da39193mr19899435qvs.4.1689083550422;
-        Tue, 11 Jul 2023 06:52:30 -0700 (PDT)
-Received: from localhost.localdomain ([69.158.190.118])
-        by smtp.googlemail.com with ESMTPSA id i16-20020a0cf390000000b0063640486254sm1067814qvk.116.2023.07.11.06.52.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 06:52:29 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com
-Subject: [GSoC] Blog:More Sparse Index Integrations
-Date:   Tue, 11 Jul 2023 09:52:14 -0400
-Message-Id: <20230711135214.17445-1-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
+        with ESMTP id S232686AbjGKOtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2023 10:49:00 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2693F10CA
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 07:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1689086910; x=1689691710; i=l.s.r@web.de;
+ bh=RQnOwqRn29tq31OPTH9FJEVj5lMptSHZt7cYwxZj/oI=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=mLu8zhujDcS8ggYQbyhvBjOrC8KDt9c032+UpboP5dy786/gjRUCsdIk9M3TySNnvkpaLZn
+ KLnwk1Biq4cInirn6YF3NL7Cu0WbjwrIbPCQSjJ+F3oumVPtgwNpsLX0jFiZCe9xVpRaz37IX
+ sBSP3XUSLz9W2MiA/0nj3AqfBzNucEzwclASjgIu0ZtvVGhmTV9VLWAB79uSB94ifb/xBaIFK
+ CkJEbNewxtruDwGbSSNys8G7be+JWM+4gZ1Tgus0/eaNqbRkeDeLz737Lo6RUbfveB3UAH9uQ
+ FocHuAsa2K+jP3Ip7kXliuFOhUKsA4kAYfcVBjv3Yu8/xAx4TW4Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.149.250]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M28SB-1qGkch38bB-002e7d; Tue, 11
+ Jul 2023 16:48:30 +0200
+Message-ID: <e77ff965-cad1-dee3-a0a4-aa41249a875d@web.de>
+Date:   Tue, 11 Jul 2023 16:48:29 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH 2/2] for-each-ref: add --count-matches option
+To:     phillip.wood@dunelm.org.uk, Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        vdye@github.com, me@ttaylorr.com, mjcheetham@outlook.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1548.git.1687792197.gitgitgadget@gmail.com>
+ <9121e027fb9f157878a9624ce6c834b69cd38472.1687792197.git.gitgitgadget@gmail.com>
+ <20230627073007.GD1226768@coredump.intra.peff.net>
+ <f6fd39bc-65d4-76e3-94b4-9163194c89dd@gmail.com>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <f6fd39bc-65d4-76e3-94b4-9163194c89dd@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Hb+zLJi/AAjvPFboKvVSVjHCLZ3jV7YPoVDEKmYZJV5A5ttzZ3Q
+ GDiN8YPrxlQCcnIf9JtDoSUrbaTEUo5ti2obUtPgJnxjUp7+oilTFqKTUU5sJiCq0YcGS2W
+ /sCfwEjrY4viygE4gF+hyDkS84V14L1mSPqwObKGsY23vrDzJ+RJsp6KhqPtt1U2VDBBw8T
+ EtilJx6t81Ba9U+zje8jw==
+UI-OutboundReport: notjunk:1;M01:P0:5uyqDC0Alwk=;r0YJ/tMY3psEEJhe0HwdUlXX2rU
+ xRcRHg8MJKi6rZmY0/5r9elbvliXBYwetIhT/IvWWT7NgXsDA8W9lwtsex1m7gq4jeROkjaxZ
+ w+cE9FFj65gTvLbBolhWGaibEvLs9a9JkmqBVAeoyoiiBi45Ie+gihXl1KlV+0t5a3knGTU/c
+ ISzKB2HP8wdLJmWNy9/5ZM9OcLfK5bzMp6R3ZmzU1AE9JQi/tNBn0ifQfJYXXW3dkczMlIlRj
+ jmQhUohsYLYst4MBKS3Yoq5XPDrrNGb3mjAPC84+NSEq95sEV1KHzCgg4VJ+50NMl/XKMR5ua
+ nXMBwd+yH2xVfo6DSiCYv2U9ua74V2ylxzP4rbYWf9kNa/rGGeM2FFgiwmJbylvhRBwPNYudl
+ WFbnanfnrIST+RTz58BlGV2Rxra9pPmYHGHkh79ztWETVnNp6DYIALxLJQYqh2JEAly2gGTfC
+ 1DQH8QVFviGCOf53R2vKyuIujVs3FH5/HMgDGsm0l9BXBSJrWaPK05fcajN/ecXt/UmKOWZnp
+ wpa4ba0NCWqDIzxzibKyHDhm7aikbH42YiFWxVkbMcxoS76ZMVKqr4J63xsiy0mJoTYdlx67q
+ 2JpQeDUwUukXALmIG0JtZ/oR7TxLejc9Z9HllUPFNnJ4YzMdrVJYN1QNYW3geQKOtYDNhXbl2
+ uBJutp4jSnbQEwDzbujSWPflHdi3UfIo+LKrhOUbeYhf0gWCfeEBS1665S7kkBfzXjkLQLhuV
+ aOKrpegGOkF2fjbUHbldCwtop8ynfmowVYDeLc5fMWnYLvZlZRwr6nRziAFF9Oi/hU/tYLMbG
+ hGahX2lXGujOEJlL49nc8akhud9EXc9RmhceChUCkmDyDjLIo1txDk/Jb5biMI0MHZeMyy/rT
+ EO04zdBvxw1akq/spmu/VtmzexLKNri+YMKIj3MaA/2bJ+iuZJLCl+nidDz1KYPhI7dRfd/EN
+ MjscVirK2BFhot2XneB+apEXNmA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-Week 5-8 post is here
+Am 27.06.23 um 12:05 schrieb Phillip Wood:
+> On 27/06/2023 08:30, Jeff King wrote:
+>> On Mon, Jun 26, 2023 at 03:09:57PM +0000, Derrick Stolee via GitGitGadg=
+et wrote:
+>>
+>>> +for pattern in "refs/heads/" "refs/tags/" "refs/remotes"
+>>> +do
+>>> +=C2=A0=C2=A0=C2=A0 test_perf "count $pattern: git for-each-ref | wc -=
+l" "
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git for-each-ref $pattern =
+| wc -l
+>>> +=C2=A0=C2=A0=C2=A0 "
+>>> +
+>>> +=C2=A0=C2=A0=C2=A0 test_perf "count $pattern: git for-each-ref --coun=
+t-match" "
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git for-each-ref --count-m=
+atches $pattern
+>>> +=C2=A0=C2=A0=C2=A0 "
+>>> +done
+>>
+>> I don't think this is a very realistic perf test, because for-each-ref
+>> is doing a bunch of work to generate its default format, only to have
+>> "wc" throw most of it away. Doing:
+>>
+>> =C2=A0=C2=A0 git for-each-ref --format=3D'%(refname)' | wc -l
+>
+> That's a good point. I wondered if using a short fixed format string was=
+ even better so I tried
+>
+> git init test
+> cd test
+> git commit --allow-empty -m initial
+> seq 0 100000 | sed "s:\(.*\):create refs/heads/some-prefix/\1 $(git rev-=
+parse HEAD):" | git update-ref --stdin
+> git pack-refs --all
+> hyperfine -L fmt "","--format=3D%\(refname\)","--format=3Dx" 'git for-ea=
+ch-ref {fmt} refs/heads/ | wc -l'
+>
+> Which gives
+>
+> Benchmark 1: git for-each-ref=C2=A0 refs/heads/ | wc -l
+> =C2=A0 Time (mean =C2=B1 =CF=83):=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1.150 s =
+=C2=B1=C2=A0 0.010 s=C2=A0=C2=A0=C2=A0 [User: 0.494 s, System: 0.637 s]
+> =C2=A0 Range (min =E2=80=A6 max):=C2=A0=C2=A0=C2=A0 1.140 s =E2=80=A6=C2=
+=A0 1.170 s=C2=A0=C2=A0=C2=A0 10 runs
+>
+> Benchmark 2: git for-each-ref --format=3D%\(refname\) refs/heads/ | wc -=
+l
+> =C2=A0 Time (mean =C2=B1 =CF=83):=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 66.0 ms =
+=C2=B1=C2=A0=C2=A0 0.3 ms=C2=A0=C2=A0=C2=A0 [User: 58.9 ms, System: 9.5 ms=
+]
+> =C2=A0 Range (min =E2=80=A6 max):=C2=A0=C2=A0=C2=A0 65.2 ms =E2=80=A6=C2=
+=A0 67.1 ms=C2=A0=C2=A0=C2=A0 43 runs
+>
+> Benchmark 3: git for-each-ref --format=3Dx refs/heads/ | wc -l
+> =C2=A0 Time (mean =C2=B1 =CF=83):=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 63.0 ms =
+=C2=B1=C2=A0=C2=A0 0.5 ms=C2=A0=C2=A0=C2=A0 [User: 54.3 ms, System: 9.6 ms=
+]
+> =C2=A0 Range (min =E2=80=A6 max):=C2=A0=C2=A0=C2=A0 62.3 ms =E2=80=A6=C2=
+=A0 65.4 ms=C2=A0=C2=A0=C2=A0 44 runs
+>
+> Summary
+> =C2=A0 git for-each-ref --format=3Dx refs/heads/ | wc -l ran
+> =C2=A0=C2=A0=C2=A0 1.05 =C2=B1 0.01 times faster than git for-each-ref -=
+-format=3D%\(refname\) refs/heads/ | wc -l
+> =C2=A0=C2=A0 18.25 =C2=B1 0.20 times faster than git for-each-ref=C2=A0 =
+refs/heads/ | wc -l
 
-	Week 5-6: https://cheskaqiqi.github.io/2023/06/25/Week5-6/
+You don't need no "x", by the way; using the empty string saves some
+cycles for me.  In my Git clone, no special setup, 9931 refs:
 
-  Week 7-8: https://cheskaqiqi.github.io/2023/07/05/Week7-8/
+Benchmark 1: git for-each-ref --format=3Dx | wc -l
+  Time (mean =C2=B1 =CF=83):      25.1 ms =C2=B1   0.1 ms    [User: 8.7 ms=
+, System: 16.8 ms]
+  Range (min =E2=80=A6 max):    24.9 ms =E2=80=A6  25.6 ms    109 runs
 
-Thanks
-Shuqi
+Benchmark 2: git for-each-ref --format=3D | wc -l
+  Time (mean =C2=B1 =CF=83):      24.6 ms =C2=B1   0.1 ms    [User: 8.3 ms=
+, System: 16.8 ms]
+  Range (min =E2=80=A6 max):    24.4 ms =E2=80=A6  25.3 ms    110 runs
+
+Summary
+  git for-each-ref --format=3D | wc -l ran
+    1.02 =C2=B1 0.01 times faster than git for-each-ref --format=3Dx | wc =
+-l
+
+Ren=C3=A9
 
