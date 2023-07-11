@@ -2,81 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E28C001B0
-	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 22:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5428CEB64DC
+	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 22:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbjGKWJB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jul 2023 18:09:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53554 "EHLO
+        id S230495AbjGKW60 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jul 2023 18:58:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231319AbjGKWI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2023 18:08:58 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050FF1999
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 15:08:46 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F89D1AECE7;
-        Tue, 11 Jul 2023 18:08:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GKo1nnplNAk4VeXlvZdXguXS4qUI0eYHNAEkyv
-        UoQTs=; b=qE9s2bwzI+78ut8Gn7AxMd8FLuEVJ8yyndhAvYlfqeuTyi9lMbMpd2
-        3ym0D2FVCcd3dV2r1JkFsFiYI/4cIzetfoWOJLLoO2ctdJHAHfuQPCHZDL55WxBu
-        nFOu6WAY1EP6tO17wRUUVculcY84uaxj7SeR5Um9onkm6wXKBPR5s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 690441AECE6;
-        Tue, 11 Jul 2023 18:08:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA5C91AECE4;
-        Tue, 11 Jul 2023 18:08:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com
-Subject: Re: [PATCH v3 1/3] attr.c: read attributes in a sparse directory
-References: <20230707151839.504494-1-cheskaqiqi@gmail.com>
-        <20230711133035.16916-1-cheskaqiqi@gmail.com>
-        <20230711133035.16916-2-cheskaqiqi@gmail.com>
-        <xmqqjzv6w3o2.fsf@gitster.g>
-Date:   Tue, 11 Jul 2023 15:08:43 -0700
-In-Reply-To: <xmqqjzv6w3o2.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        11 Jul 2023 14:15:25 -0700")
-Message-ID: <xmqqfs5uw178.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229538AbjGKW6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2023 18:58:25 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C1FEE60
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 15:58:24 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51ddbf83ff9so6068a12.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 15:58:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1689116303; x=1691708303;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Yelit3cLWNOuwPN5+7Vn60snCIhCe7tQ9jqhvkttvjg=;
+        b=VnpgRoRg5uid84n6zXgdpkMpyaWT/Gj4x1Og+iwZ8Nby+4Nqzkb+tqOZ0eHHJHRle9
+         cF94KAYn05bVdDz8kkzmn/+Ovp6UsE//YWurVeLiXAHDPMD3bs4BZytG/btM8zyK7ADr
+         tyCoOdNCSGr1R7oBj1HDQZUwr8KPUQIRctnnjdWc7GiZ3c/hlZlGqXYm4MxfwlFOKbea
+         haT2c1M3E7V90MrpbuQ9eXuOJP83XjA6xEBK61DpXumZC46ZUUo+7v40Og+39DJO0NP1
+         Xr08+eee+etyJD+7MKrILc5ZicN9eZFNHEVgD3SNDJpebhRH3jC0VDnBBNV2QEl2VlYo
+         8iJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689116303; x=1691708303;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yelit3cLWNOuwPN5+7Vn60snCIhCe7tQ9jqhvkttvjg=;
+        b=duB8pploebQ7x+BnHUjhhXH23mzh9qmtJONo31NzsX94Wc6aJcB1SlVIe0LhX1EvYM
+         65c7Qn1buNZPMI4Uk43PBbTC6PpCFOk+KbfTYyrBxSNOBSaVRx0323iCsdSVx8NN4fdQ
+         IZXAghTYxeDGo5pkuStHfIYCp1MEH3hI+T0KmzPO8/CwKXY9K18WicQyOvDto3eyscqS
+         tShhfGKvS82TGBGbL70T5GqYrScirhyVF9gChNHpCSyD3Tj2cnDdEjU/9JmY8J7znQxp
+         R/CUh8lO574U8nV+ea4D79ypUdZIfrXI2Jd7u5Sx2eKaV4pK/7g9kqjrEy/maVwsFIK/
+         /tXA==
+X-Gm-Message-State: ABy/qLbsSCiEGuRwMGMo3oXwBOmLIpt+LsDkjuAmykEprpLx/5V6p5gM
+        G8TSOd0bukiCU9qB05WcPSBkJNv3TX1HRtrjehf5MkiEqgSeYp/k+Y3E14cF
+X-Google-Smtp-Source: APBJJlFs6bP5gVZ2Ssd5bFQ9P6xGRGAqnyT+CjQdO6Sh9D7iaUnGp8WtaKo8vZ9jzZ3vPL1KmtOlEAw8ESitxvcXatw=
+X-Received: by 2002:a50:d685:0:b0:50b:c48c:8a25 with SMTP id
+ r5-20020a50d685000000b0050bc48c8a25mr53210edi.6.1689116302681; Tue, 11 Jul
+ 2023 15:58:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 80A1A55A-2037-11EE-8318-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Tue, 11 Jul 2023 15:58:11 -0700
+Message-ID: <CAJoAoZmzBfPDyvK33eEeW=YSK_RzBnQNB3pgA84fuv4mMTVuLA@mail.gmail.com>
+Subject: Video conference libification eng discussion, this Thursday 17:00 UTC
+To:     Git List <git@vger.kernel.org>, ethomson@edwardthomson.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello folks,
 
->> -	if (!path_in_cone_mode_sparse_checkout(path, istate))
->> -		return NULL;
->> +	pos = index_name_pos_sparse(istate, path, strlen(path));
->> +	pos = - pos - 2;
->>  
->> -	buf = read_blob_data_from_index(istate, path, &size);
->> -	if (!buf)
->> -		return NULL;
->> -	if (size >= ATTR_MAX_FILE_SIZE) {
->> -		warning(_("ignoring overly large gitattributes blob '%s'"), path);
->> -		return NULL;
->> -	}
->> +	if (!path_in_cone_mode_sparse_checkout(path, istate) && 0 <= pos) {
->> +		if (!S_ISSPARSEDIR(istate->cache[pos]->ce_mode))
->> +			return NULL;
+Google is hosting a standing engineering discussion about libifying
+Git, for contributors interested in participating in or hearing about
+the progress of this effort. Expect this discussion to be free-form
+and casual - no powerpoints here!
 
-Another thing I forgot to ask.  When we are asked to read
-".gitattributes" at the top level, does this code work correctly?
-As ".gitattributes" is at the root level, it won't be hidden inside
-a sparsified directory in the index, and we do not have to search
-for its parent.  I just wanted to see if the relative_path computation
-and other things we see below will safely be skipped in such a case.
+We're hoping to hold this meeting every Thursday at 10am Pacific
+(17:00 UTC) via Google Meet.
 
-Thanks.
+To get an invite to the video conference and the notes document,
+please reply to this email. Please also add points to the agenda
+(template follows) if you want to raise awareness of them.
+
+We'll choose a topic to discuss at the beginning of the meeting, and
+I'll reply afterwards with the notes.
+
+*   (asynchronous) What's cooking in libification?
+    *   Patches we sent regarding libification
+    *   Patches for review related to the libification effort
+*   (asynchronous) What happened in the past 1-2 weeks that interested
+parties or intermittent contributors need to know?
+*   (asynchronous) Where are you stuck? What eng discussions do we
+want to have? (We'll choose a topic from this list at the beginning of
+the meeting.)
+*   Session topic: TBD
