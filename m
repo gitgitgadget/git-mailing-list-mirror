@@ -2,272 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D1ECEB64DC
-	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 21:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14FCBEB64DC
+	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 21:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbjGKVPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jul 2023 17:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33344 "EHLO
+        id S230099AbjGKVYm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jul 2023 17:24:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbjGKVPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2023 17:15:33 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E5FC133
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 14:15:31 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64787279DD;
-        Tue, 11 Jul 2023 17:15:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=/cBCaz8XPUMEH6WW6K7rE/M8r
-        mNv8u8LAPdYB09aZws=; b=M73tpxJr6/CHUy+9KSlexwWdNWHKhmH367lc+OQKD
-        OVrVdfRTSCPo3BFhHpoKwCBbu/2TDVEL86aIpQjEJKDfAAwWHWtiQhIx07H408R3
-        v9Q09SH2h3JWx2sHXSDzVA6BFkv9nzYtEZjopNpvSogH5yCPTeYuh1tyR2DNg23i
-        QY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5CAC3279DC;
-        Tue, 11 Jul 2023 17:15:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E80DE279DB;
-        Tue, 11 Jul 2023 17:15:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com
-Subject: Re: [PATCH v3 1/3] attr.c: read attributes in a sparse directory
-References: <20230707151839.504494-1-cheskaqiqi@gmail.com>
-        <20230711133035.16916-1-cheskaqiqi@gmail.com>
-        <20230711133035.16916-2-cheskaqiqi@gmail.com>
-Date:   Tue, 11 Jul 2023 14:15:25 -0700
-Message-ID: <xmqqjzv6w3o2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229547AbjGKVYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2023 17:24:41 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DADE811B
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 14:24:39 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1b89b75dc1cso395795ad.1
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 14:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1689110679; x=1691702679;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NSEIwVxjEjaRXQ5iDz+ITCyxMUMWvWRiHFWYZM2CoUg=;
+        b=iA7u/8lyJMeO9o+dg6CwO3y9oosPzD0WS8GcIgn4cgrf0cr3tSVQrb1zMOdkpaATQw
+         1kyvY1nCq2NT/zHA+SLzUDEPzGe4bIh6nHzSRzYSByr+GqPsb/imkFx4HHi8f0A4TDqj
+         hwADL850NN+8/s8dNEtDv6VLbTsRGFhw0UsxdmyGC+eZ2igVorsPZ31fvH1YBoKCso/0
+         RMkjG3vH/hgCuGy1v9OKybOqFkF8SE+uWkDfl3XZzfmQKUf87paldGOuhHBkTgeOUrUM
+         Mbwjisk+A1eYM76AE89U/23f1Cu1rPH5nbx2DueUb0yP08rtiVXekWIBa6XCa7k85dJs
+         97rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689110679; x=1691702679;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NSEIwVxjEjaRXQ5iDz+ITCyxMUMWvWRiHFWYZM2CoUg=;
+        b=jRx5wHgtod3VKqbj28OQh3Gk/ls3J5hCWlUpdOafOWrcL4tWbeR1actceJmYdk7sJ3
+         2XR209U7VAgfAycsjzThSw9wXbVL0XhCSxqMrM3W4W39t/XAJeH+5b+m/1Y5qrRnWRpA
+         4yLMKW+NNeB6d98toZt2E1UXENKBkIiwb1AqBm1BtisGOM4MkavoZpOhp3IQAv02gO4D
+         /lXXR2L/Bmh65v9OV9vRW24tiHqUd6ERa5T4PoCJszMHkn5V8seWS6xMmlNl2MPopaEx
+         SGkewlfPgK7Njz5Suz7ch5bcOhWqyv48yoZWZ95tAh7zxgZ05sVAeLVZLF0zRp4E6fFu
+         CHKw==
+X-Gm-Message-State: ABy/qLaHXFQdGi4y2sq3FMzSLGy2Vnyze7ZUyn56DUO4dR5qlNemwkkq
+        bSBPtJDCZzhVWTjCkFbu4xFI0S4hRagz1wSRQA==
+X-Google-Smtp-Source: APBJJlGhOnkSxZnlvT0pNUED3eoWUnvyUojb7QkEA64CJVrUPdOu8OuZFLh/f5aXZInOyglBEFEg7A==
+X-Received: by 2002:a17:902:e884:b0:1b8:948b:41b6 with SMTP id w4-20020a170902e88400b001b8948b41b6mr35077plg.10.1689110679257;
+        Tue, 11 Jul 2023 14:24:39 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id y24-20020a1709029b9800b001ac5896e96esm2362000plp.207.2023.07.11.14.24.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jul 2023 14:24:38 -0700 (PDT)
+Message-ID: <e4a77d0f-cf1d-ef76-fe26-ad5e58372a02@github.com>
+Date:   Tue, 11 Jul 2023 14:24:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0E8C4C9C-2030-11EE-AC84-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: Re: [PATCH v3 1/3] attr.c: read attributes in a sparse directory
+Content-Language: en-US
+To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <20230707151839.504494-1-cheskaqiqi@gmail.com>
+ <20230711133035.16916-1-cheskaqiqi@gmail.com>
+ <20230711133035.16916-2-cheskaqiqi@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20230711133035.16916-2-cheskaqiqi@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
-
+Shuqi Liang wrote:
 > 'git check-attr' cannot currently find attributes of a file within a
 > sparse directory. This is due to .gitattributes files are irrelevant in
 > sparse-checkout cone mode, as the file is considered sparse only if all
-> paths within its parent directory are also sparse.
+> paths within its parent directory are also sparse. 
 
-I do not quite understand what these two sentences want to say.  If
-the attribute files are truly irrelevant then "cannot find" does not
-matter, because there is no point in finding irrelevant things that
-by definition will not affect the outcome of any commands at all,
-no?
+If .gitattributes files are irrelevant in sparse-checkout cone mode, then
+why are we changing the behavior? If you're challenging that assertion,
+please state so clearly.
 
-> In addition,
-> searching for a .gitattributes file causes expansion of the sparse
+> In addition,> searching for a .gitattributes file causes expansion of the sparse
 > index, which is avoided to prevent potential performance degradation.
 
-Does this sentence want to say that there is a price to pay, in
-order to read an attribute file that is not part of the cones of
-interest, that you first need to expand the sparse index?  I think
-that is a given and I am not sure what the point of saying it is.
+This isn't an unchangeable fact (as your implementation below shows).
+Expanding the index is just the most straightforward approach, but the
+performance cost of that is (AFAICT) a reason used to justify why we didn't
+read sparse directory attributes in the past.
 
+> 
 > However, this behavior can lead to missing attributes for files inside
 > sparse directories, causing inconsistencies in file handling.
-
-I agree.  Not reading attribute files correctly will lead to a bug.
-
-Let me rephase what (I think) you wrote below to see if I understand
-what you are doing correctly.
-
-Suppose that sub1/.gitattributes need to be read, when the calling
-command wants to know about attributes of sub1/file.  Imagine that
-sub1/ and sub2/ are both outside the cones of interest. It would be
-better not to expand sub2/ even though we need to expand sub1/.  Not
-calling ensure_full_index() upfront and instead expanding the
-necessary subdirectories on demand would be a good way to solve it.
-
-Is that what going on?
-
+> 
 > To resolve this, revise 'git check-attr' to allow attribute reading for
-> files in sparse directories from the corresponding .gitattributes files=
-:
->
+> files in sparse directories from the corresponding .gitattributes files:
+> 
 > 1.Utilize path_in_cone_mode_sparse_checkout() and index_name_pos_sparse
 > to check if a path falls within a sparse directory.
->
+> 
 > 2.If path is inside a sparse directory, employ the value of
-> index_name_pos_sparse() to find the sparse directory containing path an=
-d
+> index_name_pos_sparse() to find the sparse directory containing path and
 > path relative to sparse directory. Proceed to read attributes from the
 > tree OID of the sparse directory using read_attr_from_blob().
->
-> 3.If path is not inside a sparse directory=EF=BC=8Censure that attribut=
-es are
+> 
+> 3.If path is not inside a sparse directory，ensure that attributes are
 > fetched from the index blob with read_blob_data_from_index().
->
+
+Makes sense to me.
+
+> 
 > Helped-by: Victoria Dye <vdye@github.com>
 > Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
 > ---
 >  attr.c | 47 ++++++++++++++++++++++++++++-------------------
 >  1 file changed, 28 insertions(+), 19 deletions(-)
-
-Thanks.
-
+> 
 > diff --git a/attr.c b/attr.c
 > index 7d39ac4a29..be06747b0d 100644
 > --- a/attr.c
 > +++ b/attr.c
-> @@ -808,35 +808,44 @@ static struct attr_stack *read_attr_from_blob(str=
-uct index_state *istate,
->  static struct attr_stack *read_attr_from_index(struct index_state *ist=
-ate,
+> @@ -808,35 +808,44 @@ static struct attr_stack *read_attr_from_blob(struct index_state *istate,
+>  static struct attr_stack *read_attr_from_index(struct index_state *istate,
 >  					       const char *path, unsigned flags)
 >  {
-> +	struct attr_stack *stack =3D NULL;
+> +	struct attr_stack *stack = NULL;
 >  	char *buf;
 >  	unsigned long size;
 > +	int pos;
-> =20
+>  
 >  	if (!istate)
 >  		return NULL;
-> =20
+>  
 >  	/*
 > -	 * The .gitattributes file only applies to files within its
 > -	 * parent directory. In the case of cone-mode sparse-checkout,
 > -	 * the .gitattributes file is sparse if and only if all paths
 > -	 * within that directory are also sparse. Thus, don't load the
 > -	 * .gitattributes file since it will not matter.
-
-Imagine that you have a tree with sub1/ outside the cones of
-interest and sub2/ and sub9/ inside the cones of interest, and
-further imagine that sub1/.gitattributes and sub2/.gitattributes
-give attribute X to sub1/file and sub2/file respectively.  There
-is no sub9/.gitattributes file.
-
-Then "git ls-files ':(attr:X)sub[0-9]'" _could_ have two equally
-sensible behaviours:
-
- (1) Only show sub2/file because sub1/ is outside the cones of
-     interest and the user does not want to clutter the output
-     from the parts of the tree they are not interested in.
-
- (2) Show both sub1/file and sub2/file, even though sub1/ is outside
-     the cones of interest, in response to the fact that the mention
-     of "sub[0-9]" on the command line is an explicit indication of
-     interest by the user (it would become more and more interesting
-     if the pathspec gets less specific, like ":(attr:X)" that is
-     treewide, though).
-
-The original comment seems to say that only behaviour (1) is
-supported, but I wonder if we eventually want to support both,
-choice made by the calling code (and perhaps options)?  In any case,
-offering the choice of (2) is a good thing in the longer run.
-Anyway...
-
-> +	 * If the pos value is negative, it means the path is not in the inde=
-x.=20
-> +	 * However, the absolute value of pos minus 1 gives us the position w=
-here the path=20
-> +	 * would be inserted in lexicographic order. By subtracting another 1=
- from this=20
-> +	 * value (pos =3D -pos - 2), we find the position of the last index e=
-ntry=20
-> +	 * which is lexicographically smaller than the provided path. This wo=
-uld be=20
+> -	 *
+> -	 * In the case of a sparse index, it is critical that we don't go
+> -	 * looking for a .gitattributes file, as doing so would cause the
+> -	 * index to expand.
+> +	 * If the pos value is negative, it means the path is not in the index. 
+> +	 * However, the absolute value of pos minus 1 gives us the position where the path 
+> +	 * would be inserted in lexicographic order. By subtracting another 1 from this 
+> +	 * value (pos = -pos - 2), we find the position of the last index entry 
+> +	 * which is lexicographically smaller than the provided path. This would be 
 > +	 * the sparse directory containing the path.
 
-That is true only if the directory containing the .gitattribute file
-is sparsified (e.g. sub1/.gitattributes does not appear in the index
-but sub1/ does; sub2/.gitattributes however does appear in the index
-and there is no sub2/ in the index).
+This is a good explanation of what '-pos - 2' represents, but it doesn't
+explain why we'd want that value. Could you add a bit of detail around why
+1) we care whether 'pos' identifies a value that exists in the index or not,
+and 2) why we're looking for the sparse directory containing the path?
 
-If not, there are two cases:
-
- * sub2/.gitattributes does appear in the index (and there is no
-   sub2/ in the index).  "pos =3D - pos - 2" computes a nonsense
-   number in this case; hopefully we can reject it early by noticing
-   that the resulting pos is negative.
-
- * sub9/.gitattributes does not belong to the project.  The pos is
-   negative and "- pos - 2" does not poihnt at sub9/ (as it is not
-   sparse).  Depending on what other paths appear in sub9/., the
-   path that appears at (-pos-2) may be inside or outside sub9/.  In
-   the worst case, it could be a sparsified directory that sorts
-   directly before sub9/ (say, there is sub8/ that is sparse, which
-   may have .gitattributes in it).  Would the updated code
-   mistakenly check S_ISSPARSEDIR() on sub8/ that has no relevance
-   when we are dealing with sub9/.gitattributes that does not exist?
-
+>  	 */
 > -	if (!path_in_cone_mode_sparse_checkout(path, istate))
 > -		return NULL;
-> +	pos =3D index_name_pos_sparse(istate, path, strlen(path));
-> +	pos =3D - pos - 2;
-> =20
-> -	buf =3D read_blob_data_from_index(istate, path, &size);
+> +	pos = index_name_pos_sparse(istate, path, strlen(path));
+> +	pos = - pos - 2;
+
+nit: don't add the space between '-' and 'pos'. This should be:
+
+	pos = -pos - 2;
+
+>  
+> -	buf = read_blob_data_from_index(istate, path, &size);
 > -	if (!buf)
 > -		return NULL;
-> -	if (size >=3D ATTR_MAX_FILE_SIZE) {
+> -	if (size >= ATTR_MAX_FILE_SIZE) {
 > -		warning(_("ignoring overly large gitattributes blob '%s'"), path);
 > -		return NULL;
 > -	}
-> +	if (!path_in_cone_mode_sparse_checkout(path, istate) && 0 <=3D pos) {
+> +	if (!path_in_cone_mode_sparse_checkout(path, istate) && 0 <= pos) {
+
+Typically, we try to put the less expensive operation first in a condition
+like this (if the first part of the condition is 'false', the second part
+won't be evaluated). 'path_in_cone_mode_sparse_checkout()' is more expensive
+than a simple numerical check, so this should probably be:
+
+	if (pos >= 0 && !path_in_cone_mode_sparse_checkout(path, istate)) {
+
+But on a more general note, why check 'path_in_cone_mode_sparse_checkout()'
+at all? The goal is to determine whether 'path' is inside a sparse
+directory, so first you search the index to find where that directory would
+be, then - if 'path' isn't in the sparse-checkout cone - check whether the
+index entry you found is a sparse directory. But sparse directories can't
+exist within the sparse-checkout cone in the first place, so the
+'path_in_cone_mode_sparse_checkout()' is redundant. 
+
+Instead, 'path_in_cone_mode_sparse_checkout()' (and probably
+'istate->sparse_index', since sparse directories can't exist if the index
+isn't sparse) could be used to avoid calculating 'index_name_pos_sparse()'
+in the first place; the index search operation is generally more expensive
+than 'path_in_cone_mode_sparse_checkout()', especially when sparse-checkout
+is disabled entirely.
+
 > +		if (!S_ISSPARSEDIR(istate->cache[pos]->ce_mode))
 > +			return NULL;
+>  
+> -	return read_attr_from_buf(buf, path, flags);
+> +		if (strncmp(istate->cache[pos]->name, path, ce_namelen(istate->cache[pos])) == 0) {
 
-So earlier, the code, given say sub1/.gitattributes, checked if that
-path is outside the cones of interest and skipped reading it.  But
-the updated code tries to check the same "is it outside or inside?"
-condition for sub1/ directory itself.  Does it make a practical
-difference that you can demonstrate with a test?
+All of these nested conditions could be simplified/collapsed into a single,
+top-level condition:
 
-I do not know if the updated code does the right thing for
-sub2/.gitattributes (exists in a non-sparse directory) and
-sub9/.gitattributes (does not exist in non-sparse directory),
-though.
+	if (pos >= 0 && !path_in_cone_mode_sparse_checkout(path, istate) &&
+	    S_ISSPARSEDIR(istate->cache[pos]->ce_mode) &&
+	    !strncmp(istate->cache[pos]->name, path, ce_namelen(istate->cache[pos]))) {
 
-> +		if (strncmp(istate->cache[pos]->name, path, ce_namelen(istate->cache=
-[pos])) =3D=3D 0) {
+IMO, this also more clearly reflects _why_ you'd want to enter this
+condition and read from the index directly:
 
-Don't compare with "=3D=3D0", write !strncmp(...) instead.
+* If the path is not in the sparse-checkout cone
+* AND the index entry preceding 'path' is a sparse directory
+* AND the sparse directory is the prefix of 'path' (i.e., 'path' is in the
+  directory) 
+    -> Read from the sparse directory's tree
 
-> +			const char *relative_path =3D path + ce_namelen(istate->cache[pos])=
-; =20
-> +			stack =3D read_attr_from_blob(istate, &istate->cache[pos]->oid, rel=
-ative_path, flags);
+One other quick sanity check - for the sparse directory prefixing check to
+work, 'path' needs to be a normalized path relative to the root of the repo.
+Is that guaranteed to be the case here?
+
+> +			const char *relative_path = path + ce_namelen(istate->cache[pos]);  
+
+Here, you get the relative path within the sparse directory by skipping past
+the sparse directory name in 'path'. If 'path' is normalized (see above),
+this works. Nice!
+
+> +			stack = read_attr_from_blob(istate, &istate->cache[pos]->oid, relative_path, flags);
 > +		}
+> +	} else {
+> +		buf = read_blob_data_from_index(istate, path, &size);
+> +		if (!buf)
+> +			return NULL;
+> +		if (size >= ATTR_MAX_FILE_SIZE) {
+> +			warning(_("ignoring overly large gitattributes blob '%s'"), path);
+> +			return NULL;
+> +		}
+> +		stack = read_attr_from_buf(buf, path, flags);
+> +	}
+> +	return stack;
+>  }
+>  
+>  static struct attr_stack *read_attr(struct index_state *istate,
 
-If the earlier "- pos - 2" misidentified the parent sparse directory
-entry in the index and the strncmp() noticed that mistake, we would
-come here without reading any new attribute stack frame.  Don't we
-need to fallback reading from the path in the correct directory that
-is not at "- pos - 2"?
-
-Let's imagine this case where sub/ is a directory outside the cones
-of interest, and our sparse-index may or may not have it as a
-directory in the index, and then the caller asks to read from the
-"sub/sub1/.gitattributes" file.  Even when "sub/" is expanded in the
-index, "sub/sub1/" may not and appear as a directory in the index.
-
-The above "find relative_path and read from the tree object" code
-would of course work when the direct parent directory of
-".gitattributes" is visible in the index, but interestingly, it
-would also work when it does not.  E.g. if "sub/" is represented as
-a directory in the index, then asking for "sub1/.gitattributes"
-inside the tree object of "sub/" would work as get_tree_entry() used
-by read_attr_from_blob() would get to the right object recursively,
-so that is nice.  If that is why "'- pos - 2' must be the directory
-entry in the index that _would_ include $leadingpath/.gitattributes
-regardless of how many levels of directory hierarchy there are
-inside $leadingpath" idea was chosen, I'd have to say that it is
-clever ;-)
-
-I however find the "'- pos - 2' must be the directory entry in the
-index" trick hard to reason about and explain.  I wonder if we write
-this in a more straight-forward and stupid way, the result becomes
-easier to read and less prone to future bugs...
-
-Thanks.
