@@ -2,181 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53109EB64DD
-	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 17:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12CEFEB64DC
+	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 17:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231258AbjGKRcm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jul 2023 13:32:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
+        id S231947AbjGKRhk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jul 2023 13:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231241AbjGKRck (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2023 13:32:40 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FFBC9F
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:32:39 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-57722942374so71584077b3.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:32:39 -0700 (PDT)
+        with ESMTP id S232199AbjGKRhe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2023 13:37:34 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21D73E4D
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:37:31 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5768a7e3adbso103904947b3.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:37:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689096758; x=1691688758;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689097050; x=1691689050;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=f/ZTKsg88zeCnJUhYV5+8RVDAEvsDJW0aF37JsyAb28=;
-        b=gxkQyVYBvI/9oBVqvLGLPVZ9kqFNPsBk9hlQkqJJtp1Le4NA0PffU/fxvxTxnHY4Or
-         w+z1HthPCP98NqRT19S0Pa6Gi/4kkHRgKpQ0Egb7Vat1JME1oIz62mMBpgCCMukhYMq+
-         8TC8AmjdbmYewgEcnFwfcB1OFu8J9dqzKzs+TNOAIG2wS/QY96T6wOkENATRBHN3Vwoy
-         BrKg3L4T2qmzV8wJr4mNy0Yzso6An/BWUYenyKmt8qX+p5qnI6rFkCQlflcNGiLrNfP2
-         /aF2/WfoFwL8Y+W8EHLB6akrIevXlzd79HhPJtrrxnZDQbFBwwqMOTvwxsosa7yiK7rv
-         nbqg==
+        bh=Oh8jbqjHmOnAdDtp2QA6P0ZpyKEg1p0sz49kbewcDBo=;
+        b=f+Wc+Z333QoiqzCSfp1SoM0UYxGwXbPoS5vXfE4f5cpA/oASKxctcat3zooilxg1RM
+         TPA6RRbkPWBBQHqBamJDP3EcipJ9enEKwlvKkuwCoQCo4b2QiM0wSKzEpMlgU6SLjIMz
+         3A/UrLvlinwEFypf1eaeLUCH3KcFYp/jLYoAjPaovqxPyqE0l0VsQmTTSfox00BnHM8m
+         USKcfv0RRHSwJ04dmFajLt9faoQEEVagM/ANw3iwf/UTO9QnML0hcAh36AKSBnbfs88Z
+         QTl3idI9IjnA5FT/LSwVrKi8rErbgtwMlJdnW8YyXPZXGJeMdz0jk2nOayWZuNLVldj4
+         lyOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689096758; x=1691688758;
+        d=1e100.net; s=20221208; t=1689097050; x=1691689050;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f/ZTKsg88zeCnJUhYV5+8RVDAEvsDJW0aF37JsyAb28=;
-        b=kNc3TlQmmRSoK/yBhrkANt3wjsSHd2zbgABBDh47BT+UsVxAIyRrD3gOhnlvNSMvDL
-         Dzl6dOBCKwJ9GTBP8Q8CkCBqZSswd6EsbodFQg9W8zqmyt9zAd+xDwpVeI8vbNyAQ/K3
-         C4qfh1QLW6dSMqKxocmU6o9BzVRXDM2lC3bX3POLOhi8llF5ppQLDnSNQtIODsyaY6pH
-         FH/PzC9ITwSPLMqrEMRP1Ueelu+74sijZWkIkYNCEbg64XTuMagKw7Ukt0FxHFMGM6+x
-         bmUmymUPtOIMGmrxp77FCBFju1DnN5fKquDkSk/VavRIVotQjAVRmgzwmHZFxTyh6v4a
-         t6wQ==
-X-Gm-Message-State: ABy/qLbViXSBTlkcvGGm7YK9lZqUaumqKqrgz1BhXuFol8Z2GVGPmjBs
-        z/+abzATKzUIWiJ2t4d2fLPzVoSnqUoXBzn26A4qIA==
-X-Google-Smtp-Source: APBJJlEnsIrHRz07xrFoo8JxPieOcWSKzpi4CUjyjCjO2CDTZRNnqnqWGgaSifq70ROrap3Nu1V2Hg==
-X-Received: by 2002:a81:7dc1:0:b0:573:9751:ad15 with SMTP id y184-20020a817dc1000000b005739751ad15mr15271193ywc.17.1689096758461;
-        Tue, 11 Jul 2023 10:32:38 -0700 (PDT)
+        bh=Oh8jbqjHmOnAdDtp2QA6P0ZpyKEg1p0sz49kbewcDBo=;
+        b=SyaWLH6rirCFHznjX062QnYfaVcXrjd7kSDK9W1+YN6Y5xHU0DhFlmNcBILNMd2tDZ
+         qqFVddeZdI74OAoBKkYtYb04fFmmXu3jinsFhL0bKplLG4JeMFuBiEu+mH6gI8kBR2ZW
+         NYyEpdaTWR1AZT868OKsOHZ+QJblr/OqUL+VzocK/FSrDJXcw1CpFVRtZKAyO8C1FnMp
+         9V2OE4cYcdk7HqIMi56LMhQl6H0UvKehIyy0qmoC5DP5ezSjZQRUY98oLkjiZDKFjgCm
+         nW7jnwDQQZuvVzRwrXUSaO0Le3WcsoupJUjqVEdUwAPJTiwNwl12OhoAKssmd4qS6E+T
+         SadA==
+X-Gm-Message-State: ABy/qLbyE1qWIozH00pai2NSg7zRwmdSRUlE0YVk3OBs9rvcHMZhRgm5
+        n8cCSNqEVvUzjjxWWsJg+1epdu6jzTLRBfRM2nsOFA==
+X-Google-Smtp-Source: APBJJlFsOuEEJH97sGNg6RTEWMaG151Fku4+SVX78DE74yJ31KKhUdFV9OYQh/6Q+uy9ylTo1b2Rzg==
+X-Received: by 2002:a0d:d409:0:b0:56f:f83f:618 with SMTP id w9-20020a0dd409000000b0056ff83f0618mr13427344ywd.19.1689097050186;
+        Tue, 11 Jul 2023 10:37:30 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l22-20020a0de216000000b00570589c5aedsm693882ywe.7.2023.07.11.10.32.38
+        by smtp.gmail.com with ESMTPSA id q63-20020a817542000000b0057a68b6c2f4sm684200ywc.133.2023.07.11.10.37.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 10:32:38 -0700 (PDT)
-Date:   Tue, 11 Jul 2023 13:32:37 -0400
+        Tue, 11 Jul 2023 10:37:29 -0700 (PDT)
+Date:   Tue, 11 Jul 2023 13:37:29 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] builtin/repack.c: avoid dir traversal in
- `collect_pack_filenames()`
-Message-ID: <ffdf85f6d39c3fa2e7035deeaa0837cc58237896.1689096750.git.me@ttaylorr.com>
-References: <cover.1689017830.git.me@ttaylorr.com>
- <cover.1689096750.git.me@ttaylorr.com>
+To:     Junio C Hamano <junio@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2023, #02; Mon, 10)
+Message-ID: <ZK2TWdME96AODU4+@nand.local>
+References: <xmqqmt032r7m.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1689096750.git.me@ttaylorr.com>
+In-Reply-To: <xmqqmt032r7m.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When repacking, the function `collect_pack_filenames()` is responsible
-for collecting the set of existing packs in the repository, and
-partitioning them into "kept" (if the pack has a ".keep" file or was
-given via `--keep-pack`) and "nonkept" (otherwise) lists.
+On Mon, Jul 10, 2023 at 06:05:01PM -0700, Junio C Hamano wrote:
+> * tb/fsck-no-progress (2023-07-10) 6 commits
+>  - commit-graph.c: avoid duplicated progress output during `verify`
+>  - commit-graph.c: pass progress to `verify_one_commit_graph()`
+>  - commit-graph.c: iteratively verify commit-graph chains
+>  - commit-graph.c: extract `verify_one_commit_graph()`
+>  - fsck: suppress MIDX output with `--no-progress`
+>  - fsck: suppress commit-graph output with `--no-progress`
+>
+>  "git fsck --no-progress" still spewed noise from the commit-graph
+>  subsystem, which has been corrected.
+>
+>  Will merge to 'next'.
+>  source: <cover.1688776280.git.me@ttaylorr.com>
 
-This function comes from the original C port of git-repack.sh from back
-in a1bbc6c0176 (repack: rewrite the shell script in C, 2013-09-15),
-where it first appears as `get_non_kept_pack_filenames()`. At the time,
-the implementation was a fairly direct translation from the relevant
-portion of git-repack.sh, which looped over the results of
+Thanks, this one is fairly innocuous and shouldn't cause any problems.
 
-    find "$PACKDIR" -type f -name '*.pack'
+> * tb/repack-cleanup (2023-07-10) 2 commits
+>  - builtin/repack.c: avoid dir traversal in `collect_pack_filenames()`
+>  - builtin/repack.c: only repack `.pack`s that exist
+>
+>  The recent change to "git repack" made it react less nicely when a
+>  leftover .idx file that no longer has the corresponding .pack file
+>  in the repository, which has been corrected.
+>
+>  Will merge to 'next'.
+>  source: <cover.1689017830.git.me@ttaylorr.com>
 
-either ignoring the pack as kept, or adding it to the list of existing
-packs.
+This one is definitely a higher risk change, but I am as confident as I
+can be in terms of its correctness. I sent a new version[1] to remove the
+unnecessary 'ls'-to-'find' conversion, but feel free to queue either.
 
-So the choice to directly translate this function in terms of
-`readdir()` in a1bbc6c0176 made sense. At the time, it was possible to
-refine the C version in terms of packed_git structs, but was never done.
+> * cc/repack-sift-filtered-objects-to-separate-pack (2023-07-05) 8 commits
+>  - gc: add `gc.repackFilterTo` config option
+>  - repack: implement `--filter-to` for storing filtered out objects
+>  - gc: add `gc.repackFilter` config option
+>  - repack: add `--filter=<filter-spec>` option
+>  - repack: refactor finding pack prefix
+>  - repack: refactor finishing pack-objects command
+>  - t/helper: add 'find-pack' test-tool
+>  - pack-objects: allow `--filter` without `--stdout`
+>
+>  "git repack" machinery learns to pay attention to the "--filter="
+>  option.
+>
+>  Comments?
+>  cf. <xmqqh6qi1byn.fsf@gitster.g>
+>  source: <20230705060812.2865188-1-christian.couder@gmail.com>
 
-However, manually enumerating a repository's packs via `readdir()` is
-confusing and error-prone. It leads to frustrating inconsistencies
-between which packs Git considers to be part of a repository (i.e.,
-could be found in the list of packs from `get_all_packs()`), and which
-packs `collect_pack_filenames()` considers to meet the same criteria.
+This is on my review queue, sorry for the delay in responding to the
+rest of the newer version.
 
-This bit us in 73320e49ad (builtin/repack.c: only collect fully-formed
-packs, 2023-06-07), and again in the previous commit.
+> * jt/path-filter-fix (2023-06-13) 4 commits
+>  - commit-graph: new filter ver. that fixes murmur3
+>  - repo-settings: introduce commitgraph.changedPathsVersion
+>  - t4216: test changed path filters with high bit paths
+>  - gitformat-commit-graph: describe version 2 of BDAT
+>
+>  The Bloom filter used for path limited history traversal was broken
+>  on systems whose "char" is unsigned; update the implementation and
+>  bump the format version to 2.
+>
+>  Expecting a reroll.
+>  cf. <c7b66d2c-cdc3-1f0f-60a0-a2ee21c277bf@github.com>
+>  source: <cover.1686677910.git.jonathantanmy@google.com>
 
-Prevent these issues from biting us in the future by implementing the
-`collect_pack_filenames()` function by looping over an array of pointers
-to `packed_git` structs, ensuring that we use the same criteria to
-determine the set of available packs.
+This is also on my review queue as soon as the reroll appears on the
+list.
 
-One gotcha here is that we have to ignore non-local packs, since the
-original version of `collect_pack_filenames()` only looks at the local
-pack directory to collect existing packs.
+> * tb/refs-exclusion-and-packed-refs (2023-07-10) 16 commits
+>  - ls-refs.c: avoid enumerating hidden refs where possible
+>  - upload-pack.c: avoid enumerating hidden refs where possible
+>  - builtin/receive-pack.c: avoid enumerating hidden references
+>  - refs.h: implement `hidden_refs_to_excludes()`
+>  - refs.h: let `for_each_namespaced_ref()` take excluded patterns
+>  - revision.h: store hidden refs in a `strvec`
+>  - refs/packed-backend.c: add trace2 counters for jump list
+>  - refs/packed-backend.c: implement jump lists to avoid excluded pattern(s)
+>  - refs/packed-backend.c: refactor `find_reference_location()`
+>  - refs: plumb `exclude_patterns` argument throughout
+>  - builtin/for-each-ref.c: add `--exclude` option
+>  - ref-filter.c: parameterize match functions over patterns
+>  - ref-filter: add `ref_filter_clear()`
+>  - ref-filter: clear reachable list pointers after freeing
+>  - ref-filter.h: provide `REF_FILTER_INIT`
+>  - refs.c: rename `ref_filter`
+>
+>  Enumerating refs in the packed-refs file, while excluding refs that
+>  match certain patterns, has been optimized.
+>
+>  Under discussion.
+>  source: <cover.1689023520.git.me@ttaylorr.com>
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c | 41 +++++++++++++++--------------------------
- 1 file changed, 15 insertions(+), 26 deletions(-)
+Patrick took a look[2] at this (which you responded to), and gave an
+ack, so this one should be ready to go down to 'next', too.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 724e09536e..ac9fc61d2e 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -106,49 +106,38 @@ static void collect_pack_filenames(struct string_list *fname_nonkept_list,
- 				   struct string_list *fname_kept_list,
- 				   const struct string_list *extra_keep)
- {
--	DIR *dir;
--	struct dirent *e;
--	char *fname;
-+	struct packed_git *p;
- 	struct strbuf buf = STRBUF_INIT;
- 
--	if (!(dir = opendir(packdir)))
--		return;
--
--	while ((e = readdir(dir)) != NULL) {
--		size_t len;
-+	for (p = get_all_packs(the_repository); p; p = p->next) {
- 		int i;
-+		const char *base;
- 
--		if (!strip_suffix(e->d_name, ".idx", &len))
-+		if (!p->pack_local)
- 			continue;
- 
--		strbuf_reset(&buf);
--		strbuf_add(&buf, e->d_name, len);
--		strbuf_addstr(&buf, ".pack");
--
--		if (!file_exists(mkpath("%s/%s", packdir, buf.buf)))
--			continue;
-+		base = pack_basename(p);
- 
- 		for (i = 0; i < extra_keep->nr; i++)
--			if (!fspathcmp(buf.buf, extra_keep->items[i].string))
-+			if (!fspathcmp(base, extra_keep->items[i].string))
- 				break;
- 
--		fname = xmemdupz(e->d_name, len);
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, base);
-+		strbuf_strip_suffix(&buf, ".pack");
- 
--		if ((extra_keep->nr > 0 && i < extra_keep->nr) ||
--		    (file_exists(mkpath("%s/%s.keep", packdir, fname)))) {
--			string_list_append_nodup(fname_kept_list, fname);
--		} else {
-+		if ((extra_keep->nr > 0 && i < extra_keep->nr) || p->pack_keep)
-+			string_list_append(fname_kept_list, buf.buf);
-+		else {
- 			struct string_list_item *item;
--			item = string_list_append_nodup(fname_nonkept_list,
--							fname);
--			if (file_exists(mkpath("%s/%s.mtimes", packdir, fname)))
-+			item = string_list_append(fname_nonkept_list, buf.buf);
-+			if (p->is_cruft)
- 				item->util = (void*)(uintptr_t)CRUFT_PACK;
- 		}
- 	}
--	closedir(dir);
--	strbuf_release(&buf);
- 
- 	string_list_sort(fname_kept_list);
-+	strbuf_release(&buf);
- }
- 
- static void remove_redundant_pack(const char *dir_name, const char *base_name)
--- 
-2.41.0.329.gffdf85f6d39
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/cover.1689096750.git.me@ttaylorr.com/
+[2]: https://lore.kernel.org/git/eddehgbfqnmkhvhkacbvnqiiripbn6jvjawpy76ysfnpohsygt@a43fbutqg64z/
