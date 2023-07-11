@@ -2,150 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC367EB64DC
-	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 17:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E713BC001DE
+	for <git@archiver.kernel.org>; Tue, 11 Jul 2023 17:20:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230194AbjGKRCQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jul 2023 13:02:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54510 "EHLO
+        id S232250AbjGKRUA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jul 2023 13:20:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjGKRCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2023 13:02:14 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D762A1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:02:13 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B1AD1ACC5C;
-        Tue, 11 Jul 2023 13:02:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=2c8iw6nAU3rv09UYOdQm82wUh
-        ZYMBgmP/wPa2uUPPgk=; b=XxE8h/JgZwT13y4yMGIoipDHOTc9WO5/yYHa4+mbo
-        3Y/iYMoRX0pkKBUxVYfbfPBXxO/M6hWCyFjhNjEMNnao/muI/DQHxXopW+kK2VeR
-        anM0WMIrOYZ/u82+J6YU84IDJzxmTrSXsquhSzoFm7FJnZrQAU0lZZ3uazlb52FE
-        0k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8ECE31ACC5B;
-        Tue, 11 Jul 2023 13:02:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A79FB1ACC58;
-        Tue, 11 Jul 2023 13:02:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Aleksander =?utf-8?Q?Korzy=C5=84ski?= <ak@akorzy.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
-References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
-Date:   Tue, 11 Jul 2023 10:02:10 -0700
-Message-ID: <xmqqwmz6z8j1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232223AbjGKRTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2023 13:19:54 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C511BE8
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:19:21 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-c581c758ad8so6756570276.1
+        for <git@vger.kernel.org>; Tue, 11 Jul 2023 10:19:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689095952; x=1691687952;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pwIn11o9UG2icmHFhCNlCOZxpB87pUpr9W8P4bUdBtc=;
+        b=tWK/mzwZSQbhzghNqql6bU0FoIUH3fH+3QL/oPW5WvH20B63OoYyKo75nBim1Cg3mB
+         C66nywqil1VddJwm5pTcZUmY2t7JJsjev889zoN8TJhipM39P/uKD9nb+CCDNLtQqRE3
+         JRlVXGnw0XIALxS+eWJARw/zompgeHxovRoHXC+jAX4hJIusWoxWvfS9vQMJIUvLhrHM
+         n628zOLGqSUXEH34Z3Kg76oIrKiSzIbGrAYWSk5rn3mKiRGRkAoC7/YRlYpHMrqkUlAp
+         aw3EukP9l+DgYuQQ+O2JUPPLQ+F+J2Ja1dDhVBScEN0aTJH1GkrvkpunBZiLwq+Hzgpa
+         9ywg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689095952; x=1691687952;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pwIn11o9UG2icmHFhCNlCOZxpB87pUpr9W8P4bUdBtc=;
+        b=GVGqv8CRg+P07tiDl/6bzVx4Snx8jNgjW3964YG5npos0G6caTdQJvXbcr523AhodP
+         5Oyx5/2sbCPuxRLd9B5qKCYWCTVC0ayX/lmNwXZZAJznTjpqSpSlNnRk3YU+cmZsJVrZ
+         I/RNHQgZny8VsnYFkvQ2aiy7EpCMKAgVsTHiu1r0cZ64cVtJ4TE/mrtsaQ45E2ANKp45
+         p8LYPPCSm0buZzyAdcaBh0ZMvKN+Y6wuHqEInsLV+oV8uNoP08wy6ctikMJFMEoVLvTq
+         XtvEVjcvmMXDsuAZZumAIKsM0K9wu9TgAqGi8n+VpCtWhBVnUJvma0AHhR5iAv8riysu
+         r2MA==
+X-Gm-Message-State: ABy/qLb+HXRh2TiZYd1ENFGc0zt6CK66elzHQYqyckr7pyO+PeEg+7LA
+        0R7Lr+TZJerUP8oUKgO0utkxwg==
+X-Google-Smtp-Source: APBJJlEeJosg5Yh1EE1/9ncexRIzf8kiWQJLzvu/uXsaPR1eP/FseLnLJ9uwpUa1UmFcP7mhi87N6A==
+X-Received: by 2002:a25:8b86:0:b0:c60:9caf:bf57 with SMTP id j6-20020a258b86000000b00c609cafbf57mr13528746ybl.45.1689095952256;
+        Tue, 11 Jul 2023 10:19:12 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y11-20020a25dc0b000000b00c4e93761e38sm535609ybe.64.2023.07.11.10.19.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jul 2023 10:19:11 -0700 (PDT)
+Date:   Tue, 11 Jul 2023 13:19:08 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 00/16] refs: implement jump lists for packed backend
+Message-ID: <ZK2PDJbGQoTcR/si@nand.local>
+References: <cover.1683581621.git.me@ttaylorr.com>
+ <cover.1689023520.git.me@ttaylorr.com>
+ <xmqq5y6r4con.fsf@gitster.g>
+ <eddehgbfqnmkhvhkacbvnqiiripbn6jvjawpy76ysfnpohsygt@a43fbutqg64z>
+ <xmqqilaq30hi.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AD7CC7D8-200C-11EE-9EA5-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqilaq30hi.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aleksander Korzy=C5=84ski <ak@akorzy.net> writes:
-
-> So the alternative solution is to rebase your "main" branch on top of
-> "upstream/main":
+On Tue, Jul 11, 2023 at 08:56:57AM -0700, Junio C Hamano wrote:
+> >> I've skimmed the whole set again and nothing jumped at me as an
+> >> unexpected change.  Let's wait for a few days to see if we have
+> >> others comment on the patches and then merge it down to 'next'
+> >> unless there is something spotted in there.
+> >>
+> >> Thanks.
+> >
+> > The patch series looks good to me, too, so please feel free to add my
+> > Reviewed-by. Thanks for these exciting changes!
 >
->   o---o---o---o---o  upstream/main
->                    \
->                     o'---o'---o'  main
->
-> You now have the advantage of having greater visibility into the
-> differences between "upstream/main" and "main". However, a rebase
-> comes with a different problem: if any user of your fork had the
-> "main" branch checked out in their local repository and they run "git
-> pull", they are going to get an error stating that the local and
-> upstream branches have diverged. They will have to take special steps
-> to recover from the rebase of the "main" branch.
->
-> So how to solve that problem?
+> Thanks.
 
-In short, what you wrote is a way to use rebase but help those who
-have older versions of your work to bring themselves up to date.
-That is a useful thing for downstream contributors to have, and it
-is a valuable goal to aim to help these downstream contributors to
-coordinate sharing of their work.  Because in general, downstream
-contributors tend to outnumber upstream maintainers.  It would help
-you to hear perspective from upstream maintainers as well, and here
-are a few things that come to my mind.
+Thanks, both :-).
 
-    o---o---o---o---o  upstream/main
-         \           \
-          \           a'---b'---c'
-           \                     \
-            a---b---c-------------S  main
-
- * It certainly would help folks who received a copy of c from you
-   and then want to observe your progress after you rebased c to c',
-   but how does this help those who have older versions of your
-   work, *and* built their own changes on top?  They would not just
-   need to update their remote-tracking branch that has your older
-   version of the work to the latest, but also rebase their work on
-   top.
-
-    o---o---o---o---o  upstream/main
-         \           \
-          \           a'---b'---c'---d'---e'
-           \                     \
-            a---b---c-------------S  main
-                     \
-                      d---e  your coworker
-
- * It is a reasonable way to for keeping your work as a fork from
-   the upstream up-to-date, but it is unclear what the eventual
-   presentation to and adoption by the upstream would look like.  As
-   an upstream maintainer, for example, I do not want to merge S
-   above to the upstream tree.
-
- * There is no need to say that it is undesirable to merge from
-   upstream to your working topic branch like 'main' repeatedly, as
-   everybody knows it will clutter your history, but more
-   importantly, the resulting history becomes more useless from the
-   upstream's point of view as you have more such reverse merges.
-   The upstream wants to see your work and only your work delineated
-   on your repository.  If you repeat the "rebase and merge", then
-   the next round would create a new history a", b" and c" forked on
-   top of an updated upstream/main, merged on top of S, perhaps
-   looking like this:
-
-    o---o---o---o---o---------------o  upstream/main
-         \           \               \
-          \           a'---b'---c'    a"--b"--c"
-           \                     \             \
-            a---b---c-------------S-------------T  main
-
-   However, once you keep going this way for several rounds, would
-   the result really be much better than bushy history with full of
-   reverse merges from upstream?  Would it help to add new history
-   simplification mechanisms and options to help visualize the
-   history, or do we already have necessary support (e.g. if the
-   convention for these "merge to cauterize the older versions of
-   history with the newly rebased history" S and T merges is to
-   record the rebased history as the first-parent, then "git log
-   --first-parent upstream/main..main" should be sufficient).  The
-   users would benefit to have an easy way, given only T or S, to
-   get range-diff among (a,b,c) and (a',b',c') and (a",b",c").
-
-What is interesting is that, because S and T are essentially "ours"
-merges of your local history into the history that would result if
-you rebased on top of the upstream (i.e. merge S and T would have
-the same tree as c' and c"), what is tested and used by the holder
-of S and T are the changes represented by the latest rebased
-versions of the commits.  So from the upstream point of view,
-throwing a pull request for c" (not the original a, b and c) would
-be a reasonable way to finalize your work.  That way, what you are
-offering to the upstream is not an ancient original commits (i.e. a,
-b, and c) that you haven't been using at all once you created S and
-T.
-
-Thanks.
+Thanks,
+Taylor
