@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA6E1EB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 044A0EB64DD
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233308AbjGLXih (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 19:38:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47196 "EHLO
+        id S233423AbjGLXir (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 19:38:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233283AbjGLXiZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:38:25 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9628E211C
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:07 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-579dd20b1c8so82789107b3.1
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:07 -0700 (PDT)
+        with ESMTP id S233171AbjGLXid (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 19:38:33 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A9CF2689
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:12 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-c1aad78d5b2so2017785276.0
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205086; x=1691797086;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205092; x=1691797092;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hpE5g+uWgax8IGRduDa+G9Yt6ihxoWIeZdKbkK0J6bs=;
-        b=U+BsMjV75NkE87sQSMhD4kWSFyqTm8OBrOnPDQPp6dNAdW/i1VO1lCaCs7b8gotkg7
-         0MjpaUFuxu/cy9yzW/S/JHVSGJj/miNYeYSrfz19P+D60V12B7N9oeeRKyK2G5iSQIfj
-         1U4gEgUP/hgTSvLJ6Y0Ndr3YJyHj1wI72ko3PfIZ2zCeJzT8QyT1Ve1E9Gy6p6hX2WhF
-         dyTQhh9inOrZQcYWT50mIcoxhI8PF2XMrxoENgUl5K7hd322xp1JjnuKNPaIxkNLc3kJ
-         YeIKccESCkW/duRKq3qDFRh2YfJDw9ejMooO1gHdfrTiZaWVNefKUrPC6SR5BpltXpVP
-         jPNA==
+        bh=+BuDXyj4t6pxRONY6+ks8ATUP26JKbQh8TuvcfpQStc=;
+        b=uG6vKNPufbxPtM4H/e3Smq/yc97tdcdb2f2xYEfu3Ck2UAtRN9uDr6Bn1mGbtCg5Pt
+         7phE0OkTRoDwItDK0c/l8CM8sLb2dW+VQJ21+DwDkXnu/oMkQXp7jiSrFBrAj5wibljd
+         m7ZQDF650hbWWVQME470XzQKSBgvwzwjMeaF4bRUz3a8OXN0k9dDkCr/Yc7tS1aWyTfV
+         F06oK6dwJdQ1ztel9v+sLDZOT4wxYwqyTtjva/tyG6XPM4ZtXLVQeAlIT5mnGa3GImeg
+         f74fbtqxbT4KEj7QJD+05uHEU1rGsJ1ynl2rC+8y2qvNidiVPezoWDi7ZlobhEE5kRFf
+         TNqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689205086; x=1691797086;
+        d=1e100.net; s=20221208; t=1689205092; x=1691797092;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hpE5g+uWgax8IGRduDa+G9Yt6ihxoWIeZdKbkK0J6bs=;
-        b=YQG079Fy2s3+4Sqh1OSTJXdjDDmBqhSNID3Nz7t2LQvQuREGXeWpkuqGDDy1vQqiVi
-         6qwJrr9YkmJOKzRkN6SUQHRS7ClzJQbE8f4BnyZEGwHZlbHDJwV/J+unjJ7CVq6bwh+S
-         aa2CWJlmsAUh3SRlMga3IrIBX58INwvYyCbZza8X9bQRVXnSCE4F59hHrxzLgMxKiLni
-         qEQs31ThIWKsbDbbnckZRTmpCYcuDrOS6yiGJwai9xgQhAgaS7zIVwEwBOGdia1JwfCy
-         tcUk2p5x4iXiK1Z9OczMP0DQNFNglBVDgzKZxveQUX3NZCRYL9bFdvHy640EQsU2ewkU
-         tWIA==
-X-Gm-Message-State: ABy/qLZvNRMt7wF/6cwWZtzCImYocpngm9SyEfOzCkMVP36EM13mwms0
-        m0cqjfjxioWHF8rAb9AN/IAb5DTkZ3stgpnmn2VZOQ==
-X-Google-Smtp-Source: APBJJlF11LEiLneWxCkpteWyIqOcqs4sAJxM2Q2W42f78cX30NMGZCNY3IIuG36JH6WPElII/7o9Ig==
-X-Received: by 2002:a81:918a:0:b0:57a:5099:fd7a with SMTP id i132-20020a81918a000000b0057a5099fd7amr139098ywg.3.1689205086729;
-        Wed, 12 Jul 2023 16:38:06 -0700 (PDT)
+        bh=+BuDXyj4t6pxRONY6+ks8ATUP26JKbQh8TuvcfpQStc=;
+        b=GXokgPiNpOoURVx0LmZgVMT9xcZrhR0O6NHYynnZQwrvejR+VITrrCq1K/tszFVNzy
+         WWKaf4XdDuQKxAcG6OReP6XIowqsH4eZsz83mmQP2T3p50xW++mCLUjBT27oz83s0pdR
+         piD60WsPqGLO9kPmfFMr4jdeNMIn4zYcvzHqcOyJV1xEfdgGx3fF3/pygB5tqHQOG6l9
+         ulRiE12qEQJnXh+39qMpadtLDLAVD5qwrHG5pvHtzV2KZqh3PWUD0H7KoOIeXBheqfiX
+         p86dwVoe7nbZIA//A0CAeE3Izh0v1LSJODsYcpcGlIh7l114W4iSHmX/2NtN8Dai3MF2
+         V6Iw==
+X-Gm-Message-State: ABy/qLY84c3cUN1/hILS4C2w0n3ZuKc5+lxWdfgh4Q5sMg6INUJddQ5x
+        oArBRHwrdyc55AYU1tsnU3n+yNGXz2hUqGEO+m/X4g==
+X-Google-Smtp-Source: APBJJlG2mySgSdZeeDOLKMJtY/7MOjNVCQDN6r9dl+pl3ww4ope1FNxHwy9fyYkGw8UPo43efL+3Cw==
+X-Received: by 2002:a25:d68e:0:b0:bc3:7ee1:8d4e with SMTP id n136-20020a25d68e000000b00bc37ee18d4emr226440ybg.24.1689205091976;
+        Wed, 12 Jul 2023 16:38:11 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x189-20020a81a0c6000000b0057399b3bd26sm1488909ywg.33.2023.07.12.16.38.06
+        by smtp.gmail.com with ESMTPSA id o13-20020a256b4d000000b00ca483619498sm526264ybm.6.2023.07.12.16.38.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 16:38:06 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 19:38:05 -0400
+        Wed, 12 Jul 2023 16:38:11 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 19:38:11 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
@@ -56,9 +56,9 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>
-Subject: [PATCH 15/20] commit-graph.c: prevent overflow in
- `fill_commit_in_graph()`
-Message-ID: <d49bedb1be00b76629dbfb6494d4f8cd45af1d02.1689205042.git.me@ttaylorr.com>
+Subject: [PATCH 17/20] commit-graph.c: prevent overflow in
+ `split_graph_merge_strategy()`
+Message-ID: <8d43e3bab557a85f5c22abb750ebbe9885444690.1689205042.git.me@ttaylorr.com>
 References: <cover.1689205042.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -69,41 +69,41 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 In a similar spirit as previous commits, ensure that we don't overflow
-when the lex_index of the commit we are trying to fill out exceeds
-2^32-1/(g->hash_len+16).
+when choosing how to split and merge different layers of the
+commit-graph.
 
-The other hunk touched in this patch is not susceptible to overflow,
-since an explicit cast is made to a 64-bit unsigned value. For clarity
-and consistency with the rest of the commits in this series, avoid a
-tricky to reason about cast, and use `st_mult()` directly.
+In particular, avoid a potential overflow between `size_mult` and
+`num_commits`, as well as a potential overflow between the number of
+commits currently in the merged graph, and the number of commits in the
+graph about to be merged.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ commit-graph.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index ceaeb8b785..ca1d997516 100644
+index 35f700273b..8010e0763e 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -837,7 +837,7 @@ static int fill_commit_in_graph(struct repository *r,
- 	fill_commit_graph_info(item, g, pos);
+@@ -2111,11 +2111,16 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
  
- 	lex_index = pos - g->num_commits_in_base;
--	commit_data = g->chunk_commit_data + (g->hash_len + 16) * lex_index;
-+	commit_data = g->chunk_commit_data + st_mult(g->hash_len + 16, lex_index);
+ 	if (flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED &&
+ 	    flags != COMMIT_GRAPH_SPLIT_REPLACE) {
+-		while (g && (g->num_commits <= size_mult * num_commits ||
++		while (g && (g->num_commits <= st_mult(size_mult, num_commits) ||
+ 			    (max_commits && num_commits > max_commits))) {
+ 			if (g->odb != ctx->odb)
+ 				break;
  
- 	item->object.parsed = 1;
++			if (unsigned_add_overflows(num_commits, g->num_commits))
++				die(_("cannot merge graphs with %"PRIuMAX", "
++				      "%"PRIuMAX" commits"),
++				    (uintmax_t)num_commits,
++				    (uintmax_t)g->num_commits);
+ 			num_commits += g->num_commits;
+ 			g = g->base_graph;
  
-@@ -859,7 +859,7 @@ static int fill_commit_in_graph(struct repository *r,
- 	}
- 
- 	parent_data_ptr = (uint32_t*)(g->chunk_extra_edges +
--			  4 * (uint64_t)(edge_value & GRAPH_EDGE_LAST_MASK));
-+			  st_mult(4, edge_value & GRAPH_EDGE_LAST_MASK));
- 	do {
- 		edge_value = get_be32(parent_data_ptr);
- 		pptr = insert_parent_or_die(r, g,
 -- 
 2.41.0.347.g7b976b8871f
 
