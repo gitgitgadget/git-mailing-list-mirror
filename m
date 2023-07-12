@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B14EFEB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61231EB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232477AbjGLXjF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 19:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47184 "EHLO
+        id S233365AbjGLXnJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 19:43:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233023AbjGLXiq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:38:46 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53540272C
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:21 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5701eaf0d04so82685697b3.2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:21 -0700 (PDT)
+        with ESMTP id S233105AbjGLXht (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 19:37:49 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C97019B4
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:46 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5703cb4bcb4so79805057b3.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205100; x=1691797100;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205065; x=1691797065;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p30Z1OFGsL5nDL4WvWSG0hJmT7eu7c5o0Zjtih24t5k=;
-        b=GzdXtb/iboi9v9EA2ibXAIGzlLpFlYt0CHPqE5z0iq2PRQlGLIMAKMY7zGmb9pRgFL
-         fPXXpM8/z80pxmRm7C2ywxZyvsgSbDhGU0icRNU3WaEjqP2fblcctSMkHy7xXDDpOn8S
-         OvZeovhUqjU2ximvQPCbFfSUI55FscRIdaY9bDTZEuwPac/qxlfdlUbnETGFiJc7W5eY
-         jZUgoAvN+jLJNQKpUy4mw4t1RiMTXbGp8fjPdj81YVhKbMpW24FavDiOVzRUBfNKd6jz
-         cz4kB+HIGJXXOnLhQZF1bTyfeouhFYgYd/WkcW5NYJlUOP2Y8B/yAq+rXhLjg8Ck9sy/
-         O8wg==
+        bh=bwz1RJ91Ih3YI/nVdUt0UyRdOarlVnHTssLh60EBeNM=;
+        b=CaxwZLFckgqIIuS4LdLRanCJd6G1V23R8oJC4zKeANdeXvFt9vdPWREyR5cK+km8AX
+         YSIW72+xBBGrWNjy7GToO/Is4svcjcKa6OU6oxx2yXJ9HywHEI+U+G5NgeeQoOMjyCd6
+         xlRhXoozqi4JkghvYuPGpfRDze9IS/vjMlaQtVCAIDAm5Kz9yCCXIsGQ2nlZKhaZNwgg
+         KaPY+7UDlM0W1Yce+jw6UgXUqk/Z5Kyqx1KDHDBtT36Rf8LNYXNdENvoqwsnoi7EJi/t
+         wZDm6A0IrNCI7xyaGsYGDQAA5fD9ZOwx2WaFjJaO5z8DIm65pr6jDqiViYQjKjO7xAbq
+         cCEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689205100; x=1691797100;
+        d=1e100.net; s=20221208; t=1689205065; x=1691797065;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p30Z1OFGsL5nDL4WvWSG0hJmT7eu7c5o0Zjtih24t5k=;
-        b=Vk4AGGKm92BRRRr5IeNuwOntKAR6NiYAZQIXjIj8UCufsdOgqFW75XjazEjCcxP3N2
-         OROELsOqqOlwSBhCO9uyJl3aCwz6BfDt9Wg5fj2AJSBwG4LKEvLJC/kxVw7yDQafeePl
-         4Oei5Ad0sOCmoMDP2TUFQtbvB7c33N5m2nr2nOchhoW/67kTzti1Qshi3cshQsqrwLA3
-         FybK8Qr9jN3qbPHZ4/+UqzQlwRT7xBNIHQeGKvibR1fs20DhDR2BXMWLeTykraDbRakH
-         w8yybkNsYBvca+59JxIoEp4iE6rXZpecEprZ9OrM+viQcFrxuSlYs1bLbGlBljdUOX/B
-         9QDw==
-X-Gm-Message-State: ABy/qLaYQ2b1q683AUFLx5h5njOjTZzPvU3/AAbS7PuGMtNM3NjyAr2M
-        /0s1A4TyLPIW8/R7kwhrZMMYhWANKObGZyHQnd6bGQ==
-X-Google-Smtp-Source: APBJJlFe/CsapXUCEq2JZImoIRrSMtWPSVM0lp3cUEAziWnujmuaL4Z2JPQ9hKXBerM/sSZS/hcV/g==
-X-Received: by 2002:a0d:d445:0:b0:575:4b1c:e5f0 with SMTP id w66-20020a0dd445000000b005754b1ce5f0mr105544ywd.32.1689205100287;
-        Wed, 12 Jul 2023 16:38:20 -0700 (PDT)
+        bh=bwz1RJ91Ih3YI/nVdUt0UyRdOarlVnHTssLh60EBeNM=;
+        b=S3SgmRuiQCmImw2BsoMYl4Btd1WzvK4jg8ND/ly2mME2Jfwb6/lAkG0uQrrmXSCuF6
+         gwA0eXIEQhNfCqkseSS9F007Ga423NemsCTpN3icM0eENdJc8rI7lbckcSX8pyqwTFpX
+         pClvxJZn+2XPZHoLTYRnpWlWjVFzlfrsYxlHzLVC4lbEmnClvPT8vdk++xBIG3mg/q8W
+         fipVbBQVMRFgXuvaWb3OD679W5SU+7ZDtaHHGbdlSeaOpDGeDOvH4zwQdtn6pHS/Iy1h
+         h3yyIwRCiOXkC9izcFAniP8CRclYDKZ6x8nmP3oi8v/xVn5UJ442nFPFCrH6nrYxrF2d
+         5+Ng==
+X-Gm-Message-State: ABy/qLZIGWFxdMIGJ33LxnPvNgd6cXDKAgaShZ46h4foTpMjP74bw/tM
+        YO/29pLjYVuRfiKTgtEUgvkOKtaf+eBHvhXAPT9Vtg==
+X-Google-Smtp-Source: APBJJlGAzaGBMEDEBiA7OKjCw4AFkKuZuWq9mWWgWD/TdYR4ihvQDBe9g12ZhclYSQmS5Y8uZ8frAw==
+X-Received: by 2002:a81:67c2:0:b0:56d:502:43d4 with SMTP id b185-20020a8167c2000000b0056d050243d4mr139380ywc.11.1689205065050;
+        Wed, 12 Jul 2023 16:37:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w1-20020a5b05c1000000b00bcb4ac1fbc6sm1137705ybp.30.2023.07.12.16.38.19
+        by smtp.gmail.com with ESMTPSA id u63-20020a816042000000b005706c3e5dfcsm1461869ywb.48.2023.07.12.16.37.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 16:38:20 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 19:38:19 -0400
+        Wed, 12 Jul 2023 16:37:44 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 19:37:44 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
@@ -56,9 +56,8 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>
-Subject: [PATCH 20/20] commit-graph.c: prevent overflow in
- `verify_commit_graph()`
-Message-ID: <55fff3eb84d8a70aa370aedaf1057ad292435a67.1689205042.git.me@ttaylorr.com>
+Subject: [PATCH 07/20] midx.c: store `nr`, `alloc` variables as `size_t`'s
+Message-ID: <4067ff3f1b422734b79591268644a38f053d2f54.1689205042.git.me@ttaylorr.com>
 References: <cover.1689205042.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -68,36 +67,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar spirit as previous commits, ensure that we don't overflow
-when trying to read an OID out of an existing commit-graph during
-verification.
+In the `write_midx_context` structure, we use two `uint32_t`'s to track
+the length and allocated size of the packs, and one `uint32_t` to track
+the number of objects in the MIDX.
+
+In practice, having these be 32-bit unsigned values shouldn't cause any
+problems since we are unlikely to have that many objects or packs in any
+real-world repository. But these values should be `size_t`'s, so change
+their type to reflect that.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ midx.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 20d9296c8b..f7a3f97401 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2584,7 +2584,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	for (i = 0; i < g->num_commits; i++) {
- 		struct commit *graph_commit;
+diff --git a/midx.c b/midx.c
+index a5a4ff4398..b176745df1 100644
+--- a/midx.c
++++ b/midx.c
+@@ -446,14 +446,14 @@ static int idx_or_pack_name_cmp(const void *_va, const void *_vb)
  
--		oidread(&cur_oid, g->chunk_oid_lookup + g->hash_len * i);
-+		oidread(&cur_oid, g->chunk_oid_lookup + st_mult(g->hash_len, i));
+ struct write_midx_context {
+ 	struct pack_info *info;
+-	uint32_t nr;
+-	uint32_t alloc;
++	size_t nr;
++	size_t alloc;
+ 	struct multi_pack_index *m;
+ 	struct progress *progress;
+ 	unsigned pack_paths_checked;
  
- 		if (i && oidcmp(&prev_oid, &cur_oid) >= 0)
- 			graph_report(_("commit-graph has incorrect OID order: %s then %s"),
-@@ -2632,7 +2632,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 		timestamp_t generation;
+ 	struct pack_midx_entry *entries;
+-	uint32_t entries_nr;
++	size_t entries_nr;
  
- 		display_progress(progress, i + 1);
--		oidread(&cur_oid, g->chunk_oid_lookup + g->hash_len * i);
-+		oidread(&cur_oid, g->chunk_oid_lookup + st_mult(g->hash_len, i));
+ 	uint32_t *pack_perm;
+ 	uint32_t *pack_order;
+@@ -671,17 +671,18 @@ static void midx_fanout_add_pack_fanout(struct midx_fanout *fanout,
+ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
+ 						  struct pack_info *info,
+ 						  uint32_t nr_packs,
+-						  uint32_t *nr_objects,
++						  size_t *nr_objects,
+ 						  int preferred_pack)
+ {
+ 	uint32_t cur_fanout, cur_pack, cur_object;
+-	uint32_t alloc_objects, total_objects = 0;
++	size_t alloc_objects, total_objects = 0;
+ 	struct midx_fanout fanout = { 0 };
+ 	struct pack_midx_entry *deduplicated_entries = NULL;
+ 	uint32_t start_pack = m ? m->num_packs : 0;
  
- 		graph_commit = lookup_commit(r, &cur_oid);
- 		odb_commit = (struct commit *)create_object(r, &cur_oid, alloc_commit_node(r));
+ 	for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++)
+-		total_objects += info[cur_pack].p->num_objects;
++		total_objects = st_add(total_objects,
++				       info[cur_pack].p->num_objects);
+ 
+ 	/*
+ 	 * As we de-duplicate by fanout value, we expect the fanout
+@@ -724,7 +725,8 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
+ 						&fanout.entries[cur_object].oid))
+ 				continue;
+ 
+-			ALLOC_GROW(deduplicated_entries, *nr_objects + 1, alloc_objects);
++			ALLOC_GROW(deduplicated_entries, st_add(*nr_objects, 1),
++				   alloc_objects);
+ 			memcpy(&deduplicated_entries[*nr_objects],
+ 			       &fanout.entries[cur_object],
+ 			       sizeof(struct pack_midx_entry));
 -- 
 2.41.0.347.g7b976b8871f
+
