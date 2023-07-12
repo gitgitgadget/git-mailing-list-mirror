@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4954EB64DD
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E10EB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233002AbjGLXiI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 19:38:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46840 "EHLO
+        id S229847AbjGLXiG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 19:38:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233391AbjGLXh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:37:57 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B858211C
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:54 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-579efc32377so81928137b3.1
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:54 -0700 (PDT)
+        with ESMTP id S233379AbjGLXhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 19:37:55 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94DCE2113
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:51 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5704fce0f23so86449487b3.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205073; x=1691797073;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205070; x=1691797070;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4YUlZoHQI+N0Wp5Inpg3wT76vKxb7CvRII98frxzjeE=;
-        b=U5/hGMRplLiv4cWlSDbWqoQ4vrarUZmtXootDrQJVl9iAMwpOdxGLt293qwDnW9bAR
-         Vo46ozeYIeJ4cC0WuviOrU/uy5qPREscXuk0hITGcbiR7wtATQomVfTl3iSJEjBCKj2t
-         q6g3vJW4XnpDeiWwrnfvoJFjLShqt559yYdednrb+gwEaNMp/u8v2lnwYSB2prN4E0Z7
-         dBxeCunSooLOKFwvJvXDB1sugz8E0xu0K7Eukk8Lrn5+iGZCE4Ts9+s2xEXhmttGiZHn
-         YP+lZ1eV1O0cwHe/1/j0uksu/fhDC9yWKcTPQxARiZxc29/62b80De4/ia75HZi+jF2O
-         KUXg==
+        bh=K45ZX/XKjpaBddWI/twC9FLpzPLFI9xWeSKIQfsT/3g=;
+        b=w6qbmy6E4a/BZf/IO6GTenNOTeMKnLvy3P3K7y+lAXwF1taPBH6WH53Vf5ZfRcabyA
+         TPs4upIIJLO3LGBb7/IxpV3YDIxUy5nUn+aHRnP7NN4WtZQIiXG6LxdpOg+EWfEdGAtF
+         JVNzV2do/JxzGST4gczo70fD6dw1cLp1VaFr1NstyxEwNw6OdUdLSQW8iDPlo3S0HC6S
+         4hWYeVErXQ+JlrT/2UbG+IMy0hcCSZonyxVjubI7SZDJW1FWJe8JBEB8HLSqZYrOC5cF
+         l9Bh/wMdMcQRMxPOqINFPYVi5itqG7/hZHnnv4fGddnBIBSVnERehmISvg8Mq3sf7kLo
+         5yHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689205073; x=1691797073;
+        d=1e100.net; s=20221208; t=1689205070; x=1691797070;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4YUlZoHQI+N0Wp5Inpg3wT76vKxb7CvRII98frxzjeE=;
-        b=b1sYj7aKqYSodtZK8t4/g3S2Nuy+t2/R1HzfSdDFcWP5guK31hQALoQMCQ6lpxcFty
-         pKRz8Kk0TeFSzX/y3izS9E9tbs2eUbsmF4D3EX2Sdy8fS5d05oT4vvm73NGBK0i/5IcA
-         NssonA3oI5dMfKjZjkRJwj2NEYyusRPmbd0hpzksOU2ML+u919V8U7Of0uIiRfX9oGP5
-         A9H62P4eiVZsGMlMAAbpeQ5rKSP1THXoAUl8EJX6VL3qaRmjiglToKUDvOkvDYWpRIYv
-         xBM1bm7kNRMLq88jfRI5lREUaJisO1AqCi9W1GtWYsZOEsIGNp99gJ0zUjqr7nKwMntw
-         LAIg==
-X-Gm-Message-State: ABy/qLYnSyHN1W/OL2IsMXJiKYl3zr4ZGdUBbHarth1ZIFxaNLbxJuKp
-        UeqeGXbUzm1hqbzTyOn9YHa54/Hxq7etWGFAN0FPoA==
-X-Google-Smtp-Source: APBJJlFvBXczxwLN2hPGo5W8DqOHjJ7cbJMcMTc/eL2gYLiBCYakFljjxtTe6GLo1nvzFokHzD84Zg==
-X-Received: by 2002:a81:8645:0:b0:576:8fcd:270f with SMTP id w66-20020a818645000000b005768fcd270fmr128168ywf.19.1689205073283;
-        Wed, 12 Jul 2023 16:37:53 -0700 (PDT)
+        bh=K45ZX/XKjpaBddWI/twC9FLpzPLFI9xWeSKIQfsT/3g=;
+        b=Y5oDsKgAVdjQwaiP7Rm8bIOYj3yxm5PLrePtFeURX9+KdMKekgLSM2MQSAWkdieqiR
+         o4H+SjT4RQ9Hts0HeK+c8BA+jMQU1A0VP2jGpYvuf7yZkSgORsXfIR/NoZ03f+3Z58bN
+         4sHlUNJLA/UPSBkPpeaAaYB7uAI+kEx71L1QWwhFKvRXFavPmsVDbO2OSaT7vFArFqCN
+         wv92lAkTlHAd81Gjh78Tx+ILdF/tKg9oX2DmTmtqxQ9mPGmKc8GBdYzwo4HERCBZHiVb
+         zIxHMDZcFQ3fhJJ18mvjHvaT7WPHxwRSjYS87eWbFwlJpnkkY/9X6MuWTuLsVEOgl8l2
+         vajQ==
+X-Gm-Message-State: ABy/qLYV2JHV3CEbdE06+eJbraIsXNz7PSB0XGhKRNRo/NkO2V6HzFEF
+        KqhdoPGiE92S9Bk39nOmAS2nxOX1Gu92TnF9zYX10A==
+X-Google-Smtp-Source: APBJJlEmAz4RA61uKCY/olFZWhwSw8MA053Lwrw66T2bue4RAs3eoz/BN/4D7oRvo1ygudnywuV3rw==
+X-Received: by 2002:a81:6c55:0:b0:57a:8ecb:11ad with SMTP id h82-20020a816c55000000b0057a8ecb11admr80303ywc.43.1689205070611;
+        Wed, 12 Jul 2023 16:37:50 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n7-20020a819c47000000b00568b941e5e3sm1445057ywa.72.2023.07.12.16.37.52
+        by smtp.gmail.com with ESMTPSA id v145-20020a814897000000b0057a8de72338sm1443038ywa.68.2023.07.12.16.37.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 16:37:53 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 19:37:52 -0400
+        Wed, 12 Jul 2023 16:37:50 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 19:37:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
@@ -56,9 +56,9 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>
-Subject: [PATCH 10/20] pack-bitmap.c: ensure that eindex lookups don't
- overflow
-Message-ID: <822cb19da4e7dac5b1d4d4c7e115d7e4bcb7c976.1689205042.git.me@ttaylorr.com>
+Subject: [PATCH 09/20] midx.c: prevent overflow in
+ `fill_included_packs_batch()`
+Message-ID: <80c79f6fea2fdafb00e6c2866ae1756c1956d16e.1689205042.git.me@ttaylorr.com>
 References: <cover.1689205042.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -68,84 +68,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a bitmap is used to answer some reachability query, it creates a
-pseudo-bitmap called the "extended index" on top of any existing bitmaps
-to store objects that are relevant to the query, but not mentioned in
-the bitmap.
+In a similar spirit as in previous commits, avoid an integer overflow
+when computing the expected size of a MIDX.
 
-When looking up the ith object in the extended index in a bitmap, it is
-common to write something like:
-
-    bitmap_get(result, i + bitmap_num_objects(bitmap_git))
-
-, indicating that we want the ith object following all other objects
-mentioned in the bitmap_git.
-
-Since the type of `i` and the return type of `bitmap_num_objects()` are
-both `uint32_t`s,  But if there are either a large number of objects in
-the bitmap, or a large number of objects in the extended index (or
-both), this addition can overflow when the sum is greater than 2^32-1.
-
-Having that large of a bitmap position is entirely acceptable, but we
-need to ensure that the computed bitmap position for that object is
-performed using 64-bits and doesn't overflow.
+(Note that this is also OK as-is, since `p->pack_size` is an `off_t`, so
+this computation should already be done as 64-bit integers. But again,
+let's use `st_mult()` to make this fact clear).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ midx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 7367f62bb6..7ddb465c20 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1294,7 +1294,7 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
- 	for (i = 0; i < eindex->count; ++i) {
- 		struct object *obj;
- 
--		if (!bitmap_get(objects, bitmap_num_objects(bitmap_git) + i))
-+		if (!bitmap_get(objects, st_add(bitmap_num_objects(bitmap_git), i)))
+diff --git a/midx.c b/midx.c
+index 57c53dbd4a..a5e4094340 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1994,8 +1994,8 @@ static int fill_included_packs_batch(struct repository *r,
+ 		if (open_pack_index(p) || !p->num_objects)
  			continue;
  
- 		obj = eindex->objects[i];
-@@ -1473,7 +1473,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
- 	 * them individually.
- 	 */
- 	for (i = 0; i < eindex->count; i++) {
--		uint32_t pos = i + bitmap_num_objects(bitmap_git);
-+		size_t pos = st_add(i, bitmap_num_objects(bitmap_git));
- 		if (eindex->objects[i]->type == type &&
- 		    bitmap_get(to_filter, pos) &&
- 		    !bitmap_get(tips, pos))
-@@ -1564,7 +1564,7 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
- 	}
+-		expected_size = (size_t)(p->pack_size
+-					 * pack_info[i].referenced_objects);
++		expected_size = st_mult(p->pack_size,
++					pack_info[i].referenced_objects);
+ 		expected_size /= p->num_objects;
  
- 	for (i = 0; i < eindex->count; i++) {
--		uint32_t pos = i + bitmap_num_objects(bitmap_git);
-+		size_t pos = st_add(i, bitmap_num_objects(bitmap_git));
- 		if (eindex->objects[i]->type == OBJ_BLOB &&
- 		    bitmap_get(to_filter, pos) &&
- 		    !bitmap_get(tips, pos) &&
-@@ -2038,7 +2038,8 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
- 
- 	for (i = 0; i < eindex->count; ++i) {
- 		if (eindex->objects[i]->type == type &&
--			bitmap_get(objects, bitmap_num_objects(bitmap_git) + i))
-+		    bitmap_get(objects,
-+			       st_add(bitmap_num_objects(bitmap_git), i)))
- 			count++;
- 	}
- 
-@@ -2452,7 +2453,8 @@ static off_t get_disk_usage_for_extended(struct bitmap_index *bitmap_git)
- 	for (i = 0; i < eindex->count; i++) {
- 		struct object *obj = eindex->objects[i];
- 
--		if (!bitmap_get(result, bitmap_num_objects(bitmap_git) + i))
-+		if (!bitmap_get(result,
-+				st_add(bitmap_num_objects(bitmap_git), i)))
- 			continue;
- 
- 		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
+ 		if (expected_size >= batch_size)
 -- 
 2.41.0.347.g7b976b8871f
 
