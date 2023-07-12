@@ -2,91 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2044EB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 18:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F75EEB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 18:47:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231768AbjGLSTj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 14:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35082 "EHLO
+        id S231756AbjGLSrV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 14:47:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjGLSTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 14:19:38 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BE21173C
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 11:19:37 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 931821B61E8;
-        Wed, 12 Jul 2023 14:19:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Mza16Dbaq++v2Mpyz2rjobKoXlMUvrvLQlMe8b
-        5G/GY=; b=hrkDH2hjpFVAWIWRcO5yrqW65SE79MoVNha1hKppGwKOI2CVVzlD8N
-        GiyxhhBbH74Um5ULyuM4MRy31QwcXScZI1hocGm4KXkC2+GMB+NMfdDObM5oxTcM
-        3HIPfJxU9ujFB+UB9Mtprbm6LoHPfurZ7Kg7um3yoiFstuzZb/wHY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A8C41B61E7;
-        Wed, 12 Jul 2023 14:19:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E10AD1B61E6;
-        Wed, 12 Jul 2023 14:19:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Andy Koppe <andy.koppe@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] pretty: add %r format specifier for showing refs
-References: <20230712110732.8274-1-andy.koppe@gmail.com>
-        <CAPig+cT3tWnSfk+ZoRWU=JTGctMiE38fH5V1ebpP7L1bGsfU4Q@mail.gmail.com>
-Date:   Wed, 12 Jul 2023 11:19:34 -0700
-In-Reply-To: <CAPig+cT3tWnSfk+ZoRWU=JTGctMiE38fH5V1ebpP7L1bGsfU4Q@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 12 Jul 2023 12:56:35 -0400")
-Message-ID: <xmqqa5w1t2kp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S231144AbjGLSrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 14:47:20 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274421BF3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 11:47:19 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id E5318320090A;
+        Wed, 12 Jul 2023 14:47:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Wed, 12 Jul 2023 14:47:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imap.cc; h=cc:cc
+        :content-transfer-encoding:content-type:content-type:date:date
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+        1689187635; x=1689274035; bh=J5lkf2X9FmZD2lSGMXBv+Rx8iGuv9yC2Z+9
+        VbxpUL5M=; b=Sk5zlZWbCUgUdTxHKq8hrBB++PuyqWUMWargPqvtQjBhFUplTPf
+        Chkff3/MCk0+Tb6n8PbHdy5uHUwrO3xJm3mHAb2vqbG3WdqrHnee/S2++xlb1Rlv
+        pXna2lSJUiQPBemWubwk+kqe13YwuMykOdZFrw7J9TRi9OvRKME3zIrHwS+mOQHm
+        //WDh0n0I9lRa5NIXzmVgpbEIJZBxn54eLbboqxZlK0FuWqXtM73imS4a2i5YK0c
+        JQhrOPh6TajOAgfNWAp3WHSW7jE+1JCI+BOxwqo5O/pE1NRoJi5srX06Pu9MhRpl
+        wHF0OYaatCj7qfNzpT8rjjPRyktgLhz1GDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1689187635; x=1689274035; bh=J5lkf2X9FmZD2lSGMXBv+Rx8iGuv9yC2Z+9
+        VbxpUL5M=; b=J/wnw1gSKNUauQpanAKjv80gk6BhRyLBYNlZiAAdK2oGlaV6t4w
+        6rxMfJBYCj8AlVciDpbhgifNM0pJgqGTKact/86jWeYj2GwaoBKh1Kmc1If4REO/
+        7YWTSZpKSEPt1ZjOHx2k5SWrsIrsCI7L3arG+6MV92hPFIgp/xo8VdTDg5JhdDTD
+        BBQZFq5m39rOA3ePbWjrdMjWqJdT2zhVoBOM58VOp3adGtRdqD5Kkfx6fLaxXmpC
+        r4WyOnjCaXWVvCtBeaae8J+uArYXiAegMUDrGCDmq6Sd9anZMRVYclt15yeLmdWY
+        pGLdnQECi5SrpV7M/Au37sZytzXLUzxLetg==
+X-ME-Sender: <xms:M_WuZLcbr_R10rvGUyD1xlShyCHPFEsltoEoyf6uLZTOuKlcM6IggQ>
+    <xme:M_WuZBNTHwjieTQuCeYTuTcpewvf0QNj7CE7Qxp__-lfLdPAnjTFlxZ7yOeoNX5HX
+    mZrTk2ya9MrT_vKHQ>
+X-ME-Received: <xmr:M_WuZEjJ3aDdWT7qdMmLRCJE0WQ9tKchG0PAaL2CEdde84BH437lEQTEifWZb0btISoyXO1JJ3Tc8sYNAH1TYhqWyYhdeRiE0m2NtpM6aw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrfedvgdduvdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfedtmdenucfjughrpefkff
+    ggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheprfgvthgrrhcugghuthho
+    vhcuoehpvhhuthhovhesihhmrghprdgttgeqnecuggftrfgrthhtvghrnhephefgueeftd
+    eghfeljeegjeffffdvieevgfduudffjeehkeettdekkeeufeetleeunecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhvuhhtohhvsehimhgrph
+    drtggt
+X-ME-Proxy: <xmx:M_WuZM_PiAQVvshLmf8mtQH3QPKUZrfCm7xTU-8EUajraHISRaeeFQ>
+    <xmx:M_WuZHs5DCps4ebBx9A0Qg_gIpRiAH2G7GNyF5SmB1TaqeCIqXCMNg>
+    <xmx:M_WuZLGXIwuwWsmY2gRYvWZTHDo7z1ViW94jlivZT4gZGp-IdRRLBg>
+    <xmx:M_WuZF3HT3QPd16saw3SMoHEkkABMNn9KlYH66WP8Ts1cvMpwPvffg>
+Feedback-ID: iccdf4031:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Jul 2023 14:47:14 -0400 (EDT)
+Message-ID: <7090349c-4485-d5c4-1f26-190974864f72@imap.cc>
+Date:   Wed, 12 Jul 2023 20:48:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A80EC1C8-20E0-11EE-8E06-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] doc: remove mentions of .gitmodules !command syntax
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20230712160216.855054-1-pvutov@imap.cc>
+ <xmqqleflt75z.fsf@gitster.g> <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
+ <xmqqfs5tt3qz.fsf@gitster.g>
+From:   Petar Vutov <pvutov@imap.cc>
+In-Reply-To: <xmqqfs5tt3qz.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Not a proper review... just running my eye quickly over the patch...
-> ...
->> Amend t4207-log-decoration-colors.sh to reflect the added color
->> controls, and t4202-log.sh to test the %r format.
->> ---
->
-> Missing sign-off.
->
->> diff --git a/log-tree.h b/log-tree.h
->> @@ -13,17 +13,18 @@ struct decoration_filter {
->> +enum decoration_format {
->> +  DECO_FMT_BARE = 0,
->> +  DECO_FMT_UNWRAPPED,
->> +  DECO_FMT_WRAPPED,
->> +};
->
-> Indent with TAB, not spaces.
->
-> Is this enum name a bit too generic for a public header? A quick scan
-> of other enums in the project shows that they usually incorporate the
-> "subsystem" into their names somehow (often as a prefix); for
-> instance, "enum apply_ws_ignore", "enum bisect_error".
 
-Everything you said makes sense.
+On 7/12/23 19:54, Junio C Hamano wrote:
+> 
+> Perhaps
+> 
+>      "... available via the ... configuration variable, and cannot be
+>      used in the .gitmodules file"
+> 
+> would have helped you?
+> 
+> Thanks.
 
-But more importantly, I doubt the wisdom of adding any more %<single
-letter> placeholders to the vocabulary.  Even though I personally do
-not see any need for variants other than just the plain "%d" to show
-the "decorate" information (if you want anything else, just
-post-process the output), if we really want to, the way we should
-extend the format placeholders is to add %(decorate:<options>) that
-is extensible enough that it can produce the identical output as
-existing "%d" and "%D" placeholders do, and add new ones as a new
-option to %(decorate).
+I think that addition is good and makes the intent clearer.
 
-Thanks.
+But it's slightly wrong - only 'custom command' cannot be used in 
+.gitmodules. 'none' is legal (and mentioned in the gitmodules doc as such).
+
+What about something like this?
+
+ From 7b2fcd9a56b4954863cc74e1cf89a4b9d9d3ad52 Mon Sep 17 00:00:00 2001
+From: Petar Vutov <pvutov@imap.cc>
+Date: Wed, 12 Jul 2023 20:40:10 +0200
+Subject: [PATCH] docs: highlight that .gitmodules does not support !command
+
+The `custom command` and `none` entries are described as sharing the
+same limitations, but one is allowed in .gitmodules and the other is
+not. Instead, describe their limitations separately and with slightly
+more detail.
+
+Signed-off-by: Petar Vutov <pvutov@imap.cc>
+---
+  Documentation/git-submodule.txt | 9 ++++++---
+  1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt 
+b/Documentation/git-submodule.txt
+index 4d3ab6b9f9..eb024a1531 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -160,16 +160,19 @@ checked out in the submodule.
+  	merge;; the commit recorded in the superproject will be merged
+  	    into the current branch in the submodule.
+
+-The following 'update' procedures are only available via the
+-`submodule.<name>.update` configuration variable:
+-
+  	custom command;; arbitrary shell command that takes a single
+  	    argument (the sha1 of the commit recorded in the
+  	    superproject) is executed. When `submodule.<name>.update`
+  	    is set to '!command', the remainder after the exclamation mark
+  	    is the custom command.
+++
++Custom commands are only available via the `submodule.<name>.update`
++configuration variable. They cannot be used in the .gitmodules file.
+
+  	none;; the submodule is not updated.
+++
++The `none` update procedure is only available via the .gitmodules file
++or the `submodule.<name>.update` configuration variable.
+
+  If the submodule is not yet initialized, and you just want to use the
+  setting as stored in `.gitmodules`, you can automatically initialize the
+-- 
+2.41.0
+
+
