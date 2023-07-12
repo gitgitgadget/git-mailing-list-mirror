@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B79EB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA6E1EB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231723AbjGLXid (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 19:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47122 "EHLO
+        id S233308AbjGLXih (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 19:38:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232285AbjGLXiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:38:24 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16FEF1BF2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:05 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-c4dd264359cso84276.3
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:05 -0700 (PDT)
+        with ESMTP id S233283AbjGLXiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 19:38:25 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9628E211C
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:07 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-579dd20b1c8so82789107b3.1
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205084; x=1691797084;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205086; x=1691797086;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2juJz+XqNUzfjF+rbmcIRT44Yh17DlsW3aU6M8fDG3w=;
-        b=TPNSYA8sAqiSd16SLB2y0zPCoFqxvDwFHTf+DbUw9YrCLfLI/Mzg6ytsvCNsP2tAl5
-         LJrQx/id7OtUQcUyjmILrtJDakjQxcplaQfImk78TnxgoZ5IT09lTtZNDBfl2NgmnScw
-         KHpAj+GKurCifjULUjNiojZ4lvkcSMgz3oyljXd5wxMN+U1Cb/uOljyMlGlbVdX3Pv79
-         dUE3oklI2lfCKRZsB2dBzGtsJVqoqjwMncx9+hqpYEgXs0DhvOtXN/xQzJvqzFUhCQlj
-         L7eQqxsCV+qbi8Nf7M4GQ5eg6ovAggtEJEvrHZkfJrplwibh52MkLvGGKBitGIWhwpwk
-         FMKg==
+        bh=hpE5g+uWgax8IGRduDa+G9Yt6ihxoWIeZdKbkK0J6bs=;
+        b=U+BsMjV75NkE87sQSMhD4kWSFyqTm8OBrOnPDQPp6dNAdW/i1VO1lCaCs7b8gotkg7
+         0MjpaUFuxu/cy9yzW/S/JHVSGJj/miNYeYSrfz19P+D60V12B7N9oeeRKyK2G5iSQIfj
+         1U4gEgUP/hgTSvLJ6Y0Ndr3YJyHj1wI72ko3PfIZ2zCeJzT8QyT1Ve1E9Gy6p6hX2WhF
+         dyTQhh9inOrZQcYWT50mIcoxhI8PF2XMrxoENgUl5K7hd322xp1JjnuKNPaIxkNLc3kJ
+         YeIKccESCkW/duRKq3qDFRh2YfJDw9ejMooO1gHdfrTiZaWVNefKUrPC6SR5BpltXpVP
+         jPNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689205084; x=1691797084;
+        d=1e100.net; s=20221208; t=1689205086; x=1691797086;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2juJz+XqNUzfjF+rbmcIRT44Yh17DlsW3aU6M8fDG3w=;
-        b=NrPkQXQ/ykbpfnW9Hm9+LlO6qglGZeuPUs+6RzcND7LQPZ6pBYBl6Pmcxj7U8I9qGY
-         dYB/AWoV4KPeLLXORDh+pe9tBG2TO4Io6k1utsHoxDUQLKc/Q/gBFGeEfiKB+QqtRBQo
-         PcQudx1j7+Tj33s3tUmpe619V7kswbEhHFjy+nVu0DBXvsLNRknLkYpMnvkw1fuiWnMi
-         Ck7Xdr/T3csga6oRVFvKJE4DeMVggnyS2qPI1AK3fRDv5jSbe3hRW3plTc9x4axJcm3+
-         1Lv+ANL/iFJ+GzyKhbvtf4ySvZnkznbxGK99sN0e0ZX07tHpknvqqXZP73L8DoofC9sf
-         ILBw==
-X-Gm-Message-State: ABy/qLYddaCemELfbJBQwFD6NZYlqmyAX/dOUzOFaQ8Y8B1GSTQLb4H4
-        ribsJjQcFWCDKJll+0KrS+xpIO0BKnzItG+1Mo473w==
-X-Google-Smtp-Source: APBJJlGhbtUnmFzN6YOj9kkRbRviwRFy/Zqh1crTQ9VZhlVFIL/L1RYL826fHdUmkZChm58XXvfxag==
-X-Received: by 2002:a25:4c07:0:b0:bc6:5d71:f820 with SMTP id z7-20020a254c07000000b00bc65d71f820mr17869102yba.55.1689205084094;
-        Wed, 12 Jul 2023 16:38:04 -0700 (PDT)
+        bh=hpE5g+uWgax8IGRduDa+G9Yt6ihxoWIeZdKbkK0J6bs=;
+        b=YQG079Fy2s3+4Sqh1OSTJXdjDDmBqhSNID3Nz7t2LQvQuREGXeWpkuqGDDy1vQqiVi
+         6qwJrr9YkmJOKzRkN6SUQHRS7ClzJQbE8f4BnyZEGwHZlbHDJwV/J+unjJ7CVq6bwh+S
+         aa2CWJlmsAUh3SRlMga3IrIBX58INwvYyCbZza8X9bQRVXnSCE4F59hHrxzLgMxKiLni
+         qEQs31ThIWKsbDbbnckZRTmpCYcuDrOS6yiGJwai9xgQhAgaS7zIVwEwBOGdia1JwfCy
+         tcUk2p5x4iXiK1Z9OczMP0DQNFNglBVDgzKZxveQUX3NZCRYL9bFdvHy640EQsU2ewkU
+         tWIA==
+X-Gm-Message-State: ABy/qLZvNRMt7wF/6cwWZtzCImYocpngm9SyEfOzCkMVP36EM13mwms0
+        m0cqjfjxioWHF8rAb9AN/IAb5DTkZ3stgpnmn2VZOQ==
+X-Google-Smtp-Source: APBJJlF11LEiLneWxCkpteWyIqOcqs4sAJxM2Q2W42f78cX30NMGZCNY3IIuG36JH6WPElII/7o9Ig==
+X-Received: by 2002:a81:918a:0:b0:57a:5099:fd7a with SMTP id i132-20020a81918a000000b0057a5099fd7amr139098ywg.3.1689205086729;
+        Wed, 12 Jul 2023 16:38:06 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z1-20020a25ad81000000b00c581e8d0ae4sm1180626ybi.56.2023.07.12.16.38.03
+        by smtp.gmail.com with ESMTPSA id x189-20020a81a0c6000000b0057399b3bd26sm1488909ywg.33.2023.07.12.16.38.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 16:38:03 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 19:38:03 -0400
+        Wed, 12 Jul 2023 16:38:06 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 19:38:05 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
@@ -56,9 +56,9 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>
-Subject: [PATCH 14/20] commit-graph.c: prevent overflow in
- `fill_commit_graph_info()`
-Message-ID: <62a3e40b9714bb8739ab32eceda8816b073ba5de.1689205042.git.me@ttaylorr.com>
+Subject: [PATCH 15/20] commit-graph.c: prevent overflow in
+ `fill_commit_in_graph()`
+Message-ID: <d49bedb1be00b76629dbfb6494d4f8cd45af1d02.1689205042.git.me@ttaylorr.com>
 References: <cover.1689205042.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -69,57 +69,41 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 In a similar spirit as previous commits, ensure that we don't overflow
-in a few spots within `fill_commit_graph_info()`:
+when the lex_index of the commit we are trying to fill out exceeds
+2^32-1/(g->hash_len+16).
 
-  - First, when computing an offset into the commit data chunk, which
-    can occur when the `lex_index` of the item we're looking up exceeds
-    2^32-1/GRAPH_DATA_WIDTH.
-
-  - A similar issue when computing the generation date offset for
-    commits with `lex_index` greater than 2^32-1/4. Note that in
-    practice this will never overflow, since the left-hand operand is
-    from calling `sizeof(...)` and is thus already a `size_t`. But wrap
-    that in an `st_mult()` to make it clear that we intend to perform
-    this computation using 64-bit operands.
-
-  - Finally, a nearly identical issue as above when computing an offset
-    into the `generation_data_overflow` chunk.
+The other hunk touched in this patch is not susceptible to overflow,
+since an explicit cast is made to a 64-bit unsigned value. For clarity
+and consistency with the rest of the commits in this series, avoid a
+tricky to reason about cast, and use `st_mult()` directly.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ commit-graph.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 1b70bdb07e..ceaeb8b785 100644
+index ceaeb8b785..ca1d997516 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -789,7 +789,7 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
- 		die(_("invalid commit position. commit-graph is likely corrupt"));
+@@ -837,7 +837,7 @@ static int fill_commit_in_graph(struct repository *r,
+ 	fill_commit_graph_info(item, g, pos);
  
  	lex_index = pos - g->num_commits_in_base;
--	commit_data = g->chunk_commit_data + GRAPH_DATA_WIDTH * lex_index;
-+	commit_data = g->chunk_commit_data + st_mult(GRAPH_DATA_WIDTH, lex_index);
+-	commit_data = g->chunk_commit_data + (g->hash_len + 16) * lex_index;
++	commit_data = g->chunk_commit_data + st_mult(g->hash_len + 16, lex_index);
  
- 	graph_data = commit_graph_data_at(item);
- 	graph_data->graph_pos = pos;
-@@ -799,14 +799,14 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
- 	item->date = (timestamp_t)((date_high << 32) | date_low);
+ 	item->object.parsed = 1;
  
- 	if (g->read_generation_data) {
--		offset = (timestamp_t)get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
-+		offset = (timestamp_t)get_be32(g->chunk_generation_data + st_mult(sizeof(uint32_t), lex_index));
+@@ -859,7 +859,7 @@ static int fill_commit_in_graph(struct repository *r,
+ 	}
  
- 		if (offset & CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW) {
- 			if (!g->chunk_generation_data_overflow)
- 				die(_("commit-graph requires overflow generation data but has none"));
- 
- 			offset_pos = offset ^ CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW;
--			graph_data->generation = item->date + get_be64(g->chunk_generation_data_overflow + 8 * offset_pos);
-+			graph_data->generation = item->date + get_be64(g->chunk_generation_data_overflow + st_mult(8, offset_pos));
- 		} else
- 			graph_data->generation = item->date + offset;
- 	} else
+ 	parent_data_ptr = (uint32_t*)(g->chunk_extra_edges +
+-			  4 * (uint64_t)(edge_value & GRAPH_EDGE_LAST_MASK));
++			  st_mult(4, edge_value & GRAPH_EDGE_LAST_MASK));
+ 	do {
+ 		edge_value = get_be32(parent_data_ptr);
+ 		pptr = insert_parent_or_die(r, g,
 -- 
 2.41.0.347.g7b976b8871f
 
