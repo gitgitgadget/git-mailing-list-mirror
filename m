@@ -2,107 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C982EB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 16:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7941EB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 16:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231906AbjGLQkf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 12:40:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42182 "EHLO
+        id S230344AbjGLQ4t convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 12 Jul 2023 12:56:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbjGLQkd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 12:40:33 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2016E69
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 09:40:26 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A28A1A0746;
-        Wed, 12 Jul 2023 12:40:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=spr3ApQh3yrQfEZV3uEvl4fghtWVefywHAusDV
-        CN48U=; b=D2bD0lT8DqI9WwTBd2ZPs9TPzyBKVxxQLF7TGN/B1snN32YZx0jMOb
-        YmFU+ZGNoihlxCpdUn9gUtdhbIGGT3dDU3NP06uDNgyjb2hSb/UpRwdtx5JSJgxq
-        QsSGY/w3PHWAKTddinGYbCNqiZ92H/JWoCaKzCdDGo6J9qSQNlfcM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F6881A0745;
-        Wed, 12 Jul 2023 12:40:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B4BD1A0744;
-        Wed, 12 Jul 2023 12:40:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     pvutov@imap.cc
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: remove mentions of .gitmodules !command syntax
-References: <20230712160216.855054-1-pvutov@imap.cc>
-Date:   Wed, 12 Jul 2023 09:40:24 -0700
-In-Reply-To: <20230712160216.855054-1-pvutov@imap.cc> (pvutov@imap.cc's
-        message of "Wed, 12 Jul 2023 18:02:03 +0200")
-Message-ID: <xmqqleflt75z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S230028AbjGLQ4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 12:56:48 -0400
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A50912E
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 09:56:47 -0700 (PDT)
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-635dd1b52a2so43975566d6.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 09:56:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689181006; x=1691773006;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7rQaWrhS0A4BSTee3Hig/WOgjNDCoAqoqhWn871g4GA=;
+        b=ZsAkllxZ9pUHJm4B8KwnBYA/h/J+SfglzFK0rpGgjGCFBynUsnkVMKG8kQ2FjRDDUw
+         2z3DwdGBJOPSCb0pP0PCDsiZN0dBdaBckCmmutz9O+AuI80h4+dyecniyrYed7/5j3ka
+         UJ3YHMs8MUWk6EsTpPt976kyzgUWDwiRHGSUSm/2YkUCDASxESpeIIDfxSqC3oz46rYN
+         7It+cD3vz4WQo3RVJWRMh5XrLwnHH4V3UHAFolxGoXtFuHtizvTa2AOnN9x9aCSOAN9x
+         +gGkN6ctv6e2J8ZNV/M/aI+SnmK7px/UDKvDsJoGS0K79GA7BsklEwNXcoDL5o62ntod
+         bHTg==
+X-Gm-Message-State: ABy/qLZYGT+cvzZfkeVOSlNyiCvMJ9JGKDQ9iFwgJ6obX4sWCS2o9db1
+        iShRbZUr6SC5TNO4QQn183j5oPzmBX9d+lDZ5OLR/i7L
+X-Google-Smtp-Source: APBJJlFV05r4De2o2IhdV9Cvt37P935SirHO6e7Wj8sL7/WlXUWMxJn6OiR+Dqb/PJqZG0ReGFUO+YWHEnnU2kjiSBI=
+X-Received: by 2002:a0c:b3ce:0:b0:636:fda0:a23 with SMTP id
+ b14-20020a0cb3ce000000b00636fda00a23mr14910582qvf.27.1689181006456; Wed, 12
+ Jul 2023 09:56:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CD4196EA-20D2-11EE-ADFA-307A8E0A682E-77302942!pb-smtp2.pobox.com
+References: <20230712110732.8274-1-andy.koppe@gmail.com>
+In-Reply-To: <20230712110732.8274-1-andy.koppe@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 12 Jul 2023 12:56:35 -0400
+Message-ID: <CAPig+cT3tWnSfk+ZoRWU=JTGctMiE38fH5V1ebpP7L1bGsfU4Q@mail.gmail.com>
+Subject: Re: [PATCH] pretty: add %r format specifier for showing refs
+To:     Andy Koppe <andy.koppe@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-pvutov@imap.cc writes:
+Not a proper review... just running my eye quickly over the patch...
 
-> From: Petar Vutov <pvutov@imap.cc>
+On Wed, Jul 12, 2023 at 7:17 AM Andy Koppe <andy.koppe@gmail.com> wrote:
+> This lists refs similarly to the %D decoration format, but separates
+> the refs with spaces only and omits "tag:" annotations. It's intended
+> primarily for color output, where tags are already distinguished by
+> color.
 >
-> To mitigate CVE-2019-19604, the capability to configure
-> `git submodule update` to execute custom commands was
-> removed in v2.20.2.
+> Refactor format_decorations() to take an enum decoration_format argument
+> that determines the prefix, separator and suffix as well as the tag
+> annotation.
 >
-> The git-submodule documentation still mentions the now-unsupported
-> syntax, which is misleading.
+> For %d and %D, wrap the "tag:" annotation and the actual tag in separate
+> color controls, because otherwise the tag ends up uncolored when %w
+> width formatting breaks a line between the annotation and tag.
 >
-> Remove the leftover documentation.
-
-The change during v2.20.2 timeperiod you have in mind may be
-e904deb8 (submodule: reject submodule.update = !command in
-.gitmodules, 2019-12-05).  The key phrase is "in .gitmodules"
-as it did not forbid writing update command in the configuration.
-
-The pre-context lines of your patch (see below) say that the 'custom
-command' option and 'none' option are only available via the
-`submodule.<name>.update` configuration variable.  IOW, this part of
-the documentation does not talk about the .gitmodules file---it
-talks about what you can say in the configuration file (which is
-under your local control).
-
-I think the existing text that came from fc01a5d2 (submodule update
-documentation: don't repeat ourselves, 2016-12-27) may be
-misleading, and may has room for improvement, but I do not think it
-is wrong per-se.  If we remove it, there is nowhere else that teaches
-users !cmd can be set in their configuration files, or is there?
-
-Thanks.
-
-> Signed-off-by: Petar Vutov <pvutov@imap.cc>
+> Amend t4207-log-decoration-colors.sh to reflect the added color
+> controls, and t4202-log.sh to test the %r format.
 > ---
->  Documentation/git-submodule.txt | 6 ------
->  1 file changed, 6 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 4d3ab6b9f9..b40ac72f75 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -163,12 +163,6 @@ checked out in the submodule.
->  The following 'update' procedures are only available via the
->  `submodule.<name>.update` configuration variable:
->  
-> -	custom command;; arbitrary shell command that takes a single
-> -	    argument (the sha1 of the commit recorded in the
-> -	    superproject) is executed. When `submodule.<name>.update`
-> -	    is set to '!command', the remainder after the exclamation mark
-> -	    is the custom command.
-> -
->  	none;; the submodule is not updated.
->  
->  If the submodule is not yet initialized, and you just want to use the
+
+Missing sign-off.
+
+> diff --git a/log-tree.h b/log-tree.h
+> @@ -13,17 +13,18 @@ struct decoration_filter {
+> +enum decoration_format {
+> +  DECO_FMT_BARE = 0,
+> +  DECO_FMT_UNWRAPPED,
+> +  DECO_FMT_WRAPPED,
+> +};
+
+Indent with TAB, not spaces.
+
+Is this enum name a bit too generic for a public header? A quick scan
+of other enums in the project shows that they usually incorporate the
+"subsystem" into their names somehow (often as a prefix); for
+instance, "enum apply_ws_ignore", "enum bisect_error".
