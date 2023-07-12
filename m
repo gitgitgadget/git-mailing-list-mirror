@@ -2,125 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 168FDEB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 20:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CCC6EB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 20:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231767AbjGLUry (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 16:47:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58836 "EHLO
+        id S231281AbjGLUty (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 16:49:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbjGLUrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 16:47:53 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28D9A2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 13:47:51 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-51e43473ee0so7659763a12.3
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 13:47:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689194870; x=1691786870;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HhqbRSxtN1EB9TYnCl0nWfvwGFrOqwiSv5uEX/f6jw8=;
-        b=Bh4HgLWxT4BhASsF34hGbgEEWTcAa+DP94Z/anHK1kTem7yp37t0IT/u3NJOLu4cB6
-         KqnpTNO+mKd0T8+eQJ186aHYx9INwGgHHm3//2in95Qxl0exHXs2UVKMtMI0/r/JT43k
-         /tqWMXYkzH1C0b4q2of8ZP9Gx+vF2Hp1VGPJBFWkUBA0fERL/XZjAmsFl5YfT0HK91/d
-         ECbKG4rAd4IXaLrifiZusXdx3NEbfaGttJVMgJw95TSgWNTFO0J3chC+CUxuP/PtZrBm
-         5ltuw1hcxzVdPptkxb6ywKZno6VrhZmCwk8DrIELMyotL+9pWNg08shnSdtnpxzddKWX
-         kHQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689194870; x=1691786870;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HhqbRSxtN1EB9TYnCl0nWfvwGFrOqwiSv5uEX/f6jw8=;
-        b=S1eond0OtfB89Ci5M7bS+PRhw1+yfO4On+aD+G5QHJkF0u6yQQlc+4Wuo+yHuMY4Yq
-         TtIWQDIPen7jS3AeoWl2hgoXshy0qRdOUDlxoYTrzsdvVG3EZmeLPqWe/cAuCw+6khw+
-         ZWty544+8BaFzkwcrvMu+4V1mhxkBM+Nf0FCfjH5R4X2uSEJ95XdUvZn74jUEOVoZK5U
-         aNUUBx5oCoRW7lddjQZD+1H0VYOra2as1WGsNKh5WelySSnVQ9f6R3UreWkbZ2QGyJ2b
-         HViVafYHjfvdPy/a4g5aMkBELuHItGdkLcZTJIGN74r9RuodHOkfUjv3AkOu4YiVJjd2
-         NNLg==
-X-Gm-Message-State: ABy/qLaRZClsuC1vpbcsewRS+TUDbHQzH1H9ukgIIT10L/lgUBAr0U02
-        BszqPDrAe989/7A08z0r9HaZI9j8+o3YQ91hqLDTmABMKas=
-X-Google-Smtp-Source: APBJJlF01BVuDaFmFvMINGEXT+1kiwyANNEq2tXuKHu6AIzTrexXnlyT9M6k784KeZoqoUBaB9ZhOr5/HxKf8V1p4Kc=
-X-Received: by 2002:aa7:d782:0:b0:51d:98d0:3049 with SMTP id
- s2-20020aa7d782000000b0051d98d03049mr18455138edq.21.1689194870132; Wed, 12
- Jul 2023 13:47:50 -0700 (PDT)
+        with ESMTP id S229693AbjGLUtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 16:49:53 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0609C9B
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 13:49:52 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8582A3501C;
+        Wed, 12 Jul 2023 16:49:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PU9gQs1DslWtVlnJTU3aMH66V18uPDjB+UhtWS
+        cesTs=; b=aKDfBr6OgzswfxGfn54VHxoDZiRjH5hPlXi6UpJqc5RHzkTu0xal9P
+        iUaDRR5KasHBiCvy5ARGDOSNofkacjOv1+dveyRC+tzvy58luYuItpzjdOOHNy89
+        ZwxYrO+EhE8QS8s7RlhoPu7bU9kNpaBuDQCzx2C5t+vJPfuGERFQk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7B0963501B;
+        Wed, 12 Jul 2023 16:49:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 14B2735017;
+        Wed, 12 Jul 2023 16:49:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Soref <jsoref@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [rebase] `fatal: cannot force update the branch ... checkout
+ out at ...` is confusing when it isn't active
+References: <CACZqfqAB7zyn56+NOL=E8Y3bXNiQnJdmVXgzsnj78C-Anw-h2Q@mail.gmail.com>
+        <xmqqbkghw4qd.fsf@gitster.g>
+        <CACZqfqDE-SCOqVX9a8KCLAn1zSVbYxuCeU8Y=3-nhj5wbL=AWQ@mail.gmail.com>
+Date:   Wed, 12 Jul 2023 13:49:47 -0700
+In-Reply-To: <CACZqfqDE-SCOqVX9a8KCLAn1zSVbYxuCeU8Y=3-nhj5wbL=AWQ@mail.gmail.com>
+        (Josh Soref's message of "Wed, 12 Jul 2023 16:33:22 -0400")
+Message-ID: <xmqq5y6osvmc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230712110732.8274-1-andy.koppe@gmail.com> <CAPig+cT3tWnSfk+ZoRWU=JTGctMiE38fH5V1ebpP7L1bGsfU4Q@mail.gmail.com>
- <xmqqa5w1t2kp.fsf@gitster.g>
-In-Reply-To: <xmqqa5w1t2kp.fsf@gitster.g>
-From:   Andy Koppe <andy.koppe@gmail.com>
-Date:   Wed, 12 Jul 2023 21:47:37 +0100
-Message-ID: <CAHWeT-agn87wc82xdMzB07Y=xe6H-yR_oxS_CGf2tE-szQ=T-Q@mail.gmail.com>
-Subject: Re: [PATCH] pretty: add %r format specifier for showing refs
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A45206CA-20F5-11EE-AFAF-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+Josh Soref <jsoref@gmail.com> writes:
+
+> Josh Soref writes:
+>> fatal: cannot force update the branch 'main' checked out at
+>> '/private/var/folders/r3/n29fz25x72x191fdv6mhhr3m0000gp/T/tmp.fGD64HAf'
 >
->> Not a proper review... just running my eye quickly over the patch...
->> ...
->> Missing sign-off.
->>
->> Indent with TAB, not spaces.
+>> It's true git in the repository does have a pin of sorts for the
+>> `main` branch and that `git-rebase` would be very upset if the
+>> branch's location were changed, but as an end user, the `main` branch
+>> is not checked out, the `next` branch is checked out.
+>
+> Junio C Hamano wrote:
+>> Fair enough.  Perhaps "cannot force update the branch 'main' in use"
+>> would alleviate the confusion?
+>
+> That would be better.
+>
+> Even better would be to tell me what's using it (rebase). I'm not sure
+> how possible that is.
 
-Thanks for the check, and apologies for those avoidable mistakes. Must
-remember to run checkpatch =E2=80=A6
+When branch.c:prepare_checked_out() notices which branch is in use
+in what way in which worktree, it does check many conditions (e.g.
+"in this worktree, is a rebase in progress and if so which branch is
+being affected?") but the information is lost there to only record a
+mapping from branch names to worktree location.  So "it is in use
+over there" with exact location is given, but "how it is used" is
+not recorded.
 
-I'll send a corrected patch, if only for completeness.
+It shouldn't be a rocket surgery to teach the function to leave that
+information, but I am not offhand sure how valuable it would be to
+do so.  After all, once you learn which worktree of yours is using
+the branch you wanted to touch, you'll either know already or it
+would be easy for you to find out what you have been doing in that
+other worktree anyway, no?
 
->>> +enum decoration_format {
->> Is this enum name a bit too generic for a public header? A quick scan
->> of other enums in the project shows that they usually incorporate the
->> "subsystem" into their names somehow (often as a prefix); for
->> instance, "enum apply_ws_ignore", "enum bisect_error".
-
-I took existing decoration-related types as precedent, in particular
-enum decoration_type and structs decoration_entry and
-decoration_filter, whereby the latter is in the same header.
-
-Junio C Hamano <gitster@pobox.com> writes:
-> But more importantly, I doubt the wisdom of adding any more %<single
-> letter> placeholders to the vocabulary.  Even though I personally do
-> not see any need for variants other than just the plain "%d" to show
-> the "decorate" information (if you want anything else, just
-> post-process the output)
-
-The proposed %r placeholder basically is the minimised version of %d,
-which could save space in one-line logs and generally reduce visual
-noise in custom log formats. Post-processing is rather more difficult
-and error-prone than a built-in feature.
-
-> if we really want to, the way we should
-> extend the format placeholders is to add %(decorate:<options>) that
-> is extensible enough that it can produce the identical output as
-> existing "%d" and "%D" placeholders do, and add new ones as a new
-> option to %(decorate).
-
-I'd be happy to look into that.
-
-What have you got in mind for the <options>?
-
-Something like:
-  %(decorate) for %d
-  %(decorate:unwrapped) for %D
-  %(decorate:bare) instead of the proposed %r
-
-Or something with separate options for each element, similar to the
-separator option of %(trailers)?
-
-%r might look as follows, with a space for the separator and empty
-strings for the other elements:
-
-  %(decorate:prefix=3D,separator=3D ,suffix=3D,tag=3D)
-
-(Each option would default to its %d value if not specified.)
-
-Thanks,
-Andy
