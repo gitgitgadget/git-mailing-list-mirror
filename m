@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E89AEEB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CDFBC0015E
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 23:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233271AbjGLXhs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 19:37:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46786 "EHLO
+        id S233339AbjGLXhv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 19:37:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232866AbjGLXhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:37:45 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BE51FCC
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:38 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5701eaf0d04so82678767b3.2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:38 -0700 (PDT)
+        with ESMTP id S231987AbjGLXhq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 19:37:46 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD6081FF7
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:40 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-57a6df91b1eso56842187b3.1
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 16:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205057; x=1691797057;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689205059; x=1691797059;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SLU39YylH/x9Y3EwN3WYovqewoUwGi66uEa9KFJ1XUI=;
-        b=JLVbEq2Sr8tdU7iW0m7KhjChVflpl+wwihtmVit4G6k6uQgt1Ji+ukI6GiJP7eGioD
-         Ox2HJVwEyfhzP6wt936k2ZbLMyDRpfH5CsxH8avU73pV05He4c1stLCiZsZcK0AQLKHh
-         0ZVd/PNR4XzwqweoMoz9bue1uvyThom3uhiU+33Penm6/PqkZMpMColxMXPoNTutbdar
-         SjhRiuPd2qda16zBzi7SHW1QaXAGcEmXzBGjZdHY2pFGy3LlbfZVbbaLelHb6VRx8o5W
-         b8GWGgucpN3rrXLQPt2T4aiH2Z/YkD6yR2wsABxuTVnXv3/F0ISvHDnv1OY8v22XR3El
-         M+xA==
+        bh=R+eKKd2Xv2yoPgePE2cYqk74E9Fbvjeb4VfHtVmi9KI=;
+        b=gaBtKNqqfxM40R5X3N1hMWxZrMmXsH7EYIWmGfddQFZYKL/bL0sJSVVeE8bcwKmBeo
+         LzlcyMZN2ZyKYZsegxuJw3RELH+bDpRYF8o9rlUIE6knGL7jKG5COgPpoUg3n48xAXRV
+         rSTAMPR6zAITa/2HblenQPdYN4pGERs7xQ1mPv/7jg2IPRKb3VBpeabyWT97jHAMgWGV
+         fIMy46towyU/vIFmMHG115VnNv1PXmyX4Zy4ZCwqPwXpWL3tAfgT0QzLrqDuEanvjsxV
+         tL70wbreOyqsKAKmz1SJBC+KaAgAywh8aNQYyMGAA8oKJaTgoWT3ENL345Dvc+7p/y8s
+         9zSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689205057; x=1691797057;
+        d=1e100.net; s=20221208; t=1689205059; x=1691797059;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SLU39YylH/x9Y3EwN3WYovqewoUwGi66uEa9KFJ1XUI=;
-        b=OXaDLVgymgtzn3uGTora4x6oWVfg8XeB+qiH6VfvAQSqlhwMDSu3qg1AwaGGIfXT+j
-         g5pHIIf8vJZnghfwuqjDzAGpDw/0tdQFuT/rLH23nJfJ0BsVDOgVgpicYwPhuJvTlGFg
-         LirFfhTKB2Y44roUgtCWFbqsfJ5W5iQM2RUhYeGBYVUJp7XGeG7NgBy2yyS4wLDiIM7N
-         mzLIV1AQyFfUMJ6i3HigVHZ6XmCwYVHmRrZphsBCDp+PYy6qzkof/4H3u2nkUbhVV2a0
-         F6lX1+bl//xjbhIkTntb4C30RAbt1fwxvpkHhArtDfxeikNVy2qxNhC+JEbNY9tgET3c
-         ai8g==
-X-Gm-Message-State: ABy/qLZXfqp731skcuUwPM0n1uxHkqkGCh4hrfrC1ieQZaqhD/Nkyoay
-        rhU9lximjW2oj3dn5jU3PDTI1NgNM+knc8f++JDnKA==
-X-Google-Smtp-Source: APBJJlEogbmcjXySwbFA3uPsAi6dqgJOFEJmMQCB7VGIBV2IwoXk0rtfaZ1DGzJL3T+9I0ejogE2Ow==
-X-Received: by 2002:a81:a191:0:b0:572:83de:a011 with SMTP id y139-20020a81a191000000b0057283dea011mr55957ywg.35.1689205057137;
-        Wed, 12 Jul 2023 16:37:37 -0700 (PDT)
+        bh=R+eKKd2Xv2yoPgePE2cYqk74E9Fbvjeb4VfHtVmi9KI=;
+        b=W9Y6d42xNmgxixLtI+/JauHqXmx4nExjAi76dKru+dAqiL8GYsxZCeziGTqBuRUUZt
+         7zYzkd+00z9O3riiXrEDDO6WSYerrZ7UyFI1To0FiWXx2GeLdxWqU7yiASOmc+xnP3AU
+         0lNoRZwsN+9TBjPne10tkwQF6+M94aSoAZKAT/z+OVg9Yzt1bO8d3NHjB+R0bxXP1e1+
+         6e+Ncn86GnVyHWA+mIXR1lSCm8VGBh3VU8dkmNQyQkD6TKNVCpPCmyn8hAlvGrBqYE6i
+         Wqi+C8Uauw4AxP/giHj3EtZATZ8WL9ucp5z0m9FH5vwj8TadfyF+05I58JvFgOxcROVF
+         /jVA==
+X-Gm-Message-State: ABy/qLaryTaBC7gxFlXdZbV/9yF+eDzbX/tmWFiPoWwKEN9DfrhpXGTe
+        K2I9/Mj9147zURva5UQvlWvDQ09erC1Qom7ezYCHUA==
+X-Google-Smtp-Source: APBJJlGioOHxAt8dNe17uyG9VYh1eMtKW9LJqnTTOnjMAPRziGVwgeMSk0ur38l+jxh/VVIJR05FtA==
+X-Received: by 2002:a81:7d86:0:b0:57a:5039:aa77 with SMTP id y128-20020a817d86000000b0057a5039aa77mr121039ywc.15.1689205059751;
+        Wed, 12 Jul 2023 16:37:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q127-20020a0de785000000b00545a081849esm1470250ywe.46.2023.07.12.16.37.36
+        by smtp.gmail.com with ESMTPSA id w18-20020a814912000000b0057a92cd7f95sm1442407ywa.100.2023.07.12.16.37.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 16:37:36 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 19:37:36 -0400
+        Wed, 12 Jul 2023 16:37:39 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 19:37:38 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
@@ -56,8 +56,8 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>
-Subject: [PATCH 04/20] midx.c: use `size_t`'s for fanout nr and alloc
-Message-ID: <bdad7286046e5f4ae43d4b2571fab2d3e31912c7.1689205042.git.me@ttaylorr.com>
+Subject: [PATCH 05/20] midx.c: prevent overflow in `nth_midxed_object_oid()`
+Message-ID: <1a60b79296c567da33cb8e7001ff21c484836989.1689205042.git.me@ttaylorr.com>
 References: <cover.1689205042.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,45 +67,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `midx_fanout` struct is used to keep track of a set of OIDs
-corresponding to each layer of the MIDX's fanout table. It stores an
-array of entries, along with the number of entries in the table, and the
-allocated size of the array.
+In a similar spirit as previous commits, avoid overflow when looking up
+an object's OID in a MIDX when its position is greater than
+`2^32-1/m->hash_len`.
 
-Both `nr` and `alloc` are stored as 32-bit unsigned integers. In
-practice, this should never cause any problems, since most packs have
-far fewer than 2^32-1 objects.
-
-But storing these as `size_t`'s is more appropriate, and prevents us
-from accidentally overflowing some result when multiplying or adding to
-either of these values. Update these struct members to be `size_t`'s as
-appropriate.
+As usual, it is perfectly OK for a MIDX to have as many as 2^32-1
+objects (since we use 32-bit fields to count the number of objects at
+each fanout layer). But if we have more than `2^32-1/m->hash_len` number
+of objects, we will incorrectly perform the computation using 32-bit
+integers, overflowing the result.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ midx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index db459e448b..449c10289c 100644
+index 449c10289c..dbc63c0d42 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -584,12 +584,14 @@ static void fill_pack_entry(uint32_t pack_int_id,
+@@ -254,7 +254,7 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
+ 	if (n >= m->num_objects)
+ 		return NULL;
  
- struct midx_fanout {
- 	struct pack_midx_entry *entries;
--	uint32_t nr;
--	uint32_t alloc;
-+	size_t nr, alloc;
- };
- 
--static void midx_fanout_grow(struct midx_fanout *fanout, uint32_t nr)
-+static void midx_fanout_grow(struct midx_fanout *fanout, size_t nr)
- {
-+	if (nr < fanout->nr)
-+		BUG("negative growth in midx_fanout_grow() (%"PRIuMAX" < %"PRIuMAX")",
-+		    (uintmax_t)nr, (uintmax_t)fanout->nr);
- 	ALLOC_GROW(fanout->entries, nr, fanout->alloc);
+-	oidread(oid, m->chunk_oid_lookup + m->hash_len * n);
++	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n));
+ 	return oid;
  }
  
 -- 
