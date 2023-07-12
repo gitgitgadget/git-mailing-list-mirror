@@ -2,172 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E99FDEB64D9
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 11:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6494EB64D9
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 15:01:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbjGLLeN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 07:34:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55010 "EHLO
+        id S232463AbjGLPBg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 11:01:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjGLLeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 07:34:12 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772C68F
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 04:34:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1689161647; x=1689766447; i=johannes.schindelin@gmx.de;
- bh=jxWz8BLn5xKFp4/2AphuaIcBwJRNHmllvUxVHQ4imAY=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=OBkvG8wAMcp1vAxllCqzQ2i6p077F46gJjcku1Hz2VJr/+8Sos1nw9d2gEmPlM/uVQdh4j2
- ioKa9DYl3kr6WFL7sbRt//Wxxed6vxnKeZmtbjhVgVnt+maq3bHz1cpGvkg7RCFX37oQOJ5U6
- 7a9mllg36gAc/FCmPDb0X9scu6BFPRU3xCyk8YvKIi97qX8xWMTdA5bGIVyiO6RbUiBy5Vb2k
- eZphAjyMP9u4pB50sVkg3x8Mu+CurWjrs5CFwipe7gO6cBZOVvALPnJa3jdiSLKFZ1AhElJtT
- XDGoqMszJh0qFGbhTzsw5rhcHkNzsZIazs8JRw13FDON60gknphA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.64]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMGNC-1qZYoz0Piw-00JH4Y; Wed, 12
- Jul 2023 13:34:07 +0200
-Date:   Wed, 12 Jul 2023 13:34:05 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
-cc:     git@vger.kernel.org
-Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
-In-Reply-To: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
-Message-ID: <71f7d816-b139-03ab-88fc-7552d65e4498@gmx.de>
-References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
+        with ESMTP id S232358AbjGLPBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 11:01:35 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E6BEBB
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 08:01:34 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-666e6ecb52dso4226055b3a.2
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 08:01:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689174094; x=1691766094;
+        h=to:subject:message-id:date:mime-version:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Bsgyh6EctDjm8fD/wSp3vXsfXhTyPBaswy4jv5bx4U4=;
+        b=JWMSqKwZwvEgpEhMOy6+wsvu+ztp1rp8brBUl/0XTXiQw43PDNYkxIVgLvQF/4ZNLl
+         CtjZUqh2BAcuOilOWCzeZXu+ERi+rpenhaNjynC4zAbWNKpK+BcS0cCgayYBxceOzCwV
+         g4cihMRont+7p3HDQ/6YTcgtXi3gm+BsqeFqQlGAPucDFZ3yt10xemaXwl7FgT6FOkZv
+         JCsyliqbycl/toxziR6WkmIHSs7kYbdVExNg5EF0YeTml8h2qZGWOeApxuQdZGB93tOj
+         vKhnQkgQpPp0OQXaDnbIKoIZRBlqsl9+6l2YUrexQXwUQgFG7u3hGmPaYWqTcvPOTM+Q
+         Godg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689174094; x=1691766094;
+        h=to:subject:message-id:date:mime-version:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Bsgyh6EctDjm8fD/wSp3vXsfXhTyPBaswy4jv5bx4U4=;
+        b=clLoICESX6ZsBTsoiE/O9l3fQevq9lEfPRHyG/4UcI1bq9hWTxww1ois1tUcfrE/Hy
+         9VcI9ZcYJKR2EYPLjtChZc1w1Kmnh4Fm/lEqYU96zJslo5lbP5e5Qcot8hWz1D9PcGUg
+         MkTpnfC7/9YcWaWrVHW7ja4i0UBey/oDMQG9u8f00wZFjoTAMifGVTJsPYJlLH2jh1XU
+         1+aomAwzgI0aLBIdd0Dsoxd2VgfLX62XcTnKhtMPCravV2tY/Kotk/VT5NkAcaIn3Rd9
+         6X0eYTYFEkYCwqyh66aTgaN1U8pQd4KrGM7BHFGIS2qoOZI4+34sEJQJKiN+keNgMKOk
+         +LlQ==
+X-Gm-Message-State: ABy/qLZbRendNnnyMqamloqV0dH3zOQrNOdXI43GPkX86m1kee2r6aFZ
+        rJKfw34vzMon/PoeU4VtESQqQrenyIRZVhBb
+X-Google-Smtp-Source: APBJJlEwW+wNqqgP/2BUb/uktvJpvu2yI154PYQzHbxP3FjrvnDhukeNciwE9/aj4j10S7lfjpnJ/A==
+X-Received: by 2002:a05:6a21:6d90:b0:130:9638:36d4 with SMTP id wl16-20020a056a216d9000b00130963836d4mr15608463pzb.33.1689174093024;
+        Wed, 12 Jul 2023 08:01:33 -0700 (PDT)
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com. [209.85.216.45])
+        by smtp.gmail.com with ESMTPSA id d190-20020a6336c7000000b005533b6cb3a6sm3624344pga.16.2023.07.12.08.01.32
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 08:01:32 -0700 (PDT)
+From:   Manuel Ricci <manuelricciwc@gmail.com>
+X-Google-Original-From: Manuel Ricci <manuel@webtea.it>
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-262cc036fa4so3525830a91.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 08:01:32 -0700 (PDT)
+X-Received: by 2002:a17:90b:1d10:b0:263:8c2:6290 with SMTP id
+ on16-20020a17090b1d1000b0026308c26290mr15033417pjb.43.1689174092332; Wed, 12
+ Jul 2023 08:01:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-119226400-1689161647=:25096"
-X-Provags-ID: V03:K1:KV/bZkGnmr44rgGFyBeGFUkjfXpqKXlGSidzR6/Sy5VTP89tCwH
- +vc0AfICChhED2l3vGHz6rnEP+63d6A5vKdtW64DARiB+MiPbu5p6hQ5nmAigN/D8zCNbaW
- KHYZkMKQEY5nhTAy0FYLB1NaplPIJWAdNbT3PpCLy7NJTjyZr8ko0m2UgPwvDOr8IssGmoQ
- F5CPXmQEcbt3ZzNJQi0hg==
-UI-OutboundReport: notjunk:1;M01:P0:lwTet6ncpTg=;VvItpxoGNW/qIS4uoTcoGyDj45+
- GwcQ+23W/PFj9o9JdH55a3JDKwx9+L4uMIezSaYAw92Ox6M5LayaEZiWtwXFOr/6hZmJgvceq
- VBZHuQXFuv38pCwXJ6xH14cbjEJXQDsE1+MpzsgphpBi3wcMk3sjCzyCLZOPJBvVNG+GCTFWP
- poqOHU/fJLUx/dnAOJ04NKy16wADKfOhNjzlcE/EzvyJv5Ixlb01aKRJjabq/rOEXaWTwk5Bv
- m5I3oAtpu0cFQvKlSFwZe8Bne7p49OoBtLXrEZ38/BBUYSdtAxxg5rv3LQlk3/jD30xh+WXMA
- ZuAVrMRz4W+0FuEKhITsT99+/ghQpz0TvAbsiWwWGEc7sbmuXcYqx9iwYzMrIUcYWt8/s2Hnq
- kkTbhSBDhw8y94SGLBfijJIM7p8E/V159imiiyVavy0+VZKN+JnAe1iAxccUbE1AwZtSzf8Sc
- piekfRpWCj0Q7gtQlh+2yft/h1tH2y5UhHLvUMwcSnyIDpyicdRKYwFeT/CX66pKnovumb4ke
- 5+atlAJNOx1g+DM1W+9DVNj7OP2qB161R1sdGBRh7KdFrhrUQ1NGuB8vQKl77lLQWRiyH7vuF
- buYrKfFv4aT7ptyv/ZGTKE13HY9DqpHJcUZq5UwCMYQmaQ7TmT+GC4p0nr0sflDtt/nefGmX+
- KV0WACitZlMuFR+NZulfCqnae6bzDhuQjpvICpzheZ+h0GE52TypqQRQlYffsxDtxVaC9NaYt
- C6LPMTPym6Lc9c5pRv0ZX0YNfi2+iNLca5FJx/+JkQvDA7fGksrB7P6sgls4FPd9Q1AY1Qp1r
- 2L8WsElVGWlPCWGM0kPDs9oNrQPzR1JH2IcRHI8TKYrgmo6Nf8gpZyfdYt3jX94WjzsvP+LMU
- qgr5dKhz/x8cg5JxjnqWOSsFOAXyORdOFMG+l0qp07OjyTSyEW4x052VQLuzUDPGTH7yr+yNP
- A5AzGA==
+Date:   Wed, 12 Jul 2023 17:01:29 +0200
+X-Gmail-Original-Message-ID: <CAMvNOSqDgDnchNdNq7AvBYbMTFfy0mWMygHnX_8HjTAnBA=AnQ@mail.gmail.com>
+Message-ID: <CAMvNOSqDgDnchNdNq7AvBYbMTFfy0mWMygHnX_8HjTAnBA=AnQ@mail.gmail.com>
+Subject: Possible typo in git stash doc page
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-119226400-1689161647=:25096
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In the doc page about git stash, specifically where there're the
+details about git stash push
+https://git-scm.com/docs/git-stash#Documentation/git-stash.txt-push-p--patch-S--staged-k--no-keep-index-u--include-untracked-a--all-q--quiet-m--messageltmessagegt--pathspec-from-fileltfilegt--pathspec-file-nul--ltpathspecgt82308203
 
-Hi Aleksander,
+There's a reference about --staged or -S. I tried to execute the
+command with that flag and the output is like this one:
 
-On Tue, 11 Jul 2023, Aleksander Korzy=C5=84ski wrote:
+error: unknown switch `S'
+usage: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
+          [-u|--include-untracked] [-a|--all] [-m|--message <message>]
+          [--] [<pathspec>...]]
 
-> THE THIRD WAY - UPSTREAM IMPORT
->
-> The proposed third way is a special operation that (in the described
-> use case) has the advantages of both a merge and a rebase, without the
-> disadvantages. The approach is illustrated below:
->
->   o---o---o---o---o  upstream/main
->        \           \
->         \           o'---o'---o'
->          \                     \
->           o---o---o-------------S  main
->
-> First, the divergent commits from "main" are rebased on top of
-> "upstream/main", but then they are combined back with "main" using a
-> special merge commit, which has a custom strategy: it replaces the old
-> content of "main" with the new rebased content. This last commit is
-> the secret sauce of this solution: the commit has two parents, like an
-> ordinary merge, but has the semantics of a rebase.
->
-> The structure above has the advantages of both a merge and a rebase.
-> On the one hand, just like with an ordinary merge, a user who runs
-> "git pull" on their local copy of "main" is not going to see the error
-> about divergent branches. On the other hand, just like with an
-> ordinary rebase, there is visibility into the last imported commit
-> from "upstream/main" and the differences between that commit and the
-> tip of "main".
+    -k, --keep-index      keep index
+    -p, --patch           stash in patch mode
+    -q, --quiet           quiet mode
+    -u, --include-untracked
+                          include untracked files in stash
+    -a, --all             include ignore files
+    -m, --message <message>
+                          stash message
 
-I know this strategy well, having used it initially to maintain Git for
-Windows' patches on top of Git releases. I refer to it as `rebasing merge`
-strategy.
+Even if the flag is --staged
 
-The main benefit for me was that the patches were always kept in an
-"upstreamable state", which incidentally also helped resolving the
-merge conflicts that occurred by continually rebasing them onto upstream
-releases.
+error: unknown option `staged'
+usage: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
+          [-u|--include-untracked] [-a|--all] [-m|--message <message>]
+          [--] [<pathspec>...]]
 
-However, I soon realized that the delineation between upstream and
-downstream patches was unsatisfactory, in particular when new downstream
-patches are added. In the context of the example above, try to find a `git
-rebase` invocation that rebases the current set of downstream patches:
+    -k, --keep-index      keep index
+    -p, --patch           stash in patch mode
+    -q, --quiet           quiet mode
+    -u, --include-untracked
+                          include untracked files in stash
+    -a, --all             include ignore files
+    -m, --message <message>
+                          stash message
 
-   o---o---o---o---o---o---o---o  upstream/main
-        \           \
-         \           o'---o'---o'
-          \                     \
-           o---o---o-------------S---o---o---o  main
+At the start of the same page, --staged is not present in the push
+arguments, so I think that is a typo.
 
-A candidate to describe this in a commit range would be
-`upstream/main..main ^S^`, but you cannot pass that to `git rebase -i`,
-which expects a single upstream.
+Have a good day
 
-Side note: You could _simulate_ this by calling `git replace --graft
-upstream/main upstream/main^ S^` before calling `git rebase -i
-upstream/main`, but I found it really easy to forget to remove the replace
-object afterwards, and I managed to confuse myself many times before
-deciding to use replace objects only very rarely.
-
-So I switched to a different scheme instead that I dub "merging rebase".
-Instead of finishing the rebase with a merge, I start it with that merge.
-In your example, it would look like this:
-
-   o---o---o---o---o  upstream/main
-        \           \
-         o---o---o---M---o'---o'---o' main
-
-Naturally, `M` needs to be a merge that _must_ be made with `-s ours` in
-order to be "tree-same with upstream/main".
-
-This strategy was implemented initially in
-https://github.com/msysgit/msysgit/commit/95ae63b8c6c0b275f460897c15a44a7d=
-f5246dfb
-and is in use to this day:
-https://github.com/git-for-windows/build-extra/blob/main/shears.sh
-
-This strategy is not without problems, though, which becomes quite clear
-when you accept PRs that are based on commits prior to the most recent
-merging rebase (or rebasing merge, both strategies suffer from the same
-problem): the _next_ merging rebase will not necessarily find the most
-appropriate base commit, in particular when rebasing with
-`--rebase-merges`, causing unnecessary merge conflicts.
-
-The underlying problem is, of course, the lack of mapping between
-pre-rebase and post-rebase versions of the commits: Git has no idea
-that two commits should be considered identical for the purposes of the
-rebase, even if their SHA-1 differs. And in my hands, the patch ID has
-been a poor tool to address this lack of mapping, almost always failing
-for me. Not even hacked-up `git range-diff` was able to reconstruct the
-mapping reliably enough.
-
-And that problem, as far as I can tell, is still unsolved.
-
-There have been efforts to this end, including
-https://lore.kernel.org/git/pull.1356.v2.git.1664981957.gitgitgadget@gmail=
-.com/,
-but I do not think that any satisfying consensus was reached.
-
-Ciao,
-Johannes
-
---8323328-119226400-1689161647=:25096--
+Manuel
