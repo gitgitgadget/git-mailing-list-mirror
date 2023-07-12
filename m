@@ -2,106 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C489EB64DA
-	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 20:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 168FDEB64DA
+	for <git@archiver.kernel.org>; Wed, 12 Jul 2023 20:47:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232345AbjGLUd7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 16:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52264 "EHLO
+        id S231767AbjGLUry (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jul 2023 16:47:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjGLUd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 16:33:58 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6619C1FC0
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 13:33:57 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD5B81A2149;
-        Wed, 12 Jul 2023 16:33:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8kM0i8TQC9J+ECnYrw5+vvRqCD79bJf1yEODhd
-        kRvc8=; b=INOrM+B2NllsFmKmKIOScyYkzsTM9GsFxUmOx7KZEdX2Wj2Hf1+21r
-        eKjO8s5g3/JsfEZubZCA+Fp3P4l1t3q/8I3w0p2kxSPxh33KUfLbOtPhIF/lsEtR
-        oGUT97FOmsZnpTHSxZ/lTN5LfjeuL5rDJHBE6eA/3EMpbCZHaPizo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C52181A2148;
-        Wed, 12 Jul 2023 16:33:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 30ADB1A2147;
-        Wed, 12 Jul 2023 16:33:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Petar Vutov <pvutov@imap.cc>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: remove mentions of .gitmodules !command syntax
-References: <20230712160216.855054-1-pvutov@imap.cc>
-        <xmqqleflt75z.fsf@gitster.g>
-        <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
-        <xmqqfs5tt3qz.fsf@gitster.g>
-        <7090349c-4485-d5c4-1f26-190974864f72@imap.cc>
-Date:   Wed, 12 Jul 2023 13:33:55 -0700
-In-Reply-To: <7090349c-4485-d5c4-1f26-190974864f72@imap.cc> (Petar Vutov's
-        message of "Wed, 12 Jul 2023 20:48:10 +0200")
-Message-ID: <xmqqa5w0swcs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229693AbjGLUrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2023 16:47:53 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28D9A2
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 13:47:51 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-51e43473ee0so7659763a12.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 13:47:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689194870; x=1691786870;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HhqbRSxtN1EB9TYnCl0nWfvwGFrOqwiSv5uEX/f6jw8=;
+        b=Bh4HgLWxT4BhASsF34hGbgEEWTcAa+DP94Z/anHK1kTem7yp37t0IT/u3NJOLu4cB6
+         KqnpTNO+mKd0T8+eQJ186aHYx9INwGgHHm3//2in95Qxl0exHXs2UVKMtMI0/r/JT43k
+         /tqWMXYkzH1C0b4q2of8ZP9Gx+vF2Hp1VGPJBFWkUBA0fERL/XZjAmsFl5YfT0HK91/d
+         ECbKG4rAd4IXaLrifiZusXdx3NEbfaGttJVMgJw95TSgWNTFO0J3chC+CUxuP/PtZrBm
+         5ltuw1hcxzVdPptkxb6ywKZno6VrhZmCwk8DrIELMyotL+9pWNg08shnSdtnpxzddKWX
+         kHQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689194870; x=1691786870;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HhqbRSxtN1EB9TYnCl0nWfvwGFrOqwiSv5uEX/f6jw8=;
+        b=S1eond0OtfB89Ci5M7bS+PRhw1+yfO4On+aD+G5QHJkF0u6yQQlc+4Wuo+yHuMY4Yq
+         TtIWQDIPen7jS3AeoWl2hgoXshy0qRdOUDlxoYTrzsdvVG3EZmeLPqWe/cAuCw+6khw+
+         ZWty544+8BaFzkwcrvMu+4V1mhxkBM+Nf0FCfjH5R4X2uSEJ95XdUvZn74jUEOVoZK5U
+         aNUUBx5oCoRW7lddjQZD+1H0VYOra2as1WGsNKh5WelySSnVQ9f6R3UreWkbZ2QGyJ2b
+         HViVafYHjfvdPy/a4g5aMkBELuHItGdkLcZTJIGN74r9RuodHOkfUjv3AkOu4YiVJjd2
+         NNLg==
+X-Gm-Message-State: ABy/qLaRZClsuC1vpbcsewRS+TUDbHQzH1H9ukgIIT10L/lgUBAr0U02
+        BszqPDrAe989/7A08z0r9HaZI9j8+o3YQ91hqLDTmABMKas=
+X-Google-Smtp-Source: APBJJlF01BVuDaFmFvMINGEXT+1kiwyANNEq2tXuKHu6AIzTrexXnlyT9M6k784KeZoqoUBaB9ZhOr5/HxKf8V1p4Kc=
+X-Received: by 2002:aa7:d782:0:b0:51d:98d0:3049 with SMTP id
+ s2-20020aa7d782000000b0051d98d03049mr18455138edq.21.1689194870132; Wed, 12
+ Jul 2023 13:47:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6C5BF368-20F3-11EE-A07F-307A8E0A682E-77302942!pb-smtp2.pobox.com
+References: <20230712110732.8274-1-andy.koppe@gmail.com> <CAPig+cT3tWnSfk+ZoRWU=JTGctMiE38fH5V1ebpP7L1bGsfU4Q@mail.gmail.com>
+ <xmqqa5w1t2kp.fsf@gitster.g>
+In-Reply-To: <xmqqa5w1t2kp.fsf@gitster.g>
+From:   Andy Koppe <andy.koppe@gmail.com>
+Date:   Wed, 12 Jul 2023 21:47:37 +0100
+Message-ID: <CAHWeT-agn87wc82xdMzB07Y=xe6H-yR_oxS_CGf2tE-szQ=T-Q@mail.gmail.com>
+Subject: Re: [PATCH] pretty: add %r format specifier for showing refs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Petar Vutov <pvutov@imap.cc> writes:
-
-> On 7/12/23 19:54, Junio C Hamano wrote:
->> Perhaps
->>      "... available via the ... configuration variable, and cannot
->> be
->>      used in the .gitmodules file"
->> would have helped you?
->> Thanks.
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
-> I think that addition is good and makes the intent clearer.
->
-> But it's slightly wrong - only 'custom command' cannot be used in
-> .gitmodules. 'none' is legal (and mentioned in the gitmodules doc as
-> such).
+>> Not a proper review... just running my eye quickly over the patch...
+>> ...
+>> Missing sign-off.
+>>
+>> Indent with TAB, not spaces.
 
-Hmph, that will be a bugfix for fc01a5d2 (submodule update
-documentation: don't repeat ourselves, 2016-12-27).  I think you are
-technically correct.
+Thanks for the check, and apologies for those avoidable mistakes. Must
+remember to run checkpatch =E2=80=A6
 
-    Side note: but is there a useful use case to set it to 'none' in
-    ".gitmodules" in the first place?  If there is not, saying that
-    "'none' is only useful in the configuration files" is not quite
-    wrong per-se.
+I'll send a corrected patch, if only for completeness.
 
->  	merge;; the commit recorded in the superproject will be merged
->  	    into the current branch in the submodule.
->
-> -The following 'update' procedures are only available via the
-> -`submodule.<name>.update` configuration variable:
-> -
->  	custom command;; arbitrary shell command that takes a single
->  	    argument (the sha1 of the commit recorded in the
->  	    superproject) is executed. When `submodule.<name>.update`
->  	    is set to '!command', the remainder after the exclamation mark
->  	    is the custom command.
-> ++
-> +Custom commands are only available via the `submodule.<name>.update`
-> +configuration variable. They cannot be used in the .gitmodules file.
+>>> +enum decoration_format {
+>> Is this enum name a bit too generic for a public header? A quick scan
+>> of other enums in the project shows that they usually incorporate the
+>> "subsystem" into their names somehow (often as a prefix); for
+>> instance, "enum apply_ws_ignore", "enum bisect_error".
 
-Sounds good.  s/available/allowed/, perhaps.
+I took existing decoration-related types as precedent, in particular
+enum decoration_type and structs decoration_entry and
+decoration_filter, whereby the latter is in the same header.
 
->  	none;; the submodule is not updated.
-> ++
-> +The `none` update procedure is only available via the .gitmodules file
-> +or the `submodule.<name>.update` configuration variable.
+Junio C Hamano <gitster@pobox.com> writes:
+> But more importantly, I doubt the wisdom of adding any more %<single
+> letter> placeholders to the vocabulary.  Even though I personally do
+> not see any need for variants other than just the plain "%d" to show
+> the "decorate" information (if you want anything else, just
+> post-process the output)
 
-This side we do not need "only" anywhere in the sentence, do we?
+The proposed %r placeholder basically is the minimised version of %d,
+which could save space in one-line logs and generally reduce visual
+noise in custom log formats. Post-processing is rather more difficult
+and error-prone than a built-in feature.
 
-Thanks.
+> if we really want to, the way we should
+> extend the format placeholders is to add %(decorate:<options>) that
+> is extensible enough that it can produce the identical output as
+> existing "%d" and "%D" placeholders do, and add new ones as a new
+> option to %(decorate).
+
+I'd be happy to look into that.
+
+What have you got in mind for the <options>?
+
+Something like:
+  %(decorate) for %d
+  %(decorate:unwrapped) for %D
+  %(decorate:bare) instead of the proposed %r
+
+Or something with separate options for each element, similar to the
+separator option of %(trailers)?
+
+%r might look as follows, with a space for the separator and empty
+strings for the other elements:
+
+  %(decorate:prefix=3D,separator=3D ,suffix=3D,tag=3D)
+
+(Each option would default to its %d value if not specified.)
+
+Thanks,
+Andy
