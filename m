@@ -2,158 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A635EB64DA
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 00:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28293EB64DD
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 04:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232072AbjGMAVy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jul 2023 20:21:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38060 "EHLO
+        id S233505AbjGMEKv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 00:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231786AbjGMAV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2023 20:21:26 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E22371995
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 17:21:24 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 04AE15A336;
-        Thu, 13 Jul 2023 00:21:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1689207684;
-        bh=BuBUGDI15DnT8A/iIA6s+jZ5DeTQj7fuXSBOQhN/ewM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=arK0Rq6GsoH0Ap+xQd1KVlUpKo54uhs/L+pvz7OJujHED1GA12Wm948Wyu+Zqj2AT
-         M6pq4U2OKY71Huk3Fw4Ro4KJRiIKQ/RxwzoPrTScgBKcmm8EtMBTAjmuBal2wIvbkM
-         iEO10pAGXW0B4mD+uuRVGf/VLUKpX47BVqkjtFQYYvOGFz98B1Li2FAAI334bCFjL8
-         N9Lzsz1mpzSnQzFSphD3/GOB67Qj6cuNybrOIDD1XJwr8huPN7SOThbayIz7hrExDd
-         iA9AIqpvjnA28Jiaf1LcD3wdisjmN1V4V5p4Hh8qQgm9wHoRp7LKmSfa+yF+ofy60H
-         P5Qtb9CTmuNAQkHJu55Azx/5nTX5DN4YzR3urrldjNNZAA5RbvB8DYjAK6JYXfY15H
-         yJYM4M1wEhUS86+K4KzHsTZTe0RlHlK2ctIBVG+TmMq7s4P9utPpnLZoiSOSZ0v5A4
-         CsRx0Aso6ZrrtOa+swCSVvNjtp+SVFv8vvu+k3hImMrl2fRtfWs
-Date:   Thu, 13 Jul 2023 00:21:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Juan M Uys <opyate@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug report: cloning private repo to absolute path doesn't work
- if gitconfig has includeIf directives
-Message-ID: <ZK9Dgqgy5qRDKhG0@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Juan M Uys <opyate@gmail.com>, git@vger.kernel.org
-References: <CADfPAEbgfvnS6JTwa5Y1Zt7gQ31GRUyjjjpX9mmpcwxsaTLPGw@mail.gmail.com>
+        with ESMTP id S233799AbjGMEK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 00:10:28 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31100212D
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 21:10:22 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb7b2e3dacso492202e87.0
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 21:10:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689221420; x=1691813420;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SfY7RheRk08OQjDD/X5/c7DvBcI8cfN6xMLw1d9k/Xc=;
+        b=l+R3G87jwaJ/kwEqnHtW282W+yKKntpo8ZLPLbdoyXfx6Sjb2s3DszZxAFRoRd3mSX
+         4gjr0BjJNTFea5ykg7T4We4QO73NWhtoGdJgvNrnWHdtX1DrBc2dTspEjFn/7HdWl3UL
+         zy1kI7/u7pxfH47QCM/LLeJbuLnZzcd/nuSGc7PSsti4pTRxDdG9h+qHJBMnXxb/TaTd
+         XT980VDRLbZScKl1ZCuzzpxytimsU1ayYxn58Qu+arS6OmYDcbQUE10elPsM2tRQGUEH
+         ZQ54zn5K8gc1u/JxfJB/z36VJfgvcrNx5t3A2S0fzpbTCmnd9b0E1hc6lJudQ8hfqPzS
+         mShw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689221420; x=1691813420;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SfY7RheRk08OQjDD/X5/c7DvBcI8cfN6xMLw1d9k/Xc=;
+        b=jfukJlCBbt63sWKARGDeTlRfdWmNwbAzr/tBgQ1otaCLQVdMNOM9xCY9mrDh5jlhY4
+         wuZfKtMrnYW9kVYQJ2FeSJnAwGDf+Gf/arBVKTXlixyaYdX7ldoB2+BGbtRRVR24wdsr
+         JMCacjtmCbMGXceOHlRo3QW6Wvy1w0zR62Au30mBWlGsDWVe+yO7S5qB2QZ9iYJ94/AU
+         hTutyK5wrmYdhaPPVpDiMEYYc6Zy6WtHAIAKpISxLnBIplK4CrSysfUt61R/2bomzPj9
+         E+kPq90x6fIuMFhBYU0alxJL2Jd0MWSeP2jgaZErZhfgiRk9F3llAHr37vzFu2rh1NRM
+         pk2g==
+X-Gm-Message-State: ABy/qLZuQHBw2JOClxODCl3bXNek49yPBTxh1LOFhZ2OgUmV9CK0gw/L
+        WmzrNDOiUE1LsPHhDPcVALSfLjgg3+oAdJ8Z7YY=
+X-Google-Smtp-Source: APBJJlGWWaCiLHYhaBbspUXgqoog+DyYa+bssssEzSTlJ+MTNo+4heEN11+nEugDUW9GXleyTd6HpXzkquZeEa3SDPQ=
+X-Received: by 2002:a05:6512:1045:b0:4f9:cb8f:3182 with SMTP id
+ c5-20020a056512104500b004f9cb8f3182mr175195lfb.25.1689221420013; Wed, 12 Jul
+ 2023 21:10:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="37rU1pdgcxSFEW86"
-Content-Disposition: inline
-In-Reply-To: <CADfPAEbgfvnS6JTwa5Y1Zt7gQ31GRUyjjjpX9mmpcwxsaTLPGw@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+References: <20230704194756.166111-1-alexhenrie24@gmail.com>
+ <20230706040111.81110-1-alexhenrie24@gmail.com> <20230706040111.81110-2-alexhenrie24@gmail.com>
+ <xmqqttugbxds.fsf@gitster.g> <xmqqo7kobwpj.fsf@gitster.g> <CAMMLpeS9_P=XXMoOdTAM3jZbaxfLEJNwYArS6p9pMXisT3TRtw@mail.gmail.com>
+ <xmqq8rbra9ti.fsf@gitster.g> <CAMMLpeQ2P+qQxo17dEdWhMHcmAfTiBoEifp2wUjWVrP+oGSzxQ@mail.gmail.com>
+ <xmqqbkgl6f04.fsf@gitster.g> <CAMMLpeSwadTcd+z0-J1t=vUgz0wFiVaE5KaT-Wy1cckT3=fFGQ@mail.gmail.com>
+ <xmqqsf9v2roa.fsf@gitster.g> <CAMMLpeTNMaVk7M2nLSJJzDMWPDVdyOr27Ae2-Usky5tW-dRqJQ@mail.gmail.com>
+ <xmqqo7khupjh.fsf@gitster.g>
+In-Reply-To: <xmqqo7khupjh.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 12 Jul 2023 22:09:42 -0600
+Message-ID: <CAMMLpeR9yLA3zM0GfTMhuFa8HW5fDCRBN7Gnft6Mof59Tk7i0Q@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] remote: advise about force-pushing as an
+ alternative to reconciliation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, git@matthieu-moy.fr, christiwald@gmail.com,
+        john@keeping.me.uk, philipoakley@iee.email,
+        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jul 12, 2023 at 9:18=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > Just to be sure that we're on the same page, when I said "I thought we
+> > just agreed that we don't need to mention force-pushing..." and you
+> > replied "I do not think so", were you only saying that you think that
+> > changes to `git commit` are essential, or were you also saying that we
+> > have not come to an agreement about whether to include force-pushing
+> > advice in this message?
+>
+> None of the above ;-)
+>
+> With that "I do not think so", I meant that I do not agree with "I
+> guess you're saying that we'd still be over-encouraging `git pull`"
+> that was in your message.  In the message you were responding to, I
+> was saying that the time the user runs `git commit` is not a good
+> time for the user to decide how to eventually update the remote
+> target, and it does not matter which one we encourage more between
+> "`git pull [--rebase]` then `git push`" and "`git push --force`".
+>
+> I am fine dropping patch [1/2]; we would not be touching output from
+> "git status", "git commit", or "git checkout", and "we should not
+> talk about 'git pull' (or how the eventual remote update should go,
+> for that matter) when we notice that the base of the user's branch
+> has become stale" becomes totally out of the scope of this topic.  I
+> think that we all are in agreement that [2/2] is the more important
+> part of this topic, as it more directly improves the guidance for
+> the end-users when their "push" triggers the non-ff check.
 
---37rU1pdgcxSFEW86
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for the clarification. This all started because of the message
+in `git status`, so despite it being the less important message, I
+feel pretty strongly that that message does need to be toned down
+slightly. There's also the problem of that message assuming that `git
+pull` will do a merge when it can do either a merge or a rebase,
+depending on the user's Git config.
 
-On 2023-07-12 at 16:21:38, Juan M Uys wrote:
-> What happened instead? (Actual behavior)
->=20
-> ```
-> % git clone --depth=3D1 'git@github.com:myorg/myprivaterepo.git' '/tmp/so=
-me-new-folder'
-> Cloning into '/tmp/some-new-folder'...
-> ERROR: Repository not found.
-> fatal: Could not read from remote repository.
->=20
-> Please make sure you have the correct access rights
-> and the repository exists.
-> ```
->=20
-> However, if I remove the last argument, it works, and clones to the curre=
-nt directory:
->=20
-> ```
-> % git clone --depth=3D1 'git@github.com:myorg/myprivaterepo.git'
-> Cloning into 'myprivaterepo'...
-> remote: Enumerating objects: 99, done.
-> remote: Counting objects: 100% (99/99), done.
-> remote: Compressing objects: 100% (87/87), done.
-> remote: Total 99 (delta 7), reused 77 (delta 7), pack-reused 0
-> Receiving objects: 100% (99/99), 5.66 MiB | 4.71 MiB/s, done.
-> Resolving deltas: 100% (7/7), done.
-> ```
+I've already written a patch to suppress the irrelevant advice in `git
+commit`, so I might as well send it. I'm hoping that we can agree to
+make a few tweaks to these advice messages without going as far as I
+originally proposed.
 
-Is the directory you're cloning to the same as above?  Do you see the
-same behaviour as above if you switch to /tmp and run this:
-
-  $ git clone --depth=3D1 'git@github.com:myorg/myprivaterepo.git' some-new=
--folder
-
-> I separate my git organisations with different SSH keys with the help of =
-a global git config:
->=20
-> ```
-> init]
->         defaultBranch =3D main
-> [user]
->         email =3D opyate@gmail.com
->         name =3D Juan Uys
-> [core]
->         excludesfile =3D /home/opyate/.gitignore
->         editor =3D vim
->         pager =3D less -FRX
->=20
-> [includeIf "gitdir:/home/opyate/Documents/code/org1/"]
->         path =3D /home/opyate/Documents/code/org1/gitconfig
-> [includeIf "gitdir:/home/opyate/Documents/code/org2/"]
->         path =3D /home/opyate/Documents/code/org2/gitconfig
-> [filter "lfs"]
->         clean =3D git-lfs clean -- %f
->         smudge =3D git-lfs smudge -- %f
->         process =3D git-lfs filter-process
->         required =3D true
-> ```
->=20
-> And then each org's gitconfig typically looks like:
->=20
-> ```
-> [user]
->         name =3D Juan Uys
->         email =3D juan.uys@org1.com
->=20
->=20
-> [core]
->         sshCommand =3D "ssh -i ~/.ssh/org1/id_ed25519"
-> ```
-
-My guess is that this is related.  If you're cloning into one of the
-directories specified with `includeIf` above, then you'd be using a
-specific SSH key to do so.  In such a case, you'd have access to
-different things than if you cloned in a different repository.
-
-That would explain why public repositories work: as long as you have
-an SSH key valid for _some_ account on GitHub, you can clone any public
-repository.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---37rU1pdgcxSFEW86
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZK9DgQAKCRB8DEliiIei
-gY6+AP0W3Xw7XGmOV6kc6FJ0nUkHv1u7lxncErquOUmVr0XjsAEA1jeQFb9945dP
-OWBRRWd8Jt2I8DTQHNCZTkskGnh7mQQ=
-=Pesp
------END PGP SIGNATURE-----
-
---37rU1pdgcxSFEW86--
+-Alex
