@@ -2,64 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EE3AC001B0
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 19:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4322FC001B0
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 19:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232897AbjGMTR0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 15:17:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57884 "EHLO
+        id S233020AbjGMTTt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 15:19:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232910AbjGMTRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 15:17:24 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 018AE2712
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 12:17:23 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4faaaa476a9so1942672e87.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 12:17:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689275841; x=1691867841;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XNnVqf6s14dGM33M0/lVLc31fQ3N6QimQflUDfmbawk=;
-        b=GmI2LlYl4/9dq8ax1CNXK6N+8ekV77so+n+9Q1c0PNQavlDFdr3LIe2AxhdsyZOZ/6
-         O+oliJddlR+CpdNyinjpCQ8UUXYdh64ot4h9796KNTK2TBgxjkzYffGdW0Ibi/W9SfdL
-         spO+HYtHqCX1DWU+33p+sCjOs/hvnvHyG9M6/cv1h2gktqvRurnBvGRFoXRTkjfNyZqT
-         DZlzIVDuidRBRZ6aHPtZsc9xkqspo9chm5eQO+el65r4y8D4Fj1UHB4tWIkEDFSGVzNy
-         tOTHWy1AWjmJ6hORTv8rOAL4Y0bkvPFuXL5u7WBShF2brB79GYzfjptb9QvmO0MG7QVD
-         NOZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689275841; x=1691867841;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XNnVqf6s14dGM33M0/lVLc31fQ3N6QimQflUDfmbawk=;
-        b=ipamex7z3uSbR9eSeaXkFXNLupt7VHbcGCVl7OZOdJ0xuNvSoNBCtD2QlfgllHG09G
-         9qo/sfZNz3u0+DNMQHmChPkNGaGzUxOUcEVcefg3wd53ZiaMkcGNdbH1BwQ9LgHeuviD
-         I5BcaXI0/de3um61unGKzwqNx4yhmt4oTdHg8JJQuiXBFtIh9Vb1BcT2QIBSg+ABl9ug
-         S1jzMogHANznj9pOGQoNsBIg/fPyIAw4CwTnFCdjm83EMuYj9fbuB6hiGs23GFwoN3L+
-         JMlfXC9EZmVWuzBP5CwfIGynd0iIBygpejzWYDqKhi49s6KSEILyMYPvkkcun8dl5iGJ
-         0B9g==
-X-Gm-Message-State: ABy/qLZgeNuxWGal9LKqp8KLbIoiLWklkSYeT3eqohSLI6FZts1umEq2
-        7QMPzlKpRLi0coP2Z9wop7Su4QxzDaX5J13l+GpYRoC/
-X-Google-Smtp-Source: APBJJlGYxeZrw+taWPGR5kf+6966h+H4YGdlZmw/fHgSdajDuY1aMvHApn/d+bWOZw2H9T1xvrzTsxOGZwKKAx2PqbU=
-X-Received: by 2002:a05:6512:158d:b0:4f8:742f:3bed with SMTP id
- bp13-20020a056512158d00b004f8742f3bedmr2319563lfb.37.1689275840660; Thu, 13
- Jul 2023 12:17:20 -0700 (PDT)
+        with ESMTP id S233081AbjGMTTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 15:19:38 -0400
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74FCA2D54
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 12:19:24 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id F26585C0135;
+        Thu, 13 Jul 2023 15:19:22 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 13 Jul 2023 15:19:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imap.cc; h=cc:cc
+        :content-transfer-encoding:content-type:content-type:date:date
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm3; t=
+        1689275962; x=1689362362; bh=WeZx28kYIY3NUiVr78TnEjEWMdcdU51QAje
+        I1JZWtD4=; b=xzUwFRqTCoJpiH7iCFgMdlotrJs/4sKuCbsxJbvYRm4Ksjc5qas
+        NsWb5mqPMFAAjX8nmrRk+yafXd6mQFbeBBt8W2iRihmNWKLV50zMcq8u9v7OsJMT
+        gzfqFxEwKjZjL/9NngMTWWENUDfAQ3Qhdoir4wqMDCZ491CAHg/M1jFmRW2RTY6W
+        7yYijt22Z8miA4hrUteyURgRRd0Q+YjIZqF3+9o95M/urkOi/+lF+zAipQbJ2+T+
+        JOJDDLgw432ONgM/V8WWjd/zYC1QiPw58qd3Dgw5fHVetYwZ7AkBte/l/KK7ON7t
+        q6fD1MuLcf126Ja1V+4CEP2zMWlAwiR4zzw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1689275962; x=1689362362; bh=WeZx28kYIY3NUiVr78TnEjEWMdcdU51QAje
+        I1JZWtD4=; b=TOIr19WC3hktFYNV+nnNbBf3cATtZEMIjCiqDnCclqBHyUNA3D0
+        t7LDWBpDlmkQ182Awa8Ont175OsDytBE2fK/SCdy5ZAPyNvBVrrKpXzj1XVpuDgy
+        2QQ5pRTZzpsZLoW78+Ffucq3T26WGni4N4BosIMwrgmV6rHviwesy7MwhajgKIC7
+        IzobA7gjKNfqpcjBShlWEbhNn2IzVXuH3DfLkSRiYULGja3fEgEooHQ3ierPObGS
+        PiRYeq/8MslCqdZRkvC1HA1Fh0fqMcz1coGcpKLF3TOFRCBZaxB/2GQ6Bmvr4NsH
+        uwvTH6VSteZ0Y352DBY/Ws2oMTFJ2yWtbZA==
+X-ME-Sender: <xms:Ok6wZJCdrlwhDsaLIRLPrFi38NwaniEbKHJZBeZwHAAZ5Isz0Q5G7g>
+    <xme:Ok6wZHiSnsDNLPkl902Wo6DctlbZTzSWbPCIpU4BvS9kwy9r3IGnJ2q7vy4frtHHi
+    mJ2hNGQuXNivBmfaQ>
+X-ME-Received: <xmr:Ok6wZEmFHIlCHl9URnOmo3F6CSCDextxNNoMTE8LwumxYVwzKtDB9j3voT7rQw4ITZvlZOJdhpITT946FRdPesfhHAFErdNV6SALbb4SQA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrfeeggddufeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfedtmdenucfjughrpefkff
+    ggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheprfgvthgrrhcugghuthho
+    vhcuoehpvhhuthhovhesihhmrghprdgttgeqnecuggftrfgrthhtvghrnhephefgueeftd
+    eghfeljeegjeffffdvieevgfduudffjeehkeettdekkeeufeetleeunecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhvuhhtohhvsehimhgrph
+    drtggt
+X-ME-Proxy: <xmx:Ok6wZDzCE3M6UQIRFWF2_wysqX7if8Nl6i7T9IngboAKHuTPxz_EJA>
+    <xmx:Ok6wZORffxOtXzVIDx4bZjTwv3zxPM6lbX3JcM87jepXwA6iU3IByw>
+    <xmx:Ok6wZGZIeVxpfHfQKPKWvGEVixyHjNyeDRsJa04xygD-54hPqZAxig>
+    <xmx:Ok6wZH6iTyZ9_w9p3KGNN823uK7M6JtxyIPKLIbHEcVGjLa-WmjY6g>
+Feedback-ID: iccdf4031:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Jul 2023 15:19:22 -0400 (EDT)
+Message-ID: <7ce31744-8c9d-da75-126c-e92dfbb4cf16@imap.cc>
+Date:   Thu, 13 Jul 2023 21:20:17 +0200
 MIME-Version: 1.0
-References: <CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-9zbqXMA@mail.gmail.com>
-In-Reply-To: <CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-9zbqXMA@mail.gmail.com>
-From:   "D. Ben Knoble" <ben.knoble@gmail.com>
-Date:   Thu, 13 Jul 2023 15:17:09 -0400
-Message-ID: <CALnO6CCc-J+fe9qKaoyYUMM3xMEUnV5w7NKWSbn6xTgEjbac5w@mail.gmail.com>
-Subject: Re: t2400 on freebsd12
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] doc: remove mentions of .gitmodules !command syntax
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20230712160216.855054-1-pvutov@imap.cc>
+ <xmqqleflt75z.fsf@gitster.g> <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
+ <xmqqfs5tt3qz.fsf@gitster.g> <7090349c-4485-d5c4-1f26-190974864f72@imap.cc>
+ <xmqqa5w0swcs.fsf@gitster.g>
+From:   Petar Vutov <pvutov@imap.cc>
+In-Reply-To: <xmqqa5w0swcs.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bump: this bug seems to affect several GitGitGadget PRs in CI, which
-also renders GGG unusable for sending mail, IIUC.
+On 7/12/23 22:33, Junio C Hamano wrote:
+> 
+>      Side note: but is there a useful use case to set it to 'none' in
+>      ".gitmodules" in the first place?  If there is not, saying that
+>      "'none' is only useful in the configuration files" is not quite
+>      wrong per-se.
 
+A twisted person might use it to commit a truly empty folder, without 
+even a .gitkeep file. Whether that's a useful use case, I don't know.
 
--- 
-D. Ben Knoble
+> 
+> Sounds good.  s/available/allowed/, perhaps.
+> 
+>>   	none;; the submodule is not updated.
+>> ++
+>> +The `none` update procedure is only available via the .gitmodules file
+>> +or the `submodule.<name>.update` configuration variable.
+> 
+> This side we do not need "only" anywhere in the sentence, do we?
+> 
+> Thanks.
+
+I will address both of those and include your bugfix blurb in v3. Still 
+figuring out how to properly reference the previous patches using 
+git-send-email..
