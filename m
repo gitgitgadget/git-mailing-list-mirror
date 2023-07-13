@@ -2,198 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2250C0015E
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 09:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C81EAEB64DD
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 10:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234189AbjGMJvQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 05:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37000 "EHLO
+        id S233006AbjGMKz1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 06:55:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233870AbjGMJvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 05:51:14 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B1C2686
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 02:51:12 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbf1b82d9cso4069275e9.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 02:51:12 -0700 (PDT)
+        with ESMTP id S229600AbjGMKzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 06:55:25 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343D8212E
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 03:55:23 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-992b66e5affso88489066b.3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 03:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689241871; x=1691833871;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sHtzEXH3KjvF+0oAQwZSABUHbYJetR/+kBZdulQ1Z6k=;
-        b=iiRaamTp7YROV2oVNl1pA1+holAA7vaxjGPx3DeYa2c3Y2qD+7lBXBmOq8IOCFqzjp
-         uu7QOeuCq5WgYw3h5f1BskN2Kc7/aJsm20LQ37nCBVRpLgsIdqmDHq7hidQ7vive5dGe
-         tNw3+DnKlbHTWdtO+hbBKamvcpltNpgsefNG5HodFh4a1J6jf5Sm6zZRwkucUhsfwOBT
-         plA71KR1kTLxYp/4GEJTq97o4Rdru1kQvamB1EqBA9MKAviHw5qdi5XM/umk16nKe1/Y
-         CzNWxV+1b0xaGqPyDPLeUDdRyOI7Vvu4NM+GjfnjV4m+ubHPTTACZAQzLJjAN92g0pbd
-         tfqg==
+        d=akorzy-net.20221208.gappssmtp.com; s=20221208; t=1689245721; x=1691837721;
+        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ehPum1BByH/e0veyWYVeJ7d1CBCwHxjBvqNiJ9yilb0=;
+        b=eSXm2Vz6DZOGKxuYBo9MFGSPgKqGdSRjO7qREutlRE+P83lpu5i1tLTSJw4XmR5r1Q
+         QaE5ihCOeruntt5kZzeG33W5RYoySH0vjglCch6enIV+9agPFEVYj+LGk+mbhdCIrU9K
+         /RjDaxfaA97RuzWbvgGUDq2Z4th3p9TODcPufcuZoHKsI6bwLW/4YG8YtmszYKI2/B7U
+         u2NqsNCn9XdDK3Vgyimwy6N25+njRUh51NWbJmHrzlWEqbrlw+QMcqfCcdZUZriRtkox
+         vstJW7lBN373tASzHzcri6iaMphY8kLMVsSwhabolnRxpU4iY3ZaEXLZ/oelK0n7mxJV
+         Qshg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689241871; x=1691833871;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1689245721; x=1691837721;
+        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sHtzEXH3KjvF+0oAQwZSABUHbYJetR/+kBZdulQ1Z6k=;
-        b=i2CwM0ngoWj0AQz6QmL8Kr07YhzduT3DDAjZIRLAMxMfi6nlKOQctBOtBjDHXG9phr
-         HpHnIgSI0R0FXCDFKFNNnqCRtclK+Xkb+k2y8QgqcENf2YCeJyWUJfjxUGF91Xf7aGgG
-         wka3V5UbD8mbXoHFrT+/irIBw9XG7uqu+pzgwqofzRsJ+Pg8/H+nD1tl//OUu9g9oXu1
-         mwfP2uX0nqeUD8Pe6tRBbuRYPsN2/P7dQlMwnkZVBX2H8Z1GCZkatCzh2sRTbNjOXp5C
-         PXwjHdqw1KmbkDIaqUGr0pfk+Zu4ErRdOuRbOMPbgs2NmEIG3S7W1MgwNQ1LzemRmMmN
-         RF+w==
-X-Gm-Message-State: ABy/qLacY2Mo9+vlORwz9g1TRZvauaj18os/BvLHyPMCSEwCJbpb/qKu
-        Ym3h4TkyefJqZ7dTGZh3G5b0f7KQKN4=
-X-Google-Smtp-Source: APBJJlE18cbcVlmuDXGy3jp+uIFG7hMq3JaVg5c9azcqPN/WJoRq3MzkUGjfSY//+K7wd+53GyZeTw==
-X-Received: by 2002:a7b:cd95:0:b0:3f7:3699:c294 with SMTP id y21-20020a7bcd95000000b003f73699c294mr902023wmj.29.1689241870825;
-        Thu, 13 Jul 2023 02:51:10 -0700 (PDT)
-Received: from [192.168.1.195] ([90.242.235.211])
-        by smtp.googlemail.com with ESMTPSA id q5-20020a1ce905000000b003fc07e1908csm7281428wmc.43.2023.07.13.02.51.09
+        bh=ehPum1BByH/e0veyWYVeJ7d1CBCwHxjBvqNiJ9yilb0=;
+        b=U/eRgucS23pZSuJxhbPZXy1+RT7LdfZeOys1JdkZF9yIr794rl5PtP1A8wWNKY6ehv
+         csgyTqzBGbm+3ZQC71xxqbpRzYi6KKa50IeVfL8rKG4x8GdesytQ6YdXwVfvP/tsGuLI
+         kuU8S8QwhZxg4KJkNht6oIrWyVvT/19lAluAQoq87Zjk21/0bSYaCuEeYushMecRqTTe
+         f/PoKim5pUAzc2/ER/zX0EHE2Ye25U25W0EQuB/xO1GBMKM319Yy7unb5mBXBJknGfNB
+         iDrToriv91bbXUa6jhgn2CSuUTKf9jsF7bslcsa6hjpfHWZmN30I8aBmFOKwLIxGDJCB
+         5ybw==
+X-Gm-Message-State: ABy/qLaZ1F/DqKSVEbOfJfBNNsrDMYUGJl8ySW04sArv6OpfxZuTO+jO
+        FDs4ym/SoTlMcmbx0PhLSZa0guVkRkiMvzzdqok=
+X-Google-Smtp-Source: APBJJlHDHWW6yZTPp6MR+t6eEA38NFetlIFt/UzT1joyFY0DzsvbkRlR7PqWqIfpqizJAGNDSCu+Fg==
+X-Received: by 2002:a17:906:2091:b0:987:6372:c31f with SMTP id 17-20020a170906209100b009876372c31fmr1122957ejq.37.1689245720949;
+        Thu, 13 Jul 2023 03:55:20 -0700 (PDT)
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com. [209.85.218.54])
+        by smtp.gmail.com with ESMTPSA id h14-20020a170906110e00b009829dc0f2a0sm3885292eja.111.2023.07.13.03.55.19
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jul 2023 02:51:10 -0700 (PDT)
-Message-ID: <919d1ba8-bb8b-a77b-cef3-db14f168ed4a@gmail.com>
-Date:   Thu, 13 Jul 2023 10:51:09 +0100
+        Thu, 13 Jul 2023 03:55:20 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-992ca792065so88566166b.2
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 03:55:19 -0700 (PDT)
+X-Received: by 2002:a17:906:ae12:b0:98e:37fe:691b with SMTP id
+ le18-20020a170906ae1200b0098e37fe691bmr946239ejb.34.1689245719144; Thu, 13
+ Jul 2023 03:55:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/3] don't imply that integration is always required
- before pushing
-Content-Language: en-US
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        git@matthieu-moy.fr, christiwald@gmail.com, john@keeping.me.uk,
-        philipoakley@iee.email, phillip.wood@dunelm.org.uk
-References: <20230707054257.3366355-1-alexhenrie24@gmail.com>
- <20230713044128.3771818-1-alexhenrie24@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230713044128.3771818-1-alexhenrie24@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
+ <xmqqwmz6z8j1.fsf@gitster.g>
+In-Reply-To: <xmqqwmz6z8j1.fsf@gitster.g>
+Reply-To: ak@akorzy.net
+From:   =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
+Date:   Thu, 13 Jul 2023 12:55:07 +0200
+X-Gmail-Original-Message-ID: <CADWu+Ukgnc241jsYwqorAJ20qeGvqYvyqRbDa4CFXXjiEeDOkw@mail.gmail.com>
+Message-ID: <CADWu+Ukgnc241jsYwqorAJ20qeGvqYvyqRbDa4CFXXjiEeDOkw@mail.gmail.com>
+Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+Hello Junio,
 
-On 13/07/2023 05:41, Alex Henrie wrote:
-> Many times now, I have seen novices do the following:
-> 
-> 1. Start work on their own personal topic branch
-> 2. Push the branch to origin
-> 3. Rebase the branch onto origin/master
-> 4. Try to push again, but Git says they need to pull
-> 5. Pull and make a mess trying to reconcile the older topic branch with
->     the rebased topic branch
-> 
-> Help avoid this mistake by giving somewhat more general advice that does
-> not assume that the user always wants to do reconciliation.
-> 
-> Changes from v4:
-> - Don't show divergent branch advice in the middle of `git commit`
-> - Soften the advice, but don't specifically mention force-pushing
+Thanks for the insightful response.
 
-All three patches look fine to me, they are definitely an improvement on 
-the current advice.
+Firstly, let me add some context, which will be helpful for responding
+to your comments. This strategy was created at a large organization,
+where the "main" branch was used as the integration branch for changes
+made within the organization and for the organization. So whenever an
+employee needed to make a change, they would start a topic branch off
+"main" and the topic branch would be later merged or rebased onto
+"main". When the employee was ready to contribute the change upstream,
+they would only present the topic branch upstream. The "main" branch
+was never presented upstream. Release branches were created from the
+"main" branch to work on releases to production at the organization.
+Tags were created on the release branches to mark stable and tested
+versions. Deployments to production were made from the tagged
+versions.
 
-Thanks for working on this,
+The rest of my response is inline:
 
-Phillip
+> So from the upstream point of view,
+> throwing a pull request for c" (not the original a, b and c) would
+> be a reasonable way to finalize your work.  That way, what you are
+> offering to the upstream is not an ancient original commits (i.e. a,
+> b, and c) that you haven't been using at all once you created S and
+> T.
 
-> Alex Henrie (3):
->    wt-status: don't show divergence advice when committing
->    remote: don't imply that integration is always required before pushing
->    push: don't imply that integration is always required before pushing
-> 
->   builtin/checkout.c |  2 +-
->   builtin/push.c     | 24 +++++++++++------------
->   remote.c           |  8 +++++---
->   remote.h           |  3 ++-
->   t/t7508-status.sh  | 48 ++++++++++++++++++++++------------------------
->   wt-status.c        |  3 ++-
->   6 files changed, 45 insertions(+), 43 deletions(-)
-> 
-> Range-diff against v4:
-> 1:  9626721c13 < -:  ---------- remote: advise about force-pushing as an alternative to reconciliation
-> -:  ---------- > 1:  e84989c4a6 wt-status: don't show divergence advice when committing
-> -:  ---------- > 2:  9bb643df7e remote: don't imply that integration is always required before pushing
-> 2:  209e86588a ! 3:  5ff9ecb51b push: advise about force-pushing as an alternative to reconciliation
->      @@ Metadata
->       Author: Alex Henrie <alexhenrie24@gmail.com>
->       
->        ## Commit message ##
->      -    push: advise about force-pushing as an alternative to reconciliation
->      +    push: don't imply that integration is always required before pushing
->       
->      -    Also, don't put `git pull` in an awkward parenthetical, because
->      -    `git pull` can always be used to reconcile branches and is the normal
->      -    way to do so.
->      +    In a narrow but common case, the user is the only author of a branch and
->      +    doesn't mind overwriting the corresponding branch on the remote. This
->      +    workflow is especially common on GitHub, GitLab, and Gerrit, which keep
->      +    a permanent record of every version of a branch that is pushed while a
->      +    pull request is open for that branch. On those platforms, force-pushing
->      +    is encouraged and is analogous to emailing a new version of a patchset.
->      +
->      +    When giving advice about divergent branches, tell the user about
->      +    `git pull`, but don't unconditionally instruct the user to do it. A less
->      +    prescriptive message will help prevent users from thinking that they are
->      +    required to create an integrated history instead of simply replacing the
->      +    previous history. Also, don't put `git pull` in an awkward
->      +    parenthetical, because `git pull` can always be used to reconcile
->      +    branches and is the normal way to do so.
->      +
->      +    Due to the difficulty of knowing which command for force-pushing is best
->      +    suited to the user's situation, no specific advice is given about
->      +    force-pushing. Instead, the user is directed to the Git documentation to
->      +    read about possible ways forward that do not involve integration.
->       
->           Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
->       
->      @@ builtin/push.c: static void setup_default_push_refspecs(int *flags, struct remot
->        	N_("Updates were rejected because the tip of your current branch is behind\n"
->       -	   "its remote counterpart. Integrate the remote changes (e.g.\n"
->       -	   "'git pull ...') before pushing again.\n"
->      -+	   "its remote counterpart. Use 'git pull' to integrate the remote changes\n"
->      -+	   "before pushing again, or use 'git push --force' to delete the remote\n"
->      -+	   "changes and replace them with your own.\n"
->      ++	   "its remote counterpart. If you want to integrate the remote changes,\n"
->      ++	   "use 'git pull' before pushing again.\n"
->        	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->        
->        static const char message_advice_checkout_pull_push[] =
->        	N_("Updates were rejected because a pushed branch tip is behind its remote\n"
->       -	   "counterpart. Check out this branch and integrate the remote changes\n"
->       -	   "(e.g. 'git pull ...') before pushing again.\n"
->      -+	   "counterpart. Check out this branch and use 'git pull' to integrate the\n"
->      -+	   "remote changes before pushing again, or use 'git push --force' to delete\n"
->      -+	   "the remote changes and replace them with your own.\n"
->      ++	   "counterpart. If you want to integrate the remote changes, use 'git pull'\n"
->      ++	   "before pushing again.\n"
->        	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->        
->        static const char message_advice_ref_fetch_first[] =
->      @@ builtin/push.c: static void setup_default_push_refspecs(int *flags, struct remot
->       -	   "(e.g., 'git pull ...') before pushing again.\n"
->       +	N_("Updates were rejected because the remote contains work that you do not\n"
->       +	   "have locally. This is usually caused by another repository pushing to\n"
->      -+	   "the same ref. Use 'git pull' to integrate the remote changes before\n"
->      -+	   "pushing again, or use 'git push --force' to delete the remote changes\n"
->      -+	   "and replace them with your own.\n"
->      ++	   "the same ref. If you want to integrate the remote changes, use\n"
->      ++	   "'git pull' before pushing again.\n"
->        	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->        
->        static const char message_advice_ref_already_exists[] =
->      @@ builtin/push.c: static const char message_advice_ref_needs_force[] =
->       -	   "to integrate those changes locally (e.g., 'git pull ...')\n"
->       -	   "before forcing an update.\n");
->       +	N_("Updates were rejected because the tip of the remote-tracking branch has\n"
->      -+	   "been updated since the last checkout. Use 'git pull' to integrate the\n"
->      -+	   "remote changes before pushing again, or use 'git push --force' to delete\n"
->      -+	   "the remote changes and replace them with your own.\n");
->      ++	   "been updated since the last checkout. If you want to integrate the\n"
->      ++	   "remote changes, use 'git pull' before pushing again.\n"
->      ++	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->        
->        static void advise_pull_before_push(void)
->        {
+Yes, this is how it's intended to be used.
 
+> it is unclear what the eventual
+> presentation to and adoption by the upstream would look like.  As
+> an upstream maintainer, for example, I do not want to merge S
+> above to the upstream tree.
+
+Presentation to upstream would only involve submitting a pull request
+for c". Merge S would not be presented to upstream.
+
+> how does this help those who have older versions of your
+> work, *and* built their own changes on top?  They would not just
+> need to update their remote-tracking branch that has your older
+> version of the work to the latest, but also rebase their work on
+> top.
+>
+>     o---o---o---o---o  upstream/main
+>          \           \
+>           \           a'---b'---c'---d'---e'
+>            \                     \
+>             a---b---c-------------S  main
+>                      \
+>                       d---e  your coworker
+
+The coworker would either merge their topic branch to "main" or rebase
+it on top of "main":
+
+    o---o---o---o---o  upstream/main
+         \           \
+          \           a'---b'---c'
+           \                     \
+            a---b---c-------------S---M  main
+                     \               /
+                      d-------------e
+
+
+    o---o---o---o---o  upstream/main
+         \           \
+          \           a'---b'---c'
+           \                     \
+            a---b---c-------------S---d'---e'  main
+
+> However, once you keep going this way for several rounds, would
+> the result really be much better than bushy history with full of
+> reverse merges from upstream?   Would it help to add new history
+> simplification mechanisms and options to help visualize the
+> history, or do we already have necessary support (e.g. if the
+> convention for these "merge to cauterize the older versions of
+> history with the newly rebased history" S and T merges is to
+> record the rebased history as the first-parent, then "git log
+> --first-parent upstream/main..main" should be sufficient).
+
+Good point. I believe the proposed method has two advantages over
+using "git log --first-parent":
+
+* consider the scenario where the cauterizing merge is not the only
+merge in the "main" branch - a topic branch from a coworker has also
+been merged to "main". In that case, "git log --first-parent" would
+not show the commits from the merged topic branch.
+
+* a user unfamiliar with the command-line interface can use a history
+visualization tool (such as gitk or tig) to obtain a clear view of the
+differences between the last imported version of upstream and the tip
+of "main".
+
+> The users would benefit to have an easy way, given only T or S, to
+> get range-diff among (a,b,c) and (a',b',c') and (a",b",c").
+
+I like that idea. It would be great to have a simple git command to
+display such a range-diff. The command would have to correctly
+identify the commits.
+
+--
+Best regards,
+Aleksander Korzynski
