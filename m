@@ -2,84 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6E8CC001B0
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 16:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DD2AC001DD
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 16:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232880AbjGMQPo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 12:15:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35548 "EHLO
+        id S231772AbjGMQhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 12:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230439AbjGMQPn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 12:15:43 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3C3E74
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 09:15:42 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6910E1A974E;
-        Thu, 13 Jul 2023 12:15:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OJmbIddAcDJJMPme0CAlYZrHNTEBNDd7A9yUc/
-        1KQgM=; b=YA7/W/bYqinzN11QXglChkCR7lAqTfRGVncfwljR649674SywyFVL+
-        toPFo5BAbPjOmtFsn5tY0Yx0hyYr/17y05b9KYuQ95NTCzYxx239UIpkUoM8ImCU
-        tWXnvrNdC0XWFj+q7pL8V+WlzaxXrRtHygk6pRNI1YBUtPdPhUH/M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ED8D1A974D;
-        Thu, 13 Jul 2023 12:15:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A2BE41A974B;
-        Thu, 13 Jul 2023 12:15:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        git@matthieu-moy.fr, christiwald@gmail.com, john@keeping.me.uk,
-        philipoakley@iee.email, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/3] don't imply that integration is always required
- before pushing
-References: <20230707054257.3366355-1-alexhenrie24@gmail.com>
-        <20230713044128.3771818-1-alexhenrie24@gmail.com>
-        <919d1ba8-bb8b-a77b-cef3-db14f168ed4a@gmail.com>
-Date:   Thu, 13 Jul 2023 09:15:39 -0700
-In-Reply-To: <919d1ba8-bb8b-a77b-cef3-db14f168ed4a@gmail.com> (Phillip Wood's
-        message of "Thu, 13 Jul 2023 10:51:09 +0100")
-Message-ID: <xmqqpm4vrdn8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 82B7BE30-2198-11EE-B7F8-307A8E0A682E-77302942!pb-smtp2.pobox.com
+        with ESMTP id S231559AbjGMQhJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 12:37:09 -0400
+X-Greylist: delayed 564 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 13 Jul 2023 09:36:44 PDT
+Received: from mail.nicholasjohnson.ch (mail.nicholasjohnson.ch [93.95.231.105])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F4F62D66
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 09:36:43 -0700 (PDT)
+Content-Type: text/plain; charset=UTF-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nicholasjohnson.ch;
+        s=dkim1; t=1689265634;
+        bh=JwLomMKJgY9rLPilFfPJ60nAbI6uV7MLl8OWCN6KnRI=;
+        h=Date:Subject:From:To:From;
+        b=QUvAnEpRu89ZODX7wII4Vhc2o6mfn5MR70QWyHerZFogs6JPKcoyiHVmRvXmM3fJJ
+         /2eZLnRaJ0nEpjF9XRnz75BsvMNGTAeZGgPGonvSPGfpPjrJ10fGxqi1UEdEB+UHcW
+         U7JuPUwknvPm20n3tWSfvNQ2T4QGO3n5BlEYse/d2c7WAHO50buPbRsTnhReSrH6eb
+         ijQVyuOa3d4nWYTa41/QCMpdrXZ5E4teo0nX3RiMQdQ/BTVCHFHs0vRk6SRfkeAUEs
+         J5mmcLpFIT5ug0GuuAcvhq94mR79/K46bYtm5f6M8zY2jyRU0CrFJD/7OaT2Os0eqz
+         Pdh32IiD3G7WQ==
+Date:   Thu, 13 Jul 2023 16:27:46 +0000
+Subject: Git Privacy
+From:   "nick" <nick@nicholasjohnson.ch>
+To:     <git@vger.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CTZ9RD9RQ5UO.3OIJX50PKMIR0@anonymous>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+A couple years ago, I created git-privacy[1]. In it, I explain how
+having exact commit times in a Git repo, over a long enough timespan,
+can potentially be used to deduce private information about a
+developer's life. Then I go on to explain the steps to prevent this
+private information leakage.
 
-> Hi Alex
->
-> On 13/07/2023 05:41, Alex Henrie wrote:
->> Many times now, I have seen novices do the following:
->> 1. Start work on their own personal topic branch
->> 2. Push the branch to origin
->> 3. Rebase the branch onto origin/master
->> 4. Try to push again, but Git says they need to pull
->> 5. Pull and make a mess trying to reconcile the older topic branch with
->>     the rebased topic branch
->> Help avoid this mistake by giving somewhat more general advice that
->> does
->> not assume that the user always wants to do reconciliation.
->> Changes from v4:
->> - Don't show divergent branch advice in the middle of `git commit`
->> - Soften the advice, but don't specifically mention force-pushing
->
-> All three patches look fine to me, they are definitely an improvement
-> on the current advice.
->
-> Thanks for working on this,
->
-> Phillip
+I know this is low on the list of priorities when it comes to increasing
+one's digital privacy, but I think it still matters. It's certainly
+relevant to developers who need to remain anonymous while version
+controlling their public software.
 
-Thanks, both.  Will queue after taking another look.
+I was wondering if it would be appropriate to implement a feature which
+would allow for automatic obfuscation of Git committer and author
+timestamps without the need to assign environment variables or use Git
+hooks. Perhaps a config option to automatically set the date to a time
+before Git was invented?
+
+Might there a better way to implement these ideas than what I'm
+thinking? Please provide some feedback.
+
+
+References:
+1: https://git.nicholasjohnson.ch/git-privacy/
