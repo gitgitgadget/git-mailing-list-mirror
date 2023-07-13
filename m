@@ -2,65 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E388C001DF
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 20:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FDB5C0015E
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 20:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234076AbjGMUoD convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 13 Jul 2023 16:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60000 "EHLO
+        id S230143AbjGMUzj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 16:55:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234134AbjGMUnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 16:43:50 -0400
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 061FA2710
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 13:43:49 -0700 (PDT)
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-635decc135eso11590266d6.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 13:43:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689281028; x=1691873028;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bJKBYyexT+rn3qJIicNYj3JBgZSuWLeoR9qzaeBLDAQ=;
-        b=aEZBO79jUolAAulcFLTwp4uaGFsZlr1VvgEXL+ed9OoLgcqbUmY0RpkwnQ3qRy+Swy
-         Odil1scOq6PNqswHQkyuWMTr3MrTMRF9nM47d5RYJ01JN86G7yf2M+hzmLZu9xibzfmj
-         7Zjc1dOcKv1AqEDB5610j0zJGSh3rtdpJuqLsTROO0WoAuqXeRxxoTl01UhfYDTpGTcM
-         rSXOewGmuji4HcfOOklWscfJZCMxrdkpl2jV9Akbrku/n6K1siSWIRZRYXIfe/hRkEXO
-         PiJFNiHc3wtp/ktP6zS0bzc5kteUx5jkbhY5oiyREr1IdExfaHm1wlGKOgczVcOjX5XX
-         mToA==
-X-Gm-Message-State: ABy/qLa7x1w3oVcwyIHL36Xr5QkroNdryJb9WMTb48Zqxx6prSz7jU12
-        k1B4+TpN2n4Ga3geEPcEuoOvlXthVAHswNKDYNs=
-X-Google-Smtp-Source: APBJJlHeadq9zfQxuXIwcit48HjKZ+oyP0Fuzm4HQBa38c8V8WD1Lc93MVLxrKhxaWjMf31Yd651qddGfUfvm6s+C7Y=
-X-Received: by 2002:a05:6214:acd:b0:636:fbc3:d841 with SMTP id
- g13-20020a0562140acd00b00636fbc3d841mr961408qvi.30.1689281027919; Thu, 13 Jul
- 2023 13:43:47 -0700 (PDT)
+        with ESMTP id S231584AbjGMUzi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 16:55:38 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96E7CE
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 13:55:34 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E4A8839769;
+        Thu, 13 Jul 2023 16:55:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0L92s8kAiHMniOyvupVuCsM9yRSS/Vk7YHIYDu
+        pqhTY=; b=NWiiIym3nA3duNGTBYs3dAUGXcE1BOs363UZLF5XWa2QG6de2m40Gn
+        asZ9d97NXXZfnpsjBvc0NHL91tt7HsbrO81v8dKMyzca7padEbQ4ogiEZM+utQjW
+        yPJxJRbABuBvRfub4UR6O3cnCSZt/3uM8FM1Df9ZekF7+LuWyWRAY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CECFE39768;
+        Thu, 13 Jul 2023 16:55:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5C4A039766;
+        Thu, 13 Jul 2023 16:55:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Petar Vutov <pvutov@imap.cc>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] docs: highlight that .gitmodules does not
+ support !command
+References: <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
+        <20230713193342.1053968-1-pvutov@imap.cc>
+        <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc>
+        <xmqqwmz3oacg.fsf@gitster.g>
+        <9de918bc-6913-0486-02dd-5b4028a7fe1b@imap.cc>
+Date:   Thu, 13 Jul 2023 13:55:29 -0700
+In-Reply-To: <9de918bc-6913-0486-02dd-5b4028a7fe1b@imap.cc> (Petar Vutov's
+        message of "Thu, 13 Jul 2023 22:34:16 +0200")
+Message-ID: <xmqqa5vzo7jy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-9zbqXMA@mail.gmail.com>
- <CALnO6CCc-J+fe9qKaoyYUMM3xMEUnV5w7NKWSbn6xTgEjbac5w@mail.gmail.com> <xmqqfs5ro8v7.fsf@gitster.g>
-In-Reply-To: <xmqqfs5ro8v7.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 13 Jul 2023 16:43:37 -0400
-Message-ID: <CAPig+cQvr-HuJBQsjt0jW0G95SmyzTc74R6JiznNeKbHmfu9PQ@mail.gmail.com>
-Subject: Re: t2400 on freebsd12
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9A292E9C-21BF-11EE-82D0-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2023 at 4:31 PM Junio C Hamano <gitster@pobox.com> wrote:
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
-> > Bump: this bug seems to affect several GitGitGadget PRs in CI, which
-> > also renders GGG unusable for sending mail, IIUC.
->
-> By the way, is this really "blocking" use of GGG in any way?  I do
-> recall seeing messages regarding gitk from Jens Lidestrom that are
-> shown in https://github.com/gitgitgadget/git/pull/1551 but the CI
-> run report at the end of that page does have a failing CirrusCI.
+Petar Vutov <pvutov@imap.cc> writes:
 
-Failed CI doesn't block GGG (at least not last time I used it). You
-can "/submit" the pull request to the Git mailing list even if CI
-failed or is not yet finished running.
+> I prefer the original description as it uses shorter sentences. I
+> can't hold that 5-liner in my head :)
+
+But you are comparing oranges and apples, aren't you?  You are not
+counting "oh by the way this cannot be in .gitmodules" as part of 5.
+
+> But now I really am bikeshedding, and I've taken enough of your
+> time. I will send a v4 with just the .gitmodules disclaimer, no
+> rewrite, in case you end up agreeing.
+
+After reading the original again and again, I hate more and more the
+way the original wasted too many words to refer to one thing twice
+(e.g. "arbitrary command" and then "is the custom command", "a
+single argument" and then the parenthesized explanation of it)
+without adding any clarity.
+
