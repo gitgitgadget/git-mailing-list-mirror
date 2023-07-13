@@ -2,170 +2,346 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08C9CC001DF
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 21:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF686C0015E
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 21:43:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232575AbjGMVhS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 17:37:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
+        id S234306AbjGMVnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 17:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229715AbjGMVhR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 17:37:17 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD0CF1FC0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 14:37:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F7FF1E28D;
-        Thu, 13 Jul 2023 17:37:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Lscyjvft339f7pZ2zF/4+zlXuQgNLuH7qilIOB
-        iT4v4=; b=YNVSBqwmJM/AsaxzhKwE2CbEN/aSeSeRCnJLYojF0RzyhJMk943lp1
-        OvI4HMKUqGKAet7Khvo/2hqyzYu3Q6Xtw0MknktkxXerzteCutiKhK1kGllo/17X
-        wIu/pxBp9HTebC1NPWag7MdvBYUS7bJLK+3a5Ei70uHXyI+JYyp+0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A77E1E28C;
-        Thu, 13 Jul 2023 17:37:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CB8691E28B;
-        Thu, 13 Jul 2023 17:37:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Petar Vutov <pvutov@imap.cc>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] docs: highlight that .gitmodules does not
- support !command
-References: <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
-        <20230713193342.1053968-1-pvutov@imap.cc>
-        <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc>
-        <xmqqwmz3oacg.fsf@gitster.g>
-        <9de918bc-6913-0486-02dd-5b4028a7fe1b@imap.cc>
-        <xmqqa5vzo7jy.fsf@gitster.g>
-Date:   Thu, 13 Jul 2023 14:37:10 -0700
-In-Reply-To: <xmqqa5vzo7jy.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        13 Jul 2023 13:55:29 -0700")
-Message-ID: <xmqqv8enmr21.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6D24A060-21C5-11EE-9501-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+        with ESMTP id S234524AbjGMVm6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 17:42:58 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C07132D65
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 14:42:29 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-56ff7b4feefso10449697b3.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 14:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1689284534; x=1691876534;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KD9nF5AQlBZUeMkfG7oxAsOsVKbMSCeU+6Q0Y0oh1+0=;
+        b=fWEAGF5FvPlAnk2evRqBZklNuU+RTocBp1JhhhVLH1EHKkAg2f1uyZ+2pDvTjWFaAl
+         nV4lLXGeBB3Qk0c52WKc3pfJvsN6dFNPf9+CXYOKRZbpWGT3ZvYEzj9VDG/86eD0bMuF
+         fbbmu9d9X9tDSa/4sgKH8zcsSqXxep+Vdf1J66Q8X74MypV3V06OumkWmxIJCbD3pELH
+         XmjJvKF6BDOzaYMD2f03gFja424/Fv3GG6wKlBMLKxVWRJwf36n2HSwAuYcpQXvFykGp
+         6z2vNC04A34sqvcu8taGbuH4LcY+BSlDz4KRmOwGWwd8DoE/VDFvZsu0X0nJTh3c01p8
+         XbtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689284534; x=1691876534;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KD9nF5AQlBZUeMkfG7oxAsOsVKbMSCeU+6Q0Y0oh1+0=;
+        b=AzUkJ2cosaz9qKyM8brUcQUTHA8b1fUwLJBTlcIHDX0pZALJLWmxdpCV69e0Ji0KHI
+         3azPoDPRlguu8g/U2KtSJEt+qK8v6mzhKbaRz4+ehi+Hrg4ozW3uaE8AwHgEnwwIlVGu
+         SicvuyT9NKpnDjCu8LUeDfcuJCse5nYfjVTzZ18xcfkNhWse8DNJ3ttd+QfegidEpnNG
+         uX9mCyjtuLD3p5zPObN+ClaP5kmGzzJRn+7O4rbuFb8XKnwqEdrTmd1G8czuLH8K2WFl
+         ZhPb58jkraUMvX7ArFf8s09o3xg4Uuvt/mef+pskKd5RTHkPQCLjWCjmTHrTDee7YCQh
+         16Og==
+X-Gm-Message-State: ABy/qLZFDee9P1Gckwb1Ei57WL0yN8Mb+HgZfijrIf+OS5Rc8KG5dU9G
+        bfUec6VbyBAf0ezNHknctha8YPK+ZiEo2DEvnsRzky+iWYRUbEhhkK+R1AcU+27EJC+A56qotlZ
+        t7NdkA0tgEYg63xNl0YpZuG7iPsmkn+nzR09rqWv58/B0PBym6xfIxeFZvpV07gOsyfESRaRj5v
+        zg
+X-Google-Smtp-Source: APBJJlFYOlHeUnM78Ar9JxCdzxOuN6l7cU8xj9HbIJ14ZqJFDUWoF827AwSpo6fWNzECksXZf3eQXi/3vyxX/wVX46MA
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:8bde:aac2:2aa0:da1a])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:430c:0:b0:555:cd45:bc3a with
+ SMTP id q12-20020a81430c000000b00555cd45bc3amr20970ywa.9.1689284534510; Thu,
+ 13 Jul 2023 14:42:14 -0700 (PDT)
+Date:   Thu, 13 Jul 2023 14:42:07 -0700
+In-Reply-To: <cover.1684790529.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1684790529.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
+Message-ID: <cover.1689283789.git.jonathantanmy@google.com>
+Subject: [PATCH v5 0/4] Changed path filter hash fix and version bump
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sorry it took me a while to get back to this. Looking at the existing
+code, Bloom filters are passed around a lot without context, especially
+when writing - they are generated into a commit slab and then when it is
+time to write them to disk, they are taken from that commit slab. And
+rather than annotating where they are passed around, I thought it better
+to stick to the single-version approach in version 4 (per Git invocation
+and per repo, only one version), which also sidesteps what happens if
+there so happens to be multiple commit graphs each with their own Bloom
+filter version (not possible to be generated by Git but possible with
+a hex editor) and what happens if we want to write a different version
+than what is currently stored in the commit slab. But with an auto-
+detection of that version, I think we have what we need; in regular
+operation, Git will run with whatever the version on disk is, and when
+it is time to migrate, the user can explicitly specify the version.
 
-> After reading the original again and again, I hate more and more the
-> way the original wasted too many words to refer to one thing twice
-> (e.g. "arbitrary command" and then "is the custom command", "a
-> single argument" and then the parenthesized explanation of it)
-> without adding any clarity.
+I did not implement the mitigation of not using the Bloom filters when
+a high-bit path is sought because, as Stolee says, this is useful only
+when mixing Git implementations and will slow down operations (without
+any increase in correctness) in the absence of such a mix [1]. But I can
+implement this if need be.
 
-Another thing I noticed is that this section is ONLY talking about
-the configuration variable, so everything both of us have been
-saying misses the point.  The preamble before the choices
-("checkout", "rebase", "merge", "custom" and "none") are listed read
-like so:
+[1] https://lore.kernel.org/git/e57b2272-b269-b705-3d42-d32e0b410f03@github.com/
 
-    update [--init] [--remote] [-N|--no-f...
-    +
-    --
-    Update the registered submodules to match what the superproject
-    expects by cloning missing submodules, fetching missing commits
-    in submodules and updating the working tree of
-    the submodules. The "updating" can be done in several ways depending
-    on command line options and the value of `submodule.<name>.update`
-    configuration variable. The command line option takes precedence over
-    the configuration variable. If neither is given, a 'checkout' is performed.
-    The 'update' procedures supported both from the command line as well as
-    through the `submodule.<name>.update` configuration are:
+Jonathan Tan (4):
+  gitformat-commit-graph: describe version 2 of BDAT
+  t4216: test changed path filters with high bit paths
+  repo-settings: introduce commitgraph.changedPathsVersion
+  commit-graph: new filter ver. that fixes murmur3
 
-Then why do we even think about referring to ".gitmodules" here?  It
-is because of this behaviour that is described elsewhere:
+ Documentation/config/commitgraph.txt     |  19 +++-
+ Documentation/gitformat-commit-graph.txt |   9 +-
+ bloom.c                                  |  65 ++++++++++++-
+ bloom.h                                  |   8 +-
+ commit-graph.c                           |  33 +++++--
+ oss-fuzz/fuzz-commit-graph.c             |   2 +-
+ repo-settings.c                          |   6 +-
+ repository.h                             |   2 +-
+ t/helper/test-bloom.c                    |   9 +-
+ t/t0095-bloom.sh                         |   8 ++
+ t/t4216-log-bloom.sh                     | 117 +++++++++++++++++++++++
+ 11 files changed, 256 insertions(+), 22 deletions(-)
 
-    init [--] [<path>...]::
-            Initialize the submodules recorded in the index (which were
-            added and committed elsewhere) by setting `submodule.$name.url`
-            in .git/config. It uses the same setting from `.gitmodules` as
-            a template. If the URL is relative, it will be resolved using
-            the default remote. If there is no default remote, the current
-            repository will be assumed to be upstream.
-    +
-    Optional <path> arguments limit which submodules will be initialized.
-    If no path is specified and submodule.active has been configured, submodules
-    configured to be active will be initialized, otherwise all submodules are
-    initialized.
-    +
-    When present, it will also copy the value of `submodule.$name.update`.
+Range-diff against v4:
+1:  a5955cda3d ! 1:  52e281eef0 gitformat-commit-graph: describe version 2 of BDAT
+    @@ Documentation/gitformat-commit-graph.txt: All multi-byte numbers are in network
+      	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
+      	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
+     -	in Probabilistic Verification"
+    -+	in Probabilistic Verification". Version 1 bloom filters have a bug that appears
+    ++	in Probabilistic Verification". Version 1 Bloom filters have a bug that appears
+     +	when char is signed and the repository has path names that have characters >=
+     +	0x80; Git supports reading and writing them, but this ability will be removed
+     +	in a future version of Git.
+2:  68732120f9 ! 2:  94a4c7af38 t4216: test changed path filters with high bit paths
+    @@ t/t4216-log-bloom.sh: test_expect_success 'Bloom generation backfills empty comm
+     +test_expect_success 'setup check value of version 1 changed-path' '
+     +	(cd highbit1 &&
+     +		printf "52a9" >expect &&
+    -+		get_first_changed_path_filter >actual)
+    ++		get_first_changed_path_filter >actual &&
+    ++		test_cmp expect actual)
+     +'
+     +
+     +# expect will not match actual if char is unsigned by default. Write the test
+3:  44cbcc6a69 ! 3:  131095666d repo-settings: introduce commitgraph.changedPathsVersion
+    @@ Commit message
+         repo-settings: introduce commitgraph.changedPathsVersion
+     
+         A subsequent commit will introduce another version of the changed-path
+    -    filter in the commit graph file. In order to control which version is
+    -    to be accepted when read (and which version to write), a config variable
+    -    is needed.
+    +    filter in the commit graph file. In order to control which version to
+    +    write (and read), a config variable is needed.
+     
+         Therefore, introduce this config variable. For forwards compatibility,
+         teach Git to not read commit graphs when the config variable
+    @@ Commit message
+         This commit does not change the behavior of writing (Git writes changed
+         path filters when explicitly instructed regardless of any config
+         variable), but a subsequent commit will restrict Git such that it will
+    -    only write when commitgraph.changedPathsVersion is 0, 1, or 2.
+    +    only write when commitgraph.changedPathsVersion is a recognized value.
+     
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    @@ Documentation/config/commitgraph.txt: commitGraph.maxNewFilters::
+     -	If true, then git will use the changed-path Bloom filters in the
+     -	commit-graph file (if it exists, and they are present). Defaults to
+     -	true. See linkgit:git-commit-graph[1] for more information.
+    -+	Deprecated. Equivalent to changedPathsVersion=1 if true, and
+    ++	Deprecated. Equivalent to changedPathsVersion=-1 if true, and
+     +	changedPathsVersion=0 if false.
+     +
+     +commitGraph.changedPathsVersion::
+     +	Specifies the version of the changed-path Bloom filters that Git will read and
+    -+	write. May be 0 or 1. Any changed-path Bloom filters on disk that do not
+    ++	write. May be -1, 0 or 1. Any changed-path Bloom filters on disk that do not
+     +	match the version set in this config variable will be ignored.
+     ++
+    -+Defaults to 1.
+    ++Defaults to -1.
+    +++
+    ++If -1, Git will use the version of the changed-path Bloom filters in the
+    ++repository, defaulting to 1 if there are none.
+     ++
+     +If 0, git will write version 1 Bloom filters when instructed to write.
+     ++
+    @@ commit-graph.c: struct commit_graph *parse_commit_graph(struct repo_settings *s,
+      	}
+      
+     -	if (s->commit_graph_read_changed_paths) {
+    -+	if (s->commit_graph_changed_paths_version == 1) {
+    ++	if (s->commit_graph_changed_paths_version != 0) {
+      		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
+      			   &graph->chunk_bloom_indexes);
+      		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
+    @@ repo-settings.c: void prepare_repo_settings(struct repository *r)
+     +	repo_cfg_bool(r, "commitgraph.readchangedpaths", &readChangedPaths, 1);
+     +	repo_cfg_int(r, "commitgraph.changedpathsversion",
+     +		     &r->settings.commit_graph_changed_paths_version,
+    -+		     readChangedPaths ? 1 : 0);
+    ++		     readChangedPaths ? -1 : 0);
+      	repo_cfg_bool(r, "gc.writecommitgraph", &r->settings.gc_write_commit_graph, 1);
+      	repo_cfg_bool(r, "fetch.writecommitgraph", &r->settings.fetch_write_commit_graph, 0);
+      
+4:  6dee3bfa70 ! 4:  47ba89c565 commit-graph: new filter ver. that fixes murmur3
+    @@ Commit message
+         So this patch does not include any mechanism to "salvage" changed path
+         filters from repositories. There is also no "mixed" mode - for each
+         invocation of Git, reading and writing changed path filters are done
+    -    with the same version number.
+    +    with the same version number; this version number may be explicitly
+    +    stated (typically if the user knows which version they need) or
+    +    automatically determined from the version of the existing changed path
+    +    filters in the repository.
+     
+         There is a change in write_commit_graph(). graph_read_bloom_data()
+         makes it possible for chunk_bloom_data to be non-NULL but
+    @@ Documentation/config/commitgraph.txt: commitGraph.readChangedPaths::
+      
+      commitGraph.changedPathsVersion::
+      	Specifies the version of the changed-path Bloom filters that Git will read and
+    --	write. May be 0 or 1. Any changed-path Bloom filters on disk that do not
+    -+	write. May be 0, 1, or 2. Any changed-path Bloom filters on disk that do not
+    +-	write. May be -1, 0 or 1. Any changed-path Bloom filters on disk that do not
+    ++	write. May be -1, 0, 1, or 2. Any changed-path Bloom filters on disk that do not
+      	match the version set in this config variable will be ignored.
+      +
+    - Defaults to 1.
+    + Defaults to -1.
+     
+      ## bloom.c ##
+     @@ bloom.c: static int load_bloom_filter_from_graph(struct commit_graph *g,
+    @@ commit-graph.c: static int graph_read_oid_lookup(const unsigned char *chunk_star
+      
+     +struct graph_read_bloom_data_data {
+     +	struct commit_graph *g;
+    -+	int commit_graph_changed_paths_version;
+    ++	int *commit_graph_changed_paths_version;
+     +};
+     +
+      static int graph_read_bloom_data(const unsigned char *chunk_start,
+    @@ commit-graph.c: static int graph_read_oid_lookup(const unsigned char *chunk_star
+      	hash_version = get_be32(chunk_start);
+      
+     -	if (hash_version != 1)
+    -+	if (hash_version != d->commit_graph_changed_paths_version)
+    - 		return 0;
+    +-		return 0;
+    ++	if (*d->commit_graph_changed_paths_version == -1) {
+    ++		*d->commit_graph_changed_paths_version = hash_version;
+    ++	} else if (hash_version != *d->commit_graph_changed_paths_version) {
+    ++ 		return 0;
+    ++	}
+      
+      	g->bloom_filter_settings = xmalloc(sizeof(struct bloom_filter_settings));
+    + 	g->bloom_filter_settings->hash_version = hash_version;
+     @@ commit-graph.c: struct commit_graph *parse_commit_graph(struct repo_settings *s,
+    - 			graph->read_generation_data = 1;
+      	}
+      
+    --	if (s->commit_graph_changed_paths_version == 1) {
+    -+	if (s->commit_graph_changed_paths_version == 1
+    -+	    || s->commit_graph_changed_paths_version == 2) {
+    + 	if (s->commit_graph_changed_paths_version != 0) {
+     +		struct graph_read_bloom_data_data data = {
+     +			.g = graph,
+    -+			.commit_graph_changed_paths_version = s->commit_graph_changed_paths_version
+    ++			.commit_graph_changed_paths_version = &s->commit_graph_changed_paths_version
+     +		};
+      		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
+      			   &graph->chunk_bloom_indexes);
+    @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
+      	ctx->write_generation_data = (get_configured_generation_version(r) == 2);
+      	ctx->num_generation_data_overflows = 0;
+      
+    -+	if (r->settings.commit_graph_changed_paths_version < 0
+    ++	if (r->settings.commit_graph_changed_paths_version < -1
+     +	    || r->settings.commit_graph_changed_paths_version > 2) {
+     +		warning(_("attempting to write a commit-graph, but 'commitgraph.changedPathsVersion' (%d) is not supported"),
+     +			r->settings.commit_graph_changed_paths_version);
+    @@ t/t0095-bloom.sh: test_expect_success 'compute unseeded murmur3 hash for test st
+      	Hashes:0x5615800c|0x5b966560|0x61174ab4|0x66983008|0x6c19155c|0x7199fab0|0x771ae004|
+     
+      ## t/t4216-log-bloom.sh ##
+    +@@ t/t4216-log-bloom.sh: get_bdat_offset () {
+    + 		.git/objects/info/commit-graph
+    + }
+    + 
+    ++get_changed_path_filter_version () {
+    ++	BDAT_OFFSET=$(get_bdat_offset) &&
+    ++	perl -0777 -ne \
+    ++		'print unpack("H*", substr($_, '$BDAT_OFFSET', 4))' \
+    ++		.git/objects/info/commit-graph
+    ++}
+    ++
+    + get_first_changed_path_filter () {
+    + 	BDAT_OFFSET=$(get_bdat_offset) &&
+    + 	perl -0777 -ne \
+    +@@ t/t4216-log-bloom.sh: test_expect_success 'set up repo with high bit path, version 1 changed-path' '
+    + 	git -C highbit1 commit-graph write --reachable --changed-paths
+    + '
+    + 
+    +-test_expect_success 'setup check value of version 1 changed-path' '
+    ++test_expect_success 'check value of version 1 changed-path' '
+    + 	(cd highbit1 &&
+    + 		printf "52a9" >expect &&
+    + 		get_first_changed_path_filter >actual &&
+     @@ t/t4216-log-bloom.sh: test_expect_success 'version 1 changed-path used when version 1 requested' '
+      		test_bloom_filters_used "-- $CENT")
+      '
+    @@ t/t4216-log-bloom.sh: test_expect_success 'version 1 changed-path used when vers
+     +		test_bloom_filters_not_used "-- $CENT")
+     +'
+     +
+    ++test_expect_success 'version 1 changed-path used when autodetect requested' '
+    ++	(cd highbit1 &&
+    ++		git config --add commitgraph.changedPathsVersion -1 &&
+    ++		test_bloom_filters_used "-- $CENT")
+    ++'
+    ++
+    ++test_expect_success 'when writing another commit graph, preserve existing version 1 of changed-path' '
+    ++	test_commit -C highbit1 c1double "$CENT$CENT" &&
+    ++	git -C highbit1 commit-graph write --reachable --changed-paths &&
+    ++	(cd highbit1 &&
+    ++		git config --add commitgraph.changedPathsVersion -1 &&
+    ++		printf "00000001" >expect &&
+    ++		get_changed_path_filter_version >actual &&
+    ++		test_cmp expect actual)
+    ++'
+    ++
+     +test_expect_success 'set up repo with high bit path, version 2 changed-path' '
+     +	git init highbit2 &&
+     +	git -C highbit2 config --add commitgraph.changedPathsVersion 2 &&
+    @@ t/t4216-log-bloom.sh: test_expect_success 'version 1 changed-path used when vers
+     +		git config --add commitgraph.changedPathsVersion 1 &&
+     +		test_bloom_filters_not_used "-- $CENT")
+     +'
+    ++
+    ++test_expect_success 'version 2 changed-path used when autodetect requested' '
+    ++	(cd highbit2 &&
+    ++		git config --add commitgraph.changedPathsVersion -1 &&
+    ++		test_bloom_filters_used "-- $CENT")
+    ++'
+    ++
+    ++test_expect_success 'when writing another commit graph, preserve existing version 2 of changed-path' '
+    ++	test_commit -C highbit2 c2double "$CENT$CENT" &&
+    ++	git -C highbit2 commit-graph write --reachable --changed-paths &&
+    ++	(cd highbit2 &&
+    ++		git config --add commitgraph.changedPathsVersion -1 &&
+    ++		printf "00000002" >expect &&
+    ++		get_changed_path_filter_version >actual &&
+    ++		test_cmp expect actual)
+    ++'
+     +
+      test_done
+-- 
+2.41.0.255.g8b1d071c50-goog
 
-and this description is very flawed.  It says "X is copied", but not
-"X is copied from A to B".  It also does not say that even if you
-have a custom command there, it does not get copied.
-
-It copies submodule.<name>.update from the ".gitmodules" to the
-configuraiton.  And that is the reason why, the configuration may
-have "submodule.<name>.update" in it after running "git init" to
-initialize a submodule.  And that is why the choices of update
-methods listed in the part your patch touched talked about things
-that can both appear in .gitmodules and the configuration.  But the
-linkage is quite indirect.
-
-So, here is another round, this time the primary change is to stop
-talking about `.gitmodules` in the "update" section, but explain how
-`.gitmodules` file is used in the "init" section.
-
- Documentation/git-submodule.txt | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git c/Documentation/git-submodule.txt w/Documentation/git-submodule.txt
-index 4d3ab6b9f9..5248840b18 100644
---- c/Documentation/git-submodule.txt
-+++ w/Documentation/git-submodule.txt
-@@ -95,7 +95,7 @@ too (and can also report changes to a submodule's work tree).
- init [--] [<path>...]::
- 	Initialize the submodules recorded in the index (which were
- 	added and committed elsewhere) by setting `submodule.$name.url`
--	in .git/config. It uses the same setting from `.gitmodules` as
-+	in `.git/config`, using the same setting from `.gitmodules` as
- 	a template. If the URL is relative, it will be resolved using
- 	the default remote. If there is no default remote, the current
- 	repository will be assumed to be upstream.
-@@ -105,9 +105,12 @@ If no path is specified and submodule.active has been configured, submodules
- configured to be active will be initialized, otherwise all submodules are
- initialized.
- +
--When present, it will also copy the value of `submodule.$name.update`.
--This command does not alter existing information in .git/config.
--You can then customize the submodule clone URLs in .git/config
-+It will also copy the value of `submodule.$name.update`, if present in
-+the `.gitmodules` file, to `.git/config`, but (1) this command does not
-+alter existing information in `.git/config`, and (2) `submodule.$name.update`
-+that is set to a custom command is *not* copied for security reasons.
-++
-+You can then customize the submodule clone URLs in `.git/config`
- for your local setup and proceed to `git submodule update`;
- you can also just use `git submodule update --init` without
- the explicit 'init' step if you do not intend to customize
-@@ -143,6 +146,8 @@ the submodules. The "updating" can be done in several ways depending
- on command line options and the value of `submodule.<name>.update`
- configuration variable. The command line option takes precedence over
- the configuration variable. If neither is given, a 'checkout' is performed.
-+(note: what is in `.gitmodules` file is irrelevant at this point;
-+see `git submodule init` above for how `.gitmodules` is used).
- The 'update' procedures supported both from the command line as well as
- through the `submodule.<name>.update` configuration are:
- 
-@@ -160,9 +165,6 @@ checked out in the submodule.
- 	merge;; the commit recorded in the superproject will be merged
- 	    into the current branch in the submodule.
- 
--The following 'update' procedures are only available via the
--`submodule.<name>.update` configuration variable:
--
- 	custom command;; arbitrary shell command that takes a single
- 	    argument (the sha1 of the commit recorded in the
- 	    superproject) is executed. When `submodule.<name>.update`
