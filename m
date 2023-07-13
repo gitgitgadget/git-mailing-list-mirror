@@ -2,106 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E12DC001B0
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 22:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2839EC001B0
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 22:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231386AbjGMWB3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 18:01:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50900 "EHLO
+        id S231530AbjGMWQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 18:16:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbjGMWB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 18:01:27 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA6EC0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 15:01:25 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-31427ddd3fbso1370539f8f.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 15:01:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689285684; x=1691877684;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=STmDjZMapDc38UrI4UEFa8eXLieXDqRvOgKxZoTxf0s=;
-        b=Qwa6/vSRucVAfiyQgPLeDorYCX0W7fB0XOGzGvM+JjObXh2QxoNU4islCuobrlEJJR
-         a27t5/tNP+nyOrqhj0XHxA4TiKEi3gwS7KEeP6M4mN4KVnC5uNBnzzsNvHwQQg/fiKFa
-         gZvNij5pks83EaB5dkKS/22Yxowb3QoLUsJo3MVznqe+Cj4LiV/n1adldgkMz8TGbOdt
-         0DYFaNclURLUrGJtrQfVOUs6EQzo3wQgseP+Q1Ys87sKG5/F5AL8xj9Sjm/j3TB0wNPe
-         hbLzscGwA7mp1SjsxaLoZoQkfx8snPFotahsz+OoWZJPJcjBgm5ra0QWUKBDRwccXYnB
-         gzdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689285684; x=1691877684;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=STmDjZMapDc38UrI4UEFa8eXLieXDqRvOgKxZoTxf0s=;
-        b=GAEKZtdDdDxEl0uiae0pHIpB0R5qubciR0RE7XoGxwjh+05YgZgmVSRLw208O8LZ6y
-         7Ul+unnp+A0oBz30Z5XejP8nsaUS2m2HJhMY+q1JhVaYsYs+oErZfXEKIGvgG/xrYZLQ
-         QkjC8ms+ADFey7g9U5OnSTvLCxPfAcn5xSTbF5iTM76KimaccUfytbaokhFvwqgQoaKi
-         /Om1sbfelhlRPGNHIOOjDUU+tZBmwTUGONtf9pSuE7iiR467yG+ef7MfxregxVGUam5F
-         h6Vy5i161/sMgfbHj99DJze7zq46ns5dlCqiY68M7y1FzEXktvkTEz5mLP4+4/wQWlqr
-         k4rA==
-X-Gm-Message-State: ABy/qLaQ+01nzjsJvZZZziUpcoO8fDD2MOmiGe5M/JmCB8/aZXtX54Bv
-        tmJZPdk3XHnwPM+qVWsx1Bqcm5E9C2A=
-X-Google-Smtp-Source: APBJJlGcQYfxosdQ2/TU0RFG3zdhG3OzM3+OBwNk5fRi/s9CvkOipjunOYyvc2Y3LKMag+SaqptLrg==
-X-Received: by 2002:a5d:4ac5:0:b0:314:1318:18b7 with SMTP id y5-20020a5d4ac5000000b00314131818b7mr2470748wrs.19.1689285684038;
-        Thu, 13 Jul 2023 15:01:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w18-20020a5d6812000000b0031416362e23sm9026740wru.3.2023.07.13.15.01.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jul 2023 15:01:23 -0700 (PDT)
-Message-ID: <pull.1550.git.1689285683013.gitgitgadget@gmail.com>
-From:   "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 13 Jul 2023 22:01:22 +0000
-Subject: [PATCH] i18n: mark more bundle.c strings for translation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229815AbjGMWQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 18:16:51 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D75211B
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 15:16:50 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53B861ABEFE;
+        Thu, 13 Jul 2023 18:16:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oMuqibFVe2UpnTQ2fQyhoO0va4HiMAn92M1G0e
+        UMoWg=; b=Cj3aXz29mfP9LrF4X3LLJlC2v7Ra+uZl0znxDA7aGZRR1SN1hW63IO
+        LthXMJ9AziQpZ0oSGOY0Rm7Wu7HKsfclxJFTaD7CEm0wcu7dgGfURWtRPdzg+ORU
+        kVkUcsYloBHLT680FxK+9ccf9SpLOAIv8xhhI458aQ1zwBCVjV+es=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B6DC1ABEFD;
+        Thu, 13 Jul 2023 18:16:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 954801ABEFC;
+        Thu, 13 Jul 2023 18:16:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v5 0/4] Changed path filter hash fix and version bump
+References: <cover.1684790529.git.jonathantanmy@google.com>
+        <cover.1689283789.git.jonathantanmy@google.com>
+Date:   Thu, 13 Jul 2023 15:16:46 -0700
+In-Reply-To: <cover.1689283789.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 13 Jul 2023 14:42:07 -0700")
+Message-ID: <xmqqlefjlanl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-        "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F5D18932-21CA-11EE-AE55-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-These two messages were introduced in 8ba221e245 (bundle: output hash
-information in 'verify', 2022-03-22) and 105c6f14ad (bundle: parse
-filter capability, 2022-03-09) but never for translation.
+> I did not implement the mitigation of not using the Bloom filters when
+> a high-bit path is sought because, as Stolee says, this is useful only
+> when mixing Git implementations and will slow down operations (without
+> any increase in correctness) in the absence of such a mix [1].
 
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-    i18n: mark more bundle.c strings for translation
+Sensible, I guess.
+
+>     @@ Commit message
+>          This commit does not change the behavior of writing (Git writes changed
+>          path filters when explicitly instructed regardless of any config
+>          variable), but a subsequent commit will restrict Git such that it will
+>     -    only write when commitgraph.changedPathsVersion is 0, 1, or 2.
+>     +    only write when commitgraph.changedPathsVersion is a recognized value.
+
+This is nicer.
+
+>          Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>          Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>     @@ Documentation/config/commitgraph.txt: commitGraph.maxNewFilters::
+>      -	If true, then git will use the changed-path Bloom filters in the
+>      -	commit-graph file (if it exists, and they are present). Defaults to
+>      -	true. See linkgit:git-commit-graph[1] for more information.
+>     -+	Deprecated. Equivalent to changedPathsVersion=1 if true, and
+>     ++	Deprecated. Equivalent to changedPathsVersion=-1 if true, and
+>      +	changedPathsVersion=0 if false.
+
+I forgot to comment on this part earlier, but does the context make
+it clear enough that these `changedPathsVersion` references are
+about `commitGraph.changedPathsVersion` configuration variable
+without fully spelled out?  They sit next to each other right now,
+so it may not be too bad.  If they appeared across more distance,
+I would be worried, though.
+
+>      +commitGraph.changedPathsVersion::
+>      +	Specifies the version of the changed-path Bloom filters that Git will read and
+>     -+	write. May be 0 or 1. Any changed-path Bloom filters on disk that do not
+>     ++	write. May be -1, 0 or 1. Any changed-path Bloom filters on disk that do not
+>      +	match the version set in this config variable will be ignored.
+
+So, any time the user configures this to a different value, we will
+start to ignore the existing changed-path-filters data in the
+repository, and when we are told to write commit-graph, we will
+construct changed-path-filters data using the new version?
+
+>      ++
+>     -+Defaults to 1.
+>     ++Defaults to -1.
+>     +++
+>     ++If -1, Git will use the version of the changed-path Bloom filters in the
+>     ++repository, defaulting to 1 if there are none.
+
+OK, that was misleading.  The configuration can say "-1" and it does
+not mean "I'll ignore anything other than version -1"---it means
+"I'll read anything".  The earlier statement should be toned down so
+that we do not surprise readers, perhaps
+
+    When set to a positive integer value, any changed-path Bloom
+    filters on disk whose version is different from the value are
+    ignored.
+
+to signal that 0 and negative are special.  Then the readers can
+anticipate that special cases are described next.
+
+    When set to -1, then ...
+    When set to 0, then ...
+    Defaults to -1.
     
-    I noticed that git bundle output contained some untranslated messages
-    for LC_ALL=fr_FR.UTF-8; in order to add translations for these messages,
-    they need to be marked for translation.
+When set to the special value -1, what version will we write?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1550%2Fbenknoble%2Fbundle-translations-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1550/benknoble/bundle-translations-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1550
+>      +If 0, git will write version 1 Bloom filters when instructed to write.
 
- bundle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+And we will only read 0 and refuse to read 1?  Or we will read both
+0 and 1?
 
-diff --git a/bundle.c b/bundle.c
-index 8d5936c4212..a9744da255c 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -271,10 +271,10 @@ int verify_bundle(struct repository *r,
- 			list_refs(r, 0, NULL);
- 		}
- 
--		printf_ln("The bundle uses this hash algorithm: %s",
-+		printf_ln(_("The bundle uses this hash algorithm: %s"),
- 			  header->hash_algo->name);
- 		if (header->filter.choice)
--			printf_ln("The bundle uses this filter: %s",
-+			printf_ln(_("The bundle uses this filter: %s"),
- 				  list_objects_filter_spec(&header->filter));
- 	}
- cleanup:
-
-base-commit: aa9166bcc0ba654fc21f198a30647ec087f733ed
--- 
-gitgitgadget
+Thanks.
