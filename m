@@ -2,174 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C81EAEB64DD
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 10:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30476EB64DD
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 13:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233006AbjGMKz1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 06:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
+        id S234922AbjGMNZG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 09:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjGMKzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 06:55:25 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343D8212E
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 03:55:23 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-992b66e5affso88489066b.3
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 03:55:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=akorzy-net.20221208.gappssmtp.com; s=20221208; t=1689245721; x=1691837721;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ehPum1BByH/e0veyWYVeJ7d1CBCwHxjBvqNiJ9yilb0=;
-        b=eSXm2Vz6DZOGKxuYBo9MFGSPgKqGdSRjO7qREutlRE+P83lpu5i1tLTSJw4XmR5r1Q
-         QaE5ihCOeruntt5kZzeG33W5RYoySH0vjglCch6enIV+9agPFEVYj+LGk+mbhdCIrU9K
-         /RjDaxfaA97RuzWbvgGUDq2Z4th3p9TODcPufcuZoHKsI6bwLW/4YG8YtmszYKI2/B7U
-         u2NqsNCn9XdDK3Vgyimwy6N25+njRUh51NWbJmHrzlWEqbrlw+QMcqfCcdZUZriRtkox
-         vstJW7lBN373tASzHzcri6iaMphY8kLMVsSwhabolnRxpU4iY3ZaEXLZ/oelK0n7mxJV
-         Qshg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689245721; x=1691837721;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ehPum1BByH/e0veyWYVeJ7d1CBCwHxjBvqNiJ9yilb0=;
-        b=U/eRgucS23pZSuJxhbPZXy1+RT7LdfZeOys1JdkZF9yIr794rl5PtP1A8wWNKY6ehv
-         csgyTqzBGbm+3ZQC71xxqbpRzYi6KKa50IeVfL8rKG4x8GdesytQ6YdXwVfvP/tsGuLI
-         kuU8S8QwhZxg4KJkNht6oIrWyVvT/19lAluAQoq87Zjk21/0bSYaCuEeYushMecRqTTe
-         f/PoKim5pUAzc2/ER/zX0EHE2Ye25U25W0EQuB/xO1GBMKM319Yy7unb5mBXBJknGfNB
-         iDrToriv91bbXUa6jhgn2CSuUTKf9jsF7bslcsa6hjpfHWZmN30I8aBmFOKwLIxGDJCB
-         5ybw==
-X-Gm-Message-State: ABy/qLaZ1F/DqKSVEbOfJfBNNsrDMYUGJl8ySW04sArv6OpfxZuTO+jO
-        FDs4ym/SoTlMcmbx0PhLSZa0guVkRkiMvzzdqok=
-X-Google-Smtp-Source: APBJJlHDHWW6yZTPp6MR+t6eEA38NFetlIFt/UzT1joyFY0DzsvbkRlR7PqWqIfpqizJAGNDSCu+Fg==
-X-Received: by 2002:a17:906:2091:b0:987:6372:c31f with SMTP id 17-20020a170906209100b009876372c31fmr1122957ejq.37.1689245720949;
-        Thu, 13 Jul 2023 03:55:20 -0700 (PDT)
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com. [209.85.218.54])
-        by smtp.gmail.com with ESMTPSA id h14-20020a170906110e00b009829dc0f2a0sm3885292eja.111.2023.07.13.03.55.19
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jul 2023 03:55:20 -0700 (PDT)
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-992ca792065so88566166b.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 03:55:19 -0700 (PDT)
-X-Received: by 2002:a17:906:ae12:b0:98e:37fe:691b with SMTP id
- le18-20020a170906ae1200b0098e37fe691bmr946239ejb.34.1689245719144; Thu, 13
- Jul 2023 03:55:19 -0700 (PDT)
+        with ESMTP id S234774AbjGMNYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 09:24:52 -0400
+X-Greylist: delayed 1141 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 13 Jul 2023 06:23:48 PDT
+Received: from scc-mailout-kit-01.scc.kit.edu (scc-mailout-kit-01.scc.kit.edu [IPv6:2a00:1398:9:f712::810d:e751])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97ABB3C3A
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 06:23:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=student.kit.edu; s=20220408; h=Content-Transfer-Encoding:Content-Type:
+        Subject:To:From:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=tBzKohqLgw0JSI83EtLP8ijOL9k61vbrjdGLUlTVLUo=; b=NxIddzBCYOGWERslsURKY0w5+u
+        0XLTmkeBWinKEBhzZEFIe6As0W6uo7edIQ1EacVxisew5Vg1muW+hrql2VtrOAdqmIvwctGCE6jft
+        eJpzzuDWCitDO/GuH6bSrNVo+O5RNikljs6MFhSWfIuuqZ58BBxUv7bjyn5iAD1UYZHins0t5UNjd
+        3i8582REJ47hbg19nqbXka0koMJbi7hE3bNwaBrY7k1K/2mbW3Xp+uTl07pNorW3rU3/TBOiVgBUv
+        ohC6fzOy2zt+0qj1fCQ9qxSc47YUbTxwa/9iGbhfev+m+2lbwqSIXpBoEPogesexCf7PunuoSkxi5
+        tZBvIUxg==;
+Received: from kit-msx-44.kit.edu ([2a00:1398:9:f612::144])
+        by scc-mailout-kit-01.scc.kit.edu with esmtps (TLS1.2:ECDHE_SECP384R1__RSA_SHA256__AES_256_GCM:256)
+        (envelope-from <uxecw@student.kit.edu>)
+        id 1qJvzq-00Ck3X-Aw
+        for git@vger.kernel.org; Thu, 13 Jul 2023 15:04:38 +0200
+Received: from [IPV6:2a02:8071:67f0:fc0:3c65:561e:c5ff:fb6a]
+ (2a02:8071:67f0:fc0:3c65:561e:c5ff:fb6a) by smtp.kit.edu
+ (2a00:1398:9:f612::106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.16; Thu, 13 Jul
+ 2023 15:04:37 +0200
+Message-ID: <fcdf19b3-269b-aa9f-38c2-d0f775524a89@student.kit.edu>
+Date:   Thu, 13 Jul 2023 15:04:37 +0200
 MIME-Version: 1.0
-References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
- <xmqqwmz6z8j1.fsf@gitster.g>
-In-Reply-To: <xmqqwmz6z8j1.fsf@gitster.g>
-Reply-To: ak@akorzy.net
-From:   =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
-Date:   Thu, 13 Jul 2023 12:55:07 +0200
-X-Gmail-Original-Message-ID: <CADWu+Ukgnc241jsYwqorAJ20qeGvqYvyqRbDa4CFXXjiEeDOkw@mail.gmail.com>
-Message-ID: <CADWu+Ukgnc241jsYwqorAJ20qeGvqYvyqRbDa4CFXXjiEeDOkw@mail.gmail.com>
-Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Content-Language: en-US, de-DE
+From:   uxecw <uxecw@student.kit.edu>
+Autocrypt: addr=uxecw@student.kit.edu; keydata=
+ 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
+To:     <git@vger.kernel.org>
+Subject: Bug Report - Git does not require a space between shorthand flags and
+ the commit-message
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [2a02:8071:67f0:fc0:3c65:561e:c5ff:fb6a]
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Junio,
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Thanks for the insightful response.
+What did you do before the bug happened? (Steps to reproduce your issue)
+Rebasing.
+I entered `git commit —amend` (one hypen istead of two) accidently and 
+it passed as defacto `git commit —all —message "end"`.
+I think because of the missing space git should have rejected the given 
+input.
 
-Firstly, let me add some context, which will be helpful for responding
-to your comments. This strategy was created at a large organization,
-where the "main" branch was used as the integration branch for changes
-made within the organization and for the organization. So whenever an
-employee needed to make a change, they would start a topic branch off
-"main" and the topic branch would be later merged or rebased onto
-"main". When the employee was ready to contribute the change upstream,
-they would only present the topic branch upstream. The "main" branch
-was never presented upstream. Release branches were created from the
-"main" branch to work on releases to production at the organization.
-Tags were created on the release branches to mark stable and tested
-versions. Deployments to production were made from the tagged
-versions.
+What did you expect to happen? (Expected behavior)
+Input should have been rejected
 
-The rest of my response is inline:
+What happened instead? (Actual behavior)
+`git commit —all —message "end"`
 
-> So from the upstream point of view,
-> throwing a pull request for c" (not the original a, b and c) would
-> be a reasonable way to finalize your work.  That way, what you are
-> offering to the upstream is not an ancient original commits (i.e. a,
-> b, and c) that you haven't been using at all once you created S and
-> T.
+What's different between what you expected and what actually happened?
 
-Yes, this is how it's intended to be used.
+Anything else you want to add:
 
-> it is unclear what the eventual
-> presentation to and adoption by the upstream would look like.  As
-> an upstream maintainer, for example, I do not want to merge S
-> above to the upstream tree.
-
-Presentation to upstream would only involve submitting a pull request
-for c". Merge S would not be presented to upstream.
-
-> how does this help those who have older versions of your
-> work, *and* built their own changes on top?  They would not just
-> need to update their remote-tracking branch that has your older
-> version of the work to the latest, but also rebase their work on
-> top.
->
->     o---o---o---o---o  upstream/main
->          \           \
->           \           a'---b'---c'---d'---e'
->            \                     \
->             a---b---c-------------S  main
->                      \
->                       d---e  your coworker
-
-The coworker would either merge their topic branch to "main" or rebase
-it on top of "main":
-
-    o---o---o---o---o  upstream/main
-         \           \
-          \           a'---b'---c'
-           \                     \
-            a---b---c-------------S---M  main
-                     \               /
-                      d-------------e
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
-    o---o---o---o---o  upstream/main
-         \           \
-          \           a'---b'---c'
-           \                     \
-            a---b---c-------------S---d'---e'  main
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.19.0-46-generic #47~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC 
+Wed Jun 21 15:35:31 UTC 2 x86_64
+compiler info: gnuc: 11.3
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
 
-> However, once you keep going this way for several rounds, would
-> the result really be much better than bushy history with full of
-> reverse merges from upstream?   Would it help to add new history
-> simplification mechanisms and options to help visualize the
-> history, or do we already have necessary support (e.g. if the
-> convention for these "merge to cauterize the older versions of
-> history with the newly rebased history" S and T merges is to
-> record the rebased history as the first-parent, then "git log
-> --first-parent upstream/main..main" should be sufficient).
 
-Good point. I believe the proposed method has two advantages over
-using "git log --first-parent":
+[Enabled Hooks]
+not run from a git repository - no hooks to show
 
-* consider the scenario where the cauterizing merge is not the only
-merge in the "main" branch - a topic branch from a coworker has also
-been merged to "main". In that case, "git log --first-parent" would
-not show the commits from the merged topic branch.
-
-* a user unfamiliar with the command-line interface can use a history
-visualization tool (such as gitk or tig) to obtain a clear view of the
-differences between the last imported version of upstream and the tip
-of "main".
-
-> The users would benefit to have an easy way, given only T or S, to
-> get range-diff among (a,b,c) and (a',b',c') and (a",b",c").
-
-I like that idea. It would be great to have a simple git command to
-display such a range-diff. The command would have to correctly
-identify the commits.
-
---
-Best regards,
-Aleksander Korzynski
