@@ -2,184 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E05B2EB64DD
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 04:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 026BBC0015E
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 04:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233659AbjGMEmn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 00:42:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43286 "EHLO
+        id S233855AbjGMEmr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 00:42:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232133AbjGMEml (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 00:42:41 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3AD2CF
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 21:42:40 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-1b056276889so232042fac.2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2023 21:42:40 -0700 (PDT)
+        with ESMTP id S232133AbjGMEmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 00:42:43 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C976FCF
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 21:42:42 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id 5614622812f47-3a3e1152c23so286176b6e.2
+        for <git@vger.kernel.org>; Wed, 12 Jul 2023 21:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689223359; x=1691815359;
+        d=gmail.com; s=20221208; t=1689223361; x=1691815361;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CohUKtPqTbts55u/TEmJpvh1dUcnBRe//1hSAGg2rlE=;
-        b=NzgjfrmwxX8dcm4wo6XzUV42e3kM4iQnuQg4ozfPoEGiqtz0xjSmzuJThAC+N0xFvU
-         wVpobUXBPlDzcSMaPh9VCmk+KHm4BTcGJpUNMdpVezvwK8J2prQ1qHNjG5NoiUnurPZP
-         fHDKORCbfynJVHihq1L39SJ/WR9kz8PuekZAEH5po0ze267LzwfcWGfMfeFiLZn/OWSC
-         PiQoH4MjRzN5IvoICp6nTAd9mxxCmTl3z9AG0c3IMppO2wNyeEvt95QAL4oLW/2hTh4/
-         tJOnSmrmBRvBuSrc2jPEHhgRxZRfCvxFWHAMpiOEu90akPTFPRht+WOO2veUQ3ZNDGc/
-         FfrA==
+        bh=+tnRpy7hMi7m8JWoWC3tBjyGzH6ftc7CP8t+iwWGFWE=;
+        b=cIUhjjxsl1X1+eA5BUfsoOrxhIzmFqnrfCGcwnGbGjH2Z+IuRU1qulAmiz9OCiJxHp
+         e/Pfk74f+SpdT0AiRNLgv41pcIs7xg321+fRT0VIyKS55+vi8RvHb2oESsUxAXQGhbSg
+         OOBzQ/Z7jQQPl0rkMds6kw4AElA26U/irHbhpEoGHbWjPIlsyKKwjhSOB8LhrcdDCWdm
+         +n7sVt/frSk0cBJaG1Iv/ZL092lpdw3zqC8clWXLTPW+ZskcYxLnVmuqiowPeVhNzfBg
+         NrGzq2JUj92p3ScCq2SDu/2x/f3/e4+MHiwD3M/j0AlXtlMwiGERqXpbzk5S2+tReHU8
+         /QwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689223359; x=1691815359;
+        d=1e100.net; s=20221208; t=1689223361; x=1691815361;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CohUKtPqTbts55u/TEmJpvh1dUcnBRe//1hSAGg2rlE=;
-        b=JQupcAcF0ps96b4tFwXGqPHM4eihggDtpb/s8RXqnKN9GFtFIzecj213nAHcqFQijq
-         uBwMH6nbC6P8v6L+z/RUSww5AZ/zFEhatxtzHmH9g7B8ZwG2d4vpxd5y1OqZovQmJuU/
-         MkVnIxuh/E5+obzlfF59wArvVnQlKFknwnK9zcd/thMQQJ5MXTxgxkygRbQyanPG+u5Z
-         VIHNYfgInPVXc89wlU5y3RNCKgzV5jzjrYIZ8VJPxWAgBwxl4osAimr3uC4wAuKi1rH/
-         yLCNOCRTArXyWRUZdOwB1guuibGtHEJhZkQNMak0fTZobLsEqFrIAuPMsO0UV/YvmTaq
-         6SYQ==
-X-Gm-Message-State: ABy/qLbbXmgXLrikMQkWoYM4Nbg0lc6x/3MIqbueVcvvVN1V99Ksc56Z
-        7TIsUDm5sXx9akr8xqVvpmukVewEVx0=
-X-Google-Smtp-Source: APBJJlGxFXYldI7wUKvQ961YIbtOIwNz/ZVOJjBNqRilqKVJek1RndxHl03XkZT2OCQN9gYmuYMUYw==
-X-Received: by 2002:a05:6871:29a:b0:1b3:afdc:6c14 with SMTP id i26-20020a056871029a00b001b3afdc6c14mr1039775oae.2.1689223359004;
-        Wed, 12 Jul 2023 21:42:39 -0700 (PDT)
+        bh=+tnRpy7hMi7m8JWoWC3tBjyGzH6ftc7CP8t+iwWGFWE=;
+        b=PWe8pDszaWDXpuZkCkqX1YnHkU7I9SgvXlHuOgtocKkPbdzjpCfZ8ZcFr4euGshLNn
+         gBnl/wAuRaMJIMbR72EYghAvLUDSqMw9E8cZCGWnwfcFN+otNe2Qs82PLtXA6GJAtyux
+         Es+EVu6Z1Y3BOxvKIi+T6zWhQuSbAbbVBYyExwZlXzRJn986QSzR3SKhNnlq56UjHl8R
+         Lczap4POWbYHGghudNkMhVR7TXmraXx/87pnAv+XSjUFPorFdAyksUeumQ1WDeqkeir8
+         dKvF+CpuhFpyAaBo4j0VXKb+vNEwkY+Z2lqK3cMhuab+4MWUMp48QBVXWZL5yr7AGlez
+         T73g==
+X-Gm-Message-State: ABy/qLY/A9ELzgiXqfXebX3OXFsGd0FcSwQnEKZYg213R9bhe3+ygYLg
+        hmqIMZIvIVPdEiICq3vjUCSd2OPV0xU=
+X-Google-Smtp-Source: APBJJlF67sPf74XDG+7dPrQpZsBvfWdyOWqvxRIovv/E4ksG39b2VUlv64qfRZ8zcK8ClmRlLDFI6w==
+X-Received: by 2002:a05:6358:6f8f:b0:133:7c4:e752 with SMTP id s15-20020a0563586f8f00b0013307c4e752mr1185782rwn.26.1689223361164;
+        Wed, 12 Jul 2023 21:42:41 -0700 (PDT)
 Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
-        by smtp.gmail.com with ESMTPSA id g13-20020a170902cd0d00b001ae5d21f760sm4843040ply.146.2023.07.12.21.42.37
+        by smtp.gmail.com with ESMTPSA id g13-20020a170902cd0d00b001ae5d21f760sm4843040ply.146.2023.07.12.21.42.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 21:42:37 -0700 (PDT)
+        Wed, 12 Jul 2023 21:42:39 -0700 (PDT)
 From:   Alex Henrie <alexhenrie24@gmail.com>
 To:     git@vger.kernel.org, git@matthieu-moy.fr, christiwald@gmail.com,
         john@keeping.me.uk, philipoakley@iee.email,
         phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
 Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v5 0/3] don't imply that integration is always required before pushing
-Date:   Wed, 12 Jul 2023 22:41:12 -0600
-Message-ID: <20230713044128.3771818-1-alexhenrie24@gmail.com>
+Subject: [PATCH v5 1/3] wt-status: don't show divergence advice when committing
+Date:   Wed, 12 Jul 2023 22:41:13 -0600
+Message-ID: <20230713044128.3771818-2-alexhenrie24@gmail.com>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230707054257.3366355-1-alexhenrie24@gmail.com>
+In-Reply-To: <20230713044128.3771818-1-alexhenrie24@gmail.com>
 References: <20230707054257.3366355-1-alexhenrie24@gmail.com>
+ <20230713044128.3771818-1-alexhenrie24@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many times now, I have seen novices do the following:
+When the user is in the middle of making a commit, they are not yet at
+the point where they are ready to think about integrating their local
+branch with the corresponding remote branch or force-pushing over the
+remote branch. Don't include advice on how to deal with divergent
+branches in the commit template, to avoid giving the impression that the
+divergence needs to be dealt with immediately. Similar advice will be
+printed when it is most relevant, that is, if the user does try to push
+without first reconciling the two branches.
 
-1. Start work on their own personal topic branch
-2. Push the branch to origin
-3. Rebase the branch onto origin/master
-4. Try to push again, but Git says they need to pull
-5. Pull and make a mess trying to reconcile the older topic branch with
-   the rebased topic branch
-
-Help avoid this mistake by giving somewhat more general advice that does
-not assume that the user always wants to do reconciliation.
-
-Changes from v4:
-- Don't show divergent branch advice in the middle of `git commit`
-- Soften the advice, but don't specifically mention force-pushing
-
-Alex Henrie (3):
-  wt-status: don't show divergence advice when committing
-  remote: don't imply that integration is always required before pushing
-  push: don't imply that integration is always required before pushing
-
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
  builtin/checkout.c |  2 +-
- builtin/push.c     | 24 +++++++++++------------
- remote.c           |  8 +++++---
+ remote.c           |  6 ++++--
  remote.h           |  3 ++-
- t/t7508-status.sh  | 48 ++++++++++++++++++++++------------------------
+ t/t7508-status.sh  | 10 ++++------
  wt-status.c        |  3 ++-
- 6 files changed, 45 insertions(+), 43 deletions(-)
+ 5 files changed, 13 insertions(+), 11 deletions(-)
 
-Range-diff against v4:
-1:  9626721c13 < -:  ---------- remote: advise about force-pushing as an alternative to reconciliation
--:  ---------- > 1:  e84989c4a6 wt-status: don't show divergence advice when committing
--:  ---------- > 2:  9bb643df7e remote: don't imply that integration is always required before pushing
-2:  209e86588a ! 3:  5ff9ecb51b push: advise about force-pushing as an alternative to reconciliation
-    @@ Metadata
-     Author: Alex Henrie <alexhenrie24@gmail.com>
-     
-      ## Commit message ##
-    -    push: advise about force-pushing as an alternative to reconciliation
-    +    push: don't imply that integration is always required before pushing
-     
-    -    Also, don't put `git pull` in an awkward parenthetical, because
-    -    `git pull` can always be used to reconcile branches and is the normal
-    -    way to do so.
-    +    In a narrow but common case, the user is the only author of a branch and
-    +    doesn't mind overwriting the corresponding branch on the remote. This
-    +    workflow is especially common on GitHub, GitLab, and Gerrit, which keep
-    +    a permanent record of every version of a branch that is pushed while a
-    +    pull request is open for that branch. On those platforms, force-pushing
-    +    is encouraged and is analogous to emailing a new version of a patchset.
-    +
-    +    When giving advice about divergent branches, tell the user about
-    +    `git pull`, but don't unconditionally instruct the user to do it. A less
-    +    prescriptive message will help prevent users from thinking that they are
-    +    required to create an integrated history instead of simply replacing the
-    +    previous history. Also, don't put `git pull` in an awkward
-    +    parenthetical, because `git pull` can always be used to reconcile
-    +    branches and is the normal way to do so.
-    +
-    +    Due to the difficulty of knowing which command for force-pushing is best
-    +    suited to the user's situation, no specific advice is given about
-    +    force-pushing. Instead, the user is directed to the Git documentation to
-    +    read about possible ways forward that do not involve integration.
-     
-         Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-     
-    @@ builtin/push.c: static void setup_default_push_refspecs(int *flags, struct remot
-      	N_("Updates were rejected because the tip of your current branch is behind\n"
-     -	   "its remote counterpart. Integrate the remote changes (e.g.\n"
-     -	   "'git pull ...') before pushing again.\n"
-    -+	   "its remote counterpart. Use 'git pull' to integrate the remote changes\n"
-    -+	   "before pushing again, or use 'git push --force' to delete the remote\n"
-    -+	   "changes and replace them with your own.\n"
-    ++	   "its remote counterpart. If you want to integrate the remote changes,\n"
-    ++	   "use 'git pull' before pushing again.\n"
-      	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
-      
-      static const char message_advice_checkout_pull_push[] =
-      	N_("Updates were rejected because a pushed branch tip is behind its remote\n"
-     -	   "counterpart. Check out this branch and integrate the remote changes\n"
-     -	   "(e.g. 'git pull ...') before pushing again.\n"
-    -+	   "counterpart. Check out this branch and use 'git pull' to integrate the\n"
-    -+	   "remote changes before pushing again, or use 'git push --force' to delete\n"
-    -+	   "the remote changes and replace them with your own.\n"
-    ++	   "counterpart. If you want to integrate the remote changes, use 'git pull'\n"
-    ++	   "before pushing again.\n"
-      	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
-      
-      static const char message_advice_ref_fetch_first[] =
-    @@ builtin/push.c: static void setup_default_push_refspecs(int *flags, struct remot
-     -	   "(e.g., 'git pull ...') before pushing again.\n"
-     +	N_("Updates were rejected because the remote contains work that you do not\n"
-     +	   "have locally. This is usually caused by another repository pushing to\n"
-    -+	   "the same ref. Use 'git pull' to integrate the remote changes before\n"
-    -+	   "pushing again, or use 'git push --force' to delete the remote changes\n"
-    -+	   "and replace them with your own.\n"
-    ++	   "the same ref. If you want to integrate the remote changes, use\n"
-    ++	   "'git pull' before pushing again.\n"
-      	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
-      
-      static const char message_advice_ref_already_exists[] =
-    @@ builtin/push.c: static const char message_advice_ref_needs_force[] =
-     -	   "to integrate those changes locally (e.g., 'git pull ...')\n"
-     -	   "before forcing an update.\n");
-     +	N_("Updates were rejected because the tip of the remote-tracking branch has\n"
-    -+	   "been updated since the last checkout. Use 'git pull' to integrate the\n"
-    -+	   "remote changes before pushing again, or use 'git push --force' to delete\n"
-    -+	   "the remote changes and replace them with your own.\n");
-    ++	   "been updated since the last checkout. If you want to integrate the\n"
-    ++	   "remote changes, use 'git pull' before pushing again.\n"
-    ++	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
-      
-      static void advise_pull_before_push(void)
-      {
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index fd6ee8c272..c278c2169d 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -916,7 +916,7 @@ static void report_tracking(struct branch_info *new_branch_info)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct branch *branch = branch_get(new_branch_info->name);
+ 
+-	if (!format_tracking_info(branch, &sb, AHEAD_BEHIND_FULL))
++	if (!format_tracking_info(branch, &sb, AHEAD_BEHIND_FULL, 1))
+ 		return;
+ 	fputs(sb.buf, stdout);
+ 	strbuf_release(&sb);
+diff --git a/remote.c b/remote.c
+index a81f2e2f17..d79aae0d76 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2258,7 +2258,8 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+  * Return true when there is anything to report, otherwise false.
+  */
+ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+-			 enum ahead_behind_flags abf)
++			 enum ahead_behind_flags abf,
++			 int show_divergence_advice)
+ {
+ 	int ours, theirs, sti;
+ 	const char *full_base;
+@@ -2321,7 +2322,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			       "respectively.\n",
+ 			   ours + theirs),
+ 			base, ours, theirs);
+-		if (advice_enabled(ADVICE_STATUS_HINTS))
++		if (show_divergence_advice &&
++		    advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" to merge the remote branch into yours)\n"));
+ 	}
+diff --git a/remote.h b/remote.h
+index 929c7c676d..cdc8b1db42 100644
+--- a/remote.h
++++ b/remote.h
+@@ -380,7 +380,8 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 		       const char **upstream_name, int for_push,
+ 		       enum ahead_behind_flags abf);
+ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+-			 enum ahead_behind_flags abf);
++			 enum ahead_behind_flags abf,
++			 int show_divergence_advice);
+ 
+ struct ref *get_local_heads(void);
+ /*
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 36567708f5..845af287d7 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -847,7 +847,6 @@ test_expect_success 'dry-run of partial commit excluding new file in index' '
+ On branch main
+ Your branch and '\''upstream'\'' have diverged,
+ and have 1 and 2 different commits each, respectively.
+-  (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+   (use "git restore --staged <file>..." to unstage)
+@@ -1013,7 +1012,7 @@ test_expect_success 'status -s submodule summary' '
+ '
+ 
+ test_expect_success 'status submodule summary (clean submodule): commit' '
+-	cat >expect <<EOF &&
++	cat >expect-status <<EOF &&
+ On branch main
+ Your branch and '\''upstream'\'' have diverged,
+ and have 2 and 2 different commits each, respectively.
+@@ -1033,12 +1032,13 @@ Untracked files:
+ 
+ no changes added to commit (use "git add" and/or "git commit -a")
+ EOF
++	sed "/git pull/d" expect-status > expect-commit &&
+ 	git commit -m "commit submodule" &&
+ 	git config status.submodulesummary 10 &&
+ 	test_must_fail git commit --dry-run >output &&
+-	test_cmp expect output &&
++	test_cmp expect-commit output &&
+ 	git status >output &&
+-	test_cmp expect output
++	test_cmp expect-status output
+ '
+ 
+ cat >expect <<EOF
+@@ -1065,7 +1065,6 @@ test_expect_success 'commit --dry-run submodule summary (--amend)' '
+ On branch main
+ Your branch and '\''upstream'\'' have diverged,
+ and have 2 and 2 different commits each, respectively.
+-  (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+   (use "git restore --source=HEAD^1 --staged <file>..." to unstage)
+@@ -1558,7 +1557,6 @@ test_expect_success 'git commit --dry-run will show a staged but ignored submodu
+ On branch main
+ Your branch and '\''upstream'\'' have diverged,
+ and have 2 and 2 different commits each, respectively.
+-  (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+   (use "git restore --staged <file>..." to unstage)
+diff --git a/wt-status.c b/wt-status.c
+index bcd0ef8044..e3e3732ea2 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1186,7 +1186,8 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
+ 
+ 	t_begin = getnanotime();
+ 
+-	if (!format_tracking_info(branch, &sb, s->ahead_behind_flags))
++	if (!format_tracking_info(branch, &sb, s->ahead_behind_flags,
++				  !s->commit_template))
+ 		return;
+ 
+ 	if (advice_enabled(ADVICE_STATUS_AHEAD_BEHIND_WARNING) &&
 -- 
 2.41.0
 
