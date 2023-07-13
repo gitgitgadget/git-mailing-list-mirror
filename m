@@ -2,100 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD79CC0015E
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 20:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06D36C0015E
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 20:33:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233411AbjGMU1N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 16:27:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54952 "EHLO
+        id S233944AbjGMUd2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 16:33:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjGMU1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 16:27:12 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C0F212E
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 13:27:11 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A7241AB2D3;
-        Thu, 13 Jul 2023 16:27:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v1Jr9a8Rm6Zi8QgFgqoD6ugGuURVxwuUtr4HIQ
-        pyZzU=; b=o4h8AikOc9ufD1n1tv4eAF0jEq4cCZPYESJGqO9XVYn24bqSqDSLqe
-        ylG4FVlJdzOgoZefGfFMT9zXIAp/iqtrtAtI5MwuXHLrpNUGyJYko6BrqhS+AlHC
-        m0WlYXqaHD7uFMgLUyGQM01LjyPgQpdmFOsw6YOgz+vnC6e/+pieI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61C521AB2D2;
-        Thu, 13 Jul 2023 16:27:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBEDA1AB2D1;
-        Thu, 13 Jul 2023 16:27:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: t2400 on freebsd12
-References: <CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-9zbqXMA@mail.gmail.com>
-        <CALnO6CCc-J+fe9qKaoyYUMM3xMEUnV5w7NKWSbn6xTgEjbac5w@mail.gmail.com>
-Date:   Thu, 13 Jul 2023 13:27:08 -0700
-In-Reply-To: <CALnO6CCc-J+fe9qKaoyYUMM3xMEUnV5w7NKWSbn6xTgEjbac5w@mail.gmail.com>
-        (D. Ben Knoble's message of "Thu, 13 Jul 2023 15:17:09 -0400")
-Message-ID: <xmqqfs5ro8v7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232120AbjGMUd0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 16:33:26 -0400
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7532D2117
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 13:33:25 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id E41FA5C016D;
+        Thu, 13 Jul 2023 16:33:22 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Thu, 13 Jul 2023 16:33:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imap.cc; h=cc:cc
+        :content-transfer-encoding:content-type:content-type:date:date
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm3; t=
+        1689280402; x=1689366802; bh=vdQyvLh/62+DapQN2SODXM2h5RsRNlbegJM
+        9wsfeEpU=; b=wsEEz0dYYYJHJc4XfytYcdzuhSiXTXG0INB0x/MAdYYhnL/M3qp
+        QQKl4wt4xxbSAsggb6bNeqazekVxMDQTnSzWVbf3SMqMxMB0ntXfyP1lqsAcH7Fc
+        MUTpdCx992z++EGj1eWOQ8G0+MOMR+Vjp9MHNxUP23FJR/XHlfQpddwnph6++RC/
+        6z7LEeqaAWK9lmxmMYNEb96jFl+wP5YKBS3s3TMfgBADnzynGMlpxJmOA6+zxSS7
+        +wV80UrEgUjJ7zcbykcxrWdezn5xasb5l1dpvHqRJbfWHDwB6oMRhZO2rZpUHP3l
+        LLjfjLnOZYk0+8Ekv6+kdNLlOR3aHObovVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1689280402; x=1689366802; bh=vdQyvLh/62+DapQN2SODXM2h5RsRNlbegJM
+        9wsfeEpU=; b=yLYwf8H+J30KRyDjwscdRN/UVeCpNIdzt9N1rc3J1U6I/LjLyQ1
+        S/d6hPmj5hZB4VfsWBYxVmQdiBRjptgqQ9gYYYTrH0P9aqUmNJB2aiHdv6dZZxhk
+        yPG8Ov3vumNICWH+38Tk7+Haao4MOReVeQDFijJcGa4MA2dT8AvFQv42ydcrO6LV
+        6CQoeoRq+kdflAuY6R5Xb8VtTiri36H8khQ6uT0rskbCTva0yS0jipi7oTlmAoq3
+        7H334i6Ptd6vYzzIeKUAhEqiUEfS4OH9lTzuUKfDc0pbq1aMjYjvfpKbmBr1JdU4
+        UYZKJj+SvRrwNEKrxBFvFCMgBG5ybvYAhOA==
+X-ME-Sender: <xms:kl-wZEeDYaZzOKy95-vT_EHoTrUClK0Yw6lDAzmNyv6IpZMqzypoZQ>
+    <xme:kl-wZGPL4FJjVshnEjgvnkLVaJzf0BjL-6uk758D3h3hmrVq2CoRqqBA-a0EpiLY-
+    VAgLDAPOPibglRF0A>
+X-ME-Received: <xmr:kl-wZFjjFZHOJnEXGFXwM-Gbxi6mUkiPpkMeG_l3PBDhCgAGf4sXk-ozky-05UTVTBf-HrHfj6aDJ_9P8kggkAf0PpXla0qiIHL8eggzsw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrfeeggddugeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfedtmdenucfjughrpefkff
+    ggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheprfgvthgrrhcugghuthho
+    vhcuoehpvhhuthhovhesihhmrghprdgttgeqnecuggftrfgrthhtvghrnhephefgueeftd
+    eghfeljeegjeffffdvieevgfduudffjeehkeettdekkeeufeetleeunecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhvuhhtohhvsehimhgrph
+    drtggt
+X-ME-Proxy: <xmx:kl-wZJ9Ilpoo2X6oZFZhaFpe3EbA2AKpYcpGiCrD5tDrPys5XG3ZhQ>
+    <xmx:kl-wZAuKE-it5ylClfbOkLOb2577NmnEdJPJaRouYOc3udUNtAtwTw>
+    <xmx:kl-wZAFFYqvuRrkJE-SBCR8vb-5-GpRJMoEADWBEKasFDRQWJRDiwA>
+    <xmx:kl-wZG0TC_gXLQBrRAQ2rNbyRrhJjHq8WdzYbMZClwAS8x5wjLmFuw>
+Feedback-ID: iccdf4031:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Jul 2023 16:33:22 -0400 (EDT)
+Message-ID: <9de918bc-6913-0486-02dd-5b4028a7fe1b@imap.cc>
+Date:   Thu, 13 Jul 2023 22:34:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A485721E-21BB-11EE-A700-307A8E0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 1/1] docs: highlight that .gitmodules does not support
+ !command
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
+ <20230713193342.1053968-1-pvutov@imap.cc>
+ <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc> <xmqqwmz3oacg.fsf@gitster.g>
+From:   Petar Vutov <pvutov@imap.cc>
+In-Reply-To: <xmqqwmz3oacg.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On 7/13/23 21:55, Junio C Hamano wrote:
+> Petar Vutov <pvutov@imap.cc> writes:
+> 
+> Don't.  People should be familiar with "configuration variable", but
+> may not be with "git-config variable".
 
-> "D. Ben Knoble" <ben.knoble@gmail.com> wrote:
->> CI for an i18n PR [1] is failing on freebsd12, but I cannot reproduce
->> it. Is this known (a search of archives and the master branch doesn't
->> reveal anything)?
->> 
->> Summary output:
->> 
->> Test Summary Report
->> -------------------
->> t2400-worktree-add.sh                            (Wstat: 256 Tests:
->> 227 Failed: 27)
->>   Failed tests:  50-52, 91-93, 107-109, 123-125, 139-141
->>                 159-161, 175-177, 191-193, 207-209
->>   Non-zero exit status: 1
->> 
->> Proximate log entry:
->> 
->> [16:19:43] t2400-worktree-add.sh ..............................
->> Dubious, test returned 1 (wstat 256, 0x100)
->> Failed 27/227 subtests
+Right, on closer inspection this collision with .gitmodules is rather 
+niche to start with. Few things in .gitconfig are also legal in .gitmodules.
 
-Those listed in https://github.com/gitgitgadget/git/actions do not
-seem to even run Cirrus CI.  Perhaps GitGitGadget folks wanted to
-make sure that changes that may break FreeBSD will not escape to the
-public list, and added it as an extra for pull requests?  The runs
-shown at the end of PR in https://github.com/gitgitgadget/git/pulls
-however do run Cirrus CI and some, but not all, of them do fail.
+>   
+> -The following 'update' procedures are only available via the
+> -`submodule.<name>.update` configuration variable:
+> -
+> -	custom command;; arbitrary shell command that takes a single
+> -	    argument (the sha1 of the commit recorded in the
+> -	    superproject) is executed. When `submodule.<name>.update`
+> -	    is set to '!command', the remainder after the exclamation mark
+> -	    is the custom command.
+> -
+>   	none;; the submodule is not updated.
+>   
+> +	custom command;; When the `submodule.<name>.update`
+> +	    configuration variable is set to `!custom command`, the
+> +	    object name of the commit recorded in the superproject
+> +	    for the submodule is appended to the `custom command`
+> +	    string and gets executed.  Note that this mechanism
+> +	    cannot be used in the `.gitmodules` file.
+> +
+>   If the submodule is not yet initialized, and you just want to use the
+>   setting as stored in `.gitmodules`, you can automatically initialize the
+>   submodule with the `--init` option.
 
-Given that the tests seem to randomly fail, I can believe if this is
-due to a flakey test that needs to be fixed, but from what we can
-see in the webpage of Cirrus CI, I cannot even guess what the
-problem is.
+I prefer the original description as it uses shorter sentences. I can't 
+hold that 5-liner in my head :)
 
-I do not offhand know how well the FreeBSD port has been maintained,
-or those who have (or had once in the past) stake in it are keeping
-an eye on it.  Anybody?
-
-> Bump: this bug seems to affect several GitGitGadget PRs in CI, which
-> also renders GGG unusable for sending mail, IIUC.
-
-By the way, is this really "blocking" use of GGG in any way?  I do
-recall seeing messages regarding gitk from Jens Lidestrom that are
-shown in https://github.com/gitgitgadget/git/pull/1551 but the CI
-run report at the end of that page does have a failing CirrusCI.
+But now I really am bikeshedding, and I've taken enough of your time. I 
+will send a v4 with just the .gitmodules disclaimer, no rewrite, in case 
+you end up agreeing.
