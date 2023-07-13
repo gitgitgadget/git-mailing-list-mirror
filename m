@@ -2,97 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9787EC0015E
-	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 19:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3983FC0015E
+	for <git@archiver.kernel.org>; Thu, 13 Jul 2023 19:55:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231945AbjGMTqD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 15:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39558 "EHLO
+        id S233441AbjGMTzV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jul 2023 15:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbjGMTqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 15:46:02 -0400
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A94269D
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 12:46:01 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id C34E15C012B;
-        Thu, 13 Jul 2023 15:46:00 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 13 Jul 2023 15:46:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imap.cc; h=cc:cc
-        :content-transfer-encoding:content-type:content-type:date:date
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-        1689277560; x=1689363960; bh=mVVc8i4mAxlllUUdNrdLjY9eMLY7xXKVx6N
-        SSBN/gVI=; b=DgQ4a61lm2AAJyVZgo63FtCdSqG+FwrTCcxpkJv7kqq0qgB9+ln
-        my5b4HMHtpSeJLaXIzf4ipUGckaWzDQwg6jhYoLL8VFebCau0qafdIpU5RGLq63s
-        +4MpJ57CxlAQm04werDfO7NmNEBgTZAmmhe4XH8KGzZblF13wThWQX1F1HUZdbDG
-        KycgaPRqTrEneQV4JyseG0cZav4vFTXmn8qzcKSynLEMgYIikJ8ViwvDigWPmohX
-        LWrlJScJoT14RdpQ9OewqtTFkVn7o8MdWNZ8Es3WmVxqmsRlVJ31e2lH3xkGnr/X
-        jaIUZREFXN2zB7J2q7eFKTVmQn7Cmpu1hRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1689277560; x=1689363960; bh=mVVc8i4mAxlllUUdNrdLjY9eMLY7xXKVx6N
-        SSBN/gVI=; b=gdazUJ9aeqaZPmJlxxfWBg/8ePVIIH4T7EcuIKtokb37Yru2nGY
-        a5eqS2PqV0chHBOOx3RvxV8PKMtCBTru09VHSTxcirUhFE5SXmv5yiGrWhRoCoWt
-        mlUr2OuAcrct9LhFEWI79/4+VCzlC58H+OilgdAnauzKsBygDz6WNnhvhaSNY5nH
-        1tiJ/Et9Q/lejXCYt+SCxq2L+R0lSfVGecwKs9RD5ZaKFyLXCLAtmLVOHed3paIS
-        6VRVLPGMCooMj/nPXHlKTq7nNPpwnDvabIOEbYb5GlVTm2rOS0678LRCUG1C/qwD
-        S6SvGSM+3oyGfvww+kWbQF1YBa2g8Km0DBg==
-X-ME-Sender: <xms:eFSwZGVCJ44DLvVJLpWnh8Zy_C63VXBsbcRjj89v2zJ5nf26zMR7VQ>
-    <xme:eFSwZCkfcN-6hVB7i0fAnp8PiYLccWCixTQIfFrAmaTksOVwz2QE9ITbk3fKkkFlF
-    ghT9e0lIUx-pKqDuQ>
-X-ME-Received: <xmr:eFSwZKZy6B0e8hdqyj5VGot73zIh_MnRnDNssVyR-rmaP2m1AZvsiX92-d09v3lN8og06t1uazIdeK5c53VDkUU2o_v7xdp3OcGC45UzpQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrfeeggddugedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfedtmdenogetfedtuddqtd
-    duucdludehmdenucfjughrpefkffggfgfuvehfvffhjggtgfesthejredttdefjeenucfh
-    rhhomheprfgvthgrrhcugghuthhovhcuoehpvhhuthhovhesihhmrghprdgttgeqnecugg
-    ftrfgrthhtvghrnhepleehjeekhfeigfduhefftedtueduffejvdetvdekkeetieevgeeg
-    leefleejudffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepphhvuhhtohhvsehimhgrphdrtggt
-X-ME-Proxy: <xmx:eFSwZNVg5Xw0gwDoWf_k0zn43kszes201Tg7DTKmA01wLoUZwxHqYw>
-    <xmx:eFSwZAldSXniPBeHv08OMUx470qgd3KXFqYVEFdQ19Jvn5cHFG6gIA>
-    <xmx:eFSwZCdPBaFVmLeTTPVIaBdBLyTiWwh84bVklhhCzUAXyatnZQQevA>
-    <xmx:eFSwZHv-dg65cMTOF26PKpR8rW2i-KdZnaKhKcl7yCc8eWvIm7vNMw>
-Feedback-ID: iccdf4031:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Jul 2023 15:46:00 -0400 (EDT)
-Message-ID: <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc>
-Date:   Thu, 13 Jul 2023 21:46:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 1/1] docs: highlight that .gitmodules does not support
- !command
-Content-Language: en-US
+        with ESMTP id S231387AbjGMTzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2023 15:55:18 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D8C272A
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 12:55:16 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6570191420;
+        Thu, 13 Jul 2023 15:55:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aXWVwHVxuhVqgUcU1FQjqB4LPLJHdpqna+6CDL
+        eDGmc=; b=BxYwn/KmTbrYnTcSjek3908aPt6Ml2VSL2gcE8yzzYlWVIqSI0WYO5
+        LAaS/SSWsjiKOmBvKfuzt3rbOUGP3PaOGAwUZ+OrJBDYFadU03mwH/vpssvTdm0e
+        +nvbxxc35ZfAjsb6mG/LHAn8asESpFZ87+cz9KUTh9NQZQCoGnkYo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E1C319141F;
+        Thu, 13 Jul 2023 15:55:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BBBA919141E;
+        Thu, 13 Jul 2023 15:55:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Petar Vutov <pvutov@imap.cc>
 Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] docs: highlight that .gitmodules does not
+ support !command
 References: <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
- <20230713193342.1053968-1-pvutov@imap.cc>
-To:     pvutov@imap.cc
-From:   Petar Vutov <pvutov@imap.cc>
-In-Reply-To: <20230713193342.1053968-1-pvutov@imap.cc>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        <20230713193342.1053968-1-pvutov@imap.cc>
+        <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc>
+Date:   Thu, 13 Jul 2023 12:55:11 -0700
+In-Reply-To: <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc> (Petar Vutov's
+        message of "Thu, 13 Jul 2023 21:46:55 +0200")
+Message-ID: <xmqqwmz3oacg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2DE564E2-21B7-11EE-98F2-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oops, this was supposed to go under 
-<7090349c-4485-d5c4-1f26-190974864f72@imap.cc>..
+Petar Vutov <pvutov@imap.cc> writes:
 
-Side question in this side thread: I was tempted to change the mention 
-of "configuration variable" with "git-config variable", to highlight the 
-narrow meaning of the term. But I grepped and that term is used 
-everywhere in the documentation. Changing it only in this section would 
-be inconsistent.
+> Oops, this was supposed to go under
+> <7090349c-4485-d5c4-1f26-190974864f72@imap.cc>..
+>
+> Side question in this side thread: I was tempted to change the mention
+> of "configuration variable" with "git-config variable", to highlight
+> the narrow meaning of the term. But I grepped and that term is used
+> everywhere in the documentation. Changing it only in this section
+> would be inconsistent.
 
-If I were to go through all those mentions and figure out which 
-"configuration variable" mentions refer exclusively to `git-config`, wis 
-there interest in changing them to something like "git-config variable" 
-in a potential future patch? Or do we like the term "configuration 
-variable"?
+Don't.  People should be familiar with "configuration variable", but
+may not be with "git-config variable".
+
+How about doing it this way?  I moved 'none' up, as it is effective
+in `.gitmodules` and as a configuration variable, just like all
+others, and then completely rewrote the somewhat awkward explanation
+of the custom command thing.
+
+----- >8 --------- >8 --------- >8 --------- >8 ----
+Subject: submodule: clarify that "!custom command" is the only oddball
+
+We singled out 'none' and 'custom command' as submodule update modes
+that cannot be specified in the .gitmodules file, but 'none' can
+appear there, and use of a custom command is the only oddball.
+
+Move the description of 'none' up, clarify how the custom command is
+used, and explicitly say it cannot be used in the `.gitmodules` file.
+
+Strictly speaking, the last one should not be needed, as we already
+say `configuration variable`, but to new readers, the distinction
+between the configuration variable and settings that appear in the
+.gitmodules file may not be apparent; hopefully the new text will
+help them understand where it can(not) be used.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-submodule.txt | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
+
+diff --git c/Documentation/git-submodule.txt w/Documentation/git-submodule.txt
+index 4d3ab6b9f9..391ff0dbf2 100644
+--- c/Documentation/git-submodule.txt
++++ w/Documentation/git-submodule.txt
+@@ -160,17 +160,15 @@ checked out in the submodule.
+ 	merge;; the commit recorded in the superproject will be merged
+ 	    into the current branch in the submodule.
+ 
+-The following 'update' procedures are only available via the
+-`submodule.<name>.update` configuration variable:
+-
+-	custom command;; arbitrary shell command that takes a single
+-	    argument (the sha1 of the commit recorded in the
+-	    superproject) is executed. When `submodule.<name>.update`
+-	    is set to '!command', the remainder after the exclamation mark
+-	    is the custom command.
+-
+ 	none;; the submodule is not updated.
+ 
++	custom command;; When the `submodule.<name>.update`
++	    configuration variable is set to `!custom command`, the
++	    object name of the commit recorded in the superproject
++	    for the submodule is appended to the `custom command`
++	    string and gets executed.  Note that this mechanism
++	    cannot be used in the `.gitmodules` file.
++
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in `.gitmodules`, you can automatically initialize the
+ submodule with the `--init` option.
