@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 928A7EB64DA
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 06:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52378EB64DC
+	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 06:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234937AbjGNGBs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 02:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43896 "EHLO
+        id S235002AbjGNGBv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 02:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234676AbjGNGBk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 02:01:40 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F91D2D43
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 23:01:39 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3fc03aa6e04so14072075e9.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 23:01:39 -0700 (PDT)
+        with ESMTP id S234710AbjGNGBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 02:01:42 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAB92D45
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 23:01:41 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-31441dfbf97so1725882f8f.1
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 23:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689314498; x=1691906498;
+        d=gmail.com; s=20221208; t=1689314500; x=1691906500;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fUOGi/S8harMIkeMlwlGX4B7j1x/qNSxJP2y5l0vrds=;
-        b=nfr35yMklnU6PAVEx5zZcn8m07NqyGyICtLgYZjr/NCQbnLR14TPfXfhTGvOnj6QId
-         ylY3ZTDRfupwBINnxo791GMq1UcCTN7t7zljXnK1UZAcBbyvE9Wz3n1y8h6sKGreFQx0
-         tGewUR9HGjDN/6sTKorIg2O/85q357YzVfNpQPfr0BNnuna05Li6+wVqkdYQW4jIhlvV
-         QpnNRgk/FYYgDOAY7/z2gA4fxoVFlPtH1nvB4XqVxW/pxckNipMLBUUwi71A3tEwTFaC
-         oExRfRmDU1CxPu5IGx3QnUbxB/nV3tN/AKFjSBaz986WzAh2BAGrOLvijQ0/K9xT6Kw4
-         K0dw==
+        bh=L5fOw66Oz/l74QmvF25VG2PF3rAhwtQYaMAuXKwfkGw=;
+        b=M0CgdJnP8BkiAaulQWz7QV6xT3eU9317PAN3uoxoi8qbdkFIzepZH8NvAaOxX6xEEi
+         X/uoplFhIT8d2CH7wmQQj4Zv6WYWlCRXn6iAP1vhRhGowQN6j/yZyZZW6EromXrrK2fS
+         cz7FWZ7m6a+z6UUIaShxIaNJBXpCNOCJrOXEnEVh7Ry/XfbukxHWcVWUeoQjJqQ5AX30
+         hZMhA9U7EJMAG3OGLjDSjz/S4LSW74hDFrJPQ7EGJbTXzmKusjkZ21XCeOTCdJmshoG6
+         BXQCti9KLqnbQcye5/6K9jYT3ZCGe2Vox7z2++odSzJOpWIbl3m3YPw12BLpZDPlRo6j
+         Hk5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689314498; x=1691906498;
+        d=1e100.net; s=20221208; t=1689314500; x=1691906500;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fUOGi/S8harMIkeMlwlGX4B7j1x/qNSxJP2y5l0vrds=;
-        b=SK7tOFtHaxNgpw180TpmwqH6l2YJL6x/2SdRpZB34ipVWP2JxuOkKLZ+UdiWrz81q6
-         nUUYzDmmrWh1/5claHqPn4MkDdcDeKrUeC6cye9URp1P5FWxHHooE28ySwTz/PKFh3Ue
-         mEnOhohbgwMe//TN+YK+NM7SrYUKH2su5+1qxi2K/1rbB/JkiB+MDafhOoOgOjUF3cDv
-         jB54ifncFkkMPx3zpRsGZaItp+NbeNSvSHRvnAuSI+qwjnE98FURms2Oi69nGU0R1Cgm
-         9hz5N44rP5Es2RpKoTu9R58IxLg2S30KRTayHJpH5FlPrjectKb4cP2jn2MU53lDT5Tz
-         U5sA==
-X-Gm-Message-State: ABy/qLYn09ViO3vG78NAkg80IQPgjVK1HPvM/YXxH0WJfUHgRrzR5vdf
-        JSpZODnL6PGBwohH2B5IQJ6G5q6CLiE=
-X-Google-Smtp-Source: APBJJlGqmsQ1cSYBVc9Zfqmq1Df+wFWeY+ZVF5TbQvvYgYyYr4TaPzdUxXOE6+y474vBXYIN2zcP8Q==
-X-Received: by 2002:a1c:4b11:0:b0:3fa:962e:e8f4 with SMTP id y17-20020a1c4b11000000b003fa962ee8f4mr2969963wma.26.1689314497680;
-        Thu, 13 Jul 2023 23:01:37 -0700 (PDT)
+        bh=L5fOw66Oz/l74QmvF25VG2PF3rAhwtQYaMAuXKwfkGw=;
+        b=fo+dw4DIAV80BKVGVFhlyOubSfI4sbVrnikSceFhxSjW1f2mffshitrpFs86ywV27Y
+         Thx0C+2weSf06Kzmiocsnd/+rQHXzJwNXbE9M48QGclkCdU5FOnxRS4znSGUbPDrB3iu
+         Xwrko8+pKytFjZ3YYQzlxg/sXWaNfO06Ii0UJ8/A1DrQ9g4e4Cz0C7aU4dytExig9jxt
+         V49l9YMx8eZhQIv73C+p0787gleBIjwOYX/NKZspVxpCWdnPnmBMDY5eFI4sPi0DLSwq
+         FHgLGbs6rEWShLC120MOMSMvY09yIHSu8TwWetJ7MrAGdjTaTlZFuVQc7EcVp/BKddTw
+         24Vw==
+X-Gm-Message-State: ABy/qLY6ezgy9SAQWihAC+7A8oafV767CL/koXXmb/dmFCF2bPnUAoCT
+        WhD31xXdBwqTS3MwohbtZJh1Vk0EyJc=
+X-Google-Smtp-Source: APBJJlFkfA0ogaIWA0QsRE4tV2EiHH7Gq3Aqg7Jdo65vHyHmKUtoTNl9FLSMKFGcElwrowyc/9sVLg==
+X-Received: by 2002:a05:6000:18d:b0:314:4ba7:b024 with SMTP id p13-20020a056000018d00b003144ba7b024mr3765334wrx.9.1689314499847;
+        Thu, 13 Jul 2023 23:01:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p17-20020a05600c205100b003fc01f7b415sm587834wmg.39.2023.07.13.23.01.36
+        by smtp.gmail.com with ESMTPSA id v16-20020a5d6790000000b003112ab916cdsm9937434wru.73.2023.07.13.23.01.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jul 2023 23:01:37 -0700 (PDT)
-Message-ID: <08deed14d960b0b7de56a023a1da6ab5280e04bb.1689314493.git.gitgitgadget@gmail.com>
+        Thu, 13 Jul 2023 23:01:39 -0700 (PDT)
+Message-ID: <69fef8afe64156a1f54e9e1b7bbcc73d2867695c.1689314493.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1556.v2.git.1689314493.gitgitgadget@gmail.com>
 References: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
         <pull.1556.v2.git.1689314493.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Jul 2023 06:01:29 +0000
-Subject: [PATCH v2 1/5] SubmittingPatches: reword awkward phrasing
+Date:   Fri, 14 Jul 2023 06:01:31 +0000
+Subject: [PATCH v2 3/5] SubmittingPatches: de-emphasize branches as starting
+ points
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,26 +69,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
+It could be that a suitable branch does not exist, so instead just use
+the phrase "starting point". Technically speaking the starting point
+would be a commit (not a branch) anyway.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/SubmittingPatches | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index b218e273570..b89678cedc3 100644
+index 7919a362e31..f1d1446764b 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -3,8 +3,8 @@ Submitting Patches
- 
- == Guidelines
- 
--Here are some guidelines for people who want to contribute their code to this
--software. There is also a link:MyFirstContribution.html[step-by-step tutorial]
-+Here are some guidelines for contributing back to this
-+project. There is also a link:MyFirstContribution.html[step-by-step tutorial]
+@@ -7,8 +7,8 @@ Here are some guidelines for contributing back to this
+ project. There is also a link:MyFirstContribution.html[step-by-step tutorial]
  available which covers many of these same guidelines.
  
- [[base-branch]]
+-[[base-branch]]
+-=== Decide what to base your work on.
++[[choose-starting-point]]
++=== Choose a starting point.
+ 
+ In general, always base your work on the oldest branch that your
+ change is relevant to.
+@@ -317,8 +317,8 @@ Please make sure your patch does not add commented out debugging code,
+ or include any extra files which do not relate to what your patch
+ is trying to achieve. Make sure to review
+ your patch after generating it, to ensure accuracy.  Before
+-sending out, please make sure it cleanly applies to the base you
+-have chosen in the "Decide what to base your work on" section,
++sending out, please make sure it cleanly applies to the starting point you
++have chosen in the "Choose a starting point" section,
+ and unless it targets the `master` branch (which is the default),
+ mark your patches as such.
+ 
 -- 
 gitgitgadget
 
