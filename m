@@ -2,247 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB598EB64DA
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 10:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE10EB64DA
+	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 10:08:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236000AbjGNKGu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 06:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53238 "EHLO
+        id S236022AbjGNKIc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 06:08:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236013AbjGNKGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 06:06:44 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F11EEE44
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:06:41 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so6161686a12.1
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:06:41 -0700 (PDT)
+        with ESMTP id S235170AbjGNKIa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 06:08:30 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5C51989
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:08:29 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbd33a57b6so16763085e9.2
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=akorzy-net.20221208.gappssmtp.com; s=20221208; t=1689329200; x=1691921200;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TpdbrH5kDOzlYZnlq6T+4IJMIIyMIznPATHuOnOCyC0=;
-        b=N3NhgggEXZorZdIjcsNF1F0JR6WCSPJNwON09Q2GmqkTd0dQDAG0yn4Nw7CupKpiBu
-         Cgsm8kVBP0U+Ogks34feORaHy/xV3iBpr4Q5cwGG5iymEXV+g8I5BWrTIN6upiAxTfU8
-         7S0b6Vo36VI4b8U7Sxc7bTcHjEbW1jygTVnJpxZJPifmtNo+gNdZsNE4jFowy+99HHjt
-         9CCkF9yXurmwsGRxXoTwD8d7Hj9e6SJN0Y6qI/hBTNEG72bTV037pxsuGhJn5bEP7BBo
-         lhi4eDUs3ObUeW2ye/RAyxZYyyTfOvdVGehbFpNqMP5kldKNEyXdJdujz39aLFAeic01
-         gnUg==
+        d=gmail.com; s=20221208; t=1689329308; x=1691921308;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6SOotzPUjsZHsomMSE2T0OqRo6SJKpKAB84Z3w2Oxhc=;
+        b=P3h/CrvT+fthCk68EdHWYMTJbk12wbF315YaKHj/s1Vx1y8+RAXgpC5zwsOe+vCJad
+         KNth+f+65EjMtJWrcet25KcKzAkE30ueS+et0g40FbtH07aSgzVWoEFp5fVudz/ZOnFi
+         7VuyGoUV9ZO712U37C5qwS0QAoD9I55xs+CkVbtS2aBcQlwICBvT0PeShzymKzDbisJF
+         jMAhjdZQQtpT3hxB1fX6klGWiaNK9G/2LQ9KXwNUpPrCoVwmcuvppiWx6zqqd5vSuWVw
+         dLZkOIvKHz+AdaroNV2s3Mu65/q4l43HysLeQVDP7MDPHoV/51B+yG6uyCo+zAqwRitk
+         F6Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689329200; x=1691921200;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1689329308; x=1691921308;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TpdbrH5kDOzlYZnlq6T+4IJMIIyMIznPATHuOnOCyC0=;
-        b=PQSwyUk7dheT7dD40V+r2pDqEpCenW6KENYF/Ilwec2WzFMZ0vrA/C2hPy/wwI63tH
-         c91CdFC1LyvXDXu0jEaLiJ0VtTV25rhu07K7cjCTy2j708Nl9sCG0GT7ux1oYptX2/0t
-         cNxtyOpNdWSqBgxqaJ9o1HxEI/aB/T7YXRU9HDubpDcCTVxFaFrc5f1Eu62C502S/ebC
-         Anc5cbSVUcUPO1tpjZIiLlnTfzj3Xdj1HKfMZ5SB6V2QLg3BTV95Xv+G8Duv0DM0xPiG
-         uNelpsh860b6M1DSNIdYh1A0VLiGuUZSVvCXbzKft5+NVTPebXpnYxX6bbT90UiNIxhy
-         OViw==
-X-Gm-Message-State: ABy/qLZ1TQN7k3JhZUhPEH7MBQmcJoCKAbA9Y3CDTNhX2Rh7z/AYB6Bn
-        BWEoZX2hMzAjPcq76n1T8sTmF91sOExtvI2DRjQ=
-X-Google-Smtp-Source: APBJJlEGbrBJ7NhKLPyFLd9HoUGmuUqvuNzsALpfuKcsPK/IfHnVlm9VvlQ3zN/OgTK1oB7wEWAQYg==
-X-Received: by 2002:a05:6402:27c9:b0:51e:5898:a23d with SMTP id c9-20020a05640227c900b0051e5898a23dmr2717599ede.5.1689329199511;
-        Fri, 14 Jul 2023 03:06:39 -0700 (PDT)
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com. [209.85.218.49])
-        by smtp.gmail.com with ESMTPSA id n7-20020aa7c447000000b0051e22660835sm5556274edr.46.2023.07.14.03.06.38
-        for <git@vger.kernel.org>
+        bh=6SOotzPUjsZHsomMSE2T0OqRo6SJKpKAB84Z3w2Oxhc=;
+        b=OvZF4Tld6W95fm1l1OgtUUjHl5KIE2mbBwhHjOysUFbKOgzQF07mrRxhdc0l634GAj
+         1GzHMoyVjv8BS0i6+Tk3l8u0NuDdR3joBDBQMFLypob2Ge2STN+ZWtAwJ9o2/Y9Tq/ao
+         +uFbG6D78ga0z5RaDZ3RuvAIx7YTd/MrWkz4Eo6sXiLtDdmX3bSvRM0EQqVGXG7KPhUd
+         Znfh4fKFwLPUYyRKgjv1HCqYyZ/6oEJO5HIQJpDcJwyCbtSDwsuuLXCW/Hru9F7nDW4t
+         Rq+XBBtocURBMkW7IrH8KgYv1M3mx/Y2+nNE2fEztNZGobs7uL5C98edN9q3He74qHXU
+         J/Cw==
+X-Gm-Message-State: ABy/qLZ+/KmsDY2bFcGiD7IHk8mKUFtnvJyhm9k0st0VulX6SgUJ0wh3
+        OszwCCDBfSLejM7YPhesFmQ=
+X-Google-Smtp-Source: APBJJlG10wX3CGhLjv0iHnpJkUP/aMdFNdG4d586SOgeQrFksDoXQth6nVPbqA9AUY6Qb1K11TmSUg==
+X-Received: by 2002:a1c:4b0b:0:b0:3fa:8519:d323 with SMTP id y11-20020a1c4b0b000000b003fa8519d323mr4376749wma.5.1689329307726;
+        Fri, 14 Jul 2023 03:08:27 -0700 (PDT)
+Received: from [192.168.1.195] ([90.242.235.211])
+        by smtp.googlemail.com with ESMTPSA id q8-20020a1ce908000000b003fc02a410d0sm1038255wmc.48.2023.07.14.03.08.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jul 2023 03:06:38 -0700 (PDT)
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-9939fbb7191so347880966b.0
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:06:38 -0700 (PDT)
-X-Received: by 2002:a17:906:5d16:b0:992:13c7:560 with SMTP id
- g22-20020a1709065d1600b0099213c70560mr2810311ejt.38.1689329197469; Fri, 14
- Jul 2023 03:06:37 -0700 (PDT)
+        Fri, 14 Jul 2023 03:08:27 -0700 (PDT)
+Message-ID: <55dd6194-25e5-1a66-9c39-27cb19bfbb3c@gmail.com>
+Date:   Fri, 14 Jul 2023 11:08:26 +0100
 MIME-Version: 1.0
-References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
- <71f7d816-b139-03ab-88fc-7552d65e4498@gmx.de>
-In-Reply-To: <71f7d816-b139-03ab-88fc-7552d65e4498@gmx.de>
-Reply-To: ak@akorzy.net
-From:   =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
-Date:   Fri, 14 Jul 2023 12:06:26 +0200
-X-Gmail-Original-Message-ID: <CADWu+UmSotSA3Usn=z3C5wBpYp8DWnb0_s1ATv=RKZn+YrERvA@mail.gmail.com>
-Message-ID: <CADWu+UmSotSA3Usn=z3C5wBpYp8DWnb0_s1ATv=RKZn+YrERvA@mail.gmail.com>
-Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/6] rebase -i: remove patch file after conflict
+ resolution
+Content-Language: en-US
+To:     Glen Choo <chooglen@google.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+ <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+ <227aea031b588977f22f3f97faee981d79ade05c.1682089074.git.gitgitgadget@gmail.com>
+ <kl6lsfakr2sr.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <kl6lsfakr2sr.fsf@chooglen-macbookpro.roam.corp.google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On 21/06/2023 21:14, Glen Choo wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> @@ -3490,7 +3495,6 @@ static int make_patch(struct repository *r,
+>>   		return -1;
+>>   	res |= write_rebase_head(&commit->object.oid);
+>>   
+>> -	strbuf_addf(&buf, "%s/patch", get_dir(opts));
+>>   	memset(&log_tree_opt, 0, sizeof(log_tree_opt));
+>>   	repo_init_revisions(r, &log_tree_opt, NULL);
+>>   	log_tree_opt.abbrev = 0;
+> 
+> I was checking to see if we could remove buf or whether we are reusing
+> it for unrelated reasons (which is a common Git-ism). We can't remove it
+> because we reuse it, however...
 
-My responses are inline:
+I had a look at that and we're using it to construct a path that we 
+should obtain by calling rebase_path_message() - I'll add a fix when I 
+re-roll.
 
-> I know this strategy well, having used it initially to maintain Git for
-> Windows' patches on top of Git releases.
+>> @@ -3498,7 +3502,7 @@ static int make_patch(struct repository *r,
+>>   	log_tree_opt.diffopt.output_format = DIFF_FORMAT_PATCH;
+>>   	log_tree_opt.disable_stdin = 1;
+>>   	log_tree_opt.no_commit_id = 1;
+>> -	log_tree_opt.diffopt.file = fopen(buf.buf, "w");
+>> +	log_tree_opt.diffopt.file = fopen(rebase_path_patch(), "w");
+>>   	log_tree_opt.diffopt.use_color = GIT_COLOR_NEVER;
+>>   	if (!log_tree_opt.diffopt.file)
+>>   		res |= error_errno(_("could not open '%s'"), buf.buf);
+> 
+> this buf.buf was supposed to be the value we populated earlier - this
+> should be rebase_path_patch() instead.
 
-It's good to know others are using similar ideas :-)
+Oh, well spotted, thanks for pointing that out.
 
-> However, I soon realized that the delineation between upstream and
-> downstream patches was unsatisfactory, in particular when new downstream
-> patches are added. In the context of the example above, try to find a `git
-> rebase` invocation that rebases the current set of downstream patches:
->
->    o---o---o---o---o---o---o---o  upstream/main
->         \           \
->          \           o'---o'---o'
->           \                     \
->            o---o---o-------------S---o---o---o  main
+> As an aside, I have a mild distaste the Git-ism of reusing "struct
+> strbuf buf" - using a variable for just a single purpose and naming it
+> as such makes these sorts of errors much easier to spot. That isn't
+> something we need to fix here, I'm just venting a little :)
 
-We have solved that problem with custom scripting. The git-upstream[1]
-tool properly rebases the commits in that case. This is one of the
-reasons why I would like to see the git-upstream functionality
-reimplemented in git itself. With git today, you can't achieve that
-with a single `git rebase` command, but you can with a series of
-commands. Introducing a new command or switch to git would allow us to
-perform that operation with a single command.
+I agree it can get confusing. We occasionally forget to call 
+strbuf_reset() before reusing the buffer (my first contribution to git 
+fixed such a case in 4ab867b8fc8 (rebase -i: fix reflog message, 
+2017-05-18)), or forget to remove a call to reset the buffer that is 
+no-longer necessary when refactoring. However it does save quite a few 
+calls to malloc()/free() in the rebase/sequencer code.
 
-Let's recap what the automation needs to do. Assume the following situation:
+Best Wishes
 
-  o---o---o---o---x---o---o---t  tag=v1.2.3  branch=upstream/main
-       \           \
-        \           a'---b'---c'
-         \                     \
-          a---b---c-------------S---d---e  branch=main
-
-Let's assume the user has the "main" branch checked out and they want
-to import the latest tag from the "upstream/main" branch. The commands
-they run are:
-
-git checkout main
-git upstream import v1.2.3
-
-The automation should now perform the following:
-
-* create a new branch "import/v1.2.3" starting from tag "v1.2.3"
-* rebase a', b', c' onto "import/v1.2.3"
-* rebase d, e onto "import/v1.2.3"
-* perform the cauterizing merge of "import/v1.2.3" to "main"
-
-Here are important observations:
-
-* the first rebase operates on commits present on the main branch,
-starting from the first commit after x, ending with the last commit
-before S
-* the second rebase operates on commits present on the main branch,
-starting from the first commit after S, ending with the tip of main
-
-So the problem boils down to identifying commits x and S. Once we
-identify these commits, we can perform the rebases.
-
-To identify x we need to find the most recent common ancestor of
-"main" and "v1.2.3". To identify S we need to iterate over branch
-"main" starting from x and forward in time until we find the first
-merge. That's the logic that needs to be implemented. If that logic
-was available under a single command or switch in git, we'd be able to
-perform the upstream import operation without a helper script such as
-git-upstream.
-
-> This strategy is not without problems, though, which becomes quite clear
-> when you accept PRs that are based on commits prior to the most recent
-> merging rebase (or rebasing merge, both strategies suffer from the same
-> problem): the _next_ merging rebase will not necessarily find the most
-> appropriate base commit, in particular when rebasing with
-> `--rebase-merges`, causing unnecessary merge conflicts.
-
-This can also be solved with custom logic. Let's consider the scenario
-in detail:
-
-  o---o---o---o---x---o---o---t  tag=v1.2.3  branch=upstream/main
-       \           \
-        \           a'---b'
-         \                \
-          a---b------------S---c---M---f  branch=main
-               \                  /
-                d----------------e  branch=topic
-
-As before, the user runs the following commands:
-
-git checkout main
-git upstream import v1.2.3
-
-In this case, the automation should rebase d and e between c and f:
-
-  o---o---o---o---x---o---o---t  tag=v1.2.3  branch=upstream/main
-       \           \           \
-        \           a'---b'     a"--b"--c"--d"--e"--f"
-         \                \                          \
-          a---b------------S---c---M---f--------------S'  branch=main
-               \                  /
-                d----------------e  branch=topic
-
-This logic can be implemented as follows. When the automation reaches
-the merge commit M, it finds the second parent e and then searches for
-the most recent common ancestor of e and main, so that it finds b. The
-rebase then operates on commits starting from the first commit after b
-and ending with the second parent of M.
-
-The logic above could also be incorporated into git.
-
-> The underlying problem is, of course, the lack of mapping between
-> pre-rebase and post-rebase versions of the commits: Git has no idea
-> that two commits should be considered identical for the purposes of the
-> rebase, even if their SHA-1 differs. And in my hands, the patch ID has
-> been a poor tool to address this lack of mapping, almost always failing
-> for me. Not even hacked-up `git range-diff` was able to reconstruct the
-> mapping reliably enough.
->
-> And that problem, as far as I can tell, is still unsolved.
-
-As shown above, we don't actually need to be able to map pre-rebase
-and post-rebase versions of the commits in order to correctly perform
-the "git upstream import" operation. The "git-upstream" helper script
-is a working implementation of the strategy without doing the mapping.
-
-That being said, being able to map pre-rebase and post-rebase versions
-of the commits is useful for something else: dropping patches that
-have been incorporated upstream. The "git-upstream" script utilizes
-two strategies for that purpose. One of them is to use patch-id. The
-other one is to use an arbitrary identifier that you attach to the
-commit both in the "main" and "upstream/main" branches. In our case,
-we have used the Gerrit's Change-Id as the identifier, but it could be
-something else. The Gerrit's Change-Id is just a random string added
-to the bottom of a commit message by a git commit hook.
-
-> So I switched to a different scheme instead that I dub "merging rebase".
-> Instead of finishing the rebase with a merge, I start it with that merge.
-> In your example, it would look like this:
->
->    o---o---o---o---o  upstream/main
->         \           \
->          o---o---o---M---o'---o'---o' main
-
-I like Junio's word "cauterize" to describe the special merge :-) So
-I'm going to call this strategy "cauterize & rebase" and the strategy
-I described in the initial email "rebase & cauterize".
-
-We have also considered "cauterize & rebase" instead of "rebase &
-cauterize" and the reason we opted for the latter was peer review in
-Gerrit. When we rebase first, we can store the rebased commits on a
-temporary import branch and push the import branch to a shared
-repository. The import branch then contains everything except for the
-last cauterizing merge. We then need to push only the cauterizing
-merge into the Gerrit review system. The reviewer then only has to
-approve the cauterizing merge to approve the entire "upstream import"
-structure. We didn't need to make any changes to the Gerrit review
-system to utilize it in that way. These considerations may not apply
-to other review systems.
-
-> This strategy was implemented initially in
-> https://github.com/msysgit/msysgit/commit/95ae63b8c6c0b275f460897c15a44a7df5246dfb
-> and is in use to this day:
-> https://github.com/git-for-windows/build-extra/blob/main/shears.sh
-> (...)
-> https://lore.kernel.org/git/pull.1356.v2.git.1664981957.gitgitgadget@gmail.com/
-
-Thanks for the links, they are useful :-)
-
-With the content of this email in mind, what are your thoughts? Would
-you like to see the strategy becoming a first-class feature in git?
-
-Best regards,
-Aleksander Korzynski
-
-[1] https://opendev.org/x/git-upstream
+Phillip
