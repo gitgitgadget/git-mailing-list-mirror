@@ -2,136 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCD8BEB64DA
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 10:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2868EC0015E
+	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 13:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234894AbjGNK6v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 06:58:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55112 "EHLO
+        id S235607AbjGNNaQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 09:30:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230093AbjGNK6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 06:58:49 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED893585
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:58:23 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-521650a7603so441908a12.3
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:58:23 -0700 (PDT)
+        with ESMTP id S235393AbjGNNaP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 09:30:15 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A391A2691
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 06:30:13 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-316eabffaa6so1465977f8f.2
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 06:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=akorzy-net.20221208.gappssmtp.com; s=20221208; t=1689332224; x=1691924224;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jqqkKne+IzuewpeXsU0EFsQlyVOuZktb77+ZkW0IURo=;
-        b=r6kfWfVcBZb4VMDlNhq0G1moWRl/XbLwQPtixOOzdruTFFHcxYq9m2H65hwQ0MVHmu
-         hJSvlg0CiZ1YOQW1AmFzuV2gbKRL0005Q6H2z7Lc63YW/jZeaI1tfA8dFowWMAXLj3XZ
-         951v0iuTLE7a2DXAJkiPDkc0LmOMQgDJJo6xhVck98d1FBtJbG+3Pu8vMelHmkPcj7l7
-         Lp4uiN0kYNAacl/pmPcPL1zIYqtC9ZI0qQgYkVIqQ+ukgh+tkhsogcLnA9WFOKZjlYWd
-         olrrgOBtj/dCWbx98OyXgOeKwqH3Z7q4C4wOnxJtzUJV5D5EoBzlXHPclvOfbsxngLIR
-         x+pA==
+        d=gmail.com; s=20221208; t=1689341412; x=1691933412;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=M3W4qN25I+kp3ZwvzdI/k7svMUXD1lG4AMh/sAv6drw=;
+        b=WzkIiu9BZWyx1Qk5naysdYvS/BRlWjBnmt+MIamrqk438IDxTTWqvGzibh1sQlnmDQ
+         0Ft3H5Xl6MzW/qJvQ6e5mizr52ntQV+D1jq0cqfrRh4uOrJD0wJh7sHpn0aFh/WvgPpn
+         tONVlgLjWIH2jEHcmUAZ1p6Gx1IE/0JTUA6D5KScPIKpvNIu4m3VZfUXojWzza2wYLsm
+         +IN6lfYf3+Ril67opE295hFLMWeVXTc1J/w6/Bg7v2oupSkQRg33u3XySCGh3mEMa1F6
+         b+d0HCWyRG/C2XMYV//zSZxtOfFG9wNbnLB4FKEkDnhCTolDsYhKMMiMApKJVLFQpPS+
+         C7hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689332224; x=1691924224;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1689341412; x=1691933412;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jqqkKne+IzuewpeXsU0EFsQlyVOuZktb77+ZkW0IURo=;
-        b=NNMXv4rzSyY8GurhrkrnXlrX8ir3DDTPhQ4rpuLfE3p3D8oAD8pHOUqWh+4TKehAFi
-         /wS1djvkvMKDWfkheoBKcY9wQv3vVtJ1ZolYqhOTnRPnBWN6SLL9YZ4sPhe0KjLDBtEl
-         XikxIdAbe1cNcj6M4c6F271wAogYH5SlVbVz7hb137v5rgKKuu/TkulkvOGGxwvp97O3
-         woC69/s8SiYOrGp0i6356LISvL65S2vGbpUOXYhuk7M3g/NT2vEYlTmwTyTGhPx7axKR
-         Do3ZJZzjXNFzWjFm80dSY4lcBtEIS+g47qsGm9munI8cbwKBBJyyGwoTldCYhWhBEESV
-         fZkw==
-X-Gm-Message-State: ABy/qLYrJry+gx18801MRQxu+mLXj6IEE3GMtDCjw56imVMYI8gv6bXX
-        //1JwzJzyhqgvzBo3Xz0/UMlOKzwgEGDSXztkqE=
-X-Google-Smtp-Source: APBJJlEvfvSWd/XqZXEj/oPah942g5bnVwc5r5hd4GYjrzOv951N80sKxIGZ6NUcjJ6wTK9aOoA37g==
-X-Received: by 2002:a17:906:28c:b0:991:e17c:f8fa with SMTP id 12-20020a170906028c00b00991e17cf8famr4080417ejf.61.1689332224228;
-        Fri, 14 Jul 2023 03:57:04 -0700 (PDT)
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
-        by smtp.gmail.com with ESMTPSA id r11-20020a1709067fcb00b009929d998abcsm5208035ejs.209.2023.07.14.03.57.03
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jul 2023 03:57:03 -0700 (PDT)
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-991c786369cso231327566b.1
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 03:57:03 -0700 (PDT)
-X-Received: by 2002:a17:906:c205:b0:986:d833:3cf9 with SMTP id
- d5-20020a170906c20500b00986d8333cf9mr3296325ejz.39.1689332222576; Fri, 14 Jul
- 2023 03:57:02 -0700 (PDT)
+        bh=M3W4qN25I+kp3ZwvzdI/k7svMUXD1lG4AMh/sAv6drw=;
+        b=HSuuUHoBNOuO3xjk/gPzWBhE/L/CezGaLy3zB1xgBdGts2WZBuwSMGv2g2mmr/z0xg
+         CE0J43eYyrfxUTLgrqmQS7zCFiGBj1YwkbvcF3h/+Isq1Z12BRoAHtB4O78WEfZ70T/s
+         earR76zTKPs6pvt941VZ1smJa730RpAvxKBrzkWrGKCIWVM5Zq0F1kMHMr7CMDj4L9ZH
+         BdkPcQRBXctfxAaj9W1V2zI2eL3Ge7+i+AgIchk9gLBrgZ61Xr5EzLyFzANV6l+uTmBg
+         EhBT4Cun8DCj5ArYZnH6yOM01SsYSHh/JuiCIXGc+Soy0l6wCjLbTvTlFW/C08ZWpHmL
+         cXOA==
+X-Gm-Message-State: ABy/qLYFDSJVp2TML2wqdAY1yz1w3qgBTPJMyB9COZDULciOXBdRD06o
+        +cP7IYmRVB1bjz/lkRQyB/3B2Gc0vbs=
+X-Google-Smtp-Source: APBJJlEQXwHnNlaRT5/+nONdsuPPIJpf8OaHHGE1yewdB/CRJG/PckP+lVkkOos9TxaoI6B82ufcQQ==
+X-Received: by 2002:adf:d4c8:0:b0:30f:c1ab:a039 with SMTP id w8-20020adfd4c8000000b0030fc1aba039mr4197274wrk.40.1689341411650;
+        Fri, 14 Jul 2023 06:30:11 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h7-20020a5d5487000000b0030ae901bc54sm10854785wrv.62.2023.07.14.06.30.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jul 2023 06:30:11 -0700 (PDT)
+Message-ID: <pull.1545.git.git.1689341410476.gitgitgadget@gmail.com>
+From:   "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 14 Jul 2023 13:30:10 +0000
+Subject: [PATCH] t4002: fix "diff can read from stdin" syntax
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
- <71f7d816-b139-03ab-88fc-7552d65e4498@gmx.de> <xmqq7cr5uonp.fsf@gitster.g> <xmqqpm4wswny.fsf@gitster.g>
-In-Reply-To: <xmqqpm4wswny.fsf@gitster.g>
-Reply-To: ak@akorzy.net
-From:   =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
-Date:   Fri, 14 Jul 2023 12:56:51 +0200
-X-Gmail-Original-Message-ID: <CADWu+UnvastFbWsjfHvJhvS1RBgD8M1LXuA2VMBMSkTqpiLS5w@mail.gmail.com>
-Message-ID: <CADWu+UnvastFbWsjfHvJhvS1RBgD8M1LXuA2VMBMSkTqpiLS5w@mail.gmail.com>
-Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+        "D. Ben Knoble" <ben.knoble+github@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> it is more effective to have the original authors of these changes to
-> update them to your most recent tree, than you dealing with them
-> yourself, for two reasons.  There are more ICs than you alone, and
-> they are more familiar with their work.
->
-> In other words, isn't the real cause of the above that the workflow
-> is not taking advantage of the distributed development?  "This PR
-> seems to solve the right problem, but it is based on an old version
-> of the code, please update?"
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 
-That's a valid point. Let me describe how it used to work.
+I noticed this test was producing output like
 
-We tracked a busy project (OpenStack Nova), which used to have as many
-as 50 commits per day. At night we used to run an automated job that
-would attempt to import the latest upstream (rebase and cauterize),
-deploy to a test environment and test it with our configuration. It
-would have been impractically slow to require the developer of every
-internal patch to manually update to the latest version of the code,
-before deploying and testing. Also, it wouldn't be acceptable to an
-enterprise to always require the original author to rebase their
-patch, because the author may be on holiday or may have left the
-company, but the business has to move on.
+```
+t4002-diff-basic.sh: test_expect_successdiff can read from stdin: not found
+```
 
-In the morning, we used to check if the automated job returned green
-or red. In practice, however, most of the time our patches would
-cleanly rebase automatically without manual intervention. That was
-because of the way we used to write the patches - changing as few
-lines as possible. Also, patches were typically only temporary in
-nature, as they were eventually contributed to the open-source
-upstream project.
+which is rather odd. Investigation shows an error of shell syntax:
+foo'abc' is the same as fooabc to the shell. Perhaps obviously, this is
+not a valid command for the test.
 
-If the automated job returned red, there was a designated engineer who
-would investigate the issue on a given day. They would try to rebase
-the patches themselves and fix any issues. If they had any questions
-or concerns they would contact the original author, as long as the
-original author was at work. Most of the time contacting the original
-author wasn't necessary.
+I am surprised this doesn't count as an error in the test, but that
+accounts for it going unnoticed.
 
-> In Git, any commit, be it a single parent commit or a merge, makes
-> this statement:
->
->     I considered all the parents of this commit, and it is my belief
->     that it suits the purpose of the branch I am growing better than
->     all of them.
-> (...)
-> M in the "merging rebase", however, claims that M, i.e. the recent
-> upstream, fits the purpose of the branch better than the earlier
-> three commits did, which is not quite right.  In contrast, rebasing
-> merge does not have such a problem, i.e.
->
->     o---o---o---o---o  upstream/main
->          \           \
->           \           a'---b'---c'
->            \                     \
->             a---b---c-------------M main
+Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+---
+    t4002: fix "diff can read from stdin" syntax
+    
+    I noticed this test was producing output like
+    
+    t4002-diff-basic.sh: test_expect_successdiff can read from stdin: not found
+    
+    
+    which is rather odd. Investigation shows an error of shell syntax:
+    foo'abc' is the same as fooabc to the shell. Perhaps obviously, this is
+    not a valid command for the test.
+    
+    I am surprised this doesn't count as an error in the test, but that
+    accounts for it going unnoticed.
+    
+    ------------------------------------------------------------------------
+    
+    I would be interested in knowing how to "unsilence" failures like this
+    so they do not go unnoticed in the future.
 
-I second that observation.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1545%2Fbenknoble%2Ft4002-diff-stdin-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1545/benknoble/t4002-diff-stdin-v1
+Pull-Request: https://github.com/git/git/pull/1545
 
-Any other comments? :-)
+ t/t4002-diff-basic.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---
-Best regards,
-Aleksander Korzynski
+diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+index d524d4057dc..7afc883ec37 100755
+--- a/t/t4002-diff-basic.sh
++++ b/t/t4002-diff-basic.sh
+@@ -403,7 +403,7 @@ test_expect_success 'diff-tree -r B A == diff-tree -r -R A B' '
+ 	git diff-tree -r -R $tree_A $tree_B >.test-b &&
+ 	cmp -s .test-a .test-b'
+ 
+-test_expect_success'diff can read from stdin' '
++test_expect_success 'diff can read from stdin' '
+ 	test_must_fail git diff --no-index -- MN - < NN |
+ 		grep -v "^index" | sed "s#/-#/NN#" >.test-a &&
+ 	test_must_fail git diff --no-index -- MN NN |
+
+base-commit: aa9166bcc0ba654fc21f198a30647ec087f733ed
+-- 
+gitgitgadget
