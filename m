@@ -2,136 +2,340 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7367C0015E
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 00:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2255BEB64DA
+	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 06:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232662AbjGNAy7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jul 2023 20:54:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49450 "EHLO
+        id S234739AbjGNGBn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 02:01:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbjGNAy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2023 20:54:58 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B6D21BEB
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 17:54:57 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-cae0ad435b6so1316056276.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2023 17:54:57 -0700 (PDT)
+        with ESMTP id S232670AbjGNGBk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 02:01:40 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60312D45
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 23:01:37 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3141c3a7547so1624564f8f.2
+        for <git@vger.kernel.org>; Thu, 13 Jul 2023 23:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689296096; x=1691888096;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=txOihDaFwNsbEDc3nsfKTIFCk9iHgolEsZUvvPZilaM=;
-        b=DQijAVG+JQxY0+ept3XVF+5A8NDJ9sDjHYx0ZTixEfVOg1v+RxDHhsvMkjlLsxO4yT
-         EBwMOSRMLWxetqCsapX2zwLztmcvwG4zppXCtUPlzjbhoRc4v/kkbZB+W6hRsc/5Vax1
-         gGta5ogwcXEgsDAGfYgUGA0om42lyY0oITV2C+q/DsKx3OVj0s7ACTCQ4Lm7XjY4YM7W
-         IeQqXvpJGVNs2dc1YNDQk/W+OeNyrjZYooc2DCHG3U2SKDlVGJhF7YaZaFRuaw/AKigd
-         Iz0EEudQWSeXtbLeBMjG/kAZLXiCqlF9bnl7rz9ATb2lELZvVBOBy7PA79LA3GBTwwGq
-         fHZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689296096; x=1691888096;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1689314496; x=1691906496;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=txOihDaFwNsbEDc3nsfKTIFCk9iHgolEsZUvvPZilaM=;
-        b=f8kwOT9mubIzX4dxkUy5UnRLaZz88VArUKbpJY/Qj+y+2vz9qqv90r2segns8ppvTy
-         2IUthn4fhqCKXM65yOSCw+p0PYWt3QX2lWxe9WGHcgix2SGBnk3VtY5aV3/rBwvDmhPn
-         gvRZESYs3PALwZACcqRPtCoLo7pIgb2RlTWVzwXg8FvoFa72oW5by5uLvnOSB7Z3jUsv
-         OWumeWS7LAjmjfVEODvmFlGHd26/39UWSp1wnOACRW50CnKmqM5pXV7yNSjYvG5mY/u7
-         LImTF7KzIFQG+ghyBXS6OXCJ24IgMsq9BFZO+ThvnmyF8Jzm+B7wV4zN9KIH9xNHIFIr
-         /EDQ==
-X-Gm-Message-State: ABy/qLag0JKfTGXXNac5hCTMhx5sA8QKlFn0fBnVN0OgtFjIbArZu3ix
-        +txLxq/4Ub1vk+cZMlJbbeCB0A==
-X-Google-Smtp-Source: APBJJlELDmD9ela6iLqJDhksxYekAWLFb7JhXQvknupCYUhaK28RfS/qYNMCLmGqT1zdU4x7U2Z8bQ==
-X-Received: by 2002:a25:ad1f:0:b0:c3e:2a69:7937 with SMTP id y31-20020a25ad1f000000b00c3e2a697937mr3008122ybi.22.1689296096599;
-        Thu, 13 Jul 2023 17:54:56 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b5-20020a056902030500b00c389676f3a2sm1565668ybs.40.2023.07.13.17.54.55
+        bh=E9ev/9iQuNoOgzofaKYMYL897ngOwk5e1M4eO1nkgDo=;
+        b=RtiEca/5yoal6ACZPmwoc20ckXs6QfvQN3CflN5q04JK7lv5EakwKzGElp1D3d6+jM
+         DYtwm3ALA74fJR21LFcs36NyFuP4mrBaoDPc6L3u4vOZLsVJJ4l4Inclj08wAZNa8+GA
+         aEDu3J+plEuPWNw4IRgZqCkJ2XOkM24pBcdVu/gxHwgJIFaXJYR2/k2auXQEp8R3FHtI
+         eVH7V7R7+QylZUzrF95X7JlwSFL/raDG6HBk/zvP+WZXMlo3sOxh4BPUKAwbF4qwzR+p
+         8lDP//6bHdh54okhqEPf0Fk3GwPtkF5Icp+BOlS5ymZybbj1VjtP52hRrnkEzBQuDb2m
+         HCiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689314496; x=1691906496;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E9ev/9iQuNoOgzofaKYMYL897ngOwk5e1M4eO1nkgDo=;
+        b=Coeaw5MiPJtWTQtUPpcYUFtKaWswPrrn5upLhazBY3QFjapwurVkf5qrYZyrBg8ZNP
+         Pr/PvoRuF74YzHmuipom4LPJTWXkRgpgHwb8abecXsXqZdXJlGHe50GpQ/cMpxeSikmx
+         zzmj+KCVPw1Mt3hEjgNKbtcQNP4KMECvqzjmYJ2A99J+KEPeTOQ3KejYkAIFXqxlhPTF
+         jr3Jr1vgUkghNluR2eLf2V4LR21TZxTXJzS3zs2VgS0uqifeCU/eK1+XPXwp5jESvfLJ
+         Qx5lcv/sqIFS6aOC0DVZryiOlAK1RKLEYMyWcEAO5RdvgysFOILkMA8mz5lF0A/cfPtz
+         WCQQ==
+X-Gm-Message-State: ABy/qLabM82oJKqjP1oTAXPBY50i+MQfFuph53suQfw3/WY6nrdUUiZ1
+        5q7bhwcKUewJNANWtoeQ+ND0xdObF20=
+X-Google-Smtp-Source: APBJJlEO+0SdKLum88lQJn1KrU/FMPySf+wQ/OwxcmOeBa/Ep8WdlkTscP5IwrurQdx0jyas6vhBLQ==
+X-Received: by 2002:a05:6000:1c6:b0:314:10d8:b491 with SMTP id t6-20020a05600001c600b0031410d8b491mr3258823wrx.67.1689314495675;
+        Thu, 13 Jul 2023 23:01:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k10-20020a5d66ca000000b00313f9085119sm9852861wrw.113.2023.07.13.23.01.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jul 2023 17:54:55 -0700 (PDT)
-Date:   Thu, 13 Jul 2023 20:54:54 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 02/20] packfile.c: prevent overflow in `load_idx()`
-Message-ID: <ZLCc3mRbdXPllpAp@nand.local>
-References: <cover.1689205042.git.me@ttaylorr.com>
- <d6902cd9e7f7f2a6b8044c8fb782a28c23e15600.1689205042.git.me@ttaylorr.com>
- <5d2cf09f-34c7-9a88-bab2-8bf348dd13bb@gmail.com>
- <ZLAJNbIBFUPHYhlt@nand.local>
+        Thu, 13 Jul 2023 23:01:35 -0700 (PDT)
+Message-ID: <pull.1556.v2.git.1689314493.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
+References: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
+From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 14 Jul 2023 06:01:28 +0000
+Subject: [PATCH v2 0/5] SubmittingPatches: clarify which branch to use
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZLAJNbIBFUPHYhlt@nand.local>
+To:     git@vger.kernel.org
+Cc:     Linus Arver <linusa@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2023 at 10:24:53AM -0400, Taylor Blau wrote:
-> On Thu, Jul 13, 2023 at 09:21:55AM +0100, Phillip Wood wrote:
-> > p->crc_offset is a uint32_t so we're still prone to truncation here unless
-> > we change the crc_offset member of struct packed_git to be a size_t. I
-> > haven't checked if the other users of crc_offset would need adjusting if we
-> > change its type.
->
-> Thanks for spotting. Luckily, this should be a straightforward change:
+This series rewords the "base-branch" section (now renamed to
+"choose-starting-point") to be more informative in general to new
+contributors, who may not be as familiar with the various integration
+branches. Other smaller cleanups and improvements were made along the way.
 
-Here's a replacement patch which changes the type of `crc_offset`. If
-there end up being other review comments, I'll fold this into the next
-round.
 
---- 8< ---
-Subject: [PATCH] packfile.c: prevent overflow in `load_idx()`
+Updates in v2
+=============
 
-Prevent an overflow when locating a pack's CRC offset when the number
-of packed items is greater than 2^32-1/hashsz by guarding the
-computation with an `st_mult()`.
+ * The language about choosing the "oldest" branch was retained, and
+   expanded. It turns out that this language is also present in
+   gitworkflows, however the meaning of the word "oldest" was not explained
+   properly in the "base-branch" section. This has been addressed.
+ * Rename "base-branch" to "choose-starting-point"
+ * Patch 04 (emphasize need to communicate non-default starting points) is
+   new.
 
-Note that to avoid truncating the result, the `crc_offset` member must
-itself become a `size_t`. The only usage of this variable (besides the
-assignment in `load_idx()`) is in `read_v2_anomalous_offsets()` in the
-index-pack code. There we use the `crc_offset` as a pointer offset, so
-we are already equipped to handle the type change.
+Linus Arver (5):
+  SubmittingPatches: reword awkward phrasing
+  SubmittingPatches: discuss subsystems separately from git.git
+  SubmittingPatches: de-emphasize branches as starting points
+  SubmittingPatches: emphasize need to communicate non-default starting
+    points
+  SubmittingPatches: simplify guidance for choosing a starting point
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- object-store-ll.h | 2 +-
- packfile.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches | 125 +++++++++++++++++++++-----------
+ 1 file changed, 84 insertions(+), 41 deletions(-)
 
-diff --git a/object-store-ll.h b/object-store-ll.h
-index e8f22cdb1b..26a3895c82 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -106,7 +106,7 @@ struct packed_git {
- 	const void *index_data;
- 	size_t index_size;
- 	uint32_t num_objects;
--	uint32_t crc_offset;
-+	size_t crc_offset;
- 	struct oidset bad_objects;
- 	int index_version;
- 	time_t mtime;
-diff --git a/packfile.c b/packfile.c
-index 89220f0e03..70acf1694b 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -186,7 +186,7 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
- 		     */
- 		    (sizeof(off_t) <= 4))
- 			return error("pack too large for current definition of off_t in %s", path);
--		p->crc_offset = 8 + 4 * 256 + nr * hashsz;
-+		p->crc_offset = st_add(8 + 4 * 256, st_mult(nr, hashsz));
- 	}
 
- 	p->index_version = version;
---
-2.41.0.329.g0a1adfae833
---- >8 ---
+base-commit: aa9166bcc0ba654fc21f198a30647ec087f733ed
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1556%2Flistx%2Fdoc-submitting-patches-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1556/listx/doc-submitting-patches-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1556
 
-Thanks,
-Taylor
+Range-diff vs v1:
+
+ 1:  cb4a61eba8d = 1:  08deed14d96 SubmittingPatches: reword awkward phrasing
+ 3:  d430a4ed8ee ! 2:  8d4b57a8704 SubmittingPatches: discuss subsystems separately from git.git
+     @@ Commit message
+          SubmittingPatches: discuss subsystems separately from git.git
+      
+          The discussion around subsystems disrupts the flow of discussion in the
+     -    surrounding area, which only deals with branches used for the git.git
+     -    project. So move this bullet point out to the end.
+     +    surrounding area, which only deals with starting points used for the
+     +    git.git project. So move this bullet point out to the end.
+      
+          Signed-off-by: Linus Arver <linusa@google.com>
+      
+     @@ Documentation/SubmittingPatches: change is relevant to.
+       master..seen` and look for the merge commit. The second parent of this
+       commit is the tip of the topic branch.
+       
+     -+Note that some parts of the system have dedicated maintainers with their
+     -+own separate source code repositories (see the section "Subsystems"
+     -+below).
+     ++Finally, note that some parts of the system have dedicated maintainers
+     ++with their own separate source code repositories (see the section
+     ++"Subsystems" below).
+      +
+       [[separate-commits]]
+       === Make separate commits for logically separate changes.
+ 2:  203ed19dd1b ! 3:  69fef8afe64 SubmittingPatches: be more explicit
+     @@ Metadata
+      Author: Linus Arver <linusa@google.com>
+      
+       ## Commit message ##
+     -    SubmittingPatches: be more explicit
+     +    SubmittingPatches: de-emphasize branches as starting points
+      
+     +    It could be that a suitable branch does not exist, so instead just use
+     +    the phrase "starting point". Technically speaking the starting point
+     +    would be a commit (not a branch) anyway.
+     +
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Linus Arver <linusa@google.com>
+      
+       ## Documentation/SubmittingPatches ##
+     -@@ Documentation/SubmittingPatches: project. There is also a link:MyFirstContribution.html[step-by-step tutorial]
+     +@@ Documentation/SubmittingPatches: Here are some guidelines for contributing back to this
+     + project. There is also a link:MyFirstContribution.html[step-by-step tutorial]
+       available which covers many of these same guidelines.
+       
+     - [[base-branch]]
+     +-[[base-branch]]
+      -=== Decide what to base your work on.
+     -+=== Decide which branch to base your work on.
+     ++[[choose-starting-point]]
+     ++=== Choose a starting point.
+       
+       In general, always base your work on the oldest branch that your
+       change is relevant to.
+     @@ Documentation/SubmittingPatches: Please make sure your patch does not add commen
+       your patch after generating it, to ensure accuracy.  Before
+      -sending out, please make sure it cleanly applies to the base you
+      -have chosen in the "Decide what to base your work on" section,
+     -+sending out, please make sure it cleanly applies to the branch you
+     -+have chosen in the "Decide which branch to base your work on" section,
+     ++sending out, please make sure it cleanly applies to the starting point you
+     ++have chosen in the "Choose a starting point" section,
+       and unless it targets the `master` branch (which is the default),
+       mark your patches as such.
+       
+ -:  ----------- > 4:  f8f96a79b92 SubmittingPatches: emphasize need to communicate non-default starting points
+ 4:  55bed55cb88 ! 5:  5ec91d02b7a SubmittingPatches: remove confusing guidance about base branches
+     @@ Metadata
+      Author: Linus Arver <linusa@google.com>
+      
+       ## Commit message ##
+     -    SubmittingPatches: remove confusing guidance about base branches
+     +    SubmittingPatches: simplify guidance for choosing a starting point
+      
+     -    The guidance to "base your work on the oldest branch that your change is
+     -    relevant to" was added in d0c26f0f56 (SubmittingPatches: Add new section
+     -    about what to base work on, 2010-04-19). That commit also added the
+     -    bullet points which describe the scenarios where one would use one of
+     -    "maint", "master", "next", and "seen" ("pu" in the original as that was
+     -    the name of this branch before it was renamed, per 828197de8f (docs:
+     -    adjust for the recent rename of `pu` to `seen`, 2020-06-25)).
+     +    Background: The guidance to "base your work on the oldest branch that
+     +    your change is relevant to" was added in d0c26f0f56 (SubmittingPatches:
+     +    Add new section about what to base work on, 2010-04-19). That commit
+     +    also added the bullet points which describe the scenarios where one
+     +    would use one of the following named branches: "maint", "master",
+     +    "next", and "seen" ("pu" in the original as that was the name of this
+     +    branch before it was renamed, per 828197de8f (docs: adjust for the
+     +    recent rename of `pu` to `seen`, 2020-06-25)). The guidance was probably
+     +    taken from existing similar language introduced in the "Merge upwards"
+     +    section of gitworkflows in f948dd8992 (Documentation: add manpage about
+     +    workflows, 2008-10-19).
+      
+     -    The underlying principle of this guidance was probably something like
+     -    "base your work on the earlier-in-history branch so your change can be
+     -    merged forward". However, this principle is already concretely explained
+     -    in the accompanying bullet points. This principle should only come into
+     -    play if none of the scenarios described in the bullet points apply ---
+     -    and such a situation would be exceedingly rare.
+     -
+     -    Also, the guidance's wording of using the "oldest" branch is confusing
+     -    when read together with the rest of this section, because three of the
+     -    four named branches discussed ("master", "next", and "seen") move
+     -    frequently enough to not be considered "old" at all.
+     -
+     -    For these reasons, remove the guidance _without_ preserving the meaning
+     -    of the underlying principle, and instead add an overview of the four
+     -    named branches.
+     +    Summary: This change simplifies the guidance by pointing users to just
+     +    "maint" or "master". But it also gives an explanation of why that is
+     +    preferred and what is meant by preferring "older" branches (which might
+     +    be confusing to some because "old" here is meant in relative terms
+     +    between these named branches, not in terms of the age of the branches
+     +    themselves). We also add an example to illustrate why it would be a bad
+     +    idea to use "next" as a starting point, which may not be so obvious to
+     +    new contributors.
+      
+          Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Linus Arver <linusa@google.com>
+      
+       ## Documentation/SubmittingPatches ##
+      @@ Documentation/SubmittingPatches: available which covers many of these same guidelines.
+     - [[base-branch]]
+     - === Decide which branch to base your work on.
+     + [[choose-starting-point]]
+     + === Choose a starting point.
+       
+      -In general, always base your work on the oldest branch that your
+      -change is relevant to.
+     -+The following branches are the typical starting points for new work:
+     +-
+     +-* A bugfix should be based on `maint` in general. If the bug is not
+     +-  present in `maint`, base it on `master`. For a bug that's not yet
+     +-  in `master`, find the topic that introduces the regression, and
+     +-  base your work on the tip of the topic.
+     +-
+     +-* A new feature should be based on `master` in general. If the new
+     +-  feature depends on other topics that are in `next`, but not in
+     +-  `master`, fork a branch from the tip of `master`, merge these topics
+     +-  to the branch, and work on that branch.  You can remind yourself of
+     +-  how you prepared the base with `git log --first-parent master..`.
+     +-
+     +-* Corrections and enhancements to a topic not yet in `master` should
+     +-  be based on the tip of that topic. If the topic has not been merged
+     +-  to `next`, it's alright to add a note to squash minor corrections
+     +-  into the series.
+     +-
+     +-* In the exceptional case that a new feature depends on several topics
+     +-  not in `master`, start working on `next` or `seen` privately and
+     +-  send out patches only for discussion. Once your new feature starts
+     +-  to stabilize, you would have to rebase it (see the "depends on other
+     +-  topics" above).
+     +-
+     +-To find the tip of a topic branch, run `git log --first-parent
+     +-master..seen` and look for the merge commit. The second parent of this
+     +-commit is the tip of the topic branch.
+     ++As a preliminary step, you must first choose a starting point for your
+     ++work. Typically this means choosing a branch, although technically
+     ++speaking it is actually a particular commit (typically the HEAD, or tip,
+     ++of the branch).
+     ++
+     ++There are several important branches to be aware of. Namely, there are
+     ++four integration branches as discussed in linkgit:gitworkflows[7]:
+      +
+      +* maint
+      +* master
+      +* next
+      +* seen
+      +
+     -+These branches are explained in detail in linkgit:gitworkflows[7].
+     -+Choose the appropriate branch depending on the following scenarios:
+     ++The branches lower on the list are typically descendants of the ones
+     ++that come before it. For example, `maint` is an "older" branch than
+     ++`master` because `master` usually has patches (commits) on top of
+     ++`maint`.
+     ++
+     ++There are also "topic" branches, which contain work from other
+     ++contributors.  Topic branches are created by the Git maintainer (in
+     ++their fork) to organize the current set of incoming contributions on
+     ++the mailing list, and are itemized in the regular "What's cooking in
+     ++git.git" announcements.  To find the tip of a topic branch, run `git log
+     ++--first-parent master..seen` and look for the merge commit. The second
+     ++parent of this commit is the tip of the topic branch.
+     ++
+     ++There is one guiding principle for choosing the right starting point: in
+     ++general, always base your work on the oldest integration branch that
+     ++your change is relevant to (see "Merge upwards" in
+     ++linkgit:gitworkflows[7]).  What this principle means is that for the
+     ++vast majority of cases, the starting point for new work should be the
+     ++latest HEAD commit of `maint` or `master` based on the following cases:
+     ++
+     ++* If you are fixing bugs in the released version, use `maint` as the
+     ++  starting point (which may mean you have to fix things without using
+     ++  new API features on the cutting edge that recently appeared in
+     ++  `master` but were not available in the released version).
+     ++
+     ++* Otherwise (such as if you are adding new features) use `master`.
+     ++
+     ++This also means that `next` or `seen` are inappropriate starting points
+     ++for your work, if you want your work to have a realistic chance of
+     ++graduating to `master`.  They are simply not designed to provide a
+     ++stable base for new work, because they are (by design) frequently
+     ++re-integrated with incoming patches on the mailing list and force-pushed
+     ++to replace previous versions of these branches.
+     ++
+     ++For example, if you are making tree-wide changes, while somebody else is
+     ++also making their own tree-wide changes, your work may have severe
+     ++overlap with the other person's work.  This situation may tempt you to
+     ++use `next` as your starting point (because it would have the other
+     ++person's work included in it), but doing so would mean you'll not only
+     ++depend on the other person's work, but all the other random things from
+     ++other contributors that are already integrated into `next`.  And as soon
+     ++as `next` is updated with a new version, all of your work will need to
+     ++be rebased anyway in order for them to be cleanly applied by the
+     ++maintainer.
+     ++
+     ++Under truly exceptional circumstances where you absolutely must depend
+     ++on a select few topic branches that are already in `next` but not in
+     ++`master`, you may want to create your own custom base-branch by forking
+     ++`master` and merging the required topic branches to it. You could then
+     ++work on top of this base-branch.  But keep in mind that this base-branch
+     ++would only be known privately to you.  So when you are ready to send
+     ++your patches to the list, be sure to communicate how you created it in
+     ++your cover letter.  This critical piece of information would allow
+     ++others to recreate your base-branch on their end in order for them to
+     ++try out your work.
+       
+     - * A bugfix should be based on `maint` in general. If the bug is not
+     -   present in `maint`, base it on `master`. For a bug that's not yet
+     + Finally, note that some parts of the system have dedicated maintainers
+     + with their own separate source code repositories (see the section
+ 5:  1db7a1be27f < -:  ----------- SubmittingPatches: define topic branches
+
+-- 
+gitgitgadget
