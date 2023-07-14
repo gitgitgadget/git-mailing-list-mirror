@@ -2,124 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2868EC0015E
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 13:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96300EB64DC
+	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 14:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235607AbjGNNaQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 09:30:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38674 "EHLO
+        id S235661AbjGNOPa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 10:15:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235393AbjGNNaP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 09:30:15 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A391A2691
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 06:30:13 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-316eabffaa6so1465977f8f.2
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 06:30:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689341412; x=1691933412;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=M3W4qN25I+kp3ZwvzdI/k7svMUXD1lG4AMh/sAv6drw=;
-        b=WzkIiu9BZWyx1Qk5naysdYvS/BRlWjBnmt+MIamrqk438IDxTTWqvGzibh1sQlnmDQ
-         0Ft3H5Xl6MzW/qJvQ6e5mizr52ntQV+D1jq0cqfrRh4uOrJD0wJh7sHpn0aFh/WvgPpn
-         tONVlgLjWIH2jEHcmUAZ1p6Gx1IE/0JTUA6D5KScPIKpvNIu4m3VZfUXojWzza2wYLsm
-         +IN6lfYf3+Ril67opE295hFLMWeVXTc1J/w6/Bg7v2oupSkQRg33u3XySCGh3mEMa1F6
-         b+d0HCWyRG/C2XMYV//zSZxtOfFG9wNbnLB4FKEkDnhCTolDsYhKMMiMApKJVLFQpPS+
-         C7hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689341412; x=1691933412;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=M3W4qN25I+kp3ZwvzdI/k7svMUXD1lG4AMh/sAv6drw=;
-        b=HSuuUHoBNOuO3xjk/gPzWBhE/L/CezGaLy3zB1xgBdGts2WZBuwSMGv2g2mmr/z0xg
-         CE0J43eYyrfxUTLgrqmQS7zCFiGBj1YwkbvcF3h/+Isq1Z12BRoAHtB4O78WEfZ70T/s
-         earR76zTKPs6pvt941VZ1smJa730RpAvxKBrzkWrGKCIWVM5Zq0F1kMHMr7CMDj4L9ZH
-         BdkPcQRBXctfxAaj9W1V2zI2eL3Ge7+i+AgIchk9gLBrgZ61Xr5EzLyFzANV6l+uTmBg
-         EhBT4Cun8DCj5ArYZnH6yOM01SsYSHh/JuiCIXGc+Soy0l6wCjLbTvTlFW/C08ZWpHmL
-         cXOA==
-X-Gm-Message-State: ABy/qLYFDSJVp2TML2wqdAY1yz1w3qgBTPJMyB9COZDULciOXBdRD06o
-        +cP7IYmRVB1bjz/lkRQyB/3B2Gc0vbs=
-X-Google-Smtp-Source: APBJJlEQXwHnNlaRT5/+nONdsuPPIJpf8OaHHGE1yewdB/CRJG/PckP+lVkkOos9TxaoI6B82ufcQQ==
-X-Received: by 2002:adf:d4c8:0:b0:30f:c1ab:a039 with SMTP id w8-20020adfd4c8000000b0030fc1aba039mr4197274wrk.40.1689341411650;
-        Fri, 14 Jul 2023 06:30:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h7-20020a5d5487000000b0030ae901bc54sm10854785wrv.62.2023.07.14.06.30.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jul 2023 06:30:11 -0700 (PDT)
-Message-ID: <pull.1545.git.git.1689341410476.gitgitgadget@gmail.com>
-From:   "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Jul 2023 13:30:10 +0000
-Subject: [PATCH] t4002: fix "diff can read from stdin" syntax
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S234555AbjGNOP3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 10:15:29 -0400
+X-Greylist: delayed 453 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 14 Jul 2023 07:15:27 PDT
+Received: from mail.mrvanes.com (mail.mrvanes.com [104.248.86.249])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB9042D51
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 07:15:27 -0700 (PDT)
+Received: from authenticated-user (mail.mrvanes.com [104.248.86.249])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mrvanes.com (Postfix) with ESMTPSA id EA21BFD199
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 16:07:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mrvanes.com; s=mail;
+        t=1689343671; bh=t0iaULeDgY34JawEW24S8rSySgSrbTfLy/XjQ58Ygqc=;
+        h=From:To:Subject:Date:From;
+        b=f1ZWhg+czXsim7Xu50+KggGSG3u2Sz6vjeQ3z8iBQf1so7FYmLJ/26zPrVlqVZQZ8
+         Qw1jBK7sLXE0LpWg826LYcItjrY4dsmlCKPKrUf2JfGbm1LO9xoOwu0bjm6WwFGC5M
+         RGIHDb+xbaiNKPtgNaY699rUpkQGZA/VxQrigCVpk7/xRuSHQOapW9250XIeWA8ubc
+         tKCxAqep/WY1YWPPDdTVMHeZhe4tTR2lF6U7UEhW/DIaAdbFVIacu6tTJSaCTsaXnP
+         dUcg5ZyJZ7bAzP5zi81jWX1h4j+5cpRZbwPOJAuWT+PQE5IzOY7R2tVhC/z/3qfKUe
+         Ymorhrw61iKaQ==
+From:   Martin van Es <martin@mrvanes.com>
 To:     git@vger.kernel.org
-Cc:     "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-        "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: git gui locks-up system when invoked under wayland session (sometimes)
+Date:   Fri, 14 Jul 2023 16:07:49 +0200
+Message-ID: <12246559.O9o76ZdvQC@minivanes>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+What did you do before the bug happened? (Steps to reproduce your issue)
+Use Wayland
+start "git gui"
 
-I noticed this test was producing output like
+What did you expect to happen? (Expected behavior)
+The Graphical Git user interface 
 
-```
-t4002-diff-basic.sh: test_expect_successdiff can read from stdin: not found
-```
+What happened instead? (Actual behavior)
+System completely locks up
 
-which is rather odd. Investigation shows an error of shell syntax:
-foo'abc' is the same as fooabc to the shell. Perhaps obviously, this is
-not a valid command for the test.
+What's different between what you expected and what actually happened?
+The locked up system
 
-I am surprised this doesn't count as an error in the test, but that
-accounts for it going unnoticed.
+Anything else you want to add:
+The problem is intermittant, but when it happens, it's a really bad lock-up 
+that can only be resolved with a cold reset
 
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-    t4002: fix "diff can read from stdin" syntax
-    
-    I noticed this test was producing output like
-    
-    t4002-diff-basic.sh: test_expect_successdiff can read from stdin: not found
-    
-    
-    which is rather odd. Investigation shows an error of shell syntax:
-    foo'abc' is the same as fooabc to the shell. Perhaps obviously, this is
-    not a valid command for the test.
-    
-    I am surprised this doesn't count as an error in the test, but that
-    accounts for it going unnoticed.
-    
-    ------------------------------------------------------------------------
-    
-    I would be interested in knowing how to "unsilence" failures like this
-    so they do not go unnoticed in the future.
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1545%2Fbenknoble%2Ft4002-diff-stdin-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1545/benknoble/t4002-diff-stdin-v1
-Pull-Request: https://github.com/git/git/pull/1545
 
- t/t4002-diff-basic.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[System Info]
+git version 2.39.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.4.0 #1 SMP Mon Jun 26 22:05:37 CEST 2023 x86_64
+compiler info: gnuc: 12.2
+libc info: glibc: 2.37
+$SHELL (typically, interactive shell): /bin/bash
 
-diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
-index d524d4057dc..7afc883ec37 100755
---- a/t/t4002-diff-basic.sh
-+++ b/t/t4002-diff-basic.sh
-@@ -403,7 +403,7 @@ test_expect_success 'diff-tree -r B A == diff-tree -r -R A B' '
- 	git diff-tree -r -R $tree_A $tree_B >.test-b &&
- 	cmp -s .test-a .test-b'
- 
--test_expect_success'diff can read from stdin' '
-+test_expect_success 'diff can read from stdin' '
- 	test_must_fail git diff --no-index -- MN - < NN |
- 		grep -v "^index" | sed "s#/-#/NN#" >.test-a &&
- 	test_must_fail git diff --no-index -- MN NN |
 
-base-commit: aa9166bcc0ba654fc21f198a30647ec087f733ed
--- 
-gitgitgadget
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+
+
