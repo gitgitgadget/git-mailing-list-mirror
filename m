@@ -2,133 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D08A5EB64DC
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 18:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61F65EB64DC
+	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 18:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235910AbjGNSsu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 14:48:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53460 "EHLO
+        id S236301AbjGNS4i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 14:56:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235524AbjGNSss (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 14:48:48 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CA730DA
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 11:48:46 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-569e7aec37bso18521377b3.2
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 11:48:46 -0700 (PDT)
+        with ESMTP id S235611AbjGNS4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 14:56:37 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED31930F8
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 11:56:36 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id d75a77b69052e-403aa9d4991so5285741cf.0
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 11:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689360526; x=1691952526;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0QfUbEziABSBZvqTUhNFVCtr8czygzeNBpBzaGnnUlM=;
-        b=OdoBdazXrIzCbNnUz+jyQOQ5FkflbcOkgrsRZ6ZU7e2M0nfLAA2Sg7TwZDT51aJSQF
-         2mGyadlin7dQUlXvdmaWfMhiSJAhuS/KAUoijaVeYnS+miUha7EU8GDBVxWJ8y4fgr56
-         9BhJ3sirxRxXaB0UrtxzJpPL3GxU3YPj2Dow/2IcOqMQ1aSFBbIHFH9zEevn8BnKp+H5
-         Fc9Re+v3btimkjG8xKfKkXueg6OUSUEjn67GJjMve+lxQ3KWLPQQWGduqhRYB/U3726j
-         tV2pHIsSUlAE1WH9i6gjdf44BW6+KqawAZ81H4MDAJZryRkf51daTPoQ2fOhSRFLYopB
-         5dcw==
+        d=gmail.com; s=20221208; t=1689360996; x=1689965796;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6UWt1zQiP4Bg/FqGTkgW4mffJ9DPJYfBkd3QmTD2skE=;
+        b=YWm+XG3136lCdyl/Jq2/8TgOCTEkIPLwWe1IWrb6wDGUnwS5CcLsCoRFiTAv0mabSV
+         aWxLgXbChWkuRqpMI9qQqdWbn4CspGyZnlLcPpOSB5UaptNegtWa8pWbZd2+UEikH1fC
+         9O7oldJSmMi+Q2EipwnIew3z8r8ZYmRYzlRETNa/AX5lU0w2yoHMC1VpHW+F+Ul+QKjx
+         g7n4vzgVxfca3U8DLW32n5tZyOBaUnKDbHHn5TO0SWgIrds3sGbuC39Ev4ETzodQJIPY
+         +2qiT432JBu9enzU1mpxsxtGgoq/vTguFUP7rvvf8LrTzQHHpvTtuoq8Vr+fxruTTzSt
+         LrWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689360526; x=1691952526;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0QfUbEziABSBZvqTUhNFVCtr8czygzeNBpBzaGnnUlM=;
-        b=OdH6nHz/2hP8qciWxEkoDKZH3Q2SW0fb8KtFFKaywdvWPre9WlPislmTprOIoy/9cx
-         5CmXpoO4CJxYNnvxOX12DiqpRKaHrCrR87olww2fFKwkIx8btx5N3ttkdFcSPMQ66lC4
-         AtPWbNYylGtgRx93GCWHVSX2vb5jU4CM1rDCh/B5Y3bHII9O8BdIhyk5vVgJ9t0Oq1JL
-         j4EYLDSDcAHRsYhZ5PhJCwYALRkCZwY6St0wEs7MpHZnilgFel/PV0yQM3bbUcmXzXPA
-         yvRf65Soi324Y4Hrwc8HG7gNo5lg/BwHAABCoz7mnRniLDmxXEc+dPVdrw8+c9C247sm
-         qGBQ==
-X-Gm-Message-State: ABy/qLYcYoD1CFx8gaiqCcIuwy5vpvh95/TpAXduTEFKDSMhQjqS+zZL
-        Nx18jrQfA22gr1LpvGmYTMUGkok3RledYTDPpcyt
-X-Google-Smtp-Source: APBJJlHggRoZ+UMWa1gGD4IXNBbxt9sZQndOck+2U/MVAIT9rwWeyM4GYQpp1SccJ40i3iS+7NJs7hdqtoVCfMNo3xUv
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:db41:f17c:70c4:c573])
- (user=jonathantanmy job=sendgmr) by 2002:a25:ae43:0:b0:c5d:2380:23d6 with
- SMTP id g3-20020a25ae43000000b00c5d238023d6mr27990ybe.7.1689360526209; Fri,
- 14 Jul 2023 11:48:46 -0700 (PDT)
-Date:   Fri, 14 Jul 2023 11:48:43 -0700
-In-Reply-To: <xmqqlefjlanl.fsf@gitster.g>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230714184843.1360071-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v5 0/4] Changed path filter hash fix and version bump
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1689360996; x=1689965796;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6UWt1zQiP4Bg/FqGTkgW4mffJ9DPJYfBkd3QmTD2skE=;
+        b=PdACPrusGQr+VWYwhl3hSUE0qQF67GsgGPMuk4+p+6L2Meb8onxP2APitVEH4uBZ+8
+         m2bOzW0Ls6NK06Y2vrOb4N0sOE3dzY3Ua7+juiJIqsuzz1do2OoZBD8FHoyV7EnIThyE
+         2jEt/n4OkSqnwnVUe/zQinIlfbXvNUm7JiPJqgWBKbXoXSxSK+cfzknxb42HwG2dTJHB
+         yT05NATXvWU87DwADl69erBkQa3oV5/r1y4X5feXIxpCtSzelAidmmYCWVHZFWvsz03n
+         fwdPrLuTq90TLoCTP/5BuvtQTs63Rk1gGdkBe8hRN11UFt+E1iMG0zycXLJq0pmaPIk9
+         2UXA==
+X-Gm-Message-State: ABy/qLaOANHVEPJ8WZfJJGWiYBrrP/svi6aDwHrmtNmAwzbxlypqcuv1
+        R7ufptgx16Z0le9Ao0eggZSMZLdyUUI=
+X-Google-Smtp-Source: APBJJlE4cpHFSw7Rqnp32EJ4uw+a1INi6SIAnbJ7Q4uozMHAl3bZZB2bBLLutRB2h7XBmCtzbRalXQ==
+X-Received: by 2002:a05:622a:1a99:b0:3fd:eb2f:8627 with SMTP id s25-20020a05622a1a9900b003fdeb2f8627mr6579451qtc.6.1689360995905;
+        Fri, 14 Jul 2023 11:56:35 -0700 (PDT)
+Received: from [192.168.1.13] (ool-182e6d73.dyn.optonline.net. [24.46.109.115])
+        by smtp.gmail.com with ESMTPSA id q11-20020ac8450b000000b003f7fd3ce69fsm4159459qtn.59.2023.07.14.11.56.35
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 14 Jul 2023 11:56:35 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
+To:     =?utf-8?q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: Re: [PATCH] t4002: fix "diff can read from stdin" syntax
+Date:   Fri, 14 Jul 2023 14:56:34 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <CEC94FDD-E5F1-48C0-8FBF-05682EBEB035@gmail.com>
+In-Reply-To: <279beaea-d332-0d88-3cd0-b935ef6bc5eb@web.de>
+References: <pull.1545.git.git.1689341410476.gitgitgadget@gmail.com>
+ <279beaea-d332-0d88-3cd0-b935ef6bc5eb@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> >          Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> >          Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >     @@ Documentation/config/commitgraph.txt: commitGraph.maxNewFilters::
-> >      -	If true, then git will use the changed-path Bloom filters in the
-> >      -	commit-graph file (if it exists, and they are present). Defaults to
-> >      -	true. See linkgit:git-commit-graph[1] for more information.
-> >     -+	Deprecated. Equivalent to changedPathsVersion=1 if true, and
-> >     ++	Deprecated. Equivalent to changedPathsVersion=-1 if true, and
-> >      +	changedPathsVersion=0 if false.
-> 
-> I forgot to comment on this part earlier, but does the context make
-> it clear enough that these `changedPathsVersion` references are
-> about `commitGraph.changedPathsVersion` configuration variable
-> without fully spelled out?  They sit next to each other right now,
-> so it may not be too bad.  If they appeared across more distance,
-> I would be worried, though.
 
-Ah, probably better to spell it out. I'll change it.
+On 14 Jul 2023, at 10:44, René Scharfe wrote:
 
-> >      +commitGraph.changedPathsVersion::
-> >      +	Specifies the version of the changed-path Bloom filters that Git will read and
-> >     -+	write. May be 0 or 1. Any changed-path Bloom filters on disk that do not
-> >     ++	write. May be -1, 0 or 1. Any changed-path Bloom filters on disk that do not
-> >      +	match the version set in this config variable will be ignored.
-> 
-> So, any time the user configures this to a different value, we will
-> start to ignore the existing changed-path-filters data in the
-> repository, and when we are told to write commit-graph, we will
-> construct changed-path-filters data using the new version?
+> Am 14.07.23 um 15:30 schrieb D. Ben Knoble via GitGitGadget:
+>> diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+>> index d524d4057dc..7afc883ec37 100755
+>> --- a/t/t4002-diff-basic.sh
+>> +++ b/t/t4002-diff-basic.sh
+>> @@ -403,7 +403,7 @@ test_expect_success 'diff-tree -r B A == diff-tree -r -R A B' '
+>>  	git diff-tree -r -R $tree_A $tree_B >.test-b &&
+>>  	cmp -s .test-a .test-b'
+>>
+>> -test_expect_success'diff can read from stdin' '
+>> +test_expect_success 'diff can read from stdin' '
+>>  	test_must_fail git diff --no-index -- MN - < NN |
+>>  		grep -v "^index" | sed "s#/-#/NN#" >.test-a &&
+>>  	test_must_fail git diff --no-index -- MN NN |
+>>
+>
+> Good find!  Introduced by 9cfcbcc095 (t4002-diff-basic: modernize test
+> format, 2023-05-18).  Perhaps an automatic formatter would have avoided
+> it?  E.g. some sed(1) scripting, or shfmt (https://github.com/mvdan/sh)?
+> (Just discovered shfmt, never used it.)
 
-Yes.
+Thanks for finding this and fixing!
 
-> >     -+Defaults to 1.
-> >     ++Defaults to -1.
-> >     +++
-> >     ++If -1, Git will use the version of the changed-path Bloom filters in the
-> >     ++repository, defaulting to 1 if there are none.
-> 
-> OK, that was misleading.  The configuration can say "-1" and it does
-> not mean "I'll ignore anything other than version -1"---it means
-> "I'll read anything".  The earlier statement should be toned down so
-> that we do not surprise readers, perhaps
-
-Ah, good point. Will do.
-
->     When set to a positive integer value, any changed-path Bloom
->     filters on disk whose version is different from the value are
->     ignored.
-> 
-> to signal that 0 and negative are special.  Then the readers can
-> anticipate that special cases are described next.
-> 
->     When set to -1, then ...
->     When set to 0, then ...
->     Defaults to -1.
->     
-> When set to the special value -1, what version will we write?
-> 
-> >      +If 0, git will write version 1 Bloom filters when instructed to write.
-> 
-> And we will only read 0 and refuse to read 1?  Or we will read both
-> 0 and 1?
-> 
-> Thanks.
-
-Currently, there is only version 1 (no version 0) and after all the
-patches in this patch set are applied, there will be version 1 and
-version 2. I think that with your suggestions above, it will be clearer
-to the reader.
- 
+>
+> René
