@@ -2,124 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D978DEB64DC
-	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 00:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 584F6EB64DA
+	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 02:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230166AbjGOAfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 20:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
+        id S229684AbjGOCzo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 22:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjGOAfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 20:35:07 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937A43A95
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 17:35:06 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03C2119D8A1;
-        Fri, 14 Jul 2023 20:35:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qcV6jPTdSFQ7IDDrt/w3lcis9x8uAemm6syWPJ
-        vEdjc=; b=kcYMBibYNJZOlCaJZ7BUJAy5e3LKncw28U14V0Ox69Bu9gMv+2xFZn
-        kToW38D15uHp/oCsev4ZPeDr+gBjgFQm5Ww6LgkBy8W80eC2C+27eGW3GYVKYJez
-        msAWboAizDcD97U6mpgUmgTjAzMvX1lv1OM5SfU/oWdK+8XtOE/1Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC8E219D89F;
-        Fri, 14 Jul 2023 20:35:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29D0B19D89B;
-        Fri, 14 Jul 2023 20:35:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, calvinwan@google.com, szeder.dev@gmail.com,
-        phillip.wood123@gmail.com, chooglen@google.com, avarab@gmail.com,
-        sandals@crustytoothpaste.net
-Subject: Re: Splitting common-main
-References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
-        <20230517-unit-tests-v2-v2-1-21b5b60f4b32@google.com>
-        <xmqqcz2xtv83.fsf@gitster.g> <ZLHcaFvvZh88TrLb@google.com>
-Date:   Fri, 14 Jul 2023 17:34:59 -0700
-In-Reply-To: <ZLHcaFvvZh88TrLb@google.com> (Josh Steadmon's message of "Fri,
-        14 Jul 2023 16:38:16 -0700")
-Message-ID: <xmqqh6q6m2q4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229494AbjGOCzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 22:55:43 -0400
+Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3086835A9
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 19:55:40 -0700 (PDT)
+Date:   Sat, 15 Jul 2023 02:55:21 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail; t=1689389737; x=1689648937;
+        bh=CwNqkG3Ttg2gliMWGS0/X46uy2tT76JxskTALr4Vka0=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=w/ccnpBh4ov575QC9IYJcPknSK62RPQMxB2GdcaW1S2H4LYOqR+cd54p/RyuDkzKx
+         K4nS3YOZIW2NDduWskAcQRLF3WvT45BZhx4yW3qjqy/q4TTl6X++UuHGuJCzR35Jwn
+         FGmD++5n3RLg3y8xOSB3D9c2+J680+0YJmK5iO3WcJVmK+1RwfOQcSSxNfe3X549ex
+         7s11ph6QwKTTnJcHjDrYwGw6litWpNIKQz8n1IswSlN7yWi7XSudFnFHiNHJWu+Xo+
+         6E+1yyOVqIB/ePsQW0WcdKjLgqNA4/qDB1zT6nCPWWEZO7/3fEp4WfxNOSHH4oXCP4
+         VDpAw1z8GwdYg==
+To:     git@vger.kernel.org
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     Jacob Abel <jacobabel@nullpo.dev>
+Subject: [PATCH] t2400: Fix test failures when using grep 2.5
+Message-ID: <20230715025512.7574-1-jacobabel@nullpo.dev>
+Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6F447748-22A7-11EE-84BF-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Replace all cases of `\s` with `[[:space:]]` as older versions of GNU
+grep (and from what it seems most versions of BSD grep) do not handle
+`\s`.
 
-> Sorry, I don't think I'm understanding your proposal here properly,
-> please let me know where I'm going wrong: isn't this functionally
-> equivalent to my patch, just with different filenames? Now main() would
-> live in main.c (vs. my common-main.c), while check_bug_if_BUG() and
-> common_exit() would live in common-main.c (now a misnomer, vs. my
-> common-exit.c). I'm not following how that changes anything so I'm
-> pretty sure I've misunderstood.
+For the same reason all cases of `\S` are replaced with `[^[:space:]]`.
+Replacing `\S` also needs to occur as `\S` is technically PCRE and not
+part of ERE even though most modern versions of grep accept it as ERE.
 
-Sorry, the old discussion has expired out of my brain, and asking
-what I had in mind back then is too late.
+Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
+---
+This patch is in response to build failures on GGG's Cirrus CI=20
+freebsd_12 build jobs[1] and was prompted by a discussion thread [2].
 
-Your common-main.c has stuff _other than_ main(), and the remaining
-main() has tons of Git specific stuff.  It may be one way to split,
-but I did not find a reason to convince myself that it was a good
-split.
+These failures seem to be caused by the behavior outlined in [3].=20
+Weirdly however they only seem to occur on the FreeBSD CI but not the=20
+Mac OS CI for some reason despite Mac OS using FreeBSD grep.
 
-What I was wondering as a straw-man alternative was to have main.c
-that has only this and nothing else:
+1. https://github.com/gitgitgadget/git/pull/1550/checks?check_run_id=3D1494=
+9695859
+2. https://lore.kernel.org/git/CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-=
+9zbqXMA@mail.gmail.com/
+3. https://stackoverflow.com/questions/4233159/grep-regex-whitespace-behavi=
+or
 
-    $ cat >main.c <<\EOF
-    #include "git-compat-util.h" /* or whatever defines git_main() */
-    int main(int ac, char **av)
-    {
-	return git_main(ac, av);
-    }
-    EOF
+ t/t2400-worktree-add.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Then in common-main.c, rename main() to git_main().
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 0ac468e69e..7f19bdabff 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -417,9 +417,9 @@ test_wt_add_orphan_hint () {
+ =09=09grep "hint: If you meant to create a worktree containing a new orpha=
+n branch" actual &&
+ =09=09if [ $use_branch -eq 1 ]
+ =09=09then
+-=09=09=09grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" actua=
+l
++=09=09=09grep -E "^hint:[[:space:]]+git worktree add --orphan -b [^[:space=
+:]]+ [^[:space:]]+[[:space:]]*$" actual
+ =09=09else
+-=09=09=09grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
++=09=09=09grep -E "^hint:[[:space:]]+git worktree add --orphan [^[:space:]]=
++[[:space:]]*$" actual
+ =09=09fi
+=20
+ =09'
+@@ -709,7 +709,7 @@ test_dwim_orphan () {
+ =09local info_text=3D"No possible source branch, inferring '--orphan'" &&
+ =09local fetch_error_text=3D"fatal: No local or remote refs exist despite =
+at least one remote" &&
+ =09local orphan_hint=3D"hint: If you meant to create a worktree containing=
+ a new orphan branch" &&
+-=09local invalid_ref_regex=3D"^fatal: invalid reference:\s\+.*" &&
++=09local invalid_ref_regex=3D"^fatal: invalid reference:[[:space:]]\+.*" &=
+&
+ =09local bad_combo_regex=3D"^fatal: '[a-z-]\+' and '[a-z-]\+' cannot be us=
+ed together" &&
+=20
+ =09local git_ns=3D"repo" &&
+@@ -998,8 +998,8 @@ test_dwim_orphan () {
+ =09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --sq --path-format=
+=3Dabsolute --git-path HEAD) &&
+ =09=09=09=09=09headcontents=3D$(cat "$headpath") &&
+ =09=09=09=09=09grep "HEAD points to an invalid (or orphaned) reference" ac=
+tual &&
+-=09=09=09=09=09grep "HEAD path:\s*.$headpath." actual &&
+-=09=09=09=09=09grep "HEAD contents:\s*.$headcontents." actual &&
++=09=09=09=09=09grep "HEAD path:[[:space:]]*.$headpath." actual &&
++=09=09=09=09=09grep "HEAD contents:[[:space:]]*.$headcontents." actual &&
+ =09=09=09=09=09grep "$orphan_hint" actual &&
+ =09=09=09=09=09! grep "$info_text" actual
+ =09=09=09=09fi &&
 
-I was not saying such a split would be superiour compared to how you
-moved only some stuff out of common-main.c to a separate file.  I
-had trouble equally with your split and with the above strawman,
-because I did not (and do not) quite see how one would evaluate the
-result (go back to the message you are responding to for details).
+base-commit: 830b4a04c45bf0a6db26defe02ed1f490acd18ee
+--=20
+2.39.3
 
-> The issue I was trying to solve (whether for a unit-test framework or
-> for the fuzzing engine) is that we don't have direct control over their
-> main(), and so we can't rename it to avoid conflicts with our main().
 
-Sure.  And if we by default use a very thin main() that calls
-git_main(), it would be very easy for them to replace that main.o
-file with their own implementation of main(); as long as they
-eventually call git_main(), they can borrow what we do in ours.
-
-> I guess there may be some linker magic we could do to avoid the conflict
-> and have (our) main() call (their, renamed) main()?
-
-We can throw a main.o that has the implementation of our default
-"main" function into "libgit.a".
-
-Then, when we link our "git" program (either built-in programs that
-are reachable from git.o, or standalone programs like remote-curl.o
-that have their own cmd_main()), we list our object files (but we do
-not have to list main.o) and tuck libgit.a at the end of the linker
-command line.  As the start-up runtime code needs to find symbol
-"main", and the linker sees no object files listed has "main", the
-linker goes in and finds main.o stored in libgit.a (which has "main"
-defined) and that will end up being linked.
-
-If on the other hand when we link somebody else's program that has
-its own "main()", we list the object files that make up the program,
-including the one that has their "main()", before "libgit.a" and
-the linker does not bother trying to find "main" in libgit.a:main.o
-so the resulting binary will use their main().
-
-Is that what you are looking for?
