@@ -2,59 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B3D3EB64DC
-	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 10:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1314C001B0
+	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 16:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbjGOKiv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Jul 2023 06:38:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
+        id S229866AbjGOQHu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Jul 2023 12:07:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbjGOKiu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2023 06:38:50 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D85F35AA
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 03:38:48 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9741caaf9d4so358703266b.0
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 03:38:47 -0700 (PDT)
+        with ESMTP id S229472AbjGOQHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2023 12:07:48 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9276D2D51
+        for <git@vger.kernel.org>; Sat, 15 Jul 2023 09:07:46 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-992acf67388so379454166b.1
+        for <git@vger.kernel.org>; Sat, 15 Jul 2023 09:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689417526; x=1692009526;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jzVUFE5m5MMdvjynFS+F6UK1wkrR/ZsRHjvGMN2vS2A=;
-        b=XGnZuUI/QNEIJAXqpt3rr9c6oQIUBZG0iaYdlnUlTyzFcd9rP55z3Ble8/f6eyrVgi
-         8m9d+LlvBM/3FU1CgIohgeNo9hbcuTzw2eQh1lYclk2+TfNLH12S7L+HCtHS8TWS8Y22
-         HJBkELHpQ2x09aT7aDtyuMxxICw4Ec4daDcoSrOx1KbqEXL6Y0YdHNeNG457ZXstaCUO
-         Nnis2DTJh2VZCPXgeNiLW67gJ7KYiaAb524xDU7SjCC3gdkJFAO+Wog0CcqWnD7fNSxG
-         zrhXMH0bwIYRXIx5ogibXzJTA9zZTcOk4uCM32dD7ipUKTEC+cHxKWaVBs4DQkHiERyX
-         /RSQ==
+        d=gmail.com; s=20221208; t=1689437265; x=1692029265;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vk2KqKEW9sbhSYz7GpJZM4lmutNfIf4SmEpOAgqqBqs=;
+        b=UgmT/UlkSsF5JEeJhOI3aUhwMiO9vgTXtNYlEe43Jsv8M1DRv2hx/hiR8y/oZoe4dl
+         b0OpYNZqEkoWX0r0zQxABqdGpKvdznN9QwhvTpvdqdlukCF3E0UZmmwU7MitkDTpswfQ
+         4BMlGd3ld7I6cWlIG3/z97q8PK3LXIykK8SNsz2Z+0z0jEuvdivW9WninV51qaypwJ1R
+         2DWMMdONxjX5FOER/dc+QYy9t34IrwPRFINOdpDI4ot7EWnO/WXHSL2pra0sy0fKUkIt
+         4JTM0BYUSxbywpSLeZ8KVz8VHUqcg8itHQSnZNH02Jo+LroYcPQP1gZNLkkFlTfIWO8R
+         K5Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689417526; x=1692009526;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jzVUFE5m5MMdvjynFS+F6UK1wkrR/ZsRHjvGMN2vS2A=;
-        b=G5XuPX5QmVKRosrmMrPkv9M6B2IdfbwM6L2M4LaHOENNcfbPI6GRiVMoUrzQYTlhSN
-         hvHnqpRRWWRUWlh4OP53mgRQMS8FIrDC/aUrFgvUVrCkFeSTuve5JjPcI512RPeU02D0
-         ePOYHtpURZcS4KZWf0Doi3LRttCQ0D+MEMyWUAVIVjzeko/OGxhG8cnB9+BN+jftDt9x
-         MVhJlLfJNBUxZGbcvb5piz0wZkUw2iPE2BqZ3VEwDiqvYi4H1LJvg8g5IpkxKljMBJwx
-         3j/Upm380IhgFQC7oXhV5yB5TUBZXfVRccMWykYpl/gAt8tpwjKXKV02ldpwdzzUo8vR
-         yuPA==
-X-Gm-Message-State: ABy/qLb+SNtkkjQU9/My4ABYmS6exicu6NzTZpwPE5lY6MEMsa4cHlqD
-        E5gIo3TsERYXwlAE28ixScatC2531dc=
-X-Google-Smtp-Source: APBJJlGAzNlXOFz/2bPxPNGdvlIyIh5fMOJvlZ+QC2TMYcARO8NxQ3KuTHHnss7/DO3peVI1Y+Yqzw==
-X-Received: by 2002:a17:906:cd0e:b0:992:a90a:5d1f with SMTP id oz14-20020a170906cd0e00b00992a90a5d1fmr6927854ejb.68.1689417526188;
-        Sat, 15 Jul 2023 03:38:46 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689437265; x=1692029265;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vk2KqKEW9sbhSYz7GpJZM4lmutNfIf4SmEpOAgqqBqs=;
+        b=P8C/R8yo59thyI7txH6Ed2U2F1XykdZ9FgZap60IyArKcmAc8F4m+w2+dJdQpOUOKe
+         C4XhyH3s8fdtZp3BYA63l4Fm0TEQtbKJGcA+1cu+P6E/lheasZPIiloVBX1XU4eXK+Ud
+         LUJzFVdeULKRBnwt578itb4LsORq3E6TczW8C1fNu4OERwPM6pf1Ktbzsq/y6qbextpz
+         /gb1vpXaSrE6+pOCnwyuFmBMt1Lg988M6UxLIk8CyAuLQHEQN2ijSg5cqj0Pb/vz56S5
+         hmwSPDluYbDgxhHCTMc3BJLyhs2Ko3o87c9pTOupkZ0KF/10TlzDSzG6eFFm8R3behfs
+         hbrg==
+X-Gm-Message-State: ABy/qLZucbsWzqJsde5NuJZWzMQztg9Y8iZagQKnW2UJIIlvBA1c3Q9t
+        qn4+uvjn6KKuiysezDC7IfLgmMfibfM=
+X-Google-Smtp-Source: APBJJlG+LJGWkNYrdmIkWLqSYwcQwR6b6cSzT2d4KJjrjFJR1/6JjzeMyuNkdOPLL3TZ+aUvEar1Tw==
+X-Received: by 2002:a17:906:314c:b0:957:1df0:9cbf with SMTP id e12-20020a170906314c00b009571df09cbfmr5552247eje.19.1689437264679;
+        Sat, 15 Jul 2023 09:07:44 -0700 (PDT)
 Received: from localhost.localdomain (host-92-6-81-118.as13285.net. [92.6.81.118])
-        by smtp.gmail.com with ESMTPSA id um10-20020a170906cf8a00b0098e78ff1a87sm6592930ejb.120.2023.07.15.03.38.45
+        by smtp.gmail.com with ESMTPSA id z2-20020a1709063ac200b009944e955e19sm2266851ejd.30.2023.07.15.09.07.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Jul 2023 03:38:45 -0700 (PDT)
+        Sat, 15 Jul 2023 09:07:44 -0700 (PDT)
 From:   Andy Koppe <andy.koppe@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH] pretty: add %(decorate[:<options>]) format
-Date:   Sat, 15 Jul 2023 11:37:56 +0100
-Message-ID: <20230715103758.3862-1-andy.koppe@gmail.com>
+Subject: [PATCH v2] pretty: add %(decorate[:<options>]) format
+Date:   Sat, 15 Jul 2023 17:07:29 +0100
+Message-ID: <20230715160730.4046-1-andy.koppe@gmail.com>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230715103758.3862-1-andy.koppe@gmail.com>
+References: <20230715103758.3862-1-andy.koppe@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,8 +71,9 @@ be customized, namely prefix, suffix, separator, the "tag:" annotation
 and the arrow used to show where HEAD points.
 
 Examples:
-- %decorate(prefix=,suffix=) removes the enclosing parentheses, like %D.
-- %decorate(prefix=,suffix=,separator=,tag=,arrow=->) produces a
+- %(decorate) is equivalent to %d.
+- %(decorate:prefix=,suffix=) is equivalent to %D.
+- %(decorate:prefix=,suffix=,separator= ,tag=,arrow=->) produces a
   space-separated list without wrapping, tag annotations or spaces
   around the arrow.
 - %(decorate:prefix=[,suffix=],separator=%x2C,arrow=%x2C,tag=) produces
@@ -91,7 +95,7 @@ accordingly.
 
 Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
-CI: https://github.com/ak2/git/actions/runs/5561647197
+Corrected mistakes in commit description.
 
  Documentation/pretty-formats.txt | 19 ++++++++-
  log-tree.c                       | 69 ++++++++++++++++++++------------
