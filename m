@@ -2,129 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42DF3EB64DC
-	for <git@archiver.kernel.org>; Fri, 14 Jul 2023 23:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D978DEB64DC
+	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 00:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229605AbjGNXiZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jul 2023 19:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48868 "EHLO
+        id S230166AbjGOAfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jul 2023 20:35:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjGNXiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2023 19:38:24 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30DA3A92
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 16:38:23 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-6689430d803so1765547b3a.0
-        for <git@vger.kernel.org>; Fri, 14 Jul 2023 16:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689377903; x=1691969903;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=t6DHpVdFJId4SXZd9ZUFyxCQYwiiThFk33SS+Kr4NmM=;
-        b=cYHaRVyiv2F/pMeCnV/5elZw+M0P2npWhr0kOI64M1S+/Gf+90atd0N60sl0YyalhB
-         BoIDrGj3PeOVgTyqQ5WMFiE2EWfn5Q7lauhplOVpCBF4H36lk8JvFNAm0/UP2FlTbjq8
-         BAQ3eR2lvgIdfejXrcUsJ8ls/BYqCWLQJh83FBYLRl1B8yGMISh0QmfM2/UgCezgWUHo
-         iep+MnOhH9ImBcU/ioFTMUYvInOKI/1WV2m1ftFBLG5bqqFOM9lsF0bydswOZH4b9qko
-         qeQ3SdgBJYjx6NN+T54YMsVIdJoZyHQgvE4GJ3ODKPJoTJvmI3NmNyNkLU43rkNhSbr9
-         mIow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689377903; x=1691969903;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t6DHpVdFJId4SXZd9ZUFyxCQYwiiThFk33SS+Kr4NmM=;
-        b=Nxe5+GKiVa7ih8mpHt2/e4oEXOgqVP3kcoE1tOWTNFPuzl/GCRTt8rl+SOggX2jEwj
-         Bzuy59ltFE009ojue2bzWbUneaf4k1sLLW3p1Ml1+/aRr1G018mHJTq5aIDxJMRLIsPd
-         HKiezrLwn2RE2xduV4FaFgSsY6h67AenscghkrvrSYkjwCCS0lgZmcIxPT68m5LKqCIg
-         4IVXu+6uPr7bHEKjb4nduipWeVWFcrjCCO1UAk8Hs3fd3kvb83gw3JGTE8S7tCAJzENB
-         gPbjjvY4ICzFvIqV1nBfR5rh7+MuGczUmXWxkMoAgjLqBJrKiWz+senj1z7zZ8PMALwt
-         XlQw==
-X-Gm-Message-State: ABy/qLah1BRBSuiCv+hrAcWaOD11yiDmvMTwRr2SuL4b2VBsoWNFXrP+
-        i1+1X6DY3sUeZ5cwggl9HIkPzA==
-X-Google-Smtp-Source: APBJJlHwzC6ClwhYIRwrT4OQ1J3e3v09X8Ql2CZtt5mHr0q2fkDwZ0W7mpzUuAjKpY5Qg/aPG4it+g==
-X-Received: by 2002:a05:6a00:3913:b0:67e:bf65:ae68 with SMTP id fh19-20020a056a00391300b0067ebf65ae68mr5619132pfb.3.1689377903141;
-        Fri, 14 Jul 2023 16:38:23 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:202:5363:38df:480d:c7f7])
-        by smtp.gmail.com with ESMTPSA id i19-20020aa787d3000000b0063b7f3250e9sm7646431pfo.7.2023.07.14.16.38.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jul 2023 16:38:22 -0700 (PDT)
-Date:   Fri, 14 Jul 2023 16:38:16 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229515AbjGOAfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2023 20:35:07 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937A43A95
+        for <git@vger.kernel.org>; Fri, 14 Jul 2023 17:35:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03C2119D8A1;
+        Fri, 14 Jul 2023 20:35:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qcV6jPTdSFQ7IDDrt/w3lcis9x8uAemm6syWPJ
+        vEdjc=; b=kcYMBibYNJZOlCaJZ7BUJAy5e3LKncw28U14V0Ox69Bu9gMv+2xFZn
+        kToW38D15uHp/oCsev4ZPeDr+gBjgFQm5Ww6LgkBy8W80eC2C+27eGW3GYVKYJez
+        msAWboAizDcD97U6mpgUmgTjAzMvX1lv1OM5SfU/oWdK+8XtOE/1Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC8E219D89F;
+        Fri, 14 Jul 2023 20:35:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29D0B19D89B;
+        Fri, 14 Jul 2023 20:35:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
 Cc:     git@vger.kernel.org, calvinwan@google.com, szeder.dev@gmail.com,
         phillip.wood123@gmail.com, chooglen@google.com, avarab@gmail.com,
         sandals@crustytoothpaste.net
-Subject: Splitting common-main (Was: Re: [PATCH RFC v2 1/4] common-main:
- split common_exit() into a new file)
-Message-ID: <ZLHcaFvvZh88TrLb@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        calvinwan@google.com, szeder.dev@gmail.com,
-        phillip.wood123@gmail.com, chooglen@google.com, avarab@gmail.com,
-        sandals@crustytoothpaste.net
+Subject: Re: Splitting common-main
 References: <20230517-unit-tests-v2-v2-0-21b5b60f4b32@google.com>
- <20230517-unit-tests-v2-v2-1-21b5b60f4b32@google.com>
- <xmqqcz2xtv83.fsf@gitster.g>
+        <20230517-unit-tests-v2-v2-1-21b5b60f4b32@google.com>
+        <xmqqcz2xtv83.fsf@gitster.g> <ZLHcaFvvZh88TrLb@google.com>
+Date:   Fri, 14 Jul 2023 17:34:59 -0700
+In-Reply-To: <ZLHcaFvvZh88TrLb@google.com> (Josh Steadmon's message of "Fri,
+        14 Jul 2023 16:38:16 -0700")
+Message-ID: <xmqqh6q6m2q4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqcz2xtv83.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6F447748-22A7-11EE-84BF-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, I'd like to revisit this as it's also relevant to a non-unit-test
-issue (`make fuzz-all` is currently broken). I have some questions
-inline below:
+Josh Steadmon <steadmon@google.com> writes:
 
-On 2023.05.18 10:17, Junio C Hamano wrote:
-> steadmon@google.com writes:
-> 
-> > It is convenient to have common_exit() in its own object file so that
-> > standalone programs may link to it (and any other object files that
-> > depend on it) while still having their own independent main() function.
-> 
-> I am not so sure if this is a good direction to go in, though.  The
-> common_exit() function does two things that are very specific to and
-> dependent on what Git runtime has supposed to have done, like
-> initializing trace2 subsystem and linking with usage.c to make
-> bug_called_must_BUG exist.
+> Sorry, I don't think I'm understanding your proposal here properly,
+> please let me know where I'm going wrong: isn't this functionally
+> equivalent to my patch, just with different filenames? Now main() would
+> live in main.c (vs. my common-main.c), while check_bug_if_BUG() and
+> common_exit() would live in common-main.c (now a misnomer, vs. my
+> common-exit.c). I'm not following how that changes anything so I'm
+> pretty sure I've misunderstood.
 
-True. We won't call common_exit() unless we're trying to exit() from a
-file that also includes git-compat-util.h, but I guess that's not a
-guarantee that trace2 is initialized or that usage.o is linked.
+Sorry, the old discussion has expired out of my brain, and asking
+what I had in mind back then is too late.
 
-> I understand that a third-party or standalone non-Git programs may
-> want to do _more_ than what our main() does when starting up, but it
-> should be doable if make our main() call out to a hook function,
-> whose definition in Git is a no-op, that can be replaced by their
-> own implementation to do whatever they want to happen in main(), no?
-> 
-> The reason why I am not comfortable with this patch is because I
-> cannot say why this split is better than other possible split.  For
-> example, we could instead split only our 'main' out to a separate
-> file, say "main.c", and put main.o together with common-main.o to
-> libgit.a to be found by the linker, and that arrangement will also
-> help your "standalone programs" having their own main() function.
-> Now with these two possible ways to split (and there may be other
-> split that may be even more convenient; I simply do not know), which
-> one is better, and what's the argument for each approach?
+Your common-main.c has stuff _other than_ main(), and the remaining
+main() has tons of Git specific stuff.  It may be one way to split,
+but I did not find a reason to convince myself that it was a good
+split.
 
-Sorry, I don't think I'm understanding your proposal here properly,
-please let me know where I'm going wrong: isn't this functionally
-equivalent to my patch, just with different filenames? Now main() would
-live in main.c (vs. my common-main.c), while check_bug_if_BUG() and
-common_exit() would live in common-main.c (now a misnomer, vs. my
-common-exit.c). I'm not following how that changes anything so I'm
-pretty sure I've misunderstood.
+What I was wondering as a straw-man alternative was to have main.c
+that has only this and nothing else:
 
-The issue I was trying to solve (whether for a unit-test framework or
-for the fuzzing engine) is that we don't have direct control over their
-main(), and so we can't rename it to avoid conflicts with our main().
+    $ cat >main.c <<\EOF
+    #include "git-compat-util.h" /* or whatever defines git_main() */
+    int main(int ac, char **av)
+    {
+	return git_main(ac, av);
+    }
+    EOF
 
-I guess there may be some linker magic we could do to avoid the conflict
-and have (our) main() call (their, renamed) main()? I don't know offhand
-if that's actually possible, just speculating. Even if possible, it
-feels more complicated to me, but again that may just be due to my lack
-of linker knowledge.
+Then in common-main.c, rename main() to git_main().
+
+I was not saying such a split would be superiour compared to how you
+moved only some stuff out of common-main.c to a separate file.  I
+had trouble equally with your split and with the above strawman,
+because I did not (and do not) quite see how one would evaluate the
+result (go back to the message you are responding to for details).
+
+> The issue I was trying to solve (whether for a unit-test framework or
+> for the fuzzing engine) is that we don't have direct control over their
+> main(), and so we can't rename it to avoid conflicts with our main().
+
+Sure.  And if we by default use a very thin main() that calls
+git_main(), it would be very easy for them to replace that main.o
+file with their own implementation of main(); as long as they
+eventually call git_main(), they can borrow what we do in ours.
+
+> I guess there may be some linker magic we could do to avoid the conflict
+> and have (our) main() call (their, renamed) main()?
+
+We can throw a main.o that has the implementation of our default
+"main" function into "libgit.a".
+
+Then, when we link our "git" program (either built-in programs that
+are reachable from git.o, or standalone programs like remote-curl.o
+that have their own cmd_main()), we list our object files (but we do
+not have to list main.o) and tuck libgit.a at the end of the linker
+command line.  As the start-up runtime code needs to find symbol
+"main", and the linker sees no object files listed has "main", the
+linker goes in and finds main.o stored in libgit.a (which has "main"
+defined) and that will end up being linked.
+
+If on the other hand when we link somebody else's program that has
+its own "main()", we list the object files that make up the program,
+including the one that has their "main()", before "libgit.a" and
+the linker does not bother trying to find "main" in libgit.a:main.o
+so the resulting binary will use their main().
+
+Is that what you are looking for?
