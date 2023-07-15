@@ -2,173 +2,470 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B188EB64DC
-	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 08:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B3D3EB64DC
+	for <git@archiver.kernel.org>; Sat, 15 Jul 2023 10:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbjGOI7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Jul 2023 04:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47052 "EHLO
+        id S230176AbjGOKiv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Jul 2023 06:38:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjGOI73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2023 04:59:29 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4762D66
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 01:59:27 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3143b72c5ffso2879437f8f.3
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 01:59:27 -0700 (PDT)
+        with ESMTP id S229494AbjGOKiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2023 06:38:50 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D85F35AA
+        for <git@vger.kernel.org>; Sat, 15 Jul 2023 03:38:48 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9741caaf9d4so358703266b.0
+        for <git@vger.kernel.org>; Sat, 15 Jul 2023 03:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689411566; x=1692003566;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jVzDpPzXMTKp3Aa8vipAh6H4F7O8UB9k2aHYeoVs9y8=;
-        b=ORpNs+vrvPVyK9orxtB+BV9i+rWqS6vO4ZIX6ncMMft9HjPRzt/unV4UhDIeuRAtE8
-         U1ot/g6CtYNrWYoOZws98qxo9rFLbW1k7sdT3gBV0Wii3uNPJZqN3J/i+8dj13x8avOc
-         QIZDQ01VtHlFQvZI8IClX2wqJkM3YYuXMEsFtsLwnN6sCLX1guMPL7NN2RtH2Xb4YYCb
-         dk9m/oIopbmQ54qilBZjJbEy+iwFVDZx8WYdi/sCKMPftP3QLDy5IwR84DZsaJ7QQM56
-         +PxuqJf70I5vtmJCpxvmtp98Nj+uD9l4Xc7GggtTMw++mMeoaLFLj0YNGiDoYW6R3GRD
-         50Jw==
+        d=gmail.com; s=20221208; t=1689417526; x=1692009526;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jzVUFE5m5MMdvjynFS+F6UK1wkrR/ZsRHjvGMN2vS2A=;
+        b=XGnZuUI/QNEIJAXqpt3rr9c6oQIUBZG0iaYdlnUlTyzFcd9rP55z3Ble8/f6eyrVgi
+         8m9d+LlvBM/3FU1CgIohgeNo9hbcuTzw2eQh1lYclk2+TfNLH12S7L+HCtHS8TWS8Y22
+         HJBkELHpQ2x09aT7aDtyuMxxICw4Ec4daDcoSrOx1KbqEXL6Y0YdHNeNG457ZXstaCUO
+         Nnis2DTJh2VZCPXgeNiLW67gJ7KYiaAb524xDU7SjCC3gdkJFAO+Wog0CcqWnD7fNSxG
+         zrhXMH0bwIYRXIx5ogibXzJTA9zZTcOk4uCM32dD7ipUKTEC+cHxKWaVBs4DQkHiERyX
+         /RSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689411566; x=1692003566;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1689417526; x=1692009526;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jVzDpPzXMTKp3Aa8vipAh6H4F7O8UB9k2aHYeoVs9y8=;
-        b=dG5q4/CnVG7S22mTc4Hk+DfY9z0NVYrdbaZsnMl3zHitmdoZudDaLVvnefuypv/6Jj
-         HEC0MJJg36AIamyzm+kAehTpRM3E6YT57pSR2P1Nj6236852zXalquM6CzKDboe9/wGA
-         u5VgOYYii/vt3WoBLtqlSiZLU8+GD9UeOjpMFlgM3IDSokrjBI0ex6At0gXBCQN3hOpt
-         lLpS8PWfJ9wTJibm2PHAP6bdeoF/mcgcLzpDUaYaQS0xD+EkAvaiYyE0dsnP38oAF/SY
-         JekCm1++VL0i9p7oRl8nQdKnSkfqtH9QmBKynqJK8qnYmZo8QN+WhhB07CjxPczu0b63
-         9HOw==
-X-Gm-Message-State: ABy/qLbHjvUMCKmMqY5/pfucvX+5Sk4bn275EGkuphyoZaAtsNMfbc6Y
-        QyaM+1eoQMXGyK5vNZ93Plc6aEVisyGnOw==
-X-Google-Smtp-Source: APBJJlE1hcZyMMwUCCV9RnNQBUqd7bT9RnOEgQ+V7n+hFiKdkS2G6cnhtVepQ+jp66+CWbutAoAJ0A==
-X-Received: by 2002:a5d:5706:0:b0:314:46af:e1e7 with SMTP id a6-20020a5d5706000000b0031446afe1e7mr7555680wrv.34.1689411565380;
-        Sat, 15 Jul 2023 01:59:25 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id f10-20020adff98a000000b003159d2dabbasm13125615wrr.94.2023.07.15.01.59.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Jul 2023 01:59:24 -0700 (PDT)
-Message-ID: <2e22a23f-576f-7a42-ace8-624a5362d9f4@gmail.com>
-Date:   Sat, 15 Jul 2023 09:59:23 +0100
+        bh=jzVUFE5m5MMdvjynFS+F6UK1wkrR/ZsRHjvGMN2vS2A=;
+        b=G5XuPX5QmVKRosrmMrPkv9M6B2IdfbwM6L2M4LaHOENNcfbPI6GRiVMoUrzQYTlhSN
+         hvHnqpRRWWRUWlh4OP53mgRQMS8FIrDC/aUrFgvUVrCkFeSTuve5JjPcI512RPeU02D0
+         ePOYHtpURZcS4KZWf0Doi3LRttCQ0D+MEMyWUAVIVjzeko/OGxhG8cnB9+BN+jftDt9x
+         MVhJlLfJNBUxZGbcvb5piz0wZkUw2iPE2BqZ3VEwDiqvYi4H1LJvg8g5IpkxKljMBJwx
+         3j/Upm380IhgFQC7oXhV5yB5TUBZXfVRccMWykYpl/gAt8tpwjKXKV02ldpwdzzUo8vR
+         yuPA==
+X-Gm-Message-State: ABy/qLb+SNtkkjQU9/My4ABYmS6exicu6NzTZpwPE5lY6MEMsa4cHlqD
+        E5gIo3TsERYXwlAE28ixScatC2531dc=
+X-Google-Smtp-Source: APBJJlGAzNlXOFz/2bPxPNGdvlIyIh5fMOJvlZ+QC2TMYcARO8NxQ3KuTHHnss7/DO3peVI1Y+Yqzw==
+X-Received: by 2002:a17:906:cd0e:b0:992:a90a:5d1f with SMTP id oz14-20020a170906cd0e00b00992a90a5d1fmr6927854ejb.68.1689417526188;
+        Sat, 15 Jul 2023 03:38:46 -0700 (PDT)
+Received: from localhost.localdomain (host-92-6-81-118.as13285.net. [92.6.81.118])
+        by smtp.gmail.com with ESMTPSA id um10-20020a170906cf8a00b0098e78ff1a87sm6592930ejb.120.2023.07.15.03.38.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Jul 2023 03:38:45 -0700 (PDT)
+From:   Andy Koppe <andy.koppe@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH] pretty: add %(decorate[:<options>]) format
+Date:   Sat, 15 Jul 2023 11:37:56 +0100
+Message-ID: <20230715103758.3862-1-andy.koppe@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] t2400: Fix test failures when using grep 2.5
-Content-Language: en-US
-To:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org
-References: <20230715025512.7574-1-jacobabel@nullpo.dev>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230715025512.7574-1-jacobabel@nullpo.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jocab
+This lists ref names in the same way as the %d decoration format, but
+allows all the otherwise fixed strings printed around the ref names to
+be customized, namely prefix, suffix, separator, the "tag:" annotation
+and the arrow used to show where HEAD points.
 
-On 15/07/2023 03:55, Jacob Abel wrote:
-> Replace all cases of `\s` with `[[:space:]]` as older versions of GNU
-> grep (and from what it seems most versions of BSD grep) do not handle
-> `\s`.
->
-> For the same reason all cases of `\S` are replaced with `[^[:space:]]`.
-> Replacing `\S` also needs to occur as `\S` is technically PCRE and not
-> part of ERE even though most modern versions of grep accept it as ERE.
+Examples:
+- %decorate(prefix=,suffix=) removes the enclosing parentheses, like %D.
+- %decorate(prefix=,suffix=,separator=,tag=,arrow=->) produces a
+  space-separated list without wrapping, tag annotations or spaces
+  around the arrow.
+- %(decorate:prefix=[,suffix=],separator=%x2C,arrow=%x2C,tag=) produces
+  a comma-separated list enclosed in square brackets where the arrow is
+  replaced by a comma as well.
 
-Thanks for working on this fix. Having looked at the changes I think it 
-would be better just be using a space character in a lot of these 
-expressions - see below.
+Add functions parse_decoration_option(), parse_decoration_options() and
+free_decoration_options() to help implement the format. Test it in
+t4205-log-pretty-formats.sh and document it in pretty-formats.txt.
 
-> Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
-> ---
-> This patch is in response to build failures on GGG's Cirrus CI
-> freebsd_12 build jobs[1] and was prompted by a discussion thread [2].
-> 
-> These failures seem to be caused by the behavior outlined in [3].
-> Weirdly however they only seem to occur on the FreeBSD CI but not the
-> Mac OS CI for some reason despite Mac OS using FreeBSD grep.
-> 
-> 1. https://github.com/gitgitgadget/git/pull/1550/checks?check_run_id=14949695859
-> 2. https://lore.kernel.org/git/CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-9zbqXMA@mail.gmail.com/
-> 3. https://stackoverflow.com/questions/4233159/grep-regex-whitespace-behavior
-> 
->   t/t2400-worktree-add.sh | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index 0ac468e69e..7f19bdabff 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -417,9 +417,9 @@ test_wt_add_orphan_hint () {
->   		grep "hint: If you meant to create a worktree containing a new orphan branch" actual &&
->   		if [ $use_branch -eq 1 ]
->   		then
-> -			grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" actual
-> +			grep -E "^hint:[[:space:]]+git worktree add --orphan -b [^[:space:]]+ [^[:space:]]+[[:space:]]*$" actual
+Refactor format_decorations() to take a struct decoration_options
+argument specifying those strings, whereby NULL entries select the
+default. Avoid emitting color sequences for empty strings.
 
-We know that "hint:" is followed by a single space and all we're really 
-interested in is that we print something after the "-b " so we can 
-simplify this to
+Wrap tag annotations in separate color sequences from tag names, because
+otherwise tag names can end up uncolored when %w width formatting breaks
+lines between annotation and name. Amend t4207-log-decoration-colors.sh
+accordingly.
 
-	grep "^hint: git worktree add --orphan -b [^ ]"
+Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
+---
+CI: https://github.com/ak2/git/actions/runs/5561647197
 
-I think the same applies to most of the other expressions changed in 
-this patch.
+ Documentation/pretty-formats.txt | 19 ++++++++-
+ log-tree.c                       | 69 ++++++++++++++++++++------------
+ log-tree.h                       | 17 ++++----
+ pretty.c                         | 62 +++++++++++++++++++++++++++-
+ t/t4205-log-pretty-formats.sh    | 21 ++++++++++
+ t/t4207-log-decoration-colors.sh | 32 +++++++++------
+ 6 files changed, 171 insertions(+), 49 deletions(-)
 
->   		else
-> -			grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
-> +			grep -E "^hint:[[:space:]]+git worktree add --orphan [^[:space:]]+[[:space:]]*$" actual
->   		fi
->   
->   	'
-> @@ -709,7 +709,7 @@ test_dwim_orphan () {
->   	local info_text="No possible source branch, inferring '--orphan'" &&
->   	local fetch_error_text="fatal: No local or remote refs exist despite at least one remote" &&
->   	local orphan_hint="hint: If you meant to create a worktree containing a new orphan branch" &&
-> -	local invalid_ref_regex="^fatal: invalid reference:\s\+.*" &&
-> +	local invalid_ref_regex="^fatal: invalid reference:[[:space:]]\+.*" &&
->   	local bad_combo_regex="^fatal: '[a-z-]\+' and '[a-z-]\+' cannot be used together" &&
->   
->   	local git_ns="repo" &&
-> @@ -998,8 +998,8 @@ test_dwim_orphan () {
->   					headpath=$(git $dashc_args rev-parse --sq --path-format=absolute --git-path HEAD) &&
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 3b71334459..c08aba15af 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -222,7 +222,22 @@ The placeholders are:
+ 	linkgit:git-rev-list[1])
+ '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+ '%D':: ref names without the " (", ")" wrapping.
+-'%(describe[:options])':: human-readable name, like
++'%(decorate[:<options>])':: ref names with custom decorations.
++			  The `decorate` string may be followed by a colon
++			  and zero or more comma-separated options.
++			  Option values may contain literal formatting codes.
++			  These must be used for commas (`%x2C`) and closing
++			  parentheses (`%x29`), due to their role in the option
++			  syntax.
+++
++** 'prefix=<value>': Shown before the list of ref names.  Defaults to " (".
++** 'suffix=<value>': Shown after the list of ref names.  Defaults to ")".
++** 'separator=<value>': Shown between ref names.  Defaults to ", ".
++** 'arrow=<value>': Shown between HEAD and the branch it points to, if any.
++		    Defaults to " \-> ".
++** 'tag=<value>': Shown before tag names. Defaults to "tag: ".
++
++'%(describe[:<options>])':: human-readable name, like
+ 			  linkgit:git-describe[1]; empty string for
+ 			  undescribable commits.  The `describe` string
+ 			  may be followed by a colon and zero or more
+@@ -281,7 +296,7 @@ endif::git-rev-list[]
+ '%gE':: reflog identity email (respecting .mailmap, see
+ 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ '%gs':: reflog subject
+-'%(trailers[:options])':: display the trailers of the body as
++'%(trailers[:<options>])':: display the trailers of the body as
+ 			  interpreted by
+ 			  linkgit:git-interpret-trailers[1]. The
+ 			  `trailers` string may be followed by a colon
+diff --git a/log-tree.c b/log-tree.c
+index f4b22a60cc..4b46884ef6 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -301,27 +301,34 @@ static void show_name(struct strbuf *sb, const struct name_decoration *decoratio
+ 
+ /*
+  * The caller makes sure there is no funny color before calling.
+- * format_decorations_extended makes sure the same after return.
++ * format_decorations ensures the same after return.
+  */
+-void format_decorations_extended(struct strbuf *sb,
++void format_decorations(struct strbuf *sb,
+ 			const struct commit *commit,
+ 			int use_color,
+-			const char *prefix,
+-			const char *separator,
+-			const char *suffix)
++			const struct decoration_options *opts)
+ {
+-	const struct name_decoration *decoration;
+-	const struct name_decoration *current_and_HEAD;
+-	const char *color_commit =
+-		diff_get_color(use_color, DIFF_COMMIT);
+-	const char *color_reset =
+-		decorate_get_color(use_color, DECORATION_NONE);
++	const char *color_commit, *color_reset;
++	const char *prefix, *suffix, *separator, *arrow, *tag;
++
++	const struct name_decoration *current_and_HEAD;
++	const struct name_decoration *decoration =
++		get_name_decoration(&commit->object);
+ 
+-	decoration = get_name_decoration(&commit->object);
+ 	if (!decoration)
+ 		return;
+ 
++	color_commit = diff_get_color(use_color, DIFF_COMMIT);
++	color_reset = decorate_get_color(use_color, DECORATION_NONE);
++
++	prefix = (opts && opts->prefix) ? opts->prefix : " (";
++	suffix = (opts && opts->suffix) ? opts->suffix : ")";
++	separator = (opts && opts->separator) ? opts->separator : ", ";
++	arrow = (opts && opts->arrow) ? opts->arrow : " -> ";
++	tag = (opts && opts->tag) ? opts->tag : "tag: ";
++
+ 	current_and_HEAD = current_pointed_by_HEAD(decoration);
++
+ 	while (decoration) {
+ 		/*
+ 		 * When both current and HEAD are there, only
+@@ -329,20 +336,29 @@ void format_decorations_extended(struct strbuf *sb,
+ 		 * appeared, skipping the entry for current.
+ 		 */
+ 		if (decoration != current_and_HEAD) {
+-			strbuf_addstr(sb, color_commit);
+-			strbuf_addstr(sb, prefix);
+-			strbuf_addstr(sb, color_reset);
+-			strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
+-			if (decoration->type == DECORATION_REF_TAG)
+-				strbuf_addstr(sb, "tag: ");
++			const char *color =
++				decorate_get_color(use_color, decoration->type);
+ 
++			if (*prefix) {
++				strbuf_addstr(sb, color_commit);
++				strbuf_addstr(sb, prefix);
++				strbuf_addstr(sb, color_reset);
++			}
++
++			if (*tag && decoration->type == DECORATION_REF_TAG) {
++				strbuf_addstr(sb, color);
++				strbuf_addstr(sb, tag);
++				strbuf_addstr(sb, color_reset);
++			}
++			strbuf_addstr(sb, color);
+ 			show_name(sb, decoration);
+ 
+-			if (current_and_HEAD &&
++			if (*arrow && current_and_HEAD &&
+ 			    decoration->type == DECORATION_REF_HEAD) {
+-				strbuf_addstr(sb, " -> ");
++				strbuf_addstr(sb, arrow);
+ 				strbuf_addstr(sb, color_reset);
+-				strbuf_addstr(sb, decorate_get_color(use_color, current_and_HEAD->type));
++				strbuf_addstr(sb, decorate_get_color(
++					use_color, current_and_HEAD->type));
+ 				show_name(sb, current_and_HEAD);
+ 			}
+ 			strbuf_addstr(sb, color_reset);
+@@ -351,9 +367,12 @@ void format_decorations_extended(struct strbuf *sb,
+ 		}
+ 		decoration = decoration->next;
+ 	}
+-	strbuf_addstr(sb, color_commit);
+-	strbuf_addstr(sb, suffix);
+-	strbuf_addstr(sb, color_reset);
++
++	if (*suffix) {
++		strbuf_addstr(sb, color_commit);
++		strbuf_addstr(sb, suffix);
++		strbuf_addstr(sb, color_reset);
++	}
+ }
+ 
+ void show_decorations(struct rev_info *opt, struct commit *commit)
+@@ -368,7 +387,7 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
+ 	}
+ 	if (!opt->show_decorations)
+ 		return;
+-	format_decorations(&sb, commit, opt->diffopt.use_color);
++	format_decorations(&sb, commit, opt->diffopt.use_color, NULL);
+ 	fputs(sb.buf, opt->diffopt.file);
+ 	strbuf_release(&sb);
+ }
+diff --git a/log-tree.h b/log-tree.h
+index e7e4641cf8..39ab06a3ca 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -13,17 +13,20 @@ struct decoration_filter {
+ 	struct string_list *exclude_ref_config_pattern;
+ };
+ 
++struct decoration_options {
++	char *prefix;
++	char *suffix;
++	char *separator;
++	char *arrow;
++	char *tag;
++};
++
+ int parse_decorate_color_config(const char *var, const char *slot_name, const char *value);
+ int log_tree_diff_flush(struct rev_info *);
+ int log_tree_commit(struct rev_info *, struct commit *);
+ void show_log(struct rev_info *opt);
+-void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
+-			     int use_color,
+-			     const char *prefix,
+-			     const char *separator,
+-			     const char *suffix);
+-#define format_decorations(strbuf, commit, color) \
+-			     format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
++void format_decorations(struct strbuf *sb, const struct commit *commit,
++			int use_color, const struct decoration_options *opts);
+ void show_decorations(struct rev_info *opt, struct commit *commit);
+ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			     const char **extra_headers_p,
+diff --git a/pretty.c b/pretty.c
+index 0bb938021b..a59b7f0dbc 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1373,6 +1373,46 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
+ 	return arg - start;
+ }
+ 
++
++static int parse_decoration_option(const char **arg,
++				   const char *name,
++				   char **opt)
++{
++	const char *argval;
++	size_t arglen;
++
++	if (match_placeholder_arg_value(*arg, name, arg, &argval, &arglen)) {
++		char *val = xstrndup(argval, arglen);
++		struct strbuf sb = STRBUF_INIT;
++
++		strbuf_expand(&sb, val, strbuf_expand_literal_cb, NULL);
++		free(val);
++		*opt = strbuf_detach(&sb, NULL);
++		return 1;
++	}
++	return 0;
++}
++
++static void parse_decoration_options(const char **arg,
++				     struct decoration_options *opts)
++{
++	while (parse_decoration_option(arg, "prefix", &opts->prefix) ||
++	       parse_decoration_option(arg, "suffix", &opts->suffix) ||
++	       parse_decoration_option(arg, "separator", &opts->separator) ||
++	       parse_decoration_option(arg, "arrow", &opts->arrow) ||
++	       parse_decoration_option(arg, "tag", &opts->tag))
++		;
++}
++
++static void free_decoration_options(const struct decoration_options *opts)
++{
++	free(opts->prefix);
++	free(opts->suffix);
++	free(opts->separator);
++	free(opts->arrow);
++	free(opts->tag);
++}
++
+ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 				const char *placeholder,
+ 				void *context)
+@@ -1526,10 +1566,11 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		strbuf_addstr(sb, get_revision_mark(NULL, commit));
+ 		return 1;
+ 	case 'd':
+-		format_decorations(sb, commit, c->auto_color);
++		format_decorations(sb, commit, c->auto_color, NULL);
+ 		return 1;
+ 	case 'D':
+-		format_decorations_extended(sb, commit, c->auto_color, "", ", ", "");
++		format_decorations(sb, commit, c->auto_color,
++				   &(struct decoration_options){"", ""});
+ 		return 1;
+ 	case 'S':		/* tag/branch like --source */
+ 		if (!(c->pretty_ctx->rev && c->pretty_ctx->rev->sources))
+@@ -1627,6 +1668,23 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		return 2;
+ 	}
+ 
++	if (skip_prefix(placeholder, "(decorate", &arg)) {
++		struct decoration_options opts = { NULL };
++		size_t ret = 0;
++
++		if (*arg == ':') {
++			arg++;
++			parse_decoration_options(&arg, &opts);
++		}
++		if (*arg == ')') {
++			format_decorations(sb, commit, c->auto_color, &opts);
++			ret = arg - placeholder + 1;
++		}
++
++		free_decoration_options(&opts);
++		return ret;
++	}
++
+ 	/* For the rest we have to parse the commit header. */
+ 	if (!c->commit_header_parsed) {
+ 		msg = c->message =
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 4cf8a77667..5ea937648a 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -576,6 +576,27 @@ test_expect_success 'clean log decoration' '
+ 	test_cmp expected actual1
+ '
+ 
++test_expect_success 'pretty format %decorate' '
++	git checkout -b foo &&
++	git commit --allow-empty -m "new commit" &&
++	git tag bar &&
++	git branch qux &&
++	echo " (HEAD -> foo, tag: bar, qux)" >expect1 &&
++	git log --format="%(decorate)" -1 >actual1 &&
++	test_cmp expect1 actual1 &&
++	echo "HEAD -> foo, tag: bar, qux" >expect2 &&
++	git log --format="%(decorate:prefix=,suffix=)" -1 >actual2 &&
++	test_cmp expect2 actual2 &&
++	echo "HEAD->foo bar qux" >expect3 &&
++	git log --format="%(decorate:prefix=,suffix=,separator= ,arrow=->,tag=)" \
++		-1 >actual3 &&
++	test_cmp expect3 actual3 &&
++	echo "[HEAD,foo,bar,qux]" >expect4 &&
++	git log --format="%(decorate:prefix=[,suffix=],separator=%x2C,arrow=%x2C,tag=)" \
++		-1 >actual4 &&
++	test_cmp expect4 actual4
++'
++
+ cat >trailers <<EOF
+ Signed-off-by: A U Thor <author@example.com>
+ Acked-by: A U Thor <author@example.com>
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index ded33a82e2..3a4eedc494 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -55,13 +55,15 @@ test_expect_success 'commit decorations colored correctly' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+ ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+-${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
++${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A1${c_reset}${c_commit}, \
+ ${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit})${c_reset} A1
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset} \
+-On main: Changes to A.t
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_stash}refs/stash${c_reset}${c_commit})${c_reset} On main: Changes to A.t
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always --all >actual &&
+@@ -78,10 +80,12 @@ test_expect_success 'test coloring with replace-objects' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+ ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: D${c_reset}${c_commit})${c_reset} D
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: C${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}D${c_reset}${c_commit})${c_reset} D
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}C${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} B
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always HEAD >actual &&
+@@ -102,11 +106,13 @@ test_expect_success 'test coloring with grafted commit' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+ ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: D${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}D${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} D
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always HEAD >actual &&
+-- 
+2.41.0
 
-I'm a bit confused by the --sq here - why does it need to be shell 
-quoted when it is always used inside double quotes? Also when the 
-reftable backend is used I'm not sure that HEAD is actually a file in 
-$GIT_DIR anymore (that's less of an issue at the moment as that backend 
-is not is use yet).
-
->   					headcontents=$(cat "$headpath") &&
->   					grep "HEAD points to an invalid (or orphaned) reference" actual &&
-> -					grep "HEAD path:\s*.$headpath." actual &&
-> -					grep "HEAD contents:\s*.$headcontents." actual &&
-> +					grep "HEAD path:[[:space:]]*.$headpath." actual &&
-> +					grep "HEAD contents:[[:space:]]*.$headcontents." actual &&
-
-Using grep like this makes it harder to debug test failures as one has 
-to run the test with "-x" in order to try and figure out which grep 
-actually failed. I think here we can replace the sequence of "grep"s 
-with "test_cmp"
-
-	cat >expect <<-EOF &&
-	HEAD points to an invalid (or orphaned) reference
-	HEAD path: $headpath
-	HEAD contents: $headcontents
-	EOF
-
-	test_cmp expect actual
-
-Best Wishes
-
-Phillip
-
->   					grep "$orphan_hint" actual &&
->   					! grep "$info_text" actual
->   				fi &&
-> 
-> base-commit: 830b4a04c45bf0a6db26defe02ed1f490acd18ee
