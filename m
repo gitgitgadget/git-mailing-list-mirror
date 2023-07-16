@@ -2,236 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BED4EB64DA
-	for <git@archiver.kernel.org>; Sun, 16 Jul 2023 03:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ECC1C0015E
+	for <git@archiver.kernel.org>; Sun, 16 Jul 2023 08:17:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbjGPDiz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Jul 2023 23:38:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56530 "EHLO
+        id S230023AbjGPIRm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Jul 2023 04:17:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjGPDiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2023 23:38:54 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E8E010FE
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 20:38:51 -0700 (PDT)
-Date:   Sun, 16 Jul 2023 03:38:42 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail; t=1689478726; x=1689737926;
-        bh=fStHEA2J75ZxI8IZrYPWbEJYbXV6Ix+OqkJnjF2v2sg=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=ZxmmcgfgkcPdjpFwZ1AdOK1lqwsrlXji7XhtjgPTxIIty37BmrwUq/AJkTDeAQWFt
-         /NhSG8paT+DLUzUXb683zZokb65A52b4KuZ7jMLZ+9svMlJaj+j946DPMGh2WRvFcf
-         aglmSfa5OFsFtOcIoLcAY0XHw+MXfoXwZJsPC7PbXwyobOI1GXfD/t/ZVxtXpgzEJ0
-         ZqZ7bJL+4rji5y0y8WNiqFNpnFnIZ65korrhaC4/Rizh/7RPPea4ibZSSQCk6ecKMi
-         +vowxWRm2SfUYGCREQrsr5uTwfQLABuJLpPdKTRP5lmxx19TsOO5sAJOXX4Bo6ZeQG
-         Z2vzaP9a+S8tA==
-To:     git@vger.kernel.org
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2] t2400: Fix test failures when using grep 2.5
-Message-ID: <20230716033743.18200-1-jacobabel@nullpo.dev>
-In-Reply-To: <20230715025512.7574-1-jacobabel@nullpo.dev>
-References: <20230715025512.7574-1-jacobabel@nullpo.dev>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S229462AbjGPIRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jul 2023 04:17:41 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A58D118F
+        for <git@vger.kernel.org>; Sun, 16 Jul 2023 01:17:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1689495456; x=1690100256; i=l.s.r@web.de;
+ bh=T/CAd4a0WPrA5SMb12JFEVN7BZrv+HfDdPGsWkX4FaA=;
+ h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+ b=sbYiSmqljXsPLjs/b9uC16YCipaoXk7uuvsD2ntyrzHzHwlUO/7T/pvAT1xA9gwf4dIcWVi
+ nM1jjp6rbW00qOsG30TWGYoafsIxRaNeviiTtNcnADLVJMLPST3ReRMli51wrbk/3bn34HroI
+ gX1ZCOcloVNSsz+ssXYzlmGIRWacB5m6d/y83XmSsO/Zi3aVRUav/0iRJsJYlUsr5NXeMoaPq
+ HSQcifeiVHAN9VUR9CeKp4dWYtQ7QvKmQCeJlMcnVjw5A2LtsSc42fmkf3UDqi1CK6ia/snEu
+ ZpMSr2fVbc5xoXcYf8OAsc5uZbKtZyXdCTklkpsUGBL6GQkhjZjg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.154.247]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N79RG-1ptMya0J2q-017O45; Sun, 16
+ Jul 2023 10:17:36 +0200
+Message-ID: <cbc22750-af93-9274-2ed4-6dfd356568e8@web.de>
+Date:   Sun, 16 Jul 2023 10:17:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Kousik Sanagavarapu <five231003@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Jaydeep Das <jaydeepjd.8914@gmail.com>,
+        Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] t6300: fix setup with GPGSSH but without GPG
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:7tLtNQc37lE/FS/ghe1nxUBGD3ihaaqIRZQ0pJTW+KDjFvp/SGh
+ yqwt0BVAqAMuHXuv69aZ7tbPUazMw+ULUuxa2Wmt2m3GBj/LmjwsXn3nVvQFy9rmPIkw5Tx
+ pBfhxaiJw5bvhVkQXYoA+/XYcFdBPMzUyQ1Gf6KwU976i4Astutr6j1OgpsD+a8sdJrTTGu
+ kFmvjqohYxqLMWBsb2vkQ==
+UI-OutboundReport: notjunk:1;M01:P0:WOAtI//leN8=;dnqOS2nsRW+qIEQ5AG+rEfjj94C
+ UrQIwO+5ggYGXcdzV6KAIJGvzAKDWVLwzKrFb8RR+lE6/CXe5V/jD+kB15i/Kyg//SE8IgW25
+ qu5BDAae7N6fDktpK11/b6uJLFVXqX6nZ0oH8zWqLtsYzkGcWu7buAoHFEQplw5Mmq8j1vRLM
+ WhSLkAGt9bcFVpQnF4g2ooz/E1BE16UrfL33Qcsz8iQG6IUr5eoNV8ojuRBei8ANduiL6ATTr
+ 2wTOXYDDxYaqGhpXgDQzd8GmQU3PQVxDIdXiUTPGGZuvoFBcAJ0wsNsznR9q4MraA859IurXW
+ ev80caSFnFHFEwy8I91RSrn9L1eD44xxQzwQ7YFkQlpxIdvzspu0P9qWvjA2M9KFQZcwxH5e7
+ Y6B4w0RgzQB8R1N1Hp/JqhPkRGNnoohxDNQhSgcqnnTf3QG1xdLZ/0tF+/Ph3YfteCZxwhtco
+ jwJCDeQio4PxKNTO7qN5SzYYEmuhpQpI6B3+AEMjYRNcRaFtbhCdzf/nedEhonCfJeuK4/Tsd
+ aguJPN9MY61INGhwIze4fUCwEbEAAYfhEaGtp+yJI+ru+hWG4qjtci/0KXTGFOrizofMSYRz8
+ kBtSFMBRpjNSkBlcw5GfL8K+NMT6GVbQI6hKatt/F0mlh2ManixH5Uojx9WYHi10YwaJC5Y0q
+ OI2kf9qhHV8zw3TP1wTJ1sW6QUL+lj5hNGlBNzMEqctw91U1+mHSW3wzau/QqVkOG2J3iTDXs
+ hmHuk2ZvK51OmSXhLJbq6wJzhQ+OaqlfG9ss8Y39VEwlFz90Ohk2bjpyibnqt+DHO9AroDP47
+ aUX+2VeyxGOu7UZZqnYYy9jeZs/jFAjMq77yrt8R2SgRZ3rgDn5JIC0RpQ6t4THFe+06J+FDF
+ drdCAtFClIgt/B4trI64aoaWhT9d0lcbjQqur+wvDFScd0tBEYlWhmQqcLI3eWOoTo9ovq817
+ ypzsXqJYdCzjNMWB4bK/7WHGeOo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace all cases of `\s` with `[[:blank:]]` or ` ` as older versions
-of GNU grep (and from what it seems most versions of BSD grep) do not
-handle `\s`.
+In a test introduced by 26c9c03f0a (ref-filter: add new "signature"
+atom, 2023-06-04) the file named "file" is added by a setup step that
+requires GPG and modified by a second setup step that requires GPGSSH.
+Systems lacking the first prerequisite skip the initial setup step and
+then "git commit -a" in the second one doesn't find the modified file.
+Add it explicitly.
 
-For the same reason all cases of `\S` are replaced with `[^ ]`. It's not
-an exact replacement (as it does not match tabs) but it is close enough
-for this use case.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t6300-for-each-ref.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Replacing `\S` also needs to occur as `\S` is technically PCRE and not
-part of ERE even though most modern versions of grep accept it as ERE.
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 6e6ec852b5..1180c3254c 100755
+=2D-- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -1584,7 +1584,8 @@ test_expect_success GPGSSH 'setup for signature atom=
+ using ssh' '
+ 	test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
+ 	echo "8" >file &&
+ 	test_tick &&
+-	git commit -a -S -m "file: 8" &&
++	git add file &&
++	git commit -S -m "file: 8" &&
+ 	git tag eighth-signed-ssh
+ '
 
-This commit also drops `--sq` from a rev-parse call as it appears to be
-a no-op.
-
-Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
----
-This patch is in response to build failures on GGG's Cirrus CI=20
-freebsd_12 build jobs[1] and was prompted by a discussion thread [2].
-These failures seem to be caused by the behavior outlined in [3].=20
-
-Changes from v1:
-  * Change `[[:space:]]` to ` ` where possible and `[[:blank:]]`=20
-    (tabs and spaces) otherwise as it is more accurate than `[[:space:]]` [=
-4].
-  * Change `[^[:space:]]` to `[^ ]` [4]. Technically `[^[:blank:]]` would b=
-e
-    more accurate but tabs shouldn't be present where this `[^ ]` is used.
-  * Drop `--sq` from rev-parse [4] (after further discussion [5]).
-  * Update commit message to match changes.
-
-1. https://github.com/gitgitgadget/git/pull/1550/checks?check_run_id=3D1494=
-9695859
-2. https://lore.kernel.org/git/CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-=
-9zbqXMA@mail.gmail.com/
-3. https://stackoverflow.com/questions/4233159/grep-regex-whitespace-behavi=
-or
-4. https://lore.kernel.org/git/vn5sylull5lqpitsanlyan5fafxj5dhrxgo6k65c462d=
-hqjbno@uwghfyfdixtk/
-5. https://lore.kernel.org/git/bj27nq5aputhd66rkqer37vuc7qogpmn6nqyusladdy4=
-k5it7k@u3yvvivrixsy/
-
-Range-diff against v1:
-1:  39f57add45 ! 1:  ef4ebd7350 t2400: Fix test failures when using grep 2.=
-5
-    @@ Metadata
-      ## Commit message ##
-         t2400: Fix test failures when using grep 2.5
-    =20
-    -    Replace all cases of `\s` with `[[:space:]]` as older versions of =
-GNU
-    -    grep (and from what it seems most versions of BSD grep) do not han=
-dle
-    -    `\s`.
-    +    Replace all cases of `\s` with `[[:blank:]]` or ` ` as older versi=
-ons
-    +    of GNU grep (and from what it seems most versions of BSD grep) do =
-not
-    +    handle `\s`.
-    +
-    +    For the same reason all cases of `\S` are replaced with `[^ ]`. It=
-'s not
-    +    an exact replacement (as it does not match tabs) but it is close e=
-nough
-    +    for this use case.
-    =20
-    -    For the same reason all cases of `\S` are replaced with `[^[:space=
-:]]`.
-         Replacing `\S` also needs to occur as `\S` is technically PCRE and=
- not
-         part of ERE even though most modern versions of grep accept it as =
-ERE.
-    =20
-    +    This commit also drops `--sq` from a rev-parse call as it appears =
-to be
-    +    a no-op.
-    +
-         Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
-    =20
-      ## t/t2400-worktree-add.sh ##
-    @@ t/t2400-worktree-add.sh: test_wt_add_orphan_hint () {
-      =09=09if [ $use_branch -eq 1 ]
-      =09=09then
-     -=09=09=09grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" =
-actual
-    -+=09=09=09grep -E "^hint:[[:space:]]+git worktree add --orphan -b [^[:=
-space:]]+ [^[:space:]]+[[:space:]]*$" actual
-    ++=09=09=09grep -E "^hint:[[:blank:]]+git worktree add --orphan -b [^ ]=
-+ [^ ]+$" actual
-      =09=09else
-     -=09=09=09grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
-    -+=09=09=09grep -E "^hint:[[:space:]]+git worktree add --orphan [^[:spa=
-ce:]]+[[:space:]]*$" actual
-    ++=09=09=09grep -E "^hint:[[:blank:]]+git worktree add --orphan [^ ]+$"=
- actual
-      =09=09fi
-     =20
-      =09'
-    @@ t/t2400-worktree-add.sh: test_dwim_orphan () {
-      =09local fetch_error_text=3D"fatal: No local or remote refs exist des=
-pite at least one remote" &&
-      =09local orphan_hint=3D"hint: If you meant to create a worktree conta=
-ining a new orphan branch" &&
-     -=09local invalid_ref_regex=3D"^fatal: invalid reference:\s\+.*" &&
-    -+=09local invalid_ref_regex=3D"^fatal: invalid reference:[[:space:]]\+=
-.*" &&
-    ++=09local invalid_ref_regex=3D"^fatal: invalid reference: .*" &&
-      =09local bad_combo_regex=3D"^fatal: '[a-z-]\+' and '[a-z-]\+' cannot =
-be used together" &&
-     =20
-      =09local git_ns=3D"repo" &&
-     @@ t/t2400-worktree-add.sh: test_dwim_orphan () {
-    - =09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --sq --path-for=
-mat=3Dabsolute --git-path HEAD) &&
-    + =09=09=09=09=09grep "$invalid_ref_regex" actual &&
-    + =09=09=09=09=09! grep "$orphan_hint" actual
-    + =09=09=09=09else
-    +-=09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --sq --path-for=
-mat=3Dabsolute --git-path HEAD) &&
-    ++=09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --path-format=
-=3Dabsolute --git-path HEAD) &&
-      =09=09=09=09=09headcontents=3D$(cat "$headpath") &&
-      =09=09=09=09=09grep "HEAD points to an invalid (or orphaned) referenc=
-e" actual &&
-     -=09=09=09=09=09grep "HEAD path:\s*.$headpath." actual &&
-     -=09=09=09=09=09grep "HEAD contents:\s*.$headcontents." actual &&
-    -+=09=09=09=09=09grep "HEAD path:[[:space:]]*.$headpath." actual &&
-    -+=09=09=09=09=09grep "HEAD contents:[[:space:]]*.$headcontents." actua=
-l &&
-    ++=09=09=09=09=09grep "HEAD path: .$headpath." actual &&
-    ++=09=09=09=09=09grep "HEAD contents: .$headcontents." actual &&
-      =09=09=09=09=09grep "$orphan_hint" actual &&
-      =09=09=09=09=09! grep "$info_text" actual
-      =09=09=09=09fi &&
-
- t/t2400-worktree-add.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 0ac468e69e..1b693dfca9 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -417,9 +417,9 @@ test_wt_add_orphan_hint () {
- =09=09grep "hint: If you meant to create a worktree containing a new orpha=
-n branch" actual &&
- =09=09if [ $use_branch -eq 1 ]
- =09=09then
--=09=09=09grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" actua=
-l
-+=09=09=09grep -E "^hint:[[:blank:]]+git worktree add --orphan -b [^ ]+ [^ =
-]+$" actual
- =09=09else
--=09=09=09grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
-+=09=09=09grep -E "^hint:[[:blank:]]+git worktree add --orphan [^ ]+$" actu=
-al
- =09=09fi
-=20
- =09'
-@@ -709,7 +709,7 @@ test_dwim_orphan () {
- =09local info_text=3D"No possible source branch, inferring '--orphan'" &&
- =09local fetch_error_text=3D"fatal: No local or remote refs exist despite =
-at least one remote" &&
- =09local orphan_hint=3D"hint: If you meant to create a worktree containing=
- a new orphan branch" &&
--=09local invalid_ref_regex=3D"^fatal: invalid reference:\s\+.*" &&
-+=09local invalid_ref_regex=3D"^fatal: invalid reference: .*" &&
- =09local bad_combo_regex=3D"^fatal: '[a-z-]\+' and '[a-z-]\+' cannot be us=
-ed together" &&
-=20
- =09local git_ns=3D"repo" &&
-@@ -995,11 +995,11 @@ test_dwim_orphan () {
- =09=09=09=09=09grep "$invalid_ref_regex" actual &&
- =09=09=09=09=09! grep "$orphan_hint" actual
- =09=09=09=09else
--=09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --sq --path-format=
-=3Dabsolute --git-path HEAD) &&
-+=09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --path-format=3Dabso=
-lute --git-path HEAD) &&
- =09=09=09=09=09headcontents=3D$(cat "$headpath") &&
- =09=09=09=09=09grep "HEAD points to an invalid (or orphaned) reference" ac=
-tual &&
--=09=09=09=09=09grep "HEAD path:\s*.$headpath." actual &&
--=09=09=09=09=09grep "HEAD contents:\s*.$headcontents." actual &&
-+=09=09=09=09=09grep "HEAD path: .$headpath." actual &&
-+=09=09=09=09=09grep "HEAD contents: .$headcontents." actual &&
- =09=09=09=09=09grep "$orphan_hint" actual &&
- =09=09=09=09=09! grep "$info_text" actual
- =09=09=09=09fi &&
---=20
-2.39.3
-
-
+=2D-
+2.41.0
