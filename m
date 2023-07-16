@@ -2,76 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F744C0015E
-	for <git@archiver.kernel.org>; Sun, 16 Jul 2023 02:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D2BDC0015E
+	for <git@archiver.kernel.org>; Sun, 16 Jul 2023 02:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjGPCwA convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 15 Jul 2023 22:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53650 "EHLO
+        id S229768AbjGPC4J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Jul 2023 22:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjGPCv7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2023 22:51:59 -0400
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F28198
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 19:51:56 -0700 (PDT)
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-bfe6ea01ff5so3407908276.3
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 19:51:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689475916; x=1692067916;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Hc9k9C7ymiehKXMDehFin40/q0EAKVhmsodnLI80FVQ=;
-        b=S0OwnqVeIU8TxiT9hBJ1gC0i2mAzZUZoM2qhOu8E6TOelra/zzM6mBGgvPd9ufAxGo
-         lXqLaC9JExrwYXy+L+WLFiIeKNk3vKrxAoGaur39ndFi1ZfapWwXc27AZOAac129TsGQ
-         TCHs6Ix5dtKL29gGS4R2YKhjn1Nj/Kvpvg3Vji4AaQ3W6ARuHINvx0bHR+qxfoaiO3vU
-         /4EeujO+n6k2qLx+fn20X8F0j6FXZPjqGU2lZ54V2y8jDr6I1uqDxKAvBhesy5Q/ann3
-         BqZ2t/eAqvrei5/wW5zNvfPuctE3zdb+aBW/rO5jW0oqKt554X4NAD6+CcUrj9jX0tyT
-         eQGw==
-X-Gm-Message-State: ABy/qLb9lPRm/Je8Pbduw1PACj+xieHV9pgxM2SmQm0ICWPmmGIpHZws
-        HIAR7Xo1cT8moxR4en/Y9fQkJdQjKvj+rz2/qSk=
-X-Google-Smtp-Source: APBJJlFfyo1VeLVTMmveZGk8VWzob7RBhzpRQdy0YdoC7dNYC1g+Tudd5fNIXvS4lFxmdvfit55dn9pS8dyFMYvQAhA=
-X-Received: by 2002:a25:cf57:0:b0:c90:4ee8:31c2 with SMTP id
- f84-20020a25cf57000000b00c904ee831c2mr9567986ybg.59.1689475916109; Sat, 15
- Jul 2023 19:51:56 -0700 (PDT)
+        with ESMTP id S229451AbjGPC4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2023 22:56:08 -0400
+Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3631C197
+        for <git@vger.kernel.org>; Sat, 15 Jul 2023 19:56:06 -0700 (PDT)
+Date:   Sun, 16 Jul 2023 02:55:56 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail; t=1689476163; x=1689735363;
+        bh=PxbIT2sbO8Pi6zKMTxA9KopUSacU1xVzjenLErcALes=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=F0gk101P8HalKoStzY2CUktuEc3Lq5shHi0zR/yP6rD/ecLFfR2GzhJyDhWT8inPr
+         hNRLxeQqgTdb+zRTvuAYNBQbxxKdrZjrxhOgNDH/ZhdJ57+GhUJV0fUEXjfY9LS2um
+         Ri8lbDjMxGzORVjueoNIdobTuvX2bh/slSZOEUMLOkR34MY55/AtckZ4SBZg+9ROTH
+         +9lW2qJES9+mpH3el3WGfEXgntYQ2JDGLjUhxP7DbJzWIYourR3c9vkuIj9/x6UMUi
+         Y3Oid4+LObJrO5C55Qnoi6z89QDaKpUNKISO55ScJwAVjlaR1L1N8LQFcUZXJXEzLl
+         7Rmcu6LxRf6Ow==
+To:     Junio C Hamano <gitster@pobox.com>
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: [PATCH] t2400: Fix test failures when using grep 2.5
+Message-ID: <bj27nq5aputhd66rkqer37vuc7qogpmn6nqyusladdy4k5it7k@u3yvvivrixsy>
+In-Reply-To: <xmqqilakll2m.fsf@gitster.g>
+References: <20230715025512.7574-1-jacobabel@nullpo.dev> <2e22a23f-576f-7a42-ace8-624a5362d9f4@gmail.com> <vn5sylull5lqpitsanlyan5fafxj5dhrxgo6k65c462dhqjbno@uwghfyfdixtk> <xmqqilakll2m.fsf@gitster.g>
+Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
-References: <CALnO6CDryTsguLshcQxx97ZxyY42Twu2hC2y1bLOsS-9zbqXMA@mail.gmail.com>
- <CALnO6CCc-J+fe9qKaoyYUMM3xMEUnV5w7NKWSbn6xTgEjbac5w@mail.gmail.com>
- <xmqqfs5ro8v7.fsf@gitster.g> <356tacvizwbtwigdkz4byrrzsyjuktcb7cxaibf6wjocffgycp@iwhmszuuvzpl>
- <CAPig+cRMXJkrEgyVtC0u2QK=5QNnJOQnXBU_rE+JiGufEYH9sg@mail.gmail.com> <dk2fndv5aqshkgvfq55mrr5chdouenszedugyjoezcuatrsmn6@vqyih7nbqwbu>
-In-Reply-To: <dk2fndv5aqshkgvfq55mrr5chdouenszedugyjoezcuatrsmn6@vqyih7nbqwbu>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 15 Jul 2023 22:51:45 -0400
-Message-ID: <CAPig+cRUOMSUzb95nnDPRnPN0TyDY93E4EdMp9zxTmnOfc8vKg@mail.gmail.com>
-Subject: Re: t2400 on freebsd12
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 11:02 PM Jacob Abel <jacobabel@nullpo.dev> wrote:
-> On 23/07/14 12:19PM, Eric Sunshine wrote:
-> > I haven't been following this thread closely, but I wonder if the
-> > `grep` introduced by patch [3/8] of the cited patch series is
-> > problematic:
+On 23/07/15 06:08PM, Junio C Hamano wrote:
+> Jacob Abel <jacobabel@nullpo.dev> writes:
+>=20
+> >> > @@ -998,8 +998,8 @@ test_dwim_orphan () {
+> >> >   =09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --sq --path-=
+format=3Dabsolute --git-path HEAD) &&
+> >>
+> >> I'm a bit confused by the --sq here - why does it need to be shell
+> >> quoted when it is always used inside double quotes?
 > >
-> >     grep -E "fatal:( options)? .* cannot be used together" actual
->
-> Thank you for this insight. It didn't end up being exactly this issue
-> but it seems to be a grep issue nonetheless. I've submitted a
-> patch [1] which should resolve the issue (I tested it on a freebsd12
-> VM locally).
->
-> The TLDR of the issue is that grep 2.5 (GNU or BSD) doesn't seem to
-> recognise `\s` (or its inverted counterpart) as ERE but newer GNU (and
-> potentially other) grep versions do.
+> > To be honest I can't remember if this specifically needs to be in
+> > quotes or not however I had a lot of trouble during the development of
+> > that patchset with things escaping quotes and causing breakages in the
+> > tests so if it isn't currently harmful I'd personally prefer to leave
+> > it as is.
+>=20
+> Quoting is sometimes tricky enough that "this happens to work for me
+> but I do not know why it works" is asking for trouble in somebody
+> else's environment.  If the form in the patch is correct, but tricky
+> for others to understand, you'd need to pick it apart and document
+> how it works (and if you cannot do so, ask for help by somebody who
+> can, or simplify it enough so that you can explain it yourself).
 
-That's great to hear. Thanks for digging into this and submitting a fix.
+Yes Apologies. That was kind of a cop-out on my part as I was hesitant
+to add additional changes that could potentially introduce new issues
+to this patch as it is already addressing a fairly obscure issue.
 
-(The FreeBSD 12 VM I created with the idea of investigating this is
-now unnecessary.)
+>=20
+>     headpath=3D$(git $dashc_args rev-parse --sq --path-format=3Dabsolute =
+--git-path HEAD) &&
+>=20
+> In this case, "--sq" is a noop that only confuses readers, I think,
+> and I would drop it if I were you.  "--git-path HEAD" is given by
+> this call chain:
+>=20
+>    builtin/rev-parse.c:cmd_rev_parse()
+>    -> builtin/rev-parse.c:print_path()
+>       -> transform path depending on the path format
+>          -> puts()
+>=20
+> and nowhere in this chain "output_sq" (which is set by "--sq") is
+> even checked.  The transformations are all about relative, prefix,
+> etc., and never about quoting.
+
+Understood. I tried running it with `--sq` removed and it seems to
+work as you and Phillip expected so I'm adding that to v2.
+
+>=20
+> The original test script t2400 (before your patch) does look crappy
+> with full of long lines and coding style violations (none of which
+> is your fault), and it may need to be cleaned up once this patch
+> settles.
+>=20
+> Thanks.
+
+I may give that cleanup a shot some time down the line if nobody else
+takes a crack at it first.
+
