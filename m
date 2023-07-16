@@ -2,96 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB8F1C001B0
-	for <git@archiver.kernel.org>; Sun, 16 Jul 2023 01:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CA5C001B0
+	for <git@archiver.kernel.org>; Sun, 16 Jul 2023 01:15:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbjGPBIm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Jul 2023 21:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45440 "EHLO
+        id S229663AbjGPBPo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Jul 2023 21:15:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbjGPBIl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2023 21:08:41 -0400
+        with ESMTP id S229539AbjGPBPn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2023 21:15:43 -0400
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0868271E
-        for <git@vger.kernel.org>; Sat, 15 Jul 2023 18:08:40 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8061E271E
+        for <git@vger.kernel.org>; Sat, 15 Jul 2023 18:15:42 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0155D21375;
-        Sat, 15 Jul 2023 21:08:38 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 330D921419;
+        Sat, 15 Jul 2023 21:15:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tpqERKh4Hzu6HLwuN/h6jKO4WiwPlQ9ui3awP2
-        F6mug=; b=OHcW1eprQLpJtLI1Yl0VIR1OW50oHu2iIxasqmYj10HJqpyrrUljJA
-        mQQG6d80Z+FnnnDIKtR/oB700sefmib8s3hnESTjDoukrirZ6Eabu6VuCiw/Y2ZZ
-        wT4Lw+miG0LJS3Lxn03wDRV8Eq8mcsfOxYSli6bGUcMPe6G/gjzQY=
+        :content-type; s=sasl; bh=dHIHXH51Y5DlHC2qOTdtTDG1mt0WF6JRPHRZrg
+        ywMCI=; b=ig/5wJNfcm/lsablxJ+viw3EoFs5I9kBTo+3eyTwnEcatjxaOl5zRo
+        bJHU9RKT52T/I77thXTbyTO1C8VcmrB44Mp0bgFrSRTbxQnnAdINOw58sQ0lnHsV
+        5x8e8XQocdF9b5PJvAWAysP+D0GXHHbYq37VfmgkWTbE7g9rFQCmc=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EF18B21374;
-        Sat, 15 Jul 2023 21:08:37 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D9AB21418;
+        Sat, 15 Jul 2023 21:15:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.127.75.226])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8EBFC21372;
-        Sat, 15 Jul 2023 21:08:34 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9EFEC21417;
+        Sat, 15 Jul 2023 21:15:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: [PATCH] t2400: Fix test failures when using grep 2.5
-References: <20230715025512.7574-1-jacobabel@nullpo.dev>
-        <2e22a23f-576f-7a42-ace8-624a5362d9f4@gmail.com>
-        <vn5sylull5lqpitsanlyan5fafxj5dhrxgo6k65c462dhqjbno@uwghfyfdixtk>
-Date:   Sat, 15 Jul 2023 18:08:33 -0700
-In-Reply-To: <vn5sylull5lqpitsanlyan5fafxj5dhrxgo6k65c462dhqjbno@uwghfyfdixtk>
-        (Jacob Abel's message of "Sat, 15 Jul 2023 23:15:28 +0000")
-Message-ID: <xmqqilakll2m.fsf@gitster.g>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Yuri <yuri@rawbw.com>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: Pressing Ctrl-C during 'git checkout <branch-name>' messes up
+ the repository
+References: <fe3c68d5-124e-5a87-881a-21ad8e492f76@tsoft.com>
+        <ZLM4sTUjBQt4QMfG@tapette.crustytoothpaste.net>
+Date:   Sat, 15 Jul 2023 18:15:37 -0700
+In-Reply-To: <ZLM4sTUjBQt4QMfG@tapette.crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 16 Jul 2023 00:24:17 +0000")
+Message-ID: <xmqqedl8lkqu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 497AF3F6-2375-11EE-BF4E-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 463E4066-2376-11EE-B214-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Abel <jacobabel@nullpo.dev> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->> > @@ -998,8 +998,8 @@ test_dwim_orphan () {
->> >   					headpath=$(git $dashc_args rev-parse --sq --path-format=absolute --git-path HEAD) &&
->> 
->> I'm a bit confused by the --sq here - why does it need to be shell
->> quoted when it is always used inside double quotes? 
+>> When the user presses Ctrl-C, the correct action would be to cleanly return
+>> to the initial branch.
 >
-> To be honest I can't remember if this specifically needs to be in
-> quotes or not however I had a lot of trouble during the development of
-> that patchset with things escaping quotes and causing breakages in the
-> tests so if it isn't currently harmful I'd personally prefer to leave
-> it as is.
+> I would disagree here.  When the user has hit Ctrl-C, they want to
+> interrupt the operation.  That's literally why a SIGINT (interrupt)
+> signal is sent.  A checkout can take a long time, and the user will not
+> want Git to perform an operation which will take even longer than the
+> original one (because the original checkout was aborted).
+>
+> Even if we did that, the user could just hit Ctrl-C again and really
+> interrupt the process, and then they'd be stuck again.
+>
+> If you don't want to interrupt the operation, then don't hit Ctrl-C.
 
-Quoting is sometimes tricky enough that "this happens to work for me
-but I do not know why it works" is asking for trouble in somebody
-else's environment.  If the form in the patch is correct, but tricky
-for others to understand, you'd need to pick it apart and document
-how it works (and if you cannot do so, ask for help by somebody who
-can, or simplify it enough so that you can explain it yourself).
+I agree with all of the above, but stopping with "don't" is not very
+helpful---people do do things that they are told not to anyway, and
+it makes a whole lot of difference if they know how to recover from
+the fallout of their actions.  It would help to teach "reset --hard"
+or something that lets the user to return to a known state.  It may
+not necessarily be the state the user would want to go, but it is
+still better to be in a known stable state and be able to complain
+"I lost my stashed changes" or "I lost a few commits" than to be in
+a state where the user is totally lost and do not know what to do
+next.
 
-    headpath=$(git $dashc_args rev-parse --sq --path-format=absolute --git-path HEAD) &&
-
-In this case, "--sq" is a noop that only confuses readers, I think,
-and I would drop it if I were you.  "--git-path HEAD" is given by
-this call chain:
-
-   builtin/rev-parse.c:cmd_rev_parse() 
-   -> builtin/rev-parse.c:print_path()
-      -> transform path depending on the path format
-         -> puts()
-
-and nowhere in this chain "output_sq" (which is set by "--sq") is
-even checked.  The transformations are all about relative, prefix,
-etc., and never about quoting.
-
-The original test script t2400 (before your patch) does look crappy
-with full of long lines and coding style violations (none of which
-is your fault), and it may need to be cleaned up once this patch
-settles.
+Of course, that kind of coaching is not something we should do in
+our error or advise messages, but in an early part of the tutorial
+or somewhere, perhaps?
 
 Thanks.
