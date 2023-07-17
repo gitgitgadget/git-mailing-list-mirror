@@ -2,96 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE5CEB64DC
-	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 04:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F80EB64DC
+	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 05:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbjGQETe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jul 2023 00:19:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56646 "EHLO
+        id S231172AbjGQFgU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jul 2023 01:36:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjGQETd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2023 00:19:33 -0400
+        with ESMTP id S229920AbjGQFgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2023 01:36:18 -0400
 Received: from mail.nicholasjohnson.ch (mail.nicholasjohnson.ch [93.95.231.105])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D9AF10F
-        for <git@vger.kernel.org>; Sun, 16 Jul 2023 21:19:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C59010F
+        for <git@vger.kernel.org>; Sun, 16 Jul 2023 22:36:14 -0700 (PDT)
 Mime-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nicholasjohnson.ch;
-        s=dkim1; t=1689567569;
-        bh=Z9GwqXJI3v1KZwC628pxqDTGB0aWRdUxypDam5qOU5Y=;
-        h=Date:To:Cc:Subject:From:References:In-Reply-To:From;
-        b=inmdMsjEGtkw4mfuOhuk2DKdOZ425mlTIi3+/WTjRWKfOfYT4WtU8SsiZlQI4RoOl
-         vU6px8vn0db2VTQ2BfJS/OMwUyIP87X0+0VqzsMKJ6pd+2Dx8nVC0pKYOEg15S0lo4
-         AgYBSLmFL8t7qjCbZiFiT6+vsvVv/6P1yotCvMpwoKshzBAjb3XlcoTsoqTv+I0M1j
-         Qd/MWF2a8fLhQw7tcw0V2FntbYaM5qCUZKDEUsBajhs0MgCxwThdE5AOB738LO5Nux
-         K/ZzGgtsOEQNyAxiR2FXwRzP5VihNx22mE4iO5jLaRqY/4NaF1U+2CTLw2K2SkK/g8
-         bLMd5XtUs3YMA==
+        s=dkim1; t=1689572170;
+        bh=o6ImfPADh+ya6cyoXHJShquLm00Smh8xr2CaUFf1TZA=;
+        h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+        b=XPKw+nB0KBQ6e4sV8nHNqQEYqtyVLyB04iptXPn79FGvOd/yQK3RlEJRBb8bzZmtX
+         5FJA1BpnQZ3tBYhC4iu4+d+/e0FOXWKqHEs0jvUEia/5PB7199k29Cir90283P8OBv
+         8dAKmgX5hVLccFIHCL/i0iNxDX8FSASQl/MzTT6/vjMBbSaPGrbdev12uf3opvah6X
+         RX4KVTKvElP9JAojHU7TsY2xWmAUckHhoh4guaQ3V2d2UrOp20wVWy8Y2bMCXoJskz
+         qsbPOlPfqY+QjMtHX3vKkjU1pljZxFJ/efBEb8wdZb+w7CvvTQOYUa3B/ba0Yrlxhv
+         y+37NH2l/DUcw==
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 17 Jul 2023 04:20:12 +0000
-Message-Id: <CU45QDSITT7K.1HLDIM21MXW7H@anonymous>
-To:     "Jason Pyeron" <jpyeron@pdinc.us>,
-        "'Junio C Hamano'" <gitster@pobox.com>
+Date:   Mon, 17 Jul 2023 05:36:48 +0000
+Message-Id: <CU47D1G1Y1E2.GID9E4XI7W1K@anonymous>
 Cc:     <git@vger.kernel.org>
 Subject: Re: Git Privacy
 From:   "nick" <nick@nicholasjohnson.ch>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 References: <CTZ9RD9RQ5UO.3OIJX50PKMIR0@anonymous>
  <xmqqlefjpwif.fsf@gitster.g> <CU1SAE4WGP3X.3R7TTIWFSHGDI@anonymous>
  <xmqqbkgeqw6n.fsf@gitster.g> <CU2GQHQV5GD3.CL67078EF4OO@anonymous>
- <CU3Z2NYP6BGG.1PQ6S5AF60XX6@anonymous>
- <00b901d9b83d$249a2d20$6dce8760$@pdinc.us>
-In-Reply-To: <00b901d9b83d$249a2d20$6dce8760$@pdinc.us>
+ <1d36d5ce-f452-fc31-6e30-b4ba819de7e4@web.de> <xmqqsf9njmc9.fsf@gitster.g>
+ <xmqq5y6jjlcs.fsf@gitster.g>
+In-Reply-To: <xmqq5y6jjlcs.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jason Pyeron wrote:
-> > nick wrote:
-> > Come to think of it, even if timezones were converted to UTC by default=
-,
-> > time of day would still leak information about a user's likely timezone=
-.
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Discussed this with our policy wonks...
+> > and just use them), we should NOT be adding a "--privacy" option
+> > that picks rand(24)*60 as UTC offset and pretends that it the
+> > timezone of the author, and picks some random timestamp between the
+> > timestamp of the latest commit in the repository and the actual
+> > wallclock timestamp and pretends that is the author time.  After
+> > all, our project is not about coming up with a quality time
+> > obfusucation.
 >
-> Short answer - no. There is no legal assumption that can be made - your
-> work hours cannot be assumed to be 9-5. They also said that time zone is
-> "too broad at 1/24th of the world", but understood the concern.
+> We could go to the extreme in the complete opposite, if we do not
+> care about the quality of the "privacy" feature, and you could
+> probably talk me into adopting below as long as the option or the
+> configuration are not named with the word "privacy" in them (a
+> "--useless-time" option, or a "core.uselesstime" configuration
+> variable, are OK).
 
-An adversary may have other information which can be correlated with the
-timestamps or timezone, making them less benign than in isolation.
+I hadn't considered it in my other responses, but calling it --privacy
+would be a bad idea for exactly the reasons you laid out. Calling it
+--useless-time would be better.
 
-> That being said the recommendation is to add --privacy
-
-I'm not familiar with the processes here. Is it my responsibility to
-implement it since I proposed it or who shall implement it?
-
-> Where it assumes some defaults and those defaults can be controlled in
-> your config or via --privacy=3Doption1,option2
+> When the feature is in effect, all timestamps in commit and tag
+> objects pretend to be in UTC timezone, and
 >
-> And then some of the options can be:
+> (1) the commits record the Epoch as its timestamps if there is no
+> parent;
 >
-> date-timezone=3DUTC
+> (2) the commits record one second after the largest of the
+> timestamps as its timestamps of all its parents;
 >
-> date-precision=3D8hour
+> (3) in any case, the same (phoney) timestamp is used for author and
+> committer.
+>
+> (4) the tags record the Epoch as its timestamp if they point at
+> trees or blobs.
+>
+> (5) the tags record one second after the largest timestamp of
+> pointee as their timestamp, if they point at tags or commits.
+>
+> (6) as the reflog is a local matter, its timestamp may be local,
+> but it is OK if it ends up being just a useless number if that
+> is more convenient to implement.
 
-This sounds great. A few preliminary ideas on implementation:
+You're the expert on Git's internals and clearly know best how to
+implement this with the least amount of breakage. So I can't comment on
+that.
 
-'date-precision' must round the author AND committer timestamps
-otherwise it's useless
+I will say these points seem to be sufficient to satisfy the privacy use
+case. I don't think any more can reasonably be expected.
 
-'date-precision' must round down, never into the future
+> The resulting history will be shouting that "I am privacy conscious
+> and hiding my activities behind a fake clock" in capital letters,
+> which I would not call a quality design of a privacy feature, but it
+> does completely dissociate the wallclock time from the recorded
+> history without breaking the monotonicity of timestamps in the
+> recorded history.
 
-'date-timezone' must convert the date from local time and not just
-replace the timezone
+Depending on one's threat model, revealing the fact that one is using a
+privacy feature/tool isn't necessarily a problem. I agree that perhaps a
+really high-quality implementation of a privacy feature could do this,
+but I think that's outside the scope and way too much to expect from
+devs as you said.
 
-Any thoughts on making 'date-precision' also apply to GnuPG signature
-timestamps? It's possible to specify a custom GnuPG command which does
-this using gpg.program, but it's inconvenient. The relevant GnuPG option
-is '--faked-system-time <epoch>!'
+> When the useless-time feature is in use, you cannot expect features
+> like "git log --since" would work sensibly, but that is a given, I
+> would guess.
 
-If that idea is no good, there should at least be a warning displayed
-when the user signs anything with GnuPG with 'date-precision' enabled.
-
-If that idea is good, then there should be a conditional check that the
-rounding performed by 'date-precision' does not round down to before the
-signing key was generated. Otherwise the signature will be invalid.
+There could be a warning in the documentation that this feature may
+cause breakage.
