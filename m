@@ -2,104 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D24F1EB64DD
-	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 00:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D99DEB64DD
+	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 02:37:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbjGQA2N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Jul 2023 20:28:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54450 "EHLO
+        id S231192AbjGQCho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Jul 2023 22:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229705AbjGQA2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jul 2023 20:28:11 -0400
-X-Greylist: delayed 3606 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 16 Jul 2023 17:28:09 PDT
-Received: from mail2.pdinc.us (mail2.pdinc.us [67.90.184.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F286E47
-        for <git@vger.kernel.org>; Sun, 16 Jul 2023 17:28:09 -0700 (PDT)
-Received: from lovegrove (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 36GNRrbd008419
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 16 Jul 2023 19:27:53 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 36GNRrbd008419
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1689550073; bh=1sSS8HbOLV1KD1sdIm/Gqn/f+9DFlMN7Vq0MDQ8b02s=;
-        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=r8eGGR/tKnhPp1CEb6jt/QiXSdQxtKM4IavCyks4l22UeDj42jIjOGP9j9WsF94gf
-         5OYe8pk0fQkYlveoJisx9wxlGILsaey5A4GlIN6nDeM3qCissXeTgB9buD/eG9rGb7
-         2NZXTVc4YCmwvEOnBiNbV8n4GJbkJXjEznV1jRGjurIb/7sbLxggwMiDi13nOhblvZ
-         tF/xYmUFCxoVGxlLRo/sh9Je+2Zctcbhye4jnewSe75mzrRgcBH/4g41h8+DGnY9A8
-         Jb9u1lcAMjqtzMHZ/eoMKvfNw4B+XuoHroCYuXSy2R9gTgw45i10dvjz7enBuh3IBx
-         i2m5bk2r4R5tA==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     "'nick'" <nick@nicholasjohnson.ch>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <CTZ9RD9RQ5UO.3OIJX50PKMIR0@anonymous> <xmqqlefjpwif.fsf@gitster.g> <CU1SAE4WGP3X.3R7TTIWFSHGDI@anonymous> <xmqqbkgeqw6n.fsf@gitster.g> <CU2GQHQV5GD3.CL67078EF4OO@anonymous> <CU3Z2NYP6BGG.1PQ6S5AF60XX6@anonymous>
-In-Reply-To: <CU3Z2NYP6BGG.1PQ6S5AF60XX6@anonymous>
-Subject: RE: Git Privacy
-Date:   Sun, 16 Jul 2023 19:27:52 -0400
-Message-ID: <00b901d9b83d$249a2d20$6dce8760$@pdinc.us>
+        with ESMTP id S230449AbjGQChn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jul 2023 22:37:43 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A17198E
+        for <git@vger.kernel.org>; Sun, 16 Jul 2023 19:37:13 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B302F185A5;
+        Sun, 16 Jul 2023 22:36:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ZgUp5O5lxmWi
+        pKjXNhe/gJhRFVsJ8sqsrGTaozOy2o0=; b=tTedLd0sw3MBfwaye32QKbRzK8Rt
+        p/IVnCOT4AYzt3PM3CW2ucAjmVZlkZXYPFC4WVn+IBZsTEjD1few316uqdOg8Ciy
+        84JXAQlwfVs3/vhvR9dFPPQcGWFp8pKvNGpBP8ubfLv+CGiKMcOKVhHVeMc1CbAH
+        DaoOM7VBmV6Jsf0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ABC8C185A4;
+        Sun, 16 Jul 2023 22:36:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5E07E185A2;
+        Sun, 16 Jul 2023 22:36:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     nick <nick@nicholasjohnson.ch>, git@vger.kernel.org
+Subject: Re: Git Privacy
+References: <CTZ9RD9RQ5UO.3OIJX50PKMIR0@anonymous>
+        <xmqqlefjpwif.fsf@gitster.g> <CU1SAE4WGP3X.3R7TTIWFSHGDI@anonymous>
+        <xmqqbkgeqw6n.fsf@gitster.g> <CU2GQHQV5GD3.CL67078EF4OO@anonymous>
+        <1d36d5ce-f452-fc31-6e30-b4ba819de7e4@web.de>
+Date:   Sun, 16 Jul 2023 19:36:22 -0700
+In-Reply-To: <1d36d5ce-f452-fc31-6e30-b4ba819de7e4@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 16 Jul 2023 13:47:29 +0200")
+Message-ID: <xmqqsf9njmc9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B857C9FE-244A-11EE-8810-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 15.0
-Content-Language: en-us
-Thread-Index: AQHtErF6w8ZIUenaPtejiJMYrPbg0QEGGU1YAkcCJMYCq1o+QgJg3jd2AcSmUdSvRWNfUA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: nick=20
-> Sent: Sunday, July 16, 2023 7:07 PM
-> Subject: Re: Git Privacy
->=20
-> nick wrote:
-> > The time zones reveal private information about developers and they
-> > don't even serve a use case, as far as I'm aware. A =
-backwards-compatible
-> > way to solve this leak would be to convert timestamps to UTC by =
-default
-> > and have a Git config option to revert back to the current behavior.
->=20
-> Come to think of it, even if timezones were converted to UTC by =
-default,
-> time of day would still leak information about a user's likely =
-timezone.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Discussed this with our policy wonks...
+> But Git is not a legal entity, it's just a command line program that yo=
+u,
+> the data subject, control.  You can use the  option --date or the
+> environment variable GIT_AUTHOR_DATE to set the author timestamp and th=
+e
+> variable GIT_COMMITTER_DATE to set the committer timestamp on commit.
+> Not sure why there is no command line option for the latter, hmm.
 
-Short answer - no. There is no legal assumption that can be made - your =
-work hours cannot be assumed to be 9-5. They also said that time zone is =
-"too broad at 1/24th of the world", but understood the concern.
+For two reasons.
 
-That being said the recommendation is to add --privacy
+ * While using the GIT_AUTHOR_DATE environment variable is perfectly
+   adequate (after all, we did not have the option before Git 1.7.0,
+   released in Feb 2010), overriding the author time with "--date"
+   had a good reason to exist, unlike the committer timestamp.
 
-Where it assumes some defaults and those defaults can be controlled in =
-your config or via --privacy=3Doption1,option2=20
+   Imagine you were relayed somebody else's changes, not via a
+   format that is kosher and acceptable by "git am", but somehow
+   managed to reproduce in your working tree.  If you also have
+   learned when and in which timezone the original author made that
+   change, you'd want to have a way to record it.
 
-And then some of the options can be:
+ * Having a system clock that can randomly go backwards and using
+   such a system clock to record the committer timestamp, has broken
+   "git log" in mergy-bushy histories.  This issue has been somewhat
+   mitigated by introduction of generation numbers, but traversing
+   the commits in the newer part of the history that are not yet
+   covered by commit-graph would be affected if you let your commit
+   timestamps go back and force deliberately.
 
-date-timezone=3DUTC
+> So I see this more as a usability issue.  Git allows its users to tailo=
+r
+> commits to suit their needs in many ways.  You can edit file contents,
+> history and metadata.  For timestamp and timezone this isn't as
+> convenient as it could be.
 
-date-precision=3D8hour
+I think the existing two environment variables are very good place
+to draw the line.  When we start talking about "privacy", just like
+"security", the exact details of the design and the implementation
+would affect the resulting quality of the "privacy enhancing
+features", but our primary mission is source code control and we are
+not equipped to even measure how good our implementation would be.
 
-etc...
+Just like we do not pretend to be security engineers and do not
+invent our own implementations of the hash functions and secure
+network transports (instead we let third-parties to implement them
+and just use them), we should NOT be adding a "--privacy" option
+that picks rand(24)*60 as UTC offset and pretends that it the
+timezone of the author, and picks some random timestamp between the
+timestamp of the latest commit in the repository and the actual
+wallclock timestamp and pretends that is the author time.  After
+all, our project is not about coming up with a quality time
+obfusucation.
 
-v/r,
+But the good thing is that privacy-minded folks can write a quality
+implementation of a much better design to lie about the timezone and
+the current time, preferrably (but not absolutely necessary) within
+the constraints that the time should not go backwards, which would
+help Git.  Once such an external program is written, the users can
+arrange that the program is called every time the shell gives the
+control back to the user to set its output to GIT_AUTHOR_DATE.  Zsh
+has precmd mechansim that you can use to invoke such a mechanism
+before each prompt; bash has PROMPT_COMMAND that can used in a
+similar way.
 
-Jason Pyeron
+Needless to say, such a "privacy enhancing `date` command" can be
+used outside the context of Git, too.  My point is that it is not
+within the scope of this project to add an internal implementation
+of such a command and drive that from a command line option or a
+configuration variable.
 
---
-Jason Pyeron  | Architect
-Contractor    |
-PD Inc        | Certified SBA 8(a)
-10 w 24th St  | Certified SBA HUBZone
-Baltimore, MD | CAGE Code: 1WVR6
-
-.mil: jason.j.pyeron.ctr@mail.mil
-.com: jpyeron@pdinc.us
-tel : 202-741-9397
-
-
+Thanks.
