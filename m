@@ -2,120 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14D43C0015E
-	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 23:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FE96EB64DC
+	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 23:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbjGQXrM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jul 2023 19:47:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59236 "EHLO
+        id S230244AbjGQX4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jul 2023 19:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjGQXrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2023 19:47:11 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE719D
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 16:47:07 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-57704aace46so44028367b3.2
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 16:47:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689637626; x=1692229626;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=aJT5H4SeZJ3Pn+ODt+vYaoN1pBpyaPBoIqmbVm612lo=;
-        b=DtiP6dlWPKoOMmGK2VsDMxImcX9lncV/w+WYDOWjEFUJCNvXSd0raWpb2LZ9prkP9N
-         vsjtVgA5yTi+atIaMoK/KhZoViErNP9tjtZkiSjCprSvWc2y9naa8XEdlWqLkpA+n5lc
-         XhSggVfHnJrM3TtC3x+2/UDQ2r8PiKoIzTq459ycgw2Ac4yB58OJq6QkOGDAL+f8Wdf8
-         fSPo1/pxm/gZtFN9wRrAljn5BSd/9LgnMpJBOe0lR9SZ/NWwEa9JM1m2yEXYumImb14k
-         OEqn/KJT+qSFdOoTCog7O6K1IKlHOaoE4TtJsrBGey1CmOiDJwMhNvMDCLyHShOy4Cdt
-         vsig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689637626; x=1692229626;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aJT5H4SeZJ3Pn+ODt+vYaoN1pBpyaPBoIqmbVm612lo=;
-        b=QamNS83XpmhE89iljuGWPaZZ6yqy5C50Kq8RnrCcn0xWPFeJl+MAPnrxtZj9Kqw4IW
-         4OR/V+vzy+qTDHe5qaKMLyUo2pegRI+V1J5ZhgSn5EI5iIg6mPkrESTogFcOV1NVDinU
-         wI8HluwzmU7Yc+rNrbNS3RQ66ohESjBC5P0GhstE1MSwHqt3JltvON7HsWJu+C1/6xsl
-         61PLVOmGU53EQhQ1X4sHCdiHN+EmtinsQ8XoL1vPhgqooiUIepZFwpdcabB7XKZvhasO
-         CZ9e/9qLfLz1VYObZILH60nDDqINiaEBV/8Jb1ltlu9dSRLpAEHp1tGoet8XMbJNnc6g
-         v7iA==
-X-Gm-Message-State: ABy/qLYG5gEJMxoz5yQ93wlmAK/Hu2+uvdlhde7d5Gh0SANTty70EobM
-        K/GG1R674G0O2rMsEHd5UuAM26w+Aq1FSj9VogHb
-X-Google-Smtp-Source: APBJJlG2jjSexr5gen9w0Z7Ljru76mYchUSqXoSdKCxsvpGes8AncjGL0OBWMQR9jN6SUmIwBXf9fQzvzRFzZ4HZP3pf
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:952b:2f28:e948:26e3])
- (user=jonathantanmy job=sendgmr) by 2002:a25:50d4:0:b0:ca7:8c92:4f62 with
- SMTP id e203-20020a2550d4000000b00ca78c924f62mr126128ybb.9.1689637626694;
- Mon, 17 Jul 2023 16:47:06 -0700 (PDT)
-Date:   Mon, 17 Jul 2023 16:47:04 -0700
-In-Reply-To: <87edl6bx7o.fsf@iotcl.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230717234704.1906465-1-jonathantanmy@google.com>
-Subject: Re: Teach git-fetch(1) to use a quarantine directory
-From:   Jonathan Tan <jonathantanmy@google.com>
+        with ESMTP id S230391AbjGQX4O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2023 19:56:14 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56E809D
+        for <git@vger.kernel.org>; Mon, 17 Jul 2023 16:56:10 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E25E42038C;
+        Mon, 17 Jul 2023 19:56:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HRGkjUtttQUzaWLWeDVTMwRC5QvbX887OTHAzx
+        Unscc=; b=Zhqi+oeQn/2t3XJkIdRiVETiRBYRSoCfegBQJRIms4K0sSww1CoAEw
+        YMMl+WV6hBcIlUAertxRlw8+hYqwNTxBvFHpQI9PR6zra6Ib7Gv7JeyVg9PKDwB6
+        XuSY6pzqNdP4gJkz74TAquM9ix06Zb7AYr1xDRTyj4Zo1lE9aBnX4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD4DF2038B;
+        Mon, 17 Jul 2023 19:56:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6CE422038A;
+        Mon, 17 Jul 2023 19:56:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Toon Claes <toon@iotcl.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+Subject: Re: Teach git-fetch(1) to use a quarantine directory
+References: <87edl6bx7o.fsf@iotcl.com>
+Date:   Mon, 17 Jul 2023 16:56:05 -0700
+In-Reply-To: <87edl6bx7o.fsf@iotcl.com> (Toon Claes's message of "Mon, 17 Jul
+        2023 12:48:17 +0200")
+Message-ID: <xmqqcz0qdre2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7E9CDB56-24FD-11EE-ABCD-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Toon Claes <toon@iotcl.com> writes:
-> Hi,
-> 
-> I've been looking into making git-fetch(1) to use a quarantine
-> directory, but I'm a bit stuck on direction.
 
-Thanks for looking into this!
-
-> I took git-receive-pack(1) as an example how it uses a quarantine
-> directory. It seems it sets the environment variables
-> $GIT_OBJECT_DIRECTORY and $GIT_ALTERNATE_OBJECT_DIRECTORIES so the real
-> object db is used as an alternative, and a temporary is set as the
-> default. Then a sub-process is spawned to uses these. In case of
-> git-receive-pack(1), it calls git-unpack-objects(1).
-
-From a reading of the source code, it may call git-unpack-objects or
-git-index-pack, I think. (unpack() in builtin/receive-pack.c)
-
-> At the moment git-fetch(1) does not spawn any similar subprocess, so if
-> we want to take the same approach to use the quarantine, we'll need to
-> split up that command.
-
-It calls get_pack() in fetch-pack.c, which actually may call one of the
-two commands above in the same way. (The calling may happen in various
-ways. IIRC in fetch protocol v2, get_pack() is invoked directly by git-
-fetch, whereas in earlier protocol versions, it may be the remote helper
-that calls git-fetch-pack that invokes this function.)
-
-> But then we run into another problem as well. git-fetch(1) updates
-> references, and that is something that's not allowed when using a tmp
-> object directory.
-
-execute_commands() in builtin/receive-pack.c has this:
-
-          /*                                                                                                                          
-           * Now we'll start writing out refs, which means the objects need                                                           
-           * to be in their final positions so that other processes can see them.                                                     
-           */                                                                                                                         
-          if (tmp_objdir_migrate(tmp_objdir) < 0) {     
-
-which seems to be a solution to the same problem. I think Taylor wrote
-something similar [1].
-
-[1] https://lore.kernel.org/git/ZLVK5nzVZU48uvYE@nand.local/
-
-> As far as I can tell from the code, fetching packs and updating refs is
-> heavily intertwined, so I'm not sure this approach is the best way
-> forward. So a few questions:
-> 
 > 1) Does it even make sense to make use git-fetch(1) use a quarantine
 >    directory?
 
-I don't know off-hand if this will work, but this sounds promising.
+What's the goal here?  If the push gets rejected, remove the
+incoming packfile data together with quarantine repository?  Who
+will be doing such a rejection and how?  Does something run in the
+quarantine repository as its main repository while using the final
+one as an alternate (presumably some form of hooks) to make that
+decision?  If these goals do not make sense, then no, it does not
+make sense to teach "fetch" to use a quarantine directory.
+Otherwise, teaching "fetch" would be a reasonable way to go forward.
 
-> 2) When making git-fetch(1) use a quarantine directory, what is the
->    recommended way to achieve this? Is this by calling a subprocess?
->    Maybe git-fetch-pack(1)?
+It is a separate issue if the mechanisms added (if any) when we
+tought receive-pack to use a quarantine repository are directly
+applicable, if if they need some twaking, in order to reuse them in
+the context of "git fetch".  But their needing some tweaking does
+not mean that it does not make sense to try teaching "fetch" to use
+quarantine repository.
 
-I also don't know off-hand if this will work, but replicating what git-
-receive-pack does makes sense to me.
+Thanks.
