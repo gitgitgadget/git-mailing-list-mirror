@@ -2,81 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E9BC001DF
-	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 16:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A9A5EB64DC
+	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 17:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231955AbjGQQwB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jul 2023 12:52:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53624 "EHLO
+        id S229903AbjGQRM7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jul 2023 13:12:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231630AbjGQQvy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2023 12:51:54 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645921709
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 09:51:47 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C920D1D503;
-        Mon, 17 Jul 2023 12:51:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XwoHXd/l/VsTpvd+EWomXOCyBW/6avZnab0eFq
-        NBVVw=; b=FOnx55jFA/YeLp0vsIiwogRDAcpX4NlehK7TwdMPa6WiDOsW1F9zsl
-        bnWIVW/ai6bjwaNIUdiexdKIlniaKrsgFgrQ7JZhwUzQNMb7JPD4m2yX5UHNZliy
-        oekGkAv6GscovWaHmnswoLJ/LwLRQe6chUGYwJRjoWKy+rE/dvwmQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C1A0E1D502;
-        Mon, 17 Jul 2023 12:51:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 454FC1D501;
-        Mon, 17 Jul 2023 12:51:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "AtariDreams via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH] Prefer fgetc over fgets where possible
-References: <pull.1550.git.git.1689608291732.gitgitgadget@gmail.com>
-Date:   Mon, 17 Jul 2023 09:51:42 -0700
-In-Reply-To: <pull.1550.git.git.1689608291732.gitgitgadget@gmail.com>
-        (AtariDreams via GitGitGadget's message of "Mon, 17 Jul 2023 15:38:11
-        +0000")
-Message-ID: <xmqq7cqyiiqp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S231205AbjGQRM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2023 13:12:57 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DAD131
+        for <git@vger.kernel.org>; Mon, 17 Jul 2023 10:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1689613968; x=1690218768; i=l.s.r@web.de;
+ bh=xwyCULG2+ZvMq5kaj5dQrM+ivG7Ye2H982nYg0mQBSs=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=IixmiQKpqzAhPqZqtc4+urw8yDwZQbhUTmvJv2jWGOt83EcADACmlfz07Y18skeXoebRfMY
+ 7ryN8LvcMenutfolJSyjsStAoHu7AA3h50Hx3IuNx1xDOkp1Z0ssU+szgw9cvQ4dQ9iSKE9He
+ 2wT4MGEWBZ26U0SnyDd6QFN4zY28UDhNFgDBjjRmNuF7gcLa6GL1LqOUTL/rzJO6LtU2kSIJ0
+ cU9IWfKFzgovg0Yf1+FBhKyzasw+u13+vNqn75miOrHxeE2lzlNjY8/iL4r/MsDIPxRMponGK
+ uLG1VnerXXsnpWFBhy50Rm49b5FYYe4Y8yA+cVI0G2oFkoYrS4RQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.151.224]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MeDQZ-1plYWt2wmF-00b6R5; Mon, 17
+ Jul 2023 19:12:48 +0200
+Message-ID: <183f69ff-8b6b-80a5-4d25-d58d25ae5b5f@web.de>
+Date:   Mon, 17 Jul 2023 19:12:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3562D8D6-24C2-11EE-AE8F-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH] t6300: fix setup with GPGSSH but without GPG
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Kousik Sanagavarapu <five231003@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Jaydeep Das <jaydeepjd.8914@gmail.com>,
+        Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+References: <cbc22750-af93-9274-2ed4-6dfd356568e8@web.de>
+ <xmqqwmyyik2o.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqwmyyik2o.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:guvaKE+tx1Here3UySBwCeqhbyhD8zkHPNFahN/fR5tzlgxOywp
+ B/8qiL73RoVEkW2LQcP1FNUo3rno/+4PLKpnIWmZOOVjclXb3r3lPrY7cJ03SeNf8zusHoy
+ K1ws9iL/7lY9ULpfPu6FDjsSIIsyLxhZ5ildKswWlHSDtxcpWlLqmAns3EzGneVFz0IVmYT
+ av7Lga60v4kdC0cwJtGBA==
+UI-OutboundReport: notjunk:1;M01:P0:B72R0Lq0G6o=;qYO+QI4gFZ0tMb6VMWu7BhJm9Lp
+ xeYj+0tPoKrlxC22lTtdwiYL/dy+F1J1jwy3cacAP9MjN1fo6VHgX/eZMEQ3qkNrfZjUs/89m
+ YT+JYf6ejxRPIJGsqUgBLVj8DMM9BXjzrKvOu+4rp3YxLPg959XjNAm32YeuocgDSstPbVw5J
+ UNHntiGzdpabx8Gr4LAjPzI9cvemBvSeyNVmQZ1KTj3HJptzhTSMCyHPT2XyENibO8TntVT8u
+ 2U/nXGYIG7fkY5Bf5RIuIbCLxRRQlVh9baHvtfTi3aFdvYelYuN785UOB/DJITmudnPMSAIqc
+ odre+mghVsL+34nDgeJ51T+wgKlwkhtCpB1l3mFmNbs9YmDAKwYAE3joGyMkYtYSVQaCbLvBy
+ xyG/FdZaMpBH7nS15C37J3qZLq0hNUk9Y/h1eRijzaIGXSDHIHxHXuuYc33tfKjm52NTx9dir
+ oMOX0lftygUiHY1pbVh+RpnHJovEh+1kbHXg/VsQklmUEaJGHuIWFLsuNa1SIL/ppgjSKHNfl
+ sGkt1w3s6HyapGCWmh1dt8YluhY164e4oNsk91XTvt+cGr8ens4a/mIwdGqEHhdmr0oWciUrz
+ s4fZKjNSuaUDTyo8cBVMl5i+WNUcAxx/i8SnYXx9r1oa2riK4vxrMkWfox1WRyFcZtOf6BHD2
+ IQi9uE2sLIn4qOl1ui8c+5Upk7opN/KNEBOmptCDVfs1UCXnLZEuWldX01gon47+d+U4CltdN
+ +PfJv8a8daDibWAsQrpaT2xo9tvlYrgm3mHZbsxNqbO5g00QneejfjxAWi99o5j4qj/rojDRl
+ bTkE7Y4Y/TXcQiWFavVSFoYr3RwpgzMgRzf9p8DXDMl2vjQOOiR2MQRSBjbRVOgtFzN4oMOMj
+ KsB9b660eH+1a/zoIJ+uouSsdssYQ+zR5PpkPhNZ3SqNQqzZi7HroaTwB9OihDJBRFVpuKqUi
+ kxBSQA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"AtariDreams via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Seija Kijin <doremylover123@gmail.com>
+Am 17.07.23 um 18:22 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> fputc is meant for single characters,
-> fputs is for strings. We are better off
-> inserting sole \n characters as
-> characters, not whole strings.
+>> In a test introduced by 26c9c03f0a (ref-filter: add new "signature"
+>> atom, 2023-06-04) the file named "file" is added by a setup step that
+>> requires GPG and modified by a second setup step that requires GPGSSH.
+>> Systems lacking the first prerequisite skip the initial setup step and
+>> then "git commit -a" in the second one doesn't find the modified file.
+>> Add it explicitly.
+>>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> ---
+>>  t/t6300-for-each-ref.sh | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> Thanks for good eyes.
+>
+> I guess a box without GPG is not so uncommon, and even such a box
+> can reasonably be expected to have SSH on it, so I would believe if
+> this was discovered on a real development box, but is that how you
+> found this?  Or have you invented a nice test helper that lets you
+> pick random set of prerequisites and try permutations of having and
+> not having them, or something nice like that?
 
-I do not see if these short lines are deliberate; are they meant to
-follow some sort of poetry styles?
+The test actually did fail on my machine.
 
-In any case, while the above is correct, I do not see the patch
-noise is worth it in this particular case.  Yes, if we are writing
-code snippets shown with the context in these hunks afresh, please
-carefully choose between fputs() and fputc().  But once the code is
-written and it is in, it is not worth to go back and fix it, unless
-we are fixing surrounding area and doing the clean-up as a "while at
-it" change.
+Running tests with all possible permutations of prerequisites would be
+nice, but sounds very expensive -- there must be billions of them!  But
+there are only a few per test script, I imagine.  Collecting all found
+prerequisites for each script and providing a way to force-disable them
+individually could make testing them all feasible.  Nice idea!
 
-By the way, because my mail program warned against an address that
-apparently refuses to receive any replies, I had to manually remove
-"AtariDreams <83477269+AtariDreams@users.noreply.github.com>" while
-composing this message.  I'd appreciate it if you arrange to ensure
-that your next patch will not have such addresses on your CC: line.
-
-Thanks.
-
+Ren=C3=A9
