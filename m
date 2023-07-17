@@ -2,73 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CF84C001B0
-	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 20:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5222EB64DC
+	for <git@archiver.kernel.org>; Mon, 17 Jul 2023 20:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230257AbjGQU0k convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 17 Jul 2023 16:26:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60460 "EHLO
+        id S230247AbjGQUxP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jul 2023 16:53:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbjGQU0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2023 16:26:39 -0400
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D889186
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 13:26:38 -0700 (PDT)
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6b9cf7e6ab2so1540890a34.1
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 13:26:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689625597; x=1692217597;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xhSR8hMV6CLTLR49XvbYovt25lwArCa6UjB58hJqIHM=;
-        b=FBrsIUpY5TCAlWLUIMuRH0eSOeRDpTXypIEkHeuMWrX6WyZ22GrCRhjl3Rb+htXItz
-         uPtDItTo22KWw1D2BMQE0zB36MsW+oU99hSyaIFZ8cXARXrZs5Gdx1/jpsvTSqEHgoKe
-         koK7OZNtiqmA+GCIYZPXbi1hT7L1IRTw0Ei0HspZZ4HA0cAmu3ki2OpP2cIJ4be3G7DB
-         RnHcUgROwzF3yD7lBj5hrkcYGZ5LTZJqMMwf3kjcyCXXa5syvflOfeKEawViOodM/m3H
-         zSjUKUjYaE6YrLmWVaB2u40U/DrtAI5mA+F+COoJekztripTfhgK173q1doG7stnLgnG
-         O4mA==
-X-Gm-Message-State: ABy/qLa6MKU8+6yGF6apo79c3hebFLOUHrO07KgRBSWyIyG/2BP6rIlw
-        C4yP4OfFsX+Nav2rOQsn0w+xXS+ksBNW4I7DDr/detVsSwENcF7hKFZMYg==
-X-Google-Smtp-Source: APBJJlFex8I6tp5yv5aaXq+3jMPCjDZvtTdGSfU4lXhHcpUvLd77us6kJBLv7E8l6EeUjilgauMAObZy9Kc4kSEcUV4=
-X-Received: by 2002:a05:6870:f58d:b0:1b7:8b42:f17 with SMTP id
- eh13-20020a056870f58d00b001b78b420f17mr378682oab.59.1689625597129; Mon, 17
- Jul 2023 13:26:37 -0700 (PDT)
-MIME-Version: 1.0
-From:   =?UTF-8?Q?Adam_=22Sinus=22_Skawi=C5=84ski?= 
+        with ESMTP id S229525AbjGQUxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2023 16:53:13 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7795810C7
+        for <git@vger.kernel.org>; Mon, 17 Jul 2023 13:52:24 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D98EE1F066;
+        Mon, 17 Jul 2023 16:52:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=q/C4Qtu+7snM
+        sy7KVeWUphw1LEEN93Yc/iY5Me8M7oU=; b=sjrRc8Dq8AsSuUz6w1/uJVPqmQe4
+        G0TQ9NpGewcH0cMGfixpqdgzwwZksrmQYRuOV79S5Js/Poa2MFtuqlWGYUWtEV+E
+        y6whhMbILQfJ6nqyjT9gXfWiHX+lcclRpb6Rh9tdEwbF2CVovqJ9XHALinq1iowv
+        d0NYmFENAlXqxdQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D25011F065;
+        Mon, 17 Jul 2023 16:52:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8ACCB1F064;
+        Mon, 17 Jul 2023 16:52:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Adam_=5C=22Sinus=5C=22_Skawi=C5=84ski?= 
         <adam.skawinski@sinpi.net>
-Date:   Mon, 17 Jul 2023 22:26:26 +0200
-Message-ID: <CAGE71k3Ccm3hBrfNgXFqO9Zk0V9FkoskgD1ViJ6eSakxdBuqQQ@mail.gmail.com>
-Subject: receive.denyCurrentBranch=updateInstead won't update the repo
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Cc:     git@vger.kernel.org
+Subject: Re: receive.denyCurrentBranch=updateInstead won't update the repo
+References: <CAGE71k3Ccm3hBrfNgXFqO9Zk0V9FkoskgD1ViJ6eSakxdBuqQQ@mail.gmail.com>
+Date:   Mon, 17 Jul 2023 13:52:19 -0700
+In-Reply-To: <CAGE71k3Ccm3hBrfNgXFqO9Zk0V9FkoskgD1ViJ6eSakxdBuqQQ@mail.gmail.com>
+        ("Adam \"Sinus\" =?utf-8?Q?Skawi=C5=84ski=22's?= message of "Mon, 17 Jul
+ 2023 22:26:26
+        +0200")
+Message-ID: <xmqqzg3ugt18.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D2AD93BC-24E3-11EE-9A6D-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm using Git to push-to-checkout a website.
+"Adam \"Sinus\" Skawi=C5=84ski"  <adam.skawinski@sinpi.net> writes:
 
-The receive.denyCurrentBranch=updateInstead option (set on the server
-repo), according to the docs, should allow the push and do a checkout
-on the worktree if it's clean, or just refuse the push if the worktree
-isn't clean. Instead, for me it allows the push, but doesn't update
-the worktree - I have to `git checkout -f` on the remote shell after
-each push, even though the worktree is clean.
+> Note: The `push-to-checkout` hook doesn't seem to run, either, even
+> though it's in the .git/hooks/push-to-checkout file, with +x rights as
+> needed. I made it output some lines and exit with code 1, so it should
+> abort after producing the output - and yet the pushes come through.
+> Other hooks, like `update`, work fine and can abort if they exit 1.
 
-Note: The `push-to-checkout` hook doesn't seem to run, either, even
-though it's in the .git/hooks/push-to-checkout file, with +x rights as
-needed. I made it output some lines and exit with code 1, so it should
-abort after producing the output - and yet the pushes come through.
-Other hooks, like `update`, work fine and can abort if they exit 1.
+I have nothing to offer offhand, but have you compared on the server
+side your "update" and "push-to-checkout" hooks?  Even a simple typo
+of the filename "push-to-checkout" would make it untable to run ;-).
+Similarly to the name of the configuration variable, which is rather
+long and prone to be mistyped.  After staring at a problem for a
+long time getting frustrated, I myself would miss such a trivial
+mistake, and would want to go back and double check just to be sure.
 
-Setup:
-
-My client is 2.31.0.windows.1 (TortoiseGit)
-Server’s git is 2.39.1.
-My remote is set as ssh://user@hostname.com/path.
-
-Please advise what I can do to investigate further.
-
--- 
-Adam "Sinus" Skawiński
+In fact, while trying to reproduce the problem with a simple pair of
+repositories, I did manage to mistype denyCurrentBranch and saw that
+the machinery not to kick in at all ;-).
