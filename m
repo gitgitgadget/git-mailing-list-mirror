@@ -2,133 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6CC0EB64DC
-	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 18:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6799FEB64DC
+	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 19:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229970AbjGRS2G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jul 2023 14:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60460 "EHLO
+        id S229781AbjGRT0b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jul 2023 15:26:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230140AbjGRS1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2023 14:27:52 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EC4FF4
-        for <git@vger.kernel.org>; Tue, 18 Jul 2023 11:27:51 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 048DB199A86;
-        Tue, 18 Jul 2023 14:27:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=x
-        lvH2dS0gD79Pp14SO9/0Xuq0afpwtam9+BJKL0W2TA=; b=M5/ArysgnZ08i16M1
-        t1o2vygcBAARq2ydyqmAfTq6CyB+NBT9GkHTUafktC6Ip+OF1yTLSuRjoUf/wAcX
-        e/K68H+3jVOcNpCHBovLmOq3nDNIUJO5566u55fKFdPzsZ06X74emOWQq6u+9PMu
-        oQuWFyHp70r3Y7pqvUDtVL1z4Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F0795199A85;
-        Tue, 18 Jul 2023 14:27:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 60067199A84;
-        Tue, 18 Jul 2023 14:27:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] branch: reject "--no-all" and "--no-remotes" early
-Date:   Tue, 18 Jul 2023 11:27:49 -0700
-Message-ID: <xmqqjzuxgjmi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229497AbjGRT0a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2023 15:26:30 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F5D199A
+        for <git@vger.kernel.org>; Tue, 18 Jul 2023 12:26:25 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51e55517de3so15692a12.1
+        for <git@vger.kernel.org>; Tue, 18 Jul 2023 12:26:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1689708383; x=1692300383;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9CKju0dcoon9lt1FgZ59zTi+XBVt0OpkbZe2Gcwk4kM=;
+        b=J84jG0AMU6rs5oPziPNKm6OZABl6TcV4Cfx3cD6bjl1gnaRwqGWmrV+7oP+aiGp+IF
+         JZNBTFFZQqIvKTmRiqzbfVB1V9vRoEwI3D/Zimo4hWr2ggfZmVDaqkIg3J0GeOkVeHMc
+         EK3CJ2xHd2EJNiCbdLLAwP6Gm6espIlVgzIdrk3/KX8LaavG8RInuJ/RRxrvhu3Lr4Lo
+         j8O2liHA04JqttzBNnxc/K+4X154MLhdDVLaRj16mTVVwIabKrAD059hlkZV8+A4J7B4
+         TYGKV/VY+ShJ8/tLWmqdXXzaVGTMcl6uASEUvWKQS9Tmkzi+1u1Q4LjFE3aZregsQQcL
+         Nolg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689708383; x=1692300383;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9CKju0dcoon9lt1FgZ59zTi+XBVt0OpkbZe2Gcwk4kM=;
+        b=l/sIW6STVmbs6sj4V+q1vdsjma7h78W/TRafgiwVg3t3tvkg+BUUVV6yKjcmkZzb1p
+         aMkk4+0NT9RgNkzE1wpZS8niqM02uqbn5L8iAA1qcuX439YBiVrl6qUO5YdrRKAJdsXR
+         xpeujABtkf6zGNZnyMJr/uS9PoKTxW2t0I0Rg+AciqoRXuSQdyu2/+jNkEPCYdlhorPj
+         BYCBFH2W3Q7TLSfHOSxOat2++9zvaKutlPRLui/ljdGP3XYDTj87e9UYT7YQB95B5okk
+         wEAt7BtfaWAM28YhgHxYXbKAb3XKXxKl2PQ+2B6a7HMygvWHd3TCCTrgJPaDOM8ZW4OF
+         72nA==
+X-Gm-Message-State: ABy/qLb0i0ueMBO3IM9t0Bc0r72MukjTC0Xhw/ik7Ahf7y3YNhOiMDDd
+        0wdCVzZBLDVfnpZMBt+jIZgLSFIlO80dbWCpg49Fl7szeq6K43jMPZPA+eoZ
+X-Google-Smtp-Source: APBJJlEEP3vS2a2n0eH7eRvHgucpm7Zrh2uwnKZQEdLD7ecIZhOlX0JiQOoNGxXNTW93ay+V62EmfDKXIVxb5S8jURA=
+X-Received: by 2002:a50:d0c6:0:b0:51d:ebed:93a6 with SMTP id
+ g6-20020a50d0c6000000b0051debed93a6mr131229edf.5.1689708383359; Tue, 18 Jul
+ 2023 12:26:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CD439038-2598-11EE-9E52-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Tue, 18 Jul 2023 12:26:09 -0700
+Message-ID: <CAJoAoZmBFTi5SFRuG8uh4ZyGs7pKQTYQLzZAC82zh2pMSggX3A@mail.gmail.com>
+Subject: Video conference libification eng discussion, this Thursday 17:00 UTC
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the command line parser for "git branch --all" forgets to use
-PARSE_OPT_NONEG, it accepted "git branch --no-all", and then passed
-a nonsense value to the underlying machinery, leading to a fatal
-error "filter_refs: invalid type".  The "--remotes" option had
-exactly the same issue.
+Hello folks,
 
-Catch the unsupported options early in the option parser.
+Google is hosting a standing engineering discussion about libifying
+Git, for contributors interested in participating in or hearing about
+the progress of this effort. Expect this discussion to be free-form
+and casual - no powerpoints here!
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/branch.c         | 10 ++++++----
- t/t3203-branch-output.sh | 16 ++++++++++++++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+We're hoping to hold this meeting every Thursday at 10am Pacific
+(17:00 UTC) via Google Meet.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a27bc0a3df..518be060c5 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -720,8 +720,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
- 		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("unset the upstream info")),
- 		OPT__COLOR(&branch_use_color, N_("use colored output")),
--		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
--			FILTER_REFS_REMOTES),
-+		OPT_SET_INT_F('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
-+			      FILTER_REFS_REMOTES,
-+			      PARSE_OPT_NONEG),
- 		OPT_CONTAINS(&filter.with_commit, N_("print only branches that contain the commit")),
- 		OPT_NO_CONTAINS(&filter.no_commit, N_("print only branches that don't contain the commit")),
- 		OPT_WITH(&filter.with_commit, N_("print only branches that contain the commit")),
-@@ -729,8 +730,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT__ABBREV(&filter.abbrev),
- 
- 		OPT_GROUP(N_("Specific git-branch actions:")),
--		OPT_SET_INT('a', "all", &filter.kind, N_("list both remote-tracking and local branches"),
--			FILTER_REFS_REMOTES | FILTER_REFS_BRANCHES),
-+		OPT_SET_INT_F('a', "all", &filter.kind, N_("list both remote-tracking and local branches"),
-+			      FILTER_REFS_REMOTES | FILTER_REFS_BRANCHES,
-+			      PARSE_OPT_NONEG),
- 		OPT_BIT('d', "delete", &delete, N_("delete fully merged branch"), 1),
- 		OPT_BIT('D', NULL, &delete, N_("delete branch (even if not merged)"), 2),
- 		OPT_BIT('m', "move", &rename, N_("move/rename a branch and its reflog"), 1),
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 93f8295339..758963b189 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -55,9 +55,17 @@ cat >expect <<'EOF'
- EOF
- test_expect_success 'git branch -r shows remote branches' '
- 	git branch -r >actual &&
-+	test_cmp expect actual &&
-+
-+	git branch --remotes >actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git branch --no-remotes is rejected' '
-+	test_must_fail git branch --no-remotes 2>err &&
-+	grep "unknown option .no-remotes." err
-+'
-+
- cat >expect <<'EOF'
-   branch-one
-   branch-two
-@@ -68,9 +76,17 @@ cat >expect <<'EOF'
- EOF
- test_expect_success 'git branch -a shows local and remote branches' '
- 	git branch -a >actual &&
-+	test_cmp expect actual &&
-+
-+	git branch --all >actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git branch --no-all is rejected' '
-+	test_must_fail git branch --no-all 2>err &&
-+	grep "unknown option .no-all." err
-+'
-+
- cat >expect <<'EOF'
- two
- one
--- 
-2.41.0-376-gcba07a324d
+To get an invite to the video conference and the notes document,
+please reply to this email. Please also add points to the agenda
+(template follows) if you want to raise awareness of them.
 
+We'll choose a topic to discuss at the beginning of the meeting, and
+I'll reply afterwards with the notes.
+
+*   What's cooking in libification?
+    *   Patches we sent regarding libification
+    *   Patches for review related to the libification effort
+*   What happened in the past 1-2 weeks that interested parties or
+intermittent contributors need to know?
+*   (asynchronous) Where are you stuck? What eng discussions do we
+want to have? (We'll choose a topic from this list at the beginning of
+the meeting.)
+*   Session topic: TBD
