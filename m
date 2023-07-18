@@ -2,82 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6799FEB64DC
-	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 19:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B71ECEB64DC
+	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 20:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229781AbjGRT0b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jul 2023 15:26:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
+        id S229917AbjGRUtd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jul 2023 16:49:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbjGRT0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2023 15:26:30 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F5D199A
-        for <git@vger.kernel.org>; Tue, 18 Jul 2023 12:26:25 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51e55517de3so15692a12.1
-        for <git@vger.kernel.org>; Tue, 18 Jul 2023 12:26:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689708383; x=1692300383;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9CKju0dcoon9lt1FgZ59zTi+XBVt0OpkbZe2Gcwk4kM=;
-        b=J84jG0AMU6rs5oPziPNKm6OZABl6TcV4Cfx3cD6bjl1gnaRwqGWmrV+7oP+aiGp+IF
-         JZNBTFFZQqIvKTmRiqzbfVB1V9vRoEwI3D/Zimo4hWr2ggfZmVDaqkIg3J0GeOkVeHMc
-         EK3CJ2xHd2EJNiCbdLLAwP6Gm6espIlVgzIdrk3/KX8LaavG8RInuJ/RRxrvhu3Lr4Lo
-         j8O2liHA04JqttzBNnxc/K+4X154MLhdDVLaRj16mTVVwIabKrAD059hlkZV8+A4J7B4
-         TYGKV/VY+ShJ8/tLWmqdXXzaVGTMcl6uASEUvWKQS9Tmkzi+1u1Q4LjFE3aZregsQQcL
-         Nolg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689708383; x=1692300383;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9CKju0dcoon9lt1FgZ59zTi+XBVt0OpkbZe2Gcwk4kM=;
-        b=l/sIW6STVmbs6sj4V+q1vdsjma7h78W/TRafgiwVg3t3tvkg+BUUVV6yKjcmkZzb1p
-         aMkk4+0NT9RgNkzE1wpZS8niqM02uqbn5L8iAA1qcuX439YBiVrl6qUO5YdrRKAJdsXR
-         xpeujABtkf6zGNZnyMJr/uS9PoKTxW2t0I0Rg+AciqoRXuSQdyu2/+jNkEPCYdlhorPj
-         BYCBFH2W3Q7TLSfHOSxOat2++9zvaKutlPRLui/ljdGP3XYDTj87e9UYT7YQB95B5okk
-         wEAt7BtfaWAM28YhgHxYXbKAb3XKXxKl2PQ+2B6a7HMygvWHd3TCCTrgJPaDOM8ZW4OF
-         72nA==
-X-Gm-Message-State: ABy/qLb0i0ueMBO3IM9t0Bc0r72MukjTC0Xhw/ik7Ahf7y3YNhOiMDDd
-        0wdCVzZBLDVfnpZMBt+jIZgLSFIlO80dbWCpg49Fl7szeq6K43jMPZPA+eoZ
-X-Google-Smtp-Source: APBJJlEEP3vS2a2n0eH7eRvHgucpm7Zrh2uwnKZQEdLD7ecIZhOlX0JiQOoNGxXNTW93ay+V62EmfDKXIVxb5S8jURA=
-X-Received: by 2002:a50:d0c6:0:b0:51d:ebed:93a6 with SMTP id
- g6-20020a50d0c6000000b0051debed93a6mr131229edf.5.1689708383359; Tue, 18 Jul
- 2023 12:26:23 -0700 (PDT)
-MIME-Version: 1.0
-From:   Emily Shaffer <nasamuffin@google.com>
-Date:   Tue, 18 Jul 2023 12:26:09 -0700
-Message-ID: <CAJoAoZmBFTi5SFRuG8uh4ZyGs7pKQTYQLzZAC82zh2pMSggX3A@mail.gmail.com>
-Subject: Video conference libification eng discussion, this Thursday 17:00 UTC
+        with ESMTP id S229535AbjGRUtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2023 16:49:31 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB96BD
+        for <git@vger.kernel.org>; Tue, 18 Jul 2023 13:49:30 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F51418A978;
+        Tue, 18 Jul 2023 16:49:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7lRgtQtwiCad0NGyRmiXf/EG0e/rkqT2yWTGX/
+        uxI2o=; b=SA00vHt/1+AJMxOBwX8WoC3KzT0HesrVFPuJMzs4h3U/qeFGo+yJ4m
+        qZlVZKWnGubbsK6o1yF8k8auRrXgeLOeWXNDR/GX2ND5WlO7HzUfvuwNqFuftswC
+        KueKpS0jX9VLi9dDwvDbPcHd3Be0GSHEG9yvWDLXxoovboliKBTiM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 161C018A977;
+        Tue, 18 Jul 2023 16:49:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 77C1C18A976;
+        Tue, 18 Jul 2023 16:49:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH] ls-tree: fix --no-full-name
+References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
+        <xmqqo7k9fa5x.fsf@gitster.g>
+Date:   Tue, 18 Jul 2023 13:49:26 -0700
+In-Reply-To: <xmqqo7k9fa5x.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        18 Jul 2023 09:37:30 -0700")
+Message-ID: <xmqq4jm1gd2h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 95EDAF42-25AC-11EE-B5D2-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello folks,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Google is hosting a standing engineering discussion about libifying
-Git, for contributors interested in participating in or hearing about
-the progress of this effort. Expect this discussion to be free-form
-and casual - no powerpoints here!
+>  * "git commit --[no-](short|long|porcelain)" are accepted and
+>    behave as "git status" without doing any "git commit" thing,
+>    which should be corrected, I think.
 
-We're hoping to hold this meeting every Thursday at 10am Pacific
-(17:00 UTC) via Google Meet.
+It turns out that this was very much deliberate that these options
+imply "--dry-run", implemented in 7c9f7038 (commit: support
+alternate status formats, 2009-09-05).
 
-To get an invite to the video conference and the notes document,
-please reply to this email. Please also add points to the agenda
-(template follows) if you want to raise awareness of them.
-
-We'll choose a topic to discuss at the beginning of the meeting, and
-I'll reply afterwards with the notes.
-
-*   What's cooking in libification?
-    *   Patches we sent regarding libification
-    *   Patches for review related to the libification effort
-*   What happened in the past 1-2 weeks that interested parties or
-intermittent contributors need to know?
-*   (asynchronous) Where are you stuck? What eng discussions do we
-want to have? (We'll choose a topic from this list at the beginning of
-the meeting.)
-*   Session topic: TBD
+So there is nothing to fix here.
