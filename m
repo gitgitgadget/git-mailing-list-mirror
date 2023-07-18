@@ -2,109 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11859EB64DC
-	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 00:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D690EB64DC
+	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 01:05:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230255AbjGRApC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jul 2023 20:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45796 "EHLO
+        id S230340AbjGRBFy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jul 2023 21:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjGRApB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2023 20:45:01 -0400
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D25A10DF
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 17:44:57 -0700 (PDT)
-Date:   Tue, 18 Jul 2023 00:44:47 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail; t=1689641095; x=1689900295;
-        bh=FdiCH1abLrkQ132+/xC8tpBMt9jijpo2A3DnM03wymc=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=QJe2YfgENpojBmJtYK72UoclU8q4reiTxpsYfkYWwhQ22th87ojrHMaSupPZjjsDa
-         RyHibkXwJIfIdJ/Q+AR0VyE/py9yGf4dNQmsVaRtvWAXotB3atSnDuZ1uekTSTmCNb
-         wLC76p9Azk+w2LhpxisjkmbmDudD4IniFvN1ULudcJr340qU5QlqqaJQaqSZiN8VG9
-         z28Xrk0rUap3r0nQrpIOap9dCAaPS0zrbzDCknT2XE8x4L1fvWBGOJoQgPJU1T7Hge
-         Jk9vgGi9UKTX7O5a4qRTMLLNbeRs4TdSo2oWpGG4/X/VyGvnVeSbqnQM9LqBMy1aGm
-         VU+L2acq8Gkmw==
-To:     phillip.wood@dunelm.org.uk
-From:   Jacob Abel <jacobabel@nullpo.dev>
+        with ESMTP id S229827AbjGRBFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2023 21:05:53 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A509795
+        for <git@vger.kernel.org>; Mon, 17 Jul 2023 18:05:51 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92FF31AAF74;
+        Mon, 17 Jul 2023 21:05:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UtjxWs/fxHY2UyEmRBPwOAZGfCswFSZPQYbDJz
+        hWMr4=; b=rfWkXNDCvO7pZ+HFj3n0D26ZJmsaqKl7ktqm1P1oouQJI7dEpMCeSq
+        bQuzv0GmCUvbl6iIjBG8ZD2SnvpDY5PuZGlxXIZMrtjrBv2Ya8cQzXlnXzlwbPKf
+        DF1OkJShG2FvQt7e9BJf9yOkc3BlaSHTNt3mn1+yUAZ4XfToeDZOg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 896FA1AAF71;
+        Mon, 17 Jul 2023 21:05:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.127.75.226])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ECFC71AAF70;
+        Mon, 17 Jul 2023 21:05:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andy Koppe <andy.koppe@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t2400: Fix test failures when using grep 2.5
-Message-ID: <dyzkftugvd5b4f4wxsg6773fkrdrnbync6idvvi6h7cuuto36w@dbzjnkj3mh2l>
-In-Reply-To: <3f3a3f5b-70fd-ec3f-acbb-d585b5eb6cbc@gmail.com>
-References: <20230715025512.7574-1-jacobabel@nullpo.dev> <2e22a23f-576f-7a42-ace8-624a5362d9f4@gmail.com> <vn5sylull5lqpitsanlyan5fafxj5dhrxgo6k65c462dhqjbno@uwghfyfdixtk> <3f3a3f5b-70fd-ec3f-acbb-d585b5eb6cbc@gmail.com>
-Feedback-ID: 21506737:user:proton
+Subject: Re: [PATCH v2] pretty: add %(decorate[:<options>]) format
+References: <20230715103758.3862-1-andy.koppe@gmail.com>
+        <20230715160730.4046-1-andy.koppe@gmail.com>
+        <xmqqmszudtih.fsf@gitster.g>
+Date:   Mon, 17 Jul 2023 18:05:48 -0700
+In-Reply-To: <xmqqmszudtih.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        17 Jul 2023 16:10:14 -0700")
+Message-ID: <xmqq7cqydo5v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3C30363C-2507-11EE-AFD8-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/07/16 04:34PM, Phillip Wood wrote:
-> Hi Jacob
->=20
-> [...]
->=20
-> One thing I forgot to mention was that I think it would be better to
-> explain in the commit message that "\s" etc. are not part of POSIX EREs
-> and that is why they do not work.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Noted. Will do.
+> I'll stop here. After skimming the changes to the test, I think this
+> single patch should be split into separate steps.  Perhaps the split
+> should go like this:
+> ...
+> Thanks.
 
-> [...]
->=20
-> Oh so we need to search for a space followed by a tab after "hint:"
-> then.=20
+Oh, sorry that I forgot to add one thing.
 
-Okay. I think `\t` is PCRE so I'll just update the string in=20
-`builtin/worktree.c` so we can just do `[ ]+` instead.=20
+Overall, the patch seems to be done very well when viewed as a
+whole.  Thanks for working on it.
 
-> As an aside we often just use four spaces to indent commands in
-> advice messages (see the output of git -C .. grep '"    git' \*.c)
-
-Apologies. When writing up that original patchset I based the
-formatting of the advice based on the ones in `builtin/add.c` which
-seems to also use `\t`.
-
->=20
-> > So I just went with `[[:space:]]+` as I
-> > didn't want to have to worry about whether some platforms expand the
-> > tab to spaces or how many spaces.
->=20
-> Is that a thing?
-
-It might be? I know copying text through tmux tends to expand tabs to
-spaces for me so I figured some other tools or those same tools on
-different platforms might do things like that as well. To be honest I
-have no idea and figured that I'd just CYA by making it work in the
-case that it did than trying to guarantee that it wouldn't happen.
-
-> > [...]
-> >
-> > If there is documentation (or discussions) on how to use this backend
-> > properly I'd appreciate a link and I can try workshopping a better
-> > solution then. The warning included in the original patchset reads
-> > from that HEAD file as well so it would also need to be adapted.
->=20
-> I'm afraid I don't have anything specific, there were some patches a
-> while ago such as dd8468ef00 (t5601: read HEAD using rev-parse,
-> 2021-05-31) that stopped reading HEAD from the filesystem.
-
-Noted.
-
-> > [...]
->=20
-> I think it might be better to just diagnose if HEAD is a dangling
-> symbolic-ref or contains an invalid oid and leave it at that. See the
-> documentation in refs.h for refs_resolve_ref_unsafe() for how to check
-> if HEAD is a dangling symbolic ref - if rego_get_oid(repo, "HEAD") fails
-> and it is not a dangling symbolic ref then it contains an invalid oid.
-
-Understood. I'll start working on a separate patch to update that
-warning once this patch settles then.
-
->=20
-> [...]
-
+It is just I cannot be as confident as I would like to be in my
+review when the single patch does several different things at once.
+If it were split in steps, each step focusing on doing a single
+thing well and describing well what it does and why, reviewers can
+be more confident that they did not miss something important in the
+patch(es).
