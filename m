@@ -2,73 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D690EB64DC
-	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 01:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B65EB64DA
+	for <git@archiver.kernel.org>; Tue, 18 Jul 2023 04:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230340AbjGRBFy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jul 2023 21:05:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53152 "EHLO
+        id S229963AbjGREkP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jul 2023 00:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbjGRBFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2023 21:05:53 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A509795
-        for <git@vger.kernel.org>; Mon, 17 Jul 2023 18:05:51 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92FF31AAF74;
-        Mon, 17 Jul 2023 21:05:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UtjxWs/fxHY2UyEmRBPwOAZGfCswFSZPQYbDJz
-        hWMr4=; b=rfWkXNDCvO7pZ+HFj3n0D26ZJmsaqKl7ktqm1P1oouQJI7dEpMCeSq
-        bQuzv0GmCUvbl6iIjBG8ZD2SnvpDY5PuZGlxXIZMrtjrBv2Ya8cQzXlnXzlwbPKf
-        DF1OkJShG2FvQt7e9BJf9yOkc3BlaSHTNt3mn1+yUAZ4XfToeDZOg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 896FA1AAF71;
-        Mon, 17 Jul 2023 21:05:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.127.75.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ECFC71AAF70;
-        Mon, 17 Jul 2023 21:05:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andy Koppe <andy.koppe@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] pretty: add %(decorate[:<options>]) format
-References: <20230715103758.3862-1-andy.koppe@gmail.com>
-        <20230715160730.4046-1-andy.koppe@gmail.com>
-        <xmqqmszudtih.fsf@gitster.g>
-Date:   Mon, 17 Jul 2023 18:05:48 -0700
-In-Reply-To: <xmqqmszudtih.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        17 Jul 2023 16:10:14 -0700")
-Message-ID: <xmqq7cqydo5v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229496AbjGREkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2023 00:40:13 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C23E52
+        for <git@vger.kernel.org>; Mon, 17 Jul 2023 21:40:12 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-262ef07be72so2548350a91.1
+        for <git@vger.kernel.org>; Mon, 17 Jul 2023 21:40:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689655212; x=1692247212;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=W0nYlGBMcB3gI/PHcGiKtOrUfhUNqDucvBPe7EMTYu0=;
+        b=JiDyBB30GyRQrKan3kL5hY6acu4k2aXZuho+ToLc71r1mYgHt7I0tigg4L7Exhbx1e
+         /oTHuTSoFk8bbGJRQ7VBNxF8UTlf97klPeBGL/luesR157TTHU/f2tKnIF+POjE0lVoR
+         jrkJim4E97BubrWdmWJEC4xDw2rf3XtdqbOpORWRx2P6mraUB9fa02GFcpBNxrEQqbXD
+         Wru8v6EdygVvcJwHUIyFwxD6kF4uGnZBNRErpFGsdRagoisuqj+Y86ax9VMRTcWsxvGR
+         L+BSN4ft2XAW323FCpUjKjkoKI7xQ9XZ97+lTC27kMiFu0FrY82vYbjCDijAavjTO6bw
+         /vIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689655212; x=1692247212;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W0nYlGBMcB3gI/PHcGiKtOrUfhUNqDucvBPe7EMTYu0=;
+        b=b23ulWHliOMGaPWniyOKlBeaJkiyaup6/Ybqe9xjNATkOx/2iY16GEDTu1vuUmXEz/
+         93Abbmf8pxwi6ltLbc1V6kTYZeoU9jhJMWGXPvi+XHBQAJzzLv1znSFs5TY6jnmdr0CR
+         6S9DhXCFiRL2G+MtSARp+2Hv3uz+gFTkZfGk6gUz6W8n1NlvEGxu+pljfWJI/TPEyAfm
+         +vRkvQ8b/S6V4+Y4C/eKU7hhshFVkn1mzNBn270DHLnJ34kbPTDgfwt+xib7/mHZ2a+f
+         K0mD2X2vx+nNcVQTqQykl11wNA5+2LCQwVr/Vlli72VEhCVV6Lk2LX55Rh/zmSrB0F+3
+         Ol0g==
+X-Gm-Message-State: ABy/qLapbROwJwKcNm6/OQkQ0cKprDEjjuCK+hn8JV2/vf44BEKVAtyv
+        v5arnwYrh7v81yaV00laT/eieYXdecZfzXCdQhb/le6Rf0Y=
+X-Google-Smtp-Source: APBJJlFCyUEBLMN9LHoF3YDpcD7lLYh5tUOp0W550iDrc1570Jrq31+UeynOc+rHO1PrPLNNKnRpp1AzXTHJEi0nQoY=
+X-Received: by 2002:a17:90a:fd06:b0:263:30a0:643f with SMTP id
+ cv6-20020a17090afd0600b0026330a0643fmr10285890pjb.21.1689655212308; Mon, 17
+ Jul 2023 21:40:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3C30363C-2507-11EE-AFD8-307A8E0A682E-77302942!pb-smtp2.pobox.com
+References: <kl6lilai18zu.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lilai18zu.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Luna Jernberg <droidbittin@gmail.com>
+Date:   Tue, 18 Jul 2023 06:40:00 +0200
+Message-ID: <CADo9pHhyjeZoRX8b00U_CCHXBPTodsrYgW6oJL4pmyFV02zHGw@mail.gmail.com>
+Subject: Re: Join us for Review Club!
+To:     Glen Choo <chooglen@google.com>,
+        Luna Jernberg <droidbittin@gmail.com>
+Cc:     git@vger.kernel.org, Andy Koppe <andy.koppe@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+17th July not 19th ?
 
-> I'll stop here. After skimming the changes to the test, I think this
-> single patch should be split into separate steps.  Perhaps the split
-> should go like this:
-> ...
-> Thanks.
-
-Oh, sorry that I forgot to add one thing.
-
-Overall, the patch seems to be done very well when viewed as a
-whole.  Thanks for working on it.
-
-It is just I cannot be as confident as I would like to be in my
-review when the single patch does several different things at once.
-If it were split in steps, each step focusing on doing a single
-thing well and describing well what it does and why, reviewers can
-be more confident that they did not miss something important in the
-patch(es).
+Den tis 18 juli 2023 kl 00:21 skrev Glen Choo <chooglen@google.com>:
+>
+> Hi everyone!
+>
+> Review Club is happening this Wednesday, 17 Jul, 16:30 UTC. You can find
+> more info at [1] and on gitcal [2]. We run a session every other week,
+> and you can find the full schedule on gitcal.
+>
+> This week, we'll be discussing Andy Koppe's new ref format specifier to
+> pretty-formats [3]. Let me know if you're interested and would like to
+> join (off-list is fine), and I'll send you an invite.
+>
+> See you there!
+>
+> [1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
+> [2] http://tinyurl.com/gitcal
+> [3] https://lore.kernel.org/git/20230712205608.1806-1-andy.koppe@gmail.com/
