@@ -2,234 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0D4BC0015E
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 22:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F2DC0015E
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 23:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjGSW5R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 18:57:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52350 "EHLO
+        id S229934AbjGSXYG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 19:24:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229668AbjGSW5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 18:57:16 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE342101
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 15:56:49 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A72BF3239E;
-        Wed, 19 Jul 2023 18:56:20 -0400 (EDT)
+        with ESMTP id S230297AbjGSXYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 19:24:05 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38866268B
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 16:23:39 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B33521FC97;
+        Wed, 19 Jul 2023 19:23:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3ZEoojbVEjwrk+w4XLKKnjl3tnsLABryhSD8HA
-        u/Vzg=; b=jVqYlyeVHQdWsAFUEXwkg+MQ2cJ0viUsr0wk7qIQ33zrqvr5ckAXwe
-        o0cnzCzpDRsdjKKVefXbkICUrwUDO5pC5vNQpXF+r9veV3CcJSVp96M/zk/bVzPb
-        UkH0wW7uBAmZASDPO7VaTDQLUgFoG+3M1owEghRUCy6IUe+SHVLV0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EA3C3239D;
-        Wed, 19 Jul 2023 18:56:20 -0400 (EDT)
+        :content-type; s=sasl; bh=vMK3jWtddBjVL9pTmoIGgSClict1TeOOWqd4GC
+        r+nSQ=; b=sKDAIwwVSRb29fuZkg35pQRruUWXi0oTOnYxGBFEdJZ+D5DPaaz9aR
+        OhLz+FUCNiPCYDq8CN1d+QsPSZMF2jQrL45/F4V9Py7q5aLNEBWkftE3+4x5gShK
+        EKCl3t6jSOm8w7YJ7rg9R8/K8Ps0YDrSzd8IHSMrnvX1+Rc48tO0k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AADB71FC96;
+        Wed, 19 Jul 2023 19:23:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 20AE93239C;
-        Wed, 19 Jul 2023 18:56:17 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 32B991FC93;
+        Wed, 19 Jul 2023 19:23:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kousik Sanagavarapu <five231003@gmail.com>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH v3 2/2] ref-filter: add new "describe" atom
+        Hariom Verma <hariom18599@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Siddharth Singh <siddhartth@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 1/2] ref-filter: add multiple-option parsing functions
 References: <20230714194249.66862-1-five231003@gmail.com>
         <20230719162424.70781-1-five231003@gmail.com>
-        <20230719162424.70781-3-five231003@gmail.com>
-Date:   Wed, 19 Jul 2023 15:56:15 -0700
-In-Reply-To: <20230719162424.70781-3-five231003@gmail.com> (Kousik
-        Sanagavarapu's message of "Wed, 19 Jul 2023 21:45:06 +0530")
-Message-ID: <xmqqy1jb7bow.fsf@gitster.g>
+        <20230719162424.70781-2-five231003@gmail.com>
+Date:   Wed, 19 Jul 2023 16:23:15 -0700
+In-Reply-To: <20230719162424.70781-2-five231003@gmail.com> (Kousik
+        Sanagavarapu's message of "Wed, 19 Jul 2023 21:45:05 +0530")
+Message-ID: <xmqqjzuv5vvg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 780A4AAE-2687-11EE-BA81-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 3D167518-268B-11EE-8E9F-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Kousik Sanagavarapu <five231003@gmail.com> writes:
 
-> Duplicate the logic of %(describe) and friends from pretty to
-> ref-filter. In the future, this change helps in unifying both the
-> formats as ref-filter will be able to do everything that pretty is doing
-> and we can have a single interface.
->
-> The new atom "describe" and its friends are equivalent to the existing
-> pretty formats with the same name.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Hariom Verma <hariom18599@gmail.com>
-> Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
-> ---
->  Documentation/git-for-each-ref.txt |  23 +++++
->  ref-filter.c                       | 130 +++++++++++++++++++++++++++++
->  t/t6300-for-each-ref.sh            | 114 +++++++++++++++++++++++++
->  3 files changed, 267 insertions(+)
->
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index 2e0318770b..395daf1b22 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -258,6 +258,29 @@ ahead-behind:<committish>::
->  	commits ahead and behind, respectively, when comparing the output
->  	ref to the `<committish>` specified in the format.
->  
-> +describe[:options]:: Human-readable name, like
-> +		     link-git:git-describe[1]; empty string for
-> +		     undescribable commits. The `describe` string may be
-> +		     followed by a colon and zero or more comma-separated
-> +		     options.
+>  ref-filter.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
 
-Why do these new items formatted so differently from the previous
-ones?  By indenting the lines so deeply you are forcing yourself to
-wrap these lines many times.  How about imitating the previous entry
-for ahead-behind and writing this like so:
+New helper functions that do not have any caller and no
+documentation to explain how they are supposed to be called
+(i.e. the expectation on the callers---what values they need to feed
+as parameters when they call these helpers, and the expectation by
+the callers---what they expect to get out of the helpers once they
+return) makes it impossible to evaluate if they are any good [*].
 
-        describe[:<options>]::
-                A human-readable name, like linkgit:git-describe[1];
-                empty string is given for an undescribable commit.
-		...
+	Side note.  Those of you who are keen to add unit tests to
+	the system (Cc:ed) , do you think a patch line this one that
+	adds a new helper function to the system, would benefit from
+	being able to add a few unit tests for these otherwise
+	unused helper functions?
 
-By the way, there is a typo "link-git" above that needs to be
-corrected.
+	The calls to the new functions that the unit test framework
+	would make should serve as a good piece of interface
+	documentation, showing what the callers are supposed to pass
+	and what they expect, I guess.
 
-It is curious that we support "describe:" (i.e. having no options,
-but colon is still present).  It may not be wrong per se, but it
-looks strange.  "may be followed by a colon and one or more
-comma-separated options" would be more intuitive (I haven't seen the
-implementation yet, so if we go that route, the implementation may
-also need to be updated).
+	So whatever framework we choose, it should allow adding a
+	test or two to this patch easily, without being too
+	intrusive.  Would that be a good and concrete evaluation
+	criterion?
 
->               .... Descriptions can be inconsistent when tags
-> +		     are added or removed at the same time.
+Anyway, because of that, I had to read [2/2] first and then come
+back here to review this one.
 
-"at the same time" meaning "while the description are being
-computed"?  I think this was copied from 273c9901 (pretty: document
-multiple %(describe) being inconsistent, 2021-02-28) where the
-pretty placeholder for "git log" and friends are described, and the
-implementation used there go one formatting element at a time,
-unlike for-each-ref that can compute a description for a given ref
-just once in populate_value() and reuse the same atom number of
-times in the format, each instance giving exactly the same value.
-So I am not sure if the "can be inconsistent" disclaimer applies
-to the %(describe) on this side the same way.  Are you sure?
+The following is my attempt to write down the contract between the
+callers and this new helper function---please give something like
+that to the final version.  The the example below is there just to
+illustrate the level of information that would be desired to help
+future readers and programmers.  Do not take the contents as-written
+as truth---I may have (deliberately) mixed in incorrect descriptions
+;-).
 
-As %(describe) is fairly expensive to compute, if the format string
-wants two, e.g. --format="%(refname) %(describe) %(describe)", there
-should be some effort to make these two share the same used_atom(),
-so that there will be only one "git describe" invocation from
-populate_value() that lets get_ref_atom_value() reuse that result
-of a single invocation to fill the two placeholder.
+/*
+ * The string "to_parse" is expected to be a comma-separated list
+ * of "key" or "key=val".  If your atom allows "key1" and "key2"
+ * (possibly with their values) as options, make two calls to this
+ * funtion, passing "key1" in candiate and then passing "key2" in
+ * candidate.
+ *
+ * The function Returns true ONLY when the to_parse string begins
+ * with the candidate key, possibly followed by its value (valueless
+ * key-only entries are allowed in the comman-separated list).
+ * Otherwise, *end, *valuestart and *valuelen are LEFT INTACT and
+ * the function returns false.
+ *
+ * *valuestart will point at the byte after '=' (i.e. the beginning
+ * of the value), and the number of bytes in the value will be set
+ * to *valuelen.
+ * A key-only entry results in *valuestart set to NULL and *valuelen
+ * set to 0.
+ * *end will point at the next key[=val] in the comma-separated list
+ * or NULL when the list ran out.
+ */
 
-
-> @@ -219,6 +222,7 @@ static struct used_atom {
->  			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
->  			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL } option;
->  		} signature;
-> +		const char **describe_args;
->  		struct refname_atom refname;
->  		char *head;
->  	} u;
-
-Nice and simple ;-).
-
-> +static int describe_atom_option_parser(struct strvec *args, const char **arg,
-> +				       struct strbuf *err)
+> +static int match_atom_arg_value(const char *to_parse, const char *candidate,
+> +				const char **end, const char **valuestart,
+> +				size_t *valuelen)
 > +{
-> +	const char *argval;
-> +	size_t arglen = 0;
-> +	int optval = 0;
+> +	const char *atom;
 > +
-> +	if (match_atom_bool_arg(*arg, "tags", arg, &optval)) {
-> +		if (!optval)
-> +			strvec_push(args, "--no-tags");
-> +		else
-> +			strvec_push(args, "--tags");
+> +	if (!(skip_prefix(to_parse, candidate, &atom)))
+> +		return 0;
+> +	if (valuestart) {
+
+As far as I saw, no callers pass NULL to valuestart.  Getting rid of
+this if() statement and always entering its body would clarify what
+is going on, I think.
+
+> +		if (*atom == '=') {
+> +			*valuestart = atom + 1;
+> +			*valuelen = strcspn(*valuestart, ",\0");
+> +			atom = *valuestart + *valuelen;
+> +		} else {
+> +			if (*atom != ',' && *atom != '\0')
+> +				return 0;
+> +			*valuestart = NULL;
+> +			*valuelen = 0;
+> +		}
+> +	}
+> +	if (*atom == ',') {
+> +		*end = atom + 1;
 > +		return 1;
 > +	}
-
-OK.  One thing that I hate about the split of this series into two
-steps is that [1/2] has to be read without knowing what the expected
-use of those two helper functions are.  It was especially bad as the
-functions lacked any documentation on how they are supposed to be
-called.
-
-Now, if we go back to the implementation of match_atom_bool_arg(),
-it first called match_atom_arg_value(), which stripped the given key
-("tags" in this case) from the argument being parsed, and allowed
-'=' (i.e. followed by a val), ',' (i.e. no val, but more "key[=val]"
-to follow), or '\0' (i.e. end of the argument string).  Anything
-else after the matched key meant that the key did not match
-(e.g. the arg had "tagsabcd", which should not match "tag").  And it
-stored the byte position after '=' if the key was terminated with
-'=', or NULL otherwise, to signal where the optional value starts.
-match_atom_bool_arg() uses this and correctly translates a key
-without the optional [=val] part into "true".  So the above is
-given, after the caller skips "%(describe:", things like "tags,...",
-"tags=no,...", "tags=yes,..." (or replace ",..." with a NUL for the
-final option), and chooses between --no-tags and --tags.  Sounds
-good.
-
-> + ...
-> +	if (match_atom_arg_value(*arg, "exclude", arg, &argval, &arglen)) {
-> +		if (!arglen)
-> +			return strbuf_addf_ret(err, -1,
-> +					       _("value expected %s="),
-> +					       "describe:exclude");
-> +
-> +		strvec_pushf(args, "--exclude=%.*s", (int)arglen, argval);
+> +	if (*atom == '\0') {
+> +		*end = atom;
 > +		return 1;
 > +	}
-
-I would have expected that these become if/else if/.../else cascade,
-i.e.
-
-	if (is that "tags"?) {
-	} else if (is that "abbrev"?) {
-		...
-	} else
-		return 0; /* nothing matched */
-	return 1;
-
-but I do not mind the above.  Each "block" that matches and handles
-one key looks more indenendent the way the patch was written, which
-may be a good thing.
-
 > +	return 0;
 > +}
-> +
-> +static int describe_atom_parser(struct ref_format *format UNUSED,
-> +				struct used_atom *atom,
-> +				const char *arg, struct strbuf *err)
+
+/*
+ * Write something similar to document the contract between the caller
+ * and this function here.
+ */
+> +static int match_atom_bool_arg(const char *to_parse, const char *candidate,
+> +				const char **end, int *val)
 > +{
-> +	struct strvec args = STRVEC_INIT;
 
-OK, parse_ref_fitler_atom() saw "%(describe", possibly followed by a
-colon and zero or more comma-separated key[=val], and the location
-after ':' (or NULL) is given to arg.  Specifically, %(describe) and
-%(describe:) both pass NULL in arg.
-
-> +	for (;;) {
-> +		int found = 0;
-> +		const char *bad_arg = NULL;
-> +
-> +		if (!arg || !*arg)
-> +			break;
-
-And we stop when there is no more key[=val].
-
-> +		bad_arg = arg;
-> +		found = describe_atom_option_parser(&args, &arg, err);
-
-This one moves arg forward and arranges the next key[=val] to be seen
-in the next iteration of this loop.  Makes sense.
-
-In the remainder of the code changes, I saw nothing strange.
-Quite well made.
+Thanks.
