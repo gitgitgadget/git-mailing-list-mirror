@@ -2,58 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A84CDEB64DA
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 14:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2928BEB64DA
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 14:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbjGSOo1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 10:44:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39932 "EHLO
+        id S230160AbjGSOw1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 10:52:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230205AbjGSOo0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 10:44:26 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C3661731
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 07:44:04 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-55fcc15e109so3354329a12.3
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 07:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689777831; x=1690382631;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FrD0Ek8VhOZnaTX1VS24yFluFuBTtMALKdkiGlotIZQ=;
-        b=BdwfeWiTE46aOuL7QuA3SeDJ13yPu28SkVXJAt4/hFRLzAFSXfdQ+x+8V+x3FQoYll
-         NsDOeuE/bZETDBk5dCKyUr87yx4CXalUDMLVr64+BmCEtths2rjak2WqhSP5X5o2GjBU
-         xh8ghdILEUBSGdXF5fFzRhwZFzCLGjGLTS+S8y7EMrmWYuA08XhMyfhpLnvTb4OZof0i
-         cgrqrqFszWQkzPpXFOGLY5NN2Q49b6vzseL/wDw+FSm+88v3J3s02xMRXC0mfZlETOJJ
-         OZs766i3tQNdT/pfUyyukSv1RVAeceaTjxlEZ/5xt8Pi/jqVZX0Ywqe3u2INo0WRM3q8
-         f+gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689777831; x=1690382631;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FrD0Ek8VhOZnaTX1VS24yFluFuBTtMALKdkiGlotIZQ=;
-        b=HgX81AU0tb+rj5wDGj0bUWMgY2RPAX8fhMyecQCwceTG/E55U31TdyyIPOI4HG788D
-         d7jYBihFrHyi5nGayyQ1sRwdykoK7x/bGwmcUGV/LVd4866ZXY5kD5WLLn4d5uIdVofj
-         wQHexRWx2Iy2A8TIvbn+GBsAcQDRydFZ69aukmogbwDOgSjotVhaOJrcYdmLo4/cfG54
-         GHNodlgk/H/SbVpg8IT+cWIoy9s2A4vVdOFErQZ/5UbGYX7ESarjVdV1ORkUOcb5XHPx
-         MMUPPYHHjR4zklOvNelh7S69Q1E7IztNDr+wg+d+nwyL79m3pxOYtO5O5VQtSYNtleUm
-         uwyQ==
-X-Gm-Message-State: ABy/qLbeaZZTfG7glaumDSyqtOX+kZrD9VtByoiPgdzuaUZJBZDZlTcA
-        S9/coyRd+epocZPQSWZKriJtNNCffHM=
-X-Google-Smtp-Source: APBJJlF66m/U6yydlF0/Kx4kfYJivKrWF6eSdcZaD160RLgNJMkxTnBlEbme7Ro5f0p3kO8+HFJ2rw==
-X-Received: by 2002:a17:903:110d:b0:1b0:3637:384e with SMTP id n13-20020a170903110d00b001b03637384emr2803630plh.25.1689777830675;
-        Wed, 19 Jul 2023 07:43:50 -0700 (PDT)
-Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
-        by smtp.gmail.com with ESMTPSA id g1-20020a170902740100b001b9cb27e07dsm4073191pll.45.2023.07.19.07.43.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jul 2023 07:43:49 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, alban.gruin@gmail.com, gitster@pobox.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] sequencer: finish parsing the todo list despite an invalid first line
-Date:   Wed, 19 Jul 2023 08:43:15 -0600
-Message-ID: <20230719144339.447852-1-alexhenrie24@gmail.com>
+        with ESMTP id S231154AbjGSOwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 10:52:23 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E59BC7
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 07:52:22 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id B611D1FD69;
+        Wed, 19 Jul 2023 14:52:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1689778340; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=Pz/+ai53udOSvj8mRAtHX/6ot2P1/dABCTyBZ8Qcc+s=;
+        b=ajWKdiDS+yfIy/kMn1DJZ4OwCfO6QpV8QuHFDCbxi+oD+x8ehgLcJA6/VF/zxp4FjDz8Jo
+        KJ9F/6v1vmhisT5TyAfenLlPryUKzk6NoTaPA8/Q6XGxeXHStyqsY7ToQ6TkubDoWyjAmE
+        ADnXADKJ9P7yqG1a0rmHZEEA20OlymQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1689778340;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=Pz/+ai53udOSvj8mRAtHX/6ot2P1/dABCTyBZ8Qcc+s=;
+        b=Jrpi12vtw1Lc9lBgEy1ik6fz+gXnhrBCcpFPeJeVLugYgUu5NGDzlDYi10k6NfrxgjvMkI
+        VO+8NL3caaGBHTAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9018513460;
+        Wed, 19 Jul 2023 14:52:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 6DeVIaT4t2TBVQAAMHmgww
+        (envelope-from <aherrmann@suse.de>); Wed, 19 Jul 2023 14:52:20 +0000
+From:   Andreas Herrmann <aherrmann@suse.de>
+To:     git@vger.kernel.org
+Cc:     Andreas Herrmann <aherrmann@suse.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/3] configure.ac: misc configure fixes
+Date:   Wed, 19 Jul 2023 16:29:52 +0200
+Message-ID: <20230719145211.17854-2-aherrmann@suse.de>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -61,67 +58,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ddb81e5072 (rebase-interactive: use todo_list_write_to_file() in
-edit_todo_list(), 2019-03-05) made edit_todo_list more efficient by
-replacing transform_todo_file with todo_list_parse_insn_buffer.
-Unfortunately, that innocuous change caused a regression because
-todo_list_parse_insn_buffer would stop parsing after encountering an
-invalid 'fixup' line. If the user accidentally made the first line a
-'fixup' and tried to recover from their mistake with `git rebase
---edit-todo`, all of the commands after the first would be lost.
+Some of the configure options are not working as expected.
+I first encountered this when using '--with-expat=no'.
+Following patches address this.
 
-To avoid throwing away important parts of the todo list, change
-todo_list_parse_insn_buffer to keep going and not return early on error.
+I've also checked configure options for 'libpcre', 'openssl' (together
+with 'make OPENSSL_SHA1=yes ...'), and 'tcltk'. These are working
+correctly.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- sequencer.c                   |  2 +-
- t/t3404-rebase-interactive.sh | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+As a test I've run 'make test' when disabling support of a package.
+I always had to use 'export GIT_SKIP_TESTS="t5801.1[4-7] t5801.31"' to
+skip some failing tests. Those failed also with default build.
 
-diff --git a/sequencer.c b/sequencer.c
-index cc9821ece2..adc9cfb4df 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2702,7 +2702,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
- 		if (fixup_okay)
- 			; /* do nothing */
- 		else if (is_fixup(item->command))
--			return error(_("cannot '%s' without a previous commit"),
-+			res = error(_("cannot '%s' without a previous commit"),
- 				command_to_string(item->command));
- 		else if (!is_noop(item->command))
- 			fixup_okay = 1;
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index ff0afad63e..d2801ffee4 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1596,6 +1596,25 @@ test_expect_success 'static check of bad command' '
- 	test C = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
- 
-+test_expect_success 'the first command cannot be a fixup' '
-+	# When using `git rebase --edit-todo` to recover from this error, ensure
-+	# that none of the original todo list is lost
-+	rebase_setup_and_clean fixup-first &&
-+	(
-+		set_fake_editor &&
-+		test_must_fail env FAKE_LINES="fixup 1 2 3 4 5" \
-+			       git rebase -i --root 2>actual &&
-+		test_i18ngrep "cannot .fixup. without a previous commit" \
-+				actual &&
-+		test_i18ngrep "You can fix this with .git rebase --edit-todo.." \
-+				actual &&
-+		grep -v "^#" .git/rebase-merge/git-rebase-todo >orig &&
-+		test_must_fail git rebase --edit-todo &&
-+		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
-+		test_cmp orig actual
-+	)
-+'
-+
- test_expect_success 'tabs and spaces are accepted in the todolist' '
- 	rebase_setup_and_clean indented-comment &&
- 	write_script add-indent.sh <<-\EOF &&
+When disabling iconv ('configure --without-iconv') further tests are
+failing. In this case I've used
+'export GIT_SKIP_TESTS="t5801.1[4-7] t5801.31 \
+t0028* t2082.2 t3434* t390[01]* \
+t4041* t4059* t4060.8 t4201.12 t4205* t4210* t4254.[34] \
+t5100* t6006* t7102.2 t8005* t9300.193 t9350*"'
+to ensure that 'make test' completed without exiting early.
+
+Andreas Herrmann (3):
+  configure.ac: don't overwrite NO_EXPAT option
+  configure.ac: don't overwrite NO_CURL option
+  configure.ac: always save NO_ICONV to config.status
+
+ configure.ac | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
 -- 
 2.41.0
 
