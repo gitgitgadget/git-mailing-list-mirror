@@ -2,278 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4607FC0015E
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 18:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3FADC0015E
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 18:24:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbjGSSQV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 14:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48818 "EHLO
+        id S229618AbjGSSYt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 14:24:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbjGSSQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 14:16:20 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 221B611C
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 11:16:19 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id d9443c01a7336-1b9de3e7fb1so38064935ad.1
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 11:16:19 -0700 (PDT)
+        with ESMTP id S229525AbjGSSYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 14:24:47 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E0DB1BF6
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 11:24:46 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-cc7863e7b82so5137584276.0
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 11:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689790578; x=1690395378;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SWtDPiAoXv+hd94ePqrjR3xTnQbCr7ZMq4NvDxwYWH0=;
-        b=dnadrghQGuNgaJjWjMXlgI0VCd462YqFYgIEA8eBR/D3b5xq/6WfBZZ3GaXTNGYcXO
-         s6o+lZO4lKMjIAeBb5FqG42hRJAaqN+f83PCtuuwKgrIk0MdcsYlL5tSN4GbqysQ3lxf
-         oj6DPp0JoHLQiYsbS4Q9h1BrMwzVIm1apFTBNd6aBrKhxTnzhkeSUgI1JzRDxnHKRSmF
-         +iApDFlEJYPj6PNf6WC8oiVB2NqhlTxlVxazkInN2QR4lbOtDCDWYFLknzBgKNoLK2iZ
-         9qHKaPxZ+bYrcI5WviQNXDbUQ1kMLz5O4ke/jUtFKFXWNwQ7+GaYZmKehCbEqplyDjRm
-         sueg==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689791085; x=1692383085;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0bAXfDjdSrEgcClXlVHg9e4u29LhaezTuXvRGiZ4ZLA=;
+        b=mgsa+E88xN5grSR+3ciK05WdKSzmynpuPaGffJSrCQy1FIDE/npSjU4Imis+MP6j71
+         HxThJtpTY9gUKhQIWRVwosnpvKDAVE9PB43doq6ZoGSmE8VNKkScVMjjV8wTR4G+wybA
+         b6sRxB+N+QinFtOCn6KIVDOnlwcD+c8WRsRXHyCfCr6QrCye9eD8BZI8Qj0D2GFxCGEr
+         VJ3wXhoGhtWRvGpGLyCd2TC6LM876f497ECfMhu+0xIxbTEE1Ei+nhpfx68PJ7SvLPwm
+         hLVf1hMtu7+7xlcwjwXfGRmT2b4ZwBR/N5e7nBBrEpCnHj2H0jffV4CrVbOn8ipN93Ma
+         yWdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689790578; x=1690395378;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SWtDPiAoXv+hd94ePqrjR3xTnQbCr7ZMq4NvDxwYWH0=;
-        b=XxJHvouAQeFv2cmFQAI8nEP9/hs/rywXkFlW977yM+0kTmf1eA5YdI17jxpE8Dwp0s
-         MNU0qoP25aM2ttyrqW0aZ/xgyCLPvu+vISr8BAaSuZjBr/w44bvgrIFD/FAKmhy5B3rX
-         /FvMpE/DsOFUb2lmfaSC6kODn0VzUISmlKApzs31BMV4yT5UG3FjB0dXPFbGzFD9gwP2
-         /u2hrSnwOYWaW22CvKv7tAz1hi7g1meatH1JMBDUsaV4yGVBrsfbCqyniXC7islpnum7
-         qISOKb21XOulUVQBLZH5tajD+qKtkhhE2bfZ4Zoba9X9lCozWTlgi53rAjd0KLulz1/3
-         6nzQ==
-X-Gm-Message-State: ABy/qLao69pN+aDaWyYVrIZ83yM9GSbEfk5Xm3jhKPux/qfWzOV1qzuy
-        CK3fz75pUSHkwqS42/ER41Iczr/1E/zWTQ==
-X-Google-Smtp-Source: APBJJlGyHTEbSQ6fbtLTtC/LIau1kEu1M3WFhGIlmtkiR4dfPeiYFZ9VOvDVHrZGMBVLmzavUqlrYQaXymk6gg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:ec88:b0:1b9:df8f:888c with SMTP
- id x8-20020a170902ec8800b001b9df8f888cmr25165plg.8.1689790578576; Wed, 19 Jul
- 2023 11:16:18 -0700 (PDT)
-Date:   Wed, 19 Jul 2023 11:16:16 -0700
-In-Reply-To: <20230715160730.4046-1-andy.koppe@gmail.com>
-Mime-Version: 1.0
-References: <20230715103758.3862-1-andy.koppe@gmail.com> <20230715160730.4046-1-andy.koppe@gmail.com>
-Message-ID: <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2] pretty: add %(decorate[:<options>]) format
-From:   Glen Choo <chooglen@google.com>
-To:     Andy Koppe <andy.koppe@gmail.com>, git@vger.kernel.org
-Cc:     Andy Koppe <andy.koppe@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1689791085; x=1692383085;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0bAXfDjdSrEgcClXlVHg9e4u29LhaezTuXvRGiZ4ZLA=;
+        b=VBYqHP82QdbdUIRzvkO31VaLq3DuzhuzhiYMD55PFSuKz4tTUvzDgIyUwnf0UQWcoT
+         reioqsG9xQdsWEjOAKxbRFXr6vwtObSOSMAIGbMSAkbVhpfyFFfLaJh0YdKsLJQA4Y9J
+         r4NDXdGvkWOM1VH8p2TMCzI/rGaPPLAWm1Cf/JwB0QBMu2gy8r3ajd9HuzDB478sfPZE
+         O2B36o1bJBLgUBXsojdVA4IVP4FBLKwaAmvIHzXxuahWVoSOq7xA3fAadM2hG8TSLCVb
+         erRGhe/kh7eI7w4D20xBmTKyg8ML5imDJa2cgyNwBoh55nW7bzgm3O+qejJXLZpDeNqe
+         oz5Q==
+X-Gm-Message-State: ABy/qLYFSiIA/K/GTD/EL2i2Rtg//v7VxX0Gbqf/I5lP1fa+a2CufSki
+        ruC35CuFiCBwb7Bp5d9x5Ro6qPONjes8TOdJOnqjVg==
+X-Google-Smtp-Source: APBJJlGAabQamWLmjUKYIrbHk4C7C65OAQqk2mm0PcW0+l9t/f+c4qcQ+YYXOU44NdGDREO+HDveCg==
+X-Received: by 2002:a81:4755:0:b0:583:3b24:d1c0 with SMTP id u82-20020a814755000000b005833b24d1c0mr3498347ywa.34.1689791085479;
+        Wed, 19 Jul 2023 11:24:45 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id r74-20020a0de84d000000b00545a081849esm1153958ywe.46.2023.07.19.11.24.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jul 2023 11:24:45 -0700 (PDT)
+Date:   Wed, 19 Jul 2023 14:24:44 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 4/4] commit-graph: new filter ver. that fixes murmur3
+Message-ID: <ZLgqbB2JG8+HPoHN@nand.local>
+References: <cover.1684790529.git.jonathantanmy@google.com>
+ <cover.1689283789.git.jonathantanmy@google.com>
+ <47ba89c565d3383a8a14272fe52ac274be82d0be.1689283789.git.jonathantanmy@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <47ba89c565d3383a8a14272fe52ac274be82d0be.1689283789.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andy!
+On Thu, Jul 13, 2023 at 02:42:11PM -0700, Jonathan Tan wrote:
+> The murmur3 implementation in bloom.c has a bug when converting series
+> of 4 bytes into network-order integers when char is signed (which is
+> controllable by a compiler option, and the default signedness of char is
+> platform-specific). When a string contains characters with the high bit
+> set, this bug causes results that, although internally consistent within
+> Git, does not accord with other implementations of murmur3 and even with
+> Git binaries that were compiled with different signedness of char. This
+> bug affects both how Git writes changed path filters to disk and how Git
+> interprets changed path filters on disk.
 
-We picked up this series at Review Club. Reviewers will leave their
-thoughts on the mailing list, but if you like, you can find the notes
-at:
+I think that you make a worthwhile point that the existing
+implementation is internally consistent, but doesn't actually implement
+a conventional murmur3. I wonder if it's worth being explicit where you
+mention its internal consistency to say that the existing implementation
+would never cause us to produce wrong results, but wouldn't be readable
+by other off-the-shelf implementations of murmur3.
 
-  https://docs.google.com/document/d/14L8BAumGTpsXpjDY8VzZ4rRtpAjuGrFSRqn3stCuS_w/edit
+(To be clear, I think that you already make this point, I'm just
+suggesting that it may be worth spelling it out even more explicitly
+than what is written above).
 
-Andy Koppe <andy.koppe@gmail.com> writes:
+> Therefore, introduce a new version (2) of changed path filters that
+> corrects this problem. The existing version (1) is still supported and
+> is still the default, but users should migrate away from it as soon
+> as possible.
 
-> This lists ref names in the same way as the %d decoration format, but
-> allows all the otherwise fixed strings printed around the ref names to
-> be customized, namely prefix, suffix, separator, the "tag:" annotation
-> and the arrow used to show where HEAD points.
->
-> Examples:
-> - %(decorate) is equivalent to %d.
-> - %(decorate:prefix=,suffix=) is equivalent to %D.
-> - %(decorate:prefix=,suffix=,separator= ,tag=,arrow=->) produces a
->   space-separated list without wrapping, tag annotations or spaces
->   around the arrow.
-> - %(decorate:prefix=[,suffix=],separator=%x2C,arrow=%x2C,tag=) produces
->   a comma-separated list enclosed in square brackets where the arrow is
->   replaced by a comma as well.
+Makes sense.
 
-I think giving the user this level of customization makes sense,
-especially since we do this for other format options. Importantly, this
-design also fits the existing conventions we have, so this looks like a
-good proposal.
+> Because this bug only manifests with characters that have the high bit
+> set, it may be possible that some (or all) commits in a given repo would
+> have the same changed path filter both before and after this fix is
+> applied. However, in order to determine whether this is the case, the
+> changed paths would first have to be computed, at which point it is not
+> much more expensive to just compute a new changed path filter.
 
-As a micro-nit: there's some useful context behind your chosen design in
-[1]. It would have been useful to link to it in the `---` context, or
-perhaps send this series as v3 and v4 to [1].
+Hmm. I think in the general case that is true, but I wonder if there's a
+shortcut we could take for trees that are known to not have *any*
+characters with their high-order bits set. That is, if we scan both of
+the first parent's trees and determine that no such paths exist, the
+contents of the Bloom filter would be the same in either version, right?
 
-[1] https://lore.kernel.org/git/20230712110732.8274-1-andy.koppe@gmail.com/
+I think that that would be faster than recomputing all filters from
+scratch. In either case, we have to load the whole tree. But if we can
+quickly scan (and cache our results by setting some bit--indicating the
+absence of paths with characters having their highest bit set--on the tree
+objects' `flags` field), then we should be able to copy forward the
+existing representation of the filter.
 
-> Add functions parse_decoration_option(), parse_decoration_options() and
-> free_decoration_options() to help implement the format. Test it in
-> t4205-log-pretty-formats.sh and document it in pretty-formats.txt.
+I think the early checks would be more expensive, since in the worst
+case you have to walk the entire tree, only to realize that you actually
+wanted to compute a first-parent tree diff, meaning you have to
+essentially repeat the whole walk over again. But for repositories that
+have few or no commits whose Bloom filters need computing, I think it
+would be significantly faster, since many of the sub-trees wouldn't need
+to be visited again.
 
-This commit adds the new feature...
+> There is a change in write_commit_graph(). graph_read_bloom_data()
+> makes it possible for chunk_bloom_data to be non-NULL but
+> bloom_filter_settings to be NULL, which causes a segfault later on. I
+> produced such a segfault while developing this patch, but couldn't find
+> a way to reproduce it neither after this complete patch (or before),
+> but in any case it seemed like a good thing to include that might help
+> future patch authors.
 
-> Refactor format_decorations() to take a struct decoration_options
-> argument specifying those strings, whereby NULL entries select the
-> default. Avoid emitting color sequences for empty strings.
+Hmm. Interesting, I'd love to know more about what you were doing that
+produced the segfault. I think it would be worth it to prove to
+ourselves that this segfault can't occur in the wild. Or if it can, it
+would be worth it to understand the bug and prevent it from happening.
 
-does some refactoring to support the new feature + existing use cases...
-
-> Wrap tag annotations in separate color sequences from tag names, because
-> otherwise tag names can end up uncolored when %w width formatting breaks
-> lines between annotation and name. Amend t4207-log-decoration-colors.sh
-> accordingly.
-
-and fixes a bug with coloring that is easier to run into as a result of
-the new feature.
-
-As others have mentioned, I think this would be easier to follow as
-separate commits. This commit isn't so big that the refactor needs to be
-its own commit, though I don't feel strongly either way.
-
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index 3b71334459..c08aba15af 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -222,7 +222,22 @@ The placeholders are:
->  	linkgit:git-rev-list[1])
->  '%d':: ref names, like the --decorate option of linkgit:git-log[1]
->  '%D':: ref names without the " (", ")" wrapping.
-> -'%(describe[:options])':: human-readable name, like
-> +'%(decorate[:<options>])':: ref names with custom decorations.
-> +			  The `decorate` string may be followed by a colon
-> +			  and zero or more comma-separated options.
-> +			  Option values may contain literal formatting codes.
-> +			  These must be used for commas (`%x2C`) and closing
-> +			  parentheses (`%x29`), due to their role in the option
-> +			  syntax.
-
-To make this easier to visualize, it would be useful to include the
-examples from your commit message (%d, %D, etc.).
-
-> +'%(describe[:<options>])':: human-readable name, like
-
-Ah, adding the <> is a good fix. I think it doesn't warrant its own
-patch, but it should be called out in the commit message.
-
->  /*
->   * The caller makes sure there is no funny color before calling.
-> - * format_decorations_extended makes sure the same after return.
-> + * format_decorations ensures the same after return.
->   */
-> -void format_decorations_extended(struct strbuf *sb,
-> +void format_decorations(struct strbuf *sb,
->  			const struct commit *commit,
->  			int use_color,
-> -			const char *prefix,
-> -			const char *separator,
-> -			const char *suffix)
-> +			const struct decoration_options *opts)
+> +static uint32_t murmur3_seeded_v1(uint32_t seed, const char *data, size_t len)
 >  {
-> -	const struct name_decoration *decoration;
-> -	const struct name_decoration *current_and_HEAD;
-> -	const char *color_commit =
-> -		diff_get_color(use_color, DIFF_COMMIT);
-> -	const char *color_reset =
-> -		decorate_get_color(use_color, DECORATION_NONE);
-> +	const char *color_commit, *color_reset;
-> +	const char *prefix, *suffix, *separator, *arrow, *tag;
-> +
-> +	const struct name_decoration *current_and_HEAD;
-> +	const struct name_decoration *decoration =
-> +		get_name_decoration(&commit->object);
->  
-> -	decoration = get_name_decoration(&commit->object);
->  	if (!decoration)
->  		return;
->  
-> +	color_commit = diff_get_color(use_color, DIFF_COMMIT);
-> +	color_reset = decorate_get_color(use_color, DECORATION_NONE);
+>  	const uint32_t c1 = 0xcc9e2d51;
+>  	const uint32_t c2 = 0x1b873593;
+> @@ -130,8 +187,10 @@ void fill_bloom_key(const char *data,
+>  	int i;
+>  	const uint32_t seed0 = 0x293ae76f;
+>  	const uint32_t seed1 = 0x7e646e2c;
+> -	const uint32_t hash0 = murmur3_seeded(seed0, data, len);
+> -	const uint32_t hash1 = murmur3_seeded(seed1, data, len);
+> +	const uint32_t hash0 = (settings->hash_version == 2
+> +		? murmur3_seeded_v2 : murmur3_seeded_v1)(seed0, data, len);
+> +	const uint32_t hash1 = (settings->hash_version == 2
+> +		? murmur3_seeded_v2 : murmur3_seeded_v1)(seed1, data, len);
 
-I'm guessing that you shuffled these lines to make use of an early
-return? If so, both versions are not different enough to warrant the
-churn IMO. It would be worth pointing out the reshuffling in the commit
-message, especially if you had another rationale in mind.
+I do admire the ternary operator over the function being called, as I
+think that Stolee pointed out earlier in this series. But I worry that
+these two checks could fall out of sync with each other, causing us to
+pick incosistent values for hash0, and hash1, respectively.
 
-> +	prefix = (opts && opts->prefix) ? opts->prefix : " (";
-> +	suffix = (opts && opts->suffix) ? opts->suffix : ")";
-> +	separator = (opts && opts->separator) ? opts->separator : ", ";
-> +	arrow = (opts && opts->arrow) ? opts->arrow : " -> ";
-> +	tag = (opts && opts->tag) ? opts->tag : "tag: ";
+FWIW, I would probably write this as:
 
-So NULL means "use the default"...
+    const uint32_t hash0, hash1;
+    if (settings->hash_version == 2) {
+        hash0 = murmur3_seeded_v2(seed0, data, len);
+        hash1 = murmur3_seeded_v2(seed1, data, len);
+    } else {
+        hash0 = murmur3_seeded_v1(seed0, data, len);
+        hash1 = murmur3_seeded_v1(seed1, data, len);
+    }
 
-> +struct decoration_options {
-> +	char *prefix;
-> +	char *suffix;
-> +	char *separator;
-> +	char *arrow;
-> +	char *tag;
+I suppose that there isn't anything keeping the calls within each arm of
+the if-statement above in sync with each other (i.e., I could call
+murmur3_seeded_v1() immediately before dispatching a call to
+murmur3_seeded_v2()). So in that sense I think that this is no more or
+less safe than what's already written.
+
+But IMHO I think this one reads more cleanly, so I might prefer it over
+what you have in this patch. But I don't feel so strongly about it
+either way.
+
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 9b72319450..c50107eed5 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -302,16 +302,25 @@ static int graph_read_oid_lookup(const unsigned char *chunk_start,
+>  	return 0;
+>  }
+>
+> +struct graph_read_bloom_data_data {
+> +	struct commit_graph *g;
+> +	int *commit_graph_changed_paths_version;
 > +};
 > +
->  int parse_decorate_color_config(const char *var, const char *slot_name, const char *value);
->  int log_tree_diff_flush(struct rev_info *);
->  int log_tree_commit(struct rev_info *, struct commit *);
->  void show_log(struct rev_info *opt);
-> -void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
-> -			     int use_color,
-> -			     const char *prefix,
-> -			     const char *separator,
-> -			     const char *suffix);
-> -#define format_decorations(strbuf, commit, color) \
-> -			     format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
-> +void format_decorations(struct strbuf *sb, const struct commit *commit,
-> +			int use_color, const struct decoration_options *opts);
 
-Which lets us unify these two functions. Makes sense.
+Nit: maybe `graph_read_bloom_data_context`, to avoid repeating "data"? I
+don't have strong feelings here, FWIW.
 
-> +static int parse_decoration_option(const char **arg,
-> +				   const char *name,
-> +				   char **opt)
-> +{
-> +	const char *argval;
-> +	size_t arglen;
-> +
-> +	if (match_placeholder_arg_value(*arg, name, arg, &argval, &arglen)) {
-> +		char *val = xstrndup(argval, arglen);
-> +		struct strbuf sb = STRBUF_INIT;
-> +
-> +		strbuf_expand(&sb, val, strbuf_expand_literal_cb, NULL);
+The rest of the implementation and tests look good to me.
 
-strbuf_expand() got removed in 'master' recently, so this should be
-rebased.
-
->  static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
->  				const char *placeholder,
->  				void *context)
-> @@ -1526,10 +1566,11 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
->  		strbuf_addstr(sb, get_revision_mark(NULL, commit));
->  		return 1;
->  	case 'd':
-> -		format_decorations(sb, commit, c->auto_color);
-> +		format_decorations(sb, commit, c->auto_color, NULL);
->  		return 1;
->  	case 'D':
-> -		format_decorations_extended(sb, commit, c->auto_color, "", ", ", "");
-> +		format_decorations(sb, commit, c->auto_color,
-> +				   &(struct decoration_options){"", ""});
-
-I don't remember if C99 lets you name .prefix and .suffix here, but if
-so, it would be good to name them. Otherwise it's easy to get the order
-wrong, e.g. if someone reorders the fields in struct decoration_options.
-
-> +test_expect_success 'pretty format %decorate' '
-> +	git checkout -b foo &&
-> +	git commit --allow-empty -m "new commit" &&
-> +	git tag bar &&
-> +	git branch qux &&
-> +	echo " (HEAD -> foo, tag: bar, qux)" >expect1 &&
-> +	git log --format="%(decorate)" -1 >actual1 &&
-> +	test_cmp expect1 actual1 &&
-> +	echo "HEAD -> foo, tag: bar, qux" >expect2 &&
-> +	git log --format="%(decorate:prefix=,suffix=)" -1 >actual2 &&
-> +	test_cmp expect2 actual2 &&
-> +	echo "HEAD->foo bar qux" >expect3 &&
-> +	git log --format="%(decorate:prefix=,suffix=,separator= ,arrow=->,tag=)" \
-> +		-1 >actual3 &&
-> +	test_cmp expect3 actual3 &&
-> +	echo "[HEAD,foo,bar,qux]" >expect4 &&
-> +	git log --format="%(decorate:prefix=[,suffix=],separator=%x2C,arrow=%x2C,tag=)" \
-> +		-1 >actual4 &&
-> +	test_cmp expect4 actual4
-> +'
-> +
-
-It would be useful to get some "bad" inputs to %(decorate:) to check
-that we handle them correctly, especially since it's implemented with
-while() loops.
-
-Overall, I thought this patch looks really good. Thanks!
+Thanks,
+Taylor
