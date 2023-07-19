@@ -2,125 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCD3C0015E
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 17:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFA19C0015E
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 17:25:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230453AbjGSREQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 13:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43450 "EHLO
+        id S229603AbjGSRZX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 13:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230164AbjGSREO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 13:04:14 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF3EB7
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 10:04:13 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 184A21A310D;
-        Wed, 19 Jul 2023 13:04:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ovvbI13BdR8x
-        gk79pSwXmadpywtwB6Euxukh7qWQOus=; b=pFREZ5h2whxFBwkkeLFVNo3o6q5o
-        C63v88EiDOew43mEh/SYVhZQq2A3eYnagaiu/nHLry2Jm9cQ6PJFR5GiggUrE5Sd
-        4E2cOkhGN5JMZcWhUT4IfhTayZ6Eo2VudaoXjjtP1p3C6n/kaJf0s+U9mgIaPHSH
-        U7LucACxgERZt38=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12A0C1A310C;
-        Wed, 19 Jul 2023 13:04:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A3651A310B;
-        Wed, 19 Jul 2023 13:04:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v3] MyFirstContribution: refrain from self-iterating too much
-References: <xmqq3583uyk0.fsf@gitster.g>
-        <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
-        <xmqqcz76tv6d.fsf@gitster.g> <xmqqzga9opdu.fsf@gitster.g>
-        <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4>
-Date:   Wed, 19 Jul 2023 10:04:09 -0700
-In-Reply-To: <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Mon, 23 Jan 2023 18:58:04
- +0100")
-Message-ID: <xmqq8rbbbzp2.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229560AbjGSRZW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 13:25:22 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8DD31BB
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 10:25:20 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5728df0a7d9so73291807b3.1
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 10:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689787520; x=1692379520;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uFpaLYvMB6GQc/5AsLZ+iMIPKff/ndwf7HoVvWQ/STM=;
+        b=qg2HAqRJdgzrhF4NRdkZucKCeKEfWS+l98r0ufEVt2KcINVgBZyrzLgf9z7wK5DeW6
+         rSd4mqyHtbZXEGAxXdjs8cTUVpXjUgvriJmcHMZTIrrEjeKeT0/VHzrrzzws9XxDw7BB
+         w8y4flzusAWzyH6/E8Ul4XrxFRX19lOMmvkonin4w+gQHW2Gy1laTEzLNvb4REEqhVCy
+         fQB116AM7LmeC0GiinZbnNgyOmU8eJ+yIQFjwWpLN9vEaIppH1w1LqI9r+J2dFIc9yJX
+         0dWLU6Be5Qf9whVTCmB94ZZwOy0eXdL0amd84BZnBIur0Jx09RabwzosvdD/wNfoUKKZ
+         37rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689787520; x=1692379520;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uFpaLYvMB6GQc/5AsLZ+iMIPKff/ndwf7HoVvWQ/STM=;
+        b=YMCJ3sRB3Gy39BBlc7dtxcctCK5z2ArsXFFyp0HnTrf0AGQax+4LNIQOGi1ygncCOE
+         nA+5KKXFXtXOX2EfZjsVjxFyN9Pb/tjsj4U0Wve+SWLLK+1RtMP8NcoRa8CIHMeCoGj+
+         WFHrzeU3srQf32BujVN5r9Lxoyx5GnIrJ7ubBoC3zSnQLykIAdlUMjj+nR//zF8Xnhcl
+         YxbfOJJX6Aly6lPmS8p14m28SK2zgQfgN4ndVwEDwNchjC2Voi1TXuPZFCF41PlKnYX1
+         qKNd1cfHjSJrmlO5m7h1bgVS9dJoAxj8s+G4KsX6jrunOZSDUarLPPO7IxTbB0F+RjC/
+         Ihgw==
+X-Gm-Message-State: ABy/qLb87sUm11KXpIoWq2WVeeoM7nHtKXbJlDlMUvwMpEkV0uTIZNU8
+        Zef85XRMu02b4dDdKsMD2xh3Pg==
+X-Google-Smtp-Source: APBJJlHKoPLK0W6Lnj45SBU8WYIywNaFRHaSUVTRwoDTul+cZ0FYNDCxQFXzbL5fVElup/Yq3yy6iA==
+X-Received: by 2002:a81:5485:0:b0:56d:824e:d93f with SMTP id i127-20020a815485000000b0056d824ed93fmr3586828ywb.38.1689787520003;
+        Wed, 19 Jul 2023 10:25:20 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w78-20020a0dd451000000b005832268b729sm1123259ywd.99.2023.07.19.10.25.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jul 2023 10:25:19 -0700 (PDT)
+Date:   Wed, 19 Jul 2023 13:25:18 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/4] gitformat-commit-graph: describe version 2 of BDAT
+Message-ID: <ZLgcfvIrV3TapMAp@nand.local>
+References: <cover.1684790529.git.jonathantanmy@google.com>
+ <cover.1689283789.git.jonathantanmy@google.com>
+ <52e281eef0e857de93e5bdc6e0ef50065adaab2c.1689283789.git.jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4795E742-2656-11EE-AB0D-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <52e281eef0e857de93e5bdc6e0ef50065adaab2c.1689283789.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Finding mistakes in and improving your own patches is a good idea,
-but doing so too quickly is being inconsiderate to reviewers who
-have just seen the initial iteration and taking their time to review
-it.  Encourage new developers to perform such a self review before
-they send out their patches, not after.  After sending a patch that
-they immediately found mistakes in, they are welcome to comment on
-them, mentioning what and how they plan to improve them in an
-updated version, before sending out their updates.
+On Thu, Jul 13, 2023 at 02:42:08PM -0700, Jonathan Tan wrote:
+> The code change to Git to support version 2 will be done in subsequent
+> commits.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/gitformat-commit-graph.txt | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
+> index 31cad585e2..3e906e8030 100644
+> --- a/Documentation/gitformat-commit-graph.txt
+> +++ b/Documentation/gitformat-commit-graph.txt
+> @@ -142,13 +142,16 @@ All multi-byte numbers are in network byte order.
+>
+>  ==== Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
 
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Sorry for a slow update.  Even though the topic is about not
-   updating too quickly, this update was long overdue.  Not a whole
-   lot changed.  Primary change is the later part of the proposed
-   log message, which was helped by Torsten's comments, to which
-   this message is a response to.
+This is a little beyond the scope of your series, but since we're
+changing the on-disk format here a little bit, I think that it might be
+worth it to consider whether there are any other changes that we'd like
+to perform at the same time.
 
- Documentation/MyFirstContribution.txt | 31 +++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+One that comes to mind is serializing the `max_changed_paths` value of
+the Bloom filter settings, which is currently hard-coded as a constant,
+c.f. 97ffa4fab50 (commit-graph.c: store maximum changed paths,
+2020-09-17).
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirs=
-tContribution.txt
-index ccfd0cb5f3..1ede3f8e37 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -1256,6 +1256,37 @@ index 88f126184c..38da593a60 100644
- [[now-what]]
- =3D=3D My Patch Got Emailed - Now What?
-=20
-+After you sent out your first patch, you may find mistakes in it, or
-+a different and better way to achieve the goal of the patch.  But
-+please resist the temptation to send a new version immediately.
-+
-+ - If the mistakes you found are minor, send a reply to your patch as
-+   if you were a reviewer and mention that you will fix them in an
-+   updated version.
-+
-+ - On the other hand, if you think you want to change the course so
-+   drastically that reviews on the initial patch would become
-+   useless, send a reply to your patch to say so immediately to
-+   avoid wasting others' time (e.g. "I am working on a better
-+   approach, so please ignore this patch, and wait for the updated
-+   version.")
-+
-+Then give reviewers enough time to process your initial patch before
-+sending an updated version (unless you retracted the initial patch,
-+that is).
-+
-+Now, the above is a good practice if you sent your initial patch
-+prematurely without polish.  But a better approach of course is to
-+avoid sending your patch prematurely in the first place.
-+
-+Keep in mind that people in the development community do not have to
-+see your patch immediately after you wrote it.  Instead of seeing
-+the initial version right now, that will be followed by several
-+updated "oops, I like this version better than the previous one"
-+versions over 2 days, reviewers would more appreciate if a single
-+polished version came 2 days late and that version with fewer
-+mistakes were the only one they need to review.
-+
- [[reviewing]]
- =3D=3D=3D Responding to Reviews
-=20
---=20
-2.41.0-376-gcba07a324d
+We always assume that the value there is 512, or the environment
+variable GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS, if it is set. But it
+might be nice to write it to disk, since it would allow us to do
+something like:
 
+--- 8< ---
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index fa9d32facfb..a42b0b03cfb 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -178,11 +178,12 @@ test_expect_success 'persist filter settings' '
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+ 		GIT_TEST_BLOOM_SETTINGS_NUM_HASHES=9 \
+ 		GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY=15 \
++		GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS=513 \
+ 		git commit-graph write --reachable --changed-paths &&
+-	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15,\"max_changed_paths\":512" trace2.txt &&
++	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15,\"max_changed_paths\":513" trace2.txt &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2-auto.txt" \
+ 		git commit-graph write --reachable --changed-paths &&
+-	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15,\"max_changed_paths\":512" trace2-auto.txt
++	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15,\"max_changed_paths\":513" trace2-auto.txt
+ '
+
+ test_max_changed_paths () {
+--- >8 ---
+
+Which is currently not possible (the second grep assertion will fail,
+since Git has no way to remember what the value of max_changed_paths is
+from the existing commit-graph).
+
+> +	in Probabilistic Verification". Version 1 Bloom filters have a bug that appears
+> +	when char is signed and the repository has path names that have characters >=
+> +	0x80; Git supports reading and writing them, but this ability will be removed
+> +	in a future version of Git.
+
+Makes sense.
+
+Thanks,
+Taylor
