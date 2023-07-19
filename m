@@ -2,74 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29DECC0015E
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 16:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCD3C0015E
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 17:04:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbjGSQ5U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 12:57:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40740 "EHLO
+        id S230453AbjGSREQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 13:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjGSQ5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 12:57:19 -0400
-Received: from mail-vk1-xa2b.google.com (mail-vk1-xa2b.google.com [IPv6:2607:f8b0:4864:20::a2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D11BB6
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 09:57:18 -0700 (PDT)
-Received: by mail-vk1-xa2b.google.com with SMTP id 71dfb90a1353d-47e36c35285so2319044e0c.0
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 09:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1689785837; x=1692377837;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ha8yEbq1nP1F7i30hweK/5LbvXYX6Yt785A3SHovatU=;
-        b=jqz2sWKPSaxSsUR4RzzrXBfYa49d+tOwakdMDfno87Xy4+oOn7R9bexKCupSXMSL6r
-         s6/llXy8m+dusbOPKb3mOsCEn2CJRB7czocxEozQGDec8DeAX3kRRXD/WJ4sV8t5jdfY
-         HmIin0I7UIJfs5O2Zo0acTRyR/pVxI1we/+N1xNcNlIpoE1Gb1iIyi+hDib63qTrC8LT
-         m9/2fcs7MXwAmvpuUowwlh2SEZgRRSyMemYmRgiS3seaVu78m/FytXk3nTkuj430JjgC
-         szeOqOeJFZxm65Cvx/RoQR2kOapIffp22LQNuwv6+tNO2sIqw+88DsEfrl8bMI9svkAN
-         g0eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689785837; x=1692377837;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ha8yEbq1nP1F7i30hweK/5LbvXYX6Yt785A3SHovatU=;
-        b=dFP3HTepxQ0pZ6iqNqBXZb0WXEQ/RdVmdOxl5d397SYWiK+cf3+NZwORV9Lz0GocSv
-         70ZMQ1ZSN5SOC2yx66zQjCqIkjjqBZ6H3Tw3XJLlC0pBzzZ0ETTHhoL7bJWMg6b9GJOk
-         +Sz/jSgboi3S1mYY7mArvu4TV5thvbIhB1m4/JlCP6MjPN/03KRueQmvckmyPM3H4/Mr
-         SNrpZ7vIxukVD2M6SJUQD36ufAxAw1T/tFjk7j6AVMKX0k23EHlqjtS+UlLUgWdeU6Op
-         VPTAWiKZSZyKBJ0XB2BcfLJpb01VALhPxYLYI6M8I2xum8EJOnYgP0LKrBs63Rituve0
-         Bctw==
-X-Gm-Message-State: ABy/qLYNlq2/CeV6Z9szp2rSleVq1BchaExw+C8oy1KI54DbROy8tbDf
-        t9ZLMiDrwZ/bc6fUZzNLJuA8QXmBPfpzT/FH3w4SFw==
-X-Google-Smtp-Source: APBJJlFejh4zYPoeVSgAo99I57TuNcTCvrWp39oMouHbSteECYie5uau1EMDvde1pbvbxD69jBbzWg==
-X-Received: by 2002:a1f:bd92:0:b0:47e:3bc8:af53 with SMTP id n140-20020a1fbd92000000b0047e3bc8af53mr91196vkf.14.1689785837245;
-        Wed, 19 Jul 2023 09:57:17 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j131-20020a819289000000b00555df877a4csm1093254ywg.102.2023.07.19.09.57.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jul 2023 09:57:16 -0700 (PDT)
-Date:   Wed, 19 Jul 2023 12:57:16 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] reset: reject --no-(mixed|soft|hard|merge|keep) option
-Message-ID: <ZLgV7EdEox9r1RvK@nand.local>
-References: <xmqq1qh4c998.fsf@gitster.g>
+        with ESMTP id S230164AbjGSREO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 13:04:14 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF3EB7
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 10:04:13 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 184A21A310D;
+        Wed, 19 Jul 2023 13:04:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ovvbI13BdR8x
+        gk79pSwXmadpywtwB6Euxukh7qWQOus=; b=pFREZ5h2whxFBwkkeLFVNo3o6q5o
+        C63v88EiDOew43mEh/SYVhZQq2A3eYnagaiu/nHLry2Jm9cQ6PJFR5GiggUrE5Sd
+        4E2cOkhGN5JMZcWhUT4IfhTayZ6Eo2VudaoXjjtP1p3C6n/kaJf0s+U9mgIaPHSH
+        U7LucACxgERZt38=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12A0C1A310C;
+        Wed, 19 Jul 2023 13:04:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A3651A310B;
+        Wed, 19 Jul 2023 13:04:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v3] MyFirstContribution: refrain from self-iterating too much
+References: <xmqq3583uyk0.fsf@gitster.g>
+        <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
+        <xmqqcz76tv6d.fsf@gitster.g> <xmqqzga9opdu.fsf@gitster.g>
+        <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4>
+Date:   Wed, 19 Jul 2023 10:04:09 -0700
+In-Reply-To: <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Mon, 23 Jan 2023 18:58:04
+ +0100")
+Message-ID: <xmqq8rbbbzp2.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1qh4c998.fsf@gitster.g>
+X-Pobox-Relay-ID: 4795E742-2656-11EE-AB0D-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 19, 2023 at 06:37:39AM -0700, Junio C Hamano wrote:
-> ---
->  builtin/reset.c  | 29 ++++++++++++++++++-----------
->  t/t7102-reset.sh | 10 ++++++++++
->  2 files changed, 28 insertions(+), 11 deletions(-)
+Finding mistakes in and improving your own patches is a good idea,
+but doing so too quickly is being inconsiderate to reviewers who
+have just seen the initial iteration and taking their time to review
+it.  Encourage new developers to perform such a self review before
+they send out their patches, not after.  After sending a patch that
+they immediately found mistakes in, they are welcome to comment on
+them, mentioning what and how they plan to improve them in an
+updated version, before sending out their updates.
 
-Seems all very sane to me, LGTM.
+Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * Sorry for a slow update.  Even though the topic is about not
+   updating too quickly, this update was long overdue.  Not a whole
+   lot changed.  Primary change is the later part of the proposed
+   log message, which was helped by Torsten's comments, to which
+   this message is a response to.
 
-Thanks,
-Taylor
+ Documentation/MyFirstContribution.txt | 31 +++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirs=
+tContribution.txt
+index ccfd0cb5f3..1ede3f8e37 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -1256,6 +1256,37 @@ index 88f126184c..38da593a60 100644
+ [[now-what]]
+ =3D=3D My Patch Got Emailed - Now What?
+=20
++After you sent out your first patch, you may find mistakes in it, or
++a different and better way to achieve the goal of the patch.  But
++please resist the temptation to send a new version immediately.
++
++ - If the mistakes you found are minor, send a reply to your patch as
++   if you were a reviewer and mention that you will fix them in an
++   updated version.
++
++ - On the other hand, if you think you want to change the course so
++   drastically that reviews on the initial patch would become
++   useless, send a reply to your patch to say so immediately to
++   avoid wasting others' time (e.g. "I am working on a better
++   approach, so please ignore this patch, and wait for the updated
++   version.")
++
++Then give reviewers enough time to process your initial patch before
++sending an updated version (unless you retracted the initial patch,
++that is).
++
++Now, the above is a good practice if you sent your initial patch
++prematurely without polish.  But a better approach of course is to
++avoid sending your patch prematurely in the first place.
++
++Keep in mind that people in the development community do not have to
++see your patch immediately after you wrote it.  Instead of seeing
++the initial version right now, that will be followed by several
++updated "oops, I like this version better than the previous one"
++versions over 2 days, reviewers would more appreciate if a single
++polished version came 2 days late and that version with fewer
++mistakes were the only one they need to review.
++
+ [[reviewing]]
+ =3D=3D=3D Responding to Reviews
+=20
+--=20
+2.41.0-376-gcba07a324d
+
