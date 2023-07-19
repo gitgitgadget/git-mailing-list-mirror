@@ -2,128 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D932EEB64DA
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 13:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A84CDEB64DA
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 14:44:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231181AbjGSNho (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 09:37:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
+        id S229986AbjGSOo1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 10:44:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjGSNhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 09:37:43 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5C5E5
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 06:37:42 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AF86C191D2B;
-        Wed, 19 Jul 2023 09:37:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=P
-        x3dFrXqlgyDCjsJrpF3FOce/Dpsepz2oazjamOYkns=; b=hY1hKfCnCwgYbpWbR
-        wyjGQedEkC1Mt+RmwiK85LmkqY1gpiC9o9wONQ30ah6p/nFNOL1M9HFqBwliJ7mG
-        4XEJUa0VfT5SEV3ttdqKcJ0j7F+PMIcTnkBy+HUqkckMvgTANXpJLw5mxQbxTiXr
-        HOM9CdgAHvPHYgMHHK5SaRNT5E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A86F7191D2A;
-        Wed, 19 Jul 2023 09:37:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1534B191D28;
-        Wed, 19 Jul 2023 09:37:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] reset: reject --no-(mixed|soft|hard|merge|keep) option
-Date:   Wed, 19 Jul 2023 06:37:39 -0700
-Message-ID: <xmqq1qh4c998.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S230205AbjGSOo0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 10:44:26 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C3661731
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 07:44:04 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-55fcc15e109so3354329a12.3
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 07:44:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689777831; x=1690382631;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FrD0Ek8VhOZnaTX1VS24yFluFuBTtMALKdkiGlotIZQ=;
+        b=BdwfeWiTE46aOuL7QuA3SeDJ13yPu28SkVXJAt4/hFRLzAFSXfdQ+x+8V+x3FQoYll
+         NsDOeuE/bZETDBk5dCKyUr87yx4CXalUDMLVr64+BmCEtths2rjak2WqhSP5X5o2GjBU
+         xh8ghdILEUBSGdXF5fFzRhwZFzCLGjGLTS+S8y7EMrmWYuA08XhMyfhpLnvTb4OZof0i
+         cgrqrqFszWQkzPpXFOGLY5NN2Q49b6vzseL/wDw+FSm+88v3J3s02xMRXC0mfZlETOJJ
+         OZs766i3tQNdT/pfUyyukSv1RVAeceaTjxlEZ/5xt8Pi/jqVZX0Ywqe3u2INo0WRM3q8
+         f+gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689777831; x=1690382631;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FrD0Ek8VhOZnaTX1VS24yFluFuBTtMALKdkiGlotIZQ=;
+        b=HgX81AU0tb+rj5wDGj0bUWMgY2RPAX8fhMyecQCwceTG/E55U31TdyyIPOI4HG788D
+         d7jYBihFrHyi5nGayyQ1sRwdykoK7x/bGwmcUGV/LVd4866ZXY5kD5WLLn4d5uIdVofj
+         wQHexRWx2Iy2A8TIvbn+GBsAcQDRydFZ69aukmogbwDOgSjotVhaOJrcYdmLo4/cfG54
+         GHNodlgk/H/SbVpg8IT+cWIoy9s2A4vVdOFErQZ/5UbGYX7ESarjVdV1ORkUOcb5XHPx
+         MMUPPYHHjR4zklOvNelh7S69Q1E7IztNDr+wg+d+nwyL79m3pxOYtO5O5VQtSYNtleUm
+         uwyQ==
+X-Gm-Message-State: ABy/qLbeaZZTfG7glaumDSyqtOX+kZrD9VtByoiPgdzuaUZJBZDZlTcA
+        S9/coyRd+epocZPQSWZKriJtNNCffHM=
+X-Google-Smtp-Source: APBJJlF66m/U6yydlF0/Kx4kfYJivKrWF6eSdcZaD160RLgNJMkxTnBlEbme7Ro5f0p3kO8+HFJ2rw==
+X-Received: by 2002:a17:903:110d:b0:1b0:3637:384e with SMTP id n13-20020a170903110d00b001b03637384emr2803630plh.25.1689777830675;
+        Wed, 19 Jul 2023 07:43:50 -0700 (PDT)
+Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
+        by smtp.gmail.com with ESMTPSA id g1-20020a170902740100b001b9cb27e07dsm4073191pll.45.2023.07.19.07.43.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jul 2023 07:43:49 -0700 (PDT)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, alban.gruin@gmail.com, gitster@pobox.com
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] sequencer: finish parsing the todo list despite an invalid first line
+Date:   Wed, 19 Jul 2023 08:43:15 -0600
+Message-ID: <20230719144339.447852-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6EEC3D04-2639-11EE-BF5D-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git reset --no-mixed" behaved exactly like "git reset --mixed",
-which was nonsense.
+ddb81e5072 (rebase-interactive: use todo_list_write_to_file() in
+edit_todo_list(), 2019-03-05) made edit_todo_list more efficient by
+replacing transform_todo_file with todo_list_parse_insn_buffer.
+Unfortunately, that innocuous change caused a regression because
+todo_list_parse_insn_buffer would stop parsing after encountering an
+invalid 'fixup' line. If the user accidentally made the first line a
+'fixup' and tried to recover from their mistake with `git rebase
+--edit-todo`, all of the commands after the first would be lost.
 
-If there were only two kinds, e.g. "mixed" vs "separate", it might
-have made sense to make "git reset --no-mixed" behave identically to
-"git reset --separate" and vice-versa, but because we have many
-types of reset, lets just forbid "--no-mixed" and negated form of
-other types.
+To avoid throwing away important parts of the todo list, change
+todo_list_parse_insn_buffer to keep going and not return early on error.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 ---
- builtin/reset.c  | 29 ++++++++++++++++++-----------
- t/t7102-reset.sh | 10 ++++++++++
- 2 files changed, 28 insertions(+), 11 deletions(-)
+ sequencer.c                   |  2 +-
+ t/t3404-rebase-interactive.sh | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index f99f32d580..ac4901e003 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -334,18 +334,25 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_BOOL(0, "no-refresh", &no_refresh,
- 				N_("skip refreshing the index after reset")),
--		OPT_SET_INT(0, "mixed", &reset_type,
--						N_("reset HEAD and index"), MIXED),
--		OPT_SET_INT(0, "soft", &reset_type, N_("reset only HEAD"), SOFT),
--		OPT_SET_INT(0, "hard", &reset_type,
--				N_("reset HEAD, index and working tree"), HARD),
--		OPT_SET_INT(0, "merge", &reset_type,
--				N_("reset HEAD, index and working tree"), MERGE),
--		OPT_SET_INT(0, "keep", &reset_type,
--				N_("reset HEAD but keep local changes"), KEEP),
-+		OPT_SET_INT_F(0, "mixed", &reset_type,
-+			      N_("reset HEAD and index"),
-+			      MIXED, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "soft", &reset_type,
-+			      N_("reset only HEAD"),
-+			      SOFT, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "hard", &reset_type,
-+			      N_("reset HEAD, index and working tree"),
-+			      HARD, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "merge", &reset_type,
-+			      N_("reset HEAD, index and working tree"),
-+			      MERGE, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "keep", &reset_type,
-+			      N_("reset HEAD but keep local changes"),
-+			      KEEP, PARSE_OPT_NONEG),
- 		OPT_CALLBACK_F(0, "recurse-submodules", NULL,
--			    "reset", "control recursive updating of submodules",
--			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
-+			       "reset", "control recursive updating of submodules",
-+			       PARSE_OPT_OPTARG,
-+			       option_parse_recurse_submodules_worktree_updater),
- 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
- 				N_("record only the fact that removed paths will be added later")),
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 22477f3a31..4287863ae6 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -71,6 +71,16 @@ check_changes () {
-	done | test_cmp .cat_expect -
- }
+diff --git a/sequencer.c b/sequencer.c
+index cc9821ece2..adc9cfb4df 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2702,7 +2702,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+ 		if (fixup_okay)
+ 			; /* do nothing */
+ 		else if (is_fixup(item->command))
+-			return error(_("cannot '%s' without a previous commit"),
++			res = error(_("cannot '%s' without a previous commit"),
+ 				command_to_string(item->command));
+ 		else if (!is_noop(item->command))
+ 			fixup_okay = 1;
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ff0afad63e..d2801ffee4 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1596,6 +1596,25 @@ test_expect_success 'static check of bad command' '
+ 	test C = $(git cat-file commit HEAD^ | sed -ne \$p)
+ '
  
-+# no negated form for various type of resets
-+for opt in soft mixed hard merge keep
-+do
-+	test_expect_success "no 'git reset --no-$opt'" '
-+		test_when_finished "rm -f err" &&
-+		test_must_fail git reset --no-$opt 2>err &&
-+		grep "error: unknown option .no-$opt." err
-+	'
-+done
++test_expect_success 'the first command cannot be a fixup' '
++	# When using `git rebase --edit-todo` to recover from this error, ensure
++	# that none of the original todo list is lost
++	rebase_setup_and_clean fixup-first &&
++	(
++		set_fake_editor &&
++		test_must_fail env FAKE_LINES="fixup 1 2 3 4 5" \
++			       git rebase -i --root 2>actual &&
++		test_i18ngrep "cannot .fixup. without a previous commit" \
++				actual &&
++		test_i18ngrep "You can fix this with .git rebase --edit-todo.." \
++				actual &&
++		grep -v "^#" .git/rebase-merge/git-rebase-todo >orig &&
++		test_must_fail git rebase --edit-todo &&
++		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
++		test_cmp orig actual
++	)
++'
 +
- test_expect_success 'reset --hard message' '
- 	hex=$(git log -1 --format="%h") &&
- 	git reset --hard >.actual &&
+ test_expect_success 'tabs and spaces are accepted in the todolist' '
+ 	rebase_setup_and_clean indented-comment &&
+ 	write_script add-indent.sh <<-\EOF &&
 -- 
-2.41.0-376-gcba07a324d
+2.41.0
 
