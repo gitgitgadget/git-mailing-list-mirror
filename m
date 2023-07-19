@@ -2,65 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A54C9C001B0
-	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 23:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85F2CC001B0
+	for <git@archiver.kernel.org>; Wed, 19 Jul 2023 23:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjGSX1G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jul 2023 19:27:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
+        id S229627AbjGSXfq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jul 2023 19:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbjGSX1E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2023 19:27:04 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F2D1B9
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 16:27:03 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 146671FCCB;
-        Wed, 19 Jul 2023 19:27:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wlk1f1X4zhkK+FKY41n35LYTzZlcFmDg0baHsy
-        zcGrQ=; b=EW5tR+SPG9yk+IFd+K2YZwtAQuPo2VStKkFnL8oHJCE3ZmMs6vd5Ex
-        C4s4FPpfVDESnk8dbRXmmA28xzkEEdtcn9dxMDYXLjhn/S/e/g52Xn2B4Y7XFk9t
-        iHju41CUJowZ8ZLv+fJzVRBTFLk4hm3YeiLBZavG9dUnrUAjlRY/w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D7791FCCA;
-        Wed, 19 Jul 2023 19:27:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7E43A1FCC6;
-        Wed, 19 Jul 2023 19:26:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] short help: allow a gap smaller than USAGE_GAP
-References: <xmqq5y6gg8fn.fsf@gitster.g> <xmqqttu0esqb.fsf@gitster.g>
-        <xmqqlefcesjr.fsf_-_@gitster.g>
-        <98b86433-053b-c44e-05a9-b2e3afd4b4f0@drbeat.li>
-Date:   Wed, 19 Jul 2023 16:26:58 -0700
-In-Reply-To: <98b86433-053b-c44e-05a9-b2e3afd4b4f0@drbeat.li> (Beat Bolli's
-        message of "Thu, 20 Jul 2023 00:04:45 +0200")
-Message-ID: <xmqqfs5j5vp9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229512AbjGSXfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2023 19:35:45 -0400
+X-Greylist: delayed 644 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 19 Jul 2023 16:35:43 PDT
+Received: from mail-gateway-shared13.cyon.net (mail-gateway-shared13.cyon.net [194.126.200.66])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A3DC6
+        for <git@vger.kernel.org>; Wed, 19 Jul 2023 16:35:43 -0700 (PDT)
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared13.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <bb@drbeat.li>)
+        id 1qMGXR-0007Pk-2X
+        for git@vger.kernel.org;
+        Thu, 20 Jul 2023 01:24:58 +0200
+Received: from [10.20.10.230] (port=3738 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.96)
+        (envelope-from <bb@drbeat.li>)
+        id 1qMGXQ-00HN1V-25;
+        Thu, 20 Jul 2023 01:24:56 +0200
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 05BFA1800FD; Thu, 20 Jul 2023 01:24:55 +0200 (CEST)
+From:   Beat Bolli <dev+git@drbeat.li>
+To:     git@vger.kernel.org
+Cc:     Beat Bolli <dev+git@drbeat.li>, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH 1/2] trace2: fix a comment
+Date:   Thu, 20 Jul 2023 01:24:43 +0200
+Message-Id: <20230719232444.555838-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.35.1.720.g215f5dbbfb
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C230967A-268B-11EE-8718-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
+When the trace2 counter mechanism was added in 81071626ba (trace2: add
+global counter mechanism, 2022-10-24), the name of the file where new
+counters are added was misspelled in a comment.
 
->> +		OPT_SET_INT_F(0, "longhelp", &integer, "help text of this entry\n"
->> +			      "spans multiple lines", 0, PARSE_OPT_NONEG),
->>   		OPT_STRING_LIST(0, "list", &list, "str", "add str to list"),
->>   		OPT_GROUP("Magic arguments"),
->>   		OPT_NUMBER_CALLBACK(&integer, "set integer to NUM",
->
-> I think this chunk should be part of the previous commit.
+Use the correct file name.
 
-Good eyes.  Thanks.
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ trace2.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/trace2.h b/trace2.h
+index f5c5a9e6bac5..64c747c1df1b 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -541,7 +541,7 @@ void trace2_timer_stop(enum trace2_timer_id tid);
+  * elsewhere as array indexes).
+  *
+  * Any values added to this enum be also be added to the
+- * `tr2_counter_metadata[]` in `trace2/tr2_tr2_ctr.c`.
++ * `tr2_counter_metadata[]` in `trace2/tr2_ctr.c`.
+  */
+ enum trace2_counter_id {
+ 	/*
+-- 
+2.41.0
+
