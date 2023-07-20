@@ -2,138 +2,241 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3426CEB64DA
-	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 05:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B17C1EB64DC
+	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 09:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbjGTFVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jul 2023 01:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37966 "EHLO
+        id S230035AbjGTJqn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jul 2023 05:46:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbjGTFVm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2023 01:21:42 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 263832681
-        for <git@vger.kernel.org>; Wed, 19 Jul 2023 22:21:38 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 561BF35117;
-        Thu, 20 Jul 2023 01:21:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DavUkiwt3TY3tqt6ThA1VqRC8h8HPoz6g6YyMg
-        Xm7N4=; b=TIxI4X/4bs8nc6BZ0PEgped5bnNxnivUdZBDDDQIe/hXYepM4Tbeeb
-        Wh07/d9EPS+BtI/Jo2l3tZZcZ27S/Lll50iUYXVc0TbDgP6z0/Eu2dA1ocEHQQN5
-        khrMq+lTBefIhMQPf76j9k5gedkzjcNsPNhNepUJHCz8TUma6r4eo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E04E35116;
-        Thu, 20 Jul 2023 01:21:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CC67F35115;
-        Thu, 20 Jul 2023 01:21:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Siddharth Singh <siddhartth@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 1/2] ref-filter: add multiple-option parsing functions
-References: <20230714194249.66862-1-five231003@gmail.com>
-        <20230719162424.70781-1-five231003@gmail.com>
-        <20230719162424.70781-2-five231003@gmail.com>
-        <xmqqjzuv5vvg.fsf@gitster.g>
-Date:   Wed, 19 Jul 2023 22:21:33 -0700
-In-Reply-To: <xmqqjzuv5vvg.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        19 Jul 2023 16:23:15 -0700")
-Message-ID: <xmqqcz0n40pu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229988AbjGTJqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2023 05:46:25 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99C534220
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 02:42:36 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fc03aa6e04so4260145e9.2
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 02:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689846154; x=1690450954;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=7UT84qV2S9J/3MIYo62/iuBgc1eyWfPFymwYNwTw2t8=;
+        b=dJU9DxfZgBf8AfhI5t+Qlc2afeKDqpjOdnOvtS012bzDX0x6euuMPAcodLWb2L/Ojv
+         I4yORDl8Ttpw3iMnpNtO0K7DcEpiHLM0ntMCuCfk0XAoNQNGPTUKL9KCNF5M/ObUvPbW
+         DS1xoc0Ys0zHBvAMRU5fAnjVv0sfljRsUnjAX0MpnDbrQTN2iPb1s0pgJCcS0bvCF3rg
+         HAJblbOhWbTAgs+jIQSlIbmnUK3SfQ665/Qdcxk8Iawawmlvx7vQWf8xZ/w9xkTJi2Dp
+         nTb7qfteFnBjMGkXAVuCyr5W68J11c/+DZDuvSBxTIlJsII2IpO04CnFjLoQly0Q3SKl
+         XPVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689846154; x=1690450954;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7UT84qV2S9J/3MIYo62/iuBgc1eyWfPFymwYNwTw2t8=;
+        b=UXrwyblA0BTwtWbc7MYM+xkUKAbKfUulvjdYoaz9hY4jqiGZ42eBGffDysRBF0SZDn
+         eJbGLBydUfEcFumnoWgLSIDoi6EpedIhpI7GyRUaZTfpq2gzkO4gN+1nKyn6jFhsxt3L
+         C3Hm+SCCzLnUvrLqocfr5hOP7Ntj5nUgAOmnmzt6AFDoBKCRS6OM4U4lSLo7hG118d9d
+         aiscqn/tNrN8ra4RaJ6t85YFZuQO+k0dnDNN7NRvuqArCjuk/oMTc+OUd7dIct2/JQ1h
+         5E47SqRIcRp1Oy09VGaDJztS97P/qNKoX61lyz/gZz8LY60luA4kSF2QKwqtqeqrminw
+         EQHg==
+X-Gm-Message-State: ABy/qLY1yYQ9UejzMpMCwL7BB3giZvwC9z0tjS6123IXouJ8368Y0kMi
+        qKF8t/dox2Egf7rhtGPByl71TsNo5ae1Yg==
+X-Google-Smtp-Source: APBJJlH8E5mDHkAz2DgZ4t7Z4uhUfD8rZ+D8WSiZriPKXpKHoeI4b+CiUtuAFCDtHwVa2xG8GOJLlQ==
+X-Received: by 2002:a1c:790b:0:b0:3fb:d1c1:9b79 with SMTP id l11-20020a1c790b000000b003fbd1c19b79mr3686681wme.30.1689846154013;
+        Thu, 20 Jul 2023 02:42:34 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.235.211])
+        by smtp.gmail.com with ESMTPSA id j9-20020a5d4529000000b0030fd03e3d25sm790588wra.75.2023.07.20.02.42.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 02:42:33 -0700 (PDT)
+Message-ID: <395274b4-37a9-8c95-203f-94178c99772a@gmail.com>
+Date:   Thu, 20 Jul 2023 10:42:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4B4475E0-26BD-11EE-98A3-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer: finish parsing the todo list despite an
+ invalid first line
+Content-Language: en-US
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        alban.gruin@gmail.com, gitster@pobox.com
+References: <20230719144339.447852-1-alexhenrie24@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230719144339.447852-1-alexhenrie24@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Alex
 
->> +static int match_atom_arg_value(const char *to_parse, const char *candidate,
->> +				const char **end, const char **valuestart,
->> +				size_t *valuelen)
->> +{
->> +	const char *atom;
->> +
->> +	if (!(skip_prefix(to_parse, candidate, &atom)))
->> +		return 0;
->> +	if (valuestart) {
->
-> As far as I saw, no callers pass NULL to valuestart.  Getting rid of
-> this if() statement and always entering its body would clarify what
-> is going on, I think.
+Thanks for working on this.
 
-Specifically, ...
+On 19/07/2023 15:43, Alex Henrie wrote:
+> ddb81e5072 (rebase-interactive: use todo_list_write_to_file() in
+> edit_todo_list(), 2019-03-05) made edit_todo_list more efficient by
+> replacing transform_todo_file with todo_list_parse_insn_buffer.
+> Unfortunately, that innocuous change caused a regression because
+> todo_list_parse_insn_buffer would stop parsing after encountering an
+> invalid 'fixup' line. If the user accidentally made the first line a
+> 'fixup' and tried to recover from their mistake with `git rebase
+> --edit-todo`, all of the commands after the first would be lost.
 
->> +		if (*atom == '=') {
->> +			*valuestart = atom + 1;
->> +			*valuelen = strcspn(*valuestart, ",\0");
->> +			atom = *valuestart + *valuelen;
->> +		} else {
->> +			if (*atom != ',' && *atom != '\0')
->> +				return 0;
->> +			*valuestart = NULL;
->> +			*valuelen = 0;
->> +		}
->> +	}
->> +	if (*atom == ',') {
->> +		*end = atom + 1;
->> +		return 1;
->> +	}
->> +	if (*atom == '\0') {
->> +		*end = atom;
->> +		return 1;
->> +	}
->> +	return 0;
->> +}
+I found this description a little confusing as transform_todo_file() 
+also called todo_list_parse_insn_buffer(). transform_todo_file() does 
+not exist anymore but it looked like
 
-... I think the body of the function would become easier to read if
-written like so:
+static int transform_todo_file(unsigned flags)
+{
+         const char *todo_file = rebase_path_todo();
+         struct todo_list todo_list = TODO_LIST_INIT;
+         int res;
 
-	if (!skip_prefix(to_parse, candidate, &atom))
-		return 0; /* definitely not "candidate" */
+         if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+                 return error_errno(_("could not read '%s'."), todo_file);
 
-	if (*atom == '=') {
-		/* we just saw "candidate=" */
-		*valuestart = atom + 1;
-                atom = strchrnul(*valuestart, ',');
-		*valuelen = atom - *valuestart;
-	} else if (*atom != ',' && *atom != '\0') {
-        	 /* key begins with "candidate" but has more chars */
-		return 0;
-	} else {
-        	/* just "candidate" without "=val" */
-		*valuestart = NULL;
-		*valuelen = 0;
-	}
+         if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+                                         &todo_list)) {
+                 todo_list_release(&todo_list);
+                 return error(_("unusable todo list: '%s'"), todo_file);
+         }
 
-        /* atom points at either the ',' or NUL after this key[=val] */
-	if (*atom == ',')
-		atom++;
-	else if (*atom)
-		BUG("should not happen");
+         res = todo_list_write_to_file(the_repository, &todo_list, 
+todo_file,
+                                       NULL, NULL, -1, flags);
+         todo_list_release(&todo_list);
 
-	*end = atom;
-	return 1;
+         if (res)
+                 return error_errno(_("could not write '%s'."), todo_file);
+         return 0;
+}
 
-as it is clear that *valuestart, *valuelen, and *end are not touched
-when the function returns 0 and they are all filled when the function
-returns 1.
+If it could not parse the todo list it did not try and write it to disc. 
+After ddb81e5072 this changed as edit_todo_list() tries to shorten the 
+OIDs in the todo list before it is edited even if it cannot be parsed. 
+The fix below works around that by making sure we always try and parse 
+the whole todo list even if the the first line is a fixup command. That 
+is a worthwhile improvement because it means we notify the user of all 
+the errors we find rather than just the first one and is in keeping with 
+the way we handle other invalid lines. It does not however fix the root 
+cause of this regression which is the change in behavior in 
+edit_todo_list().
 
-Also, avoid passing ",\0" to strcspn(); its effect is exactly the
-same as passing ",", and at that point you are better off using
-strchnul().
+After the user edits the todo file we do not try to transform the OIDs 
+if it cannot be parsed or has missing commits. Therefore it still 
+contains the shortened OIDs and editing hints and there is no need for 
+edit_todo_list() to call write_todo_list() when "incorrect" is true.
 
-Thanks.
 
+> To avoid throwing away important parts of the todo list, change
+> todo_list_parse_insn_buffer to keep going and not return early on error.
+> 
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>   sequencer.c                   |  2 +-
+>   t/t3404-rebase-interactive.sh | 19 +++++++++++++++++++
+>   2 files changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index cc9821ece2..adc9cfb4df 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2702,7 +2702,7 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>   		if (fixup_okay)
+>   			; /* do nothing */
+>   		else if (is_fixup(item->command))
+> -			return error(_("cannot '%s' without a previous commit"),
+> +			res = error(_("cannot '%s' without a previous commit"),
+>   				command_to_string(item->command));
+>   		else if (!is_noop(item->command))
+>   			fixup_okay = 1;
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ff0afad63e..d2801ffee4 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1596,6 +1596,25 @@ test_expect_success 'static check of bad command' '
+>   	test C = $(git cat-file commit HEAD^ | sed -ne \$p)
+>   '
+>   
+> +test_expect_success 'the first command cannot be a fixup' '
+> +	# When using `git rebase --edit-todo` to recover from this error, ensure
+> +	# that none of the original todo list is lost
+> +	rebase_setup_and_clean fixup-first &&
+> +	(
+> +		set_fake_editor &&
+> +		test_must_fail env FAKE_LINES="fixup 1 2 3 4 5" \
+> +			       git rebase -i --root 2>actual &&
+
+Thanks for taking the time to add a test. It is not worth a re-roll on 
+its own, but there is no need to use "--root" here. It is confusing as 
+it is not clear if we're refusing "fixup" as the first command because 
+we're rewriting the root commit or if we always refuse to have "fixup" 
+as the first command.
+
+As an aside this restriction is pretty easy to defeat. In fact I think 
+we probably allow a todo list that starts with
+
+[new root]
+fixup <commit>
+
+which is a bug. We certainly allow todo lists starting with
+
+exec true / label <label> / reset <commit>
+fixup <commit>
+
+but that is not the concern of this patch.
+
+> +		test_i18ngrep "cannot .fixup. without a previous commit" \
+> +				actual &&
+> +		test_i18ngrep "You can fix this with .git rebase --edit-todo.." \
+> +				actual &&
+> +		grep -v "^#" .git/rebase-merge/git-rebase-todo >orig &&
+> +		test_must_fail git rebase --edit-todo &&
+> +		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+> +		test_cmp orig actual
+
+We check that the uncommitted lines after running "git rebase 
+--edit-todo" match the uncommitted lines after the initial edit. That's 
+fine to detect if the second edit truncates the file but it will still 
+pass if the initial edit starts truncating the todo list as well. As we 
+expect that git should not change an incorrect todo list we do not need 
+to filter out the lines beginning with "#".
+
+To ensure we detect a regression where the first edit truncates the todo 
+list we could do something like
+
+	test_when_finished "git rebase --abort" &&
+	cat >todo <<-EOF &&
+	fixup $(git log -1 --format="%h %s" B)
+	pick $(git log -1 --format="%h %s" C)
+	EOF
+
+	(
+		set_replace_editor todo &&
+		test_must_fail git rebase -i A 2>actual
+	) &&
+	test_i18ngrep "cannot .fixup. without a previous commit" actual &&
+	test_i18ngrep "You can fix this with .git rebase --edit-todo.." actual &&
+	# check initial edit has not truncated todo list
+	grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+	test_cmp todo actual &&
+	cat .git/rebase-merge/git-rebase-todo >expect &&
+	test_must_fail git rebase --edit-todo &&
+	# check the list is unchanged by --edit-todo
+	test_cmp expect .git/rebase-merge/git-rebase-todo
+
+We could perhaps check the error message from "git rebase --edit-todo" 
+as well.
+
+Thanks for finding this and working on a fix
+
+Phillip
+
+> +	)
+> +'
+> +
+>   test_expect_success 'tabs and spaces are accepted in the todolist' '
+>   	rebase_setup_and_clean indented-comment &&
+>   	write_script add-indent.sh <<-\EOF &&
