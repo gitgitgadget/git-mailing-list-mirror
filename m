@@ -2,98 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99089EB64DA
-	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 23:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10AACEB64DA
+	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 23:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229790AbjGTXKS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jul 2023 19:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35064 "EHLO
+        id S229643AbjGTXoz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jul 2023 19:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjGTXKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2023 19:10:17 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097B02D4B
-        for <git@vger.kernel.org>; Thu, 20 Jul 2023 16:10:12 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15E48190ADA;
-        Thu, 20 Jul 2023 19:10:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tRt9VxN9/2dGVSwK7S4PAgtzKMugPSbhEN3snJ
-        pdYF8=; b=d9iBNZ6Hp9+o7Oh2eV42tvJnS52YUhGMJ7IHc37Ki+qiM6gmhuoQVg
-        a5P7XmzgZXGddw6ctawRpFy/p0n9sZMlSwyb+zPnFt7HUo45lmsdJ3psmbDJclRu
-        lLcZJ7yzwL4bz+vhlbXpwDW/10ZKxKh+0hU3l/ksfDhOfF389PZ4A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DC65190AD7;
-        Thu, 20 Jul 2023 19:10:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4537B190AD6;
-        Thu, 20 Jul 2023 19:10:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH v3 0/2] Add new "describe" atom
-References: <20230714194249.66862-1-five231003@gmail.com>
-        <20230719162424.70781-1-five231003@gmail.com>
-        <xmqqr0p219ib.fsf@gitster.g>
-Date:   Thu, 20 Jul 2023 16:10:09 -0700
-In-Reply-To: <xmqqr0p219ib.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        20 Jul 2023 15:52:12 -0700")
-Message-ID: <xmqqjzuu18oe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 93A5C84E-2752-11EE-97FD-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+        with ESMTP id S229484AbjGTXoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2023 19:44:54 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9302733
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 16:44:52 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-c6dd0e46a52so1165038276.2
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 16:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1689896692; x=1690501492;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=iFX5T1weNxgLCbtKlIyxMWcgJ6sZ+g0+zctJ/pW4Ngw=;
+        b=iRE6Xk5Y32m4tOMyV/xSQeVIWYTSCR19tpfrTjiTgjzB7/G8MgCCgcz6c73AsE9EjL
+         ATeMkJx5PwG7GiM+Qf+IVUzIQQwiiPojtWI09RinUDpZFGNPpG7A7/m0u7u+4B+ZIDds
+         BWI/CoehmBgA9E/A3hpV0T91O7IaetAWhYZA/eicKHCzXChKVxuENt4T61rb9bdIRB3U
+         +CQc9uG0fndXVEgbjqKZVE18WPp11C/y+AuqQB+Ao/4CEsW3ohL+Z5OJFb2086fYVR0E
+         mTMU7MZYag6oaTSYX1iLs/NySyUqs+0Vh4LdRuBLkMlJ+KWvfwBSoKpMFbUFVQFHE5+H
+         wedA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689896692; x=1690501492;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iFX5T1weNxgLCbtKlIyxMWcgJ6sZ+g0+zctJ/pW4Ngw=;
+        b=gcQld4j9Ssn+N3EaiHA0sbif9yUF1pPqa9+PfiVZHRQYyrJnBDyLsnirXfryUNZH2Y
+         7x7X5rR25CHSRNMP2n7Rl0WR5pWbAhuW4J/i4ULQSlt0VR/QVt6B9syeLy2JNRvn82Pk
+         gaUax7BzWzS+3EGkF7NM8dcoKQfu3rwIzotJ9nhzye3EjmbyGCLMq8ndAe8DsybmfrVb
+         aMmViFQlxMuaLN8HK8yABkA1uv7I3qDzH2HeNsiqCyZaaiP2R+3gv2Nh2tWbLGvR/xa8
+         NnmMsP+rKULFEWnuhN4MMIMQohInE4m3m2OnsnmN0pcb9EEvTYsEOZE1gseMY/Vz948f
+         7J/Q==
+X-Gm-Message-State: ABy/qLYWYSN0SHoeAahJPpsvypwQ3hTpt4qS9RukjGgNT34nrZbV6o4y
+        zFoJhceUbgJtaGjqMbYswWhNfEt5kak/rQ/Yisz6
+X-Google-Smtp-Source: APBJJlHUfnkIyPEOYBlC/N4d0ON3ZobkYHJNjaUOJH+bO8Qyqk+96dLzw/80CtCzwi41DpGOjWl7hWkB/+8xz5g6fPpz
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:d142:b4af:6ea8:6b8b])
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:90a:0:b0:c1e:f91c:2691 with SMTP
+ id a10-20020a5b090a000000b00c1ef91c2691mr3261ybq.10.1689896692123; Thu, 20
+ Jul 2023 16:44:52 -0700 (PDT)
+Date:   Thu, 20 Jul 2023 16:44:49 -0700
+In-Reply-To: <99244816307b822bd8ffcbff8690ef449c797a23.1689891436.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.487.g6d72f3e995-goog
+Message-ID: <20230720234450.3087841-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 1/2] config: return positive from git_config_parse_key()
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Calvin Wan <calvinwan@google.com>,
+        Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> From: Glen Choo <chooglen@google.com>
+> 
+> git_config_parse_key() returns #define-d error codes, but negated. This
+> negation is merely a convenience to other parts of config.c that don't
+> bother inspecting the return value before passing it along. But:
+> 
+> a) There's no good reason why those callers couldn't negate the value
+>    themselves.
+> 
+> b) In other callers, this value eventually gets fed to exit(3), and
+>    those callers need to sanitize the negative value (and they sometimes
+>    do so lossily, by overriding the return value with
+>    CONFIG_INVALID_KEY).
+> 
+> c) We want to move that into a separate library, and returning only
+>    negative values no longer makes as much sense.
 
-> The linux-gcc job is where we force the initial branch name to be
-> 'main' and not 'master', so if your tests assume that the initial &
-> primary branch name is 'master', that may be something you need to
-> fix.
+I'm not sure if we ever concluded that functions returning errors should
+return positive integers, but in this case I think it makes sense. We
+can document what's returned as being the same as what's documented in
+the config manpage.
 
-Perhaps something along the line of the attached patch?
+The negative return was as early as when the function was first
+introduced in b09c53a3e3 (Sanity-check config variable names, 2011-01-
+30), but there's no indication there as to why the author chose negative
+values.
 
-The primary test repository t6300 uses is aware of the "problem"
-where the tester may set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-to 'main' and hacks it around by using
+> Change git_config_parse_key() to return positive values instead, and
+> adjust callers accordingly. Callers that sanitize the negative sign for
+> exit(3) now pass the return value opaquely, fixing a bug where "git
+> config <key with no section or name>" results in a different exit code
+> depending on whether we are setting or getting config.
 
-	git branch -M main
+Can you be more precise as to which bug is being fixed? (I think
+somewhere, a 1 is returned when it should be a 2.)
 
-as one of the first things it does, to _force_ the primary branch
-name always to 'main', whether the tester's environment forces "git"
-to start with 'main' or 'master', and existing tests in the script
-relies on 'main' being the primary branch.
+> Callers that
+> wanted to pass along a negative value now negate the return value
+> themselves.
 
-But your tests are done in a repository newly created with your own
-"git init", so depending on the tester's environment, the primary
-branch may be 'master' or 'main'.  The way your new tests are
-written, however, things will fail if "refs/heads/master" is not the
-primary branch.
+OK.
 
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 1c75cbc43df..8a2840f0a8c 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -362,8 +362,7 @@ static int get_value(const char *key_, const char *regex_, unsigned flags)
+>  			goto free_strings;
+>  		}
+>  	} else {
+> -		if (git_config_parse_key(key_, &key, NULL)) {
+> -			ret = CONFIG_INVALID_KEY;
+> +		if ((ret = git_config_parse_key(key_, &key, NULL))) {
+>  			goto free_strings;
+>  		}
+>  	}
 
- t/t6300-for-each-ref.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ah, here, the return value was sanitized in such a way that it lost
+information. The change makes sense.
 
-diff --git c/t/t6300-for-each-ref.sh w/t/t6300-for-each-ref.sh
-index 4bbba76874..489f4d9186 100755
---- c/t/t6300-for-each-ref.sh
-+++ w/t/t6300-for-each-ref.sh
-@@ -563,7 +563,7 @@ test_expect_success 'color.ui=always does not override tty check' '
- '
- 
- test_expect_success 'setup for describe atom tests' '
--	git init describe-repo &&
-+	git init -b master describe-repo &&
- 	(
- 		cd describe-repo &&
- 
+Besides the callers modified in this patch, there is another caller
+config_parse_pair() in config.c, but that just checks whether the return
+value is 0, so it remaining unmodified is fine.
+
+> diff --git a/config.h b/config.h
+> index 6332d749047..40966cb6828 100644
+> --- a/config.h
+> +++ b/config.h
+> @@ -23,7 +23,7 @@
+>  
+>  struct object_id;
+>  
+> -/* git_config_parse_key() returns these negated: */
+> +/* git_config_parse_key() returns these: */
+>  #define CONFIG_INVALID_KEY 1
+>  #define CONFIG_NO_SECTION_OR_NAME 2
+
+Should these be turned into an enum? Also, it might be worth adding that
+these match the return values as documented in the manpage.
+
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 387d336c91f..3202b0f8843 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -2590,4 +2590,20 @@ test_expect_success 'includeIf.hasconfig:remote.*.url forbids remote url in such
+>  	grep "fatal: remote URLs cannot be configured in file directly or indirectly included by includeIf.hasconfig:remote.*.url" err
+>  '
+>  
+> +# Exit codes
+> +test_expect_success '--get with bad key' '
+
+Rather than put an "exit codes" title, maybe embed that in the test
+description.
+
+> +	# Also exits with 1 if the value is not found
+
+I don't understand this comment - what's the difference between a bad
+key and a value not being found? And if there's a difference, could we
+test both?
+
+> +	test_expect_code 1 git config --get "bad.name\n" 2>err &&
+> +	grep "error: invalid key" err &&
+> +	test_expect_code 2 git config --get "bad." 2>err &&
+> +	grep "error: key does not contain variable name" err
+> +'
+> +
+> +test_expect_success 'set with bad key' '
+> +	test_expect_code 1 git config "bad.name\n" var 2>err &&
+> +	grep "error: invalid key" err &&
+> +	test_expect_code 2 git config "bad." var 2>err &&
+> +	grep "error: key does not contain variable name" err
+> +'
+
+Makes sense.
+
+From a libification perspective, I'm not sure that using positive values
+to indicate error is an advantage over negative values, but it makes
+sense in this particular context to have the return values match the
+manpage exactly, since that is part of the benefit of this function. So
+I think this patch is worth getting in by itself.
