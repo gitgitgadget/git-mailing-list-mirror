@@ -2,37 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 635A2EB64DD
-	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 22:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99089EB64DA
+	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 23:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjGTWwX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jul 2023 18:52:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59674 "EHLO
+        id S229790AbjGTXKS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jul 2023 19:10:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjGTWwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2023 18:52:22 -0400
+        with ESMTP id S229451AbjGTXKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2023 19:10:17 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07953171A
-        for <git@vger.kernel.org>; Thu, 20 Jul 2023 15:52:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097B02D4B
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 16:10:12 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A8081908DC;
-        Thu, 20 Jul 2023 18:52:17 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15E48190ADA;
+        Thu, 20 Jul 2023 19:10:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Olhqt120lUtjYmmI6n4tR9HGHMMtu89NGMWMnK
-        xzlt0=; b=TlHEcLc2v89K+rzjiHILyqPfG3q0He12S12vQsI4xIBmJtLA0EAp4j
-        DaopJ19vcCw6aEnZ9AO7sZ9BANUcZEoYxTkd94W07NFPd4yDshshdLlSbNpmBRra
-        qprygrQ9dCrlURPuw2orRwFx5u9TkWlYdgWCH4cAoa29E36vYQjBA=
+        :content-type; s=sasl; bh=tRt9VxN9/2dGVSwK7S4PAgtzKMugPSbhEN3snJ
+        pdYF8=; b=d9iBNZ6Hp9+o7Oh2eV42tvJnS52YUhGMJ7IHc37Ki+qiM6gmhuoQVg
+        a5P7XmzgZXGddw6ctawRpFy/p0n9sZMlSwyb+zPnFt7HUo45lmsdJ3psmbDJclRu
+        lLcZJ7yzwL4bz+vhlbXpwDW/10ZKxKh+0hU3l/ksfDhOfF389PZ4A=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02F711908DB;
-        Thu, 20 Jul 2023 18:52:17 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DC65190AD7;
+        Thu, 20 Jul 2023 19:10:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D31091908DA;
-        Thu, 20 Jul 2023 18:52:15 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4537B190AD6;
+        Thu, 20 Jul 2023 19:10:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kousik Sanagavarapu <five231003@gmail.com>
@@ -41,66 +41,59 @@ Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
 Subject: Re: [PATCH v3 0/2] Add new "describe" atom
 References: <20230714194249.66862-1-five231003@gmail.com>
         <20230719162424.70781-1-five231003@gmail.com>
-Date:   Thu, 20 Jul 2023 15:52:12 -0700
-In-Reply-To: <20230719162424.70781-1-five231003@gmail.com> (Kousik
-        Sanagavarapu's message of "Wed, 19 Jul 2023 21:45:04 +0530")
-Message-ID: <xmqqr0p219ib.fsf@gitster.g>
+        <xmqqr0p219ib.fsf@gitster.g>
+Date:   Thu, 20 Jul 2023 16:10:09 -0700
+In-Reply-To: <xmqqr0p219ib.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        20 Jul 2023 15:52:12 -0700")
+Message-ID: <xmqqjzuu18oe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 12A89F8E-2750-11EE-9884-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 93A5C84E-2752-11EE-97FD-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kousik Sanagavarapu <five231003@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> PATCH 1/2 - Left unchanged expect for small changes in the commit
-> 	    message for more clarity.
->
-> PATCH 2/2 - We now parse the arguments in a seperate function
-> 	    `describe_atom_option_parser()` call this in
-> 	    `describe_atom_parser()` instead to populate
-> 	    `atom->u.describe_args`. This splitting of the function
-> 	    helps err at the right places.
+> The linux-gcc job is where we force the initial branch name to be
+> 'main' and not 'master', so if your tests assume that the initial &
+> primary branch name is 'master', that may be something you need to
+> fix.
 
-This topic may be getting rerolled but from the CI logs,
-comparing 
+Perhaps something along the line of the attached patch?
 
- * https://github.com/git/git/actions/runs/5603242871 (seen at
-   77ba682) that passes the tests
+The primary test repository t6300 uses is aware of the "problem"
+where the tester may set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+to 'main' and hacks it around by using
 
- * https://github.com/git/git/actions/runs/5605480104 (seen at
-   29f0316) that breaks linux-gcc (ubuntu-20.04) at t6300 [*]
+	git branch -M main
 
-output from "git shortlog --no-merges 77ba682..29f0316" [*] makes us
-suspect that this topic may be the culprit of the recent breakage.
+as one of the first things it does, to _force_ the primary branch
+name always to 'main', whether the tester's environment forces "git"
+to start with 'main' or 'master', and existing tests in the script
+relies on 'main' being the primary branch.
 
-The linux-gcc job is where we force the initial branch name to be
-'main' and not 'master', so if your tests assume that the initial &
-primary branch name is 'master', that may be something you need to
-fix.
-
-Thanks.
-
-[Reference]
- * https://github.com/git/git/actions/runs/5605480104/job/15186229680
-
- * git shortlog --no-merges 77ba682..29f0316
-Alex Henrie (1):
-      sequencer: finish parsing the todo list despite an invalid first line
-
-Beat Bolli (1):
-      trace2: fix a comment
-
-Junio C Hamano (4):
-      short help: allow multi-line opthelp
-      remote: simplify "remote add --tags" help text
-      short help: allow a gap smaller than USAGE_GAP
-      ###
-
-Kousik Sanagavarapu (2):
-      ref-filter: add multiple-option parsing functions
-      ref-filter: add new "describe" atom
+But your tests are done in a repository newly created with your own
+"git init", so depending on the tester's environment, the primary
+branch may be 'master' or 'main'.  The way your new tests are
+written, however, things will fail if "refs/heads/master" is not the
+primary branch.
 
 
+ t/t6300-for-each-ref.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git c/t/t6300-for-each-ref.sh w/t/t6300-for-each-ref.sh
+index 4bbba76874..489f4d9186 100755
+--- c/t/t6300-for-each-ref.sh
++++ w/t/t6300-for-each-ref.sh
+@@ -563,7 +563,7 @@ test_expect_success 'color.ui=always does not override tty check' '
+ '
+ 
+ test_expect_success 'setup for describe atom tests' '
+-	git init describe-repo &&
++	git init -b master describe-repo &&
+ 	(
+ 		cd describe-repo &&
+ 
