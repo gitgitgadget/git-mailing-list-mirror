@@ -2,122 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0428AEB64DA
-	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 17:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D778CEB64DD
+	for <git@archiver.kernel.org>; Thu, 20 Jul 2023 18:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230094AbjGTR7r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jul 2023 13:59:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48080 "EHLO
+        id S229994AbjGTSSP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jul 2023 14:18:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbjGTR7p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2023 13:59:45 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFFF2709
-        for <git@vger.kernel.org>; Thu, 20 Jul 2023 10:59:44 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 47A321AE6A0;
-        Thu, 20 Jul 2023 13:59:41 -0400 (EDT)
+        with ESMTP id S229684AbjGTSSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2023 14:18:14 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A29270B
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 11:18:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0363026E44;
+        Thu, 20 Jul 2023 14:18:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=emNfW8zskeGMkCvbrrSFs7G1aUwiDFW1DM5uji
-        KZ8K4=; b=oWSBZU2qdVG7boFVxYtsFpG+jPRzgcR3eZPuA5gho4ArxkxiBnwFgE
-        exI7PzjKVl4wCOkvET3qyAmsPi6SPjsRAeRLq6rULVF258O+A6FSlPltYmFgKehz
-        iOBw7suxBLgRVEYO4amZzUtGFGdeHx3rOARrcXPpevSJ8+/3ApIp4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FC711AE69F;
-        Thu, 20 Jul 2023 13:59:41 -0400 (EDT)
+        :content-type; s=sasl; bh=uk4qxc+v4H5WHtJWsA0cH7hkJ9Ks26QVxzTS3f
+        deYi4=; b=rZlxigITQ5NO60FU06YqxK/v3hJ2licMDsmlRVIs1qz+9beQOQBzHG
+        BOTn443MbrDMDytkzEwO0rhHECqo1kqKpmt67x16Px3i45cGMmF854MrGDFE1XtU
+        NqT5TXRRt7Jw5wmxVSy8MVC6iGib/pmGOFVbDhZPvw7qAKvS+ik8E=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F04A526E43;
+        Thu, 20 Jul 2023 14:18:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A888F1AE69E;
-        Thu, 20 Jul 2023 13:59:40 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 78C9626E40;
+        Thu, 20 Jul 2023 14:18:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Siddharth Singh <siddhartth@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 1/2] ref-filter: add multiple-option parsing functions
-References: <20230714194249.66862-1-five231003@gmail.com>
-        <20230719162424.70781-1-five231003@gmail.com>
-        <20230719162424.70781-2-five231003@gmail.com>
-        <xmqqjzuv5vvg.fsf@gitster.g> <ZLlmXNt2crTEIXLg@five231003>
-Date:   Thu, 20 Jul 2023 10:59:39 -0700
-In-Reply-To: <ZLlmXNt2crTEIXLg@five231003> (Kousik Sanagavarapu's message of
-        "Thu, 20 Jul 2023 22:22:44 +0530")
-Message-ID: <xmqq351i4g6s.fsf@gitster.g>
+To:     Adam Majer <adamm@zombino.com>
+Cc:     git@vger.kernel.org
+Subject: Re: SHA256 support not experimental, or?
+References: <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>
+        <ZLlNtbAbVcYH7eFb@adams>
+Date:   Thu, 20 Jul 2023 11:18:08 -0700
+In-Reply-To: <ZLlNtbAbVcYH7eFb@adams> (Adam Majer's message of "Thu, 20 Jul
+        2023 17:07:54 +0200")
+Message-ID: <xmqqr0p230rj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 32F31388-2727-11EE-8378-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C7D93020-2729-11EE-B6E9-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kousik Sanagavarapu <five231003@gmail.com> writes:
+Adam Majer <adamm@zombino.com> writes:
 
-> Going off in a tangent here---In yesterday's review club which discussed
-> the %(decorate:<options>) patch[1], Glen suggested the possibility of
-> having a single kind of a framework (used this word very loosely here)
-> for parsing these multiple options since we are beginning to see them so
-> often (might also help new formats which maybe added in the future). The
-> fact that this wasn't done already says something about its difficulty
-> as Jacob mentioned yesterday. The difficulty being we don't exactly know
-> which options to parse as they differ from format to format.
+> I'll try again with inline patch. I think it wasn't picked up since it
+> was mime encoded by the mail client..
+>
+> - Adam
+>
+>
+> From 90be51143e741053390810720ba4a639c3b0b74c Mon Sep 17 00:00:00 2001
 
-Yes, while writing the sample in-code documentation for the
-match_atom_arg_value() function, I found its interface to force the
-callers to do "parse if it is 'tags'; else parse if it is 'abbrev';
-and so on" hard to use.  I wondered if the primitive to parse these
-should be modeled after config.c:parse_config_key(), i.e. the helper
-function takes the input and returns the split point and lengths of
-the components it finds in the return parameter.
+Remove all the above lines (including the "From <commit object
+name>").  If you want to add a note that should not be recorded in
+the message of the resulting commit, write it _after_ the three-dash
+line after your sign-off.
 
-As the contract between the caller and the callee is that the caller
-passes the beginning of "key1[=val1],key2[=val2],...", the interface
-may look like
+> From: Adam Majer <adamm@zombino.com>
+> Date: Wed, 28 Jun 2023 14:46:02 +0200
+> Subject: [PATCH] doc: sha256 is no longer experimental
 
-	int parse_cskv(const char *to_parse,
-		       const char **key, size_t *keylen,
-		       const char **val, size_t *vallen,
-		       const char **end);
+It is not technically incorrect to have these three lines here, but
+when you are presenting your own work, it is preferrable to do
+without them.  The "From:" address line and "Subject:" text line do
+not have to be here---most people should be able to make the
+corresponding e-mail headers to have the value they want to use,
+and while the above "Date:" might be the time you wrote the commit,
+it is way earlier than the time the contents of the commit was
+presented for consideration to the general public, which is recorded
+in the e-mail header of the message you are sending.
 
-and would be used like so:
+So, the body of the message usually should start from here (below).
 
-	const char *cskv = "key1,key2=val2";
-	const char *key, *val;
-	size_t keylen, vallen;
+In general, please follow [[describe-changes]] part of the
+Documentation/SubmittingPatches document, and also "git log
+--no-merges" of recent contributions by others.  "The purpose of
+this patch is" is not how we usually talk about our work.
 
-	while (parse_cskv(cskv, &key, &keylen, &val, &vallen, &cskv) {
-		if (!val)
-			printf("valueless key '%.*s'\n",
-			       (int)keylen, key);
-		else
-			printf("key-value pair '%.*s=%.*s'\n",
-			       (int)keylen, key, (int)vallen, val);
-	}
-	if (*cskv)
-		fprintf(stderr, "error - trailing garbage seen '%s'\n",
-			cskv);
+> The purpose of this patch is to remove scary wording that basically
+> stops people using sha256 repositories not because of interoperability
+> issues with sha1 repositories, but from fear that their work will
+> suddenly become incompatible in some future version of git.
+>
+> We should be clear that currently sha256 repositories will not work with
+> sha1 repositories but stop the scary words.
+>
+> Signed-off-by: Adam Majer <adamm@zombino.com>
+> ---
+>  Documentation/git.txt                      | 4 ++--
+>  Documentation/object-format-disclaimer.txt | 8 ++------
+>  2 files changed, 4 insertions(+), 8 deletions(-)
+>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index f0cafa2290..666dbdb55c 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -553,8 +553,8 @@ double-quotes and respecting backslash escapes. E.g., the value
+>  	If this variable is set, the default hash algorithm for new
+>  	repositories will be set to this value. This value is
+>  	ignored when cloning and the setting of the remote repository
+> -	is always used. The default is "sha1". THIS VARIABLE IS
+> -	EXPERIMENTAL! See `--object-format` in linkgit:git-init[1].
+> +	is always used. The default is "sha1". See `--object-format`
+> +	in linkgit:git-init[1].
 
-The helper's contract to the caller may look like this:
+This side looks OK (just removing the single sentence).
 
- - It expects the string to be "key" or "key=val" followed by ',' or
-   '\0' (the latter ends the input, i.e. the last element of comma
-   separated list).  The out variables key, val, keylen, vallen are
-   used to convey to the caller where key and val are found and how
-   long they are.
+>  Git Commits
+>  ~~~~~~~~~~~
+> diff --git a/Documentation/object-format-disclaimer.txt b/Documentation/object-format-disclaimer.txt
+> index 4cb106f0d1..1e976688be 100644
+> --- a/Documentation/object-format-disclaimer.txt
+> +++ b/Documentation/object-format-disclaimer.txt
+> @@ -1,6 +1,2 @@
+> -THIS OPTION IS EXPERIMENTAL! SHA-256 support is experimental and still
+> -in an early stage.  A SHA-256 repository will in general not be able to
+> -share work with "regular" SHA-1 repositories.  It should be assumed
+> -that, e.g., Git internal file formats in relation to SHA-256
+> -repositories may change in backwards-incompatible ways.  Only use
+> -`--object-format=sha256` for testing purposes.
+> +Note: SHA-256 repositories currently will not be able to share work
+> +with "regular" SHA-1 repositories.
 
- - If it is a valueless "key", the out variable val is set to NULL.
+The original did not have this problem because it had enough
+surrounding context, but the updated text now risks getting misread
+as if there are "regular" and "special" SHA-1 repositories, the
+latter of which might work better with SHA-256.
 
- - The out variable end is updated to point at one byte after the
-   element that has just been parsed.
+And the message about SHA-256's non-experimental status can probably
+be a lot stronger, after the discussion we had recently.  How about
+saying something like:
 
-The need for the caller to check against the list of keys it knows
-about in the loop still exists, but the parser may become simpler
-that way.  I dunno.
+    Note: there is no interoperability between SHA-256 repositories
+    and SHA-1 repositories right now.  We historically warned that
+    SHA-256 repositories may need backward incompatible changes
+    later when we introduce such interoperability features, but at
+    this point we do not expect that we need to make such a change
+    when we do so, and the users can expect that their SHA-256
+    repositories they create with today's Git will be usable by
+    future versions of Git without losing information.
 
+which would probably be much closer to what you wanted to hear?
+
+Thanks.
