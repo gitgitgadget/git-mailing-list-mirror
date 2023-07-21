@@ -2,103 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22372EB64DC
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 12:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94003EB64DC
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 13:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230496AbjGUMmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 08:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45808 "EHLO
+        id S230215AbjGUNIt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jul 2023 09:08:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230409AbjGUMm1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 08:42:27 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B39E430ED
-        for <git@vger.kernel.org>; Fri, 21 Jul 2023 05:42:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1689943326; x=1690548126; i=l.s.r@web.de;
- bh=sRATAvauQjX9Gjvtses1t29OZ+LxnagDMEvNfWHNkdM=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=pwYg/rXueIYYvM3AeAiRSbDR5YHf0YcluC71TbWA7rWyTccJRxhYJ+3FpPCbUIeJeuTGeEn
- zRLC9IR9vGMUWlXphBAl61sX+vV9AMz8QLEAWinS+nP/P/lwvnHTNUAYkmm3Kzwu+MvOPDJpF
- L5msPdNuyQFPt5WI3h7ncgHMhR94QzlhIgATPCtcF8Auj+flc6+sSuT2HlvrXq3UXA1si66IL
- N8Rst+xV5tWKsohtm84Y0hRb/tLnGNG2RGuKZwHE32hnN7abe3yZODKuXL+qSNtm1QuYknWJm
- npRtKHlqmZF0B6qgS4L/g88jnkIDLAWVPxdF5CdyAoVxiXjjoMwA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MwR05-1q6fYB1fbp-00s2R2; Fri, 21
- Jul 2023 14:42:06 +0200
-Message-ID: <3fc80266-3fc3-32f7-a918-3f7a854dfdb9@web.de>
-Date:   Fri, 21 Jul 2023 14:42:06 +0200
+        with ESMTP id S229601AbjGUNIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 09:08:48 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B633E68
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 06:08:46 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b74310566cso28820321fa.2
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 06:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689944925; x=1690549725;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=gtaHrN4Zav/77GoKQhJrIk3glWvW2vHcWMHwsmzJRZU=;
+        b=CltB095b8g3qArWIn0SLnmpQUWGy6IZGugut+Yzkt/hf86Wmd8EJ7EZPD5TVvWqRct
+         0xI4tB3v9wUF9KtG9p/s1as/dutkZqPuufwYtXzGItu9rvRczlshXA5wCqeq6EstxhZp
+         lSMmFtp+ypI8SRx9VGRG8Nu+0x6u3CT7v4Pn1zmDpS2t72sNcPF7pwNMkZb5vfyEGDLh
+         Z6aJHsetCpTjRZ2kn5702aHfxFZ4Y+9CqYTFBCf5Gjo/4w02jqyIaoNU5Q8uXXMV1xoS
+         BE23e4fOf9Y8Gkwk5wC9mhD06Rvq/cnu8HtzTIK76uwyt6mrnneCqFpuqPWeiQUMfAWF
+         Wn9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689944925; x=1690549725;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gtaHrN4Zav/77GoKQhJrIk3glWvW2vHcWMHwsmzJRZU=;
+        b=EtUEmNUpxH6619U8OTyOBCjaAERvQRthNSKW3W0J/fT88FBH7zPL7WH1VEa4f724nF
+         e/dsoM1YH3HhyFvbK3NwEhzUyp6zEWEvfEBrlziUQ8cB4wpyT9nASJ2rmuKsOLnDFHTn
+         9QkHcTuu0buNYD7vlF8ndusAgyKQOdTrjP8NKZlxV7oUOaNp/2T9H8p2tFXrKd/6Bwvb
+         eadSzxvNuJoZRNNhglg+A5AK8QOG0mU+s7h7bt134UVV0+AOJw+3z5wckZ5x/TWZw+qN
+         Hx4R3AI8/i6K76Y+RYbd0i6/frj9eLFpac+78KIpQ7ItBxomrKIZLMvFmcuwQofA9KJz
+         sTkw==
+X-Gm-Message-State: ABy/qLbDWK8D8vToG1HxLY+GSrnr+VZubHUZyZscXa8KQjMM8V3r1bJs
+        YRTSkA4mSV05yysqqSWtgSfrulxCM7m56A==
+X-Google-Smtp-Source: APBJJlF78gM1pT4m7ziPr5knraEKzS9EhiafOS5I0NK8YW4hpAYpZ25e0Z9r74UQVKWR5A1GDQwafg==
+X-Received: by 2002:a2e:b61a:0:b0:2b6:e2cd:20f5 with SMTP id r26-20020a2eb61a000000b002b6e2cd20f5mr1676928ljn.9.1689944924528;
+        Fri, 21 Jul 2023 06:08:44 -0700 (PDT)
+Received: from [192.168.1.195] ([90.242.235.211])
+        by smtp.googlemail.com with ESMTPSA id e18-20020a5d65d2000000b00314172ba213sm4128803wrw.108.2023.07.21.06.08.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Jul 2023 06:08:44 -0700 (PDT)
+Message-ID: <d6e54535-79a3-2d2c-3152-4cabc5bbd9b8@gmail.com>
+Date:   Fri, 21 Jul 2023 14:08:42 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.13.0
-Subject: [PATCH] am: unify definition of --keep-cr and --no-keep-cr
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer: finish parsing the todo list despite an
+ invalid first line
+To:     phillip.wood@dunelm.org.uk, Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git@vger.kernel.org, alban.gruin@gmail.com, gitster@pobox.com
+References: <20230719144339.447852-1-alexhenrie24@gmail.com>
+ <395274b4-37a9-8c95-203f-94178c99772a@gmail.com>
+ <CAMMLpeSN_M1HW1D3HyuY+S+GwUrQ_4dP9qoSQ72hbQv3pwK5kg@mail.gmail.com>
+ <c7b7f078-6561-5081-9c23-0cec65b71c97@gmail.com>
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
- <xmqqo7k9fa5x.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqo7k9fa5x.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:chA7ypmofMpLy1QjfWEWfk9jQhCXT6iFFNsxjk3oly/mavc275T
- /LpO+b/bruTpulHszS4XvD7ao+DuRTDX22nrzulriXsRysQKArNOTbkf8HtbEUIfHDGgnuM
- dM1f5qIicCNpeLDGtZlR29M/O+yoe8it8NeEo113593k7QRf3eFJfZW7wX/iT2bRCYHHSSb
- +c7NOsNdfVgVz355Q7nqA==
-UI-OutboundReport: notjunk:1;M01:P0:FZMMxN4/340=;rLNr1+Jmbac/tjTj8tqJmrVqjIM
- Y8WEG0houIowE1ZwEoZuKfxlcPyAUVHQeUy0VWEfYuEC5ZdTuYlWXDvDRoJpt5lIn+fsch3mS
- LDyZTJ4mPDpG706oxdzxAfjRy+0PmHcPXfgkVFhWB/EY175HtLFYwwPsJPA9i0uBYGQNACL15
- q5q3Z/CaIV8vlj1nZh3xucbJ1l8bK9YET0ehYM/6yjlDYd53+oCZNFphFGFfKsKt6YVg59ihX
- OJXoH18+E8zZtRPV9fzMSdFS2N11BVuzJ9+MvAhULtottrzQPqZKWj0bERsg+Y18bj2NodhQB
- cZnhTOvLNd1xEqBNCPSL9oja9wjjSac6memPEsli8b18GaAhk0WTj1oJaTjraoHBxZpsAmXd2
- 8V9KQpOgZPr/QnQiZ6n9lothR+O+GH5AJ423h7IgTCcFpg5p0a8Cane2HK632Axd5gRB/+IdM
- CoztoQnJlnhKCrLKOoiWpOkQj9CeMuM/7UUfYCazv9UzCZrzLq5LrGsTE/ZVO2myRkrrTzT44
- QFkXj+FeAM6b87YJyv7BRnroKFvPVVu23nqrnlJFfp9WAekP1A5VAPG5VXr7dAz7jhFL+/RmD
- DILdNogAiReaVxsCxZkJ1mq3Ew3qLX7P7bOkntUbjd8kT9QkT60TJ63yGn7lDlZJRXAQxPogQ
- iISYY6L3NUa/ebn84dC2oaYqIdVHQJZOkiCVU5polf5gtPbxUOKjz8I+BmC+4bVxKvrSObP3g
- E4nN3Pzf0Q/nKpX0IXxV9+shEDmsJCHTSPclmrF79bXqvE0UvkBPutT2ASH+KR88s8yEtObRi
- hmHMXCA5oShs6TeIIEXheSmNdGCgczszCdCKZ1L3M0UorbLELOz2+ATSxi11GswFx+oB6mkXD
- Ap9XAgTmzeOlWiGNSECxZJIDzmQs87Jtv9627HdPXxJO2fez97eJR7vkIJCyo9CbL9HFIqkla
- EAlEQA==
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <c7b7f078-6561-5081-9c23-0cec65b71c97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The options --keep-cr and --no-keep-cr set the variable keep_cr to 1 and
-0, respectively.  We don't usually define the negative variant
-explicitly.  The extra help text only tells users that the option
-overrules the config option am.keepcr, which conforms to convention.
+On 21/07/2023 10:31, Phillip Wood wrote:
+> That's fine but the commit message should explain that decision and 
+> clarify why ddb81e5072 caused the regression
 
-So allow --keep-cr to be negated and drop the now redundant definition
-of --no-keep-cr for consistency.
+Maybe something like
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/am.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Before the todo list is edited it is rewritten to shorten the OIDs of
+the commits being picked and to append advice about editing the
+list. The exact advice depends on whether the todo list is being
+edited for the first time or not. After the todo list has been edited
+it is rewritten to lengthen the OIDs of the commits being picked and to
+remove the advice. If the edited list cannot be parsed then this last
+step is skipped.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index dcb89439b1..a216024e1d 100644
-=2D-- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2347,12 +2347,9 @@ int cmd_am(int argc, const char **argv, const char =
-*prefix)
- 			N_("pass -b flag to git-mailinfo"), KEEP_NON_PATCH),
- 		OPT_BOOL('m', "message-id", &state.message_id,
- 			N_("pass -m flag to git-mailinfo")),
--		OPT_SET_INT_F(0, "keep-cr", &keep_cr,
-+		OPT_SET_INT(0, "keep-cr", &keep_cr,
- 			N_("pass --keep-cr flag to git-mailsplit for mbox format"),
--			1, PARSE_OPT_NONEG),
--		OPT_SET_INT_F(0, "no-keep-cr", &keep_cr,
--			N_("do not pass --keep-cr flag to git-mailsplit independent of am.keep=
-cr"),
--			0, PARSE_OPT_NONEG),
-+			1),
- 		OPT_BOOL('c', "scissors", &state.scissors,
- 			N_("strip everything before a scissors line")),
- 		OPT_CALLBACK_F(0, "quoted-cr", &state.quoted_cr, N_("action"),
-=2D-
-2.41.0
+Prior to db81e50724 (rebase-interactive: use todo_list_write_to_file()
+in edit_todo_list(), 2019-03-05) if the existing todo list could not
+be parsed then the initial rewrite was skipped as well. This had the
+unfortunate consequence that if the list could not be parsed after the
+initial edit the advice given to the user was wrong when they
+re-edited the list. This change relied on
+todo_list_parse_insn_buffer() returning the whole todo list even when
+it cannot be parsed. Unfortunately if the list starts with a "fixup"
+command then it will be truncated and the remaining lines are
+lost. Fix this by continuing to parse after an initial "fixup" commit
+as we do when we see any other invalid line.
+
+Best Wishes
+
+Phillip
+
