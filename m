@@ -2,93 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62BB4C0015E
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 16:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FB2FEB64DC
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 17:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbjGUQnb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 12:43:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
+        id S230200AbjGURAO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jul 2023 13:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbjGUQnZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 12:43:25 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9D62D46
-        for <git@vger.kernel.org>; Fri, 21 Jul 2023 09:43:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1689957792; x=1690562592; i=l.s.r@web.de;
- bh=wNlSXIl98uYL+ydn/VTBDYyDWtwYfe2sl4GFtw8ERNw=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=wVH6w55EsOgmWX+ijB71rDCsTjo0lykl1dOY5xKdjEeHepoqu078fTfQP876Ja+6pv5tqi+
- BY7Ogh8G5gJ27xJTDEewhim+blw7WGOauHVk5QrXfAXf8zy+pfRZLweCVW1SN1aqNtXsNEjYS
- f2wONybU6SPyyvSOJ/CVV1GN8Fwy4zfGtUBM6fBcwlddCfpPgjN4jmNaFo9PYYNNFvddvvJ+U
- eMGmNLaxPKojq0RfsVDlZ5ObXpvu3G2jE7QFqWdraKMi4FwBzRyTUhqp7E7/tD/ZsSlaJwZ9Q
- Vi8XH4q+C2UleLfNRkRnnJaLbtZKDXmCLlTcw/k/RcPvQHcCxKJQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MwjK2-1py3g946KA-00yNur; Fri, 21
- Jul 2023 18:30:36 +0200
-Message-ID: <b4912737-4ee1-11a5-847e-39c8eb2967d0@web.de>
-Date:   Fri, 21 Jul 2023 18:30:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.13.0
-Subject: Re: [PATCH] show-branch: fix --no-sparse
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229813AbjGURAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 13:00:13 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A327126A0
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 10:00:11 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 43D862E9FD;
+        Fri, 21 Jul 2023 13:00:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JSvuEcqpdsFd
+        2swImsdJM7KxYeeIuOhwIc4kflmzdvU=; b=uK7uAEXpUBQwMfsVsEUbYwEKR8C7
+        gVKVe28PGGl+a3J2O7laDr7swbXzmspVwgQvBDqhe0tp6PAOH0bxX6auqw4Q1MAm
+        xKHUeMrHH2nqDdMDe6UO0GWP5c8XwLKz33ttPLF31VZPorrHCvZJ1ymO20Vgd1/j
+        7zNFwk/5Wl6nS3k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C31C2E9FC;
+        Fri, 21 Jul 2023 13:00:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B08D2E9FB;
+        Fri, 21 Jul 2023 13:00:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] describe: fix --no-exact-match
 References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
- <xmqqo7k9fa5x.fsf@gitster.g> <3f590f19-11a2-36d7-2520-1d1625ca1a25@web.de>
- <xmqqwmytxr59.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqwmytxr59.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+        <xmqqo7k9fa5x.fsf@gitster.g>
+        <4eea7e15-6594-93e2-27b5-3d6e3c0baac6@web.de>
+Date:   Fri, 21 Jul 2023 10:00:04 -0700
+In-Reply-To: <4eea7e15-6594-93e2-27b5-3d6e3c0baac6@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 21 Jul 2023 15:41:33 +0200")
+Message-ID: <xmqqy1j9urmz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0AFB4DDE-27E8-11EE-88EB-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:VKwyqSVF0f8Fx8+Od3CIZ9S/tT7CjEsC+OkLWBfJrqC2T3fX2o3
- 3W842u91HVyLDxSALlUu8YoxABMh168mXzcXHgBsT5ZHcms6Loynjqu764jfAUSTmsAj62K
- ngXV8NwLWdJxuaYcgoGzojLaGXUD3kOHW4FB3ccBWSMThwPT85aLtu5ud88emwFOINfUMyq
- Uzio+sQVmzqMzaf4CLb2Q==
-UI-OutboundReport: notjunk:1;M01:P0:jjfuKo7mi1Q=;G0RhjNHIaN5tKMbwxSd7n1Trifo
- ix9cjvDr6TeWfDStFH4v0Uu7ZII8jiZqBaR1RD+IcU1Vj/BKbcqk7IkRXO6GlUTRFPBDD3LrU
- IVljOui+xOndDC07ui/YaHQWRW76Z4Ny6zmRnPWSPQh4N4A42mEOX1xTlswjc8qOz+CX7EnfX
- Eny2xC7MEw/vjeH22xKn+V5VRL33Jlmiz618wIf022tDwMuJ0ubBA/cQhAjdzZkvcUMnnuXuo
- VQSTKURAeKzWdM01PnB95WjMhV1r/2C9D23aQTlWko1DjbqOhFUWJJq3HTy1Ndhb2v7diUdIr
- ygEuAvbFigYq5Ct3A8y5v0ihlHQzTXKlWaCrP53abFWk8evERnyPemeaLNbc+lWCzJNBUfY5O
- Gb4rJUVJ1oG/mXyOrhUOkTpPiS3ZEwFDzrI0T5aTSC9LCTXY7qAIGiA9S0bnywh1xhyeVqX0z
- 3lt+SfRXnQEZAi2YwTYZjO0ezd6qOc/abfWLiIcl8O7b6Z+C2O3xEqPWR51cFV52dk+MnxnP6
- 2t/VOHX3kx3i6xVSzEyyOo+g+aCpGHY5bCGotP55azUzFBqfUkt0pMyOkeXCwpQLSvGbUERBA
- PVJbdIW/6kgWt73Ihycxw64/FzebWvTMLfz1+AkNO9PP98dFs5XZBsg47eagBDW/0/EJVcFhf
- rIwOP5DJ35hu/def2HJzjGBBGeUP7t9mgxzTP+aSSD6NacCe7hH+davLRztSlBWqM5uORzKGU
- 88wGdJRHtVFllGBZ3ujP8VLrFDlUdNsPoD1ZzJDn8L5Zjrs+QcHich9ZXuFByUAzkhbiw5Yun
- 7R36E7L+zRzrNHlTlng9Rl3B0mBMN7A8PtFYEUfByDt7hOVmwIChka6gfWJYjAGLvT+TiV5FD
- kgrGHsTyuxHvBQtOyGsq0g//7FDPE2jcG7BpfxW5QSzHIo4kal9dl1EXcLKl8WblHtFE/afc1
- ETFMwQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.07.23 um 16:42 schrieb Junio C Hamano:
->
-> Hmph, am I expected to compare these patches with what I sent a few
-> days ago and pick whichever are the better ones?  Can I delegate
-> that task to somebody else ;-)?
->
->         jc/am-parseopt-fix		<xmqqr0p5gjv3.fsf@gitster.g>
->         jc/branch-parseopt-fix		<xmqqjzuxgjmi.fsf@gitster.g>
->         jc/describe-parseopt-fix	<xmqqy1jcgbiv.fsf@gitster.g>
->         jc/parse-options-reset		<xmqq1qh4c998.fsf@gitster.g>
->         jc/parse-options-short-help	<xmqq5y6gg8fn.fsf@gitster.g>
->         jc/parse-options-show-branch	<xmqqh6pzc15n.fsf@gitster.g>
->         jc/transport-parseopt-fix	<xmqqedl4gag8.fsf@gitster.g>
+From: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Date: Fri, 21 Jul 2023 15:41:33 +0200
 
-Aww, didn't see them.
+Since 2c33f75754 (Teach git-describe --exact-match to avoid expensive
+tag searches, 2008-02-24) git describe accepts --no-exact-match, but it
+does the same as --exact-match, an alias for --candidates=3D0.  That's
+because it's defined using OPT_SET_INT with a value of 0, which sets 0
+when negated as well.
 
-Most differences are cosmetic, but in git describe you use two
-OPT_SET_INT_F for the two OPT_SET_INT_Fs for --exact-match and
-=2D-no-exact-match.  The callback I chose is a little uglier on the
-inside, but prettier on the outside -- occupies a single line in short
-help.  Reminds me of the --[no-]keep-cr simplification in git am.
+Let --no-exact-match set the number of candidates to the default value
+instead.  Users that need a more specific lack of exactitude can specify
+their preferred value using --candidates, as before.
 
-And you don't seem to have touched pack-objects; please check those two
-patches of mine.
+The "--no-exact-match" option was not covered in the tests, so let's
+add a few.  Also add a case where --exact-match option is used on a
+commit that cannot be described without distance from tags and make
+sure the command fails.
 
-Ren=C3=A9
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+[jc: added trivial tests]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * Stole tests from my version.
+
+ builtin/describe.c  | 17 ++++++++++++++---
+ t/t6120-describe.sh |  8 ++++++++
+ 2 files changed, 22 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 55b4baaa22..a5ba584cdd 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -24,6 +24,7 @@
+ #include "commit-slab.h"
+=20
+ #define MAX_TAGS	(FLAG_BITS - 1)
++#define DEFAULT_CANDIDATES 10
+=20
+ define_commit_slab(commit_names, struct commit_name *);
+=20
+@@ -40,7 +41,7 @@ static int tags;	/* Allow lightweight tags */
+ static int longformat;
+ static int first_parent;
+ static int abbrev =3D -1; /* unspecified */
+-static int max_candidates =3D 10;
++static int max_candidates =3D DEFAULT_CANDIDATES;
+ static struct hashmap names;
+ static int have_util;
+ static struct string_list patterns =3D STRING_LIST_INIT_NODUP;
+@@ -556,6 +557,15 @@ static void describe(const char *arg, int last_one)
+ 	strbuf_release(&sb);
+ }
+=20
++static int option_parse_exact_match(const struct option *opt, const char=
+ *arg,
++				    int unset)
++{
++	BUG_ON_OPT_ARG(arg);
++
++	max_candidates =3D unset ? DEFAULT_CANDIDATES : 0;
++	return 0;
++}
++
+ int cmd_describe(int argc, const char **argv, const char *prefix)
+ {
+ 	int contains =3D 0;
+@@ -567,8 +577,9 @@ int cmd_describe(int argc, const char **argv, const c=
+har *prefix)
+ 		OPT_BOOL(0, "long",       &longformat, N_("always use long format")),
+ 		OPT_BOOL(0, "first-parent", &first_parent, N_("only follow first paren=
+t")),
+ 		OPT__ABBREV(&abbrev),
+-		OPT_SET_INT(0, "exact-match", &max_candidates,
+-			    N_("only output exact matches"), 0),
++		OPT_CALLBACK_F(0, "exact-match", NULL, NULL,
++			       N_("only output exact matches"),
++			       PARSE_OPT_NOARG, option_parse_exact_match),
+ 		OPT_INTEGER(0, "candidates", &max_candidates,
+ 			    N_("consider <n> most recent tags (default: 10)")),
+ 		OPT_STRING_LIST(0, "match", &patterns, N_("pattern"),
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index c9afcef201..0a5c487540 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -85,6 +85,7 @@ check_describe e-1-gHASH --tags HEAD^^
+ check_describe c-2-gHASH --tags HEAD^^2
+ check_describe B --tags HEAD^^2^
+ check_describe e --tags HEAD^^^
++check_describe e --tags --exact-match HEAD^^^
+=20
+ check_describe heads/main --all HEAD
+ check_describe tags/c-6-gHASH --all HEAD^
+@@ -96,6 +97,13 @@ check_describe A-3-gHASH --long HEAD^^2
+ check_describe c-7-gHASH --tags
+ check_describe e-3-gHASH --first-parent --tags
+=20
++check_describe c-7-gHASH --tags --no-exact-match HEAD
++check_describe e-3-gHASH --first-parent --tags --no-exact-match HEAD
++
++test_expect_success '--exact-match failure' '
++	test_must_fail git describe --exact-match HEAD 2>err
++'
++
+ test_expect_success 'describe --contains defaults to HEAD without commit=
+-ish' '
+ 	echo "A^0" >expect &&
+ 	git checkout A &&
+--=20
+2.41.0-376-gcba07a324d
+
