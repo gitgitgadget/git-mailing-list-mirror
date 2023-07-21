@@ -2,108 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D192EB64DD
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 18:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C87FEB64DD
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 18:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbjGUS0y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 14:26:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38158 "EHLO
+        id S230509AbjGUS2b convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 21 Jul 2023 14:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbjGUS0w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 14:26:52 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51C672D6D
-        for <git@vger.kernel.org>; Fri, 21 Jul 2023 11:26:49 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-5839e70f346so8487527b3.1
-        for <git@vger.kernel.org>; Fri, 21 Jul 2023 11:26:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689964008; x=1690568808;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zf3elx24k7AdKcw6nv3XosFMa4ASKdQcEYcTSDSQmPs=;
-        b=x7Hft2G1N7AaVoHDn6pVOXWjMhIl0hi4Nten+ZIbiBN63LA7UQItbQKHc21TFikkGN
-         Yitk6H0jaK11ihEVNHpPpkRTItOY4c9OFhvRMLv7y+wjWMqeNayrh8aZnhEy4XSGtxiY
-         DnkwlNnwFsMZOpIsW7TGFfQOehsApbgknn2fbxdDtwAvnOjBKvhRzA5vQ5kDlm+dfJye
-         8mZqiQP/AjnRo+8Ync7W4+VJnx4AznBx8K6uAhbF1zoKZRIEsXbWl6UiMuJkqfPIO//0
-         LaRZoTxtZyimNKVG1Xtpa2C6Xq9H/6L+78ohty1g6nrbf+7nC5EeBIDEz+cEfKk7DMAs
-         G2/Q==
+        with ESMTP id S230487AbjGUS2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 14:28:30 -0400
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64258EB
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 11:28:29 -0700 (PDT)
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-48165cd918dso907816e0c.0
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 11:28:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689964008; x=1690568808;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zf3elx24k7AdKcw6nv3XosFMa4ASKdQcEYcTSDSQmPs=;
-        b=X0qskL0VtQvncxChpeG+Dzsgr6REl+V9f0JBIimGt+zFYUylbXGE8nc8GRPRzYp1YU
-         FlDGwO43VMYPkzfNYUDj0fuViWgsjc9F5MPdKcFLnCsb+KzNT6l1h67ZDjel8OoF7w7b
-         doe2G8ImT9FLYY2W+I3aYmC8j+x5tINXqQl9EaMY0R+90/QVaDxsvQKOc4uW7gOSzsl/
-         fPng7VTk07oYGsgy/10umoFlY7/1jmpucjPfLH8KdMe8CMxNtjlnKv+v6FGaTJV049bQ
-         zjisZClBXU7KLOWpXku5kAtB/f+XV66OrlMA1lREEtdJYZYlUhJGQbhOMNmF7JbCkW0D
-         mUsQ==
-X-Gm-Message-State: ABy/qLZqVDPtgRI+n7MZb4M2NWK7Esab7p407z6gSIfiGLM4zUK3dCDm
-        fZiBviwysvlYXHtbjC34hCIZR/+Pngq8EQ==
-X-Google-Smtp-Source: APBJJlGogCkhjNsHl467K6dcvgcqVvsEbJohCiPF4iteu4hNZKRywsmGR1T7B8FA47l3Ru51pur2r43Xe33rPA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a81:af4c:0:b0:573:54d8:e5be with SMTP id
- x12-20020a81af4c000000b0057354d8e5bemr9322ywj.3.1689964008383; Fri, 21 Jul
- 2023 11:26:48 -0700 (PDT)
-Date:   Fri, 21 Jul 2023 11:26:38 -0700
-In-Reply-To: <xmqqzg3q1g2y.fsf@gitster.g>
-Mime-Version: 1.0
-References: <20230714194249.66862-1-five231003@gmail.com> <20230719162424.70781-1-five231003@gmail.com>
- <20230719162424.70781-2-five231003@gmail.com> <xmqqjzuv5vvg.fsf@gitster.g>
- <kl6lzg3qzdhn.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqzg3q1g2y.fsf@gitster.g>
-Message-ID: <kl6lr0p1yvc1.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 1/2] ref-filter: add multiple-option parsing functions
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Siddharth Singh <siddhartth@google.com>
+        d=1e100.net; s=20221208; t=1689964108; x=1690568908;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TB80i+l8oBnRLTnjIjJBjKBsE/xog+AAUci/7lNadXY=;
+        b=B9lcX6dwT/4PuLSesEnWztBB8MMrC2Rto+fb4hS5CN09aIqbiPRmWBfb4AiajyZcWd
+         oxZjw+7zO7jSx4dOMrNx6gcpAAiNp5X+6aQgUocW8NpVlLNIoxy/S7WTiA+WKUeEeiOH
+         wu5GzPbcnpo7zggdAlivBmK2JWdk9Tw9RK00ERa+xqJnhkFn8dcigGF/puihiBa4kRzO
+         nb3/aNXvPsUPZ9Sv8ShkHyCzFqbW7cUOIE1CzXB1AlP881mPEH1FEK1vxy00Qd+2pL8C
+         rSFdyoCXW4Yo2n8qbGdfJxUiXyiSmFV9E5Fm+6/Ij90fa5wtrefvzFdEXEjOqf22Cbns
+         ATOQ==
+X-Gm-Message-State: ABy/qLZsiobv7rZF+tVcO46bySncveqH42UMyRxhedYHygmYw9/SNArH
+        AxokV+56ynz3Z4vpzjRt1mkaNR9dDjWpJyByQrE=
+X-Google-Smtp-Source: APBJJlFviMDS43g7b+DfmGWfkudxREdx6uGbihiyAyhxuWLZFJXkGntPMZxfMfRwRxt2n1knv4E23QC6jSXtmPv5ALY=
+X-Received: by 2002:a1f:4115:0:b0:471:1b41:dbb2 with SMTP id
+ o21-20020a1f4115000000b004711b41dbb2mr2054612vka.10.1689964108400; Fri, 21
+ Jul 2023 11:28:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1689960606.git.me@ttaylorr.com> <451ec003be8714bc38cc8cdc159add3e8899ce57.1689960606.git.me@ttaylorr.com>
+In-Reply-To: <451ec003be8714bc38cc8cdc159add3e8899ce57.1689960606.git.me@ttaylorr.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 21 Jul 2023 14:28:17 -0400
+Message-ID: <CAPig+cSkoHnUY0obKkz93k7mHXrFj+kwJ21yPHy=KYroAQtiUA@mail.gmail.com>
+Subject: Re: [PATCH 3/5] t5318: avoid top-level directory changes
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Glen Choo <chooglen@google.com> writes:
+On Fri, Jul 21, 2023 at 1:33 PM Taylor Blau <me@ttaylorr.com> wrote:
+> Avoid changing the current working directory from outside of a sub-shell
+> during the tests in t5318.
 >
->>> 	So whatever framework we choose, it should allow adding a
->>> 	test or two to this patch easily, without being too
->>> 	intrusive.  Would that be a good and concrete evaluation
->>> 	criterion?
->>
->> Perhaps, but the biggest blocker to adding a unit tests is whether the
->> source file itself is amenable to being unit tested (e.g. does it depend
->> on global state? does it compile easily?).
+> Each test has mostly straightforward changes, either:
 >
-> Now would this particular example, the change to ref-filter.c file,
-> be a reasonable guinea-pig test case for candidate test frameworks
-> to add tests for these two helper functions?  They are pretty-much
-> plain vanilla string manipulation functions that does not depend too
-> many things that are specific to Git.
+>   - Removing the top-level `cd "$TRASH_DIRECTORY/full"`, which is
+>     unnecessary after ensuring that other tests don't change their
+>     working directory outside of a sub-shell.
+>
+>   - Changing any Git invocations which want to be in a sub-directory by
+>     either (a) adding a "-C $DIR" argument, or (b) moving the whole test
+>     into a sub-shell.
+>
+> While we're here, remove any explicit "git config core.commitGraph true"
+> invocations which were designed to enable use of the commit-graph. These
+> are unnecessary following 31b1de6a09b (commit-graph: turn on
+> commit-graph by default, 2019-08-13).
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> @@ -69,117 +64,106 @@ test_expect_success 'create commits and repack' '
+>  test_expect_success 'Add more commits' '
+>  ...
+> -       git reset --hard commits/2 &&
+> -       git merge commits/4 &&
+> -       git branch merge/1 &&
+> -       git reset --hard commits/4 &&
+> -       git merge commits/6 &&
+> -       git branch merge/2 &&
+> -       git reset --hard commits/3 &&
+> -       git merge commits/5 commits/7 &&
+> -       git branch merge/3 &&
+> -       git repack
+> +       git -C full reset --hard commits/2 &&
+> +       git -C full merge commits/4 &&
+> +       git -C full branch merge/1 &&
+> +       git -C full reset --hard commits/4 &&
+> +       git -C full merge commits/6 &&
+> +       git -C full branch merge/2 &&
+> +       git -C full reset --hard commits/3 &&
+> +       git -C full merge commits/5 commits/7 &&
+> +       git -C full branch merge/3 &&
+> +       git -C full repack
+>  '
 
-Ah, yes. This would be close-to-ideal candidate then.
+This is one of those cases in which "cd full" while in subshell,
+rather than using "-C full" repeatedly, would perhaps make the code a
+bit less noisy, but it is, of course, subjective and what you have
+here is good enough.
 
-> They may use helpers we
-> wrote, i.e. xstrndup(), skip_prefix(), and git_parse_maybe_bool(),
-> but they shouldn't depend on the program start-up sequence,
-> discovering repositories, installing at-exit handers, and other
-> stuff.  It was why I wondered if it can be used as a good evaluation
-> criterion---if a test framework cannot easily add tests while this
-> patch was being proposed in a non-intrusive way to demonstrate how
-> these two functions are supposed to work and to protect their
-> implementations from future breakage, it would not be all that
-> useful, I would imagine.
+> @@ -229,114 +211,101 @@ graph_git_behavior 'mixed mode, commit 8 vs merge 1' full commits/8 merge/1
+>  test_expect_success 'build graph from latest pack with closure' '
+> -       cd "$TRASH_DIRECTORY/full" &&
+> -       cat new-idx | git commit-graph write --stdin-packs &&
+> -       test_path_is_file $objdir/info/commit-graph &&
+> -       graph_read_expect "9" "generation_data extra_edges"
+> +       git -C full commit-graph write --stdin-packs <new-idx &&
+> +       test_path_is_file full/$objdir/info/commit-graph &&
+> +       graph_read_expect -C full 9 "generation_data extra_edges"
+>  '
 
-The current thinking among Googlers is that we won't remove the helpers
-from library code. Git will either provide them, e.g. via Calvin's
-git-std-lib RFC [1], or we will provide ways for callers to bring their
-own implementation (like trace2 or exit, since it doesn't necessarily
-make sense to use Git's implementation). So yes, the test framework
-should be able to support this sort of compilation pattern. I'm not sure
-how much test frameworks differ in this regard, maybe Josh has some
-insight here.
+This works because an earlier test created "new-idx", and it created
+it directly in the trash-directory rather than in the "full"
+subdirectory where it used to reside before this patch. Okay.
 
-[1] https://lore.kernel.org/git/20230627195251.1973421-1-calvinwan@google.com
+> @@ -495,25 +464,24 @@ GRAPH_BYTE_OCTOPUS=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4))
+>  corrupt_graph_setup() {
+> -       cd "$TRASH_DIRECTORY/full" &&
+> -       test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> -       cp $objdir/info/commit-graph commit-graph-backup &&
+> -       chmod u+w $objdir/info/commit-graph
+> +       test_when_finished mv commit-graph-backup full/$objdir/info/commit-graph &&
+> +       cp full/$objdir/info/commit-graph commit-graph-backup &&
+> +       chmod u+w full/$objdir/info/commit-graph
+>  }
+
+Prior to this patch, "commit-graph-backup" was placed in the "full"
+subdirectory and test_when_finished() removed it from that location.
+As of this patch, "commit-graph-backup" is placed in the top-level
+trash-directory and cleaned up from there. Okay.
