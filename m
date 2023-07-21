@@ -2,146 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACE1EB64DC
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 15:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FFF6EB64DC
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 15:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230362AbjGUPQq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 11:16:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52366 "EHLO
+        id S231534AbjGUPZi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jul 2023 11:25:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231955AbjGUPQe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 11:16:34 -0400
+        with ESMTP id S230308AbjGUPZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 11:25:36 -0400
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385C33AA4
-        for <git@vger.kernel.org>; Fri, 21 Jul 2023 08:16:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42906C6
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 08:25:26 -0700 (PDT)
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C5B231957A;
-        Fri, 21 Jul 2023 11:16:17 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B3E8119706;
+        Fri, 21 Jul 2023 11:21:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MHpfpy/0gkK5SqCgxEfWyiTrxgjHbkDg8zKIa1
-        eIz9c=; b=ohhtyxRALpNtIJVzMDzJCflNxtXK09oBnfJaPv4L6T2WZmWs7txOOb
-        z3uJR993CThI5d5TAT8TXTB2nXvCen1HYwG53PDGR6xz21JWxdQLhXLbpe62ICk9
-        5RJurRJpkSbI1qHwQHJMYdgbvB/6ytDWULnD/MXyzKs+vgGESZlR4=
+        :content-type; s=sasl; bh=vqWRspHr1mRz3N90iWSJel8zLbYivFingbNcb0
+        U4Hr8=; b=fmTYBV5DhYtc1A7jlBCjtQTD/uKPY5oWYXnmMbu2RXW9MAuGKUREYZ
+        glOknkQXoCeS/Jo7u7VxsYjsg20Q0KFfeG6uxEVmC2v1u7LL2g8daNhXHCFMXFFY
+        BTfNGGqMKln4eYY2WhgHb3gKsidsPx9wdulT6/HduAJCGXMNAqwB0=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF98819579;
-        Fri, 21 Jul 2023 11:16:17 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ADABE19705;
+        Fri, 21 Jul 2023 11:21:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9FF7F19574;
-        Fri, 21 Jul 2023 11:16:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0DAE519704;
+        Fri, 21 Jul 2023 11:21:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 3/3] t2400: rewrite regex to avoid unintentional PCRE
-References: <20230715025512.7574-1-jacobabel@nullpo.dev>
-        <20230716033743.18200-1-jacobabel@nullpo.dev>
-        <20230721044012.24360-1-jacobabel@nullpo.dev>
-        <20230721044012.24360-4-jacobabel@nullpo.dev>
-Date:   Fri, 21 Jul 2023 08:16:11 -0700
-In-Reply-To: <20230721044012.24360-4-jacobabel@nullpo.dev> (Jacob Abel's
-        message of "Fri, 21 Jul 2023 04:40:56 +0000")
-Message-ID: <xmqqv8edwb0k.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, Alex Henrie <alexhenrie24@gmail.com>,
+        git@vger.kernel.org, alban.gruin@gmail.com
+Subject: Re: [PATCH] sequencer: finish parsing the todo list despite an
+ invalid first line
+References: <20230719144339.447852-1-alexhenrie24@gmail.com>
+        <395274b4-37a9-8c95-203f-94178c99772a@gmail.com>
+        <CAMMLpeSN_M1HW1D3HyuY+S+GwUrQ_4dP9qoSQ72hbQv3pwK5kg@mail.gmail.com>
+        <c7b7f078-6561-5081-9c23-0cec65b71c97@gmail.com>
+        <d6e54535-79a3-2d2c-3152-4cabc5bbd9b8@gmail.com>
+Date:   Fri, 21 Jul 2023 08:21:00 -0700
+In-Reply-To: <d6e54535-79a3-2d2c-3152-4cabc5bbd9b8@gmail.com> (Phillip Wood's
+        message of "Fri, 21 Jul 2023 14:08:42 +0100")
+Message-ID: <xmqqpm4lwasj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 87515766-27D9-11EE-8B55-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 33D0709E-27DA-11EE-AFD6-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Abel <jacobabel@nullpo.dev> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Replace all cases of `\s` with ` ` as it is not part of POSIX BRE or ERE
-> and therefore not all versions of grep handle it without PCRE support.
-
-Good point.  But the patch replaces them with "[ ]" instead, which
-probably is not a good idea for readability.
-
-Technically speaking, there is no regular expression library that
-supports PCRE per-se; treating \S, \s, \d and the like the same way
-as PCRE is a GNU extension in the glibc land, and a simlar "enhanced
-mode" can be requested by passing REG_ENHANCED bit to regcomp(3) at
-runtime in the BSD land including macOS.  I would suggest just
-dropping "without PCRE support" for brevity, as "not all versions of
-grep handle it" is sufficient here.
-
-> For the same reason all cases of `\S` are replaced with `[^ ]`.
-> It's not an exact replacement but it is close enough for this
-> use case.
-
-Good.
-
-> Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
-> ---
->  t/t2400-worktree-add.sh | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+> On 21/07/2023 10:31, Phillip Wood wrote:
+>> That's fine but the commit message should explain that decision and
+>> clarify why ddb81e5072 caused the regression
 >
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index e106540c6d..eafecdf7ce 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -417,9 +417,9 @@ test_wt_add_orphan_hint () {
->  		grep "hint: If you meant to create a worktree containing a new orphan branch" actual &&
->  		if [ $use_branch -eq 1 ]
->  		then
-> -			grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" actual
-> +			grep -E "^hint:[ ]+git worktree add --orphan -b [^ ]+ [^ ]+$" actual
->  		else
-> -			grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
-> +			grep -E "^hint:[ ]+git worktree add --orphan [^ ]+$" actual
->  		fi
+> Maybe something like
+>
+> Before the todo list is edited it is rewritten to shorten the OIDs of
+> the commits being picked and to append advice about editing the
+> list. The exact advice depends on whether the todo list is being
+> edited for the first time or not. After the todo list has been edited
+> it is rewritten to lengthen the OIDs of the commits being picked and to
+> remove the advice. If the edited list cannot be parsed then this last
+> step is skipped.
+>
+> Prior to db81e50724 (rebase-interactive: use todo_list_write_to_file()
+> in edit_todo_list(), 2019-03-05) if the existing todo list could not
+> be parsed then the initial rewrite was skipped as well. This had the
+> unfortunate consequence that if the list could not be parsed after the
+> initial edit the advice given to the user was wrong when they
+> re-edited the list. This change relied on
+> todo_list_parse_insn_buffer() returning the whole todo list even when
+> it cannot be parsed. Unfortunately if the list starts with a "fixup"
+> command then it will be truncated and the remaining lines are
+> lost. Fix this by continuing to parse after an initial "fixup" commit
+> as we do when we see any other invalid line.
+>
+> Best Wishes
+>
+> Phillip
 
-Just a single space would be fine without [bracket].  I think older
-tests use (literally) HT and SP inside [], many of them may still
-survive.
+That does sounds a lot easier to understand as an explanation for
+the reason why this change is necessary and sufficient.
 
-> @@ -709,7 +709,7 @@ test_dwim_orphan () {
->  	local info_text="No possible source branch, inferring '--orphan'" &&
->  	local fetch_error_text="fatal: No local or remote refs exist despite at least one remote" &&
->  	local orphan_hint="hint: If you meant to create a worktree containing a new orphan branch" &&
-> -	local invalid_ref_regex="^fatal: invalid reference:\s\+.*" &&
-> +	local invalid_ref_regex="^fatal: invalid reference: .*" &&
+Thanks for reviewing.
 
-Feeding "<something>\+" to BRE (this pattern is later used with
-'grep' but not with 'egrep' or 'grep -E') and expecting it to mean 1
-or more is a GNU extension, and in this case "there must be a SP
-after colon" is much easier to see, which is what the updated one
-uses.  Good.
-
-By the way, you can drop the ".*" at the end of the pattern, because
-the match is not anchored at the tail end.
-
->  	local bad_combo_regex="^fatal: '[a-z-]\+' and '[a-z-]\+' cannot be used together" &&
-
-This should also be corrected, I think.
-
-	"fatal: '[a-z-]\{1,\}' and '[a-z-]\{1,\}' cannot be used together"
-
-or even simpler,
-
-	"fatal: '[a-z-]*' and '[a-z-]*' cannot be used together"
-
-to avoid \+ in BRE (see above).  "[-a-z]" (to show '-' at the
-beginning) may make it easier to read by letting the hyphen-minus
-stand out more, as we know we are giving two command line option
-names and in a command line option name, the first letter is always
-hyphen-minus.  But that is more of personal taste, not correctness.
-
-> @@ -998,8 +998,8 @@ test_dwim_orphan () {
->  					headpath=$(git $dashc_args rev-parse --path-format=absolute --git-path HEAD) &&
->  					headcontents=$(cat "$headpath") &&
->  					grep "HEAD points to an invalid (or orphaned) reference" actual &&
-> -					grep "HEAD path:\s*.$headpath." actual &&
-> -					grep "HEAD contents:\s*.$headcontents." actual &&
-> +					grep "HEAD path: .$headpath." actual &&
-> +					grep "HEAD contents: .$headcontents." actual &&
->  					grep "$orphan_hint" actual &&
->  					! grep "$info_text" actual
->  				fi &&
-
-Thanks.
