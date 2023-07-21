@@ -2,137 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 900B3EB64DC
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 16:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62BB4C0015E
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 16:43:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231968AbjGUQje (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 12:39:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36830 "EHLO
+        id S230127AbjGUQnb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jul 2023 12:43:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230454AbjGUQjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 12:39:15 -0400
-Received: from AUS01-ME3-obe.outbound.protection.outlook.com (mail-me3aus01olkn20802.outbound.protection.outlook.com [IPv6:2a01:111:f403:7004::802])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCDDF49FE
-        for <git@vger.kernel.org>; Fri, 21 Jul 2023 09:37:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Nr7BY+jiCXeeR+7Hzhv2GD4YnPdXBzm8uA2mRbbzzW9ZMsQ4iGRdL3bp7WJqHnR0m9/pseqtIK3Ong25vE42GnZWDz1CcgqGjsZqx/xGIM18AX4o55DtVLArX+g8/if3EgqUjHLqKtCVq96NohOzmqWSOg54vGCsV/xzz6gmrmD2q4MwpDrgKtP+3Fm+V0VX8Q8ezucp7DbvSSQKT49gmuosfzaPkQU5ogMKJvtgecA6ceC+2twtjxC8wqgnPScsyMYJQJnwkVdWA+oevbYHVXqI929bjvykuqyDm3xKqngmU4kLdCpvANFmuDdg4UTF8Aq335thjuYPgSINAXBrsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MmJjzejmrqE7G2xWy4ygZs0b5AmVRgzN7e/AJ7dYBME=;
- b=IzORaQTTy6F5KRoRrf29hlHph3YQbw6QPjVl+DvXAsC5PdaLze9nqKLZgmBKFSS6QJgnbM4lUR0peKcl8HrrehJPav5KftW7h8xnKgIgtoUU+mJb871tOd61E/7XYZalxIgrK4GlG/+Y4Du53E7KBjxLdhTe8xdDnTQCqWvSAqyj2HztdbkUjfBhE+3GG0cPoUdr7TlCXjCzW3cnFQ/Wdaup6m36H3U5OTHgFerZbCt3sOHvtnA93h81/gTqGN/c5fxDKpbQ0ygE0gNPtwRDaTx17U8KZgfqSieUAUrVvXDJWkBu3aUgjp/o5LtPb4elnObwiB4zu5Lfu1yAA78Acw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MmJjzejmrqE7G2xWy4ygZs0b5AmVRgzN7e/AJ7dYBME=;
- b=iEzm1BF6Lj+/x4CBjMlgwB+0VaJRS0gJvkZYsDw7ljLccQ9sM0/VirAJZ9rpE4C+o7OPtaLYIcjsI1Xf6G/UnYTSWAYF/SVzTFZ1Hr8FOMzZoTzwrikZ6oI+Z1uNKssZpCFGkfr6xP6LFchDBDeC+uWTzGzDY48MU/d5yw4odpu40gU8iQ2rxvGwYb3SGlxO/fxvn/93JtMgzRzHh6tF+4+nLDdcFLDJ5obQBTfqTI2L4hCMmdLwmV94diDSxTBUhe7A622igDt5pHANQymytlCarm2kkpPfOxVAiBNtciM2csvhzCuyzrt0XYsI97/3jJO+/2OQLPXlY8ejNDqS9A==
-Received: from ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:eb::14)
- by MEYP282MB1704.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:b7::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.28; Fri, 21 Jul
- 2023 16:36:44 +0000
-Received: from ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
- ([fe80::569a:9ef7:3338:79c1]) by ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
- ([fe80::569a:9ef7:3338:79c1%2]) with mapi id 15.20.6609.026; Fri, 21 Jul 2023
- 16:36:44 +0000
-From:   Qixing ksyx Xue <qixingxue@outlook.com>
-To:     qixingxue@outlook.com, git-git@nodmarc.danielabrecht.ch,
-        git@vger.kernel.org
-Subject: [PATCH] gitweb: wrong capture group used for grep search
-Date:   Fri, 21 Jul 2023 12:36:05 -0400
-Message-ID: <ME2P282MB2242C7D0E3D92E2CE5A13B68B43FA@ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.22.0.windows.1
-In-Reply-To: <ME2P282MB224200468AFBBBD4534ED1F7B453A@ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM>
-References: <ME2P282MB224200468AFBBBD4534ED1F7B453A@ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN:  [7rif9Jxh/1pl0hn4sjJNAA1kpeTSAqGVNqwXnesOSvo1tXw5R4qWgprMTOKaWPbq]
-X-ClientProxiedBy: BN9PR03CA0399.namprd03.prod.outlook.com
- (2603:10b6:408:111::14) To ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:eb::14)
-X-Microsoft-Original-Message-ID: <20230721163604.992-2-qixingxue@outlook.com>
+        with ESMTP id S229890AbjGUQnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 12:43:25 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9D62D46
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 09:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1689957792; x=1690562592; i=l.s.r@web.de;
+ bh=wNlSXIl98uYL+ydn/VTBDYyDWtwYfe2sl4GFtw8ERNw=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=wVH6w55EsOgmWX+ijB71rDCsTjo0lykl1dOY5xKdjEeHepoqu078fTfQP876Ja+6pv5tqi+
+ BY7Ogh8G5gJ27xJTDEewhim+blw7WGOauHVk5QrXfAXf8zy+pfRZLweCVW1SN1aqNtXsNEjYS
+ f2wONybU6SPyyvSOJ/CVV1GN8Fwy4zfGtUBM6fBcwlddCfpPgjN4jmNaFo9PYYNNFvddvvJ+U
+ eMGmNLaxPKojq0RfsVDlZ5ObXpvu3G2jE7QFqWdraKMi4FwBzRyTUhqp7E7/tD/ZsSlaJwZ9Q
+ Vi8XH4q+C2UleLfNRkRnnJaLbtZKDXmCLlTcw/k/RcPvQHcCxKJQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MwjK2-1py3g946KA-00yNur; Fri, 21
+ Jul 2023 18:30:36 +0200
+Message-ID: <b4912737-4ee1-11a5-847e-39c8eb2967d0@web.de>
+Date:   Fri, 21 Jul 2023 18:30:35 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ME2P282MB2242:EE_|MEYP282MB1704:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0681b04d-d41a-403e-de59-08db8a08ab88
-X-MS-Exchange-SLBlob-MailProps: ZILSnhm0P3kio6YMFhyXu7GkCIaMVIdq8E/2fn2dJIO3nUuq/fh8b/Sw7pEl48+D/16x8pjW3gg4eKO2SkgyqSbOFpFDyvGhiJTTqsyh+aI+KrKZi4S+7RiC/9ygZcG8kN8mbQrlxDc52JVwwYPrpjtn0BT8nDP/nBCLGM4twX4qbiyRp7v8s3k2YnNZALhPx9PynSqnKz4zrrGzqYzshXzPrTA/1rt9PDpV2x/WzYPoMtn00QMVtQ9QhN3gJQ0kDmVrKEGgkr/7JhFxiHOd8ZM9mzZtYx2Jkh6y2fGk7Mq6/oGqc4WGXKPxkmy/14rpmhsgA0IL+jNq6lEaEViNE1G/kb3ZAh5uyBQpKTp3eGme4Ex4q4nydOBNLQHXgXPnVuEaC+lmjF1ifrOrO8OqB5TG8ln5b5JcBtfxkN1Cz5+xD/XJixwTefkpMnmuGoIEQyhnq3AI73Iru13fIDJJX0j1NjmIl5ktajqGhRJJvvTUJQAusepwVzkbaYZdwQw7BcCiIGP/ABKXtPGCEVTK/lOhyENaSRhzWE4y6xd6nIFYb3lTE64kYbepSk4K3ZY7ksvlguYqljw9YZKOqfkPM3I59vf/aeH/MWc3m8CGefS9J9X119M86BDTHvDKjowQndMcHTndRxlwkctVntxoqpY6wktNdKq3FdJmzkL1XcxnLiuKwj1m9jKokrJEwS5bRQ0Xbaq193LldevkXDNiilYh9auFFjrwfNpt47b7ZceX+mm9TaFT5dEz9hGBFabHSAidWO9133uPpk2gw7XncK3ZLXeFs1+M
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: EMq8syhZyhaL0OPZr6njE4FP+iEvx116l7P/rIsn6AjEbRFRnxIiMssoihHwf14IieAkOV6qucMdRY/6DWE3jN80v2EAnSiarh8r0AvOh35ZESGiFTyI2LZCj+5WtUELxF1vBkTFIwB+c3OA8tbKgEJGP51HiP8Z16x4dhv5ZGKZuiJzIvx/aUKCRDqjrPwjYzzKCTLT+jgxw9+47EQPPb4/m2OgIKBlb5oqefPH2j+drijkp9avM3u9gR+OZuw8vMnbjZQ2tTVA31rZjrgO6CTA57k3ViMBC20HJlibJyaBQGqHwVckRptQYyaZ8ve4hN4FHdfE0lYo7x845foP7KjsAm8DUyJOV5P/32TTIyESivDSPOViW9vPUTqBXKJ2VvT1c92wNYDf19VrjlAlX6SQKgxqTSnvckoaQz909kVYnIJ1aRkRoX+ek8KXLSKlb2Js0b6HgZvLfeluWdS/ZBcoRzK2jle/EYgRHQaQgIesZbKjZURWBRhSXztJEcSoEbzeFnHrEqe/gnzDU375IFDXe5L1z+xi2RRJGWDdzX51HAUQbKp8AKiq5NlhEpTnFerttihqO2nxAcQgaQ+AYTNFxnoIUbDj/wW16KN5oQseRj/+yT2eh347RYl/j79N
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RHL63rMyw3SAXsKmKh4Sn3VCbvLcRO156nPv9PkCbwBMfB7kenRWwc/mBY5k?=
- =?us-ascii?Q?tmfekGI+uW5Cx+7SO8ZH3bJCd6ByV+hM+lerO+BZ29duQSH+oy31z5UXjwtC?=
- =?us-ascii?Q?klKbxcrfr3nBnFsVKXDmJ9mZttBg/7m7YhRpCNcuUTY2IAEsho9mjYKTcQR6?=
- =?us-ascii?Q?sDE3XTPTjjsVrAkNq2tKRgdiowdqJuX7nZu+8UOzurDPXh43OvI9iVkkIsKm?=
- =?us-ascii?Q?o8RvCSBwv5SMPvto2Jk3ybINKUV9m4Pr296fyrBSYOr5fLiu2ewDCSjLABHW?=
- =?us-ascii?Q?sjlTOh0UGmvszIwmdHcocNpFu3fyIlAlxoBZNvIOEATpuFoXBIoGWCOi9lyB?=
- =?us-ascii?Q?hqLashMt6PXKQqbn73GSsOqOZYgmFKFG2KokqWKpZt5om+CTXHQxVqwZ6TAe?=
- =?us-ascii?Q?gAgfAMMxJof7Ldv0X13xz7NPm0rL/5gPA9eWqAbWBfDCNpAnVi73mUsONdIl?=
- =?us-ascii?Q?Wk2XTrDqk9noi1htqBBrntqPlUnO/a0zwqHGKHM3T9CI8972Xh+uNmoD2NUV?=
- =?us-ascii?Q?fkVWM5ls2aIXrtLRZxx7Hr5N7FBVpzs72jeajKyl0qlFNwoEozVy2E+/YIAI?=
- =?us-ascii?Q?AMc68Y8eYPZ+OnieEgT1nQhuB4Fyzinh4CXrSCLU5ZbOf5O0z6/U1yklPjND?=
- =?us-ascii?Q?BJwfLtXOlnt8iKxuvvzFHN2SxYKh+p+GklAEo+gPRe/NGQ20HZIW1yEMvOmd?=
- =?us-ascii?Q?AIDsAnaXEWsnwme4jFufDiyzowDKsY62OsvoBwg94qAaJx+/+wJTyem7kYsC?=
- =?us-ascii?Q?LB8qBzhh8iX9AFE+YTRLHS4UJTuLSp8rR25t6dSj/UaOSopckBqBRh4PR4xI?=
- =?us-ascii?Q?K3nQySOmexjskjAUjWsLovI2eTYNr5n98wf6QbUGhOE5pdAn19kyaAsk/4Bw?=
- =?us-ascii?Q?pBFyvNYryqxOZD0FcqKHyAFtNIMM1/ZyLeVhmGoYcJfRczCvG3MSm/R+XOfq?=
- =?us-ascii?Q?ZUZzkZVIrpmfNlNBC07utlwAFAB7DhCk3cACU+8s95TNgT1Ge4mISWLNtWuc?=
- =?us-ascii?Q?oxcttCM+nosfVTTAInRH7tKmK2JdkGAVTXZICuBGwRfAmXbBO+efO8ta6b89?=
- =?us-ascii?Q?madnF87h97nOtXiSKOQ47EE80S/uvdzx094h46JJUnL9qEUHLmaCMbgbR40j?=
- =?us-ascii?Q?KdLYuINFyXQAYlYxFUZxiPvhqQghs4QRSuf9TExNNYv9rp6cSoPjKPE2Fvly?=
- =?us-ascii?Q?Yybn6QwMsV1Eal9pLdta2VjYPZsenxGUWsJtneqMluHQ0776wdT1Xnl+HWzu?=
- =?us-ascii?Q?+cR6E2ySadsPk9qJzw0upsAYbe/oUaFIyls3SR6Ol1qV8aS3qtHkqPWHy5ZK?=
- =?us-ascii?Q?NSc=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0681b04d-d41a-403e-de59-08db8a08ab88
-X-MS-Exchange-CrossTenant-AuthSource: ME2P282MB2242.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2023 16:36:44.7409
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEYP282MB1704
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH] show-branch: fix --no-sparse
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
+ <xmqqo7k9fa5x.fsf@gitster.g> <3f590f19-11a2-36d7-2520-1d1625ca1a25@web.de>
+ <xmqqwmytxr59.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqwmytxr59.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:VKwyqSVF0f8Fx8+Od3CIZ9S/tT7CjEsC+OkLWBfJrqC2T3fX2o3
+ 3W842u91HVyLDxSALlUu8YoxABMh168mXzcXHgBsT5ZHcms6Loynjqu764jfAUSTmsAj62K
+ ngXV8NwLWdJxuaYcgoGzojLaGXUD3kOHW4FB3ccBWSMThwPT85aLtu5ud88emwFOINfUMyq
+ Uzio+sQVmzqMzaf4CLb2Q==
+UI-OutboundReport: notjunk:1;M01:P0:jjfuKo7mi1Q=;G0RhjNHIaN5tKMbwxSd7n1Trifo
+ ix9cjvDr6TeWfDStFH4v0Uu7ZII8jiZqBaR1RD+IcU1Vj/BKbcqk7IkRXO6GlUTRFPBDD3LrU
+ IVljOui+xOndDC07ui/YaHQWRW76Z4Ny6zmRnPWSPQh4N4A42mEOX1xTlswjc8qOz+CX7EnfX
+ Eny2xC7MEw/vjeH22xKn+V5VRL33Jlmiz618wIf022tDwMuJ0ubBA/cQhAjdzZkvcUMnnuXuo
+ VQSTKURAeKzWdM01PnB95WjMhV1r/2C9D23aQTlWko1DjbqOhFUWJJq3HTy1Ndhb2v7diUdIr
+ ygEuAvbFigYq5Ct3A8y5v0ihlHQzTXKlWaCrP53abFWk8evERnyPemeaLNbc+lWCzJNBUfY5O
+ Gb4rJUVJ1oG/mXyOrhUOkTpPiS3ZEwFDzrI0T5aTSC9LCTXY7qAIGiA9S0bnywh1xhyeVqX0z
+ 3lt+SfRXnQEZAi2YwTYZjO0ezd6qOc/abfWLiIcl8O7b6Z+C2O3xEqPWR51cFV52dk+MnxnP6
+ 2t/VOHX3kx3i6xVSzEyyOo+g+aCpGHY5bCGotP55azUzFBqfUkt0pMyOkeXCwpQLSvGbUERBA
+ PVJbdIW/6kgWt73Ihycxw64/FzebWvTMLfz1+AkNO9PP98dFs5XZBsg47eagBDW/0/EJVcFhf
+ rIwOP5DJ35hu/def2HJzjGBBGeUP7t9mgxzTP+aSSD6NacCe7hH+davLRztSlBWqM5uORzKGU
+ 88wGdJRHtVFllGBZ3ujP8VLrFDlUdNsPoD1ZzJDn8L5Zjrs+QcHich9ZXuFByUAzkhbiw5Yun
+ 7R36E7L+zRzrNHlTlng9Rl3B0mBMN7A8PtFYEUfByDt7hOVmwIChka6gfWJYjAGLvT+TiV5FD
+ kgrGHsTyuxHvBQtOyGsq0g//7FDPE2jcG7BpfxW5QSzHIo4kal9dl1EXcLKl8WblHtFE/afc1
+ ETFMwQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The capture group numberings $1, $2, and $3 used in the original script
-does not work well when the search term itself has capture group, and
-could be replicated with the simplest case of p(a|b), whose search
-result with regard to original text `XpaY' would yield `Xpaa' since
-capture group 3 now becomes the one in the search term, instead of
-some suffix. This patch fixes the problem with named capture group with
-capture names that hopefully would not conflict.
+Am 21.07.23 um 16:42 schrieb Junio C Hamano:
+>
+> Hmph, am I expected to compare these patches with what I sent a few
+> days ago and pick whichever are the better ones?  Can I delegate
+> that task to somebody else ;-)?
+>
+>         jc/am-parseopt-fix		<xmqqr0p5gjv3.fsf@gitster.g>
+>         jc/branch-parseopt-fix		<xmqqjzuxgjmi.fsf@gitster.g>
+>         jc/describe-parseopt-fix	<xmqqy1jcgbiv.fsf@gitster.g>
+>         jc/parse-options-reset		<xmqq1qh4c998.fsf@gitster.g>
+>         jc/parse-options-short-help	<xmqq5y6gg8fn.fsf@gitster.g>
+>         jc/parse-options-show-branch	<xmqqh6pzc15n.fsf@gitster.g>
+>         jc/transport-parseopt-fix	<xmqqedl4gag8.fsf@gitster.g>
 
-Signed-off-by: Qixing ksyx Xue <qixingxue@outlook.com>
----
- gitweb/gitweb.perl | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Aww, didn't see them.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e66eb3d9ba..e868122853 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6418,12 +6418,12 @@ sub git_search_files {
- 			print "<div class=\"binary\">Binary file</div>\n";
- 		} else {
- 			$ltext = untabify($ltext);
--			if ($ltext =~ m/^(.*)($search_regexp)(.*)$/i) {
--				$ltext = esc_html($1, -nbsp=>1);
-+			if ($ltext =~ m/^(?<__gitweb__prefix>.*)(?<__gitweb__matching_text>$search_regexp)(?<__gitweb__suffix>.*)$/i) {
-+				$ltext = esc_html($+{__gitweb__prefix}, -nbsp=>1);
- 				$ltext .= '<span class="match">';
--				$ltext .= esc_html($2, -nbsp=>1);
-+				$ltext .= esc_html($+{__gitweb__matching_text}, -nbsp=>1);
- 				$ltext .= '</span>';
--				$ltext .= esc_html($3, -nbsp=>1);
-+				$ltext .= esc_html($+{__gitweb__suffix}, -nbsp=>1);
- 			} else {
- 				$ltext = esc_html($ltext, -nbsp=>1);
- 			}
--- 
-2.30.0
+Most differences are cosmetic, but in git describe you use two
+OPT_SET_INT_F for the two OPT_SET_INT_Fs for --exact-match and
+=2D-no-exact-match.  The callback I chose is a little uglier on the
+inside, but prettier on the outside -- occupies a single line in short
+help.  Reminds me of the --[no-]keep-cr simplification in git am.
 
+And you don't seem to have touched pack-objects; please check those two
+patches of mine.
+
+Ren=C3=A9
