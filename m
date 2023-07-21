@@ -2,154 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07533EB64DC
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 06:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 834A5EB64DD
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 09:32:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229960AbjGUG6k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 02:58:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43462 "EHLO
+        id S230198AbjGUJcC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jul 2023 05:32:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbjGUG6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 02:58:38 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2CB7270B
-        for <git@vger.kernel.org>; Thu, 20 Jul 2023 23:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1689922714; x=1690527514; i=tboegi@web.de;
- bh=ocuIn4U+sT9190zQOUDAmF8kpPogKrEHppe+v5oHe3A=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=EzFxUllUJJQdLEOHDA4f4K4KEJ4suU9uuV9njrWUBK1GzqDv3fd5ahRN5+IUJmLOhCHhxNZ
- bF0GQwx1bGHhNv8N6+lOcZuS64AgCpDkowzYfPnMiXcNbeGv7K9DPr5n2+7vrYinYQhKcWI4W
- l9q7mU6ZSyATZWW3SLMf/WMUJvU3w4nlDN6BvBMPBGX5n0uZfgIcliWIsN/g3Tbk3YJTT//k+
- hg48JXtbi1xwuujD0EcLFrXFdh4QkAcl8zYS788Y3pHwo+wkHNUSvt/XFhBc9Zlg3Wz0ftpkZ
- qL5alAOPtk/RtNn+GxHT2CL48mNcBU+kZVbcLCR4NidK1GE8+jwQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MyNwk-1pzr1C0srk-00z0wc; Fri, 21
- Jul 2023 08:58:34 +0200
-Date:   Fri, 21 Jul 2023 08:58:33 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Radu Dan <radu@fullthrottle.ro>
-Cc:     git@vger.kernel.org
-Subject: Re: [bug] lots of changes including .gitignore, many rebases, can't
- legally share the repo
-Message-ID: <20230721065833.q2zshssu4clbzxq6@tb-raspi4>
-References: <CAH3jj7fS3wziLfnAfKz49W+aZVPvF8Nm9UVBMWyeHLvYov7A-w@mail.gmail.com>
+        with ESMTP id S229557AbjGUJcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 05:32:01 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB01730C0
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 02:31:58 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fc0aecf15bso15171805e9.1
+        for <git@vger.kernel.org>; Fri, 21 Jul 2023 02:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689931917; x=1690536717;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ozbpl9l9oXN1Met4rfzKueq9FxbpTf5LHUxWoneFR0g=;
+        b=jFCO1j2G6+ezJFsgy3zOA1aPnvobhNDDhMDHq6Qx6ntnFYX7/q5qqw55VAcygTPTaq
+         RFECbblq97bjBDCSCDQdEDVV8MpGoigkwdj6dDTqwbIaFM6lKNQ2ztiZFBLt5sv08AvE
+         j5CZEDCoo/wDj1jU6noTKr5ytK+TvgudJo31aYadz3nRkReFzINWClOotq/XvSour4xi
+         bjA9cGbj6GPAQVv089x8O157ZE0BBhMXM3CE4I2v4BKrlgrWDcnoqtxMc53vVMZs6doF
+         CCTqtPT91oiR7m2BAo6mFVnnIA0M3eYpo9L8J+fB3Kuba2pJXQ6fctHhGhLBNVh/Leh2
+         R2vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689931917; x=1690536717;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ozbpl9l9oXN1Met4rfzKueq9FxbpTf5LHUxWoneFR0g=;
+        b=ZFP7pKrV7FgRF1p0f8cP6gckqAS8vzh6UhC7nnA96smDVxlnZ9hQLmCNSFdOSuyiK2
+         PDDSgz/PDxfNw/LTY9WOEmmvs+EUg8Zav5C6KCJn+wU7gu9yyxvVKNWE2NPW2IQ5ej5F
+         yAb9ciYKHQuiFC4tq7+QD368Trg5BWSBd/HYOWxQdI7YgLTrsRT08sxKHrbmlG9zy3Cp
+         Gr+WMPnIqZggi0C7xkrgfLyimJ1y2IR7RBr4f9OUXQVZikdtj14F2+r3iK5PIUzndiC5
+         4UeGT85nY0oTyOg5uQSx1BSvPJULLU1NcHtY0qhJPj/Y9mlD0vUa+FlIdcDrEQkweJT8
+         LPMQ==
+X-Gm-Message-State: ABy/qLavDEPA3k+vcdxSVDM5eJHg2A3XsN/mZQORI3Q79d72oVQy2TKW
+        bk4CA53YiVfYkAnjv61r+Hs=
+X-Google-Smtp-Source: APBJJlENP+SgmukGtdmL3/XfKLAsTg/l5PjO6bq84Ks+D8u/ehbWDkVACiG65qFwCXgNBeDXXobrEg==
+X-Received: by 2002:a7b:c30c:0:b0:3fb:c9f4:1506 with SMTP id k12-20020a7bc30c000000b003fbc9f41506mr1020111wmj.1.1689931917163;
+        Fri, 21 Jul 2023 02:31:57 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.235.211])
+        by smtp.gmail.com with ESMTPSA id a5-20020adfdd05000000b0031433d8af0dsm3647292wrm.18.2023.07.21.02.31.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Jul 2023 02:31:56 -0700 (PDT)
+Message-ID: <c7b7f078-6561-5081-9c23-0cec65b71c97@gmail.com>
+Date:   Fri, 21 Jul 2023 10:31:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH3jj7fS3wziLfnAfKz49W+aZVPvF8Nm9UVBMWyeHLvYov7A-w@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:X/9uHH257R7QcHBJW3xSanOMUB0VvQrNjqNVFV3Lt/4XvKeq2/l
- u6V2GKV/4juVyWo0VcSrW3nd690bUv9J61B/A2BqO25eJIwiC6lWIASAKM2OejlDjDXj4JC
- GxNeAZ5uz1QmdsMuJTMbT/HC/0yEwJihzOkpspuymbCN3NmMmyNai7jare6DwcZJv+utZFx
- i4/Gt1kKggE0nY6kcjmpw==
-UI-OutboundReport: notjunk:1;M01:P0:fljPnSrvIHs=;fBQUpRqxDslLJb0Rw4fopZ/VUeU
- 1K5X0bJ4R+K9ISrCJ19+CAg8az8sXhXWJ3LiNCTMrQodjO3J5qSoNv18MC3U4cHoR1/8JGXB+
- vYLO4KmDkHjVp7zOLj6CCNA5z1eG7ZkcW/rn9qAjro5h6z5Us0WuSwLJJF6q3fdaB69qocNj2
- +8MuM3QqgPjbTvV1OcVGOzxgnxwVpLq2zPZN9xOpz3hVVdYLFHogBST8tkpunIb2vYthqAKyA
- wFwGPNbbWWaDQSQLUXndmyl8uS9yz8aswN/wIJRaDpdvNaMwkDVM/0g5BUJmThlqhUUmf8gV0
- 7LhnKrPv3JkNjmzrqokGvIUYB62xACtqkxsE9NDXiAqV/Cp9HwWOXbj/kWe5zeg/iHVw3ICsP
- Lu2zutECEzo6aDY/WzwzsTSAFrQTw5fr7jeZ+4rnxHahI+5NysbQLsh5PS+Pr979rkpb9QFij
- IInXEnko+PoN0CnnLNsNZqk79TimH3rEt1rAVdMcobrIr9pLjQosC43PzXl5CO140PagtqWMr
- JU9o2O52ey6tvf/3dBpCFCf3qCvx85K61a6lvqadnVLmX4P+ZjIQc77dxjGC5j840eZPVIFhz
- 57AGrapPrSaS0DwywHYIlxzCepBfNwvw6BgjGq+x1bRsXonVCoIr+/jDSo1yoYou2CPRriCRq
- YttCP1yJnQlUBWuq+Z7yFrkfScB4koNves21n/G0nQhJBmUHc9216+yfuQluToJ51iXnSC/BB
- XuXc7QG3Cw7ELPuHzY9537InKgSkoXX0JMYihN+3hGQqcoyJVn0cBsKD4TwuKm3T3euFafQvr
- ywDHcFDwpb6QnJLy8jpgF6f2WCwfPIP0/1+DmRzftD5rJ551U644t3ybSZ6Lpe5dx5KSPZx/O
- dBFYGI54WP+P3F9NpfyRxb0L/JyvOuvDZb2qrQ4z3qVnMAlro8DzZhR31gpcLg8XgTiwMvEoo
- KJtkOw==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer: finish parsing the todo list despite an
+ invalid first line
+Content-Language: en-US
+To:     Alex Henrie <alexhenrie24@gmail.com>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, alban.gruin@gmail.com, gitster@pobox.com
+References: <20230719144339.447852-1-alexhenrie24@gmail.com>
+ <395274b4-37a9-8c95-203f-94178c99772a@gmail.com>
+ <CAMMLpeSN_M1HW1D3HyuY+S+GwUrQ_4dP9qoSQ72hbQv3pwK5kg@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAMMLpeSN_M1HW1D3HyuY+S+GwUrQ_4dP9qoSQ72hbQv3pwK5kg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 21, 2023 at 12:52:30AM +0300, Radu Dan wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> > What did you do before the bug happened? (Steps to reproduce your issu=
-e)
->
-> % git stash
-> No local changes to save
->
-> % git commit -m wtf
-> On branch test
-> Your branch is up to date with 'origin/test'.
->
-> nothing to commit, working tree clean
->
-> % git checkout main
-> error: Your local changes to the following files would be overwritten
-> by checkout:
-> settings/local.py
-> Please commit your changes or stash them before you switch branches.
-> Aborting
+Hi Alex
 
-First of all: thanks for your feedback.
-However, the situation on your local disk is hard to debug from remote.
-Which could be frustrating on both sides, so to say.
+On 20/07/2023 23:37, Alex Henrie wrote:
+> On Thu, Jul 20, 2023 at 3:42 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> 
+>> On 19/07/2023 15:43, Alex Henrie wrote:
+>>> ddb81e5072 (rebase-interactive: use todo_list_write_to_file() in
+>>> edit_todo_list(), 2019-03-05) made edit_todo_list more efficient by
+>>> replacing transform_todo_file with todo_list_parse_insn_buffer.
+>>> Unfortunately, that innocuous change caused a regression because
+>>> todo_list_parse_insn_buffer would stop parsing after encountering an
+>>> invalid 'fixup' line. If the user accidentally made the first line a
+>>> 'fixup' and tried to recover from their mistake with `git rebase
+>>> --edit-todo`, all of the commands after the first would be lost.
+>>
+>> I found this description a little confusing as transform_todo_file()
+>> also called todo_list_parse_insn_buffer(). transform_todo_file() does
+>> not exist anymore but it looked like
+>>
+>> static int transform_todo_file(unsigned flags)
+>> {
+>>           const char *todo_file = rebase_path_todo();
+>>           struct todo_list todo_list = TODO_LIST_INIT;
+>>           int res;
+>>
+>>           if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>>                   return error_errno(_("could not read '%s'."), todo_file);
+>>
+>>           if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+>>                                           &todo_list)) {
+>>                   todo_list_release(&todo_list);
+>>                   return error(_("unusable todo list: '%s'"), todo_file);
+>>           }
+>>
+>>           res = todo_list_write_to_file(the_repository, &todo_list,
+>> todo_file,
+>>                                         NULL, NULL, -1, flags);
+>>           todo_list_release(&todo_list);
+>>
+>>           if (res)
+>>                   return error_errno(_("could not write '%s'."), todo_file);
+>>           return 0;
+>> }
+>>
+>> If it could not parse the todo list it did not try and write it to disc.
+>> After ddb81e5072 this changed as edit_todo_list() tries to shorten the
+>> OIDs in the todo list before it is edited even if it cannot be parsed.
+>> The fix below works around that by making sure we always try and parse
+>> the whole todo list even if the the first line is a fixup command. That
+>> is a worthwhile improvement because it means we notify the user of all
+>> the errors we find rather than just the first one and is in keeping with
+>> the way we handle other invalid lines. It does not however fix the root
+>> cause of this regression which is the change in behavior in
+>> edit_todo_list().
+>>
+>> After the user edits the todo file we do not try to transform the OIDs
+>> if it cannot be parsed or has missing commits. Therefore it still
+>> contains the shortened OIDs and editing hints and there is no need for
+>> edit_todo_list() to call write_todo_list() when "incorrect" is true.
+> 
+> When the user first runs `git rebase`, the commit template contains
+> the following message:
+> 
+> # However, if you remove everything, the rebase will be aborted.
+> 
+> When running `git rebase --edit-todo`, that message is replaced with:
+> 
+> # You are editing the todo file of an ongoing interactive rebase.
+> # To continue rebase after editing, run:
+> #     git rebase --continue
+> 
+> The second message is indeed more accurate after the rebase has
+> started: Deleting all of the lines in `git rebase --edit-todo` drops
+> all of the commits; it does not abort the rebase.
 
-So we may come further by asking some questions:
-- Is the repo you are talking about public ?
-Does settings/local.py exist is both branches, origin/test and main ?
-- What does
-  git ls-files --eol setings/local.py
-  give you ?
+Oh, good point
 
-- Is there a .gitignore, which is different on both branches ?
-- What does
-  git ls-files | grep -i local.py
-  give you ?
+> It would be nice to preserve as much of the user's original input as
+> possible, but that's not a project that I'm going to tackle.
 
+I think with your patch we do that anyway as other invalid lines are 
+already passed through verbatim.
 
+> As far as
+> a minimal fix for the regression, we can either leave the todo file
+> untouched and display inaccurate advice during `git rebase
+> --edit-todo`, or we can lose any long commit IDs that the user entered
+> and display equivalent short hex IDs instead. I would prefer the
+> latter.
 
->
-> > What did you expect to happen? (Expected behavior)
->
-> Switch to `main`
->
-> > What happened instead? (Actual behavior)
->
-> Still on current branch
->
-> > What's different between what you expected and what actually happened?
->
-> Better error message
+That's fine but the commit message should explain that decision and 
+clarify why ddb81e5072 caused the regression as 
+todo_list_parse_insn_buffer() is unchanged by that commit. The 
+regression is caused by ddb81e5072 trying to shorten the OIDs and add 
+the correct advice even when we cannot parse the todo list. That is a 
+worthwhile change that we want to keep but means we need to tweak 
+todo_list_parse_insn_buffer() in order to avoid truncating the todo list.
 
-The error message as such is probably the best information that Git has,
-the question is, which changes does Git see ?
+>>> +             test_i18ngrep "cannot .fixup. without a previous commit" \
+>>> +                             actual &&
+>>> +             test_i18ngrep "You can fix this with .git rebase --edit-todo.." \
+>>> +                             actual &&
+>>> +             grep -v "^#" .git/rebase-merge/git-rebase-todo >orig &&
+>>> +             test_must_fail git rebase --edit-todo &&
+>>> +             grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+>>> +             test_cmp orig actual
+>>
+>> We check that the uncommitted lines after running "git rebase
+>> --edit-todo" match the uncommitted lines after the initial edit. That's
+>> fine to detect if the second edit truncates the file but it will still
+>> pass if the initial edit starts truncating the todo list as well. As we
+>> expect that git should not change an incorrect todo list we do not need
+>> to filter out the lines beginning with "#".
+>>
+>> To ensure we detect a regression where the first edit truncates the todo
+>> list we could do something like
+>>
+>>          test_when_finished "git rebase --abort" &&
+>>          cat >todo <<-EOF &&
+>>          fixup $(git log -1 --format="%h %s" B)
+>>          pick $(git log -1 --format="%h %s" C)
+>>          EOF
+>>
+>>          (
+>>                  set_replace_editor todo &&
+>>                  test_must_fail git rebase -i A 2>actual
+>>          ) &&
+>>          test_i18ngrep "cannot .fixup. without a previous commit" actual &&
+>>          test_i18ngrep "You can fix this with .git rebase --edit-todo.." actual &&
+>>          # check initial edit has not truncated todo list
+>>          grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+>>          test_cmp todo actual &&
+>>          cat .git/rebase-merge/git-rebase-todo >expect &&
+>>          test_must_fail git rebase --edit-todo &&
+>>          # check the list is unchanged by --edit-todo
+>>          test_cmp expect .git/rebase-merge/git-rebase-todo
+> 
+> To me it seems pretty far-fetched that a future bug would cause the
+> _initial_ commit template to be missing anything.
 
-Another question :
-what does
-git add --renormalize .
-give you ? (Please do not omit the '.')
+Indeed but I'm talking about the initial todo list _after_ it has been 
+edited by the user, not the initial template. If we started trying to 
+lengthen the OIDs and remove the advice after the initial edit even when 
+the list cannot be parsed then we'd have exactly this problem.
 
+Best Wishes
 
+Phillip
 
->
-> > Anything else you want to add:
->
-> First bug in 10 years of usage, great work!
->
-> > Please review the rest of the bug report below.
-> > You can delete any lines you don't wish to share.
->
-> [System Info]
-> git version:
-> git version 2.39.2 (Apple Git-143)
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Darwin 22.5.0 Darwin Kernel Version 22.5.0: Thu Jun  8 22:22:22
-> PDT 2023; root:xnu-8796.121.3~7/RELEASE_X86_64 x86_64
-> compiler info: clang: 14.0.3 (clang-1403.0.22.14.1)
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): /bin/zsh
->
->
-> [Enabled Hooks]
+> But if you're
+> concerned about it, would you like to send a follow-up patch to revise
+> the test as you see fit?
+> 
+>> We could perhaps check the error message from "git rebase --edit-todo"
+>> as well.
+> 
+> That sounds like another good change for v2.
+> 
+> Thanks for the feedback,
+> 
+> -Alex
