@@ -2,104 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE30C001DE
-	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 04:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46CF5EB64DD
+	for <git@archiver.kernel.org>; Fri, 21 Jul 2023 05:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230390AbjGUElg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jul 2023 00:41:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46314 "EHLO
+        id S230037AbjGUFwt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jul 2023 01:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230324AbjGUElH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2023 00:41:07 -0400
-Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A410130C1
-        for <git@vger.kernel.org>; Thu, 20 Jul 2023 21:41:01 -0700 (PDT)
-Date:   Fri, 21 Jul 2023 04:40:56 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail; t=1689914460; x=1690173660;
-        bh=eGz2L0fx2rKREibkbt+UE52ZxLl+jlq2Xv7CWKxzTL8=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=Bb2SqtzLcJoe/U7Fp3CIf42+V1n3ATIQIF68c8cXYPHpddl72H0TTT8D67tOPa0bx
-         V4y7k6RS78mvwKvYSc2nxn4NWzyau1v3DdY3KSaloRoWXkRE6W97c+R7l9tFi/q16X
-         U0SKagaJT/Ak0HEC8Hi2hO9DwE9c4KxwvddMuuHbGq6k/mYA404H+J7oWiindnSZXW
-         bzA8ztYdOdbFOCQVG7REEcC7nHEu9b8Jx5VZIwKAqW+7iJOOB5EMR7PmepUs5Gu2Bm
-         DDuZ+Zap5SMrFWAjK5SJrJfIxjw4Pvm/lui818yOv9AWcoTrq0ZkHGMlaVdJC84k3X
-         TrYvxEooWdxXQ==
-To:     git@vger.kernel.org
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 3/3] t2400: rewrite regex to avoid unintentional PCRE
-Message-ID: <20230721044012.24360-4-jacobabel@nullpo.dev>
-In-Reply-To: <20230721044012.24360-1-jacobabel@nullpo.dev>
-References: <20230715025512.7574-1-jacobabel@nullpo.dev> <20230716033743.18200-1-jacobabel@nullpo.dev> <20230721044012.24360-1-jacobabel@nullpo.dev>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S229783AbjGUFwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2023 01:52:17 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7E6C3AB7
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 22:51:42 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 41be03b00d2f7-55b22f82ac8so1874225a12.1
+        for <git@vger.kernel.org>; Thu, 20 Jul 2023 22:51:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689918702; x=1690523502;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mb1axS95qsch9iWoedBdre/E9lSxP8nZD6puAqBqAtA=;
+        b=IPvIgPjnQh4Dq9rxVEUXhXU0b6I6QwwpeMOH46Od+mPPGHWjUPyQ/51ASMW1waad5T
+         CclFSkbZE1/71O3C8NwnDw2zRqGpwr5ULf+4/C8hddUbkpdUC/Z1n+U9U85HFK4XItrZ
+         YjEjHw+hg286M9YtnfFmUNYfauaTo0XD1Up5GjsidLFy5g1MyFzZRIRe4HEAZbSp2z8E
+         jFVoryxMHueCLcnJeIwt8mpF2TqsGB7ZzG6Gs2EBL7lNB5f2BL5T/n5bOq5VZzzHKcNE
+         SOLILlfdG70mvZhjotNdrmQHTRGYfI4oVEiZoQ3Wck5XMzqHmzCB8MTcEnDE4WibZVbd
+         P0gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689918702; x=1690523502;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Mb1axS95qsch9iWoedBdre/E9lSxP8nZD6puAqBqAtA=;
+        b=gYxAURsIJjQ8+2xgE5lbMLwUXHwdhuGMJiUeiZTDljwek2IdPsmWex+4WgGym65WYR
+         Viu7qe6KHYMgrXMdTLSdG1iisdSl60nxqdZ5xSydoe5bovEP8aicPxnHUg1ul3Lu5KOU
+         XRwi869pKg3Bdjg49TG7zb42jfsHZDw0nygzNejwO2xR8AtWWvFH6FnE6cvNvMGZCx/B
+         HxIo1oIdsS1R9OpvLUzk1XOcoWs+nZ3JczQ1/WEbGdYmq7ycAwunv2ERvKCzs0dGMT/G
+         rBsuT3Tgn3mvhr0PE6wNcLdKkQbqSAMM+89SVAZt+5dfcYbkijRJsaJDllTKJF2Mtl+h
+         pbHw==
+X-Gm-Message-State: ABy/qLafq4SFF993z7sn/fOiE/80volxiesP1IFaV4NyYVSLWIW9VdJJ
+        69m2jdz5FzBsmXOAu9hf1aWRsAUStdY=
+X-Google-Smtp-Source: APBJJlGItsxzS91oAu0BEqBFGynQKgGzM2ZOzKGfSCoETu04tP1izEeUOaRd14ap69NFXW/TgVTNBA==
+X-Received: by 2002:a17:90b:1d07:b0:263:3567:f99 with SMTP id on7-20020a17090b1d0700b0026335670f99mr1637694pjb.15.1689918701665;
+        Thu, 20 Jul 2023 22:51:41 -0700 (PDT)
+Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
+        by smtp.gmail.com with ESMTPSA id m4-20020a17090a7f8400b00265c742a262sm1803673pjl.4.2023.07.20.22.51.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jul 2023 22:51:41 -0700 (PDT)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, alban.gruin@gmail.com, gitster@pobox.com,
+        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH v2 0/1] sequencer: finish parsing the todo list despite an invalid first line
+Date:   Thu, 20 Jul 2023 23:38:56 -0600
+Message-ID: <20230721053906.14315-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230719144339.447852-1-alexhenrie24@gmail.com>
+References: <20230719144339.447852-1-alexhenrie24@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace all cases of `\s` with ` ` as it is not part of POSIX BRE or ERE
-and therefore not all versions of grep handle it without PCRE support.
+Changes from v1:
+- Use `grep` instead of `test_i18ngrep`
+- Check for an error message from --edit-todo
+- Move and rephrase the comment in the test
 
-For the same reason all cases of `\S` are replaced with `[^ ]`. It's not
-an exact replacement but it is close enough for this use case.
+Thanks to Junio and Phillip for your feedback.
 
-Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
----
- t/t2400-worktree-add.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Alex Henrie (1):
+  sequencer: finish parsing the todo list despite an invalid first line
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index e106540c6d..eafecdf7ce 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -417,9 +417,9 @@ test_wt_add_orphan_hint () {
- =09=09grep "hint: If you meant to create a worktree containing a new orpha=
-n branch" actual &&
- =09=09if [ $use_branch -eq 1 ]
- =09=09then
--=09=09=09grep -E "^hint:\s+git worktree add --orphan -b \S+ \S+\s*$" actua=
-l
-+=09=09=09grep -E "^hint:[ ]+git worktree add --orphan -b [^ ]+ [^ ]+$" act=
-ual
- =09=09else
--=09=09=09grep -E "^hint:\s+git worktree add --orphan \S+\s*$" actual
-+=09=09=09grep -E "^hint:[ ]+git worktree add --orphan [^ ]+$" actual
- =09=09fi
-=20
- =09'
-@@ -709,7 +709,7 @@ test_dwim_orphan () {
- =09local info_text=3D"No possible source branch, inferring '--orphan'" &&
- =09local fetch_error_text=3D"fatal: No local or remote refs exist despite =
-at least one remote" &&
- =09local orphan_hint=3D"hint: If you meant to create a worktree containing=
- a new orphan branch" &&
--=09local invalid_ref_regex=3D"^fatal: invalid reference:\s\+.*" &&
-+=09local invalid_ref_regex=3D"^fatal: invalid reference: .*" &&
- =09local bad_combo_regex=3D"^fatal: '[a-z-]\+' and '[a-z-]\+' cannot be us=
-ed together" &&
-=20
- =09local git_ns=3D"repo" &&
-@@ -998,8 +998,8 @@ test_dwim_orphan () {
- =09=09=09=09=09headpath=3D$(git $dashc_args rev-parse --path-format=3Dabso=
-lute --git-path HEAD) &&
- =09=09=09=09=09headcontents=3D$(cat "$headpath") &&
- =09=09=09=09=09grep "HEAD points to an invalid (or orphaned) reference" ac=
-tual &&
--=09=09=09=09=09grep "HEAD path:\s*.$headpath." actual &&
--=09=09=09=09=09grep "HEAD contents:\s*.$headcontents." actual &&
-+=09=09=09=09=09grep "HEAD path: .$headpath." actual &&
-+=09=09=09=09=09grep "HEAD contents: .$headcontents." actual &&
- =09=09=09=09=09grep "$orphan_hint" actual &&
- =09=09=09=09=09! grep "$info_text" actual
- =09=09=09=09fi &&
---=20
-2.39.3
+ sequencer.c                   |  2 +-
+ t/t3404-rebase-interactive.sh | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
+Range-diff against v1:
+1:  ceb53efb79 ! 1:  8005d81440 sequencer: finish parsing the todo list despite an invalid first line
+    @@ t/t3404-rebase-interactive.sh: test_expect_success 'static check of bad command'
+      '
+      
+     +test_expect_success 'the first command cannot be a fixup' '
+    -+	# When using `git rebase --edit-todo` to recover from this error, ensure
+    -+	# that none of the original todo list is lost
+     +	rebase_setup_and_clean fixup-first &&
+     +	(
+     +		set_fake_editor &&
+     +		test_must_fail env FAKE_LINES="fixup 1 2 3 4 5" \
+     +			       git rebase -i --root 2>actual &&
+    -+		test_i18ngrep "cannot .fixup. without a previous commit" \
+    -+				actual &&
+    -+		test_i18ngrep "You can fix this with .git rebase --edit-todo.." \
+    -+				actual &&
+    ++		grep "cannot .fixup. without a previous commit" actual &&
+    ++		grep "You can fix this with .git rebase --edit-todo.." actual &&
+     +		grep -v "^#" .git/rebase-merge/git-rebase-todo >orig &&
+     +		test_must_fail git rebase --edit-todo &&
+    ++		grep "cannot .fixup. without a previous commit" actual &&
+    ++		grep "You can fix this with .git rebase --edit-todo.." actual &&
+     +		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+    ++		# check that --edit-todo did not lose any of the todo list
+     +		test_cmp orig actual
+     +	)
+     +'
+-- 
+2.41.0
 
