@@ -2,67 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83401EB64DA
-	for <git@archiver.kernel.org>; Sat, 22 Jul 2023 12:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88345C0015E
+	for <git@archiver.kernel.org>; Sat, 22 Jul 2023 21:21:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjGVMeg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Jul 2023 08:34:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48374 "EHLO
+        id S229503AbjGVVVk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Jul 2023 17:21:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjGVMef (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jul 2023 08:34:35 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869BEE71
-        for <git@vger.kernel.org>; Sat, 22 Jul 2023 05:34:34 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3145fcecef6so692073f8f.0
-        for <git@vger.kernel.org>; Sat, 22 Jul 2023 05:34:34 -0700 (PDT)
+        with ESMTP id S229452AbjGVVVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jul 2023 17:21:39 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF5910D8
+        for <git@vger.kernel.org>; Sat, 22 Jul 2023 14:21:38 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-635e6f8bf77so21878806d6.0
+        for <git@vger.kernel.org>; Sat, 22 Jul 2023 14:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690029272; x=1690634072;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nWYUd/Hd7XKTL+VVhSAwbKfzXGn/M58IQcXpZ1AtopM=;
-        b=FRw0lXE5l79osOzurAXvFt6DApLfzuA71swobuzg5VwmN7RGhk3bIzAGpNepglGzcp
-         zbw6Wl35X2OckydBfODGIh6HMKKuZpVzlNfvgbGAqYeJCsDMoo4/4b5T+y8F37KkohrF
-         6ZexhMwu1dqWguIEOxXjK04haK3n7Guwa1NgX/JSTfKV0X/Wi8WmBBhbcRCR2l4zGnmz
-         BL/EwxHmD4Db1IK1ZceV/YyraWKvqpV3T1QMvs5GUt9m8jnIDEkLvREgue8ZJJ7WCh3G
-         6P+AvlJ8TFD6cCwQiuaA+f0bIl3WSex+lwdePObTG8pa0jlbVFrZIfvN8TCkrj0itdS8
-         4CeQ==
+        d=teknique-com.20221208.gappssmtp.com; s=20221208; t=1690060897; x=1690665697;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qC20GXqAbAFmV8aNCXKf/jTUOAXPlFeenGibyoGiZ2k=;
+        b=OrM2f4eAiC7EwTOVjDJcdozBMpiQZ2E21lBsdZTMv/BqUlKpgqfZkNAoYu5Ew8Op/y
+         6WvlylbD2gxpy/roOOarhnwBpqfCYqYQc10jqcGhbeIUbuyN7zku5T9O6sH+VAe2jwOU
+         ttrH+XjliLgtKSYKMJzSUAWTuzbdDIp8VQPKja93JkB/uDUVu6d6vFNtr8/BqNuhn2ln
+         v3BhCo0Co+UE7ojMxJQnUoxLjRxfLXRx+wDgOZIluayTC8XzKCvK3S5L8w64JPE/a6EV
+         v1bTMqL5izOtdwXUr5+QMOQMc/VOxG3yBW4oNpsyOn93kT/7SrbJyGDbl8BGDJ//R72r
+         XIew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690029272; x=1690634072;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nWYUd/Hd7XKTL+VVhSAwbKfzXGn/M58IQcXpZ1AtopM=;
-        b=V+N8AJYyA37sERzqzB8aY7Ia+dFGyUBcukTnyvlyf0iOR+PH4QewItBpuXXgiOMLeM
-         MCzrHnF5zAOhj9BUyVRSYoptEtn4ScnpEavnCxoYNgow4Rob/9hpD/Loecl2BqG5UM9s
-         EJQr3FdQomQbNylN7cXVwHj+hAJK21eoq+8umgqTFg4ZcVodGfaAkDb+btmW001B3zbz
-         bxx35IIEXoqeVGRq/pnFeRWjBwypc+Qiw5ibgB4dM0k4Obax/8QAhGtxYButq+KzD/b6
-         TEkfGBk1sUC+yDQQiqmfHg6FDqi3vuLWBtPKiKEUsGC4m9GrQheW1NjNf1VpzhpuxKQo
-         rWHw==
-X-Gm-Message-State: ABy/qLZuMqnemqi2Vrhwpr/kvJNm5JXeV4LqG7jfPHW2fwWnzy2qEoID
-        KpLyMdmzdsxAJyM9t4eVbDYsyo38SRH5AuFte/qSPEunUMg=
-X-Google-Smtp-Source: APBJJlEzS1IS2G4G3BmrrlNorF+u2Ff1LM5ZB1HppyO2l4wcE+ZF2PsKZ19lWpAPi+zpumaPx90aAjy1wc79dnYAQlM=
-X-Received: by 2002:adf:df84:0:b0:313:efbd:bf6 with SMTP id
- z4-20020adfdf84000000b00313efbd0bf6mr3706515wrl.2.1690029272534; Sat, 22 Jul
- 2023 05:34:32 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690060897; x=1690665697;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qC20GXqAbAFmV8aNCXKf/jTUOAXPlFeenGibyoGiZ2k=;
+        b=EyQ6UEPXucpL+WA0/Ow/xfGXlZ7tQmjBoU9oO/U8vbs5qqNEMo9dvBX2aE4ySpnARb
+         HO8IORFfg9L/YOynbe/5/8RBBr+Gw6GySlVBL6/PA/5EyBYKOsAeAsSEpZbZ6YZb87yP
+         I5TNXwXR2txYUzOb+0fyeODoh/fBQb6V09zckEh8Y6nlKnRW+DFfXOF50qa1ZRgmutE+
+         fX9mq++4WtfBEKN9KiwJzDdylg4eNhNR+9NPWQXXp48EBT88p+OtyhdOfSe8lyG6JdAg
+         Wn7Lg2e7Lst4XbMjhOmA0UounIOMOo2rZf4aGinsIzQ+AIBnV0sOkPv5cmc81tDNXnYf
+         OTOQ==
+X-Gm-Message-State: ABy/qLbUDvJ7v8fOrg4Yhj5lGzulD/Md0vqMmBtWcPUzEdIT74cBEITL
+        LVdeqlnJZLkVhpIUL4Z6a1L7EjWPBddNcunsyEK60g==
+X-Google-Smtp-Source: APBJJlECZvCllIxsCYlDoA/F23DDhMaW3jxmCjBFg7WFZUi59dEq/E6pcavt8fYGKSfGLRNWPSgUe4Ka1hg9Xh8EzEU=
+X-Received: by 2002:a05:6214:4289:b0:626:b17:3b97 with SMTP id
+ og9-20020a056214428900b006260b173b97mr4000233qvb.65.1690060897511; Sat, 22
+ Jul 2023 14:21:37 -0700 (PDT)
 MIME-Version: 1.0
-From:   Sumit Kumar Verma <sumitkumarvrm559@gmail.com>
-Date:   Sat, 22 Jul 2023 18:04:21 +0530
-Message-ID: <CADYe-LV_SGCTGsQnKKZQG2Thb974fvGgAJTcTTmDA1fmk04gTA@mail.gmail.com>
-Subject: Bug : Repeatedly asked for choosing github account
-To:     git@vger.kernel.org
+References: <CA+EiEZ+PBLEtQ1bD_TnsstT0jNehAs2CGgYXebEE4aweK=kmgg@mail.gmail.com>
+ <20230717-upscale-repacking-a56622@meerkat>
+In-Reply-To: <20230717-upscale-repacking-a56622@meerkat>
+From:   Tom Isaacson <tom.isaacson@teknique.com>
+Date:   Sun, 23 Jul 2023 09:21:28 +1200
+Message-ID: <CA+EiEZLKkaX78y74xWQMioSyvwFgD7m9K-Pad14dbZSXKGuFNQ@mail.gmail.com>
+Subject: Re: Parsing git send-email
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git team,
+We use Yocto at work and try to help out with the project. I read this
+and the linked articles and one piece in
+https://www.linux.com/audience/maintainer-confidential-opportunities-and-ch=
+allenges-of-the-ubiquitous-but-under-resourced-yocto-project/
+caught my eye:
+> One question that comes up a lot is the project=E2=80=99s development mod=
+el. We=E2=80=99re an =E2=80=9Cold school=E2=80=9D patch on a mailing list, =
+similar to the kernel. New developers complain that we should have GitHub w=
+orkflows so they can make point-and-click patch submissions. I have made su=
+bmissions to other projects that way, and I can see the attraction of it. E=
+qually, it does depend a lot on your review requirements. We want many peop=
+le to see our patches, not just one person, and we greatly benefit from tha=
+t comprehensive peer review.
 
-I have installed git and connected it with github account. But
-whenever I try to take pull or fetch the repository, I am repeatedly
-asked for choosing github account. This is affecting my productivity.
-I tried reinstalling git and vscode but its not working.
-OS : Windows 22H2 build 19045.3208
-git version 2.41.0.windows.3
-VS code: 1.80.1
+It seemed like someone must have solved this problem already so I
+looked around and found https://gitgitgadget.github.io/, which is what
+this mailing list uses. Yocto already uses
+https://github.com/getpatchwork/patchwork to monitor patches sent to
+the mailing list. I was wondering if there are any other similar
+projects I haven't heard of.
 
-Please help.
+
+On Tue, Jul 18, 2023 at 2:05=E2=80=AFAM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Sun, Jul 16, 2023 at 11:22:20AM +1200, Tom Isaacson wrote:
+> > I'm trying to find a way of parsing emails sent by "git send-email".
+> > Does anyone know of any existing solutions?
+>
+> Define parsing?
+>
+> If you just want patch/description/header information, the easiest is to =
+use
+> git-mailinfo. If you want to do something more than that, then you need t=
+o
+> give additional information regarding what your end-goal is.
+>
+> -K
+
+
+
+--=20
+Tom Isaacson
