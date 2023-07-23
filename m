@@ -2,461 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2764AC001DF
-	for <git@archiver.kernel.org>; Sun, 23 Jul 2023 16:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2912DC001B0
+	for <git@archiver.kernel.org>; Sun, 23 Jul 2023 20:52:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229828AbjGWQ2n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Jul 2023 12:28:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49944 "EHLO
+        id S229711AbjGWUwu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Jul 2023 16:52:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230119AbjGWQ2k (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jul 2023 12:28:40 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E1419AB
-        for <git@vger.kernel.org>; Sun, 23 Jul 2023 09:28:04 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1bb84194bf3so5683125ad.3
-        for <git@vger.kernel.org>; Sun, 23 Jul 2023 09:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690129670; x=1690734470;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r3E+uPQlt5WXLywX6gHCcy5eVQoFrKq3LnVAu2txUzA=;
-        b=nKpwtTtwSQ4YuBmR2BxUCoUew+KuYZzZZVG9O2c+Lcw99hFK7+JIgf4Dgdvi0c1fQI
-         XVkU6M0pqEUWjHLw8x/ypza1I8N0A4c33jhfew23az5UGyJQSimRB7Xn3lJpK6biaatf
-         2r+ypzFlzNqpCKjZwd4GH6SF4nfoG/dX2IiUD6/GFTsvsE/qRzBipcNantUdzX7l5X30
-         Jzeo5Z/dHjYPTqdj/quOj+k5jDiBvxMBToCZZThatwsI+WP3dNSmeo/uuVwnwmnIxKQQ
-         6qNHoDzDBg52vMFscYSxzhvDJUOgwVwt46hm+T9/Q7fUVn7ihcLWs9lcIXUPKUb61caU
-         QCOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690129670; x=1690734470;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r3E+uPQlt5WXLywX6gHCcy5eVQoFrKq3LnVAu2txUzA=;
-        b=JB2NhNZ+DEwXmwvMxMqBq+h+b6KwmHmiJnL8ZPoT0rp6LGysPX6bec8zVBbBPolFGe
-         iUhWUmIGTqxZdEDkIBCD5BjyWW7FBgv/GMYVkG6KS/fvm9uBCGUnplG5YtHqcwUZQfuC
-         K3RaaEnHvkg1mxxLy/2HZNA3dTgVTRQJSYcO5txlFl48ANTPKsAHDyecxq/HMBs3/MHD
-         SGGH41qykB7Yysffds2ucWMsZ0L9neUvPdcw1wqrtacM9io7bo5KjNMGPEQiXYteYW/k
-         Sp1uo8h5fAeFWpmlLdNHkBRzWvNGOQcBkMyWu5QYEO3ZbZGnmKSKcJ/P0m0Bi1bcTuRv
-         HTfg==
-X-Gm-Message-State: ABy/qLaxd0bYBgQX63K9ERv8EOZdbcHLjXU8eNjxve53MX86jiIageQ3
-        uTcAA7VFUWWnABql1q3xa2IYfopMWX8MI3Fp
-X-Google-Smtp-Source: APBJJlEALr11BzHw5zMkOWE6MT2JBqs8Gsm0ZOLG+VXEeKZymKV9iiXehSHkQ1LUzdhsApod46h6XQ==
-X-Received: by 2002:a17:902:b708:b0:1bb:a125:f831 with SMTP id d8-20020a170902b70800b001bba125f831mr1134897pls.58.1690129669813;
-        Sun, 23 Jul 2023 09:27:49 -0700 (PDT)
-Received: from fivlite-virtual-machine.localdomain ([49.37.157.197])
-        by smtp.gmail.com with ESMTPSA id ju4-20020a170903428400b001b392bf9192sm7121847plb.145.2023.07.23.09.27.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jul 2023 09:27:49 -0700 (PDT)
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Siddharth Singh <siddhartth@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Kousik Sanagavarapu <five231003@gmail.com>
-Subject: [PATCH v4 2/2] ref-filter: add new "describe" atom
-Date:   Sun, 23 Jul 2023 21:49:59 +0530
-Message-ID: <20230723162717.68123-3-five231003@gmail.com>
-X-Mailer: git-send-email 2.41.0.396.g9ab76b0018
-In-Reply-To: <20230723162717.68123-1-five231003@gmail.com>
-References: <20230719162424.70781-1-five231003@gmail.com>
- <20230723162717.68123-1-five231003@gmail.com>
+        with ESMTP id S229477AbjGWUwt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jul 2023 16:52:49 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7794B2
+        for <git@vger.kernel.org>; Sun, 23 Jul 2023 13:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1690145562; x=1690750362; i=tboegi@web.de;
+ bh=5TXgm2NB36pL667RV1E1QqgtIEdwupwXssQnEyPF4KQ=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=LbBtVQVO6UNwXsN5WS9Jj1dv0och7iAurqrQ4X9T2h72edzRYrfJPv5fXvLPhEMAeHKcAUu
+ v0CQrEox4E/yHHTSu0NEHHqV0/VPF/Qx2Ndi3CBnKGn/hVkAYrw7e+SUeqVOCeDkls/URf5ct
+ 6Fn8F3byUgqXqPN92eZR5wwzf2gnyA7AFgzBz+S+JmK1CrlpbMvQyeIDRUTJtZtCgfsl7f2mC
+ 1Da7idRjTDWZ/AJWDJ0xBIRlFxUeAXYebzdyT6/LnBh/EQU1rgzwt78ftzUuWiXjuVraUbiM5
+ Itm5UsbW0vIYt2/OZbFG89rW5qhRQg2oz8ryyFyEP16Q0d12GBWg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N4N9I-1pwhKu1G2o-011kv9; Sun, 23
+ Jul 2023 22:52:42 +0200
+Date:   Sun, 23 Jul 2023 22:52:39 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Till Friebe <friebetill@gmail.com>, git@vger.kernel.org
+Subject: Re: Lost files after git stash && git stash pop
+Message-ID: <20230723205239.5snlakmd5ocy67q2@tb-raspi4>
+References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
+ <20230722214433.3xfoebf7my5wsihf@tb-raspi4>
+ <a373a659-a232-77cb-a177-a517b1f228f4@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <a373a659-a232-77cb-a177-a517b1f228f4@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:tKU1Ob0gS00Q0SCbixEKEuMBdcUs82YHTS5d0ANiDNuymWacrTm
+ BuJ8+vVaJDW0TUepWhU0UES21S3+yfpV1MQvfVsPEOI8hsNRR5XHgPAVsW/15sDZ8cGrXLT
+ 1X4TELNSeR+PUu5MxPn2UKRc7AZrwiAqEbyqL9biwLW5RBQ/TCNSQqd1efhSzLRGqBk1gJx
+ GOCWTEtgmuINx/IdwB5RA==
+UI-OutboundReport: notjunk:1;M01:P0:3mwoOxfb4us=;WUPrLLUYCe/tap9vQo1rXU6KJwC
+ L2qAk7Y3oHNjGU02H19rJtqqSKXQJXrlF0LbpOs4xPhy40A+qxZzvNodhem474SJle31i5DWj
+ qBswOOM2Ilp0sLKmr5Sffpet7hXEgGNF8r3sDtp4bc8Wj6yITbOnZ2KoI7btVMHljmqHHul8B
+ KiUlInKzuZHcTRmvmNtu+PqAem48kRay3Vu9fgL2HEf7FcvjEWJ7OJZ7cwEq+BlnEWMzJ8G28
+ /E/hvB5RsbYwbg7Vw6p4JJgpfgam3G2auo+rbr2mZ0soLU7+HdaONm0TrAwpE6gbMWpIA5WpU
+ A38V7G92DRMaq3cDjmmEgkq75m/V5J+pgjlfVk8ZRDOX0R1xvjX+7McGaaRbs/x56NOw5ypZj
+ nhIgP+UpAe2tdc4CepY/fK4yY4EDg0TeoX/uqyO8zpQ8gltlmkxkfvhulj16V7h7rrO6hkajB
+ +AC0bGPaujiNG7aqUF7oSkMSNhHiTDlrXMam9vbS6eP1cnjMm4nIRV/cWLqiDbQBCtq5TLE6v
+ pYsbOsCZSzN9bXKDFVlV0Kn0JW05p7h4yd/Dx0CPmLkPTR5NNjxUwlvmFZ+lInXEZINY1zuJT
+ 2rkCBoOJi2OOkOJnc2rY6g4MFLLVn0Ywx7Yl4WBvJD/usx7ecnL4mKRMFnQNKM4vcTBv6mmN9
+ ubie6u2fC/8TPMqbkXiJVYEmK2dNdVxkwi+2mnsEjOCL2oTLUm1T1e6oQ2++bSD3YM3nB1mnQ
+ UjxKVIwbl66ilNUJIpfswCowsjyqTQ2ot0nFXaLDzvWVUAV5ZVGFVADmEs4XRzmZyTJ3PK/7N
+ g1e3gde3g2Yrc7RfBRbiSTyWcNa5VQi1alrBIuT4WA3fS/VTbP2r639QNQJJX6d+AIgzmWDqV
+ 0h4UQ+NU5F3XGG/Oysr+n4KRsR9Y+RfSFpy7tQWfAl3AeLldYb1831vR9LjQHMvwC6x/dNT0m
+ JGZFMBnD235QDDQOKoeGCCKu1Po=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duplicate the logic of %(describe) and friends from pretty to
-ref-filter. In the future, this change helps in unifying both the
-formats as ref-filter will be able to do everything that pretty is doing
-and we can have a single interface.
+On Sun, Jul 23, 2023 at 11:01:29AM +0100, Phillip Wood wrote:
+> On 22/07/2023 22:44, Torsten B=F6gershausen wrote:
+> > On Fri, Jul 21, 2023 at 07:31:53PM +0200, Till Friebe wrote:
+> > > Thank you for filling out a Git bug report!
+> > > Please answer the following questions to help us understand your iss=
+ue.
+> > >
+> > > What did you do before the bug happened? (Steps to reproduce your is=
+sue)
+> > > ```
+> > > git init
+> > > mkdir README
+> > > touch README/README
+> > > git add .
+> > > git commit -m "Init project"
+> > > echo "Test" > README/README
+> > > mv README/README README2
+> > > rmdir README
+> > > mv README2 README
+> > > git stash
+> > > git stash pop
+> > > ```
+> > >
+> > > What did you expect to happen? (Expected behavior)
+> > > I expected that after the `git stash pop` the README file would be b=
+ack.
+> > >
+> > > What happened instead? (Actual behavior)
+> > > This README with "Test" file was deleted and I lost 5 hours of work.
+> >
+> > That is always sad to hear, when work is lost.
+>
+> Indeed it is. Thanks Till for providing an easy reproducer.
+>
+> > However, I personally wonder if this is a bug or not.
+>
+> I think whenever git overwrites an untracked file without the user passi=
+ng
+> some option indicating that they want to do so it is a bug.
 
-The new atom "describe" and its friends are equivalent to the existing
-pretty formats with the same name.
+OK, agreed after reading the next sentence.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
----
- Documentation/git-for-each-ref.txt |  23 +++++
- ref-filter.c                       | 125 ++++++++++++++++++++++++++
- t/t6300-for-each-ref.sh            | 138 +++++++++++++++++++++++++++++
- 3 files changed, 286 insertions(+)
+> For example "git
+> checkout" refuses to overwrite untracked files by default. Sadly this se=
+ems
+> to be a known bug in do_push_stash() where we are using "git reset --har=
+d"
+> to remove the stashed changes from the working copy. This was documented=
+ in
+> 94b7f1563a (Comment important codepaths regarding nuking untracked
+> files/dirs, 2021-09-27). The stash implementation does a lot of necessar=
+y
+> forking of subprocesses, in this case I think it would be better to call
+> unpack_trees() directly with UNPACK_RESET_PROTECT_UNTRACKED.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index d9588767a9..11b2bc3121 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -264,6 +264,29 @@ ahead-behind:<committish>::
- 	commits ahead and behind, respectively, when comparing the output
- 	ref to the `<committish>` specified in the format.
- 
-+describe[:options]::
-+	A human-readable name, like linkgit:git-describe[1];
-+	empty string for undescribable commits. The `describe` string may
-+	be followed by a colon and one or more comma-separated options.
-++
-+--
-+tags=<bool-value>;;
-+	Instead of only considering annotated tags, consider
-+	lightweight tags as well; see the corresponding option in
-+	linkgit:git-describe[1] for details.
-+abbrev=<number>;;
-+	Use at least <number> hexadecimal digits; see the corresponding
-+	option in linkgit:git-describe[1] for details.
-+match=<pattern>;;
-+	Only consider tags matching the given `glob(7)` pattern,
-+	excluding the "refs/tags/" prefix; see the corresponding option
-+	in linkgit:git-describe[1] for details.
-+exclude=<pattern>;;
-+	Do not consider tags matching the given `glob(7)` pattern,
-+	excluding the "refs/tags/" prefix; see the corresponding option
-+	in linkgit:git-describe[1] for details.
-+--
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/ref-filter.c b/ref-filter.c
-index 8d5f85e0a7..df00f1628c 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -5,6 +5,7 @@
- #include "gpg-interface.h"
- #include "hex.h"
- #include "parse-options.h"
-+#include "run-command.h"
- #include "refs.h"
- #include "wildmatch.h"
- #include "object-name.h"
-@@ -146,6 +147,7 @@ enum atom_type {
- 	ATOM_TAGGERDATE,
- 	ATOM_CREATOR,
- 	ATOM_CREATORDATE,
-+	ATOM_DESCRIBE,
- 	ATOM_SUBJECT,
- 	ATOM_BODY,
- 	ATOM_TRAILERS,
-@@ -220,6 +222,7 @@ static struct used_atom {
- 			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
- 			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL } option;
- 		} signature;
-+		const char **describe_args;
- 		struct refname_atom refname;
- 		char *head;
- 	} u;
-@@ -600,6 +603,87 @@ static int contents_atom_parser(struct ref_format *format, struct used_atom *ato
- 	return 0;
- }
- 
-+static int describe_atom_option_parser(struct strvec *args, const char **arg,
-+				       struct strbuf *err)
-+{
-+	const char *argval;
-+	size_t arglen = 0;
-+	int optval = 0;
-+
-+	if (match_atom_bool_arg(*arg, "tags", arg, &optval)) {
-+		if (!optval)
-+			strvec_push(args, "--no-tags");
-+		else
-+			strvec_push(args, "--tags");
-+		return 1;
-+	}
-+
-+	if (match_atom_arg_value(*arg, "abbrev", arg, &argval, &arglen)) {
-+		char *endptr;
-+
-+		if (!arglen)
-+			return strbuf_addf_ret(err, -1,
-+					       _("argument expected for %s"),
-+					       "describe:abbrev");
-+		if (strtol(argval, &endptr, 10) < 0)
-+			return strbuf_addf_ret(err, -1,
-+					       _("positive value expected %s=%s"),
-+					       "describe:abbrev", argval);
-+		if (endptr - argval != arglen)
-+			return strbuf_addf_ret(err, -1,
-+					       _("cannot fully parse %s=%s"),
-+					       "describe:abbrev", argval);
-+
-+		strvec_pushf(args, "--abbrev=%.*s", (int)arglen, argval);
-+		return 1;
-+	}
-+
-+	if (match_atom_arg_value(*arg, "match", arg, &argval, &arglen)) {
-+		if (!arglen)
-+			return strbuf_addf_ret(err, -1,
-+					       _("value expected %s="),
-+					       "describe:match");
-+
-+		strvec_pushf(args, "--match=%.*s", (int)arglen, argval);
-+		return 1;
-+	}
-+
-+	if (match_atom_arg_value(*arg, "exclude", arg, &argval, &arglen)) {
-+		if (!arglen)
-+			return strbuf_addf_ret(err, -1,
-+					       _("value expected %s="),
-+					       "describe:exclude");
-+
-+		strvec_pushf(args, "--exclude=%.*s", (int)arglen, argval);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int describe_atom_parser(struct ref_format *format UNUSED,
-+				struct used_atom *atom,
-+				const char *arg, struct strbuf *err)
-+{
-+	struct strvec args = STRVEC_INIT;
-+
-+	for (;;) {
-+		int found = 0;
-+		const char *bad_arg = arg;
-+
-+		if (!arg || !*arg)
-+			break;
-+
-+		found = describe_atom_option_parser(&args, &arg, err);
-+		if (found < 0)
-+			return found;
-+		if (!found)
-+			return err_bad_arg(err, "describe", bad_arg);
-+	}
-+	atom->u.describe_args = strvec_detach(&args);
-+	return 0;
-+}
-+
- static int raw_atom_parser(struct ref_format *format UNUSED,
- 			   struct used_atom *atom,
- 			   const char *arg, struct strbuf *err)
-@@ -802,6 +886,7 @@ static struct {
- 	[ATOM_TAGGERDATE] = { "taggerdate", SOURCE_OBJ, FIELD_TIME },
- 	[ATOM_CREATOR] = { "creator", SOURCE_OBJ },
- 	[ATOM_CREATORDATE] = { "creatordate", SOURCE_OBJ, FIELD_TIME },
-+	[ATOM_DESCRIBE] = { "describe", SOURCE_OBJ, FIELD_STR, describe_atom_parser },
- 	[ATOM_SUBJECT] = { "subject", SOURCE_OBJ, FIELD_STR, subject_atom_parser },
- 	[ATOM_BODY] = { "body", SOURCE_OBJ, FIELD_STR, body_atom_parser },
- 	[ATOM_TRAILERS] = { "trailers", SOURCE_OBJ, FIELD_STR, trailers_atom_parser },
-@@ -1708,6 +1793,44 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
- 	}
- }
- 
-+static void grab_describe_values(struct atom_value *val, int deref,
-+				 struct object *obj)
-+{
-+	struct commit *commit = (struct commit *)obj;
-+	int i;
-+
-+	for (i = 0; i < used_atom_cnt; i++) {
-+		struct used_atom *atom = &used_atom[i];
-+		enum atom_type type = atom->atom_type;
-+		const char *name = atom->name;
-+		struct atom_value *v = &val[i];
-+
-+		struct child_process cmd = CHILD_PROCESS_INIT;
-+		struct strbuf out = STRBUF_INIT;
-+		struct strbuf err = STRBUF_INIT;
-+
-+		if (type != ATOM_DESCRIBE)
-+			continue;
-+
-+		if (!!deref != (*name == '*'))
-+			continue;
-+
-+		cmd.git_cmd = 1;
-+		strvec_push(&cmd.args, "describe");
-+		strvec_pushv(&cmd.args, atom->u.describe_args);
-+		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
-+		if (pipe_command(&cmd, NULL, 0, &out, 0, &err, 0) < 0) {
-+			error(_("failed to run 'describe'"));
-+			v->s = xstrdup("");
-+			continue;
-+		}
-+		strbuf_rtrim(&out);
-+		v->s = strbuf_detach(&out, NULL);
-+
-+		strbuf_release(&err);
-+	}
-+}
-+
- /* See grab_values */
- static void grab_sub_body_contents(struct atom_value *val, int deref, struct expand_data *data)
- {
-@@ -1817,6 +1940,7 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
- 		grab_tag_values(val, deref, obj);
- 		grab_sub_body_contents(val, deref, data);
- 		grab_person("tagger", val, deref, buf);
-+		grab_describe_values(val, deref, obj);
- 		break;
- 	case OBJ_COMMIT:
- 		grab_commit_values(val, deref, obj);
-@@ -1824,6 +1948,7 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
- 		grab_person("author", val, deref, buf);
- 		grab_person("committer", val, deref, buf);
- 		grab_signature(val, deref, obj);
-+		grab_describe_values(val, deref, obj);
- 		break;
- 	case OBJ_TREE:
- 		/* grab_tree_values(val, deref, obj, buf, sz); */
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 910bf1ea94..7116e008f4 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -597,6 +597,144 @@ test_expect_success 'color.ui=always does not override tty check' '
- 	test_cmp expected.bare actual
- '
- 
-+test_expect_success 'setup for describe atom tests' '
-+	git init -b master describe-repo &&
-+	(
-+		cd describe-repo &&
-+
-+		test_commit --no-tag one &&
-+		git tag tagone &&
-+
-+		test_commit --no-tag two &&
-+		git tag -a -m "tag two" tagtwo
-+	)
-+'
-+
-+test_expect_success 'describe atom vs git describe' '
-+	(
-+		cd describe-repo &&
-+
-+		git for-each-ref --format="%(objectname)" \
-+			refs/tags/ >obj &&
-+		while read hash
-+		do
-+			if desc=$(git describe $hash)
-+			then
-+				: >expect-contains-good
-+			else
-+				: >expect-contains-bad
-+			fi &&
-+			echo "$hash $desc" || return 1
-+		done <obj >expect &&
-+		test_path_exists expect-contains-good &&
-+		test_path_exists expect-contains-bad &&
-+
-+		git for-each-ref --format="%(objectname) %(describe)" \
-+			refs/tags/ >actual 2>err &&
-+		test_cmp expect actual &&
-+		test_must_be_empty err
-+	)
-+'
-+
-+test_expect_success 'describe:tags vs describe --tags' '
-+	(
-+		cd describe-repo &&
-+		git describe --tags >expect &&
-+		git for-each-ref --format="%(describe:tags)" \
-+				refs/heads/master >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'describe:abbrev=... vs describe --abbrev=...' '
-+	(
-+		cd describe-repo &&
-+
-+		# Case 1: We have commits between HEAD and the most
-+		#	  recent tag reachable from it
-+		test_commit --no-tag file &&
-+		git describe --abbrev=14 >expect &&
-+		git for-each-ref --format="%(describe:abbrev=14)" \
-+			refs/heads/master >actual &&
-+		test_cmp expect actual &&
-+
-+		# Make sure the hash used is atleast 14 digits long
-+		sed -e "s/^.*-g\([0-9a-f]*\)$/\1/" <actual >hexpart &&
-+		test 15 -le $(wc -c <hexpart) &&
-+
-+		# Case 2: We have a tag at HEAD, describe directly gives
-+		#	  the name of the tag
-+		git tag -a -m tagged tagname &&
-+		git describe --abbrev=14 >expect &&
-+		git for-each-ref --format="%(describe:abbrev=14)" \
-+			refs/heads/master >actual &&
-+		test_cmp expect actual &&
-+		test tagname = $(cat actual)
-+	)
-+'
-+
-+test_expect_success 'describe:match=... vs describe --match ...' '
-+	(
-+		cd describe-repo &&
-+		git tag -a -m "tag foo" tag-foo &&
-+		git describe --match "*-foo" >expect &&
-+		git for-each-ref --format="%(describe:match="*-foo")" \
-+			refs/heads/master >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'describe:exclude:... vs describe --exclude ...' '
-+	(
-+		cd describe-repo &&
-+		git tag -a -m "tag bar" tag-bar &&
-+		git describe --exclude "*-bar" >expect &&
-+		git for-each-ref --format="%(describe:exclude="*-bar")" \
-+			refs/heads/master >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'deref with describe atom' '
-+	(
-+		cd describe-repo &&
-+		cat >expect <<-\EOF &&
-+
-+		tagname
-+		tagname
-+		tagname
-+
-+		tagtwo
-+		EOF
-+		git for-each-ref --format="%(*describe)" >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'err on bad describe atom arg' '
-+	(
-+		cd describe-repo &&
-+
-+		# The bad arg is the only arg passed to describe atom
-+		cat >expect <<-\EOF &&
-+		fatal: unrecognized %(describe) argument: baz
-+		EOF
-+		! git for-each-ref --format="%(describe:baz)" \
-+			refs/heads/master 2>actual &&
-+		test_cmp expect actual &&
-+
-+		# The bad arg is in the middle of the option string
-+		# passed to the describe atom
-+		cat >expect <<-\EOF &&
-+		fatal: unrecognized %(describe) argument: qux=1,abbrev=14
-+		EOF
-+		! git for-each-ref \
-+			--format="%(describe:tags,qux=1,abbrev=14)" \
-+			ref/heads/master 2>actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- cat >expected <<\EOF
- heads/main
- tags/main
--- 
-2.41.0.396.g9ab76b0018
+Thanks for the fast response.
+
+This is not an area of Git, where I have much understanding of the code.
+But is seems as if pop_stash() in builtin/stash.c
+(and the called functions) seems to be the problem here ?
 
