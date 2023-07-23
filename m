@@ -2,171 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CD89C001DC
-	for <git@archiver.kernel.org>; Sun, 23 Jul 2023 10:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96FEEC001DE
+	for <git@archiver.kernel.org>; Sun, 23 Jul 2023 15:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229660AbjGWKBj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Jul 2023 06:01:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45862 "EHLO
+        id S229703AbjGWPDY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Jul 2023 11:03:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbjGWKBi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jul 2023 06:01:38 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898A310FD
-        for <git@vger.kernel.org>; Sun, 23 Jul 2023 03:01:33 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31716932093so2306117f8f.3
-        for <git@vger.kernel.org>; Sun, 23 Jul 2023 03:01:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690106491; x=1690711291;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Cf2RYS/VyykF9n2pw3w5oHUvzC57XybMSDsg4hZkOE=;
-        b=Z/0oPITE/LqgwvT/CxvCtofsAt5BoImGkqX/s9sGhXgLcqT5LXyfZU/LBGRVOoe2UV
-         AYn85v5JjIba7trzaZ6pxs5QkKAKAmk0DvitAz5Z8A5dJH8r7IeXygNhh+WT7C79oSKe
-         JnpbD9S9fMkJyPTQwcbZsU6A/KEqyHAzEcIjuoC7nbNFe+A1Z2bzcRhWpq1CQ5TczRew
-         wKvA1vXi8bXFT+qXclW00DQhFCn16Eo/qLFwe1Frb/MsQlo1efNNQ7VmYzZ/3mSvQco3
-         yWXodWLA7m7dlFKQKkVm1QCc4MTvJEnnSYF49KGSH/IAlYFjHmztVi4Jd/0zpZ9sbJsN
-         Oc7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690106491; x=1690711291;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4Cf2RYS/VyykF9n2pw3w5oHUvzC57XybMSDsg4hZkOE=;
-        b=esAbLJEBbTkfXFxGzv5DgTwSRSxaZ67w986ljr5ZROgPUOqN/TTio//SDsyK+i/07p
-         ak+kT6njtjydMTY+TFDUONGQ9B3xtkUG36KOIzxf/J3PA6zwFJjS25xcLh5S0K3hWpG4
-         bCBJZt4TeTSyjG9F+n/b9EOut60ddIeWhptJtVqnugi9fvsgHplCM1gGvKiPdDuvA1wY
-         2+rPdlm/VU3p9L7XtXFZlbSmTjMNPsCwY8jVjJYQzB537kghgHRVoDxQ2nuuIb6m9fiH
-         r/jNgF+obTaF2SeF+UXJs014HkE2pzXWf8Nx5NiN2w3/+qPZtoL8pI7D/rR881GkMerL
-         dcVA==
-X-Gm-Message-State: ABy/qLbXwm7S8XXNpdhfsW0hcaqqk/fCXq1ygXTGqCNRdCoPcbr6incF
-        liCkZ/gPQh05lw5chXU2FLU=
-X-Google-Smtp-Source: APBJJlHs74TQFZIh3ZAdr3Ec2gZFwL4uurzDuWgGZ5OiaO/IOgERLANKCNdsZrStyAb9IV+gL6swvg==
-X-Received: by 2002:adf:eed1:0:b0:315:9021:6dc3 with SMTP id a17-20020adfeed1000000b0031590216dc3mr4677075wrp.27.1690106490729;
-        Sun, 23 Jul 2023 03:01:30 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id e14-20020a5d594e000000b003142eb75724sm9227051wri.24.2023.07.23.03.01.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jul 2023 03:01:30 -0700 (PDT)
-Message-ID: <a373a659-a232-77cb-a177-a517b1f228f4@gmail.com>
-Date:   Sun, 23 Jul 2023 11:01:29 +0100
+        with ESMTP id S229644AbjGWPDX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jul 2023 11:03:23 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6CC9D1
+        for <git@vger.kernel.org>; Sun, 23 Jul 2023 08:03:22 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id CEDE85B01B;
+        Sun, 23 Jul 2023 15:03:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1690124601;
+        bh=WKwo87iRg3UgY+6iF7S/Fur3+nOKDSapQooE9Ds5Y6I=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vQlIu5uj27xfohBrd5ElfdzUbu+1RJT0/8TXO7uhGNu1owlEf8ehZOsHds5i3aSeU
+         g9zCYcIROueKH5vN/8i10UPRW9HV4jq+dfFFD7MaV6vSsTdwRR7txSg8tRESyoUZvE
+         5Wrxa/sUihO87+3187qsieQf04Imt74+1YnbXadYus+2sNhKOZ5f45d15GQVwpTRKX
+         AscrT08xASUlTeMM+6potkCFr3Q2KST3WYVAo09x02RaHjRNBH3tRJk4436gNPWQ2K
+         yHuh2U7ZuvW/gwjYaxOoW/rmk59geOBtF/EJyh+DIYiRPJrDY9wcuxXngXZ9G1uzkh
+         AxuKZoLn0qJNJS6fzpnjD5J51CCVHRYbPs3XjP+nzxi/RgbUY+Sm6q1lndg5nMz0if
+         cXXdaAvc9ASFmydW61GEEvX8NncTmXbQ76TMGM0aGLWqoa5ogY3ExevSdhXWfxEuXS
+         oPsb7VyumeXzYIBPRHGQyV2UOBq8STp4yMuAepkLtX3HJsi2LlB
+Date:   Sun, 23 Jul 2023 15:03:19 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, "brian m. carlson" <bk2204@github.com>
+Subject: Re: [PATCH] rerere: match the hash algorithm with its length
+Message-ID: <ZL1BNxVWKGx0Gi1b@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "brian m. carlson" <bk2204@github.com>
+References: <xmqqa5vou9ar.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Lost files after git stash && git stash pop
-Content-Language: en-US
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Till Friebe <friebetill@gmail.com>
-Cc:     git@vger.kernel.org
-References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
- <20230722214433.3xfoebf7my5wsihf@tb-raspi4>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230722214433.3xfoebf7my5wsihf@tb-raspi4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="baTzPvc2KKPxDBu0"
+Content-Disposition: inline
+In-Reply-To: <xmqqa5vou9ar.fsf@gitster.g>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/07/2023 22:44, Torsten Bögershausen wrote:
-> On Fri, Jul 21, 2023 at 07:31:53PM +0200, Till Friebe wrote:
->> Thank you for filling out a Git bug report!
->> Please answer the following questions to help us understand your issue.
->>
->> What did you do before the bug happened? (Steps to reproduce your issue)
->> ```
->> git init
->> mkdir README
->> touch README/README
->> git add .
->> git commit -m "Init project"
->> echo "Test" > README/README
->> mv README/README README2
->> rmdir README
->> mv README2 README
->> git stash
->> git stash pop
->> ```
->>
->> What did you expect to happen? (Expected behavior)
->> I expected that after the `git stash pop` the README file would be back.
->>
->> What happened instead? (Actual behavior)
->> This README with "Test" file was deleted and I lost 5 hours of work.
-> 
-> That is always sad to hear, when work is lost.
 
-Indeed it is. Thanks Till for providing an easy reproducer.
+--baTzPvc2KKPxDBu0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> However, I personally wonder if this is a bug or not.
+On 2023-07-21 at 23:36:12, Junio C Hamano wrote:
+> The "conflict ID" used by "git rerere" to identify past conflicts we
+> saw has been a SHA-1 hash of the normalized text taken from the
+> conflicted region.  0d7c419a (rerere: convert to use the_hash_algo,
+> 2018-10-15) updated the rerere machinery to use more general "hash"
+> instead of hardcoded SHA-1 by using the_hash_algo, GIT_MAX_RAWSZ and
+> their friends, but the code that read from the MERGE_RR records were
+> left unconverted to still use get_sha1_hex(), possibly breaking the
+> operation in SHA-256 repositories.
 
-I think whenever git overwrites an untracked file without the user 
-passing some option indicating that they want to do so it is a bug. For 
-example "git checkout" refuses to overwrite untracked files by default. 
-Sadly this seems to be a known bug in do_push_stash() where we are using 
-"git reset --hard" to remove the stashed changes from the working copy. 
-This was documented in 94b7f1563a (Comment important codepaths regarding 
-nuking untracked files/dirs, 2021-09-27). The stash implementation does 
-a lot of necessary forking of subprocesses, in this case I think it 
-would be better to call unpack_trees() directly with 
-UNPACK_RESET_PROTECT_UNTRACKED.
+I agree consistency here is a good idea.  However, I should point out
+the definition of `get_sha1_hex`:
 
-Best Wishes
+int get_sha1_hex(const char *hex, unsigned char *sha1)
+{
+	return get_hash_hex_algop(hex, sha1, the_hash_algo);
+}
 
-Phillip
+Thus `get_sha1_hex` uses `the_hash_algo`, and therefore your change is
+equivalent to what was there before, I believe.  That's because during
+the SHA-256 code work, we could either send a bunch of patches to fix
+all of the instance of `get_sha1_hex` or we could just patch that
+function to use the default hash algorithm, and I, for better or for
+worse, made the decision to avoid the churn.
 
-> First, Git is told to track a file called README/README
-> Then the file is removed, without telling Git.
-> And a new, unkown file appers on disk (which collides with the name
-> of the directory)
-> 
-> Using this sequence could have told Git, what is going on:
-> git mv README/README README2
-> rmdir README
-> git mv README2 README
-> 
-> (a temporary branch may be checked out, with the option
->   to merge-squash the final result)
-> 
-> 
-> An other alternative could be to tell `git stash` to care
-> about untracked file(s):
-> 
-> git stash -u
-> git stash pop
-> 
-> Which will refuse to apply the stash.
-> 
-> A third alternative could be to keep the file inside an
-> editor, to have the content still available.
-> 
-> However, it would/could be nice, if files are not simply deleted,
-> but saved into a "lost+found" folder, or a wastebasket kind of thing.
-> 
-> But which files ?
-> Those that are untracked ?
-> They may be important (local config files, passwords, help scripts, ...)
-> or not (.o files from a C compiler).
-> 
-> In some older discussions they had been named "precious" files.
-> But, as far as I remember, there was no easy solution.
-> In that sense I don't have a better answer.
-> Others may have.
-> 
-> Thanks for reporting, it make me read [1] and come to the conclusion
-> that it is sometimes safer to checkout out a temporary branch, commit
-> everything and clean up later, rather than relying too much on
-> `git stash`
-> 
-> 
-> <https://stackoverflow.com/questions/835501/how-do-you-stash-an-untracked-file>
->>
->> What's different between what you expected and what actually happened?
->> The file doesn't exist anymore and I can't recover it.
->>
->> Anything else you want to add:
->> This is just a reproducible example.
->>
+I still firmly agree that your change is better, because it is easier to
+read and less confusing, and that is a major improvement in itself.
+However, I would suggest that the commit message be updated to reflect
+that if possible.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--baTzPvc2KKPxDBu0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZL1BNwAKCRB8DEliiIei
+gclCAP4+a07gvHUJfgD5jLieQVymW0TTrVhA2GwsuUpDmNZrIgD+IPjl1mCFJfph
+LugX9m+khJudKxu9aPYT5U0HypvnPw0=
+=yaLU
+-----END PGP SIGNATURE-----
+
+--baTzPvc2KKPxDBu0--
