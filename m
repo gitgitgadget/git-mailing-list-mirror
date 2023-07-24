@@ -2,149 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29586C00528
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 16:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BF9CC0015E
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 16:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231556AbjGXQj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 12:39:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35150 "EHLO
+        id S231648AbjGXQky (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 12:40:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231618AbjGXQjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 12:39:35 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE0EE53
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:33 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-583d702129cso19287787b3.3
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690216772; x=1690821572;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4IntfoclGuCOXeVpRz5aBKjJIPEGXvrz9Z61fFEG4lQ=;
-        b=e03KAa1xpyAYGArjqaR8aJZ5Tu5ul9UZE9NDga+dh+Lff/tq2mDIcjOleGYErVDKFZ
-         Ku+x1OU7+mBflgPuFLjuwn1bOYTdo5tCt3Q2vDEE/vTMj62O1D53FWqO4+hmLE6q3+R4
-         nmRRbgCpKn2k7fSHsHAkxxn8DuMIWnG0N8meDaBOZk3lUjPUru4ZnNNBGigHI78a6T76
-         tVtyO0/UTRJFdmnu1GsLyP9jRlQWBpXoNaH7b+q/wftHqK13WqEteySSWx2XjnCWP65t
-         kIwmdSV3e4lBGKLkq9rrQMceIN3DM2/MX02eyHdTc3vc73jd5rJ2shx2WiI2Y6apEYXt
-         SoeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690216772; x=1690821572;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4IntfoclGuCOXeVpRz5aBKjJIPEGXvrz9Z61fFEG4lQ=;
-        b=knK9KE0OmNtX/jPgoweVpwwo9ScRFSEFA6BSpi06zmoyh0KfqbR9Rz+xAJAvGJiQS+
-         eot3Op9A2Wh4Ro+qX0VC02eaR7+5gjwqjnHV4AHJXfEKrr4JKnSGhBCvnWizGqyelRBQ
-         QB6KBzw7eSRD9lNzQF2cX/RURi7w5nwtxVWY4WBB0R4HW/ktE18sHDdpS7MKN6H4Giqa
-         qItSeJoZ7EOcxSlolU1QboPOt7sBHjp17IjJ3LH/c+Ly+3Kh3Pwoj7D1Aa455fi2Nry+
-         xBBpw6mG7C2Me2A8AfRYXMOufCQSLzkvp7xeWXDlUZg+6K6GkyeOwAsDGUgAHGkjTCpu
-         kXGQ==
-X-Gm-Message-State: ABy/qLYXFfjw3xsNbY9kmkqs+OWGZyPagvGFOprWntIWDSI0OOzwnAGn
-        HbKL06+8tDoqIKukBT5STgU0asVHoKLgZmd9M0PEgg==
-X-Google-Smtp-Source: APBJJlEQ7QWXYXMhP9+WRLDnxZ2vCVKef2hCCWi4FFVcEK95XJFbJrhLK2F1nFVF64GCGfNYj6g97g==
-X-Received: by 2002:a0d:d50c:0:b0:580:fa79:d52 with SMTP id x12-20020a0dd50c000000b00580fa790d52mr6763914ywd.47.1690216772336;
-        Mon, 24 Jul 2023 09:39:32 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i135-20020a81918d000000b0057a8de7f43dsm2872735ywg.109.2023.07.24.09.39.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 09:39:32 -0700 (PDT)
-Date:   Mon, 24 Jul 2023 12:39:31 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/5] t5328: avoid top-level directory changes
-Message-ID: <79b3444660fbc5f75a9dde023677b0858717b602.1690216758.git.me@ttaylorr.com>
-References: <cover.1689960606.git.me@ttaylorr.com>
- <cover.1690216758.git.me@ttaylorr.com>
+        with ESMTP id S229535AbjGXQkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 12:40:46 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B00110F6
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:40:44 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 022301B40FA;
+        Mon, 24 Jul 2023 12:40:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=n3j7S1Ku7faI97DEqBzKm1yLFG0spgGJxipgVm
+        H64m4=; b=w9KytA0cVS6V/FFgRGewfhhqfGOfANfmA3ehGGcTmrtUN3SITC4Jo8
+        L+C+OLux699gFcSZ5ee9NJli3um8Cx83ftt5FTcpETRIdT0LE3asVBL8OmUZ4v9j
+        j9PhAJXxzm/wbuFi0BbVhWCJ9GXEoDxXFT072PYlNwKRc2YAt1jLg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED3B81B40F9;
+        Mon, 24 Jul 2023 12:40:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 218101B40F8;
+        Mon, 24 Jul 2023 12:40:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git@vger.kernel.org, alban.gruin@gmail.com,
+        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 1/1] sequencer: finish parsing the todo list despite
+ an invalid first line
+References: <20230721060848.35641-1-alexhenrie24@gmail.com>
+        <20230722212830.132135-1-alexhenrie24@gmail.com>
+        <20230722212830.132135-2-alexhenrie24@gmail.com>
+Date:   Mon, 24 Jul 2023 09:40:41 -0700
+In-Reply-To: <20230722212830.132135-2-alexhenrie24@gmail.com> (Alex Henrie's
+        message of "Sat, 22 Jul 2023 15:28:25 -0600")
+Message-ID: <xmqqjzupqn3q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1690216758.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D433BEC0-2A40-11EE-AE42-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar spirit as the last commit, avoid top-level directory
-changes in the last remaining commit-graph related test, t5328.
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/t5328-commit-graph-64bit-time.sh | 54 +++++++++++++++---------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+> Before the todo list is edited it is rewritten to shorten the OIDs of
+> the commits being picked and to append advice about editing the list.
+> The exact advice depends on whether the todo list is being edited for
+> the first time or not. After the todo list has been edited it is
+> rewritten to lengthen the OIDs of the commits being picked and to remove
+> the advice. If the edited list cannot be parsed then this last step is
+> skipped.
+>
+> Prior to db81e50724 (rebase-interactive: use todo_list_write_to_file()
+> in edit_todo_list(), 2019-03-05) if the existing todo list could not be
+> parsed then the initial rewrite was skipped as well. This had the
+> unfortunate consequence that if the list could not be parsed after the
+> initial edit the advice given to the user was wrong when they re-edited
+> the list. This change relied on todo_list_parse_insn_buffer() returning
+> the whole todo list even when it cannot be parsed. Unfortunately if the
+> list starts with a "fixup" command then it will be truncated and the
+> remaining lines are lost. Fix this by continuing to parse after an
+> initial "fixup" commit as we do when we see any other invalid line.
+>
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>  sequencer.c                   |  2 +-
+>  t/t3404-rebase-interactive.sh | 27 +++++++++++++++++++++++++++
+>  2 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5328-commit-graph-64bit-time.sh b/t/t5328-commit-graph-64bit-time.sh
-index 57e4d9c6998..e9c521c061c 100755
---- a/t/t5328-commit-graph-64bit-time.sh
-+++ b/t/t5328-commit-graph-64bit-time.sh
-@@ -37,39 +37,39 @@ test_expect_success 'lower layers have overflow chunk' '
- graph_git_behavior 'overflow' '' HEAD~2 HEAD
- 
- test_expect_success 'set up and verify repo with generation data overflow chunk' '
--	mkdir repo &&
--	cd repo &&
--	git init &&
--	test_commit --date "$UNIX_EPOCH_ZERO" 1 &&
--	test_commit 2 &&
--	test_commit --date "$UNIX_EPOCH_ZERO" 3 &&
--	git commit-graph write --reachable &&
--	graph_read_expect 3 generation_data &&
--	test_commit --date "$FUTURE_DATE" 4 &&
--	test_commit 5 &&
--	test_commit --date "$UNIX_EPOCH_ZERO" 6 &&
--	git branch left &&
--	git reset --hard 3 &&
--	test_commit 7 &&
--	test_commit --date "$FUTURE_DATE" 8 &&
--	test_commit 9 &&
--	git branch right &&
--	git reset --hard 3 &&
--	test_merge M left right &&
--	git commit-graph write --reachable &&
--	graph_read_expect 10 "generation_data generation_data_overflow" &&
--	git commit-graph verify
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit --date "$UNIX_EPOCH_ZERO" 1 &&
-+		test_commit 2 &&
-+		test_commit --date "$UNIX_EPOCH_ZERO" 3 &&
-+		git commit-graph write --reachable &&
-+		graph_read_expect 3 generation_data &&
-+		test_commit --date "$FUTURE_DATE" 4 &&
-+		test_commit 5 &&
-+		test_commit --date "$UNIX_EPOCH_ZERO" 6 &&
-+		git branch left &&
-+		git reset --hard 3 &&
-+		test_commit 7 &&
-+		test_commit --date "$FUTURE_DATE" 8 &&
-+		test_commit 9 &&
-+		git branch right &&
-+		git reset --hard 3 &&
-+		test_merge M left right &&
-+		git commit-graph write --reachable &&
-+		graph_read_expect 10 "generation_data generation_data_overflow" &&
-+		git commit-graph verify
-+	)
- '
- 
- graph_git_behavior 'overflow 2' repo left right
- 
- test_expect_success 'single commit with generation data exceeding UINT32_MAX' '
- 	git init repo-uint32-max &&
--	cd repo-uint32-max &&
--	test_commit --date "@4294967297 +0000" 1 &&
--	git commit-graph write --reachable &&
--	graph_read_expect 1 "generation_data" &&
--	git commit-graph verify
-+	test_commit -C repo-uint32-max --date "@4294967297 +0000" 1 &&
-+	git -C repo-uint32-max commit-graph write --reachable &&
-+	graph_read_expect -C repo-uint32-max 1 "generation_data" &&
-+	git -C repo-uint32-max commit-graph verify
- '
- 
- test_done
--- 
-2.41.0.399.g887006eab46
+Very cleanly explained.  Thanks for an update.
 
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ff0afad63e..c734983da0 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1596,6 +1596,33 @@ test_expect_success 'static check of bad command' '
+>  	test C = $(git cat-file commit HEAD^ | sed -ne \$p)
+>  '
+>  
+> +test_expect_success 'the first command cannot be a fixup' '
+> +	rebase_setup_and_clean fixup-first &&
+> +	(
+> +		cat >orig <<-EOF &&
+> +		fixup $(git log -1 --format="%h %s" B)
+> +		pick $(git log -1 --format="%h %s" C)
+> +		EOF
+> +
+> +		(
+> +			set_replace_editor orig &&
+> +			test_must_fail git rebase -i A 2>actual
+> +		) &&
+> +		grep "cannot .fixup. without a previous commit" actual &&
+> +		grep "You can fix this with .git rebase --edit-todo.." actual &&
+> +		# verify that the todo list has not been truncated
+> +		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+> +		test_cmp orig actual &&
+> +
+> +		test_must_fail git rebase --edit-todo 2>actual &&
+> +		grep "cannot .fixup. without a previous commit" actual &&
+> +		grep "You can fix this with .git rebase --edit-todo.." actual &&
+> +		# verify that the todo list has not been truncated
+> +		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
+> +		test_cmp orig actual
+> +	)
+> +'
+
+The structure of this new test piece, including the use of "log -1
+--format", seems to follow existing tests, and very readable.  Why
+do we have one extra level of subshell, though?  There is no "cd"
+that may affect the later test pieces, and set_something_editor that
+touches environment that may affect the later test pieces is called
+in its own subshell already.
+
+Other than that, looking good (there may be a valid reason why the
+test piece needs the subshell around it, but it was just not apparent
+to me).
+
+>  test_expect_success 'tabs and spaces are accepted in the todolist' '
+>  	rebase_setup_and_clean indented-comment &&
+>  	write_script add-indent.sh <<-\EOF &&
