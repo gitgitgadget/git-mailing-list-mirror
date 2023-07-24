@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 222D2C0015E
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 16:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29586C00528
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 16:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbjGXQj4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 12:39:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35282 "EHLO
+        id S231556AbjGXQj7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 12:39:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjGXQjh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 12:39:37 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD4410D9
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:36 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-583b3939521so30595497b3.0
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:36 -0700 (PDT)
+        with ESMTP id S231618AbjGXQjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 12:39:35 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE0EE53
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:33 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-583d702129cso19287787b3.3
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690216775; x=1690821575;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690216772; x=1690821572;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xg9xbcNUD7tpViFQ434woqF+JoFPBsrwYgH7/yZi55g=;
-        b=Hqk42OTw5EWRZVSKI4h7Df62NPenpyTeKemYrDuUPwnsSpCddBt2l3P4S7rJsCU4B7
-         8mJnphaBHEYGRks/RJzSUf9t9YwXyMfArElKbUPh3nAPz2FSDa5IGJtpunIH3c3aHuiM
-         nTsdPKh9gd1ZYBrotfNXrHHuycEthTVbhJK+mmiMPBb0wP3IcrkaX8YqVpCknCBWsyEj
-         ujNOCAkjDONb2e18gQHi2rLJ5dDxy6qB3wKlAsloafqnv8jl+8i+Fn2rgjMMby1rttag
-         qViW1i6wrCNbHU80eQ36fJUSSYBoqcAdoRA79f/488EpIHNku7b+XKK1yYG5PK6HnjiH
-         +tmg==
+        bh=4IntfoclGuCOXeVpRz5aBKjJIPEGXvrz9Z61fFEG4lQ=;
+        b=e03KAa1xpyAYGArjqaR8aJZ5Tu5ul9UZE9NDga+dh+Lff/tq2mDIcjOleGYErVDKFZ
+         Ku+x1OU7+mBflgPuFLjuwn1bOYTdo5tCt3Q2vDEE/vTMj62O1D53FWqO4+hmLE6q3+R4
+         nmRRbgCpKn2k7fSHsHAkxxn8DuMIWnG0N8meDaBOZk3lUjPUru4ZnNNBGigHI78a6T76
+         tVtyO0/UTRJFdmnu1GsLyP9jRlQWBpXoNaH7b+q/wftHqK13WqEteySSWx2XjnCWP65t
+         kIwmdSV3e4lBGKLkq9rrQMceIN3DM2/MX02eyHdTc3vc73jd5rJ2shx2WiI2Y6apEYXt
+         SoeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690216775; x=1690821575;
+        d=1e100.net; s=20221208; t=1690216772; x=1690821572;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xg9xbcNUD7tpViFQ434woqF+JoFPBsrwYgH7/yZi55g=;
-        b=GktoHezNmiYhqFfxThxzFcQxy6nTklCFIpS1dWVK63j+sTCZrGI/KYdu1v8Vt6eCJh
-         87H1GTopy0Ter6Xq7UTUNs+FiRLROVIiORRivtDGA0+LIk2ztkwtcQpFbJGkfWHTZWAP
-         jJVjZD7N06m2M975QOPOmMj70DCoiawcoH3NqcYcNEP9/mCWvodv4C5rjEhFF0u2tElD
-         leLFkyann84zuVz1NW0V78B5fwL6vopZkRTtQGY2/nkB4Ak/cCUAHq8R49HVOjCpP+V7
-         zNLLWOF6RqAHA/rUqte13r2AM8RGlfB29AIOJNcbUML4PpXtAB0x1JWC1Ceclv7xtSBw
-         viBg==
-X-Gm-Message-State: ABy/qLb8y/vzQpaU+x09mDrv0tr/+HzQDx5X7c3oAUOErePyqSLga+NI
-        d+JUBO0JX5KTQ/sIrEBr/V87my4f86OdK/VYps42pQ==
-X-Google-Smtp-Source: APBJJlEjaJ0ruX0zS5vFtWCqxEwRXJRZDr8sSX4SdT4tkyFTYUOSaC1/Y3pgGt7aR86Vt7LJs5gE8A==
-X-Received: by 2002:a0d:eb85:0:b0:57a:1863:755c with SMTP id u127-20020a0deb85000000b0057a1863755cmr7215496ywe.15.1690216775129;
-        Mon, 24 Jul 2023 09:39:35 -0700 (PDT)
+        bh=4IntfoclGuCOXeVpRz5aBKjJIPEGXvrz9Z61fFEG4lQ=;
+        b=knK9KE0OmNtX/jPgoweVpwwo9ScRFSEFA6BSpi06zmoyh0KfqbR9Rz+xAJAvGJiQS+
+         eot3Op9A2Wh4Ro+qX0VC02eaR7+5gjwqjnHV4AHJXfEKrr4JKnSGhBCvnWizGqyelRBQ
+         QB6KBzw7eSRD9lNzQF2cX/RURi7w5nwtxVWY4WBB0R4HW/ktE18sHDdpS7MKN6H4Giqa
+         qItSeJoZ7EOcxSlolU1QboPOt7sBHjp17IjJ3LH/c+Ly+3Kh3Pwoj7D1Aa455fi2Nry+
+         xBBpw6mG7C2Me2A8AfRYXMOufCQSLzkvp7xeWXDlUZg+6K6GkyeOwAsDGUgAHGkjTCpu
+         kXGQ==
+X-Gm-Message-State: ABy/qLYXFfjw3xsNbY9kmkqs+OWGZyPagvGFOprWntIWDSI0OOzwnAGn
+        HbKL06+8tDoqIKukBT5STgU0asVHoKLgZmd9M0PEgg==
+X-Google-Smtp-Source: APBJJlEQ7QWXYXMhP9+WRLDnxZ2vCVKef2hCCWi4FFVcEK95XJFbJrhLK2F1nFVF64GCGfNYj6g97g==
+X-Received: by 2002:a0d:d50c:0:b0:580:fa79:d52 with SMTP id x12-20020a0dd50c000000b00580fa790d52mr6763914ywd.47.1690216772336;
+        Mon, 24 Jul 2023 09:39:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q2-20020a0dce02000000b005707d7686ddsm2895503ywd.76.2023.07.24.09.39.34
+        by smtp.gmail.com with ESMTPSA id i135-20020a81918d000000b0057a8de7f43dsm2872735ywg.109.2023.07.24.09.39.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 09:39:34 -0700 (PDT)
-Date:   Mon, 24 Jul 2023 12:39:34 -0400
+        Mon, 24 Jul 2023 09:39:32 -0700 (PDT)
+Date:   Mon, 24 Jul 2023 12:39:31 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 5/5] t/lib-commit-graph.sh: avoid sub-shell in
- `graph_git_behavior()`
-Message-ID: <887006eab461908493d377c042dd1b7e74641170.1690216758.git.me@ttaylorr.com>
+Subject: [PATCH v2 4/5] t5328: avoid top-level directory changes
+Message-ID: <79b3444660fbc5f75a9dde023677b0858717b602.1690216758.git.me@ttaylorr.com>
 References: <cover.1689960606.git.me@ttaylorr.com>
  <cover.1690216758.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,42 +66,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a previous commit, we introduced a sub-shell in the implementation of
-`graph_git_behavior()`, in order to allow us to pass `-C "$DIR"`
-directly to the git processes spawned by `graph_git_two_modes()`.
-
-Now that its callers are always operating from the "$TRASH_DIRECTORY"
-instead of one of its sub-directories, we can drop the inner sub-shell,
-as it is no longer required.
+In a similar spirit as the last commit, avoid top-level directory
+changes in the last remaining commit-graph related test, t5328.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/lib-commit-graph.sh | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ t/t5328-commit-graph-64bit-time.sh | 54 +++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/t/lib-commit-graph.sh b/t/lib-commit-graph.sh
-index c8bd76a7777..89b26676fbb 100755
---- a/t/lib-commit-graph.sh
-+++ b/t/lib-commit-graph.sh
-@@ -27,14 +27,11 @@ graph_git_behavior() {
- 	BRANCH=$3
- 	COMPARE=$4
- 	test_expect_success "check normal git operations: $MSG" '
--		(
--			cd "$TRASH_DIRECTORY" &&
--			graph_git_two_modes "${DIR:+-C $DIR} log --oneline $BRANCH" &&
--			graph_git_two_modes "${DIR:+-C $DIR} log --topo-order $BRANCH" &&
--			graph_git_two_modes "${DIR:+-C $DIR} log --graph $COMPARE..$BRANCH" &&
--			graph_git_two_modes "${DIR:+-C $DIR} branch -vv" &&
--			graph_git_two_modes "${DIR:+-C $DIR} merge-base -a $BRANCH $COMPARE"
--		)
-+		graph_git_two_modes "${DIR:+-C $DIR} log --oneline $BRANCH" &&
-+		graph_git_two_modes "${DIR:+-C $DIR} log --topo-order $BRANCH" &&
-+		graph_git_two_modes "${DIR:+-C $DIR} log --graph $COMPARE..$BRANCH" &&
-+		graph_git_two_modes "${DIR:+-C $DIR} branch -vv" &&
-+		graph_git_two_modes "${DIR:+-C $DIR} merge-base -a $BRANCH $COMPARE"
- 	'
- }
+diff --git a/t/t5328-commit-graph-64bit-time.sh b/t/t5328-commit-graph-64bit-time.sh
+index 57e4d9c6998..e9c521c061c 100755
+--- a/t/t5328-commit-graph-64bit-time.sh
++++ b/t/t5328-commit-graph-64bit-time.sh
+@@ -37,39 +37,39 @@ test_expect_success 'lower layers have overflow chunk' '
+ graph_git_behavior 'overflow' '' HEAD~2 HEAD
  
+ test_expect_success 'set up and verify repo with generation data overflow chunk' '
+-	mkdir repo &&
+-	cd repo &&
+-	git init &&
+-	test_commit --date "$UNIX_EPOCH_ZERO" 1 &&
+-	test_commit 2 &&
+-	test_commit --date "$UNIX_EPOCH_ZERO" 3 &&
+-	git commit-graph write --reachable &&
+-	graph_read_expect 3 generation_data &&
+-	test_commit --date "$FUTURE_DATE" 4 &&
+-	test_commit 5 &&
+-	test_commit --date "$UNIX_EPOCH_ZERO" 6 &&
+-	git branch left &&
+-	git reset --hard 3 &&
+-	test_commit 7 &&
+-	test_commit --date "$FUTURE_DATE" 8 &&
+-	test_commit 9 &&
+-	git branch right &&
+-	git reset --hard 3 &&
+-	test_merge M left right &&
+-	git commit-graph write --reachable &&
+-	graph_read_expect 10 "generation_data generation_data_overflow" &&
+-	git commit-graph verify
++	git init repo &&
++	(
++		cd repo &&
++		test_commit --date "$UNIX_EPOCH_ZERO" 1 &&
++		test_commit 2 &&
++		test_commit --date "$UNIX_EPOCH_ZERO" 3 &&
++		git commit-graph write --reachable &&
++		graph_read_expect 3 generation_data &&
++		test_commit --date "$FUTURE_DATE" 4 &&
++		test_commit 5 &&
++		test_commit --date "$UNIX_EPOCH_ZERO" 6 &&
++		git branch left &&
++		git reset --hard 3 &&
++		test_commit 7 &&
++		test_commit --date "$FUTURE_DATE" 8 &&
++		test_commit 9 &&
++		git branch right &&
++		git reset --hard 3 &&
++		test_merge M left right &&
++		git commit-graph write --reachable &&
++		graph_read_expect 10 "generation_data generation_data_overflow" &&
++		git commit-graph verify
++	)
+ '
+ 
+ graph_git_behavior 'overflow 2' repo left right
+ 
+ test_expect_success 'single commit with generation data exceeding UINT32_MAX' '
+ 	git init repo-uint32-max &&
+-	cd repo-uint32-max &&
+-	test_commit --date "@4294967297 +0000" 1 &&
+-	git commit-graph write --reachable &&
+-	graph_read_expect 1 "generation_data" &&
+-	git commit-graph verify
++	test_commit -C repo-uint32-max --date "@4294967297 +0000" 1 &&
++	git -C repo-uint32-max commit-graph write --reachable &&
++	graph_read_expect -C repo-uint32-max 1 "generation_data" &&
++	git -C repo-uint32-max commit-graph verify
+ '
+ 
+ test_done
 -- 
 2.41.0.399.g887006eab46
+
