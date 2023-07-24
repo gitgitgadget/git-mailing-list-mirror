@@ -2,113 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9F38EB64DD
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 20:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 142FBEB64DD
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 21:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229710AbjGXUu1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 16:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38430 "EHLO
+        id S231213AbjGXVW4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 17:22:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjGXUu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 16:50:26 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA8FAE74
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 13:50:21 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29EB51B5C48;
-        Mon, 24 Jul 2023 16:50:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jr/qFCBWzotv
-        OmbzUC88WKNDVly862evxkYZ3ukMOvI=; b=jw1HeXxZaezIChvYDL8E/Yh/Xa6m
-        GvjBuL2d218bpmkWW7fA/ga7HSfBP3nHD236ZRGGOPBwnQ29rYwjestF/kwyMGrg
-        O+N9vJ5mae2NsOMc6TFyLE4qlHv82VtCSY1xevJpW7qBLUKlihw/wJpnlQ7lcY9i
-        /nR/IAdoinkGg5M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21BE31B5C47;
-        Mon, 24 Jul 2023 16:50:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S231185AbjGXVWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 17:22:52 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB772171F
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 14:22:42 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7703C1B5C46;
-        Mon, 24 Jul 2023 16:50:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] ls-tree: fix --no-full-name
-References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
-        <xmqqo7k9fa5x.fsf@gitster.g>
-        <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
-        <xmqq351hz5xp.fsf@gitster.g>
-        <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
-        <xmqq4jlxuiuu.fsf@gitster.g>
-        <1535f30e-3cf9-1a0a-04af-4ba4a7c46d15@web.de>
-        <xmqqr0oxnnx4.fsf@gitster.g>
-        <9e8225dd-1e8b-8af2-c3e1-0c5834694244@web.de>
-Date:   Mon, 24 Jul 2023 13:50:19 -0700
-In-Reply-To: <9e8225dd-1e8b-8af2-c3e1-0c5834694244@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Mon, 24 Jul 2023 22:09:36 +0200")
-Message-ID: <xmqqh6ptnies.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 830BC5A35F;
+        Mon, 24 Jul 2023 21:22:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1690233761;
+        bh=TISMZHbusTKtagRlVFv8c4ve2pQ6byFSFdhro8Qm8oo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yomCjcf+o/oTCfJbVvDv1cEV10WNMusWvum2bmmffpAU/VGhj3WSSIYONhcLKY4by
+         uWqwAh/pKk2qjaCe48fTuEqzpqSVmbhso3DP8LdYBEftn+/01Th+0VjU3i0biIGUzr
+         +3rtvI2J5EhoBaNYw2NjUUGKeqgihjDxxU2FO6xXL7J1WVSafdWZ+gDvGXaZombMmd
+         g6GV8Tl4bQ9CpVhZ8qW66hQHMLaK6zzx2txTSVIwmMkg7ojRMGAu8Tp+m1KtK0anbw
+         W1jBSc1UN4BWEix3Jx8hJ5aH9khdWO6UPk0bTgLlzr8fduAMAj6Gf8aIgwJ3+l7LC1
+         t56oyQWBrfU3mNSarLWl3RINvBF0LKYeL05WbsbVCiXQvW3i0VJvldUM3ERRN2yMn0
+         EK8CSeDYJC5/PCK6IzUE6myF56H0+cEAJG08L77KpG9tn34dNAf7A1WF9mpLJ7UWus
+         nXAiqpdHcKVyeVhO4KESpquWoGf0D0UlX7+AK9Deu46/s6N4IJZ
+Date:   Mon, 24 Jul 2023 21:22:39 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, "brian m. carlson" <bk2204@github.com>
+Subject: Re: [PATCH] rerere: match the hash algorithm with its length
+Message-ID: <ZL7rn+LTVjSFzrI8@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "brian m. carlson" <bk2204@github.com>
+References: <xmqqa5vou9ar.fsf@gitster.g>
+ <ZL1BNxVWKGx0Gi1b@tapette.crustytoothpaste.net>
+ <xmqqr0oyr3y0.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B3FED9F0-2A63-11EE-AF66-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="nwNRhzFJKQoo3gs0"
+Content-Disposition: inline
+In-Reply-To: <xmqqr0oyr3y0.fsf@gitster.g>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> Am 24.07.23 um 20:51 schrieb Junio C Hamano:
->> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->>
->>> Am 21.07.23 um 22:09 schrieb Junio C Hamano:
->>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->>>>
->>>>> -    -D, --no-doubt        begins with 'no-'
->>>>> +    -D, --[no-]no-doubt   begins with 'no-'
->>>>
->>>> Hmph, I really really loved the neat trick to allow "no-doubt"
->>>> option to be "positivised" by _dropping_ the leading "no-" at around
->>>> 0f1930c5 (parse-options: allow positivation of options starting,
->>>> with no-, 2012-02-25).
->>>
->>> Yeah, if there is a better way to document A) that the "no-" is optio=
-nal
->>> and B) whether it's present by default, I'm all ears.
->>
->> Some options take "no-" prefix while some others do not, so
->> indicating that "this can take negative forms" vs "this do not take
->> negative forms" by "--[no-]xyzzy" and "--frotz" makes sense.
->>
->> Yikes.  There are tons of options whose names begin with "no-" and
->> marked PARSE_OPT_NONEG, so "an option '--no-nitfol' that does not
->> have the 'no-' part in [brackets] can drop 'no-' to make it
->> positive" would not fly as a rule/convention.
->>
->> If we do not mind getting longer, we could say
->>
->> 	-D, --no-doubt, --doubt
->>
->> and explain in the description that --no-doubt is the same as -D and
->> --doubt is the default.  It is making the developers responsible for
->> clarify, which is not very satisfying.
->
-> Adjusting all explanations manually seems quite tedious.
->
->> We may not reject "--no-no-doubt" but with the positivization
->> support, double negation is not something we'd encourage without
->> feeling embarrassed.
->
-> Right.  Perhaps --[[no-]no-]doubt?  Looks a bit silly with its nested
-> brackets, but it's more correct, because it documents all three accepte=
-d
-> forms, including the no-less one.
+--nwNRhzFJKQoo3gs0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It may look a bit silly but looks very tempting.  Also it is not
-much longer than "--[no-]no-doubt".
+On 2023-07-23 at 16:24:39, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > I agree consistency here is a good idea.  However, I should point out
+> > the definition of `get_sha1_hex`:
+> >
+> > int get_sha1_hex(const char *hex, unsigned char *sha1)
+> > {
+> > 	return get_hash_hex_algop(hex, sha1, the_hash_algo);
+> > }
+>=20
+> Yeah, I think I lifted the inlining from there, and you are
+> absolutely right.  I think the main source of the confusion is that
+> get_sha1_hex(), while it was a perfectly good name before the
+> "struct object_id" world, has now become a misnomer.
+>=20
+> I'd retract the patch you reviewed, but now I wonder if the
+> following is a good idea.
+
+Yeah, I think that's a great idea, especially since now there are only a
+handful of those calls left.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--nwNRhzFJKQoo3gs0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZL7rnwAKCRB8DEliiIei
+gU9MAQCQPCwFbZS9LX+p5WmQpXp4m57BLA/bQF9VBqHKh6YTEwD9FfTBqEMBbXKN
+CQslWDtOOcbuAP/pomLkNNWv/rTLrAc=
+=1t9Q
+-----END PGP SIGNATURE-----
+
+--nwNRhzFJKQoo3gs0--
