@@ -2,37 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E9AFC0015E
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 12:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C975DC0015E
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 12:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbjGXMio (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 08:38:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33348 "EHLO
+        id S229926AbjGXMjs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 08:39:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjGXMin (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 08:38:43 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1087E4E
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 05:38:41 -0700 (PDT)
+        with ESMTP id S229499AbjGXMjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 08:39:47 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C0E1B8
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 05:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1690202318; x=1690807118; i=l.s.r@web.de;
- bh=KeMwsfXHsn+Xwmw/6VQTFU072VTn8A2xSW6+bP2utws=;
+ s=s29768273; t=1690202382; x=1690807182; i=l.s.r@web.de;
+ bh=g5rSZ3b5ed+9YyDCQf/y3FXW13mLRlS4L3+hPruXifc=;
  h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
- b=ZmGR55Jh2go6MrvGMDHN8YkyKTt9Nb5NedSm0gMbBkbdCgh4utBTA53NAeLc27aoJD3HsSD
- 15Cq9BpOINqP9n7X+SdivRPNIIgW4UQTvVdXpjitLO7PuKtdXMiklwiVuw9Em0+tbZriPNXl9
- gnIfuZFSput6nuA89ee3J90RE6SDQxuZ+GD0RtmgiZsyhuU65fquW6qD2Am63FQHTI/ePbhIL
- CQ3c4ihLugTOP3Wc3E5PsdLvfMBG93Vlf8rylokagq2fK4K2Z7oJcmgZ2XS+kTCYeXM0++BVj
- gd1T9NSZHVlty6GuYOr3fw5SAa3F4n4/HbP9keePqeU0a3B0Wc2Q==
+ b=Nj13XDLkZfB4AY7m3CSkPfiTNT69pHHvn9HN341HLS2oQvJ5puBiqygGs/y1QI/N/jiqkE9
+ /N4F0pakLIRWsyYlzIQXmAo4RTSajLOxJZjGI7hXD8vN5BTK62/K565RonE2jvJYs/9TGmKSY
+ pkkdj/wVbeS6nhqixV/CNQ8RK6bZGAdy0bpOqn9c3s9z1uEVQYEJfB86BzQQsZRqIqYTCNL3t
+ bjTGOApB+ek9HlixcZpbs8qRx9w3PV5poAp9s3kmrXHWXihoNmmyn/p8Mscue1O1E8cXqUgZI
+ RHPszgU75sQkfKT2aYIOjNYibLXI5g5f/WeCo3OqWsawYQ1aWSTA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MVJNT-1qVFDV2B5L-00S5Xx; Mon, 24
- Jul 2023 14:38:38 +0200
-Message-ID: <c4840046-118a-cadb-a0b2-3fd7081778a6@web.de>
-Date:   Mon, 24 Jul 2023 14:38:38 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MVJNT-1qVF8L15Hz-00S5Xv; Mon, 24
+ Jul 2023 14:39:42 +0200
+Message-ID: <831cfa35-8c83-cd24-4348-c9c3769643c7@web.de>
+Date:   Mon, 24 Jul 2023 14:39:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.13.0
-Subject: [PATCH v2 3/5] t1502: move optionspec help output to a file
+Subject: [PATCH v2 4/5] t1502: test option negation
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -44,202 +44,135 @@ References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
 In-Reply-To: <4d01e971-07cb-4f11-3cc6-9d9f21e590c1@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lkce4Bs7vXB6DlniU1ClNGHr6bEyRJtQZAE/ASrYRlj9X2qx5VD
- DpguNYHv4kctq8UcBtnW8Oxo5zs2V1IJYxX2D/LfH6j7WrugpuZr+CduuZMIy6YRSxDrg9P
- NffY4HVklcPzJKvSxLL3tyYSauQfuIxaL4nVXdjZi2d/QnfelEloJ6IBzqubscp85hDH668
- CNZF6HLLFonTeHxV1KYJQ==
-UI-OutboundReport: notjunk:1;M01:P0:b3KnM48c8bw=;bBZP48BgUw3K/fu7o24/g1CZW+u
- 970bN/1XoRLrYwYsGgw5x1FAQaR0LwOqWL6dMtIosFWi/Tv5vnEtJ1jWqEE5+89BhvbpvQKIJ
- BjjOwinMsGRD5dW2tWWjQBxoMnPqIRbmC4NsJ++kIkpK1NiCSHkr+g2Bx51QHqY855XW7jGJh
- yBGCFOL8e/QBP9zOy6vlaBrZp88BHKJwAT70moB7HTsJ0mTmRBZM25rG+kbXSI6sU/jczNDjd
- 2nKpbOM6Tkf33E6c9pi5BOtUP5/apFnsF9yCj86RdUCLwaA4swh8ADAZQ2gHlDJi8K849/Wyk
- HUvzSkBQMy/8/WfMdmL+A6Sdsk7abqJBBp16bPBPpj466nzqAIMEd8h16zI1ubHCw31LXd0By
- vXRvAU6co31dKigGK09VdUksTsvX9cMjmNjHvc4Pn3Jk/0BSigR5e5AHpzaY7rwjYM0GRsOWh
- dthBR7ZLQJ3FCAJGm3R27+kfqRftO17AK4UPKMFrrldLbQh2xzQBUb+N9cn/2WXgVKpqJ5f7M
- GdvORcIEQk99MKeVvBbsCCZR8uXF3XkYzlXjofCEXFNYWLjYITLZ8yuitiq0pKE5y0MWX7mdZ
- KtMuKoEikPZoZzcgPueB1PNpZ3tJlehmFsGwFygB6dkcvMgPX3X/7hDS23YY3y4LZPJjCmzLp
- GdKGMy/Ki7COvGix8EzsA23L8b7kLnhzjQRmwPEB7KO/47jMKouviec50E/tiBy2DMkaV68PE
- Ah6cKVZ35lD3ai7jRInMl/9KvkxCwzmaf+AycXdfEcaexLOGqJKiO9QsVu47Xm0OrYi2W5xX6
- eKuqtPAIhR9OjuyjcgHKEh8G9G4k9FgoYZi1fO6XMqUVOz1HEOX98WuZapJ0eG2lr3qA5N0Ej
- x50Qw85hKzviQHZg1jn6aKmMSU6sqdXh4bzqGX7Ocv3l5eNeD5rgMEqxhEKzJD8k3jlVcodbJ
- t3W1Ig==
+X-Provags-ID: V03:K1:WHgstp/Ge/T+MN3m4jtF6+3VSRZWM0YNwwZaiMTYlWUrZ04rITx
+ WLOFHgjjz7XFjwur8C1rFOKHeOBG68ZUAieBQAtWgiPQHfgT/Hu2ZPQjsTxQ5lXp7rciYGb
+ nJyizPdp6zEcDPJ/PQaCxBgTs0HLGRBxNG9FZ+1MmRpOX10PzBnBEyFBa/3g3PXVzEo+HOW
+ EV5SUmVsUHmDJmvsFtlMA==
+UI-OutboundReport: notjunk:1;M01:P0:TrJgqPmSby4=;m5HWiVU8bh31/103H4/B+ScOrVB
+ pUElTmXtis53KdUqD+KNhEweV4YnR9Faf/PMPiTBmCYjJrGqA0+UvLJpjMCl/T45Z913pThg+
+ tGh7hWgtedG01/frCKpeXpPi9IjCcZI0MfSeiCh6szNENX+e5tn+4/DVjk/9VbZw3bi81OC/g
+ EJTg42zvcVYh8yF/Oq1B12uo3p/7jL/a09LfhcFzWn3bl8R3vQEgSVzzUv4VSJaerV80eLo8j
+ uUhd3mFTZC1i4LtagY2F/dI+aepjBhZd/rNtNGWIY99ou//UQAL6fVlY4gnmbOaB4bmZq/n3K
+ rMmMcVcME07uQKRiHQv+tLjjTFos0JjLuZHya7ywkG6K6C33nLUeUe+cjN0YpS58j5jsg600V
+ 5StDM6+UHxu7Wx1WeZPnn9wa0zJeaPNKO/cSwsV9uv6iXezmfloIoodMnwSREVC0xYwB1dieS
+ gOhrnuhEEydtHENdnoZ/dqKyLy8g/48oQaqeLrFRDAJ2pVaLZZujUQH9p5/iyfviLVoZ2D4dc
+ 6VvkRqp3XzLPAIRQ8f8j7NJOsA+2jg2RxRHi7IaT/jiT25DAywO7/pyUBfveke/E5QZgTENiH
+ T8m51HdvRwXlYQvET7VK2FdDFCSF1jMtUp9QH6KfkhK3PXoinrlChbdUwVtDmnOYqukExN0BO
+ C8M9vQwFm8H5QJ589btIdKPaF4wYC6J3KV9D9JpMhqPQHI6Md9QnTSbjQNd5sZYJIJWQIdJ5g
+ 7ZxUInGiKC6B38G1it6ZBWk5s/kwG705g3POh5nuH6OniCk/2xixTj64ZQ4Dwvz7TPCP6sbBZ
+ v8PV1cbS+pgf1CrWiGun9/10vJVKDQzMoyOH42cO483vsepa9QzXJNboAIB69W1EmuVif1gp9
+ i0Qj309B/AD8YYjz7qlyJH8t+6Loic59B+i87ryfbs7IiwfEh/foFJU3rY1xaihju6QjsWzBq
+ qhpGMg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git rev-parse --parseopt" shows the short help with its description of
-all recognized options twice: When called with -h or --help, and after
-reporting an unknown option.  Move the one for optionspec into a file
-and use it in two tests to deduplicate that part.
-
-"git rev-parse --parseopt -- --h" wraps the help text in "cat <<\EOF"
-and "EOF".  Keep that part in the file to use it as is in the test that
-needs it and simply remove it in the other one using sed.
-
-Disable whitespace checking for the file using an attribute, as we need
-to keep its spaces intact and wouldn't want a stray --whitespace=3Dfix to
-turn them into tabs.
+Add tests for checking the "git rev-parse --parseopt" flag "!" and
+whether options can be negated with a "no-" prefix.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/t1502-rev-parse-parseopt.sh | 79 ++++-------------------------------
- t/t1502/.gitattributes        |  1 +
- t/t1502/optionspec.help       | 34 +++++++++++++++
- 3 files changed, 42 insertions(+), 72 deletions(-)
- create mode 100644 t/t1502/.gitattributes
- create mode 100755 t/t1502/optionspec.help
+ t/t1502-rev-parse-parseopt.sh | 44 +++++++++++++++++++++++++++++++++++
+ t/t1502/optionspec-neg        |  8 +++++++
+ t/t1502/optionspec-neg.help   | 11 +++++++++
+ 3 files changed, 63 insertions(+)
+ create mode 100644 t/t1502/optionspec-neg
+ create mode 100644 t/t1502/optionspec-neg.help
 
 diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-index 0cdc6eb8b3..813ee5872f 100755
+index 813ee5872f..0f7c2db4c0 100755
 =2D-- a/t/t1502-rev-parse-parseopt.sh
 +++ b/t/t1502-rev-parse-parseopt.sh
-@@ -58,44 +58,8 @@ EOF
+@@ -3,6 +3,22 @@
+ test_description=3D'test git rev-parse --parseopt'
+ . ./test-lib.sh
+
++check_invalid_long_option () {
++	spec=3D"$1"
++	opt=3D"$2"
++	test_expect_success "test --parseopt invalid switch $opt help output for=
+ $spec" '
++		{
++			cat <<-\EOF &&
++			error: unknown option `'${opt#--}\''
++			EOF
++			sed -e 1d -e \$d <"$TEST_DIRECTORY/t1502/$spec.help"
++		} >expect &&
++		test_expect_code 129 git rev-parse --parseopt -- $opt \
++			2>output <"$TEST_DIRECTORY/t1502/$spec" &&
++		test_cmp expect output
++	'
++}
++
+ test_expect_success 'setup optionspec' '
+ 	sed -e "s/^|//" >optionspec <<\EOF
+ |some-command [options] <args>...
+@@ -278,4 +294,32 @@ test_expect_success 'test --parseopt help output: mul=
+ti-line blurb after empty l
+ 	test_cmp expect actual
  '
 
- test_expect_success 'test --parseopt help output' '
--	sed -e "s/^|//" >expect <<\END_EXPECT &&
--|cat <<\EOF
--|usage: some-command [options] <args>...
--|
--|    some-command does foo and bar!
--|
--|    -h, --help            show the help
--|    --foo                 some nifty option --foo
--|    --bar ...             some cool option --bar with an argument
--|    -b, --baz             a short and long option
--|
--|An option group Header
--|    -C[...]               option C with an optional argument
--|    -d, --data[=3D...]      short and long option with an optional argum=
-ent
--|
--|Argument hints
--|    -B <arg>              short option required argument
--|    --bar2 <arg>          long option required argument
--|    -e, --fuz <with-space>
--|                          short and long option required argument
--|    -s[<some>]            short option optional argument
--|    --long[=3D<data>]       long option optional argument
--|    -g, --fluf[=3D<path>]   short and long option optional argument
--|    --longest <very-long-argument-hint>
--|                          a very long argument hint
--|    --pair <key=3Dvalue>    with an equals sign in the hint
--|    --aswitch             help te=3Dt contains? fl*g characters!`
--|    --bswitch <hint>      hint has trailing tab character
--|    --cswitch             switch has trailing tab character
--|    --short-hint <a>      with a one symbol hint
--|
--|Extras
--|    --extra1              line above used to cause a segfault but no lon=
-ger does
--|
--|EOF
--END_EXPECT
- 	test_expect_code 129 git rev-parse --parseopt -- -h > output < optionspe=
-c &&
--	test_cmp expect output
-+	test_cmp "$TEST_DIRECTORY/t1502/optionspec.help" output
- '
-
- test_expect_success 'test --parseopt help output no switches' '
-@@ -140,41 +104,12 @@ END_EXPECT
- '
-
- test_expect_success 'test --parseopt invalid switch help output' '
--	sed -e "s/^|//" >expect <<\END_EXPECT &&
--|error: unknown option `does-not-exist'\''
--|usage: some-command [options] <args>...
--|
--|    some-command does foo and bar!
--|
--|    -h, --help            show the help
--|    --foo                 some nifty option --foo
--|    --bar ...             some cool option --bar with an argument
--|    -b, --baz             a short and long option
--|
--|An option group Header
--|    -C[...]               option C with an optional argument
--|    -d, --data[=3D...]      short and long option with an optional argum=
-ent
--|
--|Argument hints
--|    -B <arg>              short option required argument
--|    --bar2 <arg>          long option required argument
--|    -e, --fuz <with-space>
--|                          short and long option required argument
--|    -s[<some>]            short option optional argument
--|    --long[=3D<data>]       long option optional argument
--|    -g, --fluf[=3D<path>]   short and long option optional argument
--|    --longest <very-long-argument-hint>
--|                          a very long argument hint
--|    --pair <key=3Dvalue>    with an equals sign in the hint
--|    --aswitch             help te=3Dt contains? fl*g characters!`
--|    --bswitch <hint>      hint has trailing tab character
--|    --cswitch             switch has trailing tab character
--|    --short-hint <a>      with a one symbol hint
--|
--|Extras
--|    --extra1              line above used to cause a segfault but no lon=
-ger does
--|
--END_EXPECT
-+	{
-+		cat <<-\EOF &&
-+		error: unknown option `does-not-exist'\''
-+		EOF
-+		sed -e 1d -e \$d <"$TEST_DIRECTORY/t1502/optionspec.help"
-+	} >expect &&
- 	test_expect_code 129 git rev-parse --parseopt -- --does-not-exist 1>/dev=
-/null 2>output < optionspec &&
- 	test_cmp expect output
- '
-diff --git a/t/t1502/.gitattributes b/t/t1502/.gitattributes
++test_expect_success 'test --parseopt help output for optionspec-neg' '
++	test_expect_code 129 git rev-parse --parseopt -- \
++		-h >output <"$TEST_DIRECTORY/t1502/optionspec-neg" &&
++	test_cmp "$TEST_DIRECTORY/t1502/optionspec-neg.help" output
++'
++
++test_expect_success 'test --parseopt valid options for optionspec-neg' '
++	cat >expect <<-\EOF &&
++	set -- --foo --no-foo --no-bar --positive-only --no-negative --
++	EOF
++	git rev-parse --parseopt -- <"$TEST_DIRECTORY/t1502/optionspec-neg" >out=
+put \
++	       --foo --no-foo --no-bar --positive-only --no-negative &&
++	test_cmp expect output
++'
++
++test_expect_success 'test --parseopt positivated option for optionspec-ne=
+g' '
++	cat >expect <<-\EOF &&
++	set -- --no-no-bar --no-no-bar --
++	EOF
++	git rev-parse --parseopt -- <"$TEST_DIRECTORY/t1502/optionspec-neg" >out=
+put \
++	       --no-no-bar --bar &&
++	test_cmp expect output
++'
++
++check_invalid_long_option optionspec-neg --no-positive-only
++check_invalid_long_option optionspec-neg --negative
++check_invalid_long_option optionspec-neg --no-no-negative
++
+ test_done
+diff --git a/t/t1502/optionspec-neg b/t/t1502/optionspec-neg
 new file mode 100644
-index 0000000000..562b12e16e
+index 0000000000..28992ee303
 =2D-- /dev/null
-+++ b/t/t1502/.gitattributes
-@@ -0,0 +1 @@
-+* -whitespace
-diff --git a/t/t1502/optionspec.help b/t/t1502/optionspec.help
-new file mode 100755
-index 0000000000..844eac6704
++++ b/t/t1502/optionspec-neg
+@@ -0,0 +1,8 @@
++some-command [options] <args>...
++
++some-command does foo and bar!
++--
++foo		can be negated
++no-bar		can be positivated
++positive-only!	cannot be negated
++no-negative!	cannot be positivated
+diff --git a/t/t1502/optionspec-neg.help b/t/t1502/optionspec-neg.help
+new file mode 100644
+index 0000000000..591f4dcd9f
 =2D-- /dev/null
-+++ b/t/t1502/optionspec.help
-@@ -0,0 +1,34 @@
++++ b/t/t1502/optionspec-neg.help
+@@ -0,0 +1,11 @@
 +cat <<\EOF
 +usage: some-command [options] <args>...
 +
 +    some-command does foo and bar!
 +
-+    -h, --help            show the help
-+    --foo                 some nifty option --foo
-+    --bar ...             some cool option --bar with an argument
-+    -b, --baz             a short and long option
-+
-+An option group Header
-+    -C[...]               option C with an optional argument
-+    -d, --data[=3D...]      short and long option with an optional argume=
-nt
-+
-+Argument hints
-+    -B <arg>              short option required argument
-+    --bar2 <arg>          long option required argument
-+    -e, --fuz <with-space>
-+                          short and long option required argument
-+    -s[<some>]            short option optional argument
-+    --long[=3D<data>]       long option optional argument
-+    -g, --fluf[=3D<path>]   short and long option optional argument
-+    --longest <very-long-argument-hint>
-+                          a very long argument hint
-+    --pair <key=3Dvalue>    with an equals sign in the hint
-+    --aswitch             help te=3Dt contains? fl*g characters!`
-+    --bswitch <hint>      hint has trailing tab character
-+    --cswitch             switch has trailing tab character
-+    --short-hint <a>      with a one symbol hint
-+
-+Extras
-+    --extra1              line above used to cause a segfault but no long=
-er does
++    --foo                 can be negated
++    --no-bar              can be positivated
++    --positive-only       cannot be negated
++    --no-negative         cannot be positivated
 +
 +EOF
 =2D-
