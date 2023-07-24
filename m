@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B317C001B0
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 08:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57D84C001DF
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 08:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232031AbjGXI7x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 04:59:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55220 "EHLO
+        id S232045AbjGXI7u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 04:59:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231781AbjGXI7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 04:59:43 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FC6131
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 01:59:42 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5222c5d71b8so1109215a12.2
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 01:59:42 -0700 (PDT)
+        with ESMTP id S231570AbjGXI7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 04:59:41 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE86EF9
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 01:59:39 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9926623e367so730003066b.0
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 01:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690189180; x=1690793980;
+        d=gmail.com; s=20221208; t=1690189178; x=1690793978;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mGphpGKPeucRmByj89WO/k/xCxKR/i7/0c8QtIZngDQ=;
-        b=YuDHuZMzZz9mz7ScZxvb1j59qYbmCZVF41OOZZ/V6UFI8SiX2pjwn2OJouUa7ykRQV
-         05Veol+/UHmuCfovtrQMyQCtQswCduqxNH2Lj+IEOksfHDN52bm3v3pP0LlbtQGpvtM5
-         MKrSIBD2oIUZbzKSanqOJeaUPzZzUT8XaFuRRNuCdp2t1fBxOnr6isbpCwtVgwJTc9SL
-         nic/Ax+YP6tTf/8C49MNzUxOO8CGLB6nOT233y38vSO7Gix7MHUqMqDlMTnfEiUSosR8
-         q7Zl4QUDxTa2pBhvKpk5IjlSgeV8ILVPoEG4XIbBxDZt2rElTXVoRsw5pVDqThjl6kGE
-         0oFA==
+        bh=ONbOqFjvECLFyVJxWULnwHX3t0j3KCY+T8uobbkhpqY=;
+        b=rXrvUI1t+FXQ1afsanctLzY91LCzLSBn3TzZDJvgbqVkoYyiWFpkNKjqD/NTzlqT7j
+         PZ9vbBPMRkfi8lpuU1DpjW85U5Zu9T89L/K88tFcPh4/qU9SXtwp56BqvPq/6qgAXF18
+         nTmrHuIZVeFqNEaPv+PvpM36Y0GU09FTulnbdSdrqf55frVOSxZNB/RrrYlvywYl3nFt
+         pEYHnaLigSSkFMgRBF/DahwrwD1YFcBX8Atr9fAXvuMXy03O0uC5xB3OGIAPa9rdn6/m
+         VNH+N2d80hxZ4RivmkrTbtdEUOb2fR98gD++meXtrAuGToDEMyV9wzQGCmAyE3GYjpeL
+         pw8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690189180; x=1690793980;
+        d=1e100.net; s=20221208; t=1690189178; x=1690793978;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mGphpGKPeucRmByj89WO/k/xCxKR/i7/0c8QtIZngDQ=;
-        b=VBiPhjlFVflCRj1EY6yh0zgagloBom7OlmP5kn8u0GJLiLRZ/mIA0V2tFzT4qskf4o
-         jiCdI/w2iQON7A3/APvlOo68FWVykv9uKo0XUoSHwtIiC6ffJ3OSIHxD5joZ6zMPXOgR
-         V/u1krfChzve8f6c2PuJ/w+A3STnBBv7NH22wrvxvq3UUFBozQOSjiVpYBCKaiLiBVyd
-         iI7orZE3UbmS/4TA7DJc/SjJLoM8LBgI48K0IrjE3geQqU0H6CcA3gnkc2Tc2AUShK0D
-         AZ0xNqTCImvuN87fUJWUcI5LpZpBky3fPXyHllQhPEjirJx/BOpbHiunj1eFLo7OKMbf
-         FGrQ==
-X-Gm-Message-State: ABy/qLadn/GhdDE5yKfOK+cZnPtmjlJ9LVOuCX1J10PEb10mcDir4csp
-        0/BVTszkMKooQjN68ZnscC/jtMUfc6U=
-X-Google-Smtp-Source: APBJJlGZ1JVoFh2ztV0qqkw+o6VQhJK07cciSsTZvOslN/91YKxZmkyyLM8jw31qGy7w6L+n6GxvLw==
-X-Received: by 2002:a17:906:3088:b0:967:e015:f542 with SMTP id 8-20020a170906308800b00967e015f542mr9315566ejv.44.1690189180465;
-        Mon, 24 Jul 2023 01:59:40 -0700 (PDT)
+        bh=ONbOqFjvECLFyVJxWULnwHX3t0j3KCY+T8uobbkhpqY=;
+        b=GVJl9gUVVt5yMLzFxKDm4dYT60+1mO/9lXEB0ua2jrjB9HOB1rkIOa0iFSB+ou5zBX
+         3t3OM1Ay6PhFeMuRVTEXXBSjKBlrE9AP3GAiG0Nh9ABLT5IECE+CVutT6XVws/abdbXB
+         YlB3Hk8CHpwM+oBQ3rURuhw01GwLOULYqDvHoavcQp/ktDMwjY2AcNI6dD5/2yoV0UWT
+         7bvIq3pyK+twnqO5itn2N95pnRR+LF/fVumzAWL5fKwyM4lQOkHvXR/De2zP3Mwj+MX2
+         LXQ4REg5EaMJZmJSUrQDDiL5fncQl4UT527iKR9g8NjVcg10JoZlBZ22LLeY3uYkyOfE
+         MzpQ==
+X-Gm-Message-State: ABy/qLbSzH9Imk9UzVmbN1MvPYe7QUNve2OaZ6X/RgowFTMD60tXiVHQ
+        Puyz+EoJ41NeeTGh7qBN2cNcMT8KIvQ=
+X-Google-Smtp-Source: APBJJlGFJ2PxZqHtOPSB3tHSxVYLL/pjk+d9iHTtYfbxCFo9umvrSRpxKGi7oKkeSGCDZdOdB1pABA==
+X-Received: by 2002:a17:906:8a67:b0:994:673:8b00 with SMTP id hy7-20020a1709068a6700b0099406738b00mr8227902ejc.12.1690189177649;
+        Mon, 24 Jul 2023 01:59:37 -0700 (PDT)
 Received: from christian-Precision-5550.. ([2a04:cec0:11c4:4096:3d09:3950:f280:5ec1])
-        by smtp.gmail.com with ESMTPSA id rv7-20020a17090710c700b00993a9a951fasm6506665ejb.11.2023.07.24.01.59.39
+        by smtp.gmail.com with ESMTPSA id rv7-20020a17090710c700b00993a9a951fasm6506665ejb.11.2023.07.24.01.59.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 01:59:40 -0700 (PDT)
+        Mon, 24 Jul 2023 01:59:36 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
@@ -57,10 +57,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 4/8] repack: refactor finding pack prefix
-Date:   Mon, 24 Jul 2023 10:59:05 +0200
-Message-ID: <20230724085909.3831831-5-christian.couder@gmail.com>
+        Christian Couder <christian.couder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3 2/8] t/helper: add 'find-pack' test-tool
+Date:   Mon, 24 Jul 2023 10:59:03 +0200
+Message-ID: <20230724085909.3831831-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.41.0.384.ged66511823
 In-Reply-To: <20230724085909.3831831-1-christian.couder@gmail.com>
 References: <20230705060812.2865188-1-christian.couder@gmail.com>
@@ -71,51 +72,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new find_pack_prefix() to refactor code that handles finding
-the pack prefix from the packtmp and packdir global variables, as we are
-going to need this feature again in following commit.
+In a following commit, we will make it possible to separate objects in
+different packfiles depending on a filter.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org
+To make sure that the right objects are in the right packs, let's add a
+new test-tool that can display which packfile(s) a given object is in.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/repack.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ Makefile                  |  1 +
+ t/helper/test-find-pack.c | 35 +++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c      |  1 +
+ t/helper/test-tool.h      |  1 +
+ 4 files changed, 38 insertions(+)
+ create mode 100644 t/helper/test-find-pack.c
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 96af2d1caf..21e3b89f27 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -783,6 +783,17 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 	return finish_pack_objects_cmd(&cmd, names, local);
- }
- 
-+static const char *find_pack_prefix(void)
-+{
-+	const char *pack_prefix;
-+	if (!skip_prefix(packtmp, packdir, &pack_prefix))
-+		die(_("pack prefix %s does not begin with objdir %s"),
-+		    packtmp, packdir);
-+	if (*pack_prefix == '/')
-+		pack_prefix++;
-+	return pack_prefix;
-+}
+diff --git a/Makefile b/Makefile
+index fb541dedc9..14ee0c45d4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -800,6 +800,7 @@ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+ TEST_BUILTINS_OBJS += test-env-helper.o
+ TEST_BUILTINS_OBJS += test-example-decorate.o
+ TEST_BUILTINS_OBJS += test-fast-rebase.o
++TEST_BUILTINS_OBJS += test-find-pack.o
+ TEST_BUILTINS_OBJS += test-fsmonitor-client.o
+ TEST_BUILTINS_OBJS += test-genrandom.o
+ TEST_BUILTINS_OBJS += test-genzeros.o
+diff --git a/t/helper/test-find-pack.c b/t/helper/test-find-pack.c
+new file mode 100644
+index 0000000000..1928fe7329
+--- /dev/null
++++ b/t/helper/test-find-pack.c
+@@ -0,0 +1,35 @@
++#include "test-tool.h"
++#include "object-name.h"
++#include "object-store.h"
++#include "packfile.h"
++#include "setup.h"
 +
- int cmd_repack(int argc, const char **argv, const char *prefix)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -1031,12 +1042,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		printf_ln(_("Nothing new to pack."));
- 
- 	if (pack_everything & PACK_CRUFT) {
--		const char *pack_prefix;
--		if (!skip_prefix(packtmp, packdir, &pack_prefix))
--			die(_("pack prefix %s does not begin with objdir %s"),
--			    packtmp, packdir);
--		if (*pack_prefix == '/')
--			pack_prefix++;
-+		const char *pack_prefix = find_pack_prefix();
- 
- 		if (!cruft_po_args.window)
- 			cruft_po_args.window = po_args.window;
++/*
++ * Display the path(s), one per line, of the packfile(s) containing
++ * the given object.
++ */
++
++static const char *find_pack_usage = "\n"
++"  test-tool find-pack <object>";
++
++
++int cmd__find_pack(int argc, const char **argv)
++{
++	struct object_id oid;
++	struct packed_git *p;
++
++	setup_git_directory();
++
++	if (argc != 2)
++		usage(find_pack_usage);
++
++	if (repo_get_oid(the_repository, argv[1], &oid))
++		die("cannot parse %s as an object name", argv[1]);
++
++	for (p = get_all_packs(the_repository); p; p = p->next) {
++		if (find_pack_entry_one(oid.hash, p))
++			printf("%s\n", p->pack_name);
++	}
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index abe8a785eb..41da40c296 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -31,6 +31,7 @@ static struct test_cmd cmds[] = {
+ 	{ "env-helper", cmd__env_helper },
+ 	{ "example-decorate", cmd__example_decorate },
+ 	{ "fast-rebase", cmd__fast_rebase },
++	{ "find-pack", cmd__find_pack },
+ 	{ "fsmonitor-client", cmd__fsmonitor_client },
+ 	{ "genrandom", cmd__genrandom },
+ 	{ "genzeros", cmd__genzeros },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index ea2672436c..411dbf2db4 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -25,6 +25,7 @@ int cmd__dump_reftable(int argc, const char **argv);
+ int cmd__env_helper(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
+ int cmd__fast_rebase(int argc, const char **argv);
++int cmd__find_pack(int argc, const char **argv);
+ int cmd__fsmonitor_client(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+ int cmd__genzeros(int argc, const char **argv);
 -- 
 2.41.0.384.ged66511823
 
