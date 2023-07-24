@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63480C001DF
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 09:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7C21C001B0
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 09:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232163AbjGXJBi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 05:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55968 "EHLO
+        id S232012AbjGXJCg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 05:02:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232096AbjGXJBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 05:01:15 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C4A10CA
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 02:01:10 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f95bf5c493so5957863e87.3
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 02:01:10 -0700 (PDT)
+        with ESMTP id S232136AbjGXJCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 05:02:24 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B70310E6
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 02:02:02 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fdd515cebcso5983391e87.0
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 02:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690189269; x=1690794069;
+        d=gmail.com; s=20221208; t=1690189320; x=1690794120;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TUyxQFKOQXmGizkdORIOh+/JwRls3VT312n9Gg+cgdg=;
-        b=XM5bCOv2CiX4lPbcsRyPUalZYrQ7WmdKmaU1rqPsSG0B5CfrOCiaWjT1rJ+ng7p/b3
-         ZAvWjyCbHUDkU8G92zawcrKJIKSrzOQb7slmLr9mgkoR3YhbsCT0TntgtHNy87/ZFOFC
-         Ny/u/ioFOlO3jKSZOtk1opec/J53J+qdxFjVf7FbocZztNQzMwp9E7+mva5UlklwSfkI
-         zUQ/QXFJpU3jNfMe1fC6RHSjFwwIFSY4juaid9MmQ2NiztudQjiEo4s9r3DxpKcViUp4
-         /X3waejgnaKDGxSorOaHxjYO6vzH6T/WYn0NzlN+KUzQ8vyw9DmGqPQtZooWq+JSTqde
-         KH/A==
+        bh=14FeRDRF9mU0hYv8MGjhSIvJDLWNwHK7AId1aAXe6YE=;
+        b=gen+4BgBnVDHVib1+upPCfJLQQmiQsD4aMGpMCXB7KQ1UyWRX+HlIMlrEHsGz+3tAJ
+         46YT8XNuivY+2lweQzkxxoYsxCN1KclHB+svLuP1ZTK9O1LmsaCHnd/nwBm92pdnoMW5
+         mxhJoF6Ws7X3SI7g58CpjezZAE3PfRSaiWxsyzuvV+aUJocbbep7oaOVbw9k4NB3jWBW
+         jnFM8WmOXsdYgkZ/PiKDciOMK8EgGoFMqBryVCqgEHQwO9Mrm82srGEkPQUCItVn5fCW
+         WnaTl6pVyK6lHZzJ5XF+gk5Z8ZT3w7dq9AKUy9OwwZUzd3P3v9LW+d2gcqG8/FDxkbWP
+         MEoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690189269; x=1690794069;
+        d=1e100.net; s=20221208; t=1690189320; x=1690794120;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TUyxQFKOQXmGizkdORIOh+/JwRls3VT312n9Gg+cgdg=;
-        b=IWpwJ+4TXaKlaybfJsdJnRUGWB0dxjUbPXljRPImN2eKS21KpYnogcfSWRnfMy9KV3
-         mPLWpw2G3DO1Rmw7w/ZbsSl90KFPG87kRfJE7AaXzXCaWVY3zeIVER1sEL1TZhdrnbQU
-         7EIH90z6YwYBZYmlooFGLOwsA5J+7SwNgoMl+6XfB/21IiIsS74gU4IENiEWlQFJoz6L
-         xqsptiLh4CacadhN5pXosj8v6Ch43/8hL8qI2WhDXMQduuyy5mxtFZA5mEJiocDHZBEM
-         k/t+/nqS3ZMnMw7P2Pb6PRwslydkh0HSDJfSf44M8GcALuwUHzTxPO1XvAzd6Tewe2LN
-         YEDg==
-X-Gm-Message-State: ABy/qLZUKYg7jqGEE80K1NSZSHIdZxtVlyYEGm2PmAgsQ0jJ9aWGs1Mw
-        edmx6GZDdzW0Mr7DGtOD5cVYjgXZ6WaRTYnWN/ZL+WtR
-X-Google-Smtp-Source: APBJJlF9Fs5O3oSeR7O8duoeZZ9ALixRHhkMCjnhwviqpFM0+Hlfk2LZ5BOvyM+x0VswNo7/0Vf3NO1dAeI2ASNyig0=
-X-Received: by 2002:ac2:4846:0:b0:4f8:6d54:72fb with SMTP id
- 6-20020ac24846000000b004f86d5472fbmr4115976lfy.62.1690189268700; Mon, 24 Jul
- 2023 02:01:08 -0700 (PDT)
+        bh=14FeRDRF9mU0hYv8MGjhSIvJDLWNwHK7AId1aAXe6YE=;
+        b=U5u0jZ9rYsqNKIHovc9VcgvfRUPbaDAKecziUKk56Ca2C0d99P6FvLVvNIQxQrjjml
+         vnV6CebgFVR6KKtkZpiThESq7Q10MBYw+GlOmgi+JgCd6vl0v6uNbKNvybbCXWztG6EH
+         v3ytYYh9x9OJhcCE52wwzfZVWHbXTv2cOkm249CjMXtsVWNhUFG827kgIJwS4NMWqBb1
+         W3VygBXClb3FNvE+0Fam1P+tJNC34rjTKKQ/uj/HdgdQIaybwsxn4/sEgF1nzE1I0T8i
+         D5O7GO7PeGRhJEzAIuKVjoX3Sw16HopFl8Qa7c5EeyflakMTSM2sbr+dbcSChbrIDl6H
+         VMzA==
+X-Gm-Message-State: ABy/qLZQeLdVtmRZ3zcfcLkpiB3ZiqdgUz/LR862eWlClNlfxIZ+PS6b
+        HS1AQMhD5rKgrdJa8w58TXZE2iFacWHltDK7SMo=
+X-Google-Smtp-Source: APBJJlHOYGP1Lbs08IMHcztH0TSC4GLk8i9m7ovFittgUvSDWNXQYV+x37xEnxuGZrUoHll06o+/PvYVHmPF6CqtX+g=
+X-Received: by 2002:a19:4f56:0:b0:4fd:f876:d86 with SMTP id
+ a22-20020a194f56000000b004fdf8760d86mr1057204lfk.50.1690189320212; Mon, 24
+ Jul 2023 02:02:00 -0700 (PDT)
 MIME-Version: 1.0
 References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230705060812.2865188-1-christian.couder@gmail.com> <20230705060812.2865188-8-christian.couder@gmail.com>
- <xmqq5y6y1agl.fsf@gitster.g>
-In-Reply-To: <xmqq5y6y1agl.fsf@gitster.g>
+ <20230705060812.2865188-1-christian.couder@gmail.com> <20230705060812.2865188-6-christian.couder@gmail.com>
+ <xmqqh6qi1byn.fsf@gitster.g>
+In-Reply-To: <xmqqh6qi1byn.fsf@gitster.g>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 24 Jul 2023 11:00:56 +0200
-Message-ID: <CAP8UFD1tqzp744j0KORw-zcgOn6Tufm4Kk3yct3vHGY29pbm-w@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] repack: implement `--filter-to` for storing
- filtered out objects
+Date:   Mon, 24 Jul 2023 11:01:48 +0200
+Message-ID: <CAP8UFD0aa+EZQ2Q=C2WjWrNL9desg-KLLjOKS8BUBR4DS1ytsQ@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] repack: add `--filter=<filter-spec>` option
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
@@ -70,84 +69,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 5, 2023 at 8:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+On Wed, Jul 5, 2023 at 7:53=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
 rote:
 >
 > Christian Couder <christian.couder@gmail.com> writes:
 >
-> > A previous commit has implemented `git repack --filter=3D<filter-spec>`=
- to
-> > allow users to filter out some objects from the main pack and move them
-> > into a new different pack.
+> > This could be useful if, for example, some large blobs take a lot of
+> > precious space on fast storage while they are rarely accessed. It could
+> > make sense to move them into a separate cheaper, though slower, storage=
+.
+> >
+> > In other use cases it might make sense to put all the blobs into
+> > separate storage.
 >
-> OK, this sidesteps the question I had on an earlier step rather
-> nicely.  Instead of having to find out which ones are to be moved
-> away, just generating them in a separate location would be more
-> straight forward.
+> Minor nit.  Aren't the above two the same use case?
+
+In the first case only some large blobs are moved to slower storage
+and in the other case all the blobs are moved to slower storage. So
+yeah the use cases are very similar. Not sure if and how I can improve
+the above wording though.
+
+> > This is done by running two `git pack-objects` commands. The first one
+> > is run with `--filter=3D<filter-spec>`, using the specified filter. It
+> > packs objects while omitting the objects specified by the filter.
+> > Then another `git pack-objects` command is launched using
+> > `--stdin-packs`. We pass it all the previously existing packs into its
+> > stdin, so that it will pack all the objects in the previously existing
+> > packs. But we also pass into its stdin, the pack created by the previou=
+s
+> > `git pack-objects --filter=3D<filter-spec>` command as well as the kept
+> > packs, all prefixed with '^', so that the objects in these packs will b=
+e
+> > omitted from the resulting pack.
 >
-> The implementation does not seem to restrict where --filter-to
-> directory can be placed, but shouldn't it make sure that it is one
-> of the already specified alternates directories?  Otherwise the user
-> will end up corrupting the repository, no?
+> When I started reading the paragraph, the first question that came
+> to my mind was if these two pack-objects processes can and should be
+> run in parallel, which is answered in the part near the end of the
+> paragraph.  It may be a good idea to start the paragraph with "by
+> running `git pack-objects` command twice in a row" or something to
+> make it clear that one should (and cannot be) run before the other
+> completes.
 
-I don't think it should make sure that the implementation should
-restrict where the --filter-to directory can be placed.
-
-In version 3, that I just sent, I have written the following in the
-commit message to explain this:
+Ok, in version 3 that I just sent, that paragraph starts with:
 
 "
-   Even in a different directory, this pack can be accessible if, for
-   example, the Git alternates mechanism is used to point to it. In fact
-   not using the Git alternates mechanism can corrupt a repo as the
-   generated pack containing the filtered objects might not be accessible
-   from the repo any more. So setting up the Git alternates mechanism
-   should be done before using this feature if the user wants the repo to
-   be fully usable while this feature is used.
-
-   In some cases, like when a repo has just been cloned or when there is no
-   other activity in the repo, it's Ok to setup the Git alternates
-   mechanism afterwards though. It's also Ok to just inspect the generated
-   packfile containing the filtered objects and then just move it into the
-   '.git/objects/pack/' directory manually. That's why it's not necessary
-   for this command to check that the Git alternates mechanism has been
-   already setup.
+   This is done by running `git pack-objects` twice in a row. The first
+   command is run with `--filter=3D<filter-spec>`, using the specified
+   filter.
 "
 
-I haven't mentioned cases related to promisor remotes, but I think in
-some of those cases the feature can be very useful too while there is
-no need to check that the Git alternates mechanism has been set up.
+> In fact, isn't the call site of write_filtered_pack() in this patch
+> a bit too early?  The subprocess that runs with "--stdin-packs" is
+> started and told about the names of the pack we are going to create,
+> and it does not start processing until it reads everything (i.e. we
+> run fclose(in) in the write_filtered_pack() function), but the loop
+> over "names" string list in the caller that moves the tempfiles to
+> their final filenames comes after the call to close_object_store()
+> we see in the post context of the call to write_filtered_pack() that
+> is new in this patch.
 
-In version 3, the doc for the --filter-to option and the corresponding
-gc.repackFilterTo config flag look like this:
+I think it can work if the call to write_filtered_pack() is either
+before the call to close_object_store() or after it. It would just use
+the tempfiles with their temporary name in the first case and with
+their final name in the second case.
 
-+--filter-to=3D<dir>::
-+       Write the pack containing filtered out objects to the
-+       directory `<dir>`. Only useful with `--filter`. This can be
-+       used for putting the pack on a separate object directory that
-+       is accessed through the Git alternates mechanism. **WARNING:**
-+       If the packfile containing the filtered out objects is not
-+       accessible, the repo could be considered corrupt by Git as it
-+       migh not be able to access the objects in that packfile. See
-+       the `objects` and `objects/info/alternates` sections of
-+       linkgit:gitrepository-layout[5].
+write_filtered_pack() is very similar to write_cruft_pack() which is
+called before the call to close_object_store(), so I prefer to keep it
+before that call too, if possible, for consistency.
 
-+gc.repackFilterTo::
-+       When repacking and using a filter, see `gc.repackFilter`, the
-+       specified location will be used to create the packfile
-+       containing the filtered out objects. **WARNING:** The
-+       specified location should be accessible, using for example the
-+       Git alternates mechanism, otherwise the repo could be
-+       considered corrupt by Git as it might not be able to access the
-+       objects in that packfile. See the `--filter-to=3D<dir>` option
-+       of linkgit:git-repack[1] and the `objects/info/alternates`
-+       section of linkgit:gitrepository-layout[5].
+> The "--stdin-packs" one is told to exclude objects that appear in
+> these packs, so if the main process is a bit slow to finalize the
+> packfiles it created (and told the "--stdin-packs" process about),
+> it will not lead to repository corruption---just some objects are
+> included in the packfiles "--stdin-packs" one creates even though
+> they do not have to.  So it does not sound like a huge problem to
+> me, but still it somehow looks wrong.  Am I misreading the code?
 
-So they warn about possible issues with the feature and link to some
-relevant doc.
+I would have thought that as finish_pack_objects_cmd() calls
+finish_command() the first pack-objects command (which is called
+without --stdout) should be completely finished and the packfiles
+fully created when write_filtered_pack() (or write_cruft_pack()) is
+called, even if the object store is not closed, but you might be
+right.
 
-Now if we think that it's not enough, I would implement a check in the
-code that would warn users loudly if the directory specified by those
-options is not accessible using the Git alternates mechanism. It would
-be annoying I think that it would be too restrictive to error out in
-that case though.
+Perhaps this could be dealt with separately though, as I think we
+might want to fix write_cruft_pack() first then.
