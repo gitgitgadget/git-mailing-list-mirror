@@ -2,90 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 726E5EB64DD
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 20:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97962EB64DD
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 20:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbjGXUI6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 16:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
+        id S230435AbjGXUJr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 16:09:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjGXUI5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 16:08:57 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74B1E10D9
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 13:08:56 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6b9b89627c3so3678253a34.1
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 13:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690229336; x=1690834136;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0TNKMjsrNy9vh2nEaym0HjDXMDj5+8b9TA1H0cFJ5RY=;
-        b=TkS1KAsYRXR2vFcEyZVJ70+ngLVHgnA2lh/HIU2A8dkQgwUOG9r+pxITWCQqPmklpz
-         S/Hr1a/QJ0UlNqxRFhTh2sV/Srj9j4TLRN+7hK6iK18cNcOuS0oRricsYGq+MpAJjKQ8
-         uoK0OuLoRRZQNb6H2iC6Sp0IQFeg+nxSgh8uUTNH5adTFbNkiO0cx1DwwPML3+UhQGu6
-         6YexpFzn0bPUTCf6x4xlITXt0CPEGJ0QTvWuf1ZvOHNQ/OQul2P8N9j6Ze7Ngjxy/CkE
-         MynKZ+WHMUtPvMBEr1o0MNiyn4kFhE4Sj6TZXEXNlI9bo6oPqGaYhX/ZacJbWXAhRwyR
-         ISYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690229336; x=1690834136;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0TNKMjsrNy9vh2nEaym0HjDXMDj5+8b9TA1H0cFJ5RY=;
-        b=UeuKWhESyhjKKj2WcGq6Crudzl58Iat+f+WNEHtu5fJv3DUMX1pd2pE4KO8Jog3Osx
-         7FM+jcysSAz05+UPcRxNu2OEzbJDT5fjfEslzWabtLvQxh0tHBtibB88EmhpfqJuNrps
-         nvlrEbsDow0sUZ5IOuTYyKXaXEQxN24tkCZqC76ytFSdB7tILRaigXrq2LXPFqAycvq/
-         SZehnnmWaDCX6Ne8RhoeQaU6E3FveUK3lolDequ4KByU9mo7PUK+pTK5VVqbxBgWwyqf
-         6lmnB2wMoelGoRkb9peTocVnmQnno2kbcdYkMWarSiulptiowX2Mijhv9eQcZe1cBWa9
-         8VRA==
-X-Gm-Message-State: ABy/qLZ7nm45eG0TAhNm+894vRqGSOgyLTF9V7uRqStm0Ecx6cD000gR
-        DHJ28eWoXbni+/o6JlzsT/T5m0OmwaNQv81R2TY=
-X-Google-Smtp-Source: APBJJlHMhedmWsxtWl8FSXmx0dXqMSuFadLsp1kjAt8DqUsOwog/o6/Q+nnS0856xGky4AOSN1emgt+8/eU3tSCClco=
-X-Received: by 2002:a05:6870:46a1:b0:1bb:739c:9e2b with SMTP id
- a33-20020a05687046a100b001bb739c9e2bmr3596553oap.57.1690229335710; Mon, 24
- Jul 2023 13:08:55 -0700 (PDT)
+        with ESMTP id S229929AbjGXUJp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 16:09:45 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A727E10F8
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 13:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1690229377; x=1690834177; i=l.s.r@web.de;
+ bh=+nyPUyu9nASHvPaHMRuFBoe8/VRkcJK+1+dtqbmLaBw=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Y/0brVrfiSumHesO0hShEXybAD3BXLDlmzrj+JTI2bLrAI5Uz3JuSbDSOStoivO9ddob7jj
+ UkbcrqEJ8oAenroS2Xo0Uj6oJ8Sct20yOrz7yxQTKDisGzLOJ/47Q/ZZp2SiCTVzGcRox1owA
+ 1zczDwluD8PBUswz7Reb1WCsPPDNJJ3C4YY6QqM+m05Y5cjktGHdA2YhyxLAPKlmK4gQs/USa
+ PkwYPNtlbaeaYzkAeDv0gOcHEuQBqUaQZgQinR+6iVFoMcUgFnJMqFc523Qdja45m75iXY2wR
+ GSVvQZU4U5Yzzju0q8/VLnJej119vpfIKcr3pwdznKQOw4/T4wQQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MeUbo-1pnb7s3YKy-00ambR; Mon, 24
+ Jul 2023 22:09:36 +0200
+Message-ID: <9e8225dd-1e8b-8af2-c3e1-0c5834694244@web.de>
+Date:   Mon, 24 Jul 2023 22:09:36 +0200
 MIME-Version: 1.0
-References: <20230721060848.35641-1-alexhenrie24@gmail.com>
- <20230722212830.132135-1-alexhenrie24@gmail.com> <20230722212830.132135-2-alexhenrie24@gmail.com>
- <xmqqjzupqn3q.fsf@gitster.g> <xmqqedkxp3fn.fsf@gitster.g>
-In-Reply-To: <xmqqedkxp3fn.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Mon, 24 Jul 2023 14:08:19 -0600
-Message-ID: <CAMMLpeQwG5TbzwUKY=QOnHA-mey2NZgM+4ssF+qDrWJ=Vxs9Uw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/1] sequencer: finish parsing the todo list despite an
- invalid first line
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH] ls-tree: fix --no-full-name
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, alban.gruin@gmail.com,
-        phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Git List <git@vger.kernel.org>
+References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
+ <xmqqo7k9fa5x.fsf@gitster.g> <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
+ <xmqq351hz5xp.fsf@gitster.g> <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
+ <xmqq4jlxuiuu.fsf@gitster.g> <1535f30e-3cf9-1a0a-04af-4ba4a7c46d15@web.de>
+ <xmqqr0oxnnx4.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqr0oxnnx4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ei2mGrIOFu6Gan8KrHSkTses8ktS05YGMfZ1mS3FfdKOg8YPkt6
+ 2TJr63gA0tRCii7xaAyHEsCZnWbqyd9PEKz9+psocRC0Q1grPSJvh2xmErua5bIRY3LXl1u
+ pL229O6I2WEh8PU6yaP7Sbi5SeUaPEBBxXR+U0Uah0B4/09wskllauyTwLD+EJuPDLwTALW
+ rjiJMGOZUZ2vuXfpe0eVw==
+UI-OutboundReport: notjunk:1;M01:P0:AAsI97hLJnI=;SFNHCZ0jVnTaedVZ+KKCwCXf2LH
+ qUfbo6HXGJji6roarZOoyA0Bd/gEOK9PTuTPk/uWgTmq3w25xaeYciHg75u2PCgUwI59Wvw8+
+ LhlveFLErOTAAgWOZJSo8FjOx/v7FJ4wM3ZAwWT+TnLuCpe1P3iwxfTXMaL/xFm4qxqT3ypi8
+ WLUxBUMjqeEjKz+l3xLHd8lO8s7tqE8G8vCZa494tej5BQDSBcAXTnStwuzlpRWd++77ilAt9
+ 47UsttIJOcZPRHgvfFYzzXD0S6aLxsXrDLuk2qTzElNCKdgmm57ZkcuzNWib6nXDt5l3Vu8oH
+ BEIel6i5eXyqwmm0EBpLhVvKjDdUHUSC8GwrAtFz+Pfhs5gYTDrT5wvzDc2Akov7TNfTIQwq8
+ kz4oA5sye8IJko8fkdYryiqYBjNUI3pLd+vQenliQQTfvmZrIRLyrCHwWAzZeh1ir/kJT6n36
+ CHK14MwNPGL+jia1c9JxOfo5U2A2RhYwiYVA13OFktcDaENv6hBaBUnRBB47kh1zV5YmJHOeS
+ FLiq08PdtlRwbHPGlzQSTpf5KtK1khlBnhtVX2G1XgQ+aLSD2EmZqgUEpSphGgkj4KaiSnsri
+ nncyldsldd5fGBhGROCqXNRiJ/IjUqPD4ntcOF8Z11YzsxdWY1qBfKGXi94UhcFsHZw0PCJQ3
+ TJ6h2shBwMDTowM/Ch7nswRr0+arCTnZV4ILol9Yph5R/hogj61cNYNwxk5+QNNmg+sB7Fk23
+ Fbjl+uVEvfJD3gnHmRLvEQ4kyWrtML4xe0iBLvP8sy1I6N6ogv3Ucg7QGQ+sSr0oNRqcek667
+ ht0/OcAuhZL21+y0XleaYMbuCY9a7ru3g2e5KG+rpkOu6lbw91ctTxywHUFikyCNQ8m938u7f
+ nBR9QghFU+5Zc2ZVbmW6zC7/NNCvTP3DXiDQVVgdsLB3qqJ97H++2eX1AU1yy3VyoEMzNW70Y
+ YrxJVFZ4RocVC7m8ys50q1jZGdw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 12:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
+Am 24.07.23 um 20:51 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+>> Am 21.07.23 um 22:09 schrieb Junio C Hamano:
+>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> -    -D, --no-doubt        begins with 'no-'
+>>>> +    -D, --[no-]no-doubt   begins with 'no-'
+>>>
+>>> Hmph, I really really loved the neat trick to allow "no-doubt"
+>>> option to be "positivised" by _dropping_ the leading "no-" at around
+>>> 0f1930c5 (parse-options: allow positivation of options starting,
+>>> with no-, 2012-02-25).
+>>
+>> Yeah, if there is a better way to document A) that the "no-" is optiona=
+l
+>> and B) whether it's present by default, I'm all ears.
 >
-> > The structure of this new test piece, including the use of "log -1
-> > --format", seems to follow existing tests, and very readable.  Why
-> > do we have one extra level of subshell, though?  There is no "cd"
-> > that may affect the later test pieces, and set_something_editor that
-> > touches environment that may affect the later test pieces is called
-> > in its own subshell already.
-> >
-> > Other than that, looking good (there may be a valid reason why the
-> > test piece needs the subshell around it, but it was just not apparent
-> > to me).
+> Some options take "no-" prefix while some others do not, so
+> indicating that "this can take negative forms" vs "this do not take
+> negative forms" by "--[no-]xyzzy" and "--frotz" makes sense.
 >
-> Ah, now I notice that Phillip also noticed the same thing.
+> Yikes.  There are tons of options whose names begin with "no-" and
+> marked PARSE_OPT_NONEG, so "an option '--no-nitfol' that does not
+> have the 'no-' part in [brackets] can drop 'no-' to make it
+> positive" would not fly as a rule/convention.
 >
-> I just removed the outer subshell while queuing.  Thanks for working
-> on this, and thanks Phillip for excellent reviews.
+> If we do not mind getting longer, we could say
+>
+> 	-D, --no-doubt, --doubt
+>
+> and explain in the description that --no-doubt is the same as -D and
+> --doubt is the default.  It is making the developers responsible for
+> clarify, which is not very satisfying.
 
-That works. Thanks to both of you!
+Adjusting all explanations manually seems quite tedious.
 
--Alex
+> We may not reject "--no-no-doubt" but with the positivization
+> support, double negation is not something we'd encourage without
+> feeling embarrassed.
+
+Right.  Perhaps --[[no-]no-]doubt?  Looks a bit silly with its nested
+brackets, but it's more correct, because it documents all three accepted
+forms, including the no-less one.
+
+Ren=C3=A9
