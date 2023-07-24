@@ -2,161 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 496C6C001DF
-	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 16:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BFF1C001DF
+	for <git@archiver.kernel.org>; Mon, 24 Jul 2023 16:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbjGXQAo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jul 2023 12:00:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36530 "EHLO
+        id S231496AbjGXQj1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jul 2023 12:39:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbjGXQAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2023 12:00:41 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C614419A
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:00:39 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b70bfc8db5so63936501fa.2
-        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:00:39 -0700 (PDT)
+        with ESMTP id S231517AbjGXQjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2023 12:39:23 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49255125
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:22 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5774098f16eso57959487b3.0
+        for <git@vger.kernel.org>; Mon, 24 Jul 2023 09:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690214438; x=1690819238;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DkkEPkhprCO8tU1dlVksM4qdZrovHzItx9KfkDJIRlo=;
-        b=YxZLtbgyqwrhik4N0tYijo+URhOQa5WH8NYAHq0eHjTsOvRM8rL15w45Kp+uUDdH1O
-         qi04caNT9qDLVhjeiFFyHNujxIS+PwCXpJ2/scpRPVf/Kn3lOl+mj+kj8tCzhrm+qJfo
-         zwuCZWjiDC2ZLAcrDio30aYZpnVFHSDVnHG/aM/MceR8MfyDPxDk7D//a62r62EP3U8q
-         PZwzGNq9bUVkYYG1Zv3Cz8ZRXRCIUwunYnzQr2Rr8a49qzOY33A87s8HxH2TtRJEPU4Q
-         ZPGN0cr0PlDAU2XyKsD59+FHfMXPTwj7ZWei5DM1BvAoIwWDQBjaxuY/0pvtkR+ds3iJ
-         bFvw==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690216761; x=1690821561;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=r6xeMdgQ/QCP4eJauLInObSumM2r826mXmHuAVHJ6BI=;
+        b=vjQMFm+vHitaXa7HM9rHZHnQajt7DBl0hJ359isnrVu/GrxucwOXY+rV08ucb8mo5a
+         wkigWMTQvIT2eo/8zEq6U6yOcHOvXiL5vTWj2oTwSgO/5LqNdZQJksLfCRGHoalnZgJg
+         CRf4bEW3+1EwCmyyWUYhJkwtays9KWaQuQQczbsScWHX4qOu5BJAuudo6aDdrFIFNdNx
+         XJiw8sNSIkdZqeooLb3PbTAod9qgi4v83aQs5DfqicWnmq76tGXWzVCYlxRiU9oueMuy
+         klYfnc1vygCpMyuzGOOX3K6qB6jnwwHM0mGUTpNe3Ld7YGY3TcUUn7dx7lQqgGSRhtWi
+         ILag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690214438; x=1690819238;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DkkEPkhprCO8tU1dlVksM4qdZrovHzItx9KfkDJIRlo=;
-        b=MhowbW6Tkc+eyFNA2cMum9xjBxVt8xHVZLC/eCT4sw7q8X+/adr6w+jVciMNX7e+xC
-         HbISgRBVVrVPPS+GHWxJKdLrrLSn/PdaKSdoDQzgrJmZjif/YZpOkAw5T/3pMCH2pJ9F
-         jFWjNETmudmHshMHDZTIMxRr1vuRh5+2nv7mw2kEfLMi1UXk+9msVBHnrkoyLHkzqGZx
-         YqAmkbdmwFopfy27FmrcrTnkf1j5bWcbx1x1/AUF7jPEHR6iuWrc0xkrt+Omr0ZfcFA1
-         WXk7wto7UfCx/W4kBmR3QuK64afil1R0cHjn34W5clQmxjMjqUHZSYw1ypY3eSSUuLUL
-         m11g==
-X-Gm-Message-State: ABy/qLbGxOFYRDeCSIa/5+fDUYAs2IGmHQDvKVH8wG5f6/Gq+eGm7aAj
-        EEwptYHhqDX8lAnMyL+ZsDo=
-X-Google-Smtp-Source: APBJJlFHDUH8sfGwZOLCchcSPboc+IsKmB5oixlWkNEfjfYWRdwekREcE+dPXaMWfr+AhJMevj4a9Q==
-X-Received: by 2002:a2e:7301:0:b0:2b7:202:cca7 with SMTP id o1-20020a2e7301000000b002b70202cca7mr6292248ljc.42.1690214437532;
-        Mon, 24 Jul 2023 09:00:37 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.235.211])
-        by smtp.gmail.com with ESMTPSA id h14-20020a05600c314e00b003fc3b03e41dsm13564416wmo.0.2023.07.24.09.00.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 09:00:37 -0700 (PDT)
-Message-ID: <ecabaf7d-d5a3-d2d9-2610-87c6a7b2570e@gmail.com>
-Date:   Mon, 24 Jul 2023 17:00:34 +0100
+        d=1e100.net; s=20221208; t=1690216761; x=1690821561;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r6xeMdgQ/QCP4eJauLInObSumM2r826mXmHuAVHJ6BI=;
+        b=WDvTxtYh3rGgINYabfVTT4L1uqhpxMh0H0NpU305EWohtEbpohCl5GnPUxD+fqhvux
+         mGFHQMMcOnWBzPfz0K2yrB2MMyJW0U5FUBMiBI5iEKjZe7UEFHTZjMVAq/FtErOzxwxh
+         W0ttykn8PsxcNWdVUZ4Px6GLSo6gjGlv+WPOmW74lDW4fMJP2UevDVHupubxtIDGTiLF
+         lNnZisYCc3Btf2BQVlgzvKbgs18zQPrhEfQHO6n0lzB49rPydZtot8K9GUhqXGWjz2VY
+         1mLoXqoKqHELqUfrA9rbsaKvTSbDdxHzX/e8/kzKe5/AjS72tAZwmWbe0Gx6+p7KdMN5
+         kG1Q==
+X-Gm-Message-State: ABy/qLaYuEDMRm9vr6YPfq90C3rQQpVjKkrmPlr9MfZEQXv6cXcsmEIw
+        vLhS1pbMvC6gNTaACgreyuhh+T0UT6ynM9gfbfUICg==
+X-Google-Smtp-Source: APBJJlEhDjkKi4+gR+Vk/92qrRThoJGbaA4qOJZ+yXEEIKpWGiU606oBdU8IPeHiyE40a01H+Rmypw==
+X-Received: by 2002:a0d:c383:0:b0:55a:3ce9:dc3d with SMTP id f125-20020a0dc383000000b0055a3ce9dc3dmr9218458ywd.13.1690216761074;
+        Mon, 24 Jul 2023 09:39:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a10-20020a0dd80a000000b0057a560a9832sm2903073ywe.1.2023.07.24.09.39.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jul 2023 09:39:20 -0700 (PDT)
+Date:   Mon, 24 Jul 2023 12:39:19 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/5] commit-graph: test cleanup and modernization
+Message-ID: <cover.1690216758.git.me@ttaylorr.com>
+References: <cover.1689960606.git.me@ttaylorr.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 1/1] sequencer: finish parsing the todo list despite an
- invalid first line
-Content-Language: en-US
-To:     Alex Henrie <alexhenrie24@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, alban.gruin@gmail.com, gitster@pobox.com
-References: <20230721060848.35641-1-alexhenrie24@gmail.com>
- <20230722212830.132135-1-alexhenrie24@gmail.com>
- <20230722212830.132135-2-alexhenrie24@gmail.com>
- <0d1c5bfd-3ae5-83f0-a333-bbb8510a973a@gmail.com>
- <CAMMLpeTBBS7FExevcvCWut8wFbcDSDBhUUq+tCaXfOPiY+3GXA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAMMLpeTBBS7FExevcvCWut8wFbcDSDBhUUq+tCaXfOPiY+3GXA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1689960606.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+Here is a reroll of my series to address a few style nitpicks in the
+commit-graph tests.
 
-On 24/07/2023 16:26, Alex Henrie wrote:
-> On Mon, Jul 24, 2023 at 4:02 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> 
->> On 22/07/2023 22:28, Alex Henrie wrote:
->>> Before the todo list is edited it is rewritten to shorten the OIDs of
->>> the commits being picked and to append advice about editing the list.
->>> The exact advice depends on whether the todo list is being edited for
->>> the first time or not. After the todo list has been edited it is
->>> rewritten to lengthen the OIDs of the commits being picked and to remove
->>> the advice. If the edited list cannot be parsed then this last step is
->>> skipped.
->>>
->>> Prior to db81e50724 (rebase-interactive: use todo_list_write_to_file()
->>> in edit_todo_list(), 2019-03-05) if the existing todo list could not be
->>> parsed then the initial rewrite was skipped as well. This had the
->>> unfortunate consequence that if the list could not be parsed after the
->>> initial edit the advice given to the user was wrong when they re-edited
->>> the list. This change relied on todo_list_parse_insn_buffer() returning
->>> the whole todo list even when it cannot be parsed. Unfortunately if the
->>> list starts with a "fixup" command then it will be truncated and the
->>> remaining lines are lost. Fix this by continuing to parse after an
->>> initial "fixup" commit as we do when we see any other invalid line.
->>
->> This version looks great apart from the test being run in an unnecessary
->> subshell which looks like it got left in from the last version. Junio
->> might be able to correct that when he applies the patch.
-> 
-> I think I see what you mean now: Because this test never performs a
-> successful rebase, rebase_setup_and_clean is overkill. I can send a v6
-> tonight that uses 'test_when_finished "git rebase --abort"' instead.
+Much is the same from the previous round, except for:
 
-I don't mind either way on that particular issue though I agree we could 
-just use 'test_when_finished "git rebase --abort"' instead. What I was 
-referring to was the subshell that comes after 'rebase_setup_and_clean'. 
-The change I was looking for was removing the '(' after 
-"rebase_setup_and_clean" at the beginning of the test, removing ')' at 
-the end of the test and adjusting the indentation.
+  - quotes >"$DIR/expect" to ensure that we work on all shells>
+  - adds a NOTE above graph_git_behavior to indicate that its second
+    argument cannot contain any character in $IFS.
+  - rebased on top of the current tip of 'master'.
 
-+test_expect_success 'the first command cannot be a fixup' '
-+	rebase_setup_and_clean fixup-first &&
-+	(
+As usual, a range-diff is available below. Thanks in advance for your
+review!
 
-This subshell is unnecessary as we're not changing directory or 
-exporting any environment variables
+Taylor Blau (5):
+  t/lib-commit-graph.sh: allow `graph_read_expect()` in sub-directories
+  t/lib-commit-graph.sh: avoid directory change in
+    `graph_git_behavior()`
+  t5318: avoid top-level directory changes
+  t5328: avoid top-level directory changes
+  t/lib-commit-graph.sh: avoid sub-shell in `graph_git_behavior()`
 
-+		cat >orig <<-EOF &&
-+		fixup $(git log -1 --format="%h %s" B)
-+		pick $(git log -1 --format="%h %s" C)
-+		EOF
-+
-+		(
+ t/lib-commit-graph.sh              |  34 ++-
+ t/t5318-commit-graph.sh            | 378 +++++++++++++----------------
+ t/t5328-commit-graph-64bit-time.sh |  54 ++---
+ 3 files changed, 224 insertions(+), 242 deletions(-)
 
-This subshell is required as we're setting GIT_SEQUENCE_EDITOR in the 
-environment. We only want that set for the initial rebase. In particular 
-we do not want it set when we run "git rebase --edit-todo" below which 
-is why we exit the subshell as soon as the initial rebase exits.
-
-
-Best Wishes
-
-Phillip
-
-+			set_replace_editor orig &&
-+			test_must_fail git rebase -i A 2>actual
-+		) &&
-+		grep "cannot .fixup. without a previous commit" actual &&
-+		grep "You can fix this with .git rebase --edit-todo.." actual &&
-+		# verify that the todo list has not been truncated
-+		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
-+		test_cmp orig actual &&
-+
-+		test_must_fail git rebase --edit-todo 2>actual &&
-+		grep "cannot .fixup. without a previous commit" actual &&
-+		grep "You can fix this with .git rebase --edit-todo.." actual &&
-+		# verify that the todo list has not been truncated
-+		grep -v "^#" .git/rebase-merge/git-rebase-todo >actual &&
-+		test_cmp orig actual
-+	)
-+'
-
-
-> Thanks,
-> 
-> -Alex
+Range-diff against v1:
+1:  08482212630 ! 1:  c81a059c181 t/lib-commit-graph.sh: allow `graph_read_expect()` in sub-directories
+    @@ t/lib-commit-graph.sh: graph_read_expect() {
+      		OPTIONS=" read_generation_data"
+      	fi
+     -	cat >expect <<- EOF
+    -+	cat >$DIR/expect <<- EOF
+    ++	cat >"$DIR/expect" <<-EOF
+      	header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
+      	num_commits: $1
+      	chunks: oid_fanout oid_lookup commit_metadata$OPTIONAL
+2:  715a160903b ! 2:  115df6fe226 t/lib-commit-graph.sh: avoid directory change in `graph_git_behavior()`
+    @@ Commit message
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+      ## t/lib-commit-graph.sh ##
+    -@@ t/lib-commit-graph.sh: graph_git_behavior() {
+    +@@ t/lib-commit-graph.sh: graph_git_two_modes() {
+    + 	test_cmp expect output
+    + }
+    + 
+    ++# graph_git_behavior <name> <directory> <branch> <compare>
+    ++#
+    ++# Ensures that a handful of traversal operations produce the same
+    ++# results with and without the commit-graph in use.
+    ++#
+    ++# NOTE: it is a bug to call this function with <directory> containing
+    ++# any characters in $IFS.
+    + graph_git_behavior() {
+    + 	MSG=$1
+    + 	DIR=$2
+      	BRANCH=$3
+      	COMPARE=$4
+      	test_expect_success "check normal git operations: $MSG" '
+3:  451ec003be8 = 3:  12ce967bafe t5318: avoid top-level directory changes
+4:  ba550987055 = 4:  79b3444660f t5328: avoid top-level directory changes
+5:  c3432f27b94 = 5:  887006eab46 t/lib-commit-graph.sh: avoid sub-shell in `graph_git_behavior()`
+-- 
+2.41.0.399.g887006eab46
