@@ -2,119 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D9F0EB64DD
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 20:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5C8FEB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 21:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbjGYU7Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 16:59:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48928 "EHLO
+        id S231447AbjGYVAZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 17:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbjGYU7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 16:59:15 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1949DE78
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 13:59:14 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E03BF1892AD;
-        Tue, 25 Jul 2023 16:59:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z/Ios38kDIx1GoDbotAQu9URZlYGohIg/itr6v
-        kMMrk=; b=uLeRvtAg2aoi2JjQUBkZB5SqzF7PDvMkmuqD5MhQN3CYPV5dyDyS1s
-        PuTtFGa8KdlvjmCDCv4zEgtlukuFVUXch0vdp39BQUvscAB0NnU/rNiqDafthXh0
-        miKt7MfZLxlfHWvTM5CmyLr1AHfWPNG55xUORhn/S1t5S+q5wW2Ao=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D76781892AC;
-        Tue, 25 Jul 2023 16:59:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 47ED31892AA;
-        Tue, 25 Jul 2023 16:59:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S231429AbjGYVAW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 17:00:22 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E002173B
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 14:00:19 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 41be03b00d2f7-55b22f82ac8so184727a12.1
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 14:00:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690318819; x=1690923619;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8eIgoDnXOksHlX9kAv9ADbyFlegaU569fb0KWPiLe+M=;
+        b=ML9ZdFRIlxVCOx8KglGVnG/50xHG5ZFqblDQeuopCUa/7qF0MuSANvGpaEK+wQ7uqm
+         dpIka9pWYTQ5KVmSl+D9hIqg8R7Bs4j3wUfgrc0VmnRiR5/W5nN3KAsN/yEqFtpnZHHE
+         cn8khCxJr3BjSNPjgdzcwTRTd3BxXqkaqqr9EkGhWMxBlktL7QLrwkfrSu0tE6cFfECc
+         CpNPeNnQpzBpwG+a9jZz9KcFilO061vCGORURcHEjaQv/nLaHL+JRUSTth7sgB2N3qh3
+         xeQzF7kp94tT70/mo4urCYRxv9OhEApcsMugsEZk8eg2BJKBHKg4zDLQva3gMyDrv53T
+         hZSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690318819; x=1690923619;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8eIgoDnXOksHlX9kAv9ADbyFlegaU569fb0KWPiLe+M=;
+        b=N+uXjO0JAMkl8/Y9n/4Y9llWb1mQ427FyeS+Kb4UYKmRHvPBPMYNHIwG04UVaYIJi0
+         MPpjIn4jP2N6fxFdQk0+sgtFFfn6p6//15kSvhH04s8ZLTtCBK6Ngn/HixI3yiUHb6oU
+         c0nPoVlqE+soAaWH1cmxsZLfNjmRH9Zre7K0lsCPLFDN8E44EsjwFE8c/alJ/2HL8o/U
+         /O47OLw6T33Y2VVXnGdIZAfkGihmZJ5kyaokSPkb7IXZSQRly9sMJ5oTJUDLd+S1Wb32
+         bDVhNlCkMleukZsjirrsVArwwjo3PJ1MoxFzZ+s7lo60+1eTR5ZXO8VdyCg5QPlw720V
+         ISRQ==
+X-Gm-Message-State: ABy/qLamuMexRBZw2I3bBYEUgtJiF8OsObDaCX+YqXMuIRnKydwXZAeq
+        urclguk4+W0ul2cF1Qt8Nw5MU1ljVvyD3cRc
+X-Google-Smtp-Source: APBJJlEMSFfoF7cPCNmDrtWhC7KawGYWDfIyqGHuZYvKNxlsuodPSNS1AmuocKQONq4IfB/k+9LOCw==
+X-Received: by 2002:a17:90a:9316:b0:263:161c:9e9c with SMTP id p22-20020a17090a931600b00263161c9e9cmr374799pjo.12.1690318819048;
+        Tue, 25 Jul 2023 14:00:19 -0700 (PDT)
+Received: from fivlite-virtual-machine.localdomain ([49.37.158.194])
+        by smtp.gmail.com with ESMTPSA id e6-20020a17090a818600b00262e485156esm10003071pjn.57.2023.07.25.14.00.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 14:00:18 -0700 (PDT)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
 To:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2023, #05; Tue, 25)
-References: <xmqqedkvk8u4.fsf@gitster.g>
-Date:   Tue, 25 Jul 2023 13:59:09 -0700
-In-Reply-To: <xmqqedkvk8u4.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        25 Jul 2023 13:57:39 -0700")
-Message-ID: <xmqqa5vjk8rm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Cc:     Junio C Hamano <gitster@pobox.com>, Glen Choo <chooglen@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Siddharth Singh <siddhartth@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Kousik Sanagavarapu <five231003@gmail.com>
+Subject: [PATCH v5 0/2] Add new "describe" atom
+Date:   Wed, 26 Jul 2023 02:21:20 +0530
+Message-ID: <20230725205924.40585-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.41.0.396.g77a2a56520
+In-Reply-To: <20230723162717.68123-1-five231003@gmail.com>
+References: <20230723162717.68123-1-five231003@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A32FA42-2B2E-11EE-AE01-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is a list of one-line summary for topics in flight.
+Hi,
+Thanks for the review on the previous version of this series. Here is a
+quick re-roll to address the minor changes that you left on the previous
+version (apart from the suggestions to PATCH 1/2).
 
-The dates are committer date for topics not in 'next' (i.e.
-typically the first time I happened to have "seen" them); for the
-topics in 'next', there is a second date that shows when the topic
-was last merged to 'next'.  Typically a topic is expected to spend
-7 or so calendar days in 'next' before graduating to 'master'.
+Please queue this instead.
 
-----------------------------------------------------------------
-Expecting a reroll from the original author.
- - jc/doc-submodule-update-settings                             07-13          #1
+PATCH 1/2 - Left unchanged
 
-Expecting a reroll.
- - tk/cherry-pick-sequence-requires-clean-worktree              06-01          #1
- - jt/path-filter-fix                                           07-13          #4
- - sl/sparse-check-attr                                         07-18          #3
- - ja/worktree-orphan-fix                                       07-21          #4
+PATCH 2/2 - Used the test helper function `test_must_fail` instead of
+	    something like "! git foo" for making a command fail.
 
-Needs review.
- - mh/credential-libsecret-attrs                                06-16          #1
- - mh/credential-erase-improvements-more                        06-24          #2
+Kousik Sanagavarapu (2):
+  ref-filter: add multiple-option parsing functions
+  ref-filter: add new "describe" atom
 
-Still filling in blanks.
- - js/doc-unit-tests                                            06-30          #1
+ Documentation/git-for-each-ref.txt |  23 +++
+ ref-filter.c                       | 230 +++++++++++++++++++++++++++++
+ t/t6300-for-each-ref.sh            | 139 +++++++++++++++++
+ 3 files changed, 392 insertions(+)
 
-Undecided
- - cc/git-replay                                                06-03         #15
- - jc/parse-options-short-help                                  07-19          #3
- - am/doc-sha256                                                07-20          #1
- - rs/parse-options-negation-help                               07-24          #5
+Range-diff against v4:
+1:  2914bd58ec = 1:  2914bd58ec ref-filter: add multiple-option parsing functions
+2:  77a2a56520 ! 2:  8127f4399c ref-filter: add new "describe" atom
+    @@ t/t6300-for-each-ref.sh: test_expect_success 'color.ui=always does not override
+     +          cat >expect <<-\EOF &&
+     +          fatal: unrecognized %(describe) argument: baz
+     +          EOF
+    -+          ! git for-each-ref --format="%(describe:baz)" \
+    ++          test_must_fail git for-each-ref \
+    ++                  --format="%(describe:baz)" \
+     +                  refs/heads/master 2>actual &&
+     +          test_cmp expect actual &&
+     +
+    @@ t/t6300-for-each-ref.sh: test_expect_success 'color.ui=always does not override
+     +          cat >expect <<-\EOF &&
+     +          fatal: unrecognized %(describe) argument: qux=1,abbrev=14
+     +          EOF
+    -+          ! git for-each-ref \
+    ++          test_must_fail git for-each-ref \
+     +                  --format="%(describe:tags,qux=1,abbrev=14)" \
+     +                  ref/heads/master 2>actual &&
+     +          test_cmp expect actual
 
-Will discard.
- - cb/checkout-same-branch-twice                                03-22          #2
- - ed/fsmonitor-windows-named-pipe                              03-24          #1
- - rn/sparse-diff-index                                         04-10          #1
- - es/recurse-submodules-option-is-a-bool                       04-10          #1
- - pw/rebase-i-after-failure                                    04-21          #6
- - ob/revert-of-revert                                          05-05          #1
- - ab/tag-object-type-errors                                    05-10          #4
+-- 
+2.41.0.396.g77a2a56520
 
-Will merge to 'master'.
- + la/doc-choose-starting-point                                 07-14/07-19    #5
- + jr/gitignore-doc-example-markup                              07-18/07-19    #1
- + jc/am-parseopt-fix                                           07-18/07-19    #1
- + jc/branch-parseopt-fix                                       07-18/07-19    #1
- + rs/ls-tree-no-full-name-fix                                  07-18/07-19    #1
- + jc/gitignore-doc-pattern-markup                              07-18/07-20    #1
- + jc/transport-parseopt-fix                                    07-18/07-20    #2
- + jc/parse-options-reset                                       07-19/07-20    #1
- + jc/parse-options-show-branch                                 07-19/07-20    #2
- + bb/trace2-comment-fix                                        07-19/07-21    #1
- + rs/describe-parseopt-fix                                     07-21/07-21    #1
- + rs/pack-objects-parseopt-fix                                 07-21/07-21    #2
- + jc/tree-walk-drop-base-offset                                07-07/07-25    #2
- + ah/autoconf-fixes                                            07-19/07-25    #3
-
-Will merge to 'next'.
- - bb/use-trace2-counters-for-fsync-stats                       07-20          #1
- - ah/sequencer-rewrite-todo-fix                                07-24          #1
- - ks/ref-filter-describe                                       07-24          #2
- - jc/retire-get-sha1-hex                                       07-24          #1
- - cc/repack-sift-filtered-objects-to-separate-pack             07-24          #8
-
-Will merge to 'next'?
- - jc/doc-sent-patch-now-what                                   07-19          #1
- - hy/blame-in-bare-with-contents                               07-21          #1
- - jc/branch-in-use-error-message                               07-21          #1
- - tb/commit-graph-tests                                        07-24          #5
