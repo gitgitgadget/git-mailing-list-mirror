@@ -2,107 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B09FDC0015E
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 22:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2366EB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 22:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231184AbjGYWpN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 18:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34108 "EHLO
+        id S231705AbjGYWqP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 18:46:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230317AbjGYWo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 18:44:56 -0400
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5763469B
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:40:23 -0700 (PDT)
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-583b47809beso43627907b3.0
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:40:23 -0700 (PDT)
+        with ESMTP id S231618AbjGYWqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 18:46:03 -0400
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA6B6E90
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:41:35 -0700 (PDT)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-577497ec6c6so72027187b3.2
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690324710; x=1690929510;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690324766; x=1690929566;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZJkfo2TKxXrDq8kUu7ZaN0Z7FSg9uWirTUp3iiXPyCU=;
-        b=KRgzvhKVA20XXo5MrVv1PV26qLbYjPuUtg84pkEOd1cGA8gim7lfM/HtF5+RRpCmyV
-         itZnas9jEmbLanH0lGdzWi6DnUnE4tBZSR6CQclvv6gRNhaBj4l+aTXMPM60ssYMK4d7
-         JqqOT42oMQoV7TcB6u3Uv/LDnUDv03T9Mw5rvQBjjlF2NnNbb8ivz+xhSVW2h5fY1iAS
-         LHT1018gdHRIU0huRNJNKm8d0WsRvhRSNX5iDSCGJug2H45TVYIO7SbcbLOL0lvTnHFR
-         UZrFTEyvr1fiUoIP8bQ/S3q2LHwcpJcuCvAB9BjrIW+x0ac1N3mdIYMFqhfP9BaQNOTg
-         vCYA==
+        bh=fb6pglrRirxp+CHTFvC9tKeYn2r5t+eAKTchETIMdx8=;
+        b=gO2vUCRnpmrzOpQ/m7X0B3HKhM4GIUbJ/J1VMcxMgT0cEthiu1bkX3fA4xyp3hY2KW
+         35JieSwUESp/EvrSNhSbmPR4Vrpj3YMGuDQyelfQtHDyMm63ZDU3eONGxLd4EjNFSOGT
+         Ck6/uoIIUbm6M8E7Vmk2aQBUkDPDI2BtrQOGZ3f2yXi5KiCZBsdeR6ohSynmihX8eNN8
+         MRKUmsjGIkWxvOmPv0YSm3ErSMFwgZ3x7gHPiaqS3eGp+by2YkqW3l9BsZDtVgLS3LZ2
+         MvsZAUxBng7U7b4tZk5Ye2+ZNB8Lk6VhBXGG3zE9HxsPQpNqUqZciUsD1WAKUT3F7quN
+         RHng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690324710; x=1690929510;
+        d=1e100.net; s=20221208; t=1690324766; x=1690929566;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZJkfo2TKxXrDq8kUu7ZaN0Z7FSg9uWirTUp3iiXPyCU=;
-        b=Lp/Jf8RwM/DHvfG+RrFGTVdM22F2fhLaj7i7ByA5ZY5EdqnR7pUJmKVH+Nd7lFpReu
-         HL9cV9YC2JnBFBESnYAOMPPUh8iafFTRi6ByRLUwhCJoVmU9HmDLyfGJ7PHpeALhgVXk
-         cKNWgi7wfFLQlPOdLK+mGPWHHVHQ/FvNaJYl1S2S1R4k/y64xC70ROkvTyy1gx3bdxuR
-         53QbaqP7MXCNVySJY1wBDOUeiAin3dpXQooq3PzHrUu4vvtwCkJMZek6FWDsE7V1bxQM
-         jss73bNCUjY1Xj8DV5HtpCXJ1NsRR+wuzp5yuLy06xEvU38UM+SvC28X+ygKCrNZgLZX
-         eBMg==
-X-Gm-Message-State: ABy/qLbsTDan+XbexqxOqlbxRKPJXmTV431xeQcN7wPOSfzucYmNYSlO
-        hUnEq7V9YmIwvButtXmuzjwmCw==
-X-Google-Smtp-Source: APBJJlHavsNP/Gt0+aAsq0CcTOcAfG1jrH9pSrVBaCbVwWtQiqCNtxKxRP84zD2OhINZP2xZF4fPVw==
-X-Received: by 2002:a0d:d955:0:b0:573:455e:2a61 with SMTP id b82-20020a0dd955000000b00573455e2a61mr494643ywe.23.1690324709807;
-        Tue, 25 Jul 2023 15:38:29 -0700 (PDT)
+        bh=fb6pglrRirxp+CHTFvC9tKeYn2r5t+eAKTchETIMdx8=;
+        b=AbWAZwfplEzsbKDRQBYTRD36mKP8cbmiIz/g2ZAFjvBCMENhNflBggoINHiZ49gXus
+         zvzBt4az2BrRG05okZYHF2pbz+v70+IGQSilzmVOnPBttb64DpS73vSK1qUV2MhDug4/
+         tx/dgbUjDSXlGeMyrefKOBX1Lc9rEPBuKKJtyMHR04hZDYeUV02rJTGT3ZTmPOEFYjGM
+         bTECrPBQOhvTPFNaPon4kIaPwRQ4DAXakUaG+vYzcykyGnKRfo7wX+KtmQeUDlUH7Aey
+         +M1l4jTOEUu+z2SVktP4Ea+uwwiVQ6/Q39bgjQerftP51vgqbRDJW9o0whqXKElRmbkU
+         oiXA==
+X-Gm-Message-State: ABy/qLYJ+FRc5WmHigDTN/Sf0Y8LWjPTfBamuYDbLWHAJE0k9dw63/QK
+        drZiuRwUP5r2flgWewtRbk/kmw==
+X-Google-Smtp-Source: APBJJlGHU3MLxp6oPM30fip1+aQcZoNP06BgHwlN+2seO4tgDrkXqlUYVTouv/7Owx3pvcCUNT+dow==
+X-Received: by 2002:a0d:c143:0:b0:583:fa2b:26d2 with SMTP id c64-20020a0dc143000000b00583fa2b26d2mr599438ywd.7.1690324766562;
+        Tue, 25 Jul 2023 15:39:26 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h184-20020a0dc5c1000000b0057736c436f1sm3791874ywd.141.2023.07.25.15.38.29
+        by smtp.gmail.com with ESMTPSA id j22-20020a819216000000b00583f9bcd531sm1632749ywg.97.2023.07.25.15.39.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 15:38:29 -0700 (PDT)
-Date:   Tue, 25 Jul 2023 18:38:28 -0400
+        Tue, 25 Jul 2023 15:39:26 -0700 (PDT)
+Date:   Tue, 25 Jul 2023 18:39:25 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 1/8] pack-objects: allow `--filter` without `--stdout`
-Message-ID: <ZMBO5A0WxWystYyv@nand.local>
-References: <20230705060812.2865188-1-christian.couder@gmail.com>
- <20230724085909.3831831-1-christian.couder@gmail.com>
- <20230724085909.3831831-2-christian.couder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2023, #05; Tue, 25)
+Message-ID: <ZMBPHTIacaWjy99D@nand.local>
+References: <xmqqedkvk8u4.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230724085909.3831831-2-christian.couder@gmail.com>
+In-Reply-To: <xmqqedkvk8u4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 10:59:02AM +0200, Christian Couder wrote:
-> diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-> index b26d476c64..2ff3eef9a3 100755
-> --- a/t/t5317-pack-objects-filter-objects.sh
-> +++ b/t/t5317-pack-objects-filter-objects.sh
-> @@ -53,6 +53,14 @@ test_expect_success 'verify blob:none packfile has no blobs' '
->  	! grep blob verify_result
->  '
+On Tue, Jul 25, 2023 at 01:57:39PM -0700, Junio C Hamano wrote:
+> * cc/repack-sift-filtered-objects-to-separate-pack (2023-07-24) 8 commits
+>  - gc: add `gc.repackFilterTo` config option
+>  - repack: implement `--filter-to` for storing filtered out objects
+>  - gc: add `gc.repackFilter` config option
+>  - repack: add `--filter=<filter-spec>` option
+>  - repack: refactor finding pack prefix
+>  - repack: refactor finishing pack-objects command
+>  - t/helper: add 'find-pack' test-tool
+>  - pack-objects: allow `--filter` without `--stdout`
 >
-> +test_expect_success 'verify blob:none packfile without --stdout' '
-> +	git -C r1 pack-objects --revs --filter=blob:none mypackname >packhash <<-EOF &&
-> +	HEAD
-> +	EOF
-> +	git -C r1 verify-pack -v "mypackname-$(cat packhash).pack" >verify_result &&
-> +	! grep blob verify_result
-> +'
+>  "git repack" machinery learns to pay attention to the "--filter="
+>  option.
+>
+>  Will merge to 'next'.
+>  source: <20230724085909.3831831-1-christian.couder@gmail.com>
 
-Just a couple of style nits here. It's a little strange (for me, at
-least) to see the heredoc into a git process. I wonder if it might be
-clearer to write something like:
+This may be a little soon to merge into 'next'. I looked at version 1
+and had some concerns, but haven't had a chance to look at version 2.
 
-    echo HEAD >in &&
-    git -C r1 pack-objects --revs --filter=blob:none $packdir/pack <in
-
-, but I could certainly go either way on that one. I am less certain
-about redirecting the output into a file "packhash", only to cat it back
-out.
-
-Do later tests depend on the existence of this file? If so, then what
-you have makes sense. If not, I would recommend storing the output in a
-variable, which avoids both the I/O operation, and the unnecessary "cat"
-sub-process.
+Now that we have a third round, I'll take a look at it now. Sorry for
+the hold up.
 
 Thanks,
 Taylor
