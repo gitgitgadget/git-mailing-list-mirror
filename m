@@ -2,98 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55DE7C0015E
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 21:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA0BEEB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 21:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjGYVJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 17:09:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51990 "EHLO
+        id S229596AbjGYVQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 17:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjGYVJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 17:09:27 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C492019BF
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 14:09:24 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-57059f90cc5so75021277b3.0
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 14:09:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1690319364; x=1690924164;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=alZvwmSKWzMDkGFZb3FXruGSH30fZmlycnKWRfLkM1g=;
-        b=nAQyyqAsYMCjR5aN7BLi1uaKTDRRV33N41asofkvrqt0+1V7VrRLYnQfD/vkfgrtPA
-         9C/NuaGcrP2z9xGChe5jUN6oaft444cU8jyy5kf7y6CnBxYcRNsDCXElMq4mnuhsPjh2
-         Qrmb5hndKzisYEY2nVpZ01K9Q6I0S7b9wIzQ+WBh26iTuAD+vGliSxjRurAEV96FbWuk
-         BKGb/2hUO5zooI9IP/xnM4y6O7i0KD6O11UX8dX3UUecWHKLGESiMIwNS5Rce4kkLw4y
-         RQ0YTNruiQPoky4vhlooQPDg8aWcB9kJYkQgErDJoV+6nPYTPJXNpG2qNXfb8UiaoxWS
-         YhSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690319364; x=1690924164;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=alZvwmSKWzMDkGFZb3FXruGSH30fZmlycnKWRfLkM1g=;
-        b=iiEP/Or4zEL43//fGCg5hFj+OMK87pSNPx1Rw/dzjxov2TpC/AKszcN0+i4udpBdpq
-         3CPI0VQ6VgNaQL5iHHN0n5nE1ZjQUj7Kne4huMtRbBPt9OTGMtvb1PxrYe174gdVOL+9
-         lBPC//6styDJEthrUf+4TjnWooz5G1bb7/JsmV/PQpZOLCP+71sSsMj2TJlOoIA2LHv6
-         3rpzipPkI4fkbYdX7qhJvtAGiK1xBA40/RAhxQrBh5LnaS9p0nSppTDca6J7KPXTBmDs
-         V/ZJZhDJy64x3SW/x3diuHbJk2cOUOvgTs9KRfxQX33z9g/3ZM7hh2dl7BUxVffFqFx5
-         eHig==
-X-Gm-Message-State: ABy/qLbwd8RZuiXI7yoBCEEOwLtSe0KM84bpFLr/p/omzLe5MuWZNuSN
-        GYJqxLJyjVPnM2pZJ0ZDi0KKVEAFbfo8Mg==
-X-Google-Smtp-Source: APBJJlFjoTT9HXfRxkaQwLhrIiaufFH2uSK1WRMDkiZlXnOwajDFGqxrdm5YZedD6OLvlaU4QyX/Q4C0JFzKTg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a25:c794:0:b0:d09:6ba9:69ec with SMTP id
- w142-20020a25c794000000b00d096ba969ecmr919ybe.4.1690319363936; Tue, 25 Jul
- 2023 14:09:23 -0700 (PDT)
-Date:   Tue, 25 Jul 2023 14:09:13 -0700
-In-Reply-To: <xmqqzg3jltyr.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqedl3a909.fsf@gitster.g> <20230724194854.3076-1-mirth.hickford@gmail.com>
- <xmqqzg3jltyr.fsf@gitster.g>
-Message-ID: <kl6lila7zojq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: Credential improvements need review
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229441AbjGYVQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 17:16:49 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6AC19B0
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 14:16:48 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1C4181F220;
+        Tue, 25 Jul 2023 17:16:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZnR53wIrx0H9IpwMdWrX/vv3jZi5wI6SYcvqBM
+        AGZeo=; b=xISyoT0UE7TX/nmi2ZF/Ts/Y5Pu51j6mZNgiKZLE4RMzhAmNtXj4Yk
+        2gyLhcV5Z9DVrsp+DK5uZqdV+PeGfCqfyDP+0rcdRUgR5imoYq6WHFaranMzTFfG
+        7Ne/uLxVfDXB8b/8T6NchFCHYUZErPlH1HPHvzZtlhtQp5Ie3mF9U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 141B51F21F;
+        Tue, 25 Jul 2023 17:16:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A4CFE1F21E;
+        Tue, 25 Jul 2023 17:16:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 12/15] replay: disallow revision specific options and
+ pathspecs
+References: <20230509175347.1714141-1-christian.couder@gmail.com>
+        <20230602102533.876905-1-christian.couder@gmail.com>
+        <20230602102533.876905-13-christian.couder@gmail.com>
+Date:   Tue, 25 Jul 2023 14:16:43 -0700
+In-Reply-To: <20230602102533.876905-13-christian.couder@gmail.com> (Christian
+        Couder's message of "Fri, 2 Jun 2023 12:25:30 +0200")
+Message-ID: <xmqqy1j3itdw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8EA92980-2B30-11EE-8FA8-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
->> Hi. Is anyone able to help review these changes?
->>
->> https://lore.kernel.org/git/pull.1529.git.git.1687596777147.gitgitgadget@gmail.com/
->> https://lore.kernel.org/git/pull.1527.git.git.1687591293705.gitgitgadget@gmail.com/
->
-> Thanks for pinging.  One thing that may help (both patches, my
-> understanding is that they are of the same spirit, just one is for
-> libsecret while the other one is for wincred) is to describe the
-> problem the patches attempt to address a bit more.  For example,
-> in one of them:
->
->     Fix test "helper ... does not erase a password distinct from input"
->     introduced in aeb21ce22e (credential: avoid erasing distinct password,
->     2023-06-13)
->
-> we can read from the above proposed log message that it is a "fix"
-> to some bug, and that the "bug" was introduced by the named commit,
-> but there are a few things that it does not explain, that could have
-> helped readers to convince themselves that the changes in the patches
-> are addressing the right problems and solving them in the right
-> way.  For example,
->
->  * how does the "bug" manifest itself in an observable way to the
->    end-users?  "When they do X, they expect Y to happen, but instead
->    Z happens, and doing Z breaks expectation of users expecting Y in
->    this (W) way."
->
->  * what was wrong in the code that led to the "bug"?  Was it testing
->    a wrong condition before making a call to some system service?
->    Was the condition it checked correct but it made a call in a
->    wrong way (and if so how)?
+> +	/*
+> +	 * Reject any pathspec. (They are allowed and eaten by
+> +	 * setup_revisions() above.) In the future we might accept
+> +	 * them, after adding related tests and doc though.
+> +	 */
+> +	if (revs.prune_data.nr) {
+> +		error(_("invalid pathspec: %s"), revs.prune_data.items[0].match);
 
-Thanks, I saw the original ping and took a look, but I came away with
-exactly the questions you raised here.
+This made me waste a few minutes wondering if and how I misspelt my
+pathspec elements.  If we mean "no pathspec is allowed", we should
+say so instead.
+
+> +		usage_with_options(replay_usage, replay_options);
+> +	}
+> +
+>  	/* requirements/overrides for revs */
+>  	revs.reverse = 1;
+>  	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+> index a1da4f9ef9..de6e40950e 100755
+> --- a/t/t3650-replay-basics.sh
+> +++ b/t/t3650-replay-basics.sh
+> @@ -80,4 +80,20 @@ test_expect_success 'using replay on bare repo to rebase with a conflict' '
+>  	test_expect_code 1 git -C bare replay --onto topic1 B..conflict
+>  '
+>  
+> +test_expect_success 'using replay with (for now) disallowed revision specific option --not' '
+> +	test_must_fail git replay --onto main topic2 --not topic1
+> +'
+> +
+> +test_expect_success 'using replay on bare repo with (for now) disallowed revision specific option --first-parent' '
+> +	test_must_fail git -C bare replay --onto main --first-parent topic1..topic2
+> +'
+> +
+> +test_expect_success 'using replay with disallowed pathspec' '
+> +	test_must_fail git replay --onto main topic1..topic2 A.t
+> +'
+> +
+> +test_expect_success 'using replay on bare repo with disallowed pathspec' '
+> +	test_must_fail git -C bare replay --onto main topic1..topic2 -- A.t
+> +'
+> +
+>  test_done
