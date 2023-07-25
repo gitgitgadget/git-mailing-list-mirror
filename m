@@ -2,96 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D869EB64DD
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 18:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BCAFEB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 19:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbjGYSgE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 14:36:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42284 "EHLO
+        id S230347AbjGYT14 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 15:27:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjGYSgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 14:36:02 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54649A3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 11:36:01 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26FFB18F333;
-        Tue, 25 Jul 2023 14:35:58 -0400 (EDT)
+        with ESMTP id S229716AbjGYT1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 15:27:55 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653222113
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 12:27:53 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E07F91E571;
+        Tue, 25 Jul 2023 15:27:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4RhRrhWCmZ22CoIwRAsEw0cexVQFYxBcBqkGK4
-        ojfY8=; b=b7OT3c9Fn5nCqMRApW1EpRxwXiKKQqkNMZBO0xBOWzt30G02cIrpPb
-        KgRtNpDfetq1enhVBYJACxKpyUVjL/m3lT+E7BE1cnGSlYTLyuCeXjjkQwKx2hH+
-        X2KKjs18AmMs/dCsuo345CFKVi4QR3hpV7wQkcuFkTCpqbVfN8emo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F88B18F331;
-        Tue, 25 Jul 2023 14:35:58 -0400 (EDT)
+        :content-type; s=sasl; bh=VBY5De/LN8H8bVEp9Cjh6pRz0MRWFCMDmR7wkl
+        k+eKA=; b=m1PYCzMgA28sdQz3wvpYHUg9cbkt2khmSKAg1wG1uZkh37UOgNl5z7
+        JsJYLMZRFVRtX5sVlbWj3XA027U+2gbpMEBhIkgN1mWGc3qzsxB0MG37m17gLaQQ
+        LdVHLWKW9STyaHqq+e4RzdV5vZmQiJv0MB7mMkbPieSLB0FCE8xyk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D8DC91E570;
+        Tue, 25 Jul 2023 15:27:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8273818F330;
-        Tue, 25 Jul 2023 14:35:57 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86BFD1E56C;
+        Tue, 25 Jul 2023 15:27:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     M Hickford <mirth.hickford@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Credential improvements need review
-References: <xmqqedl3a909.fsf@gitster.g>
-        <20230724194854.3076-1-mirth.hickford@gmail.com>
-Date:   Tue, 25 Jul 2023 11:35:56 -0700
-In-Reply-To: <20230724194854.3076-1-mirth.hickford@gmail.com> (M. Hickford's
-        message of "Mon, 24 Jul 2023 20:48:54 +0100")
-Message-ID: <xmqqzg3jltyr.fsf@gitster.g>
+To:     Kousik Sanagavarapu <five231003@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Siddharth Singh <siddhartth@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH v4 1/2] ref-filter: add multiple-option parsing functions
+References: <20230719162424.70781-1-five231003@gmail.com>
+        <20230723162717.68123-1-five231003@gmail.com>
+        <20230723162717.68123-2-five231003@gmail.com>
+        <xmqqa5vlqktr.fsf@gitster.g> <ZL6_DlDIE8Hfl_T6@five231003>
+        <xmqqmszlnixe.fsf@gitster.g>
+Date:   Tue, 25 Jul 2023 12:27:46 -0700
+In-Reply-To: <xmqqmszlnixe.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        24 Jul 2023 13:39:09 -0700")
+Message-ID: <xmqqv8e7lrkd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 18833F22-2B1A-11EE-9362-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 56D37920-2B21-11EE-A0AD-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-M Hickford <mirth.hickford@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> * mh/credential-erase-improvements-more (2023-06-24) 2 commits
->>  - credential/wincred: erase matching creds only
->>  - credential/libsecret: erase matching creds only
->> 
->>  Needs review.
->>  source: <pull.1529.git.git.1687596777147.gitgitgadget@gmail.com>
+> Kousik Sanagavarapu <five231003@gmail.com> writes:
 >
-> Hi. Is anyone able to help review these changes?
+>> What do you mean by "share code"?
+>>
+>> They are similar in their functionality, that is parsing the option and
+>> grabbing the value (if the option has a value, otherwise we do what we
+>> did here). The difference is the way we do such a parsing.
+>>
+>> In pretty, we directly skip_prefix() the placeholder. So we check for ')'
+>> to see if we have reached the end of "to_parse".
+>>
+>> In ref-filter (the current patches), we deal directly with the options
+>> ("arg" here), that is we can't do a check for ')' to see if we have
+>> exhausted our option list. So we can't really use the same functions, but
+>> there is the possiblity that we can modify them to be used here too.
 >
-> https://lore.kernel.org/git/pull.1529.git.git.1687596777147.gitgitgadget@gmail.com/
-> https://lore.kernel.org/git/pull.1527.git.git.1687591293705.gitgitgadget@gmail.com/
+> That is the kind of "sharing" to reduce repetition I had in mind.
+>
+> I haven't checked the callers, but another way would be to update
+> the caller of for-each-ref's side to match the calling convention of
+> how pretty calls the parser, wouldn't it? After all, they parse the
+> same "%(token:key=val,key=val,...)" so...?
 
-Thanks for pinging.  One thing that may help (both patches, my
-understanding is that they are of the same spirit, just one is for
-libsecret while the other one is for wincred) is to describe the
-problem the patches attempt to address a bit more.  For example,
-in one of them:
-
-    Fix test "helper ... does not erase a password distinct from input"
-    introduced in aeb21ce22e (credential: avoid erasing distinct password,
-    2023-06-13)
-
-we can read from the above proposed log message that it is a "fix"
-to some bug, and that the "bug" was introduced by the named commit,
-but there are a few things that it does not explain, that could have
-helped readers to convince themselves that the changes in the patches
-are addressing the right problems and solving them in the right
-way.  For example,
-
- * how does the "bug" manifest itself in an observable way to the
-   end-users?  "When they do X, they expect Y to happen, but instead
-   Z happens, and doing Z breaks expectation of users expecting Y in
-   this (W) way."
-
- * what was wrong in the code that led to the "bug"?  Was it testing
-   a wrong condition before making a call to some system service?
-   Was the condition it checked correct but it made a call in a
-   wrong way (and if so how)?
+Having said all that, let's move things forward by merging this
+version.  Anybody (it could be you) interested in cleaning up by
+unifying these two very similar implementations of the same thing
+can do so on top.
 
 Thanks.
-
