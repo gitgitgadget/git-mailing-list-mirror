@@ -2,80 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77B14C001DF
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 07:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A08C0015E
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 13:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231936AbjGYHKa convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 25 Jul 2023 03:10:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
+        id S231276AbjGYNl4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 09:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjGYHK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 03:10:28 -0400
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88DDBD
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 00:10:27 -0700 (PDT)
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-63ce8bea776so16867386d6.0
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 00:10:27 -0700 (PDT)
+        with ESMTP id S229759AbjGYNly (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 09:41:54 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E002E7
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 06:41:53 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-991da766865so931081266b.0
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 06:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=koordinates.com; s=google; t=1690292511; x=1690897311;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fiUp6IVzShen0mky+h9TkPkcKqqaMtqc32FlicgPffU=;
+        b=NF7wwaBPdxQZwT2Uxz0euaSIs5nN/RDAuU22Ss20TtLE9SbYGMqJD4gi3JaJEPBVRH
+         v4EgnnUq9F7bdOTg/yINcmCftXyXECeBmC4Mv8rYVg7k+CzIQKl5113FrGY7gi6mU6d+
+         DqlkRl9loJjIMuBTX95xBDg3Y0kx8N6ILghZNyY9kXH8ffjJLTVInfa0BcUZPwKO5if0
+         QXsfyBSW+ptjVnbDHBs4hlSgJx/ZgRoWyugF/dns4VgheSjigSqKaJqQs8B39iOX6qt4
+         xUhPP7JJ7sES+FWHc85pplRaQ8c7bhztqq7Xh929gb9ZQjnuBoiarOuJWdh+tXU9TtwT
+         yXPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690269027; x=1690873827;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qEGbdlFuet5ATfcjXFDVB0l4+Pt4aN4RrZby15x1Jbo=;
-        b=bejJE29x9YiojYfJDEJVeLtEdq9gRN16S5Zi9JbgMXmG095rqzpQBvvLOvWhn7YK7N
-         Dl6mt9RteML0lcGmWTJHgco5pA1gCoEGkxZt3aIhDBQjBDpw7qN0uoK+ngWQ/ZjTC85a
-         UgHc/mpqxgGTzakJW851W22+UW8SaYq3jPO2VlVeG63fb8yXQg2ar0UMP8yRXhlOs6TO
-         b1jdy+1VKaTtQ/ZIxfCRAvAOSIyStWkc6ZSsUmlOwEOVr91NtYjbWUK3A1/TeuP7qlNW
-         jAx7b6Zwp49cktw1rD6iYtEcHbkH32JydMpR+gkpXlcjcfgswsfIuSUl39IJTcb0Dh+Y
-         34aQ==
-X-Gm-Message-State: ABy/qLZZrN6ZMILatN1prhXubGv5hAJ9yMRBZwOzJWmbUCJJKxUmwWEz
-        08SFo4/FSsoJvX78F5dygbcVGYpiSRSxtcO6Png=
-X-Google-Smtp-Source: APBJJlHkbEp+DoBiKjoSW10vwzc4jZKsAbDFDxCrFPCxcpxAZZdCiQkYVnJFBoQfPqzET7e9+zXXIOwUlZLX99gMwEs=
-X-Received: by 2002:a0c:e60e:0:b0:63d:669:6455 with SMTP id
- z14-20020a0ce60e000000b0063d06696455mr1820212qvm.50.1690269026687; Tue, 25
- Jul 2023 00:10:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690292511; x=1690897311;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fiUp6IVzShen0mky+h9TkPkcKqqaMtqc32FlicgPffU=;
+        b=QjEFoMvl5zcRK+3E0k6NTTmrSdtbLrM7gx7YKU7l5iNp8SCxXMd431JZGHGiZ4FNsr
+         kt5yvUQOqJFRSXWVRU/D/RSlgPD/oqMIqhxc0qB9P2JwCnAYfk8BQRS32Ewp7ma19Dqo
+         oUr9niIWmBZ/MoiZTkLgezLN79kOQEv0ttrJHKN9j9k+mwP95Knv/V2PrGg7AX7A599X
+         bJPBTaXvMDdoFJOoIbYjmRPAn3uzYo9UzYGy17+g5HHzAgULy6iYoF4InAOH3j+U4TSJ
+         eMdFVaL5tKscIg7I92aUFp99QZSWOQjS78Ecyz98zCHfLPB2g1dLINmqqX9gesNf4+7r
+         M2Gg==
+X-Gm-Message-State: ABy/qLYoBziLLhzrg8Ff9BCgEOsN7pWHIqxnBCWVkaygciWfDzbo9ng4
+        wIvZv9sbJXYI7PLzFuRW1ixRffjM/OV6mVjzeRvBeg==
+X-Google-Smtp-Source: APBJJlEktgaFUb8rsNQBHbg0FQe9sEncncIeX7np9D2ttmM+XPtKB8YWklyTmJYh6MKkGFCsz29wEMuQVJb6X8xFpZg=
+X-Received: by 2002:a17:906:32cc:b0:982:c8d0:683f with SMTP id
+ k12-20020a17090632cc00b00982c8d0683fmr14491904ejk.18.1690292511485; Tue, 25
+ Jul 2023 06:41:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230725063516.27242-1-aherrmann@suse.de>
-In-Reply-To: <20230725063516.27242-1-aherrmann@suse.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 25 Jul 2023 03:10:15 -0400
-Message-ID: <CAPig+cS8=iJD4fwvSacvWTK0WUH_DyjkQuMVP00aV+e4Q4TL3g@mail.gmail.com>
-Subject: Re: [PATCH] t4002: fix test #63 (missing whitespace)
-To:     Andreas Herrmann <aherrmann@suse.de>
-Cc:     git@vger.kernel.org
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+ <20230705060812.2865188-1-christian.couder@gmail.com> <20230705060812.2865188-8-christian.couder@gmail.com>
+ <xmqq5y6y1agl.fsf@gitster.g> <CAP8UFD1tqzp744j0KORw-zcgOn6Tufm4Kk3yct3vHGY29pbm-w@mail.gmail.com>
+ <xmqqy1j5p40f.fsf@gitster.g>
+In-Reply-To: <xmqqy1j5p40f.fsf@gitster.g>
+From:   Robert Coup <robert.coup@koordinates.com>
+Date:   Tue, 25 Jul 2023 14:41:35 +0100
+Message-ID: <CAFLLRpL8yUb5eSBwCuEcHkgZEZcAdugua0robVUNGUE6Eik8Bw@mail.gmail.com>
+Subject: Re: [PATCH v2 7/8] repack: implement `--filter-to` for storing
+ filtered out objects
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 2:48 AM Andreas Herrmann <aherrmann@suse.de> wrote:
-> Add missing whitespace between 'test_expect_success' and test case
-> description for last test. Without this, we get:
->
-> t4002-diff-basic.sh: line 412: test_expect_successdiff can read from stdin: command not found
->
-> Signed-off-by: Andreas Herrmann <aherrmann@suse.de>
+Hi Junio,
 
-Thanks for finding this problem and submitting a fix. You're the
-second person to do so[1].
+On Mon, 24 Jul 2023 at 19:18, Junio C Hamano <gitster@pobox.com> wrote:
+> Come to think of it, we haven't seen much reviews from those other
+> than Taylor.  Are folks content with the direction this series is
+> going in general?
 
-[1]: https://lore.kernel.org/git/pull.1545.git.git.1689341410476.gitgitgadget@gmail.com/
+For what it's worth I have a medium-term plan similar to Gitlab's with
+respect to moving chunks of repositories onto lower cost storage media
+& to promisor remotes. Like others, I wasn't at all sure about the
+original approach (and commented at the time). What Christian is
+proposing here seems much cleaner, is usable without complex
+gymnastics or safety equipment, and provides a better building block
+for future work.
 
-> diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
-> @@ -401,9 +401,10 @@ test_expect_success 'diff-tree B A == diff-tree -R A B' '
->  test_expect_success 'diff-tree -r B A == diff-tree -r -R A B' '
->         git diff-tree -r $tree_B $tree_A >.test-a &&
->         git diff-tree -r -R $tree_A $tree_B >.test-b &&
-> -       cmp -s .test-a .test-b'
-> +       cmp -s .test-a .test-b
-> +'
-
-This minor style fixup could be resubmitted as a standalone patch,
-though it might be too minor to worry about.
-
-> -test_expect_success'diff can read from stdin' '
-> +test_expect_success 'diff can read from stdin' '
->         test_must_fail git diff --no-index -- MN - < NN |
->                 grep -v "^index" | sed "s#/-#/NN#" >.test-a &&
->         test_must_fail git diff --no-index -- MN NN |
+Rob :)
