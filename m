@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71DA2EB64DD
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 22:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7DC9EB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 22:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231409AbjGYWuP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 18:50:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39200 "EHLO
+        id S231909AbjGYWvd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 18:51:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232502AbjGYWt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 18:49:59 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D3AD6A52
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:46:35 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-579de633419so69838817b3.3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:46:35 -0700 (PDT)
+        with ESMTP id S230415AbjGYWvO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 18:51:14 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1882D5254
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:48:26 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d1c988afebfso298372276.2
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690325148; x=1690929948;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690325240; x=1690930040;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GhBXPN46MsDrkFEM3NiVI+FxxeOLLEax7NEFxVuKye0=;
-        b=S3AYP49eqafxa9YLEim8mEI4CuYScd7Y+ksuRLdqUCYaiWeIH/UrI3v6Ad0HA700vK
-         gDEXdo2c0Z3/u04+yI5NSa/GTevpGDXEz1fE0h4EKSU573DDqSvsqmNayJ3rL+S3txSL
-         fb+ja491265KZSCnufOoP6yCKxMbSaXQL/kCTdTaKzgeOWa9KjWFk+iWV29HhUR2t/EU
-         mehd8RQwCJBNmuWMWmDQS83jV8mk9v4QVwqHAxhFOdIAUClZFqS21h1V8bsrbqWTxfJJ
-         GnxMYtFd1qSgCoKvoVor0kVtFvBlxLwyeQJD7mqFWho5Agae9uR1K4dT1m0oCEdKk95j
-         8uJQ==
+        bh=yQYDQIyQayP9MCegryYTVOT6r+1bgu5jjwttYMrrvlo=;
+        b=Mz++nQbg+Gvp+Ir8X1ecYbo+kXwCL4U+GRyvk4z3isYRVLu53c63U6P88AxrzDHY4R
+         J+gyxYK8gYgZiPBdHcwu2aK+Sf47+nuzSQiUoauOyGiUvO+1SNNLHH3UxYqrs/fn+/p5
+         LbulHMGK0acAJajVs2A+OjcdQ2/XCegWfaYabhtd0IfG18I67J8jkzTyu/UbrImnbKd+
+         YyCdXLG4ORYEScPrmjl1uC9ZJ0sV0aGJ96cH069Ivg1DUoq/ad2zPZt48xbvDMhDnM1y
+         SkKA07ZcWBKXyvDJ20R2pV2TlRF3/2Wj2TJ7s+vPykzlIUNbMUFQZZ3nATs+jojC/zz7
+         9r1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690325148; x=1690929948;
+        d=1e100.net; s=20221208; t=1690325240; x=1690930040;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GhBXPN46MsDrkFEM3NiVI+FxxeOLLEax7NEFxVuKye0=;
-        b=AQ86EuwUk5RXuVF0Ky4vKLtmKHoUw8Ek4CvjGiyncTvlNux8K+DD8FhMhxZJErMEbb
-         /hK4XxYw41+1why+y1EdIJiMA3rwHSrXYiOf3qgTu+TjatTiPpD+P7CKWjb1QeU7wDS5
-         m2NdAZVCnV7w/3xIsTri/Kzj5dDoAIgxfeBkI57DUoDs92DH/3gZBXuQP8JxRDRMylpK
-         But4gW3YgPyIOepPob+UP/Tc2PmbRsdMyyj+8I7x731h0QQAlOrsePvDi8Wb4PRUsv85
-         I+76E+zV0I7UT03WpKlVXaFQqXa5LmpwLJbZYdMjxULsBpmmjTy96N08ZUFWyDgMmxpO
-         mcOg==
-X-Gm-Message-State: ABy/qLaKcCEHAIDiwCHKTKHps27OBb4k/uZYieZyyYOOBBidipYhImyZ
-        IUVrxhsOxrOUf3321sK92618Rg==
-X-Google-Smtp-Source: APBJJlEdMGqcDt9i9+ASJ7KXMEP3rPLg0D9rcro6yPgA6yvPUmkDs6SoGTC2RMuVMQTuUDlfXLYlPQ==
-X-Received: by 2002:a81:6dd5:0:b0:570:899f:3a52 with SMTP id i204-20020a816dd5000000b00570899f3a52mr514578ywc.35.1690325148103;
-        Tue, 25 Jul 2023 15:45:48 -0700 (PDT)
+        bh=yQYDQIyQayP9MCegryYTVOT6r+1bgu5jjwttYMrrvlo=;
+        b=Joy/XSJ2U7NUXDCKut3LZQHM9LZHwgZsmjsNU1ceS+SRJ8xprx9/dXNi7jCp39ZJ0n
+         mGzSjlRFGf7f+aVVdEXOh0nx0hAWefX/wQg0v5zkrXioL2c6B3YprTxV+aHnz5C0KlSq
+         AKnujbDmgXns5QJotEEMAuoC3ZHdmAauxn7tmr4fLC0/EpzpwolLZ41QOVNxmqftiZDU
+         dN3UrCDo2mn+q2sUyz5qDHnalgm/ZQZydeen/Cy5CfFH6j5ZDHmZZZ+kJ+t9gHaZYI89
+         ODqvNndt0/suy9kYBgDx1/a3E8WjYoxUFdw/Lu11va6ngXNBgWXpFhegEth6BHpDEkre
+         OJEA==
+X-Gm-Message-State: ABy/qLa7T6EGrF0gmv18kus1lIJjYbtuM/oVtCtTWX7i6AVHGZ/JgW2P
+        ffiSQKkgoBWJei2s/XGIkSUoEg==
+X-Google-Smtp-Source: APBJJlFG29CtIzSPpTGPbuQWF7i8mqaq5R0XqYRTPp1Ow1pow393eEItsRHvAaqQOsNa6Of3LN3KSQ==
+X-Received: by 2002:a0d:d755:0:b0:583:3fc1:54c5 with SMTP id z82-20020a0dd755000000b005833fc154c5mr496062ywd.45.1690325240360;
+        Tue, 25 Jul 2023 15:47:20 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k133-20020a816f8b000000b0058383efdf1asm3805949ywc.46.2023.07.25.15.45.47
+        by smtp.gmail.com with ESMTPSA id k184-20020a0dfac1000000b005838c619a08sm3543087ywf.111.2023.07.25.15.47.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 15:45:47 -0700 (PDT)
-Date:   Tue, 25 Jul 2023 18:45:46 -0400
+        Tue, 25 Jul 2023 15:47:20 -0700 (PDT)
+Date:   Tue, 25 Jul 2023 18:47:19 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -57,49 +57,37 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 3/8] repack: refactor finishing pack-objects command
-Message-ID: <ZMBQmrMo+1hDIJwW@nand.local>
+Subject: Re: [PATCH v3 4/8] repack: refactor finding pack prefix
+Message-ID: <ZMBQ97ucRg9gO4gW@nand.local>
 References: <20230705060812.2865188-1-christian.couder@gmail.com>
  <20230724085909.3831831-1-christian.couder@gmail.com>
- <20230724085909.3831831-4-christian.couder@gmail.com>
+ <20230724085909.3831831-5-christian.couder@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230724085909.3831831-4-christian.couder@gmail.com>
+In-Reply-To: <20230724085909.3831831-5-christian.couder@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 10:59:04AM +0200, Christian Couder wrote:
-> Create a new finish_pack_objects_cmd() to refactor duplicated code
-> that handles reading the packfile names from the output of a
-> `git pack-objects` command and putting it into a string_list, as well as
-> calling finish_command().
->
-> While at it, beautify a code comment a bit in the new function.
-
-Everything here looks good to me. Thanks for cleaning this up into its
-own function and DRY-ing things up a little bit.
-
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org
-> ---
->  builtin/repack.c | 70 +++++++++++++++++++++++-------------------------
->  1 file changed, 33 insertions(+), 37 deletions(-)
->
+On Mon, Jul 24, 2023 at 10:59:05AM +0200, Christian Couder wrote:
 > diff --git a/builtin/repack.c b/builtin/repack.c
-> index aea5ca9d44..96af2d1caf 100644
+> index 96af2d1caf..21e3b89f27 100644
 > --- a/builtin/repack.c
 > +++ b/builtin/repack.c
-> @@ -696,6 +696,36 @@ static void remove_redundant_bitmaps(struct string_list *include,
->  	strbuf_release(&path);
+> @@ -783,6 +783,17 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+>  	return finish_pack_objects_cmd(&cmd, names, local);
 >  }
 >
-> +static int finish_pack_objects_cmd(struct child_process *cmd,
-> +				   struct string_list *names,
-> +				   int local)
+> +static const char *find_pack_prefix(void)
+> +{
+> +	const char *pack_prefix;
+> +	if (!skip_prefix(packtmp, packdir, &pack_prefix))
 
-I'm glad to see "local" in the arguments list ;-). I think that the
-implementation came out nice and clean here.
+I wonder if this might be a good opportunity to pass "packtmp" and
+"packdir" as arguments to the function. I know that these are globals,
+but it at least nudges us in the right direction away from adding more
+global variables.
 
 Thanks,
 Taylor
