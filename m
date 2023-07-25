@@ -2,137 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D5EC0015E
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 18:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4205C0015E
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 18:23:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229666AbjGYSRk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 14:17:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
+        id S230344AbjGYSXk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 14:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbjGYSRj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 14:17:39 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6440B1BF8
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 11:17:38 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F22033173F;
-        Tue, 25 Jul 2023 14:17:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jRZDfS9PlYHtqreszSeMzNCbHHehdw+gE4NaBD
-        11iME=; b=JKONqfOmNlDJA3wAecRZHWpYwPrgUETXWcTP7avs2gZwcAipMoD4FF
-        juiOZjOsnCZpdOXZ3NvSnQJEea5pbryf2GhRp7ocKLU6Xmf/vGV+UCbyuzGv37Cx
-        eptwl7/shnsxkccOvTVtGhkk/Dr+VU5eIVEO3lMfzVjzYRa39q7jI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EAC5F3173E;
-        Tue, 25 Jul 2023 14:17:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7F1013173D;
-        Tue, 25 Jul 2023 14:17:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Petar Vutov <pvutov@imap.cc>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] docs: highlight that .gitmodules does not
- support !command
-References: <d775437e-7fa3-189b-a1c3-4fd358dd9768@imap.cc>
-        <20230713193342.1053968-1-pvutov@imap.cc>
-        <a8bde495-57fc-6a70-e325-6e2a52f40552@imap.cc>
-        <xmqqwmz3oacg.fsf@gitster.g>
-        <9de918bc-6913-0486-02dd-5b4028a7fe1b@imap.cc>
-        <xmqqa5vzo7jy.fsf@gitster.g> <xmqqv8enmr21.fsf@gitster.g>
-        <0d29ac42-4e8f-71b6-b85f-00de182e2957@imap.cc>
-Date:   Tue, 25 Jul 2023 11:17:33 -0700
-In-Reply-To: <0d29ac42-4e8f-71b6-b85f-00de182e2957@imap.cc> (Petar Vutov's
-        message of "Sat, 15 Jul 2023 00:03:31 +0200")
-Message-ID: <xmqq8rb3n9du.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229478AbjGYSXj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 14:23:39 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5212E1FC1
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 11:23:38 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d16639e16e6so1523685276.3
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 11:23:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690309417; x=1690914217;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M+sBN4H7fMUCqLG/5n7noafn60BfeSERDXe/7GvtC/w=;
+        b=GD/haLEHrz7n/zDOjw1cS3U9DBf1iGGW/w6FqRnkOqWNKUs01xtZ7TTWnuTuOOEYS8
+         xqPPN2mDovVcRadRyAZumss16LfSGadpbS/338Bl64nYF/skC6F6N+J1NO8s2bDiYUqA
+         A18fwDRQZvQgF6N9IvXgwVkclhN+kQFcCminYbSCU8cv91mKEUHwsJ12ASRRo63ywoZr
+         n5qo0Y4GYLu4efVkiFKWTECUUSQ5V00SJQk1YcF6BGZTZyy1fCcZOlQhvmi9V6I9JoUO
+         3eV/zetZYtCrVJRAeu60fyJzpoXc5qbe4bWjHMcEOaOswKC0w39ivfUeQ39O2GNdLktw
+         iCHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690309417; x=1690914217;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M+sBN4H7fMUCqLG/5n7noafn60BfeSERDXe/7GvtC/w=;
+        b=VWEMyupK9qryHe/DS65/hG66zuUZfa8n2T/EAhD8mcDjWrQ22FRoY1qJK2JUPSGOm2
+         QlPhhqU6YpUaQ50Y9L6/P3xKK8RkZgwKXH33OSDbU4JPgy2/9WUw87CvOOAyCMgwZAl5
+         Ms4La68nH0QJldyGXr5ch2jwLoNHsdw52pAsk8tduR9USlfTX1nLr/FM0d9Nd3goJgdF
+         eHMKO5wzSeMiEvAd/rm+m6Atm+7UdaR3gJnPqdJPqYdRwKtayWkiSPmeUSklHbNqo+tO
+         oukEmG5Yu4wLCZnrxJGmcM8Ie5BXcBkgofwUltkyzAFGxhrUBtzGbkHFwnzaaJNlT/F7
+         5h7A==
+X-Gm-Message-State: ABy/qLbt/DGsyfkV8FlLoS35hC4t0j0d0NNNSF6bHGkJmz364wAgFY+M
+        wDnY8Jjv+DIZSFmMX44/puUBOalskeiDpCdCnJzV9Q==
+X-Google-Smtp-Source: APBJJlEU3KzIBEwj4SBiB3+vTP3t9vcr6TxlpiaTf44UdmW711aB4EaGdlPCBsVyvy7iL0Jj/vdoSA==
+X-Received: by 2002:a5b:4a:0:b0:d0a:f80b:10ac with SMTP id e10-20020a5b004a000000b00d0af80b10acmr6274120ybp.46.1690309417326;
+        Tue, 25 Jul 2023 11:23:37 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id n190-20020a25dac7000000b00d0d2c7dbfecsm1590341ybf.7.2023.07.25.11.23.37
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 11:23:37 -0700 (PDT)
+Date:   Tue, 25 Jul 2023 14:23:36 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Subject: [ANNOUNCE] Virtual Contributor's Summit 2023
+Message-ID: <ZMATKIaU1A1D0wJg@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8711167E-2B17-11EE-B2A9-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Petar Vutov <pvutov@imap.cc> writes:
+Hi everybody,
 
-> I applied your patch and then made some additions, which I'll append
-> at the end of this message. Summary:
->
-> * Added your rewrite from yesterday. I like that it's more precise
->   than the current docs, but I struggle with the complexity of the
->   first sentence. I wanted to make it easier to follow by splitting it
->   in two somehow. Instead I ended up with an introductory sentence
->   summarizing the functionality with small words.
->
-> * In gitmodules.txt, moved the security disclaimer so people are more
->   likely to see it before they follow the link to git-submodule.txt.
->
-> * Explicitly called out `none` and `custom command` as being unusable
->   on the command line (and in .gitmodules). I expect that you won't
->   want that .gitmodules mention anymore, but I left it in for now, up
->  to you.
->
-> The diff below is based on top of your patch from yesterday, since I
-> assume that you don't want to look at a mishmash of both patches.
+As I mentioned a ~month ago[1], GitHub is not hosting an in-person Git
+Merge this year. Instead, we're focusing our efforts on hosting a
+Virtual Contributor's Summit, the details of which are below.
 
-Sorry for a very slow response; I seem to have missed this one.
+  - We'll host the Contributor's Summit on either Zoom or Microsoft
+    Teams (since GitHub is in the process of transitioning from the
+    former to the latter).
 
-The end result looks good.  Care to wrap it up into a single patch
-(iow, make a "mishmash of both patches") with a good log message so
-we can move the topic forward?
+  - The schedule/duration is not fixed, there are options to vote on
+    preferred days, length, and timezones in the form(s) below.
 
-Thanks.
+  - To participate, you must be either (a) an active Git contributor,
+    (b) planning on contributing soon, or (c) working on a Git-related
+    project that has interest in Git's internals. If you aren't sure
+    whether or not you are welcome, please ask!
 
-> diff --git a/Documentation/git-submodule.txt
-> b/Documentation/git-submodule.txt
-> index 5248840b18..695730609a 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -165,13 +165,18 @@ checked out in the submodule.
->  	merge;; the commit recorded in the superproject will be merged
->  	    into the current branch in the submodule.
->
-> -	custom command;; arbitrary shell command that takes a single
-> -	    argument (the sha1 of the commit recorded in the
-> -	    superproject) is executed. When `submodule.<name>.update`
-> -	    is set to '!command', the remainder after the exclamation mark
-> -	    is the custom command.
-> -
-> -	none;; the submodule is not updated.
-> +The following update procedures have additional limitations:
-> +
-> +	custom command;; mechanism for running arbitrary commands with the
-> +	    commit ID as an argument. Specifically, if the
-> +	    `submodule.<name>.update` configuration variable is set to
-> +	    `!custom command`, the object name of the commit recorded in the
-> +	    superproject for the submodule is appended to the `custom command`
-> +	    string and executed. Note that this mechanism is not supported in
-> +	    the `.gitmodules` file or on the command line.
-> +
-> +	none;; the submodule is not updated. This update procedure is not
-> +	    allowed on the command line.
->
->  If the submodule is not yet initialized, and you just want to use the
->  setting as stored in `.gitmodules`, you can automatically initialize the
-> diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-> index dcee09b500..d9bec8b187 100644
-> --- a/Documentation/gitmodules.txt
-> +++ b/Documentation/gitmodules.txt
-> @@ -43,9 +43,9 @@ submodule.<name>.update::
->  	command in the superproject. This is only used by `git
->  	submodule init` to initialize the configuration variable of
->  	the same name. Allowed values here are 'checkout', 'rebase',
-> -	'merge' or 'none'. See description of 'update' command in
-> -	linkgit:git-submodule[1] for their meaning. For security
-> -	reasons, the '!command' form is not accepted here.
-> +	'merge' or 'none', but not '!command' (for security reasons).
-> +	See the description of the 'update' command in
-> +	linkgit:git-submodule[1] for more details.
->
->  submodule.<name>.branch::
->  	A remote branch name for tracking updates in the upstream submodule.
+Participants should fill out the following forms:
+
+  - https://forms.gle/xiRcJWBAWJjWR7Zh6 (participants)
+  - https://forms.gle/rQ5oWVSVBwyPZ1K29 (topics)
+
+The participants and topics lists are being recorded in the
+spreadsheet below, and this is also the place to record your vote(s)
+on topic selection.
+
+  http://bit.ly/git-contributors-summit-2023
+
+Please send any feedback or suggestions you have for this year's
+Contributor's Summit to me on- or off-list. My hope for this year is
+to have a smaller, remote-friendly, diverse, and efficient discussion.
+As we get closer to the date, we'll finalize the schedule, make sure
+we have volunteers to take notes, etc.
+
+I'm looking forward to seeing everybody (virtually) soon :-).
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/ZJoDjnr+FkgrDsKA@nand.local/
