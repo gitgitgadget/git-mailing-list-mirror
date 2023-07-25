@@ -2,114 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24048EB64DD
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 22:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE701EB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 23:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232171AbjGYWwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 18:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39214 "EHLO
+        id S230405AbjGYXEG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 19:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231605AbjGYWwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 18:52:22 -0400
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D244C0B
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:50:21 -0700 (PDT)
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-5701eaf0d04so72755727b3.2
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 15:50:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690325062; x=1690929862;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=j0VIxeU8ZPuuefIgohzHEuzma6HLeiahvdNh6sf9wKo=;
-        b=bLaeiGJSQ063R+gkwH7wxCdA5RGKZjgiBJIzxzxv5hIVc3xUZlxEhanmK8j8P0U0et
-         hiYSSHjYIXFqZNwLpI5kais8Py/Bd4JwwijCxqB8qaftRQq/ehIu3EAnTbTZZbG0HJH4
-         sPA85lbLqfRWq4uSUOpnA9LFH0AyUxqRFeqYghRi4OBS/c1nCd36+slj2rFwp4HMUqb9
-         txOaguESPiHKtaJB/w+JZd2929lHYRgdwINRceGudcKAoUCPPz8tCaNge/1AWOTjfiqv
-         gXSs5VkHWgcisXeTB6EyswhmFQfRhWk3P14IheovVuvvLkgdhsVOoaqLpSkcb4xvAHTr
-         Wtcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690325062; x=1690929862;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j0VIxeU8ZPuuefIgohzHEuzma6HLeiahvdNh6sf9wKo=;
-        b=HiodNBLhKoMQebKkRgdbvaY3af/WY5y4nJhN7WMqf/EXWalYypM1z19+E377lADR9/
-         GuU91+GlKctH+DTLrc6Z/w04XbpNRlfAwL5CGWfqmrXbfSZdNN3eWvwCorCjPKggzobs
-         GPQyhMNkoqVxUmFUWSjyrwcbdj+QIYtY2dQalQ2uzAZvf8n6SjoYuV6gnhVB23mslddc
-         dJwwk5Fr043cuG+A/13mgG/YFRvYc79yzXbcSGTpfcGVYszHGKUSlEzh7Y0lhMgFU9BX
-         Xq6qxreGZYxQ4aAmlUDzSIBQNXcUh02gj0F99WAW+sHV/53nAl5dS3L/xsfm0q539yMm
-         ANWQ==
-X-Gm-Message-State: ABy/qLb00MZtRRRiOO+YHSdGKlAscrC3Vk9kgLG7B6NJAiJVVcSjPpUe
-        IxmwQ28SUGtU9m4CsONYuwCPXw==
-X-Google-Smtp-Source: APBJJlESR4PSygucUylperuX9DRXVhd3wg2Y/J8y5U1ejaMvplus9ESae8r+ZFO5DchXBwCg4lWnYQ==
-X-Received: by 2002:a81:4fce:0:b0:57a:5b6f:d41 with SMTP id d197-20020a814fce000000b0057a5b6f0d41mr487485ywb.42.1690325062282;
-        Tue, 25 Jul 2023 15:44:22 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r142-20020a0de894000000b005616d72f435sm3838332ywe.116.2023.07.25.15.44.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 15:44:21 -0700 (PDT)
-Date:   Tue, 25 Jul 2023 18:44:21 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 2/8] t/helper: add 'find-pack' test-tool
-Message-ID: <ZMBQRRppsadqa8Ua@nand.local>
-References: <20230705060812.2865188-1-christian.couder@gmail.com>
- <20230724085909.3831831-1-christian.couder@gmail.com>
- <20230724085909.3831831-3-christian.couder@gmail.com>
+        with ESMTP id S229721AbjGYXEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 19:04:04 -0400
+Received: from mail-gateway-shared13.cyon.net (mail-gateway-shared13.cyon.net [194.126.200.66])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F80E63
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 16:03:59 -0700 (PDT)
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared13.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1qOR4O-0003bq-2B
+        for git@vger.kernel.org;
+        Wed, 26 Jul 2023 01:03:57 +0200
+Received: from [10.20.10.231] (port=48306 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.96)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1qOR4N-003AD2-1h;
+        Wed, 26 Jul 2023 01:03:55 +0200
+Message-ID: <2f39e481-84d1-097c-ec47-5357dbc36798@drbeat.li>
+Date:   Wed, 26 Jul 2023 01:03:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230724085909.3831831-3-christian.couder@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH v2 2/2] wrapper: use trace2 counters to collect fsync
+ stats
+Content-Language: de-CH
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Victoria Dye <vdye@github.com>
+References: <20230720164823.625815-1-dev+git@drbeat.li>
+ <xmqq5y6e2xl7.fsf@gitster.g> <xmqqo7jzlrdq.fsf@gitster.g>
+From:   Beat Bolli <dev+git@drbeat.li>
+In-Reply-To: <xmqqo7jzlrdq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 10:59:03AM +0200, Christian Couder wrote:
-> ---
->  Makefile                  |  1 +
->  t/helper/test-find-pack.c | 35 +++++++++++++++++++++++++++++++++++
->  t/helper/test-tool.c      |  1 +
->  t/helper/test-tool.h      |  1 +
->  4 files changed, 38 insertions(+)
->  create mode 100645 t/helper/test-find-pack.c
+On 25.07.23 21:31, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> I also spotted this change since v1:
+>>
+>> - Rename trace2 counters to use "-" (not "_") as inter-word separators.
+>>
+>> Since I do not seem to be able to find any review comments regarding
+>> the variable naming in the v1's thread, let's ask stakeholders.
+>>
+>> Are folks involved in the trace2 subsystem (especially Jeff
+>> Hostetler---already CC:ed---who presumably has the most stake in it)
+>> OK with the naming convention of the multi-word variable?  This is
+>> the first use of multi-word variable name in tr2_ctr, and thus will
+>> establish whatever convention you guys want to use.  I do have a
+>> slight preference of "writeout-only" over "writeout_only" but that
+>> is purely from visual appearance.  If there is a desire to keep the
+>> names literally reusable as identifiers in some languages used to
+>> postprocess trace output, or something, that might weigh
+>> differently.
+> 
+> I heard absolutely nothing since I asked the above question last
+> week, so I'll take the absense of response as absense of interest in
+> the way how names are spelled.
+> 
+> Therefore, let me make a unilateral declaration here ;-)  The trace2
+> counters with multi-word names are to be named using "-" as their
+> inter-word separators.  Any patch that adds new counters that do not
+> follow the convention will silently dropped on the floor from now on.
+> 
+> Let's move this patch forward by merging to 'next' soonish.
 
-Everything that you wrote here seems reasonable to me, and the
-implementation of the new test tool is very straightforward.
+Works for me :-)
 
-I'm pretty sure that everything here is correct, and we'll implicitly
-test the behavior of the new helper in following patches.
+Cheers!
 
-That said, I think that it might be prudent here to "test the tests" and
-write a simple test script that exercises this test helper over a more
-trivial case. There is definitely prior art for testing our helpers
-directly in the t00?? tests.
-
-Among the test helpers that I can think of off the top of my head, I
-think a good handful of them have tests:
-
-  - t0011-hashmap.sh
-  - t0015-hash.sh
-  - t0016-oidmap.sh
-  - t0019-json-writer.sh
-  - t0052-simple-ipc.sh
-  - t0060-path-utils.sh
-  - t0061-run-command.sh
-  - t0063-string-list.sh
-  - t0064-oid-array.sh
-  - t0066-dir-iterator.sh
-  - t0095-bloom.sh
-
-I would definitely recommend adding a test here, too. Like I said
-earlier, I think that you are implicitly testing the new behavior here,
-but it's going to happen in much more complicated environments than
-something you could construct synthetically here.
-
-Thanks,
-Taylor
