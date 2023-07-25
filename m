@@ -2,88 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB44EB64DD
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 19:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C275EC001DE
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 19:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230478AbjGYTcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 15:32:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33824 "EHLO
+        id S231226AbjGYTtb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 15:49:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230305AbjGYTbu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 15:31:50 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D381FFA
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 12:31:50 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B700D1E5D9;
-        Tue, 25 Jul 2023 15:31:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=odvqWAHUVreFyjJ0MvIthfKlIyZRrP9oYpdx9c
-        3cmyg=; b=A/zNxh6r+9tKW9bC0rIgSuWmSFrEdkz8bMTbMKuAyQFlok+hMMrs8Z
-        SD2ByLgZwAjHgAPv0jqAGF3XToCru5xOSBRNRSFae2nLiSKOrmafeR691M4ZCzw6
-        sOfX8F8Wse/C7AyhwHlUkQlANvDwhXWj51L4QYu01IQzrpZILmjaQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B020F1E5D8;
-        Tue, 25 Jul 2023 15:31:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 54C6B1E5D7;
-        Tue, 25 Jul 2023 15:31:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2 2/2] wrapper: use trace2 counters to collect fsync stats
-References: <20230720164823.625815-1-dev+git@drbeat.li>
-        <xmqq5y6e2xl7.fsf@gitster.g>
-Date:   Tue, 25 Jul 2023 12:31:45 -0700
-In-Reply-To: <xmqq5y6e2xl7.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        20 Jul 2023 12:26:44 -0700")
-Message-ID: <xmqqo7jzlrdq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229572AbjGYTta (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 15:49:30 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181E51BCC
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 12:49:29 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-5223910acf2so3280a12.0
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 12:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1690314567; x=1690919367;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=sEv6Nm0z40x/Arv7azNjyJhayDfPyC4bG74YCQgqp94=;
+        b=1bzOndABa/unuK/PPnQlllzZ1WGo0VvUJGDlsQcCdAJ3yw6DEMrgYQWldwj1DYnY00
+         JzeRAoseeXZF8VQrGwcX+vuXoo9X31tYekECkaXjFWxJK045LqC7CrUeeCccaKLSfPjL
+         9Jd9Ah3PrtAjFBKX1JqxjSizFVgE9mqRZ0pl2ucsDbW9c/fUy9PoQfdeOSohV151WCfp
+         IqpqcJnw8KMwGIa74IbJsgsRmdfJ3uJhBTRf0itVsxBByj7n5Ovw6WgKwjOo7QrvmEuw
+         unrAt+TAXb6pOQHjyKZyOqYJRCQmLniXXhiI7B5UVg26VcSEv56pKVihy1Ehhi1mAAYY
+         uqcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690314567; x=1690919367;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sEv6Nm0z40x/Arv7azNjyJhayDfPyC4bG74YCQgqp94=;
+        b=NUNpfNtmYgCLxkhEK5M4PuWbzVd2J6XxKApvyxAmoVLF8UZtY7fbWAQ0OAyXw5HL5q
+         dBDkxvwHV/hIHO6bN7PNtRHTgHf3bi77+FklNDi8dkvDWpA+YeJpyd9DkcrnOBYWC9IR
+         /fsbnAHJmhuovo9/qny1gLSEgHsW8zc0Cm2Sgh2MR608bmtBLG9N5xD8CpEXf+RK8vnw
+         JDOX/pwU8r7HlbQLDrX3JgfXf3OwwgCN2q4nNqkZRTybGVCpUVmMbcJMPLaCwOJzRjNj
+         X017hLf55By9gIEy2kaC/d6n6Bz/T9jfscxm2hH18gJn59oLmn7gG8wSHkidG0nwFJ2a
+         bSRw==
+X-Gm-Message-State: ABy/qLahoaa0Sa3JWOp0E6KJF/qtZo0y18PE4HKU/m4Esl9OpcwkyLt2
+        5nxyFinzRzWZ2cyOsTkoNm3c9az2cq9mFEYNHT4WTRg0jkXbN4j1kvv9dA==
+X-Google-Smtp-Source: APBJJlFdULvoBDqjmqIeFcJod8hP8RCAYTUfsS89JMzCwu2gnHPv6eAfKMAcRUpYLbfngguHcLZOWyVu1ffWEH8bD/4=
+X-Received: by 2002:a50:a6dd:0:b0:522:28a1:2095 with SMTP id
+ f29-20020a50a6dd000000b0052228a12095mr144734edc.3.1690314567035; Tue, 25 Jul
+ 2023 12:49:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E48FEF64-2B21-11EE-AD03-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+From:   =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <emmir@google.com>
+Date:   Tue, 25 Jul 2023 21:49:15 +0200
+Message-ID: <CABb0KFF1vqMLa5DLYd_c9sQeZbhkhQ=Q0bE7W41nmMFmNWB4tg@mail.gmail.com>
+Subject: includeIf not matching during `git rebase`
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+* What did you do before the bug happened? (Steps to reproduce your issue)
 
-> I also spotted this change since v1:
->
-> - Rename trace2 counters to use "-" (not "_") as inter-word separators.
->
-> Since I do not seem to be able to find any review comments regarding
-> the variable naming in the v1's thread, let's ask stakeholders.
->
-> Are folks involved in the trace2 subsystem (especially Jeff
-> Hostetler---already CC:ed---who presumably has the most stake in it)
-> OK with the naming convention of the multi-word variable?  This is
-> the first use of multi-word variable name in tr2_ctr, and thus will
-> establish whatever convention you guys want to use.  I do have a
-> slight preference of "writeout-only" over "writeout_only" but that
-> is purely from visual appearance.  If there is a desire to keep the
-> names literally reusable as identifiers in some languages used to
-> postprocess trace output, or something, that might weigh
-> differently.
+With ~/.gitconfig having:
 
-I heard absolutely nothing since I asked the above question last
-week, so I'll take the absense of response as absense of interest in
-the way how names are spelled.
+[includeIf "onbranch:pr/"]
+        path = .gitconfig.for-upstream
 
-Therefore, let me make a unilateral declaration here ;-)  The trace2
-counters with multi-word names are to be named using "-" as their
-inter-word separators.  Any patch that adds new counters that do not
-follow the convention will silently dropped on the floor from now on.
+where the included config changes commit-msg hook,
 
-Let's move this patch forward by merging to 'next' soonish.
+git checkout pr/zzz # has multiple commits over upstream
+git rebase -i
+> 'edit' first commit
+(modify it)
+git rebase --continue
 
-Thanks.
+* What did you expect to happen? (Expected behavior)
+
+The commit messages are unchanged.
+
+* What happened instead? (Actual behavior)
+
+The rebased commits had messages modified by default commit-msg hook.
+
+* What's different between what you expected and what actually happened?
+
+I'd expect includeIf to match and in effect prevent the default commit
+message modifications.
+
+[System Info]
+git version:
+git version 2.41.0.487.g6d72f3e995-goog
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+compiler info: gnuc: 12.2
+libc info: glibc: 2.36
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+commit-msg
+pre-commit
+prepare-commit-msg
