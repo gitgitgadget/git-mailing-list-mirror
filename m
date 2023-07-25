@@ -2,91 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BCAFEB64DD
-	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 19:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB44EB64DD
+	for <git@archiver.kernel.org>; Tue, 25 Jul 2023 19:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230347AbjGYT14 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 15:27:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59356 "EHLO
+        id S230478AbjGYTcA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jul 2023 15:32:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbjGYT1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 15:27:55 -0400
+        with ESMTP id S230305AbjGYTbu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2023 15:31:50 -0400
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653222113
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 12:27:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D381FFA
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 12:31:50 -0700 (PDT)
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E07F91E571;
-        Tue, 25 Jul 2023 15:27:52 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B700D1E5D9;
+        Tue, 25 Jul 2023 15:31:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VBY5De/LN8H8bVEp9Cjh6pRz0MRWFCMDmR7wkl
-        k+eKA=; b=m1PYCzMgA28sdQz3wvpYHUg9cbkt2khmSKAg1wG1uZkh37UOgNl5z7
-        JsJYLMZRFVRtX5sVlbWj3XA027U+2gbpMEBhIkgN1mWGc3qzsxB0MG37m17gLaQQ
-        LdVHLWKW9STyaHqq+e4RzdV5vZmQiJv0MB7mMkbPieSLB0FCE8xyk=
+        :content-type; s=sasl; bh=odvqWAHUVreFyjJ0MvIthfKlIyZRrP9oYpdx9c
+        3cmyg=; b=A/zNxh6r+9tKW9bC0rIgSuWmSFrEdkz8bMTbMKuAyQFlok+hMMrs8Z
+        SD2ByLgZwAjHgAPv0jqAGF3XToCru5xOSBRNRSFae2nLiSKOrmafeR691M4ZCzw6
+        sOfX8F8Wse/C7AyhwHlUkQlANvDwhXWj51L4QYu01IQzrpZILmjaQ=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D8DC91E570;
-        Tue, 25 Jul 2023 15:27:52 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B020F1E5D8;
+        Tue, 25 Jul 2023 15:31:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86BFD1E56C;
-        Tue, 25 Jul 2023 15:27:48 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 54C6B1E5D7;
+        Tue, 25 Jul 2023 15:31:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Siddharth Singh <siddhartth@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH v4 1/2] ref-filter: add multiple-option parsing functions
-References: <20230719162424.70781-1-five231003@gmail.com>
-        <20230723162717.68123-1-five231003@gmail.com>
-        <20230723162717.68123-2-five231003@gmail.com>
-        <xmqqa5vlqktr.fsf@gitster.g> <ZL6_DlDIE8Hfl_T6@five231003>
-        <xmqqmszlnixe.fsf@gitster.g>
-Date:   Tue, 25 Jul 2023 12:27:46 -0700
-In-Reply-To: <xmqqmszlnixe.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        24 Jul 2023 13:39:09 -0700")
-Message-ID: <xmqqv8e7lrkd.fsf@gitster.g>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 2/2] wrapper: use trace2 counters to collect fsync stats
+References: <20230720164823.625815-1-dev+git@drbeat.li>
+        <xmqq5y6e2xl7.fsf@gitster.g>
+Date:   Tue, 25 Jul 2023 12:31:45 -0700
+In-Reply-To: <xmqq5y6e2xl7.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        20 Jul 2023 12:26:44 -0700")
+Message-ID: <xmqqo7jzlrdq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 56D37920-2B21-11EE-A0AD-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: E48FEF64-2B21-11EE-AD03-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Kousik Sanagavarapu <five231003@gmail.com> writes:
+> I also spotted this change since v1:
 >
->> What do you mean by "share code"?
->>
->> They are similar in their functionality, that is parsing the option and
->> grabbing the value (if the option has a value, otherwise we do what we
->> did here). The difference is the way we do such a parsing.
->>
->> In pretty, we directly skip_prefix() the placeholder. So we check for ')'
->> to see if we have reached the end of "to_parse".
->>
->> In ref-filter (the current patches), we deal directly with the options
->> ("arg" here), that is we can't do a check for ')' to see if we have
->> exhausted our option list. So we can't really use the same functions, but
->> there is the possiblity that we can modify them to be used here too.
+> - Rename trace2 counters to use "-" (not "_") as inter-word separators.
 >
-> That is the kind of "sharing" to reduce repetition I had in mind.
+> Since I do not seem to be able to find any review comments regarding
+> the variable naming in the v1's thread, let's ask stakeholders.
 >
-> I haven't checked the callers, but another way would be to update
-> the caller of for-each-ref's side to match the calling convention of
-> how pretty calls the parser, wouldn't it? After all, they parse the
-> same "%(token:key=val,key=val,...)" so...?
+> Are folks involved in the trace2 subsystem (especially Jeff
+> Hostetler---already CC:ed---who presumably has the most stake in it)
+> OK with the naming convention of the multi-word variable?  This is
+> the first use of multi-word variable name in tr2_ctr, and thus will
+> establish whatever convention you guys want to use.  I do have a
+> slight preference of "writeout-only" over "writeout_only" but that
+> is purely from visual appearance.  If there is a desire to keep the
+> names literally reusable as identifiers in some languages used to
+> postprocess trace output, or something, that might weigh
+> differently.
 
-Having said all that, let's move things forward by merging this
-version.  Anybody (it could be you) interested in cleaning up by
-unifying these two very similar implementations of the same thing
-can do so on top.
+I heard absolutely nothing since I asked the above question last
+week, so I'll take the absense of response as absense of interest in
+the way how names are spelled.
+
+Therefore, let me make a unilateral declaration here ;-)  The trace2
+counters with multi-word names are to be named using "-" as their
+inter-word separators.  Any patch that adds new counters that do not
+follow the convention will silently dropped on the floor from now on.
+
+Let's move this patch forward by merging to 'next' soonish.
 
 Thanks.
