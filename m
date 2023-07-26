@@ -2,85 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E751C001DC
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 17:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB42DC0015E
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 17:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232363AbjGZRT1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 13:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56248 "EHLO
+        id S232435AbjGZR3Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 13:29:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232336AbjGZRTX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 13:19:23 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D085F2707
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:19:20 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1bbbc4ae328so40015ad.1
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:19:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1690391960; x=1690996760;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QUCZVCxIp88kbZJeh0IAgRn9PfxQRRWo2aovxAHgNxA=;
-        b=6XcAPAZgTXnaEBKC8vmds9I3jAgrNYDQzXgZK511E6A2DgX5bcedhaiQl1FoxqSxNx
-         qYd+1Aee3+CsEVPjjF3MP0JcjlZ0tX7AOjDTDFaiH+E9xQcgfDyD8C6ttGS53UZ6lxN1
-         WbAUaITd7XwRPLTsOQR4YVSTOW39bADIupU6n96mBc7RlCgjq53vkYy1E8qBbTfgpKRQ
-         AYL8SVejJZJBMi9C+bTX7MzSO4DuWNYvg6UqXOE9ad7gmMZeMCrn1KcRAfDhlUUQi+r9
-         I3pIKAyjsILIPK+0v7dDa1k9/e7RFa6jQjfVCM2wXkM2a/NGOa2lJlV/Vd6XDn/rxM+h
-         jtjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690391960; x=1690996760;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QUCZVCxIp88kbZJeh0IAgRn9PfxQRRWo2aovxAHgNxA=;
-        b=A7zyj3ah1R7JlQjxxikyDOCA+xhxh3btI4lbVWV5NHS8UX68rptljDe6/kjWh9pFWx
-         1ffK5g9a51fR8Jr9+OQCpch+hTzy+dGj1Ej88QfA2eyaFjFKZbdeHNhunZhvNrbumQRo
-         V95vt0cUvwncgDA3pLrfDBkMkXxF2uTja34xyIhmcAM8q4qJ8e/Gou/7wCHmGtIof1Bk
-         F+pOxix2/TlUUNizcA6C17ZzNEWYzQDkqFaDP0oIJvjNi5ajMQWh8nekosH5BDmdpjdp
-         WSkGtuZKaogwl52XbIpNzS545QepIUDLkYI7jiC+eSGE6hmCkx3TH/V1DAkxcBzwcmk5
-         mkbw==
-X-Gm-Message-State: ABy/qLYR1YmF3aE5XtN/nCiKfT9jl2CAW0ZxrZCI69+rgeSL2JXOZ66h
-        Vf2I0EQn3j6VxLCksZbJdH5w8Nx6B98=
-X-Google-Smtp-Source: APBJJlEdBoIvKrjDcyrqRKvqLN6WzKqU9P9bvKQJp3hbWEXJVNGP1VZAUsYV/orkvwHg4XGOKXO7ciDAZcc=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:902:c951:b0:1ba:1704:89d1 with SMTP id
- i17-20020a170902c95100b001ba170489d1mr13052pla.10.1690391960028; Wed, 26 Jul
- 2023 10:19:20 -0700 (PDT)
-Date:   Wed, 26 Jul 2023 10:19:18 -0700
-In-Reply-To: <xmqqpm4ffe3m.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1556.v2.git.1689314493.gitgitgadget@gmail.com>
- <pull.1556.v3.git.1690340701.gitgitgadget@gmail.com> <xmqqpm4ffe3m.fsf@gitster.g>
-Message-ID: <owlypm4efv55.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v3 0/5] SubmittingPatches: clarify which branch to use
-From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231857AbjGZR3O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 13:29:14 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3B31BC1
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:29:13 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D1FA192680;
+        Wed, 26 Jul 2023 13:29:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vecDv1V82uBGegcyuXVuvgcHIgtzJZvVStveEj
+        YKgbQ=; b=LsDo4kOOYvy+jEHrA3ovm9pyUo2q5c7Eof1j8IDzjBNDmC0Tl3kwtP
+        30zMgJCRbNd3SaR+U8WIvvc5eD1UsYeAxCeX5dIzz1XyEwxqvgckdFjcCTvhXZNR
+        R+Y8C49oI1O9vcYpACEP0e6PMyuX1RYjQyyHuWfJlca6LZpOiGavs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3640819267F;
+        Wed, 26 Jul 2023 13:29:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CCD1419267E;
+        Wed, 26 Jul 2023 13:29:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yuri <yuri@tsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: 'git stash push -- {dir}' puts files in stash that are outside
+ of {dir}
+References: <5fce9c4f-0ea7-9393-4a30-ddd66946661d@tsoft.com>
+Date:   Wed, 26 Jul 2023 10:29:09 -0700
+In-Reply-To: <5fce9c4f-0ea7-9393-4a30-ddd66946661d@tsoft.com>
+        (yuri@tsoft.com's message of "Wed, 26 Jul 2023 10:05:04 -0700")
+Message-ID: <xmqqsf9ad1ju.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: EEC00952-2BD9-11EE-9DE9-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Yuri <yuri@tsoft.com> writes:
 
-> Well, both of us forgot that the previous round has already been in
-> 'next' for quite a while.
+> I am in the FreeBSD ports repository.
 >
-> So, I've split the difference between the previous round and the
-> result of applying this round into two patches, and then added a bit
-> of fix-ups on top. ...
+> I run this command:
+>
+> $ git stash push -m "gh-print-tuple" -- Mk
+>
+> But then 'git show' shows that the top stash entry also has other files:
+>
+> $ git stash show -p stash@{0} | grep diff
 
-Sorry about that (but also, I didn't know any better). So I guess the
-guidance is:
+Not offering a solution, as a quick test or two in my environment do
+not reproduce this problem [*].  But instead of the above command,
+which will show matches on any line that has "diff" in the "-p"
+output, perhaps
 
-    Sometimes, you may want to work on a topic (typically your own)
-    which has already been in `next` for quite a while. Perhaps you had
-    an unplanned break of a couple weeks, or some other circumstance. In
-    such cases, consider sending out patches that build on top of the
-    latest patch series round instead of directly modifying (locally
-    rebasing) the patches for a new series. This way, your new changes
-    will be easier to apply to `next` as is, without rebuilding `next`
-    all over again.
+    $ git stash show --stat
 
-Would you prefer to include this guidance in the docs as well, or is it
-sufficiently rare enough that we shouldn't include it?
+is easier to see?
+
+Are there configuration variables set to affect the behaviour of the
+"git stash" command in your environment that I do not have (I have
+nothing in "git config -l | grep stash" output), which may be
+affecting why it does not reproduce for me?
+
+> Why do files that are not under Mk get into stash?
+
+
+[Footnote]
+
+* Admittedly I didn't recall we had pathspec support to "git stash
+  push" so consider me no longer an expert in this area ;-).
