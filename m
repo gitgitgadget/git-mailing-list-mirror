@@ -2,109 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4713C001DE
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 03:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AA58C0015E
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 04:41:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231213AbjGZDF2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jul 2023 23:05:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37316 "EHLO
+        id S230057AbjGZElQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 00:41:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231129AbjGZDFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2023 23:05:15 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C6A11BE8
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 20:05:06 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbc63c2e84so63328805e9.3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2023 20:05:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690340704; x=1690945504;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L5fOw66Oz/l74QmvF25VG2PF3rAhwtQYaMAuXKwfkGw=;
-        b=cgnkNUOEt98/ydwJRzs9GFu5xpyoaw+5IJVl9IuWsW8ofiyPDpZDmU1BbDRY7bAZhA
-         RK63ytB3X60jpoGZL9PNeJ0KC1dFL4NKzkoWiJpupXiTfaW7VdQCFftQmpxh7LLlku+m
-         XWo2JOaq8WHfw4zYGqa3zoNyllQlJau56nrI/SoOe7vFawkbGdO2iNuvzIkHBzaZF75e
-         GP4iGJE8R2+uOG8eQXse9NfcLKOsrpv2Uf9sOZx+sp6H1e8Ul+ZCLLgGSD6CnySBrHud
-         ZNL9/ADQr12oZx1MzBPsLCEodb5Fv5TJ//jxszO3PVaA1s6xhbUsXOciyEZrLChB/5zS
-         m/tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690340704; x=1690945504;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L5fOw66Oz/l74QmvF25VG2PF3rAhwtQYaMAuXKwfkGw=;
-        b=AGAW8GPT4KMs6cLwZ1xEoRuMb2SGDcGhNAljJoA5IBftZAV2Oq6d4QSb6UgD13NRst
-         T0IXlQL/Ghv4nBIP38RjrvjXRZP3BBIBUImNoMAoy1+TvSDja+X/GOR0uSTF1gqdCAmr
-         wLixnrGD0KlwH04XdwFbiWGLoNMm/QK75MPTmv7KEuI2RiBIjaTS+paAJhlW19PNVvaX
-         +dVmSxZskwwKjI9up+E5urv8Q5d1SomJ0EE3X9PxWeYhB7T1RutpiQxSlpMSipd/DFKW
-         qp12iPqu1IHj94c0G/yshpFskJldRlltSZdDbJYLM/mV0p88hJGPhS/KnCy+wJ4X62e1
-         xYyQ==
-X-Gm-Message-State: ABy/qLYk96GEFSJkjQBJCKjCo1xp6/AObdcHDRl/lpnznLMTitx7RaaM
-        Hb8zZCoMz2z7bnJD3XCETNxhvff/4a4=
-X-Google-Smtp-Source: APBJJlHJoupCIvEscdPPinIZ8nG3rnMLn/3/dPLo8F9zFWOrnz1+xkl/5VLhgxiV+1M+jFaDQeSMrA==
-X-Received: by 2002:adf:fc05:0:b0:314:36c5:e4c0 with SMTP id i5-20020adffc05000000b0031436c5e4c0mr466515wrr.11.1690340704540;
-        Tue, 25 Jul 2023 20:05:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y19-20020a7bcd93000000b003fc06169ab3sm660629wmj.20.2023.07.25.20.05.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 20:05:04 -0700 (PDT)
-Message-ID: <69fef8afe64156a1f54e9e1b7bbcc73d2867695c.1690340701.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1556.v3.git.1690340701.gitgitgadget@gmail.com>
-References: <pull.1556.v2.git.1689314493.gitgitgadget@gmail.com>
-        <pull.1556.v3.git.1690340701.gitgitgadget@gmail.com>
-From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Jul 2023 03:04:59 +0000
-Subject: [PATCH v3 3/5] SubmittingPatches: de-emphasize branches as starting
- points
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229498AbjGZElN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 00:41:13 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 475301989
+        for <git@vger.kernel.org>; Tue, 25 Jul 2023 21:41:12 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC5D021E01;
+        Wed, 26 Jul 2023 00:41:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hcX2OjrFt64xKJDRU7krUNbPbCDxUIRAF/VwUH
+        b2d+0=; b=kQaqqQD1OVWRwLLQzQe5EgDy3qMyKpnnjT8KmVzMm6kQzrqqEidM4l
+        jJMMW52Qxu/kd4AlQMTVKzh/2LwUN8K9Ig9fE9sIe3brP+oA18i+6+FIdaiivy2I
+        8wq0sBCsYRuByygr0WGYym+B/h6y3D4w4muhxr7sXOxUrKlH4XWSs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B57B521E00;
+        Wed, 26 Jul 2023 00:41:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2288F21DFE;
+        Wed, 26 Jul 2023 00:41:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Arver <linusa@google.com>
+Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] SubmittingPatches: simplify guidance for
+ choosing a starting point
+References: <pull.1556.git.1688778359.gitgitgadget@gmail.com>
+        <pull.1556.v2.git.1689314493.gitgitgadget@gmail.com>
+        <5ec91d02b7ae767cc9b2395e1c0fa10e1424c0c5.1689314493.git.gitgitgadget@gmail.com>
+        <xmqq5y6mpfhm.fsf@gitster.g> <owlyy1j3fo8d.fsf@fine.c.googlers.com>
+Date:   Tue, 25 Jul 2023 21:41:06 -0700
+In-Reply-To: <owlyy1j3fo8d.fsf@fine.c.googlers.com> (Linus Arver's message of
+        "Tue, 25 Jul 2023 18:36:18 -0700")
+Message-ID: <xmqqwmynffod.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Linus Arver <linusa@google.com>, Linus Arver <linusa@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A2B9E732-2B6E-11EE-A505-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Linus Arver <linusa@google.com>
+Linus Arver <linusa@google.com> writes:
 
-It could be that a suitable branch does not exist, so instead just use
-the phrase "starting point". Technically speaking the starting point
-would be a commit (not a branch) anyway.
+>>  * An very old but still severe bug in tagged versions would want to
+>>    be fixed ideally not on top of 'maint' but on top of the latest
+>>    tagged version in the same maintenance track.  E.g. if the commit
+>>    X introduced the bug, you may ask "git describe --contains X" the
+>>    oldest version the commit appears in, say "v2.30.0-rc2-gXXXXXX".
+>>    Then you would run "git checkout -b fix v2.30.9" to start the
+>>    branch to fix it.
+>
+> In this example, are we using v2.30.9 as a starting point, not v2.30.0
+> because v2.30.9 is the latest tagged version that is in 'maint'? 
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Linus Arver <linusa@google.com>
----
- Documentation/SubmittingPatches | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Yes, the example assumes that the last maintenance release for
+v2.30.x series is v2.30.9.  But this kind of fix happening is
+sufficiently rare and I do not think regular contributors should
+have to worry too much about it.  If the affected area had tons of
+changes between v2.30.9 and 'master', a fix on such an old base
+would require a lot of work merging upwards, adjusting to newer
+codebase, and it only makes sense to go that length for high value
+fixes (aka "security patch").  The rules that apply for such a fix
+would be vastly different (e.g. the review may be done behind closed
+doors with small number of reviewers, not on the public list).
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 7919a362e31..f1d1446764b 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -7,8 +7,8 @@ Here are some guidelines for contributing back to this
- project. There is also a link:MyFirstContribution.html[step-by-step tutorial]
- available which covers many of these same guidelines.
- 
--[[base-branch]]
--=== Decide what to base your work on.
-+[[choose-starting-point]]
-+=== Choose a starting point.
- 
- In general, always base your work on the oldest branch that your
- change is relevant to.
-@@ -317,8 +317,8 @@ Please make sure your patch does not add commented out debugging code,
- or include any extra files which do not relate to what your patch
- is trying to achieve. Make sure to review
- your patch after generating it, to ensure accuracy.  Before
--sending out, please make sure it cleanly applies to the base you
--have chosen in the "Decide what to base your work on" section,
-+sending out, please make sure it cleanly applies to the starting point you
-+have chosen in the "Choose a starting point" section,
- and unless it targets the `master` branch (which is the default),
- mark your patches as such.
- 
--- 
-gitgitgadget
+> I think this nugget of knowledge should be included in a v3 of this
+> series. Will update.
+
+So, while it may help improve understanding of the philosophy behind
+the regular procedure to know, I am not sure it is worth spending a
+lot of lines to describe it when we are giving a piece of advice for
+general "bugfix and/or new development".  Some bugs are simply not
+worth the trouble of going back for more than two maintenance
+tracks to fix.
+
+Thanks.
+
+
 
