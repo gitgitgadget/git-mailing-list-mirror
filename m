@@ -2,82 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5467C001DC
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 17:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31ED4C0015E
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 17:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231777AbjGZRHM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 13:07:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48192 "EHLO
+        id S230443AbjGZRPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 13:15:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230439AbjGZRHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 13:07:11 -0400
-X-Greylist: delayed 109 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 26 Jul 2023 10:07:09 PDT
-Received: from shell1.rawbw.com (shell1.rawbw.com [198.144.192.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9AF31E73
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:07:09 -0700 (PDT)
-Received: from [192.168.5.3] (c-73-202-23-161.hsd1.ca.comcast.net [73.202.23.161])
-        (authenticated bits=0)
-        by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 36QH55Fm025899
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:05:20 -0700 (PDT)
-        (envelope-from yuri@tsoft.com)
-X-Authentication-Warning: shell1.rawbw.com: Host c-73-202-23-161.hsd1.ca.comcast.net [73.202.23.161] claimed to be [192.168.5.3]
-Message-ID: <5fce9c4f-0ea7-9393-4a30-ddd66946661d@tsoft.com>
-Date:   Wed, 26 Jul 2023 10:05:04 -0700
+        with ESMTP id S229507AbjGZRPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 13:15:12 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C2C2706
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:15:04 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D63A192590;
+        Wed, 26 Jul 2023 13:15:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9ZInk2/0DjOHGHnJMnqzIWusF6YxGV54v/kkwh
+        sd9MY=; b=ht2hO+VYvpVrRk7w8mbP6/PXDODMREeLpTtjxkUqRCsuNtkbVPAi/f
+        nxE3YayFiRpp3n7CGmm2FCvO41ErdFjrYkVL9PRI71+KAWW/EKtN8AFqMpI81yGQ
+        k7k1bVgp2pwocfDZKyTr+ZkF+Pz8oLos/b/8SbneZCx6/8QuF/Va0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C3B819258E;
+        Wed, 26 Jul 2023 13:15:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 21E9019258B;
+        Wed, 26 Jul 2023 13:15:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>,
+        M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH v2] credential/libsecret: erase matching creds only
+References: <pull.1527.git.git.1687591293705.gitgitgadget@gmail.com>
+        <pull.1527.v2.git.git.1690387585634.gitgitgadget@gmail.com>
+Date:   Wed, 26 Jul 2023 10:15:01 -0700
+In-Reply-To: <pull.1527.v2.git.git.1690387585634.gitgitgadget@gmail.com>
+        (M. Hickford via GitGitGadget's message of "Wed, 26 Jul 2023 16:06:25
+        +0000")
+Message-ID: <xmqqzg3id27e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Content-Language: en-US
-To:     Git Mailing List <git@vger.kernel.org>
-From:   Yuri <yuri@tsoft.com>
-Subject: 'git stash push -- {dir}' puts files in stash that are outside of
- {dir}
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F57C9870-2BD7-11EE-A6FD-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am in the FreeBSD ports repository.
+"M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I run this command:
+> From: M Hickford <mirth.hickford@gmail.com>
+>
+> The credential erase request typically includes protocol, host, username
+> and password.
+>
+> credential-libsecret erases a stored credential if it matches protocol,
+> host and username, regardless of password.
+>
+> This is confusing in the case the stored password differs from that
+> in the request. This case can occur when multiple credential helpers are
+> configured.
+>
+> Only erase credential if stored password matches request (or request
+> omits password).
 
-$ git stash push -m "gh-print-tuple" -- Mk
+This is much better.
 
-But then 'git show' shows that the top stash entry also has other files:
+> This fixes test "helper ... does not erase a password distinct from
+> input" introduced in aeb21ce22e (credential: avoid erasing distinct
+> password, 2023-06-13)
 
-$ git stash show -p stash@{0} | grep diff
-diff --git a/Mk/Scripts/print-submodule-gh_tuple.awk 
-b/Mk/Scripts/print-submodule-gh_tuple.awk
-diff --git a/Mk/Scripts/print-submodule-gh_tuple.sh 
-b/Mk/Scripts/print-submodule-gh_tuple.sh
-diff --git a/Mk/bsd.sites.mk b/Mk/bsd.sites.mk
-diff --git a/audio/triceratops-lv2/files/patch-synth.cpp 
-b/audio/triceratops-lv2/files/patch-synth.cpp
-diff --git a/cad/scotch/distinfo b/cad/scotch/distinfo
-diff --git 
-a/cad/scotch/files/patch-Make.inc_Makefile.inc.i686__pc__freebsd 
-b/cad/scotch/files/patch-Make.inc_Makefile.inc.i686__pc__freebsd
-diff --git 
-a/cad/scotch/files/patch-Make.inc_Makefile.inc.x86-64__pc__freebsd 
-b/cad/scotch/files/patch-Make.inc_Makefile.inc.x86-64__pc__freebsd
-diff --git a/x11/darktile/Makefile b/x11/darktile/Makefile
-diff --git a/x11/darktile/distinfo b/x11/darktile/distinfo
-diff --git 
-a/x11/darktile/files/patch-vendor_github.com_kr_pty_ztypes__freebsd__arm64.go 
-b/x11/darktile/files/patch-vendor_github.com_kr_pty_ztypes__freebsd__arm64.go
-diff --git 
-a/x11/darktile/files/patch-vendor_github.com_riywo_loginshell_loginshell.go 
-b/x11/darktile/files/patch-vendor_github.com_riywo_loginshell_loginshell.go
-diff --git a/x11/darktile/pkg-descr b/x11/darktile/pkg-descr
+This was still confusing for a patch that does not touch anything in
+t/, but after re-reading aeb21ce22e and the above a few times, I
+think I get it.  Adding the following
 
+	, when t0303 is run with GIT_TEST_CREDENTIAL_HELPER set to
+	"libsecret".
 
-Why do files that are not under Mk get into stash?
+at the end may help, but perhaps it is too obvious for folks who are
+ready to actually review this change---presumably they are familiar
+with how t0303 is to be used and read that without being told from
+the context?
 
-
-
-Thanks,
-
-Yuri
-
+Thanks.
 
