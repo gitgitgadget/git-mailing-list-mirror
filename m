@@ -2,125 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4495BC0015E
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 09:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61951C001DC
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 13:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233825AbjGZJyW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 05:54:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
+        id S233561AbjGZNIg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 09:08:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233128AbjGZJx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 05:53:59 -0400
-Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2090.outbound.protection.outlook.com [40.107.105.90])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9063C25
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 02:53:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QTMmkKHr8RRIv5Y0cmYusfkbj8K6IKotWiktlgW3TZUERgm+L5NvZeFmj8kotdF1i1mBL4WuZ5E8TpAoH83WjWX1a4UItNvFOKuBtVcCifSZ8fh3sbjkvlORCJHzI5nDs2/m8b5JZrTKAWy/xCA/MarctEzhaMh2vmxf97wv1Tw/oyPiYROda89jd4WopaE3KPMoqWQ4Ahq0rwugpLth2Y/6JRwINTCcpQpTNX1fN2jFiFb5z4/EUQ/Ei5SrOswR7unGWUhDMEFDa9DTr83uFzn0iuLjYU1/UvJuWNzJ8UVMhiUEfEOXdZThnW13CeDtevYdVoJAi+6OyMRGIyn9pA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9LDKrYguQvvF8en2T54cA8rzV09xQWJJ+lAvW7szXhc=;
- b=dOfh05zJKsadHtwXMAibn4hBXVrirkKq2SsVtfRcvhqfrDKXiKAeaGv6iovhYHI1YE93TU0PXl4Xz2PMiYSscXV+qLEnhxJWzTHhUelENx68hJ/fp3hakkvlzCsp0P0QvV+bjjUpuqbYq9PI7c5DhoISPLL1ogR61EUKhQ00QQwFBCuZSS+TE/7HClYahiiOp79/KDLnLy4JQSlI4reMizv613iGQVZbRiw+ND/+tdkSKMxR7f7/MUQVzJ18n+o9Q3JnFmlY8Bu5B+pnM5P/8mo3SUzfqG85qURfc5q3/dndRndH7GBuA7hRsFVdIKjDTQaCZ++Puhe4WsT5e9HwRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intellimagic.com; dmarc=pass action=none
- header.from=intellimagic.com; dkim=pass header.d=intellimagic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intellimagic.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9LDKrYguQvvF8en2T54cA8rzV09xQWJJ+lAvW7szXhc=;
- b=poGpvJ19Ochh55iwC4TKXs+Onmgb9ErAdFJTNUpJeyG+P9zrb0xuPd5OkTbcWLZYImUPrnAcaiTi9G+8Wgk1dMFlwxzLWAdOEsMtK3pVKsYUs/uzkD6ZgYP2kHO9jODnSCKUFYQVQI0lubCEGJF91bAvy2claLwSTH0GngHjlF4=
-Received: from VI1PR10MB2462.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:803:7e::13)
- by DU0PR10MB7285.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:447::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6631.29; Wed, 26 Jul
- 2023 09:53:01 +0000
-Received: from VI1PR10MB2462.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::f63:894c:a5f4:9d8]) by VI1PR10MB2462.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::f63:894c:a5f4:9d8%7]) with mapi id 15.20.6609.032; Wed, 26 Jul 2023
- 09:53:01 +0000
-From:   Louis Strous <Louis.Strous@intellimagic.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: How to make "git bisect visualize" use gitk on Windows?
-Thread-Topic: How to make "git bisect visualize" use gitk on Windows?
-Thread-Index: Adm/oXtVY46k1XLjSgWe3oDG3cBB2A==
-Date:   Wed, 26 Jul 2023 09:53:01 +0000
-Message-ID: <VI1PR10MB2462F7B52FF2E3F59AFE94A7F500A@VI1PR10MB2462.EURPRD10.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intellimagic.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI1PR10MB2462:EE_|DU0PR10MB7285:EE_
-x-ms-office365-filtering-correlation-id: 3d6cb72f-23d4-4e20-556e-08db8dbe1983
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: xDMhNryza4iejDUvsu7PVpXLZJB1zm1EtCLz5tNHF1Lgx4QqvOUreAeUysLxLShM8s2FrMCh6vtsNF9ypDtxW6rAl8nDN6BHnNqsWFbZ3LJpK6YRJjR+mdCCCJHbvV5wPDwPVSG+livZNoEWqts/ovHRu2evMKFBexSmBQwZhvAGHvxRScP/fJw4N1k10MjMj1v0kaC8YMW2AxWujK8tjVzYNhUxGq+9pZV9GO8bW4/DJu5x9W+UrCGRK6CSWTdlAO9DnQh/TnpKhZw0TJMcZNaXWaNNIhu9EJ35mByCLbLJ8DOE0q9ohBMAekwLvpRIJm/SVfQBSeh0249AN9pIdLpIxJRyxkwhkBi2PisYPC5SduXMH7VFt8jGBOokuerEoJ3H+zKqeGW2RZDqTwCjXmpHvwmaeG9A3eWb8zuI0pGmqgdc1lrpWinbabqsiTydwvwKbOvrTXr4T51Jn2mEWdbDUsuuCiRf/8MSDLZvl5YfqgUy6806rQVlEcAGdMmYc8ihmgCN4zfLwunjmcjcNlThBHYwlK1GPMofW190tqVdFf8C9w7S9i2OJiAzVz4OGGFDUBwszAE/aEn5vfxa/k/pozyzaH7QA7qvZ87EqTHPov5uFxcOqVYDC9PlgJSc
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR10MB2462.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(366004)(376002)(39840400004)(136003)(346002)(451199021)(966005)(9686003)(71200400001)(7696005)(33656002)(186003)(83380400001)(38070700005)(86362001)(15974865002)(38100700002)(122000001)(6506007)(26005)(55016003)(2906002)(66446008)(6916009)(64756008)(66556008)(66476007)(66946007)(76116006)(4744005)(316002)(5660300002)(52536014)(41300700001)(8676002)(8936002)(478600001)(45080400002)(18886075002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?H1X6u9NnV/BE6mkiBo+4p7u33PzOJnRB16E8uumBcw4aBqpamktsqbBI6O?=
- =?iso-8859-1?Q?fuYZi1+aUm2+RS2bG+YJYTpHGSbBhU0t7rbvtyNHVUo1HXEvS4nRXhJBSz?=
- =?iso-8859-1?Q?LUfwofaHrkyf8PW9/gVILk8Rm5hb+t4y2wK188JAEJMDUV6UVfIez8yzjd?=
- =?iso-8859-1?Q?ZD2ebSNoq1u9WCw/ZjUilQneSjocTvRIFvGnGCs+nKR+26DFILokxW2A6s?=
- =?iso-8859-1?Q?l4ct3za2JBEU25T94zXwRwsPlDb/3oR3pI3BRxudLtuPsIbw03Up4NlWCF?=
- =?iso-8859-1?Q?norrkm70e1HmbfglTny3fIpKYpX5Pn3mZhWtDhrLdbBOJxeZP4kPqAzp0U?=
- =?iso-8859-1?Q?ECJP8bQ7UrgjFBadim0UGcA+n0zI47YV3F6EVwlYPPHkErgveosl5fH3vv?=
- =?iso-8859-1?Q?NKEMFsiJ8iW6brsOEltYZdPZrP96z1sSJYAVZnRTJaJvXPjKCCiyZVyCNd?=
- =?iso-8859-1?Q?IFx915cQUOaS3vuXKD77YSiGVkSpiyoE535/3LJWIU4oaaHlY7UMg8oFJ0?=
- =?iso-8859-1?Q?AXIT8k+CH9JpimLbCzhrm8bVq9u98WI81Jv5Y85jsuWFEQxZcd483bisUo?=
- =?iso-8859-1?Q?ysUPCQWQ6wuJ6kB0lG2rwQcbstDTIynuhFynZK09pNMNwcxm273FTzM6i+?=
- =?iso-8859-1?Q?3Vgb14QiSsNMHKBk1qi+Lw/tBvhqjLLb3ovfrtUuFPJ87u8X5P93T+M0yo?=
- =?iso-8859-1?Q?LOKJWdYgzzagLG9efRCRGLa52gbivHBsHrQrnF3ihdZfSlpMnk/MiYtYRw?=
- =?iso-8859-1?Q?TKcFTdLfotyZm3XInAcTiShG8y7WQrwziojPkAEhEJfhHgtnKuzcmKhK6y?=
- =?iso-8859-1?Q?pHTX3Oftq1igwOa+i8C/X2VKyh4sdV4GqGj99eAtt84hpIhh+UrZ/Zt1BN?=
- =?iso-8859-1?Q?E11f4jPVRnn+fAi5un9prsK9wylCdv/TZoxPFKD/DW4e4WaeyMTlcNt4Sq?=
- =?iso-8859-1?Q?rOjbZXHaMttEtyHkVv8/gdXkIDw0r+wjHVlPZOScv4kOUPxQLodXwUuBGL?=
- =?iso-8859-1?Q?sb3cNFa5lLF1u7cVerURkQBbo9uFYV2aFkvFFcYcjrjrMk/WDVD7QTSY2e?=
- =?iso-8859-1?Q?Wx1DzDMOwXVmZ/4VUsOgYbfaR40/t5qOOAkMr4ISKQFHADh85OoWh0sz50?=
- =?iso-8859-1?Q?xPCbFHhtejF0DqVzdU2GDC+US6Kt7cXn8WO11AMO72We/EzG8AMFIZqiZa?=
- =?iso-8859-1?Q?CJzryFhJWCAvHos9dR+dySimIR9Fz47zD02pX6zQe5IqszBrFJvkG1kj3v?=
- =?iso-8859-1?Q?s62c3c5AWJgcjdzgyQ3BeP5/Hmhtk9GRDXLoI8I1sGlJMnNIgBO6DP4HWa?=
- =?iso-8859-1?Q?H5GDDmcmx8Rx+eXqoxdsxrhAR09ADRRhHHtEaqSLmKI9I57HPJqH2hy+wz?=
- =?iso-8859-1?Q?/bGAT7yl3ynZ1/OqAJrjkR6fZxn/O2uIygAr1Cd9iXe86gwSLUwX8nAaPZ?=
- =?iso-8859-1?Q?Z5LzRSwfS8LrglRYakMcuoot/V+jhqmSLYUpMYXiH8Z25kZpU78Zkwt7p5?=
- =?iso-8859-1?Q?bC69Kb5AOFr86DjMCDKpf99BObSlohyiS8adYxsorb/VX543bSSN2PEQB0?=
- =?iso-8859-1?Q?n0IaHqV1j9Tt6Epa2Llom1sLypQyTCG8RfH7UrOpSRxC4GOiE0eCTm5XgG?=
- =?iso-8859-1?Q?sXc45jhPSYVAOrfamdtK3S4H9wBlar5+yFqKRtuM6eBJuoJEzNqneyBQ?=
- =?iso-8859-1?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S233235AbjGZNIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 09:08:31 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E09B91FFC
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 06:08:25 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3159d5e409dso706494f8f.0
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 06:08:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690376904; x=1690981704;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6AZgJj5Y88IY4ZJTtEzozoXzCt8kPGCwODt+ePPlnJM=;
+        b=CVnCRzjXktxQbz+rTROnLc0mJHu3/mtMA1fsl38t852H4TdrdEewBuFzL5d21CJN2j
+         RACYtuInjwwRvpKKh1D5WHJ882mqlNkk92otqIjUpe462jrI++zKbnOUlUTGGGHCqFHa
+         Fqd8lchvNUPMzRQ7/GmXx2Mr8cWzcD+duPso01f9Hfu5mqeDxpEucOvoKjfswXjTqVUu
+         0gbV3oVhJBO6a74bA9C78RYeeCLzp0q42dvflExUvd3+VjITcTorWAw1xF7vGsOdnyuN
+         o+xdwNV0fr0DdB7a6qARnK0i6f4vh1cRhwl1BKnPFgiPHtJEQL2+pen45YiUQPbl33mv
+         aM9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690376904; x=1690981704;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6AZgJj5Y88IY4ZJTtEzozoXzCt8kPGCwODt+ePPlnJM=;
+        b=PG7MqbFhH1B+QjorK/5aHcuJtB1KdcHqOVhsAMJRsonCcmz+3mE1UU/JecaTArc5kF
+         L/O/K1L6GQsOtCBL2UNZ5QVTjOQYsyc4UbnQFu9e3VRAzo8C4t//Ora92VwvFfpeUfGm
+         3Vcq1aYkp5pw6sX2XBlaZLVdS6fu20niqTvlYVWEH6rqxXv1KAw84gEYXJtzd3aDc+5A
+         PWtZiPeoymyMNGCLLAB2gzFmZcbwGSqUFEgHoVBXn+KZAIKurpJESsSXe9cCFcsulbEQ
+         QneV18mvR9Bd6sOjBFGT5kCQiYGg5kj4twgzsnWQIpIwmv2TGQ4GvEXwexHexskNgI4r
+         uu0A==
+X-Gm-Message-State: ABy/qLYdsoFlO5MQPImDIJTlNsENVkjJpAMXr1Y/Sxit1FO6b+huW+mF
+        h/d/ixoVkfDwkqq5usRx110=
+X-Google-Smtp-Source: APBJJlG8B/5waXJG6Sf2fUBr7gfjoD8VAX1vN5vvdldQRxxIr6etJJeBgUdjD56BA01cTxq6RogWhw==
+X-Received: by 2002:adf:f8c7:0:b0:311:360e:ea3a with SMTP id f7-20020adff8c7000000b00311360eea3amr4960980wrq.34.1690376904056;
+        Wed, 26 Jul 2023 06:08:24 -0700 (PDT)
+Received: from [192.168.1.195] ([90.242.235.211])
+        by smtp.googlemail.com with ESMTPSA id e1-20020adfe381000000b00313f031876esm19824930wrm.43.2023.07.26.06.08.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 06:08:23 -0700 (PDT)
+Message-ID: <a3526864-dd3a-f95c-72e6-44995a9a460f@gmail.com>
+Date:   Wed, 26 Jul 2023 14:08:22 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: intellimagic.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI1PR10MB2462.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d6cb72f-23d4-4e20-556e-08db8dbe1983
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jul 2023 09:53:01.3832
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84e351a8-e0c3-496c-85f6-af5416ac9ef1
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eICNBjdYKjEvtNuInaKTMxlytYkUDDioLAR6hAte78m+iive3bbXVgULl6h+wGvasaaRkqwns7vE1drZtbdblpEhqqvBp+CSgo6WFl51ORI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR10MB7285
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 5/6] rebase: fix rewritten list for failed pick
+Content-Language: en-US
+To:     Glen Choo <chooglen@google.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+ <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+ <f8e64c1b631116367e6e68fcfde711b507a03a94.1682089075.git.gitgitgadget@gmail.com>
+ <kl6lmt0sr16k.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <fdb605bf-938d-6135-b341-6cf20600abaf@gmail.com>
+ <kl6lo7k0ym57.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <kl6lo7k0ym57.fsf@chooglen-macbookpro.roam.corp.google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I use git version 2.41.0.windows.3 on Microsoft Windows 11.  I would like t=
-o have "git bisect visualize" use gitk instead of git log, but cannot figur=
-e out how to do that.  The documentation at https://git-scm.com/docs/git-bi=
-sect says that gitk is the default but "If the DISPLAY environment variable=
- is not set, git log is used instead".  I haven't found a description of wh=
-at I should set the DISPLAY environment variable to on Windows to get gitk =
-to be used.  I've tried setting it to "whatever" and ":0" but then still go=
-t git log instead of gitk.  How do I arrange for "git bisect visualize" to =
-use gitk on Windows?
+Hi Glen
 
-Regards,
-Louis Strous
+On 25/07/2023 17:46, Glen Choo wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>>>> index c1fe55dc2c1..a657167befd 100755
+>>>> --- a/t/t3404-rebase-interactive.sh
+>>>> +++ b/t/t3404-rebase-interactive.sh
+>>>> @@ -1289,6 +1289,10 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
+>>>>    	test_cmp_rev HEAD F &&
+>>>>    	rm file6 &&
+>>>>    	test_path_is_missing .git/rebase-merge/author-script &&
+>>>> +	test_path_is_missing .git/rebase-merge/patch &&
+>>>> +	test_path_is_missing .git/MERGE_MSG &&
+>>>> +	test_path_is_missing .git/rebase-merge/message &&
+>>>> +	test_path_is_missing .git/rebase-merge/stopped-sha &&
+>>>
+>>> This also seems to be testing implementation details, and if so, it
+>>> would be worth removing them.
+>>
+>> With the exception of the "patch" file which exists solely for the
+>> benefit of the user this is testing an invariant of the implementation
+>> which isn't ideal. I'm worried that removing these checks will mask some
+>> subtle regression in the future. I think it is unlikely that the names
+>> of these files will change in the future as we try to avoid changes that
+>> would cause a rebase to fail if git is upgraded while it has stopped for
+>> the user to resolve conflicts. I did think about whether we could add
+>> some BUG() statements to sequencer.c instead. Unfortunately I don't
+>> think it is that easy for the sequencer to know when these files should
+>> be missing without relying on the logic that we are tying to test.
+> 
+> Unfortunately, it's been a while since I reviewed this patch, so forgive
+> me if I'm rusty. So you're saying that this test is about checking
+> invariants that we want to preserve between Git versions.
 
-IntelliMagic=A0- Availability Intelligence
-T: +31 (0)71-579 6000
-www.intellimagic.com
+Not really. One of the reasons why testing the implementation rather 
+than the user observable behavior is a bad idea is that when the 
+implementation is changed the test is likely to start failing or keep 
+passing without checking anything useful. I was trying to say that in 
+this case we're unlikely to change this aspect of the implementation 
+because it would be tricky to do so without inconveniencing users who 
+upgrade git while rebase is stopped for a conflict resolution and so it 
+is unlikely that this test will be affected by future changes to the 
+implementation.
+
+> IIRC, there was an earlier patch would be different from an where we
+> tested that author-script is missing, but what we really want is for the
+> pick to stop. Is the same thing happening here? E.g. is 'testing for
+> missing stopped-sha' a stand-in for 'testing that the rewritten list is
+> correct'? If so, it would be nice to test that specifically, but if
+> that's infeasible, a clarifying comment will probably suffice.
+
+Yes this patch adds a test to t5407-post-rewrite-hook.sh to do that but 
+it only checks a failing "pick" command. The reason I think it is useful 
+to add these test_path_is_missing checks is that they are checking 
+failing "squash" and "merge" commands as well. Maybe I should just bite 
+the bullet see how tricky it is to extend the post-rewrite-hook test to 
+cover those cases as well.
+
+Best Wishes
+
+Phillip
 
