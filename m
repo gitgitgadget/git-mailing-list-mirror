@@ -2,97 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8214AC001DC
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 13:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22309C0015E
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 15:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233529AbjGZNLv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 09:11:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36886 "EHLO
+        id S233039AbjGZP7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 11:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231167AbjGZNLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:11:49 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29531FDA
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 06:11:48 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-316eabffaa6so5303770f8f.2
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 06:11:48 -0700 (PDT)
+        with ESMTP id S234998AbjGZP6c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 11:58:32 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35D6319A1
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 08:58:31 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99342a599e9so1170471366b.3
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 08:58:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690377107; x=1690981907;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TD/9mdmmxM+zvBo+BR4A3BN+vSMXMdL72X4x4ySIfx4=;
-        b=AqWsV7+4ryYXbS255EqclZ7f15PgEqqqf6BSDXXDkD8tQH72+TuVPEij39ZK1n/mC2
-         D6e11WZabM/PjwlpnEzxg8FoKwxGB2ui6aXBBJuoaIegivRbqCV0YgE4+EKbsHRMNF4L
-         /CVjgngS8Bo1Cs4AJfUw4ZqrJW0zK8Vfl+JKbYv2IOL6WiLlVWIHZ+AlsyjjIAUVGmfv
-         NuSXmn49UkDcY+HfE6bmcSJjm5mtEeWkKZd1q3mPxftBi1b4vZdg0fpddduTbKtPwf9x
-         kq+Gy4zy1zXj9uMtR3L48S1vPiNKvwHTUPYcVNKFqQ4qeuYsjB3agdxGUwfMBf9PJuFU
-         4YJQ==
+        d=gmail.com; s=20221208; t=1690387109; x=1690991909;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+CT8p+nMcMXaIPmgkVFIZf7e3/2UFkE3IU9SSZ6dcs8=;
+        b=DdxzkfrMd/kXJEwG31BIjGnoPNggyq6NWu+rp+mZX99cqsPvGb4Xc0+sG++Qvdw4DE
+         ltUKsUXRAddjr2fb6YMoCLZXgTHqsSPePf2nZei8Mrsw27+CQxett9ZE0q0aW55N/omb
+         D70z+cUFH3JSD3Ao23V46iMZZzUj+PWGiX9eDIxe8fDNWZbY0AEGp+VQ+Ggy68iNVfsH
+         WvZLaqpouJ5uTZledxaQJL7fXRsObZVdq0e++L37GpXBw/j+GV3/Q8ngX7CUC6QPcH3V
+         iNLKeRMsgNZa+0klHgp64FOmHErcGG6R/XCk1VRMn8Zlm0JTlC+k9twdbU3+TeOJkdGG
+         xOtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690377107; x=1690981907;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1690387109; x=1690991909;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TD/9mdmmxM+zvBo+BR4A3BN+vSMXMdL72X4x4ySIfx4=;
-        b=Ee8vd0xtFDkwBmh8/p7cK57C/hZv6tUccdg8SI/JNx+wgKPu1swIFnqMokI5dSNsSW
-         3zNG3DJviBkUYMcA+shQZ8QKTDE3keApR3m9i7WAseqVft1i3TPqVcRh/syICzexSZzf
-         TZ9jkARbekr0JMofI/oU7vYnBExj/jhWcbySRTHJxgcmlhzIdP/ZSqnwmnrLogfWqSNo
-         qvzEgT4hfycNE/dDCDWvl09IXgBRRbTVJav1DM2MnoRXWXYQxSe1K/BuuLoSEB9Rw3u/
-         W1kPSmDC9pJ0uYFTV5tWrDKZXURsezWAw7QSD9XCiusY2sgH3Y3OHNYHxjwo1EZqUmxH
-         FCJQ==
-X-Gm-Message-State: ABy/qLaC1qUY6wSYKbkcwT2mW8LWzrHO9pUKKyks6spLISqaaPeSJumD
-        CxTz6VRoj+W732ZwLyRcy4bsHmx1icNILA==
-X-Google-Smtp-Source: APBJJlFkG7m9Cu425bKfyQSk4sfvhfX8ajHeIkNVHmIMitJsb3kn5bOB9+opqDGxGwZW17gVIlhj8g==
-X-Received: by 2002:adf:f7c5:0:b0:317:5d3d:d37c with SMTP id a5-20020adff7c5000000b003175d3dd37cmr1430816wrq.24.1690377107226;
-        Wed, 26 Jul 2023 06:11:47 -0700 (PDT)
-Received: from [192.168.1.195] ([90.242.235.211])
-        by smtp.googlemail.com with ESMTPSA id w2-20020a5d4b42000000b0030ae53550f5sm19673058wrs.51.2023.07.26.06.11.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 06:11:47 -0700 (PDT)
-Message-ID: <9d2f119d-7da7-003d-d011-5c3aa7f94ae7@gmail.com>
-Date:   Wed, 26 Jul 2023 14:11:45 +0100
+        bh=+CT8p+nMcMXaIPmgkVFIZf7e3/2UFkE3IU9SSZ6dcs8=;
+        b=bb/HD9OZu4+1TJ7buvXoKhxb3gT0D/97mQRaVGuan1ScjZ/u1bf/ORl2EjkKXqOAmh
+         LOkjxp3Nfm8QzryMYLcKJ4DS7ia+csOVSSuej5a3bueFzXrd2f7DS4c2q7R/gBIZyquH
+         gPOnhKr3aJ+6HybAY8xNgVMvAMEd07YtE/IdAbtjNfs6V1Eh/gosY5ebXuBKdRzld1td
+         7cCPAu5O8KS1nr9SeQskhjwdl8ICKWZi7bZjy7t1ncIJk/50rjtq2wbVKloA3n0LyTW/
+         PyucU0/xUK7UCYLqiPukeakHd/LL5xz0OVZUVFZFSUp6zmSHavN17JO06CLvVNlr9T/A
+         NVMg==
+X-Gm-Message-State: ABy/qLayWfN7jgWmrl+zeI5jpbKQv/US3ZgqudXqb9XtBSLBjzFnHdwa
+        SrU1NqPF4DtjdCPvzBBogayXSN6FoC0oBVQE4cA=
+X-Google-Smtp-Source: APBJJlE50pB4tKpgu+1ziqXy999DhN6RZyk2kKeLWwfXuU/SBz8OeB91Bsldz9xyPcrJvIPR/IlVmFls1dVZYDVtVFQ=
+X-Received: by 2002:a17:906:4d2:b0:997:c5c3:32cc with SMTP id
+ g18-20020a17090604d200b00997c5c332ccmr2005381eja.66.1690387109381; Wed, 26
+ Jul 2023 08:58:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Jul 2023, #05; Tue, 25)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqedkvk8u4.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqedkvk8u4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <xmqqedl3a909.fsf@gitster.g> <20230724194854.3076-1-mirth.hickford@gmail.com>
+ <xmqqzg3jltyr.fsf@gitster.g>
+In-Reply-To: <xmqqzg3jltyr.fsf@gitster.g>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Wed, 26 Jul 2023 16:57:52 +0100
+Message-ID: <CAGJzqsm0pV4SDmK+sN52q1RC5TyAXyxVf2KZSL=7CiJas_V=OQ@mail.gmail.com>
+Subject: Re: Credential improvements need review
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/07/2023 21:57, Junio C Hamano wrote:
-> * pw/rebase-i-after-failure (2023-04-21) 6 commits
->   - rebase -i: fix adding failed command to the todo list
->   - rebase: fix rewritten list for failed pick
->   - rebase --continue: refuse to commit after failed command
->   - sequencer: factor out part of pick_commits()
->   - rebase -i: remove patch file after conflict resolution
->   - rebase -i: move unlink() calls
-> 
->   Various fixes to the behaviour of "rebase -i" when the command got
->   interrupted by conflicting changes.
-> 
->   Will discard.
->   Have been expecting a reroll for too long.
+On Tue, 25 Jul 2023 at 19:36, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> M Hickford <mirth.hickford@gmail.com> writes:
+>
+> >> * mh/credential-erase-improvements-more (2023-06-24) 2 commits
+> >>  - credential/wincred: erase matching creds only
+> >>  - credential/libsecret: erase matching creds only
+> >>
+> >>  Needs review.
+> >>  source: <pull.1529.git.git.1687596777147.gitgitgadget@gmail.com>
+> >
+> > Hi. Is anyone able to help review these changes?
+> >
+> > https://lore.kernel.org/git/pull.1529.git.git.1687596777147.gitgitgadget@gmail.com/
+> > https://lore.kernel.org/git/pull.1527.git.git.1687591293705.gitgitgadget@gmail.com/
+>
+> Thanks for pinging.  One thing that may help (both patches, my
+> understanding is that they are of the same spirit, just one is for
+> libsecret while the other one is for wincred) is to describe the
+> problem the patches attempt to address a bit more.  For example,
+> in one of them:
+>
+>     Fix test "helper ... does not erase a password distinct from input"
+>     introduced in aeb21ce22e (credential: avoid erasing distinct password,
+>     2023-06-13)
+>
+> we can read from the above proposed log message that it is a "fix"
+> to some bug, and that the "bug" was introduced by the named commit,
+> but there are a few things that it does not explain, that could have
+> helped readers to convince themselves that the changes in the patches
+> are addressing the right problems and solving them in the right
+> way.  For example,
+>
+>  * how does the "bug" manifest itself in an observable way to the
+>    end-users?  "When they do X, they expect Y to happen, but instead
+>    Z happens, and doing Z breaks expectation of users expecting Y in
+>    this (W) way."
+>
+>  * what was wrong in the code that led to the "bug"?  Was it testing
+>    a wrong condition before making a call to some system service?
+>    Was the condition it checked correct but it made a call in a
+>    wrong way (and if so how)?
+>
+> Thanks.
+>
 
-I am slowly working on a new version, but it probably makes sense to 
-drop it in the meantime as it has been so long that the new version 
-probably wants to be rebased onto master anyway.
-
-Best Wishes
-
-Phillip
-
->   cf. <xmqqsfcthrpb.fsf@gitster.g>
->   cf. <1fd54422-b66a-c2e4-7cd7-934ea01190ad@gmail.com>
->   cf. <55dd6194-25e5-1a66-9c39-27cb19bfbb3c@gmail.com>
->   source: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
-
+Thanks for the suggestions. I'll send a patch v2 with an updated
+commit message that tries to answer these questions.
