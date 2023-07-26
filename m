@@ -2,121 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15DC4C001DC
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 18:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7298AC001B0
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 18:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbjGZSAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 14:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47208 "EHLO
+        id S231433AbjGZSAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 14:00:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231133AbjGZSAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 14:00:36 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57172724
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:29 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6b9ec15e014so57545a34.0
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:29 -0700 (PDT)
+        with ESMTP id S231133AbjGZSAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 14:00:42 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E8BE212F
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:40 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-576a9507a9bso18372317b3.1
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690394429; x=1690999229;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AayW+R2888iWapUDuXUn/FEvE6SrsoveAbtdyNkAI4s=;
-        b=oAetjIRmDnX9s2E9tavPGXC2UrSMqEche9v4+YXFnYNAuXNHM9tjqJ0bq7J44aKiIB
-         qfVDtHQ+GYpjNh1xOR3RKLBG8Pui7nGy8AXDo+MDapod3opsgHBT9COCNUxstEYVgpbn
-         V4sZcjELkHilEHlTtTgmXXkc7rSWwVPufkjdVfe5wZv12tU42zVyedgpcqlQv6hvGRcb
-         QRAn9w5/02ZJOPEMnkcvW4jrtrwh/H4Txd/mFyLUXapM/9eCOgJrUMAmXmucsjY8DANq
-         s5/u5cKGQf4y/GenNz1W/KLMUxZSVcbTpOxUyX/ddPCEdTNQly2wIGSONLAVuIMRgQmW
-         FNAw==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690394439; x=1690999239;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HSLCSEjKzTNIQgMWmFtpzAFG5umxGdkcVi0/DolB0PY=;
+        b=CDDCigwEUhZ5nAfJ2rMN+ttHO2C2E3JjTSaZaaEfsfvNGOoK7qHKljUeX20b4sLyZF
+         VkpAWNbC20zNi6+GX6+3//k0LxrDtRyPhu6GpporpyjwgJ3DhB5dlnGJ3Et07psFixGl
+         WjZeLWlu5rAE9I5IrISXBknOzqQTp7SSzTitGn0HO/2bbmDHOC48uF3/4CP5LIY2Orog
+         SA9m1EYE/4bcbLOTl0jZKDrZ8QRo22HxiFib6CU3FYWikuoDvHvC7Vl4dAebAmWy2zmX
+         tkhMKD03PD5fjgkze9DPAgvm9+qpvIP2H7yu31hptUnIDYGjZldcVxflopSpBv3MdBa/
+         Ba6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690394429; x=1690999229;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AayW+R2888iWapUDuXUn/FEvE6SrsoveAbtdyNkAI4s=;
-        b=XKyG1AS8jmSt9+Zav0Up6poH+ZF8QxZpUEIc2MMYAJ48IwMdgqhdVsjJAZb4Utws+a
-         cmPU+6o4RhvnY6yYAgoHtP7qQZJQgHXWMwz3d8i8inpbxap4GQnx14pl5Qk3vLyTht/A
-         yq19B2/Lqe6ZRHK3JbdDc1ZzWxg4MGMjjW71AxUcX/v1qVvhWKeN12Pm7CZrR3hCuWKl
-         vXxeYEXGlMXQQqmVMFbFqnt2fMPt9/GZXGzw1AVLXdGGh626Ib40CO1A54hG2cPc2wOj
-         8FFsY/EiaGSPBJG8yK7Q3jpPWiiK1tbHLS7PBMnlHA1Gv33h5LKm4sznVUfZ536szKCn
-         T48A==
-X-Gm-Message-State: ABy/qLbYYMpRbvepZLX3Ei3fbQoCjOu+j+aNsOIcWGRbm6k85KYDi2D+
-        xSkmzEoZKEWDadpW2zI/b+eCWNmDLQW3wPQvNKaEyDpzFCoPO8jd
-X-Google-Smtp-Source: APBJJlFVsZdT7rM3X4/On1dUBpgSQxiNGYwgapSCQ/eZikLozTVuG5ZMJM0+3esS5/Kxg89sWtxMOc6Cl7reErWGKLs=
-X-Received: by 2002:a05:6358:70a:b0:132:ce36:ee31 with SMTP id
- e10-20020a056358070a00b00132ce36ee31mr2347716rwj.6.1690394429032; Wed, 26 Jul
- 2023 11:00:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690394439; x=1690999239;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HSLCSEjKzTNIQgMWmFtpzAFG5umxGdkcVi0/DolB0PY=;
+        b=SrYddxrUszz2QyhFi+8Q+14X32/xHVQ/pEeHtu6jBzLLifc9V+ZLGv9GCjkm0+/eju
+         i3bqULZYUo5AaaS6LuKwi09Tnx0ZeYRCEHe6EKbO59kvkg+HDtgER3POm68Ya2UXRSTg
+         VS8j6sJj/cVn7SH2hWrO1fZ0es/SuIZUhaIoPG13l8nbtXYDsjbkdMSvNg8GBw/sSd1q
+         4s4t9mw2KkLVSbgtdP/7m7hJzmQRwWB2nAS5AytRqbwyIYzPjyMiMXzKeLND605hLt5J
+         R4Sr83F3k5E6m/cFOdOVj8hoSz9m8kIoFBeN1Dkzx9VIgjIQwQmRjIxrtBXUdPZdfTrC
+         Vh9g==
+X-Gm-Message-State: ABy/qLYn/yRiqpElYXh6M+33KsgXH+cHNobmCf3uxp3nzcjRibHBhwjr
+        gp12C6nyNhjfapXqaMQsKW0wMmtxLOIJz4lAjfokZw==
+X-Google-Smtp-Source: APBJJlHJ/Sgsm43YURYvMKkVhMfM0uq9w0QSZGrdRar1+IlLPqqXPnbwrKnVvO8nagAzrvh2o47noQ==
+X-Received: by 2002:a0d:e602:0:b0:579:e976:c976 with SMTP id p2-20020a0de602000000b00579e976c976mr393274ywe.2.1690394439597;
+        Wed, 26 Jul 2023 11:00:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id s65-20020a0dd044000000b005832fe29034sm4292139ywd.89.2023.07.26.11.00.39
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jul 2023 11:00:39 -0700 (PDT)
+Date:   Wed, 26 Jul 2023 14:00:38 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Virtual Contributor's Summit 2023
+Message-ID: <ZMFfRiTSXcrkzdAJ@nand.local>
+References: <ZMATKIaU1A1D0wJg@nand.local>
 MIME-Version: 1.0
-References: <CAOLTT8TVGna+C9nYy9nj3h5bT7AdAT0SKtUM3YVz6h=KZhGHHg@mail.gmail.com>
- <xmqqo7k7c1yw.fsf@gitster.g>
-In-Reply-To: <xmqqo7k7c1yw.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 27 Jul 2023 02:00:17 +0800
-Message-ID: <CAOLTT8R84Zrtpd=j6o2V=Y_uD54XAS5EA7NWHsdfL+XCkD5cqA@mail.gmail.com>
-Subject: Re: [QUESTION] how to diff one blob with nothing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZMATKIaU1A1D0wJg@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2023=E5=B9=B47=E6=9C=8820=E6=97=
-=A5=E5=91=A8=E5=9B=9B 00:15=E5=86=99=E9=81=93=EF=BC=9A
+On Tue, Jul 25, 2023 at 02:23:36PM -0400, Taylor Blau wrote:
+> Participants should fill out the following forms:
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
+>   - https://forms.gle/xiRcJWBAWJjWR7Zh6 (participants)
+>   - https://forms.gle/rQ5oWVSVBwyPZ1K29 (topics)
 >
-> > I want to diff two blobs right now, and one of them
-> > may be empty, so I tried using
-> > 0000000000000000000000000000000000000000 or
-> > e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 (empty blobID)
-> > to test its effect, and the result I found was:
-> >
-> > git diff 00750edc07d6415dcc07ae0351e9397b0222b7ba
-> > 0000000000000000000000000000000000000000
-> > fatal: bad object 0000000000000000000000000000000000000000
+> The participants and topics lists are being recorded in the
+> spreadsheet below, and this is also the place to record your vote(s)
+> on topic selection.
 >
-> As the object name for an empty blob is not all-0, this is expected.
->
-> > git diff 00750edc07d6415dcc07ae0351e9397b0222b7ba
-> > e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> > fatal: bad object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> >
-> > Since the "empty object" has not been created, the
-> > git diff operation fails.
->
-> If you haven't created one, of course it would fail.  It should help
-> to do
->
->     $ git hash-object -w --stdin </dev/null
->
-> before running
->
->     $ git diff 00750edc e69de29bb
->
+>   http://bit.ly/git-contributors-summit-2023
 
-This is a viable solution, but it's a bit ugly since a read-only "diff"
-requires =E2=80=9Dwrite=E2=80=9C an empty blob.
+FYI, I added the first week of October as a potential set of dates as
+well.
 
-> Long time ago, with 346245a1 (hard-code the empty tree object,
-> 2008-02-13) we taught git what an empty-tree looks like, but it
-> seems that we never did the same for an empty blob, perhaps?
->
+I configured the participants form to accept at most one response per
+person, but with the ability to edit any existing response.
 
-It would be great to have that capability.
-
-> Interesting.  I am not sure if it is a good idea to teach empty_blob
-> to find_cached_object() and leaning negative but I haven't thought
-> things through on this.
->
-
-I currently don't have time to delve into implementation details,
-so I went with the approach that requires writing an empty blob, but
-I'll take a closer look at it later.
-
->
->
+This configuration seems to require a Google account, please let me know
+if that's an issue for anyone.
 
 Thanks,
-ZheNing Hu
+Taylor
