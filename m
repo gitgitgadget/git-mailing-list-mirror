@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DC1DC0015E
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 19:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25F0AC001DC
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 19:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231130AbjGZTq7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 15:46:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41784 "EHLO
+        id S231451AbjGZTv3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 15:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbjGZTq6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 15:46:58 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1EE21727
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 12:46:57 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fbea14700bso956405e9.3
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 12:46:57 -0700 (PDT)
+        with ESMTP id S230332AbjGZTv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 15:51:27 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67EB21BD
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 12:51:26 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3176a439606so175310f8f.3
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 12:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690400816; x=1691005616;
+        d=gmail.com; s=20221208; t=1690401084; x=1691005884;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L5c8FuS62lBJSSyLiKkyOwWBV0B8VcBTmLN/lv36sjQ=;
-        b=NPl84JAc0k9y+zN2BlCqxgr7O1EejQJnDDyVJfElLjYlezcBaZ0aSwRvHJTAG+5YsI
-         PdK1wZiml7IJi5zZUZEzcHbRQ/FVxPTZ72l3iI/mjWbAAWUzqHcJsUe//NR+vOsr/jC9
-         21o9VRRHuNTN5dvR/nouxarujsJPmB1zZT982wkXe0CkBo5/QEDD7r1fPmF1nRBIVI72
-         jR6BQGcYGMm2EK2msKIk0n6V3tLkwz8dOqkY0tLHZ7n+Rtxd9U+KSqf4woPMtCLUAViZ
-         NOaUNfauMOTZKZTc06Oq+APARKJQ4rdejmSTu6nWmP1UO04rgRH8uckQKWbMTSmUR7Uo
-         IRCQ==
+        bh=uHK6KHU4jGi9vuIZtmH3I3yBvjJyw+Vn7x4JGpVv5nU=;
+        b=Cc2WLMuDk11Iejruh/b54lh+chhY1W0UDZp4hVu6U2tX+vkgglwS8w4ZrW2WuHL2RY
+         eD5B+s62weI6cQXAs2m1sbrCn8cNAB58MO/GXJOiFys5JUGuQ8MW7Yb6g56Vn4YkF2KM
+         KU4pQMvjg0y73QCl7110Y6DPLgrtCc2a2E1BkLE+SPZgavoWVTYqnxtCyrLt+9wOy8Hs
+         pvMUKvUVy9qzrvlY6F6J+X2+twCbf8N+khw82o1H6M3k9+jrhhOzQX23UayJci/eurBS
+         Grfr15XfIngsNP2y9SR1jEBoXhJeDCEcayI/5IfqJTFKKgH6V9NFuyqjaZJiLZbPdtDY
+         +ZpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690400816; x=1691005616;
+        d=1e100.net; s=20221208; t=1690401084; x=1691005884;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L5c8FuS62lBJSSyLiKkyOwWBV0B8VcBTmLN/lv36sjQ=;
-        b=AHOrKeV6v/FjL8WLrd2bUSy1ZhtNJC8Il5LaUCqsDlyDGCuZMwyJ2jsxus8+gQbJgZ
-         +1DIurH7OFPFs7MlIhUVilbnPvA9/r8J1trch530eFePjvT5Kh2ThKCbNe/EP1vLns64
-         sIGZUATl1LWOSrEtBSr8HuNWeZW56SViT5lQsF5dUYHryMAogKy1z+llOhwcjUWl0LoQ
-         fkcuZHvdap3YFg9Y8BKx9l/+CrpeCaC3s5JNtVOeE7vTmesVOh9eAolar8GXe/tbjRXA
-         9ldsUIET9JlyA0TdiTcZTZ9Ud2cXuFXBTE2uRzCRip+LktdGPpzABcn8x51W1DGRKkga
-         jwnA==
-X-Gm-Message-State: ABy/qLaEXnMQICZmw7E8LrgAFGfZfmR/NcYIHgrpVs7m4P+vTLpjhjPA
-        fMyrakQCyjt0hBy1w1zLJLirNV5c3d8=
-X-Google-Smtp-Source: APBJJlGkVPGMsmREbbK+zO5l4bEeB1a98Ck9Iy0CE4pz+bhniAUh+O74Fz0my3dL9lnJNSOwxIWgAA==
-X-Received: by 2002:a5d:6982:0:b0:315:93a1:c733 with SMTP id g2-20020a5d6982000000b0031593a1c733mr89785wru.20.1690400815663;
-        Wed, 26 Jul 2023 12:46:55 -0700 (PDT)
+        bh=uHK6KHU4jGi9vuIZtmH3I3yBvjJyw+Vn7x4JGpVv5nU=;
+        b=iy3pGNkIv/LVkdfzuHlSW4B0kw70gC2JQ5FyK2VvUSdSyHm8vbM6fEHJD+snOkx28r
+         ccQXqYSC+ScpNpCfeYEDsqUIc7hlpc2hB4AfOtVCywenbSNTtj3+kXwGmVj/J3+OpMsY
+         RpNtpXEd2MlWLoDArLf7VKNdL8YRQfH9O8Ss6tMSzXz5W5Z4IoiwAZ4jEB/yqDGs+o0q
+         Y6td/C/dGuud93ifXnAN/FVhjRVzCFSxJTz3mxM/TqJaPadNhXbO+qE0JyypJvj5/t8N
+         4aRJNnDiOmTXJYVgPwPQ44eoHA5mljd/YzvbSvQ68E1rcjYipzl9atWAjXUlAnS0sNdv
+         RQNg==
+X-Gm-Message-State: ABy/qLav34pdqSIrD66DPA3O/lFs5BQsFWvAwh9MKQ5lT5fWsUD9QfO8
+        SVwRmZfGOVBVXevpZttPjDWWB8738bM=
+X-Google-Smtp-Source: APBJJlHxm2EZg+JZdm7dqlPh3mg4qJNw7a5fP6jgld/ZMyP/xHJrK+GmUO17AgqsFMja+mOHmAOu0A==
+X-Received: by 2002:a05:6000:12cc:b0:314:1b6a:a095 with SMTP id l12-20020a05600012cc00b003141b6aa095mr81264wrx.23.1690401084583;
+        Wed, 26 Jul 2023 12:51:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h18-20020a5d5492000000b003142e438e8csm20638141wrv.26.2023.07.26.12.46.55
+        by smtp.gmail.com with ESMTPSA id i7-20020a05600011c700b00313fd294d6csm20662653wrx.7.2023.07.26.12.51.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jul 2023 12:46:55 -0700 (PDT)
-Message-ID: <pull.1527.v3.git.git.1690400814492.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1527.v2.git.git.1690387585634.gitgitgadget@gmail.com>
-References: <pull.1527.v2.git.git.1690387585634.gitgitgadget@gmail.com>
+        Wed, 26 Jul 2023 12:51:24 -0700 (PDT)
+Message-ID: <pull.1529.v2.git.git.1690401082695.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1529.git.git.1687596777147.gitgitgadget@gmail.com>
+References: <pull.1529.git.git.1687596777147.gitgitgadget@gmail.com>
 From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Jul 2023 19:46:54 +0000
-Subject: [PATCH v3] credential/libsecret: erase matching creds only
+Date:   Wed, 26 Jul 2023 19:51:22 +0000
+Subject: [PATCH v2] credential/wincred: erase matching creds only
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         Glen Choo <chooglen@google.com>,
         M Hickford <mirth.hickford@gmail.com>,
         M Hickford <mirth.hickford@gmail.com>
@@ -73,7 +73,7 @@ From: M Hickford <mirth.hickford@gmail.com>
 The credential erase request typically includes protocol, host, username
 and password.
 
-credential-libsecret erases a stored credential if it matches protocol,
+credential-wincred erases stored credentials that match protocol,
 host and username, regardless of password.
 
 This is confusing in the case the stored password differs from that
@@ -83,85 +83,108 @@ configured.
 Only erase credential if stored password matches request (or request
 omits password).
 
-This fixes test "helper (libsecret) does not erase a password distinct
+This fixes test "helper (wincred) does not erase a password distinct
 from input" when t0303 is run with GIT_TEST_CREDENTIAL_HELPER set to
-"libsecret". This test was added in aeb21ce22e (credential: avoid
+"wincred". This test was added in aeb21ce22e (credential: avoid
 erasing distinct password, 2023-06-13).
 
 Signed-off-by: M Hickford <mirth.hickford@gmail.com>
 ---
-    credential/libsecret: erase more carefully
+    credential/wincred: erase more carefully
     
-    Patch v3 adds instructions how to run the fixed test
+    Patch v2 expands the commit message
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1527%2Fhickford%2Ffix-libsecret-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1527/hickford/fix-libsecret-v3
-Pull-Request: https://github.com/git/git/pull/1527
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1529%2Fhickford%2Ffix-wincred-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1529/hickford/fix-wincred-v2
+Pull-Request: https://github.com/git/git/pull/1529
 
-Range-diff vs v2:
+Range-diff vs v1:
 
- 1:  b5d5c3159ad ! 1:  6b3db416c61 credential/libsecret: erase matching creds only
-     @@ Commit message
-          Only erase credential if stored password matches request (or request
-          omits password).
+ 1:  d45c61d8f79 ! 1:  5e2aae38f72 credential/wincred: erase matching creds only
+     @@ Metadata
+       ## Commit message ##
+          credential/wincred: erase matching creds only
       
-     -    This fixes test "helper ... does not erase a password distinct from
-     -    input" introduced in aeb21ce22e (credential: avoid erasing distinct
-     -    password, 2023-06-13)
-     +    This fixes test "helper (libsecret) does not erase a password distinct
+     -    Fix test "helper ... does not erase a password distinct from input"
+     -    introduced in aeb21ce22e (credential: avoid erasing distinct password,
+     -    2023-06-13)
+     +    The credential erase request typically includes protocol, host, username
+     +    and password.
+     +
+     +    credential-wincred erases stored credentials that match protocol,
+     +    host and username, regardless of password.
+     +
+     +    This is confusing in the case the stored password differs from that
+     +    in the request. This case can occur when multiple credential helpers are
+     +    configured.
+     +
+     +    Only erase credential if stored password matches request (or request
+     +    omits password).
+     +
+     +    This fixes test "helper (wincred) does not erase a password distinct
      +    from input" when t0303 is run with GIT_TEST_CREDENTIAL_HELPER set to
-     +    "libsecret". This test was added in aeb21ce22e (credential: avoid
+     +    "wincred". This test was added in aeb21ce22e (credential: avoid
      +    erasing distinct password, 2023-06-13).
       
           Signed-off-by: M Hickford <mirth.hickford@gmail.com>
       
 
 
- .../libsecret/git-credential-libsecret.c        | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ .../wincred/git-credential-wincred.c          | 20 +++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/credential/libsecret/git-credential-libsecret.c b/contrib/credential/libsecret/git-credential-libsecret.c
-index ef681f29d5b..9110714601e 100644
---- a/contrib/credential/libsecret/git-credential-libsecret.c
-+++ b/contrib/credential/libsecret/git-credential-libsecret.c
-@@ -52,6 +52,8 @@ struct credential_operation {
+diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+index 96f10613aee..4cd56c42e24 100644
+--- a/contrib/credential/wincred/git-credential-wincred.c
++++ b/contrib/credential/wincred/git-credential-wincred.c
+@@ -109,7 +109,18 @@ static int match_part_last(LPCWSTR *ptarget, LPCWSTR want, LPCWSTR delim)
+ 	return match_part_with_last(ptarget, want, delim, 1);
+ }
  
- #define CREDENTIAL_OP_END { NULL, NULL }
- 
-+static void credential_clear(struct credential *c);
+-static int match_cred(const CREDENTIALW *cred)
++static int match_cred_password(const CREDENTIALW *cred) {
++	int ret;
++	WCHAR *cred_password = xmalloc(cred->CredentialBlobSize);
++	wcsncpy_s(cred_password, cred->CredentialBlobSize,
++		(LPCWSTR)cred->CredentialBlob,
++		cred->CredentialBlobSize / sizeof(WCHAR));
++	ret = !wcscmp(cred_password, password);
++	free(cred_password);
++	return ret;
++}
 +
- /* ----------------- Secret Service functions ----------------- */
- 
- static char *make_label(struct credential *c)
-@@ -185,6 +187,7 @@ static int keyring_erase(struct credential *c)
++static int match_cred(const CREDENTIALW *cred, int match_password)
  {
- 	GHashTable *attributes = NULL;
- 	GError *error = NULL;
-+	struct credential existing = CREDENTIAL_INIT;
+ 	LPCWSTR target = cred->TargetName;
+ 	if (wusername && wcscmp(wusername, cred->UserName ? cred->UserName : L""))
+@@ -119,7 +130,8 @@ static int match_cred(const CREDENTIALW *cred)
+ 		match_part(&target, protocol, L"://") &&
+ 		match_part_last(&target, wusername, L"@") &&
+ 		match_part(&target, host, L"/") &&
+-		match_part(&target, path, L"");
++		match_part(&target, path, L"") &&
++		(!match_password || match_cred_password(cred));
+ }
  
- 	/*
- 	 * Sanity check that we actually have something to match
-@@ -197,6 +200,20 @@ static int keyring_erase(struct credential *c)
- 	if (!c->protocol && !c->host && !c->path && !c->username)
- 		return EXIT_FAILURE;
+ static void get_credential(void)
+@@ -134,7 +146,7 @@ static void get_credential(void)
  
-+	if (c->password) {
-+		existing.host = g_strdup(c->host);
-+		existing.path = g_strdup(c->path);
-+		existing.port = c->port;
-+		existing.protocol = g_strdup(c->protocol);
-+		existing.username = g_strdup(c->username);
-+		keyring_get(&existing);
-+		if (existing.password && strcmp(c->password, existing.password)) {
-+			credential_clear(&existing);
-+			return EXIT_SUCCESS;
-+		}
-+		credential_clear(&existing);
-+	}
-+
- 	attributes = make_attr_list(c);
- 	secret_password_clearv_sync(SECRET_SCHEMA_COMPAT_NETWORK,
- 				    attributes,
+ 	/* search for the first credential that matches username */
+ 	for (i = 0; i < num_creds; ++i)
+-		if (match_cred(creds[i])) {
++		if (match_cred(creds[i], 0)) {
+ 			write_item("username", creds[i]->UserName,
+ 				creds[i]->UserName ? wcslen(creds[i]->UserName) : 0);
+ 			write_item("password",
+@@ -196,7 +208,7 @@ static void erase_credential(void)
+ 		return;
+ 
+ 	for (i = 0; i < num_creds; ++i) {
+-		if (match_cred(creds[i]))
++		if (match_cred(creds[i], password != NULL))
+ 			CredDeleteW(creds[i]->TargetName, creds[i]->Type, 0);
+ 	}
+ 
 
 base-commit: a80be152923a46f04a06bade7bcc72870e46ca09
 -- 
