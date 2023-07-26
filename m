@@ -2,102 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40AD2C0015E
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 17:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15DC4C001DC
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 18:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229911AbjGZRst (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 13:48:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
+        id S229743AbjGZSAj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 14:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbjGZRsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 13:48:46 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C365E77
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:48:45 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d13e11bb9ecso33981276.0
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 10:48:45 -0700 (PDT)
+        with ESMTP id S231133AbjGZSAg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 14:00:36 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57172724
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:29 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6b9ec15e014so57545a34.0
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1690393724; x=1690998524;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jmf9auoBB3wVK6OL7dIfR6Y3b/1hoV29Iny6R8rJ28s=;
-        b=Zin0024NW5+4uzEnGzqXiW8ss2EvUy4v6oqRRv9U4XI1BAeRUYv81G5xybijUvQTca
-         32gXF+M6rTlFjLpKBGDDRf4GAk3au1wgHDqx0vpmtyg92ENLTy1ebrZaM11CzVk2VCI7
-         tGxePkSQhqyVzKbAE5LsDE6RKR3okRjWwMoQVlyODK6CiOr9GsAtPp5RYAwBR30Wi4KJ
-         zWs8+GoyK0R6mRQLHzRlwfC2RwKPCD5ylKBn2yBdge6r95/PEAnhXwCEIM0Xw+dczbgw
-         i5N5RumUz5ZoqqmOVJM873f+KE5NzJdUB/FAQT1paOw8RQ3JSo2z1zXX+b4gzmNQQGfQ
-         dYLQ==
+        d=gmail.com; s=20221208; t=1690394429; x=1690999229;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AayW+R2888iWapUDuXUn/FEvE6SrsoveAbtdyNkAI4s=;
+        b=oAetjIRmDnX9s2E9tavPGXC2UrSMqEche9v4+YXFnYNAuXNHM9tjqJ0bq7J44aKiIB
+         qfVDtHQ+GYpjNh1xOR3RKLBG8Pui7nGy8AXDo+MDapod3opsgHBT9COCNUxstEYVgpbn
+         V4sZcjELkHilEHlTtTgmXXkc7rSWwVPufkjdVfe5wZv12tU42zVyedgpcqlQv6hvGRcb
+         QRAn9w5/02ZJOPEMnkcvW4jrtrwh/H4Txd/mFyLUXapM/9eCOgJrUMAmXmucsjY8DANq
+         s5/u5cKGQf4y/GenNz1W/KLMUxZSVcbTpOxUyX/ddPCEdTNQly2wIGSONLAVuIMRgQmW
+         FNAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690393724; x=1690998524;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jmf9auoBB3wVK6OL7dIfR6Y3b/1hoV29Iny6R8rJ28s=;
-        b=U+uBgIeTMS7aBgz6r6X85Wmx45e1wpkEXmt50Sohd5r7fre3HMWJU+sXfwv9dLzoa0
-         f7UHbSTA+ZW8M8Y3gUzmyWLjeSBANDGmBj8pmSYfStyBNbyDPIG3qYBIDOI13QvtjXUy
-         l/6E1sHbxyCeeNVkKciwCgM06ZGVA5/EQGtTnyw5Cvoa55JV/gWI0e6lxgUMZfrFlAV/
-         gZS6I97YNSmBiv67B07DCtXQjpRozMj5qLoUHPUAeoifvG9zt5d3o1pzJc0leCTXb0z9
-         ZukXYLVS+B+ksr5LIg4Z3d+hHnsTnk67mFG8DMSPn08HnrXG/u5YQyGcXnRADNUrlTel
-         WfZQ==
-X-Gm-Message-State: ABy/qLa9isd774V4VPZYLaTHSOXI/Q09NCaez/vUIt6aJXxT818xYkWN
-        2BbMHSLb5uKeFNMejjNvjig8GKH5IhO+3Q==
-X-Google-Smtp-Source: APBJJlF0o6yQx3VfJzcHmutDozbgFKp6PZyfXwg14Sb8mwC+Apqya4Aii0iSBWOCfzN0wwZdBzGGnm/k3xrxBg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6902:1803:b0:d0b:c67:de3b with SMTP
- id cf3-20020a056902180300b00d0b0c67de3bmr16416ybb.13.1690393724450; Wed, 26
- Jul 2023 10:48:44 -0700 (PDT)
-Date:   Wed, 26 Jul 2023 10:48:42 -0700
-In-Reply-To: <a3526864-dd3a-f95c-72e6-44995a9a460f@gmail.com>
-Mime-Version: 1.0
-References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
- <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com> <f8e64c1b631116367e6e68fcfde711b507a03a94.1682089075.git.gitgitgadget@gmail.com>
- <kl6lmt0sr16k.fsf@chooglen-macbookpro.roam.corp.google.com>
- <fdb605bf-938d-6135-b341-6cf20600abaf@gmail.com> <kl6lo7k0ym57.fsf@chooglen-macbookpro.roam.corp.google.com>
- <a3526864-dd3a-f95c-72e6-44995a9a460f@gmail.com>
-Message-ID: <kl6lfs5azhqd.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 5/6] rebase: fix rewritten list for failed pick
-From:   Glen Choo <chooglen@google.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Haller <lists@haller-berlin.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20221208; t=1690394429; x=1690999229;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AayW+R2888iWapUDuXUn/FEvE6SrsoveAbtdyNkAI4s=;
+        b=XKyG1AS8jmSt9+Zav0Up6poH+ZF8QxZpUEIc2MMYAJ48IwMdgqhdVsjJAZb4Utws+a
+         cmPU+6o4RhvnY6yYAgoHtP7qQZJQgHXWMwz3d8i8inpbxap4GQnx14pl5Qk3vLyTht/A
+         yq19B2/Lqe6ZRHK3JbdDc1ZzWxg4MGMjjW71AxUcX/v1qVvhWKeN12Pm7CZrR3hCuWKl
+         vXxeYEXGlMXQQqmVMFbFqnt2fMPt9/GZXGzw1AVLXdGGh626Ib40CO1A54hG2cPc2wOj
+         8FFsY/EiaGSPBJG8yK7Q3jpPWiiK1tbHLS7PBMnlHA1Gv33h5LKm4sznVUfZ536szKCn
+         T48A==
+X-Gm-Message-State: ABy/qLbYYMpRbvepZLX3Ei3fbQoCjOu+j+aNsOIcWGRbm6k85KYDi2D+
+        xSkmzEoZKEWDadpW2zI/b+eCWNmDLQW3wPQvNKaEyDpzFCoPO8jd
+X-Google-Smtp-Source: APBJJlFVsZdT7rM3X4/On1dUBpgSQxiNGYwgapSCQ/eZikLozTVuG5ZMJM0+3esS5/Kxg89sWtxMOc6Cl7reErWGKLs=
+X-Received: by 2002:a05:6358:70a:b0:132:ce36:ee31 with SMTP id
+ e10-20020a056358070a00b00132ce36ee31mr2347716rwj.6.1690394429032; Wed, 26 Jul
+ 2023 11:00:29 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAOLTT8TVGna+C9nYy9nj3h5bT7AdAT0SKtUM3YVz6h=KZhGHHg@mail.gmail.com>
+ <xmqqo7k7c1yw.fsf@gitster.g>
+In-Reply-To: <xmqqo7k7c1yw.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 27 Jul 2023 02:00:17 +0800
+Message-ID: <CAOLTT8R84Zrtpd=j6o2V=Y_uD54XAS5EA7NWHsdfL+XCkD5cqA@mail.gmail.com>
+Subject: Re: [QUESTION] how to diff one blob with nothing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
->> Unfortunately, it's been a while since I reviewed this patch, so forgive
->> me if I'm rusty. So you're saying that this test is about checking
->> invariants that we want to preserve between Git versions.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2023=E5=B9=B47=E6=9C=8820=E6=97=
+=A5=E5=91=A8=E5=9B=9B 00:15=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Not really. One of the reasons why testing the implementation rather 
-> than the user observable behavior is a bad idea is that when the 
-> implementation is changed the test is likely to start failing or keep 
-> passing without checking anything useful. I was trying to say that in 
-> this case we're unlikely to change this aspect of the implementation 
-> because it would be tricky to do so without inconveniencing users who 
-> upgrade git while rebase is stopped for a conflict resolution and so it 
-> is unlikely that this test will be affected by future changes to the 
-> implementation.
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> > I want to diff two blobs right now, and one of them
+> > may be empty, so I tried using
+> > 0000000000000000000000000000000000000000 or
+> > e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 (empty blobID)
+> > to test its effect, and the result I found was:
+> >
+> > git diff 00750edc07d6415dcc07ae0351e9397b0222b7ba
+> > 0000000000000000000000000000000000000000
+> > fatal: bad object 0000000000000000000000000000000000000000
+>
+> As the object name for an empty blob is not all-0, this is expected.
+>
+> > git diff 00750edc07d6415dcc07ae0351e9397b0222b7ba
+> > e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+> > fatal: bad object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+> >
+> > Since the "empty object" has not been created, the
+> > git diff operation fails.
+>
+> If you haven't created one, of course it would fail.  It should help
+> to do
+>
+>     $ git hash-object -w --stdin </dev/null
+>
+> before running
+>
+>     $ git diff 00750edc e69de29bb
+>
 
-Ah, I see the difference. I think that's it's fair to assume that the
-names of the files will be fairly stable, though this series has made it
-clear to me that what each file does and when it is written is quite
-under-documented, and I wouldn't be surprised to see some of that change
-if we start to try to explain the inner workings to ourselves.
+This is a viable solution, but it's a bit ugly since a read-only "diff"
+requires =E2=80=9Dwrite=E2=80=9C an empty blob.
 
-> Yes this patch adds a test to t5407-post-rewrite-hook.sh to do that but 
-> it only checks a failing "pick" command. The reason I think it is useful 
-> to add these test_path_is_missing checks is that they are checking 
-> failing "squash" and "merge" commands as well. Maybe I should just bite 
-> the bullet see how tricky it is to extend the post-rewrite-hook test to 
-> cover those cases as well.
+> Long time ago, with 346245a1 (hard-code the empty tree object,
+> 2008-02-13) we taught git what an empty-tree looks like, but it
+> seems that we never did the same for an empty blob, perhaps?
+>
 
-Yes, that would probably be a good idea. Maybe if we combined them into
-a test helper that checks all of "pick", "squash" and "merge", which
-also has the added benefit of being able to hide implementation details
-in case we decide to change them.
+It would be great to have that capability.
+
+> Interesting.  I am not sure if it is a good idea to teach empty_blob
+> to find_cached_object() and leaning negative but I haven't thought
+> things through on this.
+>
+
+I currently don't have time to delve into implementation details,
+so I went with the approach that requires writing an empty blob, but
+I'll take a closer look at it later.
+
+>
+>
+
+Thanks,
+ZheNing Hu
