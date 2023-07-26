@@ -2,87 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7298AC001B0
-	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 18:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09B24C001DC
+	for <git@archiver.kernel.org>; Wed, 26 Jul 2023 18:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231433AbjGZSAo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jul 2023 14:00:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47420 "EHLO
+        id S230004AbjGZSO1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jul 2023 14:14:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231133AbjGZSAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2023 14:00:42 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E8BE212F
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:40 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-576a9507a9bso18372317b3.1
-        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:00:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690394439; x=1690999239;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HSLCSEjKzTNIQgMWmFtpzAFG5umxGdkcVi0/DolB0PY=;
-        b=CDDCigwEUhZ5nAfJ2rMN+ttHO2C2E3JjTSaZaaEfsfvNGOoK7qHKljUeX20b4sLyZF
-         VkpAWNbC20zNi6+GX6+3//k0LxrDtRyPhu6GpporpyjwgJ3DhB5dlnGJ3Et07psFixGl
-         WjZeLWlu5rAE9I5IrISXBknOzqQTp7SSzTitGn0HO/2bbmDHOC48uF3/4CP5LIY2Orog
-         SA9m1EYE/4bcbLOTl0jZKDrZ8QRo22HxiFib6CU3FYWikuoDvHvC7Vl4dAebAmWy2zmX
-         tkhMKD03PD5fjgkze9DPAgvm9+qpvIP2H7yu31hptUnIDYGjZldcVxflopSpBv3MdBa/
-         Ba6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690394439; x=1690999239;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HSLCSEjKzTNIQgMWmFtpzAFG5umxGdkcVi0/DolB0PY=;
-        b=SrYddxrUszz2QyhFi+8Q+14X32/xHVQ/pEeHtu6jBzLLifc9V+ZLGv9GCjkm0+/eju
-         i3bqULZYUo5AaaS6LuKwi09Tnx0ZeYRCEHe6EKbO59kvkg+HDtgER3POm68Ya2UXRSTg
-         VS8j6sJj/cVn7SH2hWrO1fZ0es/SuIZUhaIoPG13l8nbtXYDsjbkdMSvNg8GBw/sSd1q
-         4s4t9mw2KkLVSbgtdP/7m7hJzmQRwWB2nAS5AytRqbwyIYzPjyMiMXzKeLND605hLt5J
-         R4Sr83F3k5E6m/cFOdOVj8hoSz9m8kIoFBeN1Dkzx9VIgjIQwQmRjIxrtBXUdPZdfTrC
-         Vh9g==
-X-Gm-Message-State: ABy/qLYn/yRiqpElYXh6M+33KsgXH+cHNobmCf3uxp3nzcjRibHBhwjr
-        gp12C6nyNhjfapXqaMQsKW0wMmtxLOIJz4lAjfokZw==
-X-Google-Smtp-Source: APBJJlHJ/Sgsm43YURYvMKkVhMfM0uq9w0QSZGrdRar1+IlLPqqXPnbwrKnVvO8nagAzrvh2o47noQ==
-X-Received: by 2002:a0d:e602:0:b0:579:e976:c976 with SMTP id p2-20020a0de602000000b00579e976c976mr393274ywe.2.1690394439597;
-        Wed, 26 Jul 2023 11:00:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s65-20020a0dd044000000b005832fe29034sm4292139ywd.89.2023.07.26.11.00.39
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jul 2023 11:00:39 -0700 (PDT)
-Date:   Wed, 26 Jul 2023 14:00:38 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Virtual Contributor's Summit 2023
-Message-ID: <ZMFfRiTSXcrkzdAJ@nand.local>
-References: <ZMATKIaU1A1D0wJg@nand.local>
+        with ESMTP id S229437AbjGZSOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2023 14:14:25 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0665526A6
+        for <git@vger.kernel.org>; Wed, 26 Jul 2023 11:14:24 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C7791894C;
+        Wed, 26 Jul 2023 14:14:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EDGbf2P8QSXYUW6ogC1V3hcLgz9BgzbGfKztkX
+        lHLSI=; b=QveGCD80hAMpyybbXFdl+PqxLWJMXC0exJw7Gh6YIY8G7WkAkpugjA
+        h6NfRZJ6Ts/QOp0LkRrNAEHeJKCiGAoMDZvGLhqPmMdv2pZZIasYMtWFuF9dj7UC
+        gUQz5EQyCP0jQu+d0KhjrEAM7LJcj4FWeGqSR/X3NXgyIY0/N4/ao=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 855DB1894B;
+        Wed, 26 Jul 2023 14:14:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 296A718948;
+        Wed, 26 Jul 2023 14:14:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yuri <yuri@tsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: 'git stash push -- {dir}' puts files in stash that are outside
+ of {dir}
+References: <5fce9c4f-0ea7-9393-4a30-ddd66946661d@tsoft.com>
+        <xmqqsf9ad1ju.fsf@gitster.g>
+        <792f71bb-2b9a-2e2b-80ea-9e3afd9fbfb4@tsoft.com>
+Date:   Wed, 26 Jul 2023 11:14:20 -0700
+In-Reply-To: <792f71bb-2b9a-2e2b-80ea-9e3afd9fbfb4@tsoft.com>
+        (yuri@tsoft.com's message of "Wed, 26 Jul 2023 10:36:16 -0700")
+Message-ID: <xmqqo7jyczgj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZMATKIaU1A1D0wJg@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3E3BC092-2BE0-11EE-91F2-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 02:23:36PM -0400, Taylor Blau wrote:
-> Participants should fill out the following forms:
+Yuri <yuri@tsoft.com> writes:
+
+> On 7/26/23 10:29, Junio C Hamano wrote:
+>> Are there configuration variables set to affect the behaviour of the
+>> "git stash" command in your environment that I do not have (I have
+>> nothing in "git config -l | grep stash" output), which may be
+>> affecting why it does not reproduce for me?
 >
->   - https://forms.gle/xiRcJWBAWJjWR7Zh6 (participants)
->   - https://forms.gle/rQ5oWVSVBwyPZ1K29 (topics)
 >
-> The participants and topics lists are being recorded in the
-> spreadsheet below, and this is also the place to record your vote(s)
-> on topic selection.
->
->   http://bit.ly/git-contributors-summit-2023
+> "git config -l | grep stash" doesn't print anything.
 
-FYI, I added the first week of October as a potential set of dates as
-well.
-
-I configured the participants form to accept at most one response per
-person, but with the ability to edit any existing response.
-
-This configuration seems to require a Google account, please let me know
-if that's an issue for anyone.
-
-Thanks,
-Taylor
+Another thing to try.  The command internally uses some internal
+form of "git diff" to find out what to save and reset to the HEAD
+version in the working tree, so if you have an exotic configuration
+variable that affects the way "diff" behaves, it _could_ trigger a
+symptom like that (needless to say, the internal invocation of "git
+diff" should have prepared for such an end-user configuration and
+explicitly countermanded it, but people add configuration variables
+after a command was implemented without thinking the ramification
+through and especially when they are rarely used ones that do not
+usually appear on Git developers' radar, such a bad interaction can
+go unnoticed for a long time).
