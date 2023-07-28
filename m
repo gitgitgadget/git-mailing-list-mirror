@@ -2,124 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A7BC0015E
-	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 14:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FD20C0015E
+	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 15:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237287AbjG1OzF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jul 2023 10:55:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38198 "EHLO
+        id S235370AbjG1PKu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jul 2023 11:10:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237282AbjG1OzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2023 10:55:03 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E081BF2
-        for <git@vger.kernel.org>; Fri, 28 Jul 2023 07:55:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=s31663417; t=1690556057; x=1691160857; i=georgmueller@gmx.net;
- bh=vdtuVVjMNdCWG947AeAE/ltusmx8WHyqAjbbQpx2ahc=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=DpzYn+riiM4NWLBXNteIysjFNuuMYKKIvxA1KnSIvJDZ1pTMlQ6Vh7y4buAVqRe5adkiTkr
- QKndAB/bt13G2/XpwCSHoEuBFi9lYaqrfr9/KrGyTHMrmuMULtxN4KeSCddqxjxZ7K3KbJt8o
- rnIimYop0UoN1dw26H+n3fYd5ZyCITcHE5bTadEHFKkVt/5R2/ZZM8X4V5rYS7G6gQoYl3ST4
- LSQB19CD452F0XLhVnne7Hf1l0B5q6mJc9G992MMqIlKC7/90zhmkZG49y67h2Q7F2PUAed0Q
- WNtrgeIldtTSRnB72lks0uT3fmR4qJdBBX2djBGT7ih1MjQaDSwA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from nb-georg.intra.allegro-packets.com ([79.246.95.128]) by
- mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1M6lpG-1qWXBu3xx0-008H5l; Fri, 28 Jul 2023 16:54:17 +0200
-From:   =?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
-        Arnaldo Carvalho de Melo <acme@redhat.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Ian Rogers <irogers@google.com>,
-        Ingo Molnar <mingo@redhat.com>, Jiri Olsa <jolsa@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Namhyung Kim <namhyung@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH] perf probe: skip test_uprobe_from_different_cu if there is no gcc
-Date:   Fri, 28 Jul 2023 16:52:58 +0200
-Message-ID: <20230728145305.449904-2-georgmueller@gmx.net>
-X-Mailer: git-send-email 2.41.0
+        with ESMTP id S233488AbjG1PKt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2023 11:10:49 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E551610CB
+        for <git@vger.kernel.org>; Fri, 28 Jul 2023 08:10:47 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4758C3760F;
+        Fri, 28 Jul 2023 11:10:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JAjfF9dSwe9nvLsTfmgq6zAL9rU+/2DPdR857l
+        EM6Io=; b=mi60GjCFxXv2gh8k9PsPHai6AEN6h6CQjvPjNkqZ76JCKYziNC1Tfy
+        xNXzC7Ru3I2LwV6vLKoL07y7jXRaMZUYhWT0HZTxxo3Xq2FHJ59pHUsIUcpqRl74
+        9zpLMPnoawKV+3Tzxjm8bx2gVcVcASVdBqd3ItWE57DcF3Wv9FNn8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3F4563760D;
+        Fri, 28 Jul 2023 11:10:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB8B53760C;
+        Fri, 28 Jul 2023 11:10:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     Linus Arver <linusa@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] sequencer: beautify subject of reverts of reverts
+References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
+        <3f5e4116-54e6-9753-f925-ed4a9f6e3518@gmail.com>
+        <ZGSlqAPwaLhgWm6v@ugly>
+        <2d416834-ef3e-01a2-6be0-9e88bc0de25e@gmail.com>
+        <ZGUIqBU0+Vr5LSBF@ugly>
+        <10523968-0f02-f483-69c4-24e62e839f70@gmail.com>
+        <xmqqmt21txid.fsf@gitster.g> <owly7cqkfvyu.fsf@fine.c.googlers.com>
+        <ZMOOQTMk2wFwtSfa@ugly>
+Date:   Fri, 28 Jul 2023 08:10:42 -0700
+In-Reply-To: <ZMOOQTMk2wFwtSfa@ugly> (Oswald Buddenhagen's message of "Fri, 28
+        Jul 2023 11:45:37 +0200")
+Message-ID: <xmqqpm4c5ax9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8NUTDhXDpLEmovui9CiRrE+GpL0rteIJNSmdWPzQqSm9NH9qaC1
- KlwuXSDWnuPkyCSSGQdkBmle3dv8seAV3XE55XnBz+nZXD7JurHk6HFcPbUXBdzyvZie/US
- iefkUA1fPROdtHSNqG2r4E40qbl//i+d0k/sf8M2PjLTLxGRfqWPOQBGO3j+huh9vMSbOJC
- 2kA9uu3B5GgYqp83+g5zw==
-UI-OutboundReport: notjunk:1;M01:P0:QEBJ25EGcbs=;Yd33DJl+m+dn8tjO300UY3G+eaJ
- f/By3suboqutlYb7yR628v09fxGpnCoO76hsCxFE5zJpHOBxaRrTTyeduCkZRzChrcHGS2if5
- hFxx+YMHncmJPg8TFZyQEhY8yzVEvLQ1pSmb+VgnUN5T27a4gUrKmPbB3yQltSBSP3wcwWgl+
- 9sQd4uMEz/Fz/uXOQV8fsfW+A/dRFUvjtM/oARQeLCOB/4qv+6eOWWrcyd09iq5Qa97AlzrZ2
- PUGv7le6HysSQ5tJdHZqYWVxeft04RXnzqnKJsPuVQ4WhAphE8ms9BP7Gcbk1SYszB9fngyl3
- Aowi+kajkc81YJIk6xPSvdPJc6bMvdb5KF6VaZZwIRAycopJo6KVKzvfZIY70+5OI2MRokZMv
- slBp7PlCMpL7jIUYXbkKQxXSzGX4E6OZbvxEGqnvWrzmBTab90Sus294HL9wlzZxbOURY5Muc
- TGA9Duj64/gPbn4aFrt7EoylUdWXCaE67oFg19LsfzqQZrjy9WMjp6/inRNukEmjn4JskSAnM
- dDGoEjzdovIAH94k+V8rGNKv8jy73Jk/WFENNId3CUCdyhrDY9QlQ24HGRXA7M/fNAv5Co+iE
- g7hAQq1zxadR5rIb4n0fW1i1na0Iv6voRJQ8lNCqex5I8NgKGjBsnUIZj9HNWjqQYEGHKCu6L
- fdlPuavgKOyKQgNJ9DKZu+QwxbJb2q7zjoxj4wYZbldO5FXk1Nzx7oXOCOk/dYMDS1Tw23y93
- 2yHdelQO7q+bjtkVi9kxW2Xhp5vuTsLyI2AIBy2BaEHzrdsKg5XFwXOlQfwQmp+XmjVcN/Bau
- UqMmkKeUIDTBeR1JW6+zbX7YuGM9q9CugVBBT21P2HiADQMlB5eTZdQf7iLMw/hmj44iXViX6
- YS0SHUujwVWQ6VQcmrD3+G2X41SKE/9F1qwWKFvd2EM7Vmf6c5oEeE8Lmr7tUd6N+zBOvxb7u
- 7gJfVn+VtjPCQx2KgXl+3SH3h30=
+Content-Type: text/plain
+X-Pobox-Relay-ID: EC2D7672-2D58-11EE-AF34-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Without gcc, the test will fail.
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-On cleanup, ignore probe removal errors. Otherwise, in case of an error
-adding the probe, the temporary directory is not removed.
+> On Thu, Jul 27, 2023 at 10:26:01PM -0700, Linus Arver wrote:
+>>How about introducing a suffix (+ or -) after the word "Revert" to
+>>indicate the application/inclusion (+) or removal (-) of a commit?
+>>
+> i think that falls squarely into the "too nerdy" category, like the
+> Revert^n proposal does.
 
-Fixes: 56cbeacf1435 ("perf probe: Add test for regression introduced by sw=
-itch to die_get_decl_file()")
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Georg M=C3=BCller <georgmueller@gmx.net>
-Link: https://lore.kernel.org/r/CAP-5=3DfUP6UuLgRty3t2=3DfQsQi3k4hDMz415vW=
-dp1x88QMvZ8ug@mail.gmail.com/
-=2D--
- tools/perf/tests/shell/test_uprobe_from_different_cu.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+True, but instead of dismissing it (or ^n) as "too nerdy", let's
+compare it with what we are trying to achieve and see why we feel it
+is not desirable.  I think we are trying to find a good balance
+between aesthetics and usefulness.  The former should take lower
+precedence, as it would be more subjective between the two.
 
-diff --git a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh b/too=
-ls/perf/tests/shell/test_uprobe_from_different_cu.sh
-index 00d2e0e2e0c2..319f36ebb9a4 100755
-=2D-- a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-+++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-@@ -4,6 +4,12 @@
+The usefulness of the message comes from its information content.
+What do we want to read out of these messages?  I think we want
+a title that immediately lets us know three things:
 
- set -e
+ (1) What the original patch was about.  
+ (2) What the final state is.
+ (3) How involved was the road to get to the final state has been.
 
-+# skip if there's no gcc
-+if ! [ -x "$(command -v gcc)" ]; then
-+        echo "failed: no gcc compiler"
-+        exit 2
-+fi
-+
- temp_dir=3D$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
+As to (1), we are not proposing to lose what comes "Revert", so this
+information is not lost under any proposal we have seen so far in
+the discussion.
 
- cleanup()
-@@ -11,7 +17,7 @@ cleanup()
- 	trap - EXIT TERM INT
- 	if [[ "${temp_dir}" =3D~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
- 		echo "--- Cleaning up ---"
--		perf probe -x ${temp_dir}/testfile -d foo
-+		perf probe -x ${temp_dir}/testfile -d foo || true
- 		rm -f "${temp_dir}/"*
- 		rmdir "${temp_dir}"
- 	fi
-=2D-
-2.41.0
+As to (2), with the current "Revert" -> "Revert Revert" -> "Revert
+Revert Revert" -> ..., you have to count, which is cumbersome and
+does not give you an immediate access to that information.  With
+"Revert^n", you'd see if n is even or odd to determine, which is
+much better than the status quo, but it takes practice to interpret.
+With "Revert" -> "Reapply" -> "Revert Reapply" -> "Reapply Reapply"
+-> ..., the first word would give you the final state immediately.
 
+We want to know (3), because between a change whose revert was
+reverted and a change that hasn't been involved in any revert, there
+may be no difference in the end result, the former is likely to be
+trickier and merits more careful inspection than the latter.  With
+"Revert^n", we read how large the number n is to find the
+information.  With the current "the Revert repeated number of times"
+or your "a pair of frontmost Reverts become one Reapply", the length
+of the Revert/Reapply prefix conveys this information, but this is
+associated with the cost of pushing the original title further to
+the right and hard to read/find.  Note that, while the number of
+times revert-reapply sequence took place is a useful piece of
+information, the exact number may not be all that important.
+
+And from the above discussion, I wonder if the following would be a
+good place to stop:
+
+ - The first revert is as before:         Revert "original title"
+ - A revert of a revert becomes:          Reapply "original title"
+ - A revert of a reapply becomes:         Revert Reapply "original title"
+ - A revert of "Revert Reapply" becomes:  Reapply Reapply "original title"
+ - A revert of "Reapply Reapply" becomes: Revert Reapply "original title"
+
+In other words, we accept the fact that wedo not need exact number
+of times reversions were done, and use that to simplify the output
+to make sure we will not spend more than two words in the front of
+the title.  That would help to keep the original title visible,
+while still allowing us to distinguish the ones that was reverted up
+to four times (and "Revert Reapply" and "Reapply Reapply" only tell
+us "final state is to (discard|accept) the original but it took us
+_many_ times", without saying exactly how many).
