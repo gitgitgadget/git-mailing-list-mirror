@@ -2,198 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3EF5EB64DD
-	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 22:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38B8DC0015E
+	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 23:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbjG1WHo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jul 2023 18:07:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43118 "EHLO
+        id S234471AbjG1XAS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jul 2023 19:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbjG1WHn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2023 18:07:43 -0400
+        with ESMTP id S235385AbjG1XAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2023 19:00:16 -0400
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76CCDE48
-        for <git@vger.kernel.org>; Fri, 28 Jul 2023 15:07:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2964D3AB4
+        for <git@vger.kernel.org>; Fri, 28 Jul 2023 16:00:11 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DA202BBE9;
-        Fri, 28 Jul 2023 18:07:42 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9D4012C14F;
+        Fri, 28 Jul 2023 19:00:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JrrqiA+K24t54hwBT9EI0Z74SCQOjR79M/70R2
-        sAzww=; b=vqJ0AI646M/XhHmeOIujg6QZ+njleAnuRW9HQjPuHAQ9ZNiIifkgiV
-        mkxNXiRflk8gu6IxdEpXCDR2h9OzTn2OoisU6e826+A9pI+gGejTVXo/18zP8Wx2
-        5IkIBS/RnleZO0zpM8r/rYmwgXsejWI67ftJIvd9W1D87d9x+wWZk=
+        :content-type:content-transfer-encoding; s=sasl; bh=+ymDqxoBrLV8
+        cdTTRNJE060/vNjgGuTgQ0jtOjLMblc=; b=pTcOnYgpqBW7OhS+4ilvAg0K53gv
+        ilvdBjhrCxKrDeaBKGLp3aBai4r6dSiZgB2GYYP3H7rkhYwNq8DoAGF05HCnPYca
+        ARQiwZuD78Fp0kgz2whV/EpWTpTcPvSuZUOcwaU1a6ENOPQvvexju2972ZmoXiOv
+        tG5Bnxc4RGs/aAk=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27ADC2BBE8;
-        Fri, 28 Jul 2023 18:07:42 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9550D2C14E;
+        Fri, 28 Jul 2023 19:00:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B23E52BBE7;
-        Fri, 28 Jul 2023 18:07:38 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 411982C145;
+        Fri, 28 Jul 2023 19:00:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 2/2] checkout/restore: add basic tests for --merge
-References: <xmqqedkr4rod.fsf@gitster.g>
-Date:   Fri, 28 Jul 2023 15:07:37 -0700
-In-Reply-To: <xmqqedkr4rod.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        28 Jul 2023 15:06:26 -0700")
-Message-ID: <xmqq7cqj4rme.fsf@gitster.g>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>,
+        jacobabel@nullpo.dev
+Subject: Re: [PATCH v4] MyFirstContribution: refrain from self-iterating too
+ much
+References: <xmqq3583uyk0.fsf@gitster.g>
+        <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
+        <xmqqcz76tv6d.fsf@gitster.g> <xmqqzga9opdu.fsf@gitster.g>
+        <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4>
+        <xmqq8rbbbzp2.fsf_-_@gitster.g> <owlycz0deykz.fsf@fine.c.googlers.com>
+        <xmqq7cqkanm9.fsf@gitster.g> <xmqqmszg987u.fsf_-_@gitster.g>
+        <20230728212144.dpcbp6gfhfuiabia@tb-raspi4>
+Date:   Fri, 28 Jul 2023 16:00:05 -0700
+In-Reply-To: <20230728212144.dpcbp6gfhfuiabia@tb-raspi4> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 28 Jul 2023 23:21:44
+ +0200")
+Message-ID: <xmqqsf973ami.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2A41AA3E-2D93-11EE-8F4B-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 7E55DF08-2D9A-11EE-BFD1-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Even though "checkout --merge -- paths" had some tests, we never
-made sure it worked to recreate the conflicted state _after_ the
-resolution was recorded in the index.  Also "restore --merge" did
-not even have any tests.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Currently these commands use the unmerge_marked_index() interface
-that cannot handle paths that have been resolved as removal, and
-tests for that case are marked with test_expect_failure; these
-should eventually be fixed, but not in this patch.
+>> +While waiting for review comments, you may find mistakes in your init=
+ial
+>> +patch, or perhaps realize a different and better way to achieve the g=
+oal
+>> +of the patch. In this case you may communicate your findings to other
+>> +reviewers as follows:
+>> +
+>> + - If the mistakes you found are minor, send a reply to your patch as=
+ if
+>> +   you were a reviewer and mention that you will fix them in an
+>> +   updated version.
+>> +
+>> + - On the other hand, if you think you want to change the course so
+>> +   drastically that reviews on the initial patch would be a waste of
+>> +   time (for everyone involved), retract the patch immediately with
+>> +   a reply like "I am working on a much better approach, so please
+>> +   ignore this patch and wait for the updated version."
+>> +
+> (That's all good)
+>
+>
+>> +Now, the above is a good practice if you sent your initial patch
+>> +prematurely without polish.  But a better approach of course is to av=
+oid
+>> +sending your patch prematurely in the first place.
+>
+> That is of course a good suggestion.
+> I wonder, how much a first time contributor knows about "polishing",
+> in the Git sense ?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t2070-restore.sh | 64 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t7201-co.sh      | 42 ++++++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+)
+I do not know if "without polish" has any strong "Git sense" to
+begin with.  The actions the contributor would have done, referred
+to as "the above", are the result of re-reading their own patches
+and re-thinking their own approaches, which led them to discover
+fixes and alternative solutions, and I was hoping that "without
+polish" would be understood by anybody to mean "a version that did
+not go through such proofreading" without knowing much about how we
+develop our patches.
 
-diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-index fd775807e7..d97ecc2483 100755
---- a/t/t2070-restore.sh
-+++ b/t/t2070-restore.sh
-@@ -137,6 +137,70 @@ test_expect_success 'restore --staged invalidates cache tree for deletions' '
- 	test_must_fail git rev-parse HEAD:new1
- '
- 
-+test_expect_success 'restore --merge to unresolve' '
-+	O=$(echo original | git hash-object -w --stdin) &&
-+	A=$(echo ourside | git hash-object -w --stdin) &&
-+	B=$(echo theirside | git hash-object -w --stdin) &&
-+	{
-+		echo "100644 $O 1	file" &&
-+		echo "100644 $A 2	file" &&
-+		echo "100644 $B 3	file"
-+	} | git update-index --index-info &&
-+	echo nothing >file &&
-+	git restore --worktree --merge file &&
-+	cat >expect <<-\EOF &&
-+	<<<<<<< ours
-+	ourside
-+	=======
-+	theirside
-+	>>>>>>> theirs
-+	EOF
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'restore --merge to unresolve after (mistaken) resolution' '
-+	O=$(echo original | git hash-object -w --stdin) &&
-+	A=$(echo ourside | git hash-object -w --stdin) &&
-+	B=$(echo theirside | git hash-object -w --stdin) &&
-+	{
-+		echo "100644 $O 1	file" &&
-+		echo "100644 $A 2	file" &&
-+		echo "100644 $B 3	file"
-+	} | git update-index --index-info &&
-+	echo nothing >file &&
-+	git add file &&
-+	git restore --worktree --merge file &&
-+	cat >expect <<-\EOF &&
-+	<<<<<<< ours
-+	ourside
-+	=======
-+	theirside
-+	>>>>>>> theirs
-+	EOF
-+	test_cmp expect file
-+'
-+
-+test_expect_failure 'restore --merge to unresolve after (mistaken) resolution' '
-+	O=$(echo original | git hash-object -w --stdin) &&
-+	A=$(echo ourside | git hash-object -w --stdin) &&
-+	B=$(echo theirside | git hash-object -w --stdin) &&
-+	{
-+		echo "100644 $O 1	file" &&
-+		echo "100644 $A 2	file" &&
-+		echo "100644 $B 3	file"
-+	} | git update-index --index-info &&
-+	git rm -f file &&
-+	git restore --worktree --merge file &&
-+	cat >expect <<-\EOF &&
-+	<<<<<<< ours
-+	ourside
-+	=======
-+	theirside
-+	>>>>>>> theirs
-+	EOF
-+	test_cmp expect file
-+'
-+
- test_expect_success 'restore with merge options are incompatible with certain options' '
- 	for opts in \
- 		"--staged --ours" \
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 23d4dadbcc..4b07a26c14 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -522,6 +522,48 @@ test_expect_success 'checkout with --merge' '
- 	test_cmp merged file
- '
- 
-+test_expect_success 'checkout -m works after (mistaken) resolution' '
-+	setup_conflicting_index &&
-+	echo "none of the above" >sample &&
-+	cat sample >fild &&
-+	cat sample >file &&
-+	cat sample >filf &&
-+	# resolve to something
-+	git add file &&
-+	git checkout --merge -- fild file filf &&
-+	{
-+		echo "<<<<<<< ours" &&
-+		echo ourside &&
-+		echo "=======" &&
-+		echo theirside &&
-+		echo ">>>>>>> theirs"
-+	} >merged &&
-+	test_cmp expect fild &&
-+	test_cmp expect filf &&
-+	test_cmp merged file
-+'
-+
-+test_expect_failure 'checkout -m works after (mistaken) resolution to remove' '
-+	setup_conflicting_index &&
-+	echo "none of the above" >sample &&
-+	cat sample >fild &&
-+	cat sample >file &&
-+	cat sample >filf &&
-+	# resolve to remove
-+	git rm file &&
-+	git checkout --merge -- fild file filf &&
-+	{
-+		echo "<<<<<<< ours" &&
-+		echo ourside &&
-+		echo "=======" &&
-+		echo theirside &&
-+		echo ">>>>>>> theirs"
-+	} >merged &&
-+	test_cmp expect fild &&
-+	test_cmp expect filf &&
-+	test_cmp merged file
-+'
-+
- test_expect_success 'checkout with --merge, in diff3 -m style' '
- 	git config merge.conflictstyle diff3 &&
- 	setup_conflicting_index &&
--- 
-2.41.0-478-gee48e70a82
+I am OK to just say "sent your initial patch prematurely" and
+without "without polish".  I do think it would make the resulting
+text encourage less strongly to proofread their own patches before
+sending them, but if you think "polish" may not be understood, I am
+fine with such a copyediting.  Or using some alternative phrases is
+also fine, if it improves our chances to be understood better.
 
+> From my experience, the polishing is or could be a learning process,
+> which needs interaction with the reviewers.
+
+Yes, once they see what valuable insight reviewers offer, in their
+next topic, they will learn to stop and think before sending the
+fresh-off-the-press version without sleeping on it a bit.
+
+> Would it make sense to remove the sentences above and ask people
+> to mark their patch with RFC ?
+
+I doubt it.  Nobody will stay newbie forever.  If they do not know
+what kind of flaws to look for and how to find them themselves in
+their work, that is perfectly OK and they can just send a regular
+PATCH.  A reviewer hopefully will notice and point out that it is
+not yet beyond RFC quality if that is the case, but this document
+should not be suggesting that before seeing their work ;-)
+
+> Or is this all too much bikeshedding, IOW I am happy with V4 as is.
+
+Thanks.
