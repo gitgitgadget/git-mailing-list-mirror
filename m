@@ -2,206 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2529AC001DE
-	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 19:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70295EB64DD
+	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 21:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233897AbjG1Tt1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jul 2023 15:49:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56376 "EHLO
+        id S233984AbjG1VWB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jul 2023 17:22:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229680AbjG1Tt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2023 15:49:26 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F94D3C07
-        for <git@vger.kernel.org>; Fri, 28 Jul 2023 12:49:25 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 620421A87A6;
-        Fri, 28 Jul 2023 15:49:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DsEy1vsUG9H+2/ys9XbVeHINDxmmQuFe+AqEPe
-        /KW84=; b=g0M81vcpCwSOS7/4WUC4cloM7QHh1eYqwnPtXsyV+6Y7yGjMk4HMtv
-        B8oPygXYrRwGok3JvNcj6Hg6uJjCLDcZelnFWxYC4r3/8RW5gPJXLvzUHb+z3G0D
-        4Sa+5LA3Vo6ZmdLeiCgLj5nNLQGJ4z2rvLcIhJrnZIisxqjIkZHbo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59A381A87A5;
-        Fri, 28 Jul 2023 15:49:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A93001A87A4;
-        Fri, 28 Jul 2023 15:49:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 3/2] update-index: remove stale fallback code for "--unresolve"
-References: <xmqq3519auz5.fsf@gitster.g> <xmqqtttp9g6r.fsf@gitster.g>
-Date:   Fri, 28 Jul 2023 12:49:22 -0700
-In-Reply-To: <xmqqtttp9g6r.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        27 Jul 2023 14:51:08 -0700")
-Message-ID: <xmqqo7jv4y0t.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S231538AbjG1VV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2023 17:21:59 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FFE744AA
+        for <git@vger.kernel.org>; Fri, 28 Jul 2023 14:21:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1690579306; x=1691184106; i=tboegi@web.de;
+ bh=bavTJw0USmbor1DYlSAzgfpra19yHTpkXnqXn0Y8NDQ=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=iCIKONUrbv6ypdeTRWGWiFQQwtGlgT0m2N2ZN9ZCI/SD84cNHs2nqRjos3R4dMErx7PqnOQ
+ HXCqXV8xE67RUq6D/7WxU/6/Vb1G5KJg9TfHvAIrlazm7aNxFLKm0pLrAPdik0lDnryfIITc9
+ vH1jga7re2XE9Zh9Bx18ifG0fsWDcFBDhrCqAp+O34IWJLiriH+HsxhI8l6c4t8JW/Hem7+gJ
+ tNvbch4OQ2Wy7wuol8PMbrqWEck1ovs+GAinMnHM7votQTw41XO9D31iPG99LJlTw6j4aDFIN
+ m61hFwb23tnwT5phd2b7SQJu+KcwooBZDgDJN+8jb9iBaQep0/Hg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Movne-1q5FZc07dm-00qGF5; Fri, 28
+ Jul 2023 23:21:46 +0200
+Date:   Fri, 28 Jul 2023 23:21:44 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>,
+        jacobabel@nullpo.dev
+Subject: Re: [PATCH v4] MyFirstContribution: refrain from self-iterating too
+ much
+Message-ID: <20230728212144.dpcbp6gfhfuiabia@tb-raspi4>
+References: <xmqq3583uyk0.fsf@gitster.g>
+ <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
+ <xmqqcz76tv6d.fsf@gitster.g>
+ <xmqqzga9opdu.fsf@gitster.g>
+ <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4>
+ <xmqq8rbbbzp2.fsf_-_@gitster.g>
+ <owlycz0deykz.fsf@fine.c.googlers.com>
+ <xmqq7cqkanm9.fsf@gitster.g>
+ <xmqqmszg987u.fsf_-_@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DA077A34-2D7F-11EE-8F2C-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmszg987u.fsf_-_@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:IVLLILU49rEdsElwdQCy1lf4XCsSsdliyRdhLcnbm5yZ7qk5Oyo
+ 8UECoBsJcEHtvGUDCRntcz+LiK6ikvWWnne654cLy+zQTtpNV1s9IalWqaUsaNS7ORhq90z
+ pXa6549flU+7+fHO6t6lIB6B2iFsRrL1dbasJF0Xs2G/cMOroOD5LZ933b2vY0m3KqAbTin
+ GxjgjyorkqirSlErDFZ0A==
+UI-OutboundReport: notjunk:1;M01:P0:eiVJgbItZBo=;LycsYmqRWN1O/jLdilCBP7sFscC
+ WoAmnQ7E9QYPiyOEbadyYIbzoKgn2GpufIVJjp/pnz3nF+ZtYFJ0HSbsyRTK6spgg9XNItEm8
+ FjbfrAG70exzMz99IWD4tX1ghyilRYaLYHAYRY2dPzh6VIQ+mirZW2FCcwrFNBeW5ID9hZRLZ
+ iMdjKt+gD75EQrJQklowu3OZ0L9DRb1zHrHa2Mi7vHLtzf16GBLhMs5tJXj0qRGSd8Z0hRVpU
+ wg7BaeaaDUae66BatnPthXqJVahPniptgvAYnq0l/NEi35Shgd6AfCW3wo2Nx68w86YWzQwy4
+ OblW9tn/3gizjTbUIjk93qZr1yTLoYvP9Y0Tckvb2aVjlFh6gx433VHy87r3DzDsyB0/sm8Zs
+ 1/WX5+jgvx3xA/n5DzDuIY+Reu9srYyEiSwrnfSC0rna5DZTJgi0y7ntyWwhkqp2SBpBdZ4/H
+ v8JWsyQw02s6AaLhNAKYbk4KsqFJOmq6mIfttOnpPEClugyX63XijtOkOnuZD/jKRfnTAbSjj
+ cm05GU9Ic+XnpvZYC/UJcEDblzjbfruBOx468iasz+mkP5DtqS1U8naSnbUu9NogV+LBHlGI4
+ zFgNkMsGRnlas2bq2vu/F0+uKn52RkeT/9ERer0m4r6P0t8u6xAknzjuSMNq+wzkPgE0G2kxc
+ NCNUQwzafmDhrWH7rUnOXdXs62S3POwySIPh18nfpeXNQSsQr7V8i9PRbrBiyS5J+z4Xq8ZLK
+ 5+4TzQTPwyJFn9HHrv++WbS+CtKqdcb03Gi08wE9Y3tj5U18epG/rVRBuaGcbhSdF4CVJkNYJ
+ iOBq9PbMjyILmGmQRBK9PMzCUbnUSxvIWLnQhEYck4UnZ/uGh29MmYkQPNGABXiKU6TMtGJYU
+ hfyUolG0tbKvbwIA5lbsUxY9Q7qexL2anORexu8iWP2MTo5oHbVZvG6r1P5DWycOsYpcwHxrQ
+ vucpWA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "update-index --unresolve" is a relatively old feature that was
-introduced in Git v1.4.1 (June 2006), which predates the
-resolve-undo extension introduced in Git v1.7.0 (February 2010).
-The original code that was limited only to work during a merge (and
-not during a rebase or a cherry-pick) has been kept as the fallback
-codepath to be used as a transition measure.
+On Thu, Jul 27, 2023 at 05:43:17PM -0700, Junio C Hamano wrote:
+> Finding mistakes in and improving your own patches is a good idea,
+> but doing so too quickly is being inconsiderate to reviewers who
+> have just seen the initial iteration and taking their time to review
+> it.  Encourage new developers to perform such a self review before
+> they send out their patches, not after.  After sending a patch that
+> they immediately found mistakes in, they are welcome to comment on
+> them, mentioning what and how they plan to improve them in an
+> updated version, before sending out their updates.
 
-By now, for more than 10 years we have stored resolve-undo extension
-in the index file, and the fallback code way outlived its usefulness.
+That's all good, no possible improvements from my side.
+However, a possible question below.
 
-Remove it, together with two file-scope static global variables.
-One of these variables is still used by surviving function, but it
-does not have to be a global at all, so move it to local to that
-function.
+[]
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/update-index.c | 103 ++++-------------------------------------
- 1 file changed, 8 insertions(+), 95 deletions(-)
+> +Please give reviewers enough time to process your initial patch before
+> +sending an updated version. That is, resist the temptation to send a new
+> +version immediately, because others may have already started reviewing
+> +your initial version.
+> +
+> +While waiting for review comments, you may find mistakes in your initial
+> +patch, or perhaps realize a different and better way to achieve the goal
+> +of the patch. In this case you may communicate your findings to other
+> +reviewers as follows:
+> +
+> + - If the mistakes you found are minor, send a reply to your patch as if
+> +   you were a reviewer and mention that you will fix them in an
+> +   updated version.
+> +
+> + - On the other hand, if you think you want to change the course so
+> +   drastically that reviews on the initial patch would be a waste of
+> +   time (for everyone involved), retract the patch immediately with
+> +   a reply like "I am working on a much better approach, so please
+> +   ignore this patch and wait for the updated version."
+> +
+(That's all good)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index d02ac55313..79c25a2a58 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -609,9 +609,6 @@ static const char * const update_index_usage[] = {
- 	NULL
- };
- 
--static struct object_id head_oid;
--static struct object_id merge_head_oid;
--
- static struct cache_entry *read_one_ent(const char *which,
- 					struct object_id *ent, const char *path,
- 					int namelen, int stage)
-@@ -640,102 +637,17 @@ static struct cache_entry *read_one_ent(const char *which,
- 	return ce;
- }
- 
--static int read_head_pointers(void)
--{
--	static int result = -2; /* unknown yet */
--
--	if (result == -2) {
--		result = -1;
--		if (read_ref("HEAD", &head_oid))
--			return error("No HEAD -- no initial comit yet?");
--		if (read_ref("MERGE_HEAD", &merge_head_oid))
--			return error("Not in the middle of a merge");
--		result = 0;
--	}
--	return result;
--}
--
- static int unresolve_one(const char *path)
- {
--	int namelen = strlen(path);
--	int pos;
--	int ret = 0;
--	struct cache_entry *ce_2 = NULL, *ce_3 = NULL;
--	struct resolve_undo_info *ru = NULL;
--
--	if (the_index.resolve_undo) {
--		struct string_list_item *item;
--		item = string_list_lookup(the_index.resolve_undo, path);
--		if (item)
--			ru = item->util;
--	}
--
--	/* resolve-undo record exists for the path */
--	if (ru)
--		return unmerge_index_entry(&the_index, path, ru);
-+	struct string_list_item *item;
- 
--	/* See if there is such entry in the index. */
--	pos = index_name_pos(&the_index, path, namelen);
--	if (0 <= pos) {
--		; /* resolve-undo record was used already -- fall back */
--	} else {
--		/* Is it unmerged? */
--		pos = -pos - 1;
--		if (pos < the_index.cache_nr) {
--			const struct cache_entry *ce = the_index.cache[pos];
--			if (ce_namelen(ce) == namelen &&
--			    !memcmp(ce->name, path, namelen)) {
--				fprintf(stderr,
--					"%s: skipping still unmerged path.\n",
--					path);
--			}
--			goto free_return;
--		}
--		/* No, such a path does not exist -- removed */
--	}
--
--	/*
--	 * We are not using resolve-undo information but just
--	 * populating the stages #2 and #3 from HEAD and MERGE_HEAD.
--	 *
--	 * This is a flawed replacement of true "unresolve", as we do
--	 * not have a way to recreate the stage #1 for the common
--	 * ancestor (which may not be a unique merge-base between the
--	 * two).
--	 */
--	if (read_head_pointers()) {
--		ret = -1;
--		goto free_return;
--	}
--
--	ce_2 = read_one_ent("our", &head_oid, path, namelen, 2);
--	ce_3 = read_one_ent("their", &merge_head_oid, path, namelen, 3);
--
--	if (!ce_2 || !ce_3) {
--		ret = -1;
--		goto free_return;
--	}
--	if (oideq(&ce_2->oid, &ce_3->oid) &&
--	    ce_2->ce_mode == ce_3->ce_mode) {
--		fprintf(stderr, "%s: identical in both, skipping.\n",
--			path);
--		goto free_return;
--	}
--
--	remove_file_from_index(&the_index, path);
--	if (add_index_entry(&the_index, ce_2, ADD_CACHE_OK_TO_ADD)) {
--		error("%s: cannot add our version to the index.", path);
--		ret = -1;
--		goto free_return;
--	}
--	if (!add_index_entry(&the_index, ce_3, ADD_CACHE_OK_TO_ADD))
-+	if (!the_index.resolve_undo)
- 		return 0;
--	error("%s: cannot add their version to the index.", path);
--	ret = -1;
-- free_return:
--	discard_cache_entry(ce_2);
--	discard_cache_entry(ce_3);
--	return ret;
-+	item = string_list_lookup(the_index.resolve_undo, path);
-+	if (!item)
-+		return 0; /* no resolve-undo record for the path */
-+
-+	return unmerge_index_entry(&the_index, path, item->util);
- }
- 
- static int do_unresolve(int ac, const char **av,
-@@ -762,6 +674,7 @@ static int do_reupdate(const char **paths,
- 	int pos;
- 	int has_head = 1;
- 	struct pathspec pathspec;
-+	struct object_id head_oid;
- 
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD,
--- 
-2.41.0-478-gee48e70a82
+
+> +Now, the above is a good practice if you sent your initial patch
+> +prematurely without polish.  But a better approach of course is to avoid
+> +sending your patch prematurely in the first place.
+
+That is of course a good suggestion.
+I wonder, how much a first time contributor knows about "polishing",
+in the Git sense ?
+From my experience, the polishing is or could be a learning process,
+which needs interaction with the reviewers.
+Would it make sense to remove the sentences above and ask people
+to mark their patch with RFC ?
+
+Or is this all too much bikeshedding, IOW I am happy with V4 as is.
+
+
+
 
