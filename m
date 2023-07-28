@@ -2,73 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A753DC0015E
-	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 05:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D5E8C0015E
+	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 05:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233380AbjG1FLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jul 2023 01:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58110 "EHLO
+        id S231910AbjG1F0G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jul 2023 01:26:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233422AbjG1FLb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2023 01:11:31 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D9723C2F
-        for <git@vger.kernel.org>; Thu, 27 Jul 2023 22:11:20 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 140DB33F5E;
-        Fri, 28 Jul 2023 01:11:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dnTB4cRKBaG8XQ1xleRHojLH+fzuDe0HDBSc0i
-        /z6zc=; b=PX4cBSzMZtyltedLXPClGVSGKjUVHhkSd23HN1wFg84vNeW6bhELuw
-        xk8MLngfmOPZfw8+xi0SqbslGmkinGZjROnL5LR4K4uczS6MtHnJL2WhlQ3sySHP
-        8+oY35jcU47JGgsfCdgc6Nl97zPN7ZrqaV0WPqZRhpOCh1WHjHK28=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D09F33F5D;
-        Fri, 28 Jul 2023 01:11:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9A75933F5C;
-        Fri, 28 Jul 2023 01:11:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2023, #06; Thu, 27)
-References: <xmqqh6po95a5.fsf@gitster.g>
-        <dnydxyrjutreobayldz5ystptwyhafaebhycm2ymhj7nhiwbyo@ubfnxgbnf7cz>
-Date:   Thu, 27 Jul 2023 22:11:15 -0700
-In-Reply-To: <dnydxyrjutreobayldz5ystptwyhafaebhycm2ymhj7nhiwbyo@ubfnxgbnf7cz>
-        (Jacob Abel's message of "Fri, 28 Jul 2023 02:13:27 +0000")
-Message-ID: <xmqqy1j07h8s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2E17E940-2D05-11EE-B147-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+        with ESMTP id S229946AbjG1F0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2023 01:26:04 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762C530FC
+        for <git@vger.kernel.org>; Thu, 27 Jul 2023 22:26:03 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1bba7a32a40so13012355ad.0
+        for <git@vger.kernel.org>; Thu, 27 Jul 2023 22:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1690521963; x=1691126763;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VinsfpB2B4vj9pZIzyfHpBkz6a0LfX9Z4m0gpEKItM4=;
+        b=RDGsj2j8PRYqEF715zWY/j1nps1NQYzaoqsjjjZOWgoDmvDVM0fXA7H9/+EGg32FNZ
+         xO27R+8TqSeopsq2grk/+u5wnn4teuPcfz+NipnnIt+EsQOlxINFBWcqvZt7j+Iso0ud
+         D3Qxp/IwgjIRO9kWbEukUGHbD7bh9hr6J3SSO6eL+RrYoExkWwGtAai6IwdknKjkuA0h
+         Xy9R8AZ6v3qGGnqzy7p833B+fvJYFjHOa3BHRuHPtEA/4DHvZ9VZ9EZwrBdZ/yT0g2Cl
+         s+KaNyz5D116pF/idrmV7nJbr2T42cdAp9e0T5Yc4TR0nrE4WRKtO4PyTpYA9AAvtz3o
+         gRdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690521963; x=1691126763;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VinsfpB2B4vj9pZIzyfHpBkz6a0LfX9Z4m0gpEKItM4=;
+        b=iOIiYImD64p1Ieep976oWqBNl3f06LpZB2MzLDDs3SgaVV0vUwW4mDS5RjSIYR3IAY
+         ejmkSl3G8wjavVjwnAvOzad3am/Q980wyhU+rmnhvl6IzP9ukv6ptOseazZBetCLTfsX
+         Nbk/R9b6cJLQkuvV9T5xJK3CQTDLavtfTR9bcMoFpKN2Xqcb/Eh6ZN48dintz4o0GW22
+         HwG6ChfK1iXYyKtT+yw01xjtq8J5krj8BqH9nrfNS73cEFyflDyk/3TkSB2rOsJ7XJlG
+         TTll4yGUCg3PRhJNe3yDZP3pXf2CUNzuPKd0VgjjgNu97Joy76FdbXH0oT8k2kmGs9jD
+         23aQ==
+X-Gm-Message-State: ABy/qLZcoEqtOaM63O9zW/4iwuJwf9avC2SgXOWs0kx2KsDqiFSse+we
+        KaUEDG0DTi9oIimp00xp+uQjhymXnfg=
+X-Google-Smtp-Source: APBJJlH4Mhy/VM23A6/FP2/BQKTxDKpMbB0zFE0iPqM+xv0HeGjo6UKhgi/cEEjuQxz7rV2cFfu/jPGQg8Q=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:902:ce90:b0:1a6:4ce8:3ed5 with SMTP id
+ f16-20020a170902ce9000b001a64ce83ed5mr3089plg.4.1690521962953; Thu, 27 Jul
+ 2023 22:26:02 -0700 (PDT)
+Date:   Thu, 27 Jul 2023 22:26:01 -0700
+In-Reply-To: <xmqqmt21txid.fsf@gitster.g>
+Mime-Version: 1.0
+References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
+ <3f5e4116-54e6-9753-f925-ed4a9f6e3518@gmail.com> <ZGSlqAPwaLhgWm6v@ugly>
+ <2d416834-ef3e-01a2-6be0-9e88bc0de25e@gmail.com> <ZGUIqBU0+Vr5LSBF@ugly>
+ <10523968-0f02-f483-69c4-24e62e839f70@gmail.com> <xmqqmt21txid.fsf@gitster.g>
+Message-ID: <owly7cqkfvyu.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2] sequencer: beautify subject of reverts of reverts
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Abel <jacobabel@nullpo.dev> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 23/07/27 06:46PM, Junio C Hamano wrote:
->> * ja/worktree-orphan-fix (2023-07-26) 3 commits
->>   (merged to 'next' on 2023-07-27 at e475016065)
->>  + t2400: rewrite regex to avoid unintentional PCRE
->>  + builtin/worktree.c: convert tab in advice to space
->>  + t2400: drop no-op `--sq` from rev-parse call
->> 
->>  Fix tests with unportable regex patterns.
->> 
->>  Will merge to 'master'.
->>  source: <20230726214202.15775-1-jacobabel@nullpo.dev>
->
-> Now that this patchset has been merged to `next` I was able to confirm
-> that the Cirrus CI builds on `freebsd_12` are passing again.
->
-> source: https://cirrus-ci.com/task/4872784707321856?logs=test
+> It is better for a code to behave
+> in a dumb but explainable way, than to attempting and failing to act
+> too clever for its own worth.
 
-Thanks for a positive confirmation ;-)
+I completely agree.
+
+> Oswald, I do not think GIGO is really an excuse in this case, when
+> the only value of the topic is to make the behaviour less awkward by
+> creating something better than a repeated revert-revert sequence,
+> revert-reapply-revert is worse, as it is markedly harder to guess
+> what it really means for a reversion of revert-revert-revert than
+> "revert" repeated four times. 
+
+How about introducing a suffix (+ or -) after the word "Revert" to
+indicate the application/inclusion (+) or removal (-) of a commit? Example:
+
+    - "foo: bar baz quux"
+    - Revert "foo: bar baz quux"
+    - Revert(+) Revert(-) "foo: bar baz quux"
+    - Revert(-) Revert(+) Revert(-) "foo: bar baz quux"
+    - Revert(+) Revert(-) Revert(+) Revert(-) "foo: bar baz quux"
+
+I think the above increases readability. I chose to keep the same style
+as the status quo for the first revert, because the "(-)" suffix alone
+without a neighboring "(+)", as in
+
+    Revert(-) "foo: bar baz quux"
+
+might confuse users. This style would also do away with the multiple
+quoting levels that make the current multi-revert subject lines look
+messy at the end. Example:
+
+    Revert "Revert "Revert "Revert some subject"""
+                                                ^
+                                                This part is starting to
+                                                become noisy.
+
+(Sorry for jumping into this thread so late, but the mention of this
+topic on the recent "What's cooking" message [1] (that this topic would
+be discarded) got me interested.)
+
+[1] https://lore.kernel.org/git/xmqqpm4d9g54.fsf@gitster.g/T/#mf4edccc7bbc6365a03eaf106121694a27559d275
