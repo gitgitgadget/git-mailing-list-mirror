@@ -2,110 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D5E8C0015E
-	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 05:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5107C0015E
+	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 06:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231910AbjG1F0G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jul 2023 01:26:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60016 "EHLO
+        id S233170AbjG1GMw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jul 2023 02:12:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbjG1F0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2023 01:26:04 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762C530FC
-        for <git@vger.kernel.org>; Thu, 27 Jul 2023 22:26:03 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1bba7a32a40so13012355ad.0
-        for <git@vger.kernel.org>; Thu, 27 Jul 2023 22:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1690521963; x=1691126763;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VinsfpB2B4vj9pZIzyfHpBkz6a0LfX9Z4m0gpEKItM4=;
-        b=RDGsj2j8PRYqEF715zWY/j1nps1NQYzaoqsjjjZOWgoDmvDVM0fXA7H9/+EGg32FNZ
-         xO27R+8TqSeopsq2grk/+u5wnn4teuPcfz+NipnnIt+EsQOlxINFBWcqvZt7j+Iso0ud
-         D3Qxp/IwgjIRO9kWbEukUGHbD7bh9hr6J3SSO6eL+RrYoExkWwGtAai6IwdknKjkuA0h
-         Xy9R8AZ6v3qGGnqzy7p833B+fvJYFjHOa3BHRuHPtEA/4DHvZ9VZ9EZwrBdZ/yT0g2Cl
-         s+KaNyz5D116pF/idrmV7nJbr2T42cdAp9e0T5Yc4TR0nrE4WRKtO4PyTpYA9AAvtz3o
-         gRdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690521963; x=1691126763;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VinsfpB2B4vj9pZIzyfHpBkz6a0LfX9Z4m0gpEKItM4=;
-        b=iOIiYImD64p1Ieep976oWqBNl3f06LpZB2MzLDDs3SgaVV0vUwW4mDS5RjSIYR3IAY
-         ejmkSl3G8wjavVjwnAvOzad3am/Q980wyhU+rmnhvl6IzP9ukv6ptOseazZBetCLTfsX
-         Nbk/R9b6cJLQkuvV9T5xJK3CQTDLavtfTR9bcMoFpKN2Xqcb/Eh6ZN48dintz4o0GW22
-         HwG6ChfK1iXYyKtT+yw01xjtq8J5krj8BqH9nrfNS73cEFyflDyk/3TkSB2rOsJ7XJlG
-         TTll4yGUCg3PRhJNe3yDZP3pXf2CUNzuPKd0VgjjgNu97Joy76FdbXH0oT8k2kmGs9jD
-         23aQ==
-X-Gm-Message-State: ABy/qLZcoEqtOaM63O9zW/4iwuJwf9avC2SgXOWs0kx2KsDqiFSse+we
-        KaUEDG0DTi9oIimp00xp+uQjhymXnfg=
-X-Google-Smtp-Source: APBJJlH4Mhy/VM23A6/FP2/BQKTxDKpMbB0zFE0iPqM+xv0HeGjo6UKhgi/cEEjuQxz7rV2cFfu/jPGQg8Q=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:902:ce90:b0:1a6:4ce8:3ed5 with SMTP id
- f16-20020a170902ce9000b001a64ce83ed5mr3089plg.4.1690521962953; Thu, 27 Jul
- 2023 22:26:02 -0700 (PDT)
-Date:   Thu, 27 Jul 2023 22:26:01 -0700
-In-Reply-To: <xmqqmt21txid.fsf@gitster.g>
-Mime-Version: 1.0
-References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
- <3f5e4116-54e6-9753-f925-ed4a9f6e3518@gmail.com> <ZGSlqAPwaLhgWm6v@ugly>
- <2d416834-ef3e-01a2-6be0-9e88bc0de25e@gmail.com> <ZGUIqBU0+Vr5LSBF@ugly>
- <10523968-0f02-f483-69c4-24e62e839f70@gmail.com> <xmqqmt21txid.fsf@gitster.g>
-Message-ID: <owly7cqkfvyu.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2] sequencer: beautify subject of reverts of reverts
-From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S232651AbjG1GMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2023 02:12:51 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55E49128
+        for <git@vger.kernel.org>; Thu, 27 Jul 2023 23:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1690524760; x=1691129560; i=l.s.r@web.de;
+ bh=Uw+YwaupCcX3BnszOQsisnOikVea4BYx6Ww+eNUO4+8=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=ssn/pDdngLOqG10proCvLQ5ncxAE2V/RVFZpvxVTB0F1HzkCTXNvLEqN7GJn+pyD1rcZZT9
+ dt69ceRlGWvM6KLk7MS/jGKDsBNfzvF7oPdO/tdbA4SCf56qOiBMyaNJdpZltpSG79ZRr0Td8
+ vjs+mrheed1SNV5FZLIeqYYz0kAVBG8ui1PY5b6SjEUkUo1KeNHIAN5kfCLgjIrPQAXqhwCv/
+ 1oJl2zzL5L/vZf9ihqRA2b2TOn58a43VFjG266/n3ZgUZfqNUdGz+BDuT8dKBvhlKajLl03Lr
+ l2acK9Ss/njM5kfyb1b5XmMOp7ruWFeiOOGomy5nqrWEM5URxImA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MPaMQ-1qBR3N3v2A-00More; Fri, 28
+ Jul 2023 08:12:39 +0200
+Message-ID: <a19879db-d45a-ee42-1ad5-497e4e9eb8df@web.de>
+Date:   Fri, 28 Jul 2023 08:12:39 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH] ls-tree: fix --no-full-name
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
+ <xmqqo7k9fa5x.fsf@gitster.g> <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
+ <xmqq351hz5xp.fsf@gitster.g> <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
+ <xmqq4jlxuiuu.fsf@gitster.g> <1535f30e-3cf9-1a0a-04af-4ba4a7c46d15@web.de>
+ <xmqqr0oxnnx4.fsf@gitster.g> <9e8225dd-1e8b-8af2-c3e1-0c5834694244@web.de>
+ <xmqqh6ptnies.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqh6ptnies.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:P56WAw+urmIBpvb75n0ZsxrH5xDfSJ/RKJfEGATOq39i/tYTL1N
+ R7bNGqbfWkyHuV7cLRE2JiC9r2qBZvSMaELp2oHWfUpsN1cCLhBFv2szenORaw91gpIaRBo
+ PuUrbqeWfO0MNjSCv8BcBIX8EQEkYfLE0U9uImL/ARfaD00zTUBLWAR8ZGBPo8HW4ETcotZ
+ muN4Ygv+8qqI1BNMc23hw==
+UI-OutboundReport: notjunk:1;M01:P0:nlm/ASAbCfc=;NInRMl11CKefueSS/tw6qd/25wQ
+ vrmCwAMhaCFB7yGFISMHUfcZv+mWeNBT6cfcQB8nOYuw1oxIPWbvfuCwbxcAvLQK2PFrQ9VtY
+ kZKrypsFS6zFOnI087aZyCI8yOqDHoNIIRbk9q1BgeEZ3j6g2XBWpnwaYs0+Yl3CzQR9/uNdq
+ W234yFnTMANNkdO4FUYq8/C2eFWgOn/jkRFBi5VmwpXQBM5Kjb9l8L0Gzkcwc1NutK3c9Ny9c
+ 1Qk8CRS2X/yjg/VpQLZE2m5I5NrPkfq3b+TTsb22NYLoyDVxWmCAT4pbpSxJLb4SQ/pj5JTvV
+ Zu6UDCKLka+JGHrv5JhqELOH+mqpoELTvaWO8UuU5H+lYbHSdOpXJ+OpdMkGJWbCaVtYphpyj
+ AwYV9Juj8OlYB/mbvfcVx/QyJ/enNQ1hqiQVMa5dxcO7WXrdphFDu5llxVJ4FsRJQK+Oa0vQw
+ kmObM54YsXEQULiC0AjMqxa3V74Ngx9OHXw4Ef6ZmjZm788bCUKyfaOiyTUVyY3XjjIISvH02
+ ZnqelYhJUrnxl/dWwriNy/3n17v2mum6O/C4xhUB053s/fp6UU256FuJee6895GWFcbUqTH9C
+ WpQ6V+Y0WoV8Wqdl8sKSkLePxcrdILTvE3fFAIx/iFbkpM+1yCWyFzW/CzKLQDfgkgZss+La3
+ YRisfio/jC3iOm/E+F+wYNgwCPe3vpvNuemVF+xm9EdIw4dv1UN1lb1O3v8Ci6Lo3QK+J7IUt
+ psBnY6NX+pnS+dZUrOVmG52OqSYhRzwINYT+VHw0Hb+2LuN8GbIM4zr5/L5cKacUkCrcMIrxD
+ o+pIaZoOby1A8gB/j4KbZLR3HzqMOtZ8gve5NSe5STQi7E1LUafHUsDdexC6nX5B9K081Va0l
+ wPq3gzq2BeZiLWC5EBeLjleWRGpdXbSs1vg+NcNPTjC1JmneW2dx7sdKmO5+e93uG+JmymbJG
+ kwJKiyJ1iCZzplmn9ChaTZtoeo0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 24.07.23 um 22:50 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> Am 24.07.23 um 20:51 schrieb Junio C Hamano:
+>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> Am 21.07.23 um 22:09 schrieb Junio C Hamano:
+>>>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>>>>
+>>>>>> -    -D, --no-doubt        begins with 'no-'
+>>>>>> +    -D, --[no-]no-doubt   begins with 'no-'
+>>>>>
+>>>>> Hmph, I really really loved the neat trick to allow "no-doubt"
+>>>>> option to be "positivised" by _dropping_ the leading "no-" at around
+>>>>> 0f1930c5 (parse-options: allow positivation of options starting,
+>>>>> with no-, 2012-02-25).
+>>>>
+>>>> Yeah, if there is a better way to document A) that the "no-" is optio=
+nal
+>>>> and B) whether it's present by default, I'm all ears.
+>>>
+>>> Some options take "no-" prefix while some others do not, so
+>>> indicating that "this can take negative forms" vs "this do not take
+>>> negative forms" by "--[no-]xyzzy" and "--frotz" makes sense.
+>>>
+>>> Yikes.  There are tons of options whose names begin with "no-" and
+>>> marked PARSE_OPT_NONEG, so "an option '--no-nitfol' that does not
+>>> have the 'no-' part in [brackets] can drop 'no-' to make it
+>>> positive" would not fly as a rule/convention.
+>>>
+>>> If we do not mind getting longer, we could say
+>>>
+>>> 	-D, --no-doubt, --doubt
+>>>
+>>> and explain in the description that --no-doubt is the same as -D and
+>>> --doubt is the default.  It is making the developers responsible for
+>>> clarify, which is not very satisfying.
+>>
+>> Adjusting all explanations manually seems quite tedious.
+>>
+>>> We may not reject "--no-no-doubt" but with the positivization
+>>> support, double negation is not something we'd encourage without
+>>> feeling embarrassed.
+>>
+>> Right.  Perhaps --[[no-]no-]doubt?  Looks a bit silly with its nested
+>> brackets, but it's more correct, because it documents all three accepte=
+d
+>> forms, including the no-less one.
+>
+> It may look a bit silly but looks very tempting.  Also it is not
+> much longer than "--[no-]no-doubt".
 
-> It is better for a code to behave
-> in a dumb but explainable way, than to attempting and failing to act
-> too clever for its own worth.
+Yes, it's quite compact.  But is it they still legible?
 
-I completely agree.
+    --no-index            find in contents not managed by git
+    --[no-]no-index       find in contents not managed by git
+    --[[no-]no-]index     find in contents not managed by git
+    --[no-[no-]]index     find in contents not managed by git
 
-> Oswald, I do not think GIGO is really an excuse in this case, when
-> the only value of the topic is to make the behaviour less awkward by
-> creating something better than a repeated revert-revert sequence,
-> revert-reapply-revert is worse, as it is markedly harder to guess
-> what it really means for a reversion of revert-revert-revert than
-> "revert" repeated four times. 
+The last two document all three variants, but is it still obvious that
+the help text is supposed to be about the one with a single "no-"?
+That's something that has to be learned, I suspect.  No good making the
+short help too cryptic.  Hmm, how about:
 
-How about introducing a suffix (+ or -) after the word "Revert" to
-indicate the application/inclusion (+) or removal (-) of a commit? Example:
+    --no-index, --[no-[no-]]index
+                          find in contents not managed by git
 
-    - "foo: bar baz quux"
-    - Revert "foo: bar baz quux"
-    - Revert(+) Revert(-) "foo: bar baz quux"
-    - Revert(-) Revert(+) Revert(-) "foo: bar baz quux"
-    - Revert(+) Revert(-) Revert(+) Revert(-) "foo: bar baz quux"
+Somewhat redundant, but highlights the documented variant.
 
-I think the above increases readability. I chose to keep the same style
-as the status quo for the first revert, because the "(-)" suffix alone
-without a neighboring "(+)", as in
-
-    Revert(-) "foo: bar baz quux"
-
-might confuse users. This style would also do away with the multiple
-quoting levels that make the current multi-revert subject lines look
-messy at the end. Example:
-
-    Revert "Revert "Revert "Revert some subject"""
-                                                ^
-                                                This part is starting to
-                                                become noisy.
-
-(Sorry for jumping into this thread so late, but the mention of this
-topic on the recent "What's cooking" message [1] (that this topic would
-be discarded) got me interested.)
-
-[1] https://lore.kernel.org/git/xmqqpm4d9g54.fsf@gitster.g/T/#mf4edccc7bbc6365a03eaf106121694a27559d275
+Ren=C3=A9
