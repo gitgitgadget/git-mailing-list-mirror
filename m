@@ -2,128 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70295EB64DD
-	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 21:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ECB2EB64DD
+	for <git@archiver.kernel.org>; Fri, 28 Jul 2023 22:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233984AbjG1VWB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jul 2023 17:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58060 "EHLO
+        id S234392AbjG1WGe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jul 2023 18:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231538AbjG1VV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2023 17:21:59 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FFE744AA
-        for <git@vger.kernel.org>; Fri, 28 Jul 2023 14:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1690579306; x=1691184106; i=tboegi@web.de;
- bh=bavTJw0USmbor1DYlSAzgfpra19yHTpkXnqXn0Y8NDQ=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=iCIKONUrbv6ypdeTRWGWiFQQwtGlgT0m2N2ZN9ZCI/SD84cNHs2nqRjos3R4dMErx7PqnOQ
- HXCqXV8xE67RUq6D/7WxU/6/Vb1G5KJg9TfHvAIrlazm7aNxFLKm0pLrAPdik0lDnryfIITc9
- vH1jga7re2XE9Zh9Bx18ifG0fsWDcFBDhrCqAp+O34IWJLiriH+HsxhI8l6c4t8JW/Hem7+gJ
- tNvbch4OQ2Wy7wuol8PMbrqWEck1ovs+GAinMnHM7votQTw41XO9D31iPG99LJlTw6j4aDFIN
- m61hFwb23tnwT5phd2b7SQJu+KcwooBZDgDJN+8jb9iBaQep0/Hg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Movne-1q5FZc07dm-00qGF5; Fri, 28
- Jul 2023 23:21:46 +0200
-Date:   Fri, 28 Jul 2023 23:21:44 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linus Arver <linusa@google.com>,
-        jacobabel@nullpo.dev
-Subject: Re: [PATCH v4] MyFirstContribution: refrain from self-iterating too
- much
-Message-ID: <20230728212144.dpcbp6gfhfuiabia@tb-raspi4>
-References: <xmqq3583uyk0.fsf@gitster.g>
- <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
- <xmqqcz76tv6d.fsf@gitster.g>
- <xmqqzga9opdu.fsf@gitster.g>
- <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4>
- <xmqq8rbbbzp2.fsf_-_@gitster.g>
- <owlycz0deykz.fsf@fine.c.googlers.com>
- <xmqq7cqkanm9.fsf@gitster.g>
- <xmqqmszg987u.fsf_-_@gitster.g>
+        with ESMTP id S231533AbjG1WGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2023 18:06:32 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8284D2D73
+        for <git@vger.kernel.org>; Fri, 28 Jul 2023 15:06:31 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 10D122BBDD;
+        Fri, 28 Jul 2023 18:06:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=H
+        9BzX582P3+8SmHGECQJVmL+eUXwdPuYn2G+kcpNS8k=; b=AZ956dppP5NzffNhS
+        yzxKGg0HsqKXQgtnbO0JSBuGX0xvH3yxVMxlH29cFXtXc0LGE1JWvVUfyioJafMs
+        HpMH4qFDgU5t6g2QhQwicj0HeSxZFQI8WgnIAVotgcZkG24Hmb2O7xoA+JIzyJ4Z
+        vb9DnbssTklCzvhCSjQLc/7LIE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 097DF2BBDC;
+        Fri, 28 Jul 2023 18:06:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8FD182BBDB;
+        Fri, 28 Jul 2023 18:06:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 1/2] checkout/restore: refuse unmerging paths unless
+ checking out of the index
+Date:   Fri, 28 Jul 2023 15:06:26 -0700
+Message-ID: <xmqqedkr4rod.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmszg987u.fsf_-_@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:IVLLILU49rEdsElwdQCy1lf4XCsSsdliyRdhLcnbm5yZ7qk5Oyo
- 8UECoBsJcEHtvGUDCRntcz+LiK6ikvWWnne654cLy+zQTtpNV1s9IalWqaUsaNS7ORhq90z
- pXa6549flU+7+fHO6t6lIB6B2iFsRrL1dbasJF0Xs2G/cMOroOD5LZ933b2vY0m3KqAbTin
- GxjgjyorkqirSlErDFZ0A==
-UI-OutboundReport: notjunk:1;M01:P0:eiVJgbItZBo=;LycsYmqRWN1O/jLdilCBP7sFscC
- WoAmnQ7E9QYPiyOEbadyYIbzoKgn2GpufIVJjp/pnz3nF+ZtYFJ0HSbsyRTK6spgg9XNItEm8
- FjbfrAG70exzMz99IWD4tX1ghyilRYaLYHAYRY2dPzh6VIQ+mirZW2FCcwrFNBeW5ID9hZRLZ
- iMdjKt+gD75EQrJQklowu3OZ0L9DRb1zHrHa2Mi7vHLtzf16GBLhMs5tJXj0qRGSd8Z0hRVpU
- wg7BaeaaDUae66BatnPthXqJVahPniptgvAYnq0l/NEi35Shgd6AfCW3wo2Nx68w86YWzQwy4
- OblW9tn/3gizjTbUIjk93qZr1yTLoYvP9Y0Tckvb2aVjlFh6gx433VHy87r3DzDsyB0/sm8Zs
- 1/WX5+jgvx3xA/n5DzDuIY+Reu9srYyEiSwrnfSC0rna5DZTJgi0y7ntyWwhkqp2SBpBdZ4/H
- v8JWsyQw02s6AaLhNAKYbk4KsqFJOmq6mIfttOnpPEClugyX63XijtOkOnuZD/jKRfnTAbSjj
- cm05GU9Ic+XnpvZYC/UJcEDblzjbfruBOx468iasz+mkP5DtqS1U8naSnbUu9NogV+LBHlGI4
- zFgNkMsGRnlas2bq2vu/F0+uKn52RkeT/9ERer0m4r6P0t8u6xAknzjuSMNq+wzkPgE0G2kxc
- NCNUQwzafmDhrWH7rUnOXdXs62S3POwySIPh18nfpeXNQSsQr7V8i9PRbrBiyS5J+z4Xq8ZLK
- 5+4TzQTPwyJFn9HHrv++WbS+CtKqdcb03Gi08wE9Y3tj5U18epG/rVRBuaGcbhSdF4CVJkNYJ
- iOBq9PbMjyILmGmQRBK9PMzCUbnUSxvIWLnQhEYck4UnZ/uGh29MmYkQPNGABXiKU6TMtGJYU
- hfyUolG0tbKvbwIA5lbsUxY9Q7qexL2anORexu8iWP2MTo5oHbVZvG6r1P5DWycOsYpcwHxrQ
- vucpWA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: FFDA638A-2D92-11EE-B23D-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 27, 2023 at 05:43:17PM -0700, Junio C Hamano wrote:
-> Finding mistakes in and improving your own patches is a good idea,
-> but doing so too quickly is being inconsiderate to reviewers who
-> have just seen the initial iteration and taking their time to review
-> it.  Encourage new developers to perform such a self review before
-> they send out their patches, not after.  After sending a patch that
-> they immediately found mistakes in, they are welcome to comment on
-> them, mentioning what and how they plan to improve them in an
-> updated version, before sending out their updates.
+Recreating unmerged index entries using resolve-undo data,
+recreating conflicted working tree files using unmerged index
+entries, and writing data out of unmerged index entries, make
+sense only when we are checking paths out of the index and not when
+we are checking paths out of a tree-ish.
 
-That's all good, no possible improvements from my side.
-However, a possible question below.
+Add an extra check to make sure "--merge" and "--ours/--theirs"
+options are rejected when checking out from a tree-ish, update the
+document (especially the SYNOPSIS section) to highlight that they
+are incompatible, and add a few tests to make sure the combination
+fails.
 
-[]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> +Please give reviewers enough time to process your initial patch before
-> +sending an updated version. That is, resist the temptation to send a new
-> +version immediately, because others may have already started reviewing
-> +your initial version.
-> +
-> +While waiting for review comments, you may find mistakes in your initial
-> +patch, or perhaps realize a different and better way to achieve the goal
-> +of the patch. In this case you may communicate your findings to other
-> +reviewers as follows:
-> +
-> + - If the mistakes you found are minor, send a reply to your patch as if
-> +   you were a reviewer and mention that you will fix them in an
-> +   updated version.
-> +
-> + - On the other hand, if you think you want to change the course so
-> +   drastically that reviews on the initial patch would be a waste of
-> +   time (for everyone involved), retract the patch immediately with
-> +   a reply like "I am working on a much better approach, so please
-> +   ignore this patch and wait for the updated version."
-> +
-(That's all good)
+ * We do have proper description of the --merge option in
+   Documentation/git-checkout.txt to cover the operation in both
+   modes of "checkout" (i.e. checking out a branch vs checking out
+   paths), but the parse_options help text only talks about the one
+   that happens when checking out a branch.  We might want to do
+   something about it, but I am not sure what the right phrase
+   should be.  The options[] array there is created by concatenating
+   common ones, switch-related ones, and restore-related ones, and
+   ideally how the option works in each mode should be decribed in
+   the latter two, but we cannot have duplicate entries in the
+   resulting options[] array, of course, so such an approach would
+   not work well.
 
+ Documentation/git-checkout.txt | 9 ++++++---
+ Documentation/git-restore.txt  | 4 ++++
+ builtin/checkout.c             | 9 +++++++++
+ t/t2070-restore.sh             | 7 +++++--
+ t/t7201-co.sh                  | 5 +++++
+ 5 files changed, 29 insertions(+), 5 deletions(-)
 
-> +Now, the above is a good practice if you sent your initial patch
-> +prematurely without polish.  But a better approach of course is to avoid
-> +sending your patch prematurely in the first place.
-
-That is of course a good suggestion.
-I wonder, how much a first time contributor knows about "polishing",
-in the Git sense ?
-From my experience, the polishing is or could be a learning process,
-which needs interaction with the reviewers.
-Would it make sense to remove the sentences above and ask people
-to mark their patch with RFC ?
-
-Or is this all too much bikeshedding, IOW I am happy with V4 as is.
-
-
-
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 4af0904f47..a30e3ebc51 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -12,8 +12,10 @@ SYNOPSIS
+ 'git checkout' [-q] [-f] [-m] --detach [<branch>]
+ 'git checkout' [-q] [-f] [-m] [--detach] <commit>
+ 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new-branch>] [<start-point>]
+-'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
+-'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
++'git checkout' [-f] <tree-ish> [--] <pathspec>...
++'git checkout' [-f] <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]
++'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [--] <pathspec>...
++'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]
+ 'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+ 
+ DESCRIPTION
+@@ -260,7 +262,8 @@ and mark the resolved paths with `git add` (or `git rm` if the merge
+ should result in deletion of the path).
+ +
+ When checking out paths from the index, this option lets you recreate
+-the conflicted merge in the specified paths.
++the conflicted merge in the specified paths.  This option cannot be
++used when checking out paths from a tree-ish.
+ +
+ When switching branches with `--merge`, staged changes may be lost.
+ 
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+index 5964810caa..c70444705b 100644
+--- a/Documentation/git-restore.txt
++++ b/Documentation/git-restore.txt
+@@ -78,6 +78,8 @@ all modified paths.
+ --theirs::
+ 	When restoring files in the working tree from the index, use
+ 	stage #2 ('ours') or #3 ('theirs') for unmerged paths.
++	This option cannot be used when checking out paths from a
++	tree-ish (i.e. with the `--source` option).
+ +
+ Note that during `git rebase` and `git pull --rebase`, 'ours' and
+ 'theirs' may appear swapped. See the explanation of the same options
+@@ -87,6 +89,8 @@ in linkgit:git-checkout[1] for details.
+ --merge::
+ 	When restoring files on the working tree from the index,
+ 	recreate the conflicted merge in the unmerged paths.
++	This option cannot be used when checking out paths from a
++	tree-ish (i.e. with the `--source` option).
+ 
+ --conflict=<style>::
+ 	The same as `--merge` option above, but changes the way the
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 715eeb5048..b8dfba57c6 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -520,6 +520,15 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 			    "--merge", "--conflict", "--staged");
+ 	}
+ 
++	/*
++	 * recreating unmerged index entries and writing out data from
++	 * unmerged index entries would make no sense when checking out
++	 * of a tree-ish.
++	 */
++	if ((opts->merge || opts->writeout_stage) && opts->source_tree)
++		die(_("'%s', '%s', or '%s' cannot be used when checking out of a tree"),
++		    "--merge", "--ours", "--theirs");
++
+ 	if (opts->patch_mode) {
+ 		enum add_p_mode patch_mode;
+ 		const char *rev = new_branch_info->name;
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index c5d19dd973..fd775807e7 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -137,11 +137,14 @@ test_expect_success 'restore --staged invalidates cache tree for deletions' '
+ 	test_must_fail git rev-parse HEAD:new1
+ '
+ 
+-test_expect_success 'restore with merge options rejects --staged' '
++test_expect_success 'restore with merge options are incompatible with certain options' '
+ 	for opts in \
+ 		"--staged --ours" \
+ 		"--staged --theirs" \
+ 		"--staged --merge" \
++		"--source=HEAD --ours" \
++		"--source=HEAD --theirs" \
++		"--source=HEAD --merge" \
+ 		"--staged --conflict=diff3" \
+ 		"--staged --worktree --ours" \
+ 		"--staged --worktree --theirs" \
+@@ -149,7 +152,7 @@ test_expect_success 'restore with merge options rejects --staged' '
+ 		"--staged --worktree --conflict=zdiff3"
+ 	do
+ 		test_must_fail git restore $opts . 2>err &&
+-		grep "cannot be used with --staged" err || return
++		grep "cannot be used" err || return
+ 	done
+ '
+ 
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 61ad47b0c1..23d4dadbcc 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -497,6 +497,11 @@ test_expect_success 'checkout unmerged stage' '
+ 	test ztheirside = "z$(cat file)"
+ '
+ 
++test_expect_success 'checkout path with --merge from tree-ish is a no-no' '
++	setup_conflicting_index &&
++	test_must_fail git checkout -m HEAD -- file
++'
++
+ test_expect_success 'checkout with --merge' '
+ 	setup_conflicting_index &&
+ 	echo "none of the above" >sample &&
+-- 
+2.41.0-478-gee48e70a82
 
