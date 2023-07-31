@@ -2,71 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E6CDC04E69
-	for <git@archiver.kernel.org>; Mon, 31 Jul 2023 16:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82C27C001DE
+	for <git@archiver.kernel.org>; Mon, 31 Jul 2023 16:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233002AbjGaQBX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jul 2023 12:01:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
+        id S232312AbjGaQaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jul 2023 12:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbjGaQBT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2023 12:01:19 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2DAC171F
-        for <git@vger.kernel.org>; Mon, 31 Jul 2023 09:01:15 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 545EC19AA8;
-        Mon, 31 Jul 2023 12:01:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zN1/GqdnjhMFIEKRdpF+QDrmO8IGWknBLUvjaz
-        L0XAk=; b=U7dVPvt094mL85lUs/rFYNf+DRH/OmdA7CVoIDAE8HblwNegAFoR0s
-        jpD62f/frd8zFMbAXP1gRCbLh3VqwqoTmiQXMdwUG4WtFh4bBuPU+ey740GuGH4G
-        WnPvaykXl+bn+iYZjXGwr8SMtxA3aYyCc1GtNN8SKcYy5wFjfj3Yw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D85F19AA7;
-        Mon, 31 Jul 2023 12:01:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B49BC19AA3;
-        Mon, 31 Jul 2023 12:01:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Majer <adamm@zombino.com>
+        with ESMTP id S233143AbjGaQ3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2023 12:29:42 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531762103
+        for <git@vger.kernel.org>; Mon, 31 Jul 2023 09:29:18 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id 006d021491bc7-565f2567422so3223055eaf.2
+        for <git@vger.kernel.org>; Mon, 31 Jul 2023 09:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690820956; x=1691425756;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cD6adWQGerycZ5YlwtcxGkV+Ub5F5az98nmOoB/3dHA=;
+        b=YtmxX/6HHvpmB5cukACWA5YPl3DvwTPWMW//qA4vQHaUrMNUaU9keR5xMlrf71XA5u
+         HmtZs+VAZKoGqVpzKbvbMru563xAJJg7M98MAO4DmDdRzhdurtnLw6NaDFOr8IoIgUku
+         1ZHtV6o26N9iY5DWQRUAEL96JU4NpnekJyjT9iJikNsY7GQeqX14HD36HL3kVPq218Vh
+         Gog9WaD67ohbV9hSRJ5EArfxkK/KoIJmvzDW2XAMfX8jeYqG1qumQRS1tmPIe3ZA3gRB
+         tT2/SKHes8FUAC6B/j45SXysMc1l67stkhr1MJeqU/JM1LpdF5P0Z+VZy6y33DQj46tq
+         V92g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690820956; x=1691425756;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cD6adWQGerycZ5YlwtcxGkV+Ub5F5az98nmOoB/3dHA=;
+        b=ZaWZucKrRJW1ZqjGziUF1Px5OOgRP5qINHh5MTCFBgQ2uUujHqW1vyj+6YyCzYKEXF
+         xaRhMKxgOHyU5MEdzVWN55rLUmnqg2l+FC9eIPg583/8wA+HLCuBikGbYp/8VUMQzHXm
+         eEsVKKwcxmUDc/V9R/rqFLDm0Hw9uZpS/iauW6DuSS2HHRLOLQCUasGxtitlg1tUm22s
+         g36UgIHPd318tyjoCbX2ftqJrl8eZHEC5Sg+kHvwd1wbsLpXBu4azthhWgLDCWpu+IX0
+         yJI/z1+ZmZf2Yo5aAv3vp8ggL4rhqmTRBhdSzFpYPs4H8MEbX8nsyVmtH4eSm6kMOf0r
+         SYqw==
+X-Gm-Message-State: ABy/qLaU+PQ9Zq6fYhLie+9Oyx/yiP1uCF7F10JwAldjYSqLpHEGjsNV
+        cqZWPCiD6PIf/nFzuBUCkfZtdBYIkaLC7WVmLknhyg==
+X-Google-Smtp-Source: APBJJlGC6LK5jgFGf6nHWXXbcHRLmrh8TFAGZ1CDpbZFC19lyUNA2tdEZLRh5YA3N/9aum37zjle4g==
+X-Received: by 2002:a05:6358:2910:b0:135:69d5:1b13 with SMTP id y16-20020a056358291000b0013569d51b13mr564421rwb.0.1690820956313;
+        Mon, 31 Jul 2023 09:29:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m128-20020a0dfc86000000b005732b228a83sm3056280ywf.140.2023.07.31.09.29.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jul 2023 09:29:15 -0700 (PDT)
+Date:   Mon, 31 Jul 2023 12:29:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: sha256 is no longer experimental
-References: <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>
-        <ZLlNtbAbVcYH7eFb@adams> <xmqqr0p230rj.fsf@gitster.g>
-        <d8ba032f-51bc-0bab-fd24-25dea0d56966@zombino.com>
-        <ZMe6KmzZGVubYpvO@adams>
-Date:   Mon, 31 Jul 2023 09:01:10 -0700
-In-Reply-To: <ZMe6KmzZGVubYpvO@adams> (Adam Majer's message of "Mon, 31 Jul
-        2023 15:42:02 +0200")
-Message-ID: <xmqqr0ooyss9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Subject: tb/commit-graph-tests (was: Re: What's cooking in git.git (Jul 2023,
+ #06; Thu, 27))
+Message-ID: <ZMfhWkd24y7XjEIw@nand.local>
+References: <xmqqh6po95a5.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 783B0CCE-2FBB-11EE-BA24-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh6po95a5.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adam Majer <adamm@zombino.com> writes:
+On Thu, Jul 27, 2023 at 06:46:42PM -0700, Junio C Hamano wrote:
+> * tb/commit-graph-tests (2023-07-24) 5 commits
+>  - t/lib-commit-graph.sh: avoid sub-shell in `graph_git_behavior()`
+>  - t5328: avoid top-level directory changes
+>  - t5318: avoid top-level directory changes
+>  - t/lib-commit-graph.sh: avoid directory change in `graph_git_behavior()`
+>  - t/lib-commit-graph.sh: allow `graph_read_expect()` in sub-directories
+>
+>  Test updates.
+>
+>  Will merge to 'next'?
+>  source: <cover.1690216758.git.me@ttaylorr.com>
 
-> +Note: At present, there is no interoperability between SHA-256
-> +repositories and SHA-1 repositories.
-> +
-> +Historically, we warned that SHA-256 repositories may later need
-> +backward incompatible changes when we introduce such interoperability
-> +features. Today, we only expect compatible changes. Furthermore, if such
-> +changes prove to be necessary, it can expected that SHA-256 repositories
+I think this one is ready to go. Eric Sunshine gave the earlier round a
+review, and I made sure to address his feedback in the subsequent
+version.
 
-"can BE expected" (will tweak locally while queueing; no need to resend).
+I'm happy to wait for an ACK from him, but I think this is low-risk
+enough that you could merge it as-is. Either way :-).
 
-> +created with today's Git will be usable by future versions of Git
-> +without data loss.
-
-Will queue.  Thanks!
+Thanks,
+Taylor
