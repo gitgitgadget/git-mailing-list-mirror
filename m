@@ -2,252 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00719C0015E
-	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 15:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2281CC00528
+	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 16:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234109AbjHAPX7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Aug 2023 11:23:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47080 "EHLO
+        id S233682AbjHAQDd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Aug 2023 12:03:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234081AbjHAPXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2023 11:23:52 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04046211E
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 08:23:42 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fbc5d5742eso63017725e9.3
-        for <git@vger.kernel.org>; Tue, 01 Aug 2023 08:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690903420; x=1691508220;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=utc86jQ450LQo2nvFbVNNJSteny3cBUQPuZfLdcUVXA=;
-        b=APLiUF95XhTa+yWqA2IVRA6lQEzEAzhelFfIZQUqXBtZSnPAffewzjokUdE6V1S+HR
-         2YmHNFoIlNaDSpPPcRIdt0KtkRdb29h10TYnl4Lc7UiUZ3kqsJsncwf/MFD9NRQmL5IW
-         graHaK3krbtm/ukOpTdjEy7WOR/RxTEWwbfMYncU8b3liP726lhdVIrH1AHKEibt4NgP
-         whh6M1cBS4zEvXiy/1tzFZW2dhpRNOf93sU+Wwld/o9WRouJMYV52BgHtrbn5ykSYEQW
-         cW+m5SPnRrFZx27sziNRBVW+OcZO3yzTF43LnkPH5zOdk6HbdbePXIAYc+XsmHT4qQp/
-         yNHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690903420; x=1691508220;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=utc86jQ450LQo2nvFbVNNJSteny3cBUQPuZfLdcUVXA=;
-        b=XrlwSsDA+4KU74jD5FYq2/i5++vGeXIMCx/+f+d93uqNMy152PmfWWQ7blY2+AwODs
-         2E2r/UAhbHK2NzR31H58kNHQqiBWHS3ji+b7/ExrfpgiuZo95srjSkETrlBqfec3fcEr
-         qHNI6AWdL2tZ841ScSgfphcExQx+n12jEgyZSH7VxnyL00Wv2it+4bfl69Pi/bhaXM7o
-         mRs+dKvJXAmljRYUUOS020vgM1kwEssphAEqNSE7TeoIk1vkdgXQqRIopzKL+1L66rdr
-         UMz3G+iE++u0ueBmVekR/JJ+/hPhjsxPdBKES4/HPkiwBVasbDvh+lKePVNWbw4TrVpx
-         2icg==
-X-Gm-Message-State: ABy/qLZVbc7u4c8n9b8NBzpEJgke9qmufG+9VK8X/fVCOjved4580SrF
-        t/rSklkTlkemmrhQyCgAjyO07DlmL9s=
-X-Google-Smtp-Source: APBJJlFCLdAVNHPV/blspihhPW0dG0DyoNwrkbUeDIpToRXmMaJI/P0TOizbdd26DbDw5imHoRA6Jw==
-X-Received: by 2002:a05:600c:11ce:b0:3fe:19cf:93ca with SMTP id b14-20020a05600c11ce00b003fe19cf93camr2806276wmi.8.1690903420193;
-        Tue, 01 Aug 2023 08:23:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l27-20020a05600c1d1b00b003fe1b3e0852sm4364318wms.0.2023.08.01.08.23.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Aug 2023 08:23:39 -0700 (PDT)
-Message-ID: <bbe0afde512c52bc818fd1d10d10b3af400246ba.1690903412.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
-References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
-        <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Aug 2023 15:23:32 +0000
-Subject: [PATCH v3 7/7] rebase -i: fix adding failed command to the todo list
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S231156AbjHAQDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2023 12:03:32 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF631BF
+        for <git@vger.kernel.org>; Tue,  1 Aug 2023 09:03:30 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FC2018BCC3;
+        Tue,  1 Aug 2023 12:03:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=byCnvpn83cBbmsKBfdSu4bAZjCzzO7Acn37Uun
+        0pHb4=; b=LzJDaRYJDIVEH+0tdLLWum5kINcT503Z9m5qm90QEQZTRbn/XGLqPH
+        c0SCbfWAX1iDwFbquzP3LT1T8BK9L1ezpFsNnQ8rNoTFHwWclGvlTq7J/DSTjrfQ
+        WjXl620/SaccDOK3pwHoUSiSX8aGOI5zAuJ4fRcOmL1UxbBISzjx0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06A9A18BCC2;
+        Tue,  1 Aug 2023 12:03:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6728A18BCC0;
+        Tue,  1 Aug 2023 12:03:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] avoid SHA-1 functions deprecated in OpenSSL 3+
+References: <20230801025454.1137802-1-e@80x24.org>
+        <20230801025454.1137802-3-e@80x24.org>
+Date:   Tue, 01 Aug 2023 09:03:25 -0700
+In-Reply-To: <20230801025454.1137802-3-e@80x24.org> (Eric Wong's message of
+        "Tue, 1 Aug 2023 02:54:54 +0000")
+Message-ID: <xmqqsf92eomq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Haller <lists@haller-berlin.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2EB0860-3084-11EE-BA18-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Eric Wong <e@80x24.org> writes:
 
-When rebasing commands are moved from the todo list in "git-rebase-todo"
-to the "done" file (which is used by "git status" to show the recently
-executed commands) just before they are executed. This means that if a
-command fails because it would overwrite an untracked file it has to be
-added back into the todo list before the rebase stops for the user to
-fix the problem.
+> diff --git a/hash-ll.h b/hash-ll.h
+> index 087b421bd5..10d84cc208 100644
+> --- a/hash-ll.h
+> +++ b/hash-ll.h
+> @@ -45,6 +49,10 @@
+>  #define git_SHA1_Update		platform_SHA1_Update
+>  #define git_SHA1_Final		platform_SHA1_Final
+>  
+> +#ifdef platform_SHA1_Clone
+> +#define git_SHA1_Clone	platform_SHA1_Clone
+> +#endif
+> +
+> ...
+> +#ifndef SHA1_NEEDS_CLONE_HELPER
+>  static inline void git_SHA1_Clone(git_SHA_CTX *dst, const git_SHA_CTX *src)
+>  {
+>  	memcpy(dst, src, sizeof(*dst));
+>  }
+> +#endif
 
-Unfortunately when a failed command is added back into the todo list the
-command preceding it is erroneously appended to the "done" file.  This
-means that when rebase stops after "pick B" fails the "done" file
-contains
+This smelled a bit strange in that all the other platform_* stuff is
+"if a platform sha-1 header implements platform_SHA1_*, we will use
+it to define git_SHA1_* (which is the symbol we use in the code)"
+plus its inverse "if there is no specific platform_SHA1_*, we assume
+OpenSSL compatible ones and use them as platform_SHA1_* (which in
+turn will be used as git_SHA1-*)".
 
-	pick A
-	pick B
-	pick A
+And that is why "#ifndef platform_SHA1_CTX" block gave us default
+values for them.  And from that point of view, the first hunk
+(i.e. "if SHA1_CLONE is defined for the platform, we use it") is
+entirely sensible.
 
-instead of
+But I did not get why we guard the other hunk with a different CPP
+macro.  If we have platform_SHA1_Clone already defined, and then
+NEEDS_CLONE_HELPER not defined, we end up creating an static inline
+platform_SHA1_CLONE here, and I was not sure if that is what we
+wanted to do.
 
-	pick A
-	pick B
+The answer to the above puzzle (at least it was a puzzle to me) is
+that the new header "sha1/openssl.h" added by this series does have
+platform_SHA1_Clone defined, and the code that includes it define
+NEEDS_CLONE_HELPER to avoid this "static inline", so the CPP macro
+SHA1_NEEDS_CLONE_HELPER means "we need more than just a straight
+bitwise copy to clone the SHA context, which is provided elsewhere
+in the form of platform_SHA1_Clone".
 
-This happens because save_todo() updates the "done" file with the
-previous command whenever "git-rebase-todo" is updated. When we add the
-failed pick back into "git-rebase-todo" we do not want to update
-"done". Fix this by adding a "reschedule" parameter to save_todo() which
-prevents the "done" file from being updated when adding a failed command
-back into the "git-rebase-todo" file. A couple of the existing tests are
-modified to improve their coverage as none of them trigger this bug or
-check the "done" file.
+So everything evens out.  If we are with newer OpenSSL, we will
+include sha1/openssl.h and get both platform_SHA1_Clone and
+SHA1_NEEDS_CLONE_HELPER defined.  If we are with older OpenSSL or
+non-OpenSSL, we do not get platform_SHA1_Clone (because the "#ifndef
+platform_SHA1_CTX" block does not have a fallback default defined)
+and we do not get SHA1_NEEDS_CLONE_HELPER either.  We either use the
+memcpy() fallback only when we are not working with newer OpenSSL or
+whatever defines its own platform_SHA1_Clone.  So the patch smelled
+a bit strange, but there isn't anything incorrect per-se.
 
-Reported-by: Stefan Haller <lists@haller-berlin.de>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c                   | 12 ++++++------
- t/t3404-rebase-interactive.sh | 29 ++++++++++++++++++-----------
- t/t3430-rebase-merges.sh      | 22 ++++++++++++++++------
- 3 files changed, 40 insertions(+), 23 deletions(-)
+But then is this making folks unnecessary work when they add
+non-OpenSSL support that needs more than just memcpy() to clone the
+context?  What breaks if we turn these two hunks into
 
-diff --git a/sequencer.c b/sequencer.c
-index a90b015e79c..4976d159745 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3397,7 +3397,8 @@ give_advice:
- 	return -1;
- }
- 
--static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
-+static int save_todo(struct todo_list *todo_list, struct replay_opts *opts,
-+		     int reschedule)
- {
- 	struct lock_file todo_lock = LOCK_INIT;
- 	const char *todo_path = get_todo_path(opts);
-@@ -3407,7 +3408,7 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
- 	 * rebase -i writes "git-rebase-todo" without the currently executing
- 	 * command, appending it to "done" instead.
- 	 */
--	if (is_rebase_i(opts))
-+	if (is_rebase_i(opts) && !reschedule)
- 		next++;
- 
- 	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
-@@ -3420,7 +3421,7 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
- 	if (commit_lock_file(&todo_lock) < 0)
- 		return error(_("failed to finalize '%s'"), todo_path);
- 
--	if (is_rebase_i(opts) && next > 0) {
-+	if (is_rebase_i(opts) && !reschedule && next > 0) {
- 		const char *done = rebase_path_done();
- 		int fd = open(done, O_CREAT | O_WRONLY | O_APPEND, 0666);
- 		int ret = 0;
-@@ -4730,7 +4731,7 @@ static int pick_commits(struct repository *r,
- 		const char *arg = todo_item_get_arg(todo_list, item);
- 		int check_todo = 0;
- 
--		if (save_todo(todo_list, opts))
-+		if (save_todo(todo_list, opts, reschedule))
- 			return -1;
- 		if (is_rebase_i(opts)) {
- 			if (item->command != TODO_COMMENT) {
-@@ -4811,8 +4812,7 @@ static int pick_commits(struct repository *r,
- 			       get_item_line_length(todo_list,
- 						    todo_list->current),
- 			       get_item_line(todo_list, todo_list->current));
--			todo_list->current--;
--			if (save_todo(todo_list, opts))
-+			if (save_todo(todo_list, opts, reschedule))
- 				return -1;
- 			if (item->commit)
- 				write_rebase_head(&item->commit->object.oid);
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index a8ad398956a..71da9c465a1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1277,19 +1277,24 @@ test_expect_success 'todo count' '
- '
- 
- test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
--	git checkout --force branch2 &&
-+	git checkout --force A &&
- 	git clean -f &&
-+	cat >todo <<-EOF &&
-+	exec >file2
-+	pick $(git rev-parse B) B
-+	pick $(git rev-parse C) C
-+	pick $(git rev-parse D) D
-+	exec cat .git/rebase-merge/done >actual
-+	EOF
- 	(
--		set_fake_editor &&
--		FAKE_LINES="edit 1 2" git rebase -i A
-+		set_replace_editor todo &&
-+		test_must_fail git rebase -i A
- 	) &&
--	test_cmp_rev HEAD F &&
--	test_path_is_missing file6 &&
--	>file6 &&
--	test_must_fail git rebase --continue &&
--	test_cmp_rev HEAD F &&
--	test_cmp_rev REBASE_HEAD I &&
--	rm file6 &&
-+	test_cmp_rev HEAD B &&
-+	test_cmp_rev REBASE_HEAD C &&
-+	head -n3 todo >expect &&
-+	test_cmp expect .git/rebase-merge/done &&
-+	rm file2 &&
- 	test_path_is_missing .git/rebase-merge/patch &&
- 	echo changed >file1 &&
- 	git add file1 &&
-@@ -1297,7 +1302,9 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
- 	grep "error: you have staged changes in your working tree" err &&
- 	git reset --hard HEAD &&
- 	git rebase --continue &&
--	test_cmp_rev HEAD I
-+	test_cmp_rev HEAD D &&
-+	tail -n3 todo >>expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'rebase -i commits that overwrite untracked files (squash)' '
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 804ff819782..0b0877b9846 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -128,14 +128,24 @@ test_expect_success 'generate correct todo list' '
- '
- 
- test_expect_success '`reset` refuses to overwrite untracked files' '
--	git checkout -b refuse-to-reset &&
-+	git checkout B &&
- 	test_commit dont-overwrite-untracked &&
--	git checkout @{-1} &&
--	: >dont-overwrite-untracked.t &&
--	echo "reset refs/tags/dont-overwrite-untracked" >script-from-scratch &&
-+	cat >script-from-scratch <<-EOF &&
-+	exec >dont-overwrite-untracked.t
-+	pick $(git rev-parse B) B
-+	reset refs/tags/dont-overwrite-untracked
-+	pick $(git rev-parse C) C
-+	exec cat .git/rebase-merge/done >actual
-+	EOF
- 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
--	test_must_fail git rebase -ir HEAD &&
--	git rebase --abort
-+	test_must_fail git rebase -ir A &&
-+	test_cmp_rev HEAD B &&
-+	head -n3 script-from-scratch >expect &&
-+	test_cmp expect .git/rebase-merge/done &&
-+	rm dont-overwrite-untracked.t &&
-+	git rebase --continue &&
-+	tail -n3 script-from-scratch >>expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '`reset` rejects trees' '
--- 
-gitgitgadget
+	#ifdef platform_SHA1_Clone
+	#define git_SHA1_Clone platform_SHA1_Clone
+	#else
+	static inline void git_SHA1_Clone(git_SHA_CTX *dst, git_SHA_CTX *src)
+	{
+		memcpy(dst, src, sizeof(*dst));
+	}
+	#endif
+
+and drop the requirement that they must define SHA1_NEEDS_CLONE_HELPER
+if they want to define their own platform_SHA1_Clone()?
+
+Thanks.  Everything else in the patch made sense (even though I am
+not familiar with the EVP API) to me.
+
