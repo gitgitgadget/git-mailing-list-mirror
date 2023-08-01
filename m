@@ -2,126 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC4AEB64DD
-	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 09:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED8AC0015E
+	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 11:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231927AbjHAJT0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Aug 2023 05:19:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47784 "EHLO
+        id S231781AbjHAL0u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Aug 2023 07:26:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231755AbjHAJTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2023 05:19:05 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD1D1735
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 02:17:21 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99c0cb7285fso319371166b.0
-        for <git@vger.kernel.org>; Tue, 01 Aug 2023 02:17:21 -0700 (PDT)
+        with ESMTP id S234312AbjHAL0h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2023 07:26:37 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 205AE10EA
+        for <git@vger.kernel.org>; Tue,  1 Aug 2023 04:26:33 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99c353a395cso72768366b.2
+        for <git@vger.kernel.org>; Tue, 01 Aug 2023 04:26:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=akorzy-net.20221208.gappssmtp.com; s=20221208; t=1690881439; x=1691486239;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wnPYeL85R/48qfAH+rI5fb1jzw54jK+rb8VKjVGrlIs=;
-        b=sY+gTfRXIRuZbKFv5Chx/aHQjH047S05uRFIQG3HExCL4/IPbLJcZTAVar0F3uOgEY
-         0NuwMpDw6EcsGMjrtp1NxPAZKcQWzQCrggEgEtJ+30XERmyNv9deYUPU+h+JXdNyXuXH
-         F564knMY6OdaFc1inrCCBrrJuimmoQ7xr3BaOp4zhDJLaFHqjotZLylCnfn6lFG9ZDmF
-         3uqM0pUjHR77DcNAZIPk+SsW2FDhoH2xH3SpvDUacemAA+KFieEWOky9wPWckmAQRTnV
-         tf3bd1v4eJPA8GSUODkzsZcGrLuwgzRcoZHgD1RTcKHoWmIGfxSKQK3JvNtini5gpazX
-         FVJA==
+        d=google.com; s=20221208; t=1690889191; x=1691493991;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rJ+mVXg/G8jYBDYiXMm9SOk69xX0csSSzMyl+nG8mlY=;
+        b=1ZbUJfR3Lt6XGgwmh8jaelZPohhp4c96HG8zZLYp3wjSZjefqc/mJCxfrUSoDP1UFo
+         ZMDOL33HRkDtsbqk0ogyJ23jSSYgbM8sowa9QRLdRBfEoCAlk8SrC9BSYicur9l71NnZ
+         ImDB0qSHy5Qah22uATvMfDqr2p1fpdhSQnwXLbhXst7TvMwIkMOEfJ2TYkZKVbdWT6Kp
+         bVOpe960mrzkfqRLANhOZt5A26tSkVqfZykWYiSwo55hdgKhsfBJsXWxDxCFmzCxRWtT
+         i5kQsS7jydxGWb9Qb8srSmmi1gKKccENfaUDtIOTQwFXd4ZDkhAu9P7lcVSQF39glXVI
+         D/Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690881439; x=1691486239;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wnPYeL85R/48qfAH+rI5fb1jzw54jK+rb8VKjVGrlIs=;
-        b=KPOpTE+o7EAn8eeJ/E2E4aFYOnW3spuEMIPvu/aVaRUrrj2Y87kxxJWewOYrr05rPK
-         0cJ2a8kP7TwGBQUdJCsIKA8cFdN+kud8enCh9RcC1Q47h2DHOWSoYMeR5VKkylpsxFQ8
-         9xPaScAe66oUZmay1Gcr1giNBGlcZdcvKuZ5AFazF+gOxLP/zNT8zcpVGMgQYxBaJbVJ
-         KR4FJXBmMqh7jWFH0Zm3RQeL8xrb7d7Vm+ZYx4pAWEGd4ZokF5rPB+5xv1XrFABPPBJd
-         E2VN9iGiUWB/mQTo4ZNb9Qy1eExnocn4SnbBd2NZEzl+2JLn3UDACn/wUjhwz2Cn7Z5e
-         6KGg==
-X-Gm-Message-State: ABy/qLaRjVqaCv5pBBAWcSN/sQEta17K2ORO7rJUcr22aV12UCyjYcFz
-        j8s+GIKEQUd/MjIL3RW6ekY8VdV8FnS/yLS4AlA=
-X-Google-Smtp-Source: APBJJlEnxY6Rz4wDDks1TAHeAS3rc9TL9uPcOngZZQOXWajPrqoFVN/cyt66isvxDNMK/5wGGNMMPw==
-X-Received: by 2002:a17:906:2258:b0:982:8c28:c50d with SMTP id 24-20020a170906225800b009828c28c50dmr1893633ejr.58.1690881439176;
-        Tue, 01 Aug 2023 02:17:19 -0700 (PDT)
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
-        by smtp.gmail.com with ESMTPSA id ci18-20020a170906c35200b0098ec690e6d7sm7458937ejb.73.2023.08.01.02.17.18
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Aug 2023 02:17:18 -0700 (PDT)
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-99c0290f0a8so387256666b.1
-        for <git@vger.kernel.org>; Tue, 01 Aug 2023 02:17:18 -0700 (PDT)
-X-Received: by 2002:a17:906:3018:b0:99c:2289:63bc with SMTP id
- 24-20020a170906301800b0099c228963bcmr1891811ejz.74.1690881438059; Tue, 01 Aug
- 2023 02:17:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690889191; x=1691493991;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rJ+mVXg/G8jYBDYiXMm9SOk69xX0csSSzMyl+nG8mlY=;
+        b=cURpZtTYMqdHnzan5fiYydsjeRvKG9bfS98IECViTjOmYH4KeyfgOvM9MLMPTmRNdY
+         lVxX/7eapGTGzsMcBGAXFS9yfYncscPaGEMRyhKHDlRfgat8ZTfeXIuFrq5JLx8QV4CI
+         Wev2xcQY+2gP6JUGfkxPdGPEjpE509vIyJT0VZhG0lIDhW4oRCwLIJcWj1dpbHZs1Oz+
+         H33Aimu4vE5JGSQOAH/gZGxjv3Bxlc5Yt0D1+Ao4OmjGC3m6DjKriJAkQ74UysGndj5w
+         3LuaHscSSQ9FuD8Q5hvWwtQWo0JY9jSImNG2PY5sDDF8Gnj4nv56z/H9nMLgqNeSvs7P
+         PmcQ==
+X-Gm-Message-State: ABy/qLYb9K1Yy30uIAEkQwD+yNnvtRbnm+34uYQpj8+MJOyJrDTCAIGR
+        h2O5dZGpCCFU/N6HU3yBiP0HLFS3/gCKRTxqM5ikHw==
+X-Google-Smtp-Source: APBJJlHDEcEAgywyho0BXrgzry6pRrQMpGcOQYFDTDQiyELvN5a8/7/+qPWyI4BmbidZTXFIf1+gKnehAVwbPm9xuwA=
+X-Received: by 2002:a17:907:784a:b0:99b:c952:309a with SMTP id
+ lb10-20020a170907784a00b0099bc952309amr2196726ejc.39.1690889191300; Tue, 01
+ Aug 2023 04:26:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <CADWu+UnThMq2M+kCMADP9rZ5c6nL+Hz+z0-OqRnuG2oYVzbvWw@mail.gmail.com>
- <71f7d816-b139-03ab-88fc-7552d65e4498@gmx.de> <xmqq7cr5uonp.fsf@gitster.g>
- <xmqqpm4wswny.fsf@gitster.g> <CADWu+UnvastFbWsjfHvJhvS1RBgD8M1LXuA2VMBMSkTqpiLS5w@mail.gmail.com>
-In-Reply-To: <CADWu+UnvastFbWsjfHvJhvS1RBgD8M1LXuA2VMBMSkTqpiLS5w@mail.gmail.com>
-Reply-To: ak@akorzy.net
-From:   =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
-Date:   Tue, 1 Aug 2023 11:17:06 +0200
-X-Gmail-Original-Message-ID: <CADWu+UmjFiKa2h4qqumA-jOfEGvVnsV85bOTKgYhpQwYCf=VFw@mail.gmail.com>
-Message-ID: <CADWu+UmjFiKa2h4qqumA-jOfEGvVnsV85bOTKgYhpQwYCf=VFw@mail.gmail.com>
-Subject: Re: Beyond Merge and Rebase: The Upstream Import Approach in Git
-To:     ak@akorzy.net
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+References: <858rfnb770.fsf@gmail.com> <ZBy18EBE7WM/E4KF@nand.local>
+ <851qlfazzp.fsf@gmail.com> <CAPOJW5x+yQsPxdwCWMT9AkMQhJyxKp5BiPXp_1PT6WwF7yF4YQ@mail.gmail.com>
+ <85tty8afvy.fsf@gmail.com> <CAFQ2z_P2HkT8grAFk=6Mr05rJRfsh_sXypVFPyHr0v5xkcjYTA@mail.gmail.com>
+ <ZMgXBc5idN+sR3o1@nand.local>
+In-Reply-To: <ZMgXBc5idN+sR3o1@nand.local>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 1 Aug 2023 13:26:19 +0200
+Message-ID: <CAFQ2z_MzWauauzq_fKdcKTXahutLtADb7uHTh7ysinGNOx75nQ@mail.gmail.com>
+Subject: Re: What is the status of GSoC 2022 work on making Git use roaring bitmaps?
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Jul 31, 2023 at 10:18=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrot=
+e:
+> I haven't proved conclusively one way or the other where Roaring+Run is
+> significantly faster than EWAH or vice-versa. There are some cases where
+> the former is a clear winner, and other cases where it's the latter.
+>
+> In any event, my extremely WIP patches to make this mostly work are
+> available here:
+>
+>   https://github.com/ttaylorr/git/compare/tb/roaring-bitmaps
+>
 
-Thanks again for your responses, Junio and Johannes. I'm looking to
-implement the discussed structure in git. As the first step, I'd like
-to implement:
+thanks. For anyone reading along, the changes to JGit are here
 
-git merge -s theirs
+https://git.eclipse.org/r/c/jgit/jgit/+/203448
 
-The name of the `theirs` strategy above is inspired by the existing
-`ours` strategy. The command above is going to be the equivalent of
-the following three commands:
+I was looking into this because I was hoping that roaring might
+decrease peak memory usage.
 
-git merge --no-commit -s ours <commit>
-git read-tree --reset -u <commit>
-git commit --no-edit
+I don't have firm evidence that it's better or worse, but I did
+observe that runtime and memory usage during GC (which is heavy on
+bitmap operations due to delta/xor encoding) was unchanged. That makes
+me pessimistic that there are significant gains to be had.
 
-The new command is going to be used to create the last "welding merge"
-at the end of the structure below:
+> One thing that I was able to do to produce slightly smaller Roaring+Run
 
-     o---o---o---o---o  upstream/main
-          \           \
-           \           a'---b'---c'
-            \                     \
-             a---b---c-------------M main
-
-The strategy above could be called "rebase & weld". The new command
-can also be used with the "weld & rebase" strategy described by
-Johannes:
-
-   o---o---o---o---o  upstream/main
-        \           \
-         a---b---c---M---a'---b'---c' main
-
-In addition, `git merge -s theirs` could be called `git weld`, which
-would make it shorter to type. What do you think?
-
-Also, I'm thinking about the eventual interface for creating the
-entire structure. Perhaps "rebase & weld" could be created with the
-following command:
-
-git rebase --weld
-
-and "weld & rebase" with the following:
-
-git rebase --pre-weld
-
-What are your thoughts?
+Just for my edification: what is "Roaring + Run" ?
 
 --
-Best regards,
-Aleksander Korzynski
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
