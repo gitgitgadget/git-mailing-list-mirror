@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE27C0015E
-	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 18:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8986CC00528
+	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 18:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231475AbjHASmO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Aug 2023 14:42:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53282 "EHLO
+        id S231320AbjHASmP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Aug 2023 14:42:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjHASmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2023 14:42:08 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B134C2706
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 11:41:52 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d05883d850fso6839432276.3
-        for <git@vger.kernel.org>; Tue, 01 Aug 2023 11:41:52 -0700 (PDT)
+        with ESMTP id S231146AbjHASmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2023 14:42:09 -0400
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040D3CC
+        for <git@vger.kernel.org>; Tue,  1 Aug 2023 11:41:54 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-583312344e7so74223387b3.1
+        for <git@vger.kernel.org>; Tue, 01 Aug 2023 11:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1690915312; x=1691520112;
+        d=google.com; s=20221208; t=1690915314; x=1691520114;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9QnT3tTtabfqqxs9nL9AlnwZ/6fBBSjxJKX5ob4ntlw=;
-        b=MXCuON6YdWNM8yHjUiiOKhxL5fONZdHAPWlNwVKbdUaovDTP/75s/2hNA+7gtiFcoU
-         99FQ5zr/9WYiQYEMSQdxx21jdkM6jXeKAL86dvGaJ3Gh2BDQztyKO/hwluRMRz2VpDVm
-         EZ7ZgUBq+wxxOts+xchvNTmABxaH+menvnoU5AVbagAIipuEA92rRPRCl+b3UmHkjHnS
-         UkRGUD6xFQLbjmAMsIDdW5dw006zGDxSMhG9/90JP8EMiv+6gNYDaTvBLN0XH80mYm/D
-         nsqJEDekrBHuYMfBhxDyGQrv5DT/kWQqQcT2WMNWZfmbsOqOPUy3kwi9etTIbc4utU1+
-         Wz3Q==
+        bh=W4FSASYFJjEH2RUXE2DEfQwMxTomYyPk0dT3J9KyV5I=;
+        b=d+lxOt4IzX9Rzy+E1Sb/oLWoOr6Sxg2cytLM04WQRr9pLWZBT5c8+N9RU+7V+WnK/c
+         EiwlyZ/+g7XbCCTkAtiOkBdp+axVT8L00Xg7JLznqCO+JhWIYzzq0m7lfywHZItDH9oP
+         ROZWx9Wqfzuh5rtSiF4th6m0YL4XQr/Z+UYDCaZ3fzuVlTxYEHb5nRvbzE3akbpjOsqz
+         mdXJIcnnu+xLrOZ0Vi7mnJG915EoRGSCI0D3PIRhNks3BkgZphemkRQIOrn1nKXhfNZH
+         0G3HnXlfzFSVVaw5hcsMZiKifPh7l8SyQI7IsNTfFZC71Llq6HXN7Re4Jh5sl4J0qyOD
+         CE+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690915312; x=1691520112;
+        d=1e100.net; s=20221208; t=1690915314; x=1691520114;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9QnT3tTtabfqqxs9nL9AlnwZ/6fBBSjxJKX5ob4ntlw=;
-        b=gP/xRZx8JkaiX88fhGM+MvsgMGBVCtXohvlvzdH2ymkjJlJPE/DIsxYqQv0cuaV/IV
-         Ex01tEdXOXabFXpLrUjKmS5QMv2g6TPKi7qvSolOvnKbMej1UTRwczgm5LO+r5fd7aH2
-         /Corhe1EWx8JpPGjWBlADANjjIoWYBl/L3Ppba2wZfeRYD40DwIPal3wr+VkLsMAuwaY
-         HlJdCFtv2OnAiqaTKx7TMjPP4FzAR6WyvyYRxf4/oKbQNx99ipJB16LcdbyQdM9Cost2
-         hXZ6GMB7vTFNJLCGCosoXclU0ERq8qyRzlQjvIIJGI4Mw+aP1cOo4Wcv2yYOp6bjXdJi
-         F/Sg==
-X-Gm-Message-State: ABy/qLbZSc4GEOqapsQgeev7Xd7EfO9zpEKJiNT9gzAh7HzvdmBVVqd8
-        Dj4ijyonKpUaTUxkTtXN8WYB5FeM34hLFRxrSh6rWU6/YFOK51dNvKzHsZ1qhmB12xoHAn/EUS2
-        YfkFN3ZgPc3+AF2L9pRToKpmtE3Oqq1cU+tANri54R/0LpCMT6KTm/ezgubpmiWt0epvNRbdRkk
-        S7
-X-Google-Smtp-Source: APBJJlHDC2BpDRN4qOdLEJczYIi5paOnvTTUOZ901B4TaHNOK9qJS7DXHQ9+fu5w7W2eKWiRmtohhnu7JxYMPkTmLcQs
+        bh=W4FSASYFJjEH2RUXE2DEfQwMxTomYyPk0dT3J9KyV5I=;
+        b=C/IzZwkZVPu9JroOn6s4I+J/8Sz1UgbhlljJ9RD1d/hIB6+3SNXjYaSxxQKJbNDMdA
+         Dfzfh+n0jeEVVW4o9RDwgXegBfqx19pSd1KQcr/j9WrWYFRSSf8aBSgdqoEs93IHG2BU
+         YzG7T1m4Wb8gnCrnrAIOUTURB4eKNcMCR9/y0jTxx/Jsy3M3GKrae4Tr7LPHJaS2PKvY
+         lRwv4wMIJB4RDMC0HEg7WtzXafmzFjlSrcevnQ9bq6znTqVBJzXYAfwGEh2HL5Qb7erD
+         h958FEwTeGzANJC207q4h13AyPxj/UZLdxiMIxyBBPTGyDRnjmz+vzwFM39yI6q+uy6n
+         C2rw==
+X-Gm-Message-State: ABy/qLaBhh0hBR69ToGjZUUAFBOKlXp5XcpqD4m3aJakPaOMgygPZIZR
+        +0o2GtSbX+Gxg7iQdKxI+vwEhUqLJSH0wyNZrYN0poZT9w9t61oDu5lkLrcKCfpkIDwf1O9vADQ
+        a8l8x/KO99imSh/12TLvU9rpDtz75RNgIi0ble7GQ18gAam65I/AKKgcb3nadrheASdD1bJzJGv
+        c9
+X-Google-Smtp-Source: APBJJlFY8qDNhDRRZbda942k0pEjxIbT8EvT2aP4cBushhNzquif/uKJY5FMFdaRQWM0lhfmaOV8hj28o5foBdmbw7Dh
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:a487:6e54:d296:9521])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6902:1804:b0:d07:cb52:a3cf with
- SMTP id cf4-20020a056902180400b00d07cb52a3cfmr92800ybb.5.1690915311935; Tue,
- 01 Aug 2023 11:41:51 -0700 (PDT)
-Date:   Tue,  1 Aug 2023 11:41:37 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a81:4007:0:b0:583:4551:858d with
+ SMTP id l7-20020a814007000000b005834551858dmr120582ywn.9.1690915313974; Tue,
+ 01 Aug 2023 11:41:53 -0700 (PDT)
+Date:   Tue,  1 Aug 2023 11:41:38 -0700
 In-Reply-To: <cover.1690912539.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1684790529.git.jonathantanmy@google.com> <cover.1690912539.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.41.0.585.gd2178a4bd4-goog
-Message-ID: <fc6346c039db46ad0c35c8464ae6e7c9fe976a0d.1690912539.git.jonathantanmy@google.com>
-Subject: [PATCH v7 2/7] t/helper/test-read-graph.c: extract `dump_graph_info()`
+Message-ID: <f144dc4b15ea97cb6214a4bfbf2d88d8f16f05be.1690912539.git.jonathantanmy@google.com>
+Subject: [PATCH v7 3/7] bloom.h: make `load_bloom_filter_from_graph()` public
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
@@ -65,70 +65,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Taylor Blau <me@ttaylorr.com>
 
-Prepare for the 'read-graph' test helper to perform other tasks besides
-dumping high-level information about the commit-graph by extracting its
-main routine into a separate function.
+Prepare for a future commit to use the load_bloom_filter_from_graph()
+function directly to load specific Bloom filters out of the commit-graph
+for manual inspection (to be used during tests).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- t/helper/test-read-graph.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ bloom.c | 6 +++---
+ bloom.h | 5 +++++
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-index 8c7a83f578..c664928412 100644
---- a/t/helper/test-read-graph.c
-+++ b/t/helper/test-read-graph.c
-@@ -5,20 +5,8 @@
- #include "bloom.h"
- #include "setup.h"
- 
--int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
-+static void dump_graph_info(struct commit_graph *graph)
- {
--	struct commit_graph *graph = NULL;
--	struct object_directory *odb;
--
--	setup_git_directory();
--	odb = the_repository->objects->odb;
--
--	prepare_repo_settings(the_repository);
--
--	graph = read_commit_graph_one(the_repository, odb);
--	if (!graph)
--		return 1;
--
- 	printf("header: %08x %d %d %d %d\n",
- 		ntohl(*(uint32_t*)graph->data),
- 		*(unsigned char*)(graph->data + 4),
-@@ -57,8 +45,27 @@ int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
- 	if (graph->topo_levels)
- 		printf(" topo_levels");
- 	printf("\n");
-+}
-+
-+int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
-+{
-+	struct commit_graph *graph = NULL;
-+	struct object_directory *odb;
-+
-+	setup_git_directory();
-+	odb = the_repository->objects->odb;
-+
-+	prepare_repo_settings(the_repository);
-+
-+	graph = read_commit_graph_one(the_repository, odb);
-+	if (!graph)
-+		return 1;
-+
-+	dump_graph_info(graph);
- 
- 	UNLEAK(graph);
- 
- 	return 0;
+diff --git a/bloom.c b/bloom.c
+index aef6b5fea2..3e78cfe79d 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -29,9 +29,9 @@ static inline unsigned char get_bitmask(uint32_t pos)
+ 	return ((unsigned char)1) << (pos & (BITS_PER_WORD - 1));
  }
+ 
+-static int load_bloom_filter_from_graph(struct commit_graph *g,
+-					struct bloom_filter *filter,
+-					uint32_t graph_pos)
++int load_bloom_filter_from_graph(struct commit_graph *g,
++				 struct bloom_filter *filter,
++				 uint32_t graph_pos)
+ {
+ 	uint32_t lex_pos, start_index, end_index;
+ 
+diff --git a/bloom.h b/bloom.h
+index adde6dfe21..1e4f612d2c 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -3,6 +3,7 @@
+ 
+ struct commit;
+ struct repository;
++struct commit_graph;
+ 
+ struct bloom_filter_settings {
+ 	/*
+@@ -68,6 +69,10 @@ struct bloom_key {
+ 	uint32_t *hashes;
+ };
+ 
++int load_bloom_filter_from_graph(struct commit_graph *g,
++				 struct bloom_filter *filter,
++				 uint32_t graph_pos);
 +
-+
+ /*
+  * Calculate the murmur3 32-bit hash value for the given data
+  * using the given seed.
 -- 
 2.41.0.585.gd2178a4bd4-goog
 
