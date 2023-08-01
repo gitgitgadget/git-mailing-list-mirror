@@ -2,87 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E09AEC04A6A
-	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 20:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A83C6C04A94
+	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 20:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232720AbjHAUpY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Aug 2023 16:45:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56818 "EHLO
+        id S231559AbjHAUul (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Aug 2023 16:50:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231516AbjHAUpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2023 16:45:23 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 932141982
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 13:45:18 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7A3A1B0694;
-        Tue,  1 Aug 2023 16:45:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rFpX8x1Bq5ip
-        MGgD6w5tVmBF7uhXPVoFf7RWbNNy+M8=; b=UNBhZ5pUHBMWDRQII19qdM/583RX
-        +T/V67SEaThrIKDbvf9dZYKFVLzhGTVFxTVKlQYbvCZU+lsyuGzYbSaZGCGTzCpV
-        1zPqsnUSePgVLpBZ3NG+Cux+rx8Iwiuo9o8Qn+DaVUkzD0LpYK/juQGa0bGhSSpN
-        xmkHxEL7daZzUBQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD6061B0692;
-        Tue,  1 Aug 2023 16:45:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B6731B0690;
-        Tue,  1 Aug 2023 16:45:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] status: fix branch shown when not only bisecting
-References: <48745298-f12b-8efb-4e48-90d2c22a8349@gmail.com>
-        <xmqqedkn3arv.fsf@gitster.g>
-        <32997081-62d8-b900-d58a-308e5c773818@gmail.com>
-Date:   Tue, 01 Aug 2023 13:45:16 -0700
-In-Reply-To: <32997081-62d8-b900-d58a-308e5c773818@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Tue, 1 Aug 2023 22:39:08 +0200")
-Message-ID: <xmqqtttia3vn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S231408AbjHAUuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2023 16:50:39 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4F31BF6
+        for <git@vger.kernel.org>; Tue,  1 Aug 2023 13:50:34 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-583b3939521so68312767b3.0
+        for <git@vger.kernel.org>; Tue, 01 Aug 2023 13:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690923033; x=1691527833;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=o/FGhQanbQuQhfNXx9PcohewDX2A6vCJ5G/vCiRjePU=;
+        b=XGukfPnAdK/uJETRNeNEPA7gWBUDJTrR0+n6U9Cwr9c3ZtNxpr83L/UKpcfkEr0he6
+         SZmHJm/pQ9p4oYsy5cOWmh/l1744toSEROuMzgjcJEBaJ1WS8iVk8X0bFRI6YA0JYCM3
+         hbaL8g+WUyU70J5NerKdqUQoYxos3jRV2AjziWP8EfRYj5uS6PZLPHiclSGw/CUOaydO
+         4tCFV0B98uvkjBt2qsqiwZcGdcPxAMQDtjF3gCTpId+HYr2rB79lPCO6Gy1zBhf3lBer
+         rMneFrV/WaSIE9stOFZcaUEoxWfulK3OqQfOWBRaga5gmD4XlqIhKq6g3gCosyCdGq5A
+         QETw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690923033; x=1691527833;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o/FGhQanbQuQhfNXx9PcohewDX2A6vCJ5G/vCiRjePU=;
+        b=dMg8IIOacH3oxCVszPtm2G5jVMUm4MumF5WxS9DGDT8bPC0TcFOV4gwCVjmcNwCpDd
+         7vH4lgRnhJY/W+2NKKOc4eizAsq4N0kMuh7Bi09P0d/Ec0R1hFa930lt1pmWACAf+JJM
+         wGGVfrzgIJjoYweR/zlehWUblpgyjwXbA9bh9GfM2Bis14QZETsgj8DRlZCyRV4djyio
+         iHq7IC1To4ORrlj5hgUTUkM6YXJlb982jHfzlsat/lZBSJ+EVqw+tjDjW3kEznIM6SaM
+         +vPq0AN3T7exqpcZpJm+ACX7c13yxstaOGmFbby5M0oV3BwHJDKDPaQfXzoWkD1Nzbzg
+         Af9A==
+X-Gm-Message-State: ABy/qLYScwiUYqynez8pwisqvNQy5P0tTWflCa/6cEjyMw0EDX3uiHGX
+        sby4RGzqIeq0WeCMAtZ1KMk/1BHSXL4NNCLjdahksg==
+X-Google-Smtp-Source: APBJJlFJtooVqwKH6G1z6ZDIGiI4dH+iRZlpkYXBE/Ew6hb+GjwdkJVGeAG/aVZ+1Iz3N3oAmjRKzQ==
+X-Received: by 2002:a0d:e642:0:b0:56c:e70b:b752 with SMTP id p63-20020a0de642000000b0056ce70bb752mr13605822ywe.13.1690923033391;
+        Tue, 01 Aug 2023 13:50:33 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id b186-20020a8167c3000000b00578942e2a86sm3988905ywc.60.2023.08.01.13.50.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Aug 2023 13:50:33 -0700 (PDT)
+Date:   Tue, 1 Aug 2023 16:50:32 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: tb/commit-graph-tests (was: Re: What's cooking in git.git (Jul
+ 2023, #06; Thu, 27))
+Message-ID: <ZMlwGJv8GgIPBgQG@nand.local>
+References: <xmqqh6po95a5.fsf@gitster.g>
+ <ZMfhWkd24y7XjEIw@nand.local>
+ <CAPig+cTRUac+FRg6V1H+3_rusT17imQGZOy8Fd-MWriEv_epRQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 528D7A74-30AC-11EE-B65C-307A8E0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cTRUac+FRg6V1H+3_rusT17imQGZOy8Fd-MWriEv_epRQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-
->> When a sequencer is
->> driving a cherry-pick of master..topic1 and the user gets control
->> back in the middle, perhaps due to a conflict, should the user be
->> allowed to do "cherry-pick master..topic2", splicing these commits
->> from the other topic in the middle of the first cherry-pick session
->> the user started?
+On Tue, Aug 01, 2023 at 02:33:23PM -0400, Eric Sunshine wrote:
+> On Mon, Jul 31, 2023 at 12:55 PM Taylor Blau <me@ttaylorr.com> wrote:
+> > On Thu, Jul 27, 2023 at 06:46:42PM -0700, Junio C Hamano wrote:
+> > > * tb/commit-graph-tests (2023-07-24) 5 commits
+> > >  Test updates.
+> > >
+> > >  Will merge to 'next'?
+> > >  source: <cover.1690216758.git.me@ttaylorr.com>
+> >
+> > I think this one is ready to go. Eric Sunshine gave the earlier round a
+> > review, and I made sure to address his feedback in the subsequent
+> > version.
+> >
+> > I'm happy to wait for an ACK from him, but I think this is low-risk
+> > enough that you could merge it as-is. Either way :-).
 >
-> We already prevent this to happen.  Maybe because we do not want to
-> support multiple .git/CHERRY_PICK_HEAD files.  Anyway, to me, sounds
-> like a reasonable thing to have: that nesting limit of 1.  The same for
-> the other operations.
+> Yup, as I recall, I gave v1 a reasonably thorough read. When the
+> reroll arrived, I scanned the range-diff and saw that the few minor
+> review comments had been addressed, thus I had nothing more to add.
 
-OK, as long as we prevent such kinds of questionable combinations
-("two multi-commit cherry-picks" was merely an example---I did not
-mean that is the only problematic case), I do not see much problem
-with it.  In any case, teaching "status" how to show such a state
-with less information loss, which is the theme of this patch, is not
-making things worse---even if some of the states may be nonsense and
-should be prevented, "git status" is not the place to do so anyway.
+Thanks for giving it another look. In the latest WC, this is marked as
+"will merge to 'master'", so I think that we are good here.
 
-I didn't see if the proposed output from the command makes sense
-(yet), but somebody else may already have done so and writing their
-reviews on their findings.  Let's see if we get any positive reviews
-and move it to 'next' after that.
-
-Will queue in the meantime not to lose it in 'seen'.
-
-Thanks.
+Thanks,
+Taylor
