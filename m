@@ -2,116 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE39C0015E
-	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 16:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD39C00528
+	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 17:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231631AbjHAQNW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Aug 2023 12:13:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47522 "EHLO
+        id S234776AbjHARX3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Aug 2023 13:23:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234347AbjHAQNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2023 12:13:15 -0400
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C68D7189
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 09:13:11 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 20C693200583
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 12:13:11 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 01 Aug 2023 12:13:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=masklinn.net; h=
-        cc:content-transfer-encoding:content-type:content-type:date:date
-        :from:from:in-reply-to:message-id:mime-version:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1690906390; x=1690992790; bh=U3
-        X3agssx5tR5epx968+goDyugB4fvBQv7diU1utOc4=; b=RezlPHsNaUcaMwr0yu
-        Anh1AhHWj2MfC92SLASkyjzH/DYRzP8VzpJyYlZB3TfdvJ1SM6+/tBMXZvO8/XMV
-        8QF9wKO/+E6EIW54IkLSu5JXRia5aWBWsLYJW5JAd4oDGIynC1Sne34CN24t537x
-        FXjl6DvCtBhN+CxlQ9+kss5wmojCwQ8bM4ETwJdqNSs+EecUhcH5+WJh4BJRAGy2
-        XuTMyGLj/6FkvQqXytEEmZwDuTvj6IFn2nGvRLcnnjQwqALoYTjPE5UPfKzC6P5C
-        flcUYyyJK5Da40VYChJpJVJu0AUxPPJFTGSpn23CGJWmqkeJfDAov2IlN4h1J97w
-        JAKw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:message-id:mime-version:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1690906390; x=1690992790; bh=U3X3agssx5tR5
-        epx968+goDyugB4fvBQv7diU1utOc4=; b=ZRIrC1vynFFaAin7h2eSzSdjeBx+2
-        K+XazsrX5h9K76nvZejqxxUsW8lWO3q0NBj2e57ZW2tHT0adcVvxbB5NOACkCk9j
-        25x4Z6XCRYyHOO4+pVDzJkQeYp/zmj0nSFK5PtKE+9i5F4Icnj5rSSrf1UPWF0yA
-        WqJzYn0+dCoJopO8g+YJbYdEx/TKyDeeX49QvEQIrF2Ku1E6wfTPCWu+ou/GgoWJ
-        t9/6PM1flv57/cCU/5bV5Fhb59/7Kq3hBSPuLh5bzcTWwVexJZTNcHIdXs5LI2TQ
-        SWL2UGLuEwNUuBEAWo+IcJq8aF29b1+7+zz/DDVA/pN0qF4CEws/dunMA==
-X-ME-Sender: <xms:Fi_JZCK9gse_7PIXWrccWcFz6RCWhnaYF59HfU9GH3iDXJO7N0oKzA>
-    <xme:Fi_JZKIv5YdXOJb3p0v_KyWPInmDIpSLwRjPhHqC3ZqRwEoT3E1JVMjSjf8v1YrMu
-    yY5FPPjyEVSuxbgRU8>
-X-ME-Received: <xmr:Fi_JZCssGSKfBH0yF-ZdPEYr8sOehY0NvEKIfPkvG__r1YbrMALKZKJnlf2Md-lu-8PIyy-et4r7ORNnTy8b2N60VJRVXBe3PGrTPFQ6pWyGtbzPSXyK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrjeeigdelhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephfgtgfgguffkfffvofesthhqmhdthh
-    dtvdenucfhrhhomhepiggrvhhivghrucfoohhrvghluceogigrvhhivghrrdhmohhrvghl
-    sehmrghskhhlihhnnhdrnhgvtheqnecuggftrfgrthhtvghrnhepfeeviedtleeihfdvff
-    evtedvvdeglefhvdevjefhfefhffegjeeuteelleelfffgnecuffhomhgrihhnpehgihht
-    qdhstghmrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepgigrvhhivghrrdhmohhrvghlsehmrghskhhlihhnnhdrnhgvth
-X-ME-Proxy: <xmx:Fi_JZHbc7WjHqTwcYiiEkv0ypd1eZzjCkIk1FYxq83prQJ9m4vf6jA>
-    <xmx:Fi_JZJamZC6P0BjV3oZYexRFu_BITiix_M5ste8gAZumb2mCwghr9A>
-    <xmx:Fi_JZDBOtFUcv55GBRt0Nc8t5SZWcDSl11qHEDiaBENHpfkcNL4mgw>
-    <xmx:Fi_JZL30Ts06IW-r1DbKCIV-t1WevvRyahwmKlkIVCNoRjqyxB9jVw>
-Feedback-ID: i3619468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 1 Aug 2023 12:13:09 -0400 (EDT)
-From:   Xavier Morel <xavier.morel@masklinn.net>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
-Subject: follow-up: can't get any fsck msgid to fire for tags
-Message-Id: <086FB120-911A-4660-8964-3CD585442049@masklinn.net>
-Date:   Tue, 1 Aug 2023 18:13:07 +0200
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3696.120.41.1.3)
+        with ESMTP id S235111AbjHARXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2023 13:23:08 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125D130F7
+        for <git@vger.kernel.org>; Tue,  1 Aug 2023 10:22:43 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B39461AF015;
+        Tue,  1 Aug 2023 13:22:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jPPMciO6R04k7B/fTNXsKw9ZIYw79PPdz48ADc
+        kQPR0=; b=UUVRaiu4hEvCLxJx1Ggr7uwuG73ILKrPVNFqJlOOZt/K8ceX/DcYG8
+        RT3ujhoocEjS58iIZzhzfkb+g07GDrcYW0Q5Zj0agEvQ2oyrwSJswGhOdesDvct9
+        wP5nILBxYzlSFsaAtTrNNrd8yVVX3BK/KozopI7iIk2F4SVjDqINE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AAF301AF014;
+        Tue,  1 Aug 2023 13:22:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1728B1AF011;
+        Tue,  1 Aug 2023 13:22:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Glen Choo <chooglen@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 1/7] rebase -i: move unlink() calls
+References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+        <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+        <1ab1ad2ef07687c25c1d346b5b7b26f38bafe5b9.1690903412.git.gitgitgadget@gmail.com>
+Date:   Tue, 01 Aug 2023 10:22:37 -0700
+In-Reply-To: <1ab1ad2ef07687c25c1d346b5b7b26f38bafe5b9.1690903412.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Tue, 01 Aug 2023 15:23:26
+        +0000")
+Message-ID: <xmqqa5vad6ea.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03BBFE14-3090-11EE-8BBA-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following the previous investigation of commits I figured I'd look at
-tags, and I'm wondering if I'm doing something wrong because going
-down the list I attempted to trigger 5 fsck diagnostics and got 0 to
-work.
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-My process is simple: create a loose object with an error in it e.g.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> At the start of each iteration the loop that picks commits removes
+> state files from the previous pick. However some of these are only
+> written if there are conflicts and so we break out of the loop after
+> writing them. Therefore they only need to be removed when the rebase
+> continues, not in each iteration.
 
-    object 00
-    type blob
-    name bad
-    tagger a <a> 0 +0000
+"They only need to be removed before the loop" assumes that the SOLE
+purpose of the removal is to give the next iteration a clean slate
+to work with, but is that really the case?  The original unlink's is
+followed by "if TODO_BREAK, break out of the loop", presumably to
+give control back to the end-user.  So three files that were not
+available to the user after "break" are now suddenly visible to
+them.
 
-    msg
+Perhaps that is the effect the series wanted to have.  Or it could
+be an unintended side effect that may be a regression.  Or perhaps
+the visibility of these three files (but not others?) is considered
+an implementation detail no users should ever depend on.
 
-which has an invalid sha1 reference for the object and thus seems like
-it would trigger badObjectSha1[0].
+It is hard to tell from the above description and the patch text
+which is the case.  Care to enlighten?
 
-Then run fsck on that object, enabling the msgid if it defaults to
-IGNORE or INFO, and look at the result.
+Thanks.
 
-- badObjectSha1: error in git show (fatal: bad object), fsck says
-  "object could not be parsed" and "object missing"
-- badTagName: the diag doesn't trigger at all
-- badType: does error with "unknown tag type" (followed by "could not
-  be parsed" and "object missing") but the msgid is never listed so I
-  don't think this is from fsck
-- extraHeaderEntry: "object could not be parsed" and "object missing"
-  (also "bad object" from "git show", despite extraHeaderEntry being
-  ignore by default so that's quite strange)
-- missingObject: "object could not be parsed" and "object missing"
 
-I'm really confused at this point.
-
-Note: creating a ref for the annotated tag and fsck-ing the entire
-repository sometimes generates different but not materially
-better errors.
-
-[0] =
-https://git-scm.com/docs/git-fsck#Documentation/git-fsck.txt-codebadObject=
-Sha1code=
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  sequencer.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index cc9821ece2c..de66bda9d5b 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4656,6 +4656,10 @@ static int pick_commits(struct repository *r,
+>  	if (read_and_refresh_cache(r, opts))
+>  		return -1;
+>  
+> +	unlink(rebase_path_message());
+> +	unlink(rebase_path_stopped_sha());
+> +	unlink(rebase_path_amend());
+> +
+>  	while (todo_list->current < todo_list->nr) {
+>  		struct todo_item *item = todo_list->items + todo_list->current;
+>  		const char *arg = todo_item_get_arg(todo_list, item);
+> @@ -4679,10 +4683,7 @@ static int pick_commits(struct repository *r,
+>  						todo_list->total_nr,
+>  						opts->verbose ? "\n" : "\r");
+>  			}
+> -			unlink(rebase_path_message());
+>  			unlink(rebase_path_author_script());
+> -			unlink(rebase_path_stopped_sha());
+> -			unlink(rebase_path_amend());
+>  			unlink(git_path_merge_head(r));
+>  			unlink(git_path_auto_merge(r));
+>  			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
