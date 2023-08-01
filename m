@@ -2,84 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E479BC04A6A
-	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 20:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F34BCC00528
+	for <git@archiver.kernel.org>; Tue,  1 Aug 2023 21:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231362AbjHAU7H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Aug 2023 16:59:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
+        id S230264AbjHAVHS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Aug 2023 17:07:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjHAU7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2023 16:59:05 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4342B4
-        for <git@vger.kernel.org>; Tue,  1 Aug 2023 13:59:03 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-583b019f1cbso65979907b3.3
-        for <git@vger.kernel.org>; Tue, 01 Aug 2023 13:59:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690923543; x=1691528343;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YQLL5onkIfT9F556IfE8fSXfG7wlZZcZcVskIZWr0+Y=;
-        b=qNF70Jq1nj0xXl7/IislPonWqcvZZp7fMu6zJyQ3qJH3QAhB1myGhXjs0j1lqcvcQO
-         3guBjbThz7XS+bSh5g21pe4oxzhmaGGbNLA7cgUroTj6w+6ZACgUBMW0QlfIx9zV2D+c
-         +EEdlnkxcB0Kh8evf7EslfNp/iUbeOSVbP/MSZb8X2p3QFHSBiNVdUNQ3YK+7lnjxjG4
-         YnfVRxalLMU0by2dt93nbvEYVwFNh8fGj+2QnG5n6GxJoL010gG7pD7/BBZD6V6QswiW
-         2JZa2BPw9cAE/aNga6HZvhEgpb65bG7QWHpg8bcxKv7JUV/klS1RSlns0UzsffdFeOHE
-         Nhvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690923543; x=1691528343;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YQLL5onkIfT9F556IfE8fSXfG7wlZZcZcVskIZWr0+Y=;
-        b=R1/NUUfW64/DaDqZH3/QCJ7MWSp6691ZYEkKagyLQ/5JHH81PLn7qXU74bSdMNc4Oj
-         y22DkYV8Y/zHc+eaf4NK038Gvh2ioydUzubOEWyFqFIlDd5oaQParPwqN1z5tV/v9OUm
-         lBn33iUrZGugE0938N8jTi40FI2l/qTiHYUTxJnndXiM2f0L0fq+Bo0hhoHyLhfBUMlI
-         8vwpB0tjCDwBNXMMb8oHwb5XCoh0ssK8O8tfYziPVBzT4A1K2CuqeHBa7mM+3zlO1yIg
-         CgC4DdIVe3fZZ6ff+vKb66Q8aniYFVZF+jXl/K5HeQhSVhxntDUi+CK5GUgPoQOTpItJ
-         9BzQ==
-X-Gm-Message-State: ABy/qLbBN5eNS486ArnQvK8hAdO+v4WmIDkBxw0zcDFqn416MGzpgwJk
-        7UtPKEcku/K5P4SgBifTMsDj9Q==
-X-Google-Smtp-Source: APBJJlGAbegnSSZYUFCgaF1mcRbKxgxJXo2wFOiTePCSyRcLrlnecEg9YKJevg46s+MP7JcXKwwCNw==
-X-Received: by 2002:a81:4fd4:0:b0:568:8fa1:7a3 with SMTP id d203-20020a814fd4000000b005688fa107a3mr13641351ywb.5.1690923542756;
-        Tue, 01 Aug 2023 13:59:02 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t5-20020a814605000000b005771872a8dbsm4037696ywa.132.2023.08.01.13.59.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Aug 2023 13:59:02 -0700 (PDT)
-Date:   Tue, 1 Aug 2023 16:58:58 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229557AbjHAVHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2023 17:07:16 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028B3129
+        for <git@vger.kernel.org>; Tue,  1 Aug 2023 14:07:16 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 484BE1B0948;
+        Tue,  1 Aug 2023 17:07:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Dr8fOqrGiBJPztQr3Zgjdw4bgowKLbB2LVe4DT
+        wzstM=; b=RxWb3ZAqKBZX83hE55JRXra3Bi/Sd3tDqFIa+IM58I29svW5MWbjta
+        0ihJqpPQ1Z/AtaQPKG2Bk5SmNTcDYAbhtkpuAD0SsASw7duLcdLVA8dDIxBYvtPV
+        rQOrG3TSjBeXcuCHPzUvqAzp3/RdKw02k9kEkd+9li8WUAeIzMtiU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F0F41B0947;
+        Tue,  1 Aug 2023 17:07:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9AB641B0946;
+        Tue,  1 Aug 2023 17:07:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
 Subject: Re: [PATCH v7 0/7] Changed path filter hash fix and version bump
-Message-ID: <ZMlyEpRCPPNG7jQP@nand.local>
 References: <cover.1684790529.git.jonathantanmy@google.com>
- <cover.1690912539.git.jonathantanmy@google.com>
- <xmqqbkfqbo21.fsf@gitster.g>
+        <cover.1690912539.git.jonathantanmy@google.com>
+        <xmqqbkfqbo21.fsf@gitster.g> <ZMlyEpRCPPNG7jQP@nand.local>
+Date:   Tue, 01 Aug 2023 14:07:13 -0700
+In-Reply-To: <ZMlyEpRCPPNG7jQP@nand.local> (Taylor Blau's message of "Tue, 1
+        Aug 2023 16:58:58 -0400")
+Message-ID: <xmqqpm46a2v2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbkfqbo21.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 63C80194-30AF-11EE-9363-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 01, 2023 at 11:44:06AM -0700, Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->
-> > Taylor also suggested copying forward Bloom filters whenever possible
-> > in this patch set [3], but also that we could work on this outside this
-> > series [4]. I did not implement this in this series.
->
-> I think it is a good place to stop, as it would merely be a quality
-> of implementation difference and would not change the transition
-> story very much.
->
-> Thanks for working well together.  Will queue.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Thanks. I read through this version and feel good about the results.
-I agree that queuing this one down makes sense.
+> On Tue, Aug 01, 2023 at 11:44:06AM -0700, Junio C Hamano wrote:
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>>
+>> > Taylor also suggested copying forward Bloom filters whenever possible
+>> > in this patch set [3], but also that we could work on this outside this
+>> > series [4]. I did not implement this in this series.
+>>
+>> I think it is a good place to stop, as it would merely be a quality
+>> of implementation difference and would not change the transition
+>> story very much.
+>>
+>> Thanks for working well together.  Will queue.
+>
+> Thanks. I read through this version and feel good about the results.
+> I agree that queuing this one down makes sense.
 
-Thanks,
-Taylor
+Thanks.
+
+ps. no more comms from me for the rest of the day as I am feeling
+ill.  I've pushed out today's integration result already, merging
+three or so topics down in 'next' and also absorbing a few new
+topics in 'seen'.
+
