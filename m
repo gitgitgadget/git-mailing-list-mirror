@@ -2,91 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8284C41513
-	for <git@archiver.kernel.org>; Wed,  2 Aug 2023 18:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C6CC001DF
+	for <git@archiver.kernel.org>; Wed,  2 Aug 2023 19:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232442AbjHBSM3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Aug 2023 14:12:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59318 "EHLO
+        id S230494AbjHBTJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Aug 2023 15:09:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231406AbjHBSM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2023 14:12:28 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42FE71724
-        for <git@vger.kernel.org>; Wed,  2 Aug 2023 11:12:27 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-58688a0adbbso393257b3.0
-        for <git@vger.kernel.org>; Wed, 02 Aug 2023 11:12:27 -0700 (PDT)
+        with ESMTP id S229492AbjHBTJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2023 15:09:34 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FA07E7D
+        for <git@vger.kernel.org>; Wed,  2 Aug 2023 12:09:33 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5839f38342fso897677b3.0
+        for <git@vger.kernel.org>; Wed, 02 Aug 2023 12:09:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1690999946; x=1691604746;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vGLbAPR1Ctl00gU01GIMo1zeriPBpUk9wVVLr3TREJs=;
-        b=UUuHgJVmfAFQexFXoQwIFMZdMnH8DvjTwdYR5lD4d4mx2nMEneabSwgbaopLbamPo+
-         8rlWn4FPyHc2955tJFITwtd0RWUz8bY/SA+fC0TCIUdZvCtmfErgQDj+sbHTfjV5DbZy
-         +XiLZZCHnU/xPGUMAQqVld3VcCoXI7up/tehoJhcY4hNcqQsQ/Wd8oGMldzci4oHrGmT
-         1NqNvAYkxYbbC13so6xwYZLmRFUkBhZPFw7q6L1fHw1Gvwum4lwVXgwBPXE9iKSBYMht
-         Omr7fw5UylPhji2qo5P/A9SrPjaJbkPASYNADIrBnETZtG7ACUx58u5sK8n2dQVBd/II
-         uDKg==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691003372; x=1691608172;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=e7jiMJ7v159XfoZ8Ue4CAnQ4uCejJfWwWySon512yEk=;
+        b=hzYdZpARp9JamDJN4YIc0T7+GLPF/86qk9J2HLQUP5dVoBtZ9ME6UkNRUJFCwwgh52
+         p5KWU+pPSOhP8s58sVR1WYxWf+iJzaDNhVAzK4bIx7uutzzbZpeAUQNNPGg41ZuroJVy
+         8ZHBvelyg+IbWuvL3SqzUqTBHutVhWEkWZVq3W0o+t3roNpf9BryN3ZsgvyPrq3nN1+2
+         kKEogVk2GwO33gEJZQuQwSg+aZWjP23oLerYkFvMHuh1YgM6jkUx9xuQIm18bb3PeJve
+         vpgXwE+K1+fuJi0UQOF05A25Atf0Gvgs02Qtnvfu4bkBvk+6c3TR2pIXEliElREAfRzB
+         Plcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690999946; x=1691604746;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vGLbAPR1Ctl00gU01GIMo1zeriPBpUk9wVVLr3TREJs=;
-        b=aym48KJHM1rFclL5OEi90E/t5fWQ40Q59oi1+BbAxYwm2la0vKgXMM2tPaGQR+qBJt
-         sKvpDow7BgsSDjBLx+6m7NGddN5NHk12dqRLeFNwGhJwuCNNku9oaaO+G7Rhy5mHfjML
-         zt7ylET/PB2kve/clPrL02kitFVrev+2ElxHgE/ZldIfynRNLtOH+pMCqVf144wCf6Yo
-         OMMrCWh6X9gDjAUqCDttYBAZrRFlWBJ6xJC6oV8LAk2N8IChLctbYdNMQtKyg+wrwVtI
-         POYdC/Ql/qN4+C2y11N610iLx3Wy1/Jja2oZKrY9gw1Oi3LCYUyoLx218ix7a8uh/2OV
-         T4Aw==
-X-Gm-Message-State: ABy/qLZAhk49ws1Uvtp8GD0bj+6glBtESGqO2UkGRaPOjfBpVxXllg0z
-        +/H/HYksiT5ymdEsszvBfzeARYS7P7AhQeUaXXHpbg==
-X-Google-Smtp-Source: APBJJlGROXoP9Hac4mmy+nHOPqWVasSq+GVY9vZjP4WmNz/0zdpTAuuWihGlCZYRq65YXD84gLN+gQ==
-X-Received: by 2002:a81:7487:0:b0:586:563:e616 with SMTP id p129-20020a817487000000b005860563e616mr12391521ywc.40.1690999946469;
-        Wed, 02 Aug 2023 11:12:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691003372; x=1691608172;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e7jiMJ7v159XfoZ8Ue4CAnQ4uCejJfWwWySon512yEk=;
+        b=ILPjxzLQb2628QfGiaJKJnRFScwjyPclwiys5+kJVcxj1lBblq7EsrqbBfrPPINwdz
+         KOtnx7p88IK8e0ceKQxmCKKkNMd3BiRUbftIFgNP+6tpmTrw+02b+XAzAHCgt8kV28S9
+         Kak8CIJeMmPEK8ji2ZFfvaaiS4/uRsxmIHixycZxSc1dFSyRpI2CULIkwNsLGr+661nH
+         YIi6PkZ4+Kx2Xlfttw+1GLZ5JZ0AV4aM4kBzF95FqzV8bxRaFSheZIquWSjz6wmXaF9f
+         bMHZpnxerZrFl8pbYEFOFdzroIOwjWGxqYlio/wefVi7JXr/2rY+Bo7WuD9nWRZ43kyL
+         saWA==
+X-Gm-Message-State: ABy/qLY74zSTwxgvMRYp5fD+LYSQPaWFb9PDJxL4BWvDJ7vp9XTtWibY
+        fnVAi2xn8cYd2VYKurNPbrVxDA==
+X-Google-Smtp-Source: APBJJlHmeRiHS7u0ceYqf133KmysVmYQHDF0Vl0qUZ4YwnwKEVquFpaaAG1dK7Tam2xjLiZleiuHZQ==
+X-Received: by 2002:a81:6704:0:b0:586:3102:edfa with SMTP id b4-20020a816704000000b005863102edfamr10487873ywc.13.1691003372527;
+        Wed, 02 Aug 2023 12:09:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j1-20020a0de001000000b00583b40d907esm4809264ywe.16.2023.08.02.11.12.26
+        by smtp.gmail.com with ESMTPSA id a63-20020a818a42000000b0058390181d16sm4830457ywg.30.2023.08.02.12.09.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 11:12:26 -0700 (PDT)
-Date:   Wed, 2 Aug 2023 14:12:25 -0400
+        Wed, 02 Aug 2023 12:09:32 -0700 (PDT)
+Date:   Wed, 2 Aug 2023 15:09:28 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Yucheng Zhou <zhouyucheng98@outlook.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Feature request for shorter relative date format in log
-Message-ID: <ZMqciat7tdbYGob8@nand.local>
-References: <ME3P282MB2274D11DC15DF1FDBBC36C3DBE0BA@ME3P282MB2274.AUSP282.PROD.OUTLOOK.COM>
+Subject: jt/path-filter-fix (was: Re: What's cooking in git.git (Aug 2023,
+ #01; Wed, 2))
+Message-ID: <ZMqp6K2iXixWH/zT@nand.local>
+References: <xmqqfs518gdh.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ME3P282MB2274D11DC15DF1FDBBC36C3DBE0BA@ME3P282MB2274.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <xmqqfs518gdh.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 02, 2023 at 02:07:16PM +0800, Yucheng Zhou wrote:
-> Hello there,
+On Wed, Aug 02, 2023 at 11:10:34AM -0700, Junio C Hamano wrote:
+> * jt/path-filter-fix (2023-08-01) 7 commits
+>  - commit-graph: new filter ver. that fixes murmur3
+>  - repo-settings: introduce commitgraph.changedPathsVersion
+>  - t4216: test changed path filters with high bit paths
+>  - t/helper/test-read-graph: implement `bloom-filters` mode
+>  - bloom.h: make `load_bloom_filter_from_graph()` public
+>  - t/helper/test-read-graph.c: extract `dump_graph_info()`
+>  - gitformat-commit-graph: describe version 2 of BDAT
 >
-> I usually use --date=relative in git log, but I find it can be shorter
-> to save more space and be more efficient.
+>  The Bloom filter used for path limited history traversal was broken
+>  on systems whose "char" is unsigned; update the implementation and
+>  bump the format version to 2.
 >
-> First, the trailing “ago” can be removed, because it seems every
-> relative date has a trailing ago.  Second, the seconds, minutes,
-> hours, days, weeks, months, and years can be shorten to a single
-> letter (e.g., s, m, h, d, w, M, Y), and the suffix “s” for plural can
-> also be removed in this case.  Maybe it will be better to give us a
-> way to customize it, or create a new to config like
-> --date=relative-short.
+>  Still under discussion.
+>  cf. <20230801185232.1457172-1-jonathantanmy@google.com>
+>  source: <cover.1690912539.git.jonathantanmy@google.com>
 
-I can't think of a way that this is possible to do currently.
+I am happy with the most recent round, but I think that it is probably a
+little late in the cycle to be merging down such a large change.
 
-You can customize the format of absolute dates by using
-`--date=format:xyz' where xyz is passed as an argument to the system's
-strftime() implementation.
-
-But we don't have a way for users to provide custom over relative dates.
-Perhaps we should?
+I wouldn't be opposed if you did so, but it may be worth waiting until
+we're on the other side of 2.42 so that other reviewers have a chance to
+look at this one as well.
 
 Thanks,
 Taylor
