@@ -2,76 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CC53C00528
-	for <git@archiver.kernel.org>; Wed,  2 Aug 2023 22:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7386C001DF
+	for <git@archiver.kernel.org>; Wed,  2 Aug 2023 22:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231196AbjHBWKt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Aug 2023 18:10:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58036 "EHLO
+        id S230031AbjHBWb4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Aug 2023 18:31:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjHBWKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2023 18:10:48 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E19A3B1
-        for <git@vger.kernel.org>; Wed,  2 Aug 2023 15:10:46 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8425C23515;
-        Wed,  2 Aug 2023 18:10:46 -0400 (EDT)
+        with ESMTP id S229527AbjHBWby (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2023 18:31:54 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65E26F2
+        for <git@vger.kernel.org>; Wed,  2 Aug 2023 15:31:53 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ACADA1A1435;
+        Wed,  2 Aug 2023 18:31:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5qeuaSR6MwDjTzVgBx7/dKJkgEmYtDQKqrGcYX
-        73NVQ=; b=hE4k8Kxx0E28KF7Z8SlN1Nt3UhnS+M3jjmUptZpY0Ob2pptPgcx30Q
-        lR9Tj2J7FppNx6qB8FoE4DIuWTaw6QLNm1FdC93v7ZU0ZlagDx50T3s3ou/VjAbB
-        um2p38V1iRaT8kFmhREUOqLMADW5+krLqKWMFhFFZ080uhbOrw1uY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7C10323514;
-        Wed,  2 Aug 2023 18:10:46 -0400 (EDT)
+        :content-type; s=sasl; bh=GH/1C8CkGcco3l5MSa2k3wItQg+W5VvtsNaEBr
+        IbQdE=; b=gkVsXpBTdGzlvCWx/uRabVNJ9G1D3n//lemp249s6CY97l6w2I4ROY
+        644E4yduLmrOk2LckaeUuk1+LCo8D6hjvez33VOn1Xb9bC96o3CHvORvSXczS1j2
+        ZtSW5QIO0KUIUURGUpVf8cHkm8bjteNwXj/vZYOplB3/U6Pl/5Hsg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A52F11A1434;
+        Wed,  2 Aug 2023 18:31:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2031723513;
-        Wed,  2 Aug 2023 18:10:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18FE61A1433;
+        Wed,  2 Aug 2023 18:31:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Haller <lists@haller-berlin.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 0/7] rebase -i: impove handling of failed commands
-References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
-        <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
-Date:   Wed, 02 Aug 2023 15:10:41 -0700
-In-Reply-To: <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com> (Phillip
-        Wood via GitGitGadget's message of "Tue, 01 Aug 2023 15:23:25 +0000")
-Message-ID: <xmqq8rat6qou.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Yucheng Zhou <zhouyucheng98@outlook.com>, git@vger.kernel.org
+Subject: Re: Feature request for shorter relative date format in log
+References: <ME3P282MB2274D11DC15DF1FDBBC36C3DBE0BA@ME3P282MB2274.AUSP282.PROD.OUTLOOK.COM>
+        <ZMqciat7tdbYGob8@nand.local>
+Date:   Wed, 02 Aug 2023 15:31:51 -0700
+In-Reply-To: <ZMqciat7tdbYGob8@nand.local> (Taylor Blau's message of "Wed, 2
+        Aug 2023 14:12:25 -0400")
+Message-ID: <xmqqsf915b54.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6C3C09E2-3181-11EE-9848-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 6099385A-3184-11EE-89FD-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
->   sequencer: factor out part of pick_commits()
->   rebase: fix rewritten list for failed pick
->   rebase --continue: refuse to commit after failed command
->   rebase -i: fix adding failed command to the todo list
+> But we don't have a way for users to provide custom over relative dates.
 
-I'd really prefer to see the latter half of the series reviewed
-(both for the design and its implementation) by those who have more
-stake in the sequencer code than myself.
+Are there existing systems to format time durations in a customized
+way, just like strftime() is a way way to custom-format a timestamp,
+that we can just use, or write our own modelling after them?
 
-I just noticed that we have a question on the last step left
-unanswered since the very initial iteration.
+The relative-time code decides which points in the time durection
+spectrum are good places to switch the granularity (e.g. up to 90
+seconds we will give "N seconds", and up to 90 minutes we will give
+"N minutes").  You could grep in date.c:show_date_relative() for
+Q_() and _(), and place them in an array and allow them to be
+replaced by strings in the configuration variable, but that will
+cover only one smaller half of the problem (i.e. how the "N seconds"
+are shown) and the other half (i.e. what variants there are, and
+which variant is used for what time duration---you cannot introduce
+a rule that says "up to 500 seconds, show 'N minutes M seconds'").
 
-cf. https://lore.kernel.org/git/f05deb00-1bcd-9e05-739f-6a30d6d8cf3b@gmx.de/
+Even with that solution to the smaller half will also create i18n
+headaches.
 
-Thanks.
+> Perhaps we should?
+
+It will be an interesting puzzle, if done well.  Even though my
+criteria to consider that a solution is done "well" is not that
+high, it should at least allow defining your own variants.  Instead
+of the rules that are implemented as hardcoded if-statement cascade
+in date.c:show_date_relative(), it should allow you to say something
+like
+
+    * For a timestamp that is N seconds into the future, format a
+      relative timestamp that is N seconds ago, and replace "ago"
+      with "in the future".
+
+    * For a timestamp that is less than 1200 seconds ago, show "N
+      minutes M seconds ago" (with appropriate pluralization for
+      "minute" and "second" when N and/or M is 1).
+
+    * For a timestamp that is less than 5 hours ago, show "N hours M
+      minutes ago" (ditto about plural).
+
+and so on.
+
+No, I am not interested in working on such a solution myself.  But
+it will be an interesting puzzle.
+
