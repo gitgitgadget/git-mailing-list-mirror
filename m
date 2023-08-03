@@ -2,82 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27C29C001DB
-	for <git@archiver.kernel.org>; Thu,  3 Aug 2023 19:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87154C001DB
+	for <git@archiver.kernel.org>; Thu,  3 Aug 2023 20:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231573AbjHCT4e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Aug 2023 15:56:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39874 "EHLO
+        id S230292AbjHCUUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Aug 2023 16:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231526AbjHCT4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2023 15:56:31 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 001241706
-        for <git@vger.kernel.org>; Thu,  3 Aug 2023 12:56:30 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D6971AA10F;
-        Thu,  3 Aug 2023 15:56:30 -0400 (EDT)
+        with ESMTP id S229500AbjHCUUI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2023 16:20:08 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B948B420F
+        for <git@vger.kernel.org>; Thu,  3 Aug 2023 13:20:07 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 41E612BB36;
+        Thu,  3 Aug 2023 16:20:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1Xey6oSFeZQH
-        019BjT1GEg9/8LUXLoFl0GFuhhsXo/4=; b=QlQs53LABnf/4mpbXpxNoKHFbS8i
-        lioHlw43gi80y1A1gHZEY3kTYowidCHMkhWJvjILdFxK68L3G+Gnnvz0mAAjMzH0
-        pn8c7K9206Ovm6zE0V59XVoyOM70goi/3tOA6D/ZvlpW4/YWtN/cANB7Kt3wpgZt
-        /xEs6SBRJO+3i/s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14F621AA10E;
-        Thu,  3 Aug 2023 15:56:30 -0400 (EDT)
+        :content-type; s=sasl; bh=0s4pmW2X8/vsDWdekZEnfMZDvipJnav/K7PFtv
+        PKtFE=; b=r2+zGON36jZSTnKRVrtj6uKyOaF48Ba/KcoDdV8gAl6Q3bdh/YEs6u
+        d91+OmX7PRMvrqBo+MbKt79CfBmHNwD4SionZ/DEl/UQO2gRR13IzTmwf22ICCSH
+        cOmBRPIPilE1as/EudzW5E6OpaUgtnjpWdlqjWe8T7XGHTe510hfY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3A1F92BB35;
+        Thu,  3 Aug 2023 16:20:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FDC21AA10D;
-        Thu,  3 Aug 2023 15:56:29 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C4FE32BB32;
+        Thu,  3 Aug 2023 16:20:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
-Cc:     Matthias =?utf-8?Q?A=C3=9Fhauer?= via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Louis Strous <Louis.Strous@intellimagic.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: Re: [PATCH 0/3] git bisect visualize: find gitk on Windows again
-References: <pull.1560.git.1691058498.gitgitgadget@gmail.com>
-        <xmqqo7jo5d5a.fsf@gitster.g> <xmqqy1is3qqn.fsf@gitster.g>
-        <DB9P250MB0692B33DE1EBFC26865D78C9A508A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-Date:   Thu, 03 Aug 2023 12:56:28 -0700
-In-Reply-To: <DB9P250MB0692B33DE1EBFC26865D78C9A508A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-        ("Matthias =?utf-8?Q?A=C3=9Fhauer=22's?= message of "Thu, 3 Aug 2023
- 21:03:36 +0200
-        (CEST)")
-Message-ID: <xmqqtttf528j.fsf@gitster.g>
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase --skip: fix commit message clean up when
+ skipping squash
+References: <pull.1558.git.git.1691068176051.gitgitgadget@gmail.com>
+Date:   Thu, 03 Aug 2023 13:20:01 -0700
+In-Reply-To: <pull.1558.git.git.1691068176051.gitgitgadget@gmail.com> (Phillip
+        Wood via GitGitGadget's message of "Thu, 03 Aug 2023 13:09:35 +0000")
+Message-ID: <xmqqedkj515a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D652C210-3237-11EE-A503-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 20B487B4-323B-11EE-8E4A-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthias A=C3=9Fhauer <mha1993@live.de> writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> And the answer was in [2/3], if I am reading the proposed log
->> messages correctly.  When the "bisect visualize" was ported to C, we
->> broke it.
->
-> Yes, that's correct.
->
->>
->> Thanks.  Will try to queue based on 'maint'.
->>
->
-> Please wait a moment, I'm currently preparing a V2 based on your feedba=
-ck.
+> ... The test is also updated to explicitly check
+> the commit messages rather than relying on grep to ensure they do not
+> contain any stay commit headers.
 
-OK.  Thanks.
+"stay" -> "stray" presumably.
+
+> To check the commit message the function test_commit_message() is moved
+> from t3437-rebase-fixup-options.sh to test-lib.sh. As the function is
+> now publicly available it is updated to provide better error detection
+> and avoid overwriting the commonly used files "actual" and "expect".
+> Support for reading the expected commit message from stdin is also
+> added.
+
+It may make it cleaner to do the refactoring as a separate
+preparatory patch, but the end-result is not so large from
+the diffstat below, so it probably is OK.
+
+I am not sure if deviating from expect vs actual is such a good
+idea.  It is not like use of two temporary files are transparent to
+the caller of the new test helper---indeed, expect and actual are
+likely to be used by the caller in tests that comes before or after
+the ones that use test_commit_message, and by using a pair of files
+that are different, the caller will now see two extra untracked
+files left in the working tree.
+
+The only case such a renaming could help callers is when they do
+
+	cat >expect <<\-EOF &&
+	here to prepare some outcome
+	EOF
+	git do-something-to-make-commit &&
+	test_commit_message HEAD <<\-EOF &&
+	here is what we expect to see in HEAD
+	EOF
+	git some-other-thing >actual &&
+	test_cmp expect actual
+	
+as use of files other than expect/actual in test_commit_message will
+avoid stomping on the "expect" file that was already prepared.
+
+I suspect that it would be rare, and something we can fix when need
+arises by allowing test_commit_message to accept an option to use
+non-standard filenames for its temporaries.  The current callers,
+both the existing ones in t3437 and the new ones added by this
+patch, would not benefit.  The only externally visible side effect
+is that the existing ones will have two extra untracked files in
+their working tree.
+
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>     rebase --skip: fix commit message clean up when skipping squash
+>     
+>     This patch is based on maint.
+> ...
+>  sequencer.c                     | 26 +++++++++++----
+>  t/t3418-rebase-continue.sh      | 58 +++++++++++++++++++++++----------
+>  t/t3437-rebase-fixup-options.sh | 15 ---------
+>  t/test-lib-functions.sh         | 33 +++++++++++++++++++
+>  4 files changed, 93 insertions(+), 39 deletions(-)
+
+OK.
+
+> diff --git a/sequencer.c b/sequencer.c
+> index bceb6abcb6c..af271ab6fbd 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5038,19 +5038,31 @@ static int commit_staged_changes(struct repository *r,
+>  				 * We need to update the squash message to skip
+>  				 * the latest commit message.
+>  				 */
+> +				int res = 0;
+>  				struct commit *commit;
+> +				const char *msg;
+>  				const char *path = rebase_path_squash_msg();
+>  				const char *encoding = get_commit_output_encoding();
+>  
+> -				if (parse_head(r, &commit) ||
+> -				    !(p = repo_logmsg_reencode(r, commit, NULL, encoding)) ||
+> -				    write_message(p, strlen(p), path, 0)) {
+> -					repo_unuse_commit_buffer(r, commit, p);
+> -					return error(_("could not write file: "
+> +				if (parse_head(r, &commit))
+> +					return error(_("could not parse HEAD"));
+> +
+> +				p = repo_logmsg_reencode(r, commit, NULL, encoding);
+> +				if (!p)  {
+> +					res = error(_("could not parse commit %s"),
+> +						    oid_to_hex(&commit->object.oid));
+> +					goto unuse_commit_buffer;
+> +				}
+> +				find_commit_subject(p, &msg);
+> +				if (write_message(msg, strlen(msg), path, 0)) {
+> +					res = error(_("could not write file: "
+>  						       "'%s'"), path);
+> +					goto unuse_commit_buffer;
+>  				}
+> -				repo_unuse_commit_buffer(r,
+> -							 commit, p);
+> +			unuse_commit_buffer:
+> +				repo_unuse_commit_buffer(r, commit, p);
+> +				if (res)
+> +					return res;
+>  			}
+>  		}
+
+Just as described in the proposed log message.  Looking good.
+
+Will queue.  Thanks.
