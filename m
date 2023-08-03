@@ -2,127 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CABCCC001DF
-	for <git@archiver.kernel.org>; Thu,  3 Aug 2023 10:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE46AC001DF
+	for <git@archiver.kernel.org>; Thu,  3 Aug 2023 12:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235278AbjHCK2j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Aug 2023 06:28:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59286 "EHLO
+        id S235760AbjHCM5L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Aug 2023 08:57:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234507AbjHCK2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2023 06:28:24 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B00A2109
-        for <git@vger.kernel.org>; Thu,  3 Aug 2023 03:28:23 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fe12820bffso7860025e9.3
-        for <git@vger.kernel.org>; Thu, 03 Aug 2023 03:28:23 -0700 (PDT)
+        with ESMTP id S235874AbjHCM5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2023 08:57:05 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27F783C3E
+        for <git@vger.kernel.org>; Thu,  3 Aug 2023 05:56:55 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-317b31203c7so859246f8f.2
+        for <git@vger.kernel.org>; Thu, 03 Aug 2023 05:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691058501; x=1691663301;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cV/5ooSiOeSiBEP29cxcMJLnbS/fejhlBcxpxe2OT9E=;
-        b=gDT9U+zfWeQ1RX4KPdomU5jNqhdAQuiTV9P2i1m8jWJ9fgjqltWil6eLtlxoy1TtJF
-         ddNOq/zt2JgRQEkkJQuICkIIa67R1tbyb4JWTrSqkojzsAseGt2W4XVUNSrjTyt9sPPj
-         Jq+QXpH0IH/PvlF3gb6BLpYfwK0jWpRZDSygwD6Bpdb4ZiZx4C2IgeDK76B8sVoKDs/v
-         86q35H1o7wjVGmt2nTbkXWQz2BbOARUxdzKapaUH0h2EaIZM7Uq5uMJJ5UzFjWbFdflO
-         35iWPMvy/2MpZLMdMGwOj+9MNZ26TglKOag3jyDXhR/gZyreW6QHQork9eXsPeD2oHLV
-         4MIA==
+        d=gmail.com; s=20221208; t=1691067414; x=1691672214;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5venqiygOUH2VGDxsYzL8PZWi0gXJMnwKYnPIaIaKUM=;
+        b=EPa30R5z1rzqLMkuuuRn/SraorvgfYCMpBZU99A9zQFPVNzExYinR33lBvcDrc1tqK
+         xaHNpNfIsq1p2/nn9kM4C697eQ2Lf3R4wVxxr482+VWDxjs/qErCgjhXjkMIddD3mrY+
+         npcCTHNhiG7fQeR+zRy7pcFOR6PEKzDyCEpoyZ8elP6/d5l426uAQUOqPeQ9myqjwTZr
+         xy9YZplkYvkgN1ZVRkGhpdTe9wZra2iIDYlBHA/6GP9w4SSKNeCSEDprZGPT9F7XhEvQ
+         5dySSlomc2kligGk3oZKi9+vPMRjGPwXKNS4E3CGxGBU9pDwCm9cW5qvbfFsjD6fOxNk
+         x+sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691058501; x=1691663301;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cV/5ooSiOeSiBEP29cxcMJLnbS/fejhlBcxpxe2OT9E=;
-        b=VN0VV2EZzGhoH1lk2eeZJi8GtxQSk1476sHiIuqPCq+pg74dqGILpm3L+AI60Pthsg
-         Vn+FvKnK9HCq2Xns6uSsz277fb4c8yKzcTAO9OhFAvAHX/QgfiWyYX/ssjKKQk8N83w0
-         +pP2PJ+ZyNJxvrvOztGwM6v+2mOSw5FagjLU+Tb+QkZqGFHCIvz5zw7xhFYrKnMlHQ6a
-         hdWiM+bMI1ou9OaeT+FSbEwRXHvjSxYue9ODaaZOX8ywDt3UsxsqTL0VvVTzBBNfj/Cj
-         DqpKRF1Imb1ZBrr/VQcRTx5kX7rc7mZ8xNXD61sy7H1ewHkR+VIrkyqkHKk9SsduIbxv
-         QCSA==
-X-Gm-Message-State: ABy/qLbuf2FwvIW7mYt/S2b1VWtEM/8N8X4r8lSWmWsLmIpPGhf71FTt
-        T3acHh9mwc8Ikh9eELU3tFKgaj4KFvo=
-X-Google-Smtp-Source: APBJJlGg8Fit3LQE4LiC3M9GSYU5SB7y0WuAKfifRB0PpYpQlkSYl1KQwyaCP//krD4nEr/p+1JKBQ==
-X-Received: by 2002:a1c:6a0a:0:b0:3f5:878:c0c2 with SMTP id f10-20020a1c6a0a000000b003f50878c0c2mr6791928wmc.3.1691058501206;
-        Thu, 03 Aug 2023 03:28:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n4-20020a05600c294400b003fbe4cecc3bsm3965091wmd.16.2023.08.03.03.28.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Aug 2023 03:28:21 -0700 (PDT)
-Message-ID: <bf8b34aaef32a64b85f778ab219aeb41238f2bf2.1691058498.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1560.git.1691058498.gitgitgadget@gmail.com>
-References: <pull.1560.git.1691058498.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Matthias=20A=C3=9Fhauer?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Thu, 03 Aug 2023 10:28:17 +0000
-Subject: [PATCH 2/3] run-command: teach locate_in_PATH about Windows
+        d=1e100.net; s=20221208; t=1691067414; x=1691672214;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5venqiygOUH2VGDxsYzL8PZWi0gXJMnwKYnPIaIaKUM=;
+        b=XEBGRIuwpOoFmopi7pYFsTCjzYh18ClSqGBzcwUNaPvBGmYkDMXZ1zpUYrAwgVKESn
+         FbEvAHCuxlBPytSvj6NTueyDStmkJ5Yf2hHFianwq9RnsrygmGcA3E1yygapkjchmK1v
+         Sc4xlhqjH84N+QJ4rPoN643TsAv6B860mW51h7IwnJgtiQHOo7w6Bd4ASTWrZ2fLJvT5
+         O0q6Ftv2vt3fIH8RvdWL6akfsouTB8vCtnNk3P6yQnH7AimBIqwRuX1afy0LOzxUfq+9
+         t7vrzkbPeV0NEFXzG4k3qFWQiimvINhfOAPZsiT2U+cygwgiIH3g28m0q67nRlKk/nh0
+         SAbg==
+X-Gm-Message-State: ABy/qLbCJvb6Hl65DBKvM6DMxpD+Dip8AVxbxv0Jm/kA74vK0AhjRp9U
+        rhclkyAGvbX5qeG80SIUHPk=
+X-Google-Smtp-Source: APBJJlH06gWi6IFe2WICCq+xb0TvEfxVSh9tzYLu8biYRwmRweKYu6IKsKhm03/QVt8F9RqBe6EuTg==
+X-Received: by 2002:adf:e105:0:b0:314:11f3:ca94 with SMTP id t5-20020adfe105000000b0031411f3ca94mr7123030wrz.41.1691067413828;
+        Thu, 03 Aug 2023 05:56:53 -0700 (PDT)
+Received: from [192.168.1.195] ([90.242.223.1])
+        by smtp.googlemail.com with ESMTPSA id s6-20020a1cf206000000b003fbb1a9586esm4260344wmc.15.2023.08.03.05.56.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Aug 2023 05:56:53 -0700 (PDT)
+Message-ID: <d20ffc1f-c3b5-0f64-d508-976098f418e0@gmail.com>
+Date:   Thu, 3 Aug 2023 13:56:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase -i: do not update "done" when rescheduling command
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+ <f05deb00-1bcd-9e05-739f-6a30d6d8cf3b@gmx.de>
+Content-Language: en-US
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <f05deb00-1bcd-9e05-739f-6a30d6d8cf3b@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Louis Strous <Louis.Strous@intellimagic.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthias =?UTF-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
+Hi Dscho
 
-since 5e1f28d206 (bisect--helper: reimplement `bisect_visualize()` shell
- function in C, 2021-09-13) `git bisect visualize` uses exists_in_PATH()
-to check wether it should call `gitk`, but exists_in_PATH() relies on
-locate_in_PATH() which currently only understands POSIX-ish PATH variables
-(a list of paths, separated by colons) on native Windows executables
-we encounter Windows PATH variables (a list of paths that often contain
-drive letters (and thus colons), separated by semicolons). Luckily we do
-already have a function that can lookup executables on windows PATHs:
-mingw_path_lookup(). Teach locate_in_PATH() to use mingw_path_lookup()
-on Windows.
+Sorry for not replying sooner.
 
-Reported-by: Louis Strous <Louis.Strous@intellimagic.com>
-Signed-off-by: Matthias Aßhauer <mha1993@live.de>
----
- run-command.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+On 27/03/2023 08:04, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> On Sun, 19 Mar 2023, Phillip Wood via GitGitGadget wrote:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> As the sequencer executes todo commands it appends them to
+>> .git/rebase-merge/done. This file is used by "git status" to show the
+>> recently executed commands. Unfortunately when a command is rescheduled
+>> the command preceding it is erroneously appended to the "done" file.
+>> This means that when rebase stops after rescheduling "pick B" the "done"
+>> file contains
+>>
+>> 	pick A
+>> 	pick B
+>> 	pick A
+>>
+>> instead of
+>>
+>> 	pick A
+>> 	pick B
+>>
+>> Fix this by not updating the "done" file when adding a rescheduled
+>> command back into the "todo" file. A couple of the existing tests are
+>> modified to improve their coverage as none of them trigger this bug or
+>> check the "done" file.
+> 
+> I am purposefully not yet focusing on the patch, as I have a concern about
+> the reasoning above.
+> 
+> When a command fails that needs to be rescheduled, I actually _like_ that
+> there is a record in `done` about said command. It is very much like a
+> `pick` that failed (but was not rescheduled) and was then `--skip`ed: it
+> still shows up on `done`.
 
-diff --git a/run-command.c b/run-command.c
-index 60c94198664..8f518e37e27 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -182,13 +182,10 @@ int is_executable(const char *name)
-  * Returns the path to the command, as found in $PATH or NULL if the
-  * command could not be found.  The caller inherits ownership of the memory
-  * used to store the resultant path.
-- *
-- * This should not be used on Windows, where the $PATH search rules
-- * are more complicated (e.g., a search for "foo" should find
-- * "foo.exe").
-  */
- static char *locate_in_PATH(const char *file)
- {
-+#ifndef GIT_WINDOWS_NATIVE
- 	const char *p = getenv("PATH");
- 	struct strbuf buf = STRBUF_INIT;
- 
-@@ -217,6 +214,9 @@ static char *locate_in_PATH(const char *file)
- 
- 	strbuf_release(&buf);
- 	return NULL;
-+#else
-+	return mingw_path_lookup(file,0);
-+#endif
- }
- 
- int exists_in_PATH(const char *command)
--- 
-gitgitgadget
+We still do that after this patch. What changes is that when "pick B" 
+fails we don't add "pick A" to the "done" file when "pick B" is added 
+back into "git-rebase-todo"
+
+> I do understand the concern that the rescheduled command now shows up in
+> both `done` and `git-rebase-todo` (which is very different from the failed
+> `pick` command that would show up _only_ in `git-rebase-todo`). So maybe
+> we can find some compromise, e.g. adding a commented-out line to `done` à
+> la:
+> 
+> 	# rescheduled: pick A
+> 
+> What do you think?
+
+If a commit is rescheduled we still end up with multiple entries in the 
+"done". In the example above if "pick B" fails the first time it is 
+executed and then succeeds on the second attempt "done" will contain
+
+	pick A
+	pick B
+	pick B
+
+It might be nice to mark it as rescheduled as you suggest but this 
+series focuses on removing the incorrect entry from the "done" file, not 
+de-duplicating the "done" entities when a command fails.
+
+Best Wishes
+
+Phillip
+
+> Ciao,
+> Johannes
 
