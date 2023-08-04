@@ -2,102 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA599C001DF
-	for <git@archiver.kernel.org>; Thu,  3 Aug 2023 21:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 030C3C001DB
+	for <git@archiver.kernel.org>; Fri,  4 Aug 2023 02:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231222AbjHCVxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Aug 2023 17:53:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48318 "EHLO
+        id S232443AbjHDC2l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Aug 2023 22:28:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbjHCVxW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2023 17:53:22 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E92B41BF9
-        for <git@vger.kernel.org>; Thu,  3 Aug 2023 14:53:20 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F11D19CBF7;
-        Thu,  3 Aug 2023 17:53:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jCl0d0sWW8fGfSiryMUx+/40WjSTZTU/3Zf73o
-        A7aD0=; b=R4Zk/wtL0Ti+als8XvWtuYja8xg4q1uAlO/ew82ExrftDrQTLt46L3
-        xnN5m7kVPwDDjjo7kl79Q4IPWekIg9Exq8a76hBZI67kcwi8QLawZ52CRy1HQlMd
-        HrCcN6BZ17ZIo7dVIHhsQ18W99jFPk+GrK7fC74mM81EHB07fx4xc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26B8B19CBF6;
-        Thu,  3 Aug 2023 17:53:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8281D19CBF5;
-        Thu,  3 Aug 2023 17:53:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org,
-        Aleem Zaki <aleemzaki@gmail.com>
-Subject: Re: .gitignore is not enough
-References: <CA+sf2-+499Nfu00ciJeLwjRmBE7Bb-WZcZuCXY2-JXs88Pwz-w@mail.gmail.com>
-        <CAE1pOi1Zt8i_rVi6dCGVsshhPxa_kV7qQ7SMu6R4nsSiadq7xw@mail.gmail.com>
-        <c2fea20d-af37-8721-5bd8-14bbc3daf937@kdbg.org>
-        <CAE1pOi1xtaEo6LtF4VnXetmLYK5VbYU5uq7gGC=PpnVB3MWdag@mail.gmail.com>
-        <e453bee1-942f-ea9a-9c50-3cf5d0f9e936@kdbg.org>
-Date:   Thu, 03 Aug 2023 14:53:18 -0700
-In-Reply-To: <e453bee1-942f-ea9a-9c50-3cf5d0f9e936@kdbg.org> (Johannes Sixt's
-        message of "Thu, 3 Aug 2023 22:27:39 +0200")
-Message-ID: <xmqqsf8z3i9d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232083AbjHDC2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2023 22:28:40 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB8CE46
+        for <git@vger.kernel.org>; Thu,  3 Aug 2023 19:28:37 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-583b3939521so19188057b3.0
+        for <git@vger.kernel.org>; Thu, 03 Aug 2023 19:28:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691116116; x=1691720916;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uhVJf0xU1WS/gEvI63Et8qPFDMNCIWP8RKOfxhblYlg=;
+        b=bHbU7yyg3+eXllCD2QwsbzcfO5BtVQPeKdWRRdjN51GS6SINrBs4MkC5rHiWP7/9Vb
+         0IQjXHvaM6X5WZdTnZaBwD4JGFdWDyrYYQYJczj3Tkl0XE3NitbESTqd2bdhflaC1kAG
+         RSQCbQZqUJSA+MRV7FuplrTTKUl8gblrV7LPJ4f2/JXLQK7nTazOJ9KcatjxNm8lH/xw
+         2uV1YMivuYuVFZIpjyy3zWrWJxHYUWljKcQbO6trNHsWjEQVVlX/FGnXj1ly/rNk3Txv
+         HNpi9pHWg4PsDFNloHmnxC/qbYVPULZRUX82eCdOZennpvecFpV7UKgqzPgNYKfn2Cbu
+         S69w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691116116; x=1691720916;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uhVJf0xU1WS/gEvI63Et8qPFDMNCIWP8RKOfxhblYlg=;
+        b=S5mJcuVz/i8t46Kc79snmM9byQlgio/51rGLkwdQXQXWdGaBb67Tz6iwaxxR8NBUki
+         xZv9otUmyVF3IQoWJ90nnzO7siJmBg6M78HAiiRzR05BuCCrcssC4JKHJ5jleRA/vnB2
+         Y/c25fIO4QzQNzsP2kN11DoXqcuuxX32Xjk7+41gOK57TYPX80qr8rlcNMj1pPPI3gte
+         ovDNaRYg5BNnzLlXBqPhetbxeO53kSVWaUL+Uch9dc5UW9zmXfvpYw/T7FHC+oBIiq+7
+         4xGg1cuK678dF5QgCYSck5HOr7rS/8tkKbLYcKHSpsghAH/ypOnAW77fkihPF2SZwETV
+         0CQg==
+X-Gm-Message-State: AOJu0YyLsomDe1dAF5EmNjpAaiWCsG1wRing6EaHqQwo05tqwGTVvh08
+        tGqX5DS2ye0tZsyE8Zw/DlQXfXXnlEC6SYMuVqKtr5yNoaboJJTZ
+X-Google-Smtp-Source: AGHT+IFqJH7M1wvNoTZquC+8vWC+ZAzfb9ePylD8ipdfr5m8zC50lXcBJY63a877mXzME29n4PCdfTEalnGaG0SMcUk=
+X-Received: by 2002:a0d:dd89:0:b0:583:1bc7:8754 with SMTP id
+ g131-20020a0ddd89000000b005831bc78754mr344338ywe.33.1691116116484; Thu, 03
+ Aug 2023 19:28:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 289DD1E4-3248-11EE-B68D-307A8E0A682E-77302942!pb-smtp2.pobox.com
+References: <CAOLTT8TVGna+C9nYy9nj3h5bT7AdAT0SKtUM3YVz6h=KZhGHHg@mail.gmail.com>
+ <xmqqo7k7c1yw.fsf@gitster.g> <CAOLTT8R84Zrtpd=j6o2V=Y_uD54XAS5EA7NWHsdfL+XCkD5cqA@mail.gmail.com>
+ <xmqqila6cz0n.fsf@gitster.g> <ZMKtcaN7xYaTtkcI@nand.local>
+ <CAOLTT8Ru+3efmUNMOwbhzwRu-FW-SVPYn88-xtrRQiRuweFG+Q@mail.gmail.com>
+ <CAOLTT8S=_1Vd2Y4rBqq03JsJ1megRBcx9v-HYAWXe88jDek98Q@mail.gmail.com> <ZMvGsYSystLu6oBY@nand.local>
+In-Reply-To: <ZMvGsYSystLu6oBY@nand.local>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Fri, 4 Aug 2023 10:28:25 +0800
+Message-ID: <CAOLTT8Tc9NevyUfwiPscEH7BqShSscb=iZP4r+7mjsEwouLeXg@mail.gmail.com>
+Subject: Re: [QUESTION] how to diff one blob with nothing
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
-
-> Am 03.08.23 um 19:49 schrieb Hilco Wijbenga:
->> The promise part, I was aware of. In that sense, my wording was too
->> strong. It's more like "just trust me".
->> 
->> So the "you will get what you deserve" makes sense. If the
->> original/default/skeleton changes for some reason, your local changes
->> will just get overwritten. Nothing surprising there.
->> 
->> But in what scenario would Git "commit them nevertheless"? That one is
->> a surprise to me and is a bit worrisome.
+Taylor Blau <me@ttaylorr.com> =E4=BA=8E2023=E5=B9=B48=E6=9C=883=E6=97=A5=E5=
+=91=A8=E5=9B=9B 23:24=E5=86=99=E9=81=93=EF=BC=9A
 >
-> I don't know. In my book it is called "undefined behavior". Anything can
-> happen, including things that I did not enumerate.
+> On Thu, Aug 03, 2023 at 01:16:02PM +0800, ZheNing Hu wrote:
+> > > Here, it is necessary to compare multiple versions of blobs while als=
+o
+> > > considering the situations of creation and deletion.
+> > >
+> > > Well, what I need is the "diff" content, with lines in the diff indic=
+ating
+> > > '+' or '-' signs. This can be achieved by manually adding them, but i=
+t is
+> > > not very compatible with the original logic.
+> >
+> > The native diff command itself supports comparison with an empty file.
+> >
+> > #diff -u  /dev/null a
+> > --- /dev/null 2023-07-25 16:47:50.270094301 +0800
+> > +++ a 2023-08-03 13:14:16.980262362 +0800
+> > @@ -0,0 +1 @@
+> > +a
+> >
+> > So I believe this feature would also be useful in git.
+>
+> Sure, you can easily diff any file against any other, including if
+> either one or both are empty. I think the main difference here is that
+> /dev/null exists on your system without additional configuration and
+> the empty blob does not exist in a Git repository without additional
+> configuration (in this case, `git hash-object -w -t blob --stdin
+> </dev/null`).
+>
+> TBH, I don't know if /dev/null existing by default is necessarily a
+> solid argument in favor of having Git repositories come initialized with
+> the empty blob by default.
+>
+> (To be clear, when I say "initialized", I mean that a Git repository
+> would recognize the empty blob object's hash for any value of
+> `the_hash_algo`, not that every repository would be prepared with a
+> loose object by default.)
+>
 
-Exactly.
+Actually, there is no need to support a default empty blob.
+For example, with the command "git diff --no-index <file> /dev/null",
+it can compare a file with /dev/null, but it can only compare <file>
+and not <oid>.
+Therefore, using commands like "git diff <oid> /dev/null",
+"git diff --no-index <oid> /dev/null", or even "git diff <oid> --stdin"
+could potentially solve this issue.
 
-"Is commit affected?" and "Can we guarantee that operation X is not
-affected?" are meaningless questions, as our implementation is not
-frozen and we reserve the right to take any valid optimization
-oppoertunities as long as correctness is not violated.
-
-The assume unchanged bit allows Git to take advantage of the promise
-the user has made and choose whichever is more efficient and/or
-convenient to use between the file in the working tree and the blob
-object for a given path when that bit is set.  When you expect an
-existing blob object to be used (e.g. the one registered in the
-index), in _any_ operation (which is defined now or will be invented
-in the future), Git is allowed to instead use the contents of the
-corresponding working tree file.  Or vice versa.
-
-Perhaps you may be creating an archive of some format out of the
-tree of HEAD, and may expect that local changes in the working tree
-would not have any effect in the result.  But instead of having to
-reconstruct the contents of a blob object known to be at path
-"README" in the tree by uncompressing the base object and then
-repeatedly applying delta data read from different parts of a
-packfile, it may be easier/faster to open/read the file in the
-working tree.  And if there is such a promise from the user that the
-contents of the file will be kept the same as what was in the index
-and the HEAD, Git is allowed to do so.  If the contents of the file
-was different from the blob, the resulting archive will not be an
-archive of the tree of HEAD, but that is "what you deserve".
-
+Thanks,
+ZheNing Hu
