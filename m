@@ -2,87 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B672C04A94
-	for <git@archiver.kernel.org>; Fri,  4 Aug 2023 08:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF663C001DB
+	for <git@archiver.kernel.org>; Fri,  4 Aug 2023 16:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234619AbjHDI3q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Aug 2023 04:29:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
+        id S229812AbjHDQk3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Aug 2023 12:40:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234605AbjHDI33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Aug 2023 04:29:29 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15114C38
-        for <git@vger.kernel.org>; Fri,  4 Aug 2023 01:29:06 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-5231f439968so246863a12.0
-        for <git@vger.kernel.org>; Fri, 04 Aug 2023 01:29:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691137745; x=1691742545;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o09gS5nJtGrwgpp1IED1bOXEdJpSWW0zCpAmMESUB+0=;
-        b=IZWOpU5lYWN4ErxQRjZSp7XEYAn7OPwplau5FL1tqMAIJQEi8WotDFJipmR648FKHV
-         Mim/D6jA+wROebIzr/AFYMREFBXD3Ekob36Fe47EBnqJeFSVIuVCKB/0W/OclsDLGv2T
-         LXVykm5qBLmGKSPT2TWRwbqVkm9QBbE8LSyx8j2KV1Kmx4/lJcS8/jdO2+oy99i2C4Mp
-         OjhaHRPzYWB3i+8o+frY66BCXGvS2hs6bpEatWCP8lAUGZt/Qq54gV0M6ddMvkpP/vQn
-         5W5gVfK2MupFphMtfN19AIY6V9H0g+HyJN+SoulCMaf6PsnM18iAZ+ZQcQCI0sfGiMcs
-         o0gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691137745; x=1691742545;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o09gS5nJtGrwgpp1IED1bOXEdJpSWW0zCpAmMESUB+0=;
-        b=EBvTysUvMbQMPruPcJveyLuljYOtBxi1lFmN2S+D5Vqt6NPV/rjSeq2XodY2x4C/lQ
-         sSUekkt1JQRaD3RI2hAx5xIubFfMSYzPAd56pJwTQcy83mU3zsIvdzoglht2jxJjtV05
-         x1Bpzf9EWobqX4LNgABSbDtET7Isoda6B6PY6piDAxwfXzjIuEMO1gdV1ISm9qNqkqXR
-         28W5BYrgt2ckyzyQn39B+VH+LlaszkrM265TyRUpx/HU4lXA+dbTeRfdCMSrrVth9la9
-         lb7FWRAwUVymFzYfuGwT7ok4I15+f0j24gNzQlFLKMG9ZvR13BM/SxjUsza12ncNXPhP
-         055w==
-X-Gm-Message-State: AOJu0YyHSJgiuIU+5RvYfX64tcfgzqVv6p5ac99mq8me9VWj8rWqI5Kk
-        1nAAGaUyklvjCwSuBIU5Jb87r0sauJbAYU/CokA=
-X-Google-Smtp-Source: AGHT+IHr0YjMLxZWg3CmusYcotid2huxKiVKwSbkmRrQGnb8sp+VbddGNG/2y5J57+ggt0W4QKB0MPiwrOtL7kh476s=
-X-Received: by 2002:a05:6402:1111:b0:522:30cc:a1f4 with SMTP id
- u17-20020a056402111100b0052230cca1f4mr1115700edv.0.1691137745152; Fri, 04 Aug
- 2023 01:29:05 -0700 (PDT)
+        with ESMTP id S229663AbjHDQk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Aug 2023 12:40:28 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B019B2
+        for <git@vger.kernel.org>; Fri,  4 Aug 2023 09:40:27 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 13E4419EBD;
+        Fri,  4 Aug 2023 12:40:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/CVqMR5m3jbU
+        Dj6+rKBM0aQzHs5O+bDNUZI/5Z0vZYA=; b=TB0iLOa/WRGLaOHuxRBbon0GPlPO
+        uUWF9Yf03WDbNosxkPfxEmkB27lVcRN+WQ6GJi4QrCncrwNQ2+xrdoMQ70egEj6C
+        nyjFwyOHeubBMJ0t8OWCZIun8OaXe15nu6LpULqM5vFYHDCc0b1jEf6UNO1I33EJ
+        Y+yGZ0HS0ADY9BE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3A2019EBC;
+        Fri,  4 Aug 2023 12:40:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 802C019EBA;
+        Fri,  4 Aug 2023 12:40:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] ls-tree: fix --no-full-name
+References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
+        <xmqqo7k9fa5x.fsf@gitster.g>
+        <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
+        <xmqq351hz5xp.fsf@gitster.g>
+        <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
+        <xmqq4jlxuiuu.fsf@gitster.g>
+        <1535f30e-3cf9-1a0a-04af-4ba4a7c46d15@web.de>
+        <xmqqr0oxnnx4.fsf@gitster.g>
+        <9e8225dd-1e8b-8af2-c3e1-0c5834694244@web.de>
+        <xmqqh6ptnies.fsf@gitster.g>
+        <a19879db-d45a-ee42-1ad5-497e4e9eb8df@web.de>
+        <b17b4f6b-199f-973b-3aa9-ef995a61bb3d@gmail.com>
+        <31b71333-de8b-d9a8-3ec4-1bad9cae2bf3@web.de>
+        <xmqqjzug14jo.fsf@gitster.g>
+Date:   Fri, 04 Aug 2023 09:40:21 -0700
+In-Reply-To: <xmqqjzug14jo.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        31 Jul 2023 08:31:07 -0700")
+Message-ID: <xmqqbkfm3gne.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAOLTT8TVGna+C9nYy9nj3h5bT7AdAT0SKtUM3YVz6h=KZhGHHg@mail.gmail.com>
- <xmqqo7k7c1yw.fsf@gitster.g> <CAOLTT8R84Zrtpd=j6o2V=Y_uD54XAS5EA7NWHsdfL+XCkD5cqA@mail.gmail.com>
- <xmqqila6cz0n.fsf@gitster.g> <ZMKtcaN7xYaTtkcI@nand.local>
- <CAOLTT8Ru+3efmUNMOwbhzwRu-FW-SVPYn88-xtrRQiRuweFG+Q@mail.gmail.com>
- <CAOLTT8S=_1Vd2Y4rBqq03JsJ1megRBcx9v-HYAWXe88jDek98Q@mail.gmail.com>
- <ZMvGsYSystLu6oBY@nand.local> <CAOLTT8Tc9NevyUfwiPscEH7BqShSscb=iZP4r+7mjsEwouLeXg@mail.gmail.com>
-In-Reply-To: <CAOLTT8Tc9NevyUfwiPscEH7BqShSscb=iZP4r+7mjsEwouLeXg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 4 Aug 2023 10:28:53 +0200
-Message-ID: <CAP8UFD2GV+1LhZDrSsgQ5=gRgYSTYsS36i2ugoBEHu-Oto-Sow@mail.gmail.com>
-Subject: Re: [QUESTION] how to diff one blob with nothing
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9B0E8596-32E5-11EE-9CA8-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 4, 2023 at 6:42=E2=80=AFAM ZheNing Hu <adlternative@gmail.com> =
-wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Actually, there is no need to support a default empty blob.
-> For example, with the command "git diff --no-index <file> /dev/null",
-> it can compare a file with /dev/null, but it can only compare <file>
-> and not <oid>.
-> Therefore, using commands like "git diff <oid> /dev/null",
-> "git diff --no-index <oid> /dev/null", or even "git diff <oid> --stdin"
-> could potentially solve this issue.
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> A bit more verbose still: Document the negative form on its own line
+>> with a generated description -- requires no new syntax:
+>>
+>>     -v, --invert-match         show non-matching lines
+>>     --no-invert-match          opposite of --invert-match, default
+>>     -I, --no-index             find in contents not managed by git
+>>     --index                    opposite of --no-index, default
+>
+> I would expect _("opposite of %s, default") is acceptable by l10n
+> folks, and assuming it is, the above would be a good approach.
 
-Maybe it would be clearer to have a new option, called for example
-"--blob-vs-file", for that then. It could support both:
+I was seeing what is likely to be in the -rc1 that will happen in
+next week, and noticed that this discussion is left unconcluded.  I
+am tempted to declare that the latest iteration that shows the
+negation of "--no-foo" as "--[no-]no-foo" is "good enough" for now,
+and leave the above improvement as one potential future direction.
 
-$ git diff --blob-vs-file <blob> <file>
+Objections?  Otherwise the 5-patch series will be in 'next'.
 
-and:
-
-$ git diff --blob-vs-file <file> <blob>
+Thanks.
