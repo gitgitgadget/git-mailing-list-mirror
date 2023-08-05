@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12060EB64DD
-	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 05:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D9D5C001DE
+	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 05:05:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbjHEFEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Aug 2023 01:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52882 "EHLO
+        id S229656AbjHEFE6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Aug 2023 01:04:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjHEFEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2023 01:04:44 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F904ED3
+        with ESMTP id S229459AbjHEFEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2023 01:04:45 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9143C4ED6
         for <git@vger.kernel.org>; Fri,  4 Aug 2023 22:04:43 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-31771bb4869so2485115f8f.0
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3178dd81ac4so2305884f8f.3
         for <git@vger.kernel.org>; Fri, 04 Aug 2023 22:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691211881; x=1691816681;
+        d=gmail.com; s=20221208; t=1691211882; x=1691816682;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=n+OogCcDE6SBXq8d85cFls+RFceySrodLASDp6pcyd4=;
-        b=UvB4bFktUuhRclRpCkJAmN9/ckuk9AUDIJSpQTwiZ7ONx7Ns6VI38ZX5hKSYx7eUQD
-         cLnWAH1X6FA5TR70ReRzgIZ7GhM9kaeU6TUYOd6QGtjYQcP0FF9Yr2j73cECASyA7pei
-         y35RgpCLW6lcLKg9EjZIgJGt6aQvmujpVsdM/bbkn+Vn/I9mfsSoiBWAvIgHnH3wfDWS
-         xsprBB37WnlbJmpgGvsvKhyWAgYTDaKoBIAkNzM/nIxej8SzaF1Dp90wwjRI0ly84Upn
-         +EmQmgIpbmkpjoXXMvGj41IDDJYgYDWfh21FHWaR28TQ7m4Fni7t8bE+rcXaam3bJGu3
-         /vJg==
+        bh=A8CTofYNZZM9A5a0ncF2B46mjObmCWt2hkkcf9PsnLU=;
+        b=pPYjuEfxrNSZeGfv6SdAZlyQRnO6jFXpmDpYYQJQy+Vk7uZy/GPuqqTxFCfMthx8Sw
+         s9j61SEkN3rJSPogjm/bLuh2AstOMVA8D0sGafsjKDAgHgVYQ4xVog/9zeRUmO9QF1Ze
+         O0/oed41ATP/HJCK3+Za8H8Hs6zc4D2uhQk/wpm1Tlthpk2eWoNawfU22QErDOUYOmV4
+         rkgxPo0qVR5TVQ3D3H4kJ2d/aj8lmsgDaVifsyjqJquyrieVCwvSal9tm/rzeKCmAyF6
+         rLuP8yFH9emOgjlp9+uDk4uq799+9aXMQRBucGcx29JQcyMXDSte/7wcE9wcyxfS0a/Y
+         wP0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691211881; x=1691816681;
+        d=1e100.net; s=20221208; t=1691211882; x=1691816682;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=n+OogCcDE6SBXq8d85cFls+RFceySrodLASDp6pcyd4=;
-        b=SQj35d0Dp6CgmEsNSPWlODkAQpbd3vAasPNsI9cxMO3aKwBR6tNZc5HEeAaagecte9
-         TEJy9nSJkCP3Snh7GG31qrmkjcOngN1EbMp3V4n6+u73/gLBoEOkMAVvxDaUaZtF3F+F
-         zwbrQYqCRCLjfcXFNEilKBXugQk3GNc3NE6I4d6TVnbVluoropzuatOmaGCv8TdBTUnP
-         qLcVuQ/5FcpCISBkS6fHJOSDeCU2+A9omq4w8lNfAfN/ahHUVDa4C8yHbMUn1PI5Zy3e
-         ictZm6Cp43vmEHiwepzYfjYD4aJTR9lSdVF3ftV8QBa90qyQr7oOzDbB7pcQWhxx5YhR
-         s0lA==
-X-Gm-Message-State: AOJu0YxcP/DAyc/IwRsFUuPO4hI/w+zme5IQJp9pdYoPFgOG7c7RlEPa
-        Hgd8Z9TbXiAVM4BaTpZ9VnQbAukzbyY=
-X-Google-Smtp-Source: AGHT+IGpuhFHq2HvvizFLuKxAMN5fYGb8uyeLi/Mws5tY8cKtsD6Mb7bSmb5ZhvojHQn9dktZ4Zfjg==
-X-Received: by 2002:adf:e909:0:b0:317:3f70:9dc4 with SMTP id f9-20020adfe909000000b003173f709dc4mr2577453wrm.31.1691211881391;
+        bh=A8CTofYNZZM9A5a0ncF2B46mjObmCWt2hkkcf9PsnLU=;
+        b=J5KCzrsaPAjAzJQc12CCvZxB93le/VDh5knyaPY61J4j2pkDapw/3v/ayB1X2sG+E8
+         MAQ3i3CBGPye0r6TtonSO8A764TRmTwA90PiRU+XW5Xb0WgSnKkpxeAG4A30F/mPIxso
+         eu/wa2wyJqeJyYgUaWR/UvZUcGkNToosYboBb+ZD+leSscNDe7cix+yTX+4fjxDvdP/+
+         Q98AqaAw2rVOfcXICUb1NMHccKp96Fq2Qunegvy+z+3yzg1qpbowbykuFEURWQ7oCf31
+         69pV74gy0NN+M54SkaHr+Qtn/vSuMNZeMyXiX5A6086bEsupkIqlNdi+K/OPgI+VPR+X
+         wLHg==
+X-Gm-Message-State: AOJu0Yw+HXXixNdJb+NjwVs3zq4Fz13gD8OOvyDw8l/QbbUnA304mMar
+        fahxoCUbOQmukLH4mHkfToQupgHWU28=
+X-Google-Smtp-Source: AGHT+IEH2YDWSUnhEgfWCGgR+98w6FawDbtFktZAaEwW0rwhcX5E0pG0uL5OEd/UV2sidXjqSrU53w==
+X-Received: by 2002:adf:e253:0:b0:317:5e73:7594 with SMTP id bl19-20020adfe253000000b003175e737594mr2855909wrb.28.1691211881854;
         Fri, 04 Aug 2023 22:04:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c17-20020adfe711000000b00317afc7949csm4112592wrm.50.2023.08.04.22.04.41
+        by smtp.gmail.com with ESMTPSA id z12-20020adff1cc000000b0031434c08bb7sm4126639wro.105.2023.08.04.22.04.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 04 Aug 2023 22:04:41 -0700 (PDT)
-Message-ID: <0bce4d4b0d5650edf477cbbcc9f4e467b7981426.1691211879.git.gitgitgadget@gmail.com>
+Message-ID: <d023c297dcac0bb96f681dc1fc0116a649c2efec.1691211879.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
 References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 05 Aug 2023 05:04:35 +0000
-Subject: [PATCH 1/5] trailer: separate public from internal portion of
- trailer_iterator
+Date:   Sat, 05 Aug 2023 05:04:36 +0000
+Subject: [PATCH 2/5] trailer: split process_input_file into separate pieces
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,76 +67,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-The fields here are not meant to be used by downstream callers, so put
-them behind an anonymous struct named as
-"__private_to_trailer_c__do_not_use" to warn against their use.
+Currently, process_input_file does three things:
 
-Internally, use a "#define" to keep the code tidy.
+    (1) parse the input string for trailers,
+    (2) print text before the trailers, and
+    (3) calculate the position of the input where the trailers end.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Rename this function to parse_trailers(), and make it only do
+(1). The caller of this function, process_trailers, becomes responsible
+for (2) and (3). These items belong inside process_trailers because they
+are both concerned with printing the surrounding text around
+trailers (which is already one of the immediate concerns of
+process_trailers).
+
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 12 +++++++-----
- trailer.h |  6 ++++--
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ trailer.c | 40 +++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/trailer.c b/trailer.c
-index f408f9b058d..dff3fafe865 100644
+index dff3fafe865..16fbba03d07 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -1214,20 +1214,22 @@ void format_trailers_from_commit(struct strbuf *out, const char *msg,
- 	trailer_info_release(&info);
+@@ -961,28 +961,23 @@ static void unfold_value(struct strbuf *val)
+ 	strbuf_release(&out);
  }
  
-+#define private __private_to_trailer_c__do_not_use
-+
- void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
+-static size_t process_input_file(FILE *outfile,
+-				 const char *str,
+-				 struct list_head *head,
+-				 const struct process_trailer_options *opts)
++/*
++ * Parse trailers in "str" and populate the "head" linked list structure.
++ */
++static void parse_trailers(struct trailer_info *info,
++			     const char *str,
++			     struct list_head *head,
++			     const struct process_trailer_options *opts)
  {
- 	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
- 	strbuf_init(&iter->key, 0);
- 	strbuf_init(&iter->val, 0);
- 	opts.no_divider = 1;
--	trailer_info_get(&iter->info, msg, &opts);
--	iter->cur = 0;
-+	trailer_info_get(&iter->private.info, msg, &opts);
-+	iter->private.cur = 0;
- }
- 
- int trailer_iterator_advance(struct trailer_iterator *iter)
- {
--	while (iter->cur < iter->info.trailer_nr) {
--		char *trailer = iter->info.trailers[iter->cur++];
-+	while (iter->private.cur < iter->private.info.trailer_nr) {
-+		char *trailer = iter->private.info.trailers[iter->private.cur++];
- 		int separator_pos = find_separator(trailer, separators);
- 
- 		if (separator_pos < 1)
-@@ -1245,7 +1247,7 @@ int trailer_iterator_advance(struct trailer_iterator *iter)
- 
- void trailer_iterator_release(struct trailer_iterator *iter)
- {
--	trailer_info_release(&iter->info);
-+	trailer_info_release(&iter->private.info);
- 	strbuf_release(&iter->val);
- 	strbuf_release(&iter->key);
- }
-diff --git a/trailer.h b/trailer.h
-index 795d2fccfd9..db57e028650 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -119,8 +119,10 @@ struct trailer_iterator {
- 	struct strbuf val;
- 
- 	/* private */
 -	struct trailer_info info;
--	size_t cur;
-+	struct {
-+		struct trailer_info info;
-+		size_t cur;
-+	} __private_to_trailer_c__do_not_use;
- };
+ 	struct strbuf tok = STRBUF_INIT;
+ 	struct strbuf val = STRBUF_INIT;
+ 	size_t i;
  
- /*
+-	trailer_info_get(&info, str, opts);
+-
+-	/* Print lines before the trailers as is */
+-	if (!opts->only_trailers)
+-		fwrite(str, 1, info.trailer_start - str, outfile);
++	trailer_info_get(info, str, opts);
+ 
+-	if (!opts->only_trailers && !info.blank_line_before_trailer)
+-		fprintf(outfile, "\n");
+-
+-	for (i = 0; i < info.trailer_nr; i++) {
++	for (i = 0; i < info->trailer_nr; i++) {
+ 		int separator_pos;
+-		char *trailer = info.trailers[i];
++		char *trailer = info->trailers[i];
+ 		if (trailer[0] == comment_line_char)
+ 			continue;
+ 		separator_pos = find_separator(trailer, separators);
+@@ -1003,9 +998,7 @@ static size_t process_input_file(FILE *outfile,
+ 		}
+ 	}
+ 
+-	trailer_info_release(&info);
+-
+-	return info.trailer_end - str;
++	trailer_info_release(info);
+ }
+ 
+ static void free_all(struct list_head *head)
+@@ -1054,6 +1047,7 @@ void process_trailers(const char *file,
+ {
+ 	LIST_HEAD(head);
+ 	struct strbuf sb = STRBUF_INIT;
++	struct trailer_info info;
+ 	size_t trailer_end;
+ 	FILE *outfile = stdout;
+ 
+@@ -1064,8 +1058,16 @@ void process_trailers(const char *file,
+ 	if (opts->in_place)
+ 		outfile = create_in_place_tempfile(file);
+ 
++	parse_trailers(&info, sb.buf, &head, opts);
++	trailer_end = info.trailer_end - sb.buf;
++
+ 	/* Print the lines before the trailers */
+-	trailer_end = process_input_file(outfile, sb.buf, &head, opts);
++	if (!opts->only_trailers)
++		fwrite(sb.buf, 1, info.trailer_start - sb.buf, outfile);
++
++	if (!opts->only_trailers && !info.blank_line_before_trailer)
++		fprintf(outfile, "\n");
++
+ 
+ 	if (!opts->only_input) {
+ 		LIST_HEAD(arg_head);
 -- 
 gitgitgadget
 
