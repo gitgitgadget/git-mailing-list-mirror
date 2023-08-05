@@ -2,118 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED5BC0015E
-	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 14:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1227C0015E
+	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 15:30:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbjHEOwu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Aug 2023 10:52:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53642 "EHLO
+        id S229910AbjHEPas (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Aug 2023 11:30:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbjHEOwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2023 10:52:49 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8642F4224
-        for <git@vger.kernel.org>; Sat,  5 Aug 2023 07:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691247162; x=1691851962; i=l.s.r@web.de;
- bh=Fhy5TETtvnwPALwdwUr9h0Y9IJ5VEykcHblc/XrfwkM=;
- h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
- b=OwCFGM1t0y5tFpvpIxnIdv/3TdXyDk2uyeUkvj1+xBvJG+WIdWuyaXMbZ7Vtn51pYX2kuao
- yuyvyg0IMJ08OnjdFTf5zr7gBWkxrBLuZAOO4hpPuTXXm71PzP6MQA/4IGuJuvQFeX5FlGx1t
- Re4CundfWaVD+2LLGJDayQNd/qoctbu0igfswwbRXg/AjiQhl4md6yuO93ZBDcQlvdwp7fmwu
- CbrvAY0JmDPaW6x0V7G6sJjHSutqdEb/A1D7UNZr1kduSI0rSZhP746Xmk5xaJMUX8RrOQNun
- IcndeXu36gXDk3hcBKDRvNwoubGhbTvbmefUpONdvAYJWJwzZSrg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N9431-1pnNnB38vX-0165Ys; Sat, 05
- Aug 2023 16:52:42 +0200
-Message-ID: <a3a93950-9a0c-d68c-a32a-06c83819d72b@web.de>
-Date:   Sat, 5 Aug 2023 16:52:42 +0200
+        with ESMTP id S229576AbjHEPaq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2023 11:30:46 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 513CE139
+        for <git@vger.kernel.org>; Sat,  5 Aug 2023 08:30:43 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1bbc64f9a91so27035585ad.0
+        for <git@vger.kernel.org>; Sat, 05 Aug 2023 08:30:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691249442; x=1691854242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cnj6yPo0Ii5xJGnH/MMYZkiDzwvis9mfBJ5AisA/Dng=;
+        b=qIt8a6M2W9+d9VK9nazQyz2M6kOCBFwvsYY6D8aPD9x920G9gaZSDmP4ZmMkBXaomT
+         2ikjIApOW8yyrKTr6qUYTo7KioddXYsqtXaC2658PVlVNZPNrcALqJswE7feBt27ukoU
+         ic4Xa1jOSF8lBXmaJ3VgFpUBF6899/mONVC9a0A2UMPHTZNv/EyxvKsw1D5MRKD7KOda
+         TdlNvC8LO2BB3AEHXQM1QbyMMeJmUSZalbYsmZRzD/tN82nuMFwOquPTgI0+fqaa3loo
+         JvcJ4lBO9uxayrqcWQYvaSBWhM9wAAmr3LArPyOdXaNHZR/mARLUNINwrAGXiSUG1AkJ
+         z3Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691249442; x=1691854242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Cnj6yPo0Ii5xJGnH/MMYZkiDzwvis9mfBJ5AisA/Dng=;
+        b=MpsORlAyn7BNExbZMjimRnnXxqBk/IhxqqV4YOZSbviXRVUgK7GLjg2+9gZmjAeayt
+         EFhV/siocKqrNWqpKzhmWd+0yzNs2dVaiVmAT8w100f37Js2cNuLrD9xElKJ6GxmtM08
+         ANIfUAxOyglU/VULEgSINZ3NIxmRvx2NRA7FrgHyvq+tVxVr3DaJWKh0zxfcGG6qj/Hd
+         86C1kAbPO8l70SFh/MXJAy5ZpljGw7Sqy5sZNx/6wJ2MZxOg38Ux//OTJH97sjDfCQWx
+         YOlrDv/1YBqd6W84mVnaTTWub94yOaKaYSX+mqLvzgJKLmHJYTNhpqkVpxKjsXsb9FgE
+         ImIw==
+X-Gm-Message-State: AOJu0YylDzTnKW44BmGB4pV1ObjpZvuznjXdad0SyB8/MbGdURew4+mw
+        8oyXyVF3pr1honh/EJCRNDB1XdTg+mRhLg==
+X-Google-Smtp-Source: AGHT+IFwY5KarJ1uxqKIZBm1MQmD3Ut9Uh0QFeaP6iBZAuUaAWwfLGYs4Fwz7qo8oW+3u53tMYCOtw==
+X-Received: by 2002:a17:903:248:b0:1b9:cf52:2bcf with SMTP id j8-20020a170903024800b001b9cf522bcfmr5852149plh.0.1691249442475;
+        Sat, 05 Aug 2023 08:30:42 -0700 (PDT)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id w5-20020a170902d3c500b001bbaf09ce15sm3637024plb.152.2023.08.05.08.30.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 05 Aug 2023 08:30:41 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Git l10n discussion group <git-l10n@googlegroups.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Teng Long <dyroneteng@gmail.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.42.0 round #1
+Date:   Sat,  5 Aug 2023 23:30:38 +0800
+Message-Id: <20230805153038.7225-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.14.0
-Subject: [PATCH v3 8/8] parse-options: simplify usage_padding()
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
- <xmqqo7k9fa5x.fsf@gitster.g> <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
- <xmqq351hz5xp.fsf@gitster.g> <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
- <xmqq4jlxuiuu.fsf@gitster.g> <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
-In-Reply-To: <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xp6kkT0eUScakfRHKyvIJHF1r6B70THnHsnHSNEQIbfeWxEumJr
- E93i64E/uW78K8ZGHT5kSTLLGDMpZdgkSMOKFslcTgEgJ93UPxZ0T06R1x65qxtB+pAVkZZ
- 5hjm4OAHOiVg1X7K3s6RTaINbsy8JmIjQN+ZPKqVyDpW3QeBbZLqTmcJmVmw7WZJii5hSqx
- YW7mG3HPmNuhCnDctamsw==
-UI-OutboundReport: notjunk:1;M01:P0:6b3ljiP9AAM=;nfYtRW9uwr8ZeobxMbqcmNRO75+
- cwpPTN8RmFcoKilAw5pkZLout8QKimgBsPkkMNG1LcWA7XGUBZDEfnEq0J22aJixcR36XYTiu
- Z7+GND3UgKTAxFg3zINVDKCtz4BGwyB/0iZcLkbgTLafeqTs299oVU6IfHycJGjZ96TNQt5My
- 0OcouWF9zjXLn7RP4L3CZyMQqQF9zKwrz1srIU3EDiaWqKBeGAj8nziRM42IgcciVWqLg3gCI
- LwvOFIGb+i0b0tVFlO3TvIt7ulhoD70bICZVvvM7S73IV2oTWVzjqN/Od3JVCsyd5GngLx+hG
- rENofUoGstYKFXOQTsJC+cU9iL2t/dy0Qij43ksqRn6xUzUm/aWsLu9UPkU2uE60JdUleF7Lo
- ldLtdNFXkanIHXB2P1keEW9v0Nyocdl0nTXaJpz9Qbty31b7Anp3PHL9MnYNg8dcsKSHn6gvY
- mcts6akqnSEk59vwnJ3YZAdad6jl2J0eLjGvlm90BItLQyGVhRhKc+u97vVV9HltT08dAl0aT
- mmhegPoKsB/jM2JUMswJ3oZlDEvyvYiuyG9AmCrO8NhSOD4h1BjTNjbSTcp9eYCLjgSuu5clc
- YGN1IbIFqsUf/u3sEGtGdnLNpV8dYQtKLSt05vy3n4dUa5SyEY9FAqz5qS7f44E42/yDPkKJ3
- piYz0F3GL7JADkTWTs5FWJXxzxnJTj44xqh+6MhDUvrE/Ek6Gir+ip6tvD9GQcxl9FXIg7NrS
- gLeKSpYddPcY2zxxqT0nejI0CyCipEunFbRE47pxtegWb+YK9w3bNq6j2hhnoXguPRPM96cOC
- tN92tI4eC0+3n4NcnzRfii0+RuL4ImaZ38YJHCRuUNDKoyck6FA4MUDUoNCqmwxznJM1jh2YM
- 1C17Clf8tCZLpUFXq9m1qUxYL1tzR3uDxbcpH5oot7rqx7FgN3jWq0OBRNj2zF6zUFtI3iUbI
- AkI0XJndJXyVP1Q5bTYwYSkHhqg=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-c512643e67 (short help: allow a gap smaller than USAGE_GAP, 2023-07-18)
-effectively did away with the two-space gap between options and their
-description; one space is enough now.  Incorporate USAGE_GAP into
-USAGE_OPTS_WIDTH, merge the two cases with enough space on the line and
-incorporate the newline into the format for the remaining case.  The
-output remains the same.
+Hi,
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Removed an extra empty line added mid-submission, so the cover letter
-stats are off by one.
+Git v2.42.0-rc0 has been released, and it's time to start new round of
+git l10n.  This time there are 50 updated messages need to be translated
+since last release. Please send your pull request to the l10n coordinator's
+repository below before this update window closes on Sun, 20 Aug 2023. 
 
- parse-options.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+    https://github.com/git-l10n/git-po/
 
-diff --git a/parse-options.c b/parse-options.c
-index 4a8d380ceb..b00d868816 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -1025,21 +1025,14 @@ static int usage_indent(FILE *outfile)
- 	return fprintf(outfile, "    ");
- }
+As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
+following description of the new l10n workflow is from the "po/README.md"
+file.
 
--#define USAGE_OPTS_WIDTH 24
--#define USAGE_GAP         2
-+#define USAGE_OPTS_WIDTH 26
 
- static void usage_padding(FILE *outfile, size_t pos)
- {
--	int pad;
--	if (pos =3D=3D USAGE_OPTS_WIDTH + 1)
--		pad =3D -1;
--	else if (pos <=3D USAGE_OPTS_WIDTH)
--		pad =3D USAGE_OPTS_WIDTH - pos;
--	else {
--		fputc('\n', outfile);
--		pad =3D USAGE_OPTS_WIDTH;
--	}
--	fprintf(outfile, "%*s", pad + USAGE_GAP, "");
-+	if (pos < USAGE_OPTS_WIDTH)
-+		fprintf(outfile, "%*s", USAGE_OPTS_WIDTH - (int)pos, "");
-+	else
-+		fprintf(outfile, "\n%*s", USAGE_OPTS_WIDTH, "");
- }
+## The "po/git.pot" file is a generated file, no longer in the repository
 
- static const struct option *find_option_by_long_name(const struct option =
-*opts,
-=2D-
-2.41.0
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+
+Everyone can generate the "po/git.pot" file with the command below:
+
+    make po/git.pot
+
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
+
+
+## Update the "po/XX.po" file, and start to translate
+
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
+
+    git pull --rebase git@github.com:git/git.git master
+
+Then update the cooresponding "po/XX.po" file using the following command:
+
+    make po-update PO_FILE=po/XX.po
+
+Translate the uptodate "po/XX.po" file, and create a new commit.
+
+
+## Refine your commits, send pull requests
+
+In the "po/XX.po" file, there are location lines in comments like below:
+
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
+
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
+
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
+
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
+
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+ * Remove both filenames and locations:
+
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Sun, 20 Aug 2023. **
+
+
+--
+Jiang Xin
