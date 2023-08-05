@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72089EB64DD
-	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 04:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21472C0015E
+	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 04:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbjHEEpr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Aug 2023 00:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49486 "EHLO
+        id S229609AbjHEEpu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Aug 2023 00:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjHEEpo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2023 00:45:44 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30B54ED6
-        for <git@vger.kernel.org>; Fri,  4 Aug 2023 21:45:42 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe28e4671dso4713113e87.0
-        for <git@vger.kernel.org>; Fri, 04 Aug 2023 21:45:42 -0700 (PDT)
+        with ESMTP id S229510AbjHEEpp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2023 00:45:45 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DC44EDB
+        for <git@vger.kernel.org>; Fri,  4 Aug 2023 21:45:43 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fe426b86a8so18859165e9.3
+        for <git@vger.kernel.org>; Fri, 04 Aug 2023 21:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691210741; x=1691815541;
+        d=gmail.com; s=20221208; t=1691210742; x=1691815542;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d5C2RUivRPkhjM3FHZHrxtCNM82473MLJmyqe8BS37I=;
-        b=dM/+EmCt+fmwR8rhe/ARasUtzsdjraAlHtYvhJ/9YvI0ULSz7/MlTNKVYMKrtYQwKO
-         6HDXY+snL8JpDqT3PWNXam7LlSksAvp8IxbPfvqnkKtwfP65q/ngfaVui/RvpNkryehl
-         k80+qXDjPh3QRBREcWtaYgO9QLuVJDMAqAg+HkgsWQEMT5HZSLMMEJP9IA31CJocKPR0
-         byHtV/xhkOgQ6xOxREh8GPddDoGouKBReJKEEqYtoeEKabzBdDHle12i9xHNt+6ObdfN
-         vc/1NnYk3MUV/HyWTvtVKp24YUYUaUHoqSbWjSusc+gpUTwgPjj/2LdSXsYvUu+V2a/2
-         nbBw==
+        bh=IyCvYTpWmrnQsJJcADomOscmglATYsrcsKtWx4utdxM=;
+        b=MjNLxfMSPicwk9nJYkVX7ZVJfYWwRkhRFxHsYISjUe0SqCQlUFswvfNilPyviqpU/y
+         ZWTq4B72iRDzm1S2U1A2jUs0AXcRR9i6c+f2p3tPSQ5clM6/3EEkWgfS9ABxc0SygOdc
+         wpxJ76i74zw0XSVvQyB26F+X21CZ72Ils796amivfMl7N/z0vz+wGCdC0PlWjoYJ8Rtx
+         xQzWmAAInym33b/KAO+q1aV9QEB1Ae9E0ucaHu77nlN6xxDEoLqwWq55lU8BNZPAxRMq
+         rkQYm7PGs4U2eDhPE+o5C8Bpl0gGCOyOXzCwFZ/BpehSMfFOL08lthcXRRulyXYjKmmv
+         fWMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691210741; x=1691815541;
+        d=1e100.net; s=20221208; t=1691210742; x=1691815542;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=d5C2RUivRPkhjM3FHZHrxtCNM82473MLJmyqe8BS37I=;
-        b=BFmdLvtmGVoyajxn7RGUol03s0p45FL1yokjDSjCtyYl+JO/aIaz5WXSuuLQn9X+cx
-         HHFNhIohW8tmOomkzpb9qLvR16nk1Dn6OHRarIaAPmU8ptR4tYRWpqMn99OAkVbLy86P
-         5rv/TdlW4rHz+4+JRjQNAybKg/By1q0bI/NewgF7t9KY+x9+nrssUPikHYCBUHkffFZa
-         qGfdJ9yCMdrUJ60G1Oq/8itRR2bLFReElSM61+Iv6psYWDaZayhrB1KCRhE/KlVB5Brx
-         7371OLF9sKQ9ntEQKYBFBKrAVxZJd2yIQmRIyJHOqkJCwylCSABdpZNFRa+vZWvRvuuO
-         xrpg==
-X-Gm-Message-State: AOJu0YyFC0zhwsRvUBZwg5U6J359pGKgjVqdiiMesXfMi2HhCQanwhGg
-        gpRLyOm0+tZP9DjOeXrIKZvcqNvV/18=
-X-Google-Smtp-Source: AGHT+IE2dFQjN1HUyMw9HYYDMDA2h7dGPqaQqOlio9OTpgn/vTVm140zWjVKvzGsa6Vdzo1bIkkvNw==
-X-Received: by 2002:a05:6512:159c:b0:4f9:5ca5:f1a6 with SMTP id bp28-20020a056512159c00b004f95ca5f1a6mr3197256lfb.17.1691210740457;
-        Fri, 04 Aug 2023 21:45:40 -0700 (PDT)
+        bh=IyCvYTpWmrnQsJJcADomOscmglATYsrcsKtWx4utdxM=;
+        b=eORwrBIy33GDu7/ENVBfyzdw6pzxW6wZJw4Qa26ACzDrz7CGCmddxj2WzLQKue47pi
+         5LTOR95JpVYjMuLEPI3fT4stHpfW2Mfblo+XZKHAxP4AEAF79D1kGrO43RcyTjhhk31c
+         Uq5j9qU8vjSWGOYFhpri8PQjiuL1li6525GzTBllXdHJeGyroVwkOFXXJKJP6LaPoPuC
+         hVecUq4QFJLQ29xp7l8zWopoegEEJ8DdM5xV08WWHw7NYQX5axIsj8PT1GZmGBfMkn4Q
+         RQKpQs70ZJN6hE3PTWO9wWWE9HTCPwE6KTV+GSJQi8w6Lwa+R92bdl/H/k3sNQu8bCD0
+         +IeA==
+X-Gm-Message-State: AOJu0Ywg0fqZGGPflnblK28q6wvq8fTjmD17a63VpykBkIluczMIH08N
+        FP6Vy/Ko6fD0ql94+RjmvVvJb+8cIxc=
+X-Google-Smtp-Source: AGHT+IGgSi3+JaZ0t1zA1WnuYHGiLpQTXtTRePvL52SUmSZ6E2DLTO5PkH5TqsHfPV6Adl+ANAw57A==
+X-Received: by 2002:a1c:7211:0:b0:3fe:19cf:93ca with SMTP id n17-20020a1c7211000000b003fe19cf93camr2922766wmc.8.1691210742033;
+        Fri, 04 Aug 2023 21:45:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h20-20020a05600c261400b003fe2ebf479fsm3930051wma.36.2023.08.04.21.45.40
+        by smtp.gmail.com with ESMTPSA id q7-20020a1cf307000000b003fa98908014sm8313623wmq.8.2023.08.04.21.45.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 21:45:40 -0700 (PDT)
-Message-ID: <100a2297fa3710dc107c095778b86ce3d2a3b0a6.1691210737.git.gitgitgadget@gmail.com>
+        Fri, 04 Aug 2023 21:45:41 -0700 (PDT)
+Message-ID: <68bc89beb2a26e8ae0ae67d1489a06af9fc37fa0.1691210737.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
 References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 05 Aug 2023 04:45:34 +0000
-Subject: [PATCH 2/5] trailer test description: this tests --where=after, not
- --where=before
+Date:   Sat, 05 Aug 2023 04:45:37 +0000
+Subject: [PATCH 5/5] trailer --no-divider help: describe usual "---" meaning
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,24 +67,25 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
+It's unclear what treating something "specially" means.
+
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- t/t7513-interpret-trailers.sh | 2 +-
+ builtin/interpret-trailers.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 5b31896070a..ed0fc04bd95 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -792,7 +792,7 @@ test_expect_success 'overriding configuration with "--where after"' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'using "where = before" with "--no-where"' '
-+test_expect_success 'using "--where after" with "--no-where"' '
- 	test_config trailer.ack.key "Acked-by= " &&
- 	test_config trailer.ack.where "before" &&
- 	test_config trailer.bug.key "Bug #" &&
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index cf4f703c4e2..a7623dbfb2e 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -109,7 +109,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "unfold", &opts.unfold, N_("join whitespace-continued values")),
+ 		OPT_CALLBACK_F(0, "parse", &opts, NULL, N_("set parsing options"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_parse),
+-		OPT_BOOL(0, "no-divider", &opts.no_divider, N_("do not treat --- specially")),
++		OPT_BOOL(0, "no-divider", &opts.no_divider, N_("do not treat \"---\" as the end of input")),
+ 		OPT_CALLBACK(0, "trailer", &trailers, N_("trailer"),
+ 				N_("trailer(s) to add"), option_parse_trailer),
+ 		OPT_END()
 -- 
 gitgitgadget
-
