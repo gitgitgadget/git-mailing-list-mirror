@@ -2,163 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE7FCC0015E
-	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 14:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D35BC0015E
+	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 14:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbjHEOdR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Aug 2023 10:33:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49118 "EHLO
+        id S229528AbjHEOhv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Aug 2023 10:37:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjHEOdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2023 10:33:15 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D204F10DC
-        for <git@vger.kernel.org>; Sat,  5 Aug 2023 07:33:13 -0700 (PDT)
+        with ESMTP id S229441AbjHEOht (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2023 10:37:49 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBC7FE7
+        for <git@vger.kernel.org>; Sat,  5 Aug 2023 07:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691245988; x=1691850788; i=l.s.r@web.de;
- bh=7rDE2yRaIzQ0+43GeeFqVY725w3zZi2Ig+p3cYffsOk=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=UiHVhJnIV5Vxbzls21NcvrrQtHXYFbg92ULmapugqa1GhBtTKxf47V2KyX/DnO3UsQggmjf
- QY/9XF+xi/kQuCX82wy9AF2qqzrR0zuUiOyLr3pUM9aGFBWDLSOAUK0pAJ5h7Pn7xIYhiEFLT
- glYjkWnUkVMqtzU75GYm5jibJZoShH61X1cuqXOL+Ya1bIZDkN5zvQ5kMLxxzSXkfbATSp+C/
- WMWcrfNgyp3UeSDaMgqCsWTUS6dIufyNu9VgkW25NPQSjUeBDDpUeJ80Bx9Ywj/DOvIMqZF1O
- 9FOkQCH47R39ygkn+ZRqQ0AxGXpNAGrH3H2NyO11PAPs2UITftng==
+ s=s29768273; t=1691246261; x=1691851061; i=l.s.r@web.de;
+ bh=k6v4gvXR0gGDlIXmis3AUbBW039nh4y/TI6Isi8pHTE=;
+ h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=WTpXi0J1jeONg+cSZM8RkXm6P5jyd4toF5fCk6CquA7N37M7/XqkJulA3ZlxsLwN4hxog6v
+ 4fzrgAFtCRz1q/9aJ7tfFJlM8yLiR28SidReaIF/T+479AJovTgbM7fUB7yLgzR2EgUysD/Ye
+ 0VnIVRDgeY8R0NmwfcJQ2KM2ywZr9QmRVfthiMql1L0PfLZysAq9jLwzk27voxO/VND5ztRGe
+ dGqIqvDARublsf7QAIDoHsgUlN6PQuQzZ/mZKeT1s22rA7OfrmmIe2fkGhbfKOPRyq8fCYjP9
+ UVGBkqNAW+g/sIUdBoYowFSURDyAQT4yvzU0lt8oUKBW0m0Z9fxQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MVJRb-1qI5Ct111j-00S6gp; Sat, 05
- Aug 2023 16:33:08 +0200
-Message-ID: <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
-Date:   Sat, 5 Aug 2023 16:33:07 +0200
+Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MECCP-1qaIka0vob-00AFth; Sat, 05
+ Aug 2023 16:37:41 +0200
+Message-ID: <d9bb18cc-0290-c244-c2ef-19050d69d584@web.de>
+Date:   Sat, 5 Aug 2023 16:37:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.14.0
-Subject: [PATCH v3 0/8] show negatability of options in short help
+Subject: [PATCH v3 1/8] subtree: disallow
+ --no-{help,quiet,debug,branch,message}
 Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
 References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
  <xmqqo7k9fa5x.fsf@gitster.g> <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
  <xmqq351hz5xp.fsf@gitster.g> <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
- <xmqq4jlxuiuu.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq4jlxuiuu.fsf@gitster.g>
+ <xmqq4jlxuiuu.fsf@gitster.g> <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
+In-Reply-To: <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3i+rJjIcv+UeWTmd3LG47qO1/f7jsauhWIX50+s2W5PYc7iRgmF
- ngd4sS5S1jcWigYawEmNq/qqwdY4dWaFfJHhwcP8uh0042459BPR5X37cd1ObIZxXcvvAzH
- +5VVUOTDF5yI8NI4y+DJBqngICEcpIQi2+Oo7bLNYilmh2K/CGLn5ZzkFdTQ21vUfJEGjrn
- j8s4FeJAC3K6N7dJWTYXg==
-UI-OutboundReport: notjunk:1;M01:P0:h5DOzpmfaHc=;DL793A2qFeDSTOa4POJkE70XxaW
- OQlx8dZCLFulDrq3KCZwzqygO2N1wS31Z42MWPWh9DCop7LPd9+d5ZE4M4HEWbaKOf5fL5eeS
- ZRUL+dfU3tn82cSeKkDBkqVBIrRgJhfL9X9aZqhpC745CecH1mUgblCnLAjc0xiJU0RbkWmGL
- q7MwYuxC4Rd1/h/KMuhUVB4ka9bWI9w5iW+bf5eRfspg4NxTrdNSdiEA54EOEtAxnErKejyHQ
- T+y2b/7HO18ASIbIAXUhzzqNhFDDVkypOQW3ZNSDVQupyt2dQDxO/bv99y5MRJJfUPqFikHHz
- Wde2Bn0b6SEEa9HbfKQIb+0eDMsICFY887wpcbi496ZfQc5SvgpDHHSO7lenAkHqQBn9y50bj
- YIIqqN20rgrDUooSCN/MHA5zFCPnz59TFrpDXdLvELOheWTQjYwCxWbxH1Ifd0zzGy+8fpncM
- vB5DsZuifZcuvsQWHTROUV0qdJHPgl/JktMhQKO8V6UtjVuRxNiC9DdAk5rUP9FfYBgAYLxWK
- yz8p0DmRqE3v67ZSggLcJkmqyOJu1ZRFFhWw1VEnKnYsL5u4GYLJt5h0UzZL3BTL8SK1xYXTW
- v4E+ePESAps1IBaXLWSGRApj6EXOyEy7LAEfw+q11icV3j6Xg/ZwZjdrsFrx9urvcaVpvzAoo
- m/m8Vcfmzydxw4v1zZYBnKWGV0XRxyUzQaf5hou5NIrQEeT8WVUZqDoB85nsx0evxDJwFgZ38
- piPX7kZ//5oLd712fuojYqplezX1RdVXHAJqVH7B7YFRDLIMARtZluYkMgSYBfwUL+QpSbsN1
- BmxtMWa25WfE+W0UtI78FlDGreloZYQQZMnbQwDAnTB3FTjEYSe+kIYbFgrhNTKNVr0CKaIZ+
- 61f4IpRaMox5BZk5S8mYFhB+RFFKLEEUuMyWWW23UTSxKo9uXAOLkD6OSwgYvLtPSPjrYIkPa
- z/fY8JhRkhDj2XF4n8IsDIvsuRY=
+X-Provags-ID: V03:K1:X1Nqzxs0mVW4vo3GnqmC4VgmOdv+L1Zwspjsx/R/xFg0z9od3dJ
+ 3dt80xZq92j6O9kLk1G1MW8JABRlEomUQhczyu+3zbtC+9QrOOM7TBxrXJIiEZktZCdVl3k
+ lHPxeEIwDlhDdKQB1MhUQTVtILkqULajwt50cxtKMIak93jUAENwmBQh1H9XI3rqLFLrgg6
+ PbuOeaEJ3rmzGA/t8pm0Q==
+UI-OutboundReport: notjunk:1;M01:P0:xIk42tJfR3o=;pCs5AsodWQ246OVihbvgeVFbbUq
+ 53Qi3GBnp24m36uCmW4IRe1FIy5y1+6qmVCinB0F9BBamo5ewPZ5DcW03hMkYXNbdRaRHaqwS
+ Gl65vGHRsXXtAyw4j8xnvPZdx0ptcUQpMWOKDPjXtLzBE7R0OxH21Q29qhDlroTZwZZ5WbTEe
+ 2GETiENKUm/B/n94WxRglttA7xuAu7IcoHR3q5Oato4rqrDODQmW6ZetW0R/w0RFP0Q5rwqFC
+ D0ezqzTzMw5EdQ+Fq1Vjf4NSmGLu8tJKt5d71PpjY075j/ch9LwzBaAR5PSsdcPqsk7HcsHNK
+ OaOKEkCMaPfMV+C80cwXBPhSg9BqeeAwpMKXY1z4OrQYl7O8NYviyePxGSJFgD/Tm+k/y0iaa
+ MUI8gb/ZXcQ46x7LOYt7fAXCOEw3ignR3Xt+J3/N33tsOmG1aIRWZ9X/4nWUl8H9ap7KQFvPr
+ yn5tpaQX0PDPsNl70doM9HVnlN7vK4CSoiJv0z2rJZ38lLTbaA8YzBvuFXg2GSBpq3fLMjdPu
+ Iw67hNa8kxZc+BjscdpZsAlPrPa3DI7gXRglwvjF1iWZyXwWjdb5e7hpNWUtysxqA6Te8o0r/
+ pdND2+Je3b6sGpHfA+4xZi0WIzxCETnbxRD7r3iY6UYYkxIYPunDeihLW/qsWxnpnoh65hy5t
+ p4hxXV/jS0MDep35OuaER6KehRMV0HW6wqbHshVRdBuA+NLdmvDvVQEEin7uI4/I1BPizXuSQ
+ TldW6PndNYmj5SbLTMsLHHocSU0fVPeGUYKXUiWMv9mcB3p5ZlUQ7RF80yxsHvH9a9LcOjisT
+ unVm2hSOCFZ2+oUNEjPUASRf86zBRjI7P8Owy23frK4ZFAuQk1NhPIEccbjF1xmOIZFWC8nKi
+ Z5MdgJlu/XaEtYZzxHo2yJwEWXCypH2Wt7acV0IG5CIvd/NvGFbonErGj/77VEkRtjx39Elpr
+ U6I7FQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v2:
-- Rebase, affects only patch 5.
-- Add patch 7 for documenting negative options on their own line.
-- Add preparatory patch 6.
-- Add bonus patch 8.
+"git subtree" only handles the negated variant of the options annotate,
+prefix, onto, rejoin, ignore-joins and squash explicitly.  help is
+handled by "git rev-parse --parseopt" implicitly, but not its negated
+form.  Disable negation for it and the for the rest of the options to
+get a helpful error message when trying them.
 
-  subtree: disallow --no-{help,quiet,debug,branch,message}
-  t1502, docs: disallow --no-help
-  t1502: move optionspec help output to a file
-  t1502: test option negation
-  parse-options: show negatability of options in short help
-  parse-options: factor out usage_indent() and usage_padding()
-  parse-options: no --[no-]no-...
-  parse-options: simplify usage_padding()
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ contrib/subtree/git-subtree.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
- Documentation/git-rev-parse.txt    |  10 +--
- contrib/subtree/git-subtree.sh     |  10 +--
- contrib/subtree/t/t7900-subtree.sh |   2 +-
- parse-options.c                    |  70 ++++++++++-----
- t/t0040-parse-options.sh           |  44 +++++-----
- t/t1502-rev-parse-parseopt.sh      | 131 ++++++++++++-----------------
- t/t1502/.gitattributes             |   1 +
- t/t1502/optionspec-neg             |   8 ++
- t/t1502/optionspec-neg.help        |  12 +++
- t/t1502/optionspec.help            |  36 ++++++++
- 10 files changed, 199 insertions(+), 125 deletions(-)
- create mode 100644 t/t1502/.gitattributes
- create mode 100644 t/t1502/optionspec-neg
- create mode 100644 t/t1502/optionspec-neg.help
- create mode 100755 t/t1502/optionspec.help
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.=
+sh
+index 7db4c45676..e0c5d3b0de 100755
+=2D-- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -33,19 +33,19 @@ git subtree split --prefix=3D<prefix> [<commit>]
+ git subtree pull  --prefix=3D<prefix> <repository> <ref>
+ git subtree push  --prefix=3D<prefix> <repository> <refspec>
+ --
+-h,help        show the help
+-q,quiet       quiet
+-d,debug       show debug messages
++h,help!       show the help
++q,quiet!      quiet
++d,debug!      show debug messages
+ P,prefix=3D     the name of the subdir to split out
+  options for 'split' (also: 'push')
+ annotate=3D     add a prefix to commit message of new commits
+-b,branch=3D     create a new branch from the split subtree
++b,branch!=3D    create a new branch from the split subtree
+ ignore-joins  ignore prior --rejoin commits
+ onto=3D         try connecting new tree to an existing one
+ rejoin        merge the new branch back into HEAD
+  options for 'add' and 'merge' (also: 'pull', 'split --rejoin', and 'push=
+ --rejoin')
+ squash        merge subtree changes as a single commit
+-m,message=3D    use the given message as the commit message for the merge=
+ commit
++m,message!=3D   use the given message as the commit message for the merge=
+ commit
+ "
 
-Range-Diff gegen v2:
-1:  26c03bd70c =3D 1:  ee280b3484 subtree: disallow --no-{help,quiet,debug=
-,branch,message}
-2:  ad9e7d1393 =3D 2:  556e79ce55 t1502, docs: disallow --no-help
-3:  1bb68a4a40 =3D 3:  274e65ec1c t1502: move optionspec help output to a =
-file
-4:  47ab167d1c =3D 4:  89b0455305 t1502: test option negation
-5:  961c5dfcf7 ! 5:  7cd3abcff7 parse-options: show negatability of option=
-s in short help
-    @@ t/t0040-parse-options.sh: usage: test-tool parse-options <options>
-     +                          set file to <file>
-
-      String options
-    --    -s, --string <string>
-    -+    -s, --[no-]string <string>
-    -                           get a string
-    +-    -s, --string <string> get a string
-     -    --string2 <str>       get another string
-     -    --st <st>             get another string (pervert ordering)
-    ++    -s, --[no-]string <string>
-    ++                          get a string
-     +    --[no-]string2 <str>  get another string
-     +    --[no-]st <st>        get another string (pervert ordering)
-          -o <str>              get another string
-    +     --longhelp            help text of this entry
-    +                           spans multiple lines
-     -    --list <str>          add str to list
-     +    --[no-]list <str>     add str to list
-
-    @@ t/t1502/optionspec.help: usage: some-command [options] <args>...
-      An option group Header
-          -C[...]               option C with an optional argument
-     -    -d, --data[=3D...]      short and long option with an optional a=
-rgument
-    -+    -d, --[no-]data[=3D...]
-    -+                          short and long option with an optional arg=
-ument
-    ++    -d, --[no-]data[=3D...] short and long option with an optional a=
-rgument
-
-      Argument hints
-          -B <arg>              short option required argument
-    @@ t/t1502/optionspec.help: usage: some-command [options] <args>...
-     +    --[no-]pair <key=3Dvalue>
-     +                          with an equals sign in the hint
-     +    --[no-]aswitch        help te=3Dt contains? fl*g characters!`
-    -+    --[no-]bswitch <hint>
-    -+                          hint has trailing tab character
-    ++    --[no-]bswitch <hint> hint has trailing tab character
-     +    --[no-]cswitch        switch has trailing tab character
-    -+    --[no-]short-hint <a>
-    -+                          with a one symbol hint
-    ++    --[no-]short-hint <a> with a one symbol hint
-
-      Extras
-     -    --extra1              line above used to cause a segfault but no=
- longer does
--:  ---------- > 6:  46dcdb902d parse-options: factor out usage_indent() a=
-nd usage_padding()
--:  ---------- > 7:  fdeca0d6d2 parse-options: no --[no-]no-...
--:  ---------- > 8:  08b2d1e861 parse-options: simplify usage_padding()
+ indent=3D0
 =2D-
 2.41.0
