@@ -2,179 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D055AC0015E
-	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 14:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86297C0015E
+	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 14:48:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbjHEOoy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Aug 2023 10:44:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51874 "EHLO
+        id S229816AbjHEOsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Aug 2023 10:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjHEOox (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2023 10:44:53 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDF44224
-        for <git@vger.kernel.org>; Sat,  5 Aug 2023 07:44:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691246686; x=1691851486; i=l.s.r@web.de;
- bh=TmGA97pfbD2hJZUknzp/3HbJ6R/YrUyR9NzX7uqW/JM=;
- h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
- b=EhpE5k7seHv9sZLAlP4mhXW0loHU+39/sHhI/rXzxKL+ZebME+U5ZiyKA/kb+dTYLVZ3HZt
- pgTd7Dch6oYbA9zF9T9bMmhFSQell5XFyZiYzQWtJ4q8OFWu4e6S3fDp70AtOe4Eorbh8WosT
- 8ggQ+ZgtApc4ss8mMSTHi5klRATYM5p6KtftuX7bGZQtxj8/xD+RwMpFA4WNICSzSzOJBIOu6
- MesEQnaYz0kpGw7jY/KT0kLhYtWCdMDZ26evkpSO1LeEDz2QSlJrFl62/8ZUUZ2OnoHiLifE8
- GgFsTzByICrusnRN01JoIc0b+2PmXelY8WeHuRLoKHyvt5dUPeLQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MIc7N-1qeezb0C4D-00EPQR; Sat, 05
- Aug 2023 16:44:46 +0200
-Message-ID: <21b40894-1f1b-9e3e-8fe9-754ca9fe685c@web.de>
-Date:   Sat, 5 Aug 2023 16:44:45 +0200
+        with ESMTP id S229785AbjHEOsC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2023 10:48:02 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137034236
+        for <git@vger.kernel.org>; Sat,  5 Aug 2023 07:47:59 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id 6a1803df08f44-63cf69f3c22so20272306d6.3
+        for <git@vger.kernel.org>; Sat, 05 Aug 2023 07:47:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691246878; x=1691851678;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eaPLKtGGR7dgaQF3fuuY68pyaQVWLEmWgShjrefw56w=;
+        b=qPbqFFSEGX/udRusEgg7VkcAijBMvCWfmBPy+U1wciASz1L1rTKfogiLGpq4L5RBQV
+         MF24m4ix8bupHkLPP53ZdR3WEfmW+fE9oU4gPt6WwI1jNSvRjJE35AUMlCXoeYJ0U9Gk
+         UMOYkbdgetOCxoWFStVr71SBTpcB+lnAGvBgCT5YqFwwpHAhe3szqNimg76tubHSKxgd
+         XLfk5ocPiaeWo1/XDnYfgbOVBqc77NrJndzHJbFzddN5EDVNypuuAtEHve8afkeXCy2h
+         7gBZdNQmQQGJwlCZm9nlBfM4/2/mxREBnyKRs62qereA8krOBYlOoFyW03A8YTw1kG+l
+         dapg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691246878; x=1691851678;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eaPLKtGGR7dgaQF3fuuY68pyaQVWLEmWgShjrefw56w=;
+        b=QnmHPZJp5BbKIPWb/CxN8P/6NLUUGcjY6qVokovMz4LQgkv27iNGgr1V11KN385/td
+         FCafvDgyCYPU03xgqySHPqM/3lStz/jdTCb5cmz8W3kjNKZnOZ8/EGOJAS4BsHvjV6nS
+         oEFU0W02Dr9xSwm+lu+A3ylsMz79Xd6LDAfaC4+jyDBR5THlCig4o57YdOfqcXLpnZpb
+         Mrz7c383rBjNScs1XZp7GmKbyjcptHeSzA3Hy8cpE6gcyj1TxeRsgjPMIlXr3CGJ5wXH
+         zr/pYHZqkDjynH8gCEBSb+7Idd+Nh/h6hNLeyLvMPr94VORbOnKgVBX+75C0s1nEv/x4
+         2P3w==
+X-Gm-Message-State: AOJu0YxQ6Te8YnDrUl1n9MTW7gbJgutWD2wtCUK8xbse9Ntz4q0ReXbX
+        YSzCJMvPrpJ8kbUM3F9ga4Q=
+X-Google-Smtp-Source: AGHT+IEQd1UfTz82cRZSB3Ygl40dlZknCu7YLrIYYoLQmc6veJ6zRFialvpGGtqfif06wM/GxrNNlw==
+X-Received: by 2002:a0c:dc8f:0:b0:629:1659:dba with SMTP id n15-20020a0cdc8f000000b0062916590dbamr4274335qvk.10.1691246878146;
+        Sat, 05 Aug 2023 07:47:58 -0700 (PDT)
+Received: from [192.168.202.112] (pool-141-156-165-177.washdc.fios.verizon.net. [141.156.165.177])
+        by smtp.gmail.com with ESMTPSA id q4-20020a0c9a44000000b006300e92ea02sm1492322qvd.121.2023.08.05.07.47.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Aug 2023 07:47:57 -0700 (PDT)
+Message-ID: <07677f17-be9b-dc46-d204-6fe46d46ebc0@gmail.com>
+Date:   Sat, 5 Aug 2023 10:47:57 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.14.0
-Subject: [PATCH v3 7/8] parse-options: no --[no-]no-...
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1 0/4] Remove obsolete Cygwin support from git-gui
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     mdl123@verizon.net, git@vger.kernel.org, adam@dinwoodie.org,
+        me@yadavpratyush.com, johannes.schindelin@gmx.de,
+        sunshine@sunshineco.com
+References: <20230624212347.179656-1-mlevedahl@gmail.com>
+ <20230626165305.37488-1-mlevedahl@gmail.com> <xmqq4jmsiyhw.fsf@gitster.g>
 Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
- <xmqqo7k9fa5x.fsf@gitster.g> <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
- <xmqq351hz5xp.fsf@gitster.g> <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
- <xmqq4jlxuiuu.fsf@gitster.g> <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
-In-Reply-To: <e4d46d97-1cd4-7fea-afd1-7de5023b1b09@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:whSkK0cosqizpZlrkv5r7EYCPd0Lg6wXMQbL8huXsQLxYKUp5gR
- rSLKvyT1Juw7KZZKJDvQTVxCxfZAy+YoZu5kYw1pr9a3Z4kjit/bsSXW0485FT93F1TSYd5
- N57/DuFicvdHi7H7kUM8O54kC4ZTKMmQwUMuzVz5u1UrCqBgSDrve0pZy6YWhr3rwR2bR80
- VLL2M4wq05N8eWxQ8HHzg==
-UI-OutboundReport: notjunk:1;M01:P0:Q8OIDU8IOAc=;KSDIP4Rit7HRAvYVjcJ3YKFRWc7
- T5okrQtrUvt7bHUeXHnqet4HPfQjbFLAFl6kYcpoX/lYHHCW1P35iwIi+ephI6DrcE7tTnnkF
- 6PP8pp+/8MKuDy7/ZPusbHTRfyCc2qOTG0mAsptxqcsOGcAhAIE1S3H0uhnpZ6HtNUEBr3fFL
- r9/hhW42nmdBwm9ldbizYuINQ/gBqD6WG/8VyjQ1RLA0nGtwJAkWNukzHtz2Oi8pxqVBhPjm9
- 09q2egXbZwJL6O/MaboU2aJroKOn99JdXhKWBqqmvuKzugwzOHSJWbp4w7eGEy4ImD47rt0YQ
- PHT3EK5/D7zKGeq4oay4rPu0G7BPxohk3mvzcLqXRlwuXOa9k1q1v3K9ed6rN6+qXyNVG3WJY
- ak1UbtTz9ng2GrrHdhOppGyqGrBwFflbh+u9a9+afl9BbhKpkhRScv9mGxP9btaKH74OKy3Le
- L+adHr2aCCPyPnD5Lmw/hrulRVmD5yO9/7gRILEyNvhwARgUgpJC93ef94ysD79y4TKNwQY9H
- Wzy+wSeU8wEcP5Zo7VPDI7GMw9GiH+QGfTYFI/WplR8wW+MyHUpAh93uumlHBZG5KSNJS1QHP
- vRHWbpFpmKK3BUQ0b6tUQ+WnUvgh42wd5TJR/7sKOvoh4E+T2GyhHSz+SD1vnyN24lbISXnoK
- ERQVqY8rGH9h/IjwJ7MD0SBnuaRCr4ZXJFbW/+Qjp+AU/QLIe9I/Fuec2jJpw18QnWAd4O5ox
- +mDrNbb24XThoaw/BnGMNIxWN/2un/wYZ1j7Dyu4UfWemD8JOarnAP7KoaodbgDR2LQFfgFVh
- ZrMgAHCpQeyiUxKS2Jg4a67ofwCg/UOLda8eO7rynUdX4gFOHQCP866Pu+J+fGowq//b4QDwg
- hk7QsjXHdppTAVQPhbWNb4sjsh+RnHzOeBmPr7s2CAQfSgQRPhl3u4FAm89Zezu2mY+oa290C
- YZlCy7faNP1sOa/YSwaSGAEt/ic=
+From:   Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <xmqq4jmsiyhw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid showing an optional "no-" for options that already start with a
-"no-" in the short help, as that double negation is confusing.  Document
-the opposite variant on its own line with a generated help text instead,
-unless it's defined and documented explicitly already.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- parse-options.c             | 25 ++++++++++++++++++++++++-
- t/t0040-parse-options.sh    |  3 ++-
- t/t1502/optionspec-neg.help |  3 ++-
- 3 files changed, 28 insertions(+), 3 deletions(-)
+On 6/27/23 13:52, Junio C Hamano wrote:
+> Mark Levedahl <mlevedahl@gmail.com> writes:
+>
+>> === This is an update, incorporating responses to Junio's and Eric's
+>> comments:
+>>    -- clarified what the "upstream" git-gui branch is
+>>    -- Removed some changes from patch 2 as requested by Junio, reducing
+>>       changes in patch 3 and patch 4
+>>         All code is fixed only after applying patch 4
+>>         Differences in patch 3 and 4 are minimimized
+>>     -- updated comments to clarify G4w dedicated code.
+>>     -- updated all comments to (hopefully) clarify points of confusion
+>> ===
+>> ...
+>> Mark Levedahl (4):
+>>    git gui Makefile - remove Cygwin modifications
+>>    git-gui - remove obsolete Cygwin specific code
+>>    git-gui - use cygstart to browse on Cygwin
+>>    git-gui - use mkshortcut on Cygwin
+>>
+>>   Makefile                  |  21 +------
+>>   git-gui.sh                | 118 +++-----------------------------------
+>>   lib/choose_repository.tcl |  27 +--------
+>>   lib/shortcut.tcl          |  31 +++++-----
+>>   4 files changed, 27 insertions(+), 170 deletions(-)
+> OK, Dscho says v1 looks good, and I have no further comments.
+>
+> Pratyush, can I expect that you take further comments and usher
+> these patches to your tree, and eventually tell me to pull from your
+> repository?
+>
+> Thanks, all.
 
-diff --git a/parse-options.c b/parse-options.c
-index 4b76fc81e9..4a8d380ceb 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -1042,11 +1042,22 @@ static void usage_padding(FILE *outfile, size_t po=
-s)
- 	fprintf(outfile, "%*s", pad + USAGE_GAP, "");
- }
+Junio,
 
-+static const struct option *find_option_by_long_name(const struct option =
-*opts,
-+						     const char *long_name)
-+{
-+	for (; opts->type !=3D OPTION_END; opts++) {
-+		if (opts->long_name && !strcmp(opts->long_name, long_name))
-+			return opts;
-+	}
-+	return NULL;
-+}
-+
- static enum parse_opt_result usage_with_options_internal(struct parse_opt=
-_ctx_t *ctx,
- 							 const char * const *usagestr,
- 							 const struct option *opts,
- 							 int full, int err)
- {
-+	const struct option *all_opts =3D opts;
- 	FILE *outfile =3D err ? stderr : stdout;
- 	int need_newline;
+Thank you and Dscho for the detailed reviews. But, there is no response 
+from Pratyush in over a month, is there a different maintainer then who 
+should take this?
 
-@@ -1128,6 +1139,7 @@ static enum parse_opt_result usage_with_options_inte=
-rnal(struct parse_opt_ctx_t
- 	for (; opts->type !=3D OPTION_END; opts++) {
- 		size_t pos;
- 		const char *cp, *np;
-+		const char *positive_name =3D NULL;
+Mark
 
- 		if (opts->type =3D=3D OPTION_SUBCOMMAND)
- 			continue;
-@@ -1157,7 +1169,8 @@ static enum parse_opt_result usage_with_options_inte=
-rnal(struct parse_opt_ctx_t
- 			pos +=3D fprintf(outfile, ", ");
- 		if (opts->long_name) {
- 			const char *long_name =3D opts->long_name;
--			if (opts->flags & PARSE_OPT_NONEG)
-+			if ((opts->flags & PARSE_OPT_NONEG) ||
-+			    skip_prefix(long_name, "no-", &positive_name))
- 				pos +=3D fprintf(outfile, "--%s", long_name);
- 			else
- 				pos +=3D fprintf(outfile, "--[no-]%s", long_name);
-@@ -1185,6 +1198,16 @@ static enum parse_opt_result usage_with_options_int=
-ernal(struct parse_opt_ctx_t
- 				np++;
- 			pos =3D 0;
- 		}
-+
-+		if (positive_name) {
-+			if (find_option_by_long_name(all_opts, positive_name))
-+				continue;
-+			pos =3D usage_indent(outfile);
-+			pos +=3D fprintf(outfile, "--%s", positive_name);
-+			usage_padding(outfile, pos);
-+			fprintf_ln(outfile, _("opposite of --no-%s"),
-+				   positive_name);
-+		}
- 	}
- 	fputc('\n', outfile);
-
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 1dfc431d52..a0ad6192d6 100755
-=2D-- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -14,7 +14,8 @@ usage: test-tool parse-options <options>
-     A helper function for the parse-options API.
-
-     --[no-]yes            get a boolean
--    -D, --[no-]no-doubt   begins with 'no-'
-+    -D, --no-doubt        begins with 'no-'
-+    --doubt               opposite of --no-doubt
-     -B, --no-fear         be brave
-     -b, --[no-]boolean    increment by one
-     -4, --[no-]or4        bitwise-or boolean with ...0100
-diff --git a/t/t1502/optionspec-neg.help b/t/t1502/optionspec-neg.help
-index 156e5f0ed9..4cd3c83e55 100644
-=2D-- a/t/t1502/optionspec-neg.help
-+++ b/t/t1502/optionspec-neg.help
-@@ -4,7 +4,8 @@ usage: some-command [options] <args>...
-     some-command does foo and bar!
-
-     --[no-]foo            can be negated
--    --[no-]no-bar         can be positivated
-+    --no-bar              can be positivated
-+    --bar                 opposite of --no-bar
-     --positive-only       cannot be negated
-     --no-negative         cannot be positivated
-
-=2D-
-2.41.0
