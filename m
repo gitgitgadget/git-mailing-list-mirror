@@ -2,194 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 363F9EB64DD
-	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 08:27:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B4ACEB64DD
+	for <git@archiver.kernel.org>; Sat,  5 Aug 2023 10:40:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbjHEI1T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Aug 2023 04:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56010 "EHLO
+        id S229760AbjHEKkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Aug 2023 06:40:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjHEI1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2023 04:27:17 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D1C1FE6
-        for <git@vger.kernel.org>; Sat,  5 Aug 2023 01:27:15 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d0548cf861aso3032765276.3
-        for <git@vger.kernel.org>; Sat, 05 Aug 2023 01:27:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691224035; x=1691828835;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NBUpMRSCQY3nHiPWni0gqS3zyR+PfBZqG0QSU7Jfb88=;
-        b=r7DTNWX7/mJf6c/LASf5ZH0rDOoHnST6+h/8TNIlsUvnZODDYMKXxL6RCPhMmC/tUO
-         daOJ4EcSeM4Wi72uNrR23yLq7OsQLQQT1yJTlxDT9ZJK5Rxu3n5cp2jTZS8O0jA/2fYD
-         ljx3DqTE2s1bw08hyI7zre6JnuOSTkfUGwF0k7ngujkRTrW9VF2+c/xBv3ajCaRefqoF
-         kBgflM/tH33/U2RgmGWB9V+ctAmHfVRvzq2KU6OiLDf9DPL5Sot+EK3ZTegSY8VVlXyB
-         JMsjPwIQiH2DXze+835E51XIMfOOoc+Fuix3MPkAEKwXapEoKpwttig3uWaKut7l9w8U
-         B7uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691224035; x=1691828835;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NBUpMRSCQY3nHiPWni0gqS3zyR+PfBZqG0QSU7Jfb88=;
-        b=ZCLPwvQwRouaob1wVr7ru1m92GMEcYouPAKI1VF4sduK8KD4854icHufGnXspTS/Xk
-         H+bQ7En+cRCeW8u/apZg/kqzSgiCSdbhCsopYp0Pv1UFO6+snFYDKN4Q18Zj9BgTbg42
-         ov0OsCbjuvy7Uj9HZBLJN3mIdufg4pTR+ZvqqzmG/pHUQXvozYDzdPbt4TyFjlM8qMEn
-         NL2KfIXMWEaWBNgWJrnKq0/3YKhT4zl+fuJhbjU83KemJrdnHUiIm+4t9bWrp2sZPa8N
-         5qc6BSQA5dtpLt4BubC8P7MOgIVMFdfIusW50gn/e0Osih51syl8OG1QdOTfxQpyWbi6
-         AIAg==
-X-Gm-Message-State: AOJu0YzGzdy4cEtmhhojm2jxM0MFGCwKSASnDRnoWvpZ4h/ev75dsA5c
-        +K0+xBKOngQjlnlr/YrHObF5TONvhgzHFOkGs6w=
-X-Google-Smtp-Source: AGHT+IG6NnidfSVKmBz3WFd/8vuPheEpGh7eCK7BXoa9EciXxHlcQeDt7ltHTHNan2vFccg5KBZ3Dg33z8fpZKkpAek=
-X-Received: by 2002:a0d:d84f:0:b0:586:ddc:eabf with SMTP id
- a76-20020a0dd84f000000b005860ddceabfmr4249911ywe.37.1691224034845; Sat, 05
- Aug 2023 01:27:14 -0700 (PDT)
+        with ESMTP id S229450AbjHEKki (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2023 06:40:38 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030FE10C4
+        for <git@vger.kernel.org>; Sat,  5 Aug 2023 03:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1691232029; x=1691836829; i=l.s.r@web.de;
+ bh=27fksUmt5HxWOFJjJASQEaiwy7Ujwn0o/4G+puHOetU=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=R8oDzsxiw6gd4cUntAAIrrIQ72asr+H714yyOBWXon5Tj3NQ8hCMiMeyUqyla++FRkKmgAK
+ qyLIdkapsJOAKeYb8ICYdz+Cx743YZJNmd/YnN8TXTv8eA7G493PMva7H7fav3QyLy42IyvKy
+ fSUu5EARQQRbmETlT2e6jeikjoPfP5QF37C9Qo4eSZR7QgrL6vopMzNpxQlqZcIEX4mpqZPml
+ DMP29McjCl5UstkAWzsdpRmFT7eWaQaXBuF9JgJu6gD4+UWMNf2m7fOnQpny0B4mmCnBuA3/N
+ 532tSU/fvZ+mbYwKHBGc4Lfl/8ivVaP5gpJ2M8oLPdcc94I7qBaQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Meler-1psLWa0zZN-00aWeg; Sat, 05
+ Aug 2023 12:40:29 +0200
+Message-ID: <67e28f23-abd7-01d2-a1a7-18befc86a21e@web.de>
+Date:   Sat, 5 Aug 2023 12:40:28 +0200
 MIME-Version: 1.0
-References: <CAOLTT8TVGna+C9nYy9nj3h5bT7AdAT0SKtUM3YVz6h=KZhGHHg@mail.gmail.com>
- <xmqqo7k7c1yw.fsf@gitster.g> <CAOLTT8R84Zrtpd=j6o2V=Y_uD54XAS5EA7NWHsdfL+XCkD5cqA@mail.gmail.com>
- <xmqqila6cz0n.fsf@gitster.g> <ZMKtcaN7xYaTtkcI@nand.local>
- <CAOLTT8Ru+3efmUNMOwbhzwRu-FW-SVPYn88-xtrRQiRuweFG+Q@mail.gmail.com>
- <CAOLTT8S=_1Vd2Y4rBqq03JsJ1megRBcx9v-HYAWXe88jDek98Q@mail.gmail.com>
- <ZMvGsYSystLu6oBY@nand.local> <CAOLTT8Tc9NevyUfwiPscEH7BqShSscb=iZP4r+7mjsEwouLeXg@mail.gmail.com>
- <CAP8UFD2GV+1LhZDrSsgQ5=gRgYSTYsS36i2ugoBEHu-Oto-Sow@mail.gmail.com>
- <ZM1EvGVGv2ZYrpuT@nand.local> <xmqqmsz6ljk4.fsf@gitster.g>
-In-Reply-To: <xmqqmsz6ljk4.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 5 Aug 2023 16:27:06 +0800
-Message-ID: <CAOLTT8SBAb8bAV3uCPJ-q2btNeatMjmtRzDkRASffN5xTS1M0g@mail.gmail.com>
-Subject: Re: [QUESTION] how to diff one blob with nothing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [PATCH] ls-tree: fix --no-full-name
+Content-Language: en-US
+To:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <d392a005-4eba-7cc7-9554-cdb8dc53975e@web.de>
+ <xmqqo7k9fa5x.fsf@gitster.g> <a6326aaa-4f05-4d00-8906-2f50ea8e1e7a@web.de>
+ <xmqq351hz5xp.fsf@gitster.g> <43ca3f01-ba11-6c29-a8e8-4e6c262a68cc@web.de>
+ <xmqq4jlxuiuu.fsf@gitster.g> <1535f30e-3cf9-1a0a-04af-4ba4a7c46d15@web.de>
+ <xmqqr0oxnnx4.fsf@gitster.g> <9e8225dd-1e8b-8af2-c3e1-0c5834694244@web.de>
+ <xmqqh6ptnies.fsf@gitster.g> <a19879db-d45a-ee42-1ad5-497e4e9eb8df@web.de>
+ <b17b4f6b-199f-973b-3aa9-ef995a61bb3d@gmail.com>
+ <31b71333-de8b-d9a8-3ec4-1bad9cae2bf3@web.de> <xmqqjzug14jo.fsf@gitster.g>
+ <xmqqbkfm3gne.fsf@gitster.g> <a9d51bb4-2897-c4ca-f8b3-85f50902b041@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <a9d51bb4-2897-c4ca-f8b3-85f50902b041@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Zv1bUsvszHgi6CLR6VfKDXqa/l2mNunfbJFDHyXx7WO1Ebds3GV
+ b/ZMCSzebWBVoZncoWgIFNaTF4++lQVlS1ZjLS4BGTfURTlpJgtSsvOTFiXzQJ0R3VIxS6q
+ GkRBvRq+9E0vVZvnwxDrjloaJQ3GyRqTPgSZ6iIrcGeDnEqa9SHFR3OhJvGvs2MAZ89AwUZ
+ IhJQOspLUxTuzmdQSmkgw==
+UI-OutboundReport: notjunk:1;M01:P0:F3Cp3GG24eM=;isjDzwImXw6L9ESAGMNsWnl/ipj
+ G7taC/cnDD9/YaVa88h7gBln2OwkOWGSJ06mtbq5EiyvUPu3lBvED3l9N0PqrNfk1OPSaYvuZ
+ Zk1yvAJMtK2DhC/PzjFutpKtuW2d2VuVx18B0oFfIPqfI5Ozj6Rd4vDegPmMmWHLjmzBXEE58
+ 2yU+61ChpJNscvv8rxT1yVxHehDYLA7u4Edr6YKBxXMTxsDZ7WcI3S1xlyV3oFcIVP2P9CmqF
+ vhnDd0kNqDcO3YI6pszCxfUfYyeupfZlkbJX9T4UmyC0f4txA6McIpcpzKDfg9xJHGhqzuG+I
+ LqX102oRwD6y50CfiLyUW9ahCff1ABTsuN4P0PhPhioq7SWcWZTHe3twidn9Gp8w1B5HpbyAI
+ 9tWSYfK/Xq0++n3oUT9cUIljI4+BZe0VPKwCgJpNyheoUWX9mLDbuXLYG8Ene0OspEAGQqzSh
+ 5usaLmBu2mbC7sWREyuNGCHg7fderYVoIHAILjSZJM72Hid+fI2xzQZ5LkF6RbLSLxeiVCeeu
+ MIm8A9BoRQOcVRxLeUBNz1L7UsubIA/hG22iScIuARCMrcI4MPp3ZB+fSGU3YEz6kEhGsEuON
+ XtTEQU0xK0WMqigxoWoYatmS9b+VRjeFI0boeWmHVRAPoJcX5t41JuoxQdZDDdnu9EGZA0W5z
+ vKQuTG9CxjpyGUOSp6dVUc4+dRu24jsGqiLoplPAhVMsE2HgmsP0f1NZl9RONU2mxbp1DkaS9
+ m1vYUdlBoduPeM/eLo6DJRTsKEjCxI/IR69RMbntazVnW/yWCRXa7CU/1Svp15ePGYSnY3/wj
+ wryqgbFQdw32lwAvCCD4Ka9Mbix0NVluGW3/2xSS1qECkmVLnKiBQYq3PjHm1Zs74L4KS8jaR
+ Dp7tQf3wv0wCIgptFCMBzkJslU8oPVbfvQQGl0MmL8wPqmpIXY3Qji1OF1L3e2ij2hXejTYnJ
+ MTOAyw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2023=E5=B9=B48=E6=9C=885=E6=97=
-=A5=E5=91=A8=E5=85=AD 03:00=E5=86=99=E9=81=93=EF=BC=9A
+Am 04.08.23 um 21:48 schrieb Phillip Wood:
+> On 04/08/2023 17:40, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> A bit more verbose still: Document the negative form on its own line
+>>>> with a generated description -- requires no new syntax:
+>>>>
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 -v, --invert-match=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 show non-matching lines
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 --no-invert-match=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 opposite of --invert-match, default
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 -I, --no-index=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 find in contents not managed by=
+ git
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 --index=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 opposite of --no-index, default
+>>>
+>>> I would expect _("opposite of %s, default") is acceptable by l10n
+>>> folks, and assuming it is, the above would be a good approach.
+
+The ", default" part is not correct in all cases, though, in particular
+when the default depends on the output being a terminal, or arguably
+when it's dependent on a config setting.  We better drop it from the
+generated message.
+
+>> I was seeing what is likely to be in the -rc1 that will happen in
+>> next week, and noticed that this discussion is left unconcluded.=C2=A0 =
+I
+>> am tempted to declare that the latest iteration that shows the
+>> negation of "--no-foo" as "--[no-]no-foo" is "good enough" for now,
+>> and leave the above improvement as one potential future direction.
 >
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > On Fri, Aug 04, 2023 at 10:28:53AM +0200, Christian Couder wrote:
-> >> On Fri, Aug 4, 2023 at 6:42=E2=80=AFAM ZheNing Hu <adlternative@gmail.=
-com> wrote:
-> >>
-> >> > Actually, there is no need to support a default empty blob.
-> >> > For example, with the command "git diff --no-index <file> /dev/null"=
-,
-> >> > it can compare a file with /dev/null, but it can only compare <file>
-> >> > and not <oid>.
-> >> > Therefore, using commands like "git diff <oid> /dev/null",
-> >> > "git diff --no-index <oid> /dev/null", or even "git diff <oid> --std=
-in"
-> >> > could potentially solve this issue.
-> >>
-> >> Maybe it would be clearer to have a new option, called for example
-> >> "--blob-vs-file", for that then. It could support both:
-> >>
-> >> $ git diff --blob-vs-file <blob> <file>
-> >>
-> >> and:
-> >>
-> >> $ git diff --blob-vs-file <file> <blob>
-> >
-> > Hmm. This feels like a case of trying to teach 'git diff' to do too
-> > much.
->
-> Worse yet, I do not quite get the original use case in the first
-> place.  What is the series of diff output that result in comparing a
-> random pair of blob object names going to be used for?
->
-> The reply to <ZMKtcaN7xYaTtkcI@nand.local> says that the original
-> use case was to express the evolution of a single path since its
-> creation until its removal, but the thing is, a diff with an empty
-> blob and a creation or a deletion event are expressed differently in
-> the patch output, exactly because the patch has to be able to
-> express "before this change, a file with zero byte content was
-> there" and "before this change, there was nothing at this path"
-> (vice versa for contents-removal vs deletion).
->
-> For that reason, I have a hard time to find any merit in the earlier
-> complaint that said "can be achieved by manually adding them, but it
-> is not very compatible with the original logic", whatever the
-> "original logic" refers to.  If creation needs to be recorded as
-> creation and not as a change from an empty and existing blob, there
-> has to be something that needs to be manually done to turn the
-> latter (which is the only thing "diff" between two blobs or even a
-> blob and a file can give) into the former *anyway*.  Whatever the
-> thing that is looping over the history/evoluation of a single path
-> needs to have a three-arm switch for each iteration to deal with
-> creation, modification, and removal, and iterating over the contents
-> of the files and prefixing "+" or "-" on each and every line would
-> be the _easiest_ part of such a necessary tweak to turn "diff
-> between an empty contents and something else" into "creation or
-> deletion of a file."
->
+> While it could certainly be improved in the future I think
+> "--[no-]no-foo" is probably good enough. I definitely prefer it over
+> "--[[no-]no]-foo"
 
-Okay, let me clarify the background for using an empty blob diff.
-Essentially, it is a git web diff interface that requires real-time calcula=
-tion
-of the diff between files across multiple versions and rendering them.
-Due to some reasons, the higher-level component did not provide multiple
-versions of commits but instead provided blob OIDs (Object IDs).
+Generating help lines for the opposite variant of all negatable options
+feels quite spammy.  It almost doubles the length of the short help
+because we have so many of them.  Doing that only for --no-... options
+is much more compatc because most options are positive:
 
-Therefore, I expected to generate the diff results directly using the
-"git diff <oid> <oid>" command. (I only care about the patch part
-in the diff and don't really care about the related information of OIDs
-in the diff output.) Everything went smoothly except when a blob
-is created or deleted, as there is no direct way to obtain
-the diff for a blob using the "git diff <oid> <oid>" interface. Initially,
-I intended to generate a patch by diffing an empty blob
- (e69de29bb2d1d6434b8b29ae775ad8c2e48c5391) with the blob ID.
-However, unlike the empty tree (4b825dc642cb6eb9a060e54bf8d69288fbee4904),
-the empty blob does not exist in the git repository by default.
+    -v, --[no-]invert-match    show non-matching lines
+    -I, --no-index             find in contents not managed by git
+    --index                    opposite of --no-index
 
-I had to create an additional empty blob for the purpose of performing
-the diff, but this goes against the design of the web-based diff interface,
-which is intended to be read-only.
+>> Objections?=C2=A0 Otherwise the 5-patch series will be in 'next'.
 
-So, I might explore methods like "git diff <oid> /dev/null" or
- "git diff <oid> --stdin", they are read only, but it does not
-currently exist...
+Patch 5 has a trivial merge conflict in t/t0040-parse-options.sh due to
+448abbba63 (short help: allow multi-line opthelp, 2023-07-18), which is
+easily resolved by adding --longhelp, and a silent automatic mismerge of
+t/t1502/optionspec.help due to c512643e67 (short help: allow a gap
+smaller than USAGE_GAP, 2023-07-18), which requires removing three line
+newlines.
 
-Regardless, I hope that the empty blob diff can simulate the effect of
-an empty tree diff:
+How about dropping patch 5 for now?  We don't need to rush this pretty
+intrusive change of output.  And the first four patches are worthwhile
+in their own right, I think.
 
-git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-
-diff --git a/.cirrus.yml b/.cirrus.yml
-new file mode 100644
-index 0000000000..4860bebd32
---- /dev/null
-+++ b/.cirrus.yml
-@@ -0,0 +1,22 @@
-+env:
-+  CIRRUS_CLONE_DEPTH: 1
-+
-+freebsd_12_task:
-+  env:
-+    GIT_PROVE_OPTS: "--timer --jobs 10"
-+    GIT_TEST_OPTS: "--no-chain-lint --no-bin-wrappers"
-+    MAKEFLAGS: "-j4"
-+    DEFAULT_TEST_TARGET: prove
-+    DEVELOPER: 1
-+  freebsd_instance:
-+    image_family: freebsd-12-3
-+    memory: 2G
-+  install_script:
-+    pkg install -y gettext gmake perl5
-+  create_user_script:
-+    - pw useradd git
-+    - chown -R git:git .
-+  build_script:
-+    - su git -c gmake
-+  test_script:
-+    - su git -c 'gmake test'
-
-Thanks,
-ZheNing Hu
+Ren=C3=A9
