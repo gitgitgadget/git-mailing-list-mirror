@@ -2,121 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A388C001B0
-	for <git@archiver.kernel.org>; Sun,  6 Aug 2023 18:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98637C0015E
+	for <git@archiver.kernel.org>; Sun,  6 Aug 2023 20:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbjHFSgN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Aug 2023 14:36:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52840 "EHLO
+        id S230122AbjHFUJe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Aug 2023 16:09:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjHFSgM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Aug 2023 14:36:12 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65110171B
-        for <git@vger.kernel.org>; Sun,  6 Aug 2023 11:36:07 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 8A69D32000E5
-        for <git@vger.kernel.org>; Sun,  6 Aug 2023 14:36:02 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Sun, 06 Aug 2023 14:36:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
-         h=cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:message-id:mime-version:reply-to
-        :sender:subject:subject:to:to; s=fm3; t=1691346962; x=
-        1691433362; bh=fGICLLjbJfbMgGlOj4N8i6H3WLEq2t1tqDCaHt9otZ8=; b=M
-        b4lAZtrAfNo85eSpXbbOkPTBrDfvJzWEeyyQdp66tqowu8D2DqYQTholCuX1wWab
-        rfCwWnL1reqUe0u8elzAsyUdZfc25g7oBk1UX4gckGChK1Z/2Schya9oWiVwnu96
-        jmeluR7yMVLtPVOUKRpCtU6qbMNqexYQaiiarXQKVQmvH6GUf3we9Jdlc1T0KcQc
-        elt+5PMp7qkWMBjJZlYpF639Ls1v+XuwJFVNysPGjbjBknPLYtxmaya+RCQKe5tu
-        BBkXOOduuVtDwbEVwUOMO+OKAONEQSzEHlVWukuoxYeR7PrKJoF7Qd3kJs5jrDKn
-        kUpS8oOkFzCDNUa8Zw9gg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:message-id:mime-version:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1691346962; x=1691433362; bh=fGICLLjbJfbMg
-        GlOj4N8i6H3WLEq2t1tqDCaHt9otZ8=; b=W0Piq70osIxe6K7D4oOR1btBqpjk0
-        D2zChygB/aPjX9WQwkQk20JXnKkvVEwCJ3yMdVbfNnJ+1NwtPeCCUPIULFF2qXMc
-        ZzKml7MqF65X1Bd4nWMyoLoUlmKQI7rphMP6NjUbAhWgicXhhRcQZM3nf17fcw5j
-        c1EYjy4erzLJJL7aZYKEPR/HzpD7V674zX/IFLueHLaiBfRe+AV2iLj5ZeGttDdp
-        bpHgQNg7yNW2+yeOscfTACnH169OwtRGKjt+NbWDA9D1eI1jcPwZH08wN4ewN66B
-        zetiQruE0uTeirbt0cl6+R+h8IVbFuPdzV3uGvG01BGmc63eXq9oVWqoQ==
-X-ME-Sender: <xms:EejPZAnxwVgftzc-8gmolII6cpYhfiXjjm8za68C9WHdt5WwJsmkXg>
-    <xme:EejPZP3SY1NZESdqNY9SRPd3qgEqzzf19PO22X3i1TJOJo7DLNPskhtIernf2cpDN
-    V745xOOMlFXXsQx>
-X-ME-Received: <xmr:EejPZOp7rA_F-dKdcK3hJwzpQF6KrFMdKAUMnIZKRV0inxg8u3t9EcmCG3MW6gN_4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrkeekgdduvdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhtgfgggfukfffvffosehtqhhmtd
-    hhtdejnecuhfhrohhmpeeurhhoohhkvgcumfhuhhhlmhgrnhhnuceosghrohhokhgvsegr
-    lhgthhgvmhhishhtshdrihhoqeenucggtffrrghtthgvrhhnpeehteffkefgtdevieeuve
-    dthfevfeeiffegudejteefgeekvdfggfetgfdtgefgvdenucffohhmrghinhepghhithhh
-    uhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepsghrohhokhgvsegrlhgthhgvmhhishhtshdrihho
-X-ME-Proxy: <xmx:EejPZMlqYBCgKcT0DcGTounlDzuK81b8e8KAOM8l4__B2WL-Ue74eg>
-    <xmx:EejPZO3RjZTcK7gswua2YqETfeNTLqGAmZEA9yowfy4KPxupXJIy-Q>
-    <xmx:EejPZDvsXziUKMlkt_T0YrkZDMh2W-wF3ZxBGOIdhQ64sVEI36I1iA>
-    <xmx:EujPZHiIPtFMjrObBtUEMLfoeizDu0aB0MSyEG9PsTmOCDSF5Lcd1Q>
-Feedback-ID: i78e840cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Sun, 6 Aug 2023 14:36:01 -0400 (EDT)
-From:   Brooke Kuhlmann <brooke@alchemists.io>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Subject: Git Commit Notes (fetching/pushing)
-Message-Id: <D01976C3-4B91-464B-ACF0-78DFFB066747@alchemists.io>
-Date:   Sun, 6 Aug 2023 12:35:50 -0600
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3731.700.6)
+        with ESMTP id S229503AbjHFUJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Aug 2023 16:09:33 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5622BD3
+        for <git@vger.kernel.org>; Sun,  6 Aug 2023 13:09:32 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-cfd4ea89978so4205149276.2
+        for <git@vger.kernel.org>; Sun, 06 Aug 2023 13:09:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691352571; x=1691957371;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wmBcogMohpEPfgPf/wISwXNERAJoFQjrsI1Tha6dWek=;
+        b=12YavFkfyxCCVQZRF5mhL+XO7Qib1Kj0/VARRvu0LwEpoo/YY4P0ZDe6MB8k8aFajX
+         7Jb8BiIrdV5ivwtYXaqydb4RmbECahEDvrPUejtiFejAzO9yWZ1202IbJ0nLKIDiMfG1
+         /lmyvnCDvr8qLhmaJEAyh67TJd4NgRKSoz+TgepVM1rmQElxA6K84xFDR4VQsizr4Hld
+         N7e19shhI9d9VGcZnMrOcwrf7DdncMul9A6WM1EsXJGLybGmBr0wQCiXmLAFA5Jy0/bv
+         AN3jv9e+OoaJe46iGYYQJ05qlne/Hpa+L1DPAapqWURKeifaDH83h2hRl4tezR2tEaWL
+         6e4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691352571; x=1691957371;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wmBcogMohpEPfgPf/wISwXNERAJoFQjrsI1Tha6dWek=;
+        b=QmMj6NCIHPa1Fz8jlpHOhRpOP5JV5nmq3wcXd8h+nUyIp6e1jV+V73mJSTSjfD9+nv
+         1qoko8hPRu4nr3bquQZVG73/vpRiO7PCcW8i1DjYAl4T7Ig/M1h8bSL/MZHciWOATdnN
+         xzblktsbWafbhhsWbjils36mDRr0BYUvCrI/Klg2ecUsMcUHIscqrgRhrIPWiNjxlODG
+         xTDoXYtt9N8zCRmLQF0+fZvIrb3RPsERdxVJ9SrPLKoRy2MiV4tQgYKEwkcCKidaRx+z
+         PCZzrYvpED0+A/WdXg1BGGYT5RFgr2m4qHO1+1H/QVrp7My8PZNcrc+8Kc0fhWXF/4AI
+         CmPA==
+X-Gm-Message-State: AOJu0YwyzZk3uzHAIyNEb0UIkXhln6Y8WAZKfNrATpXwzD0NtwJKi9xN
+        W7uILr5TMASGNCJfa4isJnY/KUxSsz3qMcmteAe2vA==
+X-Google-Smtp-Source: AGHT+IGpbVpwHkJqPQJzkCg07T0SuQGisFJGebkwTvKWp5sFqYfxUviwDn8V8DVEEkIRi+RTf3MGBw==
+X-Received: by 2002:a25:73d4:0:b0:d0f:2038:9ca2 with SMTP id o203-20020a2573d4000000b00d0f20389ca2mr8281625ybc.51.1691352571286;
+        Sun, 06 Aug 2023 13:09:31 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m184-20020a2571c1000000b00d06d47fd0b8sm2009610ybc.53.2023.08.06.13.09.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Aug 2023 13:09:30 -0700 (PDT)
+Date:   Sun, 6 Aug 2023 16:09:29 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Brooke Kuhlmann <brooke@alchemists.io>
+Cc:     git@vger.kernel.org
+Subject: Re: Git Commit Notes (fetching/pushing)
+Message-ID: <ZM/9+YyOAbWWXQtC@nand.local>
+References: <D01976C3-4B91-464B-ACF0-78DFFB066747@alchemists.io>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <D01976C3-4B91-464B-ACF0-78DFFB066747@alchemists.io>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm noticing issues with GitHub and GitLab when fetching and pushing =
-commit notes and wanted to know if there is a correct way to configure =
-my Git configuration for working with these servers (or maybe notes =
-aren't supported at al)?
+On Sun, Aug 06, 2023 at 12:35:50PM -0600, Brooke Kuhlmann wrote:
+> I'm noticing issues with GitHub and GitLab when fetching and pushing
+> commit notes and wanted to know if there is a correct way to configure
+> my Git configuration for working with these servers (or maybe notes
+> aren't supported at al)?
+>
+> Here's my configuration:
+>
+> ```
+> [notes]
+>   rewriteRef = refs/notes/commits
+>
+> [remote "origin"]
+>   fetch = +refs/notes/*:refs/notes/*
+>   push = +refs/notes/*:refs/notes/*
+> ```
 
-Here's my configuration:
+It looks like your refspec may not be doing what you think it is.
 
-```
-[notes]
-  rewriteRef =3D refs/notes/commits
+Here, you set both the default fetch and push refspecs to
+"+refs/notes/*:refs/notes/*" which means to update anything under
+the "refs/notes" hierarchy on either side, even when the updates are not
+fast forwards.
 
-[remote "origin"]
-  fetch =3D +refs/notes/*:refs/notes/*
-  push =3D +refs/notes/*:refs/notes/*
-```
+Since you overwrote the default refspec, you end up only pushing the
+notes, which we see from the response that you got back from GitHub:
 
-Upon creating a note (i.e. `git notes add`) and then pushing changes to =
-the remote, I'll see the following response from GitHub:
+> remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+> To https://github.com/bkuhlmann/test
+>    5811bd44c32b..0f2422597c5d  refs/notes/commits -> refs/notes/commits
 
-```=20
-Enumerating objects: 3, done.
-Counting objects: 100% (3/3), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (2/2), 289 bytes | 289.00 KiB/s, done.
-Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-To https://github.com/bkuhlmann/test
-   5811bd44c32b..0f2422597c5d  refs/notes/commits -> refs/notes/commits
-```
+Indeed, refs/notes/commits is updated on your bkuhlmann/test repository,
+which I can fetch from:
 
-Only problem is the notes are not pushed. In fact, the feature branch =
-I'm working is never updated. Only when removing my `[remote "origin"]` =
-Git configuration does the GitHub server work properly (i.e. my changes =
-are pushed to the remote server...but without any notes). Strangely, in =
-all cases GitHub answers back with a success message even though that is =
-incorrect.
+    $ git remote add origin git@github.com:bkuhlmann/test.git
+    $ git fetch origin 'refs/notes/*:refs/notes/*'
+    remote: Enumerating objects: 41, done.
+    remote: Counting objects: 100% (41/41), done.
+    remote: Compressing objects: 100% (29/29), done.
+    remote: Total 41 (delta 14), reused 34 (delta 7), pack-reused 0
+    Unpacking objects: 100% (41/41), 4.66 KiB | 1.55 MiB/s, done.
+    From github.com:bkuhlmann/test
+     * [new ref]           refs/notes/commits -> refs/notes/commits
 
-Anyway, if anyone has advice or additional information how this should =
-work (or if my configuration is wrong), I'd be grateful. =
-=F0=9F=99=87=F0=9F=8F=BB=E2=80=8D=E2=99=82=EF=B8=8F
+I suspect you want an additional refspec that gathers any branches or
+tags that you want to push along with refs/notes/*.
 
-
-
-
+Thanks,
+Taylor
