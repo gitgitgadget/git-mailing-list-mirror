@@ -2,142 +2,457 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21151C001DB
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 22:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0EC3C001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 23:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbjHGWwE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 18:52:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38376 "EHLO
+        id S229984AbjHGXLZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 19:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbjHGWwD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 18:52:03 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631B1100
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 15:52:02 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-58440eb872aso65491227b3.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2023 15:52:02 -0700 (PDT)
+        with ESMTP id S229901AbjHGXLG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 19:11:06 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC08F2724
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 16:08:47 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d20d99c03fbso5891405276.3
+        for <git@vger.kernel.org>; Mon, 07 Aug 2023 16:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691448721; x=1692053521;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mE1Ojdu4281nxyAMkc6rfa6r81lvBCj3pb7VeQxyTQU=;
-        b=tpUc/Od9e18QNSnHC15Y4QZ6VfH6hgWKFobQjPmqkgkDb9WG26lo5fhaIIZM2/ITlq
-         A8ktk+K2m2m6D3g9xg/JYpK699joEeVC1ZoAqOMvTdg9gzRv91/uN6pNrj/BmzQiEX1g
-         n8jQvXhxbag8OzySjQyYnZetuE/o+070FfoK9iN2pekIxfCqX+BqcyCMZeZDNYXc4KIU
-         +q1SYvfMQEbqYYBXG4VSGxIgoKq3bRaZQW6jU367sMml75mKKdD4/mWelTDgdEsaL6ZM
-         pfW+fh3IWOpnSL8tITi2UMeIPaO4d8qwb3Ca9GTJTlOY+Usut8AFprzmBd4Y8YAw+bHd
-         /Tow==
+        d=google.com; s=20221208; t=1691449686; x=1692054486;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9eNyH5whQZ1scuV4pNq3GXOsF5FhPT7JKuFn5vRY6pM=;
+        b=G1OP0CAjkEeRwuN4XFUh0rKrZOZ4461LBwHA9L83oczB8+/QLERIjRQABeO7xK8TMj
+         w8ISOkNQB8y9+tC8a/lUR35HyvMHquLVyZrTS8zgGrsSvUFf83QFZhu3p6tndDgIk6Mf
+         JLRK3M7V+3BnGHdQL8xd7LYtNLMgx6AJPtRovjCSxkUVwMRk6GOrCTRV5pfcZABORMZY
+         9a4q4qig4GQhElLd4xRhqEPyI1I2J+MJ1+hyLsJXjNgrg4kX3drIokv1numjyiGlp3EZ
+         TCGD8aeqG+S8tb8l0lb/vpy4joptnVTfC2nIA7YKjT3LiTRtOLPIviyb9A2AC5hm8qg3
+         lFOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691448721; x=1692053521;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mE1Ojdu4281nxyAMkc6rfa6r81lvBCj3pb7VeQxyTQU=;
-        b=S2Uim5tY3EwKKYsuEavFBPG5e0PeZDnSa3uSJzVMJIAOabRB1+5Wk5zhNzQCtF99kQ
-         nqcSrzo6sORiGapceUivHVj3fnkjuAIH1EAml0qt9Xsk1AUr6ncnD3wz+yF+lwdSSe0E
-         C3grtq2urEcevYvPS73cp4lUAfZX4bsl+Kt3K7v3o5NMNUq5ss9V7OWINav1q3VIEEVZ
-         QbgyEtsMQsIMK+LoedhlsvPyGn+ZEIL4efOrY9uqHt1pIes9PzbmOWZdvwy1n71JgNL0
-         0uVW29aGJJyrbeCcjKOP9ktYO3/sZOmPvH/B088sUkY/3PMMeQsFWGM7nmTeZu80n5e7
-         YJNg==
-X-Gm-Message-State: AOJu0YzRFUsC+SfSddOFW7vRes/b8wA+lkZ6GDGE7zoe+vKv8P0Y1nR0
-        fDORHmsSLEsxF6YK1EelRqtIJjJtFeyUjw==
-X-Google-Smtp-Source: AGHT+IG8BecHBLWzv1HJwJ3y3BFbryq9Ejslbo9awMzJvFPXvbCfxRFIBdsPn2XyR7KZ0jbu77D2HxcS8yKF7w==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a81:b144:0:b0:586:4e84:26d2 with SMTP id
- p65-20020a81b144000000b005864e8426d2mr90627ywh.3.1691448721360; Mon, 07 Aug
- 2023 15:52:01 -0700 (PDT)
-Date:   Mon, 07 Aug 2023 15:51:59 -0700
-In-Reply-To: <c8bb013662187e9239d4a2499a63ed76daa78d14.1691211879.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20221208; t=1691449686; x=1692054486;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9eNyH5whQZ1scuV4pNq3GXOsF5FhPT7JKuFn5vRY6pM=;
+        b=j9CC/bARqGJxJdPl/OkJrJvA5rvP0iJmYPeDmK7Aib7UTx+TT9aH5ba2/+wKM2rPh3
+         GS7nARXYlEqjFB4tBNMek9Rc3/KZytWwzdnWAnHX2mWhvrBd3JLHzrcWJFmIbJepAE4u
+         I+DjEOAStIGedU/AOQY8fkjDm0eBlcwzxImR+T0SYJBvd+8QDiiEmPHiq18QW42iPC8r
+         j2rGDh2qTUwRKhvwZOjiQO7T1FYeWhoIO3b0FCharGdFf0RuaBLba6rozBsEysUpqn1m
+         fldlz3e2zlG4CjqaVXkQAgf7jeUkIhI3MEdoq+m7eFRFaJBDonuEoUiBA1C1dB2W0T+U
+         mEkA==
+X-Gm-Message-State: AOJu0YzObCZME+SGhtS5SZo1Jv+RTXNs+RF56DEOdYXADFqnB53OV7lX
+        f3RI/kxYkBpFvC+NztzHG0aBMV9V1/gDdj+kWEVtsI2FTaQCOj6mGia8SIpHqF24jEj3CAMmPIL
+        8iRKxPFUgcxAu7+xI70/5pUgjIHYL49wpuk9x6G3RRSDInRQcIg+Os9YsOIMdN/c=
+X-Google-Smtp-Source: AGHT+IFOZhWSZWSwkZZb8EJ8bdkB4qCdY4s0CyolwO7n/gF4hwAuoehYQNSVG/Iju5qZSlronEEvpjACei9DTA==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:904a:191d:e056:269d])
+ (user=steadmon job=sendgmr) by 2002:a25:cf85:0:b0:cfe:74cf:e61a with SMTP id
+ f127-20020a25cf85000000b00cfe74cfe61amr66420ybg.6.1691449686023; Mon, 07 Aug
+ 2023 16:08:06 -0700 (PDT)
+Date:   Mon,  7 Aug 2023 16:07:55 -0700
+In-Reply-To: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
 Mime-Version: 1.0
-References: <pull.1563.git.1691211879.gitgitgadget@gmail.com> <c8bb013662187e9239d4a2499a63ed76daa78d14.1691211879.git.gitgitgadget@gmail.com>
-Message-ID: <kl6l1qgea2k0.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 3/5] trailer: split process_command_line_args into
- separate functions
-From:   Glen Choo <chooglen@google.com>
-To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Linus Arver <linusa@google.com>
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+X-Mailer: git-send-email 2.41.0.640.ga95def55d0-goog
+Message-ID: <c7dca1a805a16fd4fd68e86efeec97510e3ac4b8.1691449216.git.steadmon@google.com>
+Subject: [PATCH v5] unit tests: Add a project plan document
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     linusa@google.com, calvinwan@google.com, phillip.wood123@gmail.com,
+        chooglen@google.com, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+In our current testing environment, we spend a significant amount of
+effort crafting end-to-end tests for error conditions that could easily
+be captured by unit tests (or we simply forgo some hard-to-setup and
+rare error conditions). Describe what we hope to accomplish by
+implementing unit tests, and explain some open questions and milestones.
+Discuss desired features for test frameworks/harnesses, and provide a
+preliminary comparison of several different frameworks.
 
-> Previously, process_command_line_args did two things:
->
->     (1) parse trailers from the configuration, and
->     (2) parse trailers defined on the command line.
+Coauthored-by: Calvin Wan <calvinwan@google.com>
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+In our current testing environment, we spend a significant amount of
+effort crafting end-to-end tests for error conditions that could easily
+be captured by unit tests (or we simply forgo some hard-to-setup and
+rare error conditions). Unit tests additionally provide stability to the
+codebase and can simplify debugging through isolation. Turning parts of
+Git into libraries[1] gives us the ability to run unit tests on the
+libraries and to write unit tests in C. Writing unit tests in pure C,
+rather than with our current shell/test-tool helper setup, simplifies
+test setup, simplifies passing data around (no shell-isms required), and
+reduces testing runtime by not spawning a separate process for every
+test invocation.
 
-It parses trailers from two places, but it still only does "one thing",
-in that it only parses trailers.
+This patch adds a project document describing our goals for adding unit
+tests, as well as a discussion of features needed from prospective test
+frameworks or harnesses. It also includes a WIP comparison of various
+proposed frameworks. Later iterations of this series will probably
+include a sample unit test and Makefile integration once we've settled
+on a framework. A rendered preview of this doc can be found at [2].
 
-> @@ -711,30 +711,35 @@ static void add_arg_item(struct list_head *arg_head, char *tok, char *val,
->  	list_add_tail(&new_item->list, arg_head);
->  }
->  
-> -static void process_command_line_args(struct list_head *arg_head,
-> -				      struct list_head *new_trailer_head)
-> +static void parse_trailers_from_config(struct list_head *config_head)
->  {
->  	struct arg_item *item;
-> -	struct strbuf tok = STRBUF_INIT;
-> -	struct strbuf val = STRBUF_INIT;
-> -	const struct conf_info *conf;
->  	struct list_head *pos;
->  
-> -	/*
-> -	 * In command-line arguments, '=' is accepted (in addition to the
-> -	 * separators that are defined).
-> -	 */
-> -	char *cl_separators = xstrfmt("=%s", separators);
-> -
->  	/* Add an arg item for each configured trailer with a command */
->  	list_for_each(pos, &conf_head) {
->  		item = list_entry(pos, struct arg_item, list);
->  		if (item->conf.command)
-> -			add_arg_item(arg_head,
-> +			add_arg_item(config_head,
->  				     xstrdup(token_from_item(item, NULL)),
->  				     xstrdup(""),
->  				     &item->conf, NULL);
->  	}
-> +}
-> +
-> +static void parse_trailers_from_command_line_args(struct list_head *arg_head,
-> +						  struct list_head *new_trailer_head)
-> +{
-> +	struct strbuf tok = STRBUF_INIT;
-> +	struct strbuf val = STRBUF_INIT;
-> +	const struct conf_info *conf;
-> +	struct list_head *pos;
-> +
-> +	/*
-> +	 * In command-line arguments, '=' is accepted (in addition to the
-> +	 * separators that are defined).
-> +	 */
-> +	char *cl_separators = xstrfmt("=%s", separators);
->  
->  	/* Add an arg item for each trailer on the command line */
->  	list_for_each(pos, new_trailer_head) {
+[1] https://lore.kernel.org/git/CAJoAoZ=3DCig_kLocxKGax31sU7Xe4=3D=3DBGzC__=
+Bg2_pr7krNq6MA@mail.gmail.com/
+[2] https://github.com/steadmon/git/blob/unit-tests-dev/Documentation/techn=
+ical/unit-tests.adoc
 
-I find this equally readable as the preimage, which IMO is adequately
-scoped and commented.
+Reviewers can help this series progress by discussing whether it's
+acceptable to rely on `prove` as a test harness for unit tests. We
+support this for the current shell tests suite, but it is not strictly
+required.
 
-> @@ -1070,8 +1075,11 @@ void process_trailers(const char *file,
->  
->  
->  	if (!opts->only_input) {
-> +		LIST_HEAD(config_head);
->  		LIST_HEAD(arg_head);
-> -		process_command_line_args(&arg_head, new_trailer_head);
-> +		parse_trailers_from_config(&config_head);
-> +		parse_trailers_from_command_line_args(&arg_head, new_trailer_head);
-> +		list_splice(&config_head, &arg_head);
->  		process_trailers_lists(&head, &arg_head);
->  	}
+TODOs remaining:
+- Discuss pre-existing harnesses for the current test suite
+- Figure out how to evaluate frameworks on additional OSes such as *BSD
+  and NonStop
 
-But now, we have to remember to call two functions instead of just one.
-This, and the slight additional churn makes me lean negative on this
-change. I would be really happy if we had a use case where we only
-wanted to call one function but not the other, but it seems like this
-isn't the case.
+Changes in v5:
+- Add comparison point "License".
+- Discuss feature priorities
+- Drop frameworks:
+  - Incompatible licenses: libtap, cmocka
+  - Missing source: MyTAP
+  - No TAP support: =C2=B5nit, cmockery, cmockery2, Unity, minunit, CUnit
+- Drop comparison point "Coverage reports": this can generally be
+  handled by tools such as `gcov` regardless of the framework used.
+- Drop comparison point "Inline tests": there didn't seem to be
+  strong interest from reviewers for this feature.
+- Drop comparison point "Scheduling / re-running": this was not
+  supported by any of the main contenders, and is generally better
+  handled by the harness rather than framework.
+- Drop comparison point "Lazy test planning": this was supported by
+  all frameworks that provide TAP output.
+
+Changes in v4:
+- Add link anchors for the framework comparison dimensions
+- Explain "Partial" results for each dimension
+- Use consistent dimension names in the section headers and comparison
+  tables
+- Add "Project KLOC", "Adoption", and "Inline tests" dimensions
+- Fill in a few of the missing entries in the comparison table
+
+Changes in v3:
+- Expand the doc with discussion of desired features and a WIP
+  comparison.
+- Drop all implementation patches until a framework is selected.
+- Link to v2: https://lore.kernel.org/r/20230517-unit-tests-v2-v2-0-21b5b60=
+f4b32@google.com
+
+ Documentation/Makefile                 |   1 +
+ Documentation/technical/unit-tests.txt | 217 +++++++++++++++++++++++++
+ 2 files changed, 218 insertions(+)
+ create mode 100644 Documentation/technical/unit-tests.txt
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b629176d7d..3f2383a12c 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -122,6 +122,7 @@ TECH_DOCS +=3D technical/scalar
+ TECH_DOCS +=3D technical/send-pack-pipeline
+ TECH_DOCS +=3D technical/shallow
+ TECH_DOCS +=3D technical/trivial-merge
++TECH_DOCS +=3D technical/unit-tests
+ SP_ARTICLES +=3D $(TECH_DOCS)
+ SP_ARTICLES +=3D technical/api-index
+=20
+diff --git a/Documentation/technical/unit-tests.txt b/Documentation/technic=
+al/unit-tests.txt
+new file mode 100644
+index 0000000000..fad9ec9279
+--- /dev/null
++++ b/Documentation/technical/unit-tests.txt
+@@ -0,0 +1,217 @@
++=3D Unit Testing
++
++In our current testing environment, we spend a significant amount of effor=
+t
++crafting end-to-end tests for error conditions that could easily be captur=
+ed by
++unit tests (or we simply forgo some hard-to-setup and rare error condition=
+s).
++Unit tests additionally provide stability to the codebase and can simplify
++debugging through isolation. Writing unit tests in pure C, rather than wit=
+h our
++current shell/test-tool helper setup, simplifies test setup, simplifies pa=
+ssing
++data around (no shell-isms required), and reduces testing runtime by not
++spawning a separate process for every test invocation.
++
++We believe that a large body of unit tests, living alongside the existing =
+test
++suite, will improve code quality for the Git project.
++
++=3D=3D Definitions
++
++For the purposes of this document, we'll use *test framework* to refer to
++projects that support writing test cases and running tests within the cont=
+ext
++of a single executable. *Test harness* will refer to projects that manage
++running multiple executables (each of which may contain multiple test case=
+s) and
++aggregating their results.
++
++In reality, these terms are not strictly defined, and many of the projects
++discussed below contain features from both categories.
++
++For now, we will evaluate projects solely on their framework features. Sin=
+ce we
++are relying on having TAP output (see below), we can assume that any frame=
+work
++can be made to work with a harness that we can choose later.
++
++
++=3D=3D Choosing a framework
++
++=3D=3D=3D Desired features & feature priority
++
++There are a variety of features we can use to rank the candidate framework=
+s, and
++those features have different priorities:
++
++* Critical features: we probably won't consider a framework without these
++** Can we legally / easily use the project?
++*** <<license,License>>
++*** <<vendorable-or-ubiquitous,Vendorable or ubiquitous>>
++*** <<maintainable-extensible,Maintainable / extensible>>
++*** <<major-platform-support,Major platform support>>
++** Does the project support our bare-minimum needs?
++*** <<tap-support,TAP support>>
++*** <<diagnostic-output,Diagnostic output>>
++*** <<runtime-skippable-tests,Runtime-skippable tests>>
++* Nice-to-have features:
++** <<parallel-execution,Parallel execution>>
++** <<mock-support,Mock support>>
++** <<signal-error-handling,Signal & error-handling>>
++* Tie-breaker stats
++** <<project-kloc,Project KLOC>>
++** <<adoption,Adoption>>
++
++[[license]]
++=3D=3D=3D=3D License
++
++We must be able to legally use the framework in connection with Git. As Gi=
+t is
++licensed only under GPLv2, we must eliminate any LGPLv3, GPLv3, or Apache =
+2.0
++projects.
++
++[[vendorable-or-ubiquitous]]
++=3D=3D=3D=3D Vendorable or ubiquitous
++
++We want to avoid forcing Git developers to install new tools just to run u=
+nit
++tests. Any prospective frameworks and harnesses must either be vendorable
++(meaning, we can copy their source directly into Git's repository), or so
++ubiquitous that it is reasonable to expect that most developers will have =
+the
++tools installed already.
++
++[[maintainable-extensible]]
++=3D=3D=3D=3D Maintainable / extensible
++
++It is unlikely that any pre-existing project perfectly fits our needs, so =
+any
++project we select will need to be actively maintained and open to acceptin=
+g
++changes. Alternatively, assuming we are vendoring the source into our repo=
+, it
++must be simple enough that Git developers can feel comfortable making chan=
+ges as
++needed to our version.
++
++In the comparison table below, "True" means that the framework seems to ha=
+ve
++active developers, that it is simple enough that Git developers can make c=
+hanges
++to it, and that the project seems open to accepting external contributions=
+ (or
++that it is vendorable). "Partial" means that at least one of the above
++conditions holds.
++
++[[major-platform-support]]
++=3D=3D=3D=3D Major platform support
++
++At a bare minimum, unit-testing must work on Linux, MacOS, and Windows.
++
++In the comparison table below, "True" means that it works on all three maj=
+or
++platforms with no issues. "Partial" means that there may be annoyances on =
+one or
++more platforms, but it is still usable in principle.
++
++[[tap-support]]
++=3D=3D=3D=3D TAP support
++
++The https://testanything.org/[Test Anything Protocol] is a text-based inte=
+rface
++that allows tests to communicate with a test harness. It is already used b=
+y
++Git's integration test suite. Supporting TAP output is a mandatory feature=
+ for
++any prospective test framework.
++
++In the comparison table below, "True" means this is natively supported.
++"Partial" means TAP output must be generated by post-processing the native
++output.
++
++Frameworks that do not have at least Partial support will not be evaluated
++further.
++
++[[diagnostic-output]]
++=3D=3D=3D=3D Diagnostic output
++
++When a test case fails, the framework must generate enough diagnostic outp=
+ut to
++help developers find the appropriate test case in source code in order to =
+debug
++the failure.
++
++[[runtime-skippable-tests]]
++=3D=3D=3D=3D Runtime-skippable tests
++
++Test authors may wish to skip certain test cases based on runtime circumst=
+ances,
++so the framework should support this.
++
++[[parallel-execution]]
++=3D=3D=3D=3D Parallel execution
++
++Ideally, we will build up a significant collection of unit test cases, mos=
+t
++likely split across multiple executables. It will be necessary to run thes=
+e
++tests in parallel to enable fast develop-test-debug cycles.
++
++In the comparison table below, "True" means that individual test cases wit=
+hin a
++single test executable can be run in parallel. We assume that executable-l=
+evel
++parallelism can be handled by the test harness.
++
++[[mock-support]]
++=3D=3D=3D=3D Mock support
++
++Unit test authors may wish to test code that interacts with objects that m=
+ay be
++inconvenient to handle in a test (e.g. interacting with a network service)=
+.
++Mocking allows test authors to provide a fake implementation of these obje=
+cts
++for more convenient tests.
++
++[[signal-error-handling]]
++=3D=3D=3D=3D Signal & error handling
++
++The test framework should fail gracefully when test cases are themselves b=
+uggy
++or when they are interrupted by signals during runtime.
++
++[[project-kloc]]
++=3D=3D=3D=3D Project KLOC
++
++The size of the project, in thousands of lines of code as measured by
++https://dwheeler.com/sloccount/[sloccount] (rounded up to the next multipl=
+e of
++1,000). As a tie-breaker, we probably prefer a project with fewer LOC.
++
++[[adoption]]
++=3D=3D=3D=3D Adoption
++
++As a tie-breaker, we prefer a more widely-used project. We use the number =
+of
++GitHub / GitLab stars to estimate this.
++
++
++=3D=3D=3D Comparison
++
++[format=3D"csv",options=3D"header",width=3D"33%"]
++|=3D=3D=3D=3D=3D
++Framework,"<<license,License>>","<<vendorable-or-ubiquitous,Vendorable or =
+ubiquitous>>","<<maintainable-extensible,Maintainable / extensible>>","<<ma=
+jor-platform-support,Major platform support>>","<<tap-support,TAP support>>=
+","<<diagnostic-output,Diagnostic output>>","<<runtime--skippable-tests,Run=
+time- skippable tests>>","<<parallel-execution,Parallel execution>>","<<moc=
+k-support,Mock support>>","<<signal-error-handling,Signal & error handling>=
+>","<<project-kloc,Project KLOC>>","<<adoption,Adoption>>"
++https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com=
+/[Custom Git impl.],[lime-background]#GPL v2#,[lime-background]#True#,[lime=
+-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-ba=
+ckground]#True#,[lime-background]#True#,[red-background]#False#,[red-backgr=
+ound]#False#,[red-background]#False#,1,0
++https://github.com/silentbicycle/greatest[Greatest],[lime-background]#ISC#=
+,[lime-background]#True#,[yellow-background]#Partial#,[lime-background]#Tru=
+e#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#T=
+rue#,[red-background]#False#,[red-background]#False#,[red-background]#False=
+#,3,1400
++https://github.com/Snaipe/Criterion[Criterion],[lime-background]#MIT#,[red=
+-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[l=
+ime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime=
+-background]#True#,[red-background]#False#,[lime-background]#True#,19,1800
++https://github.com/rra/c-tap-harness/[C TAP],[lime-background]#Expat#,[lim=
+e-background]#True#,[yellow-background]#Partial#,[yellow-background]#Partia=
+l#,[lime-background]#True#,[red-background]#False#,[lime-background]#True#,=
+[red-background]#False#,[red-background]#False#,[red-background]#False#,4,3=
+3
++https://libcheck.github.io/check/[Check],[lime-background]#LGPL v2.1#,[red=
+-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[l=
+ime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-=
+background]#False#,[red-background]#False#,[lime-background]#True#,17,973
++|=3D=3D=3D=3D=3D
++
++=3D=3D=3D=3D Alternatives considered
++
++Several suggested frameworks have been eliminated from consideration:
++
++* Incompatible licenses:
++** https://github.com/zorgnax/libtap[libtap] (LGPL v3)
++** https://cmocka.org/[cmocka] (Apache 2.0)
++* Missing source: https://www.kindahl.net/mytap/doc/index.html[MyTap]
++* No TAP support:
++** https://nemequ.github.io/munit/[=C2=B5nit]
++** https://github.com/google/cmockery[cmockery]
++** https://github.com/lpabon/cmockery2[cmockery2]
++** https://github.com/ThrowTheSwitch/Unity[Unity]
++** https://github.com/siu/minunit[minunit]
++** https://cunit.sourceforge.net/[CUnit]
++
++=3D=3D=3D=3D Suggested framework
++
++Considering the feature priorities and comparison listed above, a custom
++framework seems to be the best option.
++
++
++=3D=3D Choosing a test harness
++
++During upstream discussion, it was occasionally noted that `prove` provide=
+s many
++convenient features. While we already support the use of `prove` as a test
++harness for the shell tests, it is not strictly required.
++
++IMPORTANT: It is an open question whether or not we wish to rely on `prove=
+` as a
++strict dependency for running unit tests.
++
++
++=3D=3D Milestones
++
++* Get upstream agreement on implementing a custom test framework
++* Determine if it's OK to rely on `prove` for running unit tests
++* Add useful tests of library-like code
++* Integrate with Makefile
++* Integrate with CI
++* Integrate with
++  https://lore.kernel.org/git/20230502211454.1673000-1-calvinwan@google.co=
+m/[stdlib
++  work]
++* Run alongside regular `make test` target
+
+base-commit: a9e066fa63149291a55f383cfa113d8bdbdaa6b3
+--=20
+2.41.0.640.ga95def55d0-goog
+
