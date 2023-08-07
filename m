@@ -2,76 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CBF1EB64DD
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 05:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 226AAEB64DD
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 05:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbjHGFh7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 01:37:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48538 "EHLO
+        id S230002AbjHGFuq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 01:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjHGFh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 01:37:57 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE95910EC
-        for <git@vger.kernel.org>; Sun,  6 Aug 2023 22:37:56 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5734d919156so35100567b3.3
-        for <git@vger.kernel.org>; Sun, 06 Aug 2023 22:37:56 -0700 (PDT)
+        with ESMTP id S229825AbjHGFup (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 01:50:45 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E7B1703
+        for <git@vger.kernel.org>; Sun,  6 Aug 2023 22:50:44 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-563fbc76454so4120219a12.2
+        for <git@vger.kernel.org>; Sun, 06 Aug 2023 22:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691386675; x=1691991475;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gk7QTNrE94M3W1KQVEcE7NRtOPwpBa2Ig17RqbawF9w=;
-        b=X3Q1RqFKS8zo+2AsaVkVFNCjRr4patxg8zz7VFmllyScdK5P19QFRFg45gH2/3vqg4
-         Na8pOgHpv623P1+bLke7zwEXpKvoGL1PvBvAsf0+qJHovSNjvan0xOoHsSlac6rKeqzj
-         QZ31fSLVaGXUdK4/8wcw/eQ5Xiwff2JOhpbJlZfH2pFMP4Zh3NVRgXEbRn1SlAzZDN01
-         +x5MFDmbMDsIiYxg00/rp9CHzXZXvSOvsnvYeLF7401ezW+xMgdwP5bcFJBOeV0hMhbW
-         hbvcC1Mo1ev7qpUukeS5Si19kKU8JmZcCqBnQi6ONrp+jPsRh+YW7s8Y82KimwenOtyT
-         Luuw==
+        d=google.com; s=20221208; t=1691387444; x=1691992244;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yROdIoBE0j38ktlmoeIDamfzfy9svoBTt5r2zDm3X70=;
+        b=lArnB1cx4UV8pK3/+utQhGNCKUpMuFnnTfmqf8SDfmTiajz/ay8KvWVLLym5+hSayz
+         +rCLe78UKj0j8OYw6N/IewygUTI2DY3M0ZGjRvE93YiiCcao73AT2Wpfj1scdfwWysKT
+         JyGy/p1by2EJx2gkGh3XIECVnTeO5T4AO7BQJp+v17cnMfp0nRemiHdqq/zNufM8Lv4M
+         DeaFkzFjd81Y+r4IPNqcpwpE3HEkoYtcLg0yIyaZwmEx1tEwQVlB1nqvzxd0zSNeAGSi
+         J2fvpkD+00WYdnazVyrn1fe4irhqzWjN8igiJx56n83iENu6lX+pbuwohcq+mOfvor+5
+         29oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691386675; x=1691991475;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gk7QTNrE94M3W1KQVEcE7NRtOPwpBa2Ig17RqbawF9w=;
-        b=Zs93jsBgcers1xF9+7cC5glguiyiu7Qmb65npS3r6AvFsH5RFgWPnBJ0ntxvmXeKg/
-         ZOFMWhNdbzYPCPnh6zL12iQfl7/2NQzkfnFm6g1wJw98B3G4V7lvkhAMRqWaEK1An5hb
-         Zsdrf5rhmrcZFCbzlqYadmpkSSr58QsjivjTuIvRlmjXxWc3NtmicJ5YpNru97m9iowk
-         5gCp7VxkrbT/6VBd/2lU0uYpP2L4D3ZwJvbrJGQYbAVnzAMfB6ejfMzGDJrvhiG0GCLt
-         onc+RK4vFcsBN+JgCu1ry2DLdWEPRjUV84CMvomQaJ2s4FD0hoStsflJMlmWktvvCXF7
-         VP1g==
-X-Gm-Message-State: AOJu0YxelJWzxPmt+o3tCkP+KXREOCKdGAha92UWLblwQ2zTWKWq0O2I
-        uoA3X0+gvg30VwieqXr+aBNgNaSTfqA=
-X-Google-Smtp-Source: AGHT+IEV/77HGFN3dKbsEHHsBtGCIf6p5yjW6XXHhFY1lbhHZryg8I+vBfmenLMbJOTJ1B+SBX5tD+dnGfs=
+        d=1e100.net; s=20221208; t=1691387444; x=1691992244;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yROdIoBE0j38ktlmoeIDamfzfy9svoBTt5r2zDm3X70=;
+        b=dRboJBh/1KqWf7PSI+4GiN8Q+TMFhoZK+UYxR0TTLoNU/TVlfN+jo58dWe3MX6ie0I
+         kDIb2jH/Hep8bWP9TD4oNVJUy2k1IoUseV/XGAiuOvW6kfSQvvLA38c1iTjemwb8mznG
+         BEiRi+DrGma0Lb5kpECKDmhkW/0JFNsSv+1LOPw4R92Zo8FsoTXdqhv2i3Z3WI/jDHFy
+         f5+Ayoid74A0SndvgOiHmzIIoMmvUY3D8El4xPolx+ynRU4uKAGzeMZ6BGkAZlDlGZrt
+         WLg63p10QMNxM8N8g0rI4zyU5sIQwojs/mgwGV06ItfZw3GOSSPfIkzGU4xcK9MNWWLj
+         3giw==
+X-Gm-Message-State: AOJu0YzoHayCUw+dvqrjZNiycS8OYPQVVAmZrbASy9dbXPE3mTRBs38D
+        K/4U88e7r9qWX1qhzFrsLG7+gVMQK5o=
+X-Google-Smtp-Source: AGHT+IEITjJYU4YlYOOrEKlYOhUjTLSdxMeIOllgKOMTiVJgoz+vcSj8Na+O3af8WMMrJCpi5mwoPHhM0dM=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a25:dbcf:0:b0:d01:60ec:d0e with SMTP id
- g198-20020a25dbcf000000b00d0160ec0d0emr53019ybf.9.1691386675763; Sun, 06 Aug
- 2023 22:37:55 -0700 (PDT)
-Date:   Sun, 06 Aug 2023 22:37:54 -0700
-In-Reply-To: <owlyfs4vbeus.fsf@fine.c.googlers.com>
+ (user=linusa job=sendgmr) by 2002:a17:903:2349:b0:1bc:4c3d:eb08 with SMTP id
+ c9-20020a170903234900b001bc4c3deb08mr34227plh.8.1691387443702; Sun, 06 Aug
+ 2023 22:50:43 -0700 (PDT)
+Date:   Sun, 06 Aug 2023 22:50:42 -0700
+In-Reply-To: <6d67ae6b1f62a2be076d752a2af65bb07998ca73.1691210737.git.gitgitgadget@gmail.com>
 Mime-Version: 1.0
-References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
- <6b427b4b1e82b1f01640f1f49fe8d1c2fd02111e.1691210737.git.gitgitgadget@gmail.com>
- <xmqqjzu7irhw.fsf@gitster.g> <owlyfs4vbeus.fsf@fine.c.googlers.com>
-Message-ID: <owlycyzzbefh.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 3/5] trailer: add tests to check defaulting behavior with
- --no-* flags
+References: <pull.1564.git.1691210737.gitgitgadget@gmail.com> <6d67ae6b1f62a2be076d752a2af65bb07998ca73.1691210737.git.gitgitgadget@gmail.com>
+Message-ID: <owlya5v3bdu5.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 1/5] trailer tests: make test cases self-contained
 From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
+To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> So if I configure this like
->
->    git config trailer.ack.key "Acked-by" &&
->
+> From: Linus Arver <linusa@google.com>
+> ...
+> @@ -1392,7 +1610,9 @@ test_expect_success 'with failing command using $ARG' '
+>  '
+>  
+>  test_expect_success 'with empty tokens' '
+> -	git config --unset trailer.fix.command &&
+> +	test_config trailer.sign.command "echo \"\$GIT_AUTHOR_NAME <\$GIT_AUTHOR_EMAIL>\"" &&
+> +	test_config trailer.sign.key "Signed-off-by: " &&
+> +	test_config trailer.ifexists "addIfDifferent" &&
+>  	cat >expected <<-EOF &&
+>  
+>  		Signed-off-by: A U Thor <author@example.com>
 
-Oops, I meant just
-
-    git config trailer.ack.key "Acked-by"
-
-without the trailing "&&".
+In this test and some other places we get the chance to remove
+invocations of "git config --unset ..." (because we don't leak config
+state anymore). I will update the commit message accordingly in the next
+reroll.
