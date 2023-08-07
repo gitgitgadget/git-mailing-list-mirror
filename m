@@ -2,457 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0EC3C001B0
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 23:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA518C04A94
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 23:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229984AbjHGXLZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 19:11:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
+        id S230510AbjHGX3G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 19:29:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbjHGXLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 19:11:06 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC08F2724
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 16:08:47 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d20d99c03fbso5891405276.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2023 16:08:47 -0700 (PDT)
+        with ESMTP id S230411AbjHGX2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 19:28:53 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60EF172B
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 16:28:52 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-563379fe16aso5048829a12.3
+        for <git@vger.kernel.org>; Mon, 07 Aug 2023 16:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691449686; x=1692054486;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9eNyH5whQZ1scuV4pNq3GXOsF5FhPT7JKuFn5vRY6pM=;
-        b=G1OP0CAjkEeRwuN4XFUh0rKrZOZ4461LBwHA9L83oczB8+/QLERIjRQABeO7xK8TMj
-         w8ISOkNQB8y9+tC8a/lUR35HyvMHquLVyZrTS8zgGrsSvUFf83QFZhu3p6tndDgIk6Mf
-         JLRK3M7V+3BnGHdQL8xd7LYtNLMgx6AJPtRovjCSxkUVwMRk6GOrCTRV5pfcZABORMZY
-         9a4q4qig4GQhElLd4xRhqEPyI1I2J+MJ1+hyLsJXjNgrg4kX3drIokv1numjyiGlp3EZ
-         TCGD8aeqG+S8tb8l0lb/vpy4joptnVTfC2nIA7YKjT3LiTRtOLPIviyb9A2AC5hm8qg3
-         lFOg==
+        d=google.com; s=20221208; t=1691450932; x=1692055732;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=h7HshU+G9aKZTHSu4wxWEE11KJJjUkz7Kew1R8UrbJ4=;
+        b=Hq37wosh/rU0SbvstCUKWmWbhALGGtR2pBYA/ML3cLU1AiHOfIlJ6RSm2dFhseBcn+
+         pDRisViIYtChnOhYoWjSh5o11h2YrHAEL/xHr9SQblfL/VjjswE56BpBvRWsoas6XCWV
+         nhsWZCbHGcHpecQ2VbN660F/Ejy3hAku+rVP1x2zSUZEKnKi0R9EHSJ5SigYABZjaR7D
+         Bct5QhZxHyMpD2WkOXKPpBDFACOjINLL3DyojVmxWxWo0w7cUedwuRpXltvllu7XVu9Y
+         VKi+ckDzeLEDeYjLzK9q/OONxbNS20g23gUhKyVKQaZpiK7gQz1a8F81DAgjtSZ6yqRf
+         xJjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691449686; x=1692054486;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9eNyH5whQZ1scuV4pNq3GXOsF5FhPT7JKuFn5vRY6pM=;
-        b=j9CC/bARqGJxJdPl/OkJrJvA5rvP0iJmYPeDmK7Aib7UTx+TT9aH5ba2/+wKM2rPh3
-         GS7nARXYlEqjFB4tBNMek9Rc3/KZytWwzdnWAnHX2mWhvrBd3JLHzrcWJFmIbJepAE4u
-         I+DjEOAStIGedU/AOQY8fkjDm0eBlcwzxImR+T0SYJBvd+8QDiiEmPHiq18QW42iPC8r
-         j2rGDh2qTUwRKhvwZOjiQO7T1FYeWhoIO3b0FCharGdFf0RuaBLba6rozBsEysUpqn1m
-         fldlz3e2zlG4CjqaVXkQAgf7jeUkIhI3MEdoq+m7eFRFaJBDonuEoUiBA1C1dB2W0T+U
-         mEkA==
-X-Gm-Message-State: AOJu0YzObCZME+SGhtS5SZo1Jv+RTXNs+RF56DEOdYXADFqnB53OV7lX
-        f3RI/kxYkBpFvC+NztzHG0aBMV9V1/gDdj+kWEVtsI2FTaQCOj6mGia8SIpHqF24jEj3CAMmPIL
-        8iRKxPFUgcxAu7+xI70/5pUgjIHYL49wpuk9x6G3RRSDInRQcIg+Os9YsOIMdN/c=
-X-Google-Smtp-Source: AGHT+IFOZhWSZWSwkZZb8EJ8bdkB4qCdY4s0CyolwO7n/gF4hwAuoehYQNSVG/Iju5qZSlronEEvpjACei9DTA==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:904a:191d:e056:269d])
- (user=steadmon job=sendgmr) by 2002:a25:cf85:0:b0:cfe:74cf:e61a with SMTP id
- f127-20020a25cf85000000b00cfe74cfe61amr66420ybg.6.1691449686023; Mon, 07 Aug
- 2023 16:08:06 -0700 (PDT)
-Date:   Mon,  7 Aug 2023 16:07:55 -0700
-In-Reply-To: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+        d=1e100.net; s=20221208; t=1691450932; x=1692055732;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h7HshU+G9aKZTHSu4wxWEE11KJJjUkz7Kew1R8UrbJ4=;
+        b=QaHnXFHmH7ZZfIW9lrK6BXGHwG9X1VANVd/uPcXvuoBKjqro3mMZ6jNXJ1zMg7JESz
+         xQ83c2KpFTp6IX94J0SUDWIt84Fdr1Ye4kwHhkzg/m4Ir1G/KSAuDMdcmng14FMwzNVn
+         18RUr90zKIp9hiWA8Le1VvXVStsXt46W2SiklLA5S2p0RoNaZQsqu3VRwvyw2Fz1BCea
+         oc9qpuOV+zpkeEfOV2j02dNthziHayQmWYldIbSI6ijtRdqOYkseEaCIFykgQ8e0Mi77
+         dv84zSjvNiF6iI+kgoZkVC7qTt+F+txx8se/BiSbCVKCbeEq+Xq76WDg4bG7m2KhECIA
+         iC9w==
+X-Gm-Message-State: AOJu0YzioxZvEdGyL8khUJRxBEGoAOJe+92Mb2xSQZMZj4F1tleZfZsG
+        u/bA4M5J8XnsBTs+WpwEI0zq25f0TXFEcg==
+X-Google-Smtp-Source: AGHT+IHqVLqU3GchrgSGqS1SWzHD9nl7TXngQSic9LBIAFA2EQN3NdsrY+TaZgThxFeRgeVR8YJ04oWGkDKIPw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a63:3755:0:b0:53f:6f7c:554e with SMTP id
+ g21-20020a633755000000b0053f6f7c554emr42829pgn.12.1691450932412; Mon, 07 Aug
+ 2023 16:28:52 -0700 (PDT)
+Date:   Mon, 07 Aug 2023 16:28:50 -0700
+In-Reply-To: <1fc060041db11b3df881cb2c7bd60630dc011a15.1691211879.git.gitgitgadget@gmail.com>
 Mime-Version: 1.0
-References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
-X-Mailer: git-send-email 2.41.0.640.ga95def55d0-goog
-Message-ID: <c7dca1a805a16fd4fd68e86efeec97510e3ac4b8.1691449216.git.steadmon@google.com>
-Subject: [PATCH v5] unit tests: Add a project plan document
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     linusa@google.com, calvinwan@google.com, phillip.wood123@gmail.com,
-        chooglen@google.com, gitster@pobox.com
+References: <pull.1563.git.1691211879.gitgitgadget@gmail.com> <1fc060041db11b3df881cb2c7bd60630dc011a15.1691211879.git.gitgitgadget@gmail.com>
+Message-ID: <kl6ly1im8ma5.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 4/5] trailer: teach find_patch_start about --no-divider
+From:   Glen Choo <chooglen@google.com>
+To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Linus Arver <linusa@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In our current testing environment, we spend a significant amount of
-effort crafting end-to-end tests for error conditions that could easily
-be captured by unit tests (or we simply forgo some hard-to-setup and
-rare error conditions). Describe what we hope to accomplish by
-implementing unit tests, and explain some open questions and milestones.
-Discuss desired features for test frameworks/harnesses, and provide a
-preliminary comparison of several different frameworks.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Coauthored-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
-In our current testing environment, we spend a significant amount of
-effort crafting end-to-end tests for error conditions that could easily
-be captured by unit tests (or we simply forgo some hard-to-setup and
-rare error conditions). Unit tests additionally provide stability to the
-codebase and can simplify debugging through isolation. Turning parts of
-Git into libraries[1] gives us the ability to run unit tests on the
-libraries and to write unit tests in C. Writing unit tests in pure C,
-rather than with our current shell/test-tool helper setup, simplifies
-test setup, simplifies passing data around (no shell-isms required), and
-reduces testing runtime by not spawning a separate process for every
-test invocation.
+> This patch will make unit testing a bit more pleasant in this area in
+> the future when we adopt a unit testing framework, because we would not
+> have to test multiple functions to check how finding the start of a
+> patch part works (we would only need to test find_patch_start).
 
-This patch adds a project document describing our goals for adding unit
-tests, as well as a discussion of features needed from prospective test
-frameworks or harnesses. It also includes a WIP comparison of various
-proposed frameworks. Later iterations of this series will probably
-include a sample unit test and Makefile integration once we've settled
-on a framework. A rendered preview of this doc can be found at [2].
+Unit tests typically only test external-facing interfaces, not
+implementatino details, so without seeing the unit tests or library
+boundary, it's hard to tell whether find_patch_start() is something we
+want to unit test or not. I would have assumed it's not, given that it's
+tiny and only has a single caller, so I'm hesitant to say that we should
+definitely handle no_divider inside find_patch_start().
 
-[1] https://lore.kernel.org/git/CAJoAoZ=3DCig_kLocxKGax31sU7Xe4=3D=3DBGzC__=
-Bg2_pr7krNq6MA@mail.gmail.com/
-[2] https://github.com/steadmon/git/blob/unit-tests-dev/Documentation/techn=
-ical/unit-tests.adoc
+> @@ -812,14 +812,14 @@ static ssize_t last_line(const char *buf, size_t len)
+>   * Return the position of the start of the patch or the length of str if there
+>   * is no patch in the message.
+>   */
+> -static size_t find_patch_start(const char *str)
+> +static size_t find_patch_start(const char *str, int no_divider)
+>  {
+>  	const char *s;
+>  
+>  	for (s = str; *s; s = next_line(s)) {
+>  		const char *v;
+>  
+> -		if (skip_prefix(s, "---", &v) && isspace(*v))
+> +		if (!no_divider && skip_prefix(s, "---", &v) && isspace(*v))
+>  			return s - str;
+>  	}
 
-Reviewers can help this series progress by discussing whether it's
-acceptable to rely on `prove` as a test harness for unit tests. We
-support this for the current shell tests suite, but it is not strictly
-required.
-
-TODOs remaining:
-- Discuss pre-existing harnesses for the current test suite
-- Figure out how to evaluate frameworks on additional OSes such as *BSD
-  and NonStop
-
-Changes in v5:
-- Add comparison point "License".
-- Discuss feature priorities
-- Drop frameworks:
-  - Incompatible licenses: libtap, cmocka
-  - Missing source: MyTAP
-  - No TAP support: =C2=B5nit, cmockery, cmockery2, Unity, minunit, CUnit
-- Drop comparison point "Coverage reports": this can generally be
-  handled by tools such as `gcov` regardless of the framework used.
-- Drop comparison point "Inline tests": there didn't seem to be
-  strong interest from reviewers for this feature.
-- Drop comparison point "Scheduling / re-running": this was not
-  supported by any of the main contenders, and is generally better
-  handled by the harness rather than framework.
-- Drop comparison point "Lazy test planning": this was supported by
-  all frameworks that provide TAP output.
-
-Changes in v4:
-- Add link anchors for the framework comparison dimensions
-- Explain "Partial" results for each dimension
-- Use consistent dimension names in the section headers and comparison
-  tables
-- Add "Project KLOC", "Adoption", and "Inline tests" dimensions
-- Fill in a few of the missing entries in the comparison table
-
-Changes in v3:
-- Expand the doc with discussion of desired features and a WIP
-  comparison.
-- Drop all implementation patches until a framework is selected.
-- Link to v2: https://lore.kernel.org/r/20230517-unit-tests-v2-v2-0-21b5b60=
-f4b32@google.com
-
- Documentation/Makefile                 |   1 +
- Documentation/technical/unit-tests.txt | 217 +++++++++++++++++++++++++
- 2 files changed, 218 insertions(+)
- create mode 100644 Documentation/technical/unit-tests.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index b629176d7d..3f2383a12c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -122,6 +122,7 @@ TECH_DOCS +=3D technical/scalar
- TECH_DOCS +=3D technical/send-pack-pipeline
- TECH_DOCS +=3D technical/shallow
- TECH_DOCS +=3D technical/trivial-merge
-+TECH_DOCS +=3D technical/unit-tests
- SP_ARTICLES +=3D $(TECH_DOCS)
- SP_ARTICLES +=3D technical/api-index
-=20
-diff --git a/Documentation/technical/unit-tests.txt b/Documentation/technic=
-al/unit-tests.txt
-new file mode 100644
-index 0000000000..fad9ec9279
---- /dev/null
-+++ b/Documentation/technical/unit-tests.txt
-@@ -0,0 +1,217 @@
-+=3D Unit Testing
-+
-+In our current testing environment, we spend a significant amount of effor=
-t
-+crafting end-to-end tests for error conditions that could easily be captur=
-ed by
-+unit tests (or we simply forgo some hard-to-setup and rare error condition=
-s).
-+Unit tests additionally provide stability to the codebase and can simplify
-+debugging through isolation. Writing unit tests in pure C, rather than wit=
-h our
-+current shell/test-tool helper setup, simplifies test setup, simplifies pa=
-ssing
-+data around (no shell-isms required), and reduces testing runtime by not
-+spawning a separate process for every test invocation.
-+
-+We believe that a large body of unit tests, living alongside the existing =
-test
-+suite, will improve code quality for the Git project.
-+
-+=3D=3D Definitions
-+
-+For the purposes of this document, we'll use *test framework* to refer to
-+projects that support writing test cases and running tests within the cont=
-ext
-+of a single executable. *Test harness* will refer to projects that manage
-+running multiple executables (each of which may contain multiple test case=
-s) and
-+aggregating their results.
-+
-+In reality, these terms are not strictly defined, and many of the projects
-+discussed below contain features from both categories.
-+
-+For now, we will evaluate projects solely on their framework features. Sin=
-ce we
-+are relying on having TAP output (see below), we can assume that any frame=
-work
-+can be made to work with a harness that we can choose later.
-+
-+
-+=3D=3D Choosing a framework
-+
-+=3D=3D=3D Desired features & feature priority
-+
-+There are a variety of features we can use to rank the candidate framework=
-s, and
-+those features have different priorities:
-+
-+* Critical features: we probably won't consider a framework without these
-+** Can we legally / easily use the project?
-+*** <<license,License>>
-+*** <<vendorable-or-ubiquitous,Vendorable or ubiquitous>>
-+*** <<maintainable-extensible,Maintainable / extensible>>
-+*** <<major-platform-support,Major platform support>>
-+** Does the project support our bare-minimum needs?
-+*** <<tap-support,TAP support>>
-+*** <<diagnostic-output,Diagnostic output>>
-+*** <<runtime-skippable-tests,Runtime-skippable tests>>
-+* Nice-to-have features:
-+** <<parallel-execution,Parallel execution>>
-+** <<mock-support,Mock support>>
-+** <<signal-error-handling,Signal & error-handling>>
-+* Tie-breaker stats
-+** <<project-kloc,Project KLOC>>
-+** <<adoption,Adoption>>
-+
-+[[license]]
-+=3D=3D=3D=3D License
-+
-+We must be able to legally use the framework in connection with Git. As Gi=
-t is
-+licensed only under GPLv2, we must eliminate any LGPLv3, GPLv3, or Apache =
-2.0
-+projects.
-+
-+[[vendorable-or-ubiquitous]]
-+=3D=3D=3D=3D Vendorable or ubiquitous
-+
-+We want to avoid forcing Git developers to install new tools just to run u=
-nit
-+tests. Any prospective frameworks and harnesses must either be vendorable
-+(meaning, we can copy their source directly into Git's repository), or so
-+ubiquitous that it is reasonable to expect that most developers will have =
-the
-+tools installed already.
-+
-+[[maintainable-extensible]]
-+=3D=3D=3D=3D Maintainable / extensible
-+
-+It is unlikely that any pre-existing project perfectly fits our needs, so =
-any
-+project we select will need to be actively maintained and open to acceptin=
-g
-+changes. Alternatively, assuming we are vendoring the source into our repo=
-, it
-+must be simple enough that Git developers can feel comfortable making chan=
-ges as
-+needed to our version.
-+
-+In the comparison table below, "True" means that the framework seems to ha=
-ve
-+active developers, that it is simple enough that Git developers can make c=
-hanges
-+to it, and that the project seems open to accepting external contributions=
- (or
-+that it is vendorable). "Partial" means that at least one of the above
-+conditions holds.
-+
-+[[major-platform-support]]
-+=3D=3D=3D=3D Major platform support
-+
-+At a bare minimum, unit-testing must work on Linux, MacOS, and Windows.
-+
-+In the comparison table below, "True" means that it works on all three maj=
-or
-+platforms with no issues. "Partial" means that there may be annoyances on =
-one or
-+more platforms, but it is still usable in principle.
-+
-+[[tap-support]]
-+=3D=3D=3D=3D TAP support
-+
-+The https://testanything.org/[Test Anything Protocol] is a text-based inte=
-rface
-+that allows tests to communicate with a test harness. It is already used b=
-y
-+Git's integration test suite. Supporting TAP output is a mandatory feature=
- for
-+any prospective test framework.
-+
-+In the comparison table below, "True" means this is natively supported.
-+"Partial" means TAP output must be generated by post-processing the native
-+output.
-+
-+Frameworks that do not have at least Partial support will not be evaluated
-+further.
-+
-+[[diagnostic-output]]
-+=3D=3D=3D=3D Diagnostic output
-+
-+When a test case fails, the framework must generate enough diagnostic outp=
-ut to
-+help developers find the appropriate test case in source code in order to =
-debug
-+the failure.
-+
-+[[runtime-skippable-tests]]
-+=3D=3D=3D=3D Runtime-skippable tests
-+
-+Test authors may wish to skip certain test cases based on runtime circumst=
-ances,
-+so the framework should support this.
-+
-+[[parallel-execution]]
-+=3D=3D=3D=3D Parallel execution
-+
-+Ideally, we will build up a significant collection of unit test cases, mos=
-t
-+likely split across multiple executables. It will be necessary to run thes=
-e
-+tests in parallel to enable fast develop-test-debug cycles.
-+
-+In the comparison table below, "True" means that individual test cases wit=
-hin a
-+single test executable can be run in parallel. We assume that executable-l=
-evel
-+parallelism can be handled by the test harness.
-+
-+[[mock-support]]
-+=3D=3D=3D=3D Mock support
-+
-+Unit test authors may wish to test code that interacts with objects that m=
-ay be
-+inconvenient to handle in a test (e.g. interacting with a network service)=
-.
-+Mocking allows test authors to provide a fake implementation of these obje=
-cts
-+for more convenient tests.
-+
-+[[signal-error-handling]]
-+=3D=3D=3D=3D Signal & error handling
-+
-+The test framework should fail gracefully when test cases are themselves b=
-uggy
-+or when they are interrupted by signals during runtime.
-+
-+[[project-kloc]]
-+=3D=3D=3D=3D Project KLOC
-+
-+The size of the project, in thousands of lines of code as measured by
-+https://dwheeler.com/sloccount/[sloccount] (rounded up to the next multipl=
-e of
-+1,000). As a tie-breaker, we probably prefer a project with fewer LOC.
-+
-+[[adoption]]
-+=3D=3D=3D=3D Adoption
-+
-+As a tie-breaker, we prefer a more widely-used project. We use the number =
-of
-+GitHub / GitLab stars to estimate this.
-+
-+
-+=3D=3D=3D Comparison
-+
-+[format=3D"csv",options=3D"header",width=3D"33%"]
-+|=3D=3D=3D=3D=3D
-+Framework,"<<license,License>>","<<vendorable-or-ubiquitous,Vendorable or =
-ubiquitous>>","<<maintainable-extensible,Maintainable / extensible>>","<<ma=
-jor-platform-support,Major platform support>>","<<tap-support,TAP support>>=
-","<<diagnostic-output,Diagnostic output>>","<<runtime--skippable-tests,Run=
-time- skippable tests>>","<<parallel-execution,Parallel execution>>","<<moc=
-k-support,Mock support>>","<<signal-error-handling,Signal & error handling>=
->","<<project-kloc,Project KLOC>>","<<adoption,Adoption>>"
-+https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com=
-/[Custom Git impl.],[lime-background]#GPL v2#,[lime-background]#True#,[lime=
--background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-ba=
-ckground]#True#,[lime-background]#True#,[red-background]#False#,[red-backgr=
-ound]#False#,[red-background]#False#,1,0
-+https://github.com/silentbicycle/greatest[Greatest],[lime-background]#ISC#=
-,[lime-background]#True#,[yellow-background]#Partial#,[lime-background]#Tru=
-e#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#T=
-rue#,[red-background]#False#,[red-background]#False#,[red-background]#False=
-#,3,1400
-+https://github.com/Snaipe/Criterion[Criterion],[lime-background]#MIT#,[red=
--background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[l=
-ime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime=
--background]#True#,[red-background]#False#,[lime-background]#True#,19,1800
-+https://github.com/rra/c-tap-harness/[C TAP],[lime-background]#Expat#,[lim=
-e-background]#True#,[yellow-background]#Partial#,[yellow-background]#Partia=
-l#,[lime-background]#True#,[red-background]#False#,[lime-background]#True#,=
-[red-background]#False#,[red-background]#False#,[red-background]#False#,4,3=
-3
-+https://libcheck.github.io/check/[Check],[lime-background]#LGPL v2.1#,[red=
--background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[l=
-ime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-=
-background]#False#,[red-background]#False#,[lime-background]#True#,17,973
-+|=3D=3D=3D=3D=3D
-+
-+=3D=3D=3D=3D Alternatives considered
-+
-+Several suggested frameworks have been eliminated from consideration:
-+
-+* Incompatible licenses:
-+** https://github.com/zorgnax/libtap[libtap] (LGPL v3)
-+** https://cmocka.org/[cmocka] (Apache 2.0)
-+* Missing source: https://www.kindahl.net/mytap/doc/index.html[MyTap]
-+* No TAP support:
-+** https://nemequ.github.io/munit/[=C2=B5nit]
-+** https://github.com/google/cmockery[cmockery]
-+** https://github.com/lpabon/cmockery2[cmockery2]
-+** https://github.com/ThrowTheSwitch/Unity[Unity]
-+** https://github.com/siu/minunit[minunit]
-+** https://cunit.sourceforge.net/[CUnit]
-+
-+=3D=3D=3D=3D Suggested framework
-+
-+Considering the feature priorities and comparison listed above, a custom
-+framework seems to be the best option.
-+
-+
-+=3D=3D Choosing a test harness
-+
-+During upstream discussion, it was occasionally noted that `prove` provide=
-s many
-+convenient features. While we already support the use of `prove` as a test
-+harness for the shell tests, it is not strictly required.
-+
-+IMPORTANT: It is an open question whether or not we wish to rely on `prove=
-` as a
-+strict dependency for running unit tests.
-+
-+
-+=3D=3D Milestones
-+
-+* Get upstream agreement on implementing a custom test framework
-+* Determine if it's OK to rely on `prove` for running unit tests
-+* Add useful tests of library-like code
-+* Integrate with Makefile
-+* Integrate with CI
-+* Integrate with
-+  https://lore.kernel.org/git/20230502211454.1673000-1-calvinwan@google.co=
-m/[stdlib
-+  work]
-+* Run alongside regular `make test` target
-
-base-commit: a9e066fa63149291a55f383cfa113d8bdbdaa6b3
---=20
-2.41.0.640.ga95def55d0-goog
-
+Assuming we wanted to make this unit-testable anyway, could we just move
+the strlen() call into this function? Performance aside (I wouldn't be
+surprised if a smart enough compiler could optimize away the noops), I
+don't find this easier to understand. Now the reader needs to read the
+code to see "if no_divider is given, noop until the end of the string,
+at which point str will point to the end, and s - str will give us the
+length of str", as opposed to "there are no dividers, so just return
+strlen(str)".
