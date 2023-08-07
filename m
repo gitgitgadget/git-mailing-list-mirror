@@ -2,184 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6128C001B0
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 12:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88E6BC04A94
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 14:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232716AbjHGMtY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 08:49:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48072 "EHLO
+        id S232714AbjHGOER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 10:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232127AbjHGMtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 08:49:22 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085AA170B
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 05:49:21 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3fe4ad22eb0so27921855e9.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2023 05:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691412559; x=1692017359;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hlGNCuB4d2Ai2xnzHTtlkprqwV6phjwV9Y84kPKJ/SI=;
-        b=HQ/0Qnph4LVynQ/pGmex7LC0BzSOoZ8bSGBfHSY+9s+Def7Kxt9cLcmEkNGZZSVUJf
-         zNv78Aug/td+qAeWbrY+6J/uOqnXjYv8wCHhhuJM6cAyj7JQ8+kDKhlC6ZXCI25NRc7Y
-         X5RuRG6zxIsngRYp9WmswFkq1OyI2bmaaccKf0ei3n28sgqFQkitjGto63uBpN04mNHS
-         5oPp0OuKqNmu7H9H8aF9hZwt33jH81Yvu4lavMlMWgTy6oskyE+Sqx8/uOQrk+e5NCkg
-         eTv7haQ+FUJjeoo3ifN6cwL1WjQuL1gYKxMDfJihAFYX8t+N1xKibD9aT2UFHpYAh27E
-         MaaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691412559; x=1692017359;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hlGNCuB4d2Ai2xnzHTtlkprqwV6phjwV9Y84kPKJ/SI=;
-        b=QKCzn/G2WXTTwUxyNgZHb0aNNO07IfuC/Bbfo+dBJNQ1N2GkCtNTCrt4dPDdVT6MSf
-         u+q4L89rbUIin/VFXuR8QaAwBedAX9VrkgZXFg+Ikbz8BNWQwaLGyCQcpkPzIWrozAa/
-         blKqv1t48nJp8beiowJ9dJ74Lq6xUWSzFc0P0gwX+pGmUjJzYPyCFhCkhUe37SIejDxQ
-         fqLDffspu8mgkmWSrsixWyEcMf+Hv+upNrnXvI5JgLKRYtt3jEVc2jAokM8NrQdO1tib
-         i4rgc3ALK+HqAvcjBzkJPWZJiHx3fIcpHUPaC8mZaRdFyO8jcZIA/gTeDY5BH13CT+MO
-         uHjw==
-X-Gm-Message-State: AOJu0YyNa/DBauZbmfs+FoD9Nx99ZeOX1wV45QvgcBJad69yxU8sw2b3
-        G0oRLrS9Zh/FL1HSYKgjyECQvDgBRmY=
-X-Google-Smtp-Source: AGHT+IFKaVMDsdP7SPFkwUM11KOGsGwCr5TrBrRFUMBu88jYbuusSvcIIDByAqRRYd4MOyUS8bePvQ==
-X-Received: by 2002:a7b:ca58:0:b0:3fe:20aa:ada0 with SMTP id m24-20020a7bca58000000b003fe20aaada0mr7192002wml.15.1691412559011;
-        Mon, 07 Aug 2023 05:49:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n6-20020a7bcbc6000000b003fe29f6b61bsm10495497wmi.46.2023.08.07.05.49.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 05:49:18 -0700 (PDT)
-Message-ID: <pull.1566.git.1691412557518.gitgitgadget@gmail.com>
-From:   "Ryan Williams via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Aug 2023 12:49:17 +0000
-Subject: [PATCH] ls-tree: default <tree-ish> to HEAD
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Ryan Williams <ryan@runsascoded.com>,
-        Ryan Williams <ryan@runsascoded.com>
+        with ESMTP id S235204AbjHGODw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 10:03:52 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA663C0E
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 07:03:02 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 49AC13200932;
+        Mon,  7 Aug 2023 10:02:59 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Mon, 07 Aug 2023 10:02:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1691416978; x=1691503378; bh=DKczb9oRm9V+7o02h2SbQKKCl
+        PZE69WwLT1WF84/dnA=; b=wfIp2Bftbhf1/MSwmObicwg/KwqMO3i5sEkw3aXvW
+        6DJxSWrpv7BJMoKuCSEfrZ87eP1nDSOWEpqhSBlvQjkccUFR4onp0BwzHOWO0SE0
+        OAay3SoCaafYHfxZqXEIi7/GKHLE75fHDPihaOhFptim0YwZb+cHEfrH0cIQHc+H
+        AkS15kJ9L6qFgIMQbpKqjk6Ae66zEOPcTdF7SV5lQFWdjfsKRdWoNc0dbE9tlXUv
+        iuIRj+LbkeTbARjumMbh1gETw+FEfuta1ZNSmaggSGFiLhlUOVR75LVPLMpw4exQ
+        oZP76HiJA3pqQx3z1ML8ss84Ow3ogKdaw35yG61uaYeLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1691416978; x=1691503378; bh=DKczb9oRm9V+7o02h2SbQKKClPZE69WwLT1
+        WF84/dnA=; b=kNZDwY5MBT+VgDh6p2lrCyDWmqo30tbbg4Dj5R7OuWlxzVganEc
+        bxKklVYdxPTCfXY9bK5mzYPeghQ4+y7vqF4wxplZLRWAGS1JsWn0rS/xhi7+egSM
+        iax632ElfzNd9ckH/krLgu8GgXkmaIPl4uzJyl4lxM5NyOcaEd6S+RllEE2wvRjh
+        9HZ9ZEeBfu6beTJerf6ZGM0H/eMDjfcNN6Ki1HHFypDl07twPvs224UOJQMfn+W3
+        b2F2mHGBLBfdLGz++aoU6zlxdmXATh/4l5iIupADGMLZnzZ9k7yWGpjvyfygDcvx
+        4VhXIhaGUbaarp23QSpUvARt4XTW668ZBfg==
+X-ME-Sender: <xms:kvnQZCd04X7gektGa6WG6H7JW35N7hVQkArIT_H1g4z2wOvM-JWbTg>
+    <xme:kvnQZMOaQ8JE6R3509OZSXmKxD7TtGES3FLLigC8Pw_LjHVxApoT3WKYBMLvsvAri
+    wJRgrJH1WvHPYAF>
+X-ME-Received: <xmr:kvnQZDhv-DB2koClqxv1p3pqbSzWleNQEnSULGwGJOI0feJv2MxmlhQ01qhqCZSZpA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrledtgdeiiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurheptggguffhjgffvefgkfhfvffosehtqh
+    hmtdhhtddvnecuhfhrohhmpeeurhhoohhkvgcumfhuhhhlmhgrnhhnuceosghrohhokhgv
+    segrlhgthhgvmhhishhtshdrihhoqeenucggtffrrghtthgvrhhnpedvvdejveevhfeiff
+    elfefggeeitdejfffgfeelhfetudehgfehjefhteekueegveenucffohhmrghinhepghhi
+    thhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepsghrohhokhgvsegrlhgthhgvmhhishhtshdrihho
+X-ME-Proxy: <xmx:kvnQZP8WN2r41B-8zdsYD4ibtZSL1hiz9EdCAj4JEugSqNMyorEDtw>
+    <xmx:kvnQZOuodUmYyAI_xmERZ_FCvynJVe095vfvBCVxSKIKtc8IpdfGkg>
+    <xmx:kvnQZGGqZgDfsNDpFPzWg8lq_0Zk_fnJUQO32cKBfyJgd6U0Q1SB6Q>
+    <xmx:kvnQZDVjlLfmPstGL-MVG2merRxajDP4IAAsSB6RoegGr8MXxARuXA>
+Feedback-ID: i78e840cc:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Aug 2023 10:02:57 -0400 (EDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Subject: Re: Git Commit Notes (fetching/pushing)
+From:   Brooke Kuhlmann <brooke@alchemists.io>
+In-Reply-To: <xmqqwmy7irsd.fsf@gitster.g>
+Date:   Mon, 7 Aug 2023 08:02:46 -0600
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <2301E39E-B70D-485B-AFA8-F8DA64B366A2@alchemists.io>
+References: <D01976C3-4B91-464B-ACF0-78DFFB066747@alchemists.io>
+ <ZM/9+YyOAbWWXQtC@nand.local>
+ <3A1AEE32-4A0C-445D-A1D8-146CDCA03563@alchemists.io>
+ <xmqqwmy7irsd.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3731.700.6)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ryan Williams <ryan@runsascoded.com>
+Thanks Junio. Yep, I see where I went wrong now and learned something =
+new in the process.
 
-When no positional arguments are passed to `git ls-tree`, it currently
-prints "usage" info to stderr and exits with code 129. A more intuitive
-default would be to operate on the `HEAD` commit's tree (similarly to
-`git show`, `git log`, and possibly others).
+I ended up using the following configuration in order to explicitly =
+fetch/push branches, notes, and tags:
 
-This patch updates `git ls-tree [options...]` to operate identically to
-`git ls-tree [options...] HEAD`, updates the docs to reflect that
-`<tree-ish>` is optional (and `[path...]` args can only be provided if a
-`<tree-ish>` is explicitly provided first), and duplicates some existing
-test cases to omit the `HEAD` argument to `ls-tree` (verifying that
-`ls-tree` behaves identically whether `HEAD` is provided or not).
+[remote "origin"]
+	url =3D https://github.com/bkuhlmann/test
+	fetch =3D +refs/heads/*:refs/remotes/origin/*
+	fetch =3D +refs/notes/*:refs/notes/*
+	fetch =3D +refs/tags/*:refs/tags/*
+	push =3D +refs/heads/*:refs/remotes/origin/*
+	push =3D +refs/notes/*:refs/notes/*
+	push =3D +refs/tags/*:refs/tags/*
 
-Signed-off-by: Ryan Williams <ryan@runsascoded.com>
----
-    ls-tree: default to HEAD
+The only problem is my feature branch never shows up on the remote. If I =
+amend my commits, rebase them, and/or update the commit notes, the =
+changes, once pushed, don't show up on the remote repository. I do see =
+this in the output:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1566%2Frunsascoded%2Fls-tree-head-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1566/runsascoded/ls-tree-head-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1566
+To https://github.com/bkuhlmann/test
+   709004099276..1eefe6a1101c  refs/notes/commits -> refs/notes/commits
+ + a966604d7864...e0a75df6084f release -> origin/release (forced update)
 
- Documentation/git-ls-tree.txt |  6 +++---
- builtin/ls-tree.c             | 11 ++++++++---
- t/t3105-ls-tree-output.sh     |  7 ++++++-
- 3 files changed, 17 insertions(+), 7 deletions(-)
+Seeing "forced update" in the output is strange because I'm using `git =
+push` and not `git push --force-with-lease`.
 
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index 6572095d8d6..6211d630974 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
- 	    [--name-only] [--name-status] [--object-only] [--full-name] [--full-tree] [--abbrev[=<n>]] [--format=<format>]
--	    <tree-ish> [<path>...]
-+	    [<tree-ish> [<path>...]]
- 
- DESCRIPTION
- -----------
-@@ -36,7 +36,7 @@ in the current working directory.  Note that:
- OPTIONS
- -------
- <tree-ish>::
--	Id of a tree-ish.
-+	Id of a tree-ish. If omitted, defaults to "HEAD".
- 
- -d::
- 	Show only the named tree entry itself, not its children.
-@@ -139,7 +139,7 @@ which is able to interpolate different fields using a `%(fieldname)` notation.
- For example, if you only care about the "objectname" and "path" fields, you
- can execute with a specific "--format" like
- 
--	git ls-tree --format='%(objectname) %(path)' <tree-ish>
-+	git ls-tree --format='%(objectname) %(path)' [<tree-ish>]
- 
- FIELD NAMES
- -----------
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index f558db5f3b8..b1e337ccde9 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -18,7 +18,7 @@
- #include "pathspec.h"
- 
- static const char * const ls_tree_usage[] = {
--	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
-+	N_("git ls-tree [<options>] [<tree-ish> [<path>...]]"),
- 	NULL
- };
- 
-@@ -377,6 +377,8 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	};
- 	struct ls_tree_cmdmode_to_fmt *m2f = ls_tree_cmdmode_format;
- 	int ret;
-+	/* If no positional args were passed, default <tree-ish> to HEAD. */
-+	const char *fallback_args[] = { "HEAD", NULL };
- 
- 	git_config(git_default_config, NULL);
- 
-@@ -405,8 +407,11 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 		usage_msg_opt(
- 			_("--format can't be combined with other format-altering options"),
- 			ls_tree_usage, ls_tree_options);
--	if (argc < 1)
--		usage_with_options(ls_tree_usage, ls_tree_options);
-+	if (argc < 1) {
-+		/* `git ls-tree [flags...]` -> `git ls-tree [flags...] HEAD`. */
-+		argv = fallback_args;
-+		argc = 1;
-+	}
- 	if (repo_get_oid(the_repository, argv[0], &oid))
- 		die("Not a valid object name %s", argv[0]);
- 
-diff --git a/t/t3105-ls-tree-output.sh b/t/t3105-ls-tree-output.sh
-index ce2391e28be..cb05529c0ad 100755
---- a/t/t3105-ls-tree-output.sh
-+++ b/t/t3105-ls-tree-output.sh
-@@ -26,11 +26,16 @@ test_ls_tree_format_mode_output () {
- 		local mode="$1" &&
- 		shift &&
- 
--		test_expect_success "'ls-tree $opts${mode:+ $mode}' output" '
-+		test_expect_success "'ls-tree ${mode:+$mode }$opts' output" '
- 			git ls-tree ${mode:+$mode }$opts HEAD >actual &&
- 			test_cmp expect actual
- 		'
- 
-+		test_expect_success "'ls-tree ${mode:+$mode }$opts' (default HEAD) output" '
-+			git ls-tree ${mode:+$mode }$opts >actual &&
-+			test_cmp expect actual
-+		'
-+
- 		case "$opts" in
- 		--full-tree)
- 			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir, fails)" '
+Am I still missing a configuration setting that I should be aware of? =
+I'm not getting errors but the output is odd.
 
-base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
--- 
-gitgitgadget
+
+> On Aug 6, 2023, at 7:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Brooke Kuhlmann <brooke@alchemists.io> writes:
+>=20
+>> ... o why default branch push behavior is being
+>> ignored/overwritten.
+>=20
+> The root of your confusion lies around here, I think.  The "default"
+> branch push behaviour is given only when you do not customize.  Once
+> you add customization, you would specify _exactly_ what you want.
+>=20
+> In other words, the customization is NOT something you tell Git to
+> do _in addition to_ what it does anyway (otherwise you would not be
+> able to configure _away_ what is usually done by default when you do
+> not want to see it done).
+>=20
+
