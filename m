@@ -2,170 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6805C001DE
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 17:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E6B9C001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 18:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231910AbjHGRJv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 13:09:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41232 "EHLO
+        id S229723AbjHGSYm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 14:24:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231741AbjHGRJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 13:09:39 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76504E68
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 10:09:38 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 47880242B8;
-        Mon,  7 Aug 2023 13:09:36 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qT3jc-ntp-00; Mon, 07 Aug 2023 19:09:36 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH RESEND] format-patch: add --description-file option
-Date:   Mon,  7 Aug 2023 19:09:36 +0200
-Message-Id: <20230807170936.2336760-1-oswald.buddenhagen@gmx.de>
-X-Mailer: git-send-email 2.40.0.152.g15d061e6df
+        with ESMTP id S229564AbjHGSYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 14:24:35 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86351730
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 11:24:14 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 8CACECA1243;
+        Mon,  7 Aug 2023 14:23:59 -0400 (EDT)
+Received: from [IPV6:2600:1700:840:e768:8ddb:2d4a:b436:909c] (unknown [IPv6:2600:1700:840:e768:8ddb:2d4a:b436:909c])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 17D10CC839C;
+        Mon,  7 Aug 2023 14:23:59 -0400 (EDT)
+Message-ID: <60cfab22-821a-4482-f715-12516fc464ef@jeffhostetler.com>
+Date:   Mon, 7 Aug 2023 14:23:58 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v2 2/2] wrapper: use trace2 counters to collect fsync
+ stats
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Victoria Dye <vdye@github.com>
+References: <20230720164823.625815-1-dev+git@drbeat.li>
+ <xmqq5y6e2xl7.fsf@gitster.g> <xmqqo7jzlrdq.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <xmqqo7jzlrdq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.11 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When formatting patches from a detached HEAD, there is no branch
-description to derive the cover letter from. While with format-patch
-one could post-process the generated file (which would be ugly enough),
-scripting that with send-email would be *really* ugly. So add an option
-to feed a description directly.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
----
 
-Cc: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>
-Cc: Derrick Stolee <derrickstolee@github.com>
-Cc: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-format-patch.txt |  4 ++++
- builtin/log.c                      | 21 ++++++++++++++++++---
- t/t4014-format-patch.sh            | 12 ++++++++++++
- 3 files changed, 34 insertions(+), 3 deletions(-)
+On 7/25/23 3:31 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> I also spotted this change since v1:
+>>
+>> - Rename trace2 counters to use "-" (not "_") as inter-word separators.
+>>
+>> Since I do not seem to be able to find any review comments regarding
+>> the variable naming in the v1's thread, let's ask stakeholders.
+>>
+>> Are folks involved in the trace2 subsystem (especially Jeff
+>> Hostetler---already CC:ed---who presumably has the most stake in it)
+>> OK with the naming convention of the multi-word variable?  This is
+>> the first use of multi-word variable name in tr2_ctr, and thus will
+>> establish whatever convention you guys want to use.  I do have a
+>> slight preference of "writeout-only" over "writeout_only" but that
+>> is purely from visual appearance.  If there is a desire to keep the
+>> names literally reusable as identifiers in some languages used to
+>> postprocess trace output, or something, that might weigh
+>> differently.
+> 
+> I heard absolutely nothing since I asked the above question last
+> week, so I'll take the absense of response as absense of interest in
+> the way how names are spelled.
+> 
+> Therefore, let me make a unilateral declaration here ;-)  The trace2
+> counters with multi-word names are to be named using "-" as their
+> inter-word separators.  Any patch that adds new counters that do not
+> follow the convention will silently dropped on the floor from now on.
+> 
+> Let's move this patch forward by merging to 'next' soonish.
+> 
+> Thanks.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 373b46fc0d..8e515c7dbb 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -215,6 +215,10 @@ is greater than 100 bytes, then the mode will be `message`, otherwise
- If `<mode>` is `none`, both the cover letter subject and body will be
- populated with placeholder text.
- 
-+--description-file=<file>::
-+	Use the contents of <file> instead of the branch's description
-+	for generating the cover letter.
-+
- --subject-prefix=<subject prefix>::
- 	Instead of the standard '[PATCH]' prefix in the subject
- 	line, instead use '[<subject prefix>]'. This
-diff --git a/builtin/log.c b/builtin/log.c
-index 1b119eaf0b..9c4738bbde 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1255,7 +1255,15 @@ static void show_diffstat(struct rev_info *rev,
- 	fprintf(rev->diffopt.file, "\n");
- }
- 
-+static void read_desc_file(struct strbuf *buf, const char *desc_file)
-+{
-+	if (strbuf_read_file(buf, desc_file, 2000) < 0)
-+		die_errno(_("unable to read branch description file '%s'"),
-+			  desc_file);
-+}
-+
- static void prepare_cover_text(struct pretty_print_context *pp,
-+			       const char *description_file,
- 			       const char *branch_name,
- 			       struct strbuf *sb,
- 			       const char *encoding,
-@@ -1269,7 +1277,9 @@ static void prepare_cover_text(struct pretty_print_context *pp,
- 	if (cover_from_description_mode == COVER_FROM_NONE)
- 		goto do_pp;
- 
--	if (branch_name && *branch_name)
-+	if (description_file && *description_file)
-+		read_desc_file(&description_sb, description_file);
-+	else if (branch_name && *branch_name)
- 		read_branch_desc(&description_sb, branch_name);
- 	if (!description_sb.len)
- 		goto do_pp;
-@@ -1315,6 +1325,7 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
- static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 			      struct commit *origin,
- 			      int nr, struct commit **list,
-+			      const char *description_file,
- 			      const char *branch_name,
- 			      int quiet)
- {
-@@ -1354,7 +1365,8 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 	pp.rev = rev;
- 	pp.print_email_subject = 1;
- 	pp_user_info(&pp, NULL, &sb, committer, encoding);
--	prepare_cover_text(&pp, branch_name, &sb, encoding, need_8bit_cte);
-+	prepare_cover_text(&pp, description_file, branch_name, &sb,
-+			   encoding, need_8bit_cte);
- 	fprintf(rev->diffopt.file, "%s\n", sb.buf);
- 
- 	strbuf_release(&sb);
-@@ -1895,6 +1907,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	int quiet = 0;
- 	const char *reroll_count = NULL;
- 	char *cover_from_description_arg = NULL;
-+	char *description_file = NULL;
- 	char *branch_name = NULL;
- 	char *base_commit = NULL;
- 	struct base_tree_info bases;
-@@ -1938,6 +1951,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
- 			    N_("cover-from-description-mode"),
- 			    N_("generate parts of a cover letter based on a branch's description")),
-+		OPT_FILENAME(0, "description-file", &description_file,
-+			     N_("use branch description from file")),
- 		OPT_CALLBACK_F(0, "subject-prefix", &rev, N_("prefix"),
- 			    N_("use [<prefix>] instead of [PATCH]"),
- 			    PARSE_OPT_NONEG, subject_prefix_callback),
-@@ -2323,7 +2338,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		if (thread)
- 			gen_message_id(&rev, "cover");
- 		make_cover_letter(&rev, !!output_directory,
--				  origin, nr, list, branch_name, quiet);
-+				  origin, nr, list, description_file, branch_name, quiet);
- 		print_bases(&bases, rev.diffopt.file);
- 		print_signature(rev.diffopt.file);
- 		total++;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 3cf2b7a7fb..b31401876b 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1991,6 +1991,18 @@ test_expect_success 'cover letter using branch description (6)' '
- 	grep hello actual
- '
- 
-+test_expect_success 'cover letter with --description-file' '
-+	test_when_finished "rm -f description.txt" &&
-+	echo "subject from file
-+
-+body from file" > description.txt &&
-+	git checkout rebuild-1 &&
-+	git format-patch --stdout --cover-letter --cover-from-description auto \
-+		--description-file description.txt main >actual &&
-+	grep "^Subject: \[PATCH 0/2\] subject from file$" actual &&
-+	grep "^body from file$" actual
-+'
-+
- test_expect_success 'cover letter with nothing' '
- 	git format-patch --stdout --cover-letter >actual &&
- 	test_line_count = 0 actual
--- 
-2.40.0.152.g15d061e6df
+Sorry I missed before I left for vacation.
 
+Multi-word terms have unfortunately used both "-" and "_"
+separators in the past (e.g. builtin/pack-objects.c)
+I don't think it really matters one way or the other.
+
+Originally, I used "_" because there were places where the
+post-processing could more easily extract or query a nested JSON
+or Kusto expression without needing escapes. For example
+`<record>.<category>.<item>` rather than something like
+`<record>["<category>"]["<item>"]` to avoid having the dash
+interpreted as subtraction on a local variable).
+
+But as I and others have added other categories and messages,
+we've drifted from that usage.  And that is fine.
+
+Thanks
+Jeff
