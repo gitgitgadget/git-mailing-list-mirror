@@ -2,80 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 226AAEB64DD
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 05:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCB25EB64DD
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 06:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbjHGFuq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 01:50:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
+        id S230443AbjHGGfr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 02:35:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjHGFup (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 01:50:45 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E7B1703
-        for <git@vger.kernel.org>; Sun,  6 Aug 2023 22:50:44 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-563fbc76454so4120219a12.2
-        for <git@vger.kernel.org>; Sun, 06 Aug 2023 22:50:44 -0700 (PDT)
+        with ESMTP id S230127AbjHGGfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 02:35:45 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E8A1730
+        for <git@vger.kernel.org>; Sun,  6 Aug 2023 23:35:41 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-cf4cb742715so4493135276.2
+        for <git@vger.kernel.org>; Sun, 06 Aug 2023 23:35:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691387444; x=1691992244;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yROdIoBE0j38ktlmoeIDamfzfy9svoBTt5r2zDm3X70=;
-        b=lArnB1cx4UV8pK3/+utQhGNCKUpMuFnnTfmqf8SDfmTiajz/ay8KvWVLLym5+hSayz
-         +rCLe78UKj0j8OYw6N/IewygUTI2DY3M0ZGjRvE93YiiCcao73AT2Wpfj1scdfwWysKT
-         JyGy/p1by2EJx2gkGh3XIECVnTeO5T4AO7BQJp+v17cnMfp0nRemiHdqq/zNufM8Lv4M
-         DeaFkzFjd81Y+r4IPNqcpwpE3HEkoYtcLg0yIyaZwmEx1tEwQVlB1nqvzxd0zSNeAGSi
-         J2fvpkD+00WYdnazVyrn1fe4irhqzWjN8igiJx56n83iENu6lX+pbuwohcq+mOfvor+5
-         29oA==
+        d=google.com; s=20221208; t=1691390140; x=1691994940;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gHD+WWJeZMGKpgTGBnJfiDlGsSSyPHI7ZUAiADNCRWM=;
+        b=hdStfkg6dbCRANANihaCvmErgRlE05BLo5btE7gfqSZ/RHsHBJXIPGAGgTEJz89xss
+         4fjsnIdCWiElzkBHR6KI5ja7WzEJP9nzsYlACpK//ExmNvj+lq1uANnv0cdTIMTrIv9F
+         2TiP2E5QbZuXOoZ3cl8Le2ifu3K9okNuKSzCCmBGntYXAx90Qzp8Xl+CEs5iZGAlUFT+
+         AUE2cV766/wqciEyBwI5JbL+kdlzAhnFt02KCcRu2DF0pOG5treheEi1IUnK+RGlOoG4
+         YX0kfslZfmKgUeaPIt9jOKsJBBa8imwVKpB8jJyeehwIYBINyUP3MKd0L9000E5fxRh6
+         uHWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691387444; x=1691992244;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yROdIoBE0j38ktlmoeIDamfzfy9svoBTt5r2zDm3X70=;
-        b=dRboJBh/1KqWf7PSI+4GiN8Q+TMFhoZK+UYxR0TTLoNU/TVlfN+jo58dWe3MX6ie0I
-         kDIb2jH/Hep8bWP9TD4oNVJUy2k1IoUseV/XGAiuOvW6kfSQvvLA38c1iTjemwb8mznG
-         BEiRi+DrGma0Lb5kpECKDmhkW/0JFNsSv+1LOPw4R92Zo8FsoTXdqhv2i3Z3WI/jDHFy
-         f5+Ayoid74A0SndvgOiHmzIIoMmvUY3D8El4xPolx+ynRU4uKAGzeMZ6BGkAZlDlGZrt
-         WLg63p10QMNxM8N8g0rI4zyU5sIQwojs/mgwGV06ItfZw3GOSSPfIkzGU4xcK9MNWWLj
-         3giw==
-X-Gm-Message-State: AOJu0YzoHayCUw+dvqrjZNiycS8OYPQVVAmZrbASy9dbXPE3mTRBs38D
-        K/4U88e7r9qWX1qhzFrsLG7+gVMQK5o=
-X-Google-Smtp-Source: AGHT+IEITjJYU4YlYOOrEKlYOhUjTLSdxMeIOllgKOMTiVJgoz+vcSj8Na+O3af8WMMrJCpi5mwoPHhM0dM=
+        d=1e100.net; s=20221208; t=1691390140; x=1691994940;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gHD+WWJeZMGKpgTGBnJfiDlGsSSyPHI7ZUAiADNCRWM=;
+        b=GHCFzlIxgboIm78n6lI3MapX6zNN9AAthWHc6QB4QGGLlyExulKI/fs73LSQINyWSp
+         LJP0YldzCl2p+5E/VJHdm+xHVhNamL2secsluTmtP6Bf3MC+uEte8C3vMRy+2hCPNlYN
+         5aJq1QQd9BSYdYX58wtzhpWEnAw4SQMoq35UcF0pKRN9AoNzen/hu8OVr3SeodNdQg9M
+         QALIYrQ0YJKr7XvHxdzwv8l1ALK6cFi/yZ8mO5X3OKkYC2caO5td78/rXS/ihGCWx2vT
+         B7GWM9++xP9xksU2Q/CKJ8/b8wUFKaN+6vn5K/HbMCD2bawilrp3NQkgafQJPQ01h94w
+         MNJw==
+X-Gm-Message-State: AOJu0Yzuzpm53KUzlFfoI5e2onJjPecLK7MlE2N0tp59v0aXPgVmAP4f
+        waZQgk9clMzZCqjwZ8ZinKURFzZ0y80=
+X-Google-Smtp-Source: AGHT+IGjFIOrOsZuweSwXHVUh8qYcVFsLWMjkeeIVHGxt8I6KfpFMIseoTyTunuZrF1y5Ks+l/ydv5TRjiE=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:903:2349:b0:1bc:4c3d:eb08 with SMTP id
- c9-20020a170903234900b001bc4c3deb08mr34227plh.8.1691387443702; Sun, 06 Aug
- 2023 22:50:43 -0700 (PDT)
-Date:   Sun, 06 Aug 2023 22:50:42 -0700
-In-Reply-To: <6d67ae6b1f62a2be076d752a2af65bb07998ca73.1691210737.git.gitgitgadget@gmail.com>
+ (user=linusa job=sendgmr) by 2002:a05:6902:4a7:b0:d11:3c58:2068 with SMTP id
+ r7-20020a05690204a700b00d113c582068mr48429ybs.2.1691390140649; Sun, 06 Aug
+ 2023 23:35:40 -0700 (PDT)
+Date:   Sun, 06 Aug 2023 23:35:38 -0700
+In-Reply-To: <owlyfs4vbeus.fsf@fine.c.googlers.com>
 Mime-Version: 1.0
-References: <pull.1564.git.1691210737.gitgitgadget@gmail.com> <6d67ae6b1f62a2be076d752a2af65bb07998ca73.1691210737.git.gitgitgadget@gmail.com>
-Message-ID: <owlya5v3bdu5.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 1/5] trailer tests: make test cases self-contained
+References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
+ <6b427b4b1e82b1f01640f1f49fe8d1c2fd02111e.1691210737.git.gitgitgadget@gmail.com>
+ <xmqqjzu7irhw.fsf@gitster.g> <owlyfs4vbeus.fsf@fine.c.googlers.com>
+Message-ID: <owly7cq7bbr9.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 3/5] trailer: add tests to check defaulting behavior with
+ --no-* flags
 From:   Linus Arver <linusa@google.com>
-To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Junio C Hamano <gitster@pobox.com>,
+        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Linus Arver <linusa@google.com> writes:
 
-> From: Linus Arver <linusa@google.com>
-> ...
-> @@ -1392,7 +1610,9 @@ test_expect_success 'with failing command using $ARG' '
->  '
->  
->  test_expect_success 'with empty tokens' '
-> -	git config --unset trailer.fix.command &&
-> +	test_config trailer.sign.command "echo \"\$GIT_AUTHOR_NAME <\$GIT_AUTHOR_EMAIL>\"" &&
-> +	test_config trailer.sign.key "Signed-off-by: " &&
-> +	test_config trailer.ifexists "addIfDifferent" &&
->  	cat >expected <<-EOF &&
->  
->  		Signed-off-by: A U Thor <author@example.com>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> @@ -114,8 +114,10 @@ OPTIONS
+>>>  	Specify where all new trailers will be added.  A setting
+>>>  	provided with '--where' overrides all configuration variables
+>>
+>> Obviously this is not a new issue, but "all configuration variables"
+>> is misleading (the same comment applies to the description of the
+>> "--[no-]if-exists" and the "--[no-]if-missing" options).
+>
+> Agreed.
+>
+>> If I am reading the code correctly, --where=3Dvalue overrides the
+>> trailer.where variable and nothing else, and --no-where stops the
+>> overriding of the trailer.where variable.  Ditto for the other two
+>> with their relevant configuration variables.
+>
+> That is also my understanding. Will update to remove the "all" wording.
 
-In this test and some other places we get the chance to remove
-invocations of "git config --unset ..." (because we don't leak config
-state anymore). I will update the commit message accordingly in the next
-reroll.
+Hmph, actually it also overrides any applicable "trailer.<token>.where"
+configurations (these <token>-specific configurations override the
+"trailer.where" configuration where applicable). Still, the "all
+configuration variables" wording should be updated, probably like this:
+
+    =E2=80=BA  Specify where all new trailers will be added.  A setting
+    =E2=80=BA  provided with '--where' overrides the `trailer.where` and an=
+y
+    =E2=80=BA  applicable `trailer.<token>.where` configuration variables
+    =E2=80=BA  and applies to all '--trailer' options until the next occurr=
+ence of
+    =E2=80=BA  '--where' or '--no-where'.
