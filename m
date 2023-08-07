@@ -2,78 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB41BC001DE
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 21:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADA42C001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 21:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbjHGVSU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 17:18:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52754 "EHLO
+        id S229927AbjHGVUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 17:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230128AbjHGVSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 17:18:17 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06E621737
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 14:18:16 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E3CF1A71F0;
-        Mon,  7 Aug 2023 17:18:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PnlpNZg1VJtp
-        GutlNYnRzW0WqGoyEaWhRJGVA8NfVks=; b=CHEQ+Q3orocYfr+y34hDd7XEuAMo
-        Hf9lqOjhi6i1OFxBE7ZBmtOTaJK15qwN/8V2ifWy9awetL6dSRe4FLTNBkTpqiZ+
-        RDvecXYd1z8pWpEffuaz0seaBMb83Kc96p9yG6NHvcPf3gs4rhEMcXZqCoWtXaOd
-        +gRGNe9MLwxJC50=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46C611A71EF;
-        Mon,  7 Aug 2023 17:18:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A57E41A71EE;
-        Mon,  7 Aug 2023 17:18:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] branch: update error messages
-References: <7710c002-0832-d8f6-59b8-30119bd5efe6@gmail.com>
-Date:   Mon, 07 Aug 2023 14:18:14 -0700
-In-Reply-To: <7710c002-0832-d8f6-59b8-30119bd5efe6@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Mon, 7 Aug 2023 22:38:38 +0200")
-Message-ID: <xmqqy1imblgp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229562AbjHGVUj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 17:20:39 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C998E5B
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 14:20:38 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d414540af6bso3590807276.2
+        for <git@vger.kernel.org>; Mon, 07 Aug 2023 14:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691443237; x=1692048037;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=d+CWKyO/4VYZCTAiZ8eiVVXXM0zpwAh/P7t/sPPNuDA=;
+        b=pNnPThJVxBQGfVaEMsWxtAi18Pvo8Bb+f9p13HjE1AIW4flLlN9Au/2ZpzdGUX8K4+
+         2v8sza5oy1zJG8BkV+FP+yh3ubw8M5lCoyvz5l/gPhJHzwrUxUTdGjrbte/TE1s6psRj
+         /Jxkw9eA+hZcAp/g8P3qXPss6pJaejsKYpp5L/6BKi6AZGIg42pDo38P53t8FG1UCXXm
+         bxRwwMAODrWXykDKjfW/hhAk1aKgARY8W3GbjcNg9WxjktDnNNCZnTWOLxV0jXNO+5aD
+         6xfK+bRA78jg/iEOzvCNzR6cSN2RKhCMMb1JuEBRVf6aCdjOrtK+5yaXNRND5f1sqYSv
+         oqNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691443237; x=1692048037;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d+CWKyO/4VYZCTAiZ8eiVVXXM0zpwAh/P7t/sPPNuDA=;
+        b=EN1RP53qtmUWQFRgzjVG8wVOJnQS7pH7g34BamN0eExWSTWGvMJ0+sxoszxxLLBtI5
+         0npwzN/o1SnkyNMAy3+shMqLhdwTCwclXEjmnZ7hLj9kL+v2t2pziU1rIXWRySO1fstD
+         mow36/T7Y7nj01dpjAKlz6Jp2O+k8aFklLmpbptvDO6S9eDJRTiCmzBLYvsXq22sVPD3
+         lCv/nazFVDhMNFfFZJuQ7E57XHhHFOKdXl+larf5/fyBvza4kmc/eAYoz9eo9ZBQYqZL
+         VrzaY6FFdMGBdgslUTCYh5JTh8YNF+XbZtAUqtsBakxWA9Kkx2V/PatdTa8osw0HAXii
+         NVzQ==
+X-Gm-Message-State: AOJu0YwMkjmAoQ8SjTnOLBj3hMQN6A9A2VZUC4RcWXuiSE361e4fDl0g
+        HfrB7MCgH8QQF0W+RrJn2taGvw==
+X-Google-Smtp-Source: AGHT+IFmUgBqPfFJO2tQTpAOG3xkb4NZH0EXjjbXTF4BJ81O+tUcXRthyc0PLsZPuIrS3IuwM0kKnw==
+X-Received: by 2002:a5b:ac9:0:b0:d4b:f4e4:62f4 with SMTP id a9-20020a5b0ac9000000b00d4bf4e462f4mr4537369ybr.10.1691443237353;
+        Mon, 07 Aug 2023 14:20:37 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v184-20020a252fc1000000b00d0aa0a97ee7sm2511446ybv.32.2023.08.07.14.20.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Aug 2023 14:20:36 -0700 (PDT)
+Date:   Mon, 7 Aug 2023 17:20:35 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        sandals@crustytoothpaste.net, lenaic@lhuard.fr,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/6] maintenance: add get_random_minute()
+Message-ID: <ZNFgIyuhlNd8I9Y2@nand.local>
+References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
+ <fefdaa9457948ee5302e7cbfaae250e0b589d752.1691434300.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EC44EF16-3567-11EE-A954-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <fefdaa9457948ee5302e7cbfaae250e0b589d752.1691434300.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-
-> A message like "branch 'frog' checked out at ..." may be confusing to
-> the user if the branch 'frog' is not the currently checked out branch,
-> which may occur while rebasing, bisecting or other operations.
-
-Makes sense.  Will queue.
-
-
+On Mon, Aug 07, 2023 at 06:51:35PM +0000, Derrick Stolee via GitGitGadget wrote:
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index f3942188a61..66a972bc292 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1708,6 +1708,23 @@ static int get_schedule_cmd(const char **cmd, int *is_available)
+>  	return 1;
+>  }
 >
-> Let's reword those messages as it has been done in 4970bedef2 (branch:
-> update the message to refuse touching a branch in-use, 2023-07-21).
->
-> Rub=C3=A9n Justo (2):
->   branch: error message deleting a branch in use
->   branch: error message checking out a branch in use
->
->  branch.c                |  2 +-
->  builtin/branch.c        |  2 +-
->  t/t2400-worktree-add.sh |  3 ++-
->  t/t3200-branch.sh       | 14 +++++++++++++-
->  t/t3400-rebase.sh       |  2 +-
->  5 files changed, 18 insertions(+), 5 deletions(-)
+> +MAYBE_UNUSED
+> +static int get_random_minute(void)
+> +{
+> +	static int random_initialized = 0;
+> +
+> +	/* Use a static value when under tests. */
+> +	if (!getenv("GIT_TEST_MAINTENANCE_SCHEDULER"))
+> +		return 13;
+> +
+> +	if (!random_initialized) {
+> +		srand((unsigned int)getpid());
+> +		random_initialized = 1;
+> +	}
+
+I was wondering where else we call srand() within Git, and it looks like
+the only other spot is in `lock_file_timeout()`.
+
+I doubt it, but is there a chance that that code depends on only calling
+srand() once? I think the answer is "no", since we only use rand()
+within that function to generate a random-ish backoff period, so I think
+the repeatability of it doesn't matter all that much.
+
+So I think this is kind of outside the scope of your series, but I
+wonder if we should have a git_rand() that automatically initializes the
+PRNG with the value of getpid()? Then multiple callers can grab random
+values at will without reinitializing the PRNG.
+
+Thanks,
+Taylor
