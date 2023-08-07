@@ -2,102 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCB25EB64DD
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 06:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDFFEC001DB
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 09:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230443AbjHGGfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 02:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41604 "EHLO
+        id S230274AbjHGJ7r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 05:59:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbjHGGfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 02:35:45 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E8A1730
-        for <git@vger.kernel.org>; Sun,  6 Aug 2023 23:35:41 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-cf4cb742715so4493135276.2
-        for <git@vger.kernel.org>; Sun, 06 Aug 2023 23:35:41 -0700 (PDT)
+        with ESMTP id S229868AbjHGJ7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 05:59:45 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E8E1F9
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 02:59:44 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-31783d02093so3806689f8f.0
+        for <git@vger.kernel.org>; Mon, 07 Aug 2023 02:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691390140; x=1691994940;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gHD+WWJeZMGKpgTGBnJfiDlGsSSyPHI7ZUAiADNCRWM=;
-        b=hdStfkg6dbCRANANihaCvmErgRlE05BLo5btE7gfqSZ/RHsHBJXIPGAGgTEJz89xss
-         4fjsnIdCWiElzkBHR6KI5ja7WzEJP9nzsYlACpK//ExmNvj+lq1uANnv0cdTIMTrIv9F
-         2TiP2E5QbZuXOoZ3cl8Le2ifu3K9okNuKSzCCmBGntYXAx90Qzp8Xl+CEs5iZGAlUFT+
-         AUE2cV766/wqciEyBwI5JbL+kdlzAhnFt02KCcRu2DF0pOG5treheEi1IUnK+RGlOoG4
-         YX0kfslZfmKgUeaPIt9jOKsJBBa8imwVKpB8jJyeehwIYBINyUP3MKd0L9000E5fxRh6
-         uHWA==
+        d=gmail.com; s=20221208; t=1691402383; x=1692007183;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=C29H4UScy1zNmyjd8CuuUqOMAfNRa83O4QpSgcspPms=;
+        b=IPUcuClG6vBShddmvL4NKGpIgFlNCdnfhHDQYmWekkX+lMAzQuj9X9Atr+cc2z/pL4
+         KPl7c90eWKs9t20nY5CvuogCqBi16ZcnLDKQWgnz3S+dpwrxQneRXz2Hb4ReZ0wlhpm7
+         DqZyrsDVJZiE8xxmHDUiDjPPiUJ11CycXaJubX2EQmmVTrEwEHE5WICOxuyqMNVjzMGs
+         jDT/Sli7NcIR1kpKwILnSLlGlKj0qbuacuXcYUSs1afB7ylxzSi97Ik3Z8qNPGtEey1a
+         CV+wSQ5UTjLDkVpv6Sbp2bn2F6/kqiyDak3OvzZQ18CKHAHydZXkCERFu2Oor1dlxYKk
+         SasA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691390140; x=1691994940;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gHD+WWJeZMGKpgTGBnJfiDlGsSSyPHI7ZUAiADNCRWM=;
-        b=GHCFzlIxgboIm78n6lI3MapX6zNN9AAthWHc6QB4QGGLlyExulKI/fs73LSQINyWSp
-         LJP0YldzCl2p+5E/VJHdm+xHVhNamL2secsluTmtP6Bf3MC+uEte8C3vMRy+2hCPNlYN
-         5aJq1QQd9BSYdYX58wtzhpWEnAw4SQMoq35UcF0pKRN9AoNzen/hu8OVr3SeodNdQg9M
-         QALIYrQ0YJKr7XvHxdzwv8l1ALK6cFi/yZ8mO5X3OKkYC2caO5td78/rXS/ihGCWx2vT
-         B7GWM9++xP9xksU2Q/CKJ8/b8wUFKaN+6vn5K/HbMCD2bawilrp3NQkgafQJPQ01h94w
-         MNJw==
-X-Gm-Message-State: AOJu0Yzuzpm53KUzlFfoI5e2onJjPecLK7MlE2N0tp59v0aXPgVmAP4f
-        waZQgk9clMzZCqjwZ8ZinKURFzZ0y80=
-X-Google-Smtp-Source: AGHT+IGjFIOrOsZuweSwXHVUh8qYcVFsLWMjkeeIVHGxt8I6KfpFMIseoTyTunuZrF1y5Ks+l/ydv5TRjiE=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:4a7:b0:d11:3c58:2068 with SMTP id
- r7-20020a05690204a700b00d113c582068mr48429ybs.2.1691390140649; Sun, 06 Aug
- 2023 23:35:40 -0700 (PDT)
-Date:   Sun, 06 Aug 2023 23:35:38 -0700
-In-Reply-To: <owlyfs4vbeus.fsf@fine.c.googlers.com>
-Mime-Version: 1.0
-References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
- <6b427b4b1e82b1f01640f1f49fe8d1c2fd02111e.1691210737.git.gitgitgadget@gmail.com>
- <xmqqjzu7irhw.fsf@gitster.g> <owlyfs4vbeus.fsf@fine.c.googlers.com>
-Message-ID: <owly7cq7bbr9.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 3/5] trailer: add tests to check defaulting behavior with
- --no-* flags
-From:   Linus Arver <linusa@google.com>
+        d=1e100.net; s=20221208; t=1691402383; x=1692007183;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C29H4UScy1zNmyjd8CuuUqOMAfNRa83O4QpSgcspPms=;
+        b=XYfDMvQkU9C7DoFAnSRrZapNMhHxxDWiZzYK4mkxCNgwffdtgyGm3TSb0pLyTAWIKQ
+         78FVI6oWRPCk1uXscVUs562eCOhNCej4TRkn6KUnSnBgQthObt1lTar/1OUE8VuZeOfD
+         eOSFMd3SAIFgDtOta+UYdUJYAQpijUsBrTpgUmZ9bTiukdseFbF1UsBUXwBcW8pDvATs
+         nONAVGmWKpn9fA6kxj8zTtCZRsyXnHvTP+LhDntHJMq2moVkDzkg6IpW11mLGP8/GLcY
+         8ziev3rKO29oQ8v/jz1i5KWK4RpfusLIDz6+VBPqWV772qbdmPmyfhXJLFQnTyOY99Ld
+         ts6A==
+X-Gm-Message-State: AOJu0Yyl7dWOY0q2V8ObqRu0svkdki3Db1/4mT0J2W4aN7/3eIBRcPFD
+        30dAyzIpIOte9GBAfUOZLG4=
+X-Google-Smtp-Source: AGHT+IEpVaqbIRyPobwFVyzVgbclaaY8csiJINE17IAyOdBUZusXfUTxYmfkN5WFzQVW/4IDOvP0aA==
+X-Received: by 2002:adf:dd81:0:b0:315:99be:6fe4 with SMTP id x1-20020adfdd81000000b0031599be6fe4mr6640811wrl.69.1691402382486;
+        Mon, 07 Aug 2023 02:59:42 -0700 (PDT)
+Received: from [192.168.1.101] ([90.242.223.1])
+        by smtp.googlemail.com with ESMTPSA id e10-20020adfe38a000000b00317a29af4b2sm9935431wrm.68.2023.08.07.02.59.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Aug 2023 02:59:42 -0700 (PDT)
+Message-ID: <b43a5b46-f391-bd9e-4bf2-bfeaa3548f3e@gmail.com>
+Date:   Mon, 7 Aug 2023 10:59:41 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase --skip: fix commit message clean up when skipping
+ squash
+Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1558.git.git.1691068176051.gitgitgadget@gmail.com>
+ <xmqqedkj515a.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqedkj515a.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
+On 03/08/2023 21:20, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> ... The test is also updated to explicitly check
+>> the commit messages rather than relying on grep to ensure they do not
+>> contain any stay commit headers.
+> 
+> "stay" -> "stray" presumably.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> @@ -114,8 +114,10 @@ OPTIONS
->>>  	Specify where all new trailers will be added.  A setting
->>>  	provided with '--where' overrides all configuration variables
->>
->> Obviously this is not a new issue, but "all configuration variables"
->> is misleading (the same comment applies to the description of the
->> "--[no-]if-exists" and the "--[no-]if-missing" options).
->
-> Agreed.
->
->> If I am reading the code correctly, --where=3Dvalue overrides the
->> trailer.where variable and nothing else, and --no-where stops the
->> overriding of the trailer.where variable.  Ditto for the other two
->> with their relevant configuration variables.
->
-> That is also my understanding. Will update to remove the "all" wording.
+I see this is in next already, thanks for fixing that and the other typo 
+pointed out by Marc
 
-Hmph, actually it also overrides any applicable "trailer.<token>.where"
-configurations (these <token>-specific configurations override the
-"trailer.where" configuration where applicable). Still, the "all
-configuration variables" wording should be updated, probably like this:
+>> To check the commit message the function test_commit_message() is moved
+>> from t3437-rebase-fixup-options.sh to test-lib.sh. As the function is
+>> now publicly available it is updated to provide better error detection
+>> and avoid overwriting the commonly used files "actual" and "expect".
+>> Support for reading the expected commit message from stdin is also
+>> added.
+> 
+> It may make it cleaner to do the refactoring as a separate
+> preparatory patch, but the end-result is not so large from
+> the diffstat below, so it probably is OK.
 
-    =E2=80=BA  Specify where all new trailers will be added.  A setting
-    =E2=80=BA  provided with '--where' overrides the `trailer.where` and an=
-y
-    =E2=80=BA  applicable `trailer.<token>.where` configuration variables
-    =E2=80=BA  and applies to all '--trailer' options until the next occurr=
-ence of
-    =E2=80=BA  '--where' or '--no-where'.
+I was in two minds about splitting out the refactoring, but in the end I 
+decided that as I was adding the ability to read the expected message 
+from stdin for this commit it was easier include it all here rather than 
+splitting it out.
+
+> I am not sure if deviating from expect vs actual is such a good
+> idea.  It is not like use of two temporary files are transparent to
+> the caller of the new test helper---indeed, expect and actual are
+> likely to be used by the caller in tests that comes before or after
+> the ones that use test_commit_message, and by using a pair of files
+> that are different, the caller will now see two extra untracked
+> files left in the working tree.
+
+That's true, looking at test-lib-functions.sh it seems I unwittingly 
+followed the example of test_cmp_config() which uses 
+{actual,expect}.config when it calls test_cmp(). Anyway as this is in 
+next I assume you're happy enough with the implementation as it stands.
+
+Best Wishes
+
+Phillip
+
+> The only case such a renaming could help callers is when they do
+> 
+> 	cat >expect <<\-EOF &&
+> 	here to prepare some outcome
+> 	EOF
+> 	git do-something-to-make-commit &&
+> 	test_commit_message HEAD <<\-EOF &&
+> 	here is what we expect to see in HEAD
+> 	EOF
+> 	git some-other-thing >actual &&
+> 	test_cmp expect actual
+> 	
+> as use of files other than expect/actual in test_commit_message will
+> avoid stomping on the "expect" file that was already prepared.
+> 
+> I suspect that it would be rare, and something we can fix when need
+> arises by allowing test_commit_message to accept an option to use
+> non-standard filenames for its temporaries.  The current callers,
+> both the existing ones in t3437 and the new ones added by this
+> patch, would not benefit.  The only externally visible side effect
+> is that the existing ones will have two extra untracked files in
+> their working tree.
+> 
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>      rebase --skip: fix commit message clean up when skipping squash
+>>      
+>>      This patch is based on maint.
+>> ...
+>>   sequencer.c                     | 26 +++++++++++----
+>>   t/t3418-rebase-continue.sh      | 58 +++++++++++++++++++++++----------
+>>   t/t3437-rebase-fixup-options.sh | 15 ---------
+>>   t/test-lib-functions.sh         | 33 +++++++++++++++++++
+>>   4 files changed, 93 insertions(+), 39 deletions(-)
+> 
+> OK.
+> 
+>> diff --git a/sequencer.c b/sequencer.c
+>> index bceb6abcb6c..af271ab6fbd 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -5038,19 +5038,31 @@ static int commit_staged_changes(struct repository *r,
+>>   				 * We need to update the squash message to skip
+>>   				 * the latest commit message.
+>>   				 */
+>> +				int res = 0;
+>>   				struct commit *commit;
+>> +				const char *msg;
+>>   				const char *path = rebase_path_squash_msg();
+>>   				const char *encoding = get_commit_output_encoding();
+>>   
+>> -				if (parse_head(r, &commit) ||
+>> -				    !(p = repo_logmsg_reencode(r, commit, NULL, encoding)) ||
+>> -				    write_message(p, strlen(p), path, 0)) {
+>> -					repo_unuse_commit_buffer(r, commit, p);
+>> -					return error(_("could not write file: "
+>> +				if (parse_head(r, &commit))
+>> +					return error(_("could not parse HEAD"));
+>> +
+>> +				p = repo_logmsg_reencode(r, commit, NULL, encoding);
+>> +				if (!p)  {
+>> +					res = error(_("could not parse commit %s"),
+>> +						    oid_to_hex(&commit->object.oid));
+>> +					goto unuse_commit_buffer;
+>> +				}
+>> +				find_commit_subject(p, &msg);
+>> +				if (write_message(msg, strlen(msg), path, 0)) {
+>> +					res = error(_("could not write file: "
+>>   						       "'%s'"), path);
+>> +					goto unuse_commit_buffer;
+>>   				}
+>> -				repo_unuse_commit_buffer(r,
+>> -							 commit, p);
+>> +			unuse_commit_buffer:
+>> +				repo_unuse_commit_buffer(r, commit, p);
+>> +				if (res)
+>> +					return res;
+>>   			}
+>>   		}
+> 
+> Just as described in the proposed log message.  Looking good.
+> 
+> Will queue.  Thanks.
+
