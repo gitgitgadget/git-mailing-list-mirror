@@ -2,89 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15109C001B0
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 15:54:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB0F4C001DB
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 16:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231383AbjHGPyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 11:54:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
+        id S230076AbjHGQOU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 12:14:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbjHGPyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 11:54:00 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BD1F0
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 08:53:59 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 64A0D22658;
-        Mon,  7 Aug 2023 11:53:59 -0400 (EDT)
+        with ESMTP id S229599AbjHGQOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 12:14:19 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE0B10CE
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 09:14:18 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9518A2FF80;
+        Mon,  7 Aug 2023 12:14:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4gtGhotah3pk
-        pp/BnW3BIDqoPUNmPIsci5r87n3nFEs=; b=Y6zN4pFFQVJiYnKhfbwlciDHlUyy
-        ObvcuNknbIIHJCOvwLLpuDhnO2wU2jboyzn2qeXJ5xH0X804gIWEyNUIdWsKIz2H
-        mYGNcTMjjUtajMt6Bm89ATV/WCz7E1fZgu31hI6QwXE3Arptr59M94mpViXVNmFl
-        fgWYQxLzB1sFxUQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5E19A22657;
-        Mon,  7 Aug 2023 11:53:59 -0400 (EDT)
+        :content-type; s=sasl; bh=h5zQ0GpqJYL5lGIj9DAv2wxgT3NqWFGA4z6q/H
+        YyTwM=; b=h82AOtL5yyWJTbjiv+WAFoXb6iuYkgfDeKlCJ45O4QOPtyPrS2ffj7
+        XNPaKCm6+1SyFypes6fNrofydeQlhvPqafiw9wU7hU4W3W7vXJ/a2HUrbtlDXgaY
+        HWwBVGHRpz6djZkVe9nFtXK1lbXTULxCadv3vkc4CL6PmAEMnyMyY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E7612FF7F;
+        Mon,  7 Aug 2023 12:14:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E5A6422655;
-        Mon,  7 Aug 2023 11:53:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BC3C92FF7E;
+        Mon,  7 Aug 2023 12:14:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Arver <linusa@google.com>
-Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/5] trailer: add tests to check defaulting behavior
- with --no-* flags
-References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
-        <6b427b4b1e82b1f01640f1f49fe8d1c2fd02111e.1691210737.git.gitgitgadget@gmail.com>
-        <xmqqjzu7irhw.fsf@gitster.g> <owlyfs4vbeus.fsf@fine.c.googlers.com>
-        <owly7cq7bbr9.fsf@fine.c.googlers.com>
-Date:   Mon, 07 Aug 2023 08:53:54 -0700
-In-Reply-To: <owly7cq7bbr9.fsf@fine.c.googlers.com> (Linus Arver's message of
-        "Sun, 06 Aug 2023 23:35:38 -0700")
-Message-ID: <xmqqbkfij1bh.fsf@gitster.g>
+To:     Brooke Kuhlmann <brooke@alchemists.io>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: Git Commit Notes (fetching/pushing)
+References: <D01976C3-4B91-464B-ACF0-78DFFB066747@alchemists.io>
+        <ZM/9+YyOAbWWXQtC@nand.local>
+        <3A1AEE32-4A0C-445D-A1D8-146CDCA03563@alchemists.io>
+        <xmqqwmy7irsd.fsf@gitster.g>
+        <2301E39E-B70D-485B-AFA8-F8DA64B366A2@alchemists.io>
+Date:   Mon, 07 Aug 2023 09:14:10 -0700
+In-Reply-To: <2301E39E-B70D-485B-AFA8-F8DA64B366A2@alchemists.io> (Brooke
+        Kuhlmann's message of "Mon, 7 Aug 2023 08:02:46 -0600")
+Message-ID: <xmqq4jlaj0dp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9D5D1AEA-353A-11EE-9CD6-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 720E19F4-353D-11EE-81AB-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
+Brooke Kuhlmann <brooke@alchemists.io> writes:
 
->>> If I am reading the code correctly, --where=3Dvalue overrides the
->>> trailer.where variable and nothing else, and --no-where stops the
->>> overriding of the trailer.where variable.  Ditto for the other two
->>> with their relevant configuration variables.
->>
->> That is also my understanding. Will update to remove the "all" wording=
-.
+> I ended up using the following configuration in order to
+> explicitly fetch/push branches, notes, and tags:
 >
-> Hmph, actually it also overrides any applicable "trailer.<token>.where"
-> configurations (these <token>-specific configurations override the
-> "trailer.where" configuration where applicable). Still, the "all
-> configuration variables" wording should be updated, probably like this:
->
->     =E2=80=BA  Specify where all new trailers will be added.  A setting
->     =E2=80=BA  provided with '--where' overrides the `trailer.where` an=
-d any
->     =E2=80=BA  applicable `trailer.<token>.where` configuration variabl=
-es
->     =E2=80=BA  and applies to all '--trailer' options until the next oc=
-currence of
->     =E2=80=BA  '--where' or '--no-where'.
+> [remote "origin"]
+> 	url = https://github.com/bkuhlmann/test
+> 	fetch = +refs/heads/*:refs/remotes/origin/*
+> 	fetch = +refs/notes/*:refs/notes/*
+> 	fetch = +refs/tags/*:refs/tags/*
+> 	push = +refs/heads/*:refs/remotes/origin/*
 
-Yup, that was what I meant.  I found it troubling that the "all"
-phrasing felt like it meant all trailer.* configurations, not just
-the "where" thing.  Your new description looks good.
+This will push your local branches (e.g. refs/heads/xyzzy) to their
+remote-tracking branches (e.g. refs/remotes/origin/xyzzy) of the
+same name.  Is that what you meant?  It is unclear what kind of use
+you have your remote repository for, and in some use cases, it is
+perfectly valid if a push from here is used as a substitute for a
+fetch from there to arrange the push from here like how you have
+above, to push into refs/remotes/origin/* of a remote repository
+with a working tree.
 
-Thanks.
+But often, a remote is used as a publishing point (i.e. everybody
+pulls from and only you push into it) or as a central meeting place
+(i.e. everybody pulls from and pushes into it), and in these cases,
+a push refspec would look more like
+
+	push = refs/heads/*:refs/heads/*
+
+This is especially true when the remote is a bare repository, or
+hosted at a hosting site you or nobody has access to its working
+tree.
+
+Note the lack of leading '+'; that is absolutely essential if you
+are pushing into a central meeting place because you want to avoid
+force pushing that will clobber others' work, and it is also a great
+discipline even if you are pushing into your publishing point
+because those in your downstream will be disrupted if you rewind
+your history.
+
 
