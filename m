@@ -2,104 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E0F5C001B0
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 19:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C8F3C001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 20:17:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229983AbjHGTJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 15:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
+        id S230038AbjHGURD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 16:17:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229927AbjHGTJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 15:09:09 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AF7171E
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 12:09:08 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03E3E1A6247;
-        Mon,  7 Aug 2023 15:09:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=X8dgBjj2t0Jy6kbyX5IhtjaHrrXtuTbwpcN69B
-        xqPQk=; b=Aoi8Hah09qOGEDHFGNyyCtkzrmFKRZ57zjdpe2oW6ANsLUQ5l5kZjS
-        w5yf87aVikKDsWndZ7eTcb8iumlCgQHyIdo2rUd8L4dQ7iJOWxX8LgBkhTVlzJkL
-        541VVHouwAfUhoNVN32pZD82OMyq6yitCgjJgCDPKlCjEi/lnBj54=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA51A1A6246;
-        Mon,  7 Aug 2023 15:09:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 106171A6245;
-        Mon,  7 Aug 2023 15:09:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 2/3] t/lib-rebase: set_fake_editor(): handle FAKE_LINES
- more consistently
-References: <a803e1ad-1025-164a-f7ca-cc1a41e4f12b@gmail.com>
-        <20230807170935.2336663-1-oswald.buddenhagen@gmx.de>
-        <20230807170935.2336663-3-oswald.buddenhagen@gmx.de>
-Date:   Mon, 07 Aug 2023 12:09:05 -0700
-In-Reply-To: <20230807170935.2336663-3-oswald.buddenhagen@gmx.de> (Oswald
-        Buddenhagen's message of "Mon, 7 Aug 2023 19:09:34 +0200")
-Message-ID: <xmqqzg32ekku.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E1BD39AC-3555-11EE-8C46-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+        with ESMTP id S229696AbjHGURC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 16:17:02 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DBC10E9
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 13:17:01 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d4db57d2982so2391526276.3
+        for <git@vger.kernel.org>; Mon, 07 Aug 2023 13:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1691439420; x=1692044220;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=llnB6QLYOV0zNWAdN9j0K5GY04hGAB5y5QhQJWoDPxM=;
+        b=KrMMVXsc6sMJaxs1qPBxkHlYoh3Jeatnnh4MEN1on1FW1mdXik2TcNOJu8ckp3U5AV
+         DlnZO5aqClObcbu5dQMHrelzwcUUWuprA0bia+OhOr8KZi/OXU4phk2rdjyvFv5WVmgu
+         02SFTzfHedmJ1VkcJQ3rPD34q3s9U5oglIZA5RtT5WrauGDN/R7fwQcpWPeEggCb8lYL
+         KsoFPXLJxmZWSXk0b/f32LeSmahGRi7mKRQC7zF2PTzGS9mMBquSc+pfooSt22HqgnRs
+         s2uY0biQcbJhoV6Lga80pvpuZc6GNIXPeBSm6PCbc6hqIGuYch9GpPTWFBRCx7wR3ER5
+         Y7ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691439420; x=1692044220;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=llnB6QLYOV0zNWAdN9j0K5GY04hGAB5y5QhQJWoDPxM=;
+        b=DCtk1J2UqN2XD5wNFieMotRJAWQ3LU35vQuDB4Pig+ygzhIy1QVC24evzep2nF1iaj
+         Y0iCs9A4slJCZ3iuh3GI3IFN8L7sjUj+NZEW2sLx9yOsRD2sq3CnI4WtLRv7SVdMH4Y7
+         rh4WH5s4bybrGIKXABrjA5Ktnw9OW5wUUfdLN8NyhgM5plssswTkDGZKr3mbYk1kpUJv
+         BiJZQolbKOofZxvBCndmZQB+g4C/AyBLkWXTuGhj74OeaE61UuVx1v4nUkOM8BvOV51X
+         XGusEY8mN5W11brlsS0z4S9xRT4bLZwNUA38gY6bdGzlMuY562kz5d2RB10OQni2Gj7z
+         s5rQ==
+X-Gm-Message-State: AOJu0YxZu0mWs2HyLrYa2eqO8P/IpT+WQTVNrOpQnB/mPBGs8NPao+Yb
+        /wgs5NV8YJc9E7TXwBjIKqnDzGETahltxg==
+X-Google-Smtp-Source: AGHT+IE2F6igK9lUqz/OC2/uBzX1MaCEpZ3ISozaEZ+tuKS1C91lNyLLfrJgX4B23BFs4jWGYkoMl64n8PMg+A==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a25:3756:0:b0:d08:ea77:52d4 with SMTP id
+ e83-20020a253756000000b00d08ea7752d4mr51564yba.12.1691439420752; Mon, 07 Aug
+ 2023 13:17:00 -0700 (PDT)
+Date:   Mon, 07 Aug 2023 13:16:51 -0700
+In-Reply-To: <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com> <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+Message-ID: <kl6l4jla38wc.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 0/7] rebase -i: impove handling of failed commands
+From:   Glen Choo <chooglen@google.com>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+Hi Phillip!
 
-> Default next action after 'fakesha' to preserving the command instead
-> of forcing 'pick', consistently with other "instant-effect" keywords.
-> There is no reason why one would want that inconsistency, so this was
-> clearly just an oversight in commit 5dcdd740 ("t/lib-rebase: prepare
-> for testing `git rebase --rebase-merges`"). Rectifying it makes the
-> behavior easier to reason about and document.
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> This series fixes several bugs in the way we handle a commit cannot be
+> picked because it would overwrite an untracked file.
 >
-> This would affect hypothetical "fakesha <n>" sequences where line <n>
-> already isn't a pick, which currently don't appear.
+>  * after a failed pick "git rebase --continue" will happily commit any
+>    staged changes even though no commit was picked.
 >
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> ---
-> Cc: Phillip Wood <phillip.wood123@gmail.com>
-> ---
->  t/lib-rebase.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  * the commit of the failed pick is recorded as rewritten even though no
+>    commit was picked.
+>
+>  * the "done" file used by "git status" to show the recently executed
+>    commands contains an incorrect entry.
+>
+> Thanks to Eric, Glen and Junio for their comments on v2. Here are the
+> changes since v2:
 
-I do recall seeing this change and remember wondering what the
-fallout from this change would be.  So relative to the previous
-round, the above is a definite improvement to clearly state that no
-test that is currently in the codebase is affected by this change.
+Thanks for sending this version, and apologies for not getting to it
+sooner (I tried a few times, but it was hard to reconstruct the context
+around something as complicated as sequencer.c..). Unfortunately, I
+don't think I will be able to chime in on subsequent rounds.
 
-As to the change itself, I do not much care among (1) what this
-patch does, (2) doing nothing, or (3) barf when the action is not a
-pick.  At least, having this step separate from other changes like
-this round of the series does is a very good thing---when somebody
-with more knowledge and stake in what the fake-editor does appears
-and explains why forcing pick is a good idea, we can easily revert
-only this step.
+> Patch 1 - Reworded the commit message.
+>
+> Patch 2 - Reworded the commit message, added a test and fixed error message
+> pointed out by Glen.
+>
+> Patch 3 - New cleanup.
+>
+> Patch 4 - Reworded the commit message, now only increments
+> todo_list->current if there is no error.
+>
+> Patch 5 - Swapped with next patch. Reworded the commit message, stopped
+> testing implementation (suggested by Glen). Expanded post-rewrite hook test.
+>
+> Patch 6 - Reworded the commit message, now uses the message file rather than
+> the author script to check if "rebase --continue" should commit staged
+> changes. Junio suggested using a separate file for this but I think that
+> would end up being more involved as we'd need to be careful about creating
+> and removing it.
+>
+> Patch 7 - Reworded the commit message.
 
-Will queue as-is together with the other two patches.
+I found the updated commit messages much easier to understand, and the
+change to no longer test implementation is also very welcome, so
+overall, I think this is a marked improvement over the previous version.
 
-Thanks.
-
-> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-> index e6179ab529..9ed87ca7ab 100644
-> --- a/t/lib-rebase.sh
-> +++ b/t/lib-rebase.sh
-> @@ -64,7 +64,7 @@ set_fake_editor () {
->  		fakesha)
->  			test \& != "$action" || action=pick
->  			echo "$action XXXXXXX False commit" >> "$1"
-> -			action=pick;;
-> +			action=\&;;
->  		*)
->  			sed -n "${line}s/^[a-z][a-z]*/$action/p" < "$1".tmp >> "$1"
->  			action=\&;;
+Like Junio, I'm not familiar enough with sequencer or its 'expected
+behavior' to feel comfortable LGTM-ing the later patches.
