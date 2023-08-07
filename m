@@ -2,170 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63BFBC001DE
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 20:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9531CC001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 20:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230357AbjHGUSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 16:18:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56242 "EHLO
+        id S230470AbjHGUTo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 16:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbjHGUSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 16:18:49 -0400
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35DCC10D8
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 13:18:48 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id E98345C00B1;
-        Mon,  7 Aug 2023 16:18:44 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 07 Aug 2023 16:18:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm3; t=1691439524; x=1691525924; bh=wVR4Qoq4ztks8OAdz3v1962nh
-        hDgqjZIduGT81pU2Dg=; b=OyXPyopPeuJl/9xA1SDpHSjlAp+BO/ZIdNvZdmQ0F
-        jGWkCIwkRyzjnY3B+q48GSel736aMiwGymmlRioyBdbvdxubewNehtvNTrgtOcrR
-        4Q/xeT2gLGht8WKirEglkkBtUl8EYzI0UZjgY7Q8VCUFhZp0ba4OfXn/d1qJdkJN
-        SZuH/sNQkflFVd5Kj0Hw7ozT8dBaeMNUU0IeynGmlKVeVlsofBLqMcgco4ylka2/
-        F+P1m5GeWdmIJwt0Ab2WuYq95XfPjcdUCQcM1aGoLOFT/5evUrb+bQr8McBBsBb5
-        3vyw8sWh7HOXNgZGDdaGplpHF9H+8cvML/R3WZoatgWPA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1691439524; x=1691525924; bh=wVR4Qoq4ztks8OAdz3v1962nhhDgqjZIduG
-        T81pU2Dg=; b=zDazbUfwexPRpBDyGbIIWY0PvWat9kI16sWTJcqZ0tLsb25EP0f
-        hLFz8Vmeym7n7Uu1iUOXq4psxAFO53K51B6QB6J6JChVGvZn2kxbDWEU6uCJJtV1
-        FDZ6EyPEOCaQs9XRqb3EpJbpOlkcVZMACKGmS4wql4I5Ubcwqgi6VVyYuEDFsipz
-        O2cDzh9Tltbt0PunyJWSV1mf/SuY7mVD9RWLxFHnlnDZeDxOf7yBpEO2JlpTrU45
-        fh2JMoHvi8dA4WgefqUsMhI6FKkq3vXi088qSsESva3/4E8wPaJYlJ/N2dCa/IZF
-        Vx1GN0WX8H43w//i8LafKoN2l3FRAfX9rbQ==
-X-ME-Sender: <xms:pFHRZHxXc5IAhaqjwPuFWMnhO8NJ7TYY-1-axly7BxdXRxK0ZZKUog>
-    <xme:pFHRZPTD-3Ht97dFga1zZTc0t037_QQid1lE2GDDzZ_fzcVXUG-vcCvvEDyH3seRN
-    0RUyBhjbiRVYeWd>
-X-ME-Received: <xmr:pFHRZBX_j-56EtsyYlbilGwLeZ0LbD-a_Mi5AC7ZQZLLRVTDj_oXnJtPsjazpZ-aUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrledtgddugeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpegtggfuhfgjffevgffkfhfvofesth
-    hqmhdthhdtvdenucfhrhhomhepuehrohhokhgvucfmuhhhlhhmrghnnhcuoegsrhhoohhk
-    vgesrghltghhvghmihhsthhsrdhioheqnecuggftrfgrthhtvghrnhepvddvjeevvefhie
-    ffleefgfegiedtjeffgfeflefhteduhefgheejhfetkeeugeevnecuffhomhgrihhnpehg
-    ihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpegsrhhoohhkvgesrghltghhvghmihhsthhsrdhioh
-X-ME-Proxy: <xmx:pFHRZBjmu5SDYRWTZkyMWnRYQp37T5Xh4D90UxB1LzJHL-mn_NzFqQ>
-    <xmx:pFHRZJBMHk-EBVPC-kbpDBA3HCbCv95FEtyxW1hVdWWwpzqE5-UHUQ>
-    <xmx:pFHRZKKVVt6ZgQfDBi4my_Qk0i47EgnU_8qQQKTzFxWLQdceYiRDSg>
-    <xmx:pFHRZG6c8CQGI-RL76gq2iVjwQC-KRxY7ySK5V6r4HVneE5GxCdPwA>
-Feedback-ID: i78e840cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Aug 2023 16:18:44 -0400 (EDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Subject: Re: Git Commit Notes (fetching/pushing)
-From:   Brooke Kuhlmann <brooke@alchemists.io>
-In-Reply-To: <xmqq4jlaj0dp.fsf@gitster.g>
-Date:   Mon, 7 Aug 2023 14:18:33 -0600
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4230982C-7401-4EC0-907A-85E04074237D@alchemists.io>
-References: <D01976C3-4B91-464B-ACF0-78DFFB066747@alchemists.io>
- <ZM/9+YyOAbWWXQtC@nand.local>
- <3A1AEE32-4A0C-445D-A1D8-146CDCA03563@alchemists.io>
- <xmqqwmy7irsd.fsf@gitster.g>
- <2301E39E-B70D-485B-AFA8-F8DA64B366A2@alchemists.io>
- <xmqq4jlaj0dp.fsf@gitster.g>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3731.700.6)
+        with ESMTP id S229560AbjHGUTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 16:19:43 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9432310EC
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 13:19:42 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3744C318EF;
+        Mon,  7 Aug 2023 16:19:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jRPTCbWC6WRqLKdAq7Xi3ysRHj0Wk4nCV8MBg6
+        emBbA=; b=D+7oEhc9c4ACMRIhw4GIbg/OGHcK45bxMIZyJGpuHWIX9p6OZIyp2b
+        79oyIV45IGyNdrNNfrXL0TbmCxEgASY+moah4qkSSP2mnE/agFZiaIMizRnW2BjU
+        l3ggf1qgRtSn2JYZtWY4o9JfpyjZQ0+3hmV14jDO9TUG1M+tdP9NQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30379318EE;
+        Mon,  7 Aug 2023 16:19:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4AE88318EB;
+        Mon,  7 Aug 2023 16:19:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] sequencer: rectify empty hint in call of
+ require_clean_work_tree()
+References: <20230323162234.995514-1-oswald.buddenhagen@gmx.de>
+        <20230807170935.2336730-1-oswald.buddenhagen@gmx.de>
+Date:   Mon, 07 Aug 2023 13:19:37 -0700
+In-Reply-To: <20230807170935.2336730-1-oswald.buddenhagen@gmx.de> (Oswald
+        Buddenhagen's message of "Mon, 7 Aug 2023 19:09:35 +0200")
+Message-ID: <xmqqa5v2ehba.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BBC11D90-355F-11EE-8765-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hy Junio, thanks.
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-A few important lessons learned here (in case it helps others):
+> The canonical way to represent "no error hint" is making it null, which
+> shortcuts the error() call altogether. This fixes the output by removing
+> the line which said just "error:".
+>
+> Alternatively, one could make the function treat empty strings like null
+> strings, which would make it resemble its original script implementation
+> more closely, but that doesn't seem like a worthwhile goal. If anything,
 
-1. Use `push =3D refs/heads/*:refs/heads/*` when pushing (this is what =
-made everything work for me). Especially since my host is GitHub in this =
-situation and I don't have control to the remote working tree as you =
-point out.
-2. Don't use the `+` prefix for fetches and pushes as you point out. I =
-didn't realize the value of this prefix until now, especially since this =
-seems to be default behavior when cloning a repository so I was mostly =
-following the default syntax.
+The analysis I gave you in the previous round was primarily to
+explain how this bug came to be, i.e. a misconversion of the
+scripted original, and that would be a lot more pertinent
+information than "is this closer to or further from the scripted
+original?"  IOW, "equating NULL and an empty string is how the
+original implemented the logic correctly, but the misconversion made
+the current source to fail to do so" is the take-home message.  
 
-Here's my working configuration based on your feedback:
+You could correct the current version by making it follow the same
+"NULL and an empty string are the same" convention to implement the
+logic correctly, or you can build on the misconverted callee that
+treats only NULL specially hence pass NULL instead of "".  Either
+one is a valid implementation, but the reason to choose the former
+would not be to "make it resemble the original".
 
-[remote "origin"]
-  url =3D https://github.com/bkuhlmann/test
-  fetch =3D +refs/heads/*:refs/remotes/origin/*
-  fetch =3D refs/notes/*:refs/notes/*
-  fetch =3D refs/tags/*:refs/tags/*
-  push =3D refs/heads/*:refs/heads/*
-  push =3D refs/notes/*:refs/notes/*
-  push =3D refs/tags/*:refs/tags/*
+IOW, "doesn't seem like a worthwhile goal" is beating a strawman.
+Nobody advocates "if (!hint || !*hint)" because "the code must look
+exactly like the original".  It is merely that it is one known way
+to achieve correctness, as it was how the original achieved its
+correctness.
 
-I'm a heavy rebaser (only on feature branches, never `main`) so =
-definitely don't wish to clobber work accidentally even when using `git =
-push --force-with-lease` or the `push.useForceIfIncludes =3D true` =
-configuration setting.
+> I'd go in the opposite direction and assert() that the argument is not
+> an empty string.
 
-One interesting side-effect that I've noticed with all of these changes =
-is that my `branch.autoSetupRebase =3D always` configuration no longer =
-knows how to automatically setup tracking for new feature branches when =
-using `git switch --create <example>`. Even using the `-t` flag doesn't =
-quite work either. I'll need to tinker with this some more.
+If we were writing this program from scratch, "NULL means something
+different from any sttring, and an empty string does not have
+anything special compared to any other strings" would probably be a
+good semantics to give to this helper function.  I'd be OK with the
+change.  Also, adding "if (!*hint) BUG(...)" would be a good future
+direction, I would think.
 
-Otherwise, all of this appears to be working nicely as I can push/pull =
-to my repository and then clone the same repository at a different =
-location on disk and see all of my branches and notes sync appear =
-properly.
-
-Thanks again, this has been great to learn!
-
-> On Aug 7, 2023, at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Brooke Kuhlmann <brooke@alchemists.io> writes:
->=20
->> I ended up using the following configuration in order to
->> explicitly fetch/push branches, notes, and tags:
->>=20
->> [remote "origin"]
->> url =3D https://github.com/bkuhlmann/test
->> fetch =3D +refs/heads/*:refs/remotes/origin/*
->> fetch =3D +refs/notes/*:refs/notes/*
->> fetch =3D +refs/tags/*:refs/tags/*
->> push =3D +refs/heads/*:refs/remotes/origin/*
->=20
-> This will push your local branches (e.g. refs/heads/xyzzy) to their
-> remote-tracking branches (e.g. refs/remotes/origin/xyzzy) of the
-> same name.  Is that what you meant?  It is unclear what kind of use
-> you have your remote repository for, and in some use cases, it is
-> perfectly valid if a push from here is used as a substitute for a
-> fetch from there to arrange the push from here like how you have
-> above, to push into refs/remotes/origin/* of a remote repository
-> with a working tree.
->=20
-> But often, a remote is used as a publishing point (i.e. everybody
-> pulls from and only you push into it) or as a central meeting place
-> (i.e. everybody pulls from and pushes into it), and in these cases,
-> a push refspec would look more like
->=20
-> push =3D refs/heads/*:refs/heads/*
->=20
-> This is especially true when the remote is a bare repository, or
-> hosted at a hosting site you or nobody has access to its working
-> tree.
->=20
-> Note the lack of leading '+'; that is absolutely essential if you
-> are pushing into a central meeting place because you want to avoid
-> force pushing that will clobber others' work, and it is also a great
-> discipline even if you are pushing into your publishing point
-> because those in your downstream will be disrupted if you rewind
-> your history.
->=20
->=20
-
+> diff --git a/sequencer.c b/sequencer.c
+> index cc9821ece2..d15a7409d8 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -6182,7 +6182,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>  	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
+>  		goto cleanup;
+>  
+> -	if (require_clean_work_tree(r, "rebase", "", 1, 1))
+> +	if (require_clean_work_tree(r, "rebase", NULL, 1, 1))
+>  		goto cleanup;
+>  
+>  	todo_list_write_total_nr(&new_todo);
