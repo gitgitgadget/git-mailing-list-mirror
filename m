@@ -2,80 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3287C001DB
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 16:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4869DC001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 16:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231405AbjHGQQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 12:16:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51766 "EHLO
+        id S231191AbjHGQTQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 12:19:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230076AbjHGQQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 12:16:37 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E513210CF
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 09:16:35 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E5802FF9F;
-        Mon,  7 Aug 2023 12:16:35 -0400 (EDT)
+        with ESMTP id S229564AbjHGQTO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 12:19:14 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2B4410D0
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 09:19:13 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D655228FE;
+        Mon,  7 Aug 2023 12:19:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F9RhJnOgbsQ8gq3QGF0eN1wRZFw2O1BKCMFBRM
-        JVIis=; b=sEn45pzcs5zINVuXdS7LQUvZOP9o/NeQRjjZ8e3yCu8BK8Cnmn0ZcV
-        9AGRsygFk0trJYuGLbLMMPnDqzDfmt7ACE6Kc9T1YWZDPlvHx4qfNY4OLVTl+TiP
-        PzKrw3t0iV3JSwcjbT6jZkqHhq0/dxFKGEi321dkiGuNcofGVmVRk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 862CF2FF9E;
-        Mon,  7 Aug 2023 12:16:35 -0400 (EDT)
+        :content-type; s=sasl; bh=wpjtNSVYDF2eHOSMWfpg8HOKaX7IwgKuJErfdk
+        yvb6k=; b=w+jvfkMUv8Qej1cEuU5KnkDa9H8l8iEp0WZkvrVNx6u2gLd1sBeGJE
+        +3TohcDqmXbpGuGzxtMm7fbLJSyTtSq/8/pZhnMd5RYW7BN+PyZ0JNj3wVkKdlFc
+        juTC+5SkZf81YIsrIHv5LLucX9yelPGjBO60uDvU4Ei5ejZVfp+Mg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 56256228FD;
+        Mon,  7 Aug 2023 12:19:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C22A42FF9D;
-        Mon,  7 Aug 2023 12:16:31 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2A9D228FC;
+        Mon,  7 Aug 2023 12:19:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase --skip: fix commit message clean up when
- skipping squash
-References: <pull.1558.git.git.1691068176051.gitgitgadget@gmail.com>
-        <xmqqedkj515a.fsf@gitster.g>
-        <b43a5b46-f391-bd9e-4bf2-bfeaa3548f3e@gmail.com>
-Date:   Mon, 07 Aug 2023 09:16:30 -0700
-In-Reply-To: <b43a5b46-f391-bd9e-4bf2-bfeaa3548f3e@gmail.com> (Phillip Wood's
-        message of "Mon, 7 Aug 2023 10:59:41 +0100")
-Message-ID: <xmqqzg32hlpd.fsf@gitster.g>
+        John Cai <johncai86@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Aug 2023, #01; Wed, 2)
+References: <xmqqfs518gdh.fsf@gitster.g>
+        <CAP8UFD1vuB2kRr890B7GXum9HAMjRep86zy2tE4yE2C3W5QGHA@mail.gmail.com>
+        <CAP8UFD2Fw+oGz4VK=_i3B_D_VMQqMoXTJPpXRbkDiWjHciEqJw@mail.gmail.com>
+Date:   Mon, 07 Aug 2023 09:19:08 -0700
+In-Reply-To: <CAP8UFD2Fw+oGz4VK=_i3B_D_VMQqMoXTJPpXRbkDiWjHciEqJw@mail.gmail.com>
+        (Christian Couder's message of "Mon, 7 Aug 2023 14:41:04 +0200")
+Message-ID: <xmqqv8dqhlkz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C5842150-353D-11EE-911B-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 23BB4D16-353E-11EE-9F5E-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
->> I am not sure if deviating from expect vs actual is such a good
->> idea.  It is not like use of two temporary files are transparent to
->> the caller of the new test helper---indeed, expect and actual are
->> likely to be used by the caller in tests that comes before or after
->> the ones that use test_commit_message, and by using a pair of files
->> that are different, the caller will now see two extra untracked
->> files left in the working tree.
->
-> That's true, looking at test-lib-functions.sh it seems I unwittingly
-> followed the example of test_cmp_config() which uses
-> {actual,expect}.config when it calls test_cmp(). Anyway as this is in
-> next I assume you're happy enough with the implementation as it
-> stands.
+> (Sorry I somehow forgot to put the mailing list in Cc: of this.)
 
-You assumed too much ;-).  The above is a bad move, but is minor
-enough and it is not a show-stopper.  If you are aware of other bad
-examples, clean-up patches after the dust settles would be very much
-welcomed.
+This seems to be a response to an older issue of the report, but I
+take it that the status of these two topics haven't changed since
+then.
 
-Thanks.
+>> > * cc/repack-sift-filtered-objects-to-separate-pack (2023-07-24) 8 commits
+>> > ...
+>> >  Breaks CI with some environment variables configured.
+>> >  cf. <xmqqo7jzh9mh.fsf@gitster.g>
+>> >  source: <20230724085909.3831831-1-christian.couder@gmail.com>
+>>
+>> I am working on this and hope to send a version 4 soon.
+
+Sounds good.  Thanks.
+
+>> > * cc/git-replay (2023-06-03) 15 commits
+>> > ...
+>> >
+>> >  What's the status of this thing?
+>> >  source: <20230602102533.876905-1-christian.couder@gmail.com>
+>>
+>> I have a 2 week long vacation starting soon, so I will likely not have
+>> time to work on a new round in the next 3 weeks.
+
+OK.  Enjoy.
+
+>> However in a recent article
+>> (https://github.blog/2023-07-27-scaling-merge-ort-across-github/)
+>> GitHub says that they are already using git-replay (though not sure
+>> it's this exact version or another one), and GitLab plans to use it
+>> too.
+
+So there are plenty folks who are capable of reviewing but they are
+not interested in giving it to the general public by withholding
+their reviews ;-)?
+
+
