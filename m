@@ -2,166 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F24C0015E
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 02:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47380EB64DD
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 05:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbjHGCLB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Aug 2023 22:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
+        id S229732AbjHGF2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 01:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjHGCLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Aug 2023 22:11:00 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83ECA1701
-        for <git@vger.kernel.org>; Sun,  6 Aug 2023 19:10:59 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B615E19F693;
-        Sun,  6 Aug 2023 22:10:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=iKBKskJSifPZ
-        Gvj+KNKBL8J0tohqoAwGbQjL2DzQ3e8=; b=NdiDPReWuoQIuQgZj9qDXETIfN2X
-        Baf7OoXDPtsqI/vnxDo1mQ2DllOQfcMVsT7m0PdWrzEf8Q5J4o3BCCoinOVH+wuC
-        Yp1zr+y/hWoBf000utjFe/lOnsuqmWQjOHZu5R5yQOSwE2KL8/OegTGTsbHWLJ9P
-        l1ZRnwhcDrfliC0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AED6D19F692;
-        Sun,  6 Aug 2023 22:10:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21A6919F690;
-        Sun,  6 Aug 2023 22:10:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Izzy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Izzy <winglovet@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] merge-tree: add -X strategy option
-References: <pull.1565.git.1691245481977.gitgitgadget@gmail.com>
-Date:   Sun, 06 Aug 2023 19:10:57 -0700
-In-Reply-To: <pull.1565.git.1691245481977.gitgitgadget@gmail.com> (Izzy via
-        GitGitGadget's message of "Sat, 05 Aug 2023 14:24:41 +0000")
-Message-ID: <xmqqfs4vioum.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A5E5DAC6-34C7-11EE-8840-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229517AbjHGF2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 01:28:47 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6482C10EB
+        for <git@vger.kernel.org>; Sun,  6 Aug 2023 22:28:46 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1bc734b2146so1449145ad.1
+        for <git@vger.kernel.org>; Sun, 06 Aug 2023 22:28:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1691386126; x=1691990926;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MXdkUw0Z5onBqsftvS/5sjSx6slyxv8oQ/mgtxroEIY=;
+        b=BgfPk3IA5Ge6tzqY4uCsOykh7qIweFnH7wtKxDbdaKSf76zYB72wG9HtMn92Ss1LgH
+         OpnQ//iiYY9fZPoK/q5bVSp+3TCSenMLnepJpbyh5vevoxJ2wAwgY7GNFxb6SRMvXm2L
+         +pzEbO4OSynHeaOwbR7/s7cBlbot2yGbgk3dGnLBKrtBPbKjhzG1i3e4lt4AMen8vUFW
+         FJWKzz0dbFycEBaU3yrWaqT5k96o9InLdT2XmteeNb0INjQRkjRkaebXGdCl3jTdj9UM
+         cWrbG/cK19DCmnNOsEWbvHCPDaZ9mUOX1NhMo/qFLohBq2qvFng3ZnSsnvIxxTjkPWnl
+         RfuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691386126; x=1691990926;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MXdkUw0Z5onBqsftvS/5sjSx6slyxv8oQ/mgtxroEIY=;
+        b=g/L76wlw0GGAW7zoJQIz4a2lueM2X4pU6BCqW8aDYtDMtC1ZyBxwUayGVOzEakensm
+         Tr6BX1gNr7KyNxIoIT8EDWnJptQt+f9gIYI+tTcgqqMg3Ve0hgUKY8FrNRB1WbF5KEsS
+         9Wa5WZp34mleGbd56L/3gw0teOPUhYJsf52KMo2y5kL5h87avGPDO8eDvX/zpRn/o+uH
+         bq/OiuVaTCA0xgqBmLf95KCq5ZDWy9XU4f6nHiQa5+LKI730lbWJEU8tXtuPk/nZkJPz
+         0tiVnrw0x40Vlj5t8flgCczOGWwFBPnP03Wup1oVgkSubOeyVq/aiKyVP/VLcarwnkAg
+         hpHg==
+X-Gm-Message-State: AOJu0Yz+4MfRUGhWHAPP3FGS6TVbwDG6qjd8np3Jf81DgDmbdwXpMtuZ
+        M40MsUHSYSo4w2BIIq4Kzm0TNYwUa9I=
+X-Google-Smtp-Source: AGHT+IEUJe/WT/imPPTpfMS7retkN/LhAXLwXiZ+RWvJ2rBSFRl8aIi/0JpExv71qbx18D4edxzxQH9Lnuc=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:902:d4c3:b0:1bb:c7c6:3462 with SMTP id
+ o3-20020a170902d4c300b001bbc7c63462mr31232plg.8.1691386125810; Sun, 06 Aug
+ 2023 22:28:45 -0700 (PDT)
+Date:   Sun, 06 Aug 2023 22:28:43 -0700
+In-Reply-To: <xmqqjzu7irhw.fsf@gitster.g>
+Mime-Version: 1.0
+References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
+ <6b427b4b1e82b1f01640f1f49fe8d1c2fd02111e.1691210737.git.gitgitgadget@gmail.com>
+ <xmqqjzu7irhw.fsf@gitster.g>
+Message-ID: <owlyfs4vbeus.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 3/5] trailer: add tests to check defaulting behavior with
+ --no-* flags
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Izzy via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: winglovet <winglovet@gmail.com>
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Add merge strategy option to produce more customizable merge result suc=
-h
-> as automatically solve conflicts.
+>> @@ -114,8 +114,10 @@ OPTIONS
+>>  	Specify where all new trailers will be added.  A setting
+>>  	provided with '--where' overrides all configuration variables
 >
-> Signed-off-by: winglovet <winglovet@gmail.com>
+> Obviously this is not a new issue, but "all configuration variables"
+> is misleading (the same comment applies to the description of the
+> "--[no-]if-exists" and the "--[no-]if-missing" options).
 
-cf. Documentation/SubmittingPatches::[real-name], a part of the DCO
-section of the document.
+Agreed.
 
->  builtin/merge-tree.c | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
+> If I am reading the code correctly, --where=value overrides the
+> trailer.where variable and nothing else, and --no-where stops the
+> overriding of the trailer.where variable.  Ditto for the other two
+> with their relevant configuration variables.
 
-A new feature should be protected by new tests to make sure it will
-not be broken accidentally by others.  Probably a couple of new
-tests to both t4300 and t4301?
+That is also my understanding. Will update to remove the "all" wording.
 
-$ git shortlog -sn --no-merges --since=3D6.months builtin/merge-tree.c t/=
-t430[01]*.sh
+On a separate note, I've realized there are more fixes to be done in
+this area (as I get more familiar with the codebase). For example, we
+have the following language in builtin/interpret-trailers.c inside
+cmd_interpret_trailers():
 
-tells me that Elijah and =C3=86var had been active, but by looking at the
-output of
+    OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply config rules")),
 
-$ git log --author=3D=C3=86var --since=3D6.months builtin/merge-tree.c t/=
-t430[01]*.sh
+which should be fixed in similar style to what you suggested above,
+probably with:
 
-shows that the contribution by the latter was solely about code
-clean-up with Coccinelle and not about code features and correctness,
-so for a new-feature change like this, I'd ask comments by Elijah if
-I were writing this patch.
+    OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply trailer.* configuration variables")),
 
-Thanks.
+When I reroll, I will include these additional fixes so expect the patch
+series to grow (probably ~12 patches instead of the ~5).
 
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index 0de42aecf4b..2ec6ec0d39a 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -19,6 +19,8 @@
->  #include "tree.h"
->  #include "config.h"
-> =20
-> +static const char **xopts;
-> +static size_t xopts_nr, xopts_alloc;
->  static int line_termination =3D '\n';
-> =20
->  struct merge_list {
-> @@ -414,6 +416,7 @@ struct merge_tree_options {
->  	int show_messages;
->  	int name_only;
->  	int use_stdin;
-> +	struct merge_options merge_options;
->  };
-> =20
->  static int real_merge(struct merge_tree_options *o,
-> @@ -439,6 +442,8 @@ static int real_merge(struct merge_tree_options *o,
-> =20
->  	init_merge_options(&opt, the_repository);
-> =20
-> +	opt.recursive_variant =3D o->merge_options.recursive_variant;
-> +
->  	opt.show_rename_progress =3D 0;
-> =20
->  	opt.branch1 =3D branch1;
-> @@ -510,6 +515,17 @@ static int real_merge(struct merge_tree_options *o=
-,
->  	return !result.clean; /* result.clean < 0 handled above */
->  }
-> =20
-> +static int option_parse_x(const struct option *opt,
-> +			  const char *arg, int unset)
-> +{
-> +	if (unset)
-> +		return 0;
-> +
-> +	ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
-> +	xopts[xopts_nr++] =3D xstrdup(arg);
-> +	return 0;
-> +}
-> +
->  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
->  {
->  	struct merge_tree_options o =3D { .show_messages =3D -1 };
-> @@ -548,6 +564,10 @@ int cmd_merge_tree(int argc, const char **argv, co=
-nst char *prefix)
->  			   &merge_base,
->  			   N_("commit"),
->  			   N_("specify a merge-base for the merge")),
-> +		OPT_CALLBACK('X', "strategy-option", &xopts,
-> +			N_("option=3Dvalue"),
-> +			N_("option for selected merge strategy"),
-> +			option_parse_x),
->  		OPT_END()
->  	};
-> =20
-> @@ -556,6 +576,10 @@ int cmd_merge_tree(int argc, const char **argv, co=
-nst char *prefix)
->  	argc =3D parse_options(argc, argv, prefix, mt_options,
->  			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-> =20
-> +	for (int x =3D 0; x < xopts_nr; x++)
-> +		if (parse_merge_opt(&o.merge_options, xopts[x]))
-> +			die(_("unknown strategy option: -X%s"), xopts[x]);
-> +
->  	/* Handle --stdin */
->  	if (o.use_stdin) {
->  		struct strbuf buf =3D STRBUF_INIT;
->
-> base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
+One more thing. I think the documentation
+(Documentation/git-interpret-trailers.txt) uses the word "<token>" in
+two different ways. For example, if we have in the input
+
+    subject line
+
+    body text
+
+    Acked-by: Foo
+
+the docs treat the word "Acked-by:" as the <token>. However, it defines
+the relevant configuration section like this:
+
+    trailer.<token>.key::
+            This `key` will be used instead of <token> in the trailer. At
+            the end of this key, a separator can appear and then some
+            space characters. By default the only valid separator is ':',
+            but this can be changed using the `trailer.separators` config
+            variable.
+    +
+    If there is a separator, then the key will be used instead of both the
+    <token> and the default separator when adding the trailer.
+
+So if I configure this like
+
+   git config trailer.ack.key "Acked-by" &&
+
+the <token> is both the longer-form "Acked-by:" (per the meaning so far
+in the doc) but also the shorter string "ack" per the
+"trailer.<token>.key" configuration section syntax. This secondary
+meaning is repeated again in the very start of the doc when we define
+the --trailer option syntax as
+
+    SYNOPSIS
+    --------
+    [verse]
+    'git interpret-trailers' [--in-place] [--trim-empty]
+                [(--trailer <token>[(=|:)<value>])...]
+                [--parse] [<file>...]
+
+because the <token> here could be (using the example above) either
+"Acked-by" (as in "--trailer=Acked-by:...") if we did not configure
+"trailer.ack.key", or just "ack" (as in "--trailer=ack:...") if we did
+configure it. These two scenarios would give identical "Acked-by: ..."
+output.
+
+This is confusing and I don't like how we overload this "token" word
+(not to mention we already have the word "key" which we don't really use
+much in the docs).
+
+I am inclined to replace most uses of the word "<token>" with "<key>"
+while leaving the "trailer.<token>.key" configuration syntax intact.
+This will result in a large diff but I think the removal of the double
+meaning is worth it, and will include this fix also in the next reroll.
+
+The main reason I bring this up is because this means also having to
+update our funciton names like "token_len_without_separator" in
+trailer.c, to be "key_len_without_separator" if we want the nomenclature
+in the trailer.c internals to be consistent with the (updated)
+user-facing docs. I am not sure whether we want to do this as part of
+the same reroll, or if we should leave it as #leftoverbits for a future
+series.
