@@ -2,96 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83EC5C001DB
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 21:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4315FC001DB
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 22:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbjHGVed (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 17:34:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58136 "EHLO
+        id S229689AbjHGWjf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 18:39:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbjHGVec (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 17:34:32 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D8110CF
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 14:34:31 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-58411e24eefso54266757b3.1
-        for <git@vger.kernel.org>; Mon, 07 Aug 2023 14:34:31 -0700 (PDT)
+        with ESMTP id S229503AbjHGWjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 18:39:33 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F947100
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 15:39:31 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-583a89cccf6so46876937b3.1
+        for <git@vger.kernel.org>; Mon, 07 Aug 2023 15:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691444071; x=1692048871;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hzWtAMNC0L4lyzQ7FGxQNRjkEwKe44KN2zqxoVuzOO8=;
-        b=qqX0vgPiMm84t5ThvP+0XcL3ZOYvc0eCo/OxU0jRX/eNMqkDJizlUtVayos/w3Po2n
-         B4WjBXJSSztZXWQVLx9ik9Aw4DrOsBVyhI0/RxHu7ZDR6KXGKcrBAzVhlgrfwSwFggyC
-         6B0hvgki7FhqXUs7BR4WRQuiVW6GrMpQeAiXF1+hR6V7OYdKb0DqGNKzJBHtnhXDqmH9
-         cRW5m640h9bxSZlZu+A/rWKXAJyUTaCyrw0/yi6gxB3dOnfE2OSEDF+8A370brv5B7pZ
-         DZ9Z+5AQgC2TwjBvt1sKjQ0ZIIXyppRLF5W/KdfBLrcwlCewmS88LKf2NU1jg8578j6C
-         T1HQ==
+        d=google.com; s=20221208; t=1691447970; x=1692052770;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3DuceRjdSEdbMp6ggj5mboyou/rlu/H4NAR6skBR5nU=;
+        b=s/jC9Qn9A/UYXsXXwqrZh8hD4TDTCdeUMMW9w7cHS1SqIdQf7KA/Tc1KJCo9aDHCjI
+         VAk0KqegObeMJ2yhccQDX6ZYrjrvZqqCqY2K5p+DkOmU00QQn25CwYFzuS0cAl75IbkG
+         VdpO/bNNU27ZtaTtkHot+pb0bREwXnbI+03Xmuh5cqySE/FPNWn46SFAvt8xua1edjLi
+         vdSe3bk4TnLM8GEJKxLGbTMoE2HNdsWdYT8BSODb1p6dU7Oru2RDofm4vLmanupLZywX
+         +MkVUYEO7VEuR20OFL4gIz7glz9bOrosaQCrXVbmX/D98iZULtVU0qn3xP6FvcS74v8Q
+         vp1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691444071; x=1692048871;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hzWtAMNC0L4lyzQ7FGxQNRjkEwKe44KN2zqxoVuzOO8=;
-        b=Eh/ajxbsXkCBa5fSAcO6NL/IiieVHhOIto8cAt4rZJomxUbXLpfhM+M0YesOTlIQED
-         N4MYK9XIuBY3qvgEHVjAhZqfUAgiEKN73kSiNXY8dziA1nbqbwLPU0cn057QbSbwMdrT
-         l3z3v549viJRXMVXKZpfbWG9IMfzdsmSRQ3oL9j7te4NChA1fvErFrqG7W6Cz7BrkKvJ
-         mhjtXIqDT3WZ1OjBNsGZfcde3i73+ip7/bCoqYna7evnppp5JiPqTB1OJSCPo95e/IDF
-         6/2HGn9EmxsF8BFr8fa4am5jxGQ69/7HAP1TWHruPZ+4ERG7nxOd8UXxRAhH/nGakQFN
-         gANg==
-X-Gm-Message-State: AOJu0YycXKU74+Rt4Vtqoqy+4/zZs9Xya1UiiUpHQiqL1Wlo3J2CHCP5
-        2eAFl8+R6rcUF2ZiqTD1h3BsRqyfAecpL9Y6O1HOjQ==
-X-Google-Smtp-Source: AGHT+IFq7JW+oeyiuswmC0CMIAKsZ11NDKMqTQZA2MgHpz5f8oh5JmCzMvySA2Y9k3dJxCkaUasvvg==
-X-Received: by 2002:a0d:d549:0:b0:584:1914:d2 with SMTP id x70-20020a0dd549000000b00584191400d2mr12764528ywd.12.1691444069999;
-        Mon, 07 Aug 2023 14:34:29 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x5-20020a0dee05000000b0057087e7691bsm2970598ywe.56.2023.08.07.14.34.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 14:34:29 -0700 (PDT)
-Date:   Mon, 7 Aug 2023 17:34:28 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] branch: error message checking out a branch in use
-Message-ID: <ZNFjZD4ImMz2mnrT@nand.local>
-References: <7710c002-0832-d8f6-59b8-30119bd5efe6@gmail.com>
- <d217d15f-ddef-d9bf-07fa-464b4025ab3c@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d217d15f-ddef-d9bf-07fa-464b4025ab3c@gmail.com>
+        d=1e100.net; s=20221208; t=1691447970; x=1692052770;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3DuceRjdSEdbMp6ggj5mboyou/rlu/H4NAR6skBR5nU=;
+        b=LUTxjOR4yCadUKhCRek4t3CqE6C6fM0yrs2tvg0F2W+mo1KGi9p5Otm0ecU5AIVm6W
+         jL/m09eBT2QC5xIhpCOSSPvJTGOWT2v75eblvfPuIosxT/pU/R/pVgXM69iFyVldEp4o
+         jjrN9v221WmOtHKr8FA798i8VYT9eRnruFYF640p8nJXnQ9wNF3wmydR7txnJ7rKrbGa
+         tU631WP74y3YLLvsl6gm0sAZUCFujCrFdRM90Sd2yep4SE/4S+B/ai7Pe1X2DN/fAbGY
+         QfhwDsMIPEohISrHRF/PrR932u+rUHhvZXAspsg6OGrnKtzvqvn7OOYAsYowKYZrcIqw
+         A36g==
+X-Gm-Message-State: AOJu0YwpAGdvaxlsyfB2uHRb8SdCv4GK4SycPUVLanLWh8zBd++zGP3T
+        rA9V/6OCVpRqBlSUV+ZvmXG5FdqjGoOF9A==
+X-Google-Smtp-Source: AGHT+IHUFvbtVY+WO7bPTzj3/Az1ihxcCqacs+UHTA8m/ZnZDt0nHqoruCsg68RYzacUHS/6lF59uLJVzFDj6w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a81:b647:0:b0:577:619e:d3c9 with SMTP id
+ h7-20020a81b647000000b00577619ed3c9mr89822ywk.10.1691447970674; Mon, 07 Aug
+ 2023 15:39:30 -0700 (PDT)
+Date:   Mon, 07 Aug 2023 15:39:28 -0700
+In-Reply-To: <d023c297dcac0bb96f681dc1fc0116a649c2efec.1691211879.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+References: <pull.1563.git.1691211879.gitgitgadget@gmail.com> <d023c297dcac0bb96f681dc1fc0116a649c2efec.1691211879.git.gitgitgadget@gmail.com>
+Message-ID: <kl6l5y5qa34v.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 2/5] trailer: split process_input_file into separate pieces
+From:   Glen Choo <chooglen@google.com>
+To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Linus Arver <linusa@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 07, 2023 at 10:42:40PM +0200, Rubén Justo wrote:
-> Let's update the error message we show when the user tries to check out
-> a branch which is being used in another worktree, following the
-> guideline reasoned in 4970bedef2 (branch: update the message to refuse
-> touching a branch in-use, 2023-07-21).
->
-> Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> ---
->  branch.c                | 2 +-
->  t/t2400-worktree-add.sh | 3 ++-
->  t/t3400-rebase.sh       | 2 +-
->  3 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 3e4684f79f..98c199f7b7 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -838,7 +838,7 @@ void die_if_checked_out(const char *branch, int ignore_current_worktree)
->
->  		if (is_shared_symref(worktrees[i], "HEAD", branch)) {
->  			skip_prefix(branch, "refs/heads/", &branch);
-> -			die(_("'%s' is already checked out at '%s'"),
-> +			die(_("'%s' already used by worktree at '%s'"),
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I wonder if "'%s' is already used by ..." (with the additional "is"
-between the branch name and "already") would be clearer / more natural.
+> Currently, process_input_file does three things:
+>
+>     (1) parse the input string for trailers,
+>     (2) print text before the trailers, and
+>     (3) calculate the position of the input where the trailers end.
+>
+> Rename this function to parse_trailers(), and make it only do
+> (1).
 
-Thanks,
-Taylor
+Okay, process_input_file() is a very unhelpful name (What does it mean
+to "process a file"?). In contrast, parse_trailers() is more
+self-descriptive (It parses trailers into some appropriate format, so it
+shouldn't do things like print.) Makes sense.
+
+Is there some additional, unstated purpose behind this change besides
+"move things around for readability"? E.g. do you intend to move
+parse_trailers() to a future trailer parsing library? If so, that would
+be useful context to evaluate the goodness of this split.
+
+> The caller of this function, process_trailers, becomes responsible
+> for (2) and (3). These items belong inside process_trailers because they
+> are both concerned with printing the surrounding text around
+> trailers (which is already one of the immediate concerns of
+> process_trailers).
+
+I agree that (2) doesn't belong in parse_trailers(). OTOH, (3) sounds
+like something that belongs in parse_trailers() - you have to parse
+trailers in order to tell where the trailers start and end, so it makes
+sense for the parsing function to give those values.
+
+> diff --git a/trailer.c b/trailer.c
+> index dff3fafe865..16fbba03d07 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -961,28 +961,23 @@ static void unfold_value(struct strbuf *val)
+>  	strbuf_release(&out);
+>  }
+>  
+> -static size_t process_input_file(FILE *outfile,
+> -				 const char *str,
+> -				 struct list_head *head,
+> -				 const struct process_trailer_options *opts)
+> +/*
+> + * Parse trailers in "str" and populate the "head" linked list structure.
+> + */
+> +static void parse_trailers(struct trailer_info *info,
+
+"info" is an out parameter, and IIRC we typically put out parameters
+towards the end. I didn't find a callout in CodingGuidelines, though, so
+idk if this is an ironclad rule or not.
+
+> +			     const char *str,
+> +			     struct list_head *head,
+> +			     const struct process_trailer_options *opts)
+>  {
+> -	struct trailer_info info;
+>  	struct strbuf tok = STRBUF_INIT;
+>  	struct strbuf val = STRBUF_INIT;
+>  	size_t i;
+>  
+> -	trailer_info_get(&info, str, opts);
+> -
+> -	/* Print lines before the trailers as is */
+> -	if (!opts->only_trailers)
+> -		fwrite(str, 1, info.trailer_start - str, outfile);
+
+We no longer fwrite the contents before the trailer, okay.
+
+> +	trailer_info_get(info, str, opts);
+
+This is where we actually get the start and end of trailers, and each
+trailer string. This is parsing out the trailers from a string, so what
+other parsing is left? Reading ahead shows that we're actually parsing
+the trailer string into a "struct trailer_item". Okay, so this function
+is basically a wrapper around trailer_info_get() that also "returns" the
+parsed trailer_items.
+
+> -	if (!opts->only_trailers && !info.blank_line_before_trailer)
+> -		fprintf(outfile, "\n");
+> -
+
+So we don't print the trailing line. Also makes sense.
+
+> @@ -1003,9 +998,7 @@ static size_t process_input_file(FILE *outfile,
+>  		}
+>  	}
+>  
+> -	trailer_info_release(&info);
+> -
+> -	return info.trailer_end - str;
+> +	trailer_info_release(info);
+>  }
+>  
+
+Even though "info" is a pointer passed into this function, we are
+_release-ing it. This is not an umabiguously good change, IMO. Before,
+"info" was never used outside of this function, so we should obviously
+release it before returning. However, now that "info" is an out
+parameter, we should be more careful about releasing it. I don't think
+it's obvious that the caller will see the right values for
+info.trailer_end and info.trailer_start, but free()-d values for
+info.trailers, and a meaningless value for info.trailer_nr (since the
+items were free()-d).
+
+I think it might be better to update the comment on parse_trailers()
+like so:
+
+  /*
+   * Parse trailers in "str", populating the trailer info and "head"
+   * linked list structure.
+   */
+
+and make it the caller's responsibility to call trailer_info_release().
+We could move this call to where we "free_all(head)".
+
+>  static void free_all(struct list_head *head)
+> @@ -1054,6 +1047,7 @@ void process_trailers(const char *file,
+>  {
+>  	LIST_HEAD(head);
+>  	struct strbuf sb = STRBUF_INIT;
+> +	struct trailer_info info;
+>  	size_t trailer_end;
+>  	FILE *outfile = stdout;
+>  
+> @@ -1064,8 +1058,16 @@ void process_trailers(const char *file,
+>  	if (opts->in_place)
+>  		outfile = create_in_place_tempfile(file);
+
+Thinking out loud, should we move the creation of outfile next to where
+we first use it?
+
+> +	parse_trailers(&info, sb.buf, &head, opts);
+> +	trailer_end = info.trailer_end - sb.buf;
+> +
+>  	/* Print the lines before the trailers */
+> -	trailer_end = process_input_file(outfile, sb.buf, &head, opts);
+> +	if (!opts->only_trailers)
+> +		fwrite(sb.buf, 1, info.trailer_start - sb.buf, outfile);
+
+I'm not sure if it is an unambiguously good change for the caller to
+learn how to compute the start and end of the trailer sections by doing
+pointer arithmetic, but I guess format_trailer_info() does this anyway,
+so your proposal to move (3) outside of the parse_trailers() makes
+sense.
+
+It feels a bit non-obvious that trailer_start and trailer_end are
+pointing inside the input string. I wonder if we should just return the
+_start and _end offsets directly instead of returning pointers. I.e.:
+
+   struct trailer_info {
+     int blank_line_before_trailer;
+ -  /*
+ -   * Pointers to the start and end of the trailer block found. If there
+ -   * is no trailer block found, these 2 pointers point to the end of the
+ -   * input string.
+ -   */
+ -   const char *trailer_start, *trailer_end;
+ +   /* Offsets to the trailer block start and end in the input string */
+ +   size_t *trailer_start, *trailer_end;
+
+Which makes their intended use fairly unambiguous. A quick grep suggests
+that in trailer.c, we're roughly as likely to use the pointer directly
+vs using it to do pointer arithmetic, so converging on one use might be
+a win for readability. The only other user outside of trailer.c is
+sequencer.c, which doesn't care about the return type - it only checks
+if there are trailers.
