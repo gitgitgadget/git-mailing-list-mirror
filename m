@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED82FC001B0
-	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 21:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AECD0C001B0
+	for <git@archiver.kernel.org>; Mon,  7 Aug 2023 21:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbjHGVAT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Aug 2023 17:00:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46068 "EHLO
+        id S229763AbjHGVJF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Aug 2023 17:09:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230342AbjHGVAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2023 17:00:02 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE3D1BE2
-        for <git@vger.kernel.org>; Mon,  7 Aug 2023 13:59:32 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31765792c7cso4311286f8f.0
-        for <git@vger.kernel.org>; Mon, 07 Aug 2023 13:59:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691441949; x=1692046749;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cawdj61DJT27s7IL9rFqkhzVQ3qimXABnaoW1KX0Sss=;
-        b=YIPb+sXlk9wYiyCQozqG+ccpGiXXGd0uAHkGXoJahlS9ceuiMTOTdSSnaCfOZxtY5W
-         D5Wtt4kzbqQSHyva6CBNZafqjuCS6Anj2l/RgfBt4+yvDOjdKvVX3Hm6f5+Z8ShfuPBg
-         tHVljcbcZJE0U+4G7YNxI8GVuyXOGHYGz2MuZwTOopttKMPk2BXF0ujJ06xa4nZ61dZE
-         Q8EjIKXxYHtacQuxcXa0bc4FCap14NR/+PGNkKqvKlj27NS8CnB/NWpCmk1s/J31Lh8Z
-         Gli5N4Uo0oyGUq5wzLjGRHmT+ylSmsB4Qstqsn/GK72BmP1u7YmPeEumPr7AuFVhWEhn
-         GL7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691441949; x=1692046749;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cawdj61DJT27s7IL9rFqkhzVQ3qimXABnaoW1KX0Sss=;
-        b=Mot/4SOhPOYyMJTBtNttR4ojUMW+zdIm9g9MwXmdIlNCNzBkhyF6QFxmRt0wAyU5lj
-         3Aq9whzAg+fEGc8J/aA4bDqPdcJHzdvpBrmcwXfMKHhTVDkkb3HQxngq0KWikeJqV4O5
-         vaSxiTLkDiHW7W6ap89t7/QiuUzNqY7NITaBqiAYoDDmoCy/fQPNP/2WgJ8hEFbz70Qb
-         TyuD8nnjIKJafFN2gVLTxtjuwMHFwECfNIj/HbetLEfTql5D4lpsH55EJ6ialc/FHD4O
-         3vlfwoI2/Y5kcNB6G+2RrVEkTtVt4RYk+GAw+R67Tytme9I1gpuKbAfOpI23EmvQuZFW
-         niVw==
-X-Gm-Message-State: AOJu0YwVkVoyRpTSWsVl16uq+XE1O3jQem6Gycm7c6wMZynUGVkRO/Uz
-        hPnyYSq6S7Jdt37reAWA+pzw2wRxTXE=
-X-Google-Smtp-Source: AGHT+IHsxveSSd+sBDlY6RGgAaDtfxRFXyFAByEGpdkBTz9QvNcy33/MQN7OQXMtOBAhpRyFLqvtsA==
-X-Received: by 2002:adf:d4ce:0:b0:315:8f4f:81b8 with SMTP id w14-20020adfd4ce000000b003158f4f81b8mr7156294wrk.50.1691441949003;
-        Mon, 07 Aug 2023 13:59:09 -0700 (PDT)
-Received: from [192.168.2.52] (225.red-88-14-55.dynamicip.rima-tde.net. [88.14.55.225])
-        by smtp.gmail.com with ESMTPSA id h12-20020adff4cc000000b00314367cf43asm11426888wrp.106.2023.08.07.13.59.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 13:59:08 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Aug 2023, #01; Wed, 2)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqfs518gdh.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <870d6901-e1ea-98fb-96fc-fd568bd35f16@gmail.com>
-Date:   Mon, 7 Aug 2023 22:59:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229461AbjHGVJE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2023 17:09:04 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BD3AB6
+        for <git@vger.kernel.org>; Mon,  7 Aug 2023 14:09:03 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 52D651A717D;
+        Mon,  7 Aug 2023 17:09:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Fpi+aRRHKcyo
+        2k+0qDkzjugvaIAT02xva8ryCaWZrg0=; b=GDff0vruoEmJeedQNm17LWF4x3le
+        Bt+hL5hLpzwJXhguTVdDk6kuveFud6u7dY+I3G1ykxtlfkdKYm+zmqXy1vG5ESQU
+        +qqPZRhYvypl6iIxZB7A90OZ5lO3Tj7R9QX383tJNsV3B0hwToW+mWDlGkFkR9P1
+        Xe+E9Xh63VnL4cw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ADBD1A717C;
+        Mon,  7 Aug 2023 17:09:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF3ED1A717B;
+        Mon,  7 Aug 2023 17:09:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH] mailmap: change primary address for Glen Choo
+References: <pull.1561.git.git.1691433710768.gitgitgadget@gmail.com>
+Date:   Mon, 07 Aug 2023 14:09:00 -0700
+In-Reply-To: <pull.1561.git.git.1691433710768.gitgitgadget@gmail.com> (Glen
+        Choo via GitGitGadget's message of "Mon, 07 Aug 2023 18:41:50 +0000")
+Message-ID: <xmqq350ud0gj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqfs518gdh.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: A215B4BC-3566-11EE-ABDC-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/8/23 20:10, Junio C Hamano wrote:
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> * rj/status-bisect-while-rebase (2023-08-01) 1 commit
->  - status: fix branch shown when not only bisecting
-> 
->  "git status" is taught to show both the branch being bisected and
->  being rebased when both are in effect at the same time.
+>     As mentioned elsewhere, I will be leaving Google. I've enjoyed work=
+ing
+>     with so many folks here, so I'm sad that I won't have nearly as muc=
+h
+>     time to spend on Git. Nevertheless, I'll still pop in from time to =
+time,
+>     at least to fix the bugs bothering me the most :)
 
-Maybe this suggest that something has been added, but only fixed.
-
-Perhaps we can say something like:
-
-   "git status" was not showing accurate information when bisect and
-   other operation are in effect at the same time.
-
-> 
->  Needs review.
->  source: <48745298-f12b-8efb-4e48-90d2c22a8349@gmail.com>
+Will queue.  Don't be a stranger.
 
 Thanks.
+
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1=
+561%2Fchooglen%2Fpush-usmowlsllvks-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1561=
+/chooglen/push-usmowlsllvks-v1
+> Pull-Request: https://github.com/git/git/pull/1561
+>
+>  .mailmap | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/.mailmap b/.mailmap
+> index 733e047aa82..dc31d70b8c1 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -80,6 +80,7 @@ Frank Lichtenheld <frank@lichtenheld.de> <flichtenhel=
+d@astaro.com>
+>  Fredrik Kuivinen <frekui@gmail.com> <freku045@student.liu.se>
+>  Fr=C3=A9d=C3=A9ric Heitzmann <frederic.heitzmann@gmail.com>
+>  Garry Dolley <gdolley@ucla.edu> <gdolley@arpnetworks.com>
+> +Glen Choo <glencbz@gmail.com> <chooglen@google.com>
+>  Greg Price <price@mit.edu> <price@MIT.EDU>
+>  Greg Price <price@mit.edu> <price@ksplice.com>
+>  Heiko Voigt <hvoigt@hvoigt.net> <git-list@hvoigt.net>
+>
+> base-commit: cba07a324d2cda06dd7a7b35b4579f800de024aa
