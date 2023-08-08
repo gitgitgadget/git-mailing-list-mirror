@@ -2,97 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B85F9C001E0
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 21:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CCBC001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 22:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232142AbjHHVx7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 17:53:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50146 "EHLO
+        id S230154AbjHHWc2 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 8 Aug 2023 18:32:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbjHHVxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:53:47 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BE72108
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 14:53:08 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD8791A38FF;
-        Tue,  8 Aug 2023 17:53:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=EZs2TMqlVb+3
-        etdWEvg9n3YfCp4w+NBWZzMIdWkwtm8=; b=xUCBgKRhgv9Z3PDlayGA3Ux8bAhW
-        hmyHZgGPtOK3FcKPQV4WIxXfQ+JJKNI2NSBUHKyIJ9FVhLFX+d+dzOHU7iIhZusg
-        wEyheUuVzZsJGUd7goA1RYfKYOLNEewMAgR22tfJWYA2dZYtg4febqqenORB4C9y
-        67PvdMmyMMFKbDU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFC231A38FE;
-        Tue,  8 Aug 2023 17:53:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 65E641A38F9;
-        Tue,  8 Aug 2023 17:53:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Sebastian Thiel via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Sebastian Thiel <sebastian.thiel@icloud.com>
-Subject: Re: [PATCH] fix `git mv existing-dir non-existing-dir`*
-References: <pull.1561.git.1691506431114.gitgitgadget@gmail.com>
-        <xmqqy1il77wp.fsf@gitster.g>
-        <20230808184054.cjhiboifschkwuoz@tb-raspi4>
-Date:   Tue, 08 Aug 2023 14:53:05 -0700
-In-Reply-To: <20230808184054.cjhiboifschkwuoz@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 8 Aug 2023 20:40:54
- +0200")
-Message-ID: <xmqqmsz16w1q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S230081AbjHHWc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 18:32:27 -0400
+X-Greylist: delayed 444 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Aug 2023 15:32:21 PDT
+Received: from lxh-heta-043.node.capitar.com (lxh-heta-043.node.capitar.com [159.69.137.90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F0BDE
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 15:32:20 -0700 (PDT)
+Received: from lxh-heta-043.node.capitar.com (localhost [127.0.0.1])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPS id 5ECA7432FC
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 00:24:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTP id 0786D439C2
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 00:24:53 +0200 (CEST)
+Received: from lxh-heta-043.node.capitar.com ([127.0.0.1])
+        by localhost (eur-mail-proxy-p02.zt.capitar.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id B_88w2_ihJ4C for <git@vger.kernel.org>;
+        Wed,  9 Aug 2023 00:24:53 +0200 (CEST)
+Received: from [192.168.0.42] (unknown [186.189.151.69])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPSA id 3D8DC43A2B
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 00:24:52 +0200 (CEST)
+Message-ID: <676330b6-720a-e262-d583-9012e549bba7@opperschaap.net>
+Date:   Tue, 8 Aug 2023 18:24:49 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F4DCD4B2-3635-11EE-BA09-307A8E0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Content-Language: en-US
+To:     git@vger.kernel.org
+From:   Wesley <wesleys@opperschaap.net>
+Subject: git pre-push hook not getting the lines from STDIN
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=SPw8q9nH c=1 sm=1 tr=0
+        a=WkljmVdYkabdwxfqvArNOQ==:117 a=Hb/lXKkKiutk7skFILyYNg==:17
+        a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=p0WdMEafAAAA:8
+        a=MR9Ty-H2_0z2zyL-q1UA:9 a=QEXdDO2ut3YA:10
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> On Tue, Aug 08, 2023 at 10:36:54AM -0700, Junio C Hamano wrote:
->> "Sebastian Thiel via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > From: Sebastian Thiel <sebastian.thiel@icloud.com>
->> >
->
-> The patch makes sense to me, Junio's comments included.
->
->> Shouldn't it do something similar to
->>
->>     $ mv D1 D2
->
-> Couldn't resist to test it ;-)
->
-> The result would be
->  renamed: D1/file1 -> D2/D1/file1
+Hello list,
 
-Sure.  The lstat() in question is about the case where a different
-D2/D1 already exists, either as a file (which will definitely break
-as we do not and should not do unlink-and-then-mkdir) or as a
-directory (which may be OK in some cases to get a union of the
-contents in the original D1 and D2/D1, but in general not a good
-idea).
+I'm trying to figure out how I can check which branches are used in a 
+git push action while using the pre-push hook. In the man page the 
+following is mentioned:
 
-And in the latter case, i.e. when D2/D1 exists as a directory, we
-should not say "cannot move directory over file".  So, the check
-that does not care what the dest_dir's type is fine. but the error
-message is wrong.
+----<
 
-    "cannot move directory over file, source=3DD1, destination=3DD1/D2"
+Information about what is to be pushed is provided on the hook’s 
+standard input with lines of the form:
 
-is the message we would get in such a case.  We probably just should
-say
+<local ref> SP <local object name> SP <remote ref> SP <remote object 
+name> LF
 
-    "destination already exists, source=3DD1, destination=3DD1/D2"
+For instance, if the command `git push origin master:foreign` were run 
+the hook would receive a line like the following:
 
-or something like that.
+   refs/heads/master 67890 refs/heads/foreign 12345
+
+----<
+
+I cannot seem to reproduce this behavior with the push action. Only when 
+pushing to delete a remote branch or pushing to a new branch gets 
+created yields any success. I went as far back as git 2.9.0 (I can't 
+build older versions of git), to no avail. The line in the man page 
+seems to indicate git v1.8.2-rc0 was the first tag to have it (ec55559f).
+
+Could someone verify that what I am seeing is correct behavior or that 
+this is incorrect?
+
+As stated, I experience issues on git v2.9.0, 2.40.1 (Debian) and also 
+directly from source 2.42.0.rc0.26.g6ac35453d6.
+
+Thanks,
+Wesley
+
+
+----< a new branch
+
+$ git push origin test:fofofo
++.git/hooks/pre-push:5> remote=origin
++.git/hooks/pre-push:6> url=git@gitlab.com:gitlabmeme/somerepo.git
++.git/hooks/pre-push:8> success=128
++.git/hooks/pre-push:10> z40=0000000000000000000000000000000000000000
++.git/hooks/pre-push:11> IFS=' '
++.git/hooks/pre-push:13> read LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA
++.git/hooks/pre-push:15> echo refs/heads/test
+refs/heads/test
++.git/hooks/pre-push:16> echo 24a3b84a02937df6040fecce2e0620e16c823b36
+24a3b84a02937df6040fecce2e0620e16c823b36
++.git/hooks/pre-push:17> echo refs/heads/fofofo
+refs/heads/fofofo
++.git/hooks/pre-push:18> echo 0000000000000000000000000000000000000000
+0000000000000000000000000000000000000000
++.git/hooks/pre-push:21> [ refs/heads/test '=' 
+0000000000000000000000000000000000000000 ']'
++.git/hooks/pre-push:23> [ refs/heads/test '=' '(delete)' ']'
++.git/hooks/pre-push:30> exit 128
+
+----< deletion of a branch on the remote
+
+$ git push origin :development
++.git/hooks/pre-push:5> remote=origin
++.git/hooks/pre-push:6> url=git@gitlab.com:gitlabmeme/somerepo.git
++.git/hooks/pre-push:8> success=128
++.git/hooks/pre-push:10> z40=0000000000000000000000000000000000000000
++.git/hooks/pre-push:11> IFS=' '
++.git/hooks/pre-push:13> read LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA
++.git/hooks/pre-push:15> echo '(delete)'
+(delete)
++.git/hooks/pre-push:16> echo 0000000000000000000000000000000000000000
+0000000000000000000000000000000000000000
++.git/hooks/pre-push:17> echo refs/heads/development
+refs/heads/development
++.git/hooks/pre-push:18> echo 1762c08fd38c1137bbca27898df7c64ad846f877
+1762c08fd38c1137bbca27898df7c64ad846f877
++.git/hooks/pre-push:21> [ '(delete)' '=' 
+0000000000000000000000000000000000000000 ']'
++.git/hooks/pre-push:23> [ '(delete)' '=' '(delete)' ']'
++.git/hooks/pre-push:23> exit 128
+
+----<
+
+If I push to an existing repo on my remote I see this:
+$ git push origin HEAD:development
++.git/hooks/pre-push:5> remote=origin
++.git/hooks/pre-push:6> url=git@gitlab.com:gitlabmeme/somerepo.git
++.git/hooks/pre-push:8> success=128
++.git/hooks/pre-push:10> z40=0000000000000000000000000000000000000000
++.git/hooks/pre-push:11> IFS=' '
++.git/hooks/pre-push:13> read LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA
++.git/hooks/pre-push:15> echo
+
++.git/hooks/pre-push:16> echo
+
++.git/hooks/pre-push:17> echo
+
++.git/hooks/pre-push:18> echo
+
++.git/hooks/pre-push:21> [ '' '=' 
+0000000000000000000000000000000000000000 ']'
++.git/hooks/pre-push:23> [ '' '=' '(delete)' ']'
++.git/hooks/pre-push:28> exit 128
+
+----< The pre-push script
+
+#!/usr/bin/env zsh
+#
+set -x
+
+remote="$1"
+url="$2"
+
+success=128
+
+z40=0000000000000000000000000000000000000000
+IFS=' '
+
+read LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA
+
+echo $LOCAL_REF
+echo $LOCAL_SHA
+echo $REMOTE_REF
+echo $REMOTE_SHA
+
+# deletion of remote branch
+[ "$LOCAL_REF" = $z40 ] && exit $success
+# git 2.40 at least does not have $z40 as a delete
+[ "$LOCAL_REF" = '(delete)' ] && exit $success
+
+exit $success
+
+
+
+
+-- 
+Wesley
+
+Why not both?
