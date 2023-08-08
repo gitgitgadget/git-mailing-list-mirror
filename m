@@ -2,79 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A6C5C001B0
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 17:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A20D3C001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 17:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234371AbjHHRX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 13:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60478 "EHLO
+        id S234877AbjHHRjl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 13:39:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234366AbjHHRW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:22:58 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 288A67295
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:09:36 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98CC11AE6B3;
-        Tue,  8 Aug 2023 12:08:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H/1fwxCQQh4af2tEN+ANViHEX/gK+Mol97velt
-        KSjvY=; b=L9lieSS7esS2RakLIGGIOgACao+xdp+hwOOU7sArYFTCyZIx8/n/Iv
-        8USHvIuEB90IU613RFtMnf5yg5UdrIyN0XiyxJoer4aeSg0oHSMqQZ/9Ru5tUsKT
-        N5Ev44lMKTSQJlitTxb18RWDh1WF2afvVa0MeH8fS53CehORwaEJ0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C1601AE6B2;
-        Tue,  8 Aug 2023 12:08:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF8171AE6B1;
-        Tue,  8 Aug 2023 12:08:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3] send-email: prompt-dependent exit codes
-References: <xmqqttx1l3zp.fsf@gitster.g>
-        <20230807165850.2335067-1-oswald.buddenhagen@gmx.de>
-        <xmqqbkfifzry.fsf@gitster.g> <ZNIfDXJBqEVcHh+D@ugly>
-Date:   Tue, 08 Aug 2023 09:08:56 -0700
-In-Reply-To: <ZNIfDXJBqEVcHh+D@ugly> (Oswald Buddenhagen's message of "Tue, 8
-        Aug 2023 12:55:09 +0200")
-Message-ID: <xmqqmsz1a547.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S234814AbjHHRjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 13:39:08 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3009FE40
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:17:08 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-997c4107d62so815573966b.0
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:17:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691511376; x=1692116176;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v9t6C32HznlUUgTno0LonkMIkFpgkhi67juLyYVen+s=;
+        b=VAxUuBypOYkl96g52DLUIRsi7+71FUAEUR43beDUxktvY20E/IO5NloC2jQsKH4/UQ
+         HQJR58fqcGfrRNKCMu1LWUOiBdDxrnvw6OZQ+g/tt5V7OtfqyDBNYD0eGUUZEVQSspdZ
+         svNVNcI2896TwEGEZU9wDo0g++/ayPqWRwSu34sGBKOcP53Io3J8ObvcR/6DpmWBqD/n
+         yxy8AYAqqgofGuBkUTIH6XbUm9Vh5IXpZwtuMpzStGLJpZjFG0Lc6fN5PAkuJvFUPRbj
+         0fIIdovEEUtoH30BE8Bjz+/RzwewObRAOn8B1ZXs2zRnE+6CzUFQvXXVL0agcnPpLFd1
+         nj2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691511376; x=1692116176;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v9t6C32HznlUUgTno0LonkMIkFpgkhi67juLyYVen+s=;
+        b=FfF1+hSgRuyA+n39Z4T3Wiqm9sDSxXo9vFdKENbzwR+MJuXwHxrW66/5ceqPF0TZXO
+         srDq4Ssiq0iX/FSEjQaTfuJRcp/Pfv1cyKXag5WDBKAtSZp3BvElgrdoZUM2FjrRJm5F
+         zoyecsFckdUrBr6ZrPBnrg6gOPa43LvNrSwn6d/w4iGPG59Zb/lW3k4zZRBzF4aqIfNH
+         exw0/QVIj+8+aLX03CiW3MZCyjbgt/QVtzEnt5xqlHRUQJfKgDIBIdQQITNkrg+GpMlp
+         a0ij2wUPrU8Yb/Wp45jG0wQFbmyK1sEh/0m7Tixxw6xLv4KrtSPb24bcB5jKrl3/7mzL
+         hgbw==
+X-Gm-Message-State: AOJu0Yz7z5q1ovQINjEjlz3JIl81N4tWsHbIb+Q2vCuJkrMrCuKr7ZYZ
+        FKqf6KpWBfbhidLeLtSYqUWonNwwk78=
+X-Google-Smtp-Source: AGHT+IGhC02LSXhgkAFQVrXzUjcdPp9kVv3qfeRAOQy/5S1dll8hQQAJ1y+FKF0HFk9+kEO24dNbyw==
+X-Received: by 2002:a5d:560d:0:b0:317:6470:3271 with SMTP id l13-20020a5d560d000000b0031764703271mr7931611wrv.45.1691483192308;
+        Tue, 08 Aug 2023 01:26:32 -0700 (PDT)
+Received: from christian-Precision-5550.lan ([2001:861:2420:9770:9200:db98:c1c8:97d0])
+        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b003140fff4f75sm12845707wrz.17.2023.08.08.01.26.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Aug 2023 01:26:31 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v4 4/8] repack: refactor finding pack prefix
+Date:   Tue,  8 Aug 2023 10:26:04 +0200
+Message-ID: <20230808082608.582319-5-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.42.0.rc0.8.g76fac86b0e
+In-Reply-To: <20230808082608.582319-1-christian.couder@gmail.com>
+References: <20230724085909.3831831-1-christian.couder@gmail.com>
+ <20230808082608.582319-1-christian.couder@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E15B0736-3605-11EE-92C0-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+Create a new find_pack_prefix() to refactor code that handles finding
+the pack prefix from the packtmp and packdir global variables, as we are
+going to need this feature again in following commit.
 
-> i think it's acceptable to expect them to adjust to the (from
-> their POV) false positives,...
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org
+---
+ builtin/repack.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-You are not in the position to unilaterally declare "it isn't really
-worth it" or "it's acceptable to expect", though.  We know at least
-one person want the program to signal failure when interactively
-aborted.  We know that all other current users did not complain that
-the program did not signal failure when they interactively aborted,
-they may be they did not care enough, or they may be they are happy.
-You do not know the population and neither do I, but that is not the
-point.  This behaviour change is, even among Git developers, not a
-bugfix but is a new feature that not everybody would want to be
-subjected to.  It always is the safest to make such a backward
-incompatible change a strictly opt-in feature.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 96af2d1caf..4e40f4c04e 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -783,6 +783,17 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 	return finish_pack_objects_cmd(&cmd, names, local);
+ }
+ 
++static const char *find_pack_prefix(char *packdir, char *packtmp)
++{
++	const char *pack_prefix;
++	if (!skip_prefix(packtmp, packdir, &pack_prefix))
++		die(_("pack prefix %s does not begin with objdir %s"),
++		    packtmp, packdir);
++	if (*pack_prefix == '/')
++		pack_prefix++;
++	return pack_prefix;
++}
++
+ int cmd_repack(int argc, const char **argv, const char *prefix)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -1031,12 +1042,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		printf_ln(_("Nothing new to pack."));
+ 
+ 	if (pack_everything & PACK_CRUFT) {
+-		const char *pack_prefix;
+-		if (!skip_prefix(packtmp, packdir, &pack_prefix))
+-			die(_("pack prefix %s does not begin with objdir %s"),
+-			    packtmp, packdir);
+-		if (*pack_prefix == '/')
+-			pack_prefix++;
++		const char *pack_prefix = find_pack_prefix(packdir, packtmp);
+ 
+ 		if (!cruft_po_args.window)
+ 			cruft_po_args.window = po_args.window;
+-- 
+2.42.0.rc0.8.g76fac86b0e
 
->>Thanks.  Will queue but expect at least some documentation updates.
->>
-> do you want a followup, or a v4 to replace the commit?
-
-Replace it.  We do not want to do "oops that was lacking, here is an
-incremental update" for anything that is not in 'next'.
-
-Thanks.
