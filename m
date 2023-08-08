@@ -2,170 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D84DC001B0
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 19:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62051C04A6A
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 19:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235936AbjHHTqq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 15:46:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44962 "EHLO
+        id S232420AbjHHTvb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 15:51:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231937AbjHHTqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 15:46:17 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A6117BB5
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:50:49 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe4ad22eb0so40179395e9.3
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:50:49 -0700 (PDT)
+        with ESMTP id S233473AbjHHTvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 15:51:07 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82121FCC
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:58:03 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fe4ad22eb0so40237925e9.3
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691513448; x=1692118248;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/sHuMwZKgwQ09Q3mt51P2wqlDQHj/2uOS7bgDxjaTFM=;
-        b=ejpBDCMVUL46Ki+unhoaxF4u5DYLl+HOBPZCu0B82xGR5irl3+olhRS94o0ata+6+Y
-         3UTOqNRyeLwcf6Zp7/cJ+C+Id+Has9zn0kqoBoRkP031UzUVVR6nj5OEdDx08EwE4+/3
-         NZIg0C7tld0YpMIaFUo+ulLvy1UbjHMij1HPe+Ibw8CXtj7087q187zI3sWzk9ZIcwZ1
-         6eAPM9e//w5Xh2laDfQIyceTTZG4oeUkrMibREv0A8LFO8l0syf1fsSNIwdtyfEvLVI2
-         0noAeDHX+dBh3XmCcsbE6XJWQt0wUNuuoFBnaHyL9WjvpN7Rb4tnHZ9fYg1tTwHsldRk
-         HAjA==
+        d=gmail.com; s=20221208; t=1691513882; x=1692118682;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+1hS4z0JQ635nP20XNEGT8R2zz7AB5cmfUHv3f/pBtQ=;
+        b=gVQsEVeDM9kfSQ6NSThvWSGsIC3b0jE8Rrw2kPBF5/UZvz8sGqiLwTfdGjT5Lv4J1k
+         ok/bKB0tTcuLa/H5lo8qP43gZlmkc0yY887p6pw3zocJwpMqYHGoHcdOl3D+T7nblj2n
+         hTTPCUZZ+7NwBJgEsUQNWArYvTpwh1PizIjwFlgj0o81Yt1xhsdAaInWnLdnelWfbxwR
+         LYbtVKbH4lGDX873yyOWkOrLxXc6TcX71TJw1RnOy3z6Ay7yHy87iWzFUWGjWBX0qmkt
+         Iwl5Z5zNHzCpvk3mIM74Bs3O6QiQ62RMdYbws5IF314VI8W8GfNH8UFSd5Megt2WJYg2
+         jlWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691513448; x=1692118248;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/sHuMwZKgwQ09Q3mt51P2wqlDQHj/2uOS7bgDxjaTFM=;
-        b=K0v9diUIjdas5pLRGJ0YcfGqHzYgff4f/ozc6/zk/NeFtf6pjC9Iri9kWLH1FP+ece
-         ZpZ7aeY3bHUiqjbB8pNXcOENSUvm++tmQXJVEqyp9Tcu/KZul1oVroOnt9Yaw3i+jyPC
-         m2xg1l9LmvS5ZtIHv/sVzmlpXTJsN/LUgb0gFAzeMQzLLLyc1rs2aEzk9BB7eKDLSABY
-         M7+7xdy5/EcBIzvwG1q/dwxcx5PaUBdC26MLI3s1lleKYkJR1QS9B4l7fW5UQyYzFA4/
-         KSEXxoSHFGPU3DW6Zl3KL7BJJsyFQatYUHOi8NRbJhPleThHviQwMoGe1ouO02t1oxQs
-         ieIg==
-X-Gm-Message-State: AOJu0YwJ9ck4jamQZuFvyNqS7cI6tILqsuUKrSSja55Z9QxBtnQjwRPt
-        8+3GFE1LQmLcGKCBeeSLXLjqfvbMbn4=
-X-Google-Smtp-Source: AGHT+IFEMgyLGwZXYqgOMp2P1X9TYNDsQRvWjZX0+30obq2L5Ij1g3Kx3TPRiIJMMNpNYJLe+EJ0xg==
-X-Received: by 2002:a05:600c:2286:b0:3fa:8c68:4aba with SMTP id 6-20020a05600c228600b003fa8c684abamr9002140wmf.25.1691497154896;
-        Tue, 08 Aug 2023 05:19:14 -0700 (PDT)
-Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id z12-20020a05600c220c00b003fe1ca92151sm13616523wml.26.2023.08.08.05.19.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 05:19:14 -0700 (PDT)
-Message-ID: <1fd1f22d-e0db-04f3-7235-899b10909c7a@gmail.com>
-Date:   Tue, 8 Aug 2023 13:19:13 +0100
+        d=1e100.net; s=20221208; t=1691513882; x=1692118682;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+1hS4z0JQ635nP20XNEGT8R2zz7AB5cmfUHv3f/pBtQ=;
+        b=cWoG3W4RwwEvaRD4iSo3dne4kFNyHJm0QcMzhgQ8aAI436x1wZ25ShvvlA3IzPGuiz
+         GWp9gWTbxyRyy9LWN6etazypFDbnTH3yapqBJtQnBVsHuXZpEib1EZlP8oSm595DIHkg
+         ul3Uvb02YcRgAvZR9aroWi6RValz1TaS64z8xj79TMKwayLcAb/Vwy6jMvSftkquOEK4
+         6gXlXRKsdZ9mB9thd61xk6SqzFSEaFVdmk3L6UcsxhwptuNvpN94i8dv/vGBILE6wytF
+         7vQKgYqzoABDl57+OCWpmTVqV5Jnj/bcyu70Ac/9ZS7HGsOZcuVgJQAaiVd5GcwV/qqW
+         hFqw==
+X-Gm-Message-State: AOJu0Yz/IRiKJFsVObqXvNyNn10XvmssNiGE7regvCR+Eq0StcbYvkxj
+        BRgpPEcT1mr/z/Zk4O7SoEEQznBTy4g=
+X-Google-Smtp-Source: AGHT+IGkuEpt8tt4+vFjsJie0oFai51n2NFUX2VLbxq/fXonyfIZW1btFBXVXk3H8Zi3diDI6xRCKA==
+X-Received: by 2002:adf:ff8c:0:b0:317:df3e:13d with SMTP id j12-20020adfff8c000000b00317df3e013dmr5307799wrr.38.1691483189326;
+        Tue, 08 Aug 2023 01:26:29 -0700 (PDT)
+Received: from christian-Precision-5550.lan ([2001:861:2420:9770:9200:db98:c1c8:97d0])
+        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b003140fff4f75sm12845707wrz.17.2023.08.08.01.26.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Aug 2023 01:26:28 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 1/8] pack-objects: allow `--filter` without `--stdout`
+Date:   Tue,  8 Aug 2023 10:26:01 +0200
+Message-ID: <20230808082608.582319-2-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.42.0.rc0.8.g76fac86b0e
+In-Reply-To: <20230808082608.582319-1-christian.couder@gmail.com>
+References: <20230724085909.3831831-1-christian.couder@gmail.com>
+ <20230808082608.582319-1-christian.couder@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/5] trailer: separate public from internal portion of
- trailer_iterator
-Content-Language: en-US
-To:     Glen Choo <chooglen@google.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Linus Arver <linusa@google.com>
-References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
- <0bce4d4b0d5650edf477cbbcc9f4e467b7981426.1691211879.git.gitgitgadget@gmail.com>
- <kl6l8rama6yj.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <kl6l8rama6yj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/08/2023 22:16, Glen Choo wrote:
-> As someone who isn't that familiar with trailer code, and will have less
-> time for the ML soon, this is more of a quick drive-by..
+9535ce7337 (pack-objects: add list-objects filtering, 2017-11-21)
+taught `git pack-objects` to use `--filter`, but required the use of
+`--stdout` since a partial clone mechanism was not yet in place to
+handle missing objects. Since then, changes like 9e27beaa23
+(promisor-remote: implement promisor_remote_get_direct(), 2019-06-25)
+and others added support to dynamically fetch objects that were missing.
 
-This is a bit of a drive-by comment as well ...
+Even without a promisor remote, filtering out objects can also be useful
+if we can put the filtered out objects in a separate pack, and in this
+case it also makes sense for pack-objects to write the packfile directly
+to an actual file rather than on stdout.
 
-> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +#define private __private_to_trailer_c__do_not_use
->> +
->>   void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
->>   {
->>   	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
->>   	strbuf_init(&iter->key, 0);
->>   	strbuf_init(&iter->val, 0);
->>   	opts.no_divider = 1;
->> -	trailer_info_get(&iter->info, msg, &opts);
->> -	iter->cur = 0;
->> +	trailer_info_get(&iter->private.info, msg, &opts);
->> +	iter->private.cur = 0;
->>   }
->> --- a/trailer.h
->> +++ b/trailer.h
->> @@ -119,8 +119,10 @@ struct trailer_iterator {
->>   	struct strbuf val;
->> ...
->>   	/* private */
->> -	struct trailer_info info;
->> -	size_t cur;
->> +	struct {
->> +		struct trailer_info info;
->> +		size_t cur;
->> +	} __private_to_trailer_c__do_not_use;
->>   };
-> 
-> Interesting approach to "private members". I like that it's fairly
-> lightweight and clear. On the other hand, I think this will fail to
-> autocomplete on most people's development setups, and I don't think this
-> is worth the tradeoff.
-> 
-> This is the first instance of this I could find in the codebase. 
+Remove the `--stdout` requirement when using `--filter`, so that in a
+follow-up commit, repack can pass `--filter` to pack-objects to omit
+certain objects from the resulting packfile.
 
-We have something similar in unpack_trees.h see 576de3d9560 
-(unpack_trees: start splitting internal fields from public API, 
-2023-02-27). That adds an "internal" member to "sturct unpack_trees" of 
-type "struct unpack_trees_internal which seems to be a easier naming scheme.
+Signed-off-by: John Cai <johncai86@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-pack-objects.txt     | 4 ++--
+ builtin/pack-objects.c                 | 8 ++------
+ t/t5317-pack-objects-filter-objects.sh | 8 ++++++++
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-> I'm not
-> really opposed to having a new way of doing things, but it would be nice
-> for us to be consistent with how we handle private members. Other
-> approaches I've seen are:
-> 
-> - Using a "larger" struct to hold private members and "downcasting" for
->    public users (struct dir_iterator and struct dir_iterator_int). I
->    dislike this because I think this enables 'wrong' memory access too
->    easily.
-> 
->    (As an aside, if we really wanted to 'strictly' enforce privateness in
->    this patch, shouldn't we move the "#define private" into the .c file,
->    the way dir_iterator_int is in the .c file?)
-
-That #define is pretty ugly
-
-Another common scheme is to have an opaque pointer to the private struct 
-  in the public struct (aka pimpl idiom). The merge machinery uses this 
-- see merge-recursive.h. (I'm working on something similar for the 
-sequencer so we can change the internals without having to re-compile 
-everything that includes "sequencer.h")
-
-> - Prefixing private members with "__" (khash.h and other header-only
->    libraries use this at least, not sure if we have this in the 'main
->    tree'). I think this works pretty well most of the time.
-
-It is common but I think the C standard reserves names beginning with "__"
-
-> - Just marking private members with a comment. IMO this is good enough
->    the vast majority of the time - if something is private for a good
->    reason, it's unlikely to get used accidentally anyway. But properly
->    enforcing "privateness" is worthy goal anyway.
->
-> Personally, I think a decent tradeoff between enforcement and ergonomics
-> would be to use an inner struct like you do here, but name it something
-> autocomplete-friendly and obviously private, like "private" or
-> "_private".
-
-I agree, something like that would match the unpack_trees example
-
-> I suspect self-regulation and code review should be enough
-> to catch nearly all accidental uses of private members.
-
-Agreed
-
-Best Wishes
-
-Phillip
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index a9995a932c..583270a85f 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -298,8 +298,8 @@ So does `git bundle` (see linkgit:git-bundle[1]) when it creates a bundle.
+ 	nevertheless.
+ 
+ --filter=<filter-spec>::
+-	Requires `--stdout`.  Omits certain objects (usually blobs) from
+-	the resulting packfile.  See linkgit:git-rev-list[1] for valid
++	Omits certain objects (usually blobs) from the resulting
++	packfile.  See linkgit:git-rev-list[1] for valid
+ 	`<filter-spec>` forms.
+ 
+ --no-filter::
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d2a162d528..000ebec7ab 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4400,12 +4400,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+ 		unpack_unreachable_expiration = 0;
+ 
+-	if (filter_options.choice) {
+-		if (!pack_to_stdout)
+-			die(_("cannot use --filter without --stdout"));
+-		if (stdin_packs)
+-			die(_("cannot use --filter with --stdin-packs"));
+-	}
++	if (stdin_packs && filter_options.choice)
++		die(_("cannot use --filter with --stdin-packs"));
+ 
+ 	if (stdin_packs && use_internal_rev_list)
+ 		die(_("cannot use internal rev list with --stdin-packs"));
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index b26d476c64..2ff3eef9a3 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -53,6 +53,14 @@ test_expect_success 'verify blob:none packfile has no blobs' '
+ 	! grep blob verify_result
+ '
+ 
++test_expect_success 'verify blob:none packfile without --stdout' '
++	git -C r1 pack-objects --revs --filter=blob:none mypackname >packhash <<-EOF &&
++	HEAD
++	EOF
++	git -C r1 verify-pack -v "mypackname-$(cat packhash).pack" >verify_result &&
++	! grep blob verify_result
++'
++
+ test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
+ 	git -C r1 verify-pack -v ../all.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-- 
+2.42.0.rc0.8.g76fac86b0e
 
