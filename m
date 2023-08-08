@@ -2,102 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 838DCC001DB
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 18:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E35DC001DB
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 18:09:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231436AbjHHSC4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 14:02:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36428 "EHLO
+        id S232593AbjHHSJP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 14:09:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbjHHR4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:56:35 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4AE1AD0E
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:25:36 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fe32016bc8so49460655e9.1
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:25:36 -0700 (PDT)
+        with ESMTP id S231184AbjHHSIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 14:08:45 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4BF14D266
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:03:44 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so9589846e87.2
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 10:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691511926; x=1692116726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1691514222; x=1692119022;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CXJnWICzKp66TgEZklMk6jY4XWmG7TYYEflXRiTTLgI=;
-        b=BTe4JDGzN6rIzACaDyTarwbLZvT19fJZC5iqmNIv+LSOWn/L8HQd2I6vzyNYI2VeTU
-         GlOsLmLqSYrGk37oHBmWmmtWpkycwEqEWcnkaXlOfe2qOkq7fNv3hOCnITm98L+gm29V
-         0U8QPzoJ+jUdxDlbg4efdEI+pvhamwn5HTXT7uu5t9cX02f+g/wowQcl7qtEkavmg1xJ
-         AKd7KZK7gBW0K6OqXoouU5LhFfaC5kWjmxUe6coNp3Ev+6zZ6Jqrkzy39ayDSR7sJmJj
-         gyqtqNBaQNnPV01TjlIiJa9z4v9YfV/ufUYIA6a1dA0bIZ9gPP1UR2zczGzQYTAag+FH
-         j0CQ==
+        bh=4Pb+vWwXMqqqmf86jYz3oGWrw5ityY0GVtItR+o0DqM=;
+        b=jpjZxQJN/A54ctI2ONE1U/AAvXuQCoSmue6DdFUNXkzBjl2WDiwT9oyrh6BCheUkxZ
+         ONdZiKWMEa4mpxsCwP6sXTFawWdRmJrkEuop7NYy0AhIz3llw9gRKZgCNnoNblxH9MGI
+         kHGc60WsErV9SOo/YopY4/MiS5Mn0baTrgHFljBAcAxyEphnnzE6qZ7xNx6rrX/DsL16
+         qgrT1gtFXQg9cCOyTvG9+CXCRA7/QUfNqtKDwhglBq8ztdN3KAIGl5Jw8YgJaubtmYFp
+         O2i3JM7bk6WSEogUE4KWQTmX8TZ3EBc0mk3AVL+euIcn5mNRsSPtSen1Dhf/HKgTwBnZ
+         x6yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691511926; x=1692116726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1691514222; x=1692119022;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CXJnWICzKp66TgEZklMk6jY4XWmG7TYYEflXRiTTLgI=;
-        b=bBgCOLLBrZFGalBAFui2QxOMpbB/r3UhMu4NYXojsf/rp1tO3NcRUFCYFao2ycnoC5
-         +yPQGlRBaBrxKhdDM4rGFsEnClJtc4AvIBWTkXLkmFHv3Se6J5wQk7pNFH0zyurAbxL6
-         t2/D+VqZjQpAEtoxc+xEE63sJ4NRCWPVbCE/V6KVDAHDQt102tX9rbPsK5sZWoFn9m0W
-         BxIc+tIkOV0PuNsV8kanUJ/pM+DPYQ/aevxGuKCcl6OgixCc7Vfvt6dC44Vbr3XYKq4n
-         uz3PNd2iSqQhUQUmFIrlW6xcZ8T6KmHihWRw7CbgFi1yab377d9vA1ILgb8c8w5IEy8i
-         96Bg==
-X-Gm-Message-State: AOJu0YziUD4JMLlEcfK8gAZMPWlyLBBTUYpR5c0MC4qFaWEb05H1RWxt
-        WQBMcUpD7JACabtnbVhkMx19RgOWm/nYpbk8hlj+sAt5
-X-Google-Smtp-Source: AGHT+IGLE4T5SxdrulFxsSr7tLo5N/sNP72VvLQLQi1RRY4i+dvqk1+9icUrCGBo32VbwYGZ/9095P4U3szkumWQr78=
-X-Received: by 2002:a17:907:7607:b0:99b:c2d4:ddd8 with SMTP id
- jx7-20020a170907760700b0099bc2d4ddd8mr9778131ejc.31.1691483324360; Tue, 08
- Aug 2023 01:28:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230705060812.2865188-1-christian.couder@gmail.com>
- <20230724085909.3831831-1-christian.couder@gmail.com> <20230724085909.3831831-3-christian.couder@gmail.com>
- <ZMBQRRppsadqa8Ua@nand.local>
-In-Reply-To: <ZMBQRRppsadqa8Ua@nand.local>
+        bh=4Pb+vWwXMqqqmf86jYz3oGWrw5ityY0GVtItR+o0DqM=;
+        b=JXdLQcm8Ctsjaf2rEjikuX9Y7OiFhLe3SGNJcXBi/Teskh2uQstBoqHHe0cvBL0nAS
+         XLpgx3U/usCl6bC3i2VgGXu6ZxOF2NMaX1pg19qsFpQjmLmcZtnlEbyYXAXKh1BuT1ff
+         gLhCEb9ZaJAwtTF/nCW8AdqyMfVbxQvsfS4leZkB7vkSLQQDpsgtGv0XbRTAJ9jbIpS6
+         Pv6lSI0z4jduwCTAWu3B/fGca/0/4VlWmEWy+qS6BAgWpZK/a3iWJM//7mT02vRvQ+kX
+         2kZH7mO7DHQy3FDExKzQ2KKn7sFnLfczHBYzLMTw5Jj01aQT5hImaly4DlwZlqn4YADk
+         /NLA==
+X-Gm-Message-State: AOJu0YyFnTf0raVrUmu7IXX39AyCuV7UHdMIlSv8cDu/D6wv0hblPm57
+        wvv72VT/rnY9rUbEoiFmtIHUHOy6d7o=
+X-Google-Smtp-Source: AGHT+IEXLWxYvcMxlKmK4F2MPTzmztgMjzauE85JFerVQSGuzJRiG31fwJgcyOKx7z5YWGmoX32CpQ==
+X-Received: by 2002:adf:df09:0:b0:316:f5b1:98c with SMTP id y9-20020adfdf09000000b00316f5b1098cmr6868099wrl.24.1691483191016;
+        Tue, 08 Aug 2023 01:26:31 -0700 (PDT)
+Received: from christian-Precision-5550.lan ([2001:861:2420:9770:9200:db98:c1c8:97d0])
+        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b003140fff4f75sm12845707wrz.17.2023.08.08.01.26.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Aug 2023 01:26:30 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 8 Aug 2023 10:28:31 +0200
-Message-ID: <CAP8UFD3_XOtY-cetnO6sPSj3N-EpF+eq836Vv0v8jPDTSkVupA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/8] t/helper: add 'find-pack' test-tool
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>,
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v4 3/8] repack: refactor finishing pack-objects command
+Date:   Tue,  8 Aug 2023 10:26:03 +0200
+Message-ID: <20230808082608.582319-4-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.42.0.rc0.8.g76fac86b0e
+In-Reply-To: <20230808082608.582319-1-christian.couder@gmail.com>
+References: <20230724085909.3831831-1-christian.couder@gmail.com>
+ <20230808082608.582319-1-christian.couder@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 12:44=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
-e:
->
-> On Mon, Jul 24, 2023 at 10:59:03AM +0200, Christian Couder wrote:
-> > ---
-> >  Makefile                  |  1 +
-> >  t/helper/test-find-pack.c | 35 +++++++++++++++++++++++++++++++++++
-> >  t/helper/test-tool.c      |  1 +
-> >  t/helper/test-tool.h      |  1 +
-> >  4 files changed, 38 insertions(+)
-> >  create mode 100645 t/helper/test-find-pack.c
->
-> Everything that you wrote here seems reasonable to me, and the
-> implementation of the new test tool is very straightforward.
->
-> I'm pretty sure that everything here is correct, and we'll implicitly
-> test the behavior of the new helper in following patches.
->
-> That said, I think that it might be prudent here to "test the tests" and
-> write a simple test script that exercises this test helper over a more
-> trivial case. There is definitely prior art for testing our helpers
-> directly in the t00?? tests.
+Create a new finish_pack_objects_cmd() to refactor duplicated code
+that handles reading the packfile names from the output of a
+`git pack-objects` command and putting it into a string_list, as well as
+calling finish_command().
 
-Ok, I have written a new t0080-find-pack.sh test script for this in
-the version 4 I just sent.
+While at it, beautify a code comment a bit in the new function.
 
-I have also changed `test-tool find-pack` so that it now accepts a
-`--check-count <n>` option. This addresses some of your comments on
-another patch in the previous version of this series. As the code is
-now a bit more complex, there is more justification for a test script.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org
+---
+ builtin/repack.c | 70 +++++++++++++++++++++++-------------------------
+ 1 file changed, 33 insertions(+), 37 deletions(-)
 
-Thanks.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index aea5ca9d44..96af2d1caf 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -696,6 +696,36 @@ static void remove_redundant_bitmaps(struct string_list *include,
+ 	strbuf_release(&path);
+ }
+ 
++static int finish_pack_objects_cmd(struct child_process *cmd,
++				   struct string_list *names,
++				   int local)
++{
++	FILE *out;
++	struct strbuf line = STRBUF_INIT;
++
++	out = xfdopen(cmd->out, "r");
++	while (strbuf_getline_lf(&line, out) != EOF) {
++		struct string_list_item *item;
++
++		if (line.len != the_hash_algo->hexsz)
++			die(_("repack: Expecting full hex object ID lines only "
++			      "from pack-objects."));
++		/*
++		 * Avoid putting packs written outside of the repository in the
++		 * list of names.
++		 */
++		if (local) {
++			item = string_list_append(names, line.buf);
++			item->util = populate_pack_exts(line.buf);
++		}
++	}
++	fclose(out);
++
++	strbuf_release(&line);
++
++	return finish_command(cmd);
++}
++
+ static int write_cruft_pack(const struct pack_objects_args *args,
+ 			    const char *destination,
+ 			    const char *pack_prefix,
+@@ -705,9 +735,8 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 			    struct string_list *existing_kept_packs)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+-	struct strbuf line = STRBUF_INIT;
+ 	struct string_list_item *item;
+-	FILE *in, *out;
++	FILE *in;
+ 	int ret;
+ 	const char *scratch;
+ 	int local = skip_prefix(destination, packdir, &scratch);
+@@ -751,27 +780,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 		fprintf(in, "%s.pack\n", item->string);
+ 	fclose(in);
+ 
+-	out = xfdopen(cmd.out, "r");
+-	while (strbuf_getline_lf(&line, out) != EOF) {
+-		struct string_list_item *item;
+-
+-		if (line.len != the_hash_algo->hexsz)
+-			die(_("repack: Expecting full hex object ID lines only "
+-			      "from pack-objects."));
+-		/*
+-		 * avoid putting packs written outside of the repository in the
+-		 * list of names
+-		 */
+-		if (local) {
+-			item = string_list_append(names, line.buf);
+-			item->util = populate_pack_exts(line.buf);
+-		}
+-	}
+-	fclose(out);
+-
+-	strbuf_release(&line);
+-
+-	return finish_command(&cmd);
++	return finish_pack_objects_cmd(&cmd, names, local);
+ }
+ 
+ int cmd_repack(int argc, const char **argv, const char *prefix)
+@@ -782,10 +791,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list existing_nonkept_packs = STRING_LIST_INIT_DUP;
+ 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
+ 	struct pack_geometry *geometry = NULL;
+-	struct strbuf line = STRBUF_INIT;
+ 	struct tempfile *refs_snapshot = NULL;
+ 	int i, ext, ret;
+-	FILE *out;
+ 	int show_progress;
+ 
+ 	/* variables to be filled by option parsing */
+@@ -1016,18 +1023,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		fclose(in);
+ 	}
+ 
+-	out = xfdopen(cmd.out, "r");
+-	while (strbuf_getline_lf(&line, out) != EOF) {
+-		struct string_list_item *item;
+-
+-		if (line.len != the_hash_algo->hexsz)
+-			die(_("repack: Expecting full hex object ID lines only from pack-objects."));
+-		item = string_list_append(&names, line.buf);
+-		item->util = populate_pack_exts(item->string);
+-	}
+-	strbuf_release(&line);
+-	fclose(out);
+-	ret = finish_command(&cmd);
++	ret = finish_pack_objects_cmd(&cmd, &names, 1);
+ 	if (ret)
+ 		goto cleanup;
+ 
+-- 
+2.42.0.rc0.8.g76fac86b0e
+
