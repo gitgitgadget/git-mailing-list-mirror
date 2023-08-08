@@ -2,127 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21A7AC41513
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 16:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56898C04A6A
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 16:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbjHHQXI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 12:23:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40038 "EHLO
+        id S232768AbjHHQaG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 12:30:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232516AbjHHQVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 12:21:33 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FA099EC4
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 08:49:11 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ba0f27a4c2so87024201fa.2
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 08:49:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691509750; x=1692114550;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fqcf4bH5L14XhsigffFAT/vOVUmIRRqi8eO30ANGV9A=;
-        b=q0RWB1bGan9QnNHpox6tYqg0LaBbx/sm30+h4szmVWG5Hvxm4teOOcWQ8RBgcT9R8H
-         nUZWd3qkMncWZ/cFRbGOS314j6a2xunM4I5dEP/+i5q4D4KBs3FjvAdw4sHOxJDraLiB
-         CzjYPX3IGGdWJOgF6FppHVvqoi0aiZ0zVu1hYsfeWD1TsfjBcJlh4bjqkzHRz0xyaJrf
-         LSMEpdzrmXuSCEbkymlL8uSHJrDlO1QVy4yUyt/E4KT/06xL4BjTlRNyTU5asR2Vi3wM
-         LkEP6nymD/XvsjActAig2ll4lHEM/Q+CrLLpzcOE0KGbnwZjmfTVsH/no7Ei23u1utmP
-         gU2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691509750; x=1692114550;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fqcf4bH5L14XhsigffFAT/vOVUmIRRqi8eO30ANGV9A=;
-        b=g6Dh6I95lTx76vRB58OlSS8k4+OrTdeXGKD3WxLsjg9BMUef1W8Q5Q8eociEO7rK5u
-         OwrZ2TIaMf0Pq63yObOcgyf2H0ODQWwAMYYUImj7m80CNxVhDeooFplVQ231z650AoBF
-         B1MAItFSWd0VzcfgB1IiDIryg3E0RRcd0GoyChS28gDUEiy2UVjccHqMP22sxqrCMLKv
-         kSsgortXSnIxHtSobA/P+haXPCAWS/LQRJ9U6PWolFonungTvpJSOJmB15XHOQCju4rL
-         TsV/jX1c4hkFQadYoPpVgC0PvcLJ/kCBQe4mhPs4TnkC4Ng70w+6hSx7QYRVKuD7795c
-         eyNQ==
-X-Gm-Message-State: AOJu0YxoCwCjEZd3WCSIXvbTu+ESx1uLMYTjYdC6nweWmaIUyeAE9OdM
-        9u8Y6EW4SlZ7q7gTL7rc+9F1TRKozbo=
-X-Google-Smtp-Source: AGHT+IHmhTlGXz7O1A0CN6BDMagfl2JAflkDYMeEbpn3XonhtJkDd0yp+ZPwHrRcl4oyoRkIyCTs1w==
-X-Received: by 2002:a2e:80da:0:b0:2b9:cf90:ab9c with SMTP id r26-20020a2e80da000000b002b9cf90ab9cmr8901318ljg.8.1691488437048;
-        Tue, 08 Aug 2023 02:53:57 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id k18-20020a7bc412000000b003fbbe41fd78sm13313517wmi.10.2023.08.08.02.53.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 02:53:56 -0700 (PDT)
-Message-ID: <adc0cf80-c2e3-7af2-6d7f-036b95d27f80@gmail.com>
-Date:   Tue, 8 Aug 2023 10:53:56 +0100
+        with ESMTP id S232774AbjHHQ24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 12:28:56 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B8B11F7D
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 08:51:10 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5C1D127B47;
+        Tue,  8 Aug 2023 02:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=EvMBD/RLx4aP4SFCiXxN2QvxYUBGR1o6fpR7orZckh8=; b=tTCi
+        jWiLqY6M67VTyj+Pgb0VRyi4A9OGtk2vDTlUsYjUvEyPnh9G9Q+CZtTp3xHPpJki
+        AG64nfiX/n5tDrF9ELOVitrjh5MBRWbPAqKEueGYvMroyTH3/Cl2CNAPIN5zOH97
+        c9j7X4hcloE4mM18Mkng4j2NGq72E+JyTJ1hWgc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 54D9027B46;
+        Tue,  8 Aug 2023 02:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6CDC327B45;
+        Tue,  8 Aug 2023 02:33:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH RESEND] format-patch: add --description-file option
+References: <20230807170936.2336760-1-oswald.buddenhagen@gmx.de>
+Date:   Mon, 07 Aug 2023 23:33:49 -0700
+Message-ID: <xmqqttta9h6a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/6] maintenance: use random minute in systemd scheduler
-Content-Language: en-US
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, lenaic@lhuard.fr,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
- <14e340b75faaa66980479f42fec14c457aea5c74.1691434300.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <14e340b75faaa66980479f42fec14c457aea5c74.1691434300.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 89571AAC-35B5-11EE-95EA-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-On 07/08/2023 19:51, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> +	switch (schedule) {
-> +	case SCHEDULE_HOURLY:
-> +		schedule_pattern = xstrfmt("*-*-* *:%02d:00", minute);
-> +		break;
-> +
-> +	case SCHEDULE_DAILY:
-> +		schedule_pattern = xstrfmt("*-*-* 0:%02d:00", minute);
-> +		break;
-> +
-> +	case SCHEDULE_WEEKLY:
-> +		schedule_pattern = xstrfmt("Mon 0:%02d:00", minute);
-> +		break;
+> When formatting patches from a detached HEAD, there is no branch
+> description to derive the cover letter from. While with format-patch
+> one could post-process the generated file (which would be ugly enough),
+> scripting that with send-email would be *really* ugly. So add an option
+> to feed a description directly.
 
-This is not a new issue with this patch but we run the hourly job even 
-when we want to run the daily job or the weekly job and we run the daily 
-job when we want to run the weekly job.  maintenance_run_tasks() contains
+I think it makes sense to give the same set of features to those who
+run format-patch from a detached HEAD as to those who run it on a
+branch.  But personally I am not interested in a new feature that
+encourages use of send-email as a front-end to format-patch, which I
+consider is a misfeature, to make it easier for a set of patches
+without final proofreading to be sent out.
 
-	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0) {
-		/*
-		 * Another maintenance command is running.
-		 *
-		 * If --auto was provided, then it is likely due to a
-		 * recursive process stack. Do not report an error in
-		 * that case.
-		 */
-		if (!opts->auto_flag && !opts->quiet)
-			warning(_("lock file '%s' exists, skipping maintenance"),
-				lock_path);
-		free(lock_path);
-		return 0;
-	}
+Having said that, with my maintainer hat on, if we were to add a new
+feature to format-patch, it makes sense to allow it passed through
+send-email as well, since the (mis)feature already exists.
 
-So only one of these jobs will succeed. The cron entries are careful to 
-only run one job at a time, I think it would be worth doing the same 
-thing here. I think the using the following format strings would fix this.
+Please elaborate a bit more on the use case, though.
 
-Hourly: "Tue..Sun *-*-* 1..23:00:%02d"
-Daily:  "Tue..Sun *-*-* 00:00:%02d"
-Weekly: "Mon      *-*-* 00:00:%02d"
+ * "there is no branch description to derive from" makes a reader
+   wonder what the workflow would become if you could do "git branch
+   --add-description HEAD" to prepare a description, which would
+   imply that what is more desirable might be a feature enhancement
+   of the "branch" command, not "format-patch" or "send-email", to
+   allow you to describe what you are doing on the HEAD.
 
-It looks like the launchctl schedule has the same issue.
+ * Or does the end-user have a branch with description already
+   prepared, but for some untold reason the tip of the branch is
+   checked out on a detached HEAD?
 
-One thing I've been wondering about which is related to maintenance but 
-totally off-topic for this patch is that I think when auto maintenance 
-is enabled we stop automatically running "gc" so how do the reflogs get 
-expired?
+   If so, an obviously better alternative design would be to add a
+   feature that passes a branch name to format-patch and tell it to
+   pretend that the user is working on the branch.  That way, not
+   just "description", any feature that makes the command use "which
+   branch are we on?" information to enhance its behaviour we have
+   right now or we will add to the command will all benefit.  For
+   example, builtin/log.c::cmd_format_match() uses branch_name only
+   for calling read_branch_desc() via prepare_cover_text(), but it
+   is perfectly reasonable for us to make the range-diff default
+   derived based on the reflog of the "current branch" on, and
+   "pretend we were on this branch" may help you in such a case.
 
-Best Wishes
+In other words, if a particular solution proposed (or not proposed)
+is sensible or not heavily depends on how the end-user ends up
+running format-patch (and sending the output out) on a detached
+HEAD, and where does the end-user want to take the description
+information from. No, the answer to the latter is not "the file
+specified with the --description-file option"; that is not a valid
+answer.  The question is about how the contents of that file is
+populated and maintained.
 
-Phillip
+A feature to specify the template used when generating the cover
+letter may also work well for such a use case.  Among placeholders
+to specify where to place auto-generated things like:
+
+ - shortlog information
+ - other ways to list commits in the series (e.g. listing of commit
+   titles from "git log --oneline -r" may be more appropriate and
+   readable than "shortlog" output especially when the series was
+   written by multiple authors),
+ - diffstat
+
+there would be a placeholder to stuff branch description output (for
+the normal case), and in your detached HEAD use case, you'd prepare
+such a template without using branch description placeholder, but
+instead prepare the description in place in the template before
+running format-patch.  Which might actually be a better alternative.
+
+But all of that depends on what the expected use case to support is.
+
+Thanks.
