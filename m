@@ -2,117 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61911C001DB
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 18:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC888C04A6A
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 18:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234048AbjHHSxK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 14:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46162 "EHLO
+        id S233272AbjHHS42 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 14:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjHHSwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 14:52:55 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B2D157903
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:07:34 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B75D61AEDAC;
-        Tue,  8 Aug 2023 13:07:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6Y+olMLKM04894Qqec4ZOd6eR5qp8RKcreOblq
-        h17mY=; b=CBrBuTTlvjojitYbHwixxlMdXM/qu/366oiwdaOOloJk9Pf/DY3TX8
-        8Dq7fFLxIzYl5E1zDpJD/MigQj5Wso2MzMzunksJG/u3+rrTTOnMzLIa1CyhFzmx
-        pIYeAhUitwvYjINShQVmAzog1U9PDzcu0Ldvp9aY67stvUa2DIhDo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF9D61AEDAB;
-        Tue,  8 Aug 2023 13:07:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.168.215.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 23DE91AEDAA;
-        Tue,  8 Aug 2023 13:07:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul Watson <pwatson2@wellmed.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git bug report
-References: <MW2PR12MB25558D1886C4AA2A95A5FC618709A@MW2PR12MB2555.namprd12.prod.outlook.com>
-Date:   Tue, 08 Aug 2023 10:07:32 -0700
-In-Reply-To: <MW2PR12MB25558D1886C4AA2A95A5FC618709A@MW2PR12MB2555.namprd12.prod.outlook.com>
-        (Paul Watson's message of "Fri, 4 Aug 2023 16:46:23 +0000")
-Message-ID: <xmqqbkfh8nu3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S233802AbjHHS4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 14:56:06 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB1D165079
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:15:00 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id 46e09a7af769-6bd092cba5dso43473a34.1
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 10:15:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1691514900; x=1692119700;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eNW4ZM9zHslRXke0t9jCkf3ROqWpweRZJ3YXCC/bjpY=;
+        b=j2UJSwUR3Wb61yyGjyX/aHxCpnDD1n8+Ah4PAuEYmLDgSDMs/YtQR6V9mxYObMzFqx
+         MErxIkEv42HHrju4v8aAM86Lb0KLADOdLzuCa3abxZzXKxbzyycOq9stWJYI+/lpkUbc
+         WRwKtxp4O0cBsUZ9B4/UT6KoRsy+aXkKBdZIY0bgkBUw8EoVeTPbuNQDIUuwvmLTji7W
+         GfXXoXr+DBXLbhLGj8OMZ4W6xgd5EtOmW2baDCA9tEDnIUdOpLRGxzyo9Ob0dI54felH
+         HDXKPbW52xN3WFQbvznFeFY2iC+fiA6xaPQh6t2zoaSy2zlbmurRH+6R+pQ3YKnu01Y7
+         tCFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691514900; x=1692119700;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eNW4ZM9zHslRXke0t9jCkf3ROqWpweRZJ3YXCC/bjpY=;
+        b=LQlq4WjESFgTfX9P+EwGYhN6022Br1y3sPM+4tKo0GejD3UZRkGum3BDieukBmgpBi
+         mrelKIoecCujE2Qhwp8gKHKddEUF7QWC7Ii7bI7KbqFJnWKjtMh9PMHeV+mYhj8rXcuM
+         j1UhnWUDex48eUYp1S4qbXTIAgVSP737fJethBubhimMgN0A3orqL6Jql3Lmq1JsNLVt
+         giR9baHwLSwNuZZNgkdpvRp6DVYRRF8UrWQu4IO+KtOzpUN5fgOJx0s4YziNqAec6aHL
+         JqXh+uRnDh5leMjnWQIvKgyv1zaBfiriCcpwXzcyAaivmUHV/IH4tBYg5DAfLY5WcHPo
+         vRNQ==
+X-Gm-Message-State: AOJu0YzEX2ntvZugOLeOTYgbBfHl6Vz41+Znk8UMUUk8qOkoTG6hxOw5
+        rlDOJjPAVpdRvADDn4fWY/DQ
+X-Google-Smtp-Source: AGHT+IGeuN92YsLHs4jHmWbERB8VVWBZ3rytQ00Ul8ZBmQ3KVSgmeSNu6vzixyvAloFKwavyGDkeiw==
+X-Received: by 2002:a9d:785a:0:b0:6b7:3df3:bea6 with SMTP id c26-20020a9d785a000000b006b73df3bea6mr313345otm.14.1691514899943;
+        Tue, 08 Aug 2023 10:14:59 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:f1d2:c14b:5536:5192? ([2600:1700:e72:80a0:f1d2:c14b:5536:5192])
+        by smtp.gmail.com with ESMTPSA id s2-20020a9d7582000000b006b9b0a08fdasm6064003otk.59.2023.08.08.10.14.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Aug 2023 10:14:59 -0700 (PDT)
+Message-ID: <2e9b32a8-8905-4a1f-a75b-ca747ae95b96@github.com>
+Date:   Tue, 8 Aug 2023 13:14:57 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 10A2F938-360E-11EE-9D23-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] maintenance: use random minute in systemd scheduler
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+To:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, lenaic@lhuard.fr
+References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
+ <14e340b75faaa66980479f42fec14c457aea5c74.1691434300.git.gitgitgadget@gmail.com>
+ <3e254d61-b74a-f419-1a03-dbc557a9fe86@gmail.com>
+ <d247ce48-e2ba-4915-8d96-1fa2f693909d@github.com>
+In-Reply-To: <d247ce48-e2ba-4915-8d96-1fa2f693909d@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Watson <pwatson2@wellmed.net> writes:
+On 8/8/2023 1:06 PM, Derrick Stolee wrote:
+> On 8/8/2023 8:08 AM, Phillip Wood wrote:
+>> On 07/08/2023 19:51, Derrick Stolee via GitGitGadget wrote:
 
-> 9:43:55.45 2023-08-04  C:\src\t\scripts>TYPE .\t1.txt
-> this is t1.txt
+>>> +    char *local_timer_name = xstrfmt("git-maintenance@%s.timer", frequency);
+>>
+>> The "@" in the name signifies that it is a template unit which it isn't anymore so I think we want to change this to "git-maintenance-%s.timer"
+> 
+> I'll also take your SYSTEMD_UNIT_FORMAT macro suggestion to simplify things.
 
-> 9:43:57.92 2023-08-04  C:\src\t\scripts>TYPE .\t2.txt
-> this is t2.txt
->
-> 9:43:58.04 2023-08-04  C:\src\t\scripts>"C:\Program Files\Git\cmd\git.exe" diff --exit-code --no-index  --ignore-all-space  --shortstat  .\t1.txt .\t2.txt
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
-> 9:43:58.14 2023-08-04  C:\src\t\scripts>ECHO %ERRORLEVEL%
-> 0
+As I was checking things, it turns out that we _should_ keep the '@' symbol
+if only to make sure that our new schedule overwrites the old schedule.
 
-This is not specific to Windows port and it can be reproduced on a
-random Linux box.
+The alternative is that we manually try to delete the old schedule, but that
+feels like an inefficient way to do it, leaving some cruft around long-term.
 
-    $ echo one >1
-    $ echo two >2
-    $ git diff --no-index --shortstat 1 2; echo "<<$?>>"
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    <<1>>
-    $ git diff --no-index --shortstat -w 1 2; echo "<<$?>>"
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    <<0>>
+For completeness, here is what I did to check:
 
-Note that I omitted "--exit-code" in the above reproduction, as it
-is always used in the no-index mode.  There seems to be interaction
-with "-w" and not using "-p", as this is not limited to "--shortstat".
+$ systemctl --user list-timers
+NEXT                        LEFT        LAST                        PASSED       UNIT                         ACTIVATES                     
+Tue 2023-08-08 13:13:00 EDT 6s left     n/a                         n/a          git-maintenance-hourly.timer git-maintenance-hourly.service
+Tue 2023-08-08 13:50:00 EDT 37min left  Tue 2023-08-08 12:50:10 EDT 22min ago    git-maintenance@hourly.timer git-maintenance@hourly.service
+Wed 2023-08-09 00:13:00 EDT 11h left    n/a                         n/a          git-maintenance-daily.timer  git-maintenance-daily.service
+Wed 2023-08-09 00:50:00 EDT 11h left    Tue 2023-08-08 09:35:31 EDT 3h 37min ago git-maintenance@daily.timer  git-maintenance@daily.service
+Mon 2023-08-14 00:13:00 EDT 5 days left n/a                         n/a          git-maintenance-weekly.timer git-maintenance-weekly.service
+Mon 2023-08-14 00:50:00 EDT 5 days left Mon 2023-08-07 10:28:10 EDT 1 day 2h ago git-maintenance@weekly.timer git-maintenance@weekly.service
 
-    $ git diff --no-index -w --stat 1 2; echo "<<$?>>"
-     1 => 2 | 2 +-
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    <<0>>
+Do you have an alternative idea how to handle that?
 
-    $ git diff --no-index -w --numstat 1 2; echo "<<$?>>"
-    1	1	1 => 2
-    <<0>>
-
-All of the above that exits with 0 status will exit with 1 when -p
-is added to the command line.
-
-Also, this is not limited to the no-index mode.
-
-    $ echo one >1
-    $ git add 1
-    $ echo two >1
-    $ git diff --exit-code --numstat 1; echo "<<$?>>"
-    1	1	1
-    <<1>>
-    $ git diff --exit-code --numstat -w 1; echo "<<$?>>"
-    1	1	1
-    <<0>>
-
-So the minimum reproduction seems to be
-
-  * the diff machinery is asked to do --exit-code (no-index
-    implicitly does it)
-  * -w is used
-  * -p is *not* used
-  * to compare two different files.
-
-Thanks for a bug report.
-
-Patches welcome ;-)
+Thanks,
+-Stolee
