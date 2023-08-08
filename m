@@ -2,115 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00C9EC04A6A
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 16:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6888C001DB
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 16:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbjHHQji (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 12:39:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55714 "EHLO
+        id S233247AbjHHQkb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 12:40:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233019AbjHHQi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 12:38:58 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2F83A4E1
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 08:54:10 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id 46e09a7af769-6bd066b0fd4so586335a34.2
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 08:54:10 -0700 (PDT)
+        with ESMTP id S233056AbjHHQjj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 12:39:39 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7E96155AB
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 08:54:25 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fe2ba3e260so56003595e9.2
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 08:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1691510045; x=1692114845;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y85ZAZ2FDpwy7pap6Ngi7xsLGvu87UytqwjVgogx1YI=;
-        b=gB65eVzcQTzJ2uSiJ/h/ykCucKQcg++lLYZPXO86u8obObVMOSV8Rm/2liwIufK9tA
-         gZGo9arPSAyd0UqO2PemqlwC8y564uYg4Wqyep8vl7aY2dZpghEiWQR1SX8KScPge/UR
-         JsC1wXj7xu7vdO/TfmyqGJmtozAmBrHbZuUto/asozPNQ2jtNtKYgs5tI0jmT+JApXcT
-         yMmv2T0KwWahoAoXlaYE2tt6w8ppUNQjbYwolba/vFFG5wAnr6bmUVzOcpC0dPgFEEue
-         EeoFQnCS3gANj5qd4QhjupVi5ZODLufLIrd14y9x8125FokQrpQEXbUXIhEaCmaKe1Ur
-         0YQw==
+        d=gmail.com; s=20221208; t=1691510052; x=1692114852;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aoGiDKKenqFFf/pQxfI1aph1TMthOvBk967vjRNI2vQ=;
+        b=S/v8nqlllb1H4OaY7LPD67NyPe4K/M4RMWfy1pwionunH9ygULpk5qTDzvSNkRaz4R
+         +CL/1OuSCoZEVhDf05dMBENQY+xRfkIYJGj0fQPGXTb5KA7os3WxngItS7FGToS86Pdx
+         eSu5+UI0kjN4SgD/XyErXq1iaecGoLEQcjOFnbuE0aQAGU4fdmQrpzMKo+lVLi54K0Cx
+         1EkvOPhcWlSaMFzQomEfBrk17uShtADDJivqca/yP+mUeDfPZzcENqUy6OEmZMiTrX0l
+         eMwJljhWLGrw/dv1MQXevhWHeUdKT37H25srNONlxvCv+ota4wwmPmKO5AzcfpjaKt3s
+         2DIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691510045; x=1692114845;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y85ZAZ2FDpwy7pap6Ngi7xsLGvu87UytqwjVgogx1YI=;
-        b=dScEdqYTgo6Vgcc8yHTd6paK6Qu7mwcg0FLHQZdwkZDJOg3FeVTHmIr+clyO+sFSTy
-         slaEUoy4epCtrARvPup2TjQQ3bZYXYgu/tu7pmpm6t4hkZt5VO0x5Ep6fzx2/CZK6EhN
-         /VLoTHNvdt66tRQAQ/0u8AVfCPmP0IUGFj24bL5dRXD26imxl7uoVXXuUia5RccpwKQy
-         RsI1dKkxOMn+ZiPWdLa7jSyiTyCgSAkA3G3KNhBnQGq460VRj01Pg07C805mDQFYCnQG
-         M6B9nDvRMSCbCVQakDcDZQT+lG+qkBSQRz5RiHFDyMj/BKl+Vq89ok0A1meDv7dHptQJ
-         PQiw==
-X-Gm-Message-State: AOJu0YxfeRmahptjOQrsgYAdzSeiVJ7d/N/89oSooT/WHhdW+bo4Egz+
-        BLAmTZOUBGMXXrUuG9T8jW/f26/VTStBcQ5CpQ==
-X-Google-Smtp-Source: AGHT+IE6ENT6NVJKIkv7cGBJP1iUAVfgZ0qW+W2Qu0Tb1GdmuUPtXlUZjJ1uIXjzU5FHropN1OTSUg==
-X-Received: by 2002:aca:1314:0:b0:3a4:6691:9340 with SMTP id e20-20020aca1314000000b003a466919340mr11529458oii.41.1691502583963;
-        Tue, 08 Aug 2023 06:49:43 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:f1d2:c14b:5536:5192? ([2600:1700:e72:80a0:f1d2:c14b:5536:5192])
-        by smtp.gmail.com with ESMTPSA id bk2-20020a0568081a0200b003a7a34a4ed8sm1535104oib.33.2023.08.08.06.49.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 06:49:43 -0700 (PDT)
-Message-ID: <2db943c3-2ec2-4b7e-a161-a7c9b3f04d36@github.com>
-Date:   Tue, 8 Aug 2023 09:49:40 -0400
+        d=1e100.net; s=20221208; t=1691510052; x=1692114852;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aoGiDKKenqFFf/pQxfI1aph1TMthOvBk967vjRNI2vQ=;
+        b=PtGOWaaziOF97vxAAdD03qJ/IRHj4CmlhsjIg5LgMnp+fkgYoRkLMtULR1tOtTLPfn
+         +fW3ZHeeibfM2ax6e23XlfusIeuB2S8guC57g44NumxSrliKqWKnT8dwfRJwdUJ1wMPV
+         iQfXYzsoe94/La69e8EAdc3UVr6hIo+rxacB3f5DMM6WM2Opf0jZu4IjgsRXYQTCrDNg
+         8NB7tZJsv19mtxBwzDmWwoUF/xl2JbIzuurYqblUM+uDQ2uHe5svQxZ1f7GB/pguOnc7
+         /Z8ulXE7+0ZJwmKInb08ZuaCvQs99GmGdQxByf6yLiFkr1mjh6Dn2OzEj9lEyE/1kf7t
+         UYeg==
+X-Gm-Message-State: AOJu0YyoWQAcLscuJZbhyUzpA0ktXJNVHY+dC6DUuzox+xrGsdx/yHVq
+        c5Ko6UzcCe4v/WYb+H5XvIrCTdaIosnRPPbzDiapGyFfQso=
+X-Google-Smtp-Source: AGHT+IHYKfRpHrLK7CXUkF1YATmB2ZXFvKT2zepY4p7pk4F0o0HhZvYV6zpJM4Hg9dyJnyxZqsE/7cCH1Qo2qdzY678=
+X-Received: by 2002:aa7:cccd:0:b0:523:22d9:6c39 with SMTP id
+ y13-20020aa7cccd000000b0052322d96c39mr6623706edt.38.1691483917830; Tue, 08
+ Aug 2023 01:38:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] maintenance: use random minute in systemd scheduler
-To:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        sandals@crustytoothpaste.net, lenaic@lhuard.fr
-References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
- <14e340b75faaa66980479f42fec14c457aea5c74.1691434300.git.gitgitgadget@gmail.com>
- <ZNFinmsgDI7Upw60@nand.local>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ZNFinmsgDI7Upw60@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230705060812.2865188-1-christian.couder@gmail.com>
+ <20230724085909.3831831-1-christian.couder@gmail.com> <20230724085909.3831831-7-christian.couder@gmail.com>
+ <ZMBVzWoFQCUCSTwE@nand.local>
+In-Reply-To: <ZMBVzWoFQCUCSTwE@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 8 Aug 2023 10:38:26 +0200
+Message-ID: <CAP8UFD1Z3O5Wf8D9dYZdgPuOWgo7NbQsHAWifkPUGE=Eo1U7EQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/8] gc: add `gc.repackFilter` config option
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/7/2023 5:31 PM, Taylor Blau wrote:
-> On Mon, Aug 07, 2023 at 06:51:40PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Wed, Jul 26, 2023 at 1:07=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> On Mon, Jul 24, 2023 at 10:59:07AM +0200, Christian Couder wrote:
+> > A previous commit has implemented `git repack --filter=3D<filter-spec>`=
+ to
+> > allow users to filter out some objects from the main pack and move them
+> > into a new different pack.
+> >
+> > Users might want to perform such a cleanup regularly at the same time a=
+s
+> > they perform other repacks and cleanups, so as part of `git gc`.
+> >
+> > Let's allow them to configure a <filter-spec> for that purpose using a
+> > new gc.repackFilter config option.
+>
+> Makes sense.
+>
+> > Now when `git gc` will perform a repack with a <filter-spec> configured
+> > through this option and not empty, the repack process will be passed a
+> > corresponding `--filter=3D<filter-spec>` argument.
+>
+> I may be missing something, but what happens if the user has configured
+> gc.repackFilter, but passes additional filters over the command-line
+> arguments? I'm not sure whether these should be AND'd with the existing
+> filters in config, or if they should reset them to zero, or something
+> else.
 
->> Modify the template with a custom schedule in the 'OnCalendar' setting.
->> This schedule has some interesting differences from cron-like patterns,
->> but is relatively easy to figure out from context. The one that might be
->> confusing is that '*-*-*' is a date-based pattern, but this must be
->> omitted when using 'Mon' to signal that we care about the day of the
->> week. Monday is used since that matches the day used for the 'weekly'
->> schedule used previously.
-> 
-> I think the launchd version (which uses "0" for the day of the week)
-> runs on Sunday, if I remember correctly. I don't think that these two
-> necessarily need to run on the same day of the week when configured to
-> run weekly.
-> 
-> But I figured I'd raise the question in case you did mean for them to
-> both run on either Sunday or Monday.
+`git gc` doesn't recognize `--filter=3D<...>` arguments, only `git
+repack` is being teached to recognize it in this patch series. So I
+don't see how there could be multiple such arguments on the command
+line when `git gc` is used.
 
-I don't intend to change the day that is run as part of this change.
+Also in version 4 `git repack` can be passed many such arguments
+anyway. So I think we are good.
 
-I think all other schedulers run on Sunday, but systemd running on Monday
-is a particular detail of its "weekly" schedule.
+We could support multiple gc.repackFilter config options, but on the
+other hand using something like
+`combine:<filter1>+<filter2>+...<filterN>` should work, as the content
+of the option is passed as-is to the command line. So we can leave
+that improvement for later if people don't like the `combine:...` and
+are interested in it.
 
->> -static int systemd_timer_write_unit_templates(const char *exec_path)
->> +static int systemd_timer_write_unit_template(enum schedule_priority schedule,
->> +					     const char *exec_path,
->> +					     int minute)
->>  {
->>  	char *filename;
->>  	FILE *file;
->>  	const char *unit;
->> +	char *schedule_pattern = NULL;
-> 
-> You should be able to drop the NULL initialization, since you assign
-> this value unconditionally in the switch statement below (or BUG() on an
-> unknown schedule type).
+> Regardless, I think it would be beneficial to users if we spelled this
+> out in git-gc(1) instead of just this patch message here.
 
-Unfortunately, GCC complained about a possibly-unassigned value when I
-left this unset during development, so this actually is necessary for
-that compiler.
+I am not sure what should be spelled out. I think we refer people to
+the `repack --filter=3D...` option which in turn refers to the `rev-list
+--filter=3D...` which contains a good amount of documentation about how
+`--filter=3D...` works, including the fact that `combine:...` can be
+used and that multiple `--filter=3D...` options can be passed.
 
-Thanks,
--Stolee
+> > diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> > index 69509d0c11..5b89faf505 100755
+> > --- a/t/t6500-gc.sh
+> > +++ b/t/t6500-gc.sh
+> > @@ -202,6 +202,18 @@ test_expect_success 'one of gc.reflogExpire{Unreac=
+hable,}=3Dnever does not skip "e
+> >       grep -E "^trace: (built-in|exec|run_command): git reflog expire -=
+-" trace.out
+> >  '
+> >
+> > +test_expect_success 'gc.repackFilter launches repack with a filter' '
+> > +     test_when_finished "rm -rf bare.git" &&
+> > +     git clone --no-local --bare . bare.git &&
+> > +
+> > +     git -C bare.git -c gc.cruftPacks=3Dfalse gc &&
+> > +     test_stdout_line_count =3D 1 ls bare.git/objects/pack/*.pack &&
+> > +
+> > +     GIT_TRACE=3D$(pwd)/trace.out git -C bare.git -c gc.repackFilter=
+=3Dblob:none -c repack.writeBitmaps=3Dfalse -c gc.cruftPacks=3Dfalse gc &&
+>
+> Nit: can we wrap this across multiple lines?
+
+Done in version 4.
+
+> > +     test_stdout_line_count =3D 2 ls bare.git/objects/pack/*.pack &&
+> > +     grep -E "^trace: (built-in|exec|run_command): git repack .* --fil=
+ter=3Dblob:none ?.*" trace.out
+> > +'
+>
+> I think the `test_subcommand` helper might work here, and it would allow
+> you to avoid writing a long grep invocation.
+
+Other tests related to gc.reflogExpire above use a grep invocation
+similar to this one, while `test_subcommand` isn't used in the test
+script, so I think the grep invocation makes the whole script a bit
+easier to understand.
+
+Thanks.
