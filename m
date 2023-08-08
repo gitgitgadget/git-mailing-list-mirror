@@ -2,120 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A20D3C001B0
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 17:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD88EC001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 17:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234877AbjHHRjl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 13:39:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58424 "EHLO
+        id S229491AbjHHRm2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 13:42:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234814AbjHHRjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:39:08 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3009FE40
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:17:08 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-997c4107d62so815573966b.0
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:17:08 -0700 (PDT)
+        with ESMTP id S233161AbjHHRlb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 13:41:31 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18880238D8
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:18:18 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5234f2c6c1dso47857a12.1
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691511376; x=1692116176;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1691511461; x=1692116261;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v9t6C32HznlUUgTno0LonkMIkFpgkhi67juLyYVen+s=;
-        b=VAxUuBypOYkl96g52DLUIRsi7+71FUAEUR43beDUxktvY20E/IO5NloC2jQsKH4/UQ
-         HQJR58fqcGfrRNKCMu1LWUOiBdDxrnvw6OZQ+g/tt5V7OtfqyDBNYD0eGUUZEVQSspdZ
-         svNVNcI2896TwEGEZU9wDo0g++/ayPqWRwSu34sGBKOcP53Io3J8ObvcR/6DpmWBqD/n
-         yxy8AYAqqgofGuBkUTIH6XbUm9Vh5IXpZwtuMpzStGLJpZjFG0Lc6fN5PAkuJvFUPRbj
-         0fIIdovEEUtoH30BE8Bjz+/RzwewObRAOn8B1ZXs2zRnE+6CzUFQvXXVL0agcnPpLFd1
-         nj2Q==
+        bh=/6w6o9zMfLYVgyAlpfsQI1MZYWPaS+t1e34IEfNsna8=;
+        b=Hdr+wg4hBSdXi1eA8dZr1tPCti+foc7hOeCiKruFpu86klqmTbvsFtMvc14hhWSWsy
+         pbeqX+tYxVwXOHyQXct/Vkl0CcamcIaLo9HAJy9rt99QTDsNDvnN9qXgi4LWHcZ3RNV9
+         hpCfJnN6Hsz7YJktDyj8PFMKBW3hccyl3xWeaUObcF/HRg7mbp83ZVWrXH8AX2jVEvGN
+         CNBuzX//DZIvFgMvdpwqpdKxkSuN7k9ZoeyZcaP1vhh/7Z8oUf0+3u3RjAKbG8/W2w3/
+         lzBY+ICtXAngGBiv1Yx+BGxJev4VAQqtPbR5VH8qJdBv+fs5sdK+I16FDLiYNb/E+R7N
+         QOdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691511376; x=1692116176;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1691511461; x=1692116261;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=v9t6C32HznlUUgTno0LonkMIkFpgkhi67juLyYVen+s=;
-        b=FfF1+hSgRuyA+n39Z4T3Wiqm9sDSxXo9vFdKENbzwR+MJuXwHxrW66/5ceqPF0TZXO
-         srDq4Ssiq0iX/FSEjQaTfuJRcp/Pfv1cyKXag5WDBKAtSZp3BvElgrdoZUM2FjrRJm5F
-         zoyecsFckdUrBr6ZrPBnrg6gOPa43LvNrSwn6d/w4iGPG59Zb/lW3k4zZRBzF4aqIfNH
-         exw0/QVIj+8+aLX03CiW3MZCyjbgt/QVtzEnt5xqlHRUQJfKgDIBIdQQITNkrg+GpMlp
-         a0ij2wUPrU8Yb/Wp45jG0wQFbmyK1sEh/0m7Tixxw6xLv4KrtSPb24bcB5jKrl3/7mzL
-         hgbw==
-X-Gm-Message-State: AOJu0Yz7z5q1ovQINjEjlz3JIl81N4tWsHbIb+Q2vCuJkrMrCuKr7ZYZ
-        FKqf6KpWBfbhidLeLtSYqUWonNwwk78=
-X-Google-Smtp-Source: AGHT+IGhC02LSXhgkAFQVrXzUjcdPp9kVv3qfeRAOQy/5S1dll8hQQAJ1y+FKF0HFk9+kEO24dNbyw==
-X-Received: by 2002:a5d:560d:0:b0:317:6470:3271 with SMTP id l13-20020a5d560d000000b0031764703271mr7931611wrv.45.1691483192308;
-        Tue, 08 Aug 2023 01:26:32 -0700 (PDT)
-Received: from christian-Precision-5550.lan ([2001:861:2420:9770:9200:db98:c1c8:97d0])
-        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b003140fff4f75sm12845707wrz.17.2023.08.08.01.26.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 01:26:31 -0700 (PDT)
+        bh=/6w6o9zMfLYVgyAlpfsQI1MZYWPaS+t1e34IEfNsna8=;
+        b=HvQ9q+xdg0tGt/qZpPxq2tUnqkSpn4z8pIEZysUnO9FC9ynDcM55P1yMByjMOELkTS
+         Ji/tus5AJKxhbmznJq0ruY73WyreQva+dsKln6cwchwWk8yxPB/K3WhwbHp0Iaox34Dl
+         MBkkMkr1EsGfeuwKkR1ON+3gEenOcACN2OSrT068YQiCStnEHeckccVGgfRZMtyr18yr
+         bPvXjL9o7DPogUnHgQblQhuptyZZNpTGLYbBL6n+sKgcW5KWCR7Qf0kCkPrdWd0L6oh7
+         VuhUiKuhmt0/8ds2YBe4InBD41ChEEj3PuCqKnznU3YNIIZ/SDKn8B0VFpnA0SR5cNq5
+         x5jw==
+X-Gm-Message-State: AOJu0YwmFlPhcectb+G0QjlOfG6e1ik1kdD0uzj1/ynmqQ0MeIsu9RjF
+        Hu3ClY2sbPXjgftzN0xjr8ERPNjqFvLn2PFhmUv7TxTqv98=
+X-Google-Smtp-Source: AGHT+IHQiio2p7Ylfm0uAMOKBfRaps34kpuRdJ+/99SxrjnWno6k3yoF161nDtKTkbqlcC9eLiR+64JvJ2tAvhU1a3k=
+X-Received: by 2002:a17:906:3050:b0:99c:6692:7f76 with SMTP id
+ d16-20020a170906305000b0099c66927f76mr11244456ejd.16.1691484360806; Tue, 08
+ Aug 2023 01:46:00 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+ <20230705060812.2865188-1-christian.couder@gmail.com> <20230705060812.2865188-6-christian.couder@gmail.com>
+ <xmqqh6qi1byn.fsf@gitster.g> <CAP8UFD0aa+EZQ2Q=C2WjWrNL9desg-KLLjOKS8BUBR4DS1ytsQ@mail.gmail.com>
+ <xmqqila9p3j8.fsf@gitster.g> <CAP8UFD3b6gCog5P7WKzTuPQV2Lhf51=xO7ys+W7o0pGewJMcFg@mail.gmail.com>
+ <xmqqcz0fnbs8.fsf@gitster.g> <xmqqo7jzh9mh.fsf@gitster.g>
+In-Reply-To: <xmqqo7jzh9mh.fsf@gitster.g>
 From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
+Date:   Tue, 8 Aug 2023 10:45:48 +0200
+Message-ID: <CAP8UFD1eX8JMd91Say_sC7h_V08oRq32Wu9RM+SFtAQnhRPO2w@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] repack: add `--filter=<filter-spec>` option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 4/8] repack: refactor finding pack prefix
-Date:   Tue,  8 Aug 2023 10:26:04 +0200
-Message-ID: <20230808082608.582319-5-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.rc0.8.g76fac86b0e
-In-Reply-To: <20230808082608.582319-1-christian.couder@gmail.com>
-References: <20230724085909.3831831-1-christian.couder@gmail.com>
- <20230808082608.582319-1-christian.couder@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new find_pack_prefix() to refactor code that handles finding
-the pack prefix from the packtmp and packdir global variables, as we are
-going to need this feature again in following commit.
+On Wed, Jul 26, 2023 at 1:09=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Thanks for walking through the codepaths involved.  We are good
+> > then.
+>
+> Sorry, but not so fast.
+>
+> https://github.com/git/git/actions/runs/5661445152 (seen with this topic)
+> https://github.com/git/git/actions/runs/5662517690 (seen w/o this topic)
+>
+> The former fails t7700 in the linux-TEST-vars job, while the latter
+> passes the same job.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org
----
- builtin/repack.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+I think this was because I added the following test:
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 96af2d1caf..4e40f4c04e 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -783,6 +783,17 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 	return finish_pack_objects_cmd(&cmd, names, local);
- }
- 
-+static const char *find_pack_prefix(char *packdir, char *packtmp)
-+{
-+	const char *pack_prefix;
-+	if (!skip_prefix(packtmp, packdir, &pack_prefix))
-+		die(_("pack prefix %s does not begin with objdir %s"),
-+		    packtmp, packdir);
-+	if (*pack_prefix == '/')
-+		pack_prefix++;
-+	return pack_prefix;
-+}
++test_expect_success '--filter fails with --write-bitmap-index' '
++    test_must_fail git -C bare.git repack -a -d --write-bitmap-index \
++        --filter=3Dblob:none &&
 +
- int cmd_repack(int argc, const char **argv, const char *prefix)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -1031,12 +1042,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		printf_ln(_("Nothing new to pack."));
- 
- 	if (pack_everything & PACK_CRUFT) {
--		const char *pack_prefix;
--		if (!skip_prefix(packtmp, packdir, &pack_prefix))
--			die(_("pack prefix %s does not begin with objdir %s"),
--			    packtmp, packdir);
--		if (*pack_prefix == '/')
--			pack_prefix++;
-+		const char *pack_prefix = find_pack_prefix(packdir, packtmp);
- 
- 		if (!cruft_po_args.window)
- 			cruft_po_args.window = po_args.window;
--- 
-2.42.0.rc0.8.g76fac86b0e
++    git -C bare.git repack -a -d --no-write-bitmap-index \
++        --filter=3Dblob:none
++'
 
+which fails because in the linux-TEST-vars job the
+GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP env variable is set to 1 and
+this counteracts the `--write-bitmap-index` option.
+
+I have tried to fix it like this:
+
++test_expect_success '--filter fails with --write-bitmap-index' '
++    GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=3D0 test_must_fail git -C
+bare.git repack \
++        -a -d --write-bitmap-index --filter=3Dblob:none
++'
+
+but I haven't been able to check that this works on CI as all the job
+seems to fail these days before they even start:
+
+https://github.com/chriscool/git/actions/runs/5791544404/job/15696524676
+
+Thanks!
