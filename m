@@ -2,153 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62051C04A6A
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 19:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BEF6C04A6A
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 19:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232420AbjHHTvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 15:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37444 "EHLO
+        id S230422AbjHHTxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 15:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233473AbjHHTvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 15:51:07 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82121FCC
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:58:03 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fe4ad22eb0so40237925e9.3
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691513882; x=1692118682;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+1hS4z0JQ635nP20XNEGT8R2zz7AB5cmfUHv3f/pBtQ=;
-        b=gVQsEVeDM9kfSQ6NSThvWSGsIC3b0jE8Rrw2kPBF5/UZvz8sGqiLwTfdGjT5Lv4J1k
-         ok/bKB0tTcuLa/H5lo8qP43gZlmkc0yY887p6pw3zocJwpMqYHGoHcdOl3D+T7nblj2n
-         hTTPCUZZ+7NwBJgEsUQNWArYvTpwh1PizIjwFlgj0o81Yt1xhsdAaInWnLdnelWfbxwR
-         LYbtVKbH4lGDX873yyOWkOrLxXc6TcX71TJw1RnOy3z6Ay7yHy87iWzFUWGjWBX0qmkt
-         Iwl5Z5zNHzCpvk3mIM74Bs3O6QiQ62RMdYbws5IF314VI8W8GfNH8UFSd5Megt2WJYg2
-         jlWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691513882; x=1692118682;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+1hS4z0JQ635nP20XNEGT8R2zz7AB5cmfUHv3f/pBtQ=;
-        b=cWoG3W4RwwEvaRD4iSo3dne4kFNyHJm0QcMzhgQ8aAI436x1wZ25ShvvlA3IzPGuiz
-         GWp9gWTbxyRyy9LWN6etazypFDbnTH3yapqBJtQnBVsHuXZpEib1EZlP8oSm595DIHkg
-         ul3Uvb02YcRgAvZR9aroWi6RValz1TaS64z8xj79TMKwayLcAb/Vwy6jMvSftkquOEK4
-         6gXlXRKsdZ9mB9thd61xk6SqzFSEaFVdmk3L6UcsxhwptuNvpN94i8dv/vGBILE6wytF
-         7vQKgYqzoABDl57+OCWpmTVqV5Jnj/bcyu70Ac/9ZS7HGsOZcuVgJQAaiVd5GcwV/qqW
-         hFqw==
-X-Gm-Message-State: AOJu0Yz/IRiKJFsVObqXvNyNn10XvmssNiGE7regvCR+Eq0StcbYvkxj
-        BRgpPEcT1mr/z/Zk4O7SoEEQznBTy4g=
-X-Google-Smtp-Source: AGHT+IGkuEpt8tt4+vFjsJie0oFai51n2NFUX2VLbxq/fXonyfIZW1btFBXVXk3H8Zi3diDI6xRCKA==
-X-Received: by 2002:adf:ff8c:0:b0:317:df3e:13d with SMTP id j12-20020adfff8c000000b00317df3e013dmr5307799wrr.38.1691483189326;
-        Tue, 08 Aug 2023 01:26:29 -0700 (PDT)
-Received: from christian-Precision-5550.lan ([2001:861:2420:9770:9200:db98:c1c8:97d0])
-        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b003140fff4f75sm12845707wrz.17.2023.08.08.01.26.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 01:26:28 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 1/8] pack-objects: allow `--filter` without `--stdout`
-Date:   Tue,  8 Aug 2023 10:26:01 +0200
-Message-ID: <20230808082608.582319-2-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.rc0.8.g76fac86b0e
-In-Reply-To: <20230808082608.582319-1-christian.couder@gmail.com>
-References: <20230724085909.3831831-1-christian.couder@gmail.com>
- <20230808082608.582319-1-christian.couder@gmail.com>
+        with ESMTP id S229980AbjHHTxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 15:53:22 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88FE9C446
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 11:03:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1691517799; x=1692122599; i=tboegi@web.de;
+ bh=15Bu1GUGJbJPAZsvjnr2A26Jbne8XK6ScLTiV2MTjB0=;
+ h=X-UI-Sender-Class:Date:From:To:Subject:References:In-Reply-To;
+ b=VYySHTdHAdw4iY3IfZnCsNoA5oGd/0qj0rLbADjVI/Nj9exoM9f3WmCGygiOWV/yJqKTkwC
+ aWkO6NXGYlkdjhj3uNtMRnVrzIu+wJUBKmiDyK7a8HUjHEZXDPxYRYbM0aC8WfsdyGmufRjSv
+ CpoA/NmLGgyjJ3wt7dgih01sESJuVYadWOIwugjHwWiLmwveJZqHdh3yIxqL8zbWhTk/UqwkR
+ GlyPo9lsE9NDNrDuv33M44dkNMVi7Y/5wBho9ZGyIFgyK4xiuiiCy04kRU/1a4SGhuhz1fwVK
+ R/KSmB6U+m44oH2G6nw7hUA/9d+UH+rlFWp2Q1yZ9hFWrFF9337w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MtPrY-1pfKZN1Zkc-00vBf2; Tue, 08
+ Aug 2023 20:03:19 +0200
+Date:   Tue, 8 Aug 2023 20:03:18 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     git@vger.kernel.org, friebetill@gmail.com,
+        phillip.wood123@gmail.com
+Subject: Re: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
+Message-ID: <20230808180318.bu5nlbrnndpfkuxt@tb-raspi4>
+References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
+ <20230808172624.14205-1-tboegi@web.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230808172624.14205-1-tboegi@web.de>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:goQfPrKz2VB3gzBa/T0u4HxowTJqh3qfrilt/zCTxveN+2XFsbV
+ Tmlzs+7M7HhXUHeTS5mroP7rcZvouHX1z0T8D1q6h/M/yVB6rE5MET46ygm93TKF6khKOhi
+ ak5APv6ptFVXK4Kvi+K5pKv5mLLrvk0cECw3MxlW6nk2Jnq6VvEDiM6qk04ZMhAQ4P3XUF/
+ jY9Q+av07zUnlgQqhhWgQ==
+UI-OutboundReport: notjunk:1;M01:P0:J6GlvZnaxYI=;j1jgDzbz1Ydzs7JChbji3dW6OK4
+ BT4VEHA/nUMHMT3u0i2P7UZYaSXneHnlR9RwwkcaaZw6YBws30irb1jy4TZfXxaRIdJxfEnQK
+ p2CDgxUCvY2gS2n/27v8V4oOv4WVW48fxwkGeQPpOGeXjpnBJXarlwSy8Q75vGrdt6POYeYMm
+ jZnE27dAe3b4KT80n5Hfy1hjAVXdThlYkvz9iIliGlVtZQ7pEpDVwAK+StNhQafh8mjiQxpa0
+ oJO0ZLtQqeRn6hNLIlEX9KY1wrOB1pptUKjMdZPTNWFUgcuZgt+XU21bO2MWFfuxdYxYuMXWz
+ KsABUwQCiQGQYn6meiBmwI3H0Osq/l6xyzYDN+xKxuOxW4douumB1NW4oWiHnvJ/4hb/ui17k
+ qWHP4ZfqK04uQsh7NT0+VDcEwPsFMJNC/MsNPyV81EeQOT+zWV8LifSSwi9qeZFObD4/eV5YU
+ xBBtej92kOZ/EeELFYvb9w170ou0vJBXsMCvbDWtvcnqq7xlvP3aXGPgHPkr4py1rYmUGn2Kj
+ RGv/dj4wElNNbjZ+65MUTldap9kiy3Yu1lZfi3dG5m/FgqZ5z8SAn2+kq4jJwuyiCO7DLBBhM
+ +Soa2Etu/qCnzrt8YQDJZvBL1SNUkIqwH+raxOQHGAUGqqd1whw7iVsp5xhh6Aj25cf4nh1US
+ l2kptdtnbwaIK5fW8Uq5OedqVh9B3RNmpOpmWw6C+sRykNMORVuyu4pdKx3Q04jzyiDgx82EE
+ mklSk6B3+D87PUhuxjQjBu3Gy2zt1KV+aSe2NilfvNETh9VYCyx25HT8sTMLVN43yZb2vzNlk
+ CwL/gXiMijSzRPSbIVKfs+u/wJeHvEAwaEN1g3lRBnqwMw+LXQd3gMMyXv43t4rOeGM3JKBFX
+ gFmH+ntOqaKVG4TreDxv7rMqGmnNfOMYzjTOHaLIeEW9KfQ4bFGIGWxPeHaL6VkB+ZK/Ct/nk
+ 8tumztJcIkEtBGFLaBbwNrvKSzw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-9535ce7337 (pack-objects: add list-objects filtering, 2017-11-21)
-taught `git pack-objects` to use `--filter`, but required the use of
-`--stdout` since a partial clone mechanism was not yet in place to
-handle missing objects. Since then, changes like 9e27beaa23
-(promisor-remote: implement promisor_remote_get_direct(), 2019-06-25)
-and others added support to dynamically fetch objects that were missing.
+On Tue, Aug 08, 2023 at 07:26:24PM +0200, tboegi@web.de wrote:
+> From: Torsten B=F6gershausen <tboegi@web.de>
+> .
 
-Even without a promisor remote, filtering out objects can also be useful
-if we can put the filtered out objects in a separate pack, and in this
-case it also makes sense for pack-objects to write the packfile directly
-to an actual file rather than on stdout.
+... The following sequence leads to loss of work:
 
-Remove the `--stdout` requirement when using `--filter`, so that in a
-follow-up commit, repack can pass `--filter` to pack-objects to omit
-certain objects from the resulting packfile.
+I just realized that this breaks other tests:
+t1092-sparse-checkout-compatibility.sh not ok 17 - diff with renames and c=
+onflicts
+t1092-sparse-checkout-compatibility.sh not ok 18 - diff with directory/fil=
+e conflicts
 
-Signed-off-by: John Cai <johncai86@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-pack-objects.txt     | 4 ++--
- builtin/pack-objects.c                 | 8 ++------
- t/t5317-pack-objects-filter-objects.sh | 8 ++++++++
- 3 files changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index a9995a932c..583270a85f 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -298,8 +298,8 @@ So does `git bundle` (see linkgit:git-bundle[1]) when it creates a bundle.
- 	nevertheless.
- 
- --filter=<filter-spec>::
--	Requires `--stdout`.  Omits certain objects (usually blobs) from
--	the resulting packfile.  See linkgit:git-rev-list[1] for valid
-+	Omits certain objects (usually blobs) from the resulting
-+	packfile.  See linkgit:git-rev-list[1] for valid
- 	`<filter-spec>` forms.
- 
- --no-filter::
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d2a162d528..000ebec7ab 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4400,12 +4400,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
- 		unpack_unreachable_expiration = 0;
- 
--	if (filter_options.choice) {
--		if (!pack_to_stdout)
--			die(_("cannot use --filter without --stdout"));
--		if (stdin_packs)
--			die(_("cannot use --filter with --stdin-packs"));
--	}
-+	if (stdin_packs && filter_options.choice)
-+		die(_("cannot use --filter with --stdin-packs"));
- 
- 	if (stdin_packs && use_internal_rev_list)
- 		die(_("cannot use internal rev list with --stdin-packs"));
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-index b26d476c64..2ff3eef9a3 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -53,6 +53,14 @@ test_expect_success 'verify blob:none packfile has no blobs' '
- 	! grep blob verify_result
- '
- 
-+test_expect_success 'verify blob:none packfile without --stdout' '
-+	git -C r1 pack-objects --revs --filter=blob:none mypackname >packhash <<-EOF &&
-+	HEAD
-+	EOF
-+	git -C r1 verify-pack -v "mypackname-$(cat packhash).pack" >verify_result &&
-+	! grep blob verify_result
-+'
-+
- test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
- 	git -C r1 verify-pack -v ../all.pack >verify_result &&
- 	grep -E "commit|tree" verify_result |
--- 
-2.42.0.rc0.8.g76fac86b0e
-
+However, comments are welcome:
+Is it a good idea to create file called "filename.untracked" ?
