@@ -2,182 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2722C04A6A
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 17:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF3AAC001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 17:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234013AbjHHRMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 13:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46944 "EHLO
+        id S234179AbjHHRN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 13:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234161AbjHHRMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:12:05 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 134301BAC7
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:05:03 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b9c66e2e36so70583861fa.1
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 09:05:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691510696; x=1692115496;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=t/wAz4TgQLYxjAc9YYbMNSxwtUsNEuCjYyaZXBc7IDI=;
-        b=W3dk241zLmpIOG/2k3xBOsS/IsvocGGv7FWoaFaqRu00R5Fyb7xWASSIFmJOUIlEEh
-         B7V4ziWz/OxqPJe3Ymbis9XFQM40Dohe1kMNOq8r3mRpSvH4EhQ1VS31O0LOboiDpcfn
-         tKesCYvoFZMGkMoe6ofFlqqijFzgOWQ5vUOiJAqe93OHDcjFziObb0+LTPdHYU3OTg4N
-         U7SMdjafssAY/QYE//HaBbIQxhUZyDXiwP++cRoxNlYozuhUyCTPISM+QGDidWAOmU5X
-         d8/N1SaF+0rdKcDLyE62Ka1KGhIM7KvyFVFmhqCGp4R0sllySc+9cBura2frRwAWmkzp
-         V9jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691510696; x=1692115496;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=t/wAz4TgQLYxjAc9YYbMNSxwtUsNEuCjYyaZXBc7IDI=;
-        b=BccL3keivhi+aZLl6jMI4h28gKmrLblOXyy9+bkPz++ALeuG4rqzJjYUFgtLG0Qyn7
-         5K2Gn1k6mAr7qOVI5fY7CWCl0cYDGUoVOlP5TqagoPPzNvi+jdOdsI5amCsIEJ6gzFP0
-         zGspVO4DgaHxBWMq63aAHx/JQv+qmid7C9c3sbQwxavp2vA9JgahTqraaM/HPp1WkFmG
-         O3sBcesW1iGJEFGtvRQDm9JQX4jVFT2iJIWa0WbSMGBNFuOmZ3Lh87IUy3fArvATe3x5
-         hZ9jmt9PajErKsVO6C2MrlHZuUbIRU9Yp55aSG1t9vAuq6NHYe3WcEUtEIvPboI2TeWq
-         QUdw==
-X-Gm-Message-State: AOJu0YyZCV69ikinvUqjAzFgSeiZapCOBpUaJypOoPMWE+rz0lStP6Lw
-        WzHZGsKt6ERLHcLeImTKTccf+s8MXhg=
-X-Google-Smtp-Source: AGHT+IFSDPsohYIlocpt3qUiGqDeUN4l7rN/Moq4HXmf35z0JHLYGepP0FkDEPrp06DIcFEdYxEJWQ==
-X-Received: by 2002:a05:600c:8516:b0:3fe:21f1:aba8 with SMTP id gw22-20020a05600c851600b003fe21f1aba8mr8002792wmb.12.1691506432916;
-        Tue, 08 Aug 2023 07:53:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i12-20020a05600c290c00b003fbb618f7adsm13998706wmd.15.2023.08.08.07.53.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 07:53:52 -0700 (PDT)
-Message-ID: <pull.1561.git.1691506431114.gitgitgadget@gmail.com>
-From:   "Sebastian Thiel via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Aug 2023 14:53:50 +0000
-Subject: [PATCH] fix `git mv existing-dir non-existing-dir`*
-Fcc:    Sent
+        with ESMTP id S234132AbjHHRNJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 13:13:09 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6D81BCE
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 09:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1691510685; x=1692115485; i=johannes.schindelin@gmx.de;
+ bh=zXhCziIyw37V6UDwjlr5CRiubTE15IFLdhueQ8Tnht8=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=cToiMFTPkaWwqFBJ+ZBA9mxJnvxFsnDSA2nv3dO5inVEAggWjxqDDCN1PrLseD5Ekz8Wn6v
+ rmESfB5dEo24dEEdvbAlu5gl3TuwjbVXi0p3iR6G1Ba7kzGzvz8cSofgxMj5nI0unf/umJSzr
+ ebYFIMifvuXDlTdnYD5C47FDaZeXYL6L+nRdq24lvQrgo/FnDi8e/xK1lnu2VbzkN7k3lWDC8
+ z7lQbP8XhxRE6P4DjRtnS832P4xQaF1gBxgnzswiOXYhPFg4Gl/hX9rnz7ydTkzaykO5pFWbH
+ udlD0A1pfCGR65DbC1dSGLP8OP8GVGXYi5oxljU4VtxUmBArgSXg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az887-564.kyhrjabtieueri5x0cgfkhfc1a.bx.internal.cloudapp.net
+ ([20.39.63.96]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MYeMt-1qFvBA2bWl-00Vfv0; Tue, 08 Aug 2023 13:55:31 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.42.0-rc0
+Date:   Tue,  8 Aug 2023 11:55:29 +0000
+Message-ID: <20230808115529.4147-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.41.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sebastian Thiel <sebastian.thiel@icloud.com>,
-        Sebastian Thiel <sebastian.thiel@icloud.com>
+Fcc:    Sent
+X-Provags-ID: V03:K1:PS3TfG+8qgzKN8MDc7GSpIQyi4dyPdaXctnoEwDc2KgU1NHTc+v
+ DEIETwvyEjhdz8nyIkEh4ONAS+AS/jH0jLmLrQDbmTk7hxHk7KeTKMuDy++Y1FiHGlm+e69
+ HkpxDTWmd2tKWhNcH06J3h+E1WAuKJglQE0iCPT0Kiez9St8s7D/D4U+rf+FNY4eZwuZDV8
+ 2XaozIhJiqenGXWCXsz0Q==
+UI-OutboundReport: notjunk:1;M01:P0:u1NQiHDmho4=;wpfknPh3DKKuJQQ427LRiPSNy/y
+ dB4cTy9tlkgphS5VMTatABXpVQGvK2kOZRaX0kCN6Vlw3R59b2yt0xtkzwtd7Q7RzSvjQAKl3
+ M5KxCfBVdRW7ODQLevo7HTGDLgi92EcNEC1Wy9kxcyN6MAY4Dfaerf1mZ8uJLN+rObfPIId8o
+ 9SRhDoQTvJp+7aI3XEJJ1/KZxdCP9cgPkUIqba1hCvvxLoOJa80Cn8TLl0h+xuGrcTKZH1K73
+ i+bRHLuOd8JrL4ojPxTik/EGgV9HTyjUL5e6BcCwp7nAzFWn/f5xs+TWipEUDoXxPx9hAQ/Oy
+ 47iyU+L+UgBEv1z0TZ/5GKL0lkNZE9TRlhOi3m6MSQTdn0OER1u9BQhaqtjQr4EF2m2Rz13ih
+ MCHL2my0zDk5SDfHVz7N40MA2bcWctRAdIA1xdgVneAItpEtDncp60MDlFmfTzEYEJPT2zMlJ
+ aAbORuemSk3X7faXStKyV4bNlW37uebdUcXpLJAodzDVHGt/1rlJi2XobZMciYPeqO1CpRYwf
+ KbXTw/6nYfYYXuENic5m5ZuoO2zpTWRE89GgPrMYWi804mJ1w1p3q2UXG3amdJXcnUAVR2eZb
+ UTrs2OA3FtXwLf0K9XFdKLkU7UWETbxZOEleH/Tk14xGHz+9FcilA5pZskNR8ZGMNnpWlHwoM
+ l7J02S13SlI0dv2avGnPQoXMVAjCKo+eh43fHVpuAuwqbIM2nraBDAQF14Zz4iiLJM0bE54bc
+ nX5HTsmJ9/G3CZcAAMLNY8KXadq1r0+RYy62eSXTPF96gaB9mgCcWbleJ1oWNzXtdMoPWs/7s
+ N7MEdqtZi2yJSfaCPjCSJKi2Fi5n0vmG4CMihdB2aBl2wRrt0/zVP3S17Etnf8zZUfw1159o0
+ 9sKvIEuNGirvkMHjLpYeQbikY/mznEP3NQaZ+Wyw2WhKVYaJMPyuZmlhisoJ0Zit5TQqNwQzW
+ rwZOWA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sebastian Thiel <sebastian.thiel@icloud.com>
+Dear Git users,
 
-*in some environments.
+I hereby announce that Git for Windows 2.42.0-rc0 is available from:
 
-When moving a directory onto another with `gix mv`
-various checks are performed. One of of these
-validates that the destination is not an existing
-file.
+    https://github.com/git-for-windows/git/releases/tag/v2.42.0-rc0.windows.1
 
-When calling `lstat` on the destination path and
-it fails as the path doesn't exist, some
-environments seem to overwrite the passed  in
-`stat` memory nonetheless.
-(I observed this issue on debian 12 of x86_64,
-running on OrbStack on ARM, emulated with Rosetta)
+Changes since Git for Windows v2.41.0(3) (July 13th 2023)
 
-This would affect the code that followed as it
-would still acccess a now
-modified `st` structure, which now seems to
-contain uninitialized memory.
-`S_ISDIR(st_dir_mode)` would then typically
-return false causing the code to run into a bad
-case.
+New Features
 
-The fix avoids overwriting the existing `st`
-structure, providing an alternative that exists
-only for that purpose.
+  * Comes with Git v2.42.0-rc0.
+  * Comes with OpenSSH v9.3.P2.
+  * Comes with cURL v8.2.1.
+  * Comes with Git LFS v3.4.0.
+  * Comes with OpenSSL v3.1.2.
+  * Comes with Git Credential Manager v2.3.0.
 
-Note that this patch minimizes complexity instead of stack-size.
+Bug Fixes
 
-Signed-off-by: Sebastian Thiel <sebastian.thiel@icloud.com>
----
-    fix git mv existing-dir non-existing-dir*
-    
-    fix git mv existing-dir non-existing-dir*
-    
-    *in some environments.
-    
-    When moving a directory onto another with gix mv various checks are
-    performed. One of of these validates that the destination is not an
-    existing file.
-    
-    When calling lstat on the destination path and it fails as the path
-    doesn't exist, some environments seem to overwrite the passed in stat
-    memory nonetheless. (I observed this issue on debian 12 of x86_64,
-    running on OrbStack on ARM, emulated with Rosetta)
-    
-    This would affect the code that followed as it would still acccess a now
-    modified st structure, which now seems to contain uninitialized memory.
-    S_ISDIR(st_dir_mode) would then typically return false causing the code
-    to run into a bad case.
-    
-    The fix avoids overwriting the existing st structure, providing an
-    alternative that exists only for that purpose.
-    
-    ------------------------------------------------------------------------
-    
-    It's worth pointing out that the test demonstrates this case only if one
-    happens to execute it in one of the environments that happen to have an
-    lstat that writes into stat even on error. Thus it already worked for me
-    on MacOS, even without the patch applied, which matches my observation
-    that a certain script works there but doesn't work on the VM.
-    
-    Even though the patch now minimizes size, I can imagine one might
-    instead want to rather copy st.st_mode to protect only the relevant
-    field from being affected by potential rewrites of st later on.
+  * When init.defaultBranch is changed manually in the system config,
+    subsequent Git for Windows upgrades would overwrite that change.
+    This has been fixed.
+  * When running on a remote APFS share, Git would fail, which has been
+    fixed.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1561%2FByron%2Ffix-mv-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1561/Byron/fix-mv-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1561
+Git-2.42.0-rc0-64-bit.exe | b3e71e5ed580631c1eb08b3054e9e23d50c067c3b14dfd1991685d59c89436a1
+Git-2.42.0-rc0-32-bit.exe | dd17207fade13189f6c8b453f6e58d4581df90c418d9f955d7bd7c7fd2b8eaf4
+PortableGit-2.42.0-rc0-64-bit.7z.exe | d27891ada8bb801a18419b3365832e57935ed4cda73f2b341475b0fb7c9254aa
+PortableGit-2.42.0-rc0-32-bit.7z.exe | eec6b352552841736b4b5e8800f9727b814630792e568a8aa68d2f5c469d04ac
+MinGit-2.42.0-rc0-64-bit.zip | 298f6b2ec055a28d7818769dff1dc441fc831e8034fc1616102bf02e4b236416
+MinGit-2.42.0-rc0-32-bit.zip | db63872425e432bd98f842e6b1607c3ca16ee019db1af13b079afc2d0ee6a30b
+MinGit-2.42.0-rc0-busybox-64-bit.zip | cd6366db4f405da787806b2543bdd8a4173f6d9fa8d5eb9f34dcce69e1ad408c
+MinGit-2.42.0-rc0-busybox-32-bit.zip | edd98eeee5bb89e76d68d87cff3d76ef3696989038444935ccbf193d36ce8e91
+Git-2.42.0-rc0-64-bit.tar.bz2 | 6f28ffb0cd8438cd597eb5ff0b544e0290da8b705028911b3bb41f91ed08a26e
+Git-2.42.0-rc0-32-bit.tar.bz2 | 99dc31bcd4fc20885a29d7be85769c9226513048c1d90d865d6bd42b84dda316
 
- builtin/mv.c  | 4 ++--
- t/t7001-mv.sh | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index fa84fcb20d8..05e7156034e 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -184,7 +184,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	int src_dir_nr = 0, src_dir_alloc = 0;
- 	struct strbuf a_src_dir = STRBUF_INIT;
- 	enum update_mode *modes, dst_mode = 0;
--	struct stat st;
-+	struct stat st, dest_st;
- 	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
- 	struct lock_file lock_file = LOCK_INIT;
- 	struct cache_entry *ce;
-@@ -304,7 +304,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			goto act_on_entry;
- 		}
- 		if (S_ISDIR(st.st_mode)
--		    && lstat(dst, &st) == 0) {
-+		    && lstat(dst, &dest_st) == 0) {
- 			bad = _("cannot move directory over file");
- 			goto act_on_entry;
- 		}
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 898a9205328..9894bc45ee6 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -174,6 +174,12 @@ test_expect_success 'do not move directory over existing directory' '
- 	test_must_fail git mv path2 path0
- '
- 
-+test_expect_success 'rename directory to non-existing directory' '
-+	mkdir dir-a && touch dir-a/f &&
-+	git add dir-a &&
-+	git mv dir-a non-existing-dir
-+'
-+
- test_expect_success 'move into "."' '
- 	git mv path1/path2/ .
- '
-
-base-commit: 1b0a5129563ebe720330fdc8f5c6843d27641137
--- 
-gitgitgadget
+Ciao,
+Johannes
