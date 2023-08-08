@@ -2,297 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E8B0C41513
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 20:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81EDEC001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 20:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233296AbjHHUeM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 16:34:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37192 "EHLO
+        id S232545AbjHHUe4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 16:34:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230392AbjHHUeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 16:34:00 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A69A1CA53
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 12:59:45 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-583d702129cso64901187b3.3
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 12:59:45 -0700 (PDT)
+        with ESMTP id S232449AbjHHUej (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 16:34:39 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AEDD7283
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 13:01:48 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d5869d9651aso1705832276.2
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 13:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691524784; x=1692129584;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691524908; x=1692129708;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jfG18uT4NG+e/cJ8ZQGlZK/6KyAI1UDtgxekW+KTQZI=;
-        b=bAhRhN4eyFB9p1ghfn1sWkoR7K67r6dkYay1RcHS2Qfuzqfi+zHX71fbIgV50ygZmB
-         LOC/uWMiLOKv/jmeK43KdWctf5F/+AjFwVxgkxwZChd1XoBztagZxHHBCvz44jREBZ3o
-         eEZ4/VR4zZkCthrPx2WISYGv8vSowp6eLYGM9t9yI4e+ZDMC8GxA/R60wFs5/6kf19sh
-         RJ8W8gw9u6ena3d4FoduD9ffpzZq131+hEbvNNW2jdIeN2WnV8CJ0zJveDK/4oLOPtMs
-         lZEiXI6D8rxz0G6JZDndBPbkRQ8yUs4UY6c7w1OUo6cqd2QVEFcw/dUBzAaJ5ZVYf1KD
-         ELqg==
+        bh=VP9YBHCg/urFwWcXlxRgNj4VZyPaxrsnUtiosiWvJS4=;
+        b=t2UGlaZ7P+YQMZ7kEqrjNvJPww82pPOC0fsBAPNvGbEoIORpOejm3NQYiYZBTkov+m
+         3Qg+mWhmQIzCxGnDK9DDIihVFkFJcao2dE17/liV1B2dhakENHyLr6lYY6GCJ+URb9LY
+         qh40BiBdLS33Zmpy/uP+ShA17Gv/62MASWEBwOt5Arx4Eq4oO93nMglvqXyYzp1Zen7c
+         o6eThJXnImLLEhv45mAwXZKle+JGFHq/RfrdZ/PLC6Gcs+7yGpSU1bjDNCPudTpi9A17
+         UpAv45KnQjq3/RxZeu6ZowQrCxtpH1m8kVnjr3lseEs8dmx/QOdSGY3hLpzl3qACTGcH
+         XM+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691524784; x=1692129584;
+        d=1e100.net; s=20221208; t=1691524908; x=1692129708;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jfG18uT4NG+e/cJ8ZQGlZK/6KyAI1UDtgxekW+KTQZI=;
-        b=VH3gX0+96oh3aGdZsTcnT7a+cyyo1MkJNyn4KkhDv2k5noGnFPxZeHmFxbTPpikxlz
-         Lce0b0CK3I3JSt9nIAbeSoN5DhfediGo5eZpfcmEuavSWD6QG313CB2WFTI+Ejj6AG94
-         HsiQioI/HsHLh/FIfCuKdBMN92i55DUDma8qBQIQMUxgrFCwvjMn0RzEt5T7TRC5bvnu
-         oej48WzDWNrWGSNsoqCjSqpK/hLjHf06s4x5WI6bTisCKuThr80ou77Yuw3VrQgbAF7r
-         PPZseNV/HzScAwJPfmLnIhFouMv3QVVzREWpMPbl9t38rX51/mrt58utDq4u2ntUJvh1
-         1eqw==
-X-Gm-Message-State: AOJu0YwAMk3QRF+nKVi/+8A4gD8YeV0Vaf6s+7nCX0IhBCoGAdctcJ7A
-        I8FpypRGXi9EkDPNJNoMgi38em7mGRfj8uwIXBae3g==
-X-Google-Smtp-Source: AGHT+IHyBvAyk2unYEr11W6EM5cGJSe/WV3LGjvbvHHmiJqvNKDTElVq6CQOfce5Cn7+puYpkYyBCw==
-X-Received: by 2002:a0d:cccb:0:b0:579:dfac:f507 with SMTP id o194-20020a0dcccb000000b00579dfacf507mr728747ywd.34.1691524784406;
-        Tue, 08 Aug 2023 12:59:44 -0700 (PDT)
+        bh=VP9YBHCg/urFwWcXlxRgNj4VZyPaxrsnUtiosiWvJS4=;
+        b=RsO0M9yow1KXI1OlivmmFlCeo0qc5xCGh/S4saqw91s+lW2VNIZmgeHElSjtnECxki
+         9RxbqftmEglN5PVEHGgD2eThPKHm2ut1rmIcRYB/puumflI7Tzdks4ksF9JOajvBbTvX
+         TwX57RUL3jduzCJEyF8q1t2BD8CEoGBT0dcObYJGdpoWGaYAg0wDUKH+/nptmmJlornL
+         ECMrFYXay6G6Pvnzcvx46rz3cXaaYruzNhD0qsrdVaKpsczULqTOdRPfXuq0XBwFM00L
+         uXFoRysaQxlQZmG3MobdIv+eOrB5l+WvpACEaaScj/DAvXwj0uoWc51ATYWpR1Xjn96Z
+         mnMg==
+X-Gm-Message-State: AOJu0YzjSHMS5db+Yx58OWroiaDegflhcGdL+GSg0a4g/uPrLWSH/rzB
+        UUySLvrhE0ufDh1t1eX6y4403A==
+X-Google-Smtp-Source: AGHT+IHRqvAEUnERgYSigj9s1XH4Ww9Ieeit4ZrBz7lzZfRhXh/8cJKjTlyTLYgszmnXHp8t5cnSKA==
+X-Received: by 2002:a25:b00e:0:b0:d08:5632:6b78 with SMTP id q14-20020a25b00e000000b00d0856326b78mr533469ybf.47.1691524907724;
+        Tue, 08 Aug 2023 13:01:47 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j1-20020a0de001000000b00583b5564c1dsm3552909ywe.135.2023.08.08.12.59.43
+        by smtp.gmail.com with ESMTPSA id m9-20020a258009000000b00d474cf6f53dsm2165627ybk.45.2023.08.08.13.01.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 12:59:44 -0700 (PDT)
-Date:   Tue, 8 Aug 2023 15:59:43 -0400
+        Tue, 08 Aug 2023 13:01:47 -0700 (PDT)
+Date:   Tue, 8 Aug 2023 16:01:46 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] repack: free geometry struct
-Message-ID: <ZNKer8BfwaKEeV+W@nand.local>
-References: <20230808185023.GA3498623@coredump.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        lenaic@lhuard.fr, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/6] maintenance: add get_random_minute()
+Message-ID: <ZNKfKs1mLQhnybvF@nand.local>
+References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
+ <fefdaa9457948ee5302e7cbfaae250e0b589d752.1691434300.git.gitgitgadget@gmail.com>
+ <ZNFgIyuhlNd8I9Y2@nand.local>
+ <xmqq4jlabea3.fsf@gitster.g>
+ <xmqqzg329ycm.fsf@gitster.g>
+ <ZNJVycLBUIXqZ0Xb@nand.local>
+ <xmqqbkfha3xu.fsf@gitster.g>
+ <xmqqsf8t8oo5.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230808185023.GA3498623@coredump.intra.peff.net>
+In-Reply-To: <xmqqsf8t8oo5.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 08, 2023 at 02:50:23PM -0400, Jeff King wrote:
-> Another option would be to put the struct on the stack rather than the
-> heap. However, this gets tricky, as we check the pointer against NULL in
-> several places to decide whether we're in geometric mode.
-
-The patch you have here looks good, but...
-
-> I did actually put together the "put it on the stack" patch, which swaps
-> out:
+On Tue, Aug 08, 2023 at 09:49:30AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->   if (geometry)
+> > Provided if code simplification is a good enough rationale, the
+> > patch looks sensible, but I find its use of u64 a bit questionable
+> > (though not wrong).  I would have expected that the type of "rand"
+> > would be the same as backoff_ms and wait_ms, two variables involved
+> > in the same expression.
 >
-> for:
+> Ah, not so fast.  The use of modulo means we need to be careful
+> about about the fuzzing factor going negative, and use of unsigned
+> type allows us to forget about it.
 >
->   if (geometric_factor)
->
-> to get around the NULL checks. But besides being noisy for little gain,
-> it ends up with some subtle gotchas, because we pass "&geometry" into
-> some functions which don't have access to "geometric_factor" (so now
-> extra call-sites have to keep track of "is this struct valid enough to
-> pass").
+> (fuzz % 250), when fuzz is of a signed random integral type, ranges
+> between -250 and +250 and because we want the center of our
+> distribution at 1000, so I think the following is equivalent.
 
-...I think that storing the geometric_factor value on the pack_geometry
-struct itself gets around most of these issues.
+[...]
 
-This version is still somewhat noisy, but it's not too bad IMHO. I'm
-fine with either your approach or mine :-).
+> -		wait_ms = (750 + rand % 500) * backoff_ms / 1000;
+> +		wait_ms = (1000 + fuzz % 250) * backoff_ms / 1000;
 
---- 8< ---
-diff --git a/builtin/repack.c b/builtin/repack.c
-index aea5ca9d44..13e4f0094e 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -303,6 +303,8 @@ struct pack_geometry {
- 	struct packed_git **pack;
- 	uint32_t pack_nr, pack_alloc;
- 	uint32_t split;
-+
-+	int split_factor;
- };
-
- static uint32_t geometry_pack_weight(struct packed_git *p)
-@@ -324,17 +326,13 @@ static int geometry_cmp(const void *va, const void *vb)
- 	return 0;
- }
-
--static void init_pack_geometry(struct pack_geometry **geometry_p,
-+static void init_pack_geometry(struct pack_geometry *geometry,
- 			       struct string_list *existing_kept_packs,
- 			       const struct pack_objects_args *args)
- {
- 	struct packed_git *p;
--	struct pack_geometry *geometry;
- 	struct strbuf buf = STRBUF_INIT;
-
--	*geometry_p = xcalloc(1, sizeof(struct pack_geometry));
--	geometry = *geometry_p;
--
- 	for (p = get_all_packs(the_repository); p; p = p->next) {
- 		if (args->local && !p->pack_local)
- 			/*
-@@ -380,7 +378,7 @@ static void init_pack_geometry(struct pack_geometry **geometry_p,
- 	strbuf_release(&buf);
- }
-
--static void split_pack_geometry(struct pack_geometry *geometry, int factor)
-+static void split_pack_geometry(struct pack_geometry *geometry)
- {
- 	uint32_t i;
- 	uint32_t split;
-@@ -399,12 +397,14 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
- 		struct packed_git *ours = geometry->pack[i];
- 		struct packed_git *prev = geometry->pack[i - 1];
-
--		if (unsigned_mult_overflows(factor, geometry_pack_weight(prev)))
-+		if (unsigned_mult_overflows(geometry->split_factor,
-+					    geometry_pack_weight(prev)))
- 			die(_("pack %s too large to consider in geometric "
- 			      "progression"),
- 			    prev->pack_name);
-
--		if (geometry_pack_weight(ours) < factor * geometry_pack_weight(prev))
-+		if (geometry_pack_weight(ours) <
-+		    geometry->split_factor * geometry_pack_weight(prev))
- 			break;
- 	}
-
-@@ -439,10 +439,12 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
- 	for (i = split; i < geometry->pack_nr; i++) {
- 		struct packed_git *ours = geometry->pack[i];
-
--		if (unsigned_mult_overflows(factor, total_size))
-+		if (unsigned_mult_overflows(geometry->split_factor,
-+					    total_size))
- 			die(_("pack %s too large to roll up"), ours->pack_name);
-
--		if (geometry_pack_weight(ours) < factor * total_size) {
-+		if (geometry_pack_weight(ours) <
-+		    geometry->split_factor * total_size) {
- 			if (unsigned_add_overflows(total_size,
- 						   geometry_pack_weight(ours)))
- 				die(_("pack %s too large to roll up"),
-@@ -781,7 +783,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct string_list names = STRING_LIST_INIT_DUP;
- 	struct string_list existing_nonkept_packs = STRING_LIST_INIT_DUP;
- 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
--	struct pack_geometry *geometry = NULL;
-+	struct pack_geometry geometry = { 0 };
- 	struct strbuf line = STRBUF_INIT;
- 	struct tempfile *refs_snapshot = NULL;
- 	int i, ext, ret;
-@@ -795,7 +797,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
- 	struct pack_objects_args po_args = {NULL};
- 	struct pack_objects_args cruft_po_args = {NULL};
--	int geometric_factor = 0;
- 	int write_midx = 0;
- 	const char *cruft_expiration = NULL;
- 	const char *expire_to = NULL;
-@@ -844,7 +845,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("repack objects in packs marked with .keep")),
- 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
- 				N_("do not repack this pack")),
--		OPT_INTEGER('g', "geometric", &geometric_factor,
-+		OPT_INTEGER('g', "geometric", &geometry.split_factor,
- 			    N_("find a geometric progression with factor <N>")),
- 		OPT_BOOL('m', "write-midx", &write_midx,
- 			   N_("write a multi-pack index of the resulting packs")),
-@@ -920,11 +921,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	collect_pack_filenames(&existing_nonkept_packs, &existing_kept_packs,
- 			       &keep_pack_list);
-
--	if (geometric_factor) {
-+	if (geometry.split_factor) {
- 		if (pack_everything)
- 			die(_("options '%s' and '%s' cannot be used together"), "--geometric", "-A/-a");
- 		init_pack_geometry(&geometry, &existing_kept_packs, &po_args);
--		split_pack_geometry(geometry, geometric_factor);
-+		split_pack_geometry(&geometry);
- 	}
-
- 	prepare_pack_objects(&cmd, &po_args, packtmp);
-@@ -938,7 +939,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		strvec_pushf(&cmd.args, "--keep-pack=%s",
- 			     keep_pack_list.items[i].string);
- 	strvec_push(&cmd.args, "--non-empty");
--	if (!geometry) {
-+	if (!geometry.split_factor) {
- 		/*
- 		 * We need to grab all reachable objects, including those that
- 		 * are reachable from reflogs and the index.
-@@ -985,7 +986,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				strvec_push(&cmd.args, "--pack-loose-unreachable");
- 			}
- 		}
--	} else if (geometry) {
-+	} else if (geometry.split_factor) {
- 		strvec_push(&cmd.args, "--stdin-packs");
- 		strvec_push(&cmd.args, "--unpacked");
- 	} else {
-@@ -993,7 +994,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		strvec_push(&cmd.args, "--incremental");
- 	}
-
--	if (geometry)
-+	if (geometry.split_factor)
- 		cmd.in = -1;
- 	else
- 		cmd.no_stdin = 1;
-@@ -1002,17 +1003,17 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (ret)
- 		goto cleanup;
-
--	if (geometry) {
-+	if (geometry.split_factor) {
- 		FILE *in = xfdopen(cmd.in, "w");
- 		/*
- 		 * The resulting pack should contain all objects in packs that
- 		 * are going to be rolled up, but exclude objects in packs which
- 		 * are being left alone.
- 		 */
--		for (i = 0; i < geometry->split; i++)
--			fprintf(in, "%s\n", pack_basename(geometry->pack[i]));
--		for (i = geometry->split; i < geometry->pack_nr; i++)
--			fprintf(in, "^%s\n", pack_basename(geometry->pack[i]));
-+		for (i = 0; i < geometry.split; i++)
-+			fprintf(in, "%s\n", pack_basename(geometry.pack[i]));
-+		for (i = geometry.split; i < geometry.pack_nr; i++)
-+			fprintf(in, "^%s\n", pack_basename(geometry.pack[i]));
- 		fclose(in);
- 	}
-
-@@ -1155,9 +1156,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (write_midx) {
- 		struct string_list include = STRING_LIST_INIT_NODUP;
- 		midx_included_packs(&include, &existing_nonkept_packs,
--				    &existing_kept_packs, &names, geometry);
-+				    &existing_kept_packs, &names, &geometry);
-
--		ret = write_midx_included_packs(&include, geometry,
-+		ret = write_midx_included_packs(&include, &geometry,
- 						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
- 						show_progress, write_bitmaps > 0);
-
-@@ -1180,12 +1181,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			remove_redundant_pack(packdir, item->string);
- 		}
-
--		if (geometry) {
-+		if (geometry.split_factor) {
- 			struct strbuf buf = STRBUF_INIT;
-
- 			uint32_t i;
--			for (i = 0; i < geometry->split; i++) {
--				struct packed_git *p = geometry->pack[i];
-+			for (i = 0; i < geometry.split; i++) {
-+				struct packed_git *p = geometry.pack[i];
- 				if (string_list_has_string(&names,
- 							   hash_to_hex(p->hash)))
- 					continue;
-@@ -1228,7 +1229,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	string_list_clear(&names, 1);
- 	string_list_clear(&existing_nonkept_packs, 0);
- 	string_list_clear(&existing_kept_packs, 0);
--	clear_pack_geometry(geometry);
-+	clear_pack_geometry(&geometry);
-
- 	return ret;
- }
---- >8 ---
+I was going to say that having rand be an unsigned type was the right
+behavior, but with this change it can (and should) be signed. Thanks for
+the simplification :-).
 
 Thanks,
 Taylor
