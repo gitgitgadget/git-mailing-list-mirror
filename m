@@ -2,199 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E35DC001DB
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 18:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53351C001DB
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 18:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232593AbjHHSJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 14:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44622 "EHLO
+        id S235509AbjHHSSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 14:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231184AbjHHSIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 14:08:45 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4BF14D266
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:03:44 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so9589846e87.2
-        for <git@vger.kernel.org>; Tue, 08 Aug 2023 10:03:44 -0700 (PDT)
+        with ESMTP id S235502AbjHHSRn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 14:17:43 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A4D812B1
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:24:57 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-589878e5b37so551457b3.2
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 10:24:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691514222; x=1692119022;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4Pb+vWwXMqqqmf86jYz3oGWrw5ityY0GVtItR+o0DqM=;
-        b=jpjZxQJN/A54ctI2ONE1U/AAvXuQCoSmue6DdFUNXkzBjl2WDiwT9oyrh6BCheUkxZ
-         ONdZiKWMEa4mpxsCwP6sXTFawWdRmJrkEuop7NYy0AhIz3llw9gRKZgCNnoNblxH9MGI
-         kHGc60WsErV9SOo/YopY4/MiS5Mn0baTrgHFljBAcAxyEphnnzE6qZ7xNx6rrX/DsL16
-         qgrT1gtFXQg9cCOyTvG9+CXCRA7/QUfNqtKDwhglBq8ztdN3KAIGl5Jw8YgJaubtmYFp
-         O2i3JM7bk6WSEogUE4KWQTmX8TZ3EBc0mk3AVL+euIcn5mNRsSPtSen1Dhf/HKgTwBnZ
-         x6yw==
+        d=github.com; s=google; t=1691515496; x=1692120296;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u8yD8DFZIENrwO9bZE3aJC0Puf1YzFQkMn66xg7JGnE=;
+        b=PpZ3cgKYhoHwNz/G55A5hVOEGDD+WORwEESH0ngetbahZz68d/WCWqgpRB+05gkUUI
+         KkkPW4F4lvYkHMTq8a08FTNTqqUR2LIalxSc+dpPiEBXczlkrMAPVXVMt1BIHZqQ5V73
+         5cUpgbylTrp5lKudgnBrAmFo8BkBCpiFpK5ABcvodRBxiPA+0esRfWdfF4qQZzXItdqi
+         Fa624LJAfh84a1phmeQylfu3niCYG2rMQ8lAByPsE42Q8h6z3xYgifV/as9KKM0D8fx9
+         EbocFnF7mQSoUzVVxWfiKLizSkgKAtFVpqBEt09mixBVshXJBKSRNbyI7U102F6flf/m
+         2LYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691514222; x=1692119022;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4Pb+vWwXMqqqmf86jYz3oGWrw5ityY0GVtItR+o0DqM=;
-        b=JXdLQcm8Ctsjaf2rEjikuX9Y7OiFhLe3SGNJcXBi/Teskh2uQstBoqHHe0cvBL0nAS
-         XLpgx3U/usCl6bC3i2VgGXu6ZxOF2NMaX1pg19qsFpQjmLmcZtnlEbyYXAXKh1BuT1ff
-         gLhCEb9ZaJAwtTF/nCW8AdqyMfVbxQvsfS4leZkB7vkSLQQDpsgtGv0XbRTAJ9jbIpS6
-         Pv6lSI0z4jduwCTAWu3B/fGca/0/4VlWmEWy+qS6BAgWpZK/a3iWJM//7mT02vRvQ+kX
-         2kZH7mO7DHQy3FDExKzQ2KKn7sFnLfczHBYzLMTw5Jj01aQT5hImaly4DlwZlqn4YADk
-         /NLA==
-X-Gm-Message-State: AOJu0YyFnTf0raVrUmu7IXX39AyCuV7UHdMIlSv8cDu/D6wv0hblPm57
-        wvv72VT/rnY9rUbEoiFmtIHUHOy6d7o=
-X-Google-Smtp-Source: AGHT+IEXLWxYvcMxlKmK4F2MPTzmztgMjzauE85JFerVQSGuzJRiG31fwJgcyOKx7z5YWGmoX32CpQ==
-X-Received: by 2002:adf:df09:0:b0:316:f5b1:98c with SMTP id y9-20020adfdf09000000b00316f5b1098cmr6868099wrl.24.1691483191016;
-        Tue, 08 Aug 2023 01:26:31 -0700 (PDT)
-Received: from christian-Precision-5550.lan ([2001:861:2420:9770:9200:db98:c1c8:97d0])
-        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b003140fff4f75sm12845707wrz.17.2023.08.08.01.26.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 01:26:30 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 3/8] repack: refactor finishing pack-objects command
-Date:   Tue,  8 Aug 2023 10:26:03 +0200
-Message-ID: <20230808082608.582319-4-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.rc0.8.g76fac86b0e
-In-Reply-To: <20230808082608.582319-1-christian.couder@gmail.com>
-References: <20230724085909.3831831-1-christian.couder@gmail.com>
- <20230808082608.582319-1-christian.couder@gmail.com>
+        d=1e100.net; s=20221208; t=1691515496; x=1692120296;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u8yD8DFZIENrwO9bZE3aJC0Puf1YzFQkMn66xg7JGnE=;
+        b=RKA/9gCYkJmCax/TdJu91SHioUqFtDoxwXR6EvMMkVBEx2PFuHqlxGSwyq9fNSgJcA
+         MjjVXF8ngffoLx1xHoD7E+LySBeQ/F6IhYHgF5r6LGACQjDGCbLEWf70oEn7szvBhEjo
+         T1vB0CAJkkPV8Q6O/btY7ayWT138WLpgH2r1Okr4S5mYWGvHf2RI73bj7IL6wPFUUp9u
+         /oB0aCS/XLeudnjB9IPnQ6uMtirSv1qDM7ijouK40SAghNmc/D8XvXo4JJsRaJuA76OU
+         KS62Pm2DjI8S9T9Zy1l0eF833T4G6OAgB7WVfFRgxTJC9i+J7ryJ3lNPXpOwwYKG2E2o
+         yQSw==
+X-Gm-Message-State: AOJu0Yynr/3C3keW+MaOMsISzotuFcHuEMFd4rnRxhj4y1svYzlIY9dH
+        IhgBRxliSM4kJVFFx9tXHIYQUjkxNGvRf/4aUg==
+X-Google-Smtp-Source: AGHT+IHvWuWkiGlN6kbxBcDJzuyf3Q7dtaOAEteOEXhDOp1DIcXoXSjlGPMCo95K1d1x5qWTHJOqNQ==
+X-Received: by 2002:a0d:df50:0:b0:577:606b:735e with SMTP id i77-20020a0ddf50000000b00577606b735emr379310ywe.37.1691515496365;
+        Tue, 08 Aug 2023 10:24:56 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:f1d2:c14b:5536:5192? ([2600:1700:e72:80a0:f1d2:c14b:5536:5192])
+        by smtp.gmail.com with ESMTPSA id w9-20020a0dd409000000b00586ba973bddsm2626043ywd.110.2023.08.08.10.24.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Aug 2023 10:24:56 -0700 (PDT)
+Message-ID: <5bb4313a-01f3-4dea-b724-fb41a8def334@github.com>
+Date:   Tue, 8 Aug 2023 13:24:54 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] maintenance: use random minute in systemd scheduler
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+To:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, lenaic@lhuard.fr,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
+ <14e340b75faaa66980479f42fec14c457aea5c74.1691434300.git.gitgitgadget@gmail.com>
+ <adc0cf80-c2e3-7af2-6d7f-036b95d27f80@gmail.com>
+ <8aa7be24-f4a8-4515-8425-dd4bc69e07b1@github.com>
+In-Reply-To: <8aa7be24-f4a8-4515-8425-dd4bc69e07b1@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new finish_pack_objects_cmd() to refactor duplicated code
-that handles reading the packfile names from the output of a
-`git pack-objects` command and putting it into a string_list, as well as
-calling finish_command().
+On 8/8/2023 9:56 AM, Derrick Stolee wrote:
+> On 8/8/2023 5:53 AM, Phillip Wood wrote:> Hi Stolee
 
-While at it, beautify a code comment a bit in the new function.
+>> So only one of these jobs will succeed. The cron entries are careful to
+>> only run one job at a time, I think it would be worth doing the same
+>> thing here. I think the using the following format strings would fix this.
+>>
+>> Hourly: "Tue..Sun *-*-* 1..23:00:%02d"
+>> Daily:  "Tue..Sun *-*-* 00:00:%02d"
+>> Weekly: "Mon      *-*-* 00:00:%02d"
+> 
+> I would modify this with dropping the "Tue..Sun" from the hourly schedule,
+> as we still want 23 runs on Mondays.
+> 
+>> It looks like the launchctl schedule has the same issue.
+> 
+> I will take a look at this and consider some additional patches to correct
+> these issues across both schedulers. Thank you for the attention to detail!
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org
----
- builtin/repack.c | 70 +++++++++++++++++++++++-------------------------
- 1 file changed, 33 insertions(+), 37 deletions(-)
+Taking a look, it seems that launchctl does not have this same problem.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index aea5ca9d44..96af2d1caf 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -696,6 +696,36 @@ static void remove_redundant_bitmaps(struct string_list *include,
- 	strbuf_release(&path);
- }
- 
-+static int finish_pack_objects_cmd(struct child_process *cmd,
-+				   struct string_list *names,
-+				   int local)
-+{
-+	FILE *out;
-+	struct strbuf line = STRBUF_INIT;
-+
-+	out = xfdopen(cmd->out, "r");
-+	while (strbuf_getline_lf(&line, out) != EOF) {
-+		struct string_list_item *item;
-+
-+		if (line.len != the_hash_algo->hexsz)
-+			die(_("repack: Expecting full hex object ID lines only "
-+			      "from pack-objects."));
-+		/*
-+		 * Avoid putting packs written outside of the repository in the
-+		 * list of names.
-+		 */
-+		if (local) {
-+			item = string_list_append(names, line.buf);
-+			item->util = populate_pack_exts(line.buf);
-+		}
-+	}
-+	fclose(out);
-+
-+	strbuf_release(&line);
-+
-+	return finish_command(cmd);
-+}
-+
- static int write_cruft_pack(const struct pack_objects_args *args,
- 			    const char *destination,
- 			    const char *pack_prefix,
-@@ -705,9 +735,8 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 			    struct string_list *existing_kept_packs)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
--	struct strbuf line = STRBUF_INIT;
- 	struct string_list_item *item;
--	FILE *in, *out;
-+	FILE *in;
- 	int ret;
- 	const char *scratch;
- 	int local = skip_prefix(destination, packdir, &scratch);
-@@ -751,27 +780,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 		fprintf(in, "%s.pack\n", item->string);
- 	fclose(in);
- 
--	out = xfdopen(cmd.out, "r");
--	while (strbuf_getline_lf(&line, out) != EOF) {
--		struct string_list_item *item;
--
--		if (line.len != the_hash_algo->hexsz)
--			die(_("repack: Expecting full hex object ID lines only "
--			      "from pack-objects."));
--		/*
--		 * avoid putting packs written outside of the repository in the
--		 * list of names
--		 */
--		if (local) {
--			item = string_list_append(names, line.buf);
--			item->util = populate_pack_exts(line.buf);
--		}
--	}
--	fclose(out);
--
--	strbuf_release(&line);
--
--	return finish_command(&cmd);
-+	return finish_pack_objects_cmd(&cmd, names, local);
- }
- 
- int cmd_repack(int argc, const char **argv, const char *prefix)
-@@ -782,10 +791,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct string_list existing_nonkept_packs = STRING_LIST_INIT_DUP;
- 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
- 	struct pack_geometry *geometry = NULL;
--	struct strbuf line = STRBUF_INIT;
- 	struct tempfile *refs_snapshot = NULL;
- 	int i, ext, ret;
--	FILE *out;
- 	int show_progress;
- 
- 	/* variables to be filled by option parsing */
-@@ -1016,18 +1023,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		fclose(in);
- 	}
- 
--	out = xfdopen(cmd.out, "r");
--	while (strbuf_getline_lf(&line, out) != EOF) {
--		struct string_list_item *item;
--
--		if (line.len != the_hash_algo->hexsz)
--			die(_("repack: Expecting full hex object ID lines only from pack-objects."));
--		item = string_list_append(&names, line.buf);
--		item->util = populate_pack_exts(item->string);
--	}
--	strbuf_release(&line);
--	fclose(out);
--	ret = finish_command(&cmd);
-+	ret = finish_pack_objects_cmd(&cmd, &names, 1);
- 	if (ret)
- 		goto cleanup;
- 
--- 
-2.42.0.rc0.8.g76fac86b0e
+The schedule is set via an <array> of <dict>s as follows:
+
+	case SCHEDULE_HOURLY:
+		repeat = "<dict>\n"
+			 "<key>Hour</key><integer>%d</integer>\n"
+			 "<key>Minute</key><integer>%d</integer>\n"
+			 "</dict>\n";
+		for (i = 1; i <= 23; i++)
+			strbuf_addf(&plist, repeat, i, minute);
+		break;
+
+	case SCHEDULE_DAILY:
+		repeat = "<dict>\n"
+			 "<key>Day</key><integer>%d</integer>\n"
+			 "<key>Hour</key><integer>0</integer>\n"
+			 "<key>Minute</key><integer>%d</integer>\n"
+			 "</dict>\n";
+		for (i = 1; i <= 6; i++)
+			strbuf_addf(&plist, repeat, i, minute);
+		break;
+
+This means that we create an hourly schedule for each hour 1..23
+(no 0th hour means no collision with daily or weekly schedule) and
+a daily schedule for each day 1..6 (no 0th day means no collision
+with the weekly schedule).
+
+Does this match your understanding?
+
+The overlap _definitely_ exists in systemd, which I will fix.
+
+Thanks,
+-Stolee
 
