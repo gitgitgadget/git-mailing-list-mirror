@@ -2,191 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6994C04A6A
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 19:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A65C001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 19:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjHHTAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 15:00:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55872 "EHLO
+        id S233370AbjHHTBO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 15:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231230AbjHHTAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 15:00:03 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93FB85845
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:26:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691515587; x=1692120387; i=tboegi@web.de;
- bh=felXP/PsSuYg0SFc3Z1+7UQaVDgmE1jbwNNNG3fK95A=;
- h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
- b=AkXqzIX2AQchEf/3o6md+eF+9WZn2H5I9hFKnMbnU6SI6XKUR1lA/LEz0sapfbsYY9CzFEE
- IWwwNyNomwetIUvBTQAEbWMGRxaVjEHYLw58KovbsRHYKUVftmi8wQ/9Zs8vT9LN85h0SwNWn
- iPjEMqLCMNhQuZvNOn9alP/Jg9vWerHW7NDillugnQlS0sqHt8tIDWsuEewGDieXdE5BTgBZv
- UZJ6Sxy1se81bizmzq8S3E2cfjTKKOS6DcZCCciMNjRu9JRZmFbNNYjQc9UYJsiZSD9JOdpTi
- hx2ef34THSejZhoVtd6rsmjD92/9HOGX7X/lT16R+EkznRD6ZiSA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MAcpW-1qeNmF0EjA-00BIy5; Tue, 08
- Aug 2023 19:26:27 +0200
-From:   tboegi@web.de
-To:     tboegi@web.de, git@vger.kernel.org, friebetill@gmail.com,
-        phillip.wood123@gmail.com
-Subject: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
-Date:   Tue,  8 Aug 2023 19:26:24 +0200
-Message-ID: <20230808172624.14205-1-tboegi@web.de>
-X-Mailer: git-send-email 2.41.0.394.ge43f4fd0bd
-In-Reply-To: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
-References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
+        with ESMTP id S233492AbjHHTAy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 15:00:54 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D3F20D2D
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 10:28:33 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99bcf2de59cso862727166b.0
+        for <git@vger.kernel.org>; Tue, 08 Aug 2023 10:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691515712; x=1692120512;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q8n2TBtMTJ0kMA2sERbKoC/qOx3hGZ1m+//mdFkLzXc=;
+        b=aJ3hg9mo3gP1LcGaaTJg69dpC51A1q5TPo4zsSjcmnWl1geQmqtNRmG19QnKsZ672O
+         D8ry1FlFahwkAzygilii4T4kBOKjyZ6LIn+i+tLIeqx2wujJkCGqVf8yFNz6pdSFsysB
+         3jBz1AYvFKUyAP0mcVt7umlR24QtrljC7EzE4/thpagTcqiBYU9bLsGG1JR1fBZN1TUA
+         /J8OA9PIkfHTHoi0VYdshPSI0WoQq6fVfOehH1wqmlSlEeDFX9UOH9P9d13ZUE07zMYw
+         QN5JLk+zbyAFWbNFzougUK4uQu8p2BG7QG0ncMC5aJYUSLHGuiSO9+L77uVGrwSO86gk
+         pvWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691515712; x=1692120512;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q8n2TBtMTJ0kMA2sERbKoC/qOx3hGZ1m+//mdFkLzXc=;
+        b=cUGTYYtIWApZnF2bnUZfrnzgWtU+5qzSzGFUpmjKJfRRRQ3srMxJE05kWgobINwO0y
+         PTN50lip6LEpms+QqDMvG0gOcfPeRD5d++WR58Aple8uV2C5gvsWLlDmFzLTfBp+CQVp
+         HvoiDcBmKFM2VVa5TxJZ+1ZcM4R5zmh6fhh0NwvtTOdIndfRvAPSySKR8YbocPnPLgkU
+         ZTH/YJAXy0qgCYaAYkTyR6o3CKotvGt2+rq3WqUIDcLGgjxUbmg+vLOGSTKbsLsiVwiR
+         PC1p46Hti+uNWmB4KS6jMb0Jij1Iqf6wdWJ21vElXwtJNTD8XypCFd3GpMEPTWS90Pln
+         y0Ug==
+X-Gm-Message-State: AOJu0YwSMUuY5eH31OB3pZX9cq+sDRaJ36YTblfTk/pozEDdpShRvrbD
+        bqX92WJxcOLNKZXRztPWthlnHdTpN6HxDFGYTt/mF9hy
+X-Google-Smtp-Source: AGHT+IFNX1DeQRowOekFcFH5s7QKQT0FOFi4nwxyk+4ABAy5W0tuu6K1PSDKtFvj7Df3B8qQTlN2BHyLEh2AUl68OpQ=
+X-Received: by 2002:a05:6402:1111:b0:522:201f:dee8 with SMTP id
+ u17-20020a056402111100b00522201fdee8mr10158435edv.0.1691483354559; Tue, 08
+ Aug 2023 01:29:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20230705060812.2865188-1-christian.couder@gmail.com>
+ <20230724085909.3831831-1-christian.couder@gmail.com> <20230724085909.3831831-5-christian.couder@gmail.com>
+ <ZMBQ97ucRg9gO4gW@nand.local>
+In-Reply-To: <ZMBQ97ucRg9gO4gW@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 8 Aug 2023 10:29:02 +0200
+Message-ID: <CAP8UFD0gojKUhZv82d-CVt9nPL+0UWCr+nV7+5_UFykCDuM9WA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/8] repack: refactor finding pack prefix
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:h6lu5jBjHQOK8tSYL5i9qkbfdKC19oUIPBR8K3R/+WKTzSME52L
- VMrrVOEAt6PM8nNflKah9ANDq+28QgqsMEJaeNOcayH3gxkSQ2RU/wXxe2rzvsxbSLOrfqg
- fwaxiyQJAWgWziI/iFxYCYproCjIiywp/gM5mzCY3OM5oM3u4v5pt8Qso7euOOYOsOSlRa5
- 9oxxRFJqX66+TMma1sv6w==
-UI-OutboundReport: notjunk:1;M01:P0:rBMAkxu6Cwc=;kxL+EbDGD/odGfJsJamTtt9wtG2
- tu8Sov8EqkvrRSCUw4IfaToxUHU6Lq143dDbhOuKfMekMFjFsVckJX9ryGZrnFPsaDTNMvVi0
- 6i0KZy1B1ZlC5LERCG2O9rpxgveeO/fAMG+QAjBg7EAvjotLT3l2PxXo3UX43OderyGzin02q
- rSKItfZVxmhkpQiZljM1GUqrODaS+6V2C5WuATGWnHcOwOghvyl2FQyfqkADLsVXz+lvnAnTf
- V7spIz9hAtAkblFZo4UW/wAqN+/L20X8rYnziTXEUioEmTKoSvRLr4cf30LI4tApM+QJLEzKF
- oF5+RiLobbnTQz1ppOmT17vUl3CrH2yqz7cSJTUvXSfJYilkp9yMAY+BmV8OXuGry/Rh3EReS
- /v0/JjWwEJBJi3T+8bPHtP1JUBhKb8wej/n34IYVMKK+yVFEyOekuvAlQ3kgscd35ewMxSmRH
- 7PLsCIuuEDvtOjrI2DqavJ88Rs6uMuFtWKwIsxotbku91XmO6/rN49f10nPOCSW27huHXNp7L
- Lp2n9vKGp8zI3znPAiLJ1u7NnQV+uzKb9ERbjKl7DqNtRZYfDHDw58dJD9HVweDSORg3JwEu8
- rJ/E5ZltF1ydUuqtYmSKmh8dqNrcskfds4COG5pU74oYl1dX09l9n8KTKnVFK+gxSmPwItQaF
- 4Ki0FJO5pvbf1EG46LDz0GbGdRvxOv7RjvEybaAjPPjd2xN1VSWbEDidwMJ44gumTj/fghfyV
- T9wo76idQwzQIW9DK5XLRdInp35/xaV7eXqmdAet0TynTO7qm7zLg59WJnLDNsKAoCYRPL496
- CAx9cl3NlSVmZ4ofC0CHVZw+DEgSh9uDQEKME/XQbdDT9CIXqL2/p3eIo8ML5aOqXgB/zNtkS
- XL8ZPuQ+sY+U3Cgvt4hcJP6SXgQ+3o0FMhwqbDVfI3lOlmKS6Ku/vsxo963MY+lHxV9A//c88
- bNOgnA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Wed, Jul 26, 2023 at 12:47=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
+e:
+>
+> On Mon, Jul 24, 2023 at 10:59:05AM +0200, Christian Couder wrote:
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index 96af2d1caf..21e3b89f27 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -783,6 +783,17 @@ static int write_cruft_pack(const struct pack_obje=
+cts_args *args,
+> >       return finish_pack_objects_cmd(&cmd, names, local);
+> >  }
+> >
+> > +static const char *find_pack_prefix(void)
+> > +{
+> > +     const char *pack_prefix;
+> > +     if (!skip_prefix(packtmp, packdir, &pack_prefix))
+>
+> I wonder if this might be a good opportunity to pass "packtmp" and
+> "packdir" as arguments to the function. I know that these are globals,
+> but it at least nudges us in the right direction away from adding more
+> global variables.
 
-The following sequence leads to loss of work:
- git init
- mkdir README
- touch README/README
- git add .
- git commit -m "Init project"
- echo "Test" > README/README
- mv README/README README2
- rmdir README
- mv README2 README
- git stash
- git stash pop
-
-The problem is, that `git stash` needs to create the directory README/
-and to be able to do this, the file README needs to be removed.
-And this is, where the work was lost.
-There are different possibilities preventing this loss of work:
-a)
-  `git stash` does refuse the removel of the untracked file,
-   when a directory with the same name needs to be created
-  There is a small problem here:
-  In the ideal world, the stash would do nothing at all,
-  and not do anything but complain.
-  The current code makes this hard to achieve
-  An other solution could be to do as much stash work as possible,
-  but stop when the file/directory conflict is detected.
-  This would create some inconsistent state.
-
-b) Create the directory as needed, but rename the file before doing that.
-  This would let the `git stash` proceed as usual and create a "new" file,
-  which may be surprising for some worlflows.
-
-This change goes for b), as it seems the most intuitive solution for
-Git users.
-
-Introdue a new function rename_to_untracked_or_warn() and use it
-in create_directories() in entry.c
-
-Reported-by: Till Friebe <friebetill@gmail.com>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- entry.c          | 25 ++++++++++++++++++++++++-
- t/t3903-stash.sh | 23 +++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 1 deletion(-)
-
-diff --git a/entry.c b/entry.c
-index 43767f9043..76d8a0762d 100644
-=2D-- a/entry.c
-+++ b/entry.c
-@@ -15,6 +15,28 @@
- #include "entry.h"
- #include "parallel-checkout.h"
-
-+static int rename_to_untracked_or_warn(const char *file)
-+{
-+	const size_t file_name_len =3D strlen(file);
-+	const static char *dot_untracked =3D ".untracked";
-+	const size_t dot_un_len =3D strlen(dot_untracked);
-+	struct strbuf sb;
-+	int ret;
-+
-+	strbuf_init(&sb, file_name_len + dot_un_len);
-+	strbuf_add(&sb, file, file_name_len);
-+	strbuf_add(&sb, dot_untracked, dot_un_len);
-+	ret =3D rename(file, sb.buf);
-+
-+	if (ret) {
-+		int saved_errno =3D errno;
-+		warning_errno(_("unable rename '%s' into '%s'"), file, sb.buf);
-+		errno =3D saved_errno;
-+	}
-+	strbuf_release(&sb);
-+	return ret;
-+}
-+
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
- {
-@@ -48,7 +70,8 @@ static void create_directories(const char *path, int pat=
-h_len,
- 		 */
- 		if (mkdir(buf, 0777)) {
- 			if (errno =3D=3D EEXIST && state->force &&
--			    !unlink_or_warn(buf) && !mkdir(buf, 0777))
-+			    !rename_to_untracked_or_warn(buf) &&
-+			    !mkdir(buf, 0777))
- 				continue;
- 			die_errno("cannot create directory at '%s'", buf);
- 		}
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 0b3dfeaea2..1a210f8a5a 100755
-=2D-- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1512,4 +1512,27 @@ test_expect_success 'restore untracked files even w=
-hen we hit conflicts' '
- 	)
- '
-
-+test_expect_success 'stash mkdir README needed - README.untracked created=
-' '
-+	git init mkdir_needed_file_untracked &&
-+	(
-+		cd mkdir_needed_file_untracked &&
-+		mkdir README &&
-+		touch README/README &&
-+		git add . &&
-+		git commit -m "Add README/README" &&
-+		echo Version2 > README/README &&
-+		mv README/README README2 &&
-+		rmdir README &&
-+		mv README2 README &&
-+		git stash &&
-+		test_path_is_file README.untracked &&
-+		echo Version2 >expect &&
-+		test_cmp expect README.untracked &&
-+		rm expect &&
-+		git stash pop &&
-+		test_path_is_file README.untracked &&
-+		echo Version2 >expect &&
-+		test_cmp expect README.untracked
-+	)
-+'
- test_done
-=2D-
-2.41.0.394.ge43f4fd0bd
-
+I have changed this in the version 4 I just sent. Now "packtmp" and
+"packdir" are passed as arguments to the function as you suggest.
+Thanks.
