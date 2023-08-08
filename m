@@ -2,84 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B146DC001B0
-	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 20:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1E07C001B0
+	for <git@archiver.kernel.org>; Tue,  8 Aug 2023 20:15:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234394AbjHHUJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Aug 2023 16:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50562 "EHLO
+        id S234519AbjHHUPJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Aug 2023 16:15:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbjHHUIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2023 16:08:46 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09A955FDFF
-        for <git@vger.kernel.org>; Tue,  8 Aug 2023 11:41:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691520055; x=1692124855; i=tboegi@web.de;
- bh=5+zFRMqEtEmk4EktTEQBAZxeTskhszrDyK8tBAzCfoc=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=aKLUXlku+G6UI/6xr/iinbXUMVq4f6KSzmjUXdOrpbp+m/ffyFpQtWZbxxHYGb6+P4msrSh
- tigsZmWjEU8qWmLHy/lqE1Kng0jZQZuAwdg655xD15RzV8CoiAzdnVk6bU95BHkemzTki+U0G
- 382RtoqqAnEJzY21cEvOzvSHoNilOzDn28huIS1KsXEZytmuILvpav9CMWjkZMhkLGeec/9bX
- CvUaA+/TsF8CppC3xXD+8z1+y4TYN7JoTu3aN6/16WPFWeqMrswS+KH5jYMgToByydrLXbVYr
- v/p+oRzCjNsjQ7KWveAW8oEoLSrY4Ro/s1+kwXaseAMYQLTYyk3g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MbCE0-1pwIkJ1zRI-00bU3h; Tue, 08
- Aug 2023 20:40:55 +0200
-Date:   Tue, 8 Aug 2023 20:40:54 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Sebastian Thiel via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Sebastian Thiel <sebastian.thiel@icloud.com>
-Subject: Re: [PATCH] fix `git mv existing-dir non-existing-dir`*
-Message-ID: <20230808184054.cjhiboifschkwuoz@tb-raspi4>
-References: <pull.1561.git.1691506431114.gitgitgadget@gmail.com>
- <xmqqy1il77wp.fsf@gitster.g>
+        with ESMTP id S234474AbjHHUO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2023 16:14:56 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6BE9122615
+        for <git@vger.kernel.org>; Tue,  8 Aug 2023 12:15:58 -0700 (PDT)
+Received: (qmail 4036 invoked by uid 109); 8 Aug 2023 19:15:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Aug 2023 19:15:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23067 invoked by uid 111); 8 Aug 2023 19:15:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Aug 2023 15:15:36 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 8 Aug 2023 15:15:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>
+Subject: [RFC/PATCH] commit-graph: verify swapped zero/non-zero generation
+ cases
+Message-ID: <20230808191536.GA4033224@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy1il77wp.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:81bgvblDvwcLAyQiyVB0rJddGE2oBD9fjSI4VngTVribSZIanM2
- yzEjTFBj8L6WLNEBwwHCaMuNE0yFU0VhWPm01y0B6piAIFyauacIx0VJkpHOgbjfDriy35D
- qYn7coJanB/jT1PtZeCSf83Xby2Kz1hOUq2Y3Ft3P1ARcgGo2jBVlX7zjYO+w8r6WTvhjtA
- FHet2Nk6vKdvQKEZJA5IA==
-UI-OutboundReport: notjunk:1;M01:P0:l0GpdjmOMuM=;sIlOPAX1zcJ1JY2hReFQZXyAECg
- XpcCXKwtmpi+bn0ZuhCGcR50A6+IRle3ME5+VSDETmdl5vvrTidYa6+ZkaOHyuRGhGpbVn77L
- laV/2bgqwTRHIn4pYnzkFSq06jnxloale2qTVJusHe0fU3nZepXQXFWZ0/g95ZqzVQvvdG1j0
- b2PCR3aKtfoT1RIVcTxIsskcq+/gDzWx1EA57qu2OFq42cmIGfGMUx90mTu2E9Dnwt+S/8Gep
- YEJAtv/+AosE+oGuhHF46DCkEy/kP/l3sbKLlybDvSHp59/sXbOoSve3BKqR7Bqx6VS1QvJcz
- 5RoaH1wZdRhHiqVbbVK1/prll5SVBb9dh+8syRQLNcHTokPi+i48TDlmKE7plVm/hoEZDNJE8
- HnkwCPw0rs/mx/SND966SwSwA/+ij3JH+fSBMllIp6yO2CqX+SN24YQ4l7vypdJsce5QANBWX
- 5q6MU8LP7yYS5GCoJNGymoabHfthUmGzQC5fRyahC//MJpGKq24kLwKv8JQskUTO6lc8ADNBe
- 1Ivb/zpFIt7+jGkGeMX/eCptlYe1BEg/P+qX9Psx58dMyzJGrPcDqE2NhEwCX+J/SI70mOUf8
- NLVjAC49hu/Tpm5LS6jVwWDhQpFXbPBuytnXwBPXdF67o2mB2ap8e2KJSGpIp4XVMmOYBJzUJ
- RaoBByw/6YHrs6tN2bRwUlNt1KJSwIktWoPcYVb+9HEEc0PD0djl+GD6S3p8oQeb6v0ipRVLS
- V8BNtmVGD5wWjln/U25A6RyNjtR5AIngLS9FtG77ZmOrWbp2tHmPOGcTNfhBXOM84lCpWPxHt
- WBgXSZa/2Xy02OIn7HthVoR5Cg60McviLL169pMSFqI3SL1kgFxpWV/D25OpEwRFZEkc1h7g5
- pw/sILk+IHQuwrQN949zAiVm4hwH6Yz3FKcR20YRTWxyUTWtngDCfh4yf4xu6n7dODBAgI+98
- dx3qog==
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 08, 2023 at 10:36:54AM -0700, Junio C Hamano wrote:
-> "Sebastian Thiel via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Sebastian Thiel <sebastian.thiel@icloud.com>
-> >
+In verify_one_commit_graph(), we have code that complains when a commit
+is found with a generation number of zero, and then later with a
+non-zero number. It works like this:
 
-The patch makes sense to me, Junio's comments included.
+  1. When we see an entry with generation zero, we set the
+     generation_zero flag to GENERATION_ZERO_EXISTS.
 
-> Shouldn't it do something similar to
->
->     $ mv D1 D2
+  2. When we later see an entry with a non-zero generation, we complain
+     if the flag is GENERATION_ZERO_EXISTS.
 
-Couldn't resist to test it ;-)
+There's a matching GENERATION_NUMBER_EXISTS value, which in theory would
+be used to find the case that we see the entries in the opposite order:
 
-The result would be
- renamed: D1/file1 -> D2/D1/file1
+  1. When we see an entry with a non-zero generation, we set the
+     generation_zero flag to GENERATION_NUMBER_EXISTS.
 
+  2. When we later see an entry with a zero generation, we complain if
+     the flag is GENERATION_NUMBER_EXISTS.
 
+But that doesn't work; step 2 is implemented, but there is no step 1. We
+never use NUMBER_EXISTS at all, and Coverity rightly complains that step
+2 is dead code.
+
+We can fix that by implementing that step 1.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is marked as RFC because I'm still confused about a lot of things.
+For one, my explanation above about what the code is doing is mostly a
+guess. It _looks_ to me like that's what the existing check is trying to
+do. But if so, then why is the generation_zero flag defined outside the
+loop over each object? I'd think it would be a per-object thing.
+
+Likewise, just below this code, we check:
+
+                if (generation_zero == GENERATION_ZERO_EXISTS)
+                        continue;
+
+Is the intent here "if this is the zero-th generation, we can skip the
+rest of the loop because there are no more parents to look at"? If so,
+then would it make more sense to check commit_graph_generation()
+directly? I took care to preserve the existing behavior by pushing the
+set of NUMBER_EXISTS into an "else", but it seems like a weird use of
+the flag to me.
+
+So I kind of wonder if there's something I'm not getting here. Coverity
+is definitely right that our "step 2" is dead code (because we never set
+NUMBER_EXISTS). But I'm not sure if we should be deleting it, or trying
+to fix an underlying bug.
+
+ commit-graph.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 0aa1640d15..40cd55eb15 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2676,9 +2676,13 @@ static int verify_one_commit_graph(struct repository *r,
+ 				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
+ 					     oid_to_hex(&cur_oid));
+ 			generation_zero = GENERATION_ZERO_EXISTS;
+-		} else if (generation_zero == GENERATION_ZERO_EXISTS)
+-			graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
++		} else {
++			if (generation_zero == GENERATION_ZERO_EXISTS)
++				graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
+ 				     oid_to_hex(&cur_oid));
++			else
++				generation_zero = GENERATION_NUMBER_EXISTS;
++		}
+ 
+ 		if (generation_zero == GENERATION_ZERO_EXISTS)
+ 			continue;
+-- 
+2.42.0.rc0.376.g66bfc4f195
