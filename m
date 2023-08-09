@@ -2,256 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4065EB64DD
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 07:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFC93C001B0
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 10:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231161AbjHIHrs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 03:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58900 "EHLO
+        id S230319AbjHIKAt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 06:00:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjHIHrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 03:47:46 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5A591981
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 00:47:44 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbea14700bso55169775e9.3
-        for <git@vger.kernel.org>; Wed, 09 Aug 2023 00:47:44 -0700 (PDT)
+        with ESMTP id S229830AbjHIKAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 06:00:48 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D7CA1FDF
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 03:00:47 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fe4b45a336so39652645e9.1
+        for <git@vger.kernel.org>; Wed, 09 Aug 2023 03:00:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691567263; x=1692172063;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i6PAuO1q/7dQCX00+PbFPC1+M0Zluagc/CYmGQuzEWA=;
-        b=DqZyx00b4gvBzoJgAv7GJzFgGOOpebVfv/rao551od57zGHjyusILZS7Lj3c3ZTXpx
-         kPAjKeO2hAUZ7+d9j08LbKzY22LxIcVqfRbWQP2e68UG9pRJPF490jU1g34e7zwP0X1J
-         UcFMQ56lO7on/4muoLwdGUSDUeRbDZaj71h5ieEgrMDamnvNVrEhKYk8abeppqkmTFFS
-         gCvhSQazNBL1xJG+R1hHVjkeLuXc8RHQ1WgttAL3g/qRVV/0SJGRRlRKRy562qilFBT2
-         8XkmfEuanN5xFE4zvE0VjsFOy1ZpL9LopvFOF73woEbkTctDY6dRg85BW7ufIg9+1uci
-         PkTA==
+        d=gmail.com; s=20221208; t=1691575246; x=1692180046;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HLwvEjV9mp5uez5xQvbUo99eCaRNk9e/uwDkyaeaNVA=;
+        b=ZslhoBL+rcJI9Xsk0r8+FgtM5pAo4XUFPOIT9yCJTiLJ1lY5UNJHSNIupLY3XqO+VB
+         M5n3D0x9Fm01LOSBm8TnhehS/AWeQLtpbW6j9g1EeP2VEjlA+MeIu/QgiGGzgrp5tNJM
+         xRytFcCjX6fylKcvAxriVRV+ug3R7EmoMraaZOTaQdB9q849sJSeHxX7lhf6momzrbk2
+         WyIzIA1IbkolD+HlXBtorfXL3iKu/qY/Be8hoLKnmCFwU4uf/SH8B9mb8yIWr4NBMR7p
+         t0K4o2yGlEvphUAhwQUHoNB4kcSpxZ3YUzbv7Leqr8LrM19vh4UZ0qwlKiZ6wct0FVfG
+         PfBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691567263; x=1692172063;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i6PAuO1q/7dQCX00+PbFPC1+M0Zluagc/CYmGQuzEWA=;
-        b=jhkZA3qzUfVxMkGgeWH3ZOuE1rNDRit2vzbCTMgSp+np/EaOAo8kHPEpL8uDtFmEH3
-         tlVZPUaVSMrHNkkCVWnyr6eyoQa3fwRorXEbqPk3VinfJrCChfsZNYGlbWoPN9BQYL/8
-         s48TcQiqqn7rHuTKcrDojTUZkd9aBE/Q2sE1IIqCo/ZbDwGTXuT31FbPvKJnymbNrAIp
-         zutU1q2+myUlxKVbWGdUaPS1vi4fkdBtN3NpQlgYKp4h3gOFaa/5SrRKXtY8QZ+wwMz+
-         f1W5K09ucGhB43sKYTnotpV34V7I+1GxnhBimQ690yYWGh+Ka0tkyshvnB/tjMjewHXb
-         mWYA==
-X-Gm-Message-State: AOJu0YwXnV2JHXdmufikJL5BMfsPT5vuogNiM3F47b0phWZvWIiutjTz
-        +mPh5hYYnJUJtPuDUa/zvJLNhvhyvIo=
-X-Google-Smtp-Source: AGHT+IHSZdE9fgk/BcysaAvAhCnkbaQCMchRWVtTKo/G7W5tYWX1tLXWtLSSC9Gdk0UmXzKEKUFVnA==
-X-Received: by 2002:adf:fc86:0:b0:317:5f04:c3de with SMTP id g6-20020adffc86000000b003175f04c3demr1012775wrr.4.1691567262885;
-        Wed, 09 Aug 2023 00:47:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q14-20020adfcd8e000000b00314329f7d8asm15931992wrj.29.2023.08.09.00.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 00:47:42 -0700 (PDT)
-Message-ID: <pull.1561.v2.git.1691567261701.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1561.git.1691506431114.gitgitgadget@gmail.com>
-References: <pull.1561.git.1691506431114.gitgitgadget@gmail.com>
-From:   "Sebastian Thiel via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Aug 2023 07:47:41 +0000
-Subject: [PATCH v2] fix `git mv existing-dir non-existing-dir` in some
- environments.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1691575246; x=1692180046;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HLwvEjV9mp5uez5xQvbUo99eCaRNk9e/uwDkyaeaNVA=;
+        b=Zlj8O5aK6EAMetZZIRoDNo2cKkiXwHE0DZ9cN7cW7OZKmesITRfI7XYGbkNcUHLTGN
+         vx5WSiHdCfSZEuAQ85iP8MFLW7dQbxfiJ0BZqcVoRTTonW2Hc/JdWOyvhtNRd8FmA38g
+         3BPiNEjJB/3MRTqok7RE2KT2zCEC191VCsFIridpTVxztHj+HgL5gLNzcm9ai6u24L+v
+         u11kRQz01CqT5pqUr2t1KTms5hhb6/shVbbQBaQIkhHBWwz7+m8Arq+MxzwQLJnRBVpn
+         h+dS+SfZpya3uUvlkW0N+HoWHZrLXLa+ar714nDvhE0cY0cKGGdiIlY47JN39WpBQyXX
+         cyMA==
+X-Gm-Message-State: AOJu0YwH55oNxWw+DTrVhogqi+ib9BVDdtV/Ge7+vaTcS/vdPrqACa3w
+        asttvHYCQwvJm5/fSrZFCTc=
+X-Google-Smtp-Source: AGHT+IHYjB50Ie8vmyyPRyAe9gx9EzvIb8USjv9/ZlKVEsF5s+VSddRlWt/IXcDzMQSZySdz3GuOGw==
+X-Received: by 2002:a5d:5545:0:b0:317:e542:80a8 with SMTP id g5-20020a5d5545000000b00317e54280a8mr1598119wrw.15.1691575245516;
+        Wed, 09 Aug 2023 03:00:45 -0700 (PDT)
+Received: from [192.168.1.101] ([90.242.223.1])
+        by smtp.googlemail.com with ESMTPSA id j9-20020a5d4489000000b0031411b7087dsm16426692wrq.20.2023.08.09.03.00.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 03:00:45 -0700 (PDT)
+Message-ID: <6f469118-8a7e-0b8d-33e3-c9ef486a262f@gmail.com>
+Date:   Wed, 9 Aug 2023 11:00:44 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Sebastian Thiel <sebastian.thiel@icloud.com>,
-        Sebastian Thiel <sebastian.thiel@icloud.com>
+User-Agent: Mozilla Thunderbird
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 6/6] maintenance: use random minute in systemd scheduler
+Reply-To: phillip.wood@dunelm.org.uk
+To:     Derrick Stolee <derrickstolee@github.com>,
+        phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, lenaic@lhuard.fr
+References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
+ <14e340b75faaa66980479f42fec14c457aea5c74.1691434300.git.gitgitgadget@gmail.com>
+ <3e254d61-b74a-f419-1a03-dbc557a9fe86@gmail.com>
+ <d247ce48-e2ba-4915-8d96-1fa2f693909d@github.com>
+ <2e9b32a8-8905-4a1f-a75b-ca747ae95b96@github.com>
+Content-Language: en-US
+In-Reply-To: <2e9b32a8-8905-4a1f-a75b-ca747ae95b96@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sebastian Thiel <sebastian.thiel@icloud.com>
+On 08/08/2023 18:14, Derrick Stolee wrote:
+> On 8/8/2023 1:06 PM, Derrick Stolee wrote:
+>> On 8/8/2023 8:08 AM, Phillip Wood wrote:
+>>> On 07/08/2023 19:51, Derrick Stolee via GitGitGadget wrote:
+> 
+>>>> +    char *local_timer_name = xstrfmt("git-maintenance@%s.timer", frequency);
+>>>
+>>> The "@" in the name signifies that it is a template unit which it isn't anymore so I think we want to change this to "git-maintenance-%s.timer"
+>>
+>> I'll also take your SYSTEMD_UNIT_FORMAT macro suggestion to simplify things.
+> 
+> As I was checking things, it turns out that we _should_ keep the '@' symbol
+> if only to make sure that our new schedule overwrites the old schedule.
 
-When moving a directory onto another with `git mv` various checks are
-performed. One of of these validates that the destination is not existing.
+Oh, so if the user already has scheduled maintenance set up then running 
+"git maintenance start" adds a new set of timers. I'd not though about that.
 
-When calling `lstat` on the destination path and it fails as the path
-doesn't exist, some environments seem to overwrite the passed  in
-`stat` memory nonetheless (I observed this issue on debian 12 of x86_64,
-running on OrbStack on ARM, emulated with Rosetta).
+> The alternative is that we manually try to delete the old schedule, but that
+> feels like an inefficient way to do it, leaving some cruft around long-term.
 
-This would affect the code that followed as it would still acccess a now
-modified `st` structure, which now seems to contain uninitialized memory.
-`S_ISDIR(st_dir_mode)` would then typically return false causing the code
-to run into a bad case.
+This patch still changes the names of the files we write. Currently we write
 
-The fix avoids overwriting the existing `st` structure, providing an
-alternative that exists only for that purpose.
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@.service
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@.timer
 
-Note that this patch minimizes complexity instead of stack-frame size.
+and this patch changes that to
 
-Signed-off-by: Sebastian Thiel <sebastian.thiel@icloud.com>
----
-    [PATCH] mv: handle lstat() failure correctly
-    
-    When moving a directory onto another with git mv various checks are
-    performed. One of of these validates that the destination is not
-    existing.
-    
-    When calling lstat on the destination path and it fails as the path
-    doesn't exist, some environments seem to overwrite the passed in stat
-    memory nonetheless (I observed this issue on debian 12 of x86_64,
-    running on OrbStack on ARM, emulated with Rosetta).
-    
-    This would affect the code that followed as it would still acccess a now
-    modified st structure, which now seems to contain uninitialized memory.
-    S_ISDIR(st_dir_mode) would then typically return false causing the code
-    to run into a bad case.
-    
-    The fix avoids overwriting the existing st structure, providing an
-    alternative that exists only for that purpose.
-    
-    
-    Note that this patch minimizes complexity instead of stack-frame size.
-    ======================================================================
-    
-    It's worth pointing out that the test demonstrates this case only if one
-    happens to execute it in one of the environments that happen to have an
-    lstat that writes into stat even on error. Thus it already worked for me
-    on MacOS, even without the patch applied, which matches my observation
-    that a certain script works there but doesn't work on the VM.
-    
-    Even though the patch now minimizes size, I can imagine one might
-    instead want to rather copy st.st_mode to protect only the relevant
-    field from being affected by potential rewrites of st later on.
-    
-    Changes since v1:
-    
-     * replaced previous title with recommendation by Junio C Hermano
-     * improved formatting of commit message and renamed gix to git. Let's
-       call that a typo
-     * apply Junio C Hermano's suggestions to test-case
-     * I refrained from changing the error message as this would mean all
-       translations need adjustment (and I don't know how this is tracked
-       then)
-    
-    I also want to apologise for the possibly terrible formatting and the
-    repetition - it feels strange but is what gitgadget seems to suggests.
-    Further, it's my honour to submit a patch to git and interact with the
-    maintainers, it's like meeting my idols!
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@hourly.service
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@daily.service
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@weekly.service
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@hourly.timer
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@daily.timer
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@weekly.timer
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1561%2FByron%2Ffix-mv-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1561/Byron/fix-mv-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1561
+If the user has already enabled maintenance then
 
-Range-diff vs v1:
+	$XDG_CONFIG_HOME/systemd/user/timers.target.wants/git-maintenance@hourly.timer
+	$XDG_CONFIG_HOME/systemd/user/timers.target.wants/git-maintenance@daily.timer
+	$XDG_CONFIG_HOME/systemd/user/timers.target.wants/git-maintenance@weekly.timer
 
- 1:  ad0e6754e2d ! 1:  8908fd228fe fix `git mv existing-dir non-existing-dir`*
-     @@ Metadata
-      Author: Sebastian Thiel <sebastian.thiel@icloud.com>
-      
-       ## Commit message ##
-     -    fix `git mv existing-dir non-existing-dir`*
-     +    fix `git mv existing-dir non-existing-dir` in some environments.
-      
-     -    *in some environments.
-     +    When moving a directory onto another with `git mv` various checks are
-     +    performed. One of of these validates that the destination is not existing.
-      
-     -    When moving a directory onto another with `gix mv`
-     -    various checks are performed. One of of these
-     -    validates that the destination is not an existing
-     -    file.
-     +    When calling `lstat` on the destination path and it fails as the path
-     +    doesn't exist, some environments seem to overwrite the passed  in
-     +    `stat` memory nonetheless (I observed this issue on debian 12 of x86_64,
-     +    running on OrbStack on ARM, emulated with Rosetta).
-      
-     -    When calling `lstat` on the destination path and
-     -    it fails as the path doesn't exist, some
-     -    environments seem to overwrite the passed  in
-     -    `stat` memory nonetheless.
-     -    (I observed this issue on debian 12 of x86_64,
-     -    running on OrbStack on ARM, emulated with Rosetta)
-     +    This would affect the code that followed as it would still acccess a now
-     +    modified `st` structure, which now seems to contain uninitialized memory.
-     +    `S_ISDIR(st_dir_mode)` would then typically return false causing the code
-     +    to run into a bad case.
-      
-     -    This would affect the code that followed as it
-     -    would still acccess a now
-     -    modified `st` structure, which now seems to
-     -    contain uninitialized memory.
-     -    `S_ISDIR(st_dir_mode)` would then typically
-     -    return false causing the code to run into a bad
-     -    case.
-     +    The fix avoids overwriting the existing `st` structure, providing an
-     +    alternative that exists only for that purpose.
-      
-     -    The fix avoids overwriting the existing `st`
-     -    structure, providing an alternative that exists
-     -    only for that purpose.
-     -
-     -    Note that this patch minimizes complexity instead of stack-size.
-     +    Note that this patch minimizes complexity instead of stack-frame size.
-      
-          Signed-off-by: Sebastian Thiel <sebastian.thiel@icloud.com>
-      
-     @@ t/t7001-mv.sh: test_expect_success 'do not move directory over existing director
-       '
-       
-      +test_expect_success 'rename directory to non-existing directory' '
-     -+	mkdir dir-a && touch dir-a/f &&
-     ++	mkdir dir-a &&
-     ++	>dir-a/f &&
-      +	git add dir-a &&
-      +	git mv dir-a non-existing-dir
-      +'
+will exist and are all symlinks pointing to
 
+	$XDG_CONFIG_HOME/systemd/user/git-maintenance@.timer
 
- builtin/mv.c  | 4 ++--
- t/t7001-mv.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+After this patch if the user runs "git maintenance start" again then 
+systemctl will update the symlinks tot point to the matching unit files 
+rather than the old template file. That means the user will pick up the 
+new schedule but we leave behind the original files that are unused.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index fa84fcb20d8..05e7156034e 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -184,7 +184,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	int src_dir_nr = 0, src_dir_alloc = 0;
- 	struct strbuf a_src_dir = STRBUF_INIT;
- 	enum update_mode *modes, dst_mode = 0;
--	struct stat st;
-+	struct stat st, dest_st;
- 	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
- 	struct lock_file lock_file = LOCK_INIT;
- 	struct cache_entry *ce;
-@@ -304,7 +304,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			goto act_on_entry;
- 		}
- 		if (S_ISDIR(st.st_mode)
--		    && lstat(dst, &st) == 0) {
-+		    && lstat(dst, &dest_st) == 0) {
- 			bad = _("cannot move directory over file");
- 			goto act_on_entry;
- 		}
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 898a9205328..f136ea76f7f 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -174,6 +174,13 @@ test_expect_success 'do not move directory over existing directory' '
- 	test_must_fail git mv path2 path0
- '
- 
-+test_expect_success 'rename directory to non-existing directory' '
-+	mkdir dir-a &&
-+	>dir-a/f &&
-+	git add dir-a &&
-+	git mv dir-a non-existing-dir
-+'
-+
- test_expect_success 'move into "."' '
- 	git mv path1/path2/ .
- '
+> For completeness, here is what I did to check:
+> 
+> $ systemctl --user list-timers
+> NEXT                        LEFT        LAST                        PASSED       UNIT                         ACTIVATES
+> Tue 2023-08-08 13:13:00 EDT 6s left     n/a                         n/a          git-maintenance-hourly.timer git-maintenance-hourly.service
+> Tue 2023-08-08 13:50:00 EDT 37min left  Tue 2023-08-08 12:50:10 EDT 22min ago    git-maintenance@hourly.timer git-maintenance@hourly.service
+> Wed 2023-08-09 00:13:00 EDT 11h left    n/a                         n/a          git-maintenance-daily.timer  git-maintenance-daily.service
+> Wed 2023-08-09 00:50:00 EDT 11h left    Tue 2023-08-08 09:35:31 EDT 3h 37min ago git-maintenance@daily.timer  git-maintenance@daily.service
+> Mon 2023-08-14 00:13:00 EDT 5 days left n/a                         n/a          git-maintenance-weekly.timer git-maintenance-weekly.service
+> Mon 2023-08-14 00:50:00 EDT 5 days left Mon 2023-08-07 10:28:10 EDT 1 day 2h ago git-maintenance@weekly.timer git-maintenance@weekly.service
+> 
+> Do you have an alternative idea how to handle that?
 
-base-commit: 1b0a5129563ebe720330fdc8f5c6843d27641137
--- 
-gitgitgadget
+I think we should stick with the names as you have them. It might be 
+worth keeping the service file as a template so we only write the new 
+timer files and have a reason to use the "@" naming scheme. We could 
+update systemd_timer_setup_units() to delete git-maintenance@.timer if 
+we successfully enable the new timer unit files.
+
+Sorry for the confusion, I should have thought about the user running 
+"git maintenance start" for a second time.
+
+Best Wishes
+
+Phillip
