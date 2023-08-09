@@ -2,100 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8BA7C41513
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 18:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23560C001B0
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 18:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232254AbjHISsF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 14:48:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34086 "EHLO
+        id S233106AbjHISuq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 14:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231838AbjHISsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 14:48:04 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B21E51
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 11:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691606873; x=1692211673; i=tboegi@web.de;
- bh=hReAIvoE2Ga82a59KAIkCkX/qTgQxbZzKxU+bxb41Xw=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=Aw9C/yPMWYeNMCugHCVP6aY5h1snFtKz1igPhO7MEUUt6G+5wBG4MX5c0sreOYHHDYIdFqO
- Op8K6TZmPKJxALhb7dzj/Izb+HA9azjlcVd7bwf5d935TYOoTEjlxRzCh32uYnPCGrsEVUGM1
- 5zkoULeAc/ZduBLqvfTDpZBJXyoBu1WlWBePeIhqWOa84wOjabfLHGZXtLmLTpAxAoP0xy0vO
- QxaCNz/n6K8lAQK4thVmEtdqsTrLkfL3k9WfI81Uc2T754cGysIm5n6DZbfFuLB50VaWIEvd+
- fIIWVTb/J9kH3ATSsc7qhflrw5iJiDeEmh6R1j7uxKxtO6Wit94w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MdwJY-1pv1Ac3cOs-00bJLC; Wed, 09
- Aug 2023 20:47:52 +0200
-Date:   Wed, 9 Aug 2023 20:47:52 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, friebetill@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
-Message-ID: <20230809184751.ffwolkvjwoptnmen@tb-raspi4>
-References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
- <20230808172624.14205-1-tboegi@web.de>
- <6e40eb0b-2331-1e39-bee0-c9720c24d1c8@gmail.com>
+        with ESMTP id S233018AbjHISum (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 14:50:42 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DA0CE51
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 11:50:41 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E55D8188941;
+        Wed,  9 Aug 2023 14:50:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5jKckiShHf6b5V2WqdBnhB3Qt+/sbKzM1zdWNZ
+        XO03s=; b=KICRHcNXxZYUziG/1FW8WR1a8qoW6GLXx1mcgHk2M6REM5QikuiCZ8
+        6kP3RqGWvbrIAGKzoJi6LW4Qlw1oLzfUV+aB5Jd2FRHH6tyo8OdP3BLUyI7Q2c6E
+        4sJJRZ3CsN1bRlEqjizW820Rv8IqfrJ6bmsQApFz+V8ls/BGquHfk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD1FA188940;
+        Wed,  9 Aug 2023 14:50:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0466418893F;
+        Wed,  9 Aug 2023 14:50:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net, lenaic@lhuard.fr
+Subject: Re: [PATCH 1/6] maintenance: add get_random_minute()
+References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
+        <fefdaa9457948ee5302e7cbfaae250e0b589d752.1691434300.git.gitgitgadget@gmail.com>
+        <ZNFgIyuhlNd8I9Y2@nand.local>
+        <8854e369-fabb-4044-a06c-eaf5b9fbde4a@github.com>
+        <ZNKfxOWJAuJ5DxAN@nand.local>
+        <a1e7d730-e220-48ec-8393-2d3538b80163@github.com>
+Date:   Wed, 09 Aug 2023 11:50:38 -0700
+In-Reply-To: <a1e7d730-e220-48ec-8393-2d3538b80163@github.com> (Derrick
+        Stolee's message of "Wed, 9 Aug 2023 08:17:37 -0400")
+Message-ID: <xmqq7cq4nj7l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6e40eb0b-2331-1e39-bee0-c9720c24d1c8@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:fXoFWqD6tYt4ObIpnN1+ze98+P1s9CuxUtnWdmVStwH/4ae28AX
- QVKwvE30vNgMZmnuZUhurCAIabwKu9oRUFeDwa4OKeT/2qC7TMDRXAy8Y479oiQ3G3LSdqS
- uKhZa1R7Vq9AZTVrG15fQjMwqZoGFp3f0ep+bgwTzqIelfTyU2Zij1pRxJ6t/sOJXjbTaTN
- piFleANEGZJwk+mohxd2Q==
-UI-OutboundReport: notjunk:1;M01:P0:6gg4zWbBJt0=;UPzVO1gVGD7YnZCnunQWQfg9CHD
- 78YFtSE2Lo4OkHWunbdHDIYh/iaYeiZAs+SxwPZ77vCTrNAZkrYfoKhheuEStDR39EyIDDcsZ
- 2F/Ed3Jal+ozsO++sQdJSwkXOXGBi7Dlu2l7a2jf5aHi00RM7h9jHIxLdHml6T/1UYbIgpGee
- fLtYSJVnKh9Ho5cBsn7CC3mu9Er3s7mGmFy0C7q0SZ7/zmAmBbb+2e2COCiMcEssVhzuj8sko
- nQaHjOe8Z3mfwQtmbzY4X0Hmg4wBIKNxBzfQf/tKF6dIgqtt2mK943SMvab12VDMYcllv7nf2
- UPpFR6WJhMby2w4d/4HfitcHOwRlhT+q8ZrQ+iZlkfo1Lz1T8Vh8C+tb7CVc5Mn6dPrTKWHWX
- UWe38+nHuQns5MZcN+HoS5pTA44bgYHZmaQNmTxULaJiDrQaWLWQJFZpYRg53hVpkOXEE2AQj
- ah0hJeHy2f78BSSReYFmlW3U9lXbcCugljISdMd9lMRrc9nTMcFJo8bi7Dc51InjVeENP7JNm
- 2xvWABs7F/+K+PlzasnLYL7k+we00zbQXNI0HCdbXQX7Wa5rYf+kbeoiB4k+oiMUsvrHY0Pq0
- xIUNAqU1MSyzgjw0bCFcQpQlWHT7kT1olWc4cAlpwCKqd/6CM8WGb3QsGkoN5zrHcaTgv/ZjR
- EveXwCmYwGddZflNmym3tzNgQAu07Og1P4Ag5NJ8s7KYqmquuWVvmko2Cy2PjegbGf4TnMEfF
- LL20CO458dfZCq/LQsBaz56OfBslWlzo6Ei45cvqpAS82YAQHfLfnQWRMLuL8Ro1CTMWPppMa
- PH6HXgc/LPQeRuhV+9gUuEKte3iJAogLIMYohK+NKpa5GxYvhOE0s7CBx7xKlThKTNNpNFvqD
- CoAnke0lTXdwtgR3cdDmR0uuE3GzzZrgnftT7QmqK9PGP0+ERCqlhTzv/ffrHtFTlwpOSJM1c
- oEsx4oPaixqQwLuGMRucRwAxe4M=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A2B6B5B2-36E5-11EE-9FA1-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 09, 2023 at 02:15:28PM +0100, Phillip Wood wrote:
-> Hi Torsten
+Derrick Stolee <derrickstolee@github.com> writes:
+
+>> Instead of using srand() and rand() (which would make sense to wrap with
+>> git_rand() as you propose), we can simplify our lives by using a CSPRNG,
+>> which only gets initialized once, as is already the case with
+>> csprng_bytes().
 >
-> Thanks for working on this. I've cc'd Junio for his unpack_trees()
-> knowledge.
+> So the idea is to use csprng_bytes() everywhere instead of srand()/rand().
+>
+> I can adjust my local patch to still create git_rand(), but base it on
+> csprng_bytes() and not collide with your patch. Mimicking rand()'s behavior
+> is a simpler interface to consume.
 
-Thanks Eric for the review.
+I am still ambivalent about wasting entropy for something that
+srand() would suffice, so git_rand() interface may be an welcome
+addition anyway, that serves an extra layer of indirection to
+insulate the callers from the implementation.
 
-Hej Phillip,
-I have been playing around with the whole thing some time.
-At the end I had a version, which did fiddle the information
-that we are doing a `git stash` (and not any other operation)
-into entry.c, and all test cases passed.
-So in principle I can dig out all changes, polish them
-and send them out, after doing cleanups of course.
-
-(And that could take a couple of days, or weeks ;-)
-
-My main question is still open:
-Is it a good idea, to create a "helper file" ?
-The naming can be discussed, we may stick the date/time
-into the filename to make it really unique, or so.
-
-Reading the different reports and including own experience,
-I still think that a directory called ".deleted-by-user"
-or ".wastebin" or something in that style is a good idea.
-
-What do others think ?
-
-
-
-
+Thanks.
