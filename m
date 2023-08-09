@@ -2,65 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BB75C0015E
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 19:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB203C0015E
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 19:43:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233401AbjHITjx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 15:39:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
+        id S231588AbjHITn1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 15:43:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233920AbjHITjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 15:39:52 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ABD226A5
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 12:39:42 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DB71D3540E;
-        Wed,  9 Aug 2023 15:39:41 -0400 (EDT)
+        with ESMTP id S231377AbjHITnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 15:43:25 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1BDE10DA
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 12:43:23 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5665F22B6C;
+        Wed,  9 Aug 2023 15:43:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hGjNQwkg7iAExavrhsbSjWVBkoVhlAnCepjS1d
-        8fnp0=; b=CImRk4Ve/Z9OCTwd6Gzy/4xBnPHPoKf0m1HRpIboxXwLIomRFnJdTL
-        aEDOd8Ndz5q6mtcUvkFgSgAeo9YGhUfBUHEYW5ilhP8EAr87xi1nRxZ1iwDY/Zhr
-        CwQAJQhOa/CqcSckVwhvux4KxVyOwnRZyt006u6L2uieoYGMUz5lU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D53063540D;
-        Wed,  9 Aug 2023 15:39:41 -0400 (EDT)
+        :content-type; s=sasl; bh=fy/ZmygHeKzjTQn7I91/k6ol9tmRnNddQW7GtZ
+        Jsqo8=; b=E2pzp85gVCO8Dl+R/2fTKnwLM8Nyj07KMnErMklNodhBTpjI0U2MXh
+        KE/PNsWf9Iyw+mdobPvqRj7/upaot+kswO1bOUmspFUWSR1hUIrASR28EguEkXQB
+        hlbFcG9ED5HdJ02H6nTNp7kdd3pSz/yX51aN8MFNz/kPpwqiZQpHA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F91622B6B;
+        Wed,  9 Aug 2023 15:43:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.168.215.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 75C213540B;
-        Wed,  9 Aug 2023 15:39:38 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D4DFC22B6A;
+        Wed,  9 Aug 2023 15:43:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3] rebase: clarify conditionals in todo_list_to_strbuf()
-References: <20230428125601.1719750-1-oswald.buddenhagen@gmx.de>
-        <20230807170935.2336745-1-oswald.buddenhagen@gmx.de>
-        <xmqqv8dqd2bh.fsf@gitster.g> <ZNO7IVphPf8KOC3Q@ugly>
-Date:   Wed, 09 Aug 2023 12:39:37 -0700
-In-Reply-To: <ZNO7IVphPf8KOC3Q@ugly> (Oswald Buddenhagen's message of "Wed, 9
-        Aug 2023 18:13:21 +0200")
-Message-ID: <xmqqbkfgm2di.fsf@gitster.g>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t9001: remove excessive GIT_SEND_EMAIL_NOTTY=1
+References: <20230809171531.2564754-1-oswald.buddenhagen@gmx.de>
+Date:   Wed, 09 Aug 2023 12:43:18 -0700
+In-Reply-To: <20230809171531.2564754-1-oswald.buddenhagen@gmx.de> (Oswald
+        Buddenhagen's message of "Wed, 9 Aug 2023 19:15:31 +0200")
+Message-ID: <xmqq7cq4m27d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7A2C5924-36EC-11EE-8C5D-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: FE21DFCE-36EC-11EE-9B0D-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
->>And that leads me to wonder if this is better rewritten with
->>
->>	switch (item->command) {
->>
-> as the commit message was meant to imply, my answer to that is no.
+> This was added by 3ece9bf0f9 (send-email: clear the $message_id after
+> validation, 2023-05-17) for no apparent reason, as this is required only
+> in cases when git's stdin is (must be) redirected, which isn't the case
+> here.
+>
+> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-Thanks.  Then this patch is still a strict "Meh" to me.
+Good eyes.  Thanks, will apply.
 
+
+>
+> ---
+> Cc: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t9001-send-email.sh | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 48bf0af2ee..c445859f73 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -659,7 +659,6 @@ test_expect_success $PREREQ 'clear message-id before parsing a new message' '
+>  	clean_fake_sendmail &&
+>  	echo true | write_script my-hooks/sendemail-validate &&
+>  	test_config core.hooksPath my-hooks &&
+> -	GIT_SEND_EMAIL_NOTTY=1 \
+>  	git send-email --validate --to=recipient@example.com \
+>  		--smtp-server="$(pwd)/fake.sendmail" \
+>  		$patches $threaded_patches &&
