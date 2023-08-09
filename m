@@ -2,98 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B65C001E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9519C0015E
 	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 17:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232443AbjHIRPv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 13:15:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36120 "EHLO
+        id S232930AbjHIRPw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 13:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232830AbjHIRPj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232834AbjHIRPj (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Aug 2023 13:15:39 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7A11FEF
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F046A2103
         for <git@vger.kernel.org>; Wed,  9 Aug 2023 10:15:38 -0700 (PDT)
 Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 4F3F524313;
+        by bluemchen.kde.org (Postfix) with ESMTP id 33A9F24315;
         Wed,  9 Aug 2023 13:15:32 -0400 (EDT)
 Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qTmmS-lFB-00; Wed, 09 Aug 2023 19:15:32 +0200
+        id 1qTmmR-lEw-00; Wed, 09 Aug 2023 19:15:31 +0200
 From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2] sequencer: simplify allocation of result array in todo_list_rearrange_squash()
-Date:   Wed,  9 Aug 2023 19:15:32 +0200
-Message-Id: <20230809171532.2564880-1-oswald.buddenhagen@gmx.de>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 3/3] rebase: move parse_opt_keep_empty() down
+Date:   Wed,  9 Aug 2023 19:15:31 +0200
+Message-Id: <20230809171531.2564844-4-oswald.buddenhagen@gmx.de>
 X-Mailer: git-send-email 2.40.0.152.g15d061e6df
+In-Reply-To: <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
+References: <xmqqiler8cga.fsf@gitster.g>
+ <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The operation doesn't change the number of elements in the array, so we do
-not need to allocate the result piecewise.
+This moves it right next to parse_opt_empty(), which is a much more
+logical place. As a side effect, this removes the need for a forward
+declaration of imply_merge().
 
-This moves the re-assignment of todo_list->alloc at the end slighly up,
-so it's right after the newly added assert which also refers to `nr`
-(and which indeed should come first). Also, the value is more likely to
-be still in a register at that point.
-
+Acked-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
----
-v2:
-- removed redundant assignment of `items` in ALLOC_ARRAY() call
-- added 2nd paragraph to commit message
-- broken out of the bigger series, as the aggregation just unnecessarily
-  holds it up
 
-Cc: Phillip Wood <phillip.wood123@gmail.com>
 ---
- sequencer.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+i'm not sure how to "translate" phillip's informal approval; the
+acked-by doesn't seem quite right. please adjust as necessary.
 
-diff --git a/sequencer.c b/sequencer.c
-index cc9821ece2..947cb89e60 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -6233,7 +6233,7 @@ static int skip_fixupish(const char *subject, const char **p) {
- int todo_list_rearrange_squash(struct todo_list *todo_list)
+Cc: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/rebase.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
+
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 4a093bb125..13ca5a644b 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -376,19 +376,6 @@ static int run_sequencer_rebase(struct rebase_options *opts)
+ 	return ret;
+ }
+ 
+-static void imply_merge(struct rebase_options *opts, const char *option);
+-static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+-				int unset)
+-{
+-	struct rebase_options *opts = opt->value;
+-
+-	BUG_ON_OPT_ARG(arg);
+-
+-	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
+-	opts->keep_empty = !unset;
+-	return 0;
+-}
+-
+ static int is_merge(struct rebase_options *opts)
  {
- 	struct hashmap subject2item;
--	int rearranged = 0, *next, *tail, i, nr = 0, alloc = 0;
-+	int rearranged = 0, *next, *tail, i, nr = 0;
- 	char **subjects;
- 	struct commit_todo_item commit_todo;
- 	struct todo_item *items = NULL;
-@@ -6345,6 +6345,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 	}
+ 	return opts->type == REBASE_MERGE;
+@@ -982,6 +969,18 @@ static enum empty_type parse_empty_value(const char *value)
+ 	die(_("unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"ask\"."), value);
+ }
  
- 	if (rearranged) {
-+		ALLOC_ARRAY(items, todo_list->nr);
++static int parse_opt_keep_empty(const struct option *opt, const char *arg,
++				int unset)
++{
++	struct rebase_options *opts = opt->value;
 +
- 		for (i = 0; i < todo_list->nr; i++) {
- 			enum todo_command command = todo_list->items[i].command;
- 			int cur = i;
-@@ -6357,16 +6359,15 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 				continue;
- 
- 			while (cur >= 0) {
--				ALLOC_GROW(items, nr + 1, alloc);
- 				items[nr++] = todo_list->items[cur];
- 				cur = next[cur];
- 			}
- 		}
- 
-+		assert(nr == todo_list->nr);
-+		todo_list->alloc = nr;
- 		FREE_AND_NULL(todo_list->items);
- 		todo_list->items = items;
--		todo_list->nr = nr;
--		todo_list->alloc = alloc;
- 	}
- 
- 	free(next);
++	BUG_ON_OPT_ARG(arg);
++
++	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
++	opts->keep_empty = !unset;
++	return 0;
++}
++
+ static int parse_opt_empty(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct rebase_options *options = opt->value;
 -- 
 2.40.0.152.g15d061e6df
 
