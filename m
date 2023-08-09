@@ -2,96 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9785FC0015E
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 20:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADBF4C0015E
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 20:39:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234439AbjHIUfA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 16:35:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33642 "EHLO
+        id S234754AbjHIUjg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 16:39:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234176AbjHIUfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 16:35:00 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8015A210D
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 13:34:57 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-583a8596e2aso3758767b3.1
-        for <git@vger.kernel.org>; Wed, 09 Aug 2023 13:34:57 -0700 (PDT)
+        with ESMTP id S234752AbjHIUjU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 16:39:20 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EBA72D79
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 13:38:56 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-586a3159588so3374997b3.0
+        for <git@vger.kernel.org>; Wed, 09 Aug 2023 13:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691613296; x=1692218096;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UxGQhBYaBwWbiW+29h8rgDvam6Lh5BTrkMwgzZ+zKKU=;
-        b=17wFOd4uJ2OmnM2jnfFwO1HA32ON96GI7VBKk/wNCKKCwJutUYipx+fUfGIan6t9kN
-         GUygXQbeo6PYGghoQs0g8BpZ+/2XDH2xM+Own6dYbA5fA5Zsr83voN3PhPhPFVPGKhkq
-         rfBQv2WdoqkmbtajZL670sMrrc8+alwfVY8VQPcAua5+h9RCBjBEo7pMCVfIgzHVKoK+
-         6BThnRv5CIbPDp3O0J36Yx3cYCHaK2KemXdekXmNGdg5i4vYGSSLr6+wcjv4401gpG+6
-         QU6FJ96aTni83evn45fY4AeY6DSa0r/yBDwN1gsDX7AVFamDXq2RLFuBCer0OtyBH7ON
-         oI5A==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691613509; x=1692218309;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3E7rMMT1BrQFH2PRKWBDWxJCVmnGUekzyEFVHfr7rNk=;
+        b=3RbD3UAdchBZ2cxIhHxtY0IGv0EZaNaEKbjP2E+y8sCn7/eJkod9uWlMAUCVd1XKG9
+         8QpI4txJ8EuvWP3eBq4i1Ed2KJr+lDDaPrfd822dXU2eYcuOM+gvDEwoo2eM9JWYqSih
+         uOgfhfNfg8poosi+cZtCs13cZHbzYFptGnksAwfhtuSb9VH/5X0tqYCxbScigTIeZVRK
+         pWWPFgcgQMbni3DoaS1Z6vVutJqK8joAlPbxfD5rJNDAA+JL4BSdylas5Y48T94pEW0m
+         6M41DFqMlRrW1ztU1JLqBGieoIXVbtUgN4OsHVFfHB3uhVy677RpqWHQyMwW1mkn5lB8
+         Mz8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691613296; x=1692218096;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UxGQhBYaBwWbiW+29h8rgDvam6Lh5BTrkMwgzZ+zKKU=;
-        b=d/lCrynX41wVKY7N9cGN0sg79+i/ABy/SEcMrKm0M5E6gNvZh7XBBoVIVa6mYm4VAE
-         ASNR08r4ds7rmmTwhq30JNPx8vCzlfs4CR2tcgoy0py3wnIkUUeHYELp3wX2kdcAGBN3
-         aqaqUp2V5k7BuIQ0qkqPrPKIWKk5KOnJaAERcMyStbrIStB8IyhB+3XPJM/q3963ZK7N
-         F9CZSL+7rxkv5smnibLDONZnWKp8F5dvs74FNU7NBu9ZslfDNdeJZxnm1q1dg0iu3FUw
-         65q4pZQrgI9x0lziLYNTzoRA4Df3zppL+Wgm1BkeB5MBFsCIsNvNbyAtfr7jsqDwOwnQ
-         6Ruw==
-X-Gm-Message-State: AOJu0Yx5F76HGUEm8nlinySTvVltc9hLVoxsGnCCYTNGZSr8Yri949Um
-        jMg7Mr4r5Og9o7WE6w/d/npexMwNwpWhpcGT4LcftQ==
-X-Google-Smtp-Source: AGHT+IEPfIVgirjG5t7YOHVSDyK23NQEJiu1TYdo8Lx0DyeORkWqPRcewiMJjWnBX4rBFSTKfFhxQQ==
-X-Received: by 2002:a81:77d6:0:b0:583:a590:cd66 with SMTP id s205-20020a8177d6000000b00583a590cd66mr355964ywc.4.1691613296551;
-        Wed, 09 Aug 2023 13:34:56 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691613509; x=1692218309;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3E7rMMT1BrQFH2PRKWBDWxJCVmnGUekzyEFVHfr7rNk=;
+        b=H96SfxjDwJCw7jCmb/HNS96nlKjGXV9docemrWqtFaLDY8r8QCT/14sxOD9KYOfDgv
+         v36qymQRoQb2SaIPyM+5AadHn1A71P3UdbYPAZL7syoe+nuaaOtTANrmqkDMchTl0mot
+         C8bAC8Cds9i0bwZ7qQw6jgD6fOjPDBJvhhryNW9f8zmymzhumLqk1jSQpNjxcQUZP6ku
+         VRLhzLWfHwmWW7RQCD3ULk3+2e9rC9pNxzBIpnMrqvscy0HrPSMkrcVusO8diSajvOEd
+         Fiah3xUl8R1CxgBX3nSBpib5EvHM47osT+tO5tTONKXJawXDmA/5Bnodu5o8w5K8fOml
+         /xhQ==
+X-Gm-Message-State: AOJu0Yw9Grb7ZkOojFn4pvMgODEheIGKdYWJN7kLgZJ2p/e+jqVcQYFR
+        8txn4LDZPdU5X7UKWZgl/L9R/w==
+X-Google-Smtp-Source: AGHT+IGcugTnKRCFLuMpVi7HqEhYvDkLFBxvn3QD85W9UhsEtfyPFKVBR3k3kI5zZ9gWcz62V11xYw==
+X-Received: by 2002:a81:49d4:0:b0:56f:f0db:759a with SMTP id w203-20020a8149d4000000b0056ff0db759amr569ywa.13.1691613509228;
+        Wed, 09 Aug 2023 13:38:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s9-20020a81bf49000000b0054bfc94a10dsm4127915ywk.47.2023.08.09.13.34.56
+        by smtp.gmail.com with ESMTPSA id d17-20020a0ddb11000000b00586108dd8f5sm4214546ywe.18.2023.08.09.13.38.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 13:34:56 -0700 (PDT)
-Date:   Wed, 9 Aug 2023 16:34:55 -0400
+        Wed, 09 Aug 2023 13:38:28 -0700 (PDT)
+Date:   Wed, 9 Aug 2023 16:38:28 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net, lenaic@lhuard.fr
-Subject: Re: [PATCH 1/6] maintenance: add get_random_minute()
-Message-ID: <ZNP4b8/QF73F3ySU@nand.local>
-References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
- <fefdaa9457948ee5302e7cbfaae250e0b589d752.1691434300.git.gitgitgadget@gmail.com>
- <ZNFgIyuhlNd8I9Y2@nand.local>
- <8854e369-fabb-4044-a06c-eaf5b9fbde4a@github.com>
- <ZNKfxOWJAuJ5DxAN@nand.local>
- <a1e7d730-e220-48ec-8393-2d3538b80163@github.com>
- <xmqq7cq4nj7l.fsf@gitster.g>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 5/8] repack: add `--filter=<filter-spec>` option
+Message-ID: <ZNP5RNJgTU698ra6@nand.local>
+References: <20230614192541.1599256-1-christian.couder@gmail.com>
+ <20230705060812.2865188-1-christian.couder@gmail.com>
+ <20230705060812.2865188-6-christian.couder@gmail.com>
+ <xmqqh6qi1byn.fsf@gitster.g>
+ <CAP8UFD0aa+EZQ2Q=C2WjWrNL9desg-KLLjOKS8BUBR4DS1ytsQ@mail.gmail.com>
+ <xmqqila9p3j8.fsf@gitster.g>
+ <CAP8UFD3b6gCog5P7WKzTuPQV2Lhf51=xO7ys+W7o0pGewJMcFg@mail.gmail.com>
+ <xmqqcz0fnbs8.fsf@gitster.g>
+ <xmqqo7jzh9mh.fsf@gitster.g>
+ <CAP8UFD1eX8JMd91Say_sC7h_V08oRq32Wu9RM+SFtAQnhRPO2w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7cq4nj7l.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD1eX8JMd91Say_sC7h_V08oRq32Wu9RM+SFtAQnhRPO2w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 09, 2023 at 11:50:38AM -0700, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
->
-> >> Instead of using srand() and rand() (which would make sense to wrap with
-> >> git_rand() as you propose), we can simplify our lives by using a CSPRNG,
-> >> which only gets initialized once, as is already the case with
-> >> csprng_bytes().
+On Tue, Aug 08, 2023 at 10:45:48AM +0200, Christian Couder wrote:
+> On Wed, Jul 26, 2023 at 1:09 AM Junio C Hamano <gitster@pobox.com> wrote:
 > >
-> > So the idea is to use csprng_bytes() everywhere instead of srand()/rand().
+> > Junio C Hamano <gitster@pobox.com> writes:
 > >
-> > I can adjust my local patch to still create git_rand(), but base it on
-> > csprng_bytes() and not collide with your patch. Mimicking rand()'s behavior
-> > is a simpler interface to consume.
+> > > Thanks for walking through the codepaths involved.  We are good
+> > > then.
+> >
+> > Sorry, but not so fast.
+> >
+> > https://github.com/git/git/actions/runs/5661445152 (seen with this topic)
+> > https://github.com/git/git/actions/runs/5662517690 (seen w/o this topic)
+> >
+> > The former fails t7700 in the linux-TEST-vars job, while the latter
+> > passes the same job.
 >
-> I am still ambivalent about wasting entropy for something that
-> srand() would suffice, so git_rand() interface may be an welcome
-> addition anyway, that serves an extra layer of indirection to
-> insulate the callers from the implementation.
+> I think this was because I added the following test:
+>
+> +test_expect_success '--filter fails with --write-bitmap-index' '
+> +    test_must_fail git -C bare.git repack -a -d --write-bitmap-index \
+> +        --filter=blob:none &&
+> +
+> +    git -C bare.git repack -a -d --no-write-bitmap-index \
+> +        --filter=blob:none
+> +'
+>
+> which fails because in the linux-TEST-vars job the
+> GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP env variable is set to 1 and
+> this counteracts the `--write-bitmap-index` option.
 
-Sounds good to me, I'm not particularly attached to one implementation
-over another. Thanks, both.
+Makes sense. That linux-TEST-vars job always seems to get me, too.
+
+(As an aside, and definitely not related to your patch here, I wonder if
+we should consider dropping some of the older TEST variables that belong
+to features that we no longer consider experimental).
+
+> I have tried to fix it like this:
+>
+> +test_expect_success '--filter fails with --write-bitmap-index' '
+> +    GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 test_must_fail git -C
+> bare.git repack \
+> +        -a -d --write-bitmap-index --filter=blob:none
+> +'
+>
+> but I haven't been able to check that this works on CI as all the job
+> seems to fail these days before they even start:
+
+I think the cannonical way to do this is with env, like so:
+
+    test_must_fail env GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
+      git -C bare.git repack -ad --write-bitmap-index --filter=blob:none 2>err
 
 Thanks,
 Taylor
