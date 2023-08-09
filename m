@@ -2,94 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD02C04E69
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 17:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 051F0C04FE0
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 17:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232923AbjHIRPp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 13:15:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36106 "EHLO
+        id S232840AbjHIRPk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 13:15:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232768AbjHIRPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 13:15:38 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 813D71FFA
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 10:15:38 -0700 (PDT)
+        with ESMTP id S232810AbjHIRPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 13:15:37 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50A511FF7
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 10:15:35 -0700 (PDT)
 Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 33AF324316;
+        by bluemchen.kde.org (Postfix) with ESMTP id 0467D24313;
         Wed,  9 Aug 2023 13:15:32 -0400 (EDT)
 Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qTmmR-lEk-00; Wed, 09 Aug 2023 19:15:31 +0200
+        id 1qTmmR-lEM-00; Wed, 09 Aug 2023 19:15:31 +0200
 From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 1/3] rebase: simplify code related to imply_merge()
-Date:   Wed,  9 Aug 2023 19:15:29 +0200
-Message-Id: <20230809171531.2564844-2-oswald.buddenhagen@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] sequencer: rectify empty hint in call of require_clean_work_tree()
+Date:   Wed,  9 Aug 2023 19:15:31 +0200
+Message-Id: <20230809171531.2564829-1-oswald.buddenhagen@gmx.de>
 X-Mailer: git-send-email 2.40.0.152.g15d061e6df
-In-Reply-To: <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
-References: <xmqqiler8cga.fsf@gitster.g>
- <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
+In-Reply-To: <xmqqa5v2ehba.fsf@gitster.g>
+References: <xmqqa5v2ehba.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code's evolution left in some bits surrounding enum rebase_type that
-don't really make sense any more. In particular, it makes no sense to
-invoke imply_merge() if the type is already known not to be
-REBASE_APPLY, and it makes no sense to assign the type after calling
-imply_merge().
+The canonical way to represent "no error hint" is making it NULL, which
+shortcuts the error() call altogether. This fixes the output by removing
+the line which said just "error:", which would appear when starting a
+rebase whose initial checkout worked fine despite a dirty worktree. This
+was introduced by 97e1873 (rebase -i: rewrite complete_action() in C,
+2018-08-28), which did a somewhat inaccurate conversion from shell.
 
-enum rebase_type had more values until commit a74b35081c ("rebase: drop
-support for `--preserve-merges`") and commit 10cdb9f38a ("rebase: rename
-the two primary rebase backends"). The latter commit also renamed
-imply_interactive() to imply_merge().
+To avoid that such bugs re-appear, test for the condition in
+require_clean_work_tree().
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-
 ---
+v3:
+- added BUG()
+- rewrote commit message again
 v2:
-- more verbose commit message
+- expanded commit message
 
 Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>
 ---
- builtin/rebase.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ sequencer.c | 2 +-
+ wt-status.c | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 50cb85751f..44cc1eed12 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -386,7 +386,6 @@ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+diff --git a/sequencer.c b/sequencer.c
+index cc9821ece2..d15a7409d8 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6182,7 +6182,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
+ 		goto cleanup;
  
- 	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
- 	opts->keep_empty = !unset;
--	opts->type = REBASE_MERGE;
- 	return 0;
- }
+-	if (require_clean_work_tree(r, "rebase", "", 1, 1))
++	if (require_clean_work_tree(r, "rebase", NULL, 1, 1))
+ 		goto cleanup;
  
-@@ -1505,9 +1504,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		}
+ 	todo_list_write_total_nr(&new_todo);
+diff --git a/wt-status.c b/wt-status.c
+index 8a1a4fb1f0..c8c1780566 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2654,8 +2654,12 @@ int require_clean_work_tree(struct repository *r,
  	}
  
--	if (options.type == REBASE_MERGE)
--		imply_merge(&options, "--merge");
--
- 	if (options.root && !options.onto_name)
- 		imply_merge(&options, "--root without --onto");
- 
-@@ -1552,7 +1548,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	if (options.type == REBASE_UNSPECIFIED) {
- 		if (!strcmp(options.default_backend, "merge"))
--			imply_merge(&options, "--merge");
-+			options.type = REBASE_MERGE;
- 		else if (!strcmp(options.default_backend, "apply"))
- 			options.type = REBASE_APPLY;
- 		else
+ 	if (err) {
+-		if (hint)
++		if (hint) {
++			if (!*hint)
++				BUG("empty hint passed to require_clean_work_tree();"
++				    " use NULL instead");
+ 			error("%s", hint);
++		}
+ 		if (!gently)
+ 			exit(128);
+ 	}
 -- 
 2.40.0.152.g15d061e6df
 
