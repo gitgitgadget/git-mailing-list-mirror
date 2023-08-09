@@ -2,135 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADBF4C0015E
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 20:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BADC4C0015E
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 20:52:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234754AbjHIUjg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 16:39:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
+        id S231518AbjHIUvz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 16:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234752AbjHIUjU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 16:39:20 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EBA72D79
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 13:38:56 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-586a3159588so3374997b3.0
-        for <git@vger.kernel.org>; Wed, 09 Aug 2023 13:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691613509; x=1692218309;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3E7rMMT1BrQFH2PRKWBDWxJCVmnGUekzyEFVHfr7rNk=;
-        b=3RbD3UAdchBZ2cxIhHxtY0IGv0EZaNaEKbjP2E+y8sCn7/eJkod9uWlMAUCVd1XKG9
-         8QpI4txJ8EuvWP3eBq4i1Ed2KJr+lDDaPrfd822dXU2eYcuOM+gvDEwoo2eM9JWYqSih
-         uOgfhfNfg8poosi+cZtCs13cZHbzYFptGnksAwfhtuSb9VH/5X0tqYCxbScigTIeZVRK
-         pWWPFgcgQMbni3DoaS1Z6vVutJqK8joAlPbxfD5rJNDAA+JL4BSdylas5Y48T94pEW0m
-         6M41DFqMlRrW1ztU1JLqBGieoIXVbtUgN4OsHVFfHB3uhVy677RpqWHQyMwW1mkn5lB8
-         Mz8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691613509; x=1692218309;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3E7rMMT1BrQFH2PRKWBDWxJCVmnGUekzyEFVHfr7rNk=;
-        b=H96SfxjDwJCw7jCmb/HNS96nlKjGXV9docemrWqtFaLDY8r8QCT/14sxOD9KYOfDgv
-         v36qymQRoQb2SaIPyM+5AadHn1A71P3UdbYPAZL7syoe+nuaaOtTANrmqkDMchTl0mot
-         C8bAC8Cds9i0bwZ7qQw6jgD6fOjPDBJvhhryNW9f8zmymzhumLqk1jSQpNjxcQUZP6ku
-         VRLhzLWfHwmWW7RQCD3ULk3+2e9rC9pNxzBIpnMrqvscy0HrPSMkrcVusO8diSajvOEd
-         Fiah3xUl8R1CxgBX3nSBpib5EvHM47osT+tO5tTONKXJawXDmA/5Bnodu5o8w5K8fOml
-         /xhQ==
-X-Gm-Message-State: AOJu0Yw9Grb7ZkOojFn4pvMgODEheIGKdYWJN7kLgZJ2p/e+jqVcQYFR
-        8txn4LDZPdU5X7UKWZgl/L9R/w==
-X-Google-Smtp-Source: AGHT+IGcugTnKRCFLuMpVi7HqEhYvDkLFBxvn3QD85W9UhsEtfyPFKVBR3k3kI5zZ9gWcz62V11xYw==
-X-Received: by 2002:a81:49d4:0:b0:56f:f0db:759a with SMTP id w203-20020a8149d4000000b0056ff0db759amr569ywa.13.1691613509228;
-        Wed, 09 Aug 2023 13:38:29 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d17-20020a0ddb11000000b00586108dd8f5sm4214546ywe.18.2023.08.09.13.38.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 13:38:28 -0700 (PDT)
-Date:   Wed, 9 Aug 2023 16:38:28 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 5/8] repack: add `--filter=<filter-spec>` option
-Message-ID: <ZNP5RNJgTU698ra6@nand.local>
-References: <20230614192541.1599256-1-christian.couder@gmail.com>
- <20230705060812.2865188-1-christian.couder@gmail.com>
- <20230705060812.2865188-6-christian.couder@gmail.com>
- <xmqqh6qi1byn.fsf@gitster.g>
- <CAP8UFD0aa+EZQ2Q=C2WjWrNL9desg-KLLjOKS8BUBR4DS1ytsQ@mail.gmail.com>
- <xmqqila9p3j8.fsf@gitster.g>
- <CAP8UFD3b6gCog5P7WKzTuPQV2Lhf51=xO7ys+W7o0pGewJMcFg@mail.gmail.com>
- <xmqqcz0fnbs8.fsf@gitster.g>
- <xmqqo7jzh9mh.fsf@gitster.g>
- <CAP8UFD1eX8JMd91Say_sC7h_V08oRq32Wu9RM+SFtAQnhRPO2w@mail.gmail.com>
+        with ESMTP id S230009AbjHIUvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 16:51:54 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C35196
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 13:51:54 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 805D21899ED;
+        Wed,  9 Aug 2023 16:51:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rRencTPuxgbCi44kYOf2aj0w1qNADeNHCrXZPG
+        ke2lE=; b=Of6vPWrd4Uucn3qeqwVm2FdY4nA88dvkaGFBpPvkX4qWhkzcWpvG4i
+        bMfBtd0UsDiFnzf1AW0Vu5CFIG9yFM5GbywIEM9gnti1maczPXZOnvuFxCOQIHS+
+        JPtO+tk7HpqUR9BGNgoMqhLc+vFAQx3EfqsZiurFGMLXUOQf5YCQY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78CE71899EB;
+        Wed,  9 Aug 2023 16:51:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DE3DD1899EA;
+        Wed,  9 Aug 2023 16:51:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2] sequencer: simplify allocation of result array in
+ todo_list_rearrange_squash()
+References: <20230809171532.2564880-1-oswald.buddenhagen@gmx.de>
+Date:   Wed, 09 Aug 2023 13:51:51 -0700
+In-Reply-To: <20230809171532.2564880-1-oswald.buddenhagen@gmx.de> (Oswald
+        Buddenhagen's message of "Wed, 9 Aug 2023 19:15:32 +0200")
+Message-ID: <xmqqsf8skkgo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD1eX8JMd91Say_sC7h_V08oRq32Wu9RM+SFtAQnhRPO2w@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91B19D16-36F6-11EE-A723-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 08, 2023 at 10:45:48AM +0200, Christian Couder wrote:
-> On Wed, Jul 26, 2023 at 1:09 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > > Thanks for walking through the codepaths involved.  We are good
-> > > then.
-> >
-> > Sorry, but not so fast.
-> >
-> > https://github.com/git/git/actions/runs/5661445152 (seen with this topic)
-> > https://github.com/git/git/actions/runs/5662517690 (seen w/o this topic)
-> >
-> > The former fails t7700 in the linux-TEST-vars job, while the latter
-> > passes the same job.
->
-> I think this was because I added the following test:
->
-> +test_expect_success '--filter fails with --write-bitmap-index' '
-> +    test_must_fail git -C bare.git repack -a -d --write-bitmap-index \
-> +        --filter=blob:none &&
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+
+>  	if (rearranged) {
+> +		ALLOC_ARRAY(items, todo_list->nr);
 > +
-> +    git -C bare.git repack -a -d --no-write-bitmap-index \
-> +        --filter=blob:none
-> +'
->
-> which fails because in the linux-TEST-vars job the
-> GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP env variable is set to 1 and
-> this counteracts the `--write-bitmap-index` option.
+>  		for (i = 0; i < todo_list->nr; i++) {
+>  			enum todo_command command = todo_list->items[i].command;
+>  			int cur = i;
+> @@ -6357,16 +6359,15 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+>  				continue;
+>  
+>  			while (cur >= 0) {
+> -				ALLOC_GROW(items, nr + 1, alloc);
+>  				items[nr++] = todo_list->items[cur];
+>  				cur = next[cur];
+>  			}
+>  		}
+>  
+> +		assert(nr == todo_list->nr);
 
-Makes sense. That linux-TEST-vars job always seems to get me, too.
+The assert() made me wonder what kind of bugs we are worried about.
 
-(As an aside, and definitely not related to your patch here, I wonder if
-we should consider dropping some of the older TEST variables that belong
-to features that we no longer consider experimental).
+The next[] array elements are initialized to -1 and then gets "i"
+that runs (0..todo_list->nr) and get shuffled among the elements of
+the same array, so next[cur] reference in the while loop we see
+above will always be within (0..todo_list->nr).  It is trivial to
+see that the items[] array that is preallocated so that it can hold
+up to todo_list->nr items is large enough.
 
-> I have tried to fix it like this:
->
-> +test_expect_success '--filter fails with --write-bitmap-index' '
-> +    GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 test_must_fail git -C
-> bare.git repack \
-> +        -a -d --write-bitmap-index --filter=blob:none
-> +'
->
-> but I haven't been able to check that this works on CI as all the job
-> seems to fail these days before they even start:
+But the condition of the assert() is even stronger.  We want to make
+sure we did not drop any original items in the todo_list, as the
+objective of this helper function is to shuffle the insns and
+selectively turn "pick 01234567 fixup! title of another commit"
+into "fixup 01234567 fixup! title of another commit".  There is no
+reason we should have fewer elements in the result.
 
-I think the cannonical way to do this is with env, like so:
+All makes sense.  Nice.
 
-    test_must_fail env GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
-      git -C bare.git repack -ad --write-bitmap-index --filter=blob:none 2>err
+Thanks, will queue.
 
-Thanks,
-Taylor
+
+
+
+> +		todo_list->alloc = nr;
+>  		FREE_AND_NULL(todo_list->items);
+>  		todo_list->items = items;
+> -		todo_list->nr = nr;
+> -		todo_list->alloc = alloc;
+>  	}
+>  
+>  	free(next);
