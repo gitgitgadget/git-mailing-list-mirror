@@ -2,103 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9057AEB64DD
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 13:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B75CEB64DD
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 13:15:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbjHINIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 09:08:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60212 "EHLO
+        id S232734AbjHINPc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 09:15:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjHINIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 09:08:09 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD5C10FB
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 06:08:08 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3175f17a7baso5111271f8f.0
-        for <git@vger.kernel.org>; Wed, 09 Aug 2023 06:08:08 -0700 (PDT)
+        with ESMTP id S229803AbjHINPb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 09:15:31 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC1EE5F
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 06:15:30 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe1a17f983so57464985e9.3
+        for <git@vger.kernel.org>; Wed, 09 Aug 2023 06:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691586487; x=1692191287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=gmail.com; s=20221208; t=1691586928; x=1692191728;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=215ELyogPtD67MCU2Fo0upDMzvPcu4mMk9bpj2gKdM8=;
-        b=GGmcW2M7/TqQW9pYfnCAyWYkFaHss7ndxVsNCLVmi05CINPHqA0ZTflDumqCt+HqF6
-         VBfsNWcFC8feMZ7DWpUeWLX4P4/p8dN4XMplWZnLVcY6H/g6bG9N9fVv2Z5rdkycq+Lu
-         quGOLirZRgg3hfCqZg1F0ju7LmcxyNpKOvcY3RLUxJ7SK2ErsZXWfBL2BvOUthWsRP7M
-         UO0b+X9ddUdIX4q/Mk5xhFTQzOzcjFdFyGb6NllnhYHafXuBxq4UtqI8Uk5uOSzsM16n
-         RQGa7HQzVnqcM+C15iDtrj7hZ/Mk/6H08QNXYK6PfOHpzeN2nnBakcAoxgYIL8aemw28
-         +G5g==
+        bh=Q1efreTC8jEWcB1EGgeVfKK2SOxfq3GMzTIirwcQOAk=;
+        b=QPuJD+fd7WBL0SMa+aa5yq3XcVpXRJ1101bTYP230KEQkqg2PCfwwFw4BwbJ1DxceB
+         WL9IMPuPJPBy0+eSryPhlP1DzhokwY+nqgQ1mi1KLieKgKa/Rz0vJUM/jtjh/Gvbdjev
+         EdBwN13WyomciBtwtg8m2YZpx9OPH0oY/mo9Ap1RdJLz8lJVcujH4Z/B1Uc3aSDj/Cnt
+         NJjvcskIdkvbbcAt2EwtffRKyCMh4g+Rol1S0k2M6Tnw+sERSgpf8yJSgVtKfb7X1cBS
+         vzcGNhLKU060CfZUFh0nErtjqQO8R2usP6p4vManJimTkGd/f4YRUCqWE6U6ue8TyN2Z
+         HVLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691586487; x=1692191287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1691586928; x=1692191728;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=215ELyogPtD67MCU2Fo0upDMzvPcu4mMk9bpj2gKdM8=;
-        b=giN3zdaa/vnUmkhDQ4qRLQLK5R9V2eQ+22aTJcURvUzHyN7kxnT0RRWnP0cuqDs1P5
-         ySIW5vvwVjEksMB6N6ChPbyIpwH6zZxOHCrLlYpoT9BNoZnB4hw7muID3aswSb7o1kLH
-         h+XE9M7GVavWYDA65Sc34/ES7rDMVK10C976/Gk2Zo9SNEByl2h2ACqcZMn6hsK4FFVy
-         lPqnZJYXDzwvbiFlDTZzFQ1Kfc4COLEpb5wcbYNbkG4u3C4Az/etm05NYEc8dwi1B0B/
-         JxTjlwPb5LZClcv/ee9jdp6CVwATMyl9SN1MXfjdoKvG+Z0I+YRtE4zXng9H36BUw4Y1
-         m/nw==
-X-Gm-Message-State: AOJu0YyBgqqx61P3evAZtel5UncXSZiWaKYSE5ua+IDX5xGVlWx5WWmW
-        erNgZXCqFCpYgXfXeAjpoLs=
-X-Google-Smtp-Source: AGHT+IHolQ4j5LHkFpsv3s7dUA9ZCMIIuZXnvUQ0qzuCUFw2GgYkSrCONZe3esTbaz7TAoxqXOEKqw==
-X-Received: by 2002:adf:ea05:0:b0:317:c9ad:e96c with SMTP id q5-20020adfea05000000b00317c9ade96cmr1734166wrm.15.1691586486905;
-        Wed, 09 Aug 2023 06:08:06 -0700 (PDT)
+        bh=Q1efreTC8jEWcB1EGgeVfKK2SOxfq3GMzTIirwcQOAk=;
+        b=Brv+QAXDDwYI+OIU5KkEDSnC+IxPR0ZkPUYix6koF6KidBEGe3Y2gfxUEjWYIoWxHi
+         bICr9qLLB2efCRK2MyGJzFft9p0L7CedU8hx8AlyLd4nU8HIJ3YBEmcRd/SRxZRjWL8x
+         ZBbPmlrnFuUtAlHoKg6yh5pb+IAf0Oz1cPzrPWzLtRWjD8H2UmRr5EY0fQ4jBW+AAP5F
+         W1Us6SiQM98S9FKTFunP0+uWlsDKcyZ+D9QBtTa6e+F7+zAEmxjlX2dIKLloF3Cuz2Uw
+         H26amtwleI4VIQ+fysIQ80UImHDZBwZaMUbL5Ma4Uh46Tbdsim96BNQu+/sv/bhTeTZb
+         viEQ==
+X-Gm-Message-State: AOJu0Yx1rQJHShhyAUBAemlBCemZI4EIvN4a4kqaojo6uqh5M0YKCbBP
+        EJwFu2Ff06RuPs9nTXGXXiE=
+X-Google-Smtp-Source: AGHT+IHTl5nwFv6JvbeNldC16i/POIdwJMqMf0QAbVlR2pvfeMm8Sxc38XMofUsrA8v/rHWP+KRnkw==
+X-Received: by 2002:a5d:5652:0:b0:313:e456:e64a with SMTP id j18-20020a5d5652000000b00313e456e64amr1745990wrw.21.1691586928522;
+        Wed, 09 Aug 2023 06:15:28 -0700 (PDT)
 Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id s18-20020adfeb12000000b0031779a6b451sm16763213wrn.83.2023.08.09.06.08.06
+        by smtp.googlemail.com with ESMTPSA id s18-20020adfeb12000000b0031779a6b451sm16763213wrn.83.2023.08.09.06.15.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 06:08:06 -0700 (PDT)
-Message-ID: <dd07a578-9a8e-062d-11f8-7c969b026cb3@gmail.com>
-Date:   Wed, 9 Aug 2023 14:08:06 +0100
+        Wed, 09 Aug 2023 06:15:28 -0700 (PDT)
+Message-ID: <6e40eb0b-2331-1e39-bee0-c9720c24d1c8@gmail.com>
+Date:   Wed, 9 Aug 2023 14:15:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/7] rebase -i: impove handling of failed commands
+Subject: Re: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Haller <lists@haller-berlin.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
- <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
- <xmqq8rat6qou.fsf@gitster.g>
+To:     tboegi@web.de, git@vger.kernel.org, friebetill@gmail.com
+References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
+ <20230808172624.14205-1-tboegi@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq8rat6qou.fsf@gitster.g>
+In-Reply-To: <20230808172624.14205-1-tboegi@web.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/08/2023 23:10, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>    sequencer: factor out part of pick_commits()
->>    rebase: fix rewritten list for failed pick
->>    rebase --continue: refuse to commit after failed command
->>    rebase -i: fix adding failed command to the todo list
-> 
-> I'd really prefer to see the latter half of the series reviewed
-> (both for the design and its implementation) by those who have more
-> stake in the sequencer code than myself.
+Hi Torsten
 
-Dscho do you think you will have time to look at the last four patches 
-after 2.42.0 is released?
+Thanks for working on this. I've cc'd Junio for his unpack_trees() 
+knowledge.
 
-Many Thanks
+On 08/08/2023 18:26, tboegi@web.de wrote:
+> From: Torsten Bögershausen <tboegi@web.de>
+> 
+> The following sequence leads to loss of work:
+>   git init
+>   mkdir README
+>   touch README/README
+>   git add .
+>   git commit -m "Init project"
+>   echo "Test" > README/README
+>   mv README/README README2
+>   rmdir README
+>   mv README2 README
+>   git stash
+>   git stash pop
+> 
+> The problem is, that `git stash` needs to create the directory README/
+> and to be able to do this, the file README needs to be removed.
+> And this is, where the work was lost.
+> There are different possibilities preventing this loss of work:
+> a)
+>    `git stash` does refuse the removel of the untracked file,
+>     when a directory with the same name needs to be created
+>    There is a small problem here:
+>    In the ideal world, the stash would do nothing at all,
+>    and not do anything but complain.
+>    The current code makes this hard to achieve
+>    An other solution could be to do as much stash work as possible,
+>    but stop when the file/directory conflict is detected.
+>    This would create some inconsistent state.
+> 
+> b) Create the directory as needed, but rename the file before doing that.
+>    This would let the `git stash` proceed as usual and create a "new" file,
+>    which may be surprising for some worlflows.
+> 
+> This change goes for b), as it seems the most intuitive solution for
+> Git users.
+> 
+> Introdue a new function rename_to_untracked_or_warn() and use it
+> in create_directories() in entry.c
+
+Although this change is framed in terms of changes to "git stash push" I 
+think the underlying issue and this patch actually affects all users of 
+unpack_trees(). For example if "README" is untracked then
+
+	git checkout <rev> README
+
+will currently fail if <rev>:README is a blob but will succeed and 
+remove the untracked file if <rev>:README is a tree.
+
+I'm far from an expert in this area but I think we might want to 
+understand why unpack_trees() sets state->force when it calls 
+checkout_entry() before making any changes.
+
+Best Wishes
 
 Phillip
 
-> I just noticed that we have a question on the last step left
-> unanswered since the very initial iteration.
+> Reported-by: Till Friebe <friebetill@gmail.com>
+> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> ---
+>   entry.c          | 25 ++++++++++++++++++++++++-
+>   t/t3903-stash.sh | 23 +++++++++++++++++++++++
+>   2 files changed, 47 insertions(+), 1 deletion(-)
 > 
-> cf. https://lore.kernel.org/git/f05deb00-1bcd-9e05-739f-6a30d6d8cf3b@gmx.de/
+> diff --git a/entry.c b/entry.c
+> index 43767f9043..76d8a0762d 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -15,6 +15,28 @@
+>   #include "entry.h"
+>   #include "parallel-checkout.h"
 > 
-> Thanks.
+> +static int rename_to_untracked_or_warn(const char *file)
+> +{
+> +	const size_t file_name_len = strlen(file);
+> +	const static char *dot_untracked = ".untracked";
+> +	const size_t dot_un_len = strlen(dot_untracked);
+> +	struct strbuf sb;
+> +	int ret;
+> +
+> +	strbuf_init(&sb, file_name_len + dot_un_len);
+> +	strbuf_add(&sb, file, file_name_len);
+> +	strbuf_add(&sb, dot_untracked, dot_un_len);
+> +	ret = rename(file, sb.buf);
+> +
+> +	if (ret) {
+> +		int saved_errno = errno;
+> +		warning_errno(_("unable rename '%s' into '%s'"), file, sb.buf);
+> +		errno = saved_errno;
+> +	}
+> +	strbuf_release(&sb);
+> +	return ret;
+> +}
+> +
+>   static void create_directories(const char *path, int path_len,
+>   			       const struct checkout *state)
+>   {
+> @@ -48,7 +70,8 @@ static void create_directories(const char *path, int path_len,
+>   		 */
+>   		if (mkdir(buf, 0777)) {
+>   			if (errno == EEXIST && state->force &&
+> -			    !unlink_or_warn(buf) && !mkdir(buf, 0777))
+> +			    !rename_to_untracked_or_warn(buf) &&
+> +			    !mkdir(buf, 0777))
+>   				continue;
+>   			die_errno("cannot create directory at '%s'", buf);
+>   		}
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 0b3dfeaea2..1a210f8a5a 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1512,4 +1512,27 @@ test_expect_success 'restore untracked files even when we hit conflicts' '
+>   	)
+>   '
+> 
+> +test_expect_success 'stash mkdir README needed - README.untracked created' '
+> +	git init mkdir_needed_file_untracked &&
+> +	(
+> +		cd mkdir_needed_file_untracked &&
+> +		mkdir README &&
+> +		touch README/README &&
+> +		git add . &&
+> +		git commit -m "Add README/README" &&
+> +		echo Version2 > README/README &&
+> +		mv README/README README2 &&
+> +		rmdir README &&
+> +		mv README2 README &&
+> +		git stash &&
+> +		test_path_is_file README.untracked &&
+> +		echo Version2 >expect &&
+> +		test_cmp expect README.untracked &&
+> +		rm expect &&
+> +		git stash pop &&
+> +		test_path_is_file README.untracked &&
+> +		echo Version2 >expect &&
+> +		test_cmp expect README.untracked
+> +	)
+> +'
+>   test_done
+> --
+> 2.41.0.394.ge43f4fd0bd
+> 
 
