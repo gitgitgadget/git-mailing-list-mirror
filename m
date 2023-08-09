@@ -2,147 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF74FC001E0
-	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 17:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BFD1C04A94
+	for <git@archiver.kernel.org>; Wed,  9 Aug 2023 17:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232762AbjHIRPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 13:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36046 "EHLO
+        id S232813AbjHIRPi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Aug 2023 13:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjHIRPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 13:15:34 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C151FF7
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 10:15:33 -0700 (PDT)
+        with ESMTP id S232768AbjHIRPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2023 13:15:36 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECBA1FF5
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 10:15:35 -0700 (PDT)
 Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 905F824267;
+        by bluemchen.kde.org (Postfix) with ESMTP id B635D24310;
         Wed,  9 Aug 2023 13:15:31 -0400 (EDT)
 Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qTmmR-lDO-00; Wed, 09 Aug 2023 19:15:31 +0200
+        id 1qTmmR-lDl-00; Wed, 09 Aug 2023 19:15:31 +0200
 From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t9001: fix/unify indentation regarding pipes somewhat
+Cc:     Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 1/1] t/lib-rebase: improve documentation of set_fake_editor()
 Date:   Wed,  9 Aug 2023 19:15:31 +0200
-Message-Id: <20230809171531.2564769-1-oswald.buddenhagen@gmx.de>
+Message-Id: <20230809171531.2564785-2-oswald.buddenhagen@gmx.de>
 X-Mailer: git-send-email 2.40.0.152.g15d061e6df
+In-Reply-To: <20230809171531.2564785-1-oswald.buddenhagen@gmx.de>
+References: <8ce40f48-f36f-9e81-1a3f-9d8b170c4a0f@gmail.com>
+ <20230809171531.2564785-1-oswald.buddenhagen@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Always indent the continuation of a pipe, and do not indent the
-continuation of a compound statement (involving a pipe). This better
-reflects the precedence (and is thus potentially less misleading about
-the actual structure of the compound command) and better follows most
-existing precedents.
+Firstly, make it reflect better what actually happens. Not omitting some
+possibilities makes it easier to fully exploit them, and not
+contradicting the implementation makes it easier to grok and thus modify
+the code.
+
+Secondly, improve the overall structure, putting more general info
+further up.
+
+Thirdly, document `merge`, `fakesha`, and `break`, which were previously
+omitted entirely.
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
 ---
-There are also many cases of weirdly wrapped commands with the pipe in
-the middle of the line; I did not touch these.
+v2:
+- everything phillip asked for, i think. of course, it's still bullet
+  points, just without the punctuation - i wouldn't know what else to
+  do about it which would be an actual improvement.
 
-Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>
 ---
- t/t9001-send-email.sh | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ t/lib-rebase.sh | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 48bf0af2ee..c459311a60 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -61,8 +61,8 @@ test_no_confirm () {
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$@ \
- 		$patches >stdout &&
--		! grep "Send this email" stdout &&
--		>no_confirm_okay
-+	! grep "Send this email" stdout &&
-+	>no_confirm_okay
- }
- 
- # Exit immediately to prevent hang if a no-confirm test fails
-@@ -342,8 +342,8 @@ test_expect_success $PREREQ 'Prompting works' '
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches \
- 		2>errors &&
--		grep "^From: A U Thor <author@example.com>\$" msgtxt1 &&
--		grep "^To: to@example.com\$" msgtxt1
-+	grep "^From: A U Thor <author@example.com>\$" msgtxt1 &&
-+	grep "^To: to@example.com\$" msgtxt1
- '
- 
- test_expect_success $PREREQ,AUTOIDENT 'implicit ident is allowed' '
-@@ -1197,7 +1197,7 @@ test_expect_success $PREREQ 'utf8 Cc is rfc2047 encoded' '
- 	--smtp-server="$(pwd)/fake.sendmail" \
- 	outdir/*.patch &&
- 	grep "^	" msgtxt1 |
--	grep "=?UTF-8?q?=C3=A0=C3=A9=C3=AC=C3=B6=C3=BA?= <utf8@example.com>"
-+		grep "=?UTF-8?q?=C3=A0=C3=A9=C3=AC=C3=B6=C3=BA?= <utf8@example.com>"
- '
- 
- test_expect_success $PREREQ '--compose adds MIME for utf8 body' '
-@@ -1599,7 +1599,7 @@ test_expect_success $PREREQ 'setup expect' '
- test_expect_success $PREREQ 'ASCII subject is not RFC2047 quoted' '
- 	clean_fake_sendmail &&
- 	echo bogus |
--	git send-email --from=author@example.com --to=nobody@example.com \
-+		git send-email --from=author@example.com --to=nobody@example.com \
- 			--smtp-server="$(pwd)/fake.sendmail" \
- 			--8bit-encoding=UTF-8 \
- 			email-using-8bit >stdout &&
-@@ -1618,7 +1618,7 @@ test_expect_success $PREREQ 'setup expect' '
- test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
- 	clean_fake_sendmail &&
- 	echo |
--	git send-email --from=author@example.com --to=nobody@example.com \
-+		git send-email --from=author@example.com --to=nobody@example.com \
- 			--smtp-server="$(pwd)/fake.sendmail" \
- 			email-using-8bit >stdout &&
- 	grep "do not declare a Content-Transfer-Encoding" stdout &&
-@@ -1632,7 +1632,7 @@ test_expect_success $PREREQ 'sendemail.8bitEncoding works' '
- 	clean_fake_sendmail &&
- 	git config sendemail.assume8bitEncoding UTF-8 &&
- 	echo bogus |
--	git send-email --from=author@example.com --to=nobody@example.com \
-+		git send-email --from=author@example.com --to=nobody@example.com \
- 			--smtp-server="$(pwd)/fake.sendmail" \
- 			email-using-8bit >stdout &&
- 	grep -E "Content|MIME" msgtxt1 >actual &&
-@@ -1646,19 +1646,19 @@ test_expect_success $PREREQ 'sendemail.8bitEncoding in .git/config overrides --g
- 	mkdir home &&
- 	git config -f home/.gitconfig sendemail.assume8bitEncoding "bogus too" &&
- 	echo bogus |
--	env HOME="$(pwd)/home" DEBUG=1 \
--	git send-email --from=author@example.com --to=nobody@example.com \
-+		env HOME="$(pwd)/home" DEBUG=1 \
-+		git send-email --from=author@example.com --to=nobody@example.com \
- 			--smtp-server="$(pwd)/fake.sendmail" \
- 			email-using-8bit >stdout &&
- 	grep -E "Content|MIME" msgtxt1 >actual &&
- 	test_cmp content-type-decl actual
- '
- 
- test_expect_success $PREREQ '--8bit-encoding overrides sendemail.8bitEncoding' '
- 	clean_fake_sendmail &&
- 	git config sendemail.assume8bitEncoding "bogus too" &&
- 	echo bogus |
--	git send-email --from=author@example.com --to=nobody@example.com \
-+		git send-email --from=author@example.com --to=nobody@example.com \
- 			--smtp-server="$(pwd)/fake.sendmail" \
- 			--8bit-encoding=UTF-8 \
- 			email-using-8bit >stdout &&
-@@ -1687,7 +1687,7 @@ test_expect_success $PREREQ 'setup expect' '
- test_expect_success $PREREQ '--8bit-encoding also treats subject' '
- 	clean_fake_sendmail &&
- 	echo bogus |
--	git send-email --from=author@example.com --to=nobody@example.com \
-+		git send-email --from=author@example.com --to=nobody@example.com \
- 			--smtp-server="$(pwd)/fake.sendmail" \
- 			--8bit-encoding=UTF-8 \
- 			email-using-8bit >stdout &&
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 7ca5b918f0..133c856992 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -8,18 +8,21 @@
+ # - check that non-commit messages have a certain line count with $EXPECT_COUNT
+ # - check the commit count in the commit message header with $EXPECT_HEADER_COUNT
+ # - rewrite a rebase -i script as directed by $FAKE_LINES.
+-#   $FAKE_LINES consists of a sequence of words separated by spaces.
+-#   The following word combinations are possible:
++#   $FAKE_LINES consists of a sequence of words separated by spaces;
++#   spaces inside the words are encoded as underscores.
++#   The following words are possible:
+ #
+-#   "<lineno>" -- add a "pick" line with the SHA1 taken from the
+-#       specified line.
++#   "<cmd>" -- override the command for the next line specification. Can be
++#       "pick", "squash", "fixup[_-(c|C)]", "edit", "reword", "drop",
++#       "merge[_-{c|C}_<rev>]", or "bad" for an invalid command.
+ #
+-#   "<cmd> <lineno>" -- add a line with the specified command
+-#       ("pick", "squash", "fixup"|"fixup_-C"|"fixup_-c", "edit", "reword" or "drop")
+-#       and the SHA1 taken from the specified line.
++#   "<lineno>" -- add a command, using the specified line as a template.
++#       If the command has not been overridden, the line will be copied
++#       verbatim, usually resulting in a "pick" line.
+ #
+-#   "_" -- add a space, like "fixup_-C" implies "fixup -C" and
+-#       "exec_cmd_with_args" add an "exec cmd with args" line.
++#   "fakesha" -- add a command ("pick" by default), using a fake SHA1.
++#
++#   "exec_[command...]", "break" -- add the specified command.
+ #
+ #   "#" -- Add a comment line.
+ #
 -- 
 2.40.0.152.g15d061e6df
 
