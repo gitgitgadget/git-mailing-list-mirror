@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F805C001B0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 22:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD2F9C001DE
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 22:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231681AbjHJWFO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 18:05:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59462 "EHLO
+        id S232434AbjHJWgL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 18:36:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231400AbjHJWFN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 18:05:13 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B3292684
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:05:13 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d1d9814b89fso1478761276.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:05:13 -0700 (PDT)
+        with ESMTP id S229706AbjHJWgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 18:36:10 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E54BD273D
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:36:08 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 98e67ed59e1d1-267f61da571so1884771a91.0
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691705112; x=1692309912;
+        d=google.com; s=20221208; t=1691706968; x=1692311768;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kwvC4BCGCx8y1TjtLqI1BK7RvHLirflu6Juam74hIKQ=;
-        b=uRR4YU6P+dRVGpXToPtBk7z5uhGBHlIytftHs81yOH8puHwOpVP6bi63i4tL+1CISG
-         5488MrvhMExyUwGuHsbDqFgQIl42JTUXQMQ9coVc8qvOwD0q5PaDaADDlcStOm6a3cw9
-         JqOXLXFvRifPgaeg9DL55jZZ1+3CY/BQxV1lW92BpuKP6GADedJVLN7mK8lS6IlmTiAG
-         usZ8Zp1AnYdlylg3n1SMQn0mHFp8Qyg6FJmYu3aV02NW7tzGCyudn/1LwkTeZhVLue1p
-         MaasBTrJ/aaoGooQISzONuZ5UWAXtES5/Evi0nLULvZOR6QIF5Hmy/ok/Vq8gXRmlfxv
-         4ijg==
+        bh=TiB+09FwTKNm5GFgrJmb8PUywn+ZqhvnPLj/8SmKDHY=;
+        b=NUCTOHpzjauZq483L/di8GPmZTahtbQo9iwwC4U6+e6y4xnMdQ2ZUXUM3fDhpSUb/C
+         CHyX3Bk+T1wEObgjH2HP5rxfq6z3b7/WyY6KLNyM5HX//js/ApvYCjRxN0HfWcjFiUiv
+         tVhTbgKL+84wbEcQERwDqsRdfqKLkDaeqyvVXeMpxwOCPdTO8PqTP+sXfgN8uipKPWYV
+         wVGwBiFIlDKVd3dSPdAq1yKrdL5ppHS2JbbHGPmhb3yJUoMXKic9HFtb21FxNKi61v++
+         u0VSTxh4ReUuYYxHvTCNNn34fkjK5S6TcZPN0BisKq7qRRxNfxGE5YDu7SYQfqPgxxev
+         Jr4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691705112; x=1692309912;
+        d=1e100.net; s=20221208; t=1691706968; x=1692311768;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kwvC4BCGCx8y1TjtLqI1BK7RvHLirflu6Juam74hIKQ=;
-        b=XzF61cTwDe/+png6opsErq6KMtyUrxSDBfAzXD+qbTsNrQ8z8Z3365SP38kjJ/YIbW
-         bAVgTJH8fbNhMzWlU8HTyldPWBcgZ13D8kFuBVyKAc9qBhEI7xu+oSTWGaLhI82dWHae
-         FXpRPb5719inQgdVV4ARI4DrpBnTGCDDkN3EoUGdvw6a+0y5kNYbVEAJO2pP0vKf54YR
-         90Mc4AQ4WhN0naQTKQjr8PIvfKorsMbumBIVk8P+85vyiQw+kYmZlujqtyqriP2liPCi
-         ILHGUPfKuD48Snuv6PrigOPYy/WXk0JTzd9lqD6ec0qE5/Z6HIHSs2yRIry57Rmtq3sG
-         4g9g==
-X-Gm-Message-State: AOJu0Yyn5RRhU2MyRojtjmI/r4YN9/2OiigdymxpO9iOQRZP9JRI+rz3
-        FeQbkLdsW01M2i4+rc0ML2U7SA9Jmza9Kg==
-X-Google-Smtp-Source: AGHT+IEVa7lyA8HHwSUk2PBwu+2B7ZaGD1QYCF2kAxigYPqEw6s3Z8VA5V0vwhuRuYjHwev/Sc7kJfAuMnQymg==
+        bh=TiB+09FwTKNm5GFgrJmb8PUywn+ZqhvnPLj/8SmKDHY=;
+        b=K+7EvOMySbPnTjnz46zjdLtzfgI8rOaH2LdKS2VFziWFtHtpI/xePgyOsixzBFCLS+
+         0Wmmo7GkpyzfDsCbd5FLHCcHmiO5MgwPACmdVaXPk4dS0tK74R1h4R+8mr2a3r+lGYPp
+         Ws/JFSrvxitG3duBMtmU3CfuK3i0pY7wgzNrmq8An3lLjLG6DFitE1rNI3Zmlcg3ytSY
+         U/N3mApB1eXAHJadA3gMmLqdZRAhekUhKuYklUolfPJX+ka4TJGpcbKZ6EDOnMycXcsX
+         LuNE2MvfQgUNq+uyKfQRi0EGrjS5+PYB9PKRxKLDt2VpK1s6g7drUQSdSHzy5bcqjVq2
+         wXCQ==
+X-Gm-Message-State: AOJu0Yy91uoEjOKMouUvhp5PInpEC+rVcmS3qcBAQhXM5I/vz7PUJjKD
+        mZrPODSCH6bk/4ypGkLW4OWxkt+8ggtRXg==
+X-Google-Smtp-Source: AGHT+IGXCozmjdfTQjjtAa/fDCyxcbaL1burHGhXwYxH0UT8GkWj1MrcX9pl/SrR9DKoWz7r9CXDDTWioJ5TVw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a25:ce53:0:b0:d0c:ca92:1b92 with SMTP id
- x80-20020a25ce53000000b00d0cca921b92mr258ybe.6.1691705112799; Thu, 10 Aug
- 2023 15:05:12 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 15:05:04 -0700
-In-Reply-To: <20230810163346.274132-1-calvinwan@google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90a:ea87:b0:268:b599:92ff with SMTP
+ id h7-20020a17090aea8700b00268b59992ffmr858258pjz.1.1691706968453; Thu, 10
+ Aug 2023 15:36:08 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 15:36:06 -0700
+In-Reply-To: <20230810163654.275023-2-calvinwan@google.com>
 Mime-Version: 1.0
-References: <20230627195251.1973421-1-calvinwan@google.com> <20230810163346.274132-1-calvinwan@google.com>
-Message-ID: <kl6lmsyy8sfj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH v2 0/7] Introduce Git Standard Library
+References: <20230810163346.274132-1-calvinwan@google.com> <20230810163654.275023-2-calvinwan@google.com>
+Message-ID: <kl6ljzu28qzt.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC PATCH v2 2/7] object: move function to object.c
 From:   Glen Choo <chooglen@google.com>
 To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, nasamuffin@google.com,
@@ -63,14 +63,34 @@ X-Mailing-List: git@vger.kernel.org
 
 Calvin Wan <calvinwan@google.com> writes:
 
-> Calvin Wan (7):
->   hex-ll: split out functionality from hex
->   object: move function to object.c
->   config: correct bad boolean env value error message
->   parse: create new library for parsing strings and env values
->   date: push pager.h dependency up
->   git-std-lib: introduce git standard library
->   git-std-lib: add test file to call git-std-lib.a functions
+> While remove_or_warn() is a simple ternary operator to call two other
+> wrapper functions, it creates an unnecessary dependency to object.h in
+> wrapper.c. Therefore move the function to object.[ch] where the concept
+> of GITLINKs is first defined.
 
-This doesn't seem to apply to 'master'. Do you have a base commit that
-reviewers could apply the patches to?
+As Junio mentioned elsewhere, I think we need to establish that
+wrapper.c should be free of Git-specific internals.
+
+> diff --git a/object.c b/object.c
+> index 60f954194f..cb29fcc304 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -617,3 +617,8 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+>  	FREE_AND_NULL(o->object_state);
+>  	FREE_AND_NULL(o->shallow_stat);
+>  }
+> +
+> +int remove_or_warn(unsigned int mode, const char *file)
+> +{
+> +	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
+> +}
+
+Since this function really needs S_ISGITLINK (I tried to see if we could
+just replace it with S_ISDIR and get the same behavior, but we can't),
+this really is a Git-specific thing, so yes, this should be moved out of
+wrapper.c.
+
+Minor point: I think a better home might be entry.[ch], because those
+files care about performing changes on the worktree based on the
+Git-specific file modes in the index, whereas object.[ch] seems more
+concerned about the format of objects.
