@@ -2,133 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26167C001B0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 07:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC24C001DE
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 10:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230304AbjHJHPJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 03:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37046 "EHLO
+        id S235319AbjHJKDa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 06:03:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbjHJHPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 03:15:07 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4206310C
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 00:15:07 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-991c786369cso87849466b.1
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 00:15:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1691651706; x=1692256506;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dp0da3/C7PDINzvnsWNJMzPoUbC9k9icniI38933Ttg=;
-        b=Z+SMJYRLXohQgrlBM4nMkMIH0xRixdwknL4zD3uiev6hL9gG4Dtgc0PqzX5cfz4Slu
-         Wt8HgJU2nWStgwHvd/KqzXdD5rdqD6Zzlq5ft3Uo4ULc8MbBAOnGAjZFISteT25Hl7QA
-         Zs1EapK/rwTY8MC6VKqvwc1tn4NiQq1FE3tHA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691651706; x=1692256506;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Dp0da3/C7PDINzvnsWNJMzPoUbC9k9icniI38933Ttg=;
-        b=gVh7A37IMk8pQ/evaTAwLDyuh77tHkv/DzXj2Rjxp2eIPgsDn7PDhgbkQU2fUTfFMY
-         4XnG7kIV4qwgphxjcgrBmJaB0QrM1R31FVaheJ09Ksqv9dZWz7oeXUfrKIxBwfg9HL5l
-         fpaFkunpZ9XxmgXhC6tmm464+ied0nscoeBaFSDepxtavFUFgf3UYVXjdw0qtmWahUlx
-         vfqTAu1nwAblwxIXUWvhNqgRK5aH+gAVrDWsqht7WwsrqMYWjo1hGo6IxpohqZYnPGbs
-         xDjgHkUflW0ELPk7WSmZGxGKxhGxfT87I/7jREbdbsZkQRUWlr5qWSawJGWUTeo1TDit
-         ANNQ==
-X-Gm-Message-State: AOJu0YyqDJ1Zu+GBu+BLcbxkk23peNB2vUs2QuiLQdFIBZIfoVh9QxF8
-        G7DnE4Vqi+zFIEsSXnWuGm2hfgKO+JUTG7YgDS06alAdpgwjPmK3Omd1+A==
-X-Google-Smtp-Source: AGHT+IEJ2rM/aFZoknIx8k7mQoFz8wShsZ5wwK7Nyep5zWW2gj8SLDSBYRs6Qwj+vFLXYoqmV4KQ0E3+bqgvZC2327E=
-X-Received: by 2002:a17:906:3d21:b0:99c:b0c9:4ec7 with SMTP id
- l1-20020a1709063d2100b0099cb0c94ec7mr1248187ejf.26.1691651705628; Thu, 10 Aug
- 2023 00:15:05 -0700 (PDT)
+        with ESMTP id S235241AbjHJKCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 06:02:53 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC58E46AE
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 03:00:56 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 724C423FA5;
+        Thu, 10 Aug 2023 06:00:55 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qU2TP-0fC-00; Thu, 10 Aug 2023 12:00:55 +0200
+Date:   Thu, 10 Aug 2023 12:00:55 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4] send-email: prompt-dependent exit codes
+Message-ID: <ZNS1VyGgtk9JmMe0@ugly>
+References: <xmqqmsz1a547.fsf@gitster.g>
+ <20230809171531.2564739-1-oswald.buddenhagen@gmx.de>
+ <xmqqo7jgm3hd.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAPMMpoiJ4cNcAR9gO5d-749N3YW-88p1gMnX8ySGgz84Mr9coA@mail.gmail.com>
- <CACf-nVfUotaTYeCC9XMvnYYNhjX+EW89z7fhUX0Ok9TpsVTRTw@mail.gmail.com>
-In-Reply-To: <CACf-nVfUotaTYeCC9XMvnYYNhjX+EW89z7fhUX0Ok9TpsVTRTw@mail.gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 10 Aug 2023 09:14:55 +0200
-Message-ID: <CAPMMpoh9xP8PomAUTHGZfYAMAgHb_BF74EVgmo1C-DQh22-cUA@mail.gmail.com>
-Subject: Re: "git fetch --refetch" and multiple (separate/orphan) branches
-To:     Robert Coup <robert@coup.net.nz>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqo7jgm3hd.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Robert,
-
-Sorry about the extended delay, I haven't had a chance to do "git
-hacking" in a while.
-
-On Sat, Jun 3, 2023 at 10:18=E2=80=AFAM Robert Coup <robert@coup.net.nz> wr=
-ote:
+On Wed, Aug 09, 2023 at 12:15:42PM -0700, Junio C Hamano wrote:
+>Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 >
-> On Fri, 2 Jun 2023 at 22:23, Tao Klerks <tao@klerks.biz> wrote:
+>> From the perspective of a scripted caller, failure to send (some) mails
+>> is an error even if it was interactively requested, so it should be
+>> indicated by a non-zero exit code.
 >
-> > What I believe is happening is that *if* there are refs to be updated
-> > (or new refs, presumably), *then* the objects returned to the client
-> > are only those required for those refs. If, on the other hand, there
-> > are no updated refs, then you get what is advertised in the doc: "all
-> > objects as a fresh clone would [...]".
-> >
-> > I've tested a couple of different scenarios and the behavior seems
-> > consistent with this explanation.
+>I would agree that there should be a way to ask the command to
+>indicate if some messages were not sent due to end-user request, but
+>I have to say "From the perspective of a scripted caller" is a gross
+>over generalization that I would not want to see in a commit log
+>message of the project I run.
 >
-> Do you have a repo & steps that could reproduce this easily? Otherwise
-> I can try and work up something.
+this gross error can be fixed by adding "likely" to the sentence.
+
+>It should not be hard to make this opt-in,
 >
+that doesn't matter.
 
-Does the following work? It shows that with a change to the orphan
-branch from another client, a refetch in the original client gets
-about half the objects (the ones for the orphan branch that was
-updated), and in another fetch right after, with no new changes, the
-refetch gets all 600-or-so objects.
+>and I still think it should be opt-in.
+>
+and i still think this would significantly reduce the value of the 
+change.
 
+the very idea of having to explicitly request that the obviously right 
+thing is done is intuitively silly, and shouldn't be seriously 
+entertained unless changing existing behavior can plausibly lead to 
+serious adverse consequences. the minor nuisance of having to adjust 
+wrappers to explicitly accept the most likely unexpected case does not 
+qualify as such.
 
-create_n_commits() {
-  for i in $(seq $2); do
-    echo "another new line $RANDOM" >> "$1/datafile"
-    git -C "$1" add datafile
-    git -C "$1" commit -m anothercommit -q
-  done
-}
+fwiw, other users who noticed this problem most probably preempted it by 
+adding appropriate --confirm=* and --suppress-* options. but this 
+doesn't fit my use case of a "light" wrapper.
 
-mkdir refetch-testing
-SERVERFOLDER=3Drefetch-testing/server
-git init "$SERVERFOLDER" --bare
-
-CLIENTFOLDER=3Drefetch-testing/client
-git init "$CLIENTFOLDER"
-git -C "$CLIENTFOLDER" remote add origin "../server"
-
-git -C "$CLIENTFOLDER" checkout -b main
-create_n_commits "$CLIENTFOLDER" 100
-git -C "$CLIENTFOLDER" push origin HEAD
-
-git -C "$CLIENTFOLDER" checkout --orphan orphan
-create_n_commits "$CLIENTFOLDER" 100
-git -C "$CLIENTFOLDER" push origin HEAD
-
-echo "---HERE IS A NORMAL FULL REFETCH---"
-git -C "$CLIENTFOLDER" fetch --refetch
-echo "---NORMAL FULL REFETCH ENDS---"
-
-OTHERCLIENTFOLDER=3Drefetch-testing/otherclient
-git clone "$SERVERFOLDER" "$OTHERCLIENTFOLDER"
-git -C "$OTHERCLIENTFOLDER" checkout orphan
-create_n_commits "$OTHERCLIENTFOLDER" 5
-git -C "$OTHERCLIENTFOLDER" push origin HEAD
-
-echo "---HERE IS A WEIRD PARTIAL REFETCH OF ONE BRANCH ONLY---"
-git -C "$CLIENTFOLDER" fetch --refetch
-echo "---WEIRD PARTIAL REFETCH ENDS---"
-
-echo "---HERE IS NORMAL REFETCH AGAIN---"
-git -C "$CLIENTFOLDER" fetch --refetch
-echo "---NORMAL REFETCH ENDS---"
-
-rm -rf refetch-testing
+regards
