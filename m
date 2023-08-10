@@ -2,129 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10695C04E69
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 17:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0C57C001B0
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 17:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbjHJRMR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 13:12:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35668 "EHLO
+        id S234549AbjHJRPe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 13:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233810AbjHJRMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 13:12:16 -0400
+        with ESMTP id S233590AbjHJRPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 13:15:32 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8DD1BF7
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 10:12:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1226126B2
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 10:15:32 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF7A719AADC;
-        Thu, 10 Aug 2023 13:12:14 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F7EF19AB1B;
+        Thu, 10 Aug 2023 13:15:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tLEnGiWzq7rtGAhvrhZiG/kTOf2yQ2noq73IsS
-        Ofh8E=; b=YvkhTcQ6RdFD0J92k9MXZMPrO9GNh1/dhy/rWNKTsX1VIzaKb6Yeyy
-        DqSJqW1xeZmPPdCtlbeZf4Ax89QIl+M89zi9iWn4mSaFCKUFEs6iGt1AVRLsascA
-        K6DYCOrJEp8sj83U6QUG7dhcPEvZdPRO0LJtJD9sbqZ+ixdnOpD74=
+        :content-type; s=sasl; bh=1kpzJf90oE/tZMFFCre1XAsVUQluTskcdyg/FB
+        NQBeo=; b=SzA+9LhPyjC10xWo6x+YRu7rCx5lNbpkWbAKKu4eDz9SI5O1tjLVTM
+        yI/TxJYQnfpgMvIcxWswkCIYS4aah2L72AM+l/cljsUeYkPq6BcZ9Odg3zH/1kat
+        UrEsB1oe8ytKwXyen1h+nefhfpjKgJ2XRM7BaXBP1OG13enkuKdnQ=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6E0119AADB;
-        Thu, 10 Aug 2023 13:12:14 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67CEE19AB1A;
+        Thu, 10 Aug 2023 13:15:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.58.166])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1687719AADA;
-        Thu, 10 Aug 2023 13:12:14 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0B8219AB18;
+        Thu, 10 Aug 2023 13:15:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Mark Ruvald Pedersen via GitGitGadget" <gitgitgadget@gmail.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Mark Ruvald Pedersen <mped@oticon.com>,
-        Mark Ruvald Pedersen <mped@demant.com>
-Subject: Re: [PATCH 1/2] sequencer: truncate labels to accommodate loose refs
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] rebase: allow overriding the maximal length of the
+ generated labels
 References: <pull.1562.git.git.1691685300.gitgitgadget@gmail.com>
-        <4971e3c52504bf965aa754c9a5d31abddbcc1466.1691685300.git.gitgitgadget@gmail.com>
-Date:   Thu, 10 Aug 2023 10:12:12 -0700
-In-Reply-To: <4971e3c52504bf965aa754c9a5d31abddbcc1466.1691685300.git.gitgitgadget@gmail.com>
-        (Mark Ruvald Pedersen via GitGitGadget's message of "Thu, 10 Aug 2023
-        16:34:59 +0000")
-Message-ID: <xmqqr0oastxv.fsf@gitster.g>
+        <fa757ac107d58a607a2faabd3e70934ee22d1b51.1691685300.git.gitgitgadget@gmail.com>
+Date:   Thu, 10 Aug 2023 10:15:29 -0700
+In-Reply-To: <fa757ac107d58a607a2faabd3e70934ee22d1b51.1691685300.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Thu, 10 Aug 2023
+        16:35:00 +0000")
+Message-ID: <xmqqil9mstse.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0CEB8352-37A1-11EE-A9E0-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8232A46A-37A1-11EE-866E-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Mark Ruvald Pedersen via GitGitGadget" <gitgitgadget@gmail.com>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> +/*
-> + * To accommodate common filesystem limitations, where the loose refs' file
-> + * names must not exceed `NAME_MAX`, the labels generated by `git rebase
-> + * --rebase-merges` need to be truncated if the corresponding commit subjects
-> + * are too long.
-> + * Add some margin to stay clear from reaching `NAME_MAX`.
-> + */
-> +#define GIT_MAX_LABEL_LENGTH ((NAME_MAX) - (LOCK_SUFFIX_LEN) - 16)
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> With this change, users can override the compiled-in default for the
+> maximal length of the label names generated by `git rebase
+> --rebase-merges`.
+> ...
+> +rebase.maxLabelLength::
+> +	When generating label names from commit subjects, truncate the names to
+> +	this length. By default, the names are truncated to a little less than
+> +	`NAME_MAX` (to allow e.g. `.lock` files to be written for the
+> +	corresponding loose refs).
 
-OK.  Hopefully no systems defien NAME_MAX shorter than 20 bytes ;-).
+OK.
 
-We may suffix "-%d" to make it unique after this truncation, so
-there definitely is a need for some slop, and 16-bytes should
-sufficiently be long.
-
-> @@ -5404,14 +5415,34 @@ static const char *label_oid(struct object_id *oid, const char *label,
->  		 *
->  		 * Note that we retain non-ASCII UTF-8 characters (identified
->  		 * via the most significant bit). They should be all acceptable
-> -		 * in file names. We do not validate the UTF-8 here, that's not
-> -		 * the job of this function.
-> +		 * in file names.
-> +		 *
-> +		 * As we will use the labels as names of (loose) refs, it is
-> +		 * vital that the name not be longer than the maximum component
-> +		 * size of the file system (`NAME_MAX`). We are careful to
-> +		 * truncate the label accordingly, allowing for the `.lock`
-> +		 * suffix and for the label to be UTF-8 encoded (i.e. we avoid
-> +		 * truncating in the middle of a character).
->  		 */
-> -		for (; *label; label++)
-> -			if ((*label & 0x80) || isalnum(*label))
-> +		for (; *label && buf->len + 1 < max_len; label++)
-> +			if (isalnum(*label) ||
-> +			    (!label_is_utf8 && (*label & 0x80)))
->  				strbuf_addch(buf, *label);
-> +			else if (*label & 0x80) {
-> +				const char *p = label;
+> @@ -5512,6 +5514,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+>  		*cmd_reset = abbr ? "t" : "reset",
+>  		*cmd_merge = abbr ? "m" : "merge";
+>  
+> +	git_config_get_int("rebase.maxlabellength", &state.max_label_length);
 > +
-> +				utf8_width(&p, NULL);
-> +				if (p) {
-> +					if (buf->len + (p - label) > max_len)
-> +						break;
-> +					strbuf_add(buf, label, p - label);
-> +					label = p - 1;
-> +				} else {
-> +					label_is_utf8 = 0;
-> +					strbuf_addch(buf, *label);
-> +				}
 
-Utf8_width() does let you advance one unicode character at a time as
-its side effect, but it may be a bit overkill, as its primary
-function is to compute the display width of that character.
+And it makes sense that the code does not do any check against the
+NAME_MAX; presumably the primary mission of this configuration
+variable is to help users who know better than their system headers,
+and they may need to bust the NAME_MAX limit that is artificially
+set too low.
 
-We could take advantage of the fact that the first byte of a UTF-8
-character has two high-bits set (i.e. 11xxxxxx) while the second and
-subsequent bytes have only the top-bit set and the second highest
-bit clear (i.e. 10xxxxxx) to simplify/optimize it.  If this were in
-a performance sensitive codepath, that is.
-
-I'll queue it as-is for now, as we are in "regression fix only"
-phase of the cycle, and have enough time to polish it.
-
-Thanks.
-
->  			/* avoid leading dash and double-dashes */
-> -			else if (buf->len && buf->buf[buf->len - 1] != '-')
-> +			} else if (buf->len && buf->buf[buf->len - 1] != '-')
->  				strbuf_addch(buf, '-');
->  		if (!buf->len) {
->  			strbuf_addstr(buf, "rev-");
+Will queue.  Thanks.
