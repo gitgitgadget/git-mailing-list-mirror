@@ -2,81 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC0FC001E0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 01:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B05C001B0
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 06:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231989AbjHJBp6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Aug 2023 21:45:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
+        id S230205AbjHJGQU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 02:16:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbjHJBp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2023 21:45:57 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2530210DA
-        for <git@vger.kernel.org>; Wed,  9 Aug 2023 18:45:56 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-686efb9ee0cso360075b3a.3
-        for <git@vger.kernel.org>; Wed, 09 Aug 2023 18:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691631955; x=1692236755;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RfmfL6eQrXATwUtMvvePZukFC/YKu5hs1dnxGZDeQQ8=;
-        b=g3kHxTxjoYoOFPGbBfLPpZuz58XS4wi4dSsVKIahd0/jaWFSnQqcxxG+9/Gno/mpBq
-         OeSGfMz04qho6HCWI3Itgp+zBOLs1FQnlyMf1aK74mzjzQKoap/upJfA1XgY/SgeT0O9
-         Af9HKUEkPO7ORu9Wjb+cjM8ljykKicKaWhdvQ+sGbv1WOxN3Sh133dYHwz1NWkoOIv9s
-         zwvTdvV3W1GtHLAEHW75vr1zZur4dGY8HOWEr3BDkQPOfhl7OEvPD+U0o7jMedaNDi/D
-         1JFCMaS89ZqKdqFUmt+LZgvtYfCEIMKf7MOmzf6od9umaAgYgvWPtzKEZvTwY19c7owL
-         no7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691631955; x=1692236755;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RfmfL6eQrXATwUtMvvePZukFC/YKu5hs1dnxGZDeQQ8=;
-        b=OnF9Ax8oXavNboohuSFefIFV9L8ib+fCkQeneazJZW5IxcTykrdbYPVl3/ZOauJTqi
-         Q7ZXVh7kbQGbeeZM/m/9FB1abNT0QisMDJzEoLZoPAxS10vHf6TO5FpTqY7yE198lVA1
-         JHqCuK4N76zmu3RrzttlGCOUzPXehJC7Lzk+bzgbG2DI/5DEl/5ektwBwNTNVVGd5z9y
-         hq1JYybDHEV5KtlvmzKkoBPQCOgZh3gzltoa9nXy+9TtkfCqdhHOIHiBfUQGVYuAZ3r5
-         EYoVYN0k1Yk0r42vUeTdRMGeq0tA1uGoPEt8mNiRhNAbVccYOg7OM81ca9OK/u34WSca
-         BniQ==
-X-Gm-Message-State: AOJu0YxPpnEJkme83/vdbr5wjsW8bR4freXkXl7mFafdnrvTEQfqkpld
-        qAjRfEqWjiXtu50fPVhxRBkcOw2GO6c=
-X-Google-Smtp-Source: AGHT+IE4zz3urTQwabkZ1QozTUgSpQlIb48hXp/qv2f5U7PVoIiQdxv7sqsASyJO2bTBUOSWMb1S9w==
-X-Received: by 2002:a05:6a20:8f01:b0:140:694:cd8e with SMTP id b1-20020a056a208f0100b001400694cd8emr1349630pzk.28.1691631954891;
-        Wed, 09 Aug 2023 18:45:54 -0700 (PDT)
-Received: from [192.168.0.105] ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id i11-20020aa7908b000000b0066f37665a6asm241025pfa.117.2023.08.09.18.45.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 18:45:54 -0700 (PDT)
-Message-ID: <f6ef3689-820a-f85c-68a7-9c87a5eabe27@gmail.com>
-Date:   Thu, 10 Aug 2023 08:45:29 +0700
+        with ESMTP id S229780AbjHJGQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 02:16:19 -0400
+X-Greylist: delayed 459 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 09 Aug 2023 23:16:16 PDT
+Received: from out-113.mta0.migadu.com (out-113.mta0.migadu.com [91.218.175.113])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA50AA6
+        for <git@vger.kernel.org>; Wed,  9 Aug 2023 23:16:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH] Fix grammar in git push man page
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Wesley Schwengle <wesleys@opperschaap.net>, git@vger.kernel.org
-References: <20230810004044.1420385-1-wesleys@opperschaap.net>
- <ZNRANBdZG9kAnjxq@debian.me>
-Content-Language: en-US
-In-Reply-To: <ZNRANBdZG9kAnjxq@debian.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rjp.ie; s=key1;
+        t=1691647714;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=F0LU4qk1HKVSN9eq8TOlWSZk3r0zQSd5UDHloXYs6Ok=;
+        b=YYMMFMCE9UOI6hloCRnK5NSENRepa7Pma6PA5ACCZnlKRU7tNZKdrw7aZBileT4FP4TtUi
+        nSs1Z0ex0N9deqi037ysn3oXO67yudOXwwtmkp4izEt/9USUU5Mwx7Hcfyhbc/B8lIrGnP
+        q50nfkAaqg1cc0X5nHEEJ/UgZTzHpOk=
+Date:   Thu, 10 Aug 2023 06:08:34 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   "Ronan Pigott" <ronan@rjp.ie>
+Message-ID: <274ec1a2152b0fd53b35c1591f5177e0b0713430@rjp.ie>
+TLS-Required: No
+Subject: Fetching too many tags?
+To:     git@vger.kernel.org
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/08/2023 08:41, Bagas Sanjaya wrote:
-> On Wed, Aug 09, 2023 at 08:40:25PM -0400, Wesley Schwengle wrote:
->> -When neither the command-line nor the configuration specify what to
->> +When neither the command line nor the configuration specifies what to
-> 
-> IMO either command-line or command line is correct...
-> 
+Hey git,
 
-Oops, I mean both forms (with and without dash) are correct.
+I am interested in git performance today and can't figure out what's goin=
+g on
+here. I was wondering why my git-fetch might be slow in an up-to-date rep=
+o:
 
--- 
-An old man doll... just what I always wanted! - Clara
+  $ git pull
+  Already up to date.
+  $ time git fetch origin master
+  From https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux
+   * branch                      master     -> FETCH_HEAD
+  git fetch origin master  0.13s user 0.06s system 10% cpu 1.705 total
 
+GIT_TRACE_CURL shows it spends most of the time transfering (all) tags fr=
+om the
+remote. It's much faster with --no-tags:
+
+  $ time git fetch -n origin master
+  From https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux
+   * branch                      master     -> FETCH_HEAD
+  git fetch -n origin master  0.11s user 0.03s system 36% cpu 0.383 total
+
+But I don't have tagOpt set:
+
+  $ git config remote.origin.tagOpt || echo $?
+  1
+
+And the remote doesn't have to send me any commits, so I don't see why I =
+should
+receive any tags at all. Why might I be receiving so many tags?
+
+Thanks,
+Ronan
