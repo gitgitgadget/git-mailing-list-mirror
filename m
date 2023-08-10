@@ -2,154 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5BDFC001E0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 12:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3FBAC001E0
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 14:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234109AbjHJM4h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 08:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47002 "EHLO
+        id S235726AbjHJObz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 10:31:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234077AbjHJM4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 08:56:35 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93ED72698
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 05:56:34 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe4a89e7efso7282315e9.3
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 05:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691672193; x=1692276993;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=W1zcxqU1/tyZgLr1a71XIe+VUhVgOd8p9Iz5uTxuMQo=;
-        b=OIUVb3xEUBMFAWl65tzDeblDmUuemXhgSpujQqvrwslp4D/4m7YkEuIsia2xTdPvEG
-         S3D0CQDXYzJpG8852BX+829usk7ew7Ro/JsBC0kswcij99JIYwi2wMWF5BLhFJrf70Qg
-         97c9lLtwWvMymDDt9xKP7o8PJb1C+kkaBfcoxpnkBM0jmFEsn0GCBxGCpl+iZpA4PHEI
-         9YQw23l4MPgfxozKB71Tf7vzlZbaz7Jnrsy24TSqHaQKeWsLqnYR1Fv8+VyrNkf96YoA
-         M71FGCtuqx2k9N+KDDH1hxb6MzekeV8DOJRrhET6Vm5yc0TjTcH8QELVo/5ufYdTJu2T
-         DuKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691672193; x=1692276993;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W1zcxqU1/tyZgLr1a71XIe+VUhVgOd8p9Iz5uTxuMQo=;
-        b=kKj/qvkKeKmTZ1c3oNeQN/qDqWVMasPDcsHb2JzFW0bA08Ovh5AQMMFMbUrV1xxKix
-         dP5YAGRpDVWrlJX5Y1cCurXmtEikRHmjq6YYruRbGFpS+6c+S2k6+9oZa3KIPLYx1iOS
-         UB10me8i/mMLveb1OBhW1p1Y/MlLaualTj+gYuK2ztI3uCDJMQTmE1qxqaCdAijzGYP+
-         uyX/rKUiqjbkhpxgFNdpTr6kySOetlEtQYFDrSOzYCgHB0M2JI4AHwxsckJFknoXsamD
-         1ejVtZnraoxzJKE3HAEvEVUUbtgS0aE/h3xLHX81zMk9hktNebze465QBBOZsZ1Eavv6
-         Z2qw==
-X-Gm-Message-State: AOJu0Yy3bAfI7wHkk4ys6mk2J9JEooex9aInZcoEUXaoal3Uuhoq1tCI
-        VMZv91PZ9kuo52zO6PHsn988gUZ9aiE=
-X-Google-Smtp-Source: AGHT+IHA1GGiSsF8LDa32csiXhk0zRzc2ogEYQcdmvHAjrX/FYRapOKtsgg3sHZhfnG2uTzWC/4geg==
-X-Received: by 2002:a1c:f702:0:b0:3fe:ba7:f1ef with SMTP id v2-20020a1cf702000000b003fe0ba7f1efmr1718658wmh.30.1691672192758;
-        Thu, 10 Aug 2023 05:56:32 -0700 (PDT)
-Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id w2-20020a05600c014200b003fbc9b9699dsm2056719wmm.45.2023.08.10.05.56.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 05:56:32 -0700 (PDT)
-Message-ID: <148cf4e2-e6ce-4c10-a08a-bf946ce3b95d@gmail.com>
-Date:   Thu, 10 Aug 2023 13:56:31 +0100
+        with ESMTP id S235582AbjHJOby (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 10:31:54 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B48AE4B
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 07:31:52 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BA9121BE8D;
+        Thu, 10 Aug 2023 10:31:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=7m0X47KDF4ZZ9att6WOg9kI4thrrRWlZDJ8DpfsPJfo=; b=P8MG
+        +Hw8WX1gxaMiy/NfctQBUt8maCe8mTbJlCv5B3Da3padNurtn+uziBJBM0D7zMDy
+        y/e6woVcEmY4KsiODLXtzTAZa7MyyNOLjZWvNvIYg9Zcg8AeQvMfidtwGFlQYDOU
+        TfLF+9DIJRTWE0LfLdvMobtxZwAoWVvOSq4seLE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B1C9A1BE8C;
+        Thu, 10 Aug 2023 10:31:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.168.215.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3AB4B1BE8B;
+        Thu, 10 Aug 2023 10:31:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Wesley Schwengle <wesleys@opperschaap.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [[PATCH v2]] Fix bug when more than one readline instance is used
+References: <20230810004956.GA816605@coredump.intra.peff.net>
+        <20230810011831.1423208-1-wesleys@opperschaap.net>
+Date:   Thu, 10 Aug 2023 07:31:47 -0700
+Message-ID: <xmqqmsyzhsto.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/4] diff --no-index: support reading from named pipes
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1687874975.git.phillip.wood@dunelm.org.uk>
- <cover.1688586536.git.phillip.wood@dunelm.org.uk>
- <4e05a0be54f66f2b394642762832e426a545426c.1688586536.git.phillip.wood@dunelm.org.uk>
- <20230809171731.GA3663609@coredump.intra.peff.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230809171731.GA3663609@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A376DB62-378A-11EE-B116-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eff
+Wesley Schwengle <wesleys@opperschaap.net> writes:
 
-Thanks for reporting this
+> Subject: Re: [[PATCH v2]] Fix bug when more than one readline instance is used
 
-On 09/08/2023 18:17, Jeff King wrote:
-> On Wed, Jul 05, 2023 at 08:49:30PM +0100, Phillip Wood wrote:
-> 
->> +test_expect_success PIPE 'diff --no-index refuses to diff a named pipe and a directory' '
->> +	test_when_finished "rm -f pipe" &&
->> +	mkfifo pipe &&
->> +	{
->> +		(>pipe) &
->> +	} &&
->> +	test_when_finished "kill $!" &&
->> +	test_must_fail git diff --no-index -- pipe a 2>err &&
->> +	grep "fatal: cannot compare a named pipe to a directory" err
->> +'
->> +
->> +test_expect_success PIPE,SYMLINKS 'diff --no-index reads from pipes' '
->> +	test_when_finished "rm -f old new new-link" &&
->> +	mkfifo old &&
->> +	mkfifo new &&
->> +	ln -s new new-link &&
->> +	{
->> +		(test_write_lines a b c >old) &
->> +	} &&
->> +	test_when_finished "! kill $!" &&
->> +	{
->> +		(test_write_lines a x c >new) &
->> +	} &&
->> +	test_when_finished "! kill $!" &&
->> +
->> +	cat >expect <<-EOF &&
->> +	diff --git a/old b/new-link
->> +	--- a/old
->> +	+++ b/new-link
->> +	@@ -1,3 +1,3 @@
->> +	 a
->> +	-b
->> +	+x
->> +	 c
->> +	EOF
->> +
->> +	test_expect_code 1 git diff --no-index old new-link >actual &&
->> +	test_cmp expect actual
->> +'
-> 
-> I've had t4053 hang for me once or twice in the last few days. I haven't
-> managed to pinpoint the problem, but I did notice that running it with
-> --stress seems to occasionally fail in thie "reads from pipes" test.
-> 
-> The problem is that the "kill" is racy. Even after we've read all of the
-> input from those sub-processes, they might still be hanging around
-> waiting to exit when our test_when_finished runs. And then kill will
-> return "0". So I think we need to either:
-> 
->    1. Soften the when_finished to "kill $! || true" so that we are OK if
->       they are still there.
+Thanks.  Again, our convention is to make sure that, even only with
+the title, readers would know what the commit is about.  The above
+does not even hint which part of the system the bug was about.  By
+stealing from what Peff already has done, we can call this
 
-I think this is the easiest option, I'll send a patch later today
+    Subject: [PATCH v2] git-svn: avoid creating more than one Term::ReadLine object
 
->    2. If the diff command completed as expected, it should be safe to
->       "wait" for each of them to confirm that they successfully wrote
->       everything. I'm not sure it buys us much over testing the output
->       from "diff", though.
+to mimic c016726c (send-email: avoid creating more than one
+Term::ReadLine object, 2023-08-08).  Also, please do not double the
+[brackets] around the "PATCH".
 
-If the diff output is OK that's I think that's all we really care about.
+> A followup[^1] for git-svn.perl on d42e4ca9f8 where this bug was solved
+> for git-send-email.perl
+>
+> [^1]: https://lore.kernel.org/git/20230810004956.GA816605@coredump.intra.peff.net/T/#t
 
-> I still don't see where the hang comes from, though. It might be
-> unrelated. I'll try to examine more next time I catch it in the act.
+Once a commit is in 'next', its commit object name will generally be
+stable, hence, taken as a whole, something like:
 
-I had a look at the tests again and nothing jumped out at me. If you do 
-manage to catch it hanging we should at least we should be able to tell 
-which test is causing the problem.
+    git-svn: avoid creating more than one than one Term::ReadLine object
 
-Thanks again,
+    Newer (v1.46) Term::ReadLine::Gnu would not like us to ask it to
+    create multiple readline instances.  c016726c (send-email: avoid
+    creating more than one Term::ReadLine object, 2023-08-08)
+    adjusted git-send-email to this change.  Make the same
+    adjustment to git-svn.
 
-Phillip
+    While at it, drop the same FakeTerm hack, just like dfd46bae
+    (send-email: drop FakeTerm hack, 2023-08-08) did, for exactly
+    the same reason.
+
+I'll queue the patch with the above commit log message for tonight,
+so unless you have improvements over it, there is no need to resend.
+
+Thanks.
+
+> Signed-off-by: Wesley Schwengle <wesleys@opperschaap.net>
+> ---
+>  git-svn.perl | 27 +++++++++------------------
+>  1 file changed, 9 insertions(+), 18 deletions(-)
+>
+> diff --git a/git-svn.perl b/git-svn.perl
+> index be987e316f..93f6538d61 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -297,27 +297,18 @@ sub _req_svn {
+>  		{} ],
+>  );
+>  
+> -package FakeTerm;
+> -sub new {
+> -	my ($class, $reason) = @_;
+> -	return bless \$reason, shift;
+> -}
+> -sub readline {
+> -	my $self = shift;
+> -	die "Cannot use readline on FakeTerm: $$self";
+> -}
+>  package main;
+>  
+> -my $term;
+> -sub term_init {
+> -	$term = eval {
+> +{
+> +	my $term;
+> +	sub term_init {
+> +		return $term if $term;
+>  		require Term::ReadLine;
+> -		$ENV{"GIT_SVN_NOTTY"}
+> -			? new Term::ReadLine 'git-svn', \*STDIN, \*STDOUT
+> -			: new Term::ReadLine 'git-svn';
+> -	};
+> -	if ($@) {
+> -		$term = new FakeTerm "$@: going non-interactive";
+> +		$term = $ENV{"GIT_SVN_NOTTY"}
+> +				? new Term::ReadLine 'git-svn', \*STDIN, \*STDOUT
+> +				: new Term::ReadLine 'git-svn';
+> +		};
+> +		return $term;
+>  	}
+>  }
