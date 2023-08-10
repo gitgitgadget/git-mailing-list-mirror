@@ -2,100 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C899AC001B0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 23:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DDFFC001B0
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 23:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231940AbjHJXPY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 19:15:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56692 "EHLO
+        id S231963AbjHJXVT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 19:21:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjHJXPX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 19:15:23 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D5FB2694
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:15:23 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-585fb08172bso18350337b3.2
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:15:23 -0700 (PDT)
+        with ESMTP id S231645AbjHJXVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 19:21:18 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6341B270F
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:21:18 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1bd94d2df89so18098705ad.0
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:21:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691709322; x=1692314122;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I+0xDUENOnQXatyomiK8dts8juzAoj0QqJ4INrzzCWQ=;
-        b=3VT4VRSENBUYI7svdAEJ/3uTsJzzwkZZhYf8+V4gqIeTgRevKva8GwB5QlhbTUbAsf
-         6rgcuBdgyjco2DSY0CJ3EmuNRHOTpsW4efPtlTzU/bXhREjnzeML7/WFLFzelLz4HfR7
-         8zGj2LoiSNkjOgAvJ3XIVle8SBmJd7J6Y5jVBzIC0iKq6tTtLJ92W8q8YvIu4DUDgHqs
-         BFwVy55xWkuNa7rzWM+EgT6VDMZsaXDRijQ2/Q5pVDGy2LclBsIFOW6FQJTEd5LSz/gB
-         IyBl8j3vB/KrJoLVdMiNoZFGI9H2x0fUNE1Qe9GT6Usii/DGr0z5KpZMDnqm+AfYDocK
-         t4Pw==
+        d=google.com; s=20221208; t=1691709678; x=1692314478;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZrmkxCr8eFfq4tcgzpcMZ6+FGQkVXLKBjX7ThnY4ChA=;
+        b=ueS/lsmNPUA1xFggMOZytyKfZsSuPefdktdhrsLaIv5sBSL+lFCOG90wS1jhExz6e+
+         N9WjIpPj/0KBRq0ZYf0HCwgEffAwdAnCaKFkca6G6CTEmHV7ZlR76rK4SIOQU/0hqwFn
+         fd6BVfQOPcCzv9qseZgkY6XlZ5S4JjdEzrF4wiZU4ul/iDvEZ6qN0PYe/yzSCJWCNIyM
+         EbGvbjcypuNqRYoE8ZbPgSuOD2VDrD19ebuZJjdR+XrXUzSMW/pXVApukatO6GZcoIl8
+         4bibS/+hwlpcph0+83NC6pn8EcZ9grh9/p5bFao1Rp7AV/ejeH4VoXt9RWUJMi4VXGmP
+         G5Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691709322; x=1692314122;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I+0xDUENOnQXatyomiK8dts8juzAoj0QqJ4INrzzCWQ=;
-        b=fPNkqIdZMFejd3lWquzZmO23Dv58RS1LvcpfBjUs8KcX1nP9nEtwWnglV0W+YTRqne
-         J7M4iZfGib3iN4MRZ0+/V6ZfFgGz2MpykpDj67hfgT+D8jwPTGJeHWg4HKm6s56yMmRa
-         hlXD6XBwEhR7GQf4G/pQtldMUuF5S4mXoJld5F5MSSGrKDlaU6H8fr9eFeRXvmTiKmOi
-         U+NGHB9GB//ClCXexsrraE+TjQtADzvTrY7jDjopmjXcY1jDjkbG7pn7OqPm7X20HMmX
-         ET8sPHuplt2wZsgl9hBIfDxNLBDrFnDkA6oDGoFC74PpjyEwdlLRMVB8/H+LvSo5kyiP
-         TQbQ==
-X-Gm-Message-State: AOJu0Yx29s8apQsR1jGpVcog8IFfNCsQwAKpjZQmE8qknGgv+eFtvFuD
-        Rn7xXyCJzyzriq6aWVbIjNcjN6+PKrk=
-X-Google-Smtp-Source: AGHT+IEEA5rpOqBubJZj3ccpRrAwC5VuSLFgzIqOjLskwhQ7Tno9kpGM+W0t5WS/dx0BaSXCmk6az/6M0UE=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a25:d803:0:b0:d07:9d79:881c with SMTP id
- p3-20020a25d803000000b00d079d79881cmr1940ybg.11.1691709322373; Thu, 10 Aug
- 2023 16:15:22 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 16:15:20 -0700
-In-Reply-To: <1fd1f22d-e0db-04f3-7235-899b10909c7a@gmail.com>
+        d=1e100.net; s=20221208; t=1691709678; x=1692314478;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZrmkxCr8eFfq4tcgzpcMZ6+FGQkVXLKBjX7ThnY4ChA=;
+        b=TAIjy1Cqq8NB/4Z7SWlNBhGmO0EGtpVas/8NW4MJ/sFlEkwArDmCKYueebH+kpM29N
+         /x2UoqvfMILo8fCZlBGFfoZ3uQInvUyJ73nXwGflZQxWLdJbS3i+zf5r7sQWTqOA9jsr
+         MXSs539zUcvE/HcrngKS+eb0FPJ73J4V6qGyw2ZY08viqUBhrOfuXunsyhgk3Dmnfs4e
+         zeJaNIsuapedPARfSqNXWuGWSDDYac579UarOTRFegMJXiai4IfGbrbSdj5Wwlw767EV
+         w8/UoIyF6uwrWYQzkPTXcRjBrGjFMzJmamUbyCov+1rjEd1xKz5OWHQTBSO9/loACuWV
+         NlKQ==
+X-Gm-Message-State: AOJu0YxCb//omEs4kzOLpPvzBslyzzBnb7kLEINsxJWkMfe8l/4b3yp+
+        Tej0yylFqhrOC/7GLzl3NOFG9OfCpTM8/w==
+X-Google-Smtp-Source: AGHT+IGe80S8ym3+UvtKQsCObWkAOpPU4aW3INCHFVbSDq2hRCx8lUwC574Qmq2npEVv5NN0/AwvPxNWXd97zQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:902:f349:b0:1bc:a3b:e902 with SMTP id
+ q9-20020a170902f34900b001bc0a3be902mr71204ple.3.1691709677872; Thu, 10 Aug
+ 2023 16:21:17 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 16:21:16 -0700
+In-Reply-To: <20230810163654.275023-4-calvinwan@google.com>
 Mime-Version: 1.0
-References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
- <0bce4d4b0d5650edf477cbbcc9f4e467b7981426.1691211879.git.gitgitgadget@gmail.com>
- <kl6l8rama6yj.fsf@chooglen-macbookpro.roam.corp.google.com> <1fd1f22d-e0db-04f3-7235-899b10909c7a@gmail.com>
-Message-ID: <owlyy1iifq0n.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 1/5] trailer: separate public from internal portion of trailer_iterator
-From:   Linus Arver <linusa@google.com>
-To:     phillip.wood@dunelm.org.uk, Glen Choo <chooglen@google.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+References: <20230810163346.274132-1-calvinwan@google.com> <20230810163654.275023-4-calvinwan@google.com>
+Message-ID: <kl6ledka8owj.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC PATCH v2 4/7] parse: create new library for parsing strings
+ and env values
+From:   Glen Choo <chooglen@google.com>
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, nasamuffin@google.com,
+        jonathantanmy@google.com, linusa@google.com,
+        phillip.wood123@gmail.com, vdye@github.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Calvin Wan <calvinwan@google.com> writes:
 
-> We have something similar in unpack_trees.h see 576de3d9560 
-> (unpack_trees: start splitting internal fields from public API, 
-> 2023-02-27). That adds an "internal" member to "sturct unpack_trees" of 
-> type "struct unpack_trees_internal which seems to be a easier naming scheme.
-
-Ack, I will use "internal" as the member name in the next reroll.
-
->>> +#define private __private_to_trailer_c__do_not_use
-> [...]
-> That #define is pretty ugly
-
-Haha, indeed. But I think that's the point though (i.e., the degree of
-ugliness matches the strength of our codebase's posture to discourage
-its use by external users).
-
-I will drop the #define in the next reroll though, so, I guess it's a
-moot point anyway.
-
-> Another common scheme is to have an opaque pointer to the private struct 
->   in the public struct (aka pimpl idiom). The merge machinery uses this 
-> - see merge-recursive.h. (I'm working on something similar for the 
-> sequencer so we can change the internals without having to re-compile 
-> everything that includes "sequencer.h")
-
-Very interesting! I look forward to seeing your work. :)
-
->> - Prefixing private members with "__" (khash.h and other header-only
->>    libraries use this at least, not sure if we have this in the 'main
->>    tree'). I think this works pretty well most of the time.
+> While string and environment value parsing is mainly consumed by
+> config.c, there are other files that only need parsing functionality and
+> not config functionality. By separating out string and environment value
+> parsing from config, those files can instead be dependent on parse,
+> which has a much smaller dependency chain than config.
 >
-> It is common but I think the C standard reserves names beginning with "__"
+> Move general string and env parsing functions from config.[ch] to
+> parse.[ch].
 
-Indeed (see [1]).
+An unstated purpose of this patch is that parse.[ch] becomes part of
+git-std-lib, but not config.[ch], right?
 
-[1] https://devblogs.microsoft.com/oldnewthing/20230109-00/?p=107685
+I think it's reasonable to have the string value parsing logic in
+git-std-lib, e.g. this parsing snippet from diff.c seems like a good
+thing to put into a library that wants to accept user input:
+
+  static int parse_color_moved(const char *arg)
+  {
+    switch (git_parse_maybe_bool(arg)) {
+    case 0:
+      return COLOR_MOVED_NO;
+    case 1:
+      return COLOR_MOVED_DEFAULT;
+    default:
+      break;
+    }
+
+    if (!strcmp(arg, "no"))
+      return COLOR_MOVED_NO;
+    else if (!strcmp(arg, "plain"))
+      return COLOR_MOVED_PLAIN;
+    else if (!strcmp(arg, "blocks"))
+      return COLOR_MOVED_BLOCKS;
+    /* ... */
+  }
+
+But, I don't see a why a non-Git caller would want environment value
+parsing in git-std-lib. I wouldn't think that libraries should be
+reading Git-formatted environment variables. If I had to guess, you
+arranged it this way because you want to keep xmalloc in git-std-lib,
+which has a dependency on env var parsing here:
+
+  static int memory_limit_check(size_t size, int gentle)
+  {
+    static size_t limit = 0;
+    if (!limit) {
+      limit = git_env_ulong("GIT_ALLOC_LIMIT", 0);
+      if (!limit)
+        limit = SIZE_MAX;
+    }
+    if (size > limit) {
+      if (gentle) {
+        error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
+              (uintmax_t)size, (uintmax_t)limit);
+        return -1;
+      } else
+        die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
+            (uintmax_t)size, (uintmax_t)limit);
+    }
+    return 0;
+  }
+
+If we libified this as-is, wouldn't our caller start paying attention to
+the GIT_ALLOC_LIMIT environment variable? That seems like an undesirable
+side effect.
+
+I see later in the series that you have "stubs", which are presumably
+entrypoints for the caller to specify their own implementations of
+Git-specific things. If so, then an alternative would be to provide a
+"stub" to get the memory limit, something like:
+
+  /* wrapper.h aka the things to stub */
+  size_t git_get_memory_limit(void);
+
+  /* stub-wrapper-or-something.c aka Git's implementation of the stub */
+
+  #include "wrapper.h"
+  size_t git_get_memory_limit(void)
+  {
+      return git_env_ulong("GIT_ALLOC_LIMIT", 0);
+  }
+
+  /* wrapper.c aka the thing in git-stb-lib */
+  static int memory_limit_check(size_t size, int gentle)
+  {
+    static size_t limit = 0;
+    if (!limit) {
+      limit = git_get_memory_limit();
+      if (!limit)
+        limit = SIZE_MAX;
+    }
+    if (size > limit) {
+      if (gentle) {
+        error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
+              (uintmax_t)size, (uintmax_t)limit);
+        return -1;
+      } else
+        die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
+            (uintmax_t)size, (uintmax_t)limit);
+    }
+    return 0;
+  }
