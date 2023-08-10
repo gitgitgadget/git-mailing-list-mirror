@@ -2,134 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A9C3C001DE
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 20:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC77AC001DE
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 21:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235273AbjHJUkN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 16:40:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58744 "EHLO
+        id S229742AbjHJVRH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 17:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235653AbjHJUkB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 16:40:01 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAB6790
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 13:39:56 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe426521adso2007318e87.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 13:39:56 -0700 (PDT)
+        with ESMTP id S229765AbjHJVRE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 17:17:04 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9ED92738
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 14:17:02 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fe501e0b4cso12703075e9.1
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 14:17:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691699995; x=1692304795;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1691702221; x=1692307021;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6tzSvACcIG7N9HhDyVHvty0LHt2uJL59NrztVHNMDsI=;
-        b=pZmPOPJoYOOdtldhcxoACK40LDLTxXkDdIqGHCgbKpZE9+p3uQ2/sxsB7DLbKATUkh
-         D4xgcgEAUiv3vE3DnuDWJncBNOGqKAFcZWKI7X9u/Rp10xtR7TIMrxuI5aDvHKG4C3KJ
-         GFvIXxqrlRFSZBKTsQL+7MLe6ZrziwrvvcFT362bXAQv2YURV9HdqcXaP6w87vZLmdmS
-         kpBIh2oikspYcZS7Sz46CN7zSsZD4hzzTasGl8BIV524ONpVKHpXxiSNeYRro+4KCNTZ
-         r5j/CiuKRN9yJvgMofhTW4T4U/F5K1uGyp76n1AXItFtu9gfVXoZM0QJTeBSACqkXAAI
-         zoqg==
+        bh=/5q7I3edJAB5k9KZ5royy8m/gT9lYVzk+KhH4I1gZl0=;
+        b=C/pNR7wMBWAWcUnJ3O86Dhm1OyTqBVY7+afZRB59rBaxbUh4Vvz3wTaJz9m7v4UFOE
+         KZhOSkd4sU2MMhKQYaXgk/LBG0b+5HbVVXh3aOavGs5cGBcQzcSk/VbspesoUmXVl1+X
+         Gc3qQRkmYuN9FGRLVIAgxNupmdh+MI5qqOo5jQZbpL75HVOPk7oh7V3YAp/9uhE5zZJw
+         iwXf5On3ALfb5lIiLCpLsDYjhXcey1Ym3Vmyp61B7/swQAaGfGnRM1KH47b12XDt8hs/
+         IHquVaZXdel4bFXZ9swlqvNXrEFet85fD3UgIdJuQ1R4Hn5PCwCSvm1WzLNrvgjfDz7t
+         /90g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691699995; x=1692304795;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1691702221; x=1692307021;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6tzSvACcIG7N9HhDyVHvty0LHt2uJL59NrztVHNMDsI=;
-        b=mD/mZM0R7CNkbey4h1j6jc7bW5S/76Y7C7tbAPS6UOaLVGJzQDe+SaQKL0nU50K6ap
-         NH8KEez8JYXFr2zNsgy57e1tWXiC9trnkbscszeUhgbCkKQTIk0UaaiAL8ZlThxJgvOr
-         iEwAoZ7M1PviqnZSXjsdnDl4liSWE3vzsn5xbNvDJwde9aQ7xAqeXqn1x+qYqTrsqy7a
-         tX1LWblsFftPBgl1D7SiQQfNPuxXQLDY9YDnIpXJcuCD2PAFbo266B+Q/HuDPZc87I3+
-         5NWfe3UE7pnY9mDOH/EmmtD72AwFCM+BXrbdJy+Dd4UIbU+Z5mqyypGI6nL+iezepH+J
-         J0VA==
-X-Gm-Message-State: AOJu0YykvzEqN3PBb3i6PJS3zWosFgqdlwN4YCFdVMD5H9AYWWsBkRHB
-        qu0BTryMdy7PgifGf/j7rP1mZyzW8u0=
-X-Google-Smtp-Source: AGHT+IFzklOYjDh6PL2TM9bj3xYZX4ShbbEwWLehMyFK2CJtS3bPNi3q90ousAWWuqCN8nixScfu2A==
-X-Received: by 2002:a05:6512:31cf:b0:4fe:56d8:631d with SMTP id j15-20020a05651231cf00b004fe56d8631dmr3214250lfe.25.1691699994756;
-        Thu, 10 Aug 2023 13:39:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m24-20020aa7c498000000b00521953ce6e0sm1204035edq.93.2023.08.10.13.39.54
+        bh=/5q7I3edJAB5k9KZ5royy8m/gT9lYVzk+KhH4I1gZl0=;
+        b=YMDgfV2bjNkjhRBvzs4JQGeq+6RovjHQvDATBUzoM+x1zIczs+MmOsoQWkOkwPU0pt
+         U+5YQNjkA2WtCepGPdx/qXKOzQ7pf+Iy8Vb9YPzcaLUeBvuAVuaNzWw1AEiFj8i1rFzj
+         PQdtMuIC7okwhBrIIxtc+TVN3A81J6k46ULBa4++I9zh67Uy4SZgJlqV3ulbN8/po89S
+         KoTMYGVtSKjC/X1YUgtct3LJ1h0W66eUVKLuLCcL7v80G9rbuoNCKaXhdZVQdcngaO0u
+         ZqJaHA3NZ0nwIxb1ES8jyQ5Ks3oqsgpsSanLL1l63XHvEz8ASamSaVFlJno2BBaq+iGS
+         FpMA==
+X-Gm-Message-State: AOJu0Yzs9k9bRLWijoXaXUU/f3WU+Xg9pJ0aAixrl4NAzTgudBQzCskw
+        C5zMjOb0J1DBpK11s+wSuJEciQ6aUyRmKA==
+X-Google-Smtp-Source: AGHT+IG6eLZWcFYqqWJa/fLRmfXOMLLKhWS3kzn78K0rHsW9PRmGtt7W6pXzCwYJ/kwBqKQJkLr86g==
+X-Received: by 2002:a05:600c:21cd:b0:3fb:a506:5656 with SMTP id x13-20020a05600c21cd00b003fba5065656mr24661wmj.32.1691702220921;
+        Thu, 10 Aug 2023 14:17:00 -0700 (PDT)
+Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id 19-20020a05600c229300b003fe24da493dsm3169864wmf.41.2023.08.10.14.17.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 13:39:54 -0700 (PDT)
-Message-ID: <f0c0f6eff883c62f6b07223b5f1da3fd8e462507.1691699987.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1567.v2.git.1691699987.gitgitgadget@gmail.com>
-References: <pull.1567.git.1691434300.gitgitgadget@gmail.com>
-        <pull.1567.v2.git.1691699987.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Aug 2023 20:39:47 +0000
-Subject: [PATCH v2 8/8] maintenance: update schedule before config
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Thu, 10 Aug 2023 14:17:00 -0700 (PDT)
+From:   Andy Koppe <andy.koppe@gmail.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, lenaic@lhuard.fr,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Cc:     Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH v3 2/7] pretty-formats: enclose options in angle brackets
+Date:   Thu, 10 Aug 2023 22:16:14 +0100
+Message-ID: <20230810211619.19055-2-andy.koppe@gmail.com>
+X-Mailer: git-send-email 2.42.0-rc1
+In-Reply-To: <20230810211619.19055-1-andy.koppe@gmail.com>
+References: <20230715160730.4046-1-andy.koppe@gmail.com>
+ <20230810211619.19055-1-andy.koppe@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Enclose the 'options' placeholders in the %(describe) and %(trailers)
+format specifiers in angle brackets to clarify that they are
+placeholders rather than keywords.
 
-When running 'git maintenance start', the current pattern is to
-configure global config settings to enable maintenance on the current
-repository and set 'maintenance.auto' to false and _then_ to set up the
-schedule with the system scheduler.
+Also remove the indentation from their descriptions, instead of
+increasing it to account for the extra two angle bracket in the
+headings. The indentation isn't required by asciidoc, it doesn't reflect
+how the output text is formatted, and it's inconsistent with the
+following bullet points that are at the same level in the output.
 
-This has a problematic error condition: if the scheduler fails to
-initialize, the repository still will not use automatic maintenance due
-to the 'maintenance.auto' setting.
-
-Fix this gap by swapping the order of operations. If Git fails to
-initialize maintenance, then the config changes should never happen.
-
-Reported-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
- builtin/gc.c           |  5 ++++-
- t/t7900-maintenance.sh | 13 +++++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ Documentation/pretty-formats.txt | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 6f8df366fbe..fe5f871c493 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -2728,9 +2728,12 @@ static int maintenance_start(int argc, const char **argv, const char *prefix)
- 	opts.scheduler = resolve_scheduler(opts.scheduler);
- 	validate_scheduler(opts.scheduler);
- 
-+	if (update_background_schedule(&opts, 1))
-+		die(_("failed to set up maintenance schedule"));
-+
- 	if (maintenance_register(ARRAY_SIZE(register_args)-1, register_args, NULL))
- 		warning(_("failed to add repo to global config"));
--	return update_background_schedule(&opts, 1);
-+	return 0;
- }
- 
- static const char *const builtin_maintenance_stop_usage[] = {
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 9ffe76729e6..e56f5980dc4 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -849,4 +849,17 @@ test_expect_success 'register and unregister bare repo' '
- 	)
- '
- 
-+test_expect_success 'failed schedule prevents config change' '
-+	git init --bare failcase &&
-+
-+	for scheduler in crontab launchctl schtasks systemctl
-+	do
-+		GIT_TEST_MAINT_SCHEDULER="$scheduler:false" &&
-+		export GIT_TEST_MAINT_SCHEDULER &&
-+		test_must_fail \
-+			git -C failcase maintenance start &&
-+		test_must_fail git -C failcase config maintenance.auto || return 1
-+	done
-+'
-+
- test_done
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 5e1432951b..851a9878e6 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -224,13 +224,11 @@ The placeholders are:
+ 	linkgit:git-rev-list[1])
+ '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+ '%D':: ref names without the " (", ")" wrapping.
+-'%(describe[:options])':: human-readable name, like
+-			  linkgit:git-describe[1]; empty string for
+-			  undescribable commits.  The `describe` string
+-			  may be followed by a colon and zero or more
+-			  comma-separated options.  Descriptions can be
+-			  inconsistent when tags are added or removed at
+-			  the same time.
++'%(describe[:<options>])'::
++human-readable name, like linkgit:git-describe[1]; empty string for
++undescribable commits.  The `describe` string may be followed by a colon and
++zero or more comma-separated options.  Descriptions can be inconsistent when
++tags are added or removed at the same time.
+ +
+ ** 'tags[=<bool-value>]': Instead of only considering annotated tags,
+    consider lightweight tags as well.
+@@ -283,13 +281,11 @@ endif::git-rev-list[]
+ '%gE':: reflog identity email (respecting .mailmap, see
+ 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ '%gs':: reflog subject
+-'%(trailers[:options])':: display the trailers of the body as
+-			  interpreted by
+-			  linkgit:git-interpret-trailers[1]. The
+-			  `trailers` string may be followed by a colon
+-			  and zero or more comma-separated options.
+-			  If any option is provided multiple times the
+-			  last occurrence wins.
++'%(trailers[:<options>])'::
++display the trailers of the body as interpreted by
++linkgit:git-interpret-trailers[1]. The `trailers` string may be followed by
++a colon and zero or more comma-separated options. If any option is provided
++multiple times, the last occurrence wins.
+ +
+ ** 'key=<key>': only show trailers with specified <key>. Matching is done
+    case-insensitively and trailing colon is optional. If option is
 -- 
-gitgitgadget
+2.42.0-rc1
+
