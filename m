@@ -2,200 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1AFDC001DE
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 17:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 173D9C001B0
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 19:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235304AbjHJRo4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 13:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43574 "EHLO
+        id S235853AbjHJTJt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 15:09:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232739AbjHJRoz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 13:44:55 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126582702
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 10:44:52 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-589addee1c1so11062417b3.3
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 10:44:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691689491; x=1692294291;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9SdKpvrCdrG++OYxPvy6ZplBH8apr9MyVYSPQdomqng=;
-        b=GrC1j0keGEDNkEDn6BB+OQPgfqxsH56D5ykUAqvGIxbVJ8ky1G7qysZsIZj1bgTqsU
-         X6yN/GdNHj51Of5cmudpKqfpGg/mAZWeuyOnglmmC2oQyWnCnwVM3HDPb3U2CS+T7Rnn
-         fZ1Afh2Wqu5W8FgsDhgLFoduQmvfYdEZc1K4nEWgeZfUF9tz7PTCb8prAo61zfWpluzd
-         F0HG8upOwsxic0j3hFvjtTSLv2Nfd0WiW7eu92hunKBTnVjHNlyn55VYHUtAaXZEjeBs
-         5A3WleGRN3lcFabwkFGAQAzZ/aXGddglS+IVXlhfyHetP8REB37qI+uPuTThsLLvc+ch
-         I3/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691689491; x=1692294291;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9SdKpvrCdrG++OYxPvy6ZplBH8apr9MyVYSPQdomqng=;
-        b=S4W/c+t6dF3sGmIkcnB65/PXOGE0Cy/PIz720e8yXRlrxsR0pA2sTpdvsG0s05go6B
-         zTMYt3jC4SmOkTonvL2naj6iNUJnIY6/gF7ghxDZ9pUVhIMlN2OgVKwu6O/oTL7+r/su
-         emFa5dFI7BMqpbQx8SWs0XogiWXY/LOUyFJqzzg4hbUnIMZt6ejjT+lam7pnScBIaTv1
-         Mxuhrpp/HfDLAVOYihuYh30XTN4W2Yro8V+0b3HMyf4/ojbn9q9jaEjeGXR+xEvlUPti
-         iStxusiEKTvMQrOraStYvUHKzbpA+os3GP4/mEwrRhPsO/KySdXrhxUQE33h478ihnvo
-         ORuA==
-X-Gm-Message-State: AOJu0YzF2Z4tUTNTru9a5KRx2KJ/0RE5+frn3bCl4FSN6NgXBmmURbi1
-        71EWZvkqAfDGkKCZRG8j1akuzQ==
-X-Google-Smtp-Source: AGHT+IHbmWa3LTHt+xpBsi0QLQdQT79OVnuRW0iyqprd1yqXN4bdO0MsJxb/jZ6nP32KXrxgBTZmOg==
-X-Received: by 2002:a0d:ee81:0:b0:57a:2250:f5c0 with SMTP id x123-20020a0dee81000000b0057a2250f5c0mr3843028ywe.19.1691689491181;
-        Thu, 10 Aug 2023 10:44:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x1-20020a818701000000b005707d7686ddsm471580ywf.76.2023.08.10.10.44.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 10:44:50 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 13:44:49 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [RFC/PATCH] commit-graph: verify swapped zero/non-zero
- generation cases
-Message-ID: <ZNUiEXF5CP6WMk9A@nand.local>
-References: <20230808191536.GA4033224@coredump.intra.peff.net>
- <ZNUJq2nFEDHwrF0U@nand.local>
+        with ESMTP id S235982AbjHJTJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 15:09:48 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7257A2713
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 12:09:48 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0DE661DAD0;
+        Thu, 10 Aug 2023 15:09:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Mx4DNvl5154baq/LTk9IUh8QwABigGp+rYSVDl
+        NJMDw=; b=N6vlur5pvro3Goh/KVadJZariwaSrKDoGM3vRPB6gX8jYPZTR+ayJG
+        s9q+SOeTZlfmI/0zRX0IiIRIx/f7Z+gM0R+nY5Z1uckuxremHkRndDHM72FuHsnT
+        4VoDhU2z51EkouBzO+cYVveksosEWsUx9DhMo4TsbAj9pDr8pthN4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0654E1DACF;
+        Thu, 10 Aug 2023 15:09:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD4B71DACE;
+        Thu, 10 Aug 2023 15:09:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t9001: fix/unify indentation regarding pipes somewhat
+References: <20230809171531.2564769-1-oswald.buddenhagen@gmx.de>
+        <xmqq350sm21v.fsf@gitster.g> <ZNS7PJ0oyOQLeaZ7@ugly>
+Date:   Thu, 10 Aug 2023 12:09:43 -0700
+In-Reply-To: <ZNS7PJ0oyOQLeaZ7@ugly> (Oswald Buddenhagen's message of "Thu, 10
+        Aug 2023 12:26:04 +0200")
+Message-ID: <xmqqa5uysoi0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZNUJq2nFEDHwrF0U@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7769BB1C-37B1-11EE-83C3-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2023 at 12:00:43PM -0400, Taylor Blau wrote:
-> > There's a matching GENERATION_NUMBER_EXISTS value, which in theory would
-> > be used to find the case that we see the entries in the opposite order:
-> >
-> >   1. When we see an entry with a non-zero generation, we set the
-> >      generation_zero flag to GENERATION_NUMBER_EXISTS.
-> >
-> >   2. When we later see an entry with a zero generation, we complain if
-> >      the flag is GENERATION_NUMBER_EXISTS.
-> >
-> > But that doesn't work; step 2 is implemented, but there is no step 1. We
-> > never use NUMBER_EXISTS at all, and Coverity rightly complains that step
-> > 2 is dead code.
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+
+>>but more like
+>>
+>>	A |
+>>	B |
+>>	C
+>>
+> i'd argue that this should be written as
 >
-> So I think the missing part is setting GENERATION_NUMBER_EXISTS when we
-> have a non-zero generation number from the commit-graph, but have
-> generation_zero set to GENERATION_ZERO_EXISTS (IOW, we have seen at
-> least one commit with generation number 0).
+> 	A |
+> 		B |
+> 		C
 >
-> --- 8< ---
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 0aa1640d15..935bc15440 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -2676,9 +2676,11 @@ static int verify_one_commit_graph(struct repository *r,
->  				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
->  					     oid_to_hex(&cur_oid));
->  			generation_zero = GENERATION_ZERO_EXISTS;
-> -		} else if (generation_zero == GENERATION_ZERO_EXISTS)
-> +		} else if (generation_zero == GENERATION_ZERO_EXISTS) {
->  			graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
->  				     oid_to_hex(&cur_oid));
-> +			generation_zero = GENERATION_NUMBER_EXISTS;
-> +		}
->
->  		if (generation_zero == GENERATION_ZERO_EXISTS)
->  			continue;
-> --- >8 ---
+> like other continued lines (no trailing backslashes are needed here,
+> but it would be ok to add them, and there is in fact a commit that
+> does just that in other places, and one might do the same here in a
+> followup).
 
-OK, I investigated this a little bit more and now I think I understand
-fully what's going on here.
+You are entitled to your own opinion, and you are welcome to stick
+to it in projects you run.  But please refrain from wasting time of
+this project on something that is subjective preference and has no
+absolute yardstick to tell which is _right_ or _wrong_.  Difference
+between the above two falls into "once it is written in one way, it
+is not worth the patch noise to turn it into the other way", and I
+already told you which is the preferred way for new code.
 
-There are a couple of things wrong with the diff that I posted above.
-First, it has a logic error that we should set GENERATION_NUMBER_EXISTS
-when we have a non-zero generation number from the graph, regardless of
-whether or not GENERATION_ZERO_EXISTS is set (like how it is done in
-your patch).
+As to trailing backslashes _after_ pipe, we have preference that is
+a bit stronger than "once it is written, it is not worth fixing".
+The shell knows, when you end a line with a vertical bar, you
+haven't finished your pipeline, and we do want to omit such an
+unnecessary backslash if we accidentally added one.  b8403129
+(t/t0015-hash.sh: remove unnecessary '\' at line end, 2022-02-08)
+is an example of such a style fix, and that is why I said the
+preference is a bit stronger than "once it is written...".
 
-But more importantly, we'll never end up in the first arm of that
-conditional as-is (the one that fires for when we see a generation
-number of zero) as a consequence of 2ee11f7261 (commit-graph: return
-generation from memory, 2023-03-20), which only returns non-zero
-generation numbers (or GENERATION_NUMBER_INFINITY, which is also
-non-zero).
 
-I think you want something like `commit_graph_generation()` that returns
-whatever is in `data->generation` regardless of whether or not it is
-zero valued. You'd then want to use that function instead of calling
-commit_graph_generation() directly.
 
-> > So I kind of wonder if there's something I'm not getting here. Coverity
-> > is definitely right that our "step 2" is dead code (because we never set
-> > NUMBER_EXISTS). But I'm not sure if we should be deleting it, or trying
-> > to fix an underlying bug.
->
-> I think that above is correct in that we should be fixing an underlying
-> bug. But the fact that this isn't caught by our existing tests indicates
-> that there is a gap in coverage. Let me see if I can find a test case
-> that highlights this bug...
-
-Doing the above allows me to write these two tests on top of your patch,
-which both pass:
-
---- &< ---
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 4df76173a8..8e96471b34 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -450,14 +450,15 @@ GRAPH_BYTE_FANOUT2=$(($GRAPH_FANOUT_OFFSET + 4 * 255))
- GRAPH_OID_LOOKUP_OFFSET=$(($GRAPH_FANOUT_OFFSET + 4 * 256))
- GRAPH_BYTE_OID_LOOKUP_ORDER=$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN * 8))
- GRAPH_BYTE_OID_LOOKUP_MISSING=$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN * 4 + 10))
-+GRAPH_COMMIT_DATA_WIDTH=$(($HASH_LEN + 16))
- GRAPH_COMMIT_DATA_OFFSET=$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN * $NUM_COMMITS))
- GRAPH_BYTE_COMMIT_TREE=$GRAPH_COMMIT_DATA_OFFSET
- GRAPH_BYTE_COMMIT_PARENT=$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN))
- GRAPH_BYTE_COMMIT_EXTRA_PARENT=$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 4))
- GRAPH_BYTE_COMMIT_WRONG_PARENT=$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 3))
- GRAPH_BYTE_COMMIT_GENERATION=$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 11))
-+GRAPH_BYTE_COMMIT_GENERATION_LAST=$(($GRAPH_BYTE_COMMIT_GENERATION + $(($NUM_COMMITS - 1)) * $GRAPH_COMMIT_DATA_WIDTH))
- GRAPH_BYTE_COMMIT_DATE=$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 12))
--GRAPH_COMMIT_DATA_WIDTH=$(($HASH_LEN + 16))
- GRAPH_OCTOPUS_DATA_OFFSET=$(($GRAPH_COMMIT_DATA_OFFSET + \
- 			     $GRAPH_COMMIT_DATA_WIDTH * $NUM_COMMITS))
- GRAPH_BYTE_OCTOPUS=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4))
-@@ -596,11 +597,6 @@ test_expect_success 'detect incorrect generation number' '
- 		"generation for commit"
- '
-
--test_expect_success 'detect incorrect generation number' '
--	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION "\01" \
--		"commit-graph generation for commit"
--'
--
- test_expect_success 'detect incorrect commit date' '
- 	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_DATE "\01" \
- 		"commit date"
-@@ -622,6 +618,16 @@ test_expect_success 'detect incorrect chunk count' '
- 		$GRAPH_CHUNK_LOOKUP_OFFSET
- '
-
-+test_expect_success 'detect mixed generation numbers (non-zero to zero)' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION_LAST "\0\0\0\0" \
-+		"but non-zero elsewhere"
-+'
-+
-+test_expect_success 'detect mixed generation numbers (zero to non-zero)' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION "\0\0\0\0" \
-+		"but zero elsewhere"
-+'
-+
- test_expect_success 'git fsck (checks commit-graph when config set to true)' '
- 	git -C full fsck &&
- 	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
---- >8 ---
-
-Note that we remove the duplicate "detect incorrect generation number"
-test, which was originally introduced in 1373e547f7 (commit-graph:
-verify generation number, 2018-06-27), but was modified in 2ee11f7261.
-
-That test is replaced by the latter "non-zero to zero" variant.
-
-Thanks,
-Taylor
