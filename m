@@ -2,98 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CD1AC001DE
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 21:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A6ABC04A6A
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 21:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbjHJVgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 17:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51220 "EHLO
+        id S231276AbjHJVvJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 17:51:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjHJVgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 17:36:11 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F4972712
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 14:36:11 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC42F2C24A;
-        Thu, 10 Aug 2023 17:36:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=K25azRd1/yfqIiJ43X4VAyUW0SmEP3BIieSXJt
-        yNKgg=; b=HKzMflatqpGUotOjb4hfc/FXJgVj7cywhv9i5sAFulR204lp43WST1
-        z03YsOs5Zs+uvIJosDgMA3qSxdAq7hflGwPzPhdBwlnHstOhOwjxpKJ5Ee1Hp2sH
-        wOjhirRquJbKqu6fjEO6UI2XHbWW/GuNMJunQUAbbcP0LeM5PyoG8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A55262C248;
-        Thu, 10 Aug 2023 17:36:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 53A922C247;
-        Thu, 10 Aug 2023 17:36:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 2/4] commit-graph: verify swapped zero/non-zero
- generation cases
-References: <ZNUiEXF5CP6WMk9A@nand.local>
-        <cover.1691699851.git.me@ttaylorr.com>
-        <9b9483893c072961c5871bd0bae17a7098d73c06.1691699851.git.me@ttaylorr.com>
-Date:   Thu, 10 Aug 2023 14:36:06 -0700
-In-Reply-To: <9b9483893c072961c5871bd0bae17a7098d73c06.1691699851.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Thu, 10 Aug 2023 16:37:37 -0400")
-Message-ID: <xmqqleeir35l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EA457A2C-37C5-11EE-B714-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+        with ESMTP id S231289AbjHJVvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 17:51:05 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1FF2D71
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 14:51:02 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-589ac93bc6eso14425867b3.0
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 14:51:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1691704262; x=1692309062;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hPSzIttiLsUaEB9F2CoRQf5AyswLcztnu9uQ1DmzFGo=;
+        b=1LgvXf2Z5aTvAO75Ym/JJ3QznhRLUEpX80f6x7YYdULhYMeIVvYlp44N/4bCx8V5ab
+         CFARaF2+gPTXTgxGtnu4WztyGcJ1mfTa+xa+O7poBbzbJYEo10FyR/meqAnEcmnjPQ5G
+         e8/D4kSGDtY8qdjz7SO12MmXCTK94iVdIW1X+W8myQUDQv+8ZkvLrPBtHAVH8gthjvP9
+         UXIISQXLM6XmuN21LgyzKrSso+8FwoQGfVQnt59m3e5q17RNj+4WX5Fl/F/HDs23KNTe
+         RtCrCgw0G6lTEzoFyQ0krE6ZzyNtt54w1lD2aWbRpTWAH9SzFC3i6N2Zuut3Pat1IjI/
+         53AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691704262; x=1692309062;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hPSzIttiLsUaEB9F2CoRQf5AyswLcztnu9uQ1DmzFGo=;
+        b=YShYgYitVP/dG/r6t5VYjmrPK5WcxCf09G/LCmV4mZ/qOeb1c7tyDA230HWwfAunW4
+         6s2C35sXVShvhGaey9FOL4qM2F01ZiUmTueeFN2Z9AWxV10/wvK0fNM162YakHRW9ZAD
+         C4DugBZV0FIibn8TfSU0kTy2hgqxVwlyDGFCefcrKcSlriE+Wa1oDBDLeIavTqERKymg
+         ff3zJhIhPCmPwvwZkevqjztzn0lTpoQTNUQ2TZscNzdG1REzPMXfJ4ykKySc6yBGwenn
+         mk7ef6dxbHYFseNOesHO7mJoQnrZKETQAYaFZzyJp30AbDV3ZHXB30qopgYmzsVnf813
+         DjcQ==
+X-Gm-Message-State: AOJu0Yy2HKA8Q3kkXmuD6i+R3zuqlsjfxzgKxrBAnqJUmEuz1caoPtLt
+        7wJYtMSeD74Wl3vHQPj80utgimedI0A=
+X-Google-Smtp-Source: AGHT+IH9v4w4R1syDyPW9suaRFR4B8laF3km3HNI578cFY2maVpUDksDYCGSt3DIieCzNQtrLvAWECKk30U=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a81:ae0e:0:b0:573:8316:8d04 with SMTP id
+ m14-20020a81ae0e000000b0057383168d04mr2760ywh.4.1691704262150; Thu, 10 Aug
+ 2023 14:51:02 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 14:50:59 -0700
+In-Reply-To: <20230809171531.2564807-2-oswald.buddenhagen@gmx.de>
+Mime-Version: 1.0
+References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
+ <20230809171531.2564807-1-oswald.buddenhagen@gmx.de> <20230809171531.2564807-2-oswald.buddenhagen@gmx.de>
+Message-ID: <owly8raih8ho.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 2/2] doc: revert: add discussion
+From:   Linus Arver <linusa@google.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index c68f5c6b3a..acca753ce8 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -2686,9 +2686,12 @@ static int verify_one_commit_graph(struct repository *r,
->  				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
->  					     oid_to_hex(&cur_oid));
->  			generation_zero = GENERATION_ZERO_EXISTS;
-> -		} else if (generation_zero == GENERATION_ZERO_EXISTS)
-> -			graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
-> -				     oid_to_hex(&cur_oid));
-> +		} else {
-> +			if (generation_zero == GENERATION_ZERO_EXISTS)
-> +				graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
-> +					     oid_to_hex(&cur_oid));
-> +			generation_zero = GENERATION_NUMBER_EXISTS;
-> +		}
+> while thinking about what to write, i came up with an idea for another
+> improvement: with (implicit) --edit, the template message would end up
+> being:
+>
+>  This reverts commit <sha1>,
+>  because <PUT REASON HERE>.
 
-Hmph, doesn't this potentially cause us to emit the two reports
-alternating, if we are unlucky enough to see a commit with 0
-generation first (which will silently set gz to ZERO_EXISTS), then
-another commit with non-zero generation (which will complain we saw
-non-zero for the current one and earlier we saw zero elsewhere, and
-then set gz to NUM_EXISTS), and then another commit with 0
-generation (which will complain the other way, and set gz back again
-to ZERO_EXISTS)?
+This sounds great to me.
 
-I am tempted to say this gz business should be done with two bits
-(seen zero bit and seen non-zero bit), and immediately after we see
-both kinds, we should report once and stop making further reports,
-but ...
+Nit: the "doc: revert: add discussion" subject line should probably be more
+like "revert doc: suggest adding the 'why' behind reverts".
 
->  		if (generation_zero == GENERATION_ZERO_EXISTS)
->  			continue;
+> ---
+>  Documentation/git-revert.txt | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+> index d2e10d3dce..2b52dc89a8 100644
+> --- a/Documentation/git-revert.txt
+> +++ b/Documentation/git-revert.txt
+> @@ -142,6 +142,16 @@ EXAMPLES
+>  	changes. The revert only modifies the working tree and the
+>  	index.
+>
+> +DISCUSSION
+> +----------
+> +
+> +While git creates a basic commit message automatically, you really
+> +should not leave it at that. In particular, it is _strongly_
+> +recommended to explain why the original commit is being reverted.
+> +Repeatedly reverting reversions yields increasingly unwieldy
+> +commit subjects; latest when you arrive at 'Reapply "Reapply
+> +"<original subject>""' you should get creative.
 
-... as I do not see what this "continue" is doing, I'd stop at
-expressing my puzzlement ;-)
+The word "latest" here sounds odd. Ditto for "get creative". How about
+the following rewording?
 
-Thanks.
-
+    While git creates a basic commit message automatically, it is
+    _strongly_ recommended to explain why the original commit is being
+    reverted. In addition, repeatedly reverting the same commit will
+    result in increasingly unwieldy subject lines, for example 'Reapply
+    "Reapply "<original subject>""'. Please consider rewording such
+    subject lines to reflect the reason why the original commit is being
+    reapplied again.
