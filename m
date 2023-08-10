@@ -2,56 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DDFFC001B0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 23:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60A2DC04A6A
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 23:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231963AbjHJXVT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 19:21:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35480 "EHLO
+        id S231224AbjHJXlw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 19:41:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231645AbjHJXVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 19:21:18 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6341B270F
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:21:18 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1bd94d2df89so18098705ad.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:21:18 -0700 (PDT)
+        with ESMTP id S229504AbjHJXlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 19:41:50 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A153271E
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:41:50 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d62858b0914so3440016276.1
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 16:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691709678; x=1692314478;
+        d=google.com; s=20221208; t=1691710909; x=1692315709;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZrmkxCr8eFfq4tcgzpcMZ6+FGQkVXLKBjX7ThnY4ChA=;
-        b=ueS/lsmNPUA1xFggMOZytyKfZsSuPefdktdhrsLaIv5sBSL+lFCOG90wS1jhExz6e+
-         N9WjIpPj/0KBRq0ZYf0HCwgEffAwdAnCaKFkca6G6CTEmHV7ZlR76rK4SIOQU/0hqwFn
-         fd6BVfQOPcCzv9qseZgkY6XlZ5S4JjdEzrF4wiZU4ul/iDvEZ6qN0PYe/yzSCJWCNIyM
-         EbGvbjcypuNqRYoE8ZbPgSuOD2VDrD19ebuZJjdR+XrXUzSMW/pXVApukatO6GZcoIl8
-         4bibS/+hwlpcph0+83NC6pn8EcZ9grh9/p5bFao1Rp7AV/ejeH4VoXt9RWUJMi4VXGmP
-         G5Vg==
+        bh=6WNcp8xU64urMARKbc5YtRj4N3Om/1Gb6nw5zu43gEc=;
+        b=C/w9JYNuxN0bJI2NkBOUsAuDlnMkh3niOyq0kRCdlVnIeoVOUpZquy7D9M9eqfJ8tq
+         9IB0LRv7QflFFmZi8+p5wKuIj+24adz8xN5XF5/LDOBSPx6joJsg2krJf0EMC1z2S33A
+         tVMuFhxF+EaoeqpXDjJJIYrRIe7PvLdIk1bmIgewpO7gDSUEya1bXpFkEcWD5IKGis52
+         hoBpoZQZ2mYBJGYzqtJ51QJN4ugW1SQTUYdUigYR0i3zD1trE4YDW3bsArHqEbLhVSC1
+         HUXZA9uHoQKDHydB1AF6Ninyx6fCzOboYc4RKT3QKa/ATtmXKbIIk0NQh7EXSqJLu8pz
+         G2/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691709678; x=1692314478;
+        d=1e100.net; s=20221208; t=1691710909; x=1692315709;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZrmkxCr8eFfq4tcgzpcMZ6+FGQkVXLKBjX7ThnY4ChA=;
-        b=TAIjy1Cqq8NB/4Z7SWlNBhGmO0EGtpVas/8NW4MJ/sFlEkwArDmCKYueebH+kpM29N
-         /x2UoqvfMILo8fCZlBGFfoZ3uQInvUyJ73nXwGflZQxWLdJbS3i+zf5r7sQWTqOA9jsr
-         MXSs539zUcvE/HcrngKS+eb0FPJ73J4V6qGyw2ZY08viqUBhrOfuXunsyhgk3Dmnfs4e
-         zeJaNIsuapedPARfSqNXWuGWSDDYac579UarOTRFegMJXiai4IfGbrbSdj5Wwlw767EV
-         w8/UoIyF6uwrWYQzkPTXcRjBrGjFMzJmamUbyCov+1rjEd1xKz5OWHQTBSO9/loACuWV
-         NlKQ==
-X-Gm-Message-State: AOJu0YxCb//omEs4kzOLpPvzBslyzzBnb7kLEINsxJWkMfe8l/4b3yp+
-        Tej0yylFqhrOC/7GLzl3NOFG9OfCpTM8/w==
-X-Google-Smtp-Source: AGHT+IGe80S8ym3+UvtKQsCObWkAOpPU4aW3INCHFVbSDq2hRCx8lUwC574Qmq2npEVv5NN0/AwvPxNWXd97zQ==
+        bh=6WNcp8xU64urMARKbc5YtRj4N3Om/1Gb6nw5zu43gEc=;
+        b=HT/1M1vaM9Ec6lgwbZZSyqelY1RlxIEBw2zVx3en5fYUuAEZ39n9OpfNMkhdrFF37X
+         XcoyYB7nfh9Vw2Fgy3NxR68FVse84utsDzZdlYCGzKSX4f4exIb57WEVlVxq2wX0FYC0
+         T/Y7zy1yMKdjxdlHPVZzZIlSNXUEx4rpm3Pk8sPJkAhouHmMTl2lxmoYJunFHyZsec1I
+         Q5FTTIfoYp29GPR+f+VGe3RMu/7kBPUMSdGY8tuIyMiUPApseyMtwIqKt3AhhtSkvtAp
+         cpJT3IeL4giBlKX1t8XxpD8zR3qOviWP8c3w42tSzT3o/o5eHZMXTCcfUR9lc/Pq19EN
+         fcPg==
+X-Gm-Message-State: AOJu0YyaxzbRjgzdMk7wCBSBqzbzv1qQ0LP2CXuGJRAFFrRqWF476XUA
+        kjd65Yxrf9dGyPpKTUR2ksPmR0nscbz7Rg==
+X-Google-Smtp-Source: AGHT+IFhGZkQ6bgUEUrQysL3hutVyQar1EG6IqDpKY0J73AZBhl5PhWw+rthxmGTGj1iJPeZnfh0ji1bHgJ0ZA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:f349:b0:1bc:a3b:e902 with SMTP id
- q9-20020a170902f34900b001bc0a3be902mr71204ple.3.1691709677872; Thu, 10 Aug
- 2023 16:21:17 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 16:21:16 -0700
-In-Reply-To: <20230810163654.275023-4-calvinwan@google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6902:91b:b0:d15:53b5:509f with SMTP
+ id bu27-20020a056902091b00b00d1553b5509fmr71115ybb.2.1691710909782; Thu, 10
+ Aug 2023 16:41:49 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 16:41:48 -0700
+In-Reply-To: <20230810163654.275023-5-calvinwan@google.com>
 Mime-Version: 1.0
-References: <20230810163346.274132-1-calvinwan@google.com> <20230810163654.275023-4-calvinwan@google.com>
-Message-ID: <kl6ledka8owj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH v2 4/7] parse: create new library for parsing strings
- and env values
+References: <20230810163346.274132-1-calvinwan@google.com> <20230810163654.275023-5-calvinwan@google.com>
+Message-ID: <kl6lbkfe8nyb.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC PATCH v2 5/7] date: push pager.h dependency up
 From:   Glen Choo <chooglen@google.com>
 To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, nasamuffin@google.com,
@@ -64,105 +63,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Calvin Wan <calvinwan@google.com> writes:
 
-> While string and environment value parsing is mainly consumed by
-> config.c, there are other files that only need parsing functionality and
-> not config functionality. By separating out string and environment value
-> parsing from config, those files can instead be dependent on parse,
-> which has a much smaller dependency chain than config.
->
-> Move general string and env parsing functions from config.[ch] to
-> parse.[ch].
+> In order for date.c to be included in git-std-lib, the dependency to
+> pager.h must be removed since it has dependencies on many other files
+> not in git-std-lib.
 
-An unstated purpose of this patch is that parse.[ch] becomes part of
-git-std-lib, but not config.[ch], right?
+Dependencies aside, I doubt callers of Git libraries want Git's
+pager-handling logic bundled in git-std-lib ;)
 
-I think it's reasonable to have the string value parsing logic in
-git-std-lib, e.g. this parsing snippet from diff.c seems like a good
-thing to put into a library that wants to accept user input:
+> @@ -1003,13 +1002,13 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
+>  	die("unknown date format %s", format);
+>  }
+>  
+> -void parse_date_format(const char *format, struct date_mode *mode)
+> +void parse_date_format(const char *format, struct date_mode *mode, int pager_in_use)
+>  {
+>  	const char *p;
+>  
+>  	/* "auto:foo" is "if tty/pager, then foo, otherwise normal" */
+>  	if (skip_prefix(format, "auto:", &p)) {
+> -		if (isatty(1) || pager_in_use())
+> +		if (isatty(1) || pager_in_use)
+>  			format = p;
+>  		else
+>  			format = "default";
 
-  static int parse_color_moved(const char *arg)
-  {
-    switch (git_parse_maybe_bool(arg)) {
-    case 0:
-      return COLOR_MOVED_NO;
-    case 1:
-      return COLOR_MOVED_DEFAULT;
-    default:
-      break;
-    }
+Hm, it feels odd to ship a parsing option that changes based on whether
+the caller isatty or not. Ideally we would stub this "switch the value
+of auto" logic too.
 
-    if (!strcmp(arg, "no"))
-      return COLOR_MOVED_NO;
-    else if (!strcmp(arg, "plain"))
-      return COLOR_MOVED_PLAIN;
-    else if (!strcmp(arg, "blocks"))
-      return COLOR_MOVED_BLOCKS;
-    /* ... */
-  }
-
-But, I don't see a why a non-Git caller would want environment value
-parsing in git-std-lib. I wouldn't think that libraries should be
-reading Git-formatted environment variables. If I had to guess, you
-arranged it this way because you want to keep xmalloc in git-std-lib,
-which has a dependency on env var parsing here:
-
-  static int memory_limit_check(size_t size, int gentle)
-  {
-    static size_t limit = 0;
-    if (!limit) {
-      limit = git_env_ulong("GIT_ALLOC_LIMIT", 0);
-      if (!limit)
-        limit = SIZE_MAX;
-    }
-    if (size > limit) {
-      if (gentle) {
-        error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
-              (uintmax_t)size, (uintmax_t)limit);
-        return -1;
-      } else
-        die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
-            (uintmax_t)size, (uintmax_t)limit);
-    }
-    return 0;
-  }
-
-If we libified this as-is, wouldn't our caller start paying attention to
-the GIT_ALLOC_LIMIT environment variable? That seems like an undesirable
-side effect.
-
-I see later in the series that you have "stubs", which are presumably
-entrypoints for the caller to specify their own implementations of
-Git-specific things. If so, then an alternative would be to provide a
-"stub" to get the memory limit, something like:
-
-  /* wrapper.h aka the things to stub */
-  size_t git_get_memory_limit(void);
-
-  /* stub-wrapper-or-something.c aka Git's implementation of the stub */
-
-  #include "wrapper.h"
-  size_t git_get_memory_limit(void)
-  {
-      return git_env_ulong("GIT_ALLOC_LIMIT", 0);
-  }
-
-  /* wrapper.c aka the thing in git-stb-lib */
-  static int memory_limit_check(size_t size, int gentle)
-  {
-    static size_t limit = 0;
-    if (!limit) {
-      limit = git_get_memory_limit();
-      if (!limit)
-        limit = SIZE_MAX;
-    }
-    if (size > limit) {
-      if (gentle) {
-        error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
-              (uintmax_t)size, (uintmax_t)limit);
-        return -1;
-      } else
-        die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
-            (uintmax_t)size, (uintmax_t)limit);
-    }
-    return 0;
-  }
+Without reading ahead, I'm not sure if there are other sorts of "library
+influencing process-wide" oddities like the one here and in the previous
+patch. I think it would be okay for us to merge this series with these,
+as long as we advertise to callers that the library boundary isn't very
+clean yet, and we eventually clean it up.
