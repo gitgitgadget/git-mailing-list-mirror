@@ -2,82 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E659C001B0
-	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 22:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F805C001B0
+	for <git@archiver.kernel.org>; Thu, 10 Aug 2023 22:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231400AbjHJWAo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 18:00:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40462 "EHLO
+        id S231681AbjHJWFO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 18:05:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbjHJWAn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 18:00:43 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C7AB1703
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:00:43 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-586bd766310so18030757b3.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:00:43 -0700 (PDT)
+        with ESMTP id S231400AbjHJWFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 18:05:13 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B3292684
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:05:13 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d1d9814b89fso1478761276.0
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 15:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691704842; x=1692309642;
+        d=google.com; s=20221208; t=1691705112; x=1692309912;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/wg8VtgMX8ILOvwW4O5m6/zimC62MKue7YdM+m3cFII=;
-        b=fg2wW8aMZzj5Ww2ZG8Vfqn7Wp3d8M9fUKutJiwNaBlDJK9majs0P7HX6R75PHlbnp+
-         8qDoHvaW5doe/xTeg3m+Gc3B+4d1JfhNoRhs18rDvUdriniuxrjPj2ZaOeB7hQVGTS7J
-         wMCUN6ArZfhH1FGcgs5VpVgDj2BsamzggoLrKbrEFXOWy754iM6GmVR5EzV6JDqX2xNl
-         G2/am6ZPrwVlu5yG9O6jH8P7vfDFe8vK/k7iwtINxx5FAvLn5jsqAQ4YTmHiBmJkMsAY
-         LeBZzKNVLbDJ4CcxPCHb57mDIRzrCtmgtxn2GVkbLYsZvBtON5egIlXjOIA58PBeaCp2
-         F7FQ==
+        bh=kwvC4BCGCx8y1TjtLqI1BK7RvHLirflu6Juam74hIKQ=;
+        b=uRR4YU6P+dRVGpXToPtBk7z5uhGBHlIytftHs81yOH8puHwOpVP6bi63i4tL+1CISG
+         5488MrvhMExyUwGuHsbDqFgQIl42JTUXQMQ9coVc8qvOwD0q5PaDaADDlcStOm6a3cw9
+         JqOXLXFvRifPgaeg9DL55jZZ1+3CY/BQxV1lW92BpuKP6GADedJVLN7mK8lS6IlmTiAG
+         usZ8Zp1AnYdlylg3n1SMQn0mHFp8Qyg6FJmYu3aV02NW7tzGCyudn/1LwkTeZhVLue1p
+         MaasBTrJ/aaoGooQISzONuZ5UWAXtES5/Evi0nLULvZOR6QIF5Hmy/ok/Vq8gXRmlfxv
+         4ijg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691704842; x=1692309642;
+        d=1e100.net; s=20221208; t=1691705112; x=1692309912;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/wg8VtgMX8ILOvwW4O5m6/zimC62MKue7YdM+m3cFII=;
-        b=cIgRlbxAPEoBhYLzPxX49fC1SarBJl+qsu7UM+0LUg8M0TW98ACuVtNja6g79j2LWr
-         XJw7zRMlhCyyEODfJM7hW1kWrhPbH3iz/00VzVf2okAUHjhRAQ/hbyCN4CBJV6elG29o
-         nxGnwf2zNKhQ2guUhzSwy9+h6vH1I9EnHXeGGGrYv+VoApAapF25ufuwnUo2/ES2gNvB
-         0imEr25T6Cqk+0dkT0KL4js2IHaHJgyuHoOwJu1/f8iDFvzJcg8C9qnwVxrHJTa5LXIE
-         z82//Mk33kOpXvdV0TbTrqIoAF/g6CMvxgl0zkbJuLhi5oywUnI5cqc9s5ShblEyT0TT
-         Id8Q==
-X-Gm-Message-State: AOJu0YyzIrxHHsqNUb/lyGmLdVGW5vCSuhQOrED9g09uaHpAR12f2imu
-        6WIlXuQv1F75D8aNbj7h5L3aWPf6iks=
-X-Google-Smtp-Source: AGHT+IFyAauJhDK9Y0tC3tznP2WsmRZFDFJRTw6l8v62bN0sbVAhIm16zHsa5iNCVePH8QukGY8DHrLOx8k=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a81:af0f:0:b0:586:4f9e:24a3 with SMTP id
- n15-20020a81af0f000000b005864f9e24a3mr4132ywh.3.1691704842701; Thu, 10 Aug
- 2023 15:00:42 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 15:00:41 -0700
-In-Reply-To: <owly8raih8ho.fsf@fine.c.googlers.com>
+        bh=kwvC4BCGCx8y1TjtLqI1BK7RvHLirflu6Juam74hIKQ=;
+        b=XzF61cTwDe/+png6opsErq6KMtyUrxSDBfAzXD+qbTsNrQ8z8Z3365SP38kjJ/YIbW
+         bAVgTJH8fbNhMzWlU8HTyldPWBcgZ13D8kFuBVyKAc9qBhEI7xu+oSTWGaLhI82dWHae
+         FXpRPb5719inQgdVV4ARI4DrpBnTGCDDkN3EoUGdvw6a+0y5kNYbVEAJO2pP0vKf54YR
+         90Mc4AQ4WhN0naQTKQjr8PIvfKorsMbumBIVk8P+85vyiQw+kYmZlujqtyqriP2liPCi
+         ILHGUPfKuD48Snuv6PrigOPYy/WXk0JTzd9lqD6ec0qE5/Z6HIHSs2yRIry57Rmtq3sG
+         4g9g==
+X-Gm-Message-State: AOJu0Yyn5RRhU2MyRojtjmI/r4YN9/2OiigdymxpO9iOQRZP9JRI+rz3
+        FeQbkLdsW01M2i4+rc0ML2U7SA9Jmza9Kg==
+X-Google-Smtp-Source: AGHT+IEVa7lyA8HHwSUk2PBwu+2B7ZaGD1QYCF2kAxigYPqEw6s3Z8VA5V0vwhuRuYjHwev/Sc7kJfAuMnQymg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a25:ce53:0:b0:d0c:ca92:1b92 with SMTP id
+ x80-20020a25ce53000000b00d0cca921b92mr258ybe.6.1691705112799; Thu, 10 Aug
+ 2023 15:05:12 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 15:05:04 -0700
+In-Reply-To: <20230810163346.274132-1-calvinwan@google.com>
 Mime-Version: 1.0
-References: <20230428083528.1699221-1-oswald.buddenhagen@gmx.de>
- <20230809171531.2564807-1-oswald.buddenhagen@gmx.de> <20230809171531.2564807-2-oswald.buddenhagen@gmx.de>
- <owly8raih8ho.fsf@fine.c.googlers.com>
-Message-ID: <owly5y5mh81i.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v3 2/2] doc: revert: add discussion
-From:   Linus Arver <linusa@google.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20230627195251.1973421-1-calvinwan@google.com> <20230810163346.274132-1-calvinwan@google.com>
+Message-ID: <kl6lmsyy8sfj.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC PATCH v2 0/7] Introduce Git Standard Library
+From:   Glen Choo <chooglen@google.com>
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, nasamuffin@google.com,
+        jonathantanmy@google.com, linusa@google.com,
+        phillip.wood123@gmail.com, vdye@github.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
+Calvin Wan <calvinwan@google.com> writes:
 
-> How about
-> the following rewording?
->
->     While git creates a basic commit message automatically, it is
->     _strongly_ recommended to explain why the original commit is being
->     reverted. In addition, repeatedly reverting the same commit will
+> Calvin Wan (7):
+>   hex-ll: split out functionality from hex
+>   object: move function to object.c
+>   config: correct bad boolean env value error message
+>   parse: create new library for parsing strings and env values
+>   date: push pager.h dependency up
+>   git-std-lib: introduce git standard library
+>   git-std-lib: add test file to call git-std-lib.a functions
 
-Hmph, "repeatedly reverting the same commit" sounds wrong because
-strictly speaking there is only 1 "same commit" (the original commit).
-Perhaps
-
-    In addition, repeatedly reverting the same progression of reverts will
-
-or even
-
-    In addition, repeatedly reverting the same revert chain will
-
-is better here?
+This doesn't seem to apply to 'master'. Do you have a base commit that
+reviewers could apply the patches to?
