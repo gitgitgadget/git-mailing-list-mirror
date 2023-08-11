@@ -2,96 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01255C001DE
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 19:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0CDDC001B0
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 19:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236122AbjHKTFI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 15:05:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55454 "EHLO
+        id S236809AbjHKT24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 15:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235638AbjHKTFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 15:05:07 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FED30F0
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 12:05:06 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe94dde7d7so1995115e87.3
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 12:05:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691780704; x=1692385504;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u7riPNC9V5WQScm+RP71dQ/betuvC1kPkodgvAaGktU=;
-        b=TbW47LsJOpp6qW9VStbcCBbMHS9PwkYRJJMWzLE7JurZpt9GJy4n44b5n0nYDfItI0
-         nNfrgreCOu+ANnYvQNU3nY8aK1X3Js4c59/m0QEjdwqb10G/Yh7qKbZtPYSIYV4wXnku
-         w/1L3xebpXn3i6ZC5xUj0uPo7EjQ89rzC0cQfatCRyMkH9UAXwRRJju1Z5beiH2alvd+
-         ZDo/6uZXJETI0D+4L3mJJU0Yc9TiwjcJUrIxzVEcUtWzpXwWwUqPhqSVtF+J5WIOt9jx
-         6i4/5eT7a+cXGChVZmOSyK4RiO+RuorHFdhU27mGROhZdFvoOH5AOLkL2+WDG97j0Gbq
-         GVog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691780704; x=1692385504;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u7riPNC9V5WQScm+RP71dQ/betuvC1kPkodgvAaGktU=;
-        b=ee821GXAwmQowi16410YzSPpWMy6lEkRBrdQFB0g0emz+cUfKx+FR1hWqj/lUrYtAP
-         A4ablC5i5rmiTTq7D+ojgsrpjJLSIpz1BcFwRDV5tjTaHgOzoN6nywJiHQ9UwSOMW7xW
-         xgu7ZUzkuKPCWp74YXRwsJrAijGZaTdTLUMBBWLjhTkiNkMR1kQ0AOjNYobsZDJarpXU
-         oAEFCQybEsTTPdVHHJAFz0rJZG4zeskPk/qWXpBWeyzkrWXUd4YJc95kC1XRvVQEEGnx
-         LTih+E0WtcEDi8ACVefvDoNBa2FdBL423ZN+1ZtEo3p8xKyoyCsP4Lv+S4wUcI1BEprd
-         eDBg==
-X-Gm-Message-State: AOJu0Ywi0mL83t1KAdmUmVdYzd2Jc2az3gce4+k11M65uJEY5uhPL7Xr
-        fP7AMQE7EmoktVO6aEsP/FQH+D3Q1EMKwS878l4Fz/BL
-X-Google-Smtp-Source: AGHT+IEnZkLBwue9LTDnno2oqv3EvVafxjWkUiP66Exn70ieh5Sg8sFLd3pOTlQR1Vi0bmOuJ9gsz0IFgquosNEBmdo=
-X-Received: by 2002:a05:6512:4004:b0:4fd:fef7:95a1 with SMTP id
- br4-20020a056512400400b004fdfef795a1mr2390585lfb.53.1691780704226; Fri, 11
- Aug 2023 12:05:04 -0700 (PDT)
+        with ESMTP id S231126AbjHKT2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 15:28:55 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0E330F0
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 12:28:54 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 52D3C33BE6;
+        Fri, 11 Aug 2023 15:28:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WrwwrRj5cKlg6Jnzst4Sar1pta2hgQG1O5tkSM
+        bgURQ=; b=oO9aRM3AGv/eqFKWiTePw1onEpFW66kotcms3u8cUytuHCQlLpcvFT
+        1mPJXKsISiq+gV3K4o+8vKevcwOuxEXut49L4G12tgx9hTrjiaY793oJonN79q8j
+        PJ7Kf+of3oIasGZ1odwHoGvjuRr6bk9hlhVnWm/LII4X8l/woyIwI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 491FE33BE5;
+        Fri, 11 Aug 2023 15:28:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F15CD33BA5;
+        Fri, 11 Aug 2023 15:28:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 0/5] commit-graph: fsck zero/non-zero generation
+ number fixes
+References: <ZNUiEXF5CP6WMk9A@nand.local>
+        <cover.1691773533.git.me@ttaylorr.com>
+        <20230811175854.GA2816191@coredump.intra.peff.net>
+Date:   Fri, 11 Aug 2023 12:28:49 -0700
+In-Reply-To: <20230811175854.GA2816191@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 11 Aug 2023 13:58:54 -0400")
+Message-ID: <xmqqr0o9s7im.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230715103758.3862-1-andy.koppe@gmail.com> <20230715160730.4046-1-andy.koppe@gmail.com>
- <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com> <783011d8-53ea-15cb-a9c7-6cb0c15bd5aa@gmail.com>
-In-Reply-To: <783011d8-53ea-15cb-a9c7-6cb0c15bd5aa@gmail.com>
-From:   Andy Koppe <andy.koppe@gmail.com>
-Date:   Fri, 11 Aug 2023 20:04:51 +0100
-Message-ID: <CAHWeT-Zo3nTTGBfJPwNhg50KfLn-GAdpU8WZ96d7fT9_axAQXg@mail.gmail.com>
-Subject: Re: [PATCH v2] pretty: add %(decorate[:<options>]) format
-To:     phillip.wood@dunelm.org.uk
-Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D102E56-387D-11EE-99AA-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 23 Jul 2023 at 17:26, Phillip Wood  wrote:
+Jeff King <peff@peff.net> writes:
+
+> This applies on top of yours, but probably would replace patches 2, 4,
+> and 5 (the flip-flop case isn't even really worth testing after this,
+> since the message can obviously only be shown once).
 >
-> On 19/07/2023 19:16, Glen Choo wrote:
-> >>      case 'D':
-> >> -            format_decorations_extended(sb, commit, c->auto_color, ""=
-, ", ", "");
-> >> +            format_decorations(sb, commit, c->auto_color,
-> >> +                               &(struct decoration_options){"", ""});
-> >
-> > I don't remember if C99 lets you name .prefix and .suffix here, but if
-> > so, it would be good to name them. Otherwise it's easy to get the order
-> > wrong, e.g. if someone reorders the fields in struct decoration_options=
-.
->
-> That's a good suggestion. I think this would be the first use of a
-> compound literal in the code base so it would be helpful to mention that
-> in the commit message.
+>  commit-graph.c          | 42 +++++++++--------------------------
+>  t/t5318-commit-graph.sh | 18 ++-------------
+>  2 files changed, 13 insertions(+), 47 deletions(-)
 
-I've taken the suggestion, but then forgot to mention it in the commit
-message. Will do in the next round.
+Quite an impressive amount of code reduction.  I obviously like it.
 
-> We've been depending on C99 for a while now so I'd support adding this
-> compound literal as a test balloon for compiler support. =C3=86var report=
-ed a
-> while back that they are supported by IBM xlc, Oracle SunCC and HP/UX's
-> aCC[1] and back then I looked at NonStop which seemed to offer support
-> with the right compiler flag.
+One very minor thing is that how much value are we getting by
+reporting the object names of one example from each camp, instead of
+just reporting a single bit "we have commits not counted and also
+counted their generations, which is an anomaly".
 
-There are a number of uses of designated initializers already, so
-hopefully compound literals aren't too much of an extra challenge.
+Obviously it does not matter.  Even if we stopped doing so, the code
+would not become much simpler.  We'd just use a word with two bits
+instead of two pointers to existing in-core objects, which does not
+have meaningful performance implications either way.
 
-Thanks,
-Andy
+Thanks.
