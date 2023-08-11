@@ -2,215 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D099C0015E
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 14:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5291C0015E
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 14:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235664AbjHKOWz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 10:22:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52662 "EHLO
+        id S235533AbjHKOXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 10:23:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235533AbjHKOWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 10:22:52 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278171994
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 07:22:52 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-5657a28f920so338919a12.3
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 07:22:52 -0700 (PDT)
+        with ESMTP id S235676AbjHKOXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 10:23:00 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881C42D78
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 07:22:56 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-26b0b92e190so1216318a91.1
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 07:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691763771; x=1692368571;
+        d=gmail.com; s=20221208; t=1691763775; x=1692368575;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M6XCOps560VIDBWJOSArm5fzckKfi48lDwWiMBh4Dh4=;
-        b=ikM7XBQLBw86JNa8XmNg4f+53Q85wcSGfM/xn+ychdmEhLMjdn5cY4Qm25VRa6kAnG
-         N+YK9yhAiktiLsVdX5MZqfD5ao0SvOstxDuVixL1wyPzZzx8+iU92Nm97rvxdWtxbJsR
-         Sx5HQZUyd/8mQpw6fQDsyu/lIXVzlcF/GBuGBurVqNGWQPjTvT5wG08QZqzf2MuEPV1f
-         2MPmmsSaXvw/LU1H5Gq+pYs6ab+M2gUfN3RE7HzyYS5pkZWGcuQEOavYEhmHdurK4NPV
-         OJMJ2LGUNHemo6o6bOpN22iGfBz9bsmisR4tz5sEb+5KKjXUU8nMZtVcR+qrjj8iHo62
-         tCtQ==
+        bh=rqpmKic0LF5yfjzjyZXryHcsAXau2MJS3mu7++6nKgQ=;
+        b=W7ZkL4I970hIlGzz4kNush6J0Do6RssYudnkW7ULk0ScuIaDhfzBetm+G2+k0+6iwX
+         eermwR12AdOMt4ptSGbmIimjl16AEgCpmgo2UxMDCHyBgC+XRDyfGbDFwwRB5AtNNa7M
+         jGi9xy8kd/rc2Y3CzW5rha7aHaopc0K2PQblK5F2/+YJMilRnsYFYMBQzUZWmph194Ba
+         roJODhYCpcgL6JNzFBIffs3EJMUYF+t2Orsi7s0txIuiAUBqwxuVhoWls/UUoMFyGr+R
+         40bNpHjSb2FOV0sj7WGWRqaJ9iylwjFz0lSUR0Wjn4WR/c5V00eMOJqNzztVoo8Vcamw
+         cjsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691763771; x=1692368571;
+        d=1e100.net; s=20221208; t=1691763775; x=1692368575;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M6XCOps560VIDBWJOSArm5fzckKfi48lDwWiMBh4Dh4=;
-        b=V2SHYIf/NuaFHy4S152A+zmxc39DbsS8mlxvW4eY2bkYuWEX5JCq92L8b4GuEIIG5/
-         FzqySWxwg29WdsdJiwygEnyqOWnJDkYqOghhjomAI20b/IIrGaNSNCKDIE8AbC8k5950
-         zrvwbKpiTQHWYZ4b+Z6zKX/c5nP0RL8fcWQ0PyFfgh2TlGniy4XyFHGhGY4KcH0Qq4uN
-         VCrruYa8M2ngwofsmPtB3bxi6EQX0NSyGhSvpAWMzhB4x2oagmfBOMByYZT7vksoctTg
-         5LVMd3ffgrVWB+MM3UAZcZU+jewJPO3RVJz+A5eOQeXSlcDi8UNXpqLKKuVnMYuwVndH
-         ss8A==
-X-Gm-Message-State: AOJu0YwvLIqGMDkBAW0AXnqjcenTnwxOKUtFcc8Cqy7LybZvtP/oyuiY
-        bxSTRFQ9O8CWEmcJNgJt78gFVn3JtqtNxzKq
-X-Google-Smtp-Source: AGHT+IFhVa8T7iJnpJTxtgVLnjqqGIr0/cXYZQSOXR6tqdi/nnz/jLFPOMSsyu8vk0A6eFwM44+aWQ==
-X-Received: by 2002:a17:90a:e409:b0:268:1e95:4e25 with SMTP id hv9-20020a17090ae40900b002681e954e25mr1348963pjb.17.1691763771271;
-        Fri, 11 Aug 2023 07:22:51 -0700 (PDT)
+        bh=rqpmKic0LF5yfjzjyZXryHcsAXau2MJS3mu7++6nKgQ=;
+        b=XXb7fShce8ViStjUe1yr4ozFwCjaWdrRFcCaNlpB8ln561TJkz/uzQdQDGNt5H0J0+
+         ORJbikFaAC/4PZX/rRj4TTbmIu58lfVOafIzy9V7VhqGzHebxByxcqC2g+dVgoDzb6cK
+         3XycVg0XOLXQBRstS79ZoppAPPo1Ay3otRYoOvFBrK/QHLpqyCAxJ1M+YcCN349y8FOM
+         uBIYScyO3i32hHiD0yJD7YvVT/E/t58eFu3l2mf9oAVSRw4V2kihIaKkQCJtDQpaBe2Z
+         TRTqAddcv/poYQfJfU5PZ1hY4OyISiSqLNCLui6RUaC5eMs993mxRCcoIsVuU+lE8yyL
+         8SZA==
+X-Gm-Message-State: AOJu0YxDH7WVwCtGRm8h5Ex8VO6eXQYCb/X7ian94gUeEDjjVoON1tuw
+        UXIwmT+fZJqE/3cgnlbzenz50F7tKR4z8GGQ
+X-Google-Smtp-Source: AGHT+IH7O/3+h4XiMX9UAIOLBmUmltFZTqf/U1DrXFpDTMmCwU4aRp9bHyFbrm0ofgyIt01toKiIsw==
+X-Received: by 2002:a17:90a:6fa1:b0:269:4fe8:687 with SMTP id e30-20020a17090a6fa100b002694fe80687mr2789631pjk.19.1691763775476;
+        Fri, 11 Aug 2023 07:22:55 -0700 (PDT)
 Received: from cheska.. ([120.231.214.68])
-        by smtp.googlemail.com with ESMTPSA id p2-20020a17090a284200b00264044cca0fsm10000329pjf.1.2023.08.11.07.22.48
+        by smtp.googlemail.com with ESMTPSA id p2-20020a17090a284200b00264044cca0fsm10000329pjf.1.2023.08.11.07.22.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 07:22:50 -0700 (PDT)
+        Fri, 11 Aug 2023 07:22:55 -0700 (PDT)
 From:   Shuqi Liang <cheskaqiqi@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
         gitster@pobox.com
-Subject: [PATCH v5 2/3] attr.c: read attributes in a sparse directory
-Date:   Fri, 11 Aug 2023 10:22:10 -0400
-Message-Id: <20230811142211.4547-3-cheskaqiqi@gmail.com>
+Subject: [PATCH v5 3/3] check-attr: integrate with sparse-index
+Date:   Fri, 11 Aug 2023 10:22:11 -0400
+Message-Id: <20230811142211.4547-4-cheskaqiqi@gmail.com>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230811142211.4547-1-cheskaqiqi@gmail.com>
 References: <20230718232916.31660-1-cheskaqiqi@gmail.com>
  <20230811142211.4547-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before this patch, git check-attr was unable to read the attributes from
-a .gitattributes file within a sparse directory. The original comment
-was operating under the assumption that users are only interested in
-files or directories inside the cones. Therefore, in the original code,
-in the case of a cone-mode sparse-checkout, we didn't load the
-.gitattributes file.
+Set the requires-full-index to false for "check-attr".
 
-However, this behavior can lead to missing attributes for files inside
-sparse directories, causing inconsistencies in file handling.
+Add a test to ensure that the index is not expanded whether the files
+are outside or inside the sparse-checkout cone when the sparse index is
+enabled.
 
-To resolve this, revise 'git check-attr' to allow attribute reading for
-files in sparse directories from the corresponding .gitattributes files:
+The `p2000` tests demonstrate a ~63% execution time reduction for
+'git check-attr' using a sparse index.
 
-1.Utilize path_in_cone_mode_sparse_checkout() and index_name_pos_sparse
-to check if a path falls within a sparse directory.
-
-2.If path is inside a sparse directory, employ the value of
-index_name_pos_sparse() to find the sparse directory containing path and
-path relative to sparse directory. Proceed to read attributes from the
-tree OID of the sparse directory using read_attr_from_blob().
-
-3.If path is not inside a sparse directory，ensure that attributes are
-fetched from the index blob with read_blob_data_from_index().
-
-Change the test 'check-attr with pathspec outside sparse definition' to
-'test_expect_success' to reflect that the attributes inside a sparse
-directory can now be read. Ensure that the sparse index case works
-correctly for git check-attr to illustrate the successful handling of
-attributes within sparse directories.
+Test                                            before  after
+-----------------------------------------------------------------------
+2000.106: git check-attr -a f2/f4/a (full-v3)    0.05   0.05 +0.0%
+2000.107: git check-attr -a f2/f4/a (full-v4)    0.05   0.05 +0.0%
+2000.108: git check-attr -a f2/f4/a (sparse-v3)  0.04   0.02 -50.0%
+2000.109: git check-attr -a f2/f4/a (sparse-v4)  0.04   0.01 -75.0%
 
 Helped-by: Victoria Dye <vdye@github.com>
 Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
 ---
- attr.c                                   | 57 ++++++++++++++++--------
- t/t1092-sparse-checkout-compatibility.sh | 10 ++++-
- 2 files changed, 48 insertions(+), 19 deletions(-)
+ builtin/check-attr.c                     |  3 +++
+ t/perf/p2000-sparse-operations.sh        |  1 +
+ t/t1092-sparse-checkout-compatibility.sh | 15 +++++++++++++++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/attr.c b/attr.c
-index 7d39ac4a29..1d34e48ea2 100644
---- a/attr.c
-+++ b/attr.c
-@@ -808,35 +808,56 @@ static struct attr_stack *read_attr_from_blob(struct index_state *istate,
- static struct attr_stack *read_attr_from_index(struct index_state *istate,
- 					       const char *path, unsigned flags)
- {
-+	struct attr_stack *stack = NULL;
- 	char *buf;
- 	unsigned long size;
-+	int sparse_dir_pos = -1;
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index b22ff748c3..c1da1d184e 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -122,6 +122,9 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, check_attr_options,
+ 			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
  
- 	if (!istate)
- 		return NULL;
- 
- 	/*
--	 * The .gitattributes file only applies to files within its
--	 * parent directory. In the case of cone-mode sparse-checkout,
--	 * the .gitattributes file is sparse if and only if all paths
--	 * within that directory are also sparse. Thus, don't load the
--	 * .gitattributes file since it will not matter.
--	 *
--	 * In the case of a sparse index, it is critical that we don't go
--	 * looking for a .gitattributes file, as doing so would cause the
--	 * index to expand.
-+	 * When handling sparse-checkouts, .gitattributes files
-+	 * may reside within a sparse directory. We distinguish
-+	 * whether a path exists directly in the index or not by
-+	 * evaluating if 'pos' is negative.
-+	 * If 'pos' is negative, the path is not directly present
-+	 * in the index and is likely within a sparse directory.
-+	 * For paths not in the index, The absolute value of 'pos'
-+	 * minus 1 gives us the position where the path would be
-+	 * inserted in lexicographic order within the index.
-+	 * We then subtract another 1 from this value
-+	 * (sparse_dir_pos = -pos - 2) to find the position of the
-+	 * last index entry which is lexicographically smaller than
-+	 * the path. This would be the sparse directory containing
-+	 * the path. By identifying the sparse directory containing
-+	 * the path, we can correctly read the attributes specified
-+	 * in the .gitattributes file from the tree object of the
-+	 * sparse directory.
- 	 */
--	if (!path_in_cone_mode_sparse_checkout(path, istate))
--		return NULL;
-+	if (!path_in_cone_mode_sparse_checkout(path, istate)) {
-+		int pos = index_name_pos_sparse(istate, path, strlen(path));
- 
--	buf = read_blob_data_from_index(istate, path, &size);
--	if (!buf)
--		return NULL;
--	if (size >= ATTR_MAX_FILE_SIZE) {
--		warning(_("ignoring overly large gitattributes blob '%s'"), path);
--		return NULL;
-+		if (pos < 0)
-+			sparse_dir_pos = -pos - 2;
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	if (repo_read_index(the_repository) < 0) {
+ 		die("invalid cache");
  	}
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 96ed3e1d69..39e92b0841 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -134,5 +134,6 @@ test_perf_on_all git diff-files -- $SPARSE_CONE/a
+ test_perf_on_all git diff-tree HEAD
+ test_perf_on_all git diff-tree HEAD -- $SPARSE_CONE/a
+ test_perf_on_all "git worktree add ../temp && git worktree remove ../temp"
++test_perf_on_all git check-attr -a -- $SPARSE_CONE/a
  
--	return read_attr_from_buf(buf, path, flags);
-+	if (sparse_dir_pos >= 0 &&
-+	    S_ISSPARSEDIR(istate->cache[sparse_dir_pos]->ce_mode) &&
-+	    !strncmp(istate->cache[sparse_dir_pos]->name, path, ce_namelen(istate->cache[sparse_dir_pos]))) {
-+		const char *relative_path = path + ce_namelen(istate->cache[sparse_dir_pos]);
-+		stack = read_attr_from_blob(istate, &istate->cache[sparse_dir_pos]->oid, relative_path, flags);
-+	} else {
-+		buf = read_blob_data_from_index(istate, path, &size);
-+		if (!buf)
-+			return NULL;
-+		if (size >= ATTR_MAX_FILE_SIZE) {
-+			warning(_("ignoring overly large gitattributes blob '%s'"), path);
-+			return NULL;
-+		}
-+		stack = read_attr_from_buf(buf, path, flags);
-+	}
-+	return stack;
- }
- 
- static struct attr_stack *read_attr(struct index_state *istate,
+ test_done
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 2d7fa65d81..dc84b3e2e1 100755
+index dc84b3e2e1..2a4f35e984 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2271,7 +2271,7 @@ test_expect_success 'check-attr with pathspec inside sparse definition' '
- 	test_all_match git check-attr -a --cached -- deep/a
+@@ -2316,4 +2316,19 @@ test_expect_failure 'diff --check with pathspec outside sparse definition' '
+ 	test_all_match test_must_fail git diff --check --cached -- folder1/a
  '
  
--test_expect_failure 'check-attr with pathspec outside sparse definition' '
-+test_expect_success 'check-attr with pathspec outside sparse definition' '
- 	init_repos &&
- 
- 	echo "a -crlf myAttr" >>.gitattributes &&
-@@ -2288,6 +2288,14 @@ test_expect_failure 'check-attr with pathspec outside sparse definition' '
- 	test_all_match git check-attr -a --cached -- folder1/a
- '
- 
-+# NEEDSWORK: The 'diff --check' test is left as 'test_expect_failure' due
-+# to an underlying issue in oneway_diff() within diff-lib.c.
-+# 'do_oneway_diff()' is not called as expected for paths that could match
-+# inside of a sparse directory. Specifically, the 'ce_path_match()' function
-+# fails to recognize files inside a sparse directory (e.g., when 'folder1/'
-+# is a sparse directory, 'folder1/a' cannot be recognized). The goal is to
-+# proceed with 'do_oneway_diff()' if the pathspec could match inside of a
-+# sparse directory.
- test_expect_failure 'diff --check with pathspec outside sparse definition' '
- 	init_repos &&
- 
++test_expect_success 'sparse-index is not expanded: check-attr' '
++	init_repos &&
++
++	echo "a -crlf myAttr" >>.gitattributes &&
++	mkdir ./sparse-index/folder1 &&
++	cp ./sparse-index/a ./sparse-index/folder1/a &&
++	cp .gitattributes ./sparse-index/deep &&
++	cp .gitattributes ./sparse-index/folder1 &&
++
++	git -C sparse-index add deep/.gitattributes &&
++	git -C sparse-index add --sparse folder1/.gitattributes &&
++	ensure_not_expanded check-attr -a --cached -- deep/a &&
++	ensure_not_expanded check-attr -a --cached -- folder1/a
++'
++
+ test_done
 -- 
 2.39.0
 
