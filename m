@@ -2,101 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC41C0015E
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 06:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2378CC0015E
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 09:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232739AbjHKG4K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 02:56:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S235035AbjHKJ4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 05:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbjHKG4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 02:56:08 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBDC26B2
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 23:56:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1691736964; x=1692341764; i=johannes.schindelin@gmx.de;
- bh=d4hSRnOeQf5oS4XTU6g3a2Pm5Fzon8nYBbbPkWQrURc=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=Ula0Nid63dOrt634eGmnFg/BZTmOXt2p57vr11FuFM/ZixnyN1IN27lgcBe7OVThyJaFbJo
- r/BP+Lyhzra0up+8WjvqvPQ8qKZ/FOmWFuSamDPJsF7l1MgdQWS2nmPfAXjrWkCC+z8eit5bu
- RNzugISqpc/FkRwKsvkT+LJKeXq5HJ3rE4MIU+BNvf43VkitFHw0tQsqFTNle8FTTmVBSXzbi
- OmsnVXgwoXgC8a0aPiSVE5PcA8OqAchoRWZY9jZpEX5eY9LBMkZPnf1owiglhE2C2ldffl6Ky
- NtdkOoS143Ny7d7kEGe7TmGkIptfN/8HGojDwAanDQdc1OCNE90Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1025-129.u4c4nzxa0llelhrnhprvwb0fvg.cx.internal.cloudapp.net
- ([20.57.76.113]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1Mz9Un-1pZCsK417z-00wGsT; Fri, 11 Aug 2023 08:56:04 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.42.0-rc1
-Date:   Fri, 11 Aug 2023 06:56:01 +0000
-Message-ID: <20230811065601.4115-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.41.0
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S233241AbjHKJ4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 05:56:45 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5632419E
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 02:56:44 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fe2d218eedso16857185e9.0
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 02:56:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691747803; x=1692352603;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1gfkg6fzBreU7m1xgaLINzSgSgCzYBA0gwUkn+ftM88=;
+        b=jnp5bVuLe4a6jvLjT8btGhRJLJKJxV+DTC10rpGFRk/CFWS+Q6I77PxIUtnShdzcoM
+         ZyKYLNrpR5GnAuV/0pg6JHwKSKPYhr3ujMb9ztUY3tlO2fNCNx+lNkZgmIDHtl9yaeIx
+         Rdb1jrdMWnM9B7m3MuWH12ETeBHKXUAALpwGWUqwW9NoBAA6pB2jNLRJnbHW0sOPz0Le
+         z5TT80NIdZaYQhN1TfDOZqsHTWjWMaZUQBJ8Ac3bMU36IDH9T4a8Nuoes9g5NvvOXztc
+         piP/NCC5yLZls7rJWETGB+YLk0+2OvEMUZ3OFz1mPjAQDNGHsnL/lvCEF8XFQd5SJOBH
+         XzVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691747803; x=1692352603;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1gfkg6fzBreU7m1xgaLINzSgSgCzYBA0gwUkn+ftM88=;
+        b=GYCbqKNOn4OVNx6t6CzbmyYA4Lt5eUcXXJ/3IZ2E2lGKUZIT5MK324uc3Xl5femmal
+         LiP8+iFkO2Ut3661ZQfI0q7MPJxSif8U4/rf/BSXMXiiESTM2L+mgsWK60k3NrTf9i3Y
+         4BKx9qWfmeV41eUpZ7qQ+0nBFBgM0VoW5YghkBHLtEvGqWjpB+qbSAX4crutuZ0X/6yQ
+         K9Cn5V6rXFt2AMzTiqD7OPRmczNW3j7wnNRqGjnz+Udczv3d+I53UxvfaHy6yBG+93FH
+         v4CIRiD7nZZovsKtK+MUNbSZUbXj7mJr9S2QPBsllNVoP9VTQ7plsAfc2wVHHopcb3yK
+         LQQA==
+X-Gm-Message-State: AOJu0YwpF8WPjCjWfu3Hz6rKPXRNBFVNc8zXNqvzEb5wVVUPo9x/mTuY
+        CZwK16dgRBcSfRTf/IGJTGw=
+X-Google-Smtp-Source: AGHT+IEUJfhJR9/+Va+aRcx6K14l3KosvzmsS5bULPpAUSFiw3DIsxe5g+/htKN8d7RJLx+APXnJsA==
+X-Received: by 2002:a05:600c:215a:b0:3fe:4900:dba8 with SMTP id v26-20020a05600c215a00b003fe4900dba8mr1185731wml.9.1691747802509;
+        Fri, 11 Aug 2023 02:56:42 -0700 (PDT)
+Received: from [192.168.1.116] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id z15-20020a05600c114f00b003fe2bea77ccsm4735402wmz.5.2023.08.11.02.56.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Aug 2023 02:56:42 -0700 (PDT)
+Message-ID: <2d9e9b59-bf78-8470-0731-3cd7fe15a727@gmail.com>
+Date:   Fri, 11 Aug 2023 10:56:40 +0100
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:W3NabEJhqNFs6dOf2W1YSLm6gLhsIQLNkVVom8jAa3UJ50CgkeX
- IDQYg3NT/KFjxBgG2dtwfcEdHpkOyas2iUmebiT72U2ttjyQ944xADOvK5eLbRVDBjlPsq8
- BYTl/Q1WKoLueD+v+WznexJ9EEAtop5PyFxLG6ZG9DwqfYojWSjEM0kORFx9I3XrXfBn79J
- le/FzhtwuEqLIVTnPCwtA==
-UI-OutboundReport: notjunk:1;M01:P0:R1m+4iATY6w=;lKaMyy3BwTdlvG/pNI88uTTR1c2
- TAZKEIg9B0arjwGsp6YPD2MfwIu1I9SgM1drmarSrC9RMsfp4eP3EJSQRzykRYToNIzazSbZJ
- Rr8LE84aHr9WMDG6On9fUBF8spxXlWFBZoq9fW1UKIxPytvHEjUCvHibY5J7gUVovChZGarU1
- H1Dl8gtsqjt2HuyOcK6LUb1CQGORsRY8tdKCXMm1842RsVjQkpQ49M1FDaLLk54NkMaso98lW
- 6GcIjRDKlX0nC/PJjJKTc8hKJg/jCxmPRRB7xn5mxuXQrVvh73u/wAityMRua6Cs/9KH4SAdL
- ZpsTOCZI3rEhQWFST7R8eOR78rTbDbfpOV3OMLi3Co28j5zwZ9i3WfXZ/KA/4oIgolcNAb71+
- 0Z4C8U4cWJelbl1Pf6+TDMYh4Z1zmcMdWuZSc2D3mu89HOhhmRQaaKnumV3gZByFDO8fmmbhp
- fLgKxVbBUzHSAM1UmVE0kh+Z2Tn0Re0GHfuUWbOI97Bmz4Q1pVGBYbq6aK3ZSRS8zFLY+EC1+
- t+h+32iDKdWEuBYHL8LtuUFNu60PbvIToRYNibPCk1NvE4j3aGpiJz7ufJuJzgqsl6EXJN689
- MSp5h0cmZ/GxgKKgm8mpnIcmWinK95VgJCQYBvvDkINCHzmcThDn31OvTuVmPzjVCpEVQi6LA
- tSl6lDYNkumBiFZ07qCBMq23cLrVBJqyEWqbsRlbLca4bM/fh1ZEsuoQ7y4g3uTaBmO/JNpqZ
- NbcvHDnYMT4BzwdKEdIVx7h/HdGImghHX+vwvvIslIoW8bhE+mPz9BhPtCmbsrAPdkzeTtvE+
- jd0xP632/XP/7RSCKHz2k2Fakbiq2INpaoMeaQaO7lfICzm6l28uqKmnk2b9bxIh6pR9zmlSf
- utICXEZoXote03TE2umX76DC87CQxzHbXlD1At5H2tBFt8uyH2X9TzSLzexaLpaQYodGo7fY3
- TuV8sA==
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] t4053: avoid race when killing background processes
+Content-Language: en-GB-large
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1571.git.1691677993195.gitgitgadget@gmail.com>
+ <xmqqedkassng.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqedkassng.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On 10/08/2023 18:40, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+ >
+> While I can see that "kill" in the when-finished handler may or may
+> not find the backgrounded process by the time it is run, and
+> ignoring its exit status (hence keeping test_when_finished happy)
+> would be a reasonable thing to do.  I can understand if this patch
+> is to fix a different symptom, namely, when-finished handler
+> sometimes fails and makes the test fail.
+> 
+> But I am not sure how this causes the test to "hang", 
 
-I hereby announce that Git for Windows 2.42.0-rc1 is available from:
 
-    https://github.com/git-for-windows/git/releases/tag/v2.42.0-rc1.windows.1
+This is only a fix for the test failure that Peff saw when running with 
+--stress.
 
-Changes since Git for Windows v2.41.0(3) (July 13th 2023)
+> which
+> presumably is a symptom that somebody is trying to read from
+> a pipe that nobody is making progress to write into?
 
-New Features
+That or a process blocking when tying to open a fifo seems the mostly 
+likely cause but I can't see where that is happening. As you say this 
+patch does not obviously change anything that would be causing the test 
+to hang.
 
-  * Comes with Git v2.42.0-rc1.
-  * Comes with cURL v8.2.1.
-  * Comes with Git LFS v3.4.0.
-  * Comes with OpenSSL v3.1.2.
-  * Comes with Git Credential Manager v2.3.0.
-  * Comes with OpenSSH v9.4.P1.
+Best Wishes
 
-Bug Fixes
+Phillip
 
-  * When init.defaultBranch is changed manually in the system config,
-    subsequent Git for Windows upgrades would overwrite that change.
-    This has been fixed.
-  * When running on a remote APFS share, Git would fail, which has been
-    fixed.
+>  We will
+> send a signal either way to the writers, and the only difference is
+> that we ignore the exit code.
+> 
+> Granted, when-finished handlers are concatenated with "&&-", and one
+> "kill"s failure will cause the other "kill" not to run, so we may
+> send a signal to only one but not to the other, but that should all
+> happen after "diff --no-index" returns, so it still does not explain
+> the "hang".
+> 
+> Puzzled...
 
-Git-2.42.0-rc1-64-bit.exe | 994b21a82f3589ab236a4015c17ba726c4e88d13e0a2d7c0f64c8707b7963f53
-Git-2.42.0-rc1-32-bit.exe | 528ea5006d88c741b9420dc25f585bb260fd4eaad25ca79517959c3f41a4d060
-PortableGit-2.42.0-rc1-64-bit.7z.exe | 812545fef82b298667fe9bf16265dfa81cfe5837552fc12adade21478069154d
-PortableGit-2.42.0-rc1-32-bit.7z.exe | c3112a975750214d62295a031d6d130b3eccab4a6867c9f333424e316c66e70a
-MinGit-2.42.0-rc1-64-bit.zip | 68ffdb6473814d393e0ebf8b3c3661fab92c9da27b22a37225fc22e4b0913176
-MinGit-2.42.0-rc1-32-bit.zip | 848b9e93e69feafbc7d3ef213357de658eddc424e39e27945ee80340b21718b6
-MinGit-2.42.0-rc1-busybox-64-bit.zip | 46af4ca35887c86952831b9ca6e0575c2f90e8e7039691cc15dde6cf9bb12bae
-MinGit-2.42.0-rc1-busybox-32-bit.zip | 2eb98594673d5211de7f85f0438e63912c6271ef8b3ea610253219628a0e61ec
-Git-2.42.0-rc1-64-bit.tar.bz2 | 53c2175cffc569227d54db263ea417f290a70d36a764ab6c5613ca8e1f32f385
-Git-2.42.0-rc1-32-bit.tar.bz2 | 95f99c3e9e8d681cfe11d1eda9654bdffc087a79c2232e90f6ea38b40ed4d491
-
-Ciao,
-Johannes
+>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1571%2Fphillipwood%2Fdiff-no-index-pipes-fixes-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1571/phillipwood/diff-no-index-pipes-fixes-v1
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/1571
+>>
+>>   t/t4053-diff-no-index.sh | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+>> index a28b9ff2434..1fb7d334620 100755
+>> --- a/t/t4053-diff-no-index.sh
+>> +++ b/t/t4053-diff-no-index.sh
+>> @@ -248,11 +248,11 @@ test_expect_success PIPE,SYMLINKS 'diff --no-index reads from pipes' '
+>>   	{
+>>   		(test_write_lines a b c >old) &
+>>   	} &&
+>> -	test_when_finished "! kill $!" &&
+>> +	test_when_finished "kill $! || :" &&
+>>   	{
+>>   		(test_write_lines a x c >new) &
+>>   	} &&
+>> -	test_when_finished "! kill $!" &&
+>> +	test_when_finished "kill $! || :" &&
+>>   
+>>   	cat >expect <<-EOF &&
+>>   	diff --git a/old b/new-link
+>>
+>> base-commit: a82fb66fed250e16d3010c75404503bea3f0ab61
