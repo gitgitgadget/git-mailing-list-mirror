@@ -2,112 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7221EB64DD
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 18:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A10F5C0015E
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 18:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235243AbjHKSWi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 14:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51144 "EHLO
+        id S234425AbjHKSYS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 14:24:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbjHKSWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 14:22:37 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB65430DD
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 11:22:36 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-5897d05e878so26800587b3.3
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 11:22:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691778156; x=1692382956;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D5VWAFeZspLjIw/Q5huhpqa+euBTezjMA9gxhenGnhI=;
-        b=w0R31bqIs21iplWhLoLh4ip8ihrBvJ7p8ir3aglGlPjE+NyrYYBywfa4BFxQDGsUJw
-         Mo8iREd3KbKKy4ReCTHRZQd59B/ZH7vDbX3DZelGpTZN771qpx3Xl81veFSRfmlJWUku
-         NBQOhqUtIR6UTGPF9RCYEsjC9huP7gCZ8VB3vLGxxgBsP84e7laiePn6YP2DJ7ky2Uye
-         +tlbDEh5g0/kK627xfW6Wiz2Cg3hQR12vvMgzkf33cmIisJEPCrf0/8c5dsxfmgB74qG
-         SD0SEtKPMX0oL4ecj1q9YISJu9C50if4hhu25WmMJHGUfPb2SVY2wC7GWgqseqzeTZFW
-         suZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691778156; x=1692382956;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D5VWAFeZspLjIw/Q5huhpqa+euBTezjMA9gxhenGnhI=;
-        b=O+iEiDhnOv0GhgGGXM9B7w/0PdcdKu6aJ/XS80eE+Sy610NiaQi9NSL9hhvGhF4Z++
-         GYshlq+JsGuSrXW8yGcR1UqBpWDf5diquD6piQegmCALT4h8kvyUP2/5MJMoKR7JPgPS
-         epZ4ybYHBctdxtEA2XM7Ffv6j5ROoCwVNR0fmVRGtiARDI5u4dBMuHhLxlpnDieq8IO8
-         F7n9vc9VeLCiniNkVgbmZfHa9CLuJeyYsrbrj7FV8Y+qVq3coBsgaYaBiUxjI1Z2DjiT
-         3eyv9SnWV8arkpwZQf78aiZFHpzweZKjZYJIHimHlfrax9Wv2TeZ3u1t10Jbdk9v6JCv
-         8/YQ==
-X-Gm-Message-State: AOJu0YwNQxyb1yFzLpWa0kaG8H2nE78CCeiKd1KGcFj2p/PyXHHcwOHL
-        PO2h3b//X/BJqQM2ow/teFk8ewxmUCw=
-X-Google-Smtp-Source: AGHT+IE9HOw/4efdv/XwBa+KtSXu9kn3hWNaz6PcliZabfwOJ7E0WfRp23boGWvxPcRZzGmfDrUu3e73B9g=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a81:af27:0:b0:579:f832:74b with SMTP id
- n39-20020a81af27000000b00579f832074bmr51009ywh.10.1691778156182; Fri, 11 Aug
- 2023 11:22:36 -0700 (PDT)
-Date:   Fri, 11 Aug 2023 11:22:34 -0700
-In-Reply-To: <xmqqmsz2hl9m.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1566.git.1691412557518.gitgitgadget@gmail.com> <xmqqmsz2hl9m.fsf@gitster.g>
-Message-ID: <owly5y5lfnh1.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] ls-tree: default <tree-ish> to HEAD
-From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ryan Williams via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ryan Williams <ryan@runsascoded.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231132AbjHKSYR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 14:24:17 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D98030DF
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 11:24:17 -0700 (PDT)
+Received: (qmail 30034 invoked by uid 109); 11 Aug 2023 18:24:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Aug 2023 18:24:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28803 invoked by uid 111); 11 Aug 2023 18:24:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Aug 2023 14:24:16 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 11 Aug 2023 14:24:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] describe: fix --no-exact-match
+Message-ID: <20230811182415.GC2816191@coredump.intra.peff.net>
+References: <xmqqo7k9fa5x.fsf@gitster.g>
+ <4eea7e15-6594-93e2-27b5-3d6e3c0baac6@web.de>
+ <20230808212720.GA760752@coredump.intra.peff.net>
+ <xmqqzg3156sy.fsf@gitster.g>
+ <20230809140902.GA775795@coredump.intra.peff.net>
+ <22e5a87a-cd35-9793-5b6f-6eb368fdf40e@web.de>
+ <20230810004127.GD795985@coredump.intra.peff.net>
+ <09f499ad-28a5-0d8b-8af6-97475bdc614b@web.de>
+ <20230811151102.GE2303200@coredump.intra.peff.net>
+ <fbeadf7d-c16f-0612-6256-fc4355e89638@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fbeadf7d-c16f-0612-6256-fc4355e89638@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Aug 11, 2023 at 07:59:12PM +0200, René Scharfe wrote:
 
-> "Ryan Williams via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Ryan Williams <ryan@runsascoded.com>
->>
->> When no positional arguments are passed to `git ls-tree`, it currently
->> prints "usage" info to stderr and exits with code 129. A more intuitive
->> default would be to operate on the `HEAD` commit's tree (similarly to
->> `git show`, `git log`, and possibly others).
->
-> As 'ls-tree' is a plumbing command meant for script writers, it was
-> designed to require the users to be more explicit.  So, similarity
-> to "show" and other Porcelain commands do not weigh much here.  Same
-> for "rev-list" that does not fall back to HEAD.
+> > we are defining an inline function with the explicit goal of passing it
+> > as a function pointer. I don't remember all of the standard's rules
+> > here. Are we guaranteed that it will create a linkable version if
+> > necessary?
+> 
+> I don't see on which basis the compiler could refuse.  We can't expect
+> the function address to be the same across compilation units, but we
+> don't need that.  If there's a compiler that won't do it or a standards
+> verse that makes this dubious then I'd like to know very much.
 
-Indeed, we already partition these commands into these porcelain vs
-plumbing categories in "man git". There, we say for plumbing
+I seem to recall some quirks where an inline function that is not called
+directly is not required to be compiled at all, and the compiler can
+assume that there is a definition available in another translation unit.
 
-    The interface (input, output, set of options and the semantics) to
-    these low-level commands are meant to be a lot more stable than
-    Porcelain level commands, because these commands are primarily for
-    scripted use. The interface to Porcelain commands on the other hand
-    are subject to change in order to improve the end user experience.
+But I think that only applies when no storage-class specifier is
+provided. In this case, you said "static", so I think it's OK?
 
-> This was a very deliberate design decision to help use of the
-> plumbing commands.  A buggy script may say
->
->     TREE=$(some command to find a tree object)
->     git ls-tree $TREE
->
-> without making sure something sensible is in $TREE (and not even
-> quoting it like "$TREE"), and if ls-tree defaulted to something, the
-> script will silently produce a wrong result, instead of failing,
-> robbing the script writer a chance to notice a bug in their code to
-> come up with the TREE object name.
+It's possible I'm mis-remembering the issues, too. One problem is that
+pre-C99, you might end up with the opposite problem (a compiled function
+with visible linkage that conflicts with other translation units at link
+time). E.g. here:
 
-I think this illustrative example (at least the general language of it,
-if not the entire example) could be added to the referenced section of
-our docs (I'd be happy to add this).
+  https://stackoverflow.com/questions/51533082/clarification-over-internal-linkage-of-inline-functions-in-c/51533367#51533367
 
-On a related note, does it make sense to explicitly call out the
-plumbing vs porcelain distinction in the individual manpages for each
-command? For example, I grepped for "plumb" in the docs for
-"git-ls-tree" but came up empty. We could add just a simple "Part of
-Git plumbing" to a slightly longer
+But I think with "static" we should always be OK.
 
-    Part of Git plumbing. Plumbing commands are more stable and are
-    designed to work reliably in scripting environments ...
+> > So I dunno. Clever, for sure, and I think it would work. I'm not sure if
+> > the extra code merits the return or not.
+> 
+> Sure, why check types -- script languages get work done as well.  (I'm
+> fresh off a Python basics training, nice quirky language..)  But we're
+> in C land and static typing is supposed to help us get our operations
+> correct and portable.
 
-and similarly for all the porecelain commands.
+Don't get me wrong, I like type checking. It's just that doing weird
+things with the language and pre-processor also carries a cost,
+especially in an open source project where new folks may show up and say
+"what the hell is this macro doing?". That's a friction for new
+developers, even if they're comfortable with idiomatic C.
+
+That said...
+
+> A good example in parseopt: The patch below adds type checking to the
+> int options and yields 79 warning about incompatible pointers, because
+> enum pointers were used in integer option definitions.  The storage size
+> of enums depends on the member values and the compiler; an enum could be
+> char-sized.  When we access such a thing with an int pointer we write up
+> to seven bytes of garbage ... somewhere.  We better fix that.
+
+...I do find this evidence compelling.
+
+-Peff
