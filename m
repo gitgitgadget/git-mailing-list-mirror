@@ -2,93 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE6EBC001B0
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 01:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A535DC04A94
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 01:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231745AbjHKBBS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 21:01:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53826 "EHLO
+        id S229613AbjHKBCa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 21:02:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbjHKBBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 21:01:17 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB3DF273E
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 18:01:16 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61B531B6B87;
-        Thu, 10 Aug 2023 21:01:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hEU+l7uzYZmAP/E1HCLxqJxL55LzRymEpRbnmx
-        RfNBg=; b=lIrDCZzzhJwNpXtNrpdtiofQt9m40FyeC63zHguDLXE0R9YS09WMsI
-        5k+F4vZ9CZ8qfNgZw44myHaf5HTBhzBMacmhlD4zXZ4PbWFbzpFklZUW9mQMFQo0
-        /fMTrXpeyr5pzft8RPJXGntZKdG984p597Jejg3DpaGrM8B4sYixg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A0AD1B6B86;
-        Thu, 10 Aug 2023 21:01:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BC19F1B6B85;
-        Thu, 10 Aug 2023 21:01:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wesley Schwengle <wesleys@opperschaap.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [[PATCH v2]] Fix bug when more than one readline instance is used
-References: <20230810004956.GA816605@coredump.intra.peff.net>
-        <20230810011831.1423208-1-wesleys@opperschaap.net>
-Date:   Thu, 10 Aug 2023 18:01:12 -0700
-In-Reply-To: <20230810011831.1423208-1-wesleys@opperschaap.net> (Wesley
-        Schwengle's message of "Wed, 9 Aug 2023 21:18:31 -0400")
-Message-ID: <xmqqcyzupf3b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9179F31A-37E2-11EE-AAD9-307A8E0A682E-77302942!pb-smtp2.pobox.com
+        with ESMTP id S231388AbjHKBC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 21:02:29 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2592D2724
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 18:02:28 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d5e792a163dso1538919276.1
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 18:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1691715747; x=1692320547;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qBbO72qF9VCdMl0/fbJ6MyA9VjQ2MCNIS33+WtJGdhw=;
+        b=IlIgxHsBIAlYryqL3G7a3ZThYlzoDxsthSadBx4NsQ+Tk34Cq9y56WRhTxwOcVnGuO
+         g0xs2Ah+nqbqiLGXxDsrRrZpjwD46GF6OeNrw6jcwB9FCaB7Y9+kLiplxx5ZXX0L2x5m
+         F4LxUYenaTYwtjNCjRYS2VIJQ/4oFQLtxv6vFpaWcbT8l5W36krMRRQJZnyaKDJRTaG6
+         Wj0MV0nddonOTPkTcA7SHYmx8m/tzvaus9DPjcyfuCWp6BoZST+rWnL/AtLlfVxvmGwQ
+         ogbX9QZ6a3C1EY4J09P3JVxJ1uh505yuEo0MW9/EqwoXDHnwWzxX8mvNM80lx0btg9k3
+         YJNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691715747; x=1692320547;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qBbO72qF9VCdMl0/fbJ6MyA9VjQ2MCNIS33+WtJGdhw=;
+        b=UCZ5b4JyzfKQjVBfeeZxe5JS1ZUagUOF4vyK1Ge2T3dRAkM/uDMVM6OwGqbH8zOhK3
+         AbF5g0Xh59/L1YP/MNFja6cg3R2Hzd2obasm7au597wsPEPgr1D9tLIggg6yC6bT/FB8
+         AZr4aUh1/paQSSVvfDneaIb90RfcJZY1bEhs6pPkjXsDo7opKLIKAq5kwFjiwUGFFE89
+         ksonndVDgvkmxicImLN1qxXRQ6yDZJB7TJ0qST5QvuKa2dEAO1XtYPQxKeLhNF5CcE4X
+         dmDj6/U+f9Uc7nktWgEGSEPJ6DDVyKFXBXi4raQdyHql+bfz4ayxW21M1Q4xcnt0Ifau
+         mq5g==
+X-Gm-Message-State: AOJu0YzGkb16SPUjvuLSugpj1FnJg1MWFcoMyAKsv59o5Eh4KxJPz2Jt
+        0S9sSm1CbDkXgVqwRROBaw1lv0TAVh8=
+X-Google-Smtp-Source: AGHT+IEyiBgcIGaeQmmZY1444GaNqCLfFlAjA3AP9j01z8cAAuvh2gMOl3C/NEy/vfRbn5JTErI5uA4DK5M=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a25:ab8a:0:b0:d0e:e780:81b3 with SMTP id
+ v10-20020a25ab8a000000b00d0ee78081b3mr5612ybi.2.1691715747448; Thu, 10 Aug
+ 2023 18:02:27 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 18:02:25 -0700
+In-Reply-To: <owlypm3ufl7j.fsf@fine.c.googlers.com>
+Mime-Version: 1.0
+References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
+ <c8bb013662187e9239d4a2499a63ed76daa78d14.1691211879.git.gitgitgadget@gmail.com>
+ <kl6l1qgea2k0.fsf@chooglen-macbookpro.roam.corp.google.com> <owlypm3ufl7j.fsf@fine.c.googlers.com>
+Message-ID: <owlymsyyfl26.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 3/5] trailer: split process_command_line_args into
+ separate functions
+From:   Linus Arver <linusa@google.com>
+To:     Glen Choo <chooglen@google.com>,
+        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wesley Schwengle <wesleys@opperschaap.net> writes:
+Linus Arver <linusa@google.com> writes:
+>>
+>> But now, we have to remember to call two functions instead of just one.
+>
+> But only inside interpret-trailers.c, right?
 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index be987e316f..93f6538d61 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> ...
-> -	if ($@) {
-> -		$term = new FakeTerm "$@: going non-interactive";
-> +		$term = $ENV{"GIT_SVN_NOTTY"}
-> +				? new Term::ReadLine 'git-svn', \*STDIN, \*STDOUT
-> +				: new Term::ReadLine 'git-svn';
-> +		};
+Oops, I meant trailer.c.
 
-This line with "};" on it should not be added, I think.
-
-cf. https://github.com/git/git/actions/runs/5827208598/job/15802787783#step:5:74
-
-> +		return $term;
->  	}
->  }
-
- git-svn.perl | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 93f6538d61..e919c3f172 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -307,7 +307,6 @@ package main;
- 		$term = $ENV{"GIT_SVN_NOTTY"}
- 				? new Term::ReadLine 'git-svn', \*STDIN, \*STDOUT
- 				: new Term::ReadLine 'git-svn';
--		};
- 		return $term;
- 	}
- }
--- 
-2.42.0-rc1
-
+In the future I expect to move this to interpret-trailers.c.
