@@ -2,99 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F4C5C001DB
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 22:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E017FC001B0
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 22:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237101AbjHKWGy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 18:06:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49318 "EHLO
+        id S235652AbjHKWHS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 18:07:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235652AbjHKWGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 18:06:47 -0400
-Received: from out-91.mta0.migadu.com (out-91.mta0.migadu.com [91.218.175.91])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0003C1716
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 15:06:45 -0700 (PDT)
+        with ESMTP id S236359AbjHKWHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 18:07:07 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E66E13593
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 15:07:02 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-317b31203c7so2170658f8f.2
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 15:07:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691791621; x=1692396421;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CxhaFGhc4QiWEYHMXND/p+NpkPRzhJiNodIJkt/znG0=;
+        b=cIHBCE1Hh40cTif8akh7P+FmMhFIHcYGulstCn7wf99IrDDHylslHudMAy4X9SLITs
+         J2SCKq7k2j9rGVrDIos1TI7nzfNTNmRv77ArQsstzI7XmgitBizHgGMXRkc3zlq7HkOP
+         Yx86BLmt+9Hkzqhohgxy2+w/HqzxDtytOIeTteZKnAdiuMfe9hAu7Lo+WAx1qybkKrQr
+         ow1F5tK/Jsp9jpnS+afjifIrw4cIBl6oobFe5IDrufZm7Gd+wQ2S8/zCmrPjxF0gWUQg
+         b6QSwJaVn40PM5S8blhVV5sRV9587frioOGnA0gY4kr+ZmFApOM5XsLJwYhlZcqWC9sW
+         qKMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691791621; x=1692396421;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CxhaFGhc4QiWEYHMXND/p+NpkPRzhJiNodIJkt/znG0=;
+        b=R9mwNfvmTi4AzcTFGpHmuMslDSzHTEP5YZ7wd8AldhOsuH5T6zrSjFljntulw11Fu8
+         y2ijCtoNgdpTIhbRAhLAvMwsdKWt/eSRSPMPHwYZFZMKZiozYiof9pHfEXHq/lhYH+Ox
+         Wpe1I328qEM/kuiHF4fp/omlHW5QKOUVo6WzeadiUZVWWY1MaCCZS+7s0Tz2u41y/1lc
+         I6vk0+q9oROuNHQ4TBwNKW/riKsYz9OF8seCGzh5D2kji+guMVjL4EzgZOhN/9tTvCZj
+         zfZbshnivxKU5Jgyek2iNCe/C7pAiJpwQkHQX7AFGpWSM4/8bArX5Jk0wZf0vWENiem0
+         XVdg==
+X-Gm-Message-State: AOJu0Yxsg1htv6+Kr97yuLT4pObIBqwGcCslp4Yl1onLXcHmOVKAE8Dh
+        omWRv7OpR+ybidXQxhOymDM=
+X-Google-Smtp-Source: AGHT+IFm+1DP/tzpxBtV9NdtZwhgbg9/mosExWV3Gi0p3oXnV0Rd6D6PMwpj9WXmkrwbJWPOE6ZD+A==
+X-Received: by 2002:a5d:53c3:0:b0:315:a74c:f627 with SMTP id a3-20020a5d53c3000000b00315a74cf627mr2383947wrw.16.1691791620855;
+        Fri, 11 Aug 2023 15:07:00 -0700 (PDT)
+Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id f2-20020a7bcd02000000b003fe210d8e84sm9347129wmj.5.2023.08.11.15.07.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Aug 2023 15:07:00 -0700 (PDT)
+Message-ID: <61337dad-e1db-4f08-84f5-404bacc6c9bf@gmail.com>
+Date:   Fri, 11 Aug 2023 23:06:57 +0100
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rjp.ie; s=key1;
-        t=1691791604;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=NvpNj/0JfdURjpr+Fidc4h2Zpm5rjY+5tSZ9srI8WRg=;
-        b=BuKDMDm9vrtSq+lBFa77v+sGGHgpRej8pScfwMO9lBTbIigpWjQkBVZmha8h/jA2yfaCoA
-        YB0jr4trjl472W74Hkz/U3Y+pCJvHD/6Qlw5MaQWeJXQhWXVZKFbYIjP1w+smY8oa8KmgT
-        U4B5CwLCAwKNXbQlDgtIB4WFT6d7D5s=
-Date:   Fri, 11 Aug 2023 22:06:43 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   "Ronan Pigott" <ronan@rjp.ie>
-Message-ID: <5a0544e570fb962c95840d99994bf45aa638faa8@rjp.ie>
-TLS-Required: No
-Subject: Re: Fetching too many tags?
-To:     "Jeff King" <peff@peff.net>
-Cc:     git@vger.kernel.org
-In-Reply-To: <20230811180932.GB2816191@coredump.intra.peff.net>
-References: <20230811180932.GB2816191@coredump.intra.peff.net>
- <274ec1a2152b0fd53b35c1591f5177e0b0713430@rjp.ie>
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] pretty: add %(decorate[:<options>]) format
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     phillip.wood@dunelm.org.uk, Glen Choo <chooglen@google.com>,
+        git@vger.kernel.org
+References: <20230715103758.3862-1-andy.koppe@gmail.com>
+ <20230715160730.4046-1-andy.koppe@gmail.com>
+ <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <783011d8-53ea-15cb-a9c7-6cb0c15bd5aa@gmail.com>
+ <CAHWeT-Zo3nTTGBfJPwNhg50KfLn-GAdpU8WZ96d7fT9_axAQXg@mail.gmail.com>
+ <xmqqv8dlqpq7.fsf@gitster.g>
+From:   Andy Koppe <andy.koppe@gmail.com>
+In-Reply-To: <xmqqv8dlqpq7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> And the answer, then, is that this is how the Git protocol works. The
-> server says "here are all the refs I know about", then the client
-> decides what it wants from that list and asks the server to send the
-> necessary objects, after which it updates its local refs.
+On 11/08/2023 21:38, Junio C Hamano wrote:
+ > Andy Koppe <andy.koppe@gmail.com> writes:
+ >
+ >> There are a number of uses of designated initializers already, so
+ >> hopefully compound literals aren't too much of an extra challenge.
+ >
+ > I do not see how one leads to the other here.  I'd prefer not to see
+ > use of a new construct we do not currently use mixed in a new code,
+ > even if it is mentioned in the proposed log message.
 
-Thanks, this clears up some of my confusion. I had thought that the clien=
-t sent
-the server what we had and that the server would then decide what objects=
- to
-send over.
+Okay.
 
-> When you use "--no-tags", that explicitly says "do not bother with tags
-> at all". Recent versions of Git have a protocol extension where the
-> client can say "I am only interested in refs/heads/master; don't bother
-> telling me about other stuff". Since the client knows we do not care
-> about tags, it can use that extension to get a much smaller ref
-> advertisement from the server.
+Would this style be acceptable to fulfil Glen's request to name the
+fields?
 
-Do you mean the --negotiation-tip fetch option? In my experience, it does=
-n't
-appear to have much of an effect in this case.
+	case 'D':
+		{
+			const struct decoration_options opts = {
+				.prefix = "",
+				.suffix = ""
+			};
 
-  $ time git fetch origin master
-  From https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux
-   * branch                      master     -> FETCH_HEAD
-  git fetch origin master  0.13s user 0.04s system 9% cpu 1.793 total
-  $ time git fetch --negotiation-tip=3Dmaster origin master
-  From https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux
-   * branch                      master     -> FETCH_HEAD
-  git fetch --negotiation-tip=3Dmaster origin master  0.10s user 0.06s sy=
-stem 9% cpu 1.762 total
+			format_decorations(sb, commit, c->auto_color, &opts);
+		}
+		return 1;
 
-Is that because (most) the tags point to commits reachable from master?
-
-My prior (apparently incorrect) understanding of the fetch negotiation is=
- based
-on my interpretation of the description of this option in git-fetch(1):
-
-> By default, Git will report, to the server, commits reachable from all =
-local
-> refs to find common commits in an attempt to reduce the size of the
-> to-be-received packfile. If specified, Git will only report commits rea=
-chable
-> from the given tips. This is useful to speed up fetches when the user k=
-nows
-> which local ref is likely to have commits in common with the upstream r=
-ef being
-> fetched.
-
-Now, if I understand correctly, the report does not include the tags that=
- we
-already have?=20
-
-Cheers,
-Ronan
+Andy
