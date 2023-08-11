@@ -2,107 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B47C1C0015E
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 21:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EB32C0015E
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 21:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236923AbjHKVqk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 17:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55982 "EHLO
+        id S236990AbjHKVqz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 17:46:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236488AbjHKVqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 17:46:37 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAF0271B
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 14:46:37 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 37BLiLhK884544
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 21:44:21 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Mun Johl'" <Mun.Johl@wdc.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <SJ0PR04MB8289FF1D6BAC59833D922BA89C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>        <034501d9cc91$069bd360$13d37a20$@nexbridge.com> <xmqqr0o9qpon.fsf@gitster.g> <034d01d9cc94$df9db0e0$9ed912a0$@nexbridge.com> <SJ0PR04MB82892A7EB350531DBE4701BA9C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
-In-Reply-To: <SJ0PR04MB82892A7EB350531DBE4701BA9C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
-Subject: RE: "fatal: Not a git repository" issued during 'make' from source code
-Date:   Fri, 11 Aug 2023 17:46:28 -0400
-Organization: Nexbridge Inc.
-Message-ID: <035b01d9cc9d$4c2168d0$e4643a70$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGYfaIzxiLvNNliA6NGPhsdV5ubsQMKIH4jAmvty4sCHttM2gLYUX00sBTVNNA=
-Content-Language: en-ca
+        with ESMTP id S236927AbjHKVqy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 17:46:54 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8625F2709
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 14:46:54 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d679709cdb5so667300276.1
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 14:46:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1691790414; x=1692395214;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kGkEEnqT9dplGVe+tT/vyxpGXhLH/rd2dP4R7Ol/vq0=;
+        b=1e7856/36ikOAiYBzOOqzZGlvddBVyeJ5Ao0Tu09NZ8vWSKmrl26mjBgkRFneWlH6T
+         eASffCeJBZvsKKFYd3wqS9kQUbB+4m7JS27HDZEe0nxiqfBBcwMHBllV5GFTDEDhtllb
+         yeLxEeusw7Ak00UAlz/anN33K57xfi2kr/PZRWquHW2BGffn3h3Mq8ZsGe0AA+8gjy3V
+         0dQI/EgVwrFKnDeWgMa+THvx3IYSkVi7tlRnN/rSrtWDvHr6xziFx1WHElcn1qCwC07J
+         xTQV/wVgEp9vtLg6ta86vqkV6DsA74tujrXZuyveEhDRf6VQV3vBFr3BL9h28ZbB8f9B
+         PdAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691790414; x=1692395214;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kGkEEnqT9dplGVe+tT/vyxpGXhLH/rd2dP4R7Ol/vq0=;
+        b=UmvsYLBPk01PYLlWKtWB33ZFTFJRetVKH6QaoflCQ0jenlLoaIAada2CM+UetHCwFT
+         2nXMbvDS8HL8dr8CSa8weDhROIICLKeF6FWfYTRoCMdESRTrs73rGkCzjk7dHnMIii6N
+         jcxV7INT+pVjzS3ENquKqVu7wtGEuHpf7j3K3NPFcnu77tVvLDt/7LMyXlnhrYK3Zvvb
+         V3bto4IX6B7TTLJd0blbr78G0CjMKZtMhba5x6uAXyJC/PkBXg3lEow4CjFv31p4yUrU
+         whvXa5H12kOeNvLC8sCMlb7LAwnchhUcj2pbAwCTHC962Dqn0bRxHbvLoq/7fTp3+Bvx
+         xkHg==
+X-Gm-Message-State: AOJu0YxMMHqKZTzcNldakgOeN9cQpBlE2gSQA8Z/7UGtuprEUou+AZMo
+        Bk3EFs5Vp6bd583n5kyR4UvfIXPfzbItPLjAVz+Z
+X-Google-Smtp-Source: AGHT+IEyOaavLTJnbbJYQeKFm+h4f3C6y6a7EYOGbQbXCItR4sBFTIGwDFobwHGE1/v4/f75hL0+P76aYpNEqrkeCQbM
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:4efe:1e02:1aef:3b66])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6902:1584:b0:d10:5b67:843c with
+ SMTP id k4-20020a056902158400b00d105b67843cmr57192ybu.4.1691790413821; Fri,
+ 11 Aug 2023 14:46:53 -0700 (PDT)
+Date:   Fri, 11 Aug 2023 14:46:51 -0700
+In-Reply-To: <e23a956401c5619bd46e8ec9b0e1df958cbcbfec.1691426160.git.me@ttaylorr.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.640.ga95def55d0-goog
+Message-ID: <20230811214651.3326180-1-jonathantanmy@google.com>
+Subject: Re: [RFC PATCH 1/6] bloom: annotate filters with hash version
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, August 11, 2023 5:15 PM, Mon Johl wrote:
->> On Friday, August 11, 2023 4:39 PM, Junio C Hamano wrote:
->> >Subject: Re: "fatal: Not a git repository" issued during 'make' from
->> >source
->> code
->> >
->> ><rsbecker@nexbridge.com> writes:
->> >
->> >> On Friday, August 11, 2023 3:57 PM, Mun Johl wrote:
->> >>>I am new to git and am trying to compile git-2.41.0 on RHEL7.  When
->> >>>I run
->> >> 'make
->> >>>prefix=/usr/local all doc', I get the following error:
->> >>>
->> >>>fatal: Not a git repository (or any parent up to mount point
->> >>>/tools)
->> >>>
->> >>>Which I infer means that I need to do the build within a git repo.
->> >>>Is
->> that
->> >> correct?  Or
->> >>>have I missed some basic step in the build process?
->> >>
->> >> Yes, you must be in the cloned git repository in order to run the
-build.
->> >
->> >Shouldn't we be able to build out of a tarball?
->>
->> I don't get the impression he started with a tarball, so subsequently
->> sent the doc ref for that. Using just "make" is not sufficient from a
->> tarball.[Mun]
->
->[Mun] Thank you both for the information you have provided!  It turns out I
-did in fact
->start from the tar-ball "git-2.41.0.tar.xz" which I downloaded from
->https://mirrors.edge.kernel.org/pub/software/scm/git/ .  And then I ran the
-'make'
->command.  The process went something like this (basically identical to what
-Junio
->documented):
->
->$ tar xf git-2.41.0.tar.xz
->$ cd git-2.41.0
->$ make prefix=/usr/local all doc
->
->And with the above 'make' command I got the fatal error.
->
->I consulted the Getting-Started-Installing-Git web page that rsbecker
-referenced, and
->it basically matches the above--except it uses the 'make configure'
-process.  So I tried
->that method as well, but when I got to the 'make all doc info' step, I
-again got the
->same fatal error.
->
->Due to some "security precautions", I am unable to use 'git clone
->https://git.kernel.org/pub/scm/git/git.git' to download the source code.
-But I can try
->to figure out a workaround for that if that is my only option at this point
-to
->successfully compile git.
+Taylor Blau <me@ttaylorr.com> writes:
+> In subsequent commits, we will want to load existing Bloom filters out
+> of a commit-graph, even when the hash version they were computed with
+> does not match the value of `commitGraph.changedPathVersion`.
+> 
+> In order to differentiate between the two, add a "filter" field to each
+> Bloom filter.
 
-Did you run 'make configure' before using 'make prefix=/usr/local all doc' ?
+You mean "version", I think.
 
+> @@ -55,6 +55,7 @@ struct bloom_filter_settings {
+>  struct bloom_filter {
+>  	unsigned char *data;
+>  	size_t len;
+> +	int version;
+>  };
+
+We might want to shrink the sizes of len (we have a changed path limit
+so we know exactly how big Bloom filters can get) and version so that
+this struct doesn't take up more space. But if other reviewers think
+that this is OK, I'm fine with that.
+
+Another thing that we might want to track is whether the Bloom filter is
+a reference to an existing buffer (and thus does not need to be freed)
+or a reference to a malloc-ed buffer that we must free. But both before
+and after this patch set, a malloc-ed buffer is never overridden by a
+reference-to-existing-buffer, so we should still be fine for now. (This
+patch set does add a scenario in which a reference-to-existing buffer is
+overridden by a malloc-ed buffer, but that's the only new scenario.)
