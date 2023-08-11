@@ -2,71 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B7EC001B0
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 20:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E1AFC001B0
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 20:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234905AbjHKUj0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 16:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49026 "EHLO
+        id S235706AbjHKUlZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 16:41:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjHKUjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 16:39:25 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13196FD
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 13:39:25 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C572A266BB;
-        Fri, 11 Aug 2023 16:39:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UrHo+/DWFoLs9Gehtmd/81UYEBkdNOM9aydXTo
-        Y6LWk=; b=OtZgUJGjqnAJ3B5sDtZwqw98eD5GRXCvSGBHpR9repnE6S6KJe/0gG
-        PNDRKzK7FVaCVmZvwIR+KElXr5D5tgSoY8PeKkrlV0jwrBAgRwoQQqwieD0B1QvF
-        3yDLmuV1EU0dgvgUkHGoKVSHzrIdO7eI/rYaseP0PB0Yyjq/tzy/k=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF134266BA;
-        Fri, 11 Aug 2023 16:39:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C10C266B9;
-        Fri, 11 Aug 2023 16:39:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     "'Mun Johl'" <Mun.Johl@wdc.com>, <git@vger.kernel.org>
-Subject: Re: "fatal: Not a git repository" issued during 'make' from source
- code
-References: <SJ0PR04MB8289FF1D6BAC59833D922BA89C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
-        <034501d9cc91$069bd360$13d37a20$@nexbridge.com>
-Date:   Fri, 11 Aug 2023 13:39:20 -0700
-In-Reply-To: <034501d9cc91$069bd360$13d37a20$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Fri, 11 Aug 2023 16:18:37
-        -0400")
-Message-ID: <xmqqr0o9qpon.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232759AbjHKUlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 16:41:24 -0400
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FB5E42
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 13:41:24 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 37BKd9tx875612
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 11 Aug 2023 20:39:10 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Mun Johl'" <Mun.Johl@wdc.com>, <git@vger.kernel.org>
+References: <SJ0PR04MB8289FF1D6BAC59833D922BA89C10A@SJ0PR04MB8289.namprd04.prod.outlook.com> <034501d9cc91$069bd360$13d37a20$@nexbridge.com> <SJ0PR04MB8289D45EE7A495B0ED7F69CD9C10A@SJ0PR04MB8289.namprd04.prod.outlook.com> <SJ0PR04MB82893B315F130DCF181D78F49C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+In-Reply-To: <SJ0PR04MB82893B315F130DCF181D78F49C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+Subject: RE: "fatal: Not a git repository" issued during 'make' from source code
+Date:   Fri, 11 Aug 2023 16:41:17 -0400
+Organization: Nexbridge Inc.
+Message-ID: <034c01d9cc94$30c14960$9243dc20$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 269C36A2-3887-11EE-B474-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGYfaIzxiLvNNliA6NGPhsdV5ubsQMKIH4jAuuSHg0Chwpk/bAkRwUw
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+On Friday, August 11, 2023 4:26 PM, Mon Johl wrote:
+>Sorry for the additional reply--I should have mentioned that we don't have
+a git repo
+>yet.  I am just trying to get things setup so that we can create a proper
+repo and
+>migrate our data.
 
-> On Friday, August 11, 2023 3:57 PM, Mun Johl wrote:
->>I am new to git and am trying to compile git-2.41.0 on RHEL7.  When I run
-> 'make
->>prefix=/usr/local all doc', I get the following error:
->>
->>fatal: Not a git repository (or any parent up to mount point /tools)
->>
->>Which I infer means that I need to do the build within a git repo.  Is that
-> correct?  Or
->>have I missed some basic step in the build process?
->
-> Yes, you must be in the cloned git repository in order to run the build.
+Please consult this page:
+https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
-Shouldn't we be able to build out of a tarball?
+>> -----Original Message-----
+>> From: Mun Johl <Mun.Johl@wdc.com>
+>> Sent: Friday, August 11, 2023 1:23 PM
+>> To: rsbecker@nexbridge.com; git@vger.kernel.org
+>> Subject: RE: "fatal: Not a git repository" issued during 'make' from
+>> source code
+>>
+>> Hi Randall,
+>>
+>> Thank you for your quick reply.
+>>
+>> I'm just wondering... Can I "trick" the compilation process by simply
+creating a .git
+>directory where I am running 'make'?
+>>
+>> Thanks again and best regards,
+>>
+>> --
+>> Mun
+>>
+>> > -----Original Message-----
+>> > From: rsbecker@nexbridge.com <rsbecker@nexbridge.com>
+>> > Sent: Friday, August 11, 2023 1:19 PM
+>> > To: Mun Johl <Mun.Johl@wdc.com>; git@vger.kernel.org
+>> > Subject: RE: "fatal: Not a git repository" issued during 'make' from
+>> > source code
+>> >
+>> > CAUTION: This email originated from outside of Western Digital. Do
+>> > not click on links or open attachments unless you recognize the sender
+and know
+>that the content is safe.
+>> >
+>> >
+>> > On Friday, August 11, 2023 3:57 PM, Mun Johl wrote:
+>> > >I am new to git and am trying to compile git-2.41.0 on RHEL7.  When
+>> > >I run
+>> > 'make
+>> > >prefix=/usr/local all doc', I get the following error:
+>> > >
+>> > >fatal: Not a git repository (or any parent up to mount point
+>> > >/tools)
+>> > >
+>> > >Which I infer means that I need to do the build within a git repo.
+>> > >Is that
+>> > correct?  Or
+>> > >have I missed some basic step in the build process?
+>> >
+>> > Yes, you must be in the cloned git repository in order to run the
+build.
+>> > --Randall
+
