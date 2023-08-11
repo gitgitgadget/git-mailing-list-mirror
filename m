@@ -2,90 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9016CC001B0
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 22:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACB14C0015E
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 22:29:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232083AbjHKWPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 18:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52804 "EHLO
+        id S233288AbjHKW3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 18:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229802AbjHKWPp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 18:15:45 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9774F1703
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 15:15:44 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-57320c10635so29129987b3.3
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 15:15:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691792144; x=1692396944;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zvEN3B2F2vSZGKvdyrRwYOI3u7lTWt1qXx1lenY0OOU=;
-        b=VvRrOHj8MwrPVa/xGSiZHdeM2xWeG++34vru8QC0b2fUU1E0LQqkrwz3nSN/SHP131
-         /xwTKfCOkcPP/XU6NM0mZIqwTdWFSO/AzpPEXgPoQGsdPE2zR20xhtEsNPyeDrSE1OPL
-         SGEiqzYgWobyTtyeY8ow2TjTk+eq4sZDE1csR+30QRSCpV0o1t3TrQEejvJO0AnwqoBs
-         tb8o9bxen7+yAp5xGeGPvkAagJI+WqL+4lKwuIjEXpwFewYd1r7cQKjQxFmDx/gtjLhi
-         mRLoQAG2Plt77wy+ZNMxRFkH0BOEYxSGE70YIzd47vbIFFMEpeHxOvbsxp2K/XUVGXJF
-         YDyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691792144; x=1692396944;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zvEN3B2F2vSZGKvdyrRwYOI3u7lTWt1qXx1lenY0OOU=;
-        b=dR6UO1dybOQni/js43N6SPudDpV9bN2AmY/KpEX9fRRTfIYk7F2QAHqJb1+B0G4A8z
-         SLB2VY8ByTCaF5HigY5csvLXujZxXlGOgNfJHmd070eu2TSEEZBqWIMTkKDhvVMlgGvg
-         30jvOm6W3dnpcTPZkDYhLO85jQqunaKNQNReT19IhA3Ut3Y6xswcvtqs+zeepBGAL5SR
-         odSe918PkfNxYDFe1dQNTYEoA6f0wYF4njDi6LfnhINb8ccCYf1NBX/yg3snSgWtr9yb
-         0FUVDWdyZhhke5vPWUKmOYl8Ui6+Bq0FpP8fThmuf3KBRtjz/WLK7r60ufUR4ZFqsqji
-         yAdw==
-X-Gm-Message-State: AOJu0YwPnzyuqC+Pbe5lCAJxNrI6RqWhdrWcmA/d5mlTf2BZW1pUZyjg
-        hs8JjrHJIBx/E00km6Xli8p4EjkOrajViDSMgJYS
-X-Google-Smtp-Source: AGHT+IHMGzMWRdGEFir58ohcj1j9H/YIOZgKG93b2NpxT7+iSQw+24CpB0syopkv4Y7IJgpoRb+qZNa/7rbBwCVAwVDh
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:4efe:1e02:1aef:3b66])
- (user=jonathantanmy job=sendgmr) by 2002:a81:ad15:0:b0:583:a3c1:6b5a with
- SMTP id l21-20020a81ad15000000b00583a3c16b5amr54292ywh.4.1691792143943; Fri,
- 11 Aug 2023 15:15:43 -0700 (PDT)
-Date:   Fri, 11 Aug 2023 15:15:41 -0700
-In-Reply-To: <ZNKj9vwZv4kKJEcL@nand.local>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.41.0.640.ga95def55d0-goog
-Message-ID: <20230811221541.3332720-1-jonathantanmy@google.com>
-Subject: Re: leak in jt/path-filter-fix, was Re: What's cooking in git.git
- (Aug 2023, #01; Wed, 2)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229552AbjHKW3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 18:29:45 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F5ED1FCF
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 15:29:44 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 92FDA242A2;
+        Fri, 11 Aug 2023 18:29:41 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qUadZ-n7J-00; Sat, 12 Aug 2023 00:29:41 +0200
+Date:   Sat, 12 Aug 2023 00:29:41 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2] format-patch: add --description-file option
+Message-ID: <ZNa2VQQzZmaMzM4C@ugly>
+References: <xmqqttta9h6a.fsf@gitster.g>
+ <20230809171530.2564724-1-oswald.buddenhagen@gmx.de>
+ <xmqq1qg9qmyq.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqq1qg9qmyq.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-> On Tue, Aug 08, 2023 at 03:22:40PM -0400, Jeff King wrote:
-> > Since this hit 'next', Coverity complained about a small leak. Fixed by
-> > the patch below.
-> 
-> The patch below looks good and makes sense to me. That warning is
-> awfully long, though ;-).
-> 
-> In any event, I expect that 'next' will be rewound before this topic
-> graduates, since it is meaty and we are in the middle of the -rc phase.
-> 
-> ...and we also have my series on top [1], so it may be worthwhile for
-> you, Jonathan, and I to figure out how to combine our efforts here. I
-> think that this could likely get squashed in to Jonathan's topic
-> if/after it gets ejected from 'next'. We can take my patches together in
-> the same series, separately in a different one, or discard them
-> altogether.
-> 
-> If we do decide to pursue the approach in [1], I think combining
-> everything together into one big series makes the most sense for ease of
-> merging.
-> 
-> [1]: https://lore.kernel.org/git/ZMv14grkM7x7Sf8m@nand.local/
-> 
-> Thanks,
-> Taylor
+On Fri, Aug 11, 2023 at 02:38:05PM -0700, Junio C Hamano wrote:
+>> +	if (strbuf_read_file(buf, desc_file, 2000) < 0)
+>
+>You would probably want to do "2000" -> "0" here.
+>
+hmm, yeah, i wonder where i got it from, given that there is no 
+precedent. i suppose i simply thought that 2k is a reasonably expectable 
+max size for a description. if you think the default 8k hint is a better 
+idea, then let's go with it.
 
-For what it's worth, whatever we decide sounds good to me.
+>>  static void prepare_cover_text(struct pretty_print_context *pp,
+>> +			       const char *description_file,
+>>  			       const char *branch_name,
+>
+>This is kind of suboptimal, but let's let it pass.
+>
+>A better design is to pass the description string itself to this
+>function and the make_cover_letter() function, and have the higher
+>level callers of the callchain prepare the either read_desc_file()
+>or read_branch_desc() to prepare that string before calling into the
+>callchain. 
+>
+there is only one caller, and doing this change would essentially result 
+in inlining prepare_cover_text(). probably not the best outcome.
+
+>Such a division of labor between the callers and this
+>function will allow us to more easily add another option to the
+>command, to feed the description string itself (instead of having to
+>create a temporary file and storing the description in it).
+>
+that's a good point. in fact, passing in the description directly would 
+probably fit my use case better ... i just happened to already have the 
+code for creating that temp file anyway (for editing), so i didn't give 
+it a second thought. i can add both options in the same go, given that 
+it's almost no code.
+
+regards
