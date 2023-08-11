@@ -2,109 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B111C001B0
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 17:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C338C001B0
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 17:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236870AbjHKRff (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 13:35:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34686 "EHLO
+        id S234924AbjHKRin (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 13:38:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236857AbjHKRfd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 13:35:33 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97E8326A2
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 10:35:29 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d3d729a08e4so2060778276.3
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 10:35:29 -0700 (PDT)
+        with ESMTP id S234001AbjHKRim (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 13:38:42 -0400
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 337C926A2
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 10:38:42 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-589ac93bc6eso24151577b3.0
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 10:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1691775329; x=1692380129;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lONLaBF745T5gDfEHQxKO4/CV+3s/iV6ZUlhSyn0Y4w=;
-        b=ZS2gqyo3U5cexLYe7+fNLMGLbOWnfmCeIZnHbl9MC1k5Xj2QFLZuwrVI+SI/hT+gJU
-         cASczWV/B2W6l26ZG+9BYvOKikN69FSFT0RSPO7AHqgB6vNlGPzjQEGnptI0eQ48ifFr
-         aY+nhDhXrRIgBoDAJcT+v0fBv6X1zVy/QUFPOmuWhuLKpsdBERn/kuBsDRfWcac83nBD
-         GUTnuX3OIkBTO7M0NDU7DJ90DM+73DuUeSnaEvG/CcdhOKkQE/yqATMC+raCrpHTdycK
-         Deh3a1QcqrswXmGjvboFMyRxOqISFROCv3Q0NaRs/Dl0IIaw2DVI8sQ3QGaP46Csy/FW
-         +otA==
+        d=google.com; s=20221208; t=1691775521; x=1692380321;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YC6N2j9QdcXJ38MCKF4ECcZrRPqdqCq+9MXeZ3gjUyI=;
+        b=Q8nTTzh2BKo9xh100fr216i6zOUCwqt5GqB0a1nonCUvlrYFgLn/AyhvAYGm5NcENB
+         AxzFoB511ubj8JhNMd5t2JK6fCvoK/BbUv5q45Vc35O/XQloXO/uPth/m0mR/ocV9OdO
+         F2CLWP57RCjmDrD8CrmXU5P7Pgp14r0nFEPqwS5+TfTXWvylCHWH3KzVUEJe3CtkIVWr
+         idZstXJUcLx5XB1N0ylk69m8WbhQVjCxEnliT+EE9QJAXcBw28tx683w+XEhLTY2e4ch
+         4rTynaU9v0K0Ri3fHM/SOyks6E3uAYPhozOTZiFa1fA8tni5WuhdGArxO4sBKeo0GTZQ
+         J1ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691775329; x=1692380129;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lONLaBF745T5gDfEHQxKO4/CV+3s/iV6ZUlhSyn0Y4w=;
-        b=dh6DVO3JCHQUgD2Qf9nHflJFY/dvQ7DU7rala5I3Fh2frSG2tgSuJbobHBeunH2LWz
-         gmxugew3tQ8jw2WrrZq7B+ZK5JYh2v+uNmNgxqsNKRRwUU4BK1nPUXzlI8jBEMyo6G6F
-         GHP5SVNPTAfmNzyPluM5Ze8LO8+rUBWZWyNB+duxIfyzTc/IKpa4h9/IvAXgYhWFJXfo
-         S2UR2kepqwEqsv/QiPQylnQBLPNEeYvFTeMv3H6xSowbHyKO7ByhnlQdS5vpefKhEPrv
-         xLfiVlX5Re/nJJwhXQS4wSJHyPw6Y3ll26bubinN6/npBGc4NNaFfAHhYqTu3waPKgOr
-         YNTA==
-X-Gm-Message-State: AOJu0Yx6mAhgWig76gWOZGl+1BQR88tuIluah9gf+eXGfeuf6IkGVE07
-        YqgwI1HEItTrGVPlv5kOsJ8HeA==
-X-Google-Smtp-Source: AGHT+IFEE3zNrEsSF+L0ImwpfxB41oLPHXP+vG7Whqg3czh5I5Lcv/RdbGjpaZKqOSu3lw8nSV2LXg==
-X-Received: by 2002:a25:ce01:0:b0:d06:f99e:6345 with SMTP id x1-20020a25ce01000000b00d06f99e6345mr2731536ybe.22.1691775328692;
-        Fri, 11 Aug 2023 10:35:28 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x206-20020a25e0d7000000b00d57155d4ec3sm1041123ybg.15.2023.08.11.10.35.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 10:35:28 -0700 (PDT)
-Date:   Fri, 11 Aug 2023 13:35:21 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ryan Williams via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Ryan Williams <ryan@runsascoded.com>
-Subject: Re: [PATCH] ls-tree: default <tree-ish> to HEAD
-Message-ID: <ZNZxWdUHMwGxWdbJ@nand.local>
-References: <pull.1566.git.1691412557518.gitgitgadget@gmail.com>
- <xmqqmsz2hl9m.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmsz2hl9m.fsf@gitster.g>
+        d=1e100.net; s=20221208; t=1691775521; x=1692380321;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YC6N2j9QdcXJ38MCKF4ECcZrRPqdqCq+9MXeZ3gjUyI=;
+        b=Ej+JFgGsDHXvBIewDKxdF0yQbMTdF3ONP1Y/3KnylsXP37moI+UQzw5z5S4nlLYVNn
+         8XwM9qO/mr0sp2407BIYjc/uinsgIhG8lA281TReDUfT3JhcOnbQjuuVilPghgN+UyeV
+         /bvefdhHIFueKQcSBchck+U8Bq66LS62WfN2dy5xzO9cA1MAGswDHM3G6whCNn/P00Kw
+         Alssgh+L9T7P38CjKSAwQa9YZj2cOgLvVMYeW9329ZXpYFN+B7om5KJ+RsBDJl3cys+q
+         jzNCJFTRtHBDdwQ2fkIIWpZqkaBASnObA/G/wv+CB0x59glKc0UGLIZWLJOkiAomnDnW
+         r5sA==
+X-Gm-Message-State: AOJu0Yz9T6/u3MWNIvcc62Y6Husogz52MqZHaUDdIetcC3CDCWBRql6e
+        KNiuYt4CAar39WBwqkZ8z+FYYJ3oSmM=
+X-Google-Smtp-Source: AGHT+IGFsZgSQtG1sO3tW/PmrzdLYzHITFro4Uzjcwepg7hUcZDELfHpAR2wi2ws3npd4GQB5f1Q4YX9Dos=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a81:ae63:0:b0:565:9bee:22e0 with SMTP id
+ g35-20020a81ae63000000b005659bee22e0mr43086ywk.0.1691775521475; Fri, 11 Aug
+ 2023 10:38:41 -0700 (PDT)
+Date:   Fri, 11 Aug 2023 10:38:40 -0700
+In-Reply-To: <xmqq7cq2pd7o.fsf@gitster.g>
+Mime-Version: 1.0
+References: <pull.1564.git.1691210737.gitgitgadget@gmail.com>
+ <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com> <xmqq7cq2pd7o.fsf@gitster.g>
+Message-ID: <owlyh6p5fpi7.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 00/13] Fixes to trailer test script, help text, and documentation
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 07, 2023 at 09:25:57AM -0700, Junio C Hamano wrote:
-> "Ryan Williams via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Ryan Williams <ryan@runsascoded.com>
-> >
-> > When no positional arguments are passed to `git ls-tree`, it currently
-> > prints "usage" info to stderr and exits with code 129. A more intuitive
-> > default would be to operate on the `HEAD` commit's tree (similarly to
-> > `git show`, `git log`, and possibly others).
->
-> As 'ls-tree' is a plumbing command meant for script writers, it was
-> designed to require the users to be more explicit.  So, similarity
-> to "show" and other Porcelain commands do not weigh much here.  Same
-> for "rev-list" that does not fall back to HEAD.
->
-> This was a very deliberate design decision to help use of the
-> plumbing commands.  A buggy script may say
->
->     TREE=$(some command to find a tree object)
->     git ls-tree $TREE
->
-> without making sure something sensible is in $TREE (and not even
-> quoting it like "$TREE"), and if ls-tree defaulted to something, the
-> script will silently produce a wrong result, instead of failing,
-> robbing the script writer a chance to notice a bug in their code to
-> come up with the TREE object name.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah, I am similarly torn. On one hand, I think that it is true that
-people use ls-tree for various tasks more than we'd expect from a
-typical plumbing command (but less than a porcelain one, to be sure).
+> t0450 dies like the attached, probably because the documentation was
+> updated to say "<key> or <keyAlias>" but a matching update to the
+> output of "interpret-trailers -h" command help is missing?
 
-So in that sense I am inclined to agree with Ryan that their suggestion
-is a good one. ...But, I think even more important than that is avoiding
-buggy invocations like the kind you describe above that would produce
-subtly wrong results.
+Yes, sorry I missed this. I already have made the fix locally.
 
-I think you could make an argument that you could implement that
-behavior and also emit a warning() when tree-ish is blank and the output
-isn't going to a TTY. But that seems kind of gross to me, so I'd just as
-soon not change the existing behavior here.
+> A possible trivial fix to 13/13 will be queued on top as "SQUASH???"
+> patch for now.
 
-Thanks,
-Taylor
+Thanks.
