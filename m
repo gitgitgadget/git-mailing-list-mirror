@@ -2,88 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF53C001B0
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 14:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB4D9EB64DD
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 15:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234298AbjHKOvX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 10:51:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40970 "EHLO
+        id S233483AbjHKPBR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 11:01:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbjHKOvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 10:51:23 -0400
+        with ESMTP id S229479AbjHKPBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 11:01:16 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79BA02702
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 07:51:22 -0700 (PDT)
-Received: (qmail 15149 invoked by uid 109); 11 Aug 2023 14:51:22 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B138510FE
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 08:01:15 -0700 (PDT)
+Received: (qmail 15834 invoked by uid 109); 11 Aug 2023 15:01:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Aug 2023 14:51:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Aug 2023 15:01:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26202 invoked by uid 111); 11 Aug 2023 14:51:21 -0000
+Received: (qmail 26285 invoked by uid 111); 11 Aug 2023 15:01:14 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Aug 2023 10:51:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Aug 2023 11:01:14 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Aug 2023 10:51:21 -0400
+Date:   Fri, 11 Aug 2023 11:01:14 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Wesley <wesleys@opperschaap.net>, git@vger.kernel.org
-Subject: Re: [[PATCH v2]] Fix bug when more than one readline instance is used
-Message-ID: <20230811145121.GB2303200@coredump.intra.peff.net>
-References: <20230810004956.GA816605@coredump.intra.peff.net>
- <20230810011831.1423208-1-wesleys@opperschaap.net>
- <xmqqcyzupf3b.fsf@gitster.g>
- <8d683835-31d4-41f0-9d4e-90c95acbea28@opperschaap.net>
- <xmqqwmy2no2e.fsf@gitster.g>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 2/4] commit-graph: verify swapped zero/non-zero
+ generation cases
+Message-ID: <20230811150114.GC2303200@coredump.intra.peff.net>
+References: <ZNUiEXF5CP6WMk9A@nand.local>
+ <cover.1691699851.git.me@ttaylorr.com>
+ <9b9483893c072961c5871bd0bae17a7098d73c06.1691699851.git.me@ttaylorr.com>
+ <xmqqleeir35l.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwmy2no2e.fsf@gitster.g>
+In-Reply-To: <xmqqleeir35l.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2023 at 10:30:17PM -0700, Junio C Hamano wrote:
+On Thu, Aug 10, 2023 at 02:36:06PM -0700, Junio C Hamano wrote:
 
-> And embarrassingly, the above is not sufficient, as the way $term is
-> used in git-send-email and git-svn are subtly different.
+> Taylor Blau <me@ttaylorr.com> writes:
 > 
-> I think we further need something like this on top, but my Perl is
-> rusty.
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index c68f5c6b3a..acca753ce8 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@ -2686,9 +2686,12 @@ static int verify_one_commit_graph(struct repository *r,
+> >  				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
+> >  					     oid_to_hex(&cur_oid));
+> >  			generation_zero = GENERATION_ZERO_EXISTS;
+> > -		} else if (generation_zero == GENERATION_ZERO_EXISTS)
+> > -			graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
+> > -				     oid_to_hex(&cur_oid));
+> > +		} else {
+> > +			if (generation_zero == GENERATION_ZERO_EXISTS)
+> > +				graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
+> > +					     oid_to_hex(&cur_oid));
+> > +			generation_zero = GENERATION_NUMBER_EXISTS;
+> > +		}
 > 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index e919c3f172..6033b97a0c 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -427,7 +427,7 @@ sub ask {
->  	my $default = $arg{default};
->  	my $resp;
->  	my $i = 0;
-> -	term_init() unless $term;
-> +	my $term = term_init();
->  
->  	if ( !( defined($term->IN)
->              && defined( fileno($term->IN) )
+> Hmph, doesn't this potentially cause us to emit the two reports
+> alternating, if we are unlucky enough to see a commit with 0
+> generation first (which will silently set gz to ZERO_EXISTS), then
+> another commit with non-zero generation (which will complain we saw
+> non-zero for the current one and earlier we saw zero elsewhere, and
+> then set gz to NUM_EXISTS), and then another commit with 0
+> generation (which will complain the other way, and set gz back again
+> to ZERO_EXISTS)?
+> 
+> I am tempted to say this gz business should be done with two bits
+> (seen zero bit and seen non-zero bit), and immediately after we see
+> both kinds, we should report once and stop making further reports,
+> but ...
 
-Hmm. Isn't that an indication that git-svn is OK as-is?
+Yeah, I think you are right. It might be OK, in the sense that we would
+show a different commit each time as we flip-flopped, but it's not clear
+to me how valuable that is.
 
-Looking at the version of git-svn.perl on the tip of master, I see we
-declare a global $term along with the initializer:
+If the actual commit ids are not valuable, then we could just set bits
+and then at the end of the loop produce one warning:
 
-  my $term;
-  sub term_init {
-          $term = eval { ...etc... }
+  if (seen_zero && seen_non_zero) {
+	graph_report("oops, we saw both types");
+  }
 
-And then later in ask we call term_init() only if it's uninitialized:
+Certainly that would make the code less confusing to me. :) But I really
+don't know if marking the individual commit is useful or not (on the
+other hand, it cannot be perfect, since when we see a mismatch we do not
+know if it was _this_ commit that is wrong and the previous one is
+right, or if the previous one was wrong and this one was right). I guess
+we could also save an example of each type and report them (i.e., make
+seen_zero and seen_non_zero pointers to commits/oids).
 
-  sub ask {
-          ...
-          term_init() unless $term;
+> >  		if (generation_zero == GENERATION_ZERO_EXISTS)
+> >  			continue;
+> 
+> ... as I do not see what this "continue" is doing, I'd stop at
+> expressing my puzzlement ;-)
 
-So those are looking at the same $term, and the result should only be
-initialized once.
+Yeah, I'm not sure on this bit. I had thought at first it was just
+trying to avoid the rest of the loop for commits which are 0-generation.
+But after Taylor's explanation that this is about whole files with
+zero-generations, it makes sense that we would not do the rest of the
+loop for any commit (it is already an error to have mixed zero/non-zero
+entries, so the file fails verification).
 
-It could still benefit from cleaning up FakeTerm, since we lazily init
-the object since 30d45f798d (git-svn: delay term initialization,
-2014-09-14). But I don't think there's a visible bug here with the new
-version of Term::ReadLine::Gnu.
+In a "two bits" world, I think this just becomes:
+
+  if (seen_zero)
+	continue;
 
 -Peff
