@@ -2,73 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A535DC04A94
-	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 01:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DEC2C001B0
+	for <git@archiver.kernel.org>; Fri, 11 Aug 2023 01:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbjHKBCa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Aug 2023 21:02:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36328 "EHLO
+        id S229793AbjHKBKH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Aug 2023 21:10:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbjHKBC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2023 21:02:29 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2592D2724
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 18:02:28 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d5e792a163dso1538919276.1
-        for <git@vger.kernel.org>; Thu, 10 Aug 2023 18:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1691715747; x=1692320547;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qBbO72qF9VCdMl0/fbJ6MyA9VjQ2MCNIS33+WtJGdhw=;
-        b=IlIgxHsBIAlYryqL3G7a3ZThYlzoDxsthSadBx4NsQ+Tk34Cq9y56WRhTxwOcVnGuO
-         g0xs2Ah+nqbqiLGXxDsrRrZpjwD46GF6OeNrw6jcwB9FCaB7Y9+kLiplxx5ZXX0L2x5m
-         F4LxUYenaTYwtjNCjRYS2VIJQ/4oFQLtxv6vFpaWcbT8l5W36krMRRQJZnyaKDJRTaG6
-         Wj0MV0nddonOTPkTcA7SHYmx8m/tzvaus9DPjcyfuCWp6BoZST+rWnL/AtLlfVxvmGwQ
-         ogbX9QZ6a3C1EY4J09P3JVxJ1uh505yuEo0MW9/EqwoXDHnwWzxX8mvNM80lx0btg9k3
-         YJNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691715747; x=1692320547;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qBbO72qF9VCdMl0/fbJ6MyA9VjQ2MCNIS33+WtJGdhw=;
-        b=UCZ5b4JyzfKQjVBfeeZxe5JS1ZUagUOF4vyK1Ge2T3dRAkM/uDMVM6OwGqbH8zOhK3
-         AbF5g0Xh59/L1YP/MNFja6cg3R2Hzd2obasm7au597wsPEPgr1D9tLIggg6yC6bT/FB8
-         AZr4aUh1/paQSSVvfDneaIb90RfcJZY1bEhs6pPkjXsDo7opKLIKAq5kwFjiwUGFFE89
-         ksonndVDgvkmxicImLN1qxXRQ6yDZJB7TJ0qST5QvuKa2dEAO1XtYPQxKeLhNF5CcE4X
-         dmDj6/U+f9Uc7nktWgEGSEPJ6DDVyKFXBXi4raQdyHql+bfz4ayxW21M1Q4xcnt0Ifau
-         mq5g==
-X-Gm-Message-State: AOJu0YzGkb16SPUjvuLSugpj1FnJg1MWFcoMyAKsv59o5Eh4KxJPz2Jt
-        0S9sSm1CbDkXgVqwRROBaw1lv0TAVh8=
-X-Google-Smtp-Source: AGHT+IEyiBgcIGaeQmmZY1444GaNqCLfFlAjA3AP9j01z8cAAuvh2gMOl3C/NEy/vfRbn5JTErI5uA4DK5M=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a25:ab8a:0:b0:d0e:e780:81b3 with SMTP id
- v10-20020a25ab8a000000b00d0ee78081b3mr5612ybi.2.1691715747448; Thu, 10 Aug
- 2023 18:02:27 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 18:02:25 -0700
-In-Reply-To: <owlypm3ufl7j.fsf@fine.c.googlers.com>
-Mime-Version: 1.0
-References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
- <c8bb013662187e9239d4a2499a63ed76daa78d14.1691211879.git.gitgitgadget@gmail.com>
- <kl6l1qgea2k0.fsf@chooglen-macbookpro.roam.corp.google.com> <owlypm3ufl7j.fsf@fine.c.googlers.com>
-Message-ID: <owlymsyyfl26.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 3/5] trailer: split process_command_line_args into
- separate functions
-From:   Linus Arver <linusa@google.com>
-To:     Glen Choo <chooglen@google.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229487AbjHKBKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2023 21:10:06 -0400
+Received: from lxh-heta-043.node.capitar.com (lxh-heta-043.node.capitar.com [159.69.137.90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 372B8273E
+        for <git@vger.kernel.org>; Thu, 10 Aug 2023 18:10:01 -0700 (PDT)
+Received: from lxh-heta-043.node.capitar.com (localhost [127.0.0.1])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPS id 0290637DEE;
+        Fri, 11 Aug 2023 03:09:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTP id 80BF7105C7;
+        Fri, 11 Aug 2023 03:09:58 +0200 (CEST)
+Received: from lxh-heta-043.node.capitar.com ([127.0.0.1])
+        by localhost (eur-mail-proxy-p02.zt.capitar.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 41YLQuHS8_V5; Fri, 11 Aug 2023 03:09:58 +0200 (CEST)
+Received: from [192.168.0.42] (unknown [186.189.151.69])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPSA id 06424105FF;
+        Fri, 11 Aug 2023 03:09:56 +0200 (CEST)
+Message-ID: <8d683835-31d4-41f0-9d4e-90c95acbea28@opperschaap.net>
+Date:   Thu, 10 Aug 2023 21:09:52 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [[PATCH v2]] Fix bug when more than one readline instance is used
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20230810004956.GA816605@coredump.intra.peff.net>
+ <20230810011831.1423208-1-wesleys@opperschaap.net>
+ <xmqqcyzupf3b.fsf@gitster.g>
+Content-Language: en-US
+From:   Wesley <wesleys@opperschaap.net>
+In-Reply-To: <xmqqcyzupf3b.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=GP927dFK c=1 sm=1 tr=0
+        a=WkljmVdYkabdwxfqvArNOQ==:117 a=Hb/lXKkKiutk7skFILyYNg==:17
+        a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=N3miCFJ7AAAA:8 a=NEAV23lmAAAA:8
+        a=X25-WREHGy68TV4kgyUA:9 a=QEXdDO2ut3YA:10 a=VlZU0XKO32wA:10
+        a=V5H4rQgsk92nlYCD-KPC:22
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
->>
->> But now, we have to remember to call two functions instead of just one.
->
-> But only inside interpret-trailers.c, right?
+On 8/10/23 21:01, Junio C Hamano wrote:
+> Wesley Schwengle <wesleys@opperschaap.net> writes:
+> 
+> This line with "};" on it should not be added, I think.
+> 
+> cf. https://github.com/git/git/actions/runs/5827208598/job/15802787783#step:5:74
+> 
+>> +		return $term;
+>>   	}
+>>   }
+> 
+>   git-svn.perl | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 93f6538d61..e919c3f172 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -307,7 +307,6 @@ package main;
+>   		$term = $ENV{"GIT_SVN_NOTTY"}
+>   				? new Term::ReadLine 'git-svn', \*STDIN, \*STDOUT
+>   				: new Term::ReadLine 'git-svn';
+> -		};
+>   		return $term;
+>   	}
+>   }
 
-Oops, I meant trailer.c.
+You are 100% correct.
 
-In the future I expect to move this to interpret-trailers.c.
+Cheers,
+Wesley
+
+-- 
+Wesley
+
+Why not both?
+
