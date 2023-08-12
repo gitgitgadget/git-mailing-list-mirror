@@ -2,262 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51AE8C001E0
-	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 05:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F571C001E0
+	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 05:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234509AbjHLFdL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Aug 2023 01:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45746 "EHLO
+        id S234300AbjHLFjE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Aug 2023 01:39:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbjHLFdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2023 01:33:10 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B980BF5
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 22:33:09 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3fe2fb9b4d7so23075115e9.1
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 22:33:09 -0700 (PDT)
+        with ESMTP id S229912AbjHLFjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2023 01:39:03 -0400
+Received: from esa1.hgst.iphmx.com (esa1.hgst.iphmx.com [68.232.141.245])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99138F5
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 22:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+  t=1691818741; x=1723354741;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=3GWIsnBL719dDWOdeGRzaGxPH8gvVL3/5/FgHBOrtzk=;
+  b=nZaKrrR81jmMGb8ADgCjYgNFd1/Y0w/1TBEwftm8T7SRUfBQd7p3v+bB
+   1WUT8qNOxxFkYJYASjkO/DYsVqcmqB80jLMw3/AY4ByJn9gEt+G+pQqiL
+   6s8qcUd59b78oQdMF6U02ziD5ws4x3kurV0nuh1JW0zh1nIe1R2ks2XMx
+   4l5gg9SQVzxpcaMuLdSIG/mHpg2lzERCuVcXdZiJ3FHgMqXcVbBeQP+j8
+   9jWdbUSYfFs0XpkgFcRU2ITjuLaLXIJiXfDW/LksmG2DNHO7WQkqI+3oW
+   sBMdO7vM49YxqO3hSiZ3puY9VYEHzMz2XMs2cNEvfScFYmno/m+qoGi9N
+   w==;
+X-IronPort-AV: E=Sophos;i="6.01,167,1684771200"; 
+   d="scan'208";a="352859944"
+Received: from mail-dm6nam12lp2173.outbound.protection.outlook.com (HELO NAM12-DM6-obe.outbound.protection.outlook.com) ([104.47.59.173])
+  by ob1.hgst.iphmx.com with ESMTP; 12 Aug 2023 13:38:42 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dzkhS9Isqcp4LV43ISnncq7nJuBTBQWFPY2i6mOLLlHc4r6t9o2jOkLX99WlWD7Sk1JMtO1EjsGxWNOs3ZsJdQZliOrNfy7oj9bWhu0l6NXDcp8S5/5R/ziO1wW2rXYYsxGNeI4IVG3G/8fnjNFZVYv6N57cmQGWYZEh2/eojvOhVJ11MrtkRFZmSi2vF2OnMGrgoI5IfuCcnhau7wh9dVarFs9AJQafOEFbFPEljVX3or27FfeUomeP4j6q+epbKgotfMHiosWm+jvaodtrnj7MOZLCQ/6ul+Uu76ef96g6jcQcY683Qc8Q3lPtyzQ8Tb0jn+P7yG/PLM86W5xt/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=w9L8b+06eoT98YPeaehtZtV/Oo+bgLWDVMTSls8GS6E=;
+ b=CUzL9QrMxRYYIdCR368n6JQ4Yp45ME+oknW5sA+A9tYPaVd5wGat1ihy+0atmwPS48+ubcH5b+hWEGmg/Szs23IaDfWMeJ4+/v/v41MLEpI1Sr4aOQ5b4ch+v/8n1jFQOnzPC6mKLAzYiz5AZ0UlVQ62zsozJAoHyFWX4PgtrnRf3FLMbAo+YiPNzJUtJY97SCFp6gC/+4Fqw+zz64HykchCEP0ZdijTR1j1idg5oalY2eBn0RN7at0NE14qbaYCPNTbgrFVC6zcnya9zrPbXnfEtsXam2w5sPtRKFM9Gy8++Qwh2v2jfrrbCSPizPY6ZRKerEBYdymiCs3zjpJaYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691818388; x=1692423188;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4t2OT8M+X4UaFEeWJgVm2GkubU3cSiECtlvZtgvpUI0=;
-        b=LeqXMySVRpanvVTVxl2fduVULB/QhE+IX7xVaEKLQfzTXa2D35M9k4PQct+31Zh95O
-         0S9mJcJT/Ko/+7TNvCIQy/wy06EIMdBXGLFt+ZnD6F7Gbeo3RAyzCjE2Ty8a/8Q09cNg
-         94u1JsLD5S7dl16O/xcmL7gx4617L3d2XTfnisTDDiNxJiYC32pgMwHbcQp6Uy6K/6kU
-         JnI8wRhZUrYQYOVjxaqQ5FrWGH4S6TKyHdhWOeb0h/Z71wswxp3ClcuZX2mWS8GF0VZM
-         qX1F87qN2vwehSYLG1CN+cBic1F4By7uP2SyUFa8G8kZDQSpg8w3iqCqUzzSHaJpNTMX
-         FmrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691818388; x=1692423188;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4t2OT8M+X4UaFEeWJgVm2GkubU3cSiECtlvZtgvpUI0=;
-        b=guvnrPsp/+JNw3Cbioj44iqeGHt5v/875Yz6/BOmqDjnT2wxoj2zP5AnQbW2AqGRMl
-         ++G/seee5Si/rx4/eP58fpNfNTzRgjsUaKz5vBLC5S6yvUwLYQVbxM08T9256JtMtFIA
-         KwWBuXHU8Hn1QJMwv5t9tQQ/Ck95r9a28tPOjP/kz+FT2ls9jYIgWN2vBgG2TRt+vMXw
-         mWa3le7x6FmNCClWAuMqjtsLHNM5A0kQE8Ha8Rx4EH8X7Sz07ye2uGbqC4z8qP8alsB3
-         mirE8oAmTJfarcIw0CTfIz3jqWV6E2JpqjhSbNgOMSTOw7cyspRfGgHpS3/8txt5zb5j
-         EYPQ==
-X-Gm-Message-State: AOJu0YzB/w4Y4yDdi3ODqsDHrv9qeGR/RPQS1m5hR1xIxRLnZpb0n+B0
-        TsPCz0C+4TNldoOqmcGofi+dxR6CW/0=
-X-Google-Smtp-Source: AGHT+IEQyT/DUT4Ugkvo6cHTPloo7qlapa2DFerpCckZ9eCn8xPRFLOHGVoqo9on4Er6gGTeafCc4g==
-X-Received: by 2002:a7b:c399:0:b0:3fe:24df:4180 with SMTP id s25-20020a7bc399000000b003fe24df4180mr3207631wmj.13.1691818387635;
-        Fri, 11 Aug 2023 22:33:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 22-20020a05600c231600b003fc015ae1e1sm7298198wmo.3.2023.08.11.22.33.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 22:33:07 -0700 (PDT)
-Message-ID: <pull.1565.v2.git.1691818386345.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1565.git.1691245481977.gitgitgadget@gmail.com>
-References: <pull.1565.git.1691245481977.gitgitgadget@gmail.com>
-From:   "Izzy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 12 Aug 2023 05:33:06 +0000
-Subject: [PATCH v2] merge-tree: add -X strategy option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w9L8b+06eoT98YPeaehtZtV/Oo+bgLWDVMTSls8GS6E=;
+ b=lhBzxmYozVCYwq4hSDE2CgUtKBYERWzi5bNPGoS5qrWx1UF5V0Q9ODuqyPOpH/mRYswOAF33cvWQnM0UXot8CSNkKtlfrdPrGXVMYLpokjELDHZ2WuwW6Ry7+sNnIVgDoSMZHSCqtT2YeoOVEfoWaqrStiHwrRL4/N0hjs/WD4M=
+Received: from SJ0PR04MB8289.namprd04.prod.outlook.com (2603:10b6:a03:3f1::19)
+ by SA1PR04MB8825.namprd04.prod.outlook.com (2603:10b6:806:388::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.20; Sat, 12 Aug
+ 2023 05:38:40 +0000
+Received: from SJ0PR04MB8289.namprd04.prod.outlook.com
+ ([fe80::1032:2a66:96ce:fef6]) by SJ0PR04MB8289.namprd04.prod.outlook.com
+ ([fe80::1032:2a66:96ce:fef6%6]) with mapi id 15.20.6652.029; Sat, 12 Aug 2023
+ 05:38:39 +0000
+From:   Mun Johl <Mun.Johl@wdc.com>
+To:     Todd Zullinger <tmz@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: "fatal: Not a git repository" issued during 'make' from source
+ code
+Thread-Topic: "fatal: Not a git repository" issued during 'make' from source
+ code
+Thread-Index: AdnMjcTVJgLV9DzbQRekliVLGjBYJQAKb8uAAAnLomA=
+Date:   Sat, 12 Aug 2023 05:38:39 +0000
+Message-ID: <SJ0PR04MB8289E60CA76DF65C17A79DF49C11A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+References: <SJ0PR04MB8289FF1D6BAC59833D922BA89C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+ <ZNbYNxEfPYAB3ILb@pobox.com>
+In-Reply-To: <ZNbYNxEfPYAB3ILb@pobox.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR04MB8289:EE_|SA1PR04MB8825:EE_
+x-ms-office365-filtering-correlation-id: e41958ee-31d9-42fb-52fc-08db9af661d2
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 4MabBqac1uzXy4fFjQGqfNtEuDqpR2vbc7QeH0iHaCeLSbYERDj7+XERxddfL96gTCJhHWrgr14uvjlkypEH2/J20j1CayBM5h+DZISVgC7TCGQ754HNXo12NA65hugRraXHqQSXBzSyK6t+rkMZhwFp8JEovCyiDOYohKeoyo3dDdhevXraEndL8nfTGLTHgU9llIsT/W56K9Cc0DGH/qDKOKWoJQOP1riXlwlcEXhYBwfacKdpaEaMR76XcJvOUBpW96KcE2ROkV7mtOg8XlLvtJ5Eodgr5XOvkNNRGM5Evwx50fWUA1t8BPCX4LqcLS1+kcNlhqqz3PpzkEXA5hwCLOt+RNBX0tCc9+XbcHscnjeSXA62zADEB/RDVTEAwBZFqKE0P83snzFICuMCaBrPurOcFPrts3qKO80bdtS3ZWmowiR3XM344iUe26q5PzgWsVW5s2ZLa7jvay247bF8uwvS49Bi+q8eNfR21A8JRlFzw0tjAlHyfGe9tN+Yb+dKAcgfBnjOBm5TVolAeScU3dB9EGqXVdPNjfXfQMbT+HlFhvQPLmdY360T6fs9VatT0m2IxxjJ0kiNwqm2/8pg96Q6GbR61uVsorf8mdQ=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR04MB8289.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(376002)(396003)(39860400002)(136003)(346002)(366004)(451199021)(1800799006)(186006)(966005)(9686003)(71200400001)(7696005)(478600001)(26005)(83380400001)(6506007)(66476007)(2906002)(64756008)(52536014)(5660300002)(66556008)(66946007)(66446008)(6916009)(4326008)(76116006)(8676002)(41300700001)(316002)(8936002)(86362001)(33656002)(38070700005)(55016003)(82960400001)(122000001)(38100700002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Q097H/+KVSoTyjdNDhNI8fhjm3VgwFpCpAJeQn9a/kyiAqMMbOvo7cWDeU?=
+ =?iso-8859-1?Q?4M0kBBrK9bMy8ruV11AziDPJK6YnDeRkNT4eC50ZtzNMpIq1xukvoYPt9A?=
+ =?iso-8859-1?Q?2Eb1696595IsAGcm+UFl/1/ReJKDOL9Rv7t4o/kwLxRcU/xLaSrc1ZFoOf?=
+ =?iso-8859-1?Q?1ob4O031Q3hCxXF6ryCVd465YV5ofiPIDWjJ/k6uLG5DBg8GANKaO+qXXt?=
+ =?iso-8859-1?Q?IvZ/yfN0rXELzpDjC1RlOsX3f+osOrpdSx2Xjcv9/idpv3t7z2mBSA98RI?=
+ =?iso-8859-1?Q?G9jXJ3lvHAoxAtjplYzcg6aG22LWSoiHU9vHWEDivJd2JKZme4lquGces5?=
+ =?iso-8859-1?Q?IiRMit/7zTeAfKO5vkXUszuzVLhBCNjN8ocB4v6Nmm48uvGdt8aVSn2dIy?=
+ =?iso-8859-1?Q?EdHo9god9YrWdGRphCObqb/ZkNzdGyDo1pFqSBQzoWP4otl4i9Q6LwQp9X?=
+ =?iso-8859-1?Q?T/m9yaerGjEZHou2AYPqEO3s/dL0MScRYaCsshGiime57CxRfDRUOkEksg?=
+ =?iso-8859-1?Q?GpMJAkgDJGEd3mOtcnMe9ecpRfxHYjt0wHAET6esEpfAwWWjnrrjTRjrJN?=
+ =?iso-8859-1?Q?SltiCINNJzeVaJqvDZVf0YhEMDIKKDQHo4BkJy180keG/E4KIl717aoOhM?=
+ =?iso-8859-1?Q?5cb3ELzHyBmwioHeIa4JqUHe/4Fca66GHoJjKhIijupIZXrynzbmRnS8L/?=
+ =?iso-8859-1?Q?7GLHG8yvRrNYmf+FpTo2bV49AgP6nKMPk4q27jxpsq+VZU+DuNTuTukK32?=
+ =?iso-8859-1?Q?7JoxVcLKLhsqCDMwz/LDZarY7E8tmsUgQv4B2oXzcXH6yLeuMKxtm3eyIR?=
+ =?iso-8859-1?Q?JUIIInfLkgA6GCt64Py3pVYM9OsGchuP4NP02jQgF7BbQaKr+QUtCjoF17?=
+ =?iso-8859-1?Q?QiPP7KPedqpYq3CIVfT4kK5HhlIpr8uyQwkCO2aEc4ekPsXAm4pOS0lMOU?=
+ =?iso-8859-1?Q?e8YSFMxljRN239EC/aSPpgphzV3nWjY3AWUt66v+FD+aMnHjllr3Y8U8Vu?=
+ =?iso-8859-1?Q?TZZEBlDTYk5uiB61MEsfiNNv8d3k2cm3hSb5Zyr+eNkHrc88fkMj/MLXag?=
+ =?iso-8859-1?Q?HNjuG7EZobgv2mQC/b7b9MJpP6H0VLYfBy2Z5W34Sc1OsyBmzYWAasgx4B?=
+ =?iso-8859-1?Q?2M/e+bH+jPKaVC+Dtr5FV1PRpXQu0LiB0iBQ9zVe2EUISOHlDmcb0AYIkD?=
+ =?iso-8859-1?Q?bBVGvagps3kuQnOBsWG4DPHIBFHU/LC7bLz4JmjddnrecLbHwK1XPTcEJr?=
+ =?iso-8859-1?Q?wcUWGxx+Laf7Vsz4nlnRHgTtKKFa+xJyKALrJwyvdc/6db+AwwBX33cmQ/?=
+ =?iso-8859-1?Q?ychpOL6pjWoCyqW4ZWQqUujsQCdjsry531+osaF1pqK7ccUOzlaavpLPq/?=
+ =?iso-8859-1?Q?KI2rzFE6BTSV33+jyiZdP/ab3ENaXxr9FYZXdE6j3Qou+shETarHme1RWd?=
+ =?iso-8859-1?Q?XwoiXO2gobrUAgDpbPGrjNR50wFsvnOQKsbTLdttDTfCHxOEKo7AX3xurY?=
+ =?iso-8859-1?Q?944UTAeK7pYJ4GIFB1RPrAiH0ukGxM3DslYVyaeff/21vi1XRMdQEFIa/p?=
+ =?iso-8859-1?Q?HdswACCNRELMuiGNkGG2gH/ayeqiMczFpKTfYpNI/2hWcLKMmLyeD3E5+Y?=
+ =?iso-8859-1?Q?gs5RdYybIFCvE=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Izzy <winglovet@gmail.com>, winglovet <winglovet@gmail.com>
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 3agZaLKYQpfVdz+1CulOz1ITAIWquMd8hysPYRQ+NulsNrptgAXO90OMUloBIkGc211kFMR82NJuFzTzlT3B1IVV0nj9WNv6uoJsvwM/iQQnlw3px3doLG2VT4KWY4plnmgKcrR5wn614mhbXLK+5yp5Nbpfyim5M4IokFw6PyrAWw4ngLu376V/89+5rDXm4t5goR9jQzCio3IyR7Epj7y3X2jVP20RRjNwgxcLCfbp4YiQrbGainRZOrcUJ/N9dvU+jGI2WVmnTzvGlkvlGufRLFfXuBJc0HU7A2yYnlzNt1w5cAuhFgXUyu2FvQ/dKyDz2aJnj126FcVwBrYMab2H/PDdHgBTdyBwpDMV6kp1XZZidGw1bb0vpm/86cN3NaSzM+AYd43qKk1Aa3y9BRpULNLsT08IJKzdEJCsiZptJa1UFntGH06xr7/M/UIHbWmfdHWulDAN08djAEs1PCz80nOE1gETPyU4uGvLemAQvajN5Q56ENAXegcof2PZMdLM8rXOnPgFBuAS4vRmGHSkFB7arHHz8dgNLZC+9jtXLoQqO4FFe7HDB0RcfEKraRKFzp/ETdEwh1SVjG+CG5MYccdGpIi+dycjV9zDY7Ll9Bojnm6/69gbo+7GOkA9wNQL80Y/jTJ69qhH/JzH3k4gdcdjHOGrAnzxpEBhbl4CIEFJdnRQdSzZp6Z3fnZfqtEXonZMCk9HyFQFHW9aSCCRkwJGgYE6/JCWXkveSEbZyvN9rxjCBfvyV4tuZgN/v94tX9UvdnT4hVY7Z+3Sci3YUGZLDacWbappHYBzOGm1aqk3h2mNJpe9fXTW0sxO
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR04MB8289.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e41958ee-31d9-42fb-52fc-08db9af661d2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Aug 2023 05:38:39.6347
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: obqvsFXzO7fJdq5ctddScKlwCEXaYRMHAgncKptebk1V4Z1Q/j8IfsonuJTG2pzhmAIKAT3IWpwiuoaI+JMotg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR04MB8825
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: winglovet <winglovet@gmail.com>
+Hi Todd,
 
-Add merge strategy option to produce more customizable merge result such
-as automatically solve conflicts.
+> Hi,
+>=20
+> Mun Johl wrote:
+> > I am new to git and am trying to compile git-2.41.0 on RHEL7.
+>=20
+> This isn't a direct answer to the question (which Randall
+> and Junio have covered well), but if you're interested, I
+> build git-2.41.0 for RHEL/CentOS 7 (as well as newer
+> RHEL/Rocky/Alma and Fedora release) in the Fedora Copr
+> ("Community projects"):
+>=20
+>     https://copr.fedorainfracloud.org/coprs/g/git-maint/git/
+>=20
+> I currently maintain the git package in Fedora and try to
+> ensure it always builds for all supported RHEL releases=B9.
+>=20
+> For RHEL/CentOS 7, the steps to install would be:
+>=20
+>     yum install yum-plugin-copr
+>     yum copr enable @git-maint/git
+>     yum install git
+>=20
+> The upside is that it's a current git build packaged the
+> same as the RHEL package.  The downside is that it updates
+> the RHEL package, which may not be acceptable in your
+> environment.
+>=20
+> It's certainly a big jump from 1.8.3.1 to 2.41.0.  I had
+> forgotten how ancient the RHEL 7 git package was. :)
+>=20
+> Alternately, building a git package for RHEL 7 from the
+> current Fedora git package is another option, if you'd
+> rather have an rpm to install on multiple hosts.
+>=20
+> =B9 I may not continue this due to Red Hat's recent decision
+>   to restrict access to RHEL source code, unfortunately.[Mun]=20
 
-Signed-off-by: winglovet <winglovet@gmail.com>
----
-    merge-tree: add -X strategy option
-    
-    Change-Id: I16be592262d13cebcff8726eb043f7ecdb313b76
+[Mun] Thank you for the link and the additional information!  I am going to=
+ try a little more to see if I can get git compiled from source code; but i=
+f I get blocked I may download your build :)  It's nice to have options.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1565%2FWingT%2Fmerge_tree_allow_strategy_option-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1565/WingT/merge_tree_allow_strategy_option-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1565
+Thank you and best regards,
 
-Range-diff vs v1:
+--=20
+Mun
 
- 1:  b843caed596 ! 1:  7d53d08381e merge-tree: add -X strategy option
-     @@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char
-       	/* Handle --stdin */
-       	if (o.use_stdin) {
-       		struct strbuf buf = STRBUF_INIT;
-     +
-     + ## t/t4301-merge-tree-write-tree.sh ##
-     +@@ t/t4301-merge-tree-write-tree.sh: test_expect_success setup '
-     + 	git branch side1 &&
-     + 	git branch side2 &&
-     + 	git branch side3 &&
-     ++	git branch side4 &&
-     + 
-     + 	git checkout side1 &&
-     + 	test_write_lines 1 2 3 4 5 6 >numbers &&
-     +@@ t/t4301-merge-tree-write-tree.sh: test_expect_success setup '
-     + 	test_tick &&
-     + 	git commit -m rename-numbers &&
-     + 
-     ++	git checkout side4 &&
-     ++	test_write_lines 0 1 2 3 4 5 >numbers &&
-     ++	echo yo >greeting &&
-     ++	git add numbers greeting &&
-     ++	test_tick &&
-     ++	git commit -m other-content-modifications &&
-     ++
-     + 	git switch --orphan unrelated &&
-     + 	>something-else &&
-     + 	git add something-else &&
-     +@@ t/t4301-merge-tree-write-tree.sh: test_expect_success 'Content merge and a few conflicts' '
-     + 	test_cmp expect actual
-     + '
-     + 
-     ++test_expect_success 'Auto resolve conflicts by "ours" stragety option' '
-     ++	git checkout side1^0 &&
-     ++
-     ++	# make sure merge conflict exists
-     ++	test_must_fail git merge side4 &&
-     ++	git merge --abort &&
-     ++
-     ++	git merge -X ours side4 &&
-     ++	git rev-parse HEAD^{tree} > expected &&
-     ++
-     ++    git merge-tree -X ours side1 side4 > actual &&
-     ++
-     ++	test_cmp expected actual
-     ++'
-     ++
-     + test_expect_success 'Barf on misspelled option, with exit code other than 0 or 1' '
-     + 	# Mis-spell with single "s" instead of double "s"
-     + 	test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR side1 side2 2>expect &&
-
-
- builtin/merge-tree.c             | 24 ++++++++++++++++++++++++
- t/t4301-merge-tree-write-tree.sh | 23 +++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
-
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 0de42aecf4b..2ec6ec0d39a 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -19,6 +19,8 @@
- #include "tree.h"
- #include "config.h"
- 
-+static const char **xopts;
-+static size_t xopts_nr, xopts_alloc;
- static int line_termination = '\n';
- 
- struct merge_list {
-@@ -414,6 +416,7 @@ struct merge_tree_options {
- 	int show_messages;
- 	int name_only;
- 	int use_stdin;
-+	struct merge_options merge_options;
- };
- 
- static int real_merge(struct merge_tree_options *o,
-@@ -439,6 +442,8 @@ static int real_merge(struct merge_tree_options *o,
- 
- 	init_merge_options(&opt, the_repository);
- 
-+	opt.recursive_variant = o->merge_options.recursive_variant;
-+
- 	opt.show_rename_progress = 0;
- 
- 	opt.branch1 = branch1;
-@@ -510,6 +515,17 @@ static int real_merge(struct merge_tree_options *o,
- 	return !result.clean; /* result.clean < 0 handled above */
- }
- 
-+static int option_parse_x(const struct option *opt,
-+			  const char *arg, int unset)
-+{
-+	if (unset)
-+		return 0;
-+
-+	ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
-+	xopts[xopts_nr++] = xstrdup(arg);
-+	return 0;
-+}
-+
- int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- {
- 	struct merge_tree_options o = { .show_messages = -1 };
-@@ -548,6 +564,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			   &merge_base,
- 			   N_("commit"),
- 			   N_("specify a merge-base for the merge")),
-+		OPT_CALLBACK('X', "strategy-option", &xopts,
-+			N_("option=value"),
-+			N_("option for selected merge strategy"),
-+			option_parse_x),
- 		OPT_END()
- 	};
- 
-@@ -556,6 +576,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, mt_options,
- 			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
- 
-+	for (int x = 0; x < xopts_nr; x++)
-+		if (parse_merge_opt(&o.merge_options, xopts[x]))
-+			die(_("unknown strategy option: -X%s"), xopts[x]);
-+
- 	/* Handle --stdin */
- 	if (o.use_stdin) {
- 		struct strbuf buf = STRBUF_INIT;
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 250f721795b..2718817628c 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -22,6 +22,7 @@ test_expect_success setup '
- 	git branch side1 &&
- 	git branch side2 &&
- 	git branch side3 &&
-+	git branch side4 &&
- 
- 	git checkout side1 &&
- 	test_write_lines 1 2 3 4 5 6 >numbers &&
-@@ -46,6 +47,13 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m rename-numbers &&
- 
-+	git checkout side4 &&
-+	test_write_lines 0 1 2 3 4 5 >numbers &&
-+	echo yo >greeting &&
-+	git add numbers greeting &&
-+	test_tick &&
-+	git commit -m other-content-modifications &&
-+
- 	git switch --orphan unrelated &&
- 	>something-else &&
- 	git add something-else &&
-@@ -97,6 +105,21 @@ test_expect_success 'Content merge and a few conflicts' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'Auto resolve conflicts by "ours" stragety option' '
-+	git checkout side1^0 &&
-+
-+	# make sure merge conflict exists
-+	test_must_fail git merge side4 &&
-+	git merge --abort &&
-+
-+	git merge -X ours side4 &&
-+	git rev-parse HEAD^{tree} > expected &&
-+
-+    git merge-tree -X ours side1 side4 > actual &&
-+
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'Barf on misspelled option, with exit code other than 0 or 1' '
- 	# Mis-spell with single "s" instead of double "s"
- 	test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR side1 side2 2>expect &&
-
-base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
--- 
-gitgitgadget
