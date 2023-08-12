@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0D06C001B0
-	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 00:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9493C001DB
+	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 00:01:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237318AbjHLABB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Aug 2023 20:01:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37570 "EHLO
+        id S237334AbjHLABD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Aug 2023 20:01:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237334AbjHLAA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2023 20:00:59 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A0F71FF0
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 17:00:57 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-686daaa5f1fso1906557b3a.3
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 17:00:57 -0700 (PDT)
+        with ESMTP id S237217AbjHLABB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2023 20:01:01 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA0F171D
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 17:01:01 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1bb7b8390e8so18780435ad.2
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 17:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691798456; x=1692403256;
+        d=gmail.com; s=20221208; t=1691798460; x=1692403260;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=af6Idsvllj9+XrEMPM7RyG058LIfLHYt+3X+2+wki2M=;
-        b=AHPlqgeDOk5WW9/iXmK9sT7jkJDxr09w6Fy1e9c3RIfedPs23NQYhJnPEVsx2CpmHg
-         caGEVru5CvWV3acJCuekHK97uQA7zrxsYvsy1OfeObOGGzIvKJ7jQS52/VN786vgidyI
-         q3tD3c/Eh4dh8cRmDTBcHZGYLBgpP7AY8q9ytu0W3mR4JFZfLkanPv77QF2i2aZyDdnk
-         iGX/uW1TwX53UGbKLO72vk3Z1NXQmE3VNw0R00FcVbpDPF6TVGQCDxYNDfz3SlkqcYqx
-         clgMZntdjB/rNALXq3YTF3aTn+iZ705cuEZojmM0rPOGtKU5hfYiBQ/qe8/WQ+KQXjDB
-         Cxaw==
+        bh=lEBJbf6/3phuZ6h9in+X12qWnHu3Bx/RG3Utf7mBgQU=;
+        b=VCqw3wd+uTU3TSsfq2sqsY26S5Fv8tO8fv7LcTbBbSG/QlobykghFRU4OhsQHSVa4l
+         w4XQ2iZJqLX2jtvvrHnPn1RP78DjR5/9jDjj5Fy6Q/zdnuc1LO7zhJmrQQ3KO7qPkWhh
+         Ucb6959BUs5Apt/+UWt1SDHoRPmE6/CC9WvBNHJncX4yGCanGy9R75tSL6JAQ8tgnMvM
+         xEVqrpgHZC8wqK9gOkRY2Sl5G9XpU6tL6GEbJm1eSUXCLQLUEpZTlwlWlmuZN1hub0gH
+         khZVss2hF98AmvmroC70Cy34pkUBzkHZ2l91Np/LmvgPGyhynz7zNSnuMGxBp2TMDHJf
+         zNJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691798456; x=1692403256;
+        d=1e100.net; s=20221208; t=1691798460; x=1692403260;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=af6Idsvllj9+XrEMPM7RyG058LIfLHYt+3X+2+wki2M=;
-        b=gBPrLISeKhcfVTkOzPll46YHhTKu45JNjsZtswg6/bewPRR0TiLAC67iygw3qK3zGF
-         kAPQcswR35bUlHcMZ5RiiPAczQ8JhrdYn+LkXgNH2pRF4PnIxYK54nlBGm7ymVYX/Zgm
-         mtUgkIksEoOOl3UP/HaggULM7X1q/tazDKVuA8b3sKXqpDuOiilLZKgXuxV59ymC9OXp
-         cG9XyaIhOOl+YXYNTmqslsICXuztVCyhCNMtY+PbW4vLttyGjLC0OJvgLe+q6BtOvsAU
-         zOaJlcUMwzOv85Gulx0XIRpVqZhMFAtpKrkDQabnV4TBaeH9ooB5s+dyqY3Dipe2Q2je
-         bE+w==
-X-Gm-Message-State: AOJu0Yz/fS6MQcpBi8IFsGapjT/jPUEKDkD/WEDEr5sLq0AvjoNv4un4
-        zSgXTP1DbMenpmyr4n2jzBCmaV4rNx4VZQ==
-X-Google-Smtp-Source: AGHT+IHn+WBjuQ5MTgEta7ATDsxvrd4WsQFYejIp6FJjmMNQZdALlzeGFo/gaL/O0JoR7Ju4Jf5KNA==
-X-Received: by 2002:a05:6a21:329a:b0:140:6979:295d with SMTP id yt26-20020a056a21329a00b001406979295dmr4035900pzb.2.1691798456166;
-        Fri, 11 Aug 2023 17:00:56 -0700 (PDT)
+        bh=lEBJbf6/3phuZ6h9in+X12qWnHu3Bx/RG3Utf7mBgQU=;
+        b=FaWMniYkOJNo2DB7p64lpRhO/fyA6ZD57+zbYsEmb9haCU6YHB974S7Z4qBcqokPxM
+         J4hjiAk40uwvm1GRiQ2ldQa2MIR8YwXahfQVHXlCXiDsyEnvmJ+waq94N9eipOFbpgC0
+         xDMuj5UZyXMhCi9cfqr1952yRjaTMFsj3CkUyj9v9kW9zuflL+h3GZb5LBYlx94FXDl1
+         om+/3jo757q8qYn4OPdYAVr90Edp6PjmVCicCzURvD+1H2Si/F4h06oHrbVwehhhzUma
+         6QFVZsfMoufes1XeFydJ4WehnC6ErxU/agZTIgJcUGa1CUGsf78Xq0E82vdA1+OnIi0l
+         Cvtw==
+X-Gm-Message-State: AOJu0YxqdLJvCmMiCib1Uu4MfprRPxCxOmVLGlBDYVaTFzAYOG1w5I1h
+        p3X4hCzpjjdXse3rBsNvUII3wfHT9RmmOQ==
+X-Google-Smtp-Source: AGHT+IEyWGEcZvEEu93PX3MMhLtQ8NpHQ0hZmoupxKOCuelPnHurMFmxC01HmwynHaowgr/Zmc/hPg==
+X-Received: by 2002:a17:903:246:b0:1bc:7001:6e58 with SMTP id j6-20020a170903024600b001bc70016e58mr3375679plh.33.1691798459901;
+        Fri, 11 Aug 2023 17:00:59 -0700 (PDT)
 Received: from christian-Precision-5550.. ([129.126.215.52])
-        by smtp.gmail.com with ESMTPSA id z5-20020a1709028f8500b001b8a7e1b116sm4478308plo.191.2023.08.11.17.00.52
+        by smtp.gmail.com with ESMTPSA id z5-20020a1709028f8500b001b8a7e1b116sm4478308plo.191.2023.08.11.17.00.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 17:00:55 -0700 (PDT)
+        Fri, 11 Aug 2023 17:00:59 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
         Christian Couder <christian.couder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 7/8] repack: implement `--filter-to` for storing filtered out objects
-Date:   Sat, 12 Aug 2023 02:00:10 +0200
-Message-ID: <20230812000011.1227371-8-christian.couder@gmail.com>
+Subject: [PATCH v5 8/8] gc: add `gc.repackFilterTo` config option
+Date:   Sat, 12 Aug 2023 02:00:11 +0200
+Message-ID: <20230812000011.1227371-9-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.42.0.rc1.8.ga52e3a71db
 In-Reply-To: <20230812000011.1227371-1-christian.couder@gmail.com>
 References: <20230808082608.582319-1-christian.couder@gmail.com>
@@ -72,179 +72,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A previous commit has implemented `git repack --filter=<filter-spec>` to
-allow users to filter out some objects from the main pack and move them
-into a new different pack.
+A previous commit implemented the `gc.repackFilter` config option
+to specify a filter that should be used by `git gc` when
+performing repacks.
 
-It would be nice if this new different pack could be created in a
-different directory than the regular pack. This would make it possible
-to move large blobs into a pack on a different kind of storage, for
-example cheaper storage.
+Another previous commit has implemented
+`git repack --filter-to=<dir>` to specify the location of the
+packfile containing filtered out objects when using a filter.
 
-Even in a different directory, this pack can be accessible if, for
-example, the Git alternates mechanism is used to point to it. In fact
-not using the Git alternates mechanism can corrupt a repo as the
-generated pack containing the filtered objects might not be accessible
-from the repo any more. So setting up the Git alternates mechanism
-should be done before using this feature if the user wants the repo to
-be fully usable while this feature is used.
+Let's implement the `gc.repackFilterTo` config option to specify
+that location in the config when `gc.repackFilter` is used.
 
-In some cases, like when a repo has just been cloned or when there is no
-other activity in the repo, it's Ok to setup the Git alternates
-mechanism afterwards though. It's also Ok to just inspect the generated
-packfile containing the filtered objects and then just move it into the
-'.git/objects/pack/' directory manually. That's why it's not necessary
-for this command to check that the Git alternates mechanism has been
-already setup.
-
-While at it, as an example to show that `--filter` and `--filter-to`
-work well with other options, let's also add a test to check that these
-options work well with `--max-pack-size`.
+Now when `git gc` will perform a repack with a <dir> configured
+through this option and not empty, the repack process will be
+passed a corresponding `--filter-to=<dir>` argument.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-repack.txt | 11 +++++++
- builtin/repack.c             | 10 +++++-
- t/t7700-repack.sh            | 62 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 82 insertions(+), 1 deletion(-)
+ Documentation/config/gc.txt | 11 +++++++++++
+ builtin/gc.c                |  4 ++++
+ t/t6500-gc.sh               | 13 ++++++++++++-
+ 3 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 6d5bec7716..8545a32667 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -155,6 +155,17 @@ depth is 4095.
- 	a single packfile containing all the objects. See
- 	linkgit:git-rev-list[1] for valid `<filter-spec>` forms.
+diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
+index 2153bde7ac..466466d6cc 100644
+--- a/Documentation/config/gc.txt
++++ b/Documentation/config/gc.txt
+@@ -150,6 +150,17 @@ gc.repackFilter::
+ 	objects into a separate packfile.  See the
+ 	`--filter=<filter-spec>` option of linkgit:git-repack[1].
  
-+--filter-to=<dir>::
-+	Write the pack containing filtered out objects to the
-+	directory `<dir>`. Only useful with `--filter`. This can be
-+	used for putting the pack on a separate object directory that
-+	is accessed through the Git alternates mechanism. **WARNING:**
-+	If the packfile containing the filtered out objects is not
-+	accessible, the repo can become corrupt as it might not be
-+	possible to access the objects in that packfile. See the
-+	`objects` and `objects/info/alternates` sections of
-+	linkgit:gitrepository-layout[5].
++gc.repackFilterTo::
++	When repacking and using a filter, see `gc.repackFilter`, the
++	specified location will be used to create the packfile
++	containing the filtered out objects. **WARNING:** The
++	specified location should be accessible, using for example the
++	Git alternates mechanism, otherwise the repo could be
++	considered corrupt by Git as it migh not be able to access the
++	objects in that packfile. See the `--filter-to=<dir>` option
++	of linkgit:git-repack[1] and the `objects/info/alternates`
++	section of linkgit:gitrepository-layout[5].
 +
- -b::
- --write-bitmap-index::
- 	Write a reachability bitmap index as part of the repack. This
-diff --git a/builtin/repack.c b/builtin/repack.c
-index c672387ab9..c396029ec9 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -870,6 +870,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	int write_midx = 0;
- 	const char *cruft_expiration = NULL;
- 	const char *expire_to = NULL;
-+	const char *filter_to = NULL;
+ gc.rerereResolved::
+ 	Records of conflicted merge you resolved earlier are
+ 	kept for this many days when 'git rerere gc' is run.
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 9b0984f301..1b7c775d94 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -62,6 +62,7 @@ static const char *gc_log_expire = "1.day.ago";
+ static const char *prune_expire = "2.weeks.ago";
+ static const char *prune_worktrees_expire = "3.months.ago";
+ static char *repack_filter;
++static char *repack_filter_to;
+ static unsigned long big_pack_threshold;
+ static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
  
- 	struct option builtin_repack_options[] = {
- 		OPT_BIT('a', NULL, &pack_everything,
-@@ -922,6 +923,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			   N_("write a multi-pack index of the resulting packs")),
- 		OPT_STRING(0, "expire-to", &expire_to, N_("dir"),
- 			   N_("pack prefix to store a pack containing pruned objects")),
-+		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
-+			   N_("pack prefix to store a pack containing filtered out objects")),
- 		OPT_END()
- 	};
+@@ -172,6 +173,7 @@ static void gc_config(void)
+ 	git_config_get_ulong("pack.deltacachesize", &max_delta_cache_size);
  
-@@ -1070,6 +1073,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (po_args.filter_options.choice)
- 		strvec_pushf(&cmd.args, "--filter=%s",
- 			     expand_list_objects_filter_spec(&po_args.filter_options));
-+	else if (filter_to)
-+		die(_("option '%s' can only be used along with '%s'"), "--filter-to", "--filter");
+ 	git_config_get_string("gc.repackfilter", &repack_filter);
++	git_config_get_string("gc.repackfilterto", &repack_filter_to);
  
- 	if (geometry)
- 		cmd.in = -1;
-@@ -1158,8 +1163,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	}
+ 	git_config(git_default_config, NULL);
+ }
+@@ -361,6 +363,8 @@ static void add_repack_all_option(struct string_list *keep_pack)
  
- 	if (po_args.filter_options.choice) {
-+		if (!filter_to)
-+			filter_to = packtmp;
-+
- 		ret = write_filtered_pack(&po_args,
--					  packtmp,
-+					  filter_to,
- 					  find_pack_prefix(packdir, packtmp),
- 					  &keep_pack_list,
- 					  &names,
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 39e89445fd..48e92aa6f7 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -462,6 +462,68 @@ test_expect_success '--filter works with --pack-kept-objects and .keep packs' '
- 	)
+ 	if (repack_filter && *repack_filter)
+ 		strvec_pushf(&repack, "--filter=%s", repack_filter);
++	if (repack_filter_to && *repack_filter_to)
++		strvec_pushf(&repack, "--filter-to=%s", repack_filter_to);
+ }
+ 
+ static void add_repack_incremental_option(void)
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 232e403b66..e412cf8daf 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -203,7 +203,6 @@ test_expect_success 'one of gc.reflogExpire{Unreachable,}=never does not skip "e
  '
  
-+test_expect_success '--filter-to stores filtered out objects' '
-+	git -C bare.git repack -a -d &&
+ test_expect_success 'gc.repackFilter launches repack with a filter' '
+-	test_when_finished "rm -rf bare.git" &&
+ 	git clone --no-local --bare . bare.git &&
+ 
+ 	git -C bare.git -c gc.cruftPacks=false gc &&
+@@ -215,6 +214,18 @@ test_expect_success 'gc.repackFilter launches repack with a filter' '
+ 	grep -E "^trace: (built-in|exec|run_command): git repack .* --filter=blob:none ?.*" trace.out
+ '
+ 
++test_expect_success 'gc.repackFilterTo store filtered out objects' '
++	test_when_finished "rm -rf bare.git filtered.git" &&
++
++	git init --bare filtered.git &&
++	git -C bare.git -c gc.repackFilter=blob:none \
++		-c gc.repackFilterTo=../filtered.git/objects/pack/pack \
++		-c repack.writeBitmaps=false -c gc.cruftPacks=false gc &&
++
 +	test_stdout_line_count = 1 ls bare.git/objects/pack/*.pack &&
-+
-+	git init --bare filtered.git &&
-+	git -C bare.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:none \
-+		--filter-to=../filtered.git/objects/pack/pack &&
-+	test_stdout_line_count = 1 ls bare.git/objects/pack/pack-*.pack &&
-+	test_stdout_line_count = 1 ls filtered.git/objects/pack/pack-*.pack &&
-+
-+	commit_pack=$(test-tool -C bare.git find-pack -c 1 HEAD) &&
-+	blob_pack=$(test-tool -C bare.git find-pack -c 0 HEAD:file1) &&
-+	blob_hash=$(git -C bare.git rev-parse HEAD:file1) &&
-+	test -n "$blob_hash" &&
-+	blob_pack=$(test-tool -C filtered.git find-pack -c 1 $blob_hash) &&
-+
-+	echo $(pwd)/filtered.git/objects >bare.git/objects/info/alternates &&
-+	blob_pack=$(test-tool -C bare.git find-pack -c 1 HEAD:file1) &&
-+	blob_content=$(git -C bare.git show $blob_hash) &&
-+	test "$blob_content" = "content1"
++	test_stdout_line_count = 1 ls filtered.git/objects/pack/*.pack
 +'
 +
-+test_expect_success '--filter works with --max-pack-size' '
-+	rm -rf filtered.git &&
-+	git init --bare filtered.git &&
-+	git init max-pack-size &&
-+	(
-+		cd max-pack-size &&
-+		test_commit base &&
-+		# two blobs which exceed the maximum pack size
-+		test-tool genrandom foo 1048576 >foo &&
-+		git hash-object -w foo &&
-+		test-tool genrandom bar 1048576 >bar &&
-+		git hash-object -w bar &&
-+		git add foo bar &&
-+		git commit -m "adding foo and bar"
-+	) &&
-+	git clone --no-local --bare max-pack-size max-pack-size.git &&
-+	(
-+		cd max-pack-size.git &&
-+		git -c repack.writebitmaps=false repack -a -d --filter=blob:none \
-+			--max-pack-size=1M \
-+			--filter-to=../filtered.git/objects/pack/pack &&
-+		echo $(cd .. && pwd)/filtered.git/objects >objects/info/alternates &&
-+
-+		# Check that the 3 blobs are in different packfiles in filtered.git
-+		test_stdout_line_count = 3 ls ../filtered.git/objects/pack/pack-*.pack &&
-+		test_stdout_line_count = 1 ls objects/pack/pack-*.pack &&
-+		foo_pack=$(test-tool find-pack -c 1 HEAD:foo) &&
-+		bar_pack=$(test-tool find-pack -c 1 HEAD:bar) &&
-+		base_pack=$(test-tool find-pack -c 1 HEAD:base.t) &&
-+		test "$foo_pack" != "$bar_pack" &&
-+		test "$foo_pack" != "$base_pack" &&
-+		test "$bar_pack" != "$base_pack" &&
-+		for pack in "$foo_pack" "$bar_pack" "$base_pack"
-+		do
-+			case "$foo_pack" in */filtered.git/objects/pack/*) true ;; *) return 1 ;; esac
-+		done
-+	)
-+'
-+
- objdir=.git/objects
- midx=$objdir/pack/multi-pack-index
+ prepare_cruft_history () {
+ 	test_commit base &&
  
 -- 
 2.42.0.rc1.8.ga52e3a71db
