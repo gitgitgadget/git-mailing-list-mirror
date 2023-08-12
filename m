@@ -2,104 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E28FC04A6A
-	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 07:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC98C0015E
+	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 08:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231239AbjHLHTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Aug 2023 03:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49612 "EHLO
+        id S236139AbjHLIV4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Aug 2023 04:21:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbjHLHTg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2023 03:19:36 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B42810C
-        for <git@vger.kernel.org>; Sat, 12 Aug 2023 00:19:35 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id E4E6224207;
-        Sat, 12 Aug 2023 03:19:33 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qUiuL-q16-00; Sat, 12 Aug 2023 09:19:33 +0200
-Date:   Sat, 12 Aug 2023 09:19:33 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     Linus Arver <linusa@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] doc: revert: add discussion
-Message-ID: <ZNcyhUL89WVXOv3F@ugly>
-References: <ZNYuUh27ByphTH04@ugly>
- <owly350pfal6.fsf@fine.c.googlers.com>
+        with ESMTP id S232942AbjHLIVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2023 04:21:50 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409F4211B
+        for <git@vger.kernel.org>; Sat, 12 Aug 2023 01:21:52 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F188F19BA46;
+        Sat, 12 Aug 2023 04:21:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=1KMYv/qAIotfwo1StdR8ZgceZenFvY6fjfAPiYnSqnc=; b=IOhM
+        2Ok07wlUYZMSlssp69B0w+8SkNq22gvdWSdc2I1Rs+vRPZiuMROwMCITaeCwqAJM
+        gBw+cs/jyflNUF53ut94sYjdob/S5OBZ2MQb0190JUH1Z/5/KmXWJU1xhfkr4ksO
+        QPv9WjFrbX5L28Bzt+seQnvwUMzZekqtw6xoA6E=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D27C819BA43;
+        Sat, 12 Aug 2023 04:21:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2398819BA42;
+        Sat, 12 Aug 2023 04:21:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2] format-patch: add --description-file option
+References: <xmqqttta9h6a.fsf@gitster.g>
+        <20230809171530.2564724-1-oswald.buddenhagen@gmx.de>
+        <xmqq1qg9qmyq.fsf@gitster.g> <ZNa2VQQzZmaMzM4C@ugly>
+Date:   Sat, 12 Aug 2023 01:21:46 -0700
+Message-ID: <xmqq7cq0oelh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <owly350pfal6.fsf@fine.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47689918-38E9-11EE-A3F3-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 11, 2023 at 04:00:53PM -0700, Linus Arver wrote:
->Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
->
->> On Thu, Aug 10, 2023 at 02:50:59PM -0700, Linus Arver wrote:
->>>Nit: the "doc: revert: add discussion" subject line should probably be more
->>>like "revert doc: suggest adding the 'why' behind reverts".
->>>
->> this is counter to the prevalent "big endian" prefix style, and is in 
->> this case really easy to misread.
->
->I also learned recently that there should just be one colon ":" in the
->subject, which is why I suggested "revert doc" as the prefix instead of
->"doc: revert: ...".
->
-in what context was this preference expressed?
-because here, it's rather counter-productive: most commands are verbs 
-for obvious reasons, so using that style sets the reader up for 
-misparsing the subject on first try. this could be avoided by quoting 
-the command, but that looks noisy in the subject.
-so rather, i'd follow another precedent, 'git-revert.txt: ', which is 
-unambiguous.
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
->> i also intentionally kept the subject generic, because the content 
->> covers two matters (the reasoning and the subjects, which is also the 
->> reason why this is a separate patch to start with).
->
->I think the phrase "add discussion" in "doc: revert: add discussion"
->doesn't add much value, because your patch's diff is very easy to read
->(in that it adds a new DISCUSSION section). I just wanted to replace it
->with something more useful that gives more information than
+> On Fri, Aug 11, 2023 at 02:38:05PM -0700, Junio C Hamano wrote:
+>>> +	if (strbuf_read_file(buf, desc_file, 2000) < 0)
+>>
+>>You would probably want to do "2000" -> "0" here.
+>>
+> hmm, yeah, i wonder where i got it from, given that there is no
+> precedent. i suppose i simply thought that 2k is a reasonably
+> expectable max size for a description. if you think the default 8k
+> hint is a better idea, then let's go with it.
 
->just repeat
->(somewhat redundantly) what is obvious by looking at the patch.
->
-but ... that's exactly what a subject is supposed to do!
+The suggestion was not about 2000 vs 8kiB, though it seems we stick
+to power of 2 everywhere we are explicit.  Unless we know the exact
+size from .st_size, that is.
 
->>>Please consider rewording such
->>>    subject lines to reflect the reason why the original commit is being
->>>    reapplied again.
->>>
->> the reasoning most likely wouldn't fit into the subject.
->
->Hence the language "to _reflect_ the reason", because the "reason"
->should belong in the commit message body text.
->
-i don't think that's how most people would actually read this.
-and i still don't see how that instruction could be meaningfully 
-followed.
+It was primarily about this code not having any need to express its
+own preference and go with whatever is the default.
 
->> also, the original request to explain the reasoning applies 
->> transitively, so i don't think it's really necessary to point it out 
->> explicitly.
->
->It may be that a user will think only giving the revert reason in the
->body text is enough, while leaving the subject line as is. I wanted to
->break this line of thinking by providing additional instructions.
->
-yes, that's the whole intention of this patch. but i don't see how 
-making it more convoluted than my proposal helps in any way.
+> that's a good point. in fact, passing in the description directly
+> would probably fit my use case better ... i just happened to already
+> have the code for creating that temp file anyway (for editing), so i
+> didn't give it a second thought. i can add both options in the same
+> go, given that it's almost no code.
 
->This is definitely better. But others in this thread have already
->commented that my version looks good (after seeing your version also,
->presumably).
->
-well, i'm also an "others" when it comes to your proposal, and i find it 
-confusing.
+One thing that you may have to be careful about, if you also take
+strings directly from the command line, is what to do with multiple
+of them.  "git commit -m A -m B" that makes A and B separate
+paragraphs with a break between them, I would think, would serve as
+a good model that end-users already understand well.
 
-regards
+Thanks.
+
