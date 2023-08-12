@@ -2,143 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C20D9C0015E
-	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 05:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E62C001E0
+	for <git@archiver.kernel.org>; Sat, 12 Aug 2023 05:30:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234509AbjHLFLU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Aug 2023 01:11:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52678 "EHLO
+        id S235461AbjHLFaX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Aug 2023 01:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231685AbjHLFLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2023 01:11:20 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29575BE
-        for <git@vger.kernel.org>; Fri, 11 Aug 2023 22:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1691817064; x=1692421864; i=l.s.r@web.de;
- bh=7B/ef4VKe0qjeIIc2RIMcHS1Mb86MIaGuQBEdQ82v8Y=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=msoGMww0SIdUA0Pbm61QnaQ/ysodMgB7TzpNU2Pz5qIC6YXdeLjZ3SDb7JrS3UuMJQN1dDA
- c7vTQuZ2m1T2NaFku5KcBNrp/WUJSiBNdVjJNQ168felB5wIFpPqXt2cowVannQRU82h7AmSM
- 69Ffs5vx4pemWZK00uvmPXMU5OVyzixJBE8qs5miODO7voC8J+rwcYDG4AvGu8HtBD8wbCvAL
- LioC8eHcp6Yje3hHihosQ2cYvyYq91EE7jF5pgs5DyBDT1oNX2nnfLBngCHzuAPz+v5Z2IS8h
- pYJubJH9ZR3y8ypjnOJDk5jgU2Y1wt21nJAERm2nBlfEM2PCMm9Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.150.179]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M91Pe-1qOcdK2NNu-006Oil; Sat, 12
- Aug 2023 07:11:04 +0200
-Message-ID: <6e05309d-c2be-c949-ae83-c4dd3247e790@web.de>
-Date:   Sat, 12 Aug 2023 07:11:03 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.14.0
-Subject: Re: [PATCH] describe: fix --no-exact-match
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-References: <xmqqo7k9fa5x.fsf@gitster.g>
- <4eea7e15-6594-93e2-27b5-3d6e3c0baac6@web.de>
- <20230808212720.GA760752@coredump.intra.peff.net>
- <xmqqzg3156sy.fsf@gitster.g>
- <20230809140902.GA775795@coredump.intra.peff.net>
- <22e5a87a-cd35-9793-5b6f-6eb368fdf40e@web.de>
- <20230810004127.GD795985@coredump.intra.peff.net>
- <09f499ad-28a5-0d8b-8af6-97475bdc614b@web.de>
- <20230811151102.GE2303200@coredump.intra.peff.net>
- <fbeadf7d-c16f-0612-6256-fc4355e89638@web.de>
- <20230811182415.GC2816191@coredump.intra.peff.net>
+        with ESMTP id S232185AbjHLFaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2023 01:30:22 -0400
+Received: from esa5.hgst.iphmx.com (esa5.hgst.iphmx.com [216.71.153.144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B6D2728
+        for <git@vger.kernel.org>; Fri, 11 Aug 2023 22:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+  t=1691818222; x=1723354222;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=6MDcqMfQCjVNoKGdDQzcuh7CIJAr1WojIENTWcoyu+k=;
+  b=Bp7Uz8ttZm3vH2ypUidqdMAldPJxCF6olAde0h87gBwVUhH57trWCvrP
+   jzqVtuONr+TEA69blrMe/aVQOlU+KijQTKeJ7KL/meZ1RkfIQRgbEG23H
+   8ghhh5KAbj7ndppEHmqZrNmSchvB67zYNiddWvIaz5gSZTkG1vC1htxY6
+   TnVLg4T/gFBtnf4RWtFzhdEi3Oxp1Uu93ZUe5hekFFdcreccAACLXIIl4
+   HkVnQ5AHDWiLVajFlvfWTUdm5DZhUt2zN1/h8WxUP9qQ2K1NUhSLb4+MU
+   yBevjnejZkLxnp8Jb/M8BWs/E2SAf0EidPT9wEhlqH8F4q50EeYJDm25d
+   A==;
+X-IronPort-AV: E=Sophos;i="6.01,167,1684771200"; 
+   d="scan'208";a="240721192"
+Received: from mail-mw2nam10lp2101.outbound.protection.outlook.com (HELO NAM10-MW2-obe.outbound.protection.outlook.com) ([104.47.55.101])
+  by ob1.hgst.iphmx.com with ESMTP; 12 Aug 2023 13:30:21 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TliXTD0hAt2vypihMVCJ5ws4LCUM2ruxehRYNavoTf485L3YuYKQHeeg8VUPRHZlFayIB26Qa+eCZVk3lw94f2le6pXcGRULj9K/VZ332EOu7J32L9dhVeHAlguss573BxdbqSuu7IKvYBsxZi2dMPc2KFhAzi3are/CTs2EfOo9hnCe+fJGHckVRVuF0oe2w58KCEuy836Ha8JhE7hvySMe9/PxgEQ48NQCdsItymzdHd7OnxpAyInORTMljYDAce3mXoU7/K68gHr4zt3shJJQzG/B2lAGWrtv26nlCL79FfahtiA93Os/non3KRLK8oCAy4Z61uxMpTLDsInxyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wQTB1m2tmKOt9qC4IPF9rCCS6cLHUYpbK8OFu/oJuxE=;
+ b=EIiDJk2BWkiK96lEQfoODntHWneNAvNkQcuCyDQJtDExVTOsrA8L4zdT2ioRlQReJSid+OIkCrJEkckj2zjKB1VDENbgMnuvjcl6xvIjnbAhMwic2AOjNVH3JWLM/s3jNz1MeZfY40ADW3jLoI9nnWU+WcR8osercXJ3O54qika/BTGiuY6lRdXbTpJzUP842QeGkZ7d3FnOHVBmGR2Wq37c72hM/sM1MpBKnNMV0wYNUj7K+OefcX9ZcXRLRIxTxYHvV2zJZ1U/sVQ5QyXa9bLXWYjIHBd5En+OcY9vNrTAQxxnoXhWbOadW/IOIIV177AYIrtGVJ2V3UQkZgY2BA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wQTB1m2tmKOt9qC4IPF9rCCS6cLHUYpbK8OFu/oJuxE=;
+ b=abkSrHcAPSc3eZKIYu8WuDinILYaJuS0TzFHAQVOLOat/xhocGvaE22OpJbG1YqQqqt4XspGvnFPIIETjIy0w39HQImPkqdtUVHUaH95XGlEuSBzCwVFxXbeTxGWxVhtFkRfQHAZ+D484xsuv4PDkLvKbmOGIUP5AQpPdwikJSs=
+Received: from SJ0PR04MB8289.namprd04.prod.outlook.com (2603:10b6:a03:3f1::19)
+ by BL0PR04MB6532.namprd04.prod.outlook.com (2603:10b6:208:1c1::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.20; Sat, 12 Aug
+ 2023 05:30:17 +0000
+Received: from SJ0PR04MB8289.namprd04.prod.outlook.com
+ ([fe80::1032:2a66:96ce:fef6]) by SJ0PR04MB8289.namprd04.prod.outlook.com
+ ([fe80::1032:2a66:96ce:fef6%6]) with mapi id 15.20.6652.029; Sat, 12 Aug 2023
+ 05:30:17 +0000
+From:   Mun Johl <Mun.Johl@wdc.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: "fatal: Not a git repository" issued during 'make' from source
+ code
+Thread-Topic: "fatal: Not a git repository" issued during 'make' from source
+ code
+Thread-Index: AdnMjcTVJgLV9DzbQRekliVLGjBYJQAAz3CAAAC6tsQAADubAAAALjhAAAHumxEAEBeoMA==
+Date:   Sat, 12 Aug 2023 05:30:17 +0000
+Message-ID: <SJ0PR04MB8289EB7CF0F2EF1803925D929C11A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+References: <SJ0PR04MB8289FF1D6BAC59833D922BA89C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+        <034501d9cc91$069bd360$13d37a20$@nexbridge.com> <xmqqr0o9qpon.fsf@gitster.g>
+        <034d01d9cc94$df9db0e0$9ed912a0$@nexbridge.com>
+        <SJ0PR04MB82892A7EB350531DBE4701BA9C10A@SJ0PR04MB8289.namprd04.prod.outlook.com>
+ <xmqqv8dlp80a.fsf@gitster.g>
+In-Reply-To: <xmqqv8dlp80a.fsf@gitster.g>
+Accept-Language: en-US
 Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230811182415.GC2816191@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR04MB8289:EE_|BL0PR04MB6532:EE_
+x-ms-office365-filtering-correlation-id: 74454db7-a3f7-480a-bf11-08db9af5364a
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ovQtNsp1WCF2YB3Cc8X6c2Z5EhUQfthh+xG6NnrfVAiqdenpEc1wUmy3yzQagKBge+ntClZqaqYNNblOUCCxO9Sa66hh8i4eoKavjJdWcPdtVVh6XhMd1pPxGEt4fBC4hR+b8JLcHnZhc6k++rSINDFhNj1An6cZDFvK05B+vUvpEEGCNzjiUoT73sfoMFVV+XuBhWGXVxxwKvhNwfXvqgQagvFCiskZz0MR2Ncl+c7dPr+05d24SIIEphr8QgMrGjEwPEr18T/N6fG/IXUErWNU1J4CKdRfbypGSF55WcMwVIl3bPeO7rh/xM86eBe+jR0cTJyvZ7Bf/nILuN5yGCEN1DEaI5ajSXldCrgyU5/ZOhIpcqdk4zZj5I8AWhetjplHksa3Hc8C0ndaHS7lN2rJ8DPqVwm5h4A7iqFBdEnYF7CZA8jr76pyCegSzRzyfMSvLLQDERaAU3tx33mB+5JUcvt8AOHetjbTRAU8SLJwH5lJHD3IJ40/SDuyAEjoL5j8+0sE/F2xV9L4aCcCIRTeXetS2a4uA3mmKUgG/P0/U4paaF/0LNW6YERfL1FJi5zRJjbWmr61jtqp/bgvMQRKTQJZaLNS/4wc9Q3Z+rU=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR04MB8289.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(376002)(39860400002)(136003)(346002)(366004)(396003)(451199021)(186006)(1800799006)(9686003)(966005)(478600001)(54906003)(71200400001)(53546011)(26005)(7696005)(83380400001)(52536014)(66446008)(64756008)(2906002)(5660300002)(66556008)(66476007)(66946007)(8936002)(6916009)(76116006)(6506007)(8676002)(4326008)(41300700001)(86362001)(38070700005)(55016003)(33656002)(122000001)(82960400001)(38100700002)(316002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?mvETghOaURqZfbDzO2OwVHmgeQIvyLYdhWTzb0jwITtrwq/+OB6zNdzDNnkb?=
+ =?us-ascii?Q?fE13mVSAZzAnQQyRJNA9IeLeDIat3uvWQYsreCS6CIemROdqln8+U6Ec0PUi?=
+ =?us-ascii?Q?fyZSX9SB7XAHNkcvWX8Zz8v4NMjnARDOFxfd3gu5rsG6Rmyb9mA9kKhjvMSm?=
+ =?us-ascii?Q?YsmrflNXKRQKTk7c6E5rPKzCNC42h9J8LTYRO5q16o+neMR/9I/34EURMpO5?=
+ =?us-ascii?Q?Fp0AbfseRTKVzz6Ljh8W1As2jElhop4yUDsenB9XZNON458y7zrX/ECJyriL?=
+ =?us-ascii?Q?ksptAomcD0KnITcVQUg9DvaMGILd6dkAfti9vIUJKJDgFBH3ptaSivv7o6rm?=
+ =?us-ascii?Q?CdTTSZdG5GjouM/ofL+UAoyxyq9KXQf7ZxHWFKvnGOxyNWVqFztGYCJvsS7g?=
+ =?us-ascii?Q?S2E7yKFA7EykCGWP/YORo60+o4TWc1ETq38jfQkP8qVCHCv1fvLvosMA2//h?=
+ =?us-ascii?Q?gyVzFdI0LZeT8+iGYgPe2l0QPA7cLSxEhMfRn5JbF9mm//KW1B1vfwHhcA5I?=
+ =?us-ascii?Q?4B1Zebo99p969a/2Gmoz+BNHc3mho3G6x4IYGUIX1Rbg1Zyss9krqPReooxi?=
+ =?us-ascii?Q?NroTX9WQFQVojobqivhEPfLnwF4l76N2pH4XcuPlip732p9GNpHjF7sxsKUG?=
+ =?us-ascii?Q?7uOvkJyr/NuMvcDWeWLy7vnw7KOEyXbtuT4y12Q+eqtpeCvrsAmHzFmvicT7?=
+ =?us-ascii?Q?+fknJ4m3EnTiMueG9q5k4yfXwL73LpYGcCCEEsVBiK7kxmSOk4WFWZpKeLwY?=
+ =?us-ascii?Q?g90WN8CluQEhC4UOK1c5K3lPm6J4aDwU6XRlJA71CV+2ub34gI6JKcxq8xrJ?=
+ =?us-ascii?Q?24bu1Mtn0vtCQtm2T1uKUnd33RhL0rzdWmtjO51fDKtUpO+4BZIx6adeSphS?=
+ =?us-ascii?Q?6sA8IjpWW3ZZvxvacViXwvOvZ4dIXU3loDeGz3ump2N4ElZ54U3OR7Zc2p3X?=
+ =?us-ascii?Q?6NjeXSicYAb2Hgr3kkghFMQqxo9/MdcpcFR+RYqEM6mroBlXCECNlQgwDFaQ?=
+ =?us-ascii?Q?GaUok+58RrbKP4I9eL9eYJqsWa/GHNDI/c3yK/TU4zpmUc7bT15E1pOf0atd?=
+ =?us-ascii?Q?bGHiYGnyMjrKIdvkFT1DZLL39osu0MLFhLVngB6/XRQh6A85u2NVdU3Z107j?=
+ =?us-ascii?Q?c36nXH7K2FxiH39RXDwTmdYMqh4GsPLDFbnL0qonMIHRgPDWhbXZ17lc0a9w?=
+ =?us-ascii?Q?NyCUsQLvUh2QMbokIijN/OgOurinaTK+6SBT+r6RXHrxW0T8J0ytnePprr4y?=
+ =?us-ascii?Q?LB/hOXePueZG9LTmLhUItvNc79mdktj+EOXrHanFYH9E4BpPAGTRJnmxyfjT?=
+ =?us-ascii?Q?LNfIKLa5uJ8xoWuZ1W12obynP++O3J5153IDen7R5d1J7ooVJHr2fuh5uupT?=
+ =?us-ascii?Q?LYAVNk4w8e9nV916IbQGX++QUrbH1vqE4r+BauftBRaDKjCwBZGKM/rBFchS?=
+ =?us-ascii?Q?ont7Uc8Mw62jvsco43lCcht+XnbyIDA0Q6GGdxemhET4o4QidOxKuqBSbtfy?=
+ =?us-ascii?Q?O6ZCKG0XW1xs22bq8Dk/XwNYhOEH8fAb5UdIczhwIBoQ9duox1sc7Uhnu/Xe?=
+ =?us-ascii?Q?XL/GZlAbr3AvU91qFl0=3D?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XD28+Hp5HL9VOUf5ih0skQT1DQCetCE/S9b5jwCV2ddle3SGmrB
- gOCa5UcSYJBkEKnhUYWamBz71RDj+SALJVQNJF9Ndhe+tkmgbWnV30vnndu6z+LPVm4laq4
- Oa/nfoqNITGT2h+Kp0ju1X08fcEfHwKZE2h6266Z7gAvA6KYpx4QCnWpI041GUfSD9ctlSv
- MAnlLmlnDHBo2xrsdzQ7Q==
-UI-OutboundReport: notjunk:1;M01:P0:zrm9+bo+olA=;mZf+oy+J31KsnEh/xu2cNVpWj5x
- /B8+h7g1PtB9dRnP3arm+yYHoIdU3LKthrIJWIULzuAeiy9D7fhZcuRFd6eO0N/ASMPNHNLP8
- Z9FdcLqikLi/eKher25jp7lC/sjQ+6Sg48AeVvqofkNZXZVkEUTSWxpSCQCFEqLF0f+4GNgcO
- R2k01mLUUmZp8YCtlbXbHGaHkD3AKmcihnKfKs2tjG5zpgi9b+wwxMeXXZ1y2Ha3sdYwB1+z3
- zYwgjtLAGwyUFkzf5PXdW+U3tWupNAZV8Qr8lAs7Zcjysp86bzIl4qHW66SY87+xOzyIdYk/b
- GFn6P0HAPZWiAjF/Yz2m6G8wpfozZZ/rL3oYO2oDY7jju2/pj24RzCJo9eqKQPTGdlMchxHn4
- s4LZVimW18KSIQNiNfe2EB8/LxWE/s8ysmMEa1bwPHUyx4kCO+05yzpCuZFH8uaw5VdKKyIEP
- 87ulGsxBEi/DR3fzQc81FGyUkiq9Wmd2pSwrONqUCt55+isyznyGJlI+6i5ObqOZnRamvPcjS
- yjkaonpQJvnxcpNju/WsGAvrK5I3ZRuDeg1ZmGn69fqaUAaTEInIVgMIFB0UkvdYY0q0NjHN2
- YQ+9+EXZa0EB6FHRpv1vViHB3U4Kp6aj0JIKxyZWPld8WuqLu/Fo1uDZB9PvoYR/7IhrPGEOk
- SzbnZZg4/Mf46KNNcOPVoNzwiLwUGErODwCzaJhw405NTr1lJnttc8yiJLR6yrMuUSrs8VhuC
- FJ3wA9aVp+nKpMQgVr+UCz+iFB1aKAKW6BysqwzF3VOp8hEzY//DcRkXdqXBqCpvoWg6T4qH2
- U70GUYgr0HrFfMzOV6ZkUdQgrAFFnMrp08uXElAlXdHrfe7f47+7uzEQowdRA/fmTXcxCY8Mm
- eI14VMZ0vxe4VXDvCMi9Max/Aqo/XipnBv8WdgFxbF8tVBzl7bR2tUHFQC9KP1nQEIpGJ5ipe
- ZJSa0iIzBnJjJBuYPdobYPPF3w0=
+MIME-Version: 1.0
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: +cIltzftIav7WrPfe5S7KRrf9Ji6XTu/sj8nAyFHCbfGwLtox321A6koCs9XylUgTS8ujhWFDG2RflAf5X+5q/qp35CNKYcaqEmY2J9Kha1Vp6kWQb6NZzyRkt1v05PNxeHeZnT8rpr6fF5DGu9Pf6tth4ocP5MLW7ysyjA925VUDI98jdaEsgWO22p79HZkAF2+lfSZ99xjfr/iiuefOTaMZTnzaWFU5DOBs2arOgP6AMWqJKuDzf3xjDpdwwXiJv3Df1fw21j3JH1eM4gFX6Wh09Xf8KhGFyQBuHyAIuhHCX0qJl239WiBoeJpK+Zt3krXs0gBRawTjt9GakXj0eJ7V2oaeq0JLLBKT3htH39Dp9UpG4/kCnlqqBXZ4SQXGrkvWgj4rJExDXEFv4gur9BdAGRssyLwc4B0irwpwsINaJ+3RSdlBQZB3dsWrIJVe8m1PPGtVa54Kcx1QefJpq09KSPDbzinwFpu2glOtBikdOUmDvVmqJrx0csrC1IO0H533hephVgFeF0R5NPEJKeQ+Yn2hnfTL1g89BzshOOMILkZj5k+ctiFhRqDYUivjqthG2MYSo+YHy1gN/JooL3ubIr4D8+u5jBgKTtIWwLF5AxUXPjrnrnL5vdlXkp33zUjaG6W+AYf7PCNgOzAp+95XmR3bY+CrLNQaeCtTL+i8N5xUQOoFtDdSEdXFRfK6ZFMfZQLt+KOHqIN41R4lMyzp3B8Pa0pEPUMxlm9/3ae8Nw+9BViuWiWfyJUIofZ1ocUyc8wMm9Z8GLtLbIQ1hT6/Rnh5Z8J7IZXfcKzzMsV1SLDaSmSX5niZ3I1WGfA+2/x8I2XM/9vxG0HSMx/Og==
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR04MB8289.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74454db7-a3f7-480a-bf11-08db9af5364a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Aug 2023 05:30:17.0991
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pjSYJMJDPscK01Kwdf2RqNwLZhw3tP+QSDsM7ZbQsZsex1m+HTmTz0DtTzqmlnw/fwzdheTiVMVsG8s0ZKORzQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR04MB6532
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.08.23 um 20:24 schrieb Jeff King:
-> On Fri, Aug 11, 2023 at 07:59:12PM +0200, Ren=C3=A9 Scharfe wrote:
->
->>> we are defining an inline function with the explicit goal of passing i=
-t
->>> as a function pointer. I don't remember all of the standard's rules
->>> here. Are we guaranteed that it will create a linkable version if
->>> necessary?
->>
->> I don't see on which basis the compiler could refuse.  We can't expect
->> the function address to be the same across compilation units, but we
->> don't need that.  If there's a compiler that won't do it or a standards
->> verse that makes this dubious then I'd like to know very much.
->
-> I seem to recall some quirks where an inline function that is not called
-> directly is not required to be compiled at all, and the compiler can
-> assume that there is a definition available in another translation unit.
+Hi Junio,
 
-C99 says in 6.7.4 Function specifiers: "It is unspecified whether a call
-to the function uses the inline definition or the external definition.",
-referring to functions with both types of definition.  So a compiler
-could ignore the inline version for those.
+> -----Original Message-----
+> From: Junio C Hamano <gitster@pobox.com>
+> Sent: Friday, August 11, 2023 2:46 PM
+> To: Mun Johl <Mun.Johl@wdc.com>
+> Cc: rsbecker@nexbridge.com; git@vger.kernel.org
+> Subject: Re: "fatal: Not a git repository" issued during 'make' from sour=
+ce code
+>=20
+> CAUTION: This email originated from outside of Western Digital. Do not cl=
+ick on links or open attachments unless you recognize the
+> sender and know that the content is safe.
+>=20
+>=20
+> Mun Johl <Mun.Johl@wdc.com> writes:
+>=20
+> > Due to some "security precautions", I am unable to use 'git clone
+> > https://git.kernel.org/pub/scm/git/git.git' to download the source
+> > code.  But I can try to figure out a workaround for that if that
+> > is my only option at this point to successfully compile git.
+>=20
+> If building from tarball extract fails with "not a git repository"
+> there is something very wrong with what you are doing, and we do not
+> know what it is.
+>=20
+> Most likely cause new folks fail to build from the source is lack of
+> necessary development libraries and packages that need to be
+> installed in their build environment, but I am reasonably certain
+> that if a tarball extract build is failing due to their environment,
+> build in a clone of the source repository would fail for exactly the
+> same reason.
 
-> But I think that only applies when no storage-class specifier is
-> provided. In this case, you said "static", so I think it's OK?
+[Mun] Good point.  I'm certain I don't have all of the requisite packages. =
+ I was expecting to see errors about missing packages, but was thrown off b=
+y the fatal error.  I will go back and look closely at the output from 'mak=
+e' and see if I see any errors prior to the fatal error.
 
-That's how I understand it as well -- there is no external version to
-choose and the compiler is not free to ignore the inline one.
+Thank you and regards,
 
-> It's possible I'm mis-remembering the issues, too. One problem is that
-> pre-C99, you might end up with the opposite problem (a compiled function
-> with visible linkage that conflicts with other translation units at link
-> time). E.g. here:
->
->   https://stackoverflow.com/questions/51533082/clarification-over-intern=
-al-linkage-of-inline-functions-in-c/51533367#51533367
->
-> But I think with "static" we should always be OK.
-
-*nod*
-
-> Don't get me wrong, I like type checking. It's just that doing weird
-> things with the language and pre-processor also carries a cost,
-> especially in an open source project where new folks may show up and say
-> "what the hell is this macro doing?". That's a friction for new
-> developers, even if they're comfortable with idiomatic C.
-
-Sure, but that ship has sailed in this specific case.  Standard option
-parsing would use getopt or getopt_long, neither of which has void
-pointers.  We already carry the cost of our OPT_ macros.  Let's ease it.
-
-> That said...
->
->> A good example in parseopt: The patch below adds type checking to the
->> int options and yields 79 warning about incompatible pointers, because
->> enum pointers were used in integer option definitions.  The storage siz=
-e
->> of enums depends on the member values and the compiler; an enum could b=
-e
->> char-sized.  When we access such a thing with an int pointer we write u=
-p
->> to seven bytes of garbage ... somewhere.  We better fix that.
->
-> ...I do find this evidence compelling.
-
-It's 3 instead of 7 bytes of garbage, but the point still stands..
-
-Ren=C3=A9
+--=20
+Mun
