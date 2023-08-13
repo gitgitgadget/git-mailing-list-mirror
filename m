@@ -2,100 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31E8AC001DB
-	for <git@archiver.kernel.org>; Sun, 13 Aug 2023 19:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E9CFC001B0
+	for <git@archiver.kernel.org>; Sun, 13 Aug 2023 19:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231185AbjHMTV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Aug 2023 15:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44470 "EHLO
+        id S231582AbjHMToS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Aug 2023 15:44:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230314AbjHMTV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Aug 2023 15:21:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 654F11703
-        for <git@vger.kernel.org>; Sun, 13 Aug 2023 12:21:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        with ESMTP id S229745AbjHMToR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Aug 2023 15:44:17 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D259810DB
+        for <git@vger.kernel.org>; Sun, 13 Aug 2023 12:44:19 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 292331B6DFE;
+        Sun, 13 Aug 2023 15:44:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uH2MoMTs+nBdxcybVaspavStKGqYWyzY3aBFwE
+        bi0OU=; b=LeRdO+f73oQm+1tXJCPtTNkreQp06NB/QDpVDbQVJvprojzd24ruzs
+        V7PhN/V+otnNn4rvA+w9Q13zF2j5S7L+m88kDeNl0wSwar51KZ5xuinKiWMyLD29
+        oCCLI6VaAcfspGOK/7g9PxgKswbyegT/M2E0fJqABYD1PLSGJ7cyc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20F6D1B6DFD;
+        Sun, 13 Aug 2023 15:44:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 03EB860B09
-        for <git@vger.kernel.org>; Sun, 13 Aug 2023 19:21:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D05C433C8
-        for <git@vger.kernel.org>; Sun, 13 Aug 2023 19:21:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691954489;
-        bh=58S88GmPqEQp78KoCdTcVySj065PBgcZyTuATMk+Me4=;
-        h=Date:To:From:Subject:From;
-        b=pOWKCDBhLI/tOcwtowQ1Mogg0XRlt1p1ALbX3wWFDzFxFsAe+f6Sh6lXvfhrQuRX1
-         1jXE/jZBw1BzbG3/osZikTL0kjiWqanomlcll3v1tk0NNQFoLmmT4zTxk5rIQNBRVh
-         9ksc4IlnaBLeGkZqjX8mbgOH6yQGTdny8C2p+0Wqe47gghmhTRDWctoacQ4DCpEM3+
-         /11NNdGUdLplLR5P7S9sjj8lKSjWC0Xw88i4JosSwwDBEqou9tim1DpWzAVP1r5RIA
-         hlxbJrbPJArKQv81OeULsZ35N2lVD9mGmlyHOI4JTi1+8pQdAeecdh9PVVgtDnVnN4
-         4zRaocg7TukjA==
-Message-ID: <8bbfa6fe-fdaa-aeaf-51bc-16b3d3f7afaa@kernel.org>
-Date:   Sun, 13 Aug 2023 21:21:20 +0200
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 88BBD1B6DFC;
+        Sun, 13 Aug 2023 15:44:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alejandro Colomar <alx@kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [wishlist] git-add(1), git-restore(1): -U for more context
+ (with -p)
+References: <8bbfa6fe-fdaa-aeaf-51bc-16b3d3f7afaa@kernel.org>
+Date:   Sun, 13 Aug 2023 12:44:17 -0700
+In-Reply-To: <8bbfa6fe-fdaa-aeaf-51bc-16b3d3f7afaa@kernel.org> (Alejandro
+        Colomar's message of "Sun, 13 Aug 2023 21:21:20 +0200")
+Message-ID: <xmqq350mohgu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.1
-Content-Language: en-US
-To:     Git Mailing List <git@vger.kernel.org>
-From:   Alejandro Colomar <alx@kernel.org>
-Subject: [wishlist] git-add(1), git-restore(1): -U for more context (with -p)
-Organization: Linux
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Gd0jWQHAqDWxp6lQHYQdFYh0"
+Content-Type: text/plain
+X-Pobox-Relay-ID: CAC37DA4-3A11-11EE-B079-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Gd0jWQHAqDWxp6lQHYQdFYh0
-Content-Type: multipart/mixed; boundary="------------4jGOPI0U0UcPLr8TEQb1pT4u";
- protected-headers="v1"
-From: Alejandro Colomar <alx@kernel.org>
-To: Git Mailing List <git@vger.kernel.org>
-Message-ID: <8bbfa6fe-fdaa-aeaf-51bc-16b3d3f7afaa@kernel.org>
-Subject: [wishlist] git-add(1), git-restore(1): -U for more context (with -p)
+Alejandro Colomar <alx@kernel.org> writes:
 
---------------4jGOPI0U0UcPLr8TEQb1pT4u
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> It would be useful to have -U in git-add(1) and git-restore(1)
+> to be able to see more context in combination with -p.
 
-Hi!
-
-It would be useful to have -U in git-add(1) and git-restore(1)
-to be able to see more context in combination with -p.
-
-Cheers,
-Alex
-
---=20
-<http://www.alejandro-colomar.es/>
-GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
-
---------------4jGOPI0U0UcPLr8TEQb1pT4u--
-
---------------Gd0jWQHAqDWxp6lQHYQdFYh0
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmTZLTAACgkQnowa+77/
-2zIXyA//ewQPbaeDKN59LjH1ak3zl1MoOjGBj+7yd4/hcwjAc++0sgZaVK8ujU8Y
-PTsCiah+np4EmMYsW4SpB5YFKhXcyNos1R8t16RCTH1QOTin8v89FlTdlYww9mGC
-yv2yB3n2qUgUHvksZCP8ET45Q8TjbgCfeMFUvroo2hOnKRajQwITDOIvaVOSK8Ou
-yDqwzUCPj7GSrIcyaEynb/GnvWvuk9r2ZZb163ybVUQ2yDgS9+ccCmiQhXxRRFk3
-epj68F+YkwuGygyyzf8HQxxAr0zAIWy+CijmbS9nrOrwo+oe0bGp0sWhqSJlnP1O
-ihra/SjUSV8W1xTGZWlEhw3nia1LXvk020z78fwkq2b/jQO0QUbgj7Rynxk/It46
-TsNwxczEFu12iWB3gQLTZwg681egESQ9iN+XoRhqP4zKQNX3E9x/+i5LYDNDbhxv
-2y0cwKUDVq0HzRQmhPsIlvkSC0JRxgQBiihtlYuzGdqW3n9Xk20Roas5d5HskVMd
-Xtoh6MV5RhQv79gndxkKPBphEyFmiwRkAltC8YmczZgA8ihaXQdm2XLS5/NM93/Y
-emD4zz3/RcttJrk26RP3EK6U+i8hD8doKNWi5qDRVCWF/7UyOlFCHjHl85P+r6Dq
-S3/Jx6IJTmegEhQUYxA1pAcN9rpTNXU9n/+lSlfFKPiKy18DzCs=
-=QSym
------END PGP SIGNATURE-----
-
---------------Gd0jWQHAqDWxp6lQHYQdFYh0--
+Even more useful would be to add commands to enlarge/shrink the
+context to the interactive prompt, wouldn't it?  Not all hunks need
+unformly large context and having to decide how many lines of
+context to ask upfront and having to stick to the choice during the
+whole interactive session would be a bad interactive experience.
