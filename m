@@ -2,127 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D10C001B0
-	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 16:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B009C001DB
+	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 16:30:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjHNQYu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Aug 2023 12:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54260 "EHLO
+        id S232919AbjHNQaM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Aug 2023 12:30:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232267AbjHNQYe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2023 12:24:34 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B2E127
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 09:24:33 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1bdbbede5d4so26118505ad.2
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 09:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1692030273; x=1692635073;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9aDrDB6njJrtzcNDgnuJB1mJoWBaaaCVd4qVpSbSMIE=;
-        b=GAPn49wXgxMUvQsnp8IIo+PqRTRlL0M4xJy2hYVx0h26+hcf2uW44qrY/9jcCkP9P4
-         rIEt7/eJYQZgLgZjPWiJiwYGdmXqS9hmmp2V3n941QwjkuNuC4gdzyBqjEk9SbLaFpJZ
-         lSM3RY3JrYxB573bHwFPVqb6pMkZVbn37fCrUer9FmTO0PgT7r2kP7YOuA1Fm/8aS+Jl
-         pQ0qSW2pt36WfBg3CdUWzISLsC4UdK5bDKOQ8u2rLvoIV8gffipaJeXbt2towgN3znBx
-         IGNIbzxzQNM3viDXy91BSZDrsZxcBlacWd3NrXhoQh0QE8ICsF/ngunAndGK3IrlTmn+
-         1YuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692030273; x=1692635073;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9aDrDB6njJrtzcNDgnuJB1mJoWBaaaCVd4qVpSbSMIE=;
-        b=dDnVOuVbwzFIp74Hv0JTZDvzVVu4IuL8vqiqhH02+6qB8nPMlp8CdSXF+mYmXds3Y3
-         W5JsuTghGFbPA8beGpsc0+tiq3kdCsMXy+yfy4W4uPn/T4ontSwkndmeNJ2YzV0WHfVv
-         Abt+Q7pL1X+Jh4zWMKoLOdVjGgSjIyC2BUF/+IMsD/K+yjbkOEaO5aKbuPQA40QzoIBg
-         KP9kQzRUzDUzKgyNqLusbdiejxrhcqElKwpx3uMC+8fa/3XO4eja/TrCZdRyjqNE8qk2
-         gaHT5ILCFF0dqbKqXd/x3PnZ+kYZNxpTq+NfLQuLH5wkfs4eelU8MYlJ8eSMVkxNG37E
-         o5eA==
-X-Gm-Message-State: AOJu0YyI25EslcckOub3Gm5lYi9s4pgmvYNcB39PSOklf5SNitWo2tFX
-        C2G/lRjqYAMsSNCISjgAxyKL
-X-Google-Smtp-Source: AGHT+IE39Vv6I1QcrMaVe/KUhfpu0c+RKqtkBhfHpvXOBqfH5xcOuh9sDNDi0hTRj75jpgYdrTxEzQ==
-X-Received: by 2002:a17:902:904a:b0:1bb:a4e4:54b6 with SMTP id w10-20020a170902904a00b001bba4e454b6mr10393850plz.62.1692030272795;
-        Mon, 14 Aug 2023 09:24:32 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id e10-20020a170902b78a00b001bd41b70b60sm9659872pls.45.2023.08.14.09.24.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Aug 2023 09:24:32 -0700 (PDT)
-Message-ID: <3b2a5b4b-ab8f-746b-6b69-8e8262b6390b@github.com>
-Date:   Mon, 14 Aug 2023 09:24:30 -0700
+        with ESMTP id S232620AbjHNQ3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2023 12:29:50 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A1D8E5B
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 09:29:48 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3ABA1BF4A;
+        Mon, 14 Aug 2023 12:29:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=e4cBeRZjWoPVWKBvjRFPwbB9FUSthBbNuBqjWj
+        YDANY=; b=dGAGU4ErHyPYkdJPzlBnKS/cnEtbTlHjLC2TnAEqEto9fW0dmKcoWD
+        VZXGkvmabS0rfU/Rz4SCms81cKL8X9NvIiHyQijVugU+X2vj1N4cHRxuniWs+eYF
+        q0HrHoE1IRfBCNOlei8I8qid0EbESlQaSP7xE1espW9wsArrvz6Kg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C4581BF49;
+        Mon, 14 Aug 2023 12:29:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 570301BF48;
+        Mon, 14 Aug 2023 12:29:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 2/3] setup: add discover_git_directory_reason()
+References: <pull.1569.git.1692025937.gitgitgadget@gmail.com>
+        <fbba6252aeabc9a77d8529e4725feb3ea995545f.1692025937.git.gitgitgadget@gmail.com>
+Date:   Mon, 14 Aug 2023 09:29:44 -0700
+In-Reply-To: <fbba6252aeabc9a77d8529e4725feb3ea995545f.1692025937.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 14 Aug 2023
+        15:12:16 +0000")
+Message-ID: <xmqqpm3plh8n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.13.0
-Subject: Re: [PATCH v5 0/3] check-attr: integrate with sparse-index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com
-References: <20230718232916.31660-1-cheskaqiqi@gmail.com>
- <20230811142211.4547-1-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230811142211.4547-1-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C76811DE-3ABF-11EE-83D6-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> change against v4:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I've reviewed the patches in this version and all of my prior feedback
-appears to be addressed. Overall, I think this is ready to merge. 
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> There are many reasons why discovering a Git directory may fail. In
+> particular, 8959555cee7 (setup_git_directory(): add an owner check for
+> the top-level directory, 2022-03-02) added ownership checks as a
+> security precaution.
+>
+> Callers attempting to set up a Git directory may want to inform the user
+> about the reason for the failure. For that, expose the enum
+> discovery_result from within setup.c and into cache.h where
+> discover_git_directory() is defined.
+>
+> I initially wanted to change the return type of discover_git_directory()
+> to be this enum, but several callers rely upon the "zero means success".
+> The two problems with this are:
+>
+> 1. The zero value of the enum is actually GIT_DIR_NONE, so nonpositive
+>    results are errors.
 
-I see that you didn't take the suggestion from [1], though. I personally
-don't consider it a blocking issue, but I am curious to hear your
-thoughts/reasoning behind sticking with your current patch organization over
-what was suggested there.
+True. discover_git_directory() already knows that negative return
+values from setup_git_directory_gently_1() signal errors while 0 or
+positive are OK.
 
-[1] https://lore.kernel.org/git/kl6la5v82izn.fsf@chooglen-macbookpro.roam.corp.google.com/
+> 2. There are multiple successful states, so some positive results are
+>    successful.
 
-Otherwise, a couple notes:
+Makes it sound as if some positive results are not successes, but is
+that really the case?
 
-> 
-> 1/3:
-> * Add a commit message to explain why 'test_expect_failure' is set
-> and why 'test_expect_success' is set.
-> 
-> * Update 'diff --check with pathspec outside sparse definition' to
-> compare "index vs HEAD" rather than "working tree vs index".
-> 
-> * Use 'test_all_match' to apply the config to the test repos instead of
-> the parent .
-> 
-> * Use 'test_(all|sparse)_match' when running Git commands in
-> these tests.
-> 
-> 2/3:
-> * Create a variable named 'sparse_dir_pos' to make the purpose of
-> variable clearer.
-> 
-> * Remove the redundant check of '!path_in_cone_mode_sparse_checkout()'
-> since 'pos' will always be '-1' if 'path_in_cone_mode_sparse_checkout()'
-> is true.
-> 
-> * Remove normalize path check because 'prefix_path'(builtin/check-attr.c)
-> call to 'normalize_path_copy_len' (path.c:1124). This confirms that the
-> path has indeed been normalized.
+> Instead of updating all callers immediately, add a new method,
+> discover_git_directory_reason(), and convert discover_git_directory() to
+> be a thin shim on top of it.
 
-Nice, thanks for looking into this! I'm glad we're able to avoid the
-normalization, it simplifies the code quite a bit.
+It makes sense to insulate callers who only want to know if the
+discovery was successful or not (there only are two existing callers
+anyway) from the details.  And turning a thin wrapper to the new API
+that gives richer return codes is the way to go.  Nicely designed.
 
-> 
-> * Leave the 'diff --check' test as 'test_expect_failure' with a note about
-> the bug in 'diff' to fix later.
+> Because there are extra checks that discover_git_directory_reason() does
+> after setup_git_directory_gently_1(), there are other modes that can be
+> returned for failure states. Add these modes to the enum, but be sure to
+> explicitly add them as BUG() states in the switch of
+> setup_git_directory_gently().
 
-Makes sense. The extra detail added in the "NEEDSWORK" comment is especially
-helpful in pointing out which part of the diff machinery causes the issue.
+Good.
 
-> 
-> 
-> Shuqi Liang (3):
->   t1092: add tests for 'git check-attr'
->   attr.c: read attributes in a sparse directory
->   check-attr: integrate with sparse-index
+> -enum discovery_result {
+> -	GIT_DIR_NONE = 0,
+> -	GIT_DIR_EXPLICIT,
+> -	GIT_DIR_DISCOVERED,
+> -	GIT_DIR_BARE,
+> -	/* these are errors */
+> -	GIT_DIR_HIT_CEILING = -1,
+> -	GIT_DIR_HIT_MOUNT_POINT = -2,
+> -	GIT_DIR_INVALID_GITFILE = -3,
+> -	GIT_DIR_INVALID_OWNERSHIP = -4,
+> -	GIT_DIR_DISALLOWED_BARE = -5,
+> -};
 
+So we promote this discovery_result, that was private implementation
+detail inside the setup code, to a public interface.  Is GIT_DIR_
+prefix still appropriate, or would it make more sense to have a
+common substring derived from the word DISCOVERY in them?
+
+> @@ -1385,21 +1372,22 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>  	}
+>  }
+>  
+> -int discover_git_directory(struct strbuf *commondir,
+> -			   struct strbuf *gitdir)
+> +enum discovery_result discover_git_directory_reason(struct strbuf *commondir,
+> +						    struct strbuf *gitdir)
+>  {
+>  	struct strbuf dir = STRBUF_INIT, err = STRBUF_INIT;
+>  	size_t gitdir_offset = gitdir->len, cwd_len;
+>  	size_t commondir_offset = commondir->len;
+>  	struct repository_format candidate = REPOSITORY_FORMAT_INIT;
+> +	enum discovery_result result;
+>  
+>  	if (strbuf_getcwd(&dir))
+> -		return -1;
+> +		return GIT_DIR_CWD_FAILURE;
+
+Makes sense.
+
+>  	cwd_len = dir.len;
+> -	if (setup_git_directory_gently_1(&dir, gitdir, NULL, 0) <= 0) {
+> +	if ((result = setup_git_directory_gently_1(&dir, gitdir, NULL, 0)) <= 0) {
+
+Can we split this into two simple statements?
+
+	result = setup_git_directory_gently_1(...);
+	if (result <= 0) {
+
+>  		strbuf_release(&dir);
+> -		return -1;
+> +		return result;
+>  	}
+
+OK.
+
+> @@ -1429,11 +1417,11 @@ int discover_git_directory(struct strbuf *commondir,
+>  		strbuf_setlen(commondir, commondir_offset);
+>  		strbuf_setlen(gitdir, gitdir_offset);
+>  		clear_repository_format(&candidate);
+> -		return -1;
+> +		return GIT_DIR_INVALID_FORMAT;
+
+OK, so this thing is new.  Earlier we thought we found a good
+GIT_DIR but it turns out the repository is something we cannot use.
+Over time we may acquire such a "now we found it, is it really good?"
+sanity checks, but for now, this is the only case that turns what
+gently_1() thought was good into a bad one.  OK.
+
+>  	}
+>  
+>  	clear_repository_format(&candidate);
+> -	return 0;
+> +	return result;
+
+And it makes perfect sense that everybody who passed such a "post
+discovery check" are OK and we return the result from gently_1().
+
+> @@ -1516,9 +1504,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>  		*nongit_ok = 1;
+>  		break;
+>  	case GIT_DIR_NONE:
+> +	case GIT_DIR_CWD_FAILURE:
+> +	case GIT_DIR_INVALID_FORMAT:
+>  		/*
+>  		 * As a safeguard against setup_git_directory_gently_1 returning
+> -		 * this value, fallthrough to BUG. Otherwise it is possible to
+> +		 * these values, fallthrough to BUG. Otherwise it is possible to
+>  		 * set startup_info->have_repository to 1 when we did nothing to
+>  		 * find a repository.
+>  		 */
+
+OK.
+
+Not a new problem, but does anybody explicitly or implicitly return
+DIR_NONE?  I didn't find any codepath that does so.  Presumably it
+may have been arranged in the hope that a code structured like so:
+
+	enum discovery_result res = GIT_DIR_NONE;
+
+	if (some complex condition)
+		res = ...;
+	else if (another complex condition)
+		res = ...;
+
+	... sometime later ...
+	if (res <= 0)
+		we found a bad one
+
+would ensure that "res" untouched by setup_git_directory_gently_1()
+is still an error, but I am not sure if it is effective, given that
+nobody uses GIT_DIR_NONE to assign or initialize anything.  And the
+same effect can be had by leaving 'res' uninitialized---the compilers
+are our friend.
+
+Not a part of this review, but I wonder if it makes sense for us to
+get rid of DIR_NONE.
+
+> -int discover_git_directory(struct strbuf *commondir,
+> -			   struct strbuf *gitdir);
+> +static inline int discover_git_directory(struct strbuf *commondir,
+> +					 struct strbuf *gitdir)
+> +{
+> +	return discover_git_directory_reason(commondir, gitdir) <= 0;
+> +}
+
+The _reason() thing is more or less like setup_git_directory_gently_1()
+in that positives are success and everything else is an error.  And
+the point of keeping this thin wrapper as discover_git_directory() is
+to insulate the existing callers that discover_git_directory() returns
+-1 for failure, while returning 0 for success.
+
+So this wrapper smells very wrong.  It now flips the polarity of the
+error return into a positive 1, no?  That does not achieve the goal
+to insulate the callers from the change in implementation.
+
+Other than that, as you wrote in the cover letter, I think it is an
+excellent move to have an interface to expose details of what
+discovery has found.
+
+Thanks.
