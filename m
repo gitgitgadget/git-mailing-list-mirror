@@ -2,55 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F751C001DB
-	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 22:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F6AC04A94
+	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 22:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233247AbjHNW0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Aug 2023 18:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51906 "EHLO
+        id S233273AbjHNW24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Aug 2023 18:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233274AbjHNW0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2023 18:26:45 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31766E52
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 15:26:44 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d6b66b41232so1418425276.0
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 15:26:44 -0700 (PDT)
+        with ESMTP id S233259AbjHNW21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2023 18:28:27 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701D9171A
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 15:28:26 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-589b0bbc290so59995537b3.1
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 15:28:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1692052003; x=1692656803;
+        d=google.com; s=20221208; t=1692052105; x=1692656905;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=aERsE1PPu2UW7AWpHurv7qGfiWqHaDwrOuRBq1YXUSI=;
-        b=JeAUggB5Ld4uSYWwwLYFrbXN1Y0D470LGmX+q8ZPxD9CxHrfammaY5OXBbapyxSwR9
-         wa9Wu9XP0VnvWjydPt/93+snKfRIar1fhEGVAO+jpmWB27cnxUzs7ehIOxfmca9669k0
-         j+luaKvPoudEuqP2qY+QcLnrebiXcBn9l19xss428EM7JSwHrReK5KhS+9YKJe+TU5fl
-         OEeK7xEaZ9ZtnkT7xFBszKP6o2yhC5y1zay5+W/qjrEiUOtAYiMeks4B0lgqfSf//e0L
-         jpgkW29tXV9d+9fOakvv67HJKU0UCxzxA7oNzjhfyMLPpmDTh+Eu0h+9h3w2sQJbDSNR
-         Waag==
+        bh=O9n34be/297fdC9tbAwTrTTokwh6GgeCCJhRWcCLZ9k=;
+        b=JTQMvjl+Y4gtaKkzUONFtUS/IlKtSv4dxh8gFdXFLswITNq4AK5O0pWDSS+NS2QpyU
+         9StKDLYI0k0aHlqTKTYuB9G8KxiGXA3xbARHEveT3HcTDCm5dZnEPhThUh/XKCvp8brJ
+         W0qk6Zy630zJvbJL+Z5MKtiRCOIwwMw3k3s6dkza+WOzugzey2Mm5W8je8Mbux0cbf5O
+         w4YozESpmMOflQUtvpk0CeUCSlmrpQ3/m0wuwTLGsxlAlLqQXqAHoyiyTNxyywYMpngB
+         pkRJ/vKGNfZyD0QnGDrbj+RvfFndHD6LM0FqPzg+Av/Pq3ZGYkn4DMigHp1U9K7gboiX
+         Kjyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692052003; x=1692656803;
+        d=1e100.net; s=20221208; t=1692052105; x=1692656905;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aERsE1PPu2UW7AWpHurv7qGfiWqHaDwrOuRBq1YXUSI=;
-        b=FsWGDC/nmELVJzRYI6HDx3wTP8LpSVu9bThlYWKmHY6NS4UUIseo5vrpQWTQSLlwoR
-         qUHvSLq2auHtNNB3PT2sIqK8IGCfx65oRAwXExFy71MtVDsAVuQYxZYKCxeI1jveYsCw
-         sGvjoT6Rb0Dve7ygHjPMXxAG0A7j6tXjQjKTiWaZBJ3ZIpnROdOpENUk7lc8f0IlsCgu
-         60hOZPRlskyzpDmrvllt/ZOma1fyL0bGcyYbki/fCCulBq9RUe4fwuYfXa4F4HDVSz/Y
-         6FbPHC5f6DT2ATYIJfJoDK2W2lYR9BMwh2XL638bMpUqLSVtKaM9MnBF9RmsSYRXHIA9
-         sDQw==
-X-Gm-Message-State: AOJu0Yy6jxzhDxlRjoqz5raVi+efQSv4RHWbAyUuYczcW3Ubj1D7jbXl
-        aS2uXSwLbjR2Ak0A26OxnZgRL/WDndDr2HjMqmgO
-X-Google-Smtp-Source: AGHT+IEld4i/2+S3KH9AAoNGPOdDDyp54gcq0j4LcrWmELcjnm4AHwt2AY+BoZQEN7D3DrHGQWyAK9qmuV38b/4mU6ag
+        bh=O9n34be/297fdC9tbAwTrTTokwh6GgeCCJhRWcCLZ9k=;
+        b=em8YVcd5xjdIFmgTmSJDZUXUtC+XOjdHAe8HbOHJGCCm3buWcvMzscI7KHYWFEr3Jv
+         EDIqjcsjOR5zf7l2VqjDAtRhOvu0Q5ckJuw3MSTL13fkNtF0NfospMv/kzdg5nyGq7zc
+         U/RSlgj9cDhTmuqNzsrR1uFh+8H5fA8z305m5Vidc55GiY/str8v7QWUkUwqHQHFXsXF
+         OmzRVt5jaSVTDzIDYNi43ORIpho25FvT8StSX7uN3kJB8kZ0+2nA9DTfaFNTOmX/zeda
+         ZqQ+zBplIyT16qFWLbUPflPj5D8ezwOys1oSbBQbSS4W2aN3epMKLKzJ4cN+bxpwjOOT
+         hQBQ==
+X-Gm-Message-State: AOJu0Yxe/XiK29kTQEjWutuVHZx+weu75wX6z+C/V3CCDXh5rXT9v7Z0
+        RDo433k2Ty+t/qWI5CD/iToh8M4LXqkf1tsq4Myr
+X-Google-Smtp-Source: AGHT+IE1B1HS5tizTTRJtGtmhNthz57WX7SsNvmjNynXvF8yu90HnWwsaeCjWvuGQ8jDRGyy1wzMreOKbLktHTWgCGHN
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:51f6:bcfb:aa2f:af1f])
- (user=jonathantanmy job=sendgmr) by 2002:a25:b190:0:b0:d06:cbd:1f3e with SMTP
- id h16-20020a25b190000000b00d060cbd1f3emr135901ybj.3.1692052003512; Mon, 14
- Aug 2023 15:26:43 -0700 (PDT)
-Date:   Mon, 14 Aug 2023 15:26:41 -0700
-In-Reply-To: <20230810163654.275023-6-calvinwan@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a81:4413:0:b0:583:5039:d4a0 with
+ SMTP id r19-20020a814413000000b005835039d4a0mr8339ywa.0.1692052105699; Mon,
+ 14 Aug 2023 15:28:25 -0700 (PDT)
+Date:   Mon, 14 Aug 2023 15:28:23 -0700
+In-Reply-To: <20230810163654.275023-7-calvinwan@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.41.0.694.ge786442a9b-goog
-Message-ID: <20230814222641.64695-1-jonathantanmy@google.com>
-Subject: Re: [RFC PATCH v2 6/7] git-std-lib: introduce git standard library
+Message-ID: <20230814222823.65107-1-jonathantanmy@google.com>
+Subject: Re: [RFC PATCH v2 7/7] git-std-lib: add test file to call
+ git-std-lib.a functions
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Calvin Wan <calvinwan@google.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
@@ -62,54 +63,20 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Calvin Wan <calvinwan@google.com> writes:
-> +Rationale behind Git Standard Library
-> +================
+> Add test file that directly or indirectly calls all functions defined in
+> git-std-lib.a object files to showcase that they do not reference
+> missing objects and that git-std-lib.a can stand on its own.
+> 
+> Certain functions that cause the program to exit or are already called
+> by other functions are commented out.
+> 
+> TODO: replace with unit tests
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
 
-Would it be clearer to write "Rationale behind what's in and what's not
-in the Git Standard Library"? Or maybe that is too much of a mouthful.
-
-> +Files inside of Git Standard Library
-> +================
-> +
-> +The initial set of files in git-std-lib.a are:
-> +abspath.c
-> +ctype.c
-> +date.c
-> +hex-ll.c
-> +parse.c
-> +strbuf.c
-> +usage.c
-> +utf8.c
-> +wrapper.c
-> +stubs/repository.c
-> +stubs/trace2.c
-> +relevant compat/ files
-
-I noticed that an earlier version did not have the "stubs" lines and
-this version does, but could not find a comment about why these were
-added. For me, what would make sense is to remove the "stubs" lines,
-and then say "When these files are compiled together with the following
-files (or user-provided files that provide the same functions), they
-form a complete library", and then list the stubs after.
-
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 481dac22b0..75aa9b263e 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -396,8 +396,8 @@ static inline int noop_core_config(const char *var UNUSED,
->  #define platform_core_config noop_core_config
->  #endif
->  
-> +#if !defined(__MINGW32__) && !defined(_MSC_VER) && !defined(GIT_STD_LIB)
->  int lstat_cache_aware_rmdir(const char *path);
-> -#if !defined(__MINGW32__) && !defined(_MSC_VER)
->  #define rmdir lstat_cache_aware_rmdir
->  #endif
-
-(and other changes that use defined(GIT_STD_LIB))
-
-One alternative is to add stubs for lstat_cache_aware_rmdir that call
-the "real" rmdir, but I guess that would be unnecessarily confusing.
-Also, it would be strange if a user included a header file that
-redefined a standard library function, so I guess we do need such a
-"defined()" guard.
+Thanks for this patch - it's useful for reviewers to see what this
+patch set accomplishes (a way to compile a subset of files in Git that
+can provide library functionality). I don't think we should merge it
+as-is but should wait until we have a unit test that also exercises
+functions, and then merge that instead (I think your TODO expresses the
+same sentiment).
+ 
