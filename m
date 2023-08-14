@@ -2,76 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 567BDC001B0
-	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 17:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1997EB64DD
+	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 19:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbjHNRLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Aug 2023 13:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38340 "EHLO
+        id S231523AbjHNTVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Aug 2023 15:21:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbjHNRKp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2023 13:10:45 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D691DE65
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 10:10:44 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 474311983A8;
-        Mon, 14 Aug 2023 13:10:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=49XBDBzVe/pp+uNDIxdJOTuTaFacJCracFdBzi
-        YqBFA=; b=tXRk/HQxn2YBc+DIBB1v6GAMtNIlWa7TLKBAVBgDn9FTadclki72jx
-        j3MduRoXUU0hyF3RG7f2BhTO6fMcj04Spp/dPFsTauPL3qXNxVC8zhsAe+BNO1pQ
-        Xsbp2DWLnY7rV/USXHqYAFhXM+wCo1pciMlJGq7Rtpa84pGkAY5PQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F0F91983A6;
-        Mon, 14 Aug 2023 13:10:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C9A71983A5;
-        Mon, 14 Aug 2023 13:10:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v5 0/3] check-attr: integrate with sparse-index
-References: <20230718232916.31660-1-cheskaqiqi@gmail.com>
-        <20230811142211.4547-1-cheskaqiqi@gmail.com>
-        <3b2a5b4b-ab8f-746b-6b69-8e8262b6390b@github.com>
-Date:   Mon, 14 Aug 2023 10:10:42 -0700
-In-Reply-To: <3b2a5b4b-ab8f-746b-6b69-8e8262b6390b@github.com> (Victoria Dye's
-        message of "Mon, 14 Aug 2023 09:24:30 -0700")
-Message-ID: <xmqq4jl1lfcd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232238AbjHNTUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2023 15:20:55 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92FE1702
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 12:20:49 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-589f7a48307so13599317b3.1
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 12:20:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1692040849; x=1692645649;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MBivuSGGjmwCT4E9L/m1Sed8QmEMFgjfrPsS4jYqNTg=;
+        b=WV5uewKF/udzGDq4R0hQKZOI8qvWD7DphwD29U0mxJS2qLfLCCrUXYk7Wgu8NrU4te
+         UQzu7FNZAWE4tmFCJixDz9rGHteMjIrqrvPjilLc0Qx2oHNldRoXVMGr2sv/tu/nyto5
+         6Uen6qGUSmhzRbAsftR/JCNet3Awl0ee8ILc1/iQ+zSi1aGaaXAVYL5I0S6MDL4jysoJ
+         KYvrpF1bHeWlA5DFOqK1ehLEczjixriZOuNVAy/1S50TjYaBSnNUOJulbBUwC9f39pO2
+         toH5CKY8LDodXFCR99msH7PLaqo4VLCiG9qDdyNZTL1hIGO7tz5fkuVvr9sYmGLwkpVF
+         9hAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692040849; x=1692645649;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MBivuSGGjmwCT4E9L/m1Sed8QmEMFgjfrPsS4jYqNTg=;
+        b=lCeClrMQ7vsTgLL6xKL1iBxyUt9ZktUOGwPwXTGd+9VK3C4WGKiE5CFAZQgOWxMoVa
+         KgiX3/XI9EeMICRnIEC92Czt5NMslpbs4Wjo/kHPO9eZsO2CA9kjLeK2mGA0Mgy5QaCm
+         hfbrpDH2nB8y7+DmTzn3KVuxcKl9JfPSRMXsvtOAwWaQBDK62Fhb0buGraSBmIikajXr
+         lQ2M08ueNB0WxB0rkBZO7zjYPQiWvjuKwWMnMUbnA1JjucLQAWt11+mhqqKIxxxOYAvc
+         RIzJOKtnihH2Ae5f37QvRsfohgwQFyAk+/+9EJV7rW9O7zHOxKaGT1WbMUS/Ps5XBbFK
+         KuKg==
+X-Gm-Message-State: AOJu0Ywp6Yf127kc7StBN50jcnMzQCgxpMhWadK/pcK4lAu8eNRhVKgg
+        LU+LvX7ewDmk2ATlMK94tzOo
+X-Google-Smtp-Source: AGHT+IF+SmG7dfaoAa1qC2kpdzGi0r18sncoCP3fDIRGhZkDdqhqISVh6FI5fBZhd/k3s6IjdEQWcQ==
+X-Received: by 2002:a0d:f286:0:b0:56d:9e2:7d9e with SMTP id b128-20020a0df286000000b0056d09e27d9emr11503098ywf.21.1692040849022;
+        Mon, 14 Aug 2023 12:20:49 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:2098:93bd:9768:5e65? ([2600:1700:e72:80a0:2098:93bd:9768:5e65])
+        by smtp.gmail.com with ESMTPSA id z192-20020a0dd7c9000000b00583b40d907esm431544ywd.16.2023.08.14.12.20.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Aug 2023 12:20:48 -0700 (PDT)
+Message-ID: <abae52d5-47d5-4439-9d2b-68bb6e1c96fa@github.com>
+Date:   Mon, 14 Aug 2023 15:20:45 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 80A8B306-3AC5-11EE-A42E-C65BE52EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] scalar: add --[no-]src option
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de
+References: <pull.1569.git.1692025937.gitgitgadget@gmail.com>
+ <c1c7e2f049e762b9b60614a5732e4d41db1d0da5.1692025937.git.gitgitgadget@gmail.com>
+ <xmqqcyzpmx2g.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqcyzpmx2g.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+On 8/14/2023 12:02 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Shuqi Liang wrote:
->> change against v4:
->
-> I've reviewed the patches in this version and all of my prior feedback
-> appears to be addressed. Overall, I think this is ready to merge. 
->
-> I see that you didn't take the suggestion from [1], though. I personally
-> don't consider it a blocking issue, but I am curious to hear your
-> thoughts/reasoning behind sticking with your current patch organization over
-> what was suggested there.
->
-> [1] https://lore.kernel.org/git/kl6la5v82izn.fsf@chooglen-macbookpro.roam.corp.google.com/
->
-> Otherwise, a couple notes:
+>> +--[no-]src::
+>> +	Specify if the repository should be created within a `src` directory
+>> +	within `<enlistment>`. This is the default behavior, so use
+>> +	`--no-src` to opt-out of the creation of the `src` directory.
+> 
+> While there is nothing incorrect in the above per-se, and the first
+> half of the description is perfectly good, but I find the latter
+> half places too much stress on the existence of the "src" directory.
+> As a mere mortal end-user, what is more important is not the
+> presence of an extra directory, but the fact that everything I have
+> is now moved one level down in the directory hierarchy to "src/"
+> directory.
+> 
+> 	This is the default behavior; use `--no-src` to place the
+> 	root of the working tree of the repository directly at
+> 	`<enlistment>`.
+> 
+> or something along that line would have been easier to understand
+> for me.  It is not the creation of `src`, but that everything is
+> moved into it, is what some users may find unusual.
 
-Thanks for a review Victoria, and Shuqi, thanks for working on the
-topic.
+Your confusion makes sense. Focusing on the location of the cloned
+repository is a good way to focus the option for the reader.
+ 
+>> +test_expect_success '`scalar clone --no-src`' '
+>> +	scalar clone --src "file://$(pwd)/to-clone" with-src &&
+>> +	scalar clone --no-src "file://$(pwd)/to-clone" without-src &&
+>> +
+>> +	test_path_is_dir with-src/src &&
+>> +	test_path_is_missing without-src/src
+>> +'
+> 
+> And another thing that may be interesting, from the above point of
+> view, is to compare these two:
+> 
+> 	(cd with-src/src && ls ?*) >with &&
+> 	(cd without && ls ?*) >without &&
+> 	test_cmp with without
 
-I too am curious what your response to [1] would be, by the way.
+Good idea.
 
+Thanks,
+-Stolee
