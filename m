@@ -2,149 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 602D2C001E0
-	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 16:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D10C001B0
+	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 16:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230364AbjHNQCt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Aug 2023 12:02:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54904 "EHLO
+        id S230348AbjHNQYu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Aug 2023 12:24:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231371AbjHNQCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2023 12:02:37 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F34F115
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 09:02:36 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02CE424E2E;
-        Mon, 14 Aug 2023 12:02:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VvePJn+6JIA5B6Mpltffdh+HyBl66TdywzXbvi
-        7tk+I=; b=t9JaF76VqxUHEqS4RjybaUFyXFiFjr4i4nP90Xh1XFxNeFQtUmrIQ9
-        PH1SIqPQ6L9nYdx2o0zVROtjYC7z5ItwezSXf+xI8TReHl8XZTY7hbs9nfHS79cI
-        13P/sUsjEl8vejzwbbphsTZ9ZhK0J2X3rG4mYshcMkQEtl3wFZQ4k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EF7CC24E2D;
-        Mon, 14 Aug 2023 12:02:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9039824E2C;
-        Mon, 14 Aug 2023 12:02:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/3] scalar: add --[no-]src option
-References: <pull.1569.git.1692025937.gitgitgadget@gmail.com>
-        <c1c7e2f049e762b9b60614a5732e4d41db1d0da5.1692025937.git.gitgitgadget@gmail.com>
-Date:   Mon, 14 Aug 2023 09:02:31 -0700
-In-Reply-To: <c1c7e2f049e762b9b60614a5732e4d41db1d0da5.1692025937.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Mon, 14 Aug 2023
-        15:12:15 +0000")
-Message-ID: <xmqqcyzpmx2g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232267AbjHNQYe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2023 12:24:34 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B2E127
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 09:24:33 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1bdbbede5d4so26118505ad.2
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 09:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1692030273; x=1692635073;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9aDrDB6njJrtzcNDgnuJB1mJoWBaaaCVd4qVpSbSMIE=;
+        b=GAPn49wXgxMUvQsnp8IIo+PqRTRlL0M4xJy2hYVx0h26+hcf2uW44qrY/9jcCkP9P4
+         rIEt7/eJYQZgLgZjPWiJiwYGdmXqS9hmmp2V3n941QwjkuNuC4gdzyBqjEk9SbLaFpJZ
+         lSM3RY3JrYxB573bHwFPVqb6pMkZVbn37fCrUer9FmTO0PgT7r2kP7YOuA1Fm/8aS+Jl
+         pQ0qSW2pt36WfBg3CdUWzISLsC4UdK5bDKOQ8u2rLvoIV8gffipaJeXbt2towgN3znBx
+         IGNIbzxzQNM3viDXy91BSZDrsZxcBlacWd3NrXhoQh0QE8ICsF/ngunAndGK3IrlTmn+
+         1YuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692030273; x=1692635073;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9aDrDB6njJrtzcNDgnuJB1mJoWBaaaCVd4qVpSbSMIE=;
+        b=dDnVOuVbwzFIp74Hv0JTZDvzVVu4IuL8vqiqhH02+6qB8nPMlp8CdSXF+mYmXds3Y3
+         W5JsuTghGFbPA8beGpsc0+tiq3kdCsMXy+yfy4W4uPn/T4ontSwkndmeNJ2YzV0WHfVv
+         Abt+Q7pL1X+Jh4zWMKoLOdVjGgSjIyC2BUF/+IMsD/K+yjbkOEaO5aKbuPQA40QzoIBg
+         KP9kQzRUzDUzKgyNqLusbdiejxrhcqElKwpx3uMC+8fa/3XO4eja/TrCZdRyjqNE8qk2
+         gaHT5ILCFF0dqbKqXd/x3PnZ+kYZNxpTq+NfLQuLH5wkfs4eelU8MYlJ8eSMVkxNG37E
+         o5eA==
+X-Gm-Message-State: AOJu0YyI25EslcckOub3Gm5lYi9s4pgmvYNcB39PSOklf5SNitWo2tFX
+        C2G/lRjqYAMsSNCISjgAxyKL
+X-Google-Smtp-Source: AGHT+IE39Vv6I1QcrMaVe/KUhfpu0c+RKqtkBhfHpvXOBqfH5xcOuh9sDNDi0hTRj75jpgYdrTxEzQ==
+X-Received: by 2002:a17:902:904a:b0:1bb:a4e4:54b6 with SMTP id w10-20020a170902904a00b001bba4e454b6mr10393850plz.62.1692030272795;
+        Mon, 14 Aug 2023 09:24:32 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id e10-20020a170902b78a00b001bd41b70b60sm9659872pls.45.2023.08.14.09.24.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Aug 2023 09:24:32 -0700 (PDT)
+Message-ID: <3b2a5b4b-ab8f-746b-6b69-8e8262b6390b@github.com>
+Date:   Mon, 14 Aug 2023 09:24:30 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA33B766-3ABB-11EE-AB81-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH v5 0/3] check-attr: integrate with sparse-index
+Content-Language: en-US
+To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <20230718232916.31660-1-cheskaqiqi@gmail.com>
+ <20230811142211.4547-1-cheskaqiqi@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20230811142211.4547-1-cheskaqiqi@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Shuqi Liang wrote:
+> change against v4:
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> Some users have strong aversions to Scalar's opinion that the repository
-> should be in a 'src' directory, even though it creates a clean slate for
-> placing build outputs in adjacent directories.
->
-> The --no-src option allows users to opt-out of the default behavior.
->
-> While adding options, make sure the usage output by 'scalar clone -h'
-> reports the same as the SYNOPSIS line in Documentation/scalar.txt.
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  Documentation/scalar.txt |  8 +++++++-
->  scalar.c                 | 11 +++++++++--
->  t/t9211-scalar-clone.sh  |  8 ++++++++
->  3 files changed, 24 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/scalar.txt b/Documentation/scalar.txt
-> index f33436c7f65..cd65b3e230d 100644
-> --- a/Documentation/scalar.txt
-> +++ b/Documentation/scalar.txt
-> @@ -8,7 +8,8 @@ scalar - A tool for managing large Git repositories
->  SYNOPSIS
->  --------
->  [verse]
-> -scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
-> +scalar clone [--single-branch] [--branch <main-branch>] [--full-clone]
-> +	[--[no-]src] <url> [<enlistment>]
->  scalar list
->  scalar register [<enlistment>]
->  scalar unregister [<enlistment>]
-> @@ -80,6 +81,11 @@ remote-tracking branch for the branch this option was used for the initial
->  cloning. If the HEAD at the remote did not point at any branch when
->  `--single-branch` clone was made, no remote-tracking branch is created.
->  
-> +--[no-]src::
-> +	Specify if the repository should be created within a `src` directory
-> +	within `<enlistment>`. This is the default behavior, so use
-> +	`--no-src` to opt-out of the creation of the `src` directory.
+I've reviewed the patches in this version and all of my prior feedback
+appears to be addressed. Overall, I think this is ready to merge. 
 
-While there is nothing incorrect in the above per-se, and the first
-half of the description is perfectly good, but I find the latter
-half places too much stress on the existence of the "src" directory.
-As a mere mortal end-user, what is more important is not the
-presence of an extra directory, but the fact that everything I have
-is now moved one level down in the directory hierarchy to "src/"
-directory.
+I see that you didn't take the suggestion from [1], though. I personally
+don't consider it a blocking issue, but I am curious to hear your
+thoughts/reasoning behind sticking with your current patch organization over
+what was suggested there.
 
-	This is the default behavior; use `--no-src` to place the
-	root of the working tree of the repository directly at
-	`<enlistment>`.
+[1] https://lore.kernel.org/git/kl6la5v82izn.fsf@chooglen-macbookpro.roam.corp.google.com/
 
-or something along that line would have been easier to understand
-for me.  It is not the creation of `src`, but that everything is
-moved into it, is what some users may find unusual.
+Otherwise, a couple notes:
 
-> +test_expect_success '`scalar clone --no-src`' '
-> +	scalar clone --src "file://$(pwd)/to-clone" with-src &&
-> +	scalar clone --no-src "file://$(pwd)/to-clone" without-src &&
-> +
-> +	test_path_is_dir with-src/src &&
-> +	test_path_is_missing without-src/src
-> +'
+> 
+> 1/3:
+> * Add a commit message to explain why 'test_expect_failure' is set
+> and why 'test_expect_success' is set.
+> 
+> * Update 'diff --check with pathspec outside sparse definition' to
+> compare "index vs HEAD" rather than "working tree vs index".
+> 
+> * Use 'test_all_match' to apply the config to the test repos instead of
+> the parent .
+> 
+> * Use 'test_(all|sparse)_match' when running Git commands in
+> these tests.
+> 
+> 2/3:
+> * Create a variable named 'sparse_dir_pos' to make the purpose of
+> variable clearer.
+> 
+> * Remove the redundant check of '!path_in_cone_mode_sparse_checkout()'
+> since 'pos' will always be '-1' if 'path_in_cone_mode_sparse_checkout()'
+> is true.
+> 
+> * Remove normalize path check because 'prefix_path'(builtin/check-attr.c)
+> call to 'normalize_path_copy_len' (path.c:1124). This confirms that the
+> path has indeed been normalized.
 
-And another thing that may be interesting, from the above point of
-view, is to compare these two:
+Nice, thanks for looking into this! I'm glad we're able to avoid the
+normalization, it simplifies the code quite a bit.
 
-	(cd with-src/src && ls ?*) >with &&
-	(cd without && ls ?*) >without &&
-	test_cmp with without
+> 
+> * Leave the 'diff --check' test as 'test_expect_failure' with a note about
+> the bug in 'diff' to fix later.
 
-Both output should look something like
+Makes sense. The extra detail added in the "NEEDSWORK" comment is especially
+helpful in pointing out which part of the diff machinery causes the issue.
 
-    cron.txt
-    first.t
-    second.t
-    third.t
+> 
+> 
+> Shuqi Liang (3):
+>   t1092: add tests for 'git check-attr'
+>   attr.c: read attributes in a sparse directory
+>   check-attr: integrate with sparse-index
 
-and the earlier confusion point I raised was that
-
-	(cd with-src && ls ?*)
-
-would not look like
-
-    cron.txt
-    first.t
-    second.t
-    src/
-    third.t
-
-Thanks.
