@@ -2,81 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F6AC04A94
-	for <git@archiver.kernel.org>; Mon, 14 Aug 2023 22:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49225C001B0
+	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 00:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233273AbjHNW24 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Aug 2023 18:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43750 "EHLO
+        id S233683AbjHOAz6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Aug 2023 20:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233259AbjHNW21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2023 18:28:27 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701D9171A
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 15:28:26 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-589b0bbc290so59995537b3.1
-        for <git@vger.kernel.org>; Mon, 14 Aug 2023 15:28:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1692052105; x=1692656905;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=O9n34be/297fdC9tbAwTrTTokwh6GgeCCJhRWcCLZ9k=;
-        b=JTQMvjl+Y4gtaKkzUONFtUS/IlKtSv4dxh8gFdXFLswITNq4AK5O0pWDSS+NS2QpyU
-         9StKDLYI0k0aHlqTKTYuB9G8KxiGXA3xbARHEveT3HcTDCm5dZnEPhThUh/XKCvp8brJ
-         W0qk6Zy630zJvbJL+Z5MKtiRCOIwwMw3k3s6dkza+WOzugzey2Mm5W8je8Mbux0cbf5O
-         w4YozESpmMOflQUtvpk0CeUCSlmrpQ3/m0wuwTLGsxlAlLqQXqAHoyiyTNxyywYMpngB
-         pkRJ/vKGNfZyD0QnGDrbj+RvfFndHD6LM0FqPzg+Av/Pq3ZGYkn4DMigHp1U9K7gboiX
-         Kjyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692052105; x=1692656905;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O9n34be/297fdC9tbAwTrTTokwh6GgeCCJhRWcCLZ9k=;
-        b=em8YVcd5xjdIFmgTmSJDZUXUtC+XOjdHAe8HbOHJGCCm3buWcvMzscI7KHYWFEr3Jv
-         EDIqjcsjOR5zf7l2VqjDAtRhOvu0Q5ckJuw3MSTL13fkNtF0NfospMv/kzdg5nyGq7zc
-         U/RSlgj9cDhTmuqNzsrR1uFh+8H5fA8z305m5Vidc55GiY/str8v7QWUkUwqHQHFXsXF
-         OmzRVt5jaSVTDzIDYNi43ORIpho25FvT8StSX7uN3kJB8kZ0+2nA9DTfaFNTOmX/zeda
-         ZqQ+zBplIyT16qFWLbUPflPj5D8ezwOys1oSbBQbSS4W2aN3epMKLKzJ4cN+bxpwjOOT
-         hQBQ==
-X-Gm-Message-State: AOJu0Yxe/XiK29kTQEjWutuVHZx+weu75wX6z+C/V3CCDXh5rXT9v7Z0
-        RDo433k2Ty+t/qWI5CD/iToh8M4LXqkf1tsq4Myr
-X-Google-Smtp-Source: AGHT+IE1B1HS5tizTTRJtGtmhNthz57WX7SsNvmjNynXvF8yu90HnWwsaeCjWvuGQ8jDRGyy1wzMreOKbLktHTWgCGHN
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:51f6:bcfb:aa2f:af1f])
- (user=jonathantanmy job=sendgmr) by 2002:a81:4413:0:b0:583:5039:d4a0 with
- SMTP id r19-20020a814413000000b005835039d4a0mr8339ywa.0.1692052105699; Mon,
- 14 Aug 2023 15:28:25 -0700 (PDT)
-Date:   Mon, 14 Aug 2023 15:28:23 -0700
-In-Reply-To: <20230810163654.275023-7-calvinwan@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.41.0.694.ge786442a9b-goog
-Message-ID: <20230814222823.65107-1-jonathantanmy@google.com>
-Subject: Re: [RFC PATCH v2 7/7] git-std-lib: add test file to call
- git-std-lib.a functions
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        nasamuffin@google.com, chooglen@google.com, linusa@google.com,
-        phillip.wood123@gmail.com, vdye@github.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233870AbjHOAzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2023 20:55:43 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA26919A6
+        for <git@vger.kernel.org>; Mon, 14 Aug 2023 17:55:27 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8C2121F375;
+        Mon, 14 Aug 2023 20:51:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KJWHudS8xTMTb98vaFbKXxRNP2ERpXcPHqJb4K
+        QUfYo=; b=ErBKIxlp/dU194d+j6+FszYhFUOGwaNzkCzQKJLzvyiJZ+LAEC47rj
+        ImY1uHwZ88qAMLnDMa1yQXnLMff+XS32CYer3OWu1VDitk5Ch2adMmzqjA1jdw5L
+        MXBdSumnvCrt1k8z8sXQtbrzCA6TUl5nFmeIQh0f43ELXSHlQYRBc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8390C1F374;
+        Mon, 14 Aug 2023 20:51:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2B5F51F373;
+        Mon, 14 Aug 2023 20:51:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v5 0/8] Repack objects into separate packfiles based on
+ a filter
+References: <20230808082608.582319-1-christian.couder@gmail.com>
+        <20230812000011.1227371-1-christian.couder@gmail.com>
+Date:   Mon, 14 Aug 2023 17:51:05 -0700
+In-Reply-To: <20230812000011.1227371-1-christian.couder@gmail.com> (Christian
+        Couder's message of "Sat, 12 Aug 2023 02:00:03 +0200")
+Message-ID: <xmqqv8dhjfgm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D1914FF4-3B05-11EE-BCC2-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
-> Add test file that directly or indirectly calls all functions defined in
-> git-std-lib.a object files to showcase that they do not reference
-> missing objects and that git-std-lib.a can stand on its own.
-> 
-> Certain functions that cause the program to exit or are already called
-> by other functions are commented out.
-> 
-> TODO: replace with unit tests
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
+Christian Couder <christian.couder@gmail.com> writes:
 
-Thanks for this patch - it's useful for reviewers to see what this
-patch set accomplishes (a way to compile a subset of files in Git that
-can provide library functionality). I don't think we should merge it
-as-is but should wait until we have a unit test that also exercises
-functions, and then merge that instead (I think your TODO expresses the
-same sentiment).
- 
+> # Changes since version 4
+>
+> Thanks to Junio who reviewed versions 1, 2, 3 and 4, and to Taylor who
+> reviewed version 1, 3 and 4! Thanks also to Robert Coup who
+> participated in the discussions related to version 2 and Peff who
+> participated in the discussions related to version 4. The changes are
+> the following:
+>
+> - In patch 2/8, which introduces `test-tool find-pack`, a spurious
+>   space character has been removed between 'die' and '(', as suggested
+>   by Taylor.
+>
+> - In patch 4/8, which refactors code into a find_pack_prefix()
+>   function, this function has been changed so that the `packdir` and
+>   `packtmp` arguments are now 'const', as suggested by Taylor.
+>
+> - In patch 5/8, which introduces `--filter=<filter-spec>` option, the
+>   `filter_options` member of the 'cruft_po_args' variable is not
+>   initialized and freed anymore, as this member is actually unused.
+>
+> - Also in patch 5/8, the '--filter fails with --write-bitmap-index'
+>   test has been changed to use `test_must_fail env` to fix failures
+>   with the 'test-lint' Makefile target, as suggested by Junio and
+>   Taylor. (Junio's 'SQUASH???' patch was squashed into that patch.)
+
+Thanks.  I do not recall if the previous version with SQUASH??? passed
+the tests or not, but this round seems to be breaking the exact test
+we had trouble with with the previous round:
+
+  https://github.com/git/git/actions/runs/5850998716/job/15861158252#step:4:1822
+
+The symptom looks like that "test_must_fail env" test is not
+failing.  Ring a bell?
+
+Thanks.
