@@ -2,128 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 694C4C001B0
-	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 15:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC99C04A6A
+	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 16:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236572AbjHOPZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Aug 2023 11:25:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60402 "EHLO
+        id S238565AbjHOQpD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Aug 2023 12:45:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238022AbjHOPZr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2023 11:25:47 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A3A4E74
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 08:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1692113134; x=1692717934; i=tboegi@web.de;
- bh=pHmS9ff+soygQD9TVI1BCAlAay/Ba3D/nJUylivDuIE=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=p7OyVJutOFBaV9Mi0CBj7e7GmAxjZJOR/nV4k+7W4MO76CSVYSUqbGIi4vlpcJ/onZGlKi8
- V9QPv1hvGr8du93nlr06NIq5NJmzWuQUIo4oiy7eEzODhqC+b5Iawfs/r3e0iiXW9XAryspgz
- tJU6HiBAqMuDOhG+sKq2KwpgfgLJ3jV5guvwx2zmad4F+c2zteHfyfSUUK7k9CmVjK7VPH6Tx
- md0/KKkUgzRTZRFTkL0/lZ0+2SzckRoS/YVmuMP4WhjPJE5umI8dDlQwZ8qBuOFUaY/VzC+9F
- G0/FXPYc8vvRU7jo+5iRv5sMNSZSLdk2FHpRmLsJq40jOHsEMz4Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MWz8l-1qGKyV1L4r-00XKds; Tue, 15
- Aug 2023 17:25:34 +0200
-Date:   Tue, 15 Aug 2023 17:25:33 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, friebetill@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
-Message-ID: <20230815152511.suipgnzr2wgolmsx@tb-raspi4>
-References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
- <20230808172624.14205-1-tboegi@web.de>
- <6e40eb0b-2331-1e39-bee0-c9720c24d1c8@gmail.com>
- <20230809184751.ffwolkvjwoptnmen@tb-raspi4>
- <9f76de24-d337-ed41-fb81-888dba0b1656@gmail.com>
+        with ESMTP id S238554AbjHOQoq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2023 12:44:46 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0871B2
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 09:44:45 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id 006d021491bc7-56dfe5ce871so2244943eaf.2
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 09:44:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692117884; x=1692722684;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hlqdK8mi9K4eqdftEj6j7eZAaTOgD83yvwwiCkiRP54=;
+        b=XGC0QBkSWUoxomNC8byfib9cpoOdiV6RFMruJKRa57QW2F7N4PKjtkfvckgLExNXw2
+         ZO+CeKLPExx0lLoigg6bYsKnA7BZR7IaO4vYQV9j4SpInXxwDcndfi5yvEKqiiFU0nUc
+         /dXTuybp+O86t1ljP5qtJEFPErpWltKsaFxvLnkxeyJP6lTrHxsqUo8oZeOrkaGVAvNA
+         65kh6Rts1En2u4Pn7PEF1F0uP212wDd2R6EIux40l2ixrcAjYVQXtAu80ZaCo4vcgrLG
+         FVBJIlPUuPXAFfh6mEaWediGdM9pFNu4c5AxpD8Z1j0/KUB4nafco2xHDVEgHvvLTY87
+         Cvew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692117884; x=1692722684;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hlqdK8mi9K4eqdftEj6j7eZAaTOgD83yvwwiCkiRP54=;
+        b=N8uaoJhKcOTlYEeUDlWNdn4ty1OgrjQuxM1F7WeLRMIl4orgz0V6Iq4FyOvc792UhM
+         hY+hdtV6DH0cPal8Niye0fxI+UUznGwoiZlGW12TjGI6Yria2NwBAUib6dYAHD8JehJk
+         oJ6TsPpicUQ5n4vGg70vqKshz2BBt2ydIwqOX8h9SF4HEhDsHzatowRqZdVecHQtpZZx
+         Mmqkr/ra62oUp/mexcdVyqSMPSbhm4hCYBHn3+P2Dvppe3FRBcg7Sz+Wjka5o9jAAxHJ
+         VXJer0ZZU3bZ80JMagc+1k1Ptz41pSIjHths1EOKLsd+D4sxDXSoGKBvzV9y3pJSb1LK
+         XQ5Q==
+X-Gm-Message-State: AOJu0YznH1nd/B815rxtHfuUt9dxwZqDvbr4KRjHd0DyVxS7FN0eCW0X
+        E+RyeImexAl15PRv9jNoNO/fDkDDeLxTAnGTBZ9SBaLyyYSUBw==
+X-Google-Smtp-Source: AGHT+IEFntmI7S11WT3xrNl6jd5q6CBw1PF6LREJt8yGgw47ulHS/vtrrTeiOmtM+H+63KLdFt/idt1WGBcFCEoa/Bk=
+X-Received: by 2002:a05:6870:168d:b0:1be:cf5d:6f7b with SMTP id
+ j13-20020a056870168d00b001becf5d6f7bmr14095824oae.17.1692117884165; Tue, 15
+ Aug 2023 09:44:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Tue, 15 Aug 2023 18:44:18 +0200
+Message-ID: <CAOLa=ZQmjroDiOcUsu_MHtQ-88QHU9qeZPOPh+KJJ3dFoF2q0A@mail.gmail.com>
+Subject: [Bug] In `git-rev-list(1)`, using the `--objects` flag doesn't work
+ well with the `--not` flag, as non-commit objects are not excluded
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <9f76de24-d337-ed41-fb81-888dba0b1656@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:SJ4ACOgyANcOxUXKhsZy9YSFxxaaE+UoaR+yDc/bH1hu9rqdJWz
- 3E53//ZQjeZfYGxG/EVMguSaNxWQCZDvBW87gtcPhAR+hCepNHS34GOK7xqGLOpINyOOmvU
- odeqMEZmZy5pDBh6MknhblP7SY86bcKRIWV5/+bwBYNM112ysE0t80GSYUB3TkHkC9uYLZv
- jzP5LfYYIErG7xwsiJWyQ==
-UI-OutboundReport: notjunk:1;M01:P0:T7GL/0NiF8A=;7RIlyAUb5p9UTHY/fsZyGGmppLk
- m250HvJRCQtT6OOGw2/ol14E7cl0MJtCFFcoJAcSjzlIk9Tha0zQOV2OLOIL1GYGHvk2xSamh
- bNw+/yN3zKr7PmmmDh3YEkXlDjIYYM9QF19s9UZo4AxoIfRFI2tXrcj8gQtuhnyYH8l8aJG2L
- qCkX7vV3BbyrsNtJm1og60ghlAHgLqbph5zOlyw/ohHF0g7fj29iOmNAAEcHjK+hViejN42kR
- sbHkviU/kO9DfPhzcouF2Hq7AQsh1EO2gvVRDzhzeOV4xvDam3HfeT3j55WS4mni94UU9cAdE
- n6PGMIsrHG+z+pRHyZHJ/FUDRDeuNoSO6MZswpHNdl/OxrosPmrWO/0OkEiShIvxBBU1C/txP
- +YtmGDIXtJ9NGTWq6nZ8rubLusMLH1TClH4gdSpWJxybCgvHCbiZUiBkicAKnz1W/kXOPnldo
- 8V7fWNgFWbiNHVTPT5/x3++tcgyrEAUxXEYaC0TjoMfAgBy5ED/j9geXIr6VQeAk/yyZrDN60
- FQgACEeDzq5ccNfNhbisUYWoR9R2itcl9MuGuwZ6T0TpSpYhBP+8a7VltM20MwQXZEc7enxIg
- NnhJSATkcSoGhOyx8SaxQlcb6plrcRahd/rfjJ96PT81cQPA5dHExO11pYF2TZtJck6Sh50MK
- fsYdu0fYLO0lGgSmLL7Um4EFuAKwpb23gtXqlB5GZz+3qZMTNT5r9UNp/C6ymeoDHrLpL3CzQ
- fPodbUligILLaHUa4tjofpjx+1O132xgnsTjGtcP6et9uMcd4gEvIL7dR8YzqaXe73UCsGalE
- tHW0wZdpj+5OkvZIWc9efvtY5SL3RNrOPssGiUgmsibeL10e8fy3aBoplp8F0AVZDwjoBSMPe
- zfE14cA0oqP42foq5P0CXhKkUp0EbpFnC/G7VNNz3oR4yBomnx6joyBzonIbcZzNHdq7r5iy0
- YxV5hzcpT9tTllGd//sye/qYhBM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2023 at 10:15:37AM +0100, Phillip Wood wrote:
-> Hi Torsten
->
-> Sorry for the slow reply
+Hello!
 
-No problem.
-Thanks for the response, I think that we have an
-agreement not to overwrite an untracked file, when a directory
-with the same name needs to be created.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-I try to come up with a patch series -
-starting with the stash operation.
+Assume a repository structure as follows:
 
->
-> On 09/08/2023 19:47, Torsten B=F6gershausen wrote:
-> > On Wed, Aug 09, 2023 at 02:15:28PM +0100, Phillip Wood wrote:
-> > > Hi Torsten
-> > >
-> > > Thanks for working on this. I've cc'd Junio for his unpack_trees()
-> > > knowledge.
-> >
-> > Thanks Eric for the review.
-> >
-> > Hej Phillip,
-> > I have been playing around with the whole thing some time.
-> > At the end I had a version, which did fiddle the information
-> > that we are doing a `git stash` (and not any other operation)
-> > into entry.c, and all test cases passed.
-> > So in principle I can dig out all changes, polish them
-> > and send them out, after doing cleanups of course.
->
-> I don't think we should be treating "git stash" as a special case here -
-> commands like "git checkout" should not be removing untracked files
-> unprompted either.
->
-> > (And that could take a couple of days, or weeks ;-)
-> >
-> > My main question is still open:
-> > Is it a good idea, to create a "helper file" ?
-> > The naming can be discussed, we may stick the date/time
-> > into the filename to make it really unique, or so.
->
-> I think stopping and telling the user that the file would be overwritten=
- as
-> we do in other cases would be better.
->
-> > Reading the different reports and including own experience,
-> > I still think that a directory called ".deleted-by-user"
-> > or ".wastebin" or something in that style is a good idea.
->
-> I can see an argument for being able to opt-in to that for "git restore"=
- and
-> "git reset --hard" but that is a different problem to the one here.
->
-> Best Wishes
->
-> Phillip
->
+- commit1 9f2aa2eb987c2281bb4901dbccd1398ad2c39722
+  - tree: 205f6b799e7d5c2524468ca006a0131aa57ecce7
+    - 100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99    foo
+      - content: foo
+- commit2 9e02481f4df3a8997335b0a68882580e3b9b588f (parent:
+9f2aa2eb987c2281bb4901dbccd1398ad2c39722)
+  - tree: 672d0aa883d095369c56416587bc397eee4ac37e
+    - 100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99    foo
+      - content: foo
+    - 100644 blob eec8c88a93f6ee1515fb8348f2c122cfda4302cd    moo
+      - content: moo
+- commit3 91fa9611a355db77a07f963c746d57f75af380da (parent:
+9e02481f4df3a8997335b0a68882580e3b9b588f)
+   - tree 0c16a6cc9eef3fdd3034c1ffe2fc5e6d0bba2192
+     - tree 086885f71429e3599c8c903b0e9ed491f6522879    bar
+       - 100644 blob 7a67abed5f99fdd3ee203dd137b9818d88b1bafd    goo
+         - content: goo
+     - 100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99    foo
+       - content: foo
+     - 100644 blob eec8c88a93f6ee1515fb8348f2c122cfda4302cd    moo
+       - content: moo
+     - 100644 blob 8baef1b4abc478178b004d62031cf7fe6db6f903    abc
+       - content: abc
+- commit4 6b52ed5b176604a0740689b5bb9be7bd79f4bced (parent:
+9f2aa2eb987c2281bb4901dbccd1398ad2c39722)
+  - tree ff05824d2f76436c61d2c971e11a27514aba6948
+    - tree 086885f71429e3599c8c903b0e9ed491f6522879    bar
+      - 100644 blob 7a67abed5f99fdd3ee203dd137b9818d88b1bafd    goo
+        - content: goo
+    - 100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99    foo
+      - content: foo
+    - 100644 blob 8baef1b4abc478178b004d62031cf7fe6db6f903    abc
+      - content: abc
+
+What did you expect to happen? (Expected behavior)
+
+In such a repository, the output for the command, should have the
+output provided below
+
+=E2=9D=AF git rev-list --objects 6b52ed5b176604a0740689b5bb9be7bd79f4bced
+--not 91fa9611a355db77a07f963c746d57f75af380da
+6b52ed5b176604a0740689b5bb9be7bd79f4bced
+ff05824d2f76436c61d2c971e11a27514aba6948
+
+What happened instead? (Actual behavior)
+
+Instead, the output is as follows:
+
+=E2=9D=AF git rev-list --objects 6b52ed5b176604a0740689b5bb9be7bd79f4bced
+--not 91fa9611a355db77a07f963c746d57f75af380da
+6b52ed5b176604a0740689b5bb9be7bd79f4bced
+ff05824d2f76436c61d2c971e11a27514aba6948
+8baef1b4abc478178b004d62031cf7fe6db6f903 abc
+086885f71429e3599c8c903b0e9ed491f6522879 bar
+7a67abed5f99fdd3ee203dd137b9818d88b1bafd bar/goo
+
+What's different between what you expected and what actually happened?
+
+If you notice here, the objects
+`8baef1b4abc478178b004d62031cf7fe6db6f903`,
+`086885f71429e3599c8c903b0e9ed491f6522879` and
+`7a67abed5f99fdd3ee203dd137b9818d88b1bafd` are included in the output,
+these objects are reachable from
+`91fa9611a355db77a07f963c746d57f75af380da` and shouldn't have been
+included since we used the `--not` flag.
+
+Anything else you want to add:
+
+I did some preliminary walkthrough of the code to understand why this
+happens, and my understanding is as follows:
+1. In rev-list.c: we first set up the revisions provided via the
+`setup_revisions()` function. Here, any revision provided under the
+`--not` flag is marked as `UNINTERESTING`.
+2. In rev-list.c: we then call `prepare_revision_walk()`, this
+function internally goes through the commits and calls
+`handle_commit()` on each of the commit. In our case
+(6b52ed5b176604a0740689b5bb9be7bd79f4bced,
+91fa9611a355db77a07f963c746d57f75af380da).
+3. In revision.c: In `handle_commit()` we set `revs->limited =3D 1`
+since one of our commits is marked as `UNINTERESTING`.
+4. In revision.c: Back in `prepare_revision_walk()`, since
+`revs->limited` is set, we call `limit_list()`.
+5. In revision.c: Not sure what the purpose of `limit_list()` is, but
+seems like it is to optimize the revision walk to reduce the traversal
+later on. In our case, we can mark all parents of the commit as
+uninteresting and remove the commit from the rev list entirely.
+6. In rev-list.c: Finally, when we call
+`traverse_commit_list_filtered` for the traversal, we recursively show
+commit/object unless we come across something `UNINTERESTING`. Since
+only the commits were marked as `UNINTERESTING`, any shared
+trees/blobs will still be printed to output.
+
+The diff below fixes the issue:
+
+@@ -3790,11 +3833,12 @@ int prepare_revision_walk(struct rev_info *revs)
+         commit_list_sort_by_date(&revs->commits);
+     if (revs->no_walk)
+         return 0;
+-    if (revs->limited) {
++    if (revs->limited && !revs->tree_objects) {
+         if (limit_list(revs) < 0)
+             return -1;
+         if (revs->topo_order)
+
+But this is definitely a very _naive_ fix. Before diving into fixing
+this, it would be nice to hear some thoughts on this.
+
+[System Info]
+git version:
+git version 2.41.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.4.9-200.fc38.x86_64 #1 SMP PREEMPT_DYNAMIC Tue Aug  8
+21:21:11 UTC 2023 x86_64
+compiler info: gnuc: 13.1
+libc info: glibc: 2.37
+$SHELL (typically, interactive shell): /bin/fish
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+- Karthik
